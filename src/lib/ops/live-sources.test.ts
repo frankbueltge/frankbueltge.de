@@ -13,6 +13,7 @@ import {
   archSessionEntries,
   atlasEntries,
   cycleEntries,
+  datasetEntries,
   INSTRUMENTS,
   momentEntries,
   n1NightEntries,
@@ -21,7 +22,10 @@ import {
   projectEntries,
   readingEntries,
   recordDay,
+  relayEntries,
+  type DatasetProbe,
 } from './live-sources'
+import { parseRelay, type RelayState } from '@/lib/ecology/relay'
 
 const S = NAMING.opsRoom.signal
 const K = S.kindLabels
@@ -243,6 +247,35 @@ describe('the catalogues: one counted row per day', () => {
     expect(rows[1]!.fact).toMatch(/\b1 paper last used/)
   })
 
+  it('counts the papers that entered on a day the catalogue dates, and keeps “last used” for the days before', () => {
+    const rows = paperEntries(
+      [
+        // stamped by the builder: two entered on the 7th, one on the 9th
+        { zuletzt_gebraucht: '2026-10-09', first_seen_on: '2026-10-07' },
+        { zuletzt_gebraucht: '2026-10-07', first_seen_on: '2026-10-07' },
+        { zuletzt_gebraucht: '2026-10-09', first_seen_on: '2026-10-09' },
+        // there before the stamp began: its last use speaks only for a day before the first stamp
+        { zuletzt_gebraucht: '2026-10-08', first_seen_on: null },
+        { zuletzt_gebraucht: '2026-10-05', first_seen_on: null },
+        { zuletzt_gebraucht: '2026-10-05' },
+      ],
+      names,
+    )
+    expect(rows.map((r) => [r.date, r.fact])).toEqual([
+      ['2026-10-07', S.facts.papersEntered({ count: '2', one: false })],
+      ['2026-10-09', S.facts.papersEntered({ count: '1', one: true })],
+      ['2026-10-05', S.facts.papers({ count: '2', one: false })],
+    ])
+    // from the first stamped day on, a day nothing entered has no row — not a "last used" one
+    expect(rows.some((r) => r.date === '2026-10-08')).toBe(false)
+    expect(rows[0]!.fact).toMatch(/entered the catalogue/)
+  })
+
+  it('stays with “last used” wherever the catalogue dates no entry at all', () => {
+    const rows = paperEntries([{ zuletzt_gebraucht: '2026-10-04', first_seen_on: null }, { zuletzt_gebraucht: '2026-10-04', first_seen_on: 'soon' }], names)
+    expect(rows.map((r) => [r.date, r.fact])).toEqual([['2026-10-04', S.facts.papers({ count: '2', one: false })]])
+  })
+
   const run = (gestartet_am: string, atlas_eintraege: number, atlas = 'werke') => ({ atlas, gestartet_am, atlas_eintraege })
 
   it('files the atlas’s growth under the day — and the first run — that counted it', () => {
@@ -271,6 +304,38 @@ describe('the catalogues: one counted row per day', () => {
     expect(atlasEntries([run('2026-07-25T10:00:00Z', 214)], names)).toEqual([])
     expect(atlasEntries([run('2026-08-01T10:00:00Z', 473), run('2026-08-02T10:00:00Z', 470)], names)).toEqual([])
     expect(atlasEntries([run('2026-08-01T10:00:00Z', 90, 'theorie'), run('2026-08-02T10:00:00Z', 98, 'theorie')], names)).toEqual([])
+  })
+
+  describe('the dataset register: one row per day it dates', () => {
+    const source = (over: Partial<DatasetProbe> = {}): DatasetProbe => ({ geprueft: true, ...over })
+
+    it('states the probe pass of its day, and what was added and what changed', () => {
+      const rows = datasetEntries(
+        [
+          source({ probed_on: '2026-10-07', first_seen_on: null }),
+          source({ probed_on: '2026-10-07', first_seen_on: '2026-10-07' }),
+          source({ geprueft: false, probed_on: '2026-10-07', first_seen_on: null, reachability_changed_on: '2026-10-07' }),
+          source({ geprueft: false, probed_on: '2026-10-07', first_seen_on: '2026-10-06', reachability_changed_on: '2026-10-06' }),
+          // a template: never probed, so it is not among the checked
+          source({ geprueft: false, probed_on: null, first_seen_on: null }),
+        ],
+        names,
+      )
+      expect(rows.map((r) => [r.date, r.fact])).toEqual([
+        [
+          '2026-10-07',
+          S.facts.datasets({ checked: { count: '4', one: false, confirmed: '2' }, added: { count: '1', one: true }, changed: '1' }),
+        ],
+        ['2026-10-06', S.facts.datasets({ checked: null, added: { count: '1', one: true }, changed: '1' })],
+      ])
+      expect(rows[0]).toMatchObject({ house: 'catalogues', title: 'Dataset Register', kind: K.datasets, href: '/datasets', time: null, source: 'datasets' })
+      expect(rows[0]!.fact).toBe('4 sources checked, 2 with access confirmed · 1 source added · 1 changed reachability')
+    })
+
+    it('is silent while the register dates nothing — no day is given to it', () => {
+      expect(datasetEntries([source(), source({ geprueft: false })], names)).toEqual([])
+      expect(datasetEntries([source({ probed_on: 'today', first_seen_on: '' })], names)).toEqual([])
+    })
   })
 
   it('compares a day’s last count with the day before’s last, whatever happened between', () => {
@@ -335,6 +400,160 @@ describe('the ecology: the cycle’s turn and the practices’ presentations', (
       ['2026-09-13', 'POINT AT ONE', 'ensemble', K.presentation],
       ['2026-09-07', S.facts.presentation(NAMING.frontDoor.ecologyLive.cycleLabel(2)), 'ulysses', K.presentation],
     ])
+  })
+})
+
+describe('the Middle’s relay: its handoffs by day, its load-bearing relations counted', () => {
+  const ref = (repo: string) => ({ repo, path: 'BULLETIN.md', commit: 'abcdef1' })
+  const relation = (id: string, date: string, kind: string, over: Record<string, unknown> = {}) => ({
+    id,
+    date,
+    giver: 'atelier',
+    taker: 'studio',
+    kind,
+    what: 'A line of the relay.',
+    thread: null,
+    giver_ref: ref('ulysses'),
+    taker_ref: ref('studio'),
+    ...over,
+  })
+  const handoff = (id: string, offered_on: string, status: string, over: Record<string, unknown> = {}) => ({
+    id,
+    offered_on,
+    giver: 'atelier',
+    to: ['studio'],
+    offer: `The offer of ${id}.`,
+    ref: ref('ulysses'),
+    status,
+    taken_by: null,
+    ...over,
+  })
+  const relay = (relations: unknown[], handoffs: unknown[], to = '2026-10-05'): RelayState =>
+    parseRelay({
+      $contract: 'middle-relay/1',
+      generated_at: `${to}T23:00:00Z`,
+      cycle: 4,
+      question: null,
+      period: { from: '2026-09-07', to },
+      relations,
+      handoffs,
+      counts: {},
+    })
+  const E = S.facts.handoffEvents
+
+  it('counts a day’s built-on and answered relations in one row, and leaves the noted out', () => {
+    const rows = relayEntries(
+      relay(
+        [
+          relation('r1', '2026-10-04', 'built_on'),
+          relation('r2', '2026-10-04', 'built_on'),
+          relation('r3', '2026-10-04', 'answered'),
+          relation('r4', '2026-10-04', 'noted'),
+          relation('r5', '2026-10-03', 'noted'),
+        ],
+        [],
+      ),
+      names,
+    )
+    expect(rows).toEqual([
+      {
+        date: '2026-10-04',
+        time: null,
+        source: 'relay',
+        house: 'middle',
+        houseName: names.middle,
+        title: 'The relay',
+        fact: S.facts.relations({ count: '3', one: false, builtOn: '2', answered: '1' }),
+        kind: K.relay,
+        href: '/encounters#relay',
+        withdrawn: false,
+        voice: null,
+      },
+    ])
+    expect(rows[0]!.fact).toBe('3 load-bearing relations (2 built on, 1 answered)')
+  })
+
+  it('takes the newest relation of a corrects chain, as the contract tells its readers to', () => {
+    const rows = relayEntries(
+      relay(
+        [
+          relation('r1', '2026-10-02', 'built_on'),
+          // the relay corrects r1 on the 4th: it was a note, not a use
+          relation('r2', '2026-10-04', 'noted', { corrects: 'r1' }),
+          // a `corrects` in the relay's own words names no relation, and supersedes nothing
+          relation('r3', '2026-10-03', 'answered', { corrects: 'the Field’s refusal rate' }),
+        ],
+        [],
+      ),
+      names,
+    )
+    expect(rows.map((r) => [r.date, r.fact])).toEqual([['2026-10-03', S.facts.relations({ count: '1', one: true, builtOn: null, answered: '1' })]])
+  })
+
+  it('files each handoff on the days it was offered, taken up, declined and lapsed', () => {
+    const rows = relayEntries(
+      relay(
+        [],
+        [
+          handoff('h-open', '2026-10-02', 'open', { to: ['studio', 'field'] }),
+          handoff('h-taken', '2026-09-30', 'taken', { taken_by: { practice: 'studio', date: '2026-10-03', relation: 'r9' } }),
+          handoff('h-declined', '2026-10-01', 'declined', {
+            giver: 'field',
+            to: ['atelier'],
+            declined_by: { practice: 'atelier', date: '2026-10-04', relation: 'r8' },
+          }),
+          // offered 21 days before the 3rd: lapsed on the 3rd, as the contract counts it
+          handoff('h-lapsed', '2026-09-12', 'lapsed'),
+        ],
+      ),
+      names,
+    )
+    const byId = (id: string) => rows.filter((r) => r.href === `/encounters#handoff-${id}`).map((r) => [r.date, r.fact])
+    expect(byId('h-open')).toEqual([['2026-10-02', S.facts.handoff({ events: [E.offered], offer: 'The offer of h-open.' })]])
+    expect(byId('h-taken')).toEqual([
+      ['2026-09-30', S.facts.handoff({ events: [E.offered], offer: 'The offer of h-taken.' })],
+      ['2026-10-03', S.facts.handoff({ events: [E.taken(names.studio)], offer: 'The offer of h-taken.' })],
+    ])
+    expect(byId('h-declined')).toEqual([
+      ['2026-10-01', S.facts.handoff({ events: [E.offered], offer: 'The offer of h-declined.' })],
+      ['2026-10-04', S.facts.handoff({ events: [E.declined(names.atelier)], offer: 'The offer of h-declined.' })],
+    ])
+    expect(byId('h-lapsed')).toEqual([
+      ['2026-09-12', S.facts.handoff({ events: [E.offered], offer: 'The offer of h-lapsed.' })],
+      ['2026-10-03', S.facts.handoff({ events: [E.lapsed('21')], offer: 'The offer of h-lapsed.' })],
+    ])
+    const open = rows.find((r) => r.href === '/encounters#handoff-h-open')!
+    expect(open).toMatchObject({ title: `${names.atelier} → ${names.studio}, ${names.field}`, kind: K.handoff, house: 'middle', source: 'handoff', voice: null })
+    expect(rows.find((r) => r.href === '/encounters#handoff-h-declined')!.title).toBe(`${names.field} → ${names.atelier}`)
+  })
+
+  it('says an offer taken up the day it was made in one row', () => {
+    const rows = relayEntries(
+      relay([], [handoff('h', '2026-10-04', 'taken', { taken_by: { practice: 'studio', date: '2026-10-04', relation: 'r1' } })]),
+      names,
+    )
+    expect(rows.map((r) => r.fact)).toEqual([S.facts.handoff({ events: [E.offered, E.taken(names.studio)], offer: 'The offer of h.' })])
+    expect(rows[0]!.fact).toBe(`offered, taken up by ${names.studio}: The offer of h.`)
+  })
+
+  it('dates a lapse an offer was taken up after, and none it was taken up before', () => {
+    const late = handoff('late', '2026-09-01', 'taken', { taken_by: { practice: 'studio', date: '2026-09-30', relation: 'r1' } })
+    const inTime = handoff('in-time', '2026-09-01', 'taken', { taken_by: { practice: 'studio', date: '2026-09-22', relation: 'r2' } })
+    const rows = relayEntries(relay([], [late, inTime]), names)
+    expect(rows.filter((r) => r.fact!.startsWith(E.lapsed('21'))).map((r) => [r.href, r.date])).toEqual([['/encounters#handoff-late', '2026-09-22']])
+  })
+
+  it('never dates a lapse beyond the last day the relay read', () => {
+    // marked lapsed after 20 days — the record contradicts its own rule, and the lapse is not shown
+    const rows = relayEntries(relay([], [handoff('early', '2026-09-15', 'lapsed')], '2026-10-05'), names)
+    expect(rows.map((r) => r.date)).toEqual(['2026-09-15'])
+  })
+
+  it('is an empty source while the relay is absent or unreadable', () => {
+    expect(relayEntries(null, names)).toEqual([])
+    expect(relayEntries({ status: 'absent' }, names)).toEqual([])
+    expect(relayEntries({ status: 'invalid', reason: 'not a JSON object' }, names)).toEqual([])
+    expect(relayEntries(parseRelay({ $contract: 'middle-relay/2', relations: [], handoffs: [] }), names)).toEqual([])
   })
 })
 

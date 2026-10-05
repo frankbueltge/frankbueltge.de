@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "3a6f78aab2a3fadf"
+        "sha256": "9faae9df15181cf6"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 448,
+      "nodes": 449,
       "edges": 395,
       "nodesByKind": {
-        "decision": 133,
+        "decision": 134,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
@@ -1373,6 +1373,16 @@
     {
       "id": "decision:2026-10-05-1",
       "kind": "decision",
+      "label": "The signal log takes turns by source, and the relay and the dataset register join it",
+      "date": "2026-10-05",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The signal log takes turns by source, and the relay and the dataset register join it"
+      }
+    },
+    {
+      "id": "decision:2026-10-05-2",
+      "kind": "decision",
       "label": "The record stops quoting Frank where it had slipped, and the privacy guard now reads where those quotations hid",
       "date": "2026-10-05",
       "source": {
@@ -1381,7 +1391,7 @@
       }
     },
     {
-      "id": "decision:2026-10-05-2",
+      "id": "decision:2026-10-05-3",
       "kind": "decision",
       "label": "The signal log becomes the stream of the house's live updates",
       "date": "2026-10-05",
@@ -1391,7 +1401,7 @@
       }
     },
     {
-      "id": "decision:2026-10-05-3",
+      "id": "decision:2026-10-05-4",
       "kind": "decision",
       "label": "The practices may publish rich works — size and form not limited",
       "date": "2026-10-05",
@@ -1401,7 +1411,7 @@
       }
     },
     {
-      "id": "decision:2026-10-05-4",
+      "id": "decision:2026-10-05-5",
       "kind": "decision",
       "label": "/encounters draws the relay — who built on, answered or only noted whom, and the open handoffs — instead of counting addresses",
       "date": "2026-10-05",
@@ -9437,7 +9447,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-10-05-1",
+      "from": "decision:2026-10-05-2",
       "to": "work:on-record",
       "source": {
         "file": "docs/decision-log.md",
@@ -9446,7 +9456,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-10-05-3",
+      "from": "decision:2026-10-05-4",
       "to": "work:atelier",
       "source": {
         "file": "docs/decision-log.md",
@@ -9455,7 +9465,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-10-05-3",
+      "from": "decision:2026-10-05-4",
       "to": "work:praemie",
       "source": {
         "file": "docs/decision-log.md",

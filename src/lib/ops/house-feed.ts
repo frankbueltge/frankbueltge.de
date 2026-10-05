@@ -11,9 +11,9 @@
 // the house's LIVE UPDATES — not only what the houses land, but everything that changes daily and
 // can be dated by its own record. The lab's nightly readings, the ecology's cycle turn and
 // presentations, Machine Attention's moments, n-1's nights, Arch's sessions, the paper catalogue
-// and the atlas joined the works below; their readers are in live-sources.ts, the assembly from
-// the committed record in live-feed.ts. The entrance shows the newest FEED_TOP rows, /now the
-// newest FEED_DEPTH, paged.
+// and the atlas joined the works below — and, later that day, the Middle's relay and the dataset
+// register; their readers are in live-sources.ts, the assembly from the committed record in
+// live-feed.ts. The entrance shows the newest FEED_TOP rows, /now the newest FEED_DEPTH, paged.
 //
 // The house sources this module still reads itself, each from its OWN record, in its OWN noun:
 //
@@ -37,9 +37,12 @@
 //   · A SILENT SOURCE IS A SHORTER FEED, NEVER A GUESS. A row whose record carries no date drops
 //     out rather than appearing under today's — an undated row at the top of a log sorted by
 //     date is a lie about what happened last. Nothing here reads the clock.
-//   · THE ORDER IS THE RECORD'S, AND IT DOES NOT MOVE BETWEEN BUILDS. Newest day first; within a
-//     day, the rows whose records name a time first, newest first; then the fixed order of
-//     SOURCE_ORDER; then house, title and address. See compareFeed.
+//   · THE ORDER IS THE RECORD'S, AND IT DOES NOT MOVE BETWEEN BUILDS. Newest day first. Within a
+//     day the sources take turns (since the evening of 2026-10-05): every source's newest row of
+//     the day comes before any source's second, so a night of a dozen readings cannot push the
+//     catalogues or the relay off the entrance. Within one source, newest first by the time its
+//     record names; within one turn, the rows whose records name a time first, then the fixed
+//     order of SOURCE_ORDER, then house, title and address. See streamOf and sortFeed.
 //
 // The register on /ecology is deliberately NOT this: it stays the three practices' catalogue
 // (src/lib/engines/register.ts, buildRegister), because that is what it claims to be — their
@@ -69,19 +72,23 @@ export type HouseId =
   | 'attention'
   | 'ecology'
   | 'catalogues'
+  | 'middle'
 
 /**
- * Which reader produced a row. The ORDER of this list is the fixed order in which rows of one day
+ * Which reader produced a row. The ORDER of this list is the fixed order in which rows of one turn
  * stand when their records name no time (or name the same one): the ecology first — its cycle,
- * its presentations, the artifacts and works of its sessions — then the other houses' own
- * records, then Machine Attention, then the lab's instruments and catalogues, and the lab's shelf
- * last, because an experiment's `since` is the oldest kind of news a day can carry.
+ * its presentations, the artifacts and works of its sessions, the relay between its practices —
+ * then the other houses' own records, then Machine Attention, then the lab's instruments and
+ * catalogues, and the lab's shelf last, because an experiment's `since` is the oldest kind of
+ * news a day can carry.
  */
 export const SOURCE_ORDER = [
   'cycle',
   'presentation',
   'artifact',
   'work',
+  'relay',
+  'handoff',
   'n1-night',
   'n1-work',
   'arch-session',
@@ -92,6 +99,7 @@ export const SOURCE_ORDER = [
   'probe',
   'papers',
   'atlas',
+  'datasets',
   'shelf',
 ] as const
 export type SourceId = (typeof SOURCE_ORDER)[number]
@@ -148,6 +156,8 @@ export function houseNames(): HouseNames {
     attention: cards.get('attention') ?? S.houseFallback.attention,
     ecology: cards.get('ecology') ?? S.houseFallback.ecology,
     catalogues: S.houseFallback.catalogues,
+    // the fourth door: the contact zone, kept by the conductor rather than by a practice
+    middle: doors.get('conductor') ?? S.houseFallback.middle,
   }
 }
 
@@ -304,12 +314,14 @@ export function instantOn(date: string, stamp: unknown): string | null {
 const byCode = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0)
 
 /**
- * The log's one order. Newest day first. Within a day, rows whose record names a time come
- * first, newest first: a row whose record names only its day is read as standing at that day's
- * start — the day is all it claims, and the start is the one reading of it that never lifts the
- * row above a record that names its hour. Rows still tied stand in SOURCE_ORDER, then by house,
- * title and address — so a rebuild is never a re-ordering, and the comparator never returns 0
- * for two different rows.
+ * The order of rows that stand together: newest day first; within a day, rows whose record names
+ * a time first, newest first — a row whose record names only its day is read as standing at that
+ * day's start: the day is all it claims, and the start is the one reading of it that never lifts
+ * the row above a record that names its hour. Rows still tied stand in SOURCE_ORDER, then by
+ * house, title and address — so a rebuild is never a re-ordering, and the comparator never
+ * returns 0 for two different rows.
+ *
+ * It is the order WITHIN one source and WITHIN one turn; sortFeed decides the turns.
  */
 export function compareFeed(a: FeedEntry, b: FeedEntry): number {
   return (
@@ -322,9 +334,51 @@ export function compareFeed(a: FeedEntry, b: FeedEntry): number {
   )
 }
 
-/** The rows newest first, dropping any whose record named no day. */
+/**
+ * Whose turn a row is — what the request of 2026-10-05 calls a SOURCE (Frank's decision, wording
+ * private): the unit that takes turns within a day. Not the reader (`source`): a practice is one
+ * source whatever it lands — works, artifacts, presentations — and the lab's readings are one,
+ * however many instruments read that night (Headroom's probe is one of them). Each catalogue is
+ * one, because the three count different things. Everything else is its house: Error as Method,
+ * Machine Attention (its moments and its projects), the relay (its handoffs and its relations),
+ * n-1, Arch, the ecology's own turn. The lab's shelf stands apart from its readings: an
+ * experiment arriving is not one more reading, and would otherwise wait behind a dozen of them.
+ */
+export function streamOf(e: Pick<FeedEntry, 'source' | 'house'>): string {
+  switch (e.source) {
+    case 'papers':
+    case 'atlas':
+    case 'datasets':
+      return e.source
+    case 'reading':
+    case 'probe':
+      return 'lab-readings'
+    case 'shelf':
+      return 'lab-shelf'
+    default:
+      return e.house
+  }
+}
+
+/**
+ * The rows newest first, dropping any whose record named no day. Within a day, round-robin by
+ * source (streamOf): each source's rows stand in compareFeed's order, and its n-th row takes the
+ * n-th turn — so every source's newest row of the day comes before any source's second. Within a
+ * turn, compareFeed again. Days never mix: the last turn of a day stands above the first of the
+ * day before. Pure arithmetic over the rows' own fields — the same rows give the same order,
+ * whatever order they arrive in.
+ */
 export function sortFeed(entries: readonly FeedEntry[]): FeedEntry[] {
-  return entries.filter((e) => DAY.test(e.date)).sort(compareFeed)
+  const ordered = entries.filter((e) => DAY.test(e.date)).sort(compareFeed)
+  const turn = new Map<FeedEntry, number>()
+  const taken = new Map<string, number>()
+  for (const e of ordered) {
+    const key = `${e.date}|${streamOf(e)}`
+    const n = taken.get(key) ?? 0
+    turn.set(e, n)
+    taken.set(key, n + 1)
+  }
+  return ordered.sort((a, b) => byCode(b.date, a.date) || turn.get(a)! - turn.get(b)! || compareFeed(a, b))
 }
 
 // ── the cuts ─────────────────────────────────────────────────────────────────────────────────

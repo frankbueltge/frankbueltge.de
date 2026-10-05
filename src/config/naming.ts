@@ -776,6 +776,11 @@ export const NAMING = {
      * catalogue and the atlas. The entrance shows the newest rows, /now the longer log
      * (src/lib/ops/house-feed.ts holds both cuts). The heading link returned with it, and this
      * time it leads somewhere the entrance cannot go: further back.
+     *
+     * Later the same day the stream was widened to the rest of what changes daily — the
+     * Middle's relay (its handoffs and its load-bearing relations) and the dataset register —
+     * and one day's rows began to take turns by source, so a night of a dozen readings no
+     * longer pushes the catalogues and the relay off the entrance (house-feed.ts, sortFeed).
      */
     signal: {
       kicker: 'SIGNAL LOG',
@@ -818,6 +823,13 @@ export const NAMING = {
         'n1-night': 'night',
         /** Arch's session protocols */
         'arch-session': 'session',
+        /** the Middle's relay: a day's load-bearing relations between the practices, counted */
+        relay: 'relations',
+        /** one practice's offer to another, as the relay follows it: offered, taken up,
+         *  declined or lapsed */
+        handoff: 'handoff',
+        /** the dataset register's day: its data sources checked, added, or changed in reach */
+        datasets: 'sources',
       },
       /** House names are read from the doors and the overview cards; these stand in only if a
        *  card is ever removed, so the log degrades to a plain name instead of an id. The lab has
@@ -834,6 +846,7 @@ export const NAMING = {
         attention: 'Machine Attention',
         ecology: 'The research ecology',
         catalogues: 'Catalogues',
+        middle: 'The Middle',
       },
       /**
        * The one fact a row states beside its title, where its record carries one. Every figure
@@ -856,6 +869,48 @@ export const NAMING = {
          *  practice used one ("last used" on /papers), so that is what the row counts */
         papers: (p: { count: string; one: boolean }) =>
           `${p.count} paper${p.one ? '' : 's'} last used by the practices`,
+        /** since the catalogue's builder stamps the day a paper first appeared in it
+         *  (`first_seen_on`, from its first run after 2026-10-05), a stamped day counts the
+         *  papers that entered — the "last used" line above stays for the days before */
+        papersEntered: (p: { count: string; one: boolean }) =>
+          `${p.count} paper${p.one ? '' : 's'} entered the catalogue`,
+        /** the dataset register's day, from the dates its builder stamps since 2026-10-05: the
+         *  probe pass of that day, the sources that first appeared, and those whose reachability
+         *  changed — each part only where the register dates it */
+        datasets: (p: {
+          checked: { count: string; one: boolean; confirmed: string } | null
+          added: { count: string; one: boolean } | null
+          changed: string | null
+        }) =>
+          [
+            p.checked &&
+              `${p.checked.count} source${p.checked.one ? '' : 's'} checked, ${p.checked.confirmed} with access confirmed`,
+            p.added && `${p.added.count} source${p.added.one ? '' : 's'} added`,
+            p.changed && `${p.changed} changed reachability`,
+          ]
+            .filter(Boolean)
+            .join(' · '),
+        /** a day of the Middle's relay: the relations that carried something — built on or
+         *  answered — counted; the merely noted are the relay's, not the log's */
+        relations: (p: { count: string; one: boolean; builtOn: string | null; answered: string | null }) =>
+          `${p.count} load-bearing relation${p.one ? '' : 's'} (${
+            p.builtOn && p.answered
+              ? `${p.builtOn} built on, ${p.answered} answered`
+              : p.builtOn
+                ? 'built on'
+                : 'answered'
+          })`,
+        /** a handoff's title: who offered it, to whom — the line the Middle's own list prints */
+        handoffTitle: (giver: string, to: readonly string[]) => (to.length > 0 ? `${giver} → ${to.join(', ')}` : giver),
+        /** a handoff's day: what happened to it that day, then the offer in the relay's words */
+        handoff: (p: { events: readonly string[]; offer: string }) => `${p.events.join(', ')}: ${p.offer}`,
+        handoffEvents: {
+          offered: 'offered',
+          taken: (by: string) => `taken up by ${by}`,
+          declined: (by: string) => `declined by ${by}`,
+          /** the contract's lapse; the days arrive from the relay module, which holds the rule */
+          lapsed: (days: string) => `lapsed, ${days} days without uptake`,
+        },
         /** the atlas dates no admission either; its scout counts the atlas at every run, and a
          *  count that rose is the growth this row states, on the day it was counted */
         atlas: (p: { count: string; one: boolean }) =>

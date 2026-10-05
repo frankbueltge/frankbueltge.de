@@ -119,6 +119,9 @@ class Katalogeintrag:
     # geschriebener Satz von einem der Praxis nicht zu unterscheiden — und genau das
     # darf nicht passieren (Kanon: KI-Schritte offenlegen und als solche markieren).
     urteil: dict | None = None
+    # The run that first wrote this paper into the catalogue (since 2026-10-05; see
+    # stamp_first_seen). Null for a paper that was already there when the stamp began.
+    first_seen_on: str | None = None
 
 
 @dataclass(frozen=True)
@@ -568,6 +571,7 @@ def als_json(eintraege: list[Katalogeintrag]) -> str:
                 "zuletzt_gebraucht": e.zuletzt_gebraucht,
                 "verify_status": e.verify_status,
                 "weitere_kennungen": list(e.weitere_kennungen),
+                "first_seen_on": e.first_seen_on,
             }
             for e in geordnet
         ],
@@ -629,6 +633,82 @@ def bewahre_urteile(neu: list[Katalogeintrag], alt: list[dict]) -> list[Kataloge
     return bewahrt
 
 
+# ── The day a paper entered the catalogue (since 2026-10-05) ─────────────────────────
+#
+# The catalogue is rebuilt from the practices' citations every night, so until this day it
+# could not say when a paper had come in — and the site's signal log, which files every row
+# under a day its own record names, could only count papers by their last use. From now on
+# every build stamps `first_seen_on`, kept by comparing with the catalogue committed before
+# the run: the run day for a paper that catalogue did not hold, the carried date for one it
+# did. A paper that was there before the stamp began gets null, and keeps it: nothing is
+# backfilled, and the history of this file — rebuilt nightly, its ids rederived whenever a
+# source corrects an author or a title — dates an id, not reliably a paper.
+
+_DAY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+#: A key the previous catalogue holds, with no date: the paper was there before the stamp.
+_BEFORE_THE_STAMP = None
+
+
+def _identities(
+    entry_id: object, identifier: object, other_identifiers: object, title: object, authors: object
+) -> set[str]:
+    """Every key under which the catalogue knows a paper as the same paper: its id, each of
+    its identifiers, and the title with the first author's surname — the keys
+    `fuehre_zusammen` merges on and `bewahre_urteile` carries a verdict by. The id alone would
+    not do: it is derived from author and title and changes when a source corrects either."""
+    keys: set[str] = set()
+    if isinstance(entry_id, str) and entry_id:
+        keys.add(f"id:{entry_id}")
+    others = other_identifiers if isinstance(other_identifiers, (list, tuple)) else ()
+    for k in (identifier, *others):
+        if isinstance(k, str) and k:
+            keys.add(f"k:{k.lower()}")
+    if isinstance(title, str) and normiere_titel(title):
+        names = tuple(a for a in (authors if isinstance(authors, (list, tuple)) else ()) if isinstance(a, str))
+        keys.add(f"t:{normiere_titel(title)}|{_erster_nachname(names)}")
+    return keys
+
+
+def _earlier(a: str | None, b: str | None) -> str | None:
+    """The earlier of two first appearances; "before the stamp" is earlier than any day."""
+    if a is _BEFORE_THE_STAMP or b is _BEFORE_THE_STAMP:
+        return _BEFORE_THE_STAMP
+    return min(a, b)
+
+
+def stamp_first_seen(
+    entries: list[Katalogeintrag], previous: list[dict] | None, today: str
+) -> list[Katalogeintrag]:
+    """Stamps `first_seen_on` on every entry of this build.
+
+    An entry the previous catalogue knows under any of its keys carries the earliest date
+    the previous catalogue holds for them — null as soon as one of them was there before the
+    stamp began. An entry it does not know is new: it first appears today.
+    """
+    known: dict[str, str | None] = {}
+    for e in previous or []:
+        if not isinstance(e, dict):
+            continue
+        day = e.get("first_seen_on")
+        day = day if isinstance(day, str) and _DAY.match(day) else _BEFORE_THE_STAMP
+        for key in _identities(
+            e.get("id"), e.get("kennung"), e.get("weitere_kennungen"), e.get("titel"), e.get("urheber")
+        ):
+            known[key] = _earlier(known[key], day) if key in known else day
+
+    stamped: list[Katalogeintrag] = []
+    for entry in entries:
+        keys = _identities(entry.id, entry.kennung, entry.weitere_kennungen, entry.titel, entry.urheber)
+        matches = [known[k] for k in keys if k in known]
+        first = today
+        if matches:
+            first = matches[0]
+            for m in matches[1:]:
+                first = _earlier(first, m)
+        stamped.append(replace(entry, first_seen_on=first))
+    return stamped
+
+
 def main(argv: list[str] | None = None) -> int:
     import argparse
 
@@ -646,6 +726,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--wurzel", type=Path, default=Path("."), help="Wurzel der Site")
     parser.add_argument("--grenze", type=int, default=None, help="nur N Saatkörner (Probe)")
     args = parser.parse_args(argv)
+    # The run day, read once: the day a paper this build writes for the first time entered.
+    from datetime import datetime, timezone
+
+    today = datetime.now(timezone.utc).date().isoformat()
 
     # ── Weg 1a: kuratierte Sammlungen der Praxen, direkt übernommen ──────────────
     # Zuerst, weil sie das bestbegründete Material tragen: Einträge mit einem von der
@@ -674,6 +758,8 @@ def main(argv: list[str] | None = None) -> int:
 
     # Urteile aus dem bestehenden Katalog übernehmen, BEVOR geschrieben wird.
     ziel = args.wurzel / "src/data/register/papers.json"
+    # The catalogue committed before this run: what verdicts and first appearances are kept by.
+    alt: list[dict] | None = None
     if ziel.is_file():
         alt = json.loads(ziel.read_text(encoding="utf-8"))
         vorher_urteile = sum(1 for e in alt if e.get("relevanz_herkunft") == "urteil")
@@ -708,6 +794,10 @@ def main(argv: list[str] | None = None) -> int:
             print(f"   – {adresse}")
     for eintrag_id, adresse in guarded.held_back:
         print(f"   ZURÜCKGEHALTEN {eintrag_id}: identity is a refused address ({adresse})")
+
+    eintraege = stamp_first_seen(eintraege, alt, today)
+    entered = sum(1 for e in eintraege if e.first_seen_on == today)
+    print(f"dated {today}: first seen {entered} of {len(eintraege)}")
 
     ziel.parent.mkdir(parents=True, exist_ok=True)
     ziel.write_text(als_json(eintraege), encoding="utf-8")

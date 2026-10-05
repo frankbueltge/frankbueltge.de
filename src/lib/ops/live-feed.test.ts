@@ -8,7 +8,7 @@ import { NAMING } from '@/config/naming'
 import { WERKE } from '@/data/werke'
 import { loadArtifacts } from '@/lib/ecology/v3'
 import { READOUTS, type ReadoutId } from '@/lib/experiments/readouts'
-import { FEED_DEPTH, FEED_TOP, SOURCE_ORDER, topOf, type SourceId } from './house-feed'
+import { FEED_DEPTH, FEED_TOP, SOURCE_ORDER, streamOf, topOf, type SourceId } from './house-feed'
 import { buildFeed, buildHouseFeed, loadFeedInput, readArchive } from './live-feed'
 
 const real = buildHouseFeed()
@@ -16,14 +16,28 @@ const real = buildHouseFeed()
 describe('the stream reads the whole house', () => {
   it('hears from every source it reads', () => {
     const sources = new Set(real.map((e) => e.source))
-    for (const s of SOURCE_ORDER) expect(sources.has(s), `${s} contributes nothing to the signal log`).toBe(true)
+    // The dataset register speaks from the first night its builder dates anything (the stamps of
+    // 2026-10-05). A register written before that has no day to file a row under, and is silent
+    // rather than dated by the build — so it is held to speaking only once it carries a date.
+    const datasetsDated = loadFeedInput().datasets.some((d) => d.probed_on || d.first_seen_on || d.reachability_changed_on)
+    for (const s of SOURCE_ORDER) {
+      if (s === 'datasets' && !datasetsDated) continue
+      expect(sources.has(s), `${s} contributes nothing to the signal log`).toBe(true)
+    }
   })
 
-  it('carries the ecology, the lab, Machine Attention, the catalogues and the houses beside them', () => {
+  it('carries the ecology, the lab, Machine Attention, the catalogues, the Middle and the houses beside them', () => {
     const houses = new Set(real.map((e) => e.house))
-    for (const h of ['atelier', 'field', 'studio', 'nightly-line', 'arch', 'n-1', 'lab', 'attention', 'ecology', 'catalogues'] as const) {
+    for (const h of ['atelier', 'field', 'studio', 'nightly-line', 'arch', 'n-1', 'lab', 'attention', 'ecology', 'catalogues', 'middle'] as const) {
       expect(houses.has(h), `${h} contributes nothing`).toBe(true)
     }
+  })
+
+  it('carries every handoff the relay records, on the day it was offered', () => {
+    const state = loadFeedInput().relay
+    if (state?.status !== 'ok') return
+    const offered = real.filter((e) => e.source === 'handoff' && e.fact?.startsWith(NAMING.opsRoom.signal.facts.handoffEvents.offered))
+    expect(offered).toHaveLength(state.relay.handoffs.length)
   })
 
   it('completes every row from its record', () => {
@@ -76,10 +90,29 @@ describe('the entrance’s twenty', () => {
     expect(sources.size, [...sources].join(', ')).toBeGreaterThanOrEqual(4)
     expect(houses.size, [...houses].join(', ')).toBeGreaterThanOrEqual(4)
     // a counted source is one row a day: no catalogue or stage fills the entrance on its own
-    for (const counted of ['papers', 'atlas'] as SourceId[]) {
-      const days = top.filter((e) => e.source === counted).map((e) => e.date)
+    for (const counted of ['papers', 'atlas', 'datasets', 'relay'] as SourceId[]) {
+      const days = real.filter((e) => e.source === counted).map((e) => e.date)
       expect(new Set(days).size, counted).toBe(days.length)
     }
+  })
+
+  it('give every source of a day its turn before any source takes a second', () => {
+    // over the whole stream, not only the entrance: on every day, the first rows are one per
+    // source, as many as that day has sources — the round-robin of sortFeed, held on the record
+    const days = new Map<string, typeof real>()
+    for (const e of real) days.set(e.date, [...(days.get(e.date) ?? []), e])
+    for (const [date, rows] of days) {
+      const sources = new Set(rows.map(streamOf))
+      expect(new Set(rows.slice(0, sources.size).map(streamOf)).size, date).toBe(sources.size)
+    }
+  })
+
+  it('show every source that spoke on the entrance’s newest day', () => {
+    const newest = top[0]!.date
+    const spoke = new Set(real.filter((e) => e.date === newest).map(streamOf))
+    // there are fewer sources than rows on the entrance, so every one of them gets its turn there
+    expect(spoke.size).toBeLessThanOrEqual(FEED_TOP)
+    expect(new Set(top.filter((e) => e.date === newest).map(streamOf))).toEqual(spoke)
   })
 
   it('leave the longer log to /now, which reaches further back', () => {
