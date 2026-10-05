@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "9b1ba376294fc918"
+        "sha256": "3a6f78aab2a3fadf"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 447,
-      "edges": 394,
+      "nodes": 448,
+      "edges": 395,
       "nodesByKind": {
-        "decision": 132,
+        "decision": 133,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 151,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 95
+        "touches": 96
       }
     }
   },
@@ -1373,6 +1373,16 @@
     {
       "id": "decision:2026-10-05-1",
       "kind": "decision",
+      "label": "The record stops quoting Frank where it had slipped, and the privacy guard now reads where those quotations hid",
+      "date": "2026-10-05",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The record stops quoting Frank where it had slipped, and the privacy guard now reads where those quotations hid"
+      }
+    },
+    {
+      "id": "decision:2026-10-05-2",
+      "kind": "decision",
       "label": "The signal log becomes the stream of the house's live updates",
       "date": "2026-10-05",
       "source": {
@@ -1381,7 +1391,7 @@
       }
     },
     {
-      "id": "decision:2026-10-05-2",
+      "id": "decision:2026-10-05-3",
       "kind": "decision",
       "label": "The practices may publish rich works — size and form not limited",
       "date": "2026-10-05",
@@ -1391,7 +1401,7 @@
       }
     },
     {
-      "id": "decision:2026-10-05-3",
+      "id": "decision:2026-10-05-4",
       "kind": "decision",
       "label": "/encounters draws the relay — who built on, answered or only noted whom, and the open handoffs — instead of counting addresses",
       "date": "2026-10-05",
@@ -9427,7 +9437,16 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-10-05-2",
+      "from": "decision:2026-10-05-1",
+      "to": "work:on-record",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/record/private-quotes.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-05-3",
       "to": "work:atelier",
       "source": {
         "file": "docs/decision-log.md",
@@ -9436,7 +9455,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-10-05-2",
+      "from": "decision:2026-10-05-3",
       "to": "work:praemie",
       "source": {
         "file": "docs/decision-log.md",

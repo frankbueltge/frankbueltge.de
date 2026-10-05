@@ -7,11 +7,11 @@ export type About = {
   sections: { heading: string; paragraphs: string[] }[]
 }
 
-// Rewritten 2026-08-09 (late, Frank: "aktuell zu stark auf die research ecology fokussiert …
-// es soll kein projekt fokussiert werden"): the page now leads with the question the current
-// projects share — what machines are genuinely better at, and whether they can research
-// autonomously and produce useful, checkable works — and lists every project evenly, each one
-// door away. The 2026-07-31 ecology-led version lives in git history.
+// Rewritten 2026-08-09 (late; Frank's objection, wording private: the page was focused too
+// strongly on the research ecology, and no project should be in focus): the page now leads
+// with the question the current projects share — what machines are genuinely better at, and
+// whether they can research autonomously and produce useful, checkable works — and lists every
+// project evenly, each one door away. The 2026-07-31 ecology-led version lives in git history.
 
 const de: About = {
   metaTitle: 'Über Frank Bültge — Data Engineering & Analytics',

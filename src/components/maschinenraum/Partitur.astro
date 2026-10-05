@@ -204,10 +204,11 @@ const tableRowsData = tableRows.map((e) => ({
   line: e.text,
 }))
 
-// A FIXED floor, not one that grows with the day count (Frank, 2026-07-31: "you have to scroll
-// horizontally at the top"). The old floor demanded 26 CSS px per day, so the score outgrew the
-// page after roughly a month and pushed the NEWEST landings — the point of this page — off the
-// right edge, where they had to be hunted for. The figure is a viewBox that scales, and density
+// A FIXED floor, not one that grows with the day count (Frank's finding of 2026-07-31, wording
+// private: the top of the page had to be scrolled sideways). The old floor demanded 26 CSS px
+// per day, so the score outgrew the page after roughly a month and pushed the NEWEST landings
+// — the point of this page — off the right edge, where they had to be hunted for. The figure
+// is a viewBox that scales, and density
 // is already answered by the ×n clusters and the time lens that fans them out; that is what the
 // lens is for. So the score now fits its column at any day count, and the floor only keeps it
 // from collapsing on a phone — where the table below is the honest rendition anyway.

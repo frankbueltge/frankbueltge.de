@@ -1,7 +1,7 @@
 // Paper-Katalog (/papers) — Typen und reine Hilfsfunktionen.
 //
-// Der zweite der beiden Kataloge, die aus derselben Suche abfallen (Frank, 2026-07-27:
-// „datasets für das register und einen weiteren katalog für die sammlung von papers").
+// The second of the two catalogues that fall out of the same search (Frank's decision of
+// 2026-07-27, wording private: datasets go to the register, papers get a catalogue of their own).
 // Warum getrennt vom Register: Die Praxen zitieren ganz überwiegend PAPER, nicht
 // Datensätze — gemessen am 27.07. waren von 89 je zitierten DOIs null im Dataset-Register.
 // Ein Katalog, der nur Datensätze führt, hätte die Forschung nur zur Hälfte bedient.

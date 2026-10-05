@@ -51,8 +51,8 @@ You are reading a proposal, not a plan of record. Before you change anything:
 
 ## 1. The diagnosis, measured
 
-Frank's own framing (2026-08-06): the ecology *"zu einem monster herangewachsen ist, was
-keine ernstzunehmenden werke hervorbringt"*, and *"vielleicht ist auch alles zu offen"*.
+Frank's own framing (2026-08-06, wording private): the ecology had grown into something
+monstrous that produced no works to be taken seriously — and perhaps everything was too open.
 Both halves check out, but not evenly.
 
 ### 1.1 What the repositories say
@@ -198,7 +198,7 @@ practices do not read it as a walk-back.
 
 | Practice | Proposed line | Basis |
 |---|---|---|
-| **Studio / Ensemble** | Only digital works. Only what a machine does better than a human — scale, repetition, verification, the temporal. The added value of a machine-run artist collective has to be *experienceable in the work itself*. | Frank's own words, 2026-08-06. Studio is the practice the measurements indict, and the widest remit. |
+| **Studio / Ensemble** | Digital works only, and only what a machine does better than a human — scale, repetition, verification, the temporal. A machine-run artist collective must make its added value *experienceable in the work itself*. | Frank's direction of 2026-08-06 (wording private), paraphrased. Studio is the practice the measurements indict, and the widest remit. |
 | **Field / Meridian** | Unchanged — "instruments on trial" plus the counter-forensic extension: measuring public infrastructure that power leaves unmeasured. | It already has a line, and it is the most productive practice. Do not fix this. |
 | **Atelier / Ulysses** | **Open — needs Frank.** Its current work-line (thresholds and the documents behind them) is already counter-forensic in form. A candidate: *the warrant of numbers* — where a figure that governs a decision came from, and whether the document still travels with it. | Do not invent this without him. |
 

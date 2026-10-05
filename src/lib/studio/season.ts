@@ -6,8 +6,8 @@
 // only thing the floor remembers:
 //
 //   · a PREMIERE is a lit position — a hard-edged pool with the work's title in Didone capitals
-//     (hard-edged on purpose: Frank rejected the soft gradient in 2026-07-16, "hässlicher gold
-//     glow", and the plotted light stayed);
+//     (hard-edged on purpose: Frank rejected the soft gradient's golden glow on 2026-07-16,
+//     wording private, and the plotted light stayed);
 //   · a STRIKE is a taped X with its verbatim reason;
 //   · a RETURN is the human eye sending a work back — a violet arc curving off the public side of
 //     the floor and down into the production area, one per return, numbered in Roman;

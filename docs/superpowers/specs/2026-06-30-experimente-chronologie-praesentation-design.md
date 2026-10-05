@@ -24,8 +24,8 @@ Drei zusammenhängende Beobachtungen aus der Arbeit am „Irrtum als Methode"-At
 
 ## Leitprinzip (Frank, 2026-06-30)
 
-> „Alle Projekte einfach chronologisch, und The Protocol nicht flaggshippen, sondern einfach
-> in die Liste. Newest first."
+Wording private; in substance: every project simply in chronological order, newest first —
+The Protocol gets no flagship treatment and stands in the list like the rest.
 
 Keine redaktionelle Sonderstellung. Aktualität bestimmt Prominenz. Das Atelier rückt nach
 oben, weil es das jüngste Experiment ist — nicht durch Sonderbehandlung.
@@ -130,7 +130,8 @@ Architektur: **Auto-Land** (`auto-land.yml`, 02:00 UTC) liegt im **irrtum-Repo**
 
 ## Nicht im Scope (YAGNI)
 
-- Kein neuer „Featured"-Block, kein Hero für das Atelier (Frank: nur chronologisch).
+- Kein neuer „Featured"-Block, kein Hero für das Atelier (per Frank's principle above:
+  chronological order only).
 - Keine feinere Intra-Tag-Sortierung der Werke (eigene spätere Erweiterung).
 - Keine Änderung an The-Protocol-Inhalt/Determinismus oder Registertests.
 - Keine inhaltliche Redaktion der Atelier-Werke (unredigiert bleibt unredigiert).

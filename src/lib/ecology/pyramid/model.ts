@@ -2,9 +2,10 @@
 // house is under. The one place the surfaces agree on who exists.
 //
 // Design handoff: docs/design_handoff_research_ecology/README.md ("Research Ecology v3 — the
-// top-down rebuild"). Its diagnosis, in Frank's words on 2026-08-12: too many pages, too much
-// text, nobody grasps the ecology without hours of reading. The cure is a four-level pyramid, and
-// the first thing a pyramid needs is a single answer to "which stations are there?" — otherwise
+// top-down rebuild"). Its diagnosis (Frank, 2026-08-12, wording private): too many pages and too
+// much text — the ecology could not be grasped without hours of reading. The cure is a
+// four-level pyramid, and the first thing a pyramid needs is a single answer to "which stations
+// are there?" — otherwise
 // Level 0's map, Level 1's sheets and Level 2's breadcrumbs each grow their own list and drift
 // apart, which is precisely how the site came to have eight pages per practice.
 //

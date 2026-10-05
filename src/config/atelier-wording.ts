@@ -305,9 +305,9 @@ export const ATELIER_NARRATIVE = {
   },
   /**
    * The dossier (2026-08-01) — the entrance's new centre, and the reason the rest of this page
-   * moved. Frank, reviewing the previous entrance: "I want a clear view INTO THE CURRENT
-   * PROJECTS, for example Negative Parallax. And when I select it, simply nothing happens —
-   * only the heading shows at the top, everything else stays stuck on 'scene one'."
+   * moved. Frank, reviewing the previous entrance (wording private): he wanted a clear view
+   * into the current projects, Negative Parallax for one, and selecting one did nothing — only
+   * the heading changed at the top, while everything else stayed stuck on the first scene.
    *
    * What that diagnosed: the entrance was built as a RETROSPECTIVE — four outcome harbours and
    * a guided story about one line that had already ended — while the practice runs a line that
@@ -577,8 +577,8 @@ export const ATELIER_NARRATIVE = {
     backToRoom: '← what is open',
     fullTextLabel: 'read it in full',
   },
-  /** The four first-visitor questions (Frank, 2026-07-31: „was passiert hier eigentlich,
-   * auf welcher Basis, was ist bisher passiert und wie ist der aktuelle Stand“), moved here
+  /** The four first-visitor questions (Frank, 2026-07-31, wording private: what actually
+   * happens here, on what basis, what has happened so far, and where things stand), moved here
    * from the page's own `orientierung` const (WP2 — practice-shell) so OrientationList.astro
    * can render it. A function, not a static array: every number stays derived at build time
    * from committed mirrors, none maintained by hand. */

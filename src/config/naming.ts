@@ -83,15 +83,15 @@ export const NAMING = {
   approval: 'approved' as 'draft' | 'approved',
 
   eyebrow: 'FRANK BÜLTGE · DATA ENGINEERING & ANALYTICS',
-  /** Die Forschungsfrage statt der Häuser (Frank, 2026-08-09, spät): der Hero war auf „two
-   *  houses" konzentriert, „die H1 macht so auch keinen Sinn" — kein Projekt wird fokussiert,
-   *  auch nicht zwei. Was die aktuellen Projekte verbindet, ist Franks Frage: was können
-   *  Maschinen wirklich besser als Menschen (konstant beobachten, messen, riesige Datenmengen
-   *  verarbeiten) — und können sie autonom, mit eigenen Mitteln forschen und dabei ein
-   *  konkretes, nützliches Werk oder Instrument mit prüfbarem Mehrwert hervorbringen?
-   *  Löst die Two-Houses-Hero-Zeile vom Vormittag datiert ab (deren Gleichrangigkeits-Kern
-   *  lebt in der OVERVIEW-Sektion weiter). Ausdrücklich weiterhin NICHT „artistic research,
-   *  under proof": die Festival-Linie bleibt gültig, wo sie steht, ist aber kein Hero-Anspruch. */
+  /** The research question instead of the houses (Frank, 2026-08-09, late; wording private: the
+   *  hero had centred on the two houses, and the H1 made no sense that way) — no project is put
+   *  in focus, not even two. What the current projects share is Frank's question: what can
+   *  machines really do better than people (observe constantly, measure, process vast amounts
+   *  of data) — and can they research autonomously, with means of their own, and produce a
+   *  concrete, useful work or instrument whose added value can be checked?
+   *  Supersedes, dated, the two-houses hero line of that morning (its core of equal rank lives
+   *  on in the OVERVIEW section). Still expressly NOT „artistic research, under proof": the
+   *  festival line stays valid where it stands, but it is no claim for the hero. */
   focusKicker: 'the standing question',
   title: 'what machines are actually better at',
   /** Klartext-Fassung (Frank, 24.07., Wortlaut privat — die bisherige Fassung war
@@ -140,10 +140,11 @@ export const NAMING = {
    * war redundant — The Middle ist bereits eine der vier Türen und führt nach /encounters. */
 
   /** THE OVERVIEW (Frank, 2026-08-09 evening). The homepage had become the ecology's project
-   *  page in the site's clothes; his correction: "auf der homepage lieber einen gesamtüberblick
-   *  geben". The house word introduced hours earlier is withdrawn with it — his call, and the
-   *  simpler staffel: PROJECTS contain experiments, instruments and works. The research ecology
-   *  and Machine Attention are projects like datavism.org is one; they simply live here.
+   *  page in the site's clothes; his correction (wording private): the homepage should give an
+   *  overview of everything instead. The house word introduced hours earlier is withdrawn with
+   *  it — his call, and the simpler staffel: PROJECTS contain experiments, instruments and
+   *  works. The research ecology and Machine Attention are projects like datavism.org is one;
+   *  they simply live here.
    *
    *  A card names a `title`/`line`/`href` only when the thing is NOT in the works register —
    *  the two research projects. Experiments carry theirs in `src/data/werke.ts`, and are read
@@ -551,9 +552,10 @@ export const NAMING = {
      *  result — with no site chrome around it at all. Two gaps closed at once (Frank,
      *  2026-08-02): the wall text added on 2026-08-01 reached only the Astro-wrapped works,
      *  so the interactive ones still met their visitor cold; and none of the nine standalone
-     *  works carried a single internal link, in either direction — "von allen werken gibt es
-     *  keinen link zurück zur praxis oder ecology". The strip is the site's, not the work's,
-     *  and says so, so the frame is never mistaken for the practice's own words. */
+     *  works carried a single internal link, in either direction — his finding, wording
+     *  private: no work linked back to its practice or to the ecology. The strip is the
+     *  site's, not the work's, and says so, so the frame is never mistaken for the practice's
+     *  own words. */
     standaloneFrame: {
       note: 'Wall label and links added by the site. The work itself begins below.',
       backPrefix: '←',

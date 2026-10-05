@@ -109,8 +109,8 @@ is the template every future BigQuery step follows.
   it has an EE consequence.
 - **The accepted trade-off:** EE computations are not third-party re-runnable the way a
   committed SQL string is; provenance is self-assembled (committed script + hash + task ID
-  + parameters). Frank accepted this deliberately ("man kann auch mal Teile einer Ethik
-  aufgeben, wenn es sinnvoll ist und der Sache dient") — the Dark Ocean V1 method sheet
+  + parameters). Frank accepted this deliberately (wording private: giving up part of an ethic
+  is acceptable where it makes sense and serves the work) — the Dark Ocean V1 method sheet
   must state the trade-off in exactly this openness.
 - **Where it lands:** the V1 detection path in the `machine-attention` repo, in its own
   sessions, after the V0 accumulation phase and the E-experiment criteria (V0 build note).
