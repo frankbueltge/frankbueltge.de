@@ -14,6 +14,7 @@ import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { GLOBE } from '@/config/globe-wording'
 import { NAMING } from '@/config/naming'
+import { buildHouseFeed } from './live-feed'
 
 const read = (rel: string) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8')
 
@@ -163,5 +164,17 @@ describe('the front door copy carries no digits', () => {
     expect(NAMING.frontDoor.now.lead).not.toMatch(/\d/)
     expect(NAMING.frontDoor.now.seo.title).not.toMatch(/\d/)
     expect(NAMING.frontDoor.now.seo.description).not.toMatch(/\d/)
+  })
+})
+
+describe('the log’s links land where its rows say', () => {
+  const signalLog = read('../../components/ops/SignalLog.astro')
+
+  it('hands a row’s fragment past the locale helper, which would write its slash after the #', () => {
+    // Since 2026-10-05 rows lead into sections of their pages — the relay (`/encounters#relay`),
+    // each handoff's own line, Arch's works (`/arch#works`). Handed whole, the helper wrote
+    // `#relay/`, and every one of those links missed its anchor.
+    expect(signalLog).toContain("href.split('#')")
+    expect(buildHouseFeed().some((e) => e.href.includes('#'))).toBe(true)
   })
 })
