@@ -144,15 +144,16 @@ export const FIELD_NARRATIVE = {
     backToRoom: '← what is open',
     fullTextLabel: 'read it in full',
   },
-  /** Eingang v2 (2026-07-25, Franks Go): die Band-Übersicht über dem aktuellen Instrument
-   * („man landet auf einem Instrument, nicht auf der Praxis") und der Runtime-Block.
+  /** Entrance v2 (2026-07-25, Frank's go): the band overview above the current instrument (the
+   * problem it answers: a visitor landed on an instrument, not on the practice) and the runtime
+   * block.
    *
-   * ZUORDNUNG GEÄNDERT 2026-08-01 (Frank, wörtlich: „es ist nicht die Stimme sondern ein
-   * Werkzeug was sie nutzen können wann immer es Sinn macht"): MRR ist Meridians WERKZEUG.
-   * Die frühere Fassung — MRR sei die Engineering-Linie des Architekten und „not the
-   * collective's own research voice" — ist zurückgezogen. Was von enc-2026-005 BLEIBT: die
-   * Urheberschaft des einzelnen Laufs wird benannt. Wer einen Lauf gefahren hat, steht
-   * weiter dabei; das Werkzeug gehört trotzdem der Praxis. Siehe docs/wording-kanon.md. */
+   * ATTRIBUTION CHANGED 2026-08-01 (Frank's decision, wording private: the runtime is not the
+   * practice's voice but a tool it may use whenever that makes sense): MRR is Meridian's TOOL.
+   * The earlier version — MRR as the architect's engineering line and "not the collective's own
+   * research voice" — is withdrawn. What STAYS from enc-2026-005: the authorship of each single
+   * run is named. Whoever drove a run stays on record; the tool belongs to the practice all the
+   * same. See docs/wording-kanon.md. */
   shelf: {
     heading: 'the shelf — every instrument, on the band',
     caption:

@@ -699,8 +699,8 @@ export const EDGES: readonly ApparatusEdge[] = [
 /**
  * Which undertaking a part belongs to. This distinction is load-bearing and was missing from the
  * first version of the figure, which stood the ecology's gates and the lab's nightly instruments
- * side by side as if they were one thing (Frank, 2026-08-03: "da sind auch workflows dabei die
- * nichts mit der research ecology zu tun haben").
+ * side by side as if they were one thing (Frank's finding of 2026-08-03, wording private: some
+ * of those workflows have nothing to do with the research ecology).
  *
  * The wording canon keeps them apart: the research ecology stands ALONGSIDE the site's other
  * undertakings, and `/experiments` — the Experiments, the counter-measurement line — is "our own

@@ -98,8 +98,8 @@ v2-Apparat (work-line, adversarial review, claims ledger, concept gate) — alle
   instruments of our time on trial — the science corner of the shared question: measurements
   over impressions, named sources, honest uncertainty.* Der **wissenschaftliche Pol** der
   Ökologie. NIEMALS „artistic research" für Meridian. — **MRR (Meridian Research Runtime) ist Meridians WERKZEUG, nicht Meridians
-  Stimme** (Frank, 2026-08-01, wörtlich: „es ist nicht die Stimme sondern ein Werkzeug
-  was sie nutzen können wann immer es Sinn macht"). Das Werkzeug gehört der Praxis; sie
+  Stimme** (Frank's decision of 2026-08-01, wording private: the runtime is not the practice's
+  voice but a tool it may use whenever that makes sense). Das Werkzeug gehört der Praxis; sie
   nutzt es, wann es Sinn macht. Was ein Lauf feststellt, ist ein Befund des Werkzeugs —
   eine **Aussage des Kollektivs** wird daraus erst, wenn das Kollektiv sie sich zu eigen
   macht. Ein einzelner Lauf, den die Engineering-Linie fährt, ist deshalb weiterhin keine
@@ -270,8 +270,9 @@ spricht. Vertrag je Praxis: `SITE-API.md` § „The window".
 - `tier` in `src/data/werke.ts` kennt die Wörter; `werke.test.ts` hält Praxis und
   Instrument aus der Experimente-Reihe heraus, damit der nächste neue Rang nicht still
   hineinwandert.
-- **Die Startseite ist nicht mehr die Ökologie** (Frank, 2026-08-09 abends: „research ecology
-  nicht mehr prominent dort inszenieren, sondern als eines von mehreren"). Hero-Titel jetzt
+- **Die Startseite ist nicht mehr die Ökologie** (Frank, 2026-08-09 evening, wording private:
+  the research ecology is no longer staged prominently there, but as one project among
+  several). Hero-Titel jetzt
   **„machines that research, in public"** — ausdrücklich **nicht** „artistic research, under
   proof" (Franks Wahl; die Festival-Positionierung bleibt gültig, wo sie steht, ist aber kein
   Hero-Anspruch). Darunter der Block **TWO HOUSES**: beide Häuser gleichrangig, jedes mit

@@ -339,8 +339,9 @@ export interface PassageRenderOptions {
   /**
    * Whether the ledger gutter is drawn at all. Default true — the full sheet keeps it.
    *
-   * `false` is the archive figure on the entrance (2026-08-01). Frank, reviewing the entrance:
-   * "next to the diagram, in mini type nobody can read, 'what closing it cost'." He is right —
+   * `false` is the archive figure on the entrance (2026-08-01). Frank, reviewing the entrance
+   * (wording private): the closing-cost sentences beside the diagram were set in type too small
+   * for anyone to read. He is right —
    * a ledger sentence set at 10 units inside a 1480-unit sheet scaled into a page column is
    * around 5px on screen, and a sentence nobody can read is not a disclosure. So the gutter is
    * not shrunk further or wrapped harder: it is REMOVED from the drawing, and what it carried

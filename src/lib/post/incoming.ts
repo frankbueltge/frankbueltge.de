@@ -1,6 +1,6 @@
 // src/lib/post/incoming.ts
-// The post office's INCOMING register — the counterpart the page was missing (Frank,
-// 2026-07-31: "there is a lot going in and out, not only letters from the practices").
+// The post office's INCOMING register — the counterpart the page was missing (Frank's reading of
+// 2026-07-31, wording private: far more passes in and out here than the practices' letters).
 //
 // The outgoing ledger already treats every delivery as a matter of record: who, to whom, what
 // became of it, silence published as silence. Everything arriving got no such treatment, even

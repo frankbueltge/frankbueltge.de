@@ -1,10 +1,9 @@
 // src/lib/atelier/process.ts — der Weg einer Frage durch die Praxis, aus den committeten
 // Projektakten abgeleitet.
 //
-// Warum (Frank, 2026-07-30): „/atelier/projects hat zwar ausführliche TRACE und SCORE, aber
-// es fehlt ein Diagramm, das einem den gesamten Prozess auf einen Blick verständlich macht
-// — niemand liest diese ellenlangen Texte." Die Akten sind die Tiefe; diese Datei liefert
-// die Vogelperspektive darüber.
+// Why (Frank's finding of 2026-07-30, wording private): /atelier/projects had detailed TRACE
+// and SCORE files but no diagram that makes the whole process graspable at a glance, and nobody
+// reads texts that long. The files are the depth; this module supplies the bird's-eye view.
 //
 // ALLES hier ist Ableitung aus committeten Dateien, keine Erzählung: der Ausgang steht als
 // `disposition` in der SCORE-Frontmatter, die erreichten Stationen sind die vorhandenen

@@ -2,8 +2,8 @@
 
 **Occasion.** Frank's session of 2026-08-02: apply the toolkit of the practice's own published
 work (*Kartographie statt Kopie / Cartography, not Tracing*, work 2026-07-24, ch. 5–6) to the
-question of how the ecology's frontend should visualise. Direction decided by Frank ("ja, mach
-alle drei"); this spec is the first frontend piece. The companion move — the toolkit's missing
+question of how the ecology's frontend should visualise. Direction decided by Frank (wording
+private: all three proposals approved); this spec is the first frontend piece. The companion move — the toolkit's missing
 half offered back to the practice — went to `ulysses/REQUESTS.md` the same day ("Seed: the other
 half of your own toolkit"); this figure is deliberately independent of whether the practice
 adopts anything: it renders committed records, presentation only.

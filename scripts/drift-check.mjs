@@ -205,10 +205,11 @@ if (werkInlineTally.length) {
 }
 
 // ——— 8. Every work carries a wall text, and it stays plain ————————————————————
-// Frank, 2026-08-01: "genau solche Texte machen die Arbeit fassbar … und erzeugen Staunen
-// statt Stirnrunzeln." Visitors open works, not records. The teaser store already held a
-// plain-language line for 56 of 57 works; what was missing was that it appeared on the work's
-// own page (now in wrapper.ts) and that nothing kept it plain or kept it from being forgotten.
+// Frank's reading of 2026-08-01, wording private: plain texts like these make a work graspable,
+// and they produce wonder rather than frowns. Visitors open works, not records. The teaser
+// store already held a plain-language line for 56 of 57 works; what was missing was that it
+// appeared on the work's own page (now in wrapper.ts) and that nothing kept it plain or kept
+// it from being forgotten.
 //
 // Two checks, both cheap:
 //   (a) Coverage — a work without a wall text is a finding, but only after the nightly teaser

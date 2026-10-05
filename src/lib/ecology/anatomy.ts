@@ -14,9 +14,9 @@
 // It cannot answer the question a reader actually arrives with — what is this, and how does a
 // piece of research here become public? That needs the constitutional layer: what governs a
 // practice, what one working session produces, what has to pass before anything is published,
-// and who decides. Frank, 2026-08-03: "so hat man immer noch kein holistische visualisierung von
-// dem, was die 'research ecology' ist und wie sie funktioniert mit ihren verfassungen,
-// protokollen, journals, works etc."
+// and who decides. Frank's finding of 2026-08-03, wording private: there was still no holistic
+// picture of what the research ecology is and how it works — its constitutions, protocols,
+// journals, works and the rest.
 //
 // THE ONE RULE THIS MODULE ENFORCES: every line it shows is a QUOTE from a committed file, with
 // the path it came from, and anatomy.test.ts fails if the quote is no longer there. The notation

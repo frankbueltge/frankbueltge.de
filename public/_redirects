@@ -41,20 +41,20 @@
 /lab /experiments 301
 /lab/ /experiments 301
 
-# Routen englisch (2026-07-16, Frank: "warum stehen da deutsche begriffe in den urls?") —
-# der English-only-Entscheid gilt auch für Pfade: /encounters und /experiments sind kanonisch,
-# die deutschen Pfade der Ökologie-Ära 301en dorthin. (Impressum/Datenschutz bleiben deutsch —
-# Rechtstexte; /protokoll, /praemie etc. sind Werk-Archivpfade und bleiben, bis das
-# Praxis-Oberflächen-Paket sie geordnet migriert.)
+# English routes (2026-07-16; Frank's objection, wording private: German terms had no place
+# in the URLs) — the English-only decision covers paths too: /encounters and /experiments are
+# canonical, the ecology era's German paths 301 to them. (Impressum/Datenschutz stay German —
+# legal texts; /protokoll, /praemie etc. are work archive paths and stay until the
+# practice-surfaces package migrates them in order.)
 /begegnungen /encounters 301
 /begegnungen/* /encounters/:splat 301
 /bestaende /experiments 301
 /bestaende/* /experiments 301
 
-# Werk-Slugs englisch (2026-07-20, Frank: "deutsche Slugs will ich nicht") — die zuvor als
-# "Werk-Archivpfade" belassenen deutschen Slugs wandern jetzt geordnet auf englische Slugs
-# (Anzeigetitel liegen in src/i18n/ui.ts). Je Werk: die Werk-Seite UND das Methodenblatt unter
-# /werke/<slug>. /impressum + /datenschutz bleiben deutsch (Rechtstexte). Siehe Slug-Rename-PR.
+# English work slugs (Frank's decision of 2026-07-20, wording private: no German slugs) — the
+# German slugs earlier left standing as "work archive paths" now move, in order, to English
+# slugs (display titles live in src/i18n/ui.ts). Per work: the work page AND the method sheet
+# under /werke/<slug>. /impressum + /datenschutz stay German (legal texts). See the slug-rename PR.
 /parallaxe /parallax 301
 /werke/parallaxe /werke/parallax 301
 /beifang /bycatch 301

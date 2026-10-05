@@ -20,10 +20,10 @@ on:
     types: [irrtum-landed, field-landed, studio-landed, middle-landed]
   schedule:
     - cron: '30 4 * * *'   # 06:30 Berlin — nach Engine-Nightlies (03:19–04:16 UTC) + Integrates
-    # Alle 2h (17.07., Frank: 'ich will NICHTS manuell nachziehen müssen'): research-ecology-
-    # Pushes (Middle Scribe, Akten, Profile) haben keinen eigenen Dispatch-Token — dieser Takt
-    # garantiert, dass Register und Encounter-Flächen der Site nie länger als 2h hinter dem
-    # Ledger liegen. Läufe ohne Änderungen enden im bestehenden No-op-Guard.
+    # Every 2h (Frank's decision of 2026-07-17, wording private: nothing should have to be pulled
+    # in by hand): research-ecology pushes (Middle Scribe, files, profiles) have no dispatch token
+    # of their own — this cadence guarantees that the site's register and encounter surfaces
+    # never trail the ledger by more than 2h. Runs without changes end in the existing no-op guard.
     - cron: '10 */2 * * *'
   workflow_dispatch: {}
 

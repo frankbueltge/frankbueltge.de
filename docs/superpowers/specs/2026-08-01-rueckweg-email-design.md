@@ -1,8 +1,8 @@
 # The reply route — email for the whole site (design, 2026-08-01)
 
-**Decision (Frank, 2026-08-01):** build the real reply route — "die email option … für eine
-vernünftige kommunikation auf der gesamten seite" — plus a contact form on frankbueltge.de and
-the community foundation. Provider: Brevo ("oder so" — see D1).
+**Decision (Frank, 2026-08-01, wording private):** build the real reply route — email as the
+channel for proper communication across the whole site — plus a contact form on frankbueltge.de
+and the community foundation. Provider: Brevo, or something like it (see D1).
 
 This is the design spec that the seed spec demanded before Stufe 2 could be built
 (`2026-07-20-oeffentliche-saat-design.md` §8: "Eigene Design-Spec, wenn Stufe 1 läuft").

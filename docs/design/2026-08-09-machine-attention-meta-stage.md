@@ -1,8 +1,8 @@
 # The Machine Attention entrance becomes the machine itself
 
-**Datum:** 2026-08-09, Nacht · **Status:** umgesetzt · **Anlass:** Franks Review des
-Praxis-Stands: `/machine-attention` war „ein sehr gutes Dossier über die Maschine …
-was noch fehlt, ist die Maschine als öffentliche Situation."
+**Datum:** 2026-08-09, Nacht · **Status:** umgesetzt · **Anlass:** Frank's review of the
+practice's state (2026-08-09, wording private): `/machine-attention` read as a strong dossier
+*about* the machine; what was missing was the machine itself as a public situation.
 
 ## Die Entscheidung
 
