@@ -16,6 +16,12 @@ describe('localeHref keeps a fragment a fragment', () => {
     expect(localeHref('/now', localize)).toBe('/now/')
   })
 
+  it('never puts a trailing slash on a file', () => {
+    expect(localeHref('/n-1/record.html', localize)).toBe('/n-1/record.html')
+    expect(localeHref('/atlas/werke.json', localize)).toBe('/atlas/werke.json')
+    expect(localeHref('/n-1/record.html#map', localize)).toBe('/n-1/record.html#map')
+  })
+
   it('leaves another scheme and a same-page anchor alone', () => {
     expect(localeHref('https://example.org/a#b', localize)).toBe('https://example.org/a#b')
     expect(localeHref('mailto:someone@example.org', localize)).toBe('mailto:someone@example.org')
