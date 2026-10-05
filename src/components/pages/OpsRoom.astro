@@ -43,6 +43,7 @@
 // down it. The globe panel and the pulse instrument are untouched inside; what they draw is
 // their own.
 import { getRelativeLocaleUrl } from 'astro:i18n'
+import { localeHref } from '@/lib/locale-href'
 import type { Locale } from '@/lib/site'
 import { NAMING } from '@/config/naming'
 import pulseData from '@/data/pulse/pulse.json'
@@ -72,13 +73,8 @@ import '@/styles/ops-room.css'
 import '@/styles/hub-triptych.css'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
-/** A link into a section of another page: the locale helper owns the path, the fragment stays
- *  the fragment — handed whole, it appends its trailing slash after the `#` and the anchor misses. */
-const urlTo = (href: string) => {
-  const [path, fragment] = href.split('#')
-  return fragment ? `${url(path!)}#${fragment}` : url(href)
-}
+/** Fragments survive the locale helper: src/lib/locale-href.ts. */
+const url = (href: string) => localeHref(href, (path) => getRelativeLocaleUrl(locale, path))
 
 const pulse = pulseData as PulseSnapshot
 const stackSvg = buildStackSvg(pulse)
@@ -291,7 +287,7 @@ const catalogues = NAMING.catalogues.items.filter((c) => c.href !== '/atlas')
   <section class="ops-section" id="latest">
     <div class="ops-head">
       <p class="kicker ops-kicker"><b>{OPS.signal.kicker}</b> · {OPS.signal.kickerSub}</p>
-      <a class="ops-headlink" href={urlTo(OPS.signal.link.href)}>{OPS.signal.link.label}</a>
+      <a class="ops-headlink" href={url(OPS.signal.link.href)}>{OPS.signal.link.label}</a>
     </div>
     <SignalLog entries={signal} pageSize={FEED_TOP} />
     <p class="ops-foot-line">{OPS.signal.foot} <span class="ops-cursor">▍</span></p>

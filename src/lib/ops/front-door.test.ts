@@ -80,8 +80,10 @@ describe('the signal log’s two cuts (Frank, 2026-10-05)', () => {
 
   it('links the entrance’s log to the longer one, and the link goes to /now', () => {
     expect(NAMING.opsRoom.signal.link.href).toMatch(/^\/now#latest$/)
-    // through the fragment-aware helper: the locale helper alone writes `/now#latest/`, and misses
-    expect(opsRoom).toContain('urlTo(OPS.signal.link.href)')
+    // through the fragment-aware helper: the locale helper alone writes `/now#latest/`, and misses.
+    // Since 2026-10-05 every link in the room takes that path (src/lib/locale-href.ts).
+    expect(opsRoom).toContain('url(OPS.signal.link.href)')
+    expect(opsRoom).toContain('localeHref(href,')
     expect(nowBoard).toContain('id="latest"')
   })
 })
@@ -174,7 +176,7 @@ describe('the log’s links land where its rows say', () => {
     // Since 2026-10-05 rows lead into sections of their pages — the relay (`/encounters#relay`),
     // each handoff's own line, Arch's works (`/arch#works`). Handed whole, the helper wrote
     // `#relay/`, and every one of those links missed its anchor.
-    expect(signalLog).toContain("href.split('#')")
+    expect(signalLog).toContain('localeHref(href,')
     expect(buildHouseFeed().some((e) => e.href.includes('#'))).toBe(true)
   })
 })
