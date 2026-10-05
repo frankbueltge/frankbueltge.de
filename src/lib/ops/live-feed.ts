@@ -3,7 +3,8 @@
 // Two halves. `buildFeed` is pure: it takes every source as data and returns the ordered stream,
 // which is what the tests drive with fixtures. `loadFeedInput` reads the record — the works
 // register, the practices' mirrors, the instruments' archives, the attention mirror, the
-// catalogues, the cycle state — once per build process, and `buildHouseFeed` joins the two.
+// catalogues, the cycle state, the Middle's relay — once per build process, and `buildHouseFeed`
+// joins the two.
 //
 // The instruments' archives are read from disk, file by file, the way thumbnails.ts and the
 // practices' mirrors are: an eager glob would carry every byte of several hundred day files into
@@ -17,22 +18,27 @@ import attentionExport from '@/data/attention/export.json'
 import attentionMoments from '@/data/attention/moments.json'
 import { WERKE, type Werk } from '@/data/werke'
 import { readArchFacts, type ArchFacts } from '@/lib/arch/facts'
+import { loadRelay, type RelayState } from '@/lib/ecology/relay'
 import { loadArtifacts, loadCycle, loadPresentations, type ArtifactEntry, type CycleState, type PresentationEntry } from '@/lib/ecology/v3'
 import type { LatestWork } from '@/lib/engines/latest'
 import { allWorks } from '@/lib/engines/register'
 import { readN1Nights, readN1Works, type N1Night, type N1Work } from '@/lib/n1/works'
 import { PAPERS } from '@/lib/papers'
+import { ENTRIES as DATASETS } from '@/lib/register'
 import { archEntries, artifactEntries, houseNames, labEntries, n1Entries, registerEntries, sortFeed, type FeedEntry } from './house-feed'
 import {
   archSessionEntries,
   atlasEntries,
   cycleEntries,
+  datasetEntries,
   momentEntries,
   n1NightEntries,
   paperEntries,
   presentationEntries,
   projectEntries,
   readingEntries,
+  relayEntries,
+  type DatasetProbe,
   type InstrumentId,
   type InstrumentRecord,
   type InstrumentRecords,
@@ -53,8 +59,12 @@ export interface FeedInput {
   attentionExport: unknown
   papers: readonly PaperUse[]
   atlasRuns: readonly unknown[]
+  /** the dataset register's entries — dated since its builder stamps them (2026-10-05) */
+  datasets: readonly DatasetProbe[]
   cycle: CycleState | null
   presentations: readonly PresentationEntry[]
+  /** the Middle's relay as loadRelay read it; absent and unreadable are empty sources */
+  relay: RelayState | null
 }
 
 /** A feed with no sources at all — what a fixture starts from, so a test names what it feeds in. */
@@ -70,8 +80,10 @@ export const NO_SOURCES: FeedInput = {
   attentionExport: null,
   papers: [],
   atlasRuns: [],
+  datasets: [],
   cycle: null,
   presentations: [],
+  relay: null,
 }
 
 /** The whole stream, newest first, from sources handed in — pure, and the same twice. */
@@ -83,6 +95,7 @@ export function buildFeed(input: Partial<FeedInput>): FeedEntry[] {
     ...presentationEntries(i.presentations, names),
     ...artifactEntries(i.artifacts, names),
     ...registerEntries(i.works, names),
+    ...relayEntries(i.relay, names),
     ...n1NightEntries(i.n1Nights, names),
     ...n1Entries(i.n1, names),
     ...archSessionEntries(i.arch, names),
@@ -92,6 +105,7 @@ export function buildFeed(input: Partial<FeedInput>): FeedEntry[] {
     ...readingEntries(i.instruments, i.werke, names),
     ...paperEntries(i.papers, names),
     ...atlasEntries(i.atlasRuns, names),
+    ...datasetEntries(i.datasets, names),
     ...labEntries(i.werke, names),
   ])
 }
@@ -198,8 +212,10 @@ export function loadFeedInput(): FeedInput {
     attentionExport,
     papers: PAPERS,
     atlasRuns: readAtlasRuns(root),
+    datasets: DATASETS,
     cycle: loadCycle(root),
     presentations: loadPresentations(root),
+    relay: loadRelay(root),
   }
   return cached
 }

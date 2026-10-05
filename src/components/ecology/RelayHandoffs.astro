@@ -7,10 +7,13 @@
 //
 // Ages are counted to the day the relay was generated, never to the day the site was built: the
 // page says what the record says, and the record has a date.
+//
+// Every line carries its handoff's own id (handoffAnchor), so a row of the signal log that reports
+// an offer, an uptake, a decline or a lapse lands on the handoff it reports.
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { MIDDLE_V3 } from '@/config/middle-v3-wording'
 import { ageInDays, evidenceUrl, type Handoff } from '@/lib/ecology/relay'
-import { relationAnchor, type RelayView } from '@/lib/ecology/relay-triangle'
+import { handoffAnchor, relationAnchor, type RelayView } from '@/lib/ecology/relay-triangle'
 import type { PracticeId } from '@/lib/ecology/v3'
 import '@/styles/middle-relay.css'
 
@@ -46,7 +49,7 @@ const statusLine = (h: Handoff): string => {
         {view.open.length + takenNow.length > 0 && (
           <ul class="relay-handoffs mt-4">
             {view.open.map((h) => (
-              <li class={`relay-handoff g-${h.giver}`} data-status="open">
+              <li id={handoffAnchor(h.id)} class={`relay-handoff g-${h.giver} scroll-mt-24`} data-status="open">
                 <p class="text-sm font-semibold text-fg">
                   {name(h.giver)} → {to(h)}
                 </p>
@@ -62,7 +65,7 @@ const statusLine = (h: Handoff): string => {
               </li>
             ))}
             {takenNow.map((h) => (
-              <li class={`relay-handoff g-${h.giver}`} data-status="taken">
+              <li id={handoffAnchor(h.id)} class={`relay-handoff g-${h.giver} scroll-mt-24`} data-status="taken">
                 <p class="text-sm text-fg">
                   {name(h.giver)} → {to(h)}
                 </p>
@@ -84,7 +87,7 @@ const statusLine = (h: Handoff): string => {
             <summary class="cursor-pointer font-mono text-mono-sm text-fg-faint">{H.closed(earlier.length)}</summary>
             <ul class="relay-handoffs mt-3">
               {earlier.map((h) => (
-                <li class={`relay-handoff g-${h.giver}`} data-status={h.status}>
+                <li id={handoffAnchor(h.id)} class={`relay-handoff g-${h.giver} scroll-mt-24`} data-status={h.status}>
                   <p class="text-sm text-fg">
                     {name(h.giver)} → {to(h)}
                   </p>

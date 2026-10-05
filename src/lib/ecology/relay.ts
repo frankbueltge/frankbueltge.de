@@ -84,6 +84,9 @@ export interface Handoff {
   ref: RelayRef | null
   status: HandoffStatus
   takenBy: HandoffTaken | null
+  /** the contract's optional `declined_by`: which practice declined it, when, and the relation
+   *  (usually `noted`) that records the decline — null where the relay names none */
+  declinedBy: HandoffTaken | null
 }
 
 export type KindCounts = Record<RelayKind, number>
@@ -169,10 +172,6 @@ function parseHandoff(raw: unknown): Handoff | null {
   if (typeof raw.status !== 'string' || !(STATUSES as readonly string[]).includes(raw.status)) return null
   const giver = raw.giver
   const to = Array.isArray(raw.to) ? [...new Set(raw.to.filter(isPractice))].filter((p) => p !== giver) : []
-  let takenBy: HandoffTaken | null = null
-  if (isObject(raw.taken_by) && isPractice(raw.taken_by.practice) && isDate(raw.taken_by.date)) {
-    takenBy = { practice: raw.taken_by.practice, date: raw.taken_by.date, relation: text(raw.taken_by.relation) }
-  }
   return {
     id,
     offeredOn: raw.offered_on,
@@ -181,8 +180,16 @@ function parseHandoff(raw: unknown): Handoff | null {
     offer,
     ref: parseRef(raw.ref),
     status: raw.status as HandoffStatus,
-    takenBy,
+    takenBy: parseClosing(raw.taken_by),
+    declinedBy: parseClosing(raw.declined_by),
   }
+}
+
+/** `taken_by` and `declined_by` share one shape: a practice, a day, and the relation that shows
+ *  it. Anything less is no closing at all — a day that cannot be read is never guessed. */
+function parseClosing(raw: unknown): HandoffTaken | null {
+  if (!isObject(raw) || !isPractice(raw.practice) || !isDate(raw.date)) return null
+  return { practice: raw.practice, date: raw.date, relation: text(raw.relation) }
 }
 
 /** Reads a parsed relay.json against the contract, loosely: the contract string and the two
@@ -365,6 +372,50 @@ export function threads(relations: Relation[]): Thread[] {
 export function ageInDays(from: string, asOf: string): number {
   const ms = Date.parse(`${asOf.slice(0, 10)}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)
   return Number.isFinite(ms) ? Math.max(0, Math.round(ms / 86_400_000)) : 0
+}
+
+/** The contract's lapse (research-ecology relay/README.md, and LAPSE_DAYS in its
+ *  tools/verify-relay.mjs): a handoff still open 21 days after `offered_on`, counted to
+ *  `period.to`, is `lapsed` — `period.to − offered_on ≥ 21`. */
+export const LAPSE_DAYS = 21
+
+/** The day `n` whole days after an ISO date: calendar arithmetic in UTC, never the clock. */
+export function addDays(day: string, n: number): string | null {
+  if (!DATE.test(day)) return null
+  const ms = Date.parse(`${day}T00:00:00Z`)
+  return Number.isFinite(ms) ? new Date(ms + n * 86_400_000).toISOString().slice(0, 10) : null
+}
+
+/** The last day the relay read: the end of its period, else the day it was written. */
+export function relayLastDay(relay: Relay): string | null {
+  if (relay.period) return relay.period.to
+  const day = relay.generatedAt.slice(0, 10)
+  return DATE.test(day) ? day : null
+}
+
+/**
+ * The day a handoff lapsed, as the contract counts it — `offered_on` + LAPSE_DAYS — or null.
+ * A handoff the relay marks `lapsed` lapsed on that day. So did one taken up or declined only
+ * AFTER that day: the contract lets a lapsed offer still be taken or declined, and on the day it
+ * lapsed it was open. One taken or declined on or before that day never lapsed (the verifier's
+ * transitions: a declined offer can only be taken). And a lapse later than the last day the relay
+ * read is not in the record, whatever its status says — it is left out, never dated ahead.
+ */
+export function lapseDay(h: Handoff, lastDay: string | null): string | null {
+  const day = addDays(h.offeredOn, LAPSE_DAYS)
+  if (!day || !lastDay || day > lastDay) return null
+  if (h.status === 'lapsed') return day
+  const closed = h.status === 'taken' ? h.takenBy?.date : h.status === 'declined' ? h.declinedBy?.date : null
+  return closed && closed > day ? day : null
+}
+
+/** The relations a later relation corrects. The contract keeps relations append-only and has a
+ *  wrong one corrected by a new relation whose `corrects` names it; readers take the newest
+ *  relation of such a chain. Only a `corrects` that names another relation of this relay counts —
+ *  the field may also carry the relay's own words about what was corrected. */
+export function supersededIds(relations: Relation[]): Set<string> {
+  const ids = new Set(relations.map((r) => r.id))
+  return new Set(relations.flatMap((r) => (r.corrects && r.corrects !== r.id && ids.has(r.corrects) ? [r.corrects] : [])))
 }
 
 /** The open handoffs, newest offer first. */

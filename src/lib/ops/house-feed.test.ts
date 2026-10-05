@@ -13,9 +13,11 @@ import {
   registerEntries,
   sortFeed,
   SOURCE_ORDER,
+  streamOf,
   topOf,
   type FeedEntry,
   type HouseId,
+  type SourceId,
 } from './house-feed'
 import { buildFeed } from './live-feed'
 import { NAMING } from '@/config/naming'
@@ -212,16 +214,80 @@ describe('the order of one day (Frank, 2026-10-05: deterministic, and tested)', 
     expect(sortFeed([older, newer])).toEqual([newer, older])
   })
 
-  it('within a day, puts timed rows first, the latest first', () => {
-    const early = row({ title: 'early', time: '2026-10-04T08:00:00.000Z', source: 'reading' })
-    const late = row({ title: 'late', time: '2026-10-04T12:00:00.000Z', source: 'reading' })
-    const dayOnly = row({ title: 'day only', source: 'cycle' })
-    expect(sortFeed([dayOnly, early, late]).map((e) => e.title)).toEqual(['late', 'early', 'day only'])
+  it('lets every source of a day speak once before any speaks twice', () => {
+    // the night the request was made about: eleven readings, each naming its hour, and the
+    // catalogues and a practice naming only their day — which used to stand below all eleven
+    const readings = [...Array(11).keys()].map((i) =>
+      row({ source: 'reading', house: 'lab', houseName: 'The Lab', title: `reading ${i}`, time: `2026-10-04T${10 + i}:00:00.000Z` }),
+    )
+    const papers = row({ source: 'papers', house: 'catalogues', houseName: 'Catalogues', title: 'Paper Catalogue' })
+    const atlas = row({ source: 'atlas', house: 'catalogues', houseName: 'Catalogues', title: 'Atlas of Data Art' })
+    const artifact = row({ source: 'artifact', house: 'atelier', houseName: 'The Atelier', title: 'An artifact' })
+    const sorted = sortFeed([...readings, papers, atlas, artifact])
+    // the first turn: the newest reading (it names its hour), then the untimed rows in source order
+    expect(sorted.slice(0, 4).map((e) => e.title)).toEqual(['reading 10', 'An artifact', 'Paper Catalogue', 'Atlas of Data Art'])
+    // every later turn belongs to the only source with rows left: the readings, newest first
+    expect(sorted.slice(4).map((e) => e.title)).toEqual([...Array(10).keys()].map((i) => `reading ${9 - i}`))
   })
 
-  it('stands rows that name no time in the fixed source order', () => {
-    const shuffled = [...SOURCE_ORDER].reverse().map((source) => row({ source, title: source }))
-    expect(sortFeed(shuffled).map((e) => e.source)).toEqual([...SOURCE_ORDER])
+  it('stands one source’s rows newest first by the time they name, the untimed after', () => {
+    const early = row({ source: 'moment', house: 'attention', title: 'early', time: '2026-10-04T08:00:00.000Z' })
+    const late = row({ source: 'moment', house: 'attention', title: 'late', time: '2026-10-04T12:00:00.000Z' })
+    const project = row({ source: 'project', house: 'attention', title: 'a project' })
+    expect(sortFeed([project, early, late]).map((e) => e.title)).toEqual(['late', 'early', 'a project'])
+  })
+
+  it('within one turn, puts the rows that name a time first, the latest first', () => {
+    const lab = row({ source: 'reading', house: 'lab', title: 'lab', time: '2026-10-04T08:00:00.000Z' })
+    const stage = row({ source: 'moment', house: 'attention', title: 'stage', time: '2026-10-04T12:00:00.000Z' })
+    const turn = row({ source: 'cycle', house: 'ecology', title: 'turn' })
+    expect(sortFeed([turn, lab, stage]).map((e) => e.title)).toEqual(['stage', 'lab', 'turn'])
+  })
+
+  it('stands the untimed rows of one turn in the fixed source order', () => {
+    // each row a house of its own, so each is a source of its own and all take the first turn —
+    // all but Headroom's probe, which is one of the lab's readings and waits for the second
+    const shuffled = [...SOURCE_ORDER].reverse().map((source) => row({ source, title: source, house: `h-${source}` as HouseId }))
+    expect(sortFeed(shuffled).map((e) => e.source)).toEqual([...SOURCE_ORDER.filter((s) => s !== 'probe'), 'probe'])
+  })
+
+  it('counts a source as the request did: the lab’s readings one, each practice one, each catalogue one, the relay one', () => {
+    const s = (source: SourceId, house: HouseId) => streamOf({ source, house })
+    // the lab's readings, however many instruments read — Headroom's probe among them
+    expect(s('reading', 'lab')).toBe(s('probe', 'lab'))
+    // a practice is one source whatever it lands, and each practice its own
+    expect(new Set([s('work', 'atelier'), s('artifact', 'atelier'), s('presentation', 'atelier')]).size).toBe(1)
+    expect(new Set([s('artifact', 'atelier'), s('artifact', 'field'), s('work', 'studio')]).size).toBe(3)
+    // Error as Method is one, though its works come out of the Atelier's register
+    expect(s('work', 'nightly-line')).not.toBe(s('work', 'atelier'))
+    // Machine Attention is one: its moments and its projects
+    expect(s('moment', 'attention')).toBe(s('project', 'attention'))
+    // papers, atlas and datasets are one each, though they share a house
+    expect(new Set([s('papers', 'catalogues'), s('atlas', 'catalogues'), s('datasets', 'catalogues')]).size).toBe(3)
+    // the relay is one: its relations and its handoffs
+    expect(s('relay', 'middle')).toBe(s('handoff', 'middle'))
+    // and an experiment arriving on the lab's shelf is not one more reading
+    expect(s('shelf', 'lab')).not.toBe(s('reading', 'lab'))
+  })
+
+  it('never mixes days: a day’s last turn stands above the first of the day before', () => {
+    const today = [...Array(3).keys()].map((i) =>
+      row({ source: 'reading', house: 'lab', title: `r${i}`, time: `2026-10-04T0${i}:00:00.000Z` }),
+    )
+    const yesterday = row({ date: '2026-10-03', source: 'cycle', house: 'ecology', title: 'turn' })
+    expect(sortFeed([yesterday, ...today]).at(-1)).toBe(yesterday)
+  })
+
+  it('gives one order however the rows arrive', () => {
+    const rows = [
+      ...feed(),
+      row({ source: 'reading', house: 'lab', title: 'a', time: '2026-09-06T10:00:00.000Z', date: '2026-09-06' }),
+      row({ source: 'reading', house: 'lab', title: 'b', time: '2026-09-06T11:00:00.000Z', date: '2026-09-06' }),
+      row({ source: 'papers', house: 'catalogues', title: 'Paper Catalogue', date: '2026-09-06' }),
+    ]
+    const once = sortFeed(rows)
+    expect(sortFeed([...rows].reverse())).toEqual(once)
+    expect(sortFeed([...rows.slice(5), ...rows.slice(0, 5)])).toEqual(once)
   })
 
   it('breaks the last ties by house, title and address — never by the input order', () => {
@@ -299,7 +365,7 @@ describe('the wording', () => {
 
   it('names one noun per kind of update', () => {
     const K = NAMING.opsRoom.signal.kindLabels
-    expect([K.reading, K.probe, K.papers, K.atlas, K.moment, K.turn, K.presentation]).toEqual([
+    expect([K.reading, K.probe, K.papers, K.atlas, K.moment, K.turn, K.presentation, K.relay, K.handoff, K.datasets]).toEqual([
       'reading',
       'probe',
       'papers',
@@ -307,6 +373,9 @@ describe('the wording', () => {
       'moment',
       'turn',
       'presentation',
+      'relations',
+      'handoff',
+      'sources',
     ])
   })
 })

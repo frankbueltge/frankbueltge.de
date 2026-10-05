@@ -11,12 +11,15 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import {
+  LAPSE_DAYS,
   RELAY_PATH,
+  addDays,
   ageInDays,
   checkDeclaredCounts,
   closedHandoffs,
   evidenceUrl,
   isolation,
+  lapseDay,
   loadRelay,
   openHandoffs,
   pairCounts,
@@ -24,7 +27,10 @@ import {
   parseRelay,
   practiceTotals,
   relationsSince,
+  relayLastDay,
+  supersededIds,
   threads,
+  type Handoff,
   type Relay,
 } from './relay'
 
@@ -245,5 +251,82 @@ describe('the mirror carries the relay, never the seed', () => {
     const file = path.join(process.cwd(), RELAY_PATH)
     if (!fs.existsSync(file)) return
     expect(fs.readFileSync(file, 'utf8')).not.toContain('"$fixture"')
+  })
+})
+
+describe('the days a handoff closes on (2026-10-05, read by the signal log)', () => {
+  const handoff = (over: Partial<Handoff>): Handoff => ({
+    id: 'h',
+    offeredOn: '2026-09-12',
+    giver: 'atelier',
+    to: ['studio'],
+    offer: 'An offer.',
+    ref: null,
+    status: 'open',
+    takenBy: null,
+    declinedBy: null,
+    ...over,
+  })
+
+  it('reads the contract’s optional declined_by, and nothing that lacks a practice or a day', () => {
+    const raw = seedRaw()
+    const declined = raw.handoffs.find((h: { status: string }) => h.status === 'declined')
+    declined.declined_by = { practice: 'studio', date: '2026-09-27', relation: 'rel-fixture-12' }
+    const state = parseRelay(raw)
+    if (state.status !== 'ok') throw new Error('expected ok')
+    expect(state.relay.handoffs.find((h) => h.id === declined.id)!.declinedBy).toEqual({
+      practice: 'studio',
+      date: '2026-09-27',
+      relation: 'rel-fixture-12',
+    })
+    // the seed's other handoffs name no decline
+    expect(state.relay.handoffs.filter((h) => h.declinedBy !== null)).toHaveLength(1)
+    declined.declined_by = { practice: 'studio', date: 'last week' }
+    const loose = parseRelay(raw)
+    if (loose.status !== 'ok') throw new Error('expected ok')
+    expect(loose.relay.handoffs.find((h) => h.id === declined.id)!.declinedBy).toBeNull()
+  })
+
+  it('counts days on the calendar, never on the clock', () => {
+    expect(addDays('2026-09-12', LAPSE_DAYS)).toBe('2026-10-03')
+    expect(addDays('2026-02-20', 21)).toBe('2026-03-13')
+    expect(addDays('soon', 1)).toBeNull()
+  })
+
+  it('dates a lapse offered_on + 21 days, as the contract and its verifier count it', () => {
+    expect(LAPSE_DAYS).toBe(21)
+    expect(lapseDay(handoff({ status: 'lapsed' }), '2026-10-04')).toBe('2026-10-03')
+    // the last day read is the lapse day itself: period.to − offered_on = 21
+    expect(lapseDay(handoff({ status: 'lapsed' }), '2026-10-03')).toBe('2026-10-03')
+  })
+
+  it('dates no lapse past the last day the relay read, and none for an offer still open', () => {
+    expect(lapseDay(handoff({ status: 'lapsed' }), '2026-10-02')).toBeNull()
+    expect(lapseDay(handoff({ status: 'lapsed' }), null)).toBeNull()
+    expect(lapseDay(handoff({ status: 'open' }), '2026-10-30')).toBeNull()
+  })
+
+  it('dates the lapse of an offer closed only after it lapsed, and none of one closed in time', () => {
+    const taken = (date: string) => handoff({ status: 'taken', takenBy: { practice: 'studio', date, relation: null } })
+    const declined = (date: string) => handoff({ status: 'declined', declinedBy: { practice: 'studio', date, relation: null } })
+    expect(lapseDay(taken('2026-10-04'), '2026-10-05')).toBe('2026-10-03')
+    expect(lapseDay(taken('2026-10-03'), '2026-10-05')).toBeNull()
+    expect(lapseDay(declined('2026-10-05'), '2026-10-05')).toBe('2026-10-03')
+    expect(lapseDay(declined('2026-09-20'), '2026-10-05')).toBeNull()
+  })
+
+  it('reads the last day from the period, else from the day the relay was written', () => {
+    expect(relayLastDay(seed())).toBe('2026-10-05')
+    expect(relayLastDay({ ...seed(), period: null, generatedAt: '2026-10-06T01:00:00Z' })).toBe('2026-10-06')
+    expect(relayLastDay({ ...seed(), period: null, generatedAt: '' })).toBeNull()
+  })
+
+  it('supersedes only a relation another one names by its id', () => {
+    const relations = seed().relations
+    // the seed's `corrects` are the relay's own words, naming no relation
+    expect(supersededIds(relations).size).toBe(0)
+    const fixed = [...relations, { ...relations[0]!, id: 'rel-fix', corrects: relations[1]!.id }]
+    expect([...supersededIds(fixed)]).toEqual([relations[1]!.id])
+    expect(supersededIds([{ ...relations[0]!, corrects: relations[0]!.id }]).size).toBe(0)
   })
 })

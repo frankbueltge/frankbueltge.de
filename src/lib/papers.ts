@@ -92,6 +92,10 @@ export interface PaperEntry {
   /** ISO-Datum der jüngsten Nennung — das Maß für „gerade in Arbeit". */
   zuletzt_gebraucht: string | null
   verify_status: VerifyStatus
+  /** The day the catalogue's builder first wrote this paper (stamped since 2026-10-05 by
+   *  katalog.py, stamp_first_seen, against the catalogue committed before the run). Null for a
+   *  paper already there when the stamp began; absent in a catalogue written earlier. */
+  first_seen_on?: string | null
 }
 
 export const PAPERS = eintraegeRaw as unknown as PaperEntry[]

@@ -7,8 +7,14 @@
 //   Headroom's watch        the companies' reporting pages, checked — a probe, not a reading
 //   Machine Attention       its stage moments, one row per day and project (a day of many is
 //                           counted, a day of one is that moment), and its projects by `since`
-//   the paper catalogue     one row per day: how many papers the practices last used that day
+//   the paper catalogue     one row per day: the papers that entered it that day, where its
+//                           builder dates that; before the first such date, the papers the
+//                           practices last used that day
 //   the atlas               one row per day its scout counted it larger than the day before
+//   the dataset register    one row per day: the probe pass of that day, the sources that first
+//                           appeared, the sources whose reachability changed — as its builder dates them
+//   the Middle's relay      a row per handoff and day (offered, taken up, declined, lapsed), and
+//                           one row per day counting the load-bearing relations between the practices
 //   the ecology             the cycle's opening, and each practice's presentation
 //   n-1 and Arch            n-1's nights and Arch's session protocols — what each lands daily
 //
@@ -17,10 +23,22 @@
 // record and returns rows. Reading the files is live-feed.ts's job, so each reader is tested
 // against fixtures, not against whatever the pipelines committed last night.
 
+import { MIDDLE_V3 } from '@/config/middle-v3-wording'
 import { NAMING } from '@/config/naming'
 import type { Werk } from '@/data/werke'
 import type { ArchFacts } from '@/lib/arch/facts'
 import { readMoments, type StageMoment } from '@/lib/attention/moments'
+import {
+  LAPSE_DAYS,
+  LOAD_BEARING,
+  lapseDay,
+  relayLastDay,
+  supersededIds,
+  type Handoff,
+  type Relay,
+  type RelayState,
+} from '@/lib/ecology/relay'
+import { handoffAnchor } from '@/lib/ecology/relay-triangle'
 import type { CycleState, PresentationEntry } from '@/lib/ecology/v3'
 import { count, READOUTS } from '@/lib/experiments/readouts'
 import type { N1Night } from '@/lib/n1/works'
@@ -243,35 +261,117 @@ export function projectEntries(exportFile: unknown, names: HouseNames = houseNam
 /** A catalogue's own name, from the catalogues block the entrance already renders. */
 const catalogueName = (href: string): string | null => NAMING.catalogues.items.find((c) => c.href === href)?.name ?? null
 
-/** The one field of a paper entry the log reads: the last day a practice used it. */
+/** The fields of a paper entry the log reads: the last day a practice used it, and the day the
+ *  catalogue's builder first saw it in the catalogue. */
 export interface PaperUse {
   zuletzt_gebraucht: string | null
+  /** stamped since 2026-10-05 by pipelines/atlas-scout (katalog.py, stamp_first_seen): the run
+   *  that first wrote the paper; null for a paper already there when the stamp began, absent in
+   *  a catalogue written before it */
+  first_seen_on?: string | null
 }
 
+const isDay = (v: unknown): v is string => typeof v === 'string' && DAY.test(v)
+const tally = (m: Map<string, number>, day: string) => m.set(day, (m.get(day) ?? 0) + 1)
+
 /**
- * The paper catalogue, one row per day. The catalogue records no day a paper ENTERED it — the
- * scout rebuilds it nightly from what the practices cite — so "new papers per day" is not in the
- * record. What is: the last day each paper was used (`zuletzt_gebraucht`, "last used" on /papers).
- * The row counts the papers whose last use fell on that day, and says exactly that.
+ * The paper catalogue, one row per day. Until 2026-10-05 the catalogue recorded no day a paper
+ * ENTERED it — the scout rebuilds it nightly from what the practices cite — so the row counted what
+ * was in the record: the papers whose last use (`zuletzt_gebraucht`, "last used" on /papers) fell
+ * on that day. Since then the builder stamps the day it first wrote each paper (`first_seen_on`),
+ * and a stamped day counts the papers that entered.
+ *
+ * Where the two meet: the first day the catalogue dates an entry. Before it, the "last used" row
+ * stands, worded as such; from it on, only entries are counted, and a day nothing entered has no
+ * row. The builder may have stamped a night or two before anything new arrived — those days keep
+ * the older measure, which is true, only coarser; nothing is dated that the record does not date.
  */
 export function paperEntries(papers: readonly PaperUse[], names: HouseNames = houseNames()): FeedEntry[] {
   const title = catalogueName('/papers')
   if (!title) return []
-  const byDay = new Map<string, number>()
+  const entered = new Map<string, number>()
+  for (const p of papers) if (isDay(p.first_seen_on)) tally(entered, p.first_seen_on)
+  const since = [...entered.keys()].sort()[0] ?? null
+  const used = new Map<string, number>()
   for (const p of papers) {
     const d = p.zuletzt_gebraucht
-    if (d && DAY.test(d)) byDay.set(d, (byDay.get(d) ?? 0) + 1)
+    if (isDay(d) && (since === null || d < since)) tally(used, d)
   }
-  return [...byDay.entries()].map(([date, n]) => ({
+  const row = (date: string, fact: string): FeedEntry => ({
     date,
     time: null,
-    source: 'papers' as const,
+    source: 'papers',
+    house: 'catalogues',
+    houseName: names.catalogues,
+    title,
+    fact,
+    kind: K.papers,
+    href: '/papers',
+    withdrawn: false,
+    voice: null,
+  })
+  return [
+    ...[...entered.entries()].map(([date, n]) => row(date, F.papersEntered({ count: count(n), one: n === 1 }))),
+    ...[...used.entries()].map(([date, n]) => row(date, F.papers({ count: count(n), one: n === 1 }))),
+  ]
+}
+
+/** The fields of a dataset register entry the log reads: whether the probe confirmed access, and
+ *  the three dates its builder stamps since 2026-10-05 (pipelines/atlas-scout, holdings.py,
+ *  stamp_register) — absent in a register written before. */
+export interface DatasetProbe {
+  geprueft: boolean
+  /** the day of the probe pass whose result the entry carries; null for an address never probed */
+  probed_on?: string | null
+  /** the run that first wrote the source; null for one already there when the stamp began */
+  first_seen_on?: string | null
+  /** the run whose probe moved the source between confirmed, gated, template and no answer;
+   *  null while that has not happened since the stamp began */
+  reachability_changed_on?: string | null
+}
+
+/**
+ * The dataset register, one row per day — the day of its probe pass, of the sources that first
+ * appeared, and of those whose reachability changed, each only where the register dates it. The
+ * register is rewritten whole every night, so only the newest probe pass survives in it (the way
+ * Headroom's watch keeps one): older days keep what they added and what changed, never a probe.
+ * A source carries one "changed" date, its latest, so a day's count of changes can only fall.
+ */
+export function datasetEntries(entries: readonly DatasetProbe[], names: HouseNames = houseNames()): FeedEntry[] {
+  const title = catalogueName('/datasets')
+  if (!title) return []
+  const days = new Map<string, { checked: number; confirmed: number; added: number; changed: number }>()
+  const on = (day: unknown) => {
+    if (!isDay(day)) return null
+    const d = days.get(day) ?? { checked: 0, confirmed: 0, added: 0, changed: 0 }
+    days.set(day, d)
+    return d
+  }
+  for (const e of entries) {
+    const probed = on(e.probed_on)
+    if (probed) {
+      probed.checked++
+      if (e.geprueft === true) probed.confirmed++
+    }
+    const added = on(e.first_seen_on)
+    if (added) added.added++
+    const changed = on(e.reachability_changed_on)
+    if (changed) changed.changed++
+  }
+  return [...days.entries()].map(([date, d]) => ({
+    date,
+    time: null,
+    source: 'datasets' as const,
     house: 'catalogues' as const,
     houseName: names.catalogues,
     title,
-    fact: F.papers({ count: count(n), one: n === 1 }),
-    kind: K.papers,
-    href: '/papers',
+    fact: F.datasets({
+      checked: d.checked > 0 ? { count: count(d.checked), one: d.checked === 1, confirmed: count(d.confirmed) } : null,
+      added: d.added > 0 ? { count: count(d.added), one: d.added === 1 } : null,
+      changed: d.changed > 0 ? count(d.changed) : null,
+    }),
+    kind: K.datasets,
+    href: '/datasets',
     withdrawn: false,
     voice: null,
   }))
@@ -374,6 +474,110 @@ export function presentationEntries(presentations: readonly PresentationEntry[],
         ]
       : [],
   )
+}
+
+// ── the Middle's relay ─────────────────────────────────────────────────────────────────────
+
+/** Where the relay is drawn on /encounters (RelayTriangleFigure's own id). */
+const RELAY_HREF = '/encounters#relay'
+
+/**
+ * The Middle's relay (contract middle-relay/1, mirrored to src/data/middle/relay.json): what passed
+ * between the practices, on the days the relay itself dates.
+ *
+ *   a handoff's day    one row per handoff and day: offered (`offered_on`), taken up
+ *                      (`taken_by.date`), declined (`declined_by.date`), lapsed (`offered_on` plus
+ *                      the contract's days, relay.ts lapseDay). Two of these on one day — an offer
+ *                      taken up the day it was made — are one row that says both.
+ *   the day's relations  the load-bearing ones, built on and answered, counted in one row per
+ *                      day. A relation a later one corrects counts no more (readers take the newest
+ *                      of a `corrects` chain, the contract says); a merely noted one is the
+ *                      relay's to show, not the log's.
+ *
+ * An absent or unreadable relay is an empty source — loadRelay says which, and the log says
+ * nothing rather than a guess.
+ */
+export function relayEntries(state: RelayState | null, names: HouseNames = houseNames()): FeedEntry[] {
+  if (state?.status !== 'ok') return []
+  return [...relationEntries(state.relay, names), ...handoffEntries(state.relay, names)]
+}
+
+function relationEntries(relay: Relay, names: HouseNames): FeedEntry[] {
+  const superseded = supersededIds(relay.relations)
+  const days = new Map<string, { builtOn: number; answered: number }>()
+  for (const r of relay.relations) {
+    if (!LOAD_BEARING.includes(r.kind) || superseded.has(r.id)) continue
+    const d = days.get(r.date) ?? { builtOn: 0, answered: 0 }
+    if (r.kind === 'built_on') d.builtOn++
+    else d.answered++
+    days.set(r.date, d)
+  }
+  return [...days.entries()].map(([date, d]) => {
+    const n = d.builtOn + d.answered
+    return {
+      date,
+      time: null,
+      source: 'relay' as const,
+      house: 'middle' as const,
+      houseName: names.middle,
+      title: MIDDLE_V3.triangle.kicker,
+      fact: F.relations({
+        count: count(n),
+        one: n === 1,
+        builtOn: d.builtOn > 0 ? count(d.builtOn) : null,
+        answered: d.answered > 0 ? count(d.answered) : null,
+      }),
+      kind: K.relay,
+      href: RELAY_HREF,
+      withdrawn: false,
+      voice: null,
+    }
+  })
+}
+
+/** What happened to a handoff, in the order it can happen. */
+interface HandoffEvent {
+  date: string
+  phrase: string
+}
+
+function handoffEvents(h: Handoff, lastDay: string | null, names: HouseNames): HandoffEvent[] {
+  const E = F.handoffEvents
+  const events: HandoffEvent[] = [{ date: h.offeredOn, phrase: E.offered }]
+  const lapsed = lapseDay(h, lastDay)
+  if (lapsed) events.push({ date: lapsed, phrase: E.lapsed(count(LAPSE_DAYS)) })
+  // a closing dated before the offer it closes is a record contradicting itself, and is not read
+  if (h.status === 'taken' && h.takenBy && h.takenBy.date >= h.offeredOn) {
+    events.push({ date: h.takenBy.date, phrase: E.taken(names[h.takenBy.practice]) })
+  }
+  if (h.status === 'declined' && h.declinedBy && h.declinedBy.date >= h.offeredOn) {
+    events.push({ date: h.declinedBy.date, phrase: E.declined(names[h.declinedBy.practice]) })
+  }
+  return events
+}
+
+function handoffEntries(relay: Relay, names: HouseNames): FeedEntry[] {
+  const lastDay = relayLastDay(relay)
+  return relay.handoffs.flatMap((h) => {
+    const days = new Map<string, string[]>()
+    for (const e of handoffEvents(h, lastDay, names)) days.set(e.date, [...(days.get(e.date) ?? []), e.phrase])
+    return [...days.entries()].map(([date, phrases]) => ({
+      date,
+      time: null,
+      source: 'handoff' as const,
+      house: 'middle' as const,
+      houseName: names.middle,
+      title: F.handoffTitle(
+        names[h.giver],
+        h.to.map((p) => names[p]),
+      ),
+      fact: F.handoff({ events: phrases, offer: h.offer }),
+      kind: K.handoff,
+      href: `/encounters#${handoffAnchor(h.id)}`,
+      withdrawn: false,
+      voice: null,
+    }))
+  })
 }
 
 // ── n-1 and Arch ───────────────────────────────────────────────────────────────────────────

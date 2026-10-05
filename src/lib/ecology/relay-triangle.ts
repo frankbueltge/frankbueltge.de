@@ -255,6 +255,9 @@ export function kindSummary(counts: KindCounts, labels: Record<RelayKind, string
 export const relationAnchor = (id: string): string => `rel-${id.replace(/[^A-Za-z0-9_-]/g, '-')}`
 /** The id of a lane's group in the table floor — the no-script target of a lane's link. */
 export const bandAnchor = (bandId: string): string => `relay-${bandId}`
+/** An HTML id for a handoff's line beside the triangle — where the signal log's handoff rows
+ *  lead (src/lib/ops/live-sources.ts). Same safe alphabet as a relation's. */
+export const handoffAnchor = (id: string): string => `handoff-${id.replace(/[^A-Za-z0-9_-]/g, '-')}`
 
 export interface RelationRow {
   id: string
