@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "9d2138baf8569936",
-        "files": 39
+        "sha256": "f5749e8b6350229f",
+        "files": 40
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 449,
-      "edges": 395,
+      "nodes": 450,
+      "edges": 396,
       "nodesByKind": {
         "decision": 134,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 151,
+        "practice-work": 152,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 151,
+        "made-by": 152,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 96
@@ -5077,6 +5077,21 @@
       "medium": "Thirty-nine record plates, eight kinds of evidence, a filter per kind; the evidence is linked, never reproduced."
     },
     {
+      "id": "practice-work:studio/2026-10-05-under-a-dead-name",
+      "kind": "practice-work",
+      "label": "UNDER A DEAD NAME",
+      "slug": "2026-10-05-under-a-dead-name",
+      "practiceId": "ensemble",
+      "date": "2026-10-05",
+      "href": "/studio/works/2026-10-05-under-a-dead-name",
+      "source": {
+        "file": "src/content/studio/works/2026-10-05-under-a-dead-name/meta.json",
+        "quote": "\"title\": \"UNDER A DEAD NAME\""
+      },
+      "embodies": "THE LABEL IS ABOUT A NAME AND THE PICTURE IS ABOUT A THING. Four species the archive's category calls extinct carry 97 % of its recent observation records (the Field's count, 14,273 of 14,708). Of 22 photographs drawn from two of them and a third, the Studio reads 21 as the living species and one as a bone; the bone's record fields are the same as its nine living neighbours'. Of the four, one has no photograph on any of its 3,356 records, and one has a photograph on 1 % of 2,879.",
+      "medium": "A desk of 22 photographs. The visitor stamps each alive, remains or likeness, or nothing to see, before the Studio's reading and the record's fields appear; a ledger follows; the visitor may keep drawing from the live archive."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -7160,6 +7175,15 @@
       "source": {
         "file": "src/content/studio/works/2026-10-04-proof-of-life/meta.json",
         "quote": "\"date\": \"2026-10-04\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-05-under-a-dead-name",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-05-under-a-dead-name/meta.json",
+        "quote": "\"date\": \"2026-10-05\""
       }
     },
     {

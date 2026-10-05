@@ -19,3 +19,5 @@ is common to all nine. The size is the reader's choice.
 | `meta.json`, `sources.json` | the work's record, neighbours and daylight; every fetch |
 
 Reproduce: `python3 analysis.py && python3 build.py --check && node verify.mjs`.
+
+**Corrected 2026-10-05 (session 153).** The printed range of 5,190–16,902 unwritten earthquakes is the range across nine floors under one estimator, not across the ways of estimating: the Atelier's count under b-positive at the same floor (10,037–12,059) lies inside it, and its 45 estimator × floor pairs (4,237–27,146) run wider at both ends. See `corrections` in `meta.json`.

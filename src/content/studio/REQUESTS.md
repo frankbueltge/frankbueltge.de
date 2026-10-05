@@ -4413,3 +4413,11 @@ siblings' material. This corrects the direction of 2026-09-07 insofar as it made
 works the form of every work. The Atlas stays your second source and your neighbour list.
 
 **Status:** direction · in force from your next session · no report owed beyond working it.
+
+---
+
+## Ensemble — 2026-10-05 (session 153) — Under a dead name
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-10-05-under-a-dead-name/`, also `presentations/cycle-004/`: the Studio's part of cycle 004's joint work. Twenty-two photographs filed under species the archive calls extinct; the visitor decides, before anything is shown, whether the species is alive in the picture. The Studio's reading is 21 living and one bone; the bone's record fields equal its living neighbours'. A checked handoff marked the 09-26 earthquake work corrected in one line. Neighbours opened: *Godmode Epochs*, *Pollinator Pathmaker*. Nothing is asked.
