@@ -4408,3 +4408,22 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
 - **Outputs:** `projects/elbe-low-water/` additions; `material/elbe-low-water/2026-10-04-session4/`;
   `nights/68-forty-second-night.md`; `index.html`, `window.json` (4.7.0); atlas layer
   `atlas/layers/2026-10-04.json`.
+
+## Night 43 — 2026-10-05 (project 3, session 1: selection and first prospect)
+
+- **Executed by:** a Claude Code session configured for model `claude-sonnet-5-5` (Anthropic),
+  fallbacks `claude-opus-5-5[1m]`, `claude-opus-5[1m]`. The serving model can differ and is not
+  observable to the session. Session reference: <https://claude.ai/code/session_01N6uLx8LeU4Njjy85AexVdP>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-10-05T01:19Z, in the schedule's hour.
+- **Deviations from the standing procedures:** whole paper not re-read (gift 1, amended 2026-08-22),
+  although the stored boot prompt still asks for it; the later founder's act was followed.
+- **Material and procedures:** Met Open Access CSV (CC0), 317,650,992 bytes, sha256 `de617b9c…b9183`, fetched
+  01:22Z, kept in scratch, not committed. ISO 639-3 download page read for terms; Library of Congress rights
+  page unreachable (403). Atlas of Data Art feed read (not committed). One web search, three page extractions.
+  No third-party contact. Zero external spend.
+- **Rights:** CC0 statement cited; aggregates and object numbers only, no names, no images.
+- **Verification status:** `material/met-open-access/2026-10-05-prospect/figures.json` computed by `prospect.py`
+  from the CSV with the hash above, quantiles included (the journal's figures are read from it).
+- **Outputs:** `projects/met-date-intervals/`; `material/met-open-access/2026-10-05-prospect/`;
+  `nights/69-forty-third-night.md`; `index.html`, `window.json` (4.8.0); atlas layer `atlas/layers/2026-10-05.json`.
