@@ -1,0 +1,109 @@
+---
+// The open handoffs beside the Middle's triangle (2026-10-05): what a practice has offered its
+// siblings and nobody has taken up yet, one line each — who offered it to whom, the offer in the
+// relay's words, how long it has been open, and the file it was offered in. Handoffs taken up in
+// the running cycle follow them, faded, saying by whom and when; everything older — and every
+// declined or lapsed offer — stays on the record, folded underneath.
+//
+// Ages are counted to the day the relay was generated, never to the day the site was built: the
+// page says what the record says, and the record has a date.
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { MIDDLE_V3 } from '@/config/middle-v3-wording'
+import { ageInDays, evidenceUrl, type Handoff } from '@/lib/ecology/relay'
+import { relationAnchor, type RelayView } from '@/lib/ecology/relay-triangle'
+import type { PracticeId } from '@/lib/ecology/v3'
+import '@/styles/middle-relay.css'
+
+interface Props {
+  view: RelayView
+}
+const { view } = Astro.props
+
+const H = MIDDLE_V3.handoffs
+const name = (p: PracticeId) => ECOLOGY_V3.practices[p].name
+const to = (h: Handoff) => h.to.map(name).join(', ')
+const known = new Set(view.rows.map((r) => r.id))
+const since = view.windows.cycle.since
+const takenNow = view.closed.filter((h) => h.status === 'taken' && h.takenBy !== null && h.takenBy.date >= since)
+const earlier = view.closed.filter((h) => !takenNow.includes(h))
+const statusLine = (h: Handoff): string => {
+  if (h.status === 'open') return ''
+  if (h.status === 'taken' && h.takenBy) return H.takenBy(name(h.takenBy.practice), h.takenBy.date)
+  return H.status[h.status]
+}
+---
+
+<aside class="rounded-md border border-line bg-panel panel-raised p-4 sm:p-5" aria-labelledby="handoffs-heading">
+  <h2 id="handoffs-heading" class="kicker">{H.kicker}</h2>
+  {view.asOf && <p class="mt-1 font-mono text-mono-sm text-fg-faint">{H.asOf(view.asOf)}</p>}
+
+  {
+    view.status !== 'ok' ? (
+      <p class="mt-4 text-sm leading-relaxed text-fg-faint">{H.notReported}</p>
+    ) : (
+      <>
+        {view.open.length === 0 && <p class="mt-4 text-sm leading-relaxed text-fg-faint">{H.none}</p>}
+        {view.open.length + takenNow.length > 0 && (
+          <ul class="relay-handoffs mt-4">
+            {view.open.map((h) => (
+              <li class={`relay-handoff g-${h.giver}`} data-status="open">
+                <p class="text-sm font-semibold text-fg">
+                  {name(h.giver)} → {to(h)}
+                </p>
+                <p class="mt-0.5 text-sm leading-relaxed text-fg-muted">{h.offer}</p>
+                <p class="mt-0.5 flex flex-wrap gap-x-2 font-mono text-mono-sm text-fg-faint">
+                  <span>{H.age(ageInDays(h.offeredOn, view.asOf ?? h.offeredOn))}</span>
+                  {evidenceUrl(h.ref) && (
+                    <a class="underline hover:text-fg" href={evidenceUrl(h.ref)!}>
+                      {H.offer}
+                    </a>
+                  )}
+                </p>
+              </li>
+            ))}
+            {takenNow.map((h) => (
+              <li class={`relay-handoff g-${h.giver}`} data-status="taken">
+                <p class="text-sm text-fg">
+                  {name(h.giver)} → {to(h)}
+                </p>
+                <p class="mt-0.5 text-sm leading-relaxed text-fg-muted">{h.offer}</p>
+                <p class="mt-0.5 flex flex-wrap gap-x-2 font-mono text-mono-sm text-fg-faint">
+                  <span>{statusLine(h)}</span>
+                  {h.takenBy?.relation && known.has(h.takenBy.relation) && (
+                    <a class="underline hover:text-fg" href={`#${relationAnchor(h.takenBy.relation)}`}>
+                      {H.relation}
+                    </a>
+                  )}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+        {earlier.length > 0 && (
+          <details class="mt-4">
+            <summary class="cursor-pointer font-mono text-mono-sm text-fg-faint">{H.closed(earlier.length)}</summary>
+            <ul class="relay-handoffs mt-3">
+              {earlier.map((h) => (
+                <li class={`relay-handoff g-${h.giver}`} data-status={h.status}>
+                  <p class="text-sm text-fg">
+                    {name(h.giver)} → {to(h)}
+                  </p>
+                  <p class="mt-0.5 text-sm leading-relaxed text-fg-muted">{h.offer}</p>
+                  <p class="mt-0.5 flex flex-wrap gap-x-2 font-mono text-mono-sm text-fg-faint">
+                    <span>{h.offeredOn}</span>
+                    <span>· {statusLine(h)}</span>
+                    {h.takenBy?.relation && known.has(h.takenBy.relation) && (
+                      <a class="underline hover:text-fg" href={`#${relationAnchor(h.takenBy.relation)}`}>
+                        {H.relation}
+                      </a>
+                    )}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
+      </>
+    )
+  }
+</aside>

@@ -15,7 +15,9 @@ name: Ecology integrate
 
 on:
   repository_dispatch:
-    types: [irrtum-landed, field-landed, studio-landed]
+    # middle-landed (2026-10-05): research-ecology's own signal when it publishes the Middle's
+    # relay (relay/relay.json), so /encounters does not wait for the two-hourly net below.
+    types: [irrtum-landed, field-landed, studio-landed, middle-landed]
   schedule:
     - cron: '30 4 * * *'   # 06:30 Berlin — nach Engine-Nightlies (03:19–04:16 UTC) + Integrates
     # Alle 2h (17.07., Frank: 'ich will NICHTS manuell nachziehen müssen'): research-ecology-
@@ -64,6 +66,45 @@ jobs:
           # "the three ecology practices", and the plenum is not one of them. It is cloned only
           # for its post office packets.
           git clone --depth 1 https://github.com/frankbueltge/data-snack-plenum /tmp/plenum
+
+      # The Middle's relay (2026-10-05): research-ecology publishes relay/relay.json — who built on,
+      # answered or only noted whom, and the handoffs still open (contract "middle-relay/1") — and
+      # /encounters draws it. Mirrored verbatim; the site's loader (src/lib/ecology/relay.ts) judges
+      # the contract and turns anything it cannot read into an honest empty state, never a failed
+      # build. Absent upstream is a legal state: until the relay is first published there is nothing
+      # to copy, and a file removed upstream is removed here too — a mirror that kept it would keep
+      # drawing a relay nobody publishes. Committed on its own, BEFORE the encounter gate below: the
+      # relay is a record of its own, and a red export contract must not hold it back.
+      - name: Mirror the Middle's relay (relay/relay.json → src/data/middle/relay.json)
+        run: |
+          set -euo pipefail
+          SRC=/tmp/ecology/relay/relay.json
+          DST=src/data/middle/relay.json
+          if [ -f "$SRC" ]; then
+            mkdir -p "$(dirname "$DST")"
+            cp "$SRC" "$DST"
+          elif [ -f "$DST" ]; then
+            git rm -q -- "$DST"
+          else
+            echo "relay/relay.json is not published yet — nothing to mirror (a legal state)"
+          fi
+          # --untracked-files=all: the first mirror creates src/data/middle/, and a collapsed
+          # untracked directory would not match the file's pathspec
+          if git status --porcelain --untracked-files=all -- "$DST" | grep -q .; then
+            git config user.name "Ecology-Integrate"
+            git config user.email "ecology-integrate@frankbueltge.de"
+            SHA=$(git -C /tmp/ecology rev-parse --short HEAD)
+            git add -A -- "$DST"
+            git commit -m "middle: relay mirrored from research-ecology $SHA"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              git rebase --abort 2>/dev/null || true
+              [ "$attempt" = 5 ] && { echo "relay push failed after 5 rebase attempts" >&2; exit 1; }
+              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
+            done
+          else
+            echo "relay unchanged"
+          fi
 
       - name: Install research-ecology
         working-directory: /tmp/ecology

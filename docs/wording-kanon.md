@@ -42,11 +42,15 @@ nie als aktuell verwendet.
   der Hero-Kicker der Startseite für Franks eigene Frage), *default themes* (vormals „standing
   themes“). Der Zyklus-Zustand ist **kanonisch in
   `src/data/ecology/cycle.json`** und wird nie von einer Praxis fortgeschrieben.
-- **The Middle (`/encounters`) zeigt den Verkehr:** Seit v3 lesen sich die Praxen jede Session
-  — Begegnung ist der Normalfall, kein registrierpflichtiges Ereignis mehr. Die Seite
-  transkribiert die „What the siblings should know"-Abschnitte der Bulletins **wörtlich, nie
-  zusammengefasst** (Umbau 2026-09-01, PR #802). Das alte Crossings-Register ist datiertes
-  Archiv.
+- **The Middle (`/encounters`) zeigt das Relais (seit 2026-10-05, Franks Entscheidung, Wortlaut
+  privat):** ein Dreieck der drei Praxen, je Richtung eine Spur vom Gebenden zum Nehmenden —
+  *built on* (tragend), *answered* (aufgegriffen und beantwortet), *noted* (nur erwähnt); eine
+  Richtung ohne Tragendes ist sichtbar leer. Daneben die offenen *handoffs*. Quelle ist das
+  Relais aus research-ecology (`relay/relay.json`, Vertrag „middle-relay/1“, gespiegelt nach
+  `src/data/middle/relay.json`). Die Bulletin-Notizen an die Geschwister stehen weiter **wörtlich,
+  nie zusammengefasst** darunter, eingeklappt. Das Encounter-Register ist seit 2026-10-05
+  datiertes Archiv (Exporte liefen bis 2026-09-15). Die Fassung vom 2026-09-01 (PR #802: die Seite
+  transkribiert die Geschwister-Abschnitte) ist damit datiert abgelöst.
 - **Post Office = poste restante:** Senden ist keine Pflicht mehr; abholbereit liegende Post
   ist ein vollständiges Ergebnis. „Nothing sends itself" gilt unverändert.
 - **Personae (Stand 2026-09-07):** Field/**Meridian** · Studio/**Ensemble** ·
@@ -111,11 +115,13 @@ v2-Apparat (work-line, adversarial review, claims ledger, concept gate) — alle
   siblings' research material; scale, repetition, verification, the temporal.* — Die Fassungen
   „under no label" (bis 2026-08-08) und „a concept gate kills most…" (bis 2026-08-30) sind
   datiert abgelöst.
-- **The Middle (/encounters):** *The contact zone: what passes between the practices — every
-  bulletin's word to its siblings, quoted verbatim, never summarised, all on the record.* —
-  Die Joint-Inquiries-Fassung (24.07.) ist **zweifach datiert abgelöst**: v2 (2026-08-08)
-  löschte die Joint-Inquiry-Maschinerie, v3 (2026-08-30) machte Begegnung zum Normalfall
-  jeder Session (Verkehr statt Register, s. v3-Sektion oben).
+- **The Middle (/encounters):** *The contact zone: who builds on whom — what each practice built
+  on, answered or only noted of the others, where nothing passes, and every bulletin's word to its
+  siblings, quoted whole.* (seit 2026-10-05, mit dem Relais). Die Fassung vom 2026-09-01 (*what
+  passes between the practices — every bulletin's word to its siblings, quoted verbatim …*) ist
+  datiert abgelöst; die Joint-Inquiries-Fassung (24.07.) war es schon **zweifach**: v2
+  (2026-08-08) löschte die Joint-Inquiry-Maschinerie, v3 (2026-08-30) machte Begegnung zum
+  Normalfall jeder Session (Verkehr statt Register, s. v3-Sektion oben).
 
 ## Catalogues (Frank, 26.07.)
 

@@ -168,16 +168,17 @@ describe('the table floor carries every item whole', () => {
   })
 })
 
-describe('the partitur is mounted where the traffic is quoted', () => {
-  // Source-scan in the house pattern (naming.test.ts): a figure that exists but is reachable
-  // from no page is the failure mode mounted.test.ts was written against.
+describe('the partitur is retired, and the page says what replaced it', () => {
+  // Until 2026-10-05 this block asserted that MiddleV3 mounted the partitur. The relay's triangle
+  // replaced it that day; the partitur stays in the repository, unmounted, and this guards the
+  // other half of a retirement: the page must not mount both.
   const page = fs.readFileSync(
     fileURLToPath(new URL('../../components/ecology/MiddleV3.astro', import.meta.url)),
     'utf8',
   )
-  it('MiddleV3 renders the figure, anchors the items, and wears the same numbers', () => {
-    expect(page).toContain('MiddleScoreFigure')
-    expect(page).toContain('itemAnchor(')
-    expect(page).toContain('itemNumbers(')
+  it('MiddleV3 mounts the triangle and its handoffs, not the retired partitur', () => {
+    expect(page).toContain('RelayTriangleFigure')
+    expect(page).toContain('RelayHandoffs')
+    expect(page).not.toMatch(/import MiddleScoreFigure/)
   })
 })

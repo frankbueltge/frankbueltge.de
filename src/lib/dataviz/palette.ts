@@ -227,6 +227,14 @@ export const PALETTES: readonly PaletteSet[] = [
       // has a native title and a row in the table under the drawing, and the card names the voice
       // in words beside the coloured badge. The Plenum slot is not used there.
       'src/styles/graph-explorer.css',
+      // The Middle's triangle on /encounters (2026-10-05) wears three slots — Meridian, Assay,
+      // Ensemble — BY TOKEN from hub-triptych.css (the page sits inside .hub-voices), so this
+      // sheet carries the marker and no hex of its own, and the figure sits on the panel surface
+      // the set was validated against. A lane takes the hue of the practice that GAVE; the kinds
+      // of relation are told apart by width and strength, never by a hue, and the empty lane is
+      // neutral ink. Nothing on that page is TEXT in these hues — a corner's name and every count
+      // stand beside the colour in words, with a table floor under the drawing.
+      'src/styles/middle-relay.css',
     ],
   },
   {

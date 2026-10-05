@@ -3,24 +3,145 @@
 // components (CrossingsMap, CrossingDossier) and quoted as grammar by the notation register.
 // Retiring a surface does not entitle anyone to delete the strings a shipped work is
 // registered against.
+//
+// Rebuilt 2026-10-05 (Frank's decision, wording private): the page shows, with very little text,
+// how the three practices work together and where they don't — the relay's triangle, the open
+// handoffs beside it, the bulletins' notes folded beneath. The framing above the figure is held
+// to about eighty words (kicker, title, intro, legend; middle-v3-wording.test.ts counts them),
+// and no string here carries a count: every number on the page arrives as an argument.
 export const MIDDLE_V3 = {
   seo: {
     title: 'The Middle',
     description:
-      'What passes between the three practices — quoted from the section every bulletin carries for its siblings, derived at build time from their own records.',
+      'Who builds on whom in the research ecology: what each practice built on, answered or only noted of the others, and the handoffs still open.',
   },
   head: {
     kicker: 'The Middle · the contact zone',
-    title: 'What passes between the practices',
+    title: 'Who builds on whom',
     intro:
-      'Under the order in force since 2026-08-30 the three practices work one shared question and read each other at every session open. So an encounter is no longer an event to be registered — it is the ordinary way the work moves. This page shows the traffic itself: every item a practice wrote down for its siblings, in its own words.',
-    rule: 'The Middle has no resident and no voice. It transcribes what the practices’ records already show, never interprets beyond assembly, and never speaks for a practice.',
+      'Three practices, one question. Each lane runs from the practice that gave something to the one that took it up — thick where it was built on, medium where it was answered, a hairline where it was only noted. A dashed lane: nothing load-bearing has passed that way.',
   },
-  counts: {
-    line: (directed: number, open: number, speaking: number) =>
-      `${directed} addressed to a named sibling · ${open} carried for both · ${speaking} of three practices speaking in their current bulletin`,
+  /** The one-line legend under the intro. Its swatches are the figure's own stroke classes. */
+  legend: {
+    label: 'Key',
+    kinds: { built_on: 'built on', answered: 'answered', noted: 'noted' },
+    empty: 'nothing load-bearing',
+    hue: 'colour: who gave',
   },
-  /** The partitur (2026-09-01, redrawn the same day after the architect's review, wording
+
+  /** The triangle (2026-10-05) — the relay drawn. Everything with a count in it is a function. */
+  triangle: {
+    kicker: 'The relay',
+    sectionLabel: 'The relay, and the handoffs still open',
+    figureLabel:
+      'The three practices as a triangle: between every two of them a lane in each direction, from the practice that gave something to the one that took it up, its strokes built on, answered and noted.',
+    windowGroup: 'Which relations the triangle draws',
+    windows: {
+      cycle: (opened: string) => `this cycle (from ${opened})`,
+      v3: (since: string) => `since v3 (${since})`,
+    },
+    /** the line the server render carries in place of the toggle, which needs a script */
+    drawn: (window: string) => `drawn: ${window}`,
+    hint: 'hover or focus a lane for its counts · open it for the relations · the arrow keys walk the lanes',
+    /** "The Field → The Studio · built on 3 · answered 0 · noted 2" — the counts arrive joined */
+    bandLabel: (giver: string, taker: string, counts: string) => `${giver} → ${taker} · ${counts}`,
+    nodeLabel: (name: string, persona: string, gave: string, took: string) =>
+      `${name} (${persona}) · gave — ${gave} · took up — ${took}`,
+    /** a corner before the relay has reported: its name, and no count that nobody measured */
+    nodeName: (name: string, persona: string) => `${name} (${persona})`,
+    /** Says the shorter truth: the empty directions while they are the fewer, the carrying
+     *  ones once most are empty. */
+    isolation: {
+      some: (pairs: string[]) => `Nothing load-bearing has passed: ${pairs.join(' · ')}.`,
+      only: (pairs: string[]) =>
+        `Only ${pairs.join(' and ')} carried something load-bearing; in every other direction, nothing.`,
+      none: 'Something load-bearing has passed in every direction.',
+      all: 'Nothing load-bearing has passed in any direction.',
+      pair: (giver: string, taker: string) => `${giver} → ${taker}`,
+    },
+    notReported: {
+      title: 'The relay has not reported yet.',
+      body: 'Until research-ecology publishes the relay, the corners stand without lanes: nothing between them has been measured, so nothing is drawn. The practices’ own notes to each other are quoted below.',
+    },
+    invalid: {
+      title: 'The relay could not be read.',
+      body: (reason: string) =>
+        `The mirrored file did not hold its contract (${reason}), so nothing is drawn — an unreadable record is not an empty one. The practices’ own notes to each other are quoted below.`,
+    },
+    card: {
+      close: 'close',
+      empty: 'Nothing passed in this direction in this window.',
+      given: 'where it was given ↗',
+      taken: 'where it was taken up ↗',
+      noRef: 'no reference',
+      thread: 'thread',
+      corrects: 'corrects',
+      hint: 'Esc closes · the arrow keys walk the lanes',
+    },
+    table: {
+      summary: (n: number) => (n === 1 ? 'the relay as a table — one relation' : `the relay as a table — ${n} relations`),
+      caption: (lane: string) =>
+        `${lane}: every relation in this direction, newest first — its date, its kind, the relay’s own line, and the two files it was read from.`,
+      columns: { date: 'date', kind: 'kind', what: 'what passed', evidence: 'read from' },
+      lane: (giver: string, taker: string) => `${giver} → ${taker}`,
+      noneInLane: 'Nothing has passed in this direction.',
+      totals: {
+        heading: 'By practice',
+        practice: 'practice',
+        gave: 'gave',
+        took: 'took up',
+      },
+      threads: {
+        heading: 'Threads',
+        line: (practices: string, first: string, last: string) => `${practices} · ${first} – ${last}`,
+      },
+    },
+    /** the provenance line before the relay first reports — what was looked for, and where */
+    lookedFor:
+      'Looked for at build time: src/data/middle/relay.json, which the Ecology integrate workflow mirrors from research-ecology’s relay/relay.json once it is published. Not there yet.',
+    unreadable:
+      'Read at build time: src/data/middle/relay.json, mirrored from research-ecology’s relay/relay.json. It did not hold the contract it names, so it was not drawn.',
+    provenance: (generated: string, period: string) =>
+      `Read at build time from src/data/middle/relay.json — the relay research-ecology publishes as relay/relay.json, mirrored by the Ecology integrate workflow. Generated ${generated}; it covers ${period}.`,
+    countsAgree: 'Every count above is recounted here from the relations; the relay’s own totals agree.',
+    countsDiffer: (list: string) =>
+      `Every count above is recounted here from the relations; the relay’s own totals differ (${list}) and are not used.`,
+    skipped: (n: number) =>
+      n === 1
+        ? 'One entry did not hold the contract and was left out.'
+        : `${n} entries did not hold the contract and were left out.`,
+  },
+
+  /** The open handoffs beside the triangle (2026-10-05). */
+  handoffs: {
+    kicker: 'Open handoffs',
+    asOf: (date: string) => `as the relay stood on ${date}`,
+    none: 'No handoff is open.',
+    notReported: 'Nothing to list until the relay reports.',
+    age: (days: number) => (days === 0 ? 'offered that day' : days === 1 ? 'open one day' : `open ${days} days`),
+    takenBy: (name: string, date: string) => `taken by ${name} on ${date}`,
+    /** a taken handoff whose taker the relay did not record says only that it was taken */
+    status: { taken: 'taken', declined: 'declined', lapsed: 'lapsed' },
+    offer: 'the offer ↗',
+    relation: 'the relation',
+    /** the fold under the list: handoffs taken before this cycle, and every declined or lapsed one */
+    closed: (n: number) => (n === 1 ? 'one earlier handoff, closed' : `${n} earlier handoffs, closed`),
+  },
+
+  /** The bulletins' own notes to the siblings, folded under the triangle (2026-10-05). */
+  bulletins: {
+    kicker: 'In their own words',
+    sub: 'The notes each practice’s latest bulletin carries for its siblings, quoted whole.',
+    /** numerals throughout: three summaries stand in a column, and "one note" over "2 notes" reads as two styles */
+    notes: (n: number) => `${n} ${n === 1 ? 'note' : 'notes'}`,
+    none: 'no notes',
+    date: (date: string) => `bulletin of ${date}`,
+  },
+  /** RETIRED from /encounters on 2026-10-05, when the relay's triangle replaced it; kept, with
+   *  its island (MiddleScore.tsx) and frame (MiddleScoreFigure.astro), unmounted, as this house
+   *  keeps retired surfaces.
+   *
+   *  The partitur (2026-09-01, redrawn the same day after the architect's review, wording
    *  private — the reference is the site's FIRST partitur and its legend, not a sketch): the
    *  exchange drawn in the original score's ink. The figure adds no words of its own: every
    *  mark's tooltip is the item's own first words, every mark links to the quoted item below,
@@ -106,18 +227,24 @@ export const MIDDLE_V3 = {
     empty:
       'No current bulletin carries a section for the siblings this session. Nothing is inferred from that — a quiet session is a quiet session.',
   },
+  /** Used by the bulletin notes under the triangle and by the retired partitur alike. */
   voice: {
     absent:
-      'This practice’s current bulletin carries no section for its siblings. Nothing is inferred from that — a quiet bulletin is a quiet bulletin.',
+      'This practice’s current bulletin carries no notes for its siblings. Nothing is inferred from that — a quiet bulletin is a quiet bulletin.',
     toLabel: (names: string[]) => `to ${names.join(' and ')}`,
     openLabel: 'for both',
-    sourceLabel: 'BULLETIN.md',
+    sourceLabel: 'BULLETIN.md ↗',
     wroteFor: 'wrote down for its siblings',
   },
   archive: {
-    kicker: 'Before this — the ledger of encounters, 2026-07 to 2026-08',
+    kicker: 'Before this — the encounter register',
+    // Corrected 2026-10-05: this paragraph said the register was last written on 2026-08-23, but
+    // the ecology's exports kept landing until 2026-09-15 (git log -- src/data/begegnungen).
     body:
-      'Until 2026-08-30 an encounter was an exceptional, recorded event: the practices were sovereign, meeting was optional, and a ledger in a separate repository transcribed what met, with byte-exact quotes and a verifier as its signature. That work stands and is not withdrawn; it is simply no longer the unit. Its own rule made the change visible — a fixture could be opened only for a documented acceptance, and under the new order nothing is accepted: the practices simply hand each other material. The register was last written on 2026-08-23.',
+      'An archive since 2026-10-05: the relay above replaces it. Until 2026-08-30 an encounter was a rare, recorded event, transcribed with byte-exact quotes in a separate repository; its exports kept landing until 2026-09-15. The register stands as it was written, and nothing in it is withdrawn.',
+    /** the dated line the register's own page carries (src/pages/encounters/register.astro) */
+    registerNote:
+      'An archive since 2026-10-05 — what passes between the practices is now drawn from the relay on /encounters. Exports to this register ran until 2026-09-15.',
     // Since 2026-09-01 the label leads to the site's own archived register page, where every
     // crossing row links its committed fixture; the raw mirror stays reachable beside it.
     linkLabel: 'the register, as it stood',

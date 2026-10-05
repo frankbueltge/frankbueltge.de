@@ -10,8 +10,12 @@
 // because that is where a crossing lives. The site mirrors the register, not the fixtures; a row
 // pointing at a site route that was never built is worse than a row pointing outward, which is the
 // mistake this page also repairs (four such links shipped on 2026-08-12 and 404'd).
+//
+// An archive since 2026-10-05: /encounters draws the relay now, and this page says so in its own
+// span line (the wording is MIDDLE_V3.archive.registerNote, shared with /encounters' archive note).
 import Page from '@/layouts/Page.astro'
 import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
+import { MIDDLE_V3 } from '@/config/middle-v3-wording'
 import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
 import { buildCrossings } from '@/lib/ecology/pyramid/figures'
 import { currentEntrance, shortEncounterSlug } from '@/lib/begegnungen'
@@ -85,8 +89,8 @@ const rows = [...crossingRows, ...inquiryRows]
   <RegisterSheet
     id="middle"
     register="crossings"
-    title="the crossings — everything that passed between the practices"
-    span="Every recorded encounter and every joint inquiry. Each row links to its own committed record in the ecology's repository, which is where a crossing lives — this site mirrors the register, it does not hold the fixtures."
+    title="the crossings — the encounter register, as it stood"
+    span={`${MIDDLE_V3.archive.registerNote} Every recorded encounter and every joint inquiry. Each row links to its own committed record in the ecology's repository, which is where a crossing lives — this site mirrors the register, it does not hold the fixtures.`}
     rows={rows}
     source="src/data/begegnungen/register.json · src/data/begegnungen/joint-inquiries.json"
   />
