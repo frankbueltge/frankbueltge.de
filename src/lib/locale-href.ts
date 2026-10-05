@@ -11,6 +11,9 @@ export function localeHref(href: string, localize: (path: string) => string): st
   // another scheme (https:, mailto:) is not ours to localize; a bare `#section` stays on its page
   if (/^[a-z][a-z0-9+.-]*:/i.test(href) || href.startsWith('#')) return href
   const at = href.indexOf('#')
-  if (at < 0) return localize(href)
-  return `${localize(href.slice(0, at))}#${href.slice(at + 1)}`
+  const path = at < 0 ? href : href.slice(0, at)
+  // A file (`/n-1/record.html`, a `.json` feed) is not a route: the helper's trailing slash turns
+  // it into a 404. On 2026-10-05 every n-1 night in the signal log linked to `/n-1/record.html/`.
+  const local = /\.[a-z0-9]+$/i.test(path) ? path : localize(path)
+  return at < 0 ? local : `${local}#${href.slice(at + 1)}`
 }
