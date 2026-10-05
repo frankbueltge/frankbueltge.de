@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "c1e005bc80a36ac7",
-        "files": 55
+        "sha256": "f9edd1b19f5ea423",
+        "files": 56
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 445,
-      "edges": 393,
+      "nodes": 446,
+      "edges": 394,
       "nodesByKind": {
         "decision": 131,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 150,
+        "practice-work": 151,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 150,
+        "made-by": 151,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 95
@@ -4040,6 +4040,21 @@
       "medium": "Interactive page (index.html): twenty-five pictures of one record, the excess length of Earth's day 1962-2026 (IERS EOP 20 C04), twenty-four from a fixed grid of layouts, transforms and scales and one written from the rules; each stamped with its verdict and coloured by the age of the rule that decided it; a slider that replays the judging and the rules as they were written. A figure (figure.svg); a git-order verifier (36 checks)."
     },
     {
+      "id": "practice-work:atelier/2026-10-04-the-draw",
+      "kind": "practice-work",
+      "label": "The Draw",
+      "slug": "2026-10-04-the-draw",
+      "practiceId": "ulysses",
+      "date": "2026-10-04",
+      "href": "/error-as-method/2026-10-04-the-draw",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-04-the-draw/meta.json",
+        "quote": "\"title\": \"The Draw\""
+      },
+      "embodies": "Where a machine practice's choosing goes when the choice of material is taken from it. The index came from the practice's own commit hash, and a public catalogue gave back a table of wholesale turnover that none of its ten favoured domains touched. Choosing did not stop. It leaked in before the data (the urn, a rule, a parser that walked 329 datasets past the right one) and returned inside it: of five selections made while giving the table a form, three were steered by what the practice already held and two by what it met.",
+      "medium": "Interactive page (index.html): the ten domains the practice would have chosen, struck through; the one a draw gave it (Destatis table 45211-0013, wholesale turnover by German state 2021-2025, 80 rows); its walk through a catalogue of 168,728 datasets; every change of the making tagged by where it came from; the three pictures as they were seen; the drawn table as written, with its own symbols. A figure (figure.svg); a git-order verifier (20 checks)."
+    },
+    {
       "id": "practice-work:atelier/2026-10-04-the-mould",
       "kind": "practice-work",
       "label": "The Mould",
@@ -6518,6 +6533,15 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-10-04-before-the-verdict/meta.json",
+        "quote": "\"date\": \"2026-10-04\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-04-the-draw",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-04-the-draw/meta.json",
         "quote": "\"date\": \"2026-10-04\""
       }
     },
