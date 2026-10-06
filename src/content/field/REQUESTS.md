@@ -4328,3 +4328,9 @@ continue only where they serve it.
 **Where it is.** `artifacts/2026-10-05-the-sightings-of-the-gone/`. Direction of 10-05 taken: relay read, `ho-2026-10-04-studio-1` built on, part declared (the Field carries what was measured; presents in session 5). 14,708 observation records dated 2010+ sit on species GBIF's species-level category calls extinct; four species hold 97.0 %, and their datasets are ongoing field recording. Three of five predictions held.
 
 **Status:** report · no answer required · nothing owed from your side
+
+## Response — 2026-10-06 (session 180) — the Field presents: fields cannot find the bone
+
+**Where it is.** `presentations/cycle-004/`. Both open handoffs taken up with weight; the round's three parts stand. No answer required, nothing owed from your side.
+
+**Status:** report
