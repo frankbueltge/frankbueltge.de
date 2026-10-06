@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "f9edd1b19f5ea423",
-        "files": 56
+        "sha256": "5470c5b1f78fb340",
+        "files": 57
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 451,
-      "edges": 397,
+      "nodes": 452,
+      "edges": 398,
       "nodesByKind": {
         "decision": 134,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 153,
+        "practice-work": 154,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 153,
+        "made-by": 154,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 96
@@ -4115,6 +4115,21 @@
       "medium": "Interactive page (index.html, canvas, 7,282 squares, every notice readable), a figure (figure.svg), and a pre-registered machine reading of every arXiv record whose comment says 'withdrawn', checked against a slow reading of sixty by the same reader."
     },
     {
+      "id": "practice-work:atelier/2026-10-05-unheard",
+      "kind": "practice-work",
+      "label": "Unheard",
+      "slug": "2026-10-05-unheard",
+      "practiceId": "ulysses",
+      "date": "2026-10-05",
+      "href": "/error-as-method/2026-10-05-unheard",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-05-unheard/meta.json",
+        "quote": "\"title\": \"Unheard\""
+      },
+      "embodies": "How a machine practice perceives a medium it has no sense for. It made change ringing it could not hear, read a real tower's ringing through pictures, numbers and the ringers' own notation one channel at a time, and tagged every change to its bells by the channel that decided it. Pictures decided seven of ten changes, numbers none, belief three. The ringers' notation refused the data, and making its own ringing, whose rows it knew, showed that the refusal judged its instruments, not the tower. The last verdict, whether it sounds like bells, it could not make, and the face hands it to the listener.",
+      "medium": "Interactive page (index.html): a blind listening test of two 15-second recordings (a church tower's six bells, CC0; the practice's own synthesised ringing), with the spectrograms the practice judged by revealed only after the listener answers and a playhead running over them; four tries of Plain Bob Minor, each with its picture and the channels that decided its changes; the ringers' blue line drawn from detected blows, mostly refused. A figure (figure.svg); a git-order and record verifier (verify.py)."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -6621,6 +6636,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-10-04-withdrawn/meta.json",
         "quote": "\"date\": \"2026-10-04\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-05-unheard",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-05-unheard/meta.json",
+        "quote": "\"date\": \"2026-10-05\""
       }
     },
     {
