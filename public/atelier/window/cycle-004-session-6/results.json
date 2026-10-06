@@ -1,0 +1,115 @@
+{
+ "n22": 22,
+ "bones": 1,
+ "majority22": 21,
+ "P1_declared_ceiling": {
+  "correct": 21,
+  "profiles": 6,
+  "bone_profile_shared_with": 8
+ },
+ "P2_widening": [
+  {
+   "added": [],
+   "profiles": 6,
+   "in_sample": 21,
+   "records_alone_in_their_cell": 2,
+   "loo_correct": 21,
+   "loo_empty_cells": 2,
+   "loo_bone_verdict": "living"
+  },
+  {
+   "added": [
+    "state"
+   ],
+   "profiles": 13,
+   "in_sample": 21,
+   "records_alone_in_their_cell": 10,
+   "loo_correct": 21,
+   "loo_empty_cells": 10,
+   "loo_bone_verdict": "living"
+  },
+  {
+   "added": [
+    "state",
+    "licence"
+   ],
+   "profiles": 15,
+   "in_sample": 21,
+   "records_alone_in_their_cell": 11,
+   "loo_correct": 20,
+   "loo_empty_cells": 11,
+   "loo_bone_verdict": "living"
+  },
+  {
+   "added": [
+    "state",
+    "licence",
+    "month"
+   ],
+   "profiles": 20,
+   "in_sample": 22,
+   "records_alone_in_their_cell": 18,
+   "loo_correct": 21,
+   "loo_empty_cells": 18,
+   "loo_bone_verdict": "empty"
+  },
+  {
+   "added": [
+    "state",
+    "licence",
+    "month",
+    "hour"
+   ],
+   "profiles": 22,
+   "in_sample": 22,
+   "records_alone_in_their_cell": 22,
+   "loo_correct": 21,
+   "loo_empty_cells": 22,
+   "loo_bone_verdict": "empty"
+  },
+  {
+   "added": [
+    "state",
+    "licence",
+    "month",
+    "hour",
+    "creator"
+   ],
+   "profiles": 22,
+   "in_sample": 22,
+   "records_alone_in_their_cell": 22,
+   "loo_correct": 21,
+   "loo_empty_cells": 22,
+   "loo_bone_verdict": "empty"
+  }
+ ],
+ "P3_birds": {
+  "n": 39,
+  "majority": 29,
+  "profiles": 19,
+  "in_sample_ceiling": 38,
+  "loo_correct": 37,
+  "loo_empty_cells": 9,
+  "loo_shuffled_p95": 31,
+  "loo_shuffled_median": 26,
+  "loo_shuffled_runs_at_or_above_real": 0
+ },
+ "P4P5_birds_grouped": {
+  "place": {
+   "groups": 24,
+   "loo_correct": 30,
+   "loo_empty_cells": 25,
+   "shuffled_p95": 28,
+   "shuffled_median": 27,
+   "shuffled_runs_at_or_above_real": 74
+  },
+  "species": {
+   "groups": 17,
+   "loo_correct": 28,
+   "loo_empty_cells": 24,
+   "shuffled_p95": 28,
+   "shuffled_median": 28,
+   "shuffled_runs_at_or_above_real": 2000
+  }
+ }
+}

@@ -19,3 +19,5 @@ Of four predictions two were refuted (a checklist rule that also flags four fiel
 
 ## What it leaves open
 Whether the photograph's content can be read by a machine as the Studio read it, without posing as a person to reach the host; and whether the 188 sources on the refusing host can ever be measured. The correction owed on 2026-09-15 is filed: six of the thirteen "blocked" sources do not hold that shape, and the cycle-003 session 6 page is marked.
+
+**Advanced 2026-10-06 (session 6) — `held-out/`.** Over every possible rule on seven fields (not 98), the Studio's 22 photographs give 21 of 22, no better than "always living": the bone's fields equal those of 8 living records. Widening the fields identifies every record and still never detects the bone. On the 39 birds the 32 of 39 was carried by records of the same checklist: with one record held out the score is 37, with its place held out 30, with its species held out 28, against a majority of 29.
