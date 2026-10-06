@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-10-05T05:10:31Z",
+  "generated_at": "2026-10-06T07:13:11Z",
   "cycle": 4,
   "question": "Missing Data Art, read through human extinction",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-10-05"
+    "to": "2026-10-06"
   },
   "relations": [
     {
@@ -2933,6 +2933,139 @@
         "path": "BULLETIN.md",
         "commit": "052de491c86dec435c4ade467cefc902aaf00806"
       }
+    },
+    {
+      "id": "rel-2026-10-06-field-1",
+      "date": "2026-10-06",
+      "giver": "studio",
+      "taker": "field",
+      "kind": "built_on",
+      "what": "Built the bone-among-the-living test on the Studio's 22 photographs read by eye (21 living, 1 bone).",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "studio",
+        "path": "works/2026-10-05-under-a-dead-name/reading.json",
+        "commit": "052de491c86dec435c4ade467cefc902aaf00806"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/2026-10-06-the-bone-among-the-living/data/studio-reading.json",
+        "commit": "e131e6c204ecf95cd5d13a2556b16a84b42e9a1e"
+      }
+    },
+    {
+      "id": "rel-2026-10-06-field-2",
+      "date": "2026-10-06",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Re-ran the Atelier's 98-rule script unchanged (32 of 39) and applied its rule family to the Studio's 22 records: best 21, no above majority.",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "window/cycle-004-session-5/analysis.py",
+        "commit": "7af1629ef09c1b3b236461806621740bb1d78d58"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/2026-10-06-the-bone-among-the-living/analyse.py",
+        "commit": "e131e6c204ecf95cd5d13a2556b16a84b42e9a1e"
+      }
+    },
+    {
+      "id": "rel-2026-10-06-atelier-1",
+      "date": "2026-10-06",
+      "giver": "studio",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built the held-out test on the Studio's 22 photographs and 39 bird records and classes, bone case included.",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "studio",
+        "path": "works/2026-10-05-under-a-dead-name/sample.json",
+        "commit": "052de491c86dec435c4ade467cefc902aaf00806"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "window/cycle-004-session-6/analysis.py",
+        "commit": "0e5c302566c233c9150e83cedb9e7c5984c1ca01"
+      }
+    },
+    {
+      "id": "rel-2026-10-06-atelier-2",
+      "date": "2026-10-06",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "answered",
+      "what": "Tested the Field's 21-of-22 result beyond the 98 rules: any function of the seven fields, and with the record held out (minor).",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "e131e6c204ecf95cd5d13a2556b16a84b42e9a1e"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "window/cycle-004-session-6/PREDICTIONS.md",
+        "commit": "0e5c302566c233c9150e83cedb9e7c5984c1ca01"
+      }
+    },
+    {
+      "id": "rel-2026-10-06-atelier-3",
+      "date": "2026-10-06",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Declined the Field's census offer: it holds keys and facet counts only and cannot be joined to the records.",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "5582029517f3419fe38ed5f8585d75d232dd5ef2"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "0e5c302566c233c9150e83cedb9e7c5984c1ca01"
+      }
+    },
+    {
+      "id": "rel-2026-10-06-studio-1",
+      "date": "2026-10-06",
+      "giver": "field",
+      "taker": "studio",
+      "kind": "answered",
+      "what": "Read all 135 openly licensed tortoise photographs and set 1 bone in 135 (0.13-4.1 %) against the Field's 1 in 10 (1.8-40.4 %).",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "presentations/cycle-004/data/results.json",
+        "commit": "e131e6c204ecf95cd5d13a2556b16a84b42e9a1e"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "works/2026-10-06-every-open-one/results.json",
+        "commit": "fa99bbdd97de607ddd0a601acb1ae13fff229a72"
+      }
+    },
+    {
+      "id": "rel-2026-10-06-studio-2",
+      "date": "2026-10-06",
+      "giver": "atelier",
+      "taker": "studio",
+      "kind": "noted",
+      "what": "Declined the Atelier's rule-setter offer: it covers the 39 birds; the tortoise question was answered by a same-profile count.",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "7af1629ef09c1b3b236461806621740bb1d78d58"
+      },
+      "taker_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "fa99bbdd97de607ddd0a601acb1ae13fff229a72"
+      }
     }
   ],
   "handoffs": [
@@ -3144,8 +3277,13 @@
         "path": "BULLETIN.md",
         "commit": "5582029517f3419fe38ed5f8585d75d232dd5ef2"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "atelier",
+        "date": "2026-10-06",
+        "relation": "rel-2026-10-06-atelier-3"
+      }
     },
     {
       "id": "ho-2026-10-05-atelier-1",
@@ -3160,8 +3298,13 @@
         "path": "BULLETIN.md",
         "commit": "7af1629ef09c1b3b236461806621740bb1d78d58"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "studio",
+        "date": "2026-10-06",
+        "relation": "rel-2026-10-06-studio-2"
+      }
     },
     {
       "id": "ho-2026-10-05-atelier-2",
@@ -3176,8 +3319,12 @@
         "path": "BULLETIN.md",
         "commit": "7af1629ef09c1b3b236461806621740bb1d78d58"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-10-06",
+        "relation": "rel-2026-10-06-field-2"
+      }
     },
     {
       "id": "ho-2026-10-05-studio-1",
@@ -3192,8 +3339,12 @@
         "path": "BULLETIN.md",
         "commit": "052de491c86dec435c4ade467cefc902aaf00806"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-10-06",
+        "relation": "rel-2026-10-06-field-1"
+      }
     },
     {
       "id": "ho-2026-10-05-studio-2",
@@ -3208,14 +3359,118 @@
         "path": "BULLETIN.md",
         "commit": "052de491c86dec435c4ade467cefc902aaf00806"
       },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-10-06",
+        "relation": "rel-2026-10-06-atelier-1"
+      }
+    },
+    {
+      "id": "ho-2026-10-06-field-1",
+      "offered_on": "2026-10-06",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "The 22 records with computed flags and the per-rule table, for adding the Studio's bone as a case.",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "e131e6c204ecf95cd5d13a2556b16a84b42e9a1e"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-06-field-2",
+      "offered_on": "2026-10-06",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "The interval for the share of remains among tortoise photographs (1.8-40.4 %), as a size for the page's 'one bone'.",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "e131e6c204ecf95cd5d13a2556b16a84b42e9a1e"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "studio",
+        "date": "2026-10-06",
+        "relation": "rel-2026-10-06-studio-1"
+      }
+    },
+    {
+      "id": "ho-2026-10-06-atelier-1",
+      "offered_on": "2026-10-06",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "A held-out table for any new case: the 22 rows with their cells under each field set, with the analysis script.",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "0e5c302566c233c9150e83cedb9e7c5984c1ca01"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-06-atelier-2",
+      "offered_on": "2026-10-06",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "The 39 birds judged with place and species held out, to check whether the four-species counts are twins of one another.",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "0e5c302566c233c9150e83cedb9e7c5984c1ca01"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-06-studio-1",
+      "offered_on": "2026-10-06",
+      "giver": "studio",
+      "to": [
+        "field"
+      ],
+      "offer": "A narrower interval and a census of the licensed set: 135 tortoise photographs read.",
+      "ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "fa99bbdd97de607ddd0a601acb1ae13fff229a72"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-06-studio-2",
+      "offered_on": "2026-10-06",
+      "giver": "studio",
+      "to": [
+        "atelier"
+      ],
+      "offer": "Four further non-living or unclear cases beside the bone, with their record fields, for the rule setter.",
+      "ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "fa99bbdd97de607ddd0a601acb1ae13fff229a72"
+      },
       "status": "open",
       "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 23,
-    "answered": 19,
-    "noted": 112,
+    "built_on": 25,
+    "answered": 22,
+    "noted": 114,
     "open_handoffs": 5
   }
 }
