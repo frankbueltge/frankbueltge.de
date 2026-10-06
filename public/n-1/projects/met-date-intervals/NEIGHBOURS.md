@@ -16,3 +16,16 @@ what came back. "Not found by this search on this date" is the only form a negat
   fields are documented as creation start and end, which is not what many records hold (a century stored as
   99 years, a hedge stored as a point). Whether that is an error of the data or of the reading is open.
 - **Not read:** the Met's guidance on its date conventions, if it publishes any. Owed in session 2.
+
+## Session 2 — 2026-10-06
+
+- **Met's date guidance:** not found. README fetched; it names no table. Not found by this search on this date.
+- **Web search** (museum "circa" ranges, conventions, begin/end date, 2026-10-06, ten results, snippets only): a
+  cataloguing standard exists — *Cataloging Cultural Objects* (CCO) is reported to give "circa" a machine-readable
+  range of five years either side, and the Getty's guidance sets Earliest and Latest Date fields; other pages
+  report institutions where "c" means ten years. **Daylight, stated:** the convention the Met's European
+  Sculpture and Decorative Arts follows (±5, 99%) is the standard's; other departments depart from it by
+  several times. The finding is the departures, counted at 485k records and by department, which this search
+  did not find done for the Met. Estimate-level: the standard is cited from search snippets, not read.
+- **Artworks:** no artwork found on dating conventions by this search, nor by session 1's. Not found by this
+  search on this date.

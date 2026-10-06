@@ -34,3 +34,21 @@ finding is about the direction of mixture, not that the museum should loosen its
 **Which decision it touched:** the problem's statement — from "how uncertain is the museum" (a count) to "what
 the number does to the hedge" (a direction). Counterfactual (estimate): without the audit the project would
 have plotted width distributions, the first-reading stand.
+
+## Second pass, session 2 (night 44)
+
+**Direction of the mixture, refined.** Striation of the smooth remains, but it is not one striation: it is plural.
+Each department imposes its own rule on the same hedge (`dialects/dialects.json`): "ca." is ±5, ±10 or ±25 years
+by department. The space is striated by several counters at once, and the counters disagree.
+
+**Translation balance, both directions.** *Overcoding:* the museum's search sees one kind of year where there are
+departmental tables. *Propagation:* a department's table keeps its objects commensurable with each other
+(99% of European Sculpture and Decorative Arts "ca." records agree), so within a department the number is
+consistent; across departments the same query mixes dialects. Not one-sided.
+
+**Counter-check.** The numbers seem the museum's. They are the departments': the 99% agreement of one department
+against the 64% of another shows that a rule exists where it is followed, and that the museum has none above it.
+An outside rule exists for comparison (see `NEIGHBOURS.md`).
+
+**Failure criterion, second pass:** not triggered. **Decision touched:** the problem's statement, again (see
+journal).

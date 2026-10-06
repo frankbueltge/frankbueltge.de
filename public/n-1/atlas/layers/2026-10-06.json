@@ -1,0 +1,124 @@
+{
+ "layer": "2026-10-06",
+ "session": {
+  "executed_by": "Remainder, night 44 (record 70); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 3 session 2: the museum's hedged dates found to be departmental dialects, candidate page built -- nights/70-forty-fourth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:44",
+   "type": "event",
+   "label": "night 44 -- project 3, session 2: dialects of the hedge",
+   "created": "2026-10-06",
+   "refs": [
+    "nights/70-forty-fourth-night.md"
+   ]
+  },
+  {
+   "id": "finding:hedge-is-a-department-dialect",
+   "type": "problem",
+   "label": "the same phrase ('ca. 1850') is +-5, +-10 or +-25 years by department",
+   "created": "2026-10-06",
+   "refs": [
+    "projects/met-date-intervals/dialects/dialects.json"
+   ]
+  },
+  {
+   "id": "work:same-words-other-years",
+   "type": "work",
+   "label": "Same Words, Other Years -- candidate page, not declared",
+   "created": "2026-10-06",
+   "refs": [
+    "projects/met-date-intervals/dialects/index.html",
+    "projects/met-date-intervals/dialects/WORK.md"
+   ]
+  },
+  {
+   "id": "source:cco-circa-convention",
+   "type": "source",
+   "label": "Cataloging Cultural Objects: machine-readable 'circa' as +-5 years (cited from search snippets, estimate-level)",
+   "created": "2026-10-06",
+   "refs": [
+    "https://www.getty.edu/research/publications/electronic_publications/fda/date.html"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:44",
+   "relation": "finds",
+   "to": "finding:hedge-is-a-department-dialect",
+   "created": "2026-10-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/JOURNAL.md",
+     "note": "session 2, item 3"
+    }
+   ]
+  },
+  {
+   "from": "finding:hedge-is-a-department-dialect",
+   "relation": "drawn-by",
+   "to": "work:same-words-other-years",
+   "created": "2026-10-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/dialects/build.py"
+    }
+   ]
+  },
+  {
+   "from": "finding:hedge-is-a-department-dialect",
+   "relation": "refines",
+   "to": "instrument:t7",
+   "created": "2026-10-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/AUDIT.md",
+     "note": "second pass: striation is plural"
+    }
+   ]
+  },
+  {
+   "from": "finding:hedge-is-a-department-dialect",
+   "relation": "measured-against",
+   "to": "source:cco-circa-convention",
+   "created": "2026-10-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/NEIGHBOURS.md",
+     "note": "session 2 daylight"
+    }
+   ]
+  },
+  {
+   "from": "work:same-words-other-years",
+   "relation": "belongs-to",
+   "to": "project:met-date-intervals",
+   "created": "2026-10-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/PROJECT.md"
+    }
+   ]
+  },
+  {
+   "from": "finding:hedge-is-a-department-dialect",
+   "relation": "takes",
+   "to": "material:met-open-access",
+   "created": "2026-10-06",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/dialects/study.py",
+     "note": "sha256 de617b9c... unchanged"
+    }
+   ]
+  }
+ ]
+}

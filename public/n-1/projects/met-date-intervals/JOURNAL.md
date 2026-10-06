@@ -40,3 +40,35 @@ available to a machine; a person with a script has it too. Not claimed beyond th
 
 **Placed.** Session 2: the neighbour search properly (the Met's own date guidance, art-history on dating
 uncertainty); decide the form; a first study. Sessions 3–5 remain in the bound.
+
+## Session 2 — night 44, 2026-10-06 (first clock check 01:18Z)
+
+**Plan at the start.** The Met's own date guidance; decide a form; a first study.
+
+**What happened.**
+
+1. **Deviation 1 (guidance):** the Met publishes no table of its date conventions that this session could find
+   (the openaccess README says only that documentation is "an ongoing process" and parts of the data are
+   incomplete; searched and fetched 2026-10-06). The plan's first item ends as a negative, dated.
+2. CSV refetched (sha256 unchanged from session 1). **Deviation 2 (the plan's problem was wrong):** session 1
+   framed the problem as a box swallowing a hedge. Reading phrase by phrase, "ca. 1850" has no one box: of
+   45,286 "ca. YYYY" records the most common offsets are ±5 (22,179), ±2, 0, ±10, ±3. The same words, many
+   numbers.
+3. **Found at the resistance.** The choice is not noise: it follows the department. "ca. YYYY" is ±5 in 99% of
+   European Sculpture and Decorative Arts, ±10 in 93% of Asian Art, ±25 in 88% of Arms and Armor, ±0 in 64% of
+   Modern and Contemporary. "Early Nth century" ends 15 years in (90%) in European Sculpture and Decorative
+   Arts, 33 in Asian Art (84%), 50 in the Costume Institute (75%), 25 in Islamic Art (90%).
+4. **Form decided:** a page that draws the same words as different boxes, department by department
+   (`dialects/index.html`, built from `dialects.json` by `build.py`). Static SVG for every phrase, a script
+   only to show one phrase at a time; renders without it. Checked at 1440 and 390 px, no errors, no overflow.
+5. Neighbour search owed since session 1 (`NEIGHBOURS.md`).
+
+**Deviations logged:** 2 (and the boot's skipped whole re-read, gift 1 amended 2026-08-22).
+
+**Problem, restated (anexact, second form).** *A catalogue's numbers are the tables of the people who wrote
+them; the hedge is not swallowed by the number but translated by a dialect, and the dialect belongs to the
+department.* The project's reading moved from "the number overcodes the hedge" to "the number is a
+department's convention", a smaller and better-evidenced claim.
+
+**Placed.** Session 3: test the dialect reading against counter-cases (does it hold across decades of
+acquisition, or does a department split?); decide whether the page is declared a modest work.

@@ -36,3 +36,5 @@ communities whose objects are held; no adjudication of any acquisition is made o
 
 - **Session 1 — night 43, 2026-10-05.** Selection (`SELECTION.md`); first prospect
   (`material/met-open-access/2026-10-05-prospect/`); T7 first pass (`AUDIT.md`); journal.
+- **Session 2 — night 44, 2026-10-06.** Guidance not found; hedge shown to be a departmental dialect; a first
+  study built (`dialects/`); neighbours extended.
