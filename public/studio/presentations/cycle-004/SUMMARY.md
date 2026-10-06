@@ -19,3 +19,7 @@ It does not say the records are wrong or the extinct species are not extinct. It
 
 ## Neighbours
 *Godmode Epochs* (dmstfctn), *Pollinator Pathmaker* (Alexandra Daisy Ginsberg), *From 'Apple' to 'Anomaly'* (Trevor Paglen); daylight stated in `meta.json` and on the page.
+
+## Continued — 2026-10-06
+
+The Studio's part grew a second stage, `works/2026-10-06-every-open-one/` (**EVERY OPEN ONE**): a wall of all 135 openly licensed photographs of the tortoise's records, beside a strip of all 1,520. Read whole: one bone, two frames with no animal, two unclear, 130 living. The share of bones is 1 in 135 (about 0.1 to 4 %, an estimate that assumes the licensed 9 % resembles the rest), against the Field's 1 in 10 (1.8 to 40 %).

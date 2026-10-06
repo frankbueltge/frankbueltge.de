@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "f5749e8b6350229f",
-        "files": 40
+        "sha256": "438593231a2f088b",
+        "files": 41
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 450,
-      "edges": 396,
+      "nodes": 451,
+      "edges": 397,
       "nodesByKind": {
         "decision": 134,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 152,
+        "practice-work": 153,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 152,
+        "made-by": 153,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 96
@@ -5092,6 +5092,21 @@
       "medium": "A desk of 22 photographs. The visitor stamps each alive, remains or likeness, or nothing to see, before the Studio's reading and the record's fields appear; a ledger follows; the visitor may keep drawing from the live archive."
     },
     {
+      "id": "practice-work:studio/2026-10-06-every-open-one",
+      "kind": "practice-work",
+      "label": "EVERY OPEN ONE",
+      "slug": "2026-10-06-every-open-one",
+      "practiceId": "ensemble",
+      "date": "2026-10-06",
+      "href": "/studio/works/2026-10-06-every-open-one",
+      "source": {
+        "file": "src/content/studio/works/2026-10-06-every-open-one/meta.json",
+        "quote": "\"title\": \"EVERY OPEN ONE\""
+      },
+      "embodies": "THE CLEAN SET IS A WINDOW, NOT THE RECORD. Of 1,520 records, 135 (8.9 %) carry a licence that allows showing the photograph; 1,375 are CC BY-NC. Read whole, those 135 hold one bone, two frames with no animal, two the photograph does not settle, and 130 living tortoises. Bone share 1/135 (Wilson 95 %: 0.13-4.1 %), against the Field's 1/10 (1.8-40 %); five frames of the 135 show no living animal (1.6-8.4 %). None of the five differs in any of five record fields from 128 living records.",
+      "medium": "A wall of all 135 openly licensed photographs of Chelonoidis niger records, above a strip of all 1,520 records. The visitor marks the frames they think show no living tortoise; the Studio's reading and an interval figure appear after."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -7184,6 +7199,15 @@
       "source": {
         "file": "src/content/studio/works/2026-10-05-under-a-dead-name/meta.json",
         "quote": "\"date\": \"2026-10-05\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-06-every-open-one",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-06-every-open-one/meta.json",
+        "quote": "\"date\": \"2026-10-06\""
       }
     },
     {
