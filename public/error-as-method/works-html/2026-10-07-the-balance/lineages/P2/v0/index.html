@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Balance</title>
+<style>
+  :root { --bg:#0d1117; --ink:#e8eef2; --dim:#6b7a86; }
+  html, body { margin:0; height:100%; background:var(--bg); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  canvas { display:block; cursor:pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="A beam balance weighing each day's Arctic sea-ice extent against the same day in 1979 to 1988"></canvas>
+<script src="../../../data/extent.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800;
+  const cv = document.getElementById('c');
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  const ICE = '#e8eef2', DIM = '#6b7a86', FAINT = '#2a333c', BG = '#0d1117', WARM = '#c98a6b';
+  const SERIF = 'Georgia, "Times New Roman", serif';
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const DAY = 86400000;
+
+  // ---- data ----
+  const raw = (window.EXTENT || []).filter(r => r && isFinite(r[3]) && r[3] > 0);
+  const t0 = Date.UTC(raw[0][0], raw[0][1] - 1, raw[0][2]);
+  const recs = raw.map(r => {
+    const ms = Date.UTC(r[0], r[1] - 1, r[2]);
+    const doy = Math.min(364, Math.floor((ms - Date.UTC(r[0], 0, 1)) / DAY));
+    return { y: r[0], m: r[1], d: r[2], t: (ms - t0) / DAY, doy, e: r[3] };
+  });
+  const tEnd = recs[recs.length - 1].t;
+
+  // baseline: 1979-1988, same day of year (+/- 3 days)
+  const sum = new Float64Array(365), cnt = new Float64Array(365);
+  for (const r of recs) {
+    if (r.y < 1979 || r.y > 1988) continue;
+    for (let k = -3; k <= 3; k++) { const j = (r.doy + k + 365) % 365; sum[j] += r.e; cnt[j]++; }
+  }
+  const base = Array.from(sum, (s, i) => s / cnt[i]);
+  for (const r of recs) { r.b = base[r.doy]; r.a = r.e - r.b; }
+
+  function at(t) {
+    let lo = 0, hi = recs.length - 1;
+    if (t <= recs[0].t) return { r: recs[0], e: recs[0].e, b: recs[0].b, gap: false, i: 0 };
+    if (t >= recs[hi].t) return { r: recs[hi], e: recs[hi].e, b: recs[hi].b, gap: false, i: hi };
+    while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (recs[mid].t <= t) lo = mid; else hi = mid; }
+    const A = recs[lo], B = recs[hi], f = (t - A.t) / (B.t - A.t);
+    return { r: f < 0.5 ? A : B, e: A.e + (B.e - A.e) * f, b: A.b + (B.b - A.b) * f, gap: (B.t - A.t) > 10, i: lo };
+  }
+
+  // ---- ledger strip (pre-rendered) ----
+  const SX0 = 70, SX1 = 1040, SY0 = 650, SPX = 24; // zero line, px per million km2
+  const xOf = t => SX0 + (t / tEnd) * (SX1 - SX0);
+  const yOf = a => SY0 - a * SPX;
+  const strip = document.createElement('canvas');
+  strip.width = W * dpr; strip.height = H * dpr;
+  const sg = strip.getContext('2d'); sg.scale(dpr, dpr);
+  (function drawStrip() {
+    // filled area, broken at gaps
+    let seg = [];
+    const flush = () => {
+      if (seg.length < 2) { seg = []; return; }
+      sg.beginPath(); sg.moveTo(xOf(seg[0].t), SY0);
+      for (const r of seg) sg.lineTo(xOf(r.t), yOf(r.a));
+      sg.lineTo(xOf(seg[seg.length - 1].t), SY0); sg.closePath();
+      sg.fillStyle = 'rgba(232,238,242,0.16)'; sg.fill();
+      sg.beginPath();
+      seg.forEach((r, k) => k ? sg.lineTo(xOf(r.t), yOf(r.a)) : sg.moveTo(xOf(r.t), yOf(r.a)));
+      sg.strokeStyle = ICE; sg.lineWidth = 0.8; sg.stroke();
+      seg = [];
+    };
+    for (let k = 0; k < recs.length; k++) {
+      if (k && recs[k].t - recs[k - 1].t > 10) flush();
+      seg.push(recs[k]);
+    }
+    flush();
+  })();
+
+  // ---- state ----
+  let t = 0, seen = 0, playing = true, hovering = false, ended = false;
+  let theta = 0, omega = 0, last = performance.now();
+  const SPEED = 290; // days per second
+
+  function hoverT(mx, my) {
+    if (my < SY0 - 50 || my > H || mx < SX0 - 10 || mx > SX1 + 10) return null;
+    return Math.max(0, Math.min(tEnd, (mx - SX0) / (SX1 - SX0) * tEnd));
+  }
+  cv.addEventListener('mousemove', e => {
+    const b = cv.getBoundingClientRect();
+    const ht = hoverT(e.clientX - b.left, e.clientY - b.top);
+    if (ht !== null && ht <= seen + 1) { hovering = true; t = ht; } else hovering = false;
+  });
+  cv.addEventListener('mouseleave', () => { hovering = false; });
+  cv.addEventListener('click', () => {
+    if (ended) { t = 0; seen = 0; ended = false; playing = true; return; }
+    playing = !playing;
+  });
+  window.addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); cv.click(); } });
+
+  // ---- drawing helpers ----
+  const fmt = v => v.toFixed(2);
+  function stack(cx, trayY, e, label, value) {
+    const w = 132, u = 7;
+    const full = Math.floor(e), part = e - full;
+    g.fillStyle = ICE;
+    for (let k = 0; k < full; k++) g.fillRect(cx - w / 2, trayY - (k + 1) * u + 1, w, u - 1);
+    if (part > 0.001) {
+      g.globalAlpha = 0.55; g.fillRect(cx - w / 2, trayY - full * u - part * u, w, part * u); g.globalAlpha = 1;
+    }
+    g.fillStyle = DIM; g.font = '12px ' + SERIF; g.textAlign = 'center';
+    g.fillText(label, cx, trayY + 26);
+    g.fillStyle = ICE; g.font = '15px ' + SERIF;
+    g.fillText(value, cx, trayY + 45);
+  }
+  function pan(ex, ey, e, label, value) {
+    const rod = 70, half = 92, drop = 140;
+    g.strokeStyle = DIM; g.lineWidth = 1;
+    g.beginPath();
+    g.moveTo(ex, ey); g.lineTo(ex, ey + rod);
+    g.moveTo(ex - half, ey + rod); g.lineTo(ex + half, ey + rod);
+    g.moveTo(ex - half, ey + rod); g.lineTo(ex - half, ey + rod + drop);
+    g.moveTo(ex + half, ey + rod); g.lineTo(ex + half, ey + rod + drop);
+    g.stroke();
+    const ty = ey + rod + drop;
+    g.strokeStyle = ICE; g.lineWidth = 2;
+    g.beginPath(); g.moveTo(ex - half - 6, ty); g.lineTo(ex + half + 6, ty); g.stroke();
+    g.beginPath(); g.arc(ex, ey, 3, 0, Math.PI * 2); g.fillStyle = ICE; g.fill();
+    stack(ex, ty - 2, e, label, value);
+  }
+
+  function frame(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    if (playing && !hovering && !ended) {
+      t += SPEED * dt;
+      if (t >= tEnd) { t = tEnd; ended = true; }
+    }
+    if (!hovering) seen = Math.max(seen, t);
+    const s = at(t);
+    const anom = s.e - s.b;
+
+    // physics: the heavier pan sinks
+    const target = 0.24 * Math.tanh(anom / 2.0);
+    omega += (target - theta) * 40 * dt; omega *= Math.pow(0.02, dt); theta += omega * dt;
+
+    g.fillStyle = BG; g.fillRect(0, 0, W, H);
+
+    // header
+    const r = s.r;
+    g.textAlign = 'center';
+    g.fillStyle = ICE; g.font = '30px ' + SERIF;
+    g.fillText(r.d + ' ' + MONTHS[r.m - 1] + ' ' + r.y, W / 2, 66);
+    g.font = 'italic 15px ' + SERIF; g.fillStyle = DIM;
+    let line;
+    if (s.gap) line = 'no measurement on this day';
+    else if (anom < -0.005) line = 'the Arctic is short ' + fmt(-anom) + ' million km² of the ice it held on this day, 1979–1988';
+    else if (anom > 0.005) line = 'the Arctic holds ' + fmt(anom) + ' million km² more ice than on this day, 1979–1988';
+    else line = 'the Arctic holds what it held on this day, 1979–1988';
+    g.fillText(line, W / 2, 96);
+
+    // stand
+    const PX = 550, PY = 200, L = 270;
+    g.strokeStyle = DIM; g.lineWidth = 1.2;
+    g.beginPath(); g.moveTo(PX, PY); g.lineTo(PX, 520); g.moveTo(PX - 60, 520); g.lineTo(PX + 60, 520); g.stroke();
+    // scale arc + needle
+    g.strokeStyle = FAINT; g.lineWidth = 1;
+    g.beginPath(); g.arc(PX, PY, 70, -Math.PI / 2 - 0.3, -Math.PI / 2 + 0.3); g.stroke();
+    for (let k = -3; k <= 3; k++) {
+      const a = -Math.PI / 2 + k * 0.1;
+      g.beginPath(); g.moveTo(PX + Math.cos(a) * 66, PY + Math.sin(a) * 66); g.lineTo(PX + Math.cos(a) * (k ? 72 : 76), PY + Math.sin(a) * (k ? 72 : 76)); g.stroke();
+    }
+    g.strokeStyle = WARM; g.lineWidth = 1.5;
+    g.beginPath(); g.moveTo(PX, PY); g.lineTo(PX + Math.sin(theta) * 68, PY - Math.cos(theta) * 68); g.stroke();
+
+    // beam
+    const c = Math.cos(theta), sn = Math.sin(theta);
+    const lx = PX - L * c, ly = PY - L * sn, rx = PX + L * c, ry = PY + L * sn;
+    g.strokeStyle = ICE; g.lineWidth = 3;
+    g.beginPath(); g.moveTo(lx, ly); g.lineTo(rx, ry); g.stroke();
+    g.beginPath(); g.arc(PX, PY, 5, 0, Math.PI * 2); g.fillStyle = BG; g.fill(); g.lineWidth = 1.5; g.stroke();
+
+    pan(lx, ly, s.b, 'then · same day, 1979–1988', fmt(s.b) + ' million km²');
+    pan(rx, ry, s.e, 'now · ' + r.y, s.gap ? '—' : fmt(s.e) + ' million km²');
+
+    // ledger
+    g.strokeStyle = FAINT; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(SX0, SY0); g.lineTo(SX1, SY0); g.stroke();
+    g.fillStyle = DIM; g.font = '11px ' + SERIF; g.textAlign = 'right';
+    for (const v of [1, 0, -1, -2, -3, -4]) {
+      g.fillText((v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v), SX0 - 10, yOf(v) + 4);
+      if (v) { g.globalAlpha = 0.35; g.fillRect(SX0, yOf(v), SX1 - SX0, 0.5); g.globalAlpha = 1; g.fillStyle = DIM; }
+    }
+    g.textAlign = 'center';
+    for (let y = 1980; y <= 2025; y += 5) {
+      const tx = (Date.UTC(y, 0, 1) - t0) / DAY;
+      g.fillText(String(y), xOf(tx), 788);
+    }
+    g.textAlign = 'left';
+    g.fillText('what the scale has weighed: each day, now minus then, million km²', SX0, SY0 - 40);
+
+    const xs = xOf(seen), xt = xOf(t);
+    if (xs > SX0) {
+      g.save(); g.globalAlpha = 0.3; g.beginPath(); g.rect(0, 0, xs, H); g.clip();
+      g.drawImage(strip, 0, 0, W, H); g.restore();
+    }
+    if (xt > SX0) {
+      g.save(); g.beginPath(); g.rect(0, 0, xt, H); g.clip();
+      g.drawImage(strip, 0, 0, W, H); g.restore();
+    }
+    g.strokeStyle = WARM; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(xt, SY0 - 30); g.lineTo(xt, 770); g.stroke();
+
+    // hint
+    g.fillStyle = FAINT; g.font = '12px ' + SERIF; g.textAlign = 'right';
+    g.fillText(ended ? 'click to weigh again' : (playing ? 'click to pause · hover the line to look back' : 'paused · click to continue'), SX1, 30);
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

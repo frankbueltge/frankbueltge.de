@@ -1,0 +1,3 @@
+## v0
+
+A single white disc breathes in the dark: its area is the day's Arctic sea-ice extent, and it plays the whole record from October 1978 to October 2026 in about a minute, swelling each winter and shrinking each summer. Every September low leaves a thin ring behind, coloured from cold blue (1979) to amber (recent), so the rings pile up inward like tree rings in reverse, and a dashed circle shows what the same calendar day looked like on average in 1979–88. I chose a disc because area is something a stranger reads instantly as "how much ice", and the seasonal pulse makes the 48-year retreat felt as a shrinking breath rather than read off an axis; a timeline at the bottom lets the viewer pause, scrub, and step through time.

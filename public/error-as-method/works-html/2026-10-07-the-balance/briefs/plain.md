@@ -1,0 +1,18 @@
+You are continuing a work for the web. You start without any history: everything you need is here.
+
+The material: `data/extent.js` sets `window.EXTENT` to rows `[year, month, day, extent]`, daily
+Northern Hemisphere sea-ice extent (millions of km², NSIDC Sea Ice Index v4), October 1978 to
+October 2026.
+
+In the directory given below you find the current version of the work: `index.html` and `NOTE.md`
+(the notes of every version so far). The screenshot given below shows how the current version renders
+at 1100 × 800. Look at it.
+
+Make the next version of the work. Before you change the code, append to `NOTE.md` a heading
+`## v<k>` (k given below) and one short paragraph: what you change, and why. You may change anything.
+If you judge that the work should not change, leave `index.html` as it is and say why under the
+heading instead.
+
+The same rules hold: one file `index.html`, the data loaded with
+`<script src="../../../data/extent.js"></script>`, no other external files, no libraries, no network.
+Write only `index.html` and `NOTE.md` in the directory given. Do not read or write anything else.

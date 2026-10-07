@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Balance</title>
+<style>
+  html,body{margin:0;height:100%;background:#0b1017;color:#c9d3dc;overflow:hidden;
+    font-family:ui-serif,Georgia,"Times New Roman",serif;}
+  canvas{display:block;touch-action:none}
+  .side{position:fixed;left:32px;font:12px/1.6 ui-sans-serif,system-ui,sans-serif;
+    color:#4e5c69;letter-spacing:.02em;max-width:230px}
+  #key{bottom:84px}#key b{font-weight:normal;color:#8696a3}
+  #hint{bottom:24px}
+  @media (max-width:759px){#key{display:none}.side{left:16px;right:16px;max-width:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="key" class="side"><b>The balance</b> — Arctic sea ice, day by day, 1978–2026.<br>Around the dial, the days of the year; white, this year’s ice, area to scale. Each year before stays as a line, tinted rust by how far it fell short of 1979–1990. The ice covers every year it exceeds: what is left in the water beyond its edge is every year that had more ice that day.</div>
+<div id="hint" class="side">drag around the dial to wind time · click or space — pause<br>← → a day · 1 2 3 — speed</div>
+<script src="../../../data/extent.js"></script>
+<script>
+(function(){
+const DAY=86400000, TAU=Math.PI*2;
+const rows=window.EXTENT||[];
+const t0=Date.UTC(rows[0][0],rows[0][1]-1,rows[0][2]);
+const last=rows[rows.length-1];
+const t1=Date.UTC(last[0],last[1]-1,last[2]);
+const N=Math.round((t1-t0)/DAY)+1;
+// daily series, linear interpolation across gaps; remember long gaps
+const val=new Float32Array(N), obs=new Uint8Array(N);
+let prevI=-1,prevV=0;
+for(const r of rows){
+  const i=Math.round((Date.UTC(r[0],r[1]-1,r[2])-t0)/DAY), v=r[3];
+  if(!(v>0)) continue;
+  if(prevI>=0) for(let k=prevI+1;k<i;k++){val[k]=prevV+(v-prevV)*(k-prevI)/(i-prevI); obs[k]=(i-prevI)>3?0:1;}
+  val[i]=v; obs[i]=1; prevI=i; prevV=v;
+}
+const yearOf=new Int16Array(N), doy=new Int16Array(N);
+for(let i=0;i<N;i++){const d=new Date(t0+i*DAY);const y=d.getUTCFullYear();yearOf[i]=y;
+  doy[i]=Math.min(364,Math.floor((d-Date.UTC(y,0,1))/DAY));}
+// baseline: mean of 1979–1990 for each day of year, lightly smoothed
+const bs=new Float64Array(365), bn=new Float64Array(365);
+for(let i=0;i<N;i++) if(yearOf[i]>=1979&&yearOf[i]<=1990&&obs[i]){bs[doy[i]]+=val[i];bn[doy[i]]++;}
+const base=new Float64Array(365);
+for(let d=0;d<365;d++) base[d]=bn[d]?bs[d]/bn[d]:NaN;
+for(let d=0;d<365;d++) if(isNaN(base[d])){let a=d,b=d;while(isNaN(base[(a+364)%365]))a--;while(isNaN(base[(b+1)%365]))b++;
+  base[d]=(base[(a+364)%365]+base[(b+1)%365])/2;}
+const bsm=new Float64Array(365);
+for(let d=0;d<365;d++){let s=0;for(let k=-3;k<=3;k++)s+=base[(d+k+365)%365];bsm[d]=s/7;}
+// each year's balance: mean daily difference from the old year
+const yBal={}; {const sm={},cn={};for(let i=0;i<N;i++){const y=yearOf[i];sm[y]=(sm[y]||0)+val[i]-bsm[doy[i]];cn[y]=(cn[y]||0)+1;}
+  for(const y in sm) yBal[y]=sm[y]/cn[y];}
+// first index of each year
+const yStart={}; for(let i=0;i<N;i++) if(!(yearOf[i] in yStart)) yStart[yearOf[i]]=i;
+
+const cv=document.getElementById('c'), cx=cv.getContext('2d');
+let W,H,dpr;
+const past=document.createElement('canvas'), pcx=past.getContext('2d'); let pastKey='';
+function resize(){dpr=window.devicePixelRatio||1;W=innerWidth;H=innerHeight;
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';cx.setTransform(dpr,0,0,dpr,0,0);
+  past.width=W*dpr;past.height=H*dpr;pastKey='';}
+addEventListener('resize',resize);resize();
+
+let pos=0, speed=1.5, playing=true;
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MSHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MSTART=[0,31,59,90,120,151,181,212,243,273,304,334];
+
+function layout(){
+  const narrow=W<760;
+  const R=narrow?Math.min(W*0.40,H*0.34):Math.min((W-300)*0.42,H*0.42); // radius for 17 Mkm²
+  const cxp=narrow?W/2:Math.max(W*0.58,300+R*1.15), cyp=narrow?H*0.45:H/2;
+  return {R,cxp,cyp,narrow};
+}
+function ang(d){return d/365*TAU-Math.PI/2;}          // 1 January at the top, clockwise
+function rad(ext,L){return L.R*Math.sqrt(Math.max(0,ext)/17);}
+function pt(d,r,L){const a=ang(d);return [L.cxp+Math.cos(a)*r,L.cyp+Math.sin(a)*r];}
+
+// every finished year: a closed thin loop, kept on an offscreen layer
+function drawPast(L,year){
+  const key=year+'|'+W+'|'+H; if(key===pastKey) return; pastKey=key;
+  pcx.setTransform(dpr,0,0,dpr,0,0); pcx.clearRect(0,0,W,H);
+  const y0=yearOf[0];
+  for(let y=y0;y<year;y++){
+    const s=yStart[y], e=(yStart[y+1]||N)-1; if(s===undefined) continue;
+    const age=(year-1-y);
+    pcx.beginPath();
+    for(let k=s;k<=e;k++){const [x,yy]=pt(doy[k],rad(val[k],L),L);k===s?pcx.moveTo(x,yy):pcx.lineTo(x,yy);}
+    if(e-s>360) pcx.closePath();
+    // tint by the year's balance: grey-blue at par, rust as the shortfall deepens
+    const t=Math.max(0,Math.min(1,-(yBal[y]||0)/2.2));
+    const cr=Math.round(190+24*t), cg=Math.round(212-92*t), cb=Math.round(228-136*t);
+    const al=age===0?0.65:0.18+0.20*Math.exp(-age/14)+0.14*t;
+    pcx.strokeStyle='rgba('+cr+','+cg+','+cb+','+al+')';
+    pcx.lineWidth=age===0?1.1:0.8; pcx.stroke();
+  }
+}
+
+function draw(){
+  const L=layout(); const i=Math.max(0,Math.min(N-1,Math.floor(pos)));
+  const year=yearOf[i], s=yStart[year], d=doy[i];
+  const v=val[i], b=bsm[d], a=v-b;
+  cx.fillStyle='#0b1017';cx.fillRect(0,0,W,H);
+
+  // month ticks
+  cx.font='11px ui-sans-serif,system-ui,sans-serif';cx.textAlign='center';cx.textBaseline='middle';
+  for(let m=0;m<12;m++){const [x1,y1]=pt(MSTART[m],L.R*1.0,L),[x2,y2]=pt(MSTART[m],L.R*1.03,L);
+    cx.strokeStyle='#1d2833';cx.lineWidth=1;cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);cx.stroke();
+    const [tx,ty]=pt(MSTART[m]+15,L.R*1.07,L);cx.fillStyle=(d>=MSTART[m]&&(m===11||d<MSTART[m+1]))?'#8696a3':'#3d4a56';
+    cx.fillText(MSHORT[m],tx,ty);}
+
+  // the record: every year before
+  drawPast(L,year);
+  cx.drawImage(past,0,0,W,H);
+
+  // this year: the ice swept so far, area to scale
+  const wedge=new Path2D();wedge.moveTo(L.cxp,L.cyp);
+  for(let k=s;k<=i;k++){const [x,y]=pt(doy[k],rad(val[k],L),L);wedge.lineTo(x,y);}
+  wedge.closePath();
+  const g=cx.createRadialGradient(L.cxp,L.cyp,0,L.cxp,L.cyp,L.R);
+  g.addColorStop(0,'#f4f7fa');g.addColorStop(0.75,'#e2ebf1');g.addColorStop(1,'#b9cbd8');
+  cx.fillStyle=g;cx.fill(wedge);
+
+  // the hand: today
+  const frac=pos-Math.floor(pos);
+  const [hx,hy]=pt(d+frac,rad(v,L),L),[ex,ey]=pt(d+frac,L.R,L);
+  cx.strokeStyle='rgba(231,237,242,0.18)';cx.lineWidth=1;cx.beginPath();cx.moveTo(hx,hy);cx.lineTo(ex,ey);cx.stroke();
+  cx.fillStyle='#e7edf2';cx.beginPath();cx.arc(hx,hy,2.5,0,TAU);cx.fill();
+
+  // the balance: every year before, weighed on this day — beads left in the water had more ice, marks sunk in the ice had less
+  let more=0,less=0;
+  for(let y=yearOf[0];y<year;y++){
+    const ys=yStart[y]; if(ys===undefined) continue;
+    const k=ys+d-doy[ys]; if(k<ys||k>=N||yearOf[k]!==y) continue;
+    const t=Math.max(0,Math.min(1,-(yBal[y]||0)/2.2));
+    const [bx,by]=pt(d+frac,rad(val[k],L),L);
+    if(val[k]>v){more++;
+      cx.fillStyle='rgba('+Math.round(190+24*t)+','+Math.round(212-92*t)+','+Math.round(228-136*t)+',0.85)';
+      cx.beginPath();cx.arc(bx,by,1.9,0,TAU);cx.fill();}
+    else{less++;
+      cx.fillStyle='rgba(40,56,70,0.55)';cx.beginPath();cx.arc(bx,by,1.5,0,TAU);cx.fill();}
+  }
+
+  // the reading, written on the ice: dim where the year has not yet reached, inked where it has
+  const dt=new Date(t0+i*DAY), tot=more+less, low=more>less;
+  const u=Math.max(0.55,Math.min(1.25,L.R/336));
+  const lines=[
+    ['300 '+Math.round(64*u)+'px ui-serif,Georgia,serif', String(year), '#14202b', '#5d6b78', -Math.round(24*u)],
+    ['italic '+Math.max(11,Math.round(17*u))+'px ui-serif,Georgia,serif', dt.getUTCDate()+' '+MONTHS[dt.getUTCMonth()]+(obs[i]?'':' · not observed'), '#3b4b59', '#46535f', Math.round(6*u)],
+    [Math.max(10,Math.round(13*u))+'px ui-sans-serif,system-ui,sans-serif', v.toFixed(2)+' million km² today', '#2a3a48', '#3e4b57', Math.round(34*u)],
+    [Math.max(10,Math.round(13*u))+'px ui-sans-serif,system-ui,sans-serif', tot?('more ice in '+(more===tot?'all ':'')+more+' of '+tot+' years before'):'the first year of the record', low?'#9a3f25':'#2f5f86', low?'#6b3f33':'#3a5269', Math.round(56*u)]
+  ];
+  cx.textAlign='center';cx.textBaseline='alphabetic';
+  for(const ln of lines){cx.font=ln[0];cx.fillStyle=ln[3];cx.fillText(ln[1],L.cxp,L.cyp+ln[4]);}
+  cx.save();cx.clip(wedge);
+  for(const ln of lines){cx.font=ln[0];cx.fillStyle=ln[2];cx.fillText(ln[1],L.cxp,L.cyp+ln[4]);}
+  cx.restore();
+}
+
+let lastT=performance.now();
+function tick(t){const dt=Math.min(50,t-lastT);lastT=t;
+  if(playing&&!drag){pos+=speed*dt/16.67; if(pos>=N-1){pos=N-1;playing=false;}}
+  draw();requestAnimationFrame(tick);}
+
+// wind the dial: angular drag moves time, a full turn is a year
+let drag=null;
+function angleAt(e){const L=layout();return Math.atan2(e.clientY-L.cyp,e.clientX-L.cxp);}
+cv.addEventListener('pointerdown',e=>{drag={a:angleAt(e),x:e.clientX,y:e.clientY,moved:false};cv.setPointerCapture(e.pointerId);});
+cv.addEventListener('pointermove',e=>{if(!drag)return;
+  if(!drag.moved&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<4) return;
+  drag.moved=true;const a=angleAt(e);let da=a-drag.a;if(da>Math.PI)da-=TAU;if(da<-Math.PI)da+=TAU;drag.a=a;
+  pos=Math.max(0,Math.min(N-1,pos+da/TAU*365.25));});
+cv.addEventListener('pointerup',()=>{if(drag&&!drag.moved){if(pos>=N-1)pos=0;playing=!playing;}drag=null;});
+cv.addEventListener('pointercancel',()=>{drag=null;});
+addEventListener('keydown',e=>{
+  if(e.code==='Space'){e.preventDefault();if(pos>=N-1)pos=0;playing=!playing;}
+  else if(e.key==='ArrowRight'){pos=Math.min(N-1,Math.floor(pos)+1);playing=false;}
+  else if(e.key==='ArrowLeft'){pos=Math.max(0,Math.floor(pos)-1);playing=false;}
+  else if(e.key==='1')speed=0.5;else if(e.key==='2')speed=1.5;else if(e.key==='3')speed=6;
+});
+requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

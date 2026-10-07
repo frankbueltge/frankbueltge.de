@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ice Rings</title>
+<style>
+  :root{--bg:#05080d;--fg:#dfe8ef;--dim:#6c7c8a;}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);overflow:hidden;
+    font-family:ui-sans-serif,system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;}
+  canvas{display:block;width:100vw;height:100vh;cursor:pointer}
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="Animated disc whose area follows daily Arctic sea-ice extent from 1978 to 2026, leaving a ring at each yearly minimum"></canvas>
+<script src="../../data/extent.js"></script>
+<script>
+(function(){
+  const DAY = 86400000;
+  const rows = window.EXTENT || [];
+  const t0 = Date.UTC(rows[0][0], rows[0][1]-1, rows[0][2]) / DAY;
+  const tN = Date.UTC(rows[rows.length-1][0], rows[rows.length-1][1]-1, rows[rows.length-1][2]) / DAY;
+  const N = tN - t0 + 1;
+  // Daily series, linearly interpolated across gaps; gap flag where neighbouring readings are > 3 days apart.
+  const val = new Float32Array(N), gap = new Uint8Array(N);
+  let prev = null;
+  for (const r of rows) {
+    const d = Date.UTC(r[0], r[1]-1, r[2]) / DAY - t0;
+    if (prev) {
+      const span = d - prev[0];
+      for (let k = 1; k < span; k++) {
+        val[prev[0]+k] = prev[1] + (r[3]-prev[1]) * k/span;
+        if (span > 3) gap[prev[0]+k] = 1;
+      }
+    }
+    val[d] = r[3]; prev = [d, r[3]];
+  }
+  const dateOf = i => new Date((t0 + i) * DAY);
+  const yearOf = i => dateOf(i).getUTCFullYear();
+  const doyOf = i => { const d = dateOf(i); return Math.floor((d - Date.UTC(d.getUTCFullYear(),0,1)) / DAY); };
+
+  // Yearly minima (real readings only), each becomes a ring once the playhead passes it.
+  const minima = {};
+  for (const r of rows) {
+    const y = r[0]; if (y < 1979) continue;
+    if (!minima[y] || r[3] < minima[y].v) minima[y] = {v: r[3], i: Date.UTC(r[0], r[1]-1, r[2]) / DAY - t0, y};
+  }
+  // Only keep years whose minimum is a genuine late-summer low (excludes a still-falling partial year).
+  const rings = Object.values(minima).filter(m => { const mo = dateOf(m.i).getUTCMonth(); return mo >= 7 && mo <= 9; })
+    .sort((a,b)=>a.i-b.i);
+
+  // 1979–1988 average for each day of year: the reference circle.
+  const refSum = new Float64Array(367), refN = new Uint16Array(367);
+  for (let i = 0; i < N; i++) {
+    const y = yearOf(i); if (y < 1979 || y > 1988 || gap[i]) continue;
+    const k = doyOf(i); refSum[k] += val[i]; refN[k]++;
+  }
+  const ref = k => refN[k] ? refSum[k]/refN[k] : (refN[k-1] ? refSum[k-1]/refN[k-1] : null);
+
+  const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+  const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+  let W, H, dpr, cx, cy, K, tlX0, tlX1, tlY;
+  function resize(){
+    dpr = window.devicePixelRatio || 1; W = innerWidth; H = innerHeight;
+    cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    tlY = H - 46; tlX0 = Math.max(16, W*0.08); tlX1 = W - tlX0;
+    const avail = Math.min(W - 40, (tlY - 60)) / 2;
+    K = avail / Math.sqrt(17.2);            // area of disc ∝ extent
+    cx = W/2; cy = (tlY - 40)/2 + 20;
+  }
+  addEventListener('resize', resize); resize();
+  const R = e => K * Math.sqrt(e);
+
+  let pos = 0, playing = true, last = null, dragging = false, finished = false;
+  const SPEED = 300; // days per second: the record takes about a minute
+
+  function ringColor(y, a){
+    // early years cool pale blue, recent years warm amber
+    const t = (y - 1979) / (2026 - 1979);
+    const r = Math.round(150 + 105*t), g = Math.round(200 - 40*t), b = Math.round(240 - 150*t);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+
+  function draw(){
+    const i = Math.max(0, Math.min(N-1, Math.floor(pos)));
+    const e = val[i], d = dateOf(i), y = d.getUTCFullYear();
+    ctx.fillStyle = '#05080d'; ctx.fillRect(0,0,W,H);
+
+    // reference: same calendar day, 1979–1988 average
+    const rv = ref(doyOf(i));
+    if (rv) {
+      ctx.save(); ctx.setLineDash([3,5]); ctx.strokeStyle = 'rgba(160,190,215,0.45)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(cx, cy, R(rv), 0, Math.PI*2); ctx.stroke(); ctx.restore();
+    }
+
+    // the ice
+    const r = R(e);
+    const grd = ctx.createRadialGradient(cx, cy - r*0.2, r*0.1, cx, cy, r);
+    const alpha = gap[i] ? 0.35 : 1;
+    grd.addColorStop(0, `rgba(250,253,255,${alpha})`);
+    grd.addColorStop(0.85, `rgba(214,230,242,${alpha})`);
+    grd.addColorStop(1, `rgba(170,200,222,${alpha})`);
+    ctx.fillStyle = grd; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fill();
+
+    // rings of past minima, drawn on top so they show through the ice in winter
+    let lastRing = null, firstRing = null;
+    for (const m of rings) {
+      if (m.i > i) break;
+      if (!firstRing) firstRing = m; lastRing = m;
+      const age = (i - m.i) / 365;
+      ctx.strokeStyle = ringColor(m.y, Math.max(0.28, 0.9 - age*0.04));
+      ctx.lineWidth = age < 1 ? 1.6 : 1;
+      ctx.beginPath(); ctx.arc(cx, cy, R(m.v), 0, Math.PI*2); ctx.stroke();
+    }
+    // label first and latest rings
+    ctx.font = '12px ui-sans-serif,system-ui,sans-serif'; ctx.textAlign = 'left';
+    function tag(m, ang, text){
+      const rr = R(m.v), x = cx + Math.cos(ang)*rr, yy = cy + Math.sin(ang)*rr;
+      ctx.fillStyle = ringColor(m.y, 1); ctx.beginPath(); ctx.arc(x, yy, 2.5, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = 'rgba(223,232,239,0.85)';
+      ctx.textAlign = Math.cos(ang) >= 0 ? 'left' : 'right';
+      ctx.fillText(text, x + (Math.cos(ang) >= 0 ? 8 : -8), yy + 4);
+    }
+    if (firstRing) tag(firstRing, -Math.PI*0.18, `${firstRing.y} low · ${firstRing.v.toFixed(2)}`);
+    if (lastRing && lastRing !== firstRing) tag(lastRing, Math.PI*0.82, `${lastRing.y} low · ${lastRing.v.toFixed(2)}`);
+
+    // date and value
+    ctx.textAlign = 'left'; ctx.fillStyle = '#dfe8ef';
+    ctx.font = '300 54px ui-sans-serif,system-ui,sans-serif';
+    ctx.fillText(String(y), 28, 72);
+    ctx.font = '15px ui-sans-serif,system-ui,sans-serif'; ctx.fillStyle = '#9fb0bd';
+    ctx.fillText(`${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`, 30, 98);
+    ctx.textAlign = 'right'; ctx.fillStyle = '#dfe8ef';
+    ctx.font = '300 54px ui-sans-serif,system-ui,sans-serif';
+    ctx.fillText(e.toFixed(2), W - 28, 72);
+    ctx.font = '15px ui-sans-serif,system-ui,sans-serif'; ctx.fillStyle = '#9fb0bd';
+    ctx.fillText(gap[i] ? 'no reading — interpolated' : 'million km² of Arctic sea ice', W - 30, 98);
+    if (rv) {
+      const diff = e - rv;
+      ctx.fillStyle = diff < 0 ? '#e7b27a' : '#9fc6e6';
+      ctx.fillText(`${diff >= 0 ? '+' : '−'}${Math.abs(diff).toFixed(2)} vs. this day in 1979–88 ( - - - )`, W - 30, 120);
+    }
+
+    // timeline: yearly minima as ticks hanging from the line
+    ctx.strokeStyle = 'rgba(160,180,195,0.35)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(tlX0, tlY); ctx.lineTo(tlX1, tlY); ctx.stroke();
+    const X = k => tlX0 + (tlX1 - tlX0) * k / (N-1);
+    for (const m of rings) {
+      const h = (m.v - 2.5) * 5;
+      ctx.strokeStyle = ringColor(m.y, m.i <= i ? 0.9 : 0.25);
+      ctx.beginPath(); ctx.moveTo(X(m.i), tlY); ctx.lineTo(X(m.i), tlY - h); ctx.stroke();
+    }
+    ctx.fillStyle = '#6c7c8a'; ctx.font = '11px ui-sans-serif,system-ui,sans-serif'; ctx.textAlign = 'center';
+    for (let yy = 1980; yy <= 2025; yy += 5) {
+      const k = Date.UTC(yy,0,1)/DAY - t0; ctx.fillText(String(yy), X(k), tlY + 16);
+    }
+    ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(X(i), tlY, 4, 0, Math.PI*2); ctx.fill();
+    ctx.textAlign = 'left'; ctx.fillStyle = '#56656f';
+    ctx.fillText(playing ? 'space / click: pause · drag the line to travel' : (finished ? 'space: begin again' : 'paused · space / click: play · ← → step a month'), tlX0, tlY + 34);
+    ctx.textAlign = 'right';
+    ctx.fillText('NSIDC Sea Ice Index v4 · disc area ∝ extent · rings: each year’s low', tlX1, tlY + 34);
+  }
+
+  function frame(ts){
+    if (last === null) last = ts;
+    const dt = Math.min(0.1, (ts - last)/1000); last = ts;
+    if (playing && !dragging) {
+      pos += dt * SPEED;
+      if (pos >= N-1) { pos = N-1; playing = false; finished = true; }
+    }
+    draw(); requestAnimationFrame(frame);
+  }
+
+  function toggle(){
+    if (finished) { pos = 0; finished = false; playing = true; return; }
+    playing = !playing;
+  }
+  function scrubTo(x){
+    const k = (x - tlX0) / (tlX1 - tlX0);
+    pos = Math.max(0, Math.min(N-1, k*(N-1))); finished = pos >= N-1;
+  }
+  cv.addEventListener('pointerdown', ev => {
+    if (Math.abs(ev.clientY - tlY) < 26 && ev.clientX > tlX0 - 10 && ev.clientX < tlX1 + 10) {
+      dragging = true; cv.setPointerCapture(ev.pointerId); scrubTo(ev.clientX);
+    } else toggle();
+  });
+  cv.addEventListener('pointermove', ev => { if (dragging) scrubTo(ev.clientX); });
+  cv.addEventListener('pointerup', () => { dragging = false; });
+  addEventListener('keydown', ev => {
+    if (ev.code === 'Space') { ev.preventDefault(); toggle(); }
+    else if (ev.key === 'ArrowRight') { playing = false; pos = Math.min(N-1, pos + 30); }
+    else if (ev.key === 'ArrowLeft') { playing = false; finished = false; pos = Math.max(0, pos - 30); }
+  });
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

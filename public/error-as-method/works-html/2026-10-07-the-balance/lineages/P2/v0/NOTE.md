@@ -1,0 +1,3 @@
+## v0
+
+A beam balance weighs, day by day from 1978 to 2026, the Northern Hemisphere sea-ice extent on that date against the average for the same calendar day in 1979–1988; each pan carries a stack of white slabs, one per million km², and the beam tips toward the heavier side with a little damped inertia, while a ledger line beneath records the difference as it accumulates and can be hovered to look back. I chose the balance because comparing against the same day of the year removes the huge seasonal swing that otherwise hides the change, and because a scale turns an abstract anomaly into something the body already understands: at first the beam wavers near level, and then, over the decades, it settles and stays tipped toward what used to be there.

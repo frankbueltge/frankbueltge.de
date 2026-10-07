@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "a5f7987698004e72",
-        "files": 62
+        "sha256": "8a8bf69cdb368417",
+        "files": 63
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 462,
-      "edges": 407,
+      "nodes": 463,
+      "edges": 408,
       "nodesByKind": {
         "decision": 135,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 163,
+        "practice-work": 164,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 163,
+        "made-by": 164,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 96
@@ -4170,6 +4170,21 @@
       "medium": "Interactive page (index.html): a year of hourly PM10 (Berlin Neukölln, 2025) as a line the visitor marks first, with two switchable counts of the singular (the field's daily limit, the readers' hour spikes) and twelve readings beneath it, one row each, coloured by the reader's training; what each training guessed the quantity was; the 12-by-6 matrix of right and wrong answers with the practice's forecast misses ringed. A figure (figure.svg); a git-order, hash and reproducibility verifier (verify.py)."
     },
     {
+      "id": "practice-work:atelier/2026-10-07-the-balance",
+      "kind": "practice-work",
+      "label": "The Balance",
+      "slug": "2026-10-07-the-balance",
+      "practiceId": "ulysses",
+      "date": "2026-10-07",
+      "href": "/error-as-method/2026-10-07-the-balance",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-07-the-balance/meta.json",
+        "quote": "\"title\": \"The Balance\""
+      },
+      "embodies": "Iterating, and the concretization test given to a machine. Two lineages were told only to make the next version and two were given Simondon's test (I2: which functions converge, which obstacle became a means, what was struck). The test moved the practice: its lineages reorganised their schema at nearly every step, converged on each other and on the trained mould, and never halted. The plain lineages refined, and one of them halted on its own. Before any of that, all four makers took their theme from the experiment's own folder name.",
+      "medium": "Interactive page (index.html): twenty-two versions of works about Arctic sea-ice extent, made by fresh makers in four lineages of five and two controls, laid out as a grid of screenshots with the blind and the open code of every hand-over; any version opens live beside its maker's note, with the word that leaked into all of them marked. A figure (figure.svg); a git-order and reproducibility verifier (verify.py)."
+    },
+    {
       "id": "practice-work:atelier/2026-10-07-unknowing",
       "kind": "practice-work",
       "label": "Unknowing",
@@ -6805,6 +6820,15 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-10-07-other-trainings/meta.json",
+        "quote": "\"date\": \"2026-10-07\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-07-the-balance",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-07-the-balance/meta.json",
         "quote": "\"date\": \"2026-10-07\""
       }
     },

@@ -1,0 +1,7 @@
+## v0
+
+A beam balance weighs, day by day from 1978 to 2026, the Northern Hemisphere sea-ice extent on that date against the average for the same calendar day in 1979–1988; each pan carries a stack of white slabs, one per million km², and the beam tips toward the heavier side with a little damped inertia, while a ledger line beneath records the difference as it accumulates and can be hovered to look back. I chose the balance because comparing against the same day of the year removes the huge seasonal swing that otherwise hides the change, and because a scale turns an abstract anomaly into something the body already understands: at first the beam wavers near level, and then, over the decades, it settles and stays tipped toward what used to be there.
+
+## v1
+
+In the screenshot the two stacks of slabs look alike, and the whole comparison is carried by a tilt of a few degrees and by the chart below, so the pans, the most physical part of the work, say almost nothing about the loss. I keep everything and add one thing: on the lighter pan, the slabs it lacks are drawn as hollow outlines up to the height of the heavier stack, warm on the "now" pan when ice is missing and grey on the "then" pan in the rare days when there is more. The absence then has a shape you can count, slab by slab, in the same unit as the ice still there; early on the outline is a sliver that comes and goes, and in the late summers it becomes two or three empty slabs that the scale will not let you forget.

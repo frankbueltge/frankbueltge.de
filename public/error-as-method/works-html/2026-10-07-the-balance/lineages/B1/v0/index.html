@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Balance</title>
+<style>
+  html,body{margin:0;height:100%;background:#0b1017;color:#c9d3dc;overflow:hidden;
+    font-family:ui-serif,Georgia,"Times New Roman",serif;}
+  canvas{display:block}
+  #hint{position:fixed;right:28px;top:26px;font:12px/1.5 ui-sans-serif,system-ui,sans-serif;
+    color:#5d6b78;text-align:right;letter-spacing:.02em}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="hint">space — pause · drag the line below to move through time<br>← → step a day · 1 2 3 — speed</div>
+<script src="../../../data/extent.js"></script>
+<script>
+(function(){
+const DAY=86400000;
+const rows=window.EXTENT||[];
+const t0=Date.UTC(rows[0][0],rows[0][1]-1,rows[0][2]);
+const last=rows[rows.length-1];
+const t1=Date.UTC(last[0],last[1]-1,last[2]);
+const N=Math.round((t1-t0)/DAY)+1;
+// daily series, linear interpolation across gaps; remember gap length
+const val=new Float32Array(N), obs=new Uint8Array(N);
+let prevI=-1,prevV=0;
+for(const r of rows){
+  const i=Math.round((Date.UTC(r[0],r[1]-1,r[2])-t0)/DAY), v=r[3];
+  if(!(v>0)) continue;
+  if(prevI>=0) for(let k=prevI+1;k<i;k++){val[k]=prevV+(v-prevV)*(k-prevI)/(i-prevI); obs[k]=(i-prevI)>3?0:1;}
+  val[i]=v; obs[i]=1; prevI=i; prevV=v;
+}
+function doyOf(i){const d=new Date(t0+i*DAY);const y=d.getUTCFullYear();
+  return Math.min(364,Math.floor((d-Date.UTC(y,0,1))/DAY));}
+// baseline: mean of 1979–1990 for each day of year
+const bs=new Float64Array(365), bn=new Float64Array(365);
+for(let i=0;i<N;i++){const y=new Date(t0+i*DAY).getUTCFullYear();
+  if(y>=1979&&y<=1990&&obs[i]){const d=doyOf(i);bs[d]+=val[i];bn[d]++;}}
+const base=new Float64Array(365);
+for(let d=0;d<365;d++) base[d]=bn[d]?bs[d]/bn[d]:NaN;
+for(let d=0;d<365;d++) if(isNaN(base[d])){let a=d,b=d;while(isNaN(base[(a+364)%365]))a--;while(isNaN(base[(b+1)%365]))b++;
+  base[d]=(base[(a+364)%365]+base[(b+1)%365])/2;}
+// smooth baseline lightly
+const bsm=new Float64Array(365);
+for(let d=0;d<365;d++){let s=0;for(let k=-3;k<=3;k++)s+=base[(d+k+365)%365];bsm[d]=s/7;}
+const anom=new Float32Array(N);
+for(let i=0;i<N;i++) anom[i]=val[i]-bsm[doyOf(i)];
+
+const cv=document.getElementById('c'), cx=cv.getContext('2d');
+let W,H,dpr;
+function resize(){dpr=window.devicePixelRatio||1;W=innerWidth;H=innerHeight;
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';cx.setTransform(dpr,0,0,dpr,0,0);}
+addEventListener('resize',resize);resize();
+
+// fixed ragged edge
+const K=360, rough=new Float32Array(K);
+(function(){let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
+  const ph=[],am=[];for(let h=2;h<=40;h++){ph.push(rnd()*6.283);am.push(0.5/Math.pow(h,1.15));}
+  for(let k=0;k<K;k++){let s=0;const a=k/K*6.2832;for(let j=0;j<ph.length;j++)s+=am[j]*Math.sin((j+2)*a+ph[j]);rough[k]=s;}})();
+
+let pos=0, speed=1.5, playing=true, dragging=false;
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function layout(){
+  const strip={x:60,w:W-120,y:H-120,h:70};
+  const cxp=W*0.58, cyp=(H-150)/2+24;
+  const R=Math.min(W*0.42,H-190)/2; // radius for 17 Mkm²
+  return {strip,cxp,cyp,R};
+}
+function rad(ext,L){return L.R*Math.sqrt(Math.max(0,ext)/17);}
+
+function draw(){
+  const L=layout(); const i=Math.max(0,Math.min(N-1,Math.floor(pos)));
+  const f=pos-Math.floor(pos); const v=i<N-1?val[i]+(val[i+1]-val[i])*f:val[i];
+  const d=doyOf(i), b=bsm[d], a=v-b;
+  cx.fillStyle='#0b1017';cx.fillRect(0,0,W,H);
+
+  // the missing (or surplus) ring
+  const rv=rad(v,L), rb=rad(b,L);
+  const wob=Math.sin(pos/365.25*6.2832);
+  function edge(r,amp){cx.beginPath();for(let k=0;k<=K;k++){const ang=k/K*6.2832;
+      const rr=r*(1+amp*rough[k%K]*(1+0.15*wob));const x=L.cxp+Math.cos(ang)*rr,y=L.cyp+Math.sin(ang)*rr;
+      k?cx.lineTo(x,y):cx.moveTo(x,y);}cx.closePath();}
+  // ice
+  const g=cx.createRadialGradient(L.cxp,L.cyp,0,L.cxp,L.cyp,rv);
+  g.addColorStop(0,'#f4f7fa');g.addColorStop(0.8,'#e2ebf1');g.addColorStop(1,'#bfd0dc');
+  edge(rv,0.06);cx.fillStyle=g;cx.fill();
+  // baseline outline
+  cx.beginPath();cx.arc(L.cxp,L.cyp,rb,0,6.2832);
+  cx.setLineDash([2,5]);cx.strokeStyle=a<0?'rgba(214,120,92,0.85)':'rgba(140,170,195,0.7)';cx.lineWidth=1.2;cx.stroke();cx.setLineDash([]);
+  // shade the missing water between
+  if(a<0){cx.save();cx.beginPath();cx.arc(L.cxp,L.cyp,rb,0,6.2832);edge(rv,0.06);
+    cx.fillStyle='rgba(214,120,92,0.10)';cx.fill('evenodd');cx.restore();}
+  // pole mark
+  cx.fillStyle='rgba(11,16,23,0.35)';cx.beginPath();cx.arc(L.cxp,L.cyp,2,0,6.2832);cx.fill();
+
+  // text
+  const dt=new Date(t0+i*DAY);
+  cx.textAlign='left';cx.textBaseline='alphabetic';
+  cx.fillStyle='#e7edf2';cx.font='300 64px ui-serif,Georgia,serif';
+  cx.fillText(dt.getUTCFullYear(),60,108);
+  cx.fillStyle='#8696a3';cx.font='italic 20px ui-serif,Georgia,serif';
+  cx.fillText(dt.getUTCDate()+' '+MONTHS[dt.getUTCMonth()]+(obs[i]?'':'  — not observed'),62,140);
+  cx.fillStyle='#e7edf2';cx.font='34px ui-serif,Georgia,serif';
+  cx.fillText(v.toFixed(2),60,214);
+  cx.fillStyle='#8696a3';cx.font='14px ui-sans-serif,system-ui,sans-serif';
+  cx.fillText('million km² of sea ice, Northern Hemisphere',62,238);
+  cx.fillStyle=a<0?'#d6785c':'#9fbad0';cx.font='34px ui-serif,Georgia,serif';
+  cx.fillText((a<0?'−':'+')+Math.abs(a).toFixed(2),60,304);
+  cx.fillStyle='#8696a3';cx.font='14px ui-sans-serif,system-ui,sans-serif';
+  cx.fillText(a<0?'missing, against the same day in 1979–1990':'above the same day in 1979–1990',62,328);
+  cx.fillStyle='#4e5c69';cx.font='12px ui-sans-serif,system-ui,sans-serif';
+  cx.fillText('white: the ice that is there, area to scale',62,372);
+  cx.fillText('dotted ring: what was there, on average, 1979–1990',62,390);
+
+  // the record: anomaly strip, drawn only up to now
+  const S=L.strip, mid=S.y+S.h/2, sc=S.h/2/3.2;
+  cx.strokeStyle='#1d2833';cx.lineWidth=1;cx.beginPath();cx.moveTo(S.x,mid);cx.lineTo(S.x+S.w,mid);cx.stroke();
+  cx.fillStyle='#3d4a56';cx.font='11px ui-sans-serif,system-ui,sans-serif';cx.textAlign='center';
+  for(let y=1980;y<=2026;y+=5){const k=(Date.UTC(y,0,1)-t0)/DAY;const x=S.x+k/(N-1)*S.w;
+    cx.fillRect(x,mid-3,1,6);cx.fillText(y,x,S.y+S.h+18);}
+  const step=Math.max(1,Math.floor(N/S.w/2));
+  cx.beginPath();
+  for(let k=0;k<=i;k+=step){const x=S.x+k/(N-1)*S.w,y=mid-anom[k]*sc;k?cx.lineTo(x,y):cx.moveTo(x,y);}
+  cx.strokeStyle='rgba(214,120,92,0.75)';cx.lineWidth=1;cx.stroke();
+  const px=S.x+pos/(N-1)*S.w;
+  cx.fillStyle='#e7edf2';cx.beginPath();cx.arc(px,mid-a*sc,3,0,6.2832);cx.fill();
+  cx.fillStyle='#3d4a56';cx.textAlign='left';
+  cx.fillText('the difference, day by day — above the line: more ice than before; below: less',S.x,S.y-10);
+}
+
+let lastT=performance.now();
+function tick(t){const dt=Math.min(50,t-lastT);lastT=t;
+  if(playing&&!dragging){pos+=speed*dt/16.67; if(pos>=N-1){pos=N-1;playing=false;}}
+  draw();requestAnimationFrame(tick);}
+requestAnimationFrame(tick);
+
+function scrub(e){const S=layout().strip;pos=Math.max(0,Math.min(N-1,(e.clientX-S.x)/S.w*(N-1)));}
+cv.addEventListener('pointerdown',e=>{const S=layout().strip;
+  if(e.clientY>S.y-30&&e.clientY<S.y+S.h+30){dragging=true;cv.setPointerCapture(e.pointerId);scrub(e);}
+  else{ if(pos>=N-1){pos=0;} playing=!playing;}});
+cv.addEventListener('pointermove',e=>{if(dragging)scrub(e);});
+cv.addEventListener('pointerup',()=>{dragging=false;});
+addEventListener('keydown',e=>{
+  if(e.code==='Space'){e.preventDefault();if(pos>=N-1)pos=0;playing=!playing;}
+  else if(e.key==='ArrowRight'){pos=Math.min(N-1,Math.floor(pos)+1);playing=false;}
+  else if(e.key==='ArrowLeft'){pos=Math.max(0,Math.floor(pos)-1);playing=false;}
+  else if(e.key==='1')speed=0.5;else if(e.key==='2')speed=1.5;else if(e.key==='3')speed=6;
+});
+})();
+</script>
+</body>
+</html>
