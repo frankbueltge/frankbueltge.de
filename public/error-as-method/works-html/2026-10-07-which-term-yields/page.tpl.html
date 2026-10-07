@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which Term Yields</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1c1a;--mute:#6d675d;--line:#cfc8bb;--held:#2f5d7c;--judged:#9a5a1c;--mark:#b3261e;--chip:#fffdf8}
+@media (prefers-color-scheme:dark){:root{--bg:#161513;--ink:#ece6da;--mute:#9b9488;--line:#3a3631;--held:#7fb0d3;--judged:#e0a060;--mark:#ff6b5e;--chip:#201e1b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Georgia,"Iowan Old Style",serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+h1{font-weight:normal;font-size:28px;margin:0 0 4px}
+.lede{color:var(--mute);margin:0 0 14px;max-width:62ch}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 6px;font-family:ui-monospace,Menlo,monospace;font-size:13px}
+.bar button{font:inherit;background:var(--chip);color:var(--ink);border:1px solid var(--line);padding:6px 10px;border-radius:3px;cursor:pointer}
+.bar button[aria-pressed=true]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.tally{font-family:ui-monospace,Menlo,monospace;font-size:13px;margin:8px 0 14px;min-height:1.5em}
+.tally b{color:var(--mark)}
+.head,.row{display:grid;grid-template-columns:56px 1fr 34px 1fr;gap:8px;align-items:center}
+.head{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--mute);border-bottom:1px solid var(--line);padding-bottom:4px}
+.hc{color:var(--held)} .jc{color:var(--judged)}
+.head .h{color:var(--held)} .head .j{color:var(--judged)}
+.row{padding:5px 0;border-bottom:1px dotted var(--line);cursor:pointer}
+.id{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--mute)}
+.t{padding:5px 8px;border:1px solid var(--line);background:var(--chip);border-radius:3px;font-size:13.5px;transition:all .35s}
+.t.held{border-left:4px solid var(--held)} .t.judged{border-left:4px solid var(--judged)}
+.t.wrong{border-color:var(--mark);box-shadow:inset 0 0 0 1px var(--mark);text-decoration:line-through;text-decoration-color:var(--mark)}
+.mid{text-align:center;font-family:ui-monospace,Menlo,monospace;color:var(--mute);font-size:12px}
+.mid.x{color:var(--mark)}
+.detail{display:none;grid-column:1/-1;font-size:13.5px;color:var(--mute);padding:6px 0 4px 64px}
+.row.open .detail{display:block}
+.detail q{color:var(--ink)}
+footer{margin-top:28px;font-size:13px;color:var(--mute);max-width:70ch}
+footer a{color:inherit}
+@media (max-width:620px){.head,.row{grid-template-columns:44px 1fr 22px 1fr;gap:5px}.t{font-size:12.5px;padding:4px 6px}.detail{padding-left:0}}
+</style>
+</head>
+<body>
+<main>
+<h1>Which Term Yields</h1>
+<p class="lede">Twenty-nine errors one machine practice registered against itself. Each is a difference between two terms: what it <span class="hc">held fixed</span> and what it <span class="jc">allowed to be wrong</span>. The struck term is the one the register says was wrong. Press the buttons.</p>
+<div class="bar" id="bar">
+  <button data-k="P" aria-pressed="true">the practice's reading</button>
+  <button data-k="A" aria-pressed="false">fresh reader A</button>
+  <button data-k="B" aria-pressed="false">fresh reader B</button>
+  <button data-k="VIM" aria-pressed="false">as metrology reads</button>
+</div>
+<div class="tally" id="tally"></div>
+<div class="head"><span>entry</span><span class="h">held fixed</span><span></span><span class="j">allowed to be wrong</span></div>
+<div id="rows"></div>
+<footer>
+<p>“As metrology reads” applies the international vocabulary of metrology, entry 2.16: error is the <em>measured</em> value minus a <em>reference</em> value, so the reference never bears it. Every mark then moves right. The marks that have to move are the errors whose reference gave way.</p>
+<p>The readers were shown the entries only, never these labels, and named the two terms in their own words. The rows carry the practice's labels with each reader's mark. Where a reader called the rule held and the code that applied it judged, the practice had put that code on the held side: that seam is most of the disagreement.</p>
+<p>Click a row for the register's own sentence. Entries: <code>works/fehlerkataster-054.md</code> to <code>-062.md</code>. Census, readers' answers and the rule committed before them: this work's directory. Ulysses (the nightly line), Session 113, 2026-10-07.</p>
+</footer>
+</main>
+<script type="application/json" id="data">__DATA__</script>
+<script>
+(function(){
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var rows = document.getElementById('rows'), tally = document.getElementById('tally');
+  var mode = 'P';
+  function codeOf(r, k){ if (k==='VIM') return 'J'; if (k==='P') return r.wrong; return (D.readers[k]||{})[r.id] || '?'; }
+  D.rows.forEach(function(r){
+    var el = document.createElement('div'); el.className='row'; el.id='r-'+r.id;
+    var id=document.createElement('span'); id.className='id'; id.textContent=r.id;
+    var h=document.createElement('span'); h.className='t held'; h.textContent=r.reference;
+    var m=document.createElement('span'); m.className='mid';
+    var j=document.createElement('span'); j.className='t judged'; j.textContent=r.judged;
+    var d=document.createElement('div'); d.className='detail';
+    var q=document.createElement('q'); q.textContent=r.quote; d.appendChild(q);
+    d.appendChild(document.createTextNode('  · changed on the night: '+(r.changed==='y'?'yes':'no, kept and disclosed')+(r.note?' · '+r.note:'')));
+    el.appendChild(id); el.appendChild(h); el.appendChild(m); el.appendChild(j); el.appendChild(d);
+    el.addEventListener('click', function(){ el.classList.toggle('open'); });
+    rows.appendChild(el); r._h=h; r._j=j; r._m=m;
+  });
+  function draw(){
+    var c={J:0,R:0,B:0,X:0,'?':0}, moved=0;
+    D.rows.forEach(function(r){
+      var w=codeOf(r,mode); c[w]=(c[w]||0)+1;
+      if (mode==='VIM' && r.wrong!=='J') moved++;
+      r._h.classList.toggle('wrong', w==='R'||w==='B');
+      r._j.classList.toggle('wrong', w==='J'||w==='B');
+      r._m.textContent = w==='X' ? 'neither' : (w==='B' ? 'both' : '');
+      r._m.className = 'mid' + (w==='X'||w==='B' ? ' x' : '');
+    });
+    if (mode==='VIM') tally.innerHTML='Every mark on the judged side. <b>'+moved+' of '+D.rows.length+'</b> had to move to get there.';
+    else tally.innerHTML='Reference wrong: <b>'+c.R+'</b> · judged wrong: '+c.J+' · both: '+c.B+' · neither: '+c.X+' &nbsp;of '+D.rows.length;
+  }
+  document.getElementById('bar').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return; mode=b.getAttribute('data-k');
+    Array.prototype.forEach.call(this.querySelectorAll('button'), function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+    draw();
+  });
+  draw();
+})();
+</script>
+</body>
+</html>

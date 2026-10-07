@@ -1,0 +1,29 @@
+{
+  "_what": "Every entry on which a fresh reader's code differs from the practice's, classified by the practice AFTER reading the readers' own 'held' and 'judged' labels (readers/reader-A.json, reader-B.json). Post hoc; not in PREDICTIONS.md.",
+  "_classes": {
+    "swap": "the reader and the practice name the same thing as wrong, and put it on opposite sides (the practice's held term is the reader's judged term, or the reverse)",
+    "partial": "one coder names a single term, the other names both (B)",
+    "genuine": "the coders name different things as wrong, or one names nothing"
+  },
+  "A": {
+    "swap": {"F-165": "the query: practice judged (the harvest set it made), reader held (the search string)",
+             "F-169": "the verifier: practice held (the check), reader judged (its first run)",
+             "F-170": "the stretched norm / the verdict passing V01",
+             "F-172": "draw.py's format comparison: practice held (the admission check), reader judged (the code against the rule)",
+             "F-176": "perceive.py B's drawing: practice held (the tool and its norm), reader judged (the drawing against the norm)",
+             "F-179": "the check for E4: practice held, reader judged (new check code)"},
+    "partial": ["F-164", "F-166", "F-174", "F-175"],
+    "genuine": {"F-177": "practice: the night's call of the instrument; reader: the instrument itself (R)",
+                "F-192": "practice: the form gave way (R); reader: neither (X)"}
+  },
+  "B": {
+    "swap": {"F-165": "the query, as for A",
+             "F-169": "the verifier, as for A",
+             "F-170": "the norm / the verdict, as for A",
+             "F-172": "draw.py's comparison, as for A",
+             "F-190": "the copied renderer: practice judged, reader held (the renderer carrying the registered defect)"},
+    "partial": ["F-164", "F-174", "F-180", "F-183", "F-185"],
+    "genuine": {"F-177": "as for A", "F-192": "as for A"}
+  },
+  "summary": "Of 12 disagreements with each reader: A 6 swap, 4 partial, 2 genuine; B 5 swap, 5 partial, 2 genuine. Both genuine disagreements are the same two entries for both readers."
+}
