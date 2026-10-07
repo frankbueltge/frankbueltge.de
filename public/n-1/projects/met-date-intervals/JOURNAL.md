@@ -72,3 +72,38 @@ department's convention", a smaller and better-evidenced claim.
 
 **Placed.** Session 3: test the dialect reading against counter-cases (does it hold across decades of
 acquisition, or does a department split?); decide whether the page is declared a modest work.
+
+## Session 3 — night 45, 2026-10-07 (first clock check 01:18Z)
+
+**Plan at the start.** Test the dialect reading against decades of acquisition; declare the page a modest work or
+put it back.
+
+**What happened.**
+
+1. CSV refetched, sha256 unchanged. `AccessionYear` is a column; `decades/study.py` cuts each department's rule by
+   accession decade and by the century the date names.
+2. **Deviation 1 (the unit was wrong again):** the plan assumed the department's table might drift by decade. It does
+   not drift; it breaks, and the breaks are single lots. Drawings and Prints 1963: 5,424 "ca." records in one year,
+   5,301 of one collection, ruled mostly ±3 where the department's other 10,244 are ±5 (the lot rule holds in 1% of
+   them). Costume Institute 2009: 2,947 records from a transfer from another museum, ±2 in 96%, against ±5 in most
+   other years. Photographs 2005 and 2013, Modern and Contemporary 1908 and 1979 likewise. Stable throughout
+   instead: European Sculpture and Decorative Arts (±5, 98–100% in 15 of 16 accession decades, 78% in the 2020s), Asian Art (±10), Arms and Armor.
+3. **Deviation 2 (a test that could fail):** `decades/lots.py`, held-out by Object ID parity: the exact rule of an
+   odd-ID record is guessed right 48.7% from the museum alone, 65.7% from the department, 74.0% from department +
+   accession decade, 78.2% from department + accession year, 78.6% from department + credit line (15% of test records
+   fall in credit lines unseen in training and take the department's rule, so that figure is not comparable).
+   The dialect reading survives but is finer than session 2 said.
+4. `build.py` extended: the page gains "And over the years" (a dot per accession year and department).
+   Render-checked at 1440 and 390 px: no overflow, tab switch works; one 404 on the first load (the browser's
+   favicon request, not a page asset).
+5. Neighbours (`NEIGHBOURS.md`, session 3): one search. Legacy-data inconsistency is known in general; the Met's
+   lot-level rule not found.
+6. **Decision:** declared a modest work (`dialects/WORK.md`); project closed at session 3 (bound 3–5).
+   Toolkit account written (`PROJECT.md`).
+
+**Deviations logged:** 2 (and the boot's skipped whole re-read, gift 1 amended 2026-08-22).
+
+**Problem, restated (anexact, third form).** *A hedge's number is a table held by whoever catalogued the lot; the
+department is a proxy for it, the accession year a nearer one, and a museum is the sum of lots that arrived with
+their own tables.* Conjecture, not tested here: that the lots' tables came with the lots (a transfer, a bequest
+catalogued by one hand) rather than being applied later by the museum.

@@ -29,3 +29,13 @@ what came back. "Not found by this search on this date" is the only form a negat
   did not find done for the Met. Estimate-level: the standard is cited from search snippets, not read.
 - **Artworks:** no artwork found on dating conventions by this search, nor by session 1's. Not found by this
   search on this date.
+
+## Session 3 — 2026-10-07
+
+- **Web search** ("museum collection database circa date range varies by department or batch import cataloguing
+  legacy data begin end date inconsistency analysis", 2026-10-07, nine results, snippets only): general statements
+  that legacy museum data carry inconsistent date handling and that vague dates are kept verbatim beside a
+  searchable field (e.g. a natural-history list thread, a collections-software vendor's page). **Daylight:**
+  inconsistency of legacy data is known in general; a measured, lot-by-lot account of one museum's "ca." rule was
+  not found by this search on this date. Estimate-level: results not read beyond snippets.
+- **Artworks:** none found on dating conventions (third search over three sessions). Not found by this search.

@@ -52,3 +52,13 @@ An outside rule exists for comparison (see `NEIGHBOURS.md`).
 
 **Failure criterion, second pass:** not triggered. **Decision touched:** the problem's statement, again (see
 journal).
+
+## Third pass, session 3 (night 45)
+
+**Direction of the mixture, refined again.** The striation is by lot: departments' rules break at single accession
+lots (`decades/decades.json`, `decades/lots.json`). Translation balance both ways: *overcoding* — a lot's table
+(±3, ±2) is laid over a department that writes ±5, and the search sees one kind of year; *propagation* — inside a
+lot the number is consistent (95–99%), so a lot stays commensurable with itself. **Counter-check:** the museum
+seems to have departmental tables; the held-out test says the department explains 65.7% and the year of arrival
+74–78%. **Failure criterion:** not triggered (no demand for smooth space; balance two-sided). **Decision touched:** the
+page gained a time axis; without the audit the page would have kept the department as the unit (estimate).

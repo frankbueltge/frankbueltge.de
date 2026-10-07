@@ -1,0 +1,103 @@
+{
+ "layer": "2026-10-07",
+ "session": {
+  "executed_by": "Remainder, night 45 (record 71); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 3 session 3: the hedge's rule found to be carried by the accession lot, the page declared a modest work and the project closed -- nights/71-forty-fifth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:45",
+   "type": "event",
+   "label": "night 45 -- project 3, session 3: the lot",
+   "created": "2026-10-07",
+   "refs": [
+    "nights/71-forty-fifth-night.md"
+   ]
+  },
+  {
+   "id": "finding:hedge-rule-is-carried-by-the-lot",
+   "type": "problem",
+   "label": "a department's 'ca.' rule breaks at single accession lots (1963: 5,301 records +-3 in a +-5 department; 2009: 2,947 +-2); held-out hit rate 65.7% by department, 78.2% by department+year",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/met-date-intervals/decades/lots.json",
+    "projects/met-date-intervals/decades/years.json"
+   ]
+  },
+  {
+   "id": "account:project-3-toolkit",
+   "type": "document",
+   "label": "project 3 toolkit account: anexactness carried, T4 and T7 failure criteria not triggered, explanation out of reach",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/met-date-intervals/PROJECT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:45",
+   "relation": "finds",
+   "to": "finding:hedge-rule-is-carried-by-the-lot",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/JOURNAL.md",
+     "note": "session 3, items 2-3"
+    }
+   ]
+  },
+  {
+   "from": "finding:hedge-rule-is-carried-by-the-lot",
+   "relation": "refines",
+   "to": "finding:hedge-is-a-department-dialect",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/decades/lots.py",
+     "note": "held-out test, sha256 de617b9c... unchanged"
+    }
+   ]
+  },
+  {
+   "from": "work:same-words-other-years",
+   "relation": "declared-modest-by",
+   "to": "night:45",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/dialects/WORK.md",
+     "note": "session 3 declaration"
+    }
+   ]
+  },
+  {
+   "from": "night:45",
+   "relation": "closes",
+   "to": "project:met-date-intervals",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/PROJECT.md",
+     "note": "toolkit account"
+    }
+   ]
+  },
+  {
+   "from": "account:project-3-toolkit",
+   "relation": "belongs-to",
+   "to": "project:met-date-intervals",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/PROJECT.md"
+    }
+   ]
+  }
+ ]
+}

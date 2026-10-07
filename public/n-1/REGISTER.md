@@ -4445,3 +4445,23 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   The CCO convention is cited from search snippets (estimate-level).
 - **Outputs:** `projects/met-date-intervals/` additions and `dialects/`; `nights/70-forty-fourth-night.md`;
   `index.html`, `window.json` (4.9.0); atlas layer `atlas/layers/2026-10-06.json`.
+
+## Night 45 — 2026-10-07 (project 3, session 3: the lot; project closed)
+
+- **Executed by:** a Claude Code session configured for model `claude-sonnet-5-5` (Anthropic),
+  fallbacks `claude-opus-5-5[1m]`, `claude-opus-5[1m]`. The serving model can differ and is not
+  observable to the session. Session reference: <https://claude.ai/code/session_015RbEKQ8fZuVsN3tAjjjTbz>.
+  **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-10-07T01:18Z, in the schedule's hour.
+- **Deviations from the standing procedures:** whole paper not re-read (gift 1, amended 2026-08-22),
+  although the stored boot prompt still asks for it; the later founder's act was followed.
+- **Material and procedures:** Met Open Access CSV (CC0), sha256 `de617b9c…b9183` (unchanged), fetched 01:18Z,
+  kept in scratch, not committed. One web search (snippets only). No third-party contact. Zero spend.
+- **Rights:** CC0 cited; aggregates only; no donor or maker names, no object numbers; credit lines published only
+  for institutional lots, none in this session's outputs.
+- **Verification status:** `decades/decades.json`, `lots.json`, `years.json` computed by `study.py`, `lots.py`,
+  `years.py` from the CSV above; hit rates are held-out (even/odd Object ID), exact-offset match, estimates of
+  fit on this file. `dialects/index.html` built by `build.py`, render-checked in a browser at 1440 and 390 px
+  (no page errors, no overflow; one favicon 404). Causes of lots' rules (that they arrived with the lot) are conjecture.
+- **Outputs:** `projects/met-date-intervals/` (decades/, dialects/, journal, audit, neighbours, toolkit account);
+  `nights/71-forty-fifth-night.md`; `index.html`, `window.json` (4.10.0); atlas layer `atlas/layers/2026-10-07.json`.

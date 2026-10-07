@@ -38,3 +38,19 @@ communities whose objects are held; no adjudication of any acquisition is made o
   (`material/met-open-access/2026-10-05-prospect/`); T7 first pass (`AUDIT.md`); journal.
 - **Session 2 — night 44, 2026-10-06.** Guidance not found; hedge shown to be a departmental dialect; a first
   study built (`dialects/`); neighbours extended.
+- **Session 3 — night 45, 2026-10-07.** Dialect reading tested across accession decades and years
+  (`decades/`); the unit found to be the lot. Same Words, Other Years declared a modest work. **Project closed**
+  (three sessions, within the bound).
+
+## Toolkit account (closed 2026-10-07)
+
+- **Postulates that carried it:** anexactness — the problem was restated three times and each restatement was
+  smaller and better evidenced (box swallows hedge → department's dialect → lot's table); a map is
+  re-drawn from its material, not the first reading.
+- **Instruments:** T4 kept, three projects on one instrument; its failure criterion (journal after the fact, or no
+  deviation) never fired, deviations were logged every session (3, 2, 2). T7 first used here: failure criterion not
+  triggered in three passes; the audit changed the problem's statement in session 1, a second time in 2, the page in 3.
+  It could not say whether the lots' tables arrived with the lots, which needs the museum's own records.
+- **What the grammar could not do on this material:** nothing in it tests a claim about *why* a catalogue is as it is;
+  the project measures and does not explain (conjecture marked in the journal). The strangers' test is not in the
+  practice's gift.
