@@ -390,7 +390,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'gates',
     kind: 'gate',
     owner: 'atelier',
-    what: 'Four times a day, because landing and rebuild were decoupled with Protocol v4 — the practice lands on its own main and this gate comes to fetch.',
+    what: 'Started by the practice watch within minutes of a landing, with four daily crons as the net: landing and rebuild were decoupled with Protocol v4, so the practice lands on its own main and this gate comes to fetch.',
     ref: '.github/workflows/atelier-integrate.yml',
     commitsAs: 'Atelier-Integrate <atelier-integrate@frankbueltge.de>',
     members: [
@@ -581,7 +581,12 @@ export const NODES: readonly ApparatusNode[] = [
     owner: 'shared',
     what: 'They repair nothing. They make silence visible — a stranded session, a stale mirror, a drifting figure — and then they close their own alarm when it clears.',
     members: [
-      { label: 'Mirror watch', what: 'hourly: has an engine moved since its mirror last did?', ref: '.github/workflows/mirror-watch.yml', workflowName: 'Mirror watch', cron: ['40 * * * *'] },
+      // Since 2026-10-07 (five sessions per practice landed in one day, and the hourly mirror watch
+      // ran three or four times a day): the practices are watched once a minute against the head
+      // each mirror records, while the house is active; the mirror watch keeps the two houses the
+      // practice watch does not cover.
+      { label: 'Practice watch', what: 'once a minute while the house is active: has a practice moved past the head its mirror carries? Then start its gate', ref: '.github/workflows/practice-watch.yml', workflowName: 'Practice watch', cron: ['50 22 * * *', '7 */2 * * *'] },
+      { label: 'Mirror watch', what: 'hourly, as GitHub grants it: has the plenum or the ecology moved since its mirror last did?', ref: '.github/workflows/mirror-watch.yml', workflowName: 'Mirror watch', cron: ['40 * * * *'] },
       { label: 'Drift watch', what: 'nightly: mirror and figure freshness, with network checks on', ref: '.github/workflows/drift-watch.yml', workflowName: 'Drift watch', cron: ['45 4 * * *'] },
       { label: 'Landing watchdog', what: 'nightly: sessions that ran but never landed', ref: '.github/workflows/landing-watchdog.yml', workflowName: 'Landing watchdog', cron: ['45 5 * * *'] },
       { label: 'Requests watchdog', what: 'twice daily: a new section in a practice’s REQUESTS.md becomes an issue', ref: '.github/workflows/requests-watchdog.yml', workflowName: 'Requests watchdog', cron: ['15 6 * * *', '15 21 * * *'] },
@@ -631,7 +636,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   // practices → their own mirrors, through the gates
   { from: 'repo-field', to: 'gate-field', kind: 'repository_dispatch', mechanism: 'repository_dispatch `field-landed`, sent by the practice when a session lands', checked: 'derived', ref: '.github/workflows/field-integrate.yml' },
   { from: 'repo-studio', to: 'gate-studio', kind: 'repository_dispatch', mechanism: 'repository_dispatch `studio-landed`, sent by the practice when a session lands', checked: 'derived', ref: '.github/workflows/studio-integrate.yml' },
-  { from: 'repo-ulysses', to: 'gate-atelier', kind: 'cron', mechanism: 'no dispatch — the gate fetches four times a day (landing and rebuild are decoupled since Protocol v4)', checked: 'derived', ref: '.github/workflows/atelier-integrate.yml' },
+  { from: 'repo-ulysses', to: 'gate-atelier', kind: 'cron', mechanism: 'no dispatch (landing and rebuild are decoupled since Protocol v4) — the practice watch starts the gate when the practice moves; four daily crons are the net under it', checked: 'derived', ref: '.github/workflows/atelier-integrate.yml' },
   { from: 'repo-plenum', to: 'gate-plenum', kind: 'cron', mechanism: 'nightly cron; the guest engine does not dispatch yet', checked: 'derived', ref: '.github/workflows/plenum-integrate.yml' },
   { from: 'repo-ecology', to: 'gate-ecology', kind: 'clone', mechanism: 'the gate clones the ecology and all three practices, then imports and exports', checked: 'derived', ref: '.github/workflows/ecology-integrate.yml' },
   { from: 'repo-ulysses', to: 'gate-sitepr', kind: 'repository_dispatch', mechanism: 'a practice proposes site changes under `site-prs/<slug>/` in its own repository', checked: 'derived', ref: '.github/workflows/engine-site-pr.yml' },
@@ -678,9 +683,9 @@ export const EDGES: readonly ApparatusEdge[] = [
   },
 
   // oversight
-  { from: 'ov-watchdogs', to: 'gate-atelier', kind: 'github-api', mechanism: 'hourly: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/mirror-watch.yml' },
-  { from: 'ov-watchdogs', to: 'gate-field', kind: 'github-api', mechanism: 'hourly: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/mirror-watch.yml' },
-  { from: 'ov-watchdogs', to: 'gate-studio', kind: 'github-api', mechanism: 'hourly: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/mirror-watch.yml' },
+  { from: 'ov-watchdogs', to: 'gate-atelier', kind: 'github-api', mechanism: 'once a minute while the house is active: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/practice-watch.yml' },
+  { from: 'ov-watchdogs', to: 'gate-field', kind: 'github-api', mechanism: 'once a minute while the house is active: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/practice-watch.yml' },
+  { from: 'ov-watchdogs', to: 'gate-studio', kind: 'github-api', mechanism: 'once a minute while the house is active: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/practice-watch.yml' },
   { from: 'ov-watchdogs', to: 'conductor', kind: 'issue', mechanism: 'an issue per finding, deduplicated by title — and closed again by the same workflow when it clears', checked: 'derived', ref: '.github/workflows/morning-digest.yml' },
   { from: 'gate-atelier', to: 'repo-ulysses', kind: 'github-api', mechanism: 'on refusal: a letter into the practice’s own repository, naming what was rejected and why', checked: 'derived', ref: '.github/workflows/atelier-integrate.yml' },
   { from: 'gate-field', to: 'repo-field', kind: 'github-api', mechanism: 'on refusal: a letter into the practice’s own repository, naming what was rejected and why', checked: 'derived', ref: '.github/workflows/field-integrate.yml' },

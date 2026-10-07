@@ -60,6 +60,13 @@ jobs:
           if [ -f /tmp/machine-attention/moments.json ]; then
             cp /tmp/machine-attention/moments.json src/data/attention/moments.json
           fi
+          # The practice's head this mirror now carries (2026-10-07). The practice does not
+          # dispatch, so the practice watch (practice-watch.yml) compares its head with this file
+          # once a minute while the house is active and starts this workflow when they differ; the
+          # two crons above are the net under it. Committed even when nothing else changed, so the
+          # watch never asks twice for one head.
+          mkdir -p .github/state
+          git -C /tmp/machine-attention rev-parse HEAD > .github/state/attention-mirror-head
 
       # src/data/attention/export.json is a declared graph source, so the derived artifact
       # travels in the same commit as the export it was derived from. Without this the graph
@@ -72,7 +79,7 @@ jobs:
         run: |
           git config user.name "Attention-Integrate"
           git config user.email "attention-integrate@frankbueltge.de"
-          git add public/attention src/data/attention src/data/graph
+          git add public/attention src/data/attention src/data/graph .github/state/attention-mirror-head
           if git diff --cached --quiet; then
             echo "stage unchanged"
             exit 0

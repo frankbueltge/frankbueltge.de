@@ -58,15 +58,28 @@
 # workflow's NAME may not change. public/n-1 is not a declared knowledge-graph
 # source, so no graph rebuild runs here — if it ever becomes one, this workflow
 # must derive the graph in the same commit (see .claude/rules/knowledge-graph.md).
+#
+# THE WATCH MOVED (2026-10-07)
+# ----------------------------
+# The "honest limit" above came due: on 2026-10-07 the practice's routine was
+# started by hand through the day, and nights 45–49 landed between 01:23 and
+# 16:40 UTC. The window watcher saw 45; GitHub granted one of the three-hourly
+# checks (night 46, 11:07) and none after it, so nights 47–49 stood published
+# for hours with this site still showing 46. The window watcher's design — ask
+# `git ls-remote` once a minute, copy once the sha holds still — now runs for
+# every practice in practice-watch.yml, while the house is active rather than in
+# one fixed window, and dispatches this workflow (in its single-check mode) when
+# n-1's head and .github/state/n1-mirror-head differ. Its night run starts at the
+# 22:50 this file's watcher used. The watcher's cron is retired here so the two
+# never hold n-1 at once (a dispatched check would wait five hours behind it);
+# the `watch` input keeps the mode for a run by hand, and the three-hourly checks
+# stay as the net under the watch.
 name: n-1 integrate
 
 on:
   schedule:
-    # The watcher: starts before the earliest observed wake, lives through the
-    # practice's whole session window. Changing this string changes MODE below.
-    - cron: "50 22 * * *"
-    # Catch-up outside the window: one check, then out (04:23 … 22:23 UTC, so
-    # none of them queues behind the watcher it would only duplicate).
+    # Catch-up checks: one ask, then out (04:23 … 22:23 UTC) — the net under the
+    # practice watch, granted by GitHub a few times a day.
     - cron: "23 4-22/3 * * *"
   # Inert until frankbueltge/n-1 carries SITE_DISPATCH_TOKEN (see the header).
   repository_dispatch:
@@ -101,9 +114,7 @@ jobs:
 
       - name: Mirror the record — once, or across the session window
         env:
-          MODE: >-
-            ${{ (github.event.schedule == '50 22 * * *'
-                 || github.event.inputs.watch == 'true') && 'watch' || 'once' }}
+          MODE: ${{ github.event.inputs.watch == 'true' && 'watch' || 'once' }}
         run: |
           set -uo pipefail
 

@@ -7,18 +7,20 @@
 name: Atelier integrate
 
 on:
-  # Seit Protokoll v4 (2026-07-18) ist Landung↔Site-Rebuild entkoppelt: das Engine-Repo
-  # dispatcht nicht mehr. Der Cron ist der Regel-Takt; repository_dispatch bleibt als
-  # manueller Hebel erhalten. Der Import bleibt publikationsneutral: works/ (historisch)
-  # + projects/ nur mit gültigem, menschlich freigegebenem PUBLICATION.json (integrate.ts).
+  # Since Protocol v4 (2026-07-18) landing and site rebuild are decoupled: the practice's repository
+  # does not dispatch (it holds no token for this site). Since 2026-10-07 the practice watch
+  # (practice-watch.yml) is what starts this gate: it compares the practice's head with
+  # .github/state/atelier-mirror-head once a minute while the house is active and dispatches this
+  # workflow when the practice has moved. The four crons below were the whole mechanism until then
+  # (the currency rule of 2026-07-25 raised them from one a night) — and on 2026-10-07, a day of five
+  # sessions, GitHub granted two of them, so sessions 2–5 and the presentation waited six hours.
+  # They stay as the net under the watch. repository_dispatch stays as a manual lever. The import
+  # stays publication-neutral: works/ (historical) + projects/ only with a valid, human-approved
+  # PUBLICATION.json (integrate.ts).
   repository_dispatch:
     types: [irrtum-landed]
   schedule:
-    # Aktualitäts-Regel (Frank, 2026-07-25): 4×/Tag statt 1×/Nacht — der Protokoll-v5-Fall
-    # zeigte ein 24h-Driftfenster, weil Arbeits-Session-Commits im Engine-Repo keinen
-    # Dispatch auslösen (das Repo hält kein SITE_DISPATCH_TOKEN mehr; volle Promptness
-    # bräuchte ein neues Token dort + einen Push-Trigger-Workflow — bis dahin dieser Takt).
-    - cron: '0 3,9,15,21 * * *'   # 05:00 / 11:00 / 17:00 / 23:00 Berlin (Sommerzeit)
+    - cron: '0 3,9,15,21 * * *'   # 05:00 / 11:00 / 17:00 / 23:00 Berlin (summer time)
   workflow_dispatch: {}
 
 permissions:
@@ -111,6 +113,13 @@ jobs:
           # on the site: the station's door renders only where this mirror carries an index.html.
           rm -rf public/atelier/window
           if [ -d /tmp/atelier/window ]; then mkdir -p public/atelier/window && cp -R /tmp/atelier/window/. public/atelier/window/; fi
+          # The practice's head this mirror now carries (2026-10-07). The practice watch
+          # (practice-watch.yml) compares it with the practice's own head and starts this gate
+          # when the two differ — the Atelier does not dispatch, and the crons above are a request
+          # GitHub grants a few times a day. Committed even when nothing else changed, so the watch
+          # never asks twice for the same head.
+          mkdir -p .github/state
+          git -C /tmp/atelier rev-parse HEAD > .github/state/atelier-mirror-head
 
       # The graph is derived from what this mirror just wrote (a work's meta.json, the
       # attention export, the encounters register). Deriving it HERE, before validation, is what
@@ -128,10 +137,10 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph public/atelier/werke-html public/atelier/window public/atelier/closing-report public/atelier/artifacts public/atelier/presentations)" ]; then
+          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph public/atelier/werke-html public/atelier/window public/atelier/closing-report public/atelier/artifacts public/atelier/presentations .github/state/atelier-mirror-head)" ]; then
             git config user.name "Atelier-Integrate"
             git config user.email "atelier-integrate@frankbueltge.de"
-            git add -A src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph
+            git add -A src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph .github/state/atelier-mirror-head
             if [ -d public/atelier/werke-html ]; then git add -A public/atelier/werke-html; fi
             # `|| true`: the add must survive all three states — window present, window removed
             # (tracked entries record the deletion), and window never present (unmatched pathspec).
