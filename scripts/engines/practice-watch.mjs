@@ -149,14 +149,16 @@ export const SITE_FOOTPRINT = new Set([
 ])
 
 /**
- * Whether a new head is only this site's own letter on top of the head the watch already settled.
- * Without this the watch would chase its own footprint: a red integrate writes its brief into the
- * practice's repository, that moves the practice's head, the watch starts the integrate again,
- * and a red build becomes a red build every ten minutes, each with a letter and an issue comment.
- * Only the parent the watch settled counts — a session that landed under the letter is still new.
+ * Whether a new head is only this site's own letter on top of a head already settled — the one the
+ * watch last handled, or the one the mirror carries. Without this the watch would chase its own
+ * footprint: a red integrate writes its brief into the practice's repository, that moves the
+ * practice's head, the watch starts the integrate again, and a red build becomes a red build every
+ * ten minutes, each with a letter and an issue comment. Only a settled parent counts — a session
+ * that landed under the letter is still new.
  */
-export function isOwnLetter(commit, entry) {
-  return commit !== null && SITE_FOOTPRINT.has(commit.email) && commit.parent !== null && commit.parent === entry.done
+export function isOwnLetter(commit, ...settled) {
+  if (commit === null || !SITE_FOOTPRINT.has(commit.email) || commit.parent === null) return false
+  return settled.includes(commit.parent)
 }
 
 /** Statuses of a run that has been asked for and has not started — it will clone the newest head
@@ -253,15 +255,15 @@ export async function main() {
         console.log(`${stamp(now)} ${p.id} moved to ${short(entry.seen)}`)
       }
       if (!isDue(p, entry, now)) continue
-      if (isOwnLetter(headCommit(p.repo, entry.seen), entry)) {
-        entries.set(p.id, { ...entry, done: entry.seen })
-        console.log(`${stamp(now)} ${p.id} ${short(entry.seen)} is this site's own letter to the practice — nothing to mirror`)
-        continue
-      }
       const committed = committedHead(p.state)
       if (committed === entry.seen) {
         entries.set(p.id, { ...entry, done: entry.seen })
         console.log(`${stamp(now)} ${p.id} ${short(entry.seen)} is already mirrored`)
+        continue
+      }
+      if (isOwnLetter(headCommit(p.repo, entry.seen), entry.done, committed)) {
+        entries.set(p.id, { ...entry, done: entry.seen })
+        console.log(`${stamp(now)} ${p.id} ${short(entry.seen)} is this site's own letter to the practice — nothing to mirror`)
         continue
       }
       if (waitingRun(p.workflow)) {

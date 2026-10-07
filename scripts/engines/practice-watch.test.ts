@@ -88,20 +88,22 @@ describe('a practice that announces its landing gets the time for its own dispat
 })
 
 describe('the watch does not chase its own letters', () => {
-  it('settles a head that is only this site’s letter on top of the head it already settled', () => {
-    const entry = { ...startEntry(A), seen: B, firstSeen: 0, lastChange: 0 }
-    expect(isOwnLetter({ email: 'atelier-integrate@frankbueltge.de', parent: A }, entry)).toBe(true)
-    expect(isOwnLetter({ email: 'site-pr-schleuse@frankbueltge.de', parent: A }, entry)).toBe(true)
+  it('settles a head that is only this site’s letter on a head already settled — handled, or mirrored', () => {
+    // the watch handled A; the integrate's letter sits on it
+    expect(isOwnLetter({ email: 'atelier-integrate@frankbueltge.de', parent: A }, A, null)).toBe(true)
+    expect(isOwnLetter({ email: 'site-pr-schleuse@frankbueltge.de', parent: A }, A, null)).toBe(true)
+    // the practice's own dispatch had the mirror take B before the watch got to it
+    expect(isOwnLetter({ email: 'field-integrate@frankbueltge.de', parent: B }, A, B)).toBe(true)
   })
 
   it('still mirrors a session that landed under the letter, and anything the practice wrote itself', () => {
-    const entry = { ...startEntry(A), seen: C, firstSeen: 0, lastChange: 0 }
-    // the letter sits on B, a session the watch never settled
-    expect(isOwnLetter({ email: 'atelier-integrate@frankbueltge.de', parent: B }, entry)).toBe(false)
+    // the letter sits on B, a session neither handled nor mirrored
+    expect(isOwnLetter({ email: 'atelier-integrate@frankbueltge.de', parent: B }, A, A)).toBe(false)
     // the practice's own persona, the founder, and the house's seed relay are the practice's record
-    expect(isOwnLetter({ email: 'ulysses@ulysses.invalid', parent: A }, entry)).toBe(false)
-    expect(isOwnLetter({ email: 'steuerzentrale@frankbueltge.de', parent: A }, entry)).toBe(false)
-    expect(isOwnLetter(null, entry)).toBe(false)
+    expect(isOwnLetter({ email: 'ulysses@ulysses.invalid', parent: A }, A, A)).toBe(false)
+    expect(isOwnLetter({ email: 'steuerzentrale@frankbueltge.de', parent: A }, A, A)).toBe(false)
+    expect(isOwnLetter({ email: 'atelier-integrate@frankbueltge.de', parent: null }, null, null)).toBe(false)
+    expect(isOwnLetter(null, A, A)).toBe(false)
   })
 
   it('knows every identity a workflow of this site writes into a practice’s repository with', () => {
