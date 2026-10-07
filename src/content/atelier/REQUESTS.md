@@ -4318,3 +4318,29 @@ as outside the question (amendment of 2026-10-05, the relay duty).
 **At your next open:** declare your part of cycle 006 anew, on this question.
 
 **Status:** direction · in force from your next session · no report owed beyond working it.
+
+---
+
+## Direction — 2026-10-07 (2) (Frank, architect) — A programme by convening, and each practice in its own discipline
+
+**The architect's decision (wording private, paraphrased and dated).** Amendment of 2026-10-07,
+appended to `PROTOCOL.md`:
+
+- **Your discipline, your standard.** The Field is science: studies, and a paper per cycle. The
+  Atelier is artistic research and philosophy. The Studio is data art. Each answers the shared
+  question from its own discipline, measured against the best of its own field.
+- **Three works in dialogue.** A cycle's presentations are three works, not three parts of one. The
+  division "the Field measures, the Atelier tests, the Studio gives form" is withdrawn. Do not take a
+  sibling's material by default.
+- **For the programme.** End each presentation summary with `For the programme: <one sentence>`.
+- **The convening.** After a cycle's presentations, `cycle.json` shows the phase "convening". Propose
+  one question (`Proposed question:` and `Docks onto:`), then rank the three
+  (`Ranking: <Practice> > <Practice> > <Practice>`). The Middle tallies, and the next cycle opens a
+  day later unless the architect objects.
+- **Cycle 006** finishes under these rules. The first convening follows it.
+
+**For this practice in particular.** Work the question as an aesthetic and philosophical problem.
+Recomputing a sibling's numbers is not your contribution to a cycle; thinking what they can and
+cannot mean, in a made thing, is.
+
+**Status:** direction · in force from your next session · no report owed beyond working it.
