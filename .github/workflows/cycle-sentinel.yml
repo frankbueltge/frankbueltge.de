@@ -30,6 +30,16 @@ name: Cycle sentinel
 # at once, a presented seed's cycle returns to the continuing question. Without a continuing
 # question the old limit holds unchanged: the clock does nothing and the issue below still asks
 # for a hand. The rule is src/lib/ecology/cycle-turn.ts, under test.
+#
+# SINCE 2026-10-07 THE NEXT QUESTION IS THE PRACTICES' OWN (the architect's decision, wording
+# private; docs/design/2026-10-07-the-convening.md). A presented cycle no longer opens the next
+# round on the continuing question: it opens a CONVENING, in which each practice proposes the
+# next question and ranks the three. The Middle's relay carries the tally; the clock opens the
+# next cycle on it a day after the tally unless the architect objected, or on the continuing
+# question when seven days pass without one. A released seed still interrupts, in either phase.
+# The veto day must not wait on a cron that may run hours late, so the Ecology integrate starts
+# this workflow itself whenever it lands a relay mirror, and every two hours while a convening
+# is open.
 
 on:
   schedule:
@@ -41,13 +51,18 @@ on:
   push:
     branches: [main]
     paths: ['src/data/saat/register.json']
+  # Also started by ecology-integrate.yml after a relay mirror (2026-10-07): the built-in token
+  # fires no `on: push`, but a dispatch it sends does start a run.
   workflow_dispatch: {}
 
 # contents: write since 2026-10-03 — the turn commits cycle.json and nothing else. The deploy
-# follows through deploy-cf.yml's workflow_run list, like every other committer of site data.
+# follows through deploy-cf.yml's workflow_run list, like every other committer of site data —
+# except for a run another workflow started, which deploys itself (see the step after the turn).
 permissions:
   contents: write
   issues: write
+  # to start deploy-cf.yml when another workflow started this run (2026-10-07)
+  actions: write
 
 concurrency:
   group: cycle-sentinel
@@ -64,10 +79,10 @@ jobs:
           cache: npm
       - run: npm ci
 
-      # The clock (2026-10-03). Runs first, so the watch below reads the state it leaves. Writes
-      # cycle.json only when the rule says a turn is due, validates it through the site's own
-      # loader before committing, and commits nothing else.
-      - name: Turn the cycle where the continuing-question rule decides
+      # The clock (2026-10-03; the convening since 2026-10-07). Runs first, so the watch below
+      # reads the state it leaves. Writes cycle.json only when the rule says a turn is due,
+      # validates it through the site's own loader before committing, and commits nothing else.
+      - name: Turn the cycle where the rules decide
         id: turn
         run: |
           set -euo pipefail
@@ -91,6 +106,18 @@ jobs:
           done
           echo "::error::the cycle clock could not push its turn after 5 attempts"
           exit 1
+
+      # A run started by another workflow with the built-in token (the Ecology integrate after a
+      # relay mirror, since 2026-10-07) ends without a workflow_run event — GitHub creates none for
+      # a run the built-in token started — so deploy-cf.yml would never hear of the turn it
+      # committed, and the practices would read a cycle the site does not show. Such a run starts
+      # the deploy itself, right after the push and before the watch, so a hiccup in the issue
+      # step below cannot hold it back. The pattern of PR #1049, for the same reason.
+      - name: Deploy the turn (when another workflow started this run)
+        if: success() && steps.turn.outputs.turned == 'true' && github.triggering_actor == 'github-actions[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
 
       # The presentations live in public/<practice>/presentations/, mirrored by the integrate
       # workflows into this repository — so the verdict reads committed state here and needs no

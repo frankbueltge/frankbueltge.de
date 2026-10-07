@@ -284,10 +284,20 @@ export function buildCycleModel(input: CycleModelInput): CycleModel {
   }
 
   const start = cycle.opened
+  // The day the convening opened (2026-10-07) is a record of the house like any mark: the
+  // presented cycle's ruler runs to it, and the convening's own stretch is at least one day wide
+  // so it can be drawn at all — the same rule that gives an empty cycle its one day.
+  const conv = cycle.phase === 'convening' && cycle.convening && cycle.convening.opened > start ? cycle.convening.opened : null
   const latest = marks.reduce((acc, m) => (m.date > acc ? m.date : acc), start)
   // Never the clock: the ruler ends where the record ends. One day wide when nothing has landed,
   // so the scale exists at all.
-  const end = latest > start ? latest : addDay(start, 1)
+  const end = conv
+    ? latest > conv
+      ? latest
+      : addDay(conv, 1)
+    : latest > start
+      ? latest
+      : addDay(start, 1)
 
   const lanes: CycleLane[] = LANES.map((id, i) => {
     const count = marks.filter((m) => m.lane === id).length
@@ -306,8 +316,16 @@ export function buildCycleModel(input: CycleModelInput): CycleModel {
     axis: { start, end, days: dayIndex(end) - dayIndex(start) },
     lanes,
     // The cycle state carries one phase, so the drawing bands one phase — the band says which
-    // stretch of the ruler the house was in this phase for, and nothing it does not know.
-    bands: [{ phase: cycle.phase, from: start, to: end }],
+    // stretch of the ruler the house was in this phase for, and nothing it does not know. The
+    // one exception is the convening: cycle.json records the day it opened, so the ruler is
+    // banded working up to that day and convening from it, and never claims the whole cycle
+    // was spent convening.
+    bands: conv
+      ? [
+          { phase: 'working', from: start, to: conv },
+          { phase: 'convening', from: conv, to: end },
+        ]
+      : [{ phase: cycle.phase, from: start, to: end }],
     marks,
     box: BOX,
   }
@@ -413,7 +431,10 @@ export interface AxisTick {
  *  landed on, and the end — thinned left to right so two dates never overprint. Zooming in
  *  admits more of them, for the same reason more labels appear. */
 export function axisTicks(model: CycleModel, view: CycleView): AxisTick[] {
-  const days = [...new Set([model.axis.start, ...model.marks.map((m) => m.date), model.axis.end])].sort()
+  // a band's first day is one of the cycle's own days too: the day its convening opened
+  const days = [
+    ...new Set([model.axis.start, ...model.bands.map((b) => b.from), ...model.marks.map((m) => m.date), model.axis.end]),
+  ].sort()
   const ticks: AxisTick[] = []
   let lastX = Number.NEGATIVE_INFINITY
   for (const date of days) {
@@ -431,6 +452,14 @@ export function bandSpan(model: CycleModel, band: CycleBand, view: CycleView): {
   const from = Math.max(model.box.laneX0, view.k * axisX(model, band.from) + view.x)
   const to = Math.min(model.box.spanX1, view.k * axisX(model, band.to) + view.x)
   return { x: from, w: Math.max(0, to - from) }
+}
+
+/** Whether a band's label is drawn under one view: only where its stretch is as wide as a lane
+ *  label needs (LABEL_MIN_GAP), so two bands' words never overprint. The whole-cycle band always
+ *  is; a convening opened a day ago may only be once the ruler is zoomed — the phase badge above
+ *  the figure names it meanwhile. */
+export function bandLabelled(model: CycleModel, band: CycleBand, view: CycleView): boolean {
+  return bandSpan(model, band, view).w >= LABEL_MIN_GAP
 }
 
 // ---------------------------------------------------------------- the table floor

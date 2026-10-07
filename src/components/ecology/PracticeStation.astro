@@ -148,7 +148,15 @@ const blockClass: Record<string, string> = {
       <p class={kicker}>{S.now.questionKicker}</p>
       <p class="mt-2 max-w-3xl text-lg leading-snug text-fg">{question}</p>
       <p class="mt-1.5 font-mono text-mono text-fg-faint">
-        {cycle.source === 'seed' ? S.now.seededNote : cycle.source === 'continuing' ? S.now.continuingNote : S.now.defaultsNote}
+        {
+          cycle.source === 'seed'
+            ? S.now.seededNote
+            : cycle.source === 'continuing'
+              ? S.now.continuingNote
+              : cycle.source === 'convening'
+                ? S.now.conveningNote
+                : S.now.defaultsNote
+        }
       </p>
     </div>
 

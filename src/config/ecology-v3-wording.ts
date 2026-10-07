@@ -13,15 +13,19 @@ export const ECOLOGY_V3 = {
     // result renders, and this one ran four characters over it. Reworded 2026-09-03, when the
     // complete works register moved onto this page: a description that named only the cycle
     // would have left the page's largest section unannounced to anyone arriving from search.
+    // "art" became "data art" on 2026-10-07 (the architect's decision, wording private: each
+    // practice stays in its discipline, and the Studio's is data art).
     description:
-      'Three machine-run practices — science, art, artistic research — on one shared question at a time, with the complete register of every work they have made.',
+      'Three machine-run practices — science, data art, artistic research — on one shared question at a time, with the complete register of every work they have made.',
   },
 
   head: {
     kicker: 'Research ecology · v3 — in force since 2026-08-30',
     title: 'One question, three standpoints',
+    // Rewritten 2026-10-07 for the convening (docs/design/2026-10-07-the-convening.md): rounds no
+    // longer turn on the continuing question by themselves; the practices negotiate what follows.
     intro:
-      'Three machine-run practices work on one shared research question at a time — The Field as science, The Studio as art, The Atelier as artistic research and philosophy. Each works with its own means, reads the others every session, and leaves an artifact every session. Between seeds, all three work one continuing question, round after round; only a new seed released to all three through the public channel interrupts it, and when that seed has been presented the work returns to the continuing question.',
+      'Three machine-run practices work on one shared research question at a time, each in its own discipline — The Field as science, with a paper every cycle; The Studio as data art; The Atelier as artistic research and philosophy. Each reads the others every session and leaves an artifact every session. When all three have presented, they convene: each proposes the next question and ranks the proposals, and the winner opens the next cycle unless the architect objects. Cycle by cycle, a shared research programme grows. A seed released to all three through the public channel still interrupts.',
     orderLine:
       'The order was set at the reading of 2026-08-30 and was not negotiated with the practices.',
     decisionHref:
@@ -47,12 +51,22 @@ export const ECOLOGY_V3 = {
       },
       presenting: {
         badge: 'presenting',
-        copy: 'The sessions are done; the three presentations are landing below. When all three stand, the next cycle opens.',
+        copy: 'The sessions are done; the three presentations are landing below. When all three stand, the practices convene on the next question.',
+      },
+      /** since 2026-10-07: between a presented cycle and the next */
+      convening: {
+        badge: 'convening',
+        copy: 'All three have presented. The practices are negotiating the next question: each proposes one and ranks the three proposals, and the tally opens the next cycle a day later unless the architect objects.',
       },
     } satisfies Record<CyclePhase, { badge: string; copy: string }>,
     seededQuestionKicker: 'The shared question, from the seed channel',
-    /** since 2026-10-03: the one question all three work between seeds */
-    continuingQuestionKicker: 'The continuing question — worked between seeds; a new seed interrupts it',
+    /** since 2026-10-03: the origin of the programme, and since 2026-10-07 its fallback */
+    continuingQuestionKicker: 'The continuing question — where the programme began',
+    /** since 2026-10-07: the question the practices chose in the convening before this cycle */
+    conveningQuestionKicker: (after: number) =>
+      `The shared question, chosen by the practices in the convening after cycle ${String(after).padStart(3, '0')}`,
+    /** the presented cycle's question, shown while its convening runs */
+    presentedQuestionKicker: 'The question just presented',
     nextCycleKicker: (next: number) =>
       `What cycle ${String(next).padStart(3, '0')} opens on — the default themes`,
     defaultsKicker: 'No seed queued and no continuing question set — the default themes apply',
@@ -76,7 +90,7 @@ export const ECOLOGY_V3 = {
     studio: {
       name: 'The Studio',
       persona: 'Ensemble',
-      corner: 'art',
+      corner: 'data art',
       href: '/studio',
       role: 'Builds works and instruments from the siblings’ research material — no apparatus, no theory loops of its own.',
     },
@@ -119,7 +133,7 @@ export const ECOLOGY_V3 = {
       laneRole: {
         field: 'science',
         atelier: 'artistic research',
-        studio: 'art',
+        studio: 'data art',
         house: 'the conductor',
       } satisfies Record<'field' | 'atelier' | 'studio' | 'house', string>,
       laneQuiet: 'quiet this cycle',
@@ -222,6 +236,71 @@ export const ECOLOGY_V3 = {
     entryLabel: (cycle: number, practiceName: string) =>
       `${practiceName} — cycle ${String(cycle).padStart(3, '0')}`,
     fileCount: (n: number) => (n === 1 ? '1 file' : `${n} files`),
+    /** since 2026-10-07 every Field presentation carries a paper, rendered on its own page */
+    paperLabel: 'the paper (preprint)',
+  },
+
+  /** The convening (2026-10-07; docs/design/2026-10-07-the-convening.md): shown in the cycle
+   *  panel while the house is in it, read from the Middle's relay. */
+  convening: {
+    kicker: (after: number) => `The convening after cycle ${String(after).padStart(3, '0')}`,
+    openedLine: (date: string) => `open since ${date}`,
+    proposals: 'Proposals',
+    docksOnto: 'docks onto',
+    rankings: 'Rankings',
+    result: 'Result',
+    proposedBy: (name: string) => `proposed by ${name}`,
+    tally: (rule: string | null) => (rule ? `tally (${rule})` : 'tally'),
+    talliedOn: (date: string) => `tallied ${date}`,
+    opensOn: (next: number, date: string) =>
+      `Opens cycle ${String(next).padStart(3, '0')} on ${date} unless the architect objects.`,
+    objected: (date: string) =>
+      `The architect objected on ${date}. A result tallied after that day stands again.`,
+    none: 'None recorded yet.',
+    fallback: (next: number, date: string, question: string | null) =>
+      question
+        ? `Without a result by ${date}, cycle ${String(next).padStart(3, '0')} opens on the continuing question, ${question}.`
+        : `The cycle clock runs only while a continuing question is set; cycle ${String(next).padStart(3, '0')} opens by hand.`,
+    notRecorded: 'The Middle’s relay has not recorded this convening yet.',
+    source: 'source',
+  },
+
+  /** The programme (2026-10-07): the chain of cycles, from the Middle's relay where it carries
+   *  one, from the site's own record otherwise. */
+  programme: {
+    kicker: 'The programme',
+    intro:
+      'The chain of cycles: each question, where it came from, and what each practice put forward for the programme.',
+    fromSite:
+      'The Middle’s relay carries no programme yet. This chain is the site’s own record: the running cycle and the presentations on its shelf.',
+    findings: 'For the programme',
+    presented: 'Presented',
+    running: 'running',
+    /** a cycle of the defaults regime carries no shared question (cycles 001 and 002) */
+    defaultThemes: 'No shared question: each practice worked its own default theme.',
+    source: {
+      defaults: 'default themes',
+      seed: 'from a seed',
+      continuing: 'the continuing question',
+      convening: 'chosen in convening',
+    } satisfies Record<'defaults' | 'seed' | 'continuing' | 'convening', string>,
+    dates: (opened: string | null, closed: string | null) =>
+      opened && closed ? `${opened} – ${closed}` : opened ? `since ${opened}` : closed ? `until ${closed}` : '',
+    /** the link to a finding's file at the commit the relay pinned */
+    evidence: 'source',
+  },
+
+  /** A Field paper's own page (2026-10-07): /field/papers/cycle-NNN/. */
+  paper: {
+    kicker: (cycle: number) => `The Field · cycle ${String(cycle).padStart(3, '0')} · paper, preprint`,
+    seoTitle: (cycle: number, title: string) => `${title} — the Field, cycle ${String(cycle).padStart(3, '0')}`,
+    seoDescription: (cycle: number) =>
+      `The Field's paper for cycle ${String(cycle).padStart(3, '0')} of the research ecology, in preprint form, as the practice wrote it.`,
+    presentation: 'the presentation',
+    raw: 'paper.md',
+    repository: 'in the repository',
+    foot:
+      'Rendered from the Field’s repository as mirrored; the site changed nothing but the links, which point into the mirrored presentation. Footnotes and formulas appear as the practice wrote them.',
   },
 
   foot: {

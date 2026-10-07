@@ -63,6 +63,31 @@ describe('a cycle that is finished asks for a hand', () => {
   })
 })
 
+describe('a convening is not a cycle waiting for a hand (2026-10-07)', () => {
+  const CONVENING: CycleState = {
+    ...CYCLE,
+    phase: 'convening',
+    source: 'continuing',
+    question: 'Missing Data Art',
+    continuing: { question: 'Missing Data Art', since: '2026-10-03' },
+    convening: { afterCycle: 1, opened: '2026-09-03', objected: null },
+  }
+
+  it('stays silent while the clock owns the turn, sessions over budget included', () => {
+    const v = cycleVerdict(CONVENING, new Set(['field', 'atelier', 'studio'] as PracticeId[]), () => 9)
+    expect(v.allPresented).toBe(true)
+    expect(v.needsTurning).toBe(false)
+    expect(v.anyOverBudget).toBe(false)
+    expect(v.lines).toEqual([])
+  })
+
+  it('asks for a hand when no continuing question is set, because then the clock does not turn it', () => {
+    const v = cycleVerdict({ ...CONVENING, continuing: null }, new Set(['field', 'atelier', 'studio'] as PracticeId[]), () => 4)
+    expect(v.needsTurning).toBe(true)
+    expect(v.lines[0]).toMatch(/The convening after cycle 001 runs without a continuing question/)
+  })
+})
+
 describe('what it must never do', () => {
   it('reports state and nothing else — no field on the verdict proposes a next question', () => {
     const v = verdict(['field', 'atelier', 'studio'], { field: 4, atelier: 4, studio: 4 })

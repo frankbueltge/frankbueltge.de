@@ -90,8 +90,11 @@ export const STATION_V3 = {
     questionKicker: 'the question this practice works',
     /** where the question came from — stated, so a default is never mistaken for a seed */
     seededNote: 'from the public seed channel',
-    /** since 2026-10-03: the shared question all three work between seeds */
-    continuingNote: 'the continuing question — all three work it until a new seed interrupts',
+    /** since 2026-10-03: the shared question all three work between seeds; since 2026-10-07 the
+     *  programme's origin and the convening's fallback */
+    continuingNote: 'the continuing question — where the programme began',
+    /** since 2026-10-07: the question the three chose in the convening before this cycle */
+    conveningNote: 'chosen by the three practices in their convening',
     defaultsNote: 'the default theme — no seed queued, no continuing question set',
     sessionsKicker: 'recent sessions',
   },

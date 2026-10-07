@@ -18,7 +18,9 @@
 // cycle carries is a judgement no script can make. (Cycle 002's question was changed, not
 // repeated: the answer to noticing is not automating the decision.) The one exception since
 // 2026-10-03 is not made here: while a continuing question is set, the architect has made that
-// judgement in advance, and cycle-turn.ts applies it before this verdict is read.
+// judgement in advance, and cycle-turn.ts applies it before this verdict is read. Since
+// 2026-10-07 the judgement is the practices' own, made in a convening between cycles; the clock
+// applies its tally, and a convening is never reported here as a cycle waiting for a hand.
 
 import { loadCycle, loadPresentations, loadSessionNotes, PRACTICES, type CycleState, type PracticeId } from './v3'
 
@@ -84,6 +86,22 @@ export function cycleVerdict(
 
   const allPresented = standings.every((s) => s.presented)
   const anyOverBudget = standings.some((s) => s.over > 0)
+
+  // The convening (2026-10-07) is the state a presented cycle is SUPPOSED to be in: the clock
+  // turns it on the tally or on the fallback day, and the sessions the practices hold meanwhile
+  // are convening work, not a budget overrun. Only a convening without a continuing question can
+  // stall — the clock acts only while one is set — so then a hand is due, and the watch says so.
+  if (cycle.phase === 'convening') {
+    const stalls = !cycle.continuing
+    const lines = stalls
+      ? [
+          `The convening after cycle ${String(cycle.cycle).padStart(3, '0')} runs without a continuing question, ` +
+            'so the cycle clock does not turn it. Only the architect or a site session can open the next cycle.',
+        ]
+      : []
+    return { cycle: cycle.cycle, phase: cycle.phase, opened: cycle.opened, budget, standings, allPresented, anyOverBudget: false, needsTurning: stalls, lines }
+  }
+
   const needsTurning = allPresented
 
   const lines: string[] = []

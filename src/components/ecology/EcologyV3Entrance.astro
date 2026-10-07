@@ -35,6 +35,8 @@ import { bulletinBlocks } from '@/lib/ecology/bulletin-render'
 import CycleScoreFigure from '@/components/ecology/CycleScoreFigure.astro'
 import WorksRegisterSection from '@/components/ecology/WorksRegisterSection.astro'
 import { buildCycleModel } from '@/lib/ecology/cycle-model'
+import { buildProgramme, conveningView, loadRelayExtras, rankedScores } from '@/lib/ecology/convening'
+import { evidenceUrl } from '@/lib/ecology/relay'
 import {
   BULLETIN_DISPLAY_MAX,
   inCycle,
@@ -63,6 +65,21 @@ const phase = W.cycle.phase[cycle.phase]
 const bulletins = PRACTICES.map((id) => ({ id, ...W.practices[id], bulletin: loadBulletin(id) }))
 const presentations = loadPresentations()
 const closing = loadClosingReports()
+// The convening and the programme (2026-10-07) come from the Middle's relay, read loosely: an
+// absent or unreadable relay, or one without these sections, leaves the convening "not recorded"
+// and the programme on the site's own record — never a failed build.
+const extras = loadRelayExtras()
+const conv = conveningView(cycle, extras)
+const programme = buildProgramme(extras.programme, cycle, presentations)
+const name = (p: (typeof PRACTICES)[number]) => W.practices[p].name
+const questionKicker =
+  cycle.phase === 'convening'
+    ? W.cycle.presentedQuestionKicker
+    : cycle.source === 'seed'
+      ? W.cycle.seededQuestionKicker
+      : cycle.source === 'convening'
+        ? W.cycle.conveningQuestionKicker(cycle.cycle - 1)
+        : W.cycle.continuingQuestionKicker
 // The partitur and the trail show the CURRENT cycle only — their labels say so, and the filter
 // is what makes the labels true. Since 2026-09-02 the loader reads all three practices'
 // conventions (the Field's artifacts/, the Atelier's window/, the Studio's works — v3.ts says
@@ -131,9 +148,7 @@ const blockClass: Record<string, string> = {
         <div class="mt-5 border-t border-line pt-4">
           {cycle.source !== 'defaults' && cycle.question ? (
             <>
-              <p class={kicker}>
-                {cycle.source === 'seed' ? W.cycle.seededQuestionKicker : W.cycle.continuingQuestionKicker}
-              </p>
+              <p class={kicker}>{questionKicker}</p>
               <p class="mt-2 text-lg leading-snug text-fg">{cycle.question}</p>
             </>
           ) : (
@@ -151,6 +166,94 @@ const blockClass: Record<string, string> = {
             </>
           )}
           <p class="mt-3 font-mono text-mono text-fg-faint">{W.cycle.rhythm(cycle.sessionsPerPractice)}</p>
+        </div>
+      )
+    }
+
+    {/* The convening (2026-10-07): only while the house is in it. Every line is the relay's own
+        record, every date the one the cycle clock acts on (src/lib/ecology/convening.ts). */}
+    {
+      conv && (
+        <div class="mt-5 border-t border-line pt-4">
+          <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <h3 class={kicker}>{W.convening.kicker(conv.afterCycle)}</h3>
+            <span class="font-mono text-mono text-fg-faint">{W.convening.openedLine(conv.opened)}</span>
+          </div>
+          {conv.recorded ? (
+            <div class="mt-3 grid gap-5 md:grid-cols-2">
+              <div>
+                <p class="font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">{W.convening.proposals}</p>
+                {conv.proposals.length === 0 ? (
+                  <p class="mt-2 text-sm text-fg-faint">{W.convening.none}</p>
+                ) : (
+                  <ul class="mt-2 space-y-3">
+                    {conv.proposals.map((p) => (
+                      <li class="border-l border-line pl-3">
+                        <p class="leading-snug text-fg">{p.question}</p>
+                        {p.docksOnto && (
+                          <p class="mt-1 text-sm leading-relaxed text-fg-muted">
+                            <span class="font-mono text-mono-sm text-fg-faint">{W.convening.docksOnto}</span> {p.docksOnto}
+                          </p>
+                        )}
+                        <p class="mt-1 flex flex-wrap gap-x-2 font-mono text-mono-sm text-fg-faint">
+                          <span>{W.convening.proposedBy(name(p.practice))}</span>
+                          {p.date && <span>· {p.date}</span>}
+                          {evidenceUrl(p.ref) && (
+                            <a class="underline hover:text-fg" href={evidenceUrl(p.ref)!}>{W.convening.source}</a>
+                          )}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div>
+                <p class="font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">{W.convening.rankings}</p>
+                {conv.rankings.length === 0 ? (
+                  <p class="mt-2 text-sm text-fg-faint">{W.convening.none}</p>
+                ) : (
+                  <ul class="mt-2 space-y-1.5">
+                    {conv.rankings.map((r) => (
+                      <li class="flex flex-wrap gap-x-2 text-sm leading-relaxed text-fg-muted">
+                        <span class="font-mono text-mono-sm text-fg">{name(r.practice)}</span>
+                        <span>{r.order.map(name).join(' › ')}</span>
+                        {evidenceUrl(r.ref) && (
+                          <a class="font-mono text-mono-sm text-fg-faint underline hover:text-fg" href={evidenceUrl(r.ref)!}>
+                            {W.convening.source}
+                          </a>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {conv.result && (
+                  <div class="mt-4 rounded-md border border-line p-3">
+                    <p class="font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">{W.convening.result}</p>
+                    <p class="mt-1.5 leading-snug text-fg">{conv.result.question}</p>
+                    <p class="mt-1.5 font-mono text-mono-sm leading-relaxed text-fg-faint">
+                      {[
+                        conv.result.proposedBy && W.convening.proposedBy(name(conv.result.proposedBy)),
+                        `${W.convening.tally(conv.result.rule)}: ${rankedScores(conv.result).map((s) => `${name(s.practice)} ${s.score}`).join(', ')}`,
+                        W.convening.talliedOn(conv.result.talliedOn),
+                      ]
+                        .filter(Boolean)
+                        .join(' · ')}
+                    </p>
+                    {conv.stands && conv.opensOn ? (
+                      <p class="mt-2 text-sm leading-relaxed text-fg">{W.convening.opensOn(conv.next, conv.opensOn)}</p>
+                    ) : (
+                      conv.objected && <p class="mt-2 text-sm leading-relaxed text-fg-muted">{W.convening.objected(conv.objected)}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <p class={empty}>{W.convening.notRecorded}</p>
+          )}
+          {!conv.opensOn && (
+            <p class="mt-3 font-mono text-mono text-fg-faint">{W.convening.fallback(conv.next, conv.fallbackOn, conv.continuing)}</p>
+          )}
         </div>
       )
     }
@@ -311,6 +414,73 @@ const blockClass: Record<string, string> = {
     </ul>
   </section>
 
+  {/* ── The programme (2026-10-07) ──────────────────────────────────────────── */}
+  {/* The chain of cycles, oldest first, from the Middle's relay where it carries a programme and
+      from the site's own record otherwise (src/lib/ecology/convening.ts, buildProgramme). The
+      practices' "For the programme" lines are quoted with the files they were read from. */}
+  <section class="mt-12" aria-labelledby="programme-heading">
+    <h2 id="programme-heading" class={kicker}>{W.programme.kicker}</h2>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.programme.intro}</p>
+    {programme.from === 'site' && <p class="mt-2 max-w-3xl font-mono text-mono text-fg-faint">{W.programme.fromSite}</p>}
+    <ol class="mt-4 space-y-3">
+      {
+        programme.rows.map((r) => (
+          <li class={cn(panel, 'p-4 sm:p-5')}>
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span class="font-mono text-sm uppercase tracking-[0.18em] text-fg">{W.cycle.label(r.cycle)}</span>
+              {r.source && <span class="font-mono text-mono-sm text-fg-faint">{W.programme.source[r.source]}</span>}
+              {W.programme.dates(r.opened, r.closed) && (
+                <span class="font-mono text-mono-sm text-fg-faint">{W.programme.dates(r.opened, r.closed)}</span>
+              )}
+              {r.running && (
+                <Badge variant="outline" className="border-line font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-accent">
+                  {cycle.phase === 'convening' ? W.cycle.phase.convening.badge : W.programme.running}
+                </Badge>
+              )}
+            </div>
+            {r.question ? (
+              <p class="mt-2 leading-snug text-fg">{r.question}</p>
+            ) : (
+              r.source === 'defaults' && <p class="mt-2 text-sm leading-relaxed text-fg-muted">{W.programme.defaultThemes}</p>
+            )}
+            {r.findings.length > 0 && (
+              <div class="mt-3">
+                <p class="font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">{W.programme.findings}</p>
+                <ul class="mt-1.5 space-y-1.5">
+                  {r.findings.map((f) => (
+                    <li class="border-l border-line pl-3 text-sm leading-relaxed text-fg-muted">
+                      <span class="font-mono text-mono-sm text-fg">{name(f.practice)}</span>
+                      <span class="text-fg-faint"> — </span>
+                      {f.line}
+                      {f.href && (
+                        <>
+                          {' '}<a class="font-mono text-mono-sm text-fg-faint underline hover:text-fg" href={f.href}>{W.programme.evidence}</a>
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {r.findings.length === 0 && r.presented.length > 0 && (
+              <p class="mt-2 flex flex-wrap gap-x-2 gap-y-1 text-sm leading-relaxed text-fg-muted">
+                <span class="font-mono text-mono-sm uppercase tracking-[0.14em] text-fg-faint">{W.programme.presented}</span>
+                {r.presented.map((p, i) => (
+                  <span>
+                    <a class="hover:underline" href={p.href.startsWith('http') ? p.href : url(p.href)}>
+                      {p.title ?? W.presentations.entryLabel(r.cycle, name(p.practice))}
+                    </a>
+                    <span class="font-mono text-mono-sm text-fg-faint"> ({name(p.practice)}){i < r.presented.length - 1 ? ' ·' : ''}</span>
+                  </span>
+                ))}
+              </p>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
   {/* ── Presentations ────────────────────────────────────────────────────── */}
   <section class="mt-12" aria-label="Presentations">
     <p class={kicker}>{W.presentations.kicker}</p>
@@ -328,6 +498,11 @@ const blockClass: Record<string, string> = {
                     {W.presentations.entryLabel(e.cycle, W.practices[e.practice].name)}
                   </a>
                   <p class="mt-1 font-mono text-mono text-fg-faint">{W.presentations.fileCount(e.files)}</p>
+                  {e.paperHref && (
+                    <a class="mt-1 block font-mono text-mono text-fg-muted underline decoration-line underline-offset-4 hover:text-fg" href={url(e.paperHref)}>
+                      {W.presentations.paperLabel}
+                    </a>
+                  )}
                 </CardContent>
               </Card>
             </li>

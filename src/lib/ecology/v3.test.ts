@@ -14,6 +14,7 @@ import {
   loadCycle,
   loadEncounters,
   loadLetters,
+  loadFieldPapers,
   loadPresentations,
   loadSessionNotes,
   PRACTICES,
@@ -47,8 +48,62 @@ describe('loadCycle', () => {
   it('loads the committed cycle state of this repo', () => {
     const c = loadCycle()
     expect(c.cycle).toBeGreaterThanOrEqual(0)
-    expect(['closing', 'working', 'presenting']).toContain(c.phase)
+    expect(['closing', 'working', 'presenting', 'convening']).toContain(c.phase)
     for (const p of PRACTICES) expect(c.defaults[p].length).toBeGreaterThan(0)
+    // the convening block stands exactly while the house is in the convening (2026-10-07)
+    if (c.phase === 'convening') expect(c.convening?.afterCycle).toBe(c.cycle)
+    else expect(c.convening).toBeNull()
+  })
+
+  it('reads a convening: the presented cycle stays the cycle, and the block names it', () => {
+    const root = fixtureRoot()
+    const continuing = { question: 'Missing Data Art', since: '2026-10-03' }
+    writeCycle(root, {
+      cycle: 6,
+      phase: 'convening',
+      source: 'continuing',
+      question: 'Missing Data Art, read through human extinction by AI',
+      continuing,
+      convening: { after_cycle: 6, opened: '2026-10-10' },
+    })
+    const c = loadCycle(root)
+    expect(c.phase).toBe('convening')
+    expect(c.cycle).toBe(6)
+    expect(c.question).toBe('Missing Data Art, read through human extinction by AI')
+    expect(c.convening).toEqual({ afterCycle: 6, opened: '2026-10-10', objected: null })
+    writeCycle(root, { cycle: 6, phase: 'convening', source: 'continuing', question: 'q', continuing, convening: { after_cycle: 6, opened: '2026-10-10', objected: '2026-10-12' } })
+    expect(loadCycle(root).convening?.objected).toBe('2026-10-12')
+  })
+
+  it('refuses a convening phase without its block, a block for another cycle, and a block left behind', () => {
+    const root = fixtureRoot()
+    const continuing = { question: 'q', since: '2026-10-03' }
+    const base = { cycle: 6, source: 'continuing', question: 'q', continuing }
+    writeCycle(root, { ...base, phase: 'convening' })
+    expect(() => loadCycle(root)).toThrow(/requires a convening block/)
+    writeCycle(root, { ...base, phase: 'convening', convening: { after_cycle: 5, opened: '2026-10-10' } })
+    expect(() => loadCycle(root)).toThrow(/after_cycle must equal cycle/)
+    writeCycle(root, { ...base, phase: 'convening', convening: { after_cycle: 6, opened: 'soon' } })
+    expect(() => loadCycle(root)).toThrow(/convening.opened must be a date/)
+    writeCycle(root, { ...base, phase: 'convening', convening: { after_cycle: 6, opened: '2026-10-10', objected: 'yes' } })
+    expect(() => loadCycle(root)).toThrow(/convening.objected must be a date/)
+    writeCycle(root, { ...base, phase: 'working', convening: { after_cycle: 6, opened: '2026-10-10' } })
+    expect(() => loadCycle(root)).toThrow(/outside the convening phase/)
+  })
+
+  it('reads a cycle the convening chose, and every practice works its question', () => {
+    const root = fixtureRoot()
+    writeCycle(root, {
+      cycle: 7,
+      source: 'convening',
+      question: 'What the archive refuses to count',
+      continuing: { question: 'Missing Data Art', since: '2026-10-03' },
+    })
+    const c = loadCycle(root)
+    expect(c.source).toBe('convening')
+    for (const p of PRACTICES) expect(questionFor(c, p)).toBe('What the archive refuses to count')
+    writeCycle(root, { source: 'convening', question: null })
+    expect(() => loadCycle(root)).toThrow(/requires a question/)
   })
 
   it('rejects an unknown phase — the entrance must not guess the house clock', () => {
@@ -148,6 +203,44 @@ describe('loadPresentations', () => {
     expect(entries.find((e) => e.practice === 'field')?.href).toContain(
       'github.com/frankbueltge/field-research',
     )
+  })
+
+  it("links the Field's paper where its presentation carries one, and only the Field's", () => {
+    const root = fixtureRoot()
+    const f6 = path.join(root, 'public/field/presentations/cycle-006')
+    const f5 = path.join(root, 'public/field/presentations/cycle-005')
+    const s6 = path.join(root, 'public/studio/presentations/cycle-006')
+    for (const d of [f6, f5, s6]) {
+      fs.mkdirSync(d, { recursive: true })
+      fs.writeFileSync(path.join(d, 'index.html'), '<!doctype html>')
+    }
+    fs.writeFileSync(path.join(f6, 'paper.md'), '# A preprint\n')
+    fs.writeFileSync(path.join(s6, 'paper.md'), '# not the Field\n')
+    const entries = loadPresentations(root)
+    expect(entries.find((e) => e.practice === 'field' && e.cycle === 6)?.paperHref).toBe('/field/papers/cycle-006/')
+    expect(entries.find((e) => e.practice === 'field' && e.cycle === 5)?.paperHref).toBeNull()
+    expect(entries.find((e) => e.practice === 'studio')?.paperHref).toBeNull()
+    expect(loadFieldPapers(root)).toEqual([
+      {
+        cycle: 6,
+        dir: 'cycle-006',
+        file: 'public/field/presentations/cycle-006/paper.md',
+        href: '/field/papers/cycle-006/',
+      },
+    ])
+  })
+})
+
+describe('loadFieldPapers', () => {
+  it('finds none before the first paper lands — and then no page is built', () => {
+    expect(loadFieldPapers(fixtureRoot())).toEqual([])
+  })
+
+  it('lists the papers the mirror carries in this repository, each with its page', () => {
+    for (const p of loadFieldPapers()) {
+      expect(fs.existsSync(p.file)).toBe(true)
+      expect(p.href).toBe(`/field/papers/${p.dir}/`)
+    }
   })
 })
 

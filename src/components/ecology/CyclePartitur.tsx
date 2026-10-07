@@ -36,6 +36,7 @@ import * as React from 'react'
 import { buildSegments, type Segmented } from '@/lib/dataviz/stepper'
 import {
   axisTicks,
+  bandLabelled,
   bandSpan,
   LANES,
   placeMarks,
@@ -44,6 +45,7 @@ import {
   type LaneId,
   type MarkKind,
 } from '@/lib/ecology/cycle-model'
+import type { CyclePhase } from '@/lib/ecology/v3'
 import type { FocusState } from '@/lib/tour/types'
 
 import MarkCard, { type MarkCardWording } from './MarkCard'
@@ -73,7 +75,8 @@ export interface PartiturWording {
   axis: { opened: string; newest: string; note: string }
   kinds: Record<MarkKind, string>
   kindWhat: Record<MarkKind, string>
-  band: string
+  /** one label per phase the model bands — two during a convening (2026-10-07) */
+  band: Partial<Record<CyclePhase, string>>
   card: MarkCardWording
   zoom: { group: string; in: string; out: string; reset: string; levelPrefix: string }
   figureLabel: string
@@ -378,10 +381,11 @@ export default function CyclePartitur({ model, wording, readoutId, figureId }: C
             })}
 
           {model.bands.map((band) => {
+            if (!bandLabelled(model, band, view)) return null
             const span = bandSpan(model, band, view)
             return (
               <text key={`${band.phase}-label`} className="t-note t-dim" x={n(span.x + 6)} y={bandLabelY}>
-                {wording.band}
+                {wording.band[band.phase]}
               </text>
             )
           })}

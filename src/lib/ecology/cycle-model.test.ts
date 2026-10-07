@@ -11,6 +11,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   axisTicks,
   axisX,
+  bandLabelled,
   bandSpan,
   BOX,
   buildCycleModel,
@@ -176,6 +177,33 @@ describe('buildCycleModel', () => {
     const span = bandSpan(model, model.bands[0]!, IDENTITY_VIEW)
     expect(span.x).toBeCloseTo(BOX.laneX0, 5)
     expect(span.x + span.w).toBeCloseTo(BOX.spanX1, 5)
+    expect(bandLabelled(model, model.bands[0]!, IDENTITY_VIEW)).toBe(true)
+  })
+
+  it('bands a convening from the day it opened, and never claims the whole cycle was spent convening', () => {
+    const convening = { ...INPUT.cycle, phase: 'convening' as const, convening: { afterCycle: 1, opened: '2026-09-12', objected: null } }
+    const model = buildCycleModel({ ...INPUT, cycle: convening })
+    // the opening day is a record of the house: the ruler reaches it, and the convening's own
+    // stretch gets one day so it can be drawn at all
+    expect(model.axis.end).toBe('2026-09-13')
+    expect(model.bands).toEqual([
+      { phase: 'working', from: '2026-08-30', to: '2026-09-12' },
+      { phase: 'convening', from: '2026-09-12', to: '2026-09-13' },
+    ])
+    expect(axisTicks(model, IDENTITY_VIEW).map((t) => t.date)).toContain('2026-09-12')
+    // one day of a fourteen-day ruler is too narrow for its words until the ruler is zoomed
+    expect(bandLabelled(model, model.bands[0]!, IDENTITY_VIEW)).toBe(true)
+    expect(bandLabelled(model, model.bands[1]!, IDENTITY_VIEW)).toBe(false)
+    expect(bandLabelled(model, model.bands[1]!, { k: 6, x: -7108 })).toBe(true)
+    // a later record carries the ruler past the opening day, and the convening runs to it
+    const later = buildCycleModel({
+      ...INPUT,
+      cycle: { ...convening, convening: { afterCycle: 1, opened: '2026-08-31', objected: null } },
+    })
+    expect(later.bands).toEqual([
+      { phase: 'working', from: '2026-08-30', to: '2026-08-31' },
+      { phase: 'convening', from: '2026-08-31', to: '2026-09-01' },
+    ])
   })
 })
 
