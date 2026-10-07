@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Passes</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1c1a;--mute:#6b665d;--line:#cfc8ba;--card:#fbf9f4;--river:#2f5d73;--right:#3d7a4a;--wrong:#b0412e;--silent:#b9b2a4;--accent:#2f5d73}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171716;--ink:#e9e5dc;--mute:#9d978c;--line:#3a3833;--card:#201f1d;--river:#8fbfd6;--right:#7cbf88;--wrong:#e07a64;--silent:#5b574f;--accent:#8fbfd6}}
+:root[data-theme="dark"]{--bg:#171716;--ink:#e9e5dc;--mute:#9d978c;--line:#3a3833;--card:#201f1d;--river:#8fbfd6;--right:#7cbf88;--wrong:#e07a64;--silent:#5b574f;--accent:#8fbfd6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+main{max-width:1060px;margin:0 auto;padding:22px 16px 60px}
+h1{font-weight:normal;font-size:2.1rem;margin:0 0 4px;letter-spacing:.01em}
+.lede{margin:0 0 18px;color:var(--mute);max-width:46em}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.82rem}
+#river{width:100%;height:120px;display:block;background:var(--card);border:1px solid var(--line)}
+.cap{color:var(--mute);font-size:.85rem;margin:4px 0 16px}
+.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:12px}
+.tabs button{font:inherit;font-size:.92rem;padding:8px 6px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;text-align:left;line-height:1.25}
+.tabs button b{display:block;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem;color:var(--mute);font-weight:normal}
+.tabs button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 -3px 0 var(--accent)}
+.stage{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;align-items:start}
+.ear{background:var(--card);border:1px solid var(--line);padding:8px}
+.ear img{width:100%;height:auto;display:block;background:#fff}
+.play{display:flex;gap:10px;align-items:center;margin:8px 0 2px}
+.play button{font:inherit;padding:6px 14px;border:1px solid var(--accent);background:var(--accent);color:var(--bg);cursor:pointer}
+.bar{flex:1;height:6px;background:var(--line);position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent)}
+.note{margin:6px 0 0;font-size:.95rem}
+table{border-collapse:collapse;width:100%}
+.qa td{padding:6px 4px;border-top:1px solid var(--line);vertical-align:top;font-size:.93rem}
+.qa td:last-child{text-align:right;white-space:nowrap}
+.v{display:inline-block;min-width:4.6em;text-align:center;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.75rem;color:var(--bg)}
+.v.right{background:var(--right)}.v.wrong{background:var(--wrong)}.v.silent{background:var(--silent);color:var(--ink)}
+h2{font-weight:normal;font-size:1.3rem;margin:34px 0 8px}
+.matrix{overflow-x:auto}
+.matrix table{min-width:520px}
+.matrix th,.matrix td{border:1px solid var(--line);padding:6px;text-align:center;font-size:.86rem}
+.matrix th{font-weight:normal;color:var(--mute)}
+.matrix td.right{background:color-mix(in srgb,var(--right) 22%,transparent)}
+.matrix td.wrong{background:color-mix(in srgb,var(--wrong) 30%,transparent)}
+.matrix td.silent{color:var(--mute)}
+.matrix td.miss{outline:2px dashed var(--ink);outline-offset:-4px}
+.matrix tr.home td{font-weight:bold}
+.legend{font-size:.85rem;color:var(--mute);margin-top:6px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+p{max-width:46em}
+a{color:var(--accent)}
+@media (max-width:760px){.stage{grid-template-columns:1fr}.tabs{grid-template-columns:repeat(3,1fr)}.cols{grid-template-columns:1fr}h1{font-size:1.7rem}}
+</style>
+</head>
+<body>
+<main>
+<h1>What Passes</h1>
+<p class="lede">One mountain river, four months of it. One ear, built by this practice to listen to church bells. Six ways of turning the river into sound for that ear. Choose a way and listen; the ear's picture and what the practice could answer through it change with it. The river does not.</p>
+
+<canvas id="river" aria-label="Merced River discharge, April to July 2026"></canvas>
+<div class="cap">The Merced at Happy Isles, Yosemite: discharge every 15 minutes, 1 April – 31 July 2026 (USGS 11264500). Drawn here directly, which is a seventh translation. <span id="hover" class="mono"></span></div>
+
+<div class="tabs" id="tabs" role="group" aria-label="Translations"></div>
+
+<div class="stage">
+ <div class="ear">
+  <img id="img" alt="The bell ear's spectrogram and waveform for this translation">
+  <div class="play"><button id="playbtn" type="button">Play</button><div class="bar"><i id="prog"></i></div><span id="dur" class="mono"></span></div>
+  <p class="note" id="note"></p>
+ </div>
+ <div>
+  <table class="qa"><tbody id="qa"></tbody></table>
+  <p class="legend">Answers are the practice's, written before the river's own tool was run. Each reading was committed before the next translation was opened.</p>
+ </div>
+</div>
+
+<h2>All six, at once</h2>
+<div class="matrix"><table id="matrix"></table></div>
+<p class="legend">Green: answer agrees with the river's own tool. Red: disagrees. Grey dash: the translation let nothing through to answer with. Dashed outline: the practice had forecast something else for its own reading, before the river arrived.</p>
+
+<div class="cols">
+ <div>
+  <h2>What passed</h2>
+  <p>The day passed every translation. The month passed exactly the three that kept the level, as forecast. Of 18 definite answers, 17 agree with the river's own tool. The hour of the daily peak, midnight in this record, passed none: no picture the ear makes can read a phase inside a day.</p>
+ </div>
+ <div>
+  <h2>What did not</h2>
+  <p>A single day in late July that breaks its fortnight. Five translations showed it. The one built to show change (A5) erased it: it scaled July to May's largest step, and the ear, which draws one sample in twenty because a bell recording has 44,100 a second, drew one value every five hours. Every forecast miss is in that column. The practice foresaw the regular and not the singular.</p>
+ </div>
+</div>
+<p class="legend">Sources and method: <a href="https://github.com/frankbueltge/error-as-method/tree/main/works/2026-10-07-what-passes">the experiment's directory</a> (pre-registration, adapters, the six readings in git order, scores). Data: U.S. Geological Survey, NWIS instantaneous values, site 11264500, public domain; provisional values subject to revision.</p>
+</main>
+<script src="data.js"></script>
+<script src="adapters.js"></script>
+<script>
+(function(){
+ const Q=[["R1_day","Does the river have a daily cycle?"],["R2_season","In which month is it highest?"],["R3_coupling","Is the daily swing largest when the river is highest?"],["R4_irregular","Is there a day that breaks its fortnight?"],["R5_peak_hour","At what hour does it usually peak?"]];
+ const ORDER=["A1","A2","A3","A4","A5","A6"];
+ const tabs=document.getElementById('tabs');let cur='A1',ctx=null,src=null,raf=0,buf={},A=null;
+ ORDER.forEach(a=>{const b=document.createElement('button');b.type='button';b.dataset.a=a;
+  const d=DATA.dur[a];b.innerHTML='<b>'+a+' · '+(d<2?d.toFixed(2):Math.round(d))+' s</b>'+DATA.label[a];
+  b.addEventListener('click',()=>{stop();show(a)});tabs.appendChild(b)});
+ function verdict(c){return c.verdict==='silent'?'silent':c.verdict}
+ function show(a){cur=a;tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.a===a));
+  document.getElementById('img').src='seen/'+a+'-S.png';
+  document.getElementById('note').textContent=DATA.note[a];
+  document.getElementById('dur').textContent=DATA.dur[a].toFixed(DATA.dur[a]<2?3:1)+' s';
+  const tb=document.getElementById('qa');tb.innerHTML='';
+  Q.forEach(([k,t])=>{const c=DATA.cells[a+'.'+k];const tr=document.createElement('tr');
+   const ans=c.answer==='-'?'nothing passes':c.answer;
+   tr.innerHTML='<td>'+t+'<br><span class="mono">'+ans+(c.by?' · by '+(c.by==='wave'?'the drawn line':'pitch')+'':'')+'</span></td><td><span class="v '+verdict(c)+'">'+(c.verdict==='silent'?'–':c.verdict)+'</span></td>';
+   tb.appendChild(tr)});}
+ function stop(){if(src){try{src.stop()}catch(e){}src=null}cancelAnimationFrame(raf);document.getElementById('prog').style.width='0';document.getElementById('playbtn').textContent='Play'}
+ document.getElementById('playbtn').addEventListener('click',()=>{
+  if(src){stop();return}
+  ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+  if(!A)A=WP.adapters(DATA.q);
+  if(!buf[cur]){const s=WP.toInt16(A[cur]);const b=ctx.createBuffer(1,s.length,44100);const ch=b.getChannelData(0);for(let i=0;i<s.length;i++)ch[i]=s[i]/32768;buf[cur]=b}
+  src=ctx.createBufferSource();src.buffer=buf[cur];const g=ctx.createGain();g.gain.value=0.5;src.connect(g).connect(ctx.destination);
+  const t0=ctx.currentTime,d=buf[cur].duration;src.start();document.getElementById('playbtn').textContent='Stop';
+  src.onended=()=>stop();
+  (function tick(){const p=Math.min(1,(ctx.currentTime-t0)/d);document.getElementById('prog').style.width=(p*100)+'%';if(src&&p<1)raf=requestAnimationFrame(tick)})();
+ });
+ // matrix
+ const m=document.getElementById('matrix');let h='<tr><th></th>'+Q.map(q=>'<th>'+q[0].split('_')[0]+'<br>'+q[0].split('_')[1].replace('peak','peak ')+'</th>').join('')+'</tr>';
+ h+='<tr class="home"><td>river\'s own tool</td>'+Q.map(q=>'<td>'+DATA.home[q[0]]+(q[0]==='R5_peak_hour'?':00':'')+'</td>').join('')+'</tr>';
+ ORDER.forEach(a=>{h+='<tr><td>'+a+' '+DATA.label[a]+'</td>'+Q.map(q=>{const c=DATA.cells[a+'.'+q[0]];
+  return '<td class="'+verdict(c)+(c.forecast_hit?'':' miss')+'">'+(c.answer==='-'?'–':c.answer)+'</td>'}).join('')+'</tr>'});
+ m.innerHTML=h;
+ // river
+ const cv=document.getElementById('river');
+ function draw(){const r=window.devicePixelRatio||1,w=cv.clientWidth,hh=cv.clientHeight;cv.width=w*r;cv.height=hh*r;const g=cv.getContext('2d');g.scale(r,r);
+  const cs=getComputedStyle(document.documentElement);g.clearRect(0,0,w,hh);
+  const q=DATA.q,mx=Math.max(...q),pad=6;g.strokeStyle=cs.getPropertyValue('--line');g.fillStyle=cs.getPropertyValue('--mute');g.font='11px Georgia,serif';
+  ['Apr','May','Jun','Jul'].forEach((mo,i)=>{const x=[0,30,61,91][i]/122*w;g.beginPath();g.moveTo(x,0);g.lineTo(x,hh);g.stroke();g.fillText(mo,x+4,13)});
+  g.strokeStyle=cs.getPropertyValue('--river');g.lineWidth=1;g.beginPath();
+  for(let i=0;i<q.length;i++){const x=i/(q.length-1)*w,y=hh-pad-(q[i]/mx)*(hh-2*pad-12);i?g.lineTo(x,y):g.moveTo(x,y)}g.stroke();}
+ draw();window.addEventListener('resize',draw);
+ cv.addEventListener('mousemove',e=>{const b=cv.getBoundingClientRect(),i=Math.round((e.clientX-b.left)/b.width*(DATA.q.length-1));
+  if(i>=0&&i<DATA.q.length){const t=new Date(Date.UTC(2026,3,1)+i*9e5);document.getElementById('hover').textContent=t.toISOString().slice(0,16).replace('T',' ')+' PDT · '+DATA.q[i]+' ft³/s'}});
+ show('A1');
+})();
+</script>
+</body>
+</html>

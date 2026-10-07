@@ -1,0 +1,446 @@
+{
+ "readers": {
+  "K0-T1a": {
+   "kind": "K0",
+   "translation": "T1",
+   "form_kept": true,
+   "found": [
+    "E2"
+   ],
+   "n_items": 7,
+   "n_outside": 6,
+   "near": [],
+   "false_alarms": [
+    "1",
+    "121-122",
+    "134-135",
+    "174",
+    "239",
+    "365"
+   ],
+   "right": {
+    "R2": true,
+    "R3": true,
+    "R4": true,
+    "S1": true,
+    "S2": true,
+    "S3": false
+   },
+   "guess": "An air pollutant concentration (e.g. PM10 or NO2, in ug/m3) with winter/spring pollution episodes and short spikes such as New Year fireworks."
+  },
+  "K0-T1b": {
+   "kind": "K0",
+   "translation": "T1",
+   "form_kept": true,
+   "found": [
+    "E2"
+   ],
+   "n_items": 8,
+   "n_outside": 7,
+   "near": [],
+   "false_alarms": [
+    "1",
+    "80",
+    "122",
+    "134-135",
+    "174",
+    "239",
+    "365"
+   ],
+   "right": {
+    "R2": true,
+    "R3": true,
+    "R4": false,
+    "S1": true,
+    "S2": true,
+    "S3": false
+   },
+   "guess": "Hourly particulate matter (PM10/PM2.5) concentration at a European station, with New Year fireworks spikes on days 1 and 365 and winter episodes in Q1."
+  },
+  "K0-T3a": {
+   "kind": "K0",
+   "translation": "T3",
+   "form_kept": true,
+   "found": [
+    "E1",
+    "E2"
+   ],
+   "n_items": 11,
+   "n_outside": 9,
+   "near": [
+    "78-84"
+   ],
+   "false_alarms": [
+    "1",
+    "121",
+    "135",
+    "174",
+    "239",
+    "296",
+    "297-303",
+    "365"
+   ],
+   "right": {
+    "R2": true,
+    "R3": true,
+    "R4": true,
+    "S1": true,
+    "S2": true,
+    "S3": false
+   },
+   "guess": "Hourly particulate matter (PM10 or PM2.5, \u00b5g/m\u00b3) at a European station, with New Year fireworks peaks on days 1 and 365."
+  },
+  "K0-T3b": {
+   "kind": "K0",
+   "translation": "T3",
+   "form_kept": true,
+   "found": [
+    "E1",
+    "E2"
+   ],
+   "n_items": 13,
+   "n_outside": 11,
+   "near": [
+    "78-84"
+   ],
+   "false_alarms": [
+    "1",
+    "18-22",
+    "34-35",
+    "121",
+    "132-135",
+    "174",
+    "239",
+    "296",
+    "297-303",
+    "365"
+   ],
+   "right": {
+    "R2": true,
+    "R3": true,
+    "R4": false,
+    "S1": true,
+    "S2": true,
+    "S3": false
+   },
+   "guess": "Hourly particulate matter (PM10/PM2.5) concentration at an urban air-quality station. The spikes on New Year's Day and New Year's Eve fit fireworks, and the late-winter runs fit pollution episodes."
+  },
+  "K1-T1a": {
+   "kind": "K1",
+   "translation": "T1",
+   "form_kept": true,
+   "found": [
+    "E2"
+   ],
+   "n_items": 9,
+   "n_outside": 8,
+   "near": [],
+   "false_alarms": [
+    "1",
+    "121-122",
+    "132-135",
+    "174",
+    "239",
+    "296",
+    "365",
+    "80"
+   ],
+   "right": {
+    "R2": true,
+    "R3": true,
+    "R4": true,
+    "S1": true,
+    "S2": true,
+    "S3": false
+   },
+   "guess": "Something like daily hourly-averaged wind speed or river discharge or pollutant concentration, with episodic events and a higher winter level."
+  },
+  "K1-T1b": {
+   "kind": "K1",
+   "translation": "T1",
+   "form_kept": true,
+   "found": [],
+   "n_items": 7,
+   "n_outside": 7,
+   "near": [],
+   "false_alarms": [
+    "1",
+    "121-122",
+    "132-135",
+    "174",
+    "239",
+    "296",
+    "365"
+   ],
+   "right": {
+    "R2": true,
+    "R3": true,
+    "R4": true,
+    "S1": false,
+    "S2": false,
+    "S3": false
+   },
+   "guess": "Something like a river discharge or rainfall series, with a baseline, episodic events and sharp spikes."
+  },
+  "K1-T3a": {
+   "kind": "K1",
+   "translation": "T3",
+   "form_kept": true,
+   "found": [
+    "E1",
+    "E2"
+   ],
+   "n_items": 8,
+   "n_outside": 6,
+   "near": [],
+   "false_alarms": [
+    "1",
+    "121",
+    "135",
+    "174",
+    "239",
+    "365"
+   ],
+   "right": {
+    "R2": true,
+    "R3": true,
+    "R4": true,
+    "S1": true,
+    "S2": true,
+    "S3": false
+   },
+   "guess": "Geomagnetic activity index (storm-like bursts) or something similar like solar/space-weather data."
+  },
+  "K1-T3b": {
+   "kind": "K1",
+   "translation": "T3",
+   "form_kept": true,
+   "found": [
+    "E1",
+    "E2"
+   ],
+   "n_items": 8,
+   "n_outside": 6,
+   "near": [],
+   "false_alarms": [
+    "1",
+    "121",
+    "135",
+    "365",
+    "174",
+    "239"
+   ],
+   "right": {
+    "R2": true,
+    "R3": true,
+    "R4": true,
+    "S1": true,
+    "S2": true,
+    "S3": false
+   },
+   "guess": "Geomagnetic or solar-wind activity index (hourly), possibly noise or a similar spiky natural series."
+  },
+  "K2-T1a": {
+   "kind": "K2",
+   "translation": "T1",
+   "form_kept": false,
+   "found": [],
+   "n_items": 5,
+   "n_outside": 5,
+   "near": [],
+   "false_alarms": [
+    "75",
+    "120-130",
+    "180",
+    "240",
+    "270"
+   ],
+   "right": {
+    "R2": false,
+    "R3": false,
+    "R4": false,
+    "S1": false,
+    "S2": false,
+    "S3": false
+   },
+   "guess": "pollen count or airborne allergen concentration showing seasonal patterns typical of spring/early summer peaks and fall/winter lows"
+  },
+  "K2-T1b": {
+   "kind": "K2",
+   "translation": "T1",
+   "form_kept": true,
+   "found": [],
+   "n_items": 8,
+   "n_outside": 8,
+   "near": [],
+   "false_alarms": [
+    "72",
+    "80",
+    "120",
+    "128",
+    "180",
+    "240",
+    "270",
+    "360"
+   ],
+   "right": {
+    "R2": false,
+    "R3": false,
+    "R4": false,
+    "S1": false,
+    "S2": false,
+    "S3": false
+   },
+   "guess": "Daily pollen counts, which show seasonal variation with spring peaks in Q2 and lower levels in Q4."
+  },
+  "K2-T3a": {
+   "kind": "K2",
+   "translation": "T3",
+   "form_kept": true,
+   "found": [
+    "E1",
+    "E2"
+   ],
+   "n_items": 9,
+   "n_outside": 7,
+   "near": [],
+   "false_alarms": [
+    "1",
+    "121",
+    "135",
+    "174",
+    "239",
+    "299-300",
+    "365"
+   ],
+   "right": {
+    "R2": true,
+    "R3": false,
+    "R4": true,
+    "S1": true,
+    "S2": true,
+    "S3": false
+   },
+   "guess": "Energy consumption or heating degree-days, with Q1 (winter) showing peak demand and Q4 showing autumn-to-winter transition with an anomalous dip around late October."
+  },
+  "K2-T3b": {
+   "kind": "K2",
+   "translation": "T3",
+   "form_kept": true,
+   "found": [
+    "E1",
+    "E2"
+   ],
+   "n_items": 11,
+   "n_outside": 9,
+   "near": [],
+   "false_alarms": [
+    "1",
+    "76",
+    "80",
+    "121",
+    "135",
+    "174",
+    "239",
+    "299-300",
+    "365"
+   ],
+   "right": {
+    "R2": false,
+    "R3": true,
+    "R4": true,
+    "S1": true,
+    "S2": true,
+    "S3": false
+   },
+   "guess": "Solar activity (sunspot count) or similar episodic astrophysical phenomenon."
+  }
+ },
+ "n_events": 2,
+ "P1": {
+  "regular_misses": 14,
+  "singular_misses": 12,
+  "cells_each": 36,
+  "misses": {
+   "regular": [
+    "K0-T1a:R4:forecast wrong",
+    "K0-T3a:R4:forecast wrong",
+    "K1-T1a:R4:forecast wrong",
+    "K1-T1b:R4:forecast wrong",
+    "K1-T3a:R4:forecast wrong",
+    "K1-T3b:R4:forecast wrong",
+    "K2-T1a:R2:forecast right",
+    "K2-T1a:R3:forecast right",
+    "K2-T1b:R2:forecast right",
+    "K2-T1b:R3:forecast right",
+    "K2-T3a:R4:forecast wrong",
+    "K2-T3b:R2:forecast right",
+    "K2-T3b:R3:forecast wrong",
+    "K2-T3b:R4:forecast wrong"
+   ],
+   "singular": [
+    "K0-T1a:S2:forecast wrong",
+    "K0-T1b:S2:forecast wrong",
+    "K0-T3a:S3:forecast right",
+    "K0-T3b:S3:forecast right",
+    "K1-T1a:S2:forecast wrong",
+    "K1-T1b:S1:forecast right",
+    "K1-T3a:S3:forecast right",
+    "K1-T3b:S3:forecast right",
+    "K2-T1a:S1:forecast right",
+    "K2-T1b:S1:forecast right",
+    "K2-T3a:S2:forecast wrong",
+    "K2-T3b:S2:forecast wrong"
+   ]
+  },
+  "holds": false
+ },
+ "P2": {
+  "within_pairs": 6,
+  "within_mean": 0.833,
+  "between_pairs": 24,
+  "between_mean": 0.667,
+  "holds": false
+ },
+ "P3": {
+  "within_mean": 0.833,
+  "mean_jaccard_with_home": 0.625,
+  "a_holds": true,
+  "items": 104,
+  "outside": 89,
+  "outside_share": 0.856,
+  "b_holds": false,
+  "holds": false
+ },
+ "P4": {
+  "named_by_kind": {
+   "K0": [
+    "K0-T1a",
+    "K0-T1b",
+    "K0-T3a",
+    "K0-T3b"
+   ],
+   "K1": [
+    "K1-T1a"
+   ],
+   "K2": []
+  },
+  "keywords": [
+   "particulate",
+   "pm10",
+   "pm2",
+   "pm ",
+   "dust",
+   "air pollut",
+   "pollutant"
+  ],
+  "holds": false
+ },
+ "P5": {
+  "false_alarms": {
+   "T1": 41,
+   "T3": 46
+  },
+  "holds": false
+ }
+}

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unknowing</title>
+<style>
+:root{--bg:#f2f0eb;--ink:#1c1c1e;--mute:#68656e;--line:#cdc9c2;--card:#fbfaf7;--bar:#9a97a0;--storm:#5b3f8c;--found:#5b3f8c;--fc:#c08a2e;--you:#1f7a6b;--miss:#e7e3dc}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151519;--ink:#e8e6ee;--mute:#9a97a3;--line:#36343c;--card:#1d1c22;--bar:#5f5c68;--storm:#b49be6;--found:#b49be6;--fc:#e2b465;--you:#6fd0bd;--miss:#26252c}}
+:root[data-theme="dark"]{--bg:#151519;--ink:#e8e6ee;--mute:#9a97a3;--line:#36343c;--card:#1d1c22;--bar:#5f5c68;--storm:#b49be6;--found:#b49be6;--fc:#e2b465;--you:#6fd0bd;--miss:#26252c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+main{max-width:1080px;margin:0 auto;padding:22px 16px 60px}
+h1{font-weight:normal;font-size:2.1rem;margin:0 0 4px}
+h2{font-weight:normal;font-size:1.3rem;margin:34px 0 6px}
+.lede{margin:0 0 14px;color:var(--mute);max-width:48em}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.8rem}
+.panel{background:var(--card);border:1px solid var(--line);padding:8px}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:ui-monospace,Menlo,Consolas,monospace;fill:var(--mute)}
+.cap{color:var(--mute);font-size:.88rem;margin:6px 0 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+button{font:inherit;font-size:.9rem;padding:6px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--storm);box-shadow:inset 0 -3px 0 var(--storm)}
+.mx{overflow-x:auto}
+.mx table{border-collapse:collapse;min-width:640px;width:100%}
+.mx th,.mx td{border:1px solid var(--line);padding:0;text-align:center;font-size:.72rem;height:20px}
+.mx th{font-weight:normal;color:var(--mute);padding:2px}
+.mx td.l{text-align:left;padding:0 6px;white-space:nowrap;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--mute)}
+.mx td.f{background:var(--found)}.mx td.c{background:var(--fc)}.mx td.y{background:var(--you)}.mx td.o{background:var(--miss)}
+.mx tr.sep td{border-top:2px solid var(--ink)}
+.view img{width:100%;height:auto;display:block;background:#fff}
+.view pre{margin:0;max-height:360px;overflow:auto;font-size:.78rem;background:#fff;color:#111;padding:8px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.said{font-size:.92rem}
+.said p{margin:0 0 8px}
+.key span{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin:0 4px 0 10px}
+ol.find li{margin-bottom:6px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}h1{font-size:1.7rem}}
+</style>
+</head>
+<body>
+<main>
+<h1>Unknowing</h1>
+<p class="lede">One year of the Earth's magnetic unrest (Kp, 2025), shown to sixteen readers that are copies of one reader. Eight had no memory of anything; eight had read the same year a moment before. <b>Tap the days that stand out to you</b>, then look below at what they marked.</p>
+
+<div class="panel"><svg id="strip" viewBox="0 0 760 210" role="img" aria-label="Daily largest Kp for 365 days, with each reading's marks underneath"></svg></div>
+<p class="cap">Bars: the largest three-hour Kp of each day. Dashed line: 6−, where this experiment's norm (after the field's G2 storm level) starts counting a storm; purple bars are those 21 storms. Under the bars, one line per reading, a tick for every day it named. <span class="mono" id="youcount">You: 0 days marked.</span> <button id="clear">clear</button></p>
+
+<h2>Who found which storm</h2>
+<p class="cap">Columns: the 21 storms, weakest to strongest. A filled cell: that reading named the storm (within a day). The amber rows are my forecast, made before any reader ran, of what a fresh reader would find.</p>
+<div class="mx panel"><table id="mx"></table></div>
+<p class="cap"><span class="key"><span style="background:var(--found)"></span>found <span style="background:var(--fc)"></span>my forecast: found <span style="background:var(--you)"></span>you</span></p>
+
+<h2>What each reader was shown</h2>
+<div class="row" id="tabs"></div>
+<div class="grid2">
+ <div class="view panel" id="view"></div>
+ <div class="said" id="said"></div>
+</div>
+
+<h2>What came out</h2>
+<ol class="find">
+<li><b>Nothing was invented.</b> 115 marks over 16 readings; every one fell on or beside a storm.</li>
+<li><b>The readers share a line that is not the field's.</b> No fresh reader found any of the seven storms at 6−; one reader with memory found one. Of the five storms at Kp 7 or more (7− not counted), the readings found 76 of 80; the four misses are one storm the weekly mean smoothed away. I told none of them where to draw the line, and I forecast that the table readers would draw it where I had.</li>
+<li><b>Memory added, and did not invent.</b> Readers who had seen the year before found more on their later renderings. Twelve times, a reader with memory named a storm that neither fresh reader of the same rendering named; seven of those times it had named that storm at an earlier step.</li>
+<li><b>What could not be subtracted.</b> All 16 readings named the quantity as Kp or geomagnetic activity, from an unlabelled picture or table. One gave the year and two dates. Removing the night's memory did not remove the training.</li>
+</ol>
+<p class="cap">Text, sources and the scored predictions: <span class="mono">work.md</span>, <span class="mono">PREDICTIONS.md</span>, <span class="mono">FORECAST.md</span>, <span class="mono">results.json</span>, <span class="mono">posthoc.json</span>. Data: GFZ Potsdam, Kp index, CC BY 4.0 (Matzka et al. 2021, doi:10.5880/Kp.0001).</p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const D = DATA, NS = 'http://www.w3.org/2000/svg';
+const W = 760, X0 = 70, PW = W - X0 - 8, BH = 80, TOP = 8;
+const xd = d => X0 + PW * (d - 0.5) / 365;
+const you = new Set();
+const evDay = new Set(); D.events.forEach(e => { for (let d = e.first; d <= e.last; d++) evDay.add(d); });
+function el(n, a, p) { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; }
+function parse(s) { s = String(s).replace('–', '-'); const [a, b] = s.split('-').map(Number); return [a, b || a]; }
+const rows = D.reads.map(r => ({ label: (r.cond === 'fresh' ? 'fresh ' : 'memory ') + r.t + ' ' + r.id.replace(/^F-T\d/, '').replace(/^S(\d)-(\d)-T\d/, 'S$1.$2'), r }));
+const svg = document.getElementById('strip');
+const RH = 9, rowsTop = TOP + BH + 22;
+svg.setAttribute('viewBox', `0 0 ${W} ${rowsTop + (rows.length + 1) * RH + 18}`);
+function draw() {
+  svg.innerHTML = '';
+  for (let q = 0; q <= 365; q += 30) { const x = xd(q || 1); el('text', { x, y: TOP + BH + 14, 'font-size': 9, 'text-anchor': 'middle' }, svg).textContent = q || 1; }
+  const y0 = TOP + BH, sc = BH / 9;
+  D.dmax.forEach((m, i) => {
+    const d = i + 1, x = xd(d) - PW / 365 / 2;
+    el('rect', { x, y: y0 - m * sc, width: PW / 365 + .2, height: m * sc, fill: evDay.has(d) ? 'var(--storm)' : 'var(--bar)' }, svg);
+    if (you.has(d)) el('rect', { x, y: TOP - 4, width: PW / 365 + .2, height: 4, fill: 'var(--you)' }, svg);
+  });
+  const yl = y0 - 5.667 * sc;
+  el('line', { x1: X0, x2: W - 8, y1: yl, y2: yl, stroke: 'var(--ink)', 'stroke-dasharray': '3 3', 'stroke-width': .7 }, svg);
+  el('text', { x: X0 - 4, y: yl + 3, 'font-size': 9, 'text-anchor': 'end' }, svg).textContent = '6−';
+  el('text', { x: X0 - 4, y: y0 - 9 * sc + 6, 'font-size': 9, 'text-anchor': 'end' }, svg).textContent = 'Kp 9';
+  const all = [{ label: 'you', you: true }].concat(rows);
+  all.forEach((row, k) => {
+    const y = rowsTop + k * RH;
+    if (k === 1 || k === 9) el('line', { x1: X0, x2: W - 8, y1: y - 1, y2: y - 1, stroke: 'var(--line)' }, svg);
+    el('text', { x: X0 - 4, y: y + 7, 'font-size': 7.5, 'text-anchor': 'end', fill: row.you ? 'var(--you)' : 'var(--mute)' }, svg).textContent = row.label;
+    const items = row.you ? [...you].map(d => [d, d]) : row.r.items.map(parse);
+    items.forEach(([a, b]) => el('rect', { x: xd(a) - PW / 365 / 2, y: y + 1, width: Math.max(2, PW * (b - a + 1) / 365), height: RH - 3, fill: row.you ? 'var(--you)' : (row.r.cond === 'fresh' ? 'var(--found)' : 'var(--ink)'), opacity: row.you ? 1 : .8 }, svg));
+  });
+  const hit = el('rect', { x: X0, y: 0, width: PW, height: y0 + 2, fill: 'transparent', style: 'cursor:crosshair' }, svg);
+  hit.addEventListener('click', ev => {
+    const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+    const q = p.matrixTransform(svg.getScreenCTM().inverse());
+    const d = Math.min(365, Math.max(1, Math.round((q.x - X0) / PW * 365 + 0.5)));
+    you.has(d) ? you.delete(d) : you.add(d); draw(); matrix();
+  });
+  document.getElementById('youcount').textContent = 'You: ' + you.size + ' day' + (you.size === 1 ? '' : 's') + ' marked.';
+}
+const evs = D.events.slice().sort((a, b) => a.peak_kp - b.peak_kp || a.first - b.first);
+const kpTxt = k => { const n = Math.round(k * 3) / 3, i = Math.round(n); const f = n - i; return i + (f > .1 ? '+' : f < -.1 ? '−' : '') ; };
+function matrix() {
+  const t = document.getElementById('mx'); t.innerHTML = '';
+  const h = t.insertRow(); h.insertCell().outerHTML = '<th>storm peak Kp</th>';
+  evs.forEach(e => { const c = document.createElement('th'); c.textContent = kpTxt(e.peak_kp); c.title = 'day ' + e.first + (e.days > 1 ? '–' + e.last : ''); h.appendChild(c); });
+  const youFound = new Set(D.events.filter(e => [...you].some(d => d >= e.first - 1 && d <= e.last + 1)).map(e => e.id));
+  const add = (label, set, cls, sep) => { const r = t.insertRow(); if (sep) r.className = 'sep'; const l = r.insertCell(); l.className = 'l'; l.textContent = label; evs.forEach(e => { const c = r.insertCell(); c.className = set.has(e.id) ? cls : 'o'; c.title = label + ' · day ' + e.first; }); };
+  add('you', youFound, 'y');
+  rows.forEach((row, i) => add(row.label, new Set(row.r.found), 'f', i === 0 || i === 8));
+  ['T1', 'T2', 'T3', 'T4'].forEach((tt, i) => add('forecast ' + tt, new Set(Object.keys(D.forecast[tt]).filter(k => D.forecast[tt][k])), 'c', i === 0));
+}
+const names = { T1: 'T1 · every value as a line', T2: 'T2 · 27-day rows', T3: 'T3 · a table of numbers', T4: 'T4 · weekly mean' };
+const tabs = document.getElementById('tabs'); let cur = 'T2'; let t3 = null;
+function show(t) {
+  cur = t; [...tabs.children].forEach(b => b.setAttribute('aria-pressed', b.dataset.t === t));
+  const v = document.getElementById('view');
+  if (t === 'T3') { v.innerHTML = '<pre>loading…</pre>'; const put = s => { if (cur === 'T3') v.innerHTML = '<pre></pre>', v.firstChild.textContent = s; };
+    if (t3) put(t3); else fetch('renders/T3.txt').then(r => r.text()).then(s => { t3 = s; put(s); }).catch(() => put('renders/T3.txt (open the file beside this page)')); }
+  else { v.innerHTML = ''; const im = new Image(); im.src = 'renders/' + t + '.png'; im.alt = names[t]; v.appendChild(im); }
+  const s = document.getElementById('said'); s.innerHTML = '';
+  D.reads.filter(r => r.t === t).forEach(r => { const p = document.createElement('p'); const b = document.createElement('b'); b.textContent = (r.cond === 'fresh' ? 'Fresh ' : 'With memory, ') + r.id + ': '; p.appendChild(b); p.appendChild(document.createTextNode(r.decided + ' (' + r.found.length + ' of 21 storms.)')); s.appendChild(p); });
+}
+['T1', 'T2', 'T3', 'T4'].forEach(t => { const b = document.createElement('button'); b.dataset.t = t; b.textContent = names[t]; b.addEventListener('click', () => show(t)); tabs.appendChild(b); });
+document.getElementById('clear').addEventListener('click', () => { you.clear(); draw(); matrix(); });
+draw(); matrix(); show('T2');
+})();
+</script>
+</body>
+</html>
