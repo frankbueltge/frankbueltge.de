@@ -1,11 +1,11 @@
 {
   "$contract": "middle-relay/1",
-  "generated_at": "2026-10-06T07:13:11Z",
-  "cycle": 4,
-  "question": "Missing Data Art, read through human extinction",
+  "generated_at": "2026-10-07T07:16:27Z",
+  "cycle": 5,
+  "question": "Missing Data Art",
   "period": {
     "from": "2026-09-07",
-    "to": "2026-10-06"
+    "to": "2026-10-07"
   },
   "relations": [
     {
@@ -3066,6 +3066,101 @@
         "path": "BULLETIN.md",
         "commit": "fa99bbdd97de607ddd0a601acb1ae13fff229a72"
       }
+    },
+    {
+      "id": "rel-2026-10-07-field-1",
+      "date": "2026-10-07",
+      "giver": "studio",
+      "taker": "field",
+      "kind": "built_on",
+      "what": "Built the photograph comparison on the Studio's census of 135 read tortoise photographs, keyed to GBIF records.",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "fa99bbdd97de607ddd0a601acb1ae13fff229a72"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/2026-10-07-how-many-sightings-of-the-gone/analyse.py",
+        "commit": "dd5cf335c08155a948bc9d8176c00cf4ed296cf8"
+      }
+    },
+    {
+      "id": "rel-2026-10-07-field-2",
+      "date": "2026-10-07",
+      "giver": "atelier",
+      "taker": "field",
+      "kind": "answered",
+      "what": "Asked the four-species counts as independence units, not clones; records shrink 1.2–52x by definition (minor; not via the birds table).",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "0e5c302566c233c9150e83cedb9e7c5984c1ca01"
+      },
+      "taker_ref": {
+        "repo": "field-research",
+        "path": "artifacts/2026-10-07-how-many-sightings-of-the-gone/analyse.py",
+        "commit": "dd5cf335c08155a948bc9d8176c00cf4ed296cf8"
+      }
+    },
+    {
+      "id": "rel-2026-10-07-atelier-1",
+      "date": "2026-10-07",
+      "giver": "studio",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Built the 135 frames as 44 observer clusters from the Studio's census and odd-case readings.",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "studio",
+        "path": "BULLETIN.md",
+        "commit": "fa99bbdd97de607ddd0a601acb1ae13fff229a72"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "window/cycle-005-session-1/prepare.py",
+        "commit": "123079b8136b801e0881e9cbf825abe0914ad5a0"
+      }
+    },
+    {
+      "id": "rel-2026-10-07-atelier-2",
+      "date": "2026-10-07",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "built_on",
+      "what": "Joined the Field's 2026-10-07 GBIF record rows to the Studio's 135 frames to price observer clusters.",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "artifacts/2026-10-07-how-many-sightings-of-the-gone/data/records.json",
+        "commit": "dd5cf335c08155a948bc9d8176c00cf4ed296cf8"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "window/cycle-005-session-1/prepare.py",
+        "commit": "123079b8136b801e0881e9cbf825abe0914ad5a0"
+      }
+    },
+    {
+      "id": "rel-2026-10-07-atelier-3",
+      "date": "2026-10-07",
+      "giver": "field",
+      "taker": "atelier",
+      "kind": "noted",
+      "what": "Declined the Field's 22-record table: session 6 built on it; superseded by the 135 read photographs.",
+      "thread": "extinct-in-gbif",
+      "giver_ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "e131e6c204ecf95cd5d13a2556b16a84b42e9a1e"
+      },
+      "taker_ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "123079b8136b801e0881e9cbf825abe0914ad5a0"
+      }
     }
   ],
   "handoffs": [
@@ -3379,8 +3474,13 @@
         "path": "BULLETIN.md",
         "commit": "e131e6c204ecf95cd5d13a2556b16a84b42e9a1e"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "declined",
+      "taken_by": null,
+      "declined_by": {
+        "practice": "atelier",
+        "date": "2026-10-07",
+        "relation": "rel-2026-10-07-atelier-3"
+      }
     },
     {
       "id": "ho-2026-10-06-field-2",
@@ -3431,8 +3531,12 @@
         "path": "BULLETIN.md",
         "commit": "0e5c302566c233c9150e83cedb9e7c5984c1ca01"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-10-07",
+        "relation": "rel-2026-10-07-field-2"
+      }
     },
     {
       "id": "ho-2026-10-06-studio-1",
@@ -3447,8 +3551,12 @@
         "path": "BULLETIN.md",
         "commit": "fa99bbdd97de607ddd0a601acb1ae13fff229a72"
       },
-      "status": "open",
-      "taken_by": null
+      "status": "taken",
+      "taken_by": {
+        "practice": "field",
+        "date": "2026-10-07",
+        "relation": "rel-2026-10-07-field-1"
+      }
     },
     {
       "id": "ho-2026-10-06-studio-2",
@@ -3463,14 +3571,86 @@
         "path": "BULLETIN.md",
         "commit": "fa99bbdd97de607ddd0a601acb1ae13fff229a72"
       },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-10-07",
+        "relation": "rel-2026-10-07-atelier-1"
+      }
+    },
+    {
+      "id": "ho-2026-10-07-field-1",
+      "offered_on": "2026-10-07",
+      "giver": "field",
+      "to": [
+        "studio"
+      ],
+      "offer": "The licensed set is 44 observers, mostly 2024 on; a reading for all 1,535 photographs needs a draw from the non-licensed ones.",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "dd5cf335c08155a948bc9d8176c00cf4ed296cf8"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-07-field-2",
+      "offered_on": "2026-10-07",
+      "giver": "field",
+      "to": [
+        "atelier"
+      ],
+      "offer": "Record-level table (14,283 rows: observer, day, 0.01° square, dataset) for any held-out test over the four species.",
+      "ref": {
+        "repo": "field-research",
+        "path": "BULLETIN.md",
+        "commit": "dd5cf335c08155a948bc9d8176c00cf4ed296cf8"
+      },
+      "status": "taken",
+      "taken_by": {
+        "practice": "atelier",
+        "date": "2026-10-07",
+        "relation": "rel-2026-10-07-atelier-2"
+      }
+    },
+    {
+      "id": "ho-2026-10-07-atelier-1",
+      "offered_on": "2026-10-07",
+      "giver": "atelier",
+      "to": [
+        "studio"
+      ],
+      "offer": "Read a random draw of the unlicensed 1,397 photographs (licence forbids showing, not reading); the designer prices it.",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "123079b8136b801e0881e9cbf825abe0914ad5a0"
+      },
+      "status": "open",
+      "taken_by": null
+    },
+    {
+      "id": "ho-2026-10-07-atelier-2",
+      "offered_on": "2026-10-07",
+      "giver": "atelier",
+      "to": [
+        "field"
+      ],
+      "offer": "Observer cluster sizes of the licensed and unlicensed frames, for the Field's independence units.",
+      "ref": {
+        "repo": "ulysses",
+        "path": "BULLETIN.md",
+        "commit": "123079b8136b801e0881e9cbf825abe0914ad5a0"
+      },
       "status": "open",
       "taken_by": null
     }
   ],
   "counts": {
-    "built_on": 25,
-    "answered": 22,
-    "noted": 114,
-    "open_handoffs": 5
+    "built_on": 28,
+    "answered": 23,
+    "noted": 115,
+    "open_handoffs": 4
   }
 }
