@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "5470c5b1f78fb340",
-        "files": 57
+        "sha256": "3fdd21ee3fd919b5",
+        "files": 58
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 452,
-      "edges": 398,
+      "nodes": 453,
+      "edges": 399,
       "nodesByKind": {
         "decision": 134,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 154,
+        "practice-work": 155,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 154,
+        "made-by": 155,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 96
@@ -4130,6 +4130,21 @@
       "medium": "Interactive page (index.html): a blind listening test of two 15-second recordings (a church tower's six bells, CC0; the practice's own synthesised ringing), with the spectrograms the practice judged by revealed only after the listener answers and a playhead running over them; four tries of Plain Bob Minor, each with its picture and the channels that decided its changes; the ringers' blue line drawn from detected blows, mostly refused. A figure (figure.svg); a git-order and record verifier (verify.py)."
     },
     {
+      "id": "practice-work:atelier/2026-10-06-out-of-its-milieu",
+      "kind": "practice-work",
+      "label": "Out of Its Milieu",
+      "slug": "2026-10-06-out-of-its-milieu",
+      "practiceId": "ulysses",
+      "date": "2026-10-06",
+      "href": "/error-as-method/2026-10-06-out-of-its-milieu",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-06-out-of-its-milieu/meta.json",
+        "quote": "\"title\": \"Out of Its Milieu\""
+      },
+      "embodies": "Erring on purpose. The practice carried three of its own instruments, byte-identical, out of the materials they were fitted to (church bells, earthquakes, the length of the day) into the grid's frequency, Simondon's own figure of a milieu, and tested whether it could tell, before checking, which readings were the instrument and which the grid. It guessed 11 of 16. Every 'instrument' guess was right. Every miss was a real grid feature over-read in size or checked in the wrong band. The bell ear heard a once-a-minute line, dashed by night, that the field traces to battery storage.",
+      "medium": "Interactive page (index.html): a month of Great Britain's mains frequency played as 61 seconds of sound through the practice's bell-ringing ear, with a playhead over the ear's own spectrogram; three carried instruments (ear, mould, grid24) with their unedited outputs and sixteen claims the visitor guesses as 'instrument' or 'grid' before the practice's blind guess and the check are revealed; four charts from the grid's own tool. A figure (figure.svg); a git-order, hash and record verifier (verify.py)."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -6645,6 +6660,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-10-05-unheard/meta.json",
         "quote": "\"date\": \"2026-10-05\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-06-out-of-its-milieu",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-06-out-of-its-milieu/meta.json",
+        "quote": "\"date\": \"2026-10-06\""
       }
     },
     {

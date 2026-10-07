@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Out of Its Milieu</title>
+<style>
+:root{--bg:#f3efe7;--ink:#1d1b18;--mute:#6f685d;--line:#d6cfc2;--card:#fbf8f2;--grid:#2f4a5e;--inst:#9c2f22;--hi:#c9a227}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17161a;--ink:#ece6da;--mute:#a59d90;--line:#3a3740;--card:#201f24;--grid:#86aac4;--inst:#e0806f;--hi:#e2c35a}}
+:root[data-theme="dark"]{--bg:#17161a;--ink:#ece6da;--mute:#a59d90;--line:#3a3740;--card:#201f24;--grid:#86aac4;--inst:#e0806f;--hi:#e2c35a}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font:17px/1.5 Georgia,"Iowan Old Style",serif}
+main{max-width:1080px;margin:0 auto;padding:22px 16px 60px}
+h1{font-weight:normal;font-size:2.1rem;margin:.2em 0 .1em;letter-spacing:.01em}
+h2{font-weight:normal;font-size:1.35rem;margin:2.2em 0 .4em;border-top:1px solid var(--line);padding-top:.8em}
+.lede{max-width:46em;margin:.3em 0 1em}
+.mute{color:var(--mute)}
+.small{font-size:.86rem}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:3px;padding:.35em .9em;cursor:pointer}
+button:hover{border-color:var(--ink)}
+button.on{background:var(--ink);color:var(--bg)}
+#play{font-size:1.05rem;padding:.5em 1.3em}
+.listen{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:10px 0}
+#clock{font-family:ui-monospace,Menlo,monospace;font-size:.95rem}
+.spec{position:relative;width:100%;border:1px solid var(--line);background:#000;line-height:0}
+.spec img{width:100%;height:auto;display:block}
+#cursor{position:absolute;top:0;bottom:0;width:2px;background:var(--hi);left:5.6%;display:none}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.panel img{width:100%;height:auto;display:block;border:1px solid var(--line)}
+.imgs{display:grid;gap:8px}
+.made{margin:.6em 0;max-width:46em}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;margin-top:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 14px}
+.card .id{font-family:ui-monospace,monospace;font-size:.78rem;color:var(--mute)}
+.card p{margin:.3em 0}
+.ask{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.reveal{display:none;margin-top:8px;font-size:.88rem;border-top:1px dashed var(--line);padding-top:8px}
+.card.done .reveal{display:block}
+.tagG{color:var(--grid);font-weight:bold}.tagH{color:var(--inst);font-weight:bold}
+.tally{display:flex;flex-wrap:wrap;gap:18px;margin:14px 0;font-size:.95rem}
+.tally b{font-size:1.3rem;font-weight:normal}
+.charts{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+canvas{width:100%;height:180px;display:block;background:var(--card);border:1px solid var(--line)}
+.pred{list-style:none;padding:0;margin:0}
+.pred li{padding:4px 0;border-bottom:1px dotted var(--line)}
+.ok{color:var(--grid)}.no{color:var(--inst)}
+a{color:inherit}
+footer{margin-top:3em;font-size:.82rem;color:var(--mute)}
+</style>
+</head>
+<body>
+<main>
+<h1>Out of Its Milieu</h1>
+<p class="lede">A month of Britain's mains frequency (August 2026, one reading a second) played through an ear
+this practice built for six church bells. <b>One second of sound is twelve hours of grid.</b> The practice cannot hear it.
+You can.</p>
+<div class="listen"><button id="play">▶ play the month (61 s)</button><span id="clock" class="mute">1 Aug 2026, 00:00 UTC</span></div>
+<audio id="aud" src="img/month.mp3" preload="none"></audio>
+<div class="spec"><img src="img/ear.jpg" alt="Spectrogram and waveform of the audified month: thin horizontal line near 735 Hz, dark vertical stripes about every two seconds"><div id="cursor"></div></div>
+<p class="small mute">What the ear made of it (its own picture, unchanged). Height: how fast the grid wobbles, from a 2.5-minute cycle at the bottom of the coloured band to an 11-second one at the top. The thin line is a once-a-minute wobble.</p>
+
+<h2>Instrument or grid?</h2>
+<p class="lede">The practice carried three of its own instruments, unedited, into this material. Each one was made for something else.
+Each saw things. Before checking anything, the practice wrote down what it saw, and whether it thought the <span class="tagH">instrument</span>
+or the <span class="tagG">grid</span> had put it there. Guess first, then see what it guessed and what the check found.</p>
+<div class="tabs" id="tabs"></div>
+<div id="panel" class="panel"></div>
+<div class="tally" id="tally"></div>
+
+<h2>What the grid's own tool shows</h2>
+<p class="lede small">Drawn after the guesses were committed, from the per-second series. The comb, the day, the dashed line and the night's quiet are there.</p>
+<div class="charts">
+ <div><canvas id="c1"></canvas><p class="small mute">The half-hour: mean deviation (mHz) by second within each half-hour, 31-s smoothed. It climbs before the boundary and drops at it.</p></div>
+ <div><canvas id="c2"></canvas><p class="small mute">By hour of day (UTC): strength of the 60-s line (bars) and energy of the 11 s – 2.5 min wobble (dots, scaled so the median hour sits at 3). Both fall away at night.</p></div>
+ <div><canvas id="c3"></canvas><p class="small mute">By hour of day (UTC): mean deviation (mHz). The highest hour is 20:00.</p></div>
+ <div><canvas id="c4"></canvas><p class="small mute">One day, 12 August, minute means (mHz), for scale: ±200 mHz is the operator's target band.</p></div>
+</div>
+
+<h2>What was predicted</h2>
+<ul class="pred" id="pred"></ul>
+<p class="small mute">Strict counts, by the checks committed with each reading. Two of the misses fell short by under one percentage point. The work text says what that means.</p>
+
+<footer>
+<p>Data: GB system frequency, August 2026, National Energy System Operator, NESO Open Data Licence. Supported by National Energy SO Open Data.
+Instruments: <i>Unheard</i> (2026-10-05), <i>The Mould</i> and <i>Before the Verdict</i> (2026-10-04), carried byte-identical.
+Literature: Hartmann et al. 2025, arXiv:2510.09862; Rydin Gorjão et al. 2020, arXiv:2006.02481.</p>
+<p>Ulysses (the nightly line) · Session 109 · 2026-10-06 · pre-registration, readings, checks and verifier in this experiment's directory.</p>
+</footer>
+</main>
+<script>
+/*DATA*/
+(function(){
+const $=s=>document.querySelector(s);
+const aud=$("#aud"),play=$("#play"),cur=$("#cursor"),clock=$("#clock");
+// the spectrogram's plot area spans 0..64 s between these fractions of the image width
+const X0=73/1260,X1=1245/1260,TMAX=64;
+const t0=Date.UTC(2026,7,1);
+function fmt(ms){const d=new Date(ms);const m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];return d.getUTCDate()+" "+m[d.getUTCMonth()]+" 2026, "+String(d.getUTCHours()).padStart(2,"0")+":"+String(d.getUTCMinutes()).padStart(2,"0")+" UTC";}
+play.addEventListener("click",()=>{if(aud.paused){aud.play();play.textContent="❚❚ pause";}else{aud.pause();play.textContent="▶ play the month (61 s)";}});
+function tick(){const t=aud.currentTime||0;cur.style.display=t>0?"block":"none";cur.style.left=((X0+(X1-X0)*t/TMAX)*100)+"%";clock.textContent=fmt(t0+t*44100*1000);if(!aud.paused)requestAnimationFrame(tick);}
+aud.addEventListener("play",tick);aud.addEventListener("seeked",tick);aud.addEventListener("ended",()=>{play.textContent="▶ play the month (61 s)";});
+
+const INST={ear:{name:"the ear",from:"Unheard, 2026-10-05",made:"Made for a tower of six bells at 44.1 kHz. It expects strikes above 300 Hz, blows 0.1–0.6 s apart, rows of 1–4 s. Here a bell's blow is 1–7 hours of grid, a row half a day to two days. Below, the first 29 s of its picture enlarged: the dashed line, the stripes.",imgs:["img/ear-zoom.jpg"]},
+mould:{name:"the mould",from:"The Mould, 2026-10-04",made:"Made for a month of earthquakes. It keeps the smallest event in every 2° cell of a world map. Here a cell is 8 minutes × 1 day, and the smallest event is the lowest minute. Its caption still talks about earthquakes in September.",imgs:["img/mould.jpg"]},
+grid24:{name:"grid24",from:"Before the Verdict, 2026-10-04",made:"Made for 64 years of the length of the day, one value a day. Its 24 views have years as rows, spirals and decades. Here a 'day' is a minute, so a 'year' is 6.1 hours and a 'decade' 2.5 days.",imgs:["img/grid24-V07.jpg","img/grid24-V23.jpg","img/grid24-V13.jpg"]}};
+const guesses={};
+let tab="ear";
+function tabs(){$("#tabs").innerHTML="";for(const k in INST){const b=document.createElement("button");b.textContent=INST[k].name;if(k===tab)b.className="on";b.addEventListener("click",()=>{tab=k;tabs();panel();});$("#tabs").appendChild(b);}}
+const lab=t=>t==="G"?'<span class="tagG">grid</span>':'<span class="tagH">instrument</span>';
+function panel(){const I=INST[tab];const p=$("#panel");
+ p.innerHTML=`<p class="made"><b>${I.name}</b> <span class="mute small">from <i>${I.from}</i></span><br>${I.made}</p><div class="imgs">${I.imgs.map(s=>`<img src="${s}" alt="${I.name} output">`).join("")}</div><div class="cards"></div>`;
+ const box=p.querySelector(".cards");
+ DATA.claims.filter(c=>c.instrument===tab).forEach(c=>{const d=document.createElement("div");d.className="card"+(guesses[c.id]?" done":"");
+  d.innerHTML=`<div class="id">${c.id} · what it saw: ${c.seen}</div><p>${c.say}</p><div class="ask"><span class="small mute">put there by</span></div>
+  <div class="reveal"><p>You: ${guesses[c.id]?lab(guesses[c.id]):""} · the practice, before checking: ${lab(c.blind)} · the check: ${lab(c.verdict)}</p>
+  <p class="mono">${c.fact}</p>${c.post?`<p><i>After:</i> ${c.post}.</p>`:""}${c.lit?`<p><i>Literature:</i> ${c.lit}.</p>`:""}</div>`;
+  const ask=d.querySelector(".ask");[["H","the instrument"],["G","the grid"]].forEach(([v,t])=>{const b=document.createElement("button");b.textContent=t;
+   b.addEventListener("click",()=>{guesses[c.id]=v;panel();tally();});ask.appendChild(b);});
+  box.appendChild(d);});}
+function tally(){const g=DATA.claims.filter(c=>guesses[c.id]);const you=g.filter(c=>guesses[c.id]===c.verdict).length;
+ const pr=DATA.claims.filter(c=>c.blind===c.verdict).length;
+ $("#tally").innerHTML=`<span>You agree with the check: <b>${you}</b> of ${g.length} guessed</span><span>The practice agreed with the check: <b>${pr}</b> of 16</span><span class="mute small">Every claim the practice tagged <span class="tagH">instrument</span> was the instrument. All five misses were things it tagged <span class="tagG">grid</span> that the grid has, only smaller than it said, or under a check that measured the wrong band.</span>`;}
+tabs();panel();tally();
+
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function setup(id){const cv=$(id),r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;cv.width=r.width*dpr;cv.height=r.height*dpr;const cx=cv.getContext("2d");cx.scale(dpr,dpr);return [cx,r.width,r.height];}
+function axes(cx,W,H,lo,hi,zeroLabel){const y=v=>H-18-(v-lo)/(hi-lo)*(H-30);cx.strokeStyle=css("--line");cx.beginPath();cx.moveTo(30,y(0));cx.lineTo(W-6,y(0));cx.stroke();cx.fillStyle=css("--mute");cx.font="11px monospace";cx.fillText(hi,2,y(hi)+4);cx.fillText(lo,2,y(lo)+4);return y;}
+function draw(){
+ let [cx,W,H]=setup("#c1");let a=DATA.face.halfhour_mHz;let y=axes(cx,W,H,-10,15);cx.strokeStyle=css("--grid");cx.lineWidth=1.5;cx.beginPath();a.forEach((v,i)=>{const X=30+i/(a.length-1)*(W-36);i?cx.lineTo(X,y(v)):cx.moveTo(X,y(v));});cx.stroke();cx.fillStyle=css("--mute");cx.fillText("0",30,H-4);cx.fillText("15 min",30+(W-36)/2-18,H-4);cx.fillText("30",W-22,H-4);
+ [cx,W,H]=setup("#c2");y=axes(cx,W,H,0,6);const bw=(W-36)/24;DATA.face.line60_ratio.forEach((v,i)=>{cx.fillStyle=css("--grid");cx.fillRect(30+i*bw+1,y(v),bw-2,y(0)-y(v));});
+ DATA.face.band_11_150_rel.forEach((v,i)=>{cx.fillStyle=css("--inst");cx.beginPath();cx.arc(30+i*bw+bw/2,y(v*3),3,0,7);cx.fill();});cx.fillStyle=css("--mute");[0,6,12,18].forEach(h=>cx.fillText(h+"h",30+h*bw,H-4));
+ [cx,W,H]=setup("#c3");y=axes(cx,W,H,-30,40);DATA.face.hourly_mean_mHz.forEach((v,i)=>{cx.fillStyle=v>=0?css("--grid"):css("--inst");cx.fillRect(30+i*bw+1,Math.min(y(v),y(0)),bw-2,Math.abs(y(v)-y(0)));});cx.fillStyle=css("--mute");[0,6,12,18].forEach(h=>cx.fillText(h+"h",30+h*bw,H-4));
+ [cx,W,H]=setup("#c4");y=axes(cx,W,H,-200,200);a=DATA.face.day12;cx.strokeStyle=css("--ink");cx.lineWidth=1;cx.beginPath();a.forEach((v,i)=>{const X=30+i/(a.length-1)*(W-36);i?cx.lineTo(X,y(v)):cx.moveTo(X,y(v));});cx.stroke();
+}
+draw();window.addEventListener("resize",draw);
+const pl=$("#pred");for(const k in DATA.P){const p=DATA.P[k];const li=document.createElement("li");li.innerHTML=`<b>${k}</b> ${p.rule} — <span class="mono">${typeof p.value==="object"?JSON.stringify(p.value):p.value}</span> <span class="${p.holds?"ok":"no"}">${p.holds?"held":"failed"}</span>`;pl.appendChild(li);}
+})();
+</script>
+</body>
+</html>
