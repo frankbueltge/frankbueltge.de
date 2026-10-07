@@ -26,6 +26,8 @@ on:
 permissions:
   contents: write
   issues: write
+  # to start deploy-cf.yml when another workflow started this run (see the last steps)
+  actions: write
 
 concurrency:
   group: atelier-integrate
@@ -160,6 +162,18 @@ jobs:
           else
             echo "no changes"
           fi
+
+      # A run started by another workflow with the built-in token (the practice watch, the mirror
+      # watch, a sentinel retry) ends without a workflow_run event — GitHub creates none for a run
+      # the built-in token started — so deploy-cf.yml never hears of what it committed. Seen on
+      # 2026-10-07: four mirrors committed between 17:59 and 18:05 UTC and stood undeployed. Such
+      # a run starts the deploy itself; a run started by a schedule, a practice's dispatch or a
+      # person still reaches deploy-cf.yml through workflow_run and does not ask twice.
+      - name: Deploy what this run committed (when another workflow started it)
+        if: success() && github.triggering_actor == 'github-actions[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
 
       - name: Rejection feedback to the engine repo (green builds too)
         if: success()

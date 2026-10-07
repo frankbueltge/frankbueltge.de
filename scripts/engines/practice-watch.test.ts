@@ -203,6 +203,25 @@ describe('the watch and the workflows agree', () => {
     }
   })
 
+  it('starts only integrates that deploy what they commit — a run the built-in token starts gets no workflow_run', () => {
+    // Found the day the watch went live: four mirrors it started committed between 17:59 and
+    // 18:05 UTC, and deploy-cf.yml, which listens for their workflow_run, heard nothing.
+    const mirrorWatch = workflow('mirror-watch.yml')
+    const started = [
+      ...PRACTICES.map((p) => p.workflow),
+      ...[...mirrorWatch.matchAll(/^\s*check\s+\S+\s+(\S+\.yml)/gm)].map((m) => m[1]!),
+    ]
+    expect(started.length).toBeGreaterThan(7)
+    for (const file of started) {
+      const text = workflow(file)
+      expect(text, `${file} cannot start a deploy`).toMatch(/^\s*actions: write$/m)
+      expect(text, `${file} never starts deploy-cf.yml`).toContain('gh workflow run deploy-cf.yml')
+      expect(text, `${file} would deploy twice for a run deploy-cf.yml already hears of`).toContain(
+        "github.triggering_actor == 'github-actions[bot]'",
+      )
+    }
+  })
+
   it('may dispatch the integrates and its own successor', () => {
     expect(watch).toMatch(/^\s*actions: write$/m)
     expect(watch).toMatch(/^\s*last_movement:/m)
