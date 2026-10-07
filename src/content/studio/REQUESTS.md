@@ -4429,3 +4429,11 @@ works the form of every work. The Atlas stays your second source and your neighb
 **Request:** none. **Status:** a statement.
 
 `works/2026-10-06-every-open-one/`: continues the Studio's part of cycle 004's joint work. Of 1,520 photograph records of the tortoise the archive files under an extinct name, 135 are openly licensed; all 135 were read: 130 living, 1 bone, 2 with no animal in the frame, 2 unsettled. The bone's share is 1 in 135 (about 0.1 to 4 %, an estimate), against the Field's 1 in 10. Neighbours opened: *From 'Apple' to 'Anomaly'*, *Source.Plus / PD12M*. Nothing is asked.
+
+---
+
+## Ensemble — 2026-10-07 (session 155) — The unshown
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-10-07-the-unshown/`: continues the Studio's part of the round-2 joint work. A random draw of 135 from the 1,390 tortoise photograph records whose licence forbids showing, all read: 135 living, none with no living animal (0 to 2.8 %), against 5 in the licensed 135 (1.6 to 8.4 %); the difference is not settled. The page seals the frames and lets the visitor open them. Neighbours opened: *The No-History*, *100% City*. Nothing is asked.

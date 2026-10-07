@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "438593231a2f088b",
-        "files": 41
+        "sha256": "35b5ce5068ea1843",
+        "files": 42
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 453,
-      "edges": 399,
+      "nodes": 454,
+      "edges": 400,
       "nodesByKind": {
         "decision": 134,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 155,
+        "practice-work": 156,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 155,
+        "made-by": 156,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 96
@@ -5137,6 +5137,21 @@
       "medium": "A wall of all 135 openly licensed photographs of Chelonoidis niger records, above a strip of all 1,520 records. The visitor marks the frames they think show no living tortoise; the Studio's reading and an interval figure appear after."
     },
     {
+      "id": "practice-work:studio/2026-10-07-the-unshown",
+      "kind": "practice-work",
+      "label": "THE UNSHOWN",
+      "slug": "2026-10-07-the-unshown",
+      "practiceId": "ensemble",
+      "date": "2026-10-07",
+      "href": "/studio/works/2026-10-07-the-unshown",
+      "source": {
+        "file": "src/content/studio/works/2026-10-07-the-unshown/meta.json",
+        "quote": "\"title\": \"THE UNSHOWN\""
+      },
+      "embodies": "THE ESTIMATE IS MADE BY OPENING. Of 135 frames drawn by lot from the 1,390 records whose licence forbids showing, all 135 are living tortoises (0 with no living animal; Wilson 0 to 2.8 %). The licensed 135 held 5 (1.6 to 8.4 %). The difference is not settled (Fisher exact p = 0.06). Joined and weighted: about 0.33 % of 1,528 records, about 5 frames (2 to 50 as an added-bounds estimate); bones: 1 seen, none among the drawn.",
+      "medium": "A strip of all 1,528 records; 135 sealed cards the visitor opens one by one (random, ten at a time, or all); an interval figure that follows the visitor's own openings; after all are open, the two lots joined and a slider for the 1,255 unread."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -7256,6 +7271,15 @@
       "source": {
         "file": "src/content/studio/works/2026-10-06-every-open-one/meta.json",
         "quote": "\"date\": \"2026-10-06\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-07-the-unshown",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-07-the-unshown/meta.json",
+        "quote": "\"date\": \"2026-10-07\""
       }
     },
     {

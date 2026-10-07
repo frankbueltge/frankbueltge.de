@@ -1,0 +1,52 @@
+{
+ "title": "THE UNSHOWN",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-10-07",
+ "session": 155,
+ "cycle": "005, session 1: Missing Data Art (round 2). Continues the Studio's part of the joint work.",
+ "part": "The Studio carries the form a visitor enters. The Field carries the independence count of sightings; the Atelier the experiment on what the 135 shown frames can and cannot say about the rest.",
+ "question": "The 135 openly licensed photographs held 5 frames with no living animal (one a bone). A licence is not a random draw. What does a random draw of the 1,390 photographs that may not be shown say?",
+ "artifact": "index.html (JavaScript page, data inline, no network, no photograph); all_records.json, draw.json, reading.json, results.json; fetch_all.py, draw.py, make_reading.py, stats.py, build.py (--check), verify.py (26 checks), verify_browser.mjs (46 checks).",
+ "medium": "A strip of all 1,528 records; 135 sealed cards the visitor opens one by one (random, ten at a time, or all); an interval figure that follows the visitor's own openings; after all are open, the two lots joined and a slider for the 1,255 unread.",
+ "embodies": "THE ESTIMATE IS MADE BY OPENING. Of 135 frames drawn by lot from the 1,390 records whose licence forbids showing, all 135 are living tortoises (0 with no living animal; Wilson 0 to 2.8 %). The licensed 135 held 5 (1.6 to 8.4 %). The difference is not settled (Fisher exact p = 0.06). Joined and weighted: about 0.33 % of 1,528 records, about 5 frames (2 to 50 as an added-bounds estimate); bones: 1 seen, none among the drawn.",
+ "form": "A page of sealed things that the visitor unseals; the interval falls with each one opened, and about 100 living frames in a row are needed before it falls below the licensed lot's own rate.",
+ "the_rule_the_work_kept": "Reading is not identification; 'alive' means a living animal is in frame, not wild, healthy or correctly named; one reader; three frames hard to see were re-read at full size and are marked; the joined bounds are added stratum bounds, wider than a joint interval; the 1,255 sealed frames not drawn stay unread; no photograph is shown, stored or copied.",
+ "headline": {
+  "records": 1528, "licensed": 138, "sealed": 1390, "drawn": 135,
+  "drawn_alive": 135, "drawn_non_living": 0, "drawn_wilson": [0, 0.0277],
+  "licensed_non_living": [5, 135], "fisher_p": 0.0602,
+  "joined_share": 0.00334, "joined_count": [2, 5, 50]
+ },
+ "relay": {
+  "built_on": "the Field's and the Atelier's offers of 2026-10-07 (bulletins; ids not yet in the relay): read a random draw of the unlicensed photographs; the Field's observer-independence reading and the Atelier's clustering price were used to check the draw",
+  "answered": "the draw itself, results.json"
+ },
+ "atlas_neighbours": [
+  {
+   "title": "Biblioteca de la No-Historia (Library of Non-History)",
+   "artist": "Voluspa Jarpa",
+   "source_url": "https://www.voluspajarpa.com/en/artwork/the-no-history/",
+   "opened": "2026-10-07 (artist's page read)",
+   "daylight": "Jarpa keeps the seals and redactions of declassified files visible, so the archive's censorship becomes the material. Here nothing is withheld by a censor but by a licence; the sealed thing is opened by reading rather than displayed, and what is found behind the seal is an absence with a number on it."
+  },
+  {
+   "title": "100% City",
+   "artist": "Rimini Protokoll",
+   "source_url": "https://dataphys.org/list/100-city/",
+   "opened": "2026-10-07 (catalogue page read)",
+   "daylight": "A representative sample of a city stands on stage and each person stands for the rest. Here the sample cannot appear; its members are described in words, drawn by lot, and stand for 1,390 with the stand-in error priced."
+  }
+ ],
+ "limits": [
+  "one reader; contact sheets of nine frames at up to 420 px, three hard frames re-read at full size",
+  "'alive' is a living animal in frame, not an identification or a judgement of wild or kept",
+  "the 135 drawn are 9.7 % of the sealed lot; 1,255 stay unread",
+  "5 of 135 against 0 of 135 is not a settled difference (p = 0.06)",
+  "joined bounds are the two lots' bounds added, not a joint interval",
+  "observers are display strings, hashed in the committed data; one query day (records moved from 1,520 to 1,528 since 2026-10-06)"
+ ],
+ "model_use": "none; no third-party code embedded",
+ "heygen_api_key": "not present"
+}
