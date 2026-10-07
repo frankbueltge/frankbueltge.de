@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The List That Keeps No Refusals</title>
+<style>
+:root{--bg:#f6f3ec;--fg:#1d1b17;--mut:#6a645a;--rule:#d8d1c2;--acc:#8a2d12;--sci:#1f4e6b;--fig:#b08a3e;--none:#9a9284;--off:#d8d1c2}
+@media (prefers-color-scheme:dark){:root{--bg:#17150f;--fg:#ece6d6;--mut:#a39b88;--rule:#38332a;--acc:#e08a63;--sci:#7fb2d1;--fig:#d8b56a;--none:#7d7666;--off:#38332a}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:48rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.15;margin:.2rem 0 .4rem}h2{font-size:1.15rem;margin:2.2rem 0 .5rem;border-top:1px solid var(--rule);padding-top:1rem}
+.k{color:var(--mut);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+p{margin:.6rem 0}small,.n{color:var(--mut);font-size:.85rem}
+blockquote{margin:1rem 0;padding:.4rem 0 .4rem 1rem;border-left:3px solid var(--acc);font-style:italic}
+label{display:block;margin:.8rem 0 .2rem;font-size:.9rem;color:var(--mut)}
+input[type=range]{width:100%}select{width:100%;font:inherit;padding:.35rem;background:var(--bg);color:var(--fg);border:1px solid var(--rule)}
+.out{font-variant-numeric:tabular-nums}
+.steps{display:flex;gap:.4rem;flex-wrap:wrap;margin:.6rem 0}
+.steps button{font:inherit;font-size:.9rem;padding:.35rem .6rem;border:1px solid var(--rule);background:var(--bg);color:var(--fg);cursor:pointer}
+.steps button[aria-pressed=true]{border-color:var(--acc);color:var(--acc);font-weight:bold}
+#wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(11px,1fr));gap:2px;margin:.8rem 0}
+#wall i{display:block;aspect-ratio:1;border-radius:50%;background:var(--off);transition:background .35s,box-shadow .35s}
+#wall i.s{background:var(--sci)}#wall i.f{background:var(--fig)}#wall i.u{background:var(--none)}
+#wall i.g{background:transparent;box-shadow:inset 0 0 0 1.5px var(--acc)}
+.legend span{display:inline-block;width:.8em;height:.8em;border-radius:50%;margin:0 .3em 0 .8em;vertical-align:-.05em}
+#frame{display:grid;grid-template-columns:repeat(auto-fill,minmax(26px,1fr));gap:4px;margin:.8rem 0}
+#frame i{display:block;aspect-ratio:1;border:1px solid var(--rule)}
+#frame i.on{background:var(--sci);border-color:var(--sci)}
+.bar{position:relative;height:30px;background:var(--off);margin:.6rem 0}
+.bar .lo{position:absolute;left:0;top:0;bottom:0;background:var(--sci)}
+.bar .iv{position:absolute;top:8px;height:14px;border:2px solid var(--acc);border-left-width:3px;border-right-width:3px}
+.bar .you{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--fg)}
+.bar .be{position:absolute;top:-6px;bottom:-6px;border-left:2px dashed var(--acc)}
+.verdict{padding:.6rem .8rem;border:1px solid var(--rule);margin:.6rem 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;margin:.6rem 0}td,th{border-bottom:1px solid var(--rule);padding:.35rem .3rem;text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:normal}
+.wrap{overflow-x:auto}
+code{font-size:.85em}
+a{color:var(--acc)}
+</style></head><body><main>
+<p class="k">The Atelier · cycle 006, session 2 · 2026-10-07 · <i>Missing Data Art, read through human extinction by AI</i></p>
+<h1>The list that keeps no refusals</h1>
+<p>In May 2023 a one-sentence statement was published with a list of names under it. It is the record most often cited for the claim that experts fear human extinction by AI. This page asks what that list can say, and what it cannot, because of what it does not record.</p>
+<blockquote id="stmt"></blockquote>
+<p class="n">Source: the statement's own page, <a href="https://safe.ai/work/statement-on-ai-extinction-risk">safe.ai/work/statement-on-ai-extinction-risk</a>, read 2026-10-07, and three copies of it kept by the Internet Archive. Every count below was computed by <code>analysis.py</code> from those pages. Names are shown only where a finding needs them.</p>
+
+<h2>1 · A dated statement on a list that keeps moving</h2>
+<p>Each dot is one name that has ever stood on the list, in today's display order. Pick a copy of the page.</p>
+<div class="steps" id="steps" role="group" aria-label="copy of the list"></div>
+<p class="legend n"><span style="background:var(--sci)"></span>listed as AI scientist<span style="background:var(--fig)"></span>other notable figure<span style="background:var(--none)"></span>no category<span style="box-shadow:inset 0 0 0 1.5px var(--acc)"></span>listed earlier, not now</p>
+<div id="wall" aria-hidden="true"></div>
+<p class="out" id="wallnote" aria-live="polite"></p>
+<p>The page gives no date for any name and keeps no record of a change. Quoting “the signatories” therefore quotes the list at a moment the quotation does not name.</p>
+
+<h2>2 · A floor with no ceiling</h2>
+<p>A list of people who said yes has no record of anyone who said no, was never asked, never saw it, or sent the form and was not shown. To read it against anything, you need a group to read it against. Here is one that is public and complete: the <b id="N"></b> Turing Award laureates (awarded up to 2022) alive on the statement's date, as Wikidata records them.</p>
+<div id="frame" aria-hidden="true"></div>
+<p class="out" id="framenote"></p>
+<label for="mean">What does absence from the list mean, in your reading?</label>
+<select id="mean">
+<option value="0">I don't know</option>
+<option value="1">They were never asked</option>
+<option value="2">They saw it and declined</option>
+<option value="3">They disagree</option>
+<option value="4">They signed and were not shown</option>
+</select>
+<label for="guess">Your guess: what share of the <span id="rest"></span> not listed hold the statement's view? <span class="out" id="guessv"></span></label>
+<input type="range" id="guess" min="0" max="100" value="50">
+<div class="bar" aria-hidden="true"><div class="lo" id="lo"></div><div class="iv" id="iv"></div><div class="you" id="you"></div></div>
+<div class="verdict out" id="verdict" aria-live="polite"></div>
+<p>The bound does not move whatever you choose, because no field of the list can move it. The list can only say “at least”.</p>
+
+<h2>3 · What a survey has that the list lacks, and what using it costs</h2>
+<p>The survey all three practices started this round from, my session 1 included (Grace et al., <a href="https://arxiv.org/abs/2401.02843">arXiv:2401.02843</a>) has a frame: <b>18,459</b> working addresses, of which <b>2,778</b> answered. Its silence is measured, so it can be chased. The Field asked what a sample of the silent would have to look like to be worth drawing. If <b>38 %</b> of the answerers give 10 % or more to extremely bad outcomes, the invited reach 10 % exactly when the silent sit at <b id="be"></b>. A second look can be tested against that line:</p>
+<label for="r2">Share of the sampled silent who answer the second look: <span class="out" id="r2v"></span></label>
+<input type="range" id="r2" min="5" max="100" value="50">
+<label for="p">Share of those who answer that give 10 % or more: <span class="out" id="pv"></span></label>
+<input type="range" id="p" min="0" max="60" value="38">
+<div class="bar" aria-hidden="true"><div class="iv" id="iv2"></div><div class="be" id="be2"></div></div>
+<div class="verdict out" id="verdict2" aria-live="polite"></div>
+<p><b>The answer to the Field:</b> a second look is worth drawing only in one direction. It can show the silent are <i>more</i> concerned than the break-even with a few dozen people, if about half of them answer. It can show they are <i>less</i> concerned only if almost everyone sampled answers: the share who do not answer must be smaller than the break-even itself. At the survey's own response rate (15 %), the second look clears the line only if the reached silent are at least <b id="pneed"></b> concerned, and then it needs about <b id="m15"></b> people.</p>
+<div class="wrap"><table id="ladder"><thead><tr><th>What is said</th><th>Survey</th><th>Statement list</th></tr></thead><tbody>
+<tr><td>how many said yes</td><td>exact (sampling ±1.8 points)</td><td>exact for a stated day</td></tr>
+<tr><td>how many were asked</td><td>18,459</td><td>no record</td></tr>
+<tr><td>share of a group that agrees</td><td>bounded both ways (5.7–90.6 %)</td><td>bounded from below only</td></tr>
+<tr><td>a second look at the silent</td><td>possible, and costed above</td><td>impossible: no one is recorded as silent</td></tr>
+<tr><td>whether the world ends</td><td colspan="2">no record, ever: the event leaves no one to count it</td></tr>
+</tbody></table></div>
+
+<h2>4 · Method, limits, and the test this page set itself</h2>
+<p><b>Material.</b> The live list (14 pages, 697 entries) and Internet Archive copies of 2023-05-27, 2023-06-01 and 2023-10-01 (raw captures). One entry per list item, matched by name after Unicode normalisation; source checksums in <code>results.json</code>. Frame: Wikidata query for holders of the Turing Award with award year and date of death, fetched 2026-10-07. Laureates on the list were matched by surname and each checked by hand (one entry lists its own award year; Wikidata's “Iosif” is the list's “Joseph” Sifakis). The second-look arithmetic is worst-case (Manski-style) bounds with a one-sided 95 % Wilson interval.</p>
+<p><b>Limits.</b> Four copies are not a history: names may have come and gone between them. A name match can miss a person listed under another form of name, and Wikidata may lack a date of death. Later copies (2024–2026) in the Archive load the list by script and could not be read. Removals are counted, not named: why a name leaves a list is not in the record, and this page does not guess. The second-look table assumes a simple random sample of the silent and ignores question assignment.</p>
+<p><b>Predictions</b> (committed before the script ran, <code>PREDICTIONS.md</code>): <span id="preds"></span></p>
+<p><b>Refutation condition.</b> If any field the list publishes lets a reader bound the frame's share from above, the claim that the list carries only a floor is false. The fields it publishes are name, affiliation as given, and category; none does.</p>
+<p><b>The other parts of this round.</b> The Field measures who answered the survey: <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-07-who-answered-the-extinction-question">who answered the extinction question</a>. The Studio gives it a form to enter: <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-07-the-silent-majority">The Silent Majority</a>. This page builds on the Field's break-even (5.0 %) and answers its question. <b>Neighbour:</b> Mimi Onuoha, <a href="https://github.com/MimiOnuoha/missing-datasets"><i>Missing Datasets</i></a> (2015–ongoing), which names a record nobody keeps. The list here is the reverse case: the record is kept, and what it lacks is the other half of every answer.</p>
+</main>
+<script>
+const R = {"statement":"Mitigating the risk of extinction from AI should be a global priority alongside other societal-scale risks such as pandemics and nuclear war.","statement_public_date":"2023-05-30","copies":["2023-05-27","2023-06-01","2023-10-01","2026-10-07"],"counts":{"2023-05-27":{"total":186,"distinct":185,"AI Scientists":99,"Other Notable Figures":83,"(no category)":4},"2023-06-01":{"total":381,"distinct":381,"AI Scientists":163,"Other Notable Figures":217,"(no category)":1},"2023-10-01":{"total":656,"distinct":656,"AI Scientists":297,"Other Notable Figures":357,"(no category)":2},"2026-10-07":{"total":697,"distinct":697,"AI Scientists":314,"Other Notable Figures":381,"(no category)":2}},"steps":[{"from":"2023-05-27","to":"2023-06-01","kept":182,"added":199,"gone":3,"added_by_category":{"Other Notable Figures":134,"AI Scientists":64,"(no category)":1}},{"from":"2023-06-01","to":"2023-10-01","kept":380,"added":276,"gone":1,"added_by_category":{"Other Notable Figures":141,"AI Scientists":134,"(no category)":1}},{"from":"2023-10-01","to":"2026-10-07","kept":656,"added":41,"gone":0,"added_by_category":{"Other Notable Figures":24,"AI Scientists":17}}],"names_ever_listed":701,"names_listed_then_absent_today":4,"head20_identical_in_all_copies":false,"head20_shared_by_all_copies":9,"first_copy_still_present":[182,185],"fields_the_list_publishes":["name","affiliation as given","category (AI Scientists / Other Notable Figures)"],"fields_it_does_not":["date of signing","date of removal","count of submissions through the form","who was asked","who declined","who disagreed"],"frame":{"definition":"Turing Award laureates with an award year up to 2022 and alive on 2023-05-30, as Wikidata records them on 2026-10-07","N":47,"k_on_list_today":4,"on_list_today":["Geoffrey Hinton","Iosif Sifakis","Martin Edward Hellman","Yoshua Bengio"],"on_list_in_first_copy":["Geoffrey Hinton","Martin Edward Hellman","Yoshua Bengio"],"surname_candidates_checked":6,"surname_candidates_rejected_by_hand":2,"share_bounds":[0.0851063829787234,1.0],"note":"no field of the list bounds the share from above"},"field_question":{"break_even_silent_share":0.05039602066194759,"response_rate":0.1504956931578092,"respondent_share":0.38,"p_needed_at_survey_response_rate":0.33486686299456103,"table":[{"r2":0.15,"p":0.0,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.15,"p":0.02,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.15,"p":0.1,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.15,"p":0.2,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.15,"p":0.38,"m_to_show_above":2834,"m_to_show_below":null},{"r2":0.3,"p":0.0,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.3,"p":0.02,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.3,"p":0.1,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.3,"p":0.2,"m_to_show_above":1309,"m_to_show_below":null},{"r2":0.3,"p":0.38,"m_to_show_above":22,"m_to_show_below":null},{"r2":0.5,"p":0.0,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.5,"p":0.02,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.5,"p":0.1,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.5,"p":0.2,"m_to_show_above":35,"m_to_show_below":null},{"r2":0.5,"p":0.38,"m_to_show_above":8,"m_to_show_below":null},{"r2":0.7,"p":0.0,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.7,"p":0.02,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.7,"p":0.1,"m_to_show_above":293,"m_to_show_below":null},{"r2":0.7,"p":0.2,"m_to_show_above":11,"m_to_show_below":null},{"r2":0.7,"p":0.38,"m_to_show_above":6,"m_to_show_below":null},{"r2":0.9,"p":0.0,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.9,"p":0.02,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.9,"p":0.1,"m_to_show_above":62,"m_to_show_below":null},{"r2":0.9,"p":0.2,"m_to_show_above":9,"m_to_show_below":null},{"r2":0.9,"p":0.38,"m_to_show_above":5,"m_to_show_below":null},{"r2":0.95,"p":0.0,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.95,"p":0.02,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.95,"p":0.1,"m_to_show_above":48,"m_to_show_below":null},{"r2":0.95,"p":0.2,"m_to_show_above":8,"m_to_show_below":null},{"r2":0.95,"p":0.38,"m_to_show_above":5,"m_to_show_below":null},{"r2":0.97,"p":0.0,"m_to_show_above":null,"m_to_show_below":479},{"r2":0.97,"p":0.02,"m_to_show_above":null,"m_to_show_below":null},{"r2":0.97,"p":0.1,"m_to_show_above":47,"m_to_show_below":null},{"r2":0.97,"p":0.2,"m_to_show_above":8,"m_to_show_below":null},{"r2":0.97,"p":0.38,"m_to_show_above":5,"m_to_show_below":null},{"r2":0.99,"p":0.0,"m_to_show_above":null,"m_to_show_below":140},{"r2":0.99,"p":0.02,"m_to_show_above":null,"m_to_show_below":608},{"r2":0.99,"p":0.1,"m_to_show_above":36,"m_to_show_below":null},{"r2":0.99,"p":0.2,"m_to_show_above":8,"m_to_show_below":null},{"r2":0.99,"p":0.38,"m_to_show_above":5,"m_to_show_below":null},{"r2":1.0,"p":0.0,"m_to_show_above":null,"m_to_show_below":105},{"r2":1.0,"p":0.02,"m_to_show_above":null,"m_to_show_below":255},{"r2":1.0,"p":0.1,"m_to_show_above":35,"m_to_show_below":null},{"r2":1.0,"p":0.2,"m_to_show_above":8,"m_to_show_below":null},{"r2":1.0,"p":0.38,"m_to_show_above":5,"m_to_show_below":null}]},"dots":[[0,3,1],[0,3,1],[0,3,1],[0,3,2],[0,3,1],[0,3,1],[2,3,2],[2,3,2],[0,3,1],[0,3,1],[2,3,1],[0,3,1],[0,3,2],[0,3,1],[0,3,1],[0,3,1],[2,3,1],[2,3,2],[2,3,1],[0,3,1],[2,3,2],[0,3,2],[0,3,2],[0,3,2],[0,3,2],[0,3,2],[0,3,1],[0,3,2],[0,3,1],[2,3,1],[0,3,2],[0,3,1],[0,3,2],[0,3,1],[0,3,1],[0,3,2],[0,3,2],[0,3,1],[0,3,2],[0,3,1],[0,3,1],[2,3,2],[0,3,1],[0,3,2],[0,3,2],[0,3,2],[0,3,1],[0,3,1],[2,3,1],[0,3,1],[2,3,2],[0,3,2],[2,3,2],[1,3,2],[2,3,2],[2,3,2],[3,3,2],[2,3,2],[0,3,2],[1,3,2],[0,3,2],[0,3,2],[0,3,2],[0,3,2],[2,3,2],[0,3,1],[0,3,1],[0,3,1],[2,3,2],[0,3,1],[0,3,1],[0,3,1],[0,3,1],[0,3,1],[0,3,2],[2,3,1],[2,3,1],[0,3,1],[0,3,1],[0,3,1],[0,3,1],[2,3,1],[2,3,2],[1,3,1],[2,3,2],[0,3,1],[3,3,1],[0,3,1],[2,3,1],[2,3,2],[1,3,1],[2,3,1],[0,3,2],[2,3,2],[0,3,2],[1,3,2],[0,3,2],[2,3,2],[2,3,2],[0,3,1],[0,3,1],[1,3,2],[1,3,2],[1,3,2],[0,3,2],[0,3,2],[2,3,2],[2,3,2],[0,3,2],[0,3,1],[0,3,1],[0,3,1],[1,3,1],[0,3,1],[1,3,2],[0,3,2],[0,3,2],[0,3,2],[0,3,2],[0,3,2],[0,3,1],[0,3,1],[0,3,2],[0,3,2],[0,3,2],[0,3,2],[2,3,1],[0,3,2],[2,3,2],[0,3,1],[2,3,1],[0,3,1],[0,3,1],[0,3,1],[0,3,1],[0,3,1],[0,3,2],[0,3,1],[2,3,1],[3,3,1],[0,3,1],[0,3,1],[0,3,1],[2,3,1],[0,3,1],[1,3,1],[0,3,1],[0,3,1],[0,3,2],[0,3,2],[2,3,2],[0,3,2],[0,3,1],[0,3,1],[0,3,1],[2,3,1],[2,3,2],[2,3,2],[0,3,1],[2,3,2],[0,3,2],[2,3,1],[2,3,2],[0,3,2],[0,3,2],[3,3,2],[0,3,2],[0,3,2],[0,3,2],[3,3,2],[2,3,2],[0,3,1],[2,3,2],[2,3,2],[0,3,1],[2,3,2],[0,3,1],[2,3,1],[1,3,1],[0,3,1],[2,3,1],[0,3,1],[1,3,2],[0,3,1],[0,3,1],[2,3,2],[1,3,1],[2,3,1],[3,3,1],[1,3,1],[1,3,1],[1,3,1],[1,3,1],[1,3,1],[3,3,2],[3,3,1],[3,3,1],[1,3,2],[2,3,2],[2,3,2],[1,3,2],[1,3,2],[2,3,1],[2,3,2],[3,3,1],[2,3,2],[2,3,2],[2,3,2],[2,3,2],[3,3,2],[2,3,2],[2,3,2],[3,3,2],[2,3,2],[2,3,2],[3,3,2],[3,3,2],[1,3,2],[2,3,2],[2,3,1],[2,3,1],[1,3,2],[2,3,2],[3,3,2],[2,3,1],[2,3,1],[2,3,2],[2,3,0],[2,3,1],[1,3,2],[0,3,2],[1,3,2],[1,3,2],[1,3,2],[2,3,2],[1,3,2],[2,3,2],[2,3,2],[1,3,2],[0,3,2],[1,3,2],[0,3,1],[3,3,1],[0,3,2],[2,3,2],[0,3,1],[0,3,2],[1,3,0],[0,3,2],[0,3,1],[0,3,1],[2,3,1],[2,3,1],[2,3,1],[0,3,1],[2,3,2],[2,3,1],[0,3,1],[2,3,2],[2,3,1],[2,3,2],[2,3,1],[2,3,2],[2,3,1],[2,3,1],[2,3,1],[0,3,1],[2,3,2],[1,3,2],[0,3,1],[1,3,2],[2,3,2],[2,3,2],[2,3,2],[2,3,2],[2,3,2],[2,3,2],[2,3,2],[0,3,2],[2,3,1],[3,3,1],[2,3,1],[0,3,2],[0,3,2],[0,3,2],[3,3,2],[2,3,1],[0,3,2],[0,3,2],[2,3,2],[2,3,1],[0,3,2],[1,3,2],[1,3,2],[2,3,2],[2,3,2],[2,3,2],[2,3,1],[2,3,2],[0,3,1],[1,3,1],[1,3,2],[1,3,2],[2,3,1],[0,3,1],[1,3,2],[0,3,1],[0,3,1],[2,3,1],[0,3,1],[2,3,2],[3,3,1],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[2,3,1],[0,3,2],[2,3,1],[2,3,1],[0,3,2],[0,3,2],[0,3,2],[1,3,2],[0,3,2],[0,3,2],[0,3,2],[2,3,1],[1,3,2],[2,3,1],[2,3,1],[2,3,2],[1,3,2],[1,3,2],[1,3,2],[2,3,1],[2,3,1],[2,3,1],[2,3,2],[0,3,2],[3,3,2],[1,3,2],[2,3,1],[2,3,1],[2,3,1],[2,3,1],[1,3,2],[3,3,2],[0,3,2],[0,3,2],[2,3,2],[2,3,2],[2,3,2],[3,3,2],[2,3,2],[2,3,2],[2,3,2],[2,3,2],[2,3,2],[0,3,2],[2,3,2],[2,3,2],[0,3,2],[2,3,2],[2,3,1],[2,3,1],[0,3,2],[0,3,2],[0,3,2],[0,3,1],[2,3,1],[0,3,1],[2,3,2],[2,3,2],[0,3,1],[2,3,1],[2,3,1],[2,3,1],[2,3,2],[3,3,1],[2,3,1],[1,3,2],[0,3,1],[1,3,2],[0,3,1],[2,3,2],[2,3,2],[0,3,1],[2,3,2],[2,3,1],[1,3,2],[0,3,1],[1,3,2],[0,3,1],[2,3,1],[2,3,1],[2,3,1],[2,3,2],[2,3,1],[2,3,1],[2,3,1],[1,3,2],[2,3,1],[2,3,2],[1,3,2],[2,3,2],[0,3,1],[2,3,2],[2,3,2],[2,3,1],[2,3,2],[2,3,2],[2,3,2],[2,3,1],[2,3,2],[1,3,2],[0,3,1],[1,3,2],[1,3,2],[1,3,2],[2,3,1],[2,3,1],[0,3,2],[2,3,1],[1,3,2],[1,3,1],[2,3,2],[0,3,2],[1,3,2],[1,3,2],[2,3,1],[2,3,2],[1,3,2],[2,3,1],[2,3,1],[1,3,2],[1,3,1],[1,3,2],[0,3,1],[2,3,2],[2,3,1],[2,3,2],[2,3,1],[3,3,1],[2,3,1],[2,3,1],[2,3,1],[0,3,2],[1,3,1],[2,3,2],[0,3,1],[2,3,1],[0,3,1],[2,3,1],[3,3,2],[2,3,1],[2,3,2],[3,3,2],[2,3,2],[1,3,2],[2,3,1],[2,3,1],[0,3,2],[2,3,1],[2,3,2],[2,3,1],[2,3,2],[3,3,1],[1,3,2],[1,3,1],[2,3,2],[2,3,2],[0,3,2],[0,3,1],[2,3,1],[0,3,2],[0,3,2],[2,3,2],[2,3,2],[2,3,2],[2,3,1],[2,3,2],[2,3,2],[3,3,2],[3,3,2],[0,3,1],[2,3,2],[2,3,2],[1,3,1],[2,3,1],[2,3,1],[2,3,1],[2,3,1],[3,3,1],[2,3,1],[1,3,2],[2,3,1],[1,3,1],[2,3,2],[1,3,2],[2,3,2],[2,3,2],[2,3,2],[2,3,2],[1,3,2],[1,3,2],[1,3,2],[2,3,2],[2,3,2],[1,3,1],[2,3,1],[2,3,1],[2,3,1],[1,3,2],[1,3,2],[3,3,1],[2,3,1],[3,3,2],[3,3,2],[1,3,1],[2,3,1],[2,3,2],[1,3,1],[2,3,2],[1,3,2],[2,3,1],[1,3,1],[2,3,1],[1,3,1],[1,3,2],[2,3,1],[1,3,2],[2,3,1],[3,3,1],[1,3,1],[2,3,1],[2,3,1],[1,3,2],[1,3,2],[1,3,2],[2,3,1],[1,3,1],[1,3,2],[1,3,1],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[0,3,1],[1,3,2],[2,3,1],[2,3,2],[2,3,1],[2,3,2],[2,3,1],[1,3,2],[2,3,1],[2,3,1],[3,3,2],[1,3,1],[1,3,1],[1,3,1],[1,3,2],[1,3,2],[1,3,1],[2,3,1],[2,3,2],[3,3,2],[2,3,1],[1,3,2],[1,3,2],[1,3,1],[1,3,2],[1,3,2],[1,3,1],[1,3,2],[1,3,1],[1,3,1],[2,3,1],[2,3,2],[3,3,2],[1,3,1],[1,3,1],[1,3,1],[1,3,2],[1,3,1],[1,3,2],[1,3,2],[1,3,1],[3,3,2],[2,3,2],[1,3,1],[1,3,2],[1,3,1],[2,3,1],[1,3,1],[2,3,1],[1,3,2],[1,3,2],[1,3,1],[1,3,1],[1,3,1],[1,3,2],[1,3,2],[1,3,1],[1,3,2],[1,3,1],[1,3,2],[2,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,1],[2,3,1],[1,3,2],[1,3,1],[2,3,2],[1,3,2],[2,3,1],[2,3,1],[1,3,1],[1,3,2],[1,3,2],[1,3,2],[2,3,1],[1,3,2],[1,3,1],[1,3,2],[1,3,2],[2,3,1],[1,3,1],[1,3,2],[1,3,2],[1,3,1],[1,3,2],[1,3,2],[2,3,1],[1,3,2],[1,3,2],[1,3,2],[1,3,1],[1,3,2],[1,3,2],[1,3,1],[2,3,1],[1,3,1],[1,3,1],[2,3,1],[1,3,2],[1,3,2],[2,3,2],[2,3,2],[2,3,2],[2,3,1],[2,3,2],[1,3,1],[2,3,2],[2,3,2],[2,3,2],[3,3,1],[3,3,2],[1,3,1],[1,3,1],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,2],[1,3,1],[1,3,2],[1,3,1],[3,3,1],[2,3,1],[1,3,2],[2,3,1],[2,3,2],[1,3,2],[2,3,1],[1,3,1],[1,3,1],[2,3,2],[2,3,1],[2,3,1],[2,3,2],[2,3,1],[2,3,2],[2,3,2],[0,0,1],[0,0,2],[0,0,0],[1,1,2]],"predictions":{"P1":true,"P2":false,"P3":true,"P4":true,"P5":true},"sources":[{"url":"https://web.archive.org/web/20230527192731id_/https://safe.ai/statement-on-ai-risk","sha256":"bc8d4c7803703aafd976cec39c37fa82b0a0da1b394edf61522680d175c9e627","bytes":100974},{"url":"https://web.archive.org/web/20230601011313id_/https://safe.ai/statement-on-ai-risk","sha256":"5d0c405b98c1e37d143e7e74689fbd7799a33e21d9573263eca8a34be5ed6fa7","bytes":177357},{"url":"https://web.archive.org/web/20231001075558id_/https://safe.ai/statement-on-ai-risk","sha256":"c4f6c3ae27c05e24f7901b36d2d467d1f8806c1ce98fa3a3661d92600ef71a71","bytes":279395},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=1","sha256":"6a51a2793722ab07c2e1d0080611c34f94dd76a5742c439e9371c7c0efc669d1","bytes":71888},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=2","sha256":"25c2b02917a535d50dd56a9a3ea971916052cc719995b1eb43b7bfa61cf91908","bytes":72824},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=3","sha256":"983dbd6e6ba6954bc0e9b2aacc403457f7c1e961be596b407db0008932f1e9d5","bytes":72778},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=4","sha256":"6ebc2fb2541d733849c9d4c781457909a38a9544dda0e7818066f11f093ab9eb","bytes":72692},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=5","sha256":"5c4b2b79911bcf23c0001ed67d15d4ec5fe610772d03685522519b43430adedf","bytes":73133},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=6","sha256":"d6f144cc33ee8a5af650cf4a5ff547a7911a3348d57f885d6d1d5d68e1811ac7","bytes":72682},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=7","sha256":"2405357c1dac851b849fee62b91dd250484f60d2219328c8e42e14471bd8c5b8","bytes":72546},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=8","sha256":"2900456244e9a4c3ccf55c85133ab6e10b918df718eaef380b77b78382b351de","bytes":72353},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=9","sha256":"7547da443345948b298bf69d969b920fd063ca0851854a09b7e0f6d5c951595a","bytes":72628},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=10","sha256":"ef47f42fa077ce3131bf31edfe95e8770ab46f59646adc74581a6a94ec4469fc","bytes":72305},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=11","sha256":"692fc313f65b72b1b277133cbb4911fb6972171a990b70e9e4eea75dd054b51e","bytes":72956},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=12","sha256":"1d8040e55c6c941c7270587a2f71fecb471534a70db14f660926ea2bb1a5e4f0","bytes":72571},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=13","sha256":"8be5de76b145415b137426396dd59fcb702f1e6253da3d77589e1b75c271bd1d","bytes":72957},{"url":"https://safe.ai/work/statement-on-ai-extinction-risk?223bcc0a_page=14","sha256":"02c729dd3911ffaafe425b2e02ae00c720e2e9bf44353d2c45672cbdd2374d7f","bytes":71377},{"url":"https://query.wikidata.org/sparql (award P166 = Q185667, with P585 year, P570 death)","sha256":"b7d1ab475d1efa4f749fcde768d321c6cbcc96cbed7942e9c52ed074798be92a","bytes":35209}]};
+const pct = (x, d = 1) => (100 * x).toFixed(d) + ' %';
+document.getElementById('stmt').textContent = '“' + R.statement + '”';
+// 1 · the wall
+const wall = document.getElementById('wall');
+R.dots.forEach(() => wall.appendChild(document.createElement('i')));
+const dots = [...wall.children];
+const steps = document.getElementById('steps');
+const label = ['27 May 2023', '1 June 2023', '1 Oct 2023', '7 Oct 2026 (today)'];
+function show(i) {
+  [...steps.children].forEach((b, j) => b.setAttribute('aria-pressed', j === i));
+  let on = 0, gone = 0;
+  R.dots.forEach(([f, l, t], j) => {
+    const d = dots[j];
+    d.className = '';
+    if (f <= i && i <= l) { d.className = t === 1 ? 's' : t === 2 ? 'f' : 'u'; on++; }
+    else if (l < i) { d.className = 'g'; gone++; }
+  });
+  const c = R.counts[R.copies[i]];
+  let s = `<b>${label[i]}</b>: ${on} names${c.total !== on ? ` in ${c.total} entries (one name stands twice)` : ''} (${c['AI Scientists'] || 0} as AI scientists, ${c['Other Notable Figures'] || 0} as other notable figures).`;
+  if (i === 0) s += ` This copy is <b>three days older</b> than the statement's public date of 30 May 2023.`;
+  if (i > 0) { const st = R.steps[i - 1]; s += ` Since the previous copy: <b>+${st.added}</b> added, <b>${st.gone}</b> no longer listed.`; }
+  if (gone) s += ` ${gone} name${gone > 1 ? 's' : ''} listed in an earlier copy ${gone > 1 ? 'are' : 'is'} not listed here.`;
+  if (i === 3) s += ` Of the first 20 names shown today, ${R.head20_shared_by_all_copies} were among the first 20 in every copy: the head of the list was reordered too.`;
+  document.getElementById('wallnote').innerHTML = s;
+}
+R.copies.forEach((c, i) => { const b = document.createElement('button'); b.textContent = label[i]; b.onclick = () => show(i); steps.appendChild(b); });
+show(3);
+// 2 · the frame
+const F = R.frame, k = F.k_on_list_today, N = F.N;
+document.getElementById('N').textContent = N;
+document.getElementById('rest').textContent = N - k;
+const fr = document.getElementById('frame');
+for (let i = 0; i < N; i++) { const c = document.createElement('i'); if (i < k) c.className = 'on'; fr.appendChild(c); }
+document.getElementById('framenote').innerHTML = `<b>${k} of ${N}</b> are on today's list (${F.on_list_today.map(n => n.replace('Martin Edward', 'Martin').replace('Iosif', 'Joseph')).join(', ')}); ${F.on_list_in_first_copy.length} of them were already on it on 27 May 2023.`;
+const lo = k / N;
+document.getElementById('lo').style.width = pct(lo, 3);
+const iv = document.getElementById('iv'); iv.style.left = pct(lo, 3); iv.style.width = pct(1 - lo, 3);
+const meanings = ['', 'never asked', 'declined', 'disagree', 'not shown'];
+function frame() {
+  const g = +document.getElementById('guess').value / 100, m = +document.getElementById('mean').value;
+  const share = (k + g * (N - k)) / N;
+  document.getElementById('guessv').textContent = pct(g, 0);
+  document.getElementById('you').style.left = `calc(${pct(share, 3)} - 1px)`;
+  document.getElementById('verdict').innerHTML =
+    `Your reading: ${pct(share)} of the ${N} hold the view${m ? ` (absence read as “${meanings[m]}”)` : ''}. ` +
+    `<b>What the list supports: at least ${pct(lo)}, at most 100 %.</b> The interval did not move.`;
+}
+['guess', 'mean'].forEach(id => document.getElementById(id).addEventListener('input', frame)); frame();
+// 3 · the second look
+const Q = R.field_question, BE = Q.break_even_silent_share;
+document.getElementById('be').textContent = pct(BE);
+document.getElementById('pneed').textContent = pct(Q.p_needed_at_survey_response_rate, 0);
+const row15 = Q.table.find(r => r.r2 === 0.15 && r.p === 0.38);
+document.getElementById('m15').textContent = row15.m_to_show_above.toLocaleString('en');
+document.getElementById('be2').style.left = pct(BE, 3);
+const Z = 1.6448536269514722;
+function wilson(x, m) { const p = x / m, d = 1 + Z * Z / m, c = (p + Z * Z / (2 * m)) / d, h = Z * Math.sqrt(p * (1 - p) / m + Z * Z / (4 * m * m)) / d; return [Math.max(0, c - h), Math.min(1, c + h)]; }
+function mAbove(r2, p) { if (r2 * p <= BE) return null; for (let m = 5; m < 100000; m++) { if (wilson(Math.round(m * r2 * p), m)[0] > BE) return m; } return null; }
+function mBelow(r2, p) { if (r2 * p + (1 - r2) >= BE) return null; for (let m = 5; m < 100000; m++) { if (wilson(Math.round(m * r2 * p), m)[1] + wilson(Math.round(m * (1 - r2)), m)[1] < BE) return m; } return null; }
+function second() {
+  const r2 = +document.getElementById('r2').value / 100, p = +document.getElementById('p').value / 100;
+  document.getElementById('r2v').textContent = pct(r2, 0);
+  document.getElementById('pv').textContent = pct(p, 0);
+  const a = r2 * p, b = r2 * p + (1 - r2);
+  const e = document.getElementById('iv2'); e.style.left = pct(a, 3); e.style.width = pct(b - a, 3);
+  const up = mAbove(r2, p), dn = mBelow(r2, p);
+  let s = `Worst-case range for the silent, before sampling error: <b>${pct(a)} to ${pct(b)}</b>; break-even ${pct(BE)}. `;
+  if (up) s += `A sample of about <b>${up.toLocaleString('en')}</b> would show the silent <b>above</b> the break-even.`;
+  else if (dn) s += `A sample of about <b>${dn.toLocaleString('en')}</b> would show the silent <b>below</b> the break-even.`;
+  else s += `<b>No sample size settles it</b>: ` + (1 - r2 >= BE ? `the ${pct(1 - r2, 0)} who do not answer could hold any view, which alone spans the line.` : `the observed share sits too close to the line.`);
+  document.getElementById('verdict2').innerHTML = s;
+}
+['r2', 'p'].forEach(id => document.getElementById(id).addEventListener('input', second)); second();
+// predictions
+const PT = { P1: 'later additions mostly “other notable figures”', P2: 'head of the list unchanged across copies', P3: '95 % of the first copy still listed', P4: 'no second look below 95 % response can show “below”', P5: 'at 50 % response and 38 %, under 100 people suffice' };
+document.getElementById('preds').innerHTML = Object.entries(R.predictions).map(([k, v]) => `${k} ${v ? 'held' : '<b>failed</b>'} (${PT[k]})`).join('; ') + '.';
+</script>
+</body></html>
