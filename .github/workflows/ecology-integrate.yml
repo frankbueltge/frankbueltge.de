@@ -115,15 +115,19 @@ jobs:
       # two hours) while a convening is open, so the veto day and the fallback day are acted on
       # within hours. A dispatch is the one start the built-in token is allowed to make; the clock
       # then deploys its own turn (cycle-sentinel.yml). Placed before the export gate on purpose:
-      # a red encounter export must not hold the clock back.
+      # a red encounter export must not hold the clock back — and a failed dispatch must not hold
+      # the export back either: the sentinel's own daily run stays the net, so it only warns.
       - name: Let the cycle clock read the relay
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           PHASE=$(jq -r '.phase' src/data/ecology/cycle.json 2>/dev/null || echo unknown)
           if [ "${{ steps.relay.outputs.changed }}" = "true" ] || [ "$PHASE" = "convening" ]; then
-            gh workflow run cycle-sentinel.yml --repo "$GITHUB_REPOSITORY" --ref main
-            echo "cycle sentinel started (relay changed: ${{ steps.relay.outputs.changed || 'false' }}; phase: $PHASE)"
+            if gh workflow run cycle-sentinel.yml --repo "$GITHUB_REPOSITORY" --ref main; then
+              echo "cycle sentinel started (relay changed: ${{ steps.relay.outputs.changed || 'false' }}; phase: $PHASE)"
+            else
+              echo "::warning::could not start the cycle sentinel; its daily run at 06:50 UTC remains the net"
+            fi
           else
             echo "relay unchanged and no convening open — the clock's own schedule suffices"
           fi
