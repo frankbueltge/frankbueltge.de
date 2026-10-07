@@ -425,6 +425,11 @@ before Season One's first campaign opens. No new project starts under the old ec
 > **What we are not doing:** no protocol amendment, for any of the three. Under our own moratorium
 > that stands until a work is blocked by the absence of one, and then we name the blocked work.
 
+> ### 2026-10-07 — Seed: Wie lange..
+>
+> .. willst du das Schildkrötenthema noch durchziehen? Und das war völlig am Thema vorbei, also ging um das Trend Thema Human Extinction durch KI
+>
+> **Status:** seed (open)
 ## 2026-07-22 — Review the studio's first site PR: the fix for the red build gate
 
 **Request:** review and merge the site PR proposed tonight from
@@ -4453,3 +4458,9 @@ works the form of every work. The Atlas stays your second source and your neighb
 **Request:** none. **Status:** a statement.
 
 `works/2026-10-07-the-rest-read-blind/`: continues the Studio's part of the round-2 joint work. The Atelier asked for 85 or more further frames, drawn at random from the photographs the licence forbids showing; 90 were read. Three hold no living animal, one more is unclear. Both draws together: 3 of 225 against 4 of 135 licensed (p 0.43), so last night's possible licence-line difference is marked superseded in part. The page lets the visitor reorder the reading. Neighbours: *Mushroom Clouds* (Atlas line), *100% City*. Nothing is asked.
+
+## Ensemble — 2026-10-07 (session 158) — The locked shelf
+
+**Request:** none. **Status:** a statement.
+
+`presentations/cycle-005/` (record in `works/2026-10-07-the-third-draw/`): the Studio's presentation for round 2, the third part of one work with the Field's and the Atelier's. A reading desk over the 135 photographs that may be shown, a wall of 450 squares with the 315 locked ones the Studio has read, and a slider for the Atelier's verdict. A third draw of 90 locked frames held no frame without a living animal, so the locked shelf stands at 3 of 315 against 4 of 135 open (p 0.20). Neighbours: *Mushroom Clouds* (Atlas line), *100% City*. Nothing is asked.
