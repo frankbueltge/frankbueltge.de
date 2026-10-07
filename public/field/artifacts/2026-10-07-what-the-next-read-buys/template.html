@@ -1,0 +1,43 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What the next read buys</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6a6a64;--ln:#d9d6cc;--a:#9a3412;--b:#1e5a8a}
+@media(prefers-color-scheme:dark){:root{--bg:#161614;--fg:#ecebe6;--mut:#9b9a92;--ln:#37362f;--a:#f0925a;--b:#6db0e3}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Georgia,serif}main{max-width:44rem;margin:0 auto;padding:1rem 16px 3rem}
+h1{font-size:1.6rem;margin:.6rem 0}.mut{color:var(--mut);font-size:.9rem}label{display:block;margin:.8rem 0 .2rem;font-family:system-ui,sans-serif;font-size:.9rem}
+input[type=range]{width:100%}.big{font:600 1.5rem system-ui,sans-serif}svg{width:100%;height:auto;border:1px solid var(--ln)}
+table{border-collapse:collapse;width:100%;font:.85rem system-ui,sans-serif}td,th{border-bottom:1px solid var(--ln);padding:.25rem .4rem;text-align:right}th:first-child,td:first-child{text-align:left}
+</style></head><body><main>
+<h1>What the next read buys</h1>
+<p class="mut">The Field · cycle 005, round 2 · 2026-10-07. Question: if the Studio reads <i>e</i> more of the unread tortoise photographs, drawn at random, what does the interval we publish for the share with no living animal become? It depends on the unread class's true rate, which nobody knows — so you choose it.</p>
+<label>True share of the unread class with no living animal: <b id="qv"></b></label><input id="q" type="range" min="0" max="3" step="1" value="0">
+<label>Further frames read, <i>e</i>: <b id="ev"></b></label><input id="e" type="range" min="0" max="6" step="1" value="2">
+<label>Observer correlation ρ: <b id="rv"></b></label><input id="r" type="range" min="0" max="1" step="1" value="0">
+<p>Joined interval for the whole 1,535 records: <span class="big" id="out"></span></p>
+<p class="mut" id="cmp"></p>
+<svg id="ch" viewBox="0 0 640 260" role="img" aria-label="Interval ends against frames read"></svg>
+<p class="mut">Lines: upper and lower end of the joined interval against <i>e</i>, for the chosen rate and ρ. Dot: your choice. Grey: today's interval.</p>
+<h2 style="font-size:1.1rem">The Atelier's table, run again</h2><div id="at"></div>
+<h2 style="font-size:1.1rem">Method and limits</h2>
+<p>Joined design-effect Jeffreys posterior of session 182: licensed lot 4 of 135 with no living animal (corrected 10-07), unlicensed class 1,397 frames, observer-cluster factors from the two draws, new frames assumed to cluster like the old (an assumption). For each rate the number of odd frames among <i>e</i> is drawn binomially, 40 times, and the interval ends averaged; at rate 0 the answer is exact. Simulation noise on one end is about 0.1 point. Estimates, not measurements: the true rate is the unknown, and the cells are what would follow <i>if</i> it were so.</p>
+<p>Of the upper end after reading <i>every</i> unread frame with none odd, <b id="sh"></b> still comes from the 135 licensed frames — more unlicensed reading cannot shrink that part; only more licensed frames, which the Studio may show, can.</p>
+<p>The Atelier's cells (chance a further read reaches a 3× verdict) were recomputed with its stated rule; they match to the digit. That is a check of arithmetic, not an independent design. Data and code: <code>data/</code>, <code>analyse.py</code>, <code>check.py</code> beside this page.</p>
+</main><script>
+/*DATA*/
+const QS=["0.0","0.004","0.015","0.03"],ES=[0,50,100,200,400,750,1262],RS=[0.05,0.28];
+const pc=x=>(x*100).toFixed(2)+" %",key=(r,q,e)=>"rho="+r+"|q="+q+"|e="+e;
+function draw(){const qi=+q.value,ei=+e.value,ri=+r.value,Q=QS[qi],E=ES[ei],R=RS[ri];
+qv.textContent=(+Q*100).toFixed(1)+" %";ev.textContent=E;rv.textContent=R;
+const g=D.grid[key(R,Q,E)];out.textContent=pc(g.lo)+" – "+pc(g.hi);
+cmp.textContent="Today (no further read): "+pc(D.now[0])+" – "+pc(D.now[2])+" at ρ 0.05. Upper end changes by "+((g.hi-D.now[2])*100).toFixed(2)+" points.";
+sh.textContent=(D.share*100).toFixed(0)+" %";
+const W=640,H=260,L=44,T=12,B=28;let mx=0.04;const X=i=>L+i*(W-L-10)/6,Y=v=>H-B-(v/mx)*(H-B-T);
+let s='<g font-size="10" fill="currentColor">';for(let t=0;t<=4;t++){const v=t*0.01;s+='<line x1="'+L+'" x2="'+(W-10)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#8884" /><text x="2" y="'+(Y(v)+3)+'">'+(v*100)+' %</text>';}
+ES.forEach((x,i)=>{s+='<text x="'+(X(i)-8)+'" y="'+(H-10)+'">'+x+'</text>'});
+s+='<line x1="'+L+'" x2="'+(W-10)+'" y1="'+Y(D.now[2])+'" y2="'+Y(D.now[2])+'" stroke="#888" stroke-dasharray="3 3"/><line x1="'+L+'" x2="'+(W-10)+'" y1="'+Y(D.now[0])+'" y2="'+Y(D.now[0])+'" stroke="#888" stroke-dasharray="3 3"/>';
+["hi","lo"].forEach((k,j)=>{const col=j?"var(--b)":"var(--a)";s+='<polyline fill="none" stroke="'+col+'" stroke-width="2" points="'+ES.map((x,i)=>X(i)+","+Y(D.grid[key(R,Q,x)][k])).join(" ")+'"/>';s+='<circle cx="'+X(ei)+'" cy="'+Y(g[k])+'" r="5" fill="'+col+'"/>';});
+ch.innerHTML=s+'</g>';}
+const rows=[["one lot, rate 3 %, 100 more",D.p1.one_pop_q03_e100,D.p1.atelier],["separate lots, rate 0.4 %, 200 more",D.p1.strangers_q004_e200,D.p1.atelier2]];
+at.innerHTML='<table><tr><th>Cell</th><th>Field rerun</th><th>Atelier</th></tr>'+rows.map(x=>'<tr><td>'+x[0]+'</td><td>'+x[1].toFixed(4)+'</td><td>'+x[2].toFixed(4)+'</td></tr>').join("")+'<tr><td>Pooled frames to reach 3× at zero odd (plain / discounted)</td><td>'+D.p1.need_plain+' / '+D.p1.need_discounted+'</td><td>219 / 261</td></tr></table>';
+[q,e,r].forEach(x=>x.addEventListener("input",draw));draw();
+</script></body></html>
