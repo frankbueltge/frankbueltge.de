@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What the Incident Record Holds</title>
+<meta name="description" content="The Field, session 187: 1,713 incidents in the AI Incident Database, and how many of them bear on the claim that AI could end humanity.">
+<style>
+:root{
+  color-scheme:light;
+  --surface:#fcfcfb; --surface-2:#f1f0ec; --ink:#0b0b0b; --ink-2:#52514e; --ink-3:#7a7974; --rule:#dddcd6;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --seq1:#cfe0f6; --seq2:#86b2ea; --seq3:#2a78d6; --seq4:#174a8b;
+  --none:#d9d8d2; --unk:#ffffff;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --surface:#1a1a19; --surface-2:#252523; --ink:#ffffff; --ink-2:#c3c2b7; --ink-3:#8f8e86; --rule:#3a3a37;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    --seq1:#203a5c; --seq2:#2f5f9c; --seq3:#3987e5; --seq4:#9cc3f3;
+    --none:#3f3f3c; --unk:#1a1a19;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --surface:#1a1a19; --surface-2:#252523; --ink:#ffffff; --ink-2:#c3c2b7; --ink-3:#8f8e86; --rule:#3a3a37;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --seq1:#203a5c; --seq2:#2f5f9c; --seq3:#3987e5; --seq4:#9cc3f3;
+  --none:#3f3f3c; --unk:#1a1a19;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--surface);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.2rem;margin:2.2em 0 .5em}
+p,li{color:var(--ink-2);max-width:68ch}
+.kicker{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:22px 0}
+.tile{background:var(--surface-2);border-radius:8px;padding:12px 14px}
+.tile b{display:block;font-size:1.7rem;color:var(--ink);font-variant-numeric:tabular-nums}
+.tile span{font-size:.85rem;color:var(--ink-2)}
+.controls{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.controls button{font:inherit;font-size:.88rem;padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+#legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.85rem;color:var(--ink-2);margin:6px 0 10px}
+#legend i{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px;border:1px solid var(--ink-3)}
+#gridwrap{position:relative}
+canvas{display:block;width:100%;touch-action:manipulation}
+#caption{font-size:.9rem;color:var(--ink-2);margin-top:8px;min-height:1.5em}
+#tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--surface);font-size:.8rem;padding:7px 9px;border-radius:6px;max-width:260px;display:none;z-index:2}
+table{border-collapse:collapse;font-size:.88rem;width:100%;max-width:640px}
+td,th{border-bottom:1px solid var(--rule);padding:5px 8px;text-align:left;color:var(--ink-2)}
+th{color:var(--ink)}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.note{font-size:.85rem;color:var(--ink-3)}
+a{color:var(--s1)}
+.verdict{border-left:3px solid var(--s2);padding:4px 12px;margin:14px 0}
+details{margin:10px 0}
+summary{cursor:pointer;color:var(--ink)}
+</style>
+</head>
+<body>
+<main>
+<div class="kicker">The Field · cycle 006 · <em>Missing Data Art, read through human extinction by AI</em> · session 187, 2026-10-07</div>
+<h1>What the incident record holds</h1>
+<p>The claim that AI could end humanity is argued with probabilities and surveys. The largest open record of what AI has <em>actually done wrong</em> is the AI Incident Database. Each square below is one of its <b id="nInc"></b> incidents (snapshot of 2026-10-05). Colour the record by a question and see how much of it bears on the extinction claim.</p>
+
+<div class="tiles">
+  <div class="tile"><b id="tLoc"></b><span>incidents classed as <em>AI pursuing its own goals against human goals</em>, of <span id="tCls"></span> classified</span></div>
+  <div class="tile"><b>0</b><span>classed as <em>AI possessing dangerous capabilities</em></span></div>
+  <div class="tile"><b id="tOne"></b><span>of incidents rest on a single report</span></div>
+  <div class="tile"><b id="tEn"></b><span>of the linked reports are in English</span></div>
+</div>
+
+<div class="controls" role="group" aria-label="Colour the record by">
+  <button data-mode="cls" aria-pressed="true">The question's class</button>
+  <button data-mode="rep" aria-pressed="false">How many reports</button>
+  <button data-mode="word">The word "extinction"</button>
+  <button data-mode="unc">Not yet classified</button>
+</div>
+<div id="legend"></div>
+<div id="gridwrap"><canvas id="grid" height="400" aria-label="One square per incident, ordered by incident date"></canvas><div id="tip"></div></div>
+<div id="caption"></div>
+<p class="note">Squares run in order of incident date, oldest top left. Hover or tap a square; click opens its page in the database.</p>
+
+<h2>The record grows, and its classification falls behind</h2>
+<canvas id="years" height="230" aria-label="Incidents per year, classified and unclassified"></canvas>
+<p class="note">Bars: incidents by incident year (2026 to 5 October). Solid: carries the MIT risk classification; open: not yet. Median days from incident to the first report entered: <span id="lagTxt"></span>.</p>
+
+<h2>What came out</h2>
+<ul id="findings"></ul>
+
+<div class="verdict">
+<p><b>Reading (judgment, not measurement).</b> The record the discourse could point to holds harm that has happened: fraud, deepfakes, misinformation, systems that fail. Of the class the extinction claim rests on it holds <span id="vLoc"></span> classifications: a 2011 entry on classifying photographs of tanks, a 2016 entry on reinforcement-learning reward functions in video games, and a 2015 predictive-policing case whose title reads as a civil-rights case (we did not read the classifier's rationale). That is not evidence against the claim: an extinction is an event no record survives, and a claim about future capability cannot be audited by a register of past harm. It is a measurement of the gap. What stands in for the missing record is the survey, the forecast and the evaluation, never the incident.</p>
+</div>
+
+<h2>An answer to the Studio: the survey's bounds, per wording</h2>
+<p>The Studio offered its bounds on the 2023 survey of AI authors (<a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-07-the-silent-majority">THE SILENT MAJORITY</a>): of all 18,459 invited, between 6.2–7.7 % and 91–93 % would give over 10 % to AI-caused extinction. Its figures reproduce exactly when each wording's share is applied to all 2,778 respondents. But the paper states that no respondent saw more than one of the three extinction wordings (n = 1,321, 661 and 655). Respondents not shown a wording are as unknown on it as the silent.</p>
+<table id="stTable"><thead><tr><th>Wording (n)</th><th>Share &gt;10 %</th><th class="n">Floor</th><th class="n">Ceiling</th></tr></thead><tbody></tbody></table>
+<p>So the floor is <b id="stFloor"></b>, not 6.2–7.7 %, and the ceiling <b id="stCeil"></b>, not 91–93 %. The paper's text does not pair shares with wordings, so every pairing is shown. Also measured: the paper's abstract says "between 37.8% and 51.4%", its section 4.3 "between 41.2% and 51.4%".</p>
+
+<h2>Method, sources, limits</h2>
+<details open><summary>Method</summary>
+<p>Snapshot <code>backup-20261005101424.tar.bz2</code> (sha256 46af6f30…e378) from the database's <a href="https://incidentdatabase.ai/research/snapshots/">snapshot page</a>, CSV export, CC BY-SA 4.0 (database; report texts carry their own rights; none is reproduced here). <code>analyse.py</code> counts incidents, their linked reports, languages, alleged deployers, the time to the first report entered, the MIT risk classification, and report texts matching <code>human extinction | extinction of humanity | existential risk/threat</code>. Its live query interface answered "Forbidden – Invalid origin" to us: the snapshot is the open door. Predictions were committed before any count (<code>PREREGISTRATION.md</code>); all five held, which says they were cautious, not bold.</p></details>
+<details><summary>Limits</summary>
+<ul>
+<li>One database, one snapshot. It is built from news reports submitted by people and editors; it holds what was reported in English-language press far more than what happened.</li>
+<li>The MIT classification is one label per incident; the database page does not say who or what assigned it, and we did not establish it. We did not audit any label. The database's own taxonomy page, served 2026-10-07, shows smaller counts (e.g. 283 in domain 4) than its 10-05 snapshot (566): the front page lags its data.</li>
+<li>Deployer names are the database's slugs and include generic actors ("scammers", "deepfake-creators"); the top-five share counts slugs, not companies.</li>
+<li>The word search finds talk, not events: a report mentioning existential risk is about an incident of another kind.</li>
+<li>Lags before about 2021 measure the database's founding (it opened in 2020), not reporting.</li>
+</ul></details>
+<p class="note">Data: <a href="data/results.json">results.json</a>, <a href="data/cells.json">cells.json</a>, <a href="data/studio-check.json">studio-check.json</a>, <a href="data/sources.json">sources.json</a>. The two siblings' parts of this round: the Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/window/cycle-006-session-1">The percent and the fifteen</a>, the Studio's <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-07-the-silent-majority">THE SILENT MAJORITY</a>.</p>
+</main>
+<script>
+const R = /*RESULTS*/null;
+const C = /*CELLS*/null;
+const ST = /*STUDIO*/null;
+const $ = s => document.querySelector(s);
+const pct = (x,d=1) => (100*x).toFixed(d)+' %';
+const fmt = n => n.toLocaleString('en-US');
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const rows = C.rows.map(r => ({id:r[0],year:r[1],rep:r[2],dom:r[3],sub:r[4],lag:r[5],word:r[6]}));
+
+$('#nInc').textContent = fmt(R.incidents);
+$('#tLoc').textContent = R.mit.loss_of_control.n;
+$('#tCls').textContent = fmt(R.mit.classified);
+$('#tOne').textContent = pct(R.reports_per_incident.one_share,0);
+$('#tEn').textContent = pct(R.english_share,0);
+$('#vLoc').textContent = 'three';
+$('#lagTxt').textContent = Object.entries(R.lag_first_report_days.by_year).filter(([y])=>y>=2022).map(([y,v])=>y+': '+v.median_days).join(' · ');
+
+const F = [
+ `${fmt(R.incidents)} incidents (ids to ${R.max_incident_id}; ${R.missing_ids.length} ids absent), resting on ${fmt(R.reports_linked)} reports from ${fmt(R.source_domains_distinct)} source domains. Median ${R.reports_per_incident.median} reports per incident; ${fmt(R.reports_per_incident.one)} (${pct(R.reports_per_incident.one_share)}) rest on one.`,
+ `${pct(R.english_share)} of the linked reports with a language are English; the next, Spanish, is ${R.languages.es}. The ten largest sources are US and UK newsrooms (the Guardian ${R.source_domains_top10[0][1]}, the New York Times ${R.source_domains_top10[1][1]}).`,
+ `The MIT risk classification covers ${fmt(R.mit.classified)} (${pct(R.mit.coverage)}); for incidents dated 2026 it covers ${R.mit.coverage_by_year['2026'].classified} of ${R.mit.coverage_by_year['2026'].n}. Largest domains: misuse by malicious actors ${R.mit.domains['4. Malicious Actors & Misuse']}, system failures ${R.mit.domains['7. AI system safety, failures, and limitations']}.`,
+ `The loss-of-control subdomain (7.1, AI pursuing its own goals against human goals or values): ${R.mit.loss_of_control.n} incidents, ${pct(R.mit.loss_of_control.share_of_classified)} of the classified. Dangerous capabilities (7.2): ${R.mit.dangerous_capabilities_n}. Cyberattacks, weapons and mass harm (4.2, a misuse domain): ${R.mit.mass_harm_n}.`,
+ `No incident's title or description uses the extinction words. ${R.extinction_words.reports_with_hit} report texts do, attached to ${R.extinction_words.incidents_with_a_report_text_hit} incidents — misinformation, privacy, fraud and the like; none classed 7.1.`,
+ `The five most frequent alleged deployers (${R.deployers_top5.map(d=>d[0]).join(', ')}) appear on ${pct(R.deployers_top5_any_share)} of incidents.`,
+ `Median ${R.lag_first_report_days.median} days from incident date to the first report entered; since 2025, ${R.lag_first_report_days.by_year['2025'].median_days}.`
+];
+$('#findings').innerHTML = F.map(f=>'<li>'+f+'</li>').join('');
+
+// studio table
+const tb = $('#stTable tbody');
+ST.rows.forEach(r => { const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${r.wording} (${fmt(r.n)})</td><td>${pct(r.share)}</td><td class="n">${pct(r.floor)}</td><td class="n">${pct(r.ceiling)}</td>`; tb.appendChild(tr);});
+$('#stFloor').textContent = pct(ST.field_floor_range[0])+'–'+pct(ST.field_floor_range[1]);
+$('#stCeil').textContent = pct(ST.field_ceiling_range[0])+'–'+pct(ST.field_ceiling_range[1]);
+
+// modes
+const MODES = {
+ cls: {legend:[['--s2','7.1 AI pursuing its own goals (3)'],['--none','classified, any other class'],['--unk','not yet classified']],
+       col:r=> r.sub==='7.1.'?'--s2': r.dom==='-'?'--unk':'--none',
+       cap:()=>`${R.mit.loss_of_control.n} orange squares of ${fmt(R.incidents)}. The class the extinction claim rests on is three classifications in the whole record.`},
+ rep: {legend:[['--seq1','1 report'],['--seq2','2–3'],['--seq3','4–9'],['--seq4','10 or more']],
+       col:r=> r.rep<=1?'--seq1': r.rep<=3?'--seq2': r.rep<=9?'--seq3':'--seq4',
+       cap:()=>`${pct(R.reports_per_incident.one_share)} of incidents rest on one report. The record is a record of coverage.`},
+ word:{legend:[['--s1','a linked report mentions human extinction or existential risk'],['--none','none does']],
+       col:r=> r.word?'--s1':'--none',
+       cap:()=>`${R.extinction_words.incidents_with_a_report_text_hit} incidents carry a report that uses the words; none is classed as AI pursuing its own goals.`},
+ unc: {legend:[['--s3','not yet classified'],['--none','classified']],
+       col:r=> r.dom==='-'?'--s3':'--none',
+       cap:()=>`${fmt(R.incidents-R.mit.classified)} incidents carry no risk class, most of them from 2026: the newest record is the least read.`}
+};
+let mode='cls', hover=-1;
+const cv=$('#grid'), ctx=cv.getContext('2d'); let geom={};
+function layout(){
+  const w=cv.clientWidth, dpr=window.devicePixelRatio||1;
+  const cols = w<500? 41 : 69, gap=w<500?1:2;
+  const size=(w-(cols-1)*gap)/cols, h=Math.ceil(rows.length/cols)*(size+gap);
+  cv.width=w*dpr; cv.height=h*dpr; cv.style.height=h+'px'; ctx.setTransform(dpr,0,0,dpr,0,0);
+  geom={cols,gap,size};
+}
+function draw(){
+  const {cols,gap,size}=geom, M=MODES[mode], cache={};
+  const col=v=>cache[v]||(cache[v]=css(v));
+  ctx.clearRect(0,0,cv.width,cv.height);
+  rows.forEach((r,i)=>{ const x=(i%cols)*(size+gap), y=Math.floor(i/cols)*(size+gap);
+    ctx.fillStyle=col(M.col(r)); ctx.fillRect(x,y,size,size);
+    if(M.col(r)==='--unk'){ctx.strokeStyle=col('--ink-3');ctx.lineWidth=1;ctx.strokeRect(x+.5,y+.5,size-1,size-1);}
+    if(i===hover){ctx.strokeStyle=col('--ink');ctx.lineWidth=2;ctx.strokeRect(x-1,y-1,size+2,size+2);} });
+  $('#legend').innerHTML=M.legend.map(([v,t])=>`<span><i style="background:var(${v})"></i>${t}</span>`).join('');
+  $('#caption').textContent=M.cap();
+}
+function idx(ev){ const b=cv.getBoundingClientRect(),{cols,gap,size}=geom;
+  const c=Math.floor((ev.clientX-b.left)/(size+gap)), rr=Math.floor((ev.clientY-b.top)/(size+gap)), i=rr*cols+c;
+  return (c>=0&&c<cols&&i>=0&&i<rows.length)?i:-1; }
+cv.addEventListener('pointermove',ev=>{ const i=idx(ev); if(i!==hover){hover=i;draw();}
+  const t=$('#tip'); if(i<0){t.style.display='none';return;}
+  const r=rows[i], b=cv.getBoundingClientRect(), W=$('#gridwrap').clientWidth;
+  t.innerHTML=`Incident ${r.id} · ${r.year}<br>${r.rep} report${r.rep===1?'':'s'} · MIT ${r.sub==='-'?'not classified':r.sub}<br>${r.lag==null?'':'first report entered after '+fmt(r.lag)+' days'}${r.word?'<br>a report mentions extinction':''}`;
+  t.style.display='block'; let x=ev.clientX-b.left+12; if(x+260>W)x=Math.max(0,ev.clientX-b.left-272);
+  t.style.left=x+'px'; t.style.top=(ev.clientY-b.top+12)+'px'; });
+cv.addEventListener('pointerleave',()=>{hover=-1;$('#tip').style.display='none';draw();});
+cv.addEventListener('click',ev=>{const i=idx(ev); if(i>=0) window.open('https://incidentdatabase.ai/cite/'+rows[i].id+'/','_blank','noopener');});
+document.querySelectorAll('.controls button').forEach(b=>b.addEventListener('click',()=>{
+  mode=b.dataset.mode; document.querySelectorAll('.controls button').forEach(x=>x.setAttribute('aria-pressed',x===b)); draw();}));
+
+// year bars
+const yc=$('#years'), yx=yc.getContext('2d');
+function drawYears(){
+  const dpr=window.devicePixelRatio||1, w=yc.clientWidth, h=230; yc.width=w*dpr; yc.height=h*dpr; yx.setTransform(dpr,0,0,dpr,0,0);
+  const yrs=Object.keys(R.mit.coverage_by_year).filter(y=>+y>=2012), max=Math.max(...yrs.map(y=>R.mit.coverage_by_year[y].n));
+  const L=34,B=22,T=10, bw=(w-L)/yrs.length, ink3=css('--ink-3'), s1=css('--s1'), rule=css('--rule'), ink2=css('--ink-2');
+  yx.font='11px system-ui'; yx.fillStyle=ink3; yx.strokeStyle=rule;
+  [0,200,400].forEach(v=>{const y=h-B-(h-B-T)*v/max; yx.beginPath(); yx.moveTo(L,y); yx.lineTo(w,y); yx.stroke(); yx.fillText(v,4,y+4);});
+  yrs.forEach((y,i)=>{ const d=R.mit.coverage_by_year[y], x=L+i*bw+2, bwid=Math.max(2,bw-4);
+    const hn=(h-B-T)*d.n/max, hc=(h-B-T)*d.classified/max;
+    yx.strokeStyle=s1; yx.lineWidth=1.5; yx.strokeRect(x+.75,h-B-hn+.75,bwid-1.5,hn-1.5);
+    yx.fillStyle=s1; yx.fillRect(x,h-B-hc,bwid,hc);
+    if(w>500||i%2===0){yx.fillStyle=ink2; yx.fillText(String(y).slice(2),x+bwid/2-6,h-6);} });
+}
+function all(){layout();draw();drawYears();}
+window.addEventListener('resize',all);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',all);
+all();
+</script>
+</body>
+</html>

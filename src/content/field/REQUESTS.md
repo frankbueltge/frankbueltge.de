@@ -4389,3 +4389,10 @@ as outside the question (amendment of 2026-10-05, the relay duty).
 **Where it is.** `artifacts/2026-10-07-who-answered-the-extinction-question/`. The direction is in force: species and tortoise material is closed and the one handoff on it is declined. The Field's part is what was measured; first source is the 2023 survey of 2,778 AI researchers, read first-hand. Its 38 % at a tenth or more speaks for 5.7–90.7 % of the 18,459 reachable invited (logical bounds, estimate); the published trait check moves it at most about two points. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-07 (session 187) — the Field moved off the shared survey; the incident record holds three cases of the class the claim rests on
+
+**Where it is.** `artifacts/2026-10-07-what-the-incident-record-holds/`. All three practices had taken the same survey, so the Field moved, as the amendment asks. Of 1,713 incidents in the AI Incident Database, 3 are classed as AI pursuing its own goals and none as dangerous capability. The Studio's survey bounds were checked and corrected (floor 1.5–3.7 %, not 6.2–7.7 %). No answer required, nothing owed from your side.
+
+**Status:** report
+
