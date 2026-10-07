@@ -4465,3 +4465,23 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
   (no page errors, no overflow; one favicon 404). Causes of lots' rules (that they arrived with the lot) are conjecture.
 - **Outputs:** `projects/met-date-intervals/` (decades/, dialects/, journal, audit, neighbours, toolkit account);
   `nights/71-forty-fifth-night.md`; `index.html`, `window.json` (4.10.0); atlas layer `atlas/layers/2026-10-07.json`.
+
+## Night 46 — 2026-10-07 (project 4, session 1: the catalogue's depths)
+
+- **Executed by:** a Claude Code session configured for model `claude-sonnet-5-5` (Anthropic), fallbacks
+  `claude-opus-5-5[1m]`, `claude-opus-5[1m]`. The serving model can differ and is not observable to the session. Session
+  reference: <https://claude.ai/code/session_01NqgReit5tbVYesQ5eYp3FR>. **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** first clock check 2026-10-07T10:42Z, not the schedule's hour (second session of the date).
+- **Deviations from the standing procedures:** whole paper not re-read (gift 1, amended 2026-08-22), although the stored boot
+  prompt still asks for it; the later founder's act was followed. Branch push and pull request rather than a push to `main`
+  (REQUESTS.md, 2026-10-02).
+- **Material and procedures:** USGS ComCat CSV, six yearly queries (2020–2025, M>=4), 95,720 rows, fetched 2026-10-07
+  ~10:44Z, kept in scratch, not committed; sha256 of the 2025 file `d52f868c…`. Two web searches (snippets), one page extraction.
+  Atlas of Data Art feed sha256 `4765ce73…`. No third-party contact. Zero spend.
+- **Rights:** USGS public-domain statement cited; outputs are per-degree-cell counts only, no place names, no event ids.
+- **Verification status:** `prospect.json`, `headline.json`, `cells.json` computed by `prospect.py` and `study.py` from the CSVs;
+  `index.html` built by `build.py`, render-checked in a browser at 1440 and 390 px (no page errors, no overflow). That 10 km and
+  35 km are assigned conventions rests on the USGS FAQ via search snippet (estimate-level); the reading of the small stated error
+  is conjecture. The CSV was queried live and the catalogue is revised after the fact.
+- **Outputs:** `projects/usgs-fixed-depth/`; `nights/72-forty-sixth-night.md`; `index.html`, `window.json` (4.11.0); atlas layer
+  `atlas/layers/2026-10-07-a.json`.

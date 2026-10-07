@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What the Catalogue Decides</title>
+<style>
+:root{--bg:#10121a;--fg:#e8e6df;--mute:#9a9aa6;--warm:#ff9f43;--cool:#4aa3df;--line:#2a2e3d}
+@media (prefers-color-scheme:light){:root{--bg:#f6f4ee;--fg:#1b1d27;--mute:#5d5f6b;--warm:#c4600a;--cool:#1f6fa8;--line:#d6d3c8}}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:980px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:2.1rem;margin:.2em 0 .1em;line-height:1.15}
+.lede{color:var(--mute);margin:0 0 1.2em}
+canvas{width:100%;height:auto;background:#07080d;border:1px solid var(--line);display:block;image-rendering:pixelated}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+button{background:none;color:var(--fg);border:1px solid var(--line);padding:6px 12px;font:inherit;font-size:.9rem;border-radius:4px;cursor:pointer}
+button[aria-pressed=true]{border-color:var(--warm);color:var(--warm)}
+#read{min-height:3.2em;color:var(--mute);font-size:.95rem}
+.k{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem;color:var(--mute)}
+.k i{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:5px}
+.num{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:28px 0}
+.num div{border-top:2px solid var(--warm);padding-top:6px}.num b{display:block;font-size:2rem;font-weight:normal}
+.num span{color:var(--mute);font-size:.9rem}
+h2{font-size:1.15rem;margin-top:2em}small,.src{color:var(--mute);font-size:.88rem}
+a{color:var(--cool)}
+</style></head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<h1>What the Catalogue Decides</h1>
+<p class="lede">Every earthquake in the US Geological Survey's catalogue has a depth. For many of them, nobody measured it.</p>
+<canvas id="c" width="1080" height="540" role="img" aria-label="World map of earthquakes 2020 to 2025 magnitude 4 and above, each one degree cell coloured by the share of its events whose depth is exactly 10 or 35 kilometres, a number the agency assigns when the data cannot say."></canvas>
+<div class="bar" role="group" aria-label="view">
+<button id="b1" aria-pressed="true">share decided</button><button id="b2" aria-pressed="false">only decided</button><button id="b3" aria-pressed="false">only measured</button></div>
+<div class="k"><span><i style="background:var(--warm)"></i>depth is 10 or 35 km</span><span><i style="background:var(--cool)"></i>any other depth</span><span>one square = one degree; brightness = number of events</span></div>
+<p id="read">Move over the map.</p>
+<noscript><p>Without scripts: of %%N%% earthquakes of magnitude 4 and above, 2020&ndash;2025, %%P10%% % have a depth of exactly 10 km and %%P35%% % exactly 35 km.</p></noscript>
+<div class="num">
+<div><b>%%P10%% %</b><span>of %%N%% events sit at exactly 10.0 km (%%D10%%). The neighbouring tenth-kilometre bins hold 2&ndash;8 each.</span></div>
+<div><b>%%P35%% %</b><span>sit at exactly 35 km (%%D35%%): a second decree.</span></div>
+<div><b>%%ERRD%% %</b><span>of decided depths carry a stated uncertainty of 1.6&ndash;2.0 km (median %%MEDD%%). Of the other depths, %%ERRS%% % do (median %%MEDS%%). The decided numbers look surer.</span></div>
+</div>
+<h2>What this is</h2>
+<p>The agency's own words: 10 km is a &ldquo;fixed depth&rdquo;; where data are too poor to compute a depth, it is assigned
+(<a href="https://www.usgs.gov/faqs/why-do-so-many-earthquakes-occur-depth-10km">USGS FAQ</a>). This map shows where that happens: the mid-ocean ridges and the open Atlantic are almost wholly decided; the subduction zones under Chile and Japan are mostly measured. The catalogue knows the planet unevenly, and the depth column does not say so.
+Whether the small stated uncertainty is a formal figure from the fixed-depth solution is not established here (conjecture).</p>
+<p class="src">Data: U.S. Geological Survey, ComCat via the FDSN event service, magnitude &ge; 4, 2020-01-01 to 2025-12-31, queried 2026-10-07; public domain (<a href="https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits">USGS</a>). Derived by <code>study.py</code> in the project folder; counts per one-degree cell. The catalogue is revised after the fact, so a later query returns slightly different totals. Session 1 of a bounded project; a first map, not a finished work.</p>
+</main>
+<script>
+const CELLS=%%CELLS%%;
+const cv=document.getElementById('c'),x=cv.getContext('2d'),S=3;
+const grid={};let maxn=0;
+for(const [a,o,n,d10,d35] of CELLS){grid[a*360+o]=[n,d10+d35];maxn=Math.max(maxn,n)}
+let mode=1;
+function mix(f,b,m){ // f=decided share
+  const w=[255,159,67],c=[74,163,223];
+  if(m==2)return w.map(v=>v*b);if(m==3)return c.map(v=>v*b);
+  return w.map((v,i)=>(v*f+c[i]*(1-f))*b)}
+function draw(){x.fillStyle='#07080d';x.fillRect(0,0,1080,540);
+ for(const k in grid){const [n,d]=grid[k],a=Math.floor(k/360),o=k%360;
+  const b=Math.min(1,.35+.65*Math.log(n+1)/Math.log(maxn+1));
+  if(mode==2&&!d||mode==3&&d==n)continue;
+  const col=mix(d/n,b,mode);x.fillStyle=`rgb(${col.map(Math.round)})`;
+  x.fillRect(o*S,(179-a)*S,S,S)}}
+function set(m){mode=m;[1,2,3].forEach(i=>document.getElementById('b'+i).setAttribute('aria-pressed',i==m));draw()}
+[1,2,3].forEach(i=>document.getElementById('b'+i).onclick=()=>set(i));
+cv.onmousemove=e=>{const r=cv.getBoundingClientRect(),o=Math.floor((e.clientX-r.left)/r.width*360),a=179-Math.floor((e.clientY-r.top)/r.height*180);
+ const g=grid[a*360+o],t=document.getElementById('read'),la=a-90,lo=o-180;
+ t.textContent=g?`Cell ${la} to ${la+1}° N, ${lo} to ${lo+1}° E: ${g[0]} events, ${g[1]} with a decided depth (${Math.round(100*g[1]/g[0])} %).`:`Cell ${la} to ${la+1}° N, ${lo} to ${lo+1}° E: no event of magnitude 4 or above in six years.`};
+draw();
+</script><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>
