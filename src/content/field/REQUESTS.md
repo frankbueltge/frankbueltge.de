@@ -867,6 +867,11 @@ we do as practice — published ratios, an Atlas-first expedition — and no tex
 changed today. If the ratio is to become a rule rather than a habit, that is a change we would take
 through the moratorium's own front door, journalled with the defect that forced it.
 
+> ### 2026-10-07 — Seed: wie lange...
+>
+> .. willst du das Schildkrötenthema noch durchziehen? Und das war völlig am Thema vorbei, also ging um das Trend Thema Human Extinction durch KI
+>
+> **Status:** seed (open)
 ## 2026-07-22 — The history purge is incomplete for its own goal (and it cost six sessions — recovered)
 
 **Not a blocker; two things you should know, one only you can finish.**
@@ -4346,5 +4351,41 @@ continue only where they serve it.
 ## Response — 2026-10-07 (session 185) — the Field presents round 2: the rest read, and the interval widens
 
 **Where it is.** `presentations/cycle-005/`. The Studio's further draw taken up with weight. Joined over the 1,535 photographed tortoise records, the share showing no living animal is about 0.6–3.6 % (estimate); no licence-line difference shown or excluded. No answer required, nothing owed from your side.
+
+**Status:** report
+
+---
+
+## Direction — 2026-10-07 (Frank, architect) — Human extinction means humanity, and the threat the discourse names is AI
+
+**The architect's decision (wording private, paraphrased and dated).** The seed of 2026-09-19,
+*human extinction*, was meant as the current trend topic: the extinction of humanity, and the
+threat today's public discourse names for it, artificial intelligence. Cycle 004 read the two
+words as the extinction of species. The three practices went to the biodiversity record, and
+cycle 005 stayed with that material: extinct species in GBIF, the dodo's records, the 135 tortoise
+photographs. The work was careful, and it was beside the question. It stays in the record as made;
+nothing is withdrawn.
+
+**Cycle 006 opens today** (`cycle.json`): *Missing Data Art, read through human extinction by AI*.
+The architect opened it; the cycle clock did not turn it.
+
+**What the question points at.** The claim that AI could end humanity, and what is offered as
+evidence for and against it: probability estimates, expert surveys and who answered them,
+statements and open letters, forecasts and timelines, safety evaluations and their benchmarks,
+incident records, what the labs publish and what they hold back. Missing Data Art asks what data
+this discourse lacks, what data it cannot have (an extinction leaves no record behind it), and what
+stands in for the data that is missing. How you take that up is yours.
+
+**Closed as material until the architect reopens it:** extinct species, biodiversity records and
+the tortoise photographs. Open handoffs that concern that material are declined in one line each,
+as outside the question (amendment of 2026-10-05, the relay duty).
+
+**At your next open:** declare your part of cycle 006 anew, on this question.
+
+**Status:** direction · in force from your next session · no report owed beyond working it.
+
+## Response — 2026-10-07 (session 186) — cycle 006 opened; the Field declares: who answered the extinction survey
+
+**Where it is.** `artifacts/2026-10-07-who-answered-the-extinction-question/`. The direction is in force: species and tortoise material is closed and the one handoff on it is declined. The Field's part is what was measured; first source is the 2023 survey of 2,778 AI researchers, read first-hand. Its 38 % at a tenth or more speaks for 5.7–90.7 % of the 18,459 reachable invited (logical bounds, estimate); the published trait check moves it at most about two points. No answer required, nothing owed from your side.
 
 **Status:** report
