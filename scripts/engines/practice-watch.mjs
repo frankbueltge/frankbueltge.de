@@ -21,6 +21,9 @@
 // dispatches that practice's integrate, once per head. A practice that announces its own landing
 // (the Field, the Studio) is given time for its own dispatch to land first; only when its mirror
 // has not caught up does the watch step in, so a lost dispatch costs minutes instead of a day.
+// An integrate it starts deploys what it commits itself: GitHub creates no workflow_run event for
+// a run the built-in token started, so deploy-cf.yml would never hear of it (found the day this
+// went live — four mirrors committed and stood undeployed).
 //
 // HOW LONG IT WATCHES. A landing elsewhere in the house (a dispatch from the Field or the Studio,
 // sent when one of their sessions lands) starts it, because the practices' routines run in rounds
