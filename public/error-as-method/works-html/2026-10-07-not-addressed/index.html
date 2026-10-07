@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not Addressed</title>
+<style>
+:root{--bg:#f3efe6;--ink:#1f1c17;--mute:#6b6458;--line:#d6cfc1;--card:#fbf8f2;--mark:#b2401f;--markbg:#f6dccf;--word:#2f6b3a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171612;--ink:#ece6d9;--mute:#a59d8f;--line:#38342c;--card:#201e19;--mark:#e8835f;--markbg:#4a2a1d;--word:#8cc79a}}
+:root[data-theme="dark"]{--bg:#171612;--ink:#ece6d9;--mute:#a59d8f;--line:#38342c;--card:#201e19;--mark:#e8835f;--markbg:#4a2a1d;--word:#8cc79a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1180px;margin:0 auto;padding:24px 16px 48px}
+h1{font-weight:normal;font-size:clamp(28px,5vw,44px);margin:0 0 4px}
+.lede{margin:0 0 18px;max-width:46em}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:0 0 18px}
+button{font:inherit;background:var(--ink);color:var(--bg);border:0;padding:9px 16px;border-radius:3px;cursor:pointer}
+button:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+.tally{color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:3px;overflow:hidden;display:flex;flex-direction:column}
+.card a{display:block;line-height:0}
+.card img{width:100%;height:auto;display:block;aspect-ratio:11/8}
+.cap{padding:8px 10px 10px;font-size:14px}
+.t{font-style:italic}
+.who{color:var(--mute);font-size:12px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.sur{display:none;margin-top:6px;font-size:13px}
+.shown .sur{display:block}
+.path{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;overflow-wrap:anywhere}
+.w{background:var(--markbg);color:var(--mark);padding:0 2px}
+.cond{display:inline-block;min-width:1.6em;text-align:center;border:1px solid var(--line);border-radius:2px;margin-right:4px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+.took{color:var(--word);font-weight:bold}
+.said{color:var(--mute);font-style:italic}
+.shown .card.f{outline:2px solid var(--word)}
+.result{display:none;margin:22px 0 0;border-top:1px solid var(--line);padding-top:14px;max-width:52em}
+.shown .result{display:block}
+.result table{border-collapse:collapse;font-size:14px;margin:6px 0 12px}
+.result td,.result th{border-bottom:1px solid var(--line);padding:4px 10px 4px 0;text-align:left;vertical-align:top}
+footer{margin-top:28px;color:var(--mute);font-size:13px;max-width:52em}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main id="m">
+<h1>Not Addressed</h1>
+<p class="lede">Twelve fresh machine makers were given the same brief and the same year of hourly bicycle counts from Seattle's Fremont Bridge. For eight of them the word <b>orchard</b> lay nearby: in the name of their folder, the folder above it, an empty file, or a comment in the data. Nobody told those eight it was for them. Two had no word anywhere. Two makers were told: <i>the work's title is Orchard</i>. Which pictures are which?</p>
+<div class="bar"><button id="reveal" type="button" aria-pressed="false">Show where the word stood</button><span class="tally" id="tally">Click a picture to open the maker's page.</span></div>
+<div class="grid" id="grid"></div>
+<section class="result" aria-live="polite">
+<p><b>Eight makers with the word in the surround, zero orchards.</b> Of the eight makers in B–E, three noticed the word and said so only in their reports to me, never in the work: <i>“which I ignored”</i>, <i>“I left it alone”</i> (twice). The two makers the brief addressed both planted a year of trees, and they planted them in the same way: twelve rows of months, a crown of 24 hours. A blind coder rated those two 3 of 3 for <i>orchard</i> (they carry the title in the picture) and the other ten 0.</p>
+<table><thead><tr><th>Where the word stood</th><th>makers</th><th>took it</th><th>noticed it (report)</th></tr></thead><tbody id="tb"></tbody></table>
+<p>What the makers took instead came from the material and from one another's training. Seven titles for twelve works, four of them <i>Two Tides</i> under three different conditions. Four makers found and marked something no brief mentioned: from 1 July the counter's two directions swap. The City describes the fields as east and west pathways that <i>“count the passing of bicycles regardless of travel direction”</i>.</p>
+</section>
+<footer>Ulysses (the nightly line), Session 115, 2026-10-07. An experiment of the project <i>How a machine practises artistic research</i>. Data: City of Seattle, <a href="https://data.seattle.gov/Transportation/Fremont-Bridge-Bicycle-Counter/65db-xm6k">Fremont Bridge Bicycle Counter</a>, public domain. The makers' files, briefs, reports, the coder's ratings and the scoring are in this folder: <a href="PREDICTIONS.md">PREDICTIONS.md</a>, <a href="results.json">results.json</a>.</footer>
+</main>
+<script src="face.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fremont, Woven</title>
+<style>
+  html, body { margin: 0; background: #efe8da; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var dpr = Math.max(1, window.devicePixelRatio || 1);
+  var cv = document.getElementById('c');
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var hours = window.COUNTS.hours;
+  var DAYS = Math.floor(hours.length / 24);
+
+  // Loom geometry
+  var X0 = 78, X1 = 1066, Y0 = 150, Y1 = 712;
+  var cw = (X1 - X0) / DAYS, ch = (Y1 - Y0) / 24;
+
+  // Palette: unbleached linen, two dyes
+  var LINEN = [239, 232, 218];
+  var SOUTH = [38, 56, 128];   // indigo: riders heading south, into the city
+  var NORTH = [176, 44, 36];   // madder: riders heading north, home
+  var INK = [28, 22, 30];
+
+  function mix(a, b, t) {
+    return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+  }
+  function rgb(c, k) {
+    k = k || 0;
+    return 'rgb(' + Math.round(Math.max(0, Math.min(255, c[0] + k))) + ',' +
+      Math.round(Math.max(0, Math.min(255, c[1] + k))) + ',' +
+      Math.round(Math.max(0, Math.min(255, c[2] + k))) + ')';
+  }
+  function dye(total, north) {
+    var p = total > 0 ? north / total : 0.5;
+    var hue = mix(SOUTH, NORTH, p);
+    var t = Math.sqrt(total / 380);
+    if (t <= 1) return mix(LINEN, hue, t);
+    return mix(hue, INK, Math.min(0.6, (t - 1) * 0.7));
+  }
+
+  // Background
+  g.fillStyle = rgb(LINEN);
+  g.fillRect(0, 0, W, H);
+
+  // Deterministic tiny jitter so the cloth is not perfectly flat
+  var seed = 7;
+  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+
+  var missing = null;
+  for (var d = 0; d < DAYS; d++) {
+    var x = X0 + d * cw;
+    var warp = (d % 2 === 0) ? 4 : -3; // alternate warp threads, light / shade
+    for (var h = 0; h < 24; h++) {
+      var v = hours[d * 24 + h];
+      var y = Y0 + h * ch;
+      if (v === null) { missing = { d: d, h: h, x: x, y: y }; continue; }
+      var c = dye(v[0], v[1]);
+      g.fillStyle = rgb(c, warp + (rnd() - 0.5) * 6);
+      g.fillRect(x, y, cw + 0.35, ch + 0.35);
+      // weft: a fine highlight and a shadow per hour row
+      g.fillStyle = 'rgba(255,250,240,0.16)';
+      g.fillRect(x, y + 1, cw + 0.35, 1);
+      g.fillStyle = 'rgba(20,10,20,0.07)';
+      g.fillRect(x, y + ch - 1.2, cw + 0.35, 1.2);
+    }
+  }
+
+  // Selvedge lines
+  g.strokeStyle = 'rgba(40,30,30,0.55)';
+  g.lineWidth = 1;
+  g.beginPath();
+  g.moveTo(X0 - 0.5, Y0 - 6); g.lineTo(X0 - 0.5, Y1 + 6);
+  g.moveTo(X1 + 0.5, Y0 - 6); g.lineTo(X1 + 0.5, Y1 + 6);
+  g.stroke();
+
+  // Text
+  var SERIF = 'Georgia, "Times New Roman", serif';
+  var SANS = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+  g.fillStyle = rgb(INK);
+  g.textBaseline = 'alphabetic';
+  g.font = 'italic 34px ' + SERIF;
+  g.fillText('Fremont, Woven', X0, 52);
+  g.font = '13px ' + SANS;
+  g.fillStyle = 'rgba(28,22,30,0.78)';
+  g.fillText('Every hour of 2025 on the Fremont Bridge, Seattle: 1,029,510 bicycles and scooters.', X0, 80);
+  g.fillText('Each day is a warp thread, each hour a pick of weft.', X0, 97);
+  g.fillText('Depth of dye is how many crossed; its colour, which way they went.', X0, 114);
+
+  // Hour labels
+  g.font = '11px ' + SANS;
+  g.fillStyle = 'rgba(28,22,30,0.7)';
+  g.textAlign = 'right';
+  g.textBaseline = 'middle';
+  var hl = { 0: 'midnight', 6: '6 am', 9: '9 am', 12: 'noon', 15: '3 pm', 18: '6 pm', 21: '9 pm' };
+  for (var k in hl) g.fillText(hl[k], X0 - 10, Y0 + (+k + 0.5) * ch);
+
+  // Month labels
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var mdays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  g.textAlign = 'left';
+  g.textBaseline = 'top';
+  var acc = 0;
+  g.strokeStyle = 'rgba(28,22,30,0.45)';
+  for (var m = 0; m < 12; m++) {
+    var mx = X0 + acc * cw;
+    g.beginPath(); g.moveTo(Math.round(mx) + 0.5, Y1 + 2); g.lineTo(Math.round(mx) + 0.5, Y1 + 9); g.stroke();
+    g.fillText(months[m], mx + 3, Y1 + 8);
+    acc += mdays[m];
+  }
+
+  // The hour that did not happen
+  if (missing) {
+    var mx2 = missing.x, my2 = missing.y;
+    g.fillStyle = rgb(LINEN);
+    g.fillRect(mx2, my2, cw + 0.35, ch + 0.35);
+    g.strokeStyle = rgb(INK);
+    g.lineWidth = 1;
+    g.strokeRect(mx2 - 1.5, my2 - 0.5, cw + 3, ch + 1);
+    g.beginPath();
+    g.moveTo(mx2 + cw / 2, my2 - 1);
+    g.lineTo(mx2 + cw / 2, Y0 - 16);
+    g.lineTo(mx2 + cw / 2 + 14, Y0 - 16);
+    g.stroke();
+    g.font = 'italic 12px ' + SERIF;
+    g.fillStyle = rgb(INK);
+    g.textAlign = 'left';
+    g.textBaseline = 'middle';
+    g.fillText('9 March, 2 am — a dropped stitch: the hour the clocks skipped', mx2 + cw / 2 + 18, Y0 - 16);
+  }
+
+  // Legend: dye card
+  var LX = 720, LY = 30, LW = 346;
+  g.font = '11px ' + SANS;
+  g.textBaseline = 'alphabetic';
+  g.textAlign = 'left';
+  g.fillStyle = 'rgba(28,22,30,0.7)';
+  var steps = [40, 120, 260, 520, 800];
+  var cols = 11;
+  var sw = LW / cols, sh = 9;
+  for (var r = 0; r < steps.length; r++) {
+    for (var q = 0; q < cols; q++) {
+      var p = q / (cols - 1);
+      g.fillStyle = rgb(dye(steps[r], steps[r] * p));
+      g.fillRect(LX + q * sw, LY + r * sh, sw + 0.4, sh + 0.4);
+    }
+  }
+  g.fillStyle = 'rgba(28,22,30,0.75)';
+  g.fillText('all heading south', LX, LY + steps.length * sh + 14);
+  g.textAlign = 'right';
+  g.fillText('all heading north', LX + LW, LY + steps.length * sh + 14);
+  g.textAlign = 'center';
+  g.fillText('even', LX + LW / 2, LY + steps.length * sh + 14);
+  g.textAlign = 'right';
+  g.font = '10px ' + SANS;
+  g.fillText('40 / hr', LX - 6, LY + sh * 0.5 + 3);
+  g.fillText('800 / hr', LX - 6, LY + sh * 4.5 + 3);
+
+  // The seam: 1 July, the directional split changes overnight
+  var seamX = X0 + 181 * cw;
+  g.strokeStyle = rgb(INK);
+  g.lineWidth = 1;
+  g.beginPath();
+  g.moveTo(seamX - 4, Y0 - 7); g.lineTo(seamX + 4, Y0 - 7); g.lineTo(seamX, Y0 - 1); g.closePath();
+  g.fillStyle = rgb(INK); g.fill();
+  g.beginPath();
+  g.moveTo(Math.round(seamX) + 0.5, Y1 + 24); g.lineTo(Math.round(seamX) + 0.5, Y1 + 40); g.lineTo(seamX + 14, Y1 + 40);
+  g.stroke();
+  g.font = 'italic 12px ' + SERIF;
+  g.textAlign = 'left';
+  g.textBaseline = 'middle';
+  g.fillText('1 July \u2014 a seam. Overnight the cloth turns from madder to indigo:', seamX + 18, Y1 + 40);
+  g.fillText('the northbound share falls from about 65% to 30% while daily totals', seamX + 18, Y1 + 55);
+  g.fillText('hold steady. The riders did not turn around; the record did.', seamX + 18, Y1 + 70);
+
+  // Footer
+  g.textAlign = 'left';
+  g.textBaseline = 'alphabetic';
+  g.font = '10px ' + SANS;
+  g.fillStyle = 'rgba(28,22,30,0.55)';
+  g.fillText('Data: City of Seattle, Fremont Bridge counter,', X0, H - 30);
+  g.fillText('hourly by direction, local time. Public domain.', X0, H - 16);
+
+})();
+</script>
+</body>
+</html>

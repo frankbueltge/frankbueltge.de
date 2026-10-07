@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Twenty-Four Horizons</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #f3efe6; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  svg { display: block; }
+  text { font-family: Georgia, "Times New Roman", serif; fill: #2a2722; }
+  .halo { paint-order: stroke; stroke: #f3efe6; stroke-width: 4px; stroke-linejoin: round; }
+  .sans { font-family: "Helvetica Neue", Arial, sans-serif; }
+</style>
+</head>
+<body>
+<svg id="art" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("art");
+  var H = window.COUNTS.hours;
+  var DAYS = 365;
+
+  var BG = "#f3efe6", INK = "#2a2722", SOFT = "#8a8378", ACCENT = "#b0472c";
+  var X0 = 92, X1 = 1052, Y0 = 156, ROW = 25.6, AMP = 112 / 856;
+  var step = (X1 - X0) / (DAYS - 1);
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(e);
+    return e;
+  }
+  function txt(s, attrs, parent) { var t = el("text", attrs, parent); t.textContent = s; return t; }
+  function base(h) { return Y0 + h * ROW; }
+  function xd(d) { return X0 + d * step; }
+
+  el("rect", { x: 0, y: 0, width: 1100, height: 800, fill: BG });
+
+  // title block
+  txt("Twenty-Four Horizons", { x: X0, y: 62, "font-size": 30, "letter-spacing": "0.5" });
+  txt("Bicycles and scooters crossing the Fremont Bridge, Seattle, through 2025. Each line is one hour of the day,",
+      { x: X0, y: 88, "font-size": 13.5, fill: SOFT, "font-style": "italic" });
+  txt("drawn left to right across all 365 days; its height is how many people crossed in that hour.",
+      { x: X0, y: 106, "font-size": 13.5, fill: SOFT, "font-style": "italic" });
+
+  // month guides
+  var monthStarts = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var guides = el("g", {});
+  monthStarts.forEach(function (d, i) {
+    var x = xd(d);
+    el("line", { x1: x, y1: 132, x2: x, y2: base(23) + 6, stroke: "#ddd6c8", "stroke-width": 1 }, guides);
+    var next = i < 11 ? monthStarts[i + 1] : DAYS;
+    txt(months[i], { x: (x + xd(next)) / 2, y: base(23) + 24, "font-size": 12, "text-anchor": "middle", fill: SOFT, class: "sans", "letter-spacing": "1" });
+  });
+
+  // ridges: drawn from midnight (top, behind) to 11 pm (bottom, in front)
+  var hourName = function (h) {
+    if (h === 0) return "midnight";
+    if (h === 12) return "noon";
+    return (h % 12) + (h < 12 ? " am" : " pm");
+  };
+  var gap = null;
+  for (var h = 0; h < 24; h++) {
+    var g = el("g", {});
+    var b = base(h);
+    var segs = [], cur = [];
+    for (var d = 0; d < DAYS; d++) {
+      var v = H[d * 24 + h];
+      if (v == null) { gap = { d: d, h: h }; if (cur.length) segs.push(cur); cur = []; continue; }
+      cur.push([xd(d), b - v[0] * AMP]);
+    }
+    if (cur.length) segs.push(cur);
+
+    segs.forEach(function (pts) {
+      var line = pts.map(function (p, i) { return (i ? "L" : "M") + p[0].toFixed(2) + " " + p[1].toFixed(2); }).join("");
+      var fill = line + "L" + pts[pts.length - 1][0].toFixed(2) + " " + b + "L" + pts[0][0].toFixed(2) + " " + b + "Z";
+      el("path", { d: fill, fill: BG, stroke: "none" }, g);
+      el("path", { d: line, fill: "none", stroke: INK, "stroke-width": (h === 8 || h === 17) ? 1.15 : 0.9, "stroke-linejoin": "round" }, g);
+    });
+
+    var major = h % 6 === 0 || h === 8 || h === 17;
+    txt(major ? hourName(h) : String(h % 12 === 0 ? 12 : h % 12), {
+      x: X0 - 14, y: b + 3.5, "font-size": major ? 11.5 : 10, "text-anchor": "end",
+      fill: major ? INK : SOFT, class: "sans"
+    }, g);
+  }
+
+  // the single missing hour: clocks sprang forward
+  if (gap) {
+    var gx = xd(gap.d), gy = base(gap.h);
+    el("line", { x1: gx, y1: gy - 9, x2: gx, y2: gy - 30, stroke: ACCENT, "stroke-width": 0.8 });
+    el("circle", { cx: gx, cy: gy - 3, r: 2.2, fill: "none", stroke: ACCENT, "stroke-width": 1 });
+    txt("9 Mar, 2 am: the hour that never happened", { x: gx + 6, y: gy - 24, "font-size": 11, fill: ACCENT, "font-style": "italic", class: "halo" });
+  }
+
+  // busiest hour of the year
+  var best = 0, bi = 0;
+  H.forEach(function (v, i) { if (v && v[0] > best) { best = v[0]; bi = i; } });
+  var bd = Math.floor(bi / 24), bh = bi % 24;
+  var px = xd(bd), py = base(bh) - best * AMP;
+  el("circle", { cx: px, cy: py, r: 2.6, fill: ACCENT });
+  el("line", { x1: px + 4, y1: py - 2, x2: px + 26, y2: py - 14, stroke: ACCENT, "stroke-width": 0.8 });
+  txt(best + " crossings, Tue 6 May, 5 pm — the busiest hour", { x: px + 30, y: py - 11, "font-size": 11, fill: ACCENT, "font-style": "italic", class: "halo" });
+
+  // quietest day annotation
+  var daily = [];
+  for (var dd = 0; dd < DAYS; dd++) { var s = 0; for (var hh = 0; hh < 24; hh++) { var w = H[dd * 24 + hh]; if (w) s += w[0]; } daily.push(s); }
+  var lo = daily.indexOf(Math.min.apply(null, daily));
+  var lx = xd(lo);
+  el("line", { x1: lx, y1: base(8) - 2, x2: lx, y2: base(8) - 58, stroke: ACCENT, "stroke-width": 0.8, "stroke-dasharray": "2 2" });
+  txt("Christmas Day", { x: lx - 5, y: base(8) - 62, "font-size": 11, fill: ACCENT, "font-style": "italic", "text-anchor": "end", class: "halo" });
+  txt(daily[lo] + " crossings all day", { x: lx - 5, y: base(8) - 49, "font-size": 11, fill: ACCENT, "font-style": "italic", "text-anchor": "end", class: "halo" });
+
+  // scale bar
+  var sx = X1 + 22, sb = base(23);
+  el("line", { x1: sx, y1: sb, x2: sx, y2: sb - 500 * AMP, stroke: INK, "stroke-width": 1 });
+  el("line", { x1: sx - 3, y1: sb, x2: sx + 3, y2: sb, stroke: INK });
+  el("line", { x1: sx - 3, y1: sb - 500 * AMP, x2: sx + 3, y2: sb - 500 * AMP, stroke: INK });
+  var lab = txt("500 an hour", { x: 0, y: 0, "font-size": 10, class: "sans", fill: SOFT, "text-anchor": "middle",
+    transform: "translate(" + (sx + 12) + "," + (sb - 250 * AMP) + ") rotate(90)" });
+
+  // footer
+  var total = 0; H.forEach(function (v) { if (v) total += v[0]; });
+  txt(total.toLocaleString("en-US") + " crossings in the year. The comb along every line is the week: five working days, then two quiet ones.",
+      { x: X0, y: 788, "font-size": 11.5, fill: SOFT, "font-style": "italic" });
+  txt("Data: City of Seattle, Fremont Bridge bicycle counter (public domain)",
+      { x: X1 + 30, y: 788, "font-size": 10, fill: SOFT, class: "sans", "text-anchor": "end" });
+})();
+</script>
+</body>
+</html>

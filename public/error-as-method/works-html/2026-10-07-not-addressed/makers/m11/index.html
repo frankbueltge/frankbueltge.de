@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tide Table</title>
+<style>
+  html,body{margin:0;background:#0e1013;}
+  body{width:1100px;height:800px;overflow:hidden;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+(function(){
+  var W=1100,H=800,dpr=window.devicePixelRatio||1;
+  var cv=document.getElementById('c');
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+  var g=cv.getContext('2d');g.scale(dpr,dpr);
+
+  var BG='#0e1013',INK='#e9e4d8',DIM='#8a8780',FAINT='#3a3c40';
+  var NORTH=[110,184,222], SOUTH=[238,150,82];
+  function mix(p){ // p = share northbound
+    var r=SOUTH[0]+(NORTH[0]-SOUTH[0])*p, gg=SOUTH[1]+(NORTH[1]-SOUTH[1])*p, b=SOUTH[2]+(NORTH[2]-SOUTH[2])*p;
+    return 'rgb('+(r|0)+','+(gg|0)+','+(b|0)+')';
+  }
+  function rgb(a){return 'rgb('+a.join(',')+')';}
+
+  g.fillStyle=BG;g.fillRect(0,0,W,H);
+
+  var hours=window.COUNTS.hours;
+  var GX=58,GY=46,CW=27,RH=2,DAYS=365;
+  var BX=GX+24*CW+14, BW=132;
+  var serif='Georgia, "Times New Roman", serif';
+
+  // faint hour guides
+  g.fillStyle='#16181c';
+  for(var h=0;h<24;h+=2){g.fillRect(GX+h*CW,GY,CW,DAYS*RH);}
+
+  // the strokes: one per hour
+  var missing=null;
+  for(var d=0;d<DAYS;d++){
+    for(var h=0;h<24;h++){
+      var v=hours[d*24+h];
+      var y=GY+d*RH;
+      if(v===null){missing={d:d,h:h};continue;}
+      var t=v[0]; if(t<=0) continue;
+      var len=Math.min(CW,CW*Math.sqrt(t/560));
+      var p=v[1]/t;
+      g.fillStyle=mix(p);
+      g.globalAlpha=0.35+0.65*Math.min(1,Math.sqrt(t/300));
+      g.fillRect(GX+h*CW+(CW-len)/2,y,len,1.6);
+    }
+  }
+  g.globalAlpha=1;
+
+  // daily totals, north stacked against south
+  var maxDay=0,days=[];
+  for(var d=0;d<DAYS;d++){var n=0,s=0;for(var h=0;h<24;h++){var v=hours[d*24+h];if(v){n+=v[1];s+=v[2];}}days.push([n,s]);maxDay=Math.max(maxDay,n+s);}
+  for(var d=0;d<DAYS;d++){
+    var y=GY+d*RH, n=days[d][0], s=days[d][1];
+    var ln=BW*n/maxDay, ls=BW*s/maxDay;
+    g.fillStyle=rgb(NORTH);g.fillRect(BX,y,ln,1.6);
+    g.fillStyle=rgb(SOUTH);g.fillRect(BX+ln,y,ls,1.6);
+  }
+
+  // hour labels
+  g.font='10px '+serif;g.fillStyle=DIM;g.textAlign='center';g.textBaseline='alphabetic';
+  var hl=['midnight','','','3','','','6 am','','','9','','','noon','','','3','','','6 pm','','','9','',''];
+  for(var h=0;h<24;h++){ if(hl[h]) g.fillText(hl[h],GX+h*CW+CW/2,GY-10); }
+  g.textAlign='left';
+  g.fillText('each day',BX,GY-10);
+
+  // month labels
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var mlen=[31,28,31,30,31,30,31,31,30,31,30,31];
+  var acc=0;g.textAlign='right';g.textBaseline='middle';
+  for(var m=0;m<12;m++){
+    var y=GY+acc*RH;
+    g.fillStyle=FAINT;g.fillRect(GX-16,y,10,1);
+    g.fillStyle=DIM;g.fillText(months[m],GX-20,y+mlen[m]*RH/2);
+    acc+=mlen[m];
+  }
+
+  // the hour that did not happen
+  if(missing){
+    var mx=GX+missing.h*CW+CW/2, my=GY+missing.d*RH+1;
+    g.strokeStyle=INK;g.lineWidth=0.8;
+    g.beginPath();g.arc(mx,my,6,0,Math.PI*2);g.stroke();
+  }
+
+  // right column text
+  var TX=BX+BW+26;
+  g.textAlign='left';g.textBaseline='alphabetic';
+  g.fillStyle=INK;g.font='italic 34px '+serif;g.fillText('Tide Table',TX,GY+30);
+  g.font='12px '+serif;g.fillStyle=DIM;
+  var lines=['Bicycles and scooters crossing','the Fremont Bridge, Seattle,','every hour of 2025.'];
+  lines.forEach(function(s,i){g.fillText(s,TX,GY+56+i*16);});
+
+  var ly=GY+130;
+  g.fillStyle=INK;g.font='12px '+serif;g.fillText('Each dash is one hour.',TX,ly);
+  g.fillStyle=DIM;g.fillText('Its length is how many crossed;',TX,ly+16);
+  g.fillText('a full dash is 560 or more.',TX,ly+32);
+  // length key
+  [20,100,300,560].forEach(function(t,i){
+    var len=CW*Math.sqrt(t/560),x=TX+i*44,y=ly+48;
+    g.fillStyle=mix(0.5);g.fillRect(x+(CW-len)/2,y,len,1.6);
+    g.fillStyle=DIM;g.font='10px '+serif;g.textAlign='center';g.fillText(t,x+CW/2,y+15);g.textAlign='left';
+  });
+
+  ly+=96;
+  g.fillStyle=INK;g.font='12px '+serif;g.fillText('Its colour is the direction:',TX,ly);
+  var gw=150;
+  for(var i=0;i<gw;i++){g.fillStyle=mix(1-i/(gw-1));g.fillRect(TX+i,ly+12,1,6);}
+  g.font='10px '+serif;g.fillStyle=rgb(NORTH);g.fillText('all north',TX,ly+32);
+  g.fillStyle=rgb(SOUTH);g.textAlign='right';g.fillText('all south',TX+gw,ly+32);g.textAlign='left';
+
+  ly+=70;
+  g.fillStyle=INK;g.font='12px '+serif;g.fillText('Beside it, each day’s total,',TX,ly);
+  g.fillStyle=DIM;g.fillText('north then south, up to '+maxDay.toLocaleString('en-US')+'.',TX,ly+16);
+
+  ly+=60;
+  var tN=0,tS=0;days.forEach(function(a){tN+=a[0];tS+=a[1];});
+  g.font='italic 26px '+serif;g.fillStyle=INK;g.fillText((tN+tS).toLocaleString('en-US'),TX,ly);
+  g.font='12px '+serif;g.fillStyle=DIM;g.fillText('crossings in the year',TX,ly+18);
+  g.fillStyle=rgb(NORTH);g.fillText(tN.toLocaleString('en-US')+' north',TX,ly+38);
+  g.fillStyle=rgb(SOUTH);g.fillText(tS.toLocaleString('en-US')+' south',TX,ly+54);
+
+  if(missing){
+    ly+=100;
+    g.strokeStyle=INK;g.lineWidth=0.8;g.beginPath();g.arc(TX+6,ly-4,6,0,Math.PI*2);g.stroke();
+    g.fillStyle=INK;g.fillText('9 March, 2 am.',TX+20,ly);
+    g.fillStyle=DIM;
+    ['The clocks went forward; this','hour was never counted because','it never took place.'].forEach(function(s,i){g.fillText(s,TX,ly+20+i*16);});
+  }
+
+  g.font='10px '+serif;g.fillStyle='#5d5b56';
+  g.fillText('Data: City of Seattle, Fremont Bridge',TX,GY+DAYS*RH-14);
+  g.fillText('bicycle counter (public domain).',TX,GY+DAYS*RH);
+})();
+</script>
+</body>
+</html>

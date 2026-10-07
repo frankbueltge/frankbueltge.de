@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Two Tides</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #f2ede3; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  svg { display: block; }
+  .serif { font-family: Georgia, "Times New Roman", serif; }
+  .sans { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<svg id="w" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script>
+(function () {
+  var H = window.COUNTS.hours;
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("w");
+
+  var PAPER = "#f2ede3", INK = "#2b2722", MUTE = "#8a8278", FAINT = "#d9d1c3";
+  var NORTH = "#c8462b", SOUTH = "#23527c";
+
+  // geometry
+  var L = 66, R = 168, TOP = 104, BOTTOM = 66;
+  var W = 1100 - L - R;            // plot width
+  var dx = W / 168;                // one hour
+  var ROWS = 53;                   // weeks, Monday-first; 2025-01-01 is a Wednesday
+  var rowH = (800 - TOP - BOTTOM) / ROWS;
+  var k = 0.036;                   // px per crossing, linear, same both ways
+  var OFF = 2;                     // Jan 1 sits in column 2 (Wed)
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var a in attrs) e.setAttribute(a, attrs[a]);
+    (parent || svg).appendChild(e);
+    return e;
+  }
+  function txt(s, attrs, parent) { var t = el("text", attrs, parent); t.textContent = s; return t; }
+  function slot(i) { var d = Math.floor(i / 24), h = i % 24, c = d + OFF; return { row: Math.floor(c / 7), col: (c % 7) * 24 + h, day: d, hour: h }; }
+  function baseY(row) { return TOP + rowH * (row + 0.5); }
+  function xAt(col) { return L + (col + 0.5) * dx; }
+  function fmt(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+  var MON = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  function dateOf(d) { return new Date(Date.UTC(2025, 0, 1 + d)); }
+
+  el("rect", { x: 0, y: 0, width: 1100, height: 800, fill: PAPER });
+
+  // weekend bands and day rules
+  var g0 = el("g", {});
+  el("rect", { x: L + 5 * 24 * dx, y: TOP - 6, width: 48 * dx, height: ROWS * rowH + 12, fill: "#e9e2d4" }, g0);
+  for (var c = 0; c <= 7; c++) {
+    el("line", { x1: L + c * 24 * dx, x2: L + c * 24 * dx, y1: TOP - 6, y2: TOP + ROWS * rowH + 6,
+      stroke: FAINT, "stroke-width": c === 0 || c === 7 ? 0.8 : 0.6 }, g0);
+  }
+
+  // build per-row runs of consecutive present hours
+  var runs = []; var cur = null;
+  for (var i = 0; i < H.length; i++) {
+    var v = H[i], s = slot(i);
+    if (!v) { cur = null; continue; }
+    if (!cur || cur.row !== s.row) { cur = { row: s.row, pts: [] }; runs.push(cur); }
+    cur.pts.push([s.col, v[1], v[2]]);
+  }
+
+  var gN = el("g", { fill: NORTH, "fill-opacity": 0.82, style: "mix-blend-mode:multiply" });
+  var gS = el("g", { fill: SOUTH, "fill-opacity": 0.78, style: "mix-blend-mode:multiply" });
+  runs.forEach(function (r) {
+    var y0 = baseY(r.row), p = r.pts;
+    var x0 = xAt(p[0][0]) - dx / 2, x1 = xAt(p[p.length - 1][0]) + dx / 2;
+    var dn = "M" + x0.toFixed(2) + " " + y0.toFixed(2), ds = dn;
+    p.forEach(function (q, j) {
+      var x = xAt(q[0]);
+      if (j === 0) { dn += "L" + x0.toFixed(2) + " " + (y0 - q[1] * k).toFixed(2); ds += "L" + x0.toFixed(2) + " " + (y0 + q[2] * k).toFixed(2); }
+      dn += "L" + x.toFixed(2) + " " + (y0 - q[1] * k).toFixed(2);
+      ds += "L" + x.toFixed(2) + " " + (y0 + q[2] * k).toFixed(2);
+      if (j === p.length - 1) { dn += "L" + x1.toFixed(2) + " " + (y0 - q[1] * k).toFixed(2); ds += "L" + x1.toFixed(2) + " " + (y0 + q[2] * k).toFixed(2); }
+    });
+    dn += "L" + x1.toFixed(2) + " " + y0.toFixed(2) + "Z";
+    ds += "L" + x1.toFixed(2) + " " + y0.toFixed(2) + "Z";
+    el("path", { d: dn }, gN);
+    el("path", { d: ds }, gS);
+  });
+
+  // month labels: at the row holding each 1st, with a small tick at that day
+  var gM = el("g", { "class": "sans", "font-size": 10.5, fill: INK });
+  for (var m = 0; m < 12; m++) {
+    var d = Math.round((Date.UTC(2025, m, 1) - Date.UTC(2025, 0, 1)) / 864e5);
+    var sl = slot(d * 24);
+    var y = baseY(sl.row);
+    txt(MON[m].slice(0, 3), { x: L - 12, y: y + 3.5, "text-anchor": "end", "letter-spacing": "0.06em" }, gM);
+    el("line", { x1: L + sl.col * dx, x2: L + sl.col * dx, y1: y - rowH * 0.5, y2: y + rowH * 0.5, stroke: INK, "stroke-width": 0.9 }, svg);
+  }
+
+  // day-of-week axis
+  var DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+  var axY = TOP + ROWS * rowH + 22;
+  var gA = el("g", { "class": "sans", fill: MUTE, "font-size": 10.5 });
+  DAYS.forEach(function (nm, c) {
+    txt(nm, { x: L + (c + 0.5) * 24 * dx, y: axY, "text-anchor": "middle", fill: INK, "letter-spacing": "0.04em" }, gA);
+    [6, 12, 18].forEach(function (h) {
+      var x = L + (c * 24 + h) * dx;
+      el("line", { x1: x, x2: x, y1: TOP + ROWS * rowH + 6, y2: TOP + ROWS * rowH + 10, stroke: MUTE, "stroke-width": 0.7 }, gA);
+    });
+  });
+  txt("ticks at 6 a.m., noon, 6 p.m.", { x: L, y: axY + 18, "font-size": 9.5 }, gA);
+
+  // title block
+  txt("Two Tides", { x: L - 2, y: 46, "class": "serif", "font-size": 30, fill: INK }, svg);
+  var sub = el("text", { x: L, y: 70, "class": "sans", "font-size": 12, fill: MUTE }, svg);
+  sub.innerHTML = "";
+  var t1 = el("tspan", {}, sub); t1.textContent = "Every hour of 2025 on the Fremont Bridge, Seattle, one week to a line.  ";
+  var t2 = el("tspan", { fill: NORTH }, sub); t2.textContent = "Northbound rises above";
+  var t3 = el("tspan", {}, sub); t3.textContent = ", ";
+  var t4 = el("tspan", { fill: SOUTH }, sub); t4.textContent = "southbound falls below";
+  var t5 = el("tspan", {}, sub); t5.textContent = " the same thread.";
+
+  // year totals, top right
+  var tot = 0, nb = 0, sb = 0;
+  H.forEach(function (v) { if (v) { tot += v[0]; nb += v[1]; sb += v[2]; } });
+  var gT = el("g", { "class": "sans", "text-anchor": "end" });
+  txt(fmt(tot), { x: 1100 - 24, y: 44, "class": "serif", "font-size": 24, fill: INK }, gT);
+  txt("bicycles & scooters crossing", { x: 1100 - 24, y: 60, "font-size": 10, fill: MUTE }, gT);
+  txt(fmt(nb) + " north", { x: 1100 - 24, y: 76, "font-size": 10, fill: NORTH }, gT);
+  txt(fmt(sb) + " south", { x: 1100 - 24, y: 89, "font-size": 10, fill: SOUTH }, gT);
+
+  // scale key, bottom right
+  var kx = L + W + 18, ky = 772;
+  var gK = el("g", { "class": "sans", "font-size": 9.5, fill: MUTE });
+  el("line", { x1: kx, x2: kx, y1: ky - 500 * k, y2: ky, stroke: NORTH, "stroke-width": 3 }, gK);
+  el("line", { x1: kx, x2: kx, y1: ky, y2: ky + 500 * k, stroke: SOUTH, "stroke-width": 3 }, gK);
+  txt("500 an hour, each way", { x: kx + 8, y: ky + 3 }, gK);
+
+  // annotations in the right margin
+  var gNote = el("g", { "class": "sans", "font-size": 9.5, fill: INK });
+  function note(dayIdx, hour, lines, mark) {
+    var s = slot(dayIdx * 24 + hour), y = baseY(s.row), x = xAt(s.col);
+    var tx = L + W + 14;
+    if (mark === "ring") el("circle", { cx: x, cy: y, r: 3.2, fill: "none", stroke: INK, "stroke-width": 0.9 }, gNote);
+    else el("circle", { cx: x, cy: y, r: 1.6, fill: INK }, gNote);
+    el("line", { x1: x + 5, x2: tx - 4, y1: y, y2: y, stroke: INK, "stroke-width": 0.5, "stroke-dasharray": "1 2.5" }, gNote);
+    lines.forEach(function (ln, j) {
+      txt(ln, { x: tx, y: y + 3.3 + j * 11.5, fill: j ? MUTE : INK }, gNote);
+    });
+  }
+  // find the missing hour, the busiest day, the quietest day
+  var miss = -1; H.forEach(function (v, i) { if (!v && miss < 0) miss = i; });
+  var dayTot = []; for (var dd = 0; dd < 365; dd++) { var sum = 0; for (var h = 0; h < 24; h++) { var q = H[dd * 24 + h]; if (q) sum += q[0]; } dayTot.push(sum); }
+  var hi = 0, lo = 0; dayTot.forEach(function (t, i) { if (t > dayTot[hi]) hi = i; if (t < dayTot[lo]) lo = i; });
+  function label(d) { var dt = dateOf(d); return MON[dt.getUTCMonth()].slice(0, 3) + " " + dt.getUTCDate(); }
+  if (miss >= 0) note(Math.floor(miss / 24), miss % 24, [label(Math.floor(miss / 24)) + ", 2 a.m.", "clocks jump ahead;", "the one hour not counted"], "ring");
+  var pk = 0; for (var h2 = 0; h2 < 24; h2++) { var q2 = H[hi * 24 + h2]; if (q2 && q2[0] > H[hi * 24 + pk][0]) pk = h2; }
+  note(hi, pk, [label(hi) + ", busiest day", fmt(dayTot[hi]) + " crossings"]);
+  var qh = 12;
+  note(lo, qh, [label(lo) + ", quietest day", fmt(dayTot[lo]) + " crossings"]);
+})();
+</script>
+</body>
+</html>

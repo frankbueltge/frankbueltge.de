@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Two Tides</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #f2ede3; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = Math.max(1, window.devicePixelRatio || 1);
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var hours = window.COUNTS.hours;
+  var PAPER = '#f2ede3', INK = '#2b2723', FAINT = 'rgba(43,39,35,0.13)';
+  var NORTH = 'rgba(190,58,34,0.62)', SOUTH = 'rgba(30,58,118,0.58)';
+  var SERIF = 'Georgia, "Times New Roman", serif';
+
+  g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+  // geometry: one row per week, Monday to Sunday, 168 hours across
+  var X0 = 78, X1 = 958, Y0 = 116, ROWS = 53, ROWH = 11.8;
+  var HW = (X1 - X0) / 168;
+  var MAXV = 630, AMP = 27;
+  function amp(v) { return AMP * Math.pow(v / MAXV, 0.8); }
+
+  // 2025-01-01 is a Wednesday: Monday-based offset 2
+  var OFF = 2;
+  function slot(i) { // hour index -> [row, column]
+    var day = Math.floor(i / 24) + OFF;
+    return [Math.floor(day / 7), (day % 7) * 24 + (i % 24)];
+  }
+  function rowY(r) { return Y0 + r * ROWH + ROWH / 2; }
+  function hx(c) { return X0 + (c + 0.5) * HW; }
+
+  // weekend wash and day separators
+  g.fillStyle = 'rgba(43,39,35,0.035)';
+  g.fillRect(X0 + 5 * 24 * HW, Y0 - 14, 2 * 24 * HW, ROWS * ROWH + 26);
+  g.strokeStyle = FAINT; g.lineWidth = 0.6;
+  for (var d = 0; d <= 7; d++) {
+    var x = Math.round(X0 + d * 24 * HW) + 0.5;
+    g.beginPath(); g.moveTo(x, Y0 - 14); g.lineTo(x, Y0 + ROWS * ROWH + 12); g.stroke();
+  }
+
+  // baselines (the bridge deck, once per week)
+  g.strokeStyle = 'rgba(43,39,35,0.16)'; g.lineWidth = 0.5;
+  for (var r = 0; r < ROWS; r++) {
+    var y = Math.round(rowY(r)) + 0.5;
+    var sx = r === 0 ? X0 + OFF * 24 * HW : X0;
+    var ex = r === ROWS - 1 ? X0 + 3 * 24 * HW : X1;
+    g.beginPath(); g.moveTo(sx, y); g.lineTo(ex, y); g.stroke();
+  }
+
+  // collect runs of consecutive valid hours within a row
+  function runs() {
+    var out = [], cur = null, prevRow = -1;
+    for (var i = 0; i < hours.length; i++) {
+      var s = slot(i), v = hours[i];
+      if (!v || s[0] !== prevRow) { if (cur && cur.pts.length) out.push(cur); cur = null; }
+      prevRow = s[0];
+      if (!v) continue;
+      if (!cur) cur = { row: s[0], pts: [] };
+      cur.pts.push([s[1], v]);
+    }
+    if (cur && cur.pts.length) out.push(cur);
+    return out;
+  }
+  var R = runs();
+
+  function drawSide(field, sign, color) {
+    g.fillStyle = color;
+    R.forEach(function (run) {
+      var y0 = rowY(run.row), p = run.pts;
+      g.beginPath();
+      g.moveTo(hx(p[0][0]) - HW / 2, y0);
+      for (var k = 0; k < p.length; k++) {
+        var x = hx(p[k][0]), y = y0 - sign * amp(p[k][1][field]);
+        if (k === 0) g.lineTo(x - HW / 2, y);
+        g.lineTo(x, y);
+        if (k === p.length - 1) g.lineTo(x + HW / 2, y);
+      }
+      g.lineTo(hx(p[p.length - 1][0]) + HW / 2, y0);
+      g.closePath();
+      g.fill();
+    });
+  }
+  g.globalCompositeOperation = 'multiply';
+  drawSide(1, 1, NORTH);   // northbound rises above the deck
+  drawSide(2, -1, SOUTH);  // southbound hangs below it
+  g.globalCompositeOperation = 'source-over';
+
+  // the hour that did not happen: 2025-03-09 02:00
+  var miss = hours.findIndex(function (v) { return v === null; });
+  if (miss >= 0) {
+    var ms = slot(miss), mx = hx(ms[1]), my = rowY(ms[0]);
+    g.strokeStyle = INK; g.lineWidth = 0.8;
+    g.beginPath(); g.arc(mx, my, 3.2, 0, Math.PI * 2); g.stroke();
+    g.lineWidth = 0.5;
+    g.beginPath(); g.moveTo(mx + 3.2, my); g.lineTo(X1 + 14, my); g.stroke();
+    note(['9 March, 2 a.m.,', 'the hour the', 'clocks skipped'], my);
+  }
+
+  // the morning when the heavier tide changed sides: 2025-07-01
+  var turn = slot(181 * 24);
+  var ty = rowY(turn[0]);
+  g.strokeStyle = INK; g.lineWidth = 0.5;
+  g.beginPath(); g.moveTo(X1 + 4, ty); g.lineTo(X1 + 14, ty); g.stroke();
+  note(['1 July: overnight,', 'the heavier tide', 'changes sides.', 'The counter does', 'not say why.'], ty);
+
+  function note(lines, y) {
+    g.fillStyle = INK; g.font = 'italic 11px ' + SERIF; g.textAlign = 'left';
+    lines.forEach(function (t, k) { g.fillText(t, X1 + 20, y + 4 + k * 13); });
+  }
+
+  // labels: days across the top
+  var DAYS = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+  g.fillStyle = INK; g.font = '9.5px ' + SERIF; g.textAlign = 'center';
+  if (g.letterSpacing !== undefined) g.letterSpacing = '2px';
+  DAYS.forEach(function (n, i) { g.fillText(n, X0 + (i + 0.5) * 24 * HW, Y0 - 22); });
+  if (g.letterSpacing !== undefined) g.letterSpacing = '0px';
+
+  // labels: months down the left, on the week each month begins
+  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var MLEN = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  var doy = 0;
+  g.textAlign = 'right'; g.font = 'italic 12px ' + SERIF;
+  for (var m = 0; m < 12; m++) {
+    var row = Math.floor((doy + OFF) / 7);
+    g.fillStyle = INK;
+    g.fillText(MON[m], X0 - 14, rowY(row) + 4);
+    g.fillStyle = 'rgba(43,39,35,0.4)';
+    g.fillRect(X0 - 9, rowY(row) - 0.4, 5, 0.8);
+    doy += MLEN[m];
+  }
+
+  // title and colophon
+  var total = hours.reduce(function (a, v) { return a + (v ? v[0] : 0); }, 0);
+  g.textAlign = 'left'; g.fillStyle = INK;
+  g.font = '26px ' + SERIF;
+  g.fillText('Two Tides', X0, 50);
+  g.font = 'italic 13px ' + SERIF;
+  g.fillStyle = 'rgba(43,39,35,0.75)';
+  g.fillText('Every hour of 2025 on the Fremont Bridge, Seattle — one line per week, Monday to Sunday', X0 + 128, 50);
+
+  var fy = H - 22;
+  g.font = '11.5px ' + SERIF; g.fillStyle = INK;
+  g.fillStyle = NORTH; g.fillRect(X0, fy - 8, 14, 8);
+  g.fillStyle = INK; g.fillText('northbound, rising above each week’s line', X0 + 20, fy);
+  g.fillStyle = SOUTH; g.fillRect(X0 + 258, fy - 8, 14, 8);
+  g.fillStyle = INK; g.fillText('southbound, hanging below it', X0 + 278, fy);
+  g.textAlign = 'right';
+  g.fillStyle = 'rgba(43,39,35,0.75)';
+  g.fillText(total.toLocaleString('en-US') + ' crossings by bicycle and scooter · City of Seattle counter, public domain', W - 20, fy);
+})();
+</script>
+</body>
+</html>

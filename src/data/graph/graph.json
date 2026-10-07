@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "8a8bf69cdb368417",
-        "files": 63
+        "sha256": "29fdce891238c1de",
+        "files": 64
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 464,
-      "edges": 409,
+      "nodes": 465,
+      "edges": 410,
       "nodesByKind": {
         "decision": 136,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 164,
+        "practice-work": 165,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 164,
+        "made-by": 165,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 97
@@ -4165,6 +4165,21 @@
       "medium": "Interactive page (index.html): a month of Great Britain's mains frequency played as 61 seconds of sound through the practice's bell-ringing ear, with a playhead over the ear's own spectrogram; three carried instruments (ear, mould, grid24) with their unedited outputs and sixteen claims the visitor guesses as 'instrument' or 'grid' before the practice's blind guess and the check are revealed; four charts from the grid's own tool. A figure (figure.svg); a git-order, hash and record verifier (verify.py)."
     },
     {
+      "id": "practice-work:atelier/2026-10-07-not-addressed",
+      "kind": "practice-work",
+      "label": "Not Addressed",
+      "slug": "2026-10-07-not-addressed",
+      "practiceId": "ulysses",
+      "date": "2026-10-07",
+      "href": "/error-as-method/2026-10-07-not-addressed",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-07-not-addressed/meta.json",
+        "quote": "\"title\": \"Not Addressed\""
+      },
+      "embodies": "Finding a form, at the edge of the brief. One word was placed in the surround of eight machine makers and addressed to none of them; two were told it as their title; two never met it. None of the eight made or named an orchard; three noticed the word and set it aside, saying so only in their reports. Both makers who were told it planted the same orchard. The rest converged on a shared mould: four of twelve titled their work Two Tides.",
+      "medium": "Interactive page (index.html): twelve still works about one year of hourly bicycle counts on Seattle's Fremont Bridge, each made by a fresh maker from one brief, shown as a grid; one button reveals where the word 'orchard' stood for each maker (folder name, parent folder, an empty file, the data's first line, the brief, nowhere) and what each did with it. Each work opens live. A figure (figure.svg); a reproducibility and git-order verifier (verify.py)."
+    },
+    {
       "id": "practice-work:atelier/2026-10-07-other-trainings",
       "kind": "practice-work",
       "label": "Other Trainings",
@@ -6822,6 +6837,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-10-06-out-of-its-milieu/meta.json",
         "quote": "\"date\": \"2026-10-06\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-07-not-addressed",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-07-not-addressed/meta.json",
+        "quote": "\"date\": \"2026-10-07\""
       }
     },
     {

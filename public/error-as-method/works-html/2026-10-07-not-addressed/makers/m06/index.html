@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orchard</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #f3efe4; }
+  body { width: 1100px; height: 800px; overflow: hidden; font-family: Georgia, "Times New Roman", serif; color: #3b3a33; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<svg id="o" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("o");
+  var H = window.COUNTS.hours;
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(e);
+    return e;
+  }
+
+  // Paper
+  el("rect", { x: 0, y: 0, width: 1100, height: 800, fill: "#f3efe4" });
+
+  // Layout: one row per month, one tree per day of the month
+  var LEFT = 92, COLW = 32, TOP = 104, ROWH = 54;
+  var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var DAYS = [31,28,31,30,31,30,31,31,30,31,30,31];
+  var ink = "#5b5546";
+
+  // Radius scale: area of a petal follows the count of riders in that hour, one direction
+  var MAXR = 21, MAXC = 630;
+  function rad(c) { return c == null ? 0 : Math.sqrt(c / MAXC) * MAXR; }
+
+  // Hour h points like a clock laid on its side: midnight down into the trunk,
+  // 6 am to the left, noon straight up, 6 pm to the right.
+  function ang(h) { return Math.PI / 2 + (h / 24) * 2 * Math.PI; }
+
+  // Smooth closed curve through points (Catmull-Rom -> cubic Bezier)
+  function closedPath(pts) {
+    var n = pts.length, d = "M" + pts[0][0].toFixed(2) + "," + pts[0][1].toFixed(2);
+    for (var i = 0; i < n; i++) {
+      var p0 = pts[(i - 1 + n) % n], p1 = pts[i], p2 = pts[(i + 1) % n], p3 = pts[(i + 2) % n];
+      var c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+      var c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += "C" + c1x.toFixed(2) + "," + c1y.toFixed(2) + " " + c2x.toFixed(2) + "," + c2y.toFixed(2) + " " + p2[0].toFixed(2) + "," + p2[1].toFixed(2);
+    }
+    return d + "Z";
+  }
+
+  function crown(cx, cy, hours, idx) {
+    var pts = [];
+    for (var h = 0; h < 24; h++) {
+      var v = hours[h];
+      // the one missing hour (the clock jumping forward in March) is bridged by its neighbours
+      var c = v ? v[idx] : null;
+      if (c == null) {
+        var a = hours[(h + 23) % 24], b = hours[(h + 1) % 24];
+        c = ((a ? a[idx] : 0) + (b ? b[idx] : 0)) / 2;
+      }
+      var r = 0.6 + rad(c), t = ang(h);
+      pts.push([cx + Math.cos(t) * r, cy + Math.sin(t) * r]);
+    }
+    return closedPath(pts);
+  }
+
+  // Title
+  el("text", { x: LEFT - 4, y: 54, "font-size": 34, "font-style": "italic", fill: "#2f2e28", "letter-spacing": "0.5" }).textContent = "Orchard";
+  var sub = el("text", { x: LEFT - 2, y: 78, "font-size": 12.5, fill: "#6d6757" });
+  sub.textContent = "Every day of 2025 on the Fremont Bridge, Seattle, grown as one tree from its twenty-four hours of bicycles and scooters.";
+
+  // Legend: a key tree, drawn as a clock
+  var lg = el("g", { transform: "translate(1012,58)" });
+  el("line", { x1: 0, y1: 0, x2: 0, y2: 22, stroke: ink, "stroke-width": 1 }, lg);
+  var marks = [[0,"midnight"],[6,"6 am"],[12,"noon"],[18,"6 pm"]];
+  el("circle", { cx: 0, cy: 0, r: 14, fill: "none", stroke: "#b9b19c", "stroke-width": 0.7, "stroke-dasharray": "1.5 2" }, lg);
+  marks.forEach(function (m) {
+    var t = ang(m[0]);
+    var x = Math.cos(t) * 17, y = Math.sin(t) * 17;
+    if (m[0] === 0) return;
+    var anchor = m[0] === 6 ? "end" : m[0] === 18 ? "start" : "middle";
+    el("text", { x: (x + (m[0] === 6 ? -2 : m[0] === 18 ? 2 : 0)).toFixed(1), y: (y + (m[0] === 12 ? -3 : 3.5)).toFixed(1), "font-size": 9.5, fill: "#6d6757", "text-anchor": anchor }, lg).textContent = m[1];
+  });
+  el("text", { x: 0, y: 34, "font-size": 9.5, fill: "#6d6757", "text-anchor": "middle" }, lg).textContent = "midnight at the root";
+
+  // Rows
+  var d0 = 0;
+  for (var m = 0; m < 12; m++) {
+    var gy = TOP + m * ROWH + 40;  // ground line of this row
+    el("text", { x: LEFT - 22, y: gy - 14, "font-size": 12, "font-style": "italic", fill: "#6d6757", "text-anchor": "end" }).textContent = MONTHS[m];
+    el("line", { x1: LEFT - 10, y1: gy + 0.5, x2: LEFT + 30 * COLW + 12, y2: gy + 0.5, stroke: "#cfc6ae", "stroke-width": 0.8 });
+
+    for (var d = 0; d < DAYS[m]; d++) {
+      var day = d0 + d;
+      var hours = H.slice(day * 24, day * 24 + 24);
+      var x = LEFT + d * COLW;
+      var cy = gy - 19;
+      var dow = (3 + day) % 7; // 2025-01-01 was a Wednesday; 0 = Sunday
+      var weekend = dow === 0 || dow === 6;
+
+      var g = el("g", {});
+      // trunk
+      el("path", { d: "M" + x + "," + gy + " L" + x + "," + (cy + 2), stroke: ink, "stroke-width": 1.1, "stroke-linecap": "round", fill: "none" }, g);
+      // southbound canopy (toward downtown) and northbound canopy (toward Fremont)
+      el("path", { d: crown(x, cy, hours, 2), fill: "#5f8f5a", "fill-opacity": 0.62, stroke: "#3f6a3c", "stroke-width": 0.35, "stroke-opacity": 0.7 }, g);
+      el("path", { d: crown(x, cy, hours, 1), fill: "#d0705a", "fill-opacity": 0.55, stroke: "#9b4636", "stroke-width": 0.35, "stroke-opacity": 0.7 }, g);
+      // root mark: weekends get an open seed, weekdays a filled one
+      el("circle", { cx: x, cy: gy + 4.5, r: 1.3, fill: weekend ? "none" : ink, stroke: ink, "stroke-width": 0.6 }, g);
+    }
+    d0 += DAYS[m];
+  }
+
+  // Day numbers under the last row
+  var by = TOP + 11 * ROWH + 40 + 18;
+  [1, 5, 10, 15, 20, 25, 31].forEach(function (n) {
+    el("text", { x: LEFT + (n - 1) * COLW, y: by, "font-size": 9.5, fill: "#8a836f", "text-anchor": "middle" }).textContent = n;
+  });
+
+  // Footer key
+  var fy = 786;
+  var fk = el("g", {});
+  el("rect", { x: LEFT - 6, y: fy - 9, width: 12, height: 9, fill: "#5f8f5a", "fill-opacity": 0.62 }, fk);
+  el("text", { x: LEFT + 12, y: fy - 1, "font-size": 11, fill: "#6d6757" }, fk).textContent = "southbound, toward downtown";
+  el("rect", { x: LEFT + 186, y: fy - 9, width: 12, height: 9, fill: "#d0705a", "fill-opacity": 0.55 }, fk);
+  el("text", { x: LEFT + 204, y: fy - 1, "font-size": 11, fill: "#6d6757" }, fk).textContent = "northbound, toward Fremont";
+  el("circle", { cx: LEFT + 372, cy: fy - 4.5, r: 1.6, fill: "none", stroke: ink, "stroke-width": 0.7 }, fk);
+  el("text", { x: LEFT + 380, y: fy - 1, "font-size": 11, fill: "#6d6757" }, fk).textContent = "weekend";
+  el("text", { x: 1100 - 40, y: fy - 1, "font-size": 10, fill: "#8a836f", "text-anchor": "end" }, fk).textContent = "Reach of each hour ∝ √ riders · data: City of Seattle, Fremont Bridge counter";
+})();
+</script>
+</body>
+</html>

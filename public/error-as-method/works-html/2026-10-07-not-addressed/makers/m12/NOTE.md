@@ -1,0 +1,3 @@
+# Two Tides
+
+The year is laid out as 53 lines, one per week, Monday to Sunday. On each line every hour is drawn twice from the same thread. Riders heading north rise above it in red and riders heading south hang below it in blue, both at the same linear scale. I chose this mirrored, woven form because a bridge carries traffic both ways and the data has two directions, so the picture should too. Read down the page and the weekday commute shows up as paired spikes, morning and evening, with the busier direction swapping between them. Weekends turn into soft single humps, and the weeks swell in summer and thin out in winter. Three small marks point out the busiest day, the quietest day (Christmas), and the gap on March 9 at 2 a.m., the hour the clocks skipped.
