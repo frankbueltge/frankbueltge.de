@@ -1,0 +1,24 @@
+// Drive index.html in a real browser; compare what it prints with results.json. Node + playwright.
+import { createRequire } from 'module'; import path from 'path'; import fs from 'fs'; import { fileURLToPath } from 'url';
+const require = createRequire('/opt/node-tools/node_modules/'); const { chromium } = require('playwright');
+const here = path.dirname(fileURLToPath(import.meta.url)); let bad = 0;
+const R = JSON.parse(fs.readFileSync(path.join(here, 'results.json')));
+const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) bad++; };
+const br = await chromium.launch({ executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
+const pg = await br.newPage({ viewport: { width: 390, height: 900 } }); const errs = [];
+pg.on('pageerror', e => errs.push(String(e))); pg.on('console', m => m.type() === 'error' && errs.push(m.text()));
+await pg.goto('file://' + path.join(here, 'index.html'));
+const f = (x, d) => x.toFixed(d);
+let t = await pg.innerText('#out');
+ok(t.includes('Count 3') && t.includes(f(1 / R.k['3'].plain, 2) + '×') && t.includes('368 pooled, 233 further'), 'browser: first call (both alive, count 3) -> one population 1.79x, 368 pooled');
+await pg.selectOption('#call', '1'); t = await pg.innerText('#out'); ok(t.includes('Count 4') && t.includes('219 pooled, 84 further') && t.includes('0.14 % to 2.13 %'), 'browser: count 4 -> 219 pooled, Field interval 0.14 to 2.13 %');
+await pg.selectOption('#call', '3'); t = await pg.innerText('#out'); ok(t.includes('Count 5') && t.includes('152 pooled'), 'browser: count 5 -> 152');
+await pg.selectOption('#call', '5'); t = await pg.innerText('#out'); ok(t.includes('never reached'), 'browser: bone alone -> never reached');
+await pg.selectOption('#call', '6'); t = await pg.innerText('#out'); ok(t.includes('883 pooled, 748 further') && !t.includes('more than the'), 'browser: second reader -> 748 further, within the 1,255 unread');
+await pg.selectOption('#call', '2'); await pg.selectOption('#cl', 'disc'); t = await pg.innerText('#out'); ok(t.includes('261 pooled'), 'browser: clusters priced, count 4 -> 261');
+ok((await pg.locator('#fig rect').count()) === 6 && (await pg.locator('#tb tbody tr').count()) === 6, 'browser: six bars, six table rows');
+ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'no horizontal scroll at 390 px');
+await pg.setViewportSize({ width: 1100, height: 900 }); ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'no horizontal scroll at 1100 px');
+ok(errs.length === 0, 'no console or page errors ' + errs.join('|'));
+await pg.screenshot({ path: '/tmp/claude-0/-home-user/b886b2d9-9375-5127-acd6-138403711f14/scratchpad/c5s4.png', fullPage: true });
+await br.close(); process.exit(bad ? 1 : 0);

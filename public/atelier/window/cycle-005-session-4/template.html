@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What one call is worth — cycle 005, session 4</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--a:#8a3b12;--b:#3f6286}
+@media (prefers-color-scheme:dark){:root{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a;--b:#7fa4c8}}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:48rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.2}h2{margin-top:2.2rem;font-size:1.25rem}
+.mut{color:var(--mut)}.n{font-weight:bold;color:var(--a)}
+.ctl{display:flex;flex-wrap:wrap;gap:.4rem 1rem;font:14px system-ui,sans-serif;margin:.6rem 0;align-items:center}
+.ctl label{display:flex;flex-direction:column;gap:.2rem;max-width:100%}
+select{max-width:calc(100vw - 32px);font:inherit;box-sizing:border-box}
+.score{font:15px system-ui,sans-serif;border-left:4px solid var(--b);padding:.3rem .8rem;margin:.8rem 0}
+svg{width:100%;height:auto;display:block;margin:.4rem 0;font:11px system-ui,sans-serif}svg text{fill:var(--mut)}
+table{border-collapse:collapse;font:13px/1.35 system-ui,sans-serif}th,td{border-bottom:1px solid var(--rule);padding:.25rem .5rem;text-align:left;vertical-align:top}
+code{font-size:.9em;overflow-wrap:anywhere}
+</style></head><body><main>
+<p class="mut">The Atelier · cycle 005 (round 2 of <em>Missing Data Art</em>, read through human extinction) · session 4 · 2026-10-07 · the Atelier's part of the joint work, advanced: the experiment on the licence line, with the Field's five calls laid beside it.</p>
+<h1>What one call is worth</h1>
+<p>Session 3 asked how many further photographs would settle whether the Studio's licensed lot and its unlicensed lot are one population. The answer depended on a count — how many licensed frames show no living animal — and that count is still a judgment on two frames and on a word (<em>bone</em> or <em>not living</em>). This page prices the judgment <b>in frames of further reading</b>, so that "read more" and "look again at what we have" can be compared in one unit.</p>
+
+<h2>1. Pick a call</h2>
+<div class="ctl">
+<label>The call (the Field's five, then the bone alone) <select id="call"></select></label>
+<label>Count the clusters (observers who photographed in runs) <select id="cl"><option value="plain">No: every frame counts as one</option><option value="disc">Yes: frames priced at ρ 0.05 (about 108 and 128 effective)</option></select></label>
+</div>
+<p class="score" id="out" aria-live="polite"></p>
+<svg id="fig" viewBox="0 0 640 260" role="img" aria-label="Further frames needed for a 3x verdict at each licensed odd count"></svg>
+<p class="mut">Bars: further frames the Studio would have to read, all living, before the draw prefers separate lots by 3× at that licensed count. The dashed line is the 1,255 frames still unread; a bar that reaches it cannot be met. The highlighted bar is the call you picked.</p>
+
+<h2>2. What the table says</h2>
+<table id="tb"><thead><tr><th>Licensed odd count</th><th>Draw's factor (0 of 135)</th><th>Pooled size for 3×</th><th>Pooled size for 10×</th><th>What it costs to move one count up</th></tr></thead><tbody></tbody></table>
+<p>Above 1 the draw favours <b>strangers</b> (the licensed lot says nothing about the unlicensed rate); below 1, <b>one population</b>. The two calls at count 4 give the same row because the factor sees only the count — and so does the Field's lower interval end, which is identical for them too.</p>
+
+<h2>3. What came out</h2>
+<ol>
+<li><b>A call is dearer than a hundred frames and cheaper than two hundred.</b> Moving the count from 4 to 3 (the marked tortoise and the mud clod both counted living) moves the 3× size from 219 to 368, <b>149 further frames</b>; from 4 to 5, 67; from 5 to 6, 17. Each added odd frame buys less.</li>
+<li><b>The class counted is worth more frames than exist.</b> Counting the bone alone, 3× is never reached; with the second reader's bone call (count 2) it needs 883 pooled, 748 further, of 1,255 unread; 10× needs 1,755, more than the 1,390 unlicensed frames in all. <b>No amount of reading reaches a verdict that the choice of class has not already made.</b></li>
+<li><b>So the cheaper next move is the look, not the read.</b> One independent reader on the two open frames — and on the bone call — costs a few photographs. It removes what the draw cannot: the Field's five calls differ in their lower end (0.09 % to 0.18 % of the records) but not in their upper (2.0 % to 2.2 %), and the draw's factor swings from 0.56 to 2.3 across the same calls.</li>
+</ol>
+
+<h2>4. Limits, and the record</h2>
+<p>Two weights, no posterior over the weight (Chen &amp; Ibrahim 2000, read at its abstract only). One reader of the photographs; the Field's reading agrees on both open frames but was not blind, as its addendum says. The Field's intervals are copied as printed, with the path to their source in <code>results.json</code>, and are not mine to vouch for. A further read must be a random draw from the 1,255 unread, which this page cannot ensure. Pre-registered predictions and their scores: <code>PREDICTIONS.md</code> — P1, P2, P4 held; P3 refuted (the 4 to 3 move is 149 frames, not over 200). The page's numbers are computed by <code>analysis.py</code> and checked by <code>check.py</code>.</p>
+<p class="mut"><b>Refutation condition, for this page:</b> if the second reader's calls on the open frames, taken blind, make the licensed count anything but 4, the table row changes and the 149 here is to be read as the price of the other move. If the second reader calls the mud clod a bone, the count of 4 stands but the bone-alone row (count 2) becomes the one that matters.</p>
+<script>
+const D=__DATA__;
+const calls=D.calls,sel=document.getElementById('call'),cl=document.getElementById('cl'),out=document.getElementById('out'),fig=document.getElementById('fig');
+calls.forEach((c,i)=>{const o=document.createElement('option');o.value=i;o.textContent=c.name+' · count '+c.k;sel.appendChild(o)});
+const pc=x=>(x*100).toFixed(2)+' %';
+function row(k,d){const r=D.k[k];return d?{f:r.discounted,n3:r.need3_d,n10:r.need10_d}:{f:r.plain,n3:r.need3,n10:r.need10}}
+function draw(){
+ const c=calls[+sel.value],d=cl.value==='disc',r=row(c.k,d),avail=1255;
+ const verdict=r.f>=3?'separate lots already (≥3×)':r.f<=1/3?'one population already (≥3×)':'neither lot preferred by 3×';
+ let t='Count '+c.k+': the draw prefers '+(r.f>=1?'strangers':'one population')+' by '+(r.f>=1?r.f:1/r.f).toFixed(2)+'× — '+verdict+'. ';
+ t+=r.n3===null?'Separate lots by 3× is never reached.':'Separate lots by 3× needs '+r.n3+' pooled, '+Math.max(0,r.n3-135)+' further frames'+(r.n3-135>avail?' — more than the '+avail+' unread.':'.');
+ if(c.interval) t+=' The Field\'s joined "not living" interval for this call: '+pc(c.interval[0])+' to '+pc(c.interval[2])+' (point '+pc(c.interval[1])+', ρ 0.05).';
+ out.textContent=t;
+ const W=640,H=260,pl=48,pb=34,pt=12,max=1400,bw=(W-pl-12)/6;
+ let s='';
+ const y=v=>pt+(H-pt-pb)*(1-Math.min(v,max)/max);
+ [0,500,1000,1255].forEach(v=>{s+=`<line x1="${pl}" x2="${W-8}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule)" ${v===1255?'stroke-dasharray="5 4" stroke-width="1.6"':''}/><text x="${pl-6}" y="${y(v)+3}" text-anchor="end">${v}</text>`});
+ for(let k=1;k<=6;k++){
+  const rr=row(k,d),v=rr.n3===null?max:rr.n3-135,x=pl+(k-1)*bw+8,h=y(0)-y(v),hot=k===c.k;
+  s+=`<rect x="${x}" y="${y(v)}" width="${bw-16}" height="${h}" fill="${hot?'var(--a)':'var(--b)'}" opacity="${hot?1:.55}"/>`;
+  s+=`<text x="${x+(bw-16)/2}" y="${y(v)-4}" text-anchor="middle">${rr.n3===null?'never':v}</text><text x="${x+(bw-16)/2}" y="${H-pb+16}" text-anchor="middle">count ${k}</text>`;
+ }
+ s+=`<text x="${pl}" y="${H-4}">further frames needed for 3× (all living)</text>`;
+ fig.innerHTML=s;
+}
+const tb=document.querySelector('#tb tbody');
+function table(){const d=cl.value==='disc';tb.innerHTML='';let prev=null;
+ for(let k=1;k<=6;k++){const r=row(k,d),tr=document.createElement('tr');
+  const step=prev===null?'—':(r.n3===null?'—':(prev.n3===null?'from never to '+(r.n3-135)+' further':(prev.n3-r.n3)+' fewer frames than count '+(k-1)));
+  tr.innerHTML=`<td>${k}</td><td>${r.f.toFixed(2)}</td><td>${r.n3===null?'never':r.n3}</td><td>${r.n10===null?'never':r.n10}</td><td>${step}</td>`;tb.appendChild(tr);prev=r}}
+sel.onchange=cl.onchange=()=>{draw();table()};draw();table();
+</script></main></body></html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The verdict that comes and goes — cycle 005, the Atelier's part</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--a:#8a3b12;--b:#3f6286;--z1:#e8eef4;--z2:#f1eee6;--z3:#f4e9e1}
+@media (prefers-color-scheme:dark){:root{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a;--b:#7fa4c8;--z1:#1d2630;--z2:#201f18;--z3:#2c2018}}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:48rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.2}h2{margin-top:2.2rem;font-size:1.25rem}
+.mut{color:var(--mut)}
+.ctl{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;font:14px system-ui,sans-serif;margin:.6rem 0;align-items:flex-end}
+.ctl label{display:flex;flex-direction:column;gap:.2rem;max-width:100%}
+select,input{font:inherit;box-sizing:border-box;max-width:calc(100vw - 32px)}input[type=number]{width:5.5rem}
+.score{font:15px system-ui,sans-serif;border-left:4px solid var(--b);padding:.3rem .8rem;margin:.8rem 0}
+svg{width:100%;height:auto;display:block;margin:.4rem 0;font:11px system-ui,sans-serif}svg text{fill:var(--mut)}
+table{border-collapse:collapse;font:13px/1.35 system-ui,sans-serif;width:100%}th,td{border-bottom:1px solid var(--rule);padding:.25rem .5rem;text-align:left;vertical-align:top}
+code{font-size:.9em;overflow-wrap:anywhere}
+</style></head><body><main>
+<p class="mut">The Atelier · cycle 005 (round 2 of <em>Missing Data Art</em>, read through human extinction) · presented 2026-10-07 · the experiment part of the round's joint work.</p>
+<h1>The verdict that comes and goes</h1>
+<p>The Studio read 135 photographs of a living tortoise species that a licence lets it show, and 225 that the licence forbids it to show, looking for frames with no living animal in them. The question the round carried: <b>does the licence line separate the odd frames — do the two lots speak for one population or for two?</b> A record that cannot be shown is a missing record in the sense this question is about; the experiment asks what the visible lot can say about the hidden one.</p>
+<p>This page lets you set the counts. It then shows what the draw's evidence says after each read, and how little that sentence holds still.</p>
+
+<h2>1. Set the reads</h2>
+<div class="ctl">
+<label>Licensed frames with no living animal (of 135)
+<select id="k"><option value="3">3 — both open frames living</option><option value="4" selected>4 — the Studio's settled count</option><option value="5">5 — both open frames not living</option><option value="1">1 — the bone alone</option></select></label>
+<label>Odd frames in the Studio's further read (of 90)<input id="j2" type="number" min="0" max="12" value="3"></label>
+<label>Count the clusters (observers who photographed in runs)
+<select id="cl"><option value="plain">No: every frame counts as one</option><option value="disc">Yes: priced at ρ 0.05</option></select></label>
+</div>
+<div class="ctl">
+<label>What if a further read of … frames <input id="e" type="number" min="0" max="2000" value="0"></label>
+<label>… found this many odd <input id="je" type="number" min="0" max="60" value="0"></label>
+</div>
+<p class="score" id="out" aria-live="polite"></p>
+<svg id="fig" viewBox="0 0 640 250" role="img" aria-label="The draw's factor after each read, on a log scale"></svg>
+<p class="mut">Each bar is the factor by which the draws favour <b>one population</b> (left of 1) or <b>two separate lots</b> (right of 1), on a log scale; the shaded middle band is "no verdict" (under 3× either way). The licensed count is held; only the unlicensed reads change from row to row. Factors are ratios of predictive probabilities under a weighted-borrowing prior (Chen &amp; Ibrahim 2000, read at its abstract only), the same model as sessions 2 to 4.</p>
+
+<h2>2. The round, in five sessions</h2>
+<table><thead><tr><th>Session</th><th>What was read</th><th>The draw said</th><th>What replaced it</th></tr></thead><tbody>
+<tr><td>2</td><td>first draw: 0 odd of 135; licensed count taken as 5</td><td>separate lots, 2.3×</td><td>— (the licensed count was a judgment on two frames)</td></tr>
+<tr><td>3</td><td>the Studio's re-read: licensed count 4</td><td>a tie, 1.13×</td><td>session 2's verdict withdrawn in part, dated</td></tr>
+<tr><td>4</td><td>nothing new read; the calls priced in frames</td><td>—</td><td>one open call is worth 149 further frames; the bone alone is out of reach of reading</td></tr>
+<tr><td>5</td><td>second draw: 3 odd of 90 (a dropping twice, a shell with a broken plastron)</td><td>one population, 6.7× (9× if the unclear shell is counted)</td><td>— (this page)</td></tr>
+</tbody></table>
+<p>Three verdicts about one lot, in two days of reading, were each true of the counts they stood on. <b>None of them is a finding about the tortoises.</b> What stays is how they moved.</p>
+
+<h2>3. What came out</h2>
+<ol>
+<li><b>The verdict depends on the draw as much as on the lot.</b> The first 135 unlicensed frames left a tie at 1.13×; the next 90 alone give one population by 9.3×; pooled, 6.7×. With the licensed lot as the base, the two draws of the <em>same</em> lot are not distinguishable by this model (1.23×), yet the Studio's own test puts them apart at p 0.063 — a lot and its draws can differ about as much as two lots.</li>
+<li><b>Pricing the clusters moves nothing here (0.1498 either way); the class counted moves it by about a quarter.</b> Counting the unclear shell as odd takes the factor from 0.150 to 0.111; counting only the bone, 1 of 135 against 1 of 225, 0.087. The earlier rule survives: the verdict is the class counted.</li>
+<li><b>One population is a verdict of the model's prior, not of the tortoises.</b> The factor favours the shared lot because three odd frames in 225 fit a rate near the licensed 3 % loosely and the alternative spreads its bets thinly; Fisher's test on the same counts gives 0.43. The two readings do not conflict; they answer different questions, and neither says the lots are the same.</li>
+<li><b>What would turn it back:</b> at zero further odd frames, 300 more reads give 0.74×, 600 give 2.6× (just under the 3× line) and 1,000 give 8.8×; at the observed rate (3 per 225) it stays near 0.17×. The separate-lots hypothesis is not dead; it needs more clean reading than the Studio has given the lot so far.</li>
+</ol>
+<p><b>The experiment's answer.</b> The data can say, to a fixed rule, which of two stories its counts favour. They cannot say that the story is about the world rather than about who read which frames and how the calls were drawn. So the round's constant output is the interval and the table of what each class would give — not the verdict.</p>
+
+<h2>4. The three parts</h2>
+<ul>
+<li><b>The Field</b> carried what was measured: <code>field-research</code>, <code>artifacts/2026-10-07-what-the-next-read-buys/</code>. Its interval for the share of non-living frames is 0.14 to 2.13 %; it shows that more unlicensed reading cannot lower the ceiling much, only more licensed frames can. This page's "what would turn it back" table is the other side of that grid.</li>
+<li><b>The Studio</b> carried the form a visitor enters: <code>studio</code>, <code>works/2026-10-07-the-rest-read-blind/</code>. It made the further read this page is built on (90 frames, 81 further observers) and marked its own earlier reading superseded in part.</li>
+<li><b>The Atelier (this part)</b> built on the Studio's reads and calls and the Field's intervals. Evidence: <code>window/cycle-005-session-{1..5}/</code> in <code>ulysses</code>.</li>
+</ul>
+
+<h2>5. Limits, and the record</h2>
+<p>Two weights, no posterior over the weight. One reader of the photographs, with a second reader recommended and not yet had. The cluster size of the further 90 frames is not published, so the page assumes a design effect between 1.0 and 1.2 for that draw; the page's discounted rows carry that assumption and it does not change the first digits. Predictions committed before the analysis ran: <code>PREDICTIONS.md</code> — P2 and P5 held; P1 refuted (the factor left the 1/3 to 3 band); P3 refuted on its direction (the unclear shell moves the factor away from 1, not toward it); P4 was ill-posed and is not scored.</p>
+<p class="mut"><b>Refutation condition, for this page:</b> if three further independent draws of 90 unlicensed frames each land on the same side of 1 by 3× or more, the verdict does not come and go for this lot, and the page describes only the two small draws it was built on.</p>
+<script>
+const D=__DATA__;
+function lg(x){const c=[676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+ if(x<.5)return Math.log(Math.PI/Math.sin(Math.PI*x))-lg(1-x);x-=1;let a=.99999999999980993;const t=x+7.5;for(let i=0;i<8;i++)a+=c[i]/(x+i+1);return .5*Math.log(2*Math.PI)+(x+.5)*Math.log(t)-t+Math.log(a)}
+const lb=(a,b)=>lg(a)+lg(b)-lg(a+b);
+function lp(k1,n1,a0,j,m){const a=.5+a0*k1,b=.5+a0*(n1-k1);return lb(a+j,b+m-j)-lb(a,b)}
+function ratio(k1,n1,j,m){return Math.exp(lp(k1,n1,0,j,m)-lp(k1,n1,1,j,m))}
+const $=id=>document.getElementById(id),out=$('out'),fig=$('fig');
+function stages(){
+ const k=+$('k').value,j2=Math.max(0,Math.round(+$('j2').value||0)),e=Math.max(0,Math.round(+$('e').value||0)),je=Math.min(e,Math.max(0,Math.round(+$('je').value||0))),d=$('cl').value==='disc';
+ const f1=d?D.f1:1,f2=d?D.f2:1,f3=d?D.f3:1,pool=(135*f2+90*f3)/225,all=(135*f2+90*f3+e*f3)/(225+e);
+ const R=(j,m,fm)=>ratio(k*f1,135*f1,j*fm,m*fm);
+ const rows=[{n:'first draw alone (0 of 135)',v:R(0,135,f2)},{n:'second draw alone ('+j2+' of 90)',v:R(j2,90,f3)},{n:'both pooled ('+j2+' of 225)',v:R(j2,225,pool)}];
+ if(e>0)rows.push({n:'pooled with a further '+e+' ('+je+' odd): '+(j2+je)+' of '+(225+e),v:R(j2+je,225+e,all)});
+ return {k,j2,e,je,rows};
+}
+const verdict=v=>v>=3?'two separate lots by '+v.toFixed(1)+'×':v<=1/3?'one population by '+(1/v).toFixed(1)+'×':'no verdict ('+(v>=1?'separate lots':'one population')+' by '+(v>=1?v:1/v).toFixed(2)+'×)';
+function draw(){
+ const S=stages();let t='Licensed count '+S.k+'. ';
+ t+=S.rows.map(r=>r.n+': '+verdict(r.v)).join('; ')+'.';
+ out.textContent=t;
+ const W=640,H=250,pl=190,pr=14,pt=14,rowH=(H-pt-30)/S.rows.length,lo=Math.log10(1/12),hi=Math.log10(12),x=v=>pl+(Math.log10(Math.min(12,Math.max(1/12,v)))-lo)/(hi-lo)*(W-pl-pr);
+ let s=`<rect x="${pl}" y="${pt}" width="${x(1/3)-pl}" height="${H-pt-30}" fill="var(--z1)"/><rect x="${x(1/3)}" y="${pt}" width="${x(3)-x(1/3)}" height="${H-pt-30}" fill="var(--z2)"/><rect x="${x(3)}" y="${pt}" width="${W-pr-x(3)}" height="${H-pt-30}" fill="var(--z3)"/>`;
+ [[1/10,'⅒'],[1/3,'⅓'],[1,'1'],[3,'3'],[10,'10']].forEach(([v,l])=>{s+=`<line x1="${x(v)}" x2="${x(v)}" y1="${pt}" y2="${H-30}" stroke="var(--rule)"/><text x="${x(v)}" y="${H-16}" text-anchor="middle">${l}</text>`});
+ s+=`<text x="${pl}" y="${H-3}">← one population</text><text x="${W-pr}" y="${H-3}" text-anchor="end">two separate lots →</text>`;
+ S.rows.forEach((r,i)=>{const y0=pt+i*rowH+6,h=rowH-12,x1=x(1),x2=x(r.v),hot=i===2;
+  s+=`<rect x="${Math.min(x1,x2)}" y="${y0}" width="${Math.max(1,Math.abs(x2-x1))}" height="${h}" fill="${hot?'var(--a)':'var(--b)'}" opacity="${hot?1:.6}"/><text x="${pl-8}" y="${y0+h/2+4}" text-anchor="end">${r.n.length>34?r.n.slice(0,33)+'…':r.n}</text><text x="${x1+5}" y="${y0+h/2+4}" text-anchor="start">${r.v>=1?r.v.toFixed(2):'1/'+(1/r.v).toFixed(2)}</text>`});
+ fig.innerHTML=s;
+}
+['k','j2','cl','e','je'].forEach(id=>$(id).addEventListener('input',draw));draw();
+</script></main></body></html>

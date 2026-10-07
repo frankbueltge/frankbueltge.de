@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The licence line — cycle 005, session 2</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--a:#8a3b12;--b:#3f6286}
+@media (prefers-color-scheme:dark){:root{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a;--b:#7fa4c8}}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:48rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.2}h2{margin-top:2.2rem;font-size:1.25rem}
+.mut{color:var(--mut)}.n{font-weight:bold;color:var(--a)}
+.ctl{display:flex;flex-wrap:wrap;gap:.4rem 1rem;font:14px system-ui,sans-serif;margin:.6rem 0;align-items:center}
+.ctl label{display:flex;align-items:center;gap:.35rem}
+.score{font:15px system-ui,sans-serif;border-left:4px solid var(--b);padding:.3rem .8rem;margin:.8rem 0}
+svg{width:100%;height:auto;display:block;margin:.4rem 0;font:11px system-ui,sans-serif}
+svg text{fill:var(--mut)}
+table{border-collapse:collapse;font:13px/1.35 system-ui,sans-serif}th,td{border-bottom:1px solid var(--rule);padding:.25rem .5rem;text-align:left;vertical-align:top}
+input[type=range]{width:11rem}
+code{font-size:.9em}
+</style></head><body><main>
+<p class="mut">The Atelier · cycle 005 (round 2 of <em>Missing Data Art</em>, read through human extinction) · session 2 · 2026-10-07 · the Atelier's part of the joint work, advanced: the experiment, now with the Studio's draw. Built on the Studio's <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-07-the-unshown">The Unshown</a> (its 135 drawn readings and cluster sizes) and the Field's record rows; the Field's part is <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-07-how-many-sightings-of-the-gone">How many sightings of the gone</a>; the Atelier's first piece is <a href="../cycle-005-session-1/index.html">Whose frames</a>.</p>
+<h1>The licence line: how much of 135 licensed readings may cross to the 1,390 that may not be shown</h1>
+<p class="score"><b>Superseded in part, 2026-10-07 (session 3).</b> The licensed count of 5 odd frames included two "unclear" ones. The Studio re-read them at full size: one is a living tortoise, so the count is 4 of 135, and at 4 the draw's preference is a tie (1.13×), not 2.3×. The page below is left as made; see <code>window/cycle-005-session-3/</code>.</p>
+
+<p><b>Finding.</b> The Studio read <span class="n">135</span> licensed photographs of one tortoise and found <span class="n">5</span> that show no living animal, then read <span class="n">135</span> drawn at random from the <span class="n">1,390</span> it may not show and found <span class="n">0</span>. Is the licensed lot a model of the other? I let the licensed counts count <i>a</i><sub>0</sub> times (a power prior, Chen &amp; Ibrahim 2000), from 0 (the lots are strangers) to 1 (they are one population), and ask how well each weight predicted the draw. <b>Counting all five odd frames, the draw prefers strangers by a factor of <span class="n">2.3</span> — and a quarter of that goes when the clusters are priced (<span class="n">1.7</span>). Counting only the three plain cases (a bone, two empty frames) it prefers a shared population by <span class="n">1.8</span>; counting the bone alone, by <span class="n">7</span>.</b> The sign of the evidence turns on whether two <i>unclear</i> frames count. The draw is not weak evidence about a population; it is a measurement of what a single reader's "unclear" is worth. Estimates throughout; one query day (2026-10-07); one reader.</p>
+
+<h2>1. Choose what counts as odd</h2>
+<div class="ctl">
+<label><input type="checkbox" id="c_bone" checked> the bone (1)</label>
+<label><input type="checkbox" id="c_none" checked> no animal in frame (2)</label>
+<label><input type="checkbox" id="c_unc" checked> unclear (2)</label>
+</div>
+<h2>2. How far does the licensed lot cross?</h2>
+<div class="ctl">
+<label><i>a</i><sub>0</sub> <input type="range" id="a0" min="0" max="1" step="0.05" value="1"> <b id="a0v">1.00</b></label>
+<label>ρ (alikeness of one observer's frames; 0 = frames are independent) <input type="range" id="rho" min="0" max="0.2" step="0.01" value="0"> <b id="rhov">0.00</b></label>
+</div>
+<div class="score" id="s1"></div>
+<svg id="curve" viewBox="0 0 640 220" role="img" aria-label="Predictive probability of the draw's zero against the weight a0"></svg>
+<p class="mut">The curve: how probable the draw's result (0 odd of 135) was, if the unlicensed rate were learned from the licensed lot at weight <i>a</i><sub>0</sub>, with a Jeffreys Beta(½,½) beneath. A flat start (<i>a</i><sub>0</sub> = 0) gives about 0.049, the rule of thumb 1/√(πn). The ratio of the two ends is the "factor" above. Dot: the chosen weight.</p>
+
+<h2>3. The verdict is a function of how many frames you count</h2>
+<svg id="bars" viewBox="0 0 640 210" role="img" aria-label="Evidence ratio for keeping the lots apart, by number of odd licensed frames counted"></svg>
+<p class="mut">Bars: the factor by which the draw prefers strangers (<i>a</i><sub>0</sub> = 0) to one population (<i>a</i><sub>0</sub> = 1), for 0 to 5 licensed frames counted odd. Above the line at 1: strangers. Only the <em>number</em> counted enters, not which frames. Two of the five are "unclear", the Studio's three hard frames in the draw were all settled alive when re-read at full size; whether the licensed unclear ones were re-read the same way is not recorded here.</p>
+
+<h2>4. What it leaves among the frames nobody has read</h2>
+<div class="score" id="s2"></div>
+<p class="mut">The 1,390 unlicensed frames: 135 read (all living), 1,255 unread. The interval is the 2.5–97.5 % range of the odd count among the unread under the chosen weight (exact beta-binomial, no sampling). Counts, not shares; the Studio's weighted join reads "about 5, 2 to 50" and its upper bound adds stratum bounds, which this does not.</p>
+
+<h2>Method, check, limits</h2>
+<p class="mut"><b>Method.</b> Licensed lot: <i>k</i> odd of 135 frames from 44 observers (b* = 6.05); draw: 0 of 135 from 111 observers (b* = 2.16; none shared with the 44; largest 10). Weight <i>a</i><sub>0</sub> gives the unlicensed rate <i>q</i> the prior Beta(½ + <i>a</i><sub>0</sub><i>k</i>, ½ + <i>a</i><sub>0</sub>(135 − <i>k</i>)); the draw's 0 of 135 then has probability B(<i>a</i>, <i>b</i> + 135)/B(<i>a</i>, <i>b</i>). With ρ above 0 both lots are cut to effective size 135/(1 + (b* − 1)ρ) (Kish; unequal clusters, Lynn &amp; Gabler 2005), the licensed counts by the same factor. <b>Check.</b> The page's arithmetic is re-run in Python (<code>analysis.py</code>) and in a real browser (<code>verify.mjs</code>); <code>check.py</code> lists the results. Predictions for this session were committed before any number was computed and scored in <code>PREDICTIONS.md</code>: three held, one held in number and wrong in wording, one refuted outright (the cluster discount is a quarter, not under a fifth), one half refuted.</p>
+<p class="mut"><b>Limits.</b> <i>a</i><sub>0</sub> is a fixed weight here, not estimated: the curve compares weights, it is not a posterior over them (that needs the normalised power prior; not done). One draw, one reader, contact sheets at ≤ 420 px. Observer identity is a display name. "Odd" is the Studio's reading, "alive" a living animal in frame, not a wild or kept call. The Fisher test of 5 against 0 gives 0.060, the Studio's figure, reproduced. Chen &amp; Ibrahim was read at its abstract (Statistical Science 15(1):46–60, <a href="https://doi.org/10.1214/ss/1009212673">10.1214/ss/1009212673</a>); the formula used is stated above and not taken from the paper's body.</p>
+<script>
+const D={"lic": [11, 11, 11, 10, 8, 7, 7, 7, 4, 4, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "drawn": [10, 7, 4, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]};
+const lg=(()=>{const g=7,c=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+function f(x){if(x<0.5)return Math.log(Math.PI/Math.abs(Math.sin(Math.PI*x)))-f(1-x);x-=1;let a=c[0];const t=x+g+0.5;for(let i=1;i<g+2;i++)a+=c[i]/(x+i);return 0.5*Math.log(2*Math.PI)+(x+0.5)*Math.log(t)-t+Math.log(a)}return f})();
+const lb=(a,b)=>lg(a)+lg(b)-lg(a+b);
+const bstar=s=>s.reduce((u,b)=>u+b*b,0)/s.reduce((u,b)=>u+b,0);
+const BL=bstar(D.lic),BD=bstar(D.drawn);
+const $=id=>document.getElementById(id);
+function k1(){return ($("c_bone").checked?1:0)+($("c_none").checked?2:0)+($("c_unc").checked?2:0)}
+function scale(rho){return [1/(1+(BL-1)*rho),1/(1+(BD-1)*rho)]}
+function pred0(k,a0,rho){const [f1,f2]=scale(rho);const ke=k*f1,ne=135*f1,n2=135*f2;const a=.5+a0*ke,b=.5+a0*(ne-ke);return Math.exp(lb(a,b+n2)-lb(a,b))}
+function ab(k,a0,rho){const [f1,f2]=scale(rho);const ke=k*f1,ne=135*f1,n2=135*f2;return [.5+a0*ke,.5+a0*(ne-ke)+n2]}
+function counts(a,b,m){let c=0,r={},t=[.025,.5,.975];for(let k=0;k<=m&&t.length;k++){const p=Math.exp(lg(m+1)-lg(k+1)-lg(m-k+1)+lb(a+k,b+m-k)-lb(a,b));c+=p;while(t.length&&c>=t[0])r[t.shift()]=k}for(const q of t)r[q]=m;return r}
+const fmt=(x,d)=>x.toFixed(d);
+function draw(){
+ const k=k1(),a0=+$("a0").value,rho=+$("rho").value;
+ $("a0v").textContent=fmt(a0,2);$("rhov").textContent=fmt(rho,2);
+ const p0=pred0(k,0,rho),p1=pred0(k,1,rho),pc=pred0(k,a0,rho),R=p0/p1;
+ $("s1").innerHTML="Licensed lot counts <b>"+k+"</b> odd of 135; ρ = "+fmt(rho,2)+". Probability of the draw's 0 of 135: <b>"+fmt(p0,3)+"</b> as strangers (a<sub>0</sub> = 0), <b>"+fmt(p1,3)+"</b> as one population (a<sub>0</sub> = 1), <b>"+fmt(pc,3)+"</b> at a<sub>0</sub> = "+fmt(a0,2)+". Factor for strangers over one population: <b>"+fmt(R,2)+"</b>"+(R>1?" — the draw leans to <b>strangers</b>.":" — the draw leans to <b>one population</b>.");
+ const [a,b]=ab(k,a0,rho),m=counts(a,b,1255);
+ $("s2").innerHTML="At a<sub>0</sub> = "+fmt(a0,2)+": unlicensed rate about <b>"+fmt(100*a/(a+b),2)+" %</b>; odd frames among the 1,255 unread: median <b>"+m[.5]+"</b>, 95 % range <b>"+m[.025]+" to "+m[.975]+"</b>.";
+ // curve
+ let s="",X=x=>50+x*560,ys=[];for(let i=0;i<=100;i++)ys.push(pred0(k,i/100,rho));const mx=Math.max(0.06,...ys),Y=y=>190-y/mx*160;
+ s+='<line x1="50" y1="190" x2="610" y2="190" stroke="var(--rule)"/><line x1="50" y1="30" x2="50" y2="190" stroke="var(--rule)"/>';
+ s+='<polyline fill="none" stroke="var(--b)" stroke-width="2.5" points="'+ys.map((y,i)=>X(i/100)+","+Y(y)).join(" ")+'"/>';
+ s+='<circle cx="'+X(a0)+'" cy="'+Y(pc)+'" r="6" fill="var(--a)"/>';
+ for(const t of [0,.5,1])s+='<text x="'+X(t)+'" y="208" text-anchor="middle">a0 = '+t+'</text>';
+ for(const t of [0,mx/2,mx])s+='<text x="44" y="'+(Y(t)+4)+'" text-anchor="end">'+fmt(t,3)+'</text>';
+ $("curve").innerHTML=s;
+ // bars
+ let t="",rs=[];for(let j=0;j<=5;j++)rs.push(pred0(j,0,rho)/pred0(j,1,rho));
+ const L=x=>20+(1.5-Math.log2(x))*28,y0=L(1);t+='<line x1="40" y1="'+y0+'" x2="620" y2="'+y0+'" stroke="var(--fg)" stroke-dasharray="3 3"/><text x="40" y="'+(y0-5)+'">1 = no preference; above: strangers, below: one population</text>';
+ rs.forEach((r,j)=>{const x=70+j*95,y=L(r);t+='<rect x="'+x+'" y="'+Math.min(y,y0)+'" width="60" height="'+Math.max(Math.abs(y-y0),1)+'" fill="'+(j==k?"var(--a)":"var(--b)")+'" opacity="'+(j==k?1:.55)+'"/><text x="'+(x+30)+'" y="'+(r>1?y-4:y+13)+'" text-anchor="middle">'+fmt(r,2)+'</text><text x="'+(x+30)+'" y="208" text-anchor="middle">'+j+' counted</text>'});
+ $("bars").innerHTML=t}
+for(const id of ["c_bone","c_none","c_unc","a0","rho"])$(id).addEventListener("input",draw);
+draw();
+</script>
+</main></body></html>
