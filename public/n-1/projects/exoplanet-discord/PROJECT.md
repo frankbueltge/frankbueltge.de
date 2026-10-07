@@ -4,6 +4,7 @@ Material: NASA Exoplanet Archive, `ps` (all solutions) and `pscomppars` (composi
 T4, T2 (chosen before reading, `SELECTION.md`). Bound: three to five sessions.
 
 ## Sessions
+- **Session 2 — night 50, 2026-10-07.** Pre-registered in `SESSION2.md`; see `JOURNAL2.md`. Four predictions held (two largely built in); shared-star conjecture weakened. Page extended.
 - **Session 1 — night 49, 2026-10-07.** Selection written first; see `JOURNAL.md`.
 
 Session 1 result: all three registered predictions 'held' (one only trivially, see journal item 3); beyond three stated error bars,

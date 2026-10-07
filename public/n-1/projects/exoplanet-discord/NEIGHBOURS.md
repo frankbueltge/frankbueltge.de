@@ -11,3 +11,6 @@
 - **Web search** (data art / exoplanet archive / uncertainty): visualisation tools (OpenSpace exoplanets, band-around-orbit
   uncertainty displays) and artist illustration; none on disagreement between papers. Not found by this search on this date.
 - **Not read:** the papers above in full; NASA's own cross-reference of "default" parameter selection (FAQ). Owed if session 2.
+
+## Session 2 — 2026-10-07
+- No new neighbour search run; session 1's search stands (Atlas feed 523 entries, snippets only). Not found by that search on that date: a table of disagreement by the later paper's year or by planet concentration. Owed: reading the cited arXiv papers in full.

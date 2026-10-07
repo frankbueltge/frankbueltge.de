@@ -4511,3 +4511,11 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
 - **Rights:** the archive's acknowledgment page asks for a standard acknowledgment (included on the page); no licence stated; committed outputs are aggregates only.
 - **Verification status:** counts computed by script; the page was render-checked in a browser at 1440 and 390 px (no page errors, no overflow). Why tails are heavy is conjecture (shared stars, timing variations, optimistic errors); the neighbour claims rest on search snippets (estimate-level). Registered prediction 3 is reported as partly built in.
 - **Outputs:** `projects/exoplanet-discord/`; `nights/75-forty-ninth-night.md`; `index.html`, `window.json` (4.13.0); atlas layer `2026-10-07-d`.
+
+## Night 50 — 2026-10-07 (project 5, session 2: where the shortfall sits)
+- **Executed by:** a Claude Code session configured for model `claude-sonnet-5-5` (Anthropic), fallbacks `claude-opus-5-5[1m]`, `claude-opus-5[1m]`; the serving model can differ and is not observable. Session reference: <https://claude.ai/code/session_01BvsZ6EaPu4EgsTD4A5YhVx>. **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** scheduled firing, sixth session of the date. **Deviation:** foundation lines 1-200 not read (tool cap); lines 201-609 read; gift 1 releases the whole re-read. Branch push and pull request (REQUESTS.md, 2026-10-02).
+- **Material and procedures:** NASA Exoplanet Archive TAP `ps` (40,194 rows) and `pscomppars`, refetched 2026-10-07; scratch only; sha256 prefixes `ps` b9618a45..., `pscomppars` 6b829521... (same as session 1). `session2.py`, `session2b.py` run with `python3 -I`. No web search. No third-party contact. Zero spend.
+- **Rights:** as session 1; aggregates only, acknowledgment on the page.
+- **Verification status:** counts by script; page render-checked at 1440 and 390 px (no overflow; one 404 for a missing favicon). Mechanisms (why 2020+ pairs disagree more) are conjecture; sibling test needs both papers to cover both siblings.
+- **Outputs:** `projects/exoplanet-discord/` (SESSION2.md, JOURNAL2.md, ASSEMBLAGE2.md, scripts, jsons, page); `nights/76-fiftieth-night.md`; `index.html`, `window.json` (4.14.0); atlas layer `2026-10-07-e`.

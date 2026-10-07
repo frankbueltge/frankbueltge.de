@@ -44,6 +44,17 @@ once in about 12. Near one error bar the papers agree about as promised; it is i
 stated plus and minus). Pairs where the second paper simply repeats the first paper&rsquo;s number are counted separately (19&nbsp;% of period pairs) and left out of the curves,
 because a copy cannot disagree. The most precise number is not safer than the rest: against the other papers&rsquo; own scale, its middle is no reliably nearer or further than any other paper&rsquo;s (further for periods), and it is less often far off in the tail
 (<code>session1b.json</code>). Why the tails are heavy is not in the data: shared stars, shifting transit times, and optimistic error bars would each do it, and this page does not choose.</p>
+<h2 style="font-size:1.4rem;margin-top:2em">Session 2: where the shortfall sits</h2>
+<p>The disagreement is not spread evenly. Split by the year of the <em>later</em> of the two papers, the share of pairs beyond three error bars is not falling as
+instruments improve &mdash; for periods it is highest for pairs whose later paper is from 2020 on. Across the whole table the shortfall is also a matter of which planets
+were measured often: planets with eleven or more papers carry about half of the period tail, a good part of that only because they have many pairs.</p>
+<svg id="fig2" viewBox="0 0 860 300" role="img" aria-label="Share of paper pairs beyond three stated error bars, by the year band of the later paper, for period, radius and mass."></svg>
+<table><caption class="src" style="text-align:left">The no-JavaScript floor: share of non-copy pairs beyond three stated error bars, by the later paper&rsquo;s year (<code>session2.json</code>).</caption>
+<tr><th>quantity</th><td>2014 or before</td><td>2015&ndash;2019</td><td>2020 on</td></tr>%%ROWS2%%</table>
+<p><b>What this does not show.</b> Neighbouring planets of one star share a tail more than chance: for radius, a planet whose sibling has a tail pair has one itself
+%%SIB%% times as often as one whose siblings have none. The obvious reading is the shared star. But when the tail pairs of two siblings are looked at pair by pair,
+they come from the <em>same two papers</em> less often than ordinary pairs do (%%SAME%%), so the data do not show it; well-observed systems may be the whole story.
+The later paper states the smaller error in %%LATER%% of the large disagreements, against %%LATERB%% of all pairs: the sharper paper is usually the later one, and that alone explains most of it.</p>
 <p class="src">Data: NASA Exoplanet Archive, table of all solutions, queried 2026-10-07 (40,194 rows, 6,375 planets). This research has made use of the NASA Exoplanet Archive, which is operated by the California Institute of Technology, under contract with the National Aeronautics and Space Administration under the Exoplanet Exploration Program. Only counts are published here. Code and numbers:
 <a href="https://github.com/frankbueltge/n-1/tree/main/projects/exoplanet-discord">record</a>. Not tested by a stranger.</p>
 <script>
@@ -69,4 +80,15 @@ svg.onmousemove=e=>{const r=svg.getBoundingClientRect(),x=(e.clientX-r.left)/r.w
  const k=D.k[bi];let s=`Beyond ${k} σ: honest error bars would leave ${(D.gauss[bi]*100).toPrecision(2)} % of pairs. `;
  for(const q of ['period','radius','mass']){if(sel!='all'&&sel!=q)continue;s+=`${names[q]} ${(D[q].non_identical[bi]*100).toPrecision(2)} %; `}
  read.textContent=s};
+const D2=%%DATA2%%;
+(function(){const s=document.getElementById('fig2'),n='http://www.w3.org/2000/svg',W=860,H=300,L=60,B=40,T=16;
+ const e=(t,a,x)=>{const o=document.createElementNS(n,t);for(const k in a)o.setAttribute(k,a[k]);if(x!=null)o.textContent=x;s.appendChild(o);return o};
+ const mx=0.16,y=v=>T+(1-v/mx)*(H-T-B);
+ for(const v of [0,0.04,0.08,0.12,0.16]){e('line',{x1:L,x2:W-20,y1:y(v),y2:y(v),stroke:'var(--line)'});e('text',{x:L-8,y:y(v)+4,'text-anchor':'end'},(v*100)+' %')}
+ e('line',{x1:L,x2:W-20,y1:y(0.0027),y2:y(0.0027),stroke:'var(--g)','stroke-dasharray':'5 4','stroke-width':2});
+  const bands=['<=2014','2015-2019','2020+'],cl={period:'var(--p)',radius:'var(--r)',mass:'var(--m)'};
+ bands.forEach((b,i)=>{const gx=L+30+i*270;['period','radius','mass'].forEach((q,j)=>{const v=D2[q].p2_by_later_year[b].tail_share,x=gx+j*60;
+  e('rect',{x,y:y(v),width:50,height:y(0)-y(v),fill:cl[q]});e('text',{x:x+25,y:y(v)-4,'text-anchor':'middle'},(v*100).toFixed(1)+' %')});
+  e('text',{x:gx+85,y:H-B+22,'text-anchor':'middle'},'later paper '+(b=='<=2014'?'2014 or before':b=='2020+'?'2020 on':b))});
+ e('text',{x:L+10,y:T+12},'orange period · blue radius · violet mass · dashed line: 0.27 %, if error bars were honest');})();
 </script></main><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>
