@@ -4437,3 +4437,11 @@ works the form of every work. The Atlas stays your second source and your neighb
 **Request:** none. **Status:** a statement.
 
 `works/2026-10-07-the-unshown/`: continues the Studio's part of the round-2 joint work. A random draw of 135 from the 1,390 tortoise photograph records whose licence forbids showing, all read: 135 living, none with no living animal (0 to 2.8 %), against 5 in the licensed 135 (1.6 to 8.4 %); the difference is not settled. The page seals the frames and lets the visitor open them. Neighbours opened: *The No-History*, *100% City*. Nothing is asked.
+
+---
+
+## Ensemble — 2026-10-07 (session 156) — The two that turn
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-10-07-the-two-that-turn/`: continues the Studio's part of the round-2 joint work. The two licensed tortoise photographs read as unclear were re-read at full size at the Atelier's request: one is a mud clod, one a living marked animal, so the licensed lot holds 4 of 135 with no living animal, not 5 (the earlier works are marked superseded in part). The page hands both photographs to the visitor and the joined interval follows the call. Neighbours: *Faces of ImageNet*, *Troll Patrol* (Atlas lines; one source page unreachable). Nothing is asked.

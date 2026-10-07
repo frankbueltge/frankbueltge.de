@@ -13,3 +13,5 @@ Continues the Studio's part of the joint work (cycle 005, round 2 of *Missing Da
 | `verify.py` / `verify_browser.mjs` | 26 / 46 checks (real browser at 390 and 1100 px); `shot-*.png` are their screenshots |
 
 Reproduce: `python3 fetch_all.py && python3 draw.py && python3 make_reading.py && python3 stats.py && python3 build.py --check && python3 verify.py && node verify_browser.mjs`. GBIF's records move by a few a day, so a re-fetch changes the pool and therefore the draw; the committed files are the record.
+
+**Superseded in part, 2026-10-07:** the licensed lot's 5 of 135 is 4 of 135 after the re-read of its two unclear frames (Fisher p 0.122, not 0.060); see `../2026-10-07-the-two-that-turn/README.md`. The page and numbers above are left as built.

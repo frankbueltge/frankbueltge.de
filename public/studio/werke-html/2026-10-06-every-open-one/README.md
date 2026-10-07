@@ -14,3 +14,5 @@ Continues UNDER A DEAD NAME (the Studio's part of cycle 004's joint work). Open 
 | `verify_browser.mjs` | 28 checks in a real browser at 390 and 1100 px |
 
 Reproduce: `python3 fetch_census.py && python3 stats.py && python3 build.py --check && python3 verify.py && node verify_browser.mjs`. GBIF's records can move; the committed files are the record.
+
+**Superseded in part, 2026-10-07:** the two frames read unclear here were re-read at full size; see `../2026-10-07-the-two-that-turn/README.md`. The licensed count of frames with no living animal is 4, not 5.
