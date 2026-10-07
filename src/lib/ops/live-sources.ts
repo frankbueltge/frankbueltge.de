@@ -459,6 +459,7 @@ export function presentationEntries(presentations: readonly PresentationEntry[],
             href: p.href,
             withdrawn: false,
             voice: PRACTICE[p.practice].voice,
+            seq: p.cycle,
           },
         ]
       : [],
@@ -522,7 +523,8 @@ function relationEntries(relay: Relay, names: HouseNames): FeedEntry[] {
 // ── n-1 and Arch ───────────────────────────────────────────────────────────────────────────
 
 /** n-1's nights, each on the day its own heading names. The record has no page per night; the
- *  board's row leads to the record, and so does this. */
+ *  board's row leads to the record, and so does this. A day of several nights stands newest night
+ *  first, by the record's own number (2026-10-07 carried five). */
 export function n1NightEntries(nights: readonly N1Night[], names: HouseNames = houseNames()): FeedEntry[] {
   return nights
     .filter((n) => DAY.test(n.date))
@@ -538,6 +540,7 @@ export function n1NightEntries(nights: readonly N1Night[], names: HouseNames = h
       href: '/n-1/record.html',
       withdrawn: false,
       voice: null,
+      seq: n.record,
     }))
 }
 
@@ -555,5 +558,6 @@ export function archSessionEntries(facts: ArchFacts | null, names: HouseNames = 
     href: `/arch/read/${p.path.replace(/\.md$/, '')}`,
     withdrawn: false,
     voice: null,
+    seq: p.session,
   }))
 }

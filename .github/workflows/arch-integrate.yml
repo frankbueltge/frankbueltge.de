@@ -16,10 +16,15 @@
 # (.github/state/arch-mirror-head) and exits in seconds when they match. Every ten
 # minutes because this mirror is the works' only public address during the practice's
 # pre-registered window, and a surface that is the only one may not lag an hour behind
-# the record it serves. The commit is made with the built-in GITHUB_TOKEN, which never
-# fires `on: push` — deploy-cf.yml carries this workflow in its `workflow_run` list, and
-# must keep doing so. public/arch is not a declared knowledge-graph source, so no graph
-# rebuild runs here (see .claude/rules/knowledge-graph.md).
+# the record it serves. That cadence was asked for, not granted: from 2026-10-05 to
+# 2026-10-07 GitHub ran this schedule three to five times a day, with gaps of up to seven
+# and a half hours. Since 2026-10-07 the practice watch (practice-watch.yml) asks the
+# practice's head once a minute while the house is active and dispatches this workflow
+# when it differs from the state file; the cron stays as the net under it. The commit is
+# made with the built-in GITHUB_TOKEN, which never fires `on: push` — deploy-cf.yml
+# carries this workflow in its `workflow_run` list, and must keep doing so. public/arch
+# is not a declared knowledge-graph source, so no graph rebuild runs here (see
+# .claude/rules/knowledge-graph.md).
 name: Arch integrate
 
 on:

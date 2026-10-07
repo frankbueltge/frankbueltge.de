@@ -354,6 +354,52 @@ describe('loadArtifacts', () => {
     expect(loadArtifacts(root)[0]!.date).toBeNull()
   })
 
+  // 2026-10-07: since 2026-10-06 the Atelier's H1 carries its session in brackets — "Held out
+  // (cycle 004, session 6)" — while the window's <title> says "Held out — cycle 004, session 6".
+  // The title rule did not strip the brackets, so the windows of 10-06 and 10-07 (five sessions
+  // in one day) had no day and were missing from the signal log and the register.
+  it('dates a window by the note whose H1 carries the session in brackets, several sessions in one day', () => {
+    const root = fixtureRoot()
+    writeWindow(root, 'cycle-004-session-6', 'Held out — cycle 004, session 6')
+    writeNote(root, '2026-10-06-held-out.md', '# 2026-10-06 — Held out (cycle 004, session 6)\n\n**Open.** Read protocol.')
+    const sessions = ['Whose frames', 'The licence line', 'What the next read must be', 'What one call is worth']
+    sessions.forEach((t, i) => {
+      writeWindow(root, `cycle-005-session-${i + 1}`, `${t} — cycle 005, session ${i + 1}`)
+      writeNote(root, `2026-10-07-${t.toLowerCase().replace(/\s+/g, '-')}.md`, `# 2026-10-07 — ${t} (cycle 005, session ${i + 1})\n`)
+    })
+    // the fifth names its window by path, and its window carries a title of another shape
+    writeWindow(root, 'cycle-005-session-5', 'The verdict that comes and goes — cycle 005, the Atelier’s part')
+    writeNote(
+      root,
+      '2026-10-07-the-verdict-that-comes-and-goes.md',
+      '# 2026-10-07 — The verdict that comes and goes (cycle 005, session 5, presentation)\n\nEvidence: `window/cycle-005-session-5/`.',
+    )
+    const found = loadArtifacts(root)
+    expect(found.filter((a) => a.date === null)).toEqual([])
+    expect(found.find((a) => a.slug === 'cycle-004-session-6')).toMatchObject({ date: '2026-10-06', title: 'Held out — cycle 004, session 6' })
+    for (let i = 1; i <= 5; i++) expect(found.find((a) => a.slug === `cycle-005-session-${i}`)?.date).toBe('2026-10-07')
+  })
+
+  it('dates a session window by the note whose H1 names that cycle and session, whatever its title', () => {
+    const root = fixtureRoot()
+    writeWindow(root, 'cycle-005-session-2', 'The licence line — cycle 005, session 2')
+    writeNote(root, '2026-10-07-renamed.md', '# 2026-10-07 — A line drawn by licence (cycle 5, session 2)\n')
+    expect(loadArtifacts(root)[0]!.date).toBe('2026-10-07')
+  })
+
+  it('does not let the H1 of one session date another — session 1 is not session 10, nor cycle 4 cycle 5', () => {
+    const root = fixtureRoot()
+    writeWindow(root, 'cycle-005-session-10', 'Ten')
+    writeWindow(root, 'cycle-004-session-1', 'One of four')
+    writeNote(root, '2026-10-07-one.md', '# 2026-10-07 — One (cycle 005, session 1)\n')
+    // a later note that names a session in its body, not its H1, does not date it either
+    writeNote(root, '2026-10-08-looking-back.md', '# 2026-10-08 — Looking back\n\nAs in cycle 004, session 1.')
+    expect(loadArtifacts(root).map((a) => [a.slug, a.date])).toEqual([
+      ['cycle-004-session-1', null],
+      ['cycle-005-session-10', null],
+    ])
+  })
+
   // The Field's pages name themselves; until 2026-10-04 every surface listed them by slug.
   it('titles the Field’s artifacts by their own page, entities decoded and the practice suffix trimmed', () => {
     const root = fixtureRoot()

@@ -41,8 +41,10 @@
 //     day the sources take turns (since the evening of 2026-10-05): every source's newest row of
 //     the day comes before any source's second, so a night of a dozen readings cannot push the
 //     catalogues or the relay off the entrance. Within one source, newest first by the time its
-//     record names; within one turn, the rows whose records name a time first, then the fixed
-//     order of SOURCE_ORDER, then house, title and address. See streamOf and sortFeed.
+//     record names — or, where it names only the day, by the session, night or cycle number it
+//     gives what it lands (since 2026-10-07); within one turn, the rows whose records name a time
+//     first, then the fixed order of SOURCE_ORDER, then house, title and address. See streamOf
+//     and sortFeed.
 //
 // The register on /ecology is deliberately NOT this: it stays the three practices' catalogue
 // (src/lib/engines/register.ts, buildRegister), because that is what it claims to be — their
@@ -126,6 +128,11 @@ export interface FeedEntry {
   withdrawn: boolean
   /** the identity colour this row wears; null for everything outside the ecology quartet */
   voice: Voice | null
+  /** the record's own ordinal, where it numbers what it lands — n-1's record number, the
+   *  Atelier's cycle and session, a work's session, a presentation's cycle. It orders the rows
+   *  of one house that name no time, highest first (compareFeed); absent where the record
+   *  numbers nothing. */
+  seq?: number | null
 }
 
 /** Which door names each practice, and which colour that practice wears — the same mapping the
@@ -253,8 +260,16 @@ export function registerEntries(works: readonly LatestWork[], names = houseNames
       // The fork keeps the Atelier's colour: it IS the Atelier by descent, and giving it one of
       // its own would have drawn a fourth practice into a quartet that has three.
       voice: p?.voice ?? null,
+      seq: w.session ?? null,
     }
   })
+}
+
+/** A window's place in the Atelier's own count: `cycle-005-session-2` is cycle 5, session 2 —
+ *  one number that rises with every session, across a cycle's turn. Null for anything else. */
+export function windowOrdinal(slug: string): number | null {
+  const m = /^cycle-(\d+)-session-(\d+)$/.exec(slug)
+  return m ? Number(m[1]) * 1000 + Number(m[2]) : null
 }
 
 /** The practices' cycle artifacts — research ecology v3: every session leaves one. The Field
@@ -283,6 +298,7 @@ export function artifactEntries(artifacts: readonly ArtifactEntry[], names = hou
         href: a.href,
         withdrawn: false,
         voice: PRACTICE[a.practice].voice,
+        seq: windowOrdinal(a.slug),
       },
     ]
   })
@@ -312,13 +328,30 @@ export function instantOn(date: string, stamp: unknown): string | null {
  *  every machine — a locale-aware compare would not promise that for the tie-breaks either. */
 const byCode = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0)
 
+/** The record's own ordinal, highest first — the newest session, night or cycle of a house
+ *  before its older ones; a row whose record numbers nothing after one that does. */
+function bySeq(a: FeedEntry, b: FeedEntry): number {
+  const x = a.seq ?? null
+  const y = b.seq ?? null
+  if (x === y) return 0
+  if (x === null) return 1
+  if (y === null) return -1
+  return y - x
+}
+
 /**
  * The order of rows that stand together: newest day first; within a day, rows whose record names
  * a time first, newest first — a row whose record names only its day is read as standing at that
  * day's start: the day is all it claims, and the start is the one reading of it that never lifts
  * the row above a record that names its hour. Rows still tied stand in SOURCE_ORDER, then by
- * house, title and address — so a rebuild is never a re-ordering, and the comparator never
- * returns 0 for two different rows.
+ * house, then by the record's own ordinal where it numbers what it lands (highest first), then
+ * by title and address — so a rebuild is never a re-ordering, and the comparator never returns 0
+ * for two different rows.
+ *
+ * The ordinal joined on 2026-10-07, when five sessions per practice landed in one day: their
+ * records name the day and not the hour, so a house's rows of that day stood in the order of
+ * their titles, and the entrance's twenty showed n-1's nights 45 and 46 while 47 to 49 — the
+ * newest — stood below the cut.
  *
  * It is the order WITHIN one source and WITHIN one turn; sortFeed decides the turns.
  */
@@ -328,6 +361,7 @@ export function compareFeed(a: FeedEntry, b: FeedEntry): number {
     (a.time && b.time ? byCode(b.time, a.time) : a.time ? -1 : b.time ? 1 : 0) ||
     (SOURCE_RANK.get(a.source) ?? SOURCE_ORDER.length) - (SOURCE_RANK.get(b.source) ?? SOURCE_ORDER.length) ||
     byCode(a.houseName, b.houseName) ||
+    bySeq(a, b) ||
     byCode(a.title, b.title) ||
     byCode(a.href, b.href)
   )

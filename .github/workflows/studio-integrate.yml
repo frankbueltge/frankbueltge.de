@@ -94,6 +94,12 @@ jobs:
           # on the site: the station's door renders only where this mirror carries an index.html.
           rm -rf public/studio/window
           if [ -d /tmp/studio/window ]; then mkdir -p public/studio/window && cp -R /tmp/studio/window/. public/studio/window/; fi
+          # The practice's head this mirror now carries (2026-10-07): the practice watch
+          # (practice-watch.yml) starts this gate when the practice's head and this file differ
+          # for longer than the practice's own dispatch takes — the net under a lost dispatch.
+          # Committed even when nothing else changed, so the watch never asks twice for one head.
+          mkdir -p .github/state
+          git -C /tmp/studio rev-parse HEAD > .github/state/studio-mirror-head
 
       # The graph is derived from what this mirror just wrote (a work's meta.json, the
       # attention export, the encounters register). Deriving it HERE, before validation, is what
@@ -111,10 +117,10 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph public/studio/werke-html public/studio/window public/studio/closing-report public/studio/artifacts public/studio/presentations)" ]; then
+          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph public/studio/werke-html public/studio/window public/studio/closing-report public/studio/artifacts public/studio/presentations .github/state/studio-mirror-head)" ]; then
             git config user.name "Studio-Integrate"
             git config user.email "studio-integrate@frankbueltge.de"
-            git add -A src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph
+            git add -A src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph .github/state/studio-mirror-head
             if [ -d public/studio/werke-html ]; then git add -A public/studio/werke-html; fi
             # `|| true`: the add must survive all three states — window present, window removed
             # (tracked entries record the deletion), and window never present (unmatched pathspec).

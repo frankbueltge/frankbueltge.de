@@ -260,12 +260,14 @@ function pageTitle(index: string): string | undefined {
 }
 
 /** A session's title as two of the practice's own records may spell it: the window's <title>
- *  can carry a trailing " — cycle 004, session 1" that the journal's H1 does not, and either
- *  may set an apostrophe straight or curly. Only that is normalised — two different titles never
- *  become equal here. */
+ *  can carry a trailing " — cycle 004, session 1" that the journal's H1 does not, the H1 a
+ *  trailing " (cycle 004, session 6)" that the window's <title> does not (the Atelier's notes
+ *  have written it that way since 2026-10-06), and either may set an apostrophe straight or
+ *  curly. Only that is normalised — two different titles never become equal here. */
 function sessionTitleKey(title: string): string {
   return title
     .replace(/\s+[—–-]\s+cycle\s+\d+,\s*session\s+\d+\s*$/i, '')
+    .replace(/\s*\(\s*cycle\s+\d+,\s*session\s+\d+\b[^)]*\)\s*$/i, '')
     .replace(/[‘’]/g, "'")
     .replace(/[“”]/g, '"')
     .replace(/\s+/g, ' ')
@@ -280,36 +282,61 @@ function noteHeading(text: string): string | undefined {
   return m[1]!.replace(/^\d{4}-\d{2}-\d{2}\s+[—–-]\s+/, '').trim()
 }
 
+/** A window directory that is one session of a cycle: `cycle-005-session-1`. */
+const SESSION_DIR = /^cycle-(\d+)-session-(\d+)$/
+
+/** Whether a note's own H1 says it is that session — "Whose frames (cycle 005, session 1)",
+ *  "… (cycle 005, session 5, presentation)". Numbers compare as numbers ("cycle 5" is "cycle
+ *  005"), and "session 1" never matches "session 10". */
+function headingNamesSession(heading: string, cycle: number, session: number): boolean {
+  for (const m of heading.matchAll(/\bcycle\s+(\d+),\s*session\s+(\d+)(?!\d)/gi)) {
+    if (Number(m[1]) === cycle && Number(m[2]) === session) return true
+  }
+  return false
+}
+
 /** The day a window was made, from the practice's journal — never from the clock or from git.
  *
  *  First by PATH: the earliest note that names the window (`window/cycle-001-session-3/`); the
  *  match stops at the directory's end so the note for `window/cycle-001/` does not date every
  *  session under that cycle.
  *
- *  Then, only when no note names the path, by TITLE: the earliest note whose own H1 is the
- *  window's own <title>. Added 2026-10-04: from session 20 of cycle 003 on, the Atelier's notes
- *  stopped writing the window's path into their text (they open "Cycle 004, session 1" instead),
- *  so the newest five windows — the whole of cycle 004 so far — had no day, and every surface that
- *  needs one dropped them. The note and the window share their title; that is the practice's own
- *  record tying the two together. A window neither names stays undated. */
+ *  Then, only when no note names the path, by the note's own HEADING: the earliest note whose H1
+ *  is the window's own <title>, or whose H1 names the window's cycle and session. The title rule
+ *  was added 2026-10-04: from session 20 of cycle 003 on, the Atelier's notes stopped writing the
+ *  window's path into their text (they open "Cycle 004, session 1" instead), so the whole of
+ *  cycle 004 had no day, and every surface that needs one dropped it. The session rule was added
+ *  2026-10-07: since 2026-10-06 the H1 carries the session in brackets ("Held out (cycle 004,
+ *  session 6)"), which the title rule did not strip, so the windows of 10-06 and 10-07 had no day
+ *  and were missing from the signal log and the register while they stood on the practice's own
+ *  page. Both rules read the practice's own record tying note to window; only the H1 counts, so a
+ *  later note that mentions a session in passing does not move its day. A window neither names
+ *  stays undated. */
 function windowDate(practice: PracticeId, dir: string, root: string, title?: string): string | null {
   const journal = path.join(root, 'src/content', practice, 'journal')
   if (!isDir(journal)) return null
   const names = new RegExp(`window/${dir.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\w-])`)
   const key = title ? sessionTitleKey(title) : null
+  const session = SESSION_DIR.exec(dir)
   const byPath: string[] = []
-  const byTitle: string[] = []
+  const byHeading: string[] = []
   for (const file of fs.readdirSync(journal)) {
     const m = /^(\d{4}-\d{2}-\d{2})-.*\.md$/.exec(file)
     if (!m) continue
     const text = fs.readFileSync(path.join(journal, file), 'utf8')
-    if (names.test(text)) byPath.push(m[1]!)
-    else if (key) {
-      const heading = noteHeading(text)
-      if (heading && sessionTitleKey(heading) === key) byTitle.push(m[1]!)
+    if (names.test(text)) {
+      byPath.push(m[1]!)
+      continue
     }
+    const heading = noteHeading(text)
+    if (!heading) continue
+    if (
+      (key !== null && sessionTitleKey(heading) === key) ||
+      (session !== null && headingNamesSession(heading, Number(session[1]), Number(session[2])))
+    )
+      byHeading.push(m[1]!)
   }
-  const days = byPath.length > 0 ? byPath : byTitle
+  const days = byPath.length > 0 ? byPath : byHeading
   return days.length > 0 ? days.sort()[0]! : null
 }
 

@@ -15,6 +15,7 @@ import {
   SOURCE_ORDER,
   streamOf,
   topOf,
+  windowOrdinal,
   type FeedEntry,
   type HouseId,
   type SourceId,
@@ -300,6 +301,41 @@ describe('the order of one day (Frank, 2026-10-05: deterministic, and tested)', 
     const expected = [rows[3], rows[2], rows[1], rows[0]]
     expect(sortFeed(rows)).toEqual(expected)
     expect(sortFeed([...rows].reverse())).toEqual(expected)
+  })
+
+  // 2026-10-07: five sessions per practice in one day. Their records name the day, not the hour, so
+  // a house's rows of that day stood in the order of their titles — and the entrance's twenty showed
+  // n-1's nights 45 and 46 while 47 to 49, the newest, stood below the cut.
+  it('stands a house’s untimed rows of one day by the record’s own number, newest first', () => {
+    const nights = [45, 46, 47, 48, 49].map((n) =>
+      row({ source: 'n1-night', house: 'n-1', houseName: 'n-1', title: `Night ${n}`, seq: 26 + n, href: '/n-1/record.html' }),
+    )
+    const papers = row({ source: 'papers', house: 'catalogues', houseName: 'Catalogues', title: 'Paper Catalogue' })
+    const sorted = sortFeed([...nights, papers])
+    // the first turn: n-1's newest night, then the catalogue; the older nights after
+    expect(sorted.map((e) => e.title)).toEqual(['Night 49', 'Paper Catalogue', 'Night 48', 'Night 47', 'Night 46', 'Night 45'])
+  })
+
+  it('puts a house’s numbered rows before its unnumbered ones, and never orders two houses by number', () => {
+    const numbered = row({ title: 'z numbered', seq: 1 })
+    const unnumbered = row({ title: 'a unnumbered' })
+    expect(sortFeed([unnumbered, numbered]).map((e) => e.title)).toEqual(['z numbered', 'a unnumbered'])
+    // across houses the house decides, whatever the numbers say
+    const atelier = row({ house: 'atelier', houseName: 'The Atelier', title: 'low', seq: 1 })
+    const studio = row({ house: 'studio', houseName: 'The Studio', title: 'high', seq: 999 })
+    expect([studio, atelier].sort(compareFeed).map((e) => e.title)).toEqual(['low', 'high'])
+  })
+
+  it('numbers the Atelier’s windows by cycle and session, and a work by the session its record names', () => {
+    expect(windowOrdinal('cycle-005-session-2')).toBeGreaterThan(windowOrdinal('cycle-005-session-1')!)
+    expect(windowOrdinal('cycle-005-session-1')).toBeGreaterThan(windowOrdinal('cycle-004-session-6')!)
+    expect(windowOrdinal('cycle-001')).toBeNull()
+    expect(windowOrdinal('2026-10-07-the-count-corrected')).toBeNull()
+    const works = registerEntries([
+      { ns: 'studio', kind: 'html', slug: 's', title: 'THE LOCKED SHELF', date: '2026-10-07', href: '/s', state: 'premiered', session: 158 },
+      { ns: 'studio', kind: 'html', slug: 'u', title: 'THE UNSHOWN', date: '2026-10-07', href: '/u', state: 'premiered', session: 155 },
+    ])
+    expect(sortFeed(works).map((e) => e.title)).toEqual(['THE LOCKED SHELF', 'THE UNSHOWN'])
   })
 
   it('never calls two different rows equal', () => {

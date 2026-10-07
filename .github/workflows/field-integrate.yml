@@ -91,6 +91,12 @@ jobs:
           # on the site: the station's door renders only where this mirror carries an index.html.
           rm -rf public/field/window
           if [ -d /tmp/field/window ]; then mkdir -p public/field/window && cp -R /tmp/field/window/. public/field/window/; fi
+          # The practice's head this mirror now carries (2026-10-07): the practice watch
+          # (practice-watch.yml) starts this gate when the practice's head and this file differ
+          # for longer than the practice's own dispatch takes — the net under a lost dispatch.
+          # Committed even when nothing else changed, so the watch never asks twice for one head.
+          mkdir -p .github/state
+          git -C /tmp/field rev-parse HEAD > .github/state/field-mirror-head
 
       # The graph is derived from what this mirror just wrote (a work's meta.json, the
       # attention export, the encounters register). Deriving it HERE, before validation, is what
@@ -108,10 +114,10 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/field src/components/field src/pages/field src/data/field/chronicle.upstream.json src/data/graph public/field/werke-html public/field/window public/field/closing-report public/field/artifacts public/field/presentations)" ]; then
+          if [ -n "$(git status --porcelain src/content/field src/components/field src/pages/field src/data/field/chronicle.upstream.json src/data/graph public/field/werke-html public/field/window public/field/closing-report public/field/artifacts public/field/presentations .github/state/field-mirror-head)" ]; then
             git config user.name "Field-Integrate"
             git config user.email "field-integrate@frankbueltge.de"
-            git add -A src/content/field src/components/field src/pages/field src/data/field/chronicle.upstream.json src/data/graph
+            git add -A src/content/field src/components/field src/pages/field src/data/field/chronicle.upstream.json src/data/graph .github/state/field-mirror-head
             if [ -d public/field/werke-html ]; then git add -A public/field/werke-html; fi
             # `|| true`: the add must survive all three states — window present, window removed
             # (tracked entries record the deletion), and window never present (unmatched pathspec).

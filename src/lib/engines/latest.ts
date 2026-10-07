@@ -21,6 +21,10 @@ export interface EngineWorkMeta {
   embodies?: string
   verkoerpert?: string
   medium?: string
+  /** the Studio's session number, where its meta.json carries one */
+  session?: unknown
+  /** the work's signature — the nightly line signs "Ulysses (the nightly line), Session 112" */
+  author?: unknown
 }
 export interface LatestWork {
   ns: EngineNs
@@ -41,6 +45,23 @@ export interface LatestWork {
    *  here" instead of inferring it from the namespace — which stopped being sufficient when a
    *  second repository began contributing works to the same practice. */
   dir?: string
+  /** The session that made it, where the work's own record numbers it — see sessionOf. Absent
+   *  where it does not. */
+  session?: number
+}
+
+/**
+ * The session a work's own record says made it: the `session` field of its meta.json (the Studio
+ * writes one), or the session its signature names (the nightly line signs "Ulysses (the nightly
+ * line), Session 112"). Added 2026-10-07, when five sessions a day landed in one practice and the
+ * signal log, finding no time in a work's record, stood a day's works in the order of their titles
+ * — so the entrance showed the day's oldest and left its newest below the cut. Nothing is
+ * inferred: a record that numbers no session gives none.
+ */
+export function sessionOf(meta: EngineWorkMeta): number | undefined {
+  if (typeof meta.session === 'number' && Number.isInteger(meta.session) && meta.session > 0) return meta.session
+  const signed = typeof meta.author === 'string' ? /\bSession\s+(\d+)\b/.exec(meta.author) : null
+  return signed ? Number(signed[1]) : undefined
 }
 
 /** Where a work's link points.
@@ -89,6 +110,7 @@ export function collectWorks(input: WorkSource[], options: { hrefMode?: HrefMode
       if (!slug) continue
       const date = meta.date ?? slug.match(/^\d{4}-\d{2}-\d{2}/)?.[0] ?? ''
       const marker = withdrawalMarker(meta)
+      const session = sessionOf(meta)
       all.push({
         ns, kind, slug, date,
         title: meta.title ?? slug,
@@ -98,11 +120,24 @@ export function collectWorks(input: WorkSource[], options: { hrefMode?: HrefMode
         state: marker ? 'withdrawn' : ns === 'studio' ? 'premiered' : 'published',
         withdrawnNote: marker,
         withdrawnOn: marker?.match(/(\d{4}-\d{2}-\d{2})/)?.[1],
+        ...(session !== undefined ? { session } : {}),
       })
     }
   }
-  // Newest first; the slug breaks ties so a rebuild is never a re-ordering.
-  return all.sort((a, b) => b.date.localeCompare(a.date) || b.slug.localeCompare(a.slug))
+  // Newest first; on a shared day, the higher session its record names first (a work that names
+  // one before a work that does not), and the slug breaks the last ties so a rebuild is never a
+  // re-ordering. The session joined on 2026-10-07: four Studio works landed that day, and the
+  // slug alone put THE UNSHOWN (session 155) among a practice page's three newest and left
+  // THE LONG READ (157) out.
+  return all.sort((a, b) => b.date.localeCompare(a.date) || bySession(a, b) || b.slug.localeCompare(a.slug))
+}
+
+/** Higher session first; a work whose record names one before a work whose record does not. */
+function bySession(a: LatestWork, b: LatestWork): number {
+  if (a.session === b.session) return 0
+  if (a.session === undefined) return 1
+  if (b.session === undefined) return -1
+  return b.session - a.session
 }
 
 export function latestWorks(input: WorkSource[], limit = 4): LatestWork[] {
