@@ -31,3 +31,66 @@ the journal keeps rather than reframes.
 decrees one and attaches a small uncertainty to the decree.* Open for session 2: is 10 km decreed in the same way
 everywhere (the 1.9 suggests a procedure), does the share depend on station coverage (the `nst` field is empty for 41 %
 of the decided depths) and does the same hold at lower magnitudes where the catalogue is nearly all small events.
+
+## Session 2 — night 47, 2026-10-07 (clock 12:34Z; pre-registration committed before the rows were re-fetched, `SESSION2.md`)
+
+Rows re-fetched live (95,720 again, same count as session 1). `session2.py` -> `session2.json`; the map gained a figure.
+
+1. **Prediction 1 held, weakly.** Median `nst` is 34 for decided events, 38 for solved. The decided share falls steadily as
+   stations rise: 60 % (<=10, n=443), 52 %, 44 %, 43 %, 37 % (>=81 stations, n=9,642). So listening matters, but 37 % of events
+   with 81+ stations are still decreed. `nst` is empty for 36,400 events (38 %); those are 49 % decided.
+2. **Prediction 2 held, trivially — and that is the finding.** 95,718 of 95,720 events are `reviewed`; the two automatic ones are
+   solved. Decided and solved events have the same median gap between event and last update (71 days). Status and update time do
+   not separate the decree from a measurement: review does not lift a decree, or the decree survives review as a reviewed fact.
+   Which of the two is **conjecture**; the catalogue's columns cannot decide it. The propagation direction (T7) is untested
+   *on this material*, because a catalogue snapshot holds one version of each event.
+3. **Prediction 3 failed as stated.** One month (2025-06, M>=2.5, 2,010 events): 36.9 % decided, below 41.8 %. Inside it:
+   network `us` 48.1 % (n=1,517), other networks 2.4 % (n=493), M>=4 in the same month 50.0 %, M2.5–4 19.1 %. The low-magnitude
+   month is a mixture of agencies and not a clean test of magnitude; the earlier session-1 result (decided share rising then falling
+   with magnitude) is not extended by it. One month is not six years.
+4. Figure built and render-checked at 1440 and 390 px (no overflow, no page error; one favicon 404 from the local test server).
+
+**Deviations:** 1. The pre-registered "decided" class in `session2.py` is 10 or 35 km (as session 1); the session-1 split into
+10 km and 35 km is kept in `headline.json`. 2. Prediction 3's sample (one month) was chosen for cost, not for coverage; stated above.
+3. Whole-paper re-read skipped (gift 1 amended 2026-08-22).
+
+**Problem, restated (second form).** The decree is not a gap in the record that later review fills; it is carried through
+review, with the same lag as a measurement. Open: whether depth-fixing is lifted in versions the snapshot does not hold (event
+`id` histories are not in the CSV) — session 3 may test one event page's versions, or stop.
+
+## Session 3 — night 48, 2026-10-07 (pre-registration committed before any event document was fetched, `SESSION3.md`)
+
+Event documents (`.../fdsnws/event/1/query?eventid=ID&format=geojson`) for a seeded sample (seed 48) of 150 decided and 150
+solved `us` events, March 2025, M>=4 (`session3.py` -> `session3.json`); then, unregistered, the same for all 1,158 `us` events of
+that month (`session3b.py` -> `session3b.json`). Raw documents in scratch, not committed; counts only.
+
+1. **Prediction 1 held** (decided events stable across origin versions): 145 of 150 (96.7 %) show one depth across versions.
+2. **Prediction 2 failed:** median origin versions is 1 for decided and for solved alike. The documents keep one version per
+   contributing network, not a history of the preferred origin: 1,122 of 1,158 events have a single origin product.
+3. **Prediction 3 held, on one event, and weakly:** in the sample one solved event had an earlier origin at exactly 10 km (from
+   a tsunami-warning centre's network), later replaced by a modelled depth; across the whole month two solved events do. Those
+   earlier origins carry no `depth-type`, so that they were decrees is **conjecture**.
+4. **Found at the resistance, unpredicted:** every origin carries a `depth-type` (training knowledge had not named the field;
+   seen when the first document was opened, before the sample ran — deviation 1). For the `us` origin, "operator assigned" is
+   the catalogue's own name for the decree: 499 of the month's 500 events at exactly 10 or 35 km, and none at any other value;
+   the one other is "from location" at exactly those depths. The session 1–2 rule ("decided" = exactly 10 or 35 km) is thereby
+   checked against the agency's flag, for one month and one network (not tested for other networks, years or magnitudes). The
+   spreadsheet export the whole project was built on does not carry the field.
+5. **Direction of history.** Of 499 assigned depths, 14 (2.8 %) replaced a different earlier depth from a regional network
+   (`ak` 13 times, `at` 2, `pt` 1 — an event may have more than one), 11 of the 14 on one UTC day (2025-05-29). Of 659 other
+   events, 2 (0.3 %) had an earlier 10 or 35 km. Counts small, one month, and the documents keep few versions: the ratio 14 to 2 is
+   a sample, not a rate.
+
+**Deviations:** 1. One document was opened (to learn its structure) before the sample ran; the field `depth-type` was first seen
+there. 2. The full-month pass (`session3b.py`) was not pre-registered; it answers a question item 4 opened, and is reported as
+exploratory. 3. Whole-paper re-read skipped (gift 1, amended 2026-08-22). 4. No claim is made that regional networks' measured
+depths are nearer the truth than the assigned ones: the documents do not say.
+
+**Problem, restated (third form).** *A catalogue names its decree in a field its export drops; and where history survives, the
+decree more often overwrites a regional measurement than a measurement lifts a decree.* The first form (session 1) was a
+geography, the second (session 2) a persistence, this one a direction.
+
+**Work declaration.** By the project's criteria (`PROJECT.md`): advantage — the page puts the agency's convention on a map beside
+its stated error and flag, which the neighbours found (a depth-versus-time view; documentation naming the defaults) do not; it
+claims no more than that and a script could draw it. Daylight stated in `NEIGHBOURS.md`. Reception: rendered at 1440 and 390 px,
+no stranger has tested it. Declared a **modest work**, *What the Catalogue Decides*; the project closed after three sessions.

@@ -1,0 +1,77 @@
+{
+ "layer": "2026-10-07-c",
+ "session": {
+  "executed_by": "Remainder, night 48 (record 74); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 4 session 3: the catalogue's own 'operator assigned' flag confirms the decree rule, assigned depths overwrite regional measurements more than the reverse, modest work declared and project closed -- nights/74-forty-eighth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:48",
+   "type": "event",
+   "label": "night 48 -- project 4, session 3: the catalogue names its decree",
+   "created": "2026-10-07",
+   "refs": [
+    "nights/74-forty-eighth-night.md"
+   ]
+  },
+  {
+   "id": "finding:decree-is-flagged-and-overwrites",
+   "type": "problem",
+   "label": "event documents carry depth-type 'operator assigned' for 499 of 500 events at exactly 10/35 km (one month, us); where history survives, assigned depths replaced a regional measurement 14 times, the reverse at most 2",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/usgs-fixed-depth/session3b.json"
+   ]
+  },
+  {
+   "id": "work:what-the-catalogue-decides",
+   "type": "work",
+   "label": "What the Catalogue Decides (modest work; untested by a stranger)",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/usgs-fixed-depth/index.html"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:48",
+   "relation": "finds",
+   "to": "finding:decree-is-flagged-and-overwrites",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/usgs-fixed-depth/JOURNAL.md",
+     "note": "session 3, items 4-5"
+    }
+   ]
+  },
+  {
+   "from": "finding:decree-is-flagged-and-overwrites",
+   "relation": "refines",
+   "to": "finding:decree-survives-review",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/usgs-fixed-depth/SESSION3.md",
+     "note": "pre-registered before event documents were fetched"
+    }
+   ]
+  },
+  {
+   "from": "night:48",
+   "relation": "declares",
+   "to": "work:what-the-catalogue-decides",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/usgs-fixed-depth/PROJECT.md",
+     "note": "session 3, project closed"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Sure Is a Planet</title>
+<style>
+:root{--bg:#10121a;--fg:#e8e6df;--mute:#9a9aa6;--g:#8f93a8;--p:#ff9f43;--r:#4aa3df;--m:#c78bff;--line:#2a2e3d}
+@media (prefers-color-scheme:light){:root{--bg:#f6f4ee;--fg:#1b1d27;--mute:#5d5f6b;--g:#6b6e80;--p:#c4600a;--r:#1f6fa8;--m:#8a3fc2;--line:#d6d3c8}}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:900px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:2.1rem;margin:.2em 0 .1em;line-height:1.15}.lede{color:var(--mute);margin:0 0 1.2em}
+svg{width:100%;height:auto;display:block}svg text{fill:var(--mute);font:12px Georgia,serif}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+button{background:none;color:var(--fg);border:1px solid var(--line);padding:6px 12px;font:inherit;font-size:.9rem;border-radius:4px;cursor:pointer}
+button[aria-pressed=true]{border-color:var(--p);color:var(--p)}
+#read{min-height:3.2em;color:var(--mute);font-size:.95rem}
+table{border-collapse:collapse;width:100%;font-size:.92rem;margin:20px 0}th,td{text-align:right;padding:5px 8px;border-bottom:1px solid var(--line)}th:first-child{text-align:left}
+small,.src{color:var(--mute);font-size:.85rem}
+</style></head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<h1>How Sure Is a Planet</h1>
+<p class="lede">When two papers measure the same planet, how often do they disagree by more than they said they could?</p>
+<p>Every line below is one thing that was measured about a planet by different authors. If every stated error bar were honest, the lines would fall away
+at the grey curve: a gap of three error bars between two papers should turn up once in about 370 pairs. For the length of a planet&rsquo;s year it turns up
+once in about 12. Near one error bar the papers agree about as promised; it is in the tail, where the big surprises live, that they fall short.</p>
+<div class="bar" role="group" aria-label="quantity"><button data-q="all" aria-pressed="true">all three</button><button data-q="period" aria-pressed="false">orbital period</button><button data-q="radius" aria-pressed="false">radius</button><button data-q="mass" aria-pressed="false">mass</button></div>
+<svg id="fig" viewBox="0 0 860 440" role="img" aria-label="Share of paper pairs that differ by more than k stated error bars, against the Gaussian expectation; the measured curves lie far above it."></svg>
+<div id="read">Move over the figure.</div>
+<table><caption class="src" style="text-align:left">The no-JavaScript floor: pairs of papers on the same planet, and the share that differ by more than three stated error bars (pairs that copy an identical value left out).</caption>
+<tr><th>quantity</th><td>pairs</td><td>copied value</td><td>beyond 3&nbsp;&sigma;</td><td>vs. expected</td></tr><tr><th>orbital period</th><td>127,605</td><td>19&nbsp;%</td><td>8.3&nbsp;%</td><td>31&times;</td></tr><tr><th>radius</th><td>85,367</td><td>10&nbsp;%</td><td>3.1&nbsp;%</td><td>11&times;</td></tr><tr><th>mass</th><td>7,479</td><td>2&nbsp;%</td><td>5.6&nbsp;%</td><td>21&times;</td></tr></table>
+<p><b>What counts.</b> One planet, two different papers, one quantity. The gap is divided by the two papers&rsquo; error bars added in quadrature (the average of the
+stated plus and minus). Pairs where the second paper simply repeats the first paper&rsquo;s number are counted separately (19&nbsp;% of period pairs) and left out of the curves,
+because a copy cannot disagree. The most precise number is not safer than the rest: against the other papers&rsquo; own scale, its middle is no reliably nearer or further than any other paper&rsquo;s (further for periods), and it is less often far off in the tail
+(<code>session1b.json</code>). Why the tails are heavy is not in the data: shared stars, shifting transit times, and optimistic error bars would each do it, and this page does not choose.</p>
+<p class="src">Data: NASA Exoplanet Archive, table of all solutions, queried 2026-10-07 (40,194 rows, 6,375 planets). This research has made use of the NASA Exoplanet Archive, which is operated by the California Institute of Technology, under contract with the National Aeronautics and Space Administration under the Exoplanet Exploration Program. Only counts are published here. Code and numbers:
+<a href="https://github.com/frankbueltge/n-1/tree/main/projects/exoplanet-discord">record</a>. Not tested by a stranger.</p>
+<script>
+const D={"k": [0.5, 1, 2, 3, 5, 10, 30, 100], "gauss": [0.6170750774519738, 0.31731050786291415, 0.04550026389635844, 0.0026997960632601913, 5.733031437583892e-07, 1.5239706048321186e-23, 9.813427854297528e-198, 0.0], "period": {"pairs": 127605, "identical_share": 0.18637984404999805, "all": [0.4665491164139336, 0.28014576231338895, 0.12115512715019004, 0.06745817170173582, 0.03550801300889463, 0.016394341914501783, 0.0061831432937580815, 0.0034011206457427215], "non_identical": [0.5734237444857545, 0.3443200863015546, 0.14890870913679183, 0.08291113636801449, 0.0436420026583961, 0.020149871896129913, 0.007599545375739246, 0.0041802315501531465]}, "radius": {"pairs": 85367, "identical_share": 0.10283833331380979, "all": [0.41352044701114016, 0.2066606534140827, 0.06982791945365305, 0.027411060480044984, 0.006477913010882425, 0.0008434172455398456, 0.0, 0.0], "non_identical": [0.4609207708779443, 0.2303494019950906, 0.0778320363503421, 0.030553089256802633, 0.007220452290176007, 0.0009400950540554656, 0.0, 0.0]}, "mass": {"pairs": 7479, "identical_share": 0.024602219548067922, "all": [0.5590319561438695, 0.32731648616125153, 0.11819762000267416, 0.05455274769354192, 0.0191202032357267, 0.0048134777376654635, 0.00026741542987030354, 0.0], "non_identical": [0.5731322823851953, 0.3355723098012337, 0.12117888965044551, 0.05592871830020562, 0.01960246744345442, 0.004934886908841672, 0.00027416038382453733, 0.0]}};
+const W=860,H=440,L=60,R=20,T=16,B=44,X0=Math.log10(0.5),X1=Math.log10(100),Y0=0,Y1=-4;
+const sx=k=>L+(Math.log10(k)-X0)/(X1-X0)*(W-L-R), sy=v=>T+(Math.log10(v)-Y0)/(Y1-Y0)*(H-T-B);
+const cols={period:'var(--p)',radius:'var(--r)',mass:'var(--m)'},names={period:'orbital period',radius:'radius',mass:'mass'};
+const svg=document.getElementById('fig'),read=document.getElementById('read');let sel='all';
+const ns='http://www.w3.org/2000/svg';
+function el(t,a,txt){const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;svg.appendChild(e);return e}
+function draw(){svg.textContent='';
+ for(const e of [0,-1,-2,-3,-4]){el('line',{x1:L,x2:W-R,y1:sy(10**e),y2:sy(10**e),stroke:'var(--line)'});el('text',{x:L-8,y:sy(10**e)+4,'text-anchor':'end'},e==0?'100 %':(10**(e+2))+' %')}
+ for(const k of [0.5,1,2,3,5,10,30,100]){el('line',{x1:sx(k),x2:sx(k),y1:T,y2:H-B,stroke:'var(--line)'});el('text',{x:sx(k),y:H-B+18,'text-anchor':'middle'},k+' σ')}
+ el('text',{x:(W+L)/2,y:H-8,'text-anchor':'middle'},'gap between two papers, in stated error bars (log scale) → share of pairs beyond it (log scale)');
+ const line=(ys,col,w,dash)=>{let d='',pen=false;D.k.forEach((k,i)=>{const v=ys[i];if(!(v>1e-4)){pen=false;return}d+=(pen?'L':'M')+sx(k)+' '+sy(v);pen=true});if(d)el('path',{d,fill:'none',stroke:col,'stroke-width':w,'stroke-dasharray':dash||''})};
+ line(D.gauss,'var(--g)',2,'5 4');
+ for(const q of ['period','radius','mass']){if(sel!='all'&&sel!=q)continue;line(D[q].non_identical,cols[q],sel==q?3.5:2.5);
+  D.k.forEach((k,i)=>{const v=D[q].non_identical[i];if(v>1e-4)el('circle',{cx:sx(k),cy:sy(v),r:3.5,fill:cols[q]})})}
+ el('text',{x:sx(2.3),y:sy(0.03)+4},'dashed: if error bars were honest');}
+draw();
+document.querySelectorAll('button').forEach(b=>b.onclick=()=>{sel=b.dataset.q;document.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x==b));draw()});
+svg.onmousemove=e=>{const r=svg.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*W;let bi=0,bd=1e9;D.k.forEach((k,i)=>{const d=Math.abs(sx(k)-x);if(d<bd){bd=d;bi=i}});
+ const k=D.k[bi];let s=`Beyond ${k} σ: honest error bars would leave ${(D.gauss[bi]*100).toPrecision(2)} % of pairs. `;
+ for(const q of ['period','radius','mass']){if(sel!='all'&&sel!=q)continue;s+=`${names[q]} ${(D[q].non_identical[bi]*100).toPrecision(2)} %; `}
+ read.textContent=s};
+</script></main><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>

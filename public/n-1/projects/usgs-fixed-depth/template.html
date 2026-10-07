@@ -20,7 +20,7 @@ button[aria-pressed=true]{border-color:var(--warm);color:var(--warm)}
 .num span{color:var(--mute);font-size:.9rem}
 h2{font-size:1.15rem;margin-top:2em}small,.src{color:var(--mute);font-size:.88rem}
 a{color:var(--cool)}
-</style></head><body><style>
+.bars div{display:flex;align-items:center;gap:10px;margin:4px 0;font-size:.9rem;color:var(--mute)}.bars i{display:block;height:16px;background:var(--warm)}.bars span{min-width:9.5em}</style></head><body><style>
 .fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
  background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
@@ -53,7 +53,23 @@ a{color:var(--cool)}
 <p>The agency's own words: 10 km is a &ldquo;fixed depth&rdquo;; where data are too poor to compute a depth, it is assigned
 (<a href="https://www.usgs.gov/faqs/why-do-so-many-earthquakes-occur-depth-10km">USGS FAQ</a>). This map shows where that happens: the mid-ocean ridges and the open Atlantic are almost wholly decided; the subduction zones under Chile and Japan are mostly measured. The catalogue knows the planet unevenly, and the depth column does not say so.
 Whether the small stated uncertainty is a formal figure from the fixed-depth solution is not established here (conjecture).</p>
-<p class="src">Data: U.S. Geological Survey, ComCat via the FDSN event service, magnitude &ge; 4, 2020-01-01 to 2025-12-31, queried 2026-10-07; public domain (<a href="https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits">USGS</a>). Derived by <code>study.py</code> in the project folder; counts per one-degree cell. The catalogue is revised after the fact, so a later query returns slightly different totals. Session 1 of a bounded project; a first map, not a finished work.</p>
+<h2>Does more listening lift the decree?</h2>
+<p>Session 2. Share of events with a decided depth (10 or 35 km), by the number of stations (<code>nst</code>) the catalogue
+lists for the event. Fewer stations, more decree &mdash; but with 81 or more stations, %%NSTTOP%% % are still decided, and
+for %%NSTMISS%% of events no station count is given. Reviewed status does not separate them: %%REV%% % of both kinds are
+&ldquo;reviewed&rdquo;, with the same median of 71 days between the event and its last update.</p>
+<div class="bars" role="img" aria-label="Decided share by station count">%%BARS%%</div>
+<h2>The catalogue names its own decree</h2>
+<p>Session 3. The spreadsheet export this page was built from has no column saying which depths were assigned. The same service's
+per-event documents do: each origin carries a <code>depth-type</code>. For one month (March 2025, network <code>us</code>,
+magnitude &ge; 4: %%S3N%% events), %%S3OP%% events carry the value <em>&ldquo;operator assigned&rdquo;</em>. All of them sit at
+exactly 10 or 35 km, and all but %%S3ONE%% event at exactly those depths is flagged so. So the rule used on this page
+(&ldquo;decided&rdquo; = exactly 10 or 35 km) stands, for this month and this network, against the agency&rsquo;s own flag.</p>
+<p>History runs mostly one way, in the little the documents keep: %%S3SINGLE%% of %%S3N%% events have a single origin version.
+Of the %%S3OP%% assigned depths, %%S3OVER%% replaced an earlier, different depth from a regional network, %%S3OVERDAYS%%.
+The reverse &mdash; an earlier 10 or 35 km later replaced by a measured depth &mdash; appears in %%S3LIFT%% of %%S3SOLVED%% measured events,
+and in those the earlier version carries no flag, so that it was a decree is conjecture.</p>
+<p class="src">Data: U.S. Geological Survey, ComCat via the FDSN event service, magnitude &ge; 4, 2020-01-01 to 2025-12-31, queried 2026-10-07; public domain (<a href="https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits">USGS</a>). Derived by <code>study.py</code> in the project folder; counts per one-degree cell. The catalogue is revised after the fact, so a later query returns slightly different totals. Session 3 data: the same service, one event document per event, queried 2026-10-07. Three sessions of a bounded project; declared a modest work, no stranger has yet tested it.</p>
 </main>
 <script>
 const CELLS=%%CELLS%%;

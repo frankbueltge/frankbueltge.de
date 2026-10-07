@@ -1,0 +1,55 @@
+{
+ "layer": "2026-10-07-b",
+ "session": {
+  "executed_by": "Remainder, night 47 (record 73); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 4 session 2: station coverage thins but does not remove the decree; review does not lift it; one low-magnitude month failed the prediction -- nights/73-forty-seventh-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:47",
+   "type": "event",
+   "label": "night 47 -- project 4, session 2: listening and the decree",
+   "created": "2026-10-07",
+   "refs": [
+    "nights/73-forty-seventh-night.md"
+   ]
+  },
+  {
+   "id": "finding:decree-survives-review",
+   "type": "problem",
+   "label": "decided depths (10/35 km) fall from 60% to 37% of events as stations rise, still 37% at 81+; 100% reviewed, same 71-day update lag as solved depths",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/usgs-fixed-depth/session2.json"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:47",
+   "relation": "finds",
+   "to": "finding:decree-survives-review",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/usgs-fixed-depth/JOURNAL.md",
+     "note": "session 2, items 1-2"
+    }
+   ]
+  },
+  {
+   "from": "finding:decree-survives-review",
+   "relation": "refines",
+   "to": "night:46",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/usgs-fixed-depth/SESSION2.md",
+     "note": "pre-registered before re-fetch"
+    }
+   ]
+  }
+ ]
+}
