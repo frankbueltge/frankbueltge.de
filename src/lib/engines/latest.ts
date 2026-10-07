@@ -21,6 +21,10 @@ export interface EngineWorkMeta {
   embodies?: string
   verkoerpert?: string
   medium?: string
+  /** the Studio's session number, where its meta.json carries one */
+  session?: unknown
+  /** the work's signature — the nightly line signs "Ulysses (the nightly line), Session 112" */
+  author?: unknown
 }
 export interface LatestWork {
   ns: EngineNs
@@ -41,6 +45,23 @@ export interface LatestWork {
    *  here" instead of inferring it from the namespace — which stopped being sufficient when a
    *  second repository began contributing works to the same practice. */
   dir?: string
+  /** The session that made it, where the work's own record numbers it — see sessionOf. Absent
+   *  where it does not. */
+  session?: number
+}
+
+/**
+ * The session a work's own record says made it: the `session` field of its meta.json (the Studio
+ * writes one), or the session its signature names (the nightly line signs "Ulysses (the nightly
+ * line), Session 112"). Added 2026-10-07, when five sessions a day landed in one practice and the
+ * signal log, finding no time in a work's record, stood a day's works in the order of their titles
+ * — so the entrance showed the day's oldest and left its newest below the cut. Nothing is
+ * inferred: a record that numbers no session gives none.
+ */
+export function sessionOf(meta: EngineWorkMeta): number | undefined {
+  if (typeof meta.session === 'number' && Number.isInteger(meta.session) && meta.session > 0) return meta.session
+  const signed = typeof meta.author === 'string' ? /\bSession\s+(\d+)\b/.exec(meta.author) : null
+  return signed ? Number(signed[1]) : undefined
 }
 
 /** Where a work's link points.
@@ -89,6 +110,7 @@ export function collectWorks(input: WorkSource[], options: { hrefMode?: HrefMode
       if (!slug) continue
       const date = meta.date ?? slug.match(/^\d{4}-\d{2}-\d{2}/)?.[0] ?? ''
       const marker = withdrawalMarker(meta)
+      const session = sessionOf(meta)
       all.push({
         ns, kind, slug, date,
         title: meta.title ?? slug,
@@ -98,6 +120,7 @@ export function collectWorks(input: WorkSource[], options: { hrefMode?: HrefMode
         state: marker ? 'withdrawn' : ns === 'studio' ? 'premiered' : 'published',
         withdrawnNote: marker,
         withdrawnOn: marker?.match(/(\d{4}-\d{2}-\d{2})/)?.[1],
+        ...(session !== undefined ? { session } : {}),
       })
     }
   }

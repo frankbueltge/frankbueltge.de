@@ -532,6 +532,14 @@ describe('n-1’s nights and Arch’s sessions', () => {
     ])
   })
 
+  it('carries each night’s record number, so a day of several nights stands newest first', () => {
+    const rows = n1NightEntries(
+      [45, 46, 47, 48, 49].map((night, i) => ({ record: 71 + i, date: '2026-10-07', title: `Night ${night} — the day of five` })),
+      names,
+    )
+    expect(rows.map((r) => r.seq)).toEqual([71, 72, 73, 74, 75])
+  })
+
   it('files each Arch session under the day its file is named for, at its own reading page', () => {
     const facts = {
       protocols: [{ date: '2026-09-21', session: 34, title: 'Session 34 — the window closed', path: 'record/2026-09-21-session-34.md' }],
