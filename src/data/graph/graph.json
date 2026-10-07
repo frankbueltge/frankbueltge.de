@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "7a84b22cd96e93da"
+        "sha256": "5526244a653412d0"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 463,
-      "edges": 408,
+      "nodes": 464,
+      "edges": 409,
       "nodesByKind": {
-        "decision": 135,
+        "decision": 136,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 164,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 96
+        "touches": 97
       }
     }
   },
@@ -1422,6 +1422,16 @@
     },
     {
       "id": "decision:2026-10-07-1",
+      "kind": "decision",
+      "label": "Between cycles the three practices convene on the next question, and the cycle clock opens the next cycle on their tally",
+      "date": "2026-10-07",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Between cycles the three practices convene on the next question, and the cycle clock opens the next cycle on their tally"
+      }
+    },
+    {
+      "id": "decision:2026-10-07-2",
       "kind": "decision",
       "label": "Cycle 006 is opened by the architect on *Missing Data Art, read through human extinction by AI",
       "date": "2026-10-07",
@@ -9790,6 +9800,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/lib/engines/practice-policy.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-07-1",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/field/papers/"
       }
     }
   ]

@@ -8,8 +8,9 @@
 //
 // The data model and every action flow are v2's, unchanged: content comes exclusively from the
 // script below against GET/POST /api/zentrale/* (contract: X-Zentrale-Auth header, token from
-// localStorage). Nothing renders server-side except the static frame and the knob register —
-// there is no committed JSON behind this page (the one sanctioned exception to "Git ist das
+// localStorage). Nothing renders server-side except the static frame, the knob register and,
+// since 2026-10-07, the convening tile (the committed cycle clock, read at build time) — there is
+// no other committed JSON behind this page (the one sanctioned exception to "Git ist das
 // Archiv", docs/design/2026-07-17-steuerzentrale.md). Hence no no-JS fallback, only <noscript>.
 //
 // Script pattern follows CockpitPage.astro: no is:inline (Astro bundles and hashes it, allowed
@@ -24,6 +25,16 @@
 import '@/styles/ops-room.css'
 import '@/styles/hub-triptych.css'
 import '@/styles/zentrale-ops.css'
+import { conveningView, loadRelayExtras } from '@/lib/ecology/convening'
+import { loadCycle } from '@/lib/ecology/v3'
+
+// The convening (2026-10-07): while one runs, a tile in the countdown strip names the day the
+// cycle clock acts — the result's opening day, which the architect may veto until then, or the
+// fallback day. Read at build time from the committed clock state and the mirrored relay, like
+// the dated tiles beside it; every relay mirror deploys, so the tile is as fresh as the record.
+const ZX_CYCLE_JSON = 'https://github.com/frankbueltge/frankbueltge.de/edit/main/src/data/ecology/cycle.json'
+const zxConv = conveningView(loadCycle(), loadRelayExtras())
+const zxPad = (n: number) => String(n).padStart(3, '0')
 
 // The knob register (static by design): the levers Frank actually has, one row per unit, each
 // chip linking the exact file that IS the lever. Rendered server-side because the register is
@@ -148,6 +159,42 @@ const KNOBS: { name: string; voice: string | null; links: [string, string][] }[]
           <span class="zx-count-sub">14.10.</span>
         </span>
       </div>
+      {
+        zxConv && (
+          <div class="zx-count" data-zx-date={zxConv.stands && zxConv.opensOn ? zxConv.opensOn : zxConv.fallbackOn}>
+            <span class="zx-count-n" data-zx="countn">–</span>
+            <span class="zx-count-what">
+              {zxConv.stands && zxConv.result && zxConv.opensOn ? (
+                <>
+                  <span class="zx-count-label">
+                    Konvent nach Zyklus {zxPad(zxConv.afterCycle)} · Ergebnis: {zxConv.result.question}
+                  </span>
+                  <span class="zx-count-sub">
+                    öffnet Zyklus {zxPad(zxConv.next)} am {zxConv.opensOn}, wenn du nicht widersprichst ·{' '}
+                    <a href={ZX_CYCLE_JSON} target="_blank" rel="noreferrer">Widerspruch: convening.objected ↗</a>
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span class="zx-count-label">
+                    Konvent nach Zyklus {zxPad(zxConv.afterCycle)} ·{' '}
+                    {zxConv.stands && zxConv.result
+                      ? `Ergebnis: ${zxConv.result.question}`
+                      : zxConv.objected
+                        ? `Widerspruch vom ${zxConv.objected}`
+                        : 'noch kein Ergebnis'}
+                  </span>
+                  <span class="zx-count-sub">
+                    {zxConv.continuing
+                      ? `ohne ${zxConv.objected ? 'neues ' : ''}Ergebnis öffnet Zyklus ${zxPad(zxConv.next)} am ${zxConv.fallbackOn} auf der fortlaufenden Frage`
+                      : `keine fortlaufende Frage gesetzt — Zyklus ${zxPad(zxConv.next)} öffnet nur von Hand`}
+                  </span>
+                </>
+              )}
+            </span>
+          </div>
+        )
+      }
     </div>
 
     <p data-zx="errors" class="zx-partial" hidden></p>
@@ -1156,12 +1203,12 @@ const KNOBS: { name: string; voice: string | null; links: [string, string][] }[]
       if (!approveArmed) {
         approveArmed = true
         btnApprove.textContent = 'wirklich freigeben?'
-        // Since 2026-10-03 releasing a seed addressed to all three interrupts the continuing
-        // question (the cycle clock opens the next cycle on it within minutes) — said here,
-        // at the one place where that happens.
+        // Since 2026-10-03 releasing a seed addressed to all three interrupts the running cycle
+        // (the cycle clock opens the next cycle on it within minutes), and since 2026-10-07 a
+        // running convening too — said here, at the one place where that happens.
         hint.textContent =
           seed.addressed_to === 'open'
-            ? 'Freigabe veröffentlicht den Seed im öffentlichen Register und unterbricht die fortlaufende Frage: Der nächste Zyklus öffnet auf ihm, alle drei Praxen wechseln. Nochmal klicken zum Bestätigen.'
+            ? 'Freigabe veröffentlicht den Seed im öffentlichen Register und unterbricht den laufenden Zyklus oder Konvent: Der nächste Zyklus öffnet auf ihm, alle drei Praxen wechseln. Nochmal klicken zum Bestätigen.'
             : 'Freigabe veröffentlicht den Seed im öffentlichen Register. Nochmal klicken zum Bestätigen.'
         return
       }

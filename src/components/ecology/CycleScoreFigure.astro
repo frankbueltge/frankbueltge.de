@@ -54,7 +54,7 @@ const wording: PartiturWording = {
   },
   kinds: P.kinds,
   kindWhat: P.kindWhat,
-  band: P.band(ECOLOGY_V3.cycle.phase[model.phase].badge),
+  band: Object.fromEntries(model.bands.map((b) => [b.phase, P.band(ECOLOGY_V3.cycle.phase[b.phase].badge)])),
   card: P.card,
   zoom: P.zoom,
   figureLabel: P.figureLabel(ECOLOGY_V3.cycle.label(model.cycle)),

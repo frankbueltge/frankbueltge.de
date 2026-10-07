@@ -28,19 +28,32 @@ export const PRACTICE_REPO: Record<PracticeId, string> = {
   studio: 'studio',
 }
 
-export type CyclePhase = 'closing' | 'working' | 'presenting'
-const PHASES: CyclePhase[] = ['closing', 'working', 'presenting']
+/** 'convening' since 2026-10-07: the days between a presented cycle and the next, in which the
+ *  three practices negotiate the next question (docs/design/2026-10-07-the-convening.md). */
+export type CyclePhase = 'closing' | 'working' | 'presenting' | 'convening'
+const PHASES: CyclePhase[] = ['closing', 'working', 'presenting', 'convening']
 
 /** Where the running cycle's question came from. 'continuing' since 2026-10-03: the one question
- *  all three work between seeds, which replaces the per-practice defaults while it is set. */
-export type CycleSource = 'seed' | 'continuing' | 'defaults'
-const SOURCES: CycleSource[] = ['seed', 'continuing', 'defaults']
+ *  all three work between seeds, which replaces the per-practice defaults while it is set.
+ *  'convening' since 2026-10-07: the question the three chose in the convening before it. */
+export type CycleSource = 'seed' | 'continuing' | 'defaults' | 'convening'
+const SOURCES: CycleSource[] = ['seed', 'continuing', 'defaults', 'convening']
 
-/** The continuing question (architect's decision, 2026-10-03): worked whenever no seed is live,
- *  in rounds the cycle clock turns by itself; only a seed released to all three interrupts it. */
+/** The continuing question (architect's decision, 2026-10-03): the origin of the programme, and
+ *  since 2026-10-07 the fallback when a convening reaches no result. */
 export interface ContinuingQuestion {
   question: string
   since: string
+}
+
+/** The convening after cycle `afterCycle` (2026-10-07). It stands in cycle.json only while the
+ *  phase is 'convening'; `cycle` and `question` meanwhile keep the presented cycle's own. */
+export interface ConveningState {
+  afterCycle: number
+  opened: string
+  /** the day the architect objected to the result then standing: no result tallied on or
+   *  before it opens a cycle (optional; the architect's silence is consent) */
+  objected: string | null
 }
 
 export interface CycleState {
@@ -57,6 +70,8 @@ export interface CycleState {
   seedId?: string | null
   /** every seed already used as a cycle question or taken into one; the cycle clock skips them */
   takenSeeds?: string[]
+  /** set exactly while the phase is 'convening' */
+  convening?: ConveningState | null
 }
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/
@@ -85,6 +100,21 @@ export function loadCycle(root: string = process.cwd()): CycleState {
     throw new Error('cycle.json: source "continuing" requires a continuing block')
   if (raw.taken_seeds !== undefined && !Array.isArray(raw.taken_seeds))
     throw new Error('cycle.json: taken_seeds must be a list of seed ids')
+  // The convening block and the convening phase come together or not at all: a block left behind
+  // after a turn would tell the practices a convening is open that is not.
+  const convening = raw.convening ?? null
+  if (raw.phase === 'convening') {
+    if (convening === null || typeof convening !== 'object')
+      throw new Error('cycle.json: phase "convening" requires a convening block')
+    if (convening.after_cycle !== raw.cycle)
+      throw new Error(`cycle.json: convening.after_cycle must equal cycle (${raw.cycle}), got ${convening.after_cycle}`)
+    if (!DATE.test(convening.opened))
+      throw new Error(`cycle.json: convening.opened must be a date, got "${convening.opened}"`)
+    if (convening.objected != null && !DATE.test(convening.objected))
+      throw new Error(`cycle.json: convening.objected must be a date, got "${convening.objected}"`)
+  } else if (convening !== null) {
+    throw new Error(`cycle.json: a convening block outside the convening phase (phase "${raw.phase}")`)
+  }
   return {
     cycle: raw.cycle,
     phase: raw.phase,
@@ -96,6 +126,11 @@ export function loadCycle(root: string = process.cwd()): CycleState {
     continuing: continuing && { question: continuing.question, since: continuing.since },
     seedId: raw.seed_id ?? null,
     takenSeeds: raw.taken_seeds ?? [],
+    convening: convening && {
+      afterCycle: convening.after_cycle,
+      opened: convening.opened,
+      objected: convening.objected ?? null,
+    },
   }
 }
 
@@ -472,6 +507,41 @@ export interface PresentationEntry {
   date: string | null
   /** The artifact page's own <title>, practice suffix trimmed. */
   title?: string
+  /** The Field's paper of that cycle, rendered by this site (2026-10-07: every Field presentation
+   *  carries a `paper.md` in preprint form). Null where the presentation carries none; the loader
+   *  always sets it, hand-made entries (fixtures) may leave it out. */
+  paperHref?: string | null
+}
+
+/** The file a Field presentation carries its paper in, and the page this site renders it on. */
+export const PAPER_FILE = 'paper.md'
+export const paperHref = (cycle: number): string => `/field/papers/cycle-${String(cycle).padStart(3, '0')}/`
+
+/** One Field paper as mirrored: `public/field/presentations/cycle-NNN/paper.md`. */
+export interface FieldPaper {
+  cycle: number
+  /** the presentation directory, `cycle-006` */
+  dir: string
+  /** the mirrored file, repository-relative */
+  file: string
+  href: string
+}
+
+/** The Field's papers, one per presented cycle that carries one, newest first. Before the first
+ *  paper lands the list is empty and no page is built — nothing on the site changes. */
+export function loadFieldPapers(root: string = process.cwd()): FieldPaper[] {
+  const base = path.join(root, 'public', 'field', 'presentations')
+  if (!isDir(base)) return []
+  const papers: FieldPaper[] = []
+  for (const dir of fs.readdirSync(base)) {
+    const m = /^cycle-(\d+)$/.exec(dir)
+    if (!m) continue
+    const file = path.join(base, dir, PAPER_FILE)
+    if (!fs.existsSync(file) || !fs.statSync(file).isFile()) continue
+    const cycle = Number(m[1])
+    papers.push({ cycle, dir, file: `public/field/presentations/${dir}/${PAPER_FILE}`, href: paperHref(cycle) })
+  }
+  return papers.sort((a, b) => b.cycle - a.cycle)
 }
 
 /** The day a presentation carries: the LAST calendar date its own SUMMARY.md names in its
@@ -512,6 +582,7 @@ export function loadPresentations(root: string = process.cwd()): PresentationEnt
         : `https://github.com/frankbueltge/${PRACTICE_REPO[practice]}/tree/main/presentations/${dir}`
       const face = path.join(full, 'index.html')
       const title = fs.existsSync(face) ? pageTitle(face) : undefined
+      const hasPaper = practice === 'field' && fs.existsSync(path.join(full, PAPER_FILE))
       entries.push({
         cycle: Number(m[1]),
         practice,
@@ -519,6 +590,7 @@ export function loadPresentations(root: string = process.cwd()): PresentationEnt
         files: files.length,
         date: summaryDate(full),
         ...(title ? { title } : {}),
+        paperHref: hasPaper ? paperHref(Number(m[1])) : null,
       })
     }
   }

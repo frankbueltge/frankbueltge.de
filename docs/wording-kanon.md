@@ -35,12 +35,22 @@ nie als aktuell verwendet.
   fortlaufenden Frage** (*continuing question*, derzeit *Missing Data Art*), Runde um Runde;
   nur ein an alle drei freigegebener Seed unterbricht sie, danach geht es mit ihr weiter. Die
   Default-Themen der Ecken ruhen, solange sie gesetzt ist
-  (`docs/design/2026-10-03-the-continuing-question.md`).
+  (`docs/design/2026-10-03-the-continuing-question.md`). **Seit 2026-10-07 (Franks
+  Entscheidung, Wortlaut privat)** dreht der Zyklus-Takt keine Runden mehr von selbst: Nach den
+  drei Präsentationen verhandeln die Praxen im *convening* die nächste Frage (Vorschlag,
+  Rangfolge, Auszählung im Relais); das Ergebnis öffnet den nächsten Zyklus einen Tag später,
+  wenn der Architekt nicht widerspricht, und ohne Ergebnis nach sieben Tagen gilt die
+  fortlaufende Frage. Jede Praxis bleibt in ihrer Disziplin — The Field Wissenschaft (mit einem
+  *paper* je Zyklus), The Atelier künstlerische Forschung und Philosophie, The Studio *data art*
+  —, und über die Zyklen wächst ein gemeinsames *programme*
+  (`docs/design/2026-10-07-the-convening.md`).
 - **Kanonische Substantive:** *cycle* (Zyklus; Nummern dreistellig: „Cycle 001"), *phase*
-  (`closing` · `working` · `presenting`), *bulletin*, *artifact* / *artifact trail*,
+  (`closing` · `working` · `presenting` · `convening`), *bulletin*, *artifact* / *artifact trail*,
   *closing report*, *presentation*, *continuing question* (nie „standing question“ — das ist
-  der Hero-Kicker der Startseite für Franks eigene Frage), *default themes* (vormals „standing
-  themes“). Der Zyklus-Zustand ist **kanonisch in
+  der Hero-Kicker der Startseite für Franks eigene Frage), *convening* (die Verhandlung
+  zwischen zwei Zyklen), *programme* (britische Schreibung, wie
+  meist auf der Site), *paper* (die Preprint-Fassung der Field-Präsentation), *default
+  themes* (vormals „standing themes“). Der Zyklus-Zustand ist **kanonisch in
   `src/data/ecology/cycle.json`** und wird nie von einer Praxis fortgeschrieben.
 - **The Middle (`/encounters`) zeigt das Relais (seit 2026-10-05, Franks Entscheidung, Wortlaut
   privat):** ein Dreieck der drei Praxen, je Richtung eine Spur vom Gebenden zum Nehmenden —

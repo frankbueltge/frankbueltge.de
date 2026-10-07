@@ -1,0 +1,67 @@
+---
+// /field/papers/cycle-NNN/ — the Field's paper of one cycle, in preprint form (2026-10-07).
+//
+// Since the architect's decision of 2026-10-07 every Field presentation carries a `paper.md`
+// (presentations/cycle-NNN/ in field-research, mirrored bare by field-integrate.yml). This page
+// renders it so a reader needs no git client; the raw file stays one click away beside the
+// presentation it belongs to. One page per paper that exists — before the first one lands,
+// getStaticPaths returns nothing and the site is unchanged. The /ecology presentation card links
+// here (src/lib/ecology/v3.ts, loadPresentations → paperHref).
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import Page from '@/layouts/Page.astro'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { renderPaper } from '@/lib/ecology/paper'
+import { loadFieldPapers, PAPER_FILE, type FieldPaper } from '@/lib/ecology/v3'
+
+export function getStaticPaths() {
+  return loadFieldPapers().map((paper) => ({ params: { cycle: paper.dir }, props: { paper } }))
+}
+
+const { paper } = Astro.props as { paper: FieldPaper }
+const W = ECOLOGY_V3.paper
+const source = readFileSync(join(process.cwd(), paper.file), 'utf8')
+const { title, html } = renderPaper(source, paper.dir)
+const presentation = `/field/presentations/${paper.dir}/`
+const repoFile = `https://github.com/frankbueltge/field-research/blob/main/presentations/${paper.dir}/${PAPER_FILE}`
+---
+
+<Page
+  title={`${W.seoTitle(paper.cycle, title ?? ECOLOGY_V3.presentations.entryLabel(paper.cycle, 'The Field'))} | Frank Bültge`}
+  description={W.seoDescription(paper.cycle)}
+>
+  <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-4 py-14">
+    <p class="mb-6 font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+      {W.kicker(paper.cycle)} ·
+      <a href={presentation} class="underline underline-offset-2">{W.presentation}</a> ·
+      <a href={`${presentation}${PAPER_FILE}`} class="underline underline-offset-2">{W.raw}</a> ·
+      <a href={repoFile} class="underline underline-offset-2">{W.repository}</a>
+    </p>
+    <article class="paper-md" set:html={html} />
+    <p class="mt-10 border-t border-line pt-4 font-mono text-[11px] leading-relaxed text-fg-faint">{W.foot}</p>
+  </main>
+</Page>
+
+<style>
+  /* A preprint reads as a document, not as a card — the same measure /arch/read gives a record,
+     scoped here so the site's own components keep their grammar. */
+  .paper-md { font-size: 15.5px; line-height: 1.7; }
+  .paper-md :global(h1) { font-size: 1.6rem; font-weight: 600; line-height: 1.25; margin: 0 0 1.25rem; letter-spacing: -0.02em; }
+  .paper-md :global(h2) { font-size: 1.15rem; font-weight: 600; margin: 2rem 0 0.6rem; scroll-margin-top: 6rem; }
+  .paper-md :global(h3) { font-size: 1rem; font-weight: 600; margin: 1.5rem 0 0.4rem; scroll-margin-top: 6rem; }
+  .paper-md :global(p) { margin: 0 0 1rem; }
+  .paper-md :global(ul), .paper-md :global(ol) { margin: 0 0 1rem 1.4rem; }
+  .paper-md :global(ul) { list-style: disc; }
+  .paper-md :global(ol) { list-style: decimal; }
+  .paper-md :global(li) { margin: 0.25rem 0; }
+  .paper-md :global(blockquote) { margin: 0 0 1rem; padding: 0.2rem 0 0.2rem 1rem; border-left: 2px solid var(--color-line, #8884); color: var(--color-fg-muted, inherit); }
+  .paper-md :global(pre) { overflow-x: auto; padding: 0.75rem 1rem; margin: 0 0 1rem; font-size: 12.5px; line-height: 1.55; border: 1px solid var(--color-line, #8884); }
+  .paper-md :global(code) { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }
+  .paper-md :global(a) { text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+  .paper-md :global(img) { max-width: 100%; height: auto; margin: 0.5rem 0 1rem; }
+  .paper-md :global(table) { border-collapse: collapse; margin: 0 0 1rem; font-size: 13.5px; display: block; overflow-x: auto; }
+  .paper-md :global(th), .paper-md :global(td) { border: 1px solid var(--color-line, #8884); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+  .paper-md :global(hr) { border: 0; border-top: 1px solid var(--color-line, #8884); margin: 1.5rem 0; }
+  .paper-md :global(em) { font-style: italic; }
+  .paper-md :global(strong) { font-weight: 600; }
+</style>
