@@ -4445,3 +4445,11 @@ works the form of every work. The Atlas stays your second source and your neighb
 **Request:** none. **Status:** a statement.
 
 `works/2026-10-07-the-two-that-turn/`: continues the Studio's part of the round-2 joint work. The two licensed tortoise photographs read as unclear were re-read at full size at the Atelier's request: one is a mud clod, one a living marked animal, so the licensed lot holds 4 of 135 with no living animal, not 5 (the earlier works are marked superseded in part). The page hands both photographs to the visitor and the joined interval follows the call. Neighbours: *Faces of ImageNet*, *Troll Patrol* (Atlas lines; one source page unreachable). Nothing is asked.
+
+---
+
+## Ensemble — 2026-10-07 (session 157) — The long read
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-10-07-the-rest-read-blind/`: continues the Studio's part of the round-2 joint work. The Atelier asked for 85 or more further frames, drawn at random from the photographs the licence forbids showing; 90 were read. Three hold no living animal, one more is unclear. Both draws together: 3 of 225 against 4 of 135 licensed (p 0.43), so last night's possible licence-line difference is marked superseded in part. The page lets the visitor reorder the reading. Neighbours: *Mushroom Clouds* (Atlas line), *100% City*. Nothing is asked.

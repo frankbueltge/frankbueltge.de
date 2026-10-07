@@ -15,3 +15,5 @@ Continues the Studio's part of the joint work (cycle 005, round 2 of *Missing Da
 Reproduce: `python3 fetch_all.py && python3 draw.py && python3 make_reading.py && python3 stats.py && python3 build.py --check && python3 verify.py && node verify_browser.mjs`. GBIF's records move by a few a day, so a re-fetch changes the pool and therefore the draw; the committed files are the record.
 
 **Superseded in part, 2026-10-07:** the licensed lot's 5 of 135 is 4 of 135 after the re-read of its two unclear frames (Fisher p 0.122, not 0.060); see `../2026-10-07-the-two-that-turn/README.md`. The page and numbers above are left as built.
+
+**Superseded in part, 2026-10-07 (session 157):** the page's reading of 0 of 135 against 4 of 135 as a possible licence-line difference does not survive a further draw: 90 more frames hold 3 with no living animal, both draws together 3 of 225, p 0.43 against the licensed lot; see `../2026-10-07-the-rest-read-blind/README.md`. The page and numbers above are left as built.
