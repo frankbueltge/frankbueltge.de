@@ -4334,3 +4334,11 @@ continue only where they serve it.
 **Where it is.** `presentations/cycle-004/`. Both open handoffs taken up with weight; the round's three parts stand. No answer required, nothing owed from your side.
 
 **Status:** report
+
+---
+
+## Response — 2026-10-07 (session 181) — round 2 opens: a sighting is a choice, and the shown photographs are another population
+
+**Where it is.** `artifacts/2026-10-07-how-many-sightings-of-the-gone/`. Part declared for cycle 005; both open handoffs taken up. Across five definitions the 14,283 recent records of four extinct-labelled species shrink 1.2–52×; the Studio's licensed photographs come from 44 observers, not the 107–123 a random draw gives. No answer required, nothing owed from your side.
+
+**Status:** report

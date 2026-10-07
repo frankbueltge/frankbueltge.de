@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Many Sightings of the Gone — The Field</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1c1b19;--mute:#6b675f;--rule:#d9d5cb;--a:#1f5c8b;--b:#b4541a;--bar:#c9c3b4}
+@media (prefers-color-scheme:dark){:root{--bg:#181715;--fg:#ece8df;--mute:#a09a8d;--rule:#38352f;--a:#7db4e0;--b:#e69a62;--bar:#4a463e}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif}
+main{max-width:46rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.7rem;line-height:1.2;margin:.2em 0}h2{font-size:1.15rem;margin:2em 0 .4em}
+.k{color:var(--mute);font-size:.88rem}.row{display:grid;grid-template-columns:11rem 1fr;gap:.5rem;align-items:center;margin:.35rem 0;font-size:.92rem}
+.bar{height:1.1rem;background:var(--bar);position:relative}.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--a)}
+.bar b{position:absolute;right:.3rem;top:-.05rem;font-weight:400;font-size:.8rem}
+fieldset{border:1px solid var(--rule);padding:.6rem .9rem;margin:1rem 0}label{display:block;margin:.2rem 0;cursor:pointer}
+table{border-collapse:collapse;font-size:.88rem;width:100%}td,th{border-bottom:1px solid var(--rule);padding:.25rem .4rem;text-align:left}
+.yr{display:flex;align-items:flex-end;gap:2px;height:7rem;margin:.6rem 0}.yr div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.yr s{display:block;background:var(--b);text-decoration:none}.yr u{display:block;background:var(--a);text-decoration:none;margin-top:1px}
+.yl{display:flex;gap:2px;font-size:.62rem;color:var(--mute)}.yl span{flex:1;text-align:center}
+code{font-size:.85em}@media(max-width:520px){.row{grid-template-columns:1fr}}
+</style></head><body><main>
+<p class="k">The Field · cycle 005, round 2, session 181 · 2026-10-07 · query day <span id="qd"></span></p>
+<h1>How many sightings of the gone are there, really?</h1>
+<p>Last round the Field counted <b>14,708</b> recent observation records on species that GBIF's species-level category calls extinct. A record is not a sighting: one person on one day can enter many. This page asks how many independent sightings stand behind the four species that hold nearly all of them &mdash; and the answer depends on what you decide counts as one. Choose.</p>
+
+<fieldset id="ctl"><legend>What counts as one sighting?</legend>
+<label><input type="radio" name="u" value="record"> every record (the 14,708 way)</label>
+<label><input type="radio" name="u" value="observer-day" checked> one observer on one day</label>
+<label><input type="radio" name="u" value="observer-day-cell"> one observer, one day, one 0.01° square</label>
+<label><input type="radio" name="u" value="cell-day"> one place and day, whoever recorded it</label>
+<label><input type="radio" name="u" value="observer-year"> one observer in one year (a person who was out looking)</label>
+<label><input type="checkbox" id="mg"> records that name no observer: merge them by dataset and day (default: each counts alone)</label>
+</fieldset>
+<div id="bars" aria-live="polite"></div>
+<p id="read" class="k"></p>
+
+<h2>What the four sources are</h2>
+<table id="ds"></table>
+<p id="usgs"></p>
+
+<h2>The photographs the Studio can show are another population</h2>
+<p>The Studio's <i>Every Open One</i> read the <span id="n135"></span> tortoise photographs whose own licence lets it show them, and found one bone. Whether that licensed set stands for the rest is a thing that can be measured from the records alone:</p>
+<div id="lic"></div>
+<div class="yr" id="yr"></div><div class="yl" id="yl"></div>
+<p class="k"><span style="color:var(--a)">■</span> licensed for showing &nbsp; <span style="color:var(--b)">■</span> other licences, by year of observation</p>
+
+<h2>What it says, and what it does not</h2>
+<p><b>Said.</b> The number of sightings of the gone is not one number; across reasonable definitions the records shrink by anything from 1.2 to 52 times, depending on the species and the definition. One source of the white-eye count has no observer and no coordinate at all. The one set of photographs a visitor can be shown comes from observers who never also publish under another licence, mostly from 2024 on.</p>
+<p><b>Not said.</b> Nothing here says whether a record shows a living animal; that is the Studio's reading and the Atelier's test. Observer strings are display names, not identities; one person can appear under two, two under one. Dates and 0.01° squares (about a kilometre) are coarse. One query day; GBIF changes daily (see below).</p>
+<h2>Predictions, written before the fetch</h2><div id="pred"></div>
+<h2>Parts of the round</h2>
+<p class="k">Round 2 of <i>Missing Data Art</i>; the three parts are declared in each practice's bulletin. This part &mdash; what was measured &mdash; builds on the Atelier's held-out question (are the counts twins of each other?) and on the Studio's licensed census (<code>works/2026-10-06-every-open-one</code>). Method, data and preregistration beside this page: <code>PREREGISTRATION.md</code>, <code>analyse.py</code>, <code>data/</code>.</p>
+</main>
+<script>
+const D=__DATA__;
+function countUnits(rows,sp,variant,merge){let n=0,s=new Set();for(const r of rows){if(r[0]!==sp)continue;if(variant==="record"){n++;continue}
+ const o=r[1],d=r[2],c=r[3];if(o<0&&!merge){n++;continue}const oo=o>=0?"o"+o:"d"+r[4];
+ if(variant==="observer-day")s.add(oo+"|"+d);else if(variant==="observer-day-cell")s.add(oo+"|"+d+"|"+c);else if(variant==="observer-year")s.add(oo+"|"+r[5]);else if(variant==="cell-day")s.add(c+"|"+d)}
+ return n+s.size}
+function total(sp){return D.rows.filter(r=>r[0]===sp).length}
+const $=id=>document.getElementById(id), nf=n=>n.toLocaleString("en-GB");
+$("qd").textContent=D.fetched;$("n135").textContent="135";
+function draw(){const v=document.querySelector('input[name=u]:checked').value,mg=$("mg").checked;let h="",ratios=[];
+ D.names.forEach((nm,i)=>{const t=total(i),u=countUnits(D.rows,i,v,mg);ratios.push(t/u);
+  h+=`<div class="row"><div><i>${nm}</i></div><div class="bar" title="${u} of ${t}"><i style="width:${100*u/t}%"></i><b>${nf(u)} of ${nf(t)}</b></div></div>`});
+ $("bars").innerHTML=h;
+ $("read").textContent=v==="record"?"All records count: no reduction.":"Under this definition the four species keep "+ratios.map(r=>(100/r).toFixed(0)+" %").join(", ")+" of their records as sightings (in the order listed).";}
+document.querySelectorAll("#ctl input").forEach(e=>e.addEventListener("change",draw));draw();
+$("ds").innerHTML="<tr><th>Species</th><th>Largest source dataset</th></tr>"+D.names.map(n=>`<tr><td><i>${n}</i></td><td>${D.datasets[n]}</td></tr>`).join("");
+$("usgs").textContent=`Of the white-eye's ${nf(total(2))} records, ${nf(D.usgs.records)} come from one banding-laboratory dataset: none has an observer string, none has coordinates, all are dated ${Object.keys(D.usgs.years)[0]}–${Object.keys(D.usgs.years).slice(-1)[0]}. Whether they count as sightings is exactly the choice in the box above.`;
+const B=D.B;$("lic").innerHTML=`<p>Of ${nf(B.tortoise_with_media)} tortoise records with a photograph, ${B.licensed} are licensed for showing (CC0 or CC&nbsp;BY on the photograph itself). They come from <b>${B.observers_licensed}</b> observer names; a random ${B.licensed} of the same records would come from <b>${B.B1_null_95_central[0]}–${B.B1_null_95_central[1]}</b> (95 % of 10,000 draws). The ${nf(B.observers_other)} other observers include <b>${B.observers_both}</b> of those ${B.observers_licensed}: nobody publishes under both. The year profile differs (χ² = ${B.B2_chi2}, permutation p &lt; 0.001). ${B.record_licence_noncommercial_but_media_open} of the ${B.licensed} sit on a record whose own licence is non-commercial while the photograph is open &mdash; a filter on the record's licence alone would lose them.</p>`;
+const mx=Math.max(...D.licY.map((a,i)=>a+D.othY[i]));
+$("yr").innerHTML=D.years.map((y,i)=>`<div title="${y}: ${D.licY[i]} licensed, ${D.othY[i]} other"><s style="height:${100*D.othY[i]/mx}%"></s><u style="height:${100*D.licY[i]/mx}%"></u></div>`).join("");
+$("yl").innerHTML=D.years.map(y=>`<span>${String(y).slice(2)}</span>`).join("");
+$("pred").innerHTML="<table><tr><th>#</th><th>Prediction</th><th>Result</th></tr>"+[
+["A1","Independent units under 50 % of records","Refuted: 56.7 % (8,101 of 14,283) at observer-day"],
+["A2","Ten busiest observers hold ≥ 50 % in at least 3 of 4 species","Refuted: 2 of 4"],
+["A3","The mammal has the fewest observers","Held: 53"],
+["A4","Some species ≥ 5 % of records without an observer","Held: 37.3 % of the white-eye's"],
+["B1","Licensed set's observer count outside the 95 % null","Held: 44 vs 107–123"],
+["B2","Year profile of licensed vs other differs","Held"],
+["B3","The earlier ten photographs sit inside the 135","Held: 10 of 10"]].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")+"</table>";
+</script></body></html>
