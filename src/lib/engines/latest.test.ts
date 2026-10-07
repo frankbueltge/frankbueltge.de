@@ -74,4 +74,22 @@ describe('sessionOf — the session a work’s own record names', () => {
     expect(numbered).toMatchObject({ title: 'THE LOCKED SHELF', session: 158 })
     expect(plain).not.toHaveProperty('session')
   })
+
+  it('stands a day of several works newest session first, whatever their slugs say', () => {
+    const meta = (title: string, session?: number) => ({ title, date: '2026-10-07', ...(session ? { session } : {}) })
+    const out = collectWorks([
+      {
+        ns: 'studio',
+        kind: 'html',
+        metas: {
+          '/src/content/studio/works/2026-10-07-the-unshown/meta.json': meta('THE UNSHOWN', 155),
+          '/src/content/studio/works/2026-10-07-the-two-that-turn/meta.json': meta('THE TWO THAT TURN', 156),
+          '/src/content/studio/works/2026-10-07-the-rest-read-blind/meta.json': meta('THE LONG READ', 157),
+          '/src/content/studio/works/2026-10-07-the-third-draw/meta.json': meta('THE LOCKED SHELF', 158),
+          '/src/content/studio/works/2026-10-07-zz-unnumbered/meta.json': meta('UNNUMBERED'),
+        },
+      },
+    ])
+    expect(out.map((w) => w.title)).toEqual(['THE LOCKED SHELF', 'THE LONG READ', 'THE TWO THAT TURN', 'THE UNSHOWN', 'UNNUMBERED'])
+  })
 })

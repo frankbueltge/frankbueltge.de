@@ -124,8 +124,20 @@ export function collectWorks(input: WorkSource[], options: { hrefMode?: HrefMode
       })
     }
   }
-  // Newest first; the slug breaks ties so a rebuild is never a re-ordering.
-  return all.sort((a, b) => b.date.localeCompare(a.date) || b.slug.localeCompare(a.slug))
+  // Newest first; on a shared day, the higher session its record names first (a work that names
+  // one before a work that does not), and the slug breaks the last ties so a rebuild is never a
+  // re-ordering. The session joined on 2026-10-07: four Studio works landed that day, and the
+  // slug alone put THE UNSHOWN (session 155) among a practice page's three newest and left
+  // THE LONG READ (157) out.
+  return all.sort((a, b) => b.date.localeCompare(a.date) || bySession(a, b) || b.slug.localeCompare(a.slug))
+}
+
+/** Higher session first; a work whose record names one before a work whose record does not. */
+function bySession(a: LatestWork, b: LatestWork): number {
+  if (a.session === b.session) return 0
+  if (a.session === undefined) return 1
+  if (b.session === undefined) return -1
+  return b.session - a.session
 }
 
 export function latestWorks(input: WorkSource[], limit = 4): LatestWork[] {
