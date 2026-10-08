@@ -10,6 +10,8 @@
 // migration — "names are found, not invented" (decisions doc §1.1). Pages that render this
 // copy show a small draft marker when approval !== 'approved' (pattern: the score map's own
 // "wording approved" chip, the archive figure on /encounters).
+import type { ResultFate } from '@/lib/ecology/convening'
+
 /** A card on the homepage overview. Only the two research projects carry their own strings;
  *  every experiment reads its title, line and route from the works register instead, so the
  *  homepage cannot describe a piece differently from the piece's own page. */
@@ -815,8 +817,11 @@ export const NAMING = {
         moments: 'moments',
         /** a project of Machine Attention, dated by the day it began */
         project: 'project',
-        /** the ecology's cycle opening */
+        /** the ecology's cycle opening — and since 2026-10-08 the opening of the convening between
+         *  two cycles, which the cycle clock turns the same way */
         turn: 'turn',
+        /** the Middle's relay tallied a convening: the winning question (2026-10-08) */
+        tally: 'tally',
         /** the self-contained artifact that closes a practice's cycle */
         presentation: 'presentation',
         /** n-1 lands a night */
@@ -907,6 +912,23 @@ export const NAMING = {
           `${p.atLeast ? 'at least ' : ''}${p.count} moments offered to the stage`,
         /** the ecology's cycle turn — the label is ecologyLive's own ("cycle 004") */
         cycleOpened: (cycleLabel: string) => `${cycleLabel} opened`,
+        /** the convening between two cycles (Frank's decision of 2026-10-08, wording private): the
+         *  day it opened, as cycle.json's convening block dates it */
+        conveningOpened: (cycleLabel: string) => `convening after ${cycleLabel} opened`,
+        /** the day the Middle's relay tallied the convening's result */
+        conveningTallied: (cycleLabel: string) => `convening after ${cycleLabel} tallied`,
+        /** the winning question, quoted (ecologyLive's own quotes), and what the record says became
+         *  of it (convening.ts, resultFate): the day it opens the next cycle while the convening
+         *  runs, the objection that set it aside, the day it opened the next cycle, or that the
+         *  next cycle opened on something else. Where the record says nothing, the question alone. */
+        conveningResult: (p: { question: string; next: string; fate: ResultFate }) => {
+          const f = p.fate
+          if (f.kind === 'pending') return `${p.question} — opens ${p.next} on ${f.opensOn} unless the architect objects`
+          if (f.kind === 'set-aside') return `${p.question} — set aside by the architect’s objection of ${f.objected}`
+          if (f.kind === 'opened') return `${p.question} — opened ${p.next} on ${f.opened}`
+          if (f.kind === 'passed') return `${p.question} — ${p.next} opened on another question on ${f.opened}`
+          return p.question
+        },
         /** a presentation whose page names no title of its own */
         presentation: (cycleLabel: string) => `presentation, ${cycleLabel}`,
       },

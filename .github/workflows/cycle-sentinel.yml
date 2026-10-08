@@ -40,6 +40,16 @@ name: Cycle sentinel
 # The veto day must not wait on a cron that may run hours late, so the Ecology integrate starts
 # this workflow itself whenever it lands a relay mirror, and every two hours while a convening
 # is open.
+#
+# SINCE 2026-10-08 THE ARCHITECT HEARS OF A RESULT, AND CAN ANSWER BY MAIL (his decision, wording
+# private). His silence is consent only if he knows there is something to consent to. When a
+# tallied result is pending, this workflow opens ONE issue for it — assigned to him and naming
+# him, so GitHub emails him as it does for the practices' requests (requests-watchdog.yml) — and
+# closes it when the next cycle opens. He objects by replying to that email or commenting on the
+# issue; the reply is read at the start of every run, BEFORE the clock decides, and becomes
+# `convening.objected` in cycle.json. The decisions are src/lib/ecology/convening-notice.ts,
+# under test; scripts/ecology/convening-notice.ts carries them out. A manual start with
+# `notice_dry_run` prints the planned issue, comments and closes instead of sending them.
 
 on:
   schedule:
@@ -53,11 +63,17 @@ on:
     paths: ['src/data/saat/register.json']
   # Also started by ecology-integrate.yml after a relay mirror (2026-10-07): the built-in token
   # fires no `on: push`, but a dispatch it sends does start a run.
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      notice_dry_run:
+        description: 'Convening notice: print the planned issue, comments and closes instead of sending them (the clock still turns where its rules say)'
+        type: boolean
+        default: false
 
-# contents: write since 2026-10-03 — the turn commits cycle.json and nothing else. The deploy
-# follows through deploy-cf.yml's workflow_run list, like every other committer of site data —
-# except for a run another workflow started, which deploys itself (see the step after the turn).
+# contents: write since 2026-10-03 — the turn commits cycle.json and nothing else; since
+# 2026-10-08 so does a recorded objection. The deploy follows through deploy-cf.yml's workflow_run
+# list, like every other committer of site data — except for a run another workflow started,
+# which deploys itself (see the step after the turn).
 permissions:
   contents: write
   issues: write
@@ -79,9 +95,49 @@ jobs:
           cache: npm
       - run: npm ci
 
-      # The clock (2026-10-03; the convening since 2026-10-07). Runs first, so the watch below
-      # reads the state it leaves. Writes cycle.json only when the rule says a turn is due,
-      # validates it through the site's own loader before committing, and commits nothing else.
+      # The architect's objection (2026-10-08), read BEFORE the clock decides, so an objection that
+      # arrived before this run is never outrun by the opening it objects to. While a tallied result
+      # is pending, a reply of his on its notice issue that objects becomes `convening.objected` in
+      # cycle.json, committed like a turn; the comment that confirms it, and the close, follow only
+      # once the record is pushed. With nothing pending this step asks GitHub nothing. When a result
+      # IS pending and the issue cannot be read, the step fails and the clock does not turn on this
+      # run — failing closed where an objection could be missed; while a convening is open the next
+      # run comes within hours (every Ecology integrate run starts one).
+      - name: Read the architect's objection (before the clock decides)
+        id: objection
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DRY_RUN: ${{ inputs.notice_dry_run && '--dry-run' || '' }}
+        run: |
+          set -euo pipefail
+          npx tsx scripts/ecology/convening-notice.ts objections --plan "$RUNNER_TEMP/objection-plan.json" $DRY_RUN > "$RUNNER_TEMP/objection.json"
+          if [ "$(jq -r .recorded "$RUNNER_TEMP/objection.json")" != "true" ]; then
+            echo "recorded=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "Cycle-Clock"
+          git config user.email "cycle-clock@frankbueltge.de"
+          git add src/data/ecology/cycle.json
+          git commit -m "cycle $(jq -r .cycle "$RUNNER_TEMP/objection.json"): objection recorded from #$(jq -r .issue "$RUNNER_TEMP/objection.json") — read by the cycle sentinel"
+          pushed=false
+          for attempt in 1 2 3 4 5; do
+            if git push; then pushed=true; break; fi
+            git pull --rebase
+          done
+          if [ "$pushed" != "true" ]; then
+            echo "::error::the objection could not be pushed after 5 attempts; the clock does not turn on this run"
+            exit 1
+          fi
+          echo "recorded=true" >> "$GITHUB_OUTPUT"
+          # The record stands. Confirming it on the issue may fail without holding the clock back:
+          # the notice step after the turn closes an issue whose result an objection set aside.
+          npx tsx scripts/ecology/convening-notice.ts execute --plan "$RUNNER_TEMP/objection-plan.json" \
+            || echo "::warning::the objection is recorded, but confirming it on the issue failed; the notice step closes it"
+
+      # The clock (2026-10-03; the convening since 2026-10-07). Runs right after the objection is
+      # read, so the watch below reads the state it leaves. Writes cycle.json only when the rule
+      # says a turn is due, validates it through the site's own loader before committing, and
+      # commits nothing else.
       - name: Turn the cycle where the rules decide
         id: turn
         run: |
@@ -112,12 +168,32 @@ jobs:
       # a run the built-in token started — so deploy-cf.yml would never hear of the turn it
       # committed, and the practices would read a cycle the site does not show. Such a run starts
       # the deploy itself, right after the push and before the watch, so a hiccup in the issue
-      # step below cannot hold it back. The pattern of PR #1049, for the same reason.
+      # step below cannot hold it back. The pattern of PR #1049, for the same reason. A recorded
+      # objection (2026-10-08) is deployed the same way: /ecology shows it.
       - name: Deploy the turn (when another workflow started this run)
-        if: success() && steps.turn.outputs.turned == 'true' && github.triggering_actor == 'github-actions[bot]'
+        if: success() && (steps.turn.outputs.turned == 'true' || steps.objection.outputs.recorded == 'true') && github.triggering_actor == 'github-actions[bot]'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
+
+      # The notice (2026-10-08). When a tallied result is pending — cycle.json in the convening, the
+      # relay's result for it not set aside, the next cycle not open — the architect gets ONE
+      # issue, assigned to him and naming him, which GitHub sends him by email; an open notice whose
+      # result is no longer pending is closed with a comment saying why (the next cycle opened, and
+      # on which question; an objection set it aside). It runs AFTER the clock, so it reads the state
+      # the clock left: a cycle opened on this run closes its notice instead of announcing a decision
+      # already taken. Nothing else writes to him — a convening merely opening is no decision of his.
+      # A failed notice must not hold back the deploy of a turn committed above (the deploy follows
+      # this run's success), so the step may fail without failing the run: the next run tries again,
+      # and the exact title keeps it to one issue.
+      - name: Notify the architect when his decision is due
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DRY_RUN: ${{ inputs.notice_dry_run && '--dry-run' || '' }}
+        run: |
+          set -euo pipefail
+          npx tsx scripts/ecology/convening-notice.ts notice $DRY_RUN
 
       # The presentations live in public/<practice>/presentations/, mirrored by the integrate
       # workflows into this repository — so the verdict reads committed state here and needs no

@@ -278,6 +278,9 @@ describe('the clock is started where the relay lands, and deploys what it turns'
     expect(sentinel).toMatch(/^\s*workflow_dispatch:/m)
     expect(sentinel).toMatch(/^\s*actions: write$/m)
     expect(sentinel).toContain('gh workflow run deploy-cf.yml')
-    expect(sentinel).toContain("steps.turn.outputs.turned == 'true' && github.triggering_actor == 'github-actions[bot]'")
+    // since 2026-10-08 a recorded objection is deployed the same way (convening-notice.test.ts)
+    expect(sentinel).toContain(
+      "(steps.turn.outputs.turned == 'true' || steps.objection.outputs.recorded == 'true') && github.triggering_actor == 'github-actions[bot]'",
+    )
   })
 })

@@ -58,3 +58,17 @@ A session sets `"objected": "YYYY-MM-DD"` (the day of the objection) in cycle.js
 that day opens a cycle; a later tally stands again, and without one the fallback applies on the
 seventh day. He may also open the next cycle by hand on another question: the clock only reads
 the state it finds.
+
+**Notice and objection by reply (Frank's decision of 2026-10-08, wording private).** While a
+tallied result is pending (cycle.json in the convening, the relay's result for it not set aside,
+the next cycle not open), the cycle sentinel opens one issue, `Convening after cycle NNN: the next
+question opens on YYYY-MM-DD`, assigned to him and naming him, so GitHub emails it to him; when
+the next cycle opens it comments which question opened and closes it. Nothing else is mailed. He
+objects by replying to that email or commenting on the issue with *Widerspruch*, *Einspruch*,
+*objection* or *veto*, not negated; only his account counts. Each sentinel run reads the reply
+before the clock decides, writes `objected` (the day of the run) into the convening block, commits
+it like a turn, confirms it on the issue and closes it. The relay never re-tallies a convening, so
+the fallback follows on the seventh day unless he turns the cycle by hand. The decisions are
+`src/lib/ecology/convening-notice.ts`, under test; a manual run with `notice_dry_run` prints the
+planned issue instead of sending it. The signal log files the convening's opening and its tally
+under the research ecology.

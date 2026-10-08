@@ -14,7 +14,9 @@
 //   the dataset register    one row per day: the probe pass of that day, the sources that first
 //                           appeared, the sources whose reachability changed — as its builder dates them
 //   the Middle's relay      one row per day counting the load-bearing relations between the practices
-//   the ecology             the cycle's opening, and each practice's presentation
+//   the ecology             the cycle's opening, and each practice's presentation; since 2026-10-08
+//                           the convening between two cycles: the day it opened, and the day the
+//                           relay tallied its result
 //   n-1 and Arch            n-1's nights and Arch's session protocols — what each lands daily
 //
 // High-volume sources are COUNTED, one row per source and day, so twenty rows show the breadth of
@@ -27,6 +29,7 @@ import { NAMING } from '@/config/naming'
 import type { Werk } from '@/data/werke'
 import type { ArchFacts } from '@/lib/arch/facts'
 import { readMoments, type StageMoment } from '@/lib/attention/moments'
+import { resultFate, type RelayConvening } from '@/lib/ecology/convening'
 import { LOAD_BEARING, supersededIds, type Relay, type RelayState } from '@/lib/ecology/relay'
 import type { CycleState, PresentationEntry } from '@/lib/ecology/v3'
 import { count, READOUTS } from '@/lib/experiments/readouts'
@@ -414,6 +417,13 @@ export function atlasEntries(runs: readonly unknown[], names: HouseNames = house
 // ── the ecology ────────────────────────────────────────────────────────────────────────────
 
 /**
+ * The ecology's own turns in the order they happen — cycle N opens, its convening opens, the
+ * convening's result is tallied, cycle N+1 opens — as one ordinal (house-feed.ts, `seq`), so that
+ * two of them filed under one day stand newest first, whatever their titles.
+ */
+const turnSeq = (cycle: number, step: 0 | 1 | 2): number => cycle * 10 + step
+
+/**
  * The ecology's cycle turn: the day the running cycle opened, with the question it carries. Only
  * the running cycle is in the committed state (cycle.json is rewritten at every turn, and earlier
  * turns live in its history), so the log shows that one turn — a silent past, not a guessed one.
@@ -436,8 +446,68 @@ export function cycleEntries(cycle: CycleState | null, names: HouseNames = house
       href: '/ecology',
       withdrawn: false,
       voice: null,
+      seq: turnSeq(cycle.cycle, 0),
     },
   ]
+}
+
+/** Where /ecology draws the convening — only while cycle.json is in it (EcologyV3Entrance.astro). */
+const CONVENING_HREF = '/ecology#convening'
+
+/**
+ * The convening between two cycles (Frank's decision of 2026-10-08, wording private), as the
+ * ecology's own turns — same house and same source as the cycle's opening:
+ *
+ *   · the day it opened, from cycle.json's convening block. The block stands there only while the
+ *     convening runs, so the row goes when the next cycle opens, as the cycle row goes at its turn.
+ *   · the day the Middle's relay tallied its result (contract middle-relay/1, mirrored), with the
+ *     winning question and what the record says became of it — while the convening runs, the day
+ *     it opens the next cycle unless the architect objects; afterwards, what cycle.json shows
+ *     (convening.ts, resultFate). The relay keeps a convening until a later one replaces it, so
+ *     this row outlives the convening and then leads to the cycle panel rather than an anchor
+ *     that is gone.
+ *
+ * Dates are the records' own; an absent relay, or one without a convening or a result, is an
+ * empty source.
+ */
+export function conveningEntries(
+  cycle: CycleState | null,
+  relay: RelayConvening | null,
+  names: HouseNames = houseNames(),
+): FeedEntry[] {
+  const E = NAMING.frontDoor.ecologyLive
+  const base = { time: null, source: 'cycle' as const, house: 'ecology' as const, houseName: names.ecology, withdrawn: false, voice: null }
+  const open = cycle?.phase === 'convening' && cycle.convening ? cycle.convening : null
+  const rows: FeedEntry[] = []
+  if (open && DAY.test(open.opened)) {
+    rows.push({
+      ...base,
+      date: open.opened,
+      title: F.conveningOpened(E.cycleLabel(open.afterCycle)),
+      fact: null,
+      kind: K.turn,
+      href: CONVENING_HREF,
+      seq: turnSeq(open.afterCycle, 1),
+    })
+  }
+  const result = relay?.result
+  if (relay && result && DAY.test(result.talliedOn)) {
+    const fate = cycle ? resultFate(cycle, relay) : null
+    rows.push({
+      ...base,
+      date: result.talliedOn,
+      title: F.conveningTallied(E.cycleLabel(relay.afterCycle)),
+      fact: F.conveningResult({
+        question: E.question(result.question),
+        next: E.cycleLabel(relay.afterCycle + 1),
+        fate: fate ?? { kind: 'unknown' },
+      }),
+      kind: K.tally,
+      href: open && open.afterCycle === relay.afterCycle ? CONVENING_HREF : '/ecology',
+      seq: turnSeq(relay.afterCycle, 2),
+    })
+  }
+  return rows
 }
 
 /** Each practice's presentation of a cycle, on the day its own summary names — a presentation

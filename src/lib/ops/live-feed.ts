@@ -18,6 +18,7 @@ import attentionExport from '@/data/attention/export.json'
 import attentionMoments from '@/data/attention/moments.json'
 import { WERKE, type Werk } from '@/data/werke'
 import { readArchFacts, type ArchFacts } from '@/lib/arch/facts'
+import { loadRelayExtras, type RelayConvening } from '@/lib/ecology/convening'
 import { loadRelay, type RelayState } from '@/lib/ecology/relay'
 import { loadArtifacts, loadCycle, loadPresentations, type ArtifactEntry, type CycleState, type PresentationEntry } from '@/lib/ecology/v3'
 import type { LatestWork } from '@/lib/engines/latest'
@@ -29,6 +30,7 @@ import { archEntries, artifactEntries, houseNames, labEntries, n1Entries, regist
 import {
   archSessionEntries,
   atlasEntries,
+  conveningEntries,
   cycleEntries,
   datasetEntries,
   momentEntries,
@@ -65,6 +67,9 @@ export interface FeedInput {
   presentations: readonly PresentationEntry[]
   /** the Middle's relay as loadRelay read it; absent and unreadable are empty sources */
   relay: RelayState | null
+  /** the convening the same relay carries (2026-10-08), as loadRelayExtras read it; null when the
+   *  relay is absent or unreadable, or carries no convening */
+  relayConvening: RelayConvening | null
 }
 
 /** A feed with no sources at all — what a fixture starts from, so a test names what it feeds in. */
@@ -84,6 +89,7 @@ export const NO_SOURCES: FeedInput = {
   cycle: null,
   presentations: [],
   relay: null,
+  relayConvening: null,
 }
 
 /** The whole stream, newest first, from sources handed in — pure, and the same twice. */
@@ -92,6 +98,7 @@ export function buildFeed(input: Partial<FeedInput>): FeedEntry[] {
   const names = houseNames()
   return sortFeed([
     ...cycleEntries(i.cycle, names),
+    ...conveningEntries(i.cycle, i.relayConvening, names),
     ...presentationEntries(i.presentations, names),
     ...artifactEntries(i.artifacts, names),
     ...registerEntries(i.works, names),
@@ -216,6 +223,7 @@ export function loadFeedInput(): FeedInput {
     cycle: loadCycle(root),
     presentations: loadPresentations(root),
     relay: loadRelay(root),
+    relayConvening: loadRelayExtras(root).convening,
   }
   return cached
 }
