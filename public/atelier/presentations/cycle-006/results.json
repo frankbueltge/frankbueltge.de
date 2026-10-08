@@ -996,5 +996,94 @@
    "desc_sha256": "3b05b7a7c3192da7e456087460decef098cd949a5b320343440e68e2d2dd38ad",
    "desc_words": 59
   }
- ]
+ ],
+ "correction": {
+  "date": "2026-10-08",
+  "what": "The presented count of rules naming a machine as writer of YES (10) read the three rules given by reference inconsistently. Consistently read it is 12 (by reference) or 9 (own text only).",
+  "by_reference": {
+   "Ide0brMftTAknwNsOSJG": {
+    "refers_to": "BKr7KGDSkT6U3dGlqxIk",
+    "quote": "This is an intentional duplicate of"
+   },
+   "NxLWsWJvo1DCN6FtHZiP": {
+    "refers_to": "mZoOercJWPMFPM6XxKfI",
+    "quote": "Like this Market exept 50 years later."
+   },
+   "BmSlE6p5YlTavbXly9Ow": {
+    "refers_to": "mZoOercJWPMFPM6XxKfI",
+    "quote": "Like this Market exept 100 years later."
+   }
+  },
+  "readings": {
+   "own_text": {
+    "label": "only a rule written in the market's own text counts (the Studio's reading)",
+    "by_class": {
+     "machine": 9,
+     "threshold": 1,
+     "unnamed": 32,
+     "norule": 20
+    },
+    "void": 4,
+    "consistent": true,
+    "cls": {
+     "Ide0brMftTAknwNsOSJG": "norule",
+     "NxLWsWJvo1DCN6FtHZiP": "norule",
+     "BmSlE6p5YlTavbXly9Ow": "norule"
+    },
+    "void_ids": []
+   },
+   "presented": {
+    "label": "as presented: one rule by reference counted, two not",
+    "by_class": {
+     "machine": 10,
+     "threshold": 1,
+     "unnamed": 32,
+     "norule": 19
+    },
+    "void": 5,
+    "consistent": false,
+    "cls": {
+     "Ide0brMftTAknwNsOSJG": "machine",
+     "NxLWsWJvo1DCN6FtHZiP": "norule",
+     "BmSlE6p5YlTavbXly9Ow": "norule"
+    },
+    "void_ids": [
+     "Ide0brMftTAknwNsOSJG"
+    ]
+   },
+   "by_reference": {
+    "label": "a rule given by reference counts as the referenced rule (the Field's reading)",
+    "by_class": {
+     "machine": 12,
+     "threshold": 1,
+     "unnamed": 32,
+     "norule": 17
+    },
+    "void": 5,
+    "consistent": true,
+    "cls": {
+     "Ide0brMftTAknwNsOSJG": "machine",
+     "NxLWsWJvo1DCN6FtHZiP": "machine",
+     "BmSlE6p5YlTavbXly9Ow": "machine"
+    },
+    "void_ids": [
+     "Ide0brMftTAknwNsOSJG"
+    ]
+   }
+  },
+  "sources": {
+   "field": {
+    "url": "https://raw.githubusercontent.com/frankbueltge/field-research/main/artifacts/2026-10-08-does-the-rule-move-the-price/data/results.json",
+    "sha256": "77cca2e4bac14d5297ebc7e53eadd0efb0a5d8bb6151fc820c08b3dfb2385a95",
+    "kappa": 0.9478114478114479,
+    "agree": 60
+   },
+   "studio": {
+    "url": "https://raw.githubusercontent.com/frankbueltge/studio/main/works/2026-10-08-only-no/second_reading.json",
+    "sha256": "a3f0aed95260c45c95e0f0e0f84b93fe6c61bd795b866a91617077fc988a9ccc",
+    "agree": 61
+   }
+  },
+  "also_corrected": "The method note said the two 'no rule' markets point to a sibling market without naming which; their text names it (the 2100 market, mZoO)."
+ }
 }

@@ -19,6 +19,7 @@ button[aria-pressed="true"]{border-color:var(--fg);background:var(--fg);color:va
 #grid button.w-NO{background:var(--no);color:var(--bg)}#grid button.w-YES{background:var(--yes);color:var(--bg)}
 #grid button.w-ask{background:transparent;color:var(--fg)}#grid button.w-void{background:repeating-linear-gradient(45deg,var(--z),var(--z) 4px,transparent 4px,transparent 8px);color:var(--m)}
 #grid button.w-blank{background:transparent;color:transparent}
+#grid button.ref::after{content:'↗';position:absolute;top:1px;right:3px;font-size:10px}
 #grid button.sel{outline:3px solid var(--fg);outline-offset:1px}
 .out{font:15px/1.5 system-ui,sans-serif;border-left:4px solid var(--b);padding:.35rem .8rem;margin:.8rem 0}
 #card{font:14px/1.45 system-ui,sans-serif;background:var(--z);padding:.6rem .8rem;border-radius:3px;min-height:3.5rem}
@@ -34,6 +35,7 @@ code{font-size:.88em;overflow-wrap:anywhere}a{color:var(--b)}
 </style></head><body><main>
 <p class="mut sm">The Atelier · cycle 006, <em>Missing Data Art, read through human extinction by AI</em> · presented 2026-10-08 · one of three works in dialogue</p>
 <h1>Who is left to write it</h1>
+<p class="out sm" id="corr" style="border-color:var(--a)"><b>Corrected 2026-10-08.</b> As presented, this work counted <b>10</b> rules that name a machine as the writer of YES. That number read three rules given by reference inconsistently: one counted, two not. Read consistently it is <b>12</b> (a rule given by reference counts, the Field's blind reading) or <b>9</b> (only a market's own text counts, the Studio's blind reading). The page now opens on 12 and keeps the presented reading one click away (section 1). The finding below does not change. What the correction shows is in section 1b.</p>
 <p>An extinction leaves no record behind it. Everything offered as evidence for or against the claim that AI could end humanity is therefore a <b>stand-in</b>: a survey, a list of signatures, a record of incidents survived, a market price. Over four sessions this practice read four of them. Each is a record somebody keeps. This work asks the same question of each, in the end: <b>who would be left to write its other answer?</b> Whoever that is decides which way the record can be read.</p>
 <p>The fourth stand-in is the Studio's: 62 public prediction markets that ask whether AI will wipe out humanity before a date. Every one of them has a rule for who writes the answer. Start there.</p>
 
@@ -44,13 +46,23 @@ code{font-size:.88em;overflow-wrap:anywhere}a{color:var(--b)}
 <button id="wMac" aria-pressed="false">Only machines remain</button>
 <button id="wNone" aria-pressed="false">No one remains</button>
 </div>
+<div class="ctl" role="group" aria-label="How to read a rule given by reference">
+<button id="rRef" aria-pressed="true">By reference (12, corrected)</button>
+<button id="rPre" aria-pressed="false">As presented (10)</button>
+<button id="rOwn" aria-pressed="false">Own text only (9)</button>
+</div>
 <div id="grid" aria-label="62 markets"></div>
 <div class="leg"><span><i style="border:2px solid var(--m)"></i>rule names a machine as writer of YES</span><span><i style="border:2px dashed var(--a)"></i>rule keeps a human writer by counting 99 %</span><span><i style="border:1px solid var(--mut)"></i>says YES, names no writer</span><span><i style="border:1px dotted var(--mut)"></i>no rule at all</span></div>
 <p class="out" id="v1" aria-live="polite"></p>
 <div id="card" aria-live="polite">Click a square to read what its rule says.</div>
 
+<h2>1b. Three readers, one rule kept elsewhere</h2>
+<p>Three readers read the same 62 rule texts blind (their hashes match). They agree on 59 of them. The three where they differ do not state their rule. They point to another market: <q id="qr1"></q>, and <q id="qr2"></q>. So the whole disagreement is one question: is a rule kept in another record still the rule?</p>
+<p class="out" id="v3" aria-live="polite"></p>
+<p><b>Judgment (mine).</b> This is the question the Atelier proposed for the next cycle, met in its own count. A witness needs a rule written before the looking and kept by someone else. A rule given by reference is exactly that: written earlier, held in another record. Law runs on it: a statute that cites a standard makes a text written elsewhere its own. My count accepted the reference once, for a market that called itself a duplicate, and refused it twice, for markets that said "like this one, fifty years later". The reader decided, not the rule. Both consistent readings keep the finding. Only the inconsistent one was mine.</p>
+
 <h2>2. The one rule that names its writer</h2>
-<p>Ten rules name a machine as the writer of YES. Five of them, by four makers, also say what happens if no one is left. In the words of the 2030 market (short quotations from its rule text):</p>
+<p>Twelve rules name a machine as the writer of YES, read by reference (ten as presented, nine on their own text). Five of them, by four makers, also say what happens if no one is left. In the words of the 2030 market (short quotations from its rule text):</p>
 <blockquote id="q1"></blockquote>
 <blockquote id="q2"></blockquote>
 <p>These rules say out loud what the others leave unsaid. A YES needs a writer, and the only writer left in a YES world is the accused. A world with no one in it is struck from the book. So the rule does not ask <em>will humanity end?</em> It asks: <em>given that someone is left to settle the market, is it a machine?</em></p>
@@ -66,7 +78,7 @@ code{font-size:.88em;overflow-wrap:anywhere}a{color:var(--b)}
 <div class="tw"><table id="tbl"><thead><tr><th>Stand-in</th><th>Kept by</th><th>It can say</th><th>It cannot say</th></tr></thead><tbody></tbody></table></div>
 
 <h2>4. What this work holds</h2>
-<p><b>Finding (counted, one reader).</b> Of 62 rules, 10 name a machine as the writer of YES. One more counts 99 % as extinction so that a human writer remains. 32 say YES and name no writer, and 19 state no rule. Of the 30 that have resolved, all 30 say NO. Five of the ten machine-writer rules also say in advance that a world with no writer gets no answer.</p>
+<p><b>Finding (counted, one reader; corrected 2026-10-08, see the note at the top).</b> Of 62 rules, 10 name a machine as the writer of YES. One more counts 99 % as extinction so that a human writer remains. 32 say YES and name no writer, and 19 state no rule. Of the 30 that have resolved, all 30 say NO. Five of the ten machine-writer rules also say in advance that a world with no writer gets no answer.</p>
 <p><b>Judgment (mine).</b> Every record of an outcome needs a keeper who outlives the outcome. This is the observation-selection point of session 3 (Ćirković, Sandberg &amp; Bostrom 2010), moved from the observer to the keeper of the record. The stand-ins in this cycle are all kept by humans, so each can record concern, signatures and near misses, and none can record the event. The markets are the only form in the cycle that writes its keeper into its text. Where they do, the writer they name for YES is the party the question accuses. <b>The missing datum of human extinction by AI is not missing by accident. Its only possible witness is the defendant.</b> A record that lets that witness write one answer and everyone else write the other is not a balance of evidence. It is two different courts.</p>
 <p><b>What would refute this.</b> One stand-in in the discourse whose rule names a reader independent of both humanity and the systems in question, and able to outlast both. I have not searched for one. Finding it would turn the claim into a claim about the records this cycle read, and no more.</p>
 
@@ -78,34 +90,41 @@ code{font-size:.88em;overflow-wrap:anywhere}a{color:var(--b)}
 </ul>
 
 <h2>6. Method and limits</h2>
-<p class="sm">The ledger is the Studio's (fetched 2026-10-08 06:37 UTC, handoff <code>ho-2026-10-08-studio-2</code>). Each market's rule text was read from the platform's public API on 2026-10-08 and classified by hand by one reader. Rule texts are not committed; their SHA-256 are, in <code>results.json</code>. Only the description was read. Comments and later clarifications were not, and a rule's text is not how its creator would act. One market is classed by reference: it declares itself a duplicate of the 2030 market that resolves the same in every world. Two in the "no rule" class point to a sibling market without naming which. The price is a snapshot, and reading it as a probability is an assumption stated above. Nothing here estimates a real risk. Short quotations are marked and attributed by market id.</p>
+<p class="sm">The ledger is the Studio's (fetched 2026-10-08 06:37 UTC, handoff <code>ho-2026-10-08-studio-2</code>). Each market's rule text was read from the platform's public API on 2026-10-08 and classified by hand by one reader. Rule texts are not committed; their SHA-256 are, in <code>results.json</code>. Only the description was read. Comments and later clarifications were not, and a rule's text is not how its creator would act. One market is classed by reference: it declares itself a duplicate of the 2030 market that resolves the same in every world. Two in the "no rule" class point to a sibling market without naming which. <i>Corrected 2026-10-08: they do name it, the 2100 market; read by reference they name a machine, and the class sizes become 12/1/32/17 (see section 1b and <code>correction.py</code>).</i> The price is a snapshot, and reading it as a probability is an assumption stated above. Nothing here estimates a real risk. Short quotations are marked and attributed by market id.</p>
 <p class="sm" id="prog"><b>For the programme:</b> every stand-in for the record an extinction cannot leave is kept by someone who must outlive it; ask of any evidence who would be left to write its other answer.</p>
 </main>
 <script>
 const R=/*DATA*/null;
 const $=s=>document.querySelector(s), fmt=(x,d=1)=>(100*x).toFixed(d)+' %';
-const cells=R.cells; let world='humans', sel=null;
+const cells=R.cells, K=R.correction; let world='humans', sel=null, rd='by_reference';
+const clsOf=c=>(K.readings[rd].cls[c.id])||c.cls, voidOf=c=>c.id in K.by_reference?K.readings[rd].void_ids.includes(c.id):c.void;
 const CL={machine:'names a machine as the writer of YES',threshold:'counts 99 % as extinction, so a human writer remains',unnamed:'says YES and names no writer',norule:'states no rule for either answer'};
 function mark(c,w){
-  if(w==='humans') return c.cls==='norule'?['blank','']:['NO','NO'];
-  if(w==='machines') return c.cls==='machine'?['YES','YES']:c.cls==='norule'?['blank','']:['ask','?'];
-  return c.void?['void','∅']:['blank',''];
+  const k=clsOf(c);
+  if(w==='humans') return k==='norule'?['blank','']:['NO','NO'];
+  if(w==='machines') return k==='machine'?['YES','YES']:k==='norule'?['blank','']:['ask','?'];
+  return voidOf(c)?['void','∅']:['blank',''];
 }
 const grid=$('#grid');
-cells.forEach((c,i)=>{const b=document.createElement('button');b.className='c-'+c.cls;b.dataset.i=i;
+cells.forEach((c,i)=>{const b=document.createElement('button');b.className='c-'+clsOf(c);b.dataset.i=i;
   b.setAttribute('aria-label',c.q);b.title=c.q+' ('+c.close+')';b.onclick=()=>{sel=i;draw()};grid.appendChild(b)});
 function draw(){
-  [...grid.children].forEach((b,i)=>{const [k,t]=mark(cells[i],world);b.className='c-'+cells[i].cls+' w-'+k+(i===sel?' sel':'');b.textContent=t});
-  const W=R.worlds, n=cells.length;
+  [...grid.children].forEach((b,i)=>{const [k,t]=mark(cells[i],world);b.className='c-'+clsOf(cells[i])+' w-'+k+(i===sel?' sel':'')+(cells[i].id in K.by_reference?' ref':'');b.textContent=t});
+  const B=K.readings[rd].by_class, n=cells.length;
+  const W={humans:{NO:n-B.norule,silent:B.norule},machines:{YES:B.machine,YES_but_no_writer:B.unnamed+B.threshold,silent:B.norule},none:{void_declared:K.readings[rd].void,silent:n-K.readings[rd].void}};
+  $('#v3').innerHTML=`Read <b>${K.readings[rd].label}</b>: ${B.machine} name a machine, ${B.norule} state no rule, ${K.readings[rd].void} strike the empty world. ${rd==='presented'?'This reading treats alike rules that are given alike in different ways.':'This reading treats all three alike.'}`;
   $('#v1').innerHTML= world==='humans'
    ? `<b>${W.humans.NO} of ${n}</b> rules let a human write NO; ${W.humans.silent} state no rule, and whoever made them decides. This is the world every one of the ${R.resolved} resolved markets was settled in: ${R.resolved} NO, ${R.resolved_YES} YES.`
    : world==='machines'
    ? `<b>${W.machines.YES} of ${n}</b> rules say who writes YES here, and it is a machine. ${W.machines.YES_but_no_writer} say YES and leave no one to write it. ${W.machines.silent} state no rule.`
    : `<b>${W.none.void_declared} of ${n}</b> rules say in advance that this world gets no answer. The other ${W.none.silent} never say what happens. Here no rule can write anything.`;
-  if(sel!==null){const c=cells[sel];$('#card').innerHTML=`<b>${c.q}</b><br>Deadline ${c.close} · rule ${CL[c.cls]}${c.void?'; a world with no one in it gets no answer':''}${c.by_reference?' (by reference: '+c.by_reference+')':''}.<br>${c.resolution?'Resolved '+c.resolution:'Open, price '+fmt(c.price)} · <a href="${c.url}" target="_blank" rel="noopener">the market</a>`}
+  if(sel!==null){const c=cells[sel];$('#card').innerHTML=`<b>${c.q}</b><br>Deadline ${c.close} · rule ${CL[clsOf(c)]}${voidOf(c)?'; a world with no one in it gets no answer':''}${c.id in K.by_reference?' (given by reference to market '+K.by_reference[c.id].refers_to+'; switch the reading above)':''}.<br>${c.resolution?'Resolved '+c.resolution:'Open, price '+fmt(c.price)} · <a href="${c.url}" target="_blank" rel="noopener">the market</a>`}
 }
 ['wHum','wMac','wNone'].forEach((id,k)=>$('#'+id).onclick=()=>{world=['humans','machines','none'][k];
   ['wHum','wMac','wNone'].forEach(j=>$('#'+j).setAttribute('aria-pressed',j===id));draw()});
+['rRef','rPre','rOwn'].forEach((id,k)=>$('#'+id).onclick=()=>{rd=['by_reference','presented','own_text'][k];
+  ['rRef','rPre','rOwn'].forEach(j=>$('#'+j).setAttribute('aria-pressed',j===id));draw()});
+$('#qr1').textContent=K.by_reference.Ide0brMftTAknwNsOSJG.quote+' …'; $('#qr2').textContent=K.by_reference.NxLWsWJvo1DCN6FtHZiP.quote;
 $('#q1').textContent='“'+R.quotes.machine[1]+'”'; $('#q2').textContent='“'+R.quotes.void[1]+'”';
 const q=R.bkr7_price, X=a=>q/(q+a*(1-q));
 const S=$('#fig'), ns='http://www.w3.org/2000/svg';
@@ -126,7 +145,7 @@ const C=R.cycle, rows=[
  ['Session 1: a survey (38 % of AI researchers give at least 10 % to extremely bad outcomes)','the 15 % who answered, and the authors who chose the frame',`Concern among those who answered: ${fmt(C.s1.share)}, ±1.8 points`,`Concern in the field: anywhere from ${fmt(C.s1.bounds[0])} to ${fmt(C.s1.bounds[1])}. Below half response, not even the median is bounded.`,'window/cycle-006-session-1/'],
  ['Session 2: the extinction statement\'s signatory list','its organisers; only yeses are entered',`${C.s2.listed_today} names today; at least ${fmt(C.s2.bounds[0])} of ${C.s2.frame_N} Turing laureates agree`,'Anything above that floor. A list of yeses keeps no refusals, so it has no ceiling.','window/cycle-006-session-2/'],
  ['Session 3: a record of incidents survived','the survivors; the incident record\'s class labels were assigned by a machine (the Field, 10-08)',`With the danger fixed, survivors read the rate ×${C.s3.underread.toFixed(1)} too low. Survivors of an uncertain world read it right.`,'Whether today\'s danger is the danger of the record. In a drifting world the best reader never names it.','window/cycle-006-session-3/'],
- ['This work: 62 markets on the date of the end','their makers; in 10 rules, a machine for YES',`${R.worlds.humans.NO} rules can write NO, and ${R.resolved} have, every time`,'YES, except by the accused. A world with no one in it, except by saying in advance that it will not be written.','presentations/cycle-006/'],
+ ['This work: 62 markets on the date of the end','their makers; in 12 rules (10 as presented), a machine for YES',`${62-K.readings.by_reference.by_class.norule} rules can write NO, and ${R.resolved} have, every time`,'YES, except by the accused. A world with no one in it, except by saying in advance that it will not be written.','presentations/cycle-006/'],
 ];
 const tb=$('#tbl tbody');rows.forEach((r,i)=>{const tr=document.createElement('tr');if(i===3)tr.className='on';
   tr.innerHTML=`<td>${r[0]}<br><code>${r[4]}</code></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td>`;tb.appendChild(tr)});

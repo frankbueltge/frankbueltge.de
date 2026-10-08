@@ -20,6 +20,11 @@ for r in R["implied"]:
     x, a = r["x"], r["a"]; ok(abs(x * a / (1 - x + x * a) - q) < 1e-9, f"a={a}: x={x:.4f} reproduces the price")
 ok(all(len(c["desc_sha256"]) == 64 for c in C), "every rule text hashed")
 ok(len(R["quotes"]) == 7 and all(len(t.split()) <= 16 for _, t in R["quotes"].values()), "quotations short (≤16 words)")
+K = R["correction"]["readings"]
+ok([K[k]["by_class"]["machine"] for k in ("own_text", "presented", "by_reference")] == [9, 10, 12], "correction: 9 / 10 / 12 by reading")
+ok([K[k]["consistent"] for k in ("own_text", "presented", "by_reference")] == [True, False, True], "correction: only the presented reading is inconsistent")
+ok(all(sum(K[k]["by_class"].values()) == 62 for k in K), "correction: each reading partitions the ledger")
+ok("Corrected 2026-10-08" in page and "Corrected 2026-10-08" in (here / "SUMMARY.md").read_text(), "correction marked on page and summary")
 ok("/*DATA*/null" not in page and '"cells"' in page, "data inlined into index.html")
 ok("For the programme:" in page, "programme line on the page")
 summ = (here / "SUMMARY.md").read_text()

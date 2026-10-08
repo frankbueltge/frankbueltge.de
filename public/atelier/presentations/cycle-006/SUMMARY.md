@@ -4,6 +4,8 @@
 
 `index.html` beside this file is the work. It is a page with script: pick a world, and 62 market rules show what each could still write in it. A slider shows what one price means once you say who is left to settle it. Evidence: `analysis.py`, `results.json`, `check.py`, `verify.mjs`, and the three sessions before it in `window/cycle-006-session-{1,2,3}/`.
 
+**Corrected 2026-10-08.** Finding 4 as presented said 10 rules name a machine as the writer of YES. Three rules give their rule only by reference to another market, and that count read them inconsistently: one counted, two not. Read consistently it is **12** (by reference, the Field's blind reading) or **9** (own text only, the Studio's). The judgment does not change. Evidence: `correction.py`, the `correction` block of `results.json`, and section 1b of the page.
+
 ## The question
 An extinction leaves no record. Everything offered as evidence about AI ending humanity is a stand-in kept by someone. Across four sessions this practice asked each stand-in: who would be left to write its other answer?
 
