@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Heap</title>
+<style>
+  html, body { margin: 0; background: #ebe7de; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  svg { display: block; }
+  text { font-family: Georgia, "Times New Roman", serif; fill: #2a2723; }
+  .small { font-size: 11px; fill: #6b655b; }
+  .label { font-size: 12px; }
+  .mass { font-size: 11px; fill: #6b655b; font-style: italic; }
+</style>
+</head>
+<body>
+<svg id="s" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("s");
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(e);
+    return e;
+  }
+  function txt(str, attrs, parent) { var t = el("text", attrs, parent); t.textContent = str; return t; }
+
+  var items = (window.FALLS && window.FALLS.items) || [];
+  var INK = "#24221f", PAPER = "#ebe7de", FAINT = "#6b655b";
+
+  // Geometry: every stone is a disc whose diameter grows with the cube root
+  // of its mass, as a real stone's width does. One scale for all of them.
+  var maxG = 0; items.forEach(function (f) { if (f.grams > maxG) maxG = f.grams; });
+  var HOBA_D = 124;                      // diameter of the heaviest stone, px
+  var K = HOBA_D / Math.cbrt(maxG);      // px per cube-root gram
+  function radius(g) { return Math.max(0.55, K * Math.cbrt(g) / 2); }
+
+  var GROUND = 712;
+  var Y0 = 1570, Y1 = 2026, XL = 104, XR = 938;
+  function X(year) { return XL + (year - Y0) / (Y1 - Y0) * (XR - XL); }
+
+  // Drop stones in the order they were recorded. Each keeps its year as x
+  // and settles at the lowest height where it touches nothing.
+  function settle(list, xOf) {
+    var placed = [];
+    list.forEach(function (f) {
+      var r = radius(f.grams), x = xOf(f);
+      var cand = [r];
+      placed.forEach(function (p) {
+        var dx = p.x - x, s = p.r + r;
+        if (Math.abs(dx) < s) cand.push(p.y + Math.sqrt(s * s - dx * dx));
+      });
+      cand.sort(function (a, b) { return a - b; });
+      var y = r;
+      for (var i = 0; i < cand.length; i++) {
+        var c = cand[i], ok = true;
+        for (var j = 0; j < placed.length; j++) {
+          var p = placed[j], dx = p.x - x, dy = p.y - c, s = p.r + r;
+          if (dx * dx + dy * dy < s * s - 1e-6) { ok = false; break; }
+        }
+        if (ok) { y = c; break; }
+      }
+      placed.push({ x: x, y: y, r: r, f: f });
+    });
+    return placed;
+  }
+
+  var dated = items.filter(function (f) { return f.year != null; })
+                   .sort(function (a, b) { return a.year - b.year || b.grams - a.grams; });
+  var undated = items.filter(function (f) { return f.year == null; })
+                     .sort(function (a, b) { return b.grams - a.grams; });
+
+  var heap = settle(dated, function (f) { return X(f.year) + 0; });
+  // the undated stones go on their own small heap, poured from one point
+  var UX = 1018;
+  var spill = settle(undated, function (f, i) { return UX; });
+
+  // ---------- ground ----------
+  el("line", { x1: 30, y1: GROUND + 0.5, x2: 1070, y2: GROUND + 0.5, stroke: INK, "stroke-width": 1 });
+  var hatch = el("g", { stroke: "#b9b2a5", "stroke-width": 0.7 });
+  for (var hx = 30; hx < 1070; hx += 7) {
+    el("line", { x1: hx, y1: GROUND + 2, x2: hx - 5, y2: GROUND + 8 }, hatch);
+  }
+
+  // time ticks
+  var ticks = el("g", {});
+  for (var yr = 1600; yr <= 2000; yr += 50) {
+    var tx = X(yr);
+    el("line", { x1: tx, y1: GROUND + 11, x2: tx, y2: GROUND + 16, stroke: FAINT, "stroke-width": 0.8 }, ticks);
+    txt(String(yr), { x: tx, y: GROUND + 30, "text-anchor": "middle", class: "small" }, ticks);
+  }
+  txt("year recorded \u2192", { x: 52, y: GROUND + 48, class: "small" }, ticks);
+  txt("no year", { x: UX, y: GROUND + 30, "text-anchor": "middle", class: "small" }, ticks);
+  el("line", { x1: UX, y1: GROUND + 11, x2: UX, y2: GROUND + 16, stroke: FAINT, "stroke-width": 0.8 }, ticks);
+
+  // ---------- stones ----------
+  var stones = el("g", {});
+  function draw(list) {
+    list.forEach(function (p) {
+      var located = p.f.lat != null && p.f.lon != null;
+      el("circle", {
+        cx: p.x.toFixed(2), cy: (GROUND - p.y).toFixed(2), r: p.r.toFixed(2),
+        fill: located ? INK : "#5a554d",
+        stroke: PAPER, "stroke-width": p.r > 2 ? 0.6 : 0.25
+      }, stones);
+    });
+  }
+  draw(heap); draw(spill);
+
+  // ---------- names of the heaviest ----------
+  function clean(n) {
+    n = n.replace(/\s*\(meteorite\)/i, "").replace(/\s+meteorite$/i, "");
+    if (/^Q\d+$/.test(n)) n = "unnamed (" + n + ")";
+    return n;
+  }
+  function tonnes(g) {
+    var t = g / 1e6;
+    return (t >= 10 ? Math.round(t) : t.toFixed(1)) + " t";
+  }
+  var all = heap.concat(spill).slice().sort(function (a, b) { return b.f.grams - a.f.grams; });
+  var labelled = all.slice(0, 5);
+  var notes = el("g", {});
+  // stones that land almost on top of each other get labels on either side
+  var sorted = labelled.sort(function (a, b) { return a.x - b.x; });
+  function ceilingAt(x, w) {
+    var c = GROUND;
+    heap.concat(spill).forEach(function (q) {
+      if (Math.abs(q.x - x) < w + q.r) c = Math.min(c, GROUND - q.y - q.r);
+    });
+    return c;
+  }
+  sorted.forEach(function (p, i) {
+    var top = GROUND - p.y - p.r;
+    var prev = sorted[i - 1], next = sorted[i + 1];
+    var side = 0;                               // 0 above, -1 elbow left, 1 elbow right
+    if (next && next.x - p.x < 40) side = -1;
+    if (prev && p.x - prev.x < 40) side = 1;
+    var name = clean(p.f.name), sub = tonnes(p.f.grams) + (p.f.year ? ", " + p.f.year : "");
+    if (side === 0) {
+      var ly = ceilingAt(p.x, 30) - 24;
+      el("line", { x1: p.x, y1: ly + 7, x2: p.x, y2: top - 3, stroke: FAINT, "stroke-width": 0.6 }, notes);
+      txt(name, { x: p.x, y: ly - 8, "text-anchor": "middle", class: "label" }, notes);
+      txt(sub, { x: p.x, y: ly + 4, "text-anchor": "middle", class: "mass" }, notes);
+    } else {
+      var pair = side < 0 ? next : prev;
+      var ey = Math.min(ceilingAt(p.x, 30), ceilingAt(pair.x, 30)) - 18;
+      var ex = p.x + side * 22;
+      el("polyline", { points: p.x + "," + (top - 3) + " " + p.x + "," + ey + " " + ex + "," + ey,
+        fill: "none", stroke: FAINT, "stroke-width": 0.6 }, notes);
+      var anchor = side < 0 ? "end" : "start", tx = ex + side * 4;
+      txt(name, { x: tx, y: ey - 1, "text-anchor": anchor, class: "label" }, notes);
+      txt(sub, { x: tx, y: ey + 12, "text-anchor": anchor, class: "mass" }, notes);
+    }
+  });
+
+  // ---------- title and key ----------
+  txt("The Heap", { x: 52, y: 78, "font-size": 34, "letter-spacing": "0.5" });
+  var total = 0; items.forEach(function (f) { total += f.grams; });
+  txt(items.length + " meteorites that Wikidata gives a mass, " + Math.round(total / 1e6) + " tonnes in all,",
+      { x: 54, y: 106, "font-size": 14, fill: FAINT });
+  txt("each drawn at its own size and let fall onto the year it was recorded.",
+      { x: 54, y: 125, "font-size": 14, fill: FAINT });
+
+  // key: the same scale, worked out for a few masses
+  var key = el("g", { transform: "translate(700,60)" });
+  var samples = [[1000, "1 kg"], [100000, "100 kg"], [1e6, "1 t"], [1e7, "10 t"]];
+  var kx = 0;
+  samples.forEach(function (s) {
+    var r = radius(s[0]);
+    el("circle", { cx: kx + r, cy: 46 - r, r: r, fill: "none", stroke: INK, "stroke-width": 0.8 }, key);
+    txt(s[1], { x: kx + r, y: 62, "text-anchor": "middle", class: "small" }, key);
+    kx += 2 * r + 26;
+  });
+  txt("width grows as the cube root of mass, as a stone's does", { x: 0, y: 82, class: "small" }, key);
+  txt("darker: place of fall also recorded", { x: 0, y: 97, class: "small" }, key);
+  el("circle", { cx: 162, cy: 93.5, r: 3, fill: INK }, key);
+  el("circle", { cx: 172, cy: 93.5, r: 3, fill: "#5a554d" }, key);
+
+  txt("Source: " + ((window.FALLS && window.FALLS.source) || "Wikidata") +
+      ". A one-gram stone here is a third of a pixel wide.",
+      { x: 52, y: 776, class: "small" });
+})();
+</script>
+</body>
+</html>

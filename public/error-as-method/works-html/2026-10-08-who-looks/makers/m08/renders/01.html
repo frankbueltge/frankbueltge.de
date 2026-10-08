@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Where They Came to Rest</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #e8e3d8; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800, DPR = window.devicePixelRatio || 1;
+  const cv = document.getElementById('c');
+  cv.width = W * DPR; cv.height = H * DPR; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d'); g.scale(DPR, DPR);
+
+  const items = window.FALLS.items.slice();
+  const GROUND = 690;
+  const Y0 = 1560, Y1 = 2030, XL = 70, XR = 930, XU = 1020; // XU: heap of undated stones
+  const xOf = y => XL + (y - Y0) / (Y1 - Y0) * (XR - XL);
+  // one scale for every stone: diameter grows with the cube root of mass,
+  // as a real stone of uniform density would.
+  const K = 0.5;
+  const rOf = m => Math.max(0.55, K * Math.cbrt(m) / 2);
+
+  // deterministic noise
+  let seed = 7;
+  const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+
+  const dated = items.filter(d => d.year != null).sort((a, b) => a.year - b.year || b.grams - a.grams);
+  const undated = items.filter(d => d.year == null).sort((a, b) => b.grams - a.grams);
+
+  const placed = [];
+  function restY(x, r) {
+    let y = GROUND - r;
+    for (const p of placed) {
+      const dx = Math.abs(p.x - x), s = p.r + r;
+      if (dx < s) { const yy = p.y - Math.sqrt(s * s - dx * dx); if (yy < y) y = yy; }
+    }
+    return y;
+  }
+  function drop(d, x0) {
+    const r = rOf(d.grams);
+    const reach = 14 + r * 0.6;
+    let best = null;
+    for (let i = 0; i <= 40; i++) {
+      const dx = (i / 40 * 2 - 1) * reach;
+      const x = x0 + dx;
+      const y = restY(x, r);
+      const score = y - Math.abs(dx) * 0.55;   // prefer lower rest, but not far from its year
+      if (!best || score > best.score) best = { x, y, score };
+    }
+    const p = { d, x: best.x, y: best.y, r, x0 };
+    placed.push(p);
+    return p;
+  }
+  dated.forEach(d => drop(d, xOf(d.year) + (rnd() - 0.5) * 2));
+  undated.forEach(d => drop(d, XU + (rnd() - 0.5) * 2));
+
+  // ---- sky ----
+  const sky = g.createLinearGradient(0, 0, 0, GROUND);
+  sky.addColorStop(0, '#e3ded2'); sky.addColorStop(1, '#ece8de');
+  g.fillStyle = sky; g.fillRect(0, 0, W, GROUND);
+
+  // fall lines: every dated stone's path from the top edge to where it lies
+  g.lineWidth = 0.5;
+  for (const p of placed) {
+    const a = 0.05 + 0.10 * Math.min(1, p.r / 40);
+    g.strokeStyle = 'rgba(70,60,50,' + a + ')';
+    g.beginPath();
+    const sx = p.x + (p.x - 550) * 0.18 - 90;
+    g.moveTo(sx, 0); g.lineTo(p.x, p.y);
+    g.stroke();
+  }
+
+  // ---- ground ----
+  g.fillStyle = '#d6cfc0'; g.fillRect(0, GROUND, W, H - GROUND);
+  g.strokeStyle = '#4a4239'; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(30, GROUND + 0.5); g.lineTo(W - 30, GROUND + 0.5); g.stroke();
+
+  // ---- stones ----
+  function stone(p) {
+    const { x, y, r } = p;
+    if (r < 1.6) {
+      g.fillStyle = '#2b2622';
+      g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+      return;
+    }
+    const n = Math.max(7, Math.min(22, Math.round(r * 0.9)));
+    const pts = [];
+    const ph = rnd() * 6.28;
+    for (let i = 0; i < n; i++) {
+      const t = ph + i / n * Math.PI * 2;
+      const rr = r * (0.86 + 0.14 * rnd());
+      pts.push([x + Math.cos(t) * rr, y + Math.sin(t) * rr]);
+    }
+    const gr = g.createRadialGradient(x - r * 0.35, y - r * 0.4, r * 0.05, x, y, r * 1.05);
+    gr.addColorStop(0, '#6e655b'); gr.addColorStop(0.55, '#3a332d'); gr.addColorStop(1, '#1f1b18');
+    g.fillStyle = gr;
+    g.beginPath();
+    pts.forEach((q, i) => {
+      const nq = pts[(i + 1) % n];
+      const mx = (q[0] + nq[0]) / 2, my = (q[1] + nq[1]) / 2;
+      if (i === 0) g.moveTo(mx, my); else g.quadraticCurveTo(q[0], q[1], mx, my);
+    });
+    const q0 = pts[0], q1 = pts[1];
+    g.quadraticCurveTo(q0[0], q0[1], (q0[0] + q1[0]) / 2, (q0[1] + q1[1]) / 2);
+    g.closePath(); g.fill();
+    if (r > 12) {   // pitting, regmaglypts
+      const pits = Math.round(r * 0.5);
+      for (let i = 0; i < pits; i++) {
+        const a = rnd() * 6.28, dd = Math.sqrt(rnd()) * r * 0.7;
+        g.fillStyle = 'rgba(15,12,10,' + (0.12 + rnd() * 0.15) + ')';
+        g.beginPath(); g.arc(x + Math.cos(a) * dd, y + Math.sin(a) * dd, r * (0.03 + rnd() * 0.07), 0, 6.28); g.fill();
+      }
+    }
+  }
+  placed.slice().sort((a, b) => b.y - a.y).forEach(stone);
+
+  // ---- time ruler ----
+  g.fillStyle = '#4a4239'; g.font = '11px Georgia, serif'; g.textAlign = 'center';
+  for (let y = 1600; y <= 2000; y += 50) {
+    const x = xOf(y);
+    g.fillRect(x, GROUND, 1, y % 100 ? 4 : 7);
+    if (y % 100 === 0) g.fillText(String(y), x, GROUND + 21);
+  }
+  g.fillText('year unknown', XU, GROUND + 21);
+
+  // ---- labels ----
+  const fmt = m => m >= 1e6 ? (m / 1e6).toLocaleString('en', { maximumFractionDigits: 1 }) + ' t'
+                 : m >= 1000 ? (m / 1000).toLocaleString('en', { maximumFractionDigits: 1 }) + ' kg'
+                 : m.toLocaleString('en') + ' g';
+  const clean = s => s.replace(/ meteorite$/i, '').replace(/ Meteorite$/, '').replace(/ \(meteorite\)$/, '');
+  const big = placed.slice().sort((a, b) => b.d.grams - a.d.grams).slice(0, 7)
+                    .filter(p => !/^Q\d+$/.test(p.d.name));
+  g.textAlign = 'left';
+  const used = [];
+  big.forEach(p => {
+    let lx = p.x + p.r * 0.2, ly = p.y - p.r - 34;
+    for (const u of used) if (Math.abs(u[0] - lx) < 110 && Math.abs(u[1] - ly) < 26) ly = u[1] - 30;
+    used.push([lx, ly]);
+    g.strokeStyle = 'rgba(74,66,57,0.7)'; g.lineWidth = 0.6;
+    g.beginPath(); g.moveTo(p.x + p.r * 0.2, p.y - p.r * 0.92); g.lineTo(lx, ly + 4); g.stroke();
+    g.fillStyle = '#2b2622'; g.font = 'italic 12px Georgia, serif';
+    g.fillText(clean(p.d.name), lx + 4, ly);
+    g.fillStyle = '#6b6156'; g.font = '10.5px Georgia, serif';
+    g.fillText(fmt(p.d.grams) + (p.d.year ? ' · ' + p.d.year : ''), lx + 4, ly + 13);
+  });
+  // the lightest
+  const tiny = placed.slice().sort((a, b) => a.d.grams - b.d.grams)[0];
+
+  // ---- caption ----
+  g.textAlign = 'left';
+  g.fillStyle = '#2b2622'; g.font = '26px Georgia, serif';
+  g.fillText('Where They Came to Rest', 40, 56);
+  g.fillStyle = '#5a5047'; g.font = '12.5px Georgia, serif';
+  const lines = [
+    window.FALLS.count + ' meteorites with a recorded mass, from ' + fmt(tiny.d.grams) + ' (' + clean(tiny.d.name) + ') to 60 t (Hoba).',
+    'Each is drawn at one common scale, as a stone of equal density would be: width grows with the cube root of mass.',
+    'Each is let fall at its year and comes to rest on the ones that came down before it.'
+  ];
+  lines.forEach((t, i) => g.fillText(t, 40, 80 + i * 17));
+  g.fillStyle = '#7a7066'; g.font = '10.5px Georgia, serif';
+  g.fillText('Source: Wikidata (CC0). Year as recorded there; ' + undated.length + ' stones without a year lie apart at right.', 40, H - 28);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Every Gram Counted</title>
+<style>
+html,body{margin:0;background:#0d0c0b;}
+canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+const W=1100,H=800,cv=document.getElementById('c'),g=cv.getContext('2d');
+const items=window.FALLS.items.slice().sort((a,b)=>b.grams-a.grams);
+const total=items.reduce((s,f)=>s+f.grams,0);
+
+// one scale for every stone: area on the page is mass
+const CX=405,CY=405;
+const AREA=0.50*Math.PI*350*350;           // pixels given to the whole record
+const k=AREA/total;                          // px^2 per gram
+items.forEach(f=>{f.r=Math.sqrt(f.grams*k/Math.PI);});
+
+// greedy packing: heaviest first, each stone at the nearest free place to the centre
+const placed=[],CELL=24,grid=new Map();
+const key=(i,j)=>i+','+j;
+function addGrid(p){const r=p.r;for(let i=Math.floor((p.x-r)/CELL);i<=Math.floor((p.x+r)/CELL);i++)for(let j=Math.floor((p.y-r)/CELL);j<=Math.floor((p.y+r)/CELL);j++){const kk=key(i,j);if(!grid.has(kk))grid.set(kk,[]);grid.get(kk).push(p);}}
+function fits(x,y,r){const gap=0.6+r*0.015;
+  for(let i=Math.floor((x-r)/CELL);i<=Math.floor((x+r)/CELL);i++)for(let j=Math.floor((y-r)/CELL);j<=Math.floor((y+r)/CELL);j++){
+    const L=grid.get(key(i,j));if(!L)continue;
+    for(const p of L){const dx=p.x-x,dy=p.y-y,m=p.r+r+gap;if(dx*dx+dy*dy<m*m)return false;}}
+  return true;}
+let sd=7;const rand=()=>{sd=(sd*1664525+1013904223)>>>0;return sd/4294967296;};
+for(const f of items){
+  const r=Math.max(f.r,0.35);let done=false;
+  if(f.r<1.6){ // dust: scattered through the field, not swept into the gaps
+    for(let t=0;t<4000&&!done;t++){const a=rand()*6.2832,d=Math.sqrt(rand())*370;
+      const x=CX+d*Math.cos(a),y=CY+d*Math.sin(a)*0.95;
+      if(x>8&&x<800&&y>8&&y<H-8&&fits(x,y,r+0.8)){f.x=x;f.y=y;done=true;}}
+  }
+  if(!placed.length){f.x=CX;f.y=CY;done=true;}
+  for(let rad=0;!done&&rad<600;rad+=Math.max(0.5,r*0.25)){
+    const n=Math.max(8,Math.ceil(2*Math.PI*rad/Math.max(0.6,r*0.3)));
+    const off=(rad*0.618)%1;
+    for(let a=0;a<n;a++){const t=(a+off)/n*2*Math.PI;
+      const x=CX+rad*Math.cos(t),y=CY+rad*Math.sin(t)*0.92;
+      if(fits(x,y,r)){f.x=x;f.y=y;done=true;break;}}
+  }
+  f.pr=r;placed.push({x:f.x,y:f.y,r:r});addGrid(placed[placed.length-1]);
+}
+
+// ground
+g.fillStyle='#0d0c0b';g.fillRect(0,0,W,H);
+
+// stones: tone by the year they entered the record
+function tone(f){
+  if(f.year==null) return [120,116,110];
+  const t=Math.min(1,Math.max(0,(f.year-1750)/(2024-1750)));
+  // old = deep iron rust, recent = pale ash
+  return [Math.round(150+t*80),Math.round(88+t*126),Math.round(58+t*150)];
+}
+function rough(f){ // a slightly irregular outline so they read as stones, not dots
+  const r=f.r,n=r>6?90:12;let seed=0;for(const ch of f.name)seed=(seed*31+ch.charCodeAt(0))>>>0;
+  const rnd=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
+  const ph=[rnd()*6.28,rnd()*6.28,rnd()*6.28];
+  g.beginPath();
+  for(let i=0;i<=n;i++){const t=i/n*2*Math.PI;
+    const w=1+0.03*Math.sin(3*t+ph[0])+0.02*Math.sin(5*t+ph[1])+0.012*Math.sin(7*t+ph[2]);
+    const x=f.x+r*w*Math.cos(t),y=f.y+r*w*Math.sin(t);i?g.lineTo(x,y):g.moveTo(x,y);}
+  g.closePath();
+}
+for(const f of items){
+  const [R,G,B]=tone(f);
+  if(f.r<0.7){ // below a pixel: draw only as much light as it has area
+    const a=Math.min(1,Math.PI*f.r*f.r*1.6);
+    g.fillStyle=`rgba(${R},${G},${B},${Math.max(a,0.45)})`;
+    g.fillRect(f.x-0.5,f.y-0.5,1,1);continue;}
+  rough(f);
+  if(f.r>8){
+    const gr=g.createRadialGradient(f.x-f.r*0.35,f.y-f.r*0.4,f.r*0.05,f.x,f.y,f.r*1.05);
+    gr.addColorStop(0,`rgb(${Math.min(255,R+40)},${Math.min(255,G+38)},${Math.min(255,B+34)})`);
+    gr.addColorStop(0.7,`rgb(${R},${G},${B})`);
+    gr.addColorStop(1,`rgb(${R*0.55|0},${G*0.55|0},${B*0.55|0})`);
+    g.fillStyle=gr;
+  } else g.fillStyle=`rgb(${R},${G},${B})`;
+  g.fill();
+}
+
+// labels for the stones big enough to carry a name
+g.textAlign='center';g.textBaseline='middle';
+function clean(n){return n.replace(/ meteorite$/i,'').replace(/ Meteorite$/,'').replace(/^Q\d+$/,'unnamed');}
+const tonnes=gr=>gr>=1e6?(gr/1e6).toLocaleString('en',{maximumFractionDigits:1})+' t':(gr/1e3).toLocaleString('en',{maximumFractionDigits:0})+' kg';
+for(const f of items){
+  if(f.r<30)continue;
+  const big=f.r>80;
+  g.fillStyle='rgba(18,14,10,0.82)';
+  g.font=(big?'italic 19px':'italic 12px')+' Georgia, serif';
+  const nm=clean(f.name);
+  if(g.measureText(nm).width<f.r*1.75) g.fillText(nm,f.x,f.y-(big?11:7));
+  g.font=(big?'13px':'10px')+' Georgia, serif';
+  g.fillText(tonnes(f.grams)+(f.year?' · '+f.year:''),f.x,f.y+(big?11:7));
+}
+
+// right column: text
+const X=842;
+g.textAlign='left';g.textBaseline='alphabetic';
+g.fillStyle='#e9e1d4';g.font='italic 34px Georgia, serif';
+g.fillText('Every Gram',X,92);g.fillText('Counted',X,130);
+g.fillStyle='#9d9488';g.font='13px Georgia, serif';
+const lines=[
+  'All '+items.length+' meteorites that Wikidata',
+  'lists with a mass, drawn to one scale:',
+  'the area of each stone is its weight.',
+  '',
+  'Together '+Math.round(total/1e6)+' tonnes.',
+  'The eight largest carry nine tenths.',
+  '',
+  'The lighter half, '+(items.length/2)+' stones,',
+  'weighs '+Math.round(items.slice(items.length/2).reduce((s,f)=>s+f.grams,0)/1000)+' kg in all. At this scale',
+  'most are smaller than a pixel, drawn',
+  'as single grains: the dust around',
+  'the boulders.',
+];
+lines.forEach((l,i)=>g.fillText(l,X,178+i*20));
+
+// key: colour = year
+const ky=440;
+g.fillStyle='#9d9488';g.font='12px Georgia, serif';
+g.fillText('colour: year it entered the record',X,ky);
+for(let i=0;i<200;i++){const yr=1750+i/199*274;const[R,G,B]=tone({year:yr});g.fillStyle=`rgb(${R},${G},${B})`;g.fillRect(X+i,ky+10,1.2,9);}
+g.fillStyle='#7d756b';g.font='11px Georgia, serif';
+g.fillText('1750',X,ky+34);g.textAlign='right';g.fillText('2024',X+200,ky+34);g.textAlign='left';
+const[uR,uG,uB]=tone({});g.fillStyle=`rgb(${uR},${uG},${uB})`;g.fillRect(X,ky+46,9,9);
+g.fillStyle='#7d756b';g.fillText('no year given',X+16,ky+55);
+
+// scale key: one kilogram, one tonne
+const sy=560;
+g.fillStyle='#9d9488';g.font='12px Georgia, serif';g.fillText('to scale',X,sy);
+const marks=[[1e6,'1 tonne'],[1e5,'100 kg'],[1e4,'10 kg'],[1e3,'1 kg']];
+let mx=X;
+marks.forEach(([gm,l])=>{const r=Math.sqrt(gm*k/Math.PI);
+  g.beginPath();g.arc(mx+Math.max(r,1),sy+40,Math.max(r,0.5),0,7);g.strokeStyle='#9d9488';g.lineWidth=0.8;
+  if(r>1.5)g.stroke();else{g.fillStyle='#9d9488';g.fill();}
+  g.fillStyle='#7d756b';g.font='10px Georgia, serif';g.textAlign='center';g.fillText(l,mx+Math.max(r,1),sy+76);g.textAlign='left';
+  mx+=Math.max(r*2,4)+30;});
+
+g.fillStyle='#5e574f';g.font='10px Georgia, serif';
+g.fillText('Source: Wikidata (CC0), items that are',X,H-56);
+g.fillText('meteorites and state a mass. Lightest:',X,H-42);
+const light=items[items.length-1];
+g.fillText(clean(light.name)+', '+light.grams+' g.',X,H-28);
+</script>
+</body></html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deposit</title>
+<style>
+  :root { --paper: #ece7dd; --ink: #2b2925; --soft: #7d776c; }
+  html, body { margin: 0; padding: 0; background: var(--paper); }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; width: 1100px; height: 800px; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+  cv.width = W * dpr; cv.height = H * dpr;
+  var ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  var items = (window.FALLS && window.FALLS.items) || [];
+
+  // Vessel: a trench the record is poured into.
+  var X0 = 150, X1 = 1000, FLOOR = 708;       // screen coords
+  var width = X1 - X0;
+
+  // Every stone the same density, so radius goes with the cube root of mass.
+  // k chosen so the whole record roughly fills the trench.
+  var area = 0;
+  items.forEach(function (d) { area += Math.PI * Math.pow(d.grams, 2 / 3); });
+  var k = Math.sqrt((width * 560 * 0.66) / area);
+
+  // Order of deposit: by year of record; undated last, by name.
+  var stones = items.map(function (d, i) {
+    return { d: d, r: k * Math.cbrt(d.grams), i: i };
+  });
+  stones.sort(function (a, b) {
+    var ay = a.d.year == null ? 1e9 : a.d.year, by = b.d.year == null ? 1e9 : b.d.year;
+    if (ay !== by) return ay - by;
+    return a.d.name < b.d.name ? -1 : a.d.name > b.d.name ? 1 : 0;
+  });
+
+  // Local frame: x in [0,width], y up from floor.
+  var placed = [];
+  var CX = width / 2;
+  function fits(x, y, r) {
+    if (x - r < -1e-6 || x + r > width + 1e-6 || y - r < -1e-6) return false;
+    for (var i = 0; i < placed.length; i++) {
+      var p = placed[i], dx = p.x - x, dy = p.y - y, rr = p.r + r - 1e-6;
+      if (dx * dx + dy * dy < rr * rr) return false;
+      // open to the sky: nothing may sit above the stone's column
+      if (p.y > y && Math.abs(dx) < p.r + r - 0.5) return false;
+    }
+    return true;
+  }
+  stones.forEach(function (s) {
+    var r = s.r, c = [];
+    c.push([r, r], [width - r, r]);
+    for (var i = 0; i < placed.length; i++) {
+      var p = placed[i], R = p.r + r;
+      // floor + circle
+      var dy = p.y - r;
+      if (Math.abs(dy) < R) {
+        var dx = Math.sqrt(R * R - dy * dy);
+        c.push([p.x - dx, r], [p.x + dx, r]);
+      }
+      // walls + circle
+      var wx = [r, width - r];
+      for (var w = 0; w < 2; w++) {
+        var ddx = wx[w] - p.x;
+        if (Math.abs(ddx) < R) c.push([wx[w], p.y + Math.sqrt(R * R - ddx * ddx)]);
+      }
+      // circle + circle
+      for (var j = i + 1; j < placed.length; j++) {
+        var q = placed[j], R2 = q.r + r;
+        var ex = q.x - p.x, ey = q.y - p.y, D = Math.sqrt(ex * ex + ey * ey);
+        if (D > R + R2 || D < Math.abs(R - R2) || D === 0) continue;
+        var a = (R * R - R2 * R2 + D * D) / (2 * D);
+        var h2 = R * R - a * a; if (h2 < 0) continue;
+        var h = Math.sqrt(h2), mx = p.x + a * ex / D, my = p.y + a * ey / D;
+        c.push([mx - h * ey / D, my + h * ex / D], [mx + h * ey / D, my - h * ex / D]);
+      }
+    }
+    c.sort(function (A, B) {
+      var d = A[1] - B[1];
+      if (Math.abs(d) > 0.01) return d;
+      return Math.abs(A[0] - CX) - Math.abs(B[0] - CX);
+    });
+    for (var n = 0; n < c.length; n++) {
+      if (fits(c[n][0], c[n][1], r)) { s.x = c[n][0]; s.y = c[n][1]; break; }
+    }
+    if (s.x == null) { s.x = CX; s.y = 2000; }
+    placed.push(s);
+  });
+
+  function sx(s) { return X0 + s.x; }
+  function sy(s) { return FLOOR - s.y; }
+
+  // ---- paint ----
+  ctx.fillStyle = '#ece7dd';
+  ctx.fillRect(0, 0, W, H);
+
+  // faint paper grain, deterministic
+  var seed = 7;
+  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+  ctx.fillStyle = 'rgba(60,50,40,0.035)';
+  for (var g = 0; g < 9000; g++) ctx.fillRect(rnd() * W, rnd() * H, 1, 1);
+
+  var dated = placed.filter(function (s) { return s.d.year != null; });
+  var yMin = 1576, yMax = 2024;
+  function tone(year) {
+    // older = darker, iron; newer = lighter
+    var t = Math.pow((year - yMin) / (yMax - yMin), 2.2);
+    return t;
+  }
+  function fillFor(s) {
+    if (s.d.year == null) return null;
+    var t = tone(s.d.year);
+    if (s.d.lat != null) {
+      // stones the record ties to a place: rust
+      var L = 30 + t * 30;
+      return 'hsl(18, 48%, ' + L + '%)';
+    }
+    var L2 = 20 + t * 52;
+    return 'hsl(35, 6%, ' + L2 + '%)';
+  }
+
+  // stones
+  placed.forEach(function (s) {
+    var r = Math.max(s.r, 0.75);
+    ctx.beginPath();
+    ctx.arc(sx(s), sy(s), r, 0, Math.PI * 2);
+    var f = fillFor(s);
+    if (f) {
+      ctx.fillStyle = f; ctx.fill();
+      if (s.r > 2.2) {
+        ctx.lineWidth = 0.6; ctx.strokeStyle = 'rgba(236,231,221,0.55)'; ctx.stroke();
+      }
+    } else {
+      ctx.lineWidth = s.r > 3 ? 1.1 : 0.8;
+      ctx.strokeStyle = '#3a3631';
+      ctx.stroke();
+    }
+  });
+
+  // trench
+  ctx.strokeStyle = '#2b2925';
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.moveTo(X0 - 0.7, 150); ctx.lineTo(X0 - 0.7, FLOOR + 0.7);
+  ctx.lineTo(X1 + 0.7, FLOOR + 0.7); ctx.lineTo(X1 + 0.7, 150);
+  ctx.stroke();
+  // ground hatch
+  ctx.lineWidth = 0.7; ctx.strokeStyle = 'rgba(43,41,37,0.45)';
+  for (var hx = X0 - 6; hx < X1 + 6; hx += 7) {
+    ctx.beginPath(); ctx.moveTo(hx, FLOOR + 2); ctx.lineTo(hx - 6, FLOOR + 8); ctx.stroke();
+  }
+
+  // strata marks on the left: where each period's deposit sits (median height)
+  ctx.font = '11px Georgia, "Times New Roman", serif';
+  ctx.textBaseline = 'middle';
+  var marks = [[1576, 1850, '1576 – 1849'], [1850, 1950, '1850 – 1949'], [1950, 2000, '1950 – 1999'], [2000, 2010, '2000 – 2009'], [2010, 2025, '2010 – 2024']];
+  var lastY = 1e9;
+  marks.forEach(function (m) {
+    var ys = dated.filter(function (s) { return s.d.year >= m[0] && s.d.year < m[1]; })
+                  .map(function (s) { return sy(s); }).sort(function (a, b) { return a - b; });
+    if (!ys.length) return;
+    var real = ys[Math.floor(ys.length / 2)];
+    var mid = Math.min(real, lastY - 16); lastY = mid;
+    ctx.strokeStyle = 'rgba(43,41,37,0.55)'; ctx.lineWidth = 0.8;
+    ctx.beginPath(); ctx.moveTo(X0 - 20, mid); ctx.lineTo(X0 - 12, mid); ctx.lineTo(X0 - 3, real); ctx.stroke();
+    ctx.fillStyle = '#4a463f'; ctx.textAlign = 'right';
+    ctx.fillText(m[2], X0 - 22, mid);
+  });
+  var und = placed.filter(function (s) { return s.d.year == null; }).map(sy).sort(function (a, b) { return a - b; });
+  if (und.length) {
+    var ur = und[Math.floor(und.length / 2)], um = Math.min(ur, lastY - 16);
+    ctx.fillStyle = '#4a463f'; ctx.textAlign = 'right';
+    ctx.fillText('no year', X0 - 22, um);
+    ctx.beginPath(); ctx.moveTo(X0 - 20, um); ctx.lineTo(X0 - 12, um); ctx.lineTo(X0 - 3, ur); ctx.stroke();
+  }
+
+  // names inside the largest stones
+  function fmtMass(g) {
+    if (g >= 1e6) return (g / 1e6).toFixed(g >= 1e7 ? 0 : 1).replace(/\.0$/, '') + ' t';
+    if (g >= 1e3) return Math.round(g / 1e3) + ' kg';
+    return g + ' g';
+  }
+  function clean(n) { return n.replace(/ meteorite$/i, '').replace(/ Meteorite$/, ''); }
+  placed.filter(function (s) { return s.r > 50; }).forEach(function (s) {
+    var x = sx(s), y = sy(s), f = fillFor(s);
+    var Lv = !f ? 100 : (s.d.lat != null ? 30 + tone(s.d.year) * 30 : 20 + tone(s.d.year) * 52);
+    var light = Lv > 48;
+    ctx.fillStyle = light ? '#2b2925' : '#efe9de';
+    ctx.textAlign = 'center';
+    var fs = Math.max(10, Math.min(15, s.r / 5.5));
+    ctx.font = 'italic ' + fs + 'px Georgia, "Times New Roman", serif';
+    var nm = /^Q\d+$/.test(s.d.name) ? s.d.name + ' (no label)' : clean(s.d.name);
+    ctx.fillText(nm, x, y - fs * 0.6);
+    ctx.font = (fs - 2) + 'px Georgia, "Times New Roman", serif';
+    ctx.fillText(fmtMass(s.d.grams) + (s.d.year ? ' · ' + s.d.year : ''), x, y + fs * 0.65);
+  });
+
+  // title block
+  ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#2b2925';
+  ctx.font = '30px Georgia, "Times New Roman", serif';
+  ctx.fillText('Deposit', 60, 66);
+  ctx.font = '13px Georgia, "Times New Roman", serif';
+  ctx.fillStyle = '#4a463f';
+  var n = items.length;
+  ctx.fillText('Every meteorite Wikidata gives a mass, ' + n + ' stones, poured into one trench', 60, 94);
+  ctx.fillText('in the order their years were recorded, at one scale and one density,', 60, 112);
+  ctx.fillText('so size is mass. The largest weighs sixty million times the smallest.', 60, 130);
+
+  // key, top right
+  var kx = 760, ky = 60;
+  ctx.font = '11.5px Georgia, "Times New Roman", serif';
+  function keyDot(x, y, style, stroke) {
+    ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2);
+    if (stroke) { ctx.lineWidth = 1; ctx.strokeStyle = '#3a3631'; ctx.stroke(); }
+    else { ctx.fillStyle = style; ctx.fill(); }
+  }
+  keyDot(kx, ky - 4, 'hsl(18,48%,40%)');
+  keyDot(kx + 12, ky - 4, 'hsl(35,6%,40%)');
+  ctx.fillStyle = '#4a463f';
+  ctx.fillText('rust: a place is recorded   grey: none', kx + 24, ky);
+  keyDot(kx, ky + 16, 'hsl(35,6%,22%)');
+  keyDot(kx + 12, ky + 16, 'hsl(35,6%,70%)');
+  ctx.fillStyle = '#4a463f';
+  ctx.fillText('darker is earlier, paler is recent', kx + 24, ky + 20);
+  keyDot(kx + 6, ky + 36, null, true);
+  ctx.fillStyle = '#4a463f';
+  ctx.fillText('outline: no year, laid on top', kx + 24, ky + 40);
+
+  // foot
+  ctx.font = '11px Georgia, "Times New Roman", serif';
+  ctx.fillStyle = '#7d776c';
+  var speck = Math.round(Math.pow(0.75 / k, 3));
+  ctx.fillText('Each stone settles into the lowest place still open to the sky. Stones under about ' + speck + ' g would be too small to see and are drawn as specks.', X0, FLOOR + 34);
+  ctx.textAlign = 'right';
+  ctx.fillText('Source: ' + ((window.FALLS && window.FALLS.source) || 'Wikidata'), X1, FLOOR + 52);
+})();
+</script>
+</body>
+</html>

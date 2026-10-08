@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>What Came Down</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #11100e; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; width: 1100px; height: 800px; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="Meteorites recorded in Wikidata, drawn as discs whose area is their mass, resting on a ground line at their recorded year; the lightest are written as names beneath the ground."></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+  cv.width = W * dpr; cv.height = H * dpr;
+  var ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  var INK = '#e8dcc6', DIM = '#9b907e', FAINT = '#6c6457', BG = '#11100e';
+  var SERIF = 'Georgia, "Times New Roman", serif';
+  var SANS = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+
+  ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
+
+  var F = window.FALLS || { items: [] };
+  var items = F.items.slice();
+
+  function clean(n) {
+    return String(n).replace(/\s*\(meteorite\)\s*$/i, '').replace(/\s+meteorite\s*$/i, '').trim();
+  }
+  function fmtMass(g) {
+    if (g >= 1e6) return (g / 1e6).toFixed(g >= 1e7 ? 0 : 1).replace(/\.0$/, '') + ' t';
+    if (g >= 1e3) return (g / 1e3).toFixed(g >= 1e4 ? 0 : 1).replace(/\.0$/, '') + ' kg';
+    return (g >= 10 ? Math.round(g) : (Math.round(g * 10) / 10)) + ' g';
+  }
+
+  // Scale: the heaviest stone gets radius 140 px; area is proportional to mass.
+  var maxG = items.reduce(function (m, d) { return Math.max(m, d.grams); }, 1);
+  var RMAX = 140;
+  var K = Math.PI * RMAX * RMAX / maxG;           // px^2 per gram
+  function rad(g) { return Math.sqrt(K * g / Math.PI); }
+  var CUT = 1000;                                   // under one kilogram: written, not drawn
+
+  var GROUND = 520;
+  var years = items.filter(function (d) { return d.year != null; }).map(function (d) { return d.year; });
+  var Y0 = Math.min.apply(null, years), Y1 = Math.max(2025, Math.max.apply(null, years));
+  var X0 = 165, X1 = 960;
+  function xOf(y) { return X0 + (y + 0.5 - Y0) / (Y1 + 1 - Y0) * (X1 - X0); }
+
+  var drawn = items.filter(function (d) { return d.grams >= CUT; });
+  var written = items.filter(function (d) { return d.grams < CUT; });
+  var dated = drawn.filter(function (d) { return d.year != null; });
+  var undated = drawn.filter(function (d) { return d.year == null; })
+    .sort(function (a, b) { return b.grams - a.grams; });
+
+  // ---------- ground line and years ----------
+  ctx.strokeStyle = 'rgba(232,220,198,0.55)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(24, GROUND + 0.5); ctx.lineTo(W - 24, GROUND + 0.5); ctx.stroke();
+
+  ctx.font = '10px ' + SANS;
+  ctx.fillStyle = FAINT;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  var firstTick = Math.ceil(Y0 / 50) * 50;
+  for (var t = firstTick; t <= Y1; t += 50) {
+    var tx = xOf(t) - (X1 - X0) / (Y1 + 1 - Y0) * 0.5;
+    ctx.strokeStyle = 'rgba(232,220,198,0.35)';
+    ctx.beginPath(); ctx.moveTo(tx + 0.5, GROUND + 1); ctx.lineTo(tx + 0.5, GROUND + (t % 100 === 0 ? 6 : 4)); ctx.stroke();
+    if (t % 100 === 0) ctx.fillText(String(t), tx, GROUND + 8);
+  }
+
+  // ---------- discs on the ground, drawn largest first so small ones stay visible ----------
+  function disc(x, y, r) {
+    if (r < 1.6) {
+      ctx.fillStyle = 'rgba(240,226,200,' + (0.35 + 0.35 * Math.min(1, r)) + ')';
+      ctx.beginPath(); ctx.arc(x, y, Math.max(r, 0.6), 0, Math.PI * 2); ctx.fill();
+      return;
+    }
+    ctx.fillStyle = 'rgba(214,196,166,0.075)';
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = 'rgba(236,222,196,' + (r > 40 ? 0.62 : 0.5) + ')';
+    ctx.lineWidth = r > 40 ? 1 : 0.75;
+    ctx.stroke();
+  }
+  var placed = dated.map(function (d) {
+    var r = rad(d.grams);
+    return { d: d, x: xOf(d.year), y: GROUND - r, r: r };
+  }).sort(function (a, b) { return b.r - a.r; });
+  placed.forEach(function (p) { disc(p.x, p.y, p.r); });
+
+  // ---------- undated: hung from a thread, not yet set down in time ----------
+  var THREAD = 128, ux = W - 26;
+  var hung = [];
+  undated.forEach(function (d) {
+    var r = rad(d.grams);
+    var gap = r < 1.6 ? 3 : 4;
+    var cx = ux - r;
+    hung.push({ d: d, x: cx, y: THREAD + r + 0.5, r: r });
+    ux = cx - r - gap;
+  });
+  var threadStart = ux - 6;
+  ctx.strokeStyle = 'rgba(232,220,198,0.35)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([2, 3]);
+  ctx.beginPath(); ctx.moveTo(threadStart, THREAD + 0.5); ctx.lineTo(W - 22, THREAD + 0.5); ctx.stroke();
+  ctx.setLineDash([]);
+  hung.forEach(function (p) { disc(p.x, p.y, p.r); });
+  ctx.font = 'italic 11px ' + SERIF;
+  ctx.fillStyle = DIM; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  ctx.fillText('no year recorded (' + undated.length + ')', threadStart, THREAD - 7);
+
+  // ---------- labels for the heaviest ----------
+  ctx.font = '11px ' + SANS;
+  var boxes = [];
+  function hits(b) {
+    for (var i = 0; i < boxes.length; i++) {
+      var o = boxes[i];
+      if (b.x < o.x + o.w && b.x + b.w > o.x && b.y < o.y + o.h && b.y + b.h > o.y) return true;
+    }
+    return false;
+  }
+  // reserve the title and caption zones
+  boxes.push({ x: 20, y: 20, w: 400, h: 92 });
+  boxes.push({ x: 640, y: 20, w: 440, h: 96 });
+  hung.forEach(function (p) { if (p.r >= 1.6) boxes.push({ x: p.x - Math.max(p.r, 52), y: THREAD - 20, w: Math.max(2 * p.r, 104), h: 2 * p.r + 54 }); });
+  var toLabel = placed.filter(function (p) { return p.r >= 22; })
+    .sort(function (a, b) { return b.r - a.r; });
+  toLabel.forEach(function (p) {
+    var name = clean(p.d.name);
+    var s1 = name, s2 = fmtMass(p.d.grams) + ', ' + p.d.year;
+    ctx.font = '11px ' + SANS;
+    var w1 = ctx.measureText(s1).width;
+    ctx.font = '10px ' + SANS;
+    var w2 = ctx.measureText(s2).width;
+    var w = Math.max(w1, w2) + 6, h = 26;
+    var topY = p.y - p.r;
+    var bx = Math.min(W - 20 - w, Math.max(20, p.x - w / 2));
+    var by = topY - 10 - h;
+    var b = { x: bx, y: by, w: w, h: h };
+    var tries = 0;
+    while (hits(b) && tries < 60) { b.y -= 6; tries++; }
+    boxes.push(b);
+    // leader
+    ctx.strokeStyle = 'rgba(232,220,198,0.4)';
+    ctx.lineWidth = 0.75;
+    ctx.beginPath();
+    ctx.moveTo(p.x + 0.5, topY - 1);
+    ctx.lineTo(p.x + 0.5, b.y + h + 2);
+    ctx.stroke();
+    ctx.textAlign = 'center'; var tx = b.x + w / 2;
+    ctx.font = '11px ' + SANS; ctx.fillStyle = INK; ctx.textBaseline = 'alphabetic';
+    ctx.fillText(s1, tx, b.y + 11);
+    ctx.font = '10px ' + SANS; ctx.fillStyle = DIM;
+    ctx.fillText(s2, tx, b.y + 23);
+  });
+  // a few heavy undated ones get a name too
+  hung.filter(function (p) { return p.r >= 14; }).forEach(function (p) {
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.font = '10px ' + SANS; ctx.fillStyle = DIM;
+    ctx.fillText(clean(p.d.name).replace(/\s+Meteorite$/i, ''), p.x, p.y + p.r + 5);
+    ctx.fillStyle = FAINT;
+    ctx.fillText(fmtMass(p.d.grams), p.x, p.y + p.r + 17);
+  });
+
+  // ---------- title and caption ----------
+  ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = INK; ctx.font = '30px ' + SERIF;
+  ctx.fillText('What Came Down', 26, 58);
+  ctx.fillStyle = DIM; ctx.font = 'italic 13px ' + SERIF;
+  var total = items.reduce(function (s, d) { return s + d.grams; }, 0);
+  ctx.fillText(items.length + ' meteorites, ' + Math.round(total / 1e6) + ' tonnes, as Wikidata weighs them', 27, 82);
+
+  ctx.font = '11px ' + SANS; ctx.fillStyle = DIM;
+  var lightest = Math.min.apply(null, items.map(function (d) { return d.grams; }));
+  var cap = [
+    'Each disc has the area of its mass and rests on the ground',
+    'at its recorded year. At this scale a kilogram is less than',
+    'a pixel across; ' + written.length + ' of the ' + items.length + ' weigh less than that, so they',
+    'are written below the ground, heaviest first, down to ' + fmtMass(lightest) + '.'
+  ];
+  cap.forEach(function (s, i) { ctx.fillText(s, 650, 40 + i * 15); });
+
+  // ---------- beneath the ground: the ones too light to draw ----------
+  var under = written.slice().sort(function (a, b) { return b.grams - a.grams || (a.name < b.name ? -1 : 1); });
+  var BX0 = 26, BX1 = W - 26, BY0 = GROUND + 27, BY1 = H - 16;
+  ctx.font = 'italic 11px ' + SERIF; ctx.fillStyle = DIM; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  ctx.fillText('lighter than one kilogram (' + under.length + ')', BX0, BY0 - 2);
+
+  // gauge marks are set into the text where the weight crosses round numbers
+  var MARKS = [500, 100, 50, 10, 5];
+  var seq = [], mi = 0;
+  under.forEach(function (d) {
+    while (mi < MARKS.length && d.grams < MARKS[mi]) { seq.push({ mark: MARKS[mi] }); mi++; }
+    seq.push({ d: d });
+  });
+
+  function layout(size) {
+    var lh = size * 1.3;
+    ctx.font = size + 'px ' + SANS;
+    var sepW = ctx.measureText(' \u00b7 ').width;
+    var x = BX0, y = BY0 + lh, lines = [], cur = [];
+    for (var i = 0; i < seq.length; i++) {
+      var e = seq[i];
+      var txt = e.mark ? '\u2014 under ' + e.mark + ' g \u2014' : clean(e.d.name);
+      ctx.font = (e.mark ? 'italic ' : '') + size + 'px ' + (e.mark ? SERIF : SANS);
+      var w = ctx.measureText(txt).width;
+      if (x + w > BX1 && cur.length) { lines.push(cur); cur = []; x = BX0; y += lh; }
+      cur.push({ txt: txt, mark: e.mark, x: x, y: y, g: e.d ? e.d.grams : e.mark });
+      x += w + sepW;
+    }
+    if (cur.length) lines.push(cur);
+    return { ok: y <= BY1, lines: lines, size: size, sepW: sepW };
+  }
+  var L = null;
+  for (var s = 11; s >= 5; s -= 0.25) { L = layout(s); if (L.ok) break; }
+
+  var gMax = under.length ? under[0].grams : 1, gMin = under.length ? under[under.length - 1].grams : 1;
+  L.lines.forEach(function (line) {
+    line.forEach(function (e, i) {
+      // fade with depth: the lighter the stone, the fainter its name
+      var f = (Math.log(e.g) - Math.log(gMin)) / Math.max(1e-9, Math.log(gMax) - Math.log(gMin));
+      var a = 0.4 + 0.52 * f;
+      if (e.mark) {
+        ctx.font = 'italic ' + L.size + 'px ' + SERIF;
+        ctx.fillStyle = 'rgba(214,170,120,0.9)';
+      } else {
+        ctx.font = L.size + 'px ' + SANS;
+        ctx.fillStyle = 'rgba(226,212,186,' + a.toFixed(3) + ')';
+      }
+      ctx.fillText(e.txt, e.x, e.y);
+      if (i < line.length - 1) {
+        ctx.font = L.size + 'px ' + SANS;
+        ctx.fillStyle = 'rgba(160,148,128,0.35)';
+        var w = ctx.measureText(e.txt).width;
+        ctx.fillText('\u00b7', e.x + w + L.sepW / 2 - 1.5, e.y);
+      }
+    });
+  });
+
+  // source
+  ctx.font = '9px ' + SANS; ctx.fillStyle = FAINT; ctx.textAlign = 'right';
+  ctx.fillText(F.source || 'Wikidata', W - 26, BY0 - 2);
+})();
+</script>
+</body>
+</html>

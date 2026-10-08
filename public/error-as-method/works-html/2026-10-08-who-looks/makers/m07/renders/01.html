@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Count and Weight</title>
+<style>
+  html,body{margin:0;background:#131210;}
+  body{width:1100px;height:800px;overflow:hidden;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function(){
+  const W=1100,H=800,dpr=window.devicePixelRatio||1;
+  const cv=document.getElementById('c');
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+  const g=cv.getContext('2d');g.scale(dpr,dpr);
+
+  const INK='#e9e2d4', DIM='rgba(233,226,212,0.45)', FAINT='rgba(233,226,212,0.22)', RUST='#c8693a';
+  const items=window.FALLS.items.slice();
+  // order: by year, unrecorded years last; ties by name
+  items.sort((a,b)=>{
+    const ay=a.year==null?1e9:a.year, by=b.year==null?1e9:b.year;
+    return ay-by || a.name.localeCompare(b.name);
+  });
+  const n=items.length;
+  const total=items.reduce((s,d)=>s+d.grams,0);
+
+  const L=60,R=W-60,SPAN=R-L;
+  const TOP=232, BOT=618;          // y of the two registers
+  const step=SPAN/n;
+
+  // positions
+  let acc=0;
+  items.forEach((d,i)=>{
+    d.t0=L+i*step; d.t1=d.t0+step;
+    d.b0=L+acc/total*SPAN; acc+=d.grams; d.b1=L+acc/total*SPAN;
+  });
+
+  g.fillStyle='#131210';g.fillRect(0,0,W,H);
+
+  // the threads: each object a band from equal share (top) to share of mass (bottom)
+  const rank=items.slice().sort((a,b)=>b.grams-a.grams);
+  rank.forEach((d,i)=>d.rank=i);
+  for(const d of items){
+    const big=d.rank<10;
+    g.beginPath();
+    g.moveTo(d.t0,TOP);g.lineTo(d.t1,TOP);
+    g.bezierCurveTo(d.t1,TOP+190,d.b1,BOT-190,d.b1,BOT);
+    g.lineTo(d.b0,BOT);
+    g.bezierCurveTo(d.b0,BOT-190,d.t0,TOP+190,d.t0,TOP);
+    g.closePath();
+    g.fillStyle=big?'rgba(200,105,58,0.55)':'rgba(233,226,212,0.13)';
+    g.fill();
+  }
+
+  // top register: one stroke per object, height = log of mass
+  const lmax=Math.log10(6e7);
+  for(const d of items){
+    const h=6+Math.log10(Math.max(1,d.grams))/lmax*92;
+    g.fillStyle=d.rank<10?RUST:INK;
+    g.globalAlpha=d.rank<10?1:0.82;
+    g.fillRect(d.t0+step*0.15,TOP-h,Math.max(0.8,step*0.7),h);
+  }
+  g.globalAlpha=1;
+  g.fillStyle=INK;g.fillRect(L,TOP,SPAN,1);
+
+  // bottom register: the mass itself
+  for(const d of items){
+    const w=d.b1-d.b0;
+    g.fillStyle=d.rank<10?RUST:INK;
+    g.fillRect(d.b0,BOT,Math.max(w,0.0001),26);
+  }
+  // separators between the big pieces
+  g.fillStyle='#131210';
+  for(const d of items){ if(d.b1-d.b0>3) g.fillRect(d.b1-0.5,BOT,1,26); }
+
+  // ---- type ----
+  g.textBaseline='alphabetic';
+  g.fillStyle=INK;
+  g.font='500 30px Georgia, "Times New Roman", serif';
+  g.fillText('Count and Weight',L,64);
+  g.font='italic 15px Georgia, "Times New Roman", serif';
+  g.fillStyle=DIM;
+  g.fillText(n+' meteorites that Wikidata records with a mass, '+Math.round(total/1e6)+' tonnes in all',L,90);
+
+  g.font='11px Helvetica, Arial, sans-serif';
+  g.fillStyle=DIM;
+  g.fillText('ABOVE  each stone given an equal share, in the order its year was recorded; stroke height is the logarithm of its mass',L,118);
+  g.fillText('BELOW  each stone given the share its mass claims',L,134);
+
+  // year axis on top register
+  g.font='10px Helvetica, Arial, sans-serif';
+  g.fillStyle=DIM;
+  const firstIdx={};
+  items.forEach((d,i)=>{ if(d.year!=null){ const k=d.year<1800?'_':(Math.floor(d.year/50)*50); if(!(k in firstIdx)) firstIdx[k]=i; }});
+  const marks=[[items[0].year,0]];
+  [1800,1850,1900,1950,2000].forEach(y=>{ if(y in firstIdx) marks.push([y,firstIdx[y]]); });
+  const unk=items.findIndex(d=>d.year==null);
+  g.textAlign='left';
+  for(const [y,i] of marks){
+    const x=L+i*step;
+    g.fillStyle=FAINT;g.fillRect(x,TOP+3,1,7);
+    g.fillStyle=DIM;g.fillText(String(y),x+3,TOP+18);
+  }
+  if(unk>=0){
+    const x=L+unk*step;
+    g.fillStyle=FAINT;g.fillRect(x,TOP+3,1,7);
+    g.fillStyle=DIM;g.fillText('no year',x+3,TOP+18);
+  }
+  // log scale cue
+  g.textAlign='right';
+  g.fillStyle=FAINT;
+  g.fillText('1 g',L-6,TOP-4);
+  g.fillText('60 t',L-6,TOP-96);
+  g.fillRect(L-4,TOP-98,1,98);
+
+  // labels for the ten heaviest, under the mass bar
+  const big=items.filter(d=>d.rank<10);
+  g.textAlign='left';
+  let lastEnd=-1e9, row=0;
+  const clean=s=>s.replace(/ meteorite$/i,'').replace(/ Meteorite$/,'').replace(/^Q\d+$/,'unnamed (Wikidata '+s+')');
+  for(const d of big){
+    const cx=(d.b0+d.b1)/2;
+    const name=clean(d.name);
+    const t=(d.grams>=1e6?(d.grams/1e6).toLocaleString('en',{maximumFractionDigits:1})+' t':(d.grams/1e3).toFixed(0)+' kg');
+    g.font='italic 13px Georgia, serif';
+    const w1=g.measureText(name).width;
+    g.font='10px Helvetica, Arial, sans-serif';
+    const w2=g.measureText(t+(d.year?' · '+d.year:'')).width;
+    const w=Math.max(w1,w2);
+    let x=Math.max(d.b0+2, Math.min(cx-w/2, d.b1-w-2));
+    if(d.b1-d.b0<w+4){ x=cx-4; }
+    row = (x<lastEnd+8)? row+1 : 0;
+    if(row===0) lastEnd=x+w; else lastEnd=Math.max(lastEnd,x+w);
+    const y=BOT+50+row*34;
+    g.fillStyle=FAINT;g.fillRect(cx,BOT+29,1,y-BOT-41);
+    g.fillStyle=INK;g.font='italic 13px Georgia, serif';g.fillText(name,x,y);
+    g.fillStyle=DIM;g.font='10px Helvetica, Arial, sans-serif';g.fillText(t+(d.year?' · '+d.year:''),x,y+13);
+  }
+
+  // the rest
+  const restCount=n-10;
+  const restMass=items.filter(d=>d.rank>=10).reduce((s,d)=>s+d.grams,0);
+  g.textAlign='right';
+  g.fillStyle=DIM;g.font='italic 13px Georgia, serif';
+  g.fillText('the other '+restCount+' together: '+(restMass/total*100).toFixed(1)+'% of the weight',R,H-34);
+  g.font='10px Helvetica, Arial, sans-serif';g.fillStyle=FAINT;
+  g.fillText(window.FALLS.source,R,H-18);
+})();
+</script>
+</body>
+</html>

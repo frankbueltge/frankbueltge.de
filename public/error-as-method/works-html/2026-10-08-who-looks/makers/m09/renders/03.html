@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Everything Weighed</title>
+<style>
+  html,body{margin:0;background:#15130f;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#d9cdb4;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function(){
+  var W=1100,H=800,GROUND=712;
+  var cv=document.getElementById('c'),ctx=cv.getContext('2d');
+  var dpr=window.devicePixelRatio||1;
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';ctx.scale(dpr,dpr);
+
+  var items=(window.FALLS&&window.FALLS.items)||[];
+  // every stone drawn at one scale: diameter grows with the cube root of mass,
+  // as if all were spheres of the same density
+  var K=0.6;
+  function hash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return ((h>>>0)%100000)/100000;}
+  var stones=items.map(function(d){return {d:d,r:Math.max(0.55,K*Math.cbrt(d.grams)/2)};});
+  // dated stones fall in order of year; the undated settle last, on top
+  stones.sort(function(a,b){
+    var ya=a.d.year==null?99999:a.d.year, yb=b.d.year==null?99999:b.d.year;
+    return ya-yb || b.r-a.r;
+  });
+
+  var placed=[], CX=W/2, SPREAD=290, REACH=100;
+  function restY(x,r){
+    var y=GROUND-r;
+    for(var i=0;i<placed.length;i++){
+      var c=placed[i],dx=x-c.x,s=r+c.r;
+      if(dx>-s&&dx<s){var yc=c.y-Math.sqrt(s*s-dx*dx);if(yc<y)y=yc;}
+    }
+    return y;
+  }
+  function free(x,y,r){
+    if(y+r>GROUND+1e-6||x-r<50||x+r>W-50)return false;
+    for(var i=0;i<placed.length;i++){var c=placed[i],dx=x-c.x,dy=y-c.y,s=r+c.r-1e-4;if(dx*dx+dy*dy<s*s)return false;}
+    return true;
+  }
+  // each stone falls near a point and rolls to the lowest stable resting place
+  // within reach: on the ground, or cradled between two stones below it
+  stones.forEach(function(s){
+    var u=hash(s.d.name),v=hash(s.d.name+'#'),r=s.r;
+    var x0=CX+(u+v-1)*SPREAD, D=REACH;
+    var best=null;
+    function consider(x,y){
+      if(Math.abs(x-x0)>D)return;
+      if(best&&y<=best.y)return;
+      if(free(x,y,r))best={x:x,y:y};
+    }
+    consider(x0,GROUND-r);
+    var near=[];
+    for(var i=0;i<placed.length;i++){
+      var c=placed[i];
+      if(Math.abs(c.x-x0)<D+c.r+r)near.push(c);
+    }
+    near.forEach(function(c){
+      var dy=(GROUND-r)-c.y,s2=(r+c.r)*(r+c.r)-dy*dy;
+      if(s2>=0){var h=Math.sqrt(s2);consider(c.x-h,GROUND-r);consider(c.x+h,GROUND-r);}
+    });
+    for(var i=0;i<near.length;i++)for(var j=i+1;j<near.length;j++){
+      var a=near[i],b=near[j];
+      var dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy);
+      var ra=a.r+r,rb=b.r+r;
+      if(d>ra+rb||d<Math.abs(ra-rb)||d===0)continue;
+      var l=(ra*ra-rb*rb+d*d)/(2*d),h=Math.sqrt(Math.max(0,ra*ra-l*l));
+      var mx=a.x+dx*l/d,my=a.y+dy*l/d;
+      var px1=mx-dy*h/d,py1=my+dx*h/d,px2=mx+dy*h/d,py2=my-dx*h/d;
+      var x,y; if(py1<py2){x=px1;y=py1;}else{x=px2;y=py2;}
+      var lo=Math.min(a.x,b.x),hi=Math.max(a.x,b.x);
+      if(x<lo||x>hi||y>a.y&&y>b.y)continue;
+      consider(x,y);
+    }
+    if(!best){var y=restY(x0,r);best={x:x0,y:y};}
+    s.x=best.x;s.y=best.y;
+    placed.push(s);
+  });
+
+  // ground
+  var bg=ctx.createLinearGradient(0,0,0,H);
+  bg.addColorStop(0,'#0f0e0c');bg.addColorStop(0.89,'#1b1813');bg.addColorStop(1,'#110f0c');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  function col(year,a){
+    if(year==null)return null;
+    var t=Math.max(0,Math.min(1,(year-1570)/(2025-1570)));
+    t=Math.pow(t,2.2); // most records are recent; spread the old ones
+    var c0=[92,52,30],c1=[150,98,58],c2=[222,208,178];
+    var p=t<0.5?[c0,c1,t*2]:[c1,c2,(t-0.5)*2];
+    var c=p[0].map(function(v,i){return Math.round(v+(p[1][i]-v)*p[2]);});
+    return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')';
+  }
+  // shadows on ground
+  ctx.fillStyle='rgba(0,0,0,0.35)';
+  ctx.fillRect(0,GROUND,W,H-GROUND);
+  placed.forEach(function(s){
+    var yr=s.d.year;
+    if(yr==null){
+      ctx.beginPath();ctx.arc(s.x,s.y,Math.max(0.6,s.r-0.4),0,Math.PI*2);
+      ctx.strokeStyle='rgba(217,205,180,0.55)';ctx.lineWidth=0.8;ctx.stroke();
+      return;
+    }
+    if(s.r>3){
+      var gr=ctx.createRadialGradient(s.x-s.r*0.35,s.y-s.r*0.4,s.r*0.1,s.x,s.y,s.r);
+      gr.addColorStop(0,col(yr,1));gr.addColorStop(1,'rgba(20,16,12,1)');
+      ctx.fillStyle=gr;
+      gr._=0;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=col(yr,0.35);
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+    }else{
+      ctx.fillStyle=col(yr,0.95);
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+    }
+  });
+  ctx.strokeStyle='rgba(217,205,180,0.45)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(40,GROUND+0.5);ctx.lineTo(W-40,GROUND+0.5);ctx.stroke();
+
+  // names of the heaviest
+  function fmt(g){
+    if(g>=1e6)return (g/1e6).toLocaleString('en',{maximumFractionDigits:1})+' t';
+    if(g>=1e3)return (g/1e3).toLocaleString('en',{maximumFractionDigits:1})+' kg';
+    return g.toLocaleString('en')+' g';
+  }
+  function clean(n){return n.replace(/ [Mm]eteorite$/,'');}
+  var big=placed.slice().sort(function(a,b){return b.d.grams-a.d.grams;}).slice(0,7)
+    .filter(function(s){return !/^Q\d+$/.test(s.d.name);});
+  ctx.textBaseline='middle';
+  big.forEach(function(s){
+    var inside=s.r>34, left=s.x<CX;
+    var lx=inside?s.x:(left?s.x-s.r-10:s.x+s.r+10), ly=inside?s.y-5:s.y-5;
+    ctx.textAlign=inside?'center':(left?'right':'left');
+    ctx.shadowColor='rgba(10,8,6,0.9)';ctx.shadowBlur=4;
+    ctx.font='italic 13px Georgia,serif';ctx.fillStyle='rgba(240,232,214,0.95)';
+    ctx.fillText(clean(s.d.name),lx,ly);
+    ctx.font='11px Georgia,serif';ctx.fillStyle='rgba(240,232,214,0.75)';
+    ctx.fillText(fmt(s.d.grams)+(s.d.year?' \u00b7 '+s.d.year:''),lx,ly+15);
+    ctx.shadowBlur=0;ctx.shadowColor='transparent';
+  });
+
+  // the lightest one, a speck
+  var light=placed.slice().sort(function(a,b){return a.d.grams-b.d.grams;})[0];
+
+  // title + key
+  ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.fillStyle='#e8dcc2';ctx.font='26px Georgia,serif';
+  ctx.fillText('Everything Weighed',60,70);
+  ctx.font='italic 13.5px Georgia,serif';ctx.fillStyle='rgba(217,205,180,0.7)';
+  ctx.fillText(items.length+' meteorites whose mass Wikidata records, each drawn as a sphere of the same density,',60,96);
+  ctx.fillText('all at one scale, and let fall onto one ground in the order they were found.',60,114);
+
+  // key, lower right
+  var kx=W-300,ky=748;
+  ctx.font='11px Georgia,serif';ctx.fillStyle='rgba(217,205,180,0.65)';
+  var yrs=[1600,1800,1900,1950,2000,2024];
+  yrs.forEach(function(y,i){
+    ctx.fillStyle=col(y,1);ctx.beginPath();ctx.arc(kx+i*36,ky,5,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(217,205,180,0.6)';ctx.textAlign='center';ctx.fillText(y,kx+i*36,ky+20);
+  });
+  ctx.beginPath();ctx.arc(kx+6*36+10,ky,5,0,Math.PI*2);ctx.strokeStyle='rgba(217,205,180,0.6)';ctx.lineWidth=0.8;ctx.stroke();
+  ctx.fillText('no year',kx+6*36+10,ky+20);
+
+  ctx.textAlign='left';ctx.fillStyle='rgba(217,205,180,0.55)';
+  ctx.fillText('oldest finds at the bottom, newest on top',60,748);
+  ctx.fillText('lightest: '+clean(light.d.name)+', '+fmt(light.d.grams)+' — a speck somewhere in the heap',60,766);
+  ctx.fillStyle='rgba(217,205,180,0.35)';
+  ctx.fillText((window.FALLS&&window.FALLS.source)||'',60,784);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+# Cairn
+
+Every meteorite in the set is drawn as a disc whose area is its mass, and the discs are dropped one by one onto a single heap in the order of their recorded year, with the undated ones last; tone darkens with age, so Campo del Cielo (1576) lies at the base and Hoba (1920) sits on top of it. I chose a heap rather than a chart because the material is really about weight: drawn to true scale, five stones make up 81% of the 217 tonnes, and the lighter half of the record, 284 stones weighing 25 kg together, can only show up as a faint grain on the heap's slopes. The form doesn't add any emphasis, so you can see both the imbalance and the order in which the stones were recorded.

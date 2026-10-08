@@ -1,0 +1,167 @@
+{
+ "P1": {
+  "O_looked": 4,
+  "R_looked": 4,
+  "holds": true
+ },
+ "P2": {
+  "N_viewed_picture": [
+   "m06"
+  ],
+  "N_numeric_check": [
+   "m02",
+   "m11",
+   "m12"
+  ],
+  "holds": true
+ },
+ "P3": {
+  "looks": {
+   "m01": 4,
+   "m03": 4,
+   "m04": 2,
+   "m05": 4,
+   "m07": 2,
+   "m08": 9,
+   "m09": 4,
+   "m10": 2
+  },
+  "median": 4.0,
+  "holds": false
+ },
+ "P4": {
+  "differences": 38,
+  "FINISH": 35,
+  "FORM": 3,
+  "share_finish": 0.921,
+  "holds": true
+ },
+ "P5": {
+  "same_by_maker": {
+   "m04": 2,
+   "m07": 2,
+   "m10": 1,
+   "m05": 1,
+   "m08": 2,
+   "m09": 2,
+   "m03": 2,
+   "m01": 2
+  },
+  "rated_0_or_1": {
+   "m10": 1,
+   "m05": 1
+  },
+  "holds": false
+ },
+ "P6": {
+  "defects_by_maker": {
+   "m05": 0,
+   "m06": 1,
+   "m09": 1,
+   "m08": 2,
+   "m04": 0,
+   "m02": 0,
+   "m10": 1,
+   "m01": 2,
+   "m03": 3,
+   "m11": 0,
+   "m07": 4,
+   "m12": 5
+  },
+  "mean_N": 1.5,
+  "mean_O_R": 1.625,
+  "mean_O": 2,
+  "mean_R": 1.25,
+  "holds": false
+ },
+ "P7": {
+  "groups": [
+   {
+    "name": "Rubble pile along a year axis (irregular stones heaped over a timeline)",
+    "makers": [
+     "m05",
+     "m08",
+     "m03"
+    ]
+   },
+   {
+    "name": "Disc stacks / overlapping circles at year positions on a timeline",
+    "makers": [
+     "m11",
+     "m12"
+    ]
+   },
+   {
+    "name": "Single packed heap, layered by year, no time axis on x",
+    "makers": [
+     "m06",
+     "m09",
+     "m04",
+     "m02",
+     "m01"
+    ]
+   },
+   {
+    "name": "Radial packed cluster around the largest stone",
+    "makers": [
+     "m10"
+    ]
+   },
+   {
+    "name": "Count-vs-weight strip with flow ribbons (bars to proportional band)",
+    "makers": [
+     "m07"
+    ]
+   }
+  ],
+  "largest": 5,
+  "holds": true
+ },
+ "P8": {
+  "codes": {
+   "m01": "CONFIRM",
+   "m03": "DEFECT",
+   "m04": "DEFECT",
+   "m05": "CONFIRM",
+   "m07": "DEFECT",
+   "m08": "SILENT",
+   "m09": "DEFECT",
+   "m10": "SILENT"
+  },
+  "defect_or_confirm": 6,
+  "of": 8,
+  "surprise": [],
+  "holds": true
+ },
+ "T1": {
+  "makers_with_a_FORM_change_after_looking": [
+   "m05",
+   "m08",
+   "m10"
+  ],
+  "count": 3
+ },
+ "posthoc": {
+  "_note": "Not predicted. Read after the scores.",
+  "every_look_but_the_last_followed_by_change": true,
+  "final_equals_last_look": true,
+  "lookers_with_coder2_defects_in_final": [
+   "m01",
+   "m03",
+   "m07",
+   "m08",
+   "m09",
+   "m10"
+  ],
+  "code_lines_mean_N": 238.25,
+  "code_lines_mean_lookers": 164.75,
+  "stone_piles_by_coder2_groups": 10
+ },
+ "held": [
+  "P1",
+  "P2",
+  "P4",
+  "P7",
+  "P8"
+ ]
+}

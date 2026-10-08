@@ -1,0 +1,135 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>The Pile</title>
+<style>
+html,body{margin:0;background:#ece6da;}
+body{width:1100px;height:800px;overflow:hidden;position:relative;font-family:Georgia,"Times New Roman",serif;color:#2b2722}
+canvas{position:absolute;left:0;top:0}
+#t{position:absolute;left:56px;top:44px}
+#t h1{margin:0;font-weight:normal;font-size:34px;letter-spacing:.01em}
+#t p{margin:10px 0 0;font-size:13.5px;line-height:1.5;max-width:470px;color:#5a5249;font-style:italic}
+</style></head><body>
+<canvas id="c" width="1100" height="800"></canvas>
+<div id="t"><h1>The Pile</h1>
+<p id="cap"></p></div>
+<script src="data.js"></script>
+<script>
+(function(){
+const items = window.FALLS.items.slice();
+const W=1100,H=800, GROUND=660, PPM=54;           // pixels per metre
+const RHO=3.5e6;                                  // g per m^3, one density for all
+const diam = g => Math.cbrt(6*g/(Math.PI*RHO))*PPM;
+const X0=1545,X1=2030, XL=60, XR=880;
+const xOf = y => XL+(y-X0)/(X1-X0)*(XR-XL);
+const UNK_X = 1010, WALL = 930;
+
+// deterministic jitter
+let seed=7; const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+
+// order of falling: heaviest first, so each stone lands as near its own year as the others allow
+items.sort((a,b)=>b.grams-a.grams || (a.name<b.name?-1:1));
+
+const placed=[]; // {x,y,r,it}   y = height above ground (up)
+function supportBelow(x,yTop,r){ // highest resting height at or below yTop
+  let best=r, who=null;
+  for(const p of placed){const dx=x-p.x, R=r+p.r; if(Math.abs(dx)>=R) continue;
+    const h=p.y+Math.sqrt(R*R-dx*dx); if(h<=yTop+1e-6 && h>best){best=h;who=p;}}
+  return {y:best,who};
+}
+function hits(x,y,r,skip){for(const p of placed){ if(p===skip)continue; const dx=x-p.x,dy=y-p.y,R=r+p.r-1e-6; if(dx*dx+dy*dy<R*R) return p;} return null;}
+
+function drop(it){
+  const r=diam(it.grams)/2, unk=it.year==null;
+  const outside = x => unk ? x-r < WALL : x+r > WALL;
+  let x=(it.year==null?UNK_X:xOf(it.year)) + (rnd()-.5)*2.2;
+  let y=1e6, guard=0;
+  while(guard++<200){
+    const s=supportBelow(x,y,r); y=s.y;
+    if(!s.who) break;                        // on the ground
+    let piv=s.who, dir = x===piv.x ? (rnd()<.5?-1:1) : Math.sign(x-piv.x);
+    let R=r+piv.r, th=Math.atan2(x-piv.x, y-piv.y), done=false, fell=false, k=0;
+    while(k++<4000){
+      const nth=th+dir*Math.min(0.02, 1.5/R);
+      if(Math.abs(nth)>=Math.PI/2){ x=piv.x+dir*R; y=piv.y; fell=true; break; }
+      const nx=piv.x+R*Math.sin(nth), ny=piv.y+R*Math.cos(nth);
+      if(ny<r){ x=nx; y=r; done=true; break; }
+      if(outside(nx)){ done=true; break; }
+      const h=hits(nx,ny,r,piv);
+      if(h){ // second support
+        if((piv.x-x)*(h.x-x)<0){ done=true; break; }
+        piv=h; R=r+h.r; th=Math.atan2(x-h.x,y-h.y); dir=Math.sign(x-h.x)||1; continue;
+      }
+      th=nth; x=nx; y=ny;
+    }
+    if(done||!fell) break;
+    if(outside(x)){ x = unk ? WALL+r : WALL-r; }
+    // fall straight down from here, nudge a hair outward
+    x+=dir*0.01;
+  }
+  placed.push({x,y,r,it});
+}
+items.forEach(drop);
+
+// ---------- draw ----------
+const c=document.getElementById('c').getContext('2d');
+const sy = y => GROUND-y;
+
+// ground
+c.fillStyle='#e2dacb'; c.fillRect(0,GROUND,W,H-GROUND);
+c.strokeStyle='#2b2722'; c.lineWidth=1; c.beginPath(); c.moveTo(40,GROUND+.5); c.lineTo(W-40,GROUND+.5); c.stroke();
+
+// stones
+function stone(p){
+  const cx=p.x, cy=sy(p.y), r=p.r;
+  const t=p.it.year==null?0.5:(p.it.year-X0)/(X1-X0);
+  const L=30+Math.round(10*(1-t)), g=c.createRadialGradient(cx-r*.35,cy-r*.4,r*.1,cx,cy,r*1.05);
+  g.addColorStop(0,`hsl(30,6%,${L+22}%)`); g.addColorStop(1,`hsl(25,8%,${L-12}%)`);
+  if(r<1.4){ c.globalAlpha=Math.min(1,r*r*1.2+0.15); c.fillStyle='#3a342e'; c.beginPath(); c.arc(cx,cy,Math.max(r,0.5),0,7); c.fill(); c.globalAlpha=1; return; }
+  const n=Math.max(7,Math.min(28,Math.round(r*1.2))); const ph=[rnd()*6,rnd()*6,rnd()*6];
+  c.beginPath();
+  for(let i=0;i<=n;i++){const a=i/n*Math.PI*2;
+    const k=0.93+0.05*Math.sin(2*a+ph[0])+0.03*Math.sin(3*a+ph[1])+0.02*Math.sin(5*a+ph[2]);
+    const px=cx+Math.cos(a)*r*k, py=cy+Math.sin(a)*r*k; i?c.lineTo(px,py):c.moveTo(px,py);}
+  c.closePath(); c.fillStyle=g; c.fill();
+  if(r>3){c.strokeStyle='rgba(20,16,12,.55)'; c.lineWidth=.6; c.stroke();}
+}
+placed.forEach(stone);
+
+// year ticks
+c.fillStyle='#5a5249'; c.font='12px Georgia'; c.textAlign='center'; c.strokeStyle='#5a5249';
+for(let y=1600;y<=2000;y+=50){const x=xOf(y); c.beginPath(); c.moveTo(x+.5,GROUND+4); c.lineTo(x+.5,GROUND+(y%100?8:12)); c.stroke(); if(y%100===0) c.fillText(y,x,GROUND+28);}
+c.fillText('year', UNK_X, GROUND+28); c.fillText('unrecorded', UNK_X, GROUND+43);
+
+// a person for scale (1.75 m)
+(function(){const h=1.75*PPM, x=xOf(1690), b=GROUND; const u=h/8;
+  c.fillStyle='#2b2722'; c.strokeStyle='#2b2722'; c.lineCap='round';
+  c.beginPath(); c.arc(x,b-h+u*.5,u*.5,0,7); c.fill();
+  c.lineWidth=u*.55; c.beginPath(); c.moveTo(x,b-h+u*1.2); c.lineTo(x,b-u*3.9); c.stroke();
+  c.lineWidth=u*.42; c.beginPath(); c.moveTo(x-u*.15,b-u*3.9); c.lineTo(x-u*.45,b-u*.1); c.moveTo(x+u*.15,b-u*3.9); c.lineTo(x+u*.45,b-u*.1); c.stroke();
+  c.lineWidth=u*.32; c.beginPath(); c.moveTo(x-u*.3,b-h+u*1.6); c.lineTo(x-u*.75,b-u*4.1); c.moveTo(x+u*.3,b-h+u*1.6); c.lineTo(x+u*.75,b-u*4.1); c.stroke();
+  c.font='italic 12px Georgia'; c.fillStyle='#5a5249'; c.textAlign='center'; c.fillText('a person, 1.75 m',x,b-h-10);
+})();
+
+// labels for the largest
+const big=placed.filter(p=>p.r>=34);
+c.font='12px Georgia'; c.textAlign='left';
+const fmt=g=> g>=1e6? (g/1e6).toLocaleString('en',{maximumFractionDigits:1})+' t' : g>=1e3? Math.round(g/1e3)+' kg' : g+' g';
+big.forEach(p=>{
+  const nm=p.it.name.replace(/ [Mm]eteorite$/,'').replace(/ Meteorite$/,'');
+  const cx=p.x, cy=sy(p.y);
+  c.textAlign='center'; c.fillStyle='rgba(240,234,224,.92)';
+  c.font=(p.r>60?'13px':'11.5px')+' Georgia'; c.fillText(nm, cx, cy+1);
+  c.font='italic '+(p.r>60?'12px':'10.5px')+' Georgia'; c.fillStyle='rgba(240,234,224,.7)';
+  c.fillText(fmt(p.it.grams)+(p.it.year?', '+p.it.year:''), cx, cy+16);
+});
+// the wall between dated and undated
+const lean=Math.max(...placed.filter(p=>Math.abs(Math.abs(p.x-WALL)-p.r)<0.5).map(p=>p.y+p.r),40);
+c.strokeStyle='#5a5249'; c.lineWidth=1; c.setLineDash([2,3]); c.beginPath(); c.moveTo(WALL+.5,GROUND); c.lineTo(WALL+.5,GROUND-lean-10); c.stroke(); c.setLineDash([]);
+
+const tot=items.reduce((s,i)=>s+i.grams,0);
+const small=items.filter(i=>i.grams<1000).length;
+document.getElementById('cap').textContent =
+ `All ${items.length} meteorites that Wikidata gives a mass, drawn to one physical scale as if each were a sphere of ordinary stone, and dropped, heaviest first, above the year each was found or fell, to roll and settle where the others let them. Together they weigh ${Math.round(tot/1e6)} tonnes; ${small} of them weigh less than a kilogram and are the grit along the base.`;
+c.textAlign='right'; c.fillStyle='#8a8176'; c.font='11px Georgia';
+c.fillText('Source: '+window.FALLS.source+'. Scale: 54 px to the metre; density 3.5 g/cm³ assumed for all.', W-44, H-24);
+})();
+</script></body></html>

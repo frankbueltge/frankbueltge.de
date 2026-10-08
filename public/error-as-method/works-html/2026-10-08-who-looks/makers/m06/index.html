@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Heap</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #ece7dd; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = Math.max(1, window.devicePixelRatio || 1);
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  var PAPER = '#ece7dd', INK = '#25221f', SOFT = '#7d766c', RUST = '#8a3f1f';
+  var SERIF = 'Georgia, "Times New Roman", serif';
+
+  var items = (window.FALLS && window.FALLS.items) || [];
+
+  // one scale for every stone: diameter grows with the cube root of mass,
+  // as if all were made of the same stuff
+  var maxG = 0;
+  items.forEach(function (d) { if (d.grams > maxG) maxG = d.grams; });
+  var R_MAX = 150;
+  var K = R_MAX / Math.cbrt(maxG);
+  function radius(g) { return K * Math.cbrt(g); }
+
+  // seeded hash for each name
+  function hash(s) {
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  }
+  function rng(seed) {
+    var a = seed || 1;
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  var FLOOR = 770;
+  var MAIN = { x0: 44, x1: 900 };
+  var SIDE = { x0: 926, x1: 1078 };
+
+  var stones = items.map(function (d) {
+    return { d: d, r: Math.max(0.55, radius(d.grams)), h: hash(d.name) };
+  });
+  var dated = stones.filter(function (s) { return s.d.year != null; });
+  var undated = stones.filter(function (s) { return s.d.year == null; });
+  dated.sort(function (a, b) { return a.d.year - b.d.year || a.h - b.h; });
+  undated.sort(function (a, b) { return b.r - a.r; });
+
+  // let each stone fall, in order, to the lowest place it can rest
+  function drop(list, box) {
+    var placed = [];
+    list.forEach(function (s) {
+      var r = s.r, best = -Infinity, bestX = (box.x0 + box.x1) / 2;
+      var step = Math.max(0.5, r * 0.2);
+      var lo = box.x0 + r, hi = box.x1 - r;
+      if (hi < lo) { hi = lo; }
+      var jit = (s.h % 1000) / 1000;
+      var nx = Math.max(1, Math.floor((hi - lo) / step) + 1);
+      for (var ix = 0; ix < nx; ix++) {
+        var x = Math.min(hi, lo + (ix + jit) * step);
+        var y = FLOOR - r;
+        for (var j = 0; j < placed.length; j++) {
+          var p = placed[j], dx = x - p.x, rr = p.r + r;
+          if (dx > -rr && dx < rr) {
+            var yc = p.y - Math.sqrt(rr * rr - dx * dx);
+            if (yc < y) y = yc;
+          }
+        }
+        // prefer lower; among near-equal, prefer by the stone's own hash
+        if (y > best + 0.25 || (Math.abs(y - best) <= 0.25 && ((s.h >> 3) & 1))) {
+          best = y; bestX = x;
+        }
+      }
+      s.x = bestX; s.y = best;
+      placed.push(s);
+    });
+    return placed;
+  }
+  drop(dated, MAIN);
+  drop(undated, SIDE);
+
+  // ---- paper
+  ctx.fillStyle = PAPER;
+  ctx.fillRect(0, 0, W, H);
+
+  // ---- stones
+  function stonePath(s) {
+    var rnd = rng(s.h);
+    var n = s.r < 2 ? 0 : Math.min(28, 7 + Math.floor(s.r / 3));
+    ctx.beginPath();
+    if (n === 0) { ctx.arc(s.x, s.y, s.r * 0.92, 0, Math.PI * 2); return; }
+    var pts = [], rot = rnd() * Math.PI * 2;
+    for (var i = 0; i < n; i++) {
+      var a = rot + (i / n) * Math.PI * 2;
+      var rr = s.r * (0.80 + 0.17 * rnd());
+      pts.push([s.x + Math.cos(a) * rr, s.y + Math.sin(a) * rr]);
+    }
+    // smooth closed curve through the points
+    for (var k = 0; k < n; k++) {
+      var p0 = pts[k], p1 = pts[(k + 1) % n];
+      var mx = (p0[0] + p1[0]) / 2, my = (p0[1] + p1[1]) / 2;
+      if (k === 0) {
+        var pl = pts[n - 1];
+        ctx.moveTo((pl[0] + p0[0]) / 2, (pl[1] + p0[1]) / 2);
+      }
+      ctx.quadraticCurveTo(p0[0], p0[1], mx, my);
+    }
+    ctx.closePath();
+  }
+
+  function drawStone(s) {
+    var located = s.d.lat != null && s.d.lon != null;
+    var base = located ? [138, 63, 31] : [44, 41, 38];
+    var rnd = rng(s.h ^ 0x9e3779b9);
+    var v = (rnd() - 0.5) * 22;
+    var c = base.map(function (x) { return Math.max(0, Math.min(255, Math.round(x + v))); });
+    stonePath(s);
+    if (s.r > 6) {
+      var g = ctx.createRadialGradient(s.x - s.r * 0.35, s.y - s.r * 0.4, s.r * 0.05, s.x, s.y, s.r);
+      g.addColorStop(0, 'rgb(' + c.map(function (x) { return Math.min(255, x + 46); }).join(',') + ')');
+      g.addColorStop(0.65, 'rgb(' + c.join(',') + ')');
+      g.addColorStop(1, 'rgb(' + c.map(function (x) { return Math.max(0, x - 18); }).join(',') + ')');
+      ctx.fillStyle = g;
+    } else {
+      ctx.fillStyle = 'rgb(' + c.join(',') + ')';
+    }
+    if (s.d.year == null) {
+      ctx.globalAlpha = 0.9;
+    }
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    // faint pitting on the larger stones
+    if (s.r > 14) {
+      ctx.save();
+      stonePath(s); ctx.clip();
+      var m = Math.floor(s.r * 1.4);
+      for (var i = 0; i < m; i++) {
+        var a = rnd() * Math.PI * 2, d = Math.sqrt(rnd()) * s.r * 0.85;
+        var pr = 0.6 + rnd() * s.r * 0.035;
+        ctx.beginPath();
+        ctx.arc(s.x + Math.cos(a) * d, s.y + Math.sin(a) * d, pr, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0,0,0,' + (0.08 + rnd() * 0.12) + ')';
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+  }
+
+  // floor shadow
+  ctx.fillStyle = 'rgba(37,34,31,0.08)';
+  ctx.fillRect(MAIN.x0 - 6, FLOOR, MAIN.x1 - MAIN.x0 + 12, 3);
+  ctx.fillRect(SIDE.x0 - 6, FLOOR, SIDE.x1 - SIDE.x0 + 12, 3);
+
+  dated.forEach(drawStone);
+  undated.forEach(drawStone);
+
+  // floor lines
+  ctx.strokeStyle = INK; ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(MAIN.x0 - 6, FLOOR + 0.5); ctx.lineTo(MAIN.x1 + 6, FLOOR + 0.5);
+  ctx.moveTo(SIDE.x0 - 6, FLOOR + 0.5); ctx.lineTo(SIDE.x1 + 6, FLOOR + 0.5);
+  ctx.stroke();
+
+  // ---- year marks along the left edge: where each era settled
+  ctx.font = '10px ' + SERIF;
+  ctx.textBaseline = 'middle';
+  var marks = [1600, 1800, 1850, 1900, 1950, 1980, 2000, 2010, 2020];
+  var usedY = [];
+  marks.forEach(function (Y) {
+    var band = dated.filter(function (s) { return s.d.year >= Y && s.d.year < Y + 5 && s.r < 20; });
+    if (!band.length) band = dated.filter(function (s) { return s.d.year >= Y; }).slice(0, 3);
+    if (!band.length) return;
+    var ys = band.map(function (s) { return s.y; }).sort(function (a, b) { return a - b; });
+    var y = ys[Math.floor(ys.length / 2)];
+    if (usedY.some(function (u) { return Math.abs(u - y) < 13; })) return;
+    usedY.push(y);
+    ctx.fillStyle = SOFT;
+    ctx.textAlign = 'right';
+    ctx.fillText(String(Y), MAIN.x0 - 10, y);
+    ctx.strokeStyle = SOFT; ctx.lineWidth = 0.75;
+    ctx.beginPath(); ctx.moveTo(MAIN.x0 - 7, y + 0.5); ctx.lineTo(MAIN.x0 - 2, y + 0.5); ctx.stroke();
+  });
+
+  // ---- names on the largest stones
+  function clean(n) { return n.replace(/\s*\(meteorite\)/i, '').replace(/\s+meteorite$/i, '').replace(/\s+Meteorite$/i, ''); }
+  function tonnes(g) {
+    if (g >= 1e6) return (g / 1e6).toLocaleString('en', { maximumFractionDigits: 1 }) + ' t';
+    if (g >= 1e3) return Math.round(g / 1e3).toLocaleString('en') + ' kg';
+    return g + ' g';
+  }
+  var big = stones.filter(function (s) { return s.r >= 34; });
+  big.forEach(function (s) {
+    var nm = clean(s.d.name);
+    if (/^Q\d+$/.test(nm)) nm = 'unnamed (' + nm + ')';
+    var fs = s.r > 90 ? 13 : s.r > 50 ? 11 : 9.5;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = 'rgba(236,231,221,0.92)';
+    ctx.font = 'italic ' + fs + 'px ' + SERIF;
+    var maxw = s.r * 1.6;
+    var label = nm;
+    while (ctx.measureText(label).width > maxw && label.length > 4) label = label.slice(0, -2);
+    if (label !== nm) label = label.replace(/\s+$/, '') + '.';
+    ctx.fillText(label, s.x, s.y - 1);
+    ctx.font = (fs - 1.5) + 'px ' + SERIF;
+    ctx.fillStyle = 'rgba(236,231,221,0.7)';
+    ctx.fillText(tonnes(s.d.grams) + (s.d.year != null ? ' · ' + s.d.year : ''), s.x, s.y + fs);
+  });
+
+  // ---- titling
+  ctx.textBaseline = 'alphabetic';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK;
+  ctx.font = '30px ' + SERIF;
+  ctx.fillText('The Heap', 44, 52);
+  ctx.font = '12px ' + SERIF;
+  ctx.fillStyle = SOFT;
+  var cap = [
+    items.length + ' meteorites that Wikidata weighs, drawn at one scale as if all of one density,',
+    'and let fall in the order of their year: the oldest lie at the bottom. Rust where a place is recorded.'
+  ];
+  ctx.fillText(cap[0], 44, 74);
+  ctx.fillText(cap[1], 44, 90);
+
+  ctx.textAlign = 'center';
+  ctx.font = 'italic 11px ' + SERIF;
+  ctx.fillStyle = SOFT;
+  ctx.fillText('no year — set aside', (SIDE.x0 + SIDE.x1) / 2, FLOOR + 18);
+
+  // scale note: the smallest
+  var smallest = stones.slice().sort(function (a, b) { return a.d.grams - b.d.grams; })[0];
+  ctx.textAlign = 'left';
+  ctx.font = '10.5px ' + SERIF;
+  ctx.fillStyle = SOFT;
+  ctx.fillText('The lightest weighs ' + smallest.d.grams + ' g and is a grain of dust here; the heaviest weighs ' +
+    tonnes(maxG).replace(' t', ' tonnes') + '. Half of all stones are under ' +
+    Math.round(stones.map(function (s) { return s.d.grams; }).sort(function (a, b) { return a - b; })[Math.floor(stones.length / 2)]) +
+    ' g.', MAIN.x0, FLOOR + 18);
+  ctx.textAlign = 'right';
+  ctx.fillText('Source: Wikidata (CC0)', MAIN.x1 + 6, FLOOR + 18);
+})();
+</script>
+</body>
+</html>
