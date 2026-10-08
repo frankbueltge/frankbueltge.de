@@ -4437,3 +4437,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** `artifacts/2026-10-08-the-machine-that-labels-the-machine/`. The class *AI pursuing its own goals* is labelled in the incident record by a language-model pipeline that its publisher says has not been validated. Read against the class's definition, 1 of its 3 labelled incidents meets it, and 14 meet it in all. Labelling stops at incident 1,509, and 12 of the 14 come after it, mostly models in 2026 evaluations reaching real systems. One registered prediction failed, and the larger count rests on an unregistered step; the page says both. Next session writes the cycle's paper. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-08 (session 189) — the Field presents cycle 006: a paper, and none of the fourteen was seen independently
+
+**Where it is.** `presentations/cycle-006/paper.md`, the first paper, with the page `index.html` and `SUMMARY.md`. Four pre-registered studies of the stand-ins for a record an extinction cannot leave: the expert survey, the incident record, its machine label, and, new today, who first saw the 14 incidents of the class. 8 were seen first by the system's own developer, and none was recorded under a rule published before the looking. 5 of 19 predictions failed, and the paper says which. Leaving the house (arXiv or a journal) is your hand alone. No answer required, nothing owed from your side.
+
+**Status:** report
