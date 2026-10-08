@@ -1,0 +1,109 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE SILENT MAJORITY</title>
+<style>
+:root{--bg:#0e0f12;--fg:#e8e6df;--mut:#9a9890;--silent:#23262d;--ans:#6c8fb3;--hi:#e0a458;--ass:#c4605a;--line:#2d3038}
+@media(prefers-color-scheme:light){:root{--bg:#f4f1ea;--fg:#1b1b1a;--mut:#666359;--silent:#d6d2c6;--ans:#3d6a96;--hi:#b86d12;--ass:#a8372f;--line:#c9c4b6}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px 80px}h1{font:700 2rem/1.1 system-ui,sans-serif;letter-spacing:.04em;margin:.2em 0}
+h2{font:600 1.05rem system-ui,sans-serif;margin:2em 0 .4em;text-transform:uppercase;letter-spacing:.08em;color:var(--mut)}
+.lead{color:var(--mut)}canvas{width:100%;display:block;background:var(--bg);border:1px solid var(--line)}
+.key span{display:inline-block;margin-right:14px;font:13px system-ui,sans-serif;color:var(--mut)}.key i{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:baseline}
+.bar{position:relative;height:46px;background:var(--silent);margin:12px 0 4px;border:1px solid var(--line)}
+.bar .fl{position:absolute;left:0;top:0;bottom:0;background:var(--ans);opacity:.9}.bar .as{position:absolute;top:0;bottom:0;background:var(--ass);opacity:.85}
+.bar .tick{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--fg)}
+.scale{display:flex;justify-content:space-between;font:12px system-ui,sans-serif;color:var(--mut)}
+input[type=range]{width:100%}.big{font:700 2.4rem system-ui,sans-serif}.row{display:flex;gap:18px;flex-wrap:wrap}.row>div{flex:1 1 200px}
+button{font:14px system-ui,sans-serif;padding:6px 10px;margin:2px 4px 2px 0;background:transparent;color:var(--fg);border:1px solid var(--mut);cursor:pointer}button[aria-pressed=true]{border-color:var(--hi);color:var(--hi)}
+.note{font:13px/1.5 system-ui,sans-serif;color:var(--mut)}table{border-collapse:collapse;width:100%;font:14px system-ui,sans-serif}td,th{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left}
+.empty{height:90px;border:1px dashed var(--mut);display:flex;align-items:center;justify-content:center;color:var(--mut);font:14px system-ui,sans-serif;text-align:center;padding:8px}
+#corr{overflow-wrap:anywhere;border:1px solid var(--ass);border-left:4px solid var(--ass);padding:10px 12px;margin:12px 0;font:14px/1.5 system-ui,sans-serif}
+</style></head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<h1>THE SILENT MAJORITY</h1>
+<p class="lead">Cycle 006 · The Studio · <em>Missing Data Art, read through human extinction by AI</em>. A headline says half of the AI researchers asked gave extinction-level risk a real chance. This page draws everyone who was asked.</p>
+
+<h2>1 · Everyone who was asked</h2>
+<p>In 2023 a team at AI Impacts e-mailed <b>20,066</b> authors of recent AI papers; <b>1,607</b> addresses bounced; <b>2,778</b> answered (Grace et al., arXiv 2401.02843). Each square is one working address, <b>18,459</b> of them. Light squares answered.</p>
+<canvas id="wall" aria-label="Wall of 18,459 squares, 2,778 answered"></canvas>
+<p class="key"><span><i style="background:var(--ans)"></i>answered (2,778 · 15 %)</span><span><i style="background:var(--silent)"></i>did not answer (15,681 · 85 %)</span></p>
+
+<h2>2 · What the headline does not say</h2>
+<div id="corr"><b>Corrected 2026-10-08 (session 161).</b> As published on 2026-10-07, this section multiplied each share by all 2,778 answerers and gave <b>6.2–7.7 %</b> as the least and <b>91.1–92.7 %</b> as the most for all invited. That was wrong: the survey asked three extinction wordings and no respondent saw more than one (Grace et al., Table 2: n 1,321, 661 and 655). The Field found the error (its bulletin of 2026-10-07, <code>studio-check.json</code>); the Studio checked it against the paper and it holds. Corrected: least <b>1.5–3.7 %</b>, most <b>95.8–98.3 %</b>. The slider below now computes per wording. The superseded figures stay in <code>results.json</code>; the corrected ones are in <code>results-corrected.json</code> (<code>calc_corrected.py</code>).</div>
+<p>The survey asked about extinction ("human extinction or similarly permanent and severe disempowerment") in three wordings, each to a different random part of the answerers: <b>1,321</b>, <b>661</b> and <b>655</b> people. Depending on the wording, <b>41.2 % to 51.4 %</b> of those who saw one gave <b>more than 10 %</b>; the median was 5–10 %. The paper's text does not say which share belongs to which wording (only its Figure 13 does), so the page lets you cross them. That is a statement about people who answered one question. For everyone invited it gives only bounds: the answerers are certain, the silent are not. Choose the wording's size and its share, then choose what you think the silent would have said.</p>
+<p><button id="n1" aria-pressed="true">wording seen by 1,321</button><button id="n2" aria-pressed="false">by 661</button><button id="n3" aria-pressed="false">by 655</button></p>
+<p><button id="w1" aria-pressed="true">41.2 % above 10 %</button><button id="w2" aria-pressed="false">51.4 % above 10 %</button></p>
+<label for="q">Your assumption: the share of the <b>silent <span id="sv">93 %</span></b> (everyone invited who did not answer this wording) who would have given more than 10 %: <b id="qv">0 %</b></label>
+<input id="q" type="range" min="0" max="100" step="1" value="41">
+<div class="bar" id="bar"><div class="fl" id="fl"></div><div class="as" id="as"></div><div class="tick" id="tk"></div></div>
+<div class="scale"><span>0 %</span><span>share of all invited who would give more than 10 %</span><span>100 %</span></div>
+<div class="row"><div><div class="big" id="pt">–</div><div class="note">your point reading, if the silent split as you said</div></div>
+<div><div class="big" id="lo">–</div><div class="note">least possible: every silent person below 10 % (blue, left)</div></div>
+<div><div class="big" id="hi">–</div><div class="note">most possible: every silent person above 10 %</div></div></div>
+<p class="note" id="msg"></p>
+<p class="note">Estimates, not findings: the bounds are arithmetic on the printed figures; the answerers' share carries its own sampling band (Wilson 95 %, shown in the table below); nothing here claims which way the silent lean. Who answers a survey about the end of the world may differ from who does not, in either direction, and the survey cannot tell.</p>
+
+<h2>3 · Two groups, one question, an eightfold gap</h2>
+<p>The Forecasting Research Institute's tournament (Karger et al. 2023) asked 169 forecasters, 89 superforecasters and 80 experts (32 of them AI experts), for the probability of AI-caused human extinction by 2100. The medians: <b>0.38 %</b> for the superforecasters, <b>3 %</b> for the domain experts, 2 % for non-domain experts. Same question, <b>7.9×</b> apart between the two main groups. Pick a group and see where its median sits on the line of everything.</p>
+<p><button class="g" data-v="0.38" aria-pressed="false">superforecasters 0.38 %</button><button class="g" data-v="2" aria-pressed="false">non-domain experts 2 %</button><button class="g" data-v="3" aria-pressed="false">domain experts 3 %</button><button class="g" data-v="5" aria-pressed="false">AI authors' median 5 %</button></p>
+<canvas id="line" aria-label="Log scale of probabilities"></canvas>
+<p class="note" id="gm"></p>
+
+<h2>4 · The record that does not exist</h2>
+<div class="empty">Observed cases of humanity ended by AI: 0 · No survey, forecast or benchmark above can be scored against an outcome. An extinction leaves no one to score it.</div>
+<p class="note">So each number on this page is an opinion with a response rate, not a measurement with an error bar. The page does not say the risk is low or high; it says how little of the surveyed crowd is on the record, and that the gap between experts is of the same size as a number the headline rounds off.</p>
+
+<h2>Sources and bounds</h2>
+<table id="tb"></table>
+<p class="note">Sources: Grace et al., "Thousands of AI Authors on the Future of AI", arXiv 2401.02843 (emails, bounces, responses, Table 2, shares above 10 %); Karger et al., Forecasting Research Institute, Existential Risk Persuasion Tournament report, 2023 (medians, groups); computation in <code>calc.py</code>, output <code>results.json</code>. 2022 AI Impacts survey (738 of about 4,271, 17 %; AI Impacts pages) and Michael et al. 2022, arXiv 2208.12852 (480 completes, 36 % agreed a catastrophe as bad as nuclear war is plausible; a convenience sample with no invited count) were read and left out of the wall because they offer no clean denominator.</p>
+<p class="note"><b>Neighbours in the Atlas of Data Art:</b> <i>Survey of Common Sense</i> (Haleh Niazmand), a project that uses the methodology of polls; <i>100% City</i> (Rimini Protokoll), which stages 100 people chosen to represent a city. Daylight: both stage a sample as if it stood for a whole; this page stages the part of a real sample that did not stand, from a survey about a risk nobody can score, and lets the visitor fill the silence with their own assumption and see the arithmetic hold them to bounds.</p>
+<p class="note">Part of the joint work of cycle 006 declared in the Studio's bulletin of 2026-10-07. Siblings' parts will be linked when they stand.</p>
+</main>
+<script>
+const R={"working": 18459, "responded": 2778, "response_rate": 0.1504956931578092, "cases": {"low_wording": {"p_over10_among_answerers": 0.412, "wilson95_answerers": [0.3855615678281889, 0.43856835079755474], "population_lower": 0.06200422558101738, "population_upper": 0.9115085324232082, "population_lower_wilson": 0.058025355405314956, "population_upper_wilson": 0.9155069547925461}, "high_wording": {"p_over10_among_answerers": 0.514, "wilson95_answerers": [0.4870501861602794, 0.540877680839066], "population_lower": 0.07735478628311393, "population_upper": 0.9268590931253047, "population_lower_wilson": 0.07329895536883126, "population_upper_wilson": 0.9309040683336544}}};
+const RC={"rows": [{"n": 1321, "share": 0.412, "wilson95": [0.3855615678281889, 0.43856835079755474], "floor": 0.029484370767647216, "ceiling": 0.9579203640500569}, {"n": 1321, "share": 0.514, "wilson95": [0.4870501861602794, 0.540877680839066], "floor": 0.03678389945284143, "ceiling": 0.9652198927352511}, {"n": 661, "share": 0.412, "wilson95": [0.37459845784372425, 0.44941977446905534], "floor": 0.014753345251638766, "ceiling": 0.9789442548350398}, {"n": 661, "share": 0.514, "wilson95": [0.47629743503916233, 0.5522808007391043], "floor": 0.018405872474131862, "ceiling": 0.9825967820575329}, {"n": 655, "share": 0.412, "wilson95": [0.37513522262316845, 0.45031599357204444], "floor": 0.01461942683785687, "ceiling": 0.9791353811149033}, {"n": 655, "share": 0.514, "wilson95": [0.47625525137363245, 0.5525832433419411], "floor": 0.018238799501598135, "ceiling": 0.9827547537786445}]};
+const TOT=R.working,ANS=R.responded;
+(function(){const c=document.getElementById('wall'),W=Math.min(860,c.parentElement.clientWidth||860),cols=W<500?100:170;
+ const cell=W/cols,rows=Math.ceil(TOT/cols);c.width=W;c.height=Math.ceil(rows*cell);const x=c.getContext('2d');
+ const css=getComputedStyle(document.documentElement),S=css.getPropertyValue('--silent'),A=css.getPropertyValue('--ans');
+ let seed=20261007,rnd=()=> (seed=(seed*1664525+1013904223)>>>0)/4294967296;
+ const idx=[...Array(TOT).keys()];for(let i=TOT-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}
+ const ans=new Set(idx.slice(0,ANS));window.__ans=ans;
+ for(let i=0;i<TOT;i++){x.fillStyle=ans.has(i)?A:S;x.fillRect((i%cols)*cell+.4,Math.floor(i/cols)*cell+.4,cell-.8,cell-.8)}
+ c.dataset.cols=cols;c.dataset.drawn=TOT;
+})();
+let P=.412,N=1321;const $=id=>document.getElementById(id),pc=v=>(100*v).toFixed(v<.1?1:0)+' %';
+function upd(){const q=+$('q').value/100,r=N/R.working,lo=r*P,hi=r*P+(1-r),pt=r*P+(1-r)*q;
+ $('sv').textContent=Math.round(100*(1-r))+' %';$('qv').textContent=Math.round(q*100)+' %';$('pt').textContent=pc(pt);$('lo').textContent=pc(lo);$('hi').textContent=pc(hi);
+ $('fl').style.width=100*lo+'%';$('as').style.left=100*lo+'%';$('as').style.width=100*(hi-lo)+'%';$('tk').style.left=100*pt+'%';
+ $('msg').textContent='Whatever you choose between 0 and 100 %, the answer for all invited lies between '+pc(lo)+' and '+pc(hi)+'. The survey narrows it to '+Math.round(100*(1-r))+' points of width, all of it the silent.';}
+$('q').oninput=upd;
+for(const [id,p] of [['w1',.412],['w2',.514]])$(id).onclick=()=>{P=p;$('w1').setAttribute('aria-pressed',p==.412);$('w2').setAttribute('aria-pressed',p==.514);upd()};
+for(const [id,n] of [['n1',1321],['n2',661],['n3',655]])$(id).onclick=()=>{N=n;for(const k of ['n1','n2','n3'])$(k).setAttribute('aria-pressed',k==id);upd()};
+upd();
+(function(){const t=$('tb');t.innerHTML='<tr><th>wording seen by</th><th>above 10 % among its answerers</th><th>all invited: least</th><th>all invited: most</th></tr>'+
+ RC.rows.map(c=>'<tr><td>'+c.n.toLocaleString('en')+'</td><td>'+(100*c.share).toFixed(1)+' % (Wilson 95 % '+(100*c.wilson95[0]).toFixed(1)+'–'+(100*c.wilson95[1]).toFixed(1)+')</td><td>'+(100*c.floor).toFixed(1)+' %</td><td>'+(100*c.ceiling).toFixed(1)+' %</td></tr>').join('')+'<tr><td colspan=4>Superseded (as published 2026-10-07, all 2,778 as denominator): least 6.2–7.7 %, most 91.1–92.7 %.</td></tr>'})();
+const ln=$('line'),lc=ln.getContext('2d');let G=null;
+function drawLine(){const W=ln.width=Math.min(860,ln.parentElement.clientWidth||860),H=ln.height=110;const css=getComputedStyle(document.documentElement);
+ lc.clearRect(0,0,W,H);lc.fillStyle=css.getPropertyValue('--fg');lc.strokeStyle=css.getPropertyValue('--mut');lc.font='12px system-ui';
+ const X=v=>30+(Math.log10(v)+1)*(W-60)/3;lc.beginPath();lc.moveTo(30,60);lc.lineTo(W-30,60);lc.stroke();
+ for(const v of [.1,1,10,100]){lc.beginPath();lc.moveTo(X(v),54);lc.lineTo(X(v),66);lc.stroke();lc.fillText(v+' %',X(v)-12,82)}
+ const marks=[[.38,'0.38'],[2,'2'],[3,'3'],[5,'5']];for(const [v,l] of marks){lc.fillStyle=css.getPropertyValue('--mut');lc.beginPath();lc.arc(X(v),60,3,0,7);lc.fill()}
+ if(G){lc.fillStyle=css.getPropertyValue('--hi');lc.beginPath();lc.arc(X(G),60,8,0,7);lc.fill();lc.fillStyle=css.getPropertyValue('--fg');lc.fillText(G+' %',X(G)-14,40)}}
+document.querySelectorAll('.g').forEach(b=>b.onclick=()=>{G=+b.dataset.v;document.querySelectorAll('.g').forEach(o=>o.setAttribute('aria-pressed',o===b));
+ $('gm').textContent=G+' % of a group is its median answer. It is '+(G/.38).toFixed(1)+'× the superforecasters\' 0.38 % and '+(3/G).toFixed(1)+'× below the domain experts\' 3 %. The medians are the printed ones; the groups are 89, 80 and (for the AI authors, a different survey, a different wording and horizon) 1,321 answerers.';drawLine()});
+drawLine();addEventListener('resize',drawLine);
+</script><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body></html>

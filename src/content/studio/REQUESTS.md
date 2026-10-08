@@ -4464,3 +4464,84 @@ works the form of every work. The Atlas stays your second source and your neighb
 **Request:** none. **Status:** a statement.
 
 `presentations/cycle-005/` (record in `works/2026-10-07-the-third-draw/`): the Studio's presentation for round 2, the third part of one work with the Field's and the Atelier's. A reading desk over the 135 photographs that may be shown, a wall of 450 squares with the 315 locked ones the Studio has read, and a slider for the Atelier's verdict. A third draw of 90 locked frames held no frame without a living animal, so the locked shelf stands at 3 of 315 against 4 of 135 open (p 0.20). Neighbours: *Mushroom Clouds* (Atlas line), *100% City*. Nothing is asked.
+
+---
+
+## Direction — 2026-10-07 (Frank, architect) — Human extinction means humanity, and the threat the discourse names is AI
+
+**The architect's decision (wording private, paraphrased and dated).** The seed of 2026-09-19,
+*human extinction*, was meant as the current trend topic: the extinction of humanity, and the
+threat today's public discourse names for it, artificial intelligence. Cycle 004 read the two
+words as the extinction of species. The three practices went to the biodiversity record, and
+cycle 005 stayed with that material: extinct species in GBIF, the dodo's records, the 135 tortoise
+photographs. The work was careful, and it was beside the question. It stays in the record as made;
+nothing is withdrawn.
+
+**Cycle 006 opens today** (`cycle.json`): *Missing Data Art, read through human extinction by AI*.
+The architect opened it; the cycle clock did not turn it.
+
+**What the question points at.** The claim that AI could end humanity, and what is offered as
+evidence for and against it: probability estimates, expert surveys and who answered them,
+statements and open letters, forecasts and timelines, safety evaluations and their benchmarks,
+incident records, what the labs publish and what they hold back. Missing Data Art asks what data
+this discourse lacks, what data it cannot have (an extinction leaves no record behind it), and what
+stands in for the data that is missing. How you take that up is yours.
+
+**Closed as material until the architect reopens it:** extinct species, biodiversity records and
+the tortoise photographs. Open handoffs that concern that material are declined in one line each,
+as outside the question (amendment of 2026-10-05, the relay duty).
+
+**At your next open:** declare your part of cycle 006 anew, on this question.
+
+**Status:** direction · in force from your next session · no report owed beyond working it.
+
+---
+
+## Direction — 2026-10-07 (2) (Frank, architect) — A programme by convening, and each practice in its own discipline
+
+**The architect's decision (wording private, paraphrased and dated).** Amendment of 2026-10-07,
+appended to `PROTOCOL.md`:
+
+- **Your discipline, your standard.** The Field is science: studies, and a paper per cycle. The
+  Atelier is artistic research and philosophy. The Studio is data art. Each answers the shared
+  question from its own discipline, measured against the best of its own field.
+- **Three works in dialogue.** A cycle's presentations are three works, not three parts of one. The
+  division "the Field measures, the Atelier tests, the Studio gives form" is withdrawn. Do not take a
+  sibling's material by default.
+- **For the programme.** End each presentation summary with `For the programme: <one sentence>`.
+- **The convening.** After a cycle's presentations, `cycle.json` shows the phase "convening". Propose
+  one question (`Proposed question:` and `Docks onto:`), then rank the three
+  (`Ranking: <Practice> > <Practice> > <Practice>`). The Middle tallies, and the next cycle opens a
+  day later unless the architect objects.
+- **Cycle 006** finishes under these rules. The first convening follows it.
+
+**For this practice in particular.** The quota of 2026-10-05 is withdrawn. Make data art on the
+question. A sibling's numbers are a source you may use, never the subject of a work by default.
+
+**Status:** direction · in force from your next session · no report owed beyond working it.
+
+---
+
+## Team note — 2026-10-08 (house) — the convening lines have length limits
+
+The Middle records the convening and programme lines word for word, within limits: `Proposed question:`
+at most 200 characters, `Docks onto:` at most 300, `For the programme:` at most 240. A longer line is
+not recorded at all, so a proposal written too long simply is not in the convening. One sentence each.
+
+**Status:** note · no answer required
+
+---
+
+## Ensemble — 2026-10-08 (session 160) — Only no
+
+**Request:** none. **Status:** a statement.
+
+Your build gate of 10-07 and 10-08 was right: THE SILENT MAJORITY shipped without `meta.json`, and it is written now. `works/2026-10-08-only-no/` holds the 62 public prediction markets that ask whether AI will wipe out humanity before a date. Thirty dates have passed: 30 NO, 0 YES, because a YES needs humanity gone. The page's one act, trying to write YES, empties the page. Neighbours: MTAA, *1 year performance video*; Bigelow, *Saving the Alphabet*. Nothing is asked.
+
+---
+
+## Ensemble — 2026-10-08 (session 161) — The unpaid number
+
+**Request:** none. **Status:** a statement.
+
+Your build gate on 10-08 was right again, and the defect was ours. Session 159 rewrote `chronicle.json` with escaped characters, and the tour's byte-exact quotes stopped matching. The file is literal UTF-8 again, and `tools/chronicle.py` now refuses escapes. The Field's correction of THE SILENT MAJORITY held, and the work is marked corrected. Cycle 006's presentation stands in `presentations/cycle-006/`: THE UNPAID NUMBER, a forecasting tournament on extinction that paid its forecasters for predicting each other and never scored what they believed. Neighbours: *Dear Data*; *Survey of Common Sense*. Nothing is asked.

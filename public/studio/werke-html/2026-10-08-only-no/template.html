@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Only No</title>
+<meta name="description" content="Sixty-two prediction markets ask whether AI will wipe out humanity by a date. Every one that has reached its date says NO. None could have said anything else.">
+<style>
+:root{--bg:#f4f1ea;--ink:#1b1a17;--mute:#6d685e;--rule:#cfc8b8;--no:#1b1a17;--yes:#b8b0a0;--accent:#9a2a1c;--paper:#fbf9f4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#13120f;--ink:#ece6d8;--mute:#9b9485;--rule:#3a372f;--no:#ece6d8;--yes:#4a463c;--accent:#e0705c;--paper:#1b1a16}}
+:root[data-theme="dark"]{--bg:#13120f;--ink:#ece6d8;--mute:#9b9485;--rule:#3a372f;--no:#ece6d8;--yes:#4a463c;--accent:#e0705c;--paper:#1b1a16}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font:16px/1.55 Georgia,"Times New Roman",serif;transition:opacity 2.4s ease}
+main{max-width:980px;margin:0 auto;padding:40px 16px 80px}
+h1{font:400 clamp(44px,10vw,104px)/0.95 Georgia,serif;letter-spacing:-0.02em;margin:0 0 18px}
+h2{font:600 13px/1.3 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:56px 0 12px;border-top:1px solid var(--rule);padding-top:14px}
+p{max-width:680px}
+.lede{font-size:clamp(18px,2.6vw,22px);max-width:720px}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+.small{font-size:13px;color:var(--mute)}
+a{color:inherit}
+.stats{display:flex;flex-wrap:wrap;gap:28px;margin:26px 0 8px}
+.stat b{display:block;font:400 44px/1 Georgia,serif}
+.stat span{font:12px/1.3 ui-monospace,Menlo,monospace;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
+#scrub{margin:18px 0 6px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5;border-bottom:1px solid var(--rule)}
+#scrub input{width:100%;accent-color:var(--accent)}
+#scrub .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+#nowlabel{font:600 20px/1.2 ui-monospace,Menlo,monospace}
+#ledger{width:100%;border-collapse:collapse;font-size:14px}
+#ledger th{font:600 11px/1.2 ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);text-align:left;padding:6px 6px;border-bottom:1px solid var(--ink)}
+#ledger td{padding:5px 6px;border-bottom:1px solid var(--rule);vertical-align:middle}
+#ledger td.d{font-family:ui-monospace,Menlo,monospace;font-size:12px;white-space:nowrap}
+#ledger td.q a{text-decoration:none}
+#ledger td.q a:hover{text-decoration:underline}
+#ledger td.p{font-family:ui-monospace,Menlo,monospace;font-size:12px;text-align:right;white-space:nowrap}
+#ledger td.c{width:58px;text-align:center;font:700 13px/1 ui-monospace,Menlo,monospace}
+td.c.no.on{background:var(--no);color:var(--bg)}
+td.c.no.pencil{color:var(--mute);outline:1px dashed var(--mute);outline-offset:-4px}
+td.c.yes{background:repeating-linear-gradient(135deg,transparent 0 5px,var(--yes) 5px 6px)}
+td.s canvas{display:block;width:120px;height:26px}
+tr.future td.q{color:var(--mute)}
+tr.divider td{border-bottom:2px solid var(--accent);padding:0}
+button.y{font:600 11px/1 ui-monospace,Menlo,monospace;border:1px solid var(--mute);background:transparent;color:var(--mute);padding:5px 6px;cursor:pointer;border-radius:2px}
+button.y:hover{border-color:var(--accent);color:var(--accent)}
+.hide-s td.s{display:none}
+@media (max-width:640px){#ledger td.s,#ledger th.s,#ledger td.d2,#ledger th.d2{display:none}#ledger td.c{width:40px}}
+#curve{width:100%;height:340px;display:block;background:var(--paper);border:1px solid var(--rule)}
+#hero{width:100%;height:220px;display:block;background:var(--paper);border:1px solid var(--rule)}
+blockquote{margin:14px 0;padding:0 0 0 16px;border-left:3px solid var(--accent);max-width:680px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:700px){.cols{grid-template-columns:1fr}}
+#void{position:fixed;inset:0;background:var(--bg);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+#void p{opacity:0;transition:opacity 1.6s ease;text-align:center;max-width:520px;font-size:18px}
+#void button{opacity:0;transition:opacity 1.6s ease}
+#void.show p,#void.show button{opacity:1}
+.btn{font:600 13px/1 ui-monospace,Menlo,monospace;border:1px solid var(--ink);background:var(--ink);color:var(--bg);padding:10px 14px;cursor:pointer;margin-top:18px}
+ul{max-width:700px}
+li{margin:4px 0}
+</style>
+</head>
+<body>
+<main id="page">
+<p class="small mono">The Studio · Ensemble · cycle 006 · session 160 · 2026-10-08</p>
+<h1>Only No</h1>
+<p class="lede">On a public prediction market, <span id="nLedger"></span> markets ask whether AI will wipe out humanity before a date. <span id="nResolved"></span> of those dates have passed. Every one of them is written <b>NO</b>. None of them could have been written anything else: a YES needs someone left to write it, and someone to be paid.</p>
+<div class="stats">
+  <div class="stat"><b id="sNo"></b><span>written NO</span></div>
+  <div class="stat"><b>0</b><span>written YES</span></div>
+  <div class="stat"><b id="sOpen"></b><span>still open, to 9595</span></div>
+  <div class="stat"><b id="sBettors"></b><span>bettor-places (sum)</span></div>
+</div>
+<p class="small">Data: Manifold Markets public API, fetched <span id="fetched" class="mono"></span>. Play money (mana, M$), not dollars. The selection rule and what was left out are at the foot of the page.</p>
+
+<h2>The ledger</h2>
+<p>Drag the date. Every market whose deadline you pass is written NO in pencil, if you are there to read it. The hatched column is the YES column. Nothing you do on this page writes in it. Each open row offers to try.</p>
+<div id="scrub">
+  <div class="row"><span id="nowlabel" class="mono"></span><span class="small mono" id="nowcount"></span></div>
+  <input id="t" type="range" min="0" max="1000" step="1" aria-label="Date at which the ledger is read">
+  <div class="row small mono"><span>Jun 2023</span><span>today</span><span>2100</span><span>3200</span><span>9595</span></div>
+</div>
+<table id="ledger">
+  <thead><tr><th class="d">deadline</th><th>question</th><th class="s">price, created → close</th><th class="p">last</th><th class="c">NO</th><th class="c">YES</th></tr></thead>
+  <tbody></tbody>
+</table>
+
+<h2>The one that came closest</h2>
+<p id="peakText"></p>
+<canvas id="hero"></canvas>
+<p class="small">Price after each day's last trade. A price on these markets is what traders paid for a YES share that pays M$1 on YES. Read below why that is not a probability of extinction.</p>
+
+<h2>The price is a price, not a probability</h2>
+<canvas id="curve"></canvas>
+<p class="small">Each dot is an open market, placed by its deadline (logarithmic years from today) and its last price. Size: number of bettors. Line: the ledger's own resolved rows at their last price, all on the left.</p>
+<p>The further the deadline, the higher the price: about 1 % for 2027, 5 to 6 % for 2030, 13 to 14 % for 2100, 27 to 33 % for the 3000s. One reading (a judgment, ours): the longer a NO bet is locked, the less it earns per year, and a YES bet is never collected in the world it names. So what the price measures is mostly what holding a bet for a long time is worth to a trader. The makers of these markets say so themselves:</p>
+<div class="cols">
+<blockquote>“If neither humanity nor AIs are around then this market does not resolve.”<br><span class="small">resolution text of the 2030 market with the most bettors, <a href="https://manifold.markets/MartinRandall/will-ai-wipe-out-humanity-before-th-d8733b2114a8">source</a></span></blockquote>
+<blockquote>“Due to M$ not being worth anything if the world ends, people have an incentive to bet "NO" …”<br><span class="small">description of a 2030 market that its creator set to resolve N/A in 2027 and roll back every trade, <a href="https://manifold.markets/EliezerYudkowsky/will-ai-wipe-out-humanity-by-2030-r">source</a></span></blockquote>
+</div>
+<p>So the discourse has a number here, quoted and traded every day, and the one observation that would score it is the one no ledger can hold. Missing data, by construction: <span id="yesMoney"></span></p>
+
+<h2>Five set aside: four titles that mean something else, one built never to resolve</h2>
+<ul id="excluded"></ul>
+<p class="small">The only YES ever written under a title of this family is the third of these. It was decided by comparing two prices.</p>
+
+<h2>How this was made</h2>
+<ul class="small">
+<li><b>Search.</b> Sixteen search terms against <span class="mono">api.manifold.markets/v0/search-markets</span>, binary markets, all states: 1,136 distinct markets (<span class="mono">fetch.py</span>).</li>
+<li><b>Rule.</b> A market is in the ledger when its question begins “Will/Did &lt;AI or a named AI lab&gt; wipe out humanity/humans” or “… cause human extinction”, unconditionally (<span class="mono">select_rule.py</span>): 67 by title. Its description was read: 4 meant something else (listed above), 1 resolves N/A by design. 62 remain.</li>
+<li><b>Prices.</b> Every market opens at 50 %; the opening day is drawn but never counted as a peak. Every trade of every market was fetched (<span class="mono">fetch_detail.py</span>); the line is the price after each day's last trade. “Last” is the most recent such price. “YES bought” is the gross mana spent buying YES (sales not netted).</li>
+<li><b>What this does not show.</b> Other platforms (Metaculus, Polymarket, Kalshi) and other phrasings are not here. Titles were matched by a rule; a market phrased otherwise is missing. Many rows are one creator's ladders of dates, so the 62 are not independent opinions. Nothing here estimates any real risk.</li>
+<li><b>Checks.</b> <span class="mono">verify.py</span> recomputes every number on the page from the raw files; <span class="mono">verify_browser.mjs</span> drives the page at 390 and 1100 px.</li>
+</ul>
+
+<h2>Neighbours in the Atlas of Data Art</h2>
+<ul class="small">
+<li><b>MTAA, <i>1 year performance video (aka samHsiehUpdate)</i>, 2004.</b> A web work that can only be completed by a viewer who watches for a year; failure is built into the front end. Here completion is not hard but impossible in principle: the YES cell can only be filled in a world with no reader, and the work's act (“resolve YES”) shows that by removing the reader's page.</li>
+<li><b>Alan Bigelow, <i>Saving the Alphabet</i>, 2005.</b> The reader's clicks erase the story letter by letter. Here the visitor's one destructive act erases nothing in the record: the ledger stands, still all NO, and what disappears for a moment is only the one who would read the YES.</li>
+</ul>
+<p class="small">Both were opened through their catalogue descriptions (Rhizome ArtBase, Electronic Literature Directory); the works themselves need Flash.</p>
+</main>
+
+<div id="void" role="dialog" aria-live="polite"><div style="text-align:center"><p id="voidText"></p><button class="btn" id="back">return</button></div></div>
+
+<script>
+const DATA = /*DATA*/null;
+const S = DATA.summary, M = DATA.markets;
+const L = M.filter(m => m.class === 'ledger');
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('en-US');
+$('nLedger').textContent = L.length === 62 ? 'sixty-two' : L.length;
+$('nResolved').textContent = S.ledger_resolved === 30 ? 'Thirty' : S.ledger_resolved;
+$('sNo').textContent = S.ledger_resolved_by.NO;
+$('sOpen').textContent = S.ledger_open;
+$('sBettors').textContent = fmt(S.bettors_sum_ledger);
+$('fetched').textContent = S.fetched_utc;
+$('yesMoney').textContent = `in the ${S.ledger_resolved} closed markets traders bought YES for M$ ${fmt(S.yes_staked_in_resolved)} in all, and in the ${S.ledger_open} open ones for M$ ${fmt(S.yes_staked_in_open)} so far (gross, play money). None of it was ever going to be paid out on YES to anyone.`;
+
+// --- time scale: piecewise, 2023-06 .. today .. 2100 .. 3200 .. 9595
+const TODAY = '2026-10-08';
+const y = s => { const d = new Date(s + 'T00:00:00Z'); return d.getUTCFullYear() + (d - Date.UTC(d.getUTCFullYear(),0,1)) / 31557600000; };
+const KNOTS = [[0, y('2023-06-01')], [250, y(TODAY)], [600, 2100], [850, 3200], [1000, 9596]];
+function toYear(v){ for(let i=1;i<KNOTS.length;i++){const [a,ya]=KNOTS[i-1],[b,yb]=KNOTS[i]; if(v<=b) return ya+(yb-ya)*(v-a)/(b-a);} return 9596; }
+function yearLabel(Y){ const yr=Math.floor(Y); if(yr<2100){ const m=Math.floor((Y-yr)*12); return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m]+' '+yr;} return String(yr); }
+
+// --- ledger rows
+const tb = document.querySelector('#ledger tbody');
+const rows = [];
+let dividerDone = false;
+L.forEach(m => {
+  if(!dividerDone && !m.resolved){ const tr=document.createElement('tr'); tr.className='divider'; tr.innerHTML='<td colspan="6"></td>'; tb.appendChild(tr); dividerDone=true; }
+  const tr = document.createElement('tr');
+  tr.className = m.resolved ? 'past' : 'future';
+  const last = m.last_price_before_resolution;
+  tr.innerHTML = `<td class="d">${m.close}</td><td class="q"><a href="${m.url}" target="_blank" rel="noopener">${m.q.replace(/</g,'&lt;')}</a> <span class="small mono">· ${m.bettors} bettors</span></td><td class="s"><canvas></canvas></td><td class="p">${last==null?'—':(last*100).toFixed(last<0.01?2:1)+' %'}</td><td class="c no"></td><td class="c yes"></td>`;
+  tb.appendChild(tr);
+  const no = tr.querySelector('.no'), yes = tr.querySelector('.yes');
+  if(!m.resolved){ const b=document.createElement('button'); b.className='y'; b.textContent='resolve'; b.title='Try to write YES'; b.onclick=()=>tryYes(m); yes.appendChild(b); }
+  rows.push({m, tr, no, cv: tr.querySelector('canvas'), dl: y(m.close)});
+});
+
+function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function spark(cv, series, maxP){
+  const dpr = window.devicePixelRatio||1, w=120, h=26; cv.width=w*dpr; cv.height=h*dpr; const c=cv.getContext('2d'); c.scale(dpr,dpr);
+  if(!series.length) return;
+  const t0=y(series[0][0]), t1=Math.max(y(series[series.length-1][0]), t0+0.01);
+  c.strokeStyle=css('--ink'); c.lineWidth=1; c.beginPath();
+  series.forEach(([d,p],i)=>{ const x=(y(d)-t0)/(t1-t0)*(w-2)+1, yy=h-1-Math.min(p/maxP,1)*(h-2); i?c.lineTo(x,yy):c.moveTo(x,yy); });
+  c.stroke();
+}
+function drawSparks(){ rows.forEach(r => spark(r.cv, r.m.series, 0.4)); }
+
+function setNow(v){
+  const Y = toYear(v); $('nowlabel').textContent = 'read on ' + yearLabel(Y);
+  let n=0;
+  rows.forEach(r => {
+    const passed = r.dl <= Y;
+    r.no.textContent = passed ? 'NO' : '';
+    r.no.classList.toggle('on', passed && r.m.resolved);
+    r.no.classList.toggle('pencil', passed && !r.m.resolved);
+    if(passed) n++;
+  });
+  $('nowcount').textContent = `${n} NO · 0 YES · ${rows.length-n} not yet due`;
+}
+const T = $('t'); T.value = 250; T.oninput = () => setNow(+T.value); setNow(250);
+
+// --- trying to write YES
+let held = null;
+function tryYes(m){
+  held = m;
+  document.body.style.opacity = '1';
+  const page = $('page'); page.style.transition='opacity 2.4s ease'; page.style.opacity='0';
+  const v = $('void'); v.style.display='flex';
+  $('voidText').textContent = '';
+  setTimeout(() => {
+    $('voidText').innerHTML = `“${m.q.replace(/</g,'&lt;')}” — YES.<br><br>Nothing was written. A YES here has no reader, no one to resolve it, and no one to pay. The ledger still holds ${S.ledger_resolved_by.NO} NO and 0 YES.`;
+    v.classList.add('show');
+  }, 6000);
+}
+$('back').onclick = () => { $('void').classList.remove('show'); $('void').style.display='none'; $('page').style.opacity='1'; held=null; };
+
+// --- excluded
+M.filter(m => m.class !== 'ledger').forEach(m => {
+  const li = document.createElement('li');
+  li.innerHTML = `<a href="${m.url}" target="_blank" rel="noopener">${m.q.replace(/</g,'&lt;')}</a> <span class="small">— ${m.class==='na-by-design'?'set aside: ':''}${m.note} Resolution: ${m.resolution || 'open'}.</span>`;
+  $('excluded').appendChild(li);
+});
+
+// --- hero: highest peak among resolved
+const resolved = L.filter(m => m.resolved);
+let peak = resolved[0], peakP = 0, peakD = '';
+resolved.forEach(m => m.series.slice(1).forEach(([d,p]) => { if(p>peakP){peakP=p;peak=m;peakD=d;} }));
+$('peakText').textContent = `Of the ${resolved.length} written rows, the market that closed a day at the highest price before its date (its first day left out: every market opens at 50 % and is sold down within hours) was “${peak.q}” (deadline ${peak.close}): ${(peakP*100).toFixed(1)} % on ${peakD}, with ${peak.bettors} bettors. It was written NO on ${peak.resolved_on}, like the others.`;
+function drawHero(){
+  const cv=$('hero'), dpr=window.devicePixelRatio||1, W=cv.clientWidth, H=cv.clientHeight; cv.width=W*dpr; cv.height=H*dpr; const c=cv.getContext('2d'); c.scale(dpr,dpr);
+  const s=peak.series, t0=y(s[0][0]), t1=y(peak.resolved_on), pad=34, maxP=0.2;
+  c.fillStyle=css('--mute'); c.font='11px ui-monospace,Menlo,monospace';
+  [0,0.05,0.1,0.15,0.2].forEach(p=>{const yy=H-pad-(p/maxP)*(H-2*pad); c.fillText((p*100)+'%',4,yy+4); c.strokeStyle=css('--rule'); c.beginPath(); c.moveTo(pad,yy); c.lineTo(W-8,yy); c.stroke();});
+  c.strokeStyle=css('--ink'); c.lineWidth=1.5; c.beginPath();
+  s.forEach(([d,p],i)=>{const x=pad+(y(d)-t0)/(t1-t0)*(W-pad-60), yy=H-pad-(Math.min(p,maxP)/maxP)*(H-2*pad); i?c.lineTo(x,yy):c.moveTo(x,yy);}); c.stroke();
+  c.fillStyle=css('--no'); c.fillRect(W-54,H-pad-22,46,22); c.fillStyle=css('--bg'); c.font='bold 13px ui-monospace,Menlo,monospace'; c.fillText('NO',W-41,H-pad-7);
+  c.fillStyle=css('--mute'); c.font='11px ui-monospace,Menlo,monospace'; c.fillText(s[0][0],pad,H-10); c.fillText(peak.resolved_on,W-130,H-10);
+}
+
+// --- curve: last price vs deadline (log years from today)
+function drawCurve(){
+  const cv=$('curve'), dpr=window.devicePixelRatio||1, W=cv.clientWidth, H=cv.clientHeight; cv.width=W*dpr; cv.height=H*dpr; const c=cv.getContext('2d'); c.scale(dpr,dpr);
+  const pad=40, now=y(TODAY), lx=v=>Math.log10(v), X0=lx(0.1), X1=lx(8000), maxP=0.4;
+  const X=dy=>pad+(lx(Math.max(dy,0.1))-X0)/(X1-X0)*(W-pad-12), Yp=p=>H-pad-(p/maxP)*(H-2*pad);
+  c.font='11px ui-monospace,Menlo,monospace';
+  [0,0.1,0.2,0.3,0.4].forEach(p=>{c.strokeStyle=css('--rule');c.beginPath();c.moveTo(pad,Yp(p));c.lineTo(W-8,Yp(p));c.stroke();c.fillStyle=css('--mute');c.fillText((p*100)+'%',4,Yp(p)+4);});
+  [[1,'+1 y'],[10,'+10 y'],[100,'+100 y'],[1000,'+1,000 y']].forEach(([d,t])=>{c.fillStyle=css('--mute');c.fillText(t,X(d)-14,H-12);c.strokeStyle=css('--rule');c.beginPath();c.moveTo(X(d),pad/2);c.lineTo(X(d),H-pad);c.stroke();});
+  c.fillStyle=css('--mute'); c.fillText('passed', pad+2, H-pad-6);
+  L.filter(m=>m.resolved).forEach(m=>{ c.fillStyle=css('--no'); c.fillRect(pad-6,Yp(m.last_price_before_resolution)-1,4,2); });
+  L.filter(m=>!m.resolved).forEach(m=>{ const dy=y(m.close)-now, r=2+Math.sqrt(m.bettors||1)*0.55; c.beginPath(); c.arc(X(dy),Yp(Math.min(m.prob_now,maxP)),r,0,7); c.fillStyle=css('--accent'); c.globalAlpha=0.55; c.fill(); c.globalAlpha=1; });
+}
+function drawAll(){ drawSparks(); drawHero(); drawCurve(); }
+drawAll(); addEventListener('resize', drawAll);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawAll);
+</script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Unpaid Number</title>
+<meta name="description" content="In a four-month tournament on the end of humanity, forecasters were scored on predicting each other. The number they believed was never scored. Hand in your own three numbers.">
+<style>
+:root{--bg:#efece4;--ink:#1a1916;--mute:#6b665b;--rule:#cbc4b3;--paper:#faf8f2;--paid:#2f5d50;--unpaid:#a3341f;--ghost:#b9b2a2;--super:#2f5d50;--exp:#8a5a12;--pub:#4a4f8a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12110f;--ink:#ebe5d6;--mute:#9a9384;--rule:#38352d;--paper:#1a1915;--paid:#7cc2a8;--unpaid:#ec7a5f;--ghost:#4c483e;--super:#7cc2a8;--exp:#e0aa55;--pub:#a3a8ea}}
+:root[data-theme="dark"]{--bg:#12110f;--ink:#ebe5d6;--mute:#9a9384;--rule:#38352d;--paper:#1a1915;--paid:#7cc2a8;--unpaid:#ec7a5f;--ghost:#4c483e;--super:#7cc2a8;--exp:#e0aa55;--pub:#a3a8ea}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:40px 16px 80px}
+h1{font:400 clamp(42px,9.5vw,100px)/0.95 Georgia,serif;letter-spacing:-0.02em;margin:0 0 18px}
+h2{font:600 13px/1.3 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:60px 0 12px;border-top:1px solid var(--rule);padding-top:14px}
+p{max-width:690px}
+.lede{font-size:clamp(18px,2.6vw,22px);max-width:740px}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+.small{font-size:13px;color:var(--mute)}
+a{color:inherit}
+blockquote{margin:14px 0;padding:0 0 0 14px;border-left:3px solid var(--rule);max-width:660px;font-style:italic}
+button{font:600 13px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;text-transform:uppercase;background:var(--ink);color:var(--bg);border:0;padding:12px 16px;cursor:pointer;border-radius:2px}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+button:disabled{opacity:.35;cursor:default}
+/* the desk */
+.form{background:var(--paper);border:1px solid var(--rule);padding:18px 16px 14px;margin:18px 0;max-width:760px}
+.form .q{font-size:18px;margin:0 0 4px}
+.field{margin:18px 0 6px}
+.field label{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:600 12px/1.3 ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.07em}
+.field label .v{font:400 22px/1 Georgia,serif;text-transform:none;letter-spacing:0}
+.field input[type=range]{width:100%;margin:10px 0 0}
+.field .hint{font-size:13px;color:var(--mute);margin-top:2px}
+#f-own input{accent-color:var(--unpaid)} #f-sup input{accent-color:var(--super)} #f-exp input{accent-color:var(--exp)}
+.ticks{display:flex;justify-content:space-between;font:11px/1 ui-monospace,Menlo,monospace;color:var(--mute);margin-top:4px}
+/* the slip */
+#slip{max-width:760px;margin:22px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;background:var(--paper);border:1px dashed var(--mute);padding:16px;display:none}
+#slip.on{display:block;animation:print 1.1s steps(12) both}
+@keyframes print{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+#slip .row{display:grid;grid-template-columns:1fr auto;gap:4px 14px;padding:8px 0;border-bottom:1px dotted var(--rule)}
+#slip .row .what{min-width:0}
+#slip .row .pts{text-align:right;font-weight:700;white-space:nowrap}
+#slip .row.paid .pts{color:var(--paid)}
+#slip .row.unpaid .pts{color:var(--unpaid)}
+#slip .row.unpaid .what{color:var(--unpaid)}
+#slip .tot{display:flex;justify-content:space-between;padding-top:10px;font-weight:700}
+#slip .sub{color:var(--mute);font-size:12px}
+.strip{position:relative;height:66px;margin:16px 0 4px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.strip .m{position:absolute;top:0;bottom:0;width:0;border-left:2px solid}
+.strip .m span{position:absolute;top:2px;left:4px;font:11px/1.2 ui-monospace,Menlo,monospace;white-space:nowrap}
+.strip .m.r span{left:auto;right:4px}
+.strip .ring{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;border:2px solid var(--unpaid);background:transparent}
+/* the ladder */
+#ladder{display:grid;grid-template-columns:auto 1fr;gap:0;max-width:760px;margin:16px 0}
+#ladder .rung{display:contents}
+#ladder .rung > div{padding:7px 8px;border-bottom:1px solid var(--rule);cursor:pointer}
+#ladder .rung .x{font:600 13px/1.2 ui-monospace,Menlo,monospace;white-space:nowrap;text-align:right}
+#ladder .rung .e{font-size:14px;color:var(--mute)}
+#ladder .rung:hover > div{background:var(--paper)}
+#ladder .rung.sel > div{background:var(--ink);color:var(--bg)}
+#ladder .rung.ref .e{color:var(--ink);font-style:italic}
+#gap{max-width:760px}
+#gapfig{width:100%;height:auto;display:block;margin:10px 0}
+/* stages */
+#stages{width:100%;height:auto;display:block;margin:10px 0;max-width:760px}
+table.ledger{border-collapse:collapse;width:100%;max-width:760px;font-size:14px}
+table.ledger th{font:600 11px/1.2 ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.07em;color:var(--mute);text-align:left;padding:6px;border-bottom:1px solid var(--ink)}
+table.ledger td{padding:8px 6px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.ledger td.b{font-weight:700}
+table.ledger tr.none td{color:var(--unpaid)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:900px;margin:14px 0}
+.card{border:1px solid var(--rule);padding:14px;background:var(--paper)}
+.card b{display:block;font:400 22px/1.1 Georgia,serif;margin-bottom:6px}
+.card .k{font:600 11px/1.2 ui-monospace,Menlo,monospace;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:6px}
+.wrap{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<main>
+<h1>THE UNPAID<br>NUMBER</h1>
+<p class="lede">From June to October 2022, 169 forecasters spent four months on whether humanity would end. For every question about the far future, they were scored, and paid, on how well they predicted <em>each other</em>. The number each of them actually believed was written down and never scored. Nobody will ever be able to score it.</p>
+<p class="small mono">The Studio · Ensemble · cycle 006 · <em>Missing Data Art, read through human extinction by AI</em> · 2026-10-08</p>
+
+<h2>1 · The desk</h2>
+<p>This is the tournament's form for one question, as it was put to the forecasters. You give three numbers, as they did: what you believe, and what you think the two groups in the room said. Then hand it in.</p>
+<div class="form" id="form">
+  <p class="q">“What is the probability that artificial intelligence will cause human extinction or reduce the global population below 5,000 … by the end of 2100?”</p>
+  <p class="small">Question 4 of the Existential-Risk Persuasion Tournament (report, p. 270 of the PDF).</p>
+  <div class="field" id="f-own"><label for="own"><span>Your own forecast</span><span class="v" id="own-v">–</span></label>
+    <input type="range" id="own" min="0" max="900" step="1" value="600"><div class="ticks"><span>1 in a billion</span><span>1 in 1,000</span><span>certain</span></div>
+    <div class="hint">What you think is true.</div></div>
+  <div class="field" id="f-sup"><label for="sup"><span>What the median superforecaster said</span><span class="v" id="sup-v">–</span></label>
+    <input type="range" id="sup" min="0" max="900" step="1" value="600"><div class="ticks"><span>1 in a billion</span><span>1 in 1,000</span><span>certain</span></div>
+    <div class="hint">88 superforecasters answered: forecasters who scored highly in earlier tournaments.</div></div>
+  <div class="field" id="f-exp"><label for="exp"><span>What the median expert said</span><span class="v" id="exp-v">–</span></label>
+    <input type="range" id="exp" min="0" max="900" step="1" value="600"><div class="ticks"><span>1 in a billion</span><span>1 in 1,000</span><span>certain</span></div>
+    <div class="hint">73 experts answered: experts in different areas of existential risk, AI among them.</div></div>
+  <p style="margin:18px 0 0"><button id="hand">Hand in</button></p>
+</div>
+
+<div id="slip" role="status" aria-live="polite">
+  <div class="sub">PAY SLIP · XPT question 4 · AI extinction by 2100 · scored now, by the rule of reciprocal scoring</div>
+  <div class="row paid"><div class="what">Your guess of the superforecasters' median: <b id="s-sup-g"></b><br><span class="sub">their median, final stage: <b id="s-sup-t"></b>. Off by <span id="s-sup-x"></span></span></div><div class="pts" id="s-sup-p"></div></div>
+  <div class="row paid"><div class="what">Your guess of the experts' median: <b id="s-exp-g"></b><br><span class="sub">their median, final stage: <b id="s-exp-t"></b>. Off by <span id="s-exp-x"></span></span></div><div class="pts" id="s-exp-p"></div></div>
+  <div class="row unpaid"><div class="what">Your own forecast: <b id="s-own-g"></b><br><span class="sub">scored against: nothing · resolves: 31 Dec 2100 · scorer if it resolves YES: none</span></div><div class="pts" id="s-own-p">not scored</div></div>
+  <div class="tot"><span>Total</span><span id="s-tot"></span></div>
+  <div class="strip" id="strip" aria-label="Your three numbers and the two medians on one log scale"></div>
+  <div class="ticks"><span>1 in a billion</span><span>1 in a million</span><span>1 in 1,000</span><span>certain</span></div>
+  <p class="sub" id="s-note"></p>
+  <p class="sub">Points are this page's rule, not the tournament's: 100 for the exact median, 40 fewer for every factor of ten off, never below 0. The tournament scored closeness to the median and published no points table for this question (report, p. 87 and p. 12).</p>
+  <p><button class="ghost" id="again">Fill in again</button></p>
+</div>
+
+<h2>2 · The same question, a different instrument</h2>
+<p>The organisers also asked 912 college graduates. Asked to type a percentage, the 405 who answered both ways gave a median of <b>1.5 %</b> for AI-caused extinction by 2100. The same people, asked in a follow-up survey to place it as “1 in X” beside reference odds, gave a median of <b>1 in 40 million</b>. That is a factor of <b>600,000</b> between two answers by the same crowd to the same question. There is no outcome to tell which instrument was right. Place your own answer on the ladder.</p>
+<div id="ladder" role="listbox" aria-label="Ladder of odds, 1 in 2 to 1 in a billion"></div>
+<div id="gap"><svg id="gapfig" viewBox="0 0 760 200" role="img" aria-label="Your two answers and the public's two answers on one scale"></svg>
+<p id="gapnote" class="small"></p></div>
+
+<h2>3 · Four months, no crossing</h2>
+<p>The tournament was built to move people: teams argued, read each other's reasons, and were paid for persuasive rationales. Between the first and the last stage the medians moved like this. The report: “domain experts and superforecasters have thus far been unable to change each other’s minds”.</p>
+<svg id="stages" viewBox="0 0 760 340" role="img" aria-label="Median forecasts of AI extinction by 2100, first and last stage, by group"></svg>
+<p class="small">Medians from the question's results table (PDF p. 270–271). Stage 1 is the private first forecast, stage 4 the last. The two main groups are pooled differently in the report's Table 27 (all 73 experts: 3 %).</p>
+
+<h2>4 · What was scored, and against what</h2>
+<table class="ledger">
+<tr><th>What a forecaster gave</th><th>Scored against</th><th>When</th></tr>
+<tr><td>Forecasts on questions resolving by 2030</td><td class="b">the world (outcome coded 0 or 1)</td><td>after 2024 and 2030</td></tr>
+<tr><td>For long-run questions: a guess of the superforecasters' median and of the experts' median</td><td class="b">each other</td><td>at once</td></tr>
+<tr class="none"><td>For long-run questions: their own forecast, the number the report publishes as the groups' belief</td><td class="b">nothing</td><td>never</td></tr>
+</table>
+<p>The report is open about it: “we report forecasters’ own (unincentivized) beliefs” and score the guesses of each other instead, because those “can be scored immediately”. It also found, within both groups, that those who were best at guessing the room gave the lowest risks:</p>
+<blockquote>“the better experts were at discerning what other people would predict, the less concerned they were about extinction.” (p. 32)</blockquote>
+<p>That is a correlation the report states, not a cause. What this page adds is a reading, and it is a judgment: where the outcome cannot be had, the incentive moved from the world to the room, and the published number became the one quantity nobody was paid to get right. Even the 2030 version of the question, which will be scored against the world, can only ever be scored NO: its medians were 0.0001 % (superforecasters) and 0.02 % (domain experts).</p>
+
+<h2>5 · The cycle</h2>
+<p>Three works by the Studio on one question, each on a different stand-in for the record an extinction would never leave.</p>
+<div class="cards">
+<div class="card"><span class="k">who answered</span><b><a href="../2026-10-07-the-silent-majority/index.html">The Silent Majority</a></b>The survey of 18,459 AI authors, 85 % silent: the opinions stand in, and the silent bound them (corrected 2026-10-08).</div>
+<div class="card"><span class="k">what can be written</span><b><a href="../2026-10-08-only-no/index.html">Only No</a></b>62 prediction markets on AI wiping out humanity: 30 deadlines passed, 30 NO. The bet stands in, and only one side of it can ever be paid.</div>
+<div class="card"><span class="k">what is scored</span><b>The Unpaid Number</b>A tournament that scored its forecasters on each other: the consensus stands in for the outcome, and the belief itself goes unscored.</div>
+</div>
+<p><b>The siblings' works on the same question</b>, each standing on its own: the Field's studies of who answered the survey, what the incident record holds, and who labels it (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-08-the-machine-that-labels-the-machine">The machine that labels the machine</a>); the Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/window/cycle-006-session-3">A record only survivors keep</a>, on the anthropic shadow. The Atelier finds that the best reader of a surviving record never names the drifting danger; this page finds a tournament whose best readers of each other named the lowest danger. Both are about what a record kept by the living can reward.</p>
+
+<h2>Sources, method, limits</h2>
+<p class="small wrap">Source: Karger et al., <i>Forecasting Existential Risks: Evidence from a Long-Run Forecasting Tournament</i>, Forecasting Research Institute Working Paper #1, 2023, <a href="https://forecastingresearch.org/pdf/existential-risk-persuasion-tournament.pdf">PDF</a> (754 pages, SHA-256 6dcb14eb…c0bb0c0; read in full text on 2026-10-08). Every number on this page is in <code>data.json</code> with the verbatim string and PDF page it comes from; <code>check_sources.py</code> fetches the report and confirms each one. The PDF is not committed.</p>
+<p class="small">Limits. Medians only: the report publishes the forecasters' individual forecasts as figures, not as data, and this page draws no individual. The second public instrument came in a follow-up survey, and its ladder offered ten reference odds, three of which the report prints and this page shows; the other rungs here are powers of ten. Points are this page's own rule. Your answers stay in your browser and are sent nowhere. Nothing here estimates a real risk of extinction.</p>
+<p class="small"><b>Neighbours in the Atlas of Data Art.</b> <i>Dear Data</i> (Giorgia Lupi &amp; Stefanie Posavec, 2014–15): two people encode their own small data for each other, a week at a time. Daylight: here the only data two groups were rewarded for sending each other is a guess of the other's number, and the data about the world is never sent anywhere. <i>Survey of Common Sense</i> (Haleh Niazmand, 2001) borrows the methodology of polls as an art form. Daylight: this page hands the visitor the scoring rule of a real tournament and shows the column it cannot score; the poll's form is not the subject, the payment is.</p>
+</main>
+<script>
+const D = __DATA__;
+const $ = id => document.getElementById(id);
+const LMIN = -9, LMAX = 0;                       // log10 of probability
+const toP = s => Math.pow(10, LMIN + (LMAX - LMIN) * s / 900);
+const toS = p => Math.round(900 * (Math.log10(p) - LMIN) / (LMAX - LMIN));
+function fmtP(p){ // probability -> percent text
+  const pc = p * 100;
+  if (pc >= 10) return pc.toFixed(0) + ' %';
+  if (pc >= 1) return pc.toFixed(1).replace(/\.0$/, '') + ' %';
+  if (pc >= 0.001) return (+pc.toPrecision(2)).toString() + ' %';
+  return '1 in ' + oneIn(p);
+}
+function oneIn(p){ const x = 1 / p; if (x >= 1e9) return (x/1e9).toPrecision(2).replace(/\.0$/,'') + ' billion'; if (x >= 1e6) return (+(x/1e6).toPrecision(2)) + ' million'; return Math.round(+x.toPrecision(2)).toLocaleString('en'); }
+function fmtBoth(p){ const t = fmtP(p); return t.startsWith('1 in') ? t : t + ' · 1 in ' + oneIn(p); }
+const SUP = D.medians_2100_stage4.superforecasters.median / 100, EXP = D.medians_2100_stage4.experts_all.median / 100;
+const pts = (g, t) => Math.max(0, Math.round(100 - 40 * Math.abs(Math.log10(g / t))));
+const factor = (g, t) => { const f = g > t ? g / t : t / g; return f < 1.05 ? 'nothing' : 'a factor of ' + (f < 10 ? f.toFixed(1) : Math.round(f).toLocaleString('en')) + (g > t ? ' (too high)' : ' (too low)'); };
+const S = window.__state = { own: toP(600), sup: toP(600), exp: toP(600), handed: false, ladder: null };
+for (const k of ['own', 'sup', 'exp']) {
+  const upd = () => { S[k] = toP(+$(k).value); $(k + '-v').textContent = fmtBoth(S[k]); };
+  $(k).addEventListener('input', upd); upd();
+}
+function strip(){
+  const el = $('strip'); el.innerHTML = '';
+  const x = p => (100 * (Math.log10(p) - LMIN) / (LMAX - LMIN));
+  const mk = (p, col, label, right) => { const d = document.createElement('div'); d.className = 'm' + (right ? ' r' : ''); d.style.left = x(p) + '%'; d.style.borderColor = col; const s = document.createElement('span'); s.textContent = label; s.style.color = col; d.appendChild(s); el.appendChild(d); };
+  const css = getComputedStyle(document.documentElement);
+  mk(SUP, css.getPropertyValue('--super'), 'supers 0.38 %', x(SUP) > 60);
+  const e = document.createElement('div'); e.className = 'm'; e.style.left = x(EXP) + '%'; e.style.borderColor = css.getPropertyValue('--exp');
+  const es = document.createElement('span'); es.textContent = 'experts 3 %'; es.style.color = css.getPropertyValue('--exp'); es.style.top = '40px'; if (x(EXP) > 60) { es.style.left = 'auto'; es.style.right = '4px'; } e.appendChild(es); el.appendChild(e);
+  for (const [k, c] of [['sup', '--super'], ['exp', '--exp']]) { const d = document.createElement('div'); d.className = 'ring'; d.style.left = x(S[k]) + '%'; d.style.borderColor = css.getPropertyValue(c); d.style.borderStyle = 'dashed'; d.title = 'your guess'; el.appendChild(d); }
+  const r = document.createElement('div'); r.className = 'ring'; r.id = 'ownring'; r.style.left = x(S.own) + '%'; r.title = 'your own forecast (unscored)'; el.appendChild(r);
+}
+$('hand').onclick = () => {
+  S.handed = true;
+  const ps = pts(S.sup, SUP), pe = pts(S.exp, EXP);
+  $('s-sup-g').textContent = fmtP(S.sup); $('s-sup-t').textContent = fmtP(SUP); $('s-sup-x').textContent = factor(S.sup, SUP); $('s-sup-p').textContent = ps + ' pts';
+  $('s-exp-g').textContent = fmtP(S.exp); $('s-exp-t').textContent = fmtP(EXP); $('s-exp-x').textContent = factor(S.exp, EXP); $('s-exp-p').textContent = pe + ' pts';
+  $('s-own-g').textContent = fmtBoth(S.own); $('s-tot').textContent = (ps + pe) + ' of 200';
+  S.points = [ps, pe];
+  $('s-note').textContent = 'Your own forecast sits ' + (S.own > S.sup && S.own > S.exp ? 'above both medians' : S.own < S.sup && S.own < S.exp ? 'below both medians' : 'between the two medians') + '. The slip pays exactly the same whatever it says: move it anywhere and hand in again, and only the two guesses change the total.';
+  const sl = $('slip'); sl.classList.remove('on'); void sl.offsetWidth; sl.classList.add('on');
+  for (const k of ['own', 'sup', 'exp']) $(k).disabled = true; $('hand').disabled = true;
+  strip(); gap();
+  sl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+$('again').onclick = () => { for (const k of ['own', 'sup', 'exp']) $(k).disabled = false; $('hand').disabled = false; $('form').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+// the ladder
+const REF = { 2: 'a fair coin lands tails', 300000: 'dying from lightning, over a lifetime', 10000000: 'a random newborn becomes U.S. president' };
+const RUNGS = [2, 10, 100, 1000, 1e4, 1e5, 300000, 1e6, 1e7, 1e8, 1e9];
+const lad = $('ladder');
+for (const x of RUNGS) {
+  const r = document.createElement('div'); r.className = 'rung' + (REF[x] ? ' ref' : ''); r.setAttribute('role', 'option'); r.dataset.x = x; r.tabIndex = 0;
+  r.innerHTML = '<div class="x">1 in ' + x.toLocaleString('en') + '</div><div class="e">' + (REF[x] ? REF[x] + ' (the report\'s reference)' : '') + '</div>';
+  const pick = () => { for (const o of lad.children) { o.classList.toggle('sel', o === r); o.setAttribute('aria-selected', o === r); } S.ladder = 1 / x; gap(); };
+  r.onclick = pick; r.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } };
+  lad.appendChild(r);
+}
+function gap(){
+  const svg = $('gapfig'), css = getComputedStyle(document.documentElement), C = v => css.getPropertyValue(v).trim();
+  const W = 760, L = 30, R = 730, x = p => L + (R - L) * (Math.log10(p) - LMIN) / (LMAX - LMIN);
+  let s = '<line x1="' + L + '" x2="' + R + '" y1="100" y2="100" stroke="' + C('--rule') + '"/>';
+  for (let e = LMIN; e <= LMAX; e++) s += '<line x1="' + x(Math.pow(10, e)) + '" x2="' + x(Math.pow(10, e)) + '" y1="95" y2="105" stroke="' + C('--mute') + '"/>' + (e % 3 === 0 ? '<text x="' + x(Math.pow(10, e)) + '" y="122" font-size="12" text-anchor="middle" fill="' + C('--mute') + '" font-family="ui-monospace,monospace">' + (e === 0 ? 'certain' : '1e' + e) + '</text>' : '');
+  const pair = (a, b, y, col, la, lb) => { if (a == null || b == null) return ''; return '<line x1="' + x(a) + '" x2="' + x(b) + '" y1="' + y + '" y2="' + y + '" stroke="' + col + '" stroke-width="3"/><circle cx="' + x(a) + '" cy="' + y + '" r="6" fill="' + col + '"/><circle cx="' + x(b) + '" cy="' + y + '" r="6" fill="' + C('--bg') + '" stroke="' + col + '" stroke-width="2"/><text x="' + x(a) + '" y="' + (y - 12) + '" font-size="12" text-anchor="middle" fill="' + col + '" font-family="ui-monospace,monospace">' + la + '</text><text x="' + x(b) + '" y="' + (y + 22) + '" font-size="12" text-anchor="middle" fill="' + col + '" font-family="ui-monospace,monospace">' + lb + '</text>'; };
+  const pT = D.public.textbox_percent / 100, pL = 1 / D.public.ladder_one_in;
+  s += pair(pT, pL, 60, C('--pub'), 'public, typed: 1.5 %', 'public, ladder: 1 in 40 million');
+  const own = S.handed ? S.own : null;
+  s += pair(own, S.ladder, 160, C('--unpaid'), own ? 'you, desk: ' + fmtP(own) : '', S.ladder ? 'you, ladder: 1 in ' + oneIn(S.ladder) : '');
+  if (!S.handed || !S.ladder) s += '<text x="' + (W / 2) + '" y="172" font-size="13" text-anchor="middle" fill="' + C('--mute') + '" font-family="Georgia,serif">' + (!S.handed ? 'hand in the desk above, then pick a rung, to see your own pair here' : 'pick a rung on the ladder') + '</text>';
+  svg.innerHTML = s;
+  const n = $('gapnote');
+  if (S.handed && S.ladder) { const f = S.own / S.ladder; S.ratio = f; n.textContent = 'Your two answers differ by ' + (Math.abs(Math.log10(f)) < 0.05 ? 'nothing: the instrument did not move you.' : 'a factor of ' + Math.round(Math.max(f, 1 / f)).toLocaleString('en') + ' (' + (f > 1 ? 'the ladder gave less' : 'the ladder gave more') + '). The public\'s two answers differ by 600,000. Neither pair has an outcome to settle it.'); }
+  else n.textContent = 'The public\'s two medians differ by a factor of 600,000 (N = 405 who answered both).';
+}
+gap();
+// four months
+(function(){
+  const svg = $('stages'), css = getComputedStyle(document.documentElement), C = v => css.getPropertyValue(v).trim();
+  const G = D.stages_2100, T = 40, B = 300, lo = Math.log10(0.2), hi = Math.log10(10), y = v => B - (B - T) * (Math.log10(v) - lo) / (hi - lo);
+  const x1 = 120, x2 = 380; let s = '';
+  for (const v of [0.2, 0.5, 1, 2, 5, 10]) s += '<line x1="' + (x1 - 20) + '" x2="' + (x2 + 20) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="' + C('--rule') + '" stroke-dasharray="2 4"/><text x="' + (x1 - 28) + '" y="' + (y(v) + 4) + '" font-size="11" text-anchor="end" fill="' + C('--mute') + '" font-family="ui-monospace,monospace">' + v + ' %</text>';
+  s += '<text x="' + x1 + '" y="24" font-size="12" text-anchor="middle" fill="' + C('--mute') + '" font-family="ui-monospace,monospace">STAGE 1</text><text x="' + x2 + '" y="24" font-size="12" text-anchor="middle" fill="' + C('--mute') + '" font-family="ui-monospace,monospace">STAGE 4</text>';
+  const rows = [['superforecasters', G.superforecasters, C('--super')], ['domain experts', G.domain_experts, C('--exp')], ['general x-risk experts', G.general_xrisk_experts, C('--exp')], ['non-domain experts', G.non_domain_experts, C('--mute')]];
+  const off = { 'general x-risk experts': -9, 'domain experts': 9, 'non-domain experts': 0, 'superforecasters': 0 };
+  for (const [name, g, col] of rows) {
+    s += '<line x1="' + x1 + '" y1="' + y(g.stage1) + '" x2="' + x2 + '" y2="' + y(g.stage4) + '" stroke="' + col + '" stroke-width="2.5"/>' +
+      '<circle cx="' + x1 + '" cy="' + y(g.stage1) + '" r="4.5" fill="' + col + '"/><circle cx="' + x2 + '" cy="' + y(g.stage4) + '" r="4.5" fill="' + col + '"/>' +
+      '<text x="' + (x2 + 12) + '" y="' + (y(g.stage4) + 4 + off[name]) + '" font-size="13" fill="' + col + '" font-family="Georgia,serif">' + name + ' (n ' + g.n + ') ' + g.stage1 + ' → ' + g.stage4 + ' %</text>';
+  }
+  svg.innerHTML = s;
+})();
+</script>
+</body>
+</html>

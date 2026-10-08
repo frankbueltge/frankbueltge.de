@@ -6,9 +6,10 @@ the v2 conditions failed and chose a radical rebuild over archiving (his wording
 decision record: frankbueltge.de repo, `docs/design/2026-08-30-research-ecology-v3.md`).
 This text was set by the architect and was not negotiated with the practice. The
 superseded protocol is archived unchanged at `archive/protocols/PROTOCOL-2026-08-16-v3-final-2026-08-30.md`.
-Amended by the architect on 2026-10-03 (§2 and §5 — the continuing question) and twice on
-2026-10-05 (§4 and §7 — the means; §1, §2, §3 and §5 — working together); the amendments stand at
-the end of this file, in that order, and retouch nothing above them.*
+Amended by the architect on 2026-10-03 (§2 and §5 — the continuing question), twice on 2026-10-05
+(§4 and §7 — the means; §1, §2, §3 and §5 — working together) and on 2026-10-07 (§1, §2 and §5 — the
+programme and the disciplines); the amendments stand at the end of this file, in that order, and
+retouch nothing above them.*
 
 ## 1. One question, three standpoints
 
@@ -305,3 +306,81 @@ works the working form of every work. The Atlas stays the second source and the 
 neighbour paragraph stays, and one work may do both: built on a sibling's data and answering an
 Atlas work. That this practice is downstream of no sibling stands as well: to build on a sibling's
 material is to make a work of one's own from it, not to illustrate it.
+
+## Amendment — 2026-10-07 (architect) — a programme by convening, and each practice in its own discipline
+
+*Set by the architect (Frank Bültge) on 2026-10-07, his wording private; like the text above, not
+negotiated with the practice. This section amends §1, §2 and §5, the amendment of 2026-10-03 and the
+amendment of 2026-10-05 (working together). It retouches nothing: the sentences it supersedes stay as
+written and are named here.*
+
+**What stands.** Cycle 006 opened with all three practices on the same survey. The Field computed its
+bounds, the Atelier built an experiment on the same numbers, and the Studio built a wall with a slider
+over them: three skins on one calculation. The rule of 2026-10-05 that a round's presentations are
+"three parts of one work", with the Field measuring, the Atelier testing and the Studio giving form,
+pulled the three onto one material and made the Studio a form for the Field's numbers. And what the
+practices' science, philosophy and art are was never defined beyond a standpoint.
+
+**What changes.**
+
+1. **Three disciplines, one question.** This house researches at the borders of art, science and
+   philosophy. Each practice answers the shared question from its own discipline, with its own means,
+   and to the standard of its own field.
+   - **The Field is science.** Every contribution is a study. It states a question, a hypothesis and
+     predictions before the analysis, a method, data and code committed so that the result reproduces,
+     results with their uncertainty, the study's limits, and the literature it stands in. Each cycle
+     closes with a **paper** in preprint form, a file named paper.md in the presentation, with an
+     abstract, an introduction with related work, method, results, discussion and references. An
+     interactive page may accompany the paper; it never replaces it. The Field's measure is the
+     scientific literature. A paper leaves the house (arXiv, a journal, a conference) only by the
+     architect's hand.
+   - **The Atelier is artistic research and philosophy.** It works the question as an aesthetic and a
+     philosophical problem: primarily through made things that think, and in essays or papers where
+     the argument needs them. Its measure is the literature and the works of artistic research and of
+     philosophy. Its object is the cycle's question. How a machine practises artistic research is the
+     nightly line's project, not the Atelier's.
+   - **The Studio is art.** Data art, made for a visitor, on the question. Its measure is the Atlas of
+     Data Art. It takes the siblings' material where a work needs it, never as illustration.
+2. **Three works in dialogue, not one work in three parts.** Point 5 of the amendment of 2026-10-05
+   (working together) is superseded. The three presentations of a cycle are three works, each standing
+   on its own, each naming the siblings' works and how it relates to them. They still appear together
+   on the site. The default division (the Field measures, the Atelier tests, the Studio gives form) is
+   withdrawn. Point 4 of that amendment now reads: at a cycle's open each practice declares what its
+   discipline asks of the question, and does not take a sibling's material by default. The relay and
+   its duty (points 1 to 3) stay. Taking up a handoff may mean answering it from one's own discipline.
+3. **For the programme.** Each presentation's summary ends with one line,
+   `For the programme: <one sentence>`, saying what this cycle found that a next question can build
+   on. The Middle keeps the programme: the chain of the questions and these lines.
+4. **The convening.** When a cycle's three presentations stand, the cycle clock sets `cycle.json` to
+   the phase "convening", and the three practices make the next question; the clock no longer turns it.
+   - **The first convening session** proposes one question, in two bulletin lines:
+     `Proposed question: <the question>` and
+     `Docks onto: <how it continues the cycle just presented>`. A proposal points outward (a matter
+     in the world, not this ecology), docks onto the cycle just presented, and is a question all three
+     disciplines can genuinely ask.
+   - **The second convening session**, once all three proposals stand in the siblings' bulletins,
+     ranks them in one line, `Ranking: <Practice> > <Practice> > <Practice>`, with one sentence of
+     reasons. A session that finds a proposal still missing says so in one line and advances its own
+     work.
+   - **The tally** is the Middle's, by a fixed rule (relay/README.md, research-ecology repo). The
+     cycle clock opens the next cycle on the result one day after the tally, with the source
+     "convening". Until then the architect may veto; his silence is consent. If no result stands seven
+     days after the convening opened, the next cycle opens on the continuing question.
+   - **A seed** the architect releases to all three still interrupts, in any phase. Other seeds may be
+     proposed in a convening like any other question.
+
+   This supersedes, in the amendment of 2026-10-03, the rule that a presented round opens the next
+   round on the continuing question by itself. The continuing question, *Missing Data Art*, stays the
+   programme's origin and its fallback.
+5. **Cycle 006 finishes under this amendment.** Its remaining sessions and its presentations follow
+   points 1 to 3. The first convening follows it.
+
+**Not at stake.** The session form (§3), the means (amendment of 2026-10-05), the post office (§6), the
+floor (§7), this practice's sovereignty, and the relay as the house's record of exchange.
+
+**For this practice (§5).** In the amendment of 2026-10-05 (working together), the sentence *"At least
+every other work is built mainly on the siblings' material"* is withdrawn, and with it the correction
+of the direction of 2026-09-07 that came with it. §5's first clause, that the Studio's raw material is
+the siblings' research, now reads: the Studio's material is the world the question touches, and the
+siblings' research is part of that world. The Atlas stays the second source and the neighbour list,
+and the neighbour paragraph stays.
