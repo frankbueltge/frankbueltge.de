@@ -1,0 +1,354 @@
+{
+ "built": "2026-10-08",
+ "sources": {
+  "field_results": {
+   "sha256": "f5e8e7a26d001e6fd096e5140e1a3e05bd272353aec3f85f22720c3e74064e07",
+   "url": "https://raw.githubusercontent.com/frankbueltge/field-research/main/artifacts/2026-10-08-who-saw-the-fourteen/data/results.json"
+  },
+  "eur_lex_2024_1689": {
+   "sha256": "1907fe2020bf94f4637b21495d2d989aa932d7e7983a40888aa374d01c071e21",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202401689"
+  },
+  "asrs_ac_00_46f": {
+   "sha256": "950d9552524e46b629297ecb2c3e585e432c1e7edd8803c8b2e25fbe0441f1e3",
+   "url": "https://asrs.arc.nasa.gov/overview/immunity.html"
+  }
+ },
+ "prongs": {
+  "A": "The rule for what gets recorded was public before anyone looked.",
+  "B": "The party the record concerns did not set that rule (where no rule is published, whoever looks first sets it).",
+  "C": "Someone other than that party holds the first record.",
+  "D": "A party that testifies against itself is protected from its own testimony.",
+  "E": "The one who keeps the record outlasts the outcome."
+ },
+ "quotes": {
+  "act73_1": "Providers of high-risk AI systems placed on the Union market shall report any serious incident to the market surveillance authorities of the Member States where that incident occurred.",
+  "act73_6": "the provider shall, without delay, perform the necessary investigations in relation to the serious incident and the AI system concerned.",
+  "act55": "keep track of, document, and report, without undue delay, to the AI Office and, as appropriate, to national competent authorities, relevant information about serious incidents and possible corrective measures to address them;",
+  "asrs_1975": "the FAA instituted a voluntary ASRP on April 30, 1975",
+  "asrs_third": "NASA serves as a third party to receive and process Aviation Safety Reports.",
+  "asrs_deid": "The NASA ASRS provides for the receipt, analysis, and de-identification of Aviation Safety Reports.",
+  "asrs_use": "The FAA will not use any reports submitted to NASA under the ASRS (or information derived therefrom) in any enforcement action, except information concerning criminal offenses or accidents",
+  "asrs_pen": "neither a civil penalty nor certificate suspension will be imposed if"
+ },
+ "rows": [
+  {
+   "id": "AIID 65",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/65/",
+   "setting": "test",
+   "looker": "maker",
+   "A": false,
+   "B": false,
+   "C": false,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the maker looked first and set what was recorded.",
+    "C": "The first report sits on the maker's own domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1152",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1152/",
+   "setting": "deployed",
+   "looker": "user",
+   "A": false,
+   "B": true,
+   "C": true,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the first observer is not the maker.",
+    "C": "The first report sits on tomshardware.com, not the maker's domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1604",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1604/",
+   "setting": "test",
+   "looker": "affected party",
+   "A": false,
+   "B": true,
+   "C": true,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the first observer is not the maker.",
+    "C": "The first report sits on huggingface.co, not the maker's domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1627",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1627/",
+   "setting": "test",
+   "looker": "maker",
+   "A": false,
+   "B": false,
+   "C": false,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the maker looked first and set what was recorded.",
+    "C": "The first report sits on the maker's own domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1628",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1628/",
+   "setting": "test",
+   "looker": "maker",
+   "A": false,
+   "B": false,
+   "C": false,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the maker looked first and set what was recorded.",
+    "C": "The first report sits on the maker's own domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1629",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1629/",
+   "setting": "test",
+   "looker": "maker",
+   "A": false,
+   "B": false,
+   "C": false,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the maker looked first and set what was recorded.",
+    "C": "The first report sits on the maker's own domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1633",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1633/",
+   "setting": "test",
+   "looker": "third-party evaluator",
+   "A": false,
+   "B": true,
+   "C": true,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the first observer is not the maker.",
+    "C": "The first report sits on reuters.com, not the maker's domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1642",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1642/",
+   "setting": "deployed",
+   "looker": "user",
+   "A": false,
+   "B": true,
+   "C": true,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the first observer is not the maker.",
+    "C": "The first report sits on affinda.com, not the maker's domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1649",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1649/",
+   "setting": "test",
+   "looker": "maker",
+   "A": false,
+   "B": false,
+   "C": true,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the maker looked first and set what was recorded.",
+    "C": "The first report sits on reuters.com, not the maker's domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1668",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1668/",
+   "setting": "other",
+   "looker": "third-party researchers",
+   "A": false,
+   "B": true,
+   "C": true,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the first observer is not the maker.",
+    "C": "The first report sits on reuters.com, not the maker's domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1673",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1673/",
+   "setting": "deployed",
+   "looker": "user",
+   "A": false,
+   "B": true,
+   "C": true,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the first observer is not the maker.",
+    "C": "The first report sits on theregister.com, not the maker's domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1685",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1685/",
+   "setting": "test",
+   "looker": "maker",
+   "A": false,
+   "B": false,
+   "C": true,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the maker looked first and set what was recorded.",
+    "C": "The first report sits on reuters.com, not the maker's domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1700",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1700/",
+   "setting": "test",
+   "looker": "maker",
+   "A": false,
+   "B": false,
+   "C": true,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the maker looked first and set what was recorded.",
+    "C": "The first report sits on wsj.com, not the maker's domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "AIID 1707",
+   "kind": "incident",
+   "url": "https://incidentdatabase.ai/cite/1707/",
+   "setting": "deployed",
+   "looker": "maker",
+   "A": false,
+   "B": false,
+   "C": true,
+   "D": false,
+   "why": {
+    "A": "Field: no recording rule published before the looking.",
+    "B": "Field: the maker looked first and set what was recorded.",
+    "C": "The first report sits on nytimes.com, not the maker's domain.",
+    "D": "No rule is in the record at all, so none protects a party that testifies."
+   }
+  },
+  {
+   "id": "EU AI Act, Art. 73 and 55(1)(c)",
+   "kind": "regime",
+   "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+   "setting": "law, in force by stages",
+   "looker": "the provider itself",
+   "A": true,
+   "B": true,
+   "C": true,
+   "D": false,
+   "why": {
+    "A": "The duty to report is written in a regulation published in 2024, before any incident it covers.",
+    "B": "The legislator wrote it, not the provider.",
+    "C": "The report goes to market surveillance authorities (73(1)) or the AI Office (55(1)(c)).",
+    "D": "Art. 73, read in full, carries no clause restricting the use of a report against the provider. The provider also investigates its own incident (73(6)). Only Art. 73 was read for this, not the whole Regulation."
+   },
+   "quotes": [
+    "act73_1",
+    "act73_6",
+    "act55"
+   ]
+  },
+  {
+   "id": "NASA Aviation Safety Reporting System",
+   "kind": "regime",
+   "url": "https://asrs.arc.nasa.gov/overview/immunity.html",
+   "setting": "aviation, since 1975",
+   "looker": "often the party itself (pilot, controller, mechanic)",
+   "A": true,
+   "B": true,
+   "C": true,
+   "D": true,
+   "why": {
+    "A": "The programme and its rules date from 1975 (FAA Advisory Circular 00-46F, 6).",
+    "B": "The FAA and NASA set it; the reporting party does not.",
+    "C": "NASA, a third party, receives, de-identifies and keeps the reports.",
+    "D": "The FAA will not use the reports in enforcement, and an inadvertent violation reported within 10 days carries no penalty."
+   },
+   "quotes": [
+    "asrs_1975",
+    "asrs_third",
+    "asrs_deid",
+    "asrs_use",
+    "asrs_pen"
+   ]
+  }
+ ],
+ "summary": {
+  "n_incidents": 14,
+  "per_prong_incidents": {
+   "A": 0,
+   "B": 6,
+   "C": 10,
+   "D": 0
+  },
+  "pass_all_four": [
+   "NASA Aviation Safety Reporting System"
+  ],
+  "pass_A_B": [
+   "EU AI Act, Art. 73 and 55(1)(c)",
+   "NASA Aviation Safety Reporting System"
+  ],
+  "pass_B_C": [
+   "AIID 1152",
+   "AIID 1604",
+   "AIID 1633",
+   "AIID 1642",
+   "AIID 1668",
+   "AIID 1673",
+   "EU AI Act, Art. 73 and 55(1)(c)",
+   "NASA Aviation Safety Reporting System"
+  ],
+  "pass_B_C_incidents": [
+   "AIID 1152",
+   "AIID 1604",
+   "AIID 1633",
+   "AIID 1642",
+   "AIID 1668",
+   "AIID 1673"
+  ]
+ }
+}

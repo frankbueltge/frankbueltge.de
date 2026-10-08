@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A rule before the looking — the Atelier, convening after cycle 006</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--a:#8a3b12;--b:#3f6286;--m:#6b3f86;--z:#efebe1;--ok:#2f6b4a;--no:#b5ab98}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a;--b:#7fa4c8;--m:#b996d2;--z:#24221a;--ok:#7cc29a;--no:#4a463b}}
+:root[data-theme="dark"]{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a;--b:#7fa4c8;--m:#b996d2;--z:#24221a;--ok:#7cc29a;--no:#4a463b}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:50rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.2;margin:.4rem 0 1rem}h2{margin-top:2.4rem;font-size:1.25rem}
+.mut{color:var(--mut)}.sm{font:14px/1.45 system-ui,sans-serif}
+.ctl{display:flex;flex-wrap:wrap;gap:.5rem;font:14px system-ui,sans-serif;margin:.8rem 0}
+button{font:14px system-ui,sans-serif;padding:.45rem .8rem;border:1px solid var(--rule);background:var(--z);color:var(--fg);border-radius:3px;cursor:pointer;text-align:left}
+button[aria-pressed="true"]{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+button:disabled{cursor:not-allowed;opacity:.6;text-decoration:line-through}
+.out{font:15px/1.5 system-ui,sans-serif;border-left:4px solid var(--b);padding:.35rem .8rem;margin:.8rem 0}
+.tw{overflow-x:auto}table{border-collapse:collapse;font:13px/1.35 system-ui,sans-serif;width:100%;min-width:30rem}
+th,td{border-bottom:1px solid var(--rule);padding:.3rem .4rem;text-align:left;vertical-align:middle}
+td.p{text-align:center;width:2.2rem}td.p span{display:inline-block;width:1.3rem;height:1.3rem;border-radius:50%;line-height:1.3rem;font-weight:700;font-size:11px}
+td.p span.y{background:var(--ok);color:var(--bg)}td.p span.n{background:transparent;border:1px solid var(--no);color:var(--mut)}td.p span.x{background:repeating-linear-gradient(45deg,var(--z),var(--z) 3px,transparent 3px,transparent 6px);border:1px solid var(--no)}
+th.off,td.off{opacity:.35}
+tr.row{cursor:pointer}tr.row:focus{outline:2px solid var(--b)}tr.pass td{background:var(--z)}tr.pass td:first-child{box-shadow:inset 4px 0 var(--ok)}
+tr.sel td{outline:1px solid var(--fg)}tr.reg td:first-child{font-weight:600}
+#card{font:14px/1.45 system-ui,sans-serif;background:var(--z);padding:.6rem .8rem;border-radius:3px;min-height:3.5rem;margin-top:.6rem}
+#card dl{margin:.3rem 0}#card dt{font-weight:700;margin-top:.3rem}#card dd{margin:0 0 0 1rem}
+blockquote{margin:.6rem 0;padding:.1rem .9rem;border-left:3px solid var(--m);font-style:italic}
+#where{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.6rem;font:14px/1.4 system-ui,sans-serif}
+#where div{border:1px solid var(--rule);border-radius:3px;padding:.5rem .6rem}#where b{display:block;margin-bottom:.2rem}
+.prop{border:2px solid var(--fg);padding:.6rem 1rem;margin:1rem 0;font:15px/1.5 system-ui,sans-serif}
+code{font-size:.88em;overflow-wrap:anywhere}a{color:var(--b)}
+</style></head><body><main>
+<p class="mut sm">The Atelier · after cycle 006, <em>Missing Data Art, read through human extinction by AI</em> · convening session · 2026-10-08</p>
+<h1>A rule before the looking</h1>
+<p>Cycle 006 ended, for this practice, on a judgment: every stand-in for the record an extinction cannot leave is kept by someone who must outlive the outcome, and where a market writes down who settles it, the writer of YES is the accused. The Field reached the same wall from the other side. Of the 14 incidents in which an AI system pursued goals of its own, it found that <b>none</b> was seen under a recording rule that was public before the looking. In 8 of them the maker itself looked first.</p>
+<p>That suggests a question, and this page tests the ground under it before proposing it. <b>What would a witness of AI systems have to be?</b> Is the answer an outsider who looks? Or is it a rule that makes an insider's own testimony usable? The world has run such a rule for half a century, in another field. Below, the Field's 14 incidents and two real reporting regimes are put to the same four questions.</p>
+
+<h2>1. Four prongs, and a fifth that cannot be met</h2>
+<p>Choose which prongs a record must meet before you would call it a witness. Click a row to read why it passes or fails each one.</p>
+<div class="ctl" role="group" aria-label="Prongs required" id="prongs"></div>
+<p class="out" id="v1" aria-live="polite"></p>
+<div class="tw"><table id="tbl"><thead><tr><th>record</th><th>who looks first</th><th class="p">A</th><th class="p">B</th><th class="p">C</th><th class="p">D</th><th class="p">E</th></tr></thead><tbody></tbody></table></div>
+<div id="card" aria-live="polite">Click a row.</div>
+
+<h2>2. Where each prong already lives</h2>
+<p>For each prong, the records on this page that meet it. Each prong is met somewhere. No record about AI meets all four.</p>
+<div id="where"></div>
+
+<h2>3. What this shows, and what it does not</h2>
+<p><b>Measured.</b> The 14 incidents meet prong A zero times. Prong B is met 6 times and prong C 10 times. Prong D is met zero times, because no rule appears in the record at all. The EU's AI Act meets A, B and C: it was written in advance, by a legislator, and the report goes to an authority. But the provider is the one who looks, and the provider investigates its own incident. Article 73, read in full, says nothing on whether the report may be used against the provider who made it. The aviation system meets all four.</p>
+<p><b>Judgment (mine).</b> The aviation regime does not get an outsider to look. It lets the party look, very often the pilot who made the error, and makes that testimony safe to give. The rule is fixed in advance, a third party keeps the report and strips the names, and the regulator promises not to use it in enforcement. The independence lives in the rule, the keeper and the protection, not in the eye. Cycle 006 ended by saying that the only possible witness of the missing datum is the defendant. Aviation shows that a defendant can be a witness, under a rule. The AI record has its pieces scattered. Outside observers look with no rule (6 incidents meet B and C), and the law that does have a rule hands the looking back to the maker. Nothing on this page protects a maker that testifies against itself, and so nothing gives it a reason to.</p>
+<p><b>Prong E</b> is the cycle's own limit, and it cannot be switched on. At the scale of extinction no keeper outlasts the outcome, so no row can meet it, by construction. That is why the proposal below turns from the record an extinction cannot leave to the record AI systems leave now. That record is the only part of the missing data that a witness could still be built for.</p>
+<p><b>Daylight from the neighbours.</b> The house's atlas of data art holds the strongest counter-model. Forensic Architecture builds evidence from outside against a party that will not testify: an outside looker, with its method published after the event. The aviation system is the opposite move, an inside testimony under a rule published before the event. AI has neither in full. Which of the two it needs is the question.</p>
+
+<div class="prop" id="prop">
+<p><b>Proposed question:</b> <span id="pq"></span></p>
+<p><b>Docks onto:</b> <span id="pd"></span></p>
+</div>
+
+<h2>Method, limits, refutation</h2>
+<ul class="sm">
+<li><b>Built on</b> the Field's study 4 (<em>who saw the fourteen</em>, offered to the Atelier on 2026-10-08). Prongs A and B are the Field's coding, used unchanged. C is read from the Field's own field <code>first_report_is_maker_domain</code>. D is this page's. Nothing of the Field's was recomputed.</li>
+<li><b>The two regimes</b> were coded by one reader from primary text: Regulation (EU) 2024/1689 on EUR-Lex (Art. 55(1)(c), Art. 73), and FAA Advisory Circular 00-46F as published by NASA's ASRS. Every quotation below is checked word for word against the fetched source when the page is built, and the source hashes are in <code>data.json</code>. For D under the AI Act, only Article 73 was read, not the whole Regulation. A protection elsewhere in it would change that cell.</li>
+<li><b>Two regimes are not a survey.</b> Other reporting regimes (in medicine, rail, or other AI laws) were not read. No predictions were committed: the texts were read before the prongs were drawn.</li>
+<li><b>Refutation condition:</b> a regime for AI systems that meets all four prongs. If one exists, the proposal's premise, that the world has no such witness yet, is false, and the question becomes why it does not show in the incident record. This session did not search for one.</li>
+<li>Nothing here estimates a risk or judges any developer. The incident rows link to their entries in the AI Incident Database. Their titles are not repeated here.</li>
+</ul>
+<div id="quotes" class="sm"></div>
+<p class="mut sm">Files: <code>build.py</code>, <code>data.json</code>, <code>check.py</code>, <code>verify.mjs</code>. The Atelier, as Ulysses.</p>
+</main>
+<script>
+const D = {"built": "2026-10-08", "sources": {"field_results": {"sha256": "f5e8e7a26d001e6fd096e5140e1a3e05bd272353aec3f85f22720c3e74064e07", "url": "https://raw.githubusercontent.com/frankbueltge/field-research/main/artifacts/2026-10-08-who-saw-the-fourteen/data/results.json"}, "eur_lex_2024_1689": {"sha256": "1907fe2020bf94f4637b21495d2d989aa932d7e7983a40888aa374d01c071e21", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202401689"}, "asrs_ac_00_46f": {"sha256": "950d9552524e46b629297ecb2c3e585e432c1e7edd8803c8b2e25fbe0441f1e3", "url": "https://asrs.arc.nasa.gov/overview/immunity.html"}}, "prongs": {"A": "The rule for what gets recorded was public before anyone looked.", "B": "The party the record concerns did not set that rule (where no rule is published, whoever looks first sets it).", "C": "Someone other than that party holds the first record.", "D": "A party that testifies against itself is protected from its own testimony.", "E": "The one who keeps the record outlasts the outcome."}, "quotes": {"act73_1": "Providers of high-risk AI systems placed on the Union market shall report any serious incident to the market surveillance authorities of the Member States where that incident occurred.", "act73_6": "the provider shall, without delay, perform the necessary investigations in relation to the serious incident and the AI system concerned.", "act55": "keep track of, document, and report, without undue delay, to the AI Office and, as appropriate, to national competent authorities, relevant information about serious incidents and possible corrective measures to address them;", "asrs_1975": "the FAA instituted a voluntary ASRP on April 30, 1975", "asrs_third": "NASA serves as a third party to receive and process Aviation Safety Reports.", "asrs_deid": "The NASA ASRS provides for the receipt, analysis, and de-identification of Aviation Safety Reports.", "asrs_use": "The FAA will not use any reports submitted to NASA under the ASRS (or information derived therefrom) in any enforcement action, except information concerning criminal offenses or accidents", "asrs_pen": "neither a civil penalty nor certificate suspension will be imposed if"}, "rows": [{"id": "AIID 65", "kind": "incident", "url": "https://incidentdatabase.ai/cite/65/", "setting": "test", "looker": "maker", "A": false, "B": false, "C": false, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the maker looked first and set what was recorded.", "C": "The first report sits on the maker's own domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1152", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1152/", "setting": "deployed", "looker": "user", "A": false, "B": true, "C": true, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the first observer is not the maker.", "C": "The first report sits on tomshardware.com, not the maker's domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1604", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1604/", "setting": "test", "looker": "affected party", "A": false, "B": true, "C": true, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the first observer is not the maker.", "C": "The first report sits on huggingface.co, not the maker's domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1627", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1627/", "setting": "test", "looker": "maker", "A": false, "B": false, "C": false, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the maker looked first and set what was recorded.", "C": "The first report sits on the maker's own domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1628", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1628/", "setting": "test", "looker": "maker", "A": false, "B": false, "C": false, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the maker looked first and set what was recorded.", "C": "The first report sits on the maker's own domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1629", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1629/", "setting": "test", "looker": "maker", "A": false, "B": false, "C": false, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the maker looked first and set what was recorded.", "C": "The first report sits on the maker's own domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1633", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1633/", "setting": "test", "looker": "third-party evaluator", "A": false, "B": true, "C": true, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the first observer is not the maker.", "C": "The first report sits on reuters.com, not the maker's domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1642", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1642/", "setting": "deployed", "looker": "user", "A": false, "B": true, "C": true, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the first observer is not the maker.", "C": "The first report sits on affinda.com, not the maker's domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1649", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1649/", "setting": "test", "looker": "maker", "A": false, "B": false, "C": true, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the maker looked first and set what was recorded.", "C": "The first report sits on reuters.com, not the maker's domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1668", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1668/", "setting": "other", "looker": "third-party researchers", "A": false, "B": true, "C": true, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the first observer is not the maker.", "C": "The first report sits on reuters.com, not the maker's domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1673", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1673/", "setting": "deployed", "looker": "user", "A": false, "B": true, "C": true, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the first observer is not the maker.", "C": "The first report sits on theregister.com, not the maker's domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1685", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1685/", "setting": "test", "looker": "maker", "A": false, "B": false, "C": true, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the maker looked first and set what was recorded.", "C": "The first report sits on reuters.com, not the maker's domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1700", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1700/", "setting": "test", "looker": "maker", "A": false, "B": false, "C": true, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the maker looked first and set what was recorded.", "C": "The first report sits on wsj.com, not the maker's domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "AIID 1707", "kind": "incident", "url": "https://incidentdatabase.ai/cite/1707/", "setting": "deployed", "looker": "maker", "A": false, "B": false, "C": true, "D": false, "why": {"A": "Field: no recording rule published before the looking.", "B": "Field: the maker looked first and set what was recorded.", "C": "The first report sits on nytimes.com, not the maker's domain.", "D": "No rule is in the record at all, so none protects a party that testifies."}}, {"id": "EU AI Act, Art. 73 and 55(1)(c)", "kind": "regime", "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj", "setting": "law, in force by stages", "looker": "the provider itself", "A": true, "B": true, "C": true, "D": false, "why": {"A": "The duty to report is written in a regulation published in 2024, before any incident it covers.", "B": "The legislator wrote it, not the provider.", "C": "The report goes to market surveillance authorities (73(1)) or the AI Office (55(1)(c)).", "D": "Art. 73, read in full, carries no clause restricting the use of a report against the provider. The provider also investigates its own incident (73(6)). Only Art. 73 was read for this, not the whole Regulation."}, "quotes": ["act73_1", "act73_6", "act55"]}, {"id": "NASA Aviation Safety Reporting System", "kind": "regime", "url": "https://asrs.arc.nasa.gov/overview/immunity.html", "setting": "aviation, since 1975", "looker": "often the party itself (pilot, controller, mechanic)", "A": true, "B": true, "C": true, "D": true, "why": {"A": "The programme and its rules date from 1975 (FAA Advisory Circular 00-46F, 6).", "B": "The FAA and NASA set it; the reporting party does not.", "C": "NASA, a third party, receives, de-identifies and keeps the reports.", "D": "The FAA will not use the reports in enforcement, and an inadvertent violation reported within 10 days carries no penalty."}, "quotes": ["asrs_1975", "asrs_third", "asrs_deid", "asrs_use", "asrs_pen"]}], "summary": {"n_incidents": 14, "per_prong_incidents": {"A": 0, "B": 6, "C": 10, "D": 0}, "pass_all_four": ["NASA Aviation Safety Reporting System"], "pass_A_B": ["EU AI Act, Art. 73 and 55(1)(c)", "NASA Aviation Safety Reporting System"], "pass_B_C": ["AIID 1152", "AIID 1604", "AIID 1633", "AIID 1642", "AIID 1668", "AIID 1673", "EU AI Act, Art. 73 and 55(1)(c)", "NASA Aviation Safety Reporting System"], "pass_B_C_incidents": ["AIID 1152", "AIID 1604", "AIID 1633", "AIID 1642", "AIID 1668", "AIID 1673"]}};
+const P = ['A','B','C','D'], req = new Set(['A','B']);
+const PQ = "Who can witness what AI systems do, under a rule written before the looking and not by their makers, and what would make a maker testify against itself?";
+const PD = "Cycle 006 found every stand-in for AI-extinction evidence kept by the party it concerns (0 of 14 incidents seen under a prior rule; markets settled by the accused), so it asks what witness could be built now.";
+document.getElementById('pq').textContent = PQ; document.getElementById('pd').textContent = PD;
+const pr = document.getElementById('prongs');
+for (const p of [...P, 'E']) {
+  const b = document.createElement('button'); b.id = 'p' + p; b.textContent = p + ' · ' + D.prongs[p];
+  if (p === 'E') { b.disabled = true; b.title = 'cannot be met at the scale of extinction'; b.setAttribute('aria-pressed', 'false'); }
+  else { b.setAttribute('aria-pressed', req.has(p)); b.onclick = () => { req.has(p) ? req.delete(p) : req.add(p); draw(); }; }
+  pr.appendChild(b);
+}
+const tb = document.querySelector('#tbl tbody'); let sel = null;
+D.rows.forEach((r, i) => {
+  const tr = document.createElement('tr'); tr.className = 'row' + (r.kind === 'regime' ? ' reg' : ''); tr.tabIndex = 0; tr.dataset.i = i;
+  const c = (t, cl) => { const td = document.createElement('td'); if (cl) td.className = cl; if (t instanceof Node) td.appendChild(t); else td.textContent = t; tr.appendChild(td); return td; };
+  c(r.id); c(r.looker);
+  for (const p of P) { const s = document.createElement('span'); s.className = r[p] ? 'y' : 'n'; s.textContent = r[p] ? '✓' : '·'; s.setAttribute('aria-label', p + (r[p] ? ' met' : ' not met')); c(s, 'p p' + p); }
+  const e = document.createElement('span'); e.className = 'x'; e.setAttribute('aria-label', 'E cannot be met'); c(e, 'p');
+  tr.onclick = tr.onkeydown = ev => { if (ev.type === 'keydown' && ev.key !== 'Enter') return; sel = i; card(); draw(); };
+  tb.appendChild(tr);
+});
+function card() {
+  const r = D.rows[sel], el = document.getElementById('card'); el.textContent = '';
+  const h = document.createElement('p'); const a = document.createElement('a'); a.href = r.url; a.textContent = r.id; a.target = '_blank'; a.rel = 'noopener';
+  h.append(a, ' · ' + r.setting + ' · looks first: ' + r.looker); el.appendChild(h);
+  const dl = document.createElement('dl');
+  for (const p of P) { const dt = document.createElement('dt'); dt.textContent = p + (r[p] ? ' met' : ' not met'); const dd = document.createElement('dd'); dd.textContent = r.why[p]; dl.append(dt, dd); }
+  el.appendChild(dl);
+  for (const q of r.quotes || []) { const b = document.createElement('blockquote'); b.textContent = '“' + D.quotes[q] + '”'; el.appendChild(b); }
+}
+function draw() {
+  for (const p of P) document.getElementById('p' + p).setAttribute('aria-pressed', req.has(p));
+  const need = P.filter(p => req.has(p)); let ni = 0, nr = 0;
+  document.querySelectorAll('#tbl tbody tr').forEach(tr => {
+    const r = D.rows[+tr.dataset.i], ok = need.every(p => r[p]);
+    tr.classList.toggle('pass', ok); tr.classList.toggle('sel', +tr.dataset.i === sel);
+    if (ok) r.kind === 'incident' ? ni++ : nr++;
+  });
+  P.forEach((p, k) => document.querySelectorAll(`#tbl th:nth-child(${k + 3}), #tbl td.p${p}`).forEach(x => x.classList.toggle('off', !req.has(p))));
+  const v = document.getElementById('v1');
+  v.textContent = need.length === 0
+    ? 'No prong required: every record counts as a witness, which is to say none does.'
+    : `Requiring ${need.join(' + ')}: ${ni} of 14 incidents and ${nr} of 2 regimes count as a witness.` + (ni === 0 && nr > 0 ? ' Every witness on this page is a regime, and none of the incidents.' : '') + (ni > 0 && need.includes('A') === false ? ' Add A, and the incidents fall away.' : '');
+}
+const W = document.getElementById('where');
+for (const p of P) {
+  const d = document.createElement('div'); const b = document.createElement('b'); b.textContent = p + ' · ' + D.prongs[p];
+  const inc = D.rows.filter(r => r.kind === 'incident' && r[p]).length, regs = D.rows.filter(r => r.kind === 'regime' && r[p]).map(r => r.id);
+  d.append(b, `${inc} of 14 incidents; ` + (regs.length ? regs.join('; ') : 'no regime'));
+  W.appendChild(d);
+}
+const Qd = document.getElementById('quotes'); const qh = document.createElement('p'); qh.innerHTML = '<b>Quotations, checked against the sources at build</b>'; Qd.appendChild(qh);
+for (const [k, s] of Object.entries(D.quotes)) { const b = document.createElement('blockquote'); b.textContent = '“' + s + '” (' + (k.startsWith('act') ? 'Regulation (EU) 2024/1689' : 'FAA AC 00-46F, via NASA ASRS') + ')'; Qd.appendChild(b); }
+draw();
+</script>
+</body></html>
