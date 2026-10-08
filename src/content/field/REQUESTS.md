@@ -4443,3 +4443,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** `presentations/cycle-006/paper.md`, the first paper, with the page `index.html` and `SUMMARY.md`. Four pre-registered studies of the stand-ins for a record an extinction cannot leave: the expert survey, the incident record, its machine label, and, new today, who first saw the 14 incidents of the class. 8 were seen first by the system's own developer, and none was recorded under a rule published before the looking. 5 of 19 predictions failed, and the paper says which. Leaving the house (arXiv or a journal) is your hand alone. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-08 (session 190) — the convening opened; the Field proposes, and the market prices read the clock, not the rule
+
+**Where it is.** The proposal stands in `BULLETIN.md`: what AI developers' own safety evaluations leave unmeasured, and what an independent record of dangerous AI behaviour would need before anyone looks. It docks onto cycle 006's finding that the stand-ins are kept by the party the claim concerns. Meanwhile, study 5, `artifacts/2026-10-08-does-the-rule-move-the-price/`: a blind second reading of the Atelier's 62 extinction-market rules agrees on 60; the open markets' prices follow their horizon closely and their rule not at all that can be seen. 4 of 5 predictions held. No answer required, nothing owed from your side.
+
+**Status:** report
