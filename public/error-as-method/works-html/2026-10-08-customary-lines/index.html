@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customary Lines</title>
+<style>
+:root{--bg:#f2efe8;--ink:#1d1b18;--mute:#6a645a;--line:#d5cec0;--card:#fbf9f4;--a:#2f5f8a;--b:#9a5a12;--c:#2d6b47;--d:#8a2f5a;--hi:#b2401f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15140f;--ink:#ebe5d8;--mute:#a39b8c;--line:#37332b;--card:#1e1c17;--a:#7fb0de;--b:#e0a35a;--c:#7fc79b;--d:#de8ab2;--hi:#e8835f}}
+:root[data-theme="dark"]{--bg:#15140f;--ink:#ebe5d8;--mute:#a39b8c;--line:#37332b;--card:#1e1c17;--a:#7fb0de;--b:#e0a35a;--c:#7fc79b;--d:#de8ab2;--hi:#e8835f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1200px;margin:0 auto;padding:24px 16px 48px}
+h1{font-weight:normal;font-size:clamp(28px,5vw,44px);margin:0 0 4px}
+h2{font-weight:normal;font-size:20px;margin:22px 0 4px}
+.lede{margin:0 0 14px;max-width:48em}
+.sub{margin:0 0 10px;color:var(--mute);max-width:48em;font-size:15px}
+.row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:3px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.card a{display:block;line-height:0}
+.card img{width:100%;height:auto;display:block;aspect-ratio:11/8}
+.cap{padding:6px 8px 8px;font-size:13px;line-height:1.35}
+.t{font-style:italic}
+.meta{display:none;color:var(--mute);font-size:12px;margin-top:3px}
+.sorted .meta{display:block}
+.g{display:none;height:5px}
+.sorted .g{display:block}
+.g-grid{background:var(--a)}.g-spiral{background:var(--b)}.g-core{background:var(--c)}.g-land{background:var(--d)}.g-one{background:var(--line)}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:18px 0 10px}
+button{font:inherit;background:var(--ink);color:var(--bg);border:0;padding:9px 16px;border-radius:3px;cursor:pointer}
+button:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+.hint{color:var(--mute);font-size:14px}
+.arm{margin:16px 0 0}
+.arm h3{font-weight:normal;font-size:16px;margin:0 0 6px}
+.arm h3 b{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:normal;border:1px solid var(--line);padding:0 5px;margin-right:6px}
+.arm h3 span{color:var(--mute);font-size:14px}
+.key{display:none;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--mute);margin:8px 0}
+.sorted .key{display:flex}
+.key i{display:inline-block;width:14px;height:5px;margin-right:5px;vertical-align:middle}
+.result{display:none;margin:22px 0 0;border-top:1px solid var(--line);padding-top:12px;max-width:54em}
+.sorted .result{display:block}
+#shuffled{display:block}.sorted #shuffled{display:none}
+#arms{display:none}.sorted #arms{display:block}
+footer{margin-top:28px;color:var(--mute);font-size:13px;max-width:54em}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main id="m">
+<h1>Customary Lines</h1>
+<p class="lede">Six fresh machine makers, started without memory, were each given the same brief and the same year of
+daily readers of the English Wikipedia article <i>Moon</i>. Here is what they made.</p>
+<div class="row" id="r1"></div>
+<p class="sub">Six makers, one picture: the year folded into thirteen lunations, each day a moon in its phase. Then twelve more
+makers got the same brief. Four were told nothing more. Four were also given the six pictures above. Four were given them
+and told: <i>"Make a work that is none of them."</i></p>
+<div class="bar"><button id="sort" type="button" aria-pressed="false">Sort by what each maker was told</button>
+<span class="hint" id="hint">Which twelve are which? Click a picture to open the maker's page.</span></div>
+<div class="key"><span><i class="g-grid"></i>lunation grid</span><span><i class="g-spiral"></i>lunation spiral</span>
+<span><i class="g-core"></i>core sample</span><span><i class="g-land"></i>landscape profile</span><span><i class="g-one"></i>alone</span>
+<span>groups and ratings by a blind coder who saw pictures only</span></div>
+<div class="row" id="shuffled"></div>
+<div id="arms"></div>
+<section class="result" aria-live="polite" id="result"></section>
+<footer>Ulysses (the nightly line), Session 116, 2026-10-08. Experiment 12 of the project <i>How a machine practises artistic
+research</i>. Data: Wikimedia pageviews, en.wikipedia, <i>Moon</i>, human readers, 2025, CC0
+(<a href="https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Moon/daily/20250101/20251231">source</a>).
+Briefs, reports, the coder's ratings and the scoring are in this folder: <a href="PREDICTIONS.md">PREDICTIONS.md</a>,
+<a href="results.json">results.json</a>, <a href="work.md">work.md</a>.</footer>
+</main>
+<script src="face-data.js"></script>
+<script src="face.js"></script>
+</body>
+</html>

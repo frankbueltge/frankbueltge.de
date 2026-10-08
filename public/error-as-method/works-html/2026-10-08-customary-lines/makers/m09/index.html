@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>High Water</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #070a12; }
+  body { width: 1100px; height: 800px; overflow: hidden; font-family: Georgia, "Times New Roman", serif; }
+  svg { display: block; }
+  text { font-family: Georgia, "Times New Roman", serif; }
+</style>
+</head>
+<body>
+<svg id="w" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("w");
+  var days = window.VIEWS.days;
+  var N = days.length;
+
+  function el(name, attrs, parent, txt) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (typeof parent === "string") { txt = parent; parent = null; }
+    if (txt != null) e.textContent = txt;
+    (parent || svg).appendChild(e);
+    return e;
+  }
+
+  // Geometry
+  var X0 = 70, X1 = 1060, BASE = 712, TOPV = 18000, H = 535;
+  var dw = (X1 - X0) / N;
+  function x(i) { return X0 + (i + 0.5) * dw; }       // day index (noon) -> x
+  function y(v) { return BASE - v / TOPV * H; }
+
+  // Real 2025 new and full moons (day-of-year index, 0 = 1 Jan), with the
+  // preceding new moon of 29 Dec 2024 and following full moon of 3 Jan 2026.
+  var NEW  = [-2, 28, 58, 87, 116, 146, 175, 204, 234, 263, 293, 323, 353];
+  var FULL = [12, 42, 72, 102, 131, 161, 190, 220, 249, 279, 308, 337, 367];
+  var NEWh  = [22.45, 12.6, 0.8, 10.9, 19.5, 3.0, 10.5, 19.2, 6.1, 19.9, 12.4, 6.8, 1.7];
+  var FULLh = [22.4, 13.9, 6.9, 0.4, 16.9, 7.7, 20.6, 7.9, 18.1, 3.8, 13.3, 23.2, 10.1];
+  var events = [];
+  NEW.forEach(function (d, k) { events.push({ t: d + NEWh[k] / 24, p: 0 }); });
+  FULL.forEach(function (d, k) { events.push({ t: d + FULLh[k] / 24, p: 1 }); });
+  events.sort(function (a, b) { return a.t - b.t; });
+  // phase angle 0..pi..2pi interpolated between real events; illumination = (1 - cos)/2
+  function illum(t) {
+    for (var k = 0; k < events.length - 1; k++) {
+      var a = events[k], b = events[k + 1];
+      if (t >= a.t && t <= b.t) {
+        var f = (t - a.t) / (b.t - a.t);
+        var ang = (a.p === 0 ? 0 : Math.PI) + f * Math.PI;
+        return (1 - Math.cos(ang)) / 2;
+      }
+    }
+    return 0;
+  }
+
+  var defs = el("defs", {});
+
+  // Sky: night that brightens with moonlight, day by day
+  var sky = el("linearGradient", { id: "sky", x1: X0, x2: X1, y1: 0, y2: 0, gradientUnits: "userSpaceOnUse" }, defs);
+  for (var s = 0; s <= 2 * N; s++) {
+    var t = s / 2;
+    var L = illum(t);
+    el("stop", { offset: (s / (2 * N)).toFixed(5), "stop-color": "#c9d3e6", "stop-opacity": (0.015 + 0.19 * Math.pow(L, 1.6)).toFixed(3) }, sky);
+  }
+  var fadeV = el("linearGradient", { id: "fadeV", x1: 0, x2: 0, y1: 0, y2: 1 }, defs);
+  el("stop", { offset: "0", "stop-color": "#fff", "stop-opacity": "0" }, fadeV);
+  el("stop", { offset: "0.35", "stop-color": "#fff", "stop-opacity": "1" }, fadeV);
+  el("stop", { offset: "1", "stop-color": "#fff", "stop-opacity": "1" }, fadeV);
+  var mask = el("mask", { id: "skymask" }, defs);
+  el("rect", { x: X0, y: 96, width: X1 - X0, height: BASE - 96, fill: "url(#fadeV)" }, mask);
+
+  var water = el("linearGradient", { id: "water", x1: 0, x2: 0, y1: y(TOPV * 0.98), y2: BASE, gradientUnits: "userSpaceOnUse" }, defs);
+  el("stop", { offset: "0", "stop-color": "#f1ead6" }, water);
+  el("stop", { offset: "0.55", "stop-color": "#b9c2cf" }, water);
+  el("stop", { offset: "0.72", "stop-color": "#5c6f8c" }, water);
+  el("stop", { offset: "1", "stop-color": "#16223a" }, water);
+
+  el("rect", { x: 0, y: 0, width: 1100, height: 800, fill: "#070a12" });
+  el("rect", { x: X0, y: 96, width: X1 - X0, height: BASE - 96, fill: "url(#sky)", mask: "url(#skymask)" });
+
+  // Reference lines
+  [5000, 10000, 15000].forEach(function (v) {
+    el("line", { x1: X0, x2: X1, y1: y(v), y2: y(v), stroke: "#8b96ab", "stroke-opacity": 0.22, "stroke-dasharray": "2 4" });
+    el("text", { x: X0 - 8, y: y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "#7f8aa0" }, v.toLocaleString("en-US"));
+  });
+
+  // Full-moon plumb lines and moons; new moons as dark rings
+  var MY = 118;
+  FULL.forEach(function (d, k) {
+    if (d > N - 1) return;
+    var t = d + FULLh[k] / 24, xx = X0 + t * dw;
+    el("line", { x1: xx, x2: xx, y1: MY + 10, y2: BASE, stroke: "#e8e2cf", "stroke-opacity": 0.13 });
+    el("circle", { cx: xx, cy: MY, r: 6.5, fill: "#ece6d2" });
+  });
+  NEW.forEach(function (d, k) {
+    var t = d + NEWh[k] / 24; if (t < 0) return;
+    var xx = X0 + t * dw;
+    el("circle", { cx: xx, cy: MY, r: 6, fill: "#070a12", stroke: "#5d6880", "stroke-width": 1 });
+  });
+  el("text", { x: X0 - 8, y: MY + 4, "text-anchor": "end", "font-size": 11, fill: "#7f8aa0", "font-style": "italic" }, "sky");
+
+  // Water: daily readers
+  var d = "M" + X0 + "," + BASE + " L" + X0 + "," + y(days[0]).toFixed(2);
+  for (var i = 0; i < N; i++) d += " L" + x(i).toFixed(2) + "," + y(days[i]).toFixed(2);
+  d += " L" + X1 + "," + y(days[N - 1]).toFixed(2) + " L" + X1 + "," + BASE + " Z";
+  el("path", { d: d, fill: "url(#water)" });
+  var line = "M" + X0 + "," + y(days[0]).toFixed(2);
+  for (i = 0; i < N; i++) line += " L" + x(i).toFixed(2) + "," + y(days[i]).toFixed(2);
+  line += " L" + X1 + "," + y(days[N - 1]).toFixed(2);
+  el("path", { d: line, fill: "none", stroke: "#fbf6e8", "stroke-width": 1.1, "stroke-linejoin": "round" });
+
+  // Baseline + months
+  el("line", { x1: X0, x2: X1, y1: BASE, y2: BASE, stroke: "#8b96ab", "stroke-opacity": 0.5 });
+  var mStart = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  var mName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  mStart.forEach(function (m, k) {
+    var xx = X0 + m * dw;
+    el("line", { x1: xx, x2: xx, y1: BASE, y2: BASE + 6, stroke: "#8b96ab", "stroke-opacity": 0.6 });
+    var nx = X0 + ((k < 11 ? mStart[k + 1] : N) + m) / 2 * dw;
+    el("text", { x: nx, y: BASE + 20, "text-anchor": "middle", "font-size": 12, fill: "#9aa4b8" }, mName[k]);
+  });
+
+  // Annotations
+  function fmt(n) { return n.toLocaleString("en-US"); }
+  function note(i, lines, dx, dy, anchor) {
+    var px = x(i), py = y(days[i]);
+    var tx = px + dx, ty = py + dy;
+    el("line", { x1: px, y1: py - 3, x2: tx - (anchor === "end" ? -4 : 4) * (dx === 0 ? 0 : 1), y2: ty + 3, stroke: "#d8d2bf", "stroke-opacity": 0.6, "stroke-width": 0.8 });
+    lines.forEach(function (l, k) {
+      el("text", { x: tx, y: ty - (lines.length - 1 - k) * 14, "text-anchor": anchor, "font-size": k === 0 ? 12.5 : 11.5,
+        fill: k === 0 ? "#f1ead6" : "#a8b1c3", "font-style": k === 0 ? "normal" : "italic" }, l);
+    });
+  }
+  note(72,  ["14 Mar · " + fmt(days[72]),  "total lunar eclipse"], -14, -26, "end");
+  note(249, ["7 Sep · " + fmt(days[249]),  "total lunar eclipse"], -14, -10, "end");
+  note(279, ["7 Oct · " + fmt(days[279]),  "full moon, supermoon"], 14, -30, "start");
+  note(308, ["5 Nov · " + fmt(days[308]),  "full moon, nearest of the year"], 12, -60, "start");
+  note(200, ["20 Jul · " + fmt(days[200]), "waning crescent, nothing in the sky:", "Apollo 11 anniversary"], -14, -14, "end");
+  note(58,  ["28 Feb · " + fmt(days[58]),  "new moon"], -12, -40, "end");
+
+  // Title block
+  el("text", { x: X0, y: 50, "font-size": 30, fill: "#f1ead6", "font-style": "italic" }, "High Water");
+  el("text", { x: X0, y: 76, "font-size": 13.5, fill: "#9aa4b8" },
+    "Daily human readers of the English Wikipedia article “Moon” through 2025, under the light of the Moon itself. Readers rise like a tide when it is full.");
+
+  // Key
+  var ky = 760;
+  el("circle", { cx: X0 + 6, cy: ky - 4, r: 5.5, fill: "#ece6d2" });
+  el("text", { x: X0 + 18, y: ky, "font-size": 11.5, fill: "#9aa4b8" }, "full moon");
+  el("circle", { cx: X0 + 96, cy: ky - 4, r: 5, fill: "#070a12", stroke: "#5d6880" });
+  el("text", { x: X0 + 108, y: ky, "font-size": 11.5, fill: "#9aa4b8" }, "new moon");
+  el("text", { x: X0 + 180, y: ky, "font-size": 11.5, fill: "#9aa4b8" },
+    "·  sky brightness: fraction of the Moon lit each day  ·  water height: page views that day, from zero  ·  range " + fmt(Math.min.apply(null, days)) + " to " + fmt(Math.max.apply(null, days)));
+  el("text", { x: X1, y: ky + 18, "text-anchor": "end", "font-size": 10.5, fill: "#6b768c" }, "Data: Wikimedia pageviews API, user agent, CC0. Moon phases: 2025 ephemeris.");
+})();
+</script>
+</body>
+</html>

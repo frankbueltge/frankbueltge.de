@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Synodic Year</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #0d0e11; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<div id="work"></div>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var days = window.VIEWS.days;
+
+  // The lunar clock. Reference new moon: 2024-12-30 22:27 UTC.
+  var SYN = 29.530589;
+  var REF = Date.UTC(2024, 11, 30, 22, 27);
+  var START = Date.UTC(2025, 0, 1, 12, 0); // each day sampled at noon UTC
+  var DAY = 86400000;
+
+  var cx = 690, cy = 400;
+  var R0 = 46, GAP = 25.5;          // spiral: one turn per lunation
+  var K = 13 / 5000;                // px of height per view
+
+  function lun(i) { return (START + i * DAY - REF) / DAY / SYN; } // lunations since ref
+  function ang(l) { return -Math.PI / 2 + (l % 1) * 2 * Math.PI; } // new moon at top, clockwise
+  function rad(l) { return R0 + l * GAP; }
+  function pt(r, a) { return (cx + r * Math.cos(a)).toFixed(2) + ' ' + (cy + r * Math.sin(a)).toFixed(2); }
+
+  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  function dateOf(i) { var d = new Date(START + i * DAY); return d.getUTCDate() + ' ' + MONTHS[d.getUTCMonth()]; }
+
+  var eclipse = { 72: true, 249: true }; // total lunar eclipses: 14 Mar, 7 Sep 2025
+
+  var s = [];
+  s.push('<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">');
+  s.push('<defs><radialGradient id="g" cx="50%" cy="50%" r="50%">' +
+         '<stop offset="0" stop-color="#1a1b20"/><stop offset="1" stop-color="#0d0e11"/></radialGradient></defs>');
+  s.push('<rect width="' + W + '" height="' + H + '" fill="#0d0e11"/>');
+  s.push('<circle cx="' + cx + '" cy="' + cy + '" r="390" fill="url(#g)"/>');
+
+  // the two meridians of the clock: new (up) and full (down)
+  s.push('<line x1="' + cx + '" y1="' + (cy - R0 + 14) + '" x2="' + cx + '" y2="' + (cy - 386) + '" stroke="#3a3c44" stroke-width="0.6" stroke-dasharray="1 4"/>');
+  s.push('<line x1="' + cx + '" y1="' + (cy + R0 - 14) + '" x2="' + cx + '" y2="' + (cy + 386) + '" stroke="#6b6658" stroke-width="0.6" stroke-dasharray="1 4"/>');
+
+  // baseline spiral through the year
+  var l0 = lun(0) - 0.5 / SYN, l1 = lun(days.length - 1) + 0.5 / SYN;
+  var path = [];
+  for (var l = l0; l <= l1; l += 0.004) path.push((path.length ? 'L' : 'M') + pt(rad(l), ang(l)));
+  s.push('<path d="' + path.join('') + '" fill="none" stroke="#2c2e35" stroke-width="0.8"/>');
+
+  // one wedge per day, rising outward from the spiral by its page views
+  var half = 0.5 / SYN;
+  for (var i = 0; i < days.length; i++) {
+    var lc = lun(i), la = lc - half * 0.86, lb = lc + half * 0.86;
+    var h = days[i] * K;
+    var a1 = ang(la), a2 = ang(lb);
+    var rA = rad(la), rB = rad(lb);
+    var d = 'M' + pt(rA, a1) + 'L' + pt(rA + h, a1) +
+            'A' + (rad(lc) + h).toFixed(2) + ' ' + (rad(lc) + h).toFixed(2) + ' 0 0 1 ' + pt(rB + h, a2) +
+            'L' + pt(rB, a2) +
+            'A' + rad(lc).toFixed(2) + ' ' + rad(lc).toFixed(2) + ' 0 0 0 ' + pt(rA, a1) + 'Z';
+    var phase = (lc % 1);                       // 0 new, .5 full
+    var lit = (1 - Math.cos(phase * 2 * Math.PI)) / 2; // illuminated fraction
+    var fill = eclipse[i] ? '#c4643c' : '#e8e2d0';
+    var op = eclipse[i] ? 0.92 : (0.38 + 0.5 * lit).toFixed(3);
+    s.push('<path d="' + d + '" fill="' + fill + '" fill-opacity="' + op + '"/>');
+  }
+
+  // a few quiet labels on the tallest days
+  var notes = [
+    [249, 'total lunar eclipse', 1],
+    [200, 'Apollo 11 anniversary', 0],
+    [72, 'total lunar eclipse', 1],
+    [279, 'harvest supermoon', -1]
+  ];
+  notes.forEach(function (n) {
+    var i = n[0], lc = lun(i), a = ang(lc), r = rad(lc) + days[i] * K + 8;
+    var x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
+    var right = n[2] ? n[2] > 0 : Math.cos(a) >= 0;
+    var tx = x + (right ? 30 : -30);
+    s.push('<line x1="' + x.toFixed(1) + '" y1="' + y.toFixed(1) + '" x2="' + tx.toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="#77736a" stroke-width="0.6"/>');
+    s.push('<text x="' + (tx + (right ? 4 : -4)).toFixed(1) + '" y="' + (y - 2).toFixed(1) + '" text-anchor="' + (right ? 'start' : 'end') +
+           '" stroke="#0d0e11" stroke-width="3" stroke-linejoin="round" paint-order="stroke" font-family="Georgia, serif" font-size="11" fill="#b8b2a2">' + dateOf(i) + '</text>');
+    s.push('<text x="' + (tx + (right ? 4 : -4)).toFixed(1) + '" y="' + (y + 11).toFixed(1) + '" text-anchor="' + (right ? 'start' : 'end') +
+           '" stroke="#0d0e11" stroke-width="3" stroke-linejoin="round" paint-order="stroke" font-family="Georgia, serif" font-style="italic" font-size="10.5" fill="#77736a">' + n[1] + ' · ' + days[i].toLocaleString('en-US') + '</text>');
+  });
+
+  // clock words
+  var F = 'font-family="Georgia, serif" font-size="10.5" letter-spacing="2" fill="#6b6658" text-anchor="middle"';
+  s.push('<text x="' + cx + '" y="' + (cy - 392 + 6) + '" ' + F + '>NEW</text>');
+  s.push('<text x="' + cx + '" y="' + (cy + 397) + '" ' + F + '>FULL</text>');
+  s.push('<text transform="translate(' + (cx + 390) + ' ' + cy + ') rotate(90)" ' + F + '>WAXING</text>');
+  s.push('<text transform="translate(' + (cx - 390) + ' ' + cy + ') rotate(-90)" ' + F + '>WANING</text>');
+
+  // title block
+  var T = 'font-family="Georgia, serif"';
+  s.push('<text x="56" y="522" ' + T + ' font-size="30" fill="#e8e2d0">Synodic Year</text>');
+  var lines = [
+    'Every day of 2025 on which a human',
+    'opened the English Wikipedia article',
+    '“Moon”, wound on the Moon’s own clock:',
+    'one turn of the spiral per lunation,',
+    'new moon at the top, full at the foot.',
+    '',
+    'Each mark rises by that day’s readers;',
+    'its brightness is how much of the Moon',
+    'was lit. The year begins at the centre',
+    'and ends on the outer turn.'
+  ];
+  lines.forEach(function (t, k) {
+    s.push('<text x="56" y="' + (558 + k * 18) + '" ' + T + ' font-size="13" fill="#9a9483">' + t + '</text>');
+  });
+  var total = days.reduce(function (a, b) { return a + b; }, 0);
+  s.push('<text x="56" y="752" ' + T + ' font-size="11" fill="#6b6658">' + total.toLocaleString('en-US') + ' views · 1 Jan – 31 Dec 2025</text>');
+  s.push('<text x="56" y="768" ' + T + ' font-size="11" fill="#6b6658">Wikimedia pageviews, user agent, CC0</text>');
+
+  s.push('</svg>');
+  document.getElementById('work').innerHTML = s.join('');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thirteen Lunations</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #0b0d12; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = window.devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  var days = window.VIEWS.days;
+  var DAY = 86400000;
+  var start = Date.UTC(2025, 0, 1);
+
+  // New moons (UTC) bracketing 2025. Each begins one row.
+  var NM = [
+    '2024-12-30T22:27Z', '2025-01-29T12:36Z', '2025-02-28T00:45Z', '2025-03-29T10:58Z',
+    '2025-04-27T19:31Z', '2025-05-27T03:02Z', '2025-06-25T10:31Z', '2025-07-24T19:11Z',
+    '2025-08-23T06:06Z', '2025-09-21T19:54Z', '2025-10-21T12:25Z', '2025-11-20T06:47Z',
+    '2025-12-20T01:43Z', '2026-01-18T19:52Z'
+  ].map(function (s) { return Date.parse(s); });
+
+  var BG = '#0b0d12', LIT = '#ece4d2', DARK = '#1b1f29', RIM = '#2c3240',
+      INK = '#8d8a82', FAINT = '#4a4c52', ACC = '#d9b88a';
+
+  ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
+
+  // Layout
+  var left = 118, right = 44, top = 150, rowH = 45.5;
+  var cols = 31, colW = (W - left - right) / cols;
+  var maxV = Math.max.apply(null, days);
+  var RMAX = 24;
+  function radius(v) { return RMAX * Math.sqrt(v / maxV); }
+
+  // Draw one moon: f = phase fraction (0 new, .5 full), seen from the north.
+  function moon(x, y, r, f) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2);
+    ctx.fillStyle = DARK; ctx.fill();
+    ctx.lineWidth = 0.6; ctx.strokeStyle = RIM; ctx.stroke();
+    var g = f;
+    if (f > 0.5) { ctx.scale(-1, 1); g = 1 - f; }
+    var k = Math.cos(2 * Math.PI * g);
+    if (g > 0.003) {
+      ctx.beginPath();
+      ctx.arc(0, 0, r, -Math.PI / 2, Math.PI / 2, false);
+      ctx.ellipse(0, 0, Math.max(Math.abs(k) * r, 0.01), r, 0,
+                  Math.PI / 2, -Math.PI / 2, k > 0);
+      ctx.closePath();
+      ctx.fillStyle = LIT; ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function fmtDate(t) {
+    var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var d = new Date(t);
+    return m[d.getUTCMonth()] + ' ' + d.getUTCDate();
+  }
+  function fmtN(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  // Title
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#d8d2c4';
+  ctx.font = '400 26px Georgia, "Times New Roman", serif';
+  ctx.fillText('Thirteen Lunations', left - 70, 58);
+  ctx.fillStyle = INK;
+  ctx.font = 'italic 13px Georgia, "Times New Roman", serif';
+  ctx.fillText('Daily human readers of the English Wikipedia article “Moon” in 2025, folded on the Moon’s own month.', left - 70, 82);
+  ctx.fillText('One row per lunation, new moon to new moon. Each day is drawn in its phase; its size is that day’s readership.', left - 70, 100);
+
+  // Column header
+  ctx.font = '11px Georgia, "Times New Roman", serif';
+  ctx.textAlign = 'center';
+  var heads = [[0, 'new'], [7.4, 'first quarter'], [14.8, 'full'], [22.1, 'last quarter']];
+  heads.forEach(function (h) {
+    var x = left + (h[0] + 0.5) * colW;
+    ctx.fillStyle = INK; ctx.fillText(h[1], x, top - 30);
+    ctx.strokeStyle = FAINT; ctx.lineWidth = 0.6;
+    ctx.beginPath(); ctx.moveTo(x, top - 24); ctx.lineTo(x, top - 18); ctx.stroke();
+  });
+  ctx.fillStyle = FAINT; ctx.textAlign = 'right';
+  ctx.fillText('day of lunation', left - 14, top - 30);
+
+  // Gather days into rows
+  var cells = [];
+  for (var i = 0; i < days.length; i++) {
+    var noon = start + i * DAY + DAY / 2;
+    var row = 0;
+    while (row < NM.length - 2 && noon >= NM[row + 1]) row++;
+    var nmDay = Math.floor(NM[row] / DAY) * DAY;          // calendar date of the new moon
+    var col = Math.floor((start + i * DAY - nmDay) / DAY);
+    var f = (noon - NM[row]) / (NM[row + 1] - NM[row]);
+    f = Math.min(Math.max(f, 0), 0.9999);
+    cells.push({ i: i, v: days[i], row: row, col: col, f: f, t: start + i * DAY,
+                 x: left + (col + 0.5) * colW, y: top + (row + 0.5) * rowH });
+  }
+
+  // Row labels and baselines
+  ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+  for (var r = 0; r < 13; r++) {
+    var y = top + (r + 0.5) * rowH;
+    ctx.fillStyle = INK;
+    ctx.font = '11px Georgia, "Times New Roman", serif';
+    var label = r === 0 ? 'Dec 30' : fmtDate(NM[r]);
+    ctx.fillText(label, left - 14, y);
+    ctx.strokeStyle = '#161922'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(W - right, y); ctx.stroke();
+  }
+
+  // Draw small days first so the large ones sit on top
+  cells.slice().sort(function (a, b) { return a.v - b.v; }).forEach(function (c) {
+    moon(c.x, c.y, radius(c.v), c.f);
+  });
+
+  // Annotate the brightest days
+  var notes = {
+    249: 'total lunar eclipse',
+    72: 'total lunar eclipse',
+    200: 'Apollo 11 anniversary',
+    279: 'harvest supermoon'
+  };
+  ctx.textBaseline = 'middle';
+  Object.keys(notes).forEach(function (k) {
+    var c = cells[+k];
+    var rr = radius(c.v);
+    var x0 = c.x + rr + 4, y0 = c.y - rr + 2;
+    var tx = c.x + rr + 22, ty = c.y - rr - 6;
+    ctx.strokeStyle = ACC; ctx.lineWidth = 0.7;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(tx - 3, ty); ctx.stroke();
+    ctx.textAlign = 'left';
+    ctx.font = 'italic 11px Georgia, "Times New Roman", serif';
+    var bw = Math.max(ctx.measureText(notes[k]).width, 90) + 8;
+    ctx.fillStyle = 'rgba(11,13,18,0.82)';
+    ctx.fillRect(tx - 4, ty - 14, bw, 28);
+    ctx.fillStyle = ACC;
+    ctx.font = '11px Georgia, "Times New Roman", serif';
+    ctx.fillText(fmtDate(c.t) + ' · ' + fmtN(c.v), tx, ty - 6);
+    ctx.fillStyle = INK;
+    ctx.font = 'italic 11px Georgia, "Times New Roman", serif';
+    ctx.fillText(notes[k], tx, ty + 7);
+  });
+
+  // Scale key
+  var ky = H - 36;
+  ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+  ctx.font = '11px Georgia, "Times New Roman", serif';
+  ctx.fillStyle = FAINT;
+  ctx.fillText('readers per day', left - 70, ky);
+  var kx = left + 40;
+  [4000, 8000, 16000].forEach(function (v) {
+    var rr = radius(v);
+    moon(kx + rr, ky, rr, 0.5);
+    ctx.fillStyle = INK; ctx.textAlign = 'left';
+    ctx.fillText(fmtN(v), kx + 2 * rr + 6, ky);
+    kx += 2 * rr + 60;
+  });
+  ctx.textAlign = 'right'; ctx.fillStyle = FAINT;
+  ctx.fillText('Source: Wikimedia pageviews, user agent, en.wikipedia (CC0)', W - right, ky);
+})();
+</script>
+</body>
+</html>

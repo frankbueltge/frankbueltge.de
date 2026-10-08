@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Readership Coast</title>
+<meta name="viewport" content="width=1100">
+<style>
+  html, body { margin: 0; padding: 0; background: #e9dfc6; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; width: 1100px; height: 800px; }
+</style>
+<script src="data.js"></script>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="A nautical chart whose coastline is drawn by daily readers of the Wikipedia article Moon in 2025"></canvas>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+  cv.width = W * dpr; cv.height = H * dpr;
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var days = (window.VIEWS && window.VIEWS.days) || [];
+  var N = days.length;
+
+  // palette
+  var PAPER = '#ece2c8', SEA = '#f5f1e4', SHALLOW = '#cfe0de', LAND = '#e8cf8f',
+      INK = '#2b2a26', WATERINK = '#3f6f86', BROWN = '#7a5a2e', NAVY = '#1f3b52';
+  var SERIF = '"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif';
+
+  // geometry
+  var X0 = 42, X1 = 1058, Y0 = 42, Y1 = 758;
+  var dy = (Y1 - Y0) / N;
+  var VMAX = 17284;
+  var K = 830 / VMAX;
+  function sx(v) { return X0 + v * K; }
+  function sy(i) { return Y0 + (i + 0.5) * dy; }
+
+  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var MLEN = [31,28,31,30,31,30,31,31,30,31,30,31];
+  var mStart = []; var acc = 0;
+  for (var m = 0; m < 12; m++) { mStart.push(acc); acc += MLEN[m]; }
+  function dayIndex(mo, d) { return mStart[mo - 1] + d - 1; }
+
+  // seeded rng
+  var seed = 20250101;
+  function rnd() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+
+  // ---------- paths ----------
+  function coastPath(ctx, cont) {
+    if (cont) ctx.lineTo(sx(days[0]), Y0 - 2); else ctx.moveTo(sx(days[0]), Y0 - 2);
+    for (var i = 0; i < N; i++) ctx.lineTo(sx(days[i]), sy(i));
+    ctx.lineTo(sx(days[N - 1]), Y1 + 2);
+  }
+  function landPath(ctx) {
+    ctx.beginPath();
+    ctx.moveTo(X1 + 2, Y0 - 2);
+    coastPath(ctx, true);
+    ctx.lineTo(X1 + 2, Y1 + 2);
+    ctx.closePath();
+  }
+  function seaPath(ctx) {
+    ctx.beginPath();
+    ctx.moveTo(X0 - 2, Y0 - 2);
+    coastPath(ctx, true);
+    ctx.lineTo(X0 - 2, Y1 + 2);
+    ctx.closePath();
+  }
+
+  // ---------- paper ----------
+  g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+  g.save();
+  g.beginPath(); g.rect(X0, Y0, X1 - X0, Y1 - Y0); g.clip();
+
+  // sea
+  g.fillStyle = SEA; g.fillRect(X0, Y0, X1 - X0, Y1 - Y0);
+
+  // shallow-water tint and water-lining, built on an offscreen canvas as true offset rings
+  var off = document.createElement('canvas');
+  off.width = W * dpr; off.height = H * dpr;
+  var o = off.getContext('2d'); o.scale(dpr, dpr);
+  o.lineJoin = 'round'; o.lineCap = 'round';
+  // shallow band
+  o.beginPath(); coastPath(o); o.strokeStyle = SHALLOW; o.lineWidth = 2 * 22; o.stroke();
+  // rings
+  var rings = [3, 5.5, 8.5, 12, 16.5, 22, 29, 38];
+  for (var r = 0; r < rings.length; r++) {
+    var d = rings[r];
+    var ring = document.createElement('canvas');
+    ring.width = W * dpr; ring.height = H * dpr;
+    var rc = ring.getContext('2d'); rc.scale(dpr, dpr);
+    rc.lineJoin = 'round'; rc.lineCap = 'round';
+    rc.beginPath(); coastPath(rc);
+    rc.strokeStyle = '#000'; rc.lineWidth = 2 * d + 0.9; rc.stroke();
+    rc.globalCompositeOperation = 'destination-out';
+    rc.beginPath(); coastPath(rc); rc.lineWidth = 2 * d - 0.9; rc.stroke();
+    rc.globalCompositeOperation = 'source-in';
+    var a = 0.62 * (1 - r / (rings.length + 1.5));
+    rc.fillStyle = 'rgba(63,111,134,' + a.toFixed(3) + ')';
+    rc.fillRect(0, 0, W, H);
+    o.drawImage(ring, 0, 0, W, H);
+  }
+  g.save(); seaPath(g); g.clip(); g.drawImage(off, 0, 0, W, H); g.restore();
+
+  // land
+  landPath(g); g.fillStyle = LAND; g.fill();
+
+  // land: faint inner shading along the coast
+  g.save(); landPath(g); g.clip();
+  g.lineJoin = 'round';
+  for (var s = 0; s < 6; s++) {
+    g.beginPath(); coastPath(g);
+    g.strokeStyle = 'rgba(160,120,50,' + (0.07 - s * 0.01).toFixed(3) + ')';
+    g.lineWidth = 6 + s * 7; g.stroke();
+  }
+  // land stipple
+  g.fillStyle = 'rgba(122,90,46,0.16)';
+  for (var k = 0; k < 2600; k++) {
+    var px = X0 + rnd() * (X1 - X0), py = Y0 + rnd() * (Y1 - Y0);
+    g.fillRect(px, py, 0.9, 0.9);
+  }
+  // month boundaries: dash-dot lines across the land
+  g.strokeStyle = 'rgba(122,90,46,0.55)'; g.lineWidth = 0.8;
+  g.setLineDash([7, 3, 1.5, 3]);
+  for (m = 1; m < 12; m++) {
+    var yb = Y0 + mStart[m] * dy;
+    g.beginPath(); g.moveTo(X0, yb); g.lineTo(X1, yb); g.stroke();
+  }
+  g.setLineDash([]);
+  g.restore();
+
+  // coastline
+  g.beginPath(); coastPath(g);
+  g.strokeStyle = INK; g.lineWidth = 1.15; g.lineJoin = 'miter'; g.miterLimit = 30; g.stroke();
+
+  // ---------- soundings ----------
+  function shoreMin(a, b) {
+    var mn = 1e9;
+    for (var i = Math.max(0, a); i <= Math.min(N - 1, b); i++) mn = Math.min(mn, sx(days[i]));
+    return mn;
+  }
+  g.fillStyle = NAVY;
+  g.textBaseline = 'middle';
+  var col = 0;
+  for (var i = 3; i < N; i += 6) {
+    var v = days[i];
+    var th = Math.floor(v / 1000), hu = Math.floor((v % 1000) / 100);
+    var lim = shoreMin(i - 6, i + 6) - 62;
+    var left = X0 + 16;
+    var x = left + (col % 3) * ((lim - left) / 3) + rnd() * 10;
+    if (x > lim) x = lim;
+    col++;
+    var y = sy(i);
+    g.font = 'italic 10.5px ' + SERIF;
+    g.textAlign = 'left';
+    g.fillText(String(th), x, y);
+    var tw = g.measureText(String(th)).width;
+    g.font = 'italic 7.5px ' + SERIF;
+    g.fillText(String(hu), x + tw + 0.5, y + 3);
+  }
+
+  g.restore(); // end chart clip
+
+  // ---------- named features ----------
+  var boxes = [[700, 70, 1032, 268], [910, 340, 1010, 450], [790, 618, 1032, 742]];
+  function feature(mo, dd, name, sub, opts) {
+    opts = opts || {};
+    var i = dayIndex(mo, dd);
+    var tx = sx(days[i]), ty = sy(i);
+    var lx = opts.dx != null ? tx + opts.dx : tx + 26;
+    var ly = ty + (opts.dy || 0);
+    g.strokeStyle = 'rgba(31,59,82,0.7)'; g.lineWidth = 0.7;
+    var ex = lx - 4, ey = ly;
+    if (opts.dx != null && opts.dx < 0) { ex = lx + 60; ey = ly - 11; }
+    g.beginPath(); g.moveTo(tx - 2, ty + 1); g.lineTo(ex, ey); g.stroke();
+    g.beginPath(); g.arc(tx, ty, 1.6, 0, Math.PI * 2); g.fillStyle = NAVY; g.fill();
+    g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+    g.font = 'italic 15px ' + SERIF; g.fillStyle = NAVY;
+    g.fillText(name, lx, ly + 4);
+    g.font = '10px ' + SERIF; g.fillStyle = 'rgba(43,42,38,0.85)';
+    var lines = sub.split('\n');
+    var wmax = g.measureText(name).width;
+    for (var jj = 0; jj < lines.length; jj++) wmax = Math.max(wmax, g.measureText(lines[jj]).width * 1.15);
+    boxes.push([tx - 4, Math.min(ty, ly - 12), lx + wmax + 6, ly + 22 + (lines.length - 1) * 12]);
+    for (var j = 0; j < lines.length; j++) g.fillText(lines[j], lx, ly + 18 + j * 12);
+  }
+  feature(2, 28, 'Seven Planets Cove', 'planetary parade, 28 Feb · 8,534', { dy: -6 });
+  feature(3, 14, 'Blood Moon Inlet', 'total lunar eclipse, 14 Mar · 11,854', { dx: -150, dy: 30 });
+  feature(6, 21, 'Solstice Point', 'midsummer, 21 Jun · 3,777, the lowest water of the year', { dx: 60, dy: -2 });
+  feature(7, 20, 'Apollo Inlet', 'Apollo 11 landing anniversary, 20 Jul · 13,576', { dy: -4 });
+  feature(9, 7, 'Eclipse Sound', 'total lunar eclipse, 7 Sep · 17,284\nthe highest water of the year', { dx: 22, dy: -4 });
+  feature(10, 7, 'Harvest Moon Fjord', 'full moon, 7 Oct · 10,896', { dy: 2 });
+  feature(11, 5, 'Supermoon Cove', 'closest full moon of the year, 5 Nov · 7,624', { dy: 8 });
+
+  // ---------- month names on land ----------
+  g.textBaseline = 'middle'; g.textAlign = 'left';
+  function spaced(txt, x, y, spacing) {
+    var cx = x;
+    for (var c = 0; c < txt.length; c++) {
+      g.fillText(txt[c], cx, y);
+      cx += g.measureText(txt[c]).width + spacing;
+    }
+    return cx - x;
+  }
+  for (m = 0; m < 12; m++) {
+    var a0 = mStart[m], a1 = mStart[m] + MLEN[m] - 1;
+    var mx = -1e9;
+    for (i = a0; i <= a1; i++) mx = Math.max(mx, sx(days[i]));
+    var fr = [0.5, 0.35, 0.65, 0.22, 0.78, 0.1, 0.9], placed = false;
+    g.font = '11px ' + SERIF;
+    var wtxt = MONTHS[m].length * 11;
+    for (var f = 0; f < fr.length && !placed; f++) {
+      var di = Math.round(mStart[m] + MLEN[m] * fr[f]);
+      var lmx = -1e9;
+      for (i = di - 6; i <= di + 6; i++) if (i >= 0 && i < N) lmx = Math.max(lmx, sx(days[i]));
+      var xm = Math.max(lmx + 20, 330), ym = sy(di);
+      var box = [xm - 4, ym - 9, xm + wtxt + 4, ym + 9];
+      var hit = false;
+      for (var bI = 0; bI < boxes.length; bI++) {
+        var q = boxes[bI];
+        if (box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1]) hit = true;
+      }
+      if (!hit) {
+        g.fillStyle = 'rgba(96,68,30,0.85)';
+        spaced(MONTHS[m].toUpperCase(), xm, ym, 3.2);
+        placed = true;
+      }
+    }
+  }
+
+  // ---------- border: graduated neat-line ----------
+  g.strokeStyle = INK;
+  g.lineWidth = 1.6; g.strokeRect(20.5, 20.5, W - 41, H - 41);
+  g.lineWidth = 0.8; g.strokeRect(X0 - 8.5, Y0 - 8.5, X1 - X0 + 17, Y1 - Y0 + 17);
+  g.lineWidth = 0.8; g.strokeRect(X0 + 0.5, Y0 + 0.5, X1 - X0 - 1, Y1 - Y0 - 1);
+  // left/right bands: months
+  for (m = 0; m < 12; m++) {
+    var ya = Y0 + mStart[m] * dy, yh = MLEN[m] * dy;
+    g.fillStyle = m % 2 ? PAPER : INK;
+    g.fillRect(X0 - 8, ya, 7.5, yh);
+    g.fillRect(X1 + 0.5, ya, 7.5, yh);
+    g.save();
+    g.translate(29, ya + yh / 2); g.rotate(-Math.PI / 2);
+    g.fillStyle = INK; g.font = '8.5px ' + SERIF; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText(MONTHS[m].slice(0, 3).toUpperCase(), 0, 0);
+    g.restore();
+    g.save();
+    g.translate(W - 29, ya + yh / 2); g.rotate(Math.PI / 2);
+    g.fillStyle = INK; g.font = '8.5px ' + SERIF; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText(MONTHS[m].slice(0, 3).toUpperCase(), 0, 0);
+    g.restore();
+  }
+  // top/bottom bands: readers, in thousands
+  for (var t = 0; t * 1000 * K + X0 < X1; t++) {
+    var xa = X0 + t * 1000 * K, xb = Math.min(X1, xa + 1000 * K);
+    g.fillStyle = t % 2 ? PAPER : INK;
+    g.fillRect(xa, Y0 - 8, xb - xa, 7.5);
+    g.fillRect(xa, Y1 + 0.5, xb - xa, 7.5);
+    if (t % 5 === 0) {
+      g.fillStyle = INK; g.font = '8.5px ' + SERIF; g.textAlign = 'center'; g.textBaseline = 'middle';
+      var lab = t === 0 ? '0' : (t * 1000).toLocaleString('en-US');
+      g.fillText(lab, xa, 28);
+      g.fillText(lab, xa, H - 28);
+    }
+  }
+  g.fillStyle = INK; g.font = 'italic 8.5px ' + SERIF; g.textAlign = 'left'; g.textBaseline = 'middle';
+  g.fillText('readers a day', X0 + 16 * 1000 * K + 26, 28);
+
+  // ---------- cartouche ----------
+  var cx0 = 700, cy0 = 70, cw = 330, ch = 196;
+  g.fillStyle = '#f4ecd6'; g.fillRect(cx0, cy0, cw, ch);
+  g.strokeStyle = INK; g.lineWidth = 1.4; g.strokeRect(cx0 + 0.5, cy0 + 0.5, cw, ch);
+  g.lineWidth = 0.6; g.strokeRect(cx0 + 4.5, cy0 + 4.5, cw - 8, ch - 8);
+  g.textAlign = 'center'; g.textBaseline = 'alphabetic'; g.fillStyle = INK;
+  var cc = cx0 + cw / 2;
+  g.font = '10px ' + SERIF;
+  g.fillText('A  CHART  OF', cc, cy0 + 30);
+  g.font = '25px ' + SERIF;
+  g.fillText('The Readership Coast', cc, cy0 + 60);
+  g.font = 'italic 12.5px ' + SERIF;
+  g.fillText('where the Moon’s readers came ashore, 2025', cc, cy0 + 80);
+  g.strokeStyle = INK; g.lineWidth = 0.6;
+  g.beginPath(); g.moveTo(cc - 60, cy0 + 93); g.lineTo(cc + 60, cy0 + 93); g.stroke();
+  g.font = '10.5px ' + SERIF; g.fillStyle = 'rgba(43,42,38,0.92)';
+  var body = [
+    'Surveyed from the daily human readers of the English',
+    'Wikipedia article “Moon”. North is the first of January;',
+    'each day of the year is one parallel, run southward.',
+    'On every parallel the sea comes inland as far as',
+    'that day’s readers carried it, measured from the west.',
+    'Soundings in thousands of readers, hundreds below.'
+  ];
+  for (i = 0; i < body.length; i++) g.fillText(body[i], cc, cy0 + 112 + i * 13.5);
+
+  // ---------- compass rose ----------
+  (function rose(cx, cy, R) {
+    g.save(); g.translate(cx, cy);
+    g.strokeStyle = INK; g.lineWidth = 0.7;
+    g.beginPath(); g.arc(0, 0, R, 0, Math.PI * 2); g.stroke();
+    g.beginPath(); g.arc(0, 0, R - 5, 0, Math.PI * 2); g.stroke();
+    for (var q = 0; q < 72; q++) {
+      var an = q * Math.PI / 36, l = q % 9 === 0 ? 5 : 2.5;
+      g.beginPath();
+      g.moveTo(Math.cos(an) * (R - 5), Math.sin(an) * (R - 5));
+      g.lineTo(Math.cos(an) * (R - 5 + l), Math.sin(an) * (R - 5 + l));
+      g.stroke();
+    }
+    function point(an, len, wid) {
+      g.save(); g.rotate(an);
+      g.beginPath(); g.moveTo(0, -len); g.lineTo(wid, 0); g.lineTo(0, 0); g.closePath();
+      g.fillStyle = INK; g.fill();
+      g.beginPath(); g.moveTo(0, -len); g.lineTo(-wid, 0); g.lineTo(0, 0); g.closePath();
+      g.fillStyle = '#f4ecd6'; g.fill(); g.stroke();
+      g.restore();
+    }
+    for (q = 0; q < 4; q++) point(q * Math.PI / 2 + Math.PI / 4, R * 0.5, 4);
+    for (q = 0; q < 4; q++) point(q * Math.PI / 2, R - 7, 6.5);
+    g.fillStyle = INK; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.font = '11px ' + SERIF;
+    g.fillText('N', 0, -R - 9);
+    g.font = 'italic 9px ' + SERIF;
+    g.fillText('1 January', 0, -R - 21);
+    g.fillText('31 December', 0, R + 11);
+    g.restore();
+  })(960, 395, 40);
+
+  // ---------- tide table ----------
+  var means = [];
+  for (m = 0; m < 12; m++) {
+    var sm = 0;
+    for (i = mStart[m]; i < mStart[m] + MLEN[m]; i++) sm += days[i];
+    means.push(Math.round(sm / MLEN[m]));
+  }
+  var tx0 = 790, ty0 = 618, tw2 = 240, th2 = 122;
+  g.fillStyle = '#f4ecd6'; g.fillRect(tx0, ty0, tw2, th2);
+  g.strokeStyle = INK; g.lineWidth = 0.8; g.strokeRect(tx0 + 0.5, ty0 + 0.5, tw2, th2);
+  g.textAlign = 'center'; g.textBaseline = 'alphabetic'; g.fillStyle = INK;
+  g.font = '9.5px ' + SERIF;
+  g.fillText('MEAN  HIGH  WATER,  READERS  A  DAY', tx0 + tw2 / 2, ty0 + 17);
+  g.beginPath(); g.moveTo(tx0 + 10, ty0 + 24); g.lineTo(tx0 + tw2 - 10, ty0 + 24); g.stroke();
+  g.font = '10.5px ' + SERIF;
+  for (m = 0; m < 12; m++) {
+    var colx = tx0 + 16 + Math.floor(m / 6) * 116, rowy = ty0 + 40 + (m % 6) * 14;
+    g.textAlign = 'left'; g.fillText(MONTHS[m], colx, rowy);
+    g.textAlign = 'right'; g.fillText(means[m].toLocaleString('en-US'), colx + 96, rowy);
+  }
+  g.beginPath(); g.moveTo(tx0 + tw2 / 2, ty0 + 30); g.lineTo(tx0 + tw2 / 2, ty0 + th2 - 8); g.stroke();
+
+  // source line
+  g.textAlign = 'right'; g.textBaseline = 'alphabetic';
+  g.font = 'italic 9px ' + SERIF; g.fillStyle = 'rgba(43,42,38,0.8)';
+  g.fillText('Data: Wikimedia pageviews, en.wikipedia, agent user, 365 days from 1 Jan 2025 (CC0)', X1 - 10, Y1 - 8);
+})();
+</script>
+</body>
+</html>

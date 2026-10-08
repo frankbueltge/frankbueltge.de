@@ -1,0 +1,3 @@
+# Waxing Attention
+
+The year's 365 days of readers visiting the Wikipedia article "Moon" are re-cut by the Moon's own calendar instead of the civil one: each row is one lunation, from new moon to new moon, and each day sits at its lunar age. Every day is drawn as the Moon looked that night (lit crescent, quarter or full disc), and the disc's size follows that day's page views. I chose this form because the data turned out to follow the sky. Average views rise about 50% on the day of the full moon, so the folded calendar shows a column of swollen full moons down the middle. The few nights that break out of it, the two total lunar eclipses, the supermoons and the Apollo 11 anniversary, are named in place.

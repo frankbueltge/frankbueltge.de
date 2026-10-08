@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Reading by Moonlight</title>
+<style>
+  html, body { margin: 0; background: #0b0c10; }
+  body { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = window.devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var BG = '#0b0c10', LIT = '#ece6d6', DARK = '#1d2028', INK = '#8a8d96', FAINT = '#2a2d36';
+  var SERIF = 'Georgia, "Times New Roman", serif';
+
+  var days = window.VIEWS.days;
+  var DAY = 86400000;
+  var P = 29.530588853;                          // synodic month, days
+  var REF = Date.UTC(2025, 0, 29, 12, 36);       // new moon, 29 Jan 2025 12:36 UTC
+  var start = Date.UTC(2025, 0, 1, 12, 0);       // each day sampled at noon UTC
+  var max = Math.max.apply(null, days), min = Math.min.apply(null, days);
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  // place every day by lunation (row) and lunar age (column)
+  var pts = days.map(function (v, i) {
+    var t = start + i * DAY;
+    var L = (t - REF) / DAY / P;
+    var row = Math.floor(L);
+    var age = (L - row) * P;
+    return { v: v, i: i, t: t, row: row, age: age };
+  });
+  var r0 = pts[0].row, r1 = pts[pts.length - 1].row, nRows = r1 - r0 + 1;
+
+  var left = 128, right = 52, top = 128, bottom = 92;
+  var plotW = W - left - right, rowH = (H - top - bottom) / nRows;
+  var dx = plotW / P;
+  var RMAX = 27;
+  function X(age) { return left + age * dx; }
+  function Y(row) { return top + (row - r0 + 0.5) * rowH; }
+  function rad(v) { return RMAX * Math.sqrt(v / max); }
+
+  g.fillStyle = BG; g.fillRect(0, 0, W, H);
+
+  // title
+  g.fillStyle = LIT; g.font = 'italic 30px ' + SERIF; g.textBaseline = 'alphabetic';
+  g.fillText('Reading by Moonlight', left, 58);
+  g.fillStyle = INK; g.font = '13px ' + SERIF;
+  g.fillText('Who looked up “Moon” on English Wikipedia in 2025, set out by the phase the Moon was in at the time', left, 82);
+
+  // phase guide columns
+  var marks = [[0, 'new'], [P / 4, 'first quarter'], [P / 2, 'full'], [3 * P / 4, 'last quarter'], [P, 'new']];
+  g.textAlign = 'center'; g.font = 'italic 12px ' + SERIF;
+  marks.forEach(function (m) {
+    var x = X(m[0]);
+    g.strokeStyle = m[1] === 'full' ? '#3a3d47' : FAINT; g.lineWidth = 1;
+    g.setLineDash(m[1] === 'full' ? [] : [2, 4]);
+    g.beginPath(); g.moveTo(x + 0.5, top - 6); g.lineTo(x + 0.5, H - bottom + 6); g.stroke();
+    g.fillStyle = m[1] === 'full' ? LIT : INK;
+    g.fillText(m[1], x, top - 14);
+  });
+  g.setLineDash([]);
+
+  // row labels: the new moon that opens each lunation
+  g.textAlign = 'right'; g.font = '12px ' + SERIF; g.textBaseline = 'middle';
+  for (var r = r0; r <= r1; r++) {
+    var d = new Date(REF + r * P * DAY);
+    var lab = d.getUTCDate() + ' ' + MONTHS[d.getUTCMonth()] + (d.getUTCFullYear() !== 2025 ? ' ' + d.getUTCFullYear() : '');
+    g.fillStyle = INK;
+    g.fillText(lab, left - 26, Y(r));
+    g.strokeStyle = FAINT; g.beginPath();
+    g.moveTo(left - 20, Y(r) + 0.5); g.lineTo(left - 10, Y(r) + 0.5); g.stroke();
+  }
+
+  // one moon per day: area = views, light = phase
+  function moon(x, y, rr, age) {
+    var th = 2 * Math.PI * age / P;
+    var s = age < P / 2 ? 1 : -1;               // lit limb on the right while waxing
+    var c = Math.cos(th);
+    g.beginPath(); g.arc(x, y, rr, 0, 2 * Math.PI);
+    g.fillStyle = DARK; g.fill();
+    g.lineWidth = 0.8; g.strokeStyle = BG; g.stroke();
+    g.beginPath();
+    var N = 48, k, t;
+    for (k = 0; k <= N; k++) { t = Math.PI * k / N; g.lineTo(x + s * rr * Math.sin(t), y - rr * Math.cos(t)); }
+    for (k = N; k >= 0; k--) { t = Math.PI * k / N; g.lineTo(x + s * rr * Math.sin(t) * c, y - rr * Math.cos(t)); }
+    g.closePath();
+    g.fillStyle = LIT; g.fill();
+  }
+  pts.slice().sort(function (a, b) { return a.v - b.v; }).forEach(function (p) {
+    moon(X(p.age), Y(p.row), rad(p.v), p.age);
+  });
+
+  // the brightest few days, named quietly
+  var top5 = pts.slice().sort(function (a, b) { return b.v - a.v; }).slice(0, 4);
+  g.font = 'italic 11.5px ' + SERIF; g.textBaseline = 'middle';
+  top5.forEach(function (p) {
+    var d = new Date(p.t), x = X(p.age), y = Y(p.row), rr = rad(p.v);
+    var txt = d.getUTCDate() + ' ' + MONTHS[d.getUTCMonth()] + '  ·  ' + p.v.toLocaleString('en-US');
+    var flip = p.age > P * 0.62;
+    var lx = flip ? x - rr * 0.7 - 16 : x + rr * 0.7 + 16;
+    var ly = y - rr * 0.7 - 12;
+    g.strokeStyle = '#8a8d96'; g.lineWidth = 0.8;
+    g.beginPath(); g.moveTo(x + (flip ? -1 : 1) * rr * 0.72, y - rr * 0.72); g.lineTo(lx, ly); g.stroke();
+    var w = g.measureText(txt).width;
+    var bx = flip ? lx - w - 8 : lx;
+    g.fillStyle = BG; g.fillRect(bx, ly - 9, w + 8, 18);
+    g.fillStyle = LIT; g.textAlign = 'left';
+    g.fillText(txt, bx + 4, ly + 0.5);
+  });
+
+  // key
+  g.textAlign = 'left'; g.textBaseline = 'middle';
+  var ky = H - 44;
+  var kv = [4000, 8000, 16000], kx = left;
+  kv.forEach(function (v) {
+    var rr = rad(v);
+    g.beginPath(); g.arc(kx + rr, ky, rr, 0, 2 * Math.PI); g.fillStyle = LIT; g.fill();
+    g.fillStyle = INK; g.font = '11.5px ' + SERIF;
+    g.fillText(v.toLocaleString('en-US'), kx + 2 * rr + 7, ky);
+    kx += 2 * rr + 66;
+  });
+  g.fillStyle = INK; g.font = '11.5px ' + SERIF;
+  g.fillText('views that day (disc area).  Each disc is one day of 2025, lit as the Moon was lit at noon UTC; each row is one lunation,', kx + 6, ky - 8);
+  g.fillText('new moon to new moon.  Daily human page views: ' + min.toLocaleString('en-US') + ' to ' + max.toLocaleString('en-US') + '.  Data: Wikimedia pageviews, CC0.', kx + 6, ky + 9);
+})();
+</script>
+</body>
+</html>

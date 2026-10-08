@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thirteen Lunations</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #07080c; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var days = window.VIEWS.days;
+  var cv = document.getElementById('c');
+  var dpr = window.devicePixelRatio || 1;
+  cv.width = 1100 * dpr; cv.height = 800 * dpr;
+  cv.style.width = '1100px'; cv.style.height = '800px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  // New moons (UTC) bracketing 2025.
+  var NM = [
+    '2024-12-30T22:27Z', '2025-01-29T12:36Z', '2025-02-28T00:45Z', '2025-03-29T10:58Z',
+    '2025-04-27T19:31Z', '2025-05-27T03:02Z', '2025-06-25T10:31Z', '2025-07-24T19:11Z',
+    '2025-08-23T06:06Z', '2025-09-21T19:54Z', '2025-10-21T12:25Z', '2025-11-20T06:47Z',
+    '2025-12-20T01:43Z', '2026-01-18T19:52Z'
+  ].map(function (s) { return Date.parse(s.replace('Z', ':00Z')); });
+
+  var DAY = 864e5;
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var t0 = Date.UTC(2025, 0, 1, 12);
+  var vmin = Math.min.apply(null, days), vmax = Math.max.apply(null, days);
+
+  // Layout
+  var X0 = 112, W = 940, Y0 = 150, ROWH = 46.5, SPAN = 29.9;
+  function xFor(age) { return X0 + (age / SPAN) * W; }
+
+  // Background: faint vertical guides at the principal phases
+  g.fillStyle = '#07080c'; g.fillRect(0, 0, 1100, 800);
+  var guides = [[0, 'new'], [7.38, 'first quarter'], [14.77, 'full'], [22.15, 'last quarter'], [29.53, 'new']];
+  g.font = '11px Georgia, "Times New Roman", serif';
+  g.textAlign = 'center';
+  guides.forEach(function (p) {
+    var x = xFor(p[0]);
+    g.strokeStyle = p[1] === 'full' ? 'rgba(220,210,180,0.10)' : 'rgba(160,170,200,0.06)';
+    g.lineWidth = 1;
+    g.beginPath(); g.moveTo(x, Y0 - 26); g.lineTo(x, Y0 + ROWH * 12 + 24); g.stroke();
+    g.fillStyle = 'rgba(190,190,200,0.55)';
+    g.fillText(p[1], x, Y0 - 34);
+  });
+
+  // Collect days with their lunation row and age
+  var items = [];
+  for (var i = 0; i < days.length; i++) {
+    var t = t0 + i * DAY, k = 0;
+    while (NM[k + 1] <= t) k++;
+    var len = (NM[k + 1] - NM[k]) / DAY;
+    var age = (t - NM[k]) / DAY;
+    items.push({ i: i, v: days[i], row: k, age: age, frac: age / len, t: t });
+  }
+
+  // Row labels: month in which each lunation begins
+  g.textAlign = 'right';
+  for (var r = 0; r < 13; r++) {
+    var d = new Date(NM[r]);
+    var y = Y0 + r * ROWH;
+    g.fillStyle = 'rgba(190,190,200,0.5)';
+    g.font = '12px Georgia, "Times New Roman", serif';
+    g.fillText(d.getUTCDate() + ' ' + MON[d.getUTCMonth()], X0 - 30, y + 4);
+  }
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function level(v) { return (Math.log(v) - Math.log(vmin)) / (Math.log(vmax) - Math.log(vmin)); }
+
+  function moon(cx, cy, rad, frac, v) {
+    var L = level(v);
+    // dark limb: the unlit body, just perceptible
+    g.beginPath(); g.arc(cx, cy, rad, 0, Math.PI * 2);
+    g.fillStyle = 'rgba(40,44,58,' + (0.35 + 0.35 * L) + ')';
+    g.fill();
+
+    var th = frac * Math.PI * 2;
+    var waning = th > Math.PI;
+    if (waning) th = Math.PI * 2 - th;
+    var cr = lerp(118, 255, Math.pow(L, 0.8)), cg = lerp(122, 246, Math.pow(L, 0.85)), cb = lerp(140, 222, L);
+    g.save();
+    g.translate(cx, cy);
+    if (waning) g.scale(-1, 1);
+    g.beginPath();
+    g.arc(0, 0, rad, -Math.PI / 2, Math.PI / 2, false);
+    var rx = Math.abs(Math.cos(th)) * rad;
+    if (th < Math.PI / 2) g.ellipse(0, 0, Math.max(rx, 0.01), rad, 0, Math.PI / 2, -Math.PI / 2, true);
+    else g.ellipse(0, 0, Math.max(rx, 0.01), rad, 0, Math.PI / 2, Math.PI * 1.5, false);
+    g.closePath();
+    if (L > 0.45) {
+      g.shadowColor = 'rgba(255,236,190,' + Math.min(0.9, (L - 0.45) * 1.6) + ')';
+      g.shadowBlur = 6 + 40 * (L - 0.45);
+    }
+    g.fillStyle = 'rgb(' + (cr | 0) + ',' + (cg | 0) + ',' + (cb | 0) + ')';
+    g.fill();
+    g.restore();
+  }
+
+  // Draw smaller first so the bright days lie on top
+  items.slice().sort(function (a, b) { return a.v - b.v; }).forEach(function (it) {
+    var rad = 23.5 * Math.sqrt(it.v / vmax);
+    it.x = xFor(it.age); it.y = Y0 + it.row * ROWH; it.rad = rad;
+    moon(it.x, it.y, rad, it.frac, it.v);
+  });
+
+  // Annotations for the brightest days
+  var notes = [
+    [72, '14 Mar · total lunar eclipse', 1],
+    [249, '7 Sep · total lunar eclipse', -1],
+    [200, '20 Jul', 1],
+    [279, '7 Oct', 1]
+  ];
+  g.font = 'italic 12px Georgia, "Times New Roman", serif';
+  notes.forEach(function (n) {
+    var it = items[n[0]];
+    var label = n[1] + ' · ' + it.v.toLocaleString('en-US');
+    var dir = n[2], lx = it.x + it.rad + 10, ly = it.y + (dir > 0 ? 27 : -19);
+    g.textAlign = 'left';
+    if (lx + g.measureText(label).width > 1085) { g.textAlign = 'right'; lx = it.x - it.rad - 10; }
+    g.strokeStyle = 'rgba(230,220,190,0.35)'; g.lineWidth = 0.8;
+    g.beginPath();
+    g.moveTo(it.x + (g.textAlign === 'left' ? 1 : -1) * it.rad * 0.72, it.y + dir * it.rad * 0.72);
+    g.lineTo(lx + (g.textAlign === 'left' ? -3 : 3), ly - 4);
+    g.stroke();
+    g.fillStyle = 'rgba(240,230,205,0.85)';
+    g.fillText(label, lx, ly);
+  });
+
+  // Title block
+  g.textAlign = 'left';
+  g.fillStyle = 'rgba(244,238,222,0.95)';
+  g.font = '30px Georgia, "Times New Roman", serif';
+  g.fillText('Thirteen Lunations', 40, 58);
+  g.font = '13px Georgia, "Times New Roman", serif';
+  g.fillStyle = 'rgba(200,200,210,0.6)';
+  g.fillText('Daily human readers of the English Wikipedia article “Moon”, 1 January – 31 December 2025, set out by the Moon’s own month.', 40, 84);
+  g.fillText('Each row is one lunation, new moon to new moon; each disc is one day, drawn in that day’s phase. Size and light follow the number of readers.', 40, 102);
+
+  // Scale key
+  var keyY = 772;
+  g.font = '11px Georgia, "Times New Roman", serif';
+  g.fillStyle = 'rgba(190,190,200,0.55)';
+  g.textAlign = 'left';
+  g.fillText('readers per day', 40, keyY + 4);
+  var kx = 150;
+  [4000, 8000, 17000].forEach(function (v) {
+    var rad = 23.5 * Math.sqrt(v / vmax);
+    var x = kx + rad;
+    moon(x, keyY - 4, rad, 0.5, v);
+    g.shadowBlur = 0;
+    g.fillStyle = 'rgba(190,190,200,0.55)';
+    g.fillText(v.toLocaleString('en-US'), x + rad + 7, keyY);
+    kx = x + rad + 62;
+  });
+  g.textAlign = 'right';
+  g.fillText('Source: Wikimedia pageviews, user agent, CC0 · new-moon times UTC', 1060, keyY + 4);
+})();
+</script>
+</body>
+</html>

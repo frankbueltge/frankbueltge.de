@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Inside the Night</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #e9e3d3; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var dpr = Math.max(1, window.devicePixelRatio || 1);
+  var cv = document.getElementById('c');
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var days = window.VIEWS.days;
+  var N = days.length;
+  var MAX = Math.max.apply(null, days);
+  var LAT = 45;
+  var R = Math.PI / 180;
+
+  var PAPER = '#e9e3d3';
+  var INK = '#121829';
+  var NIGHT = '#141c31';
+  var TW = ['#3c4660', '#5d6880', '#8e96a6']; // astronomical, nautical, civil twilight
+  var LIGHT = '#f3e7c4';
+  var FAINT = '#6d6a62';
+
+  g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+  // plot area: x = days, y = clock time from noon (top) through midnight to noon (bottom)
+  var X0 = 92, X1 = 1046, Y0 = 112, Y1 = 708;
+  var cw = (X1 - X0) / N;
+  var ph = (Y1 - Y0) / 24;
+  function yOf(t) { return Y0 + (t - 12) * ph; } // t in hours, 12..36
+
+  // half-length of the period with the sun above `alt` degrees, in hours
+  function halfDay(n, alt) {
+    var dec = 23.44 * Math.sin(2 * Math.PI * (284 + n) / 365) * R;
+    var c = (Math.sin(alt * R) - Math.sin(LAT * R) * Math.sin(dec)) / (Math.cos(LAT * R) * Math.cos(dec));
+    if (c <= -1) return 12;
+    if (c >= 1) return 0;
+    return Math.acos(c) / R / 15;
+  }
+
+  var dayHalf = [];
+  for (var i = 0; i < N; i++) {
+    var n = i + 1;
+    var x = X0 + i * cw, w = cw + 0.6;
+    var hd = halfDay(n, -0.833);
+    dayHalf.push(hd);
+    var bands = [[halfDay(n, -6), TW[2]], [halfDay(n, -12), TW[1]], [halfDay(n, -18), TW[0]], [0, NIGHT]];
+    var prev = hd;
+    for (var b = 0; b < bands.length; b++) {
+      var h = bands[b][0];
+      if (h >= prev) continue;
+      g.fillStyle = bands[b][1];
+      // evening segment and morning segment, or full centre for the deepest band
+      if (b === bands.length - 1) {
+        g.fillRect(x, yOf(12 + prev), w, yOf(36 - prev) - yOf(12 + prev));
+      } else {
+        g.fillRect(x, yOf(12 + prev), w, yOf(12 + h) - yOf(12 + prev));
+        g.fillRect(x, yOf(36 - h), w, yOf(36 - prev) - yOf(36 - h));
+      }
+      prev = h;
+    }
+  }
+
+  // faint hour lines over the whole field
+  for (var t = 12; t <= 36; t += 3) {
+    var y = Math.round(yOf(t)) + 0.5;
+    g.strokeStyle = (t === 24) ? 'rgba(120,120,120,0.35)' : 'rgba(120,120,120,0.16)';
+    g.lineWidth = 1;
+    g.beginPath(); g.moveTo(X0, y); g.lineTo(X1, y); g.stroke();
+  }
+
+  // readers: a bar centred on midnight, 24 hours long on the busiest day of the year
+  for (i = 0; i < N; i++) {
+    var x2 = X0 + i * cw, w2 = Math.max(1, cw - 0.9);
+    var half = days[i] / MAX * 12;
+    var top = 24 - half, bot = 24 + half;
+    var ns = 12 + dayHalf[i], ne = 36 - dayHalf[i];
+    // inside the night: light
+    var a = Math.max(top, ns), z = Math.min(bot, ne);
+    if (z > a) { g.fillStyle = LIGHT; g.fillRect(x2 + 0.45, yOf(a), w2, yOf(z) - yOf(a)); }
+    // spilling into daylight: ink
+    g.fillStyle = INK;
+    if (top < ns) g.fillRect(x2 + 0.45, yOf(top), w2, yOf(ns) - yOf(top));
+    if (bot > ne) g.fillRect(x2 + 0.45, yOf(ne), w2, yOf(bot) - yOf(ne));
+  }
+
+  // frame
+  g.strokeStyle = 'rgba(18,24,41,0.55)'; g.lineWidth = 1;
+  g.strokeRect(X0 - 0.5, Y0 - 0.5, (X1 - X0) + 1, (Y1 - Y0) + 1);
+
+  // time labels
+  g.fillStyle = FAINT; g.textBaseline = 'middle'; g.textAlign = 'right';
+  g.font = '12px Georgia, "Times New Roman", serif';
+  var tl = { 12: 'noon', 15: '3 pm', 18: '6 pm', 21: '9 pm', 24: 'midnight', 27: '3 am', 30: '6 am', 33: '9 am', 36: 'noon' };
+  for (var k in tl) { g.fillText(tl[k], X0 - 9, yOf(+k)); }
+
+  // month labels
+  var md = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  var mn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var acc = 0;
+  g.textAlign = 'center'; g.textBaseline = 'top';
+  for (var m = 0; m < 12; m++) {
+    var xs = X0 + acc * cw;
+    g.strokeStyle = 'rgba(18,24,41,0.55)';
+    g.beginPath(); g.moveTo(Math.round(xs) + 0.5, Y1); g.lineTo(Math.round(xs) + 0.5, Y1 + 6); g.stroke();
+    g.fillStyle = FAINT;
+    g.fillText(mn[m], xs + md[m] * cw / 2, Y1 + 9);
+    acc += md[m];
+  }
+
+  // annotations
+  function doy(mo, d) { var s = 0; for (var q = 0; q < mo - 1; q++) s += md[q]; return s + d - 1; }
+  function fmt(v) { return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  g.font = 'italic 12.5px Georgia, "Times New Roman", serif';
+  function note(mo, d, label, end, dx, dy, align) {
+    var idx = doy(mo, d);
+    var half = days[idx] / MAX * 12;
+    var cx = X0 + (idx + 0.5) * cw;
+    var cy = yOf(end === 'top' ? 24 - half : 24 + half);
+    if (end === 'top' && half >= 12) cy = Y0;
+    if (end === 'bot' && half >= 12) cy = Y1;
+    var lx = cx + dx, ly = cy + dy;
+    g.strokeStyle = 'rgba(128,128,136,0.95)'; g.lineWidth = 0.9;
+    g.beginPath(); g.moveTo(cx, cy); g.lineTo(lx, ly); g.stroke();
+    g.fillStyle = INK; g.textAlign = align; g.textBaseline = dy < 0 ? 'bottom' : 'top';
+    var lines = label.split('\n');
+    for (var j = 0; j < lines.length; j++) {
+      var off = dy < 0 ? -(lines.length - 1 - j) * 15 : j * 15;
+      g.fillText(lines[j], lx + (align === 'left' ? 3 : align === 'right' ? -3 : 0), ly + off + (dy < 0 ? -2 : 2));
+    }
+  }
+  note(9, 7, '7 Sep, total lunar eclipse\n' + fmt(days[doy(9, 7)]) + ' readers, noon to noon', 'top', 22, 16, 'left');
+  note(7, 20, '20 Jul, Apollo 11 anniversary\n' + fmt(days[doy(7, 20)]), 'top', -24, -14, 'right');
+  note(3, 14, '14 Mar, total lunar eclipse\n' + fmt(days[doy(3, 14)]), 'bot', -26, 30, 'right');
+  note(10, 7, '7 Oct, supermoon\n' + fmt(days[doy(10, 7)]), 'bot', 26, 30, 'left');
+  note(6, 21, '21 Jun, shortest night:\nthe year’s fewest readers, ' + fmt(days[doy(6, 21)]), 'bot', 18, 120, 'left');
+
+  // title block
+  g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  g.fillStyle = INK;
+  g.font = '30px Georgia, "Times New Roman", serif';
+  g.fillText('Inside the Night', X0, 54);
+  g.fillStyle = '#3d3b36';
+  g.font = '14px Georgia, "Times New Roman", serif';
+  g.fillText('Who read “Moon” on English Wikipedia each day of 2025, set against how long that day’s night was.', X0, 80);
+  g.fillStyle = FAINT;
+  g.font = '12px Georgia, "Times New Roman", serif';
+  g.fillText('Each column is one day, noon to the next noon. Blue: night and twilight at 45° N. Pale bar: that day’s readers, centred on midnight, scaled so', X0, 748);
+  g.fillText('the busiest day fills all 24 hours (' + fmt(Math.round(MAX / 24)) + ' readers an hour). Where readers outrun the dark they show as ink in daylight.', X0, 763);
+
+  g.textAlign = 'right'; g.font = '11px Georgia, "Times New Roman", serif';
+  g.fillText('Daily human page views, en.wikipedia.org, ' + fmt(days.reduce(function (s, v) { return s + v; }, 0)) + ' in all. Wikimedia pageviews, CC0.', X1, 786);
+})();
+</script>
+</body>
+</html>

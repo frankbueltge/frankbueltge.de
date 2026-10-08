@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wound on the Moon's Clock</title>
+<style>
+  html,body{margin:0;background:#0b0d12;}
+  body{width:1100px;height:800px;overflow:hidden;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function(){
+  const days = window.VIEWS.days;
+  const cv = document.getElementById('c');
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = 1100*dpr; cv.height = 800*dpr;
+  cv.style.width = '1100px'; cv.style.height = '800px';
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  const BG = '#0b0d12', INK = '#e9e3d3', DIM = '#8a8778', FAINT = '#3a3d45';
+  const SERIF = 'Georgia, "Times New Roman", serif';
+  g.fillStyle = BG; g.fillRect(0,0,1100,800);
+
+  // Moon's clock: synodic month, reference new moon 2025-01-29 12:36 UTC
+  const P = 29.530589;
+  const REF = Date.UTC(2025,0,29,12,36);
+  const T0 = Date.UTC(2025,0,1,12);
+  const elapsed = i => i;                         // days since 1 Jan noon
+  const ageOf = i => { let a = ((T0 + i*864e5 - REF)/864e5/P) % 1; return a<0 ? a+1 : a; };
+  const lit = a => (1 - Math.cos(2*Math.PI*a))/2;
+
+  // Spiral: one turn per lunation. Angle measured clockwise from straight up;
+  // new moon at the bottom, full moon at the top.
+  const CX = 712, CY = 412;
+  const R0 = 46, TURNS = 364/P, R1 = 296;
+  const SP = (R1-R0)/TURNS;                       // radial gap between turns
+  const age0 = ageOf(0);
+  const thetaOf = t => Math.PI + 2*Math.PI*(age0 + t/P);     // t in days
+  const radOf = t => R0 + SP*(t/P);
+  const pt = (th, r) => [CX + r*Math.sin(th), CY - r*Math.cos(th)];
+  const MAXV = 17284, LMAX = 70;
+  const len = v => v/MAXV*LMAX;
+
+  // phase guide rays
+  g.save();
+  g.strokeStyle = FAINT; g.lineWidth = 1; g.setLineDash([2,4]);
+  [[0,'full'],[Math.PI/2,'last quarter'],[Math.PI,'new'],[3*Math.PI/2,'first quarter']].forEach(([th,lab])=>{
+    const [x0,y0] = pt(th, 20), [x1,y1] = pt(th, R1+48);
+    g.beginPath(); g.moveTo(x0,y0); g.lineTo(x1,y1); g.stroke();
+  });
+  g.restore();
+  g.font = 'italic 13px '+SERIF; g.fillStyle = DIM; g.textAlign='center';
+  g.fillText('full moon', CX, CY-R1-58);
+  g.fillText('new moon', CX, CY+R1+66);
+  g.save(); g.translate(CX+R1+60, CY); g.rotate(Math.PI/2); g.fillText('last quarter', 0, 0); g.restore();
+  g.save(); g.translate(CX-R1-60, CY); g.rotate(-Math.PI/2); g.fillText('first quarter', 0, 0); g.restore();
+
+  // the baseline spiral
+  g.strokeStyle = '#2a2d35'; g.lineWidth = 1;
+  g.beginPath();
+  for (let t=-0.5; t<=364.5; t+=0.25){
+    const [x,y] = pt(thetaOf(t), radOf(t));
+    t===-0.5 ? g.moveTo(x,y) : g.lineTo(x,y);
+  }
+  g.stroke();
+
+  // colour: the day's moonlight, dark slate at new moon to bone at full
+  function col(a, alpha){
+    const f = lit(a);
+    const c0 = [52,57,70], c1 = [240,232,210];
+    const m = c0.map((c,k)=>Math.round(c + (c1[k]-c)*Math.pow(f,0.8)));
+    return `rgba(${m[0]},${m[1]},${m[2]},${alpha})`;
+  }
+
+  function wedge(i){
+    const v = days[i], a = ageOf(i);
+    const half = 0.40;                            // fraction of a day's angle on each side
+    const L = len(v);
+    g.beginPath();
+    const steps = 6;
+    for (let s=0; s<=steps; s++){
+      const t = i - half + 2*half*s/steps;
+      const [x,y] = pt(thetaOf(t), radOf(t)); s===0 ? g.moveTo(x,y) : g.lineTo(x,y);
+    }
+    for (let s=steps; s>=0; s--){
+      const t = i - half + 2*half*s/steps;
+      const [x,y] = pt(thetaOf(t), radOf(t)+L); g.lineTo(x,y);
+    }
+    g.closePath();
+    g.fillStyle = col(a, 1);
+    g.fill();
+    if (L > 2.2*SP){ g.strokeStyle = BG; g.lineWidth = 1.2; g.stroke(); }
+  }
+  // draw small days first so the tall ones lie across the turns beyond them
+  const order = days.map((v,i)=>i).sort((p,q)=>days[p]-days[q]);
+  order.forEach(wedge);
+
+  // start / end marks
+  function tipOf(i){ return pt(thetaOf(i), radOf(i)+len(days[i])); }
+  g.font = '11px '+SERIF; g.fillStyle = DIM;
+  {
+    const [x,y] = pt(thetaOf(0), radOf(0)-6);
+    g.textAlign='center'; g.fillText('1 Jan', x+4, y+12);
+    const [x2,y2] = pt(thetaOf(364)+0.04, radOf(364)+len(days[364])+12);
+    g.textAlign='left'; g.fillText('31 Dec', x2+2, y2+2);
+  }
+
+  // annotations
+  const notes = [
+    {i: 65+7, txt:'14 Mar', sub:'total lunar eclipse · 11,854', lx: 640, ly: 64, al:'right'},
+    {i: 249,  txt:'7 Sep',  sub:'total lunar eclipse · 17,284', lx: 905, ly: 72, al:'left'},
+    {i: 279,  txt:'7 Oct',  sub:'full moon · 10,896', lx: 905, ly: 140, al:'left'},
+    {i: 200,  txt:'20 Jul', sub:'Apollo 11 anniversary · 13,576', lx: 895, ly: 742, al:'left'},
+    {i: 58,   txt:'28 Feb', sub:'new moon · 8,534', lx: 420, ly: 744, al:'right'},
+  ];
+  notes.forEach(n=>{
+    const [tx,ty] = tipOf(n.i);
+    g.strokeStyle = 'rgba(233,227,211,0.45)'; g.lineWidth = 0.8;
+    g.beginPath(); g.moveTo(tx,ty);
+    const ex = n.al==='left' ? n.lx-6 : n.lx+6;
+    g.lineTo(ex, n.ly-4); g.stroke();
+    g.beginPath(); g.arc(tx,ty,1.8,0,7); g.fillStyle = INK; g.fill();
+    g.textAlign = n.al;
+    g.font = 'italic 14px '+SERIF; g.fillStyle = INK; g.fillText(n.txt, n.lx, n.ly);
+    g.font = '11.5px '+SERIF; g.fillStyle = DIM; g.fillText(n.sub, n.lx, n.ly+15);
+  });
+
+  // ---- left column: title and words
+  g.textAlign = 'left';
+  g.fillStyle = INK; g.font = '30px '+SERIF;
+  g.fillText('Wound on the', 40, 78);
+  g.fillText('Moon’s Clock', 40, 114);
+  g.font = '13.5px '+SERIF; g.fillStyle = '#b9b4a5';
+  const para = [
+    'Daily readers of the English Wikipedia',
+    'article “Moon” in 2025, wound into a',
+    'spiral that turns once per synodic month',
+    '(29.53 days), starting at the centre on',
+    '1 January. Every new moon falls at the',
+    'bottom, every full moon at the top.',
+    '',
+    'Each day is a wedge: its length is that',
+    'day’s page views, its light is how much',
+    'of the Moon was lit at noon UTC.',
+  ];
+  para.forEach((s,k)=>g.fillText(s, 40, 156 + k*19));
+
+  // inset: mean readers by age of the Moon
+  const bins = 30, sum = Array(bins).fill(0), cnt = Array(bins).fill(0);
+  days.forEach((v,i)=>{ const k = Math.floor(ageOf(i)*bins); sum[k]+=v; cnt[k]++; });
+  const mean = sum.map((s,k)=>s/cnt[k]);
+  const all = days.reduce((a,b)=>a+b,0)/days.length;
+  const ix = 40, iy = 560, iw = 270, ih = 110;
+  g.font = 'italic 13px '+SERIF; g.fillStyle = INK;
+  g.fillText('The whole year folded onto one turn', ix, iy - ih - 24);
+  g.font = '11.5px '+SERIF; g.fillStyle = DIM;
+  g.fillText('average readers per day, by age of the Moon', ix, iy - ih - 8);
+  const vmax = 8000;
+  const bw = iw/bins;
+  for (let k=0;k<bins;k++){
+    const h = mean[k]/vmax*ih;
+    g.fillStyle = col((k+0.5)/bins, 1);
+    g.fillRect(ix + k*bw + 1, iy - h, bw - 2, h);
+  }
+  g.strokeStyle = FAINT; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(ix, iy+0.5); g.lineTo(ix+iw, iy+0.5); g.stroke();
+  const ay = iy - all/vmax*ih;
+  g.setLineDash([2,3]); g.strokeStyle = '#6a675c';
+  g.beginPath(); g.moveTo(ix, ay); g.lineTo(ix+iw, ay); g.stroke(); g.setLineDash([]);
+  g.font = '10.5px '+SERIF; g.fillStyle = DIM;
+  g.textAlign='left';  g.fillText('new', ix, iy+15);
+  g.textAlign='center'; g.fillText('full', ix+iw/2, iy+15);
+  g.textAlign='right'; g.fillText('new', ix+iw, iy+15);
+  g.textAlign='left'; g.fillText('dotted line: mean of all 365 days, ' + Math.round(all).toLocaleString('en-US'), ix, iy+32);
+  const kmax = mean.indexOf(Math.max(...mean));
+  g.fillStyle = INK; g.textAlign='center';
+  g.fillText(Math.round(mean[kmax]).toLocaleString('en-US'), ix + (kmax+0.5)*bw, iy - mean[kmax]/vmax*ih - 5);
+
+  // scale key
+  const kx = 40, ky = 668;
+  g.textAlign='left'; g.font = '11.5px '+SERIF; g.fillStyle = DIM;
+  g.fillText('wedge length', kx, ky);
+  [5000,10000,15000].forEach((v,k)=>{
+    const x = kx + 6 + k*86;
+    g.fillStyle = col(0.5,1);
+    g.fillRect(x, ky + 10 + (LMAX - len(v)) , 8, len(v));
+    g.fillStyle = DIM; g.fillText(v.toLocaleString('en-US'), x+13, ky + 10 + LMAX - 1);
+  });
+
+  g.font = '10.5px '+SERIF; g.fillStyle = '#6a675c'; g.textAlign='left';
+  g.fillText('Human page views, en.wikipedia.org, 1 Jan – 31 Dec 2025. Wikimedia pageviews (CC0).', 40, 784);
+})();
+</script>
+</body>
+</html>

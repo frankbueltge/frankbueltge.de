@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Core Sample, Moon 2025</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #1b1a18; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = Math.max(1, window.devicePixelRatio || 1);
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var days = window.VIEWS.days;
+  var total = days.reduce(function (a, b) { return a + b; }, 0);
+  var maxV = Math.max.apply(null, days), minV = Math.min.apply(null, days);
+
+  // seeded random
+  var seed = 20250101;
+  function rnd() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+
+  var MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  function dateOf(i) { return new Date(Date.UTC(2025, 0, 1 + i)); }
+  function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+
+  // ---- tray -------------------------------------------------------------
+  var bg = g.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#2a2824'); bg.addColorStop(1, '#1d1c19');
+  g.fillStyle = bg; g.fillRect(0, 0, W, H);
+
+  // tray body
+  var TX = 40, TY = 96, TW = 1020, TH = 664;
+  g.fillStyle = '#3a362f';
+  g.fillRect(TX, TY, TW, TH);
+  g.strokeStyle = '#4b463d'; g.lineWidth = 2; g.strokeRect(TX + 1, TY + 1, TW - 2, TH - 2);
+  // wood-ish grain on tray
+  for (var k = 0; k < 900; k++) {
+    var yy = TY + rnd() * TH;
+    g.fillStyle = 'rgba(' + (rnd() < 0.5 ? '0,0,0' : '255,240,210') + ',' + (0.02 + rnd() * 0.03) + ')';
+    g.fillRect(TX + rnd() * TW, yy, 20 + rnd() * 140, 1);
+  }
+
+  // ---- header label (sample tag) ----------------------------------------
+  g.fillStyle = '#d9d2c2';
+  g.font = '600 22px Georgia, "Times New Roman", serif';
+  g.textBaseline = 'alphabetic';
+  g.fillText('Core Sample, Moon 2025', 40, 46);
+  g.font = '12px ui-monospace, Menlo, Consolas, monospace';
+  g.fillStyle = '#a49c8b';
+  g.fillText('en.wikipedia / "Moon" · human readers · 2025 · one layer per day, its thickness that day’s readers', 40, 70);
+  g.textAlign = 'right';
+  g.fillStyle = '#d9d2c2';
+  g.font = '600 15px ui-monospace, Menlo, Consolas, monospace';
+  g.fillText('total depth ' + fmt(total) + ' readers', W - 40, 46);
+  g.font = '12px ui-monospace, Menlo, Consolas, monospace';
+  g.fillStyle = '#a49c8b';
+  g.fillText('box of 8 runs · 250 000 readers per run', W - 40, 70);
+  g.textAlign = 'left';
+
+  // ---- geometry of runs --------------------------------------------------
+  var PER = 250000;
+  var ROWS = Math.ceil(total / PER);           // 8
+  var CX0 = TX + 70, CX1 = TX + TW - 30;       // core extent in x
+  var CL = CX1 - CX0;
+  var rowH = (TH - 24) / ROWS;
+  var D = 34;                                  // core diameter
+  var scale = CL / PER;                        // px per reader
+
+  function rowY(r) { return TY + 12 + r * rowH + 26; } // top of core in row r
+
+  // channels
+  for (var r = 0; r < ROWS; r++) {
+    var y = rowY(r);
+    var ch = g.createLinearGradient(0, y - 5, 0, y + D + 5);
+    ch.addColorStop(0, '#191714'); ch.addColorStop(0.5, '#25221d'); ch.addColorStop(1, '#14120f');
+    g.fillStyle = ch;
+    g.fillRect(CX0 - 8, y - 5, CL + 16, D + 10);
+    // depth label at run start
+    g.fillStyle = '#b8af9c';
+    g.font = '11px ui-monospace, Menlo, Consolas, monospace';
+    g.textAlign = 'right';
+    g.fillText(fmt(r * PER), CX0 - 14, y + D / 2 + 4);
+    g.textAlign = 'left';
+    // scale ticks every 25k readers along the channel lip
+    g.strokeStyle = 'rgba(217,210,194,0.25)'; g.lineWidth = 1;
+    for (var t = 0; t <= 10; t++) {
+      var tx = Math.round(CX0 + t * CL / 10) + 0.5;
+      g.beginPath(); g.moveTo(tx, y + D + 6); g.lineTo(tx, y + D + (t % 5 === 0 ? 12 : 9)); g.stroke();
+    }
+  }
+  g.fillStyle = '#8c8574';
+  g.font = '10px ui-monospace, Menlo, Consolas, monospace';
+  g.save(); g.translate(TX + 12, TY + TH / 2); g.rotate(-Math.PI / 2);
+  g.restore();
+
+  // ---- layers ------------------------------------------------------------
+  // colour: regolith greys; quiet days darker and coarser, busy days pale like fresh ejecta
+  function layerColour(v, i) {
+    var t = Math.log(v / minV) / Math.log(maxV / minV);   // 0..1
+    var j = (rnd() - 0.5) * 14;
+    var base = 52 + Math.pow(t, 0.75) * 180 + j;
+    var warm = 8 * Math.sin(i / 29.53 * 2 * Math.PI) + (rnd() - 0.5) * 6;
+    var R = base + 6 + warm * 0.6, G = base + 2, B = base - 6 - warm * 0.4;
+    function c(x) { return Math.max(0, Math.min(255, Math.round(x))); }
+    return { r: c(R), g: c(G), b: c(B), t: t };
+  }
+
+  var cum = 0;
+  var segments = []; // per day: list of {row,x0,x1}
+  var cols = [];
+  for (var i = 0; i < days.length; i++) {
+    var a = cum, b = cum + days[i];
+    cols.push(layerColour(days[i], i));
+    var segs = [];
+    var ra = Math.floor(a / PER), rb = Math.floor((b - 1e-6) / PER);
+    for (var rr = ra; rr <= rb; rr++) {
+      var s = Math.max(a, rr * PER) - rr * PER, e = Math.min(b, (rr + 1) * PER) - rr * PER;
+      segs.push({ row: rr, x0: CX0 + s * scale, x1: CX0 + e * scale });
+    }
+    segments.push(segs);
+    cum = b;
+  }
+
+  // draw cores row by row with clipping
+  for (r = 0; r < ROWS; r++) {
+    y = rowY(r);
+    var endX = CX1;
+    if (r === ROWS - 1) endX = CX0 + (total - r * PER) * scale;
+    g.save();
+    g.beginPath();
+    roundRect(CX0, y, endX - CX0, D, 3);
+    g.clip();
+
+    for (i = 0; i < days.length; i++) {
+      segments[i].forEach(function (sg) {
+        if (sg.row !== r) return;
+        var c = cols[i];
+        g.fillStyle = 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')';
+        g.fillRect(sg.x0, y, sg.x1 - sg.x0 + 0.6, D);
+        // grains: quiet days coarse, busy days fine
+        var w = sg.x1 - sg.x0;
+        var n = Math.round(w * D * 0.10);
+        var gs = 2.2 - c.t * 1.4;
+        for (var q = 0; q < n; q++) {
+          var lum = rnd() < 0.5 ? 0 : 255;
+          g.fillStyle = 'rgba(' + lum + ',' + lum + ',' + lum + ',' + (0.05 + rnd() * 0.12) + ')';
+          var sz = gs * (0.5 + rnd());
+          g.fillRect(sg.x0 + rnd() * w, y + rnd() * D, sz, sz);
+        }
+        // occasional clast
+        if (rnd() < 0.25 && w > 8) {
+          g.fillStyle = 'rgba(40,36,30,0.45)';
+          g.beginPath();
+          g.ellipse(sg.x0 + rnd() * w, y + 4 + rnd() * (D - 8), 1 + rnd() * 2.2, 0.8 + rnd() * 1.6, rnd() * 3, 0, 7);
+          g.fill();
+        }
+      });
+    }
+    // day contacts: slightly wavy hairlines
+    for (i = 0; i < days.length; i++) {
+      var sg0 = segments[i][0];
+      if (sg0.row !== r) continue;
+      var x = sg0.x0;
+      var first = dateOf(i).getUTCDate() === 1;
+      g.strokeStyle = first ? 'rgba(20,16,12,0.85)' : 'rgba(30,26,22,0.35)';
+      g.lineWidth = first ? 1.6 : 0.7;
+      g.beginPath();
+      for (var yy2 = 0; yy2 <= D; yy2 += 3) {
+        var xx = x + Math.sin((yy2 + i * 7) * 0.35) * (first ? 0.9 : 0.6);
+        if (yy2 === 0) g.moveTo(xx, y + yy2); else g.lineTo(xx, y + yy2);
+      }
+      g.stroke();
+    }
+    // cylindrical shading
+    var sh = g.createLinearGradient(0, y, 0, y + D);
+    sh.addColorStop(0, 'rgba(0,0,0,0.55)');
+    sh.addColorStop(0.18, 'rgba(255,255,255,0.10)');
+    sh.addColorStop(0.32, 'rgba(255,255,255,0.18)');
+    sh.addColorStop(0.55, 'rgba(0,0,0,0.0)');
+    sh.addColorStop(0.85, 'rgba(0,0,0,0.30)');
+    sh.addColorStop(1, 'rgba(0,0,0,0.65)');
+    g.fillStyle = sh;
+    g.fillRect(CX0, y, endX - CX0, D);
+    g.restore();
+
+    // cut end of run (core break) — ragged end caps
+    g.fillStyle = 'rgba(0,0,0,0.35)';
+    g.fillRect(endX, y + 2, 2, D - 4);
+  }
+
+  function roundRect(x, y, w, h, rad) {
+    g.moveTo(x + rad, y); g.lineTo(x + w - rad, y); g.quadraticCurveTo(x + w, y, x + w, y + rad);
+    g.lineTo(x + w, y + h - rad); g.quadraticCurveTo(x + w, y + h, x + w - rad, y + h);
+    g.lineTo(x + rad, y + h); g.quadraticCurveTo(x, y + h, x, y + h - rad);
+    g.lineTo(x, y + rad); g.quadraticCurveTo(x, y, x + rad, y); g.closePath();
+  }
+
+  // ---- month marks (below core) -----------------------------------------
+  g.font = '10px ui-monospace, Menlo, Consolas, monospace';
+  for (i = 0; i < days.length; i++) {
+    var dt = dateOf(i);
+    if (dt.getUTCDate() !== 1) continue;
+    var s0 = segments[i][0];
+    y = rowY(s0.row);
+    g.fillStyle = '#d9d2c2';
+    g.fillRect(Math.round(s0.x0), y + D + 5, 1, 9);
+    g.fillText(MONTHS[dt.getUTCMonth()], s0.x0 + 3, y + D + 14);
+  }
+
+  // ---- annotations for the thickest layers ------------------------------
+  var notes = [
+    ['2025-03-14', 'total lunar eclipse'],
+    ['2025-07-20', 'Apollo 11 anniversary'],
+    ['2025-09-07', 'total lunar eclipse · thickest layer'],
+    ['2025-10-07', 'supermoon']
+  ];
+  notes.forEach(function (n) {
+    var parts = n[0].split('-');
+    var idx = Math.round((Date.UTC(+parts[0], +parts[1] - 1, +parts[2]) - Date.UTC(2025, 0, 1)) / 864e5);
+    var sg = segments[idx][0];
+    var yy3 = rowY(sg.row);
+    var mx = (sg.x0 + segments[idx][segments[idx].length - 1].x1) / 2;
+    // bracket above the layer
+    g.strokeStyle = '#e8c98a'; g.lineWidth = 1;
+    g.beginPath();
+    g.moveTo(sg.x0 + 0.5, yy3 - 7); g.lineTo(sg.x0 + 0.5, yy3 - 10);
+    g.lineTo(segments[idx][segments[idx].length - 1].x1 - 0.5, yy3 - 10);
+    g.lineTo(segments[idx][segments[idx].length - 1].x1 - 0.5, yy3 - 7);
+    g.stroke();
+    g.fillStyle = '#e8c98a';
+    g.font = '11px ui-monospace, Menlo, Consolas, monospace';
+    var d = dateOf(idx);
+    var label = d.getUTCDate() + ' ' + MONTHS[d.getUTCMonth()].charAt(0) + MONTHS[d.getUTCMonth()].slice(1).toLowerCase() +
+      ' · ' + fmt(days[idx]) + ' · ' + n[1];
+    var wlab = g.measureText(label).width;
+    var lx = Math.min(Math.max(mx - wlab / 2, CX0), CX1 - wlab);
+    g.fillText(label, lx, yy3 - 14);
+  });
+
+  // ---- footer key --------------------------------------------------------
+  var fy = H - 22;
+  g.font = '11px ui-monospace, Menlo, Consolas, monospace';
+  g.fillStyle = '#8c8574';
+  g.fillText('depth = readers since 1 Jan', 40, fy);
+  // tone key
+  var kx = 170;
+  g.fillText('layer tone:', kx, fy);
+  for (var s = 0; s < 60; s++) {
+    var v = minV * Math.pow(maxV / minV, s / 59);
+    var tt = s / 59, base = 52 + Math.pow(tt, 0.75) * 180;
+    g.fillStyle = 'rgb(' + Math.round(base + 6) + ',' + Math.round(base + 2) + ',' + Math.round(base - 6) + ')';
+    g.fillRect(kx + 82 + s * 2, fy - 9, 2, 10);
+  }
+  g.fillStyle = '#8c8574';
+  g.fillText(fmt(minV) + ' → ' + fmt(maxV) + ' readers a day, dark to pale', kx + 82 + 128, fy);
+  g.textAlign = 'right';
+  g.fillText('data: Wikimedia pageviews (CC0)', W - 40, fy);
+  g.textAlign = 'left';
+})();
+</script>
+</body>
+</html>
