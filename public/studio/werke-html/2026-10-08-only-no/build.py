@@ -1,6 +1,7 @@
-"""Injects data.json (series thinned to at most 160 points per market) into template.html -> index.html."""
+"""Injects data.json and pen.json (series thinned to at most 160 points per market) into template.html -> index.html."""
 import json
 d = json.load(open("data.json"))
+d["pen"] = json.load(open("pen.json"))  # session 162: who each rule names as the writer of YES
 for m in d["markets"]:
     s = m["series"]
     if len(s) > 160:

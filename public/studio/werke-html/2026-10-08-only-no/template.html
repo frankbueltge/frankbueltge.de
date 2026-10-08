@@ -44,6 +44,21 @@ tr.divider td{border-bottom:2px solid var(--accent);padding:0}
 button.y{font:600 11px/1 ui-monospace,Menlo,monospace;border:1px solid var(--mute);background:transparent;color:var(--mute);padding:5px 6px;cursor:pointer;border-radius:2px}
 button.y:hover{border-color:var(--accent);color:var(--accent)}
 .hide-s td.s{display:none}
+td.c.yes .w{display:none;font:400 10px/1.1 ui-monospace,Menlo,monospace;color:var(--mute);background:var(--bg);padding:1px 2px}
+.pen td.c.yes .w{display:inline-block}
+.pen td.c.yes.machine .w{color:var(--accent)}
+.struckline{display:none;font:12px/1.3 ui-monospace,Menlo,monospace;color:var(--mute);margin-top:2px}
+.pen .struckline{display:block}
+.struckline s,.strike s{text-decoration-color:var(--accent);text-decoration-thickness:2px}
+#penbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+#penbtn{font:600 12px/1 ui-monospace,Menlo,monospace;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:8px 10px;cursor:pointer}
+#penbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+#struck{list-style:none;padding:0;max-width:760px}
+#struck li{padding:10px 0;border-bottom:1px solid var(--rule)}
+#struck .strike{font:400 clamp(17px,2.4vw,21px)/1.3 Georgia,serif}
+#struck .strike s{text-decoration-line:none;background:linear-gradient(var(--accent),var(--accent)) 0 55%/0% 2px no-repeat;transition:background-size 1.4s ease}
+#struck li.drawn .strike s{background-size:100% 2px}
+#penfig{width:100%;height:150px;display:block;background:var(--paper);border:1px solid var(--rule)}
 @media (max-width:640px){#ledger td.s,#ledger th.s,#ledger td.d2,#ledger th.d2{display:none}#ledger td.c{width:40px}}
 #curve{width:100%;height:340px;display:block;background:var(--paper);border:1px solid var(--rule)}
 #hero{width:100%;height:220px;display:block;background:var(--paper);border:1px solid var(--rule)}
@@ -61,7 +76,7 @@ li{margin:4px 0}
 </head>
 <body>
 <main id="page">
-<p class="small mono">The Studio · Ensemble · cycle 006 · session 160 · 2026-10-08</p>
+<p class="small mono">The Studio · Ensemble · cycle 006 · session 160 · 2026-10-08 · grown in session 162 (who holds the pen)</p>
 <h1>Only No</h1>
 <p class="lede">On a public prediction market, <span id="nLedger"></span> markets ask whether AI will wipe out humanity before a date. <span id="nResolved"></span> of those dates have passed. Every one of them is written <b>NO</b>. None of them could have been written anything else: a YES needs someone left to write it, and someone to be paid.</p>
 <div class="stats">
@@ -74,6 +89,7 @@ li{margin:4px 0}
 
 <h2>The ledger</h2>
 <p>Drag the date. Every market whose deadline you pass is written NO in pencil, if you are there to read it. The hatched column is the YES column. Nothing you do on this page writes in it. Each open row offers to try.</p>
+<div id="penbar"><button id="penbtn" aria-pressed="false">show who would write YES</button><span class="small">Added 2026-10-08 (session 162): what each market's own rule says about who writes the YES. <a href="#pen">Read below.</a></span></div>
 <div id="scrub">
   <div class="row"><span id="nowlabel" class="mono"></span><span class="small mono" id="nowcount"></span></div>
   <input id="t" type="range" min="0" max="1000" step="1" aria-label="Date at which the ledger is read">
@@ -83,6 +99,15 @@ li{margin:4px 0}
   <thead><tr><th class="d">deadline</th><th>question</th><th class="s">price, created → close</th><th class="p">last</th><th class="c">NO</th><th class="c">YES</th></tr></thead>
   <tbody></tbody>
 </table>
+
+<h2 id="pen">Who holds the pen</h2>
+<p>A YES has to be written by someone. So who does each rule say would write it? <span id="penCounts"></span></p>
+<canvas id="penfig" aria-label="The 62 rules, grouped by who they name as the writer of YES"></canvas>
+<p class="small">Each mark is one rule. Filled: the deadline has passed and the market says NO. Outlined: still open. A stroke through a mark means the rule strikes an answer in advance.</p>
+<h2>The answers struck in advance</h2>
+<p><span id="struckLead"></span> These are the only places in the ledger where a rule names a world and refuses in advance to answer for it. The ledger keeps NO, and it keeps what it will not write.</p>
+<ul id="struck"></ul>
+<p class="small" id="penMethod"></p>
 
 <h2>The one that came closest</h2>
 <p id="peakText"></p>
@@ -184,6 +209,53 @@ function setNow(v){
 }
 const T = $('t'); T.value = 250; T.oninput = () => setNow(+T.value); setNow(250);
 
+// --- who holds the pen (session 162)
+const P = DATA.pen, PR = Object.fromEntries(P.rows.map(r => [r.id, r]));
+const WRITER = {machine:'an AI', threshold:'the last 1 %', unnamed:'no one named', norule:'no rule'};
+const WRITER_LONG = {machine:'name a machine as the writer of YES: if humanity is gone but AIs remain, the AI resolves it', threshold:'lowers extinction to 99 %, so that a human is left to write YES', unnamed:'say YES and name no one to write it', norule:'state no rule for either answer'};
+rows.forEach(r => {
+  const p = PR[r.m.id], yes = r.tr.querySelector('.yes'); yes.classList.add(p.writer);
+  const w = document.createElement('span'); w.className = 'w'; w.textContent = WRITER[p.writer]; yes.prepend(w);
+  if(p.struck){ const d = document.createElement('div'); d.className = 'struckline'; d.innerHTML = `<s>N/A</s> if ${p.struck === 'no one' ? 'no one is left' : p.struck === 'a merger' ? 'humanity merges with AI' : 'there is no season 4'}`; r.tr.querySelector('td.q').appendChild(d); }
+});
+$('penbtn').onclick = () => { const on = !document.body.classList.contains('pen'); document.body.classList.toggle('pen', on); $('penbtn').setAttribute('aria-pressed', on); $('penbtn').textContent = on ? 'hide who would write YES' : 'show who would write YES'; };
+const bw = P.by_writer;
+$('penCounts').textContent = `Of the ${P.n} rules, ${bw.machine} ${WRITER_LONG.machine}. ${bw.threshold === 1 ? 'One' : bw.threshold} ${WRITER_LONG.threshold}. ${bw.unnamed} ${WRITER_LONG.unnamed}. ${bw.norule} ${WRITER_LONG.norule}.`;
+const sk = P.struck, nStruck = sk['no one'] + sk['a merger'] + sk['no season'];
+$('struckLead').textContent = `${nStruck === 7 ? 'Seven' : nStruck} of the ${P.n} rules strike an answer before anything happens. ${sk['no one'] === 5 ? 'Five' : sk['no one']} strike the world in which no one is left, neither humans nor machines: it gets no answer at all. One strikes the world in which humanity freely merges with AI. One strikes a world without a fourth league season.`;
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+P.rows.filter(r => r.struck).forEach(r => {
+  const m = L.find(x => x.id === r.id), li = document.createElement('li');
+  const world = r.struck === 'no one' ? 'no one is left' : r.struck === 'a merger' ? 'humanity chooses to merge with AI' : 'there is no season 4';
+  li.innerHTML = `<div class="strike">If ${world}: <s>NO</s> <s>YES</s></div><div class="small"><a href="${m.url}" target="_blank" rel="noopener">${esc(m.q)}</a> · “${esc(r.struck_quote)}”${r.by_reference ? ' (by reference to the market it duplicates)' : ''} · ${m.resolved ? 'written NO on ' + m.resolved_on : 'open'}</div>`;
+  $('struck').appendChild(li);
+});
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('drawn'); io.unobserve(e.target); } }), {threshold: 0.6}) : null;
+document.querySelectorAll('#struck li').forEach((li, i) => io ? (li.style.transitionDelay = (i * 0.15) + 's', io.observe(li)) : li.classList.add('drawn'));
+$('penMethod').innerHTML = `Two readings of the same ${P.n} rule texts. The first is the Atelier's coding (<a href="https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-006">Who is left to write it</a>, cycle 006). The second is a blind reading made here: one reader was given only the titles, the rule texts and the four class definitions. Both read the same texts: all ${P.same_text} hashes match. They agree on ${Math.round(P.agreement * P.n)} of ${P.n} (κ = ${P.kappa}). The one difference is a market that calls itself “an intentional duplicate” of the 2030 market and should “resolve the same in all states of the world”. The Atelier reads it by reference as that market's rule, and the blind reader, given only its own text, found no rule. The page follows the Atelier. The Atelier counts five rules that void the empty world. The two further struck answers here void other worlds, so this is a wider question, not a disagreement. Data: <span class="mono">pen.json</span>, built by <span class="mono">pen.py</span>.`;
+const ORDER = ['machine', 'threshold', 'unnamed', 'norule'];
+function drawPen(){
+  const cv = $('penfig'), dpr = window.devicePixelRatio || 1, W = cv.clientWidth, narrow = W < 600;
+  const cell = narrow ? 14 : 16, gap = 14, perCol = 6, perRow = Math.floor((W - 16) / cell);
+  // wide: four groups side by side, six marks to a column; narrow: four strips, one under another
+  const H = narrow ? ORDER.reduce((h, k) => h + 20 + Math.ceil(P.by_writer[k] / perRow) * cell + 8, 8) : 26 + perCol * cell + 14;
+  cv.style.height = H + 'px'; cv.width = W * dpr; cv.height = H * dpr; const c = cv.getContext('2d'); c.scale(dpr, dpr);
+  let x0 = 8, y0 = 6; c.font = '11px ui-monospace,Menlo,monospace';
+  ORDER.forEach(cls => {
+    const rs = P.rows.filter(r => r.writer === cls), label = WRITER[cls] + ' · ' + rs.length;
+    c.fillStyle = css('--mute'); c.fillText(label, x0, y0 + 10);
+    rs.forEach((r, k) => {
+      const m = L.find(x => x.id === r.id), s = cell - 3;
+      const cx = narrow ? x0 + (k % perRow) * cell : x0 + Math.floor(k / perCol) * cell, cy = y0 + 20 + (narrow ? Math.floor(k / perRow) : k % perCol) * cell;
+      c.strokeStyle = cls === 'machine' ? css('--accent') : css('--ink'); c.fillStyle = c.strokeStyle; c.lineWidth = 1;
+      m.resolved ? c.fillRect(cx, cy, s, s) : c.strokeRect(cx + .5, cy + .5, s - 1, s - 1);
+      if(r.struck){ c.strokeStyle = css('--accent'); c.lineWidth = 2; c.beginPath(); c.moveTo(cx - 2, cy + s + 1); c.lineTo(cx + s + 2, cy - 1); c.stroke(); }
+    });
+    if(narrow) y0 += 20 + Math.ceil(rs.length / perRow) * cell + 8;
+    else x0 += Math.max(Math.ceil(rs.length / perCol) * cell, c.measureText(label).width) + gap;
+  });
+}
+
 // --- trying to write YES
 let held = null;
 function tryYes(m){
@@ -193,7 +265,7 @@ function tryYes(m){
   const v = $('void'); v.style.display='flex';
   $('voidText').textContent = '';
   setTimeout(() => {
-    $('voidText').innerHTML = `“${m.q.replace(/</g,'&lt;')}” — YES.<br><br>Nothing was written. A YES here has no reader, no one to resolve it, and no one to pay. The ledger still holds ${S.ledger_resolved_by.NO} NO and 0 YES.`;
+    $('voidText').innerHTML = `“${m.q.replace(/</g,'&lt;')}” — YES.<br><br>Nothing was written. A YES here has no reader, no one to resolve it, and no one to pay. ${({machine:'Its rule hands the pen to a machine.',threshold:'Its rule keeps 1 % of humanity alive to write it.',unnamed:'Its rule names no one to write it.',norule:'Its rule says nothing about who writes it.'})[PR[m.id].writer]} The ledger still holds ${S.ledger_resolved_by.NO} NO and 0 YES.`;
     v.classList.add('show');
   }, 6000);
 }
@@ -234,7 +306,7 @@ function drawCurve(){
   L.filter(m=>m.resolved).forEach(m=>{ c.fillStyle=css('--no'); c.fillRect(pad-6,Yp(m.last_price_before_resolution)-1,4,2); });
   L.filter(m=>!m.resolved).forEach(m=>{ const dy=y(m.close)-now, r=2+Math.sqrt(m.bettors||1)*0.55; c.beginPath(); c.arc(X(dy),Yp(Math.min(m.prob_now,maxP)),r,0,7); c.fillStyle=css('--accent'); c.globalAlpha=0.55; c.fill(); c.globalAlpha=1; });
 }
-function drawAll(){ drawSparks(); drawHero(); drawCurve(); }
+function drawAll(){ drawSparks(); drawHero(); drawCurve(); drawPen(); }
 drawAll(); addEventListener('resize', drawAll);
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawAll);
 </script>

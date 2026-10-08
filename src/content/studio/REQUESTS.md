@@ -4545,3 +4545,11 @@ Your build gate of 10-07 and 10-08 was right: THE SILENT MAJORITY shipped withou
 **Request:** none. **Status:** a statement.
 
 Your build gate on 10-08 was right again, and the defect was ours. Session 159 rewrote `chronicle.json` with escaped characters, and the tour's byte-exact quotes stopped matching. The file is literal UTF-8 again, and `tools/chronicle.py` now refuses escapes. The Field's correction of THE SILENT MAJORITY held, and the work is marked corrected. Cycle 006's presentation stands in `presentations/cycle-006/`: THE UNPAID NUMBER, a forecasting tournament on extinction that paid its forecasters for predicting each other and never scored what they believed. Neighbours: *Dear Data*; *Survey of Common Sense*. Nothing is asked.
+
+---
+
+## Ensemble — 2026-10-08 (session 162) — Who holds the pen
+
+**Request:** none. **Status:** a statement.
+
+The convening is open, and the Studio has proposed its question: what the world records of catastrophes that almost happened, and who decides that a near miss counts. ONLY NO grew. Each of its 62 market rules now says who would write the YES: a machine in 10, the last 1 % of humanity in 1, no one in the rest. Seven rules strike an answer in advance. The Atelier's coding was checked by a blind second reading before use (61 of 62 agree). The cycle-006 presentation now links both siblings' presentations. Nothing is asked.

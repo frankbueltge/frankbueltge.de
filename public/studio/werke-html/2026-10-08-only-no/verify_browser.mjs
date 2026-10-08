@@ -1,4 +1,4 @@
-// node verify_browser.mjs — loads the page at 390 (light) and 1100 px (dark), drags the date, tries a YES, checks the counts against data.json
+// node verify_browser.mjs — (session 162: plus the pen layer) loads the page at 390 (light) and 1100 px (dark), drags the date, tries a YES, checks the counts against data.json
 import { createRequire } from 'module';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
@@ -25,11 +25,26 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await p.fill('#t', '250'); await p.dispatchEvent('#t', 'input');
   t(w + ' peak text names the 2026 market at 11.2 %', (await p.locator('#peakText').innerText()).includes('11.2 %'));
   t(w + ' four exclusions listed', await p.locator('#excluded li').count() === S.not_extinction + S.na_by_design);
+  // session 162: who holds the pen
+  const P = JSON.parse(fs.readFileSync(join(here, 'pen.json')));
+  t(w + ' pen inscriptions hidden by default', await p.evaluate(() => [...document.querySelectorAll('td.c.yes .w')].every(e => getComputedStyle(e).display === 'none')));
+  await p.click('#penbtn');
+  t(w + ' pen on: 62 inscriptions shown', await p.evaluate(() => [...document.querySelectorAll('td.c.yes .w')].filter(e => getComputedStyle(e).display !== 'none').length) === P.n);
+  t(w + ' pen on: ' + P.by_writer.machine + ' rows hand YES to an AI', await p.locator('td.c.yes.machine').count() === P.by_writer.machine);
+  t(w + ' pen on: 7 struck lines in the ledger', await p.evaluate(() => [...document.querySelectorAll('.struckline')].filter(e => getComputedStyle(e).display !== 'none').length) === 7);
+  t(w + ' struck list has 7 answers', await p.locator('#struck li').count() === 7);
+  t(w + ' pen counts text matches pen.json', (await p.locator('#penCounts').innerText()).startsWith(`Of the ${P.n} rules, ${P.by_writer.machine} name a machine`));
+  t(w + ' method states kappa', (await p.locator('#penMethod').innerText()).includes('κ = ' + P.kappa));
+  t(w + ' pen figure drawn', await p.evaluate(() => { const c = document.getElementById('penfig'); const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i]) n++; return n > 500; }));
+  t(w + ' no horizontal scroll with pen on', await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  await p.locator('#struck').scrollIntoViewIfNeeded(); await p.waitForTimeout(2600);
+  { const y0 = await p.evaluate(() => document.getElementById('pen').getBoundingClientRect().top + scrollY); await p.screenshot({ path: join(here, 'shot-pen-' + w + '.png'), fullPage: true, clip: { x: 0, y: y0, width: w, height: 1300 } }); }
   await p.screenshot({ path: join(here, 'shot-' + w + '.png'), fullPage: true });
   await p.locator('button.y').first().click();
   await p.waitForTimeout(6800);
   t(w + ' page emptied on YES', await p.evaluate(() => getComputedStyle(document.getElementById('page')).opacity) === '0');
   t(w + ' void says nothing was written', (await p.locator('#voidText').innerText()).includes('Nothing was written'));
+  t(w + ' void names the pen', /Its rule (hands|keeps|names|says)/.test(await p.locator('#voidText').innerText()));
   if (w === 1100) await p.screenshot({ path: join(here, 'shot-void.png') });
   await p.click('#back'); await p.waitForTimeout(2600);
   t(w + ' page returns', await p.evaluate(() => getComputedStyle(document.getElementById('page')).opacity) === '1');
