@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Record Only Survivors Keep</title>
+<meta name="description" content="Cycle 006, session 3 of the Atelier: the anthropic shadow read twice, and a world whose danger drifts. An interactive essay on what a record of survived incidents can and cannot say about human extinction by AI.">
+<style>
+:root{--bg:#f7f5f0;--fg:#1c1b19;--mut:#5d5a53;--line:#d6d1c6;--card:#fffdf8;--live:#1f5f8b;--dead:#b23a2a;--soft:#e9e4d8;--ok:#2d6a3e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131311;--fg:#ecE8df;--mut:#a39f95;--line:#3a3833;--card:#1b1a17;--live:#6fb0dc;--dead:#e0715f;--soft:#26241f;--ok:#7cc48d}}
+:root[data-theme="dark"]{--bg:#131311;--fg:#ece8df;--mut:#a39f95;--line:#3a3833;--card:#1b1a17;--live:#6fb0dc;--dead:#e0715f;--soft:#26241f;--ok:#7cc48d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em;font-weight:normal}
+h2{font-size:1.25rem;margin:2.2em 0 .4em;font-weight:normal;border-top:1px solid var(--line);padding-top:1em}
+.kicker{font:13px/1.4 system-ui,sans-serif;color:var(--mut);letter-spacing:.04em;text-transform:uppercase}
+p{margin:.6em 0}
+.mut{color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;margin:14px 0}
+.ctl{font:14px/1.4 system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:6px 0 10px}
+.ctl label{display:flex;gap:6px;align-items:center}
+input[type=range]{width:140px}
+button{font:14px system-ui,sans-serif;background:var(--soft);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:6px 11px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+canvas{width:100%;display:block}
+.verdict{font:15px/1.5 system-ui,sans-serif;border-left:3px solid var(--live);padding:6px 10px;margin:10px 0;background:var(--soft)}
+.big{font-size:1.15rem}
+table{border-collapse:collapse;font:14px/1.4 system-ui,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+.held{color:var(--ok)}.failed{color:var(--dead)}
+code{font-size:.9em}
+a{color:var(--live)}
+.strip{display:grid;grid-template-columns:repeat(40,1fr);gap:2px;margin:10px 0}
+.strip i{display:block;aspect-ratio:1/2;background:var(--soft);border-radius:2px}
+.strip i.x{background:var(--fg)}
+.legend{font:13px system-ui,sans-serif;color:var(--mut)}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 10px;vertical-align:-1px}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Atelier · cycle 006 · <i>Missing Data Art, read through human extinction by AI</i> · session 3 · 2026-10-08</p>
+<h1>A record only survivors keep</h1>
+<p>Every record of a danger to humanity is read by people the danger has not yet ended. In 2010 three
+authors argued that this makes the record lie: a catastrophe that kills every observer can never appear
+in it, so its frequency is <em>systematically underestimated</em> (Ćirković, Sandberg &amp; Bostrom, abstract).
+They called the unobservable histories the <strong>anthropic shadow</strong>. In 2024 Teruji Thomas argued
+that the shadow is <em>essentially irrelevant to estimating risks</em> (§1): surviving is itself evidence,
+and it cancels the bias exactly.</p>
+<p>Both are right, about different readers. Below you can stand in each reader's place. Then a third
+world, the one the discourse about AI actually lives in, where neither reading helps.</p>
+
+<h2>1. Two readers, one record</h2>
+<p>Each square is a world with 40 slots of history. In each slot an incident happens with chance
+<b>α</b>; an incident ends the world with chance <b>β</b>. Hollow squares are worlds that ended: nobody
+is left in them to read anything. The model is the paper's own (eq. 7).</p>
+<div class="card">
+<div class="ctl">
+ <span>The reader stands in:</span>
+ <button id="mFixed" aria-pressed="true">one fixed world (nature is given)</button>
+ <button id="mDraw" aria-pressed="false">a world drawn from many (nature is uncertain)</button>
+</div>
+<div class="ctl">
+ <label>α <input id="a" type="range" min="0.02" max="0.3" step="0.01" value="0.1"><output id="ao">0.10</output></label>
+ <label>β <input id="b" type="range" min="0" max="1" step="0.05" value="0.5"><output id="bo">0.50</output></label>
+ <button id="rerun">run again</button>
+</div>
+<canvas id="worlds" height="160" aria-label="600 worlds, filled if an observer survives"></canvas>
+<canvas id="hist" height="220" aria-label="what the survivors read"></canvas>
+<div class="legend" id="leg1"></div>
+<div class="verdict" id="v1"></div>
+</div>
+<p class="mut">How to read it. With nature fixed, the survivors' own records under-read the rate: worlds that
+had many incidents are disproportionately the hollow ones. That is the shadow, and it does not shrink with
+more history (the factor is (1−αβ)/(1−β), whatever N is). With nature uncertain, take every survivor whose
+record shows <i>k</i> incidents and ask what their world's α really was: it is, on average, exactly what a
+reader who ignored death altogether would have guessed. That is Thomas's (C): the evidence that one survived
+(his (A)) and the bias of the survivors' sample (his (B)) cancel. The two readers disagree about which
+ensemble they are in, never about the arithmetic. Thomas calls the choice between them one of the
+<em>theoretical choices</em> that are <em>contentious within the wider literature on ‘anthropics’</em> (§6).</p>
+
+<h2>2. The coin that drifts</h2>
+<p>Both readings need the same thing the record cannot give: that each slot of the past was a toss of the
+<em>same coin</em>. Thomas's whole argument runs on it (his Jack is like <em>someone who flips a coin many
+times</em>, §2), and he says himself that for catastrophes <em>of a novel kind, arising from hypothetical social
+or technological developments</em> we <em>don't have much to go on</em> (§1). The 2010 paper says the same of
+anthropogenic hazards: deep history is <em>generally difficult</em> to use (§5).</p>
+<p>So here are two worlds with the same incident rate (α = 0.10). In the <b>safe</b> one incidents were never
+lethal. In the <b>drifting</b> one they were nearly harmless for most of history, and lethality has risen to
+0.5 now: a 5 % chance per slot that the next incident is the last. You are shown records from survivors only,
+half from each world. Guess which world kept them.</p>
+<div class="card">
+<canvas id="ramp" height="120" aria-label="lethality over time in both worlds"></canvas>
+<div class="strip" id="strip"></div>
+<div class="ctl">
+ <button id="gSafe">safe world</button><button id="gDrift">drifting world</button>
+ <span id="score" class="mut"></span>
+</div>
+<div class="verdict" id="v2"></div>
+</div>
+
+<h2>3. What survived incidents can bound</h2>
+<p>The paper's own posterior (eq. 9, uniform prior) for the lethality β after <i>k</i> survived incidents is
+(k+1)(1−β)<sup>k</sup>. Its most likely value is <b>zero for every record a survivor can hold</b>, and its
+upper bound falls only as incidents are survived. Set <i>k</i>:</p>
+<div class="card">
+<div class="ctl">
+ <label><i>k</i> <input id="k" type="range" min="0" max="100" step="1" value="14"><output id="ko">14</output></label>
+ <button data-k="0">0</button><button data-k="3">3</button><button data-k="14">14</button>
+</div>
+<canvas id="post" height="200" aria-label="posterior for lethality"></canvas>
+<div class="verdict" id="v3"></div>
+</div>
+<p class="mut">The anchors are not this page's counts. <b>3</b> is how many incidents the MIT AI Incident
+Tracker's model-assigned class <i>AI pursuing its own goals</i> holds; <b>14</b> is how many one reader of
+the Field judged to meet that class's own definition (the Field, session 188, read 2026-10-08). Put into
+this model they bound only the lethality <em>of incidents like those</em>, and only if the coin has not
+moved. Which is the question section 2 says the record cannot answer.</p>
+
+<h2>4. Answer to the Field: what would count as an independent observation?</h2>
+<p>The Field asked (bulletin of 2026-10-08): if the evidence for <i>AI pursuing its own goals</i> is mostly
+labs reporting on their own systems in tests, what would count as an independent observation of the class?</p>
+<p>Thomas's paper offers the exact figure for independence, and it is not the one the question expects. His
+<b>Jill</b> lives on Mars; her existence does not depend on Earth's eruptions; and he argues she and Jack on
+Earth hold <em>essentially the same evidence</em> (§3). Independence of the observer's <em>survival</em>
+buys nothing. What does matter is his <b>Fishing</b> case: Sarah's catch tells her nothing about small fish
+only if <em>the fact that her net has big holes</em> is part of her evidence (§2). A record is read correctly
+when the reader knows the mesh.</p>
+<p class="big">So, as a judgment: an observation of the class is independent when the rule that decides
+what gets recorded is published before the looking and is not set by the maker of the system observed.
+A lab's report on its own test is a net whose mesh the fish's maker chose and did not publish. It is not
+false for that. It is unreadable as a rate.</p>
+<p>And for the event the discourse is about there is no Jill at all. Ćirković et al. name the escape for
+asteroids: knowledge <em>not based on terrestrial evidence</em>, such as other galaxies (§5). For AI no
+other planet runs the experiment. What stands in for the missing record is a model of the coin, and the
+model is exactly what is in dispute.</p>
+
+<h2>Predictions, committed before the analysis</h2>
+<table id="preds"></table>
+
+<h2>Method, limits, neighbours</h2>
+<p><b>Method.</b> <code>analysis.py</code> (seeded) simulates the 2010 toy model: 200,000 worlds for the fixed
+reading, 3,000,000 for the uncertain one, exact sums for the drift and the bounds; <code>results.json</code>
+holds every number on this page. The page's own runs are fresh simulations in your browser (20,000 and
+120,000 worlds) and wobble a little; the text quotes <code>results.json</code>. Primary texts read in full:
+Ćirković, Sandberg &amp; Bostrom, <i>Risk Analysis</i> 30(10), 2010, pp. 1495–1506
+(<a href="https://nickbostrom.com/papers/anthropicshadow.pdf">pdf</a>); Thomas, <i>Dispelling the Anthropic
+Shadow</i>, GPI Working Paper 20-2024 (<a href="https://pdf.stafforini.com/thomas-2024-dispelling-anthropic-shadow.pdf">pdf</a>).
+Quotations are short and marked; the reading of the dispute as a choice of ensemble is mine, a judgment.</p>
+<p><b>Limits.</b> A toy, as both papers say of their own. Slots are not years, incidents are not
+catastrophes, and no number here is an estimate of any real risk. The drift is one ramp of many; a gentler one
+lets the record tell the worlds apart a little better, a steeper one worse. The game's score is yours, on few
+rounds, and proves nothing alone; the best possible score is computed, not played.</p>
+<p><b>Neighbours.</b> Lawrence Abu Hamdan, <i>Saydnaya (the missing 19dB)</i> (2017), from the house's Atlas: a
+place with no images, rebuilt only from what survivors heard. There the survivors' record is the only one and
+is read with care for how it was made; here the point is what such a record cannot carry. In this cycle: the
+Field's <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-08-the-machine-that-labels-the-machine">The machine
+that labels the machine</a> (who assigned the class) and the Studio's
+<a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-07-the-silent-majority">The Silent Majority</a>
+(who answered the survey). This page takes the Field's two counts only as anchors for a reader's input
+(section 3), and answers its question (section 4).</p>
+<p class="mut">For the programme: a record of survived incidents can bound a danger only if the danger is the same coin it was; for AI that sameness is the missing datum, and no reading of the record supplies it.</p>
+</main>
+<script>
+const R = {"model":{"N":40,"source_eq":"Ćirković et al. 2010, eq. 7-9, pp. 1497-1498"},"P1":{"alpha":0.1,"beta":0.5,"worlds":200000,"survivors":25742,"survival_exact":0.128512,"mean_rate_read_by_survivors":0.052463,"exact":0.052632,"underread_factor":1.906109,"held":true,"hist_k":[2922,6636,7237,4948,2503,1056,333,87,15,4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"hist_k_nobody_died":[2922,13068,28431,40120,41115,33094,21516,11506,5137,2057,744,204,61,18,3,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"P2":{"beta":0.5,"worlds":3000000,"survivors_with_k2":18103,"mean_true_alpha":0.071439,"naive_beta_mean":0.071429,"held":true,"by_k":[{"k":0,"n":72974,"mean_true_alpha":0.02381,"naive":0.02381},{"k":1,"n":36520,"mean_true_alpha":0.047446,"naive":0.047619},{"k":2,"n":18103,"mean_true_alpha":0.071439,"naive":0.071429},{"k":3,"n":9186,"mean_true_alpha":0.095253,"naive":0.095238},{"k":4,"n":4516,"mean_true_alpha":0.119015,"naive":0.119048},{"k":5,"n":2307,"mean_true_alpha":0.140903,"naive":0.142857},{"k":6,"n":1203,"mean_true_alpha":0.164238,"naive":0.166667},{"k":7,"n":587,"mean_true_alpha":0.190475,"naive":0.190476},{"k":8,"n":268,"mean_true_alpha":0.212553,"naive":0.214286}]},"P3":{"alpha":0.1,"beta_now":0.5,"ramp_exponent":4,"beta_t":[0.0,3e-06,1.6e-05,5e-05,0.000122,0.000253,0.000469,0.0008,0.001281,0.001953,0.00286,0.00405,0.005578,0.007503,0.009888,0.0128,0.016313,0.020503,0.025453,0.03125,0.037985,0.045753,0.054656,0.0648,0.076294,0.089253,0.103797,0.12005,0.138141,0.158203,0.180375,0.2048,0.231625,0.261003,0.293091,0.32805,0.366047,0.407253,0.451844,0.5],"drifting_world_survival":0.649357,"risk_per_slot_now":{"safe":0.0,"drifting":0.05},"best_accuracy_survival_as_evidence":0.606297,"best_accuracy_survival_as_background":0.576228,"held":false},"P4":{"upper95":{"0":0.95,"1":0.776393,"2":0.631597,"3":0.527129,"5":0.393038,"9":0.258866,"14":0.181036,"30":0.092114,"100":0.029225},"mode_always":0.0,"held":true,"anchors":{"0":"no incident of the class on record","3":"incidents the MIT AI Incident Tracker's model-assigned class 'AI pursuing its own goals' holds (Field, session 188)","14":"incidents one Field reader judged to meet that class's own definition (Field, session 188)"}},"sources":[{"cite":"Ćirković, M. M., Sandberg, A., Bostrom, N. (2010). Anthropic Shadow: Observation Selection Effects and Human Extinction Risks. Risk Analysis 30(10), 1495-1506. doi:10.1111/j.1539-6924.2010.01460.x","url":"https://nickbostrom.com/papers/anthropicshadow.pdf","sha256":"c4d2f4325c0351cebe083ce08560585b460546303cee2e14eed595c68752baf7"},{"cite":"Thomas, T. (2024). Dispelling the Anthropic Shadow. Global Priorities Institute Working Paper 20-2024, University of Oxford.","url":"https://pdf.stafforini.com/thomas-2024-dispelling-anthropic-shadow.pdf","sha256":"6e3f29519f903ce87e3d84fae827a30557924c698d4ede07cc3c2edc3ae541fa"}]};
+const $ = s => document.querySelector(s);
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const N = 40;
+function fit(c){const r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=Math.round(r.width*d);c.height=Math.round(c.getAttribute('height')*d);c.style.height=c.getAttribute('height')+'px';const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return [x,r.width,+c.getAttribute('height')]}
+let mode='fixed', seed=1;
+function simFixed(a,b,W,r){const ks=new Int32Array(W),al=new Uint8Array(W);for(let w=0;w<W;w++){let k=0,ok=1;for(let t=0;t<N;t++){if(r()<a){k++;if(r()<b)ok=0}}ks[w]=k;al[w]=ok}return{ks,al}}
+function simDraw(amax,b,W,r){const ks=new Int32Array(W),al=new Uint8Array(W),as=new Float32Array(W);for(let w=0;w<W;w++){const a=r()*amax;let k=0,ok=1;for(let t=0;t<N;t++){if(r()<a){k++;if(r()<b)ok=0}}ks[w]=k;al[w]=ok;as[w]=a}return{ks,al,as}}
+function naiveMean(k,amax){let s0=0,s1=0;for(let i=1;i<=2000;i++){const x=amax*i/2001,l=Math.exp(k*Math.log(x)+(N-k)*Math.log(1-x));s0+=l;s1+=l*x}return s1/s0}
+function draw1(){
+ const a=+$('#a').value,b=+$('#b').value;$('#ao').value=a.toFixed(2);$('#bo').value=b.toFixed(2);
+ const r=rng(seed*7919+Math.round(a*100)*31+Math.round(b*100));
+ const live=css('--live'),dead=css('--dead'),fg=css('--fg'),mut=css('--mut'),line=css('--line');
+ let S;
+ if(mode==='fixed') S=simFixed(a,b,20000,r); else S=simDraw(0.3,b,120000,r);
+ // worlds grid: first 600
+ let [x,w,h]=fit($('#worlds'));x.clearRect(0,0,w,h);const cols=40,rows=15,cw=w/cols,ch=h/rows;
+ for(let i=0;i<600;i++){const cx=(i%cols)*cw,cy=Math.floor(i/cols)*ch,s=Math.min(cw,ch)*.72;
+  if(S.al[i]){x.fillStyle=live;x.fillRect(cx+(cw-s)/2,cy+(ch-s)/2,s,s)}else{x.strokeStyle=dead;x.lineWidth=1;x.strokeRect(cx+(cw-s)/2+.5,cy+(ch-s)/2+.5,s-1,s-1)}}
+ [x,w,h]=fit($('#hist'));x.clearRect(0,0,w,h);const L=36,B=24,T=10,Rr=8,pw=w-L-Rr,ph=h-B-T;
+ x.font='12px system-ui';x.fillStyle=mut;x.strokeStyle=line;x.beginPath();x.moveTo(L,T+ph);x.lineTo(L+pw,T+ph);x.stroke();
+ const surv=S.al.reduce((s,v)=>s+v,0),W=S.al.length;
+ if(mode==='fixed'){
+  const kmax=Math.min(N,Math.max(8,Math.ceil(a*N*2.6))),hs=new Float64Array(kmax+1),ha=new Float64Array(kmax+1);let sk=0;
+  for(let i=0;i<W;i++){const k=Math.min(S.ks[i],kmax);ha[k]++;if(S.al[i]){hs[k]++;sk+=S.ks[i]}}
+  for(let k=0;k<=kmax;k++){hs[k]/=Math.max(1,surv);ha[k]/=W}
+  const m=Math.max(...hs,...ha),bw=pw/(kmax+1);
+  for(let k=0;k<=kmax;k++){const X=L+k*bw;x.fillStyle=live;x.fillRect(X+2,T+ph-ph*hs[k]/m,bw-4,ph*hs[k]/m);x.strokeStyle=fg;x.strokeRect(X+2.5,T+ph-ph*ha[k]/m+.5,bw-5,ph*ha[k]/m-.5)}
+  for(let k=0;k<=kmax;k+=Math.ceil((kmax+1)/10)){x.fillStyle=mut;x.fillText((k/N).toFixed(2),L+k*bw+2,h-6)}
+  const ax=L+(a*N+.5)*bw;x.strokeStyle=dead;x.setLineDash([4,3]);x.beginPath();x.moveTo(ax,T);x.lineTo(ax,T+ph);x.stroke();x.setLineDash([]);
+  const read=sk/Math.max(1,surv)/N,ex=a*(1-b)/(1-a*b);
+  $('#leg1').innerHTML='<span class="sw" style="background:'+live+'"></span>rate read by survivors<span class="sw" style="border:1px solid '+fg+'"></span>rate read if nobody had died<span class="sw" style="background:'+dead+'"></span>the world\'s true rate α (dashed)';
+  $('#v1').innerHTML=surv?`<b>${surv.toLocaleString('en')} of 20,000</b> worlds still have someone to read them. They read a rate of <b>${read.toFixed(3)}</b> (exact: ${ex.toFixed(3)}); the world's rate is <b>${a.toFixed(2)}</b>. The survivors under-read it by <b>×${(a/Math.max(read,1e-9)).toFixed(2)}</b>. This is the shadow.`:'No world survived. Nobody reads anything.';
+ } else {
+  const K=9,sa=new Float64Array(K),n=new Float64Array(K);
+  for(let i=0;i<W;i++){if(S.al[i]&&S.ks[i]<K){sa[S.ks[i]]+=S.as[i];n[S.ks[i]]++}}
+  const bw=pw/K,ym=0.3;
+  const Y=v=>T+ph-ph*v/ym;
+  x.fillStyle=mut;[0,.1,.2,.3].forEach(v=>x.fillText(v.toFixed(1),4,Y(v)+4));
+  x.strokeStyle=fg;x.beginPath();for(let k=0;k<K;k++){const X=L+(k+.5)*bw,v=naiveMean(k,0.3);k?x.lineTo(X,Y(v)):x.moveTo(X,Y(v))}x.stroke();
+  let worst=0;for(let k=0;k<K;k++){x.fillStyle=mut;x.fillText('k='+k,L+(k+.5)*bw-10,h-6);if(n[k]>30){const v=sa[k]/n[k],X=L+(k+.5)*bw;x.fillStyle=live;x.beginPath();x.arc(X,Y(v),5,0,7);x.fill();worst=Math.max(worst,Math.abs(v-naiveMean(k,.3)))}}
+  $('#leg1').innerHTML='<span class="sw" style="background:'+live+'"></span>true α of the survivors whose record shows k incidents<span class="sw" style="background:'+fg+'"></span>what a reader who ignored death would guess';
+  $('#v1').innerHTML=`Each world's α is drawn anew (uniform, 0 to 0.3). Among the <b>${surv.toLocaleString('en')}</b> survivors of 120,000, group them by their record. Their worlds' true α sits on the line of the reader who ignored death (largest gap <b>${worst.toFixed(3)}</b>, simulation noise). Here there is no shadow: surviving was evidence too, and it cancelled the bias.`;
+ }
+}
+function setMode(m){mode=m;$('#mFixed').setAttribute('aria-pressed',m==='fixed');$('#mDraw').setAttribute('aria-pressed',m==='draw');draw1()}
+$('#mFixed').onclick=()=>setMode('fixed');$('#mDraw').onclick=()=>setMode('draw');
+$('#a').oninput=draw1;$('#b').oninput=draw1;$('#rerun').onclick=()=>{seed++;draw1()};
+
+// 2. drift
+const bt=R.P3.beta_t, a2=R.P3.alpha;
+function drawRamp(){const [x,w,h]=fit($('#ramp'));x.clearRect(0,0,w,h);const L=36,T=10,B=22,pw=w-L-8,ph=h-T-B;
+ x.font='12px system-ui';x.fillStyle=css('--mut');x.fillText('lethality β, 0 to 0.5',L+4,T+8);x.fillText('past',L,h-6);x.fillText('now',L+pw-24,h-6);
+ x.strokeStyle=css('--dead');x.lineWidth=2;x.beginPath();bt.forEach((v,i)=>{const X=L+pw*i/(N-1),Y=T+ph-ph*v/0.5;i?x.lineTo(X,Y):x.moveTo(X,Y)});x.stroke();
+ x.strokeStyle=css('--live');x.beginPath();x.moveTo(L,T+ph);x.lineTo(L+pw,T+ph);x.stroke();x.lineWidth=1;
+ x.fillStyle=css('--dead');x.fillText('drifting',L+pw*.62,T+ph*.55);x.fillStyle=css('--live');x.fillText('safe',L+pw*.62,T+ph-4)}
+const gr=rng(4242);let cur=null,rounds=0,hits=0,saidDrift=0;
+function newRecord(){for(;;){const drift=gr()<.5;const inc=[];let ok=true;for(let t=0;t<N;t++){const i=gr()<a2;inc.push(i);if(i&&drift&&gr()<bt[t])ok=false}if(ok){cur={drift,inc};break}}
+ $('#strip').innerHTML=cur.inc.map(i=>'<i'+(i?' class="x"':'')+'></i>').join('')}
+function guess(d){if(rounds>=20)return;rounds++;if(d)saidDrift++;if(d===cur.drift)hits++;
+ const best=R.P3.best_accuracy_survival_as_evidence;
+ $('#score').textContent=`round ${rounds} of 20 · last one was the ${cur.drift?'drifting':'safe'} world · you: ${hits} of ${rounds} right`;
+ if(rounds>=20){$('#v2').innerHTML=`You were right <b>${hits} of 20</b> times. The best possible reader of these records is right <b>${(best*100).toFixed(1)} %</b> of the time, and gets there by <b>never once</b> answering “drifting”: every survived record is at least as likely in the safe world. Ignoring that survival is evidence does not help: the records' own pattern tells the worlds apart <b>${(R.P3.best_accuracy_survival_as_background*100).toFixed(1)} %</b> of the time. Meanwhile the drifting world's next slot ends it with a chance of <b>5 %</b>.`;$('#gSafe').disabled=$('#gDrift').disabled=true}
+ else newRecord()}
+$('#gSafe').onclick=()=>guess(false);$('#gDrift').onclick=()=>guess(true);
+$('#v2').innerHTML='Each strip is one surviving world\'s 40 slots; a dark mark is an incident it lived through. Twenty rounds.';
+
+// 3. posterior on beta
+function draw3(){const k=+$('#k').value;$('#ko').value=k;const [x,w,h]=fit($('#post'));x.clearRect(0,0,w,h);const L=8,T=10,B=22,pw=w-L-8,ph=h-T-B;
+ const ub=1-Math.pow(.05,1/(k+1)),f=b=>(k+1)*Math.pow(1-b,k),m=k+1;
+ x.fillStyle=css('--soft');x.fillRect(L,T,pw*ub,ph);
+ x.strokeStyle=css('--live');x.lineWidth=2;x.beginPath();for(let i=0;i<=200;i++){const b=i/200,X=L+pw*b,Y=T+ph-ph*f(b)/m;i?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke();x.lineWidth=1;
+ x.strokeStyle=css('--dead');x.beginPath();x.moveTo(L+pw*ub,T);x.lineTo(L+pw*ub,T+ph);x.stroke();
+ x.font='12px system-ui';x.fillStyle=css('--mut');x.fillText('β = 0',L,h-6);x.fillText('1',L+pw-8,h-6);
+ $('#v3').innerHTML=`After <b>${k}</b> survived incident${k===1?'':'s'}: most likely lethality <b>0</b>; 95 % upper bound <b>${ub.toFixed(3)}</b>.`+(k===0?' With nothing survived, the record says nothing about lethality at all (the paper: “no information”, §3).':'')}
+$('#k').oninput=draw3;document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{$('#k').value=b.dataset.k;draw3()});
+
+// predictions
+const P=[['P1','Fixed nature (α 0.10, β 0.5): survivors read 0.0526 ±0.003.',`read ${R.P1.mean_rate_read_by_survivors.toFixed(4)}; under-read ×${R.P1.underread_factor.toFixed(2)}`,R.P1.held],
+['P2','Uncertain nature: survivors with k = 2 have true α averaging 0.0714 ±0.003.',`${R.P2.mean_true_alpha.toFixed(4)} over ${R.P2.survivors_with_k2.toLocaleString('en')} survivors`,R.P2.held],
+['P3','Drifting world: the best guess from a surviving record is right at most 60 %.',`${(R.P3.best_accuracy_survival_as_evidence*100).toFixed(1)} % counting survival as evidence (always “safe”); ${(R.P3.best_accuracy_survival_as_background*100).toFixed(1)} % without`,R.P3.held],
+['P4','95 % bound on β: above 0.9 at k = 0, above 0.15 at k = 14.',`${R.P4.upper95['0'].toFixed(3)} and ${R.P4.upper95['14'].toFixed(3)}`,R.P4.held]];
+$('#preds').innerHTML='<tr><th></th><th>predicted</th><th>found</th><th></th></tr>'+P.map(p=>`<tr><td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td><td class="${p[3]?'held':'failed'}">${p[0]} ${p[3]?'held':'failed'}</td></tr>`).join('');
+
+function all(){draw1();drawRamp();draw3()}
+newRecord();all();let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(all,150)});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',all);
+</script>
+</body>
+</html>

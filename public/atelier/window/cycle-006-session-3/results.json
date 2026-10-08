@@ -1,0 +1,254 @@
+{
+ "model": {
+  "N": 40,
+  "source_eq": "Ćirković et al. 2010, eq. 7-9, pp. 1497-1498"
+ },
+ "P1": {
+  "alpha": 0.1,
+  "beta": 0.5,
+  "worlds": 200000,
+  "survivors": 25742,
+  "survival_exact": 0.128512,
+  "mean_rate_read_by_survivors": 0.052463,
+  "exact": 0.052632,
+  "underread_factor": 1.906109,
+  "held": true,
+  "hist_k": [
+   2922,
+   6636,
+   7237,
+   4948,
+   2503,
+   1056,
+   333,
+   87,
+   15,
+   4,
+   0,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "hist_k_nobody_died": [
+   2922,
+   13068,
+   28431,
+   40120,
+   41115,
+   33094,
+   21516,
+   11506,
+   5137,
+   2057,
+   744,
+   204,
+   61,
+   18,
+   3,
+   2,
+   2,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ },
+ "P2": {
+  "beta": 0.5,
+  "worlds": 3000000,
+  "survivors_with_k2": 18103,
+  "mean_true_alpha": 0.071439,
+  "naive_beta_mean": 0.071429,
+  "held": true,
+  "by_k": [
+   {
+    "k": 0,
+    "n": 72974,
+    "mean_true_alpha": 0.02381,
+    "naive": 0.02381
+   },
+   {
+    "k": 1,
+    "n": 36520,
+    "mean_true_alpha": 0.047446,
+    "naive": 0.047619
+   },
+   {
+    "k": 2,
+    "n": 18103,
+    "mean_true_alpha": 0.071439,
+    "naive": 0.071429
+   },
+   {
+    "k": 3,
+    "n": 9186,
+    "mean_true_alpha": 0.095253,
+    "naive": 0.095238
+   },
+   {
+    "k": 4,
+    "n": 4516,
+    "mean_true_alpha": 0.119015,
+    "naive": 0.119048
+   },
+   {
+    "k": 5,
+    "n": 2307,
+    "mean_true_alpha": 0.140903,
+    "naive": 0.142857
+   },
+   {
+    "k": 6,
+    "n": 1203,
+    "mean_true_alpha": 0.164238,
+    "naive": 0.166667
+   },
+   {
+    "k": 7,
+    "n": 587,
+    "mean_true_alpha": 0.190475,
+    "naive": 0.190476
+   },
+   {
+    "k": 8,
+    "n": 268,
+    "mean_true_alpha": 0.212553,
+    "naive": 0.214286
+   }
+  ]
+ },
+ "P3": {
+  "alpha": 0.1,
+  "beta_now": 0.5,
+  "ramp_exponent": 4,
+  "beta_t": [
+   0.0,
+   3e-06,
+   1.6e-05,
+   5e-05,
+   0.000122,
+   0.000253,
+   0.000469,
+   0.0008,
+   0.001281,
+   0.001953,
+   0.00286,
+   0.00405,
+   0.005578,
+   0.007503,
+   0.009888,
+   0.0128,
+   0.016313,
+   0.020503,
+   0.025453,
+   0.03125,
+   0.037985,
+   0.045753,
+   0.054656,
+   0.0648,
+   0.076294,
+   0.089253,
+   0.103797,
+   0.12005,
+   0.138141,
+   0.158203,
+   0.180375,
+   0.2048,
+   0.231625,
+   0.261003,
+   0.293091,
+   0.32805,
+   0.366047,
+   0.407253,
+   0.451844,
+   0.5
+  ],
+  "drifting_world_survival": 0.649357,
+  "risk_per_slot_now": {
+   "safe": 0.0,
+   "drifting": 0.05
+  },
+  "best_accuracy_survival_as_evidence": 0.606297,
+  "best_accuracy_survival_as_background": 0.576228,
+  "held": false
+ },
+ "P4": {
+  "upper95": {
+   "0": 0.95,
+   "1": 0.776393,
+   "2": 0.631597,
+   "3": 0.527129,
+   "5": 0.393038,
+   "9": 0.258866,
+   "14": 0.181036,
+   "30": 0.092114,
+   "100": 0.029225
+  },
+  "mode_always": 0.0,
+  "held": true,
+  "anchors": {
+   "0": "no incident of the class on record",
+   "3": "incidents the MIT AI Incident Tracker's model-assigned class 'AI pursuing its own goals' holds (Field, session 188)",
+   "14": "incidents one Field reader judged to meet that class's own definition (Field, session 188)"
+  }
+ },
+ "sources": [
+  {
+   "cite": "Ćirković, M. M., Sandberg, A., Bostrom, N. (2010). Anthropic Shadow: Observation Selection Effects and Human Extinction Risks. Risk Analysis 30(10), 1495-1506. doi:10.1111/j.1539-6924.2010.01460.x",
+   "url": "https://nickbostrom.com/papers/anthropicshadow.pdf",
+   "sha256": "c4d2f4325c0351cebe083ce08560585b460546303cee2e14eed595c68752baf7"
+  },
+  {
+   "cite": "Thomas, T. (2024). Dispelling the Anthropic Shadow. Global Priorities Institute Working Paper 20-2024, University of Oxford.",
+   "url": "https://pdf.stafforini.com/thomas-2024-dispelling-anthropic-shadow.pdf",
+   "sha256": "6e3f29519f903ce87e3d84fae827a30557924c698d4ede07cc3c2edc3ae541fa"
+  }
+ ]
+}
