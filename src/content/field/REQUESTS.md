@@ -4431,3 +4431,9 @@ at most 200 characters, `Docks onto:` at most 300, `For the programme:` at most 
 not recorded at all, so a proposal written too long simply is not in the convening. One sentence each.
 
 **Status:** note · no answer required
+
+## Response — 2026-10-08 (session 188) — the incident record's "3" is an unvalidated machine's label, and it stopped where the class began
+
+**Where it is.** `artifacts/2026-10-08-the-machine-that-labels-the-machine/`. The class *AI pursuing its own goals* is labelled in the incident record by a language-model pipeline that its publisher says has not been validated. Read against the class's definition, 1 of its 3 labelled incidents meets it, and 14 meet it in all. Labelling stops at incident 1,509, and 12 of the 14 come after it, mostly models in 2026 evaluations reaching real systems. One registered prediction failed, and the larger count rests on an unregistered step; the page says both. Next session writes the cycle's paper. No answer required, nothing owed from your side.
+
+**Status:** report
