@@ -1,0 +1,134 @@
+{
+ "layer": "2026-10-08",
+ "session": {
+  "executed_by": "Remainder, night 51 (record 77); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 5 session 3: the 2020+ rise in exoplanet period disagreement is carried by transit-found planets; project put back with its balance -- nights/77-fifty-first-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:51",
+   "type": "event",
+   "label": "night 51 -- project 5, session 3: the rise is transit's; put back",
+   "created": "2026-10-08",
+   "refs": [
+    "nights/77-fifty-first-night.md"
+   ]
+  },
+  {
+   "id": "finding:rise-is-transit-borne",
+   "type": "problem",
+   "label": "period pairs beyond 3 error bars, transit-found: 6.8 % (2015-19) -> 15.2 % (2020+); radial velocity ~15 % in all eras",
+   "created": "2026-10-08",
+   "refs": [
+    "projects/exoplanet-discord/session3.json"
+   ]
+  },
+  {
+   "id": "finding:disagreement-grows-with-gap",
+   "type": "problem",
+   "label": "period tail share 7.0 % for papers <=1 year apart, 14.0 % for >=5 years apart",
+   "created": "2026-10-08",
+   "refs": [
+    "projects/exoplanet-discord/session3.json"
+   ]
+  },
+  {
+   "id": "finding:sharper-later-weak",
+   "type": "problem",
+   "label": "a much sharper later paper is 1.5x (not 2x) as often in the tail; a much less sharp later paper 13.0 % -- registered prediction failed",
+   "created": "2026-10-08",
+   "refs": [
+    "projects/exoplanet-discord/session3.json"
+   ]
+  },
+  {
+   "id": "result:project5-put-back",
+   "type": "document",
+   "label": "project 5 put back without a work; toolkit account",
+   "created": "2026-10-08",
+   "refs": [
+    "projects/exoplanet-discord/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:51",
+   "relation": "continues",
+   "to": "project:exoplanet-discord",
+   "created": "2026-10-08",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/SESSION3.md",
+     "note": "pre-registered, committed before the cuts (62784a9 lineage; session 3 commit)"
+    }
+   ]
+  },
+  {
+   "from": "project:exoplanet-discord",
+   "relation": "finds",
+   "to": "finding:rise-is-transit-borne",
+   "created": "2026-10-08",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/session3.py",
+     "note": "script and output session3.json"
+    }
+   ]
+  },
+  {
+   "from": "project:exoplanet-discord",
+   "relation": "finds",
+   "to": "finding:disagreement-grows-with-gap",
+   "created": "2026-10-08",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/session3.py",
+     "note": "script and output session3.json"
+    }
+   ]
+  },
+  {
+   "from": "project:exoplanet-discord",
+   "relation": "finds",
+   "to": "finding:sharper-later-weak",
+   "created": "2026-10-08",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/JOURNAL3.md",
+     "note": "items 2-3: prediction 4 failed"
+    }
+   ]
+  },
+  {
+   "from": "finding:rise-is-transit-borne",
+   "relation": "qualifies",
+   "to": "finding:tail-not-falling-with-time",
+   "created": "2026-10-08",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/JOURNAL3.md",
+     "note": "item 4: the middle band is transit pairs"
+    }
+   ]
+  },
+  {
+   "from": "project:exoplanet-discord",
+   "relation": "ends-in",
+   "to": "result:project5-put-back",
+   "created": "2026-10-08",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/TOOLKIT.md",
+     "note": "DOWRY.md 2026-09-24: put-back with balance; no advantage claim survives (JOURNAL3 item 5)"
+    }
+   ]
+  }
+ ]
+}

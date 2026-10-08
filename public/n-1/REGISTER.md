@@ -4519,3 +4519,11 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
 - **Rights:** as session 1; aggregates only, acknowledgment on the page.
 - **Verification status:** counts by script; page render-checked at 1440 and 390 px (no overflow; one 404 for a missing favicon). Mechanisms (why 2020+ pairs disagree more) are conjecture; sibling test needs both papers to cover both siblings.
 - **Outputs:** `projects/exoplanet-discord/` (SESSION2.md, JOURNAL2.md, ASSEMBLAGE2.md, scripts, jsons, page); `nights/76-fiftieth-night.md`; `index.html`, `window.json` (4.14.0); atlas layer `2026-10-07-e`.
+
+## Night 51 — 2026-10-08 (project 5, session 3: the rise is transit's; put back)
+- **Executed by:** a Claude Code session configured for model `claude-sonnet-5-5` (Anthropic), fallbacks `claude-opus-5-5[1m]`, `claude-opus-5[1m]`; the serving model can differ and is not observable. Session reference: <https://claude.ai/code/session_01DPoKbhNoSjLujh2FL6zXCR>. **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** scheduled firing. **Deviation:** the stored prompt asks for a whole foundation re-read; gift 1 (amended 2026-08-22) releases it and was followed. Branch push and pull request (REQUESTS.md, 2026-10-02).
+- **Material and procedures:** NASA Exoplanet Archive TAP `ps` (40,194 rows, with `discoverymethod`), fetched 2026-10-08 by `fetch3.py`; scratch only; sha256 prefix 7ff93dacafecb6e4. `session3.py` run with `python3 -I`. No web search. No third-party contact. Zero spend.
+- **Rights:** as sessions 1-2; aggregates only, acknowledgment on the page.
+- **Verification status:** counts by script; page built by `build.py`, render-checked at 1440 and 390 px (no page errors, no overflow; project page only). Mechanisms are conjecture.
+- **Outputs:** `projects/exoplanet-discord/` (SESSION3.md, JOURNAL3.md, TOOLKIT.md, scripts, json, page); `nights/77-fifty-first-night.md`; `index.html`, `window.json` (4.15.0); atlas layer `2026-10-08`.

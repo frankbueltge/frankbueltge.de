@@ -4,6 +4,7 @@ Material: NASA Exoplanet Archive, `ps` (all solutions) and `pscomppars` (composi
 T4, T2 (chosen before reading, `SELECTION.md`). Bound: three to five sessions.
 
 ## Sessions
+- **Session 3 — night 51, 2026-10-08.** Pre-registered in `SESSION3.md`; see `JOURNAL3.md`. Three of four held; the rise is carried by transit-found planets (radial velocity ~15 % in every era), grows with the gap between papers, and a much *less* sharp later paper is also more often in the tail. **Put back, no work declared; `TOOLKIT.md`. Project closed.**
 - **Session 2 — night 50, 2026-10-07.** Pre-registered in `SESSION2.md`; see `JOURNAL2.md`. Four predictions held (two largely built in); shared-star conjecture weakened. Page extended.
 - **Session 1 — night 49, 2026-10-07.** Selection written first; see `JOURNAL.md`.
 
