@@ -8,10 +8,12 @@ import { WERKE, type Werk } from '@/data/werke'
 import type { ArchFacts } from '@/lib/arch/facts'
 import type { CycleState, PresentationEntry } from '@/lib/ecology/v3'
 import { READOUTS } from '@/lib/experiments/readouts'
-import { houseNames } from './house-feed'
+import type { RelayConvening } from '@/lib/ecology/convening'
+import { houseNames, sortFeed } from './house-feed'
 import {
   archSessionEntries,
   atlasEntries,
+  conveningEntries,
   cycleEntries,
   datasetEntries,
   INSTRUMENTS,
@@ -376,6 +378,7 @@ describe('the ecology: the cycle’s turn and the practices’ presentations', (
         href: '/ecology',
         withdrawn: false,
         voice: null,
+        seq: 40,
       },
     ])
   })
@@ -400,6 +403,112 @@ describe('the ecology: the cycle’s turn and the practices’ presentations', (
       ['2026-09-13', 'POINT AT ONE', 'ensemble', K.presentation],
       ['2026-09-07', S.facts.presentation(NAMING.frontDoor.ecologyLive.cycleLabel(2)), 'ulysses', K.presentation],
     ])
+  })
+})
+
+describe('the ecology: the convening between two cycles (2026-10-08)', () => {
+  const WON = 'What the archive refuses to count'
+  const inConvening = (objected: string | null = null, over: Partial<CycleState> = {}): CycleState => ({
+    cycle: 6,
+    phase: 'convening',
+    question: 'Missing Data Art, read through human extinction by AI',
+    source: 'continuing',
+    opened: '2026-10-07',
+    sessionsPerPractice: '3-5',
+    defaults: { atelier: 'a', field: 'f', studio: 's' },
+    continuing: { question: 'Missing Data Art', since: '2026-10-03' },
+    convening: { afterCycle: 6, opened: '2026-10-10', objected },
+    ...over,
+  })
+  const next = (source: CycleState['source'], question: string, opened = '2026-10-13'): CycleState => ({
+    ...inConvening(),
+    cycle: 7,
+    phase: 'working',
+    question,
+    source,
+    opened,
+    convening: null,
+  })
+  const relay = (talliedOn: string | null = '2026-10-12'): RelayConvening => ({
+    afterCycle: 6,
+    opened: '2026-10-10',
+    proposals: [],
+    rankings: [],
+    result: talliedOn ? { question: WON, proposedBy: 'studio', scores: { studio: 5, field: 3, atelier: 1 }, talliedOn, rule: 'borda' } : null,
+    skipped: 0,
+  })
+  const E = NAMING.frontDoor.ecologyLive
+  const result = (fate: Parameters<typeof S.facts.conveningResult>[0]['fate']) =>
+    S.facts.conveningResult({ question: E.question(WON), next: E.cycleLabel(7), fate })
+
+  it('files the convening under the day cycle.json says it opened, as the ecology’s turn', () => {
+    expect(conveningEntries(inConvening(), null, names)).toEqual([
+      {
+        date: '2026-10-10',
+        time: null,
+        source: 'cycle',
+        house: 'ecology',
+        houseName: names.ecology,
+        title: 'convening after cycle 006 opened',
+        fact: null,
+        kind: K.turn,
+        href: '/ecology#convening',
+        withdrawn: false,
+        voice: null,
+        seq: 61,
+      },
+    ])
+  })
+
+  it('files the tally under the day the relay tallied it, with the winning question and the day it opens', () => {
+    const rows = conveningEntries(inConvening(), relay(), names)
+    expect(rows[1]).toEqual({
+      date: '2026-10-12',
+      time: null,
+      source: 'cycle',
+      house: 'ecology',
+      houseName: names.ecology,
+      title: 'convening after cycle 006 tallied',
+      fact: `“${WON}” — opens cycle 007 on 2026-10-13 unless the architect objects`,
+      kind: K.tally,
+      href: '/ecology#convening',
+      withdrawn: false,
+      voice: null,
+      seq: 62,
+    })
+  })
+
+  it('says what became of the result as the record goes on: set aside, opened, or passed over', () => {
+    const tally = (c: CycleState) => conveningEntries(c, relay(), names).find((r) => r.title.endsWith('tallied'))!
+    expect(tally(inConvening('2026-10-12')).fact).toBe(result({ kind: 'set-aside', objected: '2026-10-12' }))
+    expect(tally(inConvening('2026-10-12')).fact).toBe(`“${WON}” — set aside by the architect’s objection of 2026-10-12`)
+    // once the next cycle opened, the convening is gone from cycle.json: the opened row goes with
+    // it, the tally stays (the relay keeps it) and leads to the cycle panel, not a vanished anchor
+    const onIt = conveningEntries(next('convening', WON), relay(), names)
+    expect(onIt.map((r) => r.title)).toEqual(['convening after cycle 006 tallied'])
+    expect(onIt[0]!.fact).toBe(`“${WON}” — opened cycle 007 on 2026-10-13`)
+    expect(onIt[0]!.href).toBe('/ecology')
+    expect(tally(next('continuing', 'Missing Data Art', '2026-10-17')).fact).toBe(
+      `“${WON}” — cycle 007 opened on another question on 2026-10-17`,
+    )
+    // further on, the record no longer says: the question alone, nothing guessed
+    expect(tally({ ...next('convening', WON), cycle: 8 }).fact).toBe(`“${WON}”`)
+    // and without a continuing question no clock opens it, so no day is promised
+    expect(tally(inConvening(null, { continuing: null })).fact).toBe(`“${WON}”`)
+  })
+
+  it('is an empty source without a convening or a result, and states no undated day', () => {
+    expect(conveningEntries(null, null, names)).toEqual([])
+    expect(conveningEntries(next('convening', WON), null, names)).toEqual([])
+    expect(conveningEntries(next('convening', WON), relay(null), names)).toEqual([])
+    expect(conveningEntries(inConvening(), relay(null), names).map((r) => r.title)).toEqual(['convening after cycle 006 opened'])
+    expect(conveningEntries(inConvening(null, { convening: { afterCycle: 6, opened: 'soon', objected: null } }), null, names)).toEqual([])
+  })
+
+  it('stands newest first when the ecology turns twice in a day: the tally above the opening it followed', () => {
+    const sameDay = conveningEntries(inConvening(null, { convening: { afterCycle: 6, opened: '2026-10-12', objected: null } }), relay(), names)
+    const ordered = sortFeed([...cycleEntries(inConvening(null, { opened: '2026-10-12' }), names), ...sameDay])
+    expect(ordered.map((r) => r.title)).toEqual(['convening after cycle 006 tallied', 'convening after cycle 006 opened', 'cycle 006 opened'])
   })
 })
 

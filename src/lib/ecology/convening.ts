@@ -262,6 +262,46 @@ export function standingResult(
   return relay.result
 }
 
+/**
+ * What became of a convening's result, as cycle.json states it (2026-10-08) — read by the signal
+ * log's tally row and by the architect's notice (convening-notice.ts), so the two never disagree:
+ *
+ *   · pending   — cycle.json is in that very convening, no objection sets the result aside, and a
+ *                 continuing question is set, so the clock opens the next cycle on it on `opensOn`
+ *   · set-aside — the architect's objection (`convening.objected`) covers it
+ *   · opened    — the next cycle opened on it (chosen in convening, on this very question)
+ *   · passed    — the next cycle opened on something else: a seed, the fallback, a hand
+ *   · unknown   — the record says nothing either way: the cycle has moved further, or no clock
+ *                 turns because no continuing question is set
+ *
+ * Null when the relay carries no result. The relay keeps a convening until a later one replaces it
+ * (research-ecology relay/README.md), so a result outlives its convening in the mirror — and its
+ * fate is then read from the cycle that followed, never assumed.
+ */
+export type ResultFate =
+  | { kind: 'pending'; opensOn: string }
+  | { kind: 'set-aside'; objected: string }
+  | { kind: 'opened'; opened: string }
+  | { kind: 'passed'; opened: string }
+  | { kind: 'unknown' }
+
+export function resultFate(cycle: CycleState, relay: RelayConvening): ResultFate | null {
+  const result = relay.result
+  if (!result) return null
+  const after = relay.afterCycle
+  if (cycle.phase === 'convening' && cycle.cycle === after && cycle.convening?.afterCycle === after) {
+    const objected = cycle.convening.objected
+    if (objected && result.talliedOn <= objected) return { kind: 'set-aside', objected }
+    return cycle.continuing ? { kind: 'pending', opensOn: opensOn(result) } : { kind: 'unknown' }
+  }
+  if (cycle.cycle === after + 1) {
+    return cycle.source === 'convening' && cycle.question === result.question
+      ? { kind: 'opened', opened: cycle.opened }
+      : { kind: 'passed', opened: cycle.opened }
+  }
+  return { kind: 'unknown' }
+}
+
 // ——— the convening, as /ecology shows it ————————————————————————————————————————————
 
 export interface ConveningView {

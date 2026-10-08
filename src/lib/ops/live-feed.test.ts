@@ -6,6 +6,7 @@ import consensusLatest from '@/data/consensus/latest.json'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { NAMING } from '@/config/naming'
 import { WERKE } from '@/data/werke'
+import { loadRelayExtras } from '@/lib/ecology/convening'
 import { loadArtifacts } from '@/lib/ecology/v3'
 import { READOUTS, type ReadoutId } from '@/lib/experiments/readouts'
 import { FEED_DEPTH, FEED_TOP, SOURCE_ORDER, streamOf, topOf, type SourceId } from './house-feed'
@@ -189,5 +190,41 @@ describe('nothing depends on the clock', () => {
 describe('the wording on the pages', () => {
   it('heads the log with the kicker the room has always had', () => {
     expect(NAMING.opsRoom.signal.kicker).toBe('SIGNAL LOG')
+  })
+})
+
+describe('the convening joins the ecology’s turns (2026-10-08)', () => {
+  it('reaches the stream from cycle.json and the relay, under the ecology’s own name', () => {
+    const rows = buildFeed({
+      cycle: {
+        cycle: 6,
+        phase: 'convening',
+        question: 'Missing Data Art, read through human extinction by AI',
+        source: 'continuing',
+        opened: '2026-10-07',
+        sessionsPerPractice: '3-5',
+        defaults: { atelier: 'a', field: 'f', studio: 's' },
+        continuing: { question: 'Missing Data Art', since: '2026-10-03' },
+        convening: { afterCycle: 6, opened: '2026-10-10', objected: null },
+      },
+      relayConvening: {
+        afterCycle: 6,
+        opened: '2026-10-10',
+        proposals: [],
+        rankings: [],
+        result: { question: 'What the archive refuses to count', proposedBy: 'studio', scores: {}, talliedOn: '2026-10-12', rule: 'borda' },
+        skipped: 0,
+      },
+    })
+    expect(rows.map((r) => [r.date, r.title])).toEqual([
+      ['2026-10-12', 'convening after cycle 006 tallied'],
+      ['2026-10-10', 'convening after cycle 006 opened'],
+      ['2026-10-07', 'cycle 006 opened'],
+    ])
+    expect(new Set(rows.map((r) => `${r.house}|${r.source}`))).toEqual(new Set(['ecology|cycle']))
+  })
+
+  it('reads the relay’s convening from the committed mirror, as /ecology does', () => {
+    expect(loadFeedInput().relayConvening).toEqual(loadRelayExtras().convening)
   })
 })

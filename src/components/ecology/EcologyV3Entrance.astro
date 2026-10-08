@@ -171,10 +171,11 @@ const blockClass: Record<string, string> = {
     }
 
     {/* The convening (2026-10-07): only while the house is in it. Every line is the relay's own
-        record, every date the one the cycle clock acts on (src/lib/ecology/convening.ts). */}
+        record, every date the one the cycle clock acts on (src/lib/ecology/convening.ts). Its id
+        is where the signal log's convening rows lead (live-sources.ts, conveningEntries). */}
     {
       conv && (
-        <div class="mt-5 border-t border-line pt-4">
+        <div class="mt-5 border-t border-line pt-4" id="convening">
           <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <h3 class={kicker}>{W.convening.kicker(conv.afterCycle)}</h3>
             <span class="font-mono text-mono text-fg-faint">{W.convening.openedLine(conv.opened)}</span>
