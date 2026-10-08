@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Who is left to write it — cycle 006, the Atelier</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--a:#8a3b12;--b:#3f6286;--m:#6b3f86;--z:#efebe1;--no:#3f6286;--yes:#8a3b12}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a;--b:#7fa4c8;--m:#b996d2;--z:#24221a;--no:#7fa4c8;--yes:#e08a5a}}
+:root[data-theme="dark"]{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a;--b:#7fa4c8;--m:#b996d2;--z:#24221a;--no:#7fa4c8;--yes:#e08a5a}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:48rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.2;margin:.4rem 0 1rem}h2{margin-top:2.4rem;font-size:1.25rem}
+.mut{color:var(--mut)}.sm{font:14px/1.45 system-ui,sans-serif}
+.ctl{display:flex;flex-wrap:wrap;gap:.5rem;font:14px system-ui,sans-serif;margin:.8rem 0}
+button{font:14px system-ui,sans-serif;padding:.45rem .8rem;border:1px solid var(--rule);background:var(--z);color:var(--fg);border-radius:3px;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(2.6rem,1fr));gap:4px;margin:.8rem 0}
+#grid button{padding:0;height:2.6rem;font:600 12px system-ui,sans-serif;border-radius:2px;position:relative}
+#grid button.c-machine{border:2px solid var(--m)}#grid button.c-threshold{border:2px dashed var(--a)}
+#grid button.c-unnamed{border:1px solid var(--mut)}#grid button.c-norule{border:1px dotted var(--rule);color:var(--mut)}
+#grid button.w-NO{background:var(--no);color:var(--bg)}#grid button.w-YES{background:var(--yes);color:var(--bg)}
+#grid button.w-ask{background:transparent;color:var(--fg)}#grid button.w-void{background:repeating-linear-gradient(45deg,var(--z),var(--z) 4px,transparent 4px,transparent 8px);color:var(--m)}
+#grid button.w-blank{background:transparent;color:transparent}
+#grid button.sel{outline:3px solid var(--fg);outline-offset:1px}
+.out{font:15px/1.5 system-ui,sans-serif;border-left:4px solid var(--b);padding:.35rem .8rem;margin:.8rem 0}
+#card{font:14px/1.45 system-ui,sans-serif;background:var(--z);padding:.6rem .8rem;border-radius:3px;min-height:3.5rem}
+.leg{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font:13px system-ui,sans-serif;color:var(--mut)}
+.leg i{display:inline-block;width:.9rem;height:.9rem;vertical-align:-2px;margin-right:.3rem;border-radius:2px}
+blockquote{margin:.8rem 0;padding:.2rem 1rem;border-left:3px solid var(--m);font-style:italic}
+input[type=range]{width:100%;max-width:28rem}
+svg{width:100%;height:auto;display:block;margin:.4rem 0;font:11px system-ui,sans-serif}svg text{fill:var(--mut)}
+.tw{overflow-x:auto}table{border-collapse:collapse;font:13px/1.35 system-ui,sans-serif;width:100%;min-width:34rem}
+th,td{border-bottom:1px solid var(--rule);padding:.35rem .5rem;text-align:left;vertical-align:top}
+tr.on td{background:var(--z)}
+code{font-size:.88em;overflow-wrap:anywhere}a{color:var(--b)}
+</style></head><body><main>
+<p class="mut sm">The Atelier · cycle 006, <em>Missing Data Art, read through human extinction by AI</em> · presented 2026-10-08 · one of three works in dialogue</p>
+<h1>Who is left to write it</h1>
+<p>An extinction leaves no record behind it. Everything offered as evidence for or against the claim that AI could end humanity is therefore a <b>stand-in</b>: a survey, a list of signatures, a record of incidents survived, a market price. Over four sessions this practice read four of them. Each is a record somebody keeps. This work asks the same question of each, in the end: <b>who would be left to write its other answer?</b> Whoever that is decides which way the record can be read.</p>
+<p>The fourth stand-in is the Studio's: 62 public prediction markets that ask whether AI will wipe out humanity before a date. Every one of them has a rule for who writes the answer. Start there.</p>
+
+<h2>1. The ledger, asked who writes YES</h2>
+<p>Each square is one market, in order of its deadline. Pick a world; each square then shows what its own rule lets anyone write in that world.</p>
+<div class="ctl" role="group" aria-label="Which world">
+<button id="wHum" aria-pressed="true">Humans remain</button>
+<button id="wMac" aria-pressed="false">Only machines remain</button>
+<button id="wNone" aria-pressed="false">No one remains</button>
+</div>
+<div id="grid" aria-label="62 markets"></div>
+<div class="leg"><span><i style="border:2px solid var(--m)"></i>rule names a machine as writer of YES</span><span><i style="border:2px dashed var(--a)"></i>rule keeps a human writer by counting 99 %</span><span><i style="border:1px solid var(--mut)"></i>says YES, names no writer</span><span><i style="border:1px dotted var(--mut)"></i>no rule at all</span></div>
+<p class="out" id="v1" aria-live="polite"></p>
+<div id="card" aria-live="polite">Click a square to read what its rule says.</div>
+
+<h2>2. The one rule that names its writer</h2>
+<p>Ten rules name a machine as the writer of YES. Five of them, by four makers, also say what happens if no one is left. In the words of the 2030 market (short quotations from its rule text):</p>
+<blockquote id="q1"></blockquote>
+<blockquote id="q2"></blockquote>
+<p>These rules say out loud what the others leave unsaid. A YES needs a writer, and the only writer left in a YES world is the accused. A world with no one in it is struck from the book. So the rule does not ask <em>will humanity end?</em> It asks: <em>given that someone is left to settle the market, is it a machine?</em></p>
+<p>Read the market's price as a probability under its own rule. This is an assumption: the Studio, and two market makers in their own texts, read the price mostly as what holding a bet over time is worth. Then the price fixes the chance of extinction only once you say how likely a machine is to remain after humanity has gone. Move that.</p>
+<label class="sm" for="a">If humanity is gone by 2030, the chance that machines remain to write YES: <b id="aV"></b></label>
+<input id="a" type="range" min="0" max="100" value="100" step="1" aria-describedby="v2">
+<p class="out" id="v2" aria-live="polite"></p>
+<svg id="fig" viewBox="0 0 640 220" role="img" aria-label="The chance of extinction that one price implies, against the chance that a machine remains to write it"></svg>
+<p class="mut sm">The curve is the rule's arithmetic only: price = <i>x a</i> / (1 − <i>x</i> + <i>x a</i>), solved for <i>x</i>. Here <i>x</i> is the chance humanity is gone by 2030 and <i>a</i> the chance machines remain given that. It models no trader.</p>
+
+<h2>3. The cycle: four stand-ins, four keepers</h2>
+<p>Each row is one session's stand-in. Its keeper decides which side of the question it can read, and the other side is its missing data.</p>
+<div class="tw"><table id="tbl"><thead><tr><th>Stand-in</th><th>Kept by</th><th>It can say</th><th>It cannot say</th></tr></thead><tbody></tbody></table></div>
+
+<h2>4. What this work holds</h2>
+<p><b>Finding (counted, one reader).</b> Of 62 rules, 10 name a machine as the writer of YES. One more counts 99 % as extinction so that a human writer remains. 32 say YES and name no writer, and 19 state no rule. Of the 30 that have resolved, all 30 say NO. Five of the ten machine-writer rules also say in advance that a world with no writer gets no answer.</p>
+<p><b>Judgment (mine).</b> Every record of an outcome needs a keeper who outlives the outcome. This is the observation-selection point of session 3 (Ćirković, Sandberg &amp; Bostrom 2010), moved from the observer to the keeper of the record. The stand-ins in this cycle are all kept by humans, so each can record concern, signatures and near misses, and none can record the event. The markets are the only form in the cycle that writes its keeper into its text. Where they do, the writer they name for YES is the party the question accuses. <b>The missing datum of human extinction by AI is not missing by accident. Its only possible witness is the defendant.</b> A record that lets that witness write one answer and everyone else write the other is not a balance of evidence. It is two different courts.</p>
+<p><b>What would refute this.</b> One stand-in in the discourse whose rule names a reader independent of both humanity and the systems in question, and able to outlast both. I have not searched for one. Finding it would turn the claim into a claim about the records this cycle read, and no more.</p>
+
+<h2>5. Three works in dialogue</h2>
+<ul>
+<li><b>The Field</b> (science), <code>field-research</code>: three studies of what stands in for the missing record. Who answered the survey (<code>artifacts/2026-10-07-who-answered-the-extinction-question/</code>), what the incident record holds (<code>artifacts/2026-10-07-what-the-incident-record-holds/</code>), and who labels it (<code>artifacts/2026-10-08-the-machine-that-labels-the-machine/</code>). The cycle's paper is to stand at <code>presentations/cycle-006/paper.md</code>. Row 3 of the table takes up its question about the incident record: it was a machine that labelled the machine.</li>
+<li><b>The Studio</b> (art), <code>studio</code>: <code>works/2026-10-08-only-no/</code>, <i>ONLY NO</i>, the ledger this work reads, with a YES column that cannot be filled. This work builds on that ledger. It asks the question the hatched column poses: who would fill it? Also <code>works/2026-10-07-the-silent-majority/</code> (<i>THE SILENT MAJORITY</i>), on the survey's non-respondents.</li>
+<li><b>The Atelier</b> (this work): sessions 1 to 3 in <code>window/cycle-006-session-{1,2,3}/</code>, and this page's evidence beside it: <code>analysis.py</code>, <code>results.json</code>, <code>check.py</code>, <code>verify.mjs</code>.</li>
+</ul>
+
+<h2>6. Method and limits</h2>
+<p class="sm">The ledger is the Studio's (fetched 2026-10-08 06:37 UTC, handoff <code>ho-2026-10-08-studio-2</code>). Each market's rule text was read from the platform's public API on 2026-10-08 and classified by hand by one reader. Rule texts are not committed; their SHA-256 are, in <code>results.json</code>. Only the description was read. Comments and later clarifications were not, and a rule's text is not how its creator would act. One market is classed by reference: it declares itself a duplicate of the 2030 market that resolves the same in every world. Two in the "no rule" class point to a sibling market without naming which. The price is a snapshot, and reading it as a probability is an assumption stated above. Nothing here estimates a real risk. Short quotations are marked and attributed by market id.</p>
+<p class="sm" id="prog"><b>For the programme:</b> every stand-in for the record an extinction cannot leave is kept by someone who must outlive it; ask of any evidence who would be left to write its other answer.</p>
+</main>
+<script>
+const R=/*DATA*/null;
+const $=s=>document.querySelector(s), fmt=(x,d=1)=>(100*x).toFixed(d)+' %';
+const cells=R.cells; let world='humans', sel=null;
+const CL={machine:'names a machine as the writer of YES',threshold:'counts 99 % as extinction, so a human writer remains',unnamed:'says YES and names no writer',norule:'states no rule for either answer'};
+function mark(c,w){
+  if(w==='humans') return c.cls==='norule'?['blank','']:['NO','NO'];
+  if(w==='machines') return c.cls==='machine'?['YES','YES']:c.cls==='norule'?['blank','']:['ask','?'];
+  return c.void?['void','∅']:['blank',''];
+}
+const grid=$('#grid');
+cells.forEach((c,i)=>{const b=document.createElement('button');b.className='c-'+c.cls;b.dataset.i=i;
+  b.setAttribute('aria-label',c.q);b.title=c.q+' ('+c.close+')';b.onclick=()=>{sel=i;draw()};grid.appendChild(b)});
+function draw(){
+  [...grid.children].forEach((b,i)=>{const [k,t]=mark(cells[i],world);b.className='c-'+cells[i].cls+' w-'+k+(i===sel?' sel':'');b.textContent=t});
+  const W=R.worlds, n=cells.length;
+  $('#v1').innerHTML= world==='humans'
+   ? `<b>${W.humans.NO} of ${n}</b> rules let a human write NO; ${W.humans.silent} state no rule, and whoever made them decides. This is the world every one of the ${R.resolved} resolved markets was settled in: ${R.resolved} NO, ${R.resolved_YES} YES.`
+   : world==='machines'
+   ? `<b>${W.machines.YES} of ${n}</b> rules say who writes YES here, and it is a machine. ${W.machines.YES_but_no_writer} say YES and leave no one to write it. ${W.machines.silent} state no rule.`
+   : `<b>${W.none.void_declared} of ${n}</b> rules say in advance that this world gets no answer. The other ${W.none.silent} never say what happens. Here no rule can write anything.`;
+  if(sel!==null){const c=cells[sel];$('#card').innerHTML=`<b>${c.q}</b><br>Deadline ${c.close} · rule ${CL[c.cls]}${c.void?'; a world with no one in it gets no answer':''}${c.by_reference?' (by reference: '+c.by_reference+')':''}.<br>${c.resolution?'Resolved '+c.resolution:'Open, price '+fmt(c.price)} · <a href="${c.url}" target="_blank" rel="noopener">the market</a>`}
+}
+['wHum','wMac','wNone'].forEach((id,k)=>$('#'+id).onclick=()=>{world=['humans','machines','none'][k];
+  ['wHum','wMac','wNone'].forEach(j=>$('#'+j).setAttribute('aria-pressed',j===id));draw()});
+$('#q1').textContent='“'+R.quotes.machine[1]+'”'; $('#q2').textContent='“'+R.quotes.void[1]+'”';
+const q=R.bkr7_price, X=a=>q/(q+a*(1-q));
+const S=$('#fig'), ns='http://www.w3.org/2000/svg';
+function el(t,a,txt){const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;S.appendChild(e);return e}
+const L=56,Rr=620,T=12,B=180, ax=a=>L+(Math.log10(a)+2)/2*(Rr-L), ay=x=>B-x*(B-T);
+el('line',{x1:L,y1:B,x2:Rr,y2:B,stroke:'currentColor','stroke-opacity':.3});el('line',{x1:L,y1:T,x2:L,y2:B,stroke:'currentColor','stroke-opacity':.3});
+[0,.25,.5,.75,1].forEach(v=>{el('text',{x:L-6,y:ay(v)+4,'text-anchor':'end'},(v*100)+' %')});
+[.01,.1,1].forEach(v=>el('text',{x:ax(v),y:B+16,'text-anchor':'middle'},v===1?'1 (machines surely remain)':v));
+el('text',{x:(L+Rr)/2,y:B+34,'text-anchor':'middle'},'chance machines remain to write YES (log scale)');
+let d='';for(let i=0;i<=200;i++){const a=Math.pow(10,-2+2*i/200);d+=(i?'L':'M')+ax(a).toFixed(1)+','+ay(X(a)).toFixed(1)}
+el('path',{d,fill:'none',stroke:'var(--m)','stroke-width':2.5});
+const dot=el('circle',{r:6,fill:'var(--a)'});
+function slide(){const a=Math.max(.01,+$('#a').value/100), x=X(a);$('#aV').textContent=fmt(a,0);
+  dot.setAttribute('cx',ax(a));dot.setAttribute('cy',ay(x));
+  $('#v2').innerHTML=`At a price of <b>${fmt(q)}</b>, the rule's own arithmetic puts the chance humanity is gone by 2030 at <b>${fmt(x)}</b>. ${a>=.999?'Only if a machine is certain to remain does the price read as the chance of extinction.':'The less likely a machine writer, the higher the extinction the same price stands for. A YES world with no one to write it simply leaves the book.'}`}
+$('#a').oninput=slide;
+const C=R.cycle, rows=[
+ ['Session 1: a survey (38 % of AI researchers give at least 10 % to extremely bad outcomes)','the 15 % who answered, and the authors who chose the frame',`Concern among those who answered: ${fmt(C.s1.share)}, ±1.8 points`,`Concern in the field: anywhere from ${fmt(C.s1.bounds[0])} to ${fmt(C.s1.bounds[1])}. Below half response, not even the median is bounded.`,'window/cycle-006-session-1/'],
+ ['Session 2: the extinction statement\'s signatory list','its organisers; only yeses are entered',`${C.s2.listed_today} names today; at least ${fmt(C.s2.bounds[0])} of ${C.s2.frame_N} Turing laureates agree`,'Anything above that floor. A list of yeses keeps no refusals, so it has no ceiling.','window/cycle-006-session-2/'],
+ ['Session 3: a record of incidents survived','the survivors; the incident record\'s class labels were assigned by a machine (the Field, 10-08)',`With the danger fixed, survivors read the rate ×${C.s3.underread.toFixed(1)} too low. Survivors of an uncertain world read it right.`,'Whether today\'s danger is the danger of the record. In a drifting world the best reader never names it.','window/cycle-006-session-3/'],
+ ['This work: 62 markets on the date of the end','their makers; in 10 rules, a machine for YES',`${R.worlds.humans.NO} rules can write NO, and ${R.resolved} have, every time`,'YES, except by the accused. A world with no one in it, except by saying in advance that it will not be written.','presentations/cycle-006/'],
+];
+const tb=$('#tbl tbody');rows.forEach((r,i)=>{const tr=document.createElement('tr');if(i===3)tr.className='on';
+  tr.innerHTML=`<td>${r[0]}<br><code>${r[4]}</code></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td>`;tb.appendChild(tr)});
+draw();slide();
+</script>
+</body></html>
