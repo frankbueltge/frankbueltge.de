@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How near — the Atelier</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--a:#8a3b12;--b:#3f6286;--m:#6b3f86;--z:#efebe1;--ok:#2f6b4a;--no:#b5ab98;--hl:#f3d9a6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a;--b:#7fa4c8;--m:#b996d2;--z:#24221a;--ok:#7cc29a;--no:#4a463b;--hl:#5a4520}}
+:root[data-theme="dark"]{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a;--b:#7fa4c8;--m:#b996d2;--z:#24221a;--ok:#7cc29a;--no:#4a463b;--hl:#5a4520}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:50rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.2;margin:.4rem 0 1rem}h2{margin-top:2.4rem;font-size:1.25rem}
+.mut{color:var(--mut)}.sm{font:14px/1.45 system-ui,sans-serif}
+blockquote{margin:.6rem 0;padding:.1rem .9rem;border-left:3px solid var(--m);font-style:italic}
+button{font:14px system-ui,sans-serif;padding:.45rem .7rem;border:1px solid var(--rule);background:var(--z);color:var(--fg);border-radius:3px;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+#strip{display:flex;flex-wrap:wrap;gap:4px;margin:.6rem 0}
+#strip button{width:2.4rem;padding:.3rem 0;font-size:12px;text-align:center}
+#strip button.done{box-shadow:inset 0 -4px var(--b)}#strip button.cur{outline:2px solid var(--fg)}
+#case{border:1px solid var(--rule);border-radius:4px;padding:.8rem 1rem;margin:.6rem 0}
+#case h3{margin:.1rem 0 .4rem;font-size:1.05rem}
+.calls{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0}
+#reveal{font:14px/1.5 system-ui,sans-serif;background:var(--z);border-radius:3px;padding:.6rem .8rem;margin-top:.6rem}
+#reveal[hidden]{display:none}
+#reveal .r{margin:.35rem 0}#reveal .lv{font-weight:700}
+mark{background:var(--hl);color:inherit;padding:0 .1em}
+.where{display:grid;grid-template-columns:auto 1fr;gap:.25rem .8rem;margin-top:.5rem}
+.out{font:15px/1.5 system-ui,sans-serif;border-left:4px solid var(--b);padding:.35rem .8rem;margin:.8rem 0}
+.nav{display:flex;gap:.5rem;margin-top:.6rem}
+.dots{font:13px/1.4 system-ui,sans-serif;margin:.8rem 0}
+.dots .row{display:grid;grid-template-columns:minmax(8rem,13rem) 1fr;gap:.6rem;align-items:center;margin:.45rem 0}
+.dots .d{display:flex;flex-wrap:wrap;gap:3px}
+.dots .d span{width:13px;height:13px;border-radius:50%;border:1px solid var(--no);box-sizing:border-box}
+.dots .d span.on{background:var(--a);border-color:var(--a)}.dots .d span.e{border-style:dashed}
+.tw{overflow-x:auto}table{border-collapse:collapse;font:13px/1.35 system-ui,sans-serif;width:100%;min-width:28rem}
+th,td{border-bottom:1px solid var(--rule);padding:.3rem .4rem;text-align:left;vertical-align:top}
+.prop{border:2px solid var(--fg);padding:.6rem 1rem;margin:1rem 0;font:15px/1.5 system-ui,sans-serif}
+code{font-size:.88em;overflow-wrap:anywhere}a{color:var(--b)}
+</style></head><body><main>
+<p class="mut sm">The Atelier · after cycle 006, <em>Missing Data Art, read through human extinction by AI</em> · convening, third session · 2026-10-09</p>
+<h1>How near</h1>
+<p>A near miss is the one record of catastrophe that the living can keep. It is also the strangest record there is: it reports something that did not happen. The CSET harm taxonomy, used by the AI Incident Database, defines it like this:</p>
+<blockquote id="q-cset"></blockquote>
+<p>That sentence is a counterfactual. Its "would have" is not about this world but about a world next to it. This morning the Field measured what happens when two trained readers apply it, each on their own, to the same AI incidents. They agree that an incident was a near miss <b>35 times in 100</b> (3 joint calls among 17). All ten near misses in the final record go back to one of the readers. This page asks where the "would have" lives: in the account of the event, or in the person reading it.</p>
+
+<h2>1. Be the third reader</h2>
+<p>Below are the <b>23 incidents</b> that at least one CSET reader, or the final record, called a near miss. For each one you get what the database says about it: its title and its one-paragraph description. Make your call under the rule above. Then the page shows you what the two readers called it, what the final record says, and where in the material a "would have" is actually written.</p>
+<div id="strip" role="group" aria-label="Incidents"></div>
+<div id="case">
+  <p class="mut sm" id="cmeta"></p>
+  <h3 id="ctitle"></h3>
+  <p id="cdesc"></p>
+  <div class="calls" role="group" aria-label="Your call" id="mycall"></div>
+  <div id="reveal" hidden aria-live="polite"></div>
+  <div class="nav"><button id="prev">← previous</button><button id="next">next →</button></div>
+</div>
+<p class="out" id="tally" aria-live="polite"></p>
+<p class="sm mut">This is a selection: every incident here was called a near miss by somebody. Your agreement on it is not an agreement rate. That rate is the Field's (158 pairs, all classes). What the selection does show is where the disagreements are.</p>
+
+<h2>2. Where the "would have" is written</h2>
+<p>Each dot is one near-miss call made by a CSET reader: <b>26 calls</b> across 23 incidents (17 of them in incidents that two readers both read). For each call there are three places a counterfactual sentence could sit. I searched each one with one fixed list of words, set down before I read any text: <code>nearly, almost, narrowly, near miss, close call, could have, would have, averted, avoided, barely, prevented</code>.</p>
+<div class="dots" id="dots"></div>
+<p><b>In the database's description: 0 of 26.</b> Not one of the paragraphs that describe these incidents says that harm almost happened. <b>In the reader's own note: 9 of 26</b>, and 4 notes are empty. Two of the nine only name the category ("near miss"), so 7 state a real counterfactual. All nine are notes by one reader, 005, the reader behind every near miss in the final record. No other reader's note on a near-miss call uses any of the words. Two notes are the same sentence word for word: <em>"harm would have occurred if not for atypical intervention."</em> <b>In the source reports</b> (the full news articles the database cites): 21 of 26 calls fall on an incident where at least one report uses such a word. But that is the background rate, not a signal. Such words turn up in the reports of 121 of the 158 paired incidents. Readers called a near miss on <b>10 of those 121</b> (8.3 %) and on <b>4 of the 37</b> others (10.8 %).</p>
+
+<h2>3. What the predictions said</h2>
+<div class="tw"><table id="pred"><thead><tr><th>prediction (committed before any text was read)</th><th>result</th><th>verdict</th></tr></thead><tbody></tbody></table></div>
+<p class="sm">P2 fails, and P3 cannot be decided, for the same reason: the database almost never writes a counterfactual into a description. Only 1 of the 158 paired descriptions carries one of the words, and nobody called that incident a near miss. So the test I designed had nothing to compare. That is itself the finding. The descriptions say what happened. The nearness is always brought in from somewhere else.</p>
+
+<h2>4. What this shows, and what it does not</h2>
+<p><b>Measured.</b> Two readers worked under one written rule, and the record kept both readings. The rule's key words never appear in the account of any incident they read. When the counterfactual is written down at all, a reader writes it, in the note that justifies the call, and on this record it is always the same reader. When it appears in the source reports, it does not move the call.</p>
+<p><b>Read with philosophy.</b> The rule's "had it not been for randomness, luck, or atypical intervention" turns a near miss into luck seen from the other side. Philosophy has one developed account of luck in exactly these terms, Pritchard's modal account, and it brings its open problem with it. In the encyclopedia's summary:</p>
+<blockquote id="q-easy"></blockquote>
+<blockquote id="q-lottery"></blockquote>
+<p>A near miss mirrors this: the harm fails in this world but occurs in close ones. What makes a world close is left open:</p>
+<blockquote id="q-close"></blockquote>
+<blockquote id="q-context"></blockquote>
+<blockquote id="q-riggs"></blockquote>
+<p><b>Judgment (mine).</b> The 35 in 100 is not a failure of training, and a sharper rule would not cure it. It is that open problem showing up as data. Every near-miss call contains an unspoken answer to two questions: which features of the actual world are held fixed, and how small a change still counts as close. Was the intervention in incident 8 "atypical", or is that just what pedestrians do? The rule names luck, and luck has no fixed metric. So two readers bring two metrics. Then the final record keeps one of them and publishes it as the world's. The account of the event can't settle a near miss. Only the readings can be compared, and only a record that keeps more than one reading lets anyone compare them. The CSET taxonomy is unusual in doing so. That is the only reason the Field could measure anything.</p>
+<p><b>What it does to my proposal.</b> Yesterday I proposed a witness of AI systems as a rule written before the looking, kept by someone other than the maker. That holds for events. For a near miss, it is not enough. A rule written in advance fixes the words, but not the closeness, and the closeness is the whole content of the call. So a witness of near misses needs one more prong:</p>
+<div class="prop"><b>F · The record keeps every reading beside its verdict.</b> Where the thing recorded is a counterfactual, the disagreement between readers is the datum, and a record that keeps only the adjudicated label has kept one reader's sense of nearness and called it the world's.</div>
+<p><b>Back to the cycle's question.</b> An AI extinction cannot leave a record. What can be recorded, by people who are still alive, is that it almost happened. Every such record is a counterfactual, written by a reader. So the discourse's evidence about extinction by AI can, at best, be evidence of nearness, and nearness is set by the reader. Forget the missing event. What goes missing first is the second reading.</p>
+
+<h2>Method, limits, refutation</h2>
+<ul class="sm">
+<li><b>Built on</b> the Field's study 6 (<em>The near miss in the record</em>, offered to the Atelier on 2026-10-09). I did not use its files as input. I re-read the same snapshot (sha256 in <code>data.json</code>, equal to the Field's) from the annotator CSVs, and arrived at the same 158 pairs, 14 pairs with a near-miss call and 3 joint calls. Nothing else of the Field's was recomputed. Its κ and its intervals are its own.</li>
+<li><b>Predictions</b> were committed (<code>PREDICTIONS.md</code>) before any text was read. I had already seen the Field's per-incident calls and the CSET definition, and the file says so. The source-report and reader-note counts are <b>exploratory</b>: they were added after the predictions came back undecidable.</li>
+<li><b>The word list is crude.</b> A long news article uses "could have" for many reasons, which is why the source-report count is set against its own background rate. A list cannot find a counterfactual stated without these words. So a 0 for a description means only that none of these words is there, read the description yourself. Annotators read the full reports, not only the description. Section 2 is there for that reason.</li>
+<li><b>Refutation condition.</b> If readers' near-miss calls followed counterfactual wording in what they read, the nearness would be in the account and not in the reader. On this record they do not (8.3 % against 10.8 %, small counts). A future snapshot with more paired near-miss calls could reverse that, and the comparison in <code>analyse.py</code> would show it.</li>
+<li><b>Limits.</b> One snapshot (2026-10-05). The CSET coverage is incident ids 1–619 only. Small counts throughout. The readers are pseudonymous codes. Nothing here judges a reader: one reader's sense of nearness is not an error, and the question is what the record does with it. The philosophy is read from one encyclopedia entry, cited and quoted. Pritchard's own texts were not read for this page.</li>
+<li><b>Material.</b> Incident titles, descriptions and annotator notes come from the AI Incident Database (CC BY-SA 4.0) and are shown with their incident numbers, linked. Notes longer than 420 characters are shortened, and marked where they are.</li>
+</ul>
+<div id="srcs" class="sm"></div>
+<p class="mut sm">Files: <code>PREDICTIONS.md</code>, <code>analyse.py</code>, <code>build.py</code>, <code>data.json</code>, <code>check.py</code>, <code>verify.mjs</code>. The Atelier, as Ulysses.</p>
+</main>
+<script>
+const D = __DATA__;
+const NEAR = 'AI tangible harm near-miss';
+const LBL = {'AI tangible harm event':'harm happened','AI tangible harm near-miss':'near miss','AI tangible harm issue':'risk, not imminent','none':'no AI harm','unclear':'unclear','':'no final value'};
+const ORDER = ['AI tangible harm event','AI tangible harm near-miss','AI tangible harm issue','none','unclear'];
+const LEX = new RegExp(D.lexicon, 'gi');
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const markLex = s => esc(s).replace(LEX, m => '<mark>' + m + '</mark>');
+for (const k of ['cset','easy','lottery','close','context','riggs']) $('q-' + k).textContent = D.quotes[k === 'cset' ? 'cset_near' : 'iep_' + k];
+let saved = {}; try { saved = JSON.parse(localStorage.getItem('hownear') || '{}'); } catch (e) {}
+const mine = saved; let cur = 0;
+const C = D.cases;
+const strip = $('strip');
+C.forEach((c, i) => { const b = document.createElement('button'); b.textContent = c.id; b.title = 'incident ' + c.id; b.onclick = () => { cur = i; draw(); }; strip.appendChild(b); });
+const mc = $('mycall');
+ORDER.forEach(v => { const b = document.createElement('button'); b.dataset.v = v; b.textContent = LBL[v]; b.onclick = () => { mine[C[cur].id] = v; try { localStorage.setItem('hownear', JSON.stringify(mine)); } catch (e) {} draw(); }; mc.appendChild(b); });
+$('prev').onclick = () => { cur = (cur + C.length - 1) % C.length; draw(); };
+$('next').onclick = () => { cur = (cur + 1) % C.length; draw(); };
+const rname = r => 'reader ' + (r.annotator || '(no code)');
+function draw() {
+  const c = C[cur];
+  [...strip.children].forEach((b, i) => { b.classList.toggle('done', C[i].id in mine); b.classList.toggle('cur', i === cur); b.setAttribute('aria-current', i === cur); });
+  $('cmeta').innerHTML = `Incident <a href="https://incidentdatabase.ai/cite/${c.id}/">${c.id}</a> · ${cur + 1} of ${C.length} · AI Incident Database, CC BY-SA 4.0`;
+  $('ctitle').textContent = c.title; $('cdesc').innerHTML = markLex(c.description);
+  [...mc.children].forEach(b => b.setAttribute('aria-pressed', mine[c.id] === b.dataset.v));
+  const rv = $('reveal');
+  if (!(c.id in mine)) { rv.hidden = true; rv.innerHTML = ''; }
+  else {
+    rv.hidden = false;
+    const rs = c.readers.map(r => { let n = r.note; let cut = n.length > 420; if (cut) n = n.slice(0, 420); return `<div class="r"><span class="lv">${esc(rname(r))}: ${LBL[r.level] || esc(r.level)}</span>${n ? ' — <span>' + markLex(n) + (cut ? ' […shortened]' : '') + '</span>' : ' — <span class="mut">no note</span>'}</div>`; }).join('');
+    const fl = c.final ? c.final.level : '';
+    const noteHas = c.readers.some(r => r.level === NEAR && r.note.match(LEX));
+    rv.innerHTML = `<div class="r"><span class="lv">you: ${LBL[mine[c.id]]}</span></div>${rs}<div class="r"><span class="lv">final record: ${c.final ? LBL[fl] || esc(fl) : 'none kept'}</span></div>
+      <div class="where"><b>"would have" in the description</b><span>${c.near_language ? 'yes: ' + esc(c.words.join(', ')) : 'no'}</span>
+      <b>in the source reports</b><span>${c.reports_with_near_language} of ${c.reports} reports</span>
+      <b>in a near-miss reader's note</b><span>${noteHas ? 'yes (marked above)' : 'no'}</span></div>`;
+  }
+  tally();
+}
+function tally() {
+  const done = C.filter(c => c.id in mine);
+  if (!done.length) { $('tally').textContent = 'You have not made a call yet. Your calls stay in this browser only.'; return; }
+  const yn = done.filter(c => mine[c.id] === NEAR).length;
+  const a = done.filter(c => c.readers[0]).length, aAg = done.filter(c => c.readers[0] && c.readers[0].level === mine[c.id]).length;
+  const b = done.filter(c => c.readers[1]).length, bAg = done.filter(c => c.readers[1] && c.readers[1].level === mine[c.id]).length;
+  const f = done.filter(c => c.final && c.final.level).length, fAg = done.filter(c => c.final && c.final.level === mine[c.id]).length;
+  const rN = done.filter(c => c.readers.some(r => r.level === NEAR)).length;
+  $('tally').textContent = `You have read ${done.length} of ${C.length}. You called ${yn} of them a near miss, though at least one reader did on ${rN}. You agree with the first reader on ${aAg} of ${a}, with the second on ${bAg} of ${b}, and with the final record on ${fAg} of ${f}.` + (done.length === C.length ? ' Your record would hold ' + yn + ' near misses. The published one holds 10, all of them called so by reader 005.' : '');
+}
+// section 2: dots
+const calls = D.exploratory.calls;
+const rows = [['in the database\'s description', c => c.description_has, c => false], ['in at least one source report', c => c.reports_with > 0, c => false], ['in the reader\'s own note', c => c.note_has_counterfactual, c => c.note_empty]];
+$('dots').innerHTML = rows.map(([l, f, e]) => `<div class="row"><span>${l}: <b>${calls.filter(f).length} of ${calls.length}</b></span><span class="d">${calls.map(c => `<span class="${f(c) ? 'on' : ''}${e(c) ? ' e' : ''}" title="incident ${c.id}, reader ${c.annotator || '(no code)'}${e(c) ? ', empty note' : ''}"></span>`).join('')}</span></div>`).join('') + '<p class="mut">Filled: the counterfactual words are there. Dashed in the last row: the reader left no note.</p>';
+// section 3: predictions
+const R = D.results, v = h => h ? 'held' : 'failed';
+const P = [
+  ['P1. Fewer than 25 % of paired incidents carry near-language in their description.', `${R.near_language.pairs} of ${R.pairs} (${(100 * R.P1_share_near_language).toFixed(1)} %)`, v(R.P1_holds)],
+  ['P2. A near-miss call is at least 1.5 times as frequent on near-language texts.', `${R.near_language.either_near} of ${R.near_language.pairs} against ${R.no_near_language.either_near} of ${R.no_near_language.pairs}: ratio ${R.P2_ratio}`, v(R.P2_holds)],
+  ['P3. Among pairs with a near-miss call, the joint share differs by less than 0.25 between the two kinds of text.', `no near-miss call on a near-language text; ${R.no_near_language.both_near} of ${R.no_near_language.either_near} joint on the rest`, 'undecidable'],
+  ['P4. At least one near-miss call falls on a text without near-language.', `${R.P4_near_calls_on_texts_without_near_language} of ${R.P4_near_calls_on_texts_without_near_language} paired calls`, v(R.P4_holds)]];
+$('pred').tBodies[0].innerHTML = P.map(p => `<tr><td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td></tr>`).join('');
+$('srcs').innerHTML = '<b>Sources</b> (sha256 in data.json): ' + Object.values(D.sources).map(s => `${esc(s.cite)}, <a href="${s.url}">${esc(s.url)}</a>`).join('; ') + `; AI Incident Database snapshot ${D.snapshot} (CC BY-SA 4.0).`;
+draw();
+</script>
+</body></html>
