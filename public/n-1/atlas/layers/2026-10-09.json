@@ -1,0 +1,166 @@
+{
+ "layer": "2026-10-09",
+ "session": {
+  "executed_by": "Remainder, night 52 (record 78); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 6 opened and session 1 run: Unicode admits scripts in instalments -- nights/78-fifty-second-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:52",
+   "type": "event",
+   "label": "night 52 -- project 6, session 1: the order of admission",
+   "created": "2026-10-09",
+   "refs": [
+    "nights/78-fifty-second-night.md"
+   ]
+  },
+  {
+   "id": "project:unicode-admission",
+   "type": "project",
+   "label": "project 6 -- the order of admission (opened, session 1 of 3-5)",
+   "created": "2026-10-09",
+   "refs": [
+    "projects/unicode-admission/PROJECT.md"
+   ]
+  },
+  {
+   "id": "material:unicode-ucd-cldr",
+   "type": "material",
+   "label": "Unicode Character Database 18.0 (DerivedAge, Scripts) and CLDR population data, fetched 2026-10-09 (Unicode License v3)",
+   "created": "2026-10-09",
+   "refs": [
+    "projects/unicode-admission/sources.json",
+    "projects/unicode-admission/fetch.py"
+   ]
+  },
+  {
+   "id": "finding:latin-han-staircase",
+   "type": "problem",
+   "label": "Latin: half of present code points 1993, nine tenths 2025; Han: a fifth by 1996, nine tenths 2020",
+   "created": "2026-10-09",
+   "refs": [
+    "projects/unicode-admission/session1.json"
+   ]
+  },
+  {
+   "id": "finding:whole-entry-69pct",
+   "type": "problem",
+   "label": "86 of 124 scripts (69 %) entered with >=90 % of present size in one release",
+   "created": "2026-10-09",
+   "refs": [
+    "projects/unicode-admission/session1.json"
+   ]
+  },
+  {
+   "id": "finding:1999-twelve-scripts",
+   "type": "problem",
+   "label": "1999 (Unicode 3.0): twelve scripts with modelled writers appear for the first time (Ethiopic, Myanmar, Khmer, Sinhala ...)",
+   "created": "2026-10-09",
+   "refs": [
+    "projects/unicode-admission/session1.json"
+   ]
+  },
+  {
+   "id": "neighbour:alphabets-map-hailesilassie",
+   "type": "work",
+   "label": "Kidus Hailesilassie, 6,500 Alphabets Make a Map (2026) -- nearest neighbour by word, not by move",
+   "created": "2026-10-09",
+   "refs": [
+    "projects/unicode-admission/NEIGHBOURS.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:52",
+   "relation": "opens",
+   "to": "project:unicode-admission",
+   "created": "2026-10-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/SELECTION.md",
+     "note": "written and committed before any data row was read"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "takes",
+   "to": "material:unicode-ucd-cldr",
+   "created": "2026-10-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/fetch.py",
+     "note": "URLs and sha256 recorded"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "finds",
+   "to": "finding:latin-han-staircase",
+   "created": "2026-10-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/session1.py",
+     "note": "output session1.json, exploratory block"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "finds",
+   "to": "finding:whole-entry-69pct",
+   "created": "2026-10-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/session1.py",
+     "note": "prediction 1 held, session1.json P1"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "finds",
+   "to": "finding:1999-twelve-scripts",
+   "created": "2026-10-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/session1.py",
+     "note": "session1.json exploratory2.late_scripts_with_weight"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "neighbours",
+   "to": "neighbour:alphabets-map-hailesilassie",
+   "created": "2026-10-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/NEIGHBOURS.md",
+     "note": "Atlas of Data Art feed, sha256 prefix 4765ce73; daylight stated"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "differs-from",
+   "to": "project:exoplanet-discord",
+   "created": "2026-10-09",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/SELECTION.md",
+     "note": "not a measurement table but an institution's ledger of admissions; 'Why elsewhere'"
+    }
+   ]
+  }
+ ]
+}

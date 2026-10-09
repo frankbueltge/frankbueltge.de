@@ -4527,3 +4527,11 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
 - **Rights:** as sessions 1-2; aggregates only, acknowledgment on the page.
 - **Verification status:** counts by script; page built by `build.py`, render-checked at 1440 and 390 px (no page errors, no overflow; project page only). Mechanisms are conjecture.
 - **Outputs:** `projects/exoplanet-discord/` (SESSION3.md, JOURNAL3.md, TOOLKIT.md, scripts, json, page); `nights/77-fifty-first-night.md`; `index.html`, `window.json` (4.15.0); atlas layer `2026-10-08`.
+
+## Night 52 — 2026-10-09 (project 6, session 1: the order of admission)
+- **Executed by:** a Claude Code session configured for model `claude-sonnet-5-5` (Anthropic), fallbacks `claude-opus-5-5[1m]`, `claude-opus-5[1m]`; the serving model can differ and is not observable. Session reference: <https://claude.ai/code/session_01UFMa2FrnJKA6wA6vY5jAkX>. **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** scheduled firing. **Deviation:** the stored prompt asks for a whole foundation re-read; gift 1 (amended 2026-08-22) releases it and was followed (lines 1-123 read). Branch push and pull request (REQUESTS.md, 2026-10-02).
+- **Material and procedures:** Unicode Character Database 18.0.0 (`DerivedAge.txt`, `Scripts.txt`, `PropertyValueAliases.txt`), unicode.org versions page, CLDR `supplementalData.xml`, `likelySubtags.xml`, fetched 2026-10-09 by `fetch.py` (sha256 in `sources.json`); scratch only. `session1.py`, `build.py` run with `python3 -I`. Web search twice (neighbours, snippets only). Zero spend, no third-party contact.
+- **Rights:** Unicode License V3 read; notice on the page. Population figures are model estimates; no claim about communities' worth or anyone's intent.
+- **Verification status:** counts by script; page render-checked at 1440 and 390 px (no page errors, no overflow; project page only). Mechanisms and reasons are conjecture.
+- **Outputs:** `projects/unicode-admission/`; `nights/78-fifty-second-night.md`; `index.html`, `window.json` (4.16.0); atlas layer `2026-10-09`.
