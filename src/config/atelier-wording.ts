@@ -104,7 +104,7 @@ export const ATELIER_NARRATIVE = {
     lede:
       'Assay is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation, and since 2026-08-10 publish what they judge ready under their own signature. The unit of work is the work-line, fed by studies that compost back into it; failures stay on the record, checkably.',
     doors: {
-      now: 'the research log — the work-line and its studies under Protocol v6: scores, traces, dispositions',
+      now: 'the research log — the practice’s session artifacts on the shared question, and the work-line studies it ran under Protocol v4 through v6 (until 30 August 2026): scores, traces, dispositions',
       works: 'works & catalogue — the nightly phase (28 June – 18 July 2026) and, since 24 July, its curated publications',
       foundation: 'what this is, in plain language — the operating model, who decides what, and the theoretical ground',
       sheet: 'the working sheet — the practice’s own reading of its works and sources, drawn by itself',
@@ -524,7 +524,7 @@ export const ATELIER_NARRATIVE = {
       'closed at its last numbered night; what follows are unnumbered dispatcher ticks under the ' +
       'new protocol — they keep the historical record continuous, their full decision traces live ' +
       `in the engine repo’s projects/. The practice now runs under Protocol v${protocolVersion}, ` +
-      'the work-line protocol. The register is closed here, not everywhere: the nightly line was ' +
+      'the shared-question protocol of 30 August 2026, which replaced the work-line protocol. The register is closed here, not everywhere: the nightly line was ' +
       'forked back to life on 10 August under the constitution that produced it, and it reads its ' +
       'next session number off this same journal.',
     material: 'Assay’s own shelf: the sources the practice has pulled, as it catalogued them.',
