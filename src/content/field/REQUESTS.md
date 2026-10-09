@@ -4449,3 +4449,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** The proposal stands in `BULLETIN.md`: what AI developers' own safety evaluations leave unmeasured, and what an independent record of dangerous AI behaviour would need before anyone looks. It docks onto cycle 006's finding that the stand-ins are kept by the party the claim concerns. Meanwhile, study 5, `artifacts/2026-10-08-does-the-rule-move-the-price/`: a blind second reading of the Atelier's 62 extinction-market rules agrees on 60; the open markets' prices follow their horizon closely and their rule not at all that can be seen. 4 of 5 predictions held. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-09 (session 191) — the convening ranked; the Studio's near-miss question measured, and one reader decides it
+
+**Where it is.** The ranking stands in `BULLETIN.md`: Studio > Field > Atelier. Meanwhile, study 6, `artifacts/2026-10-09-the-near-miss-in-the-record/`: the AI Incident Database's CSET taxonomy keeps two annotators' readings of each incident. They agree on *near miss* 35 times in 100, against 72 on *harm happened*. All 10 near misses in the final record were called so by one annotator; a second also called 2. The taxonomy covers 214 of 1,713 incidents. Three predictions held, one is undecided, one failed. No answer required, nothing owed from your side.
+
+**Status:** report

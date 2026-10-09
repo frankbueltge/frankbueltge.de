@@ -1,0 +1,411 @@
+{
+ "snapshot": "backup-20261005101424",
+ "classifications_sha256": "1f232e0fd75eeb12af4ad35e6701b7bc29dc43a0c25742a297fe9842a644a20f",
+ "n_incidents": 1713,
+ "namespace_records": {
+  "CSETv1": 214,
+  "CSETv1_Annotator-1": 298,
+  "CSETv1_Annotator-2": 106,
+  "CSETv1_Annotator-3": 81
+ },
+ "namespace_publish": {
+  "CSETv1|False": 6,
+  "CSETv1|True": 208,
+  "CSETv1_Annotator-1|False": 1,
+  "CSETv1_Annotator-1|True": 297,
+  "CSETv1_Annotator-2|False": 8,
+  "CSETv1_Annotator-2|True": 98,
+  "CSETv1_Annotator-3|False": 8,
+  "CSETv1_Annotator-3|True": 73
+ },
+ "duplicate_records_per_namespace": {},
+ "off_list_values": [],
+ "coverage": {
+  "final": 214,
+  "share": 0.1249,
+  "max_id": 619,
+  "min_id": 1,
+  "final_nonblank": 201,
+  "final_blank": 13,
+  "ids_above_1000": 0
+ },
+ "final_counts": {
+  "AI tangible harm event": 44,
+  "AI tangible harm near-miss": 10,
+  "AI tangible harm issue": 10,
+  "none": 127,
+  "unclear": 10
+ },
+ "final_other": {},
+ "pairs": {
+  "n": 158,
+  "blank_excluded": 4,
+  "incidents_with_any_annotator": 316,
+  "triples": 7,
+  "triple_pairwise_agree": 16,
+  "triple_pairwise_disagree": 5,
+  "kappa": 0.6249,
+  "kappa_ci95": [
+   0.5177,
+   0.7227
+  ],
+  "raw_agreement": 0.7975,
+  "specific": {
+   "AI tangible harm event": {
+    "value": 0.7241,
+    "both": 21,
+    "a": 29,
+    "b": 29
+   },
+   "AI tangible harm near-miss": {
+    "value": 0.3529,
+    "both": 3,
+    "a": 12,
+    "b": 5
+   },
+   "AI tangible harm issue": {
+    "value": 0.48,
+    "both": 6,
+    "a": 11,
+    "b": 14
+   },
+   "none": {
+    "value": 0.9216,
+    "both": 94,
+    "a": 103,
+    "b": 101
+   },
+   "unclear": {
+    "value": 0.3333,
+    "both": 2,
+    "a": 3,
+    "b": 9
+   }
+  },
+  "near_ci95": [
+   0.0,
+   0.6087
+  ],
+  "event_ci95": [
+   0.5806,
+   0.8421
+  ],
+  "unordered_confusion": [
+   [
+    "none",
+    "none",
+    94
+   ],
+   [
+    "AI tangible harm event",
+    "AI tangible harm event",
+    21
+   ],
+   [
+    "AI tangible harm event",
+    "none",
+    8
+   ],
+   [
+    "AI tangible harm event",
+    "AI tangible harm issue",
+    6
+   ],
+   [
+    "AI tangible harm issue",
+    "AI tangible harm near-miss",
+    6
+   ],
+   [
+    "AI tangible harm issue",
+    "AI tangible harm issue",
+    6
+   ],
+   [
+    "none",
+    "unclear",
+    5
+   ],
+   [
+    "AI tangible harm near-miss",
+    "AI tangible harm near-miss",
+    3
+   ],
+   [
+    "AI tangible harm near-miss",
+    "unclear",
+    2
+   ],
+   [
+    "AI tangible harm near-miss",
+    "none",
+    2
+   ],
+   [
+    "unclear",
+    "unclear",
+    2
+   ],
+   [
+    "AI tangible harm issue",
+    "none",
+    1
+   ],
+   [
+    "AI tangible harm event",
+    "AI tangible harm near-miss",
+    1
+   ],
+   [
+    "AI tangible harm event",
+    "unclear",
+    1
+   ]
+  ]
+ },
+ "exploratory": {
+  "adjudication_of_disagreements": {
+   "A": 11,
+   "B": 13,
+   "third:none": 2,
+   "no final value": 6
+  },
+  "pairs_where_either_says_near": 14,
+  "of_those_final_near": 6,
+  "final_near_from_split_pairs": 4,
+  "pairs_both_near": 3,
+  "final_near_ids": [
+   8,
+   22,
+   34,
+   36,
+   121,
+   155,
+   214,
+   290,
+   519,
+   564
+  ],
+  "tangible_harm_of_final_near": {
+   "imminent risk of tangible harm (near miss) did occur": 10
+  },
+  "top_annotator": {
+   "id": "005",
+   "records": 296,
+   "of_all_annotator_calls": 480,
+   "pairs_with_top": 153,
+   "top_says_near_partner_not": 9,
+   "partner_says_near_top_not": 2,
+   "sign_test_p_two_sided": 0.0654,
+   "final_near_where_top_called_near": 10,
+   "final_records_with_top": 202,
+   "final_near_where_another_called_near": 2
+  },
+  "pairs_same_annotator_id": 0,
+  "final_by_number_of_annotator_records": {
+   "0": 4,
+   "1": 68,
+   "2": 135,
+   "3": 7
+  },
+  "per_annotator": {
+   "005": {
+    "calls": 296,
+    "near": 21,
+    "namespaces": [
+     "CSETv1_Annotator-1",
+     "CSETv1_Annotator-2"
+    ]
+   },
+   "002": {
+    "calls": 54,
+    "near": 1,
+    "namespaces": [
+     "CSETv1_Annotator-2",
+     "CSETv1_Annotator-3"
+    ]
+   },
+   "001": {
+    "calls": 48,
+    "near": 0,
+    "namespaces": [
+     "CSETv1_Annotator-1",
+     "CSETv1_Annotator-2"
+    ]
+   },
+   "007": {
+    "calls": 40,
+    "near": 2,
+    "namespaces": [
+     "CSETv1_Annotator-3"
+    ]
+   },
+   "006": {
+    "calls": 34,
+    "near": 1,
+    "namespaces": [
+     "CSETv1_Annotator-2"
+    ]
+   },
+   "003": {
+    "calls": 7,
+    "near": 0,
+    "namespaces": [
+     "CSETv1_Annotator-2"
+    ]
+   },
+   "None": {
+    "calls": 1,
+    "near": 1,
+    "namespaces": [
+     "CSETv1_Annotator-3"
+    ]
+   }
+  },
+  "event_minus_near_specific_ci95": [
+   0.0791,
+   0.75
+  ],
+  "final_annotation_status": {
+   "4. Peer review complete": 119,
+   "6. Complete and final": 79,
+   "3. In peer review": 7,
+   "--": 5,
+   "5. In quality control": 3,
+   "": 1
+  },
+  "incident_65": {
+   "final": "none",
+   "a1": "none",
+   "a2": "none",
+   "status": "4. Peer review complete"
+  },
+  "final_by_year": {
+   "1983": {
+    "none": 1
+   },
+   "1998": {
+    "none": 1
+   },
+   "1999": {
+    "none": 1
+   },
+   "2008": {
+    "none": 3
+   },
+   "2009": {
+    "unclear": 1,
+    "AI tangible harm event": 1
+   },
+   "2010": {
+    "none": 1
+   },
+   "2011": {
+    "AI tangible harm event": 1
+   },
+   "2012": {
+    "none": 4,
+    "AI tangible harm event": 1
+   },
+   "2013": {
+    "none": 2
+   },
+   "2014": {
+    "none": 4,
+    "AI tangible harm event": 2,
+    "AI tangible harm near-miss": 1
+   },
+   "2015": {
+    "none": 9,
+    "AI tangible harm near-miss": 1,
+    "AI tangible harm event": 2,
+    "unclear": 1
+   },
+   "2016": {
+    "none": 14,
+    "AI tangible harm event": 5,
+    "AI tangible harm issue": 1
+   },
+   "2017": {
+    "none": 17,
+    "AI tangible harm event": 5,
+    "AI tangible harm near-miss": 1,
+    "unclear": 1
+   },
+   "2018": {
+    "none": 8,
+    "AI tangible harm event": 6,
+    "unclear": 1,
+    "AI tangible harm near-miss": 1
+   },
+   "2019": {
+    "AI tangible harm event": 6,
+    "none": 4,
+    "AI tangible harm issue": 1
+   },
+   "2020": {
+    "none": 26,
+    "AI tangible harm issue": 1,
+    "AI tangible harm event": 7,
+    "unclear": 2,
+    "AI tangible harm near-miss": 2
+   },
+   "2021": {
+    "none": 13,
+    "unclear": 3,
+    "AI tangible harm event": 6,
+    "AI tangible harm issue": 4,
+    "AI tangible harm near-miss": 1
+   },
+   "2022": {
+    "AI tangible harm event": 1,
+    "none": 6,
+    "AI tangible harm issue": 2,
+    "AI tangible harm near-miss": 2
+   },
+   "2023": {
+    "none": 13,
+    "unclear": 1,
+    "AI tangible harm event": 1,
+    "AI tangible harm issue": 1,
+    "AI tangible harm near-miss": 1
+   }
+  }
+ },
+ "predictions": {
+  "P1": {
+   "text": "final CSETv1 covers fewer than half of the 1,713 incidents",
+   "value": 0.1249,
+   "verdict": "held"
+  },
+  "P2": {
+   "text": "fewer than 10 % of final non-blank AI Harm Levels are near-miss",
+   "value": 0.0498,
+   "verdict": "held"
+  },
+  "P3": {
+   "text": "Cohen kappa between two annotators below 0.60",
+   "value": 0.6249,
+   "ci95": [
+    0.5177,
+    0.7227
+   ],
+   "verdict": "undecided"
+  },
+  "P4": {
+   "text": "specific agreement on near-miss lower than on event",
+   "value": [
+    0.3529,
+    0.7241
+   ],
+   "verdict": "held"
+  },
+  "P5": {
+   "text": "none of the 14 incidents of study 188 carries a final CSETv1 record",
+   "value": [
+    65
+   ],
+   "verdict": "failed"
+  }
+ }
+}
