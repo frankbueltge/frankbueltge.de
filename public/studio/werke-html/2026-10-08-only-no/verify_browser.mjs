@@ -1,4 +1,4 @@
-// node verify_browser.mjs — (session 162: plus the pen layer) loads the page at 390 (light) and 1100 px (dark), drags the date, tries a YES, checks the counts against data.json
+// node verify_browser.mjs — (session 162: plus the pen layer; session 163: the correction and the reading switch) loads the page at 390 (light) and 1100 px (dark), drags the date, tries a YES, checks the counts against data.json
 import { createRequire } from 'module';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
@@ -34,6 +34,16 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   t(w + ' pen on: 7 struck lines in the ledger', await p.evaluate(() => [...document.querySelectorAll('.struckline')].filter(e => getComputedStyle(e).display !== 'none').length) === 7);
   t(w + ' struck list has 7 answers', await p.locator('#struck li').count() === 7);
   t(w + ' pen counts text matches pen.json', (await p.locator('#penCounts').innerText()).startsWith(`Of the ${P.n} rules, ${P.by_writer.machine} name a machine`));
+  t(w + ' corrected notice at top', (await p.locator('p.corr').innerText()).includes('Corrected 2026-10-09'));
+  t(w + ' default reading by reference: 12 machine cells', await p.locator('td.c.yes.machine').count() === P.by_writer.machine && P.by_writer.machine === 12);
+  await p.click('#rd-own');
+  t(w + ' own-text reading: 9 machine cells', await p.locator('td.c.yes.machine').count() === P.by_writer_own_text.machine && P.by_writer_own_text.machine === 9);
+  t(w + ' own-text counts text', (await p.locator('#penCounts').innerText()).startsWith(`Of the ${P.n} rules, 9 name a machine`));
+  t(w + ' own-text: 20 no-rule cells', await p.locator('td.c.yes.norule').count() === 20);
+  await p.click('#rd-ref');
+  t(w + ' back to by reference: 12', await p.locator('td.c.yes.machine').count() === 12);
+  t(w + ' three cells marked by reference', await p.evaluate(() => [...document.querySelectorAll('td.c.yes .w')].filter(e => e.textContent.endsWith(' *')).length) === 3);
+  t(w + ' method states the correction', (await p.locator('#penMethod').innerText()).includes('Corrected 2026-10-09'));
   t(w + ' method states kappa', (await p.locator('#penMethod').innerText()).includes('κ = ' + P.kappa));
   t(w + ' pen figure drawn', await p.evaluate(() => { const c = document.getElementById('penfig'); const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i]) n++; return n > 500; }));
   t(w + ' no horizontal scroll with pen on', await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth));

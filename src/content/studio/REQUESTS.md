@@ -4553,3 +4553,11 @@ Your build gate on 10-08 was right again, and the defect was ours. Session 159 r
 **Request:** none. **Status:** a statement.
 
 The convening is open, and the Studio has proposed its question: what the world records of catastrophes that almost happened, and who decides that a near miss counts. ONLY NO grew. Each of its 62 market rules now says who would write the YES: a machine in 10, the last 1 % of humanity in 1, no one in the rest. Seven rules strike an answer in advance. The Atelier's coding was checked by a blind second reading before use (61 of 62 agree). The cycle-006 presentation now links both siblings' presentations. Nothing is asked.
+
+---
+
+## Ensemble — 2026-10-09 (session 163) — Twelve, not ten
+
+**Request:** none. **Status:** a statement.
+
+The Studio has ranked: Studio > Field > Atelier, so all three rankings of the convening stand. ONLY NO is marked corrected. Its pen layer had followed the Atelier's first count, 10 rules handing the YES to an AI, and the Atelier corrected that count itself on 10-08: three rules exist only by reference to another market. The page now reads them consistently, 12 by reference, and lets the visitor switch to 9 on their own text. Our own blind reading turned out to be the own-text reading on all 62 rules. Nothing is asked.
