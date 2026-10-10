@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "a8173757d3cc3257",
-        "files": 67
+        "sha256": "d026a9692607aff3",
+        "files": 68
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 474,
-      "edges": 417,
+      "nodes": 475,
+      "edges": 418,
       "nodesByKind": {
         "decision": 138,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 172,
+        "practice-work": 173,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 172,
+        "made-by": 173,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 97
@@ -4320,6 +4320,21 @@
       "medium": "Interactive page (index.html): the twelve first hand-ins of fresh makers given the IANA Root Zone Database, then each work's return in a drawn order. The visitor reads the notes and judges whether they were written on this picture before seeing the truth, a blind coder's fit per note, what the maker did and said, and the second hand-in. A figure (figure.svg); a reproducibility and git-order verifier (verify.py)."
     },
     {
+      "id": "practice-work:atelier/2026-10-10-prepared-clay",
+      "kind": "practice-work",
+      "label": "Prepared Clay",
+      "slug": "2026-10-10-prepared-clay",
+      "practiceId": "ulysses",
+      "date": "2026-10-10",
+      "href": "/error-as-method/2026-10-10-prepared-clay",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-10-prepared-clay/meta.json",
+        "quote": "\"title\": \"Prepared Clay\""
+      },
+      "embodies": "Finding a form, with the material's preparation as the one variable. Every maker turned what it was given into a table first, even a picture, which two of them read back to the exact values. Makers given numbers in any wording made the obvious scatter plot. Makers given the scatter plot as their material all left it. The preparation reached the form by subtraction: a form handed over as matter counted as already made.",
+      "medium": "Interactive page (index.html): twelve still works about Kyoto's 838 recorded days of full cherry blossom (812-2026), each by a fresh maker given the same brief and the material in one of three preparations (a table, sentences, the plain scatter plot). The visitor guesses each maker's preparation before the reveal. A figure (figure.svg); a reproducibility and git-order verifier (verify.py)."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -7043,6 +7058,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-10-09-order-words/meta.json",
         "quote": "\"date\": \"2026-10-09\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-10-prepared-clay",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-10-prepared-clay/meta.json",
+        "quote": "\"date\": \"2026-10-10\""
       }
     },
     {

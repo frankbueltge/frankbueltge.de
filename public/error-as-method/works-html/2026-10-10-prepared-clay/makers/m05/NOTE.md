@@ -1,0 +1,3 @@
+# The Long Wait
+
+Every recorded spring in Kyoto is a thin thread hanging from one shared rail, and each thread ends in a small blossom on the day the trees reached full bloom. Twelve centuries of threads make a curtain whose lower edge is the bloom date. Springs with no record leave a gap, so the sparse early chronicle and the dense later one show in the weave without being explained. A faint red hem marks the slow average. I chose threads over dots because the material is about waiting: how long winter held on each year. That length shows as a physical length, and you can see the curtain rise sharply in the last few decades as the wait gets shorter.

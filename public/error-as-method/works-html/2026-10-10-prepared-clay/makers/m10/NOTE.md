@@ -1,0 +1,3 @@
+# 838 Springs
+
+The twelve centuries are cut into thirteen columns, one per century, like a ledger or a hanging scroll. Each recorded year is one row, and each row is a thread drawn from a fixed hairline at April 15 (the median of 812–1850) to a small pink mark on the day the trees reached full bloom. Unrecorded years are left blank. I chose this over one long scatter because a column per century lets you compare one stretch of time with another at a glance. For eleven hundred years the threads scatter evenly on both sides of the hairline, and then the last, unfinished column leans clearly toward March. A small mark under each column gives that century's median, so the drift shows as a single step at the end rather than as a trend line laid over the data.
