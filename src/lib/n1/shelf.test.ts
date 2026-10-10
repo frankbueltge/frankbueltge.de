@@ -12,6 +12,7 @@ import {
   builtLine,
   builtPages,
   datePage,
+  declaredTitles,
   discoverPages,
   firstSentence,
   n1PageHref,
@@ -316,6 +317,86 @@ describe('the shelf', () => {
   })
 })
 
+describe('what the practice has declared a work', () => {
+  // the three forms the record has used, nights 42, 45 and 48
+  it('reads a flat declaration and the title it names', () => {
+    expect(
+      declaredTitles(
+        '- **Decision:** *The Cut* declared a modest work; project 2 closed after four sessions. The\n' +
+          '  declaration is the practice’s own and no stranger has tested it — stated, not hidden.',
+      ),
+    ).toEqual(['The Cut'])
+    expect(
+      declaredTitles('- **Decision:** *Same Words, Other Years* declared a modest work; project 3 closed at three sessions.'),
+    ).toEqual(['Same Words, Other Years'])
+    expect(
+      declaredTitles(
+        '- **Built:** a section on the page; declared a modest work, *What the Catalogue Decides*; project 4 closed. Not tested by a stranger.',
+      ),
+    ).toEqual(['What the Catalogue Decides'])
+  })
+
+  it('does not read a denial, a plan or a question as a declaration', () => {
+    for (const line of [
+      '- **Built:** a first map of *The Map*. Not declared a work.',
+      '- **Balance:** *The Map* not yet declared a work; advantage claimed small and stated.',
+      '- **Built:** a station-count figure on *The Map*. Still not declared a work.',
+      '- **Decided:** no work declared for *The Map*.',
+      '- **Next:** decide whether *The Map* is declared a modest work.',
+      '- **Rule:** a session 3 must end in *The Map* declared a modest work or a balance.',
+    ]) {
+      expect(declaredTitles(line), line).toEqual([])
+    }
+  })
+
+  it('takes only the title in the declaring clause, and keeps a title’s own punctuation whole', () => {
+    expect(
+      declaredTitles('- **Decision:** *The Map* stays a study. *How Sure Is a Planet? A Curve; Twice* declared a modest work.'),
+    ).toEqual(['How Sure Is a Planet? A Curve; Twice'])
+    // the entry's own bold label is not a title
+    expect(declaredTitles('- **Decision:** declared a modest work; project closed.')).toEqual([])
+    // prose outside the record's entries declares nothing
+    expect(declaredTitles('*The Map* declared a modest work.')).toEqual([])
+  })
+
+  const pages = [
+    { path: 'projects/river/the-cut/index.html', html: page('<h1>The Cut</h1><p>You have one chisel and a falling river.</p>', 'The Cut') },
+    { path: 'projects/river/study-1/index.html', html: page('<h1>Study</h1><p>A study of three stones in one river.</p>', 'The Cut (study)') },
+    { path: 'projects/museum/dialects/index.html', html: page('<h1>Same</h1><p>A museum writes one label and stores two numbers.</p>', 'Same Words') },
+    { path: 'projects/museum/dialects/more.html', html: page('<h1>More</h1><p>A second page in the same directory as the work.</p>', 'More Words') },
+    { path: 'projects/planets/index.html', html: page('<h1>Planets</h1><p>Two papers measure the same planet and disagree.</p>', 'Planets') },
+  ]
+  const shelf = buildShelf(
+    pages,
+    record({
+      nights: [
+        night(63, '2026-10-02', '- **Built:** `projects/river/study-1/index.html`. Not declared a work.'),
+        night(66, '2026-10-03', '- **Built:** `projects/river/the-cut/index.html`. Not yet declared a work.'),
+        night(68, '2026-10-04', '- **Decision:** *the  cut* declared a modest work; project 2 closed.'),
+        night(75, '2026-10-07', '- **Built:** `projects/planets/index.html`, a curve. Not declared a work.'),
+      ],
+      forms: { 'projects/museum/dialects/WORK.md': '# Same Words — declared a modest work (session 3, 2026-10-07)\n' },
+    }),
+  )
+  const kindOf = (path: string): string | undefined => shelf.find((p) => p.path === path)?.kind
+
+  it('calls a project’s page a work once a night declares it by its title', () => {
+    expect(kindOf('projects/river/the-cut/index.html')).toBe('work')
+    // a later declaration does not move the day the page was built
+    expect(shelf.find((p) => p.path === 'projects/river/the-cut/index.html')?.date).toBe('2026-10-03')
+  })
+
+  it('calls it a work where a work document stands beside it — the directory’s index, not its neighbours', () => {
+    expect(kindOf('projects/museum/dialects/index.html')).toBe('work')
+    expect(kindOf('projects/museum/dialects/more.html')).toBe('study')
+  })
+
+  it('leaves every other page of a project a study, a near namesake included', () => {
+    expect(kindOf('projects/river/study-1/index.html')).toBe('study')
+    expect(kindOf('projects/planets/index.html')).toBe('study')
+  })
+})
+
 // ————————————————————————————————————————— the mirror on disk ——————————————
 
 describe('the mirror as it stands', () => {
@@ -345,6 +426,20 @@ describe('the mirror as it stands', () => {
       expect(p!.date, path).toMatch(/^\d{4}-\d{2}-\d{2}$/)
     }
     expect(shelf.some((p) => p.path.endsWith('template.html'))).toBe(false)
+  })
+
+  // Three pages built inside projects that the record declared works on nights 42, 45 and 48.
+  // The shelf of 2026-10-10 read the filing alone and called them studies; a record does not
+  // take a declaration back, so these three hold whatever the practice writes next.
+  it('calls a work what the practice declared one, wherever the page is filed', () => {
+    const kind = (path: string): string | undefined => shelf.find((p) => p.path === path)?.kind
+    expect(kind('projects/elbe-low-water/the-cut/index.html')).toBe('work')
+    expect(kind('projects/met-date-intervals/dialects/index.html')).toBe('work')
+    expect(kind('projects/usgs-fixed-depth/index.html')).toBe('work')
+    for (const p of shelf.filter((x) => x.path.startsWith('works/'))) expect(p.kind, p.path).toBe('work')
+    // and the study a declared work grew out of stays one
+    expect(kind('projects/earth-rotation/study-1/index.html')).toBe('study')
+    expect(kind('projects/elbe-low-water/study-1/index.html')).toBe('study')
   })
 
   // A page the practice builds tomorrow may open with a figure and no sentence, and that is a

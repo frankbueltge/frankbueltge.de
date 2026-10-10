@@ -1,11 +1,13 @@
 // src/lib/n1/works.ts — the works n-1 has laid down and the nights it has kept, read from the
 // practice's own mirror.
 //
-// n-1 keeps no meta.json. Its works are directories under public/n-1/works/, each holding the
-// work itself (index.html) beside the document that fixed it, and the only dating any of it
-// carries is the practice's own record: the night that built the page, or the sentence at the
-// top of its form ("Laid down YYYY-MM-DD, night NN"). So that record is the date — the
-// practice's own, not a file mtime and not the day the mirror happened to copy it. The
+// n-1 keeps no meta.json. Its first works are directories under public/n-1/works/, each holding
+// the work itself (index.html) beside the document that fixed it; since its projects began it
+// also declares a work where the page was built, under projects/, in a night's record or a work
+// document beside the page. The only dating any of it carries is the practice's own record: the
+// night that built the page, or the sentence at the top of its form ("Laid down YYYY-MM-DD,
+// night NN"). So that record is the date — the practice's own, not a file mtime and not the day
+// the mirror happened to copy it. The
 // derivation is src/lib/n1/shelf.ts, the one reading the shelf on the practice's front door, the
 // signal log and the board all share since 2026-10-10. Before that this module read the form
 // alone, and a work declared in a WORK.md instead of a FORM.md (The Days, End to End,
@@ -31,7 +33,9 @@ import { builtPages, readN1Shelf, readNightRecords, n1PageHref, type N1Page } fr
 export const N1_WORKS_DIR = 'public/n-1/works'
 
 export interface N1Work {
-  /** directory name under works/, which is also its address: /n-1/works/<id>/ */
+  /** the work's own place in the mirror: the directory name for one filed under works/
+   *  (`the-days-end-to-end`), the page's path for one declared inside a project
+   *  (`projects/elbe-low-water/the-cut`) */
   id: string
   title: string
   /** the day the practice's own record says the work was built or laid down */
@@ -39,15 +43,19 @@ export interface N1Work {
   href: string
 }
 
+const workId = (path: string): string =>
+  path.replace(/^works\//, '').replace(/\/index\.html$/, '').replace(/\.html$/, '')
+
 /**
- * Every work on n-1's shelf, newest first. A work the practice's record does not date is not
+ * Every work on n-1's shelf, newest first — the pages filed under works/ and the pages of a
+ * project the practice has declared a work. A work the practice's record does not date is not
  * yet one this house can file under a day, and drops out here rather than appearing undated
  * (the shelf on the practice's own front door lists it, last and marked undated).
  */
 export function readN1Works(root: string = N1_WORKS_DIR): N1Work[] {
   return readN1Shelf(dirname(root))
     .filter((p): p is N1Page & { date: string } => p.kind === 'work' && p.date !== null)
-    .map((p) => ({ id: p.path.split('/')[1], title: p.title, date: p.date, href: p.href }))
+    .map((p) => ({ id: workId(p.path), title: p.title, date: p.date, href: p.href }))
 }
 
 /**

@@ -26,6 +26,8 @@ beforeAll(() => {
   put('projects/admission/index.html', html('The order of admission', 'A writing system does not enter the standard once.'))
   put('projects/admission/languages.html', html('When a language is complete', 'A script can be present for years before its letters.'))
   put('projects/admission/template.html', html('Template', 'Not a page.'))
+  put('projects/museum/dialects/index.html', html('Same Words', 'A museum writes one label and stores two numbers.'))
+  put('projects/museum/dialects/WORK.md', '# Same Words — declared a modest work (session 3, 2026-10-07)\n')
 
   put('nights/2026-08-15-founder-note.md', '# Founder’s note — the surface\n\nNo night heading here.\n')
   put('nights/77-fifty-first-night.md', '# Night 51 — 2026-10-08, project 5, session 3: put back\n\n- **Decided:** no work declared.\n')
@@ -81,6 +83,8 @@ describe('n-1’s nights', () => {
 describe('n-1’s works and its newest page', () => {
   it('files a work under the day its form or its work document gives, newest first', () => {
     expect(readN1Works(join(root, 'works'))).toEqual([
+      // declared where a project built it, not filed under works/ — a work all the same
+      { id: 'projects/museum/dialects', title: 'Same Words', date: '2026-10-07', href: '/n-1/projects/museum/dialects/' },
       { id: 'second-work', title: 'Second Work', date: '2026-09-27', href: '/n-1/works/second-work/' },
       { id: 'first-work', title: 'First Work', date: '2026-08-16', href: '/n-1/works/first-work/' },
     ])

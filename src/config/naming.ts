@@ -591,8 +591,9 @@ export const NAMING = {
        *  through links inside the long text of its own front page. Every entry is read from
        *  the mirror — the page's own title and first sentence, the day its record says it was
        *  built (src/lib/n1/shelf.ts) — so the only words the site adds are the ones below.
-       *  `kinds` are the practice's own two: a piece filed under works/, and what a project
-       *  builds, "a study, not yet a work". */
+       *  `kinds` are the practice's own two: a piece it has declared a work (filed under
+       *  works/, or declared in a night's record or a work document where a project built it),
+       *  and what a project builds otherwise, "a study, not yet a work". */
       shelf: {
         heading: 'Built here so far',
         /** "11 pages to open, newest first · 3 works · 8 studies" */
