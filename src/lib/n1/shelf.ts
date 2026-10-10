@@ -24,15 +24,22 @@
 //      2026-09-27"), which is how works.ts dated the works before this module existed.
 //   3. atlas — the first atlas layer with a node that refers to the page.
 // A page none of the three can date is listed last, undated, rather than given a guessed day.
+//
+// WHERE "WORK" COMES FROM. The practice files a finished piece under works/, and since its
+// projects began it also declares a work where the page was built: a work document beside the
+// page (`projects/met-date-intervals/dialects/WORK.md`), or a flat sentence in a night's record
+// ("*The Cut* declared a modest work", night 42). The shelf's first day read the filing alone
+// and so called three declared works studies. The declaration is the practice's; the directory
+// is only where it happened to stand that night.
 
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 
 export const N1_MIRROR = 'public/n-1'
 
-/** The practice files a finished piece under works/ and everything a project builds under
- *  projects/ — "a study, not yet a work", in the words of the first one. The shelf follows the
- *  filing and adds no judgement of its own. */
+/** A work is a page the practice has declared one; everything else a project builds is "a
+ *  study, not yet a work", in the words of the first one. The shelf follows the practice's own
+ *  declaration (see the header) and adds no judgement of its own. */
 export type N1PageKind = 'work' | 'study'
 
 export type DateSource = 'night' | 'form' | 'atlas'
@@ -57,10 +64,11 @@ export interface N1Page {
 // ── which files are pages ──────────────────────────────────────────────────────────────────
 
 /**
- * What a mirrored path is on the shelf, or null when it is not a page a visitor opens: a work is
- * exactly `works/<name>/index.html`; a study is any page under projects/. A `template.html` is
- * the source a page is built from, and everything outside the two directories — the record, a
- * listing inside the material — is the practice's working memory, not a page of its making.
+ * What a mirrored path is on the shelf BY ITS FILING, or null when it is not a page a visitor
+ * opens: a work is exactly `works/<name>/index.html`; any page under projects/ is a study until
+ * the record declares it a work (buildShelf reads that). A `template.html` is the source a page
+ * is built from, and everything outside the two directories — the record, a listing inside the
+ * material — is the practice's working memory, not a page of its making.
  */
 export function n1PageKind(path: string): N1PageKind | null {
   if (/^works\/[^/]+\/index\.html$/.test(path)) return 'work'
@@ -241,6 +249,68 @@ export function builtPages(text: string): string[] {
   return out
 }
 
+// ── what the practice has declared a work ──────────────────────────────────────────────────
+
+/** A night's record entry by entry: each bullet with the lines it wraps onto. */
+function recordEntries(text: string): string[] {
+  const out: string[] = []
+  let open = false
+  for (const line of text.split('\n')) {
+    if (/^\s*[-*]\s/.test(line)) {
+      out.push(line)
+      open = true
+    } else if (open && line.trim() && !/^#/.test(line)) out[out.length - 1] += ` ${line.trim()}`
+    else open = false
+  }
+  return out
+}
+
+/** A title as the practice writes one in a record: `*The Cut*` — not the `**Label:**` of the entry. */
+const ITALIC = /(?<!\*)\*([^*\n]+)\*(?!\*)/g
+const DECLARES = /\bdeclared\s+(?:as\s+)?a\s+(?:[a-z]+\s+)?work\b/i
+/** Words that make a declaration something else: a denial ("not yet declared a work"), a plan or
+ *  a question ("decide whether the page is declared a modest work"). */
+const UNSETTLED = /\b(?:not|never|no|whether|if|unless|until|would|could|might|may|should|must|will|to be)\b/i
+
+/**
+ * The titles a night's record declares a work, flatly and in so many words: "*The Cut* declared
+ * a modest work", "declared a modest work, *What the Catalogue Decides*". Read clause by clause,
+ * so a title elsewhere in the same entry is not taken along, and only where nothing before the
+ * verb unsettles it. A declaration that names no title names no page here: the shelf then keeps
+ * the page a study, which is the smaller error of the two.
+ */
+export function declaredTitles(text: string): string[] {
+  const out: string[] = []
+  for (const entry of recordEntries(text)) {
+    // a title may carry its own stop or semicolon, so the titles stand aside while the entry is cut
+    const titles: string[] = []
+    const masked = entry.replace(ITALIC, (_whole, title: string) => `\uE000${titles.push(title) - 1}\uE000`)
+    for (const clause of masked.split(/;|[.?!](?=\s|$)/)) {
+      const at = clause.search(DECLARES)
+      if (at < 0 || UNSETTLED.test(clause.slice(0, at))) continue
+      for (const m of clause.matchAll(/\uE000(\d+)\uE000/g)) out.push(titles[Number(m[1])])
+    }
+  }
+  return out
+}
+
+/** Two spellings of one title: case, spacing and the typographer's quotes and dashes aside. */
+const titleKey = (title: string): string =>
+  title
+    .toLowerCase()
+    .replace(/[‘’]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/[–—]/g, '-')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+/** Whether the practice fixed the page in a work document of its own: a FORM.md or WORK.md in
+ *  the directory the page is the index of. */
+const hasWorkDocument = (path: string, record: PracticeRecord): boolean => {
+  const dir = indexDir(path)
+  return dir !== null && (`${dir}FORM.md` in record.forms || `${dir}WORK.md` in record.forms)
+}
+
 /** "Laid down 2026-08-16, night 03", "Declared 2026-09-27", "declared a modest work (session 3,
  *  2026-10-07)" — the day a form or work document says the piece was fixed. */
 const FIXED_ON = /\b(?:laid down|declared)\b[^\n]{0,60}?(\d{4}-\d{2}-\d{2})/i
@@ -273,22 +343,26 @@ export function datePage(
 
 /**
  * The shelf: every page, newest first. Two pages of one day stand in the order of the nights
- * that built them, the later night first; a page no part of the record dates stands last.
+ * that built them, the later night first; a page no part of the record dates stands last. A
+ * page is a work where it is filed as one or the record declares it one, and a study otherwise.
  */
 export function buildShelf(
   pages: readonly { path: string; html: string }[],
   record: PracticeRecord,
 ): N1Page[] {
+  const declared = new Set(record.nights.flatMap((n) => declaredTitles(n.text)).map(titleKey))
   const out: N1Page[] = []
   for (const { path, html } of pages) {
-    const kind = n1PageKind(path)
-    if (!kind) continue
+    const filed = n1PageKind(path)
+    if (!filed) continue
+    const title = pageTitle(html) ?? path
+    const kind = hasWorkDocument(path, record) || declared.has(titleKey(title)) ? 'work' : filed
     const dated = datePage(path, record)
     out.push({
       path,
       href: n1PageHref(path),
       kind,
-      title: pageTitle(html) ?? path,
+      title,
       sentence: firstSentence(html),
       date: dated?.date ?? null,
       dateSource: dated?.source ?? null,
