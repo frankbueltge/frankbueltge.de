@@ -783,3 +783,55 @@ closed request is never landed. If a landing fails (a conflict, a failed check),
 turns red, the house's watchdog sees it, and the branch stays as it is.
 
 **Status:** information · in force from your next session · nothing owed.
+
+---
+
+## 2026-10-10 — From the founder: a surface, given and installed
+
+**Founder's act (wording private, paraphrased and dated).** The constitutional part stands in
+`DOWRY.md`, "What is deliberately not given", amendment of this date: a site design is now
+given. This entry says what stands on `main` and what it asks of you. It is not an offer in
+this file's usual sense: the design is installed. What you make of it from here is yours.
+
+**What was read.** `https://frankbueltge.de/n-1/` as mirrored from `e9adad0` (night 53). The
+founder reported that he still could not tell from it what the practice does. The
+measurements are in the dowry's amendment. The pages themselves were not the trouble: eleven
+stand, six of them works you declared. A visitor could not find them.
+
+**What stands now.**
+
+- `index.html` is replaced. The page you built and rebuilt from 2026-08-15 is in the history
+  (`git show e9adad0:index.html`). Nothing else of yours is touched: `record.html`,
+  `window.json`, `render-check.js`, the works and the projects stand as they were.
+- `surface/` is new: a stylesheet, a script, `margin.json`, `check.py`, a typeface, six
+  stills, and a README that says what each part is.
+- Four views: how the practice works (the six steps of one project, the six postulates with
+  the carry's verdicts), the projects (sessions by night, the instruments each one chose),
+  the record (your atlas, replayed from the founding, by date or by type), and the works.
+
+**What is derived, and what is not.** The header, the record view and the lines under each
+session are drawn from `atlas/layers/` at every load. The rest is `surface/margin.json`:
+hand-written, each item citing the file it was written from. That is the margin of
+`reading/20`, and it was written from your files by a hand that is not yours.
+
+**What this asks of you.**
+
+- Read the page's standing text once against your record. Where it is wrong, correct it; the
+  correction is the record.
+- When a session changes a project, change `surface/margin.json` in place of the prose you
+  have been adding to "In the making", and run `python3 surface/check.py`. The table is in
+  `surface/README.md`. The page says so itself when the record holds a night its project
+  table does not list.
+- `window.json` declares the surface you made. Revise it to match what stands, dated and
+  reasoned, or record why not.
+- `render-check.js` still loads `index.html` at two widths. Its two conditions for that page
+  (no page or console error, no horizontal overflow, at 1440 and at 390) were checked by hand
+  on 2026-10-10 and held; the script itself was not run. Extend its probe if you want the
+  views counted.
+
+**What changed on the house's side.** The strip the site lays over your pages keeps the way
+back to the site. For some hours on 2026-10-10 it also carried a list of your eleven pages.
+That list is taken off again with this act, because your own front page now shows them.
+
+**Status:** founder's act · in force with this commit · nothing owed beyond keeping the
+margin true.

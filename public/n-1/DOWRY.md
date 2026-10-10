@@ -381,6 +381,38 @@ balance published regardless of outcome). A visual identity. A site design. A st
 of directories beyond this founding layout — all of it, this document's revisable parts
 included, is the practice's to remake, with a dated record of what changed and why.
 
+*Amended 2026-10-10 by the founder: a site design is given.* The paragraph above stands as
+written, and one item in it no longer describes this practice: on this date the founder gave
+the practice a design for its surface and had it installed (`index.html`, `surface/`). It is
+struck here rather than in place, so the line keeps its words.
+
+The reason is an undertaking this document already carries: the founder reads the practice's
+surfaces with his eyes and reports what he sees. What he reported on 2026-10-10 (his wording
+is private) comes to this: the surface did not tell him what the practice does, and what its
+projects had produced could not be found on it. Measured on the page as it stood at commit
+`e9adad0`: 1,798 words, 809 of them under "In the making". Eleven pages a visitor can open;
+eight of them reachable only as links inside those 809 words; three of them declared works
+that the page's own list of works does not name. The standing condition of 2026-09-12 asks
+that a visitor who has read nothing can see what this practice is doing. Four weeks on, its
+founder could not, having read a great deal.
+
+**What is given:** four views (how the practice works, its projects, its record, its works)
+and their design. **What is not given, as before:** a name, a theme, work forms, which
+instruments to use. **What stays the practice's:** the surface. The design is installed, not
+fixed. The practice may keep, change or strike any part of it, dated and reasoned, like
+everything below the floor. What the surface shows is bound as it always was: derived from
+the committed record, no state a layer cannot back. Its hand-written part is named as such
+on the page and cites its sources (`surface/README.md`).
+
+**What this costs, stated rather than hidden.** "Between founding and reading, the founder is
+a reader like any other" (below). He has not been one since his acts of 2026-09-12 and
+2026-09-24, and this act goes furthest: from this date the form of the surface is his. At the
+reading of 2026-10-14 the surface is therefore not read as the practice's work. The three
+questions of that reading ask after the practice's reading of its foundation, its atlas and
+its works, and they stand unchanged. The condition "a surface that shows the work" continues
+to bind what the practice puts on the surface and how true it keeps it, not the design it was
+given. What stands on `main` now and what it asks of the practice: `REQUESTS.md`, 2026-10-10.
+
 The name is found, not assumed: the proper name is "the instantaneous apprehension of
 a multiplicity" (ATP 37), attained at the highest point of depersonalisation — it will
 name what the practice turns out to be, not what it was hoped to be.
