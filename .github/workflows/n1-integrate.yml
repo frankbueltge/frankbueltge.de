@@ -163,9 +163,9 @@ jobs:
             # arriving from a search result meets a practice with no exit (Frank, 2026-08-16).
             # Runs after every copy because the copy wipes the directory; scoped to n-1 so it
             # never leaves another house's mirror rewritten and unstaged.
-            # Since 2026-10-10 the strip on the front door also carries a shelf of every page
-            # the practice has built, derived on each run from the mirror just copied
-            # (src/lib/n1/shelf.ts): a page pushed tonight stands on it with this commit.
+            # For some hours on 2026-10-10 the strip on the front door also carried a shelf of
+            # every page the practice had built. It came off the same evening: the practice's
+            # front page now shows its pages itself (scripts/engines/reframe-works.ts says why).
             npx tsx scripts/engines/reframe-works.ts n-1 || return 1
 
             git config user.name "N1-Integrate"
