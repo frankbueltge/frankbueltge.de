@@ -10,6 +10,7 @@ import { foldStr, foldRound, num1 } from '@/lib/tell/format'
 import { PCHART_W, PCHART_H, yearAreaPath, yearLinePath } from '@/lib/praemie/chart'
 import data from '@/data/tell/latest.json'
 import SheetHead from '@/components/experiments/SheetHead.astro'
+import DataAge from '@/components/experiments/DataAge.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import '@/styles/experiment-sheet.css'
 
@@ -33,6 +34,7 @@ const cgX = xMax > xMin ? ((d.chatgpt_year - xMin) / (xMax - xMin)) * PCHART_W :
 <article class="tell mx-auto max-w-3xl px-4 py-14">
   <SheetHead title="Delve into the intricate realm">
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'tl.sub')}</p>
+    <DataAge generatedAt={d.generated_at} cadence="weekly" />
   </SheetHead>
 
   <section class="mb-12 flex items-baseline gap-4">
