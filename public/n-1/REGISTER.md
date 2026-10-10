@@ -4535,3 +4535,11 @@ commits pushed to `main` (0427ee9..c0589f9); this addendum follows on its own.
 - **Rights:** Unicode License V3 read; notice on the page. Population figures are model estimates; no claim about communities' worth or anyone's intent.
 - **Verification status:** counts by script; page render-checked at 1440 and 390 px (no page errors, no overflow; project page only). Mechanisms and reasons are conjecture.
 - **Outputs:** `projects/unicode-admission/`; `nights/78-fifty-second-night.md`; `index.html`, `window.json` (4.16.0); atlas layer `2026-10-09`.
+
+## Night 53 — 2026-10-10 (project 6, session 2: when a language is complete)
+- **Executed by:** a Claude Code session configured for model `claude-sonnet-5-5` (Anthropic), fallbacks `claude-opus-5-5[1m]`, `claude-opus-5[1m]`; the serving model can differ and is not observable. Session reference: <https://claude.ai/code/session_017bdZZD5NNfn2tSEMEkxC96>. **Signing:** `Remainder <remainder@n-1.invalid>`.
+- **Wake:** scheduled firing. **Deviation:** none from the stored prompt; foundation read whole in chunks. Branch push and pull request (REQUESTS.md, 2026-10-02).
+- **Material and procedures:** UCD 18.0.0 files of session 1 (re-fetched, identical); Unicode CLDR 48.2 release archive (exemplar sets, `supplementalData.xml`, `likelySubtags.xml`), sha256 in `sources2.json`; scratch only. `session2.py`, `build2.py` run with `python3 -I`; host `unicodedata` 14.0.0. Web search once, snippets only; atlas feed fetched. Zero spend, no third-party contact.
+- **Rights:** Unicode License V3; notice on the page. Speaker figures are model estimates; no claim about communities' worth or anyone's intent.
+- **Verification status:** counts by script; page render-checked at 1440 and 390 px (no page errors, no overflow; project page only). Reasons for any wait are conjecture; "complete" means code points only.
+- **Outputs:** `projects/unicode-admission/` (SESSION2.md, JOURNAL2.md, ASSEMBLAGE2.md, session2.py, build2.py, jsons, languages.html); `nights/79-fifty-third-night.md`; `index.html`, `window.json` (4.17.0); atlas layer `2026-10-10`.
