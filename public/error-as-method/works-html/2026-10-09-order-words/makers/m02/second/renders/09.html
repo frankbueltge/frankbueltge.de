@@ -1,0 +1,74 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Landlords of the Root</title>
+<style>
+html,body{margin:0;background:#efebe2;}
+canvas{display:block}
+</style></head>
+<body><canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+const W=1100,H=800,cv=document.getElementById('c'),dpr=window.devicePixelRatio||1;
+cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+const g=cv.getContext('2d');g.scale(dpr*2.5,dpr*2.5);g.translate(-40,-560);g.direction='ltr';
+const RTL=/[\u0590-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]/;
+const show=t=>t.replace(/[\u200E\u200F\u202A-\u202E\u2066-\u2069]/g,'');
+const BG='#efebe2',INK='#2a2824',FAINT='#a0988a';
+g.fillStyle=BG;g.fillRect(0,0,W,H);
+const items=window.ROOT.items;
+// group by manager (case-insensitive so one registry spelled two ways counts once)
+const groups=new Map();
+for(const it of items){const k=it.manager.trim().toLowerCase();if(!groups.has(k))groups.set(k,{name:it.manager.trim(),list:[]});groups.get(k).list.push(it);}
+let ghosts=null;const arr=[];
+for(const [k,v] of groups){if(k==='not assigned')ghosts=v;else arr.push(v);}
+arr.sort((a,b)=>b.list.length-a.list.length||a.name.localeCompare(b.name));
+const cmp=(a,b)=>a.tld.localeCompare(b.tld);
+arr.forEach(a=>a.list.sort(cmp));ghosts.list.sort(cmp);
+const PAL=['#c2410c','#1d4ed8','#a21caf','#047857','#b45309','#be123c','#0e7490','#6d28d9','#4d7c0f','#9a3412'];
+const big=arr.filter(a=>a.list.length>=10);
+big.forEach((a,i)=>a.color=PAL[i%PAL.length]);
+// token stream
+const toks=[];
+for(const a of arr){
+  const isBig=a.list.length>=10;
+  if(isBig) toks.push({label:true,text:a.name.replace(/,? (LLC|Inc\.|Sarl|Limited|Corporation|Co\.)$/,'').toUpperCase()+' '+a.list.length,color:a.color});
+  for(const it of a.list) toks.push({text:show(it.tld),color:isBig?a.color:INK,cc:it.type==='country-code'&&!isBig});
+}
+toks.push({label:true,text:'NOT ASSIGNED '+ghosts.list.length,color:'#8f877a'});
+for(const it of ghosts.list) toks.push({text:show(it.tld),color:FAINT,ghost:true});
+
+const X0=44,X1=W-44,Y0=112,Y1=H-58;
+function fontFor(t,s){return t.label?`600 ${s*0.72}px "Helvetica Neue",Arial,sans-serif`:`${s}px Georgia,"Times New Roman",serif`;}
+function layout(s,draw){
+  const gap=s*0.42,lh=s*1.18;let lines=[],cur=[],w=0;
+  for(const t of toks){g.font=fontFor(t,s);t.rtl=!t.label&&RTL.test(t.text);t.dw=t.rtl?g.measureText('.').width:0;t.w=t.rtl?t.dw+g.measureText(t.text.slice(1)).width:g.measureText(t.text).width;
+    if(cur.length&&w+gap+t.w>X1-X0){lines.push(cur);cur=[];w=0;}
+    w+=(cur.length?gap:0)+t.w;cur.push(t);}
+  if(cur.length)lines.push(cur);
+  if(!draw)return lines.length*lh;
+  let y=Y0+s;
+  lines.forEach((ln,li)=>{
+    const tw=ln.reduce((a,t)=>a+t.w,0);const last=li===lines.length-1;
+    const gg=last?gap:(X1-X0-tw)/Math.max(1,ln.length-1);
+    let x=X0;
+    for(const t of ln){g.font=fontFor(t,s);g.fillStyle=t.color;
+      if(t.label){g.fillText(t.text,x,y-s*0.06);}
+      else{if(t.rtl){g.fillText('.',x,y);g.fillText(t.text.slice(1),x+t.dw,y);}else g.fillText(t.text,x,y);
+        if(t.ghost){g.fillStyle='#c3bbac';g.fillRect(Math.round(x),Math.round(y+s*0.2),Math.round(t.w),1);}}
+      x+=t.w+gg;}
+    y+=lh;});
+  return lines.length*lh;
+}
+let lo=4,hi=20;
+for(let i=0;i<30;i++){const m=(lo+hi)/2;if(layout(m,false)<=Y1-Y0-4)lo=m;else hi=m;}
+layout(lo,true);
+
+// header
+g.fillStyle=INK;g.font='italic 34px Georgia,serif';g.fillText('Landlords of the Root',X0,62);
+g.font='13px "Helvetica Neue",Arial,sans-serif';g.fillStyle='#6b645a';
+const total=items.length,inBig=big.reduce((a,b)=>a+b.list.length,0),alone=arr.filter(a=>a.list.length===1).length;
+g.fillText(`All ${total} top-level domains in the IANA root zone, set as one text and grouped by the organisation that manages them, largest holding first.`,X0,88);
+// footer
+g.font='12px "Helvetica Neue",Arial,sans-serif';g.fillStyle='#6b645a';
+g.fillText(`${big.length} registries holding ten or more names (in colour) manage ${inBig}. ${alone} organisations hold exactly one (in black). Grey, underlined: listed, but with no manager.`,X0,H-26);
+g.textAlign='right';g.fillText('IANA Root Zone Database, 2026-10-09',X1,62);
+</script></body></html>

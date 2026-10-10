@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Held</title>
+<style>
+html,body{margin:0;width:1100px;height:800px;overflow:hidden;background:#f3efe6}
+#page{position:absolute;left:44px;top:40px;width:1012px;height:690px;overflow:hidden}
+#zone{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;text-align:justify;text-align-last:justify;color:#1a1714;margin:0;hyphens:none}
+#zone span{white-space:nowrap;unicode-bidi:isolate;direction:ltr}
+#zone .u{color:#a8432e;text-decoration:line-through;text-decoration-thickness:1px}
+#foot{position:absolute;left:44px;right:44px;top:748px;font:11px/1.4 Georgia,serif;color:#5b544b;display:flex;justify-content:space-between;align-items:baseline;letter-spacing:.02em}
+#foot b{font-weight:normal;color:#1a1714;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.k{display:inline-block;margin-left:14px}
+</style></head><body>
+<div id="page"><p id="zone"></p></div>
+<div id="foot"><span><b>Held</b> &nbsp; the root zone, every top-level domain, in order</span>
+<span id="key"></span></div>
+<script src="data.js"></script>
+<script>
+const items = window.ROOT.items;
+const norm = m => m.toLowerCase().replace(/\s*\([^)]*\)\s*/g,' ').replace(/[.,]/g,'').replace(/\s+/g,' ').trim();
+const count = {};
+items.forEach(r => { if (r.manager !== 'Not assigned') { const k = norm(r.manager); count[k] = (count[k]||0)+1; } });
+const max = Math.max(...Object.values(count));
+const zone = document.getElementById('zone');
+const frag = document.createDocumentFragment();
+items.forEach((r,i) => {
+  const s = document.createElement('span');
+  s.textContent = '.';
+  const b = document.createElement('bdi');
+  b.textContent = r.tld.slice(1);
+  s.appendChild(b);
+  if (r.manager === 'Not assigned') s.className = 'u';
+  else {
+    const n = count[norm(r.manager)];
+    const t = Math.log(n)/Math.log(max);          // 0 for a sole holder, 1 for the largest portfolio
+    s.style.opacity = (1 - 0.8*t).toFixed(3);
+    if (n === 1) s.style.fontWeight = '600';
+  }
+  frag.appendChild(s);
+  frag.appendChild(document.createTextNode(' '));
+});
+zone.appendChild(frag);
+// fit type to fill the page
+const page = document.getElementById('page');
+let lo = 6, hi = 20;
+for (let k=0;k<30;k++){ const mid=(lo+hi)/2; zone.style.fontSize=mid+'px'; zone.style.lineHeight=(mid*1.32)+'px';
+  if (zone.scrollHeight <= page.clientHeight) lo=mid; else hi=mid; }
+zone.style.fontSize=lo+'px'; zone.style.lineHeight=(lo*1.32)+'px';
+const una = items.filter(r=>r.manager==='Not assigned').length;
+const big = Object.entries(count).sort((a,b)=>b[1]-a[1])[0];
+document.getElementById('key').innerHTML =
+  `<span class="k" style="color:#1a1714;font-weight:600">dark: its holder holds only this one</span>`+
+  `<span class="k" style="color:#1a1714;opacity:.28">faint: one of a holder’s many (up to ${big[1]})</span>`+
+  `<span class="k" style="color:#a8432e;text-decoration:line-through">${una} delegated to no one</span>`+
+  `<span class="k">${items.length} names</span>`;
+</script>
+</body></html>

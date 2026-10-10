@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Not Assigned</title>
+<style>
+html,body{margin:0;background:#f1ede4;}
+canvas{display:block}
+</style></head>
+<body><canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+const W=1100,H=800,dpr=window.devicePixelRatio||1;
+const cv=document.getElementById('c');cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+g.fillStyle='#f1ede4';g.fillRect(0,0,W,H);
+const items=window.ROOT.items.map(r=>({t:r.tld.replace(/[‎‏]/g,''),type:r.type,ghost:r.manager==='Not assigned'}));
+const FAM='"DejaVu Serif","WenQuanYi Zen Hei",serif';
+const X0=56,X1=W-56,Y0=52,Y1=H-78,GAP=0.42; // gap in em
+function layout(fs){
+  g.font=fs+'px '+FAM;const sp=fs*GAP,lh=fs*1.3;
+  const lines=[];let cur=[],w=0;
+  for(const it of items){it.w=g.measureText(it.t).width;
+    if(cur.length&&w+sp+it.w>X1-X0){lines.push(cur);cur=[];w=0;}
+    w+=(cur.length?sp:0)+it.w;cur.push(it);}
+  if(cur.length)lines.push(cur);
+  return {lines,lh,sp,ok:lines.length*lh<=Y1-Y0};
+}
+let lo=4,hi=20;for(let i=0;i<30;i++){const m=(lo+hi)/2;layout(m).ok?lo=m:hi=m;}
+const fs=lo,L=layout(fs);
+// spread lines vertically to fill block exactly
+const lh=(Y1-Y0)/L.lines.length;
+g.textBaseline='alphabetic';
+L.lines.forEach((ln,i)=>{
+  const y=Y0+lh*(i+0.78);
+  const tw=ln.reduce((a,b)=>a+b.w,0);
+  const last=i===L.lines.length-1;
+  const sp=last?L.sp:(X1-X0-tw)/Math.max(1,ln.length-1);
+  let x=X0;
+  for(const it of ln){
+    if(it.ghost){
+      g.font=fs+'px '+FAM;
+      g.strokeStyle='rgba(176,58,36,0.55)';g.lineWidth=0.55;g.strokeText(it.t,x,y);
+    }else{
+      const cc=it.type==='country-code';
+      g.font=(cc?'bold ':'')+fs+'px '+FAM;
+      g.fillStyle=cc?'#151311':'#5d5850';
+      if(cc){const k=g.measureText(it.t).width;g.save();g.translate(x,y);g.scale(it.w/k,1);g.fillText(it.t,0,0);g.restore();}
+      else g.fillText(it.t,x,y);
+    }
+    x+=it.w+sp;
+  }
+});
+// caption
+const n=items.length,gh=items.filter(i=>i.ghost).length,cc=items.filter(i=>i.type==='country-code').length;
+g.fillStyle='#151311';g.font='italic 22px "DejaVu Serif",serif';g.textBaseline='alphabetic';
+g.fillText('Not Assigned',X0,H-34);
+g.font='12px "DejaVu Serif",serif';g.fillStyle='#5d5850';
+const cap='Every top-level domain in the root zone, in its order: '+n.toLocaleString('en')+' names. '+cc+' belong to countries and territories (set heavy). '+gh+' are still listed but managed by no one — outlines only.';
+g.textAlign='right';g.fillText(cap,X1,H-36);
+g.font='10px "DejaVu Serif",serif';g.fillStyle='#8a8378';g.fillText('IANA Root Zone Database, as of 2026-10-09',X1,H-20);
+</script></body></html>

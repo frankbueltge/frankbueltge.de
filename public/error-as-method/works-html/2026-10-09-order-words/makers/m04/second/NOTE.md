@@ -1,0 +1,3 @@
+# Not assigned
+
+The work sets all 1,595 top-level domains from the IANA Root Zone Database as one justified page of small type, in the registry's own order. Most names are printed in a dim grey. Country codes are a little lighter. The 158 names whose manager field reads "Not assigned" are printed in vermilion. I picked running text over a chart because a domain is a word, and the material is a list of words someone once paid to own. Setting them all at once lets you read the whole namespace, and the bright gaps show the ones nobody holds any more: .abarth, .chrysler, .zippo, abandoned brand names, plus the reserved test names in other scripts. They appear among the living names without being singled out.

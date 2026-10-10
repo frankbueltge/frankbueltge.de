@@ -1,0 +1,79 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Vacancies in the Root</title>
+<style>
+html,body{margin:0;padding:0;background:#f3efe6;}
+canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+const items = window.ROOT.items.map(r => ({
+  name: r.tld.replace(/[‎‏]/g, ''),
+  vacant: r.manager === 'Not assigned',
+  type: r.type
+}));
+const cv = document.getElementById('c');
+const dpr = window.devicePixelRatio || 1;
+cv.width = 1100 * dpr; cv.height = 800 * dpr;
+cv.style.width = '1100px'; cv.style.height = '800px';
+const g = cv.getContext('2d');
+g.scale(dpr, dpr);
+g.fillStyle = '#f3efe6'; g.fillRect(0, 0, 1100, 800);
+
+const L = 56, R = 1044, TOP = 64, BOTTOM = 712;
+const W = R - L;
+const FS = 10.6;
+const font = `${FS}px Georgia, "Times New Roman", serif`;
+const fontV = `italic ${FS}px Georgia, "Times New Roman", serif`;
+const gapMin = 6;
+
+// measure
+items.forEach(it => { g.font = it.vacant ? fontV : font; it.w = g.measureText(it.name).width; });
+
+// break into lines greedily
+const lines = []; let cur = [], cw = 0;
+for (const it of items) {
+  const need = cur.length ? cw + gapMin + it.w : it.w;
+  if (need > W && cur.length) { lines.push(cur); cur = [it]; cw = it.w; }
+  else { cur.push(it); cw = need; }
+}
+if (cur.length) lines.push(cur);
+
+const lh = (BOTTOM - TOP) / (lines.length - 1);
+g.textBaseline = 'alphabetic';
+lines.forEach((ln, li) => {
+  const y = TOP + li * lh;
+  const sumW = ln.reduce((a, b) => a + b.w, 0);
+  const last = li === lines.length - 1;
+  const gap = (last || ln.length < 2) ? gapMin : (W - sumW) / (ln.length - 1);
+  let x = L;
+  for (const it of ln) {
+    if (it.vacant) {
+      // the vacancy: a blank slot where a name was, the name barely remaining
+      g.fillStyle = '#e4dccb';
+      g.fillRect(x - 1.5, y - FS * 0.82, it.w + 3, FS * 1.12);
+      g.strokeStyle = '#a5321f'; g.lineWidth = 0.8;
+      g.beginPath(); g.moveTo(x - 1.5, y + 2.6); g.lineTo(x + it.w + 1.5, y + 2.6); g.stroke();
+      g.font = fontV; g.fillStyle = '#b9ad98';
+      g.fillText(it.name, x, y);
+    } else {
+      g.font = font;
+      g.fillStyle = it.type === 'country-code' ? '#2a2a33' : '#3b3a36';
+      g.fillText(it.name, x, y);
+    }
+    x += it.w + gap;
+  }
+});
+
+// colophon
+const vac = items.filter(i => i.vacant).length;
+g.font = `italic 15px Georgia, serif`; g.fillStyle = '#1e1d1a';
+g.fillText('Vacancies in the Root', L, 760);
+g.font = `11px Georgia, serif`; g.fillStyle = '#6b6457';
+const t2 = `${items.length} top-level domains in the IANA root zone, in its own order. ${vac} of them are listed with no manager: brands handed back, territories folded, test strings never meant to be used.`;
+g.fillText(t2, L + 168, 760);
+g.strokeStyle = '#a5321f'; g.lineWidth = 0.8;
+g.beginPath(); g.moveTo(L, 736); g.lineTo(R, 736); g.stroke();
+</script>
+</body></html>

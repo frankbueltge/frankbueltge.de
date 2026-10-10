@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Held by No One</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #efe9dd; }
+  body { width: 1100px; height: 800px; overflow: hidden; position: relative;
+         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; color: #1d1b18; }
+  #wall { position: absolute; left: 28px; top: 26px; width: 1044px;
+          text-align: justify; text-align-last: left; hyphens: none; }
+  #wall span { unicode-bidi: isolate; white-space: nowrap; }
+  #wall .cc { color: #1d1b18; font-weight: 600; }
+  #wall .g  { color: #5a554c; }
+  #wall .s  { color: #1d1b18; font-style: italic; }
+  #wall .v  { color: #8a3a26; background: rgba(160, 60, 40, 0.07);
+              box-shadow: inset 0 0 0 0.6px rgba(160, 60, 40, 0.55); padding: 0 1px; }
+  #foot { position: absolute; left: 28px; right: 28px; bottom: 20px;
+          display: flex; justify-content: space-between; align-items: baseline;
+          border-top: 1px solid #1d1b18; padding-top: 8px; }
+  #foot h1 { margin: 0; font-size: 19px; font-weight: 600; letter-spacing: 0.01em; }
+  #foot p { margin: 0; font-size: 11px; color: #5a554c; }
+  #foot .key { display: inline-block; width: 22px; height: 9px; vertical-align: -1px; margin: 0 4px 0 12px;
+               background: rgba(160, 60, 40, 0.07); box-shadow: inset 0 0 0 0.6px rgba(160, 60, 40, 0.55); }
+</style>
+</head>
+<body>
+<div id="wall"></div>
+<div id="foot">
+  <h1>Held by No One</h1>
+  <p id="cap"></p>
+</div>
+<script src="data.js"></script>
+<script>
+  var items = window.ROOT.items;
+  var wall = document.getElementById('wall');
+  var vacant = 0;
+  var frag = document.createDocumentFragment();
+  items.forEach(function (it, i) {
+    var s = document.createElement('span');
+    var name = it.tld.replace(/[‎‏]/g, '');
+    s.textContent = name;
+    if (it.manager === 'Not assigned') { s.className = 'v'; vacant++; }
+    else if (it.type === 'country-code') s.className = 'cc';
+    else if (it.type === 'sponsored' || it.type === 'infrastructure' || it.type === 'generic-restricted') s.className = 's';
+    else s.className = 'g';
+    frag.appendChild(s);
+    if (i < items.length - 1) frag.appendChild(document.createTextNode(' '));
+  });
+  wall.appendChild(frag);
+
+  // grow the type until the wall fills the space above the footer
+  var limit = 800 - 26 - 64;
+  var size = 6;
+  wall.style.lineHeight = '1.32';
+  for (var f = 6; f <= 14; f += 0.05) {
+    wall.style.fontSize = f + 'px';
+    if (wall.offsetHeight > limit) break;
+    size = f;
+  }
+  // among sizes that fit, prefer the largest whose last line is well filled
+  var spans = wall.getElementsByTagName('span');
+  var last = spans[spans.length - 1];
+  var best = null;
+  for (var g = size; g >= size - 0.8; g -= 0.02) {
+    wall.style.fontSize = g + 'px';
+    var r = last.getBoundingClientRect(), w = wall.getBoundingClientRect();
+    var fill = (r.right - w.left) / w.width;
+    if (fill > 0.6) { best = g; break; }
+    if (best === null || fill > best.fill) best = { g: g, fill: fill };
+  }
+  wall.style.fontSize = (typeof best === 'number' ? best : best.g) + 'px';
+
+  document.getElementById('cap').innerHTML =
+    items.length.toLocaleString('en') + ' top-level domains in the root zone, in the order IANA lists them. ' +
+    '<b style="color:#1d1b18">Bold</b>: country codes. <i style="color:#1d1b18">Italic</i>: sponsored, restricted and infrastructure. ' +
+    '<span class="key"></span>' + vacant + ' managed by no one.';
+</script>
+</body>
+</html>
