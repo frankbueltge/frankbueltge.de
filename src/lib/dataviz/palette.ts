@@ -756,6 +756,77 @@ export const PALETTES: readonly PaletteSet[] = [
     warns: [],
     usedBy: ['src/styles/living-globe.css'],
   },
+  {
+    id: 'paper-voices',
+    description:
+      'The three voices on the paper ground (2026-10-11) — the Field, the Atelier and the Studio on ' +
+      'the entrance, the score of /ecology, the practice pages and the Middle, after the design ' +
+      'handoff of that day (docs/design_handoff_homepage_ecology/README.md). It stands beside ' +
+      '`ecology-voices`, which stays the set of the mono skin: that set was validated on a cool ' +
+      'grey panel, this one on warm cream, and neither surface flatters the other set. The ' +
+      'handoff specified #2c6aa3 · #6650c4 · #bf5427. Blue and orange are kept as specified; the ' +
+      'VIOLET IS NOT: against the blue it measured ΔE 11.0 for normal vision (hard floor 15) and ' +
+      '6.2 under deuteranopia in the validator, a FAIL, so it was moved the shortest distance ' +
+      'that clears every check on both paper surfaces — ΔE 4.6, to #7548dc, a slightly redder ' +
+      'and stronger violet. Dark steps are recorded because a set is two modes by this file’s ' +
+      'own rule, and they are NOT YET MOUNTED: the paper ground has no dark rendition (the ' +
+      'handoff ships one optional dark page; its three hues, #6db3ec · #a89bf0 · #e8825a, fail ' +
+      'the dark lightness band, the chroma floor and, in this file’s maths, CVD at ΔE 1.3). ' +
+      'The steps below are the nearest that pass, kept for the day that ground is built. ' +
+      'Text: the blue and the violet are ≥ 4.5 : 1 on both paper surfaces and may be small ' +
+      'labels; the orange is 4.06 : 1, a mark and a display colour only — small text in the ' +
+      'Studio’s hue wears --pp-studio-ink (#aa4b23, 4.89 : 1), declared beside the set.',
+    slots: [
+      { name: 'meridian / field', light: '#2c6aa3', dark: '#3aa0c8' },
+      { name: 'assay / atelier', light: '#7548dc', dark: '#9277f5' },
+      { name: 'ensemble / studio', light: '#bf5427', dark: '#d36f48' },
+    ],
+    neutrals: [
+      {
+        name: 'conductor / the middle',
+        light: '#161412',
+        dark: '#ece6d9',
+        note: 'the page’s own ink: the Middle is no fourth practice and wears no hue, here as on the mono skin',
+      },
+    ],
+    surfaces: { light: ['#f3efe6', '#ebe6da'], dark: ['#13120f'] },
+    pairs: 'all',
+    validatedOn: '2026-10-11',
+    validator:
+      'dataviz skill validate_palette.js (six checks, --pairs all) — ALL CHECKS PASS, light on both paper ' +
+      'surfaces and dark on #13120f. The validator clamps simulated colours into gamut and reports the ' +
+      'light blue↔violet pair at ΔE 9.0 under deuteranopia; this file’s test re-derives without the clamp ' +
+      'and records 10.6 for the same pair — both clear the target of 8.',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 10.6,
+        cvdPair: '#2c6aa3↔#7548dc',
+        cvdType: 'deutan',
+        tritan: 7.2,
+        normal: 15.3,
+        normalPair: '#2c6aa3↔#7548dc',
+      },
+      {
+        mode: 'dark',
+        cvd: 8.8,
+        cvdPair: '#3aa0c8↔#9277f5',
+        cvdType: 'deutan',
+        tritan: 9.6,
+        normal: 16.3,
+        normalPair: '#3aa0c8↔#9277f5',
+      },
+    ],
+    warns: [],
+    usedBy: [
+      // The one sheet that declares the paper ground. Every paper surface — the edition, and
+      // from the same handoff the score, the practice pages and the Middle — reads the three
+      // voices BY TOKEN from it and carries no hex of its own. On all of them a voice is named
+      // in words beside its hue (a column head, a stave's label, a row's own cell), so the hue
+      // never carries identity alone.
+      'src/styles/paper.css',
+    ],
+  },
 ]
 
 /** Lookup by id — WP6 practice packages add their sets to PALETTES and get the same guards. */

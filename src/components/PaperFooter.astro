@@ -1,0 +1,31 @@
+---
+// The foot of a paper page (2026-10-11, design handoff docs/design_handoff_homepage_ecology).
+//
+// The frame's footer (Footer.astro) is a black island under both themes. A page that stands on
+// the paper ground ends on paper instead: one hairline, the licence line on the left and the
+// house's standing links on the right. Nothing is dropped from the frame's footer but the logo
+// — Offer a seed, Digest, Contact, Impressum, Datenschutz and GitHub are the same six
+// addresses, so the legal pages stay one click from every page whichever footer it wears.
+import '@/styles/paper.css'
+import { SITE } from '@/lib/site'
+import { NAMING } from '@/config/naming'
+
+// The same typed year the frame's footer carries: a build never reads the clock.
+const year = 2026
+---
+
+<footer class="paper-foot">
+  <div class="paper-foot-row">
+    <div class="paper-foot-line">
+      <span>© {year} {SITE.name} · {NAMING.footer.licenseLine}</span>
+      <nav aria-label="Footer">
+        <a href="/seed">Offer a seed</a>
+        <a href="/post#digest">Digest</a>
+        <a href="/contact">Contact</a>
+        <a href="/impressum">Impressum</a>
+        <a href="/datenschutz">Datenschutz</a>
+        <a href={SITE.social.github} target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </div>
+</footer>

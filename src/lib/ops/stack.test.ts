@@ -137,6 +137,23 @@ describe('buildStackSvg', () => {
     }
   })
 
+  it('draws the dots as ellipses where a surface states the radii that come out round at its size', () => {
+    // The stack is drawn with preserveAspectRatio="none": a circle is only round where the panel
+    // has the viewBox's own proportions. The entrance of 2026-10-11 stretches the figure, and
+    // hands in the radii that compensate; without them the markup stays what it was.
+    const snapshot = snapshotOf([ramp(30), ramp(31)])
+    const stretched = buildStackSvg(snapshot, { dot: { rx: 2, ry: 2.4 } })
+    const dots = [...stretched.matchAll(/<ellipse class="ops-dot"[^/]*\/>/g)].map((m) => m[0])
+    expect(dots).toHaveLength(6)
+    for (const dot of dots) {
+      expect(dot).toContain('rx="2" ry="2.4"')
+      expect(dot).toMatch(/data-track="\d+"/)
+      expect(dot).toMatch(/cx="[\d.]+" cy="[\d.]+"/)
+    }
+    expect(stretched).not.toContain('<circle')
+    expect(buildStackSvg(snapshot)).not.toContain('<ellipse')
+  })
+
   it('carries no colour — the palette lives in the stylesheet', () => {
     expect(buildStackSvg(snapshotOf([ramp(30)]))).not.toMatch(/#[0-9a-f]{3,8}|rgba?\(/i)
   })

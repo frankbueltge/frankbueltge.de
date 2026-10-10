@@ -22,8 +22,12 @@ interface Props {
    *  Registers: sie bleiben abrufbar, zeigen aber auf ihre Werk-Seite, weil dort die
    *  Fassungsgeschichte steht und nicht dieselbe Angabe ein zweites Mal. */
   canonicalPath?: string
+  /** The ground a page stands on, where it is not the mono skin. `paper` (2026-10-11) is the
+   *  printed-page ground of the entrance and the research ecology — src/styles/paper.css keys
+   *  every one of its tokens off the attribute this stamps on <html>. */
+  surface?: 'paper'
 }
-const { title, description, noindex, analytics = true, canonicalPath } = Astro.props
+const { title, description, noindex, analytics = true, canonicalPath, surface } = Astro.props
 const locale = (Astro.currentLocale ?? 'en') as Locale
 
 // canonical URL via Astro's config-aware locale URL (single locale, en, unprefixed — site-v2
@@ -72,7 +76,7 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     [data-theme='light'|'dark'], and an unstamped page rendered their SVGs black-on-black
     (WP8 finding, 2026-08-01). The anti-FOUC script below still resolves the real theme
     before first paint and overrides this default. */}
-<html lang={locale} data-skin="mono" data-theme="dark">
+<html lang={locale} data-skin="mono" data-theme="dark" data-surface={surface}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />

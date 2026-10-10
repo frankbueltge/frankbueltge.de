@@ -21,7 +21,6 @@ import { nightlyLine } from '@/lib/engines/nightly-line'
 import { WERKE } from '@/data/werke'
 import encounters from '@/data/begegnungen/register.json'
 import attentionMoments from '@/data/attention/moments.json'
-import { lastArchProtocol } from '@/lib/arch/facts'
 import { lastN1Night, N1_RECORD_HREF, newestN1Page } from '@/lib/n1/works'
 
 /** Which door id drives which practice namespace — the only mapping the board needs, and the
@@ -235,9 +234,9 @@ export function buildBoard(snapshot: PulseSnapshot, works: readonly LatestWork[]
         spark,
         // each card beside the ecology states its last landed output from its OWN record — a
         // third card reading the nightly line's would have put another practice's work on it
+        // (Arch's branch — its newest session protocol — went with its row on 2026-10-11.)
         last:
           spec.card === 'attention' ? lastMoment()
-          : spec.card === 'arch' ? lastArchProtocol()
           : spec.card === 'n-1' ? lastN1()
           : lastNightly(),
       }

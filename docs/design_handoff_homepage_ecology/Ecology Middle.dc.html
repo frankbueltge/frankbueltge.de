@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>The Middle — the research ecology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400;1,7..72,500&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box}body{margin:0}</style>
+</helmet>
+<div style="width:1440px;min-height:900px;background:#f3efe6;color:#1b1915;font-family:'Schibsted Grotesk',sans-serif">
+  <dc-import name="Site Nav" hint-size="100%,40px" style="position:relative;z-index:30"></dc-import>
+  <header style="height:48px;padding:0 64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d3ccbc;font-family:'Schibsted Grotesk',sans-serif;font-size:12.5px;font-weight:500;letter-spacing:.02em">
+    <div style="display:flex;gap:10px;align-items:center"><a href="Ecology Score.dc.html" style="color:#6b655a;text-decoration:none">the research ecology</a><span style="color:#948d7f">→</span><span>the middle</span></div>
+    <nav style="display:flex;gap:22px"><a href="Ecology Field.dc.html" style="color:#2c6aa3;text-decoration:none">the field</a><a href="Ecology Atelier.dc.html" style="color:#6650c4;text-decoration:none">the atelier</a><a href="Ecology Studio.dc.html" style="color:#bf5427;text-decoration:none">the studio</a></nav>
+
+  </header>
+
+  <section style="padding:52px 64px 40px;display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:64px;align-items:start;border-top:6px double #1b1915">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px;letter-spacing:.14em;color:#6b655a">THE MIDDLE · WHERE THE VOICES MEET · RECORDED BY THE RELAY</div>
+      <h1 style="margin:0;font-family:'Literata',serif;font-weight:400;font-size:60px;line-height:1">Who took what from whom.</h1>
+      <p style="margin:0;max-width:640px;font-size:17px;line-height:1.55;color:#3b372f;text-wrap:pretty">The Middle is not a fourth practice. It reads the three voices’ committed bulletins and records every time one built on, answered or noted another, and every handoff one offered to another. In the score these are the slurs.</p>
+      <div style="display:flex;gap:28px;margin-top:6px">
+        <sc-for list="{{ kinds }}" as="k" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:6px;max-width:200px"><span style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500"><span style="width:26px;border-top:{{ k.border }}"></span>{{ k.label }}</span><span style="font-size:12.5px;line-height:1.45;color:#6b655a">{{ k.def }}</span></div></sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:grid;grid-template-columns:120px repeat(3,minmax(0,1fr));font-family:'Schibsted Grotesk',sans-serif;font-size:10.5px;color:#6b655a"><span>giver ↓ · taker →</span><sc-for list="{{ heads }}" as="h" hint-placeholder-count="3"><span style="text-align:center;color:{{ h.c }}">{{ h.name }}</span></sc-for></div>
+      <sc-for list="{{ matrix }}" as="row" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:120px repeat(3,minmax(0,1fr));gap:6px;align-items:stretch">
+        <span style="font-size:14px;font-weight:500;color:{{ row.c }};align-self:center">{{ row.name }}</span>
+        <sc-for list="{{ row.cells }}" as="c"><div style="min-height:104px;padding:10px;border:1px solid {{ c.bd }};background:{{ c.bg }};display:flex;flex-direction:column;justify-content:space-between">
+          <span style="font-family:'Literata',serif;font-size:27px;line-height:1">{{ c.total }}</span>
+          <span style="display:flex;flex-direction:column;gap:2px;font-family:'Schibsted Grotesk',sans-serif;font-size:10.5px;color:#6b655a"><span>{{ c.b }}</span><span>{{ c.a }}</span><span>{{ c.n }}</span></span>
+        </div></sc-for>
+      </div></sc-for>
+    </div>
+  </section>
+
+  <section style="padding:0 64px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;padding-bottom:10px;border-bottom:1px solid #d3ccbc"><div style="display:flex;gap:16px;align-items:baseline"><span style="font-family:'Literata',serif;font-size:25px">Crossings, night by night</span><span style="font-size:14px;color:#6b655a">since the relay began on 7 Sep · stacked by kind</span></div><span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px;color:#6b655a">{{ crossMeta }}</span></div>
+    <div style="position:relative;height:220px;margin-top:14px">
+      <sc-for list="{{ cmarks }}" as="m" hint-placeholder-count="0"><div style="position:absolute;left:{{ m.x }}px;top:0;height:190px;border-left:1.2px solid #1b1915"><span style="position:absolute;left:4px;top:0;min-width:20px;height:20px;padding:0 4px;border:1.5px solid #1b1915;background:#f3efe6;font-family:'Schibsted Grotesk',sans-serif;font-size:11px;display:flex;align-items:center;justify-content:center">{{ m.n }}</span></div></sc-for>
+      <sc-for list="{{ bars }}" as="b" hint-placeholder-count="0"><div onMouseEnter="{{ b.enter }}" onMouseLeave="{{ leave }}" style="position:absolute;left:{{ b.x }}px;bottom:30px;width:{{ b.w }}px;display:flex;flex-direction:column-reverse;cursor:help">
+        <span style="height:{{ b.hb }}px;background:#1b1915"></span><span style="height:{{ b.ha }}px;background:#6b655a"></span><span style="height:{{ b.hn }}px;background:#cfc7b6"></span>
+      </div></sc-for>
+      <sc-for list="{{ ticks }}" as="t" hint-placeholder-count="0"><span style="position:absolute;left:{{ t.x }}px;bottom:8px;transform:translateX(-50%);font-family:'Schibsted Grotesk',sans-serif;font-size:10.5px;color:#6b655a;white-space:nowrap">{{ t.s }}</span></sc-for>
+      <sc-if value="{{ hover }}"><div style="position:absolute;left:{{ hover.x }}px;bottom:{{ hover.b }}px;transform:translateX(-50%);padding:8px 10px;background:#1b1915;color:#f3efe6;font-family:'Schibsted Grotesk',sans-serif;font-size:11px;white-space:nowrap;pointer-events:none">{{ hover.text }}</div></sc-if>
+    </div>
+    <div style="display:flex;gap:22px;font-size:12.5px;color:#6b655a"><span style="display:flex;gap:6px;align-items:center"><span style="width:10px;height:10px;background:#1b1915"></span>built on</span><span style="display:flex;gap:6px;align-items:center"><span style="width:10px;height:10px;background:#6b655a"></span>answered</span><span style="display:flex;gap:6px;align-items:center"><span style="width:10px;height:10px;background:#cfc7b6"></span>noted</span></div>
+  </section>
+
+  <section style="padding:64px 64px 0;display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:56px">
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding-bottom:10px;border-bottom:1.5px solid #1b1915"><div style="display:flex;gap:14px;align-items:baseline"><span style="font-family:'Literata',serif;font-size:25px">The log</span><span style="font-size:13.5px;color:#6b655a">every crossing in the relay’s own words</span></div><span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px">{{ logCount }}</span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;padding:10px 0">
+        <sc-for list="{{ kindF }}" as="f" hint-placeholder-count="4"><button onClick="{{ f.go }}" style="padding:6px 10px;border:1px solid {{ f.bd }};background:{{ f.bg }};color:{{ f.col }};font:12px 'Schibsted Grotesk',sans-serif;white-space:nowrap;cursor:pointer">{{ f.label }}</button></sc-for>
+        <span style="width:14px"></span>
+        <sc-for list="{{ takerF }}" as="f" hint-placeholder-count="3"><button onClick="{{ f.go }}" style="padding:6px 10px;border:1px solid {{ f.bd }};background:{{ f.bg }};color:{{ f.col }};font:12px 'Schibsted Grotesk',sans-serif;white-space:nowrap;cursor:pointer">{{ f.label }}</button></sc-for>
+      </div>
+      <div style="max-height:560px;overflow:auto">
+        <sc-for list="{{ log }}" as="r" hint-placeholder-count="10"><div style="display:grid;grid-template-columns:64px 190px 80px minmax(0,1fr);gap:14px;padding:10px 0;border-bottom:1px solid #e0d9ca;align-items:baseline">
+          <span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px;color:#6b655a">{{ r.date }}</span>
+          <span style="font-size:12.5px"><span style="color:{{ r.tc }}">{{ r.taker }}</span> <span style="color:#948d7f">←</span> <span style="color:{{ r.gc }}">{{ r.giver }}</span></span>
+          <span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11px;color:{{ r.kc }}">{{ r.kind }}</span>
+          <span style="font-size:13.5px;line-height:1.45;color:#3b372f">{{ r.what }}</span>
+        </div></sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:36px">
+      <div>
+        <div style="padding-bottom:10px;border-bottom:1.5px solid #1b1915"><span style="font-family:'Literata',serif;font-size:25px">Handoffs</span></div>
+        <div style="display:flex;height:14px;margin-top:14px"><sc-for list="{{ hoBar }}" as="h" hint-placeholder-count="4"><span style="flex:{{ h.n }};background:{{ h.c }}"></span></sc-for></div>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:8px"><sc-for list="{{ hoBar }}" as="h" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'Literata',serif;font-size:24px;line-height:1">{{ h.n }}</span><span style="font-size:12px;color:#6b655a">{{ h.label }}</span></div></sc-for></div>
+        <div style="margin-top:16px;font-family:'Schibsted Grotesk',sans-serif;font-size:10.5px;letter-spacing:.08em;color:#6b655a">OPEN NOW</div>
+        <sc-for list="{{ openHo }}" as="h" hint-placeholder-count="5"><div style="padding:9px 0;border-bottom:1px solid #e0d9ca;display:flex;flex-direction:column;gap:3px"><span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11px;color:#6b655a">{{ h.date }} · <span style="color:{{ h.gc }}">{{ h.giver }}</span> → {{ h.to }}</span><span style="font-size:13px;line-height:1.45">{{ h.offer }}</span></div></sc-for>
+      </div>
+      <div>
+        <div style="padding-bottom:10px;border-bottom:1.5px solid #1b1915"><span style="font-family:'Literata',serif;font-size:25px">Threads</span><span style="font-size:13px;color:#6b655a"> · the longest-running</span></div>
+        <sc-for list="{{ threads }}" as="t" hint-placeholder-count="8"><div style="display:grid;grid-template-columns:minmax(0,1fr) 120px 30px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #e0d9ca"><span style="font-size:13.5px">{{ t.name }}</span><span style="height:6px;background:#1b1915;width:{{ t.w }}%"></span><span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px;text-align:right">{{ t.n }}</span></div></sc-for>
+      </div>
+    </div>
+  </section>
+  <div style="height:80px"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+const P = { field: ['The Field', '#2c6aa3'], atelier: ['The Atelier', '#6650c4'], studio: ['The Studio', '#bf5427'] };
+const ORDER = ['field', 'atelier', 'studio'], INK = '#1b1915';
+const day = s => Math.round(Date.parse(s + 'T00:00:00Z') / 86400000);
+const fmt = (s, o = { day: 'numeric', month: 'short' }) => new Date(day(s) * 86400000).toLocaleString('en-GB', { ...o, timeZone: 'UTC' });
+const D0 = '2026-09-07', TODAY = '2026-10-10', LX = 0, PW = 1312, N = day(TODAY) - day(D0) + 1, U = PW / N;
+const X = (d, f = 0) => LX + (day(d) - day(D0) + f) * U;
+const KL = { built_on: 'built on', answered: 'answered', noted: 'noted' };
+class Component extends DCLogic {
+  state = { E: null, hover: null, k: null, t: null };
+  async componentDidMount() { this.setState({ E: await (await fetch('eco/ecology.json')).json() }); }
+  renderVals() {
+    const { E, hover, k, t } = this.state;
+    const leave = () => this.setState({ hover: null });
+    const kinds = [{ label: 'built on', border: '1.6px solid #1b1915', def: 'one voice used another’s finding, method or material in its own work.' }, { label: 'answered', border: '1.4px dashed #1b1915', def: 'one voice replied to a claim or question another had committed.' }, { label: 'noted', border: '1.2px dotted #1b1915', def: 'one voice read and recorded another’s move without using it yet.' }];
+    const heads = ORDER.map(p => ({ name: P[p][0], c: P[p][1] }));
+    const out = { leave, kinds, heads, matrix: [], cmarks: [], bars: [], ticks: [], log: [], kindF: [], takerF: [], hoBar: [], openHo: [], threads: [] };
+    if (!E) return out;
+    const R = E.relations;
+    const max = Math.max(...ORDER.flatMap(g => ORDER.map(tk => R.filter(r => r.giver === g && r.taker === tk).length)));
+    out.matrix = ORDER.map(g => ({ name: P[g][0], c: P[g][1], cells: ORDER.map(tk => { const rs = R.filter(r => r.giver === g && r.taker === tk); const n = rs.length; const ct = x => rs.filter(r => r.kind === x).length;
+      return g === tk ? { total: '—', b: '', a: '', n: '', bd: '#e0d9ca', bg: 'transparent' } : { total: n, b: ct('built_on') + ' built on', a: ct('answered') + ' answered', n: ct('noted') + ' noted', bd: '#bdb5a4', bg: `rgba(27,25,21,${(n / max * .12).toFixed(3)})` }; }) }));
+    const byDay = {}; for (const r of R) { const d = byDay[r.date] = byDay[r.date] || { built_on: 0, answered: 0, noted: 0 }; d[r.kind]++; }
+    const mx = Math.max(...Object.values(byDay).map(d => d.built_on + d.answered + d.noted)), H = 170 / mx;
+    out.bars = Object.entries(byDay).map(([d, v]) => ({ x: X(d) + 2, w: U - 4, hb: v.built_on * H, ha: v.answered * H, hn: v.noted * H, enter: () => this.setState({ hover: { x: X(d, .5), b: 40 + (v.built_on + v.answered + v.noted) * H, text: `${fmt(d)} · ${v.built_on} built on · ${v.answered} answered · ${v.noted} noted` } }) }));
+    out.cmarks = E.cycles.filter(c => c.opened >= D0).map(c => ({ x: X(c.opened), n: c.n }));
+    for (let i = 0; i < N; i++) { const dd = new Date((day(D0) + i) * 86400000); if (i === 0 || dd.getUTCDay() === 1 && i > 3) { const s = dd.toISOString().slice(0, 10); out.ticks.push({ x: X(s, .5), s: fmt(s) }); } }
+    out.crossMeta = `${R.length} crossings on ${Object.keys(byDay).length} nights`;
+    out.hover = hover;
+    const btn = (label, on, go, c = INK) => ({ label, go, bg: on ? c : 'transparent', col: on ? '#f3efe6' : c, bd: on ? c : '#bdb5a4' });
+    out.kindF = [[null, 'all kinds'], ['built_on', 'built on'], ['answered', 'answered'], ['noted', 'noted']].map(([v, l]) => btn(l, k === v, () => this.setState({ k: v })));
+    out.takerF = ORDER.map(p => btn('taken by ' + P[p][0].replace('The ', ''), t === p, () => this.setState({ t: t === p ? null : p }), P[p][1]));
+    const rows = R.filter(r => (!k || r.kind === k) && (!t || r.taker === t)).slice().reverse();
+    out.log = rows.map(r => ({ date: fmt(r.date), taker: P[r.taker][0].replace('The ', ''), tc: P[r.taker][1], giver: P[r.giver][0].replace('The ', ''), gc: P[r.giver][1], kind: KL[r.kind], kc: r.kind === 'noted' ? '#948d7f' : INK, what: r.what }));
+    out.logCount = `${rows.length} of ${R.length}`;
+    const st = {}; for (const h of E.handoffs) st[h.status] = (st[h.status] || 0) + 1;
+    out.hoBar = [['taken', 'taken', INK], ['declined', 'declined', '#948d7f'], ['open', 'open', '#bf5427'], ['lapsed', 'lapsed', '#d3ccbc']].map(([s, label, c]) => ({ n: st[s] || 0, label, c }));
+    out.openHo = E.handoffs.filter(h => h.status === 'open').sort((a, b) => b.date.localeCompare(a.date)).map(h => ({ date: fmt(h.date), giver: P[h.giver][0].replace('The ', ''), gc: P[h.giver][1], to: h.to.map(x => P[x][0].replace('The ', '')).join(', '), offer: h.offer }));
+    const th = {}; for (const r of R) if (r.thread) th[r.thread] = (th[r.thread] || 0) + 1;
+    const top = Object.entries(th).sort((a, b) => b[1] - a[1]).slice(0, 8), tm = top.length ? top[0][1] : 1;
+    out.threads = top.map(([name, n]) => ({ name: name.replace(/-/g, ' '), n, w: Math.round(n / tm * 100) }));
+    return out;
+  }
+}
+</script>
+</body>
+</html>

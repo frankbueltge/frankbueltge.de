@@ -140,6 +140,18 @@ const ridgeCurve = d3Line<{ x: number; y: number }>()
   .digits(1)
 const polyline = (pts: { x: number; y: number }[]): string => ridgeCurve(pts) ?? ''
 
+export interface StackOptions {
+  /**
+   * Draw each wandering dot as an ellipse with these radii (in viewBox units) instead of the
+   * default circle. The stack is drawn with preserveAspectRatio="none", so a circle is only
+   * round where the panel happens to have the viewBox's own proportions; a surface that
+   * stretches the figure states the radii that come out round at ITS size (the entrance of
+   * 2026-10-11: 1312 × 240 px for a 1000 × 220 box, hence rx 2, ry 2.4). Left out, the markup
+   * is byte for byte what it was — the board on /now keeps its circles.
+   */
+  dot?: { rx: number; ry: number }
+}
+
 /**
  * The stack as SVG markup. Two paths per line:
  *   · the drawn ridge — filled with the panel ground so it occludes what is behind it;
@@ -153,9 +165,9 @@ const polyline = (pts: { x: number; y: number }[]): string => ridgeCurve(pts) ??
  * after the ridge it walks, so every nearer ridge occludes it exactly as it occludes the line
  * itself. Occlusion is the figure's one law, and the dots live under it too.
  */
-export function buildStackSvg(snapshot: PulseSnapshot): string {
+export function buildStackSvg(snapshot: PulseSnapshot, opts: StackOptions = {}): string {
   const lines = buildStackLines(snapshot)
-  const dots = buildDots(lines)
+  const dots = buildDots(lines, opts.dot)
   const parts: string[] = []
   // where in its week a half begins, in bins — the readout turns (offset + bin) into a weekday
   // and an hour, so it needs the same split buildStackLines used
@@ -206,7 +218,7 @@ export function buildStackSvg(snapshot: PulseSnapshot): string {
  * this function's call: buildStackSvg interleaves each dot behind the ridges in front of its
  * line, so the stack's occlusion applies to the dots too.
  */
-function buildDots(lines: readonly StackLine[]): { track: number; svg: string }[] {
+function buildDots(lines: readonly StackLine[], shape?: StackOptions['dot']): { track: number; svg: string }[] {
   if (lines.length === 0) return []
   const cfg = [
     { at: 0.95, speed: 0.021, phase: 0.1, opacity: 0.95 },
@@ -221,11 +233,13 @@ function buildDots(lines: readonly StackLine[]): { track: number; svg: string }[
     // the dots stay spread however many lines the snapshot produced.
     const track = Math.min(lines.length - 1, Math.round(d.at * (lines.length - 1)))
     const p = pointAt(lines[track], d.phase)
+    const mark = shape ? `ellipse` : `circle`
+    const radii = shape ? `rx="${shape.rx}" ry="${shape.ry}"` : `r="2.4"`
     return {
       track,
       svg:
-        `<circle class="ops-dot" id="ops-dot-${i}" data-track="${track}" data-speed="${d.speed}" ` +
-        `data-phase="${d.phase}" r="2.4" opacity="${d.opacity}" cx="${fmt(p.x)}" cy="${fmt(p.y)}"/>`,
+        `<${mark} class="ops-dot" id="ops-dot-${i}" data-track="${track}" data-speed="${d.speed}" ` +
+        `data-phase="${d.phase}" ${radii} opacity="${d.opacity}" cx="${fmt(p.x)}" cy="${fmt(p.y)}"/>`,
     }
   })
 }

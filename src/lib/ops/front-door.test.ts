@@ -9,10 +9,13 @@
 // Lineage on this one day: FrontDoor.astro became the entrance in the morning; in the evening
 // Frank's decision (wording private) brought the ops room back, and FrontDoor.astro stays in the
 // repo unlinked — reachable through Git, mounted nowhere. /now keeps the board page as built.
+// 2026-10-11: the entrance is HomeEdition.astro (design handoff docs/design_handoff_homepage_
+// ecology); OpsRoom.astro joins FrontDoor.astro in the repo, unlinked and dated.
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { GLOBE } from '@/config/globe-wording'
+import { EDITION } from '@/config/edition-wording'
 import { NAMING } from '@/config/naming'
 import { buildHouseFeed } from './live-feed'
 
@@ -65,12 +68,15 @@ describe('the full-board promise the homepage link makes stays true', () => {
   })
 })
 
-describe('the signal log’s two cuts (Frank, 2026-10-05)', () => {
-  const opsRoom = read('../../components/pages/OpsRoom.astro')
+describe('the stream’s two surfaces (Frank, 2026-10-05; the entrance redrawn 2026-10-11)', () => {
+  const edition = read('../../components/pages/HomeEdition.astro')
 
-  it('shows the newest twenty on the entrance, all in view — one page, so no pager', () => {
-    expect(opsRoom).toContain('topOf(buildHouseFeed(), FEED_TOP)')
-    expect(opsRoom).toContain('pageSize={FEED_TOP}')
+  it('lists the entrance’s arrivals from the house-wide stream, by day', () => {
+    // The ops room showed the newest twenty rows; the edition lists what arrived since a
+    // reference point, grouped by day and cut to a few rows each (src/lib/ops/edition.ts).
+    // Either way it is the one stream, never a second derivation.
+    expect(edition).toContain('buildHouseFeed()')
+    expect(edition).toContain('sinceDays(feed,')
   })
 
   it('carries the longer log on /now, paged', () => {
@@ -78,28 +84,56 @@ describe('the signal log’s two cuts (Frank, 2026-10-05)', () => {
     expect(nowBoard).not.toContain('pageSize={FEED_TOP}')
   })
 
-  it('links the entrance’s log to the longer one, and the link goes to /now', () => {
-    expect(NAMING.opsRoom.signal.link.href).toMatch(/^\/now#latest$/)
+  it('links the entrance’s arrivals to the longer log, and the link goes to /now', () => {
+    expect(EDITION.arrivals.link.href).toMatch(/^\/now#latest$/)
     // through the fragment-aware helper: the locale helper alone writes `/now#latest/`, and misses.
-    // Since 2026-10-05 every link in the room takes that path (src/lib/locale-href.ts).
-    expect(opsRoom).toContain('url(OPS.signal.link.href)')
-    expect(opsRoom).toContain('localeHref(href,')
+    // Since 2026-10-05 every link on the entrance takes that path (src/lib/locale-href.ts).
+    expect(edition).toContain('url(E.arrivals.link.href)')
+    expect(edition).toContain('localeHref(href,')
     expect(nowBoard).toContain('id="latest"')
   })
 })
 
-describe('the front page mounts the ops room', () => {
-  // The eyebrow guard in naming.test.ts reads OpsRoom.astro; this is what keeps that guard
-  // honest — if the page ever mounts something else, one of the two fails.
-  it('imports OpsRoom.astro and mounts nothing else as the entrance', () => {
-    expect(indexPage).toContain('@/components/pages/OpsRoom.astro')
-    expect(indexPage).toContain('<OpsRoom />')
+describe('the front page mounts the edition', () => {
+  // The name guard in naming.test.ts reads the top bar and the page layout; this is what keeps
+  // the other half honest — the front page mounts exactly one entrance, and it is this one.
+  it('imports HomeEdition.astro and mounts nothing else as the entrance', () => {
+    expect(indexPage).toContain('@/components/pages/HomeEdition.astro')
+    expect(indexPage).toContain('<HomeEdition />')
+    expect(indexPage).not.toContain('<OpsRoom />')
     expect(indexPage).not.toContain('<FrontDoor />')
   })
 
-  it('keeps the front door in the repo, dated, rather than deleting it', () => {
+  it('stands on the paper ground', () => {
+    expect(indexPage).toContain('surface="paper"')
+  })
+
+  it('keeps the earlier entrances in the repo, dated, rather than deleting them', () => {
     expect(frontDoor.length).toBeGreaterThan(0)
     expect(indexPage).toContain('FrontDoor.astro stays in the repo')
+    expect(read('../../components/pages/OpsRoom.astro').length).toBeGreaterThan(0)
+    expect(indexPage).toContain('OpsRoom.astro stays in the repo')
+  })
+
+  it('keeps the three properties the ops room was built to keep', () => {
+    const edition = read('../../components/pages/HomeEdition.astro')
+    expect(edition).toContain('NO NUMBER IS TYPED')
+    expect(edition).toContain('NO CLIENT DATA FETCHING')
+    expect(edition).toContain('ABSENCE IS DRAWN')
+    // and the second of them is true of the script: it asks the network for nothing
+    const script = edition.slice(edition.indexOf('<script>'))
+    expect(script).not.toMatch(/\bfetch\(|XMLHttpRequest|EventSource|WebSocket|sendBeacon/)
+  })
+
+  it('writes to the reader’s browser only through the opt-in entry', () => {
+    // § 25 TDDDG: storage on the device without consent only for what the reader expressly asked
+    // for. The script may touch local storage in exactly two places — the load, which writes
+    // only where an entry already exists, and the button — and under exactly one key.
+    const edition = read('../../components/pages/HomeEdition.astro')
+    const script = edition.slice(edition.indexOf('<script>'))
+    expect(script).not.toMatch(/sessionStorage|document\.cookie|indexedDB/)
+    for (const call of script.match(/localStorage\.\w+\([^)]*\)/g) ?? []) expect(call).toContain('VISITS_KEY')
+    expect(script).toContain('if (stored) {')
   })
 
   // The sky and the water stood under the hero from 2026-09-02: a turning globe first, then the

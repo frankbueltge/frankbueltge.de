@@ -49,6 +49,10 @@ const datenschutzDe: LegalPage = {
     { heading: 'Hosting', paragraphs: ['Gehostet über Cloudflare Pages (Cloudflare, Inc.). Beim Aufruf werden technisch notwendige Server-Logs verarbeitet (Art. 6 Abs. 1 lit. f DSGVO).'] },
     { heading: 'Schriftarten', paragraphs: ['Schriftarten werden lokal ausgeliefert (self-hosted). Keine Übertragung an Dritte.'] },
     { heading: 'Cookies & Reichweitenmessung', paragraphs: ['Diese Seite setzt keine Tracking-Cookies und kein geräteübergreifendes Tracking. Zur anonymen Reichweitenmessung kommt Umami zum Einsatz — cookielos, ohne Fingerprinting und ohne personenbezogene Profile. Umami wird first-party über einen Proxy auf dieser Domain ausgeliefert (Endpunkt /stats), sodass der Browser keine Drittanbieter-Anfrage stellt; der Proxy leitet die aggregierten Zugriffsdaten serverseitig an eine selbst betriebene Umami-Instanz auf eigener EU-Infrastruktur (Frankfurt, Vercel + Neon) weiter — kein Drittland-Transfer. Erfasst werden nur aggregierte Kennzahlen wie Seitenaufrufe, Referrer (Herkunft), Länder und Gerätetypen; die IP-Adresse wird zur Länderbestimmung übertragen und nur gehasht verarbeitet, nicht gespeichert (Art. 6 Abs. 1 lit. f DSGVO).'] },
+    // 2026-10-11, with the entrance's "since your last visit" (src/lib/ops/since.ts). The wording
+    // follows the line proposed in the design handoff of that day; whether the opt-in satisfies
+    // § 25 TDDDG as intended is for a lawyer to confirm, not for this file to assert.
+    { heading: 'Startseite: „remember my visits“', paragraphs: ['Nur wenn du diese Funktion auf der Startseite einschaltest, speichert die Seite im lokalen Speicher deines Browsers einen Zeitstempel deines letzten Besuchs, um zu markieren, was seitdem neu ist. Er wird nicht an uns übertragen, es wird kein Cookie gesetzt, und ein weiterer Klick auf dieselbe Schaltfläche löscht ihn wieder. Ohne Einschalten wird nichts gespeichert.'] },
     {
       heading: 'Öffentliche Saat (/seed)',
       paragraphs: [
@@ -93,6 +97,7 @@ const datenschutzEn: LegalPage = {
     { heading: 'Hosting', paragraphs: ['Hosted on Cloudflare Pages (Cloudflare, Inc.). Technically necessary server logs are processed on access (Art. 6(1)(f) GDPR).'] },
     { heading: 'Fonts', paragraphs: ['Fonts are served locally (self-hosted). No data sent to third parties.'] },
     { heading: 'Cookies & analytics', paragraphs: ['This site sets no tracking cookies and does no cross-device tracking. For anonymous reach measurement it uses Umami — cookieless, without fingerprinting and without personal profiles. Umami is served first-party through a proxy on this domain (the /stats endpoint), so the browser makes no third-party request; the proxy forwards the aggregated request data server-side to our own self-hosted Umami instance on EU infrastructure (Frankfurt, Vercel + Neon) — no third-country transfer. Only aggregate metrics such as page views, referrers (origin), countries and device types are collected; the IP address is transmitted for country lookup and processed only in hashed form, not stored (Art. 6(1)(f) GDPR).'] },
+    { heading: 'Homepage: “remember my visits”', paragraphs: ['Only if you switch this feature on, on the homepage, does the page store a timestamp of your last visit in your browser’s local storage, to mark what is new since then. It is not transmitted to us, no cookie is set, and one more click on the same button deletes it. Unless you switch it on, nothing is stored.'] },
     {
       heading: 'Public seeding (/seed)',
       paragraphs: [

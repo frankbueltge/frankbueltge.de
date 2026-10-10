@@ -1,0 +1,719 @@
+---
+// The entrance, as an edition (2026-10-11) — docs/design_handoff_homepage_ecology/README.md §2
+// (the desk) and §3 (the phone). It replaces OpsRoom.astro, which stays in the repo unlinked:
+// Git is the archive, so the previous entrance lives in its own file and in this lineage's
+// history, not in commented blocks. /now keeps the ops room's board whole (NowBoard.astro).
+//
+// What the ops room asked a visitor to do was read instruments. This page says the same things
+// in the order a front page would: the standing question as its title, the commit pulse under
+// it, one line about what is new since yesterday (or since the reader's own last visit, if they
+// ask for that), the research ecology's running cycle as the lead beside a timetable of who
+// worked when, then the other houses, the live readings, the arrivals, and an index.
+//
+// The three properties the ops room was built to keep are kept, and the page's tests hold them
+// (src/lib/ops/front-door.test.ts, src/config/edition-wording.test.ts):
+//
+//   · NO NUMBER IS TYPED. Every figure — counts, dates, hours, the week range, the repository
+//     count, every readout — is derived at build time by src/lib/ops/* from a committed record.
+//     Copy that wraps a number is a function in EDITION or NAMING taking it as its argument;
+//     the two sentences the script has to write are templates it fills.
+//   · NO CLIENT DATA FETCHING. Everything is in the HTML. The script moves two things that are
+//     time, not data — the UTC clock and the dots walking the pulse (not under
+//     prefers-reduced-motion) — answers the pointer, and, only for a reader who switched
+//     "remember my visits" on, re-marks what is new against a timestamp kept in their own
+//     browser (src/lib/ops/since.ts has the rule and the reason it is opt-in).
+//   · ABSENCE IS DRAWN. A system that ran on no day of the week still has its row of dots; a
+//     practice with nothing on the running question says so; a tile whose snapshot yields no
+//     reading is not rendered at all rather than shown with a placeholder.
+//
+// The person's name does not stand in this component: since 2026-10-11 it is the left end of
+// the top bar on every page (TopBar.astro renders NAMING.eyebrow), which is where the repair of
+// 2026-08-12 now lives — naming.test.ts follows it there.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { localeHref } from '@/lib/locale-href'
+import type { Locale } from '@/lib/site'
+import { NAMING } from '@/config/naming'
+import { EDITION } from '@/config/edition-wording'
+import pulseData from '@/data/pulse/pulse.json'
+import type { PulseSnapshot } from '@/lib/pulse/render'
+import { RETIRED_REPOS, withoutRepos } from '@/lib/pulse/without'
+import { buildStackSvg, stackWeekRange } from '@/lib/ops/stack'
+import { buildBoard } from '@/lib/ops/board'
+import { houseNames, type HouseId } from '@/lib/ops/house-feed'
+import { buildHouseFeed } from '@/lib/ops/live-feed'
+import { readTiles } from '@/lib/ops/tiles'
+import { buildTimetable, stripPath } from '@/lib/ops/timetable'
+import {
+  arrivalsByDay,
+  daysBefore,
+  editionInstant,
+  lineOf,
+  newestOf,
+  newestPieces,
+  sinceDays,
+  withoutHouseSuffix,
+  type PracticeHouse,
+} from '@/lib/ops/edition'
+import { arrivedAfter, counted, DAY_MS, dayOf, dayReaches, fill, longDate, longDay, shortDay, startOf } from '@/lib/ops/since'
+import { loadCycle } from '@/lib/ecology/v3'
+import { getLatestProtokoll } from '@/lib/protokoll/data'
+import '@fontsource-variable/literata/opsz-italic.css'
+import '@/styles/paper.css'
+import '@/styles/edition.css'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+/** Fragments survive the locale helper: src/lib/locale-href.ts. */
+const url = (href: string) => localeHref(href, (path) => getRelativeLocaleUrl(locale, path))
+
+const OPS = NAMING.opsRoom
+const E = EDITION
+
+// ── the records ───────────────────────────────────────────────────────────────────────────────
+// The pulse as this page shows it: without the repositories of systems that left the entrance.
+const pulse = withoutRepos(pulseData as PulseSnapshot, RETIRED_REPOS)
+// 1312 × 240 px at the handoff's width for a 1000 × 220 box: these radii come out round there.
+const stackSvg = buildStackSvg(pulse, { dot: { rx: 2, ry: 2.4 } })
+const feed = buildHouseFeed()
+const cycle = loadCycle()
+const tiles = readTiles({ protokoll: await getLatestProtokoll() })
+
+// ── the edition: its instant, its day, and the default reference point a day before ─────────
+const editionMs = editionInstant(feed, pulse.as_of)
+const editionDay = dayOf(editionMs)
+const yesterdayRef = editionMs - DAY_MS
+
+// ── the systems: the board's rows, and the row this site keeps for itself ───────────────────
+// Names, addresses, status words and relation lines are the board's (src/lib/ops/board.ts reads
+// them from NAMING.doors and NAMING.overview); the repository is the board spec's. Which
+// houses of the feed speak for a system that is not one of the ecology's practices is the one
+// mapping written here: the feed files the lab's readings and the catalogues' days under two
+// houses, and both are this site's own nightly jobs.
+const boardRows = new Map(buildBoard(pulse).flatMap((g) => g.rows).map((r) => [r.id, r]))
+const FEED_HOUSES: Record<string, HouseId[]> = {
+  attention: ['attention'],
+  'nightly-line': ['nightly-line'],
+  'n-1': ['n-1'],
+  site: ['lab', 'catalogues'],
+}
+const systems = [
+  ...OPS.board.groups.flatMap((group, g) =>
+    group.rows.map((spec) => {
+      const id = 'door' in spec ? spec.door : spec.card
+      const row = boardRows.get(id)!
+      return { id, name: row.name, href: row.href, repo: spec.repo, status: row.status, relation: row.resident, ecology: g === 0, boardLast: row.last }
+    }),
+  ),
+  { ...E.timetable.site, ecology: false, boardLast: null },
+]
+
+// ── the timetable ─────────────────────────────────────────────────────────────────────────────
+const TABLE_DAYS = 7
+const table = buildTimetable(pulse, systems.map((s) => s.repo), TABLE_DAYS)
+const pad = (n: number) => String(n).padStart(2, '0')
+const timetable = systems.map((sys, i) => ({
+  ...sys,
+  commits: table.rows[i].commits,
+  cells: table.rows[i].cells.map((cell) => ({
+    date: cell.date,
+    none: cell.from === null,
+    text: cell.from === null || cell.to === null ? E.timetable.none : E.timetable.span(cell.from, cell.to),
+    strip: stripPath(cell.blocks),
+    isNew: dayReaches(cell.date, yesterdayRef),
+    readout: E.timetable.readout({
+      name: sys.name,
+      day: longDay(cell.date),
+      commits: cell.commits,
+      active: cell.active.length,
+      perDay: table.blocksPerDay,
+      blockHours: table.blockHours,
+      hours: cell.active.map((b) => pad(b * table.blockHours)),
+    }),
+  })),
+}))
+const newestDay = table.days.at(-1)
+/** the footnote around the phrase the script swaps per mode */
+const footParts = (template: string) => {
+  const [before, after = ''] = template.split('{shade}')
+  return { before, after }
+}
+const footDesk = footParts(E.timetable.foot({ blockHours: table.blockHours }))
+const footPhone = footParts(E.timetable.footStrip({ perDay: table.blocksPerDay, blockHours: table.blockHours }))
+
+// ── the lead ──────────────────────────────────────────────────────────────────────────────────
+const names = houseNames()
+const PRACTICES: PracticeHouse[] = ['atelier', 'field', 'studio']
+const pieces = newestPieces(feed, PRACTICES, cycle.opened)
+const age = Math.round((startOf(editionDay) - startOf(cycle.opened)) / DAY_MS)
+const when = (date: string) =>
+  date === editionDay ? E.lead.when.today : date === daysBefore(editionDay, 1) ? E.lead.when.yesterday : longDay(date)
+const briefs = PRACTICES.map((practice) => {
+  const piece = pieces[practice]
+  return {
+    practice,
+    house: names[practice],
+    piece: piece && { title: withoutHouseSuffix(piece.title, names[practice]), kind: piece.kind, when: when(piece.date), href: piece.href },
+  }
+})
+const landed = briefs.filter((b) => b.piece).length
+
+// ── house by house: every system that is not one of the ecology's four ──────────────────────
+const isDay = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s)
+const houses = timetable
+  .filter((sys) => !sys.ecology)
+  .map((sys) => {
+    // The newest thing the house has in the stream, unless its board row names something newer
+    // (a row may read a record the stream does not carry).
+    const streamed = newestOf(feed, FEED_HOUSES[sys.id] ?? [])
+    const board = sys.boardLast
+    const boardDay = board && isDay(board.meta) ? board.meta : null
+    const last =
+      streamed && (!boardDay || streamed.date >= boardDay)
+        ? { text: lineOf(streamed), day: streamed.date }
+        : board
+          ? { text: board.title, day: boardDay }
+          : null
+    return {
+      ...sys,
+      last,
+      meta: E.overnight.meta({ day: last?.day ? longDay(last.day) : null, commits: sys.commits, days: table.days.length, relation: sys.relation }),
+    }
+  })
+
+// ── what arrived ──────────────────────────────────────────────────────────────────────────────
+// Listed row by row for two weeks, seven to a day; counted per day for sixty, so a reader who
+// was away for a month still gets a true number in the sentence above.
+const LIST_DAYS = 14
+const COUNT_DAYS = 60
+const PER_DAY = 7
+const listFrom = daysBefore(editionDay, LIST_DAYS - 1)
+const countFrom = daysBefore(editionDay, COUNT_DAYS - 1)
+const days = sinceDays(feed, listFrom, PER_DAY).map((day) => ({ ...day, isNew: arrivedAfter(day.date, yesterdayRef) }))
+const counts = arrivalsByDay(feed, countFrom)
+const arrivedSinceYesterday = Object.entries(counts).reduce((sum, [day, n]) => (arrivedAfter(day, yesterdayRef) ? sum + n : sum), 0)
+const sinceLine = fill(arrivedSinceYesterday > 0 ? E.since.yesterday : E.since.yesterdayNone, {
+  arrivals: counted(arrivedSinceYesterday, E.since.arrival),
+})
+
+// ── the index ─────────────────────────────────────────────────────────────────────────────────
+const index = [
+  ...NAMING.catalogues.items.map((c) => ({ kind: E.index.catalogue, name: c.name, line: c.short, href: url(c.href), external: false })),
+  ...NAMING.travel.items.map((h) => ({ kind: E.index.house, name: h.name, line: h.short, href: h.href, external: true })),
+]
+
+// ── what the script needs: numbers it re-counts from, and the words it fills ────────────────
+const forScript = {
+  edition: editionMs,
+  counts,
+  /** the day before the oldest day counted / listed: a reference day earlier than this lies
+   *  beyond what the page can count / list */
+  countFloor: daysBefore(countFrom, 1),
+  listFloor: daysBefore(listFrom, 1),
+  countDays: COUNT_DAYS,
+  words: {
+    clock: E.masthead.clock,
+    since: E.since,
+    readout: OPS.pulsePanel.readout,
+    days: OPS.pulsePanel.days,
+    binHours: pulse.bin_hours,
+  },
+}
+---
+
+<main id="main" class="paper ed" data-ed={JSON.stringify(forScript)}>
+  <div class="paper-sheet ed-wrap">
+    {/* ── 1 · the masthead: the standing question, and the date this edition stands at ────── */}
+    <header class="ed-mast">
+      <p class="ed-mast-kicker">{NAMING.focusKicker}</p>
+      <h1>{NAMING.title}</h1>
+      <div class="ed-dateline">
+        <time datetime={editionDay}>{longDate(editionDay)}</time>
+        {/* Rendered without a time and filled by the script: a clock written at build time
+            would be a stopped clock claiming to be a live one. */}
+        <span class="ed-clock" data-ed-clock aria-live="off">{E.masthead.clockIdle}</span>
+      </div>
+    </header>
+
+    {/* ── 2 · the pulse ───────────────────────────────────────────────────────────────────── */}
+    <figure class="ed-pulse">
+      <div class="ed-pulse-strip ed-pulse-strip--head">
+        <span><span class="ed-desk">{E.pulse.headLeft(pulse.repos.length)}</span><span class="ed-phone">{E.pulse.headLeftShort(pulse.repos.length)}</span></span>
+        <span>{E.pulse.headRight(stackWeekRange(pulse))}<span class="ed-desk">{E.pulse.headRightMore}</span></span>
+      </div>
+      {/* The readout's wording travels as data (a template with placeholders, in data-ed), so
+          the script owns none of the words and none of the numbers: it fills what the ridge
+          under the pointer carries — its week, its half, its unshaped bins. */}
+      <div class="ed-pulse-body" data-ed-pulse>
+        <Fragment set:html={stackSvg} />
+        <span class="ed-pulse-chip" data-ed-pulse-read aria-live="off"></span>
+      </div>
+      <div class="ed-pulse-strip ed-pulse-strip--foot ed-pulse-strip--desk">
+        <span>{E.pulse.footLeft(pulse.bin_hours)}{E.pulse.footLeftMore}</span>
+        <span>{E.pulse.footRight(pulse.as_of)}</span>
+      </div>
+      <div class="ed-pulse-strip ed-pulse-strip--foot ed-pulse-strip--phone">
+        <span class="ed-pulse-read" data-ed-pulse-read aria-live="off"></span>
+        <span>{E.pulse.footLeft(pulse.bin_hours)} · {E.pulse.footRight(pulse.as_of)}</span>
+      </div>
+    </figure>
+
+    {/* ── 3 · the since bar ───────────────────────────────────────────────────────────────── */}
+    <div class="ed-since">
+      <p class="ed-since-line" data-ed-since-line>{sinceLine}</p>
+      {/* Hidden until the script has run: without it the buttons would be dead words on a bar
+          whose sentence is already complete. */}
+      <div class="ed-since-tools" data-ed-since-tools hidden>
+        <span class="ed-since-note" data-ed-since-note>{E.since.remember.noteOff}</span>
+        <div class="ed-since-btns">
+          <button type="button" data-ed-remember aria-pressed="false">{E.since.remember.off}</button>
+          <button type="button" data-ed-mode="visit" aria-pressed="false" hidden>{E.since.modes.visit}</button>
+          <button type="button" data-ed-mode="yesterday" aria-pressed="true" hidden>{E.since.modes.yesterday}</button>
+        </div>
+      </div>
+    </div>
+
+    {/* ── 4 · the lead, and the timetable ─────────────────────────────────────────────────── */}
+    <section class="ed-front">
+      <article class="ed-lead">
+        <p class="ed-lead-kicker">{E.lead.house} · {E.lead.kicker({ cycle: cycle.cycle, phase: cycle.phase, age })}</p>
+        <h2>{cycle.question ?? E.lead.noQuestion}</h2>
+        <p class="ed-lead-stand">
+          {E.lead.standfirst({
+            source: cycle.source,
+            phase: cycle.phase,
+            age,
+            pieces: landed,
+            practices: PRACTICES.length,
+            previous: cycle.cycle - 1,
+          })}
+        </p>
+        <div class="ed-briefs">
+          {briefs.map((b) =>
+            b.piece ? (
+              <a class={`ed-brief pp-voice-${b.practice}`} href={url(b.piece.href)}>
+                <span class="ed-brief-house">{b.house}<span class="ed-phone"> · {b.piece.kind}</span></span>
+                <span class="ed-brief-title">{b.piece.title}</span>
+                <span class="ed-brief-meta">{b.piece.kind} · {b.piece.when}</span>
+              </a>
+            ) : (
+              <div class={`ed-brief ed-brief--absent pp-voice-${b.practice}`}>
+                <span class="ed-brief-house">{b.house}</span>
+                <span class="ed-brief-title">{E.lead.absent}</span>
+              </div>
+            ),
+          )}
+        </div>
+        <p class="ed-lead-links">
+          {E.lead.links.map((l) => (
+            <a class="ed-link" href={url(l.href)}>{l.label}</a>
+          ))}
+        </p>
+      </article>
+
+      <div class="ed-front-rule" aria-hidden="true"></div>
+
+      <aside class="ed-tt" data-ed-tt>
+        <div class="ed-colhead">
+          <h2>{E.timetable.title}</h2>
+          <span class="ed-colhead-sub">{E.timetable.sub}</span>
+        </div>
+        {/* A real table: a row is a system, a column a day, and a cell reads — to a screen
+            reader as to the eye — as that system on that day. The sentence with the counts is
+            the readout under it, shown for the cell under the pointer or the finger. */}
+        <table>
+          <colgroup>
+            <col class="ed-tt-namecol" />
+            {table.days.map(() => <col />)}
+          </colgroup>
+          <thead>
+            <tr>
+              <td></td>
+              {table.days.map((d) => (
+                <th scope="col" class={d === newestDay ? 'is-newest' : undefined}>
+                  <time datetime={d}>{shortDay(d)}</time>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {timetable.map((sys) => (
+              <tr>
+                <th scope="row"><a href={url(sys.href)}>{sys.name}</a></th>
+                {sys.cells.map((cell) => (
+                  <td
+                    class={[cell.none && 'is-none', cell.date === newestDay && 'is-newest'].filter(Boolean).join(' ') || undefined}
+                    data-day={cell.date}
+                    data-new={cell.isNew ? '' : undefined}
+                    data-ed-read={cell.readout}
+                  >
+                    <span class="ed-tt-val">{cell.text}</span>
+                    <svg class="ed-tt-strip" viewBox={`0 0 ${table.blocksPerDay} 16`} preserveAspectRatio="none" aria-hidden="true">
+                      <path d={cell.strip} />
+                    </svg>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="ed-tt-foot ed-desk">{footDesk.before}<span data-ed-shade>{E.since.shade.yesterday}</span>{footDesk.after}</p>
+        <p class="ed-tt-foot ed-phone">{footPhone.before}<span data-ed-shade>{E.since.shade.yesterday}</span>{footPhone.after}</p>
+        <p class="ed-tt-read" data-ed-tt-read aria-live="polite"></p>
+      </aside>
+    </section>
+
+    {/* ── 5 · overnight, house by house ───────────────────────────────────────────────────── */}
+    <section class="ed-section ed-section--double">
+      <div class="ed-sechead">
+        <h2>{E.overnight.title}</h2>
+        <span>{E.overnight.sub}</span>
+      </div>
+      <div class="ed-houses">
+        {houses.map((h) => (
+          <a class="ed-house" href={url(h.href)}>
+            <span class="ed-house-top">
+              <span>{h.name}</span>
+              <span class="ed-house-status" data-status={h.status}>{h.status}</span>
+            </span>
+            <span class="ed-house-last">{h.last?.text ?? E.overnight.absent}</span>
+            <span class="ed-house-meta">{h.meta}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    {/* ── 6 · readings, and what arrived ──────────────────────────────────────────────────── */}
+    <section class="ed-section ed-section--single ed-pair">
+      <div>
+        <div class="ed-colhead">
+          <h2>{E.readings.title}</h2>
+          <span class="ed-colhead-sub">
+            <span class="ed-desk">{E.readings.sub} · </span><a class="ed-link" href={url(E.readings.link.href)}>{E.readings.link.label}</a>
+          </span>
+        </div>
+        {tiles.map((tile) => (
+          <a class="ed-reading" href={url(tile.href)}>
+            <span class="ed-reading-name">{tile.name}</span>
+            <span class="ed-reading-sub">{tile.sub}</span>
+            <span class="ed-reading-big">{tile.big}</span>
+          </a>
+        ))}
+      </div>
+
+      <div>
+        <div class="ed-colhead">
+          <h2 data-ed-since-title>{E.since.title.yesterday}</h2>
+          <a class="ed-colhead-sub ed-link" href={url(E.arrivals.link.href)}>{E.arrivals.link.label}</a>
+        </div>
+        {/* Two weeks of days are in the document; the ones before the reference point are
+            hidden (the attribute, so they are hidden from assistive technology and from
+            find-in-page too) and the script moves which ones show. */}
+        {days.map((day) => (
+          <div class="ed-day" data-ed-day={day.date} hidden={!day.isNew}>
+            <p class="ed-day-head">{E.arrivals.dayHead(longDay(day.date), day.count)}</p>
+            {day.rows.map((entry) => (
+              <a class="ed-arrival" href={url(entry.href)}>
+                <span class="ed-arrival-house">{entry.houseName}</span>
+                <span class="ed-arrival-text">
+                  {lineOf(entry)}
+                  {entry.withdrawn && <> · {NAMING.worksRegister.withdrawnLabel}</>}
+                </span>
+              </a>
+            ))}
+            {day.more > 0 && (
+              <a class="ed-arrival" href={url(E.arrivals.link.href)}>
+                <span class="ed-arrival-house"></span>
+                <span class="ed-arrival-text">{E.arrivals.more(day.more)}</span>
+              </a>
+            )}
+          </div>
+        ))}
+        <p class="ed-arrivals-note" data-ed-none hidden={arrivedSinceYesterday > 0}>{E.arrivals.none}</p>
+        <p class="ed-arrivals-note" data-ed-earlier hidden>{E.arrivals.earlier}</p>
+      </div>
+    </section>
+
+    {/* ── 7 · the index: the four catalogues, and the two other houses ────────────────────── */}
+    <nav class="ed-index" aria-label={E.index.label}>
+      {index.map((item) => (
+        <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined}>
+          <span class="ed-index-kind">{item.kind}</span>
+          <span class="ed-index-name">{item.name}</span>
+          <span class="ed-index-line">{item.line}</span>
+        </a>
+      ))}
+    </nav>
+  </div>
+</main>
+
+<script>
+  // The edition's moving parts. ONE requestAnimationFrame loop drives the two things that move
+  // on their own — the UTC clock and the dots walking the pulse — because a throttled
+  // background tab resumes one loop correctly where two timers would drift apart. Everything
+  // else here answers the pointer, or the reader's own request to count from their last visit.
+  //
+  // The script owns no geometry, no words and no rule of its own: the dots read their positions
+  // off the tracks src/lib/ops/stack.ts drew (getPointAtLength), every sentence is a template
+  // from EDITION carried in data-ed, and what counts as new is src/lib/ops/since.ts — the same
+  // functions the build rendered the page with. Nothing is fetched, and no style attribute is
+  // ever set (this site's CSP drops those): every change is an attribute, a class or a text.
+  import {
+    arrivedAfter,
+    counted,
+    DAY_MS,
+    dayOf,
+    dayReaches,
+    daysSpanned,
+    fill,
+    firstVisits,
+    longDay,
+    nextVisits,
+    parseVisits,
+    VISITS_KEY,
+    type Visits,
+  } from '@/lib/ops/since'
+
+  interface Words {
+    clock: string
+    readout: string
+    days: string[]
+    binHours: number
+    since: {
+      yesterday: string
+      yesterdayNone: string
+      visit: string
+      visitNone: string
+      visitBeyond: string
+      arrival: [string, string]
+      day: [string, string]
+      remember: { off: string; on: string; noteOff: string; noteFresh: string; noteOn: string }
+      modes: { visit: string; yesterday: string }
+      shade: { yesterday: string; visit: string }
+      title: { yesterday: string; visit: string }
+    }
+  }
+  interface Carried {
+    edition: number
+    counts: Record<string, number>
+    countFloor: string
+    listFloor: string
+    countDays: number
+    words: Words
+  }
+
+  const pad = (n: number) => String(n).padStart(2, '0')
+  const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n))
+
+  let current: HTMLElement | null = null
+  let stop: (() => void) | null = null
+
+  function start(): void {
+    const root = document.querySelector<HTMLElement>('[data-ed]')
+    if (root === current) return
+    stop?.()
+    stop = null
+    current = root
+    if (!root) return
+
+    const carried = JSON.parse(root.dataset.ed ?? '{}') as Carried
+    const W = carried.words
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const $ = <T extends Element>(sel: string) => root.querySelector<T>(sel)
+    const $$ = <T extends Element>(sel: string) => [...root.querySelectorAll<T>(sel)]
+
+    // ── the clock and the dots ────────────────────────────────────────────────────────────
+    const clock = $<HTMLElement>('[data-ed-clock]')
+    const stamp = (d: Date) => `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`
+    const walkers = $$<SVGGraphicsElement>('.ops-dot').flatMap((el) => {
+      const track = root.querySelector<SVGPathElement>(`#ops-track-${el.dataset.track}`)
+      const length = track?.getTotalLength() ?? 0
+      return track && length > 0 ? [{ el, track, length, speed: Number(el.dataset.speed), phase: Number(el.dataset.phase) }] : []
+    })
+
+    let frame = 0
+    let lastTick = 0
+    let lastSecond = ''
+    const step = (now: number) => {
+      frame = requestAnimationFrame(step)
+      // ~10 fps is enough for a drifting dot and keeps the main thread free; the clock only
+      // repaints when the rendered second actually changed.
+      if (now - lastTick < 100) return
+      lastTick = now
+      const text = stamp(new Date())
+      if (text !== lastSecond) {
+        if (clock) clock.textContent = fill(W.clock, { clock: text })
+        lastSecond = text
+      }
+      if (reduced.matches) return
+      const seconds = now / 1000
+      for (const dot of walkers) {
+        const t = (((seconds * dot.speed + dot.phase) % 1) + 1) % 1
+        const p = dot.track.getPointAtLength(t * dot.length)
+        dot.el.setAttribute('cx', p.x.toFixed(1))
+        dot.el.setAttribute('cy', p.y.toFixed(1))
+      }
+    }
+    frame = requestAnimationFrame(step)
+    stop = () => cancelAnimationFrame(frame)
+
+    // ── the pulse answers the pointer ─────────────────────────────────────────────────────
+    // The ridge under the pointer is the one in front (they are filled, and paint order is
+    // depth), so the reading is always of the line the eye is on. The hairline and the readout
+    // state the archive's own bin — week, weekday, hour, commits — never the tapered height.
+    const svg = $<SVGSVGElement>('[data-ed-pulse] svg')
+    const hair = svg?.querySelector<SVGLineElement>('[data-ops-hair]') ?? null
+    const reads = $$<HTMLElement>('[data-ed-pulse-read]')
+    if (svg && hair) {
+      const width = svg.viewBox.baseVal.width || 1000
+      let hot: SVGPathElement | null = null
+      const rest = () => {
+        for (const out of reads) out.textContent = ''
+        hair.classList.remove('is-on')
+        hot?.classList.remove('is-hot')
+        hot = null
+      }
+      const read = (ridge: SVGPathElement, event: PointerEvent) => {
+        const values = (ridge.dataset.values ?? '').split(',').map(Number)
+        if (values.length < 2) return
+        const box = svg.getBoundingClientRect()
+        if (box.width === 0) return
+        const x = clamp((event.clientX - box.left) / box.width, 0, 1) * width
+        const i = clamp(Math.round((x / width) * (values.length - 1)), 0, values.length - 1)
+        const hoursIn = (Number(ridge.dataset.offset) + i) * W.binHours
+        const text = fill(W.readout, {
+          week: `W${ridge.dataset.week ?? ''}`,
+          day: W.days[Math.floor(hoursIn / 24) % 7] ?? '',
+          hour: `${pad(hoursIn % 24)}:00`,
+          commits: String(values[i]),
+        })
+        for (const out of reads) out.textContent = text
+        hair.setAttribute('x1', x.toFixed(1))
+        hair.setAttribute('x2', x.toFixed(1))
+        hair.classList.add('is-on')
+        if (hot !== ridge) {
+          hot?.classList.remove('is-hot')
+          ridge.classList.add('is-hot')
+          hot = ridge
+        }
+      }
+      for (const ridge of svg.querySelectorAll<SVGPathElement>('.ops-ridge')) {
+        ridge.addEventListener('pointermove', (e) => read(ridge, e))
+        ridge.addEventListener('pointerdown', (e) => read(ridge, e))
+      }
+      // A finger leaves the moment it lifts; its reading stays until the next touch.
+      svg.addEventListener('pointerleave', (e) => {
+        if (e.pointerType !== 'touch') rest()
+      })
+    }
+
+    // ── the timetable answers the pointer, and the finger ─────────────────────────────────
+    const ttRead = $<HTMLElement>('[data-ed-tt-read]')
+    if (ttRead) {
+      for (const cell of $$<HTMLElement>('[data-ed-read]')) {
+        const sentence = cell.dataset.edRead ?? ''
+        cell.addEventListener('pointerenter', (e) => {
+          if (e.pointerType === 'mouse') ttRead.textContent = sentence
+        })
+        cell.addEventListener('pointerleave', (e) => {
+          if (e.pointerType === 'mouse') ttRead.textContent = ''
+        })
+        cell.addEventListener('click', () => {
+          ttRead.textContent = sentence
+        })
+      }
+    }
+
+    // ── since yesterday, or since the reader's own last visit ─────────────────────────────
+    // Nothing is read from or written to the browser's storage unless the reader has switched
+    // the feature on; the entry is theirs, stays in this browser, and one click removes it.
+    const line = $<HTMLElement>('[data-ed-since-line]')
+    const tools = $<HTMLElement>('[data-ed-since-tools]')
+    const note = $<HTMLElement>('[data-ed-since-note]')
+    const remember = $<HTMLButtonElement>('[data-ed-remember]')
+    const modeButtons = $$<HTMLButtonElement>('[data-ed-mode]')
+    const title = $<HTMLElement>('[data-ed-since-title]')
+    const none = $<HTMLElement>('[data-ed-none]')
+    const earlier = $<HTMLElement>('[data-ed-earlier]')
+    const dayGroups = $$<HTMLElement>('[data-ed-day]')
+    const cells = $$<HTMLElement>('td[data-day]')
+    const shades = $$<HTMLElement>('[data-ed-shade]')
+    if (!line || !tools || !note || !remember) return
+
+    let visits: Visits | null = null
+    try {
+      const stored = parseVisits(localStorage.getItem(VISITS_KEY))
+      if (stored) {
+        visits = nextVisits(stored, Date.now())
+        localStorage.setItem(VISITS_KEY, JSON.stringify(visits))
+      }
+    } catch {
+      // Storage refused (a private window, a blocked site): the page stays on "since yesterday".
+    }
+    let mode: 'visit' | 'yesterday' = visits?.ref != null ? 'visit' : 'yesterday'
+
+    const render = () => {
+      const S = W.since
+      const own = visits?.ref ?? null
+      const byVisit = mode === 'visit' && own !== null
+      const ref = byVisit ? own : carried.edition - DAY_MS
+      const refDay = dayOf(ref)
+
+      let arrived = 0
+      for (const [day, n] of Object.entries(carried.counts)) if (arrivedAfter(day, ref)) arrived += n
+      const arrivals = counted(arrived, S.arrival)
+      if (!byVisit) {
+        line.textContent = fill(arrived > 0 ? S.yesterday : S.yesterdayNone, { arrivals })
+      } else if (refDay < carried.countFloor) {
+        line.textContent = fill(S.visitBeyond, { day: longDay(refDay), span: counted(carried.countDays, S.day), arrivals })
+      } else {
+        line.textContent = fill(arrived > 0 ? S.visit : S.visitNone, {
+          day: longDay(refDay),
+          span: counted(daysSpanned(ref, carried.edition), S.day),
+          arrivals,
+        })
+      }
+
+      for (const group of dayGroups) group.hidden = !arrivedAfter(group.dataset.edDay ?? '', ref)
+      if (none) none.hidden = arrived > 0
+      if (earlier) earlier.hidden = !(byVisit && refDay < carried.listFloor)
+      if (title) title.textContent = byVisit ? S.title.visit : S.title.yesterday
+      for (const cell of cells) cell.toggleAttribute('data-new', dayReaches(cell.dataset.day ?? '', ref))
+      for (const shade of shades) shade.textContent = byVisit ? S.shade.visit : S.shade.yesterday
+
+      remember.textContent = visits ? S.remember.on : S.remember.off
+      remember.setAttribute('aria-pressed', String(visits !== null))
+      note.textContent = !visits ? S.remember.noteOff : own !== null ? S.remember.noteOn : S.remember.noteFresh
+      for (const button of modeButtons) {
+        button.hidden = own === null
+        button.setAttribute('aria-pressed', String(button.dataset.edMode === (byVisit ? 'visit' : 'yesterday')))
+      }
+    }
+
+    remember.addEventListener('click', () => {
+      try {
+        if (visits) {
+          localStorage.removeItem(VISITS_KEY)
+          visits = null
+          mode = 'yesterday'
+        } else {
+          visits = firstVisits(Date.now())
+          localStorage.setItem(VISITS_KEY, JSON.stringify(visits))
+        }
+      } catch {
+        visits = null
+      }
+      render()
+    })
+    for (const button of modeButtons) {
+      button.addEventListener('click', () => {
+        mode = button.dataset.edMode === 'visit' ? 'visit' : 'yesterday'
+        render()
+      })
+    }
+    // Unhidden only now: the controls work, so they may be seen.
+    tools.hidden = false
+    render()
+  }
+
+  start()
+  document.addEventListener('astro:page-load', start)
+</script>

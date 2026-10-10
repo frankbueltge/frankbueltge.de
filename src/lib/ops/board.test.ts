@@ -85,7 +85,7 @@ describe('the board says what the rooms say', () => {
     expect(middle.last!.meta).toMatch(/^\d+ crossings on the record$/)
   })
 
-  it('gives the four ecology stations their voice and the four beside it none', () => {
+  it('gives the four ecology stations their voice and the three beside it none', () => {
     expect(rows.filter((r) => r.voice !== null).map((r) => r.voice)).toEqual([
       'ulysses', 'meridian', 'ensemble', 'conductor',
     ])
@@ -93,8 +93,9 @@ describe('the board says what the rooms say', () => {
     // rows beside the ecology wear the room's live accent and are told apart by name. n-1
     // joined them on 2026-09-03 — a fifth hue would have broken the ceiling, and n-1 is the
     // Atelier's line rather than a practice of its own, so borrowing a voice would have been
-    // a second claim on top of a colour.
-    expect(rows.filter((r) => r.voice === null).map((r) => r.id)).toEqual(['attention', 'nightly-line', 'arch', 'n-1'])
+    // a second claim on top of a colour. Arch stood among them from 2026-08-23 to 2026-10-11
+    // and left when its trial had ended: a board lists what is running.
+    expect(rows.filter((r) => r.voice === null).map((r) => r.id)).toEqual(['attention', 'nightly-line', 'n-1'])
   })
 
   it('names the newest page of n-1 a visitor can open, read from n-1’s own mirror', () => {
@@ -115,10 +116,12 @@ describe('the board says what the rooms say', () => {
     expect(existsSync(`public${href}${href.endsWith('/') ? 'index.html' : ''}`)).toBe(true)
   })
 
-  it('reads Arch’s last landed output from Arch’s own record, never from another practice', () => {
-    const arch = rows.find((r) => r.id === 'arch')!
-    expect(arch.last).not.toBeNull()
-    expect(arch.last!.href).toMatch(/^\/arch\/read\/record\//)
+  it('lists no row for Arch, whose trial has ended — its room is its archive', () => {
+    // Until 2026-10-11 this test held that the row read Arch's last landed output from Arch's
+    // own record. The row is gone; what must not happen now is that it comes back by accident
+    // (a board spec copied from history) while the practice stays off every other surface.
+    expect(rows.find((r) => r.id === 'arch')).toBeUndefined()
+    expect(NAMING.opsRoom.board.groups.flatMap((g) => g.rows.map((r) => r.repo))).not.toContain('arch')
   })
 
   // The resident line used to be the door id with its first letter capitalised, which was a

@@ -388,6 +388,16 @@ Experiments — also keine Zeile im Werke-Register (USP-Gate), sondern die dritt
 | **Werke nackt** | Die Werke unter `/arch/works/…` werden **ohne Rahmen** serviert — kein Nav-Band, keine Wandtexte, kein Rückweg auf dem Werk (`standaloneFrame.houses.arch.bare`). Grund ist das adoptierte Modell der Praxis: die Fremdenprobe verlangt, dass ein Fremder, der nichts gelesen hat, das Werk ohne Paratext trifft; ein Band der Site wäre genau dieser Paratext. Der Raum ist der Rückweg. |
 | **Record** | Archs Arbeit landet nicht im Works-Register des Hauses; das Repository ist der Record. Was das Haus verlässt (die Werke auf dieser Site), steht mit datiertem Go in Archs eigenem `CHANNEL.md`. |
 
+### Ergänzung 2026-10-11: **Arch ist Archiv**
+
+Das vorregistrierte Fenster schloss am 2026-09-21, die Bilanz ist veröffentlicht. Mit dem
+Umbau des Eingangs (Handoff vom 2026-10-11) hat Arch alle Flächen verlassen, die zeigen, was
+hier **läuft**: Leiste, Board (`NAMING.opsRoom.board`), Puls (`scripts/fetch-pulse.ts`;
+ältere Snapshots: `src/lib/pulse/without.ts`), Timetable, „house by house". **Der Raum `/arch`
+bleibt unverändert** und trägt einen Archiv-Hinweis; die Tür dorthin ist die Karte unter
+„BESIDE THE LAB" auf `/experiments`. Archs datierte Zeilen im Signal-Log bleiben, was sie
+sind: Geschichte.
+
 ### Ergänzung 2026-08-23 (abends): **Instrumente erklären sich** — der Aufbereitungs-Standard
 
 Frank, 2026-08-23 abends (Wortlaut privat), nach seiner ersten Sichtung von Archs *Arrival*
@@ -427,6 +437,32 @@ Franks Anweisung: kein Projekt wird fokussiert — nicht die Ecology, nicht „t
   ist datiert abgelöst; ihr Gleichrangigkeits-Kern lebt in der OVERVIEW-Sektion weiter.
 - **About:** führt mit derselben Frage, listet alle Projekte gleichrangig (je eine Tür),
   Rolle generalisiert („in den maschinell betriebenen Projekten überall dieselbe Rolle").
+
+### Ergänzung 2026-10-11: die Leiste und der Eingang des Design-Handoffs
+
+Quelle: `docs/design_handoff_homepage_ecology/README.md` (Franks Handoff, 2026-10-11).
+
+- **Leiste:** die vier Punkte bleiben. **Links steht die Namenszeile** (`NAMING.eyebrow`:
+  Person und Rolle) statt Punkt und Name — auf jeder Seite; sie ist der Ort, an dem die
+  Startseite den Namen trägt (vorher: Eyebrow über der H1). **Research projects** führt jetzt
+  fünf Türen, jede mit einer Zeile, was sie ist: *The research ecology* · *Machine Attention* ·
+  *Atlas* · *n-1* · ***Ulysses*** („Error as Method, the Atelier’s nightly line"). **Arch steht
+  nicht mehr im Menü.** Wortlaut kanonisch in `NAMING.nav`; Namen und Adressen werden aus
+  `NAMING.overview` gelesen, nie neu getippt.
+- **Die Nachtlinie heißt auf Flächen „Ulysses".** Die Karte `nightly-line` trägt den Namen der
+  Praxis; „Error as Method" bleibt der Titel ihres Gründungstexts — Route (`/error-as-method`),
+  Überschrift der eigenen Seite, und als erläuternde Zeile unter dem Namen (Leiste, Board).
+- **Eingang = Edition.** Die Startseite ist seit 2026-10-11 wie die Titelseite einer Zeitung
+  gesetzt (Datumszeile, Puls, „since yesterday / since your last visit", Aufmacher = laufender
+  Zyklus, Timetable, „Overnight, house by house", Readings, Arrivals, Index). Wortlaut in
+  `src/config/edition-wording.ts`; **keine Ziffer wird getippt** (`edition-wording.test.ts`).
+  Kicker und Vorspann des Aufmachers sind Funktionen des Zyklus-Stands — nie „opened today"
+  als fester Text. Das eigene Repo der Site heißt dort **„Lab & catalogues"**.
+- **Papiergrund.** Eingang und (im selben Handoff) die Ökologie-Flächen stehen auf einem
+  cremefarbenen Grund mit Serife (Literata) und Grotesk (Schibsted Grotesk), unabhängig vom
+  Theme; Tokens in `src/styles/paper.css`. Die drei Stimmen tragen dort das Set
+  `paper-voices` (`src/lib/dataviz/palette.ts`) — das Violett des Ateliers ist gegenüber dem
+  Handoff um ΔE 4,6 verschoben, weil der Handoff-Wert die Normalsicht-Schwelle riss.
 
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 

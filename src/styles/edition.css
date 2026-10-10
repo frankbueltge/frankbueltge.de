@@ -1,0 +1,900 @@
+/* src/styles/edition.css — the entrance as an edition (2026-10-11)
+ *
+ * The front page of the house, laid out like the front page of a paper. Design handoff:
+ * docs/design_handoff_homepage_ecology/README.md §2 (the desk, drawn at 1440 px) and §3 (the
+ * phone, drawn at 390 px). Every measure below is the handoff's; every colour is a token of
+ * src/styles/paper.css, so this sheet carries no hex of its own.
+ *
+ * Three widths:
+ *   · the desk, from 1100 px — the handoff's own layout;
+ *   · between 760 and 1100 px — the desk's type, with the paired columns stacked;
+ *   · the phone, below 760 px — the handoff's second drawing.
+ *
+ * No rule here is written as a style attribute anywhere in the markup: this site's CSP drops
+ * those silently (drift-check rule 3). What moves — the clock, the dots, the readouts, what is
+ * shaded as new — is moved by the script through attributes and classes this sheet answers to.
+ */
+
+.ed {
+  --ed-gutter: var(--pp-gutter);
+  padding-bottom: 18px;
+}
+.ed-wrap {
+  padding-inline: var(--ed-gutter);
+}
+.ed a:hover {
+  color: var(--pp-accent-ink);
+}
+.ed-link {
+  text-decoration: underline !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 2px;
+}
+
+/* ——— 1 · the masthead ——————————————————————————————————————————————————————————————————— */
+.ed-mast {
+  padding-top: 26px;
+  text-align: center;
+}
+.ed-mast-kicker {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pp-muted);
+}
+.ed-mast h1 {
+  margin: 6px 0 18px;
+  font-family: var(--pp-serif);
+  font-style: italic;
+  font-weight: 500;
+  /* 72 px at the handoff's 1440, where the question is one line of about 1170 px; a narrower
+     desk scales it by the same ratio so it stays one line down to the phone's breakpoint. */
+  font-size: min(72px, calc((100vw - 2 * var(--ed-gutter)) / 16.6));
+  line-height: 1;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+.ed-dateline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+  border-top: 3px double var(--pp-ink);
+  border-bottom: 1px solid var(--pp-ink);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.ed-clock {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ——— 2 · the pulse ——————————————————————————————————————————————————————————————————————— */
+.ed-pulse {
+  margin-top: 14px;
+  border: 1px solid var(--pp-ink);
+  background: var(--pp-ground);
+}
+.ed-pulse-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 12px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.ed-pulse-strip--head {
+  border-bottom: 1px solid var(--pp-rule);
+}
+.ed-pulse-strip--foot {
+  border-top: 1px solid var(--pp-rule);
+  color: var(--pp-muted);
+}
+.ed-pulse-strip--head span:last-child {
+  color: var(--pp-muted);
+}
+.ed-pulse-strip--phone,
+.ed-phone {
+  display: none;
+}
+.ed-pulse-body {
+  position: relative;
+  height: 240px;
+}
+.ed-pulse-body svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* a finger may scroll the page across the figure; a horizontal drag reads the ridges */
+  touch-action: pan-y;
+}
+/* Each ridge is filled with the ground, so a newer line occludes the older ones behind it —
+   that occlusion is the figure (src/lib/ops/stack.ts). */
+.ed-pulse .ops-ridge {
+  fill: var(--pp-ground);
+  stroke: var(--pp-ink);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  cursor: crosshair;
+}
+.ed-pulse .ops-ridge.is-hot {
+  stroke: var(--pp-accent);
+  stroke-width: 1.6;
+}
+.ed-pulse .ops-track {
+  fill: none;
+  stroke: none;
+  pointer-events: none;
+}
+.ed-pulse .ops-dot {
+  fill: var(--pp-accent);
+  pointer-events: none;
+}
+.ed-pulse .ops-hair {
+  stroke: var(--pp-accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  pointer-events: none;
+}
+.ed-pulse .ops-hair.is-on {
+  opacity: 1;
+}
+.ed-pulse-chip {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  padding: 4px 8px;
+  background: var(--pp-ink);
+  color: var(--pp-on-ink);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+}
+.ed-pulse-chip:empty {
+  display: none;
+}
+.ed-pulse-read {
+  color: var(--pp-accent-ink);
+}
+
+/* ——— 3 · the since bar ——————————————————————————————————————————————————————————————————— */
+.ed-since {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 14px;
+  padding: 10px 16px;
+  background: var(--pp-ink);
+  color: var(--pp-on-ink);
+}
+.ed-since-line {
+  font-family: var(--pp-serif);
+  font-size: 17px;
+}
+.ed-since-tools {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+}
+.ed-since-note {
+  max-width: 250px;
+  color: var(--pp-on-ink-muted);
+  font-size: 11.5px;
+  line-height: 1.35;
+  text-align: right;
+}
+.ed-since-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.ed-since button {
+  padding: 6px 12px;
+  border: 1px solid var(--pp-on-ink);
+  background: transparent;
+  color: var(--pp-on-ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.ed-since button[data-ed-remember] {
+  border-style: dashed;
+  letter-spacing: 0.04em;
+}
+.ed-since button[aria-pressed='true']:not([data-ed-remember]) {
+  background: var(--pp-on-ink);
+  color: var(--pp-ink);
+}
+.ed-since button:focus-visible {
+  outline: 2px solid var(--pp-on-ink);
+  outline-offset: 2px;
+}
+
+/* ——— 4 · the lead and the timetable —————————————————————————————————————————————————————— */
+.ed-front {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px 470px;
+  gap: 28px;
+  padding-top: 26px;
+}
+.ed-front-rule {
+  background: var(--pp-ink);
+}
+.ed-lead {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ed-lead-kicker {
+  color: var(--pp-accent-ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ed-lead h2 {
+  font-family: var(--pp-serif);
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.ed-lead-stand {
+  max-width: 760px;
+  color: var(--pp-ink-2);
+  font-family: var(--pp-serif);
+  font-size: 18px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+.ed-briefs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--pp-ink);
+}
+.ed-brief {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ed-brief-house {
+  color: var(--pp-voice-ink);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ed-brief-house .ed-phone {
+  text-transform: none;
+}
+.ed-brief-title {
+  font-family: var(--pp-serif);
+  font-size: 22px;
+  line-height: 1.2;
+}
+.ed-brief-meta {
+  color: var(--pp-muted);
+  font-size: 12.5px;
+}
+.ed-brief--absent .ed-brief-title {
+  color: var(--pp-muted);
+  font-style: italic;
+}
+.ed-lead-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  margin-top: 4px;
+  font-size: 13.5px;
+}
+
+.ed-tt {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.ed-colhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--pp-ink);
+}
+.ed-colhead h2,
+.ed-colhead h3 {
+  font-family: var(--pp-serif);
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.2;
+}
+.ed-tt .ed-colhead h2 {
+  font-size: 24px;
+}
+.ed-colhead-sub {
+  color: var(--pp-muted);
+  font-size: 12px;
+  text-align: right;
+}
+.ed-tt table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.ed-tt col.ed-tt-namecol {
+  width: 118px;
+}
+.ed-tt th,
+.ed-tt td {
+  padding: 0;
+  font-weight: 400;
+}
+.ed-tt thead th {
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--pp-rule);
+  color: var(--pp-muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+.ed-tt thead th.is-newest {
+  color: var(--pp-ink);
+  font-weight: 700;
+}
+.ed-tt tbody tr {
+  border-bottom: 1px solid var(--pp-rule-light);
+}
+.ed-tt tbody th {
+  padding-block: 5px;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ed-tt td {
+  padding-block: 5px;
+  text-align: center;
+  cursor: default;
+}
+.ed-tt-val {
+  display: block;
+  padding: 2px 0;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.ed-tt td.is-none .ed-tt-val {
+  color: var(--pp-ghost);
+}
+.ed-tt td.is-newest:not(.is-none) .ed-tt-val {
+  font-weight: 700;
+}
+/* what lies after the reference point — the script moves the attribute, never a style */
+.ed-tt td[data-new] .ed-tt-val,
+.ed-tt td[data-new] .ed-tt-strip {
+  background: var(--pp-shade);
+}
+.ed-tt-strip {
+  display: none;
+}
+.ed-tt-foot {
+  margin-top: 2px;
+  color: var(--pp-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.ed-tt-read {
+  padding: 6px 8px;
+  background: var(--pp-ink);
+  color: var(--pp-on-ink);
+  font-size: 12.5px;
+}
+.ed-tt-read:empty {
+  display: none;
+}
+
+/* ——— 5 · overnight, house by house ——————————————————————————————————————————————————————— */
+.ed-section {
+  margin-top: 30px;
+  padding-top: 14px;
+}
+.ed-section--double {
+  border-top: 3px double var(--pp-ink);
+}
+.ed-section--single {
+  border-top: 1px solid var(--pp-ink);
+}
+.ed-sechead {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.ed-sechead h2 {
+  font-family: var(--pp-serif);
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.2;
+}
+.ed-sechead span {
+  color: var(--pp-muted);
+  font-size: 13px;
+}
+.ed-houses {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 12px;
+}
+.ed-house {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-right: 18px;
+  padding-right: 18px;
+  border-right: 1px solid var(--pp-rule);
+}
+.ed-house-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ed-house-status {
+  color: var(--pp-accent-ink);
+}
+.ed-house-status[data-status='CLOSED'] {
+  color: var(--pp-muted);
+}
+.ed-house-last {
+  font-family: var(--pp-serif);
+  font-size: 19px;
+  line-height: 1.25;
+}
+.ed-house-meta {
+  color: var(--pp-muted);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+/* ——— 6 · readings, and what arrived —————————————————————————————————————————————————————— */
+.ed-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 40px;
+}
+.ed-reading {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr) 160px;
+  gap: 14px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px dotted var(--pp-ghost);
+}
+.ed-reading-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.ed-reading-sub {
+  color: var(--pp-ink-2);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.ed-reading-big {
+  font-family: var(--pp-serif);
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+.ed-day {
+  padding: 10px 0 4px;
+}
+.ed-day-head {
+  margin-bottom: 4px;
+  color: var(--pp-accent-ink);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ed-arrival {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 10px;
+  padding: 4px 0;
+}
+.ed-arrival-house {
+  overflow: hidden;
+  color: var(--pp-muted);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ed-arrival-text {
+  font-family: var(--pp-serif);
+  font-size: 14.5px;
+  line-height: 1.35;
+}
+.ed-arrivals-note {
+  padding: 10px 0 4px;
+  color: var(--pp-muted);
+  font-size: 13px;
+}
+
+/* ——— 7 · the index ——————————————————————————————————————————————————————————————————————— */
+.ed-index {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 34px;
+  padding-top: 14px;
+  border-top: 3px double var(--pp-ink);
+}
+.ed-index a {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ed-index-kind {
+  color: var(--pp-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ed-index-name {
+  font-family: var(--pp-serif);
+  font-size: 17px;
+}
+.ed-index-line {
+  color: var(--pp-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ——— between the desk and the phone: the desk's type, the paired columns stacked ————————— */
+@media (max-width: 1099.98px) {
+  .ed-front {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ed-front-rule {
+    display: none;
+  }
+  .ed-tt {
+    padding-top: 12px;
+    border-top: 3px double var(--pp-ink);
+  }
+  .ed-lead h2 {
+    font-size: clamp(28px, 4.4vw, 44px);
+  }
+  .ed-houses {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 18px;
+  }
+  .ed-pair {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+  }
+  .ed-pair > div + div {
+    padding-top: 14px;
+    border-top: 1px solid var(--pp-ink);
+  }
+  .ed-index {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .ed-since {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .ed-since-tools {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .ed-since-note {
+    max-width: none;
+    text-align: left;
+  }
+}
+
+/* ——— the phone (handoff §3, drawn at 390 px) ————————————————————————————————————————————— */
+@media (max-width: 759.98px) {
+  .ed-desk {
+    display: none;
+  }
+  .ed-phone {
+    display: revert;
+  }
+  .ed-mast {
+    padding-top: 22px;
+  }
+  .ed-mast-kicker {
+    font-size: 11px;
+  }
+  .ed-mast {
+    text-align: left;
+  }
+  .ed-mast h1 {
+    margin: 6px 0 14px;
+    font-size: 40px;
+    line-height: 1.02;
+    white-space: normal;
+  }
+  .ed-dateline {
+    padding: 7px 0;
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+
+  .ed-pulse {
+    margin-top: 12px;
+  }
+  .ed-pulse-strip {
+    padding: 6px 10px;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+  }
+  .ed-pulse-strip--foot {
+    align-items: center;
+    min-height: 28px;
+    letter-spacing: 0.1em;
+  }
+  .ed-pulse-strip--desk {
+    display: none;
+  }
+  .ed-pulse-strip--phone {
+    display: flex;
+  }
+  .ed-pulse-body {
+    height: 170px;
+  }
+  /* The figure is narrower than its box here, so the dots' radii are the ones that come out
+     round at THIS size (handoff §3): a 1000 × 220 box drawn 358 × 170. */
+  .ed-pulse .ops-dot {
+    rx: 5.6px;
+    ry: 2.6px;
+  }
+  .ed-pulse-chip {
+    display: none;
+  }
+
+  .ed-since {
+    margin-top: 12px;
+    padding: 12px 14px;
+  }
+  .ed-since-line {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  /* the handoff's order on a phone: the sentence, the buttons, then the note about them */
+  .ed-since-tools {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .ed-since-btns {
+    gap: 6px;
+  }
+  .ed-since button {
+    min-height: 40px;
+    padding: 0 12px;
+    letter-spacing: 0;
+  }
+
+  .ed-front {
+    padding-top: 24px;
+    gap: 14px;
+  }
+  .ed-lead {
+    gap: 12px;
+  }
+  .ed-lead-kicker {
+    font-size: 11px;
+  }
+  .ed-lead h2 {
+    font-size: 28px;
+    line-height: 1.15;
+    text-wrap: pretty;
+  }
+  .ed-lead-stand {
+    font-size: 16px;
+  }
+  .ed-briefs {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+  .ed-brief {
+    gap: 4px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--pp-rule);
+  }
+  .ed-brief-house {
+    font-size: 11px;
+  }
+  .ed-brief-title {
+    font-size: 21px;
+  }
+  .ed-brief-meta {
+    display: none;
+  }
+  .ed-lead-links {
+    flex-direction: column;
+    gap: 0;
+    margin-top: 0;
+    font-size: 14px;
+  }
+  .ed-lead-links a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .ed-tt .ed-colhead {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  .ed-tt .ed-colhead h2,
+  .ed-colhead h2,
+  .ed-colhead h3,
+  .ed-sechead h2 {
+    font-size: 22px;
+  }
+  .ed-colhead-sub {
+    font-size: 11px;
+  }
+  .ed-tt col.ed-tt-namecol {
+    width: 84px;
+  }
+  .ed-tt thead th {
+    font-size: 9.5px;
+    letter-spacing: 0;
+  }
+  .ed-tt tbody th {
+    padding: 6px 0 8px;
+    font-size: 12px;
+    vertical-align: bottom;
+  }
+  .ed-tt td {
+    padding: 6px 1px;
+    vertical-align: bottom;
+    cursor: pointer;
+  }
+  .ed-tt-val {
+    display: none;
+  }
+  .ed-tt-strip {
+    display: block;
+    width: 100%;
+    height: 22px;
+    border-bottom: 1px solid var(--pp-rule);
+    fill: var(--pp-ink);
+  }
+  .ed-tt-read {
+    order: 1;
+    min-height: 20px;
+    margin-top: -2px;
+    padding: 0;
+    background: none;
+    color: var(--pp-accent-ink);
+    font-size: 12px;
+  }
+  .ed-tt-read:empty {
+    display: block;
+  }
+  .ed-tt-foot {
+    order: 2;
+  }
+
+  .ed-section {
+    margin-top: 22px;
+    padding-top: 12px;
+  }
+  .ed-sechead span {
+    display: none;
+  }
+  .ed-houses {
+    display: block;
+    margin-top: 0;
+  }
+  .ed-house {
+    gap: 4px;
+    margin-right: 0;
+    padding: 12px 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--pp-rule);
+  }
+  .ed-house-top {
+    font-size: 11px;
+  }
+
+  .ed-pair {
+    gap: 22px;
+  }
+  .ed-pair > div + div {
+    padding-top: 12px;
+  }
+  .ed-pair .ed-colhead {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  .ed-reading {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 12px;
+    padding: 10px 0;
+  }
+  .ed-reading-name {
+    letter-spacing: 0;
+  }
+  .ed-reading-big {
+    font-size: 19px;
+  }
+  .ed-reading-sub {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .ed-day {
+    padding: 10px 0 2px;
+  }
+  .ed-day-head {
+    font-size: 11px;
+  }
+  .ed-arrival {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 6px 0;
+  }
+  .ed-arrival-house {
+    font-size: 11.5px;
+  }
+  .ed-arrival-text {
+    font-size: 15px;
+  }
+
+  .ed-index {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 22px;
+    padding-top: 12px;
+  }
+  .ed-index a {
+    gap: 2px;
+  }
+  .ed-index-kind {
+    font-size: 10px;
+  }
+  .ed-index-name {
+    font-size: 16px;
+  }
+  .ed-index-line {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ed * {
+    transition: none !important;
+  }
+}
