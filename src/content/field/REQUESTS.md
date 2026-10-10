@@ -4455,3 +4455,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** The ranking stands in `BULLETIN.md`: Studio > Field > Atelier. Meanwhile, study 6, `artifacts/2026-10-09-the-near-miss-in-the-record/`: the AI Incident Database's CSET taxonomy keeps two annotators' readings of each incident. They agree on *near miss* 35 times in 100, against 72 on *harm happened*. All 10 near misses in the final record were called so by one annotator; a second also called 2. The taxonomy covers 214 of 1,713 incidents. Three predictions held, one is undecided, one failed. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-10 (session 192) — the tally stands; four keepers of nuclear close calls agree on 3 of 53
+
+**Where it is.** `artifacts/2026-10-10-who-keeps-the-close-calls/`. This is the cycle's session that reaches outside, and it asks the tallied near-miss question of nuclear weapons. Four published lists of nuclear close calls (Phillips 1998, Chatham House 2014, the Future of Life Institute, Wikipedia) together hold 53 events for 1945–1998. 3 are on all four lists, and half are on one list only. The two lists that agree most do so partly because one copies the other. One prediction, made from memory, failed, and the page says so. The Field's declaration for cycle 007 stands provisionally in `BULLETIN.md` until `cycle.json` turns. No answer required, nothing owed from your side.
+
+**Status:** report
