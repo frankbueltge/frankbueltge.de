@@ -1,10 +1,15 @@
-// src/lib/n1/works.ts — the works n-1 has laid down, read from the practice's own mirror.
+// src/lib/n1/works.ts — the works n-1 has laid down and the nights it has kept, read from the
+// practice's own mirror.
 //
 // n-1 keeps no meta.json. Its works are directories under public/n-1/works/, each holding the
-// work itself (index.html) and the deliberation that fixed its form (FORM.md), and the only
-// dating either carries is the sentence the practice wrote at the top of the form: "Laid down
-// YYYY-MM-DD, night NN". So that sentence is the date — the practice's own, not a file mtime
-// and not the day the mirror happened to copy it.
+// work itself (index.html) beside the document that fixed it, and the only dating any of it
+// carries is the practice's own record: the night that built the page, or the sentence at the
+// top of its form ("Laid down YYYY-MM-DD, night NN"). So that record is the date — the
+// practice's own, not a file mtime and not the day the mirror happened to copy it. The
+// derivation is src/lib/n1/shelf.ts, the one reading the shelf on the practice's front door, the
+// signal log and the board all share since 2026-10-10. Before that this module read the form
+// alone, and a work declared in a WORK.md instead of a FORM.md (The Days, End to End,
+// 2026-09-27) stood on the practice's shelf and was missing from the house's log.
 //
 // Why this exists at all, given that src/lib/ecology/lines.ts states the opposite rule for the
 // works REGISTER: the register is the three practices' catalogue and n-1's record deliberately
@@ -15,12 +20,13 @@
 //
 // Fail-soft, unlike readN1Facts: the facts module reads two files the surface at /n-1 cannot do
 // without, so a broken mirror there is an integration fault worth stopping the build for. A works
-// directory is a growing shelf — a new work whose form is still being written has no "Laid down"
-// line yet, and that is a normal night in this practice, not a broken mirror. Such a work is
-// skipped, and the count says so by being one lower.
+// directory is a growing shelf — a new work no night has named yet and whose form carries no
+// date is a normal night in this practice, not a broken mirror. Such a work is skipped here,
+// and the count says so by being one lower.
 
-import { existsSync, readFileSync, readdirSync } from 'node:fs'
-import { join } from 'node:path'
+import { existsSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { builtPages, readN1Shelf, readNightRecords, n1PageHref, type N1Page } from './shelf'
 
 export const N1_WORKS_DIR = 'public/n-1/works'
 
@@ -28,41 +34,29 @@ export interface N1Work {
   /** directory name under works/, which is also its address: /n-1/works/<id>/ */
   id: string
   title: string
-  /** the day the practice's own form document says the work was laid down */
+  /** the day the practice's own record says the work was built or laid down */
   date: string
   href: string
 }
 
-/** The <title> of the work's own page — the practice named it there, so nothing is invented. */
-const pageTitle = (html: string): string | undefined =>
-  /<title>\s*([^<]+?)\s*<\/title>/i.exec(html)?.[1]
-
-/** "*Laid down 2026-08-16, night 03 …" — the form's own first sentence. */
-const laidDown = (form: string): string | undefined =>
-  /Laid down\s+(\d{4}-\d{2}-\d{2})/.exec(form)?.[1]
-
 /**
- * Every work on n-1's shelf, newest first. A directory missing either its page or its dated
- * form is not yet a work this house can date, and drops out rather than appearing undated.
+ * Every work on n-1's shelf, newest first. A work the practice's record does not date is not
+ * yet one this house can file under a day, and drops out here rather than appearing undated
+ * (the shelf on the practice's own front door lists it, last and marked undated).
  */
 export function readN1Works(root: string = N1_WORKS_DIR): N1Work[] {
-  if (!existsSync(root)) return []
-  const out: N1Work[] = []
-  for (const entry of readdirSync(root, { withFileTypes: true })) {
-    if (!entry.isDirectory()) continue
-    const page = join(root, entry.name, 'index.html')
-    const form = join(root, entry.name, 'FORM.md')
-    if (!existsSync(page) || !existsSync(form)) continue
-    const date = laidDown(readFileSync(form, 'utf8'))
-    if (!date) continue
-    out.push({
-      id: entry.name,
-      title: pageTitle(readFileSync(page, 'utf8')) ?? entry.name,
-      date,
-      href: `/n-1/works/${entry.name}/`,
-    })
-  }
-  return out.sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id))
+  return readN1Shelf(dirname(root))
+    .filter((p): p is N1Page & { date: string } => p.kind === 'work' && p.date !== null)
+    .map((p) => ({ id: p.path.split('/')[1], title: p.title, date: p.date, href: p.href }))
+}
+
+/**
+ * The newest page of the practice a visitor can open — a work or a study, whichever the record
+ * dates last. What the board and /experiments name beside the practice: its nights are what it
+ * lands, but a night is a record to read, and this is the thing to open.
+ */
+export function newestN1Page(root: string = dirname(N1_WORKS_DIR)): (N1Page & { date: string }) | null {
+  return readN1Shelf(root).find((p): p is N1Page & { date: string } => p.date !== null) ?? null
 }
 
 export const N1_NIGHTS_DIR = 'public/n-1/nights'
@@ -73,15 +67,17 @@ export interface N1Night {
   date: string
   /** the H1's own words after the date, which is how the practice titles a night */
   title: string
+  /** the address of the page this night's record says it built ("Built: …"), when that page
+   *  stands in the mirror — absent or null where the night built none, or names none */
+  built?: string | null
 }
 
-/** "# Night 20 — 2026-09-03, two skies in one reading, the seam at one night, …" */
-const NIGHT_H1 = /^#\s+(.+?)\s+—\s+(\d{4}-\d{2}-\d{2}),\s*(.+?)\s*$/m
+/** The record has no page per night; a night that built nothing a visitor can open leads here. */
+export const N1_RECORD_HREF = '/n-1/record.html'
 
 /**
- * The newest night on n-1's record — what the board means by "last landed" for this practice,
- * the way it means the newest session protocol for Arch. Its works are a shelf that grows
- * slowly; its nights are what it lands.
+ * The newest night on n-1's record — what the signal log means by "last landed" for this
+ * practice, the way it means the newest session protocol for Arch.
  *
  * Fail-soft for the same reason readN1Works is: a founder note or an offer sits in this
  * directory beside the nights and carries no "Night N — date" heading. That is the shelf's
@@ -96,17 +92,20 @@ export function lastN1Night(root: string = N1_NIGHTS_DIR): N1Night | null {
  * lists them all since 2026-10-05 — the nights are what this practice lands daily, and a log of
  * live updates that showed only its two works would say n-1 had been quiet since August. Same
  * fail-soft reading as lastN1Night, which is this list's last entry.
+ *
+ * Since 2026-10-10 each night also carries the page it built: the first path on its record's
+ * "Built:" line that is a page standing in the mirror. A path the record names but the mirror
+ * does not hold is not followed — a row must never lead to a 404.
  */
 export function readN1Nights(root: string = N1_NIGHTS_DIR): N1Night[] {
-  if (!existsSync(root)) return []
-  const nights: N1Night[] = []
-  for (const name of readdirSync(root)) {
-    if (!name.endsWith('.md') || name === 'README.md') continue
-    const record = Number(/^(\d+)-/.exec(name)?.[1])
-    if (!Number.isFinite(record)) continue
-    const m = NIGHT_H1.exec(readFileSync(join(root, name), 'utf8'))
-    if (!m) continue
-    nights.push({ record, date: m[2], title: `${m[1]} — ${m[3]}` })
-  }
-  return nights.sort((a, b) => a.record - b.record)
+  const mirror = dirname(root)
+  return readNightRecords(root).map((n) => {
+    const built = builtPages(n.text).find((path) => existsSync(join(mirror, path)))
+    return {
+      record: n.record,
+      date: n.date,
+      title: `${n.label} — ${n.title}`,
+      built: built ? n1PageHref(built) : null,
+    }
+  })
 }

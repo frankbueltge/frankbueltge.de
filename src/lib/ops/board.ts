@@ -22,7 +22,7 @@ import { WERKE } from '@/data/werke'
 import encounters from '@/data/begegnungen/register.json'
 import attentionMoments from '@/data/attention/moments.json'
 import { lastArchProtocol } from '@/lib/arch/facts'
-import { lastN1Night } from '@/lib/n1/works'
+import { lastN1Night, N1_RECORD_HREF, newestN1Page } from '@/lib/n1/works'
 
 /** Which door id drives which practice namespace — the only mapping the board needs, and the
  *  reason it is written down: the ids are the practices' resident names, the namespaces are the
@@ -163,13 +163,18 @@ function lastMoment(): BoardLast | null {
   }
 }
 
-/** n-1 lands a night, not a work: its shelf holds two works and its record holds twenty nights,
- *  so the newest night is what this practice last landed — the same reading the Arch row makes
- *  of its session protocols. The link is the practice's own record surface; the house keeps no
- *  page per night, because the repository IS the record (its dowry's own arrangement). */
+/** n-1's row names the newest page of the practice a visitor can open — a work or a study, by
+ *  the page's own title and the day its record says it was built (src/lib/n1/shelf.ts). Until
+ *  2026-10-10 the row named the newest night instead ("Night 53 — project 6, session 2: …"): a
+ *  count of sessions, on a row whose link leads to a front page where what those sessions built
+ *  could not be found. The nights still stand in the signal log, each leading to its page. A
+ *  mirror in which no page can be dated falls back to the newest night and the record, the way
+ *  the row read before. */
 function lastN1(): BoardLast | null {
+  const page = newestN1Page()
+  if (page) return { title: page.title, meta: page.date, href: page.href }
   const night = lastN1Night()
-  return night ? { title: night.title, meta: night.date, href: '/n-1/record.html' } : null
+  return night ? { title: night.title, meta: night.date, href: N1_RECORD_HREF } : null
 }
 
 /** The forked nightly line: its newest mirrored work, from the same metadata /error-as-method counts. */

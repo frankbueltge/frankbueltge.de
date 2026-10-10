@@ -33,7 +33,7 @@ import { resultFate, type RelayConvening } from '@/lib/ecology/convening'
 import { LOAD_BEARING, supersededIds, type Relay, type RelayState } from '@/lib/ecology/relay'
 import type { CycleState, PresentationEntry } from '@/lib/ecology/v3'
 import { count, READOUTS } from '@/lib/experiments/readouts'
-import type { N1Night } from '@/lib/n1/works'
+import { N1_RECORD_HREF, type N1Night } from '@/lib/n1/works'
 import { houseNames, instantOn, PRACTICE, werkTitle, type FeedEntry, type HouseNames } from './house-feed'
 
 const DAY = /^\d{4}-\d{2}-\d{2}$/
@@ -592,9 +592,13 @@ function relationEntries(relay: Relay, names: HouseNames): FeedEntry[] {
 
 // ── n-1 and Arch ───────────────────────────────────────────────────────────────────────────
 
-/** n-1's nights, each on the day its own heading names. The record has no page per night; the
- *  board's row leads to the record, and so does this. A day of several nights stands newest night
- *  first, by the record's own number (2026-10-07 carried five). */
+/** n-1's nights, each on the day its own heading names. A night leads to the page it built,
+ *  where its record names one that stands in the mirror (the "Built:" line, read by
+ *  readN1Nights) — until 2026-10-10 every row led to the record, so the page a night had made
+ *  was the one thing its row could not reach. The record has no page per night, and a night
+ *  that built nothing a visitor can open still leads there. The row's words are the night's own
+ *  either way. A day of several nights stands newest night first, by the record's own number
+ *  (2026-10-07 carried five). */
 export function n1NightEntries(nights: readonly N1Night[], names: HouseNames = houseNames()): FeedEntry[] {
   return nights
     .filter((n) => DAY.test(n.date))
@@ -607,7 +611,7 @@ export function n1NightEntries(nights: readonly N1Night[], names: HouseNames = h
       title: n.title,
       fact: null,
       kind: K['n1-night'],
-      href: '/n-1/record.html',
+      href: n.built || N1_RECORD_HREF,
       withdrawn: false,
       voice: null,
       seq: n.record,

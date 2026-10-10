@@ -43,6 +43,7 @@ import { datedEntries, recordThumbnail, THUMBNAILS, THUMB_BOX } from '@/lib/expe
 import { GALLERY } from '@/config/gallery-wording'
 import { NAMING } from '@/config/naming'
 import { readN1Facts } from '@/lib/ecology/n1-line'
+import { newestN1Page } from '@/lib/n1/works'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { ARCH_MIRROR, readArchFacts } from '@/lib/arch/facts'
@@ -83,6 +84,10 @@ if (!nightly?.href) throw new Error('/experiments: NAMING.overview.items has no 
 // its Dowry says it was founded, and — since 2026-08-21 — the name the practice took for
 // itself. Read, never typed: the day the practice renames itself, this row follows.
 const n1 = readN1Facts()
+// ...and, since 2026-10-10, the newest page of its making a visitor can open, by that page's own
+// title and the day the practice's record says it was built (src/lib/n1/shelf.ts) — the same
+// derivation as the shelf the site adds above the practice's front page, where this card leads.
+const n1Newest = newestN1Page()
 
 // Arch (2026-08-23) reads the same way: its sentence from its own homepage card, its founding
 // date and its window from its mirrored dowry and pre-registration — never typed here.
@@ -166,7 +171,9 @@ const sections: GallerySection[] = [
           n1.name ? ` It has since named itself ${n1.name} (2026-08-21); the working title stands until the founder acts on the renaming request.` : ''
         }`,
         href: url('/n-1'),
-        meta: `founded ${n1.founded} · ${n1.law} instead of a protocol`,
+        meta:
+          `founded ${n1.founded} · ${n1.law} instead of a protocol` +
+          (n1Newest ? ` · newest page to open: ${n1Newest.title}, ${n1Newest.date}` : ''),
         thumb: recordThumbnail('n-1', datedEntries('public/n-1/nights'), GALLERY.beside.n1, 'public/n-1/nights'),
       },
       {

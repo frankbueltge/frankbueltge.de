@@ -586,6 +586,27 @@ export const NAMING = {
       } as Record<string, { label: string; href: string; self?: string; bare?: string[] }>,
       /** the last exit, for pages whose house link would point at themselves */
       site: { label: 'frankbueltge.de', href: '/' },
+      /** The shelf the strip carries on n-1's front door (Frank, 2026-10-10, wording private):
+       *  the practice builds a page most nights, and a visitor could reach none of them except
+       *  through links inside the long text of its own front page. Every entry is read from
+       *  the mirror — the page's own title and first sentence, the day its record says it was
+       *  built (src/lib/n1/shelf.ts) — so the only words the site adds are the ones below.
+       *  `kinds` are the practice's own two: a piece filed under works/, and what a project
+       *  builds, "a study, not yet a work". */
+      shelf: {
+        heading: 'Built here so far',
+        /** "11 pages to open, newest first · 3 works · 8 studies" */
+        count: (n: { pages: number; works: number; studies: number }): string =>
+          `${n.pages} ${n.pages === 1 ? 'page' : 'pages'} to open, newest first · ` +
+          `${n.works} ${n.works === 1 ? 'work' : 'works'} · ${n.studies} ${n.studies === 1 ? 'study' : 'studies'}`,
+        kinds: { work: 'work', study: 'study' },
+        /** a page no part of the practice's record dates: listed last, never given a guessed day */
+        undated: 'undated',
+        /** the fold that keeps the shelf compact as it grows — works never fold */
+        earlier: (n: number): string => `${n} earlier ${n === 1 ? 'study' : 'studies'}`,
+        /** takes the place of `note` on the front door: it has to cover the shelf as well */
+        note: 'This list and the links are added by the site, read from the practice’s own files: each title and first sentence is the page’s own, each date the night the record says it was built. The practice’s own page begins below.',
+      },
     },
     withdrawnLabel: 'withdrawn',
     entranceNote: {
