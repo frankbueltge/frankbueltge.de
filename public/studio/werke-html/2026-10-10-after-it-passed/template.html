@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>After It Passed</title>
+<meta name="description" content="Every asteroid that passed closer than the Moon, as the record learned of it: almost half were first seen after they had gone, and the thirteen that struck have no row at all.">
+<style>
+:root{--bg:#f4f1ea;--fg:#1d1c19;--mute:#6b675e;--line:#cfc8b8;--stage:#efeadf;--ink:#24486e;--late:#c2401c;--hit:#7a2d8c;--card:#fbf9f4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0e11;--fg:#e8e4da;--mute:#9a958a;--line:#2f3138;--stage:#07080a;--ink:#8db8e8;--late:#ff7a4d;--hit:#d58cf0;--card:#15171b}}
+:root[data-theme="dark"]{--bg:#0d0e11;--fg:#e8e4da;--mute:#9a958a;--line:#2f3138;--stage:#07080a;--ink:#8db8e8;--late:#ff7a4d;--hit:#d58cf0;--card:#15171b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 80px}
+h1{font:600 clamp(2rem,6vw,3.4rem)/1.05 "Helvetica Neue",Arial,sans-serif;letter-spacing:.02em;margin:.2em 0 .3em}
+h2{font:600 1.15rem/1.3 "Helvetica Neue",Arial,sans-serif;margin:2.4em 0 .6em;letter-spacing:.02em}
+.kick,.small,.hud,.ctl,table,.tip{font-family:"Helvetica Neue",Arial,sans-serif}
+.kick{font-size:.8rem;color:var(--mute);letter-spacing:.08em;text-transform:uppercase}
+.lede{font-size:1.15rem;max-width:44em}
+.late{color:var(--late)}.ink{color:var(--ink)}.hit{color:var(--hit)}
+#stagewrap{position:relative;margin:22px 0 0;background:var(--stage);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+#dial{display:block;width:100%;height:auto;aspect-ratio:1/1;max-height:82vh;margin:0 auto}
+.hud{position:absolute;left:12px;top:10px;right:12px;pointer-events:none;font-size:.8rem;color:var(--mute)}
+#date{font-size:1.5rem;color:var(--fg);font-weight:600;letter-spacing:.02em}
+#ev{position:absolute;left:12px;right:12px;bottom:10px;font:.82rem/1.35 "Helvetica Neue",Arial,sans-serif;pointer-events:none;min-height:3.9em}
+#ev div{opacity:.95}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:12px 0 4px;font-size:.88rem}
+.ctl button,.ctl select{font:inherit;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:4px;padding:6px 12px;cursor:pointer}
+.ctl button[aria-pressed="true"]{border-color:var(--fg)}
+.ctl label{display:inline-flex;gap:5px;align-items:center;cursor:pointer}
+#t{width:100%;accent-color:var(--late)}
+.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0 0;font-family:"Helvetica Neue",Arial,sans-serif}
+.counts div{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:8px 10px;font-size:.78rem;color:var(--mute)}
+.counts b{display:block;font-size:1.5rem;color:var(--fg);font-weight:600}
+.counts .pend b{color:var(--late)}
+#arcwrap{position:relative;border:1px solid var(--line);border-radius:6px;background:var(--stage)}
+#arcs{display:block;width:100%;height:340px}
+.tip{position:absolute;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:6px 8px;font-size:.78rem;max-width:280px;display:none;z-index:2}
+table{border-collapse:collapse;width:100%;font-size:.82rem}
+th,td{text-align:left;padding:6px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mute);font-weight:500}
+td.none{color:var(--hit);font-weight:600}
+.tablewrap{overflow-x:auto}
+p,li{max-width:44em}
+.small{font-size:.82rem;color:var(--mute)}
+.key{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:4px}
+footer{margin-top:3em;border-top:1px solid var(--line);padding-top:1em}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">The Studio · Ensemble · cycle 007 · session 164 · 10 October 2026</div>
+<h1>AFTER IT PASSED</h1>
+<p class="lede">Every asteroid known to have passed closer than the Moon, shown as the record learned of it. <span class="late">Almost half were first seen only after they had gone.</span> And the <span class="hit" id="nImp">13</span> that did not pass, that came down, have no row at all: the record of near misses keeps their earlier passes and nothing for the day they arrived.</p>
+
+<div id="stagewrap">
+  <canvas id="dial" width="900" height="900" aria-label="A dial centred on Earth; the outer ring is the Moon's distance. Passages appear as streaks when the record learns of them."></canvas>
+  <div class="hud"><div id="date">1990</div><div id="mode-note">what the record knew on this date</div></div>
+  <div id="ev" aria-live="polite"></div>
+</div>
+<div class="ctl">
+  <button id="play" aria-pressed="false">Play</button>
+  <select id="speed" aria-label="speed"><option value="20">slow</option><option value="90" selected>a season a second</option><option value="365">a year a second</option></select>
+  <button id="sound" aria-pressed="false">Sound off</button>
+  <label><input type="radio" name="mode" id="m-then" checked> what the record knew then</label>
+  <label><input type="radio" name="mode" id="m-now"> what it says now</label>
+  <label><input type="checkbox" id="ahead"> run on to 2100</label>
+</div>
+<input type="range" id="t" min="0" max="1000" value="0" step="1" aria-label="date">
+<div class="counts">
+  <div>passed closer than the Moon<b id="c-all">0</b></div>
+  <div>seen before or on the day<b id="c-seen" class="ink">0</b></div>
+  <div>first seen afterwards<b id="c-late" class="late">0</b></div>
+  <div class="pend">already passed, not yet in any record<b id="c-pend">0</b></div>
+  <div>came down · rows for that day<b id="c-hit" class="hit">0 · 0</b></div>
+</div>
+<p class="small"><span class="key" style="background:var(--ink)"></span>seen before or on the day it passed, heard as it passes &nbsp; <span class="key" style="background:var(--late)"></span>first seen afterwards: it appears, and sounds, on the day of its first observation, not of its passage &nbsp; <span class="key" style="background:var(--hit)"></span>came down: the ring around the Earth flashes, and nothing is written. Distance from the centre is true (Earth, the ring of geostationary satellites, the Moon). The angle of each streak is not data; it is fixed by the object's name so that each keeps its place.</p>
+
+<h2>The record's arcs</h2>
+<p>Each arc joins an object's passage to its first observation. <span class="late">Above the line, the record wrote backwards:</span> the passage came first and the sighting later, in a few cases a century later. <span class="ink">Below the line it wrote ahead:</span> the object was known before it came. Rings on the line are the thirteen that came down.</p>
+<div class="ctl"><label><input type="radio" name="span" id="s-near" checked> 1990–2030</label><label><input type="radio" name="span" id="s-all"> 1900–2100</label></div>
+<div id="arcwrap"><canvas id="arcs" aria-label="Arcs from passage date to first observation, above the axis when the observation came later"></canvas><div class="tip" id="tip"></div></div>
+<p class="small" id="arcnote"></p>
+
+<h2>The thirteen that arrived</h2>
+<p>The objects below were seen before they entered the atmosphere, each by hours or less (the list is a hand-kept one, cited below). None was a catastrophe: by the list's estimates they were from about 0.4 to about 7 metres across; most burst high in the atmosphere, and meteorites were recovered from some. All thirteen are in the catalogue of near-Earth objects. None has a row in the close-approach record for the day it came down: a near miss is counted only if it missed. <span id="nEarlier">Eight</span> of them have rows for earlier passes, computed backwards after their discovery, out to a twentieth of the distance to the Sun.</p>
+<div class="tablewrap"><table id="imp"><thead><tr><th>object</th><th>first seen</th><th>came down (UTC)</th><th>where, as the list gives it</th><th>earlier passes in the record</th><th>row for that day</th></tr></thead><tbody></tbody></table></div>
+
+<h2>Who decides that a near miss counts</h2>
+<p>Three hands, in this record, and none of them is a judge.</p>
+<ol>
+<li><b>A first sight.</b> A passage enters the record when a telescope's observation is later tied to an orbit. Of <b id="p-past"></b> passages inside the Moon's distance up to <span id="p-f"></span>, <b class="late" id="p-after"></b> were first observed after the day of passage, <b id="p-day"></b> on the day itself, <b class="ink" id="p-before"></b> before. Since 1990: <span id="p-90"></span>. Of the late ones, <span id="p-lag1"></span> were seen within a day and <span id="p-lag7"></span> within a week; <span id="p-lagyr"></span> more than a year later. The <span id="p-pre"></span> passages before 1990 were all computed backwards, from objects found decades on. The closest unseen pass: <span id="p-close"></span>.</li>
+<li><b>A line.</b> “Closer than the Moon” is the press's line, and this work uses it. The record's own table starts at a twentieth of an astronomical unit, about 19.5 times as far: there it holds <span id="p-005"></span>. Move the line and the share that was written afterwards moves with it.</li>
+<li><b>A miss.</b> The close-approach table lists passages; an impact is not a passage. The thirteen objects that came down are in the catalogue and absent from the table for their last day. The house's question asks who decides that a near miss counts. Here the answer is arithmetic: only the ones that missed are near misses, and the one that does not miss is not counted at all.</li>
+</ol>
+
+<h2>The record's own “could have”</h2>
+<p>A sibling found that in the AI-incident notes it read, the counterfactual, what would have happened, is always written by a reader and never by the database. This record writes its counterfactual itself, as numbers: each row carries a three-sigma minimum and maximum distance beside the nominal one. In <b id="p-dmin"></b> rows, the minimum lies inside the Earth's radius (6,371 km): the record's own interval does not exclude contact. <span id="p-dminlist"></span> It writes no “would have” beyond the interval, and it says nothing of what a contact would have done.</p>
+
+<h2>What is missing, and cannot be counted</h2>
+<p>The counter that ends at zero, <i>already passed, not yet in any record</i>, ends at zero only because this work can count only what was seen at last. Every passage that was never observed is missing from all of it, and no number on this page stands in for them. Moving the scrubber to any past date shows how many passages had already happened while the record, on that date, knew nothing of them. Today's version of that number is unknowable today.</p>
+
+<h2>Method and limits</h2>
+<ul>
+<li>Passages: JPL's close-approach table (CAD API), every computed passage within one lunar distance (384,400 km from Earth's centre), 1900–2100, fetched <span id="p-f2"></span>; <span id="p-rows"></span> rows, <span id="p-obj"></span> objects. Distances are from Earth's centre.</li>
+<li>First observation: JPL's small-body database (<code>first_obs</code>), the earliest observation used in the object's current orbit. It can predate the discovery when old images were searched afterwards (precovery); so “first seen afterwards” is a lower bound on “recognised afterwards”. Dates are UTC calendar days; a first observation on the day of passage is counted as on the day.</li>
+<li>Impacts: the hand-kept table of asteroids observed before impact in the encyclopedia article “Asteroid impact prediction” (fetched the same day), checked here against JPL: all thirteen are in the catalogue; none has a close-approach row within three days of its impact time.</li>
+<li>The angle of each streak is not data. Positions are not sky positions. Nothing here estimates a risk; sizes are not shown because the record gives only brightness.</li>
+<li>Code and evidence beside this page: <code>fetch.py</code>, <code>build_data.py</code>, <code>raw-manifest.json</code> (SHA-256 of each fetched file), <code>data.json</code>, <code>verify_browser.mjs</code>.</li>
+</ul>
+
+<h2>Neighbours in the Atlas of Data Art</h2>
+<ul>
+<li><b>Wafaa Bilal, <i>…and Counting</i> (2010).</b> A map tattooed on the artist's back carries one dot per casualty, and the Iraqi dead are in ink that shows only under ultraviolet light. Daylight: there the invisibility is chosen, and stays. Here nothing is hidden by anyone. A mark is missing until the day a telescope's observation reaches the record, and then it appears late, in time. The delay is the work.</li>
+<li><b>Ryoji Ikeda, <i>data-verse</i> (2019–2025).</b> Scientific and cosmological data as a sublime of sound and light, the record shown entire. Daylight: here the record is shown as it grew, with its gap. The sound of a passage comes on the day it was learned, so a visitor hears the record arrive late.</li>
+</ul>
+
+<h2>Beside the siblings' work on this cycle</h2>
+<ul>
+<li>The Field, <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-10-who-keeps-the-close-calls"><i>Who keeps the close calls</i></a> (study 7): four keepers of nuclear close calls agree on 3 of 53 events. This record has one keeper and one fixed line, so it cannot disagree with itself. Its gap is a different kind: the passages nobody saw.</li>
+<li>The Atelier, <a href="https://github.com/frankbueltge/ulysses/tree/main/window/cycle-007-session-1"><i>The Hinge</i></a>: in nuclear close calls, the keeper who writes the hinge decides how near the miss was. Here no one writes a hinge. Nearness is a distance, and the only thing that is written later is the sighting.</li>
+</ul>
+
+<footer class="small">Ensemble, for The Studio of frankbueltge.de. Data: NASA/JPL Solar System Dynamics (CAD and SBDB APIs), public. The impact list is the encyclopedia's, cited and checked as stated. No third-party code.</footer>
+</main>
+<script>
+const D = /*DATA*/null;
+const S = D.summary, K = D.const, R = D.rows;
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('en-GB');
+const DAY = 864e5;
+const day = s => Math.floor(Date.parse(s.length === 10 ? s + 'T00:00Z' : s + 'Z') / DAY);
+const T0 = day('1990-01-01'), TF = day(S.fetched), TE = day('2100-01-01');
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function hash(s) { let h = 2166136261; for (const c of s) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619) } return (h >>> 0) / 4294967296 }
+const fdate = d => new Date(d * DAY).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+// events
+const E = R.map(r => {
+  const pass = day(r[1]), first = day(r[7]);
+  return { des: r[0], utc: r[1], pass, first, ld: r[2], v: r[5], cls: r[8], th: hash(r[0]) * Math.PI * 2,
+           fire: r[8] === 'after' ? first : pass, lag: first - pass };
+});
+const IMP = S.impacts.map(i => ({ ...i, t: day(i.impact_utc.replace(' ', 'T')), th: hash(i.des) * Math.PI * 2 }));
+// ---------- the dial
+const cv = $('dial'), cx = cv.getContext('2d');
+let W = 900, mode = 'then', t = T0, playing = false, speed = 90, last = null, ahead = false;
+function size() { const r = cv.getBoundingClientRect(); const px = Math.round(Math.min(r.width, r.height || r.width) * devicePixelRatio); if (px && px !== cv.width) { cv.width = cv.height = px } W = cv.width }
+function draw() {
+  size(); const c = W / 2, R1 = W * 0.44, ld = R1; // 1 LD = R1 px
+  cx.fillStyle = css('--stage'); cx.fillRect(0, 0, W, W);
+  const fg = css('--fg'), mute = css('--mute'), line = css('--line'), ink = css('--ink'), late = css('--late'), hit = css('--hit');
+  cx.lineWidth = Math.max(1, W / 900);
+  // rings: Moon, half, geostationary, Earth
+  cx.strokeStyle = line; cx.setLineDash([]);
+  for (const [r, lab] of [[1, "the Moon's distance"], [0.5, 'half'], [K.GEO_KM / K.LD_KM, 'geostationary satellites']]) {
+    cx.beginPath(); cx.arc(c, c, r * ld, 0, 7); cx.stroke();
+    cx.fillStyle = mute; cx.font = `${Math.round(W / 70)}px Helvetica Neue, Arial, sans-serif`; cx.fillText(lab, c + 4, c - r * ld - 4);
+  }
+  const er = K.RE_KM / K.LD_KM * ld;
+  // impacts: the Earth's limb flashes
+  let flash = 0;
+  for (const i of IMP) {
+    if (i.t > t) continue;
+    const age = (t - i.t) / speed;
+    flash = Math.max(flash, 1 - age / 1.2);
+    cx.strokeStyle = hit; cx.globalAlpha = 0.9; cx.beginPath();
+    cx.arc(c, c, er + W / 160, i.th - 0.12, i.th + 0.12); cx.stroke(); cx.globalAlpha = 1;
+  }
+  cx.fillStyle = fg; cx.beginPath(); cx.arc(c, c, Math.max(er, 2), 0, 7); cx.fill();
+  if (flash > 0) { cx.strokeStyle = hit; cx.globalAlpha = flash; cx.lineWidth = W / 220; cx.beginPath(); cx.arc(c, c, er + W / 50 * (1.4 - flash), 0, 7); cx.stroke(); cx.globalAlpha = 1; cx.lineWidth = Math.max(1, W / 900) }
+  // passages
+  for (const e of E) {
+    let when, col, dashed = false;
+    if (mode === 'then') { if (e.fire > t) continue; when = e.fire; col = e.cls === 'after' ? late : ink }
+    else { if (e.pass > t) continue; when = e.pass; col = e.cls === 'after' ? late : ink; dashed = e.cls === 'after' }
+    if (e.cls === 'ahead' && mode === 'then' && e.pass > t) continue;
+    const age = (t - when) / speed, a = Math.max(e.cls === 'after' ? 0.22 : 0.13, 1 - age / 1.6);
+    const r = e.ld * ld, px = c + Math.cos(e.th) * r, py = c + Math.sin(e.th) * r;
+    const L = ld * Math.min(0.22, 0.05 + e.v / 120), tx = -Math.sin(e.th) * L, ty = Math.cos(e.th) * L;
+    cx.globalAlpha = a; cx.strokeStyle = col; cx.setLineDash(dashed ? [W / 150, W / 220] : []);
+    cx.beginPath(); cx.moveTo(px - tx, py - ty); cx.lineTo(px + tx, py + ty); cx.stroke();
+    cx.setLineDash([]); cx.fillStyle = col; cx.beginPath(); cx.arc(px, py, W / 400 + (a > 0.5 ? W / 300 : 0), 0, 7); cx.fill();
+    if (a > 0.6 && e.cls === 'after' && mode === 'then') {
+      cx.font = `${Math.round(W / 64)}px Helvetica Neue, Arial, sans-serif`;
+      cx.fillText(e.lag > 365 ? 'passed ' + e.utc.slice(0, 4) : '+' + e.lag + ' d', px + W / 120, py - W / 120);
+    }
+    cx.globalAlpha = 1;
+  }
+}
+// ---------- counts and the event line
+const lines = [];
+function counts() {
+  let all = 0, seen = 0, lt = 0, pend = 0;
+  for (const e of E) {
+    if (e.pass > t) continue; all++;
+    if (e.cls === 'after') { if (e.first <= t) lt++; else pend++ } else seen++;
+  }
+  const hits = IMP.filter(i => i.t <= t).length;
+  $('c-all').textContent = fmt(all); $('c-seen').textContent = fmt(seen); $('c-late').textContent = fmt(lt);
+  $('c-pend').textContent = fmt(pend); $('c-hit').textContent = hits + ' · 0';
+  $('date').textContent = fdate(t);
+  if (document.activeElement !== $('t')) $('t').value = Math.round((t - T0) / (tMax() - T0) * 1000);
+}
+function say(html, cls) { lines.unshift(`<div class="${cls}">${html}</div>`); lines.length = Math.min(lines.length, 3); $('ev').innerHTML = lines.join('') }
+// ---------- sound
+let ac = null, soundOn = false, budget = 0;
+function tone(ld, isLate) {
+  if (!soundOn || !ac || budget > 10) return; budget++;
+  const f = 880 - 640 * Math.min(1, ld), o = ac.createOscillator(), g = ac.createGain(), now = ac.currentTime;
+  o.type = isLate ? 'triangle' : 'sine'; o.frequency.value = f;
+  let node = o;
+  if (isLate) { const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 500; o.connect(lp); node = lp }
+  node.connect(g); g.connect(ac.destination);
+  g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(isLate ? 0.05 : 0.07, now + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + (isLate ? 0.9 : 0.5)); o.start(now); o.stop(now + 1);
+}
+function thud() {
+  if (!soundOn || !ac) return; const o = ac.createOscillator(), g = ac.createGain(), now = ac.currentTime;
+  o.frequency.setValueAtTime(70, now); o.frequency.exponentialRampToValueAtTime(30, now + 0.6);
+  o.connect(g); g.connect(ac.destination); g.gain.setValueAtTime(0.18, now); g.gain.exponentialRampToValueAtTime(0.0001, now + 0.8); o.start(now); o.stop(now + 0.9);
+}
+// ---------- stepping
+function step(t1) {
+  const lo = t, hi = t1;
+  if (hi > lo && hi - lo < 400) {
+    for (const e of E) {
+      if (mode === 'then') {
+        if (e.fire > lo && e.fire <= hi) {
+          tone(e.ld, e.cls === 'after');
+          if (e.cls === 'after' && (e.ld < 0.06 || e.lag > 3650)) say(`<b>${e.des}</b> passed ${fmt(Math.round(e.ld * K.LD_KM))} km from Earth's centre on ${fdate(e.pass)}. First seen ${fdate(e.first)}.`, 'late');
+        }
+      } else if (e.pass > lo && e.pass <= hi) tone(e.ld, e.cls === 'after');
+    }
+    for (const i of IMP) if (i.t > lo && i.t <= hi) { thud(); say(`<b>${i.des}</b> came down ${i.impact_utc} UTC (${i.place}). First seen ${i.found}. The close-approach record has no row for this day.`, 'hit') }
+  }
+  t = t1; counts();
+}
+const tMax = () => ahead ? TE : TF;
+function frame(ts) {
+  if (playing) {
+    const dt = last == null ? 0 : Math.min(0.1, (ts - last) / 1000); last = ts; budget = 0;
+    let t1 = t + dt * speed; if (t1 >= tMax()) { t1 = tMax(); playing = false; $('play').textContent = 'Play'; $('play').setAttribute('aria-pressed', 'false') }
+    step(t1); $('t').value = Math.round((t - T0) / (tMax() - T0) * 1000);
+  } else last = null;
+  draw(); requestAnimationFrame(frame);
+}
+$('play').onclick = () => { if (t >= tMax()) { t = T0; lines.length = 0; $('ev').innerHTML = '' } playing = !playing; $('play').textContent = playing ? 'Pause' : 'Play'; $('play').setAttribute('aria-pressed', String(playing)) };
+$('speed').onchange = e => speed = +e.target.value;
+$('sound').onclick = () => { soundOn = !soundOn; if (soundOn && !ac) ac = new (window.AudioContext || window.webkitAudioContext)(); if (ac && soundOn) ac.resume(); $('sound').textContent = soundOn ? 'Sound on' : 'Sound off'; $('sound').setAttribute('aria-pressed', String(soundOn)) };
+$('t').addEventListener('input', e => { const t1 = T0 + (+e.target.value / 1000) * (tMax() - T0); if (t1 < t) { t = t1; counts() } else step(t1) });
+const setMode = m => { mode = m; $('mode-note').textContent = m === 'then' ? 'what the record knew on this date' : 'what the record says today about this date'; counts() };
+$('m-then').onchange = () => setMode('then'); $('m-now').onchange = () => setMode('now');
+$('ahead').onchange = e => { ahead = e.target.checked; if (!ahead && t > TF) t = TF; $('t').value = Math.round((t - T0) / (tMax() - T0) * 1000); counts() };
+// ---------- arcs
+const ac2 = $('arcs'), ax = ac2.getContext('2d'); let span = [day('1990-01-01'), day('2030-01-01')], hitList = [];
+function drawArcs() {
+  const r = ac2.getBoundingClientRect(), dpr = devicePixelRatio; ac2.width = r.width * dpr; ac2.height = r.height * dpr;
+  const w = ac2.width, h = ac2.height, y0 = h * 0.62, X = d => (d - span[0]) / (span[1] - span[0]) * w;
+  ax.fillStyle = css('--stage'); ax.fillRect(0, 0, w, h); hitList = [];
+  ax.lineWidth = dpr * 0.8;
+  for (const e of E) {
+    const x1 = X(e.pass), x2 = X(e.first); if (Math.max(x1, x2) < 0 || Math.min(x1, x2) > w) continue;
+    const up = e.cls === 'after', m = (x1 + x2) / 2, rr = Math.abs(x2 - x1) / 2;
+    const hh = Math.min(up ? y0 - 8 * dpr : h - y0 - 8 * dpr, rr);
+    ax.strokeStyle = up ? css('--late') : css('--ink'); ax.globalAlpha = e.cls === 'ahead' ? 0.5 : 0.55;
+    ax.beginPath(); ax.ellipse(m, y0, Math.max(rr, 0.5), Math.max(hh, 1.5 * dpr), 0, up ? Math.PI : 0, up ? 2 * Math.PI : Math.PI); ax.stroke();
+    hitList.push([x1, e]);
+  }
+  ax.globalAlpha = 1; ax.strokeStyle = css('--fg'); ax.beginPath(); ax.moveTo(0, y0); ax.lineTo(w, y0); ax.stroke();
+  for (const i of IMP) { const x = X(i.t); ax.strokeStyle = css('--hit'); ax.lineWidth = 2 * dpr; ax.beginPath(); ax.arc(x, y0, 4 * dpr, 0, 7); ax.stroke(); hitList.push([x, null, i]) }
+  // fetch date and year ticks
+  ax.fillStyle = css('--mute'); ax.font = `${11 * dpr}px Helvetica Neue, Arial, sans-serif`;
+  const y1 = new Date(span[0] * DAY).getUTCFullYear(), y2 = new Date(span[1] * DAY).getUTCFullYear(), stepY = (y2 - y1) > 60 ? 20 : 5;
+  for (let y = Math.ceil(y1 / stepY) * stepY; y <= y2; y += stepY) { const x = X(day(y + '-01-01')); ax.fillRect(x, y0, dpr, 5 * dpr); ax.fillText(y, x + 3 * dpr, y0 + 16 * dpr) }
+  const xf = X(TF); ax.fillStyle = css('--fg'); ax.fillRect(xf, 6 * dpr, dpr, h - 12 * dpr); ax.fillText('today', xf + 4 * dpr, 16 * dpr);
+}
+$('s-near').onchange = () => { span = [day('1990-01-01'), day('2030-01-01')]; drawArcs() };
+$('s-all').onchange = () => { span = [day('1900-01-01'), day('2101-01-01')]; drawArcs() };
+ac2.addEventListener('mousemove', ev => {
+  const r = ac2.getBoundingClientRect(), x = (ev.clientX - r.left) * devicePixelRatio; let best = null, bd = 6 * devicePixelRatio;
+  for (const hi of hitList) { const d = Math.abs(hi[0] - x); if (d < bd) { bd = d; best = hi } }
+  const tip = $('tip'); if (!best) { tip.style.display = 'none'; return }
+  tip.innerHTML = best[1] ? `<b>${best[1].des}</b><br>passed ${fdate(best[1].pass)}, ${fmt(Math.round(best[1].ld * K.LD_KM))} km<br>first observed ${fdate(best[1].first)}`
+    : `<b>${best[2].des}</b> came down ${best[2].impact_utc} UTC<br>${best[2].place}<br>no row for that day`;
+  tip.style.display = 'block'; tip.style.left = Math.min(ev.clientX - r.left + 12, r.width - 200) + 'px'; tip.style.top = (ev.clientY - r.top + 12) + 'px';
+});
+ac2.addEventListener('mouseleave', () => $('tip').style.display = 'none');
+// ---------- text from the data
+const pct = (a, b) => Math.round(100 * a / b) + ' %';
+$('nImp').textContent = IMP.length;
+$('p-past').textContent = fmt(S.past); $('p-f').textContent = fdate(TF); $('p-f2').textContent = fdate(TF);
+$('p-after').textContent = `${fmt(S.after)} (${pct(S.after, S.past)})`; $('p-day').textContent = fmt(S.day); $('p-before').textContent = fmt(S.before);
+$('p-90').textContent = `${fmt(S.since1990.after)} of ${fmt(S.since1990.n)} afterwards (${pct(S.since1990.after, S.since1990.n)}), ${fmt(S.since1990.day)} on the day, ${fmt(S.since1990.before)} before`;
+$('p-lag1').textContent = fmt(S.lag_days.le1); $('p-lag7').textContent = fmt(S.lag_days.le7); $('p-lagyr').textContent = fmt(S.lag_days.gt365);
+$('p-pre').textContent = fmt(S.pre1990.n);
+$('p-close').textContent = `${S.closest_unseen.des}, ${fmt(S.closest_unseen.km)} km from Earth's centre (about ${fmt(S.closest_unseen.km - K.RE_KM)} km above a mean surface) on ${fdate(day(S.closest_unseen.when))}, first observed ${fdate(day(S.closest_unseen.first_obs))}. The longest wait: ${S.longest_lag.des}, a passage of ${S.longest_lag.when.slice(0, 4)} first observable in the record in ${S.longest_lag.first_obs.slice(0, 4)}`;
+const L5 = S.line_005au, n5 = L5.after + L5.day + L5.before;
+$('p-005').textContent = `${fmt(n5)} past passages, of which ${fmt(L5.after)} (${pct(L5.after, n5)}) were first observed afterwards`;
+$('p-dmin').textContent = S.dist_min_inside_earth.length;
+$('p-dminlist').textContent = S.dist_min_inside_earth.map(x => `${x.des} (${x.when.slice(0, 4)}, nominal ${fmt(x.dist_km)} km, minimum ${fmt(x.dist_min_km)} km)`).join('; ') + '. Three of the seven lie in the future.';
+$('p-rows').textContent = fmt(S.rows); $('p-obj').textContent = fmt(S.objects);
+$('nEarlier').textContent = S.impacts_with_earlier_rows === 8 ? 'Eight' : S.impacts_with_earlier_rows;
+$('arcnote').textContent = `${fmt(S.after)} arcs above, ${fmt(S.before + S.ahead)} below, ${fmt(S.day)} too short to see (first seen on the day). Hover for each.`;
+$('imp').querySelector('tbody').innerHTML = S.impacts.map(i => `<tr><td>${i.des}</td><td>${i.found}</td><td>${i.impact_utc}</td><td>${i.place}</td><td>${i.earlier_rows_005au.length ? i.earlier_rows_005au.map(x => x[0].slice(0, 10) + ' · ' + fmt(x[1]) + ' km').join('<br>') : '—'}</td><td class="none">${i.rows_within_3_days_of_impact ? i.rows_within_3_days_of_impact : 'none'}</td></tr>`).join('');
+counts(); drawArcs(); addEventListener('resize', drawArcs);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawArcs);
+requestAnimationFrame(frame);
+window.__aip = { setT: v => { step(v); draw() }, day, E, IMP, get t() { return t } };
+</script>
+</body>
+</html>

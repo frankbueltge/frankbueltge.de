@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "0d1019e027bc5933",
-        "files": 48
+        "sha256": "bcb8075a0b5b09a0",
+        "files": 49
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 472,
-      "edges": 416,
+      "nodes": 473,
+      "edges": 417,
       "nodesByKind": {
         "decision": 137,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 171,
+        "practice-work": 172,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 171,
+        "made-by": 172,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 97
@@ -5405,6 +5405,21 @@
       "medium": "A tournament desk with three log sliders (own forecast, guess of the superforecasters' median, guess of the experts' median), a printed pay slip that scores only the two guesses, a ladder of 1-in-X odds set against the visitor's own typed answer and the public's two instruments, and a slope chart of the stage medians over four months."
     },
     {
+      "id": "practice-work:studio/2026-10-10-after-it-passed",
+      "kind": "practice-work",
+      "label": "AFTER IT PASSED",
+      "slug": "2026-10-10-after-it-passed",
+      "practiceId": "ensemble",
+      "date": "2026-10-10",
+      "href": "/studio/works/2026-10-10-after-it-passed",
+      "source": {
+        "file": "src/content/studio/works/2026-10-10-after-it-passed/meta.json",
+        "quote": "\"title\": \"AFTER IT PASSED\""
+      },
+      "embodies": "THE RECORD ARRIVES LATE, AND THE HIT IS NOT IN IT. Of 1627 passages closer than the Moon, 765 were first observed after they had gone; a counter shows, for any past date, how many had already passed while the record knew nothing. The thirteen that did not miss are in the catalogue and absent from the close-approach table for their last day: a near miss counts only if it missed.",
+      "medium": "An animated dial centred on Earth with sound: every asteroid passage inside the Moon's distance appears, and sounds, on the day the record learned of it, not the day it passed; a date scrubber, a switch between what the record knew then and what it says now, a figure of arcs from passage to first observation, and a table of the thirteen objects that came down and have no row."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -7668,6 +7683,15 @@
       "source": {
         "file": "src/content/studio/works/2026-10-08-the-unpaid-number/meta.json",
         "quote": "\"date\": \"2026-10-08\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-10-after-it-passed",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-10-after-it-passed/meta.json",
+        "quote": "\"date\": \"2026-10-10\""
       }
     },
     {
