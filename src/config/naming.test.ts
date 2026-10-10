@@ -183,20 +183,29 @@ describe('NAMING.triptych', () => {
  * `eyebrow` had been, and nothing failed, because nothing was checking. The comment in
  * src/pages/index.astro went on describing an eyebrow that was no longer rendered. This test is
  * what makes the third time impossible.
+ *
+ * 2026-10-11: the name line moved. The entrance became an edition whose masthead is the standing
+ * question alone, and the line the eyebrow carried — the person and the role — is the left end
+ * of the top bar, on every page (design handoff docs/design_handoff_homepage_ecology/README.md
+ * §1; the handoff names the line as one that must stay). The guard follows it there: the bar
+ * must render NAMING.eyebrow, and the entrance must be a page that mounts the bar.
  */
 describe('the entrance carries the name', () => {
-  // This guard reads whatever component src/pages/index.astro actually mounts (a companion
-  // check in src/lib/ops/front-door.test.ts holds that mounting in place). 2026-09-01, morning:
-  // FrontDoor.astro, when the board moved to /now. 2026-09-01, evening: OpsRoom.astro again —
-  // Frank's decision (wording private) brought the ops room back to the entrance; FrontDoor.astro
-  // stays in the repo unlinked, the dated archive of that day.
-  const entrance = readFileSync(
-    fileURLToPath(new URL('../components/pages/OpsRoom.astro', import.meta.url)),
-    'utf8',
-  )
+  const read = (rel: string) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8')
+  const topBar = read('../components/TopBar.astro')
+  const page = read('../layouts/Page.astro')
+  const index = read('../pages/index.astro')
 
-  it('renders NAMING.eyebrow, which is where the person stands as a heading', () => {
-    expect(entrance).toContain('NAMING.eyebrow')
+  it('renders NAMING.eyebrow in the top bar, which is where the person stands on every page', () => {
+    expect(topBar).toContain('NAMING.eyebrow')
+    // both halves reach the markup: the bar splits the line to set it in two rows on a phone
+    expect(topBar).toContain('{person}')
+    expect(topBar).toContain('{role}')
+  })
+
+  it('mounts that bar on the entrance', () => {
+    expect(page).toContain('<TopBar />')
+    expect(index).toMatch(/<Page [^>]*>/)
   })
 
   it('keeps the person and the role in that eyebrow', () => {

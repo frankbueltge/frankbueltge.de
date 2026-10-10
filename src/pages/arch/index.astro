@@ -86,6 +86,18 @@ const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one :
     <h1 class="mb-3 font-sans text-2xl font-semibold">Arch</h1>
     <p class="mb-8 leading-relaxed text-fg-muted">{card.line}</p>
 
+    {/* THE ARCHIVE NOTICE (2026-10-11). The trial this room was built for has ended, and with the
+        entrance's redesign of that day the practice left the surfaces that list what RUNS here:
+        the top bar, the board, the pulse, the timetable. The room itself is untouched — what
+        the practice committed stays where it was committed, reachable from /experiments. Shown
+        only once the balance stands: while a window is open this is not an archive. */}
+    {balance && (
+      <p class="mb-8 border-l-2 border-line pl-4 text-sm leading-relaxed text-fg-muted">
+        <span class="text-fg">This room is an archive.</span> The trial it was built for ended with the balance of {balance.written};
+        the practice is no longer listed among the systems running on this site. Everything it committed stays here, as it was committed.
+      </p>
+    )}
+
     {/* THE FRAME — the one sentence the site adds above the works, every number read */}
     <section class="mb-10 border border-line bg-panel/60 p-5" aria-labelledby="arch-frame">
       <h2 id="arch-frame" class="mb-2 text-[11px] uppercase tracking-[0.18em] text-fg-faint">The window</h2>

@@ -25,6 +25,7 @@ import type { Locale } from '@/lib/site'
 import { NAMING } from '@/config/naming'
 import pulseData from '@/data/pulse/pulse.json'
 import { formatWeekRange, type PulseSnapshot } from '@/lib/pulse/render'
+import { RETIRED_REPOS, withoutRepos } from '@/lib/pulse/without'
 import { buildBoard } from '@/lib/ops/board'
 import { FEED_DEPTH, topOf } from '@/lib/ops/house-feed'
 import { buildHouseFeed } from '@/lib/ops/live-feed'
@@ -39,7 +40,9 @@ const locale = (Astro.currentLocale ?? 'en') as Locale
 /** Fragments survive the locale helper: src/lib/locale-href.ts. */
 const url = (href: string) => localeHref(href, (path) => getRelativeLocaleUrl(locale, path))
 
-const pulse = pulseData as PulseSnapshot
+// Without the repositories of systems that left the board (src/lib/pulse/without.ts): the
+// caption's repository count and total are those of what this page still lists.
+const pulse = withoutRepos(pulseData as PulseSnapshot, RETIRED_REPOS)
 const board = buildBoard(pulse)
 // The house's live updates, newest first, to the depth of the longer log — the component pages
 // them seven at a time (the entrance shows only the newest twenty since 2026-10-05).

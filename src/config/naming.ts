@@ -63,6 +63,9 @@ export interface TravelItem {
    * that record; the card itself keeps pointing at the house.
    */
   resident?: { lead: string; label: string; href: string }
+  /** The house in one short line, for the index at the foot of the entrance (2026-10-11): a
+   *  column there is a sixth of the page wide, and `description` is a paragraph. */
+  short: string
 }
 
 /** One card of the entrance's triptych (WP7). One per PRACTICE — the copy only; the picture is
@@ -184,7 +187,12 @@ export const NAMING = {
         // have hidden exactly that.
         id: 'nightly-line',
         kindLabel: 'Practice',
-        title: 'Error as Method',
+        // Labelled by its name since 2026-10-11 (design handoff of that day, wording canon): the
+        // nightly line has carried the name Ulysses since 2026-06-28 and holds it alone since
+        // 2026-08-31, while this card still wore the title of its founding text. "Error as
+        // Method" stays where it is that text's title — the route, the page's own heading, and
+        // the line under the name in the top bar.
+        title: 'Ulysses',
         line: 'The other line of the Atelier: one founding text, one shared position, and from 2026-07-18 a second constitution — the practice that works one night at a time, restarted where it was switched off.',
         href: '/error-as-method',
         meta: 'nightly · forked from the Atelier, same origin',
@@ -403,11 +411,13 @@ export const NAMING = {
         name: 'datavism.org',
         href: 'https://datavism.org',
         description: 'A data-activism lab for the AI era — turning suspicion into testable questions, hidden systems into public evidence. A main project in its own right.',
+        short: 'A data-activism lab for the AI era.',
       },
       {
         name: 'data-snack.com',
         href: 'https://data-snack.com',
         description: 'A character-driven data magazine (a cyber-diner with a cast of its own). A main project in its own right.',
+        short: 'A character-driven data magazine; its Plenum keeps minutes here.',
         /* The cast of that magazine sits weekly as the Plenum, and mirrors its minutes into this
          * repo — so the house that a visitor is being sent to is also the house whose paperwork
          * they can read here without leaving. The line says minutes, not work: the snacks are
@@ -459,6 +469,9 @@ export const NAMING = {
         name: 'Atlas of Data Art',
         href: '/atlas',
         description: 'A source-cited map of contemporary data art — works where data, AI and power meet, arranged by field rather than by date.',
+        /* `short` (2026-10-11): the catalogue in a handful of words, for the index at the foot
+           of the entrance and the top bar's menu — places a sentence does not fit. */
+        short: 'contemporary data art, source-cited',
       },
       {
         /* Wortlaut neu gefasst am 2026-07-27 (Rückbau, docs/design/2026-07-27-register-
@@ -471,6 +484,7 @@ export const NAMING = {
         name: 'Dataset Register',
         href: '/datasets',
         description: 'A curated record of datasets this research has actually reached for: every entry carries a verbatim access route, how far that route has been checked, and one sentence saying why it counts here. An entry cannot exist without its reason.',
+        short: 'datasets this research reached for',
       },
       {
         /* Neu am 2026-07-27. Der Katalog entsteht aus derselben Suche wie das Register:
@@ -480,6 +494,7 @@ export const NAMING = {
         name: 'Paper Catalogue',
         href: '/papers',
         description: 'What the three research practices actually read. Each entry is here because a practice reached for it in its own work, and carries the record of that use: who cites it, when it was last picked up, and — where someone wrote one down — why it matters.',
+        short: 'what the practices actually read',
       },
       {
         /* Neu am 2026-08-01 auf Franks Anweisung, eine Seite mit allen je hervorgebrachten
@@ -497,6 +512,7 @@ export const NAMING = {
            three practices leave session artifacts rather than works, and the register lists
            both — a card promising "every work" would have described the page of September. */
         description: 'Every work and every session artifact the research practices have brought forth, on one page: dated, named by the practice that made it, and linked to the thing itself. Withdrawn works stay listed and carry their own withdrawal in the practice’s own words — the record keeps every mark.',
+        short: 'everything the practices brought forth',
       },
     ],
   },
@@ -769,12 +785,14 @@ export const NAMING = {
              stated here because neither has a resident in the doors' sense. */
           rows: [
             { card: 'attention', repo: 'machine-attention', status: 'RUNNING', resident: 'the counter-experiment' },
-            { card: 'nightly-line', repo: 'error-as-method', status: 'NIGHTLY', resident: 'forked from the Atelier' },
-            /* `status` is the practice's own word for its current condition: a window is what its
-               pre-registration calls the bounded trial it is in (public/arch/PREREGISTRATION.md).
-               Changed to CLOSED 2026-09-22 (currency check): the window ran 2026-08-23–2026-09-21
-               and BALANCE.md is published — see src/lib/arch/facts.ts (readArchBalance). */
-            { card: 'arch', repo: 'arch', status: 'CLOSED', resident: 'balance published' },
+            /* The relation line names the founding text since 2026-10-11, when the card took the
+               practice's name (Ulysses): the row should still say which line this is. */
+            { card: 'nightly-line', repo: 'error-as-method', status: 'NIGHTLY', resident: 'Error as Method · forked from the Atelier' },
+            /* Arch stood here from 2026-08-23 to 2026-10-11 (status CLOSED since 2026-09-22: its
+               pre-registered window ran 2026-08-23–2026-09-21 and the balance is published). A
+               board of what is RUNNING is the wrong place for a trial that has ended, so the row
+               left with the entrance's redesign of 2026-10-11; the practice's room at /arch stays
+               as its archive, reached from /experiments. */
             /* Added 2026-09-03: the board named three of the four practices standing beside the
                ecology. `repo` is the checkout the pulse counts (added to scripts/fetch-pulse.ts
                the same day); until a snapshot carries its bins the row simply draws no
@@ -866,7 +884,7 @@ export const NAMING = {
         atelier: 'The Atelier',
         field: 'The Field',
         studio: 'The Studio',
-        'nightly-line': 'Error as Method',
+        'nightly-line': 'Ulysses',
         arch: 'Arch',
         'n-1': 'n-1',
         lab: 'The Lab',
@@ -976,7 +994,9 @@ export const NAMING = {
       link: { label: 'lab →', href: '/experiments' },
       cataloguesLead: 'catalogues, grown by machine: ',
       /**
-       * One entry per live tile. `name` and `stamp` are fixed; `sub` takes the reading its own
+       * One entry per live tile. `name` and `stamp` are fixed (the name is written as the piece
+       * is titled since 2026-10-11 — the board on /now sets it in capitals from its stylesheet,
+       * the entrance's readings print it as written); `sub` takes the reading its own
        * derivation produced (src/lib/ops/tiles.ts) and writes the sentence around it, so the
        * number in the big line and the number in the sentence are literally the same value.
        *
@@ -988,7 +1008,7 @@ export const NAMING = {
        */
       tiles: {
         foreknown: {
-          name: 'MACHINE ATTENTION · THE FOREKNOWN',
+          name: 'Machine Attention · The Foreknown',
           stamp: 'GDACS · NOAA · NIGHTLY VERDICTS',
           sub: (p: { open: number; resolved: number; nights: number }) =>
             `public warnings held open on the ledger — ${p.resolved} closed with a verdict so far, across ${p.nights} nights on the record`,
@@ -1001,7 +1021,7 @@ export const NAMING = {
           ],
         },
         protocol: {
-          name: 'PROTOCOL',
+          name: 'Protocol',
           stamp: 'DETERMINISTIC · NO LLM IN THE WORDING',
           sub: (p: { unavailable: number }) =>
             p.unavailable === 0
@@ -1011,7 +1031,7 @@ export const NAMING = {
             p.answered ? p.item : `${p.item} — “Feststellung entfällt”`,
         },
         consensus: {
-          name: 'CONSENSUS',
+          name: 'Consensus',
           stamp: 'ONE SNAPSHOT PER DAY · NEVER EDITED',
           sub: (p: { scanned: number; hours: number }) =>
             `ran today’s most-copied sentence word-for-word — one source, one cascade of ${p.hours} hours, counted across ${p.scanned.toLocaleString('en-GB')} articles`,
@@ -1019,7 +1039,7 @@ export const NAMING = {
             `hour ${p.hour} of the cascade: ${p.outlets} outlet${p.outlets === 1 ? '' : 's'} joined`,
         },
         iceberg: {
-          name: 'ICEBERG THEORY',
+          name: 'Iceberg Theory',
           stamp: 'LANGUAGE EDITIONS · MEASURED PER TOPIC',
           /* The count sits in the big line ("5 of 12"), so the sentence must not repeat it — it
              names WHICH topic and what the other editions do instead. */
@@ -1028,14 +1048,14 @@ export const NAMING = {
           readout: (p: { lang: string; omission: number }) => `${p.lang}: ${p.omission}% of the claim omitted`,
         },
         policy: {
-          name: 'POLICY',
+          name: 'Policy',
           stamp: 'NIGHTLY · MARKET DATA',
           sub: (p: { baseYear: number; latest: string }) =>
             `today’s climate premium against ${p.baseYear} — recomputed from real market data, latest reading ${p.latest}`,
           readout: (p: { year: number; index: number }) => `${p.year}: premium index ${p.index}`,
         },
         redaction: {
-          name: 'EDITORIAL DEADLINE',
+          name: 'Editorial Deadline',
           stamp: 'WAYBACK DIFFS · DAILY',
           sub: (p: { institution: string; changed: number; watched: number }) =>
             `taken out of a page of the ${p.institution} — the most substantive of ${p.changed} changes across ${p.watched} watched pages, both versions linked`,
@@ -1043,7 +1063,7 @@ export const NAMING = {
             `${p.institution}: −${p.tokens.toLocaleString('en-GB')} tokens`,
         },
         ghostFleet: {
-          name: 'GHOST FLEET',
+          name: 'Ghost Fleet',
           stamp: 'NO CLAIM OF ILLEGALITY — COUNTED',
           sub: (p: { value: number; unit: 'hours' | 'days' }) =>
             `vessels in deliberate AIS silence today — the longest of them dark for ${p.value} ${p.unit}, in waters that are named`,
@@ -1051,7 +1071,7 @@ export const NAMING = {
             `${p.vessel}${p.flag ? ` (${p.flag})` : ''}: dark for ${p.value} ${p.unit}`,
         },
         roundNumbers: {
-          name: 'ROUND NUMBERS',
+          name: 'Round Numbers',
           stamp: 'THE METHOD ITSELF ON TRIAL',
           /* The count is in the big line; the sentence carries what makes the piece a trial of the
              METHOD and not of the data — what the same test says about the control the piece
@@ -1064,7 +1084,7 @@ export const NAMING = {
             `leading digit ${p.digit}: ${p.observed}% observed · ${p.expected}% expected`,
         },
         patterns: {
-          name: 'PATTERNS',
+          name: 'Patterns',
           stamp: 'PERMUTATION-TESTED · THE CAPSTONE',
           sub: (p: { pairs: number; survives: boolean }) =>
             `today’s strongest correlation among ${p.pairs} pairs of its own archive — ${p.survives ? 'and it survives the permutation test' : 'indistinguishable from noise under the permutation test'}`,
@@ -1072,21 +1092,21 @@ export const NAMING = {
             `r between ${p.from} and ${p.to}: ${p.count} of the shuffles`,
         },
         watchtower: {
-          name: 'ALL ALONG THE WATCHTOWER',
+          name: 'All Along the Watchtower',
           stamp: 'CELESTRAK · DAILY ORBITAL DATA · LOCAL ONLY',
           sub: () =>
             'Earth-observation satellites on tonight’s committed orbital data — which of them have you in view is computed in your browser, on the piece itself',
           readout: (p: { owner: string; count: number }) => `${p.owner}: ${p.count} satellite${p.count === 1 ? '' : 's'}`,
         },
         commonGround: {
-          name: 'COMMON GROUND',
+          name: 'Common Ground',
           stamp: 'SEARCH · READING · POSTING · CROSS-CHECKED EVERY MORNING',
           sub: (p: { topics: number; ok: number; total: number; lead?: string }) =>
             `topics ran on two platforms or more this morning — of ${p.topics} read from ${p.ok} of ${p.total} sources${p.lead ? `; leading: ${p.lead}` : ''}`,
           readout: (p: { label: string; platforms: number }) => `${p.label}: on ${p.platforms} platforms`,
         },
         atlas: {
-          name: 'ATLAS OF DATA ART',
+          name: 'Atlas of Data Art',
           stamp: 'REFERENCE COLLECTION · NIGHTLY',
           sub: (p: { artists: number }) =>
             `catalogued and sourced, by ${p.artists} named artists — uncertain classifications stay flagged`,
@@ -1157,6 +1177,42 @@ export const NAMING = {
       backLabel: '← the front door',
       backHref: '/',
     },
+  },
+
+  /**
+   * THE TOP BAR (2026-10-11, design handoff docs/design_handoff_homepage_ecology/README.md §1).
+   * Four points as before — Projects, Lab, About, Contact — and under Projects the two lists.
+   * What changed is that a research project now says in a few words what it is, and that n-1
+   * and the nightly line stand in the list beside the ecology they stand beside in the house.
+   *
+   * A research entry names a `card` where the project has one in `overview.items` above: its
+   * name and its address are read from there, never retyped, so a renamed project moves the
+   * menu with it. Atlas has no overview card (it is a catalogue), so it carries its own; its
+   * line is the catalogue's `short`, read in the bar rather than restated here. "Other
+   * projects" are read from src/data/projects.ts, as they always were.
+   */
+  nav: {
+    projects: 'Projects',
+    research: {
+      label: 'Research projects',
+      items: [
+        { card: 'ecology', line: 'three practices, one shared question' },
+        { card: 'attention', line: 'the counter-experiment' },
+        { name: 'Atlas', href: '/atlas' },
+        { card: 'n-1', line: 'the Atelier’s third line' },
+        { card: 'nightly-line', line: 'Error as Method, the Atelier’s nightly line' },
+      ] as ({ card: string; line: string } | { name: string; href: string })[],
+    },
+    other: { label: 'Other projects', foot: { label: 'all projects →', href: '/work' } },
+    points: [
+      { label: 'Lab', href: '/experiments' },
+      { label: 'About', href: '/about' },
+      { label: 'Contact', href: '/contact' },
+    ],
+    /** the small-screen button: one word closed, one word open */
+    menu: { open: 'Menu', close: 'Close' },
+    /** accessible names of the two navigation landmarks */
+    aria: { site: 'Site', projects: 'Projects' },
   },
 
   footer: {

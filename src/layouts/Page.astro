@@ -2,6 +2,7 @@
 import Base from './Base.astro'
 import TopBar from '@/components/TopBar.astro'
 import Footer from '@/components/Footer.astro'
+import PaperFooter from '@/components/PaperFooter.astro'
 import AuthorByline from '@/components/AuthorByline.astro'
 import AttributionBlock from '@/components/AttributionBlock.astro'
 
@@ -10,11 +11,13 @@ interface Props {
   description: string
   noindex?: boolean
   canonicalPath?: string
+  /** see Base.astro — the ground this page stands on, where it is not the mono skin */
+  surface?: 'paper'
 }
-const { title, description, noindex, canonicalPath } = Astro.props
+const { title, description, noindex, canonicalPath, surface } = Astro.props
 ---
 
-<Base title={title} description={description} noindex={noindex} canonicalPath={canonicalPath}>
+<Base title={title} description={description} noindex={noindex} canonicalPath={canonicalPath} surface={surface}>
   <TopBar />
   <slot />
   {/* Die Byline entscheidet selbst pfadbasiert, ob die Seite eine Quelle hat (16.07.) —
@@ -24,5 +27,7 @@ const { title, description, noindex, canonicalPath } = Astro.props
       ohne eigene Praxis rendern nichts. */}
   <AttributionBlock pageTitle={title} />
   <AuthorByline />
-  <Footer />
+  {/* The frame's footer is a black island under both themes; a paper page ends on paper, with
+      the same six links and the same licence line (PaperFooter.astro, 2026-10-11). */}
+  {surface === 'paper' ? <PaperFooter /> : <Footer />}
 </Base>
