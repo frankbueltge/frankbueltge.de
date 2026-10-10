@@ -586,9 +586,12 @@ export const NAMING = {
       } as Record<string, { label: string; href: string; self?: string; bare?: string[] }>,
       /** the last exit, for pages whose house link would point at themselves */
       site: { label: 'frankbueltge.de', href: '/' },
-      /** The shelf the strip carries on n-1's front door (Frank, 2026-10-10, wording private):
-       *  the practice builds a page most nights, and a visitor could reach none of them except
-       *  through links inside the long text of its own front page. Every entry is read from
+      /** The shelf a strip can carry on a house's front door. n-1's carried one for some hours
+       *  on 2026-10-10 (Frank, wording private): the practice built a page most nights, and a
+       *  visitor could reach none of them except through links inside the long text of its own
+       *  front page. It came off the same evening, when that page was replaced by one that shows
+       *  its pages itself (scripts/engines/reframe-works.ts); the words stay for the frame, which
+       *  can still render one. Every entry is read from
        *  the mirror — the page's own title and first sentence, the day its record says it was
        *  built (src/lib/n1/shelf.ts) — so the only words the site adds are the ones below.
        *  `kinds` are the practice's own two: a piece it has declared a work (filed under

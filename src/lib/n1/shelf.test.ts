@@ -462,21 +462,20 @@ describe('the mirror as it stands', () => {
     expect(shelf.find((p) => p.path === 'works/below-the-threshold/index.html')?.date).toBe('2026-08-16')
   })
 
-  // THE GUARD ON THE INTEGRATE. n1-integrate.yml wipes and re-copies the mirror and then frames
-  // it; if that step ever ran without the shelf, the front door would lose it silently and the
-  // next visitor would be back to links buried in the text.
-  it('stands on the practice’s front door: every page, by its own title, under the site’s note', () => {
+  // THE GUARD ON THE INTEGRATE, turned round on 2026-10-10. For some hours that day the strip
+  // on the front door carried a shelf of these pages, because the practice's own front page did
+  // not show them. The same evening that page was replaced by one that does (the founder's act
+  // in the practice's record, REQUESTS.md of that date), and the shelf came off. n1-integrate.yml
+  // wipes and re-copies the mirror and then frames it; this holds the committed door to exactly
+  // that: the strip with its way back to the site, and nothing of the site's above the page.
+  it('leaves the practice’s front door to the practice: the strip, and no shelf', () => {
     const door = readFileSync(`${MIRROR}/index.html`, 'utf8')
-    expect(door).toContain(`class="${FRAME_MARKER}__shelf"`)
+    expect(door).toContain(`class="${FRAME_MARKER}"`)
     expect(door).toMatch(/added by the site/)
-    for (const p of shelf) expect(door, p.path).toContain(`href="${p.href}"`)
-    // the shelf is above the practice's own page, not somewhere inside it
-    expect(door.indexOf(`class="${FRAME_MARKER}__shelf"`)).toBeLessThan(door.indexOf('<main'))
-    // and it is exactly what the current mirror derives — not a shelf of some earlier night
-    const entries = shelf.map(({ href, title, kind, date, sentence }) => ({ href, title, kind, date, sentence }))
+    expect(door).not.toContain(`class="${FRAME_MARKER}__shelf"`)
     expect(
-      frameStandaloneWork(door, 'n-1', null, { atHouseIndex: true, shelf: entries }) === door,
-      'the front door’s shelf is stale — run: npx tsx scripts/engines/reframe-works.ts n-1',
+      frameStandaloneWork(door, 'n-1', null, { atHouseIndex: true }) === door,
+      'the front door’s strip is stale — run: npx tsx scripts/engines/reframe-works.ts n-1',
     ).toBe(true)
   })
 })

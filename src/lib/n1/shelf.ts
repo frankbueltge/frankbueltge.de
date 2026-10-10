@@ -4,12 +4,14 @@
 // on 2026-09-25, a study or two per project under projects/. Until 2026-10-10 a visitor could
 // reach them only through links inside the 1,800 words of the practice's own front page, and a
 // night row in the signal log led to the record, never to the page the night had built (Frank's
-// finding, wording private). This module is the one derivation both repairs read:
+// finding, wording private). This module is the one derivation the repairs read:
 //
-//   · the shelf the site adds above the practice's front page (work-frame.ts renders it,
-//     scripts/engines/reframe-works.ts feeds it on every mirror);
 //   · the address a night row leads to (works.ts → live-sources.ts);
-//   · the newest page the board and /experiments name.
+//   · the newest page the board and /experiments name;
+//   · for some hours on 2026-10-10, a shelf the site added above the practice's front page. It
+//     came off the same evening, when that page was replaced by one that shows its pages itself
+//     (the founder's act in the practice's record, REQUESTS.md of that date). work-frame.ts can
+//     still render one; nothing feeds it (scripts/engines/reframe-works.ts).
 //
 // Nothing here is authored. A page is found by walking the mirror; its title and first sentence
 // are the page's own words; its date is the practice's own record of the night that built it.

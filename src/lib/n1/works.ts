@@ -8,8 +8,8 @@
 // night that built the page, or the sentence at the top of its form ("Laid down YYYY-MM-DD,
 // night NN"). So that record is the date — the practice's own, not a file mtime and not the day
 // the mirror happened to copy it. The
-// derivation is src/lib/n1/shelf.ts, the one reading the shelf on the practice's front door, the
-// signal log and the board all share since 2026-10-10. Before that this module read the form
+// derivation is src/lib/n1/shelf.ts, the one reading the signal log, the board and /experiments
+// all share since 2026-10-10. Before that this module read the form
 // alone, and a work declared in a WORK.md instead of a FORM.md (The Days, End to End,
 // 2026-09-27) stood on the practice's shelf and was missing from the house's log.
 //
@@ -50,7 +50,7 @@ const workId = (path: string): string =>
  * Every work on n-1's shelf, newest first — the pages filed under works/ and the pages of a
  * project the practice has declared a work. A work the practice's record does not date is not
  * yet one this house can file under a day, and drops out here rather than appearing undated
- * (the shelf on the practice's own front door lists it, last and marked undated).
+ * (readN1Shelf still lists it, last and undated).
  */
 export function readN1Works(root: string = N1_WORKS_DIR): N1Work[] {
   return readN1Shelf(dirname(root))
