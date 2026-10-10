@@ -641,6 +641,29 @@ describe('n-1’s nights and Arch’s sessions', () => {
     ])
   })
 
+  it('leads a night to the page it built, and to the record where it built none — in the night’s own words either way', () => {
+    const rows = n1NightEntries(
+      [
+        { record: 77, date: '2026-10-08', title: 'Night 51 — project 5, session 3: the rise is transit’s; put back', built: null },
+        { record: 78, date: '2026-10-09', title: 'Night 52 — project 6, session 1: the order of admission', built: '/n-1/projects/unicode-admission/' },
+        {
+          record: 79,
+          date: '2026-10-10',
+          title: 'Night 53 — project 6, session 2: when a language is complete',
+          built: '/n-1/projects/unicode-admission/languages.html',
+        },
+      ],
+      names,
+    )
+    expect(rows.map((r) => r.href)).toEqual([
+      '/n-1/record.html',
+      '/n-1/projects/unicode-admission/',
+      '/n-1/projects/unicode-admission/languages.html',
+    ])
+    // the row keeps the night's heading: the link changes, the wording does not
+    expect(rows[2]).toMatchObject({ title: 'Night 53 — project 6, session 2: when a language is complete', kind: K['n1-night'], seq: 79 })
+  })
+
   it('carries each night’s record number, so a day of several nights stands newest first', () => {
     const rows = n1NightEntries(
       [45, 46, 47, 48, 49].map((night, i) => ({ record: 71 + i, date: '2026-10-07', title: `Night ${night} — the day of five` })),

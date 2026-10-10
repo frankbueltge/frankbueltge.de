@@ -10,8 +10,9 @@
 // --check exits 1 if anything WOULD change, for use as a guard rather than a fixer.
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { join, sep } from 'node:path'
-import { frameStandaloneWork } from '../../src/lib/engines/work-frame'
+import { frameStandaloneWork, type FrameShelfEntry } from '../../src/lib/engines/work-frame'
 import { teaserFor } from '../../src/lib/engines/teaser'
+import { readN1Shelf } from '../../src/lib/n1/shelf'
 import { NAMING } from '../../src/config/naming'
 
 const check = process.argv.includes('--check')
@@ -61,10 +62,20 @@ function htmlUnder(dir: string): string[] {
   return out
 }
 
+// n-1's front door carries a shelf of every page the practice has built (Frank, 2026-10-10,
+// wording private): read from the mirror this run frames — each page's own title and first
+// sentence, dated by the practice's own record — so the shelf is rewritten with every copy and
+// can never be hand-edited into drift. The strip on the other pages is unchanged.
+const shelfFor = (ns: string, root: string): FrameShelfEntry[] | undefined =>
+  ns === 'n-1'
+    ? readN1Shelf(root).map(({ href, title, kind, date, sentence }) => ({ href, title, kind, date, sentence }))
+    : undefined
+
 for (const [ns, house] of Object.entries(HOUSES)) {
   if (!wanted(ns)) continue
   const root = join('public', ns)
   if (!existsSync(root)) continue
+  const shelf = shelfFor(ns, root)
   for (const file of htmlUnder(root)) {
     // `bare` names the paths under a house that get NO frame at all (Arch's works: the
     // practice's reception test needs the work met without paratext — see naming.ts). Left
@@ -74,11 +85,12 @@ for (const [ns, house] of Object.entries(HOUSES)) {
     const before = readFileSync(file, 'utf8')
     // `self` is the page that IS this house's front door: a link to itself is not an exit.
     const atHouseIndex = house.self === '/' + file.split(sep).join('/').replace(/^public\//, '')
-    const after = frameStandaloneWork(before, ns, null, { atHouseIndex })
+    const after = frameStandaloneWork(before, ns, null, { atHouseIndex, shelf: atHouseIndex ? shelf : undefined })
     if (after === before) { already++; continue }
     changed++
     if (!check) writeFileSync(file, after)
-    console.log(`${check ? 'would frame' : 'framed'}  ${file}${atHouseIndex ? '  (house front door)' : ''}`)
+    const door = atHouseIndex ? `  (house front door${shelf?.length ? `, a shelf of ${shelf.length}` : ''})` : ''
+    console.log(`${check ? 'would frame' : 'framed'}  ${file}${door}`)
   }
 }
 

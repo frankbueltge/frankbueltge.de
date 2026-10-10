@@ -1,6 +1,8 @@
+import { existsSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { buildBoard, cleanMomentTitle, newestMoment, repoSeries } from './board'
 import { NAMING } from '@/config/naming'
+import { newestN1Page } from '@/lib/n1/works'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 import type { LatestWork } from '@/lib/engines/latest'
 import pulseData from '@/data/pulse/pulse.json'
@@ -95,16 +97,22 @@ describe('the board says what the rooms say', () => {
     expect(rows.filter((r) => r.voice === null).map((r) => r.id)).toEqual(['attention', 'nightly-line', 'arch', 'n-1'])
   })
 
-  it('reads n-1’s last landed output from n-1’s own nights, never from the Atelier it descends from', () => {
+  it('names the newest page of n-1 a visitor can open, read from n-1’s own mirror', () => {
     const n1 = rows.find((r) => r.id === 'n-1')!
     expect(n1.last).not.toBeNull()
-    // The practice names its own unit of record, and on 2026-09-03 it renamed one: the newest
-    // file reads "Bell 26 — …" where its predecessors read "Night 20 — …". This assertion
-    // therefore checks the SHAPE the loader depends on — a word, a number, the em dash, then the
-    // record's own words — and not the word itself. The house reads what a practice publishes; it
-    // does not prescribe what a practice calls its nights.
-    expect(n1.last!.title).toMatch(/^\S+ \d+ — \S/)
-    expect(n1.last!.href).toBe('/n-1/record.html')
+    // Until 2026-10-10 this cell carried the newest night's heading — a count of sessions on a
+    // row whose link led to a front page where nothing those sessions built could be found. It
+    // carries a page now: the title the page gives itself, the day the practice's record says
+    // it was built, and an address that is a file in the mirror. Checked against the same
+    // derivation the shelf on the practice's front door is built from, not against a typed
+    // title — the practice builds a new page most nights.
+    const newest = newestN1Page()!
+    expect(n1.last).toEqual({ title: newest.title, meta: newest.date, href: newest.href })
+    expect(n1.last!.meta).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    // never the Atelier's: the line descends from that practice and shares none of its record
+    const href = n1.last!.href ?? ''
+    expect(href).toMatch(/^\/n-1\/(works|projects)\//)
+    expect(existsSync(`public${href}${href.endsWith('/') ? 'index.html' : ''}`)).toBe(true)
   })
 
   it('reads Arch’s last landed output from Arch’s own record, never from another practice', () => {

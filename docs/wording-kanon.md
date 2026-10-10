@@ -250,6 +250,7 @@ respektiert:
 | **Name** | „n-1" ist Arbeitstitel, keine Identität — die Praxis findet ihren Namen selbst (Dowry). Die Site liest den jeweils aktuellen Titel aus `public/n-1/window.json` (der Fenster-Erklärung der Praxis), nie getippt (`src/lib/ecology/n1-line.ts`). |
 | **Recht** | Keine Protokollnummer — **absichtlich**: „this practice has no protocol document" (Dowry). Ihre Verfassung ist **die Dowry** plus das Gründungspapier in Erprobung. Statuszeile: „the Dowry (n-1)"; eine vN für n-1 wäre erfunden. |
 | **Record** | n-1s Arbeit landet **nicht** im Works-Register des Hauses. Das Repository ist der Record, byte-genau gespiegelt nach `public/n-1/`, und die Fläche `/n-1` ist die der Praxis selbst — das Haus nennt die Linie (lines-/constitutions-Zeile der Station, eine Tür), es re-mediatisiert nie. |
+| **Regal** (2026-10-10) | Frank, Wortlaut privat: Der Streifen, den die Site über die gespiegelte Startseite legt, trägt ein Regal aller Seiten der Praxis, die sich öffnen lassen. Das ist Wegweisung, keine Re-Mediatisierung: Titel und erster Satz sind die der Seite, das Datum ist die Nacht aus dem Record der Praxis, und der Streifen sagt, dass er von der Site stammt. Die Site formuliert dort nichts über die Praxis (`src/lib/n1/shelf.ts`, Wörter in `NAMING.worksRegister.standaloneFrame.shelf`). |
 
 Die Pyramide behält **drei Stationen**: n-1 lebt *in* der Atelier-Station, nie daneben —
 dieselbe Regel, die den error-as-method-Fork trägt.
