@@ -21,6 +21,7 @@ import {
 } from '@/lib/invoked/format'
 import InvokedPastFigure from './InvokedPastFigure.astro'
 import SheetHead from '@/components/experiments/SheetHead.astro'
+import DataAge from '@/components/experiments/DataAge.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import '@/styles/experiment-sheet.css'
 
@@ -55,6 +56,7 @@ const lawTest = d.law_test
       archived, never edited.
     </p>
     <p class="mt-3 kicker">{d.date}</p>
+    <DataAge generatedAt={d.generated_at} cadence="daily" />
   </SheetHead>
 
   {failed ? (

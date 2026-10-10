@@ -82,6 +82,22 @@ jobs:
       - run: pip install pytest
       - run: pytest -q
 
+  revision:
+    name: Correction pipeline (pytest)
+    runs-on: ubuntu-latest
+    # Single-file pipeline like invoked/. The test rebuilds the workbook that broke four
+    # Mondays in August 2026 (issue #723) and pins that the vintages still read through it.
+    defaults:
+      run:
+        working-directory: pipelines/revision
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pytest "pandas>=2,<3" openpyxl
+      - run: pytest -q
+
   # Meridian/MRR: KEIN Nightly — refresh.py ist deterministisch ("no network, no clock,
   # no model") und leitet nur aus dem committeten Export ab; ein nächtlicher Lauf erzeugte
   # ewig byte-identischen Output. Der reale Fehlerfall ist ein anderer: ein neuer Export

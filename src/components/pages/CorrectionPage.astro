@@ -9,6 +9,7 @@ import type { RevisionData } from '@/lib/revision/types'
 import { millions, signedFull, sharePct, monthLabel } from '@/lib/revision/format'
 import data from '@/data/revision/latest.json'
 import SheetHead from '@/components/experiments/SheetHead.astro'
+import DataAge from '@/components/experiments/DataAge.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import '@/styles/experiment-sheet.css'
 
@@ -37,6 +38,7 @@ const bars = rec.map((r, i) => ({ x: i * bw, h: (Math.abs(r.delta) / maxAbs) * (
 <article class="correction mx-auto max-w-3xl px-4 py-14">
   <SheetHead title="Correction">
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'cr.sub')}</p>
+    <DataAge generatedAt={d.generated_at} cadence="weekly" />
   </SheetHead>
 
   {h && (
