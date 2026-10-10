@@ -1,0 +1,134 @@
+{
+ "_note": "The Hinge — my coding of 45 keeper entries on the 14 nuclear close calls that three or four keepers list (event matching: the Field's study 7). One reader, me, 2026-10-10, under the rule in PREDICTIONS.md, committed before any entry was read. Steps are my own summary of each event from the entries, not a source. Every quotation is checked word for word against the fetched source by build.py. Deviation from the fixed scheme, recorded at coding time: the consequent scheme had three values (war, detonation, unstated); four entries state a consequent that is an attack read where there was none and passed on ('misreading'), two state a consequent that is neither ('other'). P4 is decided on war against every stated consequent, so the added values cannot change its verdict.",
+ "keepers": {
+  "PH": "Phillips 1998",
+  "CH": "Chatham House 2014",
+  "FLI": "Future of Life Institute 2016",
+  "WP": "Wikipedia, as served 2026-10-10"
+ },
+ "list_level": {
+  "PH": {"quote": "If the people involved had exercised less caution, or if some unfortunate coincidental event had occurred, escalation to nuclear war can easily be imagined.", "note": "Phillips writes one hinge for all twenty items, at the door of the list: people, or coincidence."},
+  "WP": {"quote": "A nuclear close call is an incident that might have led to at least one nuclear explosion, but did not.", "src": "wp_lead", "note": "Wikipedia's definition names a consequent (one explosion), not a hinge."}
+ },
+ "events": [
+  {"id": "E03", "year": 1956, "name": "Suez: four coincident reports",
+   "steps": ["Four reports reach NORAD", "Read together as a Soviet offensive", "Fear: the NATO nuclear strike plan is triggered", "Each report explained: swans, an escort, a mechanical fault, an exercise"],
+   "same": null, "same_reason": "No keeper names a hinge.",
+   "entries": [
+    {"k": "PH", "label": "1", "hinge": false, "cons": "war", "cons_quote": "these events might trigger the NATO operations plan for nuclear strikes against the U.S.S.R."},
+    {"k": "FLI", "label": "1", "hinge": false, "cons": "war", "cons_quote": "the U.S. worried a NATO nuclear strike against Russia could soon follow"},
+    {"k": "WP", "label": "s3", "hinge": false, "cons": "war", "cons_quote": "U.S. forces believed these events could trigger a NATO nuclear strike against the Soviet Union"}
+   ]},
+  {"id": "E10", "year": 1961, "name": "BMEWS: all lines dead through one relay",
+   "steps": ["All lines from SAC HQ to NORAD and the warning sites go dead", "SAC alerts its bases; crews start engines", "A B-52 near Thule reaches the site by radio: no attack", "Cause: one overheated motor in one relay station"],
+   "same": null, "same_reason": "No keeper names a hinge.",
+   "entries": [
+    {"k": "PH", "label": "2", "hinge": false, "cons": "unstated"},
+    {"k": "FLI", "label": "4", "hinge": false, "cons": "unstated"},
+    {"k": "WP", "label": "s25", "hinge": false, "cons": "unstated"}
+   ]},
+  {"id": "E14", "year": 1962, "name": "Duluth: a bear and a miswired klaxon",
+   "steps": ["A guard shoots at a figure on the fence; sabotage alarm", "Volk Field is miswired: the klaxon orders nuclear interceptors up", "A call to Duluth reveals the error", "A car on the runway stops the aircraft", "The intruder was a bear"],
+   "same": false, "same_reason": "Phillips and Wikipedia put the hinge at the car on the runway (Wikipedia also at the commander's call); FLI puts it at the pilots' own call to Duluth, before any aircraft moved, and has no car.",
+   "entries": [
+    {"k": "PH", "label": "6", "hinge": true, "steps": [3], "actor": "an officer's car on the runway", "kind": "person", "quote": "A car raced from command center and successfully signaled the aircraft to stop.", "cons": "unstated"},
+    {"k": "FLI", "label": "7", "hinge": true, "steps": [2], "actor": "the pilots' call to Duluth", "kind": "person", "quote": "Fortunately, they first established communication with the Duluth center, where they learned that this was not a nuclear attack", "cons": "unstated"},
+    {"k": "WP", "label": "s6", "hinge": true, "steps": [2, 3], "actor": "the base commander's call, then an officer's car", "kind": "person", "quote": "Before the planes were able to take off, the base commander contacted Duluth and learned of the error.", "cons": "other", "cons_quote": "the dangerous possibility of an ADC interceptor accidentally shooting down a Strategic Air Command (SAC) bomber", "note": "Wikipedia's danger is a different catastrophe: one of our interceptors shooting down one of our bombers."}
+   ]},
+  {"id": "E17", "year": 1962, "name": "Malmstrom: codes in the silo",
+   "steps": ["Minuteman readied in haste; checks skipped", "Launch equipment and codes placed in the silo", "One operator could launch alone", "Missiles put on and off alert as faults are found"],
+   "same": true, "same_reason": "Phillips and FLI both name a single operator at the same moment; Wikipedia names no hinge.",
+   "entries": [
+    {"k": "PH", "label": "9", "hinge": true, "steps": [2], "actor": "a single operator", "kind": "person", "quote": "It was thus physically possible for a single operator to launch a fully armed missile at a SIOP target.", "cons": "detonation", "cons_quote": "launch a fully armed missile at a SIOP target"},
+    {"k": "FLI", "label": "10", "hinge": true, "steps": [2], "actor": "a single operator", "kind": "person", "quote": "which would have allowed a single operator to launch a fully armed missile", "cons": "detonation", "cons_quote": "launch a fully armed missile"},
+    {"k": "WP", "label": "s8", "hinge": false, "cons": "unstated"}
+   ]},
+  {"id": "E23", "year": 1962, "name": "Chukotka: a U-2 astray",
+   "steps": ["A U-2 is sent on a new polar route", "The aurora spoils navigation; it strays over Chukotka", "Soviet MiGs scramble to bring it down", "Nuclear-armed F-102As escort it; each pilot can fire", "It glides to Alaska"],
+   "same": false, "same_reason": "Three keepers put the hinge in an American pilot's discretion; Chatham House, through Khrushchev's letter, puts it on the Soviet side, in reading the intruder as a bomber.",
+   "entries": [
+    {"k": "PH", "label": "4", "hinge": true, "steps": [3], "actor": "any one F-102A pilot", "kind": "person", "quote": "These could have been used by any one of the F102-A pilots at his own discretion.", "cons": "detonation", "cons_quote": "These could have been used"},
+    {"k": "CH", "label": "3", "hinge": true, "steps": [2], "actor": "the Soviet reading of the U-2 as a bomber", "kind": "person", "quote": "an intruding American plane could be easily taken for a nuclear bomber, which might push us to a fateful step", "cons": "war", "cons_quote": "might push us to a fateful step", "note": "The words are Khrushchev's, quoted by Chatham House. 'A fateful step' coded as war: my reading."},
+    {"k": "FLI", "label": "8", "hinge": true, "steps": [3], "actor": "the F-102A pilots", "kind": "person", "quote": "the pilots had been given orders to shoot at their own discretion", "cons": "unstated"},
+    {"k": "WP", "label": "s9", "hinge": true, "steps": [3], "actor": "individual F-102A pilots", "kind": "person", "quote": "Individual pilots were capable of arming and launching their missiles.", "cons": "unstated"}
+   ]},
+  {"id": "E24", "year": 1962, "name": "B-59: the torpedo",
+   "steps": ["The notice of practice depth charges is not relayed to the submarines", "Practice depth charges hit B-59", "The captain orders the nuclear torpedo readied", "Launch needs the consent of three officers", "Arkhipov refuses and persuades", "B-59 surfaces"],
+   "same": true, "same_reason": "All three name Arkhipov at the same moment. Chatham House adds a second officer (Maslennikov, on Orlov's account); FLI puts the luck first in the three-officer rule.",
+   "entries": [
+    {"k": "CH", "label": "1", "hinge": true, "steps": [4], "actor": "Arkhipov, and perhaps Maslennikov", "kind": "person", "quote": "Arkhipov was able to intervene and convince Savitsky he should await instructions from superiors in Moscow", "quote2": "Ivan Semenovich Maslennikov, had a role in convincing Savitsky", "cons": "unstated"},
+    {"k": "FLI", "label": "24", "hinge": true, "steps": [3, 4], "actor": "the three-officer rule, and Arkhipov's no", "kind": "person", "quote": "Fortunately, the decision to launch had to be authorized by three officers on board, and one of them, Vasili Arkhipov, said no.", "cons": "unstated"},
+    {"k": "WP", "label": "s7", "hinge": true, "steps": [4], "actor": "Arkhipov", "kind": "person", "quote": "Vasily Arkhipov refused permission to launch", "cons": "unstated"}
+   ]},
+  {"id": "E30", "year": 1965, "name": "Blackout: two red bomb alarms",
+   "steps": ["Power fails across the northeast", "Two bomb alarms show red through circuit errors", "The Office of Emergency Planning goes on full alert", "The military does not"],
+   "same": null, "same_reason": "No keeper names a hinge.",
+   "entries": [
+    {"k": "PH", "label": "15", "hinge": false, "cons": "unstated"},
+    {"k": "FLI", "label": "13", "hinge": false, "cons": "unstated", "note": "FLI's 'would have' is about what an attack would have looked like, not about what would have followed."},
+    {"k": "WP", "label": "s29", "hinge": false, "cons": "unstated"}
+   ]},
+  {"id": "E35", "year": 1968, "name": "Thule: a burning bomber",
+   "steps": ["Fire on a B-52 on airborne alert near Thule", "The crew bails out with no word to SAC", "It crashes; the weapons' high explosive goes off, no nuclear yield", "Every line to Thule would have read as an attack"],
+   "same": true, "same_reason": "Phillips and FLI both put the hinge in the weapons' nuclear yield at the crash; Wikipedia names none.",
+   "entries": [
+    {"k": "PH", "label": "16", "hinge": true, "steps": [2], "actor": "the weapons' one-point safety", "kind": "system", "quote": "it is believed that a nuclear explosion could have resulted form accidental detonation of the high explosive trigger", "cons": "misreading", "cons_quote": "all three communication methods would have given an indication consistent with a succsessful nuclear attack"},
+    {"k": "FLI", "label": "14", "hinge": true, "steps": [2], "actor": "the bomb's nuclear component", "kind": "system", "quote": "If the nuclear component had exploded", "cons": "misreading", "cons_quote": "would likely have led SAC to assume that the explosion had been an attack"},
+    {"k": "WP", "label": "s34", "hinge": false, "cons": "unstated"}
+   ]},
+  {"id": "E40", "year": 1973, "name": "Kincheloe: a klaxon under repair",
+   "steps": ["DEFCON 3 during the Middle East crisis", "A klaxon repair sets off the whole base alarm", "B-52 crews run out and start engines", "The duty officer recalls them"],
+   "same": true, "same_reason": "All three name the duty officer at the recall.",
+   "entries": [
+    {"k": "PH", "label": "17", "hinge": true, "steps": [3], "actor": "the duty officer's prompt correction", "kind": "person", "quote": "if the following accident had not been promptly corrected then the Soviet command might have had a more dangerous interpretation", "cons": "misreading", "cons_quote": "the Soviet command might have had a more dangerous interpretation"},
+    {"k": "FLI", "label": "15", "hinge": true, "steps": [3], "actor": "the duty officer", "kind": "person", "quote": "the duty officer realized it was a false alarm, and called them all back, before any further damage was done", "cons": "unstated"},
+    {"k": "WP", "label": "s13b", "hinge": true, "steps": [3], "actor": "the duty officer", "kind": "person", "quote": "nearly scrambled the B-52 bombers at the base before the duty officer declared a false alarm", "cons": "other", "cons_quote": "nearly scrambled the B-52 bombers", "note": "Wikipedia's 'nearly' reaches a scramble, not a war."}
+   ]},
+  {"id": "E42", "year": 1979, "name": "NORAD: an exercise tape",
+   "steps": ["An exercise tape runs on an operational computer", "Four command centres see a full Soviet attack", "Retaliation is prepared; the airborne command post takes off", "Radar and satellites show no missiles"],
+   "same": null, "same_reason": "Only Chatham House names a hinge.",
+   "entries": [
+    {"k": "PH", "label": "18", "hinge": false, "cons": "war", "cons_quote": "the type of disaster that was threatening at that moment", "note": "Phillips names a safeguard that was not used, the hot line, but not a point where the outcome turned."},
+    {"k": "CH", "label": "6", "hinge": true, "steps": [3], "actor": "access to the PAVE PAWS radar", "kind": "system", "quote": "Only the ability of NORAD (the North American Aerospace Defense Command) to access the US Air Force's Ballistic Missile Early-Warning System PAVE PAWS radar enabled it to confirm that this alert was false", "cons": "unstated"},
+    {"k": "FLI", "label": "17", "hinge": false, "cons": "unstated"},
+    {"k": "WP", "label": "s35", "hinge": false, "cons": "war", "cons_quote": "a decision to retaliate would need to be made by the president within three to seven minutes", "note": "Wikipedia tells the Brzezinski telephone story (250, then 2,200 missiles) under 1979. Chatham House tells it under 3 June 1980."}
+   ]},
+  {"id": "E44", "year": 1980, "name": "NORAD: a faulty chip",
+   "steps": ["A failing chip puts 2s into the missile counters", "Retaliation is prepared; bomber crews start engines", "Odom's third call reaches Brzezinski a minute before the president would be told", "The numbers are judged irrational: a false alarm", "It happens again three days later"],
+   "same": false, "same_reason": "Chatham House puts the hinge in the timing of a third telephone call to Brzezinski; FLI puts it in the personnel who read the numbers as illogical.",
+   "entries": [
+    {"k": "PH", "label": "19", "hinge": false, "cons": "unstated"},
+    {"k": "CH", "label": "7", "hinge": true, "steps": [2], "actor": "Odom's third call, a minute early", "kind": "chance", "quote": "With only a minute until Brzezinski was to notify the president, Odom telephoned for a third time", "cons": "unstated", "note": "Coded chance (timing): the entry's weight is on the minute."},
+    {"k": "FLI", "label": "19", "hinge": true, "steps": [3], "actor": "the personnel who read the numbers", "kind": "person", "quote": "personnel were able to determine in time that this was a false alarm as the varying missile numbers weren't logical", "cons": "war", "cons_quote": "again B-52 crews and missiles were nearly sent out in retaliation"}
+   ]},
+  {"id": "E46", "year": 1983, "name": "Serpukhov-15: Petrov",
+   "steps": ["The satellite system reports five Minuteman launches", "Protocol: report upward at once", "Petrov reports a false alarm", "Cause: sunlight on clouds"],
+   "same": true, "same_reason": "All three name Petrov at his report. Chatham House alone adds that the hinge may not have been one: someone higher up could have concluded the same.",
+   "entries": [
+    {"k": "CH", "label": "8", "hinge": true, "steps": [2], "actor": "Petrov", "kind": "person", "quote": "Petrov ultimately reported the incident as a false alarm to his superiors.", "quote2": "there is the possibility that another decision-maker higher up the chain of command could have come to the same conclusion as Petrov did", "cons": "unstated", "note": "The only entry of 45 that questions its own hinge."},
+    {"k": "FLI", "label": "20", "hinge": true, "steps": [2], "actor": "Petrov", "kind": "person", "quote": "following procedures would have led him to report an incoming attack", "cons": "misreading", "cons_quote": "report an incoming attack"},
+    {"k": "WP", "label": "s38", "hinge": true, "steps": [2], "actor": "Petrov", "kind": "person", "quote": "Petrov of the Air Defense Forces refused to acknowledge the threat as legitimate", "cons": "unstated"}
+   ]},
+  {"id": "E47", "year": 1983, "name": "Able Archer 83",
+   "steps": ["Tension: KAL 007, Operation RYAN, Pershing II", "NATO's exercise runs up to a simulated DEFCON 1", "Soviet forces raised to alert", "Gordievsky tells the West what Moscow fears", "The exercise ends; Soviet forces stand down"],
+   "same": false, "same_reason": "Chatham House puts the hinge in Gordievsky's warnings (and also quotes a Soviet officer who denies there was a war scare at all); FLI puts it outside the event, in a second false alarm that did not happen on 11 November.",
+   "entries": [
+    {"k": "CH", "label": "9", "hinge": true, "steps": [3], "actor": "Gordievsky's warnings", "kind": "person", "quote": "only Gordievsky's timely warnings to the West kept things from getting out of hand", "quote2": "believed there was an immediate threat of a nuclear strike from the United States or NATO", "cons": "unstated", "note": "Chatham House keeps the hinge and its denial side by side: a former CIA historian for it, General Danilevich ('No one ... believed there was an immediate threat') against."},
+    {"k": "FLI", "label": "25", "hinge": true, "steps": [], "off": "a second false alarm on 11 November", "actor": "a coincident false alarm, imagined", "kind": "chance", "quote": "what might have happened if an independent incident such as the September 26 1983 false alarm or the 1995 Norwegian Rocket Launch would have randomly occurred on November 11 1983 instead", "cons": "war", "cons_quote": "We may have been at the brink of nuclear war and not even known it.", "note": "FLI's hinge is built from two other near misses, moved in time."},
+    {"k": "WP", "label": "s14", "hinge": false, "cons": "unstated"}
+   ]},
+  {"id": "E52", "year": 1995, "name": "The Norwegian rocket",
+   "steps": ["Norway's notice does not reach the radar crews", "Radar reads a research rocket as a submarine missile", "Yeltsin is handed the briefcase", "Satellites show no further launches; the track ends outside Russia", "The alarm is cancelled"],
+   "same": null, "same_reason": "Only FLI names a hinge.",
+   "entries": [
+    {"k": "PH", "label": "20", "hinge": false, "cons": "unstated", "note": "Phillips lists it and says it could hardly have led to retaliation.", "note_quote": "This particular one could have hardly brought nuclear retaliation."},
+    {"k": "CH", "label": "11", "hinge": false, "cons": "unstated", "note": "Chatham House: the systems worked; it was mistaken identity.", "note_quote": "technology and early-warning systems functioned properly but it was a case of 'mistaken identity'"},
+    {"k": "FLI", "label": "21", "hinge": true, "steps": [3], "actor": "satellites showing no further launches", "kind": "system", "quote": "Fortunately Russian satellites monitoring U.S. missile fields did not show any additional launches", "cons": "unstated"},
+    {"k": "WP", "label": "s40", "hinge": false, "cons": "unstated"}
+   ]}
+ ],
+ "observations": [
+  {"id": "brzezinski", "text": "The same telephone story (Brzezinski woken, first some hundreds of missiles, then 2,200) is told by Wikipedia under 9 November 1979 and by Chatham House under 3 June 1980.", "quotes": [["WP", "NORAD computers then placed the number of incoming missiles at 2,200."], ["CH", "it was in fact 2,200 missiles that were headed towards the country"]]},
+  {"id": "valentin", "text": "The words 'We will die, but we will sink them all' are given by Chatham House to the captain, Valentin Savitsky, and by FLI to 'Valentin Grigorievich, the torpedo officer'.", "quotes": [["CH", "Captain Valentin Savitsky said"], ["FLI", "Valentin Grigorievich, the torpedo officer, exclaimed"]]}
+ ]
+}
