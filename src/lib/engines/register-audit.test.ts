@@ -62,8 +62,18 @@ describe('what the register prints about prior art', () => {
   it('leaves the unaudited majority without a note, so the head line has to explain it', () => {
     const unaudited = works.filter((w) => !audits.has(`${w.ns}/${w.slug}`))
     expect(unaudited.length).toBeGreaterThan(0)
-    const page = readFileSync(`${ROOT}src/components/ecology/WorksRegisterSection.astro`, 'utf8')
-    expect(page).toContain('unexamined, not cleared')
-    expect(page).toContain('Prior art checked for')
+    // Since 2026-10-11 the register /ecology mounts is the table of the design handoff
+    // (RegisterTable.astro); the sentence travelled with it, worded in score-wording.ts. The
+    // section it replaced stays in the repo unmounted and is no longer what a visitor reads.
+    const page = readFileSync(`${ROOT}src/components/ecology/score/RegisterTable.astro`, 'utf8')
+    const wording = readFileSync(`${ROOT}src/config/score-wording.ts`, 'utf8')
+    expect(page).toContain('R.audit.lead(auditedCount, things.length)')
+    expect(page).toContain('R.audit.rule')
+    expect(page).toContain('practiceWorkAudits(GRAPH)')
+    expect(wording).toContain('unexamined, not cleared')
+    expect(wording).toContain('Prior art checked for')
+    // and the register on /ecology really is that table
+    const ecology = readFileSync(`${ROOT}src/components/ecology/score/EcologyScore.astro`, 'utf8')
+    expect(ecology).toContain('<RegisterTable ')
   })
 })

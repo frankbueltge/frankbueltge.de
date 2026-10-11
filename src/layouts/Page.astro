@@ -25,8 +25,20 @@ const { title, description, noindex, canonicalPath, surface } = Astro.props
   {/* Nennungszeile unter Werken der Praxen (Frank, 26.07.): CC BY verlangt Namensnennung,
       also muss die Site sie zum Kopieren anbieten. Entscheidet selbst pfadbasiert — Flächen
       ohne eigene Praxis rendern nichts. */}
-  <AttributionBlock pageTitle={title} />
-  <AuthorByline />
+  {/* On a paper page the two strips stand on paper too: the wrapper is one of the regions
+      src/styles/paper.css re-points the frame's tokens on. `display: contents` would lose the
+      background, so it is a plain block; it is empty wherever neither strip renders. */}
+  {surface === 'paper' ? (
+    <div class="paper-chrome">
+      <AttributionBlock pageTitle={title} />
+      <AuthorByline />
+    </div>
+  ) : (
+    <>
+      <AttributionBlock pageTitle={title} />
+      <AuthorByline />
+    </>
+  )}
   {/* The frame's footer is a black island under both themes; a paper page ends on paper, with
       the same six links and the same licence line (PaperFooter.astro, 2026-10-11). */}
   {surface === 'paper' ? <PaperFooter /> : <Footer />}

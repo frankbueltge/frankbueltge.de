@@ -9,13 +9,18 @@
 // Git is the archive: EcologyEntrance.astro and its wording stay in the repo, unlinked,
 // exactly as the anatomy page did when the pyramid replaced it. The approval trail is
 // docs/decision-log.md, 2026-08-30, and docs/design/2026-08-30-research-ecology-v3.md.
+//
+// 2026-10-11: the entrance became a SCORE (design handoff docs/design_handoff_homepage_ecology/
+// README.md §4) — every night since v3 as a bar, every session a notehead, every relation the
+// Middle recorded a slur, on the paper ground the site's entrance took the same day.
+// EcologyV3Entrance.astro stays in the repo, unlinked, as its predecessors did.
 import Page from '@/layouts/Page.astro'
-import EcologyV3Entrance from '@/components/ecology/EcologyV3Entrance.astro'
+import EcologyScore from '@/components/ecology/score/EcologyScore.astro'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 
 const SEO = ECOLOGY_V3.seo
 ---
 
-<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
-  <EcologyV3Entrance />
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description} surface="paper">
+  <EcologyScore />
 </Page>

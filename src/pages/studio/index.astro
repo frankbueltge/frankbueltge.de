@@ -1,48 +1,32 @@
 ---
-// /studio — the Studio's practice station (research ecology v3 template, 2026-09-01).
+// /studio — the Studio's page (the practice template of the design handoff of 2026-10-11).
 //
 // Lineage: the station sheet of 2026-08-12 (StationSheet with the stage floor as its figure)
-// stood here until 2026-09-01 and is archived in the repository history; its components stay
-// in the repo unlinked (decision log, 2026-09-01). This page is thin on purpose: it assembles
-// the practice's own record — the last sessions from its chronicle — and renders one
-// PracticeStation. Everything else the station derives itself.
+// stood here until 2026-09-01; the v3 practice station (PracticeStation.astro) from then until
+// 2026-10-11. Both are archived in the repository history and their components stay in the repo
+// unlinked (decision log, 2026-09-01 and 2026-10-11). This page is thin on purpose: it names
+// the practice and renders one PracticePart, which derives everything else from the record.
 //
-// The one thing this page keeps that /field does not: the SEASON FLOOR, the practice's own figure
-// since 2026-07-31 — every premiere a lit pool, every strike a taped X, every return a violet arc
-// back into production. It had rendered on no page since the station sheets of 2026-08-12, and on
-// 2026-09-01 its own bounds guard held the whole studio mirror shut over a figure nobody saw; that
-// evening it was rebuilt to hold a v3 record (three rows, the wall, the lettering steps —
-// src/lib/studio/season.ts) and put back here, in the station's figure slot like the Atelier's
-// line map. mounted.test.ts holds it on a page from now on.
+// The one thing this page keeps that the handoff does not draw: the SEASON FLOOR, the
+// practice's own figure since 2026-07-31 — every premiere a lit pool, every strike a taped X,
+// every return a violet arc back into production. It had rendered on no page between the
+// station sheets of 2026-08-12 and 2026-09-01, and in that time its own bounds guard held the
+// whole studio mirror shut over a figure nobody saw; it was rebuilt that evening to hold a v3
+// record (src/lib/studio/season.ts). It stays mounted for the same reason, in the template's
+// figure slot, and mounted.test.ts holds it on a page.
 import Page from '@/layouts/Page.astro'
-import PracticeStation from '@/components/ecology/PracticeStation.astro'
+import PracticePart from '@/components/ecology/score/PracticePart.astro'
 import Figure from '@/components/ecology/figures/Figure.astro'
 import SeasonFloor from '@/components/studio/SeasonFloor.astro'
+import '@/styles/hub-triptych.css'
 import '@/styles/ecology-pyramid.css'
 import '@/styles/studio-stage.css'
 import { PRACTICE_V3 } from '@/config/practice-wording'
-import { PYRAMID } from '@/config/ecology-pyramid-wording'
 import { FIGURES } from '@/config/ecology-figure-wording'
-import { recordLine, type ChronicleEntry } from '@/lib/ecology/pyramid/landings'
-import type { LogEntry } from '@/lib/ecology/pyramid/station'
 import { loadChronicle } from '@/lib/studio/chronicle'
 import { loadWorkMetas } from '@/lib/studio/dossier-data'
 import { buildSeasonModel, type SeasonKill } from '@/lib/studio/season'
 import stageData from '@/data/studio/stage.curated.json'
-import chronicle from '@/data/studio/chronicle.upstream.json'
-
-const rows = chronicle as ChronicleEntry[]
-
-// The record's last three sessions, in the practice's own words.
-const log: LogEntry[] = [...rows]
-  .filter((r) => r.date)
-  .sort((a, b) => (a.date! < b.date! ? 1 : -1))
-  .slice(0, 3)
-  .map((r) => ({
-    date: r.date!,
-    marker: r.collective_session ? `S${r.collective_session}` : null,
-    line: recordLine(r.move, r.summary) ?? PYRAMID.station.absent,
-  }))
 
 // The floor, from the same three committed sources it has always read: the chronicle (validated
 // on the way in), every work's own meta.json, and the curated strike list.
@@ -57,8 +41,8 @@ const SEO = PRACTICE_V3.studio.seo
 const F = FIGURES.studio.seasonFloor
 ---
 
-<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
-  <PracticeStation id="studio" log={log}>
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description} surface="paper">
+  <PracticePart id="studio">
     {/* The station's shared frame (Figure, ecology-pyramid.css through the .eco ancestor) around
         the practice's own skin: the stage is dark by default and keeps its Didone, its lamp gold
         and its curtain crimson (studio-stage.css, scoped to .studio-surface). The frame is shared,
@@ -77,7 +61,7 @@ const F = FIGURES.studio.seasonFloor
         </Figure>
       </div>
     </div>
-  </PracticeStation>
+  </PracticePart>
 </Page>
 
 <style>

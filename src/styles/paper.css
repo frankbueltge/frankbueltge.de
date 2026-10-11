@@ -6,17 +6,25 @@
  * approval trail: docs/decision-log.md, 2026-10-11.
  *
  * HOW A PAGE GETS IT. A page passes `surface="paper"` to Page.astro, which stamps
- * <html data-surface="paper">. Everything below keys off that one attribute, so:
- *   · the frame's own tokens (--color-bg, --color-fg, --color-line, …) are re-pointed at the
- *     paper values, and the shared chrome — the top bar, the byline, the attribution block —
- *     follows without knowing it is on paper;
- *   · the page's own sheets read the --pp-* tokens declared here and carry no hex of their own.
+ * <html data-surface="paper">. On such a page FOUR regions stand on paper — the top bar, the
+ * page's own `.paper` container, the frame's byline strip (`.paper-chrome`) and the paper
+ * footer — and the block below declares, on exactly those four:
+ *   · the --pp-* tokens the paper sheets read (they carry no hex of their own), and
+ *   · the frame's own tokens (--color-bg, --color-fg, --color-line, …) re-pointed at the paper
+ *     values, so the shared chrome inside them lands on paper without knowing it.
+ *
+ * WHY NOT ON <html>. Because a paper page may hold a GUEST: a figure that keeps the mono skin
+ * and its own palette (the Studio's season floor, the Atelier's line map — ADR 0010: the frame
+ * is shared, the drawing never is). Custom properties inherit, so tokens re-pointed at the root
+ * would repaint a guest's ink and type and nothing could give them back. Declared on the paper
+ * regions only, the root keeps the frame's tokens and a guest outside those regions
+ * (`.pp-guest`) reads them exactly as it does on a mono page.
  *
  * NO SECOND GROUND YET. The handoff ships one optional dark rendition of one page
  * ("Ecology Score Dark"); the entrance has none. A paper page is therefore paper under both
- * themes, and the theme toggle is taken off the bar while a paper page is open, because a
- * control that changes nothing is worse than no control. A dark ground, when it comes, is one
- * more block in this file — every colour the paper sheets use is a token here.
+ * themes, and the theme toggle is taken off the bar while a paper page is open — unless the
+ * page holds a guest, which still follows the theme. A dark ground, when it comes, is one more
+ * block in this file: every colour the paper sheets use is a token here.
  *
  * TWO STEPS PER HUE WHERE TEXT NEEDS IT. The handoff's accent and its Studio orange measure
  * 4.07 : 1 and 4.06 : 1 on the ground — enough for a mark, short of the 4.5 : 1 a small label
@@ -26,7 +34,16 @@
  * the handoff's value.
  */
 
-:root[data-skin][data-theme][data-surface='paper'] {
+/* The ground itself, where no region covers it, and the colour a browser paints its own
+   chrome in (Base.astro's theme-colour sync reads --surface-color before the frame's --color-bg). */
+:root[data-surface='paper'] {
+  --surface-color: #f3efe6;
+}
+:root[data-surface='paper'] body {
+  background-color: var(--surface-color);
+}
+
+:root[data-surface='paper'] :is(.site-bar, .paper, .paper-chrome, .paper-foot) {
   /* —— the ground and the ink —— */
   --pp-ground: #f3efe6;
   --pp-ground-2: #ebe6da; /* the "how a cycle works" band, a selected row */
@@ -100,9 +117,31 @@
   display: none;
 }
 
+/* The frame's strip between a page and its footer (the attribution block, the source byline):
+   on a paper page it stands on paper, in the page's grotesque. */
+.paper-chrome {
+  background: var(--pp-ground);
+  color: var(--pp-ink);
+  font-family: var(--pp-sans);
+}
+
+/* A GUEST on a paper page: a figure that keeps the mono skin and its own palette. It is a band
+   of the frame's own ground, and everything inside it reads the frame's tokens, which this
+   file leaves untouched at the root. */
+.pp-guest {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+}
+
 /* ———————————————————————————————————————————————————————————————————————————————————————————
    The page's own base. `.paper` sits on <main>; everything a paper page draws is inside it.
    ——————————————————————————————————————————————————————————————————————————————————————————— */
+/* a <main> that holds a paper container and a guest beside it */
+.paper-main {
+  flex: 1;
+  width: 100%;
+}
 .paper {
   flex: 1;
   width: 100%;
@@ -143,6 +182,16 @@
 }
 .paper [hidden] {
   display: none !important;
+}
+/* An anchor a link jumps to keeps a little air above it — and, below 860 px, clears the top
+   bar, which stays at the top of the screen there (TopBar.astro). */
+.paper :where([id]) {
+  scroll-margin-top: 16px;
+}
+@media (max-width: 859.98px) {
+  .paper :where([id]) {
+    scroll-margin-top: 72px;
+  }
 }
 
 /* —— the recurring pieces of type —— */

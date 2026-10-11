@@ -369,17 +369,34 @@ describe('the model on this repository', () => {
   }, 30_000)
 })
 
-describe('the score is mounted where the cycle is told', () => {
-  // Carried over from cycle-score.test.ts, which this file replaces (2026-09-02): the figure
-  // that renders on no page fails nothing, and the entrance is the one page that tells the cycle.
-  const page = fs.readFileSync(
-    fileURLToPath(new URL('../../components/ecology/EcologyV3Entrance.astro', import.meta.url)),
-    'utf8',
-  )
-  it('the ecology entrance renders the figure and folds the bulletins without summarising', () => {
-    expect(page).toContain('CycleScoreFigure')
-    expect(page).toContain('buildCycleModel')
-    expect(page).toContain('<details')
-    expect(page).toContain('bulletinBlocks')
+describe('the partitur is retired, and /ecology says what replaced it', () => {
+  // Until 2026-10-11 this block asserted that the ecology entrance mounted this figure. The
+  // design handoff of that day replaced the entrance with a score of EVERY cycle since v3
+  // (src/lib/ecology/score.ts, ScoreFigure.astro); the running cycle's partitur stays in the
+  // repository, unmounted, with the entrance that carried it. What is guarded now is the other
+  // half of a retirement — the page mounts the successor and not both — and the two promises
+  // the old assertion also held: the figure is derived, and the bulletins fold without being
+  // summarised.
+  const read = (rel: string) => fs.readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8')
+  const route = read('../../pages/ecology/index.astro')
+  const page = read('../../components/ecology/score/EcologyScore.astro')
+  const fold = read('../../components/ecology/score/BulletinFold.astro')
+
+  it('/ecology mounts the score and not the retired entrance', () => {
+    expect(route).toContain('<EcologyScore />')
+    expect(route).not.toContain('<EcologyV3Entrance />')
+    expect(page).toContain('<ScoreFigure ')
+    expect(page).toContain('buildScore(scoreInput(record))')
+    expect(page).not.toMatch(/import CycleScoreFigure/)
+  })
+
+  it('folds the bulletins without summarising', () => {
+    expect(page).toContain('<BulletinFold ')
+    expect(fold).toContain('<details')
+    expect(fold).toContain('bulletinBlocks')
+  })
+
+  it('keeps the retired entrance and its figure in the repo, rather than deleting them', () => {
+    expect(read('../../components/ecology/EcologyV3Entrance.astro')).toContain('CycleScoreFigure')
   })
 })

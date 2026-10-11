@@ -21,7 +21,7 @@
 // allWorks() keeps its meaning (the works, and only the works) for the rooms and figures that
 // count works; the page that claims to list everything the practices brought forth reads both.
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
-import { loadArtifacts, type ArtifactEntry } from '@/lib/ecology/v3'
+import { loadArtifacts, loadPresentations, type ArtifactEntry } from '@/lib/ecology/v3'
 import { collectWorks, type EngineKind, type EngineNs, type EngineWorkMeta, type LatestWork, type WorkSource } from './latest'
 
 /** The forked nightly line's mirror — named once, because three things must agree about it:
@@ -225,10 +225,18 @@ export function buildRegister(sources: RegisterSources = {}): Register {
   return { rows, undated: fresh.filter((a) => a.date === null) }
 }
 
-/** How many lines the register lists — the one number the catalogues card shows for it, from the
- *  same derivation the register page renders, so the card and the page cannot count apart. */
+/**
+ * How many lines the register lists — the one number the catalogues card shows for it, from the
+ * same sources the register page renders, so the card and the page cannot count apart.
+ *
+ * Since 2026-10-11 the register on /ecology lists a cycle's PRESENTATIONS as rows of their own
+ * and gives an artifact without a day a row under its cycle (src/lib/ecology/record.ts,
+ * madeThings), so the count is the dated rows, the undated artifacts and the presentation shelf
+ * together. record.test.ts holds this number against the list the page prints.
+ */
 export function registerCount(): number {
-  return buildRegister().rows.length
+  const { rows, undated } = buildRegister()
+  return rows.length + undated.length + loadPresentations().length
 }
 
 export interface RegisterSummary {

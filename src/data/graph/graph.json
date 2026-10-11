@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "0c016e8ac06be407"
+        "sha256": "5aef882f985ebf6a"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 474,
-      "edges": 417,
+      "nodes": 475,
+      "edges": 421,
       "nodesByKind": {
-        "decision": 138,
+        "decision": 139,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 172,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 97
+        "touches": 101
       }
     }
   },
@@ -1452,6 +1452,16 @@
     },
     {
       "id": "decision:2026-10-11-1",
+      "kind": "decision",
+      "label": "The research ecology is drawn as a score: /ecology, the three practice pages and /encounters move onto the paper ground",
+      "date": "2026-10-11",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The research ecology is drawn as a score: /ecology, the three practice pages and /encounters move onto the paper ground"
+      }
+    },
+    {
+      "id": "decision:2026-10-11-2",
       "kind": "decision",
       "label": "The entrance becomes an edition on a paper ground, the top bar carries the name line, Arch leaves the running systems and the nightly line is labelled Ulysses",
       "date": "2026-10-11",
@@ -10021,6 +10031,42 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/pages/field/papers/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-11-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/{ecology,field,atelier,studio,encounters}/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-11-1",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/{ecology,field,atelier,studio,encounters}/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-11-1",
+      "to": "work:on-record",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/ecology/{score,record}.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-11-1",
+      "to": "work:studio",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/{ecology,field,atelier,studio,encounters}/index.astro"
       }
     }
   ]

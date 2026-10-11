@@ -1,0 +1,351 @@
+---
+// A practice's page (2026-10-11, design handoff docs/design_handoff_homepage_ecology/README.md
+// §5) — one template for /field, /atelier and /studio, as the station of 2026-09-01 was.
+// PracticeStation.astro, which it replaces, stays in the repo unlinked.
+//
+// Top to bottom: who this voice is and where its record stands; its PART of the score; the
+// newest thing it made beside its bulletin, verbatim; the handoffs the Middle records to and
+// from it beside its newest sessions; everything it made, cycle by cycle. Then two things the
+// handoff does not draw and this house does not drop:
+//
+//   · THE ROOMS — the DOORS registry (src/lib/ecology/pyramid/station.ts): the practice's
+//     registers, its journal, its constitution, its team channel, its own window. Those doors
+//     are what keeps the archived record reachable (mounted.test.ts holds /atelier/archive/
+//     cockpit through them), and a page that is not linked is a claim nobody can check.
+//   · THE PRACTICE'S OWN FIGURE, where it has one — the Studio's season floor, the Atelier's
+//     line map — in the slot named `figure`, in its own skin (ADR 0010: the frame is shared,
+//     the drawing never is).
+//
+// No number is typed: every count is derived by src/lib/ecology/record.ts from committed
+// files. Nothing is fetched. A practice with nothing to show in a section says so.
+import { existsSync } from 'node:fs'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { localeHref } from '@/lib/locale-href'
+import type { Locale } from '@/lib/site'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { SCORE_WORDING as W, SHORT, shortDate } from '@/config/score-wording'
+import { loadEcologyRecord, newestPiece, piecesSince, scoreInput, sessionLabel } from '@/lib/ecology/record'
+import { buildPart } from '@/lib/ecology/score'
+import { loadCycle, loadBulletin, PRACTICE_REPO, type PracticeId } from '@/lib/ecology/v3'
+import { DOORS, windowDoor } from '@/lib/ecology/pyramid/station'
+import { withoutHouseSuffix } from '@/lib/ops/edition'
+import '@fontsource-variable/literata/opsz-italic.css'
+import '@/styles/paper.css'
+import '@/styles/score.css'
+import EcoSubnav from './EcoSubnav.astro'
+import PartFigure from './PartFigure.astro'
+import BulletinFold from './BulletinFold.astro'
+
+interface Props {
+  id: PracticeId
+}
+const { id } = Astro.props
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') || href.startsWith('#') ? href : localeHref(href, (path) => getRelativeLocaleUrl(locale, path)))
+
+const P = ECOLOGY_V3.practices
+const me = P[id]
+const T = W.practice
+const noun = T.noun[id]
+const record = loadEcologyRecord(W.presentationTitle)
+// The house clock and the bulletin, read where practice-station.test.ts looks for them: the
+// template itself derives what runs NOW.
+const cycle = loadCycle()
+const bulletin = loadBulletin(id)
+const part = buildPart(scoreInput(record), id)
+
+const sessions = record.sessions.filter((s) => s.practice === id)
+const last = sessions.at(-1) ?? null
+const pieces = piecesSince(record.things, id)
+const presentations = record.things.filter((t) => t.house === id && t.kind === 'presentation')
+const took = record.relations.filter((r) => r.taker === id)
+const taken = record.relations.filter((r) => r.giver === id)
+const builtOn = (rs: typeof took) => rs.filter((r) => r.kind === 'built_on').length
+
+const status = [
+  { k: T.status.clock, v: T.status.clockValue({ cycle: cycle.cycle, phase: W.hero.phase[cycle.phase], opened: cycle.opened }) },
+  { k: T.status.lastSession, v: last ? T.status.lastSessionValue(sessionLabel(last.title).label ?? sessionLabel(last.title).line, last.date) : T.status.none },
+  { k: T.status.cadence, v: T.status.cadenceValue({ sessions: sessions.length, nights: new Set(sessions.map((s) => s.date)).size, of: part.axis.days }) },
+  { k: T.status.made(noun.many), v: T.status.madeValue(pieces.length, presentations.length) },
+  { k: T.status.took, v: T.status.timesValue(took.length, builtOn(took)) },
+  { k: T.status.taken, v: T.status.timesValue(taken.length, builtOn(taken)) },
+]
+
+// ── the newest piece ──────────────────────────────────────────────────────────────────────
+// Its still is the practice's own: the Studio commits a screenshot beside a work
+// (shot-1100.png, and shot-390.png for a phone). A piece without one gets a plate that says so
+// — never a picture this site made up for it.
+const newest = newestPiece(record.things, id)
+const shot = (name: string) => (newest && newest.href.endsWith('/') && existsSync(`public${newest.href}${name}`) ? `${newest.href}${name}` : null)
+const still = { wide: shot('shot-1100.png'), narrow: shot('shot-390.png') }
+const newestTitle = newest ? withoutHouseSuffix(newest.title, me.name) : null
+const sessionOfNewest = newest?.date ? sessions.filter((s) => s.date === newest.date).at(-1) : null
+const newestNote = newest?.blurb ?? (sessionOfNewest ? sessionLabel(sessionOfNewest.title).line : null)
+
+// ── the handoffs, to this practice and by it ──────────────────────────────────────────────
+const byDay = <T extends { offeredOn: string }>(list: T[]) => [...list].sort((a, b) => b.offeredOn.localeCompare(a.offeredOn))
+const handoffs = [
+  {
+    key: 'to',
+    label: T.handoffs.to(me.name),
+    rows: byDay(record.handoffs.filter((h) => h.to.includes(id))).map((h) => ({ h, who: T.handoffs.from(SHORT[h.giver]), voice: h.giver })),
+  },
+  {
+    key: 'by',
+    label: T.handoffs.by(me.name),
+    rows: byDay(record.handoffs.filter((h) => h.giver === id)).map((h) => ({ h, who: T.handoffs.toWhom(h.to.map((t) => SHORT[t])), voice: h.to[0] ?? id })),
+  },
+]
+
+// ── the journal's newest sessions ─────────────────────────────────────────────────────────
+const JOURNAL_ROWS = 8
+const journal = sessions
+  .slice(-JOURNAL_ROWS)
+  .reverse()
+  .map((s) => ({ ...s, ...sessionLabel(s.title) }))
+
+// ── everything it made, cycle by cycle ────────────────────────────────────────────────────
+const SUB_MAX = 60
+const clip = (text: string) => {
+  if (text.length <= SUB_MAX) return text
+  const soft = text.lastIndexOf(' ', SUB_MAX)
+  return `${text.slice(0, soft > 0 ? soft : SUB_MAX)}…`
+}
+const mine = record.things.filter((t) => t.house === id)
+const shelf = [
+  ...[...record.cycles].reverse().map((c) => ({ n: c.n, label: W.cycleLabel(c.n), sub: c.question ? clip(c.question) : T.shelf.ownTheme })),
+  { n: 0, label: T.shelf.before.label, sub: T.shelf.before.sub },
+]
+  .map((group) => ({
+    ...group,
+    works: mine.filter((t) => t.cycle === group.n).sort((a, b) => a.sortDay.localeCompare(b.sortDay)),
+  }))
+  .filter((group) => group.works.length > 0)
+
+const doors = [...DOORS[id], ...(windowDoor(id) ? [windowDoor(id)!] : [])]
+const hasFigure = Astro.slots.has('figure')
+---
+
+<main id="main" class="paper-main" data-sc-practice>
+ <div class={`paper sc pp-voice-${id}`}>
+  <EcoSubnav here={id} />
+
+  <div class="sc-topbar">
+    <div class="paper-sheet sc-wrap">
+      {/* ── who this voice is, and where its record stands ──────────────────────────────── */}
+      <header class="sc-hero sc-hero--top sc-hero--practice">
+        <div class="sc-hero-text">
+          <p class="sc-kicker sc-voice">{T.kicker(me)}</p>
+          <h1>{T.title[id]}</h1>
+          <p class="sc-lede">{T.lede[id]}</p>
+        </div>
+        <div class="sc-status">
+          <p class="sc-status-head">{T.status.head}</p>
+          <dl>
+            {status.map((row) => (
+              <div><dt>{row.k}</dt><dd>{row.v}</dd></div>
+            ))}
+          </dl>
+        </div>
+      </header>
+
+      {/* ── the part ────────────────────────────────────────────────────────────────────── */}
+      <section id="part">
+        <div class="sc-head">
+          <div class="sc-head-title">
+            <h2>{T.part.title(me.name)}</h2>
+            <span class="sc-head-sub">{T.part.sub}</span>
+          </div>
+          <span class="sc-small sc-head-aside">{T.part.meta({ sessions: sessions.length, pieces: pieces.length, many: noun.many, crossings: part.slurs.length })}</span>
+        </div>
+        <PartFigure model={part} />
+        <p class="sc-part-legend">
+          <span>{T.part.legend.filled(noun.one)}</span>
+          <span>{T.part.legend.hollow}</span>
+          <span>{T.part.legend.slurs}</span>
+        </p>
+      </section>
+
+      {/* ── the newest piece, and the bulletin ──────────────────────────────────────────── */}
+      <section class="sc-two">
+        <div class="sc-latest">
+          {newest && newestTitle ? (
+            <>
+              <p class="sc-label">{T.latest.head({ one: noun.one, date: newest.date, cycle: newest.cycle })}</p>
+              <a class="sc-still" href={url(newest.href)}>
+                {still.wide ? (
+                  <picture>
+                    {still.narrow && <source media="(max-width: 759.98px)" srcset={still.narrow} />}
+                    <img src={still.wide} alt={T.latest.still(newestTitle)} loading="lazy" decoding="async" />
+                  </picture>
+                ) : (
+                  <span class="sc-still-note">{T.latest.noStill(noun.one)}</span>
+                )}
+              </a>
+              <p class="sc-latest-title">
+                <a href={url(newest.href)}>{newestTitle}</a>
+                <a href={url(newest.href)}>{T.latest.open(noun.one)}</a>
+              </p>
+              {newestNote && <p class="sc-latest-session">{newestNote}</p>}
+            </>
+          ) : (
+            <p class="sc-note-line">{T.latest.none(noun.one)}</p>
+          )}
+        </div>
+        <div class="sc-side">
+          <p class="sc-side-head">
+            <span class="sc-label">{T.bulletin.head}</span>
+            <a href={`https://github.com/frankbueltge/${PRACTICE_REPO[id]}/blob/main/BULLETIN.md`}>{T.bulletin.source}</a>
+          </p>
+          <BulletinFold bulletin={bulletin} />
+        </div>
+      </section>
+
+      {/* ── handoffs, and the journal ───────────────────────────────────────────────────── */}
+      <section class="sc-two sc-two--even">
+        <div data-sc-tabs>
+          <div class="sc-head sc-head--ink">
+            <div class="sc-head-title">
+              <h2>{T.handoffs.title}</h2>
+              <span class="sc-head-sub">{T.handoffs.sub}</span>
+            </div>
+          </div>
+          {/* Two lists. Without the script both stand, each under its own heading; with it
+              they are two tabs and the headings are the buttons. */}
+          <div class="sc-tabs" role="group" aria-label={T.handoffs.label} data-sc-tablist hidden>
+            {handoffs.map((tab, i) => (
+              <button type="button" class="sc-chip" data-tab={tab.key} aria-pressed={i === 0 ? 'true' : 'false'}>{tab.label}</button>
+            ))}
+          </div>
+          {handoffs.map((tab) => (
+            <div data-tabpanel={tab.key}>
+              <p class="sc-tabpanel-title">{tab.label}</p>
+              <div class="sc-list sc-list--scroll">
+                {tab.rows.length > 0 ? (
+                  tab.rows.map(({ h, who, voice }) => (
+                    <p class={`sc-handoff pp-voice-${voice}`}>
+                      <span>{shortDate(h.offeredOn)}</span>
+                      <span>{who}</span>
+                      <span>{h.offer}</span>
+                      <span class="sc-status-word" data-status={h.status}>{W.middlePage.handoffs.status[h.status]}</span>
+                    </p>
+                  ))
+                ) : (
+                  <p class="sc-note-line">{T.handoffs.none}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div>
+          <div class="sc-head sc-head--ink">
+            <div class="sc-head-title">
+              <h2>{T.journal.title}</h2>
+              <span class="sc-head-sub">{T.journal.sub}</span>
+            </div>
+          </div>
+          <div class="sc-list">
+            {journal.length > 0 ? (
+              journal.map((j) => (
+                <a class="sc-journal-row" href={url(j.href)}>
+                  <span>{shortDate(j.date)}</span>
+                  <span>{j.label ?? '—'}</span>
+                  <span>{j.line || j.title}</span>
+                </a>
+              ))
+            ) : (
+              <p class="sc-note-line">{T.journal.none}</p>
+            )}
+          </div>
+          <a class="sc-more sc-link" href={url(`/${id}/journal`)}>{T.journal.all}</a>
+        </div>
+      </section>
+
+      {/* ── everything it made, cycle by cycle ──────────────────────────────────────────── */}
+      <section class="sc-section" id="made">
+        <div class="sc-head sc-head--ink">
+          <div class="sc-head-title">
+            <h2>{noun.shelf}</h2>
+            <span class="sc-head-sub">{T.shelf.meta(mine.length)}</span>
+          </div>
+        </div>
+        <div class="sc-list">
+          {shelf.map((group) => (
+            <div class="sc-shelf-row">
+              <p class="sc-shelf-label"><span>{group.label}</span><span>{group.sub}</span></p>
+              <div class="sc-works">
+                {group.works.map((w) => (
+                  <a class={`sc-work${w.kind === 'presentation' ? ' is-presentation' : ''}`} href={url(w.href)}>
+                    {withoutHouseSuffix(w.title, me.name)}{w.date && <> <small>{shortDate(w.date)}</small></>}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── the rooms ───────────────────────────────────────────────────────────────────── */}
+      <section class="sc-section" id="rooms">
+        <div class="sc-head sc-head--ink">
+          <div class="sc-head-title">
+            <h2>{T.rooms.title}</h2>
+            <span class="sc-head-sub">{T.rooms.sub}</span>
+          </div>
+        </div>
+        <nav class="sc-rooms" aria-label={T.rooms.title}>
+          {doors.map((d) => (
+            <a href={url(d.href)}><span>{d.title}</span><span>{d.sub}</span></a>
+          ))}
+        </nav>
+      </section>
+
+      <div class="sc-end-space"></div>
+    </div>
+  </div>
+ </div>
+
+  {/* ── the practice's own figure, where it has one ─────────────────────────────────────────
+      A GUEST on the paper page: it keeps the mono skin and its own palette, so it stands in a
+      band of the frame's own ground, outside the paper container (src/styles/paper.css says
+      why the tokens are scoped to make that possible). Its heading wears the frame's kicker. */}
+  {hasFigure && (
+    <section class="pp-guest" id="figure" aria-label={T.figure.title}>
+      <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+        <p class="kicker mb-4">{T.figure.title}</p>
+        <slot name="figure" />
+      </div>
+    </section>
+  )}
+</main>
+
+<script>
+  // The handoffs' two lists become two tabs. The headings the lists carry without the script
+  // are hidden by a class the script sets, and the buttons it unhides say the same words.
+  function wire(): void {
+    for (const box of document.querySelectorAll<HTMLElement>('[data-sc-tabs]')) {
+      if (box.dataset.wired) continue
+      box.dataset.wired = 'on'
+      const list = box.querySelector<HTMLElement>('[data-sc-tablist]')
+      const tabs = [...box.querySelectorAll<HTMLButtonElement>('[data-tab]')]
+      const panels = [...box.querySelectorAll<HTMLElement>('[data-tabpanel]')]
+      if (!list || tabs.length === 0) continue
+      const show = (key: string) => {
+        for (const tab of tabs) tab.setAttribute('aria-pressed', String(tab.dataset.tab === key))
+        for (const panel of panels) panel.hidden = panel.dataset.tabpanel !== key
+      }
+      for (const tab of tabs) tab.addEventListener('click', () => show(tab.dataset.tab ?? ''))
+      box.classList.add('sc-tabbed')
+      list.hidden = false
+      show(tabs[0].dataset.tab ?? '')
+    }
+    // On a narrow screen the part scrolls sideways; it opens on its newest end.
+    for (const scroller of document.querySelectorAll<HTMLElement>('[data-sc-practice] [data-sc-scroll]')) {
+      if (scroller.scrollWidth > scroller.clientWidth) scroller.scrollLeft = scroller.scrollWidth
+    }
+  }
+  wire()
+  document.addEventListener('astro:page-load', wire)
+</script>

@@ -47,14 +47,15 @@ describe('the instruments are on a page', () => {
     // back on /studio since 2026-09-01 — it had rendered on no page since the station sheets of
     // 2026-08-12, and its own guard then held the whole studio mirror shut over a figure nobody saw
     ['SeasonFloor', 'the Studio’s season floor — every premiere lit, every strike taped, every return drawn back'],
-    // the /ecology cycle partitur, an island since 2026-09-02 — the only surface on which the
-    // running cycle's artifacts, sessions, letters, encounters and presentations stand together
-    ['CyclePartitur', 'the running cycle as a score — every record of the cycle on one dated ruler'],
-    // the Middle's triangle (2026-10-05) — the only drawing of what passes between the three
-    // practices: who built on, answered or only noted whom, and in which directions nothing did.
-    // It replaced the Middle's score (MiddleScore, an island since 2026-09-02), which counted
-    // addresses and stays in the repository unmounted, as retired surfaces do here.
-    ['RelayTriangle', 'the Middle’s triangle — every relation of the relay, lane by lane, and every direction in which nothing load-bearing passed'],
+    // TWO LEFT THIS LIST ON 2026-10-11, with the design handoff of that day, and are named here
+    // so their absence is a decision and not a slip: CyclePartitur (the running cycle as a
+    // score, on /ecology) and RelayTriangle (the Middle's triangle, on /encounters). Both were
+    // replaced by a new drawing of the SAME records — the score of every cycle since v3 and the
+    // giver × taker matrix with its log — and both stay in the repository unmounted, as the
+    // surfaces they themselves replaced did. Their successors are held just below.
+    ['ScoreFigure', 'the research ecology as a score — every session, every presentation and every relation since v3 on one dated ruler'],
+    ['PartFigure', 'a practice’s own part of that score — its staff in full, the siblings as ghost staves, the slurs that reached it'],
+    ['MiddleCrossings', 'the Middle’s page — who took what from whom, night by night, and the log of every relation in the relay’s own words'],
     // the knowledge graph, explorable (2026-09-02) — the one surface on which every record the
     // house keeps about itself stands with its receipts; without it the graph is a file
     ['GraphExplorer', 'the knowledge graph of the house — every node with the file and quote each edge was read from'],
