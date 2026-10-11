@@ -1,55 +1,40 @@
 ---
-// /atelier — the Atelier's practice station (research ecology v3 template, 2026-09-01).
+// /atelier — the Atelier's page (the practice template of the design handoff of 2026-10-11).
 //
-// Lineage: the station sheet of 2026-08-12 (StationSheet) stood here until 2026-09-01 and is
-// archived in the repository history; its components stay in the repo unlinked (decision log,
-// 2026-09-01). This page is thin on purpose: it assembles the practice's own record — the last
-// moves from its dossiers — and renders one PracticeStation.
+// Lineage: the station sheet of 2026-08-12 (StationSheet) stood here until 2026-09-01; the v3
+// practice station (PracticeStation.astro) from then until 2026-10-11. Both are archived in the
+// repository history and their components stay in the repo unlinked (decision log, 2026-09-01
+// and 2026-10-11). This page is thin on purpose: it names the practice and renders one
+// PracticePart, which derives everything else from the committed record.
 //
-// The one thing this page keeps that its siblings do not: the LINE MAP, the practice's own
-// figure, drawn from the same committed records (SCORE/TRACE and the works register) it always
-// was. It fills the station's figure slot, whose section carries id="figure" — the door's tour
+// The one thing this page keeps that the handoff does not draw: the LINE MAP, the practice's
+// own figure, from the same committed records (SCORE/TRACE and the works register) it always
+// was. It fills the template's figure slot, whose section carries id="figure" — the door's tour
 // link and the retired tour route's 301 land on that anchor, and mounted.test.ts holds the map
 // itself on a page.
 import Page from '@/layouts/Page.astro'
-import PracticeStation from '@/components/ecology/PracticeStation.astro'
+import PracticePart from '@/components/ecology/score/PracticePart.astro'
 import Figure from '@/components/ecology/figures/Figure.astro'
 import LineMapFigure from '@/components/ecology/figures/LineMap.astro'
+import '@/styles/hub-triptych.css'
 import '@/styles/ecology-pyramid.css'
 import { PRACTICE_V3 } from '@/config/practice-wording'
-import { PYRAMID } from '@/config/ecology-pyramid-wording'
 import { FIGURES } from '@/config/ecology-figure-wording'
 import { allWorks } from '@/lib/engines/register'
 import { loadDossiers } from '@/lib/atelier/dossier-data'
 import { buildLineMap } from '@/lib/ecology/pyramid/figures'
-import { firstClause } from '@/lib/ecology/pyramid/landings'
-import type { LogEntry } from '@/lib/ecology/pyramid/station'
 
 const works = allWorks()
 const dossiers = loadDossiers()
 const atelierWorks = works.filter((w) => w.ns === 'atelier')
-
-// This practice keeps a trace and a journal per work-line rather than one chronicle, so the log
-// is its dated moves, merged and newest first — the dossier already does that merge.
-const log: LogEntry[] = dossiers
-  .flatMap((d) => d.moves)
-  .filter((m) => m.date)
-  .sort((a, b) => (a.date < b.date ? 1 : -1))
-  .slice(0, 3)
-  .map((m) => ({
-    date: m.date,
-    marker: m.number ? `tick ${m.number}` : null,
-    line: firstClause(m.text ?? m.title, 190) ?? PYRAMID.station.absent,
-    href: m.href ?? undefined,
-  }))
 
 const map = buildLineMap(dossiers, works)
 const SEO = PRACTICE_V3.atelier.seo
 const F = FIGURES.atelier
 ---
 
-<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
-  <PracticeStation id="atelier" log={log}>
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description} surface="paper">
+  <PracticePart id="atelier">
     {/* The figure keeps its own instrument-panel design language (ecology-pyramid.css), scoped
         by the .eco ancestor — the tokens live there, and the drawing is the practice's, not the
         template's. */}
@@ -65,5 +50,5 @@ const F = FIGURES.atelier
         </Figure>
       </div>
     </div>
-  </PracticeStation>
+  </PracticePart>
 </Page>

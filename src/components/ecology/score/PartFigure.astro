@@ -1,0 +1,91 @@
+---
+// A PRACTICE'S PART of the score (2026-10-11, design handoff §5): its own stave at full size,
+// the two siblings as ghost staves above and below, and a slur for every relation that reached
+// it — in the sibling's colour where this practice took something, in its own where a sibling
+// took something from it. The kind of relation is the line: solid, dashed, dotted.
+//
+// Geometry: src/lib/ecology/score.ts (buildPart). Every notehead is a link to that session's
+// page; the readout names the mark under the pointer or the focus (ScoreReadout).
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { SCORE_WORDING as W, shortDate } from '@/config/score-wording'
+import { PART, type PartModel } from '@/lib/ecology/score'
+import ScoreReadout from './ScoreReadout.astro'
+
+interface Props {
+  model: PartModel
+}
+const { model } = Astro.props
+
+const P = ECOLOGY_V3.practices
+const T = W.practice.part
+const me = model.me
+const noun = W.practice.noun[me]
+const markWidth = (n: number) => (n > 9 ? 26 : 20)
+---
+
+<div class="sc-figure sc-part" data-sc-figure>
+  <div class="sc-figure-scroll" data-sc-scroll>
+    <svg
+      viewBox={`0 0 ${model.width} ${model.height}`}
+      role="group"
+      aria-label={T.label({ name: P[me].name, since: model.axis.since, until: model.axis.until })}
+    >
+      {model.staves.map((stave) =>
+        stave.lines.map((y) => (
+          <line class={`sc-staff ${stave.own ? 'sc-staff--own' : 'sc-staff--ghost'}`} x1={PART.left} x2={PART.left + PART.plot} y1={y} y2={y} />
+        )),
+      )}
+      {model.barlines.map((x) => <line class="sc-barline" x1={x} x2={x} y1={PART.barTop} y2={PART.barBottom} />)}
+      {model.ticks.map((t) => <text class="sc-tick-label" x={t.x} y="268">{shortDate(t.date)}</text>)}
+
+      {model.slurs.map((s) => (
+        <>
+          <path
+            class={`sc-slur-hit k-${s.kind}`}
+            d={s.d}
+            data-kicker={W.score.slur({ taker: P[s.taker].name, giver: P[s.giver].name, kind: s.kind, date: s.date })}
+            data-text={s.what}
+          />
+          <path class={`sc-slur k-${s.kind} pp-voice-${s.took ? s.other : me}`} d={s.d} />
+        </>
+      ))}
+
+      {model.notes.map((n) => (
+        <a
+          href={n.href}
+          data-kicker={W.score.note({ practice: P[n.practice].name, date: n.date, filled: n.filled })}
+          data-text={n.own ? T.noteText({ piece: n.piece, one: noun.one, title: n.title }) : n.title}
+          aria-label={`${P[n.practice].name}, ${shortDate(n.date)}: ${n.title}`}
+        >
+          <ellipse
+            class={`sc-note pp-voice-${n.practice}${n.own ? '' : ' sc-note--ghost'}${n.filled ? ' is-filled' : ''}`}
+            cx={n.x}
+            cy={n.y}
+            rx={n.own ? 6.3 : 3.3}
+            ry={n.own ? 4.3 : 2.3}
+            transform={`rotate(-20 ${n.x} ${n.y})`}
+          />
+        </a>
+      ))}
+
+      {model.marks.map((m) => (
+        <g class="sc-mark">
+          <rect class="sc-mark-box" x={m.x + 4} y="8" width={markWidth(m.cycle)} height="20" />
+          <text class="sc-mark-no" x={m.x + 4 + markWidth(m.cycle) / 2} y="22">{m.cycle}</text>
+        </g>
+      ))}
+
+      {model.staves.map((stave) => (
+        <>
+          <text
+            class={`sc-stave-name pp-voice-${stave.practice} ${stave.own ? 'sc-stave-name--own' : 'sc-stave-name--ghost'}`}
+            x="0"
+            y={stave.top + (stave.own ? 20 : 7)}
+          >{P[stave.practice].name}</text>
+          <text class="sc-stave-corner" x="0" y={stave.top + (stave.own ? 34 : 20)}>{stave.own ? T.own : T.sibling}</text>
+        </>
+      ))}
+    </svg>
+  </div>
+  <ScoreReadout id={`sc-part-readout-${me}`} />
+</div>

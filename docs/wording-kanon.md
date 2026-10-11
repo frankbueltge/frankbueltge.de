@@ -458,6 +458,17 @@ Quelle: `docs/design_handoff_homepage_ecology/README.md` (Franks Handoff, 2026-1
   `src/config/edition-wording.ts`; **keine Ziffer wird getippt** (`edition-wording.test.ts`).
   Kicker und Vorspann des Aufmachers sind Funktionen des Zyklus-Stands — nie „opened today"
   als fester Text. Das eigene Repo der Site heißt dort **„Lab & catalogues"**.
+- **Die Ökologie als Partitur (2026-10-11, zweite Hälfte des Handoffs).** `/ecology` zeichnet
+  alle Zyklen seit v3 als **score**: drei Systeme (staves), ein Takt je Nacht, ein Notenkopf je
+  Session (gefüllt, wenn die Nacht ein Werk oder Artefakt hinterließ), ein Balken, wo eine
+  Praxis präsentierte, und die Relationen der Mitte als **slurs** — *built on* durchgezogen,
+  *answered* gestrichelt, *noted* gepunktet (die Art ist die Linie, nie ein Farbton). Die
+  Praxisseiten zeigen ihre **part** (eigenes System groß, Geschwister als *ghost staves*), die
+  Mitte heißt dort „Who took what from whom." Wortlaut in `src/config/score-wording.ts`,
+  ebenfalls ohne getippte Ziffer. Das Lineal endet am jüngsten Datum des Records, nie an
+  „today". Die drei Stimmen heißen auf diesen Flächen auch **voices**. Praxis-eigene Figuren
+  (Season Floor, Line Map) stehen als Gäste in der Mono-Haut auf der Seite; die Räume der
+  Stationen (`DOORS`) bleiben verlinkt.
 - **Papiergrund.** Eingang und (im selben Handoff) die Ökologie-Flächen stehen auf einem
   cremefarbenen Grund mit Serife (Literata) und Grotesk (Schibsted Grotesk), unabhängig vom
   Theme; Tokens in `src/styles/paper.css`. Die drei Stimmen tragen dort das Set

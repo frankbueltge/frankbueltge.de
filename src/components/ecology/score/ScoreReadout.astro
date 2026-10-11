@@ -1,0 +1,83 @@
+---
+// The readout of a drawing on the ecology's pages: one dark chip that names the mark under the
+// pointer or under the keyboard's focus.
+//
+// It is the house's shared shell (components/dataviz/Readout.astro) and its placement
+// (src/lib/dataviz/readout.ts): clamped to the figure's own box, flipped at an edge instead of
+// clipped, never a hit target. This component adds the wiring the score, a part and the
+// crossings chart share. A mark says what it is in two attributes the build wrote — `data-kicker`
+// and `data-text` — so the script owns no words; it listens on the figure, not on its several
+// hundred marks.
+import Readout from '@/components/dataviz/Readout.astro'
+
+interface Props {
+  id: string
+}
+const { id } = Astro.props
+---
+
+<Readout id={id} />
+
+<script>
+  import { createReadout } from '@/lib/dataviz/readout'
+
+  type Mark = (HTMLElement | SVGElement) & { dataset: DOMStringMap }
+
+  function wire(): void {
+    for (const figure of document.querySelectorAll<HTMLElement>('[data-sc-figure]')) {
+      if (figure.dataset.scWired) continue
+      figure.dataset.scWired = 'on'
+      const tip = figure.querySelector<HTMLElement>('[data-dv-readout]')
+      if (!tip) continue
+      const readout = createReadout(tip, figure)
+      let hot: Mark | null = null
+
+      const hide = () => {
+        readout.hide()
+        hot?.classList.remove('is-hot')
+        hot = null
+      }
+      const show = (mark: Mark, x: number, y: number) => {
+        if (hot !== mark) {
+          hot?.classList.remove('is-hot')
+          mark.classList.add('is-hot')
+          hot = mark
+        }
+        const content = document.createDocumentFragment()
+        const kicker = document.createElement('span')
+        kicker.className = 'sc-readout-kicker'
+        kicker.textContent = mark.dataset.kicker ?? ''
+        content.append(kicker, document.createTextNode(mark.dataset.text ?? ''))
+        readout.show(content, { anchorX: x, anchorY: y })
+      }
+      const markOf = (target: EventTarget | null) =>
+        target instanceof Element ? (target.closest('[data-kicker]') as Mark | null) : null
+
+      const point = (e: PointerEvent) => {
+        const mark = markOf(e.target)
+        if (!mark) return hide()
+        const box = figure.getBoundingClientRect()
+        show(mark, e.clientX - box.left, e.clientY - box.top)
+      }
+      figure.addEventListener('pointermove', point)
+      // A finger does not hover: its tap is the whole gesture, and it leaves the moment it
+      // lifts — so a tap shows the readout and it stays until the next tap says otherwise.
+      figure.addEventListener('pointerdown', point)
+      figure.addEventListener('pointerleave', (e) => {
+        if (e.pointerType !== 'touch') hide()
+      })
+      // The keyboard reaches the marks that are links; their readout anchors on the mark itself.
+      figure.addEventListener('focusin', (e) => {
+        const mark = markOf(e.target)
+        if (!mark) return
+        const box = figure.getBoundingClientRect()
+        const at = mark.getBoundingClientRect()
+        show(mark, at.left + at.width / 2 - box.left, at.top - box.top)
+      })
+      figure.addEventListener('focusout', hide)
+    }
+  }
+
+  wire()
+  document.addEventListener('astro:page-load', wire)
+</script>

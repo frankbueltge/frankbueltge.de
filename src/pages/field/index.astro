@@ -1,35 +1,19 @@
 ---
-// /field — the Field's practice station (research ecology v3 template, 2026-09-01).
+// /field — the Field's page (the practice template of the design handoff of 2026-10-11).
 //
 // Lineage: the station sheet of 2026-08-12 (StationSheet with the gate strip, the gauntlet and
-// the claim plate as figures) stood here until 2026-09-01 and is archived in the repository
-// history; its components stay in the repo unlinked (decision log, 2026-09-01). This page is
-// thin on purpose: it assembles the practice's own record — the last sessions from its
-// chronicle — and renders one PracticeStation. Everything else the station derives itself.
+// the claim plate as figures) stood here until 2026-09-01; the v3 practice station
+// (PracticeStation.astro) from then until 2026-10-11. Both are archived in the repository
+// history and their components stay in the repo unlinked (decision log, 2026-09-01 and
+// 2026-10-11). This page is thin on purpose: it names the practice and renders one
+// PracticePart, which derives everything else from the committed record.
 import Page from '@/layouts/Page.astro'
-import PracticeStation from '@/components/ecology/PracticeStation.astro'
+import PracticePart from '@/components/ecology/score/PracticePart.astro'
 import { PRACTICE_V3 } from '@/config/practice-wording'
-import { PYRAMID } from '@/config/ecology-pyramid-wording'
-import { recordLine, type ChronicleEntry } from '@/lib/ecology/pyramid/landings'
-import type { LogEntry } from '@/lib/ecology/pyramid/station'
-import chronicle from '@/data/field/chronicle.upstream.json'
-
-const rows = chronicle as ChronicleEntry[]
-
-// The record's last three sessions, in the practice's own words.
-const log: LogEntry[] = [...rows]
-  .filter((r) => r.date)
-  .sort((a, b) => (a.date! < b.date! ? 1 : -1))
-  .slice(0, 3)
-  .map((r) => ({
-    date: r.date!,
-    marker: r.collective_session ? `S${r.collective_session}` : null,
-    line: recordLine(r.move, r.summary) ?? PYRAMID.station.absent,
-  }))
 
 const SEO = PRACTICE_V3.field.seo
 ---
 
-<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
-  <PracticeStation id="field" log={log} />
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description} surface="paper">
+  <PracticePart id="field" />
 </Page>

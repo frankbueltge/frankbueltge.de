@@ -214,7 +214,10 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
 
       const syncThemeColor = (): void => {
         const m = document.querySelector('meta[name="theme-color"]')
-        const c = getComputedStyle(root).getPropertyValue('--color-bg').trim()
+        // A page on a ground of its own (src/styles/paper.css) names it in --surface-color;
+        // everywhere else the browser's chrome takes the frame's own ground.
+        const style = getComputedStyle(root)
+        const c = style.getPropertyValue('--surface-color').trim() || style.getPropertyValue('--color-bg').trim()
         if (m && c) m.setAttribute('content', c)
       }
 

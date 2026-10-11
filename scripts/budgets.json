@@ -8,16 +8,6 @@
       "what": "React runtime (react-dom/client 19.2) plus Astro's React hydration client \u2014 ONE chunk shared by every island on the site, loaded only on pages that mount one. Measured 56.9 KB gz on 2026-09-02; the plan's 50 KB was an estimate, this is the number."
     },
     {
-      "prefix": "CyclePartitur.",
-      "maxGzipKB": 30,
-      "what": "the /ecology cycle partitur (Phase 1): the model-driven score with d3-zoom (submodules d3-zoom/d3-selection/d3-transition), the shadcn card and badge, and the shared readout. Mounted client:visible, so nothing of it loads on a page without the figure."
-    },
-    {
-      "prefix": "RelayTriangle.",
-      "maxGzipKB": 12,
-      "what": "the Middle's triangle on /encounters (2026-10-05): the relay's six lanes in two windows, the readout, the keyboard walk and the shadcn card that lists a lane's relations with their evidence links. No d3 and no chart library — every coordinate is precomputed by src/lib/ecology/relay-triangle.ts. Mounted client:visible. It replaced the Middle's score (MiddleScore., budget 30 KB), which is retired, unmounted and no longer built."
-    },
-    {
       "prefix": "SeasonFloor.",
       "maxGzipKB": 30,
       "what": "the Studio's season floor on /studio (Phase 3d): the whole season on one stage floor with the legend filter, the readout, the record card and the tour handshake. Mounted client:visible on the station, client:load inside the One Tap tour (its figure column is hidden until the tour's own script reveals it)."

@@ -1,0 +1,451 @@
+---
+// /ecology — the research ecology, drawn as a score (2026-10-11, design handoff
+// docs/design_handoff_homepage_ecology/README.md §4; approval trail docs/decision-log.md).
+//
+// It replaces EcologyV3Entrance.astro, which stays in the repo unlinked, as the entrances
+// before it did. What that page said in five panels this one says around one drawing: every
+// night since the order of 2026-08-30 as a bar, every session as a notehead, every relation the
+// Middle recorded as a slur, and a cycle as the stretch between two heavy barlines. Under the
+// drawing: the selected cycle in words, how a cycle works (shown with the last turn the record
+// holds), the three voices with their bulletins verbatim, the programme, and the works register.
+//
+// Kept from the surface it replaces, and held by the same kind of tests:
+//   · NO NUMBER IS TYPED — every count, day and cycle number is derived from committed files
+//     by src/lib/ecology/{record,score}.ts; copy that wraps one is a function in SCORE_WORDING.
+//   · NO CLIENT DATA FETCHING — everything is in the HTML. The scripts select a cycle, narrow
+//     the relations and the register, and show a readout; they fetch nothing.
+//   · ABSENCE IS DRAWN — a cycle without findings shows none, a practice without a bulletin
+//     says so, a relay that is not on the record leaves the staves without slurs and says why.
+//   · THE RECORD IS QUOTED, NOT PARAPHRASED — bulletins render verbatim (BulletinFold).
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { localeHref } from '@/lib/locale-href'
+import type { Locale } from '@/lib/site'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { SCORE_WORDING as W, SHORT, cycleNo } from '@/config/score-wording'
+import { rankedScores, resultFate } from '@/lib/ecology/convening'
+import { inScoreCycle, loadEcologyRecord, piecesIn, piecesSince, scoreInput } from '@/lib/ecology/record'
+import { buildScore, cycleOn, ORDER } from '@/lib/ecology/score'
+import { loadClosingReports, PRACTICE_REPO, type PracticeId } from '@/lib/ecology/v3'
+import '@fontsource-variable/literata/opsz-italic.css'
+import '@/styles/paper.css'
+import '@/styles/score.css'
+import EcoSubnav from './EcoSubnav.astro'
+import ScoreFigure from './ScoreFigure.astro'
+import BulletinFold from './BulletinFold.astro'
+import RegisterTable from './RegisterTable.astro'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') || href.startsWith('#') ? href : localeHref(href, (path) => getRelativeLocaleUrl(locale, path)))
+
+const P = ECOLOGY_V3.practices
+const record = loadEcologyRecord(W.presentationTitle)
+const model = buildScore(scoreInput(record))
+const cycle = record.cycle
+const selected = cycle.cycle
+const name = (p: PracticeId) => P[p].name
+
+// ── the hero's "now" ──────────────────────────────────────────────────────────────────────
+const conv = record.convening
+const chosenHere = conv?.result && conv.afterCycle === cycle.cycle - 1 && conv.result.question === cycle.question ? conv.result : null
+const origin = W.hero.origin({
+  source: cycle.source,
+  previous: cycle.cycle - 1,
+  proposedBy: chosenHere?.proposedBy ? name(chosenHere.proposedBy).replace(/^The /, 'the ') : null,
+  sessions: cycle.sessionsPerPractice,
+})
+
+// ── every cycle, in words: what stands under the drawing for the one that is selected ─────
+const relIn = (n: number) => record.relations.filter((r) => cycleOn(r.date, record.cycles, record.until)?.n === n)
+const details = record.cycles.map((c) => {
+  const row = record.programme.find((r) => r.cycle === c.n)!
+  const relations = relIn(c.n)
+  return {
+    n: c.n,
+    source: row.source ? W.source[row.source] : null,
+    dates: W.dates(c.opened, c.closed),
+    question: c.question ?? W.noQuestion,
+    findings: row.findings,
+    presentations: record.things.filter((t) => t.kind === 'presentation' && t.cycle === c.n),
+    stats: [
+      ...ORDER.map((p) => ({ voice: p as PracticeId | null, k: name(p), v: record.sessions.filter((s) => s.practice === p && inScoreCycle(s.date, c, record.until)).length, sub: W.detail.sessions })),
+      ...ORDER.map((p) => ({ voice: p as PracticeId | null, k: name(p), v: piecesIn(record.things, p, c.n).length, sub: W.detail.pieces })),
+      ...(['built_on', 'answered', 'noted'] as const).map((k) => ({ voice: null, k: W.middle, v: relations.filter((r) => r.kind === k).length, sub: W.kind[k] })),
+    ],
+  }
+})
+
+// ── how a cycle works, shown with the last turn the record holds ──────────────────────────
+const shown = [...record.cycles].reverse().find((c) => c.closed !== null) ?? null
+const shownRelations = shown ? relIn(shown.n) : []
+const shownPresented = shown
+  ? (record.presentations.filter((p) => p.cycle === shown.n && p.date).map((p) => p.date!).sort().at(-1) ?? null)
+  : null
+const tally = conv?.result && shown && conv.afterCycle === shown.n ? rankedScores(conv.result) : []
+const examples = shown
+  ? [
+      W.how.example.question(shown.n, shown.question),
+      W.how.example.sessions(shown.n, ORDER.map((p) => ({ name: SHORT[p], sessions: record.sessions.filter((s) => s.practice === p && inScoreCycle(s.date, shown, record.until)).length }))),
+      W.how.example.crossings(shown.n, shownRelations.length),
+      shownPresented ? W.how.example.presented(shown.n, shownPresented) : null,
+      tally.length > 0 ? W.how.example.tally(tally.map((t) => ({ name: SHORT[t.practice], score: t.score })), shown.n + 1) : null,
+    ]
+  : []
+const steps = W.how.steps.map((s, i) => ({
+  no: String(i + 1).padStart(2, '0'),
+  title: s.title,
+  text: typeof s.text === 'function' ? s.text(cycle.sessionsPerPractice) : s.text,
+  example: examples[i] ?? null,
+}))
+
+// The convening's proposals, and what became of the one that won — read from the record, not
+// claimed: resultFate says whether the next cycle opened on it, is about to, or did not.
+const fate = conv ? resultFate(cycle, conv) : null
+const proposals = (conv?.proposals ?? []).map((pr) => {
+  const ranking = conv!.rankings.find((r) => r.practice === pr.practice)
+  const won = conv!.result?.proposedBy === pr.practice
+  const next = conv!.afterCycle + 1
+  return {
+    practice: pr.practice,
+    question: pr.question,
+    score: conv!.result?.scores[pr.practice] ?? null,
+    ranked: ranking ? W.how.convening.rankedBy(name(pr.practice), ranking.order.map((o) => SHORT[o])) : W.how.convening.notRanked(name(pr.practice)),
+    won,
+    verdict: !conv!.result
+      ? null
+      : !won
+        ? W.how.convening.notChosen
+        : fate?.kind === 'opened'
+          ? W.how.convening.won(next)
+          : fate?.kind === 'pending'
+            ? W.how.convening.leads(next)
+            : fate?.kind === 'set-aside' || fate?.kind === 'passed'
+              ? W.how.convening.setAside
+              : W.how.convening.wonTally,
+  }
+})
+
+// ── the three voices ──────────────────────────────────────────────────────────────────────
+const voices = ORDER.map((p) => ({
+  id: p,
+  ...P[p],
+  bulletin: record.bulletins[p],
+  stats: [
+    { v: record.sessions.filter((s) => s.practice === p).length, k: W.voices.stats.sessions },
+    { v: piecesSince(record.things, p).length, k: W.voices.stats.pieces },
+    { v: record.relations.filter((r) => r.giver === p).length, k: W.voices.stats.taken },
+  ],
+}))
+
+// ── the programme, newest first ───────────────────────────────────────────────────────────
+const programme = [...details].reverse().map((d) => ({
+  ...d,
+  hasQuestion: record.cycles.find((c) => c.n === d.n)!.question !== null,
+  counts: ORDER.map((p) => ({ practice: p, text: W.programme.count(piecesIn(record.things, p, d.n).length, SHORT[p]) })),
+}))
+
+const closing = loadClosingReports()
+const firstRelation = record.relations[0]?.date ?? null
+---
+
+<main id="main" class="paper sc" data-sc-page data-selected={selected}>
+  <EcoSubnav here="ecology" />
+
+  <div class="paper-sheet sc-wrap">
+    {/* ── the hero ────────────────────────────────────────────────────────────────────────── */}
+    <header class="sc-hero">
+      <div class="sc-hero-text">
+        <p class="sc-kicker">{W.hero.kicker(record.since)}</p>
+        <h1>{W.hero.title[0]}<br />{W.hero.title[1]}</h1>
+        <p class="sc-lede">
+          {W.hero.intro.lead}
+          {ORDER.map((p) => (
+            <><a class={`sc-voice pp-voice-${p}`} href={url(P[p].href)}>{name(p)}</a>{W.hero.intro.roles[p]}</>
+          ))}
+          {W.hero.intro.tail}
+        </p>
+      </div>
+      {/* id="now": the board on /now and the retired /maschinenraum route lead here */}
+      <div class="sc-now" id="now">
+        <div class="sc-now-head">
+          <span>{W.hero.now(cycle.cycle)}</span>
+          <span class="pp-muted">{W.hero.phase[cycle.phase]} · {W.hero.opened(cycle.opened)}</span>
+        </div>
+        <p class="sc-now-q">{cycle.source !== 'defaults' && cycle.question ? cycle.question : W.noQuestion}</p>
+        <p class="sc-now-origin">{origin}</p>
+      </div>
+    </header>
+
+    {/* ── the score ───────────────────────────────────────────────────────────────────────── */}
+    <section id="score">
+      <div class="sc-head">
+        <div class="sc-head-title">
+          <h2>{W.score.title}</h2>
+          <span class="sc-head-sub">{W.score.sub({ cycles: record.cycles.length, sessions: record.sessions.length, crossings: record.relations.length })}</span>
+        </div>
+        {/* Hidden until the script runs: without it every relation is drawn and the buttons
+            would be four dead words. */}
+        <div class="sc-chips sc-head-aside" role="group" aria-label={W.score.filterLabel} data-sc-relfilter hidden>
+          {(['all', 'built_on', 'answered', 'none'] as const).map((k) => (
+            <button type="button" class="sc-chip" data-rel={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{W.score.filters[k]}</button>
+          ))}
+        </div>
+      </div>
+
+      <ScoreFigure model={model} selected={selected} sessions={record.sessions.length} />
+
+      <div class="sc-legend" aria-hidden="true">
+        <span><svg width="12" height="9" viewBox="0 0 12 9"><ellipse class="sc-key" cx="6" cy="4.5" rx="4.3" ry="2.8" stroke-width="1.4" transform="rotate(-20 6 4.5)" /></svg>{W.score.legend.session}</span>
+        <span><svg width="12" height="9" viewBox="0 0 12 9"><ellipse class="sc-key sc-key--fill" cx="6" cy="4.5" rx="4.3" ry="2.8" stroke-width="1.4" transform="rotate(-20 6 4.5)" /></svg>{W.score.legend.filled}</span>
+        <span><svg width="4" height="14" viewBox="0 0 4 14"><rect class="sc-key sc-key--fill" width="4" height="14" stroke="none" /></svg>{W.score.legend.presentation}</span>
+        <span><svg width="22" height="4" viewBox="0 0 22 4"><line class="sc-key" x1="0" x2="22" y1="2" y2="2" stroke-width="1.6" /></svg>{W.score.legend.built_on}</span>
+        <span><svg width="22" height="4" viewBox="0 0 22 4"><line class="sc-key" x1="0" x2="22" y1="2" y2="2" stroke-width="1.4" stroke-dasharray="4 3" /></svg>{W.score.legend.answered}</span>
+        {firstRelation && <span><svg width="22" height="4" viewBox="0 0 22 4"><line class="sc-key" x1="0" x2="22" y1="2" y2="2" stroke-width="1.2" stroke-dasharray="1 3" /></svg>{W.score.legend.noted(firstRelation)}</span>}
+      </div>
+      <p class="sc-floor">
+        {record.relay === 'ok' ? W.score.floor : W.middlePage.absent}{' '}
+        <a class="sc-link" href={url(W.score.floorLink.href)}>{W.score.floorLink.label}</a>
+      </p>
+
+      {/* The cycles in words. All of them are in the document; the one that is selected shows.
+          Without the script that is the running cycle. */}
+      {details.map((d) => (
+        <div class="sc-detail" data-cycle-detail={d.n} hidden={d.n !== selected}>
+          <div class="sc-detail-text">
+            <p class="sc-detail-head">
+              <span>{W.detail.head(d.n)}</span>
+              <span class="pp-muted">{[d.source, d.dates].filter(Boolean).join(' · ')}</span>
+            </p>
+            <p class="sc-detail-q">{d.question}</p>
+            {d.findings.length > 0 && (
+              <div class="sc-findings">
+                {d.findings.map((f) => (
+                  <p class={`sc-finding pp-voice-${f.practice}`}>
+                    <span>{name(f.practice)}</span>
+                    <span>{f.line}</span>
+                  </p>
+                ))}
+              </div>
+            )}
+            {d.presentations.length > 0 && (
+              <p class="sc-detail-links">
+                {d.presentations.map((p) => (
+                  <>
+                    <a class={`pp-voice-${p.house}`} href={url(p.href)}>{W.detail.presentation(name(p.house as PracticeId))} →</a>
+                    {p.paperHref && <a class={`pp-voice-${p.house}`} href={url(p.paperHref)}>{W.detail.paper} →</a>}
+                  </>
+                ))}
+              </p>
+            )}
+          </div>
+          <div class="sc-stats">
+            {d.stats.map((s) => (
+              <div class={`sc-stat${s.voice ? ` pp-voice-${s.voice}` : ''}`}>
+                <span class="sc-stat-k">{s.k}</span>
+                <span class="sc-stat-v">{s.v}</span>
+                <span class="sc-stat-sub">{s.sub}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+  </div>
+
+  {/* ── how a cycle works ─────────────────────────────────────────────────────────────────── */}
+  <section id="cycle" class="sc-how">
+    <div class="paper-sheet sc-wrap">
+      <div class="sc-head sc-head--bare sc-head--big">
+        <div class="sc-head-title">
+          <h2>{W.how.title}</h2>
+          <span class="sc-head-sub">{shown ? W.how.sub(shown.n, shown.n + 1) : W.how.subPlain}</span>
+        </div>
+      </div>
+      <ol class="sc-steps">
+        {steps.map((s) => (
+          <li class="sc-step">
+            <span class="sc-small">{s.no}</span>
+            <span class="sc-step-title">{s.title}</span>
+            <span class="sc-step-text">{s.text}</span>
+            {s.example && <span class="sc-small sc-step-example">{s.example}</span>}
+          </li>
+        ))}
+      </ol>
+
+      {/* id="convening": the signal log's rows about a convening, and the notice the architect
+          is sent when one is tallied (src/lib/ecology/convening-notice.ts), both lead here. */}
+      {conv ? (
+        <div id="convening">
+          <p class="sc-conv-head">
+            <span>{W.how.convening.head({ after: conv.afterCycle, opened: conv.opened, tallied: conv.result?.talliedOn ?? null, rule: conv.result?.rule ?? null })}</span>
+            <span>{W.how.convening.sub}</span>
+          </p>
+          <div class="sc-proposals">
+            {proposals.map((p) => (
+              <div class={`sc-proposal pp-voice-${p.practice}`}>
+                <p class="sc-proposal-head">
+                  <span class="sc-proposal-name">{W.how.convening.proposal(name(p.practice))}</span>
+                  {p.score !== null && <span class="sc-proposal-score">{p.score}</span>}
+                </p>
+                <p class="sc-proposal-q">{p.question}</p>
+                <p class="sc-small">{p.ranked}</p>
+                {p.verdict && <p class={`sc-small${p.won ? ' is-won' : ''}`}>{p.verdict}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <p class="sc-note-line" id="convening">{W.how.convening.none}</p>
+      )}
+    </div>
+  </section>
+
+  <div class="paper-sheet sc-wrap">
+    {/* ── the three voices ────────────────────────────────────────────────────────────────── */}
+    <section id="voices" class="sc-section">
+      <div class="sc-head sc-head--bare sc-head--big">
+        <div class="sc-head-title">
+          <h2>{W.voices.title}</h2>
+          <span class="sc-head-sub">{W.voices.sub}</span>
+        </div>
+      </div>
+      <div class="sc-voices">
+        {voices.map((v) => (
+          <article class={`sc-voice-card pp-voice-${v.id}`}>
+            <div class="sc-voice-head">
+              <h3><a href={url(v.href)}>{v.name}</a></h3>
+              <span class="sc-small">{v.persona} · {v.corner}</span>
+            </div>
+            <p class="sc-voice-role">{v.role}</p>
+            <div class="sc-voice-stats">
+              {v.stats.map((s) => (
+                <div><b>{s.v}</b><span>{s.k}</span></div>
+              ))}
+            </div>
+            <p class="sc-label">
+              {W.voices.bulletin} ·{' '}
+              <a class="sc-link" href={`https://github.com/frankbueltge/${PRACTICE_REPO[v.id]}/blob/main/BULLETIN.md`}>{W.practice.bulletin.source}</a>
+            </p>
+            <BulletinFold bulletin={v.bulletin} />
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {/* ── the programme ───────────────────────────────────────────────────────────────────── */}
+    <section id="programme" class="sc-section">
+      <div class="sc-head sc-head--bare sc-head--big">
+        <div class="sc-head-title">
+          <h2>{W.programme.title}</h2>
+          <span class="sc-head-sub">{W.programme.sub}</span>
+        </div>
+      </div>
+      <div class="sc-programme">
+        {programme.map((r) => (
+          /* A row is a link to the score: without the script it jumps there; with it, it also
+             selects its cycle on the way. */
+          <a class={`sc-programme-row${r.n === selected ? ' is-selected' : ''}`} href="#score" data-select-cycle={r.n} data-programme-row={r.n}>
+            <span class="sc-programme-no">{cycleNo(r.n)}</span>
+            <span class="sc-programme-src"><span>{r.source}</span><span>{r.dates}</span></span>
+            <span class={`sc-programme-q${r.hasQuestion ? '' : ' is-none'}`}>{r.question}</span>
+            <span class="sc-programme-counts">
+              {r.counts.map((c) => (
+                <span class={`sc-voice pp-voice-${c.practice}`}>{c.text}</span>
+              ))}
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    {/* ── the works register ──────────────────────────────────────────────────────────────── */}
+    <section id="register" class="sc-section">
+      <div class="sc-head sc-head--bare sc-head--big">
+        <div class="sc-head-title">
+          <h2>{W.register.title}</h2>
+          <span class="sc-head-sub">{W.register.sub}</span>
+        </div>
+        <span class="sc-head-aside" data-sc-register-count>{W.register.count(record.things.length, record.things.length)}</span>
+      </div>
+      <RegisterTable things={record.things} cycles={record.cycles.map((c) => c.n)} />
+    </section>
+
+    {/* The foot: the order's own line, and the rooms this page used to link that the drawing
+        does not — the post office, the apparatus, the closing reports of the earlier order,
+        the decision record. A redesign must not leave a page reachable only from the sitemap. */}
+    <footer class="sc-pagefoot">
+      <span>{W.foot.line(record.since)}</span>
+      <span>
+        {W.foot.also}{' '}
+        {W.foot.links.map((l) => (
+          <><a href={url(l.href)}>{l.label}</a>{' · '}</>
+        ))}
+        {closing.map((c) => (
+          <><a href={url(c.href)}>{W.foot.closing(name(c.practice))}</a>{' · '}</>
+        ))}
+        <a href={W.foot.decision.href}>{W.foot.decision.label}</a>
+      </span>
+    </footer>
+  </div>
+</main>
+
+<script>
+  // The page's two choices: which cycle is selected, and which relations the score draws.
+  // Both are a class or an attribute on marks the build already drew — nothing is computed
+  // here, nothing is fetched, and no style attribute is set.
+  function wire(): void {
+    const page = document.querySelector<HTMLElement>('[data-sc-page]')
+    if (!page || page.dataset.wired) return
+    page.dataset.wired = 'on'
+    const figure = page.querySelector<HTMLElement>('[data-sc-score]')
+    if (!figure) return
+
+    const select = (n: string): void => {
+      page.dataset.selected = n
+      for (const el of figure.querySelectorAll<SVGElement>('[data-cycle]')) el.classList.toggle('is-dim', el.dataset.cycle !== n)
+      for (const band of figure.querySelectorAll<SVGElement>('.sc-band')) {
+        const on = band.dataset.selectCycle === n
+        band.classList.toggle('is-selected', on)
+        band.setAttribute('aria-pressed', String(on))
+      }
+      for (const mark of figure.querySelectorAll<SVGElement>('[data-mark-cycle]')) mark.classList.toggle('is-selected', mark.dataset.markCycle === n)
+      for (const detail of page.querySelectorAll<HTMLElement>('[data-cycle-detail]')) detail.hidden = detail.dataset.cycleDetail !== n
+      for (const row of page.querySelectorAll<HTMLElement>('[data-programme-row]')) row.classList.toggle('is-selected', row.dataset.programmeRow === n)
+    }
+    // One listener for every mark that names a cycle — a band, a slur or a presentation lying
+    // over it, a row of the programme — rather than one per mark: the score alone holds several
+    // hundred. A programme row is a link to #score and keeps its jump.
+    const cycleOf = (target: EventTarget | null): string | null => {
+      const mark = target instanceof Element ? target.closest<HTMLElement | SVGElement>('[data-select-cycle]') : null
+      return mark?.dataset.selectCycle || null
+    }
+    page.addEventListener('click', (e) => {
+      const n = cycleOf(e.target)
+      if (n) select(n)
+    })
+    page.addEventListener('keydown', (e) => {
+      if (!(e.target instanceof SVGElement) || (e.key !== 'Enter' && e.key !== ' ')) return
+      const n = cycleOf(e.target)
+      if (!n) return
+      e.preventDefault()
+      select(n)
+    })
+
+    const filter = page.querySelector<HTMLElement>('[data-sc-relfilter]')
+    if (filter) {
+      const buttons = [...filter.querySelectorAll<HTMLButtonElement>('[data-rel]')]
+      for (const button of buttons) {
+        button.addEventListener('click', () => {
+          figure.dataset.rel = button.dataset.rel ?? 'all'
+          for (const b of buttons) b.setAttribute('aria-pressed', String(b === button))
+        })
+      }
+      filter.hidden = false
+    }
+
+    // On a narrow screen the score scrolls sideways; it opens on its newest end.
+    const scroller = figure.querySelector<HTMLElement>('[data-sc-scroll]')
+    if (scroller && scroller.scrollWidth > scroller.clientWidth) scroller.scrollLeft = scroller.scrollWidth
+  }
+  wire()
+  document.addEventListener('astro:page-load', wire)
+</script>

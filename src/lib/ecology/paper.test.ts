@@ -94,8 +94,11 @@ describe('the page', () => {
     expect(page).toContain('renderPaper(')
   })
 
-  it('is linked from the presentation shelf on /ecology', () => {
-    const entrance = fs.readFileSync(fileURLToPath(new URL('../../components/ecology/EcologyV3Entrance.astro', import.meta.url)), 'utf8')
-    expect(entrance).toContain('e.paperHref')
+  it('is linked from /ecology, beside the presentation it belongs to', () => {
+    // Since 2026-10-11 /ecology is the score (EcologyScore.astro): a cycle's presentations stand
+    // under the drawing when the cycle is selected, and the Field's paper stands beside its own.
+    const page = fs.readFileSync(fileURLToPath(new URL('../../components/ecology/score/EcologyScore.astro', import.meta.url)), 'utf8')
+    expect(page).toContain('p.paperHref && <a')
+    expect(page).toContain('W.detail.paper')
   })
 })

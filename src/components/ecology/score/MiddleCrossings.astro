@@ -1,0 +1,339 @@
+---
+// /encounters — the Middle, as who took what from whom (2026-10-11, design handoff
+// docs/design_handoff_homepage_ecology/README.md §6). It replaces MiddleV3.astro and its
+// triangle (RelayTriangle), which stay in the repo unmounted, as the Middle's score before them.
+//
+// The same relay the triangle drew (src/data/middle/relay.json, src/lib/ecology/relay.ts), in
+// four readings: a giver × taker matrix; the relations night by night, stacked by kind; the log
+// of every relation in the relay's own words, which is the table view of the slurs on the
+// score; and the handoffs with the longest-running threads beside it.
+//
+// The Middle Scribe's rule is kept: quote, never summarise. Every line of the log is the
+// relay's own `what`, and nothing here words a relation for it. No number is typed; nothing is
+// fetched; and before the relay is on the record the page says so instead of drawing zeros.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { localeHref } from '@/lib/locale-href'
+import type { Locale } from '@/lib/site'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { SCORE_WORDING as W, SHORT, shortDate } from '@/config/score-wording'
+import { loadEcologyRecord } from '@/lib/ecology/record'
+import { KINDS, threads, type HandoffStatus } from '@/lib/ecology/relay'
+import { buildCrossings, CROSSINGS, ORDER, relationMatrix } from '@/lib/ecology/score'
+import { DOORS } from '@/lib/ecology/pyramid/station'
+import type { PracticeId } from '@/lib/ecology/v3'
+import '@fontsource-variable/literata/opsz-italic.css'
+import '@/styles/paper.css'
+import '@/styles/score.css'
+import EcoSubnav from './EcoSubnav.astro'
+import ScoreReadout from './ScoreReadout.astro'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') || href.startsWith('#') ? href : localeHref(href, (path) => getRelativeLocaleUrl(locale, path)))
+
+const P = ECOLOGY_V3.practices
+const M = W.middlePage
+const record = loadEcologyRecord(W.presentationTitle)
+const relations = record.relations
+const name = (p: PracticeId) => P[p].name
+
+const matrix = relationMatrix(relations)
+const crossings = buildCrossings(relations, record.cycles, record.until)
+const log = [...relations].reverse()
+
+// the handoffs, by what became of them — in the order the handoff's bar draws them
+const STATUSES: readonly HandoffStatus[] = ['taken', 'declined', 'open', 'lapsed']
+const byStatus = Object.fromEntries(STATUSES.map((s) => [s, record.handoffs.filter((h) => h.status === s).length])) as Record<HandoffStatus, number>
+const handoffTotal = record.handoffs.length
+let run = 0
+const hoBar = STATUSES.map((s) => {
+  const x = run
+  run += byStatus[s]
+  return { status: s, x, width: byStatus[s] }
+})
+const open = record.handoffs.filter((h) => h.status === 'open').sort((a, b) => b.offeredOn.localeCompare(a.offeredOn))
+
+// the threads the relay names, longest first — a thread's length is its relations
+const THREADS = 8
+const longest = threads([...relations])
+  .map((t) => ({ name: t.id.replace(/-/g, ' '), count: t.relations.length }))
+  .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
+  .slice(0, THREADS)
+const longestCount = longest[0]?.count ?? 1
+
+const kindLine: Record<string, { width: string; dash?: string }> = {
+  built_on: { width: '1.6' },
+  answered: { width: '1.4', dash: '4 3' },
+  noted: { width: '1.2', dash: '1 3' },
+}
+---
+
+<main id="main" class="paper sc" data-sc-middle>
+  <EcoSubnav here="middle" />
+
+  <div class="sc-topbar sc-topbar--middle">
+    <div class="paper-sheet sc-wrap">
+      {/* ── what the Middle is, and the matrix ──────────────────────────────────────────── */}
+      <header class="sc-hero sc-hero--top sc-hero--middle">
+        <div class="sc-hero-text">
+          <p class="sc-kicker">{M.kicker}</p>
+          <h1>{M.title}</h1>
+          <p class="sc-lede">{M.lede}</p>
+          <dl class="sc-kinds">
+            {KINDS.map((k) => (
+              <div>
+                <dt>
+                  <svg width="26" height="4" viewBox="0 0 26 4" aria-hidden="true"><line x1="0" x2="26" y1="2" y2="2" stroke-width={kindLine[k].width} stroke-dasharray={kindLine[k].dash} /></svg>
+                  {W.kind[k]}
+                </dt>
+                <dd>{M.kinds[k]}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        {record.relay === 'ok' ? (
+          <table class="sc-matrix">
+            <caption class="sr-only">{M.matrix.label}</caption>
+            <colgroup><col />{ORDER.map(() => <col />)}</colgroup>
+            <thead>
+              <tr>
+                <th scope="col">{M.matrix.corner}</th>
+                {ORDER.map((p) => <th scope="col" class={`pp-voice-${p}`}>{name(p)}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {matrix.rows.map((row) => (
+                <tr>
+                  <th scope="row" class={`pp-voice-${row.giver}`}>{name(row.giver)}</th>
+                  {row.cells.map((cell) =>
+                    cell ? (
+                      <td data-tint={cell.tint}>
+                        <div class="sc-cell">
+                          <span class="sc-cell-total">{cell.total}</span>
+                          <span class="sc-cell-kinds">
+                            {KINDS.map((k) => <span>{M.matrix.count(cell.counts[k], k)}</span>)}
+                          </span>
+                        </div>
+                      </td>
+                    ) : (
+                      <td class="is-none"><div class="sc-cell"><span class="sc-cell-total">{M.matrix.none}</span></div></td>
+                    ),
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p class="sc-note-line">{M.absent}</p>
+        )}
+      </header>
+
+      {/* ── the crossings, night by night ───────────────────────────────────────────────── */}
+      {/* id="relay": the signal log files a day's load-bearing relations under the Middle and
+          links them here (src/lib/ops/live-sources.ts, RELAY_HREF). */}
+      {crossings && (
+        <section id="relay">
+          <div class="sc-head">
+            <div class="sc-head-title">
+              <h2>{M.crossings.title}</h2>
+              <span class="sc-head-sub">{M.crossings.sub(crossings.axis.since)}</span>
+            </div>
+            <span class="sc-small sc-head-aside">{M.crossings.meta(relations.length, crossings.nights)}</span>
+          </div>
+          <div class="sc-figure sc-crossings" data-sc-figure>
+            <div class="sc-figure-scroll" data-sc-scroll>
+              <svg
+                viewBox={`0 0 ${crossings.width} ${crossings.height + 30}`}
+                role="img"
+                aria-label={M.crossings.label({ crossings: relations.length, nights: crossings.nights, since: crossings.axis.since, until: crossings.axis.until, peak: crossings.peak })}
+              >
+                {crossings.marks.map((m) => (
+                  <g class="sc-mark">
+                    <line class="sc-barline" x1={m.x} x2={m.x} y1="0" y2={CROSSINGS.height} />
+                    <rect class="sc-mark-box" x={m.x + 4} y="1" width={m.cycle > 9 ? 26 : 20} height="20" />
+                    <text class="sc-mark-no" x={m.x + 4 + (m.cycle > 9 ? 13 : 10)} y="15">{m.cycle}</text>
+                  </g>
+                ))}
+                {crossings.bars.map((b) => (
+                  <g>
+                    {KINDS.map((k) => b.segments[k].height > 0 && (
+                      <rect class={`sc-bar-${k}`} x={b.x} y={b.segments[k].y + (CROSSINGS.height - CROSSINGS.floor)} width={b.width} height={b.segments[k].height} />
+                    ))}
+                    {/* the column a pointer can meet: the whole height of the box, not only the bar */}
+                    <rect
+                      class="sc-bar-hit"
+                      x={b.x - 2}
+                      y="0"
+                      width={b.width + 4}
+                      height={CROSSINGS.height}
+                      data-kicker={M.crossings.readoutDay(b.date)}
+                      data-text={M.crossings.readout(b.counts)}
+                    />
+                  </g>
+                ))}
+                {crossings.ticks.map((t) => <text class="sc-tick-label" x={t.x} y={CROSSINGS.height + 22}>{shortDate(t.date)}</text>)}
+              </svg>
+            </div>
+            <ScoreReadout id="sc-crossings-readout" />
+          </div>
+          <p class="sc-keyline" aria-hidden="true">
+            {KINDS.map((k) => <span><i class={`k-${k}`}></i>{W.kind[k]}</span>)}
+          </p>
+        </section>
+      )}
+
+      {/* ── the log, and beside it the handoffs and the threads ─────────────────────────── */}
+      <section class="sc-middle-grid">
+        <div id="log" data-sc-log data-count={M.log.countTemplate(log.length)}>
+          <div class="sc-head sc-head--ink">
+            <div class="sc-head-title">
+              <h2>{M.log.title}</h2>
+              <span class="sc-head-sub">{M.log.sub}</span>
+            </div>
+            <span class="sc-head-aside" data-sc-log-count>{M.log.count(log.length, log.length)}</span>
+          </div>
+          <div class="sc-tabs" role="group" aria-label={M.log.label} data-sc-tools hidden>
+            <button type="button" class="sc-chip" data-filter="kind" data-value="" aria-pressed="true">{M.log.allKinds}</button>
+            {KINDS.map((k) => (
+              <button type="button" class="sc-chip" data-filter="kind" data-value={k} aria-pressed="false">{W.kind[k]}</button>
+            ))}
+            {ORDER.map((p) => (
+              <button type="button" class={`sc-chip sc-voice-chip pp-voice-${p}`} data-filter="taker" data-value={p} aria-pressed="false">{M.log.takenBy(SHORT[p])}</button>
+            ))}
+          </div>
+          <div class="sc-scroll">
+            {log.length > 0 ? (
+              log.map((r) => (
+                <p class="sc-log-row" data-kind={r.kind} data-taker={r.taker}>
+                  <span>{shortDate(r.date)}</span>
+                  <span>
+                    <span class={`sc-voice pp-voice-${r.taker}`}>{SHORT[r.taker]}</span>{' '}
+                    <span class="sc-arrow" aria-hidden="true">←</span><span class="sr-only"> {M.log.from} </span>{' '}
+                    <span class={`sc-voice pp-voice-${r.giver}`}>{SHORT[r.giver]}</span>
+                  </span>
+                  <span data-kind={r.kind}>{W.kind[r.kind]}</span>
+                  <span>{r.what}</span>
+                </p>
+              ))
+            ) : (
+              <p class="sc-note-line">{M.absent}</p>
+            )}
+            <p class="sc-note-line" data-sc-none hidden>{M.log.none}</p>
+          </div>
+        </div>
+
+        <div class="sc-aside">
+          <div>
+            <div class="sc-head sc-head--ink">
+              <div class="sc-head-title"><h2>{M.handoffs.title}</h2></div>
+            </div>
+            {handoffTotal > 0 && (
+              <svg class="sc-hobar" viewBox={`0 0 ${handoffTotal} 14`} preserveAspectRatio="none" role="img" aria-label={M.handoffs.label(byStatus)}>
+                {hoBar.map((seg) => <rect class={`is-${seg.status}`} x={seg.x} y="0" width={seg.width} height="14" />)}
+              </svg>
+            )}
+            <div class="sc-honums">
+              {STATUSES.map((s) => <div><b>{byStatus[s]}</b><span>{M.handoffs.status[s]}</span></div>)}
+            </div>
+            <p class="sc-label sc-tabpanel-title">{M.handoffs.open}</p>
+            {open.length > 0 ? (
+              open.map((h) => (
+                <p class="sc-open">
+                  <span>
+                    {shortDate(h.offeredOn)} · <span class={`sc-voice pp-voice-${h.giver}`}>{SHORT[h.giver]}</span> → {h.to.map((t) => SHORT[t]).join(', ')}
+                  </span>
+                  <span>{h.offer}</span>
+                </p>
+              ))
+            ) : (
+              <p class="sc-note-line">{M.handoffs.none}</p>
+            )}
+          </div>
+
+          <div>
+            <div class="sc-head sc-head--ink">
+              <div class="sc-head-title">
+                <h2>{M.threads.title}</h2>
+                <span class="sc-head-sub">{M.threads.sub}</span>
+              </div>
+            </div>
+            {longest.length > 0 ? (
+              longest.map((t) => (
+                <p class="sc-thread">
+                  <span>{t.name}</span>
+                  <svg viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="0" width={Math.round((t.count / longestCount) * 100)} height="6" /></svg>
+                  <span>{t.count}</span>
+                </p>
+              ))
+            ) : (
+              <p class="sc-note-line">{M.threads.none}</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ── the rooms: the records around the Middle (the DOORS registry) ───────────────── */}
+      <section class="sc-section" id="rooms">
+        <div class="sc-head sc-head--ink">
+          <div class="sc-head-title">
+            <h2>{M.rooms.title}</h2>
+            <span class="sc-head-sub">{M.rooms.sub}</span>
+          </div>
+        </div>
+        <nav class="sc-rooms" aria-label={M.rooms.title}>
+          {DOORS.middle.map((d) => (
+            <a href={url(d.href)}><span>{d.title}</span><span>{d.sub}</span></a>
+          ))}
+        </nav>
+      </section>
+
+      <div class="sc-end-space"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+  // The log's filters: one kind of relation, one taker, or both. A row is in the document
+  // whatever the filter says; the filter moves `hidden`.
+  function wire(): void {
+    for (const root of document.querySelectorAll<HTMLElement>('[data-sc-log]')) {
+      if (root.dataset.wired) continue
+      root.dataset.wired = 'on'
+      const tools = root.querySelector<HTMLElement>('[data-sc-tools]')
+      const count = root.querySelector<HTMLElement>('[data-sc-log-count]')
+      const none = root.querySelector<HTMLElement>('[data-sc-none]')
+      if (!tools) continue
+      const rows = [...root.querySelectorAll<HTMLElement>('.sc-log-row')]
+      const chips = [...tools.querySelectorAll<HTMLButtonElement>('[data-filter]')]
+      const picked: Record<string, string> = { kind: '', taker: '' }
+
+      const apply = () => {
+        let shown = 0
+        for (const row of rows) {
+          const on = (picked.kind === '' || row.dataset.kind === picked.kind) && (picked.taker === '' || row.dataset.taker === picked.taker)
+          row.hidden = !on
+          if (on) shown++
+        }
+        if (none) none.hidden = shown > 0 || rows.length === 0
+        if (count) count.textContent = (root.dataset.count ?? '').replace('{shown}', String(shown))
+        for (const chip of chips) chip.setAttribute('aria-pressed', String(picked[chip.dataset.filter ?? ''] === chip.dataset.value))
+      }
+      for (const chip of chips) {
+        chip.addEventListener('click', () => {
+          const key = chip.dataset.filter ?? ''
+          const value = chip.dataset.value ?? ''
+          // a kind is one of four choices; a taker is a toggle
+          picked[key] = key === 'taker' && picked[key] === value ? '' : value
+          apply()
+        })
+      }
+      tools.hidden = false
+      apply()
+    }
+    for (const scroller of document.querySelectorAll<HTMLElement>('[data-sc-middle] [data-sc-scroll]')) {
+      if (scroller.scrollWidth > scroller.clientWidth) scroller.scrollLeft = scroller.scrollWidth
+    }
+  }
+  wire()
+  document.addEventListener('astro:page-load', wire)
+</script>

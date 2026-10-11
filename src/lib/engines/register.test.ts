@@ -1,7 +1,7 @@
 import { readdirSync, existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import { loadArtifacts, type ArtifactEntry } from '@/lib/ecology/v3'
+import { loadArtifacts, loadPresentations, type ArtifactEntry } from '@/lib/ecology/v3'
 import { collectWorks, hrefFor, type LatestWork } from './latest'
 import {
   NIGHTLY_FORK_DIR,
@@ -303,14 +303,19 @@ describe('the register on /ecology, against the committed record', () => {
 
   // (d)
   it('gives the catalogues card exactly the number the register page counts', () => {
-    expect(registerCount()).toBe(rows.length)
+    // Since 2026-10-11 the register on /ecology lists the presentations as rows of their own and
+    // gives an undated artifact a row under its cycle, so the card counts all three together —
+    // the same sources src/lib/ecology/record.ts turns into the page's list (record.test.ts
+    // holds the two numbers equal on the committed record).
+    const { undated } = buildRegister()
+    expect(registerCount()).toBe(rows.length + undated.length + loadPresentations().length)
     expect(summariseRegister(rows).total).toBe(rows.length)
     const card = readFileSync(`${ROOT}src/components/pages/CataloguesPage.astro`, 'utf8')
     expect(card).toMatch(/'\/ecology#register':\s*registerCount\(\)/)
-    const page = readFileSync(`${ROOT}src/components/ecology/WorksRegisterSection.astro`, 'utf8')
-    expect(page).toMatch(/const \{ rows, undated \} = buildRegister\(\)/)
-    expect(page).toMatch(/const summary = summariseRegister\(rows\)/)
-    // the works alone are not the register any more — the page must not import them separately
-    expect(page).not.toMatch(/import \{[^}]*\ballWorks\b[^}]*\} from '@\/lib\/engines\/register'/)
+    const record = readFileSync(`${ROOT}src/lib/ecology/record.ts`, 'utf8')
+    expect(record).toMatch(/const register = buildRegister\(\)/)
+    expect(record).toMatch(/things: madeThings\(register, presentations,/)
+    // the works alone are not the register any more — the record must not import them separately
+    expect(record).not.toMatch(/import \{[^}]*\ballWorks\b[^}]*\} from '@\/lib\/engines\/register'/)
   })
 })

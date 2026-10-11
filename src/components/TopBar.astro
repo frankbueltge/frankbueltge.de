@@ -360,7 +360,9 @@ const inProjects = [...research, ...other, NAV.other.foot].some((l) => onPath(l.
   .site-theme:hover {
     color: var(--color-fg);
   }
-  :global(:root[data-surface='paper']) .site-theme {
+  /* A paper page has one ground under both themes, so the control comes off the bar there —
+     unless the page holds a guest in the mono skin (.pp-guest), which still follows it. */
+  :global(:root[data-surface='paper']:not(:has(.pp-guest))) .site-theme {
     display: none;
   }
 

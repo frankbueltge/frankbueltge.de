@@ -1,0 +1,147 @@
+---
+// THE SCORE, drawn (2026-10-11, design handoff docs/design_handoff_homepage_ecology/README.md §4).
+//
+// Three staves, one bar per night since the order came into force, a notehead per session, a
+// bar where a practice presented, a slur for every relation the Middle recorded. Every
+// position comes from src/lib/ecology/score.ts — this component only writes that model as SVG,
+// so the drawing can be re-derived from the committed record without a browser.
+//
+// What the reader can do with it, and how each survives without JavaScript:
+//   · every notehead is a link to that session's page in the practice's journal;
+//   · a cycle's band selects the cycle (the page's script dims the rest and shows that cycle in
+//     words below) — and so does a slur or a presentation lying over the band, so a click
+//     anywhere in a cycle's stretch means that cycle. Without the script the running cycle is
+//     selected, as rendered here;
+//   · the relations can be narrowed to one kind or hidden — without the script all are drawn;
+//   · the readout names the mark under the pointer or the keyboard's focus (ScoreReadout).
+// The kinds of relation are told apart by the LINE — solid, dashed, dotted — never by a hue;
+// the three voices by their stave, whose name stands at its left in words.
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { SCORE_WORDING as W, shortDate } from '@/config/score-wording'
+import { SCORE, type ScoreModel } from '@/lib/ecology/score'
+import ScoreReadout from './ScoreReadout.astro'
+
+interface Props {
+  model: ScoreModel
+  /** the cycle selected as the page is rendered — the running one */
+  selected: number
+  sessions: number
+}
+const { model, selected, sessions } = Astro.props
+
+const P = ECOLOGY_V3.practices
+const S = W.score
+const dim = (cycle: number | null) => (cycle === selected ? '' : ' is-dim')
+const markWidth = (n: number) => (n > 9 ? 26 : 20)
+const label = S.label({
+  since: model.axis.since,
+  until: model.axis.until,
+  cycles: model.bands.length,
+  sessions,
+  crossings: model.slurs.length,
+})
+---
+
+<div class="sc-figure" data-sc-figure data-sc-score data-rel="all">
+  <div class="sc-figure-scroll" data-sc-scroll>
+    {/* role="group", not "img": the noteheads are links and the bands are buttons, and an image
+        role would hide both from a screen reader. */}
+    <svg viewBox={`0 0 ${model.width} ${model.height}`} role="group" aria-label={label}>
+      {/* the bands: one per cycle, the thing a reader selects */}
+      {model.bands.map((b) => (
+        <rect
+          class={`sc-band${b.cycle === selected ? ' is-selected' : ''}`}
+          x={b.x}
+          y="0"
+          width={b.width}
+          height="300"
+          data-select-cycle={b.cycle}
+          tabindex="0"
+          role="button"
+          aria-pressed={b.cycle === selected ? 'true' : 'false'}
+          aria-label={S.selectCycle(b.cycle)}
+        />
+      ))}
+      {model.convening && <rect class="sc-convening" x={model.convening.x} y="0" width={model.convening.width} height="300" />}
+
+      {model.staves.map((stave) => stave.lines.map((y) => <line class="sc-staff" x1={SCORE.left} x2={SCORE.left + SCORE.plot} y1={y} y2={y} />))}
+      {model.barlines.map((b) => (
+        <line class={`sc-barline${b.heavy ? '' : ' sc-barline--light'}`} x1={b.x} x2={b.x} y1={SCORE.barTop} y2={SCORE.barBottom} />
+      ))}
+      {model.ticks.map((t) => (
+        <>
+          <line class="sc-tick" x1={t.x} x2={t.x} y1="282" y2="288" />
+          <text class="sc-tick-label" x={t.x} y="302">{shortDate(t.date)}</text>
+        </>
+      ))}
+
+      {/* the slurs: each a wide invisible twin the pointer can meet, then the line itself */}
+      {model.slurs.map((s) => (
+        <>
+          <path
+            class={`sc-slur-hit k-${s.kind}`}
+            d={s.d}
+            data-select-cycle={s.cycle ?? undefined}
+            data-kicker={S.slur({ taker: P[s.taker].name, giver: P[s.giver].name, kind: s.kind, date: s.date })}
+            data-text={s.what}
+          />
+          <path class={`sc-slur k-${s.kind}${dim(s.cycle)}`} d={s.d} data-cycle={s.cycle ?? ''} />
+        </>
+      ))}
+
+      <line class="sc-end" x1={model.endX} x2={model.endX} y1="64" y2="292" />
+      {/* The two letterings under the ruler's end stand on two lines: a convening that is still
+          open ends where the ruler does, and on one line the words ran into each other. */}
+      <text class="sc-end-label" x={model.endX} y="330">{S.end(model.axis.until)}</text>
+      {model.convening && <text class="sc-convening-label" x={model.convening.x + 3} y="313">{S.convening}</text>}
+
+      {model.presentations.map((p) => (
+        <rect class={`sc-pres pp-voice-${p.practice}${dim(p.cycle)}`} x={p.x} y={p.y} width="4" height="24" data-cycle={p.cycle} data-select-cycle={p.cycle}>
+          <title>{W.detail.presentation(P[p.practice].name)} · {shortDate(p.date)}</title>
+        </rect>
+      ))}
+
+      {model.notes.map((n) => (
+        <a
+          href={n.href}
+          data-kicker={S.note({ practice: P[n.practice].name, date: n.date, filled: n.filled })}
+          data-text={n.title}
+          aria-label={`${P[n.practice].name}, ${shortDate(n.date)}: ${n.title}`}
+        >
+          <ellipse
+            class={`sc-note pp-voice-${n.practice}${n.filled ? ' is-filled' : ''}${dim(n.cycle)}`}
+            cx={n.x}
+            cy={n.y}
+            rx="4.3"
+            ry="2.8"
+            transform={`rotate(-20 ${n.x} ${n.y})`}
+            data-cycle={n.cycle ?? ''}
+          />
+        </a>
+      ))}
+
+      {/* the rehearsal numbers, and a cycle's question beside its number where there is room */}
+      {model.bands.map((b) => (
+        <g class={`sc-mark${b.cycle === selected ? ' is-selected' : ''}`} data-mark-cycle={b.cycle}>
+          <rect class="sc-mark-box" x={b.x + 5} y="6" width={markWidth(b.cycle)} height="20" />
+          <text class="sc-mark-no" x={b.x + 5 + markWidth(b.cycle) / 2} y="20">{b.cycle}</text>
+          {b.captioned && (
+            <foreignObject x={b.x + 5 + markWidth(b.cycle) + 7} y="5" width={Math.max(0, b.width - markWidth(b.cycle) - 22)} height="44">
+              <div class="sc-caption">{b.question ?? W.practice.shelf.ownTheme}</div>
+            </foreignObject>
+          )}
+        </g>
+      ))}
+
+      {model.staves.map((stave) => (
+        <>
+          <text class={`sc-stave-name pp-voice-${stave.practice}`} x="0" y={stave.top + 10}>{P[stave.practice].name}</text>
+          {P[stave.practice].corner.split(' · ').map((line, i) => (
+            <text class="sc-stave-corner" x="0" y={stave.top + 24 + i * 12}>{line}</text>
+          ))}
+        </>
+      ))}
+    </svg>
+  </div>
+  <ScoreReadout id="sc-score-readout" />
+</div>

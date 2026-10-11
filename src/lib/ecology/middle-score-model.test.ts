@@ -170,15 +170,30 @@ describe('the table floor carries every item whole', () => {
 
 describe('the partitur is retired, and the page says what replaced it', () => {
   // Until 2026-10-05 this block asserted that MiddleV3 mounted the partitur. The relay's triangle
-  // replaced it that day; the partitur stays in the repository, unmounted, and this guards the
-  // other half of a retirement: the page must not mount both.
-  const page = fs.readFileSync(
-    fileURLToPath(new URL('../../components/ecology/MiddleV3.astro', import.meta.url)),
-    'utf8',
-  )
-  it('MiddleV3 mounts the triangle and its handoffs, not the retired partitur', () => {
-    expect(page).toContain('RelayTriangleFigure')
-    expect(page).toContain('RelayHandoffs')
-    expect(page).not.toMatch(/import MiddleScoreFigure/)
+  // replaced it that day; on 2026-10-11 the design handoff replaced MiddleV3 itself with the
+  // matrix, the night-by-night chart and the log (MiddleCrossings.astro). Each retired surface
+  // stays in the repository, unmounted, and this guards the other half of a retirement: the
+  // page mounts the successor and none of its predecessors.
+  const read = (rel: string) => fs.readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8')
+  const route = read('../../pages/encounters/index.astro')
+  const page = read('../../components/ecology/score/MiddleCrossings.astro')
+
+  it('/encounters mounts the crossings page, not the triangle and not the partitur', () => {
+    expect(route).toContain('<MiddleCrossings />')
+    expect(route).not.toContain('<MiddleV3 />')
+    expect(page).toContain('relationMatrix(relations)')
+    expect(page).toContain('buildCrossings(relations,')
+    expect(page).not.toMatch(/import (MiddleScoreFigure|RelayTriangleFigure)/)
+  })
+
+  it('quotes the relay and summarises nothing', () => {
+    // the Middle Scribe's rule: every line of the log is the relay's own `what`
+    expect(page).toContain('<span>{r.what}</span>')
+  })
+
+  it('keeps MiddleV3 and the triangle in the repo, rather than deleting them', () => {
+    const retired = read('../../components/ecology/MiddleV3.astro')
+    expect(retired).toContain('RelayTriangleFigure')
+    expect(retired).not.toMatch(/import MiddleScoreFigure/)
   })
 })

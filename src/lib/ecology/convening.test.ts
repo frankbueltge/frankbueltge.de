@@ -163,9 +163,12 @@ describe('the programme as research-ecology seeds it (PR #34)', () => {
       [5, false, 'relay'],
       [6, true, 'relay'],
     ])
-    const entrance = fs.readFileSync(path.join(process.cwd(), 'src/components/ecology/EcologyV3Entrance.astro'), 'utf8')
-    expect(entrance).toContain("r.source === 'defaults' && <p")
-    expect(entrance).toContain('W.programme.defaultThemes')
+    // /ecology says the default themes as such, wherever a cycle carries no shared question —
+    // since 2026-10-11 on the score's page (EcologyScore.astro), in the words of score-wording.ts.
+    const page = fs.readFileSync(path.join(process.cwd(), 'src/components/ecology/score/EcologyScore.astro'), 'utf8')
+    expect(page).toContain('question: c.question ?? W.noQuestion')
+    const wording = fs.readFileSync(path.join(process.cwd(), 'src/config/score-wording.ts'), 'utf8')
+    expect(wording).toContain("noQuestion: 'No shared question: each practice worked its own default theme.'")
   })
 })
 
