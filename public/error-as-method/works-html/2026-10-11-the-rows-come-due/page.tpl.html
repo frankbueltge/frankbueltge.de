@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Rows Come Due</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a66;--line:#d9d6cf;--held:#c0392b;--judged:#2c6e9e;--both:#8e44ad;--none:#9a9a9a;--c:#d4a017;--o:#d8d6d0;--card:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--fg:#ecebe6;--mute:#a09e97;--line:#3a3935;--held:#e06353;--judged:#5aa0d6;--both:#b57ad0;--none:#7d7d7d;--c:#e0b43a;--o:#4a4945;--card:#201f1d}}
+:root[data-theme="dark"]{--bg:#161615;--fg:#ecebe6;--mute:#a09e97;--line:#3a3935;--held:#e06353;--judged:#5aa0d6;--both:#b57ad0;--none:#7d7d7d;--c:#e0b43a;--o:#4a4945;--card:#201f1d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 Georgia,serif}
+main{max-width:1040px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--mute);margin:0 0 18px;font-family:Helvetica,Arial,sans-serif;font-size:13px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 12px;font-family:Helvetica,Arial,sans-serif;font-size:13px}
+button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:6px 12px;border-radius:4px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.rows{display:grid;gap:4px;font-family:Helvetica,Arial,sans-serif;font-size:13px}
+.row{display:grid;grid-template-columns:52px 1fr 26px 1fr;gap:8px;align-items:center;padding:5px 6px;border-radius:4px;background:var(--card);border:1px solid var(--line)}
+.row.split{outline:2px solid var(--fg)}
+.id{color:var(--mute);font-variant-numeric:tabular-nums}
+.t{padding:2px 6px;border-radius:3px}
+.t.wrong{text-decoration:line-through;text-decoration-thickness:2px}
+.t.h.wrong{color:var(--held)}.t.j.wrong{color:var(--judged)}
+.vs{color:var(--mute);text-align:center}
+.heads{display:grid;grid-template-columns:52px 1fr 26px 1fr;gap:8px;padding:0 6px;color:var(--mute);font:12px Helvetica,Arial,sans-serif}
+.why{grid-column:1/-1;color:var(--mute);font-size:12px;padding-left:60px}
+h2{font-size:19px;margin:34px 0 4px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(18px,1fr));gap:3px;margin:10px 0}
+.tile{height:30px;border-radius:2px;cursor:pointer;border:0;padding:0;display:flex;flex-direction:column}
+.tile span{flex:1}
+.tile:focus{outline:2px solid var(--fg)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font:12px Helvetica,Arial,sans-serif;color:var(--mute)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-2px;margin-right:4px}
+pre{white-space:pre-wrap;background:var(--card);border:1px solid var(--line);padding:10px;border-radius:4px;font:12px/1.5 ui-monospace,Menlo,monospace;min-height:80px}
+.note{font:13px Helvetica,Arial,sans-serif;color:var(--mute);max-width:720px}
+a{color:inherit}
+@media (max-width:600px){.row,.heads{grid-template-columns:40px 1fr 18px 1fr;font-size:12px}.why{padding-left:0}}
+</style>
+</head>
+<body>
+<main>
+<h1>The Rows Come Due</h1>
+<p class="sub">Twenty-one errors this research practice registered about itself. Each is a difference with two terms: what it held fixed, and what it allowed to be wrong. Three readers struck the wrong one. Switch readers and watch which strike moves to the other side.</p>
+<div class="bar" role="group" aria-label="reader">
+<button data-k="me" aria-pressed="true">the practice</button>
+<button data-k="A" aria-pressed="false">fresh reader A</button>
+<button data-k="B" aria-pressed="false">fresh reader B</button>
+<span id="tally" style="color:var(--mute)"></span>
+</div>
+<div class="heads"><span></span><span>held fixed</span><span></span><span>allowed to be wrong</span></div>
+<div class="rows" id="rows"></div>
+<p class="note">A ringed row is a <b>side-split</b>: this reader and the practice name the same faulty thing and put it on opposite sides. Reader B splits two of its three disagreements, F-200 (a maker's report) and F-213 (the practice's own decoding of a picture). By the letter of the row that predicted otherwise, the side is not fixed by a norm declared in advance. Both splits sit where the reference is someone's <i>account</i> of what happened.</p>
+
+<h2>109 uses of the word</h2>
+<p class="note">Every <i>error</i> in this practice's journals for its last twenty nights. Upper half of each tile: the practice's code. Lower half: a fresh reader's. Tap a tile to read the passage exactly as the reader saw it: three lines, and no more (F-215). The question was whether the practice ever calls something an error against a value nobody holds.</p>
+<div class="legend">
+<span><i class="sw" style="background:var(--held)"></i>T: against a value nobody holds</span>
+<span><i class="sw" style="background:var(--judged)"></i>N: against a held reference</span>
+<span><i class="sw" style="background:var(--c)"></i>C: the concept</span>
+<span><i class="sw" style="background:var(--o)"></i>register, name, technical term, quotation</span>
+</div>
+<div class="tiles" id="tiles"></div>
+<pre id="ctx">Tap a tile. The two red lower halves are the reader's. The practice coded none.</pre>
+<p class="note">Text, sources and the rows' verdicts: <a href="https://github.com/frankbueltge/error-as-method/tree/main/works/2026-10-11-the-rows-come-due">the work's directory</a> and the position paper <code>works/position-2026-10-11.md</code>.</p>
+</main>
+<script>
+const D=/*DATA*/null;
+const rows=document.getElementById('rows'),tally=document.getElementById('tally');
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function draw(k){
+  rows.innerHTML='';const n={R:0,J:0,B:0,X:0};
+  D.entries.forEach(e=>{
+    const c=e[k],w=c.w;n[w]++;
+    const d=document.createElement('div');d.className='row'+((k!=='me'&&e.split.includes(k))?' split':'');
+    d.innerHTML=`<span class="id">${e.id}</span><span class="t h ${w==='R'||w==='B'?'wrong':''}">${esc(c.h)}</span><span class="vs">${w==='X'?'·':'≠'}</span><span class="t j ${w==='J'||w==='B'?'wrong':''}">${esc(c.j)}</span>`+
+      ((k!=='me'&&e.why[k])?`<span class="why">${esc(e.why[k])}</span>`:'');
+    rows.appendChild(d)});
+  tally.textContent=`held wrong ${n.R} · judged wrong ${n.J} · both ${n.B} · neither ${n.X}`;
+}
+document.querySelectorAll('.bar button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.bar button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw(b.dataset.k)});
+draw('me');
+const col={T:'var(--held)',N:'var(--judged)',C:'var(--c)',O:'var(--o)',R:'var(--o)'};
+const tiles=document.getElementById('tiles'),ctx=document.getElementById('ctx');
+D.uses.forEach(u=>{
+  const t=document.createElement('button');t.className='tile';t.title=u.id;
+  t.innerHTML=`<span style="background:${col[u.p]}"></span><span style="background:${col[u.r]}"></span>`;
+  t.onclick=()=>{ctx.textContent=`${u.id} · Session ${u.s} · ${u.f}:${u.l}\n\n${u.c}\n\npractice: ${u.p}${u.pn?' ('+u.pn+')':''}\nreader:   ${u.r} (${u.rw})`};
+  tiles.appendChild(t)});
+</script>
+</body>
+</html>
