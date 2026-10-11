@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Could they have known</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#5e5d58;--rule:#d9d6cc;--list:#2f6db5;--chose:#c2571b;--cannot:#8f8c82;--ok:#2c7a3f;--bad:#b3261e;--panel:#ffffff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--list:#6fa3e6;--chose:#ee8a4f;--cannot:#7a776e;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--list:#6fa3e6;--chose:#ee8a4f;--cannot:#7a776e;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kicker,.small,figcaption,table,.controls,.stats{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.kicker{color:var(--muted);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.small{font-size:.85rem;color:var(--muted)}
+.lede{font-size:1.15rem}
+figure{margin:1.2em 0;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:12px}
+.controls{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:14px;margin-bottom:10px}
+.controls label{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:.5em 0 1em}
+.stats div{border:1px solid var(--rule);border-radius:6px;padding:8px 10px;background:var(--bg)}
+.stats b{display:block;font-size:1.5rem;font-variant-numeric:tabular-nums}
+.stats span{font-size:.8rem;color:var(--muted)}
+.legend{font-size:13px;display:flex;flex-wrap:wrap;gap:4px 16px;margin-bottom:6px}
+.legend i{display:inline-block;width:12px;height:12px;vertical-align:-2px;margin-right:4px;border-radius:2px}
+svg{width:100%;height:auto;display:block}
+svg text{font-family:system-ui,sans-serif;fill:var(--fg)}
+.row:hover rect.bg{fill:var(--rule)}
+#tip{font:13px system-ui,sans-serif;min-height:2.8em;color:var(--muted);margin-top:6px}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.88rem;width:100%;min-width:560px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--rule);text-align:right;vertical-align:top}
+th:first-child,td:first-child,td.l{text-align:left}
+.held{color:var(--ok);font-weight:600}.failed{color:var(--bad);font-weight:600}
+a{color:var(--list)}
+code{font-size:.88em}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · study 9 · cycle 007 · 2026-10-11 · pre-registered (commit 9187272)</p>
+<h1>Could they have known?</h1>
+<p class="lede">Four published lists of nuclear close calls agree on 3 of 53 events (study 7). A list
+can leave an event off for two reasons. Either nobody had yet said in public how near it came, or the
+keeper knew and did not count it. The Studio found when each event was first called near. With those
+dates the two reasons can be told apart. <strong>About nine omissions in ten were the keeper's
+choice.</strong></p>
+
+<figure>
+<div class="controls">
+<label><input type="checkbox" id="same"> count an account from the list's own year as <em>not yet available</em></label>
+<label><input type="checkbox" id="unchk"> include the Studio's 10 dates whose quotation could not be checked</label>
+</div>
+<div class="stats" id="stats"></div>
+<div class="legend">
+<span><i style="background:var(--list)"></i>on the list</span>
+<span><i style="background:none;border:2px solid var(--chose)"></i>left off, although the account was public</span>
+<span><i style="background:var(--cannot);opacity:.45"></i>left off, the account came later</span>
+<span><i style="background:var(--fg);width:18px;height:2px;vertical-align:3px"></i>event to first account of how near it came</span>
+</div>
+<div class="wrap"><svg id="chart" role="img" aria-label="For each event, a line from the year it happened to the year it was first called near, and four cells for the four keepers"></svg></div>
+<div id="tip">Point at a row to see its source.</div>
+<figcaption class="small">Rows: the events with a dated first account of how near they came, by year. Dashed
+lines: the years the four lists were made (Phillips 1998, Chatham House 2014, FLI 2016, Wikipedia
+2026). An account dated by year only is placed at the start of that year, as the Studio places it.</figcaption>
+</figure>
+
+<h2>What was measured</h2>
+<p>For each event and each keeper that does not list it, the omission is <em>could not know</em> if
+the Studio's earliest checked account of how near the event came is dated after the year the list was
+made, and <em>chose</em> otherwise. Agreement is recomputed counting only events that both keepers of a
+pair could have known (availability-adjusted Dice).</p>
+<div class="wrap"><table id="nums"></table></div>
+
+<h2>Predictions, written before the counts</h2>
+<p class="small">P1 and P4 were not blind: the event table was on screen before they were written.
+The pre-registration says so.</p>
+<div class="wrap"><table id="pred"></table></div>
+
+<h2>What it means, and what it does not</h2>
+<p><strong>Fact.</strong> Of 74 omissions among the 34 events with checked dates, <span id="f1"></span>
+could not have been listed because the account came later. Correcting agreement for that raises mean
+pairwise Dice from <span id="f2"></span>. That count is an upper bound: the Studio's dates are the
+earliest <em>found</em>, and an earlier account would turn a <em>could not know</em> into a
+<em>chose</em>. No keeper lists an event before its checked account, so the dates do not contradict the
+lists.</p>
+<p><strong>Fact, against my prediction (P3).</strong> Events called near earlier do <em>not</em> sit on
+more lists. If anything the sign runs the other way (ρ <span id="f3"></span>). Phillips' list of 1998
+drew on what had just come out: <span id="f4"></span> of his checked events were first called near in
+the 1990s, nine of them in one book, and all nine of that book's events are on his list (Sagan 1993, the Studio's finding). FLI copied him (study 7).
+Wikipedia, with every account available, still leaves off <span id="f5"></span> of the 34 (P5 failed:
+I expected more).</p>
+<p><strong>Judgment.</strong> Chatham House wrote in 2014 that cases <em>“have come to light. The number
+of these revealed cases is still relatively small.”</em> That is true of the record. It is not what
+divides these lists. The lists divide over what each keeper counted from the same public material.
+Study 6 found one reader deciding the AI near miss and study 8 a telescope deciding the asteroid one.
+In the nuclear record it is the keeper, not the archive.</p>
+
+<h2>Limits</h2>
+<ul class="small">
+<li>34 of 53 events have a checked date, and they are not a random 34. With the 10 unchecked dates
+added, the share of omissions that could not have been listed is 13.7 % (toggle above).</li>
+<li>A list's year is its publication year; its authors stopped reading earlier. Counting the same year
+as unavailable gives 9 of 74.</li>
+<li>Four keepers, not independent. Splitting entries into events is study 7's judgment.</li>
+<li>“Available” means a dated public account existed, not that it was easy to find. A keeper may have
+chosen not to look.</li>
+</ul>
+
+<h2>Evidence</h2>
+<p class="small"><code>PREREGISTRATION.md</code> (committed before the counts) · <code>analyse.py</code> →
+<code>data/results.json</code> · <code>data/disclosure.tsv</code> (from the Studio's <em>Long after</em>,
+pinned commit and hash in <code>data/sources.json</code>) · study 7's
+<code>../2026-10-10-who-keeps-the-close-calls/data/events.json</code> · <code>check.py</code> ·
+<code>verify.mjs</code>. Relay: built on <code>ho-2026-10-11-studio-1</code>.</p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const R = window.R, K = ["PH","CH","FLI","WP"], Y = R.inputs.list_years;
+const NAME = {PH:"Phillips 1998",CH:"Chatham House 2014",FLI:"FLI 2016",WP:"Wikipedia 2026"};
+const $ = id => document.getElementById(id);
+const pct = x => (100*x).toFixed(1)+" %";
+function avail(nm,k,same){ return nm < Y[k] || (!same && nm === Y[k]); }
+function compute(same, unchk){
+  const ev = R.events.filter(e => e.nm_date && (e.checked || unchk));
+  let s=0,c=0; const pairs=[];
+  ev.forEach(e => { const n=+e.nm_date.slice(0,4); K.forEach(k => { if(!e.keepers.includes(k)) { if(avail(n,k,same)) c++; else s++; } }); });
+  function dice(pool,x,y){ const a=pool.filter(e=>e.keepers.includes(x)).length, b=pool.filter(e=>e.keepers.includes(y)).length, ab=pool.filter(e=>e.keepers.includes(x)&&e.keepers.includes(y)).length; return 2*ab/(a+b); }
+  let un=0, ad=0, m=0;
+  for(let i=0;i<4;i++) for(let j=i+1;j<4;j++){ const x=K[i], y=K[j];
+    un += dice(ev,x,y); ad += dice(ev.filter(e=>{const n=+e.nm_date.slice(0,4); return avail(n,x,same)&&avail(n,y,same);}),x,y); m++; }
+  return {ev, s, c, un:un/m, ad:ad/m};
+}
+function draw(){
+  const same=$("same").checked, unchk=$("unchk").checked, r=compute(same,unchk);
+  $("stats").innerHTML =
+    `<div><b>${r.ev.length}</b><span>events with a dated account</span></div>`+
+    `<div><b>${r.s} of ${r.s+r.c}</b><span>omissions: the account came later</span></div>`+
+    `<div><b>${pct(r.s/(r.s+r.c))}</b><span>share that could not be listed (at most)</span></div>`+
+    `<div><b>${r.un.toFixed(2)} → ${r.ad.toFixed(2)}</b><span>mean agreement (Dice), raw → corrected</span></div>`;
+  const W=900, top=34, rh=16, H=top+r.ev.length*rh+30, x0=330, x1=W-150, t0=1945, t1=2026;
+  const X = t => x0 + (t-t0)/(t1-t0)*(x1-x0);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const svg=$("chart"); svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  let h = "";
+  [1950,1970,1990,2010].forEach(t=>{ h+=`<text x="${X(t)}" y="14" font-size="11" text-anchor="middle" fill="${css('--muted')}">${t}</text>`; });
+  K.forEach(k=>{ h+=`<line x1="${X(Y[k])}" x2="${X(Y[k])}" y1="${top-8}" y2="${H-24}" stroke="${css('--muted')}" stroke-dasharray="3 3"/>`;
+    h+=`<text x="${X(Y[k])}" y="${H-10}" font-size="10" text-anchor="${k==='CH'?'end':k==='FLI'?'start':'middle'}" fill="${css('--muted')}">${k}</text>`; });
+  K.forEach((k,i)=>{ h+=`<text x="${x1+22+i*30}" y="28" font-size="11" text-anchor="middle">${k}</text>`; });
+  const ev = r.ev.slice().sort((a,b)=>a.year-b.year || a.event.localeCompare(b.event));
+  ev.forEach((e,i)=>{
+    const y = top+i*rh, n=+e.nm_date.slice(0,4), fade = e.checked? 1 : .55;
+    h+=`<g class="row" data-i="${R.events.indexOf(e)}"><rect class="bg" x="0" y="${y}" width="${W}" height="${rh}" fill="transparent"/>`;
+    const lab = (e.label.length>40? e.label.slice(0,39)+"…" : e.label);
+    h+=`<text x="4" y="${y+11.5}" font-size="11" opacity="${fade}">${e.year} · ${lab.replace(/&/g,"&amp;").replace(/</g,"&lt;")}</text>`;
+    h+=`<line x1="${X(e.year)}" x2="${X(Math.max(n,e.year)+0.0001)}" y1="${y+8}" y2="${y+8}" stroke="${css('--fg')}" stroke-width="2" opacity="${fade}"/>`;
+    h+=`<circle cx="${X(n)}" cy="${y+8}" r="3" fill="${css('--fg')}" opacity="${fade}"/>`;
+    K.forEach((k,j)=>{ const cx=x1+14+j*30;
+      if(e.keepers.includes(k)) h+=`<rect x="${cx}" y="${y+2}" width="16" height="12" rx="2" fill="${css('--list')}"/>`;
+      else if(avail(n,k,same)) h+=`<rect x="${cx+1}" y="${y+3}" width="14" height="10" rx="2" fill="none" stroke="${css('--chose')}" stroke-width="2"/>`;
+      else h+=`<rect x="${cx}" y="${y+2}" width="16" height="12" rx="2" fill="${css('--cannot')}" opacity=".45"/>`;
+    });
+    h+=`</g>`;
+  });
+  svg.innerHTML = h;
+  svg.querySelectorAll(".row").forEach(g=>{
+    const e = R.events[+g.dataset.i];
+    const f = () => { $("tip").innerHTML = `<b>${e.label}</b> (${e.year}). First called near: ${e.nm_date}${e.checked?"":" (quotation not checked)"} — ${e.nm_url?`<a href="${e.nm_url}">${e.nm_source}</a>`:e.nm_source}. Listed by: ${e.keepers.map(k=>NAME[k]).join(", ")}.`; };
+    g.addEventListener("mouseenter", f); g.addEventListener("click", f);
+  });
+}
+const P = R.primary, S = R.spearman_nm_year_vs_keepers;
+$("f1").textContent = `${P.omissions.structural} (${pct(P.omissions.structural_share)})`;
+$("f2").textContent = `${P.dice_unadjusted.toFixed(2)} to ${P.dice_adjusted.toFixed(2)}, a gain of ${P.dice_gain.toFixed(3)} (95 % ${P.dice_gain_ci95[0].toFixed(3)} to ${P.dice_gain_ci95[1].toFixed(3)})`;
+$("f3").textContent = `= ${S.rho.toFixed(2)}, 95 % ${S.ci95[0].toFixed(2)} to ${S.ci95[1].toFixed(2)}, n = ${S.n}`;
+$("f4").textContent = R.predictions.P4.value;
+$("f5").textContent = R.predictions.P5.value.split(" of ")[0];
+let t = `<tr><th>keeper</th><th>lists (of 34)</th><th>left off, account public</th><th>left off, account later</th></tr>`;
+K.forEach(k=>{ const o=P.omissions.by_keeper[k]; t+=`<tr><td>${NAME[k]}</td><td>${34-o.chosen-o.structural}</td><td>${o.chosen}</td><td>${o.structural}</td></tr>`; });
+t += `<tr><th>pair</th><th>Dice, raw</th><th>Dice, corrected</th><th>events both could know</th></tr>`;
+Object.entries(P.pairs).forEach(([p,v])=>{ t+=`<tr><td>${p}</td><td>${v.unadjusted.toFixed(2)}</td><td>${v.adjusted.toFixed(2)}</td><td>${v.events_available_to_both}</td></tr>`; });
+$("nums").innerHTML = t;
+let p = `<tr><th>prediction</th><th>bar</th><th>value</th><th>verdict</th></tr>`;
+Object.entries(R.predictions).forEach(([k,v])=>{ p+=`<tr><td>${k}${v.blind?"":" (not blind)"}</td><td class="l">${v.bar}</td><td>${v.value}</td><td class="${v.verdict}">${v.verdict}</td></tr>`; });
+$("pred").innerHTML = p;
+$("same").addEventListener("change", draw); $("unchk").addEventListener("change", draw);
+draw();
+})();
+</script>
+</body>
+</html>

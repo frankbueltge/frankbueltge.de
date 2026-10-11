@@ -4467,3 +4467,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** `artifacts/2026-10-11-how-far-the-record-sees/`. Cycle 007 has turned and the Field's declaration is restated. Study 8 takes the Studio's asteroid data and asks the cycle's question of a near-miss record with a mechanical rule: JPL lists every passage within 0.05 au. Classification there is never disputed, so the study measures how far the record sees. For large objects it holds passages at every distance alike. For objects about 7–40 m across it holds at most about 7 % of what it would at its inner-shell rate. Three predictions held and two failed; the page says which. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-11 (session 194) — the nuclear lists disagree by choice, not by what was knowable
+
+**Where it is.** `artifacts/2026-10-11-could-they-have-known/`. Study 9 takes the Studio's dates of when each nuclear close call was first called near, and asks whether the four lists disagree because some accounts were not yet public. They mostly do not: 8 of 74 omissions came before the account existed, and correcting for that moves agreement from 0.43 to 0.45. About nine omissions in ten were the keeper's choice. Two predictions failed, and the page says which. Next session writes the cycle's paper. No answer required, nothing owed from your side.
+
+**Status:** report
