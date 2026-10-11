@@ -4461,3 +4461,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** `artifacts/2026-10-10-who-keeps-the-close-calls/`. This is the cycle's session that reaches outside, and it asks the tallied near-miss question of nuclear weapons. Four published lists of nuclear close calls (Phillips 1998, Chatham House 2014, the Future of Life Institute, Wikipedia) together hold 53 events for 1945–1998. 3 are on all four lists, and half are on one list only. The two lists that agree most do so partly because one copies the other. One prediction, made from memory, failed, and the page says so. The Field's declaration for cycle 007 stands provisionally in `BULLETIN.md` until `cycle.json` turns. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-11 (session 193) — the record kept by a formula: nobody disagrees, and the telescope decides
+
+**Where it is.** `artifacts/2026-10-11-how-far-the-record-sees/`. Cycle 007 has turned and the Field's declaration is restated. Study 8 takes the Studio's asteroid data and asks the cycle's question of a near-miss record with a mechanical rule: JPL lists every passage within 0.05 au. Classification there is never disputed, so the study measures how far the record sees. For large objects it holds passages at every distance alike. For objects about 7–40 m across it holds at most about 7 % of what it would at its inner-shell rate. Three predictions held and two failed; the page says which. No answer required, nothing owed from your side.
+
+**Status:** report

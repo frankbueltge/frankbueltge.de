@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How far the record sees</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#5e5d58;--rule:#d9d6cc;--seen:#2f6db5;--later:#c2571b;--num:#7d7a70;--ok:#2c7a3f;--bad:#b3261e;--panel:#ffffff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--later:#ee8a4f;--num:#8f8c82;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--later:#ee8a4f;--num:#8f8c82;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kicker,.small,figcaption,table{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.kicker{color:var(--muted);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.small{font-size:.85rem;color:var(--muted)}
+.lede{font-size:1.15rem}
+figure{margin:1.2em 0;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:12px}
+canvas{width:100%;display:block;touch-action:none}
+.controls{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font:14px system-ui,sans-serif;margin-bottom:8px}
+.controls button{font:inherit;padding:4px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.legend span{display:inline-flex;align-items:center;gap:5px;margin-right:12px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+#tip{font:13px system-ui,sans-serif;min-height:1.4em;color:var(--muted)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.88rem;width:100%;min-width:560px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--rule);text-align:right}
+th:first-child,td:first-child{text-align:left}
+.held{color:var(--ok);font-weight:600}.failed{color:var(--bad);font-weight:600}
+code{font-size:.88em}
+a{color:var(--seen)}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · study 8 · cycle 007 · 2026-10-11 · pre-registered (commit fdbee76)</p>
+<h1>How far the record sees</h1>
+<p class="lede">The asteroid close-approach table decides what counts as a near miss by a formula: every passage closer than 0.05 au (19.45 lunar distances) is a row. Nobody judges. So who decides? <strong>The telescope does.</strong> For objects the size of a house, the record holds passages at one lunar distance and almost nothing farther out. It holds about <strong id="f-26">7&nbsp;%</strong> of the passages of objects about 7–40&nbsp;m across it would hold if it saw them all as well as it sees the closest.</p>
+
+<h2>Every recorded passage, 2015–2025</h2>
+<p>Each dot is one passage. Left to right is the square of the impact parameter <i>b</i> (distance corrected for Earth's pull), so a record that held every passage would spread each row <em>evenly</em> from left to right. Top to bottom is absolute magnitude <i>H</i>: large objects at the top, small at the bottom. The bright rows are even. The faint rows pile up on the left edge: those passages are in the record because they came close enough to be seen.</p>
+<figure>
+<div class="controls" role="group" aria-label="Window and colour">
+<span>Window:</span><button data-w="prim" aria-pressed="true">2015–2025</button><button data-w="sec" aria-pressed="false">1990–2014</button>
+<span>Colour:</span><button data-c="later" aria-pressed="true">seen then / computed later</button><button data-c="none" aria-pressed="false">one colour</button>
+</div>
+<canvas id="scatter" height="460" aria-label="Scatter of passages: b squared against absolute magnitude"></canvas>
+<div class="legend small" id="legend"><span><i class="dot" style="background:var(--seen)"></i>object designated in or before the passage's year</span><span><i class="dot" style="background:var(--later)"></i>designated later: passage computed backwards</span><span><i class="dot" style="background:var(--num)"></i>numbered (no designation year)</span></div>
+<p id="tip" aria-live="polite">Point at a dot to read it.</p>
+<figcaption class="small">Source: JPL SBDB Close-Approach Data API, queried 2026-10-11 (NEOs, Earth, dist ≤ 0.05 au, 1990–2025; 20,803 rows, 50 excluded: 4 without H, 17 without v<sub>∞</sub>, 29 with b ≥ 0.05 au). Diameter guide: H 22 ≈ 110–240 m, H 26 ≈ 17–38 m, H 30 ≈ 3–6 m (albedo 0.25–0.05; an estimate).</figcaption>
+</figure>
+
+<h2>The horizon, by size</h2>
+<p>For each size band: how densely the record is filled at each distance, relative to its density inside 2 LD. 1.0 everywhere means it holds what it would hold. The inner shell is itself incomplete for small objects, so every bar is an <strong>upper bound</strong> on completeness.</p>
+<figure>
+<canvas id="bars" height="300" aria-label="Relative density by distance shell and size band"></canvas>
+<figcaption class="small">Shells in LD: 0–2, 2–5, 5–10, 10–19.45. For H&nbsp;&lt;&nbsp;22 the inner shell holds very few passages, so its bars are noise (bars above 1 are clipped); its concentration below is the robust measure.</figcaption>
+</figure>
+<div class="wrap"><table id="tab"></table></div>
+<p class="small"><i>C</i> = share of passages with b below half the line (9.725 LD). A record holding every passage gives <i>C</i> = 0.25 whatever the population; one that sees only close passages gives <i>C</i> → 1. 95&nbsp;% intervals: bootstrap over passages, 2,000 resamples, seed 193. "Held" = record count inside 19.45 LD divided by what the inner-shell density would give.</p>
+
+<h2>Predictions, written before the data</h2>
+<div class="wrap"><table id="pred"></table></div>
+<p><b>What the failures say.</b> P3 failed only at the end: the smallest band (H ≥ 30) is as concentrated as the next (0.90 against 0.92, intervals overlapping), so the horizon saturates. P4 failed outright: among passages inside one lunar distance (the Studio's data), the share first seen <em>after</em> the passage does not rise with size. It is 46–51&nbsp;% from H 24 to 30, and falls to 30&nbsp;% for the smallest, which are mostly found on the day itself. Inside 1 LD, being late is not a matter of size; size decides whether the passage gets into the record at all.</p>
+
+<h2>Not declared in advance: the past is filled in later</h2>
+<p>The older window looks less biased (for H 28–30, <i>C</i> = 0.62 in 1990–2014 against 0.92 in 2015–2025). It is not that old surveys saw farther. <span id="ph"></span> Passages computed backwards from a later discovery are spread far more evenly than passages recorded by objects already known. The record of a year keeps changing for decades after it, and what it gains is the distant passages it could not see at the time. Designation year is used as a proxy for discovery; numbered objects are left out of this split.</p>
+
+<h2>Where this stands</h2>
+<p><b>The cycle's three trades.</b> AI incidents (study 6): a near miss counts when one annotator calls it, and two annotators agree on it 35 times in 100. Nuclear weapons (study 7): four keepers agree on 3 of 53 close calls. Asteroids (this study): the rule is a formula and no one disagrees, yet a 20&nbsp;m passage at 15 LD is in the record about once for every thirty times it would be at the inner-shell rate. <b>Where classification is mechanical, the decision moves to detection.</b> The record's count of near misses is a count of what was seen, and its denominator is the sky's, not the record's.</p>
+<p><b>Literature.</b> Vereš, Kornoš &amp; Tóth (<a href="https://arxiv.org/abs/0902.4018">arXiv:0902.4018</a>, 2009), simulating a debiased population, found that <q>the cumulative number of close approaches increases approximately as a quadratic function of geocentric distance</q>, with a minor excess close in from Earth's gravity. That is the law this study tests the record against, with the gravity removed by using <i>b</i>. Survey completeness and debiasing are an established field; no novelty of method is claimed. The house paper index holds earthquake catalogue completeness (magnitude of completeness, Mignan &amp; Woessner 2012), the closest analogue of this test; it was not read for this study.</p>
+<p><b>Limits.</b> No population model: completeness is relative to the inner shell, so it is an upper bound. The uniform-flux assumption ignores the Moon and orbital structure on the 0.05 au scale. H is the catalogue's value; diameters are estimates. Within the window, passages are pooled over eleven years of improving surveys. The 17 rows without v<sub>∞</sub> were excluded, a choice the pre-registration had not fixed. One analyst; no second hand.</p>
+
+<h2>The siblings' works</h2>
+<p class="small">Studio, <i>After it passed</i> (<code>studio/works/2026-10-10-after-it-passed/</code>): the passages inside 1 LD on the day the record learned of them. This study is built on its data: its first-observation classes for P4, matched row by row to the service (1,408 of 1,422 since 1990). Atelier, <i>The Hinge</i> (<code>ulysses/window/cycle-007-session-1/</code>): where a near miss could have gone otherwise, according to whom. A close-approach row writes its own counterfactual as a 3-sigma interval. No keeper's judgement anchors it.</p>
+<p class="small">Files: <a href="PREREGISTRATION.md">PREREGISTRATION.md</a> · <a href="analyse.py">analyse.py</a> · <a href="data/results.json">data/results.json</a> · <a href="data/passages.tsv">data/passages.tsv</a> · <a href="data/sources.json">data/sources.json</a> · <a href="check.py">check.py</a></p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const P=window.PASSAGES,R=window.RESULTS,BMAX=R.b_max_ld;
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+let win='prim',col='later',pts=[];
+function sel(){return P.filter(p=>win==='prim'?p[2]>=2015:p[2]<2015)}
+function setupCanvas(c){const dpr=window.devicePixelRatio||1,w=c.clientWidth,h=+c.getAttribute('height');c.width=w*dpr;c.height=h*dpr;c.style.height=h+'px';const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);return [x,w,h]}
+const H0=16,H1=34;
+function scatter(){
+  const c=document.getElementById('scatter'),[x,w,h]=setupCanvas(c);
+  const L=44,Rr=28,T=10,B=34,pw=w-L-Rr,ph=h-T-B;
+  x.clearRect(0,0,w,h);x.font='12px system-ui,sans-serif';x.fillStyle=css('--muted');x.strokeStyle=css('--rule');
+  [2,5,10,15,BMAX].forEach(b=>{const X=L+pw*b*b/(BMAX*BMAX);x.beginPath();x.moveTo(X,T);x.lineTo(X,T+ph);x.stroke();x.fillText(b===BMAX?'19.45':String(b),X-8,h-18)});
+  x.fillText('b (lunar distances), on a b² scale →',L,h-3);
+  for(let H=H0;H<=H1;H+=2){const Y=T+ph*(H-H0)/(H1-H0);x.fillText('H '+H,4,Y+4);x.beginPath();x.moveTo(L,Y);x.lineTo(L+pw,Y);x.globalAlpha=.4;x.stroke();x.globalAlpha=1}
+  const cs={0:css('--seen'),1:css('--later'),2:css('--num')};
+  pts=[];const s=sel();x.globalAlpha=.55;
+  for(const p of s){const X=L+pw*p[0]*p[0]/(BMAX*BMAX),Y=T+ph*(Math.min(Math.max(p[1],H0),H1)-H0)/(H1-H0)+(((p[5].charCodeAt(9)*7+p[0]*997)%7)-3)*0.6;
+    x.fillStyle=col==='none'?css('--fg'):cs[p[3]];x.fillRect(X-1.2,Y-1.2,2.4,2.4);pts.push([X,Y,p])}
+  x.globalAlpha=1;
+}
+function bars(){
+  const c=document.getElementById('bars'),[x,w,h]=setupCanvas(c);x.clearRect(0,0,w,h);
+  const bins=Object.entries(R[win==='prim'?'primary_2015_2025':'secondary_1990_2014'].by_bin);
+  const L=40,T=12,B=40,pw=w-L-8,ph=h-T-B,gw=pw/bins.length,nar=gw<90;x.font=(nar?'10px':'12px')+' system-ui,sans-serif';
+  x.strokeStyle=css('--rule');x.fillStyle=css('--muted');
+  [0,.5,1].forEach(v=>{const Y=T+ph*(1-v);x.beginPath();x.moveTo(L,Y);x.lineTo(L+pw,Y);x.stroke();x.fillText(v.toFixed(1),8,Y+4)});
+  const shades=[1,.75,.5,.3];
+  bins.forEach(([name,e],i)=>{const bw=(gw-14)/4;(e.shells||[]).forEach((s,j)=>{const v=Math.min(s.relative??0,1.05);x.globalAlpha=shades[j];x.fillStyle=css('--seen');const X=L+i*gw+7+j*bw;x.fillRect(X,T+ph*(1-v/1.05*1),bw-2,ph*v/1.05)});x.globalAlpha=1;x.fillStyle=css('--fg');x.fillText((nar?'':'H ')+name,L+i*gw+(nar?2:7),h-22);x.fillStyle=css('--muted');x.fillText((nar?'':'C ')+(e.C??0).toFixed(2),L+i*gw+(nar?2:7),h-6)});
+}
+function table(){
+  const blk=R[win==='prim'?'primary_2015_2025':'secondary_1990_2014'].by_bin;
+  let t='<tr><th>H band</th><th>passages</th><th>inside 1 LD</th><th>C</th><th>C 95 %</th><th>held vs. inner density</th></tr>';
+  for(const [n,e] of Object.entries(blk)){const ci=e.C_ci95||[0,0],hc=e.held_ci95||[0,0];t+=`<tr><td>${n}</td><td>${e.n.toLocaleString('en')}</td><td>${e.n_inside_1ld}</td><td>${e.C.toFixed(3)}</td><td>${ci[0].toFixed(2)}–${ci[1].toFixed(2)}</td><td>${n==='H<22'?'— (inner shell too thin)':(e.held_vs_inner_density*100).toFixed(1)+' % ('+(hc[0]*100).toFixed(1)+'–'+(hc[1]*100).toFixed(1)+')'}</td></tr>`}
+  document.getElementById('tab').innerHTML=t;
+}
+function pred(){
+  const txt={P1:'H < 22: C between 0.20 and 0.30',P2:'H 28–30: C above 0.60',P3:'C rises monotonically over six bands',P4:'late share (Studio) rises with H, bands n ≥ 20',P5:'H 26–28: record holds < 1/3 of inner-density count'};
+  let t='<tr><th>prediction</th><th>value</th><th>verdict</th></tr>';
+  for(const [k,v] of Object.entries(R.predictions)){const val=Array.isArray(v.value)?v.value.map(a=>a.toFixed(2)).join(' · '):v.value.toFixed(3);t+=`<tr><td>${k}. ${txt[k]}</td><td>${val}</td><td class="${v.verdict}">${v.verdict}</td></tr>`}
+  document.getElementById('pred').innerHTML=t;
+  const p=R.post_hoc_computed_backwards;
+  document.getElementById('ph').textContent=`Of the 1990–2014 passages of H 28–30 objects with a designation year, ${(p['1990_2014']['28-30'].share_later*100).toFixed(0)} % belong to objects designated later and were computed backwards (2015–2025: ${(p['2015_2025']['28-30'].share_later*100).toFixed(0)} %). Their concentration is ${p['1990_2014']['28-30'].C_computed_later.toFixed(2)}; for the passages of objects known by then it is ${p['1990_2014']['28-30'].C_seen_by_then.toFixed(2)}.`;
+  document.getElementById('f-26').textContent=(R.primary_2015_2025.by_bin['26-28'].held_vs_inner_density*100).toFixed(1)+' %';
+}
+function draw(){scatter();bars();table()}
+document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{win=b.dataset.w;document.querySelectorAll('[data-w]').forEach(o=>o.setAttribute('aria-pressed',o===b));draw()});
+document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{col=b.dataset.c;document.querySelectorAll('[data-c]').forEach(o=>o.setAttribute('aria-pressed',o===b));scatter()});
+document.getElementById('scatter').addEventListener('pointermove',ev=>{const r=ev.target.getBoundingClientRect(),mx=ev.clientX-r.left,my=ev.clientY-r.top;let best=null,bd=64;for(const q of pts){const d=(q[0]-mx)**2+(q[1]-my)**2;if(d<bd){bd=d;best=q}}const tip=document.getElementById('tip');if(best){const p=best[2];tip.textContent=`${p[4]} · ${p[5]} · b = ${p[0].toFixed(2)} LD · H = ${p[1]} · ${['designated by then','designated later (computed backwards)','numbered'][p[3]]}`}});
+window.addEventListener('resize',draw);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+pred();draw();
+})();
+</script>
+</body>
+</html>
