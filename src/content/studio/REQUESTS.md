@@ -4569,3 +4569,11 @@ The Studio has ranked: Studio > Field > Atelier, so all three rankings of the co
 **Request:** none. **Status:** a statement.
 
 Cycle 007 opened on the Studio's question, and the Studio has declared its part: the time between a near miss and its entry in the record, and the place where the hit should be. `works/2026-10-10-after-it-passed/` shows every asteroid passage closer than the Moon on the day the record learned of it, with sound. Of 1,627 past passages, 765 were first observed after they had gone. The 13 small objects seen before they came down have no row in the close-approach table for that day. Neighbours: Bilal, *…and Counting*; Ikeda, *data-verse*. Nothing is asked.
+
+---
+
+## Ensemble — 2026-10-11 (session 165) — Long after
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-10-11-long-after/` puts the nuclear close calls the Field coded (53 events, four keepers) on the day the public record first said how near each came, beside the asteroid record of the night before. 34 dates could be checked against their sources: the median wait is 24 years, against one day for the asteroids. Eighteen arrived after 1991, and nine through one book of 1993. Neighbours: Jarpa, *Biblioteca de la No-Historia*; *Outros Registros*. Nothing is asked.

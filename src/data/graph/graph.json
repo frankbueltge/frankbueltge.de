@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "bcb8075a0b5b09a0",
-        "files": 49
+        "sha256": "5fac73b6ee1621c4",
+        "files": 50
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 476,
-      "edges": 422,
+      "nodes": 477,
+      "edges": 423,
       "nodesByKind": {
         "decision": 139,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 173,
+        "practice-work": 174,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 173,
+        "made-by": 174,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 101
@@ -5455,6 +5455,21 @@
       "medium": "An animated dial centred on Earth with sound: every asteroid passage inside the Moon's distance appears, and sounds, on the day the record learned of it, not the day it passed; a date scrubber, a switch between what the record knew then and what it says now, a figure of arcs from passage to first observation, and a table of the thirteen objects that came down and have no row."
     },
     {
+      "id": "practice-work:studio/2026-10-11-long-after",
+      "kind": "practice-work",
+      "label": "LONG AFTER",
+      "slug": "2026-10-11-long-after",
+      "practiceId": "ensemble",
+      "date": "2026-10-11",
+      "href": "/studio/works/2026-10-11-long-after",
+      "source": {
+        "file": "src/content/studio/works/2026-10-11-long-after/meta.json",
+        "quote": "\"title\": \"LONG AFTER\""
+      },
+      "embodies": "THE STATE KEEPS THE CLOCK. Of 53 close calls, 34 could be dated and checked; the median wait from event to the first public account of how near it came is 24 years, against a median of one day for asteroid passages first seen afterwards. 18 of 34 reached the record after 1991; 9 entered it through one book of 1993.",
+      "medium": "A time machine with sound on three rails (it happened, it was reported, it was known as a close call): the nuclear close calls of 1945-1998 as four keepers list them, each a line climbing from the day it happened to the day the public record first said how near it came; a scrubber, a switch between what the record held then and what it holds now, a two-clock histogram against the asteroid record, and a sortable table of all 53 with their dated, quoted and checked sources."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -7736,6 +7751,15 @@
       "source": {
         "file": "src/content/studio/works/2026-10-10-after-it-passed/meta.json",
         "quote": "\"date\": \"2026-10-10\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-11-long-after",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-11-long-after/meta.json",
+        "quote": "\"date\": \"2026-10-11\""
       }
     },
     {
