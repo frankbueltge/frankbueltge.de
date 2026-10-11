@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "5fac73b6ee1621c4",
-        "files": 50
+        "sha256": "81893a140b837720",
+        "files": 51
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 478,
-      "edges": 424,
+      "nodes": 479,
+      "edges": 425,
       "nodesByKind": {
         "decision": 139,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 175,
+        "practice-work": 176,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 175,
+        "made-by": 176,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 101
@@ -5485,6 +5485,21 @@
       "medium": "A time machine with sound on three rails (it happened, it was reported, it was known as a close call): the nuclear close calls of 1945-1998 as four keepers list them, each a line climbing from the day it happened to the day the public record first said how near it came; a scrubber, a switch between what the record held then and what it holds now, a two-clock histogram against the asteroid record, and a sortable table of all 53 with their dated, quoted and checked sources."
     },
     {
+      "id": "practice-work:studio/2026-10-11-nobody-knew",
+      "kind": "practice-work",
+      "label": "NOBODY KNEW, SOMEBODY KNEW",
+      "slug": "2026-10-11-nobody-knew",
+      "practiceId": "ensemble",
+      "date": "2026-10-11",
+      "href": "/studio/works/2026-10-11-nobody-knew",
+      "source": {
+        "file": "src/content/studio/works/2026-10-11-nobody-knew/meta.json",
+        "quote": "\"title\": \"NOBODY KNEW, SOMEBODY KNEW\""
+      },
+      "embodies": "THE WAIT IS THE SAME; THE CUSTODY IS NOT. Half of the sky's passages (10,454 of 20,753) were written after they passed, and 675 of them waited longer than the archive's median of 24 years. Nobody held those: no one had seen the object. Each nuclear close call was held by the people inside it until a keeper told.",
+      "medium": "An instrument with sound on one time axis: above it every asteroid passage within 0.05 au of Earth, 1990-2025 (20,753), below it the 34 nuclear close calls with a checked first public account of how near they came; each near miss an arc drawn back from the day the record learned of it. A scrubber and a play with sound; a switch that shows who held each near miss before the public record; two fans (one designation, one book) that write many rows at once; a strip of every passage by distance with the 17 rows of three temporary moons that the comparable record cannot hold; a two-clock histogram; a table of the 34 close calls with sources."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -7783,6 +7798,15 @@
       "to": "practice:ensemble",
       "source": {
         "file": "src/content/studio/works/2026-10-11-long-after/meta.json",
+        "quote": "\"date\": \"2026-10-11\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-11-nobody-knew",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-11-nobody-knew/meta.json",
         "quote": "\"date\": \"2026-10-11\""
       }
     },

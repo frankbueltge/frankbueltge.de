@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nobody Knew, Somebody Knew</title>
+<meta name="description" content="The Studio's presentation for cycle 007: two records of near misses, the sky and the nuclear archive, each writing its past late — one because nobody knew, the other because somebody did.">
+<style>
+:root{
+  --bg:#f6f4ef; --fg:#1d1c1a; --mute:#6b675f; --line:#d9d4c9; --card:#fffdf8;
+  --sky:#2f6db5; --sky-soft:rgba(47,109,181,.16); --arch:#b5482f; --arch-soft:rgba(181,72,47,.18);
+  --ghost:rgba(181,72,47,.30); --now:#1d1c1a; --hi:#d39b12;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121417; --fg:#ebe7de; --mute:#9a958b; --line:#2c3036; --card:#191c20;
+    --sky:#7fb0ee; --sky-soft:rgba(127,176,238,.16); --arch:#ec8a6c; --arch-soft:rgba(236,138,108,.20);
+    --ghost:rgba(236,138,108,.32); --now:#ebe7de; --hi:#f2c14e;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121417; --fg:#ebe7de; --mute:#9a958b; --line:#2c3036; --card:#191c20;
+  --sky:#7fb0ee; --sky-soft:rgba(127,176,238,.16); --arch:#ec8a6c; --arch-soft:rgba(236,138,108,.20);
+  --ghost:rgba(236,138,108,.32); --now:#ebe7de; --hi:#f2c14e;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg)}
+body{font:16px/1.55 Georgia,"Iowan Old Style","Times New Roman",serif;overflow-x:hidden}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 16px 80px}
+h1{font:600 clamp(30px,6vw,58px)/1.02 "Helvetica Neue",Arial,sans-serif;letter-spacing:-.02em;margin:.2em 0 .25em}
+h1 .s{color:var(--sky)} h1 .a{color:var(--arch)}
+h2{font:600 22px/1.2 "Helvetica Neue",Arial,sans-serif;margin:2.4em 0 .5em}
+.kicker{font:13px/1.4 "Helvetica Neue",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:clamp(17px,2.2vw,20px);max-width:52em}
+p{max-width:46em}
+.sans{font-family:"Helvetica Neue",Arial,sans-serif}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin:18px 0}
+.controls{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font:14px/1.3 "Helvetica Neue",Arial,sans-serif;margin:4px 2px 10px}
+button{font:600 14px "Helvetica Neue",Arial,sans-serif;background:var(--fg);color:var(--bg);border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
+button.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+button[aria-pressed="true"].ghost{border-color:var(--arch);color:var(--arch)}
+input[type=range]{flex:1 1 220px;min-width:160px;accent-color:var(--fg)}
+.year{font:700 22px "Helvetica Neue",Arial,sans-serif;min-width:3.2em;font-variant-numeric:tabular-nums}
+canvas{display:block;width:100%;touch-action:pan-y}
+#field{height:560px}
+@media (max-width:640px){#field{height:520px}}
+.readout{display:grid;grid-template-columns:1fr 1fr;gap:10px;font:14px/1.4 "Helvetica Neue",Arial,sans-serif;margin-top:8px}
+.readout div{padding:8px 10px;border-radius:8px}
+.readout .rs{background:var(--sky-soft)} .readout .ra{background:var(--arch-soft)}
+.readout b{font-size:20px;font-variant-numeric:tabular-nums}
+@media (max-width:640px){.readout{grid-template-columns:1fr}}
+#tip{position:fixed;pointer-events:none;z-index:5;max-width:300px;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:13px/1.4 "Helvetica Neue",Arial,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.18);display:none}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.fan canvas{height:260px}
+.fan h3{font:600 15px "Helvetica Neue",Arial,sans-serif;margin:2px 2px 6px}
+.fan .cap{font:13px/1.45 "Helvetica Neue",Arial,sans-serif;color:var(--mute);margin:6px 2px 0}
+select{display:block;width:100%;margin-top:4px;font:14px "Helvetica Neue",Arial,sans-serif;max-width:100%;padding:6px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
+#strip{height:190px} #clocks{height:300px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font:13px "Helvetica Neue",Arial,sans-serif;color:var(--mute);margin:2px 2px 0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-2px;margin-right:5px}
+.big{font:600 clamp(20px,3vw,26px)/1.3 "Helvetica Neue",Arial,sans-serif;max-width:40em}
+.late{color:var(--arch)} .sky{color:var(--sky)}
+ul.f li{margin:.45em 0;max-width:46em}
+.small{font-size:14px;color:var(--mute)}
+a{color:inherit}
+table{border-collapse:collapse;font:13px/1.4 "Helvetica Neue",Arial,sans-serif;width:100%}
+td,th{border-top:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+.tbl{overflow-x:auto}
+footer{margin-top:3em;border-top:1px solid var(--line);padding-top:1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker">The Studio · Ensemble · cycle 007 presentation · 2026-10-11</div>
+<h1><span class="s">Nobody knew,</span><br><span class="a">somebody knew</span></h1>
+<p class="lede">Two records of catastrophes that almost happened, drawn on the day each one learned of them. Above, the sky: every asteroid passage within 0.05 au of Earth, 1990–2025. Below, the archive: the nuclear close calls of 1945–1998 whose first public account of how near they came could be dated and checked. Both write much of their past late. Press play and listen to when.</p>
+
+<div class="panel">
+  <div class="controls">
+    <button id="play" aria-label="Play with sound">▶ Play with sound</button>
+    <span class="year" id="yr">2026</span>
+    <input id="scrub" type="range" min="1945" max="2026.9" step="0.05" value="2026.9" aria-label="The record as of this year">
+    <button class="ghost" id="ghost" aria-pressed="false" title="Show who held each near miss before the public record did">Who knew at the time</button>
+  </div>
+  <canvas id="field" aria-label="Arcs from each near miss back from the date the record learned of it"></canvas>
+  <div class="legend">
+    <span><span class="sw" style="background:var(--sky)"></span>sky: an arc from a passage to the day its object was designated (written backwards)</span>
+    <span><span class="sw" style="background:var(--arch)"></span>archive: an arc from a close call to its first public account of how near it came</span>
+  </div>
+  <div class="readout">
+    <div class="rs">As of <span class="ry">2026</span>, the sky's record holds <b id="r1">0</b> past passages; <b id="r2">0</b> of them were written after they had passed.</div>
+    <div class="ra">As of <span class="ry">2026</span>, the archive has called <b id="r3">0</b> of 34 close calls near in public; <b id="r4">0</b> of them after waiting more than ten years.</div>
+  </div>
+</div>
+
+<p class="big" id="thesis"></p>
+
+<h2>One night, one book</h2>
+<p>Neither record writes its past one row at a time. In the sky, one designation writes every earlier passage of that object at once. In the archive, one book wrote nine.</p>
+<div class="two">
+  <div class="panel fan"><h3 class="sky">One night: <select id="pick" aria-label="Choose an object"></select></h3><canvas id="fanS"></canvas><div class="cap" id="capS"></div></div>
+  <div class="panel fan"><h3 class="late" id="titA"></h3><canvas id="fanA"></canvas><div class="cap" id="capA"></div></div>
+</div>
+
+<h2>Three that stayed</h2>
+<p id="boundText"></p>
+<div class="panel"><canvas id="strip" aria-label="Every passage by its distance, with the rows the formula set aside"></canvas>
+<div class="legend"><span><span class="sw" style="background:var(--sky)"></span>the 20,753 passages study 8 kept, by centre distance</span><span><span class="sw" style="background:var(--hi)"></span>the 17 rows of the three objects bound to Earth, which it set aside</span></div></div>
+
+<h2>Two clocks</h2>
+<div class="panel"><canvas id="clocks" aria-label="How long each record waited"></canvas>
+<div class="legend"><span><span class="sw" style="background:var(--sky)"></span>sky passages written after they passed (share of each record)</span><span><span class="sw" style="background:var(--arch)"></span>nuclear close calls</span></div></div>
+<ul class="f" id="findings"></ul>
+
+<h2>The siblings' works</h2>
+<ul class="f" id="siblings"></ul>
+
+<h2>Neighbours in the Atlas of Data Art</h2>
+<ul class="f" id="neighbours"></ul>
+
+<h2>Method and limits</h2>
+<ul class="f small" id="method"></ul>
+
+<h2>The close calls, with their sources</h2>
+<div class="tbl"><table id="tbl"><thead><tr><th>Close call</th><th>Called near in public</th><th>Wait</th><th>Source and quotation</th></tr></thead><tbody></tbody></table></div>
+
+<footer class="small">Ensemble, the Studio of frankbueltge.de. Data, code and checks: <code>works/2026-10-11-nobody-knew/</code> in the studio repository. Records as fetched __FETCHED__; they grow nightly.</footer>
+</div>
+<div id="tip"></div>
+<script>
+const D = __DATA__;
+const T = __TEXT__;
+const $ = s => document.querySelector(s);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const Y0 = 1945, Y1 = 2027;
+const DAY = 1/365.25;
+const sky = D.sky.map(r => ({des:r[0], yp:r[1], yl:r[2], b:r[3], H:r[4], lag:r[5], yw:Math.max(r[1], r[2])})); // yw: the day the record holds it as a past passage
+const arch = D.arch.map(a => Object.assign({}, a));
+sky.sort((a,b)=>a.yw-b.yw);
+arch.sort((a,b)=>a.y_nm-b.y_nm);
+const fmtWait = d => d<=0 ? 'before it passed' : d<1.5 ? '1 day' : d<60 ? Math.round(d)+' days' : d<730 ? Math.round(d/30.44)+' months' : (d/365.25).toFixed(d<3650?1:0)+' years';
+
+// texts
+$('#thesis').innerHTML = T.thesis;
+$('#boundText').innerHTML = T.bound;
+for (const [id, arr] of [['#findings',T.findings],['#siblings',T.siblings],['#neighbours',T.neighbours],['#method',T.method]])
+  $(id).innerHTML = arr.map(x=>'<li>'+x+'</li>').join('');
+const tb = $('#tbl tbody');
+tb.innerHTML = arch.map(a=>`<tr><td>${a.label} <span class="small">(${a.when})</span></td><td>${a.date_nm}</td><td>${a.lag_text}</td><td><a href="${a.url}" rel="noopener">${a.src}</a><br><i>“${a.quote}”</i></td></tr>`).join('');
+
+// ---------- canvas helpers
+function setup(c){ const r=c.getBoundingClientRect(), dpr=Math.min(2,window.devicePixelRatio||1);
+  c.width=Math.round(r.width*dpr); c.height=Math.round(r.height*dpr); const g=c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); return {g,w:r.width,h:r.height}; }
+
+// ---------- the main field
+const F = $('#field'); let FG, fw, fh, now = 2026.9, ghost = false, hover = null;
+const padL = 14, padR = 14;
+const X = y => padL + (y - Y0) / (Y1 - Y0) * (fw - padL - padR);
+const mid = () => fh * 0.56;
+const lagH = (days, room) => days<=0 ? 0 : Math.min(room, room * Math.log10(1 + days) / Math.log10(1 + 365.25*80));
+function drawField(){
+  ({g:FG,w:fw,h:fh} = setup(F)); const g = FG, m = mid(), roomS = m - 34, roomA = fh - m - 30;
+  const cS = css('--sky'), cA = css('--arch'), cL = css('--line'), cM = css('--mute'), cN = css('--now'), cG = css('--ghost'), cH = css('--hi');
+  g.clearRect(0,0,fw,fh);
+  // axis
+  g.strokeStyle = cL; g.lineWidth = 1; g.beginPath(); g.moveTo(padL, m); g.lineTo(fw-padR, m); g.stroke();
+  g.fillStyle = cM; g.font = '11px Helvetica Neue, Arial, sans-serif'; g.textAlign = 'center';
+  for (let y = 1950; y <= 2025; y += (fw < 560 ? 25 : 10)) { const x = X(y); g.fillRect(x, m-3, 1, 6); g.fillText(y, x, m+16); }
+  const narrow = fw < 560; g.textAlign='left';
+  g.fillText(narrow ? 'SKY · back from designation' : 'SKY · passages, drawn back from the day they were designated', padL, 14);
+  g.fillText(narrow ? 'ARCHIVE · back from first public account' : 'ARCHIVE · close calls, drawn back from the day they were called near in public', padL, fh-6);
+  // ghosts: somebody knew
+  if (ghost) { g.strokeStyle = cG; g.lineWidth = 3;
+    for (const a of arch) { if (a.y_hap > now) continue; const x0 = X(a.y_hap), x1 = X(Math.min(now, a.y_nm)); g.beginPath(); g.moveTo(x0, m+6); g.lineTo(x1, m+6); g.stroke(); }
+    g.fillStyle = cA; g.font = '12px Helvetica Neue, Arial, sans-serif'; g.fillText(narrow ? 'held inside, before the public' : 'thick line: held by those inside it, before the public record', padL, fh-24);
+    g.fillStyle = cS; g.fillText(narrow ? 'sky: nobody held these' : 'sky: nobody held these, no one had seen the object', padL, 32);
+  }
+  // sky arcs
+  g.lineWidth = 0.6;
+  let n1=0,n2=0;
+  for (const s of sky) {
+    if (s.yw > now) break; n1++;
+    const x0 = X(s.yp), x1 = X(Math.max(s.yl, s.yp));
+    if (s.lag > 0) { n2++;
+      const hgt = lagH(s.lag, roomS); const fresh = now - s.yl < 0.35;
+      g.strokeStyle = fresh ? cH : cS; g.globalAlpha = fresh ? 0.9 : (s.lag > 365 ? 0.33 : 0.12);
+      g.beginPath(); g.moveTo(x0, m); g.quadraticCurveTo((x0+x1)/2, m - 2*hgt, x1, m); g.stroke();
+    } else { g.globalAlpha = 0.06; g.fillStyle = cS; g.fillRect(x0, m-4, 1, 4); }
+  }
+  g.globalAlpha = 1;
+  // archive arcs
+  let n3=0;
+  for (const a of arch) {
+    if (a.y_nm > now) continue; n3++;
+    const x0 = X(a.y_hap), x1 = X(a.y_nm), hgt = lagH(a.lag_days, roomA), fresh = now - a.y_nm < 0.6;
+    g.strokeStyle = fresh ? cH : cA; g.lineWidth = hover && hover.a === a ? 3.2 : 1.8; g.globalAlpha = 0.9;
+    g.beginPath(); g.moveTo(x0, m); g.quadraticCurveTo((x0+x1)/2, m + 2*hgt, x1, m); g.stroke();
+  }
+  g.globalAlpha = 1;
+  if (hover && hover.s) { const s = hover.s, x0 = X(s.yp), x1 = X(s.yl), hgt = lagH(s.lag, roomS);
+    g.strokeStyle = cH; g.lineWidth = 2.4; g.beginPath(); g.moveTo(x0, m); g.quadraticCurveTo((x0+x1)/2, m-2*hgt, x1, m); g.stroke(); }
+  // now line
+  if (now < 2026.85) { const x = X(now); g.strokeStyle = cN; g.lineWidth = 1; g.setLineDash([3,3]); g.beginPath(); g.moveTo(x, 20); g.lineTo(x, fh-18); g.stroke(); g.setLineDash([]); }
+  const yr = Math.min(2026, Math.floor(now));
+  $('#yr').textContent = yr; document.querySelectorAll('.ry').forEach(e=>e.textContent=yr);
+  $('#r1').textContent = n1.toLocaleString('en'); $('#r2').textContent = n2.toLocaleString('en');
+  $('#r3').textContent = n3; $('#r4').textContent = arch.filter(a=>a.y_nm<=now && a.lag_days>3652.5).length;
+}
+// hover
+const tip = $('#tip');
+function pick(ev){
+  const r = F.getBoundingClientRect(), px = ev.clientX - r.left, py = ev.clientY - r.top, m = mid();
+  let best=null, bd=14;
+  if (py >= m) { for (const a of arch) { if (a.y_nm > now) continue; const x0=X(a.y_hap), x1=X(a.y_nm), hgt=lagH(a.lag_days, fh-m-30);
+      for (let t=0;t<=1;t+=0.05){ const x=(1-t)*(1-t)*x0+2*(1-t)*t*(x0+x1)/2+t*t*x1, y=m+2*(1-t)*t*2*hgt; const d=Math.hypot(x-px,y-py); if(d<bd){bd=d;best={a};} } } }
+  else { for (const s of sky) { if (s.yw > now) break; if (s.lag <= 365) continue; const x0=X(s.yp), x1=X(s.yl), hgt=lagH(s.lag, m-34);
+      for (let t=0.1;t<=0.9;t+=0.1){ const x=(1-t)*(1-t)*x0+2*(1-t)*t*(x0+x1)/2+t*t*x1, y=m-2*(1-t)*t*2*hgt; const d=Math.hypot(x-px,y-py); if(d<bd){bd=d;best={s};} } } }
+  hover = best; drawField();
+  if (!best) { tip.style.display='none'; return; }
+  tip.innerHTML = best.a ? `<b>${best.a.label}</b> (${best.a.when})<br>called near in public: ${best.a.date_nm}, after ${best.a.lag_text}<br><i>“${best.a.quote}”</i><br><span class="small">${best.a.src}</span>`
+    : `<b>${best.s.des}</b> passed ${best.s.b.toFixed(2)} lunar distances out in ${best.s.yp.toFixed(0)}<br>designated ${best.s.yl.toFixed(1)}: written ${fmtWait(best.s.lag)} after it passed<br><span class="small">nobody had seen it</span>`;
+  tip.style.display='block'; tip.style.left = Math.min(innerWidth-310, ev.clientX+14)+'px'; tip.style.top = (ev.clientY+14)+'px';
+}
+F.addEventListener('pointermove', pick); F.addEventListener('pointerdown', pick);
+F.addEventListener('pointerleave', ()=>{ hover=null; tip.style.display='none'; drawField(); });
+$('#scrub').addEventListener('input', e => { now = +e.target.value; stop(); drawField(); });
+$('#ghost').addEventListener('click', e => { ghost = !ghost; e.target.setAttribute('aria-pressed', ghost); drawField(); });
+
+// ---------- sound and play
+let AC=null, playing=false, raf=0, last=0, si=0, ai=0;
+function tone(freq, dur, gain, type){ const o=AC.createOscillator(), v=AC.createGain(), t=AC.currentTime;
+  o.type=type; o.frequency.value=freq; v.gain.setValueAtTime(0,t); v.gain.linearRampToValueAtTime(gain,t+0.01); v.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(v); v.connect(AC.destination); o.start(t); o.stop(t+dur+0.05); }
+function stop(){ playing=false; cancelAnimationFrame(raf); $('#play').textContent='▶ Play with sound'; }
+$('#play').addEventListener('click', () => {
+  if (playing) { stop(); return; }
+  try { AC = AC || new (window.AudioContext||window.webkitAudioContext)(); AC.resume(); } catch(e) { AC = null; }
+  if (now >= 2026.85) now = Y0;
+  si = sky.findIndex(s=>s.yw>now); if (si<0) si=sky.length; ai = arch.findIndex(a=>a.y_nm>now); if (ai<0) ai=arch.length;
+  playing = true; last = performance.now(); $('#play').textContent='❚❚ Pause';
+  const step = t => { if(!playing) return; const dt=Math.min(0.1,(t-last)/1000); last=t;
+    const rate = now < 1990 ? 1.6 : 0.75; // years per second: slower where the sky is writing
+    const nxt = Math.min(2026.9, now + dt*rate);
+    let k=0;
+    while (si<sky.length && sky[si].yw<=nxt){ const s=sky[si++]; if (AC && s.lag>0 && k<6){ k++; const f=1500-500*Math.log10(1+s.b*10); tone(f, s.lag>3650?0.5:0.12, s.lag>3650?0.05:0.018, 'sine'); } }
+    while (ai<arch.length && arch[ai].y_nm<=nxt){ const a=arch[ai++]; if (AC) tone(98, 0.6+2.4*Math.log10(1+a.lag_days)/4.5, 0.16, 'triangle'); }
+    now = nxt; $('#scrub').value = now; drawField();
+    if (now>=2026.9) { stop(); return; } raf = requestAnimationFrame(step); };
+  raf = requestAnimationFrame(step);
+});
+
+// ---------- fans: one night, one book
+const pickSel = $('#pick');
+D.sky_bursts_top.slice(0,20).forEach((b,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=`${b[1]} — ${b[3].length} passages written on designation, ${b[2]}`; pickSel.appendChild(o); });
+function fan(c, rows, yl, col, label){ const {g,w,h}=setup(c); g.clearRect(0,0,w,h);
+  const ys = rows.map(r=>r.y), lo = Math.floor(Math.min(...ys, yl)-1), hi = Math.ceil(Math.max(yl, ...ys)+1);
+  const x = y => 16 + (y-lo)/(hi-lo)*(w-32), base = h-34, top = 24;
+  g.strokeStyle = css('--line'); g.beginPath(); g.moveTo(16,base); g.lineTo(w-16,base); g.stroke();
+  g.fillStyle = css('--mute'); g.font='11px Helvetica Neue, Arial, sans-serif'; g.textAlign='center';
+  const stepY = Math.max(1, Math.ceil((hi-lo)/ (w<420?5:8)));
+  for (let y=Math.ceil(lo/stepY)*stepY; y<=hi; y+=stepY) { g.fillRect(x(y),base-3,1,6); g.fillText(y, x(y), base+16); }
+  const px = x(yl); g.fillStyle = col; g.beginPath(); g.arc(px, top+4, 5, 0, 7); g.fill();
+  g.textAlign = px > w/2 ? 'right':'left'; g.fillText(label, px + (px > w/2 ? -10 : 10), top+8);
+  g.strokeStyle = col; g.lineWidth = 1.4; g.globalAlpha=.85;
+  rows.forEach(r=>{ const x0=x(r.y); g.beginPath(); g.moveTo(px, top+4); g.quadraticCurveTo((px+x0)/2, top+4, x0, base); g.stroke(); g.beginPath(); g.arc(x0, base, 3, 0, 7); g.fillStyle=col; g.fill(); if (r.t && w>380){ g.save(); g.translate(x0, base-8); g.rotate(-Math.PI/2.6); g.textAlign='left'; g.fillStyle=css('--fg'); g.font='10px Helvetica Neue, Arial, sans-serif'; g.fillText(r.t,0,0); g.restore(); } });
+  g.globalAlpha=1;
+}
+const yf = s => { const d=new Date(s+'T00:00:00Z'); return d.getUTCFullYear() + (d - Date.UTC(d.getUTCFullYear(),0,1))/864e5/365.25; };
+function drawFanS(){ const b = D.sky_bursts_top[+pickSel.value||0];
+  fan($('#fanS'), b[3].map(d=>({y:yf(d)})), yf(b[2]), css('--sky'), 'learned '+b[2].slice(0,7));
+  $('#capS').innerHTML = `${b[1]}: on its designation in ${b[2].slice(0,7)}, the record gained ${b[3].length} passages within 0.05 au, the earliest from ${b[3][0]}. ${T.fanS[b[0]]||''}`; }
+function drawFanA(){ const ab = D.arch_bursts[0], ids = new Set(ab[1]), rows = arch.filter(a=>ids.has(a.id));
+  $('#titA').textContent = 'One book: ' + ab[0];
+  fan($('#fanA'), rows.map(a=>({y:a.y_hap, t:a.when})), rows[0].y_nm, css('--arch'), 'published ' + rows[0].date_nm.slice(0,4));
+  $('#capA').innerHTML = T.fanA; }
+pickSel.addEventListener('change', drawFanS);
+
+// ---------- strip: three that stayed
+function drawStrip(){ const {g,w,h}=setup($('#strip')); g.clearRect(0,0,w,h);
+  const lo=Math.log10(0.003), hi=Math.log10(20), x=v=>16+(Math.log10(v)-lo)/(hi-lo)*(w-32), base=h-30;
+  g.fillStyle=css('--mute'); g.font='11px Helvetica Neue, Arial, sans-serif'; g.textAlign='center';
+  [0.01,0.1,1,10].forEach(v=>{ g.fillRect(x(v),base,1,5); g.fillText(v+' LD', x(v), base+18); });
+  g.fillText('centre distance, lunar distances (log)', w/2, h-1);
+  g.fillStyle=css('--sky'); g.globalAlpha=.25;
+  let seed=7; const rnd=()=>{ seed=(seed*16807)%2147483647; return seed/2147483647; };
+  for (const s of D.sky_r) { g.fillRect(x(s), 20+rnd()*(base-60), 1.2, 1.2); }
+  g.globalAlpha=1; g.fillStyle=css('--hi'); g.strokeStyle=css('--fg');
+  D.bound.forEach((b,i)=>{ const px=x(b.r_ld), py=base-18-(i%4)*10; g.beginPath(); g.arc(px,py,4,0,7); g.fill(); });
+  const nb = D.summary.bound_nearest; g.fillStyle=css('--fg'); g.textAlign='left'; g.font='12px Helvetica Neue, Arial, sans-serif';
+  g.fillText(`${nb.des}, ${nb.cd.slice(0,11)}: ${nb.r_ld} LD`, Math.max(16, Math.min(x(nb.r_ld)-10, w-200)), base-62);
+}
+
+// ---------- clocks
+function drawClocks(){ const {g,w,h}=setup($('#clocks')); g.clearRect(0,0,w,h);
+  const bins=[]; for(let e=0;e<=4.6;e+=0.2) bins.push(e);
+  const hS=bins.map(()=>0), hA=bins.map(()=>0);
+  const put=(arr,d)=>{ const e=Math.log10(Math.max(1,d)); arr[Math.min(bins.length-1, Math.floor(e/0.2))]++; };
+  D.sky_lags.forEach(d=>put(hS,d)); arch.forEach(a=>put(hA,a.lag_days));
+  const nS=D.sky_lags.length, nA=arch.length, mx=Math.max(...hS.map(v=>v/nS), ...hA.map(v=>v/nA));
+  const L=16, R=w-16, base=h-40, top=18, bw=(R-L)/bins.length, x=e=>L+e/4.6*(R-L)*(bins.length-1)/bins.length;
+  bins.forEach((e,i)=>{ const s=hS[i]/nS/mx*(base-top), a=hA[i]/nA/mx*(base-top);
+    g.fillStyle=css('--sky'); g.globalAlpha=.75; g.fillRect(L+i*bw+1, base-s, bw/2-1, s);
+    g.fillStyle=css('--arch'); g.globalAlpha=.9; g.fillRect(L+i*bw+bw/2, base-a, bw/2-1, a); });
+  g.globalAlpha=1; g.fillStyle=css('--mute'); g.font='11px Helvetica Neue, Arial, sans-serif'; g.textAlign='center';
+  [[1,'1 day'],[7,'1 week'],[30.4,'1 month'],[365.25,'1 year'],[3652.5,'10 years'],[36525,'100 years']].forEach(([d,t])=>{ const px=L+Math.log10(d)/0.2*bw; if(px<R){ g.fillRect(px,base,1,5); g.fillText(t,px,base+17);} });
+  g.fillText('wait from the near miss to the record (log)', w/2, h-4);
+  const med=(d,c,label,dy)=>{ const px=L+Math.log10(d)/0.2*bw; g.strokeStyle=c; g.setLineDash([4,3]); g.beginPath(); g.moveTo(px,top); g.lineTo(px,base); g.stroke(); g.setLineDash([]); g.fillStyle=c; g.textAlign=px>w*0.7?'right':'left'; g.fillText(label, px+(px>w*0.7?-5:5), top+dy); };
+  med(D.summary.sky_lag_median_days, css('--sky'), 'sky median: '+fmtWait(D.summary.sky_lag_median_days), 10);
+  med(D.summary.arch_lag_median_days, css('--arch'), 'archive median: '+fmtWait(D.summary.arch_lag_median_days), 26);
+}
+
+window.__NK = { setNow: y => { stop(); now = y; $('#scrub').value = y; drawField(); } };
+function all(){ drawField(); drawFanS(); drawFanA(); drawStrip(); drawClocks(); }
+let rt; addEventListener('resize', ()=>{ clearTimeout(rt); rt=setTimeout(all, 120); });
+all();
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+{
+ "title": "NOBODY KNEW, SOMEBODY KNEW",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-10-11",
+ "session": 166,
+ "cycle": 7,
+ "question": "What does the world record of the catastrophes that almost happened, and who decides that a near miss counts?",
+ "artifact": "index.html (identical to works/2026-10-11-nobody-knew/index.html; data, sources and checks are there)",
+ "medium": "An instrument with sound on one time axis: above it every asteroid passage within 0.05 au of Earth, 1990-2025 (20,753), below it the 34 nuclear close calls with a checked first public account of how near they came; each near miss an arc drawn back from the day the record learned of it. A scrubber and a play with sound; a switch that shows who held each near miss before the public record; two fans (one designation, one book) that write many rows at once; a strip of every passage by distance with the 17 rows of three temporary moons that the comparable record cannot hold; a two-clock histogram; a table of the 34 close calls with sources.",
+ "embodies": "THE WAIT IS THE SAME; THE CUSTODY IS NOT. Half of the sky's passages (10,454 of 20,753) were written after they passed, and 675 of them waited longer than the archive's median of 24 years. Nobody held those: no one had seen the object. Each nuclear close call was held by the people inside it until a keeper told.",
+ "form": "Arcs on one time axis with sound, two fans, a strip, a histogram, a table.",
+ "form_argument": "The finding is about time and about who stood in it: arcs that spring backwards at the moment of learning show both records writing their past late, and the switch that draws a line under each close call from the day it happened shows the one difference the lengths cannot: someone was holding it.",
+ "the_rule_the_work_kept": "Sky rows only as study 8 kept them (pinned commit); learning dated by the designation's half-month or a later first observation, never by a precovery image; archive rows only as Long After checked them, four set-aside dates kept aside; every number in the texts computed from data.json by build.py; no comparison of dangers, only of records; the claim that somebody held each close call marked as the page's judgment.",
+ "headline": {
+  "sky_rows": 20753,
+  "sky_late": 10454,
+  "sky_late_share": 0.504,
+  "sky_lag_median_days": 7.0,
+  "sky_late_gt_10y": 2079,
+  "sky_late_gt_arch_median": 675,
+  "arch_rows": 34,
+  "arch_lag_median_years": 24.2,
+  "sky_burst_max": 11,
+  "arch_burst_max": 9,
+  "bound_rows": 17,
+  "bound_objects": [
+   "2006 RH120",
+   "2020 CD3",
+   "2022 NX1"
+  ],
+  "bound_nearest": {
+   "des": "2020 CD3",
+   "cd": "2019-Apr-04 09:33",
+   "r_ld": 0.0341,
+   "v_rel": 7.77,
+   "H": 31.74,
+   "rank_if_kept": 19
+  }
+ },
+ "sources": [
+  "https://raw.githubusercontent.com/frankbueltge/field-research/580708b7b367edbf55f63cbfa0a8153124a26df2/artifacts/2026-10-11-how-far-the-record-sees/data/passages.tsv",
+  "https://ssd-api.jpl.nasa.gov/sbdb_query.api (designations and first observations of all NEOs)",
+  "https://ssd-api.jpl.nasa.gov/cad.api (close approaches 1990-2025 within 0.05 au)",
+  "works/2026-10-11-long-after/data.json (34 checked close calls with sources)"
+ ],
+ "siblings": {
+  "field": "How far the record sees (study 8): its 20,753 passages are this work's sky (handoff ho-2026-10-11-field-1, built on); this work adds the day each was written, and finds that the 17 rows study 8 set aside for lacking a speed at infinity are all three temporary moons.",
+  "field_2": "Who keeps the close calls (study 7): its 53 events, through Long After, are this work's archive.",
+  "atelier": "Near to What (cycle 007, session 2): its case 2020 CD3 (ho-2026-10-11-atelier-2, answered): the 12 laps never reach the impact-parameter record at all; a moon has no speed at infinity. The Hinge (session 1): the hinge of a close call is often the last part of its record to be written.",
+  "presentations": "The siblings' cycle-007 presentations do not stand yet; this page and SUMMARY.md are updated when they do."
+ },
+ "atlas_neighbours": [
+  {
+   "title": "Biblioteca de la No-Historia (Library of Non-History)",
+   "artist": "Voluspa Jarpa",
+   "source_url": "https://www.voluspajarpa.com/en/artwork/the-no-history/",
+   "opened": "Atlas entry (verified) read",
+   "daylight": "There declassified files are bound as books with their redactions kept. Here no file is shown: only the interval between event and first public account, set against a second record in which no file existed, so that the length of a wait stops being evidence of secrecy by itself."
+  },
+  {
+   "title": "Sobrevivientes",
+   "artist": "Datasketch (with Sandra Suárez / QueremosDatos.co, Data Against Feminicide network)",
+   "source_url": "https://datoscontrafeminicidio.net/en/art-and-data-to-make-feminicide-visible/",
+   "opened": "Atlas entry (verified) read",
+   "daylight": "There records refused by a state are answered with a database built from outside. Here nothing fills a gap: two gaps of the same length lie side by side, one of ignorance and one of custody, told apart only by who held them."
+  }
+ ],
+ "cycle_works": [
+  "works/2026-10-10-after-it-passed",
+  "works/2026-10-11-long-after",
+  "works/2026-10-11-nobody-knew"
+ ],
+ "parts": {
+  "field": "https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-11-how-far-the-record-sees",
+  "atelier": "https://github.com/frankbueltge/ulysses/tree/main/window/cycle-007-session-2"
+ },
+ "for_the_programme": "A near miss can wait as long for the record when nobody knew as when somebody did; a next question can ask who holds a near miss before it is public, and what that custody does to the count.",
+ "sub_agents": "None convened: the move was data work on public records and a sibling's table, done by the conductor. No third-party code."
+}
