@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Since the Equinox</title>
+<style>
+  :root {
+    --paper: #f3eee5;
+    --ink: #2a2521;
+    --muted: #7d746b;
+    --thread: rgba(74, 64, 56, 0.26);
+    --bloom: #d0687f;
+    --rule: rgba(42, 37, 33, 0.38);
+  }
+  html, body { margin: 0; padding: 0; background: var(--paper); }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  svg { display: block; }
+  text { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; fill: var(--ink); }
+  .small { font-size: 10px; fill: var(--muted); }
+  .yr { font-size: 9.5px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<svg id="w" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+// Day of the year of full cherry bloom in Kyoto, one character per year from 812 to 2026.
+// "." = no record; otherwise day = charCode - 65 + 80.
+// Read back from a dot plot of the Aono & Katata series (via Our World in Data, CC BY 4.0).
+const DATA = "M..Z...............Q...................].Y..........U.[..P...................Y.^].[YY.....W.....S...P_...P.....Y..S...R..[.......^.......\\P....J.a^RVH.O.YSX.S..\\.]V.a.Y.....O...U.Y........Z...f.U[......d.`TbS.........e.R`WQ.Y....X....X.a.Z.........]M....Z....b.X......W..Qi...Y.Z..Z.UQ.UX..Y.]c.Z...bY.U..^W.Y..aS`]\\`[XX..[....bX`._.\\.....^..Q.K..X.a.aU[P`.ab.Xfabb..XS.YVdd.Y\\.a[..h....^YQ[Z_Z.Y..a.S\\W]V..V^T.e.Z[`.RWVMZ._H...[...]]S[.]eU.._..O.Q..RiXS.ZXU.U...\\..bVW..XWZa_]\\..\\.VW.....PQ....Y...OU.V`XW.e.W[mS.\\..a]ad........._.W.\\^.aVd....f\\_ZV].\\_.aRIO^.W_.XTZYXW]ZWSTZUT.........[..VXY..WV`GW.NL.ZV^SUaT^QXSTW.S]WYSbPVXTVSZ.\\^.]`QPUXM\\ZQ[Zab`[[VYSZVV...c.S.U_d_Y[]VROTNXUR\\]U[OR]R`RXd]c[[]`W_`^_Z`Y[d`Z\\X^^YbZ[\\\\X]`]P]]aik^Wh\\RaYgf`^Yh.ViN`QUWTT^cR][.a]\\.S.^U.WRZ.][Z[Z[ZWOSbN`Yc_XVN\\TPZ[_.]_.H[X_k\\WN.^[baPU.Ya..YSQR.ZZ]XfccZTHa.YW\\\\aYYX.].`N_ZZa]a_YWeaZd`XQ^c^_Y]g[YYcRNX^\\^ic`VReaeXb^d`X[...Y]\\_SWWcPUYT[eaYZ.Y]\\WV[NV_d^^]SZ_VQU_X_Qdi^aV^XJ[aS[bVfZZY[U_T]Y`Q^L^XZ][Z^[hTV[YbXR_XXZQ_YNceS\\U_i\\b`X_[[P^W[]c^UbaZcb\\`aa`^iZ\\Q[[WS\\WU^WbWWV`]Y_bUfgZRWVYZTY.Y\\X`YVW_aR\\^b]^\\^STd^S.[[]TWWST]ZZXW]YSZXWWaXY.Y.VR`]]\\\\XPZZ[YW`USY_UQVU.R\\W\\TSZVSRTXTMPTWVT_RRTV\\STRTUTNYRWTNT^TWP[NIRORTTXRLOUQLSMTSRPPPTVNONPTJPMFLEPOI";
+const FIRST = 812;
+
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById("w");
+function el(name, attrs, parent, txt) {
+  const e = document.createElementNS(NS, name);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (txt != null) e.textContent = txt;
+  (parent || svg).appendChild(e);
+  return e;
+}
+
+// Layout: six columns of 203 springs, read top to bottom, left to right.
+const PER = 203, COLS = 6;
+const LEFT = 44, RIGHT = 1100 - 30, GAP = 30;
+const TOP = 132, BOTTOM = 762;
+const colW = (RIGHT - LEFT - GAP * (COLS - 1)) / COLS;
+const rowH = (BOTTOM - TOP) / PER;
+const D0 = 80, D1 = 126;            // 21 March .. 6 May (non-leap reckoning)
+const dx = colW / (D1 - D0);
+
+const days = [];
+for (let i = 0; i < DATA.length; i++) {
+  const c = DATA[i];
+  days.push(c === "." ? null : c.charCodeAt(0) - 65 + 80);
+}
+const recorded = days.filter(d => d != null);
+const old = days.filter((d, i) => d != null && FIRST + i < 1850).slice().sort((a, b) => a - b);
+const oldMedian = old[Math.floor(old.length / 2)];
+
+// --- heading
+el("text", { x: LEFT, y: 54, "font-size": 30, "letter-spacing": "0.2" }, null, "Since the Equinox");
+el("text", { x: LEFT, y: 80, class: "small", "font-size": 12 }, null,
+  "Kyoto, " + FIRST + "–2026. Each row is one spring. A thread runs from the equinox to the day the cherry trees stood in full bloom;");
+el("text", { x: LEFT, y: 96, class: "small", "font-size": 12 }, null,
+  "a blank row is a spring nobody wrote down. " + recorded.length + " springs are recorded. Read down each column, then on to the next.");
+
+const ticks = [[80, "21 Mar"], [91, ""], [105, "15 Apr"], [121, "1 May"]];
+
+for (let c = 0; c < COLS; c++) {
+  const x0 = LEFT + c * (colW + GAP);
+  const g = el("g", {});
+
+  // day ticks at the head of each column
+  for (const [d, lab] of ticks) {
+    const x = x0 + (d - D0) * dx;
+    el("line", { x1: x, x2: x, y1: TOP - 8, y2: TOP - 3, stroke: "var(--muted)", "stroke-width": 0.7 }, g);
+    if (c === 0 && lab) el("text", { x: x, y: TOP - 13, class: "yr", "text-anchor": d === 80 ? "start" : "middle" }, g, lab);
+  }
+
+  // the old median: a faint rule through every column
+  const xm = x0 + (oldMedian - D0) * dx;
+  el("line", { x1: xm, x2: xm, y1: TOP - 2, y2: BOTTOM + 2, stroke: "var(--rule)", "stroke-width": 0.6, "stroke-dasharray": "1.5 3" }, g);
+
+  for (let r = 0; r < PER; r++) {
+    const i = c * PER + r;
+    const year = FIRST + i;
+    const y = TOP + (r + 0.5) * rowH;
+    if (year % 50 === 0 || r === 0) {
+      el("text", { x: x0 - 6, y: y + 3.2, class: "yr", "text-anchor": "end" }, g, year);
+      el("line", { x1: x0 - 3, x2: x0 - 1, y1: y, y2: y, stroke: "var(--muted)", "stroke-width": 0.6 }, g);
+    }
+    if (i >= days.length) continue;
+    const d = days[i];
+    if (d == null) continue;
+    const xb = x0 + (d - D0) * dx;
+    el("line", { x1: x0, x2: xb - 1.6, y1: y, y2: y, stroke: "var(--thread)", "stroke-width": 1.1 }, g);
+    el("circle", { cx: xb, cy: y, r: 1.95, fill: "var(--bloom)", "fill-opacity": 0.92 }, g);
+  }
+  if (c === COLS - 1) {
+    const lastY = TOP + ((days.length - 1) - c * PER + 0.5) * rowH;
+    el("text", { x: x0 - 6, y: lastY + 3.2, class: "yr", "text-anchor": "end" }, g, "2026");
+  }
+}
+
+// legend for the rule, beside the first column head
+const xm0 = LEFT + (oldMedian - D0) * dx;
+const months = ["Jan","Feb","Mar","Apr","May"];
+function dayLabel(d) {
+  const ml = [31, 28, 31, 30, 31]; let m = 0;
+  while (d > ml[m]) { d -= ml[m]; m++; }
+  return d + " " + months[m];
+}
+el("text", { x: RIGHT, y: 80, class: "small", "text-anchor": "end", "font-size": 12 }, null,
+  "dotted rule: the middle date of the springs before 1850, " + dayLabel(oldMedian));
+
+// credit
+el("text", { x: LEFT, y: 788, class: "yr" }, null,
+  "Data: Yasuyuki Aono and Genki Katata, via Our World in Data (CC BY 4.0). Dates are read back from a published plot and may be off by a day, or a year, here and there.");
+</script>
+</body>
+</html>

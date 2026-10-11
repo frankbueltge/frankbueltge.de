@@ -1,0 +1,195 @@
+{
+ "rows": {
+  "m12": {
+   "arm": "P",
+   "pid": "p01",
+   "close": 2,
+   "class": "XY",
+   "words": "no",
+   "guess": "T",
+   "conf": 2,
+   "why": "Running mean with gap detection and exact counts (all 37 springs since 1990) suggest clean numeric data."
+  },
+  "m03": {
+   "arm": "P",
+   "pid": "p02",
+   "close": 1,
+   "class": "OTHER",
+   "words": "no",
+   "guess": "T",
+   "conf": 2,
+   "why": "Exact per-century counts (e.g. 14 of 88 yrs) and a cell for every missing year point to a table."
+  },
+  "m11": {
+   "arm": "T",
+   "pid": "p03",
+   "close": 2,
+   "class": "XY",
+   "words": "no",
+   "guess": "T",
+   "conf": 2,
+   "why": "Fifty-year rolling mean and exact record count (838 of 1215) point to tabular data."
+  },
+  "m04": {
+   "arm": "T",
+   "pid": "p04",
+   "close": 0,
+   "class": "OTHER",
+   "words": "no",
+   "guess": "P",
+   "conf": 1,
+   "why": "Screenshot is completely blank (failed render), so the guess has no basis."
+  },
+  "m08": {
+   "arm": "P",
+   "pid": "p05",
+   "close": 2,
+   "class": "XY",
+   "words": "no",
+   "guess": "T",
+   "conf": 2,
+   "why": "51-year average, exact 838 of 1215 strip and correct extremes suggest numeric data, though the day-number axis mirrors R."
+  },
+  "m10": {
+   "arm": "I",
+   "pid": "p06",
+   "close": 0,
+   "class": "OTHER",
+   "words": "no",
+   "guess": "T",
+   "conf": 1,
+   "why": "Century columns with computed medians and precise year placement suggest structured data; no read-back caveat."
+  },
+  "m01": {
+   "arm": "I",
+   "pid": "p07",
+   "close": 0,
+   "class": "OTHER",
+   "words": "no",
+   "guess": "I",
+   "conf": 3,
+   "why": "Footnote states the data were read back from a published plot with 20 hidden points inferred."
+  },
+  "m09": {
+   "arm": "I",
+   "pid": "p08",
+   "close": 1,
+   "class": "OTHER",
+   "words": "no",
+   "guess": "I",
+   "conf": 3,
+   "why": "Caption says values were read back from a scatter plot and some stems may be a column or two off."
+  },
+  "m02": {
+   "arm": "I",
+   "pid": "p09",
+   "close": 0,
+   "class": "OTHER",
+   "words": "no",
+   "guess": "I",
+   "conf": 3,
+   "why": "Footer says dates are read back from a published plot and may be off by a day or a year."
+  },
+  "m06": {
+   "arm": "P",
+   "pid": "p10",
+   "close": 2,
+   "class": "XY",
+   "words": "no",
+   "guess": "T",
+   "conf": 2,
+   "why": "Exact record count, correct dates for the extremes and a 25-year running mean point to clean numbers."
+  },
+  "m05": {
+   "arm": "T",
+   "pid": "p11",
+   "close": 2,
+   "class": "XY",
+   "words": "no",
+   "guess": "P",
+   "conf": 2,
+   "why": "Annotations use the ordinal '84th day' / '124th day' phrasing of the chronicle sentences."
+  },
+  "m07": {
+   "arm": "T",
+   "pid": "p12",
+   "close": 2,
+   "class": "XY",
+   "words": "no",
+   "guess": "P",
+   "conf": 1,
+   "why": "Exact dates and gap claims ('since 1946 there are none') fit any clean source; T vs P is undecidable here."
+  }
+ },
+ "predictions": {
+  "P1": {
+   "text": "coder's preparation guesses right for at most 5 of 12",
+   "value": 4,
+   "who": [
+    "m01",
+    "m02",
+    "m09",
+    "m11"
+   ],
+   "held": true
+  },
+  "P2": {
+   "text": "mean closeness to R in I at least 1.0 above T",
+   "value": {
+    "T": 1.5,
+    "P": 1.75,
+    "I": 0.25
+   },
+   "held": false
+  },
+  "P3": {
+   "text": ">=2 of 4 P show chronicle words; <=1 of 8 others",
+   "value": {
+    "T": 0,
+    "P": 0,
+    "I": 0
+   },
+   "held": false
+  },
+  "P4": {
+   "text": "all 4 P pages carry >=800 pairs as numbers",
+   "value": [
+    "m03",
+    "m06",
+    "m08",
+    "m12"
+   ],
+   "held": true
+  },
+  "P5": {
+   "text": ">=2 of 4 I pages carry >=100 pairs read off the picture with MAE >= 3 days",
+   "value": {
+    "m01": 0.519,
+    "m02": 0.0,
+    "m09": 0.002,
+    "m10": 0.498
+   },
+   "held": false
+  },
+  "P6": {
+   "text": ">=9 of 12 name the recent advance, no arm below 3",
+   "value": {
+    "T": 4,
+    "P": 4,
+    "I": 4
+   },
+   "held": true
+  },
+  "P7": {
+   "text": ">=3 of 4 I reports say values estimated / not exact",
+   "value": 4,
+   "held": true
+  },
+  "P8": {
+   "text": ">=8 of 12 works XY",
+   "value": 6,
+   "held": false
+  }
+ },
+ "held": 4
+}
