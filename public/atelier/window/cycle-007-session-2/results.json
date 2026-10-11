@@ -1,0 +1,282 @@
+{
+ "n_rows_le_1ld": 1159,
+ "rows_without_moid": [],
+ "bound_rows_excluded": [
+  [
+   "2020 CD3",
+   "2017-Sep-18 06:00",
+   200331
+  ],
+  [
+   "2020 CD3",
+   "2017-Dec-06 09:22",
+   248580
+  ],
+  [
+   "2020 CD3",
+   "2018-Feb-19 08:28",
+   222692
+  ],
+  [
+   "2020 CD3",
+   "2018-May-09 13:48",
+   25748
+  ],
+  [
+   "2020 CD3",
+   "2018-Aug-09 12:37",
+   305427
+  ],
+  [
+   "2020 CD3",
+   "2018-Oct-26 00:10",
+   321862
+  ],
+  [
+   "2020 CD3",
+   "2019-Jan-16 17:12",
+   162147
+  ],
+  [
+   "2020 CD3",
+   "2019-Apr-04 09:33",
+   13104
+  ],
+  [
+   "2020 CD3",
+   "2019-Jun-30 17:27",
+   276897
+  ],
+  [
+   "2020 CD3",
+   "2019-Sep-10 04:00",
+   301984
+  ],
+  [
+   "2020 CD3",
+   "2019-Nov-18 13:04",
+   289687
+  ],
+  [
+   "2020 CD3",
+   "2020-Feb-13 16:20",
+   47061
+  ]
+ ],
+ "predictions": {
+  "P1": {
+   "claim": "fewer than one passage in ten is timing-only",
+   "value": "61 of 1159",
+   "held": true
+  },
+  "P2": {
+   "claim": "of the 10 nearest by distance, at least 6 are timing-only",
+   "value": "5 of 10",
+   "held": false
+  },
+  "P3": {
+   "claim": "inner-band timing-only share at least 3x the outer band's",
+   "value": "inner 33/235, outer 16/581",
+   "held": true
+  },
+  "P4": {
+   "claim": "at least 10 timing-only passages in the outer band",
+   "value": "16",
+   "held": true
+  },
+  "P5": {
+   "claim": "every earlier row of the impactors is timing-only and lies beyond 1 LD",
+   "value": "15 of 15 timing-only; 15 of 15 beyond 1 LD",
+   "held": true
+  }
+ },
+ "bands": {
+  "inner": [
+   33,
+   235
+  ],
+  "middle": [
+   12,
+   343
+  ],
+  "outer": [
+   16,
+   581
+  ]
+ },
+ "three_classes": {
+  "timing": 12,
+  "undecided": 329,
+  "geometry": 818
+ },
+ "three_classes_nearest10": {
+  "timing": 1,
+  "undecided": 9,
+  "geometry": 0
+ },
+ "bend_sensitivity": {
+  "0.5": {
+   "timing": 31,
+   "undecided": 278,
+   "geometry": 850
+  },
+  "1": {
+   "timing": 12,
+   "undecided": 329,
+   "geometry": 818
+  },
+  "2": {
+   "timing": 4,
+   "undecided": 391,
+   "geometry": 764
+  }
+ },
+ "moid_now_exceeds_b": 215,
+ "nearest10": [
+  [
+   "2025 UC11",
+   6599,
+   167550,
+   25460,
+   "undecided"
+  ],
+  [
+   "2020 VT4",
+   6746,
+   40242,
+   11062,
+   "undecided"
+  ],
+  [
+   "2025 TF",
+   6780,
+   16157,
+   7520,
+   "undecided"
+  ],
+  [
+   "2024 XA",
+   7726,
+   8512,
+   10169,
+   "undecided"
+  ],
+  [
+   "2024 LH1",
+   8098,
+   10562,
+   8089,
+   "undecided"
+  ],
+  [
+   "2024 UG9",
+   8850,
+   2064,
+   7507,
+   "timing"
+  ],
+  [
+   "2020 QG",
+   9317,
+   49666,
+   10816,
+   "undecided"
+  ],
+  [
+   "2021 UA1",
+   9427,
+   6627,
+   8435,
+   "undecided"
+  ],
+  [
+   "2025 BP6",
+   9712,
+   5266,
+   7393,
+   "undecided"
+  ],
+  [
+   "2023 BU",
+   9967,
+   7390,
+   30030,
+   "undecided"
+  ]
+ ],
+ "timing_farthest": [
+  [
+   "2021 GS",
+   "2021-Apr-05 09:06",
+   0.6486,
+   1541,
+   8802
+  ],
+  [
+   "2022 YW6",
+   "2022-Dec-23 10:30",
+   0.55,
+   950,
+   6806
+  ],
+  [
+   "2017 AG13",
+   "2017-Jan-09 12:50",
+   0.5429,
+   1402,
+   7843
+  ],
+  [
+   "2023 UX2",
+   "2023-Oct-18 07:29",
+   0.5281,
+   1025,
+   7430
+  ],
+  [
+   "2016 DA31",
+   "2016-Feb-29 15:56",
+   0.5211,
+   651,
+   8217
+  ]
+ ],
+ "impactor_moid_km": {
+  "2008 TC3": 1167,
+  "2014 AA": 68,
+  "2018 LA": 3680,
+  "2019 MO": 1432,
+  "2022 EB5": 3710,
+  "2022 WJ1": 4593,
+  "2023 CX1": 4638,
+  "2024 BX1": 1586,
+  "2024 RW1": 2005,
+  "2024 UQ": 850,
+  "2024 XA1": 4907,
+  "2026 JN4": 4293,
+  "2026 RW1": 485
+ },
+ "impactor_rows": 15,
+ "sha256": {
+  "cad.json": "7b580d062b36cf729ed7f3904f822a169603b249156c6227e2868b5dfb50474d",
+  "imp_2008_TC3.json": "2f3b0314ca67fb73a79ded37a69f06b7838fd789b77c2a194c538c4ca2badc0e",
+  "imp_2014_AA.json": "c30b8835cb0ab25cb981e4a4bb95a940537c147a122ae574d240fbf2458184de",
+  "imp_2018_LA.json": "14ca3507542f761f786db57943df70b977132f8b1492fa2779b813413b475821",
+  "imp_2019_MO.json": "da10aa0d0ded8a24e91fd57bacfd5a47781319ce434c96786a35898e7989289d",
+  "imp_2022_EB5.json": "6800f125e2bc1dc1932cece4e4121caa1327374a25d8a1959f65524b33ce6f3c",
+  "imp_2022_WJ1.json": "504f999474409eabf31c2dc2d424a8254aeae1825df66005e67a162dea61ff06",
+  "imp_2023_CX1.json": "42bde0b74ea9ebabf9df4e4c191d70484d4388477e9b619acb97a55be3cdbf65",
+  "imp_2024_BX1.json": "ef1f3c917268058c2b96a8fef8fc0080c91cd4f014a60ca4b6fc63f17377d201",
+  "imp_2024_RW1.json": "165354acbe36b2b9a9777db6daf01c3a441d200e35b42b9db26b3fcf2f491be1",
+  "imp_2024_UQ.json": "c30b8835cb0ab25cb981e4a4bb95a940537c147a122ae574d240fbf2458184de",
+  "imp_2024_XA1.json": "54bccbac075864ab485710a43d50e8fa236076850e88011b70a25774367ba048",
+  "imp_2026_JN4.json": "504f999474409eabf31c2dc2d424a8254aeae1825df66005e67a162dea61ff06",
+  "imp_2026_RW1.json": "ac5d1f47bcbd2f7803c6460217fcf726866eb08c1432d994dcca4428311f86b2",
+  "neo.json": "a260557ba70fa4ec39ff3688eb4c26b370152ff65036564144fa0e6979df7d06"
+ },
+ "sources": {
+  "cad.json": "https://ssd-api.jpl.nasa.gov/cad.api?dist-max=0.0026&date-min=2015-01-01&date-max=2025-12-31&fullname=true",
+  "neo.json": "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=pdes,full_name,moid,H,epoch&sb-group=neo",
+  "imp_<des>.json": "https://ssd-api.jpl.nasa.gov/cad.api?des=<des>&dist-max=0.05&date-min=1900-01-01&date-max=2100-01-01"
+ }
+}

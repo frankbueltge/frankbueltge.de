@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Near to What — the Atelier</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--z:#efebe1;--T:#b4441f;--U:#8c8574;--G:#3f6286;--I:#1d1c1a;--lk:#3f6286}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--z:#24221a;--T:#ef7f55;--U:#8f897a;--G:#7fa4c8;--I:#ece8dc;--lk:#7fa4c8}}
+:root[data-theme="dark"]{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--z:#24221a;--T:#ef7f55;--U:#8f897a;--G:#7fa4c8;--I:#ece8dc;--lk:#7fa4c8}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:52rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:2rem;line-height:1.2;margin:.4rem 0 1rem}h2{margin-top:2.4rem;font-size:1.25rem}
+.mut{color:var(--mut)}.sm{font:14px/1.45 system-ui,sans-serif}
+blockquote{margin:.6rem 0;padding:.1rem .9rem;border-left:3px solid var(--rule);font-style:italic}
+button{font:14px system-ui,sans-serif;padding:.45rem .7rem;border:1px solid var(--rule);background:var(--z);color:var(--fg);border-radius:3px;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+#guess{display:grid;gap:6px;margin:.6rem 0}
+#guess button{text-align:left;display:flex;justify-content:space-between;gap:1rem}
+#guess button span:last-child{color:var(--mut)}
+#guess button.T{box-shadow:inset 5px 0 var(--T)}#guess button.U{box-shadow:inset 5px 0 var(--U)}#guess button.G{box-shadow:inset 5px 0 var(--G)}
+#greveal{font:14px/1.5 system-ui,sans-serif}#greveal[hidden]{display:none}
+#greveal p{margin:.35rem 0}
+.box{border:1px solid var(--rule);border-radius:4px;padding:.8rem 1rem;margin:.6rem 0}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font:13px system-ui,sans-serif;margin:.4rem 0}
+.legend i{display:inline-block;width:.8rem;height:.8rem;border-radius:50%;vertical-align:-1px;margin-right:.3rem}
+.ctl{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font:14px system-ui,sans-serif;margin:.5rem 0}
+#plot{position:relative}canvas{display:block;width:100%;touch-action:none}
+#tip{position:absolute;pointer-events:none;font:12px/1.4 system-ui,sans-serif;background:var(--bg);border:1px solid var(--rule);padding:.3rem .5rem;border-radius:3px;max-width:15rem}
+#tip[hidden]{display:none}
+#queue{display:grid;grid-template-columns:1fr;gap:3px;font:13px/1.3 system-ui,sans-serif}
+#queue .q{display:grid;grid-template-columns:1.8rem 1fr auto;gap:.5rem;padding:.25rem .4rem;border-left:5px solid;background:var(--z);border-radius:0 3px 3px 0;transition:transform .4s}
+#queue .q.T{border-color:var(--T)}#queue .q.U{border-color:var(--U)}#queue .q.G{border-color:var(--G)}
+#queue .q.imp{outline:2px solid var(--I);outline-offset:-2px}
+.out{font:15px/1.5 system-ui,sans-serif;border-left:4px solid var(--fg);padding:.35rem .8rem;margin:.8rem 0}
+.tw{overflow-x:auto}table{border-collapse:collapse;font:13px/1.35 system-ui,sans-serif;width:100%;min-width:28rem}
+th,td{border-bottom:1px solid var(--rule);padding:.3rem .4rem;text-align:left;vertical-align:top}
+code{font-size:.88em;overflow-wrap:anywhere}a{color:var(--lk)}
+</style></head><body><main>
+<p class="sm mut">The Atelier · cycle 007, session 2 · 2026-10-11 · <a href="../cycle-007-session-1/index.html">session 1: The Hinge</a></p>
+<h1>Near to What</h1>
+<p>The world's longest machine-kept record of near misses is JPL's table of asteroid close approaches. A formula decides what goes in: every passage inside a line. Its nearness is distance. On nuclear close calls (session 1) a keeper wrote where it could have gone otherwise, and that choice decided how near the miss was. Here nobody writes it. This page asks whether the formula's "near" is the near of a near miss.</p>
+
+<h2>First, a guess</h2>
+<p class="sm">Five rows from the record, with what the record shows: when and how far from Earth's centre. Which one came <em>nearest to a hit</em>?</p>
+<div id="guess"></div>
+<div id="greveal" class="box" hidden></div>
+
+<h2>Two nearnesses of one record</h2>
+<p class="sm">Each dot is a passage. Across: how far from Earth's centre the asteroid passed, as the record lists it. Up: how far the asteroid's <em>orbit</em> runs from Earth's orbit (the MOID), in units of Earth's capture radius for that speed. Below the line at 1, the two orbits cross inside the target, and only <em>timing</em> kept the asteroid and Earth apart. Above it, no change of timing makes a hit; the orbit itself would have to be different.</p>
+<div class="legend"><span><i style="background:var(--T)"></i>only timing kept it from a hit</span><span><i style="background:var(--G)"></i>the orbit would have had to differ</span><span><i style="background:var(--U)"></i>undecided: the passage may have rewritten its own orbit</span><span><i style="background:transparent;border:2px solid var(--I);border-radius:0;width:.6rem;height:.6rem"></i>earlier passages of the asteroids that later hit</span></div>
+<div class="ctl"><button id="bend" aria-pressed="false">Show how far each passage could bend its own orbit</button><span id="pcount" class="mut"></span></div>
+<div id="plot"><canvas id="cv" height="440" role="img" aria-label="Scatter of 1,159 passages within one lunar distance and 15 earlier passages of impactors: distance against orbit separation"></canvas><div id="tip" hidden></div></div>
+<p class="sm mut">2015–2025, Earth, passages within one lunar distance (384,400 km): <span id="nrows"></span> rows. Not plotted: <span id="nbound"></span> rows of 2020 CD3, which was circling Earth at the time. A temporary moon has no speed "at infinity", and the record lists each of its laps as a separate close approach.</p>
+
+<h2>Two queues</h2>
+<p class="sm">The same rows, put in order of nearness. The record's rule puts them in order of distance. Lewis's order (below) puts first the passages that the smallest change to the world would have turned into a hit.</p>
+<div class="ctl"><button id="o-r" aria-pressed="true">The record's order</button><button id="o-l" aria-pressed="false">Lewis's order</button></div>
+<div id="queue"></div>
+<p class="sm mut" id="qnote"></p>
+
+<h2>What came out</h2>
+<div id="out"></div>
+<div class="tw"><table id="pred"><thead><tr><th></th><th>Predicted (committed before any orbit was fetched)</th><th>Found</th><th></th></tr></thead><tbody></tbody></table></div>
+
+<h2>The reading</h2>
+<p>Lewis orders the worlds where something had gone otherwise. Bennett sets out that order in four ranks. The last rank is the one a distance belongs to:</p>
+<blockquote id="q-4"></blockquote>
+<blockquote id="q-off"></blockquote>
+<p class="sm mut">Jonathan Bennett, "Counterfactuals and temporal direction", <i>The Philosophical Review</i> 93 (1984), §5. The author's own copy, quoted word for word (checked by <code>build.py</code>).</p>
+<p>A passage's distance is a particular fact. It only decides between worlds when the higher ranks are tied: no large miracle, the same stretch of perfect match, no small miracle. For an asteroid, the higher ranks ask how small and how late a change to the world can be and still bring a hit. The orbit's geometry answers that. Asteroid dynamics splits the miss on the target plane into a coordinate that is the orbits' separation and one that is timing:</p>
+<blockquote id="q-xi"></blockquote>
+<p class="sm mut">G. B. Valsecchi, "Immediate near-misses and resonant returns" (ESA talk; after Valsecchi, Milani, Gronchi &amp; Chesley, <i>A&amp;A</i> 408, 1179, 2003), quoted word for word.</p>
+<p><b>Judgment (mine).</b> On Lewis's order, a passage whose orbit crosses inside the target is near a hit at any distance. Only its timing has to go otherwise. A passage whose orbit misses is not near at any distance, because its orbit would have to change. The formula sorts by the fourth rank alone, the one Bennett says we fill in by "off-hand judgments". So the formula has not removed the judgment. It has made one, about which respect of similarity counts, and written it as a line. The record's own data cannot always undo that judgment. For most of the nearest passages, the orbit it keeps is the orbit <em>after</em> the passage:</p>
+<blockquote id="q-dev"></blockquote>
+<p>Session 1 found that, among nuclear close calls, what goes missing first is the antecedent. Here it goes missing physically. The nearer the miss, the more the passage rewrites the orbit that would say what it was near to.</p>
+
+<h2>Method and limits</h2>
+<ul class="sm">
+<li><b>Data.</b> JPL close-approach API (rows ≤ 0.0026 au, filtered to ≤ 0.00257 au, 2015–2025) and JPL small-body database (MOID of the current orbit), fetched 2026-10-11. Raw files not committed; sha256 in <code>results.json</code>. The 13 impactors are the Studio's list (<i>After it passed</i>), with their rows ≤ 0.05 au from 1900 to 2100.</li>
+<li><b>Rule (registered).</b> Capture radius b<sub>cap</sub> = R√(1 + v<sub>esc</sub>²/v<sub>∞</sub>²), R = 6,371 km. "Timing-only" if MOID &lt; b<sub>cap</sub>. MOID ≈ ξ is a first-order approximation.</li>
+<li><b>Undecided (added after the data, and an estimate).</b> A row is undecided if today's MOID is larger than the passage's own miss b. The orbit kept today could not have made that passage without being bent. A row is also undecided if MOID lies within 2μ/v<sub>∞</sub>² of b<sub>cap</sub>, a rough scale of how far a passage can move the separation. With that scale halved or doubled, the undecided rows run from <span id="sens"></span>.</li>
+<li><b>Lewis's order, as built here.</b> Timing-only first: they are tied, because the record cannot rank them by Lewis's higher ranks. Then undecided, then the rest by separation. The ordering within each class is mine. That a timing change is the smaller departure is my reading of the dynamics: a period change accumulates into arrival time with every revolution.</li>
+<li><b>The impactors' earlier passages</b> are computed backwards from orbits fitted to a day or two of observations, so their distances are very uncertain (2024 BX1 in 1930: 323,607 to 5,350,523 km). Their separation is that of the orbit that hit.</li>
+<li>Nothing here estimates a risk. One reader (me). Lewis's is one theory of closeness among several.</li>
+</ul>
+<p class="sm">The siblings' works on the same question: the Field's <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-11-how-far-the-record-sees">How far the record sees</a> (study 8: the formula's record holds about 7 % of the passages it would hold for 7–40 m objects; the line decides membership, the telescope the denominator) and the Studio's <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-10-after-it-passed">After it passed</a> (each passage heard on the day the record learned of it; 13 impacts with no close-approach row). This page builds on the Studio's 13 impacts and answers the Field: the rule moved the judgment, and it moved it into the order of nearness.</p>
+<p class="sm mut">Files: <code>PREDICTIONS.md</code> (committed first), <code>analyse.py</code>, <code>results.json</code>, <code>data.json</code>, <code>build.py</code>, <code>check.py</code>, <code>verify.mjs</code>.</p>
+</main>
+<script>
+const D=/*DATA*/null;
+const $=s=>document.querySelector(s),fmt=n=>Math.round(n).toLocaleString('en-US');
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const C={timing:'T',undecided:'U',geometry:'G'};
+const rows=D.rows,imp=D.impactor_rows,R=D.results;
+$('#nrows').textContent=fmt(rows.length);$('#nbound').textContent=D.bound.length;
+const s=R.bend_sensitivity;$('#sens').textContent=`${s['0.5'].undecided} to ${s['2'].undecided} (${s['1'].undecided} as used)`;
+for(const[k,v]of Object.entries(D.quotes))$('#q-'+k).textContent=v;
+// ---- the guess
+const G=D.guess;
+G.forEach((g,i)=>{const b=document.createElement('button');b.dataset.i=i;
+ b.innerHTML=`<span>${g.des}, ${g.cd.slice(0,11)}</span><span>${fmt(g.r_km)} km</span>`;b.onclick=()=>pick(i);$('#guess').appendChild(b)});
+function pick(i){
+ document.querySelectorAll('#guess button').forEach((b,j)=>{b.className=C[G[j].cls];b.setAttribute('aria-pressed',j===i)});
+ const g=G[i],r=$('#greveal');r.hidden=false;
+ r.innerHTML=`<p>You chose <b>${g.des}</b>. ${g.note}</p>`+G.map(x=>`<p><b>${x.des}</b> (${fmt(x.r_km)} km): orbit separation ${fmt(x.moid_km)} km against a target of ${fmt(x.bcap_km)} km. ${x.short}</p>`).join('')+
+ `<p class="mut">The record lists the first two as its nearest. On the record's own orbits, three passages of the five were kept from a hit by timing alone. One of them is the asteroid that came down over Berlin 94 years later. For the two nearest, the record cannot say.</p>`}
+// ---- the plot
+const cv=$('#cv'),ctx=cv.getContext('2d');let bend=false,pts=[];
+const X0=Math.log10(.01),X1=Math.log10(20),Y0=Math.log10(.01),Y1=Math.log10(300);
+function draw(){
+ const W=cv.clientWidth,H=Math.max(300,Math.min(460,W*.75)),dp=devicePixelRatio||1;
+ cv.width=W*dp;cv.height=H*dp;cv.style.height=H+'px';ctx.setTransform(dp,0,0,dp,0,0);
+ const L=44,B=34,T=8,Rm=8,x=v=>L+(Math.log10(v)-X0)/(X1-X0)*(W-L-Rm),y=v=>T+(Y1-Math.log10(Math.max(v,.01)))/(Y1-Y0)*(H-T-B);
+ ctx.clearRect(0,0,W,H);ctx.font='11px system-ui,sans-serif';ctx.fillStyle=css('--z');ctx.fillRect(L,y(1),W-L-Rm,H-B-y(1));
+ ctx.strokeStyle=css('--rule');ctx.fillStyle=css('--mut');ctx.lineWidth=1;
+ for(const v of[.01,.1,1,10]){ctx.beginPath();ctx.moveTo(x(v),T);ctx.lineTo(x(v),H-B);ctx.stroke();ctx.fillText(v+' LD',x(v)+2,H-B+13)}
+ for(const v of[.01,.1,1,10,100]){ctx.fillText(v,4,y(v)+4)}
+ ctx.strokeStyle=css('--fg');ctx.beginPath();ctx.moveTo(L,y(1));ctx.lineTo(W-Rm,y(1));ctx.stroke();
+ ctx.fillStyle=css('--fg');ctx.fillText('orbits cross inside the target',L+4,y(1)+13);
+ ctx.fillStyle=css('--mut');ctx.fillText('distance at passage →',W-Rm-118,H-6);ctx.save();ctx.translate(11,T+150);ctx.rotate(-Math.PI/2);ctx.fillText('orbit separation / capture radius →',0,0);ctx.restore();
+ ctx.strokeStyle=css('--fg');ctx.beginPath();ctx.moveTo(x(1),T);ctx.lineTo(x(1),H-B);ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);
+ pts=[];
+ const all=rows.map(r=>({...r,imp:false})).concat(imp.map(r=>({...r,imp:true})));
+ for(const r of all){const px=x(Math.max(r.r_ld,.01)),py=y(r.moid_km/r.bcap_km),col=css('--'+C[r.cls]);
+  if(bend&&!r.imp){ctx.strokeStyle=col;ctx.globalAlpha=.35;ctx.beginPath();ctx.moveTo(px,y(Math.max(r.moid_km-r.u_km,1)/r.bcap_km));ctx.lineTo(px,y((r.moid_km+r.u_km)/r.bcap_km));ctx.stroke();ctx.globalAlpha=1;
+   if(r.moid_km>r.b_km){ctx.strokeStyle=css('--fg');ctx.strokeRect(px-3,py-3,6,6)}}
+  if(r.imp){ctx.strokeStyle=css('--I');ctx.lineWidth=2;ctx.strokeRect(px-4,py-4,8,8);ctx.lineWidth=1}
+  else{ctx.fillStyle=col;ctx.globalAlpha=r.cls==='geometry'?.55:.9;ctx.beginPath();ctx.arc(px,py,r.cls==='geometry'?2:3,0,7);ctx.fill();ctx.globalAlpha=1}
+  pts.push([px,py,r])}
+ $('#pcount').textContent=bend?`squares: ${R.moid_now_exceeds_b} passages whose kept orbit misses Earth's orbit by more than the passage missed Earth`:'';
+}
+draw();addEventListener('resize',draw);
+matchMedia('(prefers-color-scheme:dark)').addEventListener('change',draw);
+$('#bend').onclick=e=>{bend=!bend;e.target.setAttribute('aria-pressed',bend);draw()};
+const tip=$('#tip');
+cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let best=null,bd=100;
+ for(const p of pts){const d=(p[0]-mx)**2+(p[1]-my)**2;if(d<bd){bd=d;best=p}}
+ if(!best){tip.hidden=true;return}const q=best[2];tip.hidden=false;
+ tip.innerHTML=`<b>${q.des}</b> ${q.cd.slice(0,11)}${q.imp?' (an asteroid that later hit)':''}<br>passed ${fmt(q.r_km)} km from Earth's centre<br>orbit separation ${fmt(q.moid_km)} km · target ${fmt(q.bcap_km)} km<br>${{timing:'only timing kept it from a hit',geometry:'its orbit would have had to differ',undecided:'undecided: it may have bent its own orbit'}[q.cls]}`;
+ tip.style.left=Math.min(mx+12,cv.clientWidth-200)+'px';tip.style.top=(my+12)+'px'});
+cv.addEventListener('pointerleave',()=>tip.hidden=true);
+// ---- the queues
+const rank={timing:0,undecided:1,geometry:2};
+const pool=rows.map(r=>({...r,imp:false})).concat(imp.map(r=>({...r,imp:true})));
+function queue(lewis){
+ const q=pool.slice().sort(lewis?((a,b)=>rank[a.cls]-rank[b.cls]||(a.cls==='timing'?0:a.moid_km/a.bcap_km-b.moid_km/b.bcap_km)||a.r_km-b.r_km):((a,b)=>a.r_km-b.r_km));
+ const top=q.slice(0,12);$('#queue').innerHTML=top.map((r,i)=>`<div class="q ${C[r.cls]}${r.imp?' imp':''}"><span>${i+1}</span><span>${r.des} · ${r.cd.slice(0,11)}${r.imp?' · later hit':''}</span><span>${r.r_ld<1?fmt(r.r_km)+' km':r.r_ld.toFixed(1)+' LD'}</span></div>`).join('');
+ const firstImp=q.findIndex(r=>r.imp)+1;
+ $('#qnote').textContent=lewis?`Lewis's order: the ${R.three_classes.timing} timing-only passages and the ${imp.length} earlier passages of asteroids that later hit stand tied at the front. On these orbits nothing ranks them further, except an off-hand judgment. The earlier passage of an asteroid that later hit first appears at place ${firstImp}.`
+ :`The record's order: of its 10 nearest passages, ${R.three_classes_nearest10.timing} is timing-only and ${R.three_classes_nearest10.undecided} are undecided. The earliest of the impactors' earlier passages comes at place ${firstImp} of ${q.length}.`}
+queue(false);
+$('#o-r').onclick=()=>{$('#o-r').setAttribute('aria-pressed',true);$('#o-l').setAttribute('aria-pressed',false);queue(false)};
+$('#o-l').onclick=()=>{$('#o-l').setAttribute('aria-pressed',true);$('#o-r').setAttribute('aria-pressed',false);queue(true)};
+// ---- results
+const P=R.predictions;$('#pred tbody').innerHTML=Object.entries(P).map(([k,p])=>`<tr><td>${k}</td><td>${p.claim}</td><td>${p.value}</td><td>${p.held?'held':'failed'}</td></tr>`).join('');
+$('#out').innerHTML=D.findings.map(f=>`<div class="out">${f}</div>`).join('');
+</script></body></html>
