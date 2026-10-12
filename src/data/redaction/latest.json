@@ -1,7 +1,7 @@
 {
-  "changed_count": 2,
-  "date": "2026-10-11",
-  "generated_at": "2026-10-11T11:41:25Z",
+  "changed_count": 1,
+  "date": "2026-10-12",
+  "generated_at": "2026-10-12T13:46:00Z",
   "pick": "20261009080325_www.bundesregierung.de_breg-de_schwerpunkte_klimaschutz",
   "pipeline_version": "0.2.0",
   "redactions": [
@@ -32,41 +32,9 @@
         ]
       },
       "url": "https://www.bundesregierung.de/breg-de/schwerpunkte/klimaschutz"
-    },
-    {
-      "after": {
-        "status": "200",
-        "url": "https://web.archive.org/web/20261004175025/https://www.bls.gov/cps/",
-        "wayback_ts": "20261004175025"
-      },
-      "before": {
-        "url": "https://web.archive.org/web/20260930011122/https://www.bls.gov/cps/",
-        "wayback_ts": "20260930011122"
-      },
-      "id": "20261004175025_www.bls.gov_cps_",
-      "institution": "BLS",
-      "kind": "removal",
-      "label": "Current Population Survey",
-      "removed_passages": [
-        "Seasonally Adjusted Unemployment Rate: 4.1% in Aug 2026 Change in Unemployment Level: +115,000 in Aug 2026 Change in Employment Level: +569,000 in Aug 2026 Change in Civilian Labor Force Level: +683,000 in Aug 2026 read more » Learn how the U.S.",
-        "Payroll employment increases by 162,000 in August; unemployment rate unchanged at 4.1% 09/04/2026 Total nonfarm payroll employment increased by 162,000 in August, and the unemployment rate was unchanged at 4.1 percent.",
-        "Employment increased in food services and drinking places and in local government education.",
-        "The information industry lost jobs.",
-        "HTML | PDF | RSS | Charts read more » The Employment Situation for September 2026 is scheduled to be published on October 2, 2026, at 8:30 a.m."
-      ],
-      "removed_tokens": 118,
-      "salience": {
-        "score": 25,
-        "signals": [
-          "date",
-          "named_entity",
-          "number"
-        ]
-      },
-      "url": "https://www.bls.gov/cps/"
     }
   ],
-  "removed_tokens_total": 380,
+  "removed_tokens_total": 262,
   "salience_version": "1",
   "schema_version": "2",
   "source": {
@@ -75,8 +43,17 @@
     "url": "https://web.archive.org/"
   },
   "unverifiable": {
-    "count": 4,
+    "count": 5,
     "items": [
+      {
+        "detail": "live page answers 200",
+        "institution": "NOAA",
+        "label": "Globale Temperatur (Erklärstück)",
+        "reason": "archive_error",
+        "side": "live",
+        "url": "https://www.climate.gov/news-features/understanding-climate/climate-change-global-temperature",
+        "wayback_ts": "20261010211348"
+      },
       {
         "detail": "live page answers 200",
         "institution": "IPCC",
@@ -84,7 +61,7 @@
         "reason": "archive_error",
         "side": "live",
         "url": "https://www.ipcc.ch/report/ar6/wg1/",
-        "wayback_ts": "20261009072104"
+        "wayback_ts": "20261010211400"
       },
       {
         "detail": "live page answers 200",
@@ -93,7 +70,7 @@
         "reason": "archive_error",
         "side": "live",
         "url": "https://www.ipcc.ch/sr15/",
-        "wayback_ts": "20261010002803"
+        "wayback_ts": "20261010211357"
       },
       {
         "detail": "botwall",
@@ -115,7 +92,7 @@
       }
     ],
     "reasons": {
-      "archive_error": 2,
+      "archive_error": 3,
       "boilerplate": 1,
       "botwall": 1
     }
