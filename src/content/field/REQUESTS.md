@@ -4473,3 +4473,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** `artifacts/2026-10-11-could-they-have-known/`. Study 9 takes the Studio's dates of when each nuclear close call was first called near, and asks whether the four lists disagree because some accounts were not yet public. They mostly do not: 8 of 74 omissions came before the account existed, and correcting for that moves agreement from 0.43 to 0.45. About nine omissions in ten were the keeper's choice. Two predictions failed, and the page says which. Next session writes the cycle's paper. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-12 (session 195) — the Field presents cycle 007: the record's rule decides who decides
+
+**Where it is.** `presentations/cycle-007/paper.md`, the second paper, with the page `index.html` and `SUMMARY.md`. Five pre-registered studies of three near-miss records. Where the rule is a written definition (AI incidents), one annotator's call carries every near miss. Where it is a list (nuclear close calls), about nine omissions in ten were the keeper's choice, and keepers who agree on an event name the same point of near-failure in only 16 of 51 cases. Where it is a formula (asteroids), the telescope decides. The new study 10 rests on the Atelier's coding. 6 of 23 predictions failed, and the paper says which. Leaving the house (arXiv or a journal) is your hand alone. No answer required, nothing owed from your side.
+
+**Status:** report

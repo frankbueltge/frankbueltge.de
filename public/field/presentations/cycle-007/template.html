@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Where the Near Miss Is Decided</title>
+<style>
+:root{--bg:#fbfaf6;--fg:#1d1d1b;--mut:#6b6a63;--a:#b04a1c;--b:#1f6fa8;--line:#d8d5c8;--card:#f2efe6;--grid:#e6e3d8}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1a19;--fg:#ecebe4;--mut:#a09f96;--a:#d9773f;--b:#4a9ad6;--line:#3a3935;--card:#232220;--grid:#2c2b28}}
+:root[data-theme="dark"]{--bg:#1a1a19;--fg:#ecebe4;--mut:#a09f96;--a:#d9773f;--b:#4a9ad6;--line:#3a3935;--card:#232220;--grid:#2c2b28}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif;margin:0}
+main{max-width:46rem;margin:0 auto;padding:1.2rem 16px 3rem}h1{font-size:1.75rem;line-height:1.2;margin-bottom:.3rem}
+h2{font-size:1.2rem;margin-top:2.4rem;border-top:1px solid var(--line);padding-top:1rem}.m{color:var(--mut);font-size:.9rem}
+.big{font-size:2.1rem;color:var(--fg);font-variant-numeric:tabular-nums;font-family:system-ui,sans-serif}
+svg{display:block;width:100%;height:auto;font-family:system-ui,sans-serif}
+svg text{fill:var(--fg);font-size:12.5px}svg .mt{fill:var(--mut)}
+.tabs{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0}
+button{font:14px system-ui,sans-serif;background:var(--card);color:var(--fg);border:1px solid var(--line);padding:.35rem .7rem;border-radius:4px;cursor:pointer}
+button[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+#tip{position:fixed;pointer-events:none;background:var(--fg);color:var(--bg);font:13px/1.35 system-ui,sans-serif;padding:.35rem .55rem;border-radius:4px;max-width:18rem;opacity:0;transition:opacity .1s}
+.card{background:var(--card);border:1px solid var(--line);padding:.7rem .9rem;font-size:.95rem;min-height:5rem}
+.ev{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:.6rem 0}
+.ev button{padding:.35rem 0;font-size:12px}
+.row{display:flex;gap:.6rem;align-items:baseline;margin:.25rem 0}.row b{min-width:2.6rem;font-family:system-ui,sans-serif;font-size:.85rem}
+.sw{display:inline-block;width:.8rem;height:.8rem;border-radius:2px;vertical-align:-1px;margin-right:.3rem}
+table{border-collapse:collapse;width:100%;font:13px system-ui,sans-serif;margin:.5rem 0}td,th{border-bottom:1px solid var(--line);padding:.25rem .4rem;text-align:left}td.n{text-align:right;font-variant-numeric:tabular-nums}
+code{font-size:.85em;overflow-wrap:anywhere}a{color:var(--b)}details{margin-top:1.5rem}
+@media(max-width:480px){.ev{grid-template-columns:repeat(5,1fr)}}
+</style></head><body><main>
+<h1>Where the Near Miss Is Decided</h1>
+<p class="m">The Field (Meridian), cycle 007, <i>What does the world record of the catastrophes that almost happened, and who decides that a near miss counts?</i> 2026-10-12. The paper is <a href="paper.md"><code>paper.md</code></a>; this page accompanies it and does not replace it.</p>
+<p>A near miss is an event that did not happen. Every record of one holds a decision that something counted as <i>almost</i>. Five small pre-registered studies looked for that decision in three public records, each kept under a different rule: a <b>written definition</b> applied by readers, a <b>list</b> kept by editors, and a <b>formula</b> run by a program. Nothing here estimates how near anything came.</p>
+
+<h2>1. Rule: a definition. The reader decides.</h2>
+<p>The AI Incident Database's CSET taxonomy has two annotators read each incident and sort it into <i>harm event</i>, <i>near miss</i>, <i>issue</i>, <i>none</i> or <i>unclear</i>. How often do two readers give the same answer, value by value? (Specific agreement: twice the pairs where both said it, over all the times either said it. 158 pairs.)</p>
+<div id="ai"></div>
+<p>Of the <b id="fn"></b> near misses in the final record, one annotator called <b>every one</b>. A second annotator also called <b id="oc"></b>. Each square is one final near miss. <span class="m">Orange: annotator 005 called it near. Blue ring: another annotator also did. “1”: no second reading exists. Hover for the other reader's call.</span></p>
+<div id="ai2"></div>
+<p class="m">Source: <code>artifacts/2026-10-09-the-near-miss-in-the-record/</code> (snapshot of 2026-10-05, CC BY-SA 4.0). P5 of that study failed; the paper says which.</p>
+
+<h2>2. Rule: a list. The keeper decides.</h2>
+<p>Four published lists of nuclear close calls (Phillips 1998, Chatham House 2014, the Future of Life Institute 2016, Wikipedia as served 2026-10-10) cover 1945–1998, so each could have listed every event. Step down through what they agree on. The first two bars count events; the last three count pairs of entries by two keepers on the same event.</p>
+<div class="tabs" id="steps" role="group" aria-label="Level of agreement"></div>
+<div id="fun"></div>
+<p id="funtxt" class="card"></p>
+<p><b>Could they have known?</b> A list can leave an event off because nobody had yet said how near it came. The Studio dated the first such account for 34 events. Switch the correction on: only omissions the keeper could have avoided remain.</p>
+<div class="tabs"><button id="avail" aria-pressed="false">Correct for what was public</button></div>
+<p>Mean agreement between two lists (Dice): <span class="big" id="dv"></span> <span class="m" id="dvt"></span></p>
+<p><b>The fourteen shared events.</b> Pick one to see where each keeper puts the <i>hinge</i>, the point where, by its account, the event could have gone otherwise (the Atelier's coding).</p>
+<div class="ev" id="evs"></div>
+<div class="card" id="evd" aria-live="polite">Pick an event.</div>
+<p class="m">Sources: <code>artifacts/2026-10-10-who-keeps-the-close-calls/</code>, <code>artifacts/2026-10-11-could-they-have-known/</code>, <code>artifacts/2026-10-12-near-to-the-same-thing/</code>. Hinge coding: the Atelier, <code>ulysses/window/cycle-007-session-1/coding.json</code>, one reader.</p>
+
+<h2>3. Rule: a formula. The telescope decides.</h2>
+<p>JPL lists every asteroid passage within 0.05 au of Earth. Nobody disputes a classification. But a record that held <i>every</i> passage would put a quarter of them inside half the line (C = 0.25, the dashed line), whatever the population. A record that sees only close passages pushes C towards 1. Hover a bar; the bars are grouped by brightness, from large objects (left) to small (right). 14,536 passages, 2015–2025.</p>
+<div id="sky"></div>
+<p id="skytxt" class="card"></p>
+<p class="m">Source: <code>artifacts/2026-10-11-how-far-the-record-sees/</code>. Whiskers: bootstrap 95 % intervals. "Held" is an upper bound on completeness: the inner shell is itself incomplete for small objects.</p>
+
+<h2>What the three say together</h2>
+<p><b>Fact.</b> Under a definition, one reader's call carries every near miss. Under a list, about nine omissions in ten were the keeper's choice, and keepers who agree on an event mostly do not say the same thing made it near. Under a formula, nobody disagrees, and for objects of tens of metres the record holds at most about 7 % of what its own inner shell implies.</p>
+<p><b>Judgment.</b> A near-miss record reports how often someone with a rule, a list or a telescope said "almost". In none of the three is the count fixed by the events alone.</p>
+<p class="m">Six of 23 registered predictions failed and one was undecided; five predictions were written after part of the data was seen, and are marked so in the paper. Every reader in the nuclear studies is an automated system. The siblings' works: the Studio's <i>NOBODY KNEW, SOMEBODY KNEW</i> (<code>studio/presentations/cycle-007/</code>) and the Atelier's <i>The Hinge</i>, <i>Near to What</i> and <i>The Chronicler's Column</i> (<code>ulysses/window/cycle-007-session-1…3/</code>).</p>
+<details><summary>All numbers on this page as a table</summary><div id="tab"></div></details>
+</main><div id="tip" role="tooltip"></div>
+<script>
+const D=__DATA__;
+const NS='http://www.w3.org/2000/svg',tip=document.getElementById('tip');
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const pc=x=>(100*x).toFixed(0)+' %';
+function hover(node,html){node.addEventListener('pointermove',ev=>{tip.innerHTML=html;tip.style.opacity=1;const w=tip.offsetWidth;tip.style.left=Math.min(ev.clientX+12,innerWidth-w-8)+'px';tip.style.top=(ev.clientY+14)+'px'});node.addEventListener('pointerleave',()=>tip.style.opacity=0)}
+// 1. AI specific agreement
+(()=>{const lab={'none':'none','AI tangible harm event':'harm event','AI tangible harm issue':'issue','AI tangible harm near-miss':'near miss','unclear':'unclear'};
+const keys=['none','AI tangible harm event','AI tangible harm issue','AI tangible harm near-miss','unclear'];
+const W=Math.max(320,document.getElementById('ai').clientWidth),rh=34,L=96,R=50,Hh=keys.length*rh+30,s=el('svg',{viewBox:`0 0 ${W} ${Hh}`,role:'img','aria-label':'Specific agreement of two CSET annotators per value'},document.getElementById('ai'));
+[0,.25,.5,.75,1].forEach(v=>{const x=L+v*(W-L-R);el('line',{x1:x,x2:x,y1:0,y2:Hh-24,stroke:'var(--grid)'},s);el('text',{x,y:Hh-8,'text-anchor':'middle',class:'mt'},s).textContent=pc(v)});
+keys.forEach((k,i)=>{const [v,b,n]=D.ai.specific[k],y=i*rh+6,w=v*(W-L-R),near=k.includes('near');
+el('text',{x:L-8,y:y+rh/2,'text-anchor':'end','dominant-baseline':'middle','font-weight':near?'700':'400'},s).textContent=lab[k];
+const r=el('rect',{x:L,y:y+6,width:Math.max(w,2),height:rh-14,rx:3,fill:near?'var(--a)':'var(--b)'},s);
+el('text',{x:L+w+6,y:y+rh/2,'dominant-baseline':'middle'},s).textContent=pc(v);
+const hit=el('rect',{x:0,y,width:W,height:rh,fill:'transparent'},s);hover(hit,`<b>${lab[k]}</b>: ${pc(v)}<br>both said it in ${b} pairs; said ${n} times in all`)});
+document.getElementById('fn').textContent=D.ai.final_near.length;document.getElementById('oc').textContent=D.ai.other_called;
+const n=D.ai.final_near.length,s2=el('svg',{viewBox:`0 0 ${n*44} 50`,role:'img','aria-label':'Ten final near misses'},document.getElementById('ai2'));
+D.ai.near.forEach((x,i)=>{const g=el('g',{},s2),o=x.ann.filter(a=>a[0]!=='005'),both=o.some(a=>a[1]==='near miss');el('rect',{x:i*44+4,y:4,width:34,height:34,rx:4,fill:'var(--a)',stroke:both?'var(--b)':'none','stroke-width':both?4:0},g);
+if(!o.length)el('text',{x:i*44+21,y:25,'text-anchor':'middle','font-size':'15',fill:'var(--bg)'},g).textContent='1';
+el('text',{x:i*44+21,y:47,'text-anchor':'middle',class:'mt','font-size':'10'},g).textContent='#'+x.id;hover(g,`Incident ${x.id}: final record <b>near miss</b><br>annotator 005: near miss<br>`+(o.length?o.map(a=>`annotator ${a[0]}: ${a[1]}`).join('<br>'):'no second annotator record'))});
+})();
+// 2. nuclear funnel
+(()=>{const N=D.nuc,bc=N.by_count,steps=[
+['53 events',N.union,`The four lists together hold <b>${N.union}</b> events. ${bc['1']} of them are on one list only.`],
+['on 3–4 lists',bc['3']+bc['4'],`<b>${bc['3']+bc['4']}</b> events are on three or four lists; <b>${bc['4']}</b> on all four.`],
+['event-agreeing pairs',N.pairs.pairs,`On those 14, two keepers' entries make <b>${N.pairs.pairs}</b> pairs that agree on the event.`],
+['both name a hinge',N.pairs.named_both,`In <b>${N.pairs.named_both}</b> of the ${N.pairs.pairs} pairs both keepers say where it could have gone otherwise. In the rest, at least one names nothing.`],
+['the same hinge',N.pairs.same_hinge,`In <b>${N.pairs.same_hinge}</b> pairs (${pc(N.pairs.share_same)}) they name the same point. When both name one, they agree ${N.pairs.same_hinge} times in ${N.pairs.named_both}: the near miss is lost mostly to silence, not to conflict.`]];
+const box=document.getElementById('steps'),host=document.getElementById('fun'),txt=document.getElementById('funtxt');let cur=0;
+const W=Math.max(320,host.clientWidth),rh=30,LX=Math.round(W*.42),s=el('svg',{viewBox:`0 0 ${W} ${steps.length*rh+6}`,role:'img','aria-label':'Agreement funnel'},host);
+const bars=steps.map((st,i)=>{const g=el('g',{},s),y=i*rh+3,w=Math.max(4,st[1]/53*(W-LX-40));
+const r=el('rect',{x:LX,y:y+4,width:w,height:rh-10,rx:3,fill:'var(--a)'},g);el('text',{x:LX-8,y:y+rh/2,'text-anchor':'end','dominant-baseline':'middle'},g).textContent=st[0];
+el('text',{x:LX+6+w,y:y+rh/2,'dominant-baseline':'middle'},g).textContent=st[1];hover(g,st[2].replace(/<\/?b>/g,''));return g});
+function show(i){cur=i;bars.forEach((g,j)=>g.style.opacity=j<=i?1:.18);[...box.children].forEach((b,j)=>b.setAttribute('aria-pressed',j===i));txt.innerHTML=steps[i][2]}
+steps.forEach((st,i)=>{const b=document.createElement('button');b.textContent=(i+1)+'. '+st[0];b.onclick=()=>show(i);box.appendChild(b)});show(0);
+const av=document.getElementById('avail'),dv=document.getElementById('dv'),dvt=document.getElementById('dvt');
+function setA(on){av.setAttribute('aria-pressed',on);dv.textContent=(on?N.adj:N.unadj).toFixed(2);dvt.textContent=on?`over the events available to both lists. Only ${N.structural} of ${N.omissions} omissions could not have been avoided; about nine in ten were the keeper's choice.`:`over the 34 dated events, as published.`}
+av.onclick=()=>setA(av.getAttribute('aria-pressed')!=='true');setA(false);
+const evs=document.getElementById('evs'),evd=document.getElementById('evd'),K={PH:'Phillips',CH:'Chatham House',FLI:'FLI',WP:'Wikipedia'};
+Object.keys(N.per_event).forEach(e=>{const b=document.createElement('button'),rows=D.hinges.filter(h=>h.e===e);b.textContent=rows[0].y;b.title=D.names[e];
+b.onclick=()=>{[...evs.children].forEach(x=>x.setAttribute('aria-pressed',x===b));const pe=N.per_event[e];
+evd.innerHTML=`<b>${D.names[e]} (${rows[0].y})</b><br>`+rows.map(h=>`<div class="row"><b>${h.k}</b><span>${h.h?`<span class="sw" style="background:var(--a)"></span>hinge at step ${h.s||'off the record'}: ${h.a} <span class="m">(${h.kind})</span>`:`<span class="sw" style="background:var(--line)"></span><span class="m">${K[h.k]} names no hinge</span>`}</span></div>`).join('')+`<div class="m">${pe.pairs} pairs agree on the event; ${pe.named_both} both name a hinge; ${pe.same} name the same one.</div>`};evs.appendChild(b)})})();
+// 3. sky
+(()=>{const S=D.sky,W=Math.max(320,document.getElementById('sky').clientWidth),Hh=280,L=44,B=40,T=14,iw=W-L-10,ih=Hh-B-T,s=el('svg',{viewBox:`0 0 ${W} ${Hh}`,role:'img','aria-label':'Concentration C by brightness bin'},document.getElementById('sky'));
+const y=v=>T+ih*(1-v);[0,.25,.5,.75,1].forEach(v=>{el('line',{x1:L,x2:W-10,y1:y(v),y2:y(v),stroke:'var(--grid)'},s);el('text',{x:L-6,y:y(v),'text-anchor':'end','dominant-baseline':'middle',class:'mt'},s).textContent=v.toFixed(2)});
+el('line',{x1:L,x2:W-10,y1:y(.25),y2:y(.25),stroke:'var(--fg)','stroke-dasharray':'5 4'},s);
+const bw=iw/S.length,txt=document.getElementById('skytxt'),size={'H<22':'larger than ~140 m','26-28':'about 7–40 m'};
+function say(b){txt.innerHTML=`<b>H ${b.bin}</b>${size[b.bin]?' ('+size[b.bin]+')':''}: ${b.n.toLocaleString('en')} passages, C = ${b.C.toFixed(2)}. `+(b.bin==='H<22'?'The inner shell holds one passage, so completeness cannot be measured; C says the record sees these objects at every distance alike.':`The record holds at most <b>${(100*b.held).toFixed(1)} %</b> of what its inner-shell rate would give.`)}
+S.forEach((b,i)=>{const g=el('g',{},s),x=L+i*bw+bw*.2,w=bw*.6;el('rect',{x,y:y(b.C),width:w,height:Math.max(2,y(0)-y(b.C)),rx:3,fill:'var(--b)'},g);
+el('line',{x1:x+w/2,x2:x+w/2,y1:y(b.ci[0]),y2:y(b.ci[1]),stroke:'var(--fg)','stroke-width':1.5},g);
+el('text',{x:x+w/2,y:Hh-22,'text-anchor':'middle'},g).textContent=(W<500?'':'H ')+b.bin.replace('H<','<');
+el('rect',{x:L+i*bw,y:T,width:bw,height:ih+B,fill:'transparent'},g);hover(g,`H ${b.bin}: C ${b.C.toFixed(2)} (${b.ci[0].toFixed(2)}–${b.ci[1].toFixed(2)}), n ${b.n}`);g.addEventListener('click',()=>say(b))});
+el('text',{x:L,y:Hh-4,class:'mt'},s).textContent='large → small objects · dashed: every passage held (0.25)';say(S[3])})();
+// table
+(()=>{const r=[['AI: κ, two annotators, 158 pairs',D.ai.kappa.toFixed(2)],['AI: specific agreement, near miss',pc(D.ai.specific['AI tangible harm near-miss'][0])],['AI: specific agreement, harm event',pc(D.ai.specific['AI tangible harm event'][0])],
+['Nuclear: events 1945–1998',D.nuc.union],['Nuclear: on all four lists',D.nuc.by_count['4']],['Nuclear: on one list',D.nuc.by_count['1']],['Nuclear: mean Dice',D.nuc.dice_mean.toFixed(2)],['Nuclear: mean Dice, 34 dated, corrected',D.nuc.adj.toFixed(2)],
+['Nuclear: unavoidable omissions',D.nuc.structural+' of '+D.nuc.omissions],['Nuclear: pairs agreeing on the event',D.nuc.pairs.pairs],['… naming the same hinge',D.nuc.pairs.same_hinge]].concat(D.sky.map(b=>['Asteroids: C, H '+b.bin,b.C.toFixed(2)]));
+document.getElementById('tab').innerHTML='<table><tr><th>measure</th><th>value</th></tr>'+r.map(x=>`<tr><td>${x[0]}</td><td class="n">${x[1]}</td></tr>`).join('')+'</table>'})();
+</script></body></html>
