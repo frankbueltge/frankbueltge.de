@@ -1,0 +1,40 @@
+{
+ "_note": "One telephone story told by eight keepers. Each telling: when it was published, which night it sets the call on, the first count, the cause it gives, a short quotation and the raw file it is checked against by verify_sources.py. 'night' is what the telling itself says or, where marked 'inferred', what its cause or its notes point to. Assembled by hand from the sources; no model output is used as fact.",
+ "nights": {
+  "1979-11-09": {"label": "9 November 1979", "cause": "tape", "cause_text": "an exercise tape fed into the live warning system", "press": "1979-11-11", "press_note": "Alert reported in the press on 11 November 1979 (Long After, E42); the call is not in it."},
+  "1980-06-03": {"label": "3 June 1980", "cause": "chip", "cause_text": "a failing 46-cent computer chip", "press": "1980-06-06", "press_note": "Alert reported in the press on 6 June 1980 (Long After, E44); the call is not in it."}
+ },
+ "tellings": [
+  {"id": "gates", "keeper": "Robert M. Gates, From the Shadows (Simon & Schuster), p. 114", "published": "1996-06-01", "published_precision": "year",
+   "night": null, "night_how": "none named in the passage", "first": 250, "cause": "tape",
+   "quote": "Someone had mistakenly put military exercise tapes into the computer system.",
+   "check_file": "raw/nsarchive-ebb371.html", "check_via": "the passage as quoted in full by the National Security Archive (EBB 371); the book itself was not read",
+   "url": "https://nsarchive2.gwu.edu/nukevault/ebb371/"},
+  {"id": "nsa", "keeper": "National Security Archive, Electronic Briefing Book 371 (W. Burr)", "published": "2012-03-01",
+   "night": "1979-11-09", "night_how": "stated", "first": 250, "cause": "tape",
+   "quote": "took place in the middle of the night on 9 November 1979",
+   "check_file": "raw/nsarchive-ebb371.html", "url": "https://nsarchive2.gwu.edu/nukevault/ebb371/"},
+  {"id": "schlosser13", "keeper": "Eric Schlosser, Command and Control (2013), endnotes to p. 368", "published": "2013-09-17", "published_precision": "month",
+   "night": "1980-06-03", "night_how": "inferred: the note for the 2,200 missiles cites Gates and is followed by the note for the defective chip; the main text was not read",
+   "first": null, "cause": "chip",
+   "quote": "2,200 missiles were heading toward the United States: See Gates, From the Shadows, p. 114",
+   "check_file": "raw/schlosser-notes.pdf", "url": "https://www.chbeck.de/media/2825/inh_schlossercommandandcontrol_978-3-406-65595-1_1a_anmerkungen.pdf"},
+  {"id": "chatham", "keeper": "Chatham House, Too Close for Comfort (Lewis, Williams, Pelopidas, Aghlani)", "published": "2014-04-28",
+   "night": "1980-06-03", "night_how": "stated", "first": 220, "cause": "chip",
+   "quote": "At 02:26 on 3 June 1980, National Security Advisor Zbigniew Brzezinski received a telephone call",
+   "check_file": "raw/chatham-2014.pdf", "url": "https://www.chathamhouse.org/sites/default/files/field/field_document/20140428TooCloseforComfortNuclearUseLewisWilliamsPelopidasAghlani.pdf"},
+  {"id": "newyorker", "keeper": "Eric Schlosser, 'World War Three, by Mistake', The New Yorker", "published": "2016-12-23",
+   "night": "1980-06-03", "night_how": "stated", "first": 220, "cause": "chip",
+   "quote": "Odom called back and offered a correction: twenty-two hundred Soviet missiles had been launched.",
+   "check_file": "raw/newyorker-2016.html", "url": "https://www.newyorker.com/news/news-desk/world-war-three-by-mistake"},
+  {"id": "aca", "keeper": "Daryl G. Kimball, 'Nuclear False Warnings and the Risk of Catastrophe', Arms Control Today", "published": "2019-12-01", "published_precision": "month",
+   "night": "1980-06-03", "night_how": "stated", "first": 2200, "cause": "tape",
+   "quote": "false alarm caused by software simulating a Soviet missile attack",
+   "check_file": "raw/aca-2019.html", "url": "https://www.armscontrol.org/act/2019-12/focus/nuclear-false-warnings-and-risk-catastrophe"},
+  {"id": "wikipedia", "keeper": "Wikipedia, 'List of nuclear close calls', as read on 2026-10-12", "published": "2026-10-12",
+   "night": "1979-11-09", "night_how": "stated: under the heading for 1979", "first": 250, "cause": "tape",
+   "quote": "NORAD computers then placed the number of incoming missiles at 2,200.",
+   "check_file": "raw/wikipedia-close-calls.html", "url": "https://en.wikipedia.org/wiki/List_of_nuclear_close_calls"}
+ ],
+ "relay": {"handoff": "ho-2026-10-10-atelier-2", "offered": "the Atelier, The Hinge (cycle 007, session 1): Wikipedia tells the call under 1979, Chatham House under 1980", "answer": "confirmed, and traced: the call reaches the public record only in 1996, without a night; it was set on 1979 in 2012 and on 1980 from 2013 on, and one telling joins the 1980 night to the 1979 cause."}
+}

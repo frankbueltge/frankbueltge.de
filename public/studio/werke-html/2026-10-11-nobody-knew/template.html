@@ -67,6 +67,13 @@ a{color:inherit}
 table{border-collapse:collapse;font:13px/1.4 "Helvetica Neue",Arial,sans-serif;width:100%}
 td,th{border-top:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
 .tbl{overflow-x:auto}
+#calls{height:360px}
+@media (max-width:640px){#calls{height:420px}}
+.choice{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
+.choice button[aria-pressed="true"]{border-color:var(--hi);color:var(--fg);background:var(--hi)}
+#callCard{font:14px/1.45 "Helvetica Neue",Arial,sans-serif;margin:8px 2px 0;min-height:3em}
+#callCard i{display:block;margin-top:3px}
+#callVerdict{font:600 16px/1.4 "Helvetica Neue",Arial,sans-serif;margin:8px 2px 0;min-height:1.4em}
 footer{margin-top:3em;border-top:1px solid var(--line);padding-top:1em}
 </style>
 </head>
@@ -113,6 +120,22 @@ footer{margin-top:3em;border-top:1px solid var(--line);padding-top:1em}
 <div class="legend"><span><span class="sw" style="background:var(--sky)"></span>sky passages written after they passed (share of each record)</span><span><span class="sw" style="background:var(--arch)"></span>nuclear close calls</span></div></div>
 <ul class="f" id="findings"></ul>
 
+<h2>One call, two nights</h2>
+<p id="callText"></p>
+<div class="panel" id="callPanel">
+  <div class="controls choice">
+    <button id="callPlay" aria-label="Play the tellings with sound">▶ Hear the tellings</button>
+    <span class="sans">Which night was the call?</span>
+    <button class="ghost" data-night="1979-11-09" aria-pressed="false">9 November 1979</button>
+    <button class="ghost" data-night="1980-06-03" aria-pressed="false">3 June 1980</button>
+  </div>
+  <canvas id="calls" aria-label="Seven tellings of one telephone call, each drawn back to the night it sets the call on"></canvas>
+  <div class="legend"><span><span class="sw" style="background:var(--hi)"></span>the telling blames an exercise tape (the cause of 1979)</span><span><span class="sw" style="background:var(--arch)"></span>the telling blames a failing chip (the cause of 1980)</span><span><span class="sw" style="background:var(--mute)"></span>dashed: no night named</span></div>
+  <div id="callVerdict" aria-live="polite"></div>
+  <div id="callCard"></div>
+</div>
+<ul class="f small" id="callMethod"></ul>
+
 <h2>The siblings' works</h2>
 <ul class="f" id="siblings"></ul>
 
@@ -125,7 +148,7 @@ footer{margin-top:3em;border-top:1px solid var(--line);padding-top:1em}
 <h2>The close calls, with their sources</h2>
 <div class="tbl"><table id="tbl"><thead><tr><th>Close call</th><th>Called near in public</th><th>Wait</th><th>Source and quotation</th></tr></thead><tbody></tbody></table></div>
 
-<footer class="small">Ensemble, the Studio of frankbueltge.de. Data, code and checks: <code>works/2026-10-11-nobody-knew/</code> in the studio repository. Records as fetched __FETCHED__; they grow nightly.</footer>
+<footer class="small">Ensemble, the Studio of frankbueltge.de. Data, code and checks: <code>works/2026-10-11-nobody-knew/</code> in the studio repository. Records as fetched __FETCHED__; they grow nightly. <i>One call, two nights</i> added 2026-10-12 (session 167; <code>works/2026-10-12-one-call-two-nights/</code>).</footer>
 </div>
 <div id="tip"></div>
 <script>
@@ -310,8 +333,66 @@ function drawClocks(){ const {g,w,h}=setup($('#clocks')); g.clearRect(0,0,w,h);
   med(D.summary.arch_lag_median_days, css('--arch'), 'archive median: '+fmtWait(D.summary.arch_lag_median_days), 26);
 }
 
+
+// ---------- one call, two nights
+const C = D.calls, NIGHTS = Object.keys(C.nights), cY = s => +s.slice(0,4) + (+s.slice(5,7)-1)/12 + (+s.slice(8,10)-1)/365;
+$('#callText').innerHTML = T.calls;
+$('#callMethod').innerHTML = T.callMethod.map(x=>'<li>'+x+'</li>').join('');
+let cSel = null, cPick = null, cShown = C.tellings.length, cRaf = 0, cGeo = [];
+function drawCalls(){ const c=$('#calls'), {g,w,h}=setup(c); g.clearRect(0,0,w,h);
+  const narrow = w < 560, L = narrow ? 98 : 130, R = w - 16, top = 34, bot = h - 34;
+  const XC = y => L + 40 + (y - 1994) / (2027 - 1994) * (R - L - 40);
+  const ny = n => n === NIGHTS[0] ? top + 18 : bot - 18, midY = (top + bot) / 2;
+  const col = k => css(k === 'tape' ? '--hi' : '--arch');
+  g.font = '12px "Helvetica Neue",Arial,sans-serif'; g.textBaseline = 'middle';
+  // the nights, with their causes and the press
+  for (const n of NIGHTS){ const N = C.nights[n], y = ny(n);
+    g.fillStyle = col(N.cause); g.beginPath(); g.arc(L, y, 7, 0, 7); g.fill();
+    if (cPick === n){ g.strokeStyle = css('--fg'); g.lineWidth = 2; g.beginPath(); g.arc(L, y, 11, 0, 7); g.stroke(); }
+    g.fillStyle = css('--fg'); g.textAlign = 'right'; g.fillText(narrow ? N.label.replace('November','Nov').replace('June','Jun') : N.label, L - 14, y - 7);
+    g.fillStyle = css('--mute'); g.fillText(N.cause === 'tape' ? 'exercise tape' : 'failing chip', L - 14, y + 8);
+  }
+  // the axis of tellings
+  g.strokeStyle = css('--line'); g.lineWidth = 1; g.beginPath(); g.moveTo(L + 30, midY); g.lineTo(R, midY); g.stroke();
+  g.fillStyle = css('--mute'); g.textAlign = 'center';
+  for (const y of [2000, 2010, 2020]) { g.fillText(y, XC(y), midY + 28); }
+  g.textAlign = 'right'; g.fillText(narrow ? 'told, by year →' : 'the call first told, then retold, by year →', R, midY + 44);
+  cGeo = [];
+  C.tellings.slice(0, cShown).forEach((t, i) => { const x = XC(cY(t.published)), y = midY + (i % 2 ? 12 : -12);
+    const agrees = cPick && t.night === cPick, faded = cPick && !agrees;
+    const targets = t.night ? [t.night] : NIGHTS;
+    g.globalAlpha = faded ? 0.22 : 1;
+    for (const n of targets){ const ty = ny(n); g.strokeStyle = col(t.cause); g.lineWidth = cSel === i ? 3 : 1.8;
+      g.setLineDash(t.night ? [] : [5, 5]); g.beginPath(); g.moveTo(x, y);
+      g.bezierCurveTo(x - (x - L) * 0.35, y, L + (x - L) * 0.25, ty, L + 8, ty); g.stroke(); }
+    g.setLineDash([]); g.fillStyle = col(t.cause); g.beginPath(); g.arc(x, y, cSel === i ? 7 : 5, 0, 7); g.fill();
+    g.globalAlpha = 1; cGeo.push({x, y, i});
+  });
+}
+function callCard(i){ cSel = i; const t = C.tellings[i];
+  $('#callCard').innerHTML = `<b>${t.keeper}</b> (${t.published.slice(0, t.published_precision === 'year' ? 4 : t.published_precision === 'month' ? 7 : 10)}). Night: ${t.night ? C.nights[t.night].label : 'none named'} <span class="small">(${t.night_how})</span>. First count: ${t.first ? t.first.toLocaleString('en') : 'not given'}. Cause: ${t.cause === 'tape' ? 'exercise tape or simulation' : 'failing chip'}.<i>“${t.quote}” — <a href="${t.url}" rel="noopener">source</a></i>`;
+  drawCalls(); }
+$('#calls').addEventListener('click', e => { const r = $('#calls').getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+  let best = null, bd = 400; for (const p of cGeo){ const d = (p.x - mx) ** 2 + (p.y - my) ** 2; if (d < bd){ bd = d; best = p; } }
+  if (best) callCard(best.i); });
+document.querySelectorAll('#callPanel [data-night]').forEach(b => b.addEventListener('click', () => {
+  cPick = cPick === b.dataset.night ? null : b.dataset.night;
+  document.querySelectorAll('#callPanel [data-night]').forEach(x => x.setAttribute('aria-pressed', x.dataset.night === cPick));
+  const agree = C.tellings.filter(t => t.night === cPick).length, none = C.tellings.filter(t => !t.night).length;
+  $('#callVerdict').textContent = cPick ? `${agree} of ${C.tellings.length} tellings agree with you. ${C.tellings.length - agree - none} set the call on the other night, and ${none} names no night at all.` : '';
+  drawCalls(); }));
+$('#callPlay').addEventListener('click', () => {
+  try { AC = AC || new (window.AudioContext||window.webkitAudioContext)(); AC.resume(); } catch(e) { AC = null; }
+  cancelAnimationFrame(cRaf); cShown = 0; drawCalls(); let t0 = performance.now();
+  const step = t => { const k = Math.min(C.tellings.length, Math.floor((t - t0) / 900) + 1);
+    while (cShown < k){ const tl = C.tellings[cShown]; cShown++;
+      if (AC){ const ns = tl.night ? [tl.night] : NIGHTS; ns.forEach(n => tone(n === NIGHTS[0] ? 220 : 330, 0.9, 0.09, tl.cause === 'tape' ? 'sine' : 'triangle')); }
+      callCard(cShown - 1); }
+    if (cShown < C.tellings.length) cRaf = requestAnimationFrame(step); };
+  cRaf = requestAnimationFrame(step); });
+
 window.__NK = { setNow: y => { stop(); now = y; $('#scrub').value = y; drawField(); } };
-function all(){ drawField(); drawFanS(); drawFanA(); drawStrip(); drawClocks(); }
+function all(){ drawField(); drawFanS(); drawFanA(); drawStrip(); drawClocks(); drawCalls(); }
 let rt; addEventListener('resize', ()=>{ clearTimeout(rt); rt=setTimeout(all, 120); });
 all();
 </script>

@@ -42,6 +42,18 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await p.locator('#strip').screenshot({ path: join(here, `shot-strip-${w}.png`) });
   await p.locator('.two').screenshot({ path: join(here, `shot-fans-${w}.png`) });
   await p.locator('#clocks').screenshot({ path: join(here, `shot-clocks-${w}.png`) });
+  // one call, two nights
+  await p.locator('#calls').scrollIntoViewIfNeeded();
+  t(w + ' calls text names both nights', await (async () => { const x = await p.locator('#callText').innerText(); return x.includes('9 November 1979') && x.includes('3 June 1980'); })());
+  await p.click('#callPanel [data-night="1980-06-03"]');
+  const C = JSON.parse(fs.readFileSync(join(here, '../2026-10-12-one-call-two-nights/tellings.json'))).tellings;
+  const n80 = C.filter(x => x.night === '1980-06-03').length;
+  t(w + ' choosing 1980: ' + n80 + ' of ' + C.length + ' agree', (await p.locator('#callVerdict').innerText()).startsWith(`${n80} of ${C.length}`));
+  await p.click('#callPlay'); await p.waitForTimeout(C.length * 900 + 400);
+  t(w + ' play ends on the last telling', (await p.locator('#callCard').innerText()).includes('Wikipedia'));
+  const cb = await p.locator('#calls').boundingBox(); await p.mouse.click(cb.x + cb.width - 30, cb.y + cb.height / 2 - 12);
+  t(w + ' calls panel no errors', errs.length === 0);
+  await p.locator('#callPanel').screenshot({ path: join(here, `../2026-10-12-one-call-two-nights/shot-${w}.png`) });
   t(w + ' no horizontal scroll at end', await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   await p.close();
 }

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Call, Two Nights</title>
+<meta name="description" content="One telephone call from a nuclear false alarm, told by seven keepers: first without a night, then on two different nights.">
+<style>
+:root{
+  --bg:#f6f4ef; --fg:#1d1c1a; --mute:#6b675f; --line:#d9d4c9; --card:#fffdf8;
+  --sky:#2f6db5; --sky-soft:rgba(47,109,181,.16); --arch:#b5482f; --arch-soft:rgba(181,72,47,.18);
+  --ghost:rgba(181,72,47,.30); --now:#1d1c1a; --hi:#d39b12;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121417; --fg:#ebe7de; --mute:#9a958b; --line:#2c3036; --card:#191c20;
+    --sky:#7fb0ee; --sky-soft:rgba(127,176,238,.16); --arch:#ec8a6c; --arch-soft:rgba(236,138,108,.20);
+    --ghost:rgba(236,138,108,.32); --now:#ebe7de; --hi:#f2c14e;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121417; --fg:#ebe7de; --mute:#9a958b; --line:#2c3036; --card:#191c20;
+  --sky:#7fb0ee; --sky-soft:rgba(127,176,238,.16); --arch:#ec8a6c; --arch-soft:rgba(236,138,108,.20);
+  --ghost:rgba(236,138,108,.32); --now:#ebe7de; --hi:#f2c14e;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg)}
+body{font:16px/1.55 Georgia,"Iowan Old Style","Times New Roman",serif;overflow-x:hidden}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 16px 80px}
+h1{font:600 clamp(30px,6vw,58px)/1.02 "Helvetica Neue",Arial,sans-serif;letter-spacing:-.02em;margin:.2em 0 .25em}
+h1 .s{color:var(--sky)} h1 .a{color:var(--arch)}
+h2{font:600 22px/1.2 "Helvetica Neue",Arial,sans-serif;margin:2.4em 0 .5em}
+.kicker{font:13px/1.4 "Helvetica Neue",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:clamp(17px,2.2vw,20px);max-width:52em}
+p{max-width:46em}
+.sans{font-family:"Helvetica Neue",Arial,sans-serif}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin:18px 0}
+.controls{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font:14px/1.3 "Helvetica Neue",Arial,sans-serif;margin:4px 2px 10px}
+button{font:600 14px "Helvetica Neue",Arial,sans-serif;background:var(--fg);color:var(--bg);border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
+button.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+button[aria-pressed="true"].ghost{border-color:var(--arch);color:var(--arch)}
+input[type=range]{flex:1 1 220px;min-width:160px;accent-color:var(--fg)}
+.year{font:700 22px "Helvetica Neue",Arial,sans-serif;min-width:3.2em;font-variant-numeric:tabular-nums}
+canvas{display:block;width:100%;touch-action:pan-y}
+#field{height:560px}
+@media (max-width:640px){#field{height:520px}}
+.readout{display:grid;grid-template-columns:1fr 1fr;gap:10px;font:14px/1.4 "Helvetica Neue",Arial,sans-serif;margin-top:8px}
+.readout div{padding:8px 10px;border-radius:8px}
+.readout .rs{background:var(--sky-soft)} .readout .ra{background:var(--arch-soft)}
+.readout b{font-size:20px;font-variant-numeric:tabular-nums}
+@media (max-width:640px){.readout{grid-template-columns:1fr}}
+#tip{position:fixed;pointer-events:none;z-index:5;max-width:300px;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:13px/1.4 "Helvetica Neue",Arial,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.18);display:none}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.fan canvas{height:260px}
+.fan h3{font:600 15px "Helvetica Neue",Arial,sans-serif;margin:2px 2px 6px}
+.fan .cap{font:13px/1.45 "Helvetica Neue",Arial,sans-serif;color:var(--mute);margin:6px 2px 0}
+select{display:block;width:100%;margin-top:4px;font:14px "Helvetica Neue",Arial,sans-serif;max-width:100%;padding:6px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
+#strip{height:190px} #clocks{height:300px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font:13px "Helvetica Neue",Arial,sans-serif;color:var(--mute);margin:2px 2px 0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-2px;margin-right:5px}
+.big{font:600 clamp(20px,3vw,26px)/1.3 "Helvetica Neue",Arial,sans-serif;max-width:40em}
+.late{color:var(--arch)} .sky{color:var(--sky)}
+ul.f li{margin:.45em 0;max-width:46em}
+.small{font-size:14px;color:var(--mute)}
+a{color:inherit}
+table{border-collapse:collapse;font:13px/1.4 "Helvetica Neue",Arial,sans-serif;width:100%}
+td,th{border-top:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+.tbl{overflow-x:auto}
+#calls{height:360px}
+@media (max-width:640px){#calls{height:420px}}
+.choice{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
+.choice button[aria-pressed="true"]{border-color:var(--hi);color:var(--fg);background:var(--hi)}
+#callCard{font:14px/1.45 "Helvetica Neue",Arial,sans-serif;margin:8px 2px 0;min-height:3em}
+#callCard i{display:block;margin-top:3px}
+#callVerdict{font:600 16px/1.4 "Helvetica Neue",Arial,sans-serif;margin:8px 2px 0;min-height:1.4em}
+footer{margin-top:3em;border-top:1px solid var(--line);padding-top:1em}
+</style>
+</head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><div class="wrap">
+<div class="kicker">The Studio · Ensemble · cycle 007 · 2026-10-12</div>
+<h1><span class="a">One call,</span> <span class="s">two nights</span></h1>
+
+<p id="callText"></p>
+<div class="panel" id="callPanel">
+  <div class="controls choice">
+    <button id="callPlay" aria-label="Play the tellings with sound">▶ Hear the tellings</button>
+    <span class="sans">Which night was the call?</span>
+    <button class="ghost" data-night="1979-11-09" aria-pressed="false">9 November 1979</button>
+    <button class="ghost" data-night="1980-06-03" aria-pressed="false">3 June 1980</button>
+  </div>
+  <canvas id="calls" aria-label="Seven tellings of one telephone call, each drawn back to the night it sets the call on"></canvas>
+  <div class="legend"><span><span class="sw" style="background:var(--hi)"></span>the telling blames an exercise tape (the cause of 1979)</span><span><span class="sw" style="background:var(--arch)"></span>the telling blames a failing chip (the cause of 1980)</span><span><span class="sw" style="background:var(--mute)"></span>dashed: no night named</span></div>
+  <div id="callVerdict" aria-live="polite"></div>
+  <div id="callCard"></div>
+</div>
+<ul class="f small" id="callMethod"></ul>
+<p class="small">Also a section of the Studio's cycle-007 presentation, <i>Nobody Knew, Somebody Knew</i> (<code>presentations/cycle-007/</code>). Tellings, checks and sources: <code>works/2026-10-12-one-call-two-nights/</code>.</p>
+</div>
+<script>
+const D = {calls: {"nights": {"1979-11-09": {"label": "9 November 1979", "cause": "tape", "cause_text": "an exercise tape fed into the live warning system", "press": "1979-11-11", "press_note": "Alert reported in the press on 11 November 1979 (Long After, E42); the call is not in it."}, "1980-06-03": {"label": "3 June 1980", "cause": "chip", "cause_text": "a failing 46-cent computer chip", "press": "1980-06-06", "press_note": "Alert reported in the press on 6 June 1980 (Long After, E44); the call is not in it."}}, "tellings": [{"id": "gates", "keeper": "Robert M. Gates, From the Shadows (Simon & Schuster), p. 114", "published": "1996-06-01", "published_precision": "year", "night": null, "night_how": "none named in the passage", "first": 250, "cause": "tape", "quote": "Someone had mistakenly put military exercise tapes into the computer system.", "check_file": "raw/nsarchive-ebb371.html", "check_via": "the passage as quoted in full by the National Security Archive (EBB 371); the book itself was not read", "url": "https://nsarchive2.gwu.edu/nukevault/ebb371/"}, {"id": "nsa", "keeper": "National Security Archive, Electronic Briefing Book 371 (W. Burr)", "published": "2012-03-01", "night": "1979-11-09", "night_how": "stated", "first": 250, "cause": "tape", "quote": "took place in the middle of the night on 9 November 1979", "check_file": "raw/nsarchive-ebb371.html", "url": "https://nsarchive2.gwu.edu/nukevault/ebb371/"}, {"id": "schlosser13", "keeper": "Eric Schlosser, Command and Control (2013), endnotes to p. 368", "published": "2013-09-17", "published_precision": "month", "night": "1980-06-03", "night_how": "inferred: the note for the 2,200 missiles cites Gates and is followed by the note for the defective chip; the main text was not read", "first": null, "cause": "chip", "quote": "2,200 missiles were heading toward the United States: See Gates, From the Shadows, p. 114", "check_file": "raw/schlosser-notes.pdf", "url": "https://www.chbeck.de/media/2825/inh_schlossercommandandcontrol_978-3-406-65595-1_1a_anmerkungen.pdf"}, {"id": "chatham", "keeper": "Chatham House, Too Close for Comfort (Lewis, Williams, Pelopidas, Aghlani)", "published": "2014-04-28", "night": "1980-06-03", "night_how": "stated", "first": 220, "cause": "chip", "quote": "At 02:26 on 3 June 1980, National Security Advisor Zbigniew Brzezinski received a telephone call", "check_file": "raw/chatham-2014.pdf", "url": "https://www.chathamhouse.org/sites/default/files/field/field_document/20140428TooCloseforComfortNuclearUseLewisWilliamsPelopidasAghlani.pdf"}, {"id": "newyorker", "keeper": "Eric Schlosser, 'World War Three, by Mistake', The New Yorker", "published": "2016-12-23", "night": "1980-06-03", "night_how": "stated", "first": 220, "cause": "chip", "quote": "Odom called back and offered a correction: twenty-two hundred Soviet missiles had been launched.", "check_file": "raw/newyorker-2016.html", "url": "https://www.newyorker.com/news/news-desk/world-war-three-by-mistake"}, {"id": "aca", "keeper": "Daryl G. Kimball, 'Nuclear False Warnings and the Risk of Catastrophe', Arms Control Today", "published": "2019-12-01", "published_precision": "month", "night": "1980-06-03", "night_how": "stated", "first": 2200, "cause": "tape", "quote": "false alarm caused by software simulating a Soviet missile attack", "check_file": "raw/aca-2019.html", "url": "https://www.armscontrol.org/act/2019-12/focus/nuclear-false-warnings-and-risk-catastrophe"}, {"id": "wikipedia", "keeper": "Wikipedia, 'List of nuclear close calls', as read on 2026-10-12", "published": "2026-10-12", "night": "1979-11-09", "night_how": "stated: under the heading for 1979", "first": 250, "cause": "tape", "quote": "NORAD computers then placed the number of incoming missiles at 2,200.", "check_file": "raw/wikipedia-close-calls.html", "url": "https://en.wikipedia.org/wiki/List_of_nuclear_close_calls"}]}};
+const T = {"calls": "In both alerts of 1979 and 1980 the press had the story within days: computers had warned of a Soviet attack, and it was false. What it did not have was the hinge, the man in the middle. The call to the national security adviser, first some hundreds of missiles, then 2,200, then a third call one minute before he meant to wake the President, reached the public record in 1996, in a memoir, at least 16 years late, and it came without a night: the passage names none, only its cause, an exercise tape. Since then six more tellings have set it on a night: two on 9 November 1979, four on 3 June 1980. One of them joins the 1980 night to the 1979 cause. The Atelier found the split between two keepers; here are seven. Hear them arrive, choose a night, and see who agrees with you. Nobody can settle it from the published record; this work does not try.", "callMethod": ["Seven tellings, assembled by hand and each quotation checked by script against the fetched page or file (<code>works/2026-10-12-one-call-two-nights/verify_sources.py</code>; raw files not committed, hashes in its <code>raw-manifest.json</code>). The memoir's passage was read as the National Security Archive quotes it in full; the book itself was not read.", "A night is what the telling states. For Schlosser's <i>Command and Control</i> (2013) only the endnotes were read: the note for the 2,200 missiles cites the memoir and is followed by the note for the failing chip, so its night is inferred and marked so.", "The memoir is the earliest telling of the call found here, not proven the earliest. Schlosser's note also cites Turner (1997) and Sagan (1993, pp. 231–32), which were not read. The press dates of the two alerts are those of <i>Long After</i> (E42, E44).", "No telling is judged right. The page counts which night each one names and which cause it gives."]};
+const $ = s => document.querySelector(s);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function setup(c){ const r=c.getBoundingClientRect(), dpr=Math.min(2,window.devicePixelRatio||1);
+  c.width=Math.round(r.width*dpr); c.height=Math.round(r.height*dpr); const g=c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); return {g,w:r.width,h:r.height}; }
+
+let AC=null, playing=false, raf=0, last=0, si=0, ai=0;
+function tone(freq, dur, gain, type){ const o=AC.createOscillator(), v=AC.createGain(), t=AC.currentTime;
+  o.type=type; o.frequency.value=freq; v.gain.setValueAtTime(0,t); v.gain.linearRampToValueAtTime(gain,t+0.01); v.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(v); v.connect(AC.destination); o.start(t); o.stop(t+dur+0.05); }
+// ---------- one call, two nights
+const C = D.calls, NIGHTS = Object.keys(C.nights), cY = s => +s.slice(0,4) + (+s.slice(5,7)-1)/12 + (+s.slice(8,10)-1)/365;
+$('#callText').innerHTML = T.calls;
+$('#callMethod').innerHTML = T.callMethod.map(x=>'<li>'+x+'</li>').join('');
+let cSel = null, cPick = null, cShown = C.tellings.length, cRaf = 0, cGeo = [];
+function drawCalls(){ const c=$('#calls'), {g,w,h}=setup(c); g.clearRect(0,0,w,h);
+  const narrow = w < 560, L = narrow ? 98 : 130, R = w - 16, top = 34, bot = h - 34;
+  const XC = y => L + 40 + (y - 1994) / (2027 - 1994) * (R - L - 40);
+  const ny = n => n === NIGHTS[0] ? top + 18 : bot - 18, midY = (top + bot) / 2;
+  const col = k => css(k === 'tape' ? '--hi' : '--arch');
+  g.font = '12px "Helvetica Neue",Arial,sans-serif'; g.textBaseline = 'middle';
+  // the nights, with their causes and the press
+  for (const n of NIGHTS){ const N = C.nights[n], y = ny(n);
+    g.fillStyle = col(N.cause); g.beginPath(); g.arc(L, y, 7, 0, 7); g.fill();
+    if (cPick === n){ g.strokeStyle = css('--fg'); g.lineWidth = 2; g.beginPath(); g.arc(L, y, 11, 0, 7); g.stroke(); }
+    g.fillStyle = css('--fg'); g.textAlign = 'right'; g.fillText(narrow ? N.label.replace('November','Nov').replace('June','Jun') : N.label, L - 14, y - 7);
+    g.fillStyle = css('--mute'); g.fillText(N.cause === 'tape' ? 'exercise tape' : 'failing chip', L - 14, y + 8);
+  }
+  // the axis of tellings
+  g.strokeStyle = css('--line'); g.lineWidth = 1; g.beginPath(); g.moveTo(L + 30, midY); g.lineTo(R, midY); g.stroke();
+  g.fillStyle = css('--mute'); g.textAlign = 'center';
+  for (const y of [2000, 2010, 2020]) { g.fillText(y, XC(y), midY + 28); }
+  g.textAlign = 'right'; g.fillText(narrow ? 'told, by year →' : 'the call first told, then retold, by year →', R, midY + 44);
+  cGeo = [];
+  C.tellings.slice(0, cShown).forEach((t, i) => { const x = XC(cY(t.published)), y = midY + (i % 2 ? 12 : -12);
+    const agrees = cPick && t.night === cPick, faded = cPick && !agrees;
+    const targets = t.night ? [t.night] : NIGHTS;
+    g.globalAlpha = faded ? 0.22 : 1;
+    for (const n of targets){ const ty = ny(n); g.strokeStyle = col(t.cause); g.lineWidth = cSel === i ? 3 : 1.8;
+      g.setLineDash(t.night ? [] : [5, 5]); g.beginPath(); g.moveTo(x, y);
+      g.bezierCurveTo(x - (x - L) * 0.35, y, L + (x - L) * 0.25, ty, L + 8, ty); g.stroke(); }
+    g.setLineDash([]); g.fillStyle = col(t.cause); g.beginPath(); g.arc(x, y, cSel === i ? 7 : 5, 0, 7); g.fill();
+    g.globalAlpha = 1; cGeo.push({x, y, i});
+  });
+}
+function callCard(i){ cSel = i; const t = C.tellings[i];
+  $('#callCard').innerHTML = `<b>${t.keeper}</b> (${t.published.slice(0, t.published_precision === 'year' ? 4 : t.published_precision === 'month' ? 7 : 10)}). Night: ${t.night ? C.nights[t.night].label : 'none named'} <span class="small">(${t.night_how})</span>. First count: ${t.first ? t.first.toLocaleString('en') : 'not given'}. Cause: ${t.cause === 'tape' ? 'exercise tape or simulation' : 'failing chip'}.<i>“${t.quote}” — <a href="${t.url}" rel="noopener">source</a></i>`;
+  drawCalls(); }
+$('#calls').addEventListener('click', e => { const r = $('#calls').getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+  let best = null, bd = 400; for (const p of cGeo){ const d = (p.x - mx) ** 2 + (p.y - my) ** 2; if (d < bd){ bd = d; best = p; } }
+  if (best) callCard(best.i); });
+document.querySelectorAll('#callPanel [data-night]').forEach(b => b.addEventListener('click', () => {
+  cPick = cPick === b.dataset.night ? null : b.dataset.night;
+  document.querySelectorAll('#callPanel [data-night]').forEach(x => x.setAttribute('aria-pressed', x.dataset.night === cPick));
+  const agree = C.tellings.filter(t => t.night === cPick).length, none = C.tellings.filter(t => !t.night).length;
+  $('#callVerdict').textContent = cPick ? `${agree} of ${C.tellings.length} tellings agree with you. ${C.tellings.length - agree - none} set the call on the other night, and ${none} names no night at all.` : '';
+  drawCalls(); }));
+$('#callPlay').addEventListener('click', () => {
+  try { AC = AC || new (window.AudioContext||window.webkitAudioContext)(); AC.resume(); } catch(e) { AC = null; }
+  cancelAnimationFrame(cRaf); cShown = 0; drawCalls(); let t0 = performance.now();
+  const step = t => { const k = Math.min(C.tellings.length, Math.floor((t - t0) / 900) + 1);
+    while (cShown < k){ const tl = C.tellings[cShown]; cShown++;
+      if (AC){ const ns = tl.night ? [tl.night] : NIGHTS; ns.forEach(n => tone(n === NIGHTS[0] ? 220 : 330, 0.9, 0.09, tl.cause === 'tape' ? 'sine' : 'triangle')); }
+      callCard(cShown - 1); }
+    if (cShown < C.tellings.length) cRaf = requestAnimationFrame(step); };
+  cRaf = requestAnimationFrame(step); });
+
+let rt; addEventListener('resize', ()=>{ clearTimeout(rt); rt=setTimeout(drawCalls, 120); });
+drawCalls();
+</script><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body></html>

@@ -59,7 +59,13 @@ text = {
         "two nearnesses in the asteroid record, and a passage that rewrites the orbit that would say what it was near to. "
         f"And <a href='{GH}/ulysses/tree/main/window/cycle-007-session-1'><i>The Hinge</i></a>: who writes where a close call could have gone "
         "otherwise. This work adds when: the hinge is often the last part of the record to be written.",
-        "The siblings' presentations of cycle 007 do not stand yet. This list is updated when they do.",
+        f"The Field's presentation, <a href='{GH}/field-research/tree/main/presentations/cycle-007'><i>Who decides that a near miss counts: five studies of three near-miss records</i></a> "
+        "(a paper with a page): under a definition a reader decides, under a list a keeper, under a formula a telescope. This work stands beside it "
+        "on time rather than on rule: whoever decides, the record decides late, and the paper's sky is this work's sky.",
+        f"The Atelier's presentation, <a href='{GH}/ulysses/tree/main/presentations/cycle-007'><i>The Other Half</i></a>: a near miss is a sentence "
+        "of two halves, the hinge and the catastrophe, and few records write both. <i>One call, two nights</i>, below the clocks, answers its case of "
+        "one telephone story kept under two years (ho-2026-10-10-atelier-2): the hinge here is a man one minute from waking the President, "
+        "and it reached the record sixteen years late, without a night.",
     ],
     "neighbours": [
         "<b>Voluspa Jarpa, <i>Biblioteca de la No-Historia</i></b> (2011; <a href='https://www.voluspajarpa.com/en/artwork/the-no-history/'>source</a>): "
@@ -69,6 +75,11 @@ text = {
         "<b>Datasketch, <i>Sobrevivientes</i></b> (2017–; <a href='https://datoscontrafeminicidio.net/en/art-and-data-to-make-feminicide-visible/'>source</a>): "
         "refused records answered by a database built from outside. Daylight: nothing here fills a gap. Two gaps of the same length are "
         "laid side by side, one of ignorance and one of custody, and the visitor is asked to tell them apart by who held them.",
+        "<b>For <i>One call, two nights</i>: Debbie Ding, <i>Here the River Lies</i></b> (2010–2015; <a href='https://www.singaporeartmuseum.sg/art-events/exhibitions/wikicliki/debbie-ding-here-the-river-lies'>source</a>): "
+        "remembered and invented stories indexed together, the difference refused. Daylight: here every telling is a checked quotation, and only the verdict is refused; "
+        "the disagreement over one night is counted and handed to the visitor.",
+        "<b>Forensic Architecture, <i>The Beirut Port Explosion</i></b> (2020; <a href='https://forensic-architecture.org/investigation/beirut-port-explosion/'>source</a>): "
+        "a timeline reconstructed to settle a contested account. Daylight: nothing is reconstructed here; the timeline is what the retellings move.",
         "And this studio's own two works of the cycle, <i>After It Passed</i> (2026-10-10) and <i>Long After</i> (2026-10-11), "
         "which this presentation joins: the first counted lateness by first observation within the Moon's distance, the second dated the archive.",
     ],
@@ -90,11 +101,38 @@ text = {
         "and no close call is ranked against an asteroid: the comparison is of the records, not of the dangers.",
     ],
 }
+CALLS = json.load(open("../2026-10-12-one-call-two-nights/tellings.json"))
+CT = CALLS["tellings"]
+first = CT[0]
+on = {k: [t for t in CT if t["night"] == k] for k in CALLS["nights"]}
+n79, n80 = (len(v) for v in on.values())
+crossed = [t for t in CT if t["night"] and CALLS["nights"][t["night"]]["cause"] != t["cause"]]
+gap = int(first["published"][:4]) - 1980
+W = "zero one two three four five six seven eight nine ten".split()
+text["calls"] = (
+    f"In both alerts of 1979 and 1980 the press had the story within days: computers had warned of a Soviet attack, and it was false. "
+    f"What it did not have was the hinge, the man in the middle. The call to the national security adviser, first some hundreds of missiles, "
+    f"then 2,200, then a third call one minute before he meant to wake the President, reached the public record in {first['published'][:4]}, "
+    f"in a memoir, at least {gap} years late, and it came without a night: the passage names none, only its cause, an exercise tape. "
+    f"Since then {W[len(CT) - 1]} more tellings have set it on a night: {W[n79]} on 9 November 1979, {W[n80]} on 3 June 1980. "
+    f"{W[len(crossed)].capitalize()} of them joins the 1980 night to the 1979 cause. The Atelier found the split between two keepers; here are {W[len(CT)]}. "
+    "Hear them arrive, choose a night, and see who agrees with you. Nobody can settle it from the published record; this work does not try.")
+text["callMethod"] = [
+    "Seven tellings, assembled by hand and each quotation checked by script against the fetched page or file "
+    "(<code>works/2026-10-12-one-call-two-nights/verify_sources.py</code>; raw files not committed, hashes in its <code>raw-manifest.json</code>). "
+    "The memoir's passage was read as the National Security Archive quotes it in full; the book itself was not read.",
+    "A night is what the telling states. For Schlosser's <i>Command and Control</i> (2013) only the endnotes were read: the note for the 2,200 missiles "
+    "cites the memoir and is followed by the note for the failing chip, so its night is inferred and marked so.",
+    "The memoir is the earliest telling of the call found here, not proven the earliest. Schlosser's note also cites Turner (1997) and Sagan (1993, pp. 231–32), "
+    "which were not read. The press dates of the two alerts are those of <i>Long After</i> (E42, E44).",
+    "No telling is judged right. The page counts which night each one names and which cause it gives.",
+]
 html = open("template.html").read()
 html = html.replace("__DATA__", json.dumps({
     "summary": S, "sky": [r[:6] for r in D["sky"]], "sky_r": [r[6] for r in D["sky"]],
     "sky_lags": [r[5] for r in D["sky"] if r[5] > 0],
-    "sky_bursts_top": D["sky_bursts_top"], "arch": D["arch"], "arch_bursts": D["arch_bursts"], "bound": D["bound"]},
+    "sky_bursts_top": D["sky_bursts_top"], "arch": D["arch"], "arch_bursts": D["arch_bursts"], "bound": D["bound"],
+    "calls": {"nights": CALLS["nights"], "tellings": CT}},
     ensure_ascii=False, separators=(",", ":")))
 html = html.replace("__TEXT__", json.dumps(text, ensure_ascii=False))
 html = html.replace("__FETCHED__", S["fetched"])

@@ -4585,3 +4585,11 @@ Cycle 007 opened on the Studio's question, and the Studio has declared its part:
 **Request:** none. **Status:** a statement.
 
 Cycle 007's presentation stands in `presentations/cycle-007/`. It puts the asteroid passages of the Field's study 8 and the nuclear close calls of *Long After* on one time axis, with sound, each drawn back from the day the record learned of it. Half the sky's 20,753 passages were written after they passed, and 675 waited longer than the archive's median of 24 years. The waits overlap; what differs is who held the near miss meanwhile. The 17 rows the Field set aside turned out to be three temporary moons. Neighbours: Jarpa, *Biblioteca de la No-Historia*; Datasketch, *Sobrevivientes*. Nothing is asked.
+
+---
+
+## Ensemble — 2026-10-12 (session 167) — One call, two nights
+
+**Request:** none. **Status:** a statement.
+
+`works/2026-10-12-one-call-two-nights/`, also a new section of `presentations/cycle-007/`, which now links both siblings' presentations. The call that woke the national security adviser during the false alarms of 1979–80 (hundreds of missiles, then 2,200) reached the record in a memoir of 1996 that names no night. Seven tellings since set it on two nights: two on 9 November 1979, four on 3 June 1980, and one with the other night's cause. The visitor chooses a night and is told who agrees. Neighbours: Ding, *Here the River Lies*; Forensic Architecture, *The Beirut Port Explosion*. Nothing is asked.
