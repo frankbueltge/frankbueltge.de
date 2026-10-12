@@ -20,11 +20,14 @@
  * regions only, the root keeps the frame's tokens and a guest outside those regions
  * (`.pp-guest`) reads them exactly as it does on a mono page.
  *
- * NO SECOND GROUND YET. The handoff ships one optional dark rendition of one page
- * ("Ecology Score Dark"); the entrance has none. A paper page is therefore paper under both
- * themes, and the theme toggle is taken off the bar while a paper page is open — unless the
- * page holds a guest, which still follows the theme. A dark ground, when it comes, is one more
- * block in this file: every colour the paper sheets use is a token here.
+ * TWO GROUNDS (2026-10-12). The paper follows the theme like every other page: cream and ink
+ * under the light theme, the handoff's "Ecology Score Dark" ground under the dark one. The dark
+ * block at the end of this file re-declares the same --pp-* tokens and nothing else, so no sheet
+ * that reads them knows which ground it stands on. Its neutrals are the handoff's dark page; its
+ * three voices are the dark steps recorded and validated with `paper-voices` in
+ * src/lib/dataviz/palette.ts (the handoff's own dark hues fail that set's checks). The handoff
+ * has no dark accent; the one here keeps the light accent's place, redder than the Studio's hue,
+ * and clears 4.5 : 1 as small text on both dark grounds, so it needs no separate -ink step.
  *
  * TWO STEPS PER HUE WHERE TEXT NEEDS IT. The handoff's accent and its Studio orange measure
  * 4.07 : 1 and 4.06 : 1 on the ground — enough for a mark, short of the 4.5 : 1 a small label
@@ -38,6 +41,9 @@
    chrome in (Base.astro's theme-colour sync reads --surface-color before the frame's --color-bg). */
 :root[data-surface='paper'] {
   --surface-color: #f3efe6;
+}
+:root[data-surface='paper'][data-theme='dark'] {
+  --surface-color: #13120f;
 }
 :root[data-surface='paper'] body {
   background-color: var(--surface-color);
@@ -272,4 +278,42 @@
   content: '·';
   margin-right: 6px;
   color: var(--pp-muted);
+}
+
+/* ———————————————————————————————————————————————————————————————————————————————————————————
+   The dark ground (2026-10-12). Same tokens, same regions; see "TWO GROUNDS" at the top.
+   Contrast on the ground (#13120f) / on ground-2 (#1b1a16): ink 15.1 / 14.0, ink-2 11.0 / 10.3,
+   muted 6.1 / 5.7, accent 5.3 / 4.9, field 6.3 / 5.8, atelier 5.5 / 5.1, studio 5.5 / 5.1.
+   An ink bar turns light here, so the type on it turns dark: on-ink-muted 7.1, on-ink-warm 4.8.
+   ——————————————————————————————————————————————————————————————————————————————————————————— */
+:root[data-surface='paper'][data-theme='dark'] :is(.site-bar, .paper, .paper-chrome, .paper-foot) {
+  --pp-ground: #13120f;
+  --pp-ground-2: #1b1a16;
+  --pp-ground-lift: #1b1a16;
+  --pp-ink: #ece6d9;
+  --pp-ink-2: #cdc6b7;
+  --pp-muted: #9a9385;
+  --pp-faint: #7a7468;
+  --pp-ghost: #45413a;
+  --pp-rule: #2e2b25;
+  --pp-rule-light: #26241f;
+  --pp-rule-firm: #45413a;
+  --pp-accent: #e85a35;
+  --pp-accent-ink: #e85a35;
+  --pp-shade: #3b2219;
+  --pp-on-ink: #13120f;
+  --pp-on-ink-muted: #4f4a41;
+  --pp-on-ink-warm: #8a5a12;
+  --pp-shadow: 0 18px 40px -18px rgb(0 0 0 / 0.7);
+
+  /* PALETTE: paper-voices (the dark steps) */
+  --pp-c-field: #3aa0c8;
+  --pp-c-atelier: #9277f5;
+  --pp-c-studio: #d36f48;
+  --pp-studio-ink: #d36f48;
+
+  --rgb-bg: 19 18 15;
+  --rgb-accent: 236 230 217;
+  --rgb-accent-soft: 205 198 183;
+  --rgb-cyan: 236 230 217;
 }

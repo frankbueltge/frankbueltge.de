@@ -768,11 +768,10 @@ export const PALETTES: readonly PaletteSet[] = [
       'VIOLET IS NOT: against the blue it measured ΔE 11.0 for normal vision (hard floor 15) and ' +
       '6.2 under deuteranopia in the validator, a FAIL, so it was moved the shortest distance ' +
       'that clears every check on both paper surfaces — ΔE 4.6, to #7548dc, a slightly redder ' +
-      'and stronger violet. Dark steps are recorded because a set is two modes by this file’s ' +
-      'own rule, and they are NOT YET MOUNTED: the paper ground has no dark rendition (the ' +
-      'handoff ships one optional dark page; its three hues, #6db3ec · #a89bf0 · #e8825a, fail ' +
-      'the dark lightness band, the chroma floor and, in this file’s maths, CVD at ΔE 1.3). ' +
-      'The steps below are the nearest that pass, kept for the day that ground is built. ' +
+      'and stronger violet. The dark steps are mounted on the dark paper ground since ' +
+      '2026-10-12 (the handoff’s own dark hues, #6db3ec · #a89bf0 · #e8825a, fail the dark ' +
+      'lightness band, the chroma floor and, in this file’s maths, CVD at ΔE 1.3; the steps ' +
+      'below are the nearest that pass, and all three clear 4.5 : 1 as small text there). ' +
       'Text: the blue and the violet are ≥ 4.5 : 1 on both paper surfaces and may be small ' +
       'labels; the orange is 4.06 : 1, a mark and a display colour only — small text in the ' +
       'Studio’s hue wears --pp-studio-ink (#aa4b23, 4.89 : 1), declared beside the set.',
