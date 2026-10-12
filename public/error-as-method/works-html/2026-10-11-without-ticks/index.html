@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Without Ticks</title>
+<style>
+:root { --bg:#f4f1ea; --fg:#1c1a16; --mute:#6a645a; --line:#d6cfc2; --card:#fffdf8; --T:#2f5d8a; --I:#7a5a1e; --L:#8a3b2f; --mark:#b3261e; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#15130f; --fg:#ebe5da; --mute:#a0988b; --line:#3a352d; --card:#1e1b16; --T:#86aedb; --I:#d6b26a; --L:#e0907f; --mark:#ff7a6e; } }
+:root[data-theme="dark"] { --bg:#15130f; --fg:#ebe5da; --mute:#a0988b; --line:#3a352d; --card:#1e1b16; --T:#86aedb; --I:#d6b26a; --L:#e0907f; --mark:#ff7a6e; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 Georgia, "Times New Roman", serif; }
+main { max-width:1180px; margin:0 auto; padding:24px 16px 64px; }
+h1 { font-size:2.1rem; margin:0 0 4px; font-weight:normal; }
+h2 { font-size:1.25rem; font-weight:normal; margin:34px 0 8px; }
+.lede { margin:0 0 18px; color:var(--mute); max-width:66ch; }
+.mono { font-family:ui-monospace, Menlo, monospace; font-size:.85em; }
+.k-T { color:var(--T); } .k-I { color:var(--I); } .k-L { color:var(--L); }
+.preps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.prep { background:var(--card); border:1px solid var(--line); padding:10px 12px; min-width:0; display:flex; flex-direction:column; gap:8px; }
+.prep h3 { font-size:.95rem; margin:0; font-weight:normal; }
+.prep h3 b { font-family:ui-monospace, Menlo, monospace; margin-right:.4em; }
+.prep pre { margin:0; font:12px/1.35 ui-monospace, Menlo, monospace; white-space:pre; overflow:hidden; color:var(--mute); }
+.prep pre mark { background:none; color:var(--mark); font-weight:bold; }
+.prep .src { width:100%; display:block; border:1px solid var(--line); background:#fff; }
+.lens { position:relative; width:100%; aspect-ratio:5/2; border:1px solid var(--line); background-color:#fff; background-repeat:no-repeat; image-rendering:pixelated; }
+.lens::after { content:""; position:absolute; left:50%; top:50%; width:34px; height:34px; margin:-17px 0 0 -17px; border:2px solid var(--mark); border-radius:50%; }
+.lens.table { display:flex; align-items:center; justify-content:center; font:15px ui-monospace, Menlo, monospace; color:#1c1a16; }
+.lens.table::after { display:none; }
+.cap { font-size:.88rem; color:var(--mute); margin:0; }
+.arm { margin:18px 0 6px; font-size:1rem; }
+.grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+.w { background:var(--card); border:1px solid var(--line); min-width:0; transition:opacity .2s; }
+.w.dim { opacity:.22; }
+.w a { display:block; aspect-ratio:1100/800; overflow:hidden; border-bottom:1px solid var(--line); background:#fff; }
+.w img { width:100%; height:100%; object-fit:cover; display:block; }
+.w .b { padding:6px 9px 8px; font-size:.86rem; }
+.w .t { font-style:italic; }
+.chip { display:inline-block; font:11px ui-monospace, Menlo, monospace; border:1px solid var(--line); padding:0 5px; margin:3px 4px 0 0; color:var(--mute); }
+.tablewrap { overflow-x:auto; }
+table.ledger { border-collapse:collapse; font-size:.9rem; min-width:640px; }
+.ledger th, .ledger td { padding:5px 7px; border-bottom:1px solid var(--line); text-align:center; }
+.ledger th.row { text-align:left; font-weight:normal; cursor:pointer; white-space:nowrap; }
+.ledger tr:hover th.row, .ledger tr.on th.row { color:var(--mark); }
+.ledger td.y::before { content:"●"; } .ledger td.n::before { content:"·"; color:var(--mute); }
+.ledger thead th { font:11px ui-monospace, Menlo, monospace; font-weight:normal; color:var(--mute); }
+.ledger td.gap, .ledger th.gap { border-left:1px solid var(--line); }
+.after { max-width:70ch; }
+a { color:inherit; }
+@media (max-width:760px) { .preps { grid-template-columns:1fr; } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } h1 { font-size:1.7rem; } }
+</style>
+</head>
+<body>
+<main>
+<h1>Without Ticks</h1>
+<p class="lede">Twelve fresh makers each made one still work from the same material: births registered in the United States on each of 5,479 days, 2000–2014. Four got the <b class="k-T">table</b>, four a <b class="k-I">picture with axes</b>, four the same dots as a <b class="k-L">small compressed picture with nothing on it but dots</b>. Below, the busiest day of the fifteen years, 9 September 2009, as each of them received it.</p>
+
+<div class="preps">
+  <div class="prep"><h3><b class="k-T">T</b>the table, <span class="mono">births.csv</span></h3><pre id="snip"></pre>
+    <div class="lens table" id="lensT"></div><p class="cap">The row names the day. 9.9.09, a date people chose.</p></div>
+  <div class="prep"><h3><b class="k-I">I</b>the picture, <span class="mono">births.png</span></h3><img class="src" src="materials/births.png" alt="Scatter plot, one dot per day 2000–2014, births on the vertical axis from 5,000 to 17,000, two bands of dots.">
+    <div class="lens" id="lensI" role="img" aria-label="The picture enlarged around 9 September 2009"></div><p class="cap">The highest dot of 2009 is there. Its column holds about five days.</p></div>
+  <div class="prep"><h3><b class="k-L">L</b>the lossy picture, <span class="mono">births.jpg</span></h3><img class="src" src="materials/births.jpg" alt="The same dots, 480 by 220 pixels, compressed, with no axes or numbers.">
+    <div class="lens" id="lensL" role="img" aria-label="The lossy picture enlarged around 9 September 2009"></div><p class="cap">A pixel holds about twelve days, and there is no scale.</p></div>
+</div>
+
+<h2>What the twelve made</h2>
+<p class="cap">Click a line of the ledger to see who named it. Click a work to open it.</p>
+<div id="works"></div>
+
+<h2>What each maker named</h2>
+<div class="tablewrap"><table class="ledger" id="ledger"></table></div>
+<p class="cap">Searched in each maker's note, report and page, after the makers and the coder had finished (<span class="mono">ledger.py</span>). ROW, DAY and PIXEL say what unit the page carries: the table's rows, days fitted back out of the picture, or the picture's own pixels.</p>
+
+<section class="after">
+<h2>What came through</h2>
+<p>All twelve found the week: two bands of days, five working days above, Saturday and Sunday below. Holidays came through every preparation, but not the same way. Table makers read them off dated rows. Two lossy makers labelled Christmas, 4 July, Labor Day and Thanksgiving where stray dots clustered, and said the names came from calendar knowledge, not from the file. A third called them only “holiday dots”. The fourth (m06) mentions Christmas only to refuse it: its lowest marks are “a claim about a cluster, not about Christmas Day”. The ledger's search counts that refusal as naming. Ten of twelve folded the fifteen years onto one calendar year.</p>
+<p>What did not come through was the dated singular. Every table maker named 9.9.09, 6.6.06 or the 13th. No picture maker did. One saw the dot (“early September 2009: about 16,100”). It could not see that the day was 9.9.09, so it could not see that the day had been chosen.</p>
+<p>No lossy maker stopped decoding. All four carried the picture's own pixels into their pages and drew each one as wide as the days it covered. They did not close the margin by inventing days. They did not leave it open by looking instead of measuring either. They measured how wide it was and drew that.</p>
+<p class="cap">Text: <a href="work.md">work.md</a> · predictions: <a href="PREDICTIONS.md">PREDICTIONS.md</a> · reports: <a href="reports/">reports/</a> · data: Social Security Administration via FiveThirtyEight, CC BY 4.0.</p>
+</section>
+</main>
+<script src="face-data.js"></script>
+<script src="face.js"></script>
+</body>
+</html>

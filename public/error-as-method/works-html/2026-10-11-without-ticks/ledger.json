@@ -1,0 +1,223 @@
+{
+ "m01": {
+  "arm": "L",
+  "m1": [
+   "DECODE",
+   "EMBED"
+  ],
+  "unit": "PIXEL",
+  "form": "FOLD-RADIAL",
+  "evidence": "report: ImageMagick to raw greyscale; 'every pixel darker than the background (about 22,000) went into a compact string inside the page'",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": true,
+   "the September swell": true,
+   "the peak around 2007": true,
+   "repeating dates (9.9.09 \u2026)": false,
+   "the 13th": false,
+   "one day's exact count": false
+  }
+ },
+ "m02": {
+  "arm": "T",
+  "m1": [
+   "TABLE"
+  ],
+  "unit": "ROW",
+  "form": "FOLD-GRID",
+  "evidence": "scratch explore.py/resid.py parse births.csv; page carries 5,479 cells",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": true,
+   "the September swell": true,
+   "the peak around 2007": true,
+   "repeating dates (9.9.09 \u2026)": true,
+   "the 13th": true,
+   "one day's exact count": true
+  }
+ },
+ "m03": {
+  "arm": "I",
+  "m1": [
+   "DECODE"
+  ],
+  "unit": "DAY",
+  "form": "NO-TIME",
+  "evidence": "scratch dots.py/mass.py/poisson.py: blobs to dots, hidden days added by a Poisson correction; page carries reconstructed days",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": true,
+   "the September swell": false,
+   "the peak around 2007": true,
+   "repeating dates (9.9.09 \u2026)": false,
+   "the 13th": false,
+   "one day's exact count": false
+  }
+ },
+ "m04": {
+  "arm": "I",
+  "m1": [
+   "DECODE"
+  ],
+  "unit": "DAY",
+  "form": "NO-TIME",
+  "evidence": "scratch decode.py/fit.py: discs fitted to ink, 5,501 dots; page carries reconstructed days",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": false,
+   "the September swell": false,
+   "the peak around 2007": true,
+   "repeating dates (9.9.09 \u2026)": false,
+   "the 13th": false,
+   "one day's exact count": false
+  }
+ },
+ "m05": {
+  "arm": "L",
+  "m1": [
+   "DECODE",
+   "EMBED"
+  ],
+  "unit": "PIXEL",
+  "form": "FOLD-LINEAR",
+  "evidence": "report: 'kept the cropped pixel darkness (470x174) and embedded it in the page as base64'",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": true,
+   "the September swell": false,
+   "the peak around 2007": true,
+   "repeating dates (9.9.09 \u2026)": false,
+   "the 13th": false,
+   "one day's exact count": false
+  }
+ },
+ "m06": {
+  "arm": "L",
+  "m1": [
+   "DECODE",
+   "EMBED"
+  ],
+  "unit": "PIXEL",
+  "form": "FOLD-RADIAL",
+  "evidence": "report: 'kept every pixel darker than a threshold (15,742 of them), with its position and darkness, and packed them into the page'",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": true,
+   "the September swell": true,
+   "the peak around 2007": false,
+   "repeating dates (9.9.09 \u2026)": false,
+   "the 13th": false,
+   "one day's exact count": false
+  }
+ },
+ "m07": {
+  "arm": "I",
+  "m1": [
+   "DECODE",
+   "EMBED"
+  ],
+  "unit": "PIXEL",
+  "form": "FOLD-LINEAR",
+  "evidence": "scratch ink.py/encode.py: ink per source pixel, run-length encoded into the page; 'each source pixel column becomes a short streak'",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": true,
+   "the September swell": true,
+   "the peak around 2007": true,
+   "repeating dates (9.9.09 \u2026)": false,
+   "the 13th": false,
+   "one day's exact count": false
+  }
+ },
+ "m08": {
+  "arm": "T",
+  "m1": [
+   "TABLE"
+  ],
+  "unit": "ROW",
+  "form": "FOLD-LINEAR",
+  "evidence": "scratch explore.py parses births.csv; page carries 5,479 values",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": true,
+   "the September swell": true,
+   "the peak around 2007": true,
+   "repeating dates (9.9.09 \u2026)": true,
+   "the 13th": true,
+   "one day's exact count": true
+  }
+ },
+ "m09": {
+  "arm": "I",
+  "m1": [
+   "DECODE"
+  ],
+  "unit": "DAY",
+  "form": "FOLD-RADIAL",
+  "evidence": "scratch decode.py/blobs.py/dots.py: blobs split into 4,995 dots; page carries reconstructed days",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": true,
+   "the September swell": true,
+   "the peak around 2007": true,
+   "repeating dates (9.9.09 \u2026)": false,
+   "the 13th": false,
+   "one day's exact count": false
+  }
+ },
+ "m10": {
+  "arm": "L",
+  "m1": [
+   "DECODE",
+   "EMBED"
+  ],
+  "unit": "PIXEL",
+  "form": "FOLD-RADIAL",
+  "evidence": "report: 'I kept every inked pixel of the source as a point: 15,743 pixels, with their darkness, stored inside the page'",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": true,
+   "the September swell": true,
+   "the peak around 2007": true,
+   "repeating dates (9.9.09 \u2026)": false,
+   "the 13th": false,
+   "one day's exact count": false
+  }
+ },
+ "m11": {
+  "arm": "T",
+  "m1": [
+   "TABLE"
+  ],
+  "unit": "ROW",
+  "form": "FOLD-GRID",
+  "evidence": "scratch explore.py parses births.csv; page carries 5,479 counts as one string",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": true,
+   "the September swell": true,
+   "the peak around 2007": true,
+   "repeating dates (9.9.09 \u2026)": true,
+   "the 13th": true,
+   "one day's exact count": true
+  }
+ },
+ "m12": {
+  "arm": "T",
+  "m1": [
+   "TABLE"
+  ],
+  "unit": "ROW",
+  "form": "FOLD-LINEAR",
+  "evidence": "scratch explore.py/ex2.py parse births.csv; page carries one list of daily counts",
+  "named": {
+   "the week (two bands)": true,
+   "holidays": true,
+   "the September swell": true,
+   "the peak around 2007": true,
+   "repeating dates (9.9.09 \u2026)": true,
+   "the 13th": true,
+   "one day's exact count": true
+  }
+ }
+}
