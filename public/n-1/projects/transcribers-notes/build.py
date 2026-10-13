@@ -46,6 +46,28 @@ tiles = "".join(f'<a class="t" href="https://www.gutenberg.org/ebooks/{i}" title
 lev1 = res["share_pairs_lev1"]
 fb = ex["formula_books"]
 
+# session 2: the hand and the ear (session2.json registered, explore2.json exploratory)
+s2 = json.load(open("session2.json")); c2 = s2["completed_sample"]; x2 = json.load(open("explore2.json"))
+allp = pairs + json.load(open("pairs2_verified.json"))
+def diff1(a, b):
+    """mark the one differing position of a same-length pair"""
+    k = next(i for i in range(len(a)) if a[i] != b[i])
+    return k
+def turned_word(a, b):
+    k = diff1(a, b)
+    return (f'<span class="w2"><span class="pr">{E(a[:k])}<b class="rot" title="the sort for {E(b[k])}, set upside down">{E(b[k])}</b>{E(a[k+1:])}</span>'
+            f' <span class="mut">printed</span> {E(a)} <span class="mut">&middot; meant</span> {E(b)}</span>')
+turned_html = "".join(turned_word(t["from"], t["to"]) for t in s2["turned_instances"])
+V = set("aeiou")
+vw = []
+for p in allp:
+    a, b = p["from"], p["to"]
+    if p["lev"] == 1 and len(a) == len(b):
+        k = diff1(a, b)
+        if a[k] in V and b[k] in V and a[k].islower() and b[k].islower():
+            vw.append(f'<span class="w">{E(a[:k])}<s>{E(a[k])}</s><b>{E(b[k])}</b>{E(a[k+1:])}</span>')
+tb = x2["turned_books"]; big = max(tb.values())
+
 lst = ", ".join(f"{b['listed']*100/b['books']:.0f}&nbsp;%" for k, b in bins.items() if k >= 2005)
 page = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>What the Repair Keeps</title>
@@ -62,7 +84,8 @@ svg{{width:100%;height:auto;display:block;margin:1em 0}} .ax{{stroke:var(--ax);s
 .key span{{display:inline-block;width:.8em;height:.8em;margin:0 .3em 0 .9em;vertical-align:-.05em}}
 table{{border-collapse:collapse;width:100%;font-size:.85rem}} th,td{{text-align:right;padding:3px 6px;border-bottom:1px solid var(--ax)}} th:first-child{{text-align:left}}
 .wall{{font-size:.82rem;line-height:1.75}} .bk{{margin:.4em 0}} .bk a{{color:var(--mut);font:11px system-ui,sans-serif;margin-right:.4em}}
-.w{{margin-right:.9em;display:inline-block;max-width:100%}} .w s{{color:var(--s);text-decoration-color:var(--c1)}}
+.w{{margin-right:.9em;display:inline-block;max-width:100%}} .w2{{display:block;margin:.3em 0}} .pr{{font-size:1.3em;margin-right:.6em}} .rot{{display:inline-block;line-height:1;vertical-align:-.22em;transform:rotate(180deg);color:var(--c1);font-weight:400}} .w b{{color:var(--c1)}}
+.w s{{color:var(--s);text-decoration-color:var(--c1)}}
 .tiles{{display:flex;flex-wrap:wrap;gap:4px}} .t{{display:inline-block;width:4.2em;padding:.5em 0;text-align:center;background:var(--c3);color:var(--mut);
 font:10px system-ui,sans-serif;text-decoration:none;border-radius:2px}}
 a{{color:inherit}}
@@ -88,6 +111,24 @@ noted book in five in 2005&ndash;09 to about half in 2015&ndash;24. The word &ld
 <h2>The rest</h2>
 <p>The {n_sil} books whose note says errors were corrected and does not say which. Each tile is one book; what was changed in it is not on record anywhere but in the printed copy it was typed from.</p>
 <div class="tiles">{tiles}</div>
+<h2>The hand and the ear</h2>
+<p>A printed page was once set by hand from small pieces of metal type, one per letter, picked from the compartments of a case.
+One misprint that leaves a trace of that is the <em>turned letter</em>: a <i>u</i> set upside down prints as an
+<i>n</i>, a <i>d</i> as a <i>p</i>. With the sample completed ({c2["pairs"]:,} listed corrections from 1,495 books), {c2["turned"]} corrections
+are exactly this, where chance would give about {c2["turned_expected"]:.1f}. The type shows through, faintly: {big} of the {c2["turned"]} come from
+a single book. Here they are, the wrong letter drawn as the right one turned over.</p>
+<div class="wall">{turned_html}</div>
+<p>The hand shows more plainly in what fell out. {c2["added"]} corrections put back a missing character; {c2["removed"]} take out one too many,
+and {x2["removed_doubled"]} of those doubled the letter beside it.</p>
+<p>But the single swap the lists record most often is not the case&rsquo;s. It is <i>a</i> printed where <i>e</i> was meant ({c2["top_lowercase"][0][1]} times),
+and {x2["vowel_for_vowel"]} of the {c2["lowercase_letter_subs"]} one-letter swaps put a vowel in place of a vowel, in {x2["vowel_for_vowel_books"]} books: the ear&rsquo;s errors,
+words spelled as they sound, and names brought to one spelling. The struck letter was printed, the bold one restored.</p>
+<div class="wall">{" ".join(vw)}</div>
+<p class="small">Five predictions were registered before this count (<code>SESSION2.md</code>). Two held: turned letters at least three times chance, and
+dropped characters at least one and a half times as common as extra ones. Three failed: the commonest swap is not <i>n</i>/<i>u</i>; corrections to
+punctuation alone are {c2["punctuation_share"]*100:.0f}&nbsp;%, not 10&nbsp;% (the reading pattern misses a correction to a bare mark, so this is partly
+the instrument); and corrections of capital to small letter are {c2["case_share"]*100:.0f}&nbsp;% of swaps, not 5&nbsp;%. The vowel count is exploratory.
+Many of these books were set by machine, where a turned letter is rare; the catalogue does not say which.</p>
 <h2>What this does not say</h2>
 <p>A note is what the transcribers wrote, not everything they did: a book with no note may have been corrected, and a list may be incomplete.
 A listed change is not always a misprint: some are a chosen spelling (<i>Wady</i> to <i>Wadi</i>) or a change between editions. The notes were
@@ -101,7 +142,7 @@ files of {res["fetched"]:,} e-books, a uniform random sample of the {json.load(o
 <code>sources.json</code>). Project Gutenberg e-books are free of U.S. copyright; nothing of them is reproduced here beyond corrected words and short phrases,
 each linked to its book. Programs: <code>fetch.py</code>, <code>session1.py</code>, <code>verify_build.py</code>, <code>explore1.py</code>.
 Project record: <a href="https://github.com/frankbueltge/n-1/tree/main/projects/transcribers-notes">projects/transcribers-notes</a>.
-Signed Remainder, project 7, session 1. Not yet tested by a stranger.</p>
+Session 2 (2026-10-13) fetched the 207 sampled books session 1 did not reach and read every correction they list; programs <code>fetch2.py</code>, <code>verify2_build.py</code>, <code>session2.py</code>, <code>explore2.py</code>. Signed Remainder, project 7, sessions 1&ndash;2. Not yet tested by a stranger.</p>
 </main></body></html>'''
 open("index.html", "w").write(page)
 print(len(page))

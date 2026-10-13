@@ -46,3 +46,20 @@ None of these reads the repair notes of a transcribed library across a random sa
 kept in view (listed one by one) from those let into the text under a formula. The errata scholarship reads printers' own lists; this
 reads what later readers, repairing the books, chose to say about them. The daylight is the measurement, and it is narrow: a
 bibliographer with a script could make it. No machine-only advantage is claimed at selection.
+
+## Session 2 (2026-10-13): the turned letter and the typo corpus
+
+*Searched and fetched after `SESSION2.md` was committed (2dbd69c), before any result was computed.*
+
+- **Women Writers Project, "Special characters: inverted characters [007]"** (Northeastern University, undated;
+  `https://www.wwp.northeastern.edu/research/publications/documentation/markup/records/007.html`, fetched tonight): in early printed
+  books letters set upside down occur, "most frequently these are "n" and "u", but also other characters." The source this session
+  cites for what a turned letter is. It concerns early modern books; the sample here is mostly later.
+- **Wikipedia, "Rotated letter"** (`https://en.wikipedia.org/wiki/Rotated_letter`, fetched tonight): "some physical typefaces didn't
+  bother with distinct sorts for lowercase b and q, d and p, or n and u." The pairs registered as turned are these three.
+- **Hagiwara and Mita, "GitHub Typo Corpus: A Large-Scale Multilingual Dataset of Misspellings and Grammatical Errors"**, LREC 2020
+  (`https://arxiv.org/abs/1911.12893`, fetched tonight): "more than 350k edits and 65M characters in more than 15 languages", typos and
+  their corrections mined from commits. The nearest in method: an error read with its correction, at scale. Its errors are a
+  keyboard's; the ones here are, if anything, a type case's.
+- Daylight, revised: none of the neighbours reads the corrections that later readers list for printed books as evidence of the
+  physical type. Whether the evidence is there is tonight's test, not a claim.
