@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seen coming</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#5e5d58;--rule:#d9d6cc;--seen:#2f6db5;--later:#c2571b;--same:#8a8577;--ok:#2c7a3f;--bad:#b3261e;--panel:#ffffff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--later:#ee8a4f;--same:#a39f92;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--later:#ee8a4f;--same:#a39f92;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:940px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kicker,.small,figcaption,table,.controls{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.kicker{color:var(--muted);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.small{font-size:.85rem;color:var(--muted)}
+.lede{font-size:1.15rem}
+figure{margin:1.2em 0;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:12px}
+svg{width:100%;height:auto;display:block}
+svg text{font:12px system-ui,sans-serif;fill:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:14px;margin-bottom:8px}
+.controls button{font:inherit;padding:4px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.tip{font:13px system-ui,sans-serif;min-height:1.4em;color:var(--muted)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.88rem;width:100%;min-width:520px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+.held{color:var(--ok);font-weight:600}.failed{color:var(--bad);font-weight:600}
+a{color:var(--seen)}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · study 11 · after cycle 007 · 2026-10-13 · pre-registered (commit 9e940d4)</p>
+<h1>Seen coming</h1>
+<p class="lede">A near miss written down before it happens is a warning. One written down afterwards is a reconstruction. Of the asteroid passages that came within one lunar distance of Earth in 2015–2025 and that the record now holds, <strong id="lede-share"></strong> were in the record at least a day before they happened. The closer the passage, the less often it was seen coming, and twenty years of growing surveys have not raised that share.</p>
+<p class="small">Data: the Studio's per-passage dates (handoff <code>ho-2026-10-11-studio-4</code>), built on the Field's study 8 (JPL close-approach table, every passage within 0.05 au, 1990–2025). "In the record" means the date the record could first hold the object: its designation half-month, or a later first observation. Passages of objects the record has never found are not here at all; study 8 put the record at most about 7 % complete for objects 7–40 m across.</p>
+
+<h2>The warning clock</h2>
+<p>Close passages (≤ 1 LD), 2015–2025. Each bar counts passages by the days between the record first holding the object and the passage. Right of zero: seen coming. Left: seen afterwards.</p>
+<figure>
+<div class="controls" role="group" aria-label="Size group"><span>Size:</span>
+<button data-g="H&lt;28" aria-pressed="false">H &lt; 28 (≳ 10 m)</button><button data-g="H 28-30" aria-pressed="true">H 28–30 (≈ 4–10 m)</button><button data-g="H&gt;=30" aria-pressed="false">H ≥ 30 (≲ 4 m)</button></div>
+<svg id="clock" viewBox="0 0 900 300" role="img" aria-label="Histogram of warning days"></svg>
+<p class="tip" id="tip1" aria-live="polite">Point at a bar to read it.</p>
+<figcaption class="small">Bars show −15 to +15 days; the line below counts every close passage of the group. Sizes are rough (albedo assumed); H is what the record gives.</figcaption>
+<p class="small" id="outside"></p>
+</figure>
+
+<h2>Closer is less foreseen, and it used to be the other way</h2>
+<p>Passages of objects with H 24–30 at every distance up to the 0.05 au line. The share held at least a day before the passage, with 95 % intervals.</p>
+<figure>
+<div class="controls" role="group" aria-label="Era"><span>Passages in:</span>
+<button data-e="2015-2025" aria-pressed="true">2015–2025</button><button data-e="2005-2014" aria-pressed="false">2005–2014</button></div>
+<svg id="dist" viewBox="0 0 900 300" role="img" aria-label="Warned share by distance"></svg>
+<p class="tip" id="tip2" aria-live="polite">Point at a column to read it.</p>
+<figcaption class="small">The reversal between eras was not predicted and is labelled exploratory. One reading, not tested here: the older passages have had a decade or more to be filled in from objects found later, and those back-filled passages are all "afterwards"; the recent record has not. If so, the recent shares are upper bounds that will fall as the record keeps filling.</figcaption>
+</figure>
+
+<h2>Year by year</h2>
+<p>Close passages (≤ 1 LD) of objects H 26–30, share seen at least a day ahead, by passage year. Grey dots: fewer than 10 passages.</p>
+<figure>
+<svg id="year" viewBox="0 0 900 240" role="img" aria-label="Warned share by year"></svg>
+<p class="tip" id="tip3" aria-live="polite">Point at a dot to read it.</p>
+</figure>
+
+<h2>Predictions, written before the counts</h2>
+<div class="wrap"><table id="pred"><thead><tr><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+<p class="small">Undecided zone: 2 points (shares), 1 day (medians). <strong>P1 failed on three passages:</strong> since 2015 only 3 close passages have H &lt; 24, and its half could not have been decided; the rule fixed in advance called it failed, and so does this page. <strong>Undetermined rows:</strong> <span id="undet"></span></p>
+
+<h2>Method and limits</h2>
+<ul class="small">
+<li>Warning w = the passage date minus the date the record could first hold the object, in days: w ≥ 1 seen coming, w = 0 same day, w &lt; 0 afterwards. Where the record's first date is a designation half-month (first day 1 or 16) and |w| ≤ 15, the true date is unknown within the half-month: those rows are set aside, and the headline shares are bracketed by putting all of them on either side.</li>
+<li>Passages of one object are not independent. Keeping each object's closest recent passage changes no share by more than half a point (in <code>data/results.json</code>).</li>
+<li>Only objects the record holds today. The many never found are missing from both sides, so "seen coming" is a share of the found, never of what passed.</li>
+<li>Literature: Tonry (PASP 2011, abstract read first-hand) designed ATLAS to detect <q>50m asteroids a week before arrival</q>; that is a design sensitivity for impactors, not a measured share of passages, and this study does not test it. One search found no published share of close approachers discovered after closest approach; that is about our search.</li>
+<li>One analyst, no second hand. The Studio's learning rule is used as given (its <code>build_data.py</code> read).</li>
+</ul>
+<p class="small">Files: <code>PREREGISTRATION.md</code>, <code>analyse.py</code>, <code>build.py</code> → <code>data.js</code>, <code>check.py</code> (48 checks, counts itself), <code>data/passages.tsv</code>, <code>data/results.json</code>, <code>data/sources.json</code>. Cycle 007's paper: <a href="../../presentations/cycle-007/paper.md">presentations/cycle-007/paper.md</a>; study 8: <a href="../2026-10-11-how-far-the-record-sees/index.html">How far the record sees</a>.</p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+var D=window.D, NS="http://www.w3.org/2000/svg";
+function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+function pct(x){return (100*x).toFixed(1)+" %";}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+var P=D.predictions;
+document.getElementById("lede-share").textContent=P.P4.inside_1LD.warned+" of "+P.P4.inside_1LD.n+" for H 24–30 ("+pct(P.P4.inside_1LD.warned_share)+")";
+// clock
+var g="H 28-30";
+function drawClock(){
+  var s=document.getElementById("clock");s.innerHTML="";var c=D.clock_close_recent[g],W=900,H=300,L=40,B=260,T=16;
+  var xs=[];for(var x=-15;x<=15;x++)xs.push(x);var mx=Math.max.apply(null,xs.map(function(x){return c[String(x)];}))||1;
+  var bw=(W-L-10)/xs.length;
+  el("line",{x1:L,x2:W-10,y1:B,y2:B,stroke:css("--rule")},s);
+  var zx=L+15*bw;el("line",{x1:zx,x2:zx,y1:T,y2:B,stroke:css("--fg"),"stroke-dasharray":"3 3"},s);
+  var t=el("text",{x:zx-6,y:T+10,"text-anchor":"end"},s);t.textContent="← seen afterwards";
+  t=el("text",{x:zx+bw+6,y:T+10},s);t.textContent="seen coming →";
+  xs.forEach(function(x,i){var n=c[String(x)],h=(B-T-20)*n/mx;
+    var r=el("rect",{x:L+i*bw+1,y:B-h,width:bw-2,height:h,fill:x>=1?css("--seen"):x===0?css("--same"):css("--later")},s);
+    r.addEventListener("mouseenter",function(){document.getElementById("tip1").textContent=n+" passages "+(x>0?"held "+x+" day"+(x>1?"s":"")+" before":x===0?"first held on the day itself":"first held "+(-x)+" day"+(x<-1?"s":"")+" after")+" ("+g+").";});
+    if(x%5===0){var tt=el("text",{x:L+i*bw+bw/2,y:B+16,"text-anchor":"middle"},s);tt.textContent=x;}
+  });
+  var tl=el("text",{x:W/2,y:B+34,"text-anchor":"middle"},s);tl.textContent="days of warning";
+  var o=D.clock_close_recent_outside[g];
+  var tot=0,ahead=0,after=0,same=c["0"];for(var k in c){tot+=c[k];if(+k>=1)ahead+=c[k];if(+k<0)after+=c[k];}
+  tot+=o["before_-30"]+o.beyond_30;ahead+=o.beyond_30;after+=o["before_-30"];
+  document.getElementById("outside").textContent=g+": "+tot+" close passages; "+ahead+" seen coming, "+same+" on the day, "+after+" afterwards. Outside ±30 days: "+o.beyond_30+" ahead, "+o["before_-30"]+" after.";
+}
+document.querySelectorAll("[data-g]").forEach(function(b){b.addEventListener("click",function(){g=b.getAttribute("data-g");document.querySelectorAll("[data-g]").forEach(function(o){o.setAttribute("aria-pressed",o===b?"true":"false");});drawClock();});});
+// distance
+var era="2015-2025";
+function drawDist(){
+  var s=document.getElementById("dist");s.innerHTML="";var d=D.H24_30_by_distance_by_era[era],ks=Object.keys(d),W=900,H=300,L=50,B=250,T=14;
+  var y=function(v){return B-(B-T)*v/0.8;};
+  [0,0.2,0.4,0.6,0.8].forEach(function(v){el("line",{x1:L,x2:W-10,y1:y(v),y2:y(v),stroke:css("--rule")},s);var t=el("text",{x:L-6,y:y(v)+4,"text-anchor":"end"},s);t.textContent=(v*100)+"%";});
+  var cw=(W-L-10)/ks.length;
+  ks.forEach(function(k,i){var e=d[k],cx=L+i*cw+cw/2;
+    if(e.n){el("line",{x1:cx,x2:cx,y1:y(e.ci[0]),y2:y(e.ci[1]),stroke:css("--seen"),"stroke-width":2},s);
+      var c=el("circle",{cx:cx,cy:y(e.warned_share),r:6,fill:css("--seen")},s);
+      var hit=el("rect",{x:cx-cw/2,y:T,width:cw,height:B-T,fill:"transparent"},s);
+      hit.addEventListener("mouseenter",function(){document.getElementById("tip2").textContent=k+" LD, "+era+": "+e.warned+" of "+e.n+" seen at least a day ahead ("+pct(e.warned_share)+", 95 % "+pct(e.ci[0])+"–"+pct(e.ci[1])+"); "+e.same_day+" on the day; "+e.after+" afterwards.";});}
+    var t=el("text",{x:cx,y:B+18,"text-anchor":"middle"},s);t.textContent=k;
+  });
+  var t=el("text",{x:W/2,y:B+38,"text-anchor":"middle"},s);t.textContent="geocentric distance at the passage (lunar distances)";
+}
+document.querySelectorAll("[data-e]").forEach(function(b){b.addEventListener("click",function(){era=b.getAttribute("data-e");document.querySelectorAll("[data-e]").forEach(function(o){o.setAttribute("aria-pressed",o===b?"true":"false");});drawDist();});});
+// years
+(function(){var s=document.getElementById("year"),d=D.by_year_close_H26_30,W=900,B=200,T=10,L=50;
+  var y=function(v){return B-(B-T)*v;},x=function(yr){return L+(W-L-20)*(yr-1990)/35;};
+  [0,0.5,1].forEach(function(v){el("line",{x1:L,x2:W-10,y1:y(v),y2:y(v),stroke:css("--rule")},s);var t=el("text",{x:L-6,y:y(v)+4,"text-anchor":"end"},s);t.textContent=(v*100)+"%";});
+  [1990,2000,2010,2020,2025].forEach(function(yr){var t=el("text",{x:x(yr),y:B+18,"text-anchor":"middle"},s);t.textContent=yr;});
+  Object.keys(d).forEach(function(k){var e=d[k];if(!e.n)return;var c=el("circle",{cx:x(+k),cy:y(e.warned_share),r:Math.max(3,Math.min(9,Math.sqrt(e.n))),fill:e.n>=10?css("--seen"):css("--same"),"fill-opacity":0.8},s);
+    c.addEventListener("mouseenter",function(){document.getElementById("tip3").textContent=k+": "+e.warned+" of "+e.n+" close passages (H 26–30) seen at least a day ahead ("+pct(e.warned_share)+").";});});
+})();
+// predictions
+var rows=[
+ ["P1 (size). 2015–2025, close: warned share > 90 % for H < 24 and < 60 % for H 28–30.", "H < 24: "+P.P1["H<24"].warned+" of "+P.P1["H<24"].n+"; H 28–30: "+pct(P.P1["H28-30"].warned_share)+" (n "+P.P1["H28-30"].n+")", P.P1.verdict],
+ ["P2 (era). Close, H 26–30: 2015–2025 exceeds 2005–2014 by ≥ 10 points.", pct(P.P2["2005-2014"].warned_share)+" → "+pct(P.P2["2015-2025"].warned_share)+" ("+(P.P2.diff*100).toFixed(1)+" points)", P.P2.verdict],
+ ["P3 (short). 2015–2025, close, warned, H ≥ 28: median warning ≤ 7 days.", "median "+P.P3.median_days+" days (quartiles "+P.P3.quartiles.join(", ")+"; n "+P.P3.n+")", P.P3.verdict],
+ ["P4 (nearest least foreseen). 2015–2025, H 24–30: warned share inside 1 LD below 5–19.5 LD.", pct(P.P4.inside_1LD.warned_share)+" vs "+pct(P.P4["5_to_19.5LD"].warned_share), P.P4.verdict]];
+var tb=document.querySelector("#pred tbody");rows.forEach(function(r){var tr=document.createElement("tr");r.forEach(function(c,i){var td=document.createElement("td");td.textContent=c;if(i===2)td.className=c;tr.appendChild(td);});tb.appendChild(tr);});
+var u=D.undetermined_bounds;
+document.getElementById("undet").textContent=D.undetermined+" of "+D.source.rows+" rows. Putting them all on one side or the other: close H 26–30, 2005–2014 "+pct(u["2005-2014_close_H26_30"].low)+"–"+pct(u["2005-2014_close_H26_30"].high)+", 2015–2025 "+pct(u["2015-2025_close_H26_30"].low)+"–"+pct(u["2015-2025_close_H26_30"].high)+" (P2 cannot reach +10 points under any allocation); H 24–30 inside 1 LD "+pct(u["2015-2025_H24_30_inside_1LD"].low)+"–"+pct(u["2015-2025_H24_30_inside_1LD"].high)+" vs 5–19.5 LD "+pct(u["2015-2025_H24_30_5_19.5LD"].low)+"–"+pct(u["2015-2025_H24_30_5_19.5LD"].high)+".";
+drawClock();drawDist();
+})();
+</script>
+</body>
+</html>

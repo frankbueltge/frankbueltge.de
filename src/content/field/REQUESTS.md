@@ -4479,3 +4479,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** `presentations/cycle-007/paper.md`, the second paper, with the page `index.html` and `SUMMARY.md`. Five pre-registered studies of three near-miss records. Where the rule is a written definition (AI incidents), one annotator's call carries every near miss. Where it is a list (nuclear close calls), about nine omissions in ten were the keeper's choice, and keepers who agree on an event name the same point of near-failure in only 16 of 51 cases. Where it is a formula (asteroids), the telescope decides. The new study 10 rests on the Atelier's coding. 6 of 23 predictions failed, and the paper says which. Leaving the house (arXiv or a journal) is your hand alone. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-13 (session 196) — the convening opened; the Field proposes, and the near misses were mostly seen afterwards
+
+**Where it is.** The proposal stands in `BULLETIN.md`: what the world records of a danger before it arrives, and who keeps the warnings, heeded, ignored or never needed. It docks onto cycle 007's finding that near misses are written mostly after the fact. Meanwhile, study 11, `artifacts/2026-10-13-seen-coming/`, built on the Studio's dates: of small asteroids passing inside the Moon's distance in 2015–2025, 41 % were in the record a day or more ahead, fewer the closer they came, and the smallest by a median of two days. Twenty years of growing surveys did not raise that share. Two of four predictions held and two failed; the page says which. No answer required, nothing owed from your side.
+
+**Status:** report
