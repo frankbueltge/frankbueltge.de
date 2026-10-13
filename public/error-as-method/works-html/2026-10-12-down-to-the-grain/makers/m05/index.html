@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Seventy-Seven Hours a Pixel</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #f3f0e8; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; width: 1100px; height: 800px; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script>
+// The whole of the material: the 19 x 6 grey values of record.jpg, as read.
+const P = [
+ [255,255,254,253,252,251,250,250,255,255,232,255,255, 18,  0,255,253,255,255],
+ [251,251,252,254,255,255,255,255,255,255,247,255,245, 94, 63,242,247,249,252],
+ [ 24, 25, 28, 32, 36, 39, 42, 44, 10, 38, 26, 15, 22,  0,  0, 27, 26, 29, 32],
+ [ 15, 16, 18, 21, 24, 26, 28, 29,  6, 17, 25, 17, 20, 53, 62, 30, 28, 30, 33],
+ [ 12, 11, 11, 11, 11, 10, 10, 10, 38, 15, 28, 31,  8, 22, 35,  2, 22, 24, 27],
+ [ 27, 26, 25, 24, 23, 21, 20, 20, 43, 10, 21, 42, 21,  9, 21, 21, 28, 30, 33]
+];
+const W = 19, H = 6, HOURS = 1464, DAYS = 61;
+
+const cv = document.getElementById('c');
+const dpr = Math.max(1, window.devicePixelRatio || 1);
+cv.width = 1100 * dpr; cv.height = 800 * dpr;
+const g = cv.getContext('2d');
+g.scale(dpr, dpr);
+
+const PAPER = '#f3f0e8', INK = '#1d1b18', FAINT = '#b9b2a3', MID = '#7d766a';
+g.fillStyle = PAPER; g.fillRect(0, 0, 1100, 800);
+
+// field
+const L = 56, R = 1044, FW = R - L;
+const T = 160, CH = 66, FH = CH * H;
+const hx = h => L + (h + 0.5) * FW / HOURS;
+
+// ghost of the source pixels, very faint
+for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) {
+  const d = (255 - P[r][c]) / 255;
+  g.fillStyle = `rgba(29,27,24,${(d * 0.06).toFixed(3)})`;
+  g.fillRect(L + c * FW / W, T + r * CH, FW / W, CH);
+}
+
+// each hour: one hairline at its exact place in time.
+// Which row it fell in is known only as a share of grey; where inside the row, not at all,
+// so the hairline fills the whole height of the row it is given.
+const PHI = 0.6180339887;
+const counts = new Array(W).fill(0);
+for (let h = 0; h < HOURS; h++) {
+  const c = Math.min(W - 1, Math.floor(h * W / HOURS));
+  const k = counts[c]++;
+  const w = P.map(row => (255 - row[c]) / 255);
+  const sum = w.reduce((a, b) => a + b, 0);
+  let u = ((k + 1) * PHI) % 1 * sum, r = 0;
+  while (r < H - 1 && u > w[r]) { u -= w[r]; r++; }
+  const x = hx(h);
+  g.strokeStyle = 'rgba(29,27,24,0.85)';
+  g.lineWidth = 0.6;
+  g.beginPath(); g.moveTo(x, T + r * CH + 1); g.lineTo(x, T + (r + 1) * CH - 1); g.stroke();
+}
+
+// pixel seams (hairline, faint)
+g.strokeStyle = 'rgba(125,118,106,0.35)'; g.lineWidth = 0.5;
+for (let c = 0; c <= W; c++) {
+  const x = L + c * FW / W;
+  g.beginPath(); g.moveTo(x, T - 8); g.lineTo(x, T + FH + 8); g.stroke();
+}
+for (let r = 0; r <= H; r++) {
+  const y = T + r * CH;
+  g.beginPath(); g.moveTo(L - 8, y); g.lineTo(R + 8, y); g.stroke();
+}
+
+// calendar beneath: 61 days, 24 hours each; the pixel seams do not land on midnight
+const RY = T + FH + 52;
+for (let h = 0; h <= HOURS; h++) {
+  const x = L + h * FW / HOURS;
+  const day = h % 24 === 0, week = h % 168 === 0;
+  g.strokeStyle = day ? INK : 'rgba(185,178,163,0.6)';
+  g.lineWidth = day ? 0.8 : 0.3;
+  const len = week ? 22 : day ? 14 : 5;
+  g.beginPath(); g.moveTo(x, RY); g.lineTo(x, RY + len); g.stroke();
+}
+for (let c = 0; c <= W; c++) {
+  const x = L + c * FW / W;
+  g.strokeStyle = '#a23a1f'; g.lineWidth = 0.8;
+  g.beginPath(); g.moveTo(x, RY - 10); g.lineTo(x, RY - 2); g.stroke();
+}
+
+// the record at its actual size
+const sx = L, sy = 706;
+const img = g.createImageData(W * dpr, H * dpr);
+for (let y = 0; y < H * dpr; y++) for (let x = 0; x < W * dpr; x++) {
+  const v = P[Math.floor(y / dpr)][Math.floor(x / dpr)], i = (y * W * dpr + x) * 4;
+  img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 255;
+}
+g.save(); g.setTransform(1, 0, 0, 1, 0, 0);
+g.putImageData(img, Math.round(sx * dpr), Math.round(sy * dpr));
+g.restore();
+g.strokeStyle = MID; g.lineWidth = 0.5;
+g.strokeRect(sx - 3.5, sy - 3.5, W + 7, H + 7);
+
+// words
+g.fillStyle = INK;
+g.font = '500 26px Georgia, "Times New Roman", serif';
+g.fillText('Seventy-Seven Hours a Pixel', L, 92);
+g.font = 'italic 15px Georgia, "Times New Roman", serif';
+g.fillStyle = MID;
+g.fillText('1,464 hours of one measured quantity, returned from a picture 19 pixels wide and 6 high.', L, 120);
+
+g.font = '11px ui-monospace, Menlo, Consolas, monospace';
+g.fillStyle = MID;
+g.fillText('each hairline is one hour, placed exactly in time; its row is drawn by lot from the grey of its pixel; its height within the row is lost', L, T + FH + 24);
+g.fillText('61 days, 24 hours each   ·   red: where one pixel column ends — every 77.05 hours, and between the two ends never at midnight', L, RY + 44);
+g.fillText('the record, actual size', sx + W + 18, sy + 6);
+g.textAlign = 'right';
+g.fillText('114 pixels  ·  1,464 values  ·  12.8 values per pixel', R, sy + 6);
+</script>
+</body>
+</html>

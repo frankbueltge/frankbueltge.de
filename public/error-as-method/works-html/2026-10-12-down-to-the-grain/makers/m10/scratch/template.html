@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Fifty-nine Lunar Days</title>
+<style>
+  :root { --paper:#f1ece1; --ink:#1c2330; }
+  html,body { margin:0; background:var(--paper); }
+  body { width:1100px; height:800px; overflow:hidden; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script>
+// 1,464 hourly values recovered from record.jpg (pixel-height units, larger = higher)
+const V = [/*V*/];
+// the source picture itself, 300 x 90 grey pixels, as hex
+const PIX = "/*PIX*/";
+const HW = /*HW*/;
+const ENV = [/*ENV*/];  // fitted semidiurnal amplitude per row (M2+S2+N2), for the spring/neap marks          // hour of the first lunar (M2) high water
+const L = 24.8412;          // one lunar day, hours
+
+const W = 1100, H = 800, dpr = Math.max(1, window.devicePixelRatio || 1);
+const cv = document.getElementById('c');
+cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+const g = cv.getContext('2d'); g.scale(dpr, dpr);
+
+const PAPER = '#f1ece1', INK = '#1c2330', SOFT = 'rgba(28,35,48,0.45)', FAINT = 'rgba(28,35,48,0.16)', RUST = '#a8432a';
+g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+const SERIF = '"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif';
+
+// ---- geometry
+const N = V.length;
+const t0 = HW - L / 4;                       // each row starts a quarter lunar day before high water
+const ROWS = Math.ceil((N - 1 - t0) / L);
+const X0 = 96, X1 = 940, TOP = 200, BOT = 716;
+const gap = (BOT - TOP) / (ROWS - 1);
+const sc = 2.0;
+const mean = V.reduce((a, b) => a + b, 0) / N;
+const xOf = t => X0 + (t - t0 - Math.floor((t - t0) / L) * L) / L * (X1 - X0);
+
+// find the event: the largest value
+let peak = 0; for (let i = 1; i < N; i++) if (V[i] > V[peak]) peak = i;
+
+// ---- the ridges: one lunar day per row, earliest at the top, each drawn over the one before
+function rowPts(r) {
+  const pts = [];
+  for (let i = 0; i < N; i++) {
+    const t = i - t0;
+    if (t >= r * L - 1 && t <= (r + 1) * L + 1) {
+      const x = X0 + (t - r * L) / L * (X1 - X0);
+      pts.push([x, TOP + r * gap - (V[i] - mean) * sc, i]);
+    }
+  }
+  return pts;
+}
+function path(pts) {
+  g.moveTo(pts[0][0], pts[0][1]);
+  for (let k = 0; k < pts.length - 1; k++) {
+    const p0 = pts[Math.max(0, k - 1)], p1 = pts[k], p2 = pts[k + 1], p3 = pts[Math.min(pts.length - 1, k + 2)];
+    g.bezierCurveTo(p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6, p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6, p2[0], p2[1]);
+  }
+}
+g.save();
+g.beginPath(); g.rect(X0, 0, X1 - X0, H); g.clip();
+for (let r = 0; r < ROWS; r++) {
+  const pts = rowPts(r);
+  if (pts.length < 2) continue;
+  const base = TOP + r * gap;
+  const hasPeak = pts.some(p => p[2] === peak);
+  // occluding fill
+  g.beginPath(); path(pts);
+  g.lineTo(pts[pts.length - 1][0], base + 40); g.lineTo(pts[0][0], base + 40); g.closePath();
+  g.fillStyle = PAPER; g.fill();
+  // line
+  g.beginPath(); path(pts);
+  g.lineWidth = hasPeak ? 1.25 : 0.85; g.strokeStyle = hasPeak ? RUST : INK; g.stroke();
+  // the hourly readings themselves
+  g.fillStyle = hasPeak ? RUST : INK;
+  pts.forEach(p => { if (p[0] >= X0 - 1 && p[0] <= X1 + 1) { g.beginPath(); g.arc(p[0], p[1], hasPeak ? 1.35 : 1.05, 0, 7); g.fill(); } });
+}
+g.restore();
+
+// ---- margins
+g.textBaseline = 'middle';
+g.font = '11px ' + SERIF; g.fillStyle = SOFT; g.textAlign = 'right';
+for (let r = 0; r < ROWS; r += 7) g.fillText(String(r + 1), X0 - 14, TOP + r * gap);
+g.save(); g.translate(X0 - 44, (TOP + BOT) / 2); g.rotate(-Math.PI / 2); g.textAlign = 'center';
+g.fillText('lunar day, counted from the start of the record', 0, 0); g.restore();
+
+// spring / neap: extremes of the fitted semidiurnal amplitude
+g.textAlign = 'left';
+for (let r = 1; r < ROWS - 1; r++) {
+  const isMax = ENV[r] > ENV[r - 1] && ENV[r] >= ENV[r + 1], isMin = ENV[r] < ENV[r - 1] && ENV[r] <= ENV[r + 1];
+  if (!isMax && !isMin) continue;
+  const y = TOP + r * gap;
+  g.strokeStyle = SOFT; g.lineWidth = 1; g.beginPath(); g.moveTo(X1 + 12, y); g.lineTo(X1 + 24, y); g.stroke();
+  g.fillStyle = SOFT; g.font = 'italic 12px ' + SERIF;
+  g.fillText(isMax ? 'springs' : 'neaps', X1 + 30, y);
+}
+
+// ticks for the high and low waters of a lunar day
+g.save();
+g.lineWidth = 1;
+[0.25, 0.5, 0.75].forEach(f => { const x = X0 + f * (X1 - X0); g.strokeStyle = SOFT; g.beginPath(); g.moveTo(x, BOT + 30); g.lineTo(x, BOT + 40); g.stroke(); });
+g.restore();
+
+// labels for the guides
+g.font = '11px ' + SERIF; g.fillStyle = SOFT; g.textAlign = 'center';
+g.fillText('high water', X0 + 0.25 * (X1 - X0), BOT + 52);
+g.fillText('high water', X0 + 0.75 * (X1 - X0), BOT + 52);
+g.fillText('low water', X0 + 0.5 * (X1 - X0), BOT + 52);
+g.textAlign = 'right'; g.fillText('one line = 24 h 50 min', X1, BOT + 70);
+
+// the event
+{
+  const r = Math.floor((peak - t0) / L), x = xOf(peak), y = TOP + r * gap - (V[peak] - mean) * sc;
+  const lx = x + 70, ly = y - 34;
+  g.font = 'italic 13px ' + SERIF;
+  const l1 = 'hour ' + (peak + 1).toLocaleString('en') + ' of 1,464: a single high water', l2 = 'standing far above every other';
+  const w = Math.max(g.measureText(l1).width, g.measureText(l2).width);
+  g.fillStyle = PAPER; g.globalAlpha = 0.92; g.fillRect(lx - 6, ly - 12, w + 12, 38); g.globalAlpha = 1;
+  g.strokeStyle = RUST; g.lineWidth = 0.8; g.beginPath(); g.moveTo(x + 5, y - 3); g.lineTo(lx - 8, ly + 6); g.stroke();
+  g.fillStyle = RUST; g.textAlign = 'left'; g.textBaseline = 'middle';
+  g.fillText(l1, lx, ly); g.fillText(l2, lx, ly + 17);
+}
+
+// ---- title block
+g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+g.fillStyle = INK; g.font = '30px ' + SERIF; g.fillText('Fifty-nine Lunar Days', X0, 66);
+g.font = '14px ' + SERIF; g.fillStyle = 'rgba(28,35,48,0.75)';
+['1,464 hourly readings, recovered from a 300 × 90 pixel picture of dots and', 'cut every 24 hours 50 minutes, so each line holds two tides and the high waters stack.', 'The swelling and thinning is the moon pulling with and against the sun.']
+  .forEach((s, k) => g.fillText(s, X0, 96 + k * 20));
+
+// ---- the source, actual size, pixel for pixel
+{
+  const id = g.createImageData(300, 90);
+  for (let k = 0; k < 27000; k++) { const v = parseInt(PIX.substr(k * 2, 2), 16); const a = 255 - v;
+    id.data[k * 4] = 28; id.data[k * 4 + 1] = 35; id.data[k * 4 + 2] = 48; id.data[k * 4 + 3] = a; }
+  const off = document.createElement('canvas'); off.width = 300; off.height = 90; off.getContext('2d').putImageData(id, 0, 0);
+  const sx = 1100 - 60 - 300, sy = 36;
+  g.imageSmoothingEnabled = false; g.drawImage(off, sx, sy, 300, 90);
+  g.font = 'italic 11px ' + SERIF; g.fillStyle = SOFT; g.textAlign = 'right';
+  g.fillText('everything there was: the source, actual size', sx + 300, sy + 106);
+}
+</script>
+</body>
+</html>

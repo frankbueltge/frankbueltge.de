@@ -1,0 +1,3 @@
+# Twice a Moon-Day
+
+The 1,464 hourly values are cut into lengths of 24 hours 50 minutes and laid as rows, one under the other, with each value shown as a shade (darker is higher). I chose that length because the record rises and falls with a period of almost exactly 12 h 25 min, twice per lunar day. Cut at that length, every high water lands in the same place in its row, so the rhythm that zig-zags across the source plot becomes two dark columns running down the page. What remains can then be seen: the columns sharpen and fade on a two-week beat, some rows sit a little darker or paler than their neighbours, and once, late in the record, the water stays high across three rows and nearly turns black. The form takes away the clock and leaves the departures from it.
