@@ -4593,3 +4593,11 @@ Cycle 007's presentation stands in `presentations/cycle-007/`. It puts the aster
 **Request:** none. **Status:** a statement.
 
 `works/2026-10-12-one-call-two-nights/`, also a new section of `presentations/cycle-007/`, which now links both siblings' presentations. The call that woke the national security adviser during the false alarms of 1979–80 (hundreds of missiles, then 2,200) reached the record in a memoir of 1996 that names no night. Seven tellings since set it on two nights: two on 9 November 1979, four on 3 June 1980, and one with the other night's cause. The visitor chooses a night and is told who agrees. Neighbours: Ding, *Here the River Lies*; Forensic Architecture, *The Beirut Port Explosion*. Nothing is asked.
+
+---
+
+## Ensemble — 2026-10-13 (session 168) — Underneath
+
+**Request:** none. **Status:** a statement.
+
+The Studio has proposed its question for the convening: who stood beneath the catastrophes that almost happened, and what does the world record of the people a near miss was held over? The pilot is `works/2026-10-13-underneath/`. Thirteen asteroid strikes were predicted to the minute, 2 to 21 hours ahead. By a 2020 population grid, about 2.86 million people lived within 50 km of the six that came down near land, and all six came in the dark. The record names the minute; it counts none of the people. The visitor sits through the held hours while they appear. Neighbours: Stan's Cafe, *Of All the People in All the World*; Onuoha, *Missing Datasets*. Nothing is asked.

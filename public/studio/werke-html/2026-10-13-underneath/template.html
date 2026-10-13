@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Underneath</title>
+<meta name="description" content="Thirteen times the record knew, hours ahead, where and when a small asteroid would strike. It never counted who lived beneath. This work estimates them, and lets you sit through the hours the warning was held.">
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1c1a;--mute:#6b675f;--rule:#d8d2c4;--land:#d9d2c0;--sea:#eae5d9;--night:rgba(20,24,40,.22);--dot:#1d1c1a;--hot:#b8461b;--ring:#7a5a1e;--card:#ece7dc}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0f14;--ink:#e9e4d8;--mute:#9a958a;--rule:#2a2d36;--land:#262a33;--sea:#12151c;--night:rgba(0,0,0,.45);--dot:#f1e7c9;--hot:#ff8a4c;--ring:#d9b25a;--card:#161922}}
+:root[data-theme="dark"]{--bg:#0d0f14;--ink:#e9e4d8;--mute:#9a958a;--rule:#2a2d36;--land:#262a33;--sea:#12151c;--night:rgba(0,0,0,.45);--dot:#f1e7c9;--hot:#ff8a4c;--ring:#d9b25a;--card:#161922}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+.wrap{max-width:980px;margin:0 auto;padding:28px 16px 60px}
+.kicker{font:12px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+h1{font-size:clamp(40px,9vw,84px);line-height:.95;margin:.25em 0 .2em;letter-spacing:-.02em;font-weight:400}
+h2{font-weight:400;font-size:24px;margin:2.2em 0 .4em;border-top:1px solid var(--rule);padding-top:.8em}
+.lede{font-size:19px;max-width:44em}
+.mono,.small,button,.chip{font-family:ui-monospace,Menlo,monospace}
+.small{font-size:13px;color:var(--mute)}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start;margin-top:22px}
+@media (max-width:760px){.stage{grid-template-columns:1fr}}
+.globe{position:relative;width:100%;aspect-ratio:1/1;max-width:620px}
+canvas{width:100%;height:100%;display:block}
+.clock{position:absolute;left:10px;top:8px;font:13px/1.4 ui-monospace,Menlo,monospace;color:var(--mute);pointer-events:none}
+.clock b{color:var(--ink);font-weight:400;font-size:22px;display:block}
+.count{position:absolute;right:10px;bottom:8px;text-align:right;font:13px/1.4 ui-monospace,Menlo,monospace;color:var(--mute);pointer-events:none}
+.count b{color:var(--ink);font-weight:400;font-size:22px;display:block}
+.card{background:var(--card);padding:14px 16px;border-radius:6px;font-size:15px}
+.card h3{margin:0 0 .3em;font-weight:400;font-size:22px}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin:.6em 0;font-size:13px;font-family:ui-monospace,Menlo,monospace}
+.card dt{color:var(--mute)}.card dd{margin:0}
+.verdict{font-size:16px;margin-top:.6em}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+button,.chip{background:transparent;color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:7px 11px;font-size:13px;cursor:pointer}
+button.primary{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.fig{width:100%;overflow:hidden}
+svg text{fill:var(--mute);font:11px ui-monospace,Menlo,monospace}
+.row{cursor:pointer}
+.row:hover text.lab{fill:var(--ink)}
+ul.f{padding-left:1.1em}ul.f li{margin:.25em 0}
+a{color:inherit}
+code{font-size:.88em}
+</style>
+</head><body><div class="wrap">
+<div class="kicker">The Studio · Ensemble · the convening after cycle 007 · 2026-10-13</div>
+<h1>Underneath</h1>
+<p class="lede" id="lede"></p>
+
+<div class="controls">
+  <button class="primary" id="play">▶ Sit through all thirteen</button>
+  <button id="stop">■ Stop</button>
+  <button id="snd" aria-pressed="true">sound: on</button>
+</div>
+<div class="chips" id="chips"></div>
+
+<div class="stage">
+  <div class="globe"><canvas id="cv" width="1200" height="1200" aria-label="A globe that turns to each predicted impact point and fills, during the hours the warning was held, with one dot per thousand estimated residents within 50 km"></canvas>
+    <div class="clock" id="clock"></div><div class="count" id="count"></div></div>
+  <div class="card" id="card"></div>
+</div>
+<p class="small">One dot is about a thousand people, an estimate from a 2020 population grid inside 50 km of the listed point. Dots are placed at random on land inside the circle: their places are not data, their number is. Shading is night at the minute of impact. One second of the clock is one held hour, compressed.</p>
+
+<h2>The held hours</h2>
+<p id="heldText"></p>
+<div class="fig" id="held"></div>
+
+<h2>On the Field's clock, every warning that came true fits inside one day</h2>
+<p id="clockText"></p>
+<div class="fig" id="fclock"></div>
+
+<h2>What this is, and how it was made</h2>
+<ul class="f" id="method"></ul>
+<h2>Neighbours and siblings</h2>
+<ul class="f" id="neigh"></ul>
+<p class="small">Data, scripts and checks: <code>works/2026-10-13-underneath/</code>. Vendored: d3 7.9.0 and topojson-client 3.1.0 (ISC, Mike Bostock); Natural Earth land via world-atlas 2.0.2 (public domain).</p>
+</div>
+<script src="vendor/d3.min.js"></script>
+<script src="vendor/topojson-client.min.js"></script>
+<script>
+const D = /*DATA*/null;
+const T = /*TEXTS*/null;
+const $ = s => document.querySelector(s);
+const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const fmt = n => n.toLocaleString('en-US');
+const hm = h => { const m = Math.round(h * 60); return `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')} min`; };
+const around = n => n === 0 ? 'no one' : n < 2000 ? `about ${fmt(Math.round(n / 10) * 10)}` : `about ${fmt(Math.round(n / 1000) * 1000)}`;
+$('#lede').innerHTML = T.lede; $('#heldText').innerHTML = T.held; $('#clockText').innerHTML = T.clock;
+$('#method').innerHTML = T.method.map(x => `<li>${x}</li>`).join('');
+$('#neigh').innerHTML = T.neigh.map(x => `<li>${x}</li>`).join('');
+
+// ---------- the globe
+const cv = $('#cv'), ctx = cv.getContext('2d'), W = cv.width;
+const proj = d3.geoOrthographic().translate([W / 2, W / 2]).clipAngle(90).precision(0.3);
+const path = d3.geoPath(proj, ctx);
+let land = null, landTopo = null;
+fetch('vendor/land-50m.json').then(r => r.json()).then(t => { landTopo = t; land = topojson.feature(t, t.objects.land); state.ready = true; layDots(state.i); draw(); })
+  .catch(() => { state.ready = true; draw(); });
+const G = 0.46 * W;                                  // whole-globe scale
+const Z = 0.30 * W / (50 / 6371);                    // scale at which the 50 km circle is 30 % of the width
+const state = { i: 0, rot: [-D.rows[0].lon, -D.rows[0].lat], scale: G, shown: 0, phase: 'rest', t: 0, ready: false, dots: [] };
+function rng(seed) { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
+function layDots(i) {
+  const r = D.rows[i], n = Math.round(r.residents_50km / D.conventions.dot), R = rng(i * 7919 + 17), out = [];
+  let tries = 0;
+  while (out.length < n && tries < n * 60) {
+    tries++;
+    const a = 2 * Math.PI * R(), d = 50 * Math.sqrt(R());
+    const lat = r.lat + d / 111.32 * Math.cos(a), lon = r.lon + d / (111.32 * Math.cos(r.lat * Math.PI / 180)) * Math.sin(a);
+    if (!land || d3.geoContains(land, [lon, lat])) out.push([lon, lat]);
+  }
+  state.dots = out;
+}
+function draw() {
+  const r = D.rows[state.i];
+  proj.rotate(state.rot).scale(state.scale);
+  ctx.clearRect(0, 0, W, W);
+  ctx.beginPath(); path({ type: 'Sphere' }); ctx.fillStyle = css('--sea'); ctx.fill();
+  if (land) { ctx.beginPath(); path(land); ctx.fillStyle = css('--land'); ctx.fill(); }
+  ctx.beginPath(); path(d3.geoGraticule10()); ctx.strokeStyle = css('--rule'); ctx.lineWidth = 1; ctx.stroke();
+  // night at the minute of impact
+  const ss = r.subsolar, anti = [ss[1] + 180, -ss[0]];
+  ctx.beginPath(); path(d3.geoCircle().center(anti).radius(90)()); ctx.fillStyle = css('--night'); ctx.fill();
+  // the 50 km circle
+  ctx.beginPath(); path(d3.geoCircle().center([r.lon, r.lat]).radius(50 / 111.2)()); ctx.strokeStyle = css('--ring'); ctx.lineWidth = 2; ctx.setLineDash([6, 6]); ctx.stroke(); ctx.setLineDash([]);
+  // the people, as many as the hours have revealed
+  ctx.fillStyle = css('--dot');
+  const k = Math.min(state.dots.length, Math.round(state.shown));
+  const sz = Math.max(1.5, W / 420);
+  for (let j = 0; j < k; j++) { const p = proj(state.dots[j]); if (p) ctx.fillRect(p[0] - sz / 2, p[1] - sz / 2, sz, sz); }
+  // the point, and the flash
+  const c = proj([r.lon, r.lat]);
+  if (c) {
+    ctx.beginPath(); ctx.arc(c[0], c[1], W / 140, 0, 7); ctx.fillStyle = css('--hot'); ctx.fill();
+    if (state.phase === 'flash') { const f = 1 - state.t; ctx.beginPath(); ctx.arc(c[0], c[1], W * (0.05 + 0.35 * state.t), 0, 7); ctx.strokeStyle = css('--hot'); ctx.globalAlpha = Math.max(0, f); ctx.lineWidth = 6; ctx.stroke(); ctx.globalAlpha = 1; }
+  }
+  ctx.beginPath(); path({ type: 'Sphere' }); ctx.strokeStyle = css('--rule'); ctx.lineWidth = 2; ctx.stroke();
+}
+function card(i, done) {
+  const r = D.rows[i];
+  const people = r.residents_50km;
+  $('#card').innerHTML = `<div class="small">${i + 1} of ${D.rows.length}</div><h3>${r.des}</h3>
+  <div>${r.place}${r.confirmed ? '' : ' <span class="small">(impact unconfirmed)</span>'}</div>
+  <dl><dt>first seen</dt><dd>${r.discovered_utc} UTC</dd><dt>by</dt><dd>${r.survey}</dd>
+  <dt>struck</dt><dd>${r.impact_utc} UTC</dd><dt>held for</dt><dd>${hm(r.held_h)}</dd>
+  <dt>local sun</dt><dd>${r.local_solar_time} · ${r.dark ? 'night' : 'daylight'} (${r.sun_alt_deg}°)</dd>
+  <dt>beneath</dt><dd>${people ? around(people) + ' people' : 'open water'}</dd>
+  <dt>held hours</dt><dd>${people ? fmt(Math.round(r.person_hours / 1000) * 1000) + ' person-hours' : '—'}</dd></dl>
+  <div class="verdict" id="verdict">${done ? verdict(r) : ''}</div>`;
+}
+function verdict(r) {
+  if (!r.residents_50km) return `It came down over open water. The record named the minute ${hm(r.held_h)} ahead, and nobody was beneath.`;
+  return `It came down at ${r.local_solar_time} local time, ${r.dark ? 'in the dark' : 'in daylight'}. The record named the minute ${hm(r.held_h)} ahead. It names none of the people beneath, and counts none of them: by this work's estimate, ${around(r.residents_50km)}.`;
+}
+function clock(i, h) {
+  const r = D.rows[i];
+  $('#clock').innerHTML = `held<b>${hm(h)}</b>of ${hm(r.held_h)}`;
+  $('#count').innerHTML = `beneath<b>${fmt(Math.min(state.dots.length, Math.round(state.shown)) * D.conventions.dot)}</b>${r.residents_50km ? 'one dot ≈ 1,000' : 'open water'}`;
+}
+
+// ---------- sound: a drone for the held hours, a tick per hour, a soft thump at the end
+let AC = null, drone = null, soundOn = true;
+function ac() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { AC = null; } } return AC; }
+function startDrone(people) {
+  const a = ac(); if (!a || !soundOn) return;
+  const o = a.createOscillator(), o2 = a.createOscillator(), g = a.createGain();
+  o.type = 'sine'; o2.type = 'sine';
+  const f = 55 * Math.pow(2, Math.min(1.5, Math.log10(1 + people) / 4));  // more people beneath, a little higher
+  o.frequency.value = f; o2.frequency.value = f * 1.5 + 0.4;
+  g.gain.value = 0; g.gain.linearRampToValueAtTime(people ? 0.09 : 0.04, a.currentTime + 0.8);
+  o.connect(g); o2.connect(g); g.connect(a.destination); o.start(); o2.start(); drone = { o, o2, g };
+}
+function stopDrone() { if (!drone || !AC) return; const { o, o2, g } = drone; g.gain.cancelScheduledValues(AC.currentTime); g.gain.setTargetAtTime(0, AC.currentTime, 0.08); o.stop(AC.currentTime + 0.5); o2.stop(AC.currentTime + 0.5); drone = null; }
+function tick() { const a = ac(); if (!a || !soundOn) return; const o = a.createOscillator(), g = a.createGain(); o.frequency.value = 1320; g.gain.value = 0.05; g.gain.setTargetAtTime(0, a.currentTime, 0.015); o.connect(g); g.connect(a.destination); o.start(); o.stop(a.currentTime + 0.1); }
+function thump() {
+  const a = ac(); if (!a || !soundOn) return;
+  const n = a.createBufferSource(), b = a.createBuffer(1, a.sampleRate * 1.2, a.sampleRate), d = b.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
+  const f = a.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 260; const g = a.createGain(); g.gain.value = 0.5;
+  n.buffer = b; n.connect(f); f.connect(g); g.connect(a.destination); n.start();
+}
+
+// ---------- one impact: turn, hold, strike
+const SEC_PER_HOUR = 0.6;
+let run = 0;
+function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+function anim(ms, f) { const id = run; return new Promise(res => { const t0 = performance.now(); (function step(now) { if (id !== run) return res(false); const t = Math.min(1, (now - t0) / ms); f(t); draw(); t < 1 ? requestAnimationFrame(step) : res(true); })(t0); }); }
+async function show(i, fast) {
+  const id = ++run; stopDrone(); select(i);
+  const r = D.rows[i], from = state.rot.slice(), to = [-r.lon, -r.lat], s0 = state.scale;
+  state.i = i; state.shown = 0; state.phase = 'turn'; layDots(i); card(i, false); clock(i, 0);
+  const ri = d3.interpolate(from, to);
+  if (!(await anim(fast ? 10 : 1400, t => { const e = ease(t); state.rot = ri(e); state.scale = Math.exp(Math.log(s0) + (Math.log(G) - Math.log(s0)) * Math.min(1, e * 2)); }))) return false;
+  if (!(await anim(fast ? 10 : 1300, t => { state.scale = Math.exp(Math.log(G) + (Math.log(Z) - Math.log(G)) * ease(t)); }))) return false;
+  if (fast) { state.shown = state.dots.length; clock(i, r.held_h); card(i, true); state.phase = 'rest'; draw(); return true; }
+  state.phase = 'hold'; startDrone(r.residents_50km);
+  const ms = Math.max(1500, r.held_h * SEC_PER_HOUR * 1000); let lastH = 0;
+  const ok = await anim(ms, t => { state.shown = state.dots.length * t; const h = r.held_h * t; clock(i, h); if (Math.floor(h) > lastH) { lastH = Math.floor(h); tick(); } });
+  stopDrone(); if (!ok) return false;
+  state.phase = 'flash'; thump(); card(i, true); clock(i, r.held_h);
+  if (!(await anim(1600, t => { state.t = t; }))) return false;
+  state.phase = 'rest'; draw(); return id === run;
+}
+async function playAll() { for (let i = 0; i < D.rows.length; i++) { const ok = await show(i); if (!ok) return; await new Promise(r => setTimeout(r, 900)); } }
+function select(i) { document.querySelectorAll('.chip').forEach((c, j) => c.setAttribute('aria-pressed', j === i ? 'true' : 'false')); }
+$('#chips').innerHTML = D.rows.map((r, i) => `<button class="chip" data-i="${i}" aria-pressed="false">${r.des}</button>`).join('');
+document.querySelectorAll('.chip').forEach(c => c.onclick = () => { ac(); show(+c.dataset.i); });
+$('#play').onclick = () => { ac(); AC && AC.resume(); playAll(); };
+$('#stop').onclick = () => { run++; stopDrone(); };
+$('#snd').onclick = e => { soundOn = !soundOn; e.target.textContent = 'sound: ' + (soundOn ? 'on' : 'off'); e.target.setAttribute('aria-pressed', soundOn); if (!soundOn) stopDrone(); };
+
+// ---------- figure: the held hours, one bar per impact, thickness by people beneath
+function drawHeld() {
+  const w = $('#held').clientWidth || 600, rowH = 26, m = { l: 66, r: w < 600 ? 150 : 14, t: 18, b: 26 }, h = m.t + m.b + rowH * D.rows.length;
+  const x = d3.scaleLinear().domain([0, 24]).range([m.l, w - m.r]);
+  const th = d3.scaleSqrt().domain([0, d3.max(D.rows, r => r.residents_50km)]).range([2, rowH - 6]);
+  const svg = d3.select('#held').html('').append('svg').attr('width', w).attr('height', h);
+  svg.append('g').attr('transform', `translate(0,${h - m.b})`).call(d3.axisBottom(x).tickValues(w < 600 ? [0, 6, 12, 18, 24] : [0, 3, 6, 9, 12, 15, 18, 21, 24]).tickFormat(d => d + ' h')).call(g => g.selectAll('path,line').attr('stroke', css('--rule')));
+  const g = svg.selectAll('g.row').data(D.rows).join('g').attr('class', 'row').attr('transform', (r, i) => `translate(0,${m.t + i * rowH})`).on('click', (e, r) => { ac(); show(D.rows.indexOf(r)); window.scrollTo({ top: $('.stage').offsetTop - 20, behavior: 'smooth' }); });
+  g.append('text').attr('class', 'lab').attr('x', m.l - 8).attr('y', rowH / 2 + 4).attr('text-anchor', 'end').text(r => r.des);
+  g.append('rect').attr('x', x(0)).attr('y', r => rowH / 2 - th(r.residents_50km) / 2).attr('height', r => th(r.residents_50km)).attr('width', r => x(r.held_h) - x(0)).attr('fill', r => r.residents_50km ? css('--ink') : css('--rule'));
+  g.append('text').attr('x', r => x(r.held_h) + 6).attr('y', rowH / 2 + 4).text(r => (r.residents_50km ? around(r.residents_50km).replace('about ', '≈') + ' beneath' : 'water') + (r.dark ? ' · night' : ' · day'));
+}
+// ---------- figure: the Field's warning clock, with the thirteen in its first bars
+function drawClock() {
+  const C = D.field_clock, w = $('#fclock').clientWidth || 600, h = 220, m = { l: 36, r: 10, t: 16, b: 40 };
+  const days = C.days.filter(d => d >= -10 && d <= 10), n = days.map(d => C.n[C.days.indexOf(d)]);
+  const x = d3.scaleBand().domain(days).range([m.l, w - m.r]).padding(0.12), y = d3.scaleLinear().domain([0, d3.max(n)]).nice().range([h - m.b, m.t]);
+  const svg = d3.select('#fclock').html('').append('svg').attr('width', w).attr('height', h);
+  svg.append('g').attr('transform', `translate(0,${h - m.b})`).call(d3.axisBottom(x).tickValues(days.filter(d => d % 2 === 0)).tickFormat(d => d > 0 ? '+' + d : d)).call(g => g.selectAll('path,line').attr('stroke', css('--rule')));
+  svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4)).call(g => g.selectAll('path,line').attr('stroke', css('--rule')));
+  svg.selectAll('rect.b').data(days).join('rect').attr('class', 'b').attr('x', d => x(d)).attr('width', x.bandwidth()).attr('y', (d, i) => y(n[i])).attr('height', (d, i) => y(0) - y(n[i])).attr('fill', d => d === 0 || d === 1 ? css('--hot') : css('--rule'));
+  const hits = d3.rollup(D.rows, v => v.length, r => r.field_day);
+  for (const [d, k] of hits) svg.append('text').attr('x', x(d) + x.bandwidth() / 2).attr('y', y(n[days.indexOf(d)]) - 6).attr('text-anchor', 'middle').style('fill', css('--hot')).text(k);
+  svg.append('text').attr('x', m.l).attr('y', h - 6).text('← first held after it passed · days of warning · held ahead →');
+  svg.append('text').attr('x', w - m.r).attr('y', m.t).attr('text-anchor', 'end').style('fill', css('--hot')).text('orange numbers: the impacts, by the same rule');
+}
+let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { drawHeld(); drawClock(); }, 150); });
+matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { draw(); drawHeld(); drawClock(); });
+layDots(0); card(0, true); state.shown = 0; clock(0, 0); draw(); drawHeld(); drawClock(); select(0);
+window.__UN = { D, show, state };
+</script></body></html>
