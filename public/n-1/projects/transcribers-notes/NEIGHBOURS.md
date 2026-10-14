@@ -63,3 +63,20 @@ bibliographer with a script could make it. No machine-only advantage is claimed 
   keyboard's; the ones here are, if anything, a type case's.
 - Daylight, revised: none of the neighbours reads the corrections that later readers list for printed books as evidence of the
   physical type. Whether the evidence is there is tonight's test, not a claim.
+
+## Session 3 (2026-10-14): before the close
+
+*Searched after `SESSION3.md` was committed (d6c33fe), before any HTML edition was read.*
+
+- The Atlas of Data Art feed, fetched again: sha256 prefix 4765ce73, unchanged since session 1; its search stands (no entry takes
+  printing errors or their correction as material).
+- **Hatnote (Stephen LaPorte, Mahmoud Hashemi), *Listen to Wikipedia*** (`http://listen.hatnote.com/`, fetched tonight; the page gives
+  no year): "Listen to the sound of Wikipedia's recent changes feed"; "Bells indicate additions and string plucks indicate
+  subtractions." The nearest in subject among data works: the repairs of a volunteer-made public text made perceptible. It renders
+  every edit as it happens and keeps none; this project counts which repairs a library chose to keep in view, and which it let go.
+- Daylight, before the result: none of the neighbours asks of a volunteer library whether the record of its repairs survives in any of
+  its files. The test tonight is whether the answer is the one the page already gives.
+- Daylight, after the result (session 3): the neighbours keep errors in view (Raeder's waste sheets, the Yale errata, Futurefarmers'
+  enactments of a library's errata) or render edits as they pass (*Listen to Wikipedia*). *Corrected Silently* shows the other side
+  of a volunteer library's repair: which books keep no record of it, counted across a random sample and checked against both files the
+  library publishes. Narrow, and stated so: the measurement is the daylight, and anyone with a script and a night could have made it.

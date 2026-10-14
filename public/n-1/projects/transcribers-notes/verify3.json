@@ -1,0 +1,78 @@
+{
+ "rule": "SESSION3.md, Verification: a random 40 books with marks (seed 3), first three marks read; 17 of 106 read marks false (16 %), above 10 %, so every S book with a record was read (all its first marks, and every HTML list pair in context). Book-level decisions below; false marks inside books that also carry true ones do not change the book's verdict.",
+ "sample_read": {
+  "books": 40,
+  "marks": 106,
+  "false": 17,
+  "false_kinds": {
+   "the note's own demonstration mark ('like this', 'explanation will pop up', 'A description of the error.')": 10,
+   "a Greek transliteration (class greek)": 4,
+   "a chapter title (h2)": 1,
+   "a title repeating the marked text (68666)": 2
+  }
+ },
+ "struck_books": [
+  21628,
+  48056,
+  22535
+ ],
+ "struck_lists": [
+  79675,
+  48736,
+  47291,
+  49461,
+  57734,
+  50815
+ ],
+ "S_records_true": {
+  "marks": [
+   55234,
+   34769,
+   70269,
+   18361,
+   22764,
+   64262,
+   56971,
+   16246,
+   33960,
+   36298,
+   32975,
+   37610,
+   21197,
+   42787,
+   35843,
+   36069,
+   29314
+  ],
+  "html_list_only": [
+   57905,
+   43574,
+   49247,
+   53111
+  ]
+ },
+ "S_list_also_in_text_file": {
+  "ids": [
+   57905,
+   43574,
+   49247,
+   53111
+  ],
+  "note": "the plain-text files, fetched again tonight for these four only, carry the same listed corrections: session 1's pattern or its reading missed them (a boxed note, 'changed to read', a correction to a page number). These four were never silent; the tile wall was wrong about them."
+ },
+ "not_read": "O and L books outside the random 40 were not read; their counts stand as registered, with the 16 % sample false rate stated beside them.",
+ "reclassified_from_L": {
+  "silent": [
+   56264,
+   56141,
+   43642,
+   78966
+  ],
+  "other": [
+   35650,
+   39696,
+   41500
+  ],
+  "note": "session 2's rows for the 207 late books (session1_rest.json) are the raw run: their 'listed' counts include pairs struck on reading (verify2.json). Seven books counted as listing list nothing that survived reading. Their plain-text notes, fetched again tonight, were tested with the registered SILENT pattern: four silent, three other. None of the four silent keeps a record in HTML (56264's one HTML pair is the pair struck in session 2). Corrected groups: listing 122 (+4 misread silent = 126 that list), silent 262 of which 4 list after all, 17 keep hover marks, 241 keep no record."
+ }
+}

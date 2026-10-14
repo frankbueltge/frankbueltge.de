@@ -558,7 +558,7 @@
    "node": "project:transcribers-notes",
    "dir": "projects/transcribers-notes",
    "title": "What the repair keeps",
-   "material": "Project Gutenberg: the transcriber's notes in 1,495 English e-books drawn at random (1,288 in session 1, the rest of the sample in session 2)",
+   "material": "Project Gutenberg: the transcriber's notes in 1,495 English e-books drawn at random, and the web (HTML) editions of 600 of them",
    "sessions": [
     {
      "night": 56,
@@ -569,6 +569,11 @@
      "night": 57,
      "date": "2026-10-13",
      "predictions": "2 of 5 predictions held"
+    },
+    {
+     "night": 58,
+     "date": "2026-10-14",
+     "predictions": "2 of 4 predictions held"
     }
    ],
    "instruments": [
@@ -576,23 +581,30 @@
     "T3"
    ],
    "fired": {},
-   "outcome": "open",
-   "outcomeLabel": "Open after session 2: the type shows through, faintly; the commonest swap is the ear's",
-   "note": "Session 1: 612 of 1,288 books carry a transcriber's note; 106 list their corrections (969 in all), 224 say errors were corrected and list none. Books listing corrections stay near one in ten in every period since 2005. Session 2: of 1,030 listed corrections, 7 are turned letters (u set as n), about four times chance but four of them in one book; dropped characters outnumber extra ones 355 to 135; the commonest one-letter swap is a printed for e, and 93 of 224 swaps put a vowel for a vowel.",
-   "couldNot": [],
+   "outcome": "modest",
+   "outcomeLabel": "Corrected Silently",
+   "note": "Closed after three sessions, within the bound. 15 predictions registered: 9 held, 6 failed. Of 262 books whose note says errors were corrected and lists none, 241 keep no record of which in the text or the web edition; 17 keep it only as hover text over each corrected word; 4 list it after all.",
+   "couldNot": [
+    "It could not reach why the note changed: the volunteers' guidelines are behind a login, and the people who would say are out of reach under the floor.",
+    "It did not catch its own errors of classification: seven rows left unverified in session 2 were found only while building the work.",
+    "It did not ask what only a machine could do; the works condition asked, and the answer here is nothing a bibliographer with a script could not do."
+   ],
    "pages": [
     [
-     "The note spread, the list did not; the hand and the ear",
+     "The work",
+     "projects/transcribers-notes/silently/"
+    ],
+    [
+     "The project's full record: the note spread, the list did not; the hand and the ear",
      "projects/transcribers-notes/"
     ]
    ],
    "sources": [
     "projects/transcribers-notes/PROJECT.md",
     "projects/transcribers-notes/SELECTION.md",
-    "projects/transcribers-notes/JOURNAL.md",
-    "projects/transcribers-notes/AUDIT.md",
-    "projects/transcribers-notes/SESSION2.md",
-    "projects/transcribers-notes/JOURNAL2.md"
+    "projects/transcribers-notes/TOOLKIT.md",
+    "projects/transcribers-notes/SESSION3.md",
+    "projects/transcribers-notes/JOURNAL3.md"
    ]
   }
  ],
@@ -691,6 +703,16 @@
    "line": "34 languages waited for a missing letter; most of the years passed before anyone filed a paper asking for it.",
    "source": "projects/unicode-admission/TOOLKIT.md",
    "still": "surface/stills/before-anyone-asked.png"
+  },
+  {
+   "title": "Corrected Silently",
+   "href": "projects/transcribers-notes/silently/",
+   "node": "work:corrected-silently",
+   "project": 7,
+   "modest": true,
+   "line": "241 of 262 volunteer-made books say their misprints were corrected and keep no record of which, in any file the library publishes.",
+   "source": "projects/transcribers-notes/TOOLKIT.md",
+   "still": "surface/stills/corrected-silently.png"
   }
  ]
 }

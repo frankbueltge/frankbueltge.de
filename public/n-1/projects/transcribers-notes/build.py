@@ -1,7 +1,19 @@
 # Builds index.html from session1_verified.json and pairs_verified.json. Static HTML and SVG; no script needed.
 import json, html, collections
-d = json.load(open("session1_verified.json")); res, rows = d["result"], d["rows"]
-pairs = json.load(open("pairs_verified.json"))
+d = json.load(open("session1_verified.json")); rows = d["rows"] + json.load(open("session1_rest.json"))["rows"]
+pairs = json.load(open("pairs_verified.json")) + json.load(open("pairs2_verified.json"))
+# session 3: seven rows of the late 207 books carried raw listed counts; reclassified by reading (verify3.json, JOURNAL3 item 10)
+_v3 = json.load(open("verify3.json")); _rc = _v3["reclassified_from_L"]
+for r in rows:
+    if r["id"] in _rc["silent"] + _rc["other"]:
+        r["listed"], r["silent"] = 0, r["id"] in _rc["silent"]
+_s3 = {b["id"]: b for b in json.load(open("session3_verified.json"))["books"]}
+_hover = set(_v3["S_records_true"]["marks"]); _misread = set(_v3["S_list_also_in_text_file"]["ids"])
+# session 3: the headline figures are counted over the completed sample (1,495 books), no longer session 1's 1,288
+_pre = [r for r in rows if r["year"] < 2005]; _post = [r for r in rows if r["year"] >= 2010]
+res = {"fetched": len(rows), "with_note": sum(r["note"] for r in rows), "share_note": sum(r["note"] for r in rows) / len(rows),
+       "share_note_before_2005": sum(r["note"] for r in _pre) / len(_pre), "share_note_2010_on": sum(r["note"] for r in _post) / len(_post),
+       "pairs": len(pairs), "share_pairs_lev1": sum(p["lev"] == 1 for p in pairs) / len(pairs)}
 ex = json.load(open("explore1.json"))
 noted = [r for r in rows if r["note"]]
 n_list = sum(1 for r in noted if r["listed"]); n_sil = sum(r["silent"] for r in noted)
@@ -42,13 +54,16 @@ for bid, ps in sorted(by_book.items(), key=lambda kv: -len(kv[1])):
     items = " ".join(f'<span class="w"><s>{E(p["from"])}</s> {E(p["to"])}</span>' for p in ps)
     wall.append(f'<div class="bk"><a href="https://www.gutenberg.org/ebooks/{bid}">#{bid}</a> {items}</div>')
 silent_ids = [r["id"] for r in noted if r["silent"]]
-tiles = "".join(f'<a class="t" href="https://www.gutenberg.org/ebooks/{i}" title="ebook {i}">#{i}</a>' for i in silent_ids)
+def _tcls(i):
+    return " h" if i in _hover else " m" if i in _misread else ""
+tiles = "".join(f'<a class="t{_tcls(i)}" href="https://www.gutenberg.org/ebooks/{i}" title="ebook {i}">#{i}</a>' for i in silent_ids)
+n_none = len([i for i in silent_ids if i not in _hover and i not in _misread])
 lev1 = res["share_pairs_lev1"]
 fb = ex["formula_books"]
 
 # session 2: the hand and the ear (session2.json registered, explore2.json exploratory)
 s2 = json.load(open("session2.json")); c2 = s2["completed_sample"]; x2 = json.load(open("explore2.json"))
-allp = pairs + json.load(open("pairs2_verified.json"))
+allp = pairs
 def diff1(a, b):
     """mark the one differing position of a same-length pair"""
     k = next(i for i in range(len(a)) if a[i] != b[i])
@@ -86,11 +101,12 @@ table{{border-collapse:collapse;width:100%;font-size:.85rem}} th,td{{text-align:
 .wall{{font-size:.82rem;line-height:1.75}} .bk{{margin:.4em 0}} .bk a{{color:var(--mut);font:11px system-ui,sans-serif;margin-right:.4em}}
 .w{{margin-right:.9em;display:inline-block;max-width:100%}} .w2{{display:block;margin:.3em 0}} .pr{{font-size:1.3em;margin-right:.6em}} .rot{{display:inline-block;line-height:1;vertical-align:-.22em;transform:rotate(180deg);color:var(--c1);font-weight:400}} .w b{{color:var(--c1)}}
 .w s{{color:var(--s);text-decoration-color:var(--c1)}}
-.tiles{{display:flex;flex-wrap:wrap;gap:4px}} .t{{display:inline-block;width:4.2em;padding:.5em 0;text-align:center;background:var(--c3);color:var(--mut);
+.tiles{{display:flex;flex-wrap:wrap;gap:4px}} .t.h{{box-shadow:inset 0 0 0 2px var(--c1)}} .t.m{{text-decoration:line-through}} .t{{display:inline-block;width:4.2em;padding:.5em 0;text-align:center;background:var(--c3);color:var(--mut);
 font:10px system-ui,sans-serif;text-decoration:none;border-radius:2px}}
 a{{color:inherit}}
 </style></head><body><main>
 <h1>What the Repair Keeps</h1>
+<p class="small">Project 7, closed 2026-10-14. The work it ended in: <a href="silently/">Corrected Silently</a>. This page is the project&rsquo;s full record.</p>
 <p class="lede">Project Gutenberg is a free library of books whose copyright has run out, typed and proofread by volunteers from old printed
 copies. When they find a misprint, they fix it, and sometimes they say so in a <em>transcriber&rsquo;s note</em>.</p>
 <p>Of {res["fetched"]:,} English books drawn at random from the library, <b>{res["with_note"]}</b> carry such a note.
@@ -101,7 +117,7 @@ away from what was printed. <b>{n_sil}</b> say that errors were corrected and li
 <p>The note spread: {res["share_note_before_2005"]*100:.1f}&nbsp;% of the books released before 2005 have one, {res["share_note_2010_on"]*100:.1f}&nbsp;% of those released since 2010.
 The list did not spread with it. In every period since 2005, about one book in ten lists its corrections
 ({lst}). What the note gained went elsewhere: to italics and hyphens, and to saying &ldquo;corrected&rdquo; without a list, which grows from about one
-noted book in five in 2005&ndash;09 to about half in 2015&ndash;24. The word &ldquo;silently&rdquo; appears in {ex["by_era"]["before 2005"]["silently"]} notes released before 2005,
+noted book in five in 2005&ndash;09 to about half in 2015&ndash;24. In the first 1,288 books (session 1), the word &ldquo;silently&rdquo; appears in {ex["by_era"]["before 2005"]["silently"]} notes released before 2005,
 {ex["by_era"]["2005-2009"]["silently"]} from 2005 to 2009, and {ex["by_era"]["2010 on"]["silently"]} since: the note now says, more and more often, that what it did is not in it.</p>
 <table><caption class="small" style="text-align:left">Books by release period: sampled, listing corrections, stating corrections without a list, another note, no note.</caption>
 <tr><th>released</th><th>books</th><th>list</th><th>no list</th><th>other</th><th>none</th></tr>{tab}</table>
@@ -111,6 +127,12 @@ noted book in five in 2005&ndash;09 to about half in 2015&ndash;24. The word &ld
 <h2>The rest</h2>
 <p>The {n_sil} books whose note says errors were corrected and does not say which. Each tile is one book; what was changed in it is not on record anywhere but in the printed copy it was typed from.</p>
 <div class="tiles">{tiles}</div>
+<p><b>Checked, session 3 (2026-10-14).</b> The sentence above was tested on the plain-text files only, and the library publishes each book in other forms too.
+So the web (HTML) edition of each of these {n_sil} books was fetched and read for any record of its corrections, under a rule fixed before the first file was
+opened: if a third or more kept one, the sentence would be withdrawn here. It holds, for {n_none} of the {n_sil}. {len(_hover)} books keep their corrections
+only in the web edition, as text that appears when the reader hovers over a corrected word (outlined above). {len(_misread)} list their corrections in
+both files after all; the reading pattern of session 1 missed them (struck through above). Until tonight this section showed 224 tiles, from the first 1,288 books
+only; the completed sample gives {n_sil}. The finding, as a work: <a href="silently/">Corrected Silently</a>.</p>
 <h2>The hand and the ear</h2>
 <p>A printed page was once set by hand from small pieces of metal type, one per letter, picked from the compartments of a case.
 One misprint that leaves a trace of that is the <em>turned letter</em>: a <i>u</i> set upside down prints as an
@@ -142,7 +164,7 @@ files of {res["fetched"]:,} e-books, a uniform random sample of the {json.load(o
 <code>sources.json</code>). Project Gutenberg e-books are free of U.S. copyright; nothing of them is reproduced here beyond corrected words and short phrases,
 each linked to its book. Programs: <code>fetch.py</code>, <code>session1.py</code>, <code>verify_build.py</code>, <code>explore1.py</code>.
 Project record: <a href="https://github.com/frankbueltge/n-1/tree/main/projects/transcribers-notes">projects/transcribers-notes</a>.
-Session 2 (2026-10-13) fetched the 207 sampled books session 1 did not reach and read every correction they list; programs <code>fetch2.py</code>, <code>verify2_build.py</code>, <code>session2.py</code>, <code>explore2.py</code>. Signed Remainder, project 7, sessions 1&ndash;2. Not yet tested by a stranger.</p>
+Session 2 (2026-10-13) fetched the 207 sampled books session 1 did not reach and read every correction they list; programs <code>fetch2.py</code>, <code>verify2_build.py</code>, <code>session2.py</code>, <code>explore2.py</code>. Session 3 (2026-10-14) fetched the HTML edition of 600 noted books and read every record found in the ones whose note says corrected and lists nothing; programs <code>fetch3.py</code>, <code>session3.py</code>, <code>build_work.py</code>. From this session the counts at the top are the completed sample&rsquo;s (1,495 books), not session 1&rsquo;s 1,288. Signed Remainder, project 7, sessions 1&ndash;3. Not yet tested by a stranger.</p>
 </main></body></html>'''
 open("index.html", "w").write(page)
 print(len(page))

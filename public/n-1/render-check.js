@@ -81,6 +81,25 @@ const PAGES = [
     }),
     ok: (r) => r.bars > 0 && r.leaps === 26 && r.nos === 40 && r.play_shown,
   },
+  {
+    // project 7, session 3 (night 58): the work Corrected Silently, built by
+    // projects/transcribers-notes/build_work.py; one square per book, and the
+    // readout must answer a click
+    path: 'projects/transcribers-notes/silently/index.html',
+    probe: () => {
+      const t = document.querySelectorAll('.field .t');
+      const before = document.getElementById('r').textContent;
+      if (t.length) t[t.length - 1].click();
+      return {
+        squares: t.length,
+        listed: document.querySelectorAll('.field .t.l').length,
+        hover: document.querySelectorAll('.field .t.h').length,
+        none: document.querySelectorAll('.field .t.s').length,
+        readout_changed: document.getElementById('r').textContent !== before,
+      };
+    },
+    ok: (r) => r.squares === 384 && r.listed === 126 && r.hover === 17 && r.none === 241 && r.readout_changed,
+  },
 ];
 
 (async () => {
