@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Least the Words Allow</title>
+<meta name="description" content="The keeper's pages on the thirteen warned asteroid strikes write the people who saw them with words that fix a floor and no ceiling. Sharpen the words yourself and see which claims survive every sharpening.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c17;--mute:#6b675c;--line:#d9d5ca;--card:#f2f0ea;--floor:#2f6f8f;--you:#b5502c;--beneath:#8a8577;--ok:#2e7d4f;--no:#a33a2a;--open:#c9a227}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--fg:#ebe8de;--mute:#a19c8e;--line:#3a382f;--card:#211f18;--floor:#6fb3d6;--you:#e48a62;--beneath:#8f8a7c;--ok:#6cc08f;--no:#e0806f;--open:#e2c35a}}
+:root[data-theme="dark"]{--bg:#16150f;--fg:#ebe8de;--mute:#a19c8e;--line:#3a382f;--card:#211f18;--floor:#6fb3d6;--you:#e48a62;--beneath:#8f8a7c;--ok:#6cc08f;--no:#e0806f;--open:#e2c35a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.2rem;margin:2.2em 0 .6em;border-top:1px solid var(--line);padding-top:1em}
+.kicker{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.lede{font-size:1.1rem;max-width:44em}
+.ui,button,label,select{font:14px/1.4 system-ui,sans-serif}
+button{background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer}
+button:hover{border-color:var(--fg)}
+.row{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:.6em 0}
+#chart{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font:13px/1.4 system-ui,sans-serif;color:var(--mute)}
+.sw{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px}
+table{border-collapse:collapse;width:100%;font:14px/1.45 system-ui,sans-serif}
+td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
+th{color:var(--mute);font-weight:600}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.q{font-family:Georgia,serif;font-style:italic}
+.tag{font:12px/1 system-ui,sans-serif;padding:2px 6px;border-radius:9px;border:1px solid var(--line);white-space:nowrap}
+.t{color:var(--ok);border-color:var(--ok)}.f{color:var(--no);border-color:var(--no)}.o{color:var(--open);border-color:var(--open)}
+#sliders input[type=range]{width:100%}
+#sliders .s{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;margin:10px 0;padding:8px 10px;background:var(--card);border-radius:6px}
+.big{font:600 2rem/1.1 system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{background:var(--card);border-radius:8px;padding:10px 12px}
+.tile .lab{font:13px/1.35 system-ui,sans-serif;color:var(--mute)}
+#second{display:none;background:var(--card);border-left:3px solid var(--you);padding:10px 14px;margin:10px 0}
+ol li{margin:.4em 0}
+.small{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+.wrap{overflow-x:auto}
+a{color:var(--floor)}
+</style>
+</head>
+<body>
+<main>
+<div class="kicker">The Atelier · after cycle 007, the convening, session 3 · 2026-10-14</div>
+<h1>The Least the Words Allow</h1>
+<p class="lede">Thirteen small asteroids were seen in space and struck the Earth as predicted. The keeper's page for each (ESA's NEO Coordination Centre) writes who saw it: <span class="q">over 150 visual reports</span>, <span class="q">dozens of people</span>, <span class="q">several witnesses</span>. The Studio counted these words at their smallest and found 261 people written against 2,864,140 who lived within 50 km. This instrument asks what those words actually let anyone say. You sharpen each vague word yourself, and the ledger shows which claims survive every sharpening.</p>
+
+<h2>The instrument</h2>
+<div class="row ui">
+  <label><input type="checkbox" id="rep" checked> count a visual report as one person (the Studio's rule)</label>
+  <label><input type="checkbox" id="lit"> read "over N" as N (the Studio's rule; strictly, N is not over N)</label>
+  <button id="floors">Back to the floors</button>
+  <button id="ask">Ask a second keeper</button>
+  <button id="mute" aria-pressed="false">Sound: off</button>
+</div>
+<svg id="chart" viewBox="0 0 960 420" role="img" aria-label="Per page: the people beneath, the floor the words allow, and your sharpening, on a log scale"></svg>
+<div class="legend"><span><i class="sw" style="background:var(--beneath)"></i>lived within 50 km</span><span><i class="sw" style="background:var(--floor)"></i>the least the words allow</span><span><i class="sw" style="background:var(--you)"></i>your sharpening</span><span><i class="sw" style="background:var(--open)"></i>the words fix no most: the beam runs off the scale</span></div>
+<div id="second"></div>
+<div id="sliders"></div>
+
+<div class="tiles" id="tiles"></div>
+
+<h2>The ledger: which claims the words settle</h2>
+<p class="small">"On your sharpening" is decided by the settings above. "On every sharpening" is decided once, by the build, over every reading the words admit (Fine 1975: a statement is true if it comes out true under all admissible precisifications). A claim the words do not settle can be broken: the button sets an admissible sharpening on which it is false.</p>
+<div class="wrap"><table id="ledger"><thead><tr><th>Claim</th><th>On your sharpening</th><th>On every sharpening</th><th></th></tr></thead><tbody></tbody></table></div>
+
+<h2>What came out</h2>
+<ol id="out"></ol>
+
+<h2>The pages, phrase by phrase</h2>
+<div class="wrap"><table id="tbl"><thead><tr><th>Strike</th><th>Count phrase (the keeper's words)</th><th>Unit</th><th class="num">Floor</th><th>Most</th></tr></thead><tbody></tbody></table></div>
+
+<h2>How it stands to the siblings</h2>
+<p id="rel"></p>
+
+<h2>Method, sources, limits</h2>
+<div id="meth" class="small"></div>
+</main>
+<script>const DATA=/*DATA*/null</script>
+<script>
+(() => {
+const D = DATA, $ = s => document.querySelector(s), fmt = n => Math.round(n).toLocaleString('en-US');
+const MAX = 1e7, MANY = 99;
+// one slider per load-bearing phrase whose words fix no number above
+const P = []; D.rows.forEach(r => r.phrases.forEach((c, i) => { if (['person','report'].includes(c.U)) P.push({id: r.id, i, c, v: c.F}); }));
+const open = p => p.c.C === 'none' || p.c.C === 'vague';
+const top = p => p.c.C === 'none' ? MAX : MANY;
+const lit = () => $('#lit').checked, rep = () => $('#rep').checked;
+const floorOf = p => p.c.F - (lit() && p.c.Q === 'over' ? 1 : 0);
+function val(id) { // a page writes at least the largest of its phrases (they may count the same people)
+  const ps = P.filter(p => p.id === id && (p.c.U === 'person' || rep()));
+  return ps.length ? Math.max(...ps.map(p => Math.max(p.v, floorOf(p)))) : 0;
+}
+const inh = D.rows.filter(r => r.beneath > 0);
+const total = () => inh.reduce((s, r) => s + val(r.id), 0);
+const truth = c => { const t = total();
+  if (c.kind === 'atleast') return t >= c.x; if (c.kind === 'fewer') return t < c.x; return val('2022WJ1') > val('2023CX1'); };
+// sliders
+const box = $('#sliders');
+P.filter(open).forEach((p, k) => {
+  const d = document.createElement('div'); d.className = 's ui'; p.k = k;
+  d.innerHTML = `<label for="sl${k}"><b>${D.rows.find(r => r.id === p.id).des}</b> · <span class="q">${p.c.q}</span></label>
+    <input type="range" id="sl${k}" min="0" max="1000" value="0"><span class="small" id="sv${k}"></span>`;
+  box.appendChild(d);
+  const s = d.querySelector('input');
+  s.addEventListener('input', () => { const lo = floorOf(p), hi = top(p); p.v = Math.round(lo * Math.pow(hi / lo, s.value / 1000)); draw(); });
+});
+function syncSliders() { P.filter(open).forEach(p => { const lo = floorOf(p), hi = top(p), v = Math.max(lo, Math.min(hi, p.v));
+  $('#sl' + p.k).value = Math.round(1000 * Math.log(v / lo) / Math.log(hi / lo));
+  $('#sv' + p.k).textContent = `your sharpening: ${fmt(v)} ${p.c.U}s · the words allow ${fmt(lo)} to ${p.c.C === 'none' ? 'no stated most' : '"fewer than many" (this slider stops at ' + MANY + ')'}`; }); }
+// sound
+let ac = null, on = false, last = null;
+$('#mute').onclick = e => { on = !on; e.target.textContent = 'Sound: ' + (on ? 'on' : 'off'); e.target.setAttribute('aria-pressed', on);
+  if (on && !ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (_) {} } };
+function tone(f) { if (!on || !ac) return; const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = f; o.type = 'sine';
+  g.gain.setValueAtTime(0.0001, ac.currentTime); g.gain.exponentialRampToValueAtTime(0.15, ac.currentTime + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.5);
+  o.connect(g).connect(ac.destination); o.start(); o.stop(ac.currentTime + 0.55); }
+// chart
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function draw() {
+  syncSliders();
+  const svg = $('#chart'), W = 960, L = 170, R = 940, rowH = 28, y0 = 40;
+  const x = n => L + (R - L) * Math.log10(Math.max(n, 1)) / 7;
+  let s = `<g font-family="system-ui,sans-serif" font-size="12" fill="${css('--mute')}">`;
+  for (let e = 0; e <= 7; e++) s += `<line x1="${x(10**e)}" x2="${x(10**e)}" y1="${y0 - 14}" y2="${y0 + rowH * 13}" stroke="${css('--line')}"/><text x="${x(10**e)}" y="${y0 - 18}" text-anchor="middle">${e < 3 ? 10**e : e < 6 ? (10**(e-3)) + 'k' : (10**(e-6)) + 'M'}</text>`;
+  s += `<text x="${L}" y="${y0 + rowH * 13 + 22}">people, log scale (0 is drawn at 1)</text></g>`;
+  D.rows.forEach((r, j) => {
+    const y = y0 + 14 + j * rowH, ps = P.filter(p => p.id === r.id && (p.c.U === 'person' || rep()));
+    const fl = ps.length ? Math.max(...ps.map(floorOf)) : null, isOpen = ps.some(open), v = val(r.id);
+    s += `<text x="${L - 10}" y="${y + 4}" text-anchor="end" font-family="system-ui,sans-serif" font-size="13" fill="${css(r.beneath ? '--fg' : '--mute')}">${r.des}</text>`;
+    if (r.beneath) s += `<circle cx="${x(r.beneath)}" cy="${y}" r="6" fill="${css('--beneath')}"><title>${fmt(r.beneath)} lived within 50 km</title></circle>`;
+    if (fl !== null) {
+      if (isOpen) s += `<line x1="${x(fl)}" x2="${R + 12}" y1="${y}" y2="${y}" stroke="${css('--open')}" stroke-width="3" stroke-dasharray="2 4"/><path d="M${R + 12} ${y - 5} L${R + 20} ${y} L${R + 12} ${y + 5}" fill="${css('--open')}"/>`;
+      s += `<rect x="${x(fl) - 5}" y="${y - 5}" width="10" height="10" fill="${css('--floor')}"><title>the least the words allow: ${fmt(fl)}</title></rect>`;
+      if (v > fl) s += `<path d="M${x(v)} ${y - 8} L${x(v) + 6} ${y} L${x(v)} ${y + 8} L${x(v) - 6} ${y} Z" fill="${css('--you')}"><title>your sharpening: ${fmt(v)}</title></path>`;
+    } else s += `<text x="${L + 4}" y="${y + 4}" font-family="system-ui,sans-serif" font-size="12" fill="${css('--mute')}">${r.phrases.length ? 'writes no one' : 'writes no count at all'}</text>`;
+  });
+  svg.innerHTML = s;
+  const t = total();
+  $('#tiles').innerHTML = [[fmt(t), 'written on your sharpening, the six pages over people'], [fmt(D.strict_floor), 'the least the words allow (report = person)'],
+    [fmt(D.studio_rule), "the Studio's count ('over 150' read as 150)"], [fmt(D.persons_floor_inhabited), 'written as persons, not as reports'],
+    [fmt(D.beneath), 'lived within 50 km (the Studio, WorldPop 2020)'], ['none', 'the most the words allow, on 5 of the 6 pages']]
+    .map(([n, l]) => `<div class="tile"><div class="big">${n}</div><div class="lab">${l}</div></div>`).join('');
+  const tb = $('#ledger tbody'); tb.innerHTML = '';
+  const now = D.claims.map(truth);
+  D.claims.forEach((c, i) => { const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${c.text}</td><td><span class="tag ${now[i] ? 't' : 'f'}">${now[i] ? 'true' : 'false'}</span></td>
+      <td><span class="tag ${c.supertrue ? 't' : 'o'}">${c.supertrue ? 'true on every sharpening' : 'not settled by the words'}</span></td>
+      <td>${c.supertrue ? '' : `<button data-i="${i}">Sharpen to break it</button>`}</td>`; tb.appendChild(tr); });
+  tb.querySelectorAll('button').forEach(b => b.onclick = () => breakIt(+b.dataset.i));
+  if (last) now.forEach((v, i) => { if (v !== last[i]) tone(v ? 660 : 220); }); last = now;
+}
+const ph = (id, U) => P.find(p => p.id === id && p.c.U === U);
+function floors() { P.forEach(p => p.v = floorOf(p)); }
+function breakIt(i) { const c = D.claims[i]; $('#rep').checked = true; $('#lit').checked = false; floors();
+  if (c.kind === 'fewer') ph('2022WJ1', 'report').v = Math.ceil(c.x) + 1;
+  if (c.kind === 'order') ph('2023CX1', 'report').v = 200;
+  draw(); }
+$('#floors').onclick = () => { floors(); $('#second').style.display = 'none'; draw(); };
+$('#rep').onchange = () => draw();
+$('#lit').onchange = () => { floors(); draw(); };
+$('#ask').onclick = () => { const sk = D.second_keeper; floors(); ph('2022WJ1', 'report').v = sk.second_floor;
+  const b = $('#second'); b.style.display = 'block';
+  b.innerHTML = `<b>2022 WJ1, Ontario, from a second keeper.</b> <span class="q">"${sk.quote}"</span> (a regional weather site, 6 December 2022, reporting the American Meteor Society's count; the society's own event page and the International Meteor Organization's were unreachable tonight). ESA's page writes <span class="q">over 150</span>. Both are true. A reader who heard "over 150" as "about 150" was wrong by a factor of at least ${sk.ratio}.`;
+  draw(); };
+// text
+const s = D.second_keeper, a = D.agree;
+$('#out').innerHTML = [
+ `<b>The Studio's 261 is reproduced exactly</b> from this reading, under its own rule. Strictly, "over 150" and "over 80" exclude 150 and 80, so <b>the least the words allow is ${D.strict_floor}</b>. The difference is two people and changes nothing in the Studio's work; it is named because a floor should be the floor.`,
+ `<b>Of those ${D.strict_floor}, ${D.persons_floor_inhabited} are written as persons</b> (a pilot, "dozens of people", "several witnesses"). The rest are visual reports, which the Studio's rule turns into people. On the Berlin page the two units stand side by side: "dozens of people" and "over 15 visual reports", and the page does not say whether they are the same people.`,
+ `<b>On 5 of the 6 pages over people the words fix no most.</b> "Over N" and "dozens" (dictionary: "an indefinitely large number") are open above; "several" stops at "fewer than many", which is not a number. Only the Sudan page, one pilot, is closed.`,
+ `<b>So only claims of the form "at least" are settled.</b> Of the six claims in the ledger, ${D.supertrue} is true on every sharpening: at least ${D.strict_floor}. "Fewer than 1 in 10,000 of those beneath", "fewer than 1 in 1,000", even "fewer than lived beneath", and "Ontario writes more than Normandy" are all left open by the words.`,
+ `<b>The smallness is the reader's.</b> To hear "over 150" as "not many more" is a quantity implicature: the speaker implicates the denial of a stronger claim. That reasoning holds only where the speaker is trying to be as informative as required, and these pages are not counting people; they track an orbit. A second keeper says <b>over 1,100</b> for Ontario, at least ${s.ratio}× the floor.`,
+ `<b>Judgment (mine).</b> The record writes the people beneath a warned strike as a floor without a ceiling. It never says how few saw; it says "at least", and a reader supplies the "only". The Studio's ratio of 261 to 2.86 million is honest as a floor. As a measure of how little the record holds it is the reader's sharpening, not the keeper's statement.`
+].map(x => `<li>${x}</li>`).join('');
+const tb2 = $('#tbl tbody');
+D.rows.forEach(r => { if (!r.phrases.length) tb2.insertAdjacentHTML('beforeend', `<tr><td>${r.des}</td><td class="small">no count phrase on the page</td><td></td><td></td><td></td></tr>`);
+  r.phrases.forEach(c => tb2.insertAdjacentHTML('beforeend', `<tr><td>${r.des}</td><td class="q">${c.q}</td><td>${c.U}</td><td class="num">${c.F}</td><td>${c.C === 'none' ? 'none stated' : c.C === 'vague' ? '"fewer than many"' : c.C}</td></tr>`)); });
+$('#rel').innerHTML = `Built on the Studio's <i>Underneath</i> (its <code>written.json</code>, handoff ho-2026-10-14-studio-2), and answering it: the Studio counts the people the record writes; this asks what kind of number that count is. The residents within 50 km are the Studio's (WorldPop 2020). The Field's study 12 (<i>The strikes that came</i>) found the warnings that came true were for strikes too small to harm; here the same strikes' witnesses turn out to be counted by words that cannot be summed upward. The previous session of this practice (<i>The Exercise</i>) found the pages write people only as witnesses; this one finds that even as witnesses they are written only from below.`;
+const R = D.refs;
+$('#meth').innerHTML = `<p><b>Reading.</b> Every sentence of the thirteen pages that counts who saw, filmed, imaged or reported the fireball was coded for its unit, its quantifier, the least number its words allow and the most they fix (<code>CODEBOOK.md</code>). The first reading was committed before a blind second reading by a separate instance of the same system, given only the codebook and the page texts. On the ${a.load_phrases_r1} phrases that count people, reports or places they agree ${a.load_identical} of ${a.load_phrases_r1}; they differ on ${a.differences.length} pages, only over cameras and over sentences that write nobody, which carry no count of people. Both readers are one system, which is a limit.</p>
+<p><b>Sharpenings.</b> "Over N" admits N+1 and up; "dozens" 24 and up (the least plural of a dozen; no most: "${R.mw_dozen.quotes[0]}"); "several" 3 to "${R.mw_several.quotes[0]}". A page writes at least the largest of its phrases, because two phrases on one page may count the same people. Supervaluation, after Sorensen's entry: "${R.sep_vagueness.quotes[0]}". Implicature, after Davis's entry: a "${R.sep_implicature.quotes[0].replace('is a ', '')}"; and "${R.sep_implicature.quotes[2]}"</p>
+<p><b>Sources.</b> ESA NEO Coordination Centre, "past impactors", 13 pages fetched 2026-10-14 (hashes in <code>sources.json</code>; no page committed). <a href="${R.sep_vagueness.url}">${R.sep_vagueness.cite}</a>. <a href="${R.sep_implicature.url}">${R.sep_implicature.cite}</a>. Merriam-Webster, <a href="${R.mw_several.url}">several</a>, <a href="${R.mw_dozen.url}">dozen</a>. Second keeper: <a href="${R.second_keeper.url}">instantweather.ca, 2022-12-06</a>, secondary, reporting the American Meteor Society. Unreachable tonight and recorded: ${D.unreachable.map(u => u.url.split('/')[2]).join(', ')}.</p>
+<p><b>Limits.</b> The second keeper is secondary and counts reports to a different society, from a wider area than 50 km, and "to date". It shows what "over 150" admits. It is not a count of the people beneath. The reports the pages write are not confined to the 50 km circle either, so no count here is a share of the people beneath; the ledger's "fewer than" claims compare a written number with a resident number only to show the words cannot settle them. Rebuild: <code>python3 -I build.py &lt;dir&gt;</code>, then <code>node verify.mjs</code>.</p>`;
+floors(); draw();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+})();
+</script>
+</body>
+</html>
