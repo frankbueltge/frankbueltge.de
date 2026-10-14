@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Underneath</title>
-<meta name="description" content="Thirteen times the record knew, hours ahead, where and when a small asteroid would strike. It never counted who lived beneath. This work estimates them, and lets you sit through the hours the warning was held.">
+<meta name="description" content="Thirteen times the record knew, hours ahead, where and when a small asteroid would strike. It never counted who lived beneath. This work estimates them, lets you sit through the hours the warning was held, and then lets the keeper's own account write its few: 261 people, as witnesses, against 2.86 million.">
 <style>
 :root{--bg:#f4f1ea;--ink:#1d1c1a;--mute:#6b675f;--rule:#d8d2c4;--land:#d9d2c0;--sea:#eae5d9;--night:rgba(20,24,40,.22);--dot:#1d1c1a;--hot:#b8461b;--ring:#7a5a1e;--card:#ece7dc}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0f14;--ink:#e9e4d8;--mute:#9a958a;--rule:#2a2d36;--land:#262a33;--sea:#12151c;--night:rgba(0,0,0,.45);--dot:#f1e7c9;--hot:#ff8a4c;--ring:#d9b25a;--card:#161922}}
@@ -42,7 +42,7 @@ a{color:inherit}
 code{font-size:.88em}
 </style>
 </head><body><div class="wrap">
-<div class="kicker">The Studio · Ensemble · the convening after cycle 007 · 2026-10-13</div>
+<div class="kicker">The Studio · Ensemble · the convening after cycle 007 · 2026-10-13, grown 2026-10-14</div>
 <h1>Underneath</h1>
 <p class="lede" id="lede"></p>
 
@@ -58,11 +58,15 @@ code{font-size:.88em}
     <div class="clock" id="clock"></div><div class="count" id="count"></div></div>
   <div class="card" id="card"></div>
 </div>
-<p class="small">One dot is about a thousand people, an estimate from a 2020 population grid inside 50 km of the listed point. Dots are placed at random on land inside the circle: their places are not data, their number is. Shading is night at the minute of impact. One second of the clock is one held hour, compressed.</p>
+<p class="small">After each strike the people fade, and the keeper's own account speaks: one bright square and one chime for each person its page writes, read at the smallest number its words allow. Those squares are a count, not a place. One dot is about a thousand people, an estimate from a 2020 population grid inside 50 km of the listed point. Dots are placed at random on land inside the circle: their places are not data, their number is. Shading is night at the minute of impact. One second of the clock is one held hour, compressed.</p>
 
 <h2>The held hours</h2>
 <p id="heldText"></p>
 <div class="fig" id="held"></div>
+
+<h2>Beneath, and written</h2>
+<p id="writtenText"></p>
+<div class="fig" id="written"></div>
 
 <h2>On the Field's clock, every warning that came true fits inside one day</h2>
 <p id="clockText"></p>
@@ -84,7 +88,7 @@ const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).
 const fmt = n => n.toLocaleString('en-US');
 const hm = h => { const m = Math.round(h * 60); return `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')} min`; };
 const around = n => n === 0 ? 'no one' : n < 2000 ? `about ${fmt(Math.round(n / 10) * 10)}` : `about ${fmt(Math.round(n / 1000) * 1000)}`;
-$('#lede').innerHTML = T.lede; $('#heldText').innerHTML = T.held; $('#clockText').innerHTML = T.clock;
+$('#lede').innerHTML = T.lede; $('#heldText').innerHTML = T.held; $('#clockText').innerHTML = T.clock; $('#writtenText').innerHTML = T.written;
 $('#method').innerHTML = T.method.map(x => `<li>${x}</li>`).join('');
 $('#neigh').innerHTML = T.neigh.map(x => `<li>${x}</li>`).join('');
 
@@ -97,7 +101,7 @@ fetch('vendor/land-50m.json').then(r => r.json()).then(t => { landTopo = t; land
   .catch(() => { state.ready = true; draw(); });
 const G = 0.46 * W;                                  // whole-globe scale
 const Z = 0.30 * W / (50 / 6371);                    // scale at which the 50 km circle is 30 % of the width
-const state = { i: 0, rot: [-D.rows[0].lon, -D.rows[0].lat], scale: G, shown: 0, phase: 'rest', t: 0, ready: false, dots: [] };
+const state = { i: 0, rot: [-D.rows[0].lon, -D.rows[0].lat], scale: G, shown: 0, phase: 'rest', t: 0, ready: false, dots: [], fade: 1, wshown: 0 };
 function rng(seed) { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
 function layDots(i) {
   const r = D.rows[i], n = Math.round(r.residents_50km / D.conventions.dot), R = rng(i * 7919 + 17), out = [];
@@ -123,10 +127,15 @@ function draw() {
   // the 50 km circle
   ctx.beginPath(); path(d3.geoCircle().center([r.lon, r.lat]).radius(50 / 111.2)()); ctx.strokeStyle = css('--ring'); ctx.lineWidth = 2; ctx.setLineDash([6, 6]); ctx.stroke(); ctx.setLineDash([]);
   // the people, as many as the hours have revealed
-  ctx.fillStyle = css('--dot');
+  ctx.fillStyle = css('--dot'); ctx.globalAlpha = state.fade;
   const k = Math.min(state.dots.length, Math.round(state.shown));
   const sz = Math.max(1.5, W / 420);
   for (let j = 0; j < k; j++) { const p = proj(state.dots[j]); if (p) ctx.fillRect(p[0] - sz / 2, p[1] - sz / 2, sz, sz); }
+  ctx.globalAlpha = 1;
+  // the people the keeper's page writes: a ledger, one square per person, in the lower left (a count, not a place)
+  const wn = Math.round(state.wshown);
+  if (wn > 0) { const q = W / 90, gap = q * 0.45, cols = 15; ctx.fillStyle = css('--hot');
+    for (let j = 0; j < wn; j++) { const cx = W * 0.05 + (j % cols) * (q + gap), cy = W * 0.93 - Math.floor(j / cols) * (q + gap); ctx.fillRect(cx, cy, q, q); } }
   // the point, and the flash
   const c = proj([r.lon, r.lat]);
   if (c) {
@@ -144,15 +153,26 @@ function card(i, done) {
   <dt>struck</dt><dd>${r.impact_utc} UTC</dd><dt>held for</dt><dd>${hm(r.held_h)}</dd>
   <dt>local sun</dt><dd>${r.local_solar_time} · ${r.dark ? 'night' : 'daylight'} (${r.sun_alt_deg}°)</dd>
   <dt>beneath</dt><dd>${people ? around(people) + ' people' : 'open water'}</dd>
-  <dt>held hours</dt><dd>${people ? fmt(Math.round(r.person_hours / 1000) * 1000) + ' person-hours' : '—'}</dd></dl>
+  <dt>held hours</dt><dd>${people ? fmt(Math.round(r.person_hours / 1000) * 1000) + ' person-hours' : '—'}</dd>
+  <dt>keeper writes</dt><dd>${WR(r).role}</dd>
+  <dt>sensors</dt><dd>${WR(r).sensors_kept ? 'kept it, ' + WR(r).impact_kt + ' kt' : 'did not keep it'}</dd></dl>
   <div class="verdict" id="verdict">${done ? verdict(r) : ''}</div>`;
 }
+const WR = r => D.written.by_strike[r.des];
+function said(r) {
+  const w = WR(r);
+  if (!w.quotes.length) return ` The keeper's page writes no one at all.`;
+  return ` The keeper's page writes: <q>${w.quotes.join(' … ')}</q> Read at its smallest, that is ${w.written === 0 ? 'no one' : w.written === 1 ? 'one person' : w.written + ' people'}${w.told ? ', and the only people in any of the thirteen accounts who were told beforehand were told so that they could watch' : ''}.`;
+}
 function verdict(r) {
-  if (!r.residents_50km) return `It came down over open water. The record named the minute ${hm(r.held_h)} ahead, and nobody was beneath.`;
-  return `It came down at ${r.local_solar_time} local time, ${r.dark ? 'in the dark' : 'in daylight'}. The record named the minute ${hm(r.held_h)} ahead. It names none of the people beneath, and counts none of them: by this work's estimate, ${around(r.residents_50km)}.`;
+  if (!r.residents_50km) return `It came down over open water. The record named the minute ${hm(r.held_h)} ahead, and nobody was beneath.` + said(r);
+  return `It came down at ${r.local_solar_time} local time, ${r.dark ? 'in the dark' : 'in daylight'}. The record named the minute ${hm(r.held_h)} ahead. It counts none of the people beneath: by this work's estimate, ${around(r.residents_50km)}.` + said(r);
 }
 function clock(i, h) {
   const r = D.rows[i];
+  if (state.phase === 'written' || (state.phase === 'rest' && state.wshown > 0)) { const w = WR(r);
+    $('#clock').innerHTML = `struck<b>${hm(r.held_h)}</b>after the first sighting`;
+    $('#count').innerHTML = `written<b>${w.written == null ? '—' : fmt(Math.round(state.wshown))}</b>${r.residents_50km ? 'of ' + around(r.residents_50km) + ' beneath' : 'nobody beneath'}`; return; }
   $('#clock').innerHTML = `held<b>${hm(h)}</b>of ${hm(r.held_h)}`;
   $('#count').innerHTML = `beneath<b>${fmt(Math.min(state.dots.length, Math.round(state.shown)) * D.conventions.dot)}</b>${r.residents_50km ? 'one dot ≈ 1,000' : 'open water'}`;
 }
@@ -171,6 +191,7 @@ function startDrone(people) {
 }
 function stopDrone() { if (!drone || !AC) return; const { o, o2, g } = drone; g.gain.cancelScheduledValues(AC.currentTime); g.gain.setTargetAtTime(0, AC.currentTime, 0.08); o.stop(AC.currentTime + 0.5); o2.stop(AC.currentTime + 0.5); drone = null; }
 function tick() { const a = ac(); if (!a || !soundOn) return; const o = a.createOscillator(), g = a.createGain(); o.frequency.value = 1320; g.gain.value = 0.05; g.gain.setTargetAtTime(0, a.currentTime, 0.015); o.connect(g); g.connect(a.destination); o.start(); o.stop(a.currentTime + 0.1); }
+function chime(j) { const a = ac(); if (!a || !soundOn) return; const o = a.createOscillator(), g = a.createGain(); o.type = 'triangle'; o.frequency.value = [880, 988, 1175, 1319, 1480][j % 5]; g.gain.value = 0.045; g.gain.setTargetAtTime(0, a.currentTime + 0.02, 0.12); o.connect(g); g.connect(a.destination); o.start(); o.stop(a.currentTime + 0.6); }
 function thump() {
   const a = ac(); if (!a || !soundOn) return;
   const n = a.createBufferSource(), b = a.createBuffer(1, a.sampleRate * 1.2, a.sampleRate), d = b.getChannelData(0);
@@ -187,18 +208,23 @@ function anim(ms, f) { const id = run; return new Promise(res => { const t0 = pe
 async function show(i, fast) {
   const id = ++run; stopDrone(); select(i);
   const r = D.rows[i], from = state.rot.slice(), to = [-r.lon, -r.lat], s0 = state.scale;
-  state.i = i; state.shown = 0; state.phase = 'turn'; layDots(i); card(i, false); clock(i, 0);
+  state.i = i; state.shown = 0; state.fade = 1; state.wshown = 0; state.phase = 'turn'; layDots(i); card(i, false); clock(i, 0);
   const ri = d3.interpolate(from, to);
   if (!(await anim(fast ? 10 : 1400, t => { const e = ease(t); state.rot = ri(e); state.scale = Math.exp(Math.log(s0) + (Math.log(G) - Math.log(s0)) * Math.min(1, e * 2)); }))) return false;
   if (!(await anim(fast ? 10 : 1300, t => { state.scale = Math.exp(Math.log(G) + (Math.log(Z) - Math.log(G)) * ease(t)); }))) return false;
-  if (fast) { state.shown = state.dots.length; clock(i, r.held_h); card(i, true); state.phase = 'rest'; draw(); return true; }
+  if (fast) { state.shown = state.dots.length; state.fade = 0.18; state.wshown = WR(r).written || 0; state.phase = 'rest'; clock(i, r.held_h); card(i, true); draw(); return true; }
   state.phase = 'hold'; startDrone(r.residents_50km);
   const ms = Math.max(1500, r.held_h * SEC_PER_HOUR * 1000); let lastH = 0;
   const ok = await anim(ms, t => { state.shown = state.dots.length * t; const h = r.held_h * t; clock(i, h); if (Math.floor(h) > lastH) { lastH = Math.floor(h); tick(); } });
   stopDrone(); if (!ok) return false;
   state.phase = 'flash'; thump(); card(i, true); clock(i, r.held_h);
   if (!(await anim(1600, t => { state.t = t; }))) return false;
-  state.phase = 'rest'; draw(); return id === run;
+  // the second movement: the people fade; the keeper's account writes its few, one chime each
+  state.phase = 'written';
+  if (!(await anim(1200, t => { state.fade = 1 - 0.82 * ease(t); clock(i, r.held_h); }))) return false;
+  const wn = WR(r).written || 0; let last = 0;
+  if (wn > 0 && !(await anim(Math.min(6000, 400 + wn * 60), t => { state.wshown = wn * t; const k = Math.floor(state.wshown); while (last < k) { if (last % Math.max(1, Math.ceil(wn / 60)) === 0) chime(last); last++; } clock(i, r.held_h); }))) return false;
+  state.wshown = wn; state.phase = 'rest'; clock(i, r.held_h); draw(); return id === run;
 }
 async function playAll() { for (let i = 0; i < D.rows.length; i++) { const ok = await show(i); if (!ok) return; await new Promise(r => setTimeout(r, 900)); } }
 function select(i) { document.querySelectorAll('.chip').forEach((c, j) => c.setAttribute('aria-pressed', j === i ? 'true' : 'false')); }
@@ -234,8 +260,23 @@ function drawClock() {
   svg.append('text').attr('x', m.l).attr('y', h - 6).text('← first held after it passed · days of warning · held ahead →');
   svg.append('text').attr('x', w - m.r).attr('y', m.t).attr('text-anchor', 'end').style('fill', css('--hot')).text('orange numbers: the impacts, by the same rule');
 }
-let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { drawHeld(); drawClock(); }, 150); });
-matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { draw(); drawHeld(); drawClock(); });
-layDots(0); card(0, true); state.shown = 0; clock(0, 0); draw(); drawHeld(); drawClock(); select(0);
+// ---------- figure: the people beneath (estimate) and the people the keeper's page writes, on one logarithmic axis
+function drawWritten() {
+  const w = $('#written').clientWidth || 600, rowH = 30, narrow = w < 600, m = { l: 66, r: narrow ? 10 : 270, t: 22, b: 30 }, h = m.t + m.b + rowH * D.rows.length;
+  const x = d3.scaleLog().domain([0.7, 3e6]).range([m.l, w - m.r]).clamp(true);
+  const svg = d3.select('#written').html('').append('svg').attr('width', w).attr('height', h);
+  svg.append('g').attr('transform', `translate(0,${h - m.b})`).call(d3.axisBottom(x).tickValues([1, 10, 100, 1e3, 1e4, 1e5, 1e6]).tickFormat(d3.format('~s'))).call(g => g.selectAll('path,line').attr('stroke', css('--rule')));
+  svg.append('text').attr('x', m.l).attr('y', 12).text('people, log scale · ● beneath (estimate) · ■ written by the keeper');
+  const g = svg.selectAll('g.row').data(D.rows).join('g').attr('class', 'row').attr('transform', (r, i) => `translate(0,${m.t + i * rowH})`).on('click', (e, r) => { ac(); show(D.rows.indexOf(r)); window.scrollTo({ top: $('.stage').offsetTop - 20, behavior: 'smooth' }); });
+  g.append('text').attr('class', 'lab').attr('x', m.l - 8).attr('y', rowH / 2 + 4).attr('text-anchor', 'end').text(r => r.des);
+  g.filter(r => r.residents_50km && WR(r).written).append('line').attr('x1', r => x(WR(r).written)).attr('x2', r => x(r.residents_50km)).attr('y1', rowH / 2).attr('y2', rowH / 2).attr('stroke', css('--rule')).attr('stroke-width', 2);
+  g.filter(r => r.residents_50km).append('circle').attr('class', 'ben').attr('cx', r => x(r.residents_50km)).attr('cy', rowH / 2).attr('r', 5).attr('fill', css('--ink'));
+  g.filter(r => WR(r).written).append('rect').attr('class', 'wr').attr('x', r => x(WR(r).written) - 4.5).attr('y', rowH / 2 - 4.5).attr('width', 9).attr('height', 9).attr('fill', css('--hot'));
+  g.append('text').attr('x', r => narrow ? x(Math.max(1, WR(r).written || 1)) + 10 : w - m.r + 10).attr('y', rowH / 2 + 4)
+    .text(r => { const v = WR(r); const a = v.written == null ? 'writes no one' : v.written === 0 ? 'writes no one saw it' : `writes ${v.written}`; return narrow ? (r.residents_50km ? '' : 'water · ') + (r.residents_50km && v.written ? v.written : a) : `${r.residents_50km ? around(r.residents_50km).replace('about ', '≈') + ' beneath' : 'water'} · ${a}${v.sensors_kept ? '' : ' · not in sensors'}`; });
+}
+let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { drawHeld(); drawWritten(); drawClock(); }, 150); });
+matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { draw(); drawHeld(); drawWritten(); drawClock(); });
+layDots(0); card(0, true); state.shown = 0; clock(0, 0); draw(); drawHeld(); drawWritten(); drawClock(); select(0);
 window.__UN = { D, show, state };
 </script></body></html>

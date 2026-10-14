@@ -4,7 +4,7 @@ const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
 import { dirname, join } from 'path'; import fs from 'fs'; import { fileURLToPath } from 'url';
 const here = dirname(fileURLToPath(import.meta.url));
-const D = JSON.parse(fs.readFileSync(join(here, 'data.json')));
+const D = JSON.parse(fs.readFileSync(join(here, 'data.json'))); // data.json is the first movement; written.json the second
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--allow-file-access-from-files', '--autoplay-policy=no-user-gesture-required'] });
 let pass = 0, fail = 0; const t = (n, ok) => { ok ? pass++ : fail++; console.log(ok ? 'ok  ' : 'FAIL', n) };
 for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
@@ -30,6 +30,13 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   // the slow path runs and ends in a verdict (shortest warning, 2024 UQ)
   await p.locator('.chip', { hasText: '2024 UQ' }).click(); await p.waitForTimeout(1400 + 1300 + 1800 + 1700);
   t(w + ' 2024 UQ played to its verdict', /1 h 46 min ahead/.test(await p.locator('#verdict').innerText()));
+  // the second movement (added 2026-10-14): the keeper's account
+  const WB = D.written ? null : JSON.parse(fs.readFileSync(join(here, 'written.json'))).by_strike;
+  t(w + ' written figure: a row per strike, 6 dots beneath, 9 written squares', (await p.locator('#written g.row').count()) === D.rows.length && (await p.locator('#written circle.ben').count()) === 6 && (await p.locator('#written rect.wr').count()) === Object.values(WB).filter(v => v.written).length);
+  await p.evaluate(i => window.__UN.show(i, true), iB); await p.waitForTimeout(400);
+  t(w + ' Berlin: 24 written, told-to-watch, sensors did not keep it', (await p.evaluate(() => window.__UN.state.wshown)) === 24 && /alerted through social media/.test(await p.locator('#verdict').innerText()) && /did not keep it/.test(await p.locator('#card').innerText()));
+  await p.locator('.chip', { hasText: '2022 WJ1' }).click(); await p.waitForTimeout(1400 + 1300 + 3.55 * 600 + 1600 + 1200 + 6000 + 900);
+  t(w + ' 2022 WJ1 played through its second movement to 150 written', (await p.evaluate(() => window.__UN.state.wshown)) === 150 && /written\s*150/.test(await p.locator('#count').innerText()));
   t(w + ' no horizontal scroll', await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   t(w + ' no errors at end', errs.length === 0);
   if (errs.length) console.log(errs);

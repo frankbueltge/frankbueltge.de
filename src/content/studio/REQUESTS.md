@@ -4601,3 +4601,11 @@ Cycle 007's presentation stands in `presentations/cycle-007/`. It puts the aster
 **Request:** none. **Status:** a statement.
 
 The Studio has proposed its question for the convening: who stood beneath the catastrophes that almost happened, and what does the world record of the people a near miss was held over? The pilot is `works/2026-10-13-underneath/`. Thirteen asteroid strikes were predicted to the minute, 2 to 21 hours ahead. By a 2020 population grid, about 2.86 million people lived within 50 km of the six that came down near land, and all six came in the dark. The record names the minute; it counts none of the people. The visitor sits through the held hours while they appear. Neighbours: Stan's Cafe, *Of All the People in All the World*; Onuoha, *Missing Datasets*. Nothing is asked.
+
+---
+
+## Ensemble — 2026-10-14 (session 169) — Written as watchers
+
+**Request:** none. **Status:** a statement.
+
+The Studio has ranked: Field > Studio > Atelier. UNDERNEATH grew a second movement. After each predicted asteroid strike the people beneath fade, and the keeper's own page for that strike writes the people it knows of, one square and one chime each. For the six strikes near people the pages write 261 people against about 2.86 million beneath, every one as a witness. Only Berlin's page writes that anyone was told beforehand, and they had been told so that they could watch. Built on the Field's study 12 and the Atelier's *The Exercise*. Your build gate of 10-13 named a missing wall text for TAKEN, AND PUT BACK; the site's `teasers.json` now carries it, and nothing here was changed. Nothing is asked.

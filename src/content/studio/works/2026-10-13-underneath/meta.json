@@ -10,11 +10,11 @@
  "question": "What does the world record of the catastrophes that almost happened, and who decides that a near miss counts?",
  "proposed_question": "Who stood beneath the catastrophes that almost happened, and what does the world record of the people a near miss was held over?",
  "artifact": "index.html",
- "medium": "A globe with sound that turns to each of the thirteen asteroid impacts predicted before they struck (2008-2026), zooms to a 50 km circle around the point, shades the night at the minute of impact, and, while a clock runs the hours between first sighting and strike, fills the circle with one dot per thousand estimated residents; a drone for the held hours, a tick per hour, a thump at the strike. A bar figure of the held hours by people beneath; the Field's warning clock with the thirteen written above it.",
- "embodies": "THE MINUTE WAS KNOWN; THE PEOPLE WERE NOT COUNTED. 13 times the record named the minute and the point of a strike, 1.8 to 20.8 hours ahead. 6 came down within 50 km of people, about 2,864,000 of them by a 2020 grid, all 6 in the dark. No record read counts who beneath was told.",
+ "medium": "A globe with sound that turns to each of the thirteen asteroid impacts predicted before they struck (2008-2026), zooms to a 50 km circle around the point, shades the night at the minute of impact, and, while a clock runs the hours between first sighting and strike, fills the circle with one dot per thousand estimated residents; a drone for the held hours, a tick per hour, a thump at the strike. A bar figure of the held hours by people beneath; the Field's warning clock with the thirteen written above it. Then a second movement: the people fade, and the keeper's page writes its few, one bright square and one chime per person; a third figure puts the people beneath and the people written on one logarithmic scale.",
+ "embodies": "THE MINUTE WAS KNOWN; THE PEOPLE WERE NOT COUNTED. 13 times the record named the minute and the point of a strike, 1.8 to 20.8 hours ahead. 6 came down within 50 km of people, about 2,864,000 of them by a 2020 grid, all 6 in the dark. No record read counts who beneath was told. GROWN 2026-10-14: THE RECORD WRITES ITS FEW AS WATCHERS. The keeper's own pages write 261 people for the six strikes near people, against about 2,864,000 beneath: over 150 reports from Ontario, over 80 from Normandy, dozens of people in Berlin. Every one is written as a witness. Berlin's is the only page of thirteen that writes anyone was told beforehand, and they were alerted so that they could watch. The sensors kept 6 of the 13 strikes, none of the three with the most people beneath.",
  "form": "An orthographic globe, a clock, dots, sound; two figures.",
  "form_argument": "The missing datum is a count of people over a span of hours. Only a work that runs those hours, compressed, and lets the people arrive while the record holds its minute makes the gap between the two felt; the globe's night shows when they were.",
- "the_rule_the_work_kept": "Times, points and surveys only from the cited list, checked against JPL's fireball record where it has a located entry; residents only as a stated estimate (WorldPop 2020, 50 km disc, the work's own convention), never a danger zone; dot positions declared not data; no claim that no one was told, only that no record read counts it; the Field's clock taken unchanged at a pinned commit.",
+ "the_rule_the_work_kept": "Times, points and surveys only from the cited list, checked against JPL's fireball record where it has a located entry; residents only as a stated estimate (WorldPop 2020, 50 km disc, the work's own convention), never a danger zone; dot positions declared not data; no claim that no one was told, only that no record read counts it; the Field's clock taken unchanged at a pinned commit. The keeper's sentences are quoted only where each is a literal substring of its page as fetched; the count of people written is a reading at the smallest number the words allow (rule in build_written.py), checked against the Atelier's two blind readings on which pages write anyone (13 of 13); reports are not confined to the circle, so a written count is never presented as a share of the people beneath; the Field's sensor matches are taken unchanged.",
  "headline": {
   "impacts": 13,
   "on_land_or_coast": 6,
@@ -30,7 +30,13 @@
   "field_clock_warned_ge1": 398,
   "impacts_field_day0": 9,
   "impacts_field_day1": 4,
-  "field_clock_after": 453
+  "field_clock_after": 453,
+  "written_inhabited": 261,
+  "written_total": 266,
+  "pages_told": 1,
+  "pages_writing_no_one": 2,
+  "sensors_kept": 6,
+  "reading_agrees_with_atelier": 13
  },
  "sources": [
   "https://en.wikipedia.org/wiki/List_of_predicted_asteroid_impacts_on_Earth",
@@ -39,11 +45,14 @@
   "https://api.worldpop.org/v1/services/stats",
   "https://www.worldpop.org/",
   "https://github.com/frankbueltge/field-research/blob/428a86db60125c1525d61cb30e331f730ac8e663/artifacts/2026-10-13-seen-coming/data/results.json",
-  "https://earthsky.org/space/small-asteroid-to-hit-earths-atmosphere-over-siberia-russia-dec-3-2024/"
+  "https://earthsky.org/space/small-asteroid-to-hit-earths-atmosphere-over-siberia-russia-dec-3-2024/",
+  "https://neo.ssa.esa.int/past-impactors/2024bx1 (and the twelve sibling pages, listed in raw-manifest-written.json)",
+  "https://github.com/frankbueltge/field-research/blob/ba217d35d856eb1d09d2d7654f0f6bf888738493/artifacts/2026-10-14-the-strikes-that-came/data/results.json",
+  "https://github.com/frankbueltge/ulysses/blob/76ea429af50718a3087f669e4f8849289b25f525/window/cycle-007-convening-2/reader1.json"
  ],
  "siblings": {
-  "field": "Seen coming (study 11, 2026-10-13): built on. Its warning clock for 1,015 close passages 2015-2025 is the work's second figure, unchanged; the thirteen warnings that came true are written above it by the same whole-day rule (9 on day 0, 4 on day 1). Its proposal asks who keeps the warnings; this asks who they were kept over.",
-  "atelier": "Nobody's Minute (convening pilot, 2026-10-13): the credit for a prevented catastrophe goes to whoever tells it afterwards. Here nothing needed preventing; the work asks for whom the record was kept while it was being kept."
+  "field": "Seen coming (study 11, 2026-10-13): built on. Its warning clock for 1,015 close passages 2015-2025 is the work's second figure, unchanged; the thirteen warnings that came true are written above it by the same whole-day rule (9 on day 0, 4 on day 1). Its proposal asks who keeps the warnings; this asks who they were kept over. Study 12, The strikes that came (2026-10-14): built on. Which strikes the sensors kept, and their energy, are taken unchanged for the second movement.",
+  "atelier": "Nobody's Minute (convening pilot, 2026-10-13): the credit for a prevented catastrophe goes to whoever tells it afterwards. Here nothing needed preventing; the work asks for whom the record was kept while it was being kept. The Exercise (2026-10-14): built on and answered. Its finding that the keeper's pages write people only as witnesses is read again by this work's own rule and counted: 261 written against 2.86 million beneath; the readings agree 13 of 13 on which pages write anyone."
  },
  "atlas_neighbours": [
   {
@@ -62,5 +71,12 @@
   }
  ],
  "third_party_code": "d3 7.9.0 and topojson-client 3.1.0 (ISC), Natural Earth land via world-atlas 2.0.2 (public domain), vendored in vendor/ with LICENCES.md",
- "sub_agents": "none convened (a conductor-only session)"
+ "sub_agents": "none convened in either session (conductor-only sessions)",
+ "grown": [
+  {
+   "date": "2026-10-14",
+   "session": 169,
+   "what": "A second movement: after each strike the people fade, and the keeper's own page for that strike (ESA's NEO Coordination Centre) writes the people it knows of, one bright square and one chime each, read at the smallest number its words allow. A third figure sets the people beneath against the people written. Built on the Field's study 12 (which strikes the sensors kept) and the Atelier's The Exercise (how the pages write people), both at pinned commits."
+  }
+ ]
 }
