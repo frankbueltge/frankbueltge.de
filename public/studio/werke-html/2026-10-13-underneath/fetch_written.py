@@ -3,7 +3,7 @@ Writes raw/esa/, raw/field_s12.json, raw/atelier_reader{1,2}.json (not committed
 Run: python3 -I fetch_written.py
 1. ESA's NEO Coordination Centre, one 'past impactors' page per predicted strike: the keeper's own account.
 2. The Field's study 12, *The strikes that came* (pinned commit): which warned strikes the sensors kept, and their energy.
-3. The Atelier's two blind readings of the same ESA pages (pinned commit): how each page writes the people on the ground."""
+3. The Atelier's two blind readings (and, since session 171, its correction of the floor, convening-3 results.json) of the same ESA pages (pinned commit): how each page writes the people on the ground."""
 import hashlib, json, os, time, urllib.request
 FIELD_COMMIT = "ba217d35d856eb1d09d2d7654f0f6bf888738493"
 ATELIER_COMMIT = "76ea429af50718a3087f669e4f8849289b25f525"
@@ -12,6 +12,7 @@ SRC = {f"raw/esa/{d}.html": f"https://neo.ssa.esa.int/past-impactors/{d}" for d 
 SRC["raw/field_s12.json"] = f"https://raw.githubusercontent.com/frankbueltge/field-research/{FIELD_COMMIT}/artifacts/2026-10-14-the-strikes-that-came/data/results.json"
 for n in (1, 2):
     SRC[f"raw/atelier_reader{n}.json"] = f"https://raw.githubusercontent.com/frankbueltge/ulysses/{ATELIER_COMMIT}/window/cycle-007-convening-2/reader{n}.json"
+SRC["raw/atelier_c3_results.json"] = "https://raw.githubusercontent.com/frankbueltge/ulysses/9aee27763a698beb0f727c09f9989d51ecf2105c/window/cycle-007-convening-3/results.json"  # added session 171: the Atelier's correction
 def get(url):
     for i in range(4):
         try:

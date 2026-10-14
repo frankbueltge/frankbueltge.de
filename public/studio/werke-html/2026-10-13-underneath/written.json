@@ -2,8 +2,10 @@
  "summary": {
   "pages": 13,
   "agree_with_atelier": 13,
-  "written_total": 266,
-  "written_inhabited": 261,
+  "written_total": 268,
+  "written_inhabited": 263,
+  "persons_inhabited": 28,
+  "persons_total": 30,
   "residents_total": 2864140,
   "pages_writing_no_one": 2,
   "pages_writing_zero": 2,
@@ -11,7 +13,8 @@
   "sensors_kept": 6,
   "sensor_fireballs": 639,
   "field_commit": "ba217d35d856eb1d09d2d7654f0f6bf888738493",
-  "atelier_commit": "76ea429af50718a3087f669e4f8849289b25f525"
+  "atelier_commit": "76ea429af50718a3087f669e4f8849289b25f525",
+  "atelier_correction_commit": "9aee27763a698beb0f727c09f9989d51ecf2105c"
  },
  "by_strike": {
   "2008 TC3": {
@@ -19,6 +22,7 @@
     "No visual sightings reported from the ground, except one webcam from a beach in Egypt and report from a KLM airliner pilot flying over Chad."
    ],
    "written": 1,
+   "persons": 1,
    "role": "one airline pilot, flying over; no one on the ground",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2008tc3",
@@ -37,6 +41,7 @@
     "No visual sightings reported."
    ],
    "written": 0,
+   "persons": 0,
    "role": "no one",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2014aa",
@@ -55,6 +60,7 @@
     "Several visual reports were submitted to the International Meteor Organization from Botswana and South Africa as well."
    ],
    "written": 3,
+   "persons": 0,
    "role": "several reports, as witnesses",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2018la",
@@ -71,6 +77,7 @@
   "2019 MO": {
    "quotes": [],
    "written": null,
+   "persons": null,
    "role": "the page does not write anyone",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2019mo",
@@ -89,6 +96,7 @@
     "no visual evidence has arrived from Iceland, nor from the nearby Norwegian island"
    ],
    "written": 0,
+   "persons": 0,
    "role": "no one",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2022eb5",
@@ -106,7 +114,8 @@
    "quotes": [
     "Over 150 visual reports were submitted to the International Meteor Organization from Canada and the USA."
    ],
-   "written": 150,
+   "written": 151,
+   "persons": 0,
    "role": "over 150 reports, as witnesses",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2022wj1",
@@ -124,7 +133,8 @@
    "quotes": [
     "Over 80 visual reports were submitted to the International Meteor Organization from France, United Kingdom, Germany and even Belgium."
    ],
-   "written": 80,
+   "written": 81,
+   "persons": 0,
    "role": "over 80 reports, as witnesses",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2023cx1",
@@ -145,6 +155,7 @@
     "Over 15 visual reports were submitted to the International Meteor Organisation from Czech Republic, France and Germany."
    ],
    "written": 24,
+   "persons": 24,
    "role": "dozens of people, as watchers, some alerted to watch",
    "told": true,
    "page": "https://neo.ssa.esa.int/past-impactors/2024bx1",
@@ -164,6 +175,7 @@
     "Several visual reports, including videos and pictures were sent to the International Meteor Organization"
    ],
    "written": 3,
+   "persons": 0,
    "role": "several reports, as witnesses",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2024rw1",
@@ -180,6 +192,7 @@
   "2024 UQ": {
    "quotes": [],
    "written": null,
+   "persons": null,
    "role": "the page does not write anyone",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2024uq",
@@ -198,6 +211,7 @@
     "which was recorded by multiple webcams and several witnesses"
    ],
    "written": 3,
+   "persons": 3,
    "role": "several witnesses",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2024xa1",
@@ -216,6 +230,7 @@
     "There is a witness of a bright fireball in Darwin"
    ],
    "written": 1,
+   "persons": 1,
    "role": "one witness",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2026jn4",
@@ -234,6 +249,7 @@
     "managed to image the fireball from Broome (Western Australia)"
    ],
    "written": 1,
+   "persons": 1,
    "role": "one photographer",
    "told": false,
    "page": "https://neo.ssa.esa.int/past-impactors/2026rw1",
@@ -248,5 +264,13 @@
    "energy_rank": null
   }
  },
- "rule": "A person is 'written' when the keeper's page writes someone who saw, filmed or reported the fireball; the count is the smallest number its words allow ('over N' = N, 'dozens' = 24, 'several' = 3, 'a'/'one' = 1, 'no visual sightings' = 0); a camera is not a person; a report counts as one person; 'told' only where the page writes that someone was alerted beforehand."
+ "rule": "A person is 'written' when the keeper's page writes someone who saw, filmed or reported the fireball; the count is the smallest number its words allow ('over N' = N + 1, 'dozens' = 24, 'several' = 3, 'a'/'one' = 1, 'no visual sightings' = 0); a camera is not a person; a report counts as one person; 'told' only where the page writes that someone was alerted beforehand. 'persons' counts only those the page writes as persons, not as reports.",
+ "corrected": [
+  {
+   "date": "2026-10-14",
+   "session": 171,
+   "what": "'over N' now reads N + 1, as the words strictly allow (it read N): 261 became 263 over the six strikes near people, 266 became 268 over all thirteen. Each strike now also carries how many the page writes as persons: 28 near people, 30 in all; the rest are written as reports.",
+   "by": "The Atelier, The Least the Words Allow (2026-10-14), window/cycle-007-convening-3/results.json at 9aee27763a698beb0f727c09f9989d51ecf2105c; checked here against the same pages and asserted"
+  }
+ ]
 }

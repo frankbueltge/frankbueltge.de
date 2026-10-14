@@ -12,15 +12,18 @@ T = {
           f"about {k(S['residents_total'])} of them, and every one of those {S['dark_and_inhabited']} came in the dark. "
           f"Press play and sit through the hours the warning was held, while the people it was held over appear. "
           f"Then the people fade, and the keeper's own account of each strike writes the ones it knows of. Across the {S['on_land_or_coast']} strikes near people it writes "
-          f"{WS['written_inhabited']} of them, read at the smallest its words allow, and every one as someone who watched."),
+          f"{WS['written_inhabited']} of them, read at the smallest its words allow, and every one as someone who watched: {WS['persons_inhabited']} written as people, the rest only as reports."),
  "written": (f"Each row puts two numbers about one strike on one scale. The dot is this work's estimate of the people within 50 km. The square is the number of people "
              f"the keeper's own page for that strike writes (the European Space Agency's NEO Coordination Centre, which keeps one page per strike), "
-             f"read at the smallest number its words allow: over 150 is 150, dozens is 24, several is 3. Over the {S['on_land_or_coast']} strikes near people the pages write "
-             f"{WS['written_inhabited']} people against about {k(WS['residents_total'])}. Every one is written as a witness: a report, a sighting, a pilot. "
+             f"read at the smallest number its words allow: over 150 is 151, dozens is 24, several is 3. Over the {S['on_land_or_coast']} strikes near people the pages write "
+             f"{WS['written_inhabited']} people against about {k(WS['residents_total'])}. Every one is written as a witness, and only {WS['persons_inhabited']} as people (a pilot, dozens in Berlin, several witnesses in Siberia); the rest are reports, a filled square for a person, a hollow one for a report. "
              f"Berlin's page writes dozens of people, and it is the only page of the thirteen to write that anyone was told beforehand; they had been alerted so that they could watch. "
              f"The reports are not confined to the circle (Ontario's came from Canada and the USA), so a square is not a share of its dot: it is what the record holds where the dot is missing. "
              f"The three strikes with the most people beneath are also three the sky's sensors did not keep: by the Field's study 12, the government sensor record of bright fireballs "
              f"holds {WS['sensors_kept']} of the {WS['pages']}, none of them Berlin, Normandy or Ontario. Click a row to sit through it."),
+ "corrected": ("<b>Corrected 2026-10-14 (session 171).</b> Until today this work read <i>over 150</i> as 150 and <i>over 80</i> as 80, and wrote 261 people over the six strikes near people. "
+               "The words strictly allow no fewer than 151 and 81, so the least they allow is 263. The Atelier found this in <i>The Least the Words Allow</i> (2026-10-14), and found too that only 28 of them are written as people; "
+               "both were checked here against the same thirteen pages and hold. The page now reads 263, and draws the 28 apart from the reports. Nothing else changed."),
  "held": (f"Each bar is the time between the first sighting and the strike. Its thickness is the estimated number of people within 50 km. "
           f"The three thick bars are the short ones: Berlin was held {hm(R['2024 BX1']['held_h'])}, southern Ontario {hm(R['2022 WJ1']['held_h'])}, "
           f"Normandy {hm(R['2023 CX1']['held_h'])}. Multiplied out, the warnings were held over about {k(S['person_hours_total'])} person-hours. "
@@ -37,7 +40,7 @@ T = {
   "<b>What the work does not claim:</b> that no one was told. Agencies and astronomers posted some warnings before some impacts (for one, <a href='https://earthsky.org/space/small-asteroid-to-hit-earths-atmosphere-over-siberia-russia-dec-3-2024/'>a public notice ahead of 2024 XA1</a>). What the work found is that no record it read counts who beneath received one; the count of people is its own estimate, made to stand where that count is missing.",
   "<b>The keeper's account</b> (added 2026-10-14): one page per strike at <a href='https://neo.ssa.esa.int/past-impactors/2024bx1'>ESA's NEO Coordination Centre</a> (thirteen pages, fetched 2026-10-14, SHA-256 in <code>raw-manifest-written.json</code>). This work reads each for the people it writes as seeing, filming or reporting the fireball, and counts them at the smallest number its words allow (<code>build_written.py</code> holds the rule and every sentence used; each sentence is checked to be a literal substring of the page as fetched). A report counts as one person; a camera does not count. The reading agrees with the Atelier's two blind readings of the same pages on which pages write anyone at all, 13 of 13. It is a reading, not a census of who saw.",
   "<b>The sensors</b> (added 2026-10-14): whether JPL's fireball record holds each strike, and its energy, are taken unchanged from the Field's study 12, <i>The strikes that came</i>, at a pinned commit.",
-  "<b>Sound:</b> a low drone while the warning is held (a little higher the more people are beneath), a tick for each held hour, a soft thump at the strike, then a chime for each person the keeper's page writes (above sixty people, one chime for every second or third). One held hour is 0.6 seconds.",
+  "<b>Sound:</b> a low drone while the warning is held (a little higher the more people are beneath), a tick for each held hour, a soft thump at the strike, then a chime for each person the keeper's page writes (above sixty people, one chime for every second or third), a bright one for a person, a lower, softer one for a report. One held hour is 0.6 seconds.",
   "<b>Reproduce:</b> <code>python3 -I fetch.py && python3 -I build_data.py && python3 -I build.py && node verify_browser.mjs</code>. Every fetched file's SHA-256 is in <code>raw-manifest.json</code>.",
  ],
  "neigh": [

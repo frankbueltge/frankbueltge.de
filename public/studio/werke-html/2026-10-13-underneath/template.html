@@ -28,6 +28,7 @@ canvas{width:100%;height:100%;display:block}
 .card dl{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin:.6em 0;font-size:13px;font-family:ui-monospace,Menlo,monospace}
 .card dt{color:var(--mute)}.card dd{margin:0}
 .verdict{font-size:16px;margin-top:.6em}
+.corr{font-size:14px;color:var(--mute);border-left:3px solid var(--hot);padding-left:.7em}
 .controls{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
 button,.chip{background:transparent;color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:7px 11px;font-size:13px;cursor:pointer}
 button.primary{border-color:var(--ink)}
@@ -66,6 +67,7 @@ code{font-size:.88em}
 
 <h2>Beneath, and written</h2>
 <p id="writtenText"></p>
+<p class="corr" id="corrText"></p>
 <div class="fig" id="written"></div>
 
 <h2>On the Field's clock, every warning that came true fits inside one day</h2>
@@ -88,7 +90,7 @@ const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).
 const fmt = n => n.toLocaleString('en-US');
 const hm = h => { const m = Math.round(h * 60); return `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')} min`; };
 const around = n => n === 0 ? 'no one' : n < 2000 ? `about ${fmt(Math.round(n / 10) * 10)}` : `about ${fmt(Math.round(n / 1000) * 1000)}`;
-$('#lede').innerHTML = T.lede; $('#heldText').innerHTML = T.held; $('#clockText').innerHTML = T.clock; $('#writtenText').innerHTML = T.written;
+$('#lede').innerHTML = T.lede; $('#heldText').innerHTML = T.held; $('#clockText').innerHTML = T.clock; $('#writtenText').innerHTML = T.written; $('#corrText').innerHTML = T.corrected;
 $('#method').innerHTML = T.method.map(x => `<li>${x}</li>`).join('');
 $('#neigh').innerHTML = T.neigh.map(x => `<li>${x}</li>`).join('');
 
@@ -134,8 +136,9 @@ function draw() {
   ctx.globalAlpha = 1;
   // the people the keeper's page writes: a ledger, one square per person, in the lower left (a count, not a place)
   const wn = Math.round(state.wshown);
-  if (wn > 0) { const q = W / 90, gap = q * 0.45, cols = 15; ctx.fillStyle = css('--hot');
-    for (let j = 0; j < wn; j++) { const cx = W * 0.05 + (j % cols) * (q + gap), cy = W * 0.93 - Math.floor(j / cols) * (q + gap); ctx.fillRect(cx, cy, q, q); } }
+  // filled: written as a person; hollow: written as a report, counted as one person (since session 171, after the Atelier's correction)
+  if (wn > 0) { const q = W / 90, gap = q * 0.45, cols = 15, pn = WR(r).persons || 0; ctx.fillStyle = css('--hot'); ctx.strokeStyle = css('--hot'); ctx.lineWidth = Math.max(1, q / 6);
+    for (let j = 0; j < wn; j++) { const cx = W * 0.05 + (j % cols) * (q + gap), cy = W * 0.93 - Math.floor(j / cols) * (q + gap); if (j < pn) ctx.fillRect(cx, cy, q, q); else ctx.strokeRect(cx + ctx.lineWidth / 2, cy + ctx.lineWidth / 2, q - ctx.lineWidth, q - ctx.lineWidth); } }
   // the point, and the flash
   const c = proj([r.lon, r.lat]);
   if (c) {
@@ -162,7 +165,8 @@ const WR = r => D.written.by_strike[r.des];
 function said(r) {
   const w = WR(r);
   if (!w.quotes.length) return ` The keeper's page writes no one at all.`;
-  return ` The keeper's page writes: <q>${w.quotes.join(' … ')}</q> Read at its smallest, that is ${w.written === 0 ? 'no one' : w.written === 1 ? 'one person' : w.written + ' people'}${w.told ? ', and the only people in any of the thirteen accounts who were told beforehand were told so that they could watch' : ''}.`;
+  const rep = (w.written || 0) - (w.persons || 0);
+  return ` The keeper's page writes: <q>${w.quotes.join(' … ')}</q> Read at its smallest, that is ${w.written === 0 ? 'no one' : w.written === 1 ? 'one person' : w.written + ' people'}${rep > 0 ? (w.persons ? `, ${w.persons} written as people and ${rep} only as reports` : `, every one written only as a report and counted here as a person`) : ''}${w.told ? ', and the only people in any of the thirteen accounts who were told beforehand were told so that they could watch' : ''}.`;
 }
 function verdict(r) {
   if (!r.residents_50km) return `It came down over open water. The record named the minute ${hm(r.held_h)} ahead, and nobody was beneath.` + said(r);
@@ -191,7 +195,7 @@ function startDrone(people) {
 }
 function stopDrone() { if (!drone || !AC) return; const { o, o2, g } = drone; g.gain.cancelScheduledValues(AC.currentTime); g.gain.setTargetAtTime(0, AC.currentTime, 0.08); o.stop(AC.currentTime + 0.5); o2.stop(AC.currentTime + 0.5); drone = null; }
 function tick() { const a = ac(); if (!a || !soundOn) return; const o = a.createOscillator(), g = a.createGain(); o.frequency.value = 1320; g.gain.value = 0.05; g.gain.setTargetAtTime(0, a.currentTime, 0.015); o.connect(g); g.connect(a.destination); o.start(); o.stop(a.currentTime + 0.1); }
-function chime(j) { const a = ac(); if (!a || !soundOn) return; const o = a.createOscillator(), g = a.createGain(); o.type = 'triangle'; o.frequency.value = [880, 988, 1175, 1319, 1480][j % 5]; g.gain.value = 0.045; g.gain.setTargetAtTime(0, a.currentTime + 0.02, 0.12); o.connect(g); g.connect(a.destination); o.start(); o.stop(a.currentTime + 0.6); }
+function chime(j, report) { const a = ac(); if (!a || !soundOn) return; const o = a.createOscillator(), g = a.createGain(); o.type = report ? 'sine' : 'triangle'; o.frequency.value = [880, 988, 1175, 1319, 1480][j % 5] / (report ? 2 : 1); g.gain.value = report ? 0.03 : 0.045; g.gain.setTargetAtTime(0, a.currentTime + 0.02, 0.12); o.connect(g); g.connect(a.destination); o.start(); o.stop(a.currentTime + 0.6); }
 function thump() {
   const a = ac(); if (!a || !soundOn) return;
   const n = a.createBufferSource(), b = a.createBuffer(1, a.sampleRate * 1.2, a.sampleRate), d = b.getChannelData(0);
@@ -223,7 +227,7 @@ async function show(i, fast) {
   state.phase = 'written';
   if (!(await anim(1200, t => { state.fade = 1 - 0.82 * ease(t); clock(i, r.held_h); }))) return false;
   const wn = WR(r).written || 0; let last = 0;
-  if (wn > 0 && !(await anim(Math.min(6000, 400 + wn * 60), t => { state.wshown = wn * t; const k = Math.floor(state.wshown); while (last < k) { if (last % Math.max(1, Math.ceil(wn / 60)) === 0) chime(last); last++; } clock(i, r.held_h); }))) return false;
+  if (wn > 0 && !(await anim(Math.min(6000, 400 + wn * 60), t => { state.wshown = wn * t; const k = Math.floor(state.wshown); while (last < k) { if (last % Math.max(1, Math.ceil(wn / 60)) === 0) chime(last, last >= (WR(r).persons || 0)); last++; } clock(i, r.held_h); }))) return false;
   state.wshown = wn; state.phase = 'rest'; clock(i, r.held_h); draw(); return id === run;
 }
 async function playAll() { for (let i = 0; i < D.rows.length; i++) { const ok = await show(i); if (!ok) return; await new Promise(r => setTimeout(r, 900)); } }
@@ -266,12 +270,13 @@ function drawWritten() {
   const x = d3.scaleLog().domain([0.7, 3e6]).range([m.l, w - m.r]).clamp(true);
   const svg = d3.select('#written').html('').append('svg').attr('width', w).attr('height', h);
   svg.append('g').attr('transform', `translate(0,${h - m.b})`).call(d3.axisBottom(x).tickValues([1, 10, 100, 1e3, 1e4, 1e5, 1e6]).tickFormat(d3.format('~s'))).call(g => g.selectAll('path,line').attr('stroke', css('--rule')));
-  svg.append('text').attr('x', m.l).attr('y', 12).text('people, log scale · ● beneath (estimate) · ■ written by the keeper');
+  svg.append('text').attr('x', m.l).attr('y', 12).text('people, log scale · ● beneath (estimate) · ■ written as people · □ written as reports');
   const g = svg.selectAll('g.row').data(D.rows).join('g').attr('class', 'row').attr('transform', (r, i) => `translate(0,${m.t + i * rowH})`).on('click', (e, r) => { ac(); show(D.rows.indexOf(r)); window.scrollTo({ top: $('.stage').offsetTop - 20, behavior: 'smooth' }); });
   g.append('text').attr('class', 'lab').attr('x', m.l - 8).attr('y', rowH / 2 + 4).attr('text-anchor', 'end').text(r => r.des);
   g.filter(r => r.residents_50km && WR(r).written).append('line').attr('x1', r => x(WR(r).written)).attr('x2', r => x(r.residents_50km)).attr('y1', rowH / 2).attr('y2', rowH / 2).attr('stroke', css('--rule')).attr('stroke-width', 2);
   g.filter(r => r.residents_50km).append('circle').attr('class', 'ben').attr('cx', r => x(r.residents_50km)).attr('cy', rowH / 2).attr('r', 5).attr('fill', css('--ink'));
-  g.filter(r => WR(r).written).append('rect').attr('class', 'wr').attr('x', r => x(WR(r).written) - 4.5).attr('y', rowH / 2 - 4.5).attr('width', 9).attr('height', 9).attr('fill', css('--hot'));
+  g.filter(r => WR(r).written).append('rect').attr('class', 'wr').attr('x', r => x(WR(r).written) - 4).attr('y', rowH / 2 - 4).attr('width', 8).attr('height', 8)
+    .attr('fill', r => WR(r).persons ? css('--hot') : css('--bg')).attr('stroke', css('--hot')).attr('stroke-width', 1.5);
   g.append('text').attr('x', r => narrow ? x(Math.max(1, WR(r).written || 1)) + 10 : w - m.r + 10).attr('y', rowH / 2 + 4)
     .text(r => { const v = WR(r); const a = v.written == null ? 'writes no one' : v.written === 0 ? 'writes no one saw it' : `writes ${v.written}`; return narrow ? (r.residents_50km ? '' : 'water · ') + (r.residents_50km && v.written ? v.written : a) : `${r.residents_50km ? around(r.residents_50km).replace('about ', '≈') + ' beneath' : 'water'} · ${a}${v.sensors_kept ? '' : ' · not in sensors'}`; });
 }

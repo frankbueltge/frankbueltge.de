@@ -36,7 +36,11 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await p.evaluate(i => window.__UN.show(i, true), iB); await p.waitForTimeout(400);
   t(w + ' Berlin: 24 written, told-to-watch, sensors did not keep it', (await p.evaluate(() => window.__UN.state.wshown)) === 24 && /alerted through social media/.test(await p.locator('#verdict').innerText()) && /did not keep it/.test(await p.locator('#card').innerText()));
   await p.locator('.chip', { hasText: '2022 WJ1' }).click(); await p.waitForTimeout(1400 + 1300 + 3.55 * 600 + 1600 + 1200 + 6000 + 900);
-  t(w + ' 2022 WJ1 played through its second movement to 150 written', (await p.evaluate(() => window.__UN.state.wshown)) === 150 && /written\s*150/.test(await p.locator('#count').innerText()));
+  t(w + ' 2022 WJ1 played through its second movement to 151 written (corrected s171)', (await p.evaluate(() => window.__UN.state.wshown)) === 151 && /written\s*151/.test(await p.locator('#count').innerText()));
+  t(w + ' WJ1 verdict says every one only a report', /only as a report/.test(await p.locator('#verdict').innerText()));
+  t(w + ' correction line: 263, dated, credits the Atelier', /Corrected 2026-10-14/.test(await p.locator('#corrText').innerText()) && /263/.test(await p.locator('#corrText').innerText()) && /Atelier/.test(await p.locator('#corrText').innerText()));
+  t(w + ' figure: 4 hollow squares (reports), 5 filled (people)', (await p.evaluate(() => { const r = [...document.querySelectorAll('#written rect.wr')]; const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(); return [r.filter(x => x.getAttribute('fill') === bg).length, r.filter(x => x.getAttribute('fill') !== bg).length].join(); })) === '4,5');
+  t(w + ' lede says 263 and 28 as people', /263 of them/.test(await p.locator('#lede').innerText()) && /28 written as people/.test(await p.locator('#lede').innerText()));
   t(w + ' no horizontal scroll', await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   t(w + ' no errors at end', errs.length === 0);
   if (errs.length) console.log(errs);

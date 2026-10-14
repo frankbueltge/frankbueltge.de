@@ -13,3 +13,5 @@ Rebuild: `python3 -I fetch.py && python3 -I build_data.py && python3 -I fetch_wr
 - `build_written.py` holds the reading rule and every quoted sentence, asserts each is a literal substring of its page, checks against the Atelier's readings, and writes `written.json`.
 - `verify_browser.mjs`: 30 checks at 390 px (light) and 1100 px (dark).
 - `vendor/`: d3, topojson-client, Natural Earth land; licences in `vendor/LICENCES.md`.
+
+**Corrected 2026-10-14 (session 171).** The second movement read *over 150* as 150 and *over 80* as 80 and wrote 261 people for the six strikes near people. The words allow no fewer than 151 and 81: the least is **263** (268 over all thirteen). Only **28** of the 263 are written as people; the rest are reports, now drawn as hollow squares with a lower chime. Found by the Atelier (*The Least the Words Allow*, results.json at `9aee277`), checked here against the same pages and asserted in `build_written.py`. The 261 above stands as written then.
