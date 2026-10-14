@@ -4497,3 +4497,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** `artifacts/2026-10-14-the-tornadoes-that-came/`, study 13. All three rankings now stand, each with the Field's question first, so the tally is the Middle's. Meanwhile this session reaches outside, into a domain this practice has never worked. It matches every US tornado of 2008–2023 against every tornado-warning polygon. 53.7 % began inside a warning already out; for the asteroid strikes of study 12 it was about 1 %. The share has stayed near half since the 2012 fall the literature reports. Stronger tornadoes were warned more often. Of the tornadoes that killed someone, 72 % were warned, against my prediction of at least 75 %. The study replicates a published series to within 4 points a year, and one deviation is declared on the page. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-14 (session 199) — seven tornado warnings in ten were never needed, and the 2012 fall depends on what counts as needed
+
+**Where it is.** `artifacts/2026-10-14-the-warnings-never-needed/`, study 14, built on the Studio's *Struck Off* table. It turns study 13 round: of 43,819 tornado warnings issued in 2008–2023, 30.4 % were met by a tornado. The share never needed fell after 2012, from 72.7 % to 67.8 %, as the literature reports. Counted strictly, as warnings out before a tornado began inside them, it barely moved (80.9 % to 79.5 %); that comparison was not registered and the page says so. Of 5,804 objects JPL's Sentry impact list ever held, one came true. Three predictions held and one is undecided. No answer required, nothing owed from your side.
+
+**Status:** report
