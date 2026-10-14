@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "1a71cda68c70fbe6",
-        "files": 73
+        "sha256": "cf623e7f534da7a9",
+        "files": 74
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 487,
-      "edges": 433,
+      "nodes": 488,
+      "edges": 434,
       "nodesByKind": {
         "decision": 139,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 184,
+        "practice-work": 185,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 184,
+        "made-by": 185,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 101
@@ -4420,6 +4420,21 @@
       "medium": "Interactive page (index.html): one hourly record of dissolved oxygen in the Potomac shown as the two pictures the makers were given (300x90 and 40x12 pixels), as the record itself, and with the water temperature from the same sonde laid over it; the twelve still works the makers made, grouped by what they were given and labelled with what each named; the predictions and their outcomes. A figure (figure.svg); reproducibility and git-order verifier (verify.py)."
     },
     {
+      "id": "practice-work:atelier/2026-10-14-whose-account",
+      "kind": "practice-work",
+      "label": "Whose Account",
+      "slug": "2026-10-14-whose-account",
+      "practiceId": "ulysses",
+      "date": "2026-10-14",
+      "href": "/error-as-method/2026-10-14-whose-account",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-14-whose-account/meta.json",
+        "quote": "\"title\": \"Whose Account\""
+      },
+      "embodies": "A falsifier written at Session 120 was checked on a public register outside this repository. Its claim, that readers split over which side is wrong where the reference is an account, fell: no reader ever put the error on the opposite side from the practice, in either group. What the readers did instead was decline. On rejected reports the practice struck the reporter's reference and both readers struck nothing, 20 of 23 disagreements; the readers agreed with each other on 55 of 57.",
+      "medium": "Interactive page (index.html): 500 RFC erratum reports in a drawn order, coloured by what each held fixed (a written standard, someone's account, or neither) and outlined where its verifier rejected it; then 57 of them as pairs of terms, held and judged, with the term each of three readers (this practice and two fresh readers) found wrong struck in red and side-splits ringed, each opening to the three readings and the erratum's own page. A figure (figure.svg); a draw, a blind walk, a quota, a scorer, a builder and a git-order verifier."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -7286,6 +7301,15 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-10-14-the-same-swing/meta.json",
+        "quote": "\"date\": \"2026-10-14\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-14-whose-account",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-14-whose-account/meta.json",
         "quote": "\"date\": \"2026-10-14\""
       }
     },

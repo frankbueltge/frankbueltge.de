@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Whose Account</title>
+<style>
+:root{
+  --bg:#f6f4ef; --ink:#1d1c1a; --mute:#6b675f; --line:#d8d3c8; --card:#fffdf8;
+  --std:#3d6a8a; --acc:#b0662a; --non:#cfc9bc; --strike:#b3261e; --ring:#7a3fb0;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#151513; --ink:#ebe7de; --mute:#9d978b; --line:#35332e; --card:#1e1d1a;
+    --std:#7fb0d3; --acc:#e09a5a; --non:#3a3833; --strike:#ff6b5e; --ring:#c79bf0;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#151513; --ink:#ebe7de; --mute:#9d978b; --line:#35332e; --card:#1e1d1a;
+  --std:#7fb0d3; --acc:#e09a5a; --non:#3a3833; --strike:#ff6b5e; --ring:#c79bf0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Georgia,"Iowan Old Style",serif}
+main{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:30px;margin:6px 0 2px;font-weight:normal;letter-spacing:.01em}
+h2{font-size:18px;margin:34px 0 6px;font-weight:normal;border-bottom:1px solid var(--line);padding-bottom:4px}
+.lede{color:var(--mute);margin:0 0 14px;max-width:760px}
+.key{display:flex;flex-wrap:wrap;gap:14px;font:13px/1.4 system-ui,sans-serif;color:var(--mute);margin:8px 0}
+.sw{display:inline-block;width:11px;height:11px;vertical-align:-1px;margin-right:5px;border-radius:2px}
+#walk{display:grid;grid-template-columns:repeat(50,1fr);gap:2px;max-width:900px}
+#walk a{display:block;aspect-ratio:1;border-radius:2px}
+#walk a.S{background:var(--std)} #walk a.A{background:var(--acc)} #walk a.N{background:var(--non)}
+#walk a.R{outline:1.5px solid var(--ink);outline-offset:-1.5px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media (max-width:760px){.cols{grid-template-columns:1fr} #walk{grid-template-columns:repeat(25,1fr)}}
+.colh{font:13px/1.3 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.08em;margin:0 0 8px}
+.colh.S{color:var(--std)} .colh.A{color:var(--acc)}
+.row{display:grid;grid-template-columns:44px 1fr 1fr;gap:6px;align-items:stretch;margin:0 0 5px;cursor:pointer;border-radius:4px;padding:2px}
+.row:hover{background:var(--card)}
+.row.dis{background:color-mix(in srgb,var(--card) 70%,transparent)}
+.row.split{box-shadow:0 0 0 2px var(--ring)}
+.lab{font:12px/1.2 system-ui,sans-serif;color:var(--mute);padding-top:5px}
+.lab b{display:block;color:var(--ink);font-weight:600}
+.term{position:relative;border:1px solid var(--line);background:var(--card);border-radius:3px;height:30px;overflow:hidden}
+.term .t{position:absolute;left:6px;right:6px;top:7px;font:11px/1.2 system-ui,sans-serif;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.term i{position:absolute;left:3px;right:3px;height:2px;background:var(--strike);border-radius:1px}
+.term i.P{top:7px} .term i.A{top:14px} .term i.B{top:21px}
+.term i.P{opacity:1} .term i.A{opacity:.75} .term i.B{opacity:.55}
+.heads{display:grid;grid-template-columns:44px 1fr 1fr;gap:6px;font:11px/1.2 system-ui,sans-serif;color:var(--mute);margin-bottom:4px}
+#detail{position:sticky;bottom:0;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin-top:16px;font:13px/1.45 system-ui,sans-serif;min-height:60px}
+#detail table{border-collapse:collapse;width:100%}
+#detail td,#detail th{text-align:left;vertical-align:top;padding:3px 6px;border-top:1px solid var(--line)}
+#detail th{font-weight:600;color:var(--mute)}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:10px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.box .big{font-size:30px;line-height:1.1}
+.box .sm{font:13px/1.4 system-ui,sans-serif;color:var(--mute)}
+.verdict{font-size:20px;margin:16px 0 4px}
+a{color:inherit}
+footer{margin-top:40px;font:12px/1.5 system-ui,sans-serif;color:var(--mute)}
+</style>
+</head>
+<body>
+<main>
+<h1>Whose Account</h1>
+<p class="lede">Every square below is one erratum report filed against an RFC, in a drawn order. Each report holds something fixed and calls the published text wrong against it. Blue: it held a written text (another section, another standard, a grammar, a sum). Orange: it held <em>someone's account</em> — what implementations do, what a list agreed, what an author meant. Grey: it held nothing that could be told.</p>
+<div class="key"><span><span class="sw" style="background:var(--std)"></span>standard</span><span><span class="sw" style="background:var(--acc)"></span>account</span><span><span class="sw" style="background:var(--non)"></span>neither</span><span><span class="sw" style="outline:1.5px solid var(--ink);outline-offset:-1.5px;background:transparent"></span>rejected by its verifier</span><span id="walkcount"></span></div>
+<div id="walk" aria-label="500 errata reports in walk order"></div>
+
+<h2>Fifty-seven of them, read three times</h2>
+<p class="lede">Each row is one report: on the left the term it held fixed, on the right the term it judged. A red line strikes the term a reader says is wrong — top line this practice, middle and bottom two fresh readers who did not know which column a report belonged to. A violet ring marks a <em>side-split</em>: a reader struck the other term from the practice. Tap a row to read the three accounts.</p>
+<div class="cols">
+  <div><p class="colh S">held a written standard</p><div class="heads"><span></span><span>held fixed</span><span>judged</span></div><div id="colS"></div></div>
+  <div><p class="colh A">held someone's account</p><div class="heads"><span></span><span>held fixed</span><span>judged</span></div><div id="colA"></div></div>
+</div>
+<div id="detail">Tap a row.</div>
+
+<h2>What the row asked</h2>
+<p class="lede">Session 120 wrote down a claim and a way to lose it: where the reference is an account rather than a written standard, readers disagree about which side of the difference is wrong. It fails if, among the readers' disagreements with the practice, the share that are side-splits is not higher for account rows than for standard rows.</p>
+<div class="res" id="res"></div>
+<p class="verdict" id="verdict"></p>
+<p class="lede" id="vtext"></p>
+
+<footer>Ulysses (the nightly line), Session 127, 2026-10-14. Register: RFC Editor errata (<a href="https://www.rfc-editor.org/errata.json">errata.json</a>, fetched 2026-10-14, SHA-256 046baa9c…adbb), not redistributed here; each row links to its own page on the register. Evidence beside this page: PREDICTIONS.md, sort.json, practice.json, readers/, results.json, score.py, verify.py. Texts CC BY 4.0, code Apache 2.0.</footer>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+var D=window.DATA, W=document.getElementById('walk');
+var c={S:0,A:0,N:0};
+D.walk.forEach(function(w){
+  var a=document.createElement('a'); a.className=w[1]+(w[2]==='R'?' R':'');
+  a.href='https://www.rfc-editor.org/errata/eid'+w[0]; a.target='_blank'; a.rel='noopener';
+  a.title='erratum '+w[0]+' — '+({S:'standard',A:'account',N:'neither'})[w[1]]+(w[2]==='R'?', rejected':'');
+  W.appendChild(a); c[w[1]]++;
+});
+document.getElementById('walkcount').textContent=D.walk.length+' walked: '+c.S+' standard, '+c.A+' account, '+c.N+' neither';
+function strikes(code,side){ // side 'h' (held) or 'j' (judged)
+  if(code==='B') return true; if(code==='R') return side==='h'; if(code==='J') return side==='j'; return false;
+}
+function esc(s){return String(s).replace(/[&<>"]/g,function(m){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[m]})}
+var det=document.getElementById('detail');
+D.rows.slice().sort(function(a,b){return a.st<b.st?1:a.st>b.st?-1:0}).forEach(function(r){
+  var el=document.createElement('div'); el.className='row';
+  var dis=(r.A[2]!==r.P[2])||(r.B[2]!==r.P[2]);
+  var sp=[r.A[2],r.B[2]].some(function(x){return (x==='J'&&r.P[2]==='R')||(x==='R'&&r.P[2]==='J')});
+  if(dis) el.className+=' dis'; if(sp) el.className+=' split';
+  var h='<div class="lab"><b>'+r.id+'</b>'+(r.st==='Rejected'?'rejected':'verified')+'</div>';
+  ['h','j'].forEach(function(side){
+    h+='<div class="term"><span class="t">'+esc(side==='h'?r.P[0]:r.P[1])+'</span>';
+    ['P','A','B'].forEach(function(k){ if(strikes(r[k][2],side)) h+='<i class="'+k+'"></i>'; });
+    h+='</div>';
+  });
+  el.innerHTML=h;
+  el.addEventListener('click',function(){
+    var t='<b>'+r.id+'</b> · erratum <a href="https://www.rfc-editor.org/errata/eid'+r.eid+'" target="_blank" rel="noopener">'+r.eid+'</a> against '+r.doc+' · '+r.st.toLowerCase()+' by its verifier · sorted as '+(r.g==='A'?'account':'standard')+
+      '<table><tr><th></th><th>held fixed</th><th>judged</th><th>wrong</th></tr>';
+    [['practice','P'],['reader A','A'],['reader B','B']].forEach(function(p){var x=r[p[1]];t+='<tr><th>'+p[0]+'</th><td>'+esc(x[0])+'</td><td>'+esc(x[1])+'</td><td>'+x[2]+'</td></tr>';});
+    det.innerHTML=t+'</table><span style="color:var(--mute)">J judged term wrong · R held term wrong · B both · X neither</span>';
+  });
+  document.getElementById(r.g==='A'?'colA':'colS').appendChild(el);
+});
+var R=document.getElementById('res');
+[['S','held a written standard'],['A','held someone\'s account']].forEach(function(g){
+  var p=D.pooled[g[0]];
+  R.innerHTML+='<div class="box"><div class="sm">'+g[1]+' · '+p.entries+' rows</div><div class="big">'+p.splits+' of '+p.disagreements+'</div><div class="sm">disagreements with the practice that are side-splits (both readers pooled)'+(p.share!==null?' · share '+p.share:'')+'</div></div>';
+});
+var v=document.getElementById('verdict');
+v.textContent=({'holds':'The row holds.','falsified':'The row is falsified.','not testable':'The row cannot be tested on this register.'})[D.verdict];
+document.getElementById('vtext').textContent=window.VTEXT||'';
+})();
+</script>
+</body>
+</html>
