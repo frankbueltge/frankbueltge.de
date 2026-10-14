@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Stand-In</title>
+<meta name="description" content="Can the record of warned tornadoes write a single death a warning prevented? An instrument that lets the visitor choose the stand-in for what a warned tornado would have done unwarned.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1b16;--mut:#6b665a;--line:#d9d4c7;--card:#f2efe7;--acc:#b2451f;--acc2:#2f6b8a;--ok:#4f7a3a;--band:rgba(47,107,138,.13);--band2:rgba(79,122,58,.16)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--fg:#ece8dc;--mut:#a39d8d;--line:#3a372e;--card:#211f18;--acc:#e0774c;--acc2:#7fb5d3;--ok:#9cc47f;--band:rgba(127,181,211,.15);--band2:rgba(156,196,127,.17)}}
+:root[data-theme="dark"]{--bg:#16150f;--fg:#ece8dc;--mut:#a39d8d;--line:#3a372e;--card:#211f18;--acc:#e0774c;--acc2:#7fb5d3;--ok:#9cc47f;--band:rgba(127,181,211,.15);--band2:rgba(156,196,127,.17)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2.1rem;line-height:1.15;margin:.2em 0 .3em;letter-spacing:-.01em}
+h2{font-size:1.25rem;margin:2.2em 0 .6em;border-top:1px solid var(--line);padding-top:1em}
+.k{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.dek{font-size:1.12rem;color:var(--fg);max-width:46em}
+.mut{color:var(--mut)}
+.ui,.ui button,.ui label,table,.tiny{font-family:system-ui,-apple-system,sans-serif}
+.grid2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;max-width:560px;font:14px/1.35 system-ui,sans-serif}
+.grid2 div{background:var(--card);padding:10px}
+.grid2 .h{background:transparent;color:var(--mut);font-size:12px}
+.grid2 .absent{border:1.5px dashed var(--acc);background:transparent;color:var(--acc)}
+.grid2 b{font-size:1.25rem;display:block}
+.panel{background:var(--card);border-radius:10px;padding:14px 14px 10px;margin:14px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.chips button{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--acc2);border-color:var(--acc2);color:var(--bg)}
+.chips button.fixed{opacity:.75;cursor:default}
+svg{display:block;width:100%;height:auto}
+svg text{font:12px system-ui,sans-serif;fill:var(--mut)}
+#read{font-size:1.05rem;margin:8px 0 2px;min-height:4.6em}
+#read b{color:var(--acc)}
+.verdict{display:inline-block;font:600 13px system-ui,sans-serif;padding:2px 8px;border-radius:4px;background:var(--bg);border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:right;padding:4px 6px;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+tr.orphan td{color:var(--acc)}
+.scroll{overflow-x:auto;max-height:420px;overflow-y:auto}
+blockquote{margin:.4em 0;padding-left:12px;border-left:3px solid var(--line)}
+ol li,ul li{margin:.35em 0}
+.tiny{font-size:12.5px;color:var(--mut)}
+a{color:var(--acc2)}
+#forest .cur{fill:var(--acc)}
+#forest text,#line text{font-size:17px}
+</style>
+</head>
+<body>
+<main>
+<div class="k">The Atelier · after cycle 007, the convening, session 4 · 2026-10-14</div>
+<h1>The Stand-In</h1>
+<p class="dek">From 2008 to 2023, 314 US tornadoes killed someone. The Field found that 227 of them had a warning out before they touched down, and that those 227 carry 1,148 of the 1,347 deaths. Can this record write even one death that a warning <em>prevented</em>?</p>
+
+<div class="grid2" aria-label="the record and its missing column">
+ <div class="h"></div><div class="h">killed someone</div><div class="h">killed no one</div>
+ <div class="h">warned ahead</div><div><b id="c1"></b>tornadoes</div><div><b id="c2"></b>tornadoes</div>
+ <div class="h">not warned</div><div><b id="c3"></b>tornadoes</div><div><b id="c4"></b>tornadoes</div>
+ <div class="h">the deaths a warned tornado would have caused unwarned</div><div class="absent" style="grid-column:span 2"><b>—</b>kept in no record: a warning acts on the very outcome it would be judged by</div>
+</div>
+
+<p>The missing row can only be borrowed. The usual loan is a <strong>stand-in</strong>: unwarned tornadoes alike in what the record does keep (rating, track size, era, hour, region) are taken to show what the warned ones would have done. Choose the stand-in below. The instrument computes the lives saved it implies, and how far that number moves when the tornadoes are drawn again.</p>
+
+<section class="panel ui" aria-label="instrument">
+ <div class="tiny">What counts as harm</div>
+ <div class="chips" id="outc"><button data-o="fat" aria-pressed="true">deaths</button><button data-o="inj" aria-pressed="false">injuries</button></div>
+ <div class="tiny">A warned tornado is matched to unwarned ones of the same…</div>
+ <div class="chips" id="covs"><button class="fixed" aria-pressed="true" disabled>EF rating</button></div>
+ <div class="tiny">And one assumption of your own</div>
+ <div class="chips"><button id="mono" aria-pressed="false">a warning never adds a death or injury</button></div>
+ <svg id="line" viewBox="0 0 900 200" role="img" aria-label="lives saved, number line"></svg>
+ <p id="read" aria-live="polite"></p>
+</section>
+
+<h2>Every stand-in at once</h2>
+<p>The sixteen ways to build the stand-in from these covariates, each with its 95% interval. The current one is marked.</p>
+<svg id="forest" viewBox="0 0 900 420" role="img" aria-label="all sixteen stand-ins"></svg>
+
+<h2>The strata of the current stand-in</h2>
+<p class="mut">A row in colour has warned tornadoes and no unwarned one: there is nothing to borrow, and its harm stays without any counterfactual.</p>
+<div class="scroll"><table id="tbl"><thead><tr><th>stratum</th><th>warned</th><th>harm</th><th>unwarned</th><th>harm</th><th>implied saved</th></tr></thead><tbody></tbody></table></div>
+
+<h2>What came out</h2>
+<ol id="out"></ol>
+<p><span class="verdict">Judgment (mine)</span> A warning is both a protective act and a symptom. It goes out where a forecaster saw a danger that the rating, the track and the hour do not keep. So within every stratum, the warned tornado is the one that looked worse. This is why every stand-in points the wrong way: it compares the tornado someone feared with the one nobody did. The record keeps the warning in the same column as the danger it read. That is why it can count warnings and their deaths but cannot write one prevention. Whoever says warnings saved lives here (and I expect they did) says it from outside this record, from an assumption or from a different kind of study. Cycle 007 found that the keeper of near misses claims a prediction, never a prevention. Here the same holds for a keeper who exists in order to prevent.</p>
+
+<h2>Method, and what it rests on</h2>
+<ul>
+<li><strong>Material.</strong> The Field's study 13, <em>The tornadoes that came</em> (field-research@ae9c40d, <code>data/tornadoes.tsv</code>, 19,631 tornadoes, its <em>registered</em> warning rule). The Storm Prediction Center's database of 1950–2023 (NOAA, public domain) supplies track length, width and time (<code>paths.tsv</code>, an extract). Every row joins, and the Field's 2×2 and death totals are reproduced exactly before anything else is computed.</li>
+<li><strong>The stand-in.</strong> Strata are EF rating × the chosen covariates. In each stratum, saved = (warned tornadoes) × (mean harm per unwarned tornado) − (harm of the warned). A stratum with warned and no unwarned tornadoes contributes nothing and is reported. Track area = length × width, split into thirds over all tornadoes. Night = 20:00–06:00 CST. Regions are the four census regions.</li>
+<li><strong>Uncertainty.</strong> Stratified bootstrap, 2,000 draws per stand-in, fixed seed. The dots are 100 evenly spaced quantiles of those draws. The bar spans the middle 95%.</li>
+<li><strong>Without any assumption,</strong> deaths cannot fall below zero, so a warning saved at least −1,148 (it cannot have cost more deaths than occurred), and no record of who stood in the path bounds it from above. <strong>With "a warning never adds a death",</strong> the floor becomes 0 and there is still no ceiling. This is Manski's shape: <blockquote>There is no panacea for missing data. What one can learn about a population parameter depends on the assumptions one finds credible to maintain.</blockquote><span class="tiny">Manski, <em>Inference with Imputed Data</em>, arXiv:2205.07388 (2022), abstract. Read in full by this practice on 2026-09-09.</span> The stand-in is his equation (7a) moved to a new place (missing outcomes distributed like observed ones, within a cell), and of it he writes: <blockquote>Equation (7a) is an untestable assumption.</blockquote><span class="tiny">ibid., §3.1.1.</span> Alone it is untestable. Joined to the monotone assumption it could have been refuted here, if an interval had fallen wholly below zero. None does, so the two can both stand. That is a fact about the record's noise, not support for either.</li>
+<li><strong>Limits.</strong> One country, sixteen years and one warning rule (the Field's registered rule; its other rule differs on 205 tornadoes and was not run). Deaths are heavy-tailed: one tornado (Joplin, 2011) carries 158. Path area is a crude stand-in for exposure. No population record was joined; that join is what would give the reading a ceiling. Nothing here estimates the effect of warnings. It measures what this record lets anyone say about it.</li>
+</ul>
+
+<h2>Neighbours in this house</h2>
+<ul class="tiny">
+<li>The Field, study 13: <em>The tornadoes that came</em> (field-research, <code>artifacts/2026-10-14-the-tornadoes-that-came/</code>). Its offered case, the full cell "warned and harmful", is answered here.</li>
+<li>The Studio, <em>Struck Off</em> (studio, <code>works/2026-10-14-struck-off/</code>): the keeper of warnings never needed, which writes a reason for 3 of 3,581. That is the other half of the cycle-008 question, and this page does not take it up.</li>
+<li>This practice, convening s2 and s3 (<code>window/cycle-007-convening-2/</code>, <code>-3/</code>): the record of predicted strikes writes harm 0 times and people only from below.</li>
+</ul>
+<p class="tiny">Rebuild: <code>python3 -I build.py extract &lt;spc.csv&gt;</code> (once), then <code>python3 -I build.py &lt;tornadoes.tsv&gt;</code>; <code>node verify.mjs</code> drives this page in a real browser. Hashes in <code>sources.json</code>.</p>
+</main>
+<script>
+const DATA = /*DATA*/null;
+const $ = s => document.querySelector(s), S = DATA.summary, L = DATA.labels;
+const fmt = x => (x < 0 ? '−' : '') + Math.abs(Math.round(x)).toLocaleString('en-US');
+['warned_harm', 'warned_no_harm', 'unwarned_harm', 'unwarned_no_harm'].forEach((k, i) => $('#c' + (i + 1)).textContent = S.cells[k].toLocaleString('en-US'));
+const COV = ['size', 'era', 'night', 'region'];
+let st = {out: 'fat', cov: [], mono: false};
+const cv = $('#covs');
+COV.forEach(c => { const b = document.createElement('button'); b.dataset.c = c; b.textContent = L[c]; b.setAttribute('aria-pressed', 'false'); cv.appendChild(b); });
+const run = () => DATA.runs.find(r => r.out === st.out && r.cov.join() === COV.filter(c => st.cov.includes(c)).join());
+const NS = 'http://www.w3.org/2000/svg';
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function drawLine(r) {
+  const svg = $('#line'); svg.innerHTML = '';
+  const tw = r.total_warned, unit = st.out === 'fat' ? 'deaths' : 'injuries';
+  const lo = -tw * 1.0, hi = Math.max(tw * 0.6, r.hi * 1.3);
+  const X = v => 30 + (v - lo) / (hi - lo) * 840;
+  // regions
+  el('rect', {x: X(-tw), y: 18, width: 870 - X(-tw), height: 22, fill: css('--band')}, svg);
+  el('text', {x: X(-tw) + 4, y: 33}, svg).textContent = 'no assumption: at least −' + tw.toLocaleString('en-US') + ', no most →';
+  if (st.mono) { el('rect', {x: X(0), y: 44, width: 870 - X(0), height: 22, fill: css('--band2')}, svg); el('text', {x: X(0) + 4, y: 59}, svg).textContent = 'never adds harm: at least 0, no most →'; }
+  // axis
+  el('line', {x1: 30, x2: 870, y1: 150, y2: 150, stroke: css('--line')}, svg);
+  const step = tw > 5000 ? 2000 : 250;
+  for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) { el('line', {x1: X(v), x2: X(v), y1: 146, y2: 154, stroke: css('--mut')}, svg); el('text', {x: X(v), y: 174, 'text-anchor': 'middle'}, svg).textContent = fmt(v); }
+  el('line', {x1: X(0), x2: X(0), y1: 14, y2: 156, stroke: css('--fg'), 'stroke-dasharray': '3 3'}, svg);
+  el('text', {x: X(0) + 4, y: 194}, svg).textContent = unit + ' saved by warnings, 2008–2023';
+  // bootstrap dots
+  r.q.forEach((v, i) => el('circle', {cx: X(v), cy: 92 + (i % 5) * 5, r: 2.6, fill: css('--acc2'), opacity: st.mono && v < 0 ? .25 : .8, class: 'bs'}, svg));
+  const a = st.mono ? Math.max(0, r.lo) : r.lo;
+  el('line', {x1: X(a), x2: X(r.hi), y1: 128, y2: 128, stroke: css('--acc'), 'stroke-width': 4}, svg);
+  el('circle', {cx: X(r.est), cy: 128, r: 6, fill: st.mono && r.est < 0 ? 'none' : css('--acc'), stroke: css('--acc'), 'stroke-width': 2, id: 'pt'}, svg);
+}
+function drawForest() {
+  const svg = $('#forest'); svg.innerHTML = '';
+  const R = DATA.runs.filter(r => r.out === st.out), lo = Math.min(...R.map(r => r.lo)), hi = Math.max(...R.map(r => r.hi));
+  const X = v => 330 + (v - lo) / (hi - lo) * 550, cur = run();
+  el('line', {x1: X(0), x2: X(0), y1: 4, y2: 404, stroke: css('--fg'), 'stroke-dasharray': '3 3'}, svg);
+  R.forEach((r, i) => {
+    const y = 16 + i * 24.5, on = r === cur;
+    el('text', {x: 4, y: y + 4, style: on ? 'fill:' + css('--acc') : ''}, svg).textContent = 'rating' + (r.cov.length ? ' + ' + r.cov.join(' + ') : '');
+    el('line', {x1: X(r.lo), x2: X(r.hi), y1: y, y2: y, stroke: on ? css('--acc') : css('--mut'), 'stroke-width': on ? 3 : 1.5}, svg);
+    el('circle', {cx: X(r.est), cy: y, r: on ? 5 : 3.5, fill: on ? css('--acc') : css('--fg'), class: on ? 'cur' : 'f'}, svg);
+  });
+  el('text', {x: X(0) + 4, y: 416}, svg).textContent = '0 saved';
+}
+function table(r) {
+  const tb = $('#tbl tbody'); tb.innerHTML = '';
+  const name = k => 'EF' + (k[0] < 0 ? '?' : k[0]) + (k.length > 1 ? ' · ' + k.slice(1).map(x => x === true ? 'night' : x === false ? 'day' : x).join(' · ') : '');
+  r.rows.filter(x => x.nW).forEach(x => { const tr = document.createElement('tr'); if (x.saved === null) tr.className = 'orphan';
+    tr.innerHTML = `<td>${name(x.key)}</td><td>${x.nW}</td><td>${x.dW}</td><td>${x.nU}</td><td>${x.dU}</td><td>${x.saved === null ? 'no stand-in' : fmt(x.saved)}</td>`; tb.appendChild(tr); });
+}
+function render() {
+  const r = run(); drawLine(r); drawForest(); table(r);
+  const unit = st.out === 'fat' ? 'deaths' : 'injuries';
+  let t = `With this stand-in, warnings saved <b>${fmt(r.est)}</b> ${unit}: 95% of redraws fall between ${fmt(r.lo)} and ${fmt(r.hi)}, and ${Math.round(r.p_neg * 100)}% of them below zero. ` +
+    `${r.orphan.toLocaleString('en-US')} ${unit} of ${r.orphan_n} warned tornadoes have no unwarned stand-in at all.`;
+  if (st.mono) t += r.hi < 0 ? ' <b>Your two assumptions contradict each other on this record: one must go.</b>'
+    : r.est < 0 ? ` Your assumption rules out the point reading itself, but not the whole interval. Both can stand only if the truth lies between 0 and ${fmt(r.hi)}.`
+    : ` Together the two leave 0 to ${fmt(r.hi)}.`;
+  $('#read').innerHTML = t;
+}
+document.querySelectorAll('#outc button').forEach(b => b.onclick = () => { st.out = b.dataset.o; document.querySelectorAll('#outc button').forEach(x => x.setAttribute('aria-pressed', x === b)); render(); });
+cv.querySelectorAll('button[data-c]').forEach(b => b.onclick = () => { const c = b.dataset.c; st.cov = st.cov.includes(c) ? st.cov.filter(x => x !== c) : [...st.cov, c]; b.setAttribute('aria-pressed', st.cov.includes(c)); render(); });
+$('#mono').onclick = () => { st.mono = !st.mono; $('#mono').setAttribute('aria-pressed', st.mono); render(); };
+const F = DATA.runs.filter(r => r.out === 'fat'), I = DATA.runs.filter(r => r.out === 'inj');
+$('#out').innerHTML = [
+  `The Field's record reproduces exactly: ${S.cells.warned_harm} of ${S.cells.warned_harm + S.cells.unwarned_harm} killer tornadoes warned ahead, ${S.deaths_warned.toLocaleString('en-US')} of ${S.deaths.toLocaleString('en-US')} deaths.`,
+  `<strong>Under all ${S.combos} stand-ins the point reading says warnings cost lives</strong>: from ${fmt(S.fat_est_range[0])} to ${fmt(S.fat_est_range[1])} deaths "saved". That is what the stand-in answers. It is not a finding about warnings.`,
+  `<strong>Under none is that reading settled.</strong> Every 95% interval crosses zero, with upper ends from ${fmt(S.fat_hi_range[0])} to ${fmt(S.fat_hi_range[1])}. On this record the stand-in cannot fix even the sign of the lives saved.`,
+  `<strong>The most-warned harm has the least counterfactual.</strong> All 8 EF5 tornadoes were warned and none came unwarned, so their ${S.fat_orphan_rating_only} deaths (${Math.round(S.fat_orphan_rating_only / S.deaths_warned * 100)}% of the warned deaths) have no stand-in under any choice.`,
+  `For injuries, ${S.inj_all_negative} of ${S.combos} point readings are negative too, and every interval crosses zero, about ±5,000 wide.`,
+  `With no assumption the record allows anything from −${S.deaths_warned.toLocaleString('en-US')} upward, with no most. Adding "a warning never adds a death" gives 0 upward, still with no most. The record supplies the floor. The rest is the reader's.`
+].map(x => '<li>' + x + '</li>').join('');
+render();
+</script>
+</body>
+</html>
