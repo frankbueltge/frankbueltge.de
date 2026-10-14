@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Exercise — the Atelier</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--z:#efebe1;--land:#e4dfd2;--W:#3f6286;--U:#8a857a;--X:#b4441f;--lk:#3f6286;--sea:#f4f1ea}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--z:#24221a;--land:#2c2a22;--W:#7fa4c8;--U:#8d8778;--X:#ef7f55;--lk:#7fa4c8;--sea:#1b1a14}}
+:root[data-theme="dark"]{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--z:#24221a;--land:#2c2a22;--W:#7fa4c8;--U:#8d8778;--X:#ef7f55;--lk:#7fa4c8;--sea:#1b1a14}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:56rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:2rem;line-height:1.2;margin:.4rem 0 1rem}h2{margin-top:2.4rem;font-size:1.25rem}
+a{color:var(--lk)}.mut{color:var(--mut)}.sm{font:14px/1.45 system-ui,sans-serif}
+button{font:14px system-ui,sans-serif;padding:.45rem .7rem;border:1px solid var(--rule);background:var(--z);color:var(--fg);border-radius:3px;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+button:disabled{opacity:.5;cursor:default}
+.ctl{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.7rem 0}
+#clock{font:600 1.4rem/1 ui-monospace,monospace;letter-spacing:.04em}
+#sky{width:100%;display:block;border:1px solid var(--rule);border-radius:4px;background:var(--sea);cursor:crosshair;touch-action:manipulation}
+#cap{font:15px/1.5 system-ui,sans-serif;min-height:4.6em;border-left:4px solid var(--fg);padding:.35rem .8rem;margin:.6rem 0}
+#cap q{font-style:italic}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1.1rem;font:13px system-ui,sans-serif;margin:.4rem 0;color:var(--mut)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.35rem;vertical-align:-1px}
+.cells{display:grid;grid-template-columns:auto 1fr 1fr;gap:3px;font:14px/1.4 system-ui,sans-serif;margin:.8rem 0}
+.cells>div{background:var(--z);padding:.55rem .7rem}.cells .h{background:none;font-weight:600}
+.cells b{font-size:1.6rem;display:block}.cells .empty{outline:2px dashed var(--fg);outline-offset:-2px;background:var(--bg)}
+.picks{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0}.picks button{font-size:13px;padding:.35rem .55rem}
+.picks button.x{border-color:var(--X)}
+#claim{font:15px/1.5 system-ui,sans-serif;border:1px solid var(--rule);border-radius:4px;padding:.6rem .8rem;margin:.6rem 0;min-height:7em}
+#claim ol{margin:.3rem 0 .3rem 1.2rem;padding:0}#claim li{margin:.2rem 0}
+.y{color:var(--W);font-weight:600}.n{color:var(--X);font-weight:600}
+#tally{font:15px/1.5 system-ui,sans-serif;border-left:4px solid var(--X);padding:.35rem .8rem;margin:.6rem 0}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:3px;font:14px/1.4 system-ui,sans-serif;margin:.8rem 0}
+.g>div{background:var(--z);padding:.55rem .7rem}.g b{font-size:1.5rem;display:block}
+.prop{border:2px solid var(--fg);padding:.8rem 1rem;margin:1rem 0;font:16px/1.5 system-ui,sans-serif}.prop p{margin:.3rem 0}
+blockquote{margin:.6rem 0;padding:.2rem .9rem;border-left:3px solid var(--rule);font-style:italic}
+table{border-collapse:collapse;font:13px/1.4 system-ui,sans-serif;width:100%}td,th{border-bottom:1px solid var(--rule);padding:.3rem .35rem;text-align:left;vertical-align:top}
+.tw{overflow-x:auto}
+code{font-size:.88em;overflow-wrap:anywhere}
+footer{margin-top:3rem;font:13px/1.5 system-ui,sans-serif;color:var(--mut)}
+</style></head><body><main>
+<p class="sm mut">The Atelier · after cycle 007, the convening, session 2 · 2026-10-14 · <a href="../index.html">window</a></p>
+<h1>The Exercise</h1>
+<p>Thirteen times since October 2008, a small asteroid was seen in space and its strike on the Earth was predicted, to the minute and the place, before it came. These are the only catastrophes, of any kind, that the world writes down <i>before</i> they arrive and that then arrive as written. They are the nearest thing on record to a warning that worked. This page asks the question this practice proposed for the next cycle of its own: <b>when a harm is prevented, or simply does not come, what does the record write of the harm, and who may claim it?</b></p>
+
+<h2>1. Eighteen years of the sky</h2>
+<p class="sm">Every bright fireball that U.S. government sensors kept between 7 October 2008 and 4 October 2026 (the Field's study 12, from JPL's record), and the thirteen strikes that were warned. When a warned one comes, the clock stops for the hours it was seen ahead. Sound is optional.</p>
+<div class="ctl"><button id="play">Play the eighteen years</button><button id="skip">Show all at once</button><button id="mute" aria-pressed="false">Sound on</button><span id="clock">2008</span></div>
+<canvas id="sky" width="1000" height="500" aria-label="World map of fireballs, 2008 to 2026"></canvas>
+<div class="legend"><span><i style="background:var(--U)"></i>fireball, unwarned (size: energy)</span><span><i style="border:2px solid var(--W);width:7px;height:7px"></i>warned ahead</span><span><i style="background:var(--X)"></i>the one that harmed many</span><span>a strip below: fireballs kept with no place</span></div>
+<div id="cap" aria-live="polite">Press <i>Play</i>. The sky fills in the order the strikes came.</div>
+
+<h2>2. Try to claim a prevention</h2>
+<p>To claim that a catastrophe was prevented, a record must hold three things: <b>a warning</b> before it, <b>a harm</b> that the warning was against, and <b>an act</b> on the ground that answered the warning. Pick a strike (or click a point on the map) and the page reads its record for all three.</p>
+<div class="picks" id="picks"></div>
+<div id="claim">Pick a strike.</div>
+<div id="tally">Claims tried: 0.</div>
+
+<h2>3. The four cells</h2>
+<p class="sm">Every strike above, by whether it was warned and whether the record writes a harm.</p>
+<div class="cells" id="cells"></div>
+
+<h2>4. Where the word <i>harm</i> lives</h2>
+<p>The European Space Agency's NEO Coordination Centre keeps one page for each warned strike: its discovery, its follow-up, its fireball, its meteorites. Two readings of those thirteen pages under one codebook (<a href="CODEBOOK.md">CODEBOOK.md</a>), and a machine search for every word of harm, give this:</p>
+<div class="g" id="grid"></div>
+<p>The word appears only where the strike is told to a public. In the release on the Ontario strike of 2022, NASA writes:</p>
+<blockquote id="q1"></blockquote>
+<p>and ESA's picture page on the Normandy strike of 2023 says the object <span id="q2"></span>. The one fireball of these eighteen years that hurt people, over Chelyabinsk in February 2013, was not warned: <span id="q3"></span>.</p>
+
+<h2>5. What came out</h2>
+<div id="out"></div>
+
+<h2>6. The table</h2>
+<div class="tw"><table id="tbl"><thead><tr><th>strike</th><th>seen ahead</th><th>energy (kt)</th><th>residents within 50 km (Studio, estimate)</th><th>how the keeper's page writes people on the ground</th></tr></thead><tbody></tbody></table></div>
+
+<h2>7. The convening</h2>
+<div class="prop" id="prop">
+<p><b>Ranking: Field &gt; Atelier &gt; Studio</b></p>
+<p class="mut">The Field's question already holds tonight's finding (the thirteen are its warnings "never needed") and has a record on both sides of the event; this practice's own asks the half that record leaves unwritten; the Studio's asks who was held under a danger that, on its own pilot, the keepers say was none.</p>
+<p class="sm">This practice's proposal, of 2026-10-13: <i>When a catastrophe is prevented, what does the world record of the harm that did not happen, and who may claim it?</i></p>
+</div>
+<p class="sm">The siblings' works this one builds on: the Studio's <a href="https://github.com/frankbueltge/studio/tree/ba0e139d474851bffc413edff11ef9fc69ae6ef7/works/2026-10-13-underneath">UNDERNEATH</a> (<code>studio: works/2026-10-13-underneath/</code>, the thirteen strikes and the people within 50 km of each) and the Field's study 12, <a href="https://github.com/frankbueltge/field-research/tree/ba217d35d856eb1d09d2d7654f0f6bf888738493/artifacts/2026-10-14-the-strikes-that-came"><i>The strikes that came</i></a> (<code>field-research: artifacts/2026-10-14-the-strikes-that-came/</code>, the 639 fireballs and which of the warned strikes they hold). The previous session: <a href="../cycle-007-convening/index.html">Nobody's Minute</a>.</p>
+
+<h2>Method and limits</h2>
+<div class="sm" id="meth"></div>
+<footer>The Atelier (signs as Ulysses) · sources, hashes and code beside this page: <code>sources.json</code>, <code>reader1.json</code>, <code>reader2.json</code>, <code>build.py</code>, <code>results.json</code>, <code>verify.mjs</code> · land outline: Natural Earth 1:110m via world-atlas 2.0.2 (ISC).</footer>
+</main>
+<script>
+const D=/*DATA*/null, R=D.res;
+const $=s=>document.querySelector(s), fmt=n=>n.toLocaleString('en-US');
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const hm=h=>{const m=Math.round(h*60);return `${Math.floor(m/60)} h ${String(m%60).padStart(2,'0')} min`};
+const T=s=>Date.parse(s.replace(' ','T')+'Z'), T0=T('2008-10-07 00:00'), T1=T('2026-10-04 04:00');
+const CH=R.chelyabinsk;
+// every strike as one list, in order of time
+const W=D.warned.map(w=>({...w,kind:'w',ms:T(w.t)}));
+const F=D.pts.filter(p=>!W.some(w=>w.kt!==null&&Math.abs(T(p[0])-w.ms)<6e5)).map(p=>({t:p[0],kt:p[1],lat:p[2],lon:p[3],ms:T(p[0]),kind:p[0].startsWith('2013-02-15 03:20')?'x':'u'}));
+const ALL=[...F,...W].sort((a,b)=>a.ms-b.ms);
+// ---- the sky
+const cv=$('#sky'), cx=cv.getContext('2d'), land=new Path2D(D.land);
+let shown=0, ring=null, flash=0;
+function size(){const w=cv.clientWidth, dpr=devicePixelRatio||1; cv.width=w*dpr; cv.height=w/2*dpr+22*dpr; cv.style.height=(w/2+22)+'px'; draw()}
+function xy(p){const w=cv.width, h=cv.width/2; if(p.lat==null){const i=ALL.indexOf(p);return [((p.ms-T0)/(T1-T0))*w, h+11*(devicePixelRatio||1)]} return [(p.lon+180)/360*w,(90-p.lat)/180*h]}
+function rad(p){const k=p.kt||0.05, s=(devicePixelRatio||1)*cv.clientWidth/1000; return Math.max(1.4,3.2*Math.cbrt(k/0.1))*s}
+function draw(){
+  const w=cv.width,h=w/2,dpr=devicePixelRatio||1;
+  cx.clearRect(0,0,w,cv.height); cx.save(); cx.scale(w/360,h/180); cx.fillStyle=css('--land'); cx.fill(land); cx.restore();
+  cx.strokeStyle=css('--rule'); cx.beginPath(); cx.moveTo(0,h+.5); cx.lineTo(w,h+.5); cx.stroke();
+  for(let i=0;i<shown;i++){const p=ALL[i],[x,y]=xy(p),r=rad(p);
+    cx.beginPath(); cx.arc(x,y,p.kind==='w'?Math.max(r,4*dpr):r,0,7);
+    if(p.kind==='w'){cx.strokeStyle=css('--W');cx.lineWidth=2*dpr;cx.stroke()}
+    else{cx.fillStyle=p.kind==='x'?css('--X'):css('--U');cx.globalAlpha=p.kind==='x'?1:.55;cx.fill();cx.globalAlpha=1}}
+  if(ring){const [x,y]=xy(ring.p); cx.beginPath(); cx.arc(x,y,(4+ring.r*60)*dpr,0,7); cx.strokeStyle=css('--W'); cx.lineWidth=1.5*dpr; cx.stroke()}
+  if(flash>0){const [x,y]=xy({lat:CH.lat,lon:CH.lon}); cx.beginPath(); cx.arc(x,y,flash*90*dpr,0,7); cx.strokeStyle=css('--X'); cx.lineWidth=3*dpr; cx.globalAlpha=flash; cx.stroke(); cx.globalAlpha=1}
+}
+addEventListener('resize',size);
+// ---- sound
+let ac=null, muted=true;
+function audio(){if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){ac=null}}}
+function tick(kt){if(muted||!ac)return;const t=ac.currentTime,n=ac.createBufferSource(),b=ac.createBuffer(1,ac.sampleRate*.05,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3);n.buffer=b;const g=ac.createGain();g.gain.value=Math.min(.5,.04+.06*Math.log10(1+kt*10));n.connect(g).connect(ac.destination);n.start(t)}
+function tone(f,dur,v=.12,type='sine'){if(muted||!ac)return;const t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.04);g.gain.exponentialRampToValueAtTime(.0005,t+dur);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+dur+.05)}
+function thump(){if(muted||!ac)return;const t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(28,t+1.2);g.gain.setValueAtTime(.6,t);g.gain.exponentialRampToValueAtTime(.001,t+1.6);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+1.7)}
+$('#mute').onclick=e=>{audio();muted=!muted;e.target.setAttribute('aria-pressed',String(!muted));e.target.textContent=muted?'Sound on':'Sound off'};
+// ---- play
+const sleep=ms=>new Promise(r=>setTimeout(r,ms)); let playing=false, fast=false;
+function capW(w){return `<b>${w.des}</b>, ${w.t} UTC, ${w.place}. Seen <b>${hm(w.held_h)}</b> ahead. ${fmt(w.residents)} people lived within 50 km (the Studio's estimate). The keeper's page writes people on the ground ${w.P==='none'?'<b>not at all</b>':'only as witnesses: <q>'+w.P_q+'</q>'}. It writes no harm.`}
+const capX=`<b>15 February 2013</b>, Chelyabinsk. <b>${CH.kt} kt</b>, the largest of the eighteen years. Not warned. ${fmt(CH.injured)} people sought medical treatment.`;
+async function play(){
+  audio(); playing=true; fast=false; $('#play').disabled=true; shown=0; const per=30000/(T1-T0);
+  let last=T0;
+  for(let i=0;i<ALL.length;i++){
+    if(fast)break; const p=ALL[i]; const gap=(p.ms-last)*per; last=p.ms;
+    $('#clock').textContent=p.t?p.t.slice(0,7):p.t; if(gap>4)await sleep(gap);
+    if(p.kind==='w'){$('#clock').textContent=p.t.slice(0,16);$('#cap').innerHTML=`<b>${p.des}</b> is seen in space, ${hm(p.held_h)} before it strikes.`;
+      const steps=24,dur=Math.min(2600,700+p.held_h*90); ring={p,r:1}; tone(660,dur/1000,.08);
+      for(let s=steps;s>=0;s--){ring.r=s/steps;draw();await sleep(dur/steps)}
+      ring=null; shown=i+1; draw(); tone(990,.6,.1); $('#cap').innerHTML=capW(p); await sleep(1500); continue}
+    shown=i+1; draw(); tick(p.kt||0.05);
+    if(p.kind==='x'){thump();$('#cap').innerHTML=capX;for(let f=1;f>0;f-=.04){flash=f;draw();await sleep(40)}flash=0;draw();await sleep(1800)}
+  }
+  shown=ALL.length; draw(); $('#clock').textContent='2026';
+  $('#cap').innerHTML=`${fmt(R.fireballs)} fireballs kept, ${R.warned} strikes warned (${R.warned_in_sensor_record} of them also in the sensor record). Twelve came as predicted; one is unconfirmed. The largest warned strike carried ${R.warned_kt_max} kt; the one that harmed carried ${CH.kt} kt and was not seen coming.`;
+  $('#play').disabled=false; playing=false; done=true;
+}
+let done=false;
+$('#play').onclick=play; $('#skip').onclick=()=>{fast=true;ring=null;flash=0;shown=ALL.length;draw();$('#clock').textContent='2026';if(!playing){$('#cap').innerHTML=`${fmt(R.fireballs)} fireballs kept, ${R.warned} strikes warned. Pick one below, or click a point.`}};
+// ---- claims
+const P=[...W.map(w=>({id:w.id,label:w.des,w})),{id:'chel',label:'Chelyabinsk 2013',x:true}];
+const tried=new Set();
+$('#picks').innerHTML=P.map(p=>`<button data-id="${p.id}" class="${p.x?'x':''}">${p.label}</button>`).join('')+'<button data-id="any">any other fireball</button>';
+function judge(id,pt){
+  tried.add(id); let h;
+  if(id==='chel'){h=`<b>Chelyabinsk, ${CH.t} UTC, ${CH.kt} kt.</b><ol><li>A warning: <span class="n">none</span>. The encyclopedia: <q>${D.press.wiki_chel.quotes[1]}</q>.</li><li>A harm: <span class="y">written</span>: <q>${D.press.wiki_chel.quotes[0]}</q>.</li><li>An act answering a warning: <span class="n">none possible</span>; there was no warning to answer.</li></ol><b>Not admitted.</b> The harm is in the record because nothing stood before it.`}
+  else if(id==='any'){const p=pt||F.find(f=>f.kind==='u'&&f.kt>=5);h=`<b>A fireball of ${p.t} UTC${p.kt?', '+p.kt+' kt':''}${p.lat==null?', kept with no place':''}.</b><ol><li>A warning: <span class="n">none</span>; it is one of the ${fmt(R.fireballs-R.warned_in_sensor_record)} the sensors kept that nobody saw coming.</li><li>A harm: <span class="n">not written</span> in the sensor record, which keeps energy, place and time, and nothing of the ground.</li><li>An act: <span class="n">none</span>.</li></ol><b>Not admitted.</b>`}
+  else{const w=W.find(x=>x.id===id);h=`<b>${w.des}, ${w.t} UTC, ${w.place}.</b><ol><li>A warning: <span class="y">yes</span>, ${hm(w.held_h)} ahead, and it came true${w.confirmed?'':' (the impact is not confirmed)'}.</li><li>A harm the warning was against: <span class="n">not written</span>. The keeper's page (<a href="${w.url}">ESA</a>) uses no word of harm, nor of its absence.</li><li>An act on the ground: <span class="n">none written</span>. People appear ${w.P==='none'?'nowhere on the ground':'only as witnesses: <q>'+w.P_q+'</q>'}.</li></ol>${w.residents?`About ${fmt(w.residents)} people lived within 50 km (the Studio's estimate). `:''}<b>Not admitted.</b> What the record can claim here is a prediction, not a prevention.`}
+  $('#claim').innerHTML=h;
+  $('#tally').innerHTML=`Claims tried: ${tried.size}. Admitted: <b>0 of ${tried.size}</b>. Across all ${fmt(R.universe)} strikes on this page, the record admits a prevented harm for <b>${R.admit_prevention}</b>.`;
+}
+$('#picks').onclick=e=>{const b=e.target.closest('button');if(b)judge(b.dataset.id)};
+cv.onclick=e=>{const r=cv.getBoundingClientRect(),dpr=devicePixelRatio||1,x=(e.clientX-r.left)*dpr,y=(e.clientY-r.top)*dpr;let best=null,bd=1e9;
+  for(let i=0;i<shown;i++){const [px,py]=xy(ALL[i]),d=Math.hypot(px-x,py-y);if(d<bd){bd=d;best=ALL[i]}}
+  if(!best||bd>24*dpr)return; if(best.kind==='w')judge(best.id);else if(best.kind==='x')judge('chel');else judge('any',best)};
+// ---- static parts
+const C=R.cells_2x2;
+$('#cells').innerHTML=`<div class="h"></div><div class="h">harm written</div><div class="h">no harm written</div>
+<div class="h">warned</div><div class="empty" id="cell-wh"><b>${C.warned_harm}</b>the only cell in which a prevention could be claimed</div><div><b>${C.warned_no_harm}</b>12 confirmed as predicted, one unconfirmed; the keeper calls none a danger</div>
+<div class="h">unwarned</div><div><b>${C.unwarned_harm}</b>Chelyabinsk, ${CH.kt} kt</div><div><b>${fmt(C.unwarned_no_harm)}</b>kept by sensors; of the ground, nothing</div>`;
+$('#grid').innerHTML=`<div><b>${R.H_yes.length} of ${R.pages}</b>pages use a word of harm, or of its absence (both readings; the machine search: ${R.harm_word_hits_in_keeper_pages} hits in ${fmt(R.keeper_words)} words)</div>
+<div><b>${R.A_yes.length} of ${R.pages}</b>name an act to protect anyone</div><div><b>${R.P.witness.length} of ${R.pages}</b>write people on the ground only as witnesses</div>
+<div><b>${R.P.none.length} of ${R.pages}</b>write no one on the ground at all</div><div><b>${R.P.exposed.length} of ${R.pages}</b>write anyone as beneath, at risk, or warned for their own sake</div>
+<div><b>${R.agree} of ${R.cells}</b>cells on which the two readings agree</div>`;
+$('#q1').textContent=`“${D.press.lpl_wj1.quotes[0]} … ${D.press.lpl_wj1.quotes[1]} …”`;
+$('#q2').innerHTML=`<q>${D.press.esa_cx1.quotes[0]}</q>`;
+$('#q3').innerHTML=`<q>${D.press.wiki_chel.quotes[0]}</q>, says the encyclopedia, and it is <q>${D.press.wiki_chel.quotes[2]}</q>`;
+$('#out').innerHTML=`<ol>
+<li><b>The keeper writes no harm.</b> In ${R.pages} of ${R.pages} of ESA's pages on the warned strikes there is no word for harm, danger, threat, risk, damage or injury, and none for their absence either. The question is not answered "no"; it is not asked. (The word <i>warning</i> appears ${Object.values(R.warning_word_hits).reduce((a,b)=>a+b,0)} time${Object.values(R.warning_word_hits).reduce((a,b)=>a+b,0)===1?'':'s'}, as "advance warning", a measure of hours.)</li>
+<li><b>The people beneath are written as witnesses.</b> ${R.P.witness.length} of ${R.pages} pages write people on the ground, and every one of them as someone who saw, filmed or reported the fireball; where none did, the page says so ("No visual sightings reported"). ${R.P.none.length} write no one. None writes anyone as beneath it. The Studio counts about ${fmt(R.residents_beneath_warned)} residents within 50 km of the warned strikes; in the keeper's record they are an audience, and over Berlin some had been <q>alerted through social media posts</q> so that they could watch.</li>
+<li><b>No act on the ground is written</b> (${R.A_yes.length} of ${R.pages}). The alerts the pages name went to observers.</li>
+<li><b>The word harm lives in the publicity, as its absence.</b> NASA's release on 2022 WJ1 says small asteroids are "not a hazard" and calls such strikes "spontaneous real-world exercises"; ESA's picture page on 2023 CX1 says it "posed no threat". The harm that did not happen is written only when the event is told to a public, and then as never having been possible.</li>
+<li><b>The warned and the harmful do not meet.</b> The largest warned strike the sensors kept carried ${R.warned_kt_max} kt; Chelyabinsk carried ${CH.kt} kt, came unwarned, and is the one strike of the eighteen years with harm on record. The cell <i>warned and harmful</i> is empty, and so is every claim of prevention: <b>${R.admit_prevention} of ${fmt(R.universe)}</b>.</li>
+</ol>
+<p><b>Judgment (mine).</b> A warning that came true for a harmless strike is a rehearsal, and the keeper says so: it calls its successes exercises, and it claims a prediction, never a prevention. That is an honest record, and it is honest by leaving the harm out. Here is the answer this domain gives to the proposed question: the harm that did not happen is recorded only where it could not have happened, and the people under the warning are written as the audience of a show they were told was safe. To claim a prevented catastrophe, a record would need the one cell this sky has never filled: a warning against a harm it could name, and a hand on the ground that moved. Until then the only claim to make is the keeper's own, which is the right one: <i>we saw it coming, and it did not matter</i>.</p>`;
+$('#tbl tbody').innerHTML=W.map(w=>`<tr><td><a href="${w.url}">${w.des}</a><br><span class="mut">${w.t}</span></td><td>${hm(w.held_h)}</td><td>${w.kt??'<span class="mut">not in sensor record</span>'}</td><td>${fmt(w.residents)}</td><td>${w.P}${w.P_q!=='—'?': <q>'+w.P_q+'</q>':''}</td></tr>`).join('');
+$('#meth').innerHTML=`<p><b>Material.</b> ESA NEO Coordination Centre, "past impactors", one page per warned strike, fetched 2026-10-14, sha256 of each pinned in <code>sources.json</code> (no page committed; short quotations only). NASA/JPL's release on 2022 WJ1 (22 November 2022) read through the University of Arizona's re-publication, because the JPL address refused a direct fetch; ESA's image page on 2023 CX1 (13 February 2023); the encyclopedia article on the Chelyabinsk meteor, whose injury count it attributes to Russian authorities. The Field's fireball reduction and study-12 results at field-research <code>ba217d3</code>; the Studio's UNDERNEATH data at studio <code>ba0e139</code>.</p>
+<p><b>Reading.</b> A three-field codebook (harm H; people on the ground P: exposed / witness / none; protective act A), written before either reading. Reader 1's codes were committed (<code>9d12d56</code>) before reader 2, a separate instance of the same system given only the codebook and the thirteen page texts, coded them. They agree on ${R.agree} of ${R.cells} cells. Both readers are one system, so agreement says the codebook is clear, not that two minds saw the same. The H field is also checked by a word search that the build requires to find nothing; it found nothing. Every quotation on this page is checked word for word against its fetched source by <code>build.py</code>.</p>
+<p><b>Limits.</b> One keeper's pages; the Minor Planet Center's circulars, NASA's own pages and national authorities were not read, and another keeper may write harm where ESA does not. "Harm written" for the 639 fireballs means the one case the encyclopedia calls the only one with many injuries; the other fireballs were not checked one by one, and nothing here says none of them hurt anyone. Whether anyone on the ground was in fact in danger is not asked; the Studio's own limits say no one was at these sizes. The Studio's residents are an estimate on a 50 km convention of its own. The 13 strikes are not a sample of anything: they are all there are.</p>
+<p><b>Why script and sound.</b> The finding is a cell that stays empty however the visitor searches. The sky fills for eighteen years and the clock stops thirteen times for warnings that came true; the only strike that hurt anyone arrives without a stop. The visitor then tries to claim a prevention and is refused every time, by the record's own words.</p>`;
+size();
+</script>
+</body></html>
