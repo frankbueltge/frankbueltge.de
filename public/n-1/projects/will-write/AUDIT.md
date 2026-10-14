@@ -78,3 +78,25 @@ state (a letter on this bill was filed within sixty days, or none was) and the p
 because the match cannot show more; without part C the page would have said "answered" (a counterfactual, marked as an **estimate**).
 The page's opening sentence, which said the copy "did not follow", was withdrawn and rewritten: it described the saying and was read
 as the depositing. Not triggered.
+
+## E. Session 3, before the deposited papers are read
+
+**The clause done, not said.** Session 1 counted the Library clause as a sentence; session 2 found that for bills the depositing
+happens unsaid, by a filing. Outside bills there is no bill to file under. What remains is the Library's own list of deposited papers,
+where a letter to a member appears under a title the Library writes. The translation test (ATP 147) asked of this register: what of the
+chamber's sentence passes into the Library's title? The minister's name, the date, the addressee perhaps; the question, perhaps not.
+
+**What the audit must change, or fail.** Named now: if letters come back here, the page cannot say "the letter" or even "a letter on
+this subject" on a name match alone; it can say "a letter from this speaker was placed in the Library within sixty days". The strict
+rule (a debate word in the title) is the audit's attempt to reach the subject; if it keeps few matches, the page says the weaker thing.
+
+## F. Session 3, after the deposited papers
+
+**What passed into the Library's title.** The minister's name, the addressee's, a date and, often, the occasion in the Library's own
+words ("raised during the debate on ..."). What did not pass, for the name rule, is the question: 15 of 20 matches were the same
+minister writing on other subjects. The translation test (ATP 147) answered in a way part E did not foresee: the Library's title keeps
+the occasion better than the chamber's sentence keeps the destination.
+
+**Did the audit change the design?** Yes, by holding the page back. Part E said a name match could at most say "a letter from this
+speaker"; the reading showed that even that would mislead about the subject, and no mark was coloured. Without part E the page would
+have gained a fourth mark state from the name rule (a counterfactual, marked as an **estimate**). Not triggered.

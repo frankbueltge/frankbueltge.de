@@ -72,6 +72,31 @@ answer, kept replies off the record, "a way of burying bad news because the true
 except OSError:
     pass
 
+OUTSIDE = ""
+try:
+    Q3 = json.load(open("q3.json"))
+    X = Q3["exploratory"]["non_bill_by_house_period"]
+    P3 = Q3["predictions"]
+    OUTSIDE = f"""<h2 id="outside">Outside the bills</h2>
+<p class="sm mut">Read with: <a href="#return">the return</a> (the register this section looks for a second time) and <a href="#post">the
+post</a> (the grey marks this section could not colour).</p>
+<p>Most promises are made outside bill debates: in questions, statements, debates on regulations. For them there is no register by
+bill. There is the Libraries' own list of the papers ministers deposit (<a href="https://depositedpapers.parliament.uk/">deposited
+papers</a>). All {sum(Q3["by_house_year"][k]["n"] for k in Q3["by_house_year"]):,} promises of 2005 to 2025 whose speaker the record names were looked for in it, among
+36,783 papers (those made on bills too, as a check). The first rule asked only whether the minister who promised placed any letter there within sixty days. It said yes
+for {P3["P12"]["k"]} of {P3["P12"]["n"]} Lords promises of 2015 to 2025. Then twenty of its matches were read: only
+{P3["P17"]["plausible"]} were about what had been promised. The rest were the same minister writing about something else. A minister
+writes often; the rule found the writing, not the answer. So no mark above is coloured from it.</p>
+<p>A narrower rule, which also asks that the letter's title share a word with the debate's, found {X["Lords 2015-2025"]["strict"]} of
+{X["Lords 2015-2025"]["n"]} Lords promises of 2015 to 2025 and {X["Commons 2015-2025"]["strict"]} of {X["Commons 2015-2025"]["n"]} in the
+Commons. Twenty of those were read too, and {Q3["exploratory"]["strict_read"]["plausible"]} were on the promise's subject. Taken
+together, and only as an estimate: in the Lords perhaps a quarter of the promises made outside bills come back to the Library in a
+letter on their subject within two months; in the Commons perhaps one in twenty. What the reading showed instead is where an answer
+could be found: the Library's titles often name their occasion themselves, "raised during the debate on", "raised during a question
+on". That is where this project stops.</p>"""
+except (OSError, KeyError):
+    pass
+
 page = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>I Will Write</title><link rel="icon" href="data:,">
@@ -96,7 +121,7 @@ table{{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}}th,td
 .yb i{{display:block;width:12px;background:var(--post)}}.yb b{{display:block;width:10px;height:5px;background:var(--lib);margin-top:2px}}.yrs{{align-items:flex-start}}
 .yb{{justify-content:flex-start}}.yb i{{margin-top:auto}}@media (max-width:600px){{.lane{{grid-template-columns:1fr}}}}
 </style></head><body><main>
-<p class="sm mut">Remainder &middot; project 8, sessions 1-2 &middot; 2026-10-14</p>
+<p class="sm mut">Remainder &middot; project 8, sessions 1-3, put back &middot; 2026-10-14</p>
 <h1>I will write</h1>
 <p>In the UK Parliament a question asked in the chamber is asked in public. A minister who cannot or will not answer it there can say:
 <i>I will write to the honourable Member.</i> In that sentence the answer leaves the public record and becomes a letter between two
@@ -106,11 +131,12 @@ people. Sometimes the minister adds that a copy will go to the Library of the Ho
 2000 and 2005 together, and not once in the 172 promises of 2025. But for promises made in debates on bills, the saying was no longer
 needed. Since 2014 Parliament files those letters itself, in a public register. Of the Commons promises made on bills in 2015, 2020
 and 2025, about half have a letter on the same bill filed within sixty days; in the Lords, about three in four. The way back stopped
-being spoken when it became a filing. Promises made outside bill debates, most of them, have no such register.</p>
+being spoken when it became a filing. Promises made outside bill debates, most of them, have no such register; looked for in the Libraries' list of deposited papers,
+they come back far less often, and a rule that reads names could not tell which (<a href="#outside">outside the bills</a>).</p>
 <p>Below is every such promise found in ten sampled years, {years[0]} to {years[-1]}, in both Houses: {len(P):,} spoken contributions.
 Each mark is one. Tap a mark to read the sentence. <span class="key sm"><span style="background:var(--post)"></span>sent to the post
 <span style="background:var(--lib)"></span>said in the same breath that a copy goes to the Library ({n_lib:,})</span></p>
-<nav class="ent" aria-label="Entryways, in any order"><a href="#post">The post</a><a href="#rate">The rate</a><a href="#return">The return</a><a href="#between">The years between</a><a href="#how">How this was found</a></nav>
+<nav class="ent" aria-label="Entryways, in any order"><a href="#post">The post</a><a href="#rate">The rate</a><a href="#return">The return</a><a href="#between">The years between</a><a href="#outside">Outside the bills</a><a href="#how">How this was found</a></nav>
 
 <h2 id="post">The post</h2>
 <p class="sm mut">Read with: <a href="#rate">the rate</a> (how large each year was) and <a href="#return">the return</a> (what becomes of a letter).</p>
@@ -141,10 +167,13 @@ days after. A bill can carry many letters, so a letter on the same bill is not s
 bounds on what came back. 2010 is empty because the register had not begun. {Q1S["frame"] - Q1S["matched"]} of {Q1S["frame"]}
 promises could not be matched to a bill and are left out.</p>
 {YEARS_BETWEEN}
+{OUTSIDE}
 <h2 id="how">How this was found</h2>
 <p class="sm">The sample, the definitions and six predictions were written down and published before any promise was read
 (<a href="SELECTION.md">SELECTION.md</a>); session 2's matching rule, the years between and five more predictions likewise
-(<a href="SESSION2.md">SESSION2.md</a>; what happened: <a href="JOURNAL2.md">JOURNAL2.md</a>). Contributions were found with the Hansard API's phrase search and then read by a fixed
+(<a href="SESSION2.md">SESSION2.md</a>; what happened: <a href="JOURNAL2.md">JOURNAL2.md</a>); session 3's rule for the deposited papers
+and six more (<a href="SESSION3.md">SESSION3.md</a>; <a href="JOURNAL3.md">JOURNAL3.md</a>). The project was put back after session 3:
+<a href="TOOLKIT.md">TOOLKIT.md</a>. Contributions were found with the Hansard API's phrase search and then read by a fixed
 pattern; a promise is "I/we will/shall [up to two words] write to", and a blue mark is a promise whose contribution names the Library: all {n_lib + 27} such contributions were read, and the 27 where the Library holds something else (a
 report, statistics, the British Library) are grey. What the search does not find is not counted, so every number is a floor. A random sample was read by hand to
 measure the pattern's errors: <a href="JOURNAL.md">JOURNAL.md</a>. Names of members are not shown; each sentence links to its debate.</p>

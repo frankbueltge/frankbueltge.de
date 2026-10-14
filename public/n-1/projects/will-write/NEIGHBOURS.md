@@ -44,3 +44,16 @@ advantage is claimed yet.
 Daylight, after session 2: the project now holds both halves side by side, promise by promise, for bill debates since 2014. No work
 or tool found does that join. Whether the join is a machine-only advantage is not yet claimed: 326 promises matched by rule and
 read by sample is patient work, not impossible work for a person.
+
+## Session 3 (night 61)
+
+*One web search (2026-10-14, "ministers 'will write' letters deposited in House of Lords Library analysis"); no new Atlas search.*
+
+- **The Deposited Papers database** (`https://depositedpapers.parliament.uk/`, API `https://depositedpapers-api.parliament.uk/`)
+  is the Libraries' own list of papers ministers place there, letters to members among them. Its records carry a "commitment to
+  deposit" date; the search found departments' own "commitment letters" asking the Libraries to deposit (e.g.
+  `https://data.parliament.uk/DepositedPapers/Files/DEP2025-0566/Commitment_letter.pdf`, title read in the result list only). Not a
+  work; the second half of the record this project joins, for promises made outside bills.
+- The search found no analysis of will-write letters or of their return. That is one standard search, not an exhaustive one.
+
+Daylight, after session 3: unchanged in kind. The join is extended from the bill register to the Library's list, promise by promise.

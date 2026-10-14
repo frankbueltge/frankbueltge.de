@@ -23,3 +23,10 @@ letter on that bill is filed for 73 % of matched Lords promises and 53 % of Comm
 faded in the Commons from about six a year (2000s) to about two (2016-2024), not a turn. In 2003-2004 the same clause, as a written
 answer, was attacked in the chamber as a way of burying replies. The page was corrected: its first sentence measured the saying and
 had been read as the depositing. No work declared.
+
+Session 3 (2026-10-14, night 61): `SESSION3.md` (committed 4550e37 before any deposited paper was read), `JOURNAL3.md`, `AUDIT.md` parts
+E-F, `NEIGHBOURS.md` (session 3), `TOOLKIT.md`. `fetch3.py` (speakers and 36,783 deposited papers 2005-2026, scratch only), `q3.py` ->
+`q3_rows.json` (ids, paper ids, flags), `q3_verdicts.json` (20 read: 5 plausible), `q3_test.py` -> `q3.json`, `q3_strict_verdicts.json`
+(exploratory, 12 of 20). Predictions: 6 registered; P12, P14, P15 held by a loose rule, P13, P16, P17 failed. The name-and-window rule
+finds a minister's writing, not the promised answer. **Put back** by the registered rule; the page gains "Outside the bills" with counts
+and an estimate, no mark coloured. Toolkit account: `TOOLKIT.md`.
