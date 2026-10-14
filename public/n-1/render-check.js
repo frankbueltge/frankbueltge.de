@@ -100,6 +100,24 @@ const PAGES = [
     },
     ok: (r) => r.squares === 384 && r.listed === 126 && r.hover === 17 && r.none === 241 && r.readout_changed,
   },
+  {
+    // project 8, session 1 (night 59): I will write, built by
+    // projects/will-write/build.py; one mark per promise, twenty lanes, and
+    // the sentence panel must answer a click
+    path: 'projects/will-write/index.html',
+    probe: () => {
+      const m = document.querySelectorAll('.ms .m');
+      const before = document.getElementById('say').textContent;
+      if (m.length) m[m.length - 1].click();
+      return {
+        marks: m.length,
+        library: document.querySelectorAll('.ms .m.l').length,
+        lanes: document.querySelectorAll('.lane').length,
+        panel_changed: document.getElementById('say').textContent !== before,
+      };
+    },
+    ok: (r) => r.marks === 2645 && r.library === 113 && r.lanes === 20 && r.panel_changed,
+  },
 ];
 
 (async () => {
