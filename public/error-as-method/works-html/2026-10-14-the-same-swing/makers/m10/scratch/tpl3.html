@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sixty-One Days, One Day</title>
+<style>
+:root{--ground:#efebe2;--ink:#191714}
+html,body{margin:0;height:100%;background:var(--ground)}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden}
+canvas{display:block}
+</style></head><body>
+<canvas id="c" role="img" aria-label=""></canvas>
+<script>
+const RAW="__PTS__", B=__B__;
+const W=1100,H=800,P=__P__,X0=3,N=61;
+const {MODE,PH0,K,DOT,AL}=__PRM__;
+const c=document.getElementById('c'),dpr=Math.max(1,window.devicePixelRatio||1);
+c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px';
+const g=c.getContext('2d');g.scale(dpr,dpr);
+g.fillStyle='#efebe2';g.fillRect(0,0,W,H);
+const lvl=t=>{const u=t-0.5,i=Math.max(0,Math.min(N-2,Math.floor(u))),f=Math.max(0,Math.min(1,u-i));return B[i]*(1-f)+B[i+1]*f;};
+const a=RAW.split(',').map(Number);
+const L=90,R=W-90,CY=H/2;
+const c0=[181,83,42],c1=[28,38,68];
+for(let i=0;i<a.length;i+=3){
+  const t=(a[i]-X0)/P; if(t<0||t>=N)continue;
+  const ph=((t-PH0)%1+1)%1;
+  const x=L+ph*(R-L);
+  const v=MODE? a[i+1]-lvl(t) : a[i+1]-45;
+  const y=CY-v*K;
+  const s=t/N, col=c0.map((q,j)=>Math.round(q+(c1[j]-q)*s));
+  g.fillStyle=`rgb(${col})`;g.globalAlpha=AL*a[i+2]/15;
+  g.beginPath();g.arc(x,y,DOT,0,7);g.fill();
+}
+</script></body></html>

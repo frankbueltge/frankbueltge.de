@@ -1,0 +1,3 @@
+# Forty Widths
+
+The picture I was given was meant to show one dot per value, but at 40 by 12 pixels every column is a dark smear several pixels tall: there were more values than there was room for, and they merged. The work doesn't pretend to recover dots that are no longer there. Instead it shows what the file can still say. Each of the forty columns is drawn as a soft grey strip taken straight from its actual pixel values. Red marks the upper and lower edge of each smear, found at sub-pixel precision. Below, the height of each smear is shown on its own, so the band's slow swelling and narrowing can be read apart from where it sits. I chose this form so that the loss is part of the image: the measurement survives only as its spread.

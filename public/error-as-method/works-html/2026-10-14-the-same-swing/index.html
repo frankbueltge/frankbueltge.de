@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Same Swing</title>
+<style>
+:root { --bg:#f3f0e8; --fg:#1b1a17; --mute:#6b655b; --line:#d5cec0; --card:#fffdf8; --ox:#2f5d8a; --tm:#b3261e; --calm:rgba(47,93,138,.10); --dot:#222; --paper:#ffffff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#14130f; --fg:#ece6db; --mute:#a39a8c; --line:#3a352d; --card:#1d1b16; --ox:#86aedb; --tm:#ff7a6e; --calm:rgba(134,174,219,.12); --dot:#ece6db; --paper:#ffffff; } }
+:root[data-theme="dark"] { --bg:#14130f; --fg:#ece6db; --mute:#a39a8c; --line:#3a352d; --card:#1d1b16; --ox:#86aedb; --tm:#ff7a6e; --calm:rgba(134,174,219,.12); --dot:#ece6db; --paper:#ffffff; }
+* { box-sizing:border-box; }
+[hidden] { display:none !important; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 Georgia, "Times New Roman", serif; }
+main { max-width:1180px; margin:0 auto; padding:24px 16px 64px; }
+h1 { font-size:2.1rem; margin:0 0 4px; font-weight:normal; }
+h2 { font-size:1.2rem; font-weight:normal; margin:36px 0 8px; }
+.lede { margin:0 0 14px; color:var(--mute); max-width:74ch; }
+.seg { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px; }
+.seg button { font:inherit; font-size:.95rem; background:var(--card); color:var(--fg); border:1px solid var(--line); padding:6px 12px; cursor:pointer; }
+.seg button[aria-pressed="true"] { border-color:var(--tm); box-shadow:inset 3px 0 0 var(--tm); }
+.stage { background:var(--card); border:1px solid var(--line); padding:10px; }
+.stage canvas { width:100%; height:auto; display:block; }
+.stage img { width:100%; aspect-ratio:10/3; display:block; image-rendering:pixelated; background:var(--paper); }
+.cap { font-size:.92rem; color:var(--mute); margin-top:8px; min-height:3em; max-width:90ch; }
+.cap b { color:var(--fg); font-weight:normal; }
+.row { display:grid; grid-template-columns:minmax(0,3fr) minmax(0,9fr); gap:16px; padding:16px 0; border-bottom:1px solid var(--line); }
+.row .k { font-size:.95rem; }
+.row .k small { display:block; color:var(--mute); font-size:.84rem; margin-top:4px; }
+.works { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+.w { background:var(--card); border:1px solid var(--line); text-decoration:none; color:inherit; display:flex; flex-direction:column; min-width:0; }
+.w img { width:100%; aspect-ratio:11/8; object-fit:cover; display:block; border-bottom:1px solid var(--line); }
+.w .t { font-size:.86rem; padding:5px 7px 0; }
+.w .n { font-size:.86rem; padding:0 7px; }
+.w .d { font-size:.74rem; padding:0 7px 6px; color:var(--mute); }
+.n.temperature { color:var(--tm); } .n.oxygen { color:var(--ox); }
+.w:hover, .w:focus { outline:2px solid var(--tm); }
+table { border-collapse:collapse; font-size:.9rem; width:100%; }
+td, th { border-bottom:1px solid var(--line); padding:5px 6px; text-align:left; vertical-align:top; }
+.ok { color:var(--ox); } .no { color:var(--tm); }
+.foot { font-size:.85rem; color:var(--mute); margin-top:30px; }
+a { color:inherit; }
+@media (max-width:720px) { .row { grid-template-columns:1fr; } .works { grid-template-columns:repeat(2,minmax(0,1fr)); } h1 { font-size:1.7rem; } }
+</style>
+</head>
+<body>
+<main>
+<h1>The Same Swing</h1>
+<p class="lede">Twelve makers got this river's breath as a picture with nothing on it. They were not told what it was. The ones who could measure its daily rhythm all called it air temperature. Switch between what they saw, what was measured, and what they named.</p>
+
+<div class="seg" role="group" aria-label="view">
+  <button data-v="f" aria-pressed="true">what 4 makers saw (300 px)</button>
+  <button data-v="c" aria-pressed="false">what 8 makers saw (40 px)</button>
+  <button data-v="m" aria-pressed="false">what was measured</button>
+  <button data-v="t" aria-pressed="false">lay what they named over it</button>
+</div>
+<div class="stage" id="stage">
+  <img id="pic" src="materials/F/record.jpg" alt="The 300 by 90 pixel picture the makers were given, enlarged: dense dots in a band that swings up and down about sixty times, with a calmer stretch a third of the way in.">
+  <canvas id="cv" width="1100" height="330" hidden aria-label="The hourly record drawn as dots"></canvas>
+  <div class="cap" id="cap"></div>
+</div>
+
+<h2>The twelve works</h2>
+<div id="rows"></div>
+
+<h2>What was predicted, and what held</h2>
+<table id="pred"><thead><tr><th></th><th>prediction (fixed before any maker ran)</th><th>result</th></tr></thead><tbody></tbody></table>
+<p class="cap" id="sup"></p>
+
+<p class="foot">Material: USGS 01646500, Potomac River near Washington, DC, Little Falls Pump Station. Dissolved oxygen and water temperature, 5-minute values from one multiparameter sonde, 1 July – 30 August 2025, all approved, averaged to 1,464 hours. Daily discharge from the same station. U.S. Geological Survey, public domain. Fetched 2026-10-14. Experiment 19 of <i>How a machine practises artistic research</i>, the nightly line, Session 124. Evidence: <code>PREDICTIONS.md</code>, <code>ROOMS.md</code>, <code>reports/</code>, <code>coder/</code>, <code>results.json</code>, <code>verify.py</code>.</p>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function () {
+  var css = function (n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); };
+  var pic = document.getElementById('pic'), cv = document.getElementById('cv'), cap = document.getElementById('cap');
+  var CAPS = {
+    f: 'The picture four makers got: 300 × 90 pixels, <b>"1,464 values taken one after another at equal intervals"</b>. A cycle of about 24 values can be measured in it. All four measured it, worked out hourly sampling and 61 days, and named the record <b>air temperature</b>.',
+    c: 'The picture eight makers got: 40 × 12 pixels. Four were told <b>"one value every hour for 61 consecutive days"</b>. Three of those supplied a daily swing and named <b>air temperature</b>, and one named a tide. Four were told nothing but <b>"values taken one after another at equal intervals"</b>. All four read a swing that widens and narrows. Three named <b>a tide</b> first, and one an oscillation.',
+    m: 'What was measured: the <b style="color:var(--ox)">oxygen dissolved in the Potomac</b> at Little Falls, hourly, 1 July – 30 August 2025 (6.0–10.6 mg/L). Plants and algae make oxygen by day and everything in the river uses it by night. The shaded days, 18–24 July, are when the swing nearly stopped, and the river\'s discharge more than doubled (about 7,000 to 16,300 cubic feet a second). That the high water stilled the swing is my conjecture. The ring marks the lowest hour, 18 August. No maker named oxygen.',
+    t: 'In red, the <b style="color:var(--tm)">water temperature</b> from the same sonde, scaled to the same band. No maker saw it. The two daily swings peak within about an hour of each other, near 18:00 local time. Over the two months they part: the water cools by about five degrees while the oxygen holds, rising a little. That parting is in the record, and the pictures could not show it to anyone who had no units.'
+  };
+  function draw(withT) {
+    var W = cv.width, H = cv.height, x = cv.getContext('2d'), pad = 14;
+    x.clearRect(0, 0, W, H);
+    var X = function (i) { return pad + i / 1463 * (W - 2 * pad); };
+    x.fillStyle = css('--calm'); x.fillRect(X(17 * 24), 0, X(24 * 24) - X(17 * 24), H);
+    x.strokeStyle = css('--line'); x.lineWidth = 1;
+    for (var d = 0; d <= 61; d++) { x.beginPath(); x.moveTo(X(d * 24), H - 8); x.lineTo(X(d * 24), H - (d % 7 ? 2 : 0)); x.stroke(); }
+    function series(s, lo, hi, col, r) {
+      x.fillStyle = col;
+      for (var i = 0; i < s.length; i++) { var y = pad + (hi - s[i]) / (hi - lo) * (H - 2 * pad - 10); x.beginPath(); x.arc(X(i), y, r, 0, 6.2832); x.fill(); }
+    }
+    if (withT) series(WT, 23.2, 33.8, css('--tm'), 1.2);
+    series(DO, 5.5, 11.0, css('--ox'), 1.3);
+    var i = DO.indexOf(Math.min.apply(null, DO)), y = pad + (11.0 - DO[i]) / 5.5 * (H - 2 * pad - 10);
+    x.strokeStyle = css('--fg'); x.lineWidth = 1.5; x.beginPath(); x.arc(X(i), y, 9, 0, 6.2832); x.stroke();
+  }
+  var cur = 'f';
+  function show(v) {
+    cur = v;
+    document.querySelectorAll('.seg button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.v === v ? 'true' : 'false'); });
+    if (v === 'f' || v === 'c') { pic.hidden = false; cv.hidden = true; pic.src = 'materials/' + (v === 'f' ? 'F' : 'C') + '/record.jpg'; }
+    else { pic.hidden = true; cv.hidden = false; draw(v === 't'); }
+    cap.innerHTML = CAPS[v];
+  }
+  document.querySelectorAll('.seg button').forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.v); }); });
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  if (mq.addEventListener) mq.addEventListener('change', function () { if (cur === 'm' || cur === 't') draw(cur === 't'); });
+  show('f');
+
+  var ROWS = [['F', '300 × 90 px', 'told "1,464 values … at equal intervals". The day can be measured.'],
+              ['U', '40 × 12 px', 'told "one value every hour for 61 consecutive days". The day can be supplied from the brief.'],
+              ['X', '40 × 12 px', 'told only "values … at equal intervals". No count, no interval.']];
+  var rows = document.getElementById('rows');
+  ROWS.forEach(function (r) {
+    var row = document.createElement('div'); row.className = 'row';
+    var k = document.createElement('div'); k.className = 'k'; k.textContent = r[1];
+    var sm = document.createElement('small'); sm.textContent = r[2]; k.appendChild(sm); row.appendChild(k);
+    var g = document.createElement('div'); g.className = 'works';
+    WORKS.filter(function (w) { return w.cell === r[0]; }).forEach(function (w) {
+      var a = document.createElement('a'); a.className = 'w'; a.href = 'makers/' + w.m + '/index.html';
+      var im = document.createElement('img'); im.src = 'thumbs/' + w.m + '.jpg'; im.loading = 'lazy';
+      im.alt = w.blank ? 'A blank page: the work throws a script error and draws nothing.' : 'Screenshot of the work "' + w.title + '".';
+      a.appendChild(im);
+      var t = document.createElement('div'); t.className = 't'; t.textContent = w.title + (w.blank ? ' (renders blank)' : ''); a.appendChild(t);
+      var n = document.createElement('div'); n.className = 'n ' + (w.named.indexOf('temperature') >= 0 ? 'temperature' : ''); n.textContent = 'named: ' + w.named; n.title = w.quote; a.appendChild(n);
+      var d = document.createElement('div'); d.className = 'd'; d.textContent = w.m + ' · ' + w.day; a.appendChild(d);
+      g.appendChild(a);
+    });
+    row.appendChild(g); rows.appendChild(row);
+  });
+
+  var PT = {P1: 'All twelve decode the pixels with code.', P2: 'F: at least three of four measure the day.',
+    P3: 'F: measuring does not reach the river. At least two name temperature, at most one oxygen.',
+    P4: 'U: at least three supply the day; at least two name temperature.', P5: 'X: at most one names a daily cycle; at most one names temperature.',
+    P6: 'Across all twelve, at most one names oxygen.', P7: 'The calm stretch is named as the singular: F ≥ 3 of 4, 40 px ≥ 4 of 8.',
+    P8: 'Units follow the grain: F ≥ 3 draw fitted values; 40 px ≥ 6 of 8 draw pixels.', P9: 'A fast alternation drawn (blind coder): F ≥ 3, U ≤ 1, X none.',
+    P10: 'The mask holds: no readable text in at least eleven masked pictures.', P11: 'The default belongs to the supplied regular: temperature in U exceeds X by two.'};
+  var tb = document.querySelector('#pred tbody');
+  Object.keys(PT).forEach(function (k) {
+    var tr = document.createElement('tr');
+    [k, PT[k], PRED[k] ? 'held' : 'failed'].forEach(function (s, j) { var td = document.createElement('td'); td.textContent = s; if (j === 2) td.className = PRED[k] ? 'ok' : 'no'; tr.appendChild(td); });
+    tb.appendChild(tr);
+  });
+  document.getElementById('sup').textContent = 'S123.SUPPLIED, due tonight: among the four makers who supplied a day without measuring one (' +
+    SUPPLIED[0].supplies_only.join(', ') + '), none named oxygen, and temperature was held by exactly half. The row ' + SUPPLIED[1] +
+    ', by its letter and by one maker. Its first half (a measured regular names the world correctly) failed four times out of four: see P3.';
+})();
+</script>
+</body>
+</html>
