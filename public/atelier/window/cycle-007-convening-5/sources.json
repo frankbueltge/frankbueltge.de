@@ -1,0 +1,69 @@
+{
+ "fetched": "2026-10-14",
+ "field_warnings": {
+  "repo": "frankbueltge/field-research",
+  "commit": "c0a409de921bd8ef89b31f9bd499851868e38acb",
+  "path": "artifacts/2026-10-14-the-tornadoes-that-came/data/warnings.tsv.gz",
+  "sha256": "6da5f7d3a46935fe4bca0e409ce5d845483ffe28872e0a0916bffa5307241f9f",
+  "rule_from": "artifacts/2026-10-14-the-warnings-never-needed/analyse.py (rule V, copied)"
+ },
+ "spc_tornadoes": {
+  "url": "https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv",
+  "sha256": "fa616e2f829c553acc7b60f5130a3ac498198e0b9d69e37a0e1289df71dc5fcc",
+  "note": "identical to the Field's studies 13 and 14. US government work. Not committed raw."
+ },
+ "spc_hail": {
+  "url": "https://www.spc.noaa.gov/wcm/data/1955-2023_hail.csv.zip",
+  "sha256": "b578d6a5c3a53b7bd61917c9a443dfa97a4bf83953a12fe36ef4b5b6a6da9143"
+ },
+ "spc_wind": {
+  "url": "https://www.spc.noaa.gov/wcm/data/1955-2023_wind.csv.zip",
+  "sha256": "92b4804c35f6e81401d4caaf20d022c3464f9dd45b293344e4ff6fbd678e8840"
+ },
+ "storm_events": {
+  "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/",
+  "files": {
+   "StormEvents_details-ftp_v1.0_d2008_c20260323.csv.gz": "c97260e82760b17bc571d55e1ca1f5073ccc0558b774313d46dddc3e1ef39b37",
+   "StormEvents_details-ftp_v1.0_d2009_c20260323.csv.gz": "c04d6e0173153475440cb614bd019287986c74c311c61864478f9087d7d1b357",
+   "StormEvents_details-ftp_v1.0_d2010_c20260323.csv.gz": "d109f8a6ab1a71e70f60fe42d30a0e31f370c904e248a51e5fe85573f904878e",
+   "StormEvents_details-ftp_v1.0_d2011_c20260323.csv.gz": "be3b40cd098a879be12c2c3e614700560bd537e6178bba8b1aaf099f665dda40",
+   "StormEvents_details-ftp_v1.0_d2012_c20260323.csv.gz": "673db47f6dc9e97e06ffec3b628f5341c128f594d9b247bd07bad2e8397ebac3",
+   "StormEvents_details-ftp_v1.0_d2013_c20260323.csv.gz": "4fa4036ed1c7ea9a779d5a5841d18de08596c423920189a9e6173488d1a98260",
+   "StormEvents_details-ftp_v1.0_d2014_c20260323.csv.gz": "410b457b1b9628cfd63292848a626482a88714c8bd8c45d56a0469f9de05d078",
+   "StormEvents_details-ftp_v1.0_d2015_c20260323.csv.gz": "c4a5a24b8c69ad2b6b867790ce298f5b642a60516c9fce5550a8d2f67cd7bf2e",
+   "StormEvents_details-ftp_v1.0_d2016_c20260323.csv.gz": "d8e1389897df3557e74ba36820357f6962a7c0ca922595400fe74d883f7a5036",
+   "StormEvents_details-ftp_v1.0_d2017_c20260519.csv.gz": "bd3ca72b71544222cba8aa2b29eb3f0efe050d3330a0c408e208befb66881750",
+   "StormEvents_details-ftp_v1.0_d2018_c20260323.csv.gz": "19702480f50cd2a8dacce5e57891feba156afb87b1ea5cbb4eaeda69d2b964a4",
+   "StormEvents_details-ftp_v1.0_d2019_c20260323.csv.gz": "f5043ecc776818b0feffdf1e0fcbaf63329db0635eab1057c7b8ba00ef332e3b",
+   "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz": "895c56fd46991c4d9a135d67558dc4b447a02a2314efac0ace645135b98f9c9d",
+   "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz": "60c1daf96dbe8eafd48c80df5b70df51a0125ab95d467ee7009a646761d57715",
+   "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz": "7d6b79d0049a6edec96b061738289daddba90be26fc9afe7b0a6fd617f21452e",
+   "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz": "713784bed40d9e5a95b1d6240a654f865f3ef97703713105c7b35437270da134"
+  },
+  "note": "NOAA NCEI, US government work. Only the extract books.tsv.gz and short narrative quotations (data.js) are committed."
+ },
+ "keeper_instruction": {
+  "title": "NWS Instruction 10-1605, Storm Data Preparation, 26 July 2021",
+  "url": "https://www.weather.gov/media/directives/010_pdfs/pd01016005curr.pdf",
+  "sha256": "c1ce1a2d6429ad2d078c5cf82ceaa01ea6e5a22da23874ea08cac994947e632f",
+  "read": "the passages used, in full: p. 1 (purpose), Appendix A entry 18 (Funnel Cloud, p. A-27), section 47.1 (p. A-74), hail entry (non-severe below one inch not used in verification)",
+  "passages": [
+   "The funnel cloud should be large, noteworthy, or create strong public or media interest to be entered.",
+   "In these cases, the preparer should document only the most significant funnel clouds, especially those that generate public or media attention.",
+   "While Storm Data serves as official input to the National Weather Service (NWS) verification system for select programs, the primary purpose of Storm Data is to accurately describe events, regardless of the impact on verification scores."
+  ]
+ },
+ "hail_criterion": {
+  "title": "WSR-88D signatures associated with one inch hail in the Southern Plains (AMS conference preprint P4.8)",
+  "url": "https://ams.confex.com/ams/pdfpapers/175739.pdf",
+  "sha256": "7e06a4314b32435b26c871dfe3726c132b32bc5f0b0b2cd94a5fc4b96b638064",
+  "passage": "On January 5, 2010 the National Weather Service changed the minimum hail size criterion for severe thunderstorms from 19 mm (0.75 in) to 25 mm (1.0 in).",
+  "used": "the checkbox that applies 1 inch to every year"
+ },
+ "committed_extracts": {
+  "books.tsv.gz": "74a8a51b6e357c925c982cbe94c1c374d89c5e000f2c7827f65102f7b142f9ed",
+  "tiers.tsv.gz": "e4b84e346d4ba1892efbcb0044d3c27472fda028d29a7a3bf944ae805c598c8e",
+  "results.json": "0b507284a08c29d7da91d4bbc02e49d11da1515cd9ceec7aa285dba057ce2d55",
+  "data.js": "2f6e52120abfdcbcae830e05c7d1371319f18fd61b4aadac25c70a936f41fb4b"
+ }
+}
