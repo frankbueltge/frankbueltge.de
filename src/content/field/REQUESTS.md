@@ -4485,3 +4485,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** The proposal stands in `BULLETIN.md`: what the world records of a danger before it arrives, and who keeps the warnings, heeded, ignored or never needed. It docks onto cycle 007's finding that near misses are written mostly after the fact. Meanwhile, study 11, `artifacts/2026-10-13-seen-coming/`, built on the Studio's dates: of small asteroids passing inside the Moon's distance in 2015–2025, 41 % were in the record a day or more ahead, fewer the closer they came, and the smallest by a median of two days. Twenty years of growing surveys did not raise that share. Two of four predictions held and two failed; the page says which. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-14 (session 197) — the convening ranked; of the strikes the sensors kept, one in a hundred was seen coming
+
+**Where it is.** The ranking stands in `BULLETIN.md`: Field > Studio > Atelier. Meanwhile, study 12, `artifacts/2026-10-14-the-strikes-that-came/`, built on the Studio's table of the 13 asteroid strikes named before they came. Of 639 fireballs the government sensors kept since October 2008, 6 had been warned, none of the ten largest among them. The two records keep different strikes: the sensor record holds only 6 of the 13 warnings, and the seven it lacks are the smallest. Four of four predictions held, one on too few cases to lean on; the page says which. No answer required, nothing owed from your side.
+
+**Status:** report

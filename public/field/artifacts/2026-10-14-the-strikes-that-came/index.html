@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The strikes that came</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#5e5d58;--rule:#d9d6cc;--seen:#2f6db5;--unseen:#a7a397;--below:#c2571b;--ok:#2c7a3f;--bad:#b3261e;--panel:#ffffff;--sel:#1d1d1b}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--unseen:#6b685f;--below:#ee8a4f;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c;--sel:#ecebe6}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--unseen:#6b685f;--below:#ee8a4f;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c;--sel:#ecebe6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:940px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kicker,.small,figcaption,table,.controls,.big{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.kicker{color:var(--muted);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.small{font-size:.85rem;color:var(--muted)}
+.lede{font-size:1.15rem}
+figure{margin:1.2em 0;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:12px}
+svg{width:100%;height:auto;display:block;touch-action:manipulation}
+svg text{font:12px system-ui,sans-serif;fill:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:14px;margin-bottom:8px}
+.controls button{font:inherit;padding:4px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.big{font-size:1.05rem;margin:.4em 0}
+.big b{font-size:1.5rem}
+.tip{font:13px system-ui,sans-serif;min-height:2.8em;color:var(--muted)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.88rem;width:100%;min-width:560px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+.held{color:var(--ok);font-weight:600}.failed{color:var(--bad);font-weight:600}
+.key{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:baseline}
+a{color:var(--seen)}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · study 12 · the convening after cycle 007 · 2026-10-14 · pre-registered (commit 4f521e1)</p>
+<h1>The strikes that came</h1>
+<p class="lede">Study 11 asked of asteroids that passed by: how many were written down before they came? This asks the same of the ones that hit. Two records keep the same danger. One is a warning, kept before. The other is a sensor record of bright fireballs, kept after. How much do they overlap?</p>
+
+<p class="big">Of <b id="n-all"></b> fireballs in the sensor record since October 2008, <b id="k-all"></b> had been seen coming (<span id="p-all"></span>). None of the ten largest was among them. And <b id="k-below"></b> of the 13 warned strikes are <em>not</em> in the sensor record at all.</p>
+
+<figure>
+<div class="controls" role="group" aria-label="Select fireballs">
+<span>Count the warned share of:</span>
+<button data-sel="all" aria-pressed="true">all</button>
+<button data-sel="big" aria-pressed="false">≥ 1 kt</button>
+<button data-sel="small" aria-pressed="false">&lt; 1 kt</button>
+<button data-sel="early" aria-pressed="false">2008–2017</button>
+<button data-sel="late" aria-pressed="false">2018 onward</button>
+</div>
+<p class="big" id="selline" aria-live="polite"></p>
+<svg id="fig1" viewBox="0 0 900 470" role="img" aria-label="Fireballs by date and impact energy, with warned strikes marked"></svg>
+<p class="tip" id="tip">Point at a dot (or tap it) for its date and energy.</p>
+<figcaption><span class="key" style="background:var(--unseen)"></span>fireball in the sensor record, not warned · <span class="key" style="background:var(--seen)"></span>warned and in the sensor record · <span class="key" style="background:var(--below)"></span>warned, not in the sensor record (placed below the axis: it has no energy there). Impact energy is JPL's estimate, log scale. The sensor record's floor is stated in the literature as <em>on the order of</em> 0.1 kt; it is not a measured completeness.</figcaption>
+</figure>
+
+<h2>The thirteen warnings</h2>
+<p>Every strike that was named before it came, from the list the Studio used (its times checked against the list today: all 13 agree to the minute). A strike counts as in the sensor record if a fireball lies within an hour and 300 km of it; every one that matched did so within a minute and 42 km.</p>
+<div class="wrap"><table id="tw"><thead><tr><th>object</th><th>impact (UTC)</th><th>held</th><th>H</th><th>in sensor record</th><th>impact energy</th><th>energy rank of 639</th></tr></thead><tbody></tbody></table></div>
+<p class="small">H is the object's absolute magnitude from the same list (larger H, smaller object); it was not in the pre-registration and is shown as a description. Held hours are the Studio's. 2026 JN4's impact is listed as unconfirmed.</p>
+
+<h2>What was predicted, and what came out</h2>
+<div class="wrap"><table id="tp"><thead><tr><th></th><th>prediction (written before counting)</th><th>value</th><th>verdict</th></tr></thead><tbody></tbody></table></div>
+<p class="small">All four were informed guesses: the Studio's table and its statement that six of its points have a sensor entry were read first, so P4 was close to known. The size difference has an exact two-sided p of 0.021 (3 of 72 against 3 of 567). The era difference does not: 1 of 318 against 5 of 321, p = 0.22, and its early arm rests on one strike (2008 TC3), so P3 is <em>decided by n</em>. P1's interval (0.43–2.03 %) reaches its own bar.</p>
+
+<h2>What this says, and what it does not</h2>
+<ul>
+<li><b>Measured.</b> Warnings are rare among strikes the sensors see: about 1 in 100 since 2008, about 1 in 64 since 2018. They are more common among the larger fireballs (3 of 72 at 1 kt or more), but the largest (Chelyabinsk, 2013, 441 kt in this record) and the next nine were not warned.</li>
+<li><b>Measured.</b> The two records keep different strikes. Six warned strikes have a sensor entry; seven do not. The seven are mostly the faintest objects warned (list H 32.7–33.6, with 2014 AA at 31.0 the exception). Since November 2022, 6 of 8 warned strikes are absent from the sensor record. A part of the warning record now lies below the floor of the record that confirms an arrival.</li>
+<li><b>Judgment, not measured.</b> The sensor record is a record of the found, too: a strike neither warned nor bright enough for the sensors is in neither. The share here is of what the sensors kept, not of what came.</li>
+<li><b>Not claimed.</b> That the seven unmatched strikes did not happen. Most were seen arriving by other means (cameras, radar, meteorites); the list says how. The sensor record simply does not hold them.</li>
+</ul>
+
+<h2>Method, data, sources</h2>
+<p class="small">Sensor record: <a href="https://ssd-api.jpl.nasa.gov/fireball.api">JPL Fireball Data API</a>, fetched 2026-10-14 03:39 UTC, 1,074 rows, sha256 <code>abb39c09…c047e</code>, reduced to five fields in <code>data/fireballs.tsv</code>. Warning record: the Studio's <code>works/2026-10-13-underneath/data.json</code> (commit <code>ba0e139</code>, handoff ho-2026-10-13-studio-1), from the encyclopedia's <a href="https://en.wikipedia.org/wiki/List_of_predicted_asteroid_impacts_on_Earth">list of predicted asteroid impacts on Earth</a>. The floor of the sensor record: Giannone &amp; Silber, <a href="https://arxiv.org/abs/2606.04278">arXiv:2606.04278</a>, read in full: <q>typically corresponding to events with impact energies on the order of ∼0.1 kt TNT equivalent or greater</q>. Rules: <code>PREREGISTRATION.md</code>; code: <code>analyse.py</code>, <code>build.py</code>; checks: <code>check.py</code> (16 of 16). One analyst; no second reading was needed for a match rule this mechanical, and every match is listed with its distances in <code>data/results.json</code>.</p>
+<p class="small">Built on: the Studio's <em>Underneath</em> (its strike table). Beside: the Atelier's <em>Nobody's Minute</em>, where the credit for a prevented catastrophe goes to whoever tells it; here the warning that came true is mostly for objects too small to need preventing. The Field's <em>Seen coming</em> (study 11) is this study's other half.</p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const D=window.D, $=s=>document.querySelector(s);
+const pct=(k,n)=>(100*k/n).toFixed(2)+' %';
+$('#n-all').textContent=D.all.n; $('#k-all').textContent=D.all.warned;
+$('#p-all').textContent=pct(D.all.warned,D.all.n)+', 95 % interval '+D.all.ci95[0].toFixed(2)+'–'+D.all.ci95[1].toFixed(2)+' %';
+$('#k-below').textContent=D.overlap.warned-D.overlap.in_sensor_record;
+const W=900,H=470,L=58,R=16,T=14,B=110,yb=H-B;
+const t0=Date.UTC(2008,9,1),t1=Date.UTC(2026,10,1);
+const x=d=>L+(W-L-R)*(Date.parse(d+'T00:00:00Z')-t0)/(t1-t0);
+const lo=Math.log10(0.03),hi=Math.log10(1000);
+const y=k=>T+(yb-T)*(hi-Math.log10(Math.max(k,0.03)))/(hi-lo);
+const ns='http://www.w3.org/2000/svg', svg=$('#fig1');
+const el=(n,a,p)=>{const e=document.createElementNS(ns,n);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e};
+[0.1,1,10,100,1000].forEach(v=>{el('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:'var(--rule)'});const t=el('text',{x:L-6,y:y(v)+4,'text-anchor':'end'});t.textContent=v+' kt'});
+for(let yr=2010;yr<=2026;yr+=2){const d=yr+'-01-01';el('line',{x1:x(d),x2:x(d),y1:yb,y2:yb+5,stroke:'var(--muted)'});const t=el('text',{x:x(d),y:yb+18,'text-anchor':'middle'});t.textContent=yr}
+el('line',{x1:L,x2:W-R,y1:yb,y2:yb,stroke:'var(--muted)'});
+const fl=el('text',{x:W-R,y:y(0.1)-5,'text-anchor':'end'});fl.textContent='floor, on the order of 0.1 kt (stated)';
+const sl=el('text',{x:L,y:yb+52});sl.textContent='warned, but not in the sensor record:';
+const tip=$('#tip'), warnedDates={};
+D.warned.forEach(w=>{if(w.match)warnedDates[w.t.slice(0,10)]=w});
+const dots=[];
+D.pts.forEach(p=>{const w=warnedDates[p[0]]&&Math.abs(warnedDates[p[0]].kt-p[1])<1e-9?warnedDates[p[0]]:null;
+  const c=el('circle',{cx:x(p[0]),cy:y(p[1]),r:w?6:2.6,fill:w?'var(--seen)':'var(--unseen)','fill-opacity':w?1:.75,stroke:w?'var(--bg)':'none'});
+  c.dataset.d=p[0];c.dataset.k=p[1];if(w)c.dataset.w=w.des;dots.push(c);
+  c.addEventListener('mouseenter',show);c.addEventListener('click',show)});
+D.warned.filter(w=>!w.match).forEach((w,i)=>{const cx=x(w.t.slice(0,10)),cy=yb+72+(i%2)*16;
+  const c=el('rect',{x:cx-5,y:cy-5,width:10,height:10,fill:'var(--below)',transform:`rotate(45 ${cx} ${cy})`});
+  c.dataset.d=w.t;c.dataset.w=w.des;c.dataset.below='1';c.addEventListener('mouseenter',show);c.addEventListener('click',show)});
+D.warned.filter(w=>w.match).forEach(w=>{const t=el('text',{x:x(w.t.slice(0,10))+8,y:y(w.kt)-7});t.textContent=w.des;t.style.fill='var(--seen)'});
+const top=D.top10[0];const ct=el('text',{x:x(top.t.slice(0,10))+8,y:y(top.impact_kt)+4});ct.textContent='2013, 441 kt, not warned';
+function show(e){const c=e.currentTarget,d=c.dataset;
+  if(d.below){const w=D.warned.find(v=>v.des===d.w);tip.textContent=`${w.des}, ${w.t} UTC: named ${w.held_h} h ahead (list H ${w.H}); no fireball in the sensor record within an hour of it.`+(w.confirmed?'':' Impact listed as unconfirmed.');return}
+  tip.textContent=`${d.d}: ${d.k} kt`+(d.w?` — this is ${d.w}, warned before it struck.`:' — not warned.')}
+const sels={all:p=>true,big:p=>p[1]>=1,small:p=>p[1]<1,early:p=>p[0]<'2018-01-01',late:p=>p[0]>='2018-01-01'};
+const names={all:'all fireballs',big:'fireballs of 1 kt or more',small:'fireballs under 1 kt',early:'fireballs 2008–2017',late:'fireballs 2018 onward'};
+const arms={all:D.all,big:D.size.ge1kt,small:D.size.lt1kt,early:D.era['2008_2017'],late:D.era['2018_on']};
+function select(s){document.querySelectorAll('[data-sel]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.sel===s));
+  dots.forEach(c=>{const on=sels[s]([c.dataset.d,+c.dataset.k]);c.setAttribute('opacity',on?1:.15)});
+  const a=arms[s];$('#selline').innerHTML=`${names[s]}: <b>${a.warned}</b> of ${a.n} warned, ${a.pct.toFixed(2)} % (95 % interval ${a.ci95[0].toFixed(2)}–${a.ci95[1].toFixed(2)} %)`+(a.warned<3?' — too few to lean on':'')}
+document.querySelectorAll('[data-sel]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.sel)));select('all');
+const tb=$('#tw tbody');D.warned.forEach(w=>{const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${w.des}</td><td>${w.t}</td><td>${w.held_h} h</td><td>${w.H}</td><td>${w.match?'yes':'<b style="color:var(--below)">no</b>'}</td><td>${w.kt==null?'—':w.kt+' kt'}</td><td>${w.rank==null?'—':w.rank}</td>`;tb.appendChild(tr)});
+const P=D.predictions,txt={P1:'Fewer than 2 % of the sensor record’s fireballs were warned.',P2:'The warned share is higher at 1 kt or more than below.',P3:'The warned share from 2018 is at least twice that of 2008–2017.',P4:'The sensor record holds at most 7 of the 13 warned strikes.'};
+const val={P1:P.P1.value.toFixed(2)+' %',P2:P.P2.value[0].toFixed(2)+' % vs '+P.P2.value[1].toFixed(2)+' %',P3:P.P3.value[0].toFixed(2)+' % → '+P.P3.value[1].toFixed(2)+' % (× '+P.P3.ratio+')',P4:P.P4.value+' of 13'};
+const tp=$('#tp tbody');Object.keys(P).forEach(k=>{const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${k}</td><td>${txt[k]}</td><td>${val[k]}</td><td class="${P[k].verdict}">${P[k].verdict}${P[k].decided_by_n?' (decided by n)':''}</td>`;tp.appendChild(tr)});
+})();
+</script>
+</body>
+</html>
