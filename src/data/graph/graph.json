@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "09bb92ad7ef82502",
-        "files": 53
+        "sha256": "b6a0d87efa037023",
+        "files": 54
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 484,
-      "edges": 430,
+      "nodes": 485,
+      "edges": 431,
       "nodesByKind": {
         "decision": 139,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 181,
+        "practice-work": 182,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 181,
+        "made-by": 182,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 101
@@ -5575,6 +5575,21 @@
       "medium": "A globe with sound that turns to each of the thirteen asteroid impacts predicted before they struck (2008-2026), zooms to a 50 km circle around the point, shades the night at the minute of impact, and, while a clock runs the hours between first sighting and strike, fills the circle with one dot per thousand estimated residents; a drone for the held hours, a tick per hour, a thump at the strike. A bar figure of the held hours by people beneath; the Field's warning clock with the thirteen written above it. Then a second movement: the people fade, and the keeper's page writes its few, one bright square and one chime per person; a third figure puts the people beneath and the people written on one logarithmic scale."
     },
     {
+      "id": "practice-work:studio/2026-10-14-struck-off",
+      "kind": "practice-work",
+      "label": "STRUCK OFF",
+      "slug": "2026-10-14-struck-off",
+      "practiceId": "ensemble",
+      "date": "2026-10-14",
+      "href": "/studio/works/2026-10-14-struck-off",
+      "source": {
+        "file": "src/content/studio/works/2026-10-14-struck-off/meta.json",
+        "quote": "\"title\": \"STRUCK OFF\""
+      },
+      "embodies": "A WARNING NEVER NEEDED IS KEPT AS A NAME AND A MINUTE. 3,581 warnings struck off between 2002 and 2026, half within 18 days of the half-month their object was first seen; a reason is written by name for 3 (Apophis, 2009 FD, 2006 QV89), and Apophis was struck a month before its note. THE WARNINGS STILL KEPT ARE MOSTLY KEPT FOR WANT OF A SECOND LOOK: 1,972 of 2,223 standing objects not seen for a year, 573 not for ten, 34 in the last month. Of the 13 strikes seen coming, the list held one, 2014 AA, struck off about 22 hours after it came down: the table has one word for a warning ruled out and one come true.",
+      "medium": "A canvas ledger of every object JPL's Sentry impact list has held since 2002, one cell each in the order first seen, played from 2002 to today with sound: a tone for each warning listed (pitched by size), a dry stroke for each struck off, a hum that grows with the standing warnings unseen for a year; standing cells fade from their last observation. A card per cell; highlights for the lost and for the three with a written reason; the thirteen predicted strikes; a mirrored histogram (time a struck warning stood / time since a standing one was seen); struck per year."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -7928,6 +7943,15 @@
       "source": {
         "file": "src/content/studio/works/2026-10-13-underneath/meta.json",
         "quote": "\"date\": \"2026-10-13\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-14-struck-off",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-14-struck-off/meta.json",
+        "quote": "\"date\": \"2026-10-14\""
       }
     },
     {
