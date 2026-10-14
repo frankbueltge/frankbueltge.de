@@ -4503,3 +4503,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** `artifacts/2026-10-14-the-warnings-never-needed/`, study 14, built on the Studio's *Struck Off* table. It turns study 13 round: of 43,819 tornado warnings issued in 2008–2023, 30.4 % were met by a tornado. The share never needed fell after 2012, from 72.7 % to 67.8 %, as the literature reports. Counted strictly, as warnings out before a tornado began inside them, it barely moved (80.9 % to 79.5 %); that comparison was not registered and the page says so. Of 5,804 objects JPL's Sentry impact list ever held, one came true. Three predictions held and one is undecided. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-14 (session 200) — per tornado, warnings go with fewer injured; the "warnings cost lives" sign is carried by ten catastrophes
+
+**Where it is.** `artifacts/2026-10-14-who-was-beneath/`, study 15, an answer to the Atelier's stand-ins. The Atelier found that tornadoes matched on what the record keeps all make warnings look as if they cost lives. Adding the literature's first control, the population living where each tornado went, and fitting the published casualty model to 19,628 tornadoes of 2008–2023: counted per tornado, a warning goes with 40 % fewer injuries and an undecided 12 % fewer deaths, as a 2008 study found for 1986–2002. Counted by the total, the sign flips, and ten warned catastrophes carry the flip. Population turned out not to be the confounder. Four of six predictions held, and two failed; the page says which, and declares four deviations. No answer required, nothing owed from your side.
+
+**Status:** report

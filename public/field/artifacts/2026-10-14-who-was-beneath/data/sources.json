@@ -1,0 +1,47 @@
+{
+ "fetched": "2026-10-14",
+ "tornado_record_all_segments": {
+  "url": "https://www.spc.noaa.gov/wcm/data/1950-2023_all_tornadoes.csv",
+  "sha256": "571b2c3638fcd9333e16ac9d1826a94095bd7291cb90ab19f92110fb5b270517",
+  "lines": 71399,
+  "note": "US government work (NOAA Storm Prediction Center). Not committed raw. Its whole-track rows (sg=1) for 2008-2023 equal, field for field, the whole-track file study 13 pinned (1950-2023_actual_tornadoes.csv, sha256 fa616e2f..., re-fetched today with the same digest); its state segments (sg=2) carry the counties of multi-state tracks."
+ },
+ "county_population": {
+  "url": "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/Gaz_counties_national.zip",
+  "file": "Gaz_counties_national.txt",
+  "fields_used": ["GEOID", "POP10", "ALAND_SQMI"],
+  "note": "US Census Bureau 2010 gazetteer, public domain. Not committed raw; density and exposure per tornado are in data/beneath.tsv."
+ },
+ "census_acs_attempt": {
+  "url": "https://api.census.gov/data/2015/acs/acs5?get=B25024_001E,B25024_010E,B19013_001E&for=county:*",
+  "result": "redirected to missing_key.html: the interface now requires a key; income and mobile-home controls were therefore not used"
+ },
+ "warnings_and_tornadoes": "artifacts/2026-10-14-the-tornadoes-that-came/data/tornadoes.tsv (study 13, registered rule)",
+ "atelier": {
+  "repo": "frankbueltge/ulysses", "commit": "eb1ead212c5aa95de4342c925338edb3e6ae5c82",
+  "paths": ["window/cycle-007-convening-4/results.json", "window/cycle-007-convening-4/paths.tsv"],
+  "used": "its 2x2 (227/10,315/87/9,002), death total and the 16 stand-in estimates (all negative for deaths), read and compared; not re-used as data"
+ },
+ "literature": [
+  {
+   "cite": "Simmons, K. M., and D. Sutter, 2008: Tornado Warnings, Lead Times, and Tornado Casualties: An Empirical Investigation. Weather and Forecasting, 23, 246-258. doi:10.1175/2007WAF2006027.1",
+   "read": "passages through a full-text extraction of the publisher's article page (journals.ametsoc.org/view/journals/wefo/23/2/2007waf2006027_1.xml); a direct request answered 403. Not the whole article.",
+   "passages": [
+    "a warning in effect reduces expected injuries by 32%, and an extra minute of lead time on a warning reduces expected injuries by 1.1%.",
+    "A warning in effect has almost no effect on expected fatalities—a statistically insignificant 1% decrease—while a 1-min increase in lead time increases expected fatalities by 0.6%.",
+    "The signs of the LEAD16–20, LEAD21–30, and LEAD31+ interval variables are all positive, with point estimates of 60%, 37%, and 1% increases in expected fatalities, respectively, relative to no warning",
+    "For fatalities, an increase in population density significantly increases expected fatalities, both directly and through the LENGTH × DENSITY interaction term."
+   ]
+  },
+  {
+   "cite": "Chatwin, R. M., H. E. Brooks, and K. Klockow McClain, 2024: Tornado Warnings, Lead Times, and Death. NWC REU final paper.",
+   "url": "https://reu.caps.ou.edu/reu24/finalpapers/Chatwin_FinalPaper.pdf",
+   "sha256": "8c1f3470f3ac187b70cab4ca81c95dcbac9a6aafd3c7f3fd86fb04d1d5e9512b",
+   "read": "in full",
+   "passages": [
+    "there is no statistically significant relationship between death and lead time.",
+    "43% (9698/22587) of tornado events were unwarned"
+   ]
+  }
+ ]
+}
