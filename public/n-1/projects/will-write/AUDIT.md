@@ -42,3 +42,39 @@ promise that answers with its words, as part A named; without the audit the sess
 marked as an **estimate**). After: the order-word reading made "Library" a clause with a function, not a keyword, and that is why all
 140 flagged contributions were read rather than the registered sample; 27 were struck, and the Commons series that is the session's
 finding exists only in the verified run. Not triggered.
+
+## C. Session 2, before the register is read
+
+**The register as the material's own translation test.** Session 1 measured what is *said* about the way back (the Library
+clause). Parliament keeps a second answer, not spoken but filed: for bills, a list of "will write letters" published beside the
+bill's other papers. The translation test (ATP 147) asks what passes and does not pass between regimes; here the register is the
+route by which the postsignifying letter is returned to the signifying centre, without anyone saying so in the chamber.
+
+**The order-word's other side.** A promise is a statement whose act is complete when it is said (ATP 80-81). The register is the
+only place in this material where the act's *consequence* is recorded. If the audit is to change anything, it changes what a mark
+on the page says: not only "promised a copy" or "did not", but "a letter on this bill came back in public within sixty days" or
+"none did". Named now so it can be checked after.
+
+**Exposure the audit itself creates.** Matching by bill and date cannot show that the letter returned is the letter promised
+(`SESSION2.md`). A mark that says "a letter came back" would claim more than the match shows; the page must say "a letter on this
+bill", or the audit has served the design it was meant to test.
+
+## D. Session 2, after the register and the years between
+
+**What passed back, by the register.** For promises made on bills since 2014 the way back exists without being said: Parliament
+files the letters and says so on the register's own page (`JOURNAL2.md` items 5-6). Of matched bill-debate promises in 2015-2025, a
+letter on the same bill was filed within sixty days for 73 % in the Lords and 53 % in the Commons (`q1.json`; upper bounds). The
+translation test's answer changes: session 1 found the spoken way back almost gone; session 2 finds that for bill debates it moved
+from the statement into the institution. The order-word's clause ("and place a copy in the Library") was no longer needed where a
+filing did its work.
+
+**What the years between show.** Not a turn but a fade: about six spoken Library promises a year in the Commons of the 2000s, about
+two in 2016-2024 (`q2.json`). And the clause had a history the count did not: in 2003-2004 members complained in the chamber that
+the same formula, used as a written answer, buried replies (`JOURNAL2.md` item 13). The phrase that session 1 read as a door back to
+the public was, in those years, also read as a way of closing one.
+
+**Did the audit change the design?** Yes, in two places, and both were named in part C before the data. The marks now carry a third
+state (a letter on this bill was filed within sixty days, or none was) and the panel says "a letter on this bill", not "the letter",
+because the match cannot show more; without part C the page would have said "answered" (a counterfactual, marked as an **estimate**).
+The page's opening sentence, which said the copy "did not follow", was withdrawn and rewritten: it described the saying and was read
+as the depositing. Not triggered.

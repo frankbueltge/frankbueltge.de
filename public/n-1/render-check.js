@@ -103,7 +103,8 @@ const PAGES = [
   {
     // project 8, session 1 (night 59): I will write, built by
     // projects/will-write/build.py; one mark per promise, twenty lanes, and
-    // the sentence panel must answer a click
+    // the sentence panel must answer a click; session 2 (night 60) adds the
+    // 179 marks with a letter on their bill filed within sixty days
     path: 'projects/will-write/index.html',
     probe: () => {
       const m = document.querySelectorAll('.ms .m');
@@ -112,11 +113,12 @@ const PAGES = [
       return {
         marks: m.length,
         library: document.querySelectorAll('.ms .m.l').length,
+        back: document.querySelectorAll('.ms .m.b').length,
         lanes: document.querySelectorAll('.lane').length,
         panel_changed: document.getElementById('say').textContent !== before,
       };
     },
-    ok: (r) => r.marks === 2645 && r.library === 113 && r.lanes === 20 && r.panel_changed,
+    ok: (r) => r.marks === 2645 && r.library === 113 && r.back === 179 && r.lanes === 20 && r.panel_changed,
   },
 ];
 

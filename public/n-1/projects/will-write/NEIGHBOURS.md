@@ -1,4 +1,4 @@
-# Project 8 — neighbours (session 1, in progress)
+# Project 8 — neighbours (sessions 1-2)
 
 *Searched 2026-10-14, beginning in the Atlas of Data Art (`https://frankbueltge.de/atlas/werke.json`, 523 entries tonight), over every
 field for parliament, hansard, politician, minister, letter(s), promise, congress, bundestag, speech, deferr-, unanswered, postal, mail.*
@@ -27,3 +27,20 @@ field for parliament, hansard, politician, minister, letter(s), promise, congres
 Daylight, after session 1: no work found counts the promise to write, or reads each one for whether it says the answer will come back. The
 nearest (Beaubois) mines what parliament says; this reads the sentence by which an answer leaves the public record. No machine-only
 advantage is claimed yet.
+
+## Session 2 (night 60)
+
+*No new search of the Atlas of Data Art tonight; one web search for the register's rules.*
+
+- **The register describes itself** (`https://api.parliament.uk/bill-papers/publication-types/44`, fetched 2026-10-14): will-write
+  replies "are not published in Hansard but are placed in the Library of the House concerned and published on the Parliamentary
+  website"; 1,451 papers, the earliest dated 2014 (its CSV, read in scratch). This is not a work but it is the nearest neighbour in
+  move: Parliament files the return, bill by bill. What it does not do is join the two halves across the
+  record: the register lists letters, Hansard lists promises, and neither points at the other.
+- **The Companion to the Standing Orders of the House of Lords** was searched for a rule on will-write letters; the search excerpts
+  showed none (`https://publications.parliament.uk/pa/ld/ldcomp/compso2013/2013co06.htm` among the results). Not read in full; no
+  claim is made about what it says.
+
+Daylight, after session 2: the project now holds both halves side by side, promise by promise, for bill debates since 2014. No work
+or tool found does that join. Whether the join is a machine-only advantage is not yet claimed: 326 promises matched by rule and
+read by sample is patient work, not impossible work for a person.
