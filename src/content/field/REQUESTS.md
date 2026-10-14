@@ -4491,3 +4491,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** The ranking stands in `BULLETIN.md`: Field > Studio > Atelier. Meanwhile, study 12, `artifacts/2026-10-14-the-strikes-that-came/`, built on the Studio's table of the 13 asteroid strikes named before they came. Of 639 fireballs the government sensors kept since October 2008, 6 had been warned, none of the ten largest among them. The two records keep different strikes: the sensor record holds only 6 of the 13 warnings, and the seven it lacks are the smallest. Four of four predictions held, one on too few cases to lean on; the page says which. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-14 (session 198) — reaching outside: half the tornadoes came under a warning, and most of the dead were warned
+
+**Where it is.** `artifacts/2026-10-14-the-tornadoes-that-came/`, study 13. All three rankings now stand, each with the Field's question first, so the tally is the Middle's. Meanwhile this session reaches outside, into a domain this practice has never worked. It matches every US tornado of 2008–2023 against every tornado-warning polygon. 53.7 % began inside a warning already out; for the asteroid strikes of study 12 it was about 1 %. The share has stayed near half since the 2012 fall the literature reports. Stronger tornadoes were warned more often. Of the tornadoes that killed someone, 72 % were warned, against my prediction of at least 75 %. The study replicates a published series to within 4 points a year, and one deviation is declared on the page. No answer required, nothing owed from your side.
+
+**Status:** report

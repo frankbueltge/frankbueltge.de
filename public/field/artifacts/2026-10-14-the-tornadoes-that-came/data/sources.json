@@ -1,0 +1,192 @@
+{
+ "fetched": "2026-10-14",
+ "tornado_record": {
+  "url": "https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv",
+  "sha256": "fa616e2f829c553acc7b60f5130a3ac498198e0b9d69e37a0e1289df71dc5fcc",
+  "lines": 70023,
+  "note": "US government work (NOAA Storm Prediction Center). Not committed raw; the fields used are in data/tornadoes.tsv."
+ },
+ "tornado_format_spec": {
+  "url": "https://www.spc.noaa.gov/wcm/data/SPC_severe_database_description.pdf",
+  "sha256": "426bd3abc0aa12ff3a7f63f8fdd326d71448119b188f3da8f95b39578fa9779a",
+  "passages": [
+   "Time zone - All times, except for ?=uknown and 9=GMT, were converted to 3=CST.",
+   "1,1,1 = Entire record for the track of the tornado",
+   "2,0,1 = A two-state tornado (st=state of touchdown, other fields summarize entire track)."
+  ],
+  "note": "An image-only PDF; the passages were read from the rendered pages."
+ },
+ "warning_record": {
+  "provider": "Iowa Environmental Mesonet, Iowa State University (archive of National Weather Service VTEC products)",
+  "files": {
+   "to_2008a.zip": {
+    "sha256": "61eab4b4b3c77c46feec48dad19fc0c4afc22916f277583d9d55db53bc3e4000",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2007-12-31T00:00Z&ets=2008-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2008b.zip": {
+    "sha256": "bf7eeca9c2e14b5edda500e93f29fb56def99ee0d35c3320429f35d39b11bc8b",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2008-07-01T00:00Z&ets=2009-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2009a.zip": {
+    "sha256": "cd5d4a884f0806e14e263eadc03797515be26675ad7d79c6bb3dbdbe98795ee5",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2008-12-31T00:00Z&ets=2009-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2009b.zip": {
+    "sha256": "9359c5a9880ad14ad8a209989d7e7c07f5333fda31355b22dde456f63884f965",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2009-07-01T00:00Z&ets=2010-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2010a.zip": {
+    "sha256": "585cf3636cf7a1643a0094be23edf4e6987a72ccc9378015dd5269806c4bd15c",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2009-12-31T00:00Z&ets=2010-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2010b.zip": {
+    "sha256": "4adc870346fde83dcf4bdc46dffcaf4cb32817b23f911b5475e2940cb2d5c5a0",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2010-07-01T00:00Z&ets=2011-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2011a.zip": {
+    "sha256": "79bf022013b0e13f0ce6b2f5920994bd3db8e54727cc824dffab5875840708f9",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2010-12-31T00:00Z&ets=2011-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2011b.zip": {
+    "sha256": "b90f16cc7c9199e9e05709ba3137d2f7f070d3e9f0ed0d34c264e0b13890cb80",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2011-07-01T00:00Z&ets=2012-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2012a.zip": {
+    "sha256": "3888193f44ba2ae3df737befedcd3123f0d66707724ecd36e76c8b205cbe30b7",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2011-12-31T00:00Z&ets=2012-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2012b.zip": {
+    "sha256": "8cbc0aea67500fdb62211079ce22ccc3b704834639370db588e5b43ed1070278",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2012-07-01T00:00Z&ets=2013-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2013a.zip": {
+    "sha256": "fac864bdb277a734921cd301acb6421b2e15ee4dd55024467e809a07d75518d4",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2012-12-31T00:00Z&ets=2013-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2013b.zip": {
+    "sha256": "f4b3d4c6dcd266026b4d6937103cdd73e6ddf468189e057d8b47566ee2590942",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2013-07-01T00:00Z&ets=2014-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2014a.zip": {
+    "sha256": "3a6a6cbca3c30d468b0079e3f2d229ecf1f9e389a277f5b40c838f43a1b476c1",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2013-12-31T00:00Z&ets=2014-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2014b.zip": {
+    "sha256": "f8c6939fbf2b6ff3621529a2de85215f321909e849a81d9ccee03e5c72196291",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2014-07-01T00:00Z&ets=2015-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2015a.zip": {
+    "sha256": "bdca7921403321466057081292b8e5f8061fac7e0cb264bfacc707853c955fbb",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2014-12-31T00:00Z&ets=2015-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2015b.zip": {
+    "sha256": "471b7498932e3cbdaeef4e1ce679afbb3fb87876d508730630f6cd554b5e6e19",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2015-07-01T00:00Z&ets=2016-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2016a.zip": {
+    "sha256": "44baba892a9b91f5397c8823f1ff9711b1619c3dd3daad650c274457689c8406",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2015-12-31T00:00Z&ets=2016-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2016b.zip": {
+    "sha256": "0540bd4fe39d1f0138935b38452e259b19c1dc80263b9b8c4310391c08ac7c1d",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2016-07-01T00:00Z&ets=2017-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2017a.zip": {
+    "sha256": "f2bcb4629eb3c36ff443e47fb56d406493e66b2bd7954be0443f4cd1e25dd81c",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2016-12-31T00:00Z&ets=2017-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2017b.zip": {
+    "sha256": "56adf2818bb011069d363b5f9aa81099d8fe9f2c61d0955fc9aa04fba6967825",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2017-07-01T00:00Z&ets=2018-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2018a.zip": {
+    "sha256": "9198fe55707dacc78cbe63d397755556b652e2b849135a16d163a6f44be04c2c",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2017-12-31T00:00Z&ets=2018-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2018b.zip": {
+    "sha256": "cce75469a81713e7f37e1c04f5cd1908d5ebaad55c56499647fe99de4e4bcc49",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2018-07-01T00:00Z&ets=2019-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2019a.zip": {
+    "sha256": "face747493eb1a32bd633ab90260874e624f2c7e082e56d7b5a038d1b94224b0",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2018-12-31T00:00Z&ets=2019-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2019b.zip": {
+    "sha256": "c035e8f5231256586b12dd8f150ff5f9eef748c0639367e332ec56d009b5596f",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2019-07-01T00:00Z&ets=2020-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2020a.zip": {
+    "sha256": "46d611907c9d2321d84e87774f62c7ccf511de75f8dd4ce96a6d9d2067b9cf76",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2019-12-31T00:00Z&ets=2020-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2020b.zip": {
+    "sha256": "4474b6c15df73868f4d0c21ac0605671d5a2273a7a8a6a08c06f2618b1a79d61",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2020-07-01T00:00Z&ets=2021-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2021a.zip": {
+    "sha256": "c55ffce7ac4b84f9826c285c118c375da3110e609ce0406337e357fca5abe88b",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2020-12-31T00:00Z&ets=2021-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2021b.zip": {
+    "sha256": "cf44b24fad86e57363b975ef1a8e36499db5b2336fdc9873d641c5598480cf74",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2021-07-01T00:00Z&ets=2022-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2022a.zip": {
+    "sha256": "17ac7d579333ccf76db2b5dac7911c5b6b0d08ddcf72dab547be5cca0455b45d",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2021-12-31T00:00Z&ets=2022-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2022b.zip": {
+    "sha256": "b9002300a9e04762bb71b4031abac203254f8434bc6562fa0b7e366050129bfc",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2022-07-01T00:00Z&ets=2023-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2023a.zip": {
+    "sha256": "5a972fdd864a306b7d0fd14377878984e24a68d3b9bf671f959f4884aeb184ad",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2022-12-31T00:00Z&ets=2023-07-01T00:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   },
+   "to_2023b.zip": {
+    "sha256": "98cc45ca85bca057fcef0bb2d1f1ff9d7a893ee448dbb2e75d088996eb8c7bed",
+    "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?sts=2023-07-01T00:00Z&ets=2024-01-01T12:00Z&limitps=yes&addsvs=yes&phenomena=TO&significance=W&accept=shapefile"
+   }
+  },
+  "note": "Reduced to polygon rows (statuses NEW, CON, COR; CAN and EXP dropped) in data/warnings.tsv.gz by extract.py. A first fetch without addsvs=yes returned issuance polygons only (43,833 rows); it was replaced before any count was read under the registered rule (see README, Deviation)."
+ },
+ "literature": [
+  {
+   "cite": "Brooks, H. E., and J. Correia Jr., 2018: Long-Term Performance Metrics for National Weather Service Tornado Warnings. Weather and Forecasting, 33, 1501-1511.",
+   "doi": "10.1175/WAF-D-18-0120.1",
+   "read": "in full, NOAA repository copy https://repository.library.noaa.gov/view/noaa/25664 (sha256 67bda8c6a7b5259e0eaefd8d81909ff6164be04caeac7e40ef0069ce256fdaea)",
+   "passages": [
+    "The mean lead time for tornadoes warned in advance was relatively constant from 1986 to 2011, while the fraction of tornadoes warned in advance increased through about 2006, and the false alarm ratio slowly decreased.",
+    "The largest changes in performance take place in 2012 when the default warning duration decreased, and there is an apparent increased emphasis on reducing false alarms.",
+    "The POD1 for (E)F3 tornadoes was approximately 0.9 for many years after 2000, compared to (E)F0/(E)F1 at only 0.6–0.7.",
+    "Tornado occurrences are counted on a county-by-county basis."
+   ],
+   "used": "Table 1, POD1 for 2008-2016 (0.672, 0.614, 0.646, 0.701, 0.625, 0.528, 0.469, 0.525, 0.502)"
+  },
+  {
+   "cite": "NWS Central Region Service Assessment: Joplin, Missouri, Tornado - May 22, 2011 (July 2011).",
+   "url": "https://repository.library.noaa.gov/view/noaa/6576",
+   "sha256": "bbe27637b737872dd2ae48c107de3e8a7c52d9fecacc4f8ad735980ff51e0b70",
+   "passages": [
+    "WFO Springfield issued Tornado Warning #31 with 17 minutes of lead time for touchdown and 19 minutes lead time before entering Joplin."
+   ],
+   "used": "spot check of one match (check.py)"
+  }
+ ],
+ "sibling_material": [
+  {
+   "handoff": "ho-2026-10-14-atelier-1",
+   "repo": "ulysses",
+   "path": "window/cycle-007-convening-2/results.json",
+   "used": "cells_2x2 (warned_harm 0, warned_no_harm 13, unwarned_harm 1, unwarned_no_harm 632), set beside the tornado table"
+  },
+  {
+   "study": "Field study 12",
+   "path": "artifacts/2026-10-14-the-strikes-that-came/data/results.json",
+   "used": "6 of 639; 3 of 72 vs 3 of 567"
+  }
+ ],
+ "house_feeds": {
+  "/papers/index.json": "1,126 entries at 18:10Z; zero for tornado, lead time; one each for warning and early warning (Tonry, asteroid)"
+ }
+}
