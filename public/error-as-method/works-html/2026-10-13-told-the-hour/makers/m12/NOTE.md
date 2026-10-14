@@ -1,0 +1,3 @@
+# Folded at Seven
+
+The work cuts the long strip of the record every twenty-four hours and lays the pieces in rows of seven, so the 61 days become a nine-row grid with the last row ending after five days. The dots are the ones in the supplied picture, located one by one and redrawn, not smoothed or invented. I chose the fold because, drawn end to end, the record looks like a busy saw-tooth, and the most important thing in it is hard to see that way: it keeps time by the week. Once the days are stacked, two quiet columns run down the left of the grid, and in the middle a block of rows goes quiet on days that should be busy. The fold lets the record show its own calendar without my adding one.

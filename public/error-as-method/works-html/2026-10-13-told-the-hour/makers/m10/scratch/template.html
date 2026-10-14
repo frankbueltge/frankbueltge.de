@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Five Hills, Except</title>
+<style>
+  :root { --paper:#f3efe6; --ink:#1d1c1a; --faint:#ddd6c8; --mass:#e7e1d4; --soft:#8a8478; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  svg { width:100vw; height:100vh; max-width:1100px; max-height:800px; display:block; }
+</style>
+</head>
+<body>
+<svg id="w" viewBox="0 0 1100 800" preserveAspectRatio="xMidYMid meet" role="img"
+     aria-label="1,464 hourly values folded into ten stacked weeks. Five raised days, two quiet ones, repeated; in the seventh and eighth rows the raised days fall in."></svg>
+<script>
+// 1,464 values, recovered dot by dot from a 300 x 90 plot (higher number = higher on the page).
+// Read as 61 runs of 24; the first run is taken to be the 6th day of a 7-day cycle.
+const V=[/*DATA*/];
+const NS='http://www.w3.org/2000/svg', svg=document.getElementById('w');
+const el=(t,a,p=svg)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e;};
+el('rect',{x:0,y:0,width:1100,height:800,fill:'var(--paper)'});
+
+const L=110, R=990, W=R-L, H=24*7, dx=W/H;   // one row = one week, 168 values
+const OFFSET=5*24;                            // first value sits on day six of the row
+const ROWS=Math.ceil((V.length+OFFSET)/H);    // 10
+const T0=205, gap=58, base=6, k=1.45;        // row spacing and height scale
+
+
+// rows from the back (T0) to the front (bottom): later weeks occlude earlier ones
+for(let r=0; r<ROWS; r++){
+  const y0=T0+r*gap, pts=[];
+  for(let j=0; j<H; j++){
+    const i=r*H+j-OFFSET;
+    if(i<0||i>=V.length) continue;
+    pts.push([L+j*dx, y0-(V[i]-base)*k]);
+  }
+  if(!pts.length) continue;
+  const line=pts.map((p,n)=>(n?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  // each mass is the band between one week and the next; the last line is the edge
+  let floor='';
+  for(let n=pts.length-1; n>=0; n--){
+    const j=Math.round((pts[n][0]-L)/dx), i2=(r+1)*H+j-OFFSET;
+    const yb = i2<V.length ? y0+gap-(V[i2]-base)*k : pts[n][1];
+    floor+=` L${pts[n][0].toFixed(1)} ${yb.toFixed(1)}`;
+  }
+  el('path',{d:line+floor+' Z',fill:'var(--mass)'});
+  el('path',{d:line,fill:'none',stroke:'var(--ink)','stroke-width':1.35,'stroke-linejoin':'round','stroke-linecap':'round'});
+}
+
+// day-divisions laid over the terrain, barely there
+for(let d=1; d<7; d++){
+  const x=L+d*24*dx;
+  el('line',{x1:x,y1:T0-55,x2:x,y2:T0+(ROWS-1)*gap-10,stroke:'var(--paper)','stroke-width':1.2,opacity:0.55});
+}
+const t=el('text',{x:L,y:770,fill:'var(--soft)','font-family':'Georgia, "Times New Roman", serif','font-size':15,'letter-spacing':'0.04em'});
+t.textContent='Five Hills, Except';
+const c=el('text',{x:R,y:770,'text-anchor':'end',fill:'var(--soft)','font-family':'Georgia, "Times New Roman", serif','font-size':12,'font-style':'italic'});
+c.textContent='1,464 values, folded every 168';
+</script>
+</body>
+</html>

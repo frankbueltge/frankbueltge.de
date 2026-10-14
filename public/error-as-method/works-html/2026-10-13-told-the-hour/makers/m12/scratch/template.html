@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Folded at Seven</title>
+<style>
+  html,body{margin:0;height:100%;background:#f3f0e8;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  svg{display:block;width:100vw;height:100vh;max-width:1100px;max-height:800px;}
+</style>
+</head>
+<body>
+<svg id="w" viewBox="0 0 1100 800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+// Dots recovered from the supplied plot (300 x 90 px): x*10, y*10, estimated number of overlapping readings.
+const RAW=[__DATA__];
+const NS='http://www.w3.org/2000/svg', svg=document.getElementById('w');
+const el=(n,a,p)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;};
+const ink='#1d1b18', paper='#f3f0e8', faint='#d9d3c5', mute='#8a8376';
+el('rect',{x:0,y:0,width:1100,height:800,fill:paper});
+
+const pts=[];for(let i=0;i<RAW.length;i+=3)pts.push([RAW[i]/10,RAW[i+1]/10,RAW[i+2]]);
+const X0=pts[0][0], X1=pts[pts.length-1][0], HOURS=1464;
+let ymin=1e9,ymax=-1e9;for(const p of pts){ymin=Math.min(ymin,p[1]);ymax=Math.max(ymax,p[1]);}
+
+// grid: rows of seven days
+const L=96, T=104, CW=130, GAP=0, RH=72, PAD=6;
+const cellX=d=>L+(d%7)*CW, cellY=d=>T+Math.floor(d/7)*RH;
+const vy=y=>PAD+(y-ymin)/(ymax-ymin)*(RH-2*PAD-6);
+
+// faint frame lines: one hairline per row, and short ticks between days
+for(let r=0;r<9;r++){
+  const y=T+r*RH+RH-4;
+  el('line',{x1:L,x2:L+7*CW-6,y1:y,y2:y,stroke:faint,'stroke-width':0.6});
+}
+for(let d=0;d<61;d++){
+  const x=cellX(d), y=cellY(d);
+  el('line',{x1:x,x2:x,y1:y+RH-8,y2:y+RH-4,stroke:faint,'stroke-width':0.6});
+}
+const g=el('g',{fill:ink});
+for(const [px,py,n] of pts){
+  const h=(px-X0)/(X1-X0)*(HOURS-1);   // hour index, about +-2.5 h
+  for(let k=0;k<n;k++){
+    const hh=h+(k-(n-1)/2)*0.9;          // overlapping readings: consecutive hours at one level
+    const d=Math.floor((hh+0.5)/24); if(d<0||d>60)continue;
+    const ph=(hh+0.5-d*24)/24;
+    const cx=cellX(d)+3+ph*(CW-12), cy=cellY(d)+vy(py);
+    el('circle',{cx:cx.toFixed(1),cy:cy.toFixed(1),r:1.7,'fill-opacity':0.82},g);
+  }
+}
+// title and legend
+const t=el('text',{x:L,y:54,fill:ink,'font-family':'Georgia, "Times New Roman", serif','font-size':26,'letter-spacing':'0.5'});t.textContent='Folded at Seven';
+const s=el('text',{x:L,y:80,fill:mute,'font-family':'Georgia, "Times New Roman", serif','font-size':13.5,'font-style':'italic'});
+s.textContent='one record of 1,464 hourly values, cut every twenty-four hours and laid down in rows of seven days';
+const c=el('text',{x:L+7*CW-6,y:T+9*RH+24,fill:mute,'font-family':'Georgia, "Times New Roman", serif','font-size':12,'text-anchor':'end'});
+c.textContent='each cell one day, read left to right; higher dots are larger values; the last row ends after five days';
+</script>
+</body>
+</html>

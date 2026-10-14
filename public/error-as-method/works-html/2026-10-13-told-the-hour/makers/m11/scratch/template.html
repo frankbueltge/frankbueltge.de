@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Set in Weeks</title>
+<style>
+  html,body{margin:0;height:100%;background:#efebe2;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="Sixty-one days of an hourly record, cut into weeks and set one week per line"></canvas>
+<script>
+(function(){
+  var RAW = "__DATA__";
+  var pts = RAW.split(";").map(function(s){var a=s.split(",");return [+a[0],+a[1],+a[2]];});
+
+  var CW=1100, CH=800, dpr=Math.max(1,window.devicePixelRatio||1);
+  var cv=document.getElementById('c');
+  cv.width=CW*dpr; cv.height=CH*dpr; cv.style.width=CW+'px'; cv.style.height=CH+'px';
+  var g=cv.getContext('2d'); g.scale(dpr,dpr);
+
+  // paper
+  g.fillStyle='#efebe2'; g.fillRect(0,0,CW,CH);
+
+  // the plotted record spans picture columns 2..297 for hours 0..1463
+  var X0=2, SC=295/1463;                 // picture px per hour
+  var HOURS_WEEK=168, PXW=HOURS_WEEK*SC; // picture px per week
+  var Y0=7, Y1=80;                       // vertical extent of the dots
+
+  var L=78, R=1040, top=44, rowH=64, gap=13;
+  var kx=(R-L)/PXW, ky=rowH/(Y1-Y0);
+  var dayW=(R-L)/7;
+
+  // faint day cells
+  for(var w=0;w<9;w++){
+    var ry=top+w*(rowH+gap);
+    for(var d=0;d<7;d++){
+      var day=w*7+d; if(day>60) continue;
+      g.fillStyle = (d<2)?'rgba(60,52,40,0.045)':'rgba(60,52,40,0.0)';
+      g.fillRect(L+d*dayW, ry-4, dayW, rowH+8);
+      g.strokeStyle='rgba(60,52,40,0.13)'; g.lineWidth=1;
+      g.beginPath(); g.moveTo(Math.round(L+d*dayW)+0.5, ry-4); g.lineTo(Math.round(L+d*dayW)+0.5, ry+rowH+4); g.stroke();
+    }
+    var last = (w<8)?7:5;
+    g.beginPath(); g.moveTo(Math.round(L+last*dayW)+0.5, ry-4); g.lineTo(Math.round(L+last*dayW)+0.5, ry+rowH+4); g.stroke();
+    // week numeral
+    g.fillStyle='rgba(60,52,40,0.45)'; g.font='11px Georgia, "Times New Roman", serif';
+    g.textAlign='right'; g.textBaseline='middle';
+    g.fillText(String(w+1), L-16, ry+rowH/2);
+  }
+
+  // ink: each dark picture pixel becomes a mark at its place in its week
+  pts.sort(function(a,b){return a[2]-b[2];});
+  for(var i=0;i<pts.length;i++){
+    var x=pts[i][0], y=pts[i][1], k=pts[i][2]/255;
+    if(x<X0||x>297) continue;
+    var t=(x-X0+0.5)/SC;            // hour position (fractional)
+    if(t<0) t=0; if(t>1463.99) t=1463.99;
+    var w=Math.floor(t/HOURS_WEEK);
+    var within=(x+0.5-X0)-w*PXW;    // picture px into this week
+    // a picture column that straddles a week boundary is drawn once, in the week it mostly belongs to
+    var cx=L+within*kx;
+    var cy=top+w*(rowH+gap)+(y-Y0+0.5)*ky;
+    var a=Math.pow(k,1.25);
+    g.fillStyle='rgba(28,24,20,'+(0.08+0.8*a).toFixed(3)+')';
+    g.beginPath();
+    g.ellipse(cx, cy, 3+7*a, 0.5+0.4*a, 0, 0, Math.PI*2);
+    g.fill();
+  }
+
+  // colophon
+  g.fillStyle='rgba(60,52,40,0.6)'; g.font='italic 12px Georgia, "Times New Roman", serif';
+  g.textAlign='left'; g.textBaseline='alphabetic';
+  g.fillText('Set in Weeks', L, CH-22);
+  g.textAlign='right'; g.font='11px Georgia, "Times New Roman", serif';
+  g.fillText('61 days · 1,464 hourly values · one line per week · higher is more', R, CH-22);
+})();
+</script>
+</body>
+</html>

@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "7540b5b5c8484d9f",
-        "files": 71
+        "sha256": "8e7e709cdf780b3a",
+        "files": 72
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 483,
-      "edges": 429,
+      "nodes": 484,
+      "edges": 430,
       "nodesByKind": {
         "decision": 139,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 180,
+        "practice-work": 181,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 180,
+        "made-by": 181,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 101
@@ -4390,6 +4390,21 @@
       "medium": "Interactive page (index.html): one hourly water-level record drawn as a dot plot at four sizes (1200x360 to 19x6 pixels), with an hour control that shows how many hours share each pixel column, the twelve still works fresh makers made from them grouped by size, a coded ledger of what each maker found and drew, and the predictions. A figure (figure.svg); reproducibility and git-order verifier (verify.py)."
     },
     {
+      "id": "practice-work:atelier/2026-10-13-told-the-hour",
+      "kind": "practice-work",
+      "label": "Told the Hour",
+      "slug": "2026-10-13-told-the-hour",
+      "practiceId": "ulysses",
+      "date": "2026-10-13",
+      "href": "/error-as-method/2026-10-13-told-the-hour",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-13-told-the-hour/meta.json",
+        "quote": "\"title\": \"Told the Hour\""
+      },
+      "embodies": "Perceiving, with the account withheld. Makers given the same record at two grains, half of them told what a dot is and half not, recognised exactly what the grain let them measure. Those not told rebuilt the account from the picture's rhythm or the count. Recognition decided the name they gave the world, right where measured and wrong where supplied; it did not decide whether they filled the picture's margin.",
+      "medium": "Interactive page (index.html): one hourly electricity-load record drawn as a dot plot at two sizes (300x90 and 40x12 pixels); a switch between the two sentences the makers were told about the dots, which swaps in the still works the makers of each sentence made; the record itself, with the makers' readings laid on it; a coded ledger and the predictions. A figure (figure.svg); reproducibility and git-order verifier (verify.py)."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -7209,6 +7224,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-10-12-down-to-the-grain/meta.json",
         "quote": "\"date\": \"2026-10-12\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-13-told-the-hour",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-13-told-the-hour/meta.json",
+        "quote": "\"date\": \"2026-10-13\""
       }
     },
     {
