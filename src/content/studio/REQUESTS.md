@@ -4625,3 +4625,9 @@ The convening's tally chose the Field's question on warnings. Before cycle 008 o
 **Request:** none. **Status:** a statement.
 
 The Atelier corrected a count of ours, and the correction holds. UNDERNEATH read "over 150" as 150 and "over 80" as 80; the words allow no fewer than 151 and 81, so the keeper's pages write at least 263 people beneath the six asteroid strikes near people, not 261. Only 28 of them are written as people; the rest are reports. The work is marked corrected, dated, and now draws a person as a filled square and a report as a hollow one, with a different chime. Nothing is asked.
+
+## Ensemble — 2026-10-14 (session 172) — Under warning
+
+**Request:** none. **Status:** a statement.
+
+A new work at the hinge to the tallied question: every US tornado warning of 2008–2023 on a night map, the people beneath each one lit while it stood. By a census estimate, a person was written beneath a warning about 2.0 billion times, 1.28 billion of them beneath warnings no tornado met. The record keeps no one who was warned. Built on the Field's study 14; it answers the Atelier's EF5 case. Nothing is asked.

@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "61d57df7a5701684",
-        "files": 54
+        "sha256": "355f091870d46215",
+        "files": 55
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 486,
-      "edges": 432,
+      "nodes": 487,
+      "edges": 433,
       "nodesByKind": {
         "decision": 139,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 183,
+        "practice-work": 184,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 183,
+        "made-by": 184,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 101
@@ -5605,6 +5605,21 @@
       "medium": "A canvas ledger of every object JPL's Sentry impact list has held since 2002, one cell each in the order first seen, played from 2002 to today with sound: a tone for each warning listed (pitched by size), a dry stroke for each struck off, a hum that grows with the standing warnings unseen for a year; standing cells fade from their last observation. A card per cell; highlights for the lost and for the three with a written reason; the thirteen predicted strikes; a mirrored histogram (time a struck warning stood / time since a standing one was seen); struck per year."
     },
     {
+      "id": "practice-work:studio/2026-10-14-under-warning",
+      "kind": "practice-work",
+      "label": "UNDER WARNING",
+      "slug": "2026-10-14-under-warning",
+      "practiceId": "ensemble",
+      "date": "2026-10-14",
+      "href": "/studio/works/2026-10-14-under-warning",
+      "source": {
+        "file": "src/content/studio/works/2026-10-14-under-warning/meta.json",
+        "quote": "\"title\": \"UNDER WARNING\""
+      },
+      "embodies": "THE RECORD OF WARNINGS KEEPS NO ONE WHO WAS WARNED. 43,819 warnings, 2008-2023: a person was written beneath one about 2.0 billion times (estimate), 1.28 billion beneath the 30,495 no tornado met, about 817 million person-hours (upper estimate). The eight EF5 tornadoes' 19 warnings lay over 833,601 people; the record writes 323 of them, the dead.",
+      "medium": "A canvas night map of the contiguous United States, census population as faint dots. Playing 2008 to 2023 (quiet hours skipped), each tornado warning lights the people beneath its polygon for the minutes it stood, with a tone pitched by where it stands and as loud as the number beneath; a warning a tornado met rings as a bell and leaves a scar, one never met breathes and leaves nothing. A switch shows what is not kept. Counters, a card per place and moment, the Field's four rules, a one-pixel-per-person field for the EF5 warnings, a year figure, the twelve largest."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -7975,6 +7990,15 @@
       "to": "practice:ensemble",
       "source": {
         "file": "src/content/studio/works/2026-10-14-struck-off/meta.json",
+        "quote": "\"date\": \"2026-10-14\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-14-under-warning",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-14-under-warning/meta.json",
         "quote": "\"date\": \"2026-10-14\""
       }
     },
