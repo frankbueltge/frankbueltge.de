@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Ebbs</title>
+<style>
+  :root { --paper:#f1ede4; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  canvas { display:block; width:1100px; height:800px; max-width:100vw; max-height:100vh; object-fit:contain; }
+</style>
+</head>
+<body>
+<canvas id="c" width="2200" height="1600" aria-label="Sixty-one days of a harbour record laid over one another inside a single turn of its daily rhythm: a dense band near the top, and in the middle of the turn a fan of ink falling away below it."></canvas>
+<script>
+(() => {
+// The source picture, 300 x 90 pixels, column by column, darkness 0-f.
+const INK = "@@INK@@";
+const SW = 300, SH = 90;
+const X0 = 2, X1 = 297;              // first and last dot centres in the source
+const HOURS = 1463;                  // hours between first and last value
+const HPC = HOURS / (X1 - X0);       // ~4.96 hours carried by each source column
+const BEAT = 23.92;                  // the record's own once-a-day rhythm, in hours
+const OFFSET = 5.9;                  // where the turn is cut, so the fall sits mid-turn
+const ink = (x, y) => parseInt(INK[x * SH + y], 16) / 15;
+
+// The slow level (weather, season): the upper edge of the band, smoothed over ~2 days.
+const edge = [];
+for (let x = 0; x < SW; x++) {
+  let s = 0, n = 0;
+  for (let y = 0; y < SH; y++) { const d = ink(x, y); if (d > 0.35) { s += y * d; n += d; } }
+  edge.push(n ? s / n : null);
+}
+const level = edge.map((_, x) => {
+  const v = []; for (let j = x - 5; j <= x + 5; j++) if (edge[j] != null) v.push(edge[j]);
+  v.sort((a, b) => a - b); return v.length ? v[Math.floor(v.length * 0.3)] : 35;
+});
+
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+g.scale(2, 2);
+const W = 1100, H = 800;
+g.fillStyle = '#f1ede4'; g.fillRect(0, 0, W, H);
+
+const left = 60, right = 1040, span = right - left;
+const yLine = 290;                   // where the usual level sits on the page
+const k = 7.6;                       // source pixels to page pixels, vertically
+const days = HOURS / 24;
+
+g.globalCompositeOperation = 'multiply';
+const SL = 40;
+for (let x = 0; x < SW; x++) {
+  const tc = (x - X0) * HPC;
+  const day = Math.max(0, Math.min(1, tc / HOURS));
+  // colour drifts over the sixty-one days: from a grey-green to a deep sea blue
+  const rr = 70 - day * 50, gg = 98 - day * 50, bb = 96 + day * 10;
+  for (let y = 0; y < SH; y++) {
+    const d = ink(x, y);
+    if (d < 0.06) continue;
+    const yy = yLine + (y - level[x]) * k;
+    for (let s = 0; s < SL; s++) {
+      const f = (s + 0.5) / SL - 0.5;                 // across this column's own hours
+      const w = Math.min(1, (0.5 - Math.abs(f)) * 6);   // soft edges
+      const t = tc + f * HPC - OFFSET;
+      const phase = (t - Math.floor(t / BEAT) * BEAT) / BEAT;
+      const px = left + phase * span;
+      g.fillStyle = `rgba(${rr|0},${gg|0},${bb|0},${(d * w * 0.10).toFixed(3)})`;
+      g.fillRect(px, yy - k * 0.5, span * HPC / BEAT / SL + 0.4, k * 1.0);
+    }
+  }
+}
+g.globalCompositeOperation = 'source-over';
+
+g.fillStyle = '#6f7270';
+g.font = '11px Georgia, "Times New Roman", serif';
+g.fillText('Sixty-one days of one harbour, laid on top of each other inside a single turn of their own 23.9-hour beat.', left, H - 40);
+g.fillText('Each day keeps its height for most of the turn, and once in every turn the water falls away.', left, H - 24);
+})();
+</script>
+</body>
+</html>

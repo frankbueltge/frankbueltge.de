@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Once a Day</title>
+<style>
+  :root { --paper:#f3efe6; --ink:#1c1b19; --faint:#8d877b; --rust:#b0452a; }
+  html,body { margin:0; background:var(--paper); }
+  body { width:1100px; height:800px; overflow:hidden; position:relative; }
+  canvas { position:absolute; left:0; top:0; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="Sixty-one threads, one per day, each carrying that day's hourly readings as beads at their height; most beads gather near the top, and each day a few fall lower, in the afternoon hours"></canvas>
+<script>
+// Material: every dot found in the source picture (300 x 90 JPEG):
+// x position, height above the bottom edge, amount of ink (heavier where readings overlap).
+const DOTS = "__DOTS__";
+const X0 = __X0__;    // source x of the first reading
+const HPP = __HPP__;  // hours of record per source pixel (~4.98)
+const DAYS = 61, H = 24, UNIT = 320; // UNIT: ink of about one reading
+
+const cv = document.getElementById('c');
+const dpr = window.devicePixelRatio || 1;
+cv.width = 1100 * dpr; cv.height = 800 * dpr;
+cv.style.width = '1100px'; cv.style.height = '800px';
+const g = cv.getContext('2d');
+g.scale(dpr, dpr);
+g.fillStyle = '#f3efe6'; g.fillRect(0, 0, 1100, 800);
+
+const L = 120, R = 1040, YT = 118, YB = 700;
+const VMIN = 3, VMAX = 88;
+const xd = d => L + (d + 0.5) * (R - L) / DAYS;
+const yv = v => YB - (v - VMIN) / (VMAX - VMIN) * (YB - YT);
+
+// assign each dot to its day and hour
+const days = Array.from({length: DAYS}, () => []);
+for (const rec of DOTS.split(';')) {
+  const [sx, v, ink] = rec.split(',').map(Number);
+  const t = Math.min(DAYS * H - 1e-6, Math.max(0, (sx - X0) * HPP));
+  const d = Math.floor(t / H);
+  days[d].push({h: t - d * H, v, n: ink / UNIT});
+}
+
+// colour by hour: ink for most of the day, rust around the 11th hour, where the falls gather
+const mix = h => {
+  const w = Math.max(0, Math.cos(2 * Math.PI * (h - 11) / 24)) ** 3;
+  const a = [28, 27, 25], b = [176, 69, 42];
+  return `rgb(${a.map((c, i) => Math.round(c + (b[i] - c) * w)).join(',')})`;
+};
+
+// threads
+for (let d = 0; d < DAYS; d++) {
+  const b = days[d]; if (!b.length) continue;
+  const vs = b.map(o => o.v);
+  const x = xd(d);
+  g.strokeStyle = 'rgba(28,27,25,0.32)'; g.lineWidth = 0.7;
+  g.beginPath(); g.moveTo(x, YT - 18); g.lineTo(x, yv(Math.min(...vs)) + 8); g.stroke();
+}
+// a rod across the top
+g.strokeStyle = 'rgba(28,27,25,0.55)'; g.lineWidth = 1.2;
+g.beginPath(); g.moveTo(xd(0) - 10, YT - 18); g.lineTo(xd(DAYS - 1) + 10, YT - 18); g.stroke();
+
+// beads: heaviest first so the light ones stay visible on top
+for (let d = 0; d < DAYS; d++) {
+  const x = xd(d);
+  const b = days[d].slice().sort((p, q) => q.n - p.n);
+  for (const o of b) {
+    const r = 1.55 * Math.sqrt(Math.max(0.45, o.n));
+    g.fillStyle = mix(o.h);
+    g.beginPath(); g.arc(x, yv(o.v), r, 0, Math.PI * 2); g.fill();
+  }
+}
+
+// words, kept few
+g.textBaseline = 'alphabetic';
+g.fillStyle = '#1c1b19'; g.font = '24px Georgia, "Times New Roman", serif';
+g.textAlign = 'left'; g.fillText('Once a Day', L, 58);
+g.fillStyle = '#8d877b'; g.font = 'italic 12.5px Georgia, "Times New Roman", serif';
+g.fillText('Sixty-one days of an hourly record, one thread per day. Each bead is a reading, or several that fell together; higher is more.', L, 80);
+
+g.font = '11px Georgia, "Times New Roman", serif'; g.textAlign = 'center';
+g.fillText('day 1', xd(0), YB + 44);
+g.fillText('day 61', xd(DAYS - 1), YB + 44);
+g.fillText('31', xd(30), YB + 44);
+
+// key for the colour
+const kx = R - 300, ky = YB + 70;
+g.textAlign = 'left'; g.font = 'italic 11px Georgia, "Times New Roman", serif';
+for (let i = 0; i <= 48; i++) {
+  const h = i / 2;
+  g.fillStyle = mix(h);
+  g.beginPath(); g.arc(kx + i * 4.2, ky, 1.7, 0, Math.PI * 2); g.fill();
+}
+g.fillStyle = '#8d877b';
+g.textAlign = 'center';
+for (const h of [0, 6, 12, 18, 24]) g.fillText(String(h), kx + h * 2 * 4.2, ky + 16);
+g.textAlign = 'right';
+g.fillText('hour of the day it was read, counted from the first reading', kx - 12, ky + 4);
+</script>
+</body>
+</html>

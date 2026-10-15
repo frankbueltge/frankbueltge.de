@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Almost a Day</title>
+<style>
+  :root { --paper:#f2ede3; --ink:#1b2033; --soft:#6d6a63; --hair:#c9c1b2; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden;
+         font-family: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; color:var(--ink); }
+  .sheet { position:relative; width:1100px; height:800px; flex:none; }
+  canvas { position:absolute; left:0; top:0; width:1100px; height:800px; }
+  .cap { position:absolute; left:820px; top:236px; width:236px; }
+  h1 { font-weight:400; font-size:30px; letter-spacing:.01em; margin:0 0 18px; line-height:1.1; }
+  p { font-size:13.5px; line-height:1.55; margin:0 0 12px; color:var(--soft); }
+  .key { margin-top:22px; font-size:11.5px; color:var(--soft); letter-spacing:.04em; }
+  .bar { height:8px; width:236px; margin:6px 0 4px;
+         background:linear-gradient(90deg,#efe8da 0%,#d9cdb6 30%,#8a7f86 62%,#3a3b57 82%,#1b2033 100%); }
+  .ends { display:flex; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <canvas id="c" width="1100" height="800"></canvas>
+  <div class="cap">
+    <h1>Almost a Day</h1>
+    <p>1,464 hourly values, wound from the centre outward. One turn holds twenty-four of them, so each of the sixty-one days lies on its own ring.</p>
+    <p>Once a ring, the value falls away and comes back; those hours are drawn dark. The fall does not stay put: it arrives a little earlier each day, and over two months its arm swings round by about a third of the clock.</p>
+    <div class="key">
+      <div class="bar"></div>
+      <div class="ends"><span>its usual height</span><span>far below it</span></div>
+    </div>
+  </div>
+</div>
+<script>
+// Values recovered from the source picture: height of each hourly dot above the
+// picture's lower edge, in source pixels (0 to 90). Hour 0 is the leftmost dot.
+const V = __DATA__;
+(function(){
+  const cv = document.getElementById('c');
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  cv.width = 1100*dpr; cv.height = 800*dpr;
+  const g = cv.getContext('2d'); g.scale(dpr,dpr);
+
+  const N = V.length, PER = 24, DAYS = N/PER;
+  const cx = 400, cy = 400, r0 = 40, r1 = 334;
+  const step = (r1 - r0) / DAYS;           // radial gap per turn
+  const band = step * 0.8;                // ring thickness
+
+  // "Usual height": a running upper-middle level (median of the surrounding 3 days),
+  // so a slow change of the whole record does not read as a fall.
+  const base = new Array(N);
+  for (let i = 0; i < N; i++) {
+    const a = Math.max(0, i - 36), b = Math.min(N, i + 37);
+    const w = V.slice(a, b).sort((x,y)=>x-y);
+    base[i] = w[Math.floor(w.length*0.6)];
+  }
+  // colour ramp: paper-warm for at/above usual, through a muted mauve, to ink
+  const stops = [[0,[239,232,218]],[0.3,[217,205,182]],[0.62,[138,127,134]],[0.82,[58,59,87]],[1,[27,32,51]]];
+  function col(t){
+    t = Math.max(0, Math.min(1, t));
+    for (let k = 1; k < stops.length; k++) if (t <= stops[k][0]) {
+      const [t0,c0] = stops[k-1], [t1,c1] = stops[k], u = (t-t0)/(t1-t0);
+      return 'rgb(' + c0.map((c,j)=>Math.round(c + (c1[j]-c)*u)).join(',') + ')';
+    }
+    return 'rgb(27,32,51)';
+  }
+  const ang = h => -Math.PI/2 + 2*Math.PI*h/PER;   // hour 0 of each day at twelve o'clock
+  const rad = h => r0 + step*h/PER;                 // Archimedean: radius grows steadily with time
+
+  // Each pixel is placed on the spiral by its angle (hour of the turn) and its radius
+  // (which turn); its tone is how far that hour sits below its usual height.
+  const T = new Float32Array(N);
+  for (let i = 0; i < N; i++) {
+    const dd = base[i] - V[i];
+    T[i] = dd >= 0 ? 0.12 + Math.pow(dd / 34, 0.85) : Math.max(0, 0.12 + dd / 60);
+  }
+  const W = 1100*dpr, H = 800*dpr, img = g.createImageData(W, H), px = img.data;
+  const paper = [242,237,227];
+  const rgb = t => { const m = col(t).match(/\d+/g); return m.map(Number); };
+  const LUT = []; for (let k = 0; k <= 200; k++) LUT.push(rgb(k/200));
+  for (let Y = 0; Y < H; Y++) for (let X = 0; X < W; X++) {
+    const o = (Y*W + X)*4;
+    const x = X/dpr + 0.5/dpr - cx, y = Y/dpr + 0.5/dpr - cy;
+    const r = Math.hypot(x, y);
+    let c = paper, a = 0;
+    if (r > r0 - step && r < r1 + step) {
+      let f = Math.atan2(x, -y) / (2*Math.PI); if (f < 0) f += 1;   // 0 at twelve o'clock, clockwise
+      const k = Math.round((r - r0)/step - f);
+      const h = (k + f) * PER;
+      if (h >= 0 && h <= N) {
+        const rc = r0 + step*(k + f);
+        a = Math.max(0, Math.min(1, band/2 - Math.abs(r - rc) + 0.5));
+        const i = Math.min(N - 1, Math.floor(h)), u = h - Math.floor(h);
+        const arcPx = 2*Math.PI*r/PER;                       // length of one hour along this ring
+        const edge = Math.min(u, 1 - u) * arcPx;             // distance to the hour's boundary
+        a *= Math.max(0, Math.min(1, edge*2 - 0.35));        // a hairline of paper between hours
+        c = LUT[Math.round(Math.max(0, Math.min(1, T[i]))*200)];
+      }
+    }
+    px[o]   = paper[0] + (c[0]-paper[0])*a;
+    px[o+1] = paper[1] + (c[1]-paper[1])*a;
+    px[o+2] = paper[2] + (c[2]-paper[2])*a;
+    px[o+3] = 255;
+  }
+  g.putImageData(img, 0, 0);
+
+  // the clock it is laid against: twenty-four hairline ticks outside the last ring
+  g.strokeStyle = '#b9b0a0'; g.lineWidth = 0.8;
+  for (let h = 0; h < PER; h++) {
+    const a = ang(h), ra = r1 + 12, rb = r1 + (h % 6 ? 17 : 24);
+    g.beginPath(); g.moveTo(cx+ra*Math.cos(a), cy+ra*Math.sin(a)); g.lineTo(cx+rb*Math.cos(a), cy+rb*Math.sin(a)); g.stroke();
+  }
+  // first and last hour
+  g.fillStyle = '#1b2033';
+  const dot = (h,r)=>{ g.beginPath(); g.arc(cx+rad(h)*Math.cos(ang(h)), cy+rad(h)*Math.sin(ang(h)), r, 0, 7); g.fill(); };
+  dot(0, 2.2); dot(N-0.5, 2.2);
+  g.font = 'italic 12px "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif';
+  g.fillStyle = '#6d6a63'; g.textAlign = 'center';
+  g.fillText('first hour', cx, cy - r0 + 22);
+  g.textAlign = 'right'; g.fillText('last hour', cx - 52, cy - r1 - 8);
+})();
+</script>
+</body>
+</html>
