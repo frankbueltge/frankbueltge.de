@@ -86,10 +86,11 @@ entschieden: `/experiments` ordnet nach **Forschungslinie** (COUNTER-MEASUREMENT
 LEDGER · REPRESENTATION & MEMORY · SURVEILLANCE, COUNTED — kanonisch in `src/data/werke.ts`,
 Feld `line`), und die Titel der Experimente tragen **keinen bestimmten Artikel** mehr
 (Society, Protocol, Policy, Consensus, Invoked Past, Balance, Correction, Ghost Fleet).
-Darunter verlinkt die Seite die zwei Praxen **neben** dem Lab, die nicht zur Ökologie
-gehören: die Nachtlinie (`/error-as-method`) und n-1 (`/n-1`). Details:
-`docs/wording-kanon.md`, Abschnitt „Die vier Linien des Labs" (Index: `/experiments`; das
-frühere `/lab` 301t dorthin).
+Darunter verlinkt die Seite die drei Praxen **neben** dem Lab, die nicht zur Ökologie
+gehören: die Nachtlinie (`/error-as-method`), n-1 (`/n-1`) und Arch (`/arch`, gegründet
+2026-08-22, Bilanz vom 2026-09-21 mit dem Verdikt FAILED, seit 2026-10-11 nicht mehr unter
+den laufenden Systemen; der Raum bleibt als Record stehen). Details: `docs/wording-kanon.md`,
+Abschnitt „Die vier Linien des Labs" (Index: `/experiments`; das frühere `/lab` 301t dorthin).
 
 **Lizenz (alle Lab-Repos, 2026-07-26): offen** — Apache 2.0 für Code, CC BY 4.0 für
 Werke/Texte, CC0 für Daten und Archiv-Snapshots (ersetzt die noncommercial-Linie vom
