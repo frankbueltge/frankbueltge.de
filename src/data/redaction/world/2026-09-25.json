@@ -1,0 +1,149 @@
+{
+  "date": "2026-09-25",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-25T10:35:07Z",
+    "counts": {
+      "botwall": 15,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 282,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 283,
+    "excluded_unverifiable": 17,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0197
+    ],
+    "gone_rate": 0.0035,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0134
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-23",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "rock1015.com",
+        "first_seen": "20260923140000",
+        "http_code": 404,
+        "title": "Kearney city council approves one and six-year street plan",
+        "url": "https://rock1015.com/2026/09/23/424367/"
+      }
+    ],
+    "sample_drawn_at": "2026-09-24T10:50:30Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 6160,
+      "replaced": 5451,
+      "trivial": 953,
+      "update": 581
+    },
+    "day": "2026-09-24",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Beaver",
+          "Impact",
+          "on",
+          "Flow",
+          "water"
+        ],
+        "after": "Beaver Impact on Water Flow: After 400 years, beavers are back in England; 9 dams are estimated to store 3 million litres of water and slow flood flows",
+        "before": "Beavers in UK: After 400 years, beavers are back in England; 9 dams are estimated to store 3 million litres of water and slow flood flows",
+        "detected": "2026-09-24T18:49:45Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "UK",
+          "beavers",
+          "in"
+        ],
+        "similarity": 0.815,
+        "url": "https://economictimes.indiatimes.com/news/international/us/after-400-years-beavers-are-back-in-england-9-dams-are-estimated-to-store-3-million-litres-of-water-and-slow-flood-flows/articleshow/134317043.cms",
+        "weight": 10,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Las",
+          "Vegas"
+        ],
+        "after": "'You Can't Afford Me': Indian YouTuber Paramvir Sharply Responds To Racist 7-Eleven Taunt During Livestream Encounter In Las Vegas",
+        "before": "'You Can't Afford Me': Indian YouTuber Paramvir Sharply Responds To Racist 7-Eleven Taunt During Livestream Encounter In Los Angeles",
+        "detected": "2026-09-24T08:31:54Z",
+        "domain": "freepressjournal.in",
+        "removed": [
+          "Los",
+          "Angeles"
+        ],
+        "similarity": 0.826,
+        "url": "https://www.freepressjournal.in/viral/you-cant-afford-me-indian-youtuber-paramvir-sharply-responds-to-racist-7-eleven-taunt-during-livestream-encounter-in-los-angeles-watch",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Cruz",
+          "Montana"
+        ],
+        "after": "Powell's NXT Hit List: The Dusty Classic begins, Grayson Waller and Mason Rook trade insults before their NXT Championship match, Cruz Montana might be exactly what Dion Lennox needs",
+        "before": "Powell's NXT Hit List: The Dusty Classic begins, Grayson Waller and Mason Rook trade insults before their NXT Championship match, Mike Santana might be exactly what Dion Lennox needs",
+        "detected": "2026-09-24T17:32:25Z",
+        "domain": "prowrestling.net",
+        "removed": [
+          "Mike",
+          "Santana"
+        ],
+        "similarity": 0.871,
+        "url": "https://prowrestling.net/site/2026/09/23/powells-nxt-hit-list-the-dusty-classic-begins-grayson-waller-and-mason-rook-trade-insults-before-their-nxt-championship-match-mike-santana-might-be-exactly-what-dion-lennox-needs/",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 18569,
+      "PAGE_TEXTCHANGE": 136976,
+      "PAGE_TITLECHANGE": 51509,
+      "UNCHANGED_CONTENT": 785852
+    },
+    "title_changes_en": 13145,
+    "trace": [
+      {
+        "bytes_billed": 27262976,
+        "created": "1790332232245",
+        "job_id": "world_gdg_counts_20260924",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 249561088,
+        "created": "1790332238117",
+        "job_id": "world_gdg_titles_20260924",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-25T10:35:07Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-24.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

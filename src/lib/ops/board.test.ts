@@ -1,6 +1,8 @@
+import { existsSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { buildBoard, buildSignalLog, repoSeries } from './board'
+import { buildBoard, cleanMomentTitle, newestMoment, repoSeries } from './board'
 import { NAMING } from '@/config/naming'
+import { newestN1Page } from '@/lib/n1/works'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 import type { LatestWork } from '@/lib/engines/latest'
 import pulseData from '@/data/pulse/pulse.json'
@@ -88,14 +90,47 @@ describe('the board says what the rooms say', () => {
       'ulysses', 'meridian', 'ensemble', 'conductor',
     ])
     // Four is the measured ceiling for a categorical set in this repo (palette.test.ts); the
-    // rows beside the ecology wear the room's live accent and are told apart by name.
-    expect(rows.filter((r) => r.voice === null).map((r) => r.id)).toEqual(['attention', 'nightly-line', 'arch'])
+    // rows beside the ecology wear the room's live accent and are told apart by name. n-1
+    // joined them on 2026-09-03 — a fifth hue would have broken the ceiling, and n-1 is the
+    // Atelier's line rather than a practice of its own, so borrowing a voice would have been
+    // a second claim on top of a colour. Arch stood among them from 2026-08-23 to 2026-10-11
+    // and left when its trial had ended: a board lists what is running.
+    expect(rows.filter((r) => r.voice === null).map((r) => r.id)).toEqual(['attention', 'nightly-line', 'n-1'])
   })
 
-  it('reads Arch’s last landed output from Arch’s own record, never from another practice', () => {
-    const arch = rows.find((r) => r.id === 'arch')!
-    expect(arch.last).not.toBeNull()
-    expect(arch.last!.href).toMatch(/^\/arch\/read\/record\//)
+  it('names the newest page of n-1 a visitor can open, read from n-1’s own mirror', () => {
+    const n1 = rows.find((r) => r.id === 'n-1')!
+    expect(n1.last).not.toBeNull()
+    // Until 2026-10-10 this cell carried the newest night's heading — a count of sessions on a
+    // row whose link led to a front page where nothing those sessions built could be found. It
+    // carries a page now: the title the page gives itself, the day the practice's record says
+    // it was built, and an address that is a file in the mirror. Checked against the same
+    // derivation the shelf on the practice's front door is built from, not against a typed
+    // title — the practice builds a new page most nights.
+    const newest = newestN1Page()!
+    expect(n1.last).toEqual({ title: newest.title, meta: newest.date, href: newest.href })
+    expect(n1.last!.meta).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    // never the Atelier's: the line descends from that practice and shares none of its record
+    const href = n1.last!.href ?? ''
+    expect(href).toMatch(/^\/n-1\/(works|projects)\//)
+    expect(existsSync(`public${href}${href.endsWith('/') ? 'index.html' : ''}`)).toBe(true)
+  })
+
+  it('lists no row for Arch, whose trial has ended — its room is its archive', () => {
+    // Until 2026-10-11 this test held that the row read Arch's last landed output from Arch's
+    // own record. The row is gone; what must not happen now is that it comes back by accident
+    // (a board spec copied from history) while the practice stays off every other surface.
+    expect(rows.find((r) => r.id === 'arch')).toBeUndefined()
+    expect(NAMING.opsRoom.board.groups.flatMap((g) => g.rows.map((r) => r.repo))).not.toContain('arch')
+  })
+
+  // The resident line used to be the door id with its first letter capitalised, which was a
+  // spelling coincidence rather than a name: it broke the day the Atelier settled on Assay
+  // (2026-09-03) while its door, repo and route stayed `ulysses`.
+  it('names the resident practice, never the door id it is reached through', () => {
+    const atelier = rows.find((r) => r.id === 'ulysses')!
+    expect(atelier.resident).toBe('resident: Assay')
+    expect(atelier.resident).not.toMatch(/Ulysses/)
   })
 
   it('never leaves a cell silently empty', () => {
@@ -108,17 +143,31 @@ describe('the board says what the rooms say', () => {
   })
 })
 
-describe('the signal log', () => {
-  it('is the works register, cut to the top few and newest first', () => {
-    const log = buildSignalLog(WORKS, 2)
-    expect(log.map((e) => e.title)).toEqual(['A field instrument', 'An atelier work'])
-    expect(log[0].practice).toBe(NAMING.doors.items.find((d) => d.id === 'meridian')!.name)
-    expect(log[0].kind).toBe('instrument')
+/* The signal log's own tests moved with it to house-feed.test.ts on 2026-09-03. */
+
+describe('the attention row title', () => {
+  it('cleans a subject that is a raw list dump — doubled spaces, empty items, a trailing ", ,"', () => {
+    const raw = 'Drought in Austria, Bosnia  and  Herzegovina, Belgium, Belarus, Switzerland, Czech Republic, Germany, Denmark, Spain, France, Croatia, Hungary, Ireland, Italy, Liechtenstein, Luxembourg, Netherlands, Poland, Romania, Serbia, Sweden, Slovenia, Slovakia, San Marino, Ukraine, ,'
+    const title = cleanMomentTitle(raw)
+    expect(title).not.toMatch(/,\s*,/)
+    expect(title).not.toMatch(/\s{2,}/)
+    expect(title).not.toMatch(/,\s*$/)
+    expect(title.length).toBeLessThanOrEqual(92)
+    expect(title.endsWith('…')).toBe(true)
+    expect(title.startsWith('Drought in Austria')).toBe(true)
   })
 
-  it('keeps a withdrawn work listed and marked — the record keeps every mark', () => {
-    const log = buildSignalLog(WORKS, 3)
-    expect(log).toHaveLength(3)
-    expect(log.find((e) => e.title === 'A withdrawn premiere')!.withdrawn).toBe(true)
+  it('leaves a short, clean subject exactly as written', () => {
+    expect(cleanMomentTitle('Earthquake in Afghanistan')).toBe('Earthquake in Afghanistan')
+  })
+
+  it('picks the newest moment deterministically when timestamps tie', () => {
+    const tied = [
+      { occurred_at: '2026-09-01T10:27:00+00:00', subject: 'Zulu warning' },
+      { occurred_at: '2026-09-01T10:27:00+00:00', subject: 'Alpha warning' },
+      { occurred_at: '2026-08-31T09:00:00+00:00', subject: 'Older moment' },
+    ]
+    expect(newestMoment(tied)!.subject).toBe('Alpha warning')
+    expect(newestMoment([...tied].reverse())!.subject).toBe('Alpha warning')
   })
 })

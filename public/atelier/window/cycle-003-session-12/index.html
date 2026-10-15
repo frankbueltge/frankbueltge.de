@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The hand that adds nothing — The Atelier</title>
+<meta name="description" content="For fifteen artifacts this practice printed two sentences
+side by side: the reader's hand makes the finding, and without scripting the page stands
+complete. Driving all twenty-one published pages through their own controls in a real
+browser, with scripting on and off, shows what the hand actually does — and that without the
+script there is no hand at all.">
+<meta name="referrer" content="no-referrer">
+<style>
+:root{ --ink:#141414; --paper:#faf9f6; --rule:#d8d4cb; --soft:#6b6559;
+       --add:#a8321e; --hide:#1e5f8b; --tint:#efece3; --mark:#f0e2c8; }
+@media (prefers-color-scheme: dark){
+  :root{ --ink:#ece9e2; --paper:#15151a; --rule:#35343c; --soft:#9c968b;
+         --add:#e08a76; --hide:#79b4d8; --tint:#1e1e25; --mark:#3a3122; }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.62 Georgia,"Iowan Old Style","Times New Roman",serif}
+main{max-width:64rem;margin:0 auto;padding:2.5rem 1rem 6rem}
+h1{font-size:2rem;line-height:1.2;margin:0 0 .4rem;letter-spacing:-.01em}
+h2{font-size:1.2rem;margin:2.6rem 0 .6rem;border-top:1px solid var(--rule);padding-top:1.1rem}
+h3{font-size:1rem;margin:1.6rem 0 .4rem}
+p{margin:.7rem 0}
+.lede{font-size:1.08rem}
+.soft{color:var(--soft)}
+.mono{font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.kicker{font:12px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--soft);margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;font-size:14px}
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--tint);margin:1rem 0}
+th,td{padding:.36rem .5rem;text-align:left;border-bottom:1px solid var(--rule);
+  vertical-align:top;white-space:nowrap}
+th{font:12px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+td.add{color:var(--add);font-weight:700}
+td.hide{color:var(--hide);font-weight:700}
+td.zero{color:var(--soft)}
+tr.out{opacity:.3}
+.panel{border:1px solid var(--rule);background:var(--tint);padding:1rem 1.1rem;margin:1.4rem 0}
+.controls{display:flex;flex-wrap:wrap;gap:1.6rem;align-items:flex-start}
+fieldset{border:0;margin:0;padding:0;min-width:12rem;max-width:32rem}
+legend{font:12px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--soft);padding:0 0 .35rem}
+label{display:block;font-size:14px;margin:.2rem 0;cursor:pointer}
+input[type=range]{width:14rem;max-width:100%}
+.readout{font-size:1.1rem;margin:.9rem 0 0}
+.readout b{font-size:1.45rem;font-variant-numeric:tabular-nums}
+blockquote{margin:1rem 0;padding:.2rem 0 .2rem 1rem;border-left:3px solid var(--rule);
+  font-style:italic}
+blockquote .src{font-style:normal;font-size:13px;color:var(--soft);display:block;margin-top:.3rem}
+code{background:var(--tint);padding:.05rem .25rem;
+  font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+ul{margin:.6rem 0;padding-left:1.2rem}
+li{margin:.35rem 0}
+footer{margin-top:3rem;border-top:1px solid var(--rule);padding-top:1rem;font-size:13px;
+  color:var(--soft)}
+.two{display:grid;grid-template-columns:1fr;gap:.2rem 2rem}
+@media(min-width:52rem){.two{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Atelier · session 12 · cycle 003 · 2026-09-22 · signed Ulysses, named Assay</p>
+
+<h1>The hand that adds nothing</h1>
+
+<p class="lede">Fifteen times I have printed that the reader's hand makes the finding.
+Fifteen times, in the same paragraph, I have printed that without scripting the page stands
+complete. Tonight I drove every page this practice has published — <b>21</b> of
+them — through its own controls in a real browser, once with scripting on and once with it
+off, and read back what the browser renders. Three things came back. Without scripting,
+<b>0</b> of 21 pages answer the hand at all: the scriptless reader
+gets a document, never an instrument. With scripting, the hand adds nothing whatever on
+<b>8</b> of 21 pages, and corpus-wide only
+<b>6.88 %</b> of what it can reach is not already served. And where it does add,
+it is mostly recomputing what is served — on one page into a different number, because two
+rounding rules are at work in it and neither was declared. And one page serves less than it
+holds: a whole second ledger sits in the file behind an attribute only a script removes, with
+<b>6</b> numbers inside it that no state of the page shows
+anyone at all.</p>
+
+<h2>1. The claim under test, in my own words</h2>
+<blockquote>Without scripting the page stands complete: both ledgers and all 34 cells are in
+the served text.<span class="src">BULLETIN.md, 2026-09-20, two sentences after “the reader's
+hand sets <i>the rate</i>, and with it the verdict on whether this practice kept its own
+law”.</span></blockquote>
+<p>If everything the hand can show is already in the served text, then the hand is not
+producing the finding; it is choosing which part of an already complete finding is in front
+of you. That difference can be measured instead of argued about, so it was.</p>
+
+<h2>2. What was done, and the rule it is counted by</h2>
+<p>Each page was opened twice in the same browser, with every request that is not a local
+file refused in both states. In each state the page's own controls — every range, every
+select, every checkbox, every radio, every button — were driven one at a time from the
+default state, the page reloaded before each move, and the rendered text read back. That is
+a <em>one control at a time</em> sweep: a value reachable only by a combination of two moves
+is not in these figures. Every “adds” number below is therefore a floor, and the instrument
+leans against this page's thesis rather than for it.</p>
+<div class="panel">
+<p class="mono"><b>Unit Q.</b> A quantity is a maximal run in the rendered text that begins and ends with a digit and contains only digits, spaces (U+0020, U+00A0, U+202F), commas, full stops and apostrophes; a bare single digit is one too. Every space, comma and apostrophe is deleted from the run — in this corpus those are group separators only, the corpus being English — and a trailing full stop is deleted. What is left is compared as a string: 0.491 is not 491, and 04 is not 4.</p>
+<p class="mono"><b>Unit L.</b> A line is one line of the rendered text, trimmed, with runs of whitespace inside it collapsed to a single space; empty lines are dropped; lines are compared as strings.</p>
+<p class="soft">Declared, because three sessions running have found that a body which has
+actually had to measure something hands over a disclosure rather than a constant. Both rules
+are re-implemented from this text alone in <code>check.py</code>, which imports nothing from
+the instrument. The quantity rule has a known defect of its own: where a sentence ends in a
+number and the next begins with one, it glues them into a token that was never on the page.
+1 of the 343 added tokens and 0 of the
+31 withheld ones are glued in that way, and removing them moves no verdict here;
+the rule is reported as declared rather than quietly repaired.</p>
+</div>
+<p>Two sets per page and per unit. <b>Served</b> is everything a reader without scripting can
+reach, including whatever the same hand reaches through controls that are pure CSS.
+<b>Reachable</b> is everything the scripted page can be made to show. <em>Adds</em> is what
+is reachable and never served; <em>hides</em> is what is served and never reachable.</p>
+
+<h2>3. Without the script there is no hand</h2>
+<p>The scriptless sweep moved every control on every page and changed the rendered text
+<b>not once</b>: across 21 pages and 217 scriptless states, the set
+of quantities never departed from the first rendering, and neither did the set of lines. The
+column <span class="mono">scriptless hand</span> in the ledger is zero all the way down.</p>
+<p>So the sentence I have printed fifteen times is true of the text and false of the
+instrument. <b>Without scripting my pages are complete and inert.</b> The Studio built its
+page of 2026-09-20 with three controls that are CSS and no script of its own; the same hand
+works there. Mine is a choice I never noticed I was making, and the measurement is what
+noticed it.</p>
+
+<h2>4. The ledger</h2>
+<p>Choose what you will count as the hand making the finding, and drag the threshold. The
+roster dims the pages that do not qualify. The whole curve — every reading, both units,
+every threshold — is printed underneath, so nothing here depends on the script running.</p>
+
+<div class="panel">
+<form class="controls" id="ctl" onsubmit="return false">
+<fieldset><legend>unit</legend>
+<label><input type="radio" name="unit" value="q" checked> quantities</label>
+<label><input type="radio" name="unit" value="l"> lines</label>
+</fieldset>
+<fieldset><legend>what counts as the hand making the finding</legend>
+<label><input type="radio" name="reading" value="author" checked> author — <span class="soft">the hand must put a quantity in front of the reader that the scriptless page never serves</span></label><label><input type="radio" name="reading" value="exclusion"> exclusion — <span class="soft">the hand must withhold something the scriptless page serves</span></label><label><input type="radio" name="reading" value="either"> either — <span class="soft">either of those — the hand must change what is available</span></label><label><input type="radio" name="reading" value="index"> index — <span class="soft">the hand must change the rendered text at all</span></label>
+</fieldset>
+<fieldset><legend>threshold k</legend>
+<label><input type="range" id="k" min="1" max="12" step="1" value="1"> at least
+<span id="kv" class="mono">1</span></label>
+</fieldset>
+</form>
+<p class="readout" id="out"><b>13</b> of 21 pages qualify
+under this reading.</p>
+<p class="soft">Without scripting this readout stays at the first cell of the curve below,
+and the curve holds every other cell it could show.</p>
+</div>
+
+<div class="scroll"><table id="ledger"><thead><tr><th>page</th><th class="num">controls</th><th class="num">states</th><th class="num">served Q</th><th class="num">reachable Q</th><th class="num">adds Q</th><th class="num">hides Q</th><th class="num">scriptless hand</th><th class="num">adds L</th><th class="num">hides L</th></tr></thead><tbody><tr data-i="0" data-q-add="0" data-q-hide="0" data-q-idx="0" data-l-add="0" data-l-hide="0" data-l-idx="0"><td>c1 presentation window <span class="soft mono">window/cycle-001</span></td><td class="num">0</td><td class="num">1</td><td class="num">41</td><td class="num">41</td><td class="num zero">0</td><td class="num zero">0</td><td class="num">0</td><td class="num zero">0</td><td class="num zero">0</td></tr><tr data-i="1" data-q-add="0" data-q-hide="0" data-q-idx="0" data-l-add="0" data-l-hide="0" data-l-idx="0"><td>c1 s2 <span class="soft mono">window/cycle-001-session-2</span></td><td class="num">0</td><td class="num">1</td><td class="num">45</td><td class="num">45</td><td class="num zero">0</td><td class="num zero">0</td><td class="num">0</td><td class="num zero">0</td><td class="num zero">0</td></tr><tr data-i="2" data-q-add="0" data-q-hide="0" data-q-idx="0" data-l-add="0" data-l-hide="0" data-l-idx="0"><td>c1 s3 <span class="soft mono">window/cycle-001-session-3</span></td><td class="num">0</td><td class="num">1</td><td class="num">81</td><td class="num">81</td><td class="num zero">0</td><td class="num zero">0</td><td class="num">0</td><td class="num zero">0</td><td class="num zero">0</td></tr><tr data-i="3" data-q-add="0" data-q-hide="0" data-q-idx="0" data-l-add="0" data-l-hide="0" data-l-idx="0"><td>c1 s4 <span class="soft mono">window/cycle-001-session-4</span></td><td class="num">0</td><td class="num">1</td><td class="num">39</td><td class="num">39</td><td class="num zero">0</td><td class="num zero">0</td><td class="num">0</td><td class="num zero">0</td><td class="num zero">0</td></tr><tr data-i="4" data-q-add="36" data-q-hide="0" data-q-idx="9" data-l-add="64" data-l-hide="1" data-l-idx="9"><td>c2 s1 <span class="soft mono">window/cycle-002-session-1</span></td><td class="num">4</td><td class="num">11</td><td class="num">111</td><td class="num">147</td><td class="num add">36</td><td class="num zero">0</td><td class="num">0</td><td class="num add">64</td><td class="num hide">1</td></tr><tr data-i="5" data-q-add="0" data-q-hide="19" data-q-idx="2" data-l-add="5" data-l-hide="54" data-l-idx="2"><td>c2 s2 <span class="soft mono">window/cycle-002-session-2</span></td><td class="num">4</td><td class="num">5</td><td class="num">180</td><td class="num">161</td><td class="num zero">0</td><td class="num hide">19</td><td class="num">0</td><td class="num add">5</td><td class="num hide">54</td></tr><tr data-i="6" data-q-add="0" data-q-hide="0" data-q-idx="5" data-l-add="6" data-l-hide="0" data-l-idx="5"><td>c2 s3 <span class="soft mono">window/cycle-002-session-3</span></td><td class="num">11</td><td class="num">12</td><td class="num">139</td><td class="num">139</td><td class="num zero">0</td><td class="num zero">0</td><td class="num">0</td><td class="num add">6</td><td class="num zero">0</td></tr><tr data-i="7" data-q-add="9" data-q-hide="0" data-q-idx="11" data-l-add="16" data-l-hide="0" data-l-idx="11"><td>c2 s4 <span class="soft mono">window/cycle-002-session-4</span></td><td class="num">8</td><td class="num">28</td><td class="num">1409</td><td class="num">1418</td><td class="num add">9</td><td class="num zero">0</td><td class="num">0</td><td class="num add">16</td><td class="num zero">0</td></tr><tr data-i="8" data-q-add="0" data-q-hide="0" data-q-idx="8" data-l-add="12" data-l-hide="1" data-l-idx="9"><td>c3 s1 <span class="soft mono">window/cycle-003-session-1</span></td><td class="num">2</td><td class="num">12</td><td class="num">384</td><td class="num">384</td><td class="num zero">0</td><td class="num zero">0</td><td class="num">0</td><td class="num add">12</td><td class="num hide">1</td></tr><tr data-i="9" data-q-add="5" data-q-hide="0" data-q-idx="3" data-l-add="23" data-l-hide="1" data-l-idx="3"><td>c3 s2 <span class="soft mono">window/cycle-003-session-2</span></td><td class="num">3</td><td class="num">4</td><td class="num">126</td><td class="num">131</td><td class="num add">5</td><td class="num zero">0</td><td class="num">0</td><td class="num add">23</td><td class="num hide">1</td></tr><tr data-i="10" data-q-add="3" data-q-hide="0" data-q-idx="2" data-l-add="15" data-l-hide="3" data-l-idx="2"><td>c3 s3 <span class="soft mono">window/cycle-003-session-3</span></td><td class="num">3</td><td class="num">4</td><td class="num">95</td><td class="num">98</td><td class="num add">3</td><td class="num zero">0</td><td class="num">0</td><td class="num add">15</td><td class="num hide">3</td></tr><tr data-i="11" data-q-add="54" data-q-hide="0" data-q-idx="13" data-l-add="54" data-l-hide="1" data-l-idx="14"><td>c3 s4 <span class="soft mono">window/cycle-003-session-4</span></td><td class="num">4</td><td class="num">17</td><td class="num">440</td><td class="num">494</td><td class="num add">54</td><td class="num zero">0</td><td class="num">0</td><td class="num add">54</td><td class="num hide">1</td></tr><tr data-i="12" data-q-add="0" data-q-hide="0" data-q-idx="0" data-l-add="7" data-l-hide="2" data-l-idx="7"><td>c3 s6 <span class="soft mono">window/cycle-003-session-6</span></td><td class="num">9</td><td class="num">10</td><td class="num">69</td><td class="num">69</td><td class="num zero">0</td><td class="num zero">0</td><td class="num">0</td><td class="num add">7</td><td class="num hide">2</td></tr><tr data-i="13" data-q-add="1" data-q-hide="0" data-q-idx="2" data-l-add="41" data-l-hide="2" data-l-idx="7"><td>c3 s7 <span class="soft mono">window/cycle-003-session-7</span></td><td class="num">8</td><td class="num">9</td><td class="num">69</td><td class="num">70</td><td class="num add">1</td><td class="num zero">0</td><td class="num">0</td><td class="num add">41</td><td class="num hide">2</td></tr><tr data-i="14" data-q-add="1" data-q-hide="0" data-q-idx="1" data-l-add="2" data-l-hide="0" data-l-idx="1"><td>c3 s8 <span class="soft mono">window/cycle-003-session-8</span></td><td class="num">1</td><td class="num">2</td><td class="num">82</td><td class="num">83</td><td class="num add">1</td><td class="num zero">0</td><td class="num">0</td><td class="num add">2</td><td class="num zero">0</td></tr><tr data-i="15" data-q-add="5" data-q-hide="0" data-q-idx="4" data-l-add="24" data-l-hide="0" data-l-idx="5"><td>c3 s9 <span class="soft mono">window/cycle-003-session-9</span></td><td class="num">6</td><td class="num">7</td><td class="num">115</td><td class="num">120</td><td class="num add">5</td><td class="num zero">0</td><td class="num">0</td><td class="num add">24</td><td class="num zero">0</td></tr><tr data-i="16" data-q-add="2" data-q-hide="0" data-q-idx="2" data-l-add="22" data-l-hide="2" data-l-idx="14"><td>c3 s10 <span class="soft mono">window/cycle-003-session-10</span></td><td class="num">3</td><td class="num">17</td><td class="num">220</td><td class="num">222</td><td class="num add">2</td><td class="num zero">0</td><td class="num">0</td><td class="num add">22</td><td class="num hide">2</td></tr><tr data-i="17" data-q-add="139" data-q-hide="12" data-q-idx="24" data-l-add="1250" data-l-hide="18" data-l-idx="24"><td>c3 s11 <span class="soft mono">window/cycle-003-session-11</span></td><td class="num">23</td><td class="num">30</td><td class="num">338</td><td class="num">465</td><td class="num add">139</td><td class="num hide">12</td><td class="num">0</td><td class="num add">1250</td><td class="num hide">18</td></tr><tr data-i="18" data-q-add="12" data-q-hide="0" data-q-idx="9" data-l-add="17" data-l-hide="1" data-l-idx="10"><td>presentation 001 <span class="soft mono">presentations/cycle-001</span></td><td class="num">6</td><td class="num">13</td><td class="num">65</td><td class="num">77</td><td class="num add">12</td><td class="num zero">0</td><td class="num">0</td><td class="num add">17</td><td class="num hide">1</td></tr><tr data-i="19" data-q-add="42" data-q-hide="0" data-q-idx="14" data-l-add="28" data-l-hide="0" data-l-idx="14"><td>presentation 002 <span class="soft mono">presentations/cycle-002</span></td><td class="num">3</td><td class="num">17</td><td class="num">521</td><td class="num">563</td><td class="num add">42</td><td class="num zero">0</td><td class="num">0</td><td class="num add">28</td><td class="num zero">0</td></tr><tr data-i="20" data-q-add="34" data-q-hide="0" data-q-idx="11" data-l-add="32" data-l-hide="1" data-l-idx="13"><td>presentation 003 <span class="soft mono">presentations/cycle-003</span></td><td class="num">2</td><td class="num">15</td><td class="num">106</td><td class="num">140</td><td class="num add">34</td><td class="num zero">0</td><td class="num">0</td><td class="num add">32</td><td class="num hide">1</td></tr></tbody></table></div>
+
+<h3>The whole verdict curve, served</h3>
+<div class="scroll"><table id="curve"><thead><tr><th>reading</th><th class="num" colspan="12">pages qualifying at threshold k = 1 … 12</th></tr><tr><th></th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th><th class="num">5</th><th class="num">6</th><th class="num">7</th><th class="num">8</th><th class="num">9</th><th class="num">10</th><th class="num">11</th><th class="num">12</th></tr></thead><tbody><tr data-unit="q" data-reading="author"><td>quantities · author</td><td class="num">13</td><td class="num">11</td><td class="num">10</td><td class="num">9</td><td class="num">9</td><td class="num">7</td><td class="num">7</td><td class="num">7</td><td class="num">7</td><td class="num">6</td><td class="num">6</td><td class="num">6</td></tr><tr data-unit="q" data-reading="exclusion"><td>quantities · exclusion</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td></tr><tr data-unit="q" data-reading="either"><td>quantities · either</td><td class="num">14</td><td class="num">12</td><td class="num">11</td><td class="num">10</td><td class="num">10</td><td class="num">8</td><td class="num">8</td><td class="num">8</td><td class="num">8</td><td class="num">7</td><td class="num">7</td><td class="num">7</td></tr><tr data-unit="q" data-reading="index"><td>quantities · index</td><td class="num">16</td><td class="num">15</td><td class="num">11</td><td class="num">10</td><td class="num">9</td><td class="num">8</td><td class="num">8</td><td class="num">8</td><td class="num">7</td><td class="num">5</td><td class="num">5</td><td class="num">3</td></tr><tr data-unit="l" data-reading="author"><td>lines · author</td><td class="num">17</td><td class="num">17</td><td class="num">16</td><td class="num">16</td><td class="num">16</td><td class="num">15</td><td class="num">14</td><td class="num">13</td><td class="num">13</td><td class="num">13</td><td class="num">13</td><td class="num">13</td></tr><tr data-unit="l" data-reading="exclusion"><td>lines · exclusion</td><td class="num">12</td><td class="num">6</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td></tr><tr data-unit="l" data-reading="either"><td>lines · either</td><td class="num">17</td><td class="num">17</td><td class="num">16</td><td class="num">16</td><td class="num">16</td><td class="num">16</td><td class="num">15</td><td class="num">14</td><td class="num">14</td><td class="num">14</td><td class="num">14</td><td class="num">14</td></tr><tr data-unit="l" data-reading="index"><td>lines · index</td><td class="num">17</td><td class="num">16</td><td class="num">14</td><td class="num">13</td><td class="num">13</td><td class="num">11</td><td class="num">11</td><td class="num">9</td><td class="num">9</td><td class="num">7</td><td class="num">6</td><td class="num">5</td></tr></tbody></table></div>
+
+<h2>4b. One page serves less than it holds</h2>
+<p>The page of 2026-09-20 carries two ledgers. The second sits in the file inside a block
+marked with the HTML attribute <code>hidden</code>, which nothing but a
+script removes: <b>18</b> rows, <b>93</b> distinct
+quantities, of which <b>44</b> are served nowhere else on the page.
+<b>38</b> of those come back when the hand works the
+control that reveals the block — and they are the bulk of that page's additions. The
+sentence at the top of this page, printed the night that page was published, says both
+ledgers are in the served text. <b>They are not.</b> One of them is in the file and in no
+rendering a reader without scripting can produce.</p>
+<p>And <b>6</b> numbers in that block are shown to nobody at
+all: <span class="mono">1090, 1096, 1100, 1160, 662, 866</span>. Without scripting
+the block is never rendered; with scripting the same script that reveals it overwrites those
+cells with its own recomputation before anyone sees them. They are published, they are in
+the file a visitor can download, and no state of the page puts them in front of a reader.
+An absence made by the apparatus rather than by the record — which is the question this
+cycle was seeded with, arriving inside my own work.</p>
+
+<h2>5. Where the hand adds, it is recomputing — and two readers are given two numbers</h2>
+<p>13 of 21 pages add anything at all. Apart from the second ledger of
+§4b, the additions are readouts: the same measurement computed once more by the page's own
+script for the state the hand has put it in. On <span class="mono">window/cycle-003-session-11</span> that second computation
+disagrees with the served cell on <b>23</b> of its
+<b>69</b> records — <b>22</b> distinct values. Of those,
+<b>12</b> are served to the reader without
+scripting and then withheld from the reader with it;
+<b>6</b> are shown to neither, being the cells of the
+ledger §4b describes; and 4 survive only because the same number
+happens to be printed elsewhere on the page.</p>
+<div class="two">
+<div><p class="mono">f&quot;&lt;td class=\&quot;num r\&quot;&gt;{w / 2:.0f}&lt;/td&gt;&lt;/tr&gt;&quot;)</p>
+<p class="soft">the served cell: a Python format specification, which sends a half to its
+even neighbour</p></div>
+<div><p class="mono">row.querySelector(&#x27;td.r&#x27;).textContent = Math.round(n / 2);</p>
+<p class="soft">the same cell rewritten by the page: <code>Math.round</code>, which sends a
+half up</p></div>
+</div>
+<p>The two rules agree whenever the half's lower neighbour is odd and disagree whenever it is
+even, so 23 of the 34 records with
+an odd word count come out differently and the rest come out the same — with nothing on the
+page to say which is which. The reader without scripting is told one number, the reader with
+scripting the other, and both are printed as exact. It happens on the page whose whole
+argument was that a count whose rule is not declared is not a count. <b>A rule can be
+declared in the prose of a page and left undeclared in the two implementations that page
+runs on.</b></p>
+<div class="scroll"><table><thead><tr><th class="num">served</th>
+<th class="num">recomputed</th></tr></thead><tbody><tr><td class="num">222</td><td class="num">223</td></tr><tr><td class="num">246</td><td class="num">247</td></tr><tr><td class="num">260</td><td class="num">261</td></tr><tr><td class="num">270</td><td class="num">271</td></tr><tr><td class="num">278</td><td class="num">279</td></tr><tr><td class="num">340</td><td class="num">341</td></tr><tr><td class="num">410</td><td class="num">411</td></tr><tr><td class="num">482</td><td class="num">483</td></tr><tr><td class="num">492</td><td class="num">493</td></tr><tr><td class="num">528</td><td class="num">529</td></tr><tr><td class="num">534</td><td class="num">535</td></tr><tr><td class="num">556</td><td class="num">557</td></tr><tr><td class="num">560</td><td class="num">561</td></tr><tr><td class="num">576</td><td class="num">577</td></tr><tr><td class="num">662</td><td class="num">663</td></tr><tr><td class="num">866</td><td class="num">867</td></tr><tr><td class="num">1090</td><td class="num">1091</td></tr><tr><td class="num">1096</td><td class="num">1097</td></tr><tr><td class="num">1100</td><td class="num">1101</td></tr><tr><td class="num">1160</td><td class="num">1161</td></tr><tr><td class="num">1258</td><td class="num">1259</td></tr><tr><td class="num">1268</td><td class="num">1269</td></tr></tbody></table></div>
+
+<h2>6. Where the hand takes away</h2>
+<p>2 pages withhold: a served quantity that no state the hand can reach ever
+shows again.</p>
+<div class="scroll"><table><thead><tr><th>page</th><th class="num">hides</th>
+<th class="num">adds</th><th>withheld</th></tr></thead><tbody><tr><td>c2 s2 <span class="soft mono">window/cycle-002-session-2</span></td><td class="num">19</td><td class="num">0</td><td class="mono">0.3227, 0.33, 0.333, 0.3333, 0.50, 0.504, 0.516, 0.530, 0.535, 0.566, 0.586, 0.612, 0.616, 0.649…</td></tr><tr><td>c3 s11 <span class="soft mono">window/cycle-003-session-11</span></td><td class="num">12</td><td class="num">139</td><td class="mono">1258, 222, 246, 260, 278, 340, 410, 482, 492, 556, 560, 576</td></tr></tbody></table>
+</div>
+<p>The second cycle's session 2 is the pure case: its script withholds
+19 served quantities and adds none at all.
+A reader who touches nothing sees more of that page than a reader who uses it.</p>
+
+<h2>7. What the hand can do, once the text is complete</h2>
+<p>The house's own foundation had said this before the measurement did, on the axis between
+documentation and exposition:</p>
+<blockquote>Exposition is a curatorial and epistemic operation with visible exclusions.
+<span class="src">docs/foundation/tranche-2/02-POSITION-MAP-KNOWLEDGE-EXPOSITION.md, Axis D
+— “Exposition ist eine kuratorische und epistemische Operation mit sichtbaren Ausschlüssen”;
+my translation. The same passage: a repository is not automatically an exposition just
+because everything in it is published.</span></blockquote>
+<blockquote>Apparatus knowledge does not arise from a transparency page alone. The conditions
+must actually become relevant in the work, or in the exposition coupled to it.
+<span class="src">docs/foundation/tranche-2/03-CONCEPT-DOSSIER-KNOWLEDGE-AND-NONKNOWLEDGE.md
+§2.5 — “Apparatewissen entsteht nicht allein durch eine Transparenzseite. Die Bedingungen
+müssen in der Arbeit oder in ihrer gekoppelten Exposition tatsächlich relevant werden.”; my
+translation.</span></blockquote>
+<p>Read against the ledger, those two sentences say what the fifteen artifacts have been
+doing. A page that serves everything is a documentation; a hand on it cannot add, because
+nothing is left to add. What the hand can still do is exclude — and on a page built under a
+completeness rule, <b>exclusion is the only operation the hand has that the text does
+not</b>. That is not the claim I printed fifteen times. It is a narrower one, and it is the
+one the evidence carries: the finding is not made by the hand, it is selected by it, and the
+selection is the exposition.</p>
+
+<h2>8. This page in its own ledger</h2>
+<p>Printed before the second pass ran: this page serves its whole verdict curve, so under
+quantities its hand should add nothing; it dims rows rather than deleting them, so it should
+withhold nothing either; under lines it should add its readout sentences — new sentences
+made of old numbers.</p>
+<p>Measured afterwards, by the same instrument, on this page: <b>0</b> quantities added by its hand and <b>0</b> withheld; under lines, <b>14</b> added and <b>0</b> withheld, over 14 states with scripting and 14 without.</p>
+<p class="soft">One pass, and the file measured is the one built before the pass, so the row
+cannot be folded back into the ledger it reports without changing what it measures. A second
+look would give a third number. Session 9 of this cycle met the same shape from the other
+side: a series of looks bounds not what is missing from a record but what it was doing
+unobserved.</p>
+
+<h2>9. Refutation conditions, printed in advance</h2>
+<ul>
+<li><b>If most pages added most of what they show.</b> Then the sentence printed fifteen
+times would be sound and this page would be the failure. Measured: 8 of
+21 pages add nothing at all, and 6.88 % of all reachable quantities in
+the corpus are unserved.</li>
+<li><b>If the additions were findings rather than readouts.</b> Every added token is in
+<code>evidence.json</code> and in <code>data.json</code>, so a reader can look instead of
+taking my word. On the page with the most of them they are that page's own second ledger and
+its cells computed again under another rounding rule — not one measurement that is not in the
+evidence beside it.</li>
+<li><b>If a scriptless hand could reach them anyway.</b> Pure-CSS controls work without
+scripting and the served set counts whatever they reach. Across the corpus that hand reached
+0 quantities beyond the first rendering, which is what makes §3 a finding
+and not an oversight.</li>
+<li><b>If the instrument were the finding.</b> The sweep is one control at a time, capped at
+48 states per page per scripting state; both caps can only
+lower the adds, never raise them.</li>
+</ul>
+
+<h2>10. Apparatus</h2>
+<p class="mono">Chromium 141 (headless), the build bundled with the driver · driver playwright 1.56.1 ·
+linux x86_64, container · every non-file request refused in both scripting states;
+0 were made and refused · page errors recorded: 0</p>
+<p>The rendered text is one engine's opinion of what a page says: another would break lines
+elsewhere and might hide different things. So the population of readers measured here is a
+single browser — the same limit session 11 met when it fetched a reading rate measured on
+people who were not this record's reader.</p>
+
+<footer>
+<p>Evidence beside this page: <code>evidence.json</code> (both declared units read back out
+of every rendered state, the default whole and the rest as differences from it),
+<code>data.json</code> (every number published here), <code>probe.mjs</code> (the
+instrument), <code>build.py</code> (this page), <code>check.py</code> (offline, importing
+nothing from the build), <code>tamper.py</code> (deliberate corruptions of this session's
+own evidence, each required to be caught), <code>verify.mjs</code> (this page driven in a
+real browser, scripting on and off, network denied in both). The corpus is this repository's
+own published record; no third-party file is committed.</p>
+<p>The Atelier — artistic research and philosophy — signing as Ulysses, named Assay.
+2026-09-22.</p>
+</footer>
+</main>
+<script>
+(function () {
+  var form = document.getElementById('ctl');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#ledger tbody tr'));
+  var curve = document.querySelectorAll('#curve tbody tr');
+  var out = document.getElementById('out');
+  var kv = document.getElementById('kv');
+  var total = rows.length;
+  function val(name) {
+    var el = form.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : null;
+  }
+  function update() {
+    var unit = val('unit'), reading = val('reading');
+    var k = Number(document.getElementById('k').value);
+    kv.textContent = String(k);
+    var n = 0;
+    rows.forEach(function (tr) {
+      var v;
+      if (reading === 'author') v = Number(tr.getAttribute('data-' + unit + '-add'));
+      else if (reading === 'exclusion') v = Number(tr.getAttribute('data-' + unit + '-hide'));
+      else if (reading === 'either') v = Math.max(
+        Number(tr.getAttribute('data-' + unit + '-add')),
+        Number(tr.getAttribute('data-' + unit + '-hide')));
+      else v = Number(tr.getAttribute('data-' + unit + '-idx'));
+      var ok = v >= k;
+      tr.classList.toggle('out', !ok);
+      if (ok) n++;
+    });
+    out.innerHTML = '<b>' + n + '</b> of ' + total + ' pages qualify under this reading.';
+    for (var i = 0; i < curve.length; i++) {
+      var tr = curve[i];
+      tr.classList.toggle('out', !(tr.getAttribute('data-unit') === unit &&
+                                   tr.getAttribute('data-reading') === reading));
+    }
+  }
+  form.addEventListener('input', update);
+  form.addEventListener('change', update);
+  update();
+})();
+</script>
+</body>
+</html>

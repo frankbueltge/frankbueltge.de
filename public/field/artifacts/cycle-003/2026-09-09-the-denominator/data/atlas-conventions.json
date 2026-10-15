@@ -1,0 +1,125 @@
+{
+ "feed": "atlas.json",
+ "feed_sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+ "records": 521,
+ "schema_fields_observed": 13,
+ "schema": [
+  "artist",
+  "axis_pole",
+  "clusters",
+  "curator_note",
+  "decisive_move",
+  "form",
+  "lab_renderable",
+  "medium_class",
+  "source_url",
+  "title",
+  "venue_prize",
+  "verify_status",
+  "year"
+ ],
+ "conventions": {
+  "A_present_key": {
+   "description": "A cell counts only where the field is present on the record. The convention this practice used on 2026-09-08.",
+   "numerator": 6247,
+   "denominator": 6254,
+   "score": 0.9988807163415414
+  },
+  "B_schema_plain": {
+   "description": "Every field in the schema is expected on every record, each counted equally. Ochoa & Duval eq. 1 as reproduced by Kiraly 2015; metadata-qa-api; Hillmann & Phipps obligation.",
+   "numerator": 6247,
+   "denominator": 6773,
+   "score": 0.9223386977705595
+  },
+  "C_per_field_over_records": {
+   "description": "One rate per field, denominator the record count. Phillips, Zavalina & Tarver 2019; Tarver et al. 2015. Reported as a distribution, not one number.",
+   "per_field": {
+    "artist": {
+     "records_with_value": 521,
+     "share": 1.0
+    },
+    "axis_pole": {
+     "records_with_value": 521,
+     "share": 1.0
+    },
+    "clusters": {
+     "records_with_value": 514,
+     "share": 0.9865642994241842
+    },
+    "curator_note": {
+     "records_with_value": 2,
+     "share": 0.003838771593090211
+    },
+    "decisive_move": {
+     "records_with_value": 521,
+     "share": 1.0
+    },
+    "form": {
+     "records_with_value": 521,
+     "share": 1.0
+    },
+    "lab_renderable": {
+     "records_with_value": 521,
+     "share": 1.0
+    },
+    "medium_class": {
+     "records_with_value": 521,
+     "share": 1.0
+    },
+    "source_url": {
+     "records_with_value": 521,
+     "share": 1.0
+    },
+    "title": {
+     "records_with_value": 521,
+     "share": 1.0
+    },
+    "venue_prize": {
+     "records_with_value": 521,
+     "share": 1.0
+    },
+    "verify_status": {
+     "records_with_value": 521,
+     "share": 1.0
+    },
+    "year": {
+     "records_with_value": 521,
+     "share": 1.0
+    }
+   },
+   "min": 0.003838771593090211,
+   "median": 1.0,
+   "max": 1.0
+  },
+  "D_no_ratio": {
+   "description": "Per-element occurrence counts, no denominator and no ratio at all. qa-catalogue.",
+   "counts": {
+    "artist": 521,
+    "axis_pole": 521,
+    "clusters": 514,
+    "curator_note": 2,
+    "decisive_move": 521,
+    "form": 521,
+    "lab_renderable": 521,
+    "medium_class": 521,
+    "source_url": 521,
+    "title": 521,
+    "venue_prize": 521,
+    "verify_status": 521,
+    "year": 521
+   }
+  },
+  "E_weighted_by_obligation": {
+   "description": "Fields weighted by an obligation tier (mandatory/recommended/optional). Lorenzini et al. 2021; data.europa.eu MQA; F-UJI; Kiraly 2015 eq. 2.",
+   "computable": false,
+   "why_not": "The catalogue declares no application profile and no obligation tiers, so no weights exist to apply. The convention family cannot be run against it at all."
+  }
+ },
+ "sparse_fields_under_5pct": {
+  "curator_note": {
+   "records_with_value": 2,
+   "share": 0.003838771593090211
+  }
+ },
+ "gap_A_minus_B_points": 7.654201857098187
+}

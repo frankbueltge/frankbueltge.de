@@ -1,0 +1,397 @@
+{
+ "note": "Session 167. Each corruption of this artifact's own evidence, and the named check that must catch it. Applied to a copy; nothing in the repository is modified.",
+ "n_corruptions": 30,
+ "n_caught": 30,
+ "n_missed": 0,
+ "corruptions": [
+  {
+   "corruption": "shipped violation total nudged from 167 to 166",
+   "expected_check": "baseline/shipped-reproduces-167-0-0-100",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 8,
+   "failing_checks": [
+    "lattice/relation-counts-sum-to-total",
+    "baseline/shipped-reproduces-167-0-0-100",
+    "interactions/recomputed-from-the-lattice",
+    "interactions/marginals-recomputed-from-the-lattice",
+    "page/rebuilds-byte-identical-from-data",
+    "page/the-interactive-figure-reads-committed-numbers-only",
+    "correction/audited-files-digests-match-the-files-as-they-stand",
+    "correction/the-2026-09-20-undercount-is-three"
+   ]
+  },
+  {
+   "corruption": "full repair headline raised by one without its percentage",
+   "expected_check": "lattice/headline-pct-consistent",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 6,
+   "failing_checks": [
+    "lattice/headline-pct-consistent",
+    "headline/groups-recomputed-from-the-lattice",
+    "headline/full-repair-moves-four-repositories-and-the-number-not-at-all",
+    "page/rebuilds-byte-identical-from-data",
+    "page/the-interactive-figure-reads-committed-numbers-only",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "one of the 32 subsets deleted",
+   "expected_check": "lattice/32-variants",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 12,
+   "failing_checks": [
+    "lattice/32-variants",
+    "lattice/every-subset-exactly-once",
+    "baseline/every-variant-has-a-distinct-fingerprints-digest-per-repair-set",
+    "interactions/recomputed-from-the-lattice",
+    "interactions/marginals-recomputed-from-the-lattice",
+    "headline/groups-recomputed-from-the-lattice",
+    "headline/every-variant-in-exactly-one-group",
+    "headline/sixteen-subsets-move-the-set",
+    "false-notices/32-rows-matching-the-lattice",
+    "page/rebuilds-byte-identical-from-data",
+    "page/the-interactive-figure-reads-committed-numbers-only",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "the negative control made to fire on one subset",
+   "expected_check": "lattice/M4-control-zero-everywhere",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "lattice/M4-control-zero-everywhere",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "one relation's count edited so the row no longer sums",
+   "expected_check": "lattice/relation-counts-sum-to-total",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "lattice/relation-counts-sum-to-total",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "the shipped rule's digest replaced",
+   "expected_check": "baseline/shipped-digests-are-the-2026-09-18-rule",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 4,
+   "failing_checks": [
+    "baseline/shipped-digests-are-the-2026-09-18-rule",
+    "landed/v1-is-untouched",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "the landed subset's digest replaced",
+   "expected_check": "landed/v2-digests-equal-the-01110-variant",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "landed/v2-digests-equal-the-01110-variant",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "a subset's repair list made to disagree with its own identifier",
+   "expected_check": "lattice/repairs-match-variant-id",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "lattice/repairs-match-variant-id",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "a repository added to a subset's gains without changing its count",
+   "expected_check": "lattice/symmetric-difference-consistent",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 4,
+   "failing_checks": [
+    "lattice/symmetric-difference-consistent",
+    "headline/groups-recomputed-from-the-lattice",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "an interaction value rewritten",
+   "expected_check": "interactions/recomputed-from-the-lattice",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 4,
+   "failing_checks": [
+    "interactions/recomputed-from-the-lattice",
+    "predictions/observed-values-match-the-committed-tables",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "a second repair declared to change sign",
+   "expected_check": "interactions/R7-is-the-only-sign-changing-marginal",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "interactions/R7-is-the-only-sign-changing-marginal",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "a marginal-effect row's arithmetic broken",
+   "expected_check": "interactions/marginals-recomputed-from-the-lattice",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "interactions/marginals-recomputed-from-the-lattice",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "a subset moved into the wrong headline group",
+   "expected_check": "headline/groups-recomputed-from-the-lattice",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 4,
+   "failing_checks": [
+    "headline/groups-recomputed-from-the-lattice",
+    "headline/every-variant-in-exactly-one-group",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "a whole headline group deleted",
+   "expected_check": "headline/every-variant-in-exactly-one-group",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 5,
+   "failing_checks": [
+    "headline/every-variant-in-exactly-one-group",
+    "headline/four-distinct-outcomes-and-95.2-appears-twice",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand",
+    "correction/outcomes-match-the-headline-table"
+   ]
+  },
+  {
+   "corruption": "the C1 corpus digest altered",
+   "expected_check": "corpora/digests-match-2026-09-20",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "corpora/digests-match-2026-09-20",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "one pinned blob declared excluded",
+   "expected_check": "corpora/896-inputs-none-excluded",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "corpora/896-inputs-none-excluded",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "R7's false-notice count reduced to look harmless",
+   "expected_check": "false-notices/R7-multiplies-them-and-puts-decisions-on-them",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 4,
+   "failing_checks": [
+    "false-notices/R7-multiplies-them-and-puts-decisions-on-them",
+    "page/rebuilds-byte-identical-from-data",
+    "page/the-interactive-figure-reads-committed-numbers-only",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "the shipped rule given a decision at risk it does not have",
+   "expected_check": "false-notices/reference-of-2026-09-20-reproduced-by-the-shipped-rule",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 6,
+   "failing_checks": [
+    "false-notices/reference-of-2026-09-20-reproduced-by-the-shipped-rule",
+    "false-notices/R7-multiplies-them-and-puts-decisions-on-them",
+    "false-notices/landed-subset-identical-to-shipped",
+    "page/rebuilds-byte-identical-from-data",
+    "page/the-interactive-figure-reads-committed-numbers-only",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "the landed subset's false notices made to differ from the shipped rule's",
+   "expected_check": "false-notices/landed-subset-identical-to-shipped",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 4,
+   "failing_checks": [
+    "false-notices/landed-subset-identical-to-shipped",
+    "page/rebuilds-byte-identical-from-data",
+    "page/the-interactive-figure-reads-committed-numbers-only",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "the full repair's defect class downgraded to latent",
+   "expected_check": "adjudication/full-repair-has-one-defect-class-of-nine-inputs",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "adjudication/full-repair-has-one-defect-class-of-nine-inputs",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "a closure claimed for the defect that is not closed",
+   "expected_check": "adjudication/four-closures-checked",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "adjudication/four-closures-checked",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "the refuted prediction marked confirmed",
+   "expected_check": "predictions/each-verdict-follows-from-its-own-threshold",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 5,
+   "failing_checks": [
+    "predictions/six-resolved-five-confirmed-one-refuted",
+    "predictions/P4-is-the-refuted-one",
+    "predictions/each-verdict-follows-from-its-own-threshold",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "a prediction's observed value detached from the tables",
+   "expected_check": "predictions/observed-values-match-the-committed-tables",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "predictions/observed-values-match-the-committed-tables",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "the fabricated holder edited out of the decisive case",
+   "expected_check": "evidence/the-microsoft-case-carries-all-three-readings",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "evidence/the-microsoft-case-carries-all-three-readings",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "the record of the delegate's wrong figures removed",
+   "expected_check": "sources/the-delegate-discrepancy-is-recorded",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "sources/the-delegate-discrepancy-is-recorded",
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "a number edited in the published page",
+   "expected_check": "page/rebuilds-byte-identical-from-data",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 2,
+   "failing_checks": [
+    "page/rebuilds-byte-identical-from-data",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "a sentence added claiming a person read the classes",
+   "expected_check": "page/claims-no-person-read-anything",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "page/rebuilds-byte-identical-from-data",
+    "page/claims-no-person-read-anything",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "a number changed inside the interactive figure's own data block",
+   "expected_check": "page/the-interactive-figure-reads-committed-numbers-only",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "page/rebuilds-byte-identical-from-data",
+    "page/the-interactive-figure-reads-committed-numbers-only",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "an outside asset added to the page",
+   "expected_check": "page/no-outside-fetch-and-no-remote-asset",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "page/rebuilds-byte-identical-from-data",
+    "page/no-outside-fetch-and-no-remote-asset",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  },
+  {
+   "corruption": "the amendment's reason struck from the pre-registration",
+   "expected_check": "page/prints-the-preregistrations-amendment-reason",
+   "caught": true,
+   "exit": 1,
+   "n_failing_checks": 3,
+   "failing_checks": [
+    "page/rebuilds-byte-identical-from-data",
+    "page/prints-the-preregistrations-amendment-reason",
+    "correction/audited-files-digests-match-the-files-as-they-stand"
+   ]
+  }
+ ]
+}

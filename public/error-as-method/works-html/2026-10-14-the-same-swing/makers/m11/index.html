@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Width of a Swing</title>
+<meta name="viewport" content="width=1100">
+<style>
+html,body{margin:0;background:#f3efe6;}
+body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#2a2621}
+canvas{display:block}
+</style></head><body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script>
+// The 40 x 12 greys of record.jpg, row by row, exactly as read from the file.
+const G=[249,255,255,254,222,194,183,182,255,247,235,255,255,228,255,255,248,235,252,255,244,252,255,253,252,255,255,255,255,255,250,244,255,255,255,255,255,245,253,255,255,253,230,179,112,53,18,5,169,238,238,250,249,239,255,234,254,253,251,255,255,255,249,227,249,219,158,120,166,253,255,255,255,242,238,248,251,245,247,255,75,80,79,64,41,26,24,28,79,255,255,255,250,243,255,254,255,255,220,202,244,214,140,126,130,109,50,18,96,211,221,155,255,243,209,213,235,251,255,255,16,21,25,23,19,23,34,45,47,218,216,209,255,255,255,247,222,224,127,76,128,94,21,40,28,24,5,7,64,121,96,28,247,163,71,29,26,29,29,30,50,48,41,31,22,19,24,29,37,86,20,85,248,255,199,149,79,106,36,0,54,37,0,41,41,21,12,23,33,32,32,39,182,110,36,12,22,30,29,28,18,19,20,24,32,42,53,59,19,40,0,44,118,79,58,59,2,40,24,15,49,35,11,44,33,19,30,51,35,0,10,52,22,0,0,10,40,50,48,47,36,32,28,26,26,27,26,24,19,54,44,62,26,0,0,22,24,35,40,41,40,31,23,25,4,13,33,48,41,20,13,20,46,36,36,44,37,14,0,0,29,27,24,26,29,30,27,24,37,24,0,35,37,27,50,0,49,25,26,27,11,23,40,27,37,41,24,2,14,45,48,25,31,28,31,35,25,16,28,51,38,12,11,38,42,21,24,49,33,21,14,23,39,46,36,24,39,9,24,44,23,21,46,53,189,165,102,75,23,7,56,23,27,25,29,33,35,68,157,245,0,52,132,167,112,26,0,24,25,20,30,72,141,213,255,255,126,83,40,0,2,106,223,255,255,255,239,182,63,0,36,15,12,109,209,247,249,255,255,255,43,115,210,244,179,81,40,53,27,60,121,194,252,255,255,255,255,255,206,123,96,184,255,255,239,255,255,231,127,59,79,37,75,188,255,255,255,255,255,234,250,252,255,255,255,249,227,226,240,236,235,241,251,255,251,244,253,255,255,255,232,255,255,236,255,255,249,255,255,236,227,130,225,255,255,243,228,250,255,255];
+const W=40,H=12,g=(x,y)=>G[y*W+x];
+const c=document.getElementById('c'),r=window.devicePixelRatio||1;
+c.width=1100*r;c.height=800*r;c.style.width='1100px';c.style.height='800px';
+const k=c.getContext('2d');k.scale(r,r);
+k.fillStyle='#f3efe6';k.fillRect(0,0,1100,800);
+
+const L=120,R=980,T=170,B=600,cw=(R-L)/W,rh=(B-T)/H;
+const cx=x=>L+(x+.5)*cw, ry=y=>T+(y+.5)*rh;
+
+// edge of the dark band in one column, sub-pixel, where grey crosses 128
+function edge(x,fromTop){
+  const ys=[...Array(H).keys()]; if(!fromTop) ys.reverse();
+  for(let i=1;i<ys.length;i++){const a=g(x,ys[i-1]),b=g(x,ys[i]);
+    if(a>=128&&b<128){const t=(a-128)/(a-b);return ys[i-1]+(ys[i]-ys[i-1])*t;}}
+  return ys[0];
+}
+const upE=[],loE=[];
+for(let x=0;x<W;x++){upE.push(edge(x,true));loE.push(edge(x,false));}
+
+// faint row rules: the grid the record was squeezed into
+k.strokeStyle='rgba(42,38,33,.06)';k.lineWidth=1;
+for(let y=0;y<=H;y++){k.beginPath();k.moveTo(L,T+y*rh+.5);k.lineTo(R,T+y*rh+.5);k.stroke();}
+
+// the mean line of the band
+let mid=0;for(let x=0;x<W;x++)mid+=(upE[x]+loE[x])/2;mid/=W;
+k.strokeStyle='rgba(150,60,40,.35)';k.setLineDash([2,6]);
+k.beginPath();k.moveTo(L-30,ry(mid));k.lineTo(R+30,ry(mid));k.stroke();k.setLineDash([]);
+
+// each column: one vertical stroke of ink, its density taken from the twelve greys
+for(let x=0;x<W;x++){
+  const grd=k.createLinearGradient(0,T,0,B);
+  for(let y=0;y<H;y++){const a=(1-g(x,y)/255)*.92;
+    grd.addColorStop((y+.5)/H,'rgba(30,27,24,'+a.toFixed(3)+')');}
+  grd.addColorStop(0,'rgba(30,27,24,'+((1-g(x,0)/255)*.92).toFixed(3)+')');
+  grd.addColorStop(1,'rgba(30,27,24,'+((1-g(x,H-1)/255)*.92).toFixed(3)+')');
+  k.fillStyle=grd;
+  k.fillRect(cx(x)-cw*.31,T,cw*.62,B-T);
+}
+
+// the two edges: what survives of the values
+function trace(arr){k.beginPath();
+  for(let x=0;x<W;x++){const px=cx(x),py=ry(arr[x]);
+    if(!x)k.moveTo(px,py);else{const qx=cx(x-1),qy=ry(arr[x-1]);
+      k.bezierCurveTo((qx+px)/2,qy,(qx+px)/2,py,px,py);}}
+  k.stroke();}
+k.strokeStyle='#a33a24';k.lineWidth=1.6;trace(upE);trace(loE);
+for(let x=0;x<W;x++)for(const v of[upE[x],loE[x]]){k.fillStyle='#a33a24';
+  k.beginPath();k.arc(cx(x),ry(v),2.4,0,7);k.fill();}
+
+// below: the width alone, the one thing the record still tells clearly
+const b0=690,s=9;
+k.strokeStyle='rgba(42,38,33,.15)';k.lineWidth=1;
+k.beginPath();k.moveTo(L,b0+.5);k.lineTo(R,b0+.5);k.stroke();
+for(let x=0;x<W;x++){const w=loE[x]-upE[x];
+  k.fillStyle='#2a2621';k.fillRect(cx(x)-1,b0-w*s/2,2,w*s);}
+
+// the source, at a size where its pixels can be counted
+const ps=3,ox=R-W*ps,oy=740;
+for(let y=0;y<H;y++)for(let x=0;x<W;x++){const v=g(x,y);
+  k.fillStyle='rgb('+v+','+v+','+v+')';k.fillRect(ox+x*ps,oy+y*ps,ps,ps);}
+k.strokeStyle='rgba(42,38,33,.3)';k.strokeRect(ox-.5,oy-.5,W*ps+1,H*ps+1);
+
+k.fillStyle='#2a2621';k.font='italic 30px Georgia,serif';
+k.fillText('Width of a Swing',L,92);
+k.font='14px Georgia,serif';k.fillStyle='rgba(42,38,33,.7)';
+k.fillText('forty columns of a record too dense for its picture: the values are lost, their reach is kept',L,122);
+k.font='12px Georgia,serif';k.fillStyle='rgba(42,38,33,.55)';
+k.fillText('above: each column\u2019s twelve greys, and where the ink gives out \u00b7 below: its reach alone',L,oy+22);
+k.textAlign='right';k.fillText('the whole source, 40 × 12',ox-12,oy+22);
+</script></body></html>

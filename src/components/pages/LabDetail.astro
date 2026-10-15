@@ -4,6 +4,9 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import { getLabEntry } from '@/lib/lab'
 import { SITE, type Locale } from '@/lib/site'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props { slug: string }
 const { slug } = Astro.props
@@ -22,15 +25,14 @@ const url = `${SITE.url}${getRelativeLocaleUrl(locale, `/lab/${slug}`)}`
 ---
 
 <main id="main" class="mx-auto w-full max-w-[760px] flex-1 px-6 py-16 sm:py-24">
-  <a href={getRelativeLocaleUrl(locale, '/lab')} class="font-mono text-xs text-fg-muted transition-colors hover:text-fg">← {t(locale, 'lab.back')}</a>
+  <a href={getRelativeLocaleUrl(locale, '/lab')} class="sheet-link">← {t(locale, 'lab.back')}</a>
 
   <div class="mt-8 flex flex-wrap gap-2">
     {entry.data.tags.map((tag, i) => (
       <span class={`rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.06em] ${i % 2 === 0 ? 'border-cyan/30 text-cyan' : 'border-accent/30 text-accent-soft'}`}>{tag}</span>
     ))}
   </div>
-  <h1 class="mt-5 text-[clamp(32px,5vw,52px)] font-bold leading-[1.05] tracking-[-0.03em]">{entry.data.title}</h1>
-  <p class="mt-4 text-lg text-fg-muted sm:text-xl">{entry.data.description}</p>
+  <SheetHead class="mt-5 mb-0" title={entry.data.title} sub={entry.data.description} />
 
   <div class="mt-6 flex flex-wrap items-center gap-3 border-b border-line pb-6 font-mono text-xs text-fg-faint">
     <span class="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-accent to-cyan text-[13px] font-semibold text-bg">FB</span>

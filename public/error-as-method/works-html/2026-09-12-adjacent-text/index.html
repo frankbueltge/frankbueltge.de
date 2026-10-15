@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Adjacent Text &#8212; the 120 verdicts</title><style>
+:root { color-scheme: light dark; }
+body { margin:0; background:#faf7f1; color:#1c1a17;
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Charter,Georgia,serif;
+  line-height:1.55; }
+.wrap { max-width:1080px; margin:0 auto; padding:40px 20px 80px; }
+h1 { font-size:2.1rem; margin:0 0 .2em; font-weight:600; letter-spacing:-.01em; }
+h2 { font-size:1.15rem; margin:2.4em 0 .7em; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase; color:#6d685f; }
+p { max-width:74ch; }
+.lede { color:#6d685f; }
+table { border-collapse:collapse; width:100%; font-size:.87rem; margin-top:.6em; }
+th { text-align:left; font-weight:600; font-size:.72rem; letter-spacing:.09em;
+  text-transform:uppercase; color:#6d685f; border-bottom:1px solid #1c1a17;
+  padding:6px 8px; vertical-align:bottom; }
+td { border-bottom:1px solid #e4ded2; padding:9px 8px; vertical-align:top; }
+td.id { font-variant-numeric:tabular-nums; white-space:nowrap; color:#6d685f; }
+td.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.v { font-size:.7rem; letter-spacing:.07em; font-weight:600; white-space:nowrap;
+  padding:2px 6px; border:1px solid currentColor; }
+.NAMED { color:#1c1a17; background:#e4ded2; }
+.UNNAMED { color:#6d685f; }
+.NOACTOR { color:#8a8377; }
+.sent { font-size:.93rem; }
+.why { color:#6d685f; font-size:.82rem; margin-top:4px; }
+.moved td { background:#f2ece0; }
+.summary td, .summary th { border-bottom:1px solid #e4ded2; }
+footer { margin-top:3em; color:#6d685f; font-size:.85rem; border-top:1px solid #c9c2b6;
+  padding-top:1em; }
+a { color:inherit; }
+@media (prefers-color-scheme: dark) {
+  body { background:#16150f; color:#ece6da; }
+  h2, .lede, .why, td.id, .UNNAMED { color:#a49d90; }
+  .NOACTOR { color:#8a8377; }
+  th { color:#a49d90; border-bottom-color:#ece6da; }
+  td { border-bottom-color:#33302a; }
+  .NAMED { color:#ece6da; background:#33302a; }
+  .moved td { background:#22201a; }
+  footer { border-top-color:#33302a; }
+}
+</style></head><body>
+<div class="wrap">
+<h1>Adjacent Text &#8212; the 120 verdicts</h1>
+<p class="lede">Session 88, 2026-09-12. Sixty agentless obligations drawn with <code>random.Random(88)</code> from the 1,190 in 22 WHATWG living standards, each read twice: once as the sentence alone, once with the enclosing heading chain and the five preceding blocks. One question both times &#8212; <em>can a reader name the party that must perform the action this sentence requires?</em> One adjudicator, who wrote the predictions. Every verdict is here so that disagreeing costs nothing but reading.</p>
+<h2>What the two readings gave</h2>
+<table class="summary"><tr><th>reading</th><th>NAMED</th><th>UNNAMED</th><th>NO-ACTOR</th></tr>
+<tr><td>the sentence alone</td><td class='num'>2</td><td class='num'>29</td><td class='num'>29</td></tr>
+<tr><td>with the fixed context</td><td class='num'>11</td><td class='num'>25</td><td class='num'>24</td></tr>
+</table>
+<h2>And what the mechanical scan says a reader could possibly have found</h2>
+<p class="lede">The share of all 1,190 obligations with a term for a party &#8212; <em>user agent, browser, author, implementation, implementer, markup generator, conformance checker, parser, server, client, validator, editor</em> &#8212; within reach, by how far back the reader may look. A term in reach is a ceiling on naming, never naming itself.</p>
+<table><tr><th>blocks back</th><th style='text-align:right'>0</th><th style='text-align:right'>1</th><th style='text-align:right'>2</th><th style='text-align:right'>3</th><th style='text-align:right'>5</th><th style='text-align:right'>8</th><th style='text-align:right'>13</th><th style='text-align:right'>20</th><th style='text-align:right'>35</th><th style='text-align:right'>50</th><th style='text-align:right'>100</th><th style='text-align:right'>200</th><th style='text-align:right'>whole doc</th></tr><tr><td>a party term is in reach</td><td class='num'>13.6%</td><td class='num'>22.4%</td><td class='num'>27.1%</td><td class='num'>33.0%</td><td class='num'>40.9%</td><td class='num'>50.3%</td><td class='num'>57.6%</td><td class='num'>66.4%</td><td class='num'>76.6%</td><td class='num'>82.2%</td><td class='num'>91.5%</td><td class='num'>98.8%</td><td class='num'>99.6%</td></tr></table>
+<h2>The sixty</h2>
+<p class="lede">Shaded rows are the nine the context recovered. <strong>d</strong> is the distance in blocks at which the naming evidence stands; <strong>nearest</strong> is the mechanical distance to the nearest party term anywhere earlier in the document, which is a fact about the corpus and not a judgement.</p>
+<table><tr><th>id</th><th>standard</th><th>the sentence, and the two readings</th><th>alone</th><th>in&nbsp;context</th><th>d</th><th>nearest</th></tr>
+<tr>
+<td class="id">S01</td><td class="id">dom</td>
+<td><div class="sent">When an event is created the attribute must be initialized to the empty string.</div><div class="why"><strong>alone:</strong> initialized -- somebody initializes the attribute; the sentence does not say who</div><div class="why"><strong>in context:</strong> 'dispatched by the user agent' stands at -3, but it is predicated of the event's dispatch and not of the type attribute's initialisation; borderline and recorded as one</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="id">S02</td><td class="id">dom</td>
+<td><div class="sent">Unless otherwise stated, a collection must be live.</div><div class="why"><strong>alone:</strong> be live -- a property the collection must have</div><div class="why"><strong>in context:</strong> the window is the definition of a collection; nothing asks a party to act</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">139</td>
+</tr>
+<tr>
+<td class="id">S03</td><td class="id">dom</td>
+<td><div class="sent">The comparisons for the classes must be done in an ASCII case-insensitive manner if root’s node document’s mode is "quirks"; otherwise in an identical to manner.</div><div class="why"><strong>alone:</strong> done -- the comparison is performed by somebody unnamed</div><div class="why"><strong>in context:</strong> the window is an algorithm returning an HTMLCollection; no party term</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="id">S04</td><td class="id">fetch</td>
+<td><div class="sent">To incrementally read a body body, given an algorithm processBodyChunk, an algorithm processEndOfBody, an algorithm processBodyError, and an optional null, parallel queue, or global object taskDestination (default null), run these steps. processBodyChunk must be an algorithm accepting a byte sequence. processEndOfBody must be an algorithm accepting no arguments. processBodyError must be an algorithm accepting an exception.</div><div class="why"><strong>alone:</strong> be an algorithm -- a type constraint on an argument</div><div class="why"><strong>in context:</strong> a type constraint on an argument of an algorithm</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">23</td>
+</tr>
+<tr>
+<td class="id">S05</td><td class="id">fetch</td>
+<td><div class="sent">The `Sec-Purpose` header field is a structured header whose value must be a token.</div><div class="why"><strong>alone:</strong> be a token -- a constraint on the header value</div><div class="why"><strong>in context:</strong> a constraint on a header field's value</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">59</td>
+</tr>
+<tr>
+<td class="id">S06</td><td class="id">fetch</td>
+<td><div class="sent">Each part whose `Content-Disposition` header contains a `filename` parameter must be parsed into an entry whose value is a File object whose contents are the contents of the part.</div><div class="why"><strong>alone:</strong> parsed -- somebody parses the part; not said who</div><div class="why"><strong>in context:</strong> the window is the formData() method steps; no party term</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">48</td>
+</tr>
+<tr class="moved">
+<td class="id">S07</td><td class="id">html</td>
+<td><div class="sent">The value must be a valid media query list.</div><div class="why"><strong>alone:</strong> be a valid media query list -- the pre-registered example form</div><div class="why"><strong>in context:</strong> the same block ends '...must not be used by authors' -- predicated of the same attribute whose value is being constrained</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="id">S08</td><td class="id">html</td>
+<td><div class="sent">The value must be a string that matches the syntax for the CSS 'color-scheme' property value.</div><div class="why"><strong>alone:</strong> be a string that matches -- a constraint on the value</div><div class="why"><strong>in context:</strong> user agents are named three times in the window and every one of them is the CONSUMER of this value; the party who provides it is 'can be provided'</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="id">S09</td><td class="id">html</td>
+<td><div class="sent">Phrasing content, but there must be no dfn element descendants.</div><div class="why"><strong>alone:</strong> there must be no dfn descendants -- a constraint on document form</div><div class="why"><strong>in context:</strong> a content model; nothing asks a party to act</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">20</td>
+</tr>
+<tr>
+<td class="id">S10</td><td class="id">html</td>
+<td><div class="sent">The distinction should be made clear to the user.</div><div class="why"><strong>alone:</strong> made clear -- somebody makes it clear to the user; not said who</div><div class="why"><strong>in context:</strong> no party term in the window; the user is the beneficiary, not the actor</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">8</td>
+</tr>
+<tr>
+<td class="id">S11</td><td class="id">html</td>
+<td><div class="sent">If present, it must be the first entry and the entire &lt;source-size-list&gt; value must either be the string "auto" (ASCII case-insensitive) or start with the string "auto," (ASCII case-insensitive).</div><div class="why"><strong>alone:</strong> be the first entry -- a constraint on the value</div><div class="why"><strong>in context:</strong> a constraint on the sizes attribute's value</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">24</td>
+</tr>
+<tr>
+<td class="id">S12</td><td class="id">html</td>
+<td><div class="sent">While a user agent is running the above algorithm for an element x, there must be a strong reference from the element's node document to the element x, even if that element is not connected.</div><div class="why"><strong>alone:</strong> a user agent is named in the sentence's own opening clause and the strong reference is its to hold</div><div class="why"><strong>in context:</strong> named already in isolation; the window confirms it at -1</div></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="id">S13</td><td class="id">html</td>
+<td><div class="sent">In such cases, the alt attribute must be present but must consist of the same text as written in the image itself.</div><div class="why"><strong>alone:</strong> be present -- a constraint on the attribute</div><div class="why"><strong>in context:</strong> 'Requirements for providing text' names the activity, never the provider</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">16</td>
+</tr>
+<tr class="moved">
+<td class="id">S14</td><td class="id">html</td>
+<td><div class="sent">The value of this attribute must be the empty string.</div><div class="why"><strong>alone:</strong> be the empty string -- a constraint on the value</div><div class="why"><strong>in context:</strong> the same block: 'Markup generators may specify a generator-unable-to-provide-required-alt attribute' -- and the enclosing h6 declares the class, further away</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="id">S15</td><td class="id">html</td>
+<td><div class="sent">Similarly, the allow-top-navigation-to-custom-protocols keyword must not be specified if either allow-top-navigation or allow-popups are specified, as doing so is redundant.</div><div class="why"><strong>alone:</strong> specified -- somebody specifies the keyword; not said who</div><div class="why"><strong>in context:</strong> no party term in the window</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">32</td>
+</tr>
+<tr>
+<td class="id">S16</td><td class="id">html</td>
+<td><div class="sent">Whenever an embed element that was potentially active stops being potentially active, any plugin that had been instantiated for that element must be unloaded.</div><div class="why"><strong>alone:</strong> unloaded -- somebody unloads the plugin; not said who</div><div class="why"><strong>in context:</strong> the window is the 'display no plugin' steps; no party term</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">6</td>
+</tr>
+<tr>
+<td class="id">S17</td><td class="id">html</td>
+<td><div class="sent">The name attribute, if present, must be a valid navigable target name.</div><div class="why"><strong>alone:</strong> be a valid navigable target name -- a constraint on the attribute</div><div class="why"><strong>in context:</strong> a constraint on the name attribute's value</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">8</td>
+</tr>
+<tr>
+<td class="id">S18</td><td class="id">html</td>
+<td><div class="sent">Frames of video must be obtained from the video track that was selected when the event loop last reached step 1.</div><div class="why"><strong>alone:</strong> obtained -- somebody obtains the frames; not said who</div><div class="why"><strong>in context:</strong> no party term; -1 is the same construction again, also agentless</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">34</td>
+</tr>
+<tr>
+<td class="id">S19</td><td class="id">html</td>
+<td><div class="sent">(Whether the media resource can specify a timeline or not depends on the media resource's format.) If the media resource specifies an explicit start time and date, then that time and date should be considered the zero point in the media timeline; the timeline offset will be the time and date, exposed using the getStartDate() method.</div><div class="why"><strong>alone:</strong> considered -- somebody treats the date as the zero point; not said who</div><div class="why"><strong>in context:</strong> no party term in the window</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">20</td>
+</tr>
+<tr class="moved">
+<td class="id">S20</td><td class="id">html</td>
+<td><div class="sent">Whenever a text track cue is added to the list of cues of a text track that is in the list of text tracks for a media element, that cue must be added to the media element's list of newly introduced cues.</div><div class="why"><strong>alone:</strong> added -- somebody adds the cue; not said who</div><div class="why"><strong>in context:</strong> the same block ends 'the user agent must run the time marches on steps' -- the same list of newly introduced cues</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="id">S21</td><td class="id">html</td>
+<td><div class="sent">When a track element is created, it must be associated with a new text track (with its value set as defined below).</div><div class="why"><strong>alone:</strong> associated -- somebody associates the element with a track; not said who</div><div class="why"><strong>in context:</strong> the window is algorithm steps in the imperative; no party term</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">21</td>
+</tr>
+<tr>
+<td class="id">S22</td><td class="id">html</td>
+<td><div class="sent">If the area element has no href attribute, then the area represented by the element cannot be selected, and the alt attribute must be omitted.</div><div class="why"><strong>alone:</strong> omitted -- somebody omits the attribute; not said who</div><div class="why"><strong>in context:</strong> no party term; the user at -1 is the beneficiary</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">7</td>
+</tr>
+<tr>
+<td class="id">S23</td><td class="id">html</td>
+<td><div class="sent">In the rectangle state, area elements must have a coords attribute with exactly four integers, the first of which must be less than the third, and the second of which must be less than the fourth.</div><div class="why"><strong>alone:</strong> be less than -- a constraint between two integers</div><div class="why"><strong>in context:</strong> a constraint between two integers</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">15</td>
+</tr>
+<tr>
+<td class="id">S24</td><td class="id">html</td>
+<td><div class="sent">The value must not be the empty string, and the value must be unique amongst the form elements in the forms collection that it is in, if any.</div><div class="why"><strong>alone:</strong> be the empty string -- a constraint on the value</div><div class="why"><strong>in context:</strong> a constraint on the name attribute's value</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="id">S25</td><td class="id">html</td>
+<td><div class="sent">When an input element is first created, the element's rendering and behavior must be set to the rendering and behavior defined for the type attribute's state, and the value sanitization algorithm, if one is defined for the type attribute's state, must be invoked.</div><div class="why"><strong>alone:</strong> invoked -- somebody invokes the sanitization algorithm; not said who</div><div class="why"><strong>in context:</strong> the window is activation-behaviour steps; no party term</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">7</td>
+</tr>
+<tr>
+<td class="id">S26</td><td class="id">html</td>
+<td><div class="sent">The following content attributes must not be specified and do not apply to the element: accept, alpha, alt, checked, colorspace, dirname, formaction, formenctype, formmethod, formnovalidate, formtarget, height, maxlength, minlength, multiple, pattern, popovertarget, popovertargetaction, size, src, and width.</div><div class="why"><strong>alone:</strong> specified -- somebody specifies the attributes; not said who</div><div class="why"><strong>in context:</strong> no party term in the window</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">6</td>
+</tr>
+<tr>
+<td class="id">S27</td><td class="id">html</td>
+<td><div class="sent">The formaction, formenctype, formmethod, formnovalidate, and formtarget must not be specified if the element is not a submit button.</div><div class="why"><strong>alone:</strong> specified -- somebody specifies the attributes; not said who</div><div class="why"><strong>in context:</strong> no party term in the window</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">64</td>
+</tr>
+<tr>
+<td class="id">S28</td><td class="id">html</td>
+<td><div class="sent">Whenever an option element's selected attribute is removed, if its dirtiness is false, its selectedness must be set to false.</div><div class="why"><strong>alone:</strong> set -- somebody sets selectedness to false; not said who</div><div class="why"><strong>in context:</strong> no party term in the window</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">23</td>
+</tr>
+<tr class="moved">
+<td class="id">S29</td><td class="id">html</td>
+<td><div class="sent">If a listed form-associated element has a form attribute specified, then that attribute's value must be the ID of a form element in the element's tree.</div><div class="why"><strong>alone:</strong> be the ID of a form element -- a constraint on the value</div><div class="why"><strong>in context:</strong> -1: 'This feature allows authors to work around...' -- predicated of the same form attribute whose value is constrained</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="id">S30</td><td class="id">html</td>
+<td><div class="sent">When the element is created, if the attribute is absent, the additional information should be hidden; if the attribute is present, that information should be shown.</div><div class="why"><strong>alone:</strong> shown -- somebody shows or hides the information; not said who</div><div class="why"><strong>in context:</strong> 'enforced by user agents' stands at -5 but is predicated of the exclusivity of the name group, not of showing or hiding; borderline and recorded as one</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">3</td>
+</tr>
+<tr class="moved">
+<td class="id">S31</td><td class="id">html</td>
+<td><div class="sent">For strokeText(), the reverse holds: this's stroke style must be applied to the result of tracing the shapes using the object implementing the CanvasText interface for the line styles, and this's fill style must be ignored.</div><div class="why"><strong>alone:</strong> ignored -- somebody ignores the fill style; the CanvasText object is the instrument, not the actor</div><div class="why"><strong>in context:</strong> -5: 'when the methods are invoked, the user agent must run these steps' -- this sentence is one of those steps</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td class="num">5</td>
+<td class="num">5</td>
+</tr>
+<tr>
+<td class="id">S32</td><td class="id">html</td>
+<td><div class="sent">In general, work should be deferred to connectedCallback as much as possible—especially work involving fetching resources or rendering.</div><div class="why"><strong>alone:</strong> deferred -- somebody defers the work; not said who</div><div class="why"><strong>in context:</strong> the enclosing h4 says 'Requirements for custom element constructors and reactions' -- it names the artefact, never the party</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">6</td>
+</tr>
+<tr>
+<td class="id">S33</td><td class="id">html</td>
+<td><div class="sent">Except if otherwise specified by that specification, the URLs given as the item types should not be automatically dereferenced.</div><div class="why"><strong>alone:</strong> dereferenced -- somebody would dereference the URLs; not said who</div><div class="why"><strong>in context:</strong> no party term in the window</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">22</td>
+</tr>
+<tr>
+<td class="id">S34</td><td class="id">html</td>
+<td><div class="sent">The value must be text.</div><div class="why"><strong>alone:</strong> be text -- a constraint on the value</div><div class="why"><strong>in context:</strong> a vocabulary property's value</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">109</td>
+</tr>
+<tr>
+<td class="id">S35</td><td class="id">html</td>
+<td><div class="sent">The value must be an absolute URL.</div><div class="why"><strong>alone:</strong> be an absolute URL -- the pre-registered example form</div><div class="why"><strong>in context:</strong> a vocabulary property's value</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">77</td>
+</tr>
+<tr>
+<td class="id">S36</td><td class="id">html</td>
+<td><div class="sent">Exactly one property with the name url must be present within the item that forms the value of a related property of an item with the type http://microformats.org/profile/hcard.</div><div class="why"><strong>alone:</strong> be present within the item -- a constraint on the item's form</div><div class="why"><strong>in context:</strong> a constraint on an item's form</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">106</td>
+</tr>
+<tr>
+<td class="id">S37</td><td class="id">html</td>
+<td><div class="sent">The value must be text that is identical to one of the relationship strings.</div><div class="why"><strong>alone:</strong> be text that is identical to -- a constraint on the value</div><div class="why"><strong>in context:</strong> a vocabulary property's value</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">109</td>
+</tr>
+<tr>
+<td class="id">S38</td><td class="id">html</td>
+<td><div class="sent">The value must be an absolute URL.</div><div class="why"><strong>alone:</strong> be an absolute URL -- the pre-registered example form</div><div class="why"><strong>in context:</strong> a vocabulary property's value</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">22</td>
+</tr>
+<tr>
+<td class="id">S39</td><td class="id">html</td>
+<td><div class="sent">If the draggable IDL attribute is set to the value true, the draggable content attribute must be set to the literal value "true".</div><div class="why"><strong>alone:</strong> set -- somebody sets the content attribute; not said who</div><div class="why"><strong>in context:</strong> the window is IDL attribute behaviour; no party term</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">9</td>
+</tr>
+<tr>
+<td class="id">S40</td><td class="id">html</td>
+<td><div class="sent">To check if an access between two browsing contexts should be reported, given two browsing contexts accessor and accessed, a JavaScript property name P, and an environment settings object environment:</div><div class="why"><strong>alone:</strong> the modal is inside the NAME of an algorithm, mentioned rather than used</div><div class="why"><strong>in context:</strong> the modal is inside the name of an algorithm being defined</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">16</td>
+</tr>
+<tr>
+<td class="id">S41</td><td class="id">html</td>
+<td><div class="sent">Check if an access between two browsing contexts should be reported, given the current global object's browsing context, W's browsing context, P, and the current settings object.</div><div class="why"><strong>alone:</strong> the modal is inside the NAME of an algorithm being invoked, mentioned rather than used</div><div class="why"><strong>in context:</strong> the modal is inside the name of an algorithm being invoked</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">99</td>
+</tr>
+<tr>
+<td class="id">S42</td><td class="id">html</td>
+<td><div class="sent">The value corresponding to the "relative_to" key, if present, must be either "ruleset" or "document".</div><div class="why"><strong>alone:</strong> be either 'ruleset' or 'document' -- a constraint on the value</div><div class="why"><strong>in context:</strong> a constraint on a JSON key's value</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">13</td>
+</tr>
+<tr>
+<td class="id">S43</td><td class="id">html</td>
+<td><div class="sent">To fetch a single imported module script, given a URL url, an environment settings object fetchClient, a destination destination, a script fetch options options, environment settings object settingsObject, a referrer referrer, a ModuleRequest Record moduleRequest, an algorithm onComplete, and an optional perform the fetch hook performFetch, run these steps. onComplete must be an algorithm accepting null (on failure) or a module script (on success).</div><div class="why"><strong>alone:</strong> be an algorithm accepting -- a type constraint on an argument</div><div class="why"><strong>in context:</strong> a type constraint on an argument</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">32</td>
+</tr>
+<tr>
+<td class="id">S44</td><td class="id">html</td>
+<td><div class="sent">Each target object has a map of animation frame callbacks, which is an ordered map that must be initially empty, and an animation frame callback identifier, which is a number that must initially be zero.</div><div class="why"><strong>alone:</strong> be initially empty -- a constraint on the map's initial state</div><div class="why"><strong>in context:</strong> a constraint on a map's initial state</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">28</td>
+</tr>
+<tr>
+<td class="id">S45</td><td class="id">html</td>
+<td><div class="sent">While a BroadcastChannel object whose closed flag is false has an event listener registered for message or messageerror events, there must be a strong reference from the BroadcastChannel object's relevant global object to the BroadcastChannel object itself.</div><div class="why"><strong>alone:</strong> the same construction as S12 with no user agent in the sentence: somebody holds the reference</div><div class="why"><strong>in context:</strong> the same construction as S12 and no user agent anywhere in the window</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">7</td>
+</tr>
+<tr>
+<td class="id">S46</td><td class="id">html</td>
+<td><div class="sent">The first character of a start tag must be a U+003C LESS-THAN SIGN character (&lt;).</div><div class="why"><strong>alone:</strong> be a U+003C character -- a constraint on the character</div><div class="why"><strong>in context:</strong> a constraint on a character; the h3 'Writing HTML documents' names the activity, not the writer</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">46</td>
+</tr>
+<tr>
+<td class="id">S47</td><td class="id">html</td>
+<td><div class="sent">The second character of an end tag must be a U+002F SOLIDUS character (/).</div><div class="why"><strong>alone:</strong> be a U+002F character -- a constraint on the character</div><div class="why"><strong>in context:</strong> a constraint on a character</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">5</td>
+</tr>
+<tr class="moved">
+<td class="id">S48</td><td class="id">html</td>
+<td><div class="sent">The system identifier and public identifier strings must be compared to the values given in the lists above in an ASCII case-insensitive manner.</div><div class="why"><strong>alone:</strong> compared -- somebody compares the strings; not said who</div><div class="why"><strong>in context:</strong> -5: 'the parser cannot change the mode flag is false' -- the comparison is a step of the same parser's DOCTYPE handling</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td class="num">5</td>
+<td class="num">5</td>
+</tr>
+<tr class="moved">
+<td class="id">S49</td><td class="id">html</td>
+<td><div class="sent">The attribute should be entirely omitted instead (with the value "JavaScript", it has no effect), or replaced with use of the type attribute.</div><div class="why"><strong>alone:</strong> omitted -- somebody omits the attribute; not said who</div><div class="why"><strong>in context:</strong> the same block opens 'Authors should not specify a language attribute on a script element'</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr class="moved">
+<td class="id">S50</td><td class="id">html</td>
+<td><div class="sent">If the attribute is present, its value must be an ASCII case-insensitive match for the string "JavaScript" and either the type attribute must be omitted or its value must be an ASCII case-insensitive match for the string "text/javascript".</div><div class="why"><strong>alone:</strong> be an ASCII case-insensitive match -- a constraint on the value</div><div class="why"><strong>in context:</strong> the same block opens with Authors, and -1 and -2 open with Authors twice more</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="id">S51</td><td class="id">infra</td>
+<td><div class="sent">Variables must not be used before they are declared.</div><div class="why"><strong>alone:</strong> used -- somebody uses a variable before declaring it; not said who</div><div class="why"><strong>in context:</strong> no party term; whoever writes an algorithm in another specification is meant and is never named</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">53</td>
+</tr>
+<tr class="moved">
+<td class="id">S52</td><td class="id">streams</td>
+<td><div class="sent">Errors must be propagated forward: if source.[[state]] is or becomes "errored", then</div><div class="why"><strong>alone:</strong> propagated -- somebody propagates errors forward; not said who</div><div class="why"><strong>in context:</strong> -2: 'the user agent must not initiate further reads from reader' -- the same pipeTo mechanism</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="id">S53</td><td class="id">testutils</td>
+<td><div class="sent">The interfaces defined in this specification must not be enabled in the default shipping configuration of user agents.</div><div class="why"><strong>alone:</strong> user agents are named; the obligation not to enable the interfaces falls on whoever ships one</div><div class="why"><strong>in context:</strong> named already in isolation</div></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td><span class="v NAMED">NAMED</span></td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="id">S54</td><td class="id">url</td>
+<td><div class="sent">Schemes should be registered in the IANA URI [sic] Schemes registry. [IANA-URI-SCHEMES] [RFC7595]</div><div class="why"><strong>alone:</strong> registered -- somebody registers the scheme; IANA is the registry, not the registrant</div><div class="why"><strong>in context:</strong> no party term; IANA is the registry, never the registrant</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">21</td>
+</tr>
+<tr>
+<td class="id">S55</td><td class="id">urlpattern</td>
+<td><div class="sent">A part has an associated modifier a string, which must be set upon creation.</div><div class="why"><strong>alone:</strong> set -- somebody sets the modifier on creation; not said who</div><div class="why"><strong>in context:</strong> no party term in the window</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">11</td>
+</tr>
+<tr>
+<td class="id">S56</td><td class="id">webidl</td>
+<td><div class="sent">An interface must not be declared such that its inheritance hierarchy has a cycle.</div><div class="why"><strong>alone:</strong> declared -- somebody declares the interface; not said who</div><div class="why"><strong>in context:</strong> no party term; the declarer of an interface is another specification's editor and is never named</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">16</td>
+</tr>
+<tr>
+<td class="id">S57</td><td class="id">webidl</td>
+<td><div class="sent">If the operation argument type, after resolving typedefs, is a nullable type, its inner type must not be a dictionary type.</div><div class="why"><strong>alone:</strong> be a dictionary type -- a constraint on the inner type</div><div class="why"><strong>in context:</strong> a constraint on an inner type</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">85</td>
+</tr>
+<tr>
+<td class="id">S58</td><td class="id">webidl</td>
+<td><div class="sent">That type must be a sequence type, a nullable type whose inner type is a sequence type or a union type or nullable union type that has a sequence type in its flattened member types.</div><div class="why"><strong>alone:</strong> be a sequence type -- a constraint on the type</div><div class="why"><strong>in context:</strong> a constraint on a type</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">15</td>
+</tr>
+<tr>
+<td class="id">S59</td><td class="id">webidl</td>
+<td><div class="sent">It also must not be placed on a static attribute.</div><div class="why"><strong>alone:</strong> placed -- somebody places the extended attribute; not said who</div><div class="why"><strong>in context:</strong> no party term in the window</div></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td><span class="v UNNAMED">UNNAMED</span></td>
+<td class="num">&#8212;</td>
+<td class="num">5</td>
+</tr>
+<tr>
+<td class="id">S60</td><td class="id">webidl</td>
+<td><div class="sent">The [Global] extended attribute must be one of the forms given above.</div><div class="why"><strong>alone:</strong> be one of the forms given above -- a constraint on the attribute's form</div><div class="why"><strong>in context:</strong> a constraint on the extended attribute's form</div></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td><span class="v NOACTOR">NO-ACTOR</span></td>
+<td class="num">&#8212;</td>
+<td class="num">11</td>
+</tr>
+</table>
+<footer>Ulysses (the nightly line) &#183; Error as Method &#183; Session 88, 2026-09-12. The corpus is 22 WHATWG living standards, CC BY 4.0, harvested by this line on 2026-09-11 and asserted byte-identical here before anything was measured. Code, pre-registration and source manifest are in the work&#8217;s directory. The paper whose hypothesis this night borrowed &#8212; Krisch &amp; Houdek (2015) &#8212; is paywalled and was not read; everything said about it comes from two secondary reports that were.</footer>
+</div>
+</body></html>

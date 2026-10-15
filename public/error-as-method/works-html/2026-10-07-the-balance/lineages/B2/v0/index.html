@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Balance</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #070b12; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; font-family: Georgia, "Times New Roman", serif; }
+  canvas { display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="Animated disc whose area is the daily Northern Hemisphere sea-ice extent, 1978 to 2026"></canvas>
+<script src="../../../data/extent.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = Math.max(1, window.devicePixelRatio || 1);
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var DAY = 86400000;
+  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var raw = (window.EXTENT || []).slice().sort(function (a, b) {
+    return Date.UTC(a[0], a[1] - 1, a[2]) - Date.UTC(b[0], b[1] - 1, b[2]);
+  });
+  if (!raw.length) { g.fillStyle = '#ccc'; g.fillText('no data', 20, 20); return; }
+
+  // --- daily series, linearly bridged; days far from any observation are marked ---
+  var t0 = Date.UTC(raw[0][0], raw[0][1] - 1, raw[0][2]) / DAY;
+  var tN = Date.UTC(raw[raw.length - 1][0], raw[raw.length - 1][1] - 1, raw[raw.length - 1][2]) / DAY;
+  var N = tN - t0 + 1;
+  var val = new Float32Array(N), missing = new Uint8Array(N);
+  var Y = new Int16Array(N), M = new Int8Array(N), D = new Int8Array(N);
+  var prevI = -1, prevV = 0;
+  for (var k = 0; k < raw.length; k++) {
+    var r = raw[k];
+    var i = Date.UTC(r[0], r[1] - 1, r[2]) / DAY - t0;
+    if (prevI >= 0 && i - prevI > 1) {
+      var span = i - prevI;
+      for (var j = prevI + 1; j < i; j++) {
+        val[j] = prevV + (r[3] - prevV) * (j - prevI) / span;
+        missing[j] = span > 3 ? 1 : 0;
+      }
+    }
+    val[i] = r[3]; prevI = i; prevV = r[3];
+  }
+  for (var n = 0; n < N; n++) {
+    var dt = new Date((t0 + n) * DAY);
+    Y[n] = dt.getUTCFullYear(); M[n] = dt.getUTCMonth(); D[n] = dt.getUTCDate();
+  }
+
+  // --- the reference: mean of the same calendar day, 1979-1988 ---
+  var refSum = {}, refCnt = {};
+  for (n = 0; n < N; n++) {
+    if (Y[n] >= 1979 && Y[n] <= 1988 && !missing[n]) {
+      var key = M[n] * 32 + D[n];
+      refSum[key] = (refSum[key] || 0) + val[n];
+      refCnt[key] = (refCnt[key] || 0) + 1;
+    }
+  }
+  function ref(n) {
+    var key = M[n] * 32 + D[n];
+    if (!refCnt[key]) key = M[n] * 32 + Math.min(D[n], 28);
+    return refCnt[key] ? refSum[key] / refCnt[key] : null;
+  }
+
+  // --- each year's lowest day (complete years only) ---
+  var mins = [];
+  var lastYear = Y[N - 1];
+  for (var yr = 1979; yr <= lastYear; yr++) {
+    var best = -1;
+    for (n = 0; n < N; n++) {
+      if (Y[n] !== yr || missing[n]) continue;
+      if (best < 0 || val[n] < val[best]) best = n;
+    }
+    // only count a year's minimum if the year has passed September
+    if (best >= 0 && (yr < lastYear || M[N - 1] >= 9)) mins.push({ y: yr, i: best, v: val[best] });
+  }
+  var lowest = mins.reduce(function (a, b) { return b.v < a.v ? b : a; }, mins[0]);
+
+  // --- geometry: disc area is proportional to extent ---
+  var CX = 550, CY = 372, RMAX = 300;
+  var vmax = 0; for (n = 0; n < N; n++) if (val[n] > vmax) vmax = val[n];
+  var K = RMAX / Math.sqrt(vmax);
+  function rad(v) { return K * Math.sqrt(Math.max(0, v)); }
+
+  // --- time ---
+  var DAYS_PER_SEC = 92;
+  var pos = 0, playing = true, last = null, endHold = 0;
+  var TL = { x: 120, y: 742, w: 860, h: 26 };
+
+  function fmt(v) { return v.toFixed(2); }
+
+  function draw() {
+    var n = Math.min(N - 1, Math.floor(pos));
+    var v = val[n], rf = ref(n), miss = missing[n];
+    g.clearRect(0, 0, W, H);
+    g.fillStyle = '#070b12'; g.fillRect(0, 0, W, H);
+
+    // reference circle: what this day used to hold
+    var rr = rf != null ? rad(rf) : null, rv = rad(v);
+    if (rr != null && rr > rv) {
+      g.beginPath();
+      g.arc(CX, CY, rr, 0, Math.PI * 2);
+      g.arc(CX, CY, rv, 0, Math.PI * 2, true);
+      g.fillStyle = 'rgba(196, 92, 62, 0.22)';
+      g.fill('evenodd');
+    }
+
+    // the ice
+    g.beginPath(); g.arc(CX, CY, rv, 0, Math.PI * 2);
+    if (miss) {
+      g.fillStyle = 'rgba(226, 234, 240, 0.18)'; g.fill();
+      g.setLineDash([3, 5]); g.strokeStyle = 'rgba(226,234,240,0.7)'; g.lineWidth = 1; g.stroke(); g.setLineDash([]);
+    } else {
+      var grd = g.createRadialGradient(CX - rv * 0.25, CY - rv * 0.3, rv * 0.1, CX, CY, rv);
+      grd.addColorStop(0, '#f4f8fb'); grd.addColorStop(1, '#cfdbe4');
+      g.fillStyle = grd; g.fill();
+    }
+
+    if (rr != null) {
+      g.beginPath(); g.arc(CX, CY, rr, 0, Math.PI * 2);
+      g.setLineDash([2, 4]);
+      g.strokeStyle = rr > rv ? 'rgba(232, 150, 120, 0.85)' : 'rgba(40, 60, 80, 0.6)';
+      g.lineWidth = 1; g.stroke(); g.setLineDash([]);
+    }
+
+    // rings: every summer's low point that has already happened
+    var latest = null;
+    for (var m = 0; m < mins.length; m++) {
+      if (mins[m].i > n) break;
+      latest = mins[m];
+      var age = (mins.length > 1) ? m / (mins.length - 1) : 1;
+      g.beginPath(); g.arc(CX, CY, rad(mins[m].v), 0, Math.PI * 2);
+      g.strokeStyle = 'rgba(90, 130, 165, ' + (0.18 + 0.32 * age) + ')';
+      g.lineWidth = 0.8; g.stroke();
+    }
+    if (latest) {
+      var lr = rad(latest.v);
+      g.beginPath(); g.arc(CX, CY, lr, 0, Math.PI * 2);
+      g.strokeStyle = 'rgba(120, 175, 215, 0.95)'; g.lineWidth = 1.4; g.stroke();
+      g.font = '12px Georgia, serif'; g.fillStyle = 'rgba(150, 190, 220, 0.95)';
+      g.textAlign = 'left';
+      var lab = 'lowest of ' + latest.y + ': ' + fmt(latest.v);
+      var a = -Math.PI / 4;
+      var lx = CX + Math.cos(a) * lr, ly = CY + Math.sin(a) * lr;
+      g.beginPath(); g.moveTo(lx, ly); g.lineTo(CX + 330, CY - 170); g.strokeStyle = 'rgba(120,175,215,0.35)'; g.lineWidth = 0.8; g.stroke();
+      g.fillText(lab, CX + 336, CY - 166);
+    }
+
+    // text: date and quantity
+    g.textAlign = 'left';
+    g.fillStyle = '#e6edf2';
+    g.font = '40px Georgia, serif';
+    g.fillText(String(Y[n]), 56, 86);
+    g.font = 'italic 17px Georgia, serif';
+    g.fillStyle = 'rgba(230,237,242,0.7)';
+    g.fillText(D[n] + ' ' + MONTHS[M[n]], 58, 114);
+
+    g.textAlign = 'right';
+    g.font = '40px Georgia, serif';
+    g.fillStyle = miss ? 'rgba(230,237,242,0.45)' : '#e6edf2';
+    g.fillText(fmt(v), W - 56, 86);
+    g.font = 'italic 15px Georgia, serif';
+    g.fillStyle = 'rgba(230,237,242,0.7)';
+    g.fillText(miss ? 'no observation: bridged' : 'million km² of sea ice', W - 58, 114);
+    if (rf != null) {
+      var d = v - rf;
+      g.fillStyle = d < 0 ? 'rgba(232,150,120,0.95)' : 'rgba(170,200,225,0.9)';
+      g.fillText((d < 0 ? '−' : '+') + fmt(Math.abs(d)) + ' against this day, 1979–1988', W - 58, 138);
+    }
+
+    // legend, bottom left, quiet
+    g.textAlign = 'left'; g.font = '12px Georgia, serif';
+    g.fillStyle = 'rgba(230,237,242,0.5)';
+    g.fillText('the disc: northern sea ice on this day, area true', 56, 676);
+    g.fillStyle = 'rgba(232,150,120,0.75)';
+    g.fillText('dotted ring: the same day, averaged over 1979–1988', 56, 694);
+    g.fillStyle = 'rgba(120,175,215,0.8)';
+    g.fillText('fine rings: each September’s low, one per year', 56, 712);
+    g.textAlign = 'right'; g.fillStyle = 'rgba(230,237,242,0.35)';
+    g.fillText('NSIDC Sea Ice Index v4 · click to pause · drag the line to move in time', W - 56, 712);
+
+    // timeline: annual lows as a ground line, position as a mark
+    g.strokeStyle = 'rgba(230,237,242,0.18)'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(TL.x, TL.y + TL.h); g.lineTo(TL.x + TL.w, TL.y + TL.h); g.stroke();
+    var lo = lowest ? lowest.v : 3, hi = mins.length ? Math.max.apply(null, mins.map(function (o) { return o.v; })) : 8;
+    for (m = 0; m < mins.length; m++) {
+      var x = TL.x + TL.w * mins[m].i / (N - 1);
+      var h = 4 + (TL.h - 4) * (mins[m].v - lo + 0.3) / (hi - lo + 0.3);
+      g.strokeStyle = mins[m].i <= n ? 'rgba(120,175,215,0.75)' : 'rgba(120,175,215,0.2)';
+      g.beginPath(); g.moveTo(x, TL.y + TL.h); g.lineTo(x, TL.y + TL.h - h); g.stroke();
+    }
+    var px = TL.x + TL.w * n / (N - 1);
+    g.fillStyle = '#e6edf2';
+    g.beginPath(); g.arc(px, TL.y + TL.h, 3.5, 0, Math.PI * 2); g.fill();
+    g.font = '11px Georgia, serif'; g.fillStyle = 'rgba(230,237,242,0.45)';
+    g.textAlign = 'left'; g.fillText(String(Y[0]), TL.x, TL.y + TL.h + 18);
+    g.textAlign = 'right'; g.fillText(String(Y[N - 1]), TL.x + TL.w, TL.y + TL.h + 18);
+    if (!playing) {
+      g.textAlign = 'center'; g.fillStyle = 'rgba(230,237,242,0.5)';
+      g.fillText(pos >= N - 1 ? 'the record ends here · click to begin again' : 'paused', W / 2, TL.y + TL.h + 18);
+    }
+  }
+
+  function frame(ts) {
+    if (last == null) last = ts;
+    var dt = Math.min(0.1, (ts - last) / 1000); last = ts;
+    if (playing) {
+      pos += dt * DAYS_PER_SEC;
+      if (pos >= N - 1) { pos = N - 1; playing = false; }
+    }
+    draw();
+    requestAnimationFrame(frame);
+  }
+
+  // interaction
+  var dragging = false;
+  function local(e) { var b = cv.getBoundingClientRect(); return { x: (e.clientX - b.left) * W / b.width, y: (e.clientY - b.top) * H / b.height }; }
+  function onLine(p) { return p.y > TL.y - 14 && p.y < TL.y + TL.h + 14 && p.x > TL.x - 10 && p.x < TL.x + TL.w + 10; }
+  function seek(p) { pos = Math.max(0, Math.min(N - 1, (p.x - TL.x) / TL.w * (N - 1))); }
+  cv.addEventListener('pointerdown', function (e) {
+    var p = local(e);
+    if (onLine(p)) { dragging = true; cv.setPointerCapture(e.pointerId); seek(p); return; }
+    if (pos >= N - 1) { pos = 0; playing = true; } else playing = !playing;
+  });
+  cv.addEventListener('pointermove', function (e) {
+    var p = local(e);
+    cv.style.cursor = onLine(p) || dragging ? 'ew-resize' : 'pointer';
+    if (dragging) seek(p);
+  });
+  cv.addEventListener('pointerup', function () { dragging = false; });
+  window.addEventListener('keydown', function (e) {
+    if (e.key === ' ') { e.preventDefault(); if (pos >= N - 1) { pos = 0; playing = true; } else playing = !playing; }
+    if (e.key === 'ArrowRight') pos = Math.min(N - 1, pos + 365);
+    if (e.key === 'ArrowLeft') pos = Math.max(0, pos - 365);
+  });
+
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

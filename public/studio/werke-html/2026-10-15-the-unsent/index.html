@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Unsent</title>
+<meta name="description" content="Every county the United States declared a disaster area since 2012, set against the warnings its local keepers sent through the national alert system around the day the danger began. A declaration sounds a low tone, a keeper's word a bell. Of 17,176 declared county disasters, a local word that names the danger reached 1,221.">
+<style>
+:root{--bg:#f2efe7;--ink:#1c1b19;--mute:#6a655c;--line:#d5cfc2;--card:#fffdf7;--stage:#0b0d11;--acc:#a8471a;--spoke:#ffc46b;--other:#9aa3b5;--silent:#5d7aa6;--never:#a0607a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111216;--ink:#ebe7dd;--mute:#9b968c;--line:#2b2d34;--card:#191b21;--stage:#06070a;--acc:#ff9a5c}}
+:root[data-theme="dark"]{--bg:#111216;--ink:#ebe7dd;--mute:#9b968c;--line:#2b2d34;--card:#191b21;--stage:#06070a;--acc:#ff9a5c}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:1100px;margin:0 auto;padding:28px 16px 80px}
+h1{font:600 clamp(2rem,6vw,3.3rem)/1.02 "Helvetica Neue",Arial,sans-serif;letter-spacing:.05em;margin:0 0 8px;text-transform:uppercase}
+h2{font:600 1.05rem/1.3 "Helvetica Neue",Arial,sans-serif;letter-spacing:.06em;margin:46px 0 10px;text-transform:uppercase}
+.sub{color:var(--mute);margin:0 0 18px;font-style:italic}
+p,li{max-width:46em}
+.sans{font-family:"Helvetica Neue",Arial,sans-serif}
+#stage{position:relative;background:var(--stage);border-radius:6px;overflow:hidden;margin-top:18px}
+canvas{display:block;width:100%;cursor:crosshair;touch-action:manipulation}
+#hud{position:absolute;left:10px;top:8px;right:10px;color:#e9e4d6;font:12px/1.4 "Helvetica Neue",Arial,sans-serif;pointer-events:none;text-shadow:0 0 4px #000}
+#hud b{font-size:16px;letter-spacing:.04em}
+#hud .now{opacity:.85;margin-top:2px;max-width:36em}
+#legend{position:absolute;left:10px;bottom:8px;right:10px;color:#cfc9ba;font:11px/1.5 "Helvetica Neue",Arial,sans-serif;pointer-events:none}
+@media (max-width:640px){#legend{position:static;padding:6px 10px 8px}#legend span{white-space:normal}#hud .now{display:none}}
+#legend span{display:inline-block;margin-right:10px;white-space:nowrap}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}
+button,select{font:600 13px "Helvetica Neue",Arial,sans-serif;padding:8px 12px;border-radius:4px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.on{background:var(--ink);color:var(--bg)}
+input[type=range]{flex:1 1 220px;accent-color:var(--acc)}
+.cases{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0}
+.cases button{font-weight:500}
+.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:14px 0}
+.counts>div{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+.counts .n{font:600 1.5rem/1.1 "Helvetica Neue",Arial,sans-serif;font-variant-numeric:tabular-nums}
+.counts .k{font:12px/1.35 "Helvetica Neue",Arial,sans-serif;color:var(--mute)}
+#card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:6px;padding:14px 16px;margin:14px 0;min-height:4em}
+#card .meta{font:12px/1.4 "Helvetica Neue",Arial,sans-serif;color:var(--mute)}
+#card h3{font:600 1.1rem/1.3 "Helvetica Neue",Arial,sans-serif;margin:2px 0 8px}
+#card ol{list-style:none;padding:0;margin:0;max-height:420px;overflow-y:auto}
+#card li{border-top:1px dashed var(--line);padding:7px 0;font-size:15px}
+#card li .st{font:600 11px "Helvetica Neue",Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+#card li .w{display:block;font-style:italic;margin-top:3px}
+.withheld{color:var(--mute);font-style:italic}
+table{border-collapse:collapse;font:13px/1.35 "Helvetica Neue",Arial,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:right;white-space:nowrap}
+td:first-child,th:first-child{text-align:left}
+.bar{display:flex;height:12px;min-width:120px;border-radius:2px;overflow:hidden;background:var(--line)}
+.bar i{display:block;height:100%}
+.tw{overflow-x:auto}
+small,.note{color:var(--mute);font-size:14px}
+a{color:var(--acc)}
+code{font-size:.9em}
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+<h1>The Unsent</h1>
+<p class="sub">Every county the United States declared a disaster area since 2012, and whether a local keeper's warning reached it through the national alert system when the danger began. A declaration sounds a low tone. A keeper's word sounds a bell.</p>
+
+<p>When a fire, a flood or a hurricane is bad enough, the federal government declares the counties it struck disaster areas. That declaration is a record, written afterwards, that a danger came. Sheriffs, counties and states can warn the people in its way through FEMA's alert system, which sends a message to every phone and radio in the area and keeps it, signed and timed to the second. The declaration names where the danger came. The archive keeps what was said there. This work sets the two beside each other. Where a warning should have been and none is, the archive keeps nothing, and the map shows that gap.</p>
+
+<div id="stage"><canvas id="cv" aria-label="Map of US counties; declared disaster areas light up as time plays"></canvas>
+<div id="hud"><b id="date">—</b><div class="now" id="now"></div></div>
+<div id="legend"></div>
+</div>
+<div class="controls">
+<button id="play" class="on">Play</button>
+<input id="slider" type="range" min="0" max="1000" value="1000" aria-label="time">
+<select id="speed" aria-label="speed"><option value="15">1 month per second</option><option value="60" selected>2 months per second</option><option value="180">6 months per second</option></select>
+<button id="snd">Sound on</button>
+<select id="view" aria-label="what the map holds"><option value="silence">Map: declared and unsent</option><option value="share">Map: share of a county's disasters with a word</option></select>
+</div>
+<div class="cases sans"><small style="align-self:center">Go to:</small></div>
+
+<div class="counts" id="counts"></div>
+<div id="card"><div class="meta">Tap a county to read its declared disasters and what reached it.</div></div>
+
+<h2>By kind of danger</h2>
+<div class="tw"><table id="bytype"></table></div>
+<h2>By year</h2>
+<div class="tw"><table id="byyear"></table></div>
+<p class="note" id="offmap"></p>
+
+<h2>What the record holds, and what it cannot</h2>
+<ul>
+<li><b>The declarations.</b> FEMA's public list of every disaster declaration (<a href="https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2">OpenFEMA, Disaster Declarations Summaries v2</a>), each incident that began on or after 1 January 2012: <span id="n-rows"></span> rows. Left out: the pandemic (<span id="n-bio"></span> rows, a different kind of danger). A county declared twice for the same incident (an emergency and then a major disaster) counts once: <span id="n-areas"></span> county disasters, in <span id="n-inc"></span> incidents by state. <span id="n-000"></span> areas declared for a whole state or a tribal nation have no county and are not placed.</li>
+<li><b>The words.</b> FEMA's public archive of the alert system (<a href="https://www.fema.gov/openfema-data-page/ipaws-archived-alerts-v1">OpenFEMA, IPAWS Archived Alerts v1</a>): every alert from a sender other than the National Weather Service, minus tests (by code and by their own words) and administrative messages, as in <a href="../2026-10-15-the-keepers-word/">The Keeper's Word</a>: <span id="n-warn"></span> warnings. A warning reaches a county when its area codes name the county or its whole state.</li>
+<li><b>The window, fixed before counting:</b> from three days before the incident's declared start to seven days after it. <b>Named the danger:</b> the warning's words match a fixed word list for the incident's kind (fire, flood, storm and so on, in <code>build.py</code>), read mechanically; the card shows the words so you can judge. Warnings coded for people (abductions, police, missing persons) never count as naming it, and their words are withheld here, as are any that describe a person.</li>
+<li><b>What this cannot say.</b> The alert system is one channel. Counties also warn by opt-in phone lists, sirens, social media, radio and knocking on doors, and none of that is in this archive. The weather service's own warnings are left out on purpose: they are not a local keeper's word. And a declaration does not say a warning was needed: many declare damage from storms that the weather service warned of, or that no warning could have changed. The record cannot tell a warning never needed from a warning never sent. That is the question's blank, and the map is its shape.</li>
+</ul>
+
+<h2>Neighbours in the Atlas of Data Art</h2>
+<ul>
+<li>Mimi Ọnụọha, <i>The Library of Missing Datasets</i> (v2.0): there an empty folder carries the name of a dataset that does not exist, one of them the uncounted deaths of a hurricane. Here the missing record is located, county by county and day by day, from two records that do exist, and the gap is the distance between them.</li>
+<li>Tori Holmes, Nico Espinoza, Rafucko, <i>Outros Registros</i>: there a city's killings sound as drones mapped to its regions. Here the drone is the government's word after the fact, and what the ear listens for is the bell that mostly does not come.</li>
+<li>Jaime Black, <i>The REDress Project</i>: there an empty dress makes an uncounted absence present in a place. Here an unlit county does that work for a warning, and the visitor can open it to read what did arrive.</li>
+</ul>
+<p class="note">Sources: FEMA, OpenFEMA (public domain), fetched 2026-10-15. Map: us-atlas 3.0.1 (ISC), from the US Census Bureau's cartographic boundaries; drawn with d3 7.9.0 and topojson-client 3.1.0 (ISC). Connecticut's planning regions of 2022 are not on this map's county layer, and the territories are not on the map; both are counted. Made by Ensemble, The Studio, session 174. Code and evidence: <code>build.py</code>, <code>summary.json</code>, <code>cases.json</code>, <code>verify_browser.mjs</code>.</p>
+</main>
+<script src="vendor/d3.min.js"></script>
+<script src="vendor/topojson-client.min.js"></script>
+<script src="data.js"></script>
+<script>
+'use strict';
+const S = window.SUMMARY, INC = window.INC, WORDS = window.WORDS, CASES = window.CASES;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const fmt = n => n.toLocaleString('en-US');
+const day = d => new Date(d * 864e5).toISOString().slice(0, 10);
+const minute = m => new Date(m * 6e4).toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
+const STN = {spoke: 'a local word named the danger', other: 'a local word, on something else', silent: 'nothing reached it', never: 'nothing reached it; it had never received a local warning'};
+const COL = {spoke: '#ffc46b', other: '#9aa3b5', silent: '#5d7aa6', never: '#a0607a'};
+const D0 = INC[0].b - 30, D1 = Math.floor(Date.parse(S.fetched) / 864e5);
+const st = {t: D1, playing: false, sound: false, ready: false, view: 'silence', counts: null, applied: -1, sel: null};
+
+// ---------- map ----------
+const cv = $('cv'), ctx = cv.getContext('2d');
+const W0 = 975, H0 = 610;
+let topo, proj, paths = new Map(), centroid = new Map(), names = new Map(), stateMesh, nationPath;
+const SNAME = {};
+async function loadMap() {
+  topo = await (await fetch('vendor/counties-10m.json')).json();
+  proj = d3.geoAlbersUsa().scale(1300).translate([487.5, 305]);
+  const pg = d3.geoPath(proj);
+  for (const s of topojson.feature(topo, topo.objects.states).features) SNAME[s.id] = s.properties.name;
+  for (const f of topojson.feature(topo, topo.objects.counties).features) {
+    const d = pg(f); if (!d) continue;
+    paths.set(f.id, new Path2D(d)); centroid.set(f.id, pg.centroid(f));
+    names.set(f.id, f.properties.name);
+  }
+  stateMesh = new Path2D(pg(topojson.mesh(topo, topo.objects.states, (a, b) => a !== b)));
+  nationPath = new Path2D(pg(topojson.feature(topo, topo.objects.nation)));
+}
+function size() {
+  const w = cv.clientWidth || cv.parentNode.clientWidth, h = Math.round(w * H0 / W0);
+  const r = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = Math.round(w * r); cv.height = Math.round(h * r); cv.style.height = h + 'px';
+  draw();
+}
+
+// ---------- state over time ----------
+// per county: declared, spoke, other, silent, never, and the time of its last event
+const C = new Map();
+function reset() { C.clear(); st.applied = -1; }
+function apply(upto) {
+  if (upto < st.applied) reset();
+  for (let i = st.applied + 1; i <= upto; i++) {
+    for (const a of INC[i].a) {
+      let c = C.get(a[0]); if (!c) C.set(a[0], c = {n: 0, spoke: 0, other: 0, silent: 0, never: 0, last: 0, ls: ''});
+      c.n++; c[a[1]]++; c.last = INC[i].b; c.ls = a[1];
+    }
+  }
+  st.applied = upto;
+}
+function idxAt(t) { let lo = -1, hi = INC.length - 1; while (lo < hi) { const m = (lo + hi + 1) >> 1; if (INC[m].b <= t) lo = m; else hi = m - 1; } return lo; }
+function tally(t) {
+  const k = {spoke: 0, other: 0, silent: 0, never: 0, all: 0};
+  const i1 = idxAt(t);
+  for (let i = 0; i <= i1; i++) for (const a of INC[i].a) { k[a[1]]++; k.all++; }
+  return k;
+}
+
+// ---------- drawing ----------
+const silentRamp = d3.scaleSequential(d3.interpolateRgb('#1f2a3c', '#9db8e0')).domain([0, 12]).clamp(true);
+const shareRamp = d3.scaleSequential(d3.interpolateRgb('#24324a', '#ffc46b')).domain([0, 1]);
+function draw() {
+  if (!st.ready) return;
+  const k = cv.width / W0;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = '#06070a'; ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.setTransform(k, 0, 0, k, 0, 0);
+  ctx.fillStyle = '#15171d'; ctx.fill(nationPath);
+  for (const [id, p] of paths) {
+    const c = C.get(id); if (!c) continue;
+    if (st.view === 'share') ctx.fillStyle = shareRamp((c.spoke + c.other * 0.25) / c.n);
+    else ctx.fillStyle = silentRamp(c.silent + c.never);
+    ctx.fill(p);
+  }
+  ctx.lineWidth = 0.5 / k * 1.2; ctx.strokeStyle = 'rgba(210,205,190,.28)'; ctx.stroke(stateMesh);
+  // the spoken: a warm point at the county's centre, sized by how often
+  if (st.view === 'silence') for (const [id, c] of C) {
+    if (!c.spoke) continue; const p = centroid.get(id); if (!p) continue;
+    ctx.fillStyle = 'rgba(255,196,107,.85)'; ctx.beginPath(); ctx.arc(p[0], p[1], Math.min(4.5, 0.9 + Math.sqrt(c.spoke) * 0.9), 0, 7); ctx.fill();
+  }
+  // the last 45 days: flashes
+  for (const [id, c] of C) {
+    const age = st.t - c.last; if (age < 0 || age > 45) continue;
+    const p = paths.get(id); if (!p) continue;
+    const a = 1 - age / 45;
+    ctx.globalAlpha = a; ctx.strokeStyle = COL[c.ls]; ctx.lineWidth = (c.ls === 'spoke' ? 2.2 : 1.4) / k * 1.5;
+    if (c.ls === 'never') ctx.setLineDash([2, 2]); ctx.stroke(p); ctx.setLineDash([]);
+    if (c.ls === 'spoke') { ctx.fillStyle = 'rgba(255,196,107,.55)'; ctx.fill(p); }
+    ctx.globalAlpha = 1;
+  }
+  if (st.sel && paths.get(st.sel)) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 2 / k * 1.5; ctx.stroke(paths.get(st.sel)); }
+}
+
+// ---------- sound ----------
+let ac = null, master;
+function audio() {
+  if (ac) return; ac = new (window.AudioContext || window.webkitAudioContext)();
+  master = ac.createGain(); master.gain.value = 0.5; master.connect(ac.destination);
+}
+let voices = 0;
+function tone(f, dur, type, vol, when = 0) {
+  if (!ac || !st.sound || ac.state !== 'running' || voices > 24) return;
+  const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime + when;
+  o.type = type; o.frequency.value = f; g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(vol, t + (type === 'sine' && f < 120 ? 0.25 : 0.005));
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t + dur + 0.05); voices++; o.onended = () => voices--;
+}
+const KINDF = {Fire: 1, Flood: 0.9, Hurricane: 0.8, 'Severe Storm': 0.85, 'Winter Storm': 1.12};
+function sound(inc) {
+  // the declaration: a low tone, longer for more counties; each county a word reached: a bell
+  const n = inc.a.length, f = 55 * (KINDF[inc.y] || 1);
+  tone(f, Math.min(3.5, 0.8 + n / 30), 'sine', Math.min(0.35, 0.12 + n / 400));
+  let b = 0;
+  for (const a of inc.a) {
+    if (a[1] === 'spoke' && b < 6) { tone(880 * Math.pow(2, (b * 5 % 12) / 12), 1.6, 'triangle', 0.12, 0.08 + b * 0.09); b++; }
+    else if (a[1] === 'other' && b < 6) { tone(2400, 0.04, 'square', 0.02, 0.05 + b * 0.07); b++; }
+  }
+}
+
+// ---------- play ----------
+let lastFrame = 0;
+function frame(ts) {
+  if (!st.playing) return;
+  const dt = lastFrame ? Math.min(0.1, (ts - lastFrame) / 1000) : 0; lastFrame = ts;
+  const t0 = st.t; st.t = Math.min(D1, st.t + dt * +$('speed').value);
+  const i0 = idxAt(t0), i1 = idxAt(st.t);
+  for (let i = i0 + 1; i <= i1; i++) { sound(INC[i]); showNow(INC[i]); }
+  set(st.t, false);
+  if (st.t >= D1) { st.playing = false; $('play').textContent = 'Play'; $('play').classList.add('on'); }
+  else requestAnimationFrame(frame);
+}
+function showNow(inc) {
+  const k = {spoke: 0, other: 0, silent: 0, never: 0}; for (const a of inc.a) k[a[1]]++;
+  $('now').textContent = `${inc.d} · ${inc.n} (${inc.y}, ${inc.s}) · ${inc.a.length} ${inc.a.length === 1 ? 'county' : 'counties'}: a word named it in ${k.spoke}` + (k.other ? `, a word on something else in ${k.other}` : '') + `, nothing in ${k.silent + k.never}`;
+}
+function set(t, quiet = true) {
+  st.t = t; apply(idxAt(t));
+  $('date').textContent = day(Math.floor(t));
+  $('slider').value = Math.round((t - D0) / (D1 - D0) * 1000);
+  counts(); draw();
+}
+function counts() {
+  const k = tally(st.t); st.counts = k;
+  const pc = x => k.all ? ' (' + (100 * x / k.all).toFixed(1) + ' %)' : '';
+  $('counts').innerHTML = [
+    [k.all, 'county disasters declared so far'],
+    [k.spoke, 'a local word named the danger' + pc(k.spoke)],
+    [k.other, 'a local word on something else' + pc(k.other)],
+    [k.silent, 'nothing, though the county had heard its keepers before' + pc(k.silent)],
+    [k.never, 'nothing, and the county had never received a local warning' + pc(k.never)],
+  ].map(([n, t]) => `<div><div class="n">${fmt(n)}</div><div class="k">${t}</div></div>`).join('');
+}
+
+// ---------- card ----------
+function card(id) {
+  st.sel = id; draw();
+  const rows = [];
+  for (const inc of INC) for (const a of inc.a) if (a[0] === id && inc.b <= st.t) rows.push([inc, a]);
+  const nm = names.get(id) || '', sn = SNAME[id.slice(0, 2)] || '';
+  if (!rows.length) { $('card').innerHTML = `<div class="meta">FIPS ${id}</div><h3>${esc(nm)}${sn ? ', ' + esc(sn) : ''}</h3><p>No disaster declared here between 2012 and ${day(Math.floor(st.t))}.</p>`; return; }
+  const k = {spoke: 0, other: 0, silent: 0, never: 0}; rows.forEach(r => k[r[1][1]]++);
+  $('card').innerHTML = `<div class="meta">FIPS ${id} · declared ${rows.length} ${rows.length === 1 ? 'time' : 'times'} · a word named the danger ${k.spoke} · nothing ${k.silent + k.never}</div><h3>${esc(nm)}${sn ? ', ' + esc(sn) : ''}</h3><ol>` +
+    rows.slice().reverse().map(([inc, a]) => {
+      const ws = a[2].map(j => WORDS[j]).map(w => `<span class="w">${minute(w[0])} · ${esc(w[1])} · ${w[2] ? '“' + esc(w[2]) + '”' : '<span class="withheld">words withheld: they concern a person</span>'}</span>`).join('');
+      return `<li><span class="st" style="color:${COL[a[1]]}">${STN[a[1]]}${a[3] > 3 ? ` · ${a[3]} warnings, first three shown` : ''}</span><br>${day(inc.b)} · ${esc(inc.d)} · ${esc(inc.n)} <small>(${esc(inc.y)})</small>${ws}</li>`;
+    }).join('') + '</ol>';
+}
+cv.addEventListener('click', e => {
+  if (!st.ready) return;
+  const r = cv.getBoundingClientRect(), k = cv.width / W0, dpr = cv.width / r.width;
+  const x = (e.clientX - r.left) * dpr, y = (e.clientY - r.top) * dpr;
+  ctx.setTransform(k, 0, 0, k, 0, 0);
+  for (const [id, p] of paths) if (ctx.isPointInPath(p, x, y)) { card(id); return; }
+});
+
+// ---------- cases ----------
+const kerr = CASES.kerr_county_tx_2025_07_04_nws;
+const CASE = [
+  ['Sonoma, October 2017', '06097', '2017-10-12', 'The Tubbs and Nuns fires began on the night of 8 October 2017. Four declarations name Sonoma County. The archive holds no local warning to the county in the window.'],
+  ['Butte, November 2018', '06007', '2018-11-12', 'The Camp Fire began on 8 November 2018. Two declarations name Butte County. The archive holds no local warning to the county in the window. From 2019 on, Butte\'s keepers send often: open the county at the end to read them.'],
+  ['Maui, August 2023', '15009', '2023-08-12', 'Four declarations name Maui County from 8 August 2023. The archive holds 15 local alerts to the county on 8 and 9 August; the card shows the first three. The first to name a Lahaina subdivision went out at 02:16 UTC on 9 August, 4:16 pm in Hawaii on the 8th.'],
+  ['Kerr, July 2025', '48265', '2025-07-08', `The declaration's incident began on 2 July 2025. The weather service warned Kerr County's phones at ${kerr[0].sent.slice(11, 16)} UTC on 4 July and raised it to a flash flood emergency at ${kerr[2].sent.slice(11, 16)} UTC (1:14 and 4:03 am local time); those are not counted here. The first local keeper's word to the county in the archive went out on 6 July.`],
+  ['Los Angeles, January 2025', '06037', '2025-01-12', 'Four declarations name Los Angeles County from 7 January 2025. The archive holds 91 local warnings to the county that name a fire in the window.'],
+];
+const cs = document.querySelector('.cases');
+for (const [label, id, d, text] of CASE) {
+  const b = document.createElement('button'); b.textContent = label;
+  b.onclick = () => { pause(); set(Math.floor(Date.parse(d) / 864e5)); card(id); $('card').insertAdjacentHTML('afterbegin', `<p style="margin-top:0">${esc(text)}</p>`); };
+  cs.appendChild(b);
+}
+
+// ---------- tables ----------
+function bar(o) {
+  const n = o.spoke + o.other + o.silent + o.never;
+  return `<div class="bar">${['spoke', 'other', 'silent', 'never'].map(k => `<i style="width:${100 * o[k] / n}%;background:${COL[k]}"></i>`).join('')}</div>`;
+}
+function table(el, obj, label) {
+  const h = `<tr><th>${label}</th><th>declared</th><th>word named it</th><th>on something else</th><th>nothing</th><th>never heard</th><th style="text-align:left">share</th></tr>`;
+  $(el).innerHTML = h + Object.entries(obj).map(([k, v]) => {
+    v = Object.assign({spoke: 0, other: 0, silent: 0, never: 0}, v); const n = v.spoke + v.other + v.silent + v.never;
+    return `<tr><td>${esc(k)}</td><td>${fmt(n)}</td><td>${fmt(v.spoke)} <small>${(100 * v.spoke / n).toFixed(0)} %</small></td><td>${fmt(v.other)}</td><td>${fmt(v.silent)}</td><td>${fmt(v.never)}</td><td>${bar(v)}</td></tr>`;
+  }).join('');
+}
+
+// ---------- controls ----------
+function pause() { st.playing = false; $('play').textContent = 'Play'; $('play').classList.add('on'); }
+$('play').onclick = () => {
+  if (st.playing) { pause(); return; }
+  if (st.t >= D1) set(D0);
+  if (st.sound) { audio(); ac.resume(); }
+  st.playing = true; lastFrame = 0; $('play').textContent = 'Pause'; $('play').classList.remove('on'); requestAnimationFrame(frame);
+};
+$('snd').onclick = () => {
+  st.sound = !st.sound; $('snd').textContent = st.sound ? 'Sound off' : 'Sound on'; $('snd').classList.toggle('on', st.sound);
+  if (st.sound) { audio(); ac.resume(); tone(55, 1.4, 'sine', 0.25); tone(880, 1.4, 'triangle', 0.1, 0.4); }
+};
+$('slider').oninput = e => { pause(); set(D0 + (D1 - D0) * e.target.value / 1000); };
+$('view').onchange = e => { st.view = e.target.value; legend(); draw(); };
+function legend() {
+  const sw = c => `<i class="sw" style="background:${c}"></i>`;
+  const flash = `<span>outlines, the last 45 days: ${sw(COL.spoke)}a word named it ${sw(COL.other)}a word on something else ${sw(COL.silent)}nothing ${sw(COL.never)}nothing, ever before</span>`;
+  $('legend').innerHTML = (st.view === 'share'
+    ? `<span>${sw('#24324a')}no declared disaster here had a local word &nbsp;${sw('#ffc46b')}every one had</span>`
+    : `<span>${sw('#2c3a52')}${sw('#6f88b3')}${sw('#9db8e0')}declared disasters with no local word: 1, 6, 12 or more</span><span>${sw('#ffc46b')}point: a word named the danger</span>`) + '<br>' + flash;
+}
+legend();
+window.addEventListener('resize', size);
+
+// ---------- start ----------
+(async () => {
+  $('n-rows').textContent = fmt(S.declaration_rows); $('n-bio').textContent = fmt(S.skipped.biological);
+  $('n-areas').textContent = fmt(S.county_areas); $('n-inc').textContent = fmt(S.incidents);
+  $('n-000').textContent = fmt(S.outcomes.state_or_tribal_area); $('n-warn').textContent = fmt(S.alerts.warnings);
+  table('bytype', S.by_type, 'kind'); table('byyear', S.by_year, 'year');
+  await loadMap();
+  let off = 0; const offIds = new Set();
+  for (const inc of INC) for (const a of inc.a) if (!paths.has(a[0])) { off++; offIds.add(a[0].slice(0, 2)); }
+  st.offmap = off;
+  $('offmap').textContent = `${fmt(off)} of the ${fmt(S.county_areas)} county disasters lie off this map (the territories, Connecticut's new planning regions and a few others; state codes ${[...offIds].sort().join(', ')}); they are in every count and table.`;
+  st.ready = true; size(); set(D1);
+  const last = INC.filter(i => i.a.length).pop(); showNow(last);
+})();
+window.__UN = {state: st, set, card, D0, D1, tally};
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>

@@ -1,0 +1,38 @@
+{
+ "_note": "This session's own answer to the question it is about: has this been done already? Run BEFORE the record was written and AFTER the study, which is one stage earlier than session 152 managed. Two channels: the house's own paper index, and outward web research.",
+ "date": "2026-09-06",
+ "house_register": {
+  "feed": "https://frankbueltge.de/papers/index.json",
+  "http": 200,
+  "entries": 1264,
+  "terms_searched": ["prior art", "novelty", "literature review", "related work", "retrieval",
+                     "citation recommend", "systematic review", "duplicate", "plagiar",
+                     "reinvent", "deduplicat", "search agent", "idea generation"],
+  "matches": {"prior art": 0, "novelty": 0, "literature review": 3, "related work": 0,
+              "retrieval": 4, "citation recommend": 0, "systematic review": 10, "duplicate": 0,
+              "plagiar": 0, "reinvent": 0, "deduplicat": 0, "search agent": 7,
+              "idea generation": 0},
+  "reading": "The seven 'search agent' matches are benchmarks and audit frameworks for deep-research agents (answer quality, source attribution, claim-level auditability). The 'literature review' and 'systematic review' matches are clinical reviews, not method papers. Nothing on the shelf treats prior-art retrieval as a STAGE inside an automated research loop. Zero for 'prior art', 'novelty' and 'reinvent' across 1,264 entries.",
+  "caveat": "A term match over a title-and-metadata index is a weak instrument, as this session's own measurements make clear. Absence here is not absence in the literature."
+ },
+ "outward": {
+  "method": "web research, one query: novelty check prior art retrieval for AI-generated research ideas automated literature search agent",
+  "found": [
+   {
+    "title": "NoveltyRank: A Retrieval-Augmented Framework for Conceptual Novelty Estimation in AI Research",
+    "authors": ["Zhengxu Yan", "Han Li", "Yuming Feng"],
+    "identifier": "arXiv:2512.14738",
+    "submitted": "2025-12-12",
+    "read_at_source": "https://arxiv.org/abs/2512.14738 — title, authors, date and abstract read; full text not read",
+    "what_it_does": "Combines semantic representation learning with retrieval-based comparison against the literature to score a paper's conceptual novelty, treated both as classification (novel / not novel) and as ranking. Reports that fine-tuned lightweight models outperform larger zero-shot ones, and deploys the best model as a public real-time service.",
+    "daylight": "It scores novelty with a trained model, taking retrieval as given. This session measures the retrieval step alone, model-free, and asks the opposite question: given prose describing something whose canonical source is KNOWN, does a mechanical stage return that source at all? Its answer is the recall floor beneath any novelty score. The two are complementary, not competing — and NoveltyRank's premise is exactly what this session found does not hold for free-text catalogue search."
+   },
+   {
+    "field": "commercial patent prior-art search",
+    "read_at_source": false,
+    "note": "A substantial commercial sector sells automated prior-art and novelty search over patent and non-patent literature. Vendor material was seen in search results and NOT read at source, and no vendor is named here. It is recorded as context, and nothing in this artifact rests on it. Its object is patent claims rather than a research loop's own output, and its systems are neither model-free nor auditable from outside."
+   }
+  ],
+  "still_unfound": "A published measurement of prior-art RECALL from a name-free description of a known method, inside an automated research pipeline. This session's 0 of 9 is offered as one such measurement, for one instrument."
+ }
+}

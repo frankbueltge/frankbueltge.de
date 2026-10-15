@@ -1,0 +1,181 @@
+---
+// The Middle's triangle (2026-10-05) — the FRAME, not the figure. It does four things and stops:
+//
+//   · resolves the wording canon against the model, so the island receives plain strings and no
+//     number is ever typed into one (every count line is built here from the model's counts);
+//   · mounts the island `client:visible` inside `.tri-figure`, the position: relative box the
+//     readout clamps within (readout.ts, house rule 1), with the Readout shell beside it;
+//   · lays the table floor: every relation of the relay, lane by lane, each with its two
+//     commit-pinned references — the place a lane's link leads when no script runs;
+//   · says where the drawing was read from, and whether the relay's own totals agree with the
+//     recount. Before the relay first reports it says that instead, and draws no lane at all.
+import { MIDDLE_V3 } from '@/config/middle-v3-wording'
+import Readout from '@/components/dataviz/Readout.astro'
+import { DEFAULT_WINDOW, bandAnchor, kindSummary, type RelayView } from '@/lib/ecology/relay-triangle'
+import '@/styles/middle-relay.css'
+
+import RelayTriangle from './RelayTriangle'
+import { practiceName as name, relayWording } from './relay-wording'
+
+interface Props {
+  view: RelayView
+}
+const { view } = Astro.props
+
+const W = MIDDLE_V3.triangle
+const kinds = MIDDLE_V3.legend.kinds
+const READOUT_ID = 'relay-triangle-readout'
+const FIGURE_ID = 'relay-triangle'
+
+const wording = relayWording(view)
+
+// The floor lists the whole record, lane by lane, newest first — whatever the window on screen.
+const byId = new Map(view.rows.map((r) => [r.id, r]))
+const lanes = view.record.bands.map((b) => ({
+  band: b,
+  rows: b.relationIds.map((id) => byId.get(id)!).filter(Boolean),
+}))
+const period = view.period ? `${view.period.from} – ${view.period.to}` : '—'
+const generated = view.generatedAt ?? '—'
+const diff = view.check.differences.map(([k, declared, mine]) => `${k}: ${declared} against ${mine}`).join(', ')
+---
+
+<figure class="rounded-md border border-line bg-panel panel-raised" id="relay" aria-labelledby="relay-heading">
+  <div class="p-4 sm:p-5">
+    <h2 id="relay-heading" class="kicker">{W.kicker}</h2>
+    <div class="tri-figure mt-3">
+      <RelayTriangle
+        client:visible
+        windows={view.windows}
+        defaultWindow={DEFAULT_WINDOW}
+        rows={view.rows}
+        wording={wording}
+        readoutId={READOUT_ID}
+        figureId={FIGURE_ID}
+      />
+      <Readout id={READOUT_ID} maxWidth="40ch" />
+    </div>
+  </div>
+
+  {
+    view.status === 'ok' ? (
+      <div class="border-t border-line p-4 sm:p-5">
+        <details class="relay-floor" id="relay-floor">
+          <summary class="font-mono text-mono-sm text-fg-faint">{W.table.summary(view.rows.length)}</summary>
+          <div class="mt-4 space-y-6">
+            {lanes.map(({ band, rows }) => (
+              <section id={bandAnchor(band.id)} class="relay-lane scroll-mt-24" aria-label={W.table.lane(name(band.giver), name(band.taker))}>
+                <h3 class="relay-lane-head flex flex-wrap items-center gap-2 font-mono text-mono-sm text-fg-muted">
+                  <span class={`tri-dot g-${band.giver}`} aria-hidden="true" />
+                  {W.table.lane(name(band.giver), name(band.taker))}
+                  <span class="text-fg-faint">· {kindSummary(band.counts, kinds)}</span>
+                </h3>
+                {rows.length === 0 ? (
+                  <p class="mt-1 text-sm text-fg-faint">{W.table.noneInLane}</p>
+                ) : (
+                  <div class="mt-2 overflow-x-auto">
+                    <table class="relay-table">
+                      <caption class="sr-only">{W.table.caption(W.table.lane(name(band.giver), name(band.taker)))}</caption>
+                      <thead>
+                        <tr>
+                          <th scope="col">{W.table.columns.date}</th>
+                          <th scope="col">{W.table.columns.kind}</th>
+                          <th scope="col">{W.table.columns.what}</th>
+                          <th scope="col">{W.table.columns.evidence}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {rows.map((r) => (
+                          <tr id={r.anchor} class="scroll-mt-24">
+                            <td data-nowrap class="font-mono">{r.date}</td>
+                            <td data-nowrap>{kinds[r.kind]}</td>
+                            <td>
+                              {r.what}
+                              {r.thread && <span class="ml-1 font-mono text-mono-xs text-fg-faint">· {W.card.thread} {r.thread}</span>}
+                              {r.corrects && (
+                                <span class="ml-1 font-mono text-mono-xs text-fg-faint">
+                                  · {W.card.corrects}{' '}
+                                  {r.correctsAnchor ? <a class="underline" href={`#${r.correctsAnchor}`}>{r.corrects}</a> : r.corrects}
+                                </span>
+                              )}
+                            </td>
+                            <td data-nowrap class="font-mono text-mono-sm">
+                              {r.giverHref ? <a class="underline hover:text-fg" href={r.giverHref}>{W.card.given}</a> : <span>{W.card.noRef}</span>}
+                              <br />
+                              {r.takerHref ? <a class="underline hover:text-fg" href={r.takerHref}>{W.card.taken}</a> : <span>{W.card.noRef}</span>}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </section>
+            ))}
+
+            <section aria-label={W.table.totals.heading}>
+              <h3 class="font-mono text-mono-sm text-fg-muted">{W.table.totals.heading}</h3>
+              <div class="mt-2 overflow-x-auto">
+                <table class="relay-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">{W.table.totals.practice}</th>
+                      <th scope="col">{W.table.totals.gave}</th>
+                      <th scope="col">{W.table.totals.took}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {view.record.nodes.map((n) => (
+                      <tr>
+                        <td data-nowrap>
+                          <span class={`tri-dot g-${n.practice} mr-1.5`} aria-hidden="true" />
+                          {name(n.practice)}
+                        </td>
+                        <td>{kindSummary(n.totals.given, kinds)}</td>
+                        <td>{kindSummary(n.totals.received, kinds)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {view.threads.length > 0 && (
+              <section aria-label={W.table.threads.heading}>
+                <h3 class="font-mono text-mono-sm text-fg-muted">{W.table.threads.heading}</h3>
+                <ul class="mt-2 space-y-1.5 text-sm text-fg-muted">
+                  {view.threads.map((t) => (
+                    <li>
+                      <span class="font-mono text-fg">{t.id}</span>
+                      <span class="text-fg-faint"> · {W.table.threads.line(t.practices.map(name).join(', '), t.first, t.last)}</span>
+                      <span class="block font-mono text-mono-sm text-fg-faint">
+                        {t.relations.map((r, i) => (
+                          <>
+                            {i > 0 && ' · '}
+                            <a class="underline hover:text-fg" href={`#${byId.get(r.id)!.anchor}`}>
+                              {r.date} {name(r.giver)} → {name(r.taker)}, {kinds[r.kind]}
+                            </a>
+                          </>
+                        ))}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+          </div>
+        </details>
+        <p class="mt-4 max-w-3xl font-mono text-mono-sm leading-relaxed text-fg-faint">
+          {W.provenance(generated, period)} {view.check.agrees ? W.countsAgree : W.countsDiffer(diff)}
+          {view.skipped > 0 && <> {W.skipped(view.skipped)}</>}
+        </p>
+      </div>
+    ) : (
+      <div class="border-t border-line p-4 sm:p-5">
+        <p class="max-w-3xl font-mono text-mono-sm leading-relaxed text-fg-faint">
+          {view.status === 'invalid' ? W.unreadable : W.lookedFor}
+        </p>
+      </div>
+    )
+  }
+</figure>

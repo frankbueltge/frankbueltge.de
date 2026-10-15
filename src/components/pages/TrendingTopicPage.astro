@@ -1,0 +1,252 @@
+---
+/** One watched term (/trending/topics/<slug>) — the arcs seen from inside a single phrase.
+ *
+ *  A stable address that is rewritten every morning: the counts, the status sentence, the
+ *  series and the receipts all come out of the committed terms files, so the page says today
+ *  what today's file says and keeps yesterday's numbers reachable in the archive rather than
+ *  in prose.
+ *
+ *  The series is a figure, so it carries its table floor and a provenance line beneath it
+ *  (WP3, shared dataviz primitives): nothing here is reachable only by hovering a bar.
+ */
+import '@/styles/trending.css'
+import '@/styles/trending-figures.css'
+import Readout from '@/components/dataviz/Readout.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { Badge } from '@/components/ui/badge'
+import { arcModel } from '@/lib/trending/arc'
+import { compact, fmtDateWeekday } from '@/lib/trending/format'
+import { seriesFor } from '@/lib/trending/terms-data'
+import { definedTermLd, termDatasetLd, termsWebPageLd } from '@/lib/trending/terms-jsonld'
+import { termsUrls } from '@/lib/trending/terms-markdown'
+import type { TrendingTerm, TrendingTermsDay } from '@/lib/trending/terms-types'
+import {
+  cappedPlatforms,
+  countRows,
+  countedPlatforms,
+  joinWithAnd,
+  receiptItems,
+  searchedPlatforms,
+  seriesRows,
+  sortTerms,
+  statusLabel,
+  statusSentence,
+  termPlatformLabel,
+  termSubline,
+} from '@/lib/trending/terms-view'
+
+import TrendingArc, { type ArcWording } from './TrendingArc'
+
+interface Props {
+  file: TrendingTermsDay
+  term: TrendingTerm
+}
+const { file, term } = Astro.props
+
+const u = termsUrls(term.slug)
+const canonical = u.page
+const order = searchedPlatforms(file)
+const counts = countRows(file, term)
+const capped = cappedPlatforms(term, order)
+const carried = countedPlatforms(term, order)
+const receipts = receiptItems(term, 12)
+const series = seriesFor(term.slug, 30)
+const arc = arcModel(series, 560, 72)
+const rows = seriesRows(series)
+const views = term.counts.wikipedia_views ?? null
+const wikipediaUrl = term.wikipedia_article ? `https://en.wikipedia.org/wiki/${encodeURIComponent(term.wikipedia_article)}` : null
+
+// The neighbours in the hub's order, so a reader can walk the watchlist without going back up.
+const ordered = sortTerms(file.terms)
+const idx = ordered.findIndex((t) => t.slug === term.slug)
+const prev = idx > 0 ? ordered[idx - 1] : undefined
+const next = idx >= 0 && idx < ordered.length - 1 ? ordered[idx + 1] : undefined
+
+const lds = [
+  termDatasetLd(file, term, canonical),
+  definedTermLd(term, canonical),
+  termsWebPageLd({
+    name: term.term,
+    canonical,
+    datePublished: `${term.added}T00:00:00Z`,
+    dateModified: file.generated_at,
+  }),
+]
+
+const countsProvenance =
+  `The term and each of its declared aliases are searched as one quoted phrase through every platform's own search ` +
+  `interface, once a day; matching documents are deduplicated by URL, and each document counts once however often the ` +
+  `phrase occurs in it. The three windows end at the run, so seven days means the seven days before this morning. ` +
+  `A platform marked as possibly undercounting returns at most a fixed number of items per query, so its thirty-day ` +
+  `figure is a floor rather than a count. Page views are shown where the watchlist names a Wikipedia article and are ` +
+  `never added to a total — they are readers, not documents.`
+
+const seriesProvenance =
+  `One point per committed run, oldest on the left, read out of the dated files in src/data/trending/terms rather ` +
+  `than from any stored series: a day the machine did not run has no bar, and a day that counted nothing is drawn as ` +
+  `a hairline, because a measured zero is still a measurement. The strip is as long as the archive, which is why a ` +
+  `term added recently has a short one.`
+
+const ARC_READOUT_ID = 'trending-arc-readout'
+const ARC_FIGURE_ID = 'trending-arc'
+const arcWording: ArcWording = {
+  figureLabel: `Bars: mentions of this term per day over the last ${series.length} committed runs, tallest bar ${arc.max}.`,
+  mentionsWord: 'mentions',
+  perRunWord: 'per run',
+  recentLabel: 'last 7 runs',
+  priorLabel: 'the 21 before',
+}
+
+const measured = [
+  'A term is a phrase, not a subject: it is counted when it or one of its declared aliases occurs in the title of a document a platform returns for that quoted phrase.',
+  'Each document counts once. Duplicates are removed by URL, so one story syndicated to five outlets counts as the number of distinct URLs, not as five mentions of a topic.',
+  'The windows end at the run, not at midnight: one day, seven days and thirty days back from the moment the machine asked.',
+  'The status compares the seven-day count with the three weeks before it against thresholds committed in the pipeline. No editorial judgement enters, and no model is called.',
+  'The first sighting is the earliest receipt across this run and every committed file, so it can only move backwards — never forwards, and never to today because the archive is young.',
+]
+---
+
+<main id="main" class="flex-1">
+  <div class="trending mx-auto max-w-3xl px-4 py-14">
+    <header class="mb-10">
+      <p class="kicker">
+        <a href="/trending/topics/" class="transition-colors hover:text-fg">Common Ground · Trends in the making</a>
+      </p>
+      <h1 class="mt-2 text-h1 font-bold">{term.term}</h1>
+      <p class="mt-4 font-mono text-xs text-fg-faint">{termSubline(term, file)}</p>
+      <p class="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-2">
+        <Badge variant="outline">{statusLabel(term.status)}</Badge>
+        <span class="max-w-2xl text-lg leading-relaxed">{statusSentence(term)}</span>
+      </p>
+      <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+        Counted every morning across {joinWithAnd(order.map(termPlatformLabel))}, from each platform&rsquo;s own search
+        interface, with the documents the counts were read from listed below. This page is rewritten with every run;
+        the run it stands on is <time datetime={file.date}>{fmtDateWeekday(file.date)}</time>.
+      </p>
+      <ul class="mt-4 space-y-1 font-mono text-mono-sm leading-relaxed text-fg-faint">
+        {term.aliases.length > 0 && <li>Also counted as: {term.aliases.join(', ')}</li>}
+        <li>Entered the watchlist as {term.origin === 'discovered' ? 'a discovery the machine proposed and a person accepted' : 'an editorial decision'}{term.note ? ` — ${term.note}` : ''}</li>
+        {carried.length > 0 && <li>Carried in the last thirty days by: {carried.map(termPlatformLabel).join(' · ')}</li>}
+        {wikipediaUrl && (
+          <li>
+            Wikipedia:{' '}
+            <a href={wikipediaUrl} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{term.wikipedia_article}</a>
+            {views && <span> — <span class="tabular-nums">{compact(views.d30)}</span> page views in thirty days, counted apart from the mentions</span>}
+          </li>
+        )}
+      </ul>
+    </header>
+
+    <section class="mb-12">
+      <h2 class="kicker">Mentions per platform</h2>
+      <div class="mt-3 text-sm">
+        <TableFallback
+          summary="The counts per platform, as a table"
+          open={true}
+          columns={[
+            { key: 'platform', label: 'Platform', nowrap: true },
+            { key: 'd1', label: '1 day', align: 'right' },
+            { key: 'd7', label: '7 days', align: 'right' },
+            { key: 'd30', label: '30 days', align: 'right' },
+            { key: 'capped', label: 'Note' },
+          ]}
+          rows={counts}
+          caption="Documents mentioning this term per platform, over one day, seven days and thirty days, with the total excluding page views"
+          provenance={countsProvenance}
+        />
+      </div>
+      {capped.length > 0 && (
+        <p class="mt-3 max-w-2xl font-mono text-mono-sm leading-relaxed text-fg-faint">
+          May undercount: {capped.map(termPlatformLabel).join(', ')} — the feed returns at most a fixed number of
+          items per query, so the thirty-day figure is a floor.
+        </p>
+      )}
+    </section>
+
+    <section class="mb-12 border-t border-line pt-6">
+      <h2 class="kicker">The arc</h2>
+      {series.length === 0 ? (
+        <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+          No committed run carries this term yet, so there is no series to draw. It appears with the next run, one
+          point at a time.
+        </p>
+      ) : (
+        <figure class="mt-4">
+          <div class="tr-figure">
+            <TrendingArc client:visible model={arc} wording={arcWording} id={ARC_FIGURE_ID} readoutId={ARC_READOUT_ID} />
+            <Readout id={ARC_READOUT_ID} maxWidth="28ch" />
+          </div>
+          <figcaption class="mt-2 max-w-2xl font-mono text-mono-sm text-fg-faint">
+            One bar per committed run, oldest on the left, tallest bar = <span class="tabular-nums">{compact(arc.max)}</span> mentions
+            in a day.{arc.windows
+              ? ' The two brackets are the windows the status word rests on: the last seven runs, and the three weeks before them.'
+              : ` The comparison the status rests on — the last seven runs against the three weeks before them — is not drawn yet: the archive is ${arc.needs} runs short of carrying it.`}
+            {' '}The table below is the same data, day by day.
+          </figcaption>
+          <div class="mt-3 text-sm">
+            <TableFallback
+              summary="The arc, day by day, as a table"
+              columns={[
+                { key: 'date', label: 'Run', nowrap: true },
+                { key: 'mentions', label: 'Mentions that day', align: 'right' },
+              ]}
+              rows={rows}
+              caption="Mentions of this term per committed run, newest first"
+              provenance={seriesProvenance}
+            />
+          </div>
+        </figure>
+      )}
+    </section>
+
+    <section class="mb-12 border-t border-line pt-6">
+      <h2 class="kicker">Receipts</h2>
+      {receipts.length === 0 ? (
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+          No document was kept for this run. A count without a receipt is a count a reader cannot check, which is why
+          the number above stands alone here rather than being dressed up.
+        </p>
+      ) : (
+        <>
+          <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+            The newest documents the counts were read from — title, platform and date, nothing else. The bodies are
+            not stored anywhere: the receipt exists so a reader can open the source and check the count themselves.
+          </p>
+          <ol class="mt-4 space-y-2 text-sm">
+            {receipts.map((r) => (
+              <li class="border-b border-line pb-2">
+                <a href={r.url} target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{r.title}</a>
+                <span class="ml-2 whitespace-nowrap font-mono text-mono-sm text-fg-faint">{r.platform} · {r.date}</span>
+              </li>
+            ))}
+          </ol>
+        </>
+      )}
+    </section>
+
+    <section class="mb-12 border-t border-line pt-6">
+      <h2 class="kicker">How this is measured</h2>
+      <ol class="mt-3 list-decimal space-y-1.5 pl-5 leading-relaxed text-fg-muted">{measured.map((m) => <li>{m}</li>)}</ol>
+      <p class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-xs text-fg-faint">
+        <a href="/werke/trending#arcs" class="transition-colors hover:text-fg">Method sheet, section seven &rarr;</a>
+        <a href={`/trending/topics/${term.slug}.json`} class="transition-colors hover:text-fg">This term as JSON &rarr;</a>
+        <a href="/trending/topics.json" class="transition-colors hover:text-fg">The whole watchlist as JSON &rarr;</a>
+      </p>
+      <p class="au-note">
+        No language model writes anything on this page: the count is a platform&rsquo;s own answer to a quoted phrase,
+        the status is a threshold in the pipeline, and the sentence above the numbers is assembled from them. Data
+        CC0 1.0; cite as Frank Bültge, Common Ground — trends in the making, {canonical}
+      </p>
+    </section>
+
+    <nav class="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-line pt-6 font-mono text-xs text-fg-muted">
+      {prev && <a href={`/trending/topics/${prev.slug}/`} class="transition-colors hover:text-fg">&larr; {prev.term}</a>}
+      {next && <a href={`/trending/topics/${next.slug}/`} class="transition-colors hover:text-fg">{next.term} &rarr;</a>}
+      <a href="/trending/topics/" class="transition-colors hover:text-fg">All watched terms</a>
+      <a href="/trending/" class="transition-colors hover:text-fg">Today&rsquo;s spikes</a>
+    </nav>
+  </div>
+</main>
+
+{lds.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
+

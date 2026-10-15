@@ -1,0 +1,137 @@
+{
+  "date": "2026-09-09",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-09T10:31:56Z",
+    "counts": {
+      "botwall": 23,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 274,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 274,
+    "excluded_unverifiable": 26,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0138
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0138
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-07",
+    "receipts": [],
+    "sample_drawn_at": "2026-09-08T10:07:31Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5875,
+      "replaced": 5041,
+      "trivial": 1004,
+      "update": 420
+    },
+    "day": "2026-09-08",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "S",
+          "F",
+          "S",
+          "F"
+        ],
+        "after": "S.F. homeless service providers must prove their programs work. S.F. permitting software, not so much…",
+        "before": "SF homeless service providers must prove their programs work. SF permitting software, not so much…",
+        "detected": "2026-09-08T13:32:43Z",
+        "domain": "missionlocal.org",
+        "removed": [
+          "SF",
+          "SF"
+        ],
+        "similarity": 0.812,
+        "url": "https://missionlocal.org/2026/09/san-francisco-opengov-homeless-performance-based-contracting-permit/",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Gavin",
+          "Baker"
+        ],
+        "after": "Gavin Baker : Top tech investor Gavin Baker regrets his comments on data centres; says what I should have said is: There are reasonable concerns and ... |",
+        "before": "Data Centers: Top tech investor Gavin Baker regrets his comments on data centres; says what I should have said is: There are reasonable concerns and ...",
+        "detected": "2026-09-08T07:19:25Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Centers",
+          "data"
+        ],
+        "similarity": 0.958,
+        "url": "https://timesofindia.indiatimes.com/technology/tech-news/top-tech-investor-gavin-baker-regrets-his-comments-on-data-centres-says-what-i-should-have-said-is-there-are-reasonable-concerns-and-/articleshow/133671391.cms",
+        "weight": 7,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Sheffield"
+        ],
+        "after": "Five held by police after newborn baby dies from stab wounds in Sheffield",
+        "before": "Five held by police after newborn baby dies from stab wounds in South Yorkshire",
+        "detected": "2026-09-08T18:01:20Z",
+        "domain": "aol.co.uk",
+        "removed": [
+          "South",
+          "Yorkshire"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.aol.co.uk/articles/five-held-police-newborn-baby-174656000.html",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 17657,
+      "PAGE_TEXTCHANGE": 132356,
+      "PAGE_TITLECHANGE": 50974,
+      "UNCHANGED_CONTENT": 743922
+    },
+    "title_changes_en": 12340,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1788949659471",
+        "job_id": "world_gdg_counts_20260908",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 238026752,
+        "created": "1788949665239",
+        "job_id": "world_gdg_titles_20260908",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-09T10:31:56Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-08.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

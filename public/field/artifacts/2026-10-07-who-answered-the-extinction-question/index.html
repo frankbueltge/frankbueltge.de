@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Who answered the extinction question</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1c1c1c;--mut:#666;--a:#a33;--b:#246;--rule:#d8d4c8}
+@media(prefers-color-scheme:dark){:root{--bg:#161614;--fg:#e8e6df;--mut:#9a978c;--a:#e07a6a;--b:#7fb0d8;--rule:#3a3935}}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:46rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.7rem;line-height:1.2}h2{font-size:1.1rem;margin-top:2.2rem;border-top:1px solid var(--rule);padding-top:1rem}
+.m{color:var(--mut);font-size:.9rem}
+.bar{position:relative;height:34px;background:var(--rule);margin:.6rem 0 .2rem}
+.bar i{position:absolute;top:0;bottom:0;display:block}
+label{display:block;margin:.8rem 0 .2rem}input[type=range]{width:100%}
+output{font-weight:bold}
+table{border-collapse:collapse;width:100%;font-size:.9rem}td,th{border-bottom:1px solid var(--rule);padding:.25rem .4rem;text-align:left}
+.big{font-size:1.6rem;font-weight:bold}
+</style></head><body><main>
+<h1>Who answered the extinction question</h1>
+<p class="m">The Field · cycle 006 · 2026-10-07 · estimates from published counts; one source, read first-hand.</p>
+<p>The best-known number in the debate on AI and human extinction comes from a survey of AI researchers: 38&nbsp;% of respondents gave at least a 10&nbsp;% chance to an extremely bad outcome of advanced AI (e.g. human extinction); 41–51&nbsp;% did so when asked about extinction or severe disempowerment directly (Grace et al., arXiv:2401.02843, §4.2–4.3). An extinction leaves no record to count. The count that exists is a count of <em>answers</em>. This page asks what share of the people <em>invited</em> that number can speak for.</p>
+
+<h2>1 · The denominator</h2>
+<p>About 21,800 names were collected; 20,066 had an email address; 1,607 bounced, leaving 18,459; <strong>2,778 answered</strong> (§6.3–6.4). That is <span id="rr1"></span> of the reachable and <span id="rr2"></span> of the collected. The paper says it found <em>"no evidence suggesting strong participation bias"</em> (App. D), by comparing 369 responders with 589 non-responders on public traits — not on opinion, which nobody has for the non-responders.</p>
+
+<h2>2 · Set the opinion of those who did not answer</h2>
+<label>Headline used (share of respondents at ≥10 %)
+<select id="hl"><option value="0.38">38 % (§4.2, long-run impact)</option><option value="0.412">41.2 % (§4.3, lowest wording)</option><option value="0.514">51.4 % (§4.3, highest wording)</option></select></label>
+<label>Share of <em>non-respondents</em> who would have answered ≥10 %: <output id="rv"></output></label>
+<input id="r" type="range" min="0" max="100" step="0.5" value="38">
+<p>Share of all <em>invited</em> (reachable) researchers at ≥10 %: <span class="big" id="pop"></span></p>
+<div class="bar" aria-hidden="true"><i id="b1" style="left:0;background:var(--a)"></i><i id="b2" style="background:var(--b);opacity:.55"></i></div>
+<p class="m">Red: answered ≥10 % (known). Blue: non-respondents at the slider's rate (unknown). The whole bar is the invited.</p>
+<p id="verdict"></p>
+<table id="tab"><thead><tr><th>Headline</th><th>Floor (nobody else holds it)</th><th>Ceiling (everybody else does)</th></tr></thead><tbody></tbody></table>
+
+<h2>3 · What the authors could check, and what it can move</h2>
+<p>The one stratum with a published response ratio and a published opinion comparison is industry: 61&nbsp;% as likely to respond as the base rate, medians equal (5&nbsp;% in both, App. A.3). The shares of strata among invited and respondents are <em>not</em> printed, so set them:</p>
+<label>Industry share of invited: <output id="fv"></output></label><input id="f" type="range" min="10" max="50" value="30">
+<label>Gap in ≥10 % share, industry minus the rest (points): <output id="dv"></output></label><input id="d" type="range" min="-10" max="10" value="10">
+<p>Weighting back to the invited moves the headline by <span class="big" id="shift"></span> points. Across the whole grid (f 10–50 %, gap ±10) the largest move is <strong id="mx"></strong> points. The slice the opinion of non-respondents leaves open is <strong id="wd"></strong> points wide — <strong id="ratio"></strong> times as wide.</p>
+
+<h2>What this does and does not say</h2>
+<p>It does not say the survey is wrong; the respondents' answers are what they are. It says the survey's 38&nbsp;% is a statement about 15&nbsp;% of the reachable invited, and that the checks which can be made (traits of non-responders) can move it by about two points while the unchecked part can move it by eighty-five. A discourse whose strongest figure rests on an opt-in 15&nbsp;% is a discourse built on missing data in the plain sense of the field. A response rate of 15&nbsp;% is within the range the authors cite for large expert surveys (§5.2.2); that is a fact about surveys, not a reassurance about this one.</p>
+<p class="m"><strong>Limits.</strong> One survey (2023 wave) read from the preprint; other surveys and the forecasting tournament were not read and are not claimed. The 38&nbsp;% denominator (n) is not printed in the text; Table 2 lists N=1,321 / 661 / 655 for the three extinction wordings. Floors and ceilings are logical bounds, not forecasts. Reweighting assumes the stratum's response ratio is relative to the 15 % base. Predictions P1–P3 held, <b>P4 refuted</b> (44×, not over 50×): <code>PREREGISTRATION.md</code>, <code>data/results.json</code>, <code>data/sources.json</code>.</p>
+<script>
+const RESP=2778,FUNC=18459,COL=21800,RR=RESP/FUNC;
+const $=i=>document.getElementById(i),pc=x=>(100*x).toFixed(1)+" %";
+$("rr1").textContent=pc(RR);$("rr2").textContent=pc(RESP/COL);
+function shift(f,dq,rho=0.61,base=0.38){const sr=rho*f/(rho*f+1-f),qi=base+dq,qo=(base-sr*qi)/(1-sr);return (f*qi+(1-f)*qo)-base}
+let mx=0;for(let f=10;f<=50;f++)for(let d=-10;d<=10;d++)mx=Math.max(mx,Math.abs(shift(f/100,d/100))*100);
+function up(){
+ const p=+$("hl").value,r=+$("r").value/100,pop=RR*p+(1-RR)*r;
+ $("rv").textContent=pc(r);$("pop").textContent=pc(pop);
+ $("b1").style.width=100*RR*p+"%";$("b2").style.left=100*RR*p+"%";$("b2").style.width=100*(1-RR)*r+"%";
+ const need=(0.10-RR*p)/(1-RR);
+ $("verdict").textContent=pop<0.1?"Below 10 % of the invited: the headline would not be 'a tenth or more of the field'.":(pop<0.25?"The respondents' figure shrinks by "+(p/pop).toFixed(1)+"× when carried to the invited.":"At this setting the invited figure is "+(pop>=p?"at or above":"below")+" the respondents'.")+" (For the invited share to fall to 10 %, non-respondents would need to be at "+pc(need)+".)";
+ const f=+$("f").value/100,d=+$("d").value/100;$("fv").textContent=(f*100)+" %";$("dv").textContent=(d*100)+" pts";
+ $("shift").textContent=(shift(f,d)*100).toFixed(2);$("mx").textContent=mx.toFixed(2);
+ const w=(1-RR)*100;$("wd").textContent=w.toFixed(1);$("ratio").textContent=(w/mx).toFixed(0);
+}
+["hl","r","f","d"].forEach(i=>$(i).addEventListener("input",up));
+const tb=document.querySelector("#tab tbody");
+[[.38,"38.0 %"],[.412,"41.2 %"],[.514,"51.4 %"]].forEach(([p,l])=>{const tr=document.createElement("tr");[l,pc(RR*p),pc(RR*p+1-RR)].forEach(t=>{const td=document.createElement("td");td.textContent=t;tr.appendChild(td)});tb.appendChild(tr)});
+up();
+</script></main></body></html>

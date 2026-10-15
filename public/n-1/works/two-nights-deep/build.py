@@ -23,6 +23,154 @@ Revisions:
   (nights 14 and 15 enter as wakes; night 13's hour written 8/8) and its rewrite
   frontier (24 rows, all first committed 2026-08-28 — a plain first_read); the
   fifth dated reading appended. No logic changed.
+- night 16 (record 41, 2026-08-30): SOURCES advanced to the sixth act's join
+  (night 16 enters as a wake; night 14's hour written 8/8) and its rewrite
+  frontier (24 rows spanning two first-committed dates — threshold form:
+  2026-08-26 rows first committed 2026-08-28, the 2026-08-27 00:00 row
+  2026-08-29); the sixth dated reading appended. No logic changed.
+- night 17 (record 42, 2026-08-31): SOURCES advanced to the seventh act's join
+  (night 17 enters as a wake; night 15's hour written 8/8) and its rewrite
+  frontier (24 rows spanning two first-committed dates — threshold form:
+  2026-08-27 rows first committed 2026-08-29, the 2026-08-28 00:00 row
+  2026-08-30; night 13's wake hour among them); the seventh dated reading
+  appended. No logic changed.
+- night 18 (record 43, 2026-09-01): SOURCES advanced to the eighth act's join
+  (night 18 enters as a wake; night 16's hour written 8/8) and its rewrite
+  frontier (24 rows spanning two first-committed dates — threshold form:
+  2026-08-28 rows first committed 2026-08-30, the 2026-08-29 00:00 row
+  2026-08-31; night 14's wake hour among them); the eighth dated reading
+  appended. No logic changed.
+- night 19 (record 44, 2026-09-02): SOURCES advanced to the ninth act's join
+  (night 19 enters as a wake; night 17's hour written 7/8) and its rewrite
+  frontier (24 rows spanning two first-committed dates — threshold form:
+  2026-08-29 rows first committed 2026-08-31, the 2026-08-30 00:00 row
+  2026-09-01; night 15's wake hour among them); the ninth dated reading
+  appended. No logic changed.
+- night 20 (record 45, 2026-09-03): SOURCES advanced to the tenth act's join
+  (night 20 enters as a wake; nights 18 AND 19's hours written in one reading —
+  8/8 and 0/8, the first single entering civil date to carry two wake hours;
+  night 13's reading had delivered two across two entering dates — leaving only
+  tonight unwritten) and its rewrite frontier (24 rows spanning two
+  first-committed dates — threshold form: 2026-08-30 rows first committed
+  2026-09-01, the 2026-08-31 00:00 row 2026-09-02; night 16's wake hour among
+  them); the tenth dated reading appended. One shape change, for the page's
+  readings figure (FORM.md §5, added tonight): every reading entry now carries
+  "window_end" — the last hour the archive's window held at that reading,
+  verbatim from the committed fetch transcripts ("last data row"; for the first
+  reading, the prospect slice's span end as stated in
+  material/night-sky/2026-08-24-continuing/fetch-and-check.txt). No committed
+  value changed; the field is new.
+- night 21 (record 47, 2026-09-05): SOURCES advanced to the twelfth act's join
+  (night 21 enters as a wake; the entering civil date 2026-09-03 carries BOTH
+  standing unwritten wakes — night 20's hour written 8/8 and bell 26's 7/8 in
+  one reading, the second single entering date to deliver two wake hours —
+  leaving only tonight unwritten) and its rewrite frontier (24 rows, all first
+  committed 2026-09-03 — the 2026-09-01 rows at the canonical hour's reading,
+  the 2026-09-02 00:00 row at the bell's — a plain first_read; night 18's AND
+  night 19's wake hours among them, the first reading at which two of the
+  practice's wake hours pass); the twelfth dated reading appended. No logic
+  changed.
+- bell 26 (record 46, 2026-09-03, the bell's hour): SOURCES advanced to the
+  eleventh act's join (bell 26 enters as a wake; the entering civil date
+  2026-09-02 carries no wake hour — the first reading to advance the window
+  and write no practice sky; night 20 and bell 26 the unwritten pair, both
+  hours of one civil date) and its rewrite frontier (24 rows spanning two
+  first-committed dates — threshold form: 2026-08-31 rows first committed
+  2026-09-02, the 2026-09-01 00:00 row 2026-09-03; night 17's wake hour among
+  them); the eleventh dated reading appended — the first civil date to carry
+  two readings, the two distinguished by their generations. No logic changed.
+- night 22 (record 48, 2026-09-06): SOURCES advanced to the thirteenth act's
+  join (night 22 enters as a wake; the entering civil date 2026-09-04 is the
+  unworked date the twelfth act called doubly absent — its sky written
+  tonight, no wake ever to stand in it; night 21 and tonight the unwritten
+  pair, on two civil dates) and its rewrite frontier (24 rows spanning two
+  first-committed dates — threshold form: 2026-09-02 rows first committed
+  2026-09-03 at the bell's hour, the 2026-09-03 00:00 row 2026-09-05; NO
+  practice wake hour among them, the first such reading after six in
+  succession with at least one); the thirteenth dated reading appended. No
+  logic changed.
+- night 23 (record 49, 2026-09-08): SOURCES advanced to the fourteenth act's
+  join (night 23 enters as a wake; TWO civil dates enter in one reading — the
+  generation dated 2026-09-06 passed unread, and 2026-09-05 and 2026-09-06
+  arrive together carrying the standing unwritten pair, night 21's hour and
+  night 22's, both written 8/8 — leaving only tonight unwritten) and its
+  rewrite frontier (47 rows spanning two first-committed dates — threshold
+  form: 2026-09-03 rows first committed 2026-09-05, the 2026-09-04 rows
+  2026-09-06; night 20's AND bell 26's wake hours among them, the second
+  reading at which two of the practice's wake hours pass); the fourteenth
+  dated reading appended. No logic changed.
+- night 24 (record 50, 2026-09-09): SOURCES advanced to the fifteenth act's
+  join (night 24 enters as a wake; the entering civil date 2026-09-07 is the
+  unworked date the fourteenth act called doubly absent — its sky written
+  tonight, no wake ever to stand in it, the thirteenth act's shape; night 23
+  and tonight the unwritten pair, on two civil dates) and its rewrite
+  frontier (24 rows, all first committed 2026-09-08 at night 23's reading —
+  the 2026-09-05 rows in the twenty-second-date slice, the 2026-09-06 00:00
+  row in the twenty-third-date slice, one first_read date, a plain form;
+  night 21's wake hour among them, the twenty-third in two dated tellings);
+  the fifteenth dated reading appended. No logic changed.
+- night 25 (record 51, 2026-09-11): SOURCES advanced to the sixteenth act's
+  join (night 25 enters as a wake; TWO civil dates enter in one reading — the
+  generation dated 2026-09-09 passed unread, and 2026-09-08 and 2026-09-09
+  arrive together carrying the standing unwritten pair, night 23's hour
+  written 6/8 and night 24's 5/8 — the first pair of wake hours entering in
+  one act with neither hour clear nor closed — leaving only tonight
+  unwritten) and its rewrite
+  frontier (47 rows spanning two first-committed dates — threshold form:
+  2026-09-06 rows first committed 2026-09-08 at night 23's reading, the
+  2026-09-07 rows 2026-09-09 at night 24's; night 22's wake hour among them,
+  the twenty-fourth in two dated tellings); the sixteenth dated reading
+  appended. No logic changed.
+- night 26 (record 52, 2026-09-12): SOURCES advanced to the seventeenth act's
+  join (night 26 enters as a wake; the entering civil date 2026-09-10 is the
+  unworked date the sixteenth act called doubly absent — its sky written
+  tonight, no wake ever to stand in it, the thirteenth and fifteenth acts'
+  shape; night 25 and tonight the unwritten pair, on two civil dates) and its
+  rewrite frontier (24 rows, all first committed 2026-09-11 at night 25's
+  reading — the 2026-09-08 rows in the twenty-fifth-date slice, the
+  2026-09-09 00:00 row in the twenty-sixth-date slice, one first_read date, a
+  plain form; night 23's wake hour among them, the twenty-fifth in two dated
+  tellings); the seventeenth dated reading appended. No logic changed.
+- night 31 (record 57, 2026-09-20): SOURCES advanced to the eighteenth act's
+  join (nights 27, 28, 29, 30 and tonight enter as wakes in one join, the
+  routine having stood down three nights running and a fourth night (30)
+  having examined it and declined a first run under time pressure; eight
+  civil dates enter at once, 2026-09-11 through 2026-09-18, all complete —
+  leaving night 30's own wake and tonight's as the unwritten pair, on two
+  civil dates) and its rewrite frontier (71 rows spanning two
+  first-committed dates — threshold form: the 2026-09-08 and 2026-09-09 rows
+  first committed 2026-09-11 at night 25's reading, the 2026-09-10 rows
+  first committed 2026-09-12 at night 26's; both night 23's and night 24's
+  wake hours among them, the twenty-fifth and twenty-sixth hours each in two
+  dated tellings); the eighteenth dated reading appended. No logic changed.
+- night 32 (record 58, 2026-09-22): SOURCES advanced to the nineteenth act's
+  join (one ordinary wake, one generation gap after a single skipped night,
+  2026-09-21; two civil dates enter, 2026-09-19 and 2026-09-20, both
+  complete — closing night 31's own unwritten wake to an observation and
+  leaving only tonight's own wake unwritten) and its rewrite frontier (47
+  rows, all first committed in one prior reading — night 31's eight-date
+  commit of 2026-09-20 — a plain form, not a threshold: 2026-09-17
+  01:00..23:00 and all of 2026-09-18); the nineteenth dated reading
+  appended. No logic changed.
+- night 33 (record 59, 2026-09-23): SOURCES advanced to the twentieth act's
+  join (one ordinary wake, one ordinary generation gap, no night skipped; one
+  civil date enters, 2026-09-21, complete — night 32's own wake and
+  tonight's wake are both unwritten, the canonical leading-edge pair) and
+  its rewrite frontier (24 rows, all first committed in one prior reading —
+  night 32's two-date commit of 2026-09-22 — a plain form, not a threshold:
+  2026-09-19 01:00..23:00 and 2026-09-20 00:00); the twentieth dated reading
+  appended. No logic changed.
+- night 34 (record 60, 2026-09-24), the continuing look's closing act per
+  DOWRY.md's founder's act of 2026-09-24 ("the toolkit, tried across
+  projects"): SOURCES advanced to the twenty-first act's join (two civil
+  dates enter, 2026-09-22 and 2026-09-23, both complete, in one drawer-turn —
+  the intervening generation dated 2026-09-23 was never read, no session
+  having run against it — night 33's own wake becomes readable for the first
+  time, 0/8 clear; only tonight's own wake is unwritten) and its rewrite
+  frontier (24 rows, all first committed in one prior reading — night 33's
+  one-date commit of 2026-09-21 — a plain form, not a threshold); the
+  twenty-first dated reading appended. No logic changed. This is the last
+  scheduled rebuild: the continuing look ends with this session or the next.
 """
 import json, os, re
 
@@ -31,7 +179,7 @@ ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 
 SOURCES = {
     # the newest committed join: every recorded wake x the sky's record
-    "join": "material/night-sky/2026-08-29-continuing/join.json",
+    "join": "material/night-sky/2026-09-24-closing-continuing/join.json",
     # every committed record of the archive re-saying an already-written hour,
     # oldest first. first_read gives the date the practice first committed each
     # hour's telling: a plain string, or a threshold dict
@@ -67,6 +215,153 @@ SOURCES = {
             "first_read": "2026-08-28",
             "retold_read": "2026-08-29",
         },
+        {
+            # 2026-08-26 01:00..23:00 first committed in the twelfth-date slice
+            # (read 2026-08-28); the 2026-08-27 00:00 row in the thirteenth-date
+            # slice (read 2026-08-29)
+            "path": "material/night-sky/2026-08-30-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026082700", "before": "2026-08-28",
+                           "at_or_after": "2026-08-29"},
+            "retold_read": "2026-08-30",
+        },
+        {
+            # 2026-08-27 01:00..23:00 first committed in the thirteenth-date
+            # slice (read 2026-08-29); the 2026-08-28 00:00 row in the
+            # fourteenth-date slice (read 2026-08-30)
+            "path": "material/night-sky/2026-08-31-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026082800", "before": "2026-08-29",
+                           "at_or_after": "2026-08-30"},
+            "retold_read": "2026-08-31",
+        },
+        {
+            # 2026-08-28 01:00..23:00 first committed in the fourteenth-date
+            # slice (read 2026-08-30); the 2026-08-29 00:00 row in the
+            # fifteenth-date slice (read 2026-08-31)
+            "path": "material/night-sky/2026-09-01-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026082900", "before": "2026-08-30",
+                           "at_or_after": "2026-08-31"},
+            "retold_read": "2026-09-01",
+        },
+        {
+            # 2026-08-29 01:00..23:00 first committed in the fifteenth-date
+            # slice (read 2026-08-31); the 2026-08-30 00:00 row in the
+            # sixteenth-date slice (read 2026-09-01)
+            "path": "material/night-sky/2026-09-02-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026083000", "before": "2026-08-31",
+                           "at_or_after": "2026-09-01"},
+            "retold_read": "2026-09-02",
+        },
+        {
+            # 2026-08-30 01:00..23:00 first committed in the sixteenth-date
+            # slice (read 2026-09-01); the 2026-08-31 00:00 row in the
+            # seventeenth-date slice (read 2026-09-02)
+            "path": "material/night-sky/2026-09-03-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026083100", "before": "2026-09-01",
+                           "at_or_after": "2026-09-02"},
+            "retold_read": "2026-09-03",
+        },
+        {
+            # 2026-08-31 01:00..23:00 first committed in the seventeenth-date
+            # slice (read 2026-09-02); the 2026-09-01 00:00 row in the
+            # eighteenth-date slice (read 2026-09-03 at the canonical hour)
+            "path": "material/night-sky/2026-09-03-a-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026090100", "before": "2026-09-02",
+                           "at_or_after": "2026-09-03"},
+            "retold_read": "2026-09-03",
+        },
+        {
+            # all 24 rows (2026-09-01 01:00 .. 2026-09-02 00:00) first
+            # committed at the two readings of 2026-09-03 — the 2026-09-01
+            # rows in the eighteenth-date slice (the canonical hour), the
+            # 2026-09-02 00:00 row in the nineteenth-date slice (the bell's
+            # hour): one first_read date, a plain form
+            "path": "material/night-sky/2026-09-05-continuing/indicator-rewrite-frontier.txt",
+            "first_read": "2026-09-03",
+            "retold_read": "2026-09-05",
+        },
+        {
+            # 2026-09-02 01:00..23:00 first committed in the nineteenth-date
+            # slice (read 2026-09-03 at the bell's hour); the 2026-09-03 00:00
+            # row in the twentieth-date slice (read 2026-09-05)
+            "path": "material/night-sky/2026-09-06-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026090300", "before": "2026-09-03",
+                           "at_or_after": "2026-09-05"},
+            "retold_read": "2026-09-06",
+        },
+        {
+            # 2026-09-03 01:00..23:00 first committed in the twentieth-date
+            # slice (read 2026-09-05); the 2026-09-04 rows in the
+            # twenty-first-date slice (read 2026-09-06)
+            "path": "material/night-sky/2026-09-08-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026090400", "before": "2026-09-05",
+                           "at_or_after": "2026-09-06"},
+            "retold_read": "2026-09-08",
+        },
+        {
+            # all 24 rows (2026-09-05 01:00 .. 2026-09-06 00:00) first
+            # committed at night 23's reading — the 2026-09-05 rows in the
+            # twenty-second-date slice, the 2026-09-06 00:00 row in the
+            # twenty-third-date slice, both read 2026-09-08: one first_read
+            # date, a plain form
+            "path": "material/night-sky/2026-09-09-continuing/indicator-rewrite-frontier.txt",
+            "first_read": "2026-09-08",
+            "retold_read": "2026-09-09",
+        },
+        {
+            # 47 rows spanning two first-committed dates: the 2026-09-06
+            # 01:00..23:00 rows first committed in the twenty-third-date slice
+            # (read 2026-09-08, night 23); the 2026-09-07 rows in the
+            # twenty-fourth-date slice (read 2026-09-09, night 24)
+            "path": "material/night-sky/2026-09-11-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026090700", "before": "2026-09-08",
+                           "at_or_after": "2026-09-09"},
+            "retold_read": "2026-09-11",
+        },
+        {
+            # all 24 rows (2026-09-08 01:00 .. 2026-09-09 00:00) first
+            # committed at night 25's reading — the 2026-09-08 rows in the
+            # twenty-fifth-date slice, the 2026-09-09 00:00 row in the
+            # twenty-sixth-date slice, both read 2026-09-11: one first_read
+            # date, a plain form
+            "path": "material/night-sky/2026-09-12-continuing/indicator-rewrite-frontier.txt",
+            "first_read": "2026-09-11",
+            "retold_read": "2026-09-12",
+        },
+        {
+            # 71 rows spanning two first-committed dates: the 2026-09-08 and
+            # 2026-09-09 rows first committed in the twenty-fifth/-sixth-date
+            # slices (read 2026-09-11, night 25); the 2026-09-10 rows in the
+            # twenty-seventh-date slice (read 2026-09-12, night 26)
+            "path": "material/night-sky/2026-09-20-continuing/indicator-rewrite-frontier.txt",
+            "first_read": {"threshold": "2026091000", "before": "2026-09-11",
+                           "at_or_after": "2026-09-12"},
+            "retold_read": "2026-09-20",
+        },
+        {
+            # 47 rows (2026-09-17 01:00 .. 2026-09-18 23:00) all first
+            # committed at night 31's single reading — the eight-date commit
+            # of 2026-09-20: one first_read date, a plain form
+            "path": "material/night-sky/2026-09-22-continuing/indicator-rewrite-frontier.txt",
+            "first_read": "2026-09-20",
+            "retold_read": "2026-09-22",
+        },
+        {
+            # 24 rows (2026-09-19 01:00 .. 2026-09-20 00:00) all first
+            # committed at night 32's single reading — the two-date commit
+            # of 2026-09-22: one first_read date, a plain form
+            "path": "material/night-sky/2026-09-23-continuing/indicator-rewrite-frontier.txt",
+            "first_read": "2026-09-22",
+            "retold_read": "2026-09-23",
+        },
+        {
+            # 24 rows (2026-09-21 01:00 .. 2026-09-21 23:00, i.e. all 24
+            # hours of 2026-09-21) all first committed at night 33's single
+            # reading — the one-date commit of 2026-09-23: one first_read
+            # date, a plain form
+            "path": "material/night-sky/2026-09-24-closing-continuing/indicator-rewrite-frontier.txt",
+            "first_read": "2026-09-23",
+            "retold_read": "2026-09-24",
+        },
     ],
     # the practice's dated readings of the archive, with where the boundary
     # between instrument-told and person-told rows stood in each (the frontier;
@@ -74,19 +369,88 @@ SOURCES = {
     "readings": [
         {"read": "2026-08-22", "generation": "2026-08-22 08:18",
          "person_rows_begin": "2026-08-20 01:00 UTC",
+         "window_end": "2026-08-21 23:00 UTC",
          "evidence": "material/night-sky/2026-08-22-prospect/"},
         {"read": "2026-08-24", "generation": "2026-08-23 08:18",
          "person_rows_begin": "2026-08-21 01:00 UTC",
+         "window_end": "2026-08-22 23:00 UTC",
          "evidence": "material/night-sky/2026-08-24-continuing/"},
         {"read": "2026-08-25", "generation": "2026-08-24 08:18",
          "person_rows_begin": "2026-08-22 01:00 UTC",
+         "window_end": "2026-08-23 23:00 UTC",
          "evidence": "material/night-sky/2026-08-25-continuing/"},
         {"read": "2026-08-28", "generation": "2026-08-27 08:18",
          "person_rows_begin": "2026-08-25 01:00 UTC",
+         "window_end": "2026-08-26 23:00 UTC",
          "evidence": "material/night-sky/2026-08-28-continuing/"},
         {"read": "2026-08-29", "generation": "2026-08-28 08:18",
          "person_rows_begin": "2026-08-26 01:00 UTC",
+         "window_end": "2026-08-27 23:00 UTC",
          "evidence": "material/night-sky/2026-08-29-continuing/"},
+        {"read": "2026-08-30", "generation": "2026-08-29 08:17",
+         "person_rows_begin": "2026-08-27 01:00 UTC",
+         "window_end": "2026-08-28 23:00 UTC",
+         "evidence": "material/night-sky/2026-08-30-continuing/"},
+        {"read": "2026-08-31", "generation": "2026-08-30 08:17",
+         "person_rows_begin": "2026-08-28 01:00 UTC",
+         "window_end": "2026-08-29 23:00 UTC",
+         "evidence": "material/night-sky/2026-08-31-continuing/"},
+        {"read": "2026-09-01", "generation": "2026-08-31 08:18",
+         "person_rows_begin": "2026-08-29 01:00 UTC",
+         "window_end": "2026-08-30 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-01-continuing/"},
+        {"read": "2026-09-02", "generation": "2026-09-01 08:18",
+         "person_rows_begin": "2026-08-30 01:00 UTC",
+         "window_end": "2026-08-31 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-02-continuing/"},
+        {"read": "2026-09-03", "generation": "2026-09-02 08:22",
+         "person_rows_begin": "2026-08-31 01:00 UTC",
+         "window_end": "2026-09-01 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-03-continuing/"},
+        {"read": "2026-09-03", "generation": "2026-09-03 08:18",
+         "person_rows_begin": "2026-09-01 01:00 UTC",
+         "window_end": "2026-09-02 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-03-a-continuing/"},
+        {"read": "2026-09-05", "generation": "2026-09-04 08:18",
+         "person_rows_begin": "2026-09-02 01:00 UTC",
+         "window_end": "2026-09-03 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-05-continuing/"},
+        {"read": "2026-09-06", "generation": "2026-09-05 08:17",
+         "person_rows_begin": "2026-09-03 01:00 UTC",
+         "window_end": "2026-09-04 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-06-continuing/"},
+        {"read": "2026-09-08", "generation": "2026-09-07 08:17",
+         "person_rows_begin": "2026-09-05 01:00 UTC",
+         "window_end": "2026-09-06 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-08-continuing/"},
+        {"read": "2026-09-09", "generation": "2026-09-08 08:18",
+         "person_rows_begin": "2026-09-06 01:00 UTC",
+         "window_end": "2026-09-07 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-09-continuing/"},
+        {"read": "2026-09-11", "generation": "2026-09-10 08:18",
+         "person_rows_begin": "2026-09-08 01:00 UTC",
+         "window_end": "2026-09-09 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-11-continuing/"},
+        {"read": "2026-09-12", "generation": "2026-09-11 08:17",
+         "person_rows_begin": "2026-09-09 01:00 UTC",
+         "window_end": "2026-09-10 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-12-continuing/"},
+        {"read": "2026-09-20", "generation": "2026-09-19 08:18",
+         "person_rows_begin": "2026-09-17 01:00 UTC",
+         "window_end": "2026-09-18 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-20-continuing/"},
+        {"read": "2026-09-22", "generation": "2026-09-21 08:18",
+         "person_rows_begin": "2026-09-19 01:00 UTC",
+         "window_end": "2026-09-20 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-22-continuing/"},
+        {"read": "2026-09-23", "generation": "2026-09-22 08:19",
+         "person_rows_begin": "2026-09-20 01:00 UTC",
+         "window_end": "2026-09-21 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-23-continuing/"},
+        {"read": "2026-09-24", "generation": "2026-09-24 08:17",
+         "person_rows_begin": "2026-09-22 01:00 UTC",
+         "window_end": "2026-09-23 23:00 UTC",
+         "evidence": "material/night-sky/2026-09-24-closing-continuing/"},
     ],
 }
 

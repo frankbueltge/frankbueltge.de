@@ -155,7 +155,8 @@ out, filed it, and were waiting on an answer.
    not a merge.
 3. **Nine figures are still on no page** (`HeroField`, `MachinesStrip`, `WerkeStrip`, `CrossingsMap`,
    `ScoreFigure`, `ScoreKey`, `field/Dossier`, `GauntletTour`, `LineageNote`). Frank ruled out
-   `ProcessFigure` ("passage brauchen wir nicht"); the rest were never decided about, only dropped.
+   `ProcessFigure` (wording private: the passage figure is not needed); the rest were never
+   decided about, only dropped.
    `src/lib/ecology/mounted.test.ts` guards the ones that are back.
 4. **`archive/trace/` is mirrored for the Atelier only.** If another practice starts rotating, its
    halves will vanish from the site the same way, silently.

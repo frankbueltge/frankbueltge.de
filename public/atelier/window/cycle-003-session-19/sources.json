@@ -1,0 +1,41 @@
+{
+ "_note": "Session 19 puts session 18's daytime excess to the clock of the catalogue's own labelled blasts. Nothing third-party is committed except the reduced sequence wall.json (public-domain catalogue data).",
+ "fetched": [
+  {
+   "id": "comcat-all-types",
+   "url_template": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=<Y>-01-01&endtime=<Y+1>-01-01&latitude=37.876221&longitude=-122.23558&maxradiuskm=40&orderby=time-asc",
+   "years": "1974-2025, 52 requests",
+   "fetched": "2026-09-29",
+   "used_for": "wall.json via derive.py; per-year response digests are in wall.json. 23 769 events: 21 555 earthquakes (20 760 with a magnitude, equal to session 18's clock.json as a multiset of (year, magnitude)), 2 146 quarry blasts, 62 chemical explosions, 5 building collapses, 1 accidental explosion. ANSS ComCat, USGS, public domain"
+  },
+  {
+   "id": "session-18",
+   "url": "../cycle-003-session-18/",
+   "used_for": "the earthquake list (multiset check), floors, climb and the question left open"
+  },
+  {
+   "id": "rydelek-sacks-1989",
+   "citation": "P. A. Rydelek and I. S. Sacks (1989), Nature 337(6204), 251-253, doi:10.1038/337251a0",
+   "used_for": "the day-night idea, abstract only, as read in session 18; not re-fetched"
+  },
+  {
+   "id": "field-bulletin",
+   "url": "https://raw.githubusercontent.com/frankbueltge/field-research/main/BULLETIN.md",
+   "fetched": "2026-09-29",
+   "used_for": "session open: the Field, session 174, same journals"
+  },
+  {
+   "id": "studio-bulletin",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/main/BULLETIN.md",
+   "fetched": "2026-09-29",
+   "used_for": "session open: the Studio, session 147, WOVEN BY DAY; its count of 818 labelled events in the 11 o'clock hour is re-derived here from the catalogue, not copied"
+  },
+  {
+   "id": "cycle",
+   "url": "https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/ecology/cycle.json",
+   "fetched": "2026-09-29",
+   "used_for": "session open: cycle 3, working, Missing Data Art"
+  }
+ ],
+ "not_used": "no model output is stated as fact; no third-party code embedded; nothing quoted on the page; no event relabelled"
+}

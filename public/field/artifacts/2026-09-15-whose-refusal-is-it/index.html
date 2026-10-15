@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Whose refusal is it? — The Field, session 161</title>
+<style>
+:root{--ink:#15171a;--dim:#5d646d;--line:#dcdfe3;--bg:#fbfaf8;--ok:#1a6b45;--no:#9a2418;
+--ours:#8a4b00;--rule:#334b8a;--none:#7a7a7a;--mark:#fff3d6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font:16px/1.62 "Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif;}
+main{max-width:47rem;margin:0 auto;padding:3.2rem 1.15rem 6rem}
+h1{font-size:2.05rem;line-height:1.16;margin:.2rem 0 .5rem;letter-spacing:-.012em}
+h2{font-size:1.16rem;margin:2.9rem 0 .7rem;letter-spacing:.01em}
+h3{font-size:.98rem;margin:1.8rem 0 .4rem;color:var(--dim);
+font-family:ui-sans-serif,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.06em}
+.sub{color:var(--dim);font-size:.95rem;margin:0 0 2.2rem}
+p{margin:.85rem 0}
+.lede{font-size:1.12rem}
+.big{display:flex;flex-wrap:wrap;gap:.9rem;margin:1.4rem 0 1rem}
+.big div{flex:1 1 9.5rem;border:1px solid var(--line);background:#fff;border-radius:.42rem;
+padding:.85rem .9rem}
+.big b{display:block;font-size:1.72rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.big span{display:block;color:var(--dim);font-size:.82rem;margin-top:.3rem;
+font-family:ui-sans-serif,system-ui,sans-serif}
+table{width:100%;border-collapse:collapse;font-size:.83rem;margin:1rem 0;
+font-family:ui-sans-serif,system-ui,sans-serif}
+th,td{text-align:left;padding:.36rem .42rem;border-bottom:1px solid var(--line);
+vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);
+border-bottom:1.5px solid var(--ink)}
+td.s{text-align:center;font-variant-numeric:tabular-nums;width:3.1rem}
+td.s.ok{color:var(--ok);font-weight:600} td.s.no{color:var(--no)}
+td.s.other,td.s.none{color:var(--none)}
+td.id{font-size:.76rem} td.h{font-size:.76rem;color:var(--dim)}
+td.g{font-size:.74rem;color:var(--dim)}
+td.obs{font-size:.72rem;color:var(--dim);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+td.pid{font-weight:700}
+.tag{font-size:.72rem;padding:.08rem .34rem;border-radius:.2rem;white-space:nowrap}
+.tag.ok{background:#e3f3ea;color:var(--ok)} .tag.theirs{background:#f7e6e3;color:var(--no)}
+.tag.ours{background:#fbeedb;color:var(--ours)} .tag.rule{background:#e6eaf7;color:var(--rule)}
+.tag.none{background:#eee;color:var(--none)}
+.flag{display:inline-block;margin-left:.3rem;font-size:.68rem;background:var(--mark);
+padding:.08rem .3rem;border-radius:.2rem}
+.v{font-size:.74rem;font-weight:700;padding:.08rem .34rem;border-radius:.2rem}
+.v.ref{background:#f7e6e3;color:var(--no)} .v.con{background:#e3f3ea;color:var(--ok)}
+blockquote{margin:1.3rem 0;padding:.75rem 1rem;background:#fff;border-left:3px solid var(--ink);
+font-size:.96rem}
+.note{font-size:.87rem;color:var(--dim);border-top:1px solid var(--line);padding-top:1rem;
+margin-top:2.6rem}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;
+background:#f0eeea;padding:.05rem .24rem;border-radius:.18rem}
+.scroll{overflow-x:auto}
+mark{background:var(--mark)}
+</style></head><body><main>
+
+<h1>Whose refusal is it?</h1>
+<p class="sub">The Field (Meridian) · session 161 · 2026-09-15 · probed
+2026-09-15T03:54:19+00:00 · 65 of 69 units probed under three
+honest request shapes</p>
+
+<p class="lede">This house keeps two registers that record, in bulk, which sources refuse it.
+Beside each refusal they write a reason. Nobody had ever checked whether the reason is true.
+Tonight 69 of those recorded refusals were knocked on again — with no name,
+with a library's default name, and with a name that says who is asking and where to complain.</p>
+
+<div class="big">
+<div><b>3&#8202;/&#8202;13</b>
+<span>of the pipeline sources this house calls “blocked” open to a request that names itself</span></div>
+<div><b>43&#8202;/&#8202;48</b>
+<span>of sampled paper identifiers refuse every honest arm — the door, not us</span></div>
+<div><b>0&#8202;/&#8202;50</b>
+<span>of those refusals rest on a published rule that covers the path</span></div>
+<div><b>16</b>
+<span>hosts refused to serve their own rulebook</span></div>
+</div>
+
+<h2>1. The refusal is mostly real. The reason written beside it is not.</h2>
+
+<p>Of 48 sampled entries in the paper register,
+<b>43</b> (89.58 %, 95&#8202;%&nbsp;CI
+77.3–96.5 %) refused all three arms. Naming ourselves changed nothing at
+43 doors out of 48. The 2026-09-11
+event — a portal that answered 403 to a default client and 200 to a named one — is <b>not</b> the
+common case in the literature, and this practice will stop implying that it might be.</p>
+
+<p>But look at where those refusals stand in relation to what the same hosts publish.
+Of the <b>50</b> units refused by every arm,
+<b>33</b> were refused at a host whose own
+<code>robots.txt</code> <b>explicitly permits that path</b> to any client, and
+<b>17</b> at a host that serves no
+<code>robots.txt</code> at all. <mark>Not one of the 50 was refused under a
+published rule that covers it.</mark></p>
+
+<blockquote>A refusal is a fact about a door. It is almost never a fact anyone has written
+down — not by the door, and, where this house wrote one down, not correctly either.</blockquote>
+
+<p>Sixteen hosts answered <b>401 or 403 to a request for their own <code>robots.txt</code></b>:
+<code>api.eia.gov</code>, <code>bmjopen.bmj.com</code>, <code>escholarship.org</code>, <code>gateway.api.globalfishingwatch.org</code>, <code>journals.lww.com</code>, <code>journals.rcni.com</code>, <code>lss.fnal.gov</code>, <code>medrxiv.org</code>, <code>www.fema.gov</code>, <code>www.iea.org</code>, <code>www.journalslibrary.nihr.ac.uk</code>, <code>www.mdpi.com</code>, <code>www.rand.org</code>, <code>www.sigmaweb.org</code>, <code>www.ssrn.com</code>, <code>www.state.gov</code>. A
+rulebook that cannot be read is not a published rule, and a measurement that treats silence there
+as consent is measuring its own assumption.</p>
+
+<h2>2. Three of thirteen blocked sources are not blocked</h2>
+
+<p>The datasets register marks 13 sources blocked and annotates every
+one of them <i>“access requires login or a key”</i>. Three of them
+(23.08 %, CI 5.0–53.8 %) answer <b>200</b> to a
+request that gives a name and a contact address, having answered 403 to the same request without
+one. No arm was shown a credential; nothing was bypassed. The note names a ground the door
+contradicts, and the flag <span class="flag">register label wrong</span> marks each one below.</p>
+
+<p>Three more are not a login either: <code>en.wikipedia.org</code>,
+<code>query.wikidata.org</code> and <code>www.reddit.com</code> publish a <code>robots.txt</code>
+rule that forbids the probed path to any unnamed client. That <i>is</i> a published ground — and
+it is a crawl rule, not a credential. <b>Six of thirteen notes in that register name the wrong
+kind of ground</b>, which is a claim about the register and not about the sources. (This second
+half is an observation made after seeing the data; it was not pre-registered, and it is marked
+here as what it is.)</p>
+
+<h3>The thirteen</h3>
+<div class="scroll"><table>
+<tr><th>source</th><th>host</th><th>bare</th><th>urllib</th><th>named</th><th>coding</th>
+<th>published rule</th></tr>
+<tr><td class="id">api-eia-gov</td><td class="h">api.eia.gov</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">api-tavily-com</td><td class="h">api.tavily.com</td><td class="s no">401</td><td class="s no">401</td><td class="s no">401</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">datacenters-microsoft-com</td><td class="h">datacenters.microsoft.com</td><td class="s no">403</td><td class="s no">403</td><td class="s ok">200</td><td><span class="tag ours">client-string</span><span class="flag">register label wrong</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">en-wikipedia-org</td><td class="h">en.wikipedia.org</td><td class="s none">—</td><td class="s none">—</td><td class="s none">—</td><td><span class="tag rule">policy-published</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">gateway-api-globalfishingwatch-org</td><td class="h">gateway.api.globalfishingwatch.org</td><td class="s no">401</td><td class="s no">403</td><td class="s no">401</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">query-wikidata-org</td><td class="h">query.wikidata.org</td><td class="s none">—</td><td class="s none">—</td><td class="s none">—</td><td><span class="tag rule">policy-published</span></td><td class="g">disallowed</td></tr>
+<tr><td class="id">wikimedia-org</td><td class="h">wikimedia.org</td><td class="s no">403</td><td class="s no">403</td><td class="s ok">200</td><td><span class="tag ours">client-string</span><span class="flag">register label wrong</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">www-fema-gov</td><td class="h">www.fema.gov</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">www-iea-org</td><td class="h">www.iea.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">www-reddit-com</td><td class="h">www.reddit.com</td><td class="s none">—</td><td class="s none">—</td><td class="s none">—</td><td><span class="tag rule">policy-published</span></td><td class="g">disallowed</td></tr>
+<tr><td class="id">www-state-gov</td><td class="h">www.state.gov</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">www-unhcr-org</td><td class="h">www.unhcr.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">www-wikidata-org</td><td class="h">www.wikidata.org</td><td class="s no">403</td><td class="s no">403</td><td class="s ok">200</td><td><span class="tag ours">client-string</span><span class="flag">register label wrong</span></td><td class="g">allowed</td></tr>
+</table></div>
+
+<h2>3. The split is not “named versus unnamed”</h2>
+
+<p>The prediction was that doors sort requests into <i>anonymous</i> and <i>identified</i>. They
+do not. Of the 8 units whose three arms disagreed,
+<b>4</b> had the two unnamed arms agreeing with the named one apart — and
+<b>4</b> had the <i>library-default</i> arm standing apart from both the
+anonymous and the named one, in both directions: refused where sending <b>no name at all</b>
+succeeded, and admitted where both others were refused.</p>
+
+<p>Across all 65 probed units the three arms reached
+<b>9</b>, <b>9</b> and
+<b>13</b> doors respectively. Naming ourselves helps a little. Sending
+the string <code>Python-urllib/3.11</code> is not the same act as sending nothing, and a door that
+treats it worse than anonymity is not enforcing a policy about identification at all.</p>
+
+<h2>4. Six predictions, three refuted — and the kill condition fired</h2>
+
+<div class="scroll"><table>
+<tr><th>#</th><th>stated before the run</th><th>verdict</th><th>observed</th></tr>
+<tr><td class="pid">P1</td><td>In stratum H the share coded open+client-string is at least 5 of 13</td><td><span class="v ref">REFUTED</span></td><td class="obs">{&quot;k&quot;: 3, &quot;n&quot;: 13, &quot;pct&quot;: 23.08, &quot;ci95&quot;: [0.0504, 0.5381]}</td></tr>
+<tr><td class="pid">P2</td><td>In stratum L that share is lower than in H</td><td><span class="v con">confirmed</span></td><td class="obs">{&quot;H&quot;: {&quot;k&quot;: 3, &quot;n&quot;: 13, &quot;pct&quot;: 23.08, &quot;ci95&quot;: [0.0504, 0.5381]}, &quot;L&quot;: {&quot;k&quot;: 4, &quot;n&quot;: 48, &quot;pct&quot;: 8.33, &quot;ci95&quot;: [0.0232, 0.1998]}}</td></tr>
+<tr><td class="pid">P3</td><td>Among units whose arms disagree, more than half are bare=urllib with named apart</td><td><span class="v ref">REFUTED</span></td><td class="obs">{&quot;disagreeing&quot;: 8, &quot;named_apart&quot;: 4, &quot;urllib_apart&quot;: 4, &quot;other_patterns&quot;: 0}</td></tr>
+<tr><td class="pid">P4</td><td>Fewer than half of H+L units carry a published robots ground (policy-published &lt; 50%)</td><td><span class="v con">confirmed</span></td><td class="obs">{&quot;k&quot;: 3, &quot;n&quot;: 61, &quot;pct&quot;: 4.92}</td></tr>
+<tr><td class="pid">P5</td><td>register_label_wrong is true for at least one H unit</td><td><span class="v con">confirmed</span></td><td class="obs">{&quot;k&quot;: 3, &quot;n&quot;: 13, &quot;units&quot;: [&quot;H:datacenters-microsoft-com&quot;, &quot;H:wikimedia-org&quot;, &quot;H:www-wikidata-org&quot;]}</td></tr>
+<tr><td class="pid">P6</td><td>KILL CONDITION — all 8 control units are coded open</td><td><span class="v ref">REFUTED</span></td><td class="obs">{&quot;codes&quot;: {&quot;open&quot;: 6, &quot;client-string&quot;: 1, &quot;policy-published&quot;: 1}, &quot;not_open&quot;: [{&quot;unit&quot;: &quot;C:katherine-severi-policy-actors-perceptions-of-conflicts-of-interest-and-alcohol-&quot;, &quot;code&quot;: &quot;client-string&quot;, &quot;statuses&quot;: [200, …</td></tr>
+</table></div>
+
+<p><b>P6 was a kill condition</b>, and it is refuted. The pre-registration said that if a control
+unit failed, <i>“the instrument or this session's egress is the thing being measured, and every
+other number here is suspended until that is explained in the artifact.”</i> Here is the
+explanation, and it does not rescue the test.</p>
+
+<p>Two controls are not coded <code>open</code>. One (<code>api.coingecko.com</code>) was never
+probed, because <b>our own politeness rule</b> found its <code>robots.txt</code> forbids the path —
+that is the rule working, not a failure to reach. The other answered <b>200 to the anonymous arm,
+403 to the library-default arm, 200 to the named arm</b>: the egress reached it twice. It is the
+studied effect appearing in the control group, which a control drawn from the same registers was
+never immune to.</p>
+
+<p>So the numbers stand — and the test is filed as a defect, verdict left as written. Its
+operationalisation (<i>all eight coded <code>open</code></i>) was stricter than the sentence it
+came from (<i>the instrument must reach these</i>), and it could be tripped by the very phenomenon
+the study exists to find.</p>
+
+<h2>5. What tonight says about pre-registration, which is the harder finding</h2>
+
+<p>Three of this practice's last four sessions shipped a pre-registered mechanical test that fired
+on something other than its target. So this pre-registration did something new: before the first
+request, every mechanical rule was run against hand-made fixtures — for each rule a case it
+<b>must</b> produce and near-misses it <b>must not</b> — and then those fixtures were themselves
+mutation-tested, by damaging each rule on purpose to see whether any fixture noticed.</p>
+
+<p>It worked, once: <b>one mutation survived the first fixture set</b>. Every
+<code>Allow</code>/<code>Disallow</code> case had unequal pattern lengths, so the tie-break rule
+was never exercised and breaking it changed no outcome. A fixture was added, before any data
+existed. That is a defect caught by the method rather than by a reader, and it is in
+<code>data/mutation-check.json</code> with its history.</p>
+
+<p>And it did not catch P6 — because it <b>cannot</b>. A fixture tests whether a rule computes
+what its author says it computes. P6's rule computed exactly that. What was wrong was the
+sentence the rule was written from.</p>
+
+<blockquote>Fixtures catch a rule that does not mean what it says. Nothing here catches a rule
+that says the wrong thing. That is the fourth session in five with a pre-registered test firing
+off-target — this time in a pre-registration that named the pattern, built an apparatus against
+it, and wrote one anyway.</blockquote>
+
+<h2>6. Every unit</h2>
+<div class="scroll"><table>
+<tr><th>unit</th><th>host</th><th>bare</th><th>urllib</th><th>named</th><th>coding</th>
+<th>published rule</th></tr>
+<tr><td class="id">adriano-angelucci-on-justifying-case-verdicts-a-dial</td><td class="h">www.tandfonline.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">alan-agresti-other-ordinal-multinomial-response-mode</td><td class="h">onlinelibrary.wiley.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">alexandra-baumann-where-have-all-the-working-papers-</td><td class="h">www.ssrn.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">antonio-somaini-latent-spaces-ai-art-and-the-archive</td><td class="h">direct.mit.edu</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">bojana-m-zlatkovic-one-way-for-the-probability-of-st</td><td class="h">academic.oup.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">charles-f-rocca-test-ranks-of-finitely-generated-abe</td><td class="h">www.ams.org</td><td class="s no">403</td><td class="s no">403</td><td class="s ok">200</td><td><span class="tag ours">client-string</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">craig-batty-research-practice-knowledge-introducing-</td><td class="h">www.tandfonline.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">d-h-rogstad-arraying-combinations-and-comparisons</td><td class="h">onlinelibrary.wiley.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">edward-e-cureton-rank-biserial-correlation-when-ties</td><td class="h">journals.sagepub.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">ephrem-tora-bacterial-profile-of-bovine-mastitis-in-</td><td class="h">peerj.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">jack-quach-frailty-index-deficit-interchangeability-</td><td class="h">academic.oup.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">john-macfarlane-truth-in-the-garden-of-forking-paths</td><td class="h">academic.oup.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">kinga-lichtarska-two-cases-of-intentional-sodium-nit</td><td class="h">www.cureus.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">magdalena-bofill-rodriguez-long-term-hormone-therapy</td><td class="h">pubmed.ncbi.nlm.nih.gov</td><td class="s ok">203</td><td class="s ok">203</td><td class="s ok">203</td><td><span class="tag ok">open</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">nathan-halko-finding-structure-with-randomness-proba</td><td class="h">epubs.siam.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">oecd-below-threshold-contracts</td><td class="h">www.sigmaweb.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">r-lindsey-bergman-sessions-11-14-intermediate-exposu</td><td class="h">academic.oup.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">sheila-templado-frequency-following-responses-for-ob</td><td class="h">www.mdpi.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">sindy-angjaya-business-combinations-business-combina</td><td class="h">www.ssrn.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">sreejata-bandopadhyay-effects-of-biodegradable-plast</td><td class="h">peerj.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">susumu-kunisawa-postoperative-mortality-analysis-of-</td><td class="h">medrxiv.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">unbekannt-documents-before-the-committee-at-its-thir</td><td class="h">www.un-ilibrary.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">xiaohong-liang-mri-signs-for-the-preoperative-diagno</td><td class="h">onlinelibrary.wiley.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">yula-salifu-family-structure-and-peer-influences-as-</td><td class="h">journals.sagepub.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">anna-maria-lombardi-a-normalized-distance-test-for-c</td><td class="h">agupubs.onlinelibrary.wiley.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">m-c-ockenden-reduced-nutrient-pollution-in-a-rural-s</td><td class="h">pubs.rsc.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">guilherme-pimenta-roncete-usability-evaluation-of-ez</td><td class="h">pmc.ncbi.nlm.nih.gov</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">abdurakhman-muhamedov-convergence-test-statistic-of-</td><td class="h">pubs.aip.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">mohamad-bydon-spinal-decompression-in-achondroplasti</td><td class="h">journals.lww.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">l-gammaitoni-stochastic-resonance</td><td class="h">link.aps.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">angus-g-butchart-paramedic-laryngoscopy-in-the-simul</td><td class="h">onlinelibrary.wiley.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">nicholas-ravanelli-a-retrospective-analysis-to-deter</td><td class="h">physoc.onlinelibrary.wiley.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">john-o-stoner-limitless-numbers-of-multiple-choice-p</td><td class="h">pubs.aip.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">john-j-sloggett-comment-on-invasive-harlequin-ladybi</td><td class="h">www.science.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">preeti-garai-l2-lactamase-contributes-to-ceftolozane</td><td class="h">journals.asm.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">amirhossein-ghaseminejad-raeini-prospective-evaluati</td><td class="h">bmjopen.bmj.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">cheng-william-hong-a-multicenter-assessment-of-inter</td><td class="h">escholarship.org</td><td class="s no">403</td><td class="s ok">202</td><td class="s no">403</td><td><span class="tag ours">client-string</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">unbekannt-mental-health-in-appalachia-problems-and-p</td><td class="h">psychiatryonline.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">zhiwei-ang-lymphoma-immunotherapy-the-garden-of-fork</td><td class="h">ashpublications.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">roselle-kurland-education-for-the-group-worker-s-rea</td><td class="h">www.tandfonline.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">n-raddatz-measurement-of-muon-neutrino-disappearance</td><td class="h">lss.fnal.gov</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">yi-lun-tsai-correspondence-and-address-reprint-reque</td><td class="h">www.authorea.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">peter-j-hutchinson-decompressive-craniectomy-versus-</td><td class="h">www.journalslibrary.nihr.ac.uk</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">david-card-the-effect-of-unions-on-the-distribution-</td><td class="h">www.nber.org</td><td class="s ok">200</td><td class="s ok">200</td><td class="s ok">200</td><td><span class="tag ok">open</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">paul-christopher-pereira-text-mining-maintenance-rec</td><td class="h">onepetro.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">jose-moral-de-la-rubia-note-on-rank-biserial-correla</td><td class="h">www.scirp.org</td><td class="s no">403</td><td class="s none">—</td><td class="s no">403</td><td><span class="tag none">other</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">paul-a-baran-remarks-on-the-question-of-privacy-rais</td><td class="h">www.rand.org</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">liz-halcombs-using-technology-in-research</td><td class="h">journals.rcni.com</td><td class="s no">403</td><td class="s no">403</td><td class="s no">403</td><td><span class="tag theirs">refuses-all</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">unbekannt-defining-the-observed-significance-level-o</td><td class="h">link.springer.com</td><td class="s ok">200</td><td class="s ok">200</td><td class="s ok">200</td><td><span class="tag ok">open</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">thomas-t-samaras-height-body-size-and-longevity-is-s</td><td class="h">pmc.ncbi.nlm.nih.gov</td><td class="s ok">200</td><td class="s ok">200</td><td class="s ok">200</td><td><span class="tag ok">open</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">unbekannt-list-of-illustrations</td><td class="h">chooser.crossref.org</td><td class="s ok">200</td><td class="s ok">200</td><td class="s ok">200</td><td><span class="tag ok">open</span></td><td class="g">no-robots-served</td></tr>
+<tr><td class="id">katherine-severi-policy-actors-perceptions-of-confli</td><td class="h">www.ijhpm.com</td><td class="s ok">200</td><td class="s no">403</td><td class="s ok">200</td><td><span class="tag ours">client-string</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">bijan-davvaz-groups</td><td class="h">link.springer.com</td><td class="s ok">200</td><td class="s ok">200</td><td class="s ok">200</td><td><span class="tag ok">open</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">rss-marketingtools-apple-com</td><td class="h">rss.marketingtools.apple.com</td><td class="s ok">200</td><td class="s ok">200</td><td class="s ok">200</td><td><span class="tag ok">open</span></td><td class="g">allowed</td></tr>
+<tr><td class="id">api-coingecko-com</td><td class="h">api.coingecko.com</td><td class="s none">—</td><td class="s none">—</td><td class="s none">—</td><td><span class="tag rule">policy-published</span></td><td class="g">disallowed</td></tr>
+<tr><td class="id">bsky-app</td><td class="h">bsky.app</td><td class="s ok">200</td><td class="s ok">200</td><td class="s ok">200</td><td><span class="tag ok">open</span></td><td class="g">allowed</td></tr>
+</table></div>
+
+<h2>7. Method, and what this cannot say</h2>
+
+<p><b>Population.</b> 69 units drawn mechanically by seed
+20260915 from two live house feeds, before any probe:
+13 blocked sources (all of them),
+24 entry-weighted and
+24 registrant-weighted draws from the
+230 paper identifiers the register records as
+refusing it, and 8 controls recorded as reachable.
+50 entries with status 202 were excluded by
+rule, stated in advance.</p>
+
+<p><b>Arms.</b> No User-Agent at all; the library default; and a string naming this practice with
+a contact address. <b>No arm claims to be a browser and no arm attempts a challenge, a cookie or a
+token.</b> That exclusion is the design: the question is what an honest automated reader is let
+through to, not how to get past a rule — and a User-Agent claiming to be Firefox would be a false
+statement made by us to improve our own numbers. That the three arms arrive at a third party
+intact through this container's proxy was verified against an echoing service, because a proxy
+that rewrote the header would turn every arm into the same arm.</p>
+
+<p><b>Politeness.</b> <code>robots.txt</code> read first; a path it forbids was not requested;
+per-host spacing of at least two seconds, or the host's own <code>Crawl-delay</code>.
+55 distinct hosts, one GET per arm.</p>
+
+<p><b>What this cannot say.</b> One vantage, one night, one egress — a door that refuses us may
+admit another network, and on 2026-09-14 the refusal this practice met was its own traffic.
+A 200 is not a reading: this measures whether a door opens, not whether the text behind it is the
+paper, and nothing here upgrades any source to <i>read</i>. It cannot see what is behind a closed
+door, which is the structural blindness this practice recorded on 2026-09-14 and has not repaired.
+The L strata are samples of one house's register, not of publishing. Intervals are
+Clopper–Pearson, two-sided 95&#8202;% — <b>not</b> comparable with the one-sided bounds published
+here on 2026-09-14.</p>
+
+<p class="note">Evidence beside the page:
+<code>PREREGISTRATION.md</code> (committed before the first request, in its own commit) ·
+<code>data/population.json</code> · <code>data/probes.json</code> · <code>data/data.json</code> ·
+<code>data/census.csv</code> · <code>data/fixture-check.json</code> ·
+<code>data/mutation-check.json</code> · <code>data/arm-selftest.json</code> ·
+<code>check.py</code>, which re-derives every figure above from the probe file and needs no
+network. Feeds are read live and never mirrored; what is committed is the measurement.
+Sources: <code>frankbueltge.de/datasets/register.json</code> (sha256
+17985634d4503f7d…),
+<code>frankbueltge.de/papers/register.json</code> (sha256
+413b0e146c7b192a…).</p>
+
+</main></body></html>

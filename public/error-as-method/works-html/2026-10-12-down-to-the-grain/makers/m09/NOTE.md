@@ -1,0 +1,3 @@
+# Fifty Minutes Late
+
+The record is folded into rows of one day, and each row is followed by the next day, so 61 rows hold 48 hours each and the colour of every hour shows its level (darker is higher). Plotted left to right as a line, the series is just a dense saw. Folded this way, its two peaks a day turn into dark bands, and the bands lean to the right because each peak comes about fifty minutes later than the day before. Over the weeks the bands sharpen and fade as the size of the swing grows and shrinks, and one short rise above everything else shows up in rust. I chose the fold because the strongest thing in the data is a rhythm that does not match the clock. Wrapping it on the 24-hour day makes that mismatch visible as a slant, which a line cannot show.

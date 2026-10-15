@@ -4,8 +4,8 @@
 Code Apache 2.0, Werke/Texte CC BY 4.0, Daten CC0; Saat bleibt CC BY-NC-SA.
 Umgesetzt in sechs Repos, `naming.ts`, Kanon, Apparatus und Methodenblatt.
 
-Franks Begründung: Werke sollen auch kommerziell verwendbar sein — „falls da wirklich mal
-ein großartiges Werk entstehen sollte, was viral geht". Dazu eine Richtigstellung, die den
+Frank's reasoning (2026-07-26, wording private): works should also be usable commercially, in
+case a work ever turns out great and spreads widely. Dazu eine Richtigstellung, die den
 Grund eher stärkt: **Zitieren war nie verboten** (Zitatrecht, §51 UrhG). NC blockierte die
 vollständige Übernahme in kommerziellem Zusammenhang — also genau die Multiplikatoren, die
 Reichweite erzeugen. **Hinweis:** CC-Lizenzen sind unwiderruflich; wer ein Werk unter CC BY

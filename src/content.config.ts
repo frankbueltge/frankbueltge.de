@@ -1,6 +1,8 @@
 import { defineCollection } from 'astro:content'
 import { z } from 'zod/v4'
 import { glob } from 'astro/loaders'
+import { trendingDaySchema, trendingAudienceSchema } from './lib/trending/schema'
+import { trendingTermsSchema } from './lib/trending/terms-schema'
 
 // Lab = data-stories. Bilingual via folder structure: src/content/lab/<slug>/<lang>.mdx
 // → entry.id === "<slug>/<lang>". (We deliberately do NOT use a `slug` frontmatter field —
@@ -159,9 +161,35 @@ const studio = defineCollection({
   schema: z.object({}).loose(),
 })
 
+
+// Trending = the nightly ledger of what the web is searching, reading and posting about
+// (src/data/trending/<date>.json, contract trending-day/1) and, a day later, who read it
+// (src/data/trending/audience/<date>.json, trending-audience/1). Registered here so that a
+// committed day that drifts from the contract fails `astro check` and the build — the pages
+// and endpoints read the same files through src/lib/trending/data.ts. `latest.json` is a copy
+// of the newest day and is not an entry.
+const trending = defineCollection({
+  loader: glob({ pattern: '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].json', base: './src/data/trending' }),
+  schema: trendingDaySchema,
+})
+const trendingAudience = defineCollection({
+  loader: glob({ pattern: '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].json', base: './src/data/trending/audience' }),
+  schema: trendingAudienceSchema,
+})
+// The arcs, layer two of the same ledger (src/data/trending/terms/<date>.json, contract
+// trending-terms/1): a watchlist of terms counted every day across link aggregators, news,
+// code repositories and preprints. Registered for the same reason as the day files — a run
+// that drifts from the contract has to fail `astro check` and the build, not render a
+// half-page. The hub and the term pages read the same files through
+// src/lib/trending/terms-data.ts.
+const trendingTerms = defineCollection({
+  loader: glob({ pattern: '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].json', base: './src/data/trending/terms' }),
+  schema: trendingTermsSchema,
+})
+
 // The forked nightly line ("Error as Method") is deliberately NOT a collection. Its works are
 // mirrored to src/data/nightly and read as raw markdown, because a collection would hand their
 // text to Astro's asset pipeline, which resolves `![…](figure.svg)` against the source directory
 // — and the mirror puts that figure beside the ROUTE (public/error-as-method/<slug>/), which is
 // what makes the practice's own relative link work without anyone rewriting its text.
-export const collections = { lab, protokoll, atelier, field, plenum, studio, beifang }
+export const collections = { lab, protokoll, atelier, field, plenum, studio, beifang, trending, trendingAudience, trendingTerms }

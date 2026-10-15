@@ -1,0 +1,6279 @@
+{
+ "work": "BELOW HEARING",
+ "practice": "The Studio (Ensemble)",
+ "date": "2026-09-11",
+ "session": 133,
+ "cycle": 3,
+ "question": "Missing Data Art",
+ "source": {
+  "catalogue": "USGS Earthquake Catalog (ComCat), FDSN event web service",
+  "service": "https://earthquake.usgs.gov/fdsnws/event/1/count",
+  "api_version": "2.7.0",
+  "rights": "Work of the United States Geological Survey; public domain.",
+  "window": {
+   "starttime": "2021-01-01",
+   "endtime": "2026-01-01"
+  },
+  "note": "Counts only. No event record was downloaded and none is committed here."
+ },
+ "window": {
+  "starttime": "2021-01-01",
+  "endtime": "2026-01-01"
+ },
+ "harvested_utc": "2026-09-11T04:42:47Z",
+ "requests_made": 985,
+ "thresholds": [
+  -1.0,
+  -0.9,
+  -0.8,
+  -0.7,
+  -0.6,
+  -0.5,
+  -0.4,
+  -0.3,
+  -0.2,
+  -0.1,
+  0.0,
+  0.1,
+  0.2,
+  0.3,
+  0.4,
+  0.5,
+  0.6,
+  0.7,
+  0.8,
+  0.9,
+  1.0,
+  1.1,
+  1.2,
+  1.3,
+  1.4,
+  1.5,
+  1.6,
+  1.7,
+  1.8,
+  1.9,
+  2.0,
+  2.1,
+  2.2,
+  2.3,
+  2.4,
+  2.5,
+  2.6,
+  2.7,
+  2.8,
+  2.9,
+  3.0,
+  3.1,
+  3.2,
+  3.3,
+  3.4,
+  3.5,
+  3.6,
+  3.7,
+  3.8,
+  3.9,
+  4.0,
+  4.1,
+  4.2,
+  4.3,
+  4.4,
+  4.5,
+  4.6,
+  4.7,
+  4.8,
+  4.9,
+  5.0,
+  5.1,
+  5.2,
+  5.3,
+  5.4,
+  5.5,
+  5.6,
+  5.7,
+  5.8,
+  5.9,
+  6.0,
+  6.1,
+  6.2,
+  6.3,
+  6.4,
+  6.5,
+  6.6,
+  6.7,
+  6.8,
+  6.9,
+  7.0,
+  7.1,
+  7.2,
+  7.3,
+  7.4,
+  7.5,
+  7.6,
+  7.7,
+  7.8,
+  7.9,
+  8.0
+ ],
+ "floors": [
+  2.0,
+  2.5,
+  3.0,
+  3.5,
+  4.0
+ ],
+ "floor_default": 3.0,
+ "rules": [
+  {
+   "key": "maxc",
+   "label": "maximum curvature, +0.2",
+   "note": "Woessner & Wiemer (2005) correction to the MAXC estimate"
+  },
+  {
+   "key": "maxc_raw",
+   "label": "maximum curvature, raw",
+   "note": "the fullest magnitude bin, uncorrected"
+  },
+  {
+   "key": "gft95",
+   "label": "goodness of fit, 95 %",
+   "note": "Wiemer & Wyss (2000): lowest Mc whose fitted line reproduces the record to 5 %"
+  },
+  {
+   "key": "gft90",
+   "label": "goodness of fit, 90 %",
+   "note": "the same test relaxed to 10 %"
+  },
+  {
+   "key": "cautious",
+   "label": "maximum curvature, +0.7",
+   "note": "a deliberately cautious floor, half a magnitude above the default"
+  },
+  {
+   "key": "none",
+   "label": "no law at all",
+   "note": "hold nothing about magnitudes below the floor of hearing"
+  }
+ ],
+ "rule_default": "maxc",
+ "regions": [
+  {
+   "name": "California",
+   "sparse": false,
+   "box": {
+    "min_lon": -125.0,
+    "max_lon": -114.0,
+    "min_lat": 32.0,
+    "max_lat": 42.0
+   },
+   "area_km2": 1084828,
+   "total": 236571,
+   "largest_threshold": 6.4,
+   "record_floor": -0.8,
+   "record_floor_censored": false,
+   "cumulative": [
+    236571,
+    236571,
+    236571,
+    236568,
+    236553,
+    236533,
+    236149,
+    235384,
+    234065,
+    232413,
+    230111,
+    227555,
+    223937,
+    216338,
+    205278,
+    194800,
+    184124,
+    171439,
+    149751,
+    129956,
+    114256,
+    95279,
+    79472,
+    67529,
+    57266,
+    47527,
+    39078,
+    31938,
+    26226,
+    21424,
+    17789,
+    14649,
+    11917,
+    9555,
+    7759,
+    6239,
+    4983,
+    3915,
+    3087,
+    2368,
+    1835,
+    1497,
+    1239,
+    986,
+    811,
+    655,
+    509,
+    412,
+    324,
+    258,
+    198,
+    150,
+    120,
+    95,
+    66,
+    53,
+    42,
+    33,
+    26,
+    18,
+    15,
+    12,
+    10,
+    7,
+    6,
+    5,
+    5,
+    4,
+    3,
+    3,
+    3,
+    2,
+    2,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "incremental": [
+    0,
+    0,
+    3,
+    15,
+    20,
+    384,
+    765,
+    1319,
+    1652,
+    2302,
+    2556,
+    3618,
+    7599,
+    11060,
+    10478,
+    10676,
+    12685,
+    21688,
+    19795,
+    15700,
+    18977,
+    15807,
+    11943,
+    10263,
+    9739,
+    8449,
+    7140,
+    5712,
+    4802,
+    3635,
+    3140,
+    2732,
+    2362,
+    1796,
+    1520,
+    1256,
+    1068,
+    828,
+    719,
+    533,
+    338,
+    258,
+    253,
+    175,
+    156,
+    146,
+    97,
+    88,
+    66,
+    60,
+    48,
+    30,
+    25,
+    29,
+    13,
+    11,
+    9,
+    7,
+    8,
+    3,
+    3,
+    2,
+    3,
+    1,
+    1,
+    0,
+    1,
+    1,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 0.9,
+     "b": 0.7662,
+     "sigma_b": 0.0019,
+     "n_above": 129956,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "maxc_raw": {
+     "mc": 0.7,
+     "b": 0.7179,
+     "sigma_b": 0.0015,
+     "n_above": 171439,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft95": {
+     "mc": 1.0,
+     "b": 0.8075,
+     "sigma_b": 0.0022,
+     "n_above": 114256,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft90": {
+     "mc": 0.7,
+     "b": 0.7179,
+     "sigma_b": 0.0015,
+     "n_above": 171439,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "cautious": {
+     "mc": 1.4,
+     "b": 0.8681,
+     "sigma_b": 0.0034,
+     "n_above": 57266,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 96.3,
+    "90": 92.3
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 17789,
+      "expected": 17789,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "2.5": {
+      "observed": 6239,
+      "expected": 6239,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.0": {
+      "observed": 1835,
+      "expected": 1835,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.5": {
+      "observed": 655,
+      "expected": 655,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "4.0": {
+      "observed": 198,
+      "expected": 198,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 17789,
+      "expected": 17789,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "2.5": {
+      "observed": 6239,
+      "expected": 6239,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.0": {
+      "observed": 1835,
+      "expected": 1835,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.5": {
+      "observed": 655,
+      "expected": 655,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "4.0": {
+      "observed": 198,
+      "expected": 198,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 17789,
+      "expected": 17789,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "2.5": {
+      "observed": 6239,
+      "expected": 6239,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.0": {
+      "observed": 1835,
+      "expected": 1835,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.5": {
+      "observed": 655,
+      "expected": 655,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "4.0": {
+      "observed": 198,
+      "expected": 198,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 17789,
+      "expected": 17789,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "2.5": {
+      "observed": 6239,
+      "expected": 6239,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.0": {
+      "observed": 1835,
+      "expected": 1835,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.5": {
+      "observed": 655,
+      "expected": 655,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "4.0": {
+      "observed": 198,
+      "expected": 198,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 17789,
+      "expected": 17789,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "2.5": {
+      "observed": 6239,
+      "expected": 6239,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.0": {
+      "observed": 1835,
+      "expected": 1835,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.5": {
+      "observed": 655,
+      "expected": 655,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "4.0": {
+      "observed": 198,
+      "expected": 198,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 17789,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 6239,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 1835,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 655,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 198,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  },
+  {
+   "name": "Alaska",
+   "sparse": false,
+   "box": {
+    "min_lon": -170.0,
+    "max_lon": -140.0,
+    "min_lat": 52.0,
+    "max_lat": 72.0
+   },
+   "area_km2": 3465170,
+   "total": 212875,
+   "largest_threshold": 8.0,
+   "record_floor": -1.0,
+   "record_floor_censored": true,
+   "cumulative": [
+    212875,
+    212150,
+    211071,
+    209620,
+    207854,
+    205578,
+    202928,
+    200198,
+    197226,
+    194303,
+    191485,
+    188951,
+    186599,
+    184503,
+    182358,
+    180537,
+    178711,
+    176705,
+    173961,
+    169182,
+    162471,
+    153388,
+    139453,
+    125006,
+    110717,
+    94617,
+    82355,
+    69056,
+    59538,
+    50013,
+    40960,
+    33880,
+    28136,
+    23713,
+    20486,
+    17822,
+    15229,
+    12787,
+    10652,
+    8639,
+    6981,
+    5539,
+    4444,
+    3600,
+    2948,
+    2415,
+    2004,
+    1661,
+    1375,
+    1151,
+    958,
+    803,
+    679,
+    560,
+    456,
+    360,
+    281,
+    212,
+    169,
+    131,
+    110,
+    91,
+    74,
+    59,
+    48,
+    31,
+    26,
+    18,
+    16,
+    14,
+    11,
+    10,
+    9,
+    7,
+    7,
+    7,
+    7,
+    6,
+    6,
+    5,
+    3,
+    3,
+    3,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "incremental": [
+    725,
+    1079,
+    1451,
+    1766,
+    2276,
+    2650,
+    2730,
+    2972,
+    2923,
+    2818,
+    2534,
+    2352,
+    2096,
+    2145,
+    1821,
+    1826,
+    2006,
+    2744,
+    4779,
+    6711,
+    9083,
+    13935,
+    14447,
+    14289,
+    16100,
+    12262,
+    13299,
+    9518,
+    9525,
+    9053,
+    7080,
+    5744,
+    4423,
+    3227,
+    2664,
+    2593,
+    2442,
+    2135,
+    2013,
+    1658,
+    1442,
+    1095,
+    844,
+    652,
+    533,
+    411,
+    343,
+    286,
+    224,
+    193,
+    155,
+    124,
+    119,
+    104,
+    96,
+    79,
+    69,
+    43,
+    38,
+    21,
+    19,
+    17,
+    15,
+    11,
+    17,
+    5,
+    8,
+    2,
+    2,
+    3,
+    1,
+    1,
+    2,
+    0,
+    0,
+    0,
+    1,
+    0,
+    1,
+    2,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 1.6,
+     "b": 0.762,
+     "sigma_b": 0.0025,
+     "n_above": 82355,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "maxc_raw": {
+     "mc": 1.4,
+     "b": 0.7279,
+     "sigma_b": 0.002,
+     "n_above": 110717,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft95": {
+     "mc": 1.4,
+     "b": 0.7279,
+     "sigma_b": 0.002,
+     "n_above": 110717,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft90": {
+     "mc": 1.2,
+     "b": 0.6651,
+     "sigma_b": 0.0016,
+     "n_above": 139453,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "cautious": {
+     "mc": 2.1,
+     "b": 0.7675,
+     "sigma_b": 0.0039,
+     "n_above": 33880,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 96.2,
+    "90": 92.3
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 40960,
+      "expected": 40960,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "2.5": {
+      "observed": 17822,
+      "expected": 17822,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.0": {
+      "observed": 6981,
+      "expected": 6981,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.5": {
+      "observed": 2415,
+      "expected": 2415,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "4.0": {
+      "observed": 958,
+      "expected": 958,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 40960,
+      "expected": 40960,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "2.5": {
+      "observed": 17822,
+      "expected": 17822,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.0": {
+      "observed": 6981,
+      "expected": 6981,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.5": {
+      "observed": 2415,
+      "expected": 2415,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "4.0": {
+      "observed": 958,
+      "expected": 958,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 40960,
+      "expected": 40960,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "2.5": {
+      "observed": 17822,
+      "expected": 17822,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.0": {
+      "observed": 6981,
+      "expected": 6981,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.5": {
+      "observed": 2415,
+      "expected": 2415,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "4.0": {
+      "observed": 958,
+      "expected": 958,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 40960,
+      "expected": 40960,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "2.5": {
+      "observed": 17822,
+      "expected": 17822,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.0": {
+      "observed": 6981,
+      "expected": 6981,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.5": {
+      "observed": 2415,
+      "expected": 2415,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "4.0": {
+      "observed": 958,
+      "expected": 958,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 40960,
+      "expected": 40429,
+      "missing": 0,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 17822,
+      "expected": 17822,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.0": {
+      "observed": 6981,
+      "expected": 6981,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "3.5": {
+      "observed": 2415,
+      "expected": 2415,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     },
+     "4.0": {
+      "observed": 958,
+      "expected": 958,
+      "missing": 0,
+      "unbounded": false,
+      "complete": true
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 40960,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 17822,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 6981,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 2415,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 958,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  },
+  {
+   "name": "Japan",
+   "sparse": false,
+   "box": {
+    "min_lon": 128.0,
+    "max_lon": 148.0,
+    "min_lat": 30.0,
+    "max_lat": 46.0
+   },
+   "area_km2": 3107715,
+   "total": 4157,
+   "largest_threshold": 7.6,
+   "record_floor": 3.8,
+   "record_floor_censored": false,
+   "cumulative": [
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4157,
+    4153,
+    4136,
+    3971,
+    3649,
+    3158,
+    2505,
+    1811,
+    1289,
+    925,
+    738,
+    551,
+    384,
+    295,
+    237,
+    173,
+    133,
+    111,
+    91,
+    69,
+    58,
+    45,
+    35,
+    25,
+    18,
+    15,
+    12,
+    11,
+    11,
+    10,
+    9,
+    7,
+    6,
+    5,
+    3,
+    3,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "incremental": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4,
+    17,
+    165,
+    322,
+    491,
+    653,
+    694,
+    522,
+    364,
+    187,
+    187,
+    167,
+    89,
+    58,
+    64,
+    40,
+    22,
+    20,
+    22,
+    11,
+    13,
+    10,
+    10,
+    7,
+    3,
+    3,
+    1,
+    0,
+    1,
+    1,
+    2,
+    1,
+    1,
+    2,
+    0,
+    1,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 4.6,
+     "b": 1.2092,
+     "sigma_b": 0.0365,
+     "n_above": 1289,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "maxc_raw": {
+     "mc": 4.4,
+     "b": 1.3048,
+     "sigma_b": 0.0286,
+     "n_above": 2505,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft95": {
+     "mc": 4.3,
+     "b": 1.228,
+     "sigma_b": 0.0222,
+     "n_above": 3158,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft90": {
+     "mc": 4.2,
+     "b": 1.0875,
+     "sigma_b": 0.0163,
+     "n_above": 3649,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "cautious": {
+     "mc": 5.1,
+     "b": 1.0336,
+     "sigma_b": 0.0626,
+     "n_above": 295,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 95.3,
+    "90": 90.8
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 4157,
+      "expected": 1795448,
+      "missing": 1791291,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4157,
+      "expected": 446245,
+      "missing": 442088,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4157,
+      "expected": 110911,
+      "missing": 106754,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4157,
+      "expected": 27566,
+      "missing": 23409,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4136,
+      "expected": 6851,
+      "missing": 2715,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 4157,
+      "expected": 3391000,
+      "missing": 3386843,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4157,
+      "expected": 754967,
+      "missing": 750810,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4157,
+      "expected": 168085,
+      "missing": 163928,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4157,
+      "expected": 37422,
+      "missing": 33265,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4136,
+      "expected": 8332,
+      "missing": 4196,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 4157,
+      "expected": 2107716,
+      "missing": 2103559,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4157,
+      "expected": 512640,
+      "missing": 508483,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4157,
+      "expected": 124684,
+      "missing": 120527,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4157,
+      "expected": 30326,
+      "missing": 26169,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4136,
+      "expected": 7376,
+      "missing": 3240,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 4157,
+      "expected": 900894,
+      "missing": 896737,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4157,
+      "expected": 257587,
+      "missing": 253430,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4157,
+      "expected": 73650,
+      "missing": 69493,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4157,
+      "expected": 21058,
+      "missing": 16901,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4136,
+      "expected": 6021,
+      "missing": 1885,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 4157,
+      "expected": 472043,
+      "missing": 467886,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4157,
+      "expected": 143609,
+      "missing": 139452,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4157,
+      "expected": 43690,
+      "missing": 39533,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4157,
+      "expected": 13292,
+      "missing": 9135,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4136,
+      "expected": 4044,
+      "missing": 0,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 4157,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4157,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4157,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4157,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4136,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  },
+  {
+   "name": "Iceland",
+   "sparse": true,
+   "box": {
+    "min_lon": -25.0,
+    "max_lon": -13.0,
+    "min_lat": 63.0,
+    "max_lat": 67.0
+   },
+   "area_km2": 250768,
+   "total": 206,
+   "largest_threshold": 5.6,
+   "record_floor": 3.5,
+   "record_floor_censored": false,
+   "cumulative": [
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    205,
+    205,
+    205,
+    205,
+    205,
+    200,
+    185,
+    164,
+    143,
+    107,
+    71,
+    52,
+    43,
+    32,
+    26,
+    22,
+    17,
+    9,
+    3,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "incremental": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    5,
+    15,
+    21,
+    21,
+    36,
+    36,
+    19,
+    9,
+    11,
+    6,
+    4,
+    5,
+    8,
+    6,
+    2,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 4.6,
+     "b": 1.2768,
+     "sigma_b": 0.1199,
+     "n_above": 71,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "maxc_raw": {
+     "mc": 4.4,
+     "b": 1.3634,
+     "sigma_b": 0.1047,
+     "n_above": 143,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft95": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": true
+    },
+    "gft90": {
+     "mc": 4.3,
+     "b": 1.1695,
+     "sigma_b": 0.0737,
+     "n_above": 164,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "cautious": {
+     "mc": 5.1,
+     "b": 2.2749,
+     "sigma_b": 0.3099,
+     "n_above": 22,
+     "unavailable": false,
+     "implausible_b": true
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 92.1,
+    "90": 91.4
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 206,
+      "expected": 148231,
+      "missing": 148025,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 206,
+      "expected": 34083,
+      "missing": 33877,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 206,
+      "expected": 7837,
+      "missing": 7631,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 206,
+      "expected": 1802,
+      "missing": 1596,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 205,
+      "expected": 414,
+      "missing": 209,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 206,
+      "expected": 267606,
+      "missing": 267400,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 206,
+      "expected": 55692,
+      "missing": 55486,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 206,
+      "expected": 11590,
+      "missing": 11384,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 206,
+      "expected": 2412,
+      "missing": 2206,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 205,
+      "expected": 502,
+      "missing": 297,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 206,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "2.5": {
+      "observed": 206,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "3.0": {
+      "observed": 206,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "3.5": {
+      "observed": 206,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "4.0": {
+      "observed": 205,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 206,
+      "expected": 80296,
+      "missing": 80090,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 206,
+      "expected": 20890,
+      "missing": 20684,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 206,
+      "expected": 5435,
+      "missing": 5229,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 206,
+      "expected": 1414,
+      "missing": 1208,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 205,
+      "expected": 368,
+      "missing": 163,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 206,
+      "expected": 248091955,
+      "missing": 248091749,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 206,
+      "expected": 18078512,
+      "missing": 18078306,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 206,
+      "expected": 1317385,
+      "missing": 1317179,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 206,
+      "expected": 95998,
+      "missing": 95792,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 205,
+      "expected": 6995,
+      "missing": 6790,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 206,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 206,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 206,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 206,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 205,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  },
+  {
+   "name": "Central Italy",
+   "sparse": true,
+   "box": {
+    "min_lon": 10.0,
+    "max_lon": 16.0,
+    "min_lat": 41.0,
+    "max_lat": 45.0
+   },
+   "area_km2": 216981,
+   "total": 60,
+   "largest_threshold": 5.6,
+   "record_floor": 2.1,
+   "record_floor_censored": false,
+   "cumulative": [
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    59,
+    59,
+    59,
+    58,
+    57,
+    57,
+    56,
+    55,
+    55,
+    54,
+    54,
+    53,
+    52,
+    51,
+    49,
+    49,
+    48,
+    47,
+    45,
+    39,
+    32,
+    20,
+    12,
+    11,
+    8,
+    6,
+    4,
+    4,
+    3,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "incremental": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    1,
+    1,
+    0,
+    1,
+    1,
+    0,
+    1,
+    0,
+    1,
+    1,
+    1,
+    2,
+    0,
+    1,
+    1,
+    2,
+    6,
+    7,
+    12,
+    8,
+    1,
+    3,
+    2,
+    2,
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 4.4,
+     "b": 1.0636,
+     "sigma_b": 0.2571,
+     "n_above": 12,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "maxc_raw": {
+     "mc": 4.2,
+     "b": 1.5272,
+     "sigma_b": 0.3118,
+     "n_above": 32,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft95": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": true
+    },
+    "gft90": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": true
+    },
+    "cautious": {
+     "mc": 4.9,
+     "b": 1.4476,
+     "sigma_b": 0.7493,
+     "n_above": 4,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 66.6,
+    "90": 66.6
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 60,
+      "expected": 4284,
+      "missing": 4224,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 58,
+      "expected": 1259,
+      "missing": 1201,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 55,
+      "expected": 370,
+      "missing": 315,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 51,
+      "expected": 109,
+      "missing": 58,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 45,
+      "expected": 32,
+      "missing": 0,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 60,
+      "expected": 73281,
+      "missing": 73221,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 58,
+      "expected": 12630,
+      "missing": 12572,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 55,
+      "expected": 2177,
+      "missing": 2122,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 51,
+      "expected": 375,
+      "missing": 324,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 45,
+      "expected": 65,
+      "missing": 20,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 60,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "2.5": {
+      "observed": 58,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "3.0": {
+      "observed": 55,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "3.5": {
+      "observed": 51,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "4.0": {
+      "observed": 45,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 60,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "2.5": {
+      "observed": 58,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "3.0": {
+      "observed": 55,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "3.5": {
+      "observed": 51,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "4.0": {
+      "observed": 45,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 60,
+      "expected": 63110,
+      "missing": 63050,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 58,
+      "expected": 11921,
+      "missing": 11863,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 55,
+      "expected": 2252,
+      "missing": 2197,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 51,
+      "expected": 425,
+      "missing": 374,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 45,
+      "expected": 80,
+      "missing": 35,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 60,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 58,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 55,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 51,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 45,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  },
+  {
+   "name": "Chile",
+   "sparse": false,
+   "box": {
+    "min_lon": -76.0,
+    "max_lon": -66.0,
+    "min_lat": -45.0,
+    "max_lat": -17.0
+   },
+   "area_km2": 2938086,
+   "total": 4460,
+   "largest_threshold": 7.4,
+   "record_floor": 2.3,
+   "record_floor_censored": false,
+   "cumulative": [
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4460,
+    4459,
+    4459,
+    4457,
+    4454,
+    4450,
+    4447,
+    4443,
+    4441,
+    4435,
+    4433,
+    4423,
+    4419,
+    4413,
+    4405,
+    4385,
+    4357,
+    4291,
+    3983,
+    3475,
+    2733,
+    1962,
+    1297,
+    826,
+    560,
+    429,
+    319,
+    248,
+    197,
+    154,
+    123,
+    97,
+    78,
+    58,
+    48,
+    33,
+    28,
+    23,
+    18,
+    14,
+    11,
+    9,
+    4,
+    4,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "incremental": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    2,
+    3,
+    4,
+    3,
+    4,
+    2,
+    6,
+    2,
+    10,
+    4,
+    6,
+    8,
+    20,
+    28,
+    66,
+    308,
+    508,
+    742,
+    771,
+    665,
+    471,
+    266,
+    131,
+    110,
+    71,
+    51,
+    43,
+    31,
+    26,
+    19,
+    20,
+    10,
+    15,
+    5,
+    5,
+    5,
+    4,
+    3,
+    2,
+    5,
+    0,
+    2,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 4.5,
+     "b": 1.4298,
+     "sigma_b": 0.0473,
+     "n_above": 1297,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "maxc_raw": {
+     "mc": 4.3,
+     "b": 1.4993,
+     "sigma_b": 0.0321,
+     "n_above": 2733,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft95": {
+     "mc": 4.7,
+     "b": 1.1131,
+     "sigma_b": 0.0477,
+     "n_above": 560,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft90": {
+     "mc": 4.2,
+     "b": 1.3694,
+     "sigma_b": 0.0234,
+     "n_above": 3475,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "cautious": {
+     "mc": 5.0,
+     "b": 1.0426,
+     "sigma_b": 0.0626,
+     "n_above": 248,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 96.9,
+    "90": 91.9
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 4460,
+      "expected": 4869002,
+      "missing": 4864542,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4459,
+      "expected": 938728,
+      "missing": 934269,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4443,
+      "expected": 180984,
+      "missing": 176541,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4419,
+      "expected": 34893,
+      "missing": 30474,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4291,
+      "expected": 6727,
+      "missing": 2436,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 4460,
+      "expected": 7674138,
+      "missing": 7669678,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4459,
+      "expected": 1365776,
+      "missing": 1361317,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4443,
+      "expected": 243069,
+      "missing": 238626,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4419,
+      "expected": 43259,
+      "missing": 38840,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4291,
+      "expected": 7699,
+      "missing": 3408,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 4460,
+      "expected": 566967,
+      "missing": 562507,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4459,
+      "expected": 157401,
+      "missing": 152942,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4443,
+      "expected": 43698,
+      "missing": 39255,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4419,
+      "expected": 12131,
+      "missing": 7712,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4291,
+      "expected": 3368,
+      "missing": 0,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 4460,
+      "expected": 3577954,
+      "missing": 3573494,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4459,
+      "expected": 739494,
+      "missing": 735035,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4443,
+      "expected": 152839,
+      "missing": 148396,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4419,
+      "expected": 31589,
+      "missing": 27170,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4291,
+      "expected": 6529,
+      "missing": 2238,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 4460,
+      "expected": 332852,
+      "missing": 328392,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4459,
+      "expected": 100219,
+      "missing": 95760,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4443,
+      "expected": 30175,
+      "missing": 25732,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4419,
+      "expected": 9086,
+      "missing": 4667,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4291,
+      "expected": 2736,
+      "missing": 0,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 4460,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 4459,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 4443,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 4419,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 4291,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  },
+  {
+   "name": "Aotearoa New Zealand",
+   "sparse": false,
+   "box": {
+    "min_lon": 165.0,
+    "max_lon": 180.0,
+    "min_lat": -48.0,
+    "max_lat": -34.0
+   },
+   "area_km2": 1954742,
+   "total": 713,
+   "largest_threshold": 7.3,
+   "record_floor": 1.9,
+   "record_floor_censored": false,
+   "cumulative": [
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    713,
+    712,
+    712,
+    712,
+    712,
+    712,
+    711,
+    710,
+    707,
+    705,
+    704,
+    701,
+    696,
+    695,
+    692,
+    688,
+    683,
+    678,
+    673,
+    672,
+    671,
+    667,
+    637,
+    574,
+    496,
+    378,
+    273,
+    185,
+    144,
+    117,
+    95,
+    70,
+    53,
+    36,
+    24,
+    18,
+    14,
+    13,
+    9,
+    6,
+    5,
+    5,
+    5,
+    4,
+    3,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "incremental": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    3,
+    2,
+    1,
+    3,
+    5,
+    1,
+    3,
+    4,
+    5,
+    5,
+    5,
+    1,
+    1,
+    4,
+    30,
+    63,
+    78,
+    118,
+    105,
+    88,
+    41,
+    27,
+    22,
+    25,
+    17,
+    17,
+    12,
+    6,
+    4,
+    1,
+    4,
+    3,
+    1,
+    0,
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 4.5,
+     "b": 1.2395,
+     "sigma_b": 0.0814,
+     "n_above": 273,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "maxc_raw": {
+     "mc": 4.3,
+     "b": 1.2531,
+     "sigma_b": 0.0588,
+     "n_above": 496,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft95": {
+     "mc": 4.3,
+     "b": 1.2531,
+     "sigma_b": 0.0588,
+     "n_above": 496,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft90": {
+     "mc": 4.2,
+     "b": 1.106,
+     "sigma_b": 0.0427,
+     "n_above": 574,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "cautious": {
+     "mc": 5.0,
+     "b": 1.2459,
+     "sigma_b": 0.1773,
+     "n_above": 70,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 95.4,
+    "90": 92.0
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 712,
+      "expected": 342699,
+      "missing": 341987,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 711,
+      "expected": 82255,
+      "missing": 81544,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 701,
+      "expected": 19743,
+      "missing": 19042,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 683,
+      "expected": 4739,
+      "missing": 4056,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 667,
+      "expected": 1137,
+      "missing": 470,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 712,
+      "expected": 378104,
+      "missing": 377392,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 711,
+      "expected": 89343,
+      "missing": 88632,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 701,
+      "expected": 21111,
+      "missing": 20410,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 683,
+      "expected": 4988,
+      "missing": 4305,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 667,
+      "expected": 1179,
+      "missing": 512,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 712,
+      "expected": 378104,
+      "missing": 377392,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 711,
+      "expected": 89343,
+      "missing": 88632,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 701,
+      "expected": 21111,
+      "missing": 20410,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 683,
+      "expected": 4988,
+      "missing": 4305,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 667,
+      "expected": 1179,
+      "missing": 512,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 712,
+      "expected": 155637,
+      "missing": 154925,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 711,
+      "expected": 43562,
+      "missing": 42851,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 701,
+      "expected": 12193,
+      "missing": 11492,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 683,
+      "expected": 3413,
+      "missing": 2730,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 667,
+      "expected": 955,
+      "missing": 288,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 712,
+      "expected": 382647,
+      "missing": 381935,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 711,
+      "expected": 91169,
+      "missing": 90458,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 701,
+      "expected": 21722,
+      "missing": 21021,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 683,
+      "expected": 5175,
+      "missing": 4492,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 667,
+      "expected": 1233,
+      "missing": 566,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 712,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 711,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 701,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 683,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 667,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  },
+  {
+   "name": "Indonesia",
+   "sparse": false,
+   "box": {
+    "min_lon": 95.0,
+    "max_lon": 141.0,
+    "min_lat": -11.0,
+    "max_lat": 6.0
+   },
+   "area_km2": 9624322,
+   "total": 10103,
+   "largest_threshold": 7.6,
+   "record_floor": 3.0,
+   "record_floor_censored": false,
+   "cumulative": [
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10103,
+    10102,
+    10102,
+    10102,
+    10102,
+    10100,
+    10100,
+    10099,
+    10098,
+    10091,
+    10073,
+    9634,
+    8774,
+    7516,
+    5993,
+    4390,
+    3118,
+    2223,
+    1761,
+    1377,
+    928,
+    650,
+    470,
+    341,
+    266,
+    224,
+    182,
+    144,
+    118,
+    95,
+    75,
+    56,
+    42,
+    30,
+    24,
+    18,
+    18,
+    17,
+    10,
+    10,
+    9,
+    6,
+    3,
+    3,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "incremental": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    2,
+    0,
+    1,
+    1,
+    7,
+    18,
+    439,
+    860,
+    1258,
+    1523,
+    1603,
+    1272,
+    895,
+    462,
+    384,
+    449,
+    278,
+    180,
+    129,
+    75,
+    42,
+    42,
+    38,
+    26,
+    23,
+    20,
+    19,
+    14,
+    12,
+    6,
+    6,
+    0,
+    1,
+    7,
+    0,
+    1,
+    3,
+    3,
+    0,
+    2,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 4.6,
+     "b": 1.2701,
+     "sigma_b": 0.0238,
+     "n_above": 3118,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "maxc_raw": {
+     "mc": 4.4,
+     "b": 1.3274,
+     "sigma_b": 0.018,
+     "n_above": 5993,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft95": {
+     "mc": 4.3,
+     "b": 1.2382,
+     "sigma_b": 0.0139,
+     "n_above": 7516,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft90": {
+     "mc": 4.2,
+     "b": 1.1043,
+     "sigma_b": 0.0104,
+     "n_above": 8774,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "cautious": {
+     "mc": 5.1,
+     "b": 1.1342,
+     "sigma_b": 0.0479,
+     "n_above": 650,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 95.3,
+    "90": 90.6
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 10103,
+      "expected": 6253687,
+      "missing": 6243584,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 10103,
+      "expected": 1449059,
+      "missing": 1438956,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 10103,
+      "expected": 335766,
+      "missing": 325663,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 10100,
+      "expected": 77801,
+      "missing": 67701,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 10073,
+      "expected": 18028,
+      "missing": 7955,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 10103,
+      "expected": 9191879,
+      "missing": 9181776,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 10103,
+      "expected": 1993904,
+      "missing": 1983801,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 10103,
+      "expected": 432518,
+      "missing": 422415,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 10100,
+      "expected": 93822,
+      "missing": 83722,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 10073,
+      "expected": 20352,
+      "missing": 10279,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 10103,
+      "expected": 5294766,
+      "missing": 5284663,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 10103,
+      "expected": 1272761,
+      "missing": 1262658,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 10103,
+      "expected": 305947,
+      "missing": 295844,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 10100,
+      "expected": 73544,
+      "missing": 63444,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 10073,
+      "expected": 17679,
+      "missing": 7606,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 10103,
+      "expected": 2358618,
+      "missing": 2348515,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 10103,
+      "expected": 661466,
+      "missing": 651363,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 10103,
+      "expected": 185506,
+      "missing": 175403,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 10100,
+      "expected": 52024,
+      "missing": 41924,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 10073,
+      "expected": 14590,
+      "missing": 4517,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 10103,
+      "expected": 2132718,
+      "missing": 2122615,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 10103,
+      "expected": 577874,
+      "missing": 567771,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 10103,
+      "expected": 156579,
+      "missing": 146476,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 10100,
+      "expected": 42426,
+      "missing": 32326,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 10073,
+      "expected": 11496,
+      "missing": 1423,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 10103,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 10103,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 10103,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 10100,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 10073,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  },
+  {
+   "name": "Himalaya",
+   "sparse": false,
+   "box": {
+    "min_lon": 80.0,
+    "max_lon": 95.0,
+    "min_lat": 26.0,
+    "max_lat": 36.0
+   },
+   "area_km2": 1587730,
+   "total": 558,
+   "largest_threshold": 7.1,
+   "record_floor": 3.6,
+   "record_floor_censored": false,
+   "cumulative": [
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    558,
+    557,
+    556,
+    554,
+    552,
+    516,
+    467,
+    386,
+    306,
+    229,
+    170,
+    132,
+    101,
+    82,
+    61,
+    37,
+    29,
+    21,
+    18,
+    15,
+    9,
+    8,
+    3,
+    3,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "incremental": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    2,
+    2,
+    36,
+    49,
+    81,
+    80,
+    77,
+    59,
+    38,
+    31,
+    19,
+    21,
+    24,
+    8,
+    8,
+    3,
+    3,
+    6,
+    1,
+    5,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 4.4,
+     "b": 1.226,
+     "sigma_b": 0.069,
+     "n_above": 306,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "maxc_raw": {
+     "mc": 4.2,
+     "b": 1.0925,
+     "sigma_b": 0.0454,
+     "n_above": 467,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft95": {
+     "mc": 4.3,
+     "b": 1.1723,
+     "sigma_b": 0.0566,
+     "n_above": 386,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft90": {
+     "mc": 4.2,
+     "b": 1.0925,
+     "sigma_b": 0.0454,
+     "n_above": 467,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "cautious": {
+     "mc": 4.9,
+     "b": 1.3803,
+     "sigma_b": 0.1672,
+     "n_above": 82,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 96.0,
+    "90": 93.9
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 558,
+      "expected": 267992,
+      "missing": 267434,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 558,
+      "expected": 65331,
+      "missing": 64773,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 558,
+      "expected": 15927,
+      "missing": 15369,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 558,
+      "expected": 3883,
+      "missing": 3325,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 552,
+      "expected": 947,
+      "missing": 395,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 558,
+      "expected": 118254,
+      "missing": 117696,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 558,
+      "expected": 33618,
+      "missing": 33060,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 558,
+      "expected": 9557,
+      "missing": 8999,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 558,
+      "expected": 2717,
+      "missing": 2159,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 552,
+      "expected": 772,
+      "missing": 220,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 558,
+      "expected": 191813,
+      "missing": 191255,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 558,
+      "expected": 49742,
+      "missing": 49184,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 558,
+      "expected": 12900,
+      "missing": 12342,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 558,
+      "expected": 3345,
+      "missing": 2787,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 552,
+      "expected": 868,
+      "missing": 316,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 558,
+      "expected": 118254,
+      "missing": 117696,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 558,
+      "expected": 33618,
+      "missing": 33060,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 558,
+      "expected": 9557,
+      "missing": 8999,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 558,
+      "expected": 2717,
+      "missing": 2159,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 552,
+      "expected": 772,
+      "missing": 220,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 558,
+      "expected": 825437,
+      "missing": 824879,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 558,
+      "expected": 168474,
+      "missing": 167916,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 558,
+      "expected": 34386,
+      "missing": 33828,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 558,
+      "expected": 7018,
+      "missing": 6460,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 552,
+      "expected": 1432,
+      "missing": 880,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 558,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 558,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 558,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 558,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 552,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  },
+  {
+   "name": "South Mid-Atlantic Ridge",
+   "sparse": true,
+   "box": {
+    "min_lon": -20.0,
+    "max_lon": 0.0,
+    "min_lat": -40.0,
+    "max_lat": -10.0
+   },
+   "area_km2": 6647000,
+   "total": 295,
+   "largest_threshold": 6.2,
+   "record_floor": 4.1,
+   "record_floor_censored": false,
+   "cumulative": [
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    295,
+    293,
+    291,
+    289,
+    279,
+    242,
+    185,
+    137,
+    106,
+    73,
+    47,
+    38,
+    32,
+    26,
+    18,
+    9,
+    5,
+    5,
+    4,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "incremental": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    2,
+    2,
+    10,
+    37,
+    57,
+    48,
+    31,
+    33,
+    26,
+    9,
+    6,
+    6,
+    8,
+    9,
+    4,
+    0,
+    1,
+    3,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 4.8,
+     "b": 1.3694,
+     "sigma_b": 0.1062,
+     "n_above": 137,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "maxc_raw": {
+     "mc": 4.6,
+     "b": 1.2991,
+     "sigma_b": 0.0756,
+     "n_above": 242,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft95": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": true
+    },
+    "gft90": {
+     "mc": 4.6,
+     "b": 1.2991,
+     "sigma_b": 0.0756,
+     "n_above": 242,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "cautious": {
+     "mc": 5.3,
+     "b": 1.616,
+     "sigma_b": 0.2263,
+     "n_above": 32,
+     "unavailable": false,
+     "implausible_b": true
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 94.7,
+    "90": 94.7
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 295,
+      "expected": 935493,
+      "missing": 935198,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 295,
+      "expected": 193348,
+      "missing": 193053,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 295,
+      "expected": 39961,
+      "missing": 39666,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 295,
+      "expected": 8259,
+      "missing": 7964,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 295,
+      "expected": 1707,
+      "missing": 1412,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 295,
+      "expected": 577398,
+      "missing": 577103,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 295,
+      "expected": 129397,
+      "missing": 129102,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 295,
+      "expected": 28998,
+      "missing": 28703,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 295,
+      "expected": 6499,
+      "missing": 6204,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 295,
+      "expected": 1456,
+      "missing": 1161,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 295,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "2.5": {
+      "observed": 295,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "3.0": {
+      "observed": 295,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "3.5": {
+      "observed": 295,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "4.0": {
+      "observed": 295,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 295,
+      "expected": 577398,
+      "missing": 577103,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 295,
+      "expected": 129397,
+      "missing": 129102,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 295,
+      "expected": 28998,
+      "missing": 28703,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 295,
+      "expected": 6499,
+      "missing": 6204,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 295,
+      "expected": 1456,
+      "missing": 1161,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 295,
+      "expected": 6885730,
+      "missing": 6885435,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 295,
+      "expected": 1071396,
+      "missing": 1071101,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 295,
+      "expected": 166706,
+      "missing": 166411,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 295,
+      "expected": 25939,
+      "missing": 25644,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 295,
+      "expected": 4036,
+      "missing": 3741,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 295,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 295,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 295,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 295,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 295,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  },
+  {
+   "name": "Central Africa",
+   "sparse": true,
+   "box": {
+    "min_lon": 10.0,
+    "max_lon": 35.0,
+    "min_lat": -10.0,
+    "max_lat": 10.0
+   },
+   "area_km2": 6150834,
+   "total": 164,
+   "largest_threshold": 5.5,
+   "record_floor": 3.2,
+   "record_floor_censored": false,
+   "cumulative": [
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    164,
+    163,
+    163,
+    163,
+    163,
+    162,
+    162,
+    162,
+    162,
+    161,
+    158,
+    144,
+    117,
+    88,
+    56,
+    36,
+    19,
+    12,
+    9,
+    7,
+    6,
+    3,
+    2,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "incremental": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    1,
+    3,
+    14,
+    27,
+    29,
+    32,
+    20,
+    17,
+    7,
+    3,
+    2,
+    1,
+    3,
+    1,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 4.7,
+     "b": 2.0044,
+     "sigma_b": 0.3607,
+     "n_above": 36,
+     "unavailable": false,
+     "implausible_b": true
+    },
+    "maxc_raw": {
+     "mc": 4.5,
+     "b": 1.9499,
+     "sigma_b": 0.2081,
+     "n_above": 88,
+     "unavailable": false,
+     "implausible_b": true
+    },
+    "gft95": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": true
+    },
+    "gft90": {
+     "mc": 4.4,
+     "b": 1.7023,
+     "sigma_b": 0.1396,
+     "n_above": 117,
+     "unavailable": false,
+     "implausible_b": true
+    },
+    "cautious": {
+     "mc": 5.2,
+     "b": 2.6058,
+     "sigma_b": 0.9385,
+     "n_above": 6,
+     "unavailable": false,
+     "implausible_b": true
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 94.8,
+    "90": 92.6
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 164,
+      "expected": 9293568,
+      "missing": 9293404,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 164,
+      "expected": 924661,
+      "missing": 924497,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 164,
+      "expected": 91999,
+      "missing": 91835,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 163,
+      "expected": 9153,
+      "missing": 8990,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 162,
+      "expected": 911,
+      "missing": 749,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 164,
+      "expected": 6595271,
+      "missing": 6595107,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 164,
+      "expected": 698687,
+      "missing": 698523,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 164,
+      "expected": 74017,
+      "missing": 73853,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 163,
+      "expected": 7841,
+      "missing": 7678,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 162,
+      "expected": 831,
+      "missing": 669,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 164,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "2.5": {
+      "observed": 164,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "3.0": {
+      "observed": 164,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "3.5": {
+      "observed": 163,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     },
+     "4.0": {
+      "observed": 162,
+      "expected": null,
+      "missing": null,
+      "unbounded": false,
+      "complete": false,
+      "unavailable": true
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 164,
+      "expected": 1424642,
+      "missing": 1424478,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 164,
+      "expected": 200704,
+      "missing": 200540,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 164,
+      "expected": 28275,
+      "missing": 28111,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 163,
+      "expected": 3983,
+      "missing": 3820,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 162,
+      "expected": 561,
+      "missing": 399,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 164,
+      "expected": 1308311776,
+      "missing": 1308311612,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 164,
+      "expected": 65134525,
+      "missing": 65134361,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 164,
+      "expected": 3242733,
+      "missing": 3242569,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 163,
+      "expected": 161440,
+      "missing": 161277,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 162,
+      "expected": 8037,
+      "missing": 7875,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 164,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 164,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 164,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 163,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 162,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  },
+  {
+   "name": "South of 60S",
+   "sparse": false,
+   "box": {
+    "min_lon": -180.0,
+    "max_lon": 180.0,
+    "min_lat": -90.0,
+    "max_lat": -60.0
+   },
+   "area_km2": 34167935,
+   "total": 773,
+   "largest_threshold": 7.6,
+   "record_floor": 4.0,
+   "record_floor_censored": false,
+   "cumulative": [
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    773,
+    771,
+    767,
+    742,
+    686,
+    588,
+    469,
+    342,
+    283,
+    240,
+    179,
+    141,
+    111,
+    95,
+    81,
+    59,
+    47,
+    34,
+    25,
+    20,
+    16,
+    13,
+    10,
+    9,
+    8,
+    8,
+    7,
+    4,
+    4,
+    4,
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "incremental": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    4,
+    25,
+    56,
+    98,
+    119,
+    127,
+    59,
+    43,
+    61,
+    38,
+    30,
+    16,
+    14,
+    22,
+    12,
+    13,
+    9,
+    5,
+    4,
+    3,
+    3,
+    1,
+    1,
+    0,
+    1,
+    3,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "rules": {
+    "maxc": {
+     "mc": 4.8,
+     "b": 0.9666,
+     "sigma_b": 0.057,
+     "n_above": 283,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "maxc_raw": {
+     "mc": 4.6,
+     "b": 1.0238,
+     "sigma_b": 0.0495,
+     "n_above": 469,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft95": {
+     "mc": 4.4,
+     "b": 0.9443,
+     "sigma_b": 0.0345,
+     "n_above": 686,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "gft90": {
+     "mc": 4.4,
+     "b": 0.9443,
+     "sigma_b": 0.0345,
+     "n_above": 686,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "cautious": {
+     "mc": 5.3,
+     "b": 1.0026,
+     "sigma_b": 0.1086,
+     "n_above": 95,
+     "unavailable": false,
+     "implausible_b": false
+    },
+    "none": {
+     "mc": null,
+     "b": null,
+     "sigma_b": null,
+     "n_above": null,
+     "unavailable": false
+    }
+   },
+   "gft_best_r": {
+    "95": 95.1,
+    "90": 95.1
+   },
+   "grid": {
+    "maxc": {
+     "2.0": {
+      "observed": 773,
+      "expected": 143968,
+      "missing": 143195,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 773,
+      "expected": 47311,
+      "missing": 46538,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 773,
+      "expected": 15548,
+      "missing": 14775,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 773,
+      "expected": 5109,
+      "missing": 4336,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 773,
+      "expected": 1679,
+      "missing": 906,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "maxc_raw": {
+     "2.0": {
+      "observed": 773,
+      "expected": 215304,
+      "missing": 214531,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 773,
+      "expected": 66245,
+      "missing": 65472,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 773,
+      "expected": 20382,
+      "missing": 19609,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 773,
+      "expected": 6271,
+      "missing": 5498,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 773,
+      "expected": 1930,
+      "missing": 1157,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft95": {
+     "2.0": {
+      "observed": 773,
+      "expected": 126661,
+      "missing": 125888,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 773,
+      "expected": 42707,
+      "missing": 41934,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 773,
+      "expected": 14399,
+      "missing": 13626,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 773,
+      "expected": 4855,
+      "missing": 4082,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 773,
+      "expected": 1637,
+      "missing": 864,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "gft90": {
+     "2.0": {
+      "observed": 773,
+      "expected": 126661,
+      "missing": 125888,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 773,
+      "expected": 42707,
+      "missing": 41934,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 773,
+      "expected": 14399,
+      "missing": 13626,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 773,
+      "expected": 4855,
+      "missing": 4082,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 773,
+      "expected": 1637,
+      "missing": 864,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "cautious": {
+     "2.0": {
+      "observed": 773,
+      "expected": 193332,
+      "missing": 192559,
+      "unbounded": false,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 773,
+      "expected": 60954,
+      "missing": 60181,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 773,
+      "expected": 19218,
+      "missing": 18445,
+      "unbounded": false,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 773,
+      "expected": 6059,
+      "missing": 5286,
+      "unbounded": false,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 773,
+      "expected": 1910,
+      "missing": 1137,
+      "unbounded": false,
+      "complete": false
+     }
+    },
+    "none": {
+     "2.0": {
+      "observed": 773,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "2.5": {
+      "observed": 773,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.0": {
+      "observed": 773,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "3.5": {
+      "observed": 773,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     },
+     "4.0": {
+      "observed": 773,
+      "expected": null,
+      "missing": null,
+      "unbounded": true,
+      "complete": false
+     }
+    }
+   }
+  }
+ ],
+ "grid_totals": {
+  "maxc": {
+   "2.0": {
+    "missing": 24032884,
+    "observed": 80237,
+    "unbounded": false
+   },
+   "2.5": {
+    "missing": 4160796,
+    "observed": 45545,
+    "unbounded": false
+   },
+   "3.0": {
+    "missing": 797591,
+    "observed": 30271,
+    "unbounded": false
+   },
+   "3.5": {
+    "missing": 151909,
+    "observed": 24475,
+    "unbounded": false
+   },
+   "4.0": {
+    "missing": 17247,
+    "observed": 22355,
+    "unbounded": false
+   }
+  },
+  "maxc_raw": {
+   "2.0": {
+    "missing": 28460747,
+    "observed": 80237,
+    "unbounded": false
+   },
+   "2.5": {
+    "missing": 5178775,
+    "observed": 45545,
+    "unbounded": false
+   },
+   "3.0": {
+    "missing": 990049,
+    "observed": 30271,
+    "unbounded": false
+   },
+   "3.5": {
+    "missing": 184201,
+    "observed": 24475,
+    "unbounded": false
+   },
+   "4.0": {
+    "missing": 21919,
+    "observed": 22355,
+    "unbounded": false
+   }
+  },
+  "gft95": {
+   "2.0": {
+    "missing": 8645264,
+    "observed": 80237,
+    "unbounded": false
+   },
+   "2.5": {
+    "missing": 2103833,
+    "observed": 45545,
+    "unbounded": false
+   },
+   "3.0": {
+    "missing": 502004,
+    "observed": 30271,
+    "unbounded": false
+   },
+   "3.5": {
+    "missing": 108499,
+    "observed": 24475,
+    "unbounded": false
+   },
+   "4.0": {
+    "missing": 12538,
+    "observed": 22355,
+    "unbounded": false
+   }
+  },
+  "gft90": {
+   "2.0": {
+    "missing": 9298926,
+    "observed": 80237,
+    "unbounded": false
+   },
+   "2.5": {
+    "missing": 2107999,
+    "observed": 45545,
+    "unbounded": false
+   },
+   "3.0": {
+    "missing": 489452,
+    "observed": 30271,
+    "unbounded": false
+   },
+   "3.5": {
+    "missing": 106198,
+    "observed": 24475,
+    "unbounded": false
+   },
+   "4.0": {
+    "missing": 11735,
+    "observed": 22355,
+    "unbounded": false
+   }
+  },
+  "cautious": {
+   "2.0": {
+    "missing": 1567670112,
+    "observed": 80237,
+    "unbounded": false
+   },
+   "2.5": {
+    "missing": 85417169,
+    "observed": 45545,
+    "unbounded": false
+   },
+   "3.0": {
+    "missing": 5013391,
+    "observed": 30271,
+    "unbounded": false
+   },
+   "3.5": {
+    "missing": 345453,
+    "observed": 24475,
+    "unbounded": false
+   },
+   "4.0": {
+    "missing": 22447,
+    "observed": 22355,
+    "unbounded": false
+   }
+  },
+  "none": {
+   "2.0": {
+    "missing": null,
+    "unbounded": true,
+    "observed": 80237
+   },
+   "2.5": {
+    "missing": null,
+    "unbounded": true,
+    "observed": 45545
+   },
+   "3.0": {
+    "missing": null,
+    "unbounded": true,
+    "observed": 30271
+   },
+   "3.5": {
+    "missing": null,
+    "unbounded": true,
+    "observed": 24475
+   },
+   "4.0": {
+    "missing": null,
+    "unbounded": true,
+    "observed": 22355
+   }
+  }
+ },
+ "headline": {
+  "missing": 797591,
+  "observed": 30271,
+  "unbounded": false
+ },
+ "headline_grid": {
+  "maxc": {
+   "2.0": {
+    "missing": 24032884,
+    "observed": 80237,
+    "unbounded": false
+   },
+   "2.5": {
+    "missing": 4160796,
+    "observed": 45545,
+    "unbounded": false
+   },
+   "3.0": {
+    "missing": 797591,
+    "observed": 30271,
+    "unbounded": false
+   },
+   "3.5": {
+    "missing": 151909,
+    "observed": 24475,
+    "unbounded": false
+   },
+   "4.0": {
+    "missing": 17247,
+    "observed": 22355,
+    "unbounded": false
+   }
+  },
+  "maxc_raw": {
+   "2.0": {
+    "missing": 28460747,
+    "observed": 80237,
+    "unbounded": false
+   },
+   "2.5": {
+    "missing": 5178775,
+    "observed": 45545,
+    "unbounded": false
+   },
+   "3.0": {
+    "missing": 990049,
+    "observed": 30271,
+    "unbounded": false
+   },
+   "3.5": {
+    "missing": 184201,
+    "observed": 24475,
+    "unbounded": false
+   },
+   "4.0": {
+    "missing": 21919,
+    "observed": 22355,
+    "unbounded": false
+   }
+  },
+  "gft95": {
+   "2.0": {
+    "missing": 8645264,
+    "observed": 80237,
+    "unbounded": false
+   },
+   "2.5": {
+    "missing": 2103833,
+    "observed": 45545,
+    "unbounded": false
+   },
+   "3.0": {
+    "missing": 502004,
+    "observed": 30271,
+    "unbounded": false
+   },
+   "3.5": {
+    "missing": 108499,
+    "observed": 24475,
+    "unbounded": false
+   },
+   "4.0": {
+    "missing": 12538,
+    "observed": 22355,
+    "unbounded": false
+   }
+  },
+  "gft90": {
+   "2.0": {
+    "missing": 9298926,
+    "observed": 80237,
+    "unbounded": false
+   },
+   "2.5": {
+    "missing": 2107999,
+    "observed": 45545,
+    "unbounded": false
+   },
+   "3.0": {
+    "missing": 489452,
+    "observed": 30271,
+    "unbounded": false
+   },
+   "3.5": {
+    "missing": 106198,
+    "observed": 24475,
+    "unbounded": false
+   },
+   "4.0": {
+    "missing": 11735,
+    "observed": 22355,
+    "unbounded": false
+   }
+  },
+  "cautious": {
+   "2.0": {
+    "missing": 1567670112,
+    "observed": 80237,
+    "unbounded": false
+   },
+   "2.5": {
+    "missing": 85417169,
+    "observed": 45545,
+    "unbounded": false
+   },
+   "3.0": {
+    "missing": 5013391,
+    "observed": 30271,
+    "unbounded": false
+   },
+   "3.5": {
+    "missing": 345453,
+    "observed": 24475,
+    "unbounded": false
+   },
+   "4.0": {
+    "missing": 22447,
+    "observed": 22355,
+    "unbounded": false
+   }
+  },
+  "none": {
+   "2.0": {
+    "missing": null,
+    "unbounded": true,
+    "observed": 80237
+   },
+   "2.5": {
+    "missing": null,
+    "unbounded": true,
+    "observed": 45545
+   },
+   "3.0": {
+    "missing": null,
+    "unbounded": true,
+    "observed": 30271
+   },
+   "3.5": {
+    "missing": null,
+    "unbounded": true,
+    "observed": 24475
+   },
+   "4.0": {
+    "missing": null,
+    "unbounded": true,
+    "observed": 22355
+   }
+  }
+ },
+ "headline_span": {
+  "low": 489452,
+  "high": 5013391
+ },
+ "floor_span": {
+  "low": 0.9,
+  "low_name": "California",
+  "high": 4.8,
+  "high_name": "South of 60S"
+ },
+ "totals": {
+  "events": 470935,
+  "regions": 12,
+  "complete_at_default": 2,
+  "nothing_below_4": 2
+ },
+ "record_floor_span": {
+  "low": -1.0,
+  "low_name": "Alaska",
+  "low_caveat": " \u2014 and this work asked no lower",
+  "high": 4.1,
+  "high_name": "South Mid-Atlantic Ridge"
+ },
+ "wildest": {
+  "missing": 1567670112,
+  "rule_label": "maximum curvature, +0.7",
+  "floor": 2.0
+ },
+ "b_flag_sentence": "Under the setting this page opens at, 1 of the 12 boxes \u2014 Central Africa \u2014 return a b outside the band 0.6 to 1.6 where catalogues normally put it. Their shortfall is printed like the others and should be read as a sign that the fit is wrong rather than that the Earth is unusual there."
+}

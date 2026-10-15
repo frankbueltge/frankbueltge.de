@@ -166,3 +166,153 @@ placement rules (`reading/08-fear-the-deferral-that-hardened.md` §2).
   and stated daylight — the three things the standing condition requires of
   whatever work may come, in place before the work, so the work cannot be
   retrofitted to them.
+
+## 7. Addendum, 2026-09-16 (night 27, record 53 as self-identified; corrected to night 28, record 54 — `nights/54-twenty-eighth-night.md`) — the search refreshed, not owed
+
+Unlike the sibling candidate, this document never marked its search as owed
+for re-run; the original stands on its own terms. Refreshed anyway, thirty-one
+days on, under the founder's dated act of 2026-09-12 naming the ratio of
+apparatus to research across the record (`DOWRY.md`) — a voluntary check, not
+a debt paid. Three dated queries
+(`material/ct-logs/2026-09-16-neighbours-recheck/README.md`): no new
+neighbour found; the named works (Ọnụọha, Vijgen, Segni) and the Critical
+Engineering field, and every daylight statement in §4, stand unrevised.
+Status unchanged: candidate, not a work.
+
+## 8. Addendum, 2026-09-23 (night 33, record 59) — the cited certificate has expired; the claim corrected, the thesis sharpened
+
+§1 states that the zone's wildcard certificate, issued 2026-06-23, "covers
+[the vanished name] still" — present tense, naming that one certificate's
+ongoing coverage as the counter-record standing against the vanished name's
+absence. Asking 29 (2026-09-22,
+`material/ct-logs/2026-09-22-twenty-ninth-asking/README.md`;
+`works/below-the-threshold/askings.json`, asking 29) found that exact
+certificate (id `15533795174`, `not_after` 2026-09-21T18:12:20Z) had
+expired and dropped out of Cert Spotter's live zone view — the first time
+this vigil watched a cited certificate age out of a monitor's own view
+mid-run. Asking 30 (2026-09-23, tonight,
+`material/ct-logs/2026-09-23-thirtieth-asking/README.md`) confirms no
+further change: the zone view stands byte-identical to asking 29's.
+
+**The sentence's literal claim is false as stated today, and is corrected
+here, not retouched there** (floor rule 2, `DOWRY.md`: history is
+continued, never retouched — §1 stands exactly as written 2026-08-16, the
+record of the claim as it was made). That one certificate does not cover
+the name today; it expired 2026-09-21.
+
+**What the finding does to the thesis, stated exactly.** §1's deeper claim
+— "the same memory holds the general in the singular's place, forever" —
+survives the correction and is sharpened by it, not undone. The zone's
+wildcard coverage has continued unbroken across the boundary, but through
+renewal, not one certificate's own permanence: two later, already-issued
+wildcard certificates (ids `16670134519`, `16980049587`) were already in
+force before the cited one expired, and crt.sh's full listing still
+retains the expired certificate itself (located directly by id in asking
+29's committed evidence) — the world's memory has not forgotten it, it has
+only stopped being the instrument presently attesting the zone. The
+"forever" §1 names belongs to the zone's continuous coverage of the
+general, sustained by overlapping, renewing acts of the same kind — never
+to any single certificate's permanence, which §1's present-tense wording
+let a reader assume without saying. That distinction was not available to
+the candidate at its writing; it took thirty-eight days and a monitor's own
+expiry-driven view of its own record to turn it from an inference into a
+checked finding.
+
+**Not a revision of the problem, the daylight, or the form.** The
+quadrature at §1's close, the neighbours at §3, the daylight at §4 and the
+direction at §5 all stand as the finding leaves them — the correction
+sharpens the asymmetry the candidate already named rather than closing it
+or opening a new one. Status unchanged: candidate, not a work.
+
+## 9. Addendum, 2026-09-24 (night 34, record 60) — declared a work; the vigil closed
+
+**The occasion.** The founder's act of 2026-09-24 (`DOWRY.md`, "the toolkit,
+tried across projects") gives this candidate at most two further sessions,
+beginning with this one, to be finished as a work under the works
+condition or put back with its balance, and ends the nightly asking either
+way. This addendum is that decision for this session — the first of the
+at most two.
+
+**What was checked tonight, before deciding anything.** (1) The neighbour
+search was re-run, dated fresh (three queries, 2026-09-24, logged in the
+night record; no new neighbour found — the third dated negative finding
+since 2026-08-16 (the original search, itself already negative, then the
+2026-09-16 recheck, then tonight), at three different dates and query
+wordings, the named
+works of §3 and the daylight of §4 standing unrevised). (2) The page itself
+was read end to end against the reception bar stated in `FORM.md` §1
+("if they can only be understood by reading this record, the work has
+failed the reception bar") — and one real defect was found and fixed:
+the "world's memory" section had stood, since bell 13, pointed at the
+third asking's snapshot (2026-08-16) with prose claiming to show the
+zone "as of my latest asking", a sentence that stopped being true the
+moment a later asking moved the state it described and was never revised
+to match — the margin-beside-the-map drift class this record already has
+case law for (`reading/20-tracing-the-margin-beside-the-map.md`). Fixed
+by re-pointing the page at tonight's closing asking (below) and rewriting
+the sentence to the sharpened, renewal-based thesis §8 already
+established, rather than the single-certificate claim §8 found false.
+A second, unrelated defect surfaced in fixing the first: crt.sh's JSON API
+dropped the `entry_timestamp` field it carried at the third asking
+sometime before 2026-09-11 (every asking checked from the twenty-fifth
+on lacks it); the page's script depended on that field and would have
+thrown, silently falling back to its static error text, the moment it was
+pointed at any asking newer than the third. Neither defect had surfaced
+before tonight because no session had touched the page's data source
+since bell 13 — the render-check instrument (`render-check.js`) checks
+that the ledger loads without error, not that the page is reading current
+evidence, and structural passing and factual currency are not the same
+thing. Both are fixed; `render-check.js` passes clean at both stated
+geometries (1440×900, 390×844) against the corrected page, screenshotted
+and read for legibility in-session.
+
+**The closing asking.** A thirty-first, final asking was run tonight
+rather than closing on asking 30's evidence
+(`material/ct-logs/2026-09-24-closing-asking/`, appended to
+`askings.json`): both exact-name doors still empty (the fifteenth
+consecutive two-eyed exact-name night), both zone views unchanged since
+asking 30 (crt.sh's unchanged since asking 19). Thirty-one askings,
+2026-08-15 to 2026-09-24; the exact name never surfaced at either
+monitor. No further asking is promised or scheduled from tonight.
+
+**The decision.** Declared a **work**. Problem constructed (bell 13),
+neighbours searched four times to no new finding, daylight stated (§4),
+advantage deliberated and stated in the work's own words inside the piece
+(`FORM.md` §1), form built and re-verified tonight, reception designed
+for and checked as far as this practice can check it — that the piece
+requires no reading of this record, which is a structural property a
+session can verify, not the same claim as a stranger's actual
+understanding, which this practice cannot award itself (`DOWRY.md`, the
+works condition; `reading/10-verification-the-readers-side.md`). That
+gap is not closed by this addendum and is not this practice's to close:
+the founder's returned third question runs the reception test with a
+stranger, no preparation permitted, and this addendum asks for that run
+in `REQUESTS.md`, dated the same night. If that test finds the piece
+needs the record as a caption after all, the put-back criterion of §6
+still applies and would be executed as a dated correction to this
+addendum, history continued rather than retouched — declaring a work
+tonight is this practice's claim, not a verdict no later evidence can
+revise.
+
+**The toolkit account**, per the founder's act of 2026-09-24. Instruments
+in force for this material (`reading/00-protocol.md`): T1 (atlas
+consultation) ran most nights this project touched, confirmatory every
+time per its own standing caveat — no night's asking decision ever turned
+on what the graph showed, only the decision to weigh tonight's finding
+against a text needing revision, which the query itself did not surface
+(the reading of `CANDIDATE.md` at boot did). T4 (the night record as
+following-journal) is the instrument this project leaned on hardest: every
+detour the vigil produced — the wrong-form frontier file, the wildcard
+certificate ageing out mid-run, tonight's two page defects — is logged
+where it happened, in the night it happened. The second pass ran on every
+work presentation this candidate produced (bell 13's founding two commits,
+FORM.md's two commits, three addenda, this one). Of the postulates,
+Postulate 3 (following, not reproducing) carried the project most legibly:
+the problem was found by asking a real question of a real absence and
+letting thirty-one answers, not a plan, decide when the asking was done.
+What the grammar could not do on this material: it gave no method for
+noticing that a built artifact's own prose can drift out of true while its
+render-check instrument stays green — that finding came from re-reading
+the piece as a stranger would, which no instrument here automated, and
+which very nearly did not happen inside this project's own five-session
+economy had the founder's closing act not forced a last full read.

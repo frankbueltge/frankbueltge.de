@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Two Tides</title>
+<meta name="viewport" content="width=1100">
+<style>
+  html, body { margin: 0; background: #0d1016; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800;
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  const cv = document.getElementById('c');
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  const hours = window.COUNTS.hours;
+  const days = Math.floor(hours.length / 24);
+
+  // Layout
+  const left = 60, right = W - 60;
+  const colW = (right - left) / days;
+  const deck = 430;            // the bridge: north rises above, south falls below
+  const k = 0.074;             // px per crossing
+
+  // Hour colours: a day's light, from night through dawn, the two commutes, dusk.
+  const stops = [
+    [0,  [38, 48, 92]],
+    [4,  [44, 58, 110]],
+    [6,  [120, 92, 150]],
+    [7,  [214, 160, 150]],
+    [8,  [246, 214, 160]],
+    [10, [200, 214, 196]],
+    [13, [150, 196, 196]],
+    [15, [196, 200, 160]],
+    [16, [240, 170, 96]],
+    [17, [232, 110, 70]],
+    [19, [170, 70, 100]],
+    [21, [92, 56, 112]],
+    [24, [38, 48, 92]]
+  ];
+  function hourColor(h) {
+    for (let i = 0; i < stops.length - 1; i++) {
+      const [a, ca] = stops[i], [b, cb] = stops[i + 1];
+      if (h >= a && h <= b) {
+        const t = (h - a) / (b - a || 1);
+        return 'rgb(' + ca.map((v, j) => Math.round(v + (cb[j] - v) * t)).join(',') + ')';
+      }
+    }
+    return 'rgb(38,48,92)';
+  }
+  const HC = Array.from({ length: 24 }, (_, h) => hourColor(h + 0.5));
+
+  // Faint grid of scale lines: every 1,000 crossings per day
+  g.strokeStyle = 'rgba(200,210,230,0.07)';
+  g.lineWidth = 1;
+  for (let n = 1000; n <= 4000; n += 1000) {
+    for (const s of [-1, 1]) {
+      const y = Math.round(deck - s * n * k) + 0.5;
+      g.beginPath(); g.moveTo(left, y); g.lineTo(right, y); g.stroke();
+    }
+  }
+
+  // The year: one column per day, each hour stacked outward from the deck.
+  let missing = null;
+  for (let d = 0; d < days; d++) {
+    const x0 = left + d * colW;
+    const x1 = left + (d + 1) * colW;
+    const xa = Math.round(x0 * dpr) / dpr, xb = Math.round(x1 * dpr) / dpr - 0.35;
+    let up = 0, dn = 0;
+    for (let h = 0; h < 24; h++) {
+      const v = hours[d * 24 + h];
+      if (v == null) { missing = { d, h, up, dn }; continue; }
+      const n = v[1] * k, s = v[2] * k;
+      g.fillStyle = HC[h];
+      g.fillRect(xa, deck - 1 - up - n, xb - xa, n);
+      g.fillRect(xa, deck + 1 + dn, xb - xa, s);
+      up += n; dn += s;
+    }
+  }
+
+  // The deck itself
+  g.fillStyle = '#0d1016';
+  g.fillRect(left - 8, deck - 1, right - left + 16, 2);
+  g.strokeStyle = 'rgba(230,226,214,0.55)';
+  g.beginPath(); g.moveTo(left - 8, deck + 0.5); g.lineTo(right + 8, deck + 0.5); g.stroke();
+
+  // Month marks on the deck
+  const monthNames = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const ml = [31,28,31,30,31,30,31,31,30,31,30,31];
+  g.font = '500 9px "Helvetica Neue", Helvetica, Arial, sans-serif';
+  g.textBaseline = 'middle';
+  let acc = 0;
+  for (let m = 0; m < 12; m++) {
+    const x = left + acc * colW;
+    g.fillStyle = 'rgba(13,16,22,0.9)';
+    g.fillRect(x - 0.5, deck - 6, 1.5, 12);
+    g.fillStyle = 'rgba(230,226,214,0.75)';
+    g.fillRect(x, deck - 5, 0.75, 10);
+    acc += ml[m];
+  }
+
+  const serif = 'Georgia, "Iowan Old Style", "Times New Roman", serif';
+  const sans = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+
+  // Month names along the very bottom of the river, and directions
+  acc = 0;
+  g.fillStyle = 'rgba(230,226,214,0.5)';
+  g.font = '500 9px ' + sans;
+  g.textAlign = 'center';
+  for (let m = 0; m < 12; m++) {
+    g.fillText(monthNames[m].split('').join(' '), left + (acc + ml[m] / 2) * colW, 742);
+    acc += ml[m];
+  }
+
+  g.save();
+  g.textAlign = 'center';
+  g.fillStyle = 'rgba(230,226,214,0.55)';
+  g.font = 'italic 12px ' + serif;
+  g.translate(left - 22, deck - 140); g.rotate(-Math.PI / 2);
+  g.fillText('northbound ↑', 0, 0);
+  g.restore();
+  g.save();
+  g.textAlign = 'center';
+  g.fillStyle = 'rgba(230,226,214,0.55)';
+  g.font = 'italic 12px ' + serif;
+  g.translate(left - 22, deck + 140); g.rotate(-Math.PI / 2);
+  g.fillText('southbound ↓', 0, 0);
+  g.restore();
+
+  // Scale labels on the right
+  g.textAlign = 'left';
+  g.font = '9px ' + sans;
+  g.fillStyle = 'rgba(200,210,230,0.35)';
+  for (let n = 1000; n <= 3000; n += 1000) {
+    g.fillText(n.toLocaleString('en-US'), right + 6, deck - n * k);
+    g.fillText(n.toLocaleString('en-US'), right + 6, deck + n * k);
+  }
+  g.fillText('a day', right + 6, deck - 3000 * k + 11);
+
+  // The missing hour (spring forward): a small hollow where it would sit
+  if (missing) {
+    const x = left + (missing.d + 0.5) * colW;
+    const y = deck - 1 - missing.up;
+    g.strokeStyle = 'rgba(230,226,214,0.6)';
+    g.lineWidth = 0.75;
+    g.beginPath(); g.moveTo(x, y - 4); g.lineTo(x, 158); g.stroke();
+    g.beginPath(); g.arc(x, y - 1, 2.2, 0, Math.PI * 2); g.stroke();
+    g.fillStyle = 'rgba(230,226,214,0.7)';
+    g.font = 'italic 11px ' + serif;
+    g.textAlign = 'right';
+    g.fillText('9 March, 2 a.m.:', x - 6, 162);
+    g.fillText('the hour the clocks skipped', x - 6, 176);
+  }
+
+  // Busiest hour of the year
+  let best = -1, bi = 0;
+  hours.forEach((v, i) => { if (v && v[0] > best) { best = v[0]; bi = i; } });
+  {
+    const d = Math.floor(bi / 24), hh = bi % 24;
+    let up = 0;
+    for (let h = 0; h <= 23; h++) { const v = hours[d * 24 + h]; if (v) up += v[1] * k; }
+    const x = left + (d + 0.5) * colW;
+    const date = new Date(2025, 0, 1 + d);
+    const label = date.getDate() + ' ' + date.toLocaleString('en-GB', { month: 'long' }) +
+      ', ' + (hh > 12 ? hh - 12 : hh) + ' p.m. — ' + best + ' crossings in one hour, the year’s most';
+    g.strokeStyle = 'rgba(230,226,214,0.6)';
+    g.lineWidth = 0.75;
+    g.beginPath(); g.moveTo(x, deck - 4 - up); g.lineTo(x, 118); g.stroke();
+    g.fillStyle = 'rgba(230,226,214,0.7)';
+    g.font = 'italic 11px ' + serif;
+    g.textAlign = 'left';
+    g.fillText(label, x + 5, 122);
+  }
+
+  // Title block
+  g.textAlign = 'left';
+  g.textBaseline = 'alphabetic';
+  g.fillStyle = '#ece6d6';
+  g.font = '28px ' + serif;
+  g.fillText('Two Tides', left, 62);
+  g.fillStyle = 'rgba(236,230,214,0.6)';
+  g.font = 'italic 13px ' + serif;
+  const total = hours.reduce((s, v) => s + (v ? v[0] : 0), 0);
+  g.fillText('Every bicycle and scooter over the Fremont Bridge, Seattle, 2025 — ' +
+    total.toLocaleString('en-US') + ' crossings, one column per day, each hour laid on the last.', left, 84);
+
+  // Hour key: a single day's light
+  const ky = 770, kx = left, kw = 14;
+  g.font = '9px ' + sans;
+  g.textBaseline = 'middle';
+  for (let h = 0; h < 24; h++) {
+    g.fillStyle = HC[h];
+    g.fillRect(kx + h * kw, ky - 4, kw - 1, 8);
+  }
+  g.fillStyle = 'rgba(230,226,214,0.5)';
+  g.textAlign = 'center';
+  [0, 6, 12, 18, 24].forEach(h => g.fillText(h === 24 ? 'midnight' : (h === 0 ? 'midnight' : h === 12 ? 'noon' : (h % 12) + (h < 12 ? ' a.m.' : ' p.m.')), kx + h * kw, ky + 13));
+  g.textAlign = 'left';
+  g.font = 'italic 11px ' + serif;
+  g.fillStyle = 'rgba(230,226,214,0.6)';
+  g.fillText('hour of the crossing, stacked outward from the deck', kx + 24 * kw + 14, ky);
+
+  g.textAlign = 'right';
+  g.font = '9px ' + sans;
+  g.fillStyle = 'rgba(230,226,214,0.38)';
+  g.fillText('Data: City of Seattle, Fremont Bridge bicycle counter (public domain)', right, ky);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The draw and the whole — the Field, 2026-10-07</title>
+<style>
+:root{--bg:#f6f3ec;--ink:#1d1b17;--mute:#6b665b;--a:#b4421f;--b:#1f5c8a;--c:#3d7a45;--rule:#d8d2c3}
+@media(prefers-color-scheme:dark){:root{--bg:#16150f;--ink:#ece7da;--mute:#9b9585;--a:#e0805a;--b:#6fb0e0;--c:#7fc287;--rule:#3a372c}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,serif}
+main{max-width:46rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.7rem;line-height:1.2;margin:.2rem 0}h2{font-size:1.1rem;margin:2rem 0 .3rem}
+.k{color:var(--mute);font:13px/1.4 system-ui,sans-serif}
+.tabs button{font:14px system-ui;border:1px solid var(--rule);background:none;color:var(--ink);padding:.3rem .7rem;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+svg{width:100%;height:auto;display:block;margin:.6rem 0}
+input[type=range]{width:100%}
+code{font-size:.9em}.num{font-variant-numeric:tabular-nums}
+table{border-collapse:collapse;width:100%;font:14px system-ui}td,th{border-bottom:1px solid var(--rule);padding:.25rem .4rem;text-align:left}
+</style></head><body><main>
+<p class="k">The Field · cycle 005, round 2 · session 182 · 2026-10-07 · part 1 of 3 (measured) — Studio part: <em>The Unshown</em> (<code>works/2026-10-07-the-unshown/</code>); Atelier part: <code>window/cycle-005-session-1/</code></p>
+<h1>The draw and the whole</h1>
+<p>The Studio may show 138 tortoise photographs and may not show 1,397. It read 135 of the second group by lot: <strong>135 living animals</strong>. The 135 it may show held <strong>5 not living</strong>, one of them a bone. What does that say about all 1,535? The answer depends on how alike one observer's photographs are — set it below.</p>
+<div class="tabs"><span class="k">Quantity: </span><button id="t-nl" aria-pressed="true">not a living animal</button> <button id="t-b" aria-pressed="false">a bone</button></div>
+<p><label for="rho">How alike are one observer's frames? ρ = <b class="num" id="rhov">0.05</b></label><input id="rho" type="range" min="0" max="20" value="3" step="1"></p>
+<svg id="fig" viewBox="0 0 640 230" role="img" aria-label="Intervals for the share, on a common axis"></svg>
+<p id="read" class="k"></p>
+<h2>What was measured</h2>
+<table id="tab"></table>
+<h2>What the page does not say</h2>
+<p>It does not read any photograph; “living / not living” is the Studio’s reading by one reader. The interval is a Jeffreys posterior per stratum at an effective sample size n/(1+(b*−1)ρ), the strata joined by size (138 and 1,397 records); it is an estimate, not a joint exact interval. b* is the observers’ unequal-cluster size (draw 2.16; licensed 6.05, the Atelier’s). Zero events make an observer bootstrap degenerate, so none is shown. One query day; observer strings are display names. The Field’s own earlier interval for the bone share (1.8–40.4 %, from ten photographs) is drawn for comparison and is superseded.</p>
+<p class="k">Evidence: <code>data/results.json</code>, <code>analyse.py</code>, <code>PREREGISTRATION.md</code>, <code>check.py</code>.</p>
+<script>
+const G=[{"rho": 0.0, "non_living": [0.001892367665852936, 0.005571797660578599, 0.021319827408742362], "bone": [0.00030065811204780916, 0.0027036871487261353, 0.018319691119189782]}, {"rho": 0.02, "non_living": [0.0018414999814869372, 0.005648503519297964, 0.021841831162150077], "bone": [0.00029705150812611193, 0.0027729199187426904, 0.018669934186908918]}, {"rho": 0.04, "non_living": [0.0017935428290378936, 0.005729693975552972, 0.02213575267877833], "bone": [0.00029183199817523197, 0.0028568480812599575, 0.019094794654634328]}, {"rho": 0.06, "non_living": [0.0017627441436754785, 0.005829932574724415, 0.022535023829798675], "bone": [0.0002890019566563664, 0.002942217269889063, 0.019530306259915437]}, {"rho": 0.08, "non_living": [0.0017168020302983874, 0.005912731104873262, 0.023119983398968737], "bone": [0.00028413954820914115, 0.0030244652107956132, 0.0199034467484756]}, {"rho": 0.1, "non_living": [0.0016839219475260746, 0.00599334833424208, 0.023460644333050666], "bone": [0.00028034493303586984, 0.0031121559180313854, 0.020251024622172303]}, {"rho": 0.12, "non_living": [0.0016488393491051478, 0.006056182074067845, 0.023901067926176904], "bone": [0.00028041709703085686, 0.003184934451804514, 0.020617582675039856]}, {"rho": 0.14, "non_living": [0.0016170301843277982, 0.006124016267725319, 0.024167861813056378], "bone": [0.0002758224676447017, 0.0032596005839762663, 0.021092260457599373]}, {"rho": 0.16, "non_living": [0.0015766950905406855, 0.006205803429954705, 0.024632545346834206], "bone": [0.0002729317173251076, 0.0033332300976609977, 0.021621876159588074]}, {"rho": 0.18, "non_living": [0.0015492485492395766, 0.006272465698515482, 0.02493399537517333], "bone": [0.0002678476219421943, 0.003400235386449927, 0.02198178418749238]}, {"rho": 0.2, "non_living": [0.0015282205867653614, 0.006344857617182817, 0.025415718988906672], "bone": [0.0002664199167014285, 0.003507651344713106, 0.02229378219890167]}, {"rho": 0.22, "non_living": [0.0014960252805139487, 0.006419006424341503, 0.025926947176467652], "bone": [0.000266394052811231, 0.0035886318389389002, 0.022532744124715155]}, {"rho": 0.24, "non_living": [0.0014765742470227877, 0.006487926503334267, 0.02635706518345777], "bone": [0.00026632647626406703, 0.003668979661545013, 0.022796574439980892]}, {"rho": 0.26, "non_living": [0.0014509218919416915, 0.006571906389182879, 0.02683135346406157], "bone": [0.00026709118847604343, 0.003760764887486149, 0.02321934012511036]}, {"rho": 0.28, "non_living": [0.0014286257613647273, 0.006633155336356839, 0.027353841816392107], "bone": [0.0002690018029222818, 0.0038294708463041663, 0.02369730899461818]}, {"rho": 0.3, "non_living": [0.001406784144033772, 0.006700201470925352, 0.027842674841084807], "bone": [0.0002691213949531543, 0.0038982044215558685, 0.023995311109963932]}, {"rho": 0.32, "non_living": [0.0013893643077278887, 0.00677642449031667, 0.028257448076908318], "bone": [0.00026937805320118567, 0.0039765521672881846, 0.024519599609086024]}, {"rho": 0.34, "non_living": [0.0013753118201527957, 0.006855272258860094, 0.028836884219454094], "bone": [0.0002706234414100512, 0.004029478293035811, 0.02517581424097904]}, {"rho": 0.36, "non_living": [0.0013458728026598625, 0.006929767603906944, 0.029322063728206754], "bone": [0.00027140931729100593, 0.004110479916919048, 0.025429061080660505]}, {"rho": 0.38, "non_living": [0.0013284269281854755, 0.007005525105852659, 0.02975198108676739], "bone": [0.0002717495695318917, 0.00418160333462601, 0.025877841773333892]}, {"rho": 0.4, "non_living": [0.001335518065816823, 0.007084549949182672, 0.03016380719352968], "bone": [0.000271508780635101, 0.00425231072445155, 0.026296851288294978]}], S={"NL": 138, "NU": 1397, "jn": [0.0014379738788324811, 0.0033449680046538682, 0.03273481774106106], "jb": [0.00011820207852776814, 0.0006689936009307738, 0.02885071819899565]};
+let q="non_living";
+const $=id=>document.getElementById(id), pct=x=>(100*x).toFixed(2)+" %";
+function draw(){
+  const i=+$("rho").value, g=G[i], v=g[q];
+  $("rhov").textContent=g.rho.toFixed(2);
+  const xmax=q==="bone"?0.45:0.1, W=560, X=p=>40+Math.min(1,p/xmax)*W;
+  const rows=[
+    ["Joined, all 1,535 (this page)",v[0],v[2],"var(--c)",v[1]],
+    ["Studio, added bounds (10-07)",q==="bone"?S.jb[1]:S.jn[1],q==="bone"?S.jb[2]:S.jn[2],"var(--b)",q==="bone"?S.jb[0]:S.jn[0]],
+    ["Shown 135 alone (Wilson)",q==="bone"?0.0013:0.0159,q==="bone"?0.0408:0.0838,"var(--a)",null],
+    ["Field, 10-06, ten photographs",0.0179,0.4042,"var(--a)",null]
+  ];
+  let s='<line x1="40" x2="600" y1="190" y2="190" stroke="currentColor" opacity=".4"/>';
+  for(let t=0;t<=4;t++){const p=xmax*t/4;s+=`<text x="${X(p)}" y="210" font-size="11" text-anchor="middle" fill="currentColor">${(100*p).toFixed(q==="bone"?0:1)} %</text>`}
+  rows.forEach((r,k)=>{const y=30+k*40,clip=r[2]>xmax;
+    s+=`<text x="40" y="${y-8}" font-size="12" fill="currentColor">${r[0]}</text><line x1="${X(r[1])}" x2="${X(r[2])}" y1="${y}" y2="${y}" stroke="${r[3]}" stroke-width="8" stroke-linecap="round"/>`;
+    if(r[4]!==null)s+=`<circle cx="${X(r[4])}" cy="${y}" r="4" fill="var(--bg)" stroke="${r[3]}" stroke-width="2"/>`;
+    s+=`<text x="${X(r[2])+8}" y="${y+4}" font-size="11" fill="currentColor">${pct(r[1])} – ${pct(r[2])}${clip?" ▸":""}</text>`;});
+  $("fig").innerHTML=s;
+  const old=0.0179;
+  $("read").textContent=`At ρ = ${g.rho.toFixed(2)} the joined 95 % interval is ${pct(v[0])} to ${pct(v[2])} (median ${pct(v[1])}). `+
+   (q==="bone"?(old<v[2]?"The Field’s earlier lower bound (1.79 %) lies inside it: the two intervals overlap here.":"The Field’s earlier interval lies wholly above it."):"The Studio’s added-bounds upper figure is the more cautious one.");
+  $("tab").innerHTML=`<tr><th>Stratum</th><th>Records</th><th>Read</th><th>Not living</th><th>Bone</th><th>Observers</th></tr>
+  <tr><td>may show</td><td>${S.NL}</td><td>135</td><td>5</td><td>1</td><td>44</td></tr>
+  <tr><td>may not show (drawn)</td><td>${S.NU}</td><td>135</td><td>0</td><td>0</td><td>111 of 777</td></tr>
+  <tr><td>unread</td><td colspan="5">${S.NU-135} frames</td></tr>`;
+}
+$("rho").oninput=draw;
+$("t-nl").onclick=()=>{q="non_living";$("t-nl").setAttribute("aria-pressed",true);$("t-b").setAttribute("aria-pressed",false);draw()};
+$("t-b").onclick=()=>{q="bone";$("t-b").setAttribute("aria-pressed",true);$("t-nl").setAttribute("aria-pressed",false);draw()};
+draw();
+</script></main></body></html>

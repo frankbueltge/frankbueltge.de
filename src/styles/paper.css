@@ -1,0 +1,319 @@
+/* src/styles/paper.css — the paper ground (2026-10-11)
+ *
+ * The entrance and the research ecology's surfaces left the mono skin on 2026-10-11 for a
+ * printed page: cream ground, ink, hairlines, one accent, a serif for what is said and a
+ * grotesque for what is labelled. Design handoff: docs/design_handoff_homepage_ecology/README.md;
+ * approval trail: docs/decision-log.md, 2026-10-11.
+ *
+ * HOW A PAGE GETS IT. A page passes `surface="paper"` to Page.astro, which stamps
+ * <html data-surface="paper">. On such a page FOUR regions stand on paper — the top bar, the
+ * page's own `.paper` container, the frame's byline strip (`.paper-chrome`) and the paper
+ * footer — and the block below declares, on exactly those four:
+ *   · the --pp-* tokens the paper sheets read (they carry no hex of their own), and
+ *   · the frame's own tokens (--color-bg, --color-fg, --color-line, …) re-pointed at the paper
+ *     values, so the shared chrome inside them lands on paper without knowing it.
+ *
+ * WHY NOT ON <html>. Because a paper page may hold a GUEST: a figure that keeps the mono skin
+ * and its own palette (the Studio's season floor, the Atelier's line map — ADR 0010: the frame
+ * is shared, the drawing never is). Custom properties inherit, so tokens re-pointed at the root
+ * would repaint a guest's ink and type and nothing could give them back. Declared on the paper
+ * regions only, the root keeps the frame's tokens and a guest outside those regions
+ * (`.pp-guest`) reads them exactly as it does on a mono page.
+ *
+ * TWO GROUNDS (2026-10-12). The paper follows the theme like every other page: cream and ink
+ * under the light theme, the handoff's "Ecology Score Dark" ground under the dark one. The dark
+ * block at the end of this file re-declares the same --pp-* tokens and nothing else, so no sheet
+ * that reads them knows which ground it stands on. Its neutrals are the handoff's dark page; its
+ * three voices are the dark steps recorded and validated with `paper-voices` in
+ * src/lib/dataviz/palette.ts (the handoff's own dark hues fail that set's checks). The handoff
+ * has no dark accent; the one here keeps the light accent's place, redder than the Studio's hue,
+ * and clears 4.5 : 1 as small text on both dark grounds, so it needs no separate -ink step.
+ *
+ * TWO STEPS PER HUE WHERE TEXT NEEDS IT. The handoff's accent and its Studio orange measure
+ * 4.07 : 1 and 4.06 : 1 on the ground — enough for a mark, short of the 4.5 : 1 a small label
+ * needs, and this house does not ship a label on a contrast WARN (.claude/rules/
+ * dataviz-figures.md, "coloured text is not a mark"). So each has an `-ink` step, the same hue
+ * at 89 % of its lightness (4.9 : 1), for small text; marks, rules and large display type keep
+ * the handoff's value.
+ */
+
+/* The ground itself, where no region covers it, and the colour a browser paints its own
+   chrome in (Base.astro's theme-colour sync reads --surface-color before the frame's --color-bg). */
+:root[data-surface='paper'] {
+  --surface-color: #f3efe6;
+}
+:root[data-surface='paper'][data-theme='dark'] {
+  --surface-color: #13120f;
+}
+:root[data-surface='paper'] body {
+  background-color: var(--surface-color);
+}
+
+:root[data-surface='paper'] :is(.site-bar, .paper, .paper-chrome, .paper-foot) {
+  /* —— the ground and the ink —— */
+  --pp-ground: #f3efe6;
+  --pp-ground-2: #ebe6da; /* the "how a cycle works" band, a selected row */
+  --pp-ground-lift: #f8f5ee; /* an input's own field, a shade lighter than the page */
+  --pp-ink: #161412;
+  --pp-ink-2: #3a352d; /* body copy */
+  --pp-muted: #6a645a; /* secondary text — 5.1 : 1 on the ground, 4.7 : 1 on ground-2 */
+  --pp-faint: #948d7f; /* ticks, arrows, an inactive status: marks, never the only carrier */
+  --pp-ghost: #b9b2a3; /* the dot of an empty cell, a dotted rule */
+  --pp-rule: #d8d2c4;
+  --pp-rule-light: #e3ddcf;
+  --pp-rule-firm: #bdb5a4; /* staff lines, the border of a quiet control */
+  --pp-accent: #d2401f; /* marks: new-since, the pulse's dots, the hover hairline */
+  --pp-accent-ink: #bb391c; /* the same hue as small text */
+  --pp-shade: #f0d9cf; /* a timetable cell since the reference point */
+  --pp-on-ink: #f3efe6; /* type on an ink bar */
+  --pp-on-ink-muted: #cfc8b8;
+  --pp-on-ink-warm: #e8c48a; /* the kicker of a tooltip */
+  --pp-shadow: 0 18px 40px -18px rgb(22 20 18 / 0.45);
+
+  /* —— the three voices ——
+     PALETTE: paper-voices
+     Recorded with its validator verdict in src/lib/dataviz/palette.ts. The Atelier's violet is
+     NOT the handoff's #6650c4: against the Field's blue that value measures ΔE 11.0 for normal
+     vision, below this house's hard floor of 15, and the validator fails the set. It was moved
+     the shortest distance that passes every check on both paper surfaces (ΔE 4.6, to a slightly
+     redder and stronger violet). The Field's blue and the Studio's orange are the handoff's own. */
+  --pp-c-field: #2c6aa3;
+  --pp-c-atelier: #7548dc;
+  --pp-c-studio: #bf5427;
+  --pp-studio-ink: #aa4b23; /* the Studio's hue as small text */
+
+  /* —— type —— */
+  --pp-serif: 'Literata Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --pp-sans: 'Schibsted Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* —— the page gutter: 64 px at the desk the handoff was drawn for, 16 px on a phone —— */
+  --pp-gutter: clamp(16px, 4.45vw, 64px);
+
+  /* —— the frame's tokens, re-pointed: the shared chrome reads these and lands on paper —— */
+  --color-bg: var(--pp-ground);
+  --color-panel: var(--pp-ground);
+  --color-panel-2: var(--pp-ground-2);
+  --color-fg: var(--pp-ink);
+  --color-fg-muted: var(--pp-muted);
+  --color-fg-faint: var(--pp-muted);
+  --color-accent: var(--pp-ink);
+  --color-accent-soft: var(--pp-ink-2);
+  --color-cyan: var(--pp-ink);
+  --color-green: var(--pp-ink);
+  --color-amber: var(--pp-muted);
+  --color-line: var(--pp-rule);
+  --color-line-lift: var(--pp-ink);
+  --line-soft: var(--pp-rule-light);
+  --color-ring: var(--pp-ink);
+  --rgb-bg: 243 239 230;
+  --rgb-accent: 22 20 18;
+  --rgb-accent-soft: 58 53 45;
+  --rgb-cyan: 22 20 18;
+  --font-sans: var(--pp-sans);
+  /* The mono of the frame's small labels has no place on this page; they are set in the
+     grotesque here, like every other label on it. */
+  --font-mono: var(--pp-sans);
+  --elev-rest: none;
+  --elev-lift: none;
+  --elev-float: var(--pp-shadow);
+}
+
+/* The cinematic vignette darkens the edges of every page; on paper it reads as a stain. */
+:root[data-surface='paper'] .vignette {
+  display: none;
+}
+
+/* The frame's strip between a page and its footer (the attribution block, the source byline):
+   on a paper page it stands on paper, in the page's grotesque. */
+.paper-chrome {
+  background: var(--pp-ground);
+  color: var(--pp-ink);
+  font-family: var(--pp-sans);
+}
+
+/* A GUEST on a paper page: a figure that keeps the mono skin and its own palette. It is a band
+   of the frame's own ground, and everything inside it reads the frame's tokens, which this
+   file leaves untouched at the root. */
+.pp-guest {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+}
+
+/* ———————————————————————————————————————————————————————————————————————————————————————————
+   The page's own base. `.paper` sits on <main>; everything a paper page draws is inside it.
+   ——————————————————————————————————————————————————————————————————————————————————————————— */
+/* a <main> that holds a paper container and a guest beside it */
+.paper-main {
+  flex: 1;
+  width: 100%;
+}
+.paper {
+  flex: 1;
+  width: 100%;
+  background: var(--pp-ground);
+  color: var(--pp-ink);
+  font-family: var(--pp-sans);
+  font-size: 14px;
+  line-height: 1.45;
+}
+.paper *,
+.paper *::before,
+.paper *::after {
+  box-sizing: border-box;
+}
+/* The handoff was drawn at 1440 px; a wider window keeps that measure and gains margin. */
+.paper-sheet {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+.paper a {
+  color: var(--pp-ink);
+  text-decoration: none;
+}
+.paper a:hover {
+  color: var(--pp-accent-ink);
+}
+.paper :where(h1, h2, h3, p, figure, ul, ol) {
+  margin: 0;
+}
+.paper :where(ul, ol) {
+  padding: 0;
+  list-style: none;
+}
+.paper :where(button) {
+  font: inherit;
+  color: inherit;
+}
+.paper [hidden] {
+  display: none !important;
+}
+/* An anchor a link jumps to keeps a little air above it — and, below 860 px, clears the top
+   bar, which stays at the top of the screen there (TopBar.astro). */
+.paper :where([id]) {
+  scroll-margin-top: 16px;
+}
+@media (max-width: 859.98px) {
+  .paper :where([id]) {
+    scroll-margin-top: 72px;
+  }
+}
+
+/* —— the recurring pieces of type —— */
+.pp-serif {
+  font-family: var(--pp-serif);
+}
+/* a small label: capitals, tracked, semibold */
+.pp-label {
+  font-family: var(--pp-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.pp-muted {
+  color: var(--pp-muted);
+}
+.pp-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* —— the voices, as classes: a mark's hue and a label's hue —— */
+.pp-voice-field {
+  --pp-voice: var(--pp-c-field);
+  --pp-voice-ink: var(--pp-c-field);
+}
+.pp-voice-atelier {
+  --pp-voice: var(--pp-c-atelier);
+  --pp-voice-ink: var(--pp-c-atelier);
+}
+.pp-voice-studio {
+  --pp-voice: var(--pp-c-studio);
+  --pp-voice-ink: var(--pp-studio-ink);
+}
+.pp-voice-middle {
+  --pp-voice: var(--pp-ink);
+  --pp-voice-ink: var(--pp-ink);
+}
+
+/* —— the foot of a paper page (PaperFooter.astro) —— */
+.paper-foot {
+  background: var(--pp-ground);
+  color: var(--pp-muted);
+  font-family: var(--pp-sans);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.paper-foot-row {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 0 var(--pp-gutter) 40px;
+}
+.paper-foot-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 24px;
+  padding-top: 12px;
+  border-top: 1px solid var(--pp-rule);
+}
+.paper-foot nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 6px;
+}
+.paper-foot a {
+  color: var(--pp-muted);
+  text-decoration: none;
+  /* a comfortable target on a phone without moving the line on a desk */
+  padding-block: 4px;
+  margin-block: -4px;
+}
+.paper-foot a:hover {
+  color: var(--pp-accent-ink);
+}
+.paper-foot nav a + a::before {
+  content: '·';
+  margin-right: 6px;
+  color: var(--pp-muted);
+}
+
+/* ———————————————————————————————————————————————————————————————————————————————————————————
+   The dark ground (2026-10-12). Same tokens, same regions; see "TWO GROUNDS" at the top.
+   Contrast on the ground (#13120f) / on ground-2 (#1b1a16): ink 15.1 / 14.0, ink-2 11.0 / 10.3,
+   muted 6.1 / 5.7, accent 5.3 / 4.9, field 6.3 / 5.8, atelier 5.5 / 5.1, studio 5.5 / 5.1.
+   An ink bar turns light here, so the type on it turns dark: on-ink-muted 7.1, on-ink-warm 4.8.
+   ——————————————————————————————————————————————————————————————————————————————————————————— */
+:root[data-surface='paper'][data-theme='dark'] :is(.site-bar, .paper, .paper-chrome, .paper-foot) {
+  --pp-ground: #13120f;
+  --pp-ground-2: #1b1a16;
+  --pp-ground-lift: #1b1a16;
+  --pp-ink: #ece6d9;
+  --pp-ink-2: #cdc6b7;
+  --pp-muted: #9a9385;
+  --pp-faint: #7a7468;
+  --pp-ghost: #45413a;
+  --pp-rule: #2e2b25;
+  --pp-rule-light: #26241f;
+  --pp-rule-firm: #45413a;
+  --pp-accent: #e85a35;
+  --pp-accent-ink: #e85a35;
+  --pp-shade: #3b2219;
+  --pp-on-ink: #13120f;
+  --pp-on-ink-muted: #4f4a41;
+  --pp-on-ink-warm: #8a5a12;
+  --pp-shadow: 0 18px 40px -18px rgb(0 0 0 / 0.7);
+
+  /* PALETTE: paper-voices (the dark steps) */
+  --pp-c-field: #3aa0c8;
+  --pp-c-atelier: #9277f5;
+  --pp-c-studio: #d36f48;
+  --pp-studio-ink: #d36f48;
+
+  --rgb-bg: 19 18 15;
+  --rgb-accent: 236 230 217;
+  --rgb-accent-soft: 205 198 183;
+  --rgb-cyan: 236 230 217;
+}

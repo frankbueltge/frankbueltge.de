@@ -1,0 +1,159 @@
+{
+  "date": "2026-09-02",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-02T10:00:59Z",
+    "counts": {
+      "botwall": 26,
+      "gone_404": 2,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 271,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 273,
+    "excluded_unverifiable": 27,
+    "gone": 2,
+    "gone_ci95": [
+      0.002,
+      0.0263
+    ],
+    "gone_rate": 0.0073,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0139
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-08-31",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "wgxa.tv",
+        "first_seen": "20260831150000",
+        "http_code": 404,
+        "title": "Two areas in the tropics being monitored by the National Hurricane Center",
+        "url": "https://wgxa.tv/news/nation-world/two-areas-in-the-tropics-being-monitored-by-the-national-hurricane-center-high-chance-of-development-dolly-edouard-hurricane-tropical-storm-texas-louisiana-gulf-bahamas-south-florida"
+      },
+      {
+        "class": "gone_404",
+        "domain": "wwaytv3.com",
+        "first_seen": "20260831190000",
+        "http_code": 404,
+        "title": "Man charged with first-degree murder in New Hanover County",
+        "url": "https://www.wwaytv3.com/man-charged-with-first-degree-murder-in-new-hanover-county/"
+      }
+    ],
+    "sample_drawn_at": "2026-09-01T10:29:56Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 6085,
+      "replaced": 6201,
+      "trivial": 1305,
+      "update": 486
+    },
+    "day": "2026-09-01",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Nitin",
+          "Nabin"
+        ],
+        "after": "Nitin Nabin: 'Swimming pool at Talkatora Stadium': AAP mocks BJP over waterlogging at Nitin Nabin event | India News",
+        "before": "Aap Mocks Bjp: 'Swimming pool at Talkatora Stadium': AAP mocks BJP over waterlogging at Nitin Nabin event | India News",
+        "detected": "2026-09-01T06:48:42Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "AAP",
+          "mocks",
+          "BJP"
+        ],
+        "similarity": 1.0,
+        "url": "https://timesofindia.indiatimes.com/india/swimming-pool-at-talkatora-stadium-aap-mocks-bjp-over-waterlogging-at-nitin-nabin-event/articleshow/133496361.cms",
+        "weight": 9,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "More"
+        ],
+        "after": "Madhya Pradesh August 31, 2026, Weather Update: Heavy Rain Alert In 11 Districts; Showers In Indore, Bhopal & More",
+        "before": "Madhya Pradesh August 31, 2026, Weather Update: Madhya Pradesh August 31, 2026, Weather Update: Heavy Rain Alert In 11 Districts; Showers In Indore, Bhopal",
+        "detected": "2026-09-01T06:02:45Z",
+        "domain": "freepressjournal.in",
+        "removed": [
+          "Madhya",
+          "Pradesh",
+          "August",
+          "31",
+          "2026",
+          "Weather",
+          "Update"
+        ],
+        "similarity": 0.941,
+        "url": "https://www.freepressjournal.in/bhopal/madhya-pradesh-august-31-2026-weather-update-madhya-pradesh-august-31-2026-weather-update-heavy-rain-alert-in-11-districts-showers-in-indore-bhopal",
+        "weight": 14,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Claim",
+          "Appreciating"
+        ],
+        "after": "Tesla Cybertruck Owners Claim Their Vehicles Are Appreciating in Value – One Owner Says, \"I Paid $85,000 for My Cybertruck, and After 2 Years and 35,000 Miles, Carvana Is Offering Me $70,000\"",
+        "before": "Early Tesla Cybertruck Owners Are Seeing Their Vehicles Appreciate in Value – One Owner Says, \"I Paid $85,000 For My Cybertruck, and After 2 Years and 35,000 Miles, Carvana Is Offering Me $70,000\"",
+        "detected": "2026-09-01T15:48:21Z",
+        "domain": "torquenews.com",
+        "removed": [
+          "Early",
+          "Seeing",
+          "Appreciate"
+        ],
+        "similarity": 0.848,
+        "url": "https://www.torquenews.com/11826/early-tesla-cybertruck-owners-are-seeing-their-vehicles-appreciate-value-one-owner-says-i",
+        "weight": 10,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 17587,
+      "PAGE_TEXTCHANGE": 134342,
+      "PAGE_TITLECHANGE": 52061,
+      "UNCHANGED_CONTENT": 742492
+    },
+    "title_changes_en": 14077,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1788343008108",
+        "job_id": "world_gdg_counts_20260901",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 238026752,
+        "created": "1788343013163",
+        "job_id": "world_gdg_titles_20260901",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-02T10:00:59Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-01.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

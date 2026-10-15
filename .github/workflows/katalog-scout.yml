@@ -66,7 +66,9 @@ jobs:
           # Katalogbau ins Leere, ohne dass irgendwo etwas rot wurde.
           set -euo pipefail
           mkdir -p ../praxen
-          for repo in ulysses field-research studio meridian-runtime; do
+          # error-as-method since 2026-10-04: the nightly line, which helped build this
+          # catalogue from inside `ulysses` and has cited from its own repository since the fork.
+          for repo in ulysses field-research studio meridian-runtime error-as-method; do
             # blob:none statt depth: die Commit-History wird gebraucht (Datum je Datei),
             # die Blobs erst beim Lesen — spart Bandbreite ohne die Zeitachse zu kappen.
             git clone --filter=blob:none --quiet \

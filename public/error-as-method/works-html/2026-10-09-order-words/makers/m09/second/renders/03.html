@@ -1,0 +1,50 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Vacant Lots</title>
+<style>
+html,body{margin:0;width:1100px;height:800px;overflow:hidden;background:#efebe2}
+#wall{position:absolute;left:34px;top:30px;width:1032px;height:694px;text-align:justify;
+ font-family:"DejaVu Sans Mono",Menlo,Consolas,monospace;color:#2a2824;letter-spacing:-0.02em;overflow:hidden}
+#wall span{white-space:nowrap;unicode-bidi:isolate;direction:ltr}
+#wall bdi{font-family:"DejaVu Sans",sans-serif;font-size:.95em}
+.cc{color:#2a2824;font-weight:700}
+.g{color:#6d685e}
+.bm{color:#b2361c}
+.na{color:#8a8273;text-decoration:line-through;text-decoration-color:rgba(138,130,115,.55);text-decoration-thickness:1px}
+.sp{color:#1f4f7a;font-weight:700}
+.t{color:#d3cdbf;font-style:italic}
+#foot{position:absolute;left:34px;right:34px;bottom:22px;height:40px;border-top:1px solid #2a2824;
+ font:11.5px/1.4 Georgia,serif;color:#2a2824;display:flex;justify-content:space-between;align-items:flex-end}
+#foot b{font:italic 20px Georgia,serif;font-weight:normal}
+#foot i{font-style:normal}
+</style></head><body>
+<div id="wall"></div>
+<div id="foot"><div><b>Vacant Lots</b></div><div id="leg"></div></div>
+<script src="data.js"></script>
+<script>
+const R=window.ROOT.items, wall=document.getElementById('wall');
+const BM='Binky Moon, LLC';
+const n={cc:0,g:0,bm:0,na:0,sp:0};
+const frag=document.createDocumentFragment();
+R.forEach((r,i)=>{
+  const s=document.createElement('span');
+  let c;
+  if(r.manager==='Not assigned') c='na';
+  else if(r.manager===BM) c='bm';
+  else if(r.type==='country-code') c='cc';
+  else if(r.type==='generic') c='g';
+  else c='sp';
+  n[c]++; s.className=c; s.textContent=r.tld;
+  const t=r.tld.replace(/[\u200e\u200f]/g,'');
+  if(/[\u0590-\u08ff]/.test(t)){s.textContent='.';const b=document.createElement('bdi');b.dir='rtl';b.textContent=t.slice(1);s.appendChild(b);}
+  frag.appendChild(s); frag.appendChild(document.createTextNode(' '));
+});
+wall.appendChild(frag);
+// fit: largest font size whose text fits the box
+let lo=4,hi=30;
+for(let k=0;k<20;k++){const m=(lo+hi)/2;wall.style.fontSize=m+'px';wall.style.lineHeight=(m*1.22)+'px';
+  if(wall.scrollHeight<=wall.clientHeight)lo=m;else hi=m;}
+wall.style.fontSize=lo+'px';wall.style.lineHeight=(lo*1.22)+'px';
+const sw=(c,t)=>`<span class="${c}" style="font-family:monospace${c==='na'?';color:#5f594d;text-decoration-color:#5f594d':''}">${t}</span>`;
+document.getElementById('leg').innerHTML=
+ `${R.length} names, A to Z: &ensp;${sw('cc','country')} ${n.cc} &ensp; ${sw('g','generic')} ${n.g} &ensp; ${sw('sp','sponsored')} ${n.sp} &ensp; ${sw('bm','Binky Moon')} ${n.bm} &ensp; ${sw('na','unassigned')} ${n.na}`;
+</script></body></html>

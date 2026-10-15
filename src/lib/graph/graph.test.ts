@@ -181,6 +181,10 @@ describe('the register and the audit still describe the same shelf', () => {
       committed.edges.filter((e) => e.kind === 'neighbor-of').map((e) => e.from),
     )
     for (const id of HOLDINGS_RANKED) {
+      // An unarchived work is exempt (Frank, 2026-09-04, wording private): the audit asks whether
+      // the world already holds a FINDING, and a live experiment publishes no finding — it shows
+      // the world as it is at the moment somebody looks. Its one duty is tested in werke.test.ts.
+      if (WERKE.find((w) => w.id === id)?.unarchived) continue
       const node = works.find((w) => w.werkId === id) as WorkNode
       expect(node.verdict, `${id} is ranked on /experiments but the USP audit has no verdict for it`).toBeDefined()
       expect(node.daylight, `${id} has no named daylight — see the audit's (d) paragraph`).toBeTruthy()

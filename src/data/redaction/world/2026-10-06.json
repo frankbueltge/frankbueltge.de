@@ -1,0 +1,162 @@
+{
+  "date": "2026-10-06",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-06T12:38:31Z",
+    "counts": {
+      "botwall": 33,
+      "gone_404": 3,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 261,
+      "other": 0,
+      "server_error": 1,
+      "unreachable": 2
+    },
+    "decided": 264,
+    "excluded_unverifiable": 36,
+    "gone": 3,
+    "gone_ci95": [
+      0.0039,
+      0.0329
+    ],
+    "gone_rate": 0.0114,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0143
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-04",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "abc7news.com",
+        "first_seen": "20261004180000",
+        "http_code": 404,
+        "title": "Week 4 NFL highlights: Best plays, moments, touchdowns, more",
+        "url": "https://abc7news.com/post/week-4-nfl-highlights-best-plays-moments-touchdowns-more/19907220/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "1047thecave.com",
+        "first_seen": "20261004210000",
+        "http_code": 404,
+        "title": "Chiefs-Raiders Live game thread",
+        "url": "https://www.1047thecave.com/chiefs-raiders-live-game-thread/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "investmentwatchblog.com",
+        "first_seen": "20261004040000",
+        "http_code": 404,
+        "title": "Walmart is beating Amazon on price and delivery - Investment Watch Blog",
+        "url": "https://www.investmentwatchblog.com/walmart-is-beating-amazon-on-price-and-delivery/"
+      }
+    ],
+    "sample_drawn_at": "2026-10-05T12:56:21Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 4275,
+      "replaced": 4043,
+      "trivial": 769,
+      "update": 337
+    },
+    "day": "2026-10-05",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Widnes"
+        ],
+        "after": "Three Widnes roads to close for water mains works | Runcorn and Widnes World",
+        "before": "Three Runcorn roads to close for water mains works | Runcorn and Widnes World",
+        "detected": "2026-10-05T08:03:05Z",
+        "domain": "runcornandwidnesworld.co.uk",
+        "removed": [
+          "Runcorn"
+        ],
+        "similarity": 1.0,
+        "url": "https://www.runcornandwidnesworld.co.uk/news/26570982.three-runcorn-roads-close-water-mains-works/",
+        "weight": 4,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "lessons",
+          "life"
+        ],
+        "after": "Life lessons: Quote of the day by Kate Hudson: 'If you're not mindful about sugar...' - inspiring life advice on moderation and what too much sugar can do to your health",
+        "before": "Kate Hudson quote on health: Quote of the day by Kate Hudson: 'If you're not mindful about sugar...' - inspiring life advice on moderation and what too much sugar can do to your health",
+        "detected": "2026-10-05T20:47:51Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Quote",
+          "Kate",
+          "Hudson",
+          "on",
+          "health"
+        ],
+        "similarity": 0.966,
+        "url": "https://economictimes.indiatimes.com/news/international/us/quote-of-the-day-by-kate-hudson-if-youre-not-mindful-about-sugar-inspiring-life-advice-on-moderation-and-what-too-much-sugar-can-do-to-your-health/articleshow/134677182.cms",
+        "weight": 9,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "KGaA"
+        ],
+        "after": "EQS-Adhoc: Borussia Dortmund GmbH & Co. KGaA: Extension of the Managing Directors' employment contracts of Carsten Cramer, Lars Ricken and Thomas Treß",
+        "before": "EQS-Adhoc: Borussia Dortmund GmbH & Co. Kommanditgesellschaft auf Aktien: Extension of the Managing Directors' employment contracts of Carsten Cramer, Lars Ricken and Thomas Treß",
+        "detected": "2026-10-05T20:33:20Z",
+        "domain": "finanznachrichten.de",
+        "removed": [
+          "Kommanditgesellschaft",
+          "auf",
+          "Aktien"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.finanznachrichten.de/nachrichten-2026-09/69697053-eqs-adhoc-borussia-dortmund-gmbh-co-kommanditgesellschaft-auf-aktien-extension-of-the-managing-directors-employment-contracts-of-carsten-cramer-023.htm",
+        "weight": 7,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 13832,
+      "PAGE_TEXTCHANGE": 104961,
+      "PAGE_TITLECHANGE": 39808,
+      "UNCHANGED_CONTENT": 607716
+    },
+    "title_changes_en": 9424,
+    "trace": [
+      {
+        "bytes_billed": 20971520,
+        "created": "1791290022433",
+        "job_id": "world_gdg_counts_20261005",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 191889408,
+        "created": "1791290027194",
+        "job_id": "world_gdg_titles_20261005",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-06T12:38:31Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-05.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Second Instrument &#183; Error as Method</title>
+<style>
+:root{--bg:#f7f5f0;--ink:#22201c;--dim:#6b655a;--rule:#d8d2c6;--deep:#2f5d50;--warn:#b04a33;--pale:#ece7dc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:17px/1.55 Iowan Old Style,Palatino Linotype,Palatino,Georgia,serif}
+main{max-width:760px;margin:0 auto;padding:40px 20px 80px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px;font-weight:600}
+h2{font-size:18px;margin:38px 0 10px;font-weight:600}
+p.lede{color:var(--dim);margin:0 0 26px}
+p{margin:0 0 14px}
+.card{border:1px solid var(--rule);background:#fff;padding:22px;margin:0 0 18px}
+.meta{font:12px SFMono-Regular,Menlo,DejaVu Sans Mono,Consolas,monospace;color:var(--dim);
+ margin:0 0 12px;letter-spacing:.02em}
+.sent{font-size:18px;line-height:1.6;margin:0 0 18px}
+mark{background:#e7dfc9;padding:0 2px;font-weight:600}
+mark.m{background:#d9e5e0;padding:0 2px;font-weight:600}
+.ask{font-size:15px;color:var(--dim);margin:0 0 12px}
+button{font:15px Iowan Old Style,Palatino Linotype,Palatino,Georgia,serif;background:var(--pale);
+ border:1px solid var(--rule);color:var(--ink);padding:9px 18px;cursor:pointer;margin-right:8px}
+button:hover{background:#e2dccd}
+button:disabled{opacity:.45;cursor:default}
+button.go{background:var(--deep);color:#fff;border-color:var(--deep)}
+.verdict{border-top:1px solid var(--rule);margin-top:18px;padding-top:16px;font-size:15px}
+.verdict.hidden{display:none}
+.vrow{display:flex;gap:10px;align-items:baseline;margin:0 0 7px}
+.tag{font:11.5px SFMono-Regular,Menlo,DejaVu Sans Mono,Consolas,monospace;color:var(--dim);
+ min-width:180px;flex:0 0 180px}
+.y{color:var(--deep);font-weight:600}
+.n{color:var(--dim)}
+.x{color:var(--warn);font-weight:600}
+.bar{height:22px;background:var(--pale);border:1px solid var(--rule);position:relative;margin:4px 0 2px}
+.bar i{display:block;height:100%;background:var(--deep)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;margin:6px 0 16px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule)}
+th{font-weight:600;color:var(--dim);font-size:13px}
+td.num,th.num{text-align:right;font:13px SFMono-Regular,Menlo,DejaVu Sans Mono,Consolas,monospace}
+.note{font-size:14px;color:var(--dim)}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);font-size:13.5px;color:var(--dim)}
+a{color:var(--deep)}
+@media (prefers-color-scheme:dark){
+ :root{--bg:#1b1a18;--ink:#e8e4da;--dim:#9c958a;--rule:#3a3733;--pale:#2a2825;--deep:#8fbfae}
+ .card{background:#211f1d}
+ mark{background:#4a412c;color:#f2ecdd}
+ mark.m{background:#2c403a;color:#e8f0ec}
+ button.go{color:#1b1a18}
+}
+</style>
+</head>
+<body>
+<main>
+<h1>The Second Instrument</h1>
+<p class="lede">Forty sentences from Acts of Parliament. Each one carries an obligation whose agent
+has been deleted &#8212; <em>must be given</em>, <em>shall be published</em> &#8212; and a term for a
+party standing near it. A scan that has run for four nights counts that term as evidence the bearer
+might be named nearby. The question it never asks is whether the term is actually the bearer. You
+answer it forty times, and then find out what one reader and three rules said.</p>
+
+<div id="deck"></div>
+
+<div id="done" style="display:none">
+<h2>Your reading</h2>
+<div id="summary"></div>
+</div>
+
+<footer>
+Session 91 &#183; 2026-09-17 &#183; <em>Error as Method</em>. Corpus: 63 UK Public General Acts
+2012&#8211;2014, harvested and committed by Session 90 from
+<a href="https://www.legislation.gov.uk/">legislation.gov.uk</a> under the Open Government Licence.
+The forty verdicts and the three rules are committed beside this page; nothing here is fetched.
+</footer>
+</main>
+<script id="d" type="application/json">{"cards":[{"n":1,"act":"2013/18","modal":"should","sentence":"inform the ISC that the information cannot be disclosed because the Secretary of State has decided that it should not be disclosed.","carrier":"Secretary of State","dir":"before","dist":4,"reader":false,"reason":"the Secretary of State decided; the bearer of 'should not be disclosed' is whoever holds the information","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":2,"act":"2014/26","modal":"must","sentence":"Where this section applies, the officer may provide a copy of the stop notice to any person the officer considers might be affected by that failure or the giving of the stop notice (for example, any person who is a client of the person who failed to comply with section 236B(1) or who otherwise makes use of arrangements that must not be promoted as a result of the stop notice).","carrier":"client","dir":"before","dist":18,"reader":false,"reason":"'officer' is the giver of the stop notice; the obligation attaches to the arrangements' user","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":3,"act":"2012/10","modal":"must","sentence":"MVO regulations must provide that, before a court makes a clamping order in respect of an individual, it must be satisfied\u2014","carrier":"court","dir":"before","dist":10,"reader":true,"reason":"'before a court makes a clamping order, it must be satisfied' -- the court is the bearer","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":4,"act":"2013/32","modal":"should","sentence":"In making provision by virtue of sub-paragraph (1) the Secretary of State must have regard to the principle that sums should be apportioned in proportion to the amounts which are owed.","carrier":"Secretary of State","dir":"before","dist":8,"reader":true,"reason":"the Secretary of State apportions; bearer of 'should be apportioned'","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":5,"act":"2014/20","modal":"must","sentence":"In determining whether a particular cost is an allowable cost under a qualifying defence contract , or, where the contract is divided into components, a component of that contract, the Secretary of State or an authorised person, and the primary contractor, must be satisfied that the cost is\u2014","carrier":"Secretary of State","dir":"before","dist":8,"reader":true,"reason":"'the Secretary of State or an authorised person ... must be satisfied' -- bearer is the grammatical subject","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":6,"act":"2014/2","modal":"must","sentence":"in the case of a notice addressed to a relevant authority, must be served on the relevant authority,","carrier":"authority","dir":"before","dist":0,"reader":false,"reason":"the relevant authority is the recipient of service, not the server","rules":{"R1_adjacent_subject":true,"R2_no_competing_nominal":true,"R3_active_governor":false}},{"n":7,"act":"2014/6","modal":"must","sentence":"Information published under subsection (3) must be published in the form and manner that the Secretary of State thinks fit, except that the names of the children and young people to whom the information relates must not be included.","carrier":"Secretary of State","dir":"before","dist":17,"reader":false,"reason":"the Secretary of State prescribes the form; the publisher is somebody else","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":8,"act":"2013/24","modal":"must","sentence":"Before making the order, the Secretary of State must be satisfied that all persons who are to be subject to the duty will be eligible to join a redress scheme before the duty applies to them.","carrier":"Secretary of State","dir":"before","dist":0,"reader":true,"reason":"'the Secretary of State must be satisfied' -- bearer as subject","rules":{"R1_adjacent_subject":true,"R2_no_competing_nominal":true,"R3_active_governor":true}},{"n":9,"act":"2014/12","modal":"must","sentence":"A fee prescribed by virtue of subsection (1) under any other enactment specified in subsection (2) must be used to finance an efficient and effective system of courts and tribunals.","carrier":"courts","dir":"after","dist":11,"reader":false,"reason":"'courts and tribunals' are what the fee finances, not who must use it","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":10,"act":"2013/25","modal":"must","sentence":"A report under subsection (4) must be published; and a copy must be sent to the scheme manager and (if different) the responsible authority.","carrier":"authority","dir":"after","dist":12,"reader":false,"reason":"the responsible authority receives the copy; the sender is unnamed","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":11,"act":"2013/32","modal":"should","sentence":"In making provision by virtue of subsection (1) the Secretary of State must have regard to the principle that sums should be apportioned in proportion to the amounts which are owed.","carrier":"Secretary of State","dir":"before","dist":8,"reader":true,"reason":"as 4, the same provision one section earlier","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":12,"act":"2014/26","modal":"should","sentence":"a condition in section 237A(11), (12) or (13) in respect of which an authorised officer makes a determination (whether in accordance with section 237A(1) or (2) or for the purposes of this paragraph) that meeting the condition should be regarded as significant in view of the purposes of this Part, and","carrier":"officer","dir":"before","dist":22,"reader":true,"reason":"the authorised officer determines what 'should be regarded as significant'","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":13,"act":"2014/26","modal":"should","sentence":"If the authorised officer determines under subsection (1) that P's meeting of the condition in question should be regarded as significant, the officer must give P a conduct notice, unless subsection (10) applies.","carrier":"officer","dir":"after","dist":6,"reader":true,"reason":"the officer both determines and regards","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":true,"R3_active_governor":true}},{"n":14,"act":"2013/22","modal":"shall","sentence":"in subsection (6) (application to Scotland) for the words after \u201cScotland,\u201d substitute \u201c for the references to the family court there shall be substituted references to the sheriff. \u201d","carrier":"court","dir":"before","dist":1,"reader":false,"reason":"'family court' is the object of the substituted reference","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":true,"R3_active_governor":false}},{"n":15,"act":"2013/32","modal":"must","sentence":"The first proposal for the ONR's strategy must be submitted to the Secretary of State within 8 months beginning with the day on which this paragraph comes into force.","carrier":"Secretary of State","dir":"after","dist":5,"reader":false,"reason":"the ONR submits; the Secretary of State receives","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":true,"R3_active_governor":false}},{"n":16,"act":"2013/22","modal":"must","sentence":"In paragraph 2(5) (judge nominated must be appointed as Chamber President) for \u201cLord Chancellor\u201d substitute \u201c Senior President of Tribunals \u201d.","carrier":"Tribunals","dir":"after","dist":14,"reader":false,"reason":"a heading citation; the appointer is the Senior President, not the Tribunal","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":true,"R3_active_governor":false}},{"n":17,"act":"2013/29","modal":"must","sentence":"A return under this section must be delivered to an officer of Revenue and Customs, and is called an \u201cannual tax on enveloped dwellings return\u201d.","carrier":"officer","dir":"after","dist":5,"reader":false,"reason":"an officer of Revenue and Customs receives the return; the taxpayer delivers it","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":true,"R3_active_governor":false}},{"n":18,"act":"2012/9","modal":"must","sentence":"In a case where the relevant authority is satisfied that, by virtue of section 27(1), there is no person falling within subsection (5) who must be notified or whose consent is required, \u201cparent\u201d is to be read as including each individual who has care of the child, but this is subject to subsections (7) and (8).","carrier":"authority","dir":"before","dist":17,"reader":true,"reason":"the relevant authority is the notifier in 'who must be notified'","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":19,"act":"2014/2","modal":"must","sentence":"The accounts of a relevant authority for a financial year must be audited\u2014","carrier":"authority","dir":"before","dist":4,"reader":false,"reason":"the accounts belong to the authority; the auditing is somebody else's act","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":20,"act":"2012/19","modal":"must","sentence":"Where the CAA or the Competition and Markets Authority or a member of the Competition and Markets Authority is required by this Schedule to publish something or send a copy of something and this Schedule does not specify a time for doing so, it must be published or sent as soon as practicable.","carrier":"Authority","dir":"before","dist":26,"reader":true,"reason":"'the Competition and Markets Authority ... it must be published' -- the matched string is the bearer","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":21,"act":"2012/7","modal":"must","sentence":"for \u201cThe Secretary of State must exercise his functions under this Act\u201d substitute \u201cThe functions under this Act of the Secretary of State, the Board and each clinical commissioning group must be exercised\u201d, and","carrier":"Secretary of State","dir":"before","dist":7,"reader":true,"reason":"the substituted words name the Secretary of State, the Board and each CCG as the exercisers","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":22,"act":"2014/21","modal":"shall","sentence":"The regulations must provide that if the Secretary of State certifies that it appears to him, as respects any Crown premises and any relevant powers of entry, that it is requisite or expedient that, in the interests of national security, the powers should not be exercisable in relation to those premises, those powers shall not be exercisable in relation to those premises.","carrier":"Secretary of State","dir":"before","dist":43,"reader":false,"reason":"the Secretary of State certifies; the powers belong to whoever holds them","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":23,"act":"2014/26","modal":"should","sentence":"If a person meets a condition in subsection (11), (12) or (13) and the person falls within the case described in paragraph 2 of Schedule 33A (multiple entity promoter), the authorised officer must determine (whether under subsection (1) or (3)(a) or (b)) that the meeting of the condition should be regarded as significant.","carrier":"officer","dir":"before","dist":16,"reader":true,"reason":"the authorised officer determines","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":24,"act":"2013/29","modal":"must","sentence":"A return under this section must be delivered to an officer of Revenue and Customs, and is called a \u201creturn of the adjusted chargeable amount\u201d.","carrier":"officer","dir":"after","dist":5,"reader":false,"reason":"as 17","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":true,"R3_active_governor":false}},{"n":25,"act":"2014/26","modal":"should","sentence":"If the authorised officer determines under subsection (5)(a) that P's meeting of the condition or conditions in question should be regarded as significant, the officer must give P a conduct notice, unless subsection (8) applies.","carrier":"officer","dir":"after","dist":6,"reader":true,"reason":"as 13","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":true,"R3_active_governor":true}},{"n":26,"act":"2013/32","modal":"should","sentence":"If the Secretary of State makes a transfer of functions order under which any EMR functions of the national system operator are transferred to an alternative delivery body, the Secretary of State must consider the extent to which (if at all) a licence modification power should be exercised as a consequence of the national system operator ceasing to carry out the functions that are transferred.","carrier":"Secretary of State","dir":"before","dist":13,"reader":true,"reason":"the Secretary of State holds the licence modification power in this provision","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":27,"act":"2012/14","modal":"should","sentence":"If the tribunal decides that the person should be liable to an increased daily penalty\u2014","carrier":"tribunal","dir":"before","dist":4,"reader":false,"reason":"the tribunal decides; the person is the one who should be liable","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":28,"act":"2012/19","modal":"must","sentence":"The decision of the Competition and Markets Authority on the application under paragraph 9 must be taken before the end of the 10 week period.","carrier":"Authority","dir":"before","dist":6,"reader":true,"reason":"the CMA's own decision must be taken by the CMA","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":29,"act":"2014/26","modal":"should","sentence":"If the officer determines that the meeting of the condition (or those conditions) by that person should be regarded as significant, the officer must determine that P's meeting of that condition (or those conditions) should be regarded as significant.","carrier":"officer","dir":"before","dist":11,"reader":true,"reason":"the officer determines twice in one sentence","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":30,"act":"2013/33","modal":"must","sentence":"If the decision is a CMA-appealable decision, the appeal must be made to the Competition and Markets Authority (\u201cthe CMA\u201d) in accordance with section 79.","carrier":"Authority","dir":"after","dist":8,"reader":false,"reason":"the CMA receives the appeal; the appellant makes it","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":31,"act":"2013/18","modal":"must","sentence":"The court must be authorised\u2014","carrier":"court","dir":"before","dist":0,"reader":false,"reason":"'the court must be authorised' -- the court is what is authorised, by the rules","rules":{"R1_adjacent_subject":true,"R2_no_competing_nominal":true,"R3_active_governor":true}},{"n":32,"act":"2012/7","modal":"should","sentence":"If a person ceases to be a non-executive member and the Secretary of State decides that there are exceptional circumstances which mean that the person should be compensated, Monitor must pay compensation to the person of such amount as the Secretary of State may determine.","carrier":"Secretary of State","dir":"before","dist":11,"reader":false,"reason":"Monitor pays the compensation; the Secretary of State only decides","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":33,"act":"2014/26","modal":"should","sentence":"If the officer determines that the meeting of the condition (or those conditions) by that person should be regarded as significant, the officer must determine that P's meeting of that condition (or those conditions) should be regarded as significant.","carrier":"officer","dir":"before","dist":11,"reader":true,"reason":"the same block as 29, drawn twice by the sample","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":34,"act":"2012/5","modal":"must","sentence":"In relation to an offence under this section committed in England and Wales before 2 May 2022 the reference in subsection (3) (b) to the general limit in a magistrates\u2019 court must be taken to be a reference to six months.","carrier":"court","dir":"before","dist":0,"reader":false,"reason":"'magistrates' court' is inside the reference being construed","rules":{"R1_adjacent_subject":true,"R2_no_competing_nominal":true,"R3_active_governor":true}},{"n":35,"act":"2012/19","modal":"should","sentence":"This section does not apply to a document if rules of court make provision about how or where it should be sent.","carrier":"court","dir":"before","dist":7,"reader":false,"reason":"'rules of court' is not a party; the sender is unnamed","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}},{"n":36,"act":"2013/32","modal":"must","sentence":"Before making the modification, the Secretary of State must be satisfied that\u2014","carrier":"Secretary of State","dir":"before","dist":0,"reader":true,"reason":"'the Secretary of State must be satisfied'","rules":{"R1_adjacent_subject":true,"R2_no_competing_nominal":true,"R3_active_governor":true}},{"n":37,"act":"2013/22","modal":"must","sentence":"In subsection (4) (a judge nominated under subsection (2)(d) or (e) must be appointed senior judge of the court) for \u201cor (e)\u201d substitute \u201c to (q) \u201d.","carrier":"court","dir":"after","dist":7,"reader":false,"reason":"a heading citation; 'court' is where the judge is appointed, not the appointer","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":true,"R3_active_governor":false}},{"n":38,"act":"2013/18","modal":"should","sentence":"inform the ISC that the information cannot be disclosed because the Secretary of State has decided that it should not be disclosed.","carrier":"Secretary of State","dir":"before","dist":4,"reader":false,"reason":"the same block as 1","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":39,"act":"2014/6","modal":"must","sentence":"The Secretary of State may by regulations make provision about matters that must be covered in an allergy safety policy.","carrier":"Secretary of State","dir":"before","dist":8,"reader":false,"reason":"the Secretary of State makes the regulations; the policy is written by somebody else","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":true}},{"n":40,"act":"2014/21","modal":"should","sentence":"The regulations must provide that if the Secretary of State certifies that it appears to him, as respects any Crown premises and any relevant powers of entry, that it is requisite or expedient that, in the interests of national security, the powers should not be exercisable in relation to those premises, those powers shall not be exercisable in relation to those premises.","carrier":"Secretary of State","dir":"before","dist":32,"reader":false,"reason":"the same block as 22, the other modal in it","rules":{"R1_adjacent_subject":false,"R2_no_competing_nominal":false,"R3_active_governor":false}}],"reader":{"yes":17,"no":23,"precision":0.425},"rules":{"R1_adjacent_subject":{"fires":5,"agreements":22,"disagreements":18,"agreement":0.55,"precision_on_yes":0.4,"recall":0.1176,"tp":2,"fp":3,"fn":15,"tn":20},"R2_no_competing_nominal":{"fires":13,"agreements":18,"disagreements":22,"agreement":0.45,"precision_on_yes":0.3077,"recall":0.2353,"tp":4,"fp":9,"fn":13,"tn":14},"R3_active_governor":{"fires":19,"agreements":30,"disagreements":10,"agreement":0.75,"precision_on_yes":0.6842,"recall":0.7647,"tp":13,"fp":6,"fn":4,"tn":17}},"short":{"R1_adjacent_subject":"R1 adjacent subject","R2_no_competing_nominal":"R2 no competing nominal","R3_active_governor":"R3 active governor"},"reach":{"base":0.76,"narrow":34.24,"wide":50.91},"in_reach":{"base":5,"narrow":226,"wide":336},"s88":0.611,"spans":{"best_agreeing_declared_rule":"R3_active_governor","uncorrected_span_session_90":50.15,"corrected_reach_pct":{"base":0.0,"narrow":6.51,"wide":8.48},"corrected_span_points":8.48,"with_the_repair_R3b":{"base":0.0,"narrow":10.76,"wide":13.33},"corrected_span_points_R3b":13.33,"band":20,"caution":"the BASE list has 5 rows in reach and its fire rate is 0 of 5; the span between the two powered lists alone is 1.97 points (R3) and 2.57 points (R3b)"}}</script>
+<script>
+(function(){
+var D=JSON.parse(document.getElementById('d').textContent);
+var i=0,mine=[],deck=document.getElementById('deck');
+
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+
+function mark(sent,carrier,modal){
+ var h=esc(sent);
+ if(carrier){
+  var c=esc(carrier);
+  h=h.replace(c,'<mark>'+c+'</mark>');
+ }
+ h=h.replace(new RegExp('\\b'+modal+'\\b'),'<mark class="m">'+modal+'</mark>');
+ return h;
+}
+
+function render(){
+ if(i>=D.cards.length){deck.innerHTML='';finish();return;}
+ var c=D.cards[i];
+ deck.innerHTML='';
+ var el=document.createElement('div');el.className='card';
+ el.innerHTML='<p class="meta">'+(i+1)+' of '+D.cards.length+' &#183; '+esc(c.act)+
+  ' &#183; carrier &#8220;'+esc(c.carrier)+'&#8221; stands '+c.dist+' word'+(c.dist===1?'':'s')+' '+
+  c.dir+' the modal</p>'+
+  '<p class="sent">'+mark(c.sentence,c.carrier,c.modal)+'</p>'+
+  '<p class="ask">Is <strong>'+esc(c.carrier)+'</strong> the bearer of this obligation &#8212; '+
+  'the one who must act?</p>'+
+  '<p><button class="go" data-v="1">Bearer</button>'+
+  '<button data-v="0">Not the bearer</button></p>'+
+  '<div class="verdict hidden"></div>';
+ deck.appendChild(el);
+ el.querySelectorAll('button[data-v]').forEach(function(b){
+  b.addEventListener('click',function(){answer(el,c,b.getAttribute('data-v')==='1');});
+ });
+}
+
+function answer(el,c,v){
+ mine.push({n:c.n,mine:v,reader:c.reader});
+ el.querySelectorAll('button[data-v]').forEach(function(b){b.disabled=true;});
+ var d=el.querySelector('.verdict');d.className='verdict';
+ var rows='<div class="vrow"><span class="tag">you</span><span class="'+(v?'y':'n')+'">'+
+  (v?'bearer':'not the bearer')+'</span></div>'+
+  '<div class="vrow"><span class="tag">the reader, Session 90</span><span class="'+
+  (c.reader!==v?'x':(c.reader?'y':'n'))+'">'+(c.reader?'bearer':'not the bearer')+'</span></div>'+
+  '<div class="vrow"><span class="tag"></span><span class="note">'+esc(c.reason)+'</span></div>';
+ Object.keys(D.short).forEach(function(k){
+  var f=c.rules[k];
+  rows+='<div class="vrow"><span class="tag">'+esc(D.short[k])+'</span><span class="'+
+   (f!==c.reader?'x':(f?'y':'n'))+'">'+(f?'fires':'silent')+'</span></div>';
+ });
+ d.innerHTML=rows+'<p><button class="go" id="nx">Next</button></p>';
+ d.querySelector('#nx').addEventListener('click',function(){
+  el.querySelector('#nx').disabled=true;i++;render();window.scrollTo(0,0);});
+}
+
+function finish(){
+ var agree=0,yes=0;
+ mine.forEach(function(m){if(m.mine===m.reader)agree++;if(m.mine)yes++;});
+ var prec=yes/mine.length;
+ var s=document.getElementById('summary');
+ var t='<p>You called <strong>'+yes+'</strong> of '+mine.length+' nearby party terms the bearer &#8212; '+
+  'a precision of <strong>'+prec.toFixed(3)+'</strong> for the scan\'s ceiling. '+
+  'The reader of Session 90 put it at <strong>'+D.reader.precision.toFixed(3)+
+  '</strong> on these same forty rows; the reader of Session 88 put it at <strong>'+
+  D.s88.toFixed(3)+'</strong> on a different corpus. You agreed with Session 90 on <strong>'+
+  agree+' of '+mine.length+'</strong>.</p>';
+ t+='<div class="bar"><i style="width:'+(prec*100).toFixed(1)+'%"></i></div>'+
+  '<p class="note">your precision, against a bar whose full width is 1.0</p>';
+ t+='<h2>What that would do to a published number</h2>'+
+  '<table><tr><th>vocabulary</th><th class="num">rows in reach</th>'+
+  '<th class="num">reach published</th><th class="num">&#215; your precision</th></tr>';
+ ['base','narrow','wide'].forEach(function(l){
+  t+='<tr><td>'+l+'</td><td class="num">'+D.in_reach[l]+'</td><td class="num">'+
+   D.reach[l].toFixed(2)+'%</td><td class="num">'+(D.reach[l]*prec).toFixed(2)+'%</td></tr>';
+ });
+ t+='</table>';
+ var sp=(D.reach.wide-D.reach.base)*prec;
+ t+='<p>Session 90 published those three figures as they stand: a span of <strong>'+
+  D.spans.uncorrected_span_session_90+'</strong> points across three vocabularies one author '+
+  'declared in advance, against a falsification band of 20. Multiplying all three by a single '+
+  'precision leaves the span at <strong>'+sp.toFixed(2)+'</strong> points &#8212; a flat scaling '+
+  'shrinks the interval but cannot close it, because one number applied to all three lists cannot '+
+  'know that the lists differ in how often their terms act. That is what the three rules were for, '+
+  'and what they could not agree about.</p>';
+ t+='<h2>The three rules, on the same forty rows</h2><table>'+
+  '<tr><th>rule</th><th class="num">fires</th><th class="num">agrees with the reader</th>'+
+  '<th class="num">precision on its own YES</th></tr>';
+ Object.keys(D.short).forEach(function(k){
+  var r=D.rules[k];
+  t+='<tr><td>'+D.short[k]+'</td><td class="num">'+r.fires+'</td><td class="num">'+
+   r.agreements+'/40</td><td class="num">'+(r.precision_on_yes===null?'&#8212;':
+   r.precision_on_yes.toFixed(3))+'</td></tr>';
+ });
+ t+='</table><p class="note">Always answering &#8220;not the bearer&#8221; agrees with the reader on '+
+  D.reader.no+' of 40. Two of the three declared rules do not beat that.</p>';
+ s.innerHTML=t;
+ document.getElementById('done').style.display='block';
+}
+
+render();
+})();
+</script>
+</body>
+</html>

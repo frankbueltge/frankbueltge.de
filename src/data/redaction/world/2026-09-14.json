@@ -1,0 +1,136 @@
+{
+  "date": "2026-09-14",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-14T11:15:54Z",
+    "counts": {
+      "botwall": 31,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 268,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 268,
+    "excluded_unverifiable": 32,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0141
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0141
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-12",
+    "receipts": [],
+    "sample_drawn_at": "2026-09-13T10:33:32Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3464,
+      "replaced": 4143,
+      "trivial": 408,
+      "update": 231
+    },
+    "day": "2026-09-13",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "UPDATE",
+          "Spidey"
+        ],
+        "after": "UPDATE: Spider-Man: Brand New Day Labor Day Weekend Box Office: Another Record Looms For Tom Holland's Spidey",
+        "before": "Spider-Man: Brand New Day Labor Day Weekend Box Office: Another Record Looms For Tom Holland's Peter Parker",
+        "detected": "2026-09-13T10:16:47Z",
+        "domain": "comicbookmovie.com",
+        "removed": [
+          "Peter",
+          "Parker"
+        ],
+        "similarity": 0.8,
+        "url": "https://comicbookmovie.com/spider_man/spider_man-brand-new-day/spider-man-brand-new-day-labor-day-weekend-box-office-another-record-looms-for-tom-hollands-peter-parker-a229742",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Vermont"
+        ],
+        "after": "'We're very proud to get it back.' Purple Heart found in Vermont returned to North Adams family",
+        "before": "'We're very proud to get it back.' Purple Heart found in North Adams returned to family in Bennington, Vt.",
+        "detected": "2026-09-13T19:16:48Z",
+        "domain": "berkshireeagle.com",
+        "removed": [
+          "in",
+          "Bennington",
+          "Vt"
+        ],
+        "similarity": 0.842,
+        "url": "https://www.berkshireeagle.com/news/local/north-adams-bennington-purple-heart/article_cecaef54-c919-4f2f-9691-5ba200ac048f.html",
+        "weight": 6,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "AG"
+        ],
+        "after": "AG's advice sought in defamatory poster case against J. Sri Ranga – Sri Lanka Mirror – Right to Know. Power to Change",
+        "before": "Attorney General's advice sought in case against J. Sri Ranga over 'Defamatory Poster' – Sri Lanka Mirror – Right to Know. Power to Change",
+        "detected": "2026-09-13T10:01:22Z",
+        "domain": "srilankamirror.com",
+        "removed": [
+          "Attorney",
+          "General",
+          "over"
+        ],
+        "similarity": 0.818,
+        "url": "https://srilankamirror.com/news/attorney-generals-advice-sought-in-case-against-j-sri-ranga-over-defamatory-poster/",
+        "weight": 6,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 12658,
+      "PAGE_TEXTCHANGE": 83011,
+      "PAGE_TITLECHANGE": 34065,
+      "UNCHANGED_CONTENT": 537831
+    },
+    "title_changes_en": 8246,
+    "trace": [
+      {
+        "bytes_billed": 17825792,
+        "created": "1789384298866",
+        "job_id": "world_gdg_counts_20260913",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 166723584,
+        "created": "1789384305348",
+        "job_id": "world_gdg_titles_20260913",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-14T11:15:54Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-13.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

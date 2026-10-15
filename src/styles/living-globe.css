@@ -1,0 +1,652 @@
+/* src/styles/living-globe.css — the room of the living globe (/globe).
+ *
+ * G0 is the floor: the plate, the legend and the tables under it, drawn from committed files and
+ * readable without a single line of JavaScript. Everything here is a reference to the frame's own
+ * tokens — no hex, no palette record, because nothing on this plate carries an identity colour
+ * yet. Depth carries the base: the sea is the panel, the land is the hairline, the coast is the
+ * muted ink. Marks are told apart by SHAPE and by weight, which is what a mono skin can afford.
+ *
+ * G1 adds the room: the island over the plate, the toggles, the day axis and the card. The layers'
+ * own colours arrive with it — at most one layer is in front at a time and the rest drop to mono
+ * ink, the readability rule and the colour rule in one. Their values live at the bottom of this
+ * file behind PALETTE: markers, validated in src/lib/dataviz/palette.ts.
+ */
+
+.globe-plate {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+}
+
+.globe-floor-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* the ground */
+.globe-sea {
+  fill: var(--color-panel);
+}
+.globe-grat {
+  fill: none;
+  stroke: var(--color-line);
+  stroke-width: 0.5;
+}
+.globe-land {
+  fill: var(--color-line);
+  stroke: var(--color-fg-faint);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}
+
+/* the marks — one weight for a measured point, a heavier one for a seat or a station, so a
+   reader can tell an instrument from an address without a legend entry per layer */
+.globe-dot {
+  fill: var(--color-accent);
+  opacity: 0.9;
+}
+.globe-dot[data-kind='seat'],
+.globe-dot[data-kind='station'] {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 1.2;
+}
+.globe-dot[data-kind='station'] {
+  fill: var(--color-accent);
+}
+/* a centroid is the weakest claim on this plate — somewhere inside a country's polygon and nothing
+   more — so it is drawn in muted ink rather than in the accent a measured point wears (G3) */
+.globe-dot[data-kind='centroid'] {
+  fill: var(--color-fg-muted);
+  opacity: 0.7;
+}
+.globe-arc {
+  fill: none;
+  stroke: var(--color-fg-muted);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+.globe-arc-off {
+  fill: none;
+  stroke: var(--color-fg-muted);
+  stroke-width: 1.1;
+}
+.globe-arc-on {
+  fill: var(--color-fg-muted);
+}
+.globe-mark:hover .globe-arc {
+  opacity: 1;
+  stroke-width: 2.1;
+}
+
+/* the legend: one row per registered layer, each carrying its own provenance line */
+.globe-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.globe-legend li {
+  padding: 10px 12px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-panel);
+}
+.globe-legend-name {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.globe-legend-prov {
+  margin-top: 6px;
+  overflow-wrap: anywhere;
+}
+
+.globe-tables {
+  display: grid;
+  gap: 10px;
+}
+.globe-note {
+  overflow-wrap: anywhere;
+}
+
+/* The tables under the plate and on the method sheet. The shared TableFallback decides structure
+   and behaviour only (ADR 0010) — no padding, no rules — which is right for a three-column table
+   in a wide column and cramped for a five-column one: without a minimum width the cells collapse
+   into each other. So the globe's own surfaces give their tables a floor and let the primitive's
+   `overflow-x: auto` do the rest; on a narrow screen the table scrolls instead of colliding. */
+.globe-tables .dv-table,
+.globe-method .dv-table {
+  min-width: 44rem;
+  font-size: 12px;
+}
+.globe-tables .dv-table :is(th, td),
+.globe-method .dv-table :is(th, td) {
+  padding: 4px 14px 4px 0;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-line);
+}
+.globe-tables .dv-table th,
+.globe-method .dv-table th {
+  font-weight: 600;
+  color: var(--color-fg-muted);
+  white-space: nowrap;
+}
+.globe-tables .dv-table td:last-child,
+.globe-method .dv-table td:last-child {
+  padding-right: 0;
+}
+
+/* ═══ G1: the room ════════════════════════════════════════════════════════════════════════════
+ *
+ * The island (src/components/pages/LivingGlobe.tsx) mounts ON the plate: the plate is the server
+ * render and stays in the accessibility tree, the canvas is a layer over it that appears only if
+ * the browser can paint it. Everything below is structure and behaviour; the four identity values
+ * and the five ramp steps sit in their own block at the end, each under its PALETTE marker.
+ */
+
+/* the positioned box the readout clamps within — the FIGURE's own, never a scroll container */
+.globe-stage {
+  position: relative;
+  min-width: 0;
+}
+
+.lg-root {
+  display: block;
+  min-width: 0;
+}
+
+.lg-stage {
+  position: relative;
+  height: clamp(340px, 44vw, 600px);
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+}
+.lg-root[data-compact='yes'] .lg-stage {
+  height: clamp(320px, 32vw, 500px);
+  border: 0;
+  border-radius: 0;
+}
+
+.lg-floor {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.6s var(--ease-frame);
+}
+.lg-floor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.lg-root[data-phase='live'] .lg-floor,
+.lg-root[data-phase='still'] .lg-floor {
+  opacity: 0;
+}
+
+.lg-canvas {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+}
+.lg-root[data-phase='live'] .lg-canvas,
+.lg-root[data-phase='still'] .lg-canvas {
+  visibility: visible;
+}
+.lg-canvas canvas {
+  display: block;
+}
+
+/* The narrow screen's own offer: the plate stands, and the globe is fetched when it is asked
+   for. Colour-free — the button is the frame's own outline variant, the hint the muted text of
+   the room around it. */
+.lg-ask {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 2;
+  transform: translateX(-50%);
+  display: flex;
+  max-width: min(30ch, calc(100% - 2rem));
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  /* the plate keeps drawing behind this, so the offer needs a ground of its own to be read on */
+  background: var(--color-panel);
+  text-align: center;
+}
+
+.lg-ask-hint {
+  color: var(--color-fg-faint);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  text-wrap: pretty;
+}
+
+.lg-status {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+  pointer-events: none;
+}
+.lg-status:empty {
+  display: none;
+}
+
+/* ── the controls ─────────────────────────────────────────────────────────────────────────── */
+
+.lg-controls {
+  margin-top: 14px;
+}
+
+.lg-day {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+}
+.lg-day-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+.lg-scrub {
+  flex: 1 1 220px;
+  min-width: 180px;
+  max-width: 460px;
+  accent-color: var(--globe-c-front);
+}
+.lg-day-value {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-fg-muted);
+  white-space: nowrap;
+}
+.lg-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-fg-faint);
+}
+
+.lg-legend-title {
+  margin-bottom: 8px;
+}
+.lg-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+  padding: 0;
+  margin: 0 0 8px;
+  list-style: none;
+}
+.lg-legend-item {
+  padding: 10px 12px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-panel);
+}
+.lg-legend-item[data-front='yes'] {
+  border-color: var(--color-line-lift);
+}
+.lg-legend-item[data-on='no'] {
+  opacity: 0.72;
+}
+
+.lg-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.lg-toggle:disabled {
+  cursor: default;
+}
+.lg-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border: 1px solid var(--color-line-lift);
+  background: transparent;
+}
+.lg-legend-item[data-on='yes'] .lg-swatch {
+  border-color: transparent;
+  background: var(--globe-mono);
+}
+.lg-legend-item[data-front='yes'] .lg-swatch {
+  background: var(--globe-c-front);
+}
+.lg-legend-item[data-front='yes'] .lg-swatch[data-layer='ghost-fleet'] {
+  background: var(--globe-c-ghost-fleet);
+}
+.lg-toggle-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+.lg-toggle-kind {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-fg-faint);
+}
+.lg-front {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.lg-prov,
+.lg-note {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-fg-faint);
+  overflow-wrap: anywhere;
+}
+.lg-note {
+  color: var(--color-fg-muted);
+}
+
+.lg-card {
+  scroll-margin-top: 80px;
+}
+
+/* ═══ G2: the guided stories ══════════════════════════════════════════════════════════════════
+ *
+ * Six tours (src/lib/tour/globe-stories.ts) drive the ONE island above them, so the room has one
+ * globe and one WebGL context — and the figure has to stay in sight while the prose about it
+ * scrolls. Hence a two-column room on a wide viewport with the figure column sticky, and a single
+ * ordinary column below that width, where the figure is simply the first thing on the page. No
+ * colour of its own: everything here is a frame token, and the only identity ink on this page is
+ * still the globe's own (bottom of this file).
+ *
+ * Nothing here is load-bearing for reading the stories. Without JavaScript each one renders as a
+ * complete article — heading, standfirst, every scene's prose, every quote with its file and
+ * locator, and the tour's own source line — and the plate, the legend and the tables stand
+ * unchanged above and below them.
+ */
+
+.globe-room {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 62rem) {
+  .globe-room {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 32px;
+  }
+  /* The figure holds its place while the scenes scroll past it. It is taller than most viewports
+     (globe, day axis, three layers with their provenance, and a card when one is open), and a
+     sticky box taller than the viewport hides its own foot: whatever sits below the fold can never
+     be scrolled to, because the box itself no longer moves. So the column scrolls INSIDE its own
+     height — which is also what carries a card into view when a story's closing scene opens one,
+     since focusing it scrolls its nearest scrollable ancestor and not the page under the reader.
+     The readout still clamps to the figure's own box (.globe-stage), never to this one. */
+  .globe-room-figure {
+    position: sticky;
+    top: 1rem;
+    align-self: start;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  /* a half-width column does not need the full plate height; the globe stays the biggest thing in
+     the column and the controls under it stay reachable without scrolling the sticky box */
+  .globe-room .lg-stage {
+    height: clamp(300px, 30vw, 460px);
+  }
+}
+
+.globe-stories {
+  min-width: 0;
+}
+
+.globe-stories .dv-tour {
+  display: block;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-line);
+  margin-top: 20px;
+}
+.globe-stories .dv-tour:first-of-type {
+  padding-top: 0;
+  border-top: 0;
+  margin-top: 0;
+}
+.globe-stories .dv-tour:focus-visible {
+  outline: 2px solid var(--color-fg-faint);
+  outline-offset: 6px;
+}
+
+.globe-stories .dv-tour-title {
+  font-size: var(--text-h3);
+  font-weight: 600;
+  color: var(--color-fg);
+}
+.globe-stories .dv-tour-standfirst {
+  margin-top: 6px;
+  font-size: var(--text-small);
+  line-height: 1.65;
+  color: var(--color-fg-muted);
+}
+
+.globe-stories .dv-tour-scenes {
+  display: grid;
+  gap: 0;
+}
+
+.globe-stories .dv-scene {
+  padding: 18px 0 18px 14px;
+  border-left: 2px solid transparent;
+  scroll-margin-top: 1.5rem;
+}
+/* The one cue the scroll mode needs: which scene the globe is currently answering. A hairline that
+   appears, not prose that fades — dimming the text of every other scene would take contrast away
+   from the thing a reader is about to read next. */
+.globe-stories .dv-scene[aria-current='step'] {
+  border-left-color: var(--color-line-lift);
+}
+
+.globe-stories .dv-scene-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+.globe-stories .dv-scene[aria-current='step'] .dv-scene-kicker {
+  color: var(--color-fg-muted);
+}
+.globe-stories .dv-scene-heading {
+  margin-top: 4px;
+  font-size: var(--text-body);
+  font-weight: 600;
+  color: var(--color-fg);
+}
+.globe-stories .dv-scene-lead {
+  margin-top: 6px;
+  font-size: var(--text-small);
+  line-height: 1.7;
+  color: var(--color-fg-muted);
+}
+
+/* A quote is a fragment of a committed file, and it is set as one: mono, on a rule, with the file
+   and the position inside it under it. Most of these are single lines out of a nightly JSON — a
+   proportional face would dress them up as prose somebody wrote. */
+.globe-stories .dv-scene-quote {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-left: 1px solid var(--color-line-lift);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--color-panel);
+}
+.globe-stories .dv-scene-quote p {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  line-height: 1.6;
+  color: var(--color-fg);
+  overflow-wrap: anywhere;
+}
+.globe-stories .dv-scene-quote footer {
+  margin-top: 5px;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  color: var(--color-fg-faint);
+  overflow-wrap: anywhere;
+}
+.globe-stories .dv-scene-quote cite {
+  font-style: normal;
+}
+
+.globe-stories .dv-scene-still:empty {
+  display: none;
+}
+
+/* The explicit mode: real buttons and a jump list, revealed by the tour's own script under reduced
+   motion or a coarse pointer on a short screen. Nothing about it is a globe control — it steps the
+   prose, and the globe follows the step. */
+.globe-stories .dv-tour-steps {
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-line);
+}
+.globe-stories .dv-tour-steps button,
+.globe-stories .dv-tour-jump a {
+  padding: 3px 9px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-panel);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-fg-muted);
+  text-decoration: none;
+  transition: border-color 200ms var(--ease-frame), color 200ms var(--ease-frame);
+}
+.globe-stories .dv-tour-steps button:hover,
+.globe-stories .dv-tour-jump a:hover {
+  border-color: var(--color-line-lift);
+  color: var(--color-fg);
+}
+.globe-stories .dv-tour-jump a[aria-current='true'] {
+  border-color: var(--color-line-lift);
+  color: var(--color-fg);
+}
+
+.globe-stories .dv-prov {
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  line-height: 1.6;
+  color: var(--color-fg-faint);
+  overflow-wrap: anywhere;
+}
+
+/* Scroll driving needs air between the scenes — a band of viewport per scene, so the observer's
+   mid-viewport line lands on one at a time. The explicit mode needs the opposite: it is read as a
+   list, and a screen of white between two steps would be a scroll where a click was offered. */
+@media (min-width: 62rem) {
+  .globe-stories .dv-tour[data-dv-tour-mode='scroll'] .dv-scene {
+    min-height: 62vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-stories .dv-scene,
+  .globe-stories .dv-tour-steps button,
+  .globe-stories .dv-tour-jump a {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-floor {
+    transition: none;
+  }
+}
+
+/* ── the room's ink ────────────────────────────────────────────────────────────────────────────
+ *
+ * PALETTE: globe-voices (src/lib/dataviz/palette.ts) — three identity slots, validated
+ * 2026-09-03 all-pairs in both modes against the sea this globe actually draws on
+ * (#f7f8fa light, #141414 dark). At most ONE layer is in front at a time, so the pair that ever
+ * appears together is the layer in front and the selected mark; the record validates all three
+ * against each other anyway, because a set that only holds under an interaction rule is a set
+ * held by memory. Every hue is one this house already records: the Field's voice (the ghost
+ * fleet has worn it since the entrance globe), the room's live petrol/cyan, and the invoked-past
+ * ember for the selection. Identity, never status: a dark vessel, a removed page and a silent
+ * instrument are identities, and none of them is an error.
+ *
+ * The sea, the land, the coast and the mono ink the layers behind drop to are DECLARED NEUTRALS
+ * and reference the frame's own tokens — depth carries the base, hue carries identity.
+ */
+.lg-root {
+  --globe-sea: var(--color-panel);
+  --globe-land: var(--color-line);
+  --globe-coast: var(--color-fg-faint);
+  --globe-mono: var(--color-fg-muted);
+  --globe-label: var(--color-fg);
+
+  --globe-c-front: #7fd0e8;
+  --globe-c-selected: #e2691f;
+  --globe-c-voice-meridian: #256abf;
+  --globe-c-ghost-fleet: var(--globe-c-voice-meridian);
+}
+:root[data-skin][data-theme='light'] .lg-root {
+  --globe-c-front: #10627a;
+  --globe-c-selected: #b8410e;
+  --globe-c-voice-meridian: #2a78d6;
+}
+
+/* PALETTE: globe-sequential (src/lib/dataviz/palette.ts) — the five-step mono ramp a country fill
+ * takes, low to high, off the room's own live ink; own steps per mode, never an automatic flip.
+ * Recorded and re-derived with adjacent-step ΔE and WCAG against the same sea. No country layer is
+ * registered yet (that is G3); the builder that reads these steps is in globe-deck.ts and is
+ * exercised by its test, so the ramp ships measured rather than assumed. */
+.lg-root {
+  --globe-c-ramp-a: #1e3b45;
+  --globe-c-ramp-b: #2e5c6b;
+  --globe-c-ramp-c: #438397;
+  --globe-c-ramp-d: #5fadc6;
+  --globe-c-ramp-e: #7fd0e8;
+}
+:root[data-skin][data-theme='light'] .lg-root {
+  --globe-c-ramp-a: #cfe0e6;
+  --globe-c-ramp-b: #a5c5cf;
+  --globe-c-ramp-c: #6fa3b3;
+  --globe-c-ramp-d: #3b7f95;
+  --globe-c-ramp-e: #10627a;
+}

@@ -1,0 +1,258 @@
+name: Cycle sentinel
+
+# Who notices that a cycle is over? (Frank's order, 2026-09-03, wording private.)
+#
+# Cycle 001 opened 2026-08-30 with a budget of three to five sessions per practice. Four days
+# later all three had presented and published their closing reports, the counts stood at ten,
+# eight and eleven, and the Atelier had spent three consecutive nights writing "empty tick:
+# cycle presented, nothing owed" — a practice correctly idling in a cycle nobody had closed.
+# Nothing was broken and nothing was red. The cycle is turned by hand on purpose (v3 decision,
+# 2026-08-30: "advanced by the architect or a site session, never by a practice"), and the
+# hand-turned step simply had no reminder attached to it.
+#
+# This watcher supplies the reminder and nothing else. It follows the Ecology sentinel's rule
+# rather than opening a seventh stream of issues: ONE standing issue, edited in place, closed
+# the night it is no longer true. And it keeps the limit that matters —
+#
+#   IT NEVER TURNS THE CYCLE. `contents: read`, no write to src/data/ecology/cycle.json.
+#
+# — because WHICH question the next cycle carries is a judgement no script can make. Cycle 002
+# proved that the day this was built: its question was changed, not repeated. The answer to
+# nobody noticing is to notice, not to automate the decision.
+#
+# SINCE 2026-10-03 IT TURNS — UNDER ONE RULE, AND ONLY THERE (the architect's decision, wording
+# private; docs/design/2026-10-03-the-continuing-question.md). Cycle 003 was presented within days
+# and then sat open for nearly four weeks while the practices wrote "between cycles" and this
+# issue stood every morning. The judgement the paragraph above protects was then made once, in
+# advance: the ecology has a CONTINUING question, and only a seed released to all three moves it
+# off. Where that rule decides, no judgement is left, so the clock applies it before the watch
+# reads the state — a presented continuing round opens the next round, a released seed interrupts
+# at once, a presented seed's cycle returns to the continuing question. Without a continuing
+# question the old limit holds unchanged: the clock does nothing and the issue below still asks
+# for a hand. The rule is src/lib/ecology/cycle-turn.ts, under test.
+#
+# SINCE 2026-10-07 THE NEXT QUESTION IS THE PRACTICES' OWN (the architect's decision, wording
+# private; docs/design/2026-10-07-the-convening.md). A presented cycle no longer opens the next
+# round on the continuing question: it opens a CONVENING, in which each practice proposes the
+# next question and ranks the three. The Middle's relay carries the tally; the clock opens the
+# next cycle on it a day after the tally unless the architect objected, or on the continuing
+# question when seven days pass without one. A released seed still interrupts, in either phase.
+# The veto day must not wait on a cron that may run hours late, so the Ecology integrate starts
+# this workflow itself whenever it lands a relay mirror, and every two hours while a convening
+# is open.
+#
+# SINCE 2026-10-08 THE ARCHITECT HEARS OF A RESULT, AND CAN ANSWER BY MAIL (his decision, wording
+# private). His silence is consent only if he knows there is something to consent to. When a
+# tallied result is pending, this workflow opens ONE issue for it — assigned to him and naming
+# him, so GitHub emails him as it does for the practices' requests (requests-watchdog.yml) — and
+# closes it when the next cycle opens. He objects by replying to that email or commenting on the
+# issue; the reply is read at the start of every run, BEFORE the clock decides, and becomes
+# `convening.objected` in cycle.json. The decisions are src/lib/ecology/convening-notice.ts,
+# under test; scripts/ecology/convening-notice.ts carries them out. A manual start with
+# `notice_dry_run` prints the planned issue, comments and closes instead of sending them.
+
+on:
+  schedule:
+    # After the Ecology sentinel (06:45 UTC) and before the morning digest (06:30 UTC next day),
+    # so a finished cycle is already standing when the digest reads the house.
+    - cron: '50 6 * * *'
+  # A released seed is committed to the register by the Steuerzentrale with a token that DOES
+  # fire `on: push` — so the interruption lands within minutes of the release, not next morning.
+  push:
+    branches: [main]
+    paths: ['src/data/saat/register.json']
+  # Also started by ecology-integrate.yml after a relay mirror (2026-10-07): the built-in token
+  # fires no `on: push`, but a dispatch it sends does start a run.
+  workflow_dispatch:
+    inputs:
+      notice_dry_run:
+        description: 'Convening notice: print the planned issue, comments and closes instead of sending them (the clock still turns where its rules say)'
+        type: boolean
+        default: false
+
+# contents: write since 2026-10-03 — the turn commits cycle.json and nothing else; since
+# 2026-10-08 so does a recorded objection. The deploy follows through deploy-cf.yml's workflow_run
+# list, like every other committer of site data — except for a run another workflow started,
+# which deploys itself (see the step after the turn).
+permissions:
+  contents: write
+  issues: write
+  # to start deploy-cf.yml when another workflow started this run (2026-10-07)
+  actions: write
+
+concurrency:
+  group: cycle-sentinel
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+
+      # The architect's objection (2026-10-08), read BEFORE the clock decides, so an objection that
+      # arrived before this run is never outrun by the opening it objects to. While a tallied result
+      # is pending, a reply of his on its notice issue that objects becomes `convening.objected` in
+      # cycle.json, committed like a turn; the comment that confirms it, and the close, follow only
+      # once the record is pushed. With nothing pending this step asks GitHub nothing. When a result
+      # IS pending and the issue cannot be read, the step fails and the clock does not turn on this
+      # run — failing closed where an objection could be missed; while a convening is open the next
+      # run comes within hours (every Ecology integrate run starts one).
+      - name: Read the architect's objection (before the clock decides)
+        id: objection
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DRY_RUN: ${{ inputs.notice_dry_run && '--dry-run' || '' }}
+        run: |
+          set -euo pipefail
+          npx tsx scripts/ecology/convening-notice.ts objections --plan "$RUNNER_TEMP/objection-plan.json" $DRY_RUN > "$RUNNER_TEMP/objection.json"
+          if [ "$(jq -r .recorded "$RUNNER_TEMP/objection.json")" != "true" ]; then
+            echo "recorded=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "Cycle-Clock"
+          git config user.email "cycle-clock@frankbueltge.de"
+          git add src/data/ecology/cycle.json
+          git commit -m "cycle $(jq -r .cycle "$RUNNER_TEMP/objection.json"): objection recorded from #$(jq -r .issue "$RUNNER_TEMP/objection.json") — read by the cycle sentinel"
+          pushed=false
+          for attempt in 1 2 3 4 5; do
+            if git push; then pushed=true; break; fi
+            git pull --rebase
+          done
+          if [ "$pushed" != "true" ]; then
+            echo "::error::the objection could not be pushed after 5 attempts; the clock does not turn on this run"
+            exit 1
+          fi
+          echo "recorded=true" >> "$GITHUB_OUTPUT"
+          # The record stands. Confirming it on the issue may fail without holding the clock back:
+          # the notice step after the turn closes an issue whose result an objection set aside.
+          npx tsx scripts/ecology/convening-notice.ts execute --plan "$RUNNER_TEMP/objection-plan.json" \
+            || echo "::warning::the objection is recorded, but confirming it on the issue failed; the notice step closes it"
+
+      # The clock (2026-10-03; the convening since 2026-10-07). Runs right after the objection is
+      # read, so the watch below reads the state it leaves. Writes cycle.json only when the rule
+      # says a turn is due, validates it through the site's own loader before committing, and
+      # commits nothing else.
+      - name: Turn the cycle where the rules decide
+        id: turn
+        run: |
+          set -euo pipefail
+          npx tsx scripts/ecology/cycle-turn.ts > "$RUNNER_TEMP/turn.json" 2> "$RUNNER_TEMP/turn.txt"
+          cat "$RUNNER_TEMP/turn.txt"
+          if [ "$(jq -r .turned "$RUNNER_TEMP/turn.json")" != "true" ]; then
+            echo "turned=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "Cycle-Clock"
+          git config user.email "cycle-clock@frankbueltge.de"
+          git add src/data/ecology/cycle.json
+          git commit -m "cycle $(jq -r '.cycle' "$RUNNER_TEMP/turn.json"): $(jq -r '.kind' "$RUNNER_TEMP/turn.json") — turned by the cycle clock"
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "turned=true" >> "$GITHUB_OUTPUT"
+              { echo "### Cycle clock"; echo; sed 's/^/- /' "$RUNNER_TEMP/turn.txt"; echo; } >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            git pull --rebase
+          done
+          echo "::error::the cycle clock could not push its turn after 5 attempts"
+          exit 1
+
+      # A run started by another workflow with the built-in token (the Ecology integrate after a
+      # relay mirror, since 2026-10-07) ends without a workflow_run event — GitHub creates none for
+      # a run the built-in token started — so deploy-cf.yml would never hear of the turn it
+      # committed, and the practices would read a cycle the site does not show. Such a run starts
+      # the deploy itself, right after the push and before the watch, so a hiccup in the issue
+      # step below cannot hold it back. The pattern of PR #1049, for the same reason. A recorded
+      # objection (2026-10-08) is deployed the same way: /ecology shows it.
+      - name: Deploy the turn (when another workflow started this run)
+        if: success() && (steps.turn.outputs.turned == 'true' || steps.objection.outputs.recorded == 'true') && github.triggering_actor == 'github-actions[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
+
+      # The notice (2026-10-08). When a tallied result is pending — cycle.json in the convening, the
+      # relay's result for it not set aside, the next cycle not open — the architect gets ONE
+      # issue, assigned to him and naming him, which GitHub sends him by email; an open notice whose
+      # result is no longer pending is closed with a comment saying why (the next cycle opened, and
+      # on which question; an objection set it aside). It runs AFTER the clock, so it reads the state
+      # the clock left: a cycle opened on this run closes its notice instead of announcing a decision
+      # already taken. Nothing else writes to him — a convening merely opening is no decision of his.
+      # A failed notice must not hold back the deploy of a turn committed above (the deploy follows
+      # this run's success), so the step may fail without failing the run: the next run tries again,
+      # and the exact title keeps it to one issue.
+      - name: Notify the architect when his decision is due
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DRY_RUN: ${{ inputs.notice_dry_run && '--dry-run' || '' }}
+        run: |
+          set -euo pipefail
+          npx tsx scripts/ecology/convening-notice.ts notice $DRY_RUN
+
+      # The presentations live in public/<practice>/presentations/, mirrored by the integrate
+      # workflows into this repository — so the verdict reads committed state here and needs no
+      # network and no engine checkout.
+      - name: Read the cycle clock
+        id: watch
+        run: |
+          set -euo pipefail
+          npx tsx scripts/ecology/cycle-watch.ts > "$RUNNER_TEMP/verdict.json" 2> "$RUNNER_TEMP/lines.txt"
+          cat "$RUNNER_TEMP/lines.txt"
+          {
+            echo "### Cycle sentinel"
+            echo
+            sed 's/^/- /' "$RUNNER_TEMP/lines.txt"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "due=$(jq -r '(.lines | length) > 0' "$RUNNER_TEMP/verdict.json")" >> "$GITHUB_OUTPUT"
+
+      - name: One standing issue, edited in place
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          TITLE="Cycle sentinel — the running cycle is finished"
+          NUM=$(gh issue list --repo "$REPO" --state open --search "$TITLE in:title" \
+                  --json number,title --jq "[.[] | select(.title == \"$TITLE\")][0].number // empty")
+
+          if [ "${{ steps.watch.outputs.due }}" != "true" ]; then
+            # An open issue should mean an open decision. A turned cycle closes it.
+            if [ -n "$NUM" ]; then
+              gh issue close "$NUM" --repo "$REPO" \
+                --comment "The cycle moved: $(jq -r '"cycle \(.cycle), phase \(.phase)"' "$RUNNER_TEMP/verdict.json"). Nothing due."
+              echo "closed #$NUM"
+            else
+              echo "nothing due, and no issue exists"
+            fi
+            exit 0
+          fi
+
+          {
+            jq -r '.lines[] | "**" + . + "**"' "$RUNNER_TEMP/verdict.json"
+            echo
+            echo "| practice | sessions | presented | past budget |"
+            echo "|---|---|---|---|"
+            jq -r '.standings[] | "| \(.practice) | \(.sessions) | \(if .presented then "yes" else "not yet" end) | \(if .over > 0 then "+\(.over)" else "—" end) |"' \
+              "$RUNNER_TEMP/verdict.json"
+            echo
+            echo "No rule turned this cycle — either no continuing question is set, or the cycle clock"
+            echo "failed (see this run's \"Turn the cycle\" step). Turning it is then a hand step: edit"
+            echo "\`src/data/ecology/cycle.json\` — raise \`cycle\`, set \`opened\`, and decide what question"
+            echo "the next cycle carries. Closing this issue without turning the cycle will reopen it"
+            echo "tomorrow, because the condition, not the issue, is what is true."
+            echo
+            echo "_Cycle sentinel, $(date -u '+%Y-%m-%d %H:%M UTC'). Derivation: \`src/lib/ecology/cycle-watch.ts\` (under test)._"
+          } > "$RUNNER_TEMP/body.md"
+
+          if [ -n "$NUM" ]; then
+            gh issue edit "$NUM" --repo "$REPO" --body-file "$RUNNER_TEMP/body.md"
+            echo "edited #$NUM in place"
+          else
+            gh issue create --repo "$REPO" --title "$TITLE" --body-file "$RUNNER_TEMP/body.md"
+          fi

@@ -1,0 +1,143 @@
+{
+  "date": "2026-09-23",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-23T10:28:46Z",
+    "counts": {
+      "botwall": 40,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 258,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 259,
+    "excluded_unverifiable": 41,
+    "gone": 1,
+    "gone_ci95": [
+      0.0007,
+      0.0215
+    ],
+    "gone_rate": 0.0039,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0146
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-21",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "joxfm.com",
+        "first_seen": "20260921210000",
+        "http_code": 404,
+        "title": "Chargers S Derwin James (finger) to play with cast",
+        "url": "https://www.joxfm.com/2026/09/21/chargers-s-derwin-james-finger-to-play-with-cast/"
+      }
+    ],
+    "sample_drawn_at": "2026-09-22T10:41:31Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5696,
+      "replaced": 4997,
+      "trivial": 1023,
+      "update": 421
+    },
+    "day": "2026-09-22",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "young",
+          "California"
+        ],
+        "after": "Young California pianist: Meet Sora Corro, the young California pianist who started playing at just 2 and went on to win major youth competitions before performing a piano concerto with an orchestra",
+        "before": "Sora Corro pianist: Meet Sora Corro, the young California pianist who started playing at just 2 and went on to win major youth competitions before performing a piano concerto with an orchestra",
+        "detected": "2026-09-22T17:31:54Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Sora",
+          "Corro"
+        ],
+        "similarity": 1.0,
+        "url": "https://economictimes.indiatimes.com/news/international/us/meet-sora-corro-the-young-california-pianist-who-started-playing-at-just-2-and-went-on-to-win-major-youth-competitions-before-performing-a-piano-concerto-with-an-orchestra/articleshow/134268269.cms",
+        "weight": 7,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Noncitizens"
+        ],
+        "after": "Trump Administration Seeks to Limit Tax Credits for Noncitizens Legally Working in the United States",
+        "before": "Trump Administration Seeks to Limit Tax Credits for Non-Citizens Legally Working in the United States",
+        "detected": "2026-09-22T22:32:17Z",
+        "domain": "aei.org",
+        "removed": [
+          "Non",
+          "Citizens"
+        ],
+        "similarity": 0.824,
+        "url": "https://www.aei.org/economics/trump-administration-seeks-to-limit-tax-credits-for-non-citizens-legally-working-in-the-united-states/",
+        "weight": 6,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Pipelines"
+        ],
+        "after": "Houthi Attacks on Saudi Pipelines Send Prices Higher; Israel Claims 'Massive Victory' over Hezbollah",
+        "before": "Houthi Attacks on Saudi Oil Piplines Send Prices Higher; Israel Claims 'Massive Victory' over Hezbollah",
+        "detected": "2026-09-22T11:46:51Z",
+        "domain": "cbn.com",
+        "removed": [
+          "Oil",
+          "Piplines"
+        ],
+        "similarity": 0.812,
+        "url": "https://cbn.com/news/israel/houthi-attacks-saudi-oil-piplines-send-prices-higher-israel-claims-massive-victory-over",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 18057,
+      "PAGE_TEXTCHANGE": 133965,
+      "PAGE_TITLECHANGE": 49469,
+      "UNCHANGED_CONTENT": 759607
+    },
+    "title_changes_en": 12137,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1790159124112",
+        "job_id": "world_gdg_counts_20260922",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 241172480,
+        "created": "1790159129579",
+        "job_id": "world_gdg_titles_20260922",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-23T10:28:46Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-22.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

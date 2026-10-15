@@ -299,6 +299,19 @@ describe('the record plate', () => {
     for (const d of real) expect(d.days.at(-1)).toBe(horizon)
   })
 
+  it('lets no other house’s encounter move the horizon', () => {
+    // The mirror holds every house's encounter files. data-snack's was dated 2026-10-04 by the
+    // ledger's last export, three weeks past this practice's record, and stretched every plate.
+    const input = realInput()
+    const horizon = recordHorizon(input)
+    const slugs = input.instruments.map(([slug]) => slug)
+    const foreign = input.encounters.filter((e) => ledgerSubject(e, slugs) === null)
+    expect(foreign.some((e) => e.status.as_of > horizon)).toBe(true)
+    expect(recordHorizon({ ...input, encounters: foreign })).toBe(
+      recordHorizon({ ...input, encounters: [] }),
+    )
+  })
+
   it('starts every plate at its own instrument’s earliest mark', () => {
     for (const d of real) {
       expect(d.days[0]).toBe([...d.marks].map((m) => m.date).sort()[0])

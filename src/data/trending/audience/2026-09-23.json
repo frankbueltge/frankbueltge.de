@@ -1,0 +1,104 @@
+{
+ "$contract": "trending-audience/2",
+ "day": "2026-09-23",
+ "edge": {
+  "bots": [
+   {
+    "class": "search",
+    "name": "Bingbot",
+    "ok_2xx": 40,
+    "other_status": 0,
+    "requests": 40
+   },
+   {
+    "class": "ai-retrieval",
+    "name": "OAI-SearchBot",
+    "ok_2xx": 17,
+    "other_status": 0,
+    "requests": 17
+   },
+   {
+    "class": "other-bot",
+    "name": "bot",
+    "ok_2xx": 10,
+    "other_status": 6,
+    "requests": 16
+   },
+   {
+    "class": "search",
+    "name": "Applebot",
+    "ok_2xx": 11,
+    "other_status": 0,
+    "requests": 11
+   },
+   {
+    "class": "ai-training",
+    "name": "Amazonbot",
+    "ok_2xx": 0,
+    "other_status": 1,
+    "requests": 1
+   },
+   {
+    "class": "search",
+    "name": "Googlebot",
+    "ok_2xx": 1,
+    "other_status": 0,
+    "requests": 1
+   },
+   {
+    "class": "search",
+    "name": "YandexBot",
+    "ok_2xx": 1,
+    "other_status": 0,
+    "requests": 1
+   },
+   {
+    "class": "ai-training",
+    "name": "meta-externalagent",
+    "ok_2xx": 0,
+    "other_status": 1,
+    "requests": 1
+   }
+  ],
+  "classes": {
+   "ai-retrieval": 17,
+   "ai-training": 2,
+   "ai-user-fetch": 0,
+   "browser": 150,
+   "other-bot": 16,
+   "search": 53
+  },
+  "countries": {
+   "AE": 3,
+   "AR": 5,
+   "BD": 3,
+   "BR": 11,
+   "CN": 4,
+   "DE": 4,
+   "FR": 61,
+   "MA": 5,
+   "SG": 4,
+   "US": 104
+  },
+  "extra_note": "referring hosts are not served on this plan (clientRefererHost, measured 2026-09-03)",
+  "note": "",
+  "paths": {
+   "archive": 112,
+   "feed": 3,
+   "json": 72,
+   "md": 2,
+   "other": 43,
+   "page": 6
+  },
+  "referers": null,
+  "sample_interval_avg": 1.023,
+  "source": "Cloudflare GraphQL Analytics API, httpRequestsAdaptiveGroups, zone scope, requestSource eyeball, clientRequestPath_like /trending%",
+  "status": "ok",
+  "total": 238,
+  "window": [
+   "2026-09-23T00:00:00Z",
+   "2026-09-23T23:59:59Z"
+  ]
+ },
+ "generated_at": "2026-09-24T12:22:04Z"
+}

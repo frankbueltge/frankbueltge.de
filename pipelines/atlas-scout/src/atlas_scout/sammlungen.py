@@ -1,8 +1,8 @@
 """Kuratierte Sammlungen der Praxen — direkt übernommen, nicht aus Kennungen geklaubt.
 
-Frank, 2026-07-28: „alle zitierten papers oder genutzte datasets oder alle zitate ALLER
-PRAXEN sollen auch im paper katalog landen." Vollständigkeit gegenüber den Praxen also,
-nicht nur gegenüber dem, was sich auflösen lässt.
+Frank's decision of 2026-07-28, wording private: every paper, dataset and quotation that any
+of the practices cites belongs in the paper catalogue. Completeness towards the practices,
+then, not only towards what can be resolved.
 
 **Der Fehler, den dieses Modul repariert.** `praxen.py` sammelt DOIs und arXiv-Kennungen
 aus dem Fließtext der Repos. Gemessen am 2026-07-28: Von Ulysses' 94 Atlas-Einträgen

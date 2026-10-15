@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>The Week Refolded</title>
+<style>
+  html,body{margin:0;height:100%;background:#efebe3;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  canvas{display:block;width:1100px;height:800px;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="Sixty-one days of an hourly record, cut into days and laid out as a calendar of nine and a half weeks, each day drawn over the faint traces of the same weekday in every other week."></canvas>
+<script>
+// The material: every dark pixel of the source image (300 x 90), as [x, y, ink 1-9].
+const PX = __DATA__;
+
+const W = 1100, H = 800;
+const cv = document.getElementById('c');
+const dpr = Math.max(1, window.devicePixelRatio || 1);
+cv.width = W * dpr; cv.height = H * dpr;
+const g = cv.getContext('2d');
+g.scale(dpr, dpr);
+
+// Source geometry, read from the image: data occupies x = 3 .. 296 inclusive (294 px for 1464 hours).
+const X0 = 3, SPAN = 294, HOURS = 1464, DAYS = 61;
+const pxPerHour = SPAN / HOURS;
+const Y_TOP = 5, Y_BOT = 83;           // vertical extent of the dots, with a little air
+
+// The first day is the first of the two quiet days in each seven, so the fold puts
+// the five busy days in rows 0-4 and the two quiet days in rows 5-6.
+const OFFSET = 5;                       // grid slot of day 0
+const COLS = Math.ceil((DAYS + OFFSET) / 7);   // 10
+const ROWS = 7;
+
+const M = { l: 62, r: 62, t: 64, b: 64 };
+const gapX = 16, gapY = 12;
+const cw = (W - M.l - M.r - gapX * (COLS - 1)) / COLS;
+const ch = (H - M.t - M.b - gapY * (ROWS - 1)) / ROWS;
+
+// paper
+g.fillStyle = '#efebe3';
+g.fillRect(0, 0, W, H);
+
+// cut each pixel into the day(s) its column covers; a source column spans ~5 hours
+const days = Array.from({ length: DAYS }, () => []);
+for (const [x, y, a] of PX) {
+  const h0 = (x - X0) / pxPerHour, h1 = (x + 1 - X0) / pxPerHour;
+  if (h1 <= 0 || h0 >= HOURS) continue;
+  const dA = Math.max(0, Math.floor(h0 / 24)), dB = Math.min(DAYS - 1, Math.floor((h1 - 1e-9) / 24));
+  for (let d = dA; d <= dB; d++) {
+    const s = Math.max(h0, d * 24) - d * 24, e = Math.min(h1, d * 24 + 24) - d * 24;
+    if (e - s < 0.6) continue;           // a sliver of the column, too small to keep
+    days[d].push([s / 24, e / 24, y, a / 9]);
+  }
+}
+
+function slot(d) { const k = d + OFFSET; return [Math.floor(k / 7), k % 7]; }
+function cellXY(col, row) { return [M.l + col * (cw + gapX), M.t + row * (ch + gapY)]; }
+function yOf(y, top) { return top + (y + 0.5 - Y_TOP) / (Y_BOT - Y_TOP) * ch; }
+
+function drawDay(d, cx, cy, color, alphaScale, inset) {
+  for (const [s, e, y, a] of days[d]) {
+    const xa = cx + s * cw + inset, xb = cx + e * cw - inset;
+    if (xb <= xa) continue;
+    g.globalAlpha = Math.min(1, a * alphaScale);
+    g.fillStyle = color;
+    const yy = yOf(y, cy);
+    g.fillRect(xa, yy - 0.55, xb - xa, 1.1);
+  }
+  g.globalAlpha = 1;
+}
+
+// faint hairline frame per occupied cell: the day as a unit of paper
+for (let d = 0; d < DAYS; d++) {
+  const [col, row] = slot(d); const [cx, cy] = cellXY(col, row);
+  g.fillStyle = '#e8e3d9';
+  g.fillRect(cx, cy, cw, ch);
+}
+
+// ghosts: every other occurrence of the same weekday, behind
+for (let d = 0; d < DAYS; d++) {
+  const [col, row] = slot(d); const [cx, cy] = cellXY(col, row);
+  for (let o = 0; o < DAYS; o++) {
+    if (o === d || slot(o)[1] !== row) continue;
+    drawDay(o, cx, cy, '#9c8f78', 0.30, 2.2);
+  }
+}
+
+// the day itself
+for (let d = 0; d < DAYS; d++) {
+  const [col, row] = slot(d); const [cx, cy] = cellXY(col, row);
+  drawDay(d, cx, cy, '#1d1a16', 1.15, 2.2);
+}
+
+</script>
+</body>
+</html>

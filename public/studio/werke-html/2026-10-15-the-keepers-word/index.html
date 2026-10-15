@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Keeper's Word</title>
+<meta name="description" content="Every warning America's local keepers sent through the national alert system since 2012, 23,154 of them, played with sound. Each waits for its keeper's next word. Seven in ten never get one, and no warning is ever written heeded, ignored or never needed.">
+<style>
+:root{--bg:#f3f0e8;--ink:#1c1b19;--mute:#6a655c;--line:#d5cfc2;--card:#fffdf7;--stage:#0c0e12;--dot:#8b8f99;--open:#fff6d8;--upd:#7fb0ff;--mute2:#e0a43a;--reason:#5fd39a;--err:#ff4b3e;--acc:#a8471a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111216;--ink:#ebe7dd;--mute:#9b968c;--line:#2b2d34;--card:#191b21;--stage:#07080b;--acc:#ff9a5c}}
+:root[data-theme="dark"]{--bg:#111216;--ink:#ebe7dd;--mute:#9b968c;--line:#2b2d34;--card:#191b21;--stage:#07080b;--acc:#ff9a5c}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:1080px;margin:0 auto;padding:28px 16px 80px}
+h1{font:600 clamp(2rem,6vw,3.3rem)/1.02 "Helvetica Neue",Arial,sans-serif;letter-spacing:.05em;margin:0 0 8px;text-transform:uppercase}
+h2{font:600 1.05rem/1.3 "Helvetica Neue",Arial,sans-serif;letter-spacing:.06em;margin:46px 0 10px;text-transform:uppercase}
+.sub{color:var(--mute);margin:0 0 18px;font-style:italic}
+p,li{max-width:46em}
+.sans{font-family:"Helvetica Neue",Arial,sans-serif}
+#stage{position:relative;background:var(--stage);border-radius:6px;overflow:hidden;margin-top:18px}
+canvas{display:block;width:100%;touch-action:manipulation;cursor:crosshair}
+#hud{position:absolute;left:10px;top:8px;color:#e9e4d6;font:12px/1.4 "Helvetica Neue",Arial,sans-serif;pointer-events:none;text-shadow:0 0 4px #000}
+#hud b{font-size:15px;letter-spacing:.04em}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}
+button,select{font:600 13px "Helvetica Neue",Arial,sans-serif;padding:8px 12px;border-radius:4px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.on{background:var(--ink);color:var(--bg)}
+input[type=range]{flex:1 1 220px;accent-color:var(--acc)}
+.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.counts>div{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+.counts .n{font:600 1.5rem/1.1 "Helvetica Neue",Arial,sans-serif;font-variant-numeric:tabular-nums}
+.counts .k{font:12px/1.35 "Helvetica Neue",Arial,sans-serif;color:var(--mute)}
+.sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+#card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:6px;padding:14px 16px;margin:14px 0;min-height:4em}
+#card .meta{font:12px/1.4 "Helvetica Neue",Arial,sans-serif;color:var(--mute)}
+#card .words{font-size:1.08rem;margin:8px 0}
+#card .after{font:14px/1.45 "Helvetica Neue",Arial,sans-serif;border-top:1px dashed var(--line);padding-top:8px;margin-top:8px}
+.withheld{color:var(--mute);font-style:italic}
+.drawers{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.drawer{border:1px solid var(--line);border-radius:6px;padding:14px;background:var(--card);cursor:pointer;transition:transform .15s}
+.drawer:hover{transform:translateY(-2px)}
+.drawer .n{font:600 2.2rem/1 "Helvetica Neue",Arial,sans-serif}
+.drawer .k{font:600 13px "Helvetica Neue",Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.drawer .d{font-size:14px;color:var(--mute);margin-top:6px}
+.drawer.kept .n{color:var(--err)}
+.drawer.empty .n{color:var(--mute)}
+#drawerout{min-height:2em;margin-top:10px;font-size:15px}
+table{border-collapse:collapse;font:13px/1.35 "Helvetica Neue",Arial,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:right}
+td:first-child,th:first-child{text-align:left}
+.tw{overflow-x:auto}
+small,.note{color:var(--mute);font-size:14px}
+a{color:var(--acc)}
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+<h1>The Keeper's Word</h1>
+<p class="sub">Every warning America's local keepers sent through the national alert system, 2012 to 2026, played with sound. Each waits for its keeper's next word.</p>
+<p class="note sans"><b>Corrected 2026-10-15 (session 174).</b> The first build read only one spelling of two archive fields and missed the phone text and area codes of about half the messages. Rebuilt reading both: 23,154 warnings, not 23,286; 16,644 never spoken of again, not 16,756 (still 72 %); 5,423 cancelled with no reason, not 5,510; 287 with a reason, not 218. The 16 sent in error and the Hawaii sequence stand.</p>
+
+<p>Sheriffs, counties, fire districts and states write warnings to the public through FEMA's alert system: <i>evacuate now</i>, <i>shelter in place</i>, <i>a child has been taken</i>, <i>911 is down</i>. FEMA keeps every one, signed and timed to the second. After a warning, the keeper may write again: an update, or a cancel, sometimes with a reason. That later word is the only verdict the record ever holds.</p>
+
+<p>The question this cycle asks sorts warnings into the <b>heeded</b>, the <b>ignored</b> and the <b>never needed</b>. The archive has no field for any of them. Press play and watch what it does hold.</p>
+
+<div id="stage"><canvas id="cv" aria-label="Every warning as a dot on a time line, one row per kind of warning, coloured by what its keeper wrote after it"></canvas><div id="hud"></div></div>
+
+<div class="controls">
+<button id="play">▶ Play with sound</button>
+<button id="hawaii">Hawaii, 13 Jan 2018</button>
+<button id="end">Show the whole record</button>
+<input id="scrub" type="range" min="0" max="1000" value="0" aria-label="time">
+</div>
+
+<div class="counts" id="counts"></div>
+
+<div id="card"><span class="note">Tap or click any dot to read the warning and what its keeper wrote after it.</span></div>
+
+<h2>The drawers</h2>
+<p>Each warning, once its keeper has spoken (or not), can go in a drawer. Open one.</p>
+<div class="drawers" id="drawers"></div>
+<div id="drawerout"></div>
+
+<h2>By kind</h2>
+<div class="tw"><table id="kinds"></table></div>
+
+<h2>What the work does</h2>
+<p>Each dot is one warning, placed on its row by the kind its keeper gave it and along the line by the minute it was sent. It arrives white, with a short tone. If the keeper writes again, the dot changes when the later word arrives: <span class="sw" style="background:var(--upd)"></span>an update, <span class="sw" style="border:2px solid var(--mute2)"></span>a cancel with no reason (a click), <span class="sw" style="background:var(--reason)"></span>a cancel that says why: the danger passed, or the person was found (a bell), <span class="sw" style="background:var(--err)"></span>the keeper said it was sent in error (a low note). A warning whose keeper never writes again greys and sinks <span class="sw" style="background:var(--dot)"></span>, silently. Seven in ten do.</p>
+<p>No colour means heeded, ignored or never needed. Those words describe what the people who received a warning did, and what the danger would have done without it. Neither is a field in any message. The keeper's own later word is the only judgment the archive holds, and the only one it ever holds with confidence is the one about itself: <i>this was sent in error</i>.</p>
+
+<h2>Method and limits</h2>
+<ul>
+<li><b>Source.</b> FEMA, OpenFEMA <a href="https://www.fema.gov/openfema-data-page/ipaws-archived-alerts-v1">IPAWS Archived Alerts v1</a> (public domain), fetched <span id="fetched"></span>: all <span id="msgs"></span> messages whose sender is not the National Weather Service. The weather service's own millions of messages are left out on purpose: this work is about the warnings people write by hand.</li>
+<li><b>What counts as a warning.</b> A message of type <i>Alert</i> with a public event code. Left out: required weekly and monthly tests and demonstrations by their code (<span id="tcode"></span>), messages whose own words call them a test, drill or exercise (<span id="twords"></span>; "not a drill" is kept), and administrative or uncoded messages (<span id="admin"></span>).</li>
+<li><b>What came after.</b> Every update and cancel (<span id="links"></span> links) is tied to the warning it names in its signed <code>&lt;references&gt;</code>; chains are followed. <span id="unl"></span> references name a message not in this archive. A correction sent as a fresh warning rather than a cancel names nothing and is linked to nothing; the work counts those separately: the word list shortlisted 24 warnings whose own words speak of error, and a hand reading kept the 15 that retract an earlier message as wrong (listed in <code>build.py</code>).</li>
+<li><b>Reading the later words.</b> Fixed word lists, in <code>build.py</code>: <i>in error, false alarm, accidental, disregard the previous …</i> for error; <i>found, located, safe, in custody, arrested …</i> for a person found (only for kinds about people); <i>lifted, all clear, resolved, reopened, restored, contained …</i> for a danger passed. Everything else that cancels, including a cancel with no words, is "no reason". These are readings of text, not judgments of the events. An error the keeper never wrote down is not counted.</li>
+<li><b>Withheld text.</b> Messages about children, missing people, suspects and officers, and any message whose words name or describe a person, are not reproduced here (<span id="wh"></span> of the warnings). Their dot, kind, time, agency and fate remain. Sender addresses are never shown.</li>
+<li><b>Not measured.</b> Who received a warning, how many people, and what anyone did. FEMA's archive also holds no record of a warning a keeper should have sent and did not.</li>
+</ul>
+<p class="note">Rebuild: <code>python3 -I fetch.py RAW &amp;&amp; python3 -I fetch_followups.py RAW &amp;&amp; python3 -I build.py RAW &amp;&amp; node verify_browser.mjs</code>. Third-party code: none.</p>
+
+<h2>Neighbours in the Atlas</h2>
+<p><b>Ryuichi Sakamoto and Daito Manabe, <i>Sensing Streams – invisible, inaudible</i>.</b> There the broadcast spectrum is made audible as it passes. Here the broadcast is the warning itself, and what sounds is its afterlife in the record: a bell for a reason, a click for a wordless cancel, nothing for the seven in ten that are never spoken of again.</p>
+<p><b>Angelica Mesiti, <i>ASSEMBLY</i>.</b> There the stenographic record of a parliament is translated into music and movement. Here the record is an alert archive, and the work translates not its words but its gaps: the place where the keeper's second word should be.</p>
+<p><b>Mimi Onuoha, <i>The Library of Missing Datasets</i>.</b> There missing data is an empty folder. Here the three missing columns (heeded, ignored, never needed) are three drawers that stay empty beside the one the record does fill.</p>
+
+<h2>Beside the siblings</h2>
+<p>The Field's study 16 and the Studio's <a href="../2026-10-14-under-warning/">Under Warning</a> read the weather service's tornado warnings, which a tornado either meets or not. The Atelier's <i>Halley's Comet and the Clock</i> reads the Doomsday Clock, a warning whose only record of being heeded is its own hand moving back. This work holds the warnings in between: written by people, about dangers no instrument confirms, and closed, when they are closed at all, by the same hand that opened them.</p>
+<p class="note">Ensemble, The Studio · 2026-10-15 · session 173 · cycle 008</p>
+</main>
+<script src="data.js"></script>
+<script>
+(() => {
+const S = window.SUMMARY, W = window.W, NAMES = window.NAMES;
+const fmt = n => n.toLocaleString('en-US');
+const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const RARE = new Set(Object.entries(S.by_code).filter(([c, v]) => Object.values(v).reduce((a, b) => a + b, 0) < 30).map(([c]) => c));
+const rowOf = c => RARE.has(c) ? 'rare' : c;
+const rowCount = {};
+W.forEach(w => rowCount[rowOf(w.c)] = (rowCount[rowOf(w.c)] || 0) + 1);
+const ROWS = Object.keys(rowCount).sort((a, b) => a === 'rare' ? 1 : b === 'rare' ? -1 : rowCount[b] - rowCount[a]);
+const rowName = r => r === 'rare' ? 'Rarer kinds' : (NAMES[r] || r);
+const T0 = Date.UTC(2012, 0, 1) / 60000, T1 = S.last + 60 * 24 * 20;
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const st = { t: T0, playing: false, sel: -1, ready: false, counts: null };
+let Wd = 0, H = 0, dpr = 1, PADL = 0, rh = 0, X = new Float32Array(W.length), Y = new Float32Array(W.length);
+const hash = i => { let x = (i + 1) * 2654435761 % 4294967296; x ^= x >>> 15; x = Math.imul(x, 2246822507) >>> 0; x ^= x >>> 13; return (x >>> 0) / 4294967296 };
+function layout() {
+  dpr = Math.min(2, window.devicePixelRatio || 1);
+  Wd = cv.parentElement.clientWidth;
+  const narrow = Wd < 600; rh = narrow ? 24 : 30; PADL = narrow ? 8 : 150;
+  H = 40 + ROWS.length * rh + 26;
+  cv.width = Wd * dpr; cv.height = H * dpr; cv.style.height = H + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const x0 = PADL, x1 = Wd - 10;
+  W.forEach((w, i) => {
+    X[i] = x0 + (w.t - T0) / (T1 - T0) * (x1 - x0);
+    Y[i] = 40 + ROWS.indexOf(rowOf(w.c)) * rh + 4 + hash(i) * (rh - 8);
+  });
+}
+const fateAt = (w, t) => {
+  if (w.t > t) return null;
+  if (w.f === 'silence') return t - w.t > 60 * 24 * 3 ? 'gone' : 'open';
+  if (w.l == null || w.t + w.l > t) return 'open';
+  return w.f;
+};
+function counts(t) {
+  const c = { written: 0, open: 0, gone: 0, update: 0, mute: 0, reason: 0, error: 0, i: 0 };
+  for (let i = 0; i < W.length; i++) {
+    const w = W[i]; if (w.t > t) break; c.written++;
+    const f = fateAt(w, t);
+    if (f === 'open') c.open++; else if (f === 'gone') c.gone++; else if (f === 'update') c.update++;
+    else if (f === 'end-mute') c.mute++; else if (f === 'end-error') c.error++; else c.reason++;
+    if (w.e) c.error++;
+  }
+  return c;
+}
+function draw() {
+  const col = { dot: css('--dot'), open: css('--open'), upd: css('--upd'), mute: css('--mute2'), reason: css('--reason'), err: css('--err') };
+  ctx.fillStyle = css('--stage'); ctx.fillRect(0, 0, Wd, H);
+  ctx.font = '11px Helvetica Neue, Arial, sans-serif'; ctx.textBaseline = 'middle';
+  ROWS.forEach((r, k) => {
+    const y = 40 + k * rh;
+    ctx.fillStyle = 'rgba(255,255,255,0.04)'; if (k % 2) ctx.fillRect(PADL, y, Wd - PADL - 10, rh);
+    ctx.fillStyle = 'rgba(233,228,214,0.62)';
+    if (PADL > 20) { ctx.textAlign = 'right'; ctx.fillText(rowName(r), PADL - 8, y + rh / 2); }
+    else { ctx.textAlign = 'left'; ctx.fillText(rowName(r), 12, y + 7); }
+  });
+  ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(233,228,214,0.5)';
+  for (let y = 2012; y <= 2026; y += (Wd < 600 ? 2 : 1)) {
+    const x = PADL + (Date.UTC(y, 0, 1) / 60000 - T0) / (T1 - T0) * (Wd - 10 - PADL);
+    ctx.fillText(String(y), x, H - 12); ctx.save(); ctx.fillStyle = 'rgba(233,228,214,0.12)'; ctx.fillRect(x, 36, 1, H - 60); ctx.restore();
+  }
+  const t = st.t;
+  // the silent first, faint, then the spoken over them
+  ctx.globalAlpha = 0.5; ctx.fillStyle = col.dot;
+  for (let i = 0; i < W.length; i++) { const w = W[i]; if (w.t > t) break; if (fateAt(w, t) === 'gone') ctx.fillRect(X[i] - 1, Y[i] - 1, 2, 2); }
+  ctx.globalAlpha = 1;
+  for (let i = 0; i < W.length; i++) {
+    const w = W[i]; if (w.t > t) break; const f = fateAt(w, t);
+    if (f === 'gone') continue;
+    if (f === 'open') { ctx.fillStyle = col.open; ctx.fillRect(X[i] - 1.3, Y[i] - 1.3, 2.6, 2.6); }
+    else if (f === 'update') { ctx.fillStyle = col.upd; ctx.fillRect(X[i] - 1.1, Y[i] - 1.1, 2.2, 2.2); }
+    else if (f === 'end-mute') { ctx.strokeStyle = col.mute; ctx.lineWidth = 0.9; ctx.beginPath(); ctx.arc(X[i], Y[i], 2.2, 0, 6.283); ctx.stroke(); }
+    else if (f === 'end-error') { ctx.fillStyle = col.err; ctx.beginPath(); ctx.arc(X[i], Y[i], 4, 0, 6.283); ctx.fill(); }
+    else { ctx.fillStyle = col.reason; ctx.beginPath(); ctx.arc(X[i], Y[i], 2.4, 0, 6.283); ctx.fill(); }
+    if (w.e) { ctx.strokeStyle = col.err; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(X[i], Y[i], 4.5, 0, 6.283); ctx.stroke(); }
+  }
+  if (st.sel >= 0 && W[st.sel].t <= t) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(X[st.sel], Y[st.sel], 8, 0, 6.283); ctx.stroke(); }
+  ctx.fillStyle = 'rgba(255,255,255,0.75)'; const px = PADL + (t - T0) / (T1 - T0) * (Wd - 10 - PADL); ctx.fillRect(Math.min(px, Wd - 10), 36, 1, H - 60);
+  const c = counts(t); st.counts = c;
+  const d = new Date(Math.min(t, S.last) * 60000);
+  document.getElementById('hud').innerHTML = `<b>${d.toISOString().slice(0, 10)}</b> · ${fmt(c.written)} warnings written · ${fmt(c.gone)} never spoken of again`;
+  const box = (n, k, sw) => `<div><div class="n">${fmt(n)}</div><div class="k">${sw ? `<span class="sw" style="${sw}"></span>` : ''}${k}</div></div>`;
+  document.getElementById('counts').innerHTML =
+    box(c.written, 'warnings written') +
+    box(c.open, 'waiting for a next word', 'background:var(--open);border:1px solid var(--line)') +
+    box(c.gone, 'nothing after: never spoken of again', 'background:var(--dot)') +
+    box(c.update, 'updated, never closed', 'background:var(--upd)') +
+    box(c.mute, 'cancelled, no reason given', 'border:2px solid var(--mute2)') +
+    box(c.reason, 'cancelled with a reason: passed, or found', 'background:var(--reason)') +
+    box(c.error, 'the keeper wrote: sent in error', 'background:var(--err)');
+  document.getElementById('scrub').value = Math.round((t - T0) / (T1 - T0) * 1000);
+}
+// sound: a short tone per warning (pitch by row), a bell for a reason, a click for a wordless cancel, a low note for an error
+let ac = null, lastSound = 0;
+function tone(f, dur, g, type = 'sine') {
+  if (!ac) return; const now = ac.currentTime; const o = ac.createOscillator(), v = ac.createGain();
+  o.type = type; o.frequency.value = f; v.gain.setValueAtTime(0, now); v.gain.linearRampToValueAtTime(g, now + 0.008); v.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+  o.connect(v).connect(ac.destination); o.start(now); o.stop(now + dur + 0.05);
+}
+function click() {
+  if (!ac) return; const n = ac.createBufferSource(), b = ac.createBuffer(1, 800, ac.sampleRate), d = b.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 6);
+  const v = ac.createGain(); v.gain.value = 0.18; n.buffer = b; n.connect(v).connect(ac.destination); n.start();
+}
+function sound(prev, t) {
+  if (!ac || ac.state !== 'running') return;
+  let budget = 6, rang = false;
+  for (let i = 0; i < W.length && budget > 0; i++) {
+    const w = W[i]; if (w.t > t) break;
+    if (w.t > prev) { tone(330 + 40 * (ROWS.length - ROWS.indexOf(rowOf(w.c))), 0.09, 0.025); budget--; }
+    if (w.l != null && w.f !== 'silence' && w.f !== 'update') {
+      const te = w.t + w.l; if (te > prev && te <= t) {
+        if (w.f === 'end-mute') click(); else if (w.f === 'end-error') tone(110, 1.2, 0.2, 'triangle');
+        else if (!rang) { tone(1318, 1.4, 0.07); tone(1975, 1.1, 0.03); rang = true; }
+        budget--;
+      }
+    }
+    if (w.e && w.t > prev) { tone(110, 1.2, 0.2, 'triangle'); budget--; }
+  }
+}
+// play: three months a second, quiet stretches skipped by the same speed
+let last = 0, raf = 0;
+function frame(ts) {
+  if (!st.playing) return;
+  const dt = last ? Math.min(0.1, (ts - last) / 1000) : 0; last = ts;
+  const prev = st.t; st.t = Math.min(T1, st.t + dt * 60 * 24 * 91);
+  sound(prev, st.t); draw();
+  if (st.t >= T1) { st.playing = false; playBtn(); return; }
+  raf = requestAnimationFrame(frame);
+}
+const pb = document.getElementById('play');
+const playBtn = () => { pb.textContent = st.playing ? '❚❚ Pause' : '▶ Play with sound'; pb.classList.toggle('on', st.playing) };
+pb.onclick = () => {
+  if (!ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)() } catch (e) { ac = null } }
+  if (ac && ac.state === 'suspended') ac.resume();
+  st.playing = !st.playing; if (st.t >= T1) st.t = T0; last = 0; playBtn(); if (st.playing) raf = requestAnimationFrame(frame);
+};
+document.getElementById('scrub').oninput = e => { st.t = T0 + (+e.target.value / 1000) * (T1 - T0); draw(); };
+document.getElementById('end').onclick = () => { st.playing = false; playBtn(); st.t = T1; draw(); };
+const DAY = 60 * 24;
+function when(m) { return new Date(m * 60000).toISOString().replace('T', ' ').slice(0, 16) + ' UTC' }
+function lagText(l) { return l < 60 ? `${l} min` : l < DAY ? `${(l / 60).toFixed(1)} h` : `${(l / DAY).toFixed(1)} days` }
+const FATE = {
+  'silence': 'Nothing. The keeper never wrote again about this warning. It expired, and the record keeps it as written.',
+  'update': 'An update, and then nothing. The warning was never closed.',
+  'end-mute': 'A cancel, with no reason the work can read.',
+  'end-safe': 'A cancel that says the person was found, located or taken into custody.',
+  'end-clear': 'A cancel that says the danger passed: lifted, all clear, resolved, reopened, restored.',
+  'end-error': 'A cancel that says the warning was sent in error.'
+};
+function card(i) {
+  st.sel = i; const w = W[i], c = document.getElementById('card');
+  const words = w.w == null ? '<span class="withheld">Text withheld here: it names or describes a person.</span>' : esc(w.w);
+  let after = FATE[w.f]; if (w.l != null && w.f !== 'silence') after += ` <b>${lagText(w.l)}</b> after the warning.`;
+  if (w.x) after += `<br><i>“${esc(w.x)}”</i>`;
+  if (w.e) after += '<br><b>The warning\'s own words say an earlier message was sent in error.</b>';
+  c.innerHTML = `<div class="meta">${when(w.t)} · ${esc(NAMES[w.c] || w.c)} · ${esc(w.a || 'agency not named')}${w.s ? ' · state FIPS ' + w.s : ''}</div><div class="words">${words}</div><div class="after"><b>What the keeper wrote after:</b> ${after}</div>`;
+  draw();
+}
+const esc = s => String(s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
+cv.addEventListener('click', e => {
+  const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  let best = -1, bd = 100;
+  for (let i = 0; i < W.length; i++) { if (W[i].t > st.t) break; const d = (X[i] - x) ** 2 + (Y[i] - y) ** 2; if (d < bd || (d === bd && W[i].f !== 'silence')) { bd = d; best = i; } }
+  if (best >= 0) card(best);
+});
+document.getElementById('hawaii').onclick = () => {
+  st.playing = false; playBtn();
+  const i = W.findIndex(w => w.t === S.hawaii.t && w.c === 'CDW');
+  st.t = S.hawaii.t + 60; card(i);
+  document.getElementById('card').insertAdjacentHTML('beforeend', `<div class="after">At ${when(S.hawaii.t)} the warning went to every phone in Hawaii. Its cancel followed five minutes later, at ${S.hawaii.cancel.slice(11, 19)} UTC, and carries no words at all. The correction went out as a new message at ${S.hawaii.correction.slice(11, 19)} UTC, 38 minutes after the warning: <i>“${esc(S.hawaii.correction_words)}”</i>. In the record, that correction names nothing and is tied to nothing.</div>`);
+};
+// drawers
+const F = S.fates;
+const DR = [
+  ['Heeded', 0, 'No message has a field for what its receivers did.', 'empty'],
+  ['Ignored', 0, 'No message has a field for what its receivers did not do.', 'empty'],
+  ['Never needed', 0, 'No message has a field for what the danger would have done.', 'empty'],
+  ['Sent in error', S.sent_in_error, `The one verdict the record keeps: ${F['end-error'] || 0} in a cancel, ${S.own_text_says_error} as a fresh message that names no earlier one (read by hand; two keepers wrote it twice).`, 'kept'],
+  ['Closed with a reason', (F['end-safe'] || 0) + (F['end-clear'] || 0), `${F['end-safe'] || 0} with a person found, ${F['end-clear'] || 0} with a danger passed. A reason, never a judgment of the warning.`, ''],
+  ['Closed with no reason', F['end-mute'] || 0, 'A cancel, and nothing the work can read as why.', ''],
+  ['Nothing after', (F['silence'] || 0) + (F['update'] || 0), `${fmt(F['silence'])} never spoken of again, ${fmt(F['update'])} updated and never closed.`, '']
+];
+document.getElementById('drawers').innerHTML = DR.map(([k, n, d, cl], j) => `<div class="drawer ${cl}" data-j="${j}"><div class="k">${k}</div><div class="n">${fmt(n)}</div><div class="d">${d}</div></div>`).join('');
+document.querySelectorAll('.drawer').forEach(el => el.onclick = () => {
+  const j = +el.dataset.j, out = document.getElementById('drawerout');
+  if (j < 3) { out.innerHTML = `<i>The drawer is empty. Of ${fmt(S.counts.warnings)} warnings, the record can put none here.</i>`; return; }
+  const pick = { 3: w => w.f === 'end-error' || w.e, 4: w => w.f === 'end-safe' || w.f === 'end-clear', 5: w => w.f === 'end-mute', 6: w => w.f === 'silence' || w.f === 'update' }[j];
+  const ids = W.map((w, i) => pick(w) && w.w != null ? i : -1).filter(i => i >= 0);
+  const i = ids[Math.floor(Math.random() * ids.length)];
+  st.t = T1; card(i);
+  out.innerHTML = `<i>One drawn at random from this drawer is in the card above. Open it again for another.</i>`;
+  document.getElementById('card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+// by-kind table
+const kinds = Object.entries(S.by_code).map(([c, v]) => { const n = Object.values(v).reduce((a, b) => a + b, 0); return [c, n, v] }).sort((a, b) => b[1] - a[1]);
+const pct = (a, n) => n ? Math.round(100 * a / n) + '%' : '';
+document.getElementById('kinds').innerHTML = '<tr><th>Kind</th><th>Warnings</th><th>Nothing after</th><th>Cancel, no reason</th><th>Cancel with a reason</th><th>Updated only</th></tr>' +
+  kinds.map(([c, n, v]) => `<tr><td>${esc(NAMES[c] || c)}</td><td>${fmt(n)}</td><td>${pct(v.silence || 0, n)}</td><td>${pct(v['end-mute'] || 0, n)}</td><td>${pct((v['end-safe'] || 0) + (v['end-clear'] || 0) + (v['end-error'] || 0), n)}</td><td>${pct(v.update || 0, n)}</td></tr>`).join('');
+const set = (id, v) => document.getElementById(id).textContent = v;
+set('fetched', S.fetched); set('msgs', fmt(S.messages)); set('tcode', fmt(S.counts.test_by_code)); set('twords', fmt(S.counts.test_by_words));
+set('admin', fmt(S.counts.admin_or_uncoded)); set('links', fmt(S.followups_linked)); set('unl', fmt(S.followup_refs_unlinked)); set('wh', fmt(S.counts.withheld));
+layout(); st.t = T1; draw();
+window.addEventListener('resize', () => { layout(); draw(); });
+st.ready = true;
+window.__KW = { state: st, setT: t => { st.t = t; draw(); }, card, T0, T1, counts };
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>

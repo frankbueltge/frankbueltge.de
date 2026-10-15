@@ -48,12 +48,14 @@ describe('NAMING.catalogues', () => {
  *  from turning a door link into a scroll to nowhere. */
 describe('NAMING.doors tour links', () => {
   const TOUR_TARGETS: Record<string, string> = {
-    // The three narrative tours were retired with the v3 pyramid (2026-08-12): what each of them
-    // walked a reader through is the figure on that practice's station sheet, so the door points
-    // there. The old routes 301 to the same anchor (public/_redirects).
+    // The three narrative tours were retired with the v3 pyramid (2026-08-12); the doors then
+    // pointed at the figure on each station sheet. Since the v3 practice stations (2026-09-01)
+    // only the Atelier keeps a figure — its line map, still at /atelier#figure — while the gate
+    // strip and the stage floor left with the sheets, so the Field's and the Studio's doors lead
+    // into their register rooms. The old tour routes 301 to the same targets (public/_redirects).
     ulysses: '/atelier#figure',
-    meridian: '/field#figure',
-    ensemble: '/studio#figure',
+    meridian: '/field/instruments',
+    ensemble: '/studio/works',
   }
 
   it('gives every practice door its tour, and The Middle none', () => {
@@ -181,15 +183,29 @@ describe('NAMING.triptych', () => {
  * `eyebrow` had been, and nothing failed, because nothing was checking. The comment in
  * src/pages/index.astro went on describing an eyebrow that was no longer rendered. This test is
  * what makes the third time impossible.
+ *
+ * 2026-10-11: the name line moved. The entrance became an edition whose masthead is the standing
+ * question alone, and the line the eyebrow carried — the person and the role — is the left end
+ * of the top bar, on every page (design handoff docs/design_handoff_homepage_ecology/README.md
+ * §1; the handoff names the line as one that must stay). The guard follows it there: the bar
+ * must render NAMING.eyebrow, and the entrance must be a page that mounts the bar.
  */
 describe('the entrance carries the name', () => {
-  const entrance = readFileSync(
-    fileURLToPath(new URL('../components/pages/OpsRoom.astro', import.meta.url)),
-    'utf8',
-  )
+  const read = (rel: string) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8')
+  const topBar = read('../components/TopBar.astro')
+  const page = read('../layouts/Page.astro')
+  const index = read('../pages/index.astro')
 
-  it('renders NAMING.eyebrow, which is where the person stands as a heading', () => {
-    expect(entrance).toContain('NAMING.eyebrow')
+  it('renders NAMING.eyebrow in the top bar, which is where the person stands on every page', () => {
+    expect(topBar).toContain('NAMING.eyebrow')
+    // both halves reach the markup: the bar splits the line to set it in two rows on a phone
+    expect(topBar).toContain('{person}')
+    expect(topBar).toContain('{role}')
+  })
+
+  it('mounts that bar on the entrance', () => {
+    expect(page).toContain('<TopBar />')
+    expect(index).toMatch(/<Page [^>]*>/)
   })
 
   it('keeps the person and the role in that eyebrow', () => {

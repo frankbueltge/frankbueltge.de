@@ -1,0 +1,153 @@
+{
+  "date": "2026-09-04",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-04T10:09:22Z",
+    "counts": {
+      "botwall": 25,
+      "gone_404": 2,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 268,
+      "other": 1,
+      "server_error": 1,
+      "unreachable": 3
+    },
+    "decided": 271,
+    "excluded_unverifiable": 29,
+    "gone": 2,
+    "gone_ci95": [
+      0.002,
+      0.0265
+    ],
+    "gone_rate": 0.0074,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.014
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-02",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "katu.com",
+        "first_seen": "20260902020000",
+        "http_code": 404,
+        "title": "What's next for Oregon attendance policy as Malheur County's truancy fines show gains",
+        "url": "https://katu.com/news/local/whats-next-for-oregon-attendance-policy-as-malheur-countys-truancy-fines-show-gains-absence-students-families-state-education-school-teachers-local-community-grades"
+      },
+      {
+        "class": "gone_404",
+        "domain": "kurv.com",
+        "first_seen": "20260902210000",
+        "http_code": 404,
+        "title": "Edouard, Now A Tropical Depression, Drenches Texas With Flash Flooding And Downed Trees – 710am KURV",
+        "url": "https://www.kurv.com/edouard-now-a-tropical-depression-drenches-texas-with-flash-flooding-and-downed-trees/"
+      }
+    ],
+    "sample_drawn_at": "2026-09-03T10:23:26Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 6225,
+      "replaced": 6305,
+      "trivial": 1464,
+      "update": 531
+    },
+    "day": "2026-09-03",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Ankit",
+          "Balyan"
+        ],
+        "after": "'Murder maar de sadak ke upar': Haryanvi singer-YouTuber Ankit Balyan's last reel before 18-bullet killing",
+        "before": "'Murder maar de sadak ke upar': Haryanvi singer-YouTuber Ankiit Balyann's last reel before 18-bullet killing",
+        "detected": "2026-09-03T04:17:28Z",
+        "domain": "hindustantimes.com",
+        "removed": [
+          "Ankiit",
+          "Balyann"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.hindustantimes.com/india-news/murder-maar-de-sadak-ke-upar-haryanvi-singer-youtuber-ankit-balyan-last-reel-before-18-bullet-killing-101787800811889.html",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Ramayana"
+        ],
+        "after": "Ramayana: Ranbir Kapoor and Yash starrer 'Ramayana' earns praise as 15-minute exclusive footage showcases one-eyed daitya, creatures, 'Hollywood-level VFX at par with The Lord of the Rings'- Report |",
+        "before": "Ranbir Kapoor and Yash starrer 'Ramayana' earns praise as 15-minute exclusive footage showcases one-eyed daitya, creatures, 'Hollywood-level VFX at par with The Lord of the Rings'- Report | Hindi Movie News",
+        "detected": "2026-09-03T10:34:10Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Hindi",
+          "Movie",
+          "News"
+        ],
+        "similarity": 0.906,
+        "url": "https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/news/ranbir-kapoor-and-yash-starrer-ramayana-earns-praise-as-15-minute-exclusive-footage-showcases-one-eyed-daitya-creatures-hollywood-level-vfx-at-par-with-the-lord-of-the-rings-report/articleshow/133564624.cms",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Alto",
+          "Shaam"
+        ],
+        "after": "Alto-Shaam: Greenfield Middle School enhances meal consistency and efficiency with Alto-Shaam's Origin multi-cook convection oven",
+        "before": "Gravity Global: Greenfield Middle School enhances meal consistency and efficiency with Alto-Shaam's Origin multi-cook convection oven",
+        "detected": "2026-09-03T18:34:40Z",
+        "domain": "wisbusiness.com",
+        "removed": [
+          "Gravity",
+          "Global"
+        ],
+        "similarity": 0.895,
+        "url": "https://www.wisbusiness.com/2026/gravity-global-greenfield-middle-school-enhances-meal-consistency-and-efficiency-with-alto-shaams-origin-multi-cook-convection-oven/",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 18725,
+      "PAGE_TEXTCHANGE": 144402,
+      "PAGE_TITLECHANGE": 55732,
+      "UNCHANGED_CONTENT": 779835
+    },
+    "title_changes_en": 14525,
+    "trace": [
+      {
+        "bytes_billed": 27262976,
+        "created": "1788516254352",
+        "job_id": "world_gdg_counts_20260903",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 251658240,
+        "created": "1788516259842",
+        "job_id": "world_gdg_titles_20260903",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-04T10:09:22Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-03.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

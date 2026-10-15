@@ -93,9 +93,11 @@ describe('the ladder of constitutions', () => {
     expect(PROTOCOL_LADDER[PROTOCOL_LADDER.length - 1]!.version).toBe(current)
   })
 
-  it('starts before the line began and never reaches past the fork', () => {
+  it('starts before the line began', () => {
     expect(PROTOCOL_LADDER[0]!.date <= LINE_END).toBe(true)
-    for (const step of PROTOCOL_LADDER) expect(step.date <= LINE_RESUMED).toBe(true)
+    // Until v7 no rung postdated the fork's restoration, and this test held the whole ladder
+    // under LINE_RESUMED. v7 (2026-08-30) rightly continues the trunk past that date — the
+    // fork froze the nightly line at v3, never the trunk — so only the origin is asserted.
   })
 })
 

@@ -3,6 +3,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import type { TellData } from '@/lib/tell/types'
 import data from '@/data/tell/latest.json'
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -58,17 +59,15 @@ const txt = {
 }
 ---
 
-<main id="main" class="flex-1">
-<div class="mx-auto max-w-2xl px-4 py-14">
-  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+<MethodSheet title={txt.h1} workHref={workUrl} workLabel={txt.toWork}>
 
-  <section class="mb-10 border border-line bg-panel/60 p-5">
-    <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{txt.revealHead}</h2>
+  <section class="sheet-reveal mb-10">
+    <h2 class="kicker mb-2">{txt.revealHead}</h2>
     <p class="leading-relaxed">{txt.reveal}</p>
   </section>
 
   <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s1}</h2><p class="leading-relaxed text-fg-muted">{txt.s1body}</p>
-    <p class="mt-2"><a href={d.source.url} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{d.source.url}</a></p>
+    <p class="mt-2"><a href={d.source.url} class="sheet-link" rel="noopener">{d.source.url}</a></p>
   </section>
 
   <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s2}</h2><p class="leading-relaxed text-fg-muted">{txt.s2body}</p></section>
@@ -77,7 +76,7 @@ const txt = {
     <h2 class="mb-2 font-semibold">{txt.s3}</h2>
     <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
     <p class="mt-2"><a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/tell"
-      class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/tell</a></p>
+      class="sheet-link" rel="noopener">→ pipelines/tell</a></p>
   </section>
 
   <section class="mb-8 border-l-2 border-line pl-4">
@@ -97,6 +96,4 @@ const txt = {
     <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
   </section>
 
-  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
-</div>
-</main>
+</MethodSheet>

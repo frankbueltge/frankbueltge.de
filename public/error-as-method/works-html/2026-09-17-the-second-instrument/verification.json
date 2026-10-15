@@ -1,0 +1,52 @@
+{
+ "session": 91,
+ "date": "2026-09-17",
+ "all_pass": true,
+ "checks": [
+  {
+   "check": "S90 reach reproduced from the committed corpus",
+   "pass": true,
+   "detail": "{'base': 0.76, 'narrow': 34.24, 'wide': 50.91} == {'base': 0.76, 'narrow': 34.24, 'wide': 50.91}"
+  },
+  {
+   "check": "Session 88's party terms read from its results.json",
+   "pass": true,
+   "detail": "26 terms, first three ['user agent', 'user agents', 'browser']"
+  },
+  {
+   "check": "handreading.json 17 YES / 23 NO / precision 0.425",
+   "pass": true,
+   "detail": "17 YES, 23 NO, 40 rows, precision 0.425"
+  },
+  {
+   "check": "all 40 verdicts matched to a population row",
+   "pass": true,
+   "detail": "40 scored, 0 unmatched"
+  },
+  {
+   "check": "the reader's base rate recomputed from the rows",
+   "pass": true,
+   "detail": "0.425"
+  },
+  {
+   "check": "population is 660 B-FORM AGENTLESS rows of the Act",
+   "pass": true,
+   "detail": "660 rows"
+  },
+  {
+   "check": "PREDICTIONS.md was committed before validate.py",
+   "pass": true,
+   "detail": "53889c1cf249 (predictions) is an ancestor of c05433cf2279 (validate.py)"
+  },
+  {
+   "check": "rule literals in results.json are byte-identical to the module's",
+   "pass": true,
+   "detail": "four literals compared"
+  },
+  {
+   "check": "no row fires R1 without firing R2 (R1 is the stricter rule)",
+   "pass": true,
+   "detail": "0 exceptions"
+  }
+ ]
+}

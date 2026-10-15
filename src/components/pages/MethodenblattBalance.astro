@@ -2,24 +2,22 @@
 /** Method sheet for Balance (Werkgruppe §3.5 duty). Plain English, static. */
 import data from '@/data/balance/latest.json'
 import type { BalanceData } from '@/lib/balance/types'
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
 
 const d = data as unknown as BalanceData
 const dims = Object.entries(d.method.dimensions)
 ---
 
-<main id="main" class="flex-1">
-<article class="mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-10">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Method sheet</p>
-    <h1 class="mt-1 text-3xl font-bold tracking-[-0.02em]">Balance</h1>
+<MethodSheet title="Balance" kicker="Method sheet" wide>
+  <div class="-mt-6 mb-10">
     <p class="mt-2 text-fg-muted">
       Method {d.method.version} since {d.method.since}. Spec and calibration record:
       <code class="text-xs">docs/superpowers/specs/2026-08-14-the-balance-design.md</code> in the site repository.
     </p>
-  </header>
+  </div>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Source and pool</h2>
+    <h2 class="kicker">Source and pool</h2>
     <p class="mt-3 text-sm text-fg-muted">
       The last 24 hours of GDELT's raw 15-minute GKG 2.1 files (96 static downloads from
       data.gdeltproject.org — no API, no key; shared fetch layer with the newspool tool). Articles
@@ -33,7 +31,7 @@ const dims = Object.entries(d.method.dimensions)
   </section>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The two pools and the gap</h2>
+    <h2 class="kicker">The two pools and the gap</h2>
     <p class="mt-3 text-sm text-fg-muted">
       For a country C: the <strong>self pool</strong> holds articles whose source country is C and
       that mention C; the <strong>foreign pool</strong> holds articles about C from every other
@@ -48,11 +46,11 @@ const dims = Object.entries(d.method.dimensions)
   </section>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Dimensions (fixed v1 set)</h2>
+    <h2 class="kicker">Dimensions (fixed v1 set)</h2>
     <div class="mt-3 overflow-x-auto">
       <table class="w-full border-collapse text-sm">
         <thead>
-          <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+          <tr class="border-b border-line text-left kicker">
             <th class="py-2 pr-3 font-medium">Dimension</th>
             <th class="py-2 pr-3 font-medium">GCAM code</th>
             <th class="py-2 font-medium">Unit</th>
@@ -81,7 +79,7 @@ const dims = Object.entries(d.method.dimensions)
   </section>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Known limits, disclosed</h2>
+    <h2 class="kicker">Known limits, disclosed</h2>
     <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-fg-muted">
       <li>Document-level scores: co-mentioned countries share one article tone (why pools have floors and CIs).</li>
       <li>Tone is a bag-of-words property of the language, not a stance measure: an angry defence of a country scores as dark as an attack on it. The instrument therefore never claims approval or hostility — only register.</li>
@@ -94,7 +92,7 @@ const dims = Object.entries(d.method.dimensions)
   </section>
 
   <section class="mb-10">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Archive and reproducibility</h2>
+    <h2 class="kicker">Archive and reproducibility</h2>
     <p class="mt-3 text-sm text-fg-muted">
       One JSON per day under <code>src/data/balance/</code>, committed nightly by the
       counter-measurement workflow; committed day files are immutable — the pipeline refuses to
@@ -104,12 +102,11 @@ const dims = Object.entries(d.method.dimensions)
     </p>
   </section>
 
-  <footer class="border-t border-line pt-5 text-sm text-fg-muted">
+  <Fragment slot="foot">
     <p>
       Data © <a href="https://www.gdeltproject.org/" target="_blank" rel="noopener" class="underline decoration-line underline-offset-2 hover:text-fg">The GDELT Project</a>,
       used and republished with attribution per its terms of use. Daily archive JSONs: CC0.
       Back to <a href="/balance" class="underline decoration-line underline-offset-2 hover:text-fg">the instrument</a>.
     </p>
-  </footer>
-</article>
-</main>
+  </Fragment>
+</MethodSheet>

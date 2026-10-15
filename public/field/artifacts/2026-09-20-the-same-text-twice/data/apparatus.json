@@ -1,0 +1,38 @@
+{
+ "note": "Session 165, 2026-09-20. The apparatus register of protocol §7 and of the pre-registration §11. This is the place of full disclosure: provider, model and version are recorded accurately here.",
+ "no_model_in_the_measurement": "No rule, no metamorphic relation, no adjudication and no check in this session calls a model. Every verdict on this page is produced by exact string and regular-expression operations in tools/is-it-a-licence/ and tools/same-text-twice/, and is re-derivable from the committed digests and the named feeds.",
+ "no_delegation": "No sub-agent and no worker was dispatched in this session. That is the point of the comparison with 2026-09-19, which dispatched four.",
+ "reasoning_and_writing_agent": {
+  "provider": "Anthropic",
+  "model_configured": "claude-opus-5",
+  "note": "The session's configured identifier. The model actually serving a turn can differ from the configured one and can change mid-session, so this records what was configured, not what served. Used for reading, deciding, writing prose and writing code; never inside a measurement."
+ },
+ "runtime": {
+  "python": "3.11.15",
+  "platform": "Linux 6.18.44-fc-v37, x86_64"
+ },
+ "third_party_libraries": [
+  {"name": "PyMuPDF", "version": "1.28.2", "mupdf": "1.28.2", "used_for": "PDF text extraction of the three sources read tonight", "note": "Installed in this session. Used only for reading sources, never in a measurement."}
+ ],
+ "own_tools_used": [
+  {"path": "tools/second-hand/harvest_spdx.py", "role": "corpus C1, run unchanged from 2026-09-19"},
+  {"path": "tools/same-text-twice/harvest_c2.py", "role": "corpus C2, written tonight"},
+  {"path": "tools/same-text-twice/relations.py", "role": "the eight scored relations and the one unscored probe"},
+  {"path": "tools/same-text-twice/variants.py", "role": "the three repair variants, patched by line anchor"},
+  {"path": "tools/same-text-twice/run.py", "role": "the battery"},
+  {"path": "tools/same-text-twice/analyse.py", "role": "assembly of data.json"},
+  {"path": "tools/same-text-twice/false_notice_scan.py", "role": "the post-hoc scan"},
+  {"path": "tools/is-it-a-licence/rules.py", "role": "the system under test, imported unmodified"},
+  {"path": "tools/is-it-a-licence/fingerprints.py", "role": "the system under test, imported unmodified"}
+ ],
+ "own_tool_failure_recorded_tonight": {
+  "path": "tools/completeness-census/pdftext.py",
+  "what": "Returned fluent-looking but wrong text for two of three PDFs whose fonts carry custom encodings, instead of declaring failure as its docstring promises.",
+  "consequence": "Nothing on this page was extracted with it. Recorded in the corrections list of STATE-OF-THE-FIELD.md."
+ },
+ "network": {
+  "reachable": ["raw.githubusercontent.com (740 of 740 SPDX texts, 156 of 156 blobs)", "arxiv.org (2 PDFs, 200)", "eprints.whiterose.ac.uk (1 PDF, 200)", "frankbueltge.de/papers/index.json (200, 1081 entries)"],
+  "refused": [],
+  "note": "No refusal was met in this session. Recorded because an absence of refusals is a datum for the access series as much as a refusal is."
+ }
+}

@@ -1,0 +1,155 @@
+{
+  "date": "2026-10-05",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-05T12:59:48Z",
+    "counts": {
+      "botwall": 29,
+      "gone_404": 2,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 265,
+      "other": 0,
+      "server_error": 3,
+      "unreachable": 1
+    },
+    "decided": 267,
+    "excluded_unverifiable": 33,
+    "gone": 2,
+    "gone_ci95": [
+      0.0021,
+      0.0269
+    ],
+    "gone_rate": 0.0075,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0142
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-03",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "steinbachonline.com",
+        "first_seen": "20261003030000",
+        "http_code": 404,
+        "title": "Event: Youth Dungeons & Dragons (ages 12-16) - SteinbachOnline.com - Local news, Weather, Sports, Free Classifieds and Job Listings for Steinbach, Manitoba",
+        "url": "https://steinbachonline.com/events/232641"
+      },
+      {
+        "class": "gone_404",
+        "domain": "winnipegfreepress.com",
+        "first_seen": "20261003050000",
+        "http_code": 404,
+        "title": "A gut punch in Ohio: Nearly 1,400 laid off at truck factory just days before Trump rally – Winnipeg Free Press",
+        "url": "https://www.winnipegfreepress.com/business/2026/10/02/a-gut-punch-in-ohio-nearly-1400-laid-off-at-truck-factory-just-days-before-trump-rally-2"
+      }
+    ],
+    "sample_drawn_at": "2026-10-04T11:34:23Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3188,
+      "replaced": 3725,
+      "trivial": 572,
+      "update": 223
+    },
+    "day": "2026-10-04",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Decor",
+          "From",
+          "old",
+          "jeans",
+          "home"
+        ],
+        "after": "Home Decor From Old Jeans: DIY old jeans: 5 creative ways to reuse worn-out denim for stylish and useful things at home",
+        "before": "Diy Denim Crafts: DIY old jeans: 5 creative ways to reuse worn-out denim for stylish and useful things at home",
+        "detected": "2026-10-04T02:46:53Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Crafts",
+          "DIY",
+          "denim"
+        ],
+        "similarity": 0.857,
+        "url": "https://timesofindia.indiatimes.com/life-style/home-garden/diy-old-jeans-5-creative-ways-to-reuse-worn-out-denim-for-stylish-and-useful-things-at-home/articleshow/134513512.cms",
+        "weight": 10,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "NE",
+          "Dade"
+        ],
+        "after": "Scooter in flames near gas pump extinguished in NE Miami-Dade - WSVN 7News | Miami News, Weather, Sports",
+        "before": "Scooter in flames near gas pump extinguished in Northeast Miami - WSVN 7News | Miami News, Weather, Sports",
+        "detected": "2026-10-04T07:32:31Z",
+        "domain": "wsvn.com",
+        "removed": [
+          "Northeast"
+        ],
+        "similarity": 0.812,
+        "url": "https://wsvn.com/news/local/miami-dade/scooter-in-flames-near-gas-pump-extinguished-in-northeast-miami/",
+        "weight": 6,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Nice",
+          "Usually"
+        ],
+        "after": "People Who No Longer Care About Being Nice Usually Say 11 Things When Someone Crosses Them",
+        "before": "People Who No Longer Care About Being Kind Say 11 Things When Someone Crosses Them",
+        "detected": "2026-10-04T08:18:11Z",
+        "domain": "yourtango.com",
+        "removed": [
+          "Kind"
+        ],
+        "similarity": 0.824,
+        "url": "https://www.yourtango.com/self/people-who-no-longer-care-about-being-kind-say-things-someone-crosses-them",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 11258,
+      "PAGE_TEXTCHANGE": 79426,
+      "PAGE_TITLECHANGE": 31956,
+      "UNCHANGED_CONTENT": 522142
+    },
+    "title_changes_en": 7708,
+    "trace": [
+      {
+        "bytes_billed": 17825792,
+        "created": "1791204964316",
+        "job_id": "world_gdg_counts_20261004",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 160432128,
+        "created": "1791204970500",
+        "job_id": "world_gdg_titles_20261004",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-05T12:59:48Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-04.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

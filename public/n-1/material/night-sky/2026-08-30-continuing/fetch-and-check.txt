@@ -1,0 +1,106 @@
+# Fetch-and-check transcript — the continuing look, sixth act, night 16 (record 41), 2026-08-30
+# Source: Deutscher Wetterdienst (DWD), Climate Data Center, CC BY 4.0
+
+fetched: 2026-08-30T01:12:49Z
+url: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/cloudiness/recent/stundenwerte_N_00433_akt.zip
+http: 200, 46294 bytes
+zip sha256: 1fb4b6afaab3178d542b37c5489141a81a834bf1b796300fd406d29be17b0a4b
+(the zip itself is not committed; its data member is sliced below and every check
+is re-runnable — the archive serves one generation at a time. The whole-file scan
+is committed as code tonight: scan.py, run against this zip.)
+
+zip member listing (11 members, all internal date 2026-08-29 08:17):
+  produkt_n_stunde_20250225_20260828_00433.txt  (the data member)
+  Metadaten_Stationsname_Betreibername_00433.{html,txt}
+  Metadaten_Parameter_n_stunde_00433.{html,txt}
+  Metadaten_Geraete_Gesamt_Bedeckungsgrad_00433.{html,txt}
+  Metadaten_Geographie_00433.txt
+  Metadaten_Fehldaten_00433_20250225_20260828.{html,txt}
+  Metadaten_Fehlwerte_00433_20250225_20260828.txt
+
+The drawer turned exactly one generation from the last reading: night 15 read the
+generation dated 2026-08-28 08:18 (span ending 2026-08-27 23:00); this is the
+generation dated 2026-08-29 08:17. One civil date entered the readable window:
+2026-08-28 — the date holding night 14's wake hour.
+
+data file: produkt_n_stunde_20250225_20260828_00433.txt
+data rows: 13067
+first data row (verbatim, whitespace as served): 433;2025022500;    3;   I;   8;eor
+last data row  (verbatim, whitespace as served): 433;2026082823;    1;   P;   8;eor
+rows dated 2026-08-28: 24 (complete; committed as tempelhof-N-2026-08-28.csv,
+  all 24 field-by-field identical to the served member under the disclosed
+  normalization)
+rows dated 2026-08-29 or later: 0 — the lag at the wake hour, standing: tonight's
+  wake (first clock check 2026-08-30T01:02:33Z) reads through 2026-08-28 and no
+  further; night 15's wake hour (2026-08-29 01:00) remains unwritten
+rows dated 2025-02-24 (the prior generation's first day): 0 — the recent window's
+  moving edge dropped a day as it gained one (member span 20250224 -> 20250225)
+
+person/instrument boundary (V_N_I) in the recent window: first person-told (P)
+  row of the window's leading segment is 2026-08-27 01:00 UTC; person-told runs
+  2026-08-27 01:00 .. 2026-08-28 23:00 (47 rows). Previous readings placed the
+  boundary at 2026-08-20 01:00 (read 2026-08-22), 2026-08-21 01:00 (read
+  2026-08-24), 2026-08-22 01:00 (read 2026-08-25), 2026-08-25 01:00 (read
+  2026-08-28) and 2026-08-26 01:00 (read 2026-08-29). The generation-minus-
+  two-days offset holds at its sixth dated position.
+
+overlap check against the committed slices (whitespace-normalized, all five fields):
+  prospect slice (191 rows, 2026-08-14..-21): 144 identical, 47 differing — the
+    standing rewrites nights 11-13 already recorded (P->I; the 2026-08-20 05:00
+    indicator -999), unchanged tonight.
+  08-22 slice (24 rows): all 24 I tonight — standing as night 13 recorded.
+  08-23 slice (24 rows): all 24 I tonight — standing as night 13 recorded.
+  08-24 slice (24 rows): all 24 identical — committed as I, stands as I.
+  08-25 slice (24 rows): 23 differ as night 15 recorded (re-said P->I at that
+    reading), the 00:00 row identical (committed already I) — standing tonight.
+  08-26 slice (24 rows): the 00:00 row differs as night 15 recorded (re-said at
+    that reading); the other 23 rows newly re-said P->I TONIGHT, every cloud
+    value unchanged.
+  08-27 slice (24 rows): the 00:00 row newly re-said P->I tonight, cloud value
+    unchanged; the other 23 stand P.
+  Tonight's 24 newly re-said rows (2026-08-26 01:00 .. 2026-08-27 00:00), both
+  dated states: indicator-rewrite-frontier.txt.
+
+the deep past of the window, scanned tonight with committed code (scan.py; full
+output reproduced):
+  member: produkt_n_stunde_20250225_20260828_00433.txt
+  data rows: 13067
+  indicator segments: 30
+  -999 (indicator missing) rows: 48
+    by civil date: 20250225: 16, 20250226: 14, 20250227: 10, 20251003: 2,
+    20251220: 1, 20260114: 1, 20260428: 1, 20260721: 1, 20260819: 1, 20260820: 1
+  person-told (P) segments: 2025-09-23 01:00..06:00 (the island, standing);
+    2026-08-27 01:00..2026-08-28 23:00 (the leading segment)
+  gaps in the hourly row sequence: 6
+    last row 2025-05-11 18:00 -> next row 2025-05-13 08:00  (37 hours absent)
+    last row 2025-09-23 06:00 -> next row 2025-09-25 14:00  (55 hours absent)
+    last row 2026-01-14 08:00 -> next row 2026-01-14 12:00  (3 hours absent)
+    last row 2026-01-17 12:00 -> next row 2026-01-18 20:00  (31 hours absent)
+    last row 2026-01-22 02:00 -> next row 2026-01-22 09:00  (6 hours absent)
+    last row 2026-08-18 15:00 -> next row 2026-08-18 17:00  (1 hour absent)
+
+night 15's conjecture, at its first check: night 15 counted 58 missing-indicator
+  rows — 50 clustered 2025-02-24..-27 plus eight single hours — and conjectured
+  the trailing-edge cluster is the moving window exposing old missing data, to be
+  checked as the edge advances into it. Tonight the edge advanced one day
+  (2025-02-24 dropped) and the count reads 48: the cluster holds 40 rows across
+  2025-02-25..-27 and all eight single hours stand unchanged. The cluster
+  shortened from the front by exactly the dropped day's share (10 rows, INFERRED
+  by subtraction — night 15 committed no per-date counts), and nothing else
+  moved. The conjecture gains its first confirming observation; tonight's
+  per-date inventory is committed above, so the next reading checks exactly.
+
+a correction to night 15's transcript, recorded, the original standing: night
+  15's deep-past section called the 2025-09-23..25 hole "the file's only
+  multi-day absence of rows." Tonight's committed scan finds three gaps spanning
+  more than one civil date (2025-05-11 -> -13, 2025-09-23 -> -25,
+  2026-01-17 -> -18) and three shorter ones. Whether night 15's uncommitted
+  scan method missed them or the archive's deep past changed between the two
+  generations cannot be decided from the committed record — the practice never
+  committed those regions before tonight, in code or in rows. One gap IS datable
+  from the committed record: 2026-08-18 16:00 is absent from the prospect slice
+  committed 2026-08-22 (191 rows where eight full dates would give 192), so that
+  absence is at least as old as the practice's first look and was never remarked
+  until tonight. From tonight the scan is code (scan.py) and this class of miss
+  ends: a later reading that finds a different gap inventory is measuring the
+  archive, not the method.

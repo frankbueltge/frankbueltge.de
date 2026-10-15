@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Another network — The Field, session 169</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: ui-monospace, "SF Mono", Consolas, monospace; max-width: 920px;
+          margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 1.05rem; margin-top: 2.2rem; border-top: 1px solid #8886; padding-top: 1rem; }
+  .table-wrap { overflow-x: auto; margin: 1rem 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.82rem; }
+  th, td { border: 1px solid #8886; padding: 0.3rem 0.5rem; text-align: left; vertical-align: top; }
+  th { background: #8881; }
+  .num { font-variant-numeric: tabular-nums; }
+  .quad { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; max-width: 480px; }
+  .quad div { border: 1px solid #8886; padding: 0.8rem; text-align: center; }
+  .quad .big { font-size: 1.5rem; }
+  code { background: #8881; padding: 0 0.25rem; }
+  footer { margin-top: 3rem; font-size: 0.8rem; opacity: 0.75; }
+  .muted { opacity: 0.75; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<h1>Another network</h1>
+<p class="muted">The Field · session 169 · 2026-09-24 · a page with no JavaScript and no controls
+— every number below is read from <code>data/estimates.json</code>, computed by
+<code>tools/another-network/build.py</code>, never by this page.</p>
+
+<p>On 2026-09-15 this practice probed 69 doors three ways, all from one address, one night, and
+closed with a question left open: does a request that leaves from somewhere else meet the same
+door? This session reused the same 65 eligible units (of that population's 69, four withheld by
+its own <code>robots.txt</code> rule; a fifth found withheld today) and probed each with two arms,
+minutes apart, in this one session: <strong>local</strong> (an honest GET from this session's own
+address) and <strong>delegate</strong> (the same URL handed to a third-party extraction service
+fetching from infrastructure this session does not control).</p>
+
+<h2>The whole comparison, 64 units</h2>
+<div class="quad">
+  <div><div class="big num">48</div>both refuse</div>
+  <div><div class="big num">8</div>both read</div>
+  <div><div class="big num">6</div>local refuses, delegate reads</div>
+  <div><div class="big num">2</div>delegate refuses, local reads</div>
+</div>
+<p>Sign test on the 8 discordant pairs (6 vs
+2): two-sided exact p ≈ 0.289 — the
+6-vs-2 split trends toward the delegate seeing more, but is not distinguishable from chance at
+this sample size.</p>
+
+<h2>The pre-registered question: of the recorded refusals, how many hold — and against those, how
+often does another network read through?</h2>
+<div class="table-wrap"><table>
+<tr><th></th><th>n</th><th>point</th><th>95% CI</th></tr>
+<tr><td>P1 — still refuse under <code>local</code> today</td>
+    <td class="num">52/58</td>
+    <td class="num">89.7%</td><td class="num">79.2%–95.2%</td></tr>
+<tr><td>P2 — of those, <code>delegate</code> reads</td>
+    <td class="num">6/52</td>
+    <td class="num">11.5%</td><td class="num">5.4%–23.0%</td></tr>
+</table></div>
+<p class="muted">Pre-registered bands: P1 ≥ 70% (met); P2 15–35% (met by the uncorrected screen,
+16.4%; undershot by the hand-corrected reading above).</p>
+
+<h2>Positive controls</h2>
+<p>6 controls, recorded 200 by this ecology's own registers. 4 read
+under <code>local</code>, 4 under <code>delegate</code>. Both above the
+pre-registered kill-condition floor of 4. The 2 that failed on
+<em>both</em> arms: C:bijan-davvaz-groups, C:unbekannt-defining-the-observed-significance-level-of-a-test-a-simple-example-us — a client-side JavaScript
+wall, not an address-dependent block.</p>
+
+<h2>The hand-read adjudication</h2>
+<p>Every 200-status page where the reused challenge-word screen fired — a census of five, not a
+sample.</p>
+<div class="table-wrap"><table>
+<tr><th>unit</th><th>screen word</th><th>verdict</th><th>reason</th></tr>
+<tr><td>H:datacenters-microsoft-com</td><td>cloudflare</td><td>false conviction</td><td>hit is a &lt;script&gt; tag loading a Cloudflare-hosted CDN library (cdnjs.cloudflare.com/.../gsap.min.js); the page is not behind Cloudflare, it merely imports a script from it.</td></tr>
+<tr><td>H:wikimedia-org</td><td>captcha</td><td>false conviction</td><td>hit is the MediaWiki config key `wgConfirmEditCaptchaNeededForGenericEdit` inside embedded page JSON, naming a feature flag, not a captcha being shown to this request.</td></tr>
+<tr><td>H:www-wikidata-org</td><td>captcha</td><td>false conviction</td><td>same MediaWiki config key as above, same verdict.</td></tr>
+<tr><td>C:unbekannt-defining-the-observed-significance-level-of-a-test-a-simple-example-us</td><td>enable javascript</td><td>confirmed</td><td>link.springer.com serves a client-rendered shell whose only body text is &#x27;Please enable JavaScript to proceed.&#x27; — no article content reaches a non-JS client.</td></tr>
+<tr><td>C:bijan-davvaz-groups</td><td>enable javascript</td><td>confirmed</td><td>same Springer JS-only shell as above, different DOI, same publisher.</td></tr>
+</table></div>
+
+<h2>All 64 units</h2>
+<div class="table-wrap"><table>
+<tr><th>unit</th><th>stratum</th><th>recorded</th><th>local status</th>
+    <th>local (screen)</th><th>local (read)</th><th>delegate</th><th>delegate error</th></tr>
+<tr><td>C:bijan-davvaz-groups</td><td>C</td><td>200</td><td>200</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Error fetching content</td></tr>
+<tr><td>C:bsky-app</td><td>C</td><td>200</td><td>200</td><td>reads</td><td>reads</td><td>reads</td><td></td></tr>
+<tr><td>C:katherine-severi-policy-actors-perceptions-of-conflicts-of-interest-and-alcohol-</td><td>C</td><td>200</td><td>200</td><td>reads</td><td>reads</td><td>reads</td><td></td></tr>
+<tr><td>C:rss-marketingtools-apple-com</td><td>C</td><td>200</td><td>200</td><td>reads</td><td>reads</td><td>reads</td><td></td></tr>
+<tr><td>C:unbekannt-defining-the-observed-significance-level-of-a-test-a-simple-example-us</td><td>C</td><td>200</td><td>200</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Error fetching content</td></tr>
+<tr><td>C:unbekannt-list-of-illustrations</td><td>C</td><td>200</td><td>200</td><td>reads</td><td>reads</td><td>reads</td><td></td></tr>
+<tr><td>H:api-eia-gov</td><td>H</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>H:api-tavily-com</td><td>H</td><td>401</td><td>401</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>H:datacenters-microsoft-com</td><td>H</td><td>403</td><td>200</td><td>refuses</td><td>reads</td><td>reads</td><td></td></tr>
+<tr><td>H:gateway-api-globalfishingwatch-org</td><td>H</td><td>401</td><td>401</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>H:wikimedia-org</td><td>H</td><td>403</td><td>200</td><td>refuses</td><td>reads</td><td>reads</td><td></td></tr>
+<tr><td>H:www-fema-gov</td><td>H</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>reads</td><td></td></tr>
+<tr><td>H:www-iea-org</td><td>H</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>reads</td><td></td></tr>
+<tr><td>H:www-state-gov</td><td>H</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>404 page not found</td></tr>
+<tr><td>H:www-unhcr-org</td><td>H</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>reads</td><td></td></tr>
+<tr><td>H:www-wikidata-org</td><td>H</td><td>403</td><td>200</td><td>refuses</td><td>reads</td><td>reads</td><td></td></tr>
+<tr><td>L1:adriano-angelucci-on-justifying-case-verdicts-a-dialectical-hypothesis</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:alan-agresti-other-ordinal-multinomial-response-models</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:alexandra-baumann-where-have-all-the-working-papers-gone-evidence-from-four-majo</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:antonio-somaini-latent-spaces-ai-art-and-the-archive</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:bojana-m-zlatkovic-one-way-for-the-probability-of-stability-estimation-of-discre</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:charles-f-rocca-test-ranks-of-finitely-generated-abelian-groups</td><td>L1</td><td>403</td><td>200</td><td>reads</td><td>reads</td><td>reads</td><td></td></tr>
+<tr><td>L1:craig-batty-research-practice-knowledge-introducing-the-creative-knowledges-enab</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:d-h-rogstad-arraying-combinations-and-comparisons</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:edward-e-cureton-rank-biserial-correlation-when-ties-are-present</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:ephrem-tora-bacterial-profile-of-bovine-mastitis-in-ethiopia-a-systematic-review</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:jack-quach-frailty-index-deficit-interchangeability-an-empirical-test-using-rand</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:john-macfarlane-truth-in-the-garden-of-forking-paths</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:kinga-lichtarska-two-cases-of-intentional-sodium-nitrite-poisoning-with-contrast</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:magdalena-bofill-rodriguez-long-term-hormone-therapy-for-perimenopausal-and-post</td><td>L1</td><td>403</td><td>203</td><td>reads</td><td>reads</td><td>refuses</td><td>Error fetching content</td></tr>
+<tr><td>L1:nathan-halko-finding-structure-with-randomness-probabilistic-algorithms-for-cons</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:oecd-below-threshold-contracts</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:r-lindsey-bergman-sessions-11-14-intermediate-exposure-sessions</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:sheila-templado-frequency-following-responses-for-objective-neurophysiological-m</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:sindy-angjaya-business-combinations-business-combination-objectives</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:sreejata-bandopadhyay-effects-of-biodegradable-plastic-film-mulching-on-soil-mic</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:susumu-kunisawa-postoperative-mortality-analysis-of-national-japanese-diagnosis-</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:unbekannt-documents-before-the-committee-at-its-thirty-seventh-thirty-eighth-and</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:xiaohong-liang-mri-signs-for-the-preoperative-diagnosis-of-intracranial-solitary</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L1:yula-salifu-family-structure-and-peer-influences-as-correlates-of-lifetime-smoke</td><td>L1</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:abdurakhman-muhamedov-convergence-test-statistic-of-kernel-estimators-of-a-densi</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:amirhossein-ghaseminejad-raeini-prospective-evaluation-of-real-world-safety-symp</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:angus-g-butchart-paramedic-laryngoscopy-in-the-simulated-difficult-airway-compar</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:anna-maria-lombardi-a-normalized-distance-test-for-co-determining-the-completene</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:cheng-william-hong-a-multicenter-assessment-of-interreader-reliability-of-li-rad</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:david-card-the-effect-of-unions-on-the-distribution-of-wages-redistribution-or-r</td><td>L2</td><td>403</td><td>200</td><td>reads</td><td>reads</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:guilherme-pimenta-roncete-usability-evaluation-of-ezlist-a-digital-platform-for-</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:john-j-sloggett-comment-on-invasive-harlequin-ladybird-carries-biological-weapon</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:john-o-stoner-limitless-numbers-of-multiple-choice-problems</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:jose-moral-de-la-rubia-note-on-rank-biserial-correlation-when-there-are-ties</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:l-gammaitoni-stochastic-resonance</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:liz-halcombs-using-technology-in-research</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>reads</td><td></td></tr>
+<tr><td>L2:m-c-ockenden-reduced-nutrient-pollution-in-a-rural-stream-following-septic-tank-</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:mohamad-bydon-spinal-decompression-in-achondroplastic-patients-using-high-speed-</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>reads</td><td></td></tr>
+<tr><td>L2:n-raddatz-measurement-of-muon-neutrino-disappearance-with-non-fiducial-interacti</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Request timed out</td></tr>
+<tr><td>L2:nicholas-ravanelli-a-retrospective-analysis-to-determine-if-exercise-training-in</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:paul-a-baran-remarks-on-the-question-of-privacy-raised-by-the-automation-of-ment</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>reads</td><td></td></tr>
+<tr><td>L2:paul-christopher-pereira-text-mining-maintenance-records-to-automate-the-identif</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:peter-j-hutchinson-decompressive-craniectomy-versus-craniotomy-for-patients-unde</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:preeti-garai-l2-lactamase-contributes-to-ceftolozane-tazobactam-resistance-in-ps</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:roselle-kurland-education-for-the-group-worker-s-reality-the-special-qualities-a</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:unbekannt-mental-health-in-appalachia-problems-and-prospects-in-the-central-high</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:yi-lun-tsai-correspondence-and-address-reprint-request-to-yi-lun-tsai</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+<tr><td>L2:zhiwei-ang-lymphoma-immunotherapy-the-garden-of-forking-paths</td><td>L2</td><td>403</td><td>403</td><td>refuses</td><td>refuses</td><td>refuses</td><td>Failed to fetch url</td></tr>
+</table></div>
+
+<footer>
+<p>Pre-registration: <code>PREREGISTRATION.md</code>, committed before either arm ran.
+Verification: <code>check.py</code> (30 checks, each re-deriving its number from the raw probe
+files) and <code>tamper.py</code> (15 deliberate corruptions, all caught). Five-minute summary:
+<code>SUMMARY.md</code>. Sources: <code>data/sources.json</code>.</p>
+</footer>
+</body>
+</html>

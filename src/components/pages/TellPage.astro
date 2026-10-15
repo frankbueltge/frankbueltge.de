@@ -9,6 +9,9 @@ import type { TellData } from '@/lib/tell/types'
 import { foldStr, foldRound, num1 } from '@/lib/tell/format'
 import { PCHART_W, PCHART_H, yearAreaPath, yearLinePath } from '@/lib/praemie/chart'
 import data from '@/data/tell/latest.json'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -28,10 +31,9 @@ const cgX = xMax > xMin ? ((d.chatgpt_year - xMin) / (xMax - xMin)) * PCHART_W :
 
 <main id="main" class="flex-1">
 <article class="tell mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-10">
-    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">Delve into the intricate realm</h1>
+  <SheetHead title="Delve into the intricate realm">
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'tl.sub')}</p>
-  </header>
+  </SheetHead>
 
   <section class="mb-12 flex items-baseline gap-4">
     <p class="text-[clamp(40px,8vw,72px)] font-bold leading-none tabular-nums">{foldRound(h.fold)}</p>
@@ -43,7 +45,7 @@ const cgX = xMax > xMin ? ((d.chatgpt_year - xMin) / (xMax - xMin)) * PCHART_W :
   </section>
 
   <section class="mb-12">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="kicker">
       {de ? 'Maschinen-Sprech-Index in PubMed-Abstracts' : 'Machine-speak index in PubMed abstracts'}
     </p>
     <svg viewBox={`0 0 ${PCHART_W} ${PCHART_H}`} class="mt-3 w-full overflow-visible text-fg-faint" role="img"
@@ -58,7 +60,7 @@ const cgX = xMax > xMin ? ((d.chatgpt_year - xMin) / (xMax - xMin)) * PCHART_W :
   </section>
 
   <section class="mb-12">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Die Tells' : 'The tells'}</p>
+    <p class="kicker">{de ? 'Die Tells' : 'The tells'}</p>
     <ul class="mt-3 divide-y divide-line/60 border-t border-line/60 font-mono text-sm">
       {d.markers.map((m) => (
         <li class="flex items-baseline justify-between py-2">
@@ -74,7 +76,7 @@ const cgX = xMax > xMin ? ((d.chatgpt_year - xMin) / (xMax - xMin)) * PCHART_W :
   </section>
 
   <section class="mb-12 border-t border-line pt-6">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="kicker">
       {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
     </p>
     <ul class="mt-3 space-y-2 text-sm text-fg-muted">
@@ -98,15 +100,15 @@ const cgX = xMax > xMin ? ((d.chatgpt_year - xMin) / (xMax - xMin)) * PCHART_W :
     </p>
   </section>
 
-  <footer class="mt-12 border-t border-line pt-6">
+  <SheetFoot>
     <p class="font-mono text-xs text-fg-faint">
       {de
         ? `Quelle: ${d.source.name}. Marker = ein Proxy; auch Menschen schreiben so — der kollektive Sprung ist der Fingerabdruck, nicht das einzelne Paper.`
         : `Source: ${d.source.name}. Markers are a proxy; humans write this way too — the collective jump is the fingerprint, not any single paper.`}
     </p>
     <nav class="mt-2">
-      <a href={methodUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">{t(locale, 'prot.method')} →</a>
+      <a href={methodUrl} class="sheet-link">{t(locale, 'prot.method')} →</a>
     </nav>
-  </footer>
+  </SheetFoot>
 </article>
 </main>

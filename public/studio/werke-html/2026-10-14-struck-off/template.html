@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Struck Off</title>
+<meta name="description" content="Every asteroid ever placed on JPL's Sentry impact list since 2002, in the order each was first seen: 3,581 warnings struck off, 2,223 still standing, most of them kept because nobody has seen the object since. With sound.">
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1c1a;--mute:#6d675d;--line:#c9c2b4;--warm:#c2410c;--warm2:#ea580c;--struck:#8a8378;--cold:#2b5f8a;--card:#fffdf8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121212;--ink:#ece8df;--mute:#9a9488;--line:#3a3833;--warm:#fb923c;--warm2:#fdba74;--struck:#6b665e;--cold:#7fb3dd;--card:#1c1b19}}
+:root[data-theme="dark"]{--bg:#121212;--ink:#ece8df;--mute:#9a9488;--line:#3a3833;--warm:#fb923c;--warm2:#fdba74;--struck:#6b665e;--cold:#7fb3dd;--card:#1c1b19}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font:16px/1.55 ui-serif,Georgia,"Times New Roman",serif}
+main{max-width:1040px;margin:0 auto;padding:28px 16px 64px}
+h1{font:600 clamp(34px,7vw,64px)/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.04em;margin:0 0 .25em;text-decoration:line-through;text-decoration-thickness:.06em;text-decoration-color:var(--warm)}
+h2{font:600 15px/1.3 ui-sans-serif,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;margin:2.2em 0 .6em;color:var(--mute)}
+.sub{font-size:clamp(17px,2.4vw,21px);max-width:44em;margin:0 0 1.2em}
+p{max-width:44em}
+.mono,.ui{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 8px}
+button{font:600 13px ui-sans-serif,system-ui,sans-serif;background:var(--ink);color:var(--bg);border:0;border-radius:3px;padding:8px 14px;cursor:pointer}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button[aria-pressed="true"]{background:var(--warm);color:#fff}
+input[type=range]{flex:1 1 220px;accent-color:var(--warm)}
+#count{display:flex;flex-wrap:wrap;gap:4px 18px;margin:6px 0 10px}
+#count b{font-weight:600}
+#count .w{color:var(--warm)}#count .s{color:var(--struck)}#count .c{color:var(--cold)}
+#wrap{position:relative}
+canvas#ledger{display:block;width:100%;touch-action:manipulation;cursor:crosshair}
+#card{min-height:4.6em;margin:10px 0 0;padding:10px 12px;background:var(--card);border-left:3px solid var(--warm);max-width:44em}
+#came{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+#came span{font:12px ui-monospace,Menlo,monospace;padding:3px 6px;border:1px dashed var(--line);color:var(--mute);border-radius:2px}
+#came span.on{border:1px solid var(--struck);color:var(--ink);text-decoration:line-through}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--mute);margin:6px 0}
+.legend i{display:inline-block;width:11px;height:11px;vertical-align:-1px;margin-right:5px}
+svg text{fill:var(--mute);font:11px ui-monospace,Menlo,monospace}
+svg .t{fill:var(--ink)}
+.fig{margin:8px 0 4px;overflow:visible}
+blockquote{margin:.6em 0;padding-left:12px;border-left:2px solid var(--line);color:var(--mute);max-width:42em}
+.small{font-size:14px;color:var(--mute)}
+a{color:inherit}
+ul{padding-left:1.2em;max-width:44em}
+</style>
+</head>
+<body>
+<main>
+<h1>STRUCK OFF</h1>
+<p class="sub">Since 2002 a list in California has kept the asteroids that might hit the Earth within a hundred years. This is every name it ever held, in the order each was first seen: <b id="nS"></b> struck off, <b id="nK"></b> still standing. It writes when it strikes a warning. It almost never writes why.</p>
+
+<div class="bar">
+  <button id="play" aria-pressed="false">Play, with sound</button>
+  <button id="end" class="ghost">Today</button>
+  <input id="scrub" type="range" min="0" max="1000" value="1000" aria-label="date">
+</div>
+<div id="count" class="ui"></div>
+<div class="bar ui" role="group" aria-label="highlight">
+  <span>Light up:</span>
+  <button class="ghost hl" data-hl="none" aria-pressed="true">nothing</button>
+  <button class="ghost hl" data-hl="lost" aria-pressed="false">standing, unseen for a year</button>
+  <button class="ghost hl" data-hl="why" aria-pressed="false">struck, with a reason written</button>
+</div>
+<div id="wrap"><canvas id="ledger" aria-label="A ledger of every warning on the Sentry list, one cell each, in the order first seen"></canvas></div>
+<div class="legend ui"><span><i style="background:var(--warm)"></i>standing, seen lately</span><span><i style="background:var(--warm);opacity:.3"></i>standing, not seen for years</span><span><i style="background:var(--struck);opacity:.55"></i>struck off</span></div>
+<div id="card" class="ui" aria-live="polite">Touch or point at a cell. Each is one object the list once held as a possible impactor.</div>
+
+<h2>The thirteen that came</h2>
+<p>Thirteen small asteroids were seen before they struck the Earth, hours ahead (the Studio's <a href="../2026-10-13-underneath/">UNDERNEATH</a>). The list of possible impactors held <b>one</b> of them, and struck it off about 22 hours after it came down.</p>
+<div id="came"></div>
+<p class="small" id="aa"></p>
+
+<h2>Held, and lost</h2>
+<p>Above: how long each struck warning stood, from the half-month its object was first seen to the minute it was struck. Below: how long since anyone saw each standing one.</p>
+<svg id="hist" class="fig" width="100%" height="270" role="img" aria-label="Mirrored histogram"></svg>
+<p id="histline"></p>
+
+<h2>Struck, by year, and the reasons written</h2>
+<svg id="years" class="fig" width="100%" height="200" role="img" aria-label="Warnings struck per year"></svg>
+<p id="yearsline"></p>
+
+<h2>What the work shows</h2>
+<p>A list of warnings is usually read for what is on it. This work reads it for its two kinds of leaving. A warning <b>struck off</b> is kept as a name and a minute: the removed table holds nothing else. JPL says these are objects <q id="qR"></q>. A warning <b>standing</b> is kept, most often, because no one has looked again: the list cannot strike what it cannot see. Of the warnings never needed, the record keeps the moment they ended and almost never the reason; of the ones it still keeps, it keeps most for want of a second look.</p>
+<p id="apo"></p>
+
+<h2>How it was made</h2>
+<ul>
+<li><b>Sources.</b> JPL Sentry API, standing list (mode S) and removed list (mode R); Sentry's operational notes and removed-objects page; JPL's small-body database for eight removed objects listed only by number or survey name. Fetched <span id="fetched"></span>; hashes in <span class="mono">raw-manifest.json</span>. No source file is committed.</li>
+<li><b>First seen</b> is the half-month a provisional designation encodes (2026&nbsp;TT2: 1&ndash;15 October 2026), dated to its first day, so a time held is good to about &plusmn;15 days and is at most what the page says.</li>
+<li><b>Listed.</b> The list does not publish when it listed an object. A cell lights at its first sighting, or on 1 January 2002 if seen earlier (the removed table begins 15 January 2002).</li>
+<li><b>Unseen</b> counts from the standing list's last observation to the fetch date. A cell standing in the past fades from its last observation as the playhead passes it; the struck ones carry no last observation, so they never fade, they are struck.</li>
+<li><b>A reason written</b> means the struck designation appears as a whole token in a dated entry of the operational notes. One entry (23 August 2021) moves an unnamed batch: <q id="qB"></q> It names none, so it is counted for no one.</li>
+<li><b>Checks.</b> Every number on this page is computed in <span class="mono">build_data.py</span> and the load-bearing ones are asserted there; the three quotations are asserted to be literal text of the pages as fetched. Browser check in <span class="mono">verify_browser.mjs</span>.</li>
+<li><b>Sound.</b> A soft tone for each warning listed, pitched by size where the list gives one (smaller is higher); a dry stroke for each struck; a low hum that grows with the standing warnings nobody has seen for a year.</li>
+</ul>
+
+<h2>Neighbours in the Atlas of Data Art</h2>
+<p><b>Mimi Onuoha, <i>The Library of Missing Datasets</i> (2016/2020).</b> There, empty folders are labelled with the names of datasets that do not exist. Here the folders are full and the label is missing: 3,581 warnings kept by name and minute, the reason written for three.</p>
+<p><b>Voluspa Jarpa, <i>Biblioteca de la No-Historia</i> (2011).</b> There, declassified files are rebound with their redactions intact, so the black bar is the subject. Here nothing is redacted; the record is open, and the missing part was never written.</p>
+
+<h2>The house</h2>
+<p>The convening after cycle 007 chose, by the Middle's tally of 14 October, the Field's question: <i>what does the world record of a danger before it arrives, and who keeps the warnings: the ones heeded, the ones ignored and the ones never needed?</i> This work stands at that hinge, made before the next cycle opens. It reads the largest public list of warnings never needed. It continues the Studio's <a href="../2026-10-13-underneath/">UNDERNEATH</a> (the thirteen warnings that came true) and sits beside the Field's study 12, <i>The strikes that came</i>, and the Atelier's <i>The Exercise</i>, which found the keeper's pages for those thirteen claim a prediction and never a prevention.</p>
+
+<h2>Limits</h2>
+<ul>
+<li>Removal does not always mean danger ruled out by new sight: the 2021 batch was a change of method, and 2014&nbsp;AA was struck after it arrived. The removed table does not say which is which; that is the finding, not a defect of this page.</li>
+<li>Objects removed from JPL's database altogether (the notes name two, one found to be a rocket stage) are on neither list and are not here.</li>
+<li>Impact probability, size and range are the list's own current values, shown on each standing cell; this work makes no risk claim of its own.</li>
+</ul>
+<p class="small">The Studio (Ensemble), 2026-10-14. Data: NASA/JPL CNEOS Sentry, public. No third-party code.</p>
+</main>
+<script>
+const D = /*DATA*/null;
+(() => {
+const S = D.summary, R = D.rows, N = R.length;
+const $ = s => document.querySelector(s), fmt = n => n.toLocaleString('en-US');
+const day = s => Date.parse(s.slice(0, 10) + 'T00:00:00Z') / 864e5;
+const T0 = day('2002-01-01'), T1 = day(S.fetched);
+const cells = R.map((r, i) => {
+  const seen = day(r.seen), lst = Math.max(seen, T0);
+  return { i, r, lst, end: r.struck ? day(r.struck) : Infinity, lo: r.last_obs ? day(r.last_obs) : null, why: !!(r.notes && r.notes.length) };
+});
+$('#nS').textContent = fmt(S.struck); $('#nK').textContent = fmt(S.standing);
+$('#fetched').textContent = S.fetched.replace('T', ' ').replace('Z', ' UTC');
+$('#qR').textContent = D.quotes.removed_page; $('#qB').textContent = D.quotes.batch_2021_08_23;
+const st = { T: T1, hl: 'none', playing: false, ready: false, cs: 6, cols: 1, hover: -1 };
+window.__SO = { state: st, D };
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+let C = {};
+const cv = $('#ledger'), cx = cv.getContext('2d');
+function layout() {
+  const W = cv.parentElement.clientWidth, Ht = W < 600 ? 430 : 470;
+  st.cs = Math.max(4, Math.floor(Math.sqrt(W * Ht / N))); st.cols = Math.floor(W / st.cs);
+  const rows = Math.ceil(N / st.cols), dpr = devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = rows * st.cs * dpr; cv.style.height = rows * st.cs + 'px';
+  cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  C = { warm: css('--warm'), warm2: css('--warm2'), struck: css('--struck'), line: css('--line'), cold: css('--cold'), ink: css('--ink'), bg: css('--bg') };
+  draw();
+}
+function alphaStanding(c, T) {           // fades from the last observation, if the playhead has passed it
+  if (c.lo == null || c.lo > T) return 1;
+  const a = T - c.lo; return Math.max(0.16, 1 - Math.log10(1 + a / 30) / 2.4);
+}
+function draw() {
+  const T = st.T, cs = st.cs, g = cs > 5 ? 1 : 0.6;
+  cx.fillStyle = C.bg; cx.fillRect(0, 0, cv.width, cv.height);
+  let nL = 0, nS = 0, nK = 0, nLost = 0;
+  for (const c of cells) {
+    if (c.lst > T) continue;
+    const x = (c.i % st.cols) * cs, y = Math.floor(c.i / st.cols) * cs; nL++;
+    const lit = st.hl === 'none' || (st.hl === 'lost' && c.end > T && c.lo != null && T - c.lo > 365) || (st.hl === 'why' && c.why && c.end <= T);
+    if (c.end <= T) {                       // struck
+      nS++;
+      const fresh = T - c.end < 45;
+      cx.globalAlpha = lit ? (fresh ? 0.95 : 0.5) : 0.12;
+      cx.fillStyle = fresh ? C.ink : C.struck; cx.fillRect(x, y + cs / 2 - 0.5, cs - g, Math.max(1, cs / 5));
+      if (st.hl === 'why' && c.why) { cx.globalAlpha = 1; cx.strokeStyle = C.cold; cx.lineWidth = 2; cx.strokeRect(x - 2, y - 2, cs + 3, cs + 3); }
+    } else {                                // standing
+      nK++; const lost = c.lo != null && T - c.lo > 365; if (lost) nLost++;
+      cx.globalAlpha = (lit ? 1 : 0.15) * alphaStanding(c, T);
+      cx.fillStyle = C.warm; cx.fillRect(x, y, cs - g, cs - g);
+    }
+  }
+  cx.globalAlpha = 1;
+  if (st.hover >= 0 && st.hover < N) { const x = (st.hover % st.cols) * st.cs, y = Math.floor(st.hover / st.cols) * st.cs; cx.strokeStyle = C.ink; cx.lineWidth = 1.5; cx.strokeRect(x - 1.5, y - 1.5, st.cs + 2, st.cs + 2); }
+  const d = new Date(T * 864e5).toISOString().slice(0, 10);
+  $('#count').innerHTML = `<span><b>${d}</b></span><span>listed <b>${fmt(nL)}</b></span><span class="s">struck <b>${fmt(nS)}</b></span><span class="w">standing <b>${fmt(nK)}</b></span><span class="c">of them unseen for a year <b>${fmt(nLost)}</b></span>`;
+  Object.assign(st, { nL, nS, nK, nLost });
+  $('#scrub').value = Math.round((T - T0) / (T1 - T0) * 1000);
+  hum(nLost);
+}
+// --- the card
+const ago = n => n >= 730 ? `${Math.round(n / 365.25)} years` : n >= 60 ? `${Math.round(n / 30.4)} months` : `${n} days`;
+function card(i) {
+  const c = cells[i], r = c.r; let h = `<b>${r.full}</b> · first seen ${r.seen.slice(0, 7)} (half-month ${r.seen.slice(8) === '01' ? '1–15' : '16–end'})<br>`;
+  if (r.struck) {
+    h += `Struck off <b>${r.struck} UTC</b>, at most ${fmt(r.held_from_seen)} days after it was first seen.<br>`;
+    h += c.why ? `A reason is written in the notes of ${r.notes.join(', ')}.` : 'The record keeps its name and that minute. No reason is written.';
+    if (r.des === '2014 AA') h += ' It struck the Earth on 2 January 2014 at 03:04 UTC, about 22 hours before it was struck off.';
+  } else {
+    h += `<b>Standing.</b> Last seen ${r.last_obs}, ${ago(r.unseen)} ago. The list gives it an impact probability of ${r.ip < 1e-3 ? r.ip.toExponential(1) : r.ip.toFixed(4)} over ${r.range}${r.diam_km ? `, size about ${r.diam_km >= 1 ? r.diam_km.toFixed(1) + ' km' : Math.round(r.diam_km * 1000) + ' m'}` : ''}.`;
+  }
+  $('#card').innerHTML = h;
+}
+function idxAt(ev) { const b = cv.getBoundingClientRect(); const i = Math.floor((ev.clientY - b.top) / st.cs) * st.cols + Math.floor((ev.clientX - b.left) / st.cs); return i >= 0 && i < N && (ev.clientX - b.left) < st.cols * st.cs ? i : -1; }
+cv.addEventListener('pointermove', e => { const i = idxAt(e); if (i !== st.hover && i >= 0 && cells[i].lst <= st.T) { st.hover = i; card(i); draw(); } });
+cv.addEventListener('pointerdown', e => { const i = idxAt(e); if (i >= 0) { st.hover = i; card(i); draw(); } });
+window.__SO.card = i => { st.hover = i; card(i); draw(); };
+// --- sound
+let ac = null, humG = null;
+function audio() {
+  if (ac) return; ac = new (window.AudioContext || window.webkitAudioContext)();
+  const o = ac.createOscillator(), o2 = ac.createOscillator(), f = ac.createBiquadFilter(); humG = ac.createGain(); humG.gain.value = 0;
+  o.frequency.value = 55; o2.frequency.value = 55.4; o.type = o2.type = 'sawtooth'; f.type = 'lowpass'; f.frequency.value = 180;
+  o.connect(f); o2.connect(f); f.connect(humG); humG.connect(ac.destination); o.start(); o2.start();
+}
+function hum(n) { if (humG) humG.gain.setTargetAtTime(st.playing ? 0.05 * Math.min(1, n / S.unseen_gt_365) : 0, ac.currentTime, 0.3); }
+function tone(dk) {
+  const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+  const f = dk ? Math.min(2400, Math.max(330, 660 * Math.pow(0.05 / dk, 0.35))) : 880;
+  o.frequency.value = f; o.type = 'sine'; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.035, t + 0.01); g.gain.exponentialRampToValueAtTime(1e-4, t + 0.35);
+  o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + 0.4);
+}
+let noiseBuf = null;
+function stroke() {
+  const t = ac.currentTime;
+  if (!noiseBuf) { noiseBuf = ac.createBuffer(1, ac.sampleRate * 0.08, ac.sampleRate); const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length); }
+  const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+  s.buffer = noiseBuf; f.type = 'bandpass'; f.frequency.value = 1800 + Math.random() * 900; f.Q.value = 3; g.gain.value = 0.12;
+  s.connect(f); f.connect(g); g.connect(ac.destination); s.start(t);
+}
+// --- playback: about 100 seconds from 2002 to the fetch day
+const DUR = 100, rate = (T1 - T0) / DUR;
+let last = null;
+function step(ts) {
+  if (!st.playing) return;
+  const dt = last == null ? 0 : Math.min(0.1, (ts - last) / 1000); last = ts;
+  const a = st.T, b = Math.min(T1, a + dt * rate); st.T = b;
+  if (ac) { let k = 0, j = 0;
+    for (const c of cells) { if (c.lst > a && c.lst <= b && k < 4) { tone(c.r.diam_km); k++; } if (c.end > a && c.end <= b && j < 5) { stroke(); j++; } } }
+  draw();
+  if (b >= T1) { st.playing = false; $('#play').setAttribute('aria-pressed', 'false'); $('#play').textContent = 'Play, with sound'; last = null; hum(0); return; }
+  requestAnimationFrame(step);
+}
+$('#play').onclick = () => {
+  if (st.playing) { st.playing = false; last = null; $('#play').setAttribute('aria-pressed', 'false'); $('#play').textContent = 'Play, with sound'; hum(0); return; }
+  try { audio(); ac.resume(); } catch (e) {}
+  if (st.T >= T1 - 1) st.T = T0;
+  st.playing = true; $('#play').setAttribute('aria-pressed', 'true'); $('#play').textContent = 'Pause'; requestAnimationFrame(step);
+};
+$('#end').onclick = () => { st.playing = false; last = null; $('#play').setAttribute('aria-pressed', 'false'); $('#play').textContent = 'Play, with sound'; st.T = T1; draw(); };
+$('#scrub').oninput = e => { st.T = T0 + (T1 - T0) * e.target.value / 1000; draw(); };
+window.__SO.setT = iso => { st.T = Math.min(T1, day(iso)); draw(); };
+document.querySelectorAll('.hl').forEach(b => b.onclick = () => { st.hl = b.dataset.hl; document.querySelectorAll('.hl').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false')); draw(); });
+window.__SO.hl = h => document.querySelector(`.hl[data-hl="${h}"]`).click();
+// --- the thirteen that came
+$('#came').innerHTML = D.strikes.map(s => `<span class="${s.on_list ? 'on' : ''}" title="${s.on_list ? 'on the list; struck ' + s.struck : 'never on the list'}">${s.des}</span>`).join('');
+const aa = D.strikes.find(s => s.on_list);
+$('#aa').textContent = `${aa.des} came down in the ${aa.place} on ${aa.impact_utc} UTC; the list struck it off on ${aa.struck} UTC. The other twelve were never on it: their hours of warning came from other systems, and the long list never held them. Struck is the only word the removed table has, for a warning ruled out and for one that came true.`;
+// --- figures (plain SVG)
+const NS = 'http://www.w3.org/2000/svg';
+function el(p, n, a, txt) { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; p.appendChild(e); return e; }
+const bins = [[0, 7, '≤1 wk'], [8, 31, '1–4 wk'], [32, 91, '1–3 mo'], [92, 365, '3–12 mo'], [366, 1095, '1–3 y'], [1096, 3652, '3–10 y'], [3653, 1e9, '>10 y']];
+function hist() {
+  const svg = $('#hist'); svg.innerHTML = ''; const W = svg.clientWidth || 600, H = 270, m = 34, mid = H / 2, bw = (W - m) / bins.length;
+  const up = bins.map(b => R.filter(r => r.struck && r.held_from_seen >= b[0] && r.held_from_seen <= b[1]).length);
+  const dn = bins.map(b => R.filter(r => !r.struck && r.unseen >= b[0] && r.unseen <= b[1]).length);
+  const mx = Math.max(...up, ...dn), sc = (mid - 26) / mx;
+  bins.forEach((b, i) => {
+    const x = m + i * bw + 3, w = bw - 6;
+    el(svg, 'rect', { x, y: mid - 9 - up[i] * sc, width: w, height: up[i] * sc, fill: css('--struck'), opacity: .7 });
+    el(svg, 'rect', { x, y: mid + 9, width: w, height: dn[i] * sc, fill: css('--warm'), opacity: .85 });
+    el(svg, 'text', { x: x + w / 2, y: mid + 4, 'text-anchor': 'middle', class: 't' }, b[2]);
+    el(svg, 'text', { x: x + w / 2, y: mid - 13 - up[i] * sc, 'text-anchor': 'middle' }, fmt(up[i]));
+    el(svg, 'text', { x: x + w / 2, y: mid + 22 + dn[i] * sc, 'text-anchor': 'middle' }, fmt(dn[i]));
+  });
+  el(svg, 'text', { x: 0, y: 14, class: 't' }, 'struck: time it stood');
+  el(svg, 'text', { x: 0, y: H - 4, class: 't' }, 'standing: time since last seen');
+  window.__SO.hist = { up, dn };
+}
+hist();
+$('#histline').innerHTML = `Half the struck warnings stood no more than <b>${S.held_median_days} days</b>; ${fmt(S.held_le_31)} of ${fmt(S.struck)} were gone within a month. Half the standing ones have not been seen for <b>${ago(S.unseen_median_days)}</b>: ${fmt(S.unseen_gt_365)} of ${fmt(S.standing)} not for a year, ${fmt(S.unseen_gt_3650)} not for ten, ${fmt(S.unseen_le_30)} in the last month.`;
+function years() {
+  const svg = $('#years'); svg.innerHTML = ''; const W = svg.clientWidth || 600, H = 200, m = 26, ys = Object.keys(S.struck_by_year), bw = (W - m) / ys.length;
+  const mx = Math.max(...Object.values(S.struck_by_year)), sc = (H - 50) / mx;
+  ys.forEach((y, i) => {
+    const v = S.struck_by_year[y], x = m + i * bw + 1, w = Math.max(1, bw - 2);
+    el(svg, 'rect', { x, y: H - 20 - v * sc, width: w, height: v * sc, fill: y === '2021' ? css('--ink') : css('--struck'), opacity: y === '2021' ? .85 : .6 });
+    if (i % (bw < 22 ? 4 : 2) === 0 || y === '2021') el(svg, 'text', { x: x + w / 2, y: H - 6, 'text-anchor': 'middle' }, bw < 22 ? "'" + y.slice(2) : y);
+  });
+  const i21 = ys.indexOf('2021'); el(svg, 'text', { x: Math.min(W - 160, m + i21 * bw + bw), y: H - 26 - S.struck_by_year['2021'] * sc + 12, class: 't' }, `${S.struck_by_year['2021']} in 2021`);
+  el(svg, 'text', { x: 0, y: 12, class: 't' }, `struck per year · ${S.reasons_named} with a reason written by name`);
+}
+years();
+$('#yearsline').innerHTML = `Between ${S.first_struck.slice(0, 10)} and ${S.last_struck.slice(0, 10)} the list struck ${fmt(S.struck)} warnings. One week of July 2021 struck ${S.week_2021_07_22_29}. The notes of 23 August 2021 say a new method had moved those it found no impact for to the removed table, and name none of them. Across ${S.notes_entries} dated notes (${S.notes_first} to ${S.notes_last}) a struck warning is named, with its reason, <b>${S.reasons_named} times</b>: Apophis, 2009&nbsp;FD and 2006&nbsp;QV89.`;
+const apo = R.find(r => r.des === '99942');
+$('#apo').innerHTML = `The most famous of them shows the order of things. Apophis was struck off on <b>${apo.struck} UTC</b>. The note that says why is dated ${apo.notes[apo.notes.length - 1]}: observations <q>${D.quotes.apophis_2021_03_26}</q>. For ${fmt(S.struck - S.reasons_named)} others there is no such note at all.`;
+addEventListener('resize', () => { layout(); hist(); years(); });
+matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { layout(); hist(); years(); });
+layout(); st.ready = true;
+})();
+</script>
+</body>
+</html>

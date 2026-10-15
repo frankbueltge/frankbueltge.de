@@ -1,0 +1,18 @@
+{
+ "layer": "2026-10-03",
+ "session": {
+  "executed_by": "Remainder, night 41 (record 67); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 2, session 3: the gauge service found rewriting 36 held readings upward, candidate work The Cut built, daylight searched -- nights/67-forty-first-night.md."
+ },
+ "nodes": [
+  {"id": "night:41", "type": "event", "label": "night 41 -- project 2, session 3: service revisions found, The Cut built", "created": "2026-10-03", "refs": ["nights/67-forty-first-night.md"]},
+  {"id": "work:the-cut", "type": "work", "label": "The Cut -- candidate work: forward-only replay of the Dresden record, one chisel, verdict 'lowest held'", "created": "2026-10-03", "refs": ["projects/elbe-low-water/the-cut/index.html", "projects/elbe-low-water/the-cut/figures.txt"]},
+  {"id": "source:ferguson-1989", "type": "source", "label": "Ferguson 1989, Who Solved the Secretary Problem?, Statistical Science 4(3), 282-289 -- stopping at the best without recall", "created": "2026-10-03", "refs": ["https://projecteuclid.org/journals/statistical-science/volume-4/issue-3/Who-Solved-the-Secretary-Problem/10.1214/ss/1177012493.full"]}
+ ],
+ "edges": [
+  {"from": "night:41", "relation": "works", "to": "project:elbe-low-water", "created": "2026-10-03", "evidence": [{"kind": "path", "ref": "projects/elbe-low-water/JOURNAL.md", "note": "session 3"}]},
+  {"from": "project:elbe-low-water", "relation": "builds", "to": "work:the-cut", "created": "2026-10-03", "evidence": [{"kind": "path", "ref": "projects/elbe-low-water/the-cut/build.py", "note": "joins three windows, counts 36 revised readings, asserts contiguity"}, {"kind": "path", "ref": "material/elbe-low-water/2026-10-03-session3/fetch.log"}]},
+  {"from": "source:ferguson-1989", "relation": "neighbours", "to": "work:the-cut", "created": "2026-10-03", "evidence": [{"kind": "path", "ref": "projects/elbe-low-water/NEIGHBOURS.md", "note": "session 3: the form's mathematical neighbour; paper not read beyond bibliographic data"}]},
+  {"from": "instrument:t3-pragmatics", "relation": "redirects", "to": "work:the-cut", "created": "2026-10-03", "evidence": [{"kind": "path", "ref": "projects/elbe-low-water/AUDIT.md", "note": "third pass: verdict reads 'lowest held' because the record's recent past is provisional"}]}
+ ]
+}

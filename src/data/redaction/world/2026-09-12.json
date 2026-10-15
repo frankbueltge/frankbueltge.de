@@ -1,0 +1,149 @@
+{
+  "date": "2026-09-12",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-12T09:57:21Z",
+    "counts": {
+      "botwall": 16,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 278,
+      "other": 1,
+      "server_error": 0,
+      "unreachable": 4
+    },
+    "decided": 280,
+    "excluded_unverifiable": 20,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0199
+    ],
+    "gone_rate": 0.0036,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0135
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-10",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "roarmag.org",
+        "first_seen": "20260910140000",
+        "http_code": 404,
+        "title": "Mammotion Mower Worx Landroid Vision Rear Wheel Assembly 50047142 • Robot Lawn Mowers Luba Mower",
+        "url": "https://roarmag.org/Vision-Rear-Wheel-Assembly-50047142-Robot-Lawn-Mowers-b-816435"
+      }
+    ],
+    "sample_drawn_at": "2026-09-11T10:08:57Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5523,
+      "replaced": 6102,
+      "trivial": 917,
+      "update": 446
+    },
+    "day": "2026-09-11",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Flood",
+          "Nepal",
+          "compensation"
+        ],
+        "after": "Nepal Flood Compensation: Nepal minister clarifies 'compensation from world' remark after flash floods - what he said | India News",
+        "before": "Climate Change: Nepal minister clarifies 'compensation from world' remark after flash floods - what he said | India News",
+        "detected": "2026-09-11T05:16:39Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Climate",
+          "Change"
+        ],
+        "similarity": 0.833,
+        "url": "https://timesofindia.indiatimes.com/india/never-asked-any-country-including-india-nepal-minister-goes-back-on-flash-flood-compensation-claim/articleshow/133751915.cms",
+        "weight": 9,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "from",
+          "Crime",
+          "Desk",
+          "the"
+        ],
+        "after": "A decapitated body, cracked skulls and charred limbs strewn everywhere: WHO were the 37 young men dumped in a pit beneath a prestigious Oxford college? New podcast from The Crime Desk lays bare the sinister secrets of the St Brice's Day massacre",
+        "before": "A decapitated body, cracked skulls and charred limbs strewn everywhere: WHO were the 37 young men dumped in a pit beneath a prestigious Oxford college? New Daily Mail podcast lays bare the sinister secrets of the St Brice's Day massacre",
+        "detected": "2026-09-11T06:32:58Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Daily",
+          "Mail"
+        ],
+        "similarity": 0.875,
+        "url": "https://www.dailymail.com/crime-desk/article-16102721/st-brices-day-massacre-oxford-mass-grave-buried-evidence-podcast.html",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Second",
+          "body",
+          "found"
+        ],
+        "after": "Second body found: Jet skier reported lost at sea between Playa del Carmen and Cozumel found off Isla Contoy",
+        "before": "Search Continues: Jet skier reported lost at sea between Playa del Carmen and Cozumel found off Isla Contoy",
+        "detected": "2026-09-11T17:19:03Z",
+        "domain": "riviera-maya-news.com",
+        "removed": [
+          "Search",
+          "Continues"
+        ],
+        "similarity": 0.8,
+        "url": "https://riviera-maya-news.com/search-continues-jet-skier-reported-lost-at-sea-between-playa-del-carmen-and-cozumel-found-off-isla-contoy/2026.html",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 17658,
+      "PAGE_TEXTCHANGE": 136146,
+      "PAGE_TITLECHANGE": 50702,
+      "UNCHANGED_CONTENT": 784988
+    },
+    "title_changes_en": 12988,
+    "trace": [
+      {
+        "bytes_billed": 27262976,
+        "created": "1789206750060",
+        "job_id": "world_gdg_counts_20260911",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 247463936,
+        "created": "1789206755569",
+        "job_id": "world_gdg_titles_20260911",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-12T09:57:21Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-11.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

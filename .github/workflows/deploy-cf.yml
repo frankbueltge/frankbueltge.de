@@ -70,6 +70,14 @@ on:
       - Puls nightly refresh # commits src/data/pulse/pulse.json with GITHUB_TOKEN → no on:push
       - Attention integrate # mirrors public/attention/ with GITHUB_TOKEN → no on:push
       - Knowledge graph nightly # commits src/data/graph/graph.json with GITHUB_TOKEN → no on:push
+      # The trending ledger (Common Ground, 2026-09-02) commits src/data/trending with the built-in
+      # token every morning — the same reason as every entry above: without this line the day's
+      # ledger would wait for an unrelated push.
+      - Trending nightly
+      # The cycle clock (2026-10-03) commits src/data/ecology/cycle.json with the built-in token
+      # when the continuing-question rule turns a cycle — without this line a new round or a seed's
+      # interruption would reach the practices (they read cycle.json from main) but not the site.
+      - Cycle sentinel
     types: [completed]
 
 permissions:
@@ -111,6 +119,21 @@ jobs:
           # PUBLIC_* vars at BUILD time; this build runs on GitHub's runner and does NOT see
           # Cloudflare's runtime env, so without this the /seed form would ship in permanent standby.
           PUBLIC_TURNSTILE_SITE_KEY: "0x4AAAAAAD543CSVCrF26LBW"
+      # Gewichts-Gate der Sichtschicht (2026-09-02), dasselbe wie in ci.yml: kein Client-Chunk
+      # geht live, der sein gzip-Budget in scripts/budgets.json überschreitet. Auf dem
+      # workflow_run-Pfad der Nightlies ist dieser Job das einzige Netz — deshalb auch hier.
+      - run: node scripts/bundle-budget.mjs
+      # IndexNow (Bing, Yandex, Seznam, Naver …) verifies ownership through a key file at the
+      # site root. The key is a repository secret, so the file is generated into dist/ at deploy
+      # time and never committed. Without a key this step does nothing and the deploy proceeds —
+      # the ping below is likewise guarded. Added 2026-09-02 for the trending ledger.
+      - name: IndexNow key file (only when INDEXNOW_KEY is configured)
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          if [ -z "$INDEXNOW_KEY" ]; then echo "No INDEXNOW_KEY configured — skipping."; exit 0; fi
+          printf '%s' "$INDEXNOW_KEY" > "dist/$INDEXNOW_KEY.txt"
+          echo "IndexNow key file written into dist/."
       - name: Deploy → Cloudflare Pages
         env:
           CF_TOKEN_RAW: ${{ secrets.CF }}
@@ -119,3 +142,34 @@ jobs:
           # Secret kann beim Einfügen ein \n/Leerzeichen enthalten → trimmen (sonst „invalid header value").
           export CLOUDFLARE_API_TOKEN="$(printf '%s' "$CF_TOKEN_RAW" | tr -d '[:space:]')"
           npx --yes wrangler@4 pages deploy dist --project-name=frankbueltge-de --branch=main --commit-dirty=true
+      # After the deploy: tell the IndexNow engines (Bing, Yandex, Seznam, Naver, Yep — Google
+      # does not take part) which pages changed. Only the trending surfaces change daily, and
+      # only the nightly changes them, so the step runs on that trigger and on a manual deploy
+      # rather than on all ten-odd deploys a day: submitting unchanged URLs over and over is
+      # what the protocol asks callers not to do. Never fails the job — a missing key skips, a
+      # failed ping is printed and ignored; the deploy above is the thing that matters.
+      - name: IndexNow ping for the trending surfaces (never fails the deploy)
+        if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'workflow_run' && github.event.workflow_run.name == 'Trending nightly') }}
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          if [ -z "$INDEXNOW_KEY" ]; then echo "No INDEXNOW_KEY configured — skipping."; exit 0; fi
+          # Every page the build produced under /trending: today's ledger, the archived days,
+          # the topics hub and one landing page per watched term.
+          python3 - "$INDEXNOW_KEY" <<'PY' > /tmp/indexnow.json
+          import json, sys, pathlib
+          key = sys.argv[1]
+          root = pathlib.Path("dist")
+          urls = sorted(
+              "https://frankbueltge.de/" + str(p.parent.relative_to(root)) + "/"
+              for p in root.glob("trending/**/index.html")
+          )
+          json.dump({"host": "frankbueltge.de", "key": key,
+                     "keyLocation": f"https://frankbueltge.de/{key}.txt",
+                     "urlList": urls[:10000]}, sys.stdout)
+          print(f"IndexNow: submitting {len(urls)} pages", file=sys.stderr)
+          PY
+          curl -sS -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            --data-binary @/tmp/indexnow.json \
+            -o /dev/null -w 'IndexNow HTTP %{http_code}\n' || echo "IndexNow ping failed — ignored."

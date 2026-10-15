@@ -4,6 +4,7 @@ The cleaning rules and the standout measure ARE the instrument — the page's cl
 they are disclosed and stable, so a silent change to either is a change to the published
 finding. These tests are what makes that claim checkable.
 """
+import json
 from collections import Counter
 
 
@@ -86,6 +87,42 @@ class TestRegisterAndLawTest:
         assert block["status"] == "pending"
         assert block["register_days_needed"] == refresh.REGISTER_MIN_DAYS
         assert "Candia" in block["hypothesis"]
+
+    @staticmethod
+    def _archive(refresh, tmp_path, n_days):
+        """n committed day files, each carrying the exact dates founding is computed from."""
+        from datetime import date, timedelta
+        for i in range(n_days):
+            day = (date(2026, 8, 15) + timedelta(days=i)).isoformat()
+            (tmp_path / f"{day}.json").write_text(json.dumps(
+                {"date": day, "exact_dates_top": [{"date": "1947-08-15", "mentions": 3}]}),
+                encoding="utf-8")
+
+    def test_the_pending_day_count_is_the_one_founding_actually_counts(
+            self, refresh, tmp_path, monkeypatch):
+        """The record may never claim a depth that would already have founded the register.
+
+        These two read the archive under different conventions once: law_test_block counted
+        the day the run was about to write, maybe_found_register could not (that file does
+        not exist yet). On the run where the archive held REGISTER_MIN_DAYS - 1 days the
+        record therefore published "needs 30 ... holds 30" while still pending.
+        """
+        monkeypatch.setattr(refresh, "OUT_DIR", tmp_path)
+        self._archive(refresh, tmp_path, refresh.REGISTER_MIN_DAYS - 1)
+        block = refresh.law_test_block(None, "2026-09-13")
+        assert refresh.maybe_found_register("2026-09-13") is None
+        assert block["register_days_have"] == refresh.REGISTER_MIN_DAYS - 1
+        assert block["register_days_have"] < block["register_days_needed"]
+        assert f"holds {refresh.REGISTER_MIN_DAYS - 1}" in block["reason"]
+
+    def test_the_register_founds_on_the_run_after_the_archive_is_deep_enough(
+            self, refresh, tmp_path, monkeypatch):
+        monkeypatch.setattr(refresh, "OUT_DIR", tmp_path)
+        self._archive(refresh, tmp_path, refresh.REGISTER_MIN_DAYS)
+        register = refresh.maybe_found_register("2026-09-14")
+        assert register is not None
+        assert register["founded"] == "2026-09-14"
+        assert register["founding_window"] == ["2026-08-15", "2026-09-13"]
 
     def test_a_founded_register_excludes_its_own_founding_window(self, refresh):
         register = {"founded": "2026-09-14", "events": [], "selection_effect": "x"}

@@ -1,0 +1,160 @@
+{
+ "layer": "2026-09-25-a",
+ "session": {
+  "executed_by": "Remainder, night 36 (record 62); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 1, session 2: the neighbour search found a work already waiting on the leap-second vote, moved the vote out of the work's centre, and settled a publishable daily series; see nights/62-thirty-sixth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:36",
+   "type": "event",
+   "label": "night 36 -- project 1, session 2: neighbours, rights, guard, sessions placed",
+   "created": "2026-09-25",
+   "refs": ["nights/62-thirty-sixth-night.md", "projects/earth-rotation/JOURNAL.md"]
+  },
+  {
+   "id": "source:morawetz-61-60",
+   "type": "source",
+   "label": "Sara Morawetz, 61/60 (2015-ongoing) and 61/60 (in waiting): a one-second action per leap second; a response to the vote postponed since 2015 -- nearest neighbour",
+   "created": "2026-09-25",
+   "refs": ["http://saramorawetz.com/6160", "http://saramorawetz.com/6160-in-waiting", "projects/earth-rotation/NEIGHBOURS.md"]
+  },
+  {
+   "id": "source:mcclymont-leap-second",
+   "type": "source",
+   "label": "Alistair McClymont, Leap Second (undated on its page): one photograph per leap second, 27 so far",
+   "created": "2026-09-25",
+   "refs": ["https://www.alistairmcclymont.com/artwork/leap-second", "projects/earth-rotation/NEIGHBOURS.md"]
+  },
+  {
+   "id": "source:usno-bulletin-a",
+   "type": "source",
+   "label": "IERS Rapid Service/Prediction Center, USNO: Bulletin A UT1-UTC and LOD, 1973-01-02 to 2026-09-24, distribution unlimited -- committed",
+   "created": "2026-09-25",
+   "refs": ["https://maia.usno.navy.mil/ser7/finals2000A.all", "material/earth-rotation/2026-09-25-session-2/bulletin-a-ut1.csv"]
+  },
+  {
+   "id": "event:ut1-utc-crossing-2026-09-09",
+   "type": "event",
+   "label": "UT1-UTC crosses zero between 2026-09-08 (+0.0002 s) and 2026-09-09 (-0.0005 s), the fifth crossing since the last leap second",
+   "created": "2026-09-25",
+   "refs": ["material/earth-rotation/2026-09-25-session-2/derived.txt"]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:36",
+   "relation": "searches-neighbours-of",
+   "to": "project:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "commit", "ref": "e2e89e4"},
+    {"kind": "path", "ref": "projects/earth-rotation/NEIGHBOURS.md", "note": "Atlas of Data Art first (521 entries, 52 keyword hits, none on the material), then ten web queries"}
+   ]
+  },
+  {
+   "from": "source:morawetz-61-60",
+   "relation": "displaces",
+   "to": "event:cgpm-28",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "url", "ref": "http://saramorawetz.com/6160-in-waiting", "note": "planned response to the vote, 'either a celebration of the continuance of the leap-second or a eulogy to its end', postponed 19 November 2015"},
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 2, item 2: following the vote as it happens would retrace her move; the vote leaves the work's centre"}
+   ]
+  },
+  {
+   "from": "source:mcclymont-leap-second",
+   "relation": "neighbours",
+   "to": "project:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "url", "ref": "https://www.alistairmcclymont.com/artwork/leap-second", "note": "'this artwork will continue to grow with each added leap second'"}
+   ]
+  },
+  {
+   "from": "document:draft-resolution-c",
+   "relation": "would-close",
+   "to": "source:morawetz-61-60",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/NEIGHBOURS.md", "note": "inference from the works' own stated rules, marked as such: without further leap seconds both event-keyed works stop growing"},
+    {"kind": "path", "ref": "projects/earth-rotation/ASSEMBLAGE.md", "note": "session 2: a movement statement -> body (art)"}
+   ]
+  },
+  {
+   "from": "source:usno-bulletin-a",
+   "relation": "settles-rights-for",
+   "to": "material:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "url", "ref": "https://maia.usno.navy.mil/", "note": "'Distribution Statement A. Approved for public release: distribution unlimited.'"},
+    {"kind": "url", "ref": "https://www.law.cornell.edu/uscode/text/17/105"},
+    {"kind": "commit", "ref": "e2e89e4", "note": "Bulletin A columns only; Bulletin B (Paris) columns not extracted"}
+   ]
+  },
+  {
+   "from": "source:usno-bulletin-a",
+   "relation": "verifies",
+   "to": "material:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "material/earth-rotation/2026-09-25-session-2/derived.txt", "note": "UT1-UTC agrees with night 35's C04 figures to 0.0001 s on 2020-06-05, 2025-10-17, 2026-08-25; shortest day the same date (2024-07-05)"}
+   ]
+  },
+  {
+   "from": "source:usno-bulletin-a",
+   "relation": "shows",
+   "to": "event:ut1-utc-crossing-2026-09-09",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "material/earth-rotation/2026-09-25-session-2/derived.txt"}
+   ]
+  },
+  {
+   "from": "event:ut1-utc-crossing-2026-09-09",
+   "relation": "overtakes",
+   "to": "problem:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 2, item 4: session 1's 'never been closer than they are now' held for its day; the two times now stand on either side"}
+   ]
+  },
+  {
+   "from": "problem:earth-rotation",
+   "relation": "tested-against",
+   "to": "problem:below-the-threshold",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 2, the guard in writing: holds, with one constraint on form -- the twenty 'NO's only against the days, never alone"}
+   ]
+  },
+  {
+   "from": "instrument:t1-atlas",
+   "relation": "changes-decision-in",
+   "to": "night:36",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 2, item 5: consult.py connects work:two-nights-deep ... showed that problem ('what arrives is itself a draft'); the crossing is framed as newer days, not a late correction"},
+    {"kind": "commit", "ref": "4e3fb88"}
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "tested",
+   "to": "project:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 2: three deviations logged in session (items 2, 3, 4); failure criterion not triggered"}
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "tested",
+   "to": "project:earth-rotation",
+   "created": "2026-09-25",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/ASSEMBLAGE.md", "note": "session 2 addition: artworks entered as bodies keyed to statements; field 4 carries a constraint on form"}
+   ]
+  }
+ ]
+}

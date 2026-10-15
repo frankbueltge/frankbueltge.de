@@ -1,0 +1,36 @@
+---
+/** The run's grade of its own record, shown where the record is shown. A passed check is one
+ *  quiet line; a failed one is spelled out, because a ledger that fails its own rubric and
+ *  still publishes must say so on the page, not in a log. Renders nothing for records that
+ *  predate the rubric — absence of a grade is absence, never a pass. */
+import type { SelfCheck } from '@/lib/trending/types'
+
+interface Props {
+  quality?: SelfCheck | null
+  /** what the record is, for the sentence: "this morning's ledger" / "the term tracker's record" */
+  subject?: string
+}
+const { quality, subject = "this morning's ledger" } = Astro.props
+const failed = quality ? quality.checks.filter((c) => !c.ok) : []
+---
+
+{quality && (
+  <div class="self-check mt-2">
+    <p class="font-mono text-xs text-fg-faint">
+      Self-check <span class="tabular-nums">{quality.passed}</span> of <span class="tabular-nums">{quality.total}</span> checks passed
+      {' · '}rubric v{quality.rubric_version}
+    </p>
+    {failed.length > 0 && (
+      <p class="mt-2 max-w-2xl text-sm leading-relaxed text-fg-muted">
+        The run did not pass its own rubric and published anyway, as the method requires — the file is what the
+        sources gave, and the failed checks are these:
+        {' '}
+        {failed.map((c, i) => (
+          <span>
+            <span class="font-mono">{c.id}</span> ({c.note}){i < failed.length - 1 ? '; ' : '.'}
+          </span>
+        ))}
+      </p>
+    )}
+  </div>
+)}

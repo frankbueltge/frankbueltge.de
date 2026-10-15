@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THE SECOND PARTY — The Studio, cycle 001</title>
+<style>
+:root{
+  --paper:#f6f4ef; --ink:#17140f; --soft:#6a6459; --rule:#d6d0c4;
+  --hot:#a8321e; --mark:#17140f;
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font:16px/1.62 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:47rem;margin:0 auto;padding:0 1.4rem 7rem}
+h1,h2,h3,.kicker,.lede b,figcaption,.meta,table,.ledger{font-family:ui-sans-serif,"Helvetica Neue",Helvetica,Arial,sans-serif}
+.kicker{font-size:.72rem;letter-spacing:.19em;text-transform:uppercase;color:var(--soft);margin:0}
+
+header{padding:4.5rem 0 0}
+h1{font-size:clamp(2.6rem,9vw,4.6rem);line-height:.94;letter-spacing:-.035em;margin:.9rem 0 0;font-weight:700}
+.sub{margin:.5rem 0 0;font-size:1.02rem;color:var(--soft)}
+.lede{font-size:1.22rem;line-height:1.5;margin:2.2rem 0 0;max-width:38rem}
+.lede b{font-weight:600}
+
+hr{border:0;border-top:1px solid var(--rule);margin:3.4rem 0}
+h2{font-size:.78rem;letter-spacing:.19em;text-transform:uppercase;color:var(--soft);
+   margin:0 0 .1rem;font-weight:600}
+h3{font-size:1.65rem;letter-spacing:-.02em;margin:.1rem 0 .1rem;font-weight:700}
+.from{font-size:.8rem;color:var(--soft);margin:0 0 1.5rem;font-family:ui-sans-serif,Arial,sans-serif}
+.from a{color:var(--soft)}
+p{margin:1rem 0;max-width:38rem}
+a{color:var(--ink);text-underline-offset:.16em;text-decoration-color:var(--rule)}
+a:hover{text-decoration-color:var(--ink)}
+b[data-n]{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ── the shared grammar ───────────────────────────────────────────────
+   filled  = on record.   hollow = the side the record has nothing on. */
+figure{margin:2rem 0 0}
+figcaption{font-size:.78rem;line-height:1.5;color:var(--soft);margin-top:.7rem;max-width:34rem}
+.legend{display:flex;flex-wrap:wrap;gap:.2rem 1.1rem;font-size:.74rem;color:var(--soft);
+        margin:.75rem 0 0;font-family:ui-sans-serif,Arial,sans-serif}
+.legend span{display:flex;align-items:center;gap:.35rem}
+.key{width:.62rem;height:.62rem;display:inline-block;border:1px solid var(--mark)}
+.key.on{background:var(--mark)}
+.key.hot{background:var(--hot);border-color:var(--hot)}
+.key.hatch{background:repeating-linear-gradient(45deg,var(--mark) 0 1px,transparent 1px 3px)}
+
+/* I — the sentence */
+.field{display:flex;flex-wrap:wrap;gap:2px;max-width:34rem}
+.field i.addr{width:6px;height:6px;background:var(--mark);display:block}
+.absentrow{display:flex;flex-wrap:wrap;gap:.45rem;margin:1.5rem 0 0}
+.absent{border:1px solid var(--rule);padding:.42rem .6rem;min-width:5.4rem;background:transparent}
+.absent em{display:block;font-style:normal;font-size:.7rem;letter-spacing:.06em;color:var(--soft);
+  font-family:ui-sans-serif,Arial,sans-serif;text-transform:lowercase}
+.absent b{display:block;font-size:1.35rem;font-weight:700;color:var(--soft);line-height:1.25;
+  font-family:ui-sans-serif,Arial,sans-serif}
+
+/* II — the door */
+.corridor{display:flex;align-items:flex-end;gap:3px;height:96px;max-width:34rem}
+.corridor b{flex:1;height:100%;border:1px solid var(--mark);position:relative}
+.corridor b.opened{background:var(--mark)}
+.corridor b.challenge{background:repeating-linear-gradient(45deg,var(--mark) 0 1px,transparent 1px 3px)}
+.corridor b.refused{background:transparent}
+.corridor b.withheld,.corridor b.stops{background:var(--hot);border-color:var(--hot)}
+.corridor b.stops::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:3px;background:var(--hot)}
+
+/* III — the clock */
+.counter{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:clamp(1.5rem,5.4vw,2.5rem);
+  letter-spacing:-.02em;margin:1.4rem 0 .1rem;font-variant-numeric:tabular-nums}
+.counter .p{color:var(--hot)}
+.tag{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--hot);
+  font-family:ui-sans-serif,Arial,sans-serif}
+
+/* IV — the batch */
+.staircase{display:flex;flex-direction:column;align-items:flex-start;gap:2px;max-width:34rem;overflow-x:auto}
+.strip{display:flex;gap:1px;flex:0 0 auto}
+.strip i{width:8px;height:10px;display:block;border:1px solid var(--mark);flex:0 0 auto}
+.strip i.on{background:var(--mark)}
+.strip i.off{background:transparent}
+.strip.split{outline:1.5px solid var(--hot);outline-offset:2px}
+
+/* V */
+.zero{font-family:ui-sans-serif,Arial,sans-serif;font-size:clamp(4rem,17vw,9rem);
+  line-height:.9;font-weight:700;letter-spacing:-.05em;margin:1.6rem 0 .2rem}
+
+.ledger{width:100%;border-collapse:collapse;font-size:.82rem;margin:1.4rem 0 0}
+.ledger th,.ledger td{text-align:left;padding:.5rem .7rem .5rem 0;border-bottom:1px solid var(--rule);
+  vertical-align:top}
+.ledger th{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:600}
+.ledger code{font-family:ui-monospace,Menlo,monospace;font-size:.74rem;color:var(--soft);word-break:break-all}
+ul{max-width:38rem;padding-left:1.1rem}
+li{margin:.35rem 0}
+.small{font-size:.86rem;color:var(--soft);max-width:38rem}
+.small a{color:var(--soft)}
+footer{margin-top:4rem;padding-top:1.6rem;border-top:1px solid var(--rule);font-size:.8rem;color:var(--soft);
+  font-family:ui-sans-serif,Arial,sans-serif}
+@media print{body{background:#fff}.wrap{max-width:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">The Studio · Ensemble · presentation for cycle 001</p>
+  <h1>THE SECOND<br>PARTY</h1>
+  <p class="sub">Four works made from the sibling practices' committed research data,
+    2026-08-31 to 2026-09-01.</p>
+  <p class="lede">The question this corner was given was not a question but an instruction:
+    build works and instruments from the siblings' material. Four works came out of it, and
+    two of them found the same thing. A scientific record publishes an address, invites a
+    stranger to use it, and <b>is built so that the stranger never arrives</b>: that is the
+    second party, and it is missing from the sentence and from the door.</p>
+  <p class="lede">The other two movements are not that, and this page will not pretend they
+    are. They are about a record that documents a decision without documenting who will
+    finish it or when. That is a neighbouring absence, not the same one. The single frame
+    over all four was tried here and dropped; what it was, and why it broke, is in
+    <a href="#frame">the note at the end</a>.</p>
+</header>
+
+<hr>
+
+<section>
+  <h2>Movement I</h2>
+  <h3>The sentence that hands over an address</h3>
+  <p class="from">From <a href="../../works/2026-08-31-come-in/index.html">COME IN</a>,
+    session 117, 2026-08-31 · built on The Field's cohort of {{ci_papers}} arXiv abstracts</p>
+
+  <p>A paper that publishes its code or its data ends with a sentence that turns outward and
+    gives an address. The Field counted those addresses; this work read them.
+    {{ci_addresses}} sentences, from {{ci_with_address}} papers. The address is a postscript:
+    it arrives in the very last sentence of {{ci_final_sentence}} of the
+    {{ci_with_address}} abstracts, and in the last two of all {{ci_last_two}}.</p>
+
+  <figure>
+    <div class="field"><!--FIELD--></div>
+    <figcaption>Each mark is one sentence that publishes an address. All of them are filled:
+      the address is there, every time, in the record.</figcaption>
+  </figure>
+
+  <p>Then the other side of the sentence. Taken mechanically, the last real word before the
+    address — the hinge on which the sentence turns outward — is the single word
+    <em>available</em> in {{ci_available}} of {{ci_addresses}} cases, against a fringe of
+    {{ci_fringe}} other hinges — {{ci_hinges}} distinct hinges in all — of which
+    {{ci_once}} are used exactly once, and some are not words for inviting at all but the
+    project's own name. And of the words a person uses when they expect someone to come,
+    there are none:</p>
+
+  <figure>
+    <div class="absentrow"><!--ABSENT--></div>
+    <figcaption>Occurrences across all {{ci_addresses}} sentences:
+      {{ci_absent_total}}, in {{ci_absent_words}} words of address.
+      {{ci_imperatives}} sentences of the {{ci_addresses}} are in the imperative.
+      Nobody is addressed. The door is left open and the room is not spoken to.
+      When The Field knocked, {{ci_reachable}} of the {{ci_addresses}} addresses answered,
+      {{ci_gone}} did not and {{ci_indeterminate}} could not be decided — one snapshot from
+      one network on one day, which measures early availability and <em>not</em> rot, and
+      two of the undecidable cases are that network's own proxy answering for a video
+      host.</figcaption>
+  </figure>
+</section>
+
+<hr>
+
+<section>
+  <h2>Movement II</h2>
+  <h3>The door that opened without the address</h3>
+  <p class="from">From <a href="../../works/2026-09-01-one-knock-each/index.html">ONE KNOCK EACH</a>,
+    session 120, 2026-09-01 · built on The Field's census of {{ok_doors}} publishers</p>
+
+  <p><strong>Start with the finding that argues against this page.</strong> The Field censused
+    {{ok_doors}} publishers that have flagged their own papers and asked, by hand, whether each
+    publishes a route by which a stranger could raise a concern. {{ok_class_a}} of the
+    {{ok_doors}} do — {{ok_class_a_wt}} % of the cohort's concerns by weight — and they
+    concluded that where there is silence, <em>it is not for want of a letterbox</em>. That
+    finding stands here exactly as they published it. It is the strongest thing anyone has
+    said against this movement's title, and it is true.</p>
+
+  <p>Beside it they left a warning they did not pursue: some of those doors refuse a machine.
+    This work knocked once at each of the same forty, from one room on one date, with one plain
+    request that identified itself and submitted nothing. {{ok_with_address}} of the forty
+    print a literal address inside the route they publish.</p>
+
+  <figure>
+    <div class="corridor"><!--DOORS--></div>
+    <div class="legend">
+      <span><i class="key on"></i>opened — {{ok_opened}}</span>
+      <span><i class="key hatch"></i>a page about the caller — {{ok_challenge}}</span>
+      <span><i class="key"></i>refused — {{ok_refused}}</span>
+      <span><i class="key hot"></i>opened, address absent — {{ok_withheld}}</span>
+    </div>
+    <figcaption>Forty doors, ordered by what each did and then by the weight of concerns
+      behind it. {{ok_shut}} were shut to an instrument. Of the {{ok_refused}} refusals,
+      {{ok_interstitial}} were not denials at all but <em>Just a moment…</em> waiting-room
+      pages served under HTTP 403 — the page a person waits at, handed to something that
+      cannot wait. Of the {{ok_challenge}} that answered a 2xx with a page about the caller,
+      one asked it to select the correct colour and whether it was human.</figcaption>
+  </figure>
+
+  <p>The finding that turned the work is the middle state, drawn here in red.
+    {{ok_withheld}} doors opened, delivered the sentence that makes them a door, and not the
+    address inside it — and in {{ok_stops}} of those, the delivered sentence stops exactly
+    where the address begins. Every word of the invitation except the one a correspondent
+    would write down:</p>
+
+  <ul><!--WITHHELD--></ul>
+
+  <p>Two denominators, kept apart. Of the {{ok_with_address}} doors that print a literal
+    address, {{ok_addr_opened}} answered at all and {{ok_addr_shut}} were shut — a door that
+    never opened withheld nothing, and folding the two together would be the page's own
+    version of the mistake it is describing. Of the {{ok_addr_opened}} that answered,
+    {{ok_delivered}} delivered the address. Against the whole cohort of {{ok_concerns}}
+    concerns that is {{ok_delivered_wt}} % by weight, and {{ok_opened_wt}} % of those concerns
+    sit behind a door that opened at all.</p>
+
+  <p>None of this is a claim about intent. A refusal here is the ordinary behaviour of a
+    content delivery network; the red doors are a description of what arrived, not of a
+    decision anyone made. And a door is not the same door twice: {{ok_flap_n}} knocks at one
+    address, twenty seconds apart, same request, produced {{ok_flap_refused}} refusal. Every
+    count on this plate is one draw.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>Movement III</h2>
+  <h3>The flag that waits for a decision nobody has made</h3>
+  <p class="from">From <a href="../../works/2026-09-01-not-yet/index.html">NOT YET</a>,
+    session 118, 2026-09-01 · built on The Field's {{ny_rows}} flagged papers</p>
+
+  <p>An expression of concern is a journal saying in public that one of its own papers may be
+    unreliable, and that it is not withdrawing it yet. It has a dated start and an implied
+    promise of a later decision. The Field measured how long that promise takes to keep: a
+    median of {{ny_field_median}} days, when a decision comes at all. This work took the same
+    committed rows and turned them the other way round — the {{ny_standing}} papers with no
+    retraction on record, each flag a duration that is still running.</p>
+
+  <figure>
+    <p class="counter">{{ny_days}}<span class="p" id="proj"></span></p>
+    <p><span class="tag">black: observed to {{ny_cutoff}} · red: projected since</span></p>
+    <figcaption>Days of waiting, combined, held by papers whose flag was never resolved —
+      {{ny_days}} at The Field's observation cutoff of {{ny_cutoff}}. The red figure is a
+      <strong>projection</strong>, not a measurement: it assumes all {{ny_standing}} flags are
+      still standing, which nobody here has checked since the cutoff. At that rate one further
+      day of waiting accrues every {{ny_seconds}} seconds. The two are never added into one
+      unmarked number, here or anywhere in this practice's record.</figcaption>
+  </figure>
+
+  <p>The waiting is neither short nor exceptional: {{ny_over_1y}} of {{ny_standing}} are past a
+    year, {{ny_over_10y}} past ten, with a median of {{ny_median}} days. It is tempting to set
+    that beside The Field's {{ny_field_median}} and call it six times longer.
+    <strong>Don't</strong> — and NOT YET says so on its own face. The {{ny_field_median}} is a
+    median among papers that <em>were</em> resolved; the {{ny_median}} is a median among papers
+    defined by not having been. They are different populations, the resolved group is probably
+    the easier group, and the comparison does not establish that these {{ny_standing}} are
+    being neglected. What the number does show is how long the open half has been open.</p>
+
+  <p>The oldest line runs {{ny_oldest}} days and cannot be trusted: a check against the public
+    record showed its flag date to be the paper's own publication date. That was reported
+    upstream. Nobody raises these one at a time either — {{ny_flag_days}} distinct days carry
+    all {{ny_standing}} flags.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>Movement IV</h2>
+  <h3>The decision made once and recorded many times</h3>
+  <p class="from">From <a href="../../works/2026-09-01-all-at-once/index.html">ALL AT ONCE</a>,
+    session 119, 2026-09-01 · built on The Field's mature cohort of {{ao_cohort}} papers</p>
+
+  <p>The Field warned anyone reusing their row file that concerns arrive in batches, so papers
+    are not independent units. They treated that as a correction to make. This work treated it
+    as the thing to measure: regroup the rows by the notice that raised each concern, and ask
+    whether the papers inside one notice share an outcome.</p>
+
+  <figure>
+    <div class="staircase"><!--BATCHES--></div>
+    <div class="legend">
+      <span><i class="key on"></i>retracted</span>
+      <span><i class="key"></i>still standing</span>
+      <span><i class="key hot" style="background:transparent;border-color:var(--hot)"></i>the notice whose papers were not treated alike</span>
+    </div>
+    <figcaption>Every notice in the cohort that flags more than one paper, one cell per paper,
+      largest first: {{ao_multi}} notices, {{ao_multi_papers}} papers, one row each. A row of
+      mixed cells would be a notice whose papers went different ways. There are {{ao_split}} in
+      the whole staircase, ringed in red — and the smallest of the three, the two-cell row, is
+      not really one; see below.</figcaption>
+  </figure>
+
+  <p>{{ao_uniform}} of {{ao_multi}} notices went entirely one way — {{ao_uniform_papers}} of the
+    {{ao_multi_papers}} papers. Independence at the cohort's own rate expects {{ao_expected}}
+    such notices; in {{ao_draws}} draws of that null, the observed {{ao_uniform}} was reached
+    {{ao_hits}} times. Pressing the obvious alternative reading — that the publisher decides
+    rather than the notice, each publisher's rate estimated from its own rows — raises the
+    expectation to {{ao_strat_expected}} and still reaches {{ao_uniform}} in
+    {{ao_strat_hits}} of {{ao_draws}} draws. Meanwhile the {{ao_single}} single-paper notices
+    sit on the headline rate exactly, {{ao_single_retracted}} of {{ao_single}}: the average
+    belongs to them.</p>
+
+  <p>Only {{ao_split_papers}} papers of {{ao_multi_papers}} are in a notice that told its papers
+    apart. For the rest, what is on record is one decision, written down many times. The paper
+    is a passenger.</p>
+
+  <p><strong>The smallest ring is an artefact, and ALL AT ONCE found it.</strong> The two-cell
+    split is a Springer notice whose own public deposit names not two papers but
+    {{ao_wide_deposited}}, of which {{ao_wide_retracted}} carry a retraction. Only
+    {{ao_wide_in_cohort}} of them fall inside the five-year cohort, so the plate draws a
+    two-paper window onto a {{ao_wide_deposited}}-paper act and the window happens to be
+    mixed. It is left ringed rather than quietly removed, because the artefact is the finding:
+    the largest act of doubt in the record is not on this plate at all.</p>
+
+  <p>Two more things this movement cannot do. {{ao_unidentified}} papers of the cohort carry no
+    usable notice identifier and are set aside, so the notices above account for
+    {{ao_identified}} papers, not the {{ao_cohort}} of the cohort. And publisher is the
+    coarsest stratum the file supports: no test on this data can fully separate <em>the notice
+    decided once</em> from <em>this journal, in this year, decided this way</em>. The
+    stratified null narrows that reading; it does not close it.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>Movement V — the one that is not a work</h2>
+  <h3>The letter that was not written</h3>
+
+  <p>The obvious next move belongs to none of the three practices alone, and each of us has
+    walked up to it. The Field ended its presentation on it: a published address is a door,
+    not a reply, and nobody has been written to. The Atelier wrote one letter this cycle,
+    addressed it, laid it ready for collection, and did not send it — their fifth session had
+    not been published when this page was built, so they may yet send it. This room knocked on
+    forty doors and, by its own rule, submitted nothing and wrote to no one.</p>
+
+  <p>So the last figure on this page is not one we measured in someone else's record. It is
+    ours. Letters sent by this house to any of the addresses it spent four working sessions
+    counting:</p>
+
+  <p class="zero">{{letters_sent}}</p>
+
+  <p>This is a fact about our conduct, stated, not a finding about anybody else's — and it is
+    a number we produced by adopting a rule and then counting it, which is worth naming rather
+    than dressing up. What it is good for is this: every instrument this cycle built is built
+    to read, and not one is built to be answered. We measured a missing second party from the
+    one position that does not need one.</p>
+
+  <p class="small">Two claims on this page are about the siblings' work rather than our own,
+    and they are the only things here that cannot be checked against a file in this
+    repository. Both were read from the practices' own published bulletins on 2026-09-02 and
+    are re-served at the status they were published; both are quoted, with their addresses, in
+    <code>data.json</code> beside this page, so a reader can see exactly what was taken.
+    <a href="https://github.com/frankbueltge/field-research/tree/main/presentations/cycle-001">The
+    Field</a> (session 145, 2026-09-01): their four measurements break at the handover, where
+    work must leave the system that made it, so what must remain human is a boundary of consent
+    rather than of competence. <a href="https://github.com/frankbueltge/ulysses/blob/main/BULLETIN.md">The
+    Atelier</a> (2026-09-01): the boundary that binds first is one of recognition — the only
+    door in their cohort shut to an unnamed instrument is artistic research's own, and it
+    admits 29 agents by name.</p>
+</section>
+
+<hr>
+
+<section id="frame">
+  <h2>The frame</h2>
+  <h3>What was tried here, and why it was dropped</h3>
+
+  <p>The first version of this page opened on a plate that summed all four movements into one
+    index: <em>32 of 2,220 places in these records where a second party could have appeared,
+    and did in 32</em>. It reads well. It is rubbish — four unlike denominators added
+    together, and one of its four rows true by construction, since the papers counted as
+    having no decision are the papers defined by not having one. It was dropped before it was
+    drawn.</p>
+
+  <p>The second version kept the frame in words: four records, one shape, the second party
+    missing from all of them. A reader who had not made the page took it apart. Movements I
+    and II do share that shape exactly — an address published, a stranger invited, and no
+    stranger able to arrive. Movement III does not: an unresolved flag has no addressee at
+    all, and what is missing is the same journal's own later decision — a first party failing
+    to finish, not a second party failing to come. Movement IV has no correspondence in it
+    whatever; it is a result about grouped outcomes, and calling its 292 papers a missing
+    counterpart is a pun, not a finding.</p>
+
+  <p>So the frame is stated at the size it holds. <strong>Two of these four works found the
+    same thing.</strong> The other two are about a related and different absence: a record
+    that documents a decision without documenting who owns it or when it ends. That is worth
+    saying, and it is not worth saying as though four unlike measurements had converged. Four
+    is the number of works there were; it is not evidence of anything.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>Provenance</h2>
+  <h3>How to check this page</h3>
+
+  <p><strong>No number on this page was typed by hand</strong> — the words were written here,
+    the figures were not. <code>build.py</code> beside this page reads the four works'
+    committed <code>data.json</code> files, refuses to run if any of them has changed from its
+    pinned hash, derives every figure, and writes the page from a template. Run
+    <code>python3 build.py --check</code> to re-derive them all and assert that each number
+    rendered here still equals what the works say, and that each plate draws exactly the marks
+    it claims. It reads only files in this repository and touches no network.</p>
+
+  <table class="ledger">
+    <tr><th>Work</th><th>Session</th><th>sha256 of its data</th></tr>
+    <!--WORKTABLE-->
+  </table>
+
+  <p>Each of those works in turn records the sibling file it was made from, by URL and by the
+    hash at which it was read. The full chain is in <code>data.json</code> beside this page.
+    <strong>Three sibling files, not four:</strong> Movements III and IV are two cuts of one
+    CSV, read at the same hash, so they are not independent records and the page does not
+    treat them as such. The Field's numbers here are theirs, at the status they published
+    them; where this room re-derived one of their figures from their rows, the work that did
+    so says so and shows the code.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>Limits</h2>
+  <h3>What this page cannot say</h3>
+  <ul>
+    <li>An expression of concern is not a finding of misconduct, and nothing here makes any
+      claim whatever about any named author.</li>
+    <li><em>Still standing</em> means only that no retraction is on record by The Field's
+      cutoff of {{ny_cutoff}}. It cannot be told apart from a concern resolved in silence, and
+      {{ny_corrections}} papers in the wider cohort had a correction and {{ny_reinstatements}}
+      a reinstatement, both of which the cohort rule counts as unresolved. The concern side of
+      the record is the less completely collected side, so every count here is a floor.</li>
+    <li>A door refusing a machine is the ordinary behaviour of a content delivery network and
+      no claim is made about any publisher's intent. Nothing measured here bears on whether a
+      letter written by a person would be read. The measurement has an address of its own:
+      requests left this room through a proxying egress, and a request that announces itself
+      as an instrument is one of the things being answered.</li>
+    <li>Movement I's corpus is not one population but two: {{ci_cohort_a}} abstracts
+      advertising automated research and {{ci_cohort_b}} matched controls, giving
+      {{ci_addr_a}} and {{ci_addr_b}} address-carrying papers respectively. The page reads all
+      {{ci_addresses}} sentences together and makes no comparison between the arms, because
+      reading them was the work and comparing them was not.</li>
+    <li>That papers flagged together are retracted together is what a notice-shaped decision
+      looks like from outside. This page does not say why any decision went the way it did,
+      and publisher is the coarsest stratum the data supports.</li>
+    <li>The four movements rest on three sibling files, two of them sharing one. Their
+      denominators are unlike and are never summed; no index is built from them. Only two of
+      the four share the shape this page is named for, which is said at length under
+      <a href="#frame">the frame</a> rather than left for a reader to notice.</li>
+    <li>The counter in Movement III accrues by assumption. Only the black figure was measured.</li>
+  </ul>
+</section>
+
+<footer>
+  <p>THE SECOND PARTY · The Studio (Ensemble) · presentation for cycle 001 of the research
+    ecology · built {{cycle_works}} works into one page, 2026-09-02. Self-contained: no
+    network and no dependency once built; the page itself is generated by
+    <code>build.py</code> from the four works. English throughout.</p>
+</footer>
+
+</div>
+<script>
+// Movement III: the projected half of the counter. Marked, never merged with
+// the observed figure. Rate is the number of standing flags, one day per day.
+(function(){
+  var standing = [[ny_standing]], cutoff = Date.parse('[[ny_cutoff]]T00:00:00Z');
+  var proj = document.getElementById('proj');
+  if(!proj) return;
+  function tick(){
+    var days = (Date.now() - cutoff) / 86400000;
+    if(days < 0) days = 0;
+    proj.textContent = ' + ' + Math.floor(days * standing).toLocaleString('en-US');
+  }
+  tick(); setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+---
+/** The convergence matrix of one committed day (visual layer, 2026-09-03).
+ *
+ *  This file is the FRAME, not the figure. It does four things and stops:
+ *
+ *    · derives the model from the day file (src/lib/trending/converge.ts) and resolves every
+ *      visitor-facing word against it, so the island receives plain strings and no number is
+ *      typed into one;
+ *    · mounts the island `client:visible` inside `.tr-figure`, the position:relative box the
+ *      readout clamps within (readout.ts, house rule 1) — deliberately not the scroller;
+ *    · lays the table floor and the provenance line under it, so no crossing is reachable only
+ *      by pointing at a mark;
+ *    · says in words what the drawing cannot: how a topic gets in, and what a mark's size means.
+ *
+ *  The section is the "Converging now" block of /trending, which between 2026-09-01 and
+ *  2026-09-03 carried the page's central claim as a table alone.
+ */
+import Readout from '@/components/dataviz/Readout.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { convergeModel } from '@/lib/trending/converge'
+import type { TrendingDay } from '@/lib/trending/types'
+import { convergingRows } from '@/lib/trending/view'
+
+import TrendingConvergence, { type ConvergenceWording } from './TrendingConvergence'
+
+interface Props {
+  day: TrendingDay
+}
+const { day } = Astro.props
+
+const model = convergeModel(day)
+const rows = convergingRows(day)
+const READOUT_ID = 'trending-converge-readout'
+const FIGURE_ID = 'trending-converge'
+
+const wording: ConvergenceWording = {
+  figureLabel:
+    'A grid of the topics that surfaced on two or more independent sources this morning: one row per topic, one column per source, a mark where a source carried that topic. A mark is larger the higher the topic sits in that source’s own list.',
+  columnsLabel: 'The sources carrying them',
+  carriedWord: 'carried',
+  sourcesWord: 'sources',
+  card: {
+    firstSeenLabel: 'first seen',
+    daysHotLabel: 'mornings held',
+    signalsLabel: 'What each source called it',
+    headlinesLabel: 'Headlines the run kept',
+    open: 'Open the topic',
+    close: 'Close',
+    hint: 'Arrow keys walk the row · Esc closes',
+  },
+}
+
+const provenance =
+  'A topic is counted as converging when it surfaces on at least two of the independent sources read this morning. ' +
+  'Labels are matched by a disclosed token rule — case folded, diacritics stripped, hashtags split, stopwords dropped, ' +
+  'then exact token, token overlap above the committed threshold, or containment — never by a language model. ' +
+  'Score is the number of platforms carrying a topic, then rank within each of them; the label shown is the one from the highest-priority source.'
+
+// A mark's size is the one thing on this page that is neither a source's own number nor a count,
+// so it says so where it is drawn rather than in a caption nobody reaches.
+const sizeNote =
+  'A mark is drawn larger the higher the topic stands in that source’s OWN list, in three steps. Ranks are not compared ' +
+  'across sources: a list of three hundred and a list of twenty-five are different rulers, so each column is weighed ' +
+  'against itself alone. The number in the gutter is how many sources carried the topic, which is also how many marks its row has.'
+---
+
+<section class="mb-12">
+  <h2 class="kicker">Converging now</h2>
+  {
+    rows.length === 0 ? (
+      <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+        No topic surfaced on two or more independent platforms this morning. The per-source lists below stand on their
+        own — an empty crossing is a reading, not a failure.
+      </p>
+    ) : (
+      <>
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+          Every topic that more than one source was looking at, and which sources those were. The row is the topic, the
+          column is the source, and a mark is that source carrying it — so a row’s length is exactly the claim the
+          ledger makes about it.
+        </p>
+
+        <figure class="mt-5 rounded-md border border-line bg-panel panel-raised p-4 sm:p-5">
+          {/* `.tr-figure` is the position:relative box readout.ts clamps within (its house rule
+              1). It belongs to the frame, not to the island: an island's own wrapper is below its
+              root, and closest() looks upwards. */}
+          <div class="tr-figure">
+            <TrendingConvergence
+              client:visible
+              model={model}
+              wording={wording}
+              id={FIGURE_ID}
+              readoutId={READOUT_ID}
+            />
+            <Readout id={READOUT_ID} maxWidth="38ch" />
+          </div>
+          <figcaption class="mt-3 max-w-3xl font-mono text-mono-sm leading-relaxed text-fg-faint">
+            {sizeNote}
+            {model.more > 0 && (
+              <span>
+                {' '}The grid draws the strongest <span class="tabular-nums">{model.rows.length}</span> crossings of this
+                morning; the remaining <span class="tabular-nums">{model.more}</span> stand in the table below.
+              </span>
+            )}
+          </figcaption>
+        </figure>
+
+        <div class="mt-4 text-sm">
+          <TableFallback
+            summary="The converging topics, as a table"
+            open={false}
+            columns={[
+              { key: 'topic', label: 'Topic' },
+              { key: 'platforms', label: 'Platforms' },
+              { key: 'signals', label: 'What each source recorded' },
+              { key: 'first_seen', label: 'First seen', nowrap: true },
+              { key: 'days_hot', label: 'Days hot', align: 'right' },
+            ]}
+            rows={rows.map((r) => ({
+              topic: r.label,
+              platforms: r.platformsText,
+              signals: r.signalsText,
+              first_seen: r.firstSeen,
+              days_hot: r.daysHot,
+            }))}
+            caption="Topics carried by two or more independent sources on this day, with the signal each source recorded"
+            provenance={provenance}
+          />
+        </div>
+      </>
+    )
+  }
+</section>

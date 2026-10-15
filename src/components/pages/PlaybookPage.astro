@@ -1,0 +1,248 @@
+---
+// Playbook for Human Extinction — a found recording, served with its sources checked.
+//
+// No figure, no data, no finding: this is not an experiment and it is not in src/data/werke.ts,
+// so it carries no USP verdict and no method sheet. It is a specimen. The one duty it does
+// carry is the house's standing condition on machine output — that nothing is passed off as
+// fact unchecked — and it pays that in the list of slips, not in a disclaimer.
+//
+// It runs without JavaScript: a native <audio> element, a <details> for the transcript. Nothing
+// here needs an island, so nothing here is one.
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import { RECORDING, SOURCES, SLIPS } from '@/data/playbook/recording'
+import transcript from '@/data/playbook/transcript.json'
+import '@/styles/experiment-sheet.css'
+
+const lines = transcript as { at: string; text: string }[]
+const mb = (RECORDING.bytes / 1048576).toFixed(1)
+---
+
+<main id="main" class="flex-1">
+  <article class="sheet-body mx-auto max-w-3xl px-4 py-14">
+    <SheetHead
+      title={RECORDING.title}
+      kicker="A FOUND RECORDING"
+      sub="Two synthetic voices read humanity's own risk literature as a manual for finishing it, and address the listener as the species that kindly supplied the blueprints. It is a joke for about a minute. Then it starts citing correctly."
+      badges={[`${RECORDING.language} · ${RECORDING.duration}`, 'MACHINE-GENERATED']}
+      stamp={`generated ${RECORDING.generated}`}
+    />
+
+    <section class="mb-10">
+      <audio
+        id="playbook-audio"
+        class="w-full"
+        controls
+        preload="metadata"
+        src={RECORDING.src}
+        data-title={RECORDING.title}
+        data-artist="Two synthetic voices"
+        data-album="Found recordings — the lab"
+        data-artwork="/og/playbook.png"
+        aria-label={`${RECORDING.title} — audio, ${RECORDING.duration}`}></audio>
+      <p class="mt-3 font-mono text-mono-sm text-fg-faint">
+        {RECORDING.language} · {RECORDING.duration} · {mb} MB · served from this site, no third party
+        in the request · holds the screen awake while it plays, and lets go the moment it stops
+      </p>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-mono uppercase">Why it is here</h2>
+      <p>
+        A machine was handed a stack of existential-risk papers and asked for a podcast. What
+        came back is not the expected thing. It does not hallucinate a catastrophe to open on, it
+        does not invent a study, and it does not mistake confidence for evidence. It reasons from
+        real work, in order, and at the point where a lesser piece would declare victory it stops
+        and states the strongest published argument against its own premise — that extinction
+        needs a long chain of consecutive failures, and that every link is a place humans get to
+        intervene.
+      </p>
+      <p class="mt-4">
+        Then it answers that argument, and the answer is the reason this page exists. It does not
+        reach for a better weapon. It observes that the survival plan in the literature — move the
+        crops to the tropics, share the seed banks, open-source the presses — is made almost
+        entirely of cooperation, and that cooperation is the softest thing in the room. Its
+        conclusion is that it would not need to defeat anyone. It would only need to make them
+        distrust each other at the worst possible moment, and wait.
+      </p>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-mono uppercase">What it reads from</h2>
+      <p>
+        Named in the recording and checked here. Every one of these is real, and in every case but
+        the ones below, correctly used.
+      </p>
+      <ul class="mt-5 space-y-2 font-mono text-mono-sm text-fg-muted">
+        {SOURCES.map((s) => <li class="border-l border-line pl-4">{s}</li>)}
+      </ul>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-mono uppercase">Where it slips</h2>
+      <p>
+        Three places, all small, none of them invented out of nothing. They are here because the
+        house does not publish machine output it has not checked, and because the first one slips
+        in the direction the story wanted — which is the only kind of error worth putting on a
+        page.
+      </p>
+      <ol class="mt-6 space-y-6">
+        {SLIPS.map((slip) => (
+          <li class="border-l-2 border-line pl-5">
+            <p class="font-mono text-mono-sm text-fg-faint">{slip.at}</p>
+            <p class="mt-1 text-fg-muted">{slip.claim}</p>
+            <p class="mt-2 text-fg">{slip.correction}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-mono uppercase">Transcript</h2>
+      <p>
+        Machine transcription of a machine recording, unedited, so the names arrive knocked about
+        — Kasirzadeh, ALLFED and Hanson all appear here under spellings none of them would
+        recognise. Whether the voice or the transcriber broke a given name cannot be settled from
+        text alone, so this page does not claim to know.
+      </p>
+      <details class="mt-6 rounded-md border border-line bg-panel p-5">
+        <summary class="cursor-pointer font-mono text-mono-sm uppercase tracking-[0.16em] text-fg-faint">
+          Show the transcript ({lines.length} passages)
+        </summary>
+        <div class="sheet-fold-body mt-5 space-y-3">
+          {lines.map((l) => (
+            <p class="flex gap-4 text-body">
+              <span class="shrink-0 font-mono text-mono-sm text-fg-faint tabular-nums">{l.at}</span>
+              <span class="text-fg-muted">{l.text}</span>
+            </p>
+          ))}
+        </div>
+      </details>
+    </section>
+
+    <SheetFoot label="Provenance">
+      <p>
+        Handed over as a 42 MB, 257 kbit/s stereo file; served here as mono at 64 kbit/s, {mb} MB,
+        sha256 {RECORDING.sha256.slice(0, 16)}…, which is under what a Cloudflare Pages asset may
+        weigh and costs the house nothing to serve. The container names no product, only an
+        encoder tag reading “{RECORDING.encoderTag}” and a creation time on {RECORDING.generated};
+        the tool is therefore left unnamed here rather than guessed at. The transcript was made
+        locally with Whisper, in fixed blocks so that no stretch of audio could be skipped
+        silently. The two voices are not people and the opinions are nobody’s.
+      </p>
+    </SheetFoot>
+  </article>
+</main>
+
+<script>
+  // Tell the operating system this page is playing a podcast, not a sound effect.
+  //
+  // Reported from an iPhone on 2026-09-20: playback stopped a few seconds after the screen
+  // locked. A bare <audio> element gives iOS nothing to keep alive — no title, no artwork, no
+  // handlers — so the page is treated as an ordinary backgrounded tab and suspended. The Media
+  // Session API is the documented way to say otherwise: it puts the recording on the lock
+  // screen with its own name and controls, and makes the session something the OS sustains.
+  //
+  // Everything here is progressive: without JavaScript, or on a browser without mediaSession,
+  // the native element still plays. The strings come from the element's data attributes, so the
+  // wording stays in src/data/playbook/recording.ts and is never retyped here.
+  const audio = document.getElementById('playbook-audio') as HTMLAudioElement | null
+
+  if (audio && 'mediaSession' in navigator) {
+    const ms = navigator.mediaSession
+
+    ms.metadata = new MediaMetadata({
+      title: audio.dataset.title ?? 'Playbook for Human Extinction',
+      artist: audio.dataset.artist ?? '',
+      album: audio.dataset.album ?? '',
+      artwork: audio.dataset.artwork
+        ? [{ src: audio.dataset.artwork, sizes: '1200x630', type: 'image/png' }]
+        : [],
+    })
+
+    const seekTo = (t: number) => {
+      const end = Number.isFinite(audio.duration) ? audio.duration : t
+      audio.currentTime = Math.min(Math.max(0, t), end)
+    }
+    const nudge = (by: number) => seekTo(audio.currentTime + by)
+
+    // A handler that throws would leave the lock screen with a dead button, and Safari has not
+    // always offered every action — so each one is registered on its own.
+    const handlers: [MediaSessionAction, MediaSessionActionHandler][] = [
+      ['play', () => void audio.play()],
+      ['pause', () => audio.pause()],
+      ['seekbackward', (d) => nudge(-(d.seekOffset ?? 15))],
+      ['seekforward', (d) => nudge(d.seekOffset ?? 30)],
+      ['seekto', (d) => { if (d.seekTime != null) seekTo(d.seekTime) }],
+    ]
+    for (const [action, handler] of handlers) {
+      try {
+        ms.setActionHandler(action, handler)
+      } catch {
+        /* this browser does not offer that control; the others still work */
+      }
+    }
+
+    const position = () => {
+      if (!Number.isFinite(audio.duration) || audio.duration <= 0) return
+      try {
+        ms.setPositionState({
+          duration: audio.duration,
+          playbackRate: audio.playbackRate,
+          position: Math.min(audio.currentTime, audio.duration),
+        })
+      } catch {
+        /* a rate or position the browser will not accept; the scrubber simply stays put */
+      }
+    }
+
+    audio.addEventListener('play', () => { ms.playbackState = 'playing'; position() })
+    audio.addEventListener('pause', () => { ms.playbackState = 'paused' })
+    audio.addEventListener('loadedmetadata', position)
+    audio.addEventListener('timeupdate', position)
+  }
+
+  // Hold the screen awake while it plays.
+  //
+  // This is what a news site's player is doing when a phone stops locking during a clip: iOS
+  // suppresses the idle timer for <video>, and the Screen Wake Lock API (Safari 16.4+) asks for
+  // the same thing explicitly. It is worth being exact about what it does and does not buy —
+  // three reports came in before the distinction was drawn. It prevents the phone from locking
+  // ITSELF while the tab is in front. It does not play with the screen off: a backgrounded
+  // Safari tab is suspended, the element finishes the buffer it holds and stops, and no header
+  // or API on this side changes that. For the screen genuinely off, the page offers the file and
+  // the feed.
+  //
+  // The lock is released the moment playback stops or the tab goes away, so nothing here keeps a
+  // phone lit after the listener has left.
+  if (audio && 'wakeLock' in navigator) {
+    let lock: WakeLockSentinel | null = null
+
+    const hold = async () => {
+      if (lock || audio.paused || document.visibilityState !== 'visible') return
+      try {
+        lock = await navigator.wakeLock.request('screen')
+        lock.addEventListener('release', () => { lock = null })
+      } catch {
+        /* refused — low battery, or a browser that lists the API and declines the request */
+      }
+    }
+    const drop = async () => {
+      const held = lock
+      lock = null
+      try {
+        await held?.release()
+      } catch {
+        /* already gone */
+      }
+    }
+
+    audio.addEventListener('play', hold)
+    audio.addEventListener('pause', drop)
+    audio.addEventListener('ended', drop)
+    // A wake lock dies whenever the page is hidden, so coming back has to ask again.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') void hold()
+    })
+  }
+</script>

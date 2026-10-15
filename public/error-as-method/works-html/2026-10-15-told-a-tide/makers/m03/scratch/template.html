@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Hour It Falls</title>
+<style>
+  :root { --paper:#f3efe6; --ink:#1c2130; --muted:#7a7568; }
+  html,body { margin:0; background:var(--paper); }
+  body { display:flex; justify-content:center; align-items:center; min-height:100vh; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="Sixty-one days of an hourly record folded into a double-plotted day chart; a once-a-day fall lines up as a vertical column."></canvas>
+<script>
+(function(){
+const RAW=[/*DATA*/];
+const W=1100,H=800,dpr=Math.max(1,window.devicePixelRatio||1);
+const cv=document.getElementById('c');
+cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+const PAPER='#f3efe6', INK=[28,33,48], FALL=[150,58,36], MUTED='#7a7568';
+g.fillStyle=PAPER;g.fillRect(0,0,W,H);
+
+// ---- the source: pixel columns 3.5 .. 296.5 hold readings 0 .. 1463 (one per hour)
+const X0=3.5,X1=296.5,N=1464,DAYS=61;
+const tOf=x=>(x+0.5-X0)/(X1-X0)*(N-1);
+const pts=[];/*pts*/for(let i=0;i<RAW.length;i+=3)pts.push({x:RAW[i],y:RAW[i+1],d:RAW[i+2]/255});
+
+// band level per source column: weighted upper-quartile of ink, smoothed (where the record "rests")
+const colY=[];for(let x=0;x<300;x++)colY.push([]);
+pts.forEach(p=>{if(p.d>0.35)colY[p.x].push(p.y)});
+const rest=[];
+for(let x=0;x<300;x++){let a=[];for(let k=-6;k<=6;k++){const c=colY[x+k];if(c)a=a.concat(c)}
+  a.sort((m,n)=>m-n);rest.push(a.length?a[Math.floor(a.length*0.35)]:35);}
+
+// ---- layout
+const L=70,R=1050,PW=R-L;
+const stripTop=92,stripH=58;
+const actTop=196,rowH=8.9;           // 61 rows
+const pxPerH=PW/48;
+
+// ---- the source strip, redrawn as found
+g.save();
+for(const p of pts){
+  const X=L+(p.x+0.5)/300*PW, Y=stripTop+(p.y+0.5)/90*stripH;
+  g.fillStyle=`rgba(${INK},${(p.d*0.45).toFixed(3)})`;
+  g.beginPath();g.arc(X,Y,1.05,0,7);g.fill();
+}
+g.restore();
+
+// ---- per source column: where the record rests, and how low it went in that ~5-hour window
+const lowY=[],hiY=[];
+for(let x=0;x<300;x++){
+  let lo=null,hi=null;
+  for(const p of pts) if(p.x===x&&p.d>0.3){ if(lo===null||p.y>lo)lo=p.y; if(hi===null||p.y<hi)hi=p.y; }
+  lowY.push(lo);hiY.push(hi);
+}
+const cols=[];for(let x=3;x<=296;x++){ if(lowY[x]!==null) cols.push({t:tOf(x),lo:lowY[x],hi:hiY[x],rest:rest[x]}); }
+function at(t,key){ // linear interpolation between column centres
+  if(t<=cols[0].t)return cols[0][key]; const n=cols.length; if(t>=cols[n-1].t)return cols[n-1][key];
+  let i=0;while(cols[i+1].t<t)i++; const a=cols[i],b=cols[i+1],u=(t-a.t)/(b.t-a.t);
+  const s=u*u*(3-2*u); return a[key]*(1-s)+b[key]*s;
+}
+const K=0.5, REST0=33, BAND=7;
+// draw rows bottom-up so each day lies over the one below it
+for(let r=DAYS-1;r>=0;r--){
+  const base=actTop+r*rowH;
+  const top=[],bot=[];
+  for(let hh=0;hh<=48.001;hh+=0.2){
+    const t=r*24+hh; if(t<0||t>N-1)continue;
+    const X=L+hh*pxPerH;
+    const rs=at(t,'rest'), lo=at(t,'lo');
+    const yr=base+(rs-REST0)*K*0.5;
+    top.push([X,yr]); bot.push([X,yr+Math.max(0,lo-rs-BAND)*K]);
+  }
+  if(top.length<2)continue;
+  // occluding paper + fall fill
+  g.beginPath();top.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));
+  for(let i=bot.length-1;i>=0;i--)g.lineTo(bot[i][0],bot[i][1]);g.closePath();
+  g.fillStyle=PAPER;g.fill();
+  const grd=g.createLinearGradient(0,base-4,0,base+34);
+  grd.addColorStop(0,`rgba(${FALL},0.06)`);grd.addColorStop(1,`rgba(${FALL},0.7)`);
+  g.fillStyle=grd;g.fill();
+  // lower edge: the lowest readings
+  g.beginPath();bot.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));
+  g.strokeStyle=`rgba(${FALL},0.9)`;g.lineWidth=0.7;g.stroke();
+  // rest line
+  g.beginPath();top.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));
+  g.strokeStyle=`rgba(${INK},0.95)`;g.lineWidth=1.1;g.stroke();
+}
+
+// ---- quiet scaffolding
+g.font='italic 26px Georgia, "Times New Roman", serif';g.fillStyle='#1c2130';
+g.fillText('The Hour It Falls',L,52);
+g.font='12px Georgia, "Times New Roman", serif';g.fillStyle=MUTED;
+g.fillText('61 days of one hourly reading, as found (above) and folded day upon day (below)',L,74);
+
+g.strokeStyle='rgba(122,117,104,0.45)';g.lineWidth=1;
+// fold mark from strip to chart
+g.beginPath();g.moveTo(L,stripTop+stripH+8.5);g.lineTo(R,stripTop+stripH+8.5);g.stroke();
+// hour ticks above the chart
+g.font='10.5px Georgia, "Times New Roman", serif';g.textAlign='center';
+for(let h=0;h<=48;h+=6){
+  const X=L+h*pxPerH+0.5;
+  g.beginPath();g.moveTo(X,actTop-12);g.lineTo(X,actTop-(h%24?16:22));g.stroke();
+  g.fillText(h%24===0?(h===0?'hour 0':h===24?'+24 h':'+48 h'):'',X,actTop-26);
+}
+// faint 24h seam
+g.setLineDash([2,4]);g.beginPath();g.moveTo(L+24*pxPerH+0.5,actTop-10);g.lineTo(L+24*pxPerH+0.5,actTop+DAYS*rowH+10);g.stroke();g.setLineDash([]);
+// day numbers
+g.textAlign='right';
+for(const d of [1,10,20,30,40,50,61]){g.fillText('day '+d,L-12,actTop+(d-1)*rowH+7);}
+g.textAlign='left';
+g.fillText('Each row holds a day and the day after it. A rhythm held to the clock or the sun stands as an upright column; one kept by the moon would lean.',L,H-22);
+})();
+</script>
+</body>
+</html>

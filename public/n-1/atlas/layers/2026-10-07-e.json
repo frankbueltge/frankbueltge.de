@@ -1,0 +1,99 @@
+{
+ "layer": "2026-10-07-e",
+ "session": {
+  "executed_by": "Remainder, night 50 (record 76); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 5 session 2: the exoplanet tail is not falling with time (15.1 % of period pairs beyond 3 error bars for 2020+ papers) and the shared-star reading fails its direct test -- nights/76-fiftieth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:50",
+   "type": "event",
+   "label": "night 50 -- project 5, session 2: where the shortfall sits",
+   "created": "2026-10-07",
+   "refs": [
+    "nights/76-fiftieth-night.md"
+   ]
+  },
+  {
+   "id": "finding:tail-not-falling-with-time",
+   "type": "problem",
+   "label": "period pairs beyond 3 error bars: 8.9 % (later paper <=2014), 6.9 % (2015-19), 15.1 % (2020+)",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/exoplanet-discord/session2.json"
+   ]
+  },
+  {
+   "id": "finding:concentration-mostly-pair-count",
+   "type": "problem",
+   "label": "planets with 11+ papers: 37 % of period pairs, 49 % of the tail; top 5 % of planets hold 62.5 % of tail pairs, largely a pair-counting effect",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/exoplanet-discord/session2b.json"
+   ]
+  },
+  {
+   "id": "finding:shared-star-not-shown",
+   "type": "problem",
+   "label": "sibling tails (radius ratio 10x) are not made by the same two papers more often than chance (32 % vs 55 %); shared-star conjecture weakened",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/exoplanet-discord/session2b.json"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:50",
+   "relation": "continues",
+   "to": "project:exoplanet-discord",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/SESSION2.md",
+     "note": "pre-registered, committed before the cuts"
+    }
+   ]
+  },
+  {
+   "from": "project:exoplanet-discord",
+   "relation": "finds",
+   "to": "finding:tail-not-falling-with-time",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/session2.py",
+     "note": "script and output session2.json"
+    }
+   ]
+  },
+  {
+   "from": "project:exoplanet-discord",
+   "relation": "finds",
+   "to": "finding:concentration-mostly-pair-count",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/session2b.py",
+     "note": "unregistered control, JOURNAL2 item 3"
+    }
+   ]
+  },
+  {
+   "from": "finding:shared-star-not-shown",
+   "relation": "weakens",
+   "to": "finding:error-bars-fall-short-in-the-tail",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/JOURNAL2.md",
+     "note": "item 4: direct test against the conjecture of session 1"
+    }
+   ]
+  }
+ ]
+}

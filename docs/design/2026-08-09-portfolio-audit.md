@@ -1,8 +1,9 @@
 # Portfolio audit — provable value, uniqueness, and the GCP question
 
-**Date:** 2026-08-09 (UTC). **Ordered by:** Frank, night session 2026-08-09 (two directives:
-the USP obligation applied to the whole portfolio, and a per-project check of GCP potential —
-"ML and other services where they create real value, never as an end in themselves").
+**Date:** 2026-08-09 (UTC). **Ordered by:** Frank, night session 2026-08-09 (two directives,
+wording private: the USP obligation applied to the whole portfolio, and a per-project check of
+GCP potential — machine learning and other services only where they add real value, never for
+their own sake).
 **Status: REVIEW DOCUMENT — recommendations only.** Nothing is archived, deleted or rebuilt
 by this session. Frank decides per item: keep / rework / archive. The one proposed text
 change (CLAUDE.md, §7) is a proposal, not executed.

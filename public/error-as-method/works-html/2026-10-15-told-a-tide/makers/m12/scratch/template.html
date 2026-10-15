@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Folded on the Sun</title>
+<style>
+  :root { --paper:#f3efe6; --ink:#1d2228; --soft:#6b6f73; --accent:#b5651d; }
+  html,body { margin:0; padding:0; background:var(--paper); }
+  body { width:1100px; height:800px; overflow:hidden; position:relative;
+         font-family: Georgia, "Times New Roman", serif; color:var(--ink); }
+  canvas { position:absolute; left:0; top:0; }
+  .t { position:absolute; }
+  h1 { position:absolute; left:760px; top:52px; margin:0; font-weight:normal;
+       font-size:30px; letter-spacing:.01em; line-height:1.1; }
+  .cap { font-size:13px; line-height:1.45; color:var(--soft); width:300px; }
+  .cap b { font-weight:normal; color:var(--ink); }
+  .sm { font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--soft); }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<h1>Folded on the Sun</h1>
+<div class="t cap" style="left:760px; top:98px">
+  Sixty-one days of a harbour's hourly record. Every speck of ink in the picture is laid
+  onto a dial turning once every <b>24 h 00 min</b>; farther out is higher.
+  <b>Dark</b> where the record lingers more than usual at that height, <b>ochre</b> where less.
+  It keeps a ceiling through one half of the day and falls away in the other.
+</div>
+<div class="t sm" style="left:760px; top:252px">wound on the moon &middot; every 24 h 50 min</div>
+<div class="t cap" style="left:760px; top:548px">
+  The same specks on the tide's dial. A harbour tide would gather here into a shape with
+  two sides. What gathers is fainter and keeps no side: this record keeps the sun's hours.
+</div>
+<div class="t sm" style="left:760px; top:640px">the record as given &middot; 300 &times; 90</div>
+<div class="t cap" style="left:760px; top:752px; font-size:11px">
+  The hour of day is unknown: the ochre tick marks where the record begins. The line is the mean height.
+</div>
+<script>
+const HEX="__HEX__";
+const W=300,H=90;
+const g=new Uint8Array(W*H);
+for(let i=0;i<W*H;i++) g[i]=parseInt(HEX.substr(i*2,2),16);
+
+const cv=document.getElementById('c');
+const dpr=Math.max(1,window.devicePixelRatio||1);
+cv.width=1100*dpr; cv.height=800*dpr; cv.style.width='1100px'; cv.style.height='800px';
+const ctx=cv.getContext('2d'); ctx.scale(dpr,dpr);
+
+// time axis: inked columns 1..297 carry the 1,464 hourly values
+const X0=1, X1=297, HOURS=1463/(X1-X0);
+
+// deterministic pseudo-random for sub-pixel scatter
+let seed=7; const rnd=()=>{seed=(seed*16807)%2147483647; return (seed-1)/2147483646;};
+
+const ink=[];
+for(let x=0;x<W;x++) for(let y=0;y<H;y++){
+  const w=Math.max(0,232-g[y*W+x])/232;
+  if(w>0.02) ink.push([x,y,w]);
+}
+
+const NA=96, NY=H;
+function fold(period){
+  // deposit every speck of ink into (time-of-cycle, height) cells, spreading each
+  // across the hours its pixel column could stand for
+  const D=new Float64Array(NA*NY), S=40; seed=7;
+  for(const [x,y,w] of ink){
+    for(let s=0;s<S;s++){
+      const t=(x-0.5+rnd()-X0)*HOURS;
+      const ph=((t%period)+period)%period/period;
+      D[(Math.floor(ph*NA)%NA)*NY+y]+=w/S;
+    }
+  }
+  return D;
+}
+
+function smooth(F,ra,ry){
+  const Q=new Float64Array(NA*NY);
+  for(let a=0;a<NA;a++) for(let y=0;y<NY;y++){
+    let s=0,c=0;
+    for(let da=-ra;da<=ra;da++) for(let dy=-ry;dy<=ry;dy++){
+      const yy=y+dy; if(yy<0||yy>=NY) continue;
+      const wgt=(ra+1-Math.abs(da))*(ry+1-Math.abs(dy));
+      s+=wgt*F[((a+da+NA)%NA)*NY+yy]; c+=wgt;
+    }
+    Q[a*NY+y]=s/c;
+  }
+  return Q;
+}
+
+function dial(cx,cy,R,F,zmax){
+  const Rin=R*0.14, k=(R-Rin)/NY;
+  let qmax=0; for(const v of F.Q) qmax=Math.max(qmax,v);
+  const sz=Math.ceil((R+2)*2*dpr), img=ctx.createImageData(sz,sz), d=img.data;
+  const ox=cx-sz/dpr/2, oy=cy-sz/dpr/2;
+  const samp=(A,af,yf)=>{
+    let a0=Math.floor(af), y0=Math.floor(yf); const ta=af-a0, ty=yf-y0;
+    const g=(a,y)=>{ y=Math.max(0,Math.min(NY-1,y)); return A[(((a%NA)+NA)%NA)*NY+y]; };
+    return (g(a0,y0)*(1-ta)+g(a0+1,y0)*ta)*(1-ty)+(g(a0,y0+1)*(1-ta)+g(a0+1,y0+1)*ta)*ty;
+  };
+  const P=[243,239,230], INK=[24,33,45], OCH=[181,101,29];
+  for(let j=0;j<sz;j++) for(let i=0;i<sz;i++){
+    const px=ox+(i+0.5)/dpr-cx, py=oy+(j+0.5)/dpr-cy;
+    const r=Math.hypot(px,py);
+    const o=(j*sz+i)*4;
+    if(r>R+1||r<Rin-1){ d[o+3]=0; continue; }
+    let ph=(Math.atan2(py,px)+Math.PI/2)/(Math.PI*2); ph=(ph%1+1)%1;
+    const yf=NY-(r-Rin)/k-0.5, af=ph*NA-0.5;
+    const q=Math.pow(Math.max(0,samp(F.Q,af,yf))/qmax,0.55);
+    const z=samp(F.Z,af,yf)/zmax;
+    let c=P.slice();
+    // fog of all specks
+    const fog=q*0.18; for(let m=0;m<3;m++) c[m]=c[m]*(1-fog)+INK[m]*fog;
+    if(z>0){ const s=Math.min(1,z)*0.85; for(let m=0;m<3;m++) c[m]=c[m]*(1-s)+INK[m]*s; }
+    else   { const s=Math.min(1,-z)*0.8;  for(let m=0;m<3;m++) c[m]=c[m]*(1-s)+OCH[m]*s; }
+    const edge=Math.min(1,Math.max(0,R+0.5-r), Math.max(0,r-Rin+0.5));
+    d[o]=c[0]; d[o+1]=c[1]; d[o+2]=c[2]; d[o+3]=255*edge;
+  }
+  const off=document.createElement('canvas'); off.width=sz; off.height=sz;
+  off.getContext('2d').putImageData(img,0,0);
+  ctx.drawImage(off,ox,oy,sz/dpr,sz/dpr);
+  // the mean height at each moment of the cycle
+  ctx.save(); ctx.strokeStyle='rgba(243,239,230,0.9)'; ctx.lineWidth=R>200?4:2.5;
+  const path=()=>{ ctx.beginPath(); for(let a=0;a<=NA;a++){ const b=a%NA, an=-Math.PI/2+(b+0.5)/NA*Math.PI*2, r=Rin+(NY-F.M[b]-0.5)*k;
+    const x=cx+Math.cos(an)*r, y=cy+Math.sin(an)*r; a?ctx.lineTo(x,y):ctx.moveTo(x,y);} ctx.closePath(); };
+  path(); ctx.stroke(); ctx.strokeStyle='#18212d'; ctx.lineWidth=R>200?1.4:1; path(); ctx.stroke(); ctx.restore();
+  // clock furniture
+  ctx.save();
+  ctx.strokeStyle='rgba(29,34,40,0.22)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.arc(cx,cy,R+7,0,Math.PI*2); ctx.stroke();
+  for(let h=0;h<24;h++){
+    const a=-Math.PI/2+h/24*Math.PI*2, l=(h%6===0)?9:4;
+    ctx.beginPath();
+    ctx.moveTo(cx+Math.cos(a)*(R+7),cy+Math.sin(a)*(R+7));
+    ctx.lineTo(cx+Math.cos(a)*(R+7+l),cy+Math.sin(a)*(R+7+l)); ctx.stroke();
+  }
+  ctx.strokeStyle='#b5651d'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(cx,cy-R-3); ctx.lineTo(cx,cy-R-24); ctx.stroke();
+  ctx.restore();
+}
+
+function prep(period){
+  const D=fold(period);
+  const Q=smooth(D,3,2);
+  const E=new Float64Array(NY);
+  for(let y=0;y<NY;y++){ let s=0; for(let a=0;a<NA;a++) s+=Q[a*NY+y]; E[y]=s/NA; }
+  const Z=new Float64Array(NA*NY);
+  for(let a=0;a<NA;a++) for(let y=0;y<NY;y++){ const e=E[y]; Z[a*NY+y]=(Q[a*NY+y]-e); }
+  const M=new Float64Array(NA);
+  for(let a=0;a<NA;a++){ let s=0,c=0; for(let y=0;y<NY;y++){ s+=Q[a*NY+y]*y; c+=Q[a*NY+y]; } M[a]=s/c; }
+  return {Q,Z,M};
+}
+const SUN=prep(24.0), MOON=prep(24+50/60);
+const zm=A=>{let m=0; for(const v of A) m=Math.max(m,Math.abs(v)); return m;};
+const zmax=zm(SUN.Z)*0.7;
+window.__z=[zm(SUN.Z),zm(MOON.Z)];
+dial(385,410,330,SUN,zmax);
+dial(880,410,108,MOON,zmax);   // same scale: a fair comparison
+
+// the source, at its own size
+const img=ctx.createImageData(W,H);
+for(let i=0;i<W*H;i++){ img.data[i*4]=img.data[i*4+1]=img.data[i*4+2]=g[i]; img.data[i*4+3]=255; }
+const off=document.createElement('canvas'); off.width=W; off.height=H;
+off.getContext('2d').putImageData(img,0,0);
+ctx.save(); ctx.globalCompositeOperation='multiply';
+ctx.drawImage(off,760,658,W,H); ctx.restore();
+</script>
+</body>
+</html>

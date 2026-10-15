@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Vacancies</title>
+<style>
+html,body{margin:0;background:#efeae0;}
+canvas{display:block;}
+</style></head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+const items = window.ROOT.items;
+const W = 1100, H = 800, dpr = window.devicePixelRatio || 1;
+const cv = document.getElementById('c');
+cv.width = W*dpr; cv.height = H*dpr; cv.style.width = W+'px'; cv.style.height = H+'px';
+const g = cv.getContext('2d'); g.scale(dpr,dpr);
+g.fillStyle = '#efeae0'; g.fillRect(0,0,W,H);
+
+const PAPER='#efeae0', INK='#2a2622', FAINT='#8d857a', HOLE='#d9d1c2', MARK='#a3341f';
+const X0 = 48, X1 = W-48, Y0 = 92, Y1 = H-70;
+const FONT = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+const vacant = it => it.manager === 'Not assigned';
+
+function layout(fs, draw){
+  g.font = fs+'px '+FONT;
+  const lh = fs*1.32, gap = fs*0.55;
+  let lines = [], line = [], w = 0;
+  for (const it of items){
+    const tw = g.measureText(it.tld).width;
+    if (line.length && w + gap + tw > X1-X0){ lines.push({line,w}); line=[]; w=0; }
+    w += (line.length?gap:0) + tw; line.push({it,tw});
+  }
+  if (line.length) lines.push({line,w,last:true});
+  const height = lines.length*lh;
+  if (!draw) return height;
+  let y = Y0;
+  lines.forEach(L=>{
+    const extra = L.last ? 0 : (X1-X0-L.w)/(L.line.length-1||1);
+    let x = X0;
+    L.line.forEach(({it,tw})=>{
+      if (vacant(it)){
+        g.fillStyle = HOLE;
+        g.fillRect(x-1.5, y-fs*0.86, tw+3, fs*1.12);
+        g.fillStyle = MARK;
+        g.fillText(it.tld, x, y);
+      } else {
+        g.fillStyle = it.type==='country-code' ? INK : '#5d564d';
+        g.fillText(it.tld, x, y);
+      }
+      x += tw + gap + extra;
+    });
+    y += lh;
+  });
+  return height;
+}
+let lo=4, hi=20;
+for (let i=0;i<30;i++){ const m=(lo+hi)/2; if (layout(m,false) <= Y1-Y0) lo=m; else hi=m; }
+layout(lo,true);
+
+// heading
+const nV = items.filter(vacant).length;
+g.fillStyle = INK; g.font = '600 26px Georgia, "Times New Roman", serif';
+g.fillText('Vacancies', X0, 52);
+g.font = 'italic 14px Georgia, serif'; g.fillStyle = FAINT;
+g.fillText('the root zone of the internet, every top-level domain in order, '+items.length+' names', X0+128, 52);
+g.textAlign='right'; g.fillStyle = MARK; g.font = '13px '+FONT;
+g.fillText(nV+' of them delegated once and now held by no one', X1, 52);
+g.textAlign='left';
+g.strokeStyle = INK; g.lineWidth = 0.6; g.beginPath(); g.moveTo(X0,66.5); g.lineTo(X1,66.5); g.stroke();
+g.beginPath(); g.moveTo(X0,H-46.5); g.lineTo(X1,H-46.5); g.stroke();
+g.font = '11px '+FONT; g.fillStyle = FAINT;
+g.fillText('Shaded: manager listed as “Not assigned”.   Dark: country codes.   Grey: generic, sponsored and other.', X0, H-28);
+g.textAlign='right';
+g.fillText(window.ROOT.source.replace(/, https?:\S+/, ''), X1, H-28);
+</script>
+</body></html>

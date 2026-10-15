@@ -1,0 +1,17 @@
+---
+// /spread — the first live, real-time work on this house (2026-09-04). Reads four exchanges'
+// own public sockets from the visitor's own browser and commits nothing: `UNARCHIVED_NOTICE` is
+// imported and threaded to the frame below because a live page and an archived page look
+// identical to a reader, and this is the one thing this page owes to tell them apart
+// (src/lib/experiments/unarchived.ts; werke.test.ts reads this exact file for that name).
+import Page from '@/layouts/Page.astro'
+import SpreadPage from '@/components/pages/SpreadPage.astro'
+import { UNARCHIVED_NOTICE } from '@/lib/experiments/unarchived'
+---
+
+<Page
+  title="Spread | Frank Bültge"
+  description="Bitcoin and Ethereum read live, at the same instant, on several exchanges at once — the gap between them, drawn as it opens and closes."
+>
+  <SpreadPage notice={UNARCHIVED_NOTICE} />
+</Page>

@@ -1,0 +1,154 @@
+---
+// src/components/holdings/GraphExplorerFigure.astro — the frame around the knowledge-graph
+// explorer on /experiments/neighbors (visual layer, Phase 3a, 2026-09-02).
+//
+// This file is the FRAME, not the figure. It does four things and stops:
+//
+//   · reads the committed view (src/data/graph/graph-view.json — the derivation of
+//     src/data/graph/graph.json that `npm run graph:build` writes), places it with the model's
+//     radial arithmetic, and resolves the wording canon against it, so the island receives plain
+//     strings and no number is ever typed into one;
+//   · mounts the island `client:visible` inside a `.gx` scope, which src/styles/graph-explorer.css
+//     inks with the ecology-voices quartet — the same hues the practices wear everywhere else;
+//   · draws the KEY as static SVG with the island's own mark shapes, so the key is a miniature of
+//     the marks rather than a second drawing that could drift from them;
+//   · lays the table floor (TableFallback) and the provenance line, so nothing the figure says is
+//     reachable only through the drawing.
+//
+// The readout shell sits beside the island inside `.gx-floor`, the position: relative box
+// readout.ts clamps within — deliberately NOT the scrolling element.
+import { GRAPH_EXPLORER as W } from '@/config/graph-explorer-wording'
+import Readout from '@/components/dataviz/Readout.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import packed from '@/data/graph/graph-view.json'
+import {
+  EDGE_KINDS,
+  layoutRadial,
+  NODE_KINDS,
+  unpackView,
+  viewRows,
+  type PackedView,
+} from '@/lib/graph/graph-explorer-model'
+import type { EdgeKind, NodeKind } from '@/lib/graph/types'
+import '@/styles/graph-explorer.css'
+
+import GraphExplorer, { markShape, radiusOf, type ExplorerWording } from './GraphExplorer'
+
+const view = unpackView(packed as unknown as PackedView)
+const placed = layoutRadial(view)
+const edgesLite = view.edges.map((e) => ({ from: e.from, to: e.to, kind: e.kind }))
+
+const READOUT_ID = 'graph-explorer-readout'
+const FIGURE_ID = 'graph-explorer'
+const RECEIPTS_URL = '/graph/view.json'
+
+const kindCount = Object.fromEntries(
+  NODE_KINDS.map((k) => [k, W.filters.count(view.counts.nodesByKind[k] ?? 0)]),
+) as Record<NodeKind, string>
+const edgeCount = Object.fromEntries(
+  EDGE_KINDS.map((k) => [k, W.filters.count(view.counts.edgesByKind[k] ?? 0)]),
+) as Record<EdgeKind, string>
+// every degree that occurs, spelled by the wording function — so the card types no number
+const degree = Object.fromEntries([...new Set(view.nodes.map((n) => n.degree))].map((d) => [String(d), W.card.degree(d)]))
+
+const wording: ExplorerWording = {
+  figureLabel: W.figureLabel(W.count.nodes(view.counts.nodes), W.count.edges(view.counts.edges)),
+  hint: W.hint,
+  kinds: W.kinds,
+  kindWhat: W.kindWhat,
+  kindCount,
+  edgeKinds: W.edgeKinds,
+  edgeCount,
+  voices: W.voices,
+  filters: W.filters,
+  search: W.search,
+  zoom: W.zoom,
+  card: W.card,
+  degree,
+}
+
+const rows = viewRows(view).map((r) => ({
+  kind: W.kinds[r.kind],
+  label: r.label,
+  voice: W.voices[r.voice],
+  date: r.date,
+  degree: r.degree,
+}))
+const columns = [
+  { key: 'kind', label: W.table.columns.kind, nowrap: true },
+  { key: 'label', label: W.table.columns.label },
+  { key: 'voice', label: W.table.columns.voice, nowrap: true },
+  { key: 'date', label: W.table.columns.date, nowrap: true },
+  { key: 'degree', label: W.table.columns.degree, align: 'right' as const },
+]
+const files = new Set(view.edges.map((e) => e.file)).size
+---
+
+<figure class="gx gx-figure rounded-sm border border-line bg-panel">
+  <figcaption class="border-b border-line p-4 sm:p-5">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">{W.kicker}</p>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{W.sub}</p>
+    <p class="mt-2 font-mono text-[11px] text-fg-faint">
+      {W.count.nodes(view.counts.nodes)} · {W.count.edges(view.counts.edges)}
+    </p>
+  </figcaption>
+
+  <div class="p-4 sm:p-5">
+    <div class="gx-scroll">
+      <div class="gx-floor">
+        <GraphExplorer
+          client:visible
+          nodes={view.nodes}
+          edges={edgesLite}
+          placed={placed}
+          wording={wording}
+          readoutId={READOUT_ID}
+          figureId={FIGURE_ID}
+          receiptsUrl={RECEIPTS_URL}
+        />
+        <Readout id={READOUT_ID} maxWidth="40ch" />
+      </div>
+    </div>
+  </div>
+
+  {/* ── The key: the island's own mark shapes, small ──────────────────────── */}
+  <div class="border-t border-line p-4 sm:p-5">
+    <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-fg-faint">{W.key.kicker}</p>
+    <ul class="gx-key">
+      {
+        NODE_KINDS.map((kind) => (
+          <li data-kind={kind} data-hollow={kind === 'neighbor' || kind === 'receiver' ? '' : undefined}>
+            <svg viewBox="-11 -8 22 16" aria-hidden="true">
+              {markShape(kind, radiusOf({ kind, degree: 0 }) * 0.8)}
+            </svg>
+            <span>
+              <b class="text-fg">{W.kinds[kind]}</b> — {W.kindWhat[kind]}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="gx-voices">
+      {
+        (['meridian', 'ulysses', 'ensemble', 'conductor'] as const).map((voice) => (
+          <span class={`gx-v-${voice}`}>
+            <span class="gx-sw"></span>
+            <span>{W.voices[voice]}</span>
+          </span>
+        ))
+      }
+    </div>
+    <p class="gx-note">{W.key.voices} · {W.key.weight}</p>
+  </div>
+
+  {/* ── The floor: the same record in words ──────────────────────────────── */}
+  <div class="border-t border-line p-4 sm:p-5">
+    <TableFallback
+      summary={W.table.summary(view.counts.nodes)}
+      caption={W.table.caption}
+      columns={columns}
+      rows={rows}
+      provenance={W.provenance(files)}
+    />
+  </div>
+</figure>

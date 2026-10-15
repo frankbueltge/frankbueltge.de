@@ -1,0 +1,349 @@
+{
+ "_note": "Coding record for the census of completeness denominators, session 156, 2026-09-09. Every code carries the passage it was made from, the URL, the route by which the passage was obtained and the date. Nothing here is coded from training memory: a source that could not be fetched is coded U and says why. Scheme fixed in PREREGISTRATION.md before any source was opened.",
+ "coded_utc": "2026-09-09",
+ "axis_a": {
+  "S": "schema-fixed denominator: the count of possible cells is fixed by a schema, profile or field list, independent of what a given record carries",
+  "P": "present-key denominator: only fields actually present on a record contribute to that record's denominator",
+  "N": "third basis, named under kill condition K4: counts reported with no denominator and no ratio at all",
+  "U": "undetermined from what could be reached"
+ },
+ "sources": [
+  {
+   "id": "kiraly-plan-2015",
+   "citation": "Király, P. (2015). A Metadata Quality Assurance Framework. GWDG, Göttingen, September 2015.",
+   "url": "https://pkiraly.github.io/metadata-quality-project-plan.pdf",
+   "route": "direct fetch, HTTP 200, 255,185 bytes; text by our own extractor",
+   "accessed": "2026-09-09",
+   "author_group": "kiraly",
+   "axis_a": "S",
+   "axis_b": "both offered",
+   "axis_c": "per record",
+   "quotes": [
+    "N is the number of fields defined in the metadata standard.",
+    "is the relative importance of the i th field"
+   ],
+   "quote_note": "Extracted from the PDF by tools/completeness-census/pdftext.py. This font places the fi and fl ligatures at code points 0x02 and 0x03; the quotes are given with those two resolved, and the checker applies the same documented substitution to both sides of the comparison. The second quote runs across line breaks in the original.",
+   "reading": "Gives Q_comp = sum(P(i))/N with P(i)=1 where the i-th field has a non-null value, and N the number of fields defined in the metadata standard; then a weighted form Q_wcomp = sum(a_i*P(i))/sum(a_i). The denominator is the standard's field list, not the record's. The text attributes the computations to Ochoa & Duval, reference [20]."
+  },
+  {
+   "id": "metadata-qa-api",
+   "citation": "Király, P. metadata-qa-api, CompletenessCalculator.java and BasicCounter.java (master branch).",
+   "url": "https://raw.githubusercontent.com/pkiraly/metadata-qa-api/master/src/main/java/de/gwdg/metadataqa/api/calculator/CompletenessCalculator.java",
+   "route": "direct fetch of the source files, HTTP 200",
+   "accessed": "2026-09-09",
+   "author_group": "kiraly",
+   "axis_a": "S",
+   "axis_b": "plain",
+   "axis_c": "per record and aggregated",
+   "quotes": [
+    "for (DataElement dataElement : schema.getPaths()) {",
+    "result = (instance / total);"
+   ],
+   "reading": "The measurement iterates the schema's declared data elements, skipping only those marked inactive, and the ratio is instances found over the total of elements iterated. A field absent from a record still increments the denominator. Schema-fixed, each field counted once."
+  },
+  {
+   "id": "qa-catalogue",
+   "citation": "Király, P. qa-catalogue (metadata-qa-marc), README, section 'Calculating data element completeness' (main branch).",
+   "url": "https://raw.githubusercontent.com/pkiraly/qa-catalogue/main/README.md",
+   "route": "direct fetch, HTTP 200, 109,892 bytes",
+   "accessed": "2026-09-09",
+   "author_group": "kiraly",
+   "axis_a": "N",
+   "axis_b": "not applicable",
+   "axis_c": "per data element over the collection",
+   "quotes": [
+    "Counts basic statistics about the data elements available in the catalogue.",
+    "`number-of-record`: means how many records they are available,"
+   ],
+   "reading": "The tool named 'completeness' reports per-element occurrence counts and their distribution — number of records, number of instances, min, max, mean, stddev, histogram. There is no denominator and no ratio. This is the third basis anticipated by kill condition K4, and it is named rather than forced into S or P."
+  },
+  {
+   "id": "lorenzini-2021",
+   "citation": "Lorenzini, M., Rospocher, M. & Tonelli, S. (2021). On assessing metadata completeness in digital cultural heritage repositories. Digital Scholarship in the Humanities 36(Suppl 2), ii182-ii188. doi:10.1093/llc/fqab036",
+   "url": "https://academic.oup.com/dsh/article/36/Supplement_2/ii182/6421788",
+   "route": "direct fetch answered a Cloudflare bot challenge (HTTP 403); text obtained through the attached research tool",
+   "accessed": "2026-09-09",
+   "author_group": "lorenzini",
+   "axis_a": "S",
+   "axis_b": "weighted",
+   "axis_c": "per record, per metadata group",
+   "quotes": [
+    "the number of filled _G_ metadata for that object is divided over the total number of _G_ metadata elements. For instance, if an object _o_ has 3 out of 10 of the compulsory metadata filled, _c compulsory(o) =_ 0.3.",
+    "metadata elements are divided into groups, representing their importance (e.g. compulsory/recommended/optional metadata);"
+   ],
+   "reading": "The denominator is the total number of elements in the group as the profile defines it — the 10 in 'three out of ten', not the number the record happens to carry. Groups carry importance tiers and the score is a weighted average."
+  },
+  {
+   "id": "mqa-europa",
+   "citation": "data.europa.eu, Metadata Quality Assurance — Methodology. European Data Portal.",
+   "url": "https://data.europa.eu/mqa/methodology",
+   "route": "direct fetch returned an application shell (1,308 bytes); text obtained through the attached research tool",
+   "accessed": "2026-09-09",
+   "author_group": "data-europa",
+   "axis_a": "S",
+   "axis_b": "weighted",
+   "axis_c": "per dataset and per catalogue",
+   "quotes": [
+    "We believe that filling the DCAT-AP mandatory fields alone is not sufficient to provide high quality metadata. For this reason, the evaluation also checks fields that are not specified as mandatory according to DCAT-AP. The exact fields that are checked are listed below.",
+    "It is checked wether the property is set or not. Distribution dct:rights | 5 |"
+   ],
+   "reading": "A fixed list of checked properties, declared in advance and independent of any record, each carrying an integer weight (5 for Rights, 5 for File size, 5 for Date of issue, 30 for SHACL conformance to DCAT-AP 3.0.0). Schema-fixed and weighted, and this one runs in production over a very large collection."
+  },
+  {
+   "id": "fuji",
+   "citation": "Devaraju, A. & Huber, R. F-UJI FAIR assessment tool, metric FsF-F2-01M 'Descriptive Core Metadata', metrics_v0.5.yaml (master branch).",
+   "url": "https://raw.githubusercontent.com/pangaea-data-publisher/fuji/master/fuji_server/yaml/metrics_v0.5.yaml",
+   "route": "direct fetch, HTTP 200, 36,746 bytes",
+   "accessed": "2026-09-09",
+   "author_group": "fuji",
+   "axis_a": "S",
+   "axis_b": "weighted",
+   "axis_c": "per record",
+   "quotes": [
+    "The metric evaluates the completeness of metadata in case metadata has been retrieved.",
+    "modality: all"
+   ],
+   "reading": "The required properties are a fixed list written into the metric definition — creator, title, object_identifier, publication_date, publisher, and further descriptive elements — with modality 'all', and the three sub-tests carry scores of 0.5, 0.5 and 1. The expected set comes from the metric, never from the record. Schema-fixed and weighted."
+  },
+  {
+   "id": "hillmann-phipps-2007",
+   "citation": "Hillmann, D. I. & Phipps, J. (2007). Application Profiles: Exposing and Enforcing Metadata Quality. Proc. Int'l Conf. on Dublin Core and Metadata Applications 2007, p. 61.",
+   "url": "https://dcpapers-data.dublincore.org/articles/dc-2007/952108665/files/dcmi-952108665.pdf",
+   "route": "direct fetch, HTTP 200, 333,757 bytes; text by our own extractor",
+   "accessed": "2026-09-09",
+   "author_group": "hillmann-phipps",
+   "axis_a": "S",
+   "axis_b": "plain",
+   "axis_c": "per record and per aggregation",
+   "quotes": [
+    "But if, for example, the Application Profile requires Title, Identifier and Description, and the metadata lacks any Descriptions, it is, by definition, incomplete. In this case the use of Obligation da ta from the Application Profile allows for a simple but quantifiable determination of comple teness, though not necessarily weighted."
+   ],
+   "quote_note": "Word breaks inside 'da ta' and 'comple teness' are line breaks in the PDF, preserved as extracted rather than silently repaired.",
+   "reading": "Completeness is determined against the Application Profile's obligation data — the expectation is the profile's, not the record's — and the paper says in the same sentence that this is 'not necessarily weighted'."
+  },
+  {
+   "id": "margaritopoulos-2008",
+   "citation": "Margaritopoulos, T., Margaritopoulos, M., Mavridis, I. & Manitsaris, A. (2008). A Conceptual Framework for Metadata Quality Assessment. Proc. Int'l Conf. on Dublin Core and Metadata Applications 2008, p. 107.",
+   "url": "https://dcpapers.dublincore.org/files/articles/952109222/dcmi-952109222.pdf",
+   "route": "direct fetch, HTTP 200, 295,902 bytes; text by our own extractor",
+   "accessed": "2026-09-09",
+   "author_group": "margaritopoulos",
+   "axis_a": "S",
+   "axis_b": "U",
+   "axis_c": "per record",
+   "quotes": [
+    "In essence, completeness measures the presence or absen ce of values in the metadata fields.",
+    "The application profile plays the role of the judge by selecting certain metadata fields to be accounted as mandatory or optional."
+   ],
+   "quote_note": "The break inside 'absen ce' is a line break in the PDF, preserved as extracted.",
+   "reading": "The field set against which a record is judged complete is selected by the application profile. Schema-fixed. The paper names mandatory and optional tiers but computes no weighted score here, so Axis B is left undetermined rather than guessed."
+  },
+  {
+   "id": "tarver-2015",
+   "citation": "Tarver, H., Phillips, M., Zavalina, O. & Kizhakkethil, P. (2015). An Exploratory Analysis of Subject Metadata in the Digital Public Library of America. Proc. Int'l Conf. on Dublin Core and Metadata Applications 2015.",
+   "url": "https://dcpapers-data.dublincore.org/articles/dc-2015/952137007/files/dcmi-952137007.pdf",
+   "route": "direct fetch, HTTP 200, 968,419 bytes; text by our own extractor",
+   "accessed": "2026-09-09",
+   "author_group": "phillips-tarver",
+   "axis_a": "S",
+   "axis_b": "plain",
+   "axis_c": "per field over records",
+   "quotes": [
+    "this analysis does provide data related to completeness, i.e., whether or not all records have subject(s), assuming that eve ry record should include at least one subject term."
+   ],
+   "quote_note": "The break inside 'eve ry' is a line break in the PDF, preserved as extracted.",
+   "reading": "The expectation is stated as an assumption about every record — the field is expected of all of them — and the denominator is the record count. The expectation comes from outside the record."
+  },
+  {
+   "id": "phillips-2019",
+   "citation": "Phillips, M. E., Zavalina, O. L. & Tarver, H. (2019). Using Metadata Record Graphs to Understand Digital Library Metadata. Proc. Int'l Conf. on Dublin Core and Metadata Applications 2019, p. 49.",
+   "url": "https://dcpapers-data.dublincore.org/articles/dcmi-2019/952141695/files/dcmi-952141695.pdf",
+   "route": "direct fetch succeeded (HTTP 200, 494,909 bytes) but our extractor could not decode the font; text obtained through the attached research tool",
+   "accessed": "2026-09-09",
+   "author_group": "phillips-tarver",
+   "axis_a": "S",
+   "axis_b": "plain",
+   "axis_c": "per field over records",
+   "quotes": [
+    "Traditional metrics provide a general overview of the makeup of metadata records in a collection, such as the percentage of records with data values for a particular metadata element, which outlines overall usage in the collection."
+   ],
+   "reading": "The traditional metric is named explicitly: the share of records carrying a value for an element. The element list is the collection's schema and the denominator is the record count; the published table runs every element over all 25,132 records, including elements only 2 % of records carry."
+  },
+  {
+   "id": "w3c-dqv",
+   "citation": "W3C Data on the Web Best Practices Working Group (2016). Data Quality Vocabulary, W3C Group Note.",
+   "url": "https://www.w3.org/TR/vocab-dqv/",
+   "route": "direct fetch answered a Cloudflare bot challenge (HTTP 403); text obtained through the attached research tool",
+   "accessed": "2026-09-09",
+   "author_group": "w3c",
+   "axis_a": "U",
+   "axis_b": "U",
+   "axis_c": "not specified",
+   "quotes": [
+    "Completeness refers to the degree to which all required information is present in a particular dataset.",
+    "The degree to which subject data associated with an entity has values for all expected attributes and related entity instances in a specific context of use."
+   ],
+   "reading": "A vocabulary, not a metric: it defines completeness as a dimension and specifies no computation, so no denominator can be read off it. Both wordings point outside the record — 'all required information', 'all expected attributes' — but neither fixes a denominator. Coded U, and see the K4 note: our scheme had no code for a source that defines completeness without measuring it, so U here means something different from U elsewhere in this table."
+  },
+  {
+   "id": "ochoa-duval-2009",
+   "citation": "Ochoa, X. & Duval, E. (2009). Automatic evaluation of metadata quality in digital repositories. International Journal on Digital Libraries 10, 67-91. doi:10.1007/s00799-009-0054-4",
+   "url": "https://link.springer.com/article/10.1007/s00799-009-0054-4",
+   "route": "not read",
+   "accessed": "2026-09-09",
+   "author_group": "ochoa-duval",
+   "axis_a": "U",
+   "axis_b": "U",
+   "axis_c": "not read",
+   "quotes": [],
+   "reading": "The publisher's page returned a 'Client Challenge' interstitial rather than the article, and the DOI is not in Semantic Scholar's index. This is the paper the field cites for the completeness formula, and Király's 2015 plan reproduces that formula and attributes it to them — but we did not read their text, so nothing is coded from it. A formula quoted by a third party is evidence about the third party."
+  },
+  {
+   "id": "margaritopoulos-2012",
+   "citation": "Margaritopoulos, M., Margaritopoulos, T., Mavridis, I. & Manitsaris, A. (2012). Quantifying and measuring metadata completeness. JASIST 63(4), 724-737. doi:10.1002/asi.21706",
+   "url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/asi.21706",
+   "route": "not read",
+   "accessed": "2026-09-09",
+   "author_group": "margaritopoulos",
+   "axis_a": "U",
+   "axis_b": "U",
+   "axis_c": "not read",
+   "quotes": [],
+   "access_status": "closed",
+   "reading": "Cloudflare challenge on direct fetch; the research tool failed to fetch it; Semantic Scholar reports isOpenAccess false, status CLOSED. The paper whose title is the exact question of this census is the one we could not read."
+  },
+  {
+   "id": "gavrilis-2015",
+   "citation": "Gavrilis, D. et al. (2015). Measuring Quality in Metadata Repositories. TPDL 2015, LNCS 9316. doi:10.1007/978-3-319-24592-8_5",
+   "url": "https://link.springer.com/chapter/10.1007/978-3-319-24592-8_5",
+   "route": "not read",
+   "accessed": "2026-09-09",
+   "author_group": "gavrilis",
+   "axis_a": "U",
+   "axis_b": "U",
+   "axis_c": "not read",
+   "quotes": [],
+   "access_status": "closed",
+   "reading": "Springer 'Client Challenge' on direct fetch; the research tool returned the reference list only, not the text. Semantic Scholar reports isOpenAccess false, status CLOSED."
+  },
+  {
+   "id": "kiraly-buchler-2018",
+   "citation": "Király, P. & Büchler, M. (2018). Measuring completeness as metadata quality metric in Europeana. IEEE International Conference on Big Data 2018. doi:10.1109/BigData.2018.8622487",
+   "url": "https://ieeexplore.ieee.org/abstract/document/8622487",
+   "route": "not read",
+   "accessed": "2026-09-09",
+   "author_group": "kiraly",
+   "axis_a": "U",
+   "axis_b": "U",
+   "axis_c": "not read",
+   "quotes": [],
+   "access_status": "closed",
+   "reading": "HTTP 200 returned an obfuscated script shell carrying the title and nothing else. Semantic Scholar reports isOpenAccess false, status CLOSED."
+  },
+  {
+   "id": "kiraly-dh2017",
+   "citation": "Király, P. (2017). Measuring completeness as metadata quality metric in Europeana. Digital Humanities 2017 conference abstract.",
+   "url": "https://dh2017.adho.org/abstracts/458/458.pdf",
+   "route": "fetched but not decodable",
+   "accessed": "2026-09-09",
+   "author_group": "kiraly",
+   "axis_a": "U",
+   "axis_b": "U",
+   "axis_c": "not read",
+   "quotes": [],
+   "reading": "HTTP 200, 106,377 bytes, and openly served — but the PDF uses a custom font encoding and our extractor returns a substitution cipher rather than text. Only the title line decodes. Open is not the same as readable; this one is open and we still could not read it."
+  },
+  {
+   "id": "kiraly-thesis-2019",
+   "citation": "Király, P. (2019). Measuring metadata quality. Doctoral dissertation, Georg-August-Universität Göttingen. doi:10.53846/goediss-7590",
+   "url": "https://doi.org/10.53846/goediss-7590",
+   "route": "not read",
+   "accessed": "2026-09-09",
+   "author_group": "kiraly",
+   "axis_a": "U",
+   "axis_b": "U",
+   "axis_c": "not read",
+   "quotes": [],
+   "reading": "Both the DOI redirect and the direct handle returned HTTP 403 from the repository, which rewrote the path to '/_ray?/handle/...'. An open-access dissertation we could not open."
+  },
+  {
+   "id": "bruce-hillmann-2004",
+   "citation": "Bruce, T. R. & Hillmann, D. I. (2004). The continuum of metadata quality: defining, expressing, exploiting. In Metadata in Practice, ALA Editions.",
+   "url": "https://ecommons.cornell.edu/entities/publication/",
+   "route": "not read",
+   "accessed": "2026-09-09",
+   "author_group": "bruce-hillmann",
+   "axis_a": "U",
+   "axis_b": "U",
+   "axis_c": "not read",
+   "quotes": [],
+   "reading": "The repository record resolved (HTTP 200, 458,605 bytes) but served a JavaScript application shell; the chapter text was not obtained. This is the conceptual source both Ochoa & Duval and Király name as their framework, and we did not read it either."
+  },
+  {
+   "id": "europeana-publishing",
+   "citation": "Europeana Foundation. Europeana Publishing Framework — metadata tiers.",
+   "url": "https://pro.europeana.eu/post/publishing-framework",
+   "route": "not read",
+   "accessed": "2026-09-09",
+   "author_group": "europeana",
+   "axis_a": "U",
+   "axis_b": "U",
+   "axis_c": "not read",
+   "quotes": [],
+   "reading": "Cloudflare challenge on direct fetch (HTTP 403); the research tool reported 'Failed to fetch url'."
+  },
+  {
+   "id": "ochoa-duval-2006",
+   "citation": "Ochoa, X. & Duval, E. (2006). Quality metrics for learning object metadata. EdMedia 2006.",
+   "url": "https://www.learntechlib.org/p/23110/",
+   "route": "not read",
+   "accessed": "2026-09-09",
+   "author_group": "ochoa-duval",
+   "axis_a": "U",
+   "axis_b": "U",
+   "axis_c": "not read",
+   "quotes": [],
+   "reading": "The server answered HTTP 202 with a zero-byte body."
+  },
+  {
+   "id": "dcatap-springer-2023",
+   "citation": "An Extensive Methodology and Framework for Quality Assessment of DCAT-AP Datasets. Springer LNCS, 2023. doi:10.1007/978-3-031-41138-0_17",
+   "url": "https://link.springer.com/chapter/10.1007/978-3-031-41138-0_17",
+   "route": "not read",
+   "accessed": "2026-09-09",
+   "author_group": "dcatap-springer",
+   "axis_a": "U",
+   "axis_b": "U",
+   "axis_c": "not read",
+   "quotes": [],
+   "reading": "Springer 'Client Challenge' interstitial (HTTP 200, 3,038 bytes, not the chapter). Authors not recorded, because we did not reach a page that states them and we will not supply them from memory."
+  }
+ ],
+ "rejected": [
+  {
+   "id": "arxiv-2402-06693",
+   "citation": "Fostering the integration of European Open Data into Data Spaces through High-Quality Metadata. arXiv:2402.06693",
+   "why": "Fails inclusion criterion 1. Read in full (PDF and HTML, both open). The word completeness appears once, in a list of data-quality dimensions; the paper defines and implements no completeness measure."
+  },
+  {
+   "id": "openaire-guidelines",
+   "citation": "OpenAIRE Guidelines",
+   "why": "Fails inclusion criterion 1 on what was reached. The guidelines specify mandatory, recommended and optional fields but state no completeness measure in the pages obtained."
+  },
+  {
+   "id": "stvilia-2007",
+   "citation": "Stvilia, B. et al. A framework for information quality assessment.",
+   "why": "Our candidate identifier was wrong: the DOI we recorded, 10.1002/asi.20681, resolves in Semantic Scholar to a different paper entirely (Saracevic, on relevance). Excluded rather than re-guessed from memory. A candidate we misidentified is a defect in our own list and is recorded as one."
+  },
+  {
+   "id": "europeana-qa-api",
+   "citation": "Király, P. europeana-qa-api, EdmCalculatorFacade.java",
+   "why": "Not an independent implementation: it imports and delegates to metadata-qa-api's CompletenessCalculator. Counting it would be counting the same code twice."
+  },
+  {
+   "id": "dlf-mawg",
+   "citation": "DLF Metadata Assessment Working Group, tool directory entry for QA catalogue",
+   "why": "Not an independent definition: the entry describes qa-catalogue and points at the same repository. Counting it would be counting the same tool twice."
+  }
+ ]
+}

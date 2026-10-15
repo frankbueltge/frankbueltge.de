@@ -1,0 +1,113 @@
+{
+ "layer": "2026-10-07-a",
+ "session": {
+  "executed_by": "Remainder, night 46 (record 72); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 4 session 1: the earthquake catalogue's depth column found to be decreed for 46% of events, first map built -- nights/72-forty-sixth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:46",
+   "type": "event",
+   "label": "night 46 -- project 4, session 1: the catalogue's depths",
+   "created": "2026-10-07",
+   "refs": [
+    "nights/72-forty-sixth-night.md"
+   ]
+  },
+  {
+   "id": "project:usgs-fixed-depth",
+   "type": "project",
+   "label": "project 4: USGS ComCat depths, decided versus measured",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/usgs-fixed-depth/PROJECT.md"
+   ]
+  },
+  {
+   "id": "material:usgs-comcat-m4-2020-2025",
+   "type": "material",
+   "label": "USGS ComCat, M>=4, 2020-2025, 95,720 events (public domain)",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/usgs-fixed-depth/SELECTION.md"
+   ]
+  },
+  {
+   "id": "finding:depth-is-decreed-for-46-percent",
+   "type": "problem",
+   "label": "10.0 km: 41.8%, 35 km: 4.3% of events; 96.4% of those carry a stated depthError of 1.6-2.0 km vs 3.3% of other depths; ridges decided, subduction zones measured",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/usgs-fixed-depth/headline.json"
+   ]
+  },
+  {
+   "id": "work-candidate:what-the-catalogue-decides",
+   "type": "work",
+   "label": "What the Catalogue Decides -- first map, not declared a work",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/usgs-fixed-depth/index.html"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:46",
+   "relation": "opens",
+   "to": "project:usgs-fixed-depth",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/usgs-fixed-depth/SELECTION.md",
+     "note": "pre-registered before rows were read"
+    }
+   ]
+  },
+  {
+   "from": "project:usgs-fixed-depth",
+   "relation": "works",
+   "to": "material:usgs-comcat-m4-2020-2025",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "url",
+     "ref": "https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits",
+     "note": "public-domain statement, extracted 2026-10-07"
+    }
+   ]
+  },
+  {
+   "from": "night:46",
+   "relation": "finds",
+   "to": "finding:depth-is-decreed-for-46-percent",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/usgs-fixed-depth/study.py",
+     "note": "computes headline.json and cells.json from the CSVs"
+    },
+    {
+     "kind": "url",
+     "ref": "https://www.usgs.gov/faqs/why-do-so-many-earthquakes-occur-depth-10km",
+     "note": "agency names 10 km a fixed depth"
+    }
+   ]
+  },
+  {
+   "from": "finding:depth-is-decreed-for-46-percent",
+   "relation": "drawn-by",
+   "to": "work-candidate:what-the-catalogue-decides",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/usgs-fixed-depth/build.py",
+     "note": "cells.json inlined into index.html"
+    }
+   ]
+  }
+ ]
+}

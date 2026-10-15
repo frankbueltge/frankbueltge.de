@@ -165,6 +165,24 @@ export const STUDIO_NARRATIVE = {
     },
     hint:
       'Hover or tab to a mark for its record; click it to hold the record open and step through the season with ← and →.',
+    /** What the floor writes where a strike's own evening is missing from the mirror — an honest
+     *  gap, said in the same words the table and the mark's native title already use. */
+    unknownEvening: 'evening not in the mirror',
+    /** The one segment the keyboard walk runs along: this floor is the whole season, end to end. */
+    segmentLabel: 'the season',
+    /** The card a mark opens when it is clicked (the island of 2026-09-02, in place of the shared
+     *  detail panel). It carries the record VERBATIM — the house rule the whole floor rests on —
+     *  so nothing here summarises anything; these are only the labels around it. */
+    card: {
+      stateLabel: 'what the house did',
+      sessionLabel: 'session',
+      eveningLabel: 'evening',
+      sourceLabel: 'source',
+      positionLabel: 'where in the season',
+      open: 'open the work →',
+      close: 'close',
+      hint: 'step through the season with ← and →',
+    },
     tableSummary: 'the season as a table — every mark, its reason verbatim, its source',
     tableCaption:
       'Every mark on the season floor, chronological: date, work, what the house did to it, the verbatim reason, and the file that reason comes from.',

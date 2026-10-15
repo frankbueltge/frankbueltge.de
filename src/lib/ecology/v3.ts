@@ -1,0 +1,799 @@
+// The v3 entrance's data layer (research ecology v3, 2026-08-30 — the shared question).
+//
+// Everything the surface shows is derived from committed files; nothing is typed into the
+// component and nothing is fetched at runtime. Three sources, three loaders:
+//
+//   · cycle       — src/data/ecology/cycle.json, the canonical cycle state this repo owns.
+//                   Invalid state fails the build loudly: a wrong phase on the entrance would
+//                   be the site lying about the house's clock.
+//   · bulletins   — src/content/<practice>/BULLETIN.md, mirrored from the engine repos by the
+//                   integrate workflows. Absence is a fact the surface draws, not an error:
+//                   before a practice's first v3 session closes there IS no bulletin.
+//   · presentations — public/<practice>/presentations/cycle-*/, mirrored bare (the artifacts
+//                   are self-contained pages; the house adds no paratext). Served where they
+//                   land; entries without an html face link to the practice's own repository.
+import fs from 'node:fs'
+import path from 'node:path'
+
+import { buildSessionEntries } from '@/lib/atelier/sessions'
+import { buildDayIndex } from '@/lib/engines/journal'
+
+export type PracticeId = 'atelier' | 'field' | 'studio'
+export const PRACTICES: PracticeId[] = ['field', 'atelier', 'studio']
+
+/** The engine repository behind each mirrored practice directory. */
+export const PRACTICE_REPO: Record<PracticeId, string> = {
+  atelier: 'ulysses',
+  field: 'field-research',
+  studio: 'studio',
+}
+
+/** 'convening' since 2026-10-07: the days between a presented cycle and the next, in which the
+ *  three practices negotiate the next question (docs/design/2026-10-07-the-convening.md). */
+export type CyclePhase = 'closing' | 'working' | 'presenting' | 'convening'
+const PHASES: CyclePhase[] = ['closing', 'working', 'presenting', 'convening']
+
+/** Where the running cycle's question came from. 'continuing' since 2026-10-03: the one question
+ *  all three work between seeds, which replaces the per-practice defaults while it is set.
+ *  'convening' since 2026-10-07: the question the three chose in the convening before it. */
+export type CycleSource = 'seed' | 'continuing' | 'defaults' | 'convening'
+const SOURCES: CycleSource[] = ['seed', 'continuing', 'defaults', 'convening']
+
+/** The continuing question (architect's decision, 2026-10-03): the origin of the programme, and
+ *  since 2026-10-07 the fallback when a convening reaches no result. */
+export interface ContinuingQuestion {
+  question: string
+  since: string
+}
+
+/** The convening after cycle `afterCycle` (2026-10-07). It stands in cycle.json only while the
+ *  phase is 'convening'; `cycle` and `question` meanwhile keep the presented cycle's own. */
+export interface ConveningState {
+  afterCycle: number
+  opened: string
+  /** the day the architect objected to the result then standing: no result tallied on or
+   *  before it opens a cycle (optional; the architect's silence is consent) */
+  objected: string | null
+}
+
+export interface CycleState {
+  cycle: number
+  phase: CyclePhase
+  question: string | null
+  source: CycleSource
+  opened: string
+  sessionsPerPractice: string
+  defaults: Record<PracticeId, string>
+  /** absent in states written before 2026-10-03, and whenever the architect removes it */
+  continuing?: ContinuingQuestion | null
+  /** the seed this cycle's question carries — the interrupting seed, or a seed taken into a round */
+  seedId?: string | null
+  /** every seed already used as a cycle question or taken into one; the cycle clock skips them */
+  takenSeeds?: string[]
+  /** set exactly while the phase is 'convening' */
+  convening?: ConveningState | null
+}
+
+const DATE = /^\d{4}-\d{2}-\d{2}$/
+
+export function loadCycle(root: string = process.cwd()): CycleState {
+  const file = path.join(root, 'src/data/ecology/cycle.json')
+  const raw = JSON.parse(fs.readFileSync(file, 'utf8'))
+  if (!PHASES.includes(raw.phase)) throw new Error(`cycle.json: unknown phase "${raw.phase}"`)
+  if (typeof raw.cycle !== 'number' || raw.cycle < 0)
+    throw new Error(`cycle.json: cycle must be a non-negative number, got ${raw.cycle}`)
+  if (!SOURCES.includes(raw.source)) throw new Error(`cycle.json: unknown source "${raw.source}"`)
+  if (raw.source !== 'defaults' && (typeof raw.question !== 'string' || raw.question.length === 0))
+    throw new Error(`cycle.json: source "${raw.source}" requires a question`)
+  for (const p of PRACTICES)
+    if (typeof raw.defaults?.[p] !== 'string' || raw.defaults[p].length === 0)
+      throw new Error(`cycle.json: missing default theme for "${p}"`)
+  if (!DATE.test(raw.opened)) throw new Error(`cycle.json: opened must be a date, got "${raw.opened}"`)
+  const continuing = raw.continuing ?? null
+  if (continuing !== null) {
+    if (typeof continuing.question !== 'string' || continuing.question.length === 0)
+      throw new Error('cycle.json: a continuing block requires a question')
+    if (!DATE.test(continuing.since))
+      throw new Error(`cycle.json: continuing.since must be a date, got "${continuing.since}"`)
+  }
+  if (raw.source === 'continuing' && continuing === null)
+    throw new Error('cycle.json: source "continuing" requires a continuing block')
+  if (raw.taken_seeds !== undefined && !Array.isArray(raw.taken_seeds))
+    throw new Error('cycle.json: taken_seeds must be a list of seed ids')
+  // The convening block and the convening phase come together or not at all: a block left behind
+  // after a turn would tell the practices a convening is open that is not.
+  const convening = raw.convening ?? null
+  if (raw.phase === 'convening') {
+    if (convening === null || typeof convening !== 'object')
+      throw new Error('cycle.json: phase "convening" requires a convening block')
+    if (convening.after_cycle !== raw.cycle)
+      throw new Error(`cycle.json: convening.after_cycle must equal cycle (${raw.cycle}), got ${convening.after_cycle}`)
+    if (!DATE.test(convening.opened))
+      throw new Error(`cycle.json: convening.opened must be a date, got "${convening.opened}"`)
+    if (convening.objected != null && !DATE.test(convening.objected))
+      throw new Error(`cycle.json: convening.objected must be a date, got "${convening.objected}"`)
+  } else if (convening !== null) {
+    throw new Error(`cycle.json: a convening block outside the convening phase (phase "${raw.phase}")`)
+  }
+  return {
+    cycle: raw.cycle,
+    phase: raw.phase,
+    question: raw.question ?? null,
+    source: raw.source,
+    opened: raw.opened,
+    sessionsPerPractice: String(raw.sessions_per_practice ?? '3-5'),
+    defaults: { atelier: raw.defaults.atelier, field: raw.defaults.field, studio: raw.defaults.studio },
+    continuing: continuing && { question: continuing.question, since: continuing.since },
+    seedId: raw.seed_id ?? null,
+    takenSeeds: raw.taken_seeds ?? [],
+    convening: convening && {
+      afterCycle: convening.after_cycle,
+      opened: convening.opened,
+      objected: convening.objected ?? null,
+    },
+  }
+}
+
+/** The question a practice works right now: the cycle's own question when it carries one (a
+ *  seed or the continuing question), otherwise that practice's default theme. */
+export function questionFor(cycle: CycleState, practice: PracticeId): string {
+  return cycle.source !== 'defaults' && cycle.question ? cycle.question : cycle.defaults[practice]
+}
+
+/** The protocols cap a bulletin at 40 lines; the surface tolerates a little drift before it
+ *  truncates, and says so when it does — a silently clipped record would misquote the practice. */
+export const BULLETIN_DISPLAY_MAX = 48
+
+export interface Bulletin {
+  present: boolean
+  /** The shown text (trailing whitespace trimmed, capped at BULLETIN_DISPLAY_MAX lines). */
+  text: string | null
+  lines: number
+  truncated: boolean
+}
+
+export function loadBulletin(practice: PracticeId, root: string = process.cwd()): Bulletin {
+  const file = path.join(root, 'src/content', practice, 'BULLETIN.md')
+  if (!fs.existsSync(file)) return { present: false, text: null, lines: 0, truncated: false }
+  const all = fs.readFileSync(file, 'utf8').replace(/\s+$/, '').split('\n')
+  const truncated = all.length > BULLETIN_DISPLAY_MAX
+  const shown = truncated ? all.slice(0, BULLETIN_DISPLAY_MAX) : all
+  return { present: true, text: shown.join('\n'), lines: all.length, truncated }
+}
+
+/** A practice's closing report (Protocol §8, the one-time transition of 2026-08-30) — a
+ *  self-contained page mirrored bare from the engine repository. */
+export interface ClosingReport {
+  practice: PracticeId
+  href: string
+}
+
+/** Where a report may sit, in the order the surface looks. Two entries because the practices
+ *  did not land in the same place: the Field and the Studio wrote `closing-report/`, while the
+ *  Atelier's gate refused a new root path on the day the constitution landed, so its report
+ *  (titled "The Atelier — closing report") is its window page. The surface links where each
+ *  practice actually put it rather than asserting a path none of them agreed on. */
+const REPORT_CANDIDATES = ['closing-report', 'window'] as const
+
+export function loadClosingReports(root: string = process.cwd()): ClosingReport[] {
+  const found: ClosingReport[] = []
+  for (const practice of PRACTICES) {
+    for (const dir of REPORT_CANDIDATES) {
+      const index = path.join(root, 'public', practice, dir, 'index.html')
+      if (!fs.existsSync(index)) continue
+      // Only count a window as the report when the page says so itself — a window is its own
+      // thing, and a practice that has one but wrote no report must not appear to have one.
+      if (dir === 'window') {
+        const head = fs.readFileSync(index, 'utf8').slice(0, 4096)
+        if (!/closing report/i.test(head)) continue
+      }
+      found.push({ practice, href: `/${practice}/${dir}/` })
+      break
+    }
+  }
+  return found
+}
+
+/** A dated artifact of a cycle, as the practice committed it. Date, title and cycle are the
+ *  practice's own — read from its record, never invented.
+ *
+ *  Three practices, three conventions (2026-09-02). Protocol v7 §4 says every session leaves an
+ *  artifact and names no path for it, and the practices did not land in the same place:
+ *
+ *    · The Field writes `artifacts/cycle-NNN/<date>-<slug>/` — date and cycle in the path.
+ *      Since 2026-09-14 its own mirror has also landed the flat `artifacts/<date>-<slug>/`
+ *      (no cycle wrapper; the layout change happened upstream, in the engine repo, and the
+ *      rsync mirror carries it through verbatim) — both shapes are read, distinguished by
+ *      whether `index.html` sits directly inside the top-level directory. Either page's own
+ *      <title> is the artifact's title.
+ *    · The Atelier writes `window/cycle-NNN[-session-n]/` — the cycle in the path, no date; the
+ *      session note in its journal that names the window (`Artifact: window/…`) — or, where no
+ *      note names it, the note whose H1 is the window's own title — carries the day in its own
+ *      filename, and the window's <title> is the artifact's title.
+ *    · The Studio ships works: `works/<date>-<slug>/meta.json` (date, title) with the page under
+ *      `werke-html/`. A work names no cycle; it belongs to the cycle whose opening it follows,
+ *      which is the caller's rule (inCycle), because only the house clock knows the cycle.
+ *
+ *  Until 2026-09-02 the loader read the Field's convention alone, and the entrance's score drew
+ *  "no artifact yet this cycle" on two lanes that had delivered four artifacts each. Until
+ *  2026-09-23 it read only the Field's nested shape, silently dropping every artifact the flat
+ *  shape carried — six sessions invisible on every surface this loader feeds. */
+export interface ArtifactEntry {
+  practice: PracticeId
+  slug: string
+  date: string | null
+  href: string
+  /** The cycle the practice's own path names; null when the record carries none — a work, or a
+   *  Field artifact in the flat, unwrapped layout. */
+  cycle: number | null
+  /** The practice's own title where its record has one (an artifact page's or a window's <title>,
+   *  a work's meta.json). */
+  title?: string
+  /** True for an entry read from `works/<date>-<slug>/meta.json` — the Studio's convention, and
+   *  the Atelier's until it moved to `window/`. Both also glob into the works register
+   *  (src/lib/engines/register.ts), so a caller that already draws from the register must skip
+   *  these or double-count them; a caller that draws only from this loader need not care. */
+  fromWorksRegister: boolean
+}
+
+/** Whether an artifact belongs to the given cycle: by the cycle its path names, or — for a
+ *  record that names none — by the house clock: shipped on or after the day the cycle opened.
+ *  Only the running cycle can be judged this way (cycle.json holds no history), which is all
+ *  the surfaces draw. */
+export function inCycle(a: ArtifactEntry, cycle: CycleState): boolean {
+  if (a.cycle !== null) return a.cycle === cycle.cycle
+  return a.date !== null && a.date >= cycle.opened
+}
+
+const CYCLE_DIR = /^cycle-(\d+)/
+const DATED_SLUG = /^(\d{4}-\d{2}-\d{2})-(.*)$/
+
+function isDir(p: string): boolean {
+  return fs.existsSync(p) && fs.statSync(p).isDirectory()
+}
+
+/** The named entities a page title commonly carries. Numeric references (&#8217;, &#x2019;) are
+ *  decoded generically below; a name not listed here is left as written rather than guessed. */
+const NAMED_ENTITIES: Record<string, string> = {
+  amp: '&',
+  apos: "'",
+  quot: '"',
+  lt: '<',
+  gt: '>',
+  nbsp: ' ',
+  mdash: '—',
+  ndash: '–',
+  lsquo: '‘',
+  rsquo: '’',
+  ldquo: '“',
+  rdquo: '”',
+  hellip: '…',
+}
+
+function decodeEntities(text: string): string {
+  return text.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (whole, ref: string) => {
+    if (ref[0] === '#') {
+      const code = ref[1] === 'x' || ref[1] === 'X' ? parseInt(ref.slice(2), 16) : parseInt(ref.slice(1), 10)
+      return Number.isFinite(code) && code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : whole
+    }
+    return NAMED_ENTITIES[ref.toLowerCase()] ?? whole
+  })
+}
+
+/** The <title> of a self-contained page, read from its head only, with the practice's own
+ *  " — The Atelier, cycle 001, session 2" suffix trimmed: the practice is the lane, the cycle
+ *  is the ruler, so the title keeps what only it says. Entities are decoded — a title showing
+ *  "&#8217;" on a surface is the page's markup leaking, not the practice's words. */
+function pageTitle(index: string): string | undefined {
+  const head = fs.readFileSync(index, 'utf8').slice(0, 4096)
+  const m = /<title>([^<]*)<\/title>/i.exec(head)
+  if (!m) return undefined
+  const raw = decodeEntities(m[1]!)
+    .replace(/\s+—\s+The (Atelier|Field|Studio)\b.*$/, '')
+    .trim()
+  return raw.length > 0 ? raw : undefined
+}
+
+/** A session's title as two of the practice's own records may spell it: the window's <title>
+ *  can carry a trailing " — cycle 004, session 1" that the journal's H1 does not, the H1 a
+ *  trailing " (cycle 004, session 6)" that the window's <title> does not (the Atelier's notes
+ *  have written it that way since 2026-10-06), and either may set an apostrophe straight or
+ *  curly. Only that is normalised — two different titles never become equal here. */
+function sessionTitleKey(title: string): string {
+  return title
+    .replace(/\s+[—–-]\s+cycle\s+\d+,\s*session\s+\d+\s*$/i, '')
+    .replace(/\s*\(\s*cycle\s+\d+,\s*session\s+\d+\b[^)]*\)\s*$/i, '')
+    .replace(/[‘’]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase()
+}
+
+/** A journal note's own H1, without the "2026-10-03 — " day prefix the Atelier writes into it. */
+function noteHeading(text: string): string | undefined {
+  const m = /^#\s+(.+)$/m.exec(withoutFrontmatter(text))
+  if (!m) return undefined
+  return m[1]!.replace(/^\d{4}-\d{2}-\d{2}\s+[—–-]\s+/, '').trim()
+}
+
+/** A window directory that is one session of a cycle: `cycle-005-session-1`. */
+const SESSION_DIR = /^cycle-(\d+)-session-(\d+)$/
+
+/** Whether a note's own H1 says it is that session — "Whose frames (cycle 005, session 1)",
+ *  "… (cycle 005, session 5, presentation)". Numbers compare as numbers ("cycle 5" is "cycle
+ *  005"), and "session 1" never matches "session 10". */
+function headingNamesSession(heading: string, cycle: number, session: number): boolean {
+  for (const m of heading.matchAll(/\bcycle\s+(\d+),\s*session\s+(\d+)(?!\d)/gi)) {
+    if (Number(m[1]) === cycle && Number(m[2]) === session) return true
+  }
+  return false
+}
+
+/** The day a window was made, from the practice's journal — never from the clock or from git.
+ *
+ *  First by PATH: the earliest note that names the window (`window/cycle-001-session-3/`); the
+ *  match stops at the directory's end so the note for `window/cycle-001/` does not date every
+ *  session under that cycle.
+ *
+ *  Then, only when no note names the path, by the note's own HEADING: the earliest note whose H1
+ *  is the window's own <title>, or whose H1 names the window's cycle and session. The title rule
+ *  was added 2026-10-04: from session 20 of cycle 003 on, the Atelier's notes stopped writing the
+ *  window's path into their text (they open "Cycle 004, session 1" instead), so the whole of
+ *  cycle 004 had no day, and every surface that needs one dropped it. The session rule was added
+ *  2026-10-07: since 2026-10-06 the H1 carries the session in brackets ("Held out (cycle 004,
+ *  session 6)"), which the title rule did not strip, so the windows of 10-06 and 10-07 had no day
+ *  and were missing from the signal log and the register while they stood on the practice's own
+ *  page. Both rules read the practice's own record tying note to window; only the H1 counts, so a
+ *  later note that mentions a session in passing does not move its day. A window neither names
+ *  stays undated. */
+function windowDate(practice: PracticeId, dir: string, root: string, title?: string): string | null {
+  const journal = path.join(root, 'src/content', practice, 'journal')
+  if (!isDir(journal)) return null
+  const names = new RegExp(`window/${dir.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\w-])`)
+  const key = title ? sessionTitleKey(title) : null
+  const session = SESSION_DIR.exec(dir)
+  const byPath: string[] = []
+  const byHeading: string[] = []
+  for (const file of fs.readdirSync(journal)) {
+    const m = /^(\d{4}-\d{2}-\d{2})-.*\.md$/.exec(file)
+    if (!m) continue
+    const text = fs.readFileSync(path.join(journal, file), 'utf8')
+    if (names.test(text)) {
+      byPath.push(m[1]!)
+      continue
+    }
+    const heading = noteHeading(text)
+    if (!heading) continue
+    if (
+      (key !== null && sessionTitleKey(heading) === key) ||
+      (session !== null && headingNamesSession(heading, Number(session[1]), Number(session[2])))
+    )
+      byHeading.push(m[1]!)
+  }
+  const days = byPath.length > 0 ? byPath : byHeading
+  return days.length > 0 ? days.sort()[0]! : null
+}
+
+export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
+  const found: ArtifactEntry[] = []
+  for (const practice of PRACTICES) {
+    // artifacts/cycle-NNN/<date>-<slug>/ — the Field's convention, read for every practice.
+    // Since 2026-09-14 the Field has also landed artifacts/<date>-<slug>/ directly, with no
+    // cycle wrapper; the two shapes are told apart by where index.html sits, not by name, since
+    // neither convention marks itself.
+    const artifacts = path.join(root, 'public', practice, 'artifacts')
+    if (isDir(artifacts)) {
+      for (const entry of fs.readdirSync(artifacts)) {
+        const entryPath = path.join(artifacts, entry)
+        if (!isDir(entryPath)) continue
+
+        const flatFace = path.join(entryPath, 'index.html')
+        if (fs.existsSync(flatFace)) {
+          // the flat shape: `entry` is the artifact itself, not a cycle wrapper — its path
+          // names no cycle, so inCycle() places it by date, exactly as it does a Studio work.
+          const m = DATED_SLUG.exec(entry)
+          const title = pageTitle(flatFace)
+          found.push({
+            practice,
+            slug: m ? m[2]! : entry,
+            date: m ? m[1]! : null,
+            href: `/${practice}/artifacts/${entry}/`,
+            cycle: null,
+            fromWorksRegister: false,
+            ...(title ? { title } : {}),
+          })
+          continue
+        }
+
+        const cycleNo = CYCLE_DIR.exec(entry)
+        for (const slug of fs.readdirSync(entryPath)) {
+          const dir = path.join(entryPath, slug)
+          const face = path.join(dir, 'index.html')
+          if (!isDir(dir) || !fs.existsSync(face)) continue
+          const m = DATED_SLUG.exec(slug)
+          // The page's own <title> since 2026-10-04 — until then the Field's artifacts were
+          // listed by their slugs alone on every surface, although each page names itself.
+          const title = pageTitle(face)
+          found.push({
+            practice,
+            slug: m ? m[2]! : slug,
+            date: m ? m[1]! : null,
+            href: `/${practice}/artifacts/${entry}/${slug}/`,
+            cycle: cycleNo ? Number(cycleNo[1]) : null,
+            fromWorksRegister: false,
+            ...(title ? { title } : {}),
+          })
+        }
+      }
+    }
+
+    // window/cycle-NNN[-session-n]/ — the Atelier's convention. The window root itself is the
+    // practice's own page (and, for the Atelier, its closing report — loadClosingReports), not
+    // an artifact; only the cycle-named directories under it are.
+    const window = path.join(root, 'public', practice, 'window')
+    if (isDir(window)) {
+      for (const dir of fs.readdirSync(window)) {
+        const cycleNo = CYCLE_DIR.exec(dir)
+        if (!cycleNo) continue
+        const index = path.join(window, dir, 'index.html')
+        if (!isDir(path.join(window, dir)) || !fs.existsSync(index)) continue
+        const title = pageTitle(index)
+        found.push({
+          practice,
+          slug: dir,
+          date: windowDate(practice, dir, root, title),
+          href: `/${practice}/window/${dir}/`,
+          cycle: Number(cycleNo[1]),
+          title,
+          fromWorksRegister: false,
+        })
+      }
+    }
+
+    // works/<date>-<slug>/meta.json + werke-html/<slug>/index.html — the Studio's convention,
+    // and the Atelier's own before it moved to window/ (src/content/atelier/works/ still holds
+    // that earlier run). A work without a page on this site is not linked, so it is not listed.
+    const works = path.join(root, 'src/content', practice, 'works')
+    if (isDir(works)) {
+      for (const dir of fs.readdirSync(works)) {
+        const meta = path.join(works, dir, 'meta.json')
+        const face = path.join(root, 'public', practice, 'werke-html', dir, 'index.html')
+        if (!fs.existsSync(meta) || !fs.existsSync(face)) continue
+        const m = DATED_SLUG.exec(dir)
+        let parsed: { title?: unknown; date?: unknown } = {}
+        try {
+          parsed = JSON.parse(fs.readFileSync(meta, 'utf8'))
+        } catch {
+          continue
+        }
+        const date =
+          typeof parsed.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(parsed.date)
+            ? parsed.date
+            : m
+              ? m[1]!
+              : null
+        const title = typeof parsed.title === 'string' && parsed.title.trim() ? parsed.title.trim() : undefined
+        found.push({
+          practice,
+          slug: m ? m[2]! : dir,
+          date,
+          href: `/${practice}/werke-html/${dir}/`,
+          cycle: null,
+          fromWorksRegister: true,
+          ...(title ? { title } : {}),
+        })
+      }
+    }
+  }
+  // newest first; undated entries last; then by practice, then by slug — a total order, so the
+  // listing never depends on the filesystem's own
+  return found.sort(
+    (a, b) =>
+      (b.date ?? '').localeCompare(a.date ?? '') ||
+      PRACTICES.indexOf(a.practice) - PRACTICES.indexOf(b.practice) ||
+      a.slug.localeCompare(b.slug),
+  )
+}
+
+export interface PresentationEntry {
+  cycle: number
+  practice: PracticeId
+  /** Site-relative href when the artifact has an html face; the repo URL otherwise. */
+  href: string
+  files: number
+  /** The day the presentation's own summary names, or null when it names none — see
+   *  summaryDate. A presentation with no committed day is listed, never placed on a ruler. */
+  date: string | null
+  /** The artifact page's own <title>, practice suffix trimmed. */
+  title?: string
+  /** The Field's paper of that cycle, rendered by this site (2026-10-07: every Field presentation
+   *  carries a `paper.md` in preprint form). Null where the presentation carries none; the loader
+   *  always sets it, hand-made entries (fixtures) may leave it out. */
+  paperHref?: string | null
+}
+
+/** The file a Field presentation carries its paper in, and the page this site renders it on. */
+export const PAPER_FILE = 'paper.md'
+export const paperHref = (cycle: number): string => `/field/papers/cycle-${String(cycle).padStart(3, '0')}/`
+
+/** One Field paper as mirrored: `public/field/presentations/cycle-NNN/paper.md`. */
+export interface FieldPaper {
+  cycle: number
+  /** the presentation directory, `cycle-006` */
+  dir: string
+  /** the mirrored file, repository-relative */
+  file: string
+  href: string
+}
+
+/** The Field's papers, one per presented cycle that carries one, newest first. Before the first
+ *  paper lands the list is empty and no page is built — nothing on the site changes. */
+export function loadFieldPapers(root: string = process.cwd()): FieldPaper[] {
+  const base = path.join(root, 'public', 'field', 'presentations')
+  if (!isDir(base)) return []
+  const papers: FieldPaper[] = []
+  for (const dir of fs.readdirSync(base)) {
+    const m = /^cycle-(\d+)$/.exec(dir)
+    if (!m) continue
+    const file = path.join(base, dir, PAPER_FILE)
+    if (!fs.existsSync(file) || !fs.statSync(file).isFile()) continue
+    const cycle = Number(m[1])
+    papers.push({ cycle, dir, file: `public/field/presentations/${dir}/${PAPER_FILE}`, href: paperHref(cycle) })
+  }
+  return papers.sort((a, b) => b.cycle - a.cycle)
+}
+
+/** The day a presentation carries: the LAST calendar date its own SUMMARY.md names in its
+ *  opening block. The two practices that have presented wrote different headers — the Field's
+ *  reads "Five sessions, 2026-08-30 to 2026-09-01", the Studio's "The Studio's presentation for
+ *  cycle 001 of the research ecology. 2026-09-02." — and neither carries a machine-readable
+ *  field. The last date of the opening block is the one day both headers agree is not before the
+ *  presentation: the Field's last session, the Studio's stated day. It is read from the
+ *  practice's own record, never from the clock, and the figure's card names the file it came
+ *  from so a reader can check it. A summary that names no date leaves the presentation undated. */
+const SUMMARY_HEAD = 700
+function summaryDate(dir: string): string | null {
+  const file = path.join(dir, 'SUMMARY.md')
+  if (!fs.existsSync(file)) return null
+  const head = fs.readFileSync(file, 'utf8').slice(0, SUMMARY_HEAD)
+  const days = [...head.matchAll(/\b(\d{4}-\d{2}-\d{2})\b/g)].map((m) => m[1]!)
+  return days.length > 0 ? days.sort()[days.length - 1]! : null
+}
+
+export function loadPresentations(root: string = process.cwd()): PresentationEntry[] {
+  const entries: PresentationEntry[] = []
+  for (const practice of PRACTICES) {
+    const base = path.join(root, 'public', practice, 'presentations')
+    if (!fs.existsSync(base)) continue
+    for (const dir of fs.readdirSync(base)) {
+      const m = /^cycle-(\d+)$/.exec(dir)
+      if (!m) continue
+      const full = path.join(base, dir)
+      if (!fs.statSync(full).isDirectory()) continue
+      const files = fs.readdirSync(full, { recursive: true }).filter((f) => {
+        return fs.statSync(path.join(full, String(f))).isFile()
+      })
+      if (files.length === 0) continue
+      const html = files.map(String).find((f) => f.endsWith('index.html')) ??
+        files.map(String).find((f) => f.endsWith('.html'))
+      const href = html
+        ? `/${practice}/presentations/${dir}/${html === 'index.html' ? '' : html}`
+        : `https://github.com/frankbueltge/${PRACTICE_REPO[practice]}/tree/main/presentations/${dir}`
+      const face = path.join(full, 'index.html')
+      const title = fs.existsSync(face) ? pageTitle(face) : undefined
+      const hasPaper = practice === 'field' && fs.existsSync(path.join(full, PAPER_FILE))
+      entries.push({
+        cycle: Number(m[1]),
+        practice,
+        href,
+        files: files.length,
+        date: summaryDate(full),
+        ...(title ? { title } : {}),
+        paperHref: hasPaper ? paperHref(Number(m[1])) : null,
+      })
+    }
+  }
+  return entries.sort(
+    (a, b) => b.cycle - a.cycle || PRACTICES.indexOf(a.practice) - PRACTICES.indexOf(b.practice),
+  )
+}
+
+// ---------------------------------------------------------------------------------------------
+// The three records the partitur added on 2026-09-02 (docs/design/2026-09-02-the-visual-layer.md,
+// Phase 1). The artifact trail was never the whole cycle: a cycle also holds the SESSIONS that
+// produced those artifacts, the LETTERS the house prepared for receivers outside it, and the
+// ENCOUNTERS in which one practice's material travelled into another's work. All three already
+// live in committed files with their own surfaces; these loaders only read them the way the
+// score needs them — dated, titled, and pointing at the page this site already publishes.
+//
+// Every one of them takes a `since` day (the running cycle's opening) rather than filtering at
+// the call site, because two of the three must walk their WHOLE record before they can filter:
+// the journal's anchors are assigned in one chronological pass and a partial walk would invent
+// different ones (see loadSessionNotes).
+
+/** The body a content collection would hand a route: the file without its YAML frontmatter.
+ *  Load-bearing, not cosmetic — thirty-three of the Atelier's journal files carry frontmatter,
+ *  and a raw read would feed the `---` block to the same splitters the routes use: the H1 would
+ *  no longer be the first line (the note would be titled by its date) and, in a day-based
+ *  journal, the block would become a heading-less first chunk that shifts every anchor in the
+ *  file. The marks would then link to pages that do not exist. */
+function withoutFrontmatter(text: string): string {
+  const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(text)
+  return m ? text.slice(m[0].length) : text
+}
+
+/** One session of a practice's journal, as the practice wrote it and as this site publishes it. */
+export interface SessionNote {
+  practice: PracticeId
+  /** the calendar day the note belongs to */
+  date: string
+  /** the note's own H1, or the day when the file carries none */
+  title: string
+  /** this site's page for that session */
+  href: string
+  /** the URL segment the practice's own journal route uses — its stable id */
+  anchor: string
+  /** the committed file the note was read from */
+  source: string
+}
+
+/**
+ * A practice's journal sessions from `since` onwards, each pointing at the page this site
+ * already builds for it.
+ *
+ * THE WALK IS COMPLETE ON PURPOSE, THE FILTER COMES LAST. The two day-based practices number
+ * their sessions in one chronological pass over the whole journal (buildDayIndex: the first
+ * claimant of a drifting session number keeps the clean `cs-N` anchor, later ones get a day
+ * suffix), so a walk that started at the cycle's opening would hand out DIFFERENT anchors than
+ * the routes did — every mark would link to a page that does not exist. So the same functions
+ * the routes use produce the same ids here, and only then does `since` cut the list.
+ *
+ * The three practices reach their session pages differently, and this follows each one rather
+ * than inventing a fourth convention: the Field and the Studio publish `/<practice>/journal/
+ * <anchor>/` from `buildDayIndex`, the Atelier `/atelier/journal/<slug>/` from
+ * `buildSessionEntries` (`s12`, `note-<slug>` — the register's own numbering).
+ */
+export function loadSessionNotes(
+  practice: PracticeId,
+  since: string,
+  root: string = process.cwd(),
+): SessionNote[] {
+  const dir = path.join(root, 'src/content', practice, 'journal')
+  if (!isDir(dir)) return []
+  const files = fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith('.md'))
+    .sort()
+  const entries = files.map((f) => ({
+    id: `journal/${f}`,
+    body: withoutFrontmatter(fs.readFileSync(path.join(dir, f), 'utf8')),
+  }))
+  const notes: SessionNote[] = []
+
+  if (practice === 'atelier') {
+    for (const e of buildSessionEntries(entries)) {
+      notes.push({
+        practice,
+        date: e.date,
+        title: e.heading,
+        href: `/atelier/journal/${e.slug}/`,
+        anchor: e.slug,
+        source: `src/content/atelier/${e.id}`,
+      })
+    }
+  } else {
+    const repo = `https://github.com/frankbueltge/${PRACTICE_REPO[practice]}`
+    const { daysAsc, sessionsAsc } = buildDayIndex(entries, { repo, docs: new Set<string>() })
+    const dayOf = new Map(daysAsc.flatMap((d) => d.sessions.map((s) => [s.anchor, d] as const)))
+    for (const s of sessionsAsc) {
+      const day = dayOf.get(s.anchor)
+      if (!day) continue
+      notes.push({
+        practice,
+        date: day.date,
+        title: s.heading || day.date,
+        href: `/${practice}/journal/${s.anchor}/`,
+        anchor: s.anchor,
+        source: `src/content/${practice}/${day.id}`,
+      })
+    }
+  }
+
+  return notes
+    .filter((n) => n.date >= since)
+    .sort((a, b) => a.date.localeCompare(b.date) || a.anchor.localeCompare(b.anchor))
+}
+
+/** One prepared delivery of the post office's outgoing ledger. `practice` is the ledger's own
+ *  field: one of the three practices, or the ecology / the plenum — which is the house speaking
+ *  as itself, and lands on the house lane. */
+export interface LetterEntry {
+  id: string
+  practice: 'atelier' | 'field' | 'studio' | 'plenum' | 'ecology'
+  date: string
+  title: string
+  receiver: string
+  status: string
+  href: string
+  source: string
+}
+
+const LEDGER_FILE = 'src/data/post/ledger.json'
+
+/** The outgoing ledger from `since` onwards. Read from the committed file rather than through
+ *  src/lib/post/ledger.ts because the loaders of this module take a root (a test hands them a
+ *  fixture tree), which a bundler-resolved JSON import cannot do. The site's own post office
+ *  stays the validating reader; this one only needs day, words and receiver. */
+export function loadLetters(since: string, root: string = process.cwd()): LetterEntry[] {
+  const file = path.join(root, LEDGER_FILE)
+  if (!fs.existsSync(file)) return []
+  let raw: unknown
+  try {
+    raw = JSON.parse(fs.readFileSync(file, 'utf8'))
+  } catch {
+    return []
+  }
+  if (!Array.isArray(raw)) return []
+  const out: LetterEntry[] = []
+  for (const e of raw as Record<string, unknown>[]) {
+    const date = typeof e.as_of === 'string' ? e.as_of : ''
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || date < since) continue
+    if (typeof e.id !== 'string' || typeof e.piece !== 'string') continue
+    const practice = String(e.practice) as LetterEntry['practice']
+    out.push({
+      id: e.id,
+      practice,
+      date,
+      title: e.piece,
+      receiver: typeof e.receiver === 'string' ? e.receiver : '',
+      status: typeof e.status === 'string' ? e.status : '',
+      href: '/post/',
+      source: LEDGER_FILE,
+    })
+  }
+  return out.sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id))
+}
+
+/** One encounter of the register — a crossing between two practices, dated by the day the
+ *  receiving practice premiered the work that carried the material. */
+export interface EncounterEntry {
+  id: string
+  date: string
+  title: string
+  href: string
+  source: string
+}
+
+const REGISTER_FILE = 'src/data/begegnungen/register.json'
+
+/** The encounter register from `since` onwards. An encounter is dated by `observed.premiered_on`
+ *  — the day the crossing became visible in a work — and belongs to no single practice, so the
+ *  score puts it on the house lane. Entries the register has not yet observed a premiere for
+ *  carry no day and are left out rather than placed on a guess. */
+export function loadEncounters(since: string, root: string = process.cwd()): EncounterEntry[] {
+  const file = path.join(root, REGISTER_FILE)
+  if (!fs.existsSync(file)) return []
+  let raw: unknown
+  try {
+    raw = JSON.parse(fs.readFileSync(file, 'utf8'))
+  } catch {
+    return []
+  }
+  if (!Array.isArray(raw)) return []
+  const out: EncounterEntry[] = []
+  for (const e of raw as Record<string, unknown>[]) {
+    const observed = (e.observed ?? {}) as Record<string, unknown>
+    const date = typeof observed.premiered_on === 'string' ? observed.premiered_on : ''
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || date < since) continue
+    if (typeof e.encounter_id !== 'string') continue
+    out.push({
+      id: e.encounter_id,
+      date,
+      title: typeof e.title === 'string' ? e.title : e.encounter_id,
+      href: '/encounters/register/',
+      source: REGISTER_FILE,
+    })
+  }
+  return out.sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id))
+}

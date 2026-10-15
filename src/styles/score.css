@@ -1,0 +1,1766 @@
+/* src/styles/score.css — the research ecology as a score (2026-10-11)
+ *
+ * /ecology, the three practice pages and /encounters, after the design handoff
+ * docs/design_handoff_homepage_ecology/README.md §4–§6 (drawn at 1440 px; the handoff ships no
+ * phone drawing for these pages and asks for one derived from the entrance's, which is the last
+ * block of this sheet). Every colour is a token of src/styles/paper.css; the three voices are
+ * the set recorded as `paper-voices` and are read here through the .pp-voice-* classes, never
+ * as a hex.
+ *
+ * PALETTE: paper-voices
+ * (by token: --pp-voice is a mark's hue, --pp-voice-ink the same voice as small text. A voice
+ * is always named in words beside its hue — a stave's label, a card's heading, a row's own
+ * cell — and the three kinds of relation are told apart by the LINE, solid, dashed or dotted,
+ * never by a hue.)
+ *
+ * No position on these pages is a style attribute: the drawings are SVG and carry their
+ * geometry as attributes (src/lib/ecology/score.ts computes all of it), and what the script
+ * changes — the selected cycle, which relations show, what a filter hides — it changes through
+ * classes, attributes and the `hidden` property. The one thing it writes through the CSSOM is
+ * the readout's place (src/lib/dataviz/readout.ts).
+ */
+
+.sc {
+  --sc-gutter: var(--pp-gutter);
+  /* the ecology pages run their ink a shade warmer in the handoff; unified to the page's ink */
+  font-size: 14px;
+}
+.sc-wrap {
+  padding-inline: var(--sc-gutter);
+}
+.sc a:hover {
+  color: var(--pp-accent-ink);
+}
+.sc-link {
+  text-decoration: underline !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 2px;
+}
+.sc-serif {
+  font-family: var(--pp-serif);
+}
+.sc-small {
+  font-family: var(--pp-sans);
+  font-size: 11.5px;
+  color: var(--pp-muted);
+}
+.sc-voice,
+.sc a.sc-voice {
+  color: var(--pp-voice-ink);
+}
+
+/* a quiet control: a filter chip, a tab */
+.sc-chip {
+  padding: 5px 10px;
+  border: 1px solid var(--pp-rule-firm);
+  background: transparent;
+  color: var(--pp-ink);
+  font-size: 12px;
+  line-height: 1.3;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.sc-chip[aria-pressed='true'] {
+  border-color: var(--pp-ink);
+  background: var(--pp-ink);
+  color: var(--pp-on-ink);
+}
+.sc-chip.sc-voice-chip {
+  color: var(--pp-voice-ink);
+}
+.sc-chip.sc-voice-chip[aria-pressed='true'] {
+  border-color: var(--pp-voice-ink);
+  background: var(--pp-voice-ink);
+  color: var(--pp-on-ink);
+}
+.sc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ——— the strip under the top bar ————————————————————————————————————————————————————————— */
+.sc-subnav {
+  border-bottom: 1px solid var(--pp-rule);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.sc-subnav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 48px;
+}
+.sc-subnav nav {
+  display: flex;
+  gap: 26px;
+}
+.sc-subnav nav a {
+  color: var(--pp-muted);
+  white-space: nowrap;
+}
+.sc-subnav nav a.sc-voice,
+.sc a.sc-voice {
+  color: var(--pp-voice-ink);
+}
+.sc-subnav nav a[aria-current],
+.sc-subnav nav a.is-first {
+  color: var(--pp-ink);
+}
+.sc-crumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.sc-crumb a {
+  color: var(--pp-muted);
+}
+.sc-crumb-arrow {
+  color: var(--pp-faint);
+}
+.sc-subnav-seed {
+  padding: 6px 12px;
+  border: 1px solid var(--pp-ink);
+  white-space: nowrap;
+}
+
+/* ——— the hero ———————————————————————————————————————————————————————————————————————————— */
+.sc-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 520px;
+  gap: 64px;
+  align-items: end;
+  padding-block: 56px 28px;
+}
+.sc-hero--top {
+  align-items: start;
+  padding-block: 52px 36px;
+}
+/* a practice's status box is narrower than the ecology's "now" and the Middle's matrix */
+.sc-hero--practice {
+  grid-template-columns: minmax(0, 1fr) 460px;
+}
+.sc-hero--middle {
+  padding-bottom: 40px;
+}
+.sc-hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.sc-kicker {
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pp-muted);
+}
+.sc-kicker.sc-voice,
+.sc a.sc-voice {
+  color: var(--pp-voice-ink);
+}
+.sc h1 {
+  font-family: var(--pp-serif);
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+}
+.sc-hero--top h1 {
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+.sc-lede {
+  max-width: 640px;
+  color: var(--pp-ink-2);
+  font-size: 17px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.sc-now {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px 24px;
+  border: 1px solid var(--pp-ink);
+}
+.sc-now-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.sc-now-q {
+  font-family: var(--pp-serif);
+  font-size: 25px;
+  line-height: 1.15;
+  text-wrap: pretty;
+}
+.sc-now-origin {
+  color: var(--pp-muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+/* the bar over a practice's page, in its colour; the Middle's is a double rule of ink */
+.sc-topbar {
+  border-top: 6px solid var(--pp-voice);
+}
+.sc-topbar--middle {
+  border-top: 6px double var(--pp-ink);
+}
+
+/* ——— a section's head ———————————————————————————————————————————————————————————————————— */
+.sc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--pp-rule);
+}
+.sc-head--ink {
+  border-bottom: 1.5px solid var(--pp-ink);
+}
+.sc-head--bare {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.sc-head-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+}
+.sc-head h2 {
+  font-family: var(--pp-serif);
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 1.2;
+}
+.sc-head--big h2 {
+  font-size: 34px;
+}
+.sc-head-sub {
+  color: var(--pp-muted);
+  font-size: 14px;
+}
+.sc-head-aside {
+  flex: none;
+  font-size: 12px;
+}
+.sc-section {
+  padding-top: 72px;
+}
+
+/* ——— the drawings: the score, a part, the crossings ——————————————————————————————————————— */
+.sc-figure {
+  position: relative;
+  margin-top: 4px;
+}
+.sc-figure-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.sc-figure svg {
+  display: block;
+  width: 100%;
+  min-width: 980px;
+  height: auto;
+  overflow: visible;
+}
+.sc-figure text {
+  font-family: var(--pp-sans);
+}
+.sc-staff {
+  stroke: var(--pp-rule-firm);
+  stroke-width: 1;
+}
+.sc-staff--own {
+  stroke: var(--pp-faint);
+}
+.sc-staff--ghost {
+  stroke: var(--pp-rule);
+}
+.sc-barline {
+  stroke: var(--pp-ink);
+  stroke-width: 1.5;
+}
+.sc-barline--light {
+  stroke-width: 1;
+}
+.sc-part .sc-barline {
+  stroke-width: 1.2;
+}
+.sc-tick {
+  stroke: var(--pp-faint);
+}
+.sc-tick-label {
+  fill: var(--pp-muted);
+  font-size: 10.5px;
+  text-anchor: middle;
+}
+.sc-stave-name {
+  fill: var(--pp-voice-ink);
+  font-size: 14px;
+  font-weight: 500;
+}
+.sc-stave-name--ghost {
+  font-size: 12.5px;
+}
+.sc-stave-name--own {
+  font-size: 16px;
+}
+.sc-stave-corner {
+  fill: var(--pp-muted);
+  font-size: 10.5px;
+}
+/* a cycle's band: the thing that is clicked to select it */
+.sc-band {
+  fill: transparent;
+  cursor: pointer;
+}
+.sc-band.is-selected {
+  fill: color-mix(in srgb, var(--pp-ink) 5%, transparent);
+}
+.sc-band:focus-visible {
+  outline: 2px solid var(--pp-ink);
+  outline-offset: -2px;
+}
+.sc-convening {
+  fill: color-mix(in srgb, var(--pp-ink) 7%, transparent);
+  pointer-events: none;
+}
+.sc-convening-label {
+  fill: var(--pp-muted);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+}
+/* a rehearsal number: a boxed figure where a cycle opens */
+.sc-mark-box {
+  fill: var(--pp-ground);
+  stroke: var(--pp-ink);
+  stroke-width: 1.5;
+}
+.sc-mark-no {
+  fill: var(--pp-ink);
+  font-size: 11px;
+  text-anchor: middle;
+}
+.sc-mark.is-selected .sc-mark-box {
+  fill: var(--pp-ink);
+}
+.sc-mark.is-selected .sc-mark-no {
+  fill: var(--pp-on-ink);
+}
+.sc-mark {
+  pointer-events: none;
+}
+.sc-caption {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  color: var(--pp-ink-2);
+  font-family: var(--pp-serif);
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.15;
+}
+.sc-end {
+  stroke: var(--pp-ink);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+}
+.sc-end-label {
+  fill: var(--pp-ink);
+  font-size: 10.5px;
+  text-anchor: end;
+}
+
+/* a notehead: an ellipse leaning to the left, hollow or filled */
+.sc-note {
+  fill: var(--pp-ground);
+  stroke: var(--pp-voice);
+  stroke-width: 1.4;
+  cursor: pointer;
+}
+.sc-note.is-filled {
+  fill: var(--pp-voice);
+}
+.sc-note.is-dim {
+  opacity: 0.35;
+}
+.sc-note--ghost {
+  fill: none;
+  opacity: 0.5;
+}
+.sc-figure a:focus-visible {
+  outline: none;
+}
+.sc-figure a:focus-visible .sc-note {
+  stroke: var(--pp-ink);
+  stroke-width: 2.4;
+}
+.sc-pres {
+  fill: var(--pp-voice);
+}
+.sc-pres.is-dim {
+  opacity: 0.35;
+}
+
+/* a slur: the Middle's record of one voice taking up another. The KIND is the line — solid,
+   dashed, dotted — and its weight; the hue is ink on the full score, and on a part the colour
+   of the voice the thing came from. */
+.sc-slur {
+  fill: none;
+  stroke: var(--pp-ink);
+  pointer-events: none;
+}
+.sc-part .sc-slur {
+  stroke: var(--pp-voice);
+}
+.sc-slur.k-built_on {
+  stroke-width: 1.5;
+  stroke-opacity: 0.75;
+}
+.sc-slur.k-answered {
+  stroke-width: 1.2;
+  stroke-dasharray: 4 3;
+  stroke-opacity: 0.6;
+}
+.sc-slur.k-noted {
+  stroke-width: 0.9;
+  stroke-dasharray: 1 3;
+  stroke-opacity: 0.32;
+}
+.sc-slur.is-dim {
+  stroke-opacity: 0.14;
+}
+.sc-part .sc-slur.k-built_on {
+  stroke-width: 1.6;
+  stroke-opacity: 0.85;
+}
+.sc-part .sc-slur.k-answered {
+  stroke-width: 1.1;
+  stroke-opacity: 0.65;
+}
+.sc-part .sc-slur.k-noted {
+  stroke-width: 1.1;
+  stroke-opacity: 0.35;
+}
+/* the wider, invisible twin a pointer can actually meet */
+.sc-slur-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 7;
+  pointer-events: stroke;
+  cursor: help;
+}
+.sc-slur-hit.is-hot + .sc-slur,
+.sc-slur.is-hot {
+  stroke-opacity: 1;
+  stroke-width: 2;
+}
+/* which relations the score draws: the script moves one attribute on the figure */
+.sc-figure[data-rel='built_on'] :is(.sc-slur, .sc-slur-hit):not(.k-built_on),
+.sc-figure[data-rel='answered'] :is(.sc-slur, .sc-slur-hit):not(.k-answered),
+.sc-figure[data-rel='none'] :is(.sc-slur, .sc-slur-hit) {
+  display: none;
+}
+
+/* the readout: the house's shared shell (components/dataviz/Readout.astro), dressed for paper */
+.sc-figure .dv-readout {
+  --dv-readout-max: 300px;
+  width: max-content;
+  padding: 10px 12px;
+  background: var(--pp-ink);
+  color: var(--pp-on-ink);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.sc-readout-kicker {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--pp-on-ink-warm);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sc-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+  padding: 12px 0 0 150px;
+  color: var(--pp-muted);
+  font-size: 12.5px;
+}
+.sc-legend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.sc-legend svg {
+  flex: none;
+}
+.sc-legend .sc-key {
+  stroke: var(--pp-ink-2);
+  fill: none;
+}
+.sc-legend .sc-key--fill {
+  fill: var(--pp-ink-2);
+}
+.sc-floor {
+  padding: 8px 0 0 150px;
+  color: var(--pp-muted);
+  font-size: 12.5px;
+}
+
+/* ——— the selected cycle, in words ———————————————————————————————————————————————————————— */
+.sc-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 48px;
+  margin-top: 26px;
+  padding-top: 26px;
+  border-top: 1px solid var(--pp-rule);
+}
+.sc-detail-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sc-detail-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.sc-detail-q {
+  max-width: 760px;
+  font-family: var(--pp-serif);
+  font-size: 24px;
+  line-height: 1.2;
+  text-wrap: pretty;
+}
+.sc-findings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.sc-finding {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 12px;
+  color: var(--pp-ink-2);
+  line-height: 1.5;
+}
+.sc-finding > :first-child {
+  padding-top: 3px;
+  color: var(--pp-voice-ink);
+  font-size: 11px;
+}
+.sc-detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  font-size: 12px;
+}
+.sc-detail-links a {
+  color: var(--pp-voice-ink);
+}
+.sc-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  align-self: start;
+  border: 1px solid var(--pp-rule);
+  background: var(--pp-rule);
+}
+.sc-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 14px;
+  background: var(--pp-ground);
+}
+.sc-stat-k {
+  color: var(--pp-voice-ink, var(--pp-muted));
+  font-size: 10.5px;
+  text-transform: uppercase;
+}
+.sc-stat-v {
+  font-family: var(--pp-serif);
+  font-size: 25px;
+  line-height: 1;
+}
+.sc-stat-sub {
+  color: var(--pp-muted);
+  font-size: 12px;
+}
+
+/* ——— how a cycle works ——————————————————————————————————————————————————————————————————— */
+.sc-how {
+  margin-top: 72px;
+  padding-block: 56px;
+  background: var(--pp-ground-2);
+}
+.sc-steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 28px;
+  border-top: 1.5px solid var(--pp-ink);
+}
+.sc-step {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 18px 22px 0 0;
+}
+.sc-step-title {
+  font-size: 18px;
+  font-weight: 500;
+}
+.sc-step-text {
+  color: var(--pp-ink-2);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+.sc-step-example {
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+.sc-conv-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 16px;
+  margin-top: 40px;
+}
+.sc-conv-head > :first-child {
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.sc-conv-head > :last-child {
+  color: var(--pp-muted);
+  font-size: 13px;
+}
+.sc-proposals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 12px;
+}
+.sc-proposal {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  border-top: 4px solid var(--pp-voice);
+  background: var(--pp-ground);
+}
+.sc-proposal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.sc-proposal-name {
+  color: var(--pp-voice-ink);
+  font-weight: 500;
+}
+.sc-proposal-score {
+  font-family: var(--pp-serif);
+  font-size: 25px;
+  line-height: 1;
+}
+.sc-proposal-q {
+  font-family: var(--pp-serif);
+  font-size: 17px;
+  line-height: 1.25;
+  text-wrap: pretty;
+}
+.sc-proposal .sc-small.is-won {
+  color: var(--pp-ink);
+}
+
+/* ——— the three voices ———————————————————————————————————————————————————————————————————— */
+.sc-voices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 24px;
+}
+.sc-voice-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 16px;
+  border-top: 4px solid var(--pp-voice);
+}
+.sc-voice-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.sc-voice-head h3 {
+  font-family: var(--pp-serif);
+  font-weight: 400;
+  font-size: 27px;
+  line-height: 1.15;
+}
+.sc-voice-role {
+  color: var(--pp-ink-2);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.sc-voice-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-block: 1px solid var(--pp-rule);
+}
+.sc-voice-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 0;
+}
+.sc-voice-stats b {
+  font-family: var(--pp-serif);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1;
+}
+.sc-voice-stats span {
+  color: var(--pp-muted);
+  font-size: 11.5px;
+}
+.sc-label {
+  color: var(--pp-muted);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* a bulletin, verbatim: its opening in view, the rest behind a native fold */
+.sc-bulletin {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.sc-bulletin p {
+  color: var(--pp-ink-2);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.sc-bulletin p.is-item {
+  padding-left: 12px;
+  border-left: 1px solid var(--pp-rule);
+}
+.sc-bulletin p.is-heading {
+  color: var(--pp-ink);
+  font-weight: 600;
+}
+.sc-bulletin strong {
+  color: var(--pp-ink);
+  font-weight: 600;
+}
+.sc-bulletin code {
+  font-family: inherit;
+}
+.sc-fold {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+/* open, the fold's handle moves under what it opened: it says "fold" there */
+.sc-fold[open] {
+  flex-direction: column-reverse;
+}
+.sc-fold > summary {
+  align-self: flex-start;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--pp-ink);
+  font-size: 11.5px;
+  list-style: none;
+  cursor: pointer;
+}
+.sc-fold > summary::-webkit-details-marker {
+  display: none;
+}
+.sc-fold > summary .when-open,
+.sc-fold[open] > summary .when-closed {
+  display: none;
+}
+.sc-fold[open] > summary .when-open {
+  display: inline;
+}
+.sc-fold-body {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+/* ——— the programme ——————————————————————————————————————————————————————————————————————— */
+.sc-programme {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  border-top: 1.5px solid var(--pp-ink);
+}
+.sc-programme-row {
+  display: grid;
+  grid-template-columns: 70px 190px minmax(0, 1fr) 260px;
+  gap: 20px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--pp-rule);
+}
+.sc-programme-row.is-selected {
+  background: var(--pp-ground-2);
+}
+.sc-programme-no {
+  font-family: var(--pp-serif);
+  font-size: 25px;
+  line-height: 1;
+}
+.sc-programme-src {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--pp-muted);
+  font-size: 11px;
+}
+.sc-programme-q {
+  font-family: var(--pp-serif);
+  font-size: 18px;
+  line-height: 1.25;
+}
+.sc-programme-q.is-none {
+  color: var(--pp-muted);
+}
+.sc-programme-counts {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  font-size: 11px;
+}
+
+/* ——— the works register —————————————————————————————————————————————————————————————————— */
+.sc-register-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  margin-top: 18px;
+  padding: 14px 0;
+  border-top: 1.5px solid var(--pp-ink);
+  border-bottom: 1px solid var(--pp-rule);
+}
+.sc-register-tools input {
+  width: 220px;
+  padding: 8px 10px;
+  border: 1px solid var(--pp-rule-firm);
+  border-radius: 0;
+  background: var(--pp-ground-lift);
+  color: var(--pp-ink);
+  font: inherit;
+}
+.sc-register-tools .sc-chips {
+  align-items: center;
+}
+.sc-register-tools .sc-chip {
+  padding: 6px 10px;
+}
+.sc-chip--cycle {
+  min-width: 30px;
+  padding-inline: 6px !important;
+}
+.sc-register-sort {
+  margin-left: auto;
+}
+.sc-scroll {
+  /* The containing block of what it scrolls: a visually hidden word inside a row is absolutely
+     positioned, and without this it would be laid out against the page — outside the scroller's
+     clip — and stretch the document to the full height of the unscrolled list. */
+  position: relative;
+  max-height: 560px;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+/* One entry: its row, and under it the notes the record keeps on it. The title is the link and
+   is stretched over the whole row; the notes carry links of their own and stand above it. */
+.sc-register-item {
+  position: relative;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--pp-rule-light);
+}
+.sc-register-item:hover {
+  background: var(--pp-ground-2);
+}
+.sc-register-row {
+  display: grid;
+  grid-template-columns: 110px 120px 70px 170px minmax(0, 1fr) 20px;
+  gap: 16px;
+  align-items: baseline;
+}
+.sc a.sc-register-title:hover {
+  color: var(--pp-ink);
+}
+.sc-register-title::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.sc-register-note {
+  position: relative;
+  z-index: 1;
+  max-width: 80ch;
+  margin-top: 4px;
+  /* under the title's column: the four columns before it and their gaps */
+  padding-left: 534px;
+  color: var(--pp-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.sc-register-note:has(+ .sc-register-note) {
+  margin-bottom: 0;
+}
+.sc-register-verdict {
+  color: var(--pp-ink-2);
+  font-weight: 600;
+}
+.sc-register-audit {
+  margin-top: 10px;
+}
+.sc-register-row > :nth-child(1),
+.sc-register-row > :nth-child(3) {
+  color: var(--pp-muted);
+  font-size: 12px;
+}
+.sc-register-row > :nth-child(2) {
+  color: var(--pp-voice-ink, var(--pp-ink));
+  font-size: 13px;
+}
+.sc-register-row > :nth-child(4) {
+  color: var(--pp-muted);
+  font-size: 11.5px;
+}
+.sc-register-row > :nth-child(5) {
+  font-size: 15px;
+}
+.sc-register-row > :nth-child(6) {
+  color: var(--pp-faint);
+}
+.sc-note-line {
+  margin-top: 14px;
+  color: var(--pp-muted);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.sc-pagefoot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 24px;
+  margin-top: 80px;
+  padding-block: 24px;
+  border-top: 1px solid var(--pp-rule);
+  color: var(--pp-muted);
+  font-size: 11.5px;
+}
+.sc-pagefoot a {
+  color: var(--pp-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ——— a practice's page ——————————————————————————————————————————————————————————————————— */
+.sc-status {
+  border: 1px solid var(--pp-ink);
+}
+.sc-status-head {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--pp-ink);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.sc-status dl {
+  margin: 0;
+}
+.sc-status dl > div {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 12px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--pp-rule);
+}
+.sc-status dl > div:last-child {
+  border-bottom: 0;
+}
+.sc-status dt {
+  color: var(--pp-muted);
+  font-size: 11.5px;
+}
+.sc-status dd {
+  margin: 0;
+}
+.sc-part-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 26px;
+  padding: 4px 0 0 150px;
+  color: var(--pp-muted);
+  font-size: 12.5px;
+}
+.sc-two {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 56px;
+  padding-top: 56px;
+}
+.sc-two--even {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  padding-top: 64px;
+}
+.sc-latest {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sc-still {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--pp-rule);
+  /* the plate a piece without a picture gets: hatched paper, and a line saying so */
+  background: repeating-linear-gradient(135deg, var(--pp-ground-2) 0 8px, var(--pp-rule-light) 8px 16px);
+}
+.sc-still img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+.sc-still-note {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  right: 14px;
+  color: var(--pp-muted);
+  font-size: 11px;
+}
+.sc-latest-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+.sc-latest-title > :first-child {
+  font-family: var(--pp-serif);
+  font-size: 30px;
+  line-height: 1.15;
+}
+.sc-latest-title > :last-child {
+  flex: none;
+  color: var(--pp-voice-ink);
+  font-size: 12px;
+}
+.sc-latest-session {
+  color: var(--pp-ink-2);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.sc-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sc-side-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.sc-side-head a {
+  color: var(--pp-muted);
+  font-size: 11px;
+}
+.sc-list {
+  display: flex;
+  flex-direction: column;
+}
+.sc-list--scroll {
+  position: relative;
+  max-height: 420px;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.sc-handoff {
+  display: grid;
+  grid-template-columns: 70px 90px minmax(0, 1fr) 72px;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--pp-rule-light);
+}
+.sc-handoff > :nth-child(1) {
+  color: var(--pp-muted);
+  font-size: 11.5px;
+}
+.sc-handoff > :nth-child(2) {
+  color: var(--pp-voice-ink);
+  font-size: 12.5px;
+}
+.sc-handoff > :nth-child(3) {
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+.sc-handoff > :nth-child(4) {
+  font-size: 11px;
+  text-align: right;
+}
+/* What became of a handoff is said in the word; the ink only sets the open one apart — in the
+   page's accent, not in the Studio's orange as the handoff has it: a voice's hue is an
+   identity on these pages and must not also mean "open". */
+.sc-status-word[data-status='open'] {
+  color: var(--pp-accent-ink);
+}
+.sc-status-word[data-status='taken'] {
+  color: var(--pp-ink);
+}
+.sc-status-word[data-status='declined'],
+.sc-status-word[data-status='lapsed'] {
+  color: var(--pp-muted);
+}
+.sc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 0;
+}
+.sc-tabs .sc-chip {
+  padding: 6px 10px;
+}
+.sc-tabpanel-title {
+  padding: 14px 0 4px;
+  color: var(--pp-muted);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+/* with the script, the two lists are tabs and their own headings are the buttons */
+.sc-tabbed .sc-tabpanel-title {
+  display: none;
+}
+.sc-journal-row {
+  display: grid;
+  grid-template-columns: 70px 96px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--pp-rule-light);
+}
+.sc-journal-row > :nth-child(1) {
+  color: var(--pp-muted);
+  font-size: 11.5px;
+}
+.sc-journal-row > :nth-child(2) {
+  color: var(--pp-voice-ink);
+  font-size: 11.5px;
+}
+.sc-journal-row > :nth-child(3) {
+  color: var(--pp-ink-2);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+.sc-more {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 12px;
+}
+.sc-shelf-row {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--pp-rule);
+}
+.sc-shelf-label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.sc-shelf-label > :first-child {
+  font-family: var(--pp-serif);
+  font-size: 20px;
+  line-height: 1;
+}
+.sc-shelf-label > :last-child {
+  color: var(--pp-muted);
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+.sc-works {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.sc-work {
+  padding: 7px 11px;
+  border: 1px solid var(--pp-rule);
+  font-size: 13.5px;
+}
+.sc a.sc-work:hover {
+  border-color: var(--pp-voice);
+  color: var(--pp-ink);
+}
+.sc-work.is-presentation {
+  border-color: var(--pp-ink);
+  background: var(--pp-ground-2);
+}
+.sc-work small {
+  color: var(--pp-muted);
+  font-size: 10.5px;
+}
+.sc-rooms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  padding-top: 14px;
+}
+.sc-rooms a {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 300px;
+}
+.sc-rooms a > :first-child {
+  font-family: var(--pp-serif);
+  font-size: 17px;
+}
+.sc-rooms a > :last-child {
+  color: var(--pp-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ——— the Middle —————————————————————————————————————————————————————————————————————————— */
+.sc-kinds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+  margin-top: 6px;
+}
+.sc-kinds > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 200px;
+}
+.sc-kinds dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+.sc-kinds dd {
+  margin: 0;
+  color: var(--pp-muted);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.sc-kinds svg line {
+  stroke: var(--pp-ink);
+}
+.sc-matrix {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 6px;
+  margin: -6px;
+  table-layout: fixed;
+}
+.sc-matrix col:first-child {
+  width: 114px;
+}
+.sc-matrix th {
+  font-weight: 400;
+}
+.sc-matrix thead th {
+  color: var(--pp-voice-ink, var(--pp-muted));
+  font-size: 10.5px;
+  text-align: center;
+}
+.sc-matrix thead th:first-child {
+  text-align: left;
+}
+.sc-matrix tbody th {
+  color: var(--pp-voice-ink);
+  font-weight: 500;
+  text-align: left;
+}
+.sc-matrix td {
+  height: 104px;
+  padding: 10px;
+  border: 1px solid var(--pp-rule-firm);
+  vertical-align: top;
+}
+.sc-matrix td.is-none {
+  border-color: var(--pp-rule-light);
+}
+/* how full a cell is against the fullest, in six steps of the same ink */
+.sc-matrix td[data-tint='1'] { background: color-mix(in srgb, var(--pp-ink) 2%, transparent); }
+.sc-matrix td[data-tint='2'] { background: color-mix(in srgb, var(--pp-ink) 4%, transparent); }
+.sc-matrix td[data-tint='3'] { background: color-mix(in srgb, var(--pp-ink) 6%, transparent); }
+.sc-matrix td[data-tint='4'] { background: color-mix(in srgb, var(--pp-ink) 8%, transparent); }
+.sc-matrix td[data-tint='5'] { background: color-mix(in srgb, var(--pp-ink) 10%, transparent); }
+.sc-matrix td[data-tint='6'] { background: color-mix(in srgb, var(--pp-ink) 12%, transparent); }
+.sc-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 82px;
+}
+.sc-cell-total {
+  font-family: var(--pp-serif);
+  font-size: 27px;
+  line-height: 1;
+}
+.sc-cell-kinds {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--pp-muted);
+  font-size: 10.5px;
+}
+.sc-crossings {
+  margin-top: 14px;
+}
+.sc-bar-built_on {
+  fill: var(--pp-ink);
+}
+.sc-bar-answered {
+  fill: var(--pp-muted);
+}
+.sc-bar-noted {
+  fill: var(--pp-ghost);
+}
+.sc-bar-hit {
+  fill: transparent;
+  cursor: help;
+}
+.sc-bar-hit.is-hot {
+  fill: color-mix(in srgb, var(--pp-ink) 6%, transparent);
+}
+.sc-keyline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  color: var(--pp-muted);
+  font-size: 12.5px;
+}
+.sc-keyline span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sc-keyline i {
+  width: 10px;
+  height: 10px;
+}
+.sc-keyline .k-built_on {
+  background: var(--pp-ink);
+}
+.sc-keyline .k-answered {
+  background: var(--pp-muted);
+}
+.sc-keyline .k-noted {
+  background: var(--pp-ghost);
+}
+.sc-middle-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 56px;
+  padding-top: 64px;
+}
+.sc-log-row {
+  display: grid;
+  grid-template-columns: 64px 190px 80px minmax(0, 1fr);
+  gap: 14px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--pp-rule-light);
+}
+.sc-log-row > :nth-child(1) {
+  color: var(--pp-muted);
+  font-size: 11.5px;
+}
+.sc-log-row > :nth-child(2) {
+  font-size: 12.5px;
+}
+.sc-log-row > :nth-child(3) {
+  font-size: 11px;
+}
+.sc-log-row > :nth-child(3)[data-kind='noted'] {
+  color: var(--pp-muted);
+}
+.sc-log-row > :nth-child(4) {
+  color: var(--pp-ink-2);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+.sc-arrow {
+  color: var(--pp-faint);
+}
+.sc-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+.sc-hobar {
+  display: block;
+  width: 100%;
+  height: 14px;
+  margin-top: 14px;
+}
+.sc-hobar .is-taken {
+  fill: var(--pp-ink);
+}
+.sc-hobar .is-declined {
+  fill: var(--pp-faint);
+}
+.sc-hobar .is-open {
+  fill: var(--pp-accent);
+}
+.sc-hobar .is-lapsed {
+  fill: var(--pp-rule);
+}
+.sc-honums {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 8px;
+}
+.sc-honums > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sc-honums b {
+  font-family: var(--pp-serif);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1;
+}
+.sc-honums span {
+  color: var(--pp-muted);
+  font-size: 12px;
+}
+.sc-open {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--pp-rule-light);
+}
+.sc-open > :first-child {
+  color: var(--pp-muted);
+  font-size: 11px;
+}
+.sc-open > :last-child {
+  font-size: 13px;
+  line-height: 1.45;
+}
+.sc-thread {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px 30px;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--pp-rule-light);
+  font-size: 13.5px;
+}
+.sc-thread svg {
+  display: block;
+  width: 100%;
+  height: 6px;
+}
+.sc-thread rect {
+  fill: var(--pp-ink);
+}
+.sc-thread > :last-child {
+  font-size: 11.5px;
+  text-align: right;
+}
+.sc-end-space {
+  height: 80px;
+}
+
+/* ——— a narrower desk: the paired columns stack ——————————————————————————————————————————— */
+@media (max-width: 1179.98px) {
+  .sc-hero,
+  .sc-hero--practice,
+  .sc-detail,
+  .sc-two,
+  .sc-two--even,
+  .sc-middle-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .sc h1 {
+    font-size: clamp(40px, 6.2vw, 64px);
+  }
+  .sc-hero--top h1 {
+    font-size: clamp(38px, 5.8vw, 60px);
+  }
+  .sc-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 18px;
+  }
+  .sc-proposals,
+  .sc-voices {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sc-programme-row {
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 4px 16px;
+  }
+  .sc-programme-src {
+    grid-column: 2;
+    flex-direction: row;
+    gap: 10px;
+  }
+  .sc-programme-q {
+    grid-column: 2;
+  }
+  .sc-programme-counts {
+    grid-column: 2;
+    justify-content: flex-start;
+  }
+  .sc-programme-no {
+    grid-row: 1 / span 3;
+  }
+  .sc-subnav nav {
+    gap: 18px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sc-subnav-row {
+    gap: 16px;
+  }
+  .sc-legend,
+  .sc-floor,
+  .sc-part-legend {
+    padding-left: 0;
+  }
+}
+
+/* ——— the phone: derived from the entrance's drawing (handoff §3) ———————————————————————— */
+@media (max-width: 759.98px) {
+  /* the strip on two lines: where the reader is (and, on /ecology, the way to pose a
+     question), then the links, which scroll sideways where they do not fit */
+  .sc-subnav-row {
+    flex-wrap: wrap;
+    gap: 2px 16px;
+    padding-block: 8px;
+  }
+  .sc-subnav nav {
+    order: 3;
+    flex: 0 0 100%;
+    min-width: 0;
+    padding-block: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sc-subnav nav a {
+    padding-block: 6px;
+  }
+  .sc-subnav-seed {
+    padding: 8px 12px;
+  }
+  .sc-hero,
+  .sc-hero--top {
+    padding-block: 28px 20px;
+    gap: 22px;
+  }
+  .sc h1,
+  .sc-hero--top h1 {
+    font-size: 40px;
+    line-height: 1.02;
+  }
+  .sc-lede {
+    font-size: 16px;
+  }
+  .sc-now {
+    padding: 16px;
+  }
+  .sc-now-q {
+    font-size: 21px;
+  }
+  .sc-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .sc-head h2 {
+    font-size: 22px;
+  }
+  .sc-head--big h2 {
+    font-size: 26px;
+  }
+  .sc-head-sub {
+    font-size: 12.5px;
+  }
+  .sc-section {
+    padding-top: 44px;
+  }
+  .sc-how {
+    margin-top: 44px;
+    padding-block: 36px;
+  }
+  .sc-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sc-step {
+    padding-right: 0;
+  }
+  .sc-detail-q {
+    font-size: 21px;
+  }
+  .sc-finding {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+  .sc-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .sc-stat {
+    padding: 10px;
+  }
+  .sc-stat-v {
+    font-size: 21px;
+  }
+  .sc-voice-head {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sc-register-tools input {
+    width: 100%;
+  }
+  .sc-register-sort {
+    margin-left: 0;
+  }
+  .sc-chip {
+    min-height: 40px;
+    padding: 0 12px;
+  }
+  .sc-register-item {
+    padding: 10px 0;
+  }
+  .sc-register-note {
+    padding-left: 0;
+  }
+  .sc-register-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 12px;
+  }
+  .sc-register-row > :nth-child(5) {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .sc-register-row > :nth-child(4),
+  .sc-register-row > :nth-child(6) {
+    display: none;
+  }
+  .sc-register-row > :nth-child(1) {
+    grid-column: 2;
+    grid-row: 2;
+    text-align: right;
+  }
+  .sc-register-row > :nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .sc-register-row > :nth-child(3) {
+    display: none;
+  }
+  .sc-status dl > div {
+    grid-template-columns: 120px 1fr;
+    padding: 10px 14px;
+  }
+  .sc-status-head {
+    padding: 10px 14px;
+  }
+  .sc-two,
+  .sc-two--even,
+  .sc-middle-grid {
+    padding-top: 40px;
+  }
+  .sc-latest-title {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sc-latest-title > :first-child {
+    font-size: 26px;
+  }
+  .sc-handoff {
+    grid-template-columns: 60px minmax(0, 1fr) auto;
+    gap: 2px 10px;
+  }
+  .sc-handoff > :nth-child(3) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .sc-journal-row {
+    grid-template-columns: 60px minmax(0, 1fr);
+    gap: 2px 10px;
+  }
+  .sc-journal-row > :nth-child(3) {
+    grid-column: 1 / -1;
+  }
+  .sc-shelf-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  .sc-work {
+    white-space: normal;
+  }
+  .sc-matrix td {
+    height: 92px;
+    padding: 8px;
+  }
+  .sc-matrix col:first-child {
+    width: 74px;
+  }
+  .sc-cell-total {
+    font-size: 22px;
+  }
+  .sc-log-row {
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    gap: 2px 10px;
+  }
+  .sc-log-row > :nth-child(4) {
+    grid-column: 1 / -1;
+  }
+  .sc-pagefoot {
+    margin-top: 48px;
+  }
+  .sc-end-space {
+    height: 40px;
+  }
+}

@@ -1,0 +1,68 @@
+# .github/workflows/practice-watch.yml
+# Every practice that lands reaches this site within minutes, however many sessions it runs in a
+# day (2026-10-07). Why, what it measured and the rules it keeps: the header of
+# scripts/engines/practice-watch.mjs. This file only says when it runs.
+#
+# It copies nothing and commits nothing. It asks each practice's repository for its head once a
+# minute and dispatches that practice's integrate when the head has moved past the one its mirror
+# carries (.github/state/<house>-mirror-head, written by each integrate beside its mirror). It
+# watches until three hours pass with no practice moving; a job that reaches its cap while the
+# house is still active dispatches its successor.
+name: Practice watch
+
+on:
+  # A landing that announces itself starts the watch — the Field's and the Studio's auto-land, the
+  # Middle's relay. The practices' routines run in rounds, so the rest of the round is about to
+  # land, and five of the seven houses never say so themselves.
+  repository_dispatch:
+    types: [field-landed, studio-landed, middle-landed, irrtum-landed, n1-landed]
+  schedule:
+    # The night run, before the nightly sessions wake (Error as Method ~23:20 UTC, n-1 ~01:20, the
+    # Field ~03:40, the Atelier ~04:10); it watches five hours at the least. n-1's own window
+    # watcher started at this minute until this watch took its place.
+    - cron: '50 22 * * *'
+    # Restarts in case a chain broke. GitHub grants few scheduled runs on this repository — the
+    # reason the watch carries itself — so these are a net, not the mechanism.
+    - cron: '7 */2 * * *'
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: 'Watch at least this many minutes'
+        default: '120'
+      last_movement:
+        description: 'Epoch seconds of the last movement a predecessor saw (set by the watch itself)'
+        default: ''
+
+permissions:
+  contents: read
+  # to dispatch the integrates, and its own successor
+  actions: write
+
+concurrency:
+  group: practice-watch
+  # A running watch is never cancelled; a newer start waits behind it (GitHub keeps one pending).
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    # The script stops itself at 340 minutes and hands over; this is the backstop above it.
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            .github/state
+            scripts/engines
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Watch the practices
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          INPUT_MINUTES: ${{ inputs.minutes }}
+          INPUT_LAST_MOVEMENT: ${{ inputs.last_movement }}
+        run: node scripts/engines/practice-watch.mjs

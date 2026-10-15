@@ -1,0 +1,98 @@
+[
+  {
+    "publisher": "Springer",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "ethics.reporting@springernature.com",
+    "evidence_url": "https://www.springernature.com/gp/editors/research-integrity",
+    "quote": "please share your concerns with our team below by sending an email to ethics.reporting@springernature.com",
+    "http_status": "200",
+    "fetch_note": "curl -L returned 200; fetch tool also succeeded. Raw HTML was pulled and grepped locally to confirm the sentence verbatim.",
+    "evidence_note": "",
+    "second_page_url": ""
+  },
+  {
+    "publisher": "Portland Press",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "editorial@portlandpress.com",
+    "evidence_url": "https://portlandpress.com/pages/editorial_policy",
+    "quote": "Concerns from readers regarding any of our articles can be sent to our Research Integrity and Publishing Policy Manager.",
+    "http_status": "403",
+    "fetch_note": "curl (plain and with browser User-Agent/Referer headers) and a fetch tool both returned 403 on every attempt; response headers show cf-mitigated: challenge (Cloudflare bot challenge) across the whole portlandpress.com domain, including the homepage.",
+    "evidence_note": "Page could not be rendered directly by either method, so the quote is taken from web-search snippets of this page's own text rather than a raw fetch. The editorial-office address editorial@portlandpress.com was likewise found only via search (of the site's separate contact page), not confirmed verbatim on the editorial_policy page itself.",
+    "second_page_url": "https://portlandpress.com/contact-us"
+  },
+  {
+    "publisher": "Spandidos Publications",
+    "class": "B",
+    "route_kind": "generic_email",
+    "route_value": "support@spandidos-publications.com",
+    "evidence_url": "https://www.spandidos-publications.com/pages/or/editorialPol",
+    "quote": "How can we help? Help Live Chat Contact Email to our Support Team",
+    "http_status": "200",
+    "fetch_note": "curl -L returned 200; fetch tool also succeeded. Raw HTML was downloaded and parsed locally.",
+    "evidence_note": "The page's own Misconduct and Corrections-and-retractions sections instruct only authors to notify the Editor-in-Chief (no address given, mailto: not present); the only address findable anywhere on the page/site is the generic support widget (mailto:support@spandidos-publications.com), which is a general help-desk contact, not one dedicated to research-integrity or ethics concerns.",
+    "second_page_url": "https://www.spandidos-publications.com/pages/contact"
+  },
+  {
+    "publisher": "American Association for the Advancement of Science (AAAS)",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "science_data@aaas.org",
+    "evidence_url": "https://www.science.org/content/page/science-journals-editorial-policies",
+    "quote": "Readers with concerns regarding the integrity of a paper published in a Science journal should contact science_data@aaas.org.",
+    "http_status": "403",
+    "fetch_note": "curl -L (plain and with browser headers) and a fetch tool both returned 403 on every attempt against science.org and sciencemag.org; response headers show cf-mitigated: challenge (Cloudflare bot challenge) across the entire domain, including the homepage and /content/page/contact-us.",
+    "evidence_note": "Page could not be rendered directly by either method; the quote is taken from web-search snippets of this page's own text, corroborated by a second independent search returning the same sentence and email address.",
+    "second_page_url": ""
+  },
+  {
+    "publisher": "American Society for Microbiology",
+    "class": "A",
+    "route_kind": "dedicated_form",
+    "route_value": "https://www.ethcomp.com/asm",
+    "evidence_url": "https://asm.org/asm-ethics",
+    "quote": "Report an ethical concern.",
+    "http_status": "200",
+    "fetch_note": "curl -L on https://asm.org/asm-ethics returned 200 and raw HTML was downloaded and parsed locally, confirming the link. journals.asm.org (the journals subdomain itself) returned 403 to both curl and a fetch tool on every path tried (contact-us, faq, publishing-ethics-procedures) with Cloudflare cf-mitigated: challenge.",
+    "evidence_note": "The load-bearing route was confirmed by direct fetch of asm.org (the parent society's own domain, which hosts ASM's org-wide Ethics Program page explicitly covering 'publishing ethics, scientific integrity and professional conduct'); its 'Report an ethical concern' link leads to a dedicated intake form on a third-party compliance platform (ethcomp.com/asm), reached directly from the publisher's page and confirmed live (curl 200). A separately reported address, journalsethics@asm.org, appears in search results tied to journals.asm.org but could not be verified against directly-fetched page text because that subdomain blocked every fetch attempt.",
+    "second_page_url": "https://www.ethcomp.com/asm"
+  },
+  {
+    "publisher": "American Diabetes Association",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "esp@diabetes.org",
+    "evidence_url": "https://diabetesjournals.org/journals/pages/ada-journal-policies",
+    "quote": "Any individual may report concerns related to possible misconduct involving ADA scientific programs or publications by email to esp@diabetes.org.",
+    "http_status": "403",
+    "fetch_note": "curl -L returned 403 on repeated attempts (diabetesjournals.org bot-blocked). The fetch tool succeeded once on this exact URL and returned genuine ADA policy content describing the Panel on Ethical Scientific Programs and listing TCooper@diabetes.org / ADA_Pubs@diabetes.org, but returned 403 on later repeat calls to the same URL.",
+    "evidence_note": "The specific esp@diabetes.org sentence was confirmed via a web-search snippet of this same page rather than in the one successful a fetch tool render (which surfaced adjacent editorial/production contacts instead); the page's Panel on Ethical Scientific Programs is nonetheless independently corroborated as the ADA's misconduct-reporting body across both the a fetch tool render and the search results.",
+    "second_page_url": ""
+  },
+  {
+    "publisher": "European Centre for Disease Prevention and Control (ECDC)",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "eurosurveillance@ecdc.europa.eu",
+    "evidence_url": "https://www.eurosurveillance.org/editorial-policy",
+    "quote": "All appeals and complaints should be sent the editorial office (eurosurveillance@ecdc.europa.eu).",
+    "http_status": "200",
+    "fetch_note": "curl -L returned 200; fetch tool also succeeded. The address is Cloudflare-obfuscated in the raw HTML (cdn-cgi/l/email-protection); it was decoded locally (XOR cipher, first byte is the key) from the downloaded HTML, confirming eurosurveillance@ecdc.europa.eu appears 4 times on the page, directly beside 'All appeals and complaints should be sent the editorial office'.",
+    "evidence_note": "",
+    "second_page_url": ""
+  },
+  {
+    "publisher": "Association for Computing Machinery (ACM)",
+    "class": "A",
+    "route_kind": "dedicated_form",
+    "route_value": "https://www.acm.org/publications/policies/publications-violation",
+    "evidence_url": "https://www.acm.org/publications/policies/publications-violation",
+    "quote": "If you believe one or more of ACM's Publications Policies have been violated and you have credible evidence of such violation(s)",
+    "http_status": "403",
+    "fetch_note": "curl -L and a fetch tool both returned 403 on every acm.org path tried (homepage, /publications, /publications/policies, /publications/policies/publications-violation, /publications/policies/plagiarism-overview); services.acm.org (the confidential submission backend) also returned 403 to both methods.",
+    "evidence_note": "Page could not be rendered directly by either method; quote is taken from web-search snippets of this page's own text. The page's own title, 'Report a Potential Publications Violation', and search-confirmed link to a confidential submission form at services.acm.org/policy_violations/policy.cfm corroborate a dedicated, non-generic reporting route distinct from ACM's general contact channels.",
+    "second_page_url": "https://services.acm.org/policy_violations/policy.cfm"
+  }
+]

@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Balance</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #070b12; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; font-family: Georgia, "Times New Roman", serif; }
+  canvas { display: block; cursor: pointer; touch-action: none; }
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="A dial on which each year of Northern Hemisphere sea-ice extent, 1978 to 2026, is swept out like a clock hand; angle is the day of the year, the rim is the same day in 1979 to 1988, area is the share of that ice still there, and each year leaves a ring of the same area"></canvas>
+<script src="../../../data/extent.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = Math.max(1, window.devicePixelRatio || 1);
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var DAY = 86400000, TAU = Math.PI * 2;
+  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var raw = (window.EXTENT || []).slice().sort(function (a, b) {
+    return Date.UTC(a[0], a[1] - 1, a[2]) - Date.UTC(b[0], b[1] - 1, b[2]);
+  });
+  if (!raw.length) { g.fillStyle = '#ccc'; g.fillText('no data', 20, 20); return; }
+
+  // --- daily series, linearly bridged; days far from any observation are marked ---
+  var t0 = Date.UTC(raw[0][0], raw[0][1] - 1, raw[0][2]) / DAY;
+  var tN = Date.UTC(raw[raw.length - 1][0], raw[raw.length - 1][1] - 1, raw[raw.length - 1][2]) / DAY;
+  var N = tN - t0 + 1;
+  var val = new Float32Array(N), missing = new Uint8Array(N);
+  var Y = new Int16Array(N), M = new Int8Array(N), D = new Int8Array(N), ang = new Float32Array(N);
+  var prevI = -1, prevV = 0;
+  for (var k = 0; k < raw.length; k++) {
+    var r = raw[k];
+    var i = Date.UTC(r[0], r[1] - 1, r[2]) / DAY - t0;
+    if (prevI >= 0 && i - prevI > 1) {
+      var span = i - prevI;
+      for (var j = prevI + 1; j < i; j++) {
+        val[j] = prevV + (r[3] - prevV) * (j - prevI) / span;
+        missing[j] = span > 3 ? 1 : 0;
+      }
+    }
+    val[i] = r[3]; prevI = i; prevV = r[3];
+  }
+  var yStart = {}, yEnd = {};
+  for (var n = 0; n < N; n++) {
+    var dt = new Date((t0 + n) * DAY);
+    var y = dt.getUTCFullYear();
+    Y[n] = y; M[n] = dt.getUTCMonth(); D[n] = dt.getUTCDate();
+    var jan1 = Date.UTC(y, 0, 1) / DAY, len = Date.UTC(y + 1, 0, 1) / DAY - jan1;
+    ang[n] = -Math.PI / 2 + TAU * ((t0 + n) - jan1) / len;   // the day of the year, January at the top
+    if (yStart[y] == null) yStart[y] = n;
+    yEnd[y] = n;
+  }
+  var firstYear = Y[0], lastYear = Y[N - 1];
+
+  // --- the reference: mean of the same calendar day, 1979-1988 ---
+  var refSum = {}, refCnt = {};
+  for (n = 0; n < N; n++) {
+    if (Y[n] >= 1979 && Y[n] <= 1988 && !missing[n]) {
+      var key = M[n] * 32 + D[n];
+      refSum[key] = (refSum[key] || 0) + val[n];
+      refCnt[key] = (refCnt[key] || 0) + 1;
+    }
+  }
+  function refMD(m, d) {
+    var key = m * 32 + d;
+    if (!refCnt[key]) key = m * 32 + Math.min(d, 28);
+    return refCnt[key] ? refSum[key] / refCnt[key] : null;
+  }
+  function ref(n) { return refMD(M[n], D[n]); }
+
+  // --- geometry: distance from the centre is sqrt(extent / the same day in 1979-1988),
+  //     so the old outline is the circle R and a wedge's area is the share of that day's old ice ---
+  var CX = 550, CY = 404, RMAX = 288;
+  var ratio = new Float32Array(N), rmax = 1;
+  for (n = 0; n < N; n++) {
+    var rf0 = ref(n);
+    ratio[n] = rf0 ? val[n] / rf0 : 1;
+    if (!missing[n] && ratio[n] > rmax) rmax = ratio[n];
+  }
+  var R = RMAX / Math.sqrt(rmax);
+  function rad(x) { return R * Math.sqrt(Math.max(0, x)); }
+  function px(a, rr) { return CX + Math.cos(a) * rr; }
+  function py(a, rr) { return CY + Math.sin(a) * rr; }
+
+  // the old outline is the dial's own circle
+  var refLoop = new Path2D(); refLoop.arc(CX, CY, R, 0, TAU);
+
+  // each calendar year, spread evenly round the dial: the circle of the same area,
+  // radius sqrt(the year's mean share); rings cannot cross, so they fall in order
+  var rings = [];
+  for (y = firstYear; y <= lastYear; y++) {
+    if (M[yStart[y]] !== 0 || D[yStart[y]] !== 1 || M[yEnd[y]] !== 11 || D[yEnd[y]] !== 31) continue;
+    var sm = 0, ct = 0;
+    for (n = yStart[y]; n <= yEnd[y]; n++) if (!missing[n] && ref(n) != null) { sm += ratio[n]; ct++; }
+    if (ct > 300) rings.push({ year: y, end: yEnd[y], share: sm / ct });
+  }
+
+  // --- time ---
+  var DAYS_PER_SEC = 92;
+  var pos = 0, playing = true, last = null;
+
+  function fmt(v) { return v.toFixed(2); }
+
+  function sector(from, to, f) {
+    g.beginPath(); g.moveTo(CX, CY);
+    for (var q = from; q <= to; q++) { var rr = rad(f(q)); g.lineTo(px(ang[q], rr), py(ang[q], rr)); }
+    g.closePath();
+  }
+
+  function draw() {
+    var n = Math.min(N - 1, Math.floor(pos));
+    var v = val[n], rf = ref(n), miss = missing[n], yr = Y[n];
+    var s = Math.max(0, n - 364);          // the white is always the last twelve months
+    var ago = n - 365 >= 0 ? n - 365 : -1; // the same day a year ago, just ahead of the hand
+    g.clearRect(0, 0, W, H);
+    g.fillStyle = '#070b12'; g.fillRect(0, 0, W, H);
+
+    // the dial: months on the rim
+    g.font = '11px Georgia, serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    for (var mo = 0; mo < 12; mo++) {
+      var a0 = -Math.PI / 2 + TAU * mo / 12, am = a0 + TAU / 24;
+      g.strokeStyle = 'rgba(230,237,242,0.18)'; g.lineWidth = 1;
+      g.beginPath(); g.moveTo(px(a0, RMAX + 6), py(a0, RMAX + 6)); g.lineTo(px(a0, RMAX + 14), py(a0, RMAX + 14)); g.stroke();
+      g.fillStyle = mo === M[n] ? 'rgba(230,237,242,0.8)' : 'rgba(230,237,242,0.32)';
+      g.fillText(MONTHS[mo].slice(0, 3), px(am, RMAX + 20), py(am, RMAX + 20));
+    }
+    g.textBaseline = 'alphabetic';
+
+    // what these days held, 1979-1988: the circle itself, tinted where this year falls short
+    sector(s, n, function () { return 1; });
+    g.fillStyle = 'rgba(196, 92, 62, 0.30)'; g.fill();
+
+    // the rings left behind: every calendar year already closed, spread evenly
+    var done = [];
+    for (var ri = 0; ri < rings.length; ri++) if (rings[ri].end < n) done.push(rings[ri]);
+    for (ri = 0; ri < done.length; ri++) {
+      var age = done.length > 1 ? ri / (done.length - 1) : 1;
+      g.strokeStyle = 'rgba(120, 165, 205, ' + (0.16 + 0.42 * age) + ')';
+      g.lineWidth = ri === done.length - 1 ? 1.2 : 0.7;
+      g.beginPath(); g.arc(CX, CY, rad(done[ri].share), 0, TAU); g.stroke();
+    }
+
+    // the last twelve months, written at the hand and erased a year behind it
+    sector(s, n, function (q) { return ratio[q]; });
+    var grd = g.createRadialGradient(CX - 60, CY - 70, 20, CX, CY, RMAX);
+    grd.addColorStop(0, 'rgba(244,248,251,0.92)'); grd.addColorStop(1, 'rgba(207,219,228,0.78)');
+    g.fillStyle = grd; g.fill();
+
+    // days the satellite missed: hollowed out, edge dashed
+    for (var q = s; q <= n; q++) {
+      if (!missing[q]) continue;
+      var e = q; while (e + 1 <= n && missing[e + 1]) e++;
+      var a1 = Math.max(s, q - 1);
+      sector(a1, Math.min(n, e + 1), function (z) { return ratio[z]; });
+      g.fillStyle = 'rgba(7,11,18,0.72)'; g.fill();
+      g.beginPath();
+      for (var z = a1; z <= Math.min(n, e + 1); z++) {
+        var rz = rad(ratio[z]);
+        if (z === a1) g.moveTo(px(ang[z], rz), py(ang[z], rz)); else g.lineTo(px(ang[z], rz), py(ang[z], rz));
+      }
+      g.setLineDash([3, 4]); g.strokeStyle = 'rgba(226,234,240,0.75)'; g.lineWidth = 1; g.stroke(); g.setLineDash([]);
+      q = e;
+    }
+
+    // the ring: the white spread evenly; its bulges outside balance its dent inside
+    var sv = 0, sr = 0;
+    for (q = s; q <= n; q++) { if (ref(q) != null && !missing[q]) { sv += ratio[q]; sr += 1; } }
+    var share = sr > 0 ? sv / sr : null;
+    if (share != null) {
+      var rb = rad(share);
+      g.save();
+      sector(s, n, function (z) { return ratio[z]; }); g.clip();
+      g.strokeStyle = 'rgba(16, 28, 44, 0.85)'; g.lineWidth = 1.6;
+      g.beginPath(); g.arc(CX, CY, rb, 0, TAU); g.stroke();
+      g.restore();
+      g.save();
+      g.beginPath(); g.rect(0, 0, W, H); sector(s, n, function (z) { return ratio[z]; }); g.clip('evenodd');
+      g.strokeStyle = 'rgba(244, 248, 251, 0.85)'; g.lineWidth = 1.6;
+      g.beginPath(); g.arc(CX, CY, rb, 0, TAU); g.stroke();
+      g.restore();
+    }
+
+    // the old outline, the whole turn: the rim
+    g.strokeStyle = 'rgba(232, 150, 120, 0.7)'; g.lineWidth = 1;
+    g.stroke(refLoop);
+
+    // the hand
+    var rv = rad(ratio[n]);
+    g.strokeStyle = 'rgba(244,248,251,0.9)'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(CX, CY); g.lineTo(px(ang[n], RMAX + 4), py(ang[n], RMAX + 4)); g.stroke();
+    g.fillStyle = '#ffffff';
+    g.beginPath(); g.arc(px(ang[n], rv), py(ang[n], rv), 3.5, 0, TAU); g.fill();
+    if (rf != null) {
+      var rr = R;
+      g.strokeStyle = 'rgba(232,150,120,0.95)'; g.lineWidth = 1.2;
+      g.beginPath(); g.arc(px(ang[n], rr), py(ang[n], rr), 3.5, 0, TAU); g.stroke();
+    }
+    // the seam: where today's edge meets the edge of a year ago, the step is the year's imbalance
+    if (ago >= 0) {
+      var ra = rad(ratio[ago]);
+      g.strokeStyle = ratio[n] < ratio[ago] ? 'rgba(236,120,86,1)' : 'rgba(130,190,236,1)';
+      g.lineWidth = 4; g.lineCap = 'round';
+      g.beginPath(); g.moveTo(px(ang[n], ra), py(ang[n], ra)); g.lineTo(px(ang[n], rv), py(ang[n], rv)); g.stroke();
+      g.lineCap = 'butt';
+      g.fillStyle = 'rgba(236,240,244,0.55)';
+      g.beginPath(); g.arc(px(ang[n], ra), py(ang[n], ra), 2.2, 0, TAU); g.fill();
+      g.fillStyle = '#ffffff';
+      g.beginPath(); g.arc(px(ang[n], rv), py(ang[n], rv), 3.5, 0, TAU); g.fill();
+    }
+
+    // text: date and quantity
+    g.textAlign = 'left';
+    g.fillStyle = '#e6edf2';
+    g.font = '40px Georgia, serif';
+    g.fillText(String(yr), 56, 86);
+    g.font = 'italic 17px Georgia, serif';
+    g.fillStyle = 'rgba(230,237,242,0.7)';
+    g.fillText(D[n] + ' ' + MONTHS[M[n]], 58, 114);
+
+    g.textAlign = 'right';
+    g.font = '40px Georgia, serif';
+    g.fillStyle = miss ? 'rgba(230,237,242,0.45)' : '#e6edf2';
+    g.fillText(fmt(v), W - 56, 86);
+    g.font = 'italic 15px Georgia, serif';
+    g.fillStyle = 'rgba(230,237,242,0.7)';
+    g.fillText(miss ? 'no observation: bridged' : 'million km² of sea ice', W - 58, 114);
+    if (rf != null) {
+      var d = v - rf;
+      g.fillStyle = d < 0 ? 'rgba(232,150,120,0.95)' : 'rgba(170,200,225,0.9)';
+      g.fillText(Math.round(100 * v / rf) + '% of this day, 1979–1988 (' + (d < 0 ? '−' : '+') + fmt(Math.abs(d)) + ')', W - 58, 138);
+    }
+    // the ring, in numbers
+    if (share != null) {
+      g.fillStyle = 'rgba(244,248,251,0.85)';
+      g.fillText('the ring: ' + Math.round(100 * share) + '% of the circle', W - 58, 162);
+      if (done.length) {
+        var lr = done[done.length - 1];
+        g.fillStyle = 'rgba(120,165,205,0.9)';
+        g.fillText('ring left by ' + lr.year + ': ' + Math.round(100 * lr.share) + '%', W - 58, 186);
+      }
+    }
+
+    // legend, bottom left, quiet
+    g.textAlign = 'left'; g.font = '12px Georgia, serif';
+    g.fillStyle = 'rgba(230,237,242,0.5)';
+    g.fillText('around the dial: the days of the year, January at the top', 56, 676);
+    g.fillStyle = 'rgba(232,150,120,0.75)';
+    g.fillText('the circle: the ice of the same day, averaged over 1979–1988', 56, 694);
+    g.fillStyle = 'rgba(230,237,242,0.6)';
+    g.fillText('white: the last twelve months · the ring: the same area, spread evenly', 56, 712);
+    g.fillStyle = 'rgba(236,140,110,0.85)';
+    g.fillText('bar on the hand: what moves the ring (red: less than a year ago)', 56, 730);
+    g.fillStyle = 'rgba(120,175,215,0.8)';
+    g.fillText('blue rings: each calendar year, left behind at 1 January', 56, 748);
+    g.textAlign = 'right'; g.fillStyle = 'rgba(230,237,242,0.35)';
+    g.fillText('NSIDC Sea Ice Index v4 · click to pause', W - 56, 730);
+    g.fillText('turn the dial to move in time · ← → a year', W - 56, 748);
+    if (!playing) {
+      g.fillStyle = 'rgba(230,237,242,0.55)';
+      g.fillText(pos >= N - 1 ? 'the record ends here · click to begin again' : 'paused', W - 56, 712);
+    }
+  }
+
+  function frame(ts) {
+    if (last == null) last = ts;
+    var dts = Math.min(0.1, (ts - last) / 1000); last = ts;
+    if (playing) {
+      pos += dts * DAYS_PER_SEC;
+      if (pos >= N - 1) { pos = N - 1; playing = false; }
+    }
+    draw();
+    requestAnimationFrame(frame);
+  }
+
+  // interaction: click toggles; dragging round the centre turns time
+  var down = null, turning = false, lastA = 0;
+  function local(e) { var b = cv.getBoundingClientRect(); return { x: (e.clientX - b.left) * W / b.width, y: (e.clientY - b.top) * H / b.height }; }
+  function angleAt(p) { return Math.atan2(p.y - CY, p.x - CX); }
+  function toggle() { if (pos >= N - 1) { pos = 0; playing = true; } else playing = !playing; }
+  cv.addEventListener('pointerdown', function (e) {
+    var p = local(e); down = p; turning = false; lastA = angleAt(p);
+    cv.setPointerCapture(e.pointerId);
+  });
+  cv.addEventListener('pointermove', function (e) {
+    var p = local(e);
+    if (!down) return;
+    if (!turning && Math.hypot(p.x - down.x, p.y - down.y) > 5) { turning = true; playing = false; cv.style.cursor = 'grabbing'; }
+    if (turning) {
+      var a = angleAt(p), da = a - lastA;
+      if (da > Math.PI) da -= TAU; if (da < -Math.PI) da += TAU;
+      lastA = a;
+      pos = Math.max(0, Math.min(N - 1, pos + da / TAU * 365.25));
+    }
+  });
+  cv.addEventListener('pointerup', function () {
+    if (down && !turning) toggle();
+    down = null; turning = false; cv.style.cursor = 'pointer';
+  });
+  window.addEventListener('keydown', function (e) {
+    if (e.key === ' ') { e.preventDefault(); toggle(); }
+    if (e.key === 'ArrowRight') pos = Math.min(N - 1, pos + 365);
+    if (e.key === 'ArrowLeft') pos = Math.max(0, pos - 365);
+  });
+
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

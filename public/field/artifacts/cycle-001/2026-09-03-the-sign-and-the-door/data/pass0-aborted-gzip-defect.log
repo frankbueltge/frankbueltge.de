@@ -1,0 +1,52 @@
+R  aacrjournals.org                       200 readable=True
+R  academic.oup.com                       200 readable=True
+R  academy.pubs.asha.org                  200 readable=True
+R  asm.org                                200 readable=True
+R  authors.wiley.com                      200 readable=True
+R  authorservices.taylorandfrancis.com    200 readable=True
+R  bmjgroup.com                           200 readable=True
+R  cellphysiolbiochem.com                 200 readable=True
+R  cureus.com                             301 readable=False
+R  diabetesjournals.org                   200 readable=True
+R  jamanetwork.com                        200 readable=True
+R  medscimonit.com                        200 readable=True
+R  plos.org                               200 readable=True
+R  portlandpress.com                      200 readable=True
+R  pubs.rsna.org                          200 readable=True
+R  researcher-resources.acs.org           302 readable=False
+R  royalsociety.org                       200 readable=True
+R  www.acm.org                            200 readable=True
+R  www.ahajournals.org                    200 readable=True
+R  www.asbmb.org                          200 readable=True
+R  www.biologists.com                     200 readable=True
+R  www.biomedcentral.com                  404 readable=False
+R  www.cambridge.org                      200 readable=True
+R  www.cell.com                           200 readable=True
+R  www.dovepress.com                      200 readable=True
+R  www.elsevier.com                       200 readable=True
+R  www.eurosurveillance.org               200 readable=True
+R  www.faseb.org                          200 readable=True
+R  www.frontiersin.org                    200 readable=True
+R  www.ieee.org                           202 readable=True
+Traceback (most recent call last):
+  File "/home/user/field-research/tools/door-recheck/probe.py", line 421, in <module>
+    run()
+  File "/home/user/field-research/tools/door-recheck/probe.py", line 209, in run
+    body = fetch_body(robots_url, BROWSER_UA, True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/field-research/tools/door-recheck/probe.py", line 99, in fetch_body
+    proc = subprocess.run(cmd, capture_output=True, text=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 2153, in _communicate
+    stdout = self._translate_newlines(stdout,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/subprocess.py", line 1086, in _translate_newlines
+    data = data.decode(encoding, errors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte

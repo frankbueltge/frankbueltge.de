@@ -1,0 +1,271 @@
+# ISO 3166-1 alpha-2 / alpha-3 / numeric, FIPS 10-4 and the ccTLD, one row per country.
+#
+# Source: Wikidata (CC0), queried once on 2026-09-03 through the public SPARQL endpoint:
+#   SELECT ?item ?itemLabel ?a2 ?a3 ?num ?fips ?tld WHERE {
+#     ?item wdt:P297 ?a2 .
+#     OPTIONAL { ?item wdt:P298 ?a3 } OPTIONAL { ?item wdt:P299 ?num }
+#     OPTIONAL { ?item wdt:P901 ?fips }
+#     OPTIONAL { ?item wdt:P78 ?tldItem . ?tldItem rdfs:label ?tld FILTER(lang(?tld)='en') }
+#     SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } }
+#   (P297 alpha-2 · P298 alpha-3 · P299 numeric · P901 FIPS 10-4 · P78 top-level domain)
+#
+# Kept: rows that carry both an alpha-3 and a numeric code. An internationalised ccTLD is
+# dropped in favour of the ASCII one (a country may hold several); an empty FIPS cell means
+# Wikidata holds no FIPS 10-4 code for that country, which is a fact about the source and not
+# a gap to be filled by hand.
+#
+# This file is the crosswalk's base table and the only place a code may be corrected by hand.
+# Regenerate the crosswalk from it with: npx tsx scripts/build-globe-crosswalk.ts
+alpha2,alpha3,numeric,fips,cctld,wikidata_label
+AD,AND,020,AN,.ad,Andorra
+AE,ARE,784,AE,.ae,United Arab Emirates
+AF,AFG,004,AF,.af,Afghanistan
+AG,ATG,028,AC,.ag,Antigua and Barbuda
+AI,AIA,660,AV,.ai,Anguilla
+AL,ALB,008,AL,.al,Albania
+AM,ARM,051,AM,.am,Armenia
+AN,ANT,530,NT,.an,Netherlands Antilles
+AO,AGO,024,AO,.ao,Angola
+AQ,ATA,010,AY,.aq,Antarctica
+AR,ARG,032,AR,.ar,Argentina
+AS,ASM,016,AQ,.as,American Samoa
+AT,AUT,040,AU,.at,Austria
+AU,AUS,036,AS,.au,Australia
+AW,ABW,533,AA,.aw,Aruba
+AX,ALA,248,FI01,.ax,Åland
+AZ,AZE,031,AJ,.az,Azerbaijan
+BA,BIH,070,BK,.ba,Bosnia and Herzegovina
+BB,BRB,052,BB,.bb,Barbados
+BD,BGD,050,BG,.bd,Bangladesh
+BE,BEL,056,BE,.be,Belgium
+BF,BFA,854,UV,.bf,Burkina Faso
+BG,BGR,100,BU,.bg,Bulgaria
+BH,BHR,048,BA,.bh,Bahrain
+BI,BDI,108,BY,.bi,Burundi
+BJ,BEN,204,BN,.bj,Benin
+BL,BLM,652,TB,.bl,Saint Barthélemy
+BM,BMU,060,BD,.bm,Bermuda
+BN,BRN,096,BX,.bn,Brunei
+BO,BOL,068,BL,.bo,Bolivia
+BQ,BES,535,,.bq,Caribbean Netherlands
+BR,BRA,076,BR,.br,Brazil
+BS,BHS,044,BF,.bs,The Bahamas
+BT,BTN,064,BT,.bt,Bhutan
+BV,BVT,074,BV,.bv,Bouvet Island
+BW,BWA,072,BC,.bw,Botswana
+BY,BLR,112,BO,.by,Belarus
+BZ,BLZ,084,BH,.bz,Belize
+CA,CAN,124,CA,.ca,Canada
+CC,CCK,166,CK,.cc,Cocos (Keeling) Islands
+CD,COD,180,CG,.cd,Democratic Republic of the Congo
+CF,CAF,140,CT,.cf,Central African Republic
+CG,COG,178,CF,.cg,Republic of the Congo
+CH,CHE,756,SZ,.ch,Switzerland
+CI,CIV,384,IV,.ci,Ivory Coast
+CK,COK,184,CW,.ck,Cook Islands
+CL,CHL,152,CI,.cl,Chile
+CM,CMR,120,CM,.cm,Cameroon
+CN,CHN,156,CH,.cn,People's Republic of China
+CO,COL,170,CO,.co,Colombia
+CR,CRI,188,CS,.cr,Costa Rica
+CU,CUB,192,CU,.cu,Cuba
+CV,CPV,132,CV,.cv,Cape Verde
+CW,CUW,531,UC,.cw,Curaçao
+CX,CXR,162,KT,.cx,Christmas Island
+CY,CYP,196,CY,.cy,Cyprus
+CZ,CZE,203,EZ,.cz,Czech Republic
+DD,DDR,278,,.dd,East Germany
+DE,DEU,276,GM,.de,Germany
+DJ,DJI,262,DJ,.dj,Djibouti
+DK,DNK,208,DA,.dk,Denmark
+DM,DMA,212,DO,.dm,Dominica
+DO,DOM,214,DR,.do,Dominican Republic
+DZ,DZA,012,AG,.dz,Algeria
+EC,ECU,218,EC,.ec,Ecuador
+EE,EST,233,EN,.ee,Estonia
+EG,EGY,818,EG,.eg,Egypt
+EH,ESH,732,WI,,Western Sahara
+ER,ERI,232,ER,.er,Eritrea
+ES,ESP,724,SP,.es,Spain
+ET,ETH,231,ET,.et,Ethiopia
+FI,FIN,246,FI,.fi,Finland
+FJ,FJI,242,FJ,.fj,Fiji
+FK,FLK,238,FK,.fk,Falkland Islands
+FM,FSM,583,FM,.fm,Federated States of Micronesia
+FO,FRO,234,FO,.fo,Faroe Islands
+FR,FRA,250,FR,.fr,France
+GA,GAB,266,GB,.ga,Gabon
+GB,GBR,826,UK,.uk,United Kingdom
+GD,GRD,308,GJ,.gd,Grenada
+GE,GEO,268,GG,.ge,Georgia
+GF,GUF,254,FG,.gf,French Guiana
+GG,GGY,831,GK,.gg,Guernsey
+GH,GHA,288,GH,.gh,Ghana
+GI,GIB,292,GI,.gi,Gibraltar
+GL,GRL,304,GL,.gl,Greenland
+GM,GMB,270,GA,.gm,The Gambia
+GN,GIN,324,GV,.gn,Guinea
+GP,GLP,312,GP,.gp,Guadeloupe
+GQ,GNQ,226,EK,.gq,Equatorial Guinea
+GR,GRC,300,GR,.gr,Greece
+GS,SGS,239,SX,.gs,South Georgia and the South Sandwich Islands
+GT,GTM,320,GT,.gt,Guatemala
+GU,GUM,316,GQ,.gu,Guam
+GW,GNB,624,PU,.gw,Guinea-Bissau
+GY,GUY,328,GY,.gy,Guyana
+HK,HKG,344,HK,.hk,Hong Kong
+HM,HMD,334,HM,.hm,Heard Island and McDonald Islands
+HN,HND,340,HO,.hn,Honduras
+HR,HRV,191,HR,.hr,Croatia
+HT,HTI,332,HA,.ht,Haiti
+HU,HUN,348,HU,.hu,Hungary
+ID,IDN,360,ID,.id,Indonesia
+IE,IRL,372,EI,.ie,Ireland
+IL,ISR,376,IS,.il,Israel
+IM,IMN,833,IM,.im,Isle of Man
+IN,IND,356,IN,.in,India
+IO,IOT,086,IO,.io,British Indian Ocean Territory
+IQ,IRQ,368,IZ,.iq,Iraq
+IR,IRN,364,IR,.ir,Iran
+IS,ISL,352,IC,.is,Iceland
+IT,ITA,380,IT,.it,Italy
+JE,JEY,832,JE,.je,Jersey
+JM,JAM,388,JM,.jm,Jamaica
+JO,JOR,400,JO,.jo,Jordan
+JP,JPN,392,JA,.jp,Japan
+KE,KEN,404,KE,.ke,Kenya
+KG,KGZ,417,KG,.kg,Kyrgyzstan
+KH,KHM,116,CB,.kh,Cambodia
+KI,KIR,296,KR,.ki,Kiribati
+KM,COM,174,CN,.km,Comoros
+KN,KNA,659,SC,.kn,Saint Kitts and Nevis
+KP,PRK,408,KN,.kp,North Korea
+KR,KOR,410,KS,.kr,South Korea
+KW,KWT,414,KU,.kw,Kuwait
+KY,CYM,136,CJ,.ky,Cayman Islands
+KZ,KAZ,398,KZ,.kz,Kazakhstan
+LA,LAO,418,LA,.la,Laos
+LB,LBN,422,LE,.lb,Lebanon
+LC,LCA,662,ST,.lc,Saint Lucia
+LI,LIE,438,LS,.li,Liechtenstein
+LK,LKA,144,CE,.lk,Sri Lanka
+LR,LBR,430,LI,.lr,Liberia
+LS,LSO,426,LT,.ls,Lesotho
+LT,LTU,440,LH,.lt,Lithuania
+LU,LUX,442,LU,.lu,Luxembourg
+LV,LVA,428,LG,.lv,Latvia
+LY,LBY,434,LY,.ly,Libya
+MA,MAR,504,MO,.ma,Morocco
+MC,MCO,492,MN,.mc,Monaco
+MD,MDA,498,MD,.md,Moldova
+ME,MNE,499,MJ,.me,Montenegro
+MF,MAF,663,RN,.mf,Saint-Martin
+MG,MDG,450,MA,.mg,Madagascar
+MH,MHL,584,RM,.mh,Marshall Islands
+MK,MKD,807,MK,.mk,North Macedonia
+ML,MLI,466,ML,.ml,Mali
+MM,MMR,104,BM,.mm,Myanmar
+MN,MNG,496,MG,.mn,Mongolia
+MO,MAC,446,MC,.mo,Macau
+MP,MNP,580,CQ,.mp,Northern Mariana Islands
+MQ,MTQ,474,MB,.mq,Martinique
+MR,MRT,478,MR,.mr,Mauritania
+MS,MSR,500,MH,.ms,Montserrat
+MT,MLT,470,MT,.mt,Malta
+MU,MUS,480,MP,.mu,Mauritius
+MV,MDV,462,MV,.mv,Maldives
+MW,MWI,454,MI,.mw,Malawi
+MX,MEX,484,MX,.mx,Mexico
+MY,MYS,458,MY,.my,Malaysia
+MZ,MOZ,508,MZ,.mz,Mozambique
+NA,NAM,516,WA,.na,Namibia
+NC,NCL,540,NC,.nc,New Caledonia
+NE,NER,562,NG,.ne,Niger
+NF,NFK,574,NF,.nf,Norfolk Island
+NG,NGA,566,NI,.ng,Nigeria
+NI,NIC,558,NU,.ni,Nicaragua
+NL,NLD,528,NL,.nl,Netherlands
+NO,NOR,578,NO,.no,Norway
+NP,NPL,524,NP,.np,Nepal
+NR,NRU,520,NR,.nr,Nauru
+NU,NIU,570,NE,.nu,Niue
+NZ,NZL,554,NZ,.nz,New Zealand
+OM,OMN,512,MU,.om,Oman
+PA,PAN,591,PM,.pa,Panama
+PC,PCI,582,,,Trust Territory of the Pacific Islands
+PE,PER,604,PE,.pe,Peru
+PF,PYF,258,FP,.pf,French Polynesia
+PG,PNG,598,PP,.pg,Papua New Guinea
+PH,PHL,608,RP,.ph,Philippines
+PK,PAK,586,PK,.pk,Pakistan
+PL,POL,616,PL,.pl,Poland
+PM,SPM,666,SB,.pm,Saint Pierre and Miquelon
+PN,PCN,612,PC,.pn,Pitcairn Islands
+PR,PRI,630,RQ,.pr,Puerto Rico
+PS,PSE,275,,.ps,Palestine
+PT,PRT,620,PO,.pt,Portugal
+PW,PLW,585,PS,.pw,Palau
+PY,PRY,600,PA,.py,Paraguay
+QA,QAT,634,QA,.qa,Qatar
+RE,REU,638,RE,.re,Réunion
+RO,ROU,642,RO,.ro,Romania
+RS,SRB,688,RI,.rs,Serbia
+RU,RUS,643,RS,.ru,Russia
+RW,RWA,646,RW,.rw,Rwanda
+SA,SAU,682,SA,.sa,Saudi Arabia
+SB,SLB,090,BP,.sb,Solomon Islands
+SC,SYC,690,SE,.sc,Seychelles
+SD,SDN,729,SU,.sd,Sudan
+SE,SWE,752,SW,.se,Sweden
+SG,SGP,702,SN,.sg,Singapore
+SH,SHN,654,SH,,Saint Helena  Ascension and Tristan da Cunha
+SI,SVN,705,SI,.si,Slovenia
+SJ,SJM,744,,.sj,Svalbard and Jan Mayen
+SK,SVK,703,LO,.sk,Slovakia
+SL,SLE,694,SL,.sl,Sierra Leone
+SM,SMR,674,SM,.sm,San Marino
+SN,SEN,686,SG,.sn,Senegal
+SO,SOM,706,SO,.so,Somalia
+SR,SUR,740,NS,.sr,Suriname
+SS,SSD,728,OD,.ss,South Sudan
+ST,STP,678,TP,.st,São Tomé and Príncipe
+SV,SLV,222,ES,.sv,El Salvador
+SX,SXM,534,NN,.sx,Sint Maarten
+SY,SYR,760,SY,.sy,Syria
+SZ,SWZ,748,WZ,.sz,Eswatini
+TC,TCA,796,TK,.tc,Turks and Caicos Islands
+TD,TCD,148,CD,.td,Chad
+TF,ATF,260,FS,.tf,French Southern and Antarctic Lands
+TG,TGO,768,TO,.tg,Togo
+TH,THA,764,TH,.th,Thailand
+TJ,TJK,762,TI,.tj,Tajikistan
+TK,TKL,772,TL,.tk,Tokelau
+TL,TLS,626,TT,.tl,Timor-Leste
+TM,TKM,795,TX,.tm,Turkmenistan
+TN,TUN,788,TS,.tn,Tunisia
+TO,TON,776,TN,.to,Tonga
+TR,TUR,792,TU,.tr,Turkey
+TT,TTO,780,TD,.tt,Trinidad and Tobago
+TV,TUV,798,TV,.tv,Tuvalu
+TW,TWN,158,TW,.tw,Taiwan
+TZ,TZA,834,TZ,.tz,Tanzania
+UA,UKR,804,UP,.ua,Ukraine
+UG,UGA,800,UG,.ug,Uganda
+UM,UMI,581,,.um,United States Minor Outlying Islands
+US,USA,840,US,.us,United States
+UY,URY,858,UY,.uy,Uruguay
+UZ,UZB,860,UZ,.uz,Uzbekistan
+VA,VAT,336,VT,.va,Vatican City
+VC,VCT,670,VC,.vc,Saint Vincent and the Grenadines
+VE,VEN,862,VE,.ve,Venezuela
+VG,VGB,092,VI,.vg,British Virgin Islands
+VI,VIR,850,VQ,.vi,United States Virgin Islands
+VN,VNM,704,VM,.vn,Vietnam
+VU,VUT,548,NH,.vu,Vanuatu
+WF,WLF,876,WF,.wf,Wallis and Futuna
+WS,WSM,882,WS,.ws,Samoa
+YE,YEM,887,YM,.ye,Yemen
+YT,MYT,175,MF,.yt,Mayotte
+ZA,ZAF,710,SF,.za,South Africa
+ZM,ZMB,894,ZA,.zm,Zambia
+ZW,ZWE,716,ZI,.zw,Zimbabwe

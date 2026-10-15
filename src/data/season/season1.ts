@@ -18,6 +18,15 @@ export const CLOSED = {
     'SEASON.md (closed, committed identically in ulysses adb63f4, field-research 19178ec, studio 2ecebad) · docs/design/2026-08-08-research-ecology-v2.md · docs/decision-log.md row 2026-08-08 (v2)',
 } as const
 
+/** Dated correction beside the frozen text, which by its own rule never changes again: the
+ *  "reading of 2026-09-05" the closure names was held early, on 2026-08-30, and judged the v2
+ *  conditions failed — research ecology v3 replaced the v2 order that day
+ *  (docs/design/2026-08-30-research-ecology-v3.md). */
+export const CORRECTION = {
+  date: '2026-09-01',
+  note: 'The reading of 2026-09-05 named above was held early on 2026-08-30; research ecology v3 has been in force since that day.',
+} as const
+
 export type EpisodeStatus = 'open' | 'claimed' | 'shipped'
 export type Practice = 'Meridian' | 'Ensemble' | 'Ulysses'
 

@@ -1,0 +1,144 @@
+name: Trending nightly
+
+# Common Ground — the trending ledger (docs/design/2026-09-02-common-ground.md).
+# Every morning: read eight keyless public sources (Google Trends RSS for six countries,
+# Wikipedia's most-read pages in two languages, Hacker News, Bluesky, Mastodon, Google News,
+# Reddit, GitHub), keep what converges across independent platforms by a disclosed token rule,
+# and write one day file under src/data/trending/. A day later the same run reads Cloudflare's
+# edge analytics for the day before and writes who fetched /trending — classes and bot names
+# only, never a raw user agent — into src/data/trending/audience/. Commits back to main, which
+# deploy-cf.yml turns into a rebuild through its workflow_run trigger.
+#
+# Secrets (Settings → Secrets and variables → Actions) and one variable:
+#   CF_ANALYTICS_TOKEN — Cloudflare API token, Zone · Analytics · Read for frankbueltge.de.
+#                        Missing: the audience half records status "unavailable" with a note.
+#   CF_ZONE_ID         — repository VARIABLE (not secret): the zone id of frankbueltge.de.
+#
+# A committed day file is never rewritten (the archive rule): the pipeline refuses to overwrite
+# an existing src/data/trending/<date>.json and exits 0.
+
+on:
+  schedule:
+    - cron: '40 6 * * *' # daily 06:40 UTC — after Gegenmessung (06:00) and the morning digest
+  workflow_dispatch:
+    inputs:
+      probe_day:
+        description: "Read the edge audience of this past day (YYYY-MM-DD) and print it. Writes and commits nothing."
+        required: false
+        default: ""
+      rehearsal:
+        description: "Run the whole routine into a scratch tree and print what it produced. Writes and commits nothing."
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trending
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history → git pull --rebase in the commit step works
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the pipeline package
+        run: pip install --no-cache-dir ./pipelines/trending
+      - name: Probe the edge audience of a past day (writes nothing)
+        if: ${{ inputs.probe_day != '' }}
+        env:
+          CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
+          CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
+        run: python -m trending.audience --day "${{ inputs.probe_day }}"
+      - name: Rehearse the whole routine in a scratch tree (writes nothing to the repo)
+        if: ${{ inputs.rehearsal }}
+        env:
+          CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
+        run: |
+          # The dress rehearsal: the same run, the same secrets, the same archive as history —
+          # but into a copy, so a change can be seen working before it is ever committed. The
+          # committed day of today is removed from the copy only, so the run writes it fresh.
+          set -eu
+          TMP="$(mktemp -d)"
+          mkdir -p "$TMP/src/data"
+          cp -R src/data/trending "$TMP/src/data/"
+          # Both dates through python: `date -d` is GNU-only, and this script is also run by
+          # hand on a laptop when a change needs seeing before it ships.
+          D="$(python3 -c 'import datetime as d; print(d.datetime.now(d.timezone.utc).date())')"
+          Y="$(python3 -c 'import datetime as d; print(d.datetime.now(d.timezone.utc).date() - d.timedelta(days=1))')"
+          rm -f "$TMP/src/data/trending/$D.json" "$TMP/src/data/trending/terms/$D.json" \
+                "$TMP/src/data/trending/audience/$Y.json"
+          python -m trending.run --repo-root "$TMP"
+          echo "::group::what the rehearsal produced"
+          python - "$TMP" "$D" "$Y" <<'PY'
+          import json, pathlib, sys
+          root, day, yday = pathlib.Path(sys.argv[1]) / "src/data/trending", sys.argv[2], sys.argv[3]
+          d = json.loads((root / f"{day}.json").read_text())
+          q = d["quality"]
+          print(f"day {day}: {d['summary']['topics_total']} clusters, "
+                f"{d['summary']['converging']} converging, "
+                f"{d['summary']['sources_ok']}/{d['summary']['sources_total']} sources ok, "
+                f"self-check {q['passed']}/{q['total']}")
+          for c in q["checks"]:
+              if not c["ok"]:
+                  print(f"  failed: {c['id']} — {c['note']}")
+          for t in d["topics"][:8]:
+              print(f"  {t['platform_count']}x {t['label'][:56]}  {', '.join(t['platforms'])}")
+          t = json.loads((root / "terms" / f"{day}.json").read_text())
+          tq = t["quality"]
+          print(f"arcs {day}: {t['summary']['terms_total']} watched, "
+                f"{t['summary']['candidates_total']} candidates, "
+                f"{len(t['promoted'])} promoted, {len(t['let_go'])} let go, "
+                f"self-check {tq['passed']}/{tq['total']}")
+          for p in t["promoted"]:
+              print(f"  promoted: {p['term']} ({len(p['platforms'])} platforms)")
+          for term in t["terms"]:
+              if term["status"] in ("emerging", "rising"):
+                  print(f"  {term['status']}: {term['term']} d7={term['total']['d7']} ratio={term['ratio']}")
+          a = json.loads((root / "audience" / f"{yday}.json").read_text())
+          e = a["edge"]
+          print(f"audience {yday}: {e['status']}, total {e.get('total')}, "
+                f"classes {({k: v for k, v in (e.get('classes') or {}).items() if v})}")
+          print(f"  countries: {e.get('countries')}")
+          print(f"  referers:  {e.get('referers')}")
+          if e.get("extra_note"):
+              print(f"  note: {e['extra_note']}")
+          PY
+          echo "::endgroup::"
+          echo "rehearsal: nothing was written to the repository"
+      - name: Run the ledger (writes, does not commit)
+        if: ${{ inputs.probe_day == '' && !inputs.rehearsal }}
+        env:
+          CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
+          # The built-in token lifts GitHub's search limit from 10 to 30 requests a minute for
+          # the term tracker; the pipeline runs unauthenticated (slower) when it is absent.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
+        run: python -m trending.run --repo-root .
+      - name: Commit
+        if: ${{ inputs.probe_day == '' && !inputs.rehearsal }}
+        run: |
+          git config user.name "Morgenlese"
+          git config user.email "morgenlese@frankbueltge.de"
+          git add src/data/trending 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."; exit 0
+          fi
+          git commit -m "trending: ledger of $(date -u +%F)"
+          # Against push races (several nightly cron commits): rebase and retry.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Pushed."; exit 0
+            fi
+            echo "Push attempt $i failed, retrying …"; sleep 5
+          done
+          echo "::error::Push failed after 5 attempts"; exit 1

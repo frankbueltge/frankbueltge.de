@@ -64,7 +64,7 @@ export interface Voice {
  * the canon; its core survives as exactly this caveat.
  */
 export const VOICES: Record<VoiceId, Voice> = {
-  ulysses: { id: 'ulysses', label: 'The Atelier · Ulysses', short: 'Ulysses', hue: 'ulysses', caveat: null },
+  ulysses: { id: 'ulysses', label: 'The Atelier · Assay', short: 'Assay', hue: 'ulysses', caveat: null },
   meridian: { id: 'meridian', label: 'The Field · Meridian', short: 'Meridian', hue: 'meridian', caveat: null },
   ensemble: { id: 'ensemble', label: 'The Studio · Ensemble', short: 'Ensemble', hue: 'ensemble', caveat: null },
   plenum: { id: 'plenum', label: 'The Plenum · data-snack.com', short: 'the Plenum', hue: 'plenum', caveat: null },

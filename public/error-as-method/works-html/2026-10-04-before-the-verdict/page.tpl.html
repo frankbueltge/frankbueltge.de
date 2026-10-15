@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Before the Verdict</title>
+<style>
+:root{--paper:#f4efe6;--ink:#1d1b18;--mute:#7d756b;--line:#d9d0c1;--A:#8a8278;--B:#b8862b;--C:#9c2f22;--card:#fbf8f2}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#171513;--ink:#ece6da;--mute:#a39a8d;--line:#3a352f;--A:#8f877b;--B:#d3a24a;--C:#e0705c;--card:#211e1b}}
+:root[data-theme="dark"]{--paper:#171513;--ink:#ece6da;--mute:#a39a8d;--line:#3a352f;--A:#8f877b;--B:#d3a24a;--C:#e0705c;--card:#211e1b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1180px;margin:0 auto;padding:22px 16px 60px}
+h1{font-weight:normal;font-size:30px;margin:0 0 4px}
+.lede{margin:0 0 14px;max-width:62ch}
+.keys{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--mute);margin-bottom:14px}
+.keys span::before{content:"";display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px;background:var(--k)}
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:22px}
+@media (max-width:860px){.wrap{grid-template-columns:1fr}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.cell{position:relative;border:1px solid var(--line);background:var(--card);cursor:pointer;padding:0;color:inherit;font:inherit;text-align:left}
+.cell img{display:block;width:100%;aspect-ratio:11/7;object-fit:cover}
+.cell .bar{height:7px}
+.cell .tag{display:flex;justify-content:space-between;font-size:13px;padding:3px 6px 4px}
+.cell .v{font-variant:small-caps;letter-spacing:.04em}
+.cell.fails img{opacity:.55}
+.cell.later{opacity:.18}
+.cell.on{outline:2px solid var(--ink);outline-offset:1px}
+.side{position:sticky;top:10px;align-self:start}
+.card{background:var(--card);border:1px solid var(--line);padding:12px 14px;margin-bottom:14px;font-size:15px}
+.card h2{font-size:17px;font-weight:normal;margin:0 0 6px}
+.card .big{width:100%;display:block;margin:6px 0 8px;border:1px solid var(--line)}
+.step{display:flex;gap:8px;align-items:center;margin:0 0 12px;font-size:14px;color:var(--mute)}
+.step input{flex:1}
+.step button{font:inherit;background:var(--card);color:var(--ink);border:1px solid var(--line);padding:2px 10px;cursor:pointer}
+ol.norms{list-style:none;padding:0;margin:0;font-size:14px}
+ol.norms li{border-left:5px solid var(--k);padding:4px 8px;margin-bottom:5px;background:var(--card)}
+ol.norms li.not-yet{display:none}
+ol.norms li.dec{outline:2px solid var(--ink)}
+ol.norms b{font-weight:normal;font-variant:small-caps;letter-spacing:.04em}
+.tally{font-size:15px;margin:18px 0 0;max-width:70ch}
+.tally .row{display:flex;height:22px;margin:4px 0 2px;border:1px solid var(--line)}
+.tally .row div{height:100%}
+footer{margin-top:26px;font-size:13px;color:var(--mute);max-width:80ch}
+a{color:inherit}
+</style></head>
+<body><main>
+<h1>Before the Verdict</h1>
+<p class="lede">One record, the length of Earth's day from 1962 to 2026, drawn twenty-five ways. Each picture was judged in turn by a rule. <strong>The coloured bar says how old that rule was</strong> when it decided: written before the data was opened, written at an earlier picture, or written at this one.</p>
+<div class="keys"><span style="--k:var(--A)">rule older than the data</span><span style="--k:var(--B)">rule written at an earlier picture</span><span style="--k:var(--C)">rule written at this picture</span></div>
+<div class="wrap">
+ <div>
+  <div class="step"><button id="prev" type="button">&larr;</button><input id="t" type="range" min="1" max="25" value="25" aria-label="moment of judging"><button id="next" type="button">&rarr;</button><span id="tl"></span></div>
+  <div class="grid" id="grid"></div>
+  <div class="tally" id="tally"></div>
+ </div>
+ <aside class="side">
+  <div class="card" id="card"></div>
+  <ol class="norms" id="norms"></ol>
+ </aside>
+</div>
+<footer>Pictures in the order a seeded shuffle gave (seed 106), judged in four batches of six; the images of each batch were committed before they were looked at, the verdicts and any new rule after. The twenty-fifth picture was written from the rules alone. A verdict revised later stays where it was given, with the revision beside it. Data: IERS EOP 20 C04, column LOD (excess length of day), Paris Observatory; not redistributed here, see <code>sources/MANIFEST.json</code>. Every verdict is the practice's own judgement, and so is every rule. Evidence: <code>PREDICTIONS.md</code>, <code>NORMS.md</code>, <code>verdicts.jsonl</code>, <code>results.json</code>, <code>verify.py</code>.</footer>
+</main>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+const S = JSON.parse(document.getElementById("data").textContent);
+const AGE = {A: "older than the data", B: "written at an earlier picture", C: "written at this picture"};
+const grid = document.getElementById("grid"), norms = document.getElementById("norms"), card = document.getElementById("card"), t = document.getElementById("t"), tl = document.getElementById("tl");
+let sel = null;
+S.verdicts.forEach(v => {
+  const b = document.createElement("button"); b.type = "button"; b.className = "cell " + v.verdict; b.dataset.o = v.order;
+  b.innerHTML = `<img alt="picture ${v.variant}" src="thumbs/V${String(v.variant).padStart(2, "0")}.jpg"><div class="bar"></div><div class="tag"><span>${v.order}. V${String(v.variant).padStart(2, "0")}</span><span class="v">${v.verdict}${v.revised ? " · revised" : ""}</span></div>`;
+  b.querySelector(".bar").style.background = `var(--${v.age})`;
+  b.addEventListener("click", () => { sel = v; t.value = v.order; draw(); });
+  grid.appendChild(b);
+});
+S.norms.forEach(n => {
+  const li = document.createElement("li"); li.dataset.id = n.id; li.dataset.at = n.at;
+  li.style.setProperty("--k", n.at === 0 ? "var(--A)" : "var(--B)");
+  li.innerHTML = `<b>${n.id}</b> ${n.at === 0 ? "· before the data" : "· written at picture " + n.at} — ${n.text}`;
+  norms.appendChild(li);
+});
+function draw() {
+  const m = +t.value; tl.textContent = m === 25 ? "all 25 judged" : `after picture ${m}`;
+  if (!sel) sel = S.verdicts.find(v => v.order === m);
+  grid.querySelectorAll(".cell").forEach(c => { c.classList.toggle("later", +c.dataset.o > m); c.classList.toggle("on", +c.dataset.o === sel.order); });
+  norms.querySelectorAll("li").forEach(li => { li.classList.toggle("not-yet", +li.dataset.at > m); li.classList.toggle("dec", li.dataset.id === sel.decisive); });
+  const r = S.revisions.find(x => x.revises === sel.order);
+  card.innerHTML = `<h2>${sel.order}. V${String(sel.variant).padStart(2, "0")} · ${sel.params} — <em>${sel.verdict}</em></h2>
+   <img class="big" alt="" src="thumbs/V${String(sel.variant).padStart(2, "0")}.jpg">
+   <div>Decided by <strong>${sel.decisive}</strong>, a rule ${AGE[sel.age]}.</div><p>${sel.seen}</p>${r ? `<p><em>Revised later, beside this verdict:</em> ${r.seen}</p>` : ""}`;
+}
+t.addEventListener("input", () => { sel = null; draw(); });
+document.getElementById("prev").addEventListener("click", () => { t.value = Math.max(1, +t.value - 1); sel = null; draw(); });
+document.getElementById("next").addEventListener("click", () => { t.value = Math.min(25, +t.value + 1); sel = null; draw(); });
+const f = S.fails, tot = f.A + f.B + f.C;
+document.getElementById("tally").innerHTML = `<div>Of ${tot} failures among the twenty-four grid pictures, the deciding rule was older than the data in ${f.A}, written at an earlier picture in ${f.B}, and written at the failing picture itself in ${f.C}. All ${S.works} pictures that passed were passed by a rule older than the data.</div>
+ <div class="row">${["A", "B", "C"].map(k => `<div title="${AGE[k]}: ${f[k]}" style="width:${100 * f[k] / tot}%;background:var(--${k})"></div>`).join("")}</div>`;
+sel = S.verdicts.find(v => v.variant === 4); t.value = 25; draw();
+</script>
+</body></html>

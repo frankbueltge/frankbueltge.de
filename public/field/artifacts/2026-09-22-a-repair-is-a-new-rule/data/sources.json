@@ -1,0 +1,65 @@
+{
+ "note": "Session 167, 2026-09-22. Every source read first-hand tonight, with the passage this artifact rests on quoted from the page or the file, not from memory and not from a search summary. Protocol v4 §5.2: when a finding rests on someone else's result, read the source and cite the passage.",
+ "house_register_first": {
+  "feed": "https://frankbueltge.de/papers/index.json",
+  "fetched": "2026-09-22", "http": 200, "n_entries": 1071,
+  "searched_for": {"incorrect fix": 0, "bug fix": 0, "fix-inducing": 0, "supplementary": 0, "patch": 0, "repair": 3, "regression": 12, "metamorph": 3},
+  "reading": "The three 'repair' hits are medical and one is about repairing model pipelines; the 'regression' hits are statistical regression. This practice's own shelf holds nothing on incorrect or incomplete software fixes. That is a fact about the shelf, not about the world, and it is why this session searched outward."
+ },
+ "read_tonight": [
+  {
+   "id": "yin-2011",
+   "authors": "Zuoning Yin, Ding Yuan, Yuanyuan Zhou, Shankar Pasupathy, Lakshmi Bairavasundaram",
+   "title": "How Do Fixes Become Bugs? -- A Comprehensive Characteristic Study on Incorrect Fixes in Commercial and Open Source Operating Systems",
+   "venue": "ESEC/FSE 2011",
+   "venue_provenance": "the abstract page read does not state the venue; ESEC/FSE 2011 is taken from the title of the ACM catalogue record listed in a search result, and that record was NOT opened",
+   "url": "https://www.eecg.utoronto.ca/~yuan/papers/incorrect_fix_abstract.html",
+   "access": "abstract page fetched directly, http 200, 1,876 characters of text after tag stripping; the PDF was not opened",
+   "quoted": [
+    "at least 14.8% to 24.4% of sampled fixes for post-release bugs in these large OSes are incorrect and have made impacts to end users.",
+    "Among several common bug types, concurrency bugs are the most difficult to fix correctly: 39% of concurrency bug fixes are incorrect.",
+    "27% of the incorrect fixes are made by developers who have never touched the source code files associated with the fix."
+   ],
+   "what_it_establishes_for_us": "That a repair is itself a likely source of defects is measured and old, in code bases far larger and better reviewed than one regular-expression rule. It sets no rate this session can be compared against: their unit is a fix to a post-release bug in an operating system, ours is a patch to one rule, and nothing here rests on their number.",
+   "abstract_only": true
+  },
+  {
+   "id": "park-2012",
+   "authors": "Jihun Park, Miryung Kim, Baishakhi Ray, Doo-Hwan Bae",
+   "title": "An Empirical Study of Supplementary Bug Fixes",
+   "venue": "MSR 2012",
+   "url": "https://web.cs.ucla.edu/~miryung/Publications/msr2012-supplementarypatch.pdf",
+   "access": "full PDF fetched and extracted locally with tools/completeness-census/pdftext.py; 54,453 characters. That extractor is known to lose ligatures (correction of 2026-09-14) and the loss is visible in this text - it prints 'nds' for 'finds' and 'xed' for 'fixed' - so the quotations below are given with the ligatures restored and the restoration is declared.",
+   "quoted": [
+    "Our study on Eclipse JDT core, Eclipse SWT, and Mozilla shows that a signi[fi]cant portion of resolved bugs (22% to 33%) involves more than one [fi]x attempt.",
+    "only a very small portion of supplementary patches (15% in JDT, 17% in SWT, and 8% in Mozilla) have a content similar to their initial patches",
+    "14% to 15% of [fi]les in supplementary patches are beyond the scope of immediate neighbors of their initial patch locations"
+   ],
+   "what_it_establishes_for_us": "An incomplete first fix is normal and its follow-up is often not where the first one was. Ours is the limit case: five repairs to one rule, all five in the same two files, and the interactions still could not be predicted from the patches.",
+   "abstract_only": false
+  },
+  {
+   "id": "xiong-2017",
+   "authors": "Yingfei Xiong, Xinyuan Liu, Muhan Zeng, Lu Zhang, Gang Huang",
+   "title": "Identifying Patch Correctness in Test-Based Program Repair",
+   "identifier": "arXiv:1706.09120",
+   "url": "https://ar5iv.labs.arxiv.org/html/1706.09120",
+   "access": "abstract read from the rendered HTML",
+   "quoted": [
+    "the test suites in practice are often too weak to guarantee correctness and existing approaches often generate a large number of incorrect patches",
+    "Our approach successfully prevented 56.3% of the incorrect patches to be generated, without blocking any correct patches."
+   ],
+   "what_it_establishes_for_us": "That a test suite can be too weak to certify a patch is an established concern. Checked and reported: this paper does NOT define the word 'overfitting', although a delegated search summary attributed that definition to this literature. Nothing of ours rests on it.",
+   "abstract_only": true
+  }
+ ],
+ "not_cited_because_not_read": {
+  "note": "A delegated web search offered three figures this session did not read first-hand and therefore does not cite: an 'overwhelming majority' of plausible patches being overfitting (attributed to Qi et al. 2015), 73-81 % of automated-repair patches overfitting on two benchmarks (attributed to Le et al. 2018), and Long and Rinard's search-space analysis. None of those papers was opened. They are named here so that a reader can see what was on offer and refused.",
+  "and_one_that_was_wrong": "The same delegated summary reported the supplementary-patch clone figures as '12% in JDT, 25% in SWT, and 9% in Mozilla'. The paper's own abstract, read tonight from the file, prints '15% in JDT, 17% in SWT, and 8% in Mozilla'. All three numbers differ. This is the third time this practice has caught a delegated read handing over figures that are not in the source (2026-09-12, 2026-09-19, tonight), and the first time the delegate was a search summary rather than a dispatched worker."
+ },
+ "neighbours_and_novelty": {
+  "method": "Regression testing, mutation testing, metamorphic testing, combinatorial interaction testing and patch-correctness assessment are all established. NO NOVELTY OF METHOD IS CLAIMED. Enumerating the subsets of a candidate repair set and scoring every subset against every test regime already owned is an obvious combination of two old ideas.",
+  "subject": "What this session did not find published is a measurement of repair-subset interaction on one instrument of an automated research practice, with every defect in the repair path already named and dated by an independent hand. That is a statement about this session's search, which was two web searches and one register fetch, not about the world.",
+  "earlier_sessions_cited_from_their_own_files": "Hora et al. arXiv:2605.16701, Wolter et al. 2022, Wolter FAU 2019, Segura et al. 2016, Chen 1998, Duque-Torres et al. 2023, Silberzahn et al. 2018 and the 2026-09-21 annotation sources live in the sources.json of the artifacts that read them. They are NOT re-quoted here from memory."
+ }
+}

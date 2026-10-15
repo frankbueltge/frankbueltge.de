@@ -1,0 +1,150 @@
+{
+  "date": "2026-09-15",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-15T10:50:30Z",
+    "counts": {
+      "botwall": 30,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 267,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 268,
+    "excluded_unverifiable": 32,
+    "gone": 1,
+    "gone_ci95": [
+      0.0007,
+      0.0208
+    ],
+    "gone_rate": 0.0037,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0141
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-13",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "portageonline.com",
+        "first_seen": "20260913050000",
+        "http_code": 404,
+        "title": "Event: Fundraising Evening with Tribal War Survivor - PortageOnline.com - Local news, Weather, Sports, Free Classifieds and Job Listings",
+        "url": "https://www.portageonline.com/events/230027"
+      }
+    ],
+    "sample_drawn_at": "2026-09-14T11:12:02Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3844,
+      "replaced": 4134,
+      "trivial": 665,
+      "update": 260
+    },
+    "day": "2026-09-14",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "glass",
+          "doors",
+          "cleaning",
+          "tips"
+        ],
+        "after": "Glass Doors Cleaning Tips: Why do glass doors keep getting cloudy? 5 simple cleaning tips to keep them clear and spotless",
+        "before": "Hard Water Mineral Buildup: Why do glass doors keep getting cloudy? 5 simple cleaning tips to keep them clear and spotless",
+        "detected": "2026-09-14T03:02:48Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Hard",
+          "Water",
+          "Mineral",
+          "Buildup"
+        ],
+        "similarity": 0.8,
+        "url": "https://timesofindia.indiatimes.com/life-style/home-garden/why-do-glass-doors-keep-getting-cloudy-5-simple-cleaning-tips-to-keep-them-clear-and-spotless/articleshow/134173124.cms",
+        "weight": 12,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Codex",
+          "CLI",
+          "OpenCode"
+        ],
+        "after": "GitHub - timgordontg/engrim: The Universal Cross-Model Episodic Memory Standard. Local-first, project-scoped SQLite engine for Google Antigravity, Claude Code, Cursor, Codex CLI, and OpenCode. Zero cloud lock-in.",
+        "before": "GitHub - timgordontg/engrim: The Universal Cross-Model Episodic Memory Standard. Local-first, project-scoped SQLite memory engine for Google Antigravity, Claude Code, Cursor, and Windsurf. Zero cloud lock-in.",
+        "detected": "2026-09-14T07:18:18Z",
+        "domain": "github.com",
+        "removed": [
+          "memory",
+          "Windsurf"
+        ],
+        "similarity": 0.871,
+        "url": "https://github.com/timgordontg/engrim",
+        "weight": 9,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Mount",
+          "Prospect"
+        ],
+        "after": "Daniel Nikov ID'd as motorcycle rider killed in crash with Jeep on Oakton Street and First Avenue, Mount Prospect police say",
+        "before": "Daniel Nikov ID'd as motorcycle rider killed in crash with Jeep on Oakton Street and First Avenue, Morton Grove police say",
+        "detected": "2026-09-14T18:31:24Z",
+        "domain": "abc7chicago.com",
+        "removed": [
+          "Morton",
+          "Grove"
+        ],
+        "similarity": 0.833,
+        "url": "https://abc7chicago.com/post/daniel-nikov-idd-motorcycle-rider-killed-crash-jeep-oakton-street-first-avenue-morton-grove-police-say/19826991/",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 14383,
+      "PAGE_TEXTCHANGE": 103241,
+      "PAGE_TITLECHANGE": 40318,
+      "UNCHANGED_CONTENT": 605532
+    },
+    "title_changes_en": 8903,
+    "trace": [
+      {
+        "bytes_billed": 20971520,
+        "created": "1789469188182",
+        "job_id": "world_gdg_counts_20260914",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 191889408,
+        "created": "1789469193323",
+        "job_id": "world_gdg_titles_20260914",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-15T10:50:30Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-14.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Forty Widths</title>
+<style>
+html,body{margin:0;background:#f4f1ea;}
+body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#2a2722}
+svg{display:block}
+</style></head><body>
+<svg id="s" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+// The whole record.jpg, column by column (grey levels, top row first). Nothing else is used.
+const P=[[249, 255, 75, 16, 50, 18, 36, 29, 38, 0, 43, 250], [255, 253, 80, 21, 48, 19, 32, 27, 12, 52, 115, 252], [255, 230, 79, 25, 41, 20, 28, 24, 11, 132, 210, 255], [254, 179, 64, 23, 31, 24, 26, 26, 38, 167, 244, 255], [222, 112, 41, 19, 22, 32, 26, 29, 42, 112, 179, 255], [194, 53, 26, 23, 19, 42, 27, 30, 21, 26, 81, 249], [183, 18, 24, 34, 24, 53, 26, 27, 24, 0, 40, 227], [182, 5, 28, 45, 29, 59, 24, 24, 49, 24, 53, 226], [255, 169, 79, 47, 37, 19, 19, 37, 33, 25, 27, 240], [247, 238, 255, 218, 86, 40, 54, 24, 21, 20, 60, 236], [235, 238, 255, 216, 20, 0, 44, 0, 14, 30, 121, 235], [255, 250, 255, 209, 85, 44, 62, 35, 23, 72, 194, 241], [255, 249, 250, 255, 248, 118, 26, 37, 39, 141, 252, 251], [228, 239, 243, 255, 255, 79, 0, 27, 46, 213, 255, 255], [255, 255, 255, 255, 199, 58, 0, 50, 36, 255, 255, 251], [255, 234, 254, 247, 149, 59, 22, 0, 24, 255, 255, 244], [248, 254, 255, 222, 79, 2, 24, 49, 39, 126, 255, 253], [235, 253, 255, 224, 106, 40, 35, 25, 9, 83, 255, 255], [252, 251, 220, 127, 36, 24, 40, 26, 24, 40, 206, 255], [255, 255, 202, 76, 0, 15, 41, 27, 44, 0, 123, 255], [244, 255, 244, 128, 54, 49, 40, 11, 23, 2, 96, 232], [252, 255, 214, 94, 37, 35, 31, 23, 21, 106, 184, 255], [255, 249, 140, 21, 0, 11, 23, 40, 46, 223, 255, 255], [253, 227, 126, 40, 41, 44, 25, 27, 53, 255, 255, 236], [252, 249, 130, 28, 41, 33, 4, 37, 189, 255, 239, 255], [255, 219, 109, 24, 21, 19, 13, 41, 165, 255, 255, 255], [255, 158, 50, 5, 12, 30, 33, 24, 102, 239, 255, 249], [255, 120, 18, 7, 23, 51, 48, 2, 75, 182, 231, 255], [255, 166, 96, 64, 33, 35, 41, 14, 23, 63, 127, 255], [255, 253, 211, 121, 32, 0, 20, 45, 7, 0, 59, 236], [250, 255, 221, 96, 32, 10, 13, 48, 56, 36, 79, 227], [244, 255, 155, 28, 39, 52, 20, 25, 23, 15, 37, 130], [255, 255, 255, 247, 182, 22, 46, 31, 27, 12, 75, 225], [255, 242, 243, 163, 110, 0, 36, 28, 25, 109, 188, 255], [255, 238, 209, 71, 36, 0, 36, 31, 29, 209, 255, 255], [255, 248, 213, 29, 12, 10, 44, 35, 33, 247, 255, 243], [255, 251, 235, 26, 22, 40, 37, 25, 35, 249, 255, 228], [245, 245, 251, 29, 30, 50, 14, 16, 68, 255, 255, 250], [253, 247, 255, 29, 29, 48, 0, 28, 157, 255, 255, 255], [255, 255, 255, 30, 28, 47, 0, 51, 245, 255, 234, 255]];
+const W=40,H=12,T=128;
+const s=document.getElementById('s'),NS='http://www.w3.org/2000/svg';
+function el(n,a,p){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);(p||s).appendChild(e);return e}
+// sub-pixel edges where each column crosses mid-grey
+const edges=P.map(c=>{let t=null,b=null;
+ for(let y=1;y<H;y++)if(c[y-1]>=T&&c[y]<T){t=y-1+(c[y-1]-T)/(c[y-1]-c[y]);break}
+ for(let y=H-1;y>0;y--)if(c[y]>=T&&c[y-1]<T){b=y-1+(c[y-1]-T)/(c[y-1]-c[y]);break}
+ return [t,b]});
+const X0=110,X1=990,Y0=70,RH=36;               // field: 12 rows x 36px
+const cw=(X1-X0)/W, py=v=>Y0+(v+0.5)*RH;
+// faint pixel rows as a ruled ground
+for(let y=0;y<=H;y++)el('line',{x1:X0,x2:X1,y1:Y0+y*RH,y2:Y0+y*RH,stroke:'#2a2722','stroke-opacity':y%H?0.06:0.18,'stroke-width':1});
+// each column: its actual grey profile, drawn as a soft vertical strip
+const defs=el('defs',{});
+P.forEach((c,x)=>{
+ const g=el('linearGradient',{id:'g'+x,x1:0,y1:0,x2:0,y2:1},defs);
+ c.forEach((v,y)=>{el('stop',{offset:((y+0.5)/H).toFixed(4),'stop-color':'#1f1c18','stop-opacity':((255-v)/255*0.85).toFixed(3)},g)});
+ el('rect',{x:X0+x*cw+cw*0.18,y:Y0,width:cw*0.64,height:H*RH,fill:'url(#g'+x+')'});
+});
+// the two edges of the band, the only thing the picture still states precisely
+const path=k=>edges.map((e,x)=>(x?'L':'M')+(X0+(x+0.5)*cw).toFixed(1)+' '+py(e[k]).toFixed(1)).join(' ');
+el('path',{d:path(0),fill:'none',stroke:'#9b3b22','stroke-width':1.6});
+el('path',{d:path(1),fill:'none',stroke:'#9b3b22','stroke-width':1.6});
+edges.forEach((e,x)=>{const cx=X0+(x+0.5)*cw;
+ el('line',{x1:cx-cw*0.38,x2:cx+cw*0.38,y1:py(e[0]),y2:py(e[0]),stroke:'#9b3b22','stroke-width':2.2});
+ el('line',{x1:cx-cw*0.38,x2:cx+cw*0.38,y1:py(e[1]),y2:py(e[1]),stroke:'#9b3b22','stroke-width':2.2});});
+// below: width of each column alone, the swell and slackening
+const B0=640,BS=11;
+el('line',{x1:X0,x2:X1,y1:B0,y2:B0,stroke:'#2a2722','stroke-opacity':0.35});
+edges.forEach((e,x)=>{const cx=X0+(x+0.5)*cw,wd=e[1]-e[0];
+ el('rect',{x:cx-cw*0.32,y:B0-wd*BS,width:cw*0.64,height:wd*BS,fill:'#9b3b22','fill-opacity':0.18+0.07*wd});});
+el('path',{d:edges.map((e,x)=>(x?'L':'M')+(X0+(x+0.5)*cw).toFixed(1)+' '+(B0-(e[1]-e[0])*BS).toFixed(1)).join(' '),fill:'none',stroke:'#9b3b22','stroke-width':1.2});
+// words
+const t=(x,y,str,a)=>{const e=el('text',Object.assign({x,y,'font-size':13,fill:'#2a2722'},a||{}));e.textContent=str;return e};
+t(X0,40,'Forty Widths',{'font-size':22,'letter-spacing':'0.04em'});
+t(X1,40,'one record, forty columns of twelve pixels',{'text-anchor':'end','font-style':'italic','fill':'#6b655b'});
+t(X0,B0+28,'the width of each column’s band, by itself',{'font-style':'italic','fill':'#6b655b'});
+t(X0,742,'Each column of the source picture was to hold a dot. It holds a smear: more values than pixels, overlapping until only their spread survives.',{'fill':'#4a453d'});
+t(X0,762,'Grey strips are the picture as it is; red marks the upper and lower edge of each smear. Time runs left to right; higher is larger.',{'fill':'#4a453d'});
+</script></body></html>

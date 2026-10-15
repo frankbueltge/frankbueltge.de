@@ -6,8 +6,8 @@
 // only thing the floor remembers:
 //
 //   · a PREMIERE is a lit position — a hard-edged pool with the work's title in Didone capitals
-//     (hard-edged on purpose: Frank rejected the soft gradient in 2026-07-16, "hässlicher gold
-//     glow", and the plotted light stayed);
+//     (hard-edged on purpose: Frank rejected the soft gradient's golden glow on 2026-07-16,
+//     wording private, and the plotted light stayed);
 //   · a STRIKE is a taped X with its verbatim reason;
 //   · a RETURN is the human eye sending a work back — a violet arc curving off the public side of
 //     the floor and down into the production area, one per return, numbered in Roman;
@@ -106,6 +106,14 @@ export interface SeasonModel {
   height: number
   /** every path this model read, for the figure's own provenance line */
   provenance: string[]
+  /** the title lettering the lit band could afford: 1 is the full face, 2 and 3 the two denser
+   *  steps studio-stage.css matches through `data-lettering` on the svg (see LETTERING) */
+  lettering: 1 | 2 | 3
+  /** How far the floor was deepened for this season: 0 while the lit band fits its shallowest
+   *  three rows, and one LIT_ROW_GAP per row added beyond them. Everything downstage of the band —
+   *  the struck positions, the production area, the floor's own edge and the canvas — is offset by
+   *  it, so a deeper band never crowds what plays behind it. */
+  depth: number
 }
 
 // ---------------------------------------------------------------- geometry constants
@@ -113,33 +121,71 @@ export interface SeasonModel {
 // deliberately asymmetric (the season crowds at its opening, where five of the seven strikes fell
 // on the first two evenings) rather than evened out into a false rhythm.
 const W = 1440
-const H = 780
-const FLOOR = { x0: 96, y0: 150, x1: 1344, y1: 706 }
-const AXIS = { x0: 214, x1: 1248 }
-/** lit positions play downstage, just under the curtain line */
-const LIT_Y = 300
-const LIT_JITTER = 52
+// 884, not the 780 of 2026-07-31: the lit band gained a third row on 2026-09-01 (see the shelf
+// below), and everything upstage of it — the struck band, the production area, the floor's own
+// edge — moved down by that row's 104px rather than crowding what was already there.
+const H = 884
+// The five constants below are exported because the floor has had TWO renderers since 2026-09-02
+// (see "the parts both renderers draw"): a drawing that read its own floor edge from a second copy
+// of these numbers would drift the first time one of them moved.
+export const FLOOR = { x0: 96, y0: 150, x1: 1344, y1: 810 }
+export const AXIS = { x0: 214, x1: 1248 }
+/** lit positions play downstage, just under the curtain line: the shallowest band is three rows,
+ *  this the middle one */
+export const LIT_Y = 352
+/** the rows are 104px apart — more than the 72px two pool edges need, jitter included */
+const LIT_ROW_GAP = 104
+/** The shallowest lit band — a starting depth, NOT a capacity.
+ *
+ *  A pool is as wide as the name it lights, so a season of N premieres needs a width no face can
+ *  keep shrinking to meet: at 21 premieres the lettering ladder was already on its last rung, and
+ *  the arithmetic says 40 would need a 6.8px face. The three ways out were to drop a position, to
+ *  stop spelling a name, or to give the band more room. The first two contradict what this figure
+ *  is — the floor keeps every mark (ADR 0010), and a pool is as wide as the name it lights.
+ *
+ *  So THE FLOOR DEEPENS. When the season outgrows the band at every face the ladder has, a row is
+ *  added and everything downstage of the band moves with it (`depth`). A season that accumulates
+ *  makes a deeper floor, which is what "the floor keeps every mark" means when it is taken at its
+ *  word. (2026-09-11, replacing the throw that asked for this decision.) */
+const LIT_ROWS_MIN = 3
+/** A guard, not a design limit: eight rows is a floor two and a half times today's depth, and a
+ *  season that reaches it is a figure to look at again rather than one to grow silently. */
+const LIT_ROWS_MAX = 8
+/** Row centres for a band of `rows`. The top row is fixed and the band grows DOWNWARD, so at
+ *  LIT_ROWS_MIN these are exactly the three rows the floor has had since 2026-09-01. */
+const litRowY = (rows: number): number[] =>
+  Array.from({ length: rows }, (_, r) => LIT_Y - LIT_ROW_GAP + r * LIT_ROW_GAP)
+/** the lit band's two walls: 40px inside the floor's edge on either side */
+const LIT_WALL = { min: FLOOR.x0 + 40, max: FLOOR.x1 - 40 }
 /** struck positions sit further back, on the dark part of the floor */
-const STRUCK_Y = 512
+const STRUCK_Y = 616
 const STRUCK_JITTER = 74
 /** the production area: the upstage band a returned work goes back into */
-const PROD_Y = 644
+export const PROD_Y = 748
 
-const POOL_RY = 36
+export const POOL_RY = 36
 const STRIKE_R = 30
 /** Clearance between two pools, so two names never letter into each other. */
 const POOL_GAP = 18
-/** The two lines the lit band is: its own top and bottom edge, 104px apart, which is more than the
- *  72px two pool edges need. A pool keeps a hashed offset inside its line (never more than half the
- *  32px of slack), so the band still reads as a scatter rather than as two ruled rows. */
+/** A pool keeps a hashed offset inside its row (never more than half the 32px of slack), so the
+ *  band still reads as a scatter rather than as three ruled rows. */
 const LIT_ROW_JITTER = 14
+/** How far a row may push a pool off its own evening before the shelf opens the next row instead:
+ *  about one pool's width. Below it, sliding along the row keeps the band compact; above it, the
+ *  pool would stand a fortnight from its date to save a row nobody needed saved. */
+const OPEN_ROW_COST = 150
+/** The title lettering, full face first. When three rows cannot hold the season at one step the
+ *  layout is tried at the next; studio-stage.css sets the matching font size off `data-lettering`
+ *  on the svg, so the face and the pool shrink together and a title never spills its pool. */
+const LETTERING = [1, 0.85, 0.72] as const
 /** the top edge of the lamp the light hangs from — the highest thing on the stage, and therefore
  *  the lowest a crop window's top edge may sit if the fragment is still to read as a stage */
 const LAMP_TOP = FLOOR.y0 - 28
 
-/** Didone capitals at 15px, measured against the glyph widths this figure actually uses: a pool is
- *  as wide as the name it lights, never a fixed box a long title spills out of. */
-const poolRx = (label: string) => Math.max(52, 26 + label.length * 5.9)
+/** Didone capitals, measured against the glyph widths this figure actually uses at the full face:
+ *  a pool is as wide as the name it lights, never a fixed box a long title spills out of. At a
+ *  denser lettering step the pool narrows with the face. */
+const poolRx = (label: string, lettering = 1) => Math.max(52, 26 + label.length * 5.9) * lettering
 
 // ---------------------------------------------------------------- return derivation
 //
@@ -260,15 +306,24 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
   }
 
   const ts = (d: string) => Date.parse(`${d}T00:00:00Z`)
-  const x = bandScale([ts(firstDate), ts(lastDate)], [AXIS.x0, AXIS.x1])
 
   // ——— premieres and withdrawals: one mark per shipped work ————————————————————
+  // Drafted without a position first: where a pool stands depends on the axis, and where the axis
+  // ends depends on the widest pool of the last evening (below), so the time scale is chosen once
+  // all the lit drafts are known and then applied to every band alike.
   interface Draft extends Omit<SeasonMark, 'x' | 'y'> {
     x: number
     y: number
   }
   const lit: Draft[] = []
   const returns: Draft[] = []
+  /** Works already given a position. A work can be shipped more than once — the practice revises a
+   *  premiered work and records the revision as the ship it is — but the floor draws PREMIERES, so
+   *  only the first ship opens a position. Without this, a re-shipped work got a second ellipse on
+   *  the same coordinates, a duplicate `premiered:<slug>` key (which markIndex then collapsed, so
+   *  one of the two marks could no longer be addressed at all) and its returns counted twice.
+   *  dossier.ts keeps the first ship per slug in the same way. (2026-09-02.) */
+  const positioned = new Set<string>()
 
   for (const e of chronicle) {
     if (e.move !== 'ship') continue
@@ -276,12 +331,13 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
     if (!slug) continue
     const meta = metas[slug]
     if (!meta?.title) continue
+    if (positioned.has(slug)) continue
+    positioned.add(slug)
     const label = meta.title.toUpperCase()
     // The WITHDRAWN state is machine-readable in the work's own meta.json — the same test /studio's
     // hero already applies to pick the newest LIVE premiere.
     const withdrawn = /^WITHDRAWN\b/i.test(meta.medium ?? '')
     const state: SeasonState = withdrawn ? 'withdrawn' : 'premiered'
-    const rx = poolRx(label)
     lit.push({
       key: `${state}:${slug}`,
       state,
@@ -293,9 +349,9 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
         ? `src/content/studio/works/${slug}/meta.json, verbatim`
         : 'chronicle mirror, verbatim',
       dateKnown: true,
-      x: x(ts(e.date)),
-      y: LIT_Y + (hash01(slug) - 0.5) * 2 * LIT_JITTER,
-      rx,
+      x: 0,
+      y: LIT_Y,
+      rx: poolRx(label),
       ry: POOL_RY,
     })
 
@@ -315,7 +371,7 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
         record,
         source: 'chronicle mirror, verbatim',
         dateKnown: true,
-        x: x(ts(c.date)),
+        x: 0,
         y: PROD_Y,
         rx: STRIKE_R,
         ry: STRIKE_R,
@@ -324,6 +380,55 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
       })
     }
   }
+
+  // ——— the time axis, and the lettering the lit band can afford ———————————————————
+  //
+  // The axis's END is not a constant. A premiere on the season's newest evening stands at the axis
+  // end by definition, and a pool is as wide as its title — so with the end fixed at 1248, ONE KNOCK
+  // EACH (109px each side) stood with a third of its name past the floor's edge on 2026-09-01. The
+  // axis now stops where the widest pool dated on the last evening still fits inside the wall; on
+  // every earlier evening that is the same 1248 it always was.
+  //
+  // The layout is tried at the full face first. Only when three rows cannot hold it at that size
+  // does the lettering step down (LETTERING; the svg says which step on `data-lettering`, and the
+  // stylesheet sets the face to match). A record that fits no step is the honest alarm this file has
+  // always kept — the band is full, the figure needs a decision — and it throws rather than draw a
+  // name over a name.
+  const layoutAt = (step: 1 | 2 | 3, rows: number) => {
+    const scale = LETTERING[step - 1]
+    const rx = (label: string) => poolRx(label, scale)
+    const widestLastDay = Math.max(0, ...lit.filter((d) => d.date === lastDate).map((d) => rx(d.label)))
+    const axisEnd = Math.min(AXIS.x1, LIT_WALL.max - widestLastDay)
+    const x = bandScale([ts(firstDate), ts(lastDate)], [AXIS.x0, axisEnd])
+    const shelved = shelveLit(
+      lit.map((d) => ({
+        key: d.key,
+        date: d.date,
+        rx: rx(d.label),
+        wanted: Math.max(x(ts(d.date)), LIT_WALL.min + rx(d.label)),
+      })),
+      rows,
+    )
+    return shelved ? { step, scale, x, shelved, rows } : null
+  }
+  // Fewest rows first, and within a depth the fullest face that fits it: the floor stays as shallow
+  // as it can, and when it must deepen it gets the FULL face back instead of shrinking further.
+  let layout: ReturnType<typeof layoutAt> = null
+  for (let rows = LIT_ROWS_MIN; rows <= LIT_ROWS_MAX && !layout; rows++) {
+    for (let step = 1; step <= LETTERING.length && !layout; step++) {
+      layout = layoutAt(step as 1 | 2 | 3, rows)
+    }
+  }
+  if (!layout) {
+    throw new Error(
+      `buildSeasonModel: the lit band is full — ${lit.length} premieres do not fit ${LIT_ROWS_MAX} rows ` +
+        'even at the densest lettering; the floor needs a decision (season.ts, the shelf), not a quietly overlapping name',
+    )
+  }
+  /** how far this season deepened the floor — 0 while the band still fits its shallowest form */
+  const depth = (layout.rows - LIT_ROWS_MIN) * LIT_ROW_GAP
+  const { x } = layout
+  for (const r of returns) r.x = x(ts(r.date))
 
   // ——— strikes: the curated kill list, dated through its session's evening ——————
   const struck: Draft[] = kills.map((k) => {
@@ -339,7 +444,7 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
       source: k.source,
       dateKnown: known !== undefined,
       x: x(ts(known ?? firstDate)),
-      y: STRUCK_Y + (hash01(k.name) - 0.5) * 2 * STRUCK_JITTER,
+      y: STRUCK_Y + depth + (hash01(k.name) - 0.5) * 2 * STRUCK_JITTER,
       rx: STRIKE_R,
       ry: STRIKE_R,
     }
@@ -372,77 +477,157 @@ export function buildSeasonModel(input: SeasonInput): SeasonModel {
     }))
   }
 
-  // ——— the lit band is shelved, not relaxed ————————————————————————————————————
-  //
-  // A relaxation pass settles marks that are ALMOST in place. It cannot answer "which of these two
-  // lines does this pool belong on", because that is an assignment, and a pass of local pushes has
-  // no way to reach it: pushing a pool towards the line it should be on drives it through whatever
-  // already sits there, so the pass stops in the first arrangement where every push cancels out.
-  //
-  // The lit band asks exactly that question, and got the wrong answer on 2026-08-21. The pools are
-  // as wide as their names (up to 253px for NO WAY OF KNOWING) and the band is 1168px wide, so the
-  // six premieres on the record need 1145px of it — 98% — to stand in a single line. The chronicle
-  // reached a new day, the time axis compressed to fit it, and NATIVE SPEAKER, clamped against the
-  // left wall with nowhere left to go, came to rest 0.3px inside NO WAY OF KNOWING. The relaxation
-  // was not short of passes: at 24, 200 and 800 iterations it returns the byte-identical wrong
-  // answer, because that arrangement is a fixed point. A single line was never going to hold this
-  // band, and every night the season lengthens makes the line shorter.
-  //
-  // So the pools are shelved instead: walked oldest first, each placed on the line where it sits
-  // closest to its own date, and moved right only as far as the pool already on that line requires.
-  // Two lines hold this record in 534px and 593px — a third of the room a single line could not
-  // find. When both lines do fill, a pool runs past the floor's right edge and the bounds guard in
-  // season.test.ts fails, which is the honest alarm: the band is full, and the figure needs a
-  // decision (a third line, smaller lettering) rather than a quietly overlapping name.
-  const shelveLit = (drafts: Draft[]): Draft[] => {
-    const minX = FLOOR.x0 + 40
-    const lines = [LIT_Y - LIT_JITTER, LIT_Y + LIT_JITTER]
-    const rightEdge = lines.map(() => -Infinity)
-    const at = new Map<string, { x: number; y: number }>()
-    // Oldest first — a shelf fills left to right, and the x axis is time. The key breaks a same-day
-    // tie, so the walk is a total order and never depends on the chronicle's own row order.
-    const oldestFirst = [...drafts].sort((a, b) =>
-      a.date === b.date ? a.key.localeCompare(b.key) : a.date < b.date ? -1 : 1,
-    )
-    for (const d of oldestFirst) {
-      const wanted = Math.max(d.x, minX + d.rx)
-      // the line that moves this pool least off its own date; ties go to the upper line
-      let line = 0
-      let best = Infinity
-      for (let i = 0; i < lines.length; i++) {
-        const cost = Math.max(wanted, rightEdge[i] + POOL_GAP + d.rx) - wanted
-        if (cost < best) {
-          best = cost
-          line = i
-        }
-      }
-      const x = Math.max(wanted, rightEdge[line] + POOL_GAP + d.rx)
-      rightEdge[line] = x + d.rx
-      at.set(d.key, {
-        x: round(x),
-        y: round(lines[line] + (hash01(d.key) - 0.5) * 2 * LIT_ROW_JITTER),
-      })
-    }
-    return drafts.map((d) => ({ ...d, ...at.get(d.key)! }))
-  }
-
   const marks: SeasonMark[] = [
-    // pools carry their own width (the title sets it), so their footprint IS their rx
-    ...shelveLit(lit),
+    // pools carry their own width (the title sets it), so their footprint IS their rx — shelved,
+    // not relaxed (see shelveLit), at the lettering the band could afford
+    ...lit.map((d) => ({ ...d, rx: poolRx(d.label, layout.scale), ...layout.shelved.get(d.key)! })),
     // an X plus two lettered lines: ~68 wide, ~26 tall
-    ...settle(struck, STRUCK_Y - STRUCK_JITTER, STRUCK_Y + STRUCK_JITTER, 26, 16, 2.6),
+    ...settle(struck, STRUCK_Y + depth - STRUCK_JITTER, STRUCK_Y + depth + STRUCK_JITTER, 26, 16, 2.6),
     // returns land on the production band itself — the arc carries only a Roman numeral, so their
     // footprint is the numeral, and their x spread is what keeps three journeys legible
-    ...settle(returns, PROD_Y, PROD_Y, 26, 26),
+    ...settle(returns, PROD_Y + depth, PROD_Y + depth, 26, 26),
   ]
 
   const counts: Record<SeasonState, number> = { premiered: 0, withdrawn: 0, struck: 0, returned: 0 }
   for (const m of marks) counts[m.state] += 1
 
-  return { marks, counts, firstDate, lastDate, width: W, height: H, provenance: PROV }
+  return {
+    marks,
+    counts,
+    firstDate,
+    lastDate,
+    width: W,
+    height: H + depth,
+    provenance: PROV,
+    lettering: layout.step,
+    depth,
+  }
 }
 
-const round = (n: number) => Math.round(n * 10) / 10
+// ---------------------------------------------------------------- the lit band is shelved, not relaxed
+//
+// A relaxation pass settles marks that are ALMOST in place. It cannot answer "which of these rows
+// does this pool belong on", because that is an assignment, and a pass of local pushes has no way
+// to reach it: pushing a pool towards the row it should be on drives it through whatever already
+// sits there, so the pass stops in the first arrangement where every push cancels out.
+//
+// The lit band asks exactly that question, and got the wrong answer on 2026-08-21. The pools are
+// as wide as their names (up to 253px for NO WAY OF KNOWING) and the band is 1168px wide, so the
+// six premieres then on the record needed 1145px of it — 98% — to stand in a single row. The
+// chronicle reached a new day, the time axis compressed to fit it, and NATIVE SPEAKER, clamped
+// against the left wall with nowhere left to go, came to rest 0.3px inside NO WAY OF KNOWING. The
+// relaxation was not short of passes: at 24, 200 and 800 iterations it returns the byte-identical
+// wrong answer, because that arrangement is a fixed point.
+//
+// So the pools are SHELVED: walked oldest first (the x axis is time, and a shelf fills left to
+// right), each placed on the row where it stands closest to its own evening, and slid right only as
+// far as the pool already on that row requires. Two rows held the record from 2026-08-21 to the end
+// of that month. On 2026-09-01 the practice restarted under research ecology v3 and shipped four
+// works in two evenings, three of them on one day — every one of them wanting the axis end, and
+// two rows cannot hold three names at one x. The 2026-09-01 shelf (Frank's decision that evening,
+// wording private: rebuild the floor for the v3 record rather than archive it) changes three things:
+//
+//   · THREE ROWS, opened lazily. A row is opened only when every open row would push the pool more
+//     than OPEN_ROW_COST off its own evening — so a record that two rows hold well still stands on
+//     two, and a season stretched to 2030 spreads along the rows rather than stacking three deep at
+//     the axis start.
+//   · THE WALL. When a row's natural place for a pool runs past the floor's edge, the pool stands
+//     against the wall and the pools before it on that row yield leftward — in order, each only as
+//     far as the next requires — so a pool may stand LEFT of its evening at the season's end, but
+//     never off the floor and never over a name. Its date is lettered under it either way. A row
+//     that would have to push its first pool past the LEFT wall is full and takes nothing.
+//   · THE LETTERING STEPS (in buildSeasonModel): only when all three rows are full at the current
+//     face does the whole layout retry with the titles a step smaller.
+//
+// What has not changed: the alarm. A record no step can hold throws, and season.test.ts holds every
+// pool inside the floor and apart from every other — the figure fails loud, never overlaps quietly.
+
+interface ShelfPool {
+  key: string
+  date: string
+  rx: number
+  /** where the pool wants to stand: its evening on the axis, already kept off the left wall */
+  wanted: number
+}
+
+interface RowPool {
+  key: string
+  rx: number
+  x: number
+}
+
+interface Placement {
+  x: number
+  /** how far this placement moves pools off their evenings — the new one and any it makes yield */
+  cost: number
+  /** earlier pools on the row that yield leftward to make room, by index */
+  shifts: { at: number; x: number }[]
+}
+
+/** Where a row would take this pool, or null when it cannot without a name running off the floor. */
+function placeOnRow(row: readonly RowPool[], d: ShelfPool): Placement | null {
+  const last = row[row.length - 1]
+  const natural = last ? Math.max(d.wanted, last.x + last.rx + POOL_GAP + d.rx) : d.wanted
+  if (natural + d.rx <= LIT_WALL.max) return { x: natural, cost: natural - d.wanted, shifts: [] }
+  // the wall: the pool stands against it, and the row yields leftward behind it
+  const x = LIT_WALL.max - d.rx
+  const shifts: { at: number; x: number }[] = []
+  let cost = Math.abs(d.wanted - x)
+  let edge = x - d.rx - POOL_GAP
+  for (let i = row.length - 1; i >= 0; i--) {
+    const p = row[i]
+    if (p.x + p.rx <= edge) break
+    const nx = edge - p.rx
+    if (nx - p.rx < LIT_WALL.min) return null
+    shifts.push({ at: i, x: nx })
+    cost += p.x - nx
+    edge = nx - p.rx - POOL_GAP
+  }
+  return { x, cost, shifts }
+}
+
+/** The shelf: every pool's place on the lit band, or null when `maxRows` rows cannot hold them at
+ *  this lettering. Deterministic — same pools in, same map out; the key breaks a same-day tie, so
+ *  the walk is a total order and never depends on the chronicle's own row order. */
+function shelveLit(
+  pools: readonly ShelfPool[],
+  maxRows: number,
+): Map<string, { x: number; y: number }> | null {
+  const rowY = litRowY(maxRows)
+  const rows: RowPool[][] = []
+  const oldestFirst = [...pools].sort((a, b) =>
+    a.date === b.date ? a.key.localeCompare(b.key) : a.date < b.date ? -1 : 1,
+  )
+  for (const d of oldestFirst) {
+    let best: { row: number; cost: number; placed: Placement } | null = null
+    // every open row, and — while one is still free — the option of opening the next
+    const options = Math.min(rows.length + 1, maxRows)
+    for (let r = 0; r < options; r++) {
+      const placed = placeOnRow(rows[r] ?? [], d)
+      if (!placed) continue
+      // opening a row costs a fixed OPEN_ROW_COST, so an open row that displaces the pool less
+      // than that always wins; ties go to the row above (strict <, rows walked top down)
+      const cost = r === rows.length ? OPEN_ROW_COST : placed.cost
+      if (!best || cost < best.cost) best = { row: r, cost, placed }
+    }
+    if (!best) return null
+    if (best.row === rows.length) rows.push([])
+    const row = rows[best.row]
+    for (const shift of best.placed.shifts) row[shift.at].x = shift.x
+    row.push({ key: d.key, rx: d.rx, x: best.placed.x })
+  }
+  const at = new Map<string, { x: number; y: number }>()
+  rows.forEach((row, r) => {
+    for (const p of row) {
+      at.set(p.key, { x: round(p.x), y: round(rowY[r] + (hash01(p.key) - 0.5) * 2 * LIT_ROW_JITTER) })
+    }
+  })
+  return at
+}
+
+/** One decimal, everywhere: an SVG attribute needs no more, and the same rounding on both
+ *  renderers is what keeps the live figure and the build-time still the same drawing. */
+export const round = (n: number) => Math.round(n * 10) / 10
 
 function slugify(s: string): string {
   return s
@@ -507,11 +692,11 @@ export function buildSeasonFloorSvg(model: SeasonModel, opts: SeasonRenderOption
   const s: string[] = []
   s.push(
     `<svg class="st-sf" viewBox="${view}" role="img" preserveAspectRatio="xMidYMid meet"` +
-      ` aria-label="${escapeXml(opts.label ?? defaultLabel(model))}">`,
+      ` data-lettering="${model.lettering}" aria-label="${escapeXml(opts.label ?? defaultLabel(model))}">`,
   )
 
   // the floor, the curtain line, and the lamp bar the light hangs from
-  s.push(`<rect class="st-sf-floor" x="${FLOOR.x0}" y="${FLOOR.y0}" width="${FLOOR.x1 - FLOOR.x0}" height="${FLOOR.y1 - FLOOR.y0}"/>`)
+  s.push(`<rect class="st-sf-floor" x="${FLOOR.x0}" y="${FLOOR.y0}" width="${FLOOR.x1 - FLOOR.x0}" height="${FLOOR.y1 + model.depth - FLOOR.y0}"/>`)
   s.push(`<path class="st-sf-curtain" d="M${FLOOR.x0} ${FLOOR.y0} H${FLOOR.x1}"/>`)
   s.push(`<path class="st-sf-bar" d="M${FLOOR.x0} ${FLOOR.y0 - 22} H${FLOOR.x1}"/>`)
   if (opts.headline) {
@@ -519,9 +704,9 @@ export function buildSeasonFloorSvg(model: SeasonModel, opts: SeasonRenderOption
   }
 
   // the production area — the upstage band a returned work goes back into
-  s.push(`<path class="st-sf-prod" d="M${FLOOR.x0 + 24} ${PROD_Y + 26} H${FLOOR.x1 - 24}"/>`)
+  s.push(`<path class="st-sf-prod" d="M${FLOOR.x0 + 24} ${PROD_Y + model.depth + 26} H${FLOOR.x1 - 24}"/>`)
   s.push(
-    `<text class="st-sf-prod-label" x="${FLOOR.x0 + 24}" y="${PROD_Y + 46}">` +
+    `<text class="st-sf-prod-label" x="${FLOOR.x0 + 24}" y="${PROD_Y + model.depth + 46}">` +
       `${escapeXml(opts.productionLabel ?? 'THE PRODUCTION AREA')}</text>`,
   )
 
@@ -529,7 +714,7 @@ export function buildSeasonFloorSvg(model: SeasonModel, opts: SeasonRenderOption
   // two dates the data actually carries (an invented month grid would be a claim about evenings the
   // house never played). The dates letter at the TOP, where the axis starts, so the upstage edge
   // stays free for the production band's own label.
-  s.push(`<path class="st-sf-axis" d="M${AXIS.x0} ${FLOOR.y1 - 7} V${FLOOR.y1 + 7} M${AXIS.x1} ${FLOOR.y1 - 7} V${FLOOR.y1 + 7}"/>`)
+  s.push(`<path class="st-sf-axis" d="M${AXIS.x0} ${FLOOR.y1 + model.depth - 7} V${FLOOR.y1 + model.depth + 7} M${AXIS.x1} ${FLOOR.y1 + model.depth - 7} V${FLOOR.y1 + model.depth + 7}"/>`)
   s.push(`<text class="st-sf-tick" x="${FLOOR.x0 + 10}" y="${FLOOR.y0 + 20}">${escapeXml(model.firstDate)}</text>`)
   s.push(
     `<text class="st-sf-tick" x="${FLOOR.x1 - 10}" y="${FLOOR.y0 + 20}" text-anchor="end">${escapeXml(model.lastDate)}</text>`,
@@ -549,9 +734,10 @@ export function buildSeasonFloorSvg(model: SeasonModel, opts: SeasonRenderOption
   for (const [key, text] of annotations) {
     const m = model.marks.find((k) => k.key === key)
     if (!m) continue
+    const p = noteParts(m)
     s.push(
-      `<g class="st-sf-note"><path d="M${m.x} ${m.y + m.ry + 6} V${m.y + m.ry + 26}"/>` +
-        `<text x="${m.x}" y="${m.y + m.ry + 42}" text-anchor="middle">${escapeXml(text)}</text></g>`,
+      `<g class="st-sf-note"><path d="${p.stem}"/>` +
+        `<text x="${p.x}" y="${p.y}" text-anchor="middle">${escapeXml(text)}</text></g>`,
     )
   }
 
@@ -579,73 +765,125 @@ function markAttrs(m: SeasonMark, f: MarkFlags, cls: string): string {
   return parts.join(' ')
 }
 
+// ---------------------------------------------------------------- the parts both renderers draw
+//
+// Since 2026-09-02 this floor has TWO renderers: the string builder in this file — which cuts the
+// build-time stills the hub's triptych and the tour's scenes are made of — and the React island
+// src/components/studio/SeasonFloor.tsx, which is the live figure a visitor points at. Two
+// drawings of one stage is exactly the arrangement that drifts, so every NUMBER both of them draw
+// is computed HERE, once; each renderer only decides how to spell it (a template string on one
+// side, JSX on the other). Nothing about appearance moved: the class names and the drawing order
+// still live with the renderer, and studio-stage.css still inks both.
+//
+// The string builder's output did not change by a byte in this move — season.test.ts and
+// triptych.test.ts hold that from the outside, and SeasonFloor.test.tsx holds the two renderings
+// against each other so a change to one cannot silently pass the other.
+
+/** The four blocking-tape corners, as (dx, dy) signs around the pool. */
+const TAPE_CORNERS = [
+  [-1, -1],
+  [1, -1],
+  [-1, 1],
+  [1, 1],
+] as const
+
+export interface LitParts {
+  withdrawn: boolean
+  lamp: { x: number; y: number; width: number; height: number }
+  /** the two beam hairlines, as path data */
+  beams: [string, string]
+  pool: { className: string; cx: number; cy: number; rx: number; ry: number }
+  /** the four blocking-tape corners, as path data */
+  tape: string[]
+  title: { x: number; y: number; text: string }
+  meta: { x: number; y: number; text: string }
+  /** the X drawn THROUGH the pool — null while the light is still on */
+  through: string | null
+  hit: { cx: number; cy: number; rx: number; ry: number }
+}
+
 /** A lit position: the lamp on the bar, its two beam hairlines, the hard-edged pool, the title in
  *  Didone capitals, and the taped blocking corners. A withdrawn one keeps ALL of it and adds the X
- *  through the pool — the light is struck, the position stays on the floor. */
-function litMark(m: SeasonMark, f: MarkFlags): string {
+ *  through the pool — the light is struck, the position stays on the floor.
+ *
+ *  The hit target comes last so it sits on top: the group's own bounding box reaches from the lamp
+ *  on the bar all the way down to the pool, so its geometric centre is empty air between two 1px
+ *  beams — a pointer aimed at "the position" would miss it. The pool plus a little margin is what a
+ *  visitor is actually aiming at. */
+export function litParts(m: SeasonMark): LitParts {
   const w = m.state === 'withdrawn'
-  const g: string[] = []
-  g.push(`<g ${markAttrs(m, f, 'st-sf-lit')}>`)
-  g.push(`<rect class="st-sf-lamp" x="${round(m.x - 7)}" y="${FLOOR.y0 - 28}" width="14" height="8"/>`)
-  g.push(`<path class="st-sf-beam" d="M${round(m.x - 5)} ${FLOOR.y0 - 20} L${round(m.x - m.rx)} ${round(m.y)}"/>`)
-  g.push(`<path class="st-sf-beam" d="M${round(m.x + 5)} ${FLOOR.y0 - 20} L${round(m.x + m.rx)} ${round(m.y)}"/>`)
-  g.push(
-    `<ellipse class="${w ? 'st-sf-pool st-sf-withdrawn' : 'st-sf-pool'}" cx="${m.x}" cy="${m.y}"` +
-      ` rx="${m.rx}" ry="${m.ry}"/>`,
-  )
-  // blocking tape: the position on the floor, kept whether or not the light is on
-  for (const [dx, dy] of [
-    [-1, -1],
-    [1, -1],
-    [-1, 1],
-    [1, 1],
-  ] as const) {
-    const cx = round(m.x + dx * (m.rx + 16))
-    const cy = round(m.y + dy * (m.ry + 14))
-    g.push(`<path class="st-sf-tape" d="M${cx} ${round(cy - dy * 11)} V${cy} H${round(cx - dx * 14)}"/>`)
-  }
-  g.push(
-    `<text class="st-sf-title" x="${m.x}" y="${round(m.y + 5)}" text-anchor="middle">${escapeXml(m.label)}</text>`,
-  )
-  g.push(
-    `<text class="st-sf-litmeta" x="${m.x}" y="${round(m.y + m.ry + 16)}" text-anchor="middle">` +
-      `${escapeXml(`${m.session ? m.session + ' · ' : ''}${m.date}`)}</text>`,
-  )
-  if (w) {
-    // the strike THROUGH the pool — the one mark that says the light was taken away
-    g.push(
-      `<path class="st-sf-x st-sf-x-through" d="M${round(m.x - m.rx * 0.82)} ${round(m.y - m.ry * 0.9)}` +
+  return {
+    withdrawn: w,
+    lamp: { x: round(m.x - 7), y: FLOOR.y0 - 28, width: 14, height: 8 },
+    beams: [
+      `M${round(m.x - 5)} ${FLOOR.y0 - 20} L${round(m.x - m.rx)} ${round(m.y)}`,
+      `M${round(m.x + 5)} ${FLOOR.y0 - 20} L${round(m.x + m.rx)} ${round(m.y)}`,
+    ],
+    pool: {
+      className: w ? 'st-sf-pool st-sf-withdrawn' : 'st-sf-pool',
+      cx: m.x,
+      cy: m.y,
+      rx: m.rx,
+      ry: m.ry,
+    },
+    tape: TAPE_CORNERS.map(([dx, dy]) => {
+      const cx = round(m.x + dx * (m.rx + 16))
+      const cy = round(m.y + dy * (m.ry + 14))
+      return `M${cx} ${round(cy - dy * 11)} V${cy} H${round(cx - dx * 14)}`
+    }),
+    title: { x: m.x, y: round(m.y + 5), text: m.label },
+    meta: {
+      x: m.x,
+      y: round(m.y + m.ry + 16),
+      text: `${m.session ? m.session + ' · ' : ''}${m.date}`,
+    },
+    through: w
+      ? `M${round(m.x - m.rx * 0.82)} ${round(m.y - m.ry * 0.9)}` +
         ` L${round(m.x + m.rx * 0.82)} ${round(m.y + m.ry * 0.9)}` +
         ` M${round(m.x + m.rx * 0.82)} ${round(m.y - m.ry * 0.9)}` +
-        ` L${round(m.x - m.rx * 0.82)} ${round(m.y + m.ry * 0.9)}"/>`,
-    )
+        ` L${round(m.x - m.rx * 0.82)} ${round(m.y + m.ry * 0.9)}`
+      : null,
+    hit: { cx: m.x, cy: m.y, rx: round(m.rx + 8), ry: round(m.ry + 8) },
   }
-  // The hit target, last so it sits on top: the group's own bounding box reaches from the lamp on
-  // the bar all the way down to the pool, so its geometric centre is empty air between two 1px
-  // beams — a pointer aimed at "the position" would miss it. The pool plus a little margin is what
-  // a visitor is actually aiming at.
-  g.push(`<ellipse class="st-sf-hit" cx="${m.x}" cy="${m.y}" rx="${round(m.rx + 8)}" ry="${round(m.ry + 8)}"/>`)
-  g.push(`<title>${escapeXml(hoverText(m))}</title></g>`)
-  return g.join('')
+}
+
+export interface StrikeParts {
+  /** the taped X, as path data */
+  x: string
+  /** where the two lettered lines start, and which side of the X they run towards */
+  labelX: number
+  anchorEnd: boolean
+  name: { y: number; text: string }
+  session: { y: number; text: string }
+  /** the hit target covers the X AND its lettering, not just the 20px glyph */
+  hit: { x: number; y: number; width: number; height: number }
 }
 
 /** A struck position: the taped X the studio's grammar already uses, with its name and session
- *  lettered beside it and the verbatim reason on hover. */
-function strikeMark(m: SeasonMark, f: MarkFlags): string {
+ *  lettered beside it and the verbatim reason on hover. Near the floor's right edge the lettering
+ *  turns and runs back inwards, so a strike on the newest evening never letters off the stage. */
+export function strikeParts(m: SeasonMark): StrikeParts {
   const left = m.x > FLOOR.x1 - 220
-  const lx = round(left ? m.x - 15 : m.x + 15)
-  const anchor = left ? ' text-anchor="end"' : ''
-  return (
-    `<g ${markAttrs(m, f, 'st-sf-strike')}>` +
-    `<path class="st-sf-x" d="M${round(m.x - 10)} ${round(m.y - 10)} L${round(m.x + 10)} ${round(m.y + 10)}` +
-    ` M${round(m.x + 10)} ${round(m.y - 10)} L${round(m.x - 10)} ${round(m.y + 10)}"/>` +
-    `<text class="st-sf-strike-n" x="${lx}" y="${round(m.y - 1)}"${anchor}>${escapeXml(m.label)}</text>` +
-    `<text class="st-sf-strike-s" x="${lx}" y="${round(m.y + 13)}"${anchor}>` +
-    `${escapeXml(`${m.session}${m.dateKnown ? ` · ${m.date}` : ' · evening not in the mirror'}`)}</text>` +
-    // the hit target covers the X and its lettering, not just the 20px glyph
-    `<rect class="st-sf-hit" x="${round(left ? m.x - 132 : m.x - 15)}" y="${round(m.y - 15)}" width="147" height="32"/>` +
-    `<title>${escapeXml(hoverText(m))}</title></g>`
-  )
+  return {
+    x:
+      `M${round(m.x - 10)} ${round(m.y - 10)} L${round(m.x + 10)} ${round(m.y + 10)}` +
+      ` M${round(m.x + 10)} ${round(m.y - 10)} L${round(m.x - 10)} ${round(m.y + 10)}`,
+    labelX: round(left ? m.x - 15 : m.x + 15),
+    anchorEnd: left,
+    name: { y: round(m.y - 1), text: m.label },
+    session: {
+      y: round(m.y + 13),
+      text: `${m.session}${m.dateKnown ? ` · ${m.date}` : ' · evening not in the mirror'}`,
+    },
+    hit: { x: round(left ? m.x - 132 : m.x - 15), y: round(m.y - 15), width: 147, height: 32 },
+  }
+}
+
+export interface ReturnParts {
+  arc: string
+  arrow: string
+  ordinal: { x: number; y: number; text: string }
+  hit: { cx: number; cy: number; r: number }
 }
 
 /** A return: a violet arc leaving the work's own pool on the public side and curving back down
@@ -655,26 +893,92 @@ function strikeMark(m: SeasonMark, f: MarkFlags): string {
  *  sideways by 120 + ordinal × 46 px and drew three enormous crossing teardrops (visible
  *  immediately in the first screenshot pass). The arcs already separate on their own, because each
  *  return lands at its own evening on the time axis — so the curve's only job is to leave the pool
- *  downward and arrive at the landing downward, which is what these two control points do. */
-function returnArc(m: SeasonMark, model: SeasonModel, f: MarkFlags): string {
+ *  downward and arrive at the landing downward, which is what these two control points do.
+ *
+ *  The hit target sits at the landing, on top of the marks, so a pointer finds the arc without
+ *  having to land on a 2px stroke (dataviz interaction rule: the hit area is bigger than the mark). */
+export function returnParts(m: SeasonMark, model: SeasonModel): ReturnParts {
   const from = model.marks.find((k) => k.ofWork === undefined && k.key.endsWith(`:${m.ofWork}`))
   const sx = from ? from.x : m.x
   const sy = from ? from.y + from.ry : LIT_Y + POOL_RY
   const ty = m.y - 12
   const dy = ty - sy
-  const d =
-    `M${round(sx)} ${round(sy)} C${round(sx)} ${round(sy + dy * 0.55)} ` +
-    `${round(m.x)} ${round(sy + dy * 0.78)} ${round(m.x)} ${round(ty)}`
+  return {
+    arc:
+      `M${round(sx)} ${round(sy)} C${round(sx)} ${round(sy + dy * 0.55)} ` +
+      `${round(m.x)} ${round(sy + dy * 0.78)} ${round(m.x)} ${round(ty)}`,
+    arrow:
+      `M${round(m.x - 6)} ${round(m.y - 21)} L${round(m.x)} ${round(m.y - 11)}` +
+      ` L${round(m.x + 6)} ${round(m.y - 21)}`,
+    ordinal: { x: m.x, y: round(m.y + 15), text: roman(m.ordinal ?? 1) },
+    hit: { cx: m.x, cy: round(m.y), r: 20 },
+  }
+}
+
+export interface NoteParts {
+  /** the call-out's stem, as path data */
+  stem: string
+  x: number
+  y: number
+}
+
+/** A free call-out lettered under the mark it names — where a tour scene puts its own words, and
+ *  the one place on this floor a string arrives that the committed record did not write. */
+export function noteParts(m: SeasonMark): NoteParts {
+  return { stem: `M${m.x} ${m.y + m.ry + 6} V${m.y + m.ry + 26}`, x: m.x, y: m.y + m.ry + 42 }
+}
+
+// ---------------------------------------------------------------- the string renderer's marks
+
+function litMark(m: SeasonMark, f: MarkFlags): string {
+  const p = litParts(m)
+  const g: string[] = []
+  g.push(`<g ${markAttrs(m, f, 'st-sf-lit')}>`)
+  g.push(
+    `<rect class="st-sf-lamp" x="${p.lamp.x}" y="${p.lamp.y}" width="${p.lamp.width}" height="${p.lamp.height}"/>`,
+  )
+  for (const d of p.beams) g.push(`<path class="st-sf-beam" d="${d}"/>`)
+  g.push(
+    `<ellipse class="${p.pool.className}" cx="${p.pool.cx}" cy="${p.pool.cy}"` +
+      ` rx="${p.pool.rx}" ry="${p.pool.ry}"/>`,
+  )
+  for (const d of p.tape) g.push(`<path class="st-sf-tape" d="${d}"/>`)
+  g.push(
+    `<text class="st-sf-title" x="${p.title.x}" y="${p.title.y}" text-anchor="middle">${escapeXml(p.title.text)}</text>`,
+  )
+  g.push(
+    `<text class="st-sf-litmeta" x="${p.meta.x}" y="${p.meta.y}" text-anchor="middle">` +
+      `${escapeXml(p.meta.text)}</text>`,
+  )
+  if (p.through) g.push(`<path class="st-sf-x st-sf-x-through" d="${p.through}"/>`)
+  g.push(`<ellipse class="st-sf-hit" cx="${p.hit.cx}" cy="${p.hit.cy}" rx="${p.hit.rx}" ry="${p.hit.ry}"/>`)
+  g.push(`<title>${escapeXml(hoverText(m))}</title></g>`)
+  return g.join('')
+}
+
+function strikeMark(m: SeasonMark, f: MarkFlags): string {
+  const p = strikeParts(m)
+  const anchor = p.anchorEnd ? ' text-anchor="end"' : ''
+  return (
+    `<g ${markAttrs(m, f, 'st-sf-strike')}>` +
+    `<path class="st-sf-x" d="${p.x}"/>` +
+    `<text class="st-sf-strike-n" x="${p.labelX}" y="${p.name.y}"${anchor}>${escapeXml(p.name.text)}</text>` +
+    `<text class="st-sf-strike-s" x="${p.labelX}" y="${p.session.y}"${anchor}>` +
+    `${escapeXml(p.session.text)}</text>` +
+    `<rect class="st-sf-hit" x="${p.hit.x}" y="${p.hit.y}" width="${p.hit.width}" height="${p.hit.height}"/>` +
+    `<title>${escapeXml(hoverText(m))}</title></g>`
+  )
+}
+
+function returnArc(m: SeasonMark, model: SeasonModel, f: MarkFlags): string {
+  const p = returnParts(m, model)
   return (
     `<g ${markAttrs(m, f, 'st-sf-return')}>` +
-    `<path class="st-sf-arc" d="${d}"/>` +
-    `<path class="st-sf-arrow" d="M${round(m.x - 6)} ${round(m.y - 21)} L${round(m.x)} ${round(m.y - 11)}` +
-    ` L${round(m.x + 6)} ${round(m.y - 21)}"/>` +
-    `<text class="st-sf-ord" x="${m.x}" y="${round(m.y + 15)}" text-anchor="middle">` +
-    `${escapeXml(roman(m.ordinal ?? 1))}</text>` +
-    // hit target at the landing, on top of the marks so a pointer finds the arc without having to
-    // land on a 2px stroke (dataviz interaction rule: the hit area is bigger than the mark)
-    `<circle class="st-sf-hit" cx="${m.x}" cy="${round(m.y)}" r="20"/>` +
+    `<path class="st-sf-arc" d="${p.arc}"/>` +
+    `<path class="st-sf-arrow" d="${p.arrow}"/>` +
+    `<text class="st-sf-ord" x="${p.ordinal.x}" y="${p.ordinal.y}" text-anchor="middle">` +
+    `${escapeXml(p.ordinal.text)}</text>` +
+    `<circle class="st-sf-hit" cx="${p.hit.cx}" cy="${p.hit.cy}" r="${p.hit.r}"/>` +
     `<title>${escapeXml(hoverText(m))}</title></g>`
   )
 }
@@ -708,9 +1012,9 @@ function defaultLabel(model: SeasonModel): string {
  *  reads as a stage rather than a detail of one. Landscape on purpose: the first version cropped to
  *  760 × 684, nearly square, and the stills rendered a full reading column tall. */
 function cropView(model: SeasonModel, cropTo?: string, box?: { width: number; height: number }): string {
-  if (!cropTo) return `0 0 ${W} ${H}`
+  if (!cropTo) return `0 0 ${W} ${model.height}`
   const m = model.marks.find((k) => k.key === cropTo)
-  if (!m) return `0 0 ${W} ${H}`
+  if (!m) return `0 0 ${W} ${model.height}`
   if (box) {
     // A named window: centred on the mark in both axes and clamped to the figure, so a window
     // larger than the stage simply becomes the stage rather than a viewBox reaching past it.
@@ -722,14 +1026,14 @@ function cropView(model: SeasonModel, cropTo?: string, box?: { width: number; he
     // lit pools happened to sit high enough, and broke by 3.5px the first evening a sixth premiere
     // pushed the newest pool down (2026-08-15).
     const cw = Math.min(box.width, W)
-    const ch = Math.min(box.height, H)
+    const ch = Math.min(box.height, model.height)
     const bx = Math.min(Math.max(m.x - cw / 2, 0), W - cw)
-    const by = Math.min(Math.max(m.y - ch / 2, 0), H - ch, LAMP_TOP)
+    const by = Math.min(Math.max(m.y - ch / 2, 0), model.height - ch, LAMP_TOP)
     return `${round(bx)} ${round(by)} ${round(cw)} ${round(ch)}`
   }
   const cw = 1040
   const x0 = Math.min(Math.max(m.x - cw / 2, 0), W - cw)
-  return `${round(x0)} 104 ${cw} ${H - 104}`
+  return `${round(x0)} 104 ${cw} ${model.height - 104}`
 }
 
 // ---------------------------------------------------------------- the table floor

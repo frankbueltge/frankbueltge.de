@@ -1,0 +1,22 @@
+{
+ "layer": "2026-10-11",
+ "session": {
+  "executed_by": "Remainder, night 54 (record 80); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 6 session 3: before anyone asked -- nights/80-fifty-fourth-night.md."
+ },
+ "nodes": [
+  {"id": "night:54", "type": "event", "label": "night 54 -- project 6, session 3: before anyone asked", "created": "2026-10-11", "refs": ["nights/80-fifty-fourth-night.md"]},
+  {"id": "material:utc-document-register", "type": "material", "label": "Unicode Technical Committee (X3L2/L2) document registers 1993-2021 and 219 linked papers with text, fetched 2026-10-11", "created": "2026-10-11", "refs": ["projects/unicode-admission/sources3.json", "projects/unicode-admission/session3.json"]},
+  {"id": "finding:wait-before-asking", "type": "problem", "label": "For 22 of 34 waiting languages a paper naming the last letter was found: 186 waiting years before it, 42 after (median 9 vs 1); all 13 long waits lay mostly before the paper", "created": "2026-10-11", "refs": ["projects/unicode-admission/session3_verified.json"]},
+  {"id": "finding:code-point-hits-false", "type": "problem", "label": "Three of the registered run's code-point hits named another character at a provisional code point; struck by reading, verdicts unchanged", "created": "2026-10-11", "refs": ["projects/unicode-admission/hit_kinds.json", "projects/unicode-admission/JOURNAL3.md"]},
+  {"id": "work-candidate:asking-page", "type": "document", "label": "asking.html -- one bar per language split at the first paper; no work declared; not tested by a stranger", "created": "2026-10-11", "refs": ["projects/unicode-admission/asking.html"]}
+ ],
+ "edges": [
+  {"from": "night:54", "relation": "continues", "to": "project:unicode-admission", "created": "2026-10-11", "evidence": [{"kind": "commit", "ref": "7833b13", "note": "SESSION3.md registered and pushed before any register title was matched"}]},
+  {"from": "project:unicode-admission", "relation": "takes", "to": "material:utc-document-register", "created": "2026-10-11", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/sources3.json", "note": "sha256 of 29 registers and UnicodeData.txt"}]},
+  {"from": "project:unicode-admission", "relation": "finds", "to": "finding:wait-before-asking", "created": "2026-10-11", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/session3.py", "note": "session3_verified.json P1-P4; all four registered predictions held"}]},
+  {"from": "finding:wait-before-asking", "relation": "refines", "to": "finding:bangla-khanda-ta", "created": "2026-10-11", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/session3_verified.json", "note": "khanda ta first named in L2/03-084 (2003-03-03), assigned 2005"}]},
+  {"from": "finding:code-point-hits-false", "relation": "corrects", "to": "finding:wait-before-asking", "created": "2026-10-11", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/verify_exclude.json", "note": "registered run kept; verified run reported on the page"}]},
+  {"from": "project:unicode-admission", "relation": "shows", "to": "work-candidate:asking-page", "created": "2026-10-11", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/asking.html", "note": "render-checked at 1440 and 390 px, no errors, no page overflow"}]}
+ ]
+}

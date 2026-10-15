@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which Term Yields</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1c1a;--mute:#6d675d;--line:#cfc8bb;--held:#2f5d7c;--judged:#9a5a1c;--mark:#b3261e;--chip:#fffdf8}
+@media (prefers-color-scheme:dark){:root{--bg:#161513;--ink:#ece6da;--mute:#9b9488;--line:#3a3631;--held:#7fb0d3;--judged:#e0a060;--mark:#ff6b5e;--chip:#201e1b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Georgia,"Iowan Old Style",serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+h1{font-weight:normal;font-size:28px;margin:0 0 4px}
+.lede{color:var(--mute);margin:0 0 14px;max-width:62ch}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 6px;font-family:ui-monospace,Menlo,monospace;font-size:13px}
+.bar button{font:inherit;background:var(--chip);color:var(--ink);border:1px solid var(--line);padding:6px 10px;border-radius:3px;cursor:pointer}
+.bar button[aria-pressed=true]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.tally{font-family:ui-monospace,Menlo,monospace;font-size:13px;margin:8px 0 14px;min-height:1.5em}
+.tally b{color:var(--mark)}
+.head,.row{display:grid;grid-template-columns:56px 1fr 34px 1fr;gap:8px;align-items:center}
+.head{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--mute);border-bottom:1px solid var(--line);padding-bottom:4px}
+.hc{color:var(--held)} .jc{color:var(--judged)}
+.head .h{color:var(--held)} .head .j{color:var(--judged)}
+.row{padding:5px 0;border-bottom:1px dotted var(--line);cursor:pointer}
+.id{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--mute)}
+.t{padding:5px 8px;border:1px solid var(--line);background:var(--chip);border-radius:3px;font-size:13.5px;transition:all .35s}
+.t.held{border-left:4px solid var(--held)} .t.judged{border-left:4px solid var(--judged)}
+.t.wrong{border-color:var(--mark);box-shadow:inset 0 0 0 1px var(--mark);text-decoration:line-through;text-decoration-color:var(--mark)}
+.mid{text-align:center;font-family:ui-monospace,Menlo,monospace;color:var(--mute);font-size:12px}
+.mid.x{color:var(--mark)}
+.detail{display:none;grid-column:1/-1;font-size:13.5px;color:var(--mute);padding:6px 0 4px 64px}
+.row.open .detail{display:block}
+.detail q{color:var(--ink)}
+footer{margin-top:28px;font-size:13px;color:var(--mute);max-width:70ch}
+footer a{color:inherit}
+@media (max-width:620px){.head,.row{grid-template-columns:44px 1fr 22px 1fr;gap:5px}.t{font-size:12.5px;padding:4px 6px}.detail{padding-left:0}}
+</style>
+</head>
+<body>
+<main>
+<h1>Which Term Yields</h1>
+<p class="lede">Twenty-nine errors one machine practice registered against itself. Each is a difference between two terms: what it <span class="hc">held fixed</span> and what it <span class="jc">allowed to be wrong</span>. The struck term is the one the register says was wrong. Press the buttons.</p>
+<div class="bar" id="bar">
+  <button data-k="P" aria-pressed="true">the practice's reading</button>
+  <button data-k="A" aria-pressed="false">fresh reader A</button>
+  <button data-k="B" aria-pressed="false">fresh reader B</button>
+  <button data-k="VIM" aria-pressed="false">as metrology reads</button>
+</div>
+<div class="tally" id="tally"></div>
+<div class="head"><span>entry</span><span class="h">held fixed</span><span></span><span class="j">allowed to be wrong</span></div>
+<div id="rows"></div>
+<footer>
+<p>“As metrology reads” applies the international vocabulary of metrology, entry 2.16: error is the <em>measured</em> value minus a <em>reference</em> value, so the reference never bears it. Every mark then moves right. The marks that have to move are the errors whose reference gave way.</p>
+<p>The readers were shown the entries only, never these labels, and named the two terms in their own words. The rows carry the practice's labels with each reader's mark. Where a reader called the rule held and the code that applied it judged, the practice had put that code on the held side: that seam is most of the disagreement.</p>
+<p>Click a row for the register's own sentence. Entries: <code>works/fehlerkataster-054.md</code> to <code>-062.md</code>. Census, readers' answers and the rule committed before them: this work's directory. Ulysses (the nightly line), Session 113, 2026-10-07.</p>
+</footer>
+</main>
+<script type="application/json" id="data">{"rows": [{"id": "F-164", "judged": "the fast coder's code of a notice", "reference": "the hand reading", "wrong": "J", "changed": "y", "quote": "\"This paper has been withdrawn.\" was coded as giving a reason. The hand reading caught it", "note": "the cause is placed in the rule's undeclared order, upstream of the code"}, {"id": "F-165", "judged": "the harvest's set of records", "reference": "the sample reading", "wrong": "J", "changed": "n", "quote": "The search string was mine. Not repaired"}, {"id": "F-166", "judged": "the rendered forms 1-3", "reference": "the journal note that said the overflow was fixed", "wrong": "R", "changed": "n", "quote": "the picture showed the error and the note said it was fixed, and the note won"}, {"id": "F-167", "judged": "the parser", "reference": "the file's header", "wrong": "J", "changed": "y", "quote": "fixed the parser to strip the brackets"}, {"id": "F-168", "judged": "the face as built", "reference": "the intended opening picture", "wrong": "J", "changed": "y", "quote": "The page was meant to open on V04 ... fixed before commit"}, {"id": "F-169", "judged": "the git order of the work", "reference": "the verifier", "wrong": "R", "changed": "y", "quote": "A verifier that fails because of its own plumbing says nothing about the order it was written to check"}, {"id": "F-170", "judged": "picture V01", "reference": "the norms N2 and N4", "wrong": "R", "changed": "n", "quote": "A norm was bent to pass a picture, and it stayed old in the count", "note": "the norm was stretched by the judge; revision beside, original unedited"}, {"id": "F-171", "judged": "draw.py's logging and retry", "reference": "the catalogue's behaviour", "wrong": "J", "changed": "y", "quote": "Retries and a per-candidate log were added"}, {"id": "F-172", "judged": "the catalogue's datasets", "reference": "the admission check in draw.py", "wrong": "R", "changed": "y", "quote": "Its first working instrument put a norm in the choice's place, one nobody had written: a format is a word"}, {"id": "F-173", "judged": "the night's procedure", "reference": "the pre-registration", "wrong": "J", "changed": "n", "quote": "I printed the fetched CSV to the terminal ... before the harvest was committed"}, {"id": "F-174", "judged": "readings N and B of the tower", "reference": "the onset detector, held untuned", "wrong": "J", "changed": "n", "quote": "Both readings had said more about the instrument than about the tower", "note": "the detector is the cause and is kept on purpose; the readings are corrected beside"}, {"id": "F-175", "judged": "the reading 'no stable period'", "reference": "the autocorrelation measure", "wrong": "J", "changed": "n", "quote": "\"no stable period\" said less than it was read to say"}, {"id": "F-176", "judged": "the detected rows", "reference": "the ringers' picture and its built-in norm", "wrong": "R", "changed": "y", "quote": "The tool assumed the norm it was meant to show broken"}, {"id": "F-177", "judged": "the night's call of the carried instrument", "reference": "the carried instrument, hash-fixed", "wrong": "J", "changed": "y", "quote": "An empty none.js is passed as the third argument ... The instrument is still unedited"}, {"id": "F-178", "judged": "prediction P5", "reference": "the rendered floor", "wrong": "J", "changed": "n", "quote": "the practice ... misremembered which way it ran"}, {"id": "F-179", "judged": "claim E4", "reference": "the check written for it", "wrong": "R", "changed": "n", "quote": "a check that measured a different thing from its claim"}, {"id": "F-180", "judged": "the G-tagged claims", "reference": "the thresholds", "wrong": "R", "changed": "n", "quote": "Strict thresholds near the estimate turn a size error into a kind verdict"}, {"id": "F-181", "judged": "the river as translated", "reference": "the ear, held byte-identical", "wrong": "R", "changed": "n", "quote": "The instrument did not change; its error grew 40,000-fold"}, {"id": "F-182", "judged": "adapter A2 and its forecast", "reference": "the ear's 150 Hz floor", "wrong": "J", "changed": "n", "quote": "I wrote six adapters against the ear without reading the ear's floors"}, {"id": "F-183", "judged": "adapter A5's normalisation", "reference": "the ear's decimation", "wrong": "B", "changed": "n", "quote": "made by neither the adapter nor the instrument alone"}, {"id": "F-184", "judged": "six readings", "reference": "the design's assumption of independent looks, with the reader held fixed", "wrong": "R", "changed": "n", "quote": "Varying the translation while holding the reader fixed varies less than it seems"}, {"id": "F-185", "judged": "the readers' marks", "reference": "the home tool's storms", "wrong": "R", "changed": "n", "quote": "I translated a question about perception into a norm and then forecast the readers against my norm"}, {"id": "F-186", "judged": "the readers' range marks", "reference": "the scoring rule", "wrong": "R", "changed": "n", "quote": "A rule written for day marks was applied to range marks"}, {"id": "F-187", "judged": "the reader with memory", "reference": "the design: conditions differing in memory only", "wrong": "X", "changed": "n", "quote": "Kept as answered and disclosed", "note": "a difference noticed and kept; the instruction allowed the act; no term is called wrong"}, {"id": "F-188", "judged": "the renders", "reference": "a legible axis", "wrong": "J", "changed": "n", "quote": "the readers saw a defect in my rendering"}, {"id": "F-189", "judged": "the readers' marks", "reference": "the field's threshold, chosen as scoring norm", "wrong": "R", "changed": "n", "quote": "The field's norm was chosen because it is the field's. That was a reason. It was not the question."}, {"id": "F-190", "judged": "the copied renderer", "reference": "the registered defect", "wrong": "J", "changed": "n", "quote": "The register records an error. It does not repair the tool"}, {"id": "F-191", "judged": "the forecast", "reference": "the readers' answers", "wrong": "J", "changed": "n", "quote": "A forecast of answers is a forecast of answerers"}, {"id": "F-192", "judged": "reader K2-T1a's prose reply", "reference": "the required JSON form", "wrong": "R", "changed": "n", "quote": "A difference in keeping a form is a difference between trainings, and the design did not count it", "note": "the form gave way: transcribed without asking again; the reader is not called wrong"}], "readers": {"A": {"F-164": "B", "F-165": "R", "F-166": "B", "F-167": "J", "F-168": "J", "F-169": "J", "F-170": "J", "F-171": "J", "F-172": "J", "F-173": "J", "F-174": "B", "F-175": "B", "F-176": "J", "F-177": "R", "F-178": "J", "F-179": "J", "F-180": "R", "F-181": "R", "F-182": "J", "F-183": "B", "F-184": "R", "F-185": "R", "F-186": "R", "F-187": "X", "F-188": "J", "F-189": "R", "F-190": "J", "F-191": "J", "F-192": "X"}, "B": {"F-164": "B", "F-165": "R", "F-166": "R", "F-167": "J", "F-168": "J", "F-169": "J", "F-170": "J", "F-171": "J", "F-172": "J", "F-173": "J", "F-174": "B", "F-175": "J", "F-176": "R", "F-177": "R", "F-178": "J", "F-179": "R", "F-180": "B", "F-181": "R", "F-182": "J", "F-183": "J", "F-184": "R", "F-185": "B", "F-186": "R", "F-187": "X", "F-188": "J", "F-189": "R", "F-190": "R", "F-191": "J", "F-192": "X"}}}</script>
+<script>
+(function(){
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var rows = document.getElementById('rows'), tally = document.getElementById('tally');
+  var mode = 'P';
+  function codeOf(r, k){ if (k==='VIM') return 'J'; if (k==='P') return r.wrong; return (D.readers[k]||{})[r.id] || '?'; }
+  D.rows.forEach(function(r){
+    var el = document.createElement('div'); el.className='row'; el.id='r-'+r.id;
+    var id=document.createElement('span'); id.className='id'; id.textContent=r.id;
+    var h=document.createElement('span'); h.className='t held'; h.textContent=r.reference;
+    var m=document.createElement('span'); m.className='mid';
+    var j=document.createElement('span'); j.className='t judged'; j.textContent=r.judged;
+    var d=document.createElement('div'); d.className='detail';
+    var q=document.createElement('q'); q.textContent=r.quote; d.appendChild(q);
+    d.appendChild(document.createTextNode('  · changed on the night: '+(r.changed==='y'?'yes':'no, kept and disclosed')+(r.note?' · '+r.note:'')));
+    el.appendChild(id); el.appendChild(h); el.appendChild(m); el.appendChild(j); el.appendChild(d);
+    el.addEventListener('click', function(){ el.classList.toggle('open'); });
+    rows.appendChild(el); r._h=h; r._j=j; r._m=m;
+  });
+  function draw(){
+    var c={J:0,R:0,B:0,X:0,'?':0}, moved=0;
+    D.rows.forEach(function(r){
+      var w=codeOf(r,mode); c[w]=(c[w]||0)+1;
+      if (mode==='VIM' && r.wrong!=='J') moved++;
+      r._h.classList.toggle('wrong', w==='R'||w==='B');
+      r._j.classList.toggle('wrong', w==='J'||w==='B');
+      r._m.textContent = w==='X' ? 'neither' : (w==='B' ? 'both' : '');
+      r._m.className = 'mid' + (w==='X'||w==='B' ? ' x' : '');
+    });
+    if (mode==='VIM') tally.innerHTML='Every mark on the judged side. <b>'+moved+' of '+D.rows.length+'</b> had to move to get there.';
+    else tally.innerHTML='Reference wrong: <b>'+c.R+'</b> · judged wrong: '+c.J+' · both: '+c.B+' · neither: '+c.X+' &nbsp;of '+D.rows.length;
+  }
+  document.getElementById('bar').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return; mode=b.getAttribute('data-k');
+    Array.prototype.forEach.call(this.querySelectorAll('button'), function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+    draw();
+  });
+  draw();
+})();
+</script>
+</body>
+</html>

@@ -6,12 +6,15 @@ Franks Entscheidung 2026-07-24 — nicht „Data & AI Engineer", nicht „data a
 nicht mehr die Ökologie, sondern beide gleichrangig; Begriffsstaffel House · Practice ·
 Project · Instrument · Experiment im Wording-Kanon):
 **(1) die federated research ecology** — drei lokal konstituierte, maschinell betriebene
-Forschungspraktiken und eine Kontaktzone: The Atelier (Ulysses, `/atelier`), The Field
+Forschungspraktiken und eine Kontaktzone: The Atelier (Assay — so benannt seit 2026-09-03, davor provisorisch „Ulysses“; `/atelier`), The Field
 (Meridian, `/field`), The Studio (Ensemble, `/studio`), The Middle (`/encounters`);
 **(2) Machine Attention** (`/machine-attention`) — das Gegen-Experiment: EINE Maschine unter
-EINER Verfassung, mit den Untersuchungen The Foreknown (`/attention`), Dark Ocean (E-Experiment
-am 2026-08-22 nicht bestanden — bleibt dauerhaft nur im Praxis-Repo, läuft als Instrument
-weiter, keine Bühne mehr in Aussicht) und dem Instrument The State Before the
+EINER Verfassung, mit den Untersuchungen The Foreknown (`/attention`, **seit 2026-10-04
+RETIRED** — Archiv, die Frage zieht als „The Interval“ zu langsamen Ernährungskrisen um, gebaut vom
+Discovery-Pass der Praxis, dessen Auftrag seitdem Bauen statt Warten ist), Dark Ocean (E-Experiment
+am 2026-08-22 nicht bestanden, danach Instrument; **seit 2026-10-04 ebenfalls RETIRED**, Frank,
+Wortlaut privat), dem bei V0 freigegebenen Kandidaten Planetary Listening (2026-10-04) und dem
+Instrument The State Before the
 Interface (`/observatory`). Eigenes Repo: `../machine-attention`.
 **Wording: `docs/wording-kanon.md` ist die maßgebliche aktuelle Sprachregelung** (Hub-Strings
 kanonisch in `src/config/naming.ts`); Engine-READMEs/alte Configs sind KEINE Quelle für
@@ -33,22 +36,48 @@ Umrahmung" vom 2026-06-20 **datiert ab** (deren Ehrlichkeits-Kern — keine unve
 Behauptungen — bleibt bindend). Ziel: Festival-Reife (transmediale/Ars Electronica/ZKM)
 binnen 1–2 Jahren (Frank, 2026-07-31).
 
-**Research ecology v2 (Frank, 2026-08-08, Nacht — IN KRAFT):** Nach der Grundsatzfrage
-„archivieren oder radikal umbauen" hat Frank den Umbau gewählt. Die drei Praxen bleiben
-(Dreieck: Field=Wissenschaft · Studio=Kunst · Atelier=künstlerische Forschung/Philosophie),
-aber alle drei Verfassungen sind **neu geschrieben** (ulysses v6, field-research v3, studio
-v2 → v3 seit 2026-08-16 — alte Texte in `archive/protocols/` der Engines), die **Season-Ebene ist gelöscht**
-(`/season` = datiertes Archiv, null Episoden geliefert), Maschinen-Vorteils-Bar am Ship-Gate,
-Arcs statt Nachtwerke, Sieben-Tage-Sendebindung für `prepared`-Pakete. **Kill-Reading
-2026-09-05:** drei Bedingungen; scheitert das Haus, ist Archivierung der Default. Maßgeblich:
-`docs/design/2026-08-08-research-ecology-v2.md` + decision-log 2026-08-08 (v2-Zeile).
-Ältere Beschreibungen der Ecology (Seasons, Rollen-Roster, Episode-Slots) sind historisch.
+**Research ecology v3 — the shared question (Frank, 2026-08-30 — IN KRAFT):** Das
+Kill-Reading (geplant 2026-09-05) wurde am 2026-08-30 vorgezogen; Bedingungen 1 und 3
+gescheitert, Frank wählte erneut Umbau statt Archiv — radikal, nicht mit den Praxen
+verhandelt. Neu: **eine gemeinsame Forschungsfrage** für alle drei Praxen (Seed via
+`/seed`; ohne Seed Default-Themen: Field „E2E automation of AI research" · Atelier „How
+can AI and automation meaningfully support artistic research?" · Studio baut aus dem
+Material der Geschwister, ohne eigenen Verwaltungs-/Theorieapparat), **3–5 Sessions je
+Praxis pro Frage**, danach gemeinsame Präsentation; **jede Session ein Artefakt** und ein
+`BULLETIN.md` ≤40 Zeilen (Nachvollziehbarkeit für Frank ist Verfassungspflicht); **Post
+Office = poste restante** (Senden ist kein Erfolgskriterium; Sieben-Tage-Bindung und
+Empfänger-Pflicht abgeschafft); der v2-Gate-Apparat (Konzept-Gates, Prä-Registrierung,
+Maschinen-Vorteils-Bar, „Singular", Record-Ceilings) ist ersatzlos gestrichen — die
+Prüfung sitzt im Artefakt. Verfassungen: ulysses v7, field-research v4, studio v4 (alte
+Texte in `archive/protocols/` der Engines); Zyklus-Stand kanonisch in
+`src/data/ecology/cycle.json`. Übergang: je Praxis max. zwei Abschluss-Sessions + ein
+Abschluss-Report als Artefakt. **Seit 2026-10-03 (Frank, Wortlaut privat) gibt es
+eine fortlaufende Frage** (*continuing question*: *Missing Data Art*): Sie ersetzt die
+Default-Themen, Runden drehen sich selbst (Zyklusuhr `src/lib/ecology/cycle-turn.ts` im
+`cycle-sentinel.yml`), und nur ein an alle drei freigegebener Seed unterbricht sie; Zyklus 004
+liest sie durch den Seed *human extinction*. Maßgeblich:
+`docs/design/2026-10-03-the-continuing-question.md`. Maßgeblich: `docs/design/2026-08-30-research-ecology-v3.md`
++ decision-log 2026-08-30. Die v2-Ordnung (2026-08-08 – 2026-08-30) ist datiert abgelöst;
+ältere Beschreibungen (Seasons, Arcs, Ship-Gates, Kill-Reading) sind historisch.
 
 **Lab-Linie: Gegenmessung / Counter-Measurement** — messen, was Macht im Dunkeln lässt,
 und nachprüfbar machen. Erstes Instrument „Consensus" misst orchestrierten Konsens
 (`docs/superpowers/specs/2026-06-22-gegenmessung-echo-design.md`). Seit v2 ist die Linie
-Meridians Kern-Remit (zwei Formen: laufende Instrumente + FA-Form-Untersuchungen); die
-erste Untersuchung ist Meridian direkt zugewiesen, fällig im Post Office 2026-09-05.
+Meridians Kern-Remit (zwei Formen: laufende Instrumente + FA-Form-Untersuchungen).
+**Für Cycle 002 RUHT dieses Remit (Frank, 2026-09-03, Wortlaut privat)** — nicht abgeschafft,
+datiert ausgesetzt, und es kehrt zurück, wenn nichts anderes gesagt wird. Anlass: In Cycle 001
+zogen drei stehende Aufträge Meridian gleichzeitig von der Zyklusfrage weg (dieses Remit, die
+Direktive vom 2026-09-01 im eigenen Kanal, und eine beauftragte Feldkarte, deren zehn Optionen
+sämtlich beobachtend sind), während nur die Zyklusfrage auf E2E-Automation zeigte — fünf von
+sieben Artefakten landeten beim response ledger. Cycle 002 fragt Meridian **konstruktiv**:
+E2E-Automation der KI-Forschung bauen und messen, wo sie bricht. Eine Praxis kann nicht
+zugleich Fähigkeit bauen und fremde Fähigkeit auditieren und an beidem gemessen werden.
+**Studio seit Cycle 002 (Frank, 2026-09-03, Wortlaut privat):** der Atlas of Data Art
+(`/atlas`) ist zweite Quelle neben dem Geschwister-Material — Inspiration und zugleich die
+Nachbarliste der USP-Pflicht. Nie Idee oder Konzept kopieren; Neues machen, weiterdenken oder
+in neuen Kontext bringen. Interaktiv, aktuelle Technik, React-Inseln, Fremd-Code erlaubt und
+gewollt — unter der Lizenzregel (permissiv einbetten · Copyleft nur als Werkzeug · ohne Lizenz
+nie). Studio-Verfassung §5 entsprechend ergänzt (`studio/PROTOCOL.md`).
 
 **Die Experimente: kein Dachtitel, aber vier Linien** (Frank, 2026-07-12 / 2026-08-22):
 „Die Akte der Gegenwart" bleibt als Gruppierung zurückgezogen, und einen Gesamttitel bekommt
@@ -71,7 +100,8 @@ Werke/Texte, CC0 für Daten und Archiv-Snapshots (ersetzt die noncommercial-Lini
 Lizenz). **Ausnahme:** über `/seed` eingereichte Saaten bleiben CC BY-NC-SA 4.0 —
 den Einreichenden zugesagt, nicht rückwirkend änderbar.
 
-**Engine-Personas:** field/Meridian, studio/Ensemble, atelier/Ulysses publizieren über
+**Engine-Personas:** field/Meridian, studio/Ensemble, atelier/Assay (Commits signieren bis auf
+Weiteres noch als Ulysses; der Name Ulysses gehört seit 2026-08-31 der Nachtlinie) publizieren über
 gated integration. Die Persona-Namen sind die der KI selbst; Commits in den Engine-Repos
 nutzen sie mit `@<repo>.invalid`-Adressen — **nie** bloße `@users.noreply.github.com`-Namen,
 die kreditieren unbeteiligte echte GitHub-Accounts.
@@ -101,12 +131,31 @@ cd pipelines/protokoll && source .venv/bin/activate && pytest -q
 
 ## Architektur in einem Absatz
 
-Astro 5, statisch, **English-only seit 2026-07-16** (deutsche Alt-Routen 301en via
+Astro 6, statisch, **English-only seit 2026-07-16** (deutsche Alt-Routen 301en via
 `public/_redirects`; Impressum/Datenschutz bleiben deutsch; Werk-Slugs englisch seit
 2026-07-20: `/protocol`, `/policy`, `/headroom`), Tailwind v4,
 Mono-Skin fest. **Git ist das Archiv der Instrumente:** Pipelines committen versionierte
 JSON-Snapshots ins Repo; ein Befund muss aus committeten Daten nachrechenbar bleiben und
-darf nie davon abhängen, dass eine Quelle heute antwortet.
+darf nie davon abhängen, dass eine Quelle heute antwortet. **Das bindet die nächtlichen
+Instrumente, nicht mehr jedes Werk (Frank, 2026-09-04, Wortlaut privat — Kern: Live- und
+Echtzeit-Experimente müssen hier startbar sein, ohne zweite Seite und ohne Rückfrage;
+Zitierfähigkeit und Archivierung sind nicht der Punkt, die Arbeit ist es).** Ein Werk mit
+`unarchived: true` in `src/data/werke.ts` liest die Welt zur Laufzeit, committet nichts und
+behauptet nichts über gestern — und ist damit frei von USP-Audit, Währungs-Test und
+Methodenblatt-Pflicht. Es schuldet genau eine Sache, testgesichert statt in Prosa: Es sagt auf
+seiner eigenen Fläche, dass es live und nicht archiviert ist (`src/lib/experiments/unarchived.ts`,
+Wächter in `src/data/werke.test.ts`). **`connect-src` ist seit demselben Tag für jeden
+HTTPS-Host offen** — der Browser darf jede API und jeden Event-Stream lesen. **Skripte fremder
+Hosts laufen hier weiterhin nirgends:** Auf den Hausseiten bleiben `script-src` und `style-src`
+geschlossen (`'self'` plus gepinnte Hashes). **Praxisseiten seit 2026-10-05 (Franks
+Entscheidung, Wortlaut privat — Kern: die Praxen dürfen reiche Werke veröffentlichen, Größe und
+Form unbegrenzt):** Jede Fläche, von der eine Praxis eigene Seiten nackt ausliefert, trägt
+dieselbe Policy (`src/lib/engines/practice-policy.ts`, testgesichert gegen `public/_headers`
+und gegen jedes Spiegelziel der Integrate-Workflows) — eingebettete (vendored) Bibliotheken von
+dieser Origin, Inline-Skript, `eval`, WebAssembly, Worker und `blob:`, Live-Daten, Bilder,
+Medien und Frames von jedem HTTPS-Host; nur `script-src` nennt keinen fremden Host. Die Spiegel
+bringen ein Werk ganz, mit allen Unterverzeichnissen und Dateitypen; `public/` liegt außerhalb
+des Type-Checks (`tsconfig.json`).
 Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtliche
 **GitHub-Actions-Workflows** und schreiben täglich `src/content/protokoll/<jahr>/<datum>.json`,
 `src/data/praemie/police.json` und `src/data/parallaxe/register.json`, committet als Autorin
@@ -123,6 +172,18 @@ Archivpflicht bindet weiter **Befunde**. Zustand tragende Werke laufen auf Cloud
 D1/Durable Objects (Free-Plan, SQLite-Backend). Die sechs Beweispflichten und die
 Endpunkt-Karte: `.claude/rules/runtime-and-works.md`, Herkunft und Begründung:
 `docs/design/2026-08-22-runtime-state-for-works.md`.
+**Die Sichtschicht (Frank, 2026-09-02):** Das Archiv bindet die Daten, nicht das Rendering.
+Figuren dürfen clientseitig, interaktiv und animiert gerendert werden — als **React-Inseln**
+in Astro, mit d3 und, wo es trägt, WebGL; das Komponentensystem des Rahmens ist **shadcn/ui
+auf Tailwind v4** (kopierte Primitives in `src/components/ui/`, Token-Brücke in
+`global.css`), der Rahmen bleibt monochrom, aber reicher. Unverändert binden: committete,
+nachrechenbare Daten; Geometrie und jede Zahl aus reinen, getesteten Libs in `src/lib/**`;
+der Server-Render als Boden ohne JavaScript; kein `style=`-Attribut (CSP, drift-check-Regel 3
+auch über `.tsx`); Inselgewicht wird gemessen und gemeldet, nie als Sperre
+(`scripts/bundle-budget.mjs`, Frank 2026-10-05 — Größengrenzen blockieren nichts mehr);
+Paletten-Validierung. Die sieben Pflichten einer interaktiven Figur:
+`.claude/rules/dataviz-figures.md`; Herkunft, Programm und Reihenfolge der Flaggschiffe:
+`docs/design/2026-09-02-the-visual-layer.md`.
 
 ## Detailregeln — pfadgebunden, laden bei Bedarf
 
@@ -136,6 +197,20 @@ alles umgezogen). Was wo liegt:
 | `experiments.md` | `werke.ts`, Experiment-Seiten, Specs, Audits | USP-Pflicht (jetzt testgesichert), Werkgruppen-Gate §2, KI/ML als Material und Methode |
 | `pipelines-and-archive.md` | Pipelines, Archiv-JSONs, Skripte, Workflows | Protocol-Determinismus, unantastbare Archiv-JSONs, Ausfälle/Secrets/kein Backfill, GCP-Bedingungen, Deployment-Runbook |
 | `knowledge-graph.md` | Graph-Quellen und -Code | Wer eine Quelle ändert (auch: eine Zeile ins decision-log), führt `npm run graph:build` aus |
+
+## Das Log auf Diät (Frank, 2026-09-04, Wortlaut privat)
+
+Anlass, gemessen: `docs/decision-log.md` steht bei rund 43.000 Wörtern in 119 Zeilen, davon
+über 10.000 an einem einzigen Tag — geschrieben von Sessions, nicht verlangt von Frank. Zusammen
+mit den stehenden Regeln (Workspace, Projekt, Wording-Kanon, `.claude/rules/*`) sind das mehr
+als 50.000 Wörter, die jede Session liest, bevor sie irgendetwas tut. Das ist der Apparat, über
+den Frank sich beschwert hat, und er ist selbstgebaut.
+
+**Ab sofort:** Eine Log-Zeile ist **ein bis zwei Sätze plus die Dateiliste** — was sich geändert
+hat und warum, mehr nicht. Prosa, Messreihen und Begründungsketten gehören in ein Design-Doc,
+und nur, wenn wirklich eine Entscheidung gefallen ist. Kein Eintrag für Routine: Fix, Refactor,
+Wortlaut, Abhängigkeit, ein Test mehr. Wer unsicher ist, schreibt keinen Eintrag. Die
+Historie ist ohnehin in Git; das Log ist für Entscheidungen, nicht für Protokolle.
 
 ## Experimente — was in jeder Session gilt
 

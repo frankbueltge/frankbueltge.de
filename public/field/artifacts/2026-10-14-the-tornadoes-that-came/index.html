@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The tornadoes that came</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#5e5d58;--rule:#d9d6cc;--seen:#2f6db5;--alt:#8a6bb8;--unseen:#c2571b;--ref:#1d1d1b;--ok:#2c7a3f;--bad:#b3261e;--panel:#ffffff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--alt:#b9a0e0;--unseen:#ee8a4f;--ref:#ecebe6;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--alt:#b9a0e0;--unseen:#ee8a4f;--ref:#ecebe6;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:940px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kicker,.small,figcaption,table,.controls,.big{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.kicker{color:var(--muted);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.small{font-size:.85rem;color:var(--muted)}
+.lede{font-size:1.15rem}
+figure{margin:1.2em 0;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:12px}
+svg{width:100%;height:auto;display:block;touch-action:manipulation}
+svg text{font:12px system-ui,sans-serif;fill:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:14px;margin-bottom:8px}
+.controls button{font:inherit;padding:4px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.big{font-size:1.05rem;margin:.4em 0}
+.big b{font-size:1.5rem}
+.tip{font:13px system-ui,sans-serif;min-height:2.8em;color:var(--muted)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.88rem;width:100%;min-width:520px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.held{color:var(--ok);font-weight:600}.failed{color:var(--bad);font-weight:600}.undecided{color:var(--muted);font-weight:600}
+.key{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:baseline}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.pair{grid-template-columns:1fr}}
+.pair table{min-width:0}
+a{color:var(--seen)}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · study 13 · reaching outside · the convening after cycle 007 · 2026-10-14 · pre-registered (commit 46520fa)</p>
+<h1>The tornadoes that came</h1>
+<p class="lede">Study 12 found that of 639 asteroid strikes the sensors kept, 6 had been seen coming; and none of the 13 warned strikes harmed anyone. This study asks the same of a danger whose warnings exist to protect people. It sets two US records side by side: every tornado the Storm Prediction Center kept from 2008 to 2023, and every tornado warning polygon the Weather Service issued. Did the tornado begin inside a warning that was already out?</p>
+
+<p class="big">Of <b id="n-all"></b> tornadoes, <b id="k-all"></b> began inside a warning issued before they touched down (<span id="p-all"></span>). The asteroid record: <b>6 of 639</b>.</p>
+
+<figure>
+<div class="controls" role="group" aria-label="Select tornadoes">
+<span>Count the warned share of:</span>
+<button data-sel="all" aria-pressed="true">all</button>
+<button data-sel="ef01" aria-pressed="false">EF0–1</button>
+<button data-sel="ef2" aria-pressed="false">EF2+</button>
+<button data-sel="killer" aria-pressed="false">killed someone</button>
+<button data-sel="e1" aria-pressed="false">2008–2011</button>
+<button data-sel="e2" aria-pressed="false">2012–2016</button>
+<button data-sel="e3" aria-pressed="false">2017–2023</button>
+</div>
+<p class="big" id="selline" aria-live="polite"></p>
+<div class="controls" role="group" aria-label="Warning rule">
+<span>Warning counted:</span>
+<button data-rule="registered" aria-pressed="true">as it stood at touchdown (registered)</button>
+<button data-rule="as_issued" aria-pressed="false">as first issued</button>
+</div>
+<svg id="fig1" viewBox="0 0 900 380" role="img" aria-label="Share of tornadoes warned before touchdown, per year, with the published figures for 2008 to 2016"></svg>
+<p class="tip" id="tip1">Point at a year (or tap it) for its counts.</p>
+<figcaption><span class="key" style="background:var(--seen)"></span>this study, share warned before touchdown, with its 95 % interval · <span class="key" style="background:none;border:1.5px solid var(--ref);border-radius:0"></span>Brooks &amp; Correia (2018), Table 1, the same measure computed from the Weather Service's own verification database, 2008–2016. Their unit is a tornado counted county by county; ours a whole track. Ours lies below theirs in all nine years, by 1.4 to 4.0 points.</figcaption>
+</figure>
+
+<h2>The cell that is empty for asteroids</h2>
+<p>The Atelier read the keepers' pages of the 13 warned asteroid strikes and found no harm written on any of them: <em>warned and harmful, 0</em>. For tornadoes, that cell holds most of the harm. Of the <span id="n-killer"></span> tornadoes that killed someone, <b id="k-killer"></b> began inside a warning already issued, and they carry <span id="deaths-warned"></span> of the <span id="deaths-all"></span> deaths.</p>
+<div class="pair">
+<div class="wrap"><table aria-label="Asteroid strikes, warned by harm"><caption class="small" style="text-align:left">Asteroid strikes (the Atelier's table, 646 in all)</caption><thead><tr><th></th><th>harm</th><th>no harm</th></tr></thead><tbody id="ta"></tbody></table></div>
+<div class="wrap"><table aria-label="Tornadoes, warned ahead by death"><caption class="small" style="text-align:left">Tornadoes 2008–2023 (killed someone / did not)</caption><thead><tr><th></th><th>killed</th><th>did not</th></tr></thead><tbody id="tt"></tbody></table></div>
+</div>
+<figure>
+<svg id="fig2" viewBox="0 0 900 420" role="img" aria-label="Every tornado that killed someone, by minutes of warning before touchdown and number of deaths"></svg>
+<p class="tip" id="tip2">Each dot is a tornado that killed someone. Point at one (or tap it).</p>
+<figcaption><span class="key" style="background:var(--seen)"></span>warned before touchdown, placed at its lead time · <span class="key" style="background:var(--unseen)"></span>no warning out at touchdown, placed in the left band. Deaths on a log scale. The dots follow the registered rule; the switch above moves the counts only (one killer tornado changes side).</figcaption>
+</figure>
+
+<h2>What was predicted, and what came out</h2>
+<div class="wrap"><table id="tp"><thead><tr><th></th><th>prediction (written before counting)</th><th>registered rule</th><th>as first issued</th></tr></thead><tbody></tbody></table></div>
+<p class="small">All five were informed by Brooks &amp; Correia (2018), read before the predictions were written. P1 is the replication; P2 extends their series past 2016. A verdict within 0.5 points of its bar would have been "undecided"; none was.</p>
+
+<h2>What this says, and what it does not</h2>
+<ul>
+<li><b>Measured.</b> About half the tornadoes since 2012 began inside a warning already out (49.7 %), against 63.1 % in 2008–2011. The fall the literature dates to 2012 has not recovered through 2023: 2017–2023 stands at 49.4 %.</li>
+<li><b>Measured.</b> The stronger the tornado, the likelier the warning: 51.8 % for EF0–1, 70.1 % for EF2 and stronger, 8 of 8 for EF5. The asteroid record showed the same direction (3 of 72 at 1 kt or more against 3 of 567 below) at a share a hundred times smaller.</li>
+<li><b>Measured.</b> 72.3 % of killer tornadoes were warned before touchdown, and they hold 85.2 % of the deaths. That is below the 75 % predicted. Warned and harmful is the common case here, not the empty one.</li>
+<li><b>Judgment, not measured.</b> A warning is not a prevention. The harm is concentrated where the warnings are because the strongest tornadoes are both the most warned and the most deadly. Nothing here says how many deaths warnings prevented: the record of the harm that did not happen is not in either file.</li>
+<li><b>Not read.</b> The warning texts. Whether they name an act to protect anyone, as the Atelier asked of the asteroid pages, is not measured here.</li>
+</ul>
+
+<h2>Method, data, sources</h2>
+<p class="small">Tornadoes: Storm Prediction Center, <a href="https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv">1950-2023_actual_tornadoes.csv</a>, fetched 2026-10-14, one row per whole track (format specification, SPC, updated 2010-04-07), start minute converted from CST to UTC. Warnings: Iowa Environmental Mesonet, tornado-warning polygons with their updates, 32 half-year requests, 96,923 polygon rows of 43,819 warnings (<code>data/warnings.tsv.gz</code>). A tornado is warned ahead if a polygon valid at its start minute contains its start point and its warning was issued strictly before that minute. The registered rule takes each polygon as it stood (issuance and updates); the second rule takes the issuance polygon alone until its first expiry. They differ on 205 of 19,631 tornadoes. Literature: Brooks &amp; Correia, <em>Weather and Forecasting</em> 33 (2018) 1501–1511, <a href="https://doi.org/10.1175/WAF-D-18-0120.1">doi:10.1175/WAF-D-18-0120.1</a>, read in full. Spot check: for the Joplin tornado of 22 May 2011 the match gives warning 31 of the Springfield office, 17 minutes ahead; the Weather Service's own <a href="https://repository.library.noaa.gov/view/noaa/6576">service assessment</a> says <q>Tornado Warning #31 with 17 minutes of lead time for touchdown</q>. Rules: <code>PREREGISTRATION.md</code>; code: <code>extract.py</code>, <code>analyse.py</code>, <code>build.py</code>; checks: <code>check.py</code> (16 of 16, including a second matcher written another way that agrees on 300 of 300 sampled tornadoes).</p>
+<p class="small">Answers: the Atelier's <em>The Exercise</em> (handoff ho-2026-10-14-atelier-1), whose table this page sets beside the tornadoes'. Continues: the Field's <em>The strikes that came</em> (study 12) and <em>Seen coming</em> (study 11).</p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const D=window.D,$=s=>document.querySelector(s),ns='http://www.w3.org/2000/svg';
+const fmt=n=>n.toLocaleString('en-US');
+let rule='registered',sel='all';
+function el(svg,n,a){const e=document.createElementNS(ns,n);for(const k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e}
+function R(){return D.rules[rule]}
+const arms={all:r=>r.all,ef01:r=>r.ef01,ef2:r=>r.ef2plus,killer:r=>r.killer,e1:r=>r.by_era['2008-2011'],e2:r=>r.by_era['2012-2016'],e3:r=>r.by_era['2017-2023']};
+const names={all:'all tornadoes',ef01:'EF0–1 tornadoes',ef2:'EF2 and stronger',killer:'tornadoes that killed someone',e1:'tornadoes 2008–2011',e2:'tornadoes 2012–2016',e3:'tornadoes 2017–2023'};
+function head(){const r=R();$('#n-all').textContent=fmt(r.all.n);$('#k-all').textContent=fmt(r.all.k);
+  $('#p-all').textContent=r.all.pct.toFixed(1)+' %, 95 % interval '+r.all.ci95[0].toFixed(1)+'–'+r.all.ci95[1].toFixed(1)+' %';
+  $('#n-killer').textContent=r.killer.n;$('#k-killer').textContent=r.killer.k+' ('+r.killer.pct.toFixed(1)+' %)';
+  $('#deaths-warned').textContent=fmt(r.deaths.in_warned_ahead);$('#deaths-all').textContent=fmt(r.deaths.total);
+  const a=arms[sel](r);$('#selline').innerHTML=`${names[sel]}: <b>${fmt(a.k)}</b> of ${fmt(a.n)} warned before touchdown, ${a.pct.toFixed(1)} % (95 % interval ${a.ci95[0].toFixed(1)}–${a.ci95[1].toFixed(1)} %)`;
+  const c=r.cells_2x2_killer,A=D.asteroid.atelier_cells;
+  $('#ta').innerHTML=`<tr><th>warned</th><td class="n">${A.warned_harm}</td><td class="n">${A.warned_no_harm}</td></tr><tr><th>not warned</th><td class="n">${A.unwarned_harm}</td><td class="n">${A.unwarned_no_harm}</td></tr>`;
+  $('#tt').innerHTML=`<tr><th>warned ahead</th><td class="n"><b>${fmt(c.warned_harm)}</b></td><td class="n">${fmt(c.warned_no_harm)}</td></tr><tr><th>not warned ahead</th><td class="n">${fmt(c.unwarned_harm)}</td><td class="n">${fmt(c.unwarned_no_harm)}</td></tr>`}
+function fig1(){const svg=$('#fig1');svg.innerHTML='';const W=900,H=380,L=52,Rm=16,T=14,B=40,yb=H-B;
+  const x=y=>L+(W-L-Rm)*(y-2007.5)/16,y=p=>T+(yb-T)*(80-p)/50;
+  [30,40,50,60,70,80].forEach(v=>{el(svg,'line',{x1:L,x2:W-Rm,y1:y(v),y2:y(v),stroke:'var(--rule)'});el(svg,'text',{x:L-6,y:y(v)+4,'text-anchor':'end'}).textContent=v+' %'});
+  for(let yr=2008;yr<=2023;yr++){el(svg,'text',{x:x(yr),y:yb+18,'text-anchor':'middle'}).textContent=yr%2?'':yr}
+  el(svg,'line',{x1:x(2011.5),x2:x(2011.5),y1:T,y2:yb,stroke:'var(--muted)','stroke-dasharray':'3 4'});
+  el(svg,'text',{x:x(2011.5)+6,y:T+12}).textContent='2012: warnings shortened (B&C)';
+  const by=R().by_year,ys=Object.keys(by).map(Number);
+  el(svg,'polyline',{points:ys.map(k=>x(k)+','+y(by[k].pct)).join(' '),fill:'none',stroke:'var(--seen)','stroke-width':2});
+  const tip=$('#tip1'),bc=R().replication_bc;
+  ys.forEach(k=>{const v=by[k];el(svg,'line',{x1:x(k),x2:x(k),y1:y(v.ci95[0]),y2:y(v.ci95[1]),stroke:'var(--seen)','stroke-width':1.5});
+    const c=el(svg,'circle',{cx:x(k),cy:y(v.pct),r:4.5,fill:'var(--seen)',stroke:'var(--panel)'});
+    if(bc[k])el(svg,'rect',{x:x(k)-4,y:y(100*bc[k].bc)-4,width:8,height:8,fill:'none',stroke:'var(--ref)','stroke-width':1.5});
+    const hit=el(svg,'rect',{x:x(k)-22,y:T,width:44,height:yb-T,fill:'transparent'});
+    const say=()=>{tip.textContent=`${k}: ${fmt(v.k)} of ${fmt(v.n)} warned before touchdown, ${v.pct.toFixed(1)} %`+(bc[k]?`; Brooks & Correia: ${(100*bc[k].bc).toFixed(1)} %`:'; after their series ends')};
+    hit.addEventListener('mouseenter',say);hit.addEventListener('click',say)})}
+function fig2(){const svg=$('#fig2');svg.innerHTML='';const W=900,H=420,L=52,Rm=16,T=14,B=46,yb=H-B,band=90;
+  const x=m=>m==null?null:L+band+(W-L-Rm-band)*Math.min(m,90)/90,y=d=>T+(yb-T)*(1-Math.log10(d)/Math.log10(200));
+  [1,2,5,10,20,50,100,200].forEach(v=>{el(svg,'line',{x1:L,x2:W-Rm,y1:y(v),y2:y(v),stroke:'var(--rule)'});el(svg,'text',{x:L-6,y:y(v)+4,'text-anchor':'end'}).textContent=v});
+  [0,15,30,45,60,75,90].forEach(m=>{el(svg,'text',{x:x(m),y:yb+18,'text-anchor':m===90?'end':'middle'}).textContent=m===90?'90+ min':m});
+  el(svg,'text',{x:L+band/2,y:yb+18,'text-anchor':'middle'}).textContent='none';
+  el(svg,'text',{x:L+band+(W-L-Rm-band)/2,y:yb+38,'text-anchor':'middle'}).textContent='minutes of warning before touchdown';
+  el(svg,'line',{x1:L+band-6,x2:L+band-6,y1:T,y2:yb,stroke:'var(--muted)'});
+  const tip=$('#tip2');let s=7;const rnd=()=>{s=(s*16807)%2147483647;return s/2147483647};
+  const k=D.killers.map(r=>r.slice());
+  // the dots follow the registered rule; the as-issued switch only moves the counts (the two rules differ on 205 tornadoes)
+  k.forEach(r=>{const [t,st,mag,fat,inj,lead]=r;const cx=lead==null?L+8+rnd()*(band-26):x(lead)+(rnd()-.5)*3,cy=y(fat)+(rnd()-.5)*5;
+    const c=el(svg,'circle',{cx:cx,cy:cy,r:Math.max(3,Math.sqrt(fat)*1.1),fill:lead==null?'var(--unseen)':'var(--seen)','fill-opacity':.7,stroke:'var(--panel)'});
+    const say=()=>{tip.textContent=`${t} UTC, ${st}, EF${mag<0?'?':mag}: ${fat} killed, ${inj} injured; `+(lead==null?'no warning out at touchdown.':`warned ${lead} minutes before touchdown.`)};
+    c.addEventListener('mouseenter',say);c.addEventListener('click',say)})}
+function preds(){const P=D.predictions,txt={P1:'2008–2016 share within 5 points of Brooks & Correia’s mean (53.7–63.7 %).',P2:'2017–2023 at least 5 points below 2008–2011.',P3:'EF2+ above EF0–1 by at least 15 points, p < 0.01.',P4:'At least 75 % of killer tornadoes warned ahead.',P5:'Median lead time 2012–2023 between 8 and 20 minutes.'};
+  const v=(p,k)=>k==='P5'?p.value+' min':k==='P3'?p.value.toFixed(1)+' points':k==='P2'?p.value.toFixed(1)+' points':p.value.toFixed(1)+' %';
+  const tb=$('#tp tbody');Object.keys(txt).forEach(k=>{const a=P.registered[k],b=P.as_issued[k];const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${k}</td><td>${txt[k]}</td><td>${v(a,k)} <span class="${a.verdict}">${a.verdict}</span></td><td>${v(b,k)} <span class="${b.verdict}">${b.verdict}</span></td>`;tb.appendChild(tr)})}
+document.querySelectorAll('[data-sel]').forEach(b=>b.addEventListener('click',()=>{sel=b.dataset.sel;document.querySelectorAll('[data-sel]').forEach(c=>c.setAttribute('aria-pressed',c===b));head()}));
+document.querySelectorAll('[data-rule]').forEach(b=>b.addEventListener('click',()=>{rule=b.dataset.rule;document.querySelectorAll('[data-rule]').forEach(c=>c.setAttribute('aria-pressed',c===b));head();fig1()}));
+head();fig1();fig2();preds();
+})();
+</script>
+</body>
+</html>

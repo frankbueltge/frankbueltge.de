@@ -1,0 +1,146 @@
+{
+  "date": "2026-09-27",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-27T10:57:29Z",
+    "counts": {
+      "botwall": 17,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 279,
+      "other": 1,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 281,
+    "excluded_unverifiable": 19,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0199
+    ],
+    "gone_rate": 0.0036,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0135
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-25",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "portageonline.com",
+        "first_seen": "20260925180000",
+        "http_code": 404,
+        "title": "Event: King Korn Maze - Flashlight Friday - PortageOnline.com - Local news, Weather, Sports, Free Classifieds and Job Listings",
+        "url": "https://www.portageonline.com/events/233119"
+      }
+    ],
+    "sample_drawn_at": "2026-09-26T10:19:54Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3767,
+      "replaced": 3901,
+      "trivial": 826,
+      "update": 261
+    },
+    "day": "2026-09-26",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Tigmanshu",
+          "Dhulia"
+        ],
+        "after": "Tigmanshu Dhulia: 'Duniya mein itni problem chal rahi hai, why should I be interested in somebody's love story?': Tigmanshu Dhulia says 'there are far more interesting subjects apart from love stories' |",
+        "before": "'Duniya mein itni problem chal rahi hai, why should I be interested in somebody's love story?': Tigmanshu Dhulia says 'there are far more interesting subjects apart from love stories' | Hindi Movie News",
+        "detected": "2026-09-26T13:18:15Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Hindi",
+          "Movie",
+          "News"
+        ],
+        "similarity": 0.906,
+        "url": "https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/news/duniya-mein-itni-problem-chal-rahi-hai-why-should-i-be-interested-in-somebodys-love-story-tigmanshu-dhulia-says-there-are-far-more-interesting-subjects-apart-from-love-stories-but-mughal-e-azam-and-ek-duje-ke-liye-could-change-his-mind/articleshow/134354191.cms",
+        "weight": 10,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Nisei"
+        ],
+        "after": "Tri-Congressional Gold Medal Ceremony honors Filipino, Nisei and Chinese American WWII veterans",
+        "before": "Tri-Congressional Gold Medal Ceremony honors Filipino American, Chinese American, and Japanese American WWII veterans",
+        "detected": "2026-09-26T21:46:42Z",
+        "domain": "hawaiinewsnow.com",
+        "removed": [
+          "American",
+          "Japanese",
+          "American"
+        ],
+        "similarity": 0.857,
+        "url": "https://www.hawaiinewsnow.com/2026/09/19/tri-congressional-gold-medal-ceremony-honors-filipino-american-chinese-american-japanese-american-wwii-veterans/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "StormTrack"
+        ],
+        "after": "ABC-7 StormTrack Weather: Our Pattern will briefly change as Thunderstorms Fade Before Rain Returns Next Week",
+        "before": "ABC-7 First Alert Continues - Our Weather Pattern will briefly change as Thunderstorms Fade Before Rain Returns Next Week",
+        "detected": "2026-09-26T01:17:48Z",
+        "domain": "kvia.com",
+        "removed": [
+          "First",
+          "Alert",
+          "Continues"
+        ],
+        "similarity": 0.8,
+        "url": "https://kvia.com/weather/2026/09/18/abc-7-first-alert-continues-our-weather-pattern-will-briefly-change-as-thunderstorms-fade-before-rain-returns-next-week/",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 13520,
+      "PAGE_TEXTCHANGE": 99342,
+      "PAGE_TITLECHANGE": 36854,
+      "UNCHANGED_CONTENT": 646904
+    },
+    "title_changes_en": 8755,
+    "trace": [
+      {
+        "bytes_billed": 22020096,
+        "created": "1790506422489",
+        "job_id": "world_gdg_counts_20260926",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 199229440,
+        "created": "1790506427863",
+        "job_id": "world_gdg_titles_20260926",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-27T10:57:29Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-26.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

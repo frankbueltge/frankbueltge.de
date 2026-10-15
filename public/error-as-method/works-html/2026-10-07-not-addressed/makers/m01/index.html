@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Crossing, 2025</title>
+<style>
+  html, body { margin: 0; background: #0d1418; }
+  body { width: 1100px; height: 800px; overflow: hidden; font-family: Georgia, "Times New Roman", serif; color: #d9d4c7; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = window.devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var hours = window.COUNTS.hours;
+  var DAYS = Math.floor(hours.length / 24);
+
+  // field
+  var X0 = 96, X1 = 1064, Y0 = 132, Y1 = 708;
+  var cw = (X1 - X0) / DAYS, rh = (Y1 - Y0) / 24;
+
+  var NORTH = [126, 206, 226], SOUTH = [240, 164, 92];
+  var BG = '#0d1418', INK = '#d9d4c7', DIM = 'rgba(217,212,199,0.45)';
+
+  var maxDir = 1, busiest = 0, busiestI = 0;
+  hours.forEach(function (h, i) {
+    if (!h) return;
+    if (h[1] > maxDir) maxDir = h[1];
+    if (h[2] > maxDir) maxDir = h[2];
+    if (h[0] > busiest) { busiest = h[0]; busiestI = i; }
+  });
+  var half = rh / 2 - 1.2;
+  function len(v) { return Math.sqrt(v / maxDir) * half; }
+
+  g.fillStyle = BG; g.fillRect(0, 0, W, H);
+
+  // faint hour lines (each the waterline of a row)
+  g.strokeStyle = 'rgba(217,212,199,0.06)'; g.lineWidth = 1;
+  for (var r = 0; r < 24; r++) {
+    var my = Math.round(Y0 + r * rh + rh / 2) + 0.5;
+    g.beginPath(); g.moveTo(X0, my); g.lineTo(X1, my); g.stroke();
+  }
+
+  // the stitches: northbound rises from the row's waterline, southbound hangs below
+  var bw = Math.max(1, cw * 0.72);
+  var missing = -1;
+  for (var i = 0; i < DAYS * 24; i++) {
+    var h = hours[i];
+    var d = Math.floor(i / 24), hr = i % 24;
+    var x = X0 + d * cw + (cw - bw) / 2;
+    var mid = Y0 + hr * rh + rh / 2;
+    if (!h) { missing = i; continue; }
+    var a = 0.35 + 0.65 * Math.sqrt(h[0] / busiest);
+    var ln = len(h[1]), ls = len(h[2]);
+    g.fillStyle = 'rgba(' + NORTH.join(',') + ',' + a.toFixed(3) + ')';
+    g.fillRect(x, mid - ln, bw, ln);
+    g.fillStyle = 'rgba(' + SOUTH.join(',') + ',' + a.toFixed(3) + ')';
+    g.fillRect(x, mid, bw, ls);
+  }
+
+  // ---- type ----
+  g.textBaseline = 'alphabetic';
+  g.fillStyle = INK;
+  g.font = 'italic 34px Georgia, serif';
+  g.fillText('Crossing', X0, 54);
+  g.font = '14px Georgia, serif';
+  g.fillStyle = DIM;
+  g.fillText('Every hour of 2025 on the Fremont Bridge, Seattle — bicycles and scooters counted in each direction.', X0, 92);
+
+  // legend (upper right)
+  var lx = 846, ly = 52;
+  g.font = '12px Georgia, serif';
+  g.fillStyle = 'rgb(' + NORTH.join(',') + ')';
+  g.fillRect(lx, ly - 10, 3, 10);
+  g.fillStyle = INK; g.fillText('northbound rises', lx + 10, ly);
+  g.fillStyle = 'rgb(' + SOUTH.join(',') + ')';
+  g.fillRect(lx, ly + 8, 3, 10);
+  g.fillStyle = INK; g.fillText('southbound hangs', lx + 10, ly + 18);
+  g.fillStyle = DIM;
+  g.fillText('one column a day, one row an hour', lx, ly + 40);
+
+  // hour labels
+  g.textAlign = 'right';
+  g.font = '11px Georgia, serif';
+  var hl = { 0: 'midnight', 3: '3 am', 6: '6 am', 9: '9 am', 12: 'noon', 15: '3 pm', 18: '6 pm', 21: '9 pm' };
+  for (var k in hl) {
+    g.fillStyle = (k == 8 || k == 17) ? INK : DIM;
+    g.fillText(hl[k], X0 - 12, Y0 + k * rh + rh / 2 + 4);
+  }
+
+  // month labels
+  g.textAlign = 'left';
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var start = Date.UTC(2025, 0, 1);
+  for (var m = 0; m < 12; m++) {
+    var dd = Math.round((Date.UTC(2025, m, 1) - start) / 864e5);
+    var mx = X0 + dd * cw;
+    g.strokeStyle = 'rgba(217,212,199,0.25)';
+    g.beginPath(); g.moveTo(Math.round(mx) + 0.5, Y1 + 6); g.lineTo(Math.round(mx) + 0.5, Y1 + 20); g.stroke();
+    g.fillStyle = DIM; g.font = '11px Georgia, serif';
+    g.fillText(months[m], mx + 4, Y1 + 18);
+  }
+
+  // annotation helper
+  function note(px, py, tx, ty, lines, align) {
+    g.strokeStyle = 'rgba(217,212,199,0.55)'; g.lineWidth = 0.8;
+    g.beginPath(); g.moveTo(px, py); g.lineTo(tx, ty); g.stroke();
+    g.beginPath(); g.arc(px, py, 2.2, 0, Math.PI * 2); g.stroke();
+    g.textAlign = align || 'left';
+    g.font = 'italic 12px Georgia, serif';
+    for (var j = 0; j < lines.length; j++) {
+      g.fillStyle = j ? DIM : INK;
+      g.fillText(lines[j], tx + (align === 'right' ? -4 : 4), ty + 4 + j * 15);
+    }
+    g.textAlign = 'left';
+  }
+
+  // the hour that never happened
+  if (missing >= 0) {
+    var md = Math.floor(missing / 24), mh = missing % 24;
+    var px = X0 + md * cw + cw / 2, py = Y0 + mh * rh + rh / 2;
+    g.strokeStyle = INK; g.lineWidth = 1;
+    g.strokeRect(X0 + md * cw - 1.5, Y0 + mh * rh + 3, cw + 3, rh - 6);
+    note(px + 3, py, X0 + 270, Y0 - 28, ['9 March, 2 am: the hour the clocks skipped.', 'It does not exist, so it was not counted.']);
+  }
+
+  // busiest hour
+  var bd = Math.floor(busiestI / 24), bh = busiestI % 24;
+  var bdate = new Date(start + bd * 864e5);
+  var bx = X0 + bd * cw + cw / 2, by = Y0 + bh * rh + rh / 2;
+  var bl = bdate.getUTCDate() + ' ' + months[bdate.getUTCMonth()] + ', ' +
+           (bh === 0 ? 'midnight' : bh < 12 ? bh + ' am' : bh === 12 ? 'noon' : (bh - 12) + ' pm');
+  note(bx, by, bx + 70, Y1 + 50, ['Busiest hour: ' + bl + ' — ' + busiest + ' crossings.'], 'left');
+
+  // year total, foot
+  var tot = 0; hours.forEach(function (h) { if (h) tot += h[0]; });
+  g.textAlign = 'left';
+  g.font = '12px Georgia, serif'; g.fillStyle = DIM;
+  g.fillText(tot.toLocaleString('en-US') + ' crossings in 8,759 counted hours', X0, H - 22);
+  g.textAlign = 'right';
+  g.fillText('Data: City of Seattle, Fremont Bridge bicycle counter', X1, H - 22);
+})();
+</script>
+</body>
+</html>

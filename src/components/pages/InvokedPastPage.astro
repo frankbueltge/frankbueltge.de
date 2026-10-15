@@ -20,6 +20,9 @@ import {
   yearsBetween,
 } from '@/lib/invoked/format'
 import InvokedPastFigure from './InvokedPastFigure.astro'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 const d = data as unknown as InvokedData
 const h = d.headline
@@ -43,8 +46,7 @@ const lawTest = d.law_test
 ---
 
 <article class="mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-10">
-    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">Invoked Past</h1>
+  <SheetHead title="Invoked Past">
     <p class="mt-2 max-w-xl text-fg-muted">
       Which yesterday the world cites today. Every night the instrument reads every dated
       reference in the last 24 hours of the world's press and publishes the histogram of
@@ -52,8 +54,8 @@ const lawTest = d.law_test
       is — and, for the year that stands out, what the articles invoking it were about. Daily,
       archived, never edited.
     </p>
-    <p class="mt-3 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{d.date}</p>
-  </header>
+    <p class="mt-3 kicker">{d.date}</p>
+  </SheetHead>
 
   {failed ? (
     <section class="mb-12 border-l-2 border-line pl-5">
@@ -62,7 +64,7 @@ const lawTest = d.law_test
     </section>
   ) : h ? (
     <section class="mb-12 border-l-2 border-accent/60 pl-5">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <h2 class="kicker">
         Today's standout year — the one that most exceeds its own neighbourhood
       </h2>
       <p class="mt-3 text-[clamp(20px,3.4vw,30px)] font-semibold leading-snug tabular-nums">{h.year}</p>
@@ -101,7 +103,7 @@ const lawTest = d.law_test
 
   {!failed && h && why && (
     <section class="mb-12 border-l-2 border-accent/30 pl-5">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <h2 class="kicker">
         Why this year — the evidence, out of the same rows
       </h2>
       <p class="mt-3 text-fg-muted">
@@ -114,7 +116,7 @@ const lawTest = d.law_test
 
       {anniversary && (
         <div class="mt-6">
-          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+          <h3 class="kicker">
             The anniversary, as arithmetic
           </h3>
           {anniversary.matches_today ? (
@@ -147,7 +149,7 @@ const lawTest = d.law_test
 
       {why.themes.length > 0 && (
         <div class="mt-6">
-          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+          <h3 class="kicker">
             What the invoking articles were about
           </h3>
           <p class="mt-2 text-sm text-fg-muted">
@@ -160,7 +162,7 @@ const lawTest = d.law_test
           <div class="mt-3 overflow-x-auto">
             <table class="w-full border-collapse text-sm tabular-nums">
               <thead>
-                <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+                <tr class="border-b border-line text-left kicker">
                   <th class="py-2 pr-3 font-medium">Theme</th>
                   <th class="py-2 pr-3 text-right font-medium">articles</th>
                   <th class="py-2 pr-3 text-right font-medium" title="share of the articles that invoked the standout year">share</th>
@@ -191,13 +193,13 @@ const lawTest = d.law_test
 
       {(why.persons.length > 0 || why.organisations.length > 0) && (
         <div class="mt-6">
-          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+          <h3 class="kicker">
             The names in those articles
           </h3>
           <div class="mt-3 grid gap-x-8 gap-y-4 sm:grid-cols-2">
             {why.persons.length > 0 && (
               <div>
-                <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">Persons</p>
+                <p class="kicker">Persons</p>
                 <ul class="mt-2 space-y-1 text-sm">
                   {why.persons.map((p) => (
                     <li class="flex justify-between gap-3 border-b border-line/50 pb-1">
@@ -210,7 +212,7 @@ const lawTest = d.law_test
             )}
             {why.organisations.length > 0 && (
               <div>
-                <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">Organisations</p>
+                <p class="kicker">Organisations</p>
                 <ul class="mt-2 space-y-1 text-sm">
                   {why.organisations.map((o) => (
                     <li class="flex justify-between gap-3 border-b border-line/50 pb-1">
@@ -232,7 +234,7 @@ const lawTest = d.law_test
 
       {why.headlines.length > 0 && (
         <div class="mt-6">
-          <h3 class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+          <h3 class="kicker">
             The articles themselves
           </h3>
           <ul class="mt-3 space-y-3">
@@ -265,7 +267,7 @@ const lawTest = d.law_test
 
   {!failed && d.years.length > 0 && (
     <section class="mb-12">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <h2 class="kicker">
         The day's memory, year by year
       </h2>
       <div class="mt-4">
@@ -276,7 +278,7 @@ const lawTest = d.law_test
 
   {!failed && d.most_invoked && (
     <section class="mb-12 border-l-2 border-line pl-5">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <h2 class="kicker">
         {maxAtCeiling
           ? 'The most-invoked year is an artefact, not the finding'
           : 'Tonight the most-invoked year is not the wall'}
@@ -313,13 +315,13 @@ const lawTest = d.law_test
 
   {!failed && d.age_profile.length > 0 && (
     <section class="mb-12">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <h2 class="kicker">
         How old is today's memory
       </h2>
       <div class="mt-3 overflow-x-auto">
         <table class="w-full border-collapse text-sm tabular-nums">
           <thead>
-            <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            <tr class="border-b border-line text-left kicker">
               <th class="py-2 pr-3 font-medium">Age of the invoked year</th>
               <th class="py-2 pr-3 text-right font-medium">mentions</th>
               <th class="py-2 text-right font-medium">share of the day</th>
@@ -347,13 +349,13 @@ const lawTest = d.law_test
 
   {!failed && topYears.length > 0 && (
     <section class="mb-12">
-      <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <h2 class="kicker">
         Today's most invoked years — a count, not a finding
       </h2>
       <div class="mt-3 overflow-x-auto">
         <table class="w-full border-collapse text-sm tabular-nums">
           <thead>
-            <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            <tr class="border-b border-line text-left kicker">
               <th class="py-2 pr-3 font-medium">Year</th>
               <th class="py-2 pr-3 text-right font-medium">mentions</th>
               <th class="py-2 pr-3 text-right font-medium" title="mentions per 1,000 articles scanned">per 1,000</th>
@@ -385,7 +387,7 @@ const lawTest = d.law_test
   )}
 
   <section class="mb-12">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <h2 class="kicker">
       The decay law: still pending, and saying so
     </h2>
     <p class="mt-3 text-fg-muted">
@@ -395,7 +397,7 @@ const lawTest = d.law_test
       needs a time series of tracked events, and this archive does not have one yet.
     </p>
     <div class="mt-4 border-l-2 border-line pl-5">
-      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Status</p>
+      <p class="kicker">Status</p>
       <p class="mt-2 font-mono text-sm">{lawTest.status}</p>
       {lawTest.hypothesis && <p class="mt-2 text-sm text-fg-muted">Hypothesis: {lawTest.hypothesis}.</p>}
       <p class="mt-2 text-sm text-fg-muted">Why not yet: {lawTest.reason}.</p>
@@ -429,7 +431,7 @@ const lawTest = d.law_test
         </p>
         <table class="mt-2 w-full border-collapse text-sm tabular-nums">
           <thead>
-            <tr class="border-b border-line text-left font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+            <tr class="border-b border-line text-left kicker">
               <th class="py-2 pr-3 font-medium">Event date</th>
               <th class="py-2 pr-3 text-right font-medium">age</th>
               <th class="py-2 text-right font-medium">mentions today</th>
@@ -450,7 +452,7 @@ const lawTest = d.law_test
   </section>
 
   <section class="mb-12">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this measures — and what it does not</h2>
+    <h2 class="kicker">What this measures — and what it does not</h2>
     <ul class="mt-3 space-y-2 text-sm text-fg-muted">
       <li>
         <strong>The extraction is inherited, and its error modes with it.</strong> The instrument does not read
@@ -506,7 +508,7 @@ const lawTest = d.law_test
   </section>
 
   <section class="mb-12">
-    <h2 class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Nearest neighbors</h2>
+    <h2 class="kicker">Nearest neighbors</h2>
     <ul class="mt-3 space-y-2 text-sm text-fg-muted">
       <li>
         <a href="https://blog.gdeltproject.org/gdelt-2-0-our-global-world-in-realtime/" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">GDELT's own <code class="text-xs">V2.1ENHANCEDDATES</code></a>
@@ -537,7 +539,7 @@ const lawTest = d.law_test
     </p>
   </section>
 
-  <footer class="border-t border-line pt-5 font-mono text-xs text-fg-faint">
+  <SheetFoot>
     <p>
       Scanned {count(d.stats.articles_scanned)} articles ·
       {count(d.stats.articles_with_dates)} carried a dated reference ({percent(d.stats.articles_with_dates_share)}) ·
@@ -551,5 +553,5 @@ const lawTest = d.law_test
       ({d.source.license.toLowerCase()}) · method {d.method.version} since {d.method.since} ·
       method sheet: <a href="/werke/invoked-past" class="underline decoration-line underline-offset-2 hover:text-fg">/werke/invoked-past</a>
     </p>
-  </footer>
+  </SheetFoot>
 </article>

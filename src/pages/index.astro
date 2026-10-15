@@ -11,8 +11,22 @@
 // instead of a page of prose about it. HubEntrance.astro stays in the repo, unlinked, the same way
 // Home.astro/HeroField.astro did before it: Git is the archive, and the approval trail for this
 // change is in docs/decision-log.md.
+// 2026-09-01, morning: the entrance became the FRONT DOOR — the ops room's full board (rows,
+// sparklines, tiles) moved whole to /now (NowBoard.astro), and the entrance kept a clear personal
+// opening, a slim live strip and an editorial front page of the newest works.
+// 2026-09-01, evening: the OPS ROOM RETURNS to the entrance — Frank's decision (wording private):
+// the board with every lab tile is the page he wants to open on, and it should be handsomer than
+// before, with more of the drawing done by d3. FrontDoor.astro stays in the repo, unlinked and
+// dated, like HubEntrance/Home before it: Git is the archive. /now keeps the board page as built
+// that morning. The beauty pass is in the room itself (OpsRoom.astro, src/lib/ops/*).
+// 2026-10-11: the entrance became an EDITION (design handoff docs/design_handoff_homepage_ecology/
+// README.md) — the same records, laid out like the front page of a paper on a paper ground: the
+// standing question, the pulse, what is new since yesterday or since the reader's last visit,
+// the ecology's running cycle beside a timetable of who worked when, the other houses, the
+// readings, the arrivals, an index. OpsRoom.astro stays in the repo, unlinked and dated, the
+// way its predecessors did; /now keeps its board. Approval trail: docs/decision-log.md.
 import Page from '@/layouts/Page.astro'
-import OpsRoom from '@/components/pages/OpsRoom.astro'
+import HomeEdition from '@/components/pages/HomeEdition.astro'
 import { NAMING } from '@/config/naming'
 
 // SEO — die Startseite ist die Autoritätsseite für die Namenssuche "Frank Bültge". Titel und
@@ -30,10 +44,13 @@ import { NAMING } from '@/config/naming'
 // gerenderte Eingangsfläche den Namen trägt. Anlass: Auf die Namenssuche konkurriert diese Site
 // mit einem gleichnamigen, seit 2007 etablierten Frank Bültge — sie kann es sich auf genau
 // dieser Abfrage nicht leisten, den eigenen Namen wegzulassen.
+// 2026-10-11: The name line moved from the entrance's own eyebrow to the left end of the top
+// bar (TopBar.astro renders NAMING.eyebrow), where it stands on every page, this one included;
+// naming.test.ts and front-door.test.ts hold it there.
 const seoTitle = `Frank Bültge — Data Engineering & Analytics · ${NAMING.title}`
 const seoDescription =
   'Frank Bültge — Data Engineering & Analytics. Projects and experiments probing what machines genuinely do better than people — constant attention, nightly measurement, evidence at scale — and whether they can research autonomously and produce useful, verifiable works. Among them: a federated research ecology, Machine Attention, datavism.org and data-snack.com. Git is the archive.'
 ---
-<Page title={seoTitle} description={seoDescription}>
-  <OpsRoom />
+<Page title={seoTitle} description={seoDescription} surface="paper">
+  <HomeEdition />
 </Page>

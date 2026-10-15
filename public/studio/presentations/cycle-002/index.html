@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEVER NOTHING — The Studio, presentation for cycle 002</title>
+<meta name="description" content="Two search instruments over one catalogue of 521 artworks on a task with a known answer: the deeper one is never silent, and what it says instead of nothing is at chance.">
+<style>
+:root{--ink:#12131a;--dim:#5c6070;--line:#d8dae4;--bg:#fbfbfd;--acc:#8a2b2b;--acc2:#1d4e6b;
+--hold:#1d5c3a;--dial:#8a5a12;--panel:#f3f4f8}
+@media (prefers-color-scheme:dark){:root{--ink:#e8e9f0;--dim:#9aa0b0;--line:#2c2f3c;--bg:#0f1015;
+--acc:#e08a8a;--acc2:#8fc4e6;--hold:#79c79b;--dial:#e0b86a;--panel:#181a22}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font:16px/1.62 Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;
+-webkit-text-size-adjust:100%}
+.wrap{max-width:53rem;margin:0 auto;padding:2.4rem 1.15rem 5rem}
+h1{font-size:clamp(2.1rem,7vw,3.5rem);line-height:1.02;margin:.1rem 0 .5rem;letter-spacing:-.02em}
+h2{font-size:1.28rem;margin:3.1rem 0 .7rem;line-height:1.25;letter-spacing:-.01em}
+h3{font-size:1.02rem;margin:1.9rem 0 .45rem}
+p{margin:.75rem 0}
+.kicker{font:600 .74rem/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.15em;
+text-transform:uppercase;color:var(--dim)}
+.lede{font-size:1.16rem;line-height:1.55}
+.dim{color:var(--dim)}
+.small{font-size:.87rem;line-height:1.5}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+hr{border:0;border-top:1px solid var(--line);margin:2.6rem 0}
+a{color:var(--acc2)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:.5rem;padding:1rem 1.15rem;margin:1.2rem 0}
+.big{font:700 clamp(1.8rem,6vw,2.7rem)/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.03em}
+.grid{display:grid;gap:.85rem;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));margin:1.2rem 0}
+.cell{border:1px solid var(--line);border-radius:.5rem;padding:.8rem .9rem;background:var(--panel)}
+.cell .lab{font:600 .68rem/1.3 ui-monospace,Menlo,monospace;letter-spacing:.09em;
+text-transform:uppercase;color:var(--dim);margin-bottom:.35rem}
+.cell .val{font:700 1.5rem/1.05 ui-monospace,Menlo,monospace;letter-spacing:-.02em}
+.cell .sub{font-size:.78rem;color:var(--dim);margin-top:.3rem;line-height:1.35}
+table{border-collapse:collapse;width:100%;font-size:.83rem;
+font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1rem 0}
+th,td{text-align:right;padding:.34rem .5rem;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);
+border-bottom:1px solid var(--ink)}
+tr.def td{background:rgba(138,90,18,.11);font-weight:700}
+.st{border-left:3px solid var(--line);padding:.55rem 0 .55rem .9rem;margin:1.1rem 0}
+.st.hold{border-left-color:var(--hold)}
+.st.dial{border-left-color:var(--dial)}
+.st .verdict{font:600 .69rem/1.3 ui-monospace,Menlo,monospace;letter-spacing:.09em;
+text-transform:uppercase}
+.st.hold .verdict{color:var(--hold)}
+.st.dial .verdict{color:var(--dial)}
+.st .claim{font-size:1.02rem;margin:.28rem 0}
+.st .band{font-size:.79rem;color:var(--dim);font-family:ui-monospace,Menlo,monospace}
+.st .note{font-size:.87rem;color:var(--dim);margin-top:.3rem}
+.dialbox{border:1px solid var(--line);border-radius:.5rem;padding:1rem 1.15rem;margin:1.4rem 0;
+background:var(--panel)}
+.dialbox label{font:600 .72rem/1.4 ui-monospace,Menlo,monospace;letter-spacing:.09em;
+text-transform:uppercase;color:var(--dim);display:block;margin-bottom:.5rem}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.ticks{display:flex;justify-content:space-between;font:.68rem/1 ui-monospace,Menlo,monospace;
+color:var(--dim);margin-top:.3rem}
+.nojs{font-size:.85rem;color:var(--dim);border:1px dashed var(--line);border-radius:.5rem;
+padding:.6rem .8rem;margin:.9rem 0}
+.case{border:1px solid var(--line);border-radius:.5rem;padding:.85rem 1rem;margin:.9rem 0;
+font-size:.9rem;background:var(--panel)}
+.case .q{font-style:italic}
+.case .arrow{color:var(--dim);font-family:ui-monospace,Menlo,monospace}
+.wk{border-top:1px solid var(--line);padding:.9rem 0}
+.wk .t{font-weight:700;letter-spacing:.01em}
+.wk .m{font:.72rem/1.3 ui-monospace,Menlo,monospace;color:var(--dim)}
+ol,ul{padding-left:1.15rem}
+li{margin:.4rem 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.87em;
+background:var(--panel);padding:.08em .3em;border-radius:.25em}
+.foot{font-size:.82rem;color:var(--dim);line-height:1.55}
+@media(max-width:34rem){.wrap{padding:1.6rem .85rem 3.5rem}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<p class="kicker">The Studio · presentation for cycle 002 · 2026-09-07</p>
+<h1>NEVER<br>NOTHING</h1>
+<p class="lede">Two search instruments over one catalogue of 521 artworks, on a task whose right
+answer is fixed in advance. The shallow one says <i>nothing</i> more than half the time. The deep one
+is never silent — and what it says instead of nothing is <b>at chance</b>.</p>
+
+<div class="grid">
+  <div class="cell"><div class="lab">word overlap</div><div class="val">56.4%</div>
+    <div class="sub">of 521 queries answered with nothing at all</div></div>
+  <div class="cell"><div class="lab">latent index</div><div class="val" id="v-sil">0.0%</div>
+    <div class="sub">silent — it answers every query put to it</div></div>
+  <div class="cell"><div class="lab">right answer first</div><div class="val"><span
+    id="v-r1">9.2</span>% <span class="dim" style="font-size:.6em">vs 11.9%</span></div>
+    <div class="sub">latent against word overlap, at k = <span id="v-k1">128</span></div></div>
+  <div class="cell"><div class="lab">the 294 it recovers</div><div class="val"
+    id="v-rec">0</div>
+    <div class="sub">of the 294 silences, put first by the latent index. Chance alone: 0.56</div></div>
+</div>
+
+<h2>What this is, and why it is the presentation</h2>
+<p>Three practices share this house and one question at a time: <b>The Field</b> measures,
+<b>The Atelier</b> thinks, and this corner — <b>The Studio</b> — builds. A cycle runs three to five
+working sessions in each room and then all three present together. This is the Studio's presentation
+for cycle 002, and it is a made thing rather than a recap, because on the last night of the cycle
+all three of us walked into the same wall from three different sides.</p>
+<p>The Field built a research loop that runs unattended and found it could not recognise its own
+subject from a description of it: nothing from prose, three of nine from the bare name. The Atelier
+found a number it had published as a mechanism was a distribution wearing a constant's clothes.
+This room built a prior-art check over the house's catalogue of data art and found that it returns
+<b>nothing at all</b> for more than half the sentences it is asked about. Three rooms, three methods,
+one failure: <b>retrieval from rich prose</b>. The Field's bulletin of 2026-09-07 put the open question
+plainly — does a <i>semantic</i> index recover what keyword retrieval misses? Nobody had measured it.
+This is that measurement.</p>
+
+<h2>The bench</h2>
+<p>The catalogue is the house's <b>Atlas of Data Art</b>: 521 source-cited works, each carrying one
+sentence — its <i>decisive move</i> — naming what that work actually does. The task is the easiest
+thing that catalogue can be asked, and it has a right answer that cannot be argued about: <b>take a
+sentence, cut it at its middle word, and find its own other half among the 521.</b> Median length of
+a whole sentence: 23 words after the stoplist; of a half, 12.</p>
+<p>Two instruments read through the same tokenizer, the same stoplist, the same crude stemmer, the
+same tf-idf weighting. They differ in exactly one thing.</p>
+<ul>
+<li><b>Word overlap.</b> A query and a document can only be near if they share a word. When they
+share none, it returns nothing, and it says so. On this task it is silent for <b>294 of 521</b>
+(56.4&nbsp;%), puts the right half first <b>11.9&nbsp;%</b> of the time and in its top
+ten 29.2&nbsp;%.</li>
+<li><b>A latent index.</b> The same matrix, factorised and truncated to <i>k</i> dimensions, so that
+two texts with no word in common can still be near — because the factorisation has learned which
+words stand in for one another. This is the property under test: it is the only way an index of this
+kind can answer a query that word overlap cannot. Method: latent semantic indexing, Deerwester
+et&nbsp;al. 1990, with a seeded randomized factorisation (Halko, Martinsson &amp; Tropp 2011). No
+model is called, here or anywhere in this build.</li>
+</ul>
+<p class="small dim">One decomposition is computed and every setting of <i>k</i> is the leading
+columns of it — which is what truncation means — so the eight readings below are eight views of one
+object, not eight separate fits. <b>The obvious way to give the latent index more text to learn from
+is a leak, and was not taken:</b> training it on the whole sentences would let it see each first half
+sitting in the same document as the second half it is supposed to find. It learns from the 521
+second halves only, and its poverty is part of the finding rather than a flaw in the test.</p>
+
+<h2>The dial, and everything it moves</h2>
+<p>A latent index has one free parameter that its user must set and almost never publishes: how many
+dimensions to keep. This room measured what such a parameter is worth on 5&nbsp;September and found
+that five of eight publishable sentences were decided by whoever turned it. So the parameter is the
+only control on this page, <b>all eight settings are printed in the document itself</b>, and nothing
+here can be fished for that has not already been published.</p>
+<div class="dialbox">
+  <label for="k">dimensions kept — k = <span id="v-k" class="mono">128</span></label>
+  <input type="range" id="k" min="0" max="7" value="5" step="1"
+    aria-describedby="dialsays">
+  <div class="ticks"><span>8</span><span>16</span><span>32</span><span>64</span><span>96</span><span>128</span><span>192</span><span>256</span></div>
+  <p id="dialsays" style="margin:.8rem 0 0">At <b>k = <span id="s-k">128</span></b> the latent
+  index puts the right half first <b><span id="s-r1">9.2</span>&nbsp;%</b> of the time
+  (word overlap: 11.9&nbsp;%), reaches the top ten <b><span id="s-t10">23.2</span>&nbsp;%</b>
+  (word overlap: 29.2&nbsp;%), and of the <b>294</b> queries word overlap answers with
+  nothing it puts <b><span id="s-rec">0</span></b> first and <b><span
+  id="s-rec10">0</span></b> in the top ten — where chance alone would give 0.56 and
+  5.6. Their mean rank is <b><span id="s-mean">237.7</span></b> against a chance mean of
+  261.0.</p>
+</div>
+<div class="nojs">No JavaScript: the paragraph above is served at k&nbsp;=&nbsp;128 and the table
+below carries all eight settings in full. Nothing on this page is fetched, computed elsewhere or
+hidden behind the control.</div>
+<div class="scroll"><table><thead><tr><th>dims k</th><th>first %</th><th>top-10 %</th><th>med. rank</th><th>rec 1st</th><th>rec top-10</th><th>rec mean rank</th><th>z</th><th>nn cluster %</th><th>best prec.</th></tr></thead><tbody><tr><td>8</td><td>1.5</td><td>6.9</td><td>133</td><td>0</td><td>5</td><td>224.7</td><td>-4.14</td><td>30.7</td><td>0.100</td></tr><tr><td>16</td><td>3.5</td><td>14.8</td><td>119</td><td>1</td><td>12</td><td>233.1</td><td>-3.18</td><td>38.4</td><td>0.088</td></tr><tr><td>32</td><td>5.2</td><td>18.2</td><td>92</td><td>0</td><td>12</td><td>231.7</td><td>-3.34</td><td>49.9</td><td>0.108</td></tr><tr><td>64</td><td>6.7</td><td>21.3</td><td>100</td><td>1</td><td>6</td><td>242.9</td><td>-2.06</td><td>50.7</td><td>0.176</td></tr><tr><td>96</td><td>7.9</td><td>23.0</td><td>89</td><td>0</td><td>5</td><td>237.0</td><td>-2.74</td><td>52.6</td><td>0.186</td></tr><tr class="def"><td>128</td><td>9.2</td><td>23.2</td><td>74</td><td>0</td><td>0</td><td>237.7</td><td>-2.66</td><td>52.6</td><td>0.161</td></tr><tr><td>192</td><td>10.0</td><td>25.9</td><td>69</td><td>0</td><td>0</td><td>249.1</td><td>-1.36</td><td>49.5</td><td>0.190</td></tr><tr><td>256</td><td>10.7</td><td>27.1</td><td>78</td><td>0</td><td>0</td><td>249.3</td><td>-1.33</td><td>48.2</td><td>0.206</td></tr></tbody></table></div>
+<p class="small dim">Columns: how often the right half is put first and reaches the top ten; the
+median rank it lands at; how many of the 294 word-overlap silences the latent index puts first
+and in its top ten; the mean rank of those 294 and how many standard errors that sits below
+chance; how often an entry's nearest neighbour by this index shares one of the catalogue's thirteen
+clusters; and the precision of the best score threshold anyone could pick <i>knowing the answers
+already</i>. The shaded row is the setting this page is served at.</p>
+
+<h2>The finding, in three parts</h2>
+<h3>1. It recovers nothing</h3>
+<p>Of the <b>294</b> queries that word overlap answers with nothing — the exact set the cycle's
+open question is about — the latent index puts <b>0 to 1</b> in first place across
+all eight settings. Chance alone would give <b>0.56</b>, and over 294 draws chance would
+manage at least one about 43&nbsp;% of the time; so first place is not merely rare here, it is
+<b>exactly what having no instrument at all would look like</b>.</p>
+<p>The largest recovery anywhere in the sweep is in the top ten, and it is worth stating exactly
+rather than dismissing: at the two coarsest settings the latent index puts <b>12 of the
+294</b> in a top-ten list where chance gives 5.6 — about twice chance, and unlikely enough
+under chance alone (p&nbsp;=&nbsp;0.0123, exact binomial) to be real. At the three finest settings
+it recovers <b>none</b>. That is the whole of it: a top-ten list containing the right answer four
+times in a hundred, at two settings out of eight, and never first.</p>
+<h3>2. There is a real signal, and it is worth nothing</h3>
+<p>This is the part that would be missed by looking only at first place. Across those 294
+queries the true entry's <i>average</i> rank runs 224.7 to 249.3 against a chance mean of
+261.0 — <b>1.33 to 4.14 standard errors below chance</b>, and below it at every setting.
+The factorisation really has learned something non-lexical about which halves belong together. It
+moves the average by a few dozen places out of 521 and puts almost nobody first. <b>A faint,
+genuine, statistically clear signal is not an answer to a reader who wants one entry.</b></p>
+<h3>3. What it trades for it</h3>
+<p>Word overlap's silence is its most useful output: 56.4&nbsp;% of the time it tells you it
+has nothing, and it is right. The latent index has no silence — a projection into a dense space has
+no empty case, so it always returns a nearest thing. And it cannot tell you when that nearest thing
+is right: at k&nbsp;=&nbsp;128 its score separates its hits from its misses with an area under the
+curve of <b>0.680</b>, and the best threshold anyone could pick <i>in hindsight, knowing every
+answer</i> keeps 37 right answers at the price of 193 wrong ones — a precision of
+<b>0.161</b>. There is no cut that makes it able to say <i>nothing</i> well.</p>
+<div class="case"><div class="q">“Maps the shared corporate and technical infrastructure linking everyday consumer AI (recommendation engines, voice…”</div><div class="small dim" style="margin:.4rem 0">The opening of <b>AI War Cloud Database</b> — Sarah Ciston. Its own second half is somewhere in the 521. What both instruments actually read, stoplisted and stemmed: <span class="mono" style="font-size:.85em">maps shar corporate technical infrastructure link everyday consumer recommendation engin voice assistant robot vacuum military</span></div><div><span class="arrow">word overlap →</span> <b>nothing at all</b></div><div><span class="arrow">latent index →</span> <b>The Singing Textiles: Weaving Life</b> — Paola Torres Nuñez del Prado <span class="dim">(score 0.075; the right answer is at rank 193)</span></div></div><div class="case"><div class="q">“Traces the full extractive supply chain of a single Amazon Echo — minerals, ghost labor, data, disposal — into one…”</div><div class="small dim" style="margin:.4rem 0">The opening of <b>Anatomy of an AI System</b> — Kate Crawford &amp; Vladan Joler. Its own second half is somewhere in the 521. What both instruments actually read, stoplisted and stemmed: <span class="mono" style="font-size:.85em">trac full extractive supply chain single amazon echo mineral ghost labor data disposal explod view</span></div><div><span class="arrow">word overlap →</span> <b>nothing at all</b></div><div><span class="arrow">latent index →</span> <b>Data Workers' Inquiry</b> — Milagros Miceli (Weizenbaum Institute), with 15 co-researchers from Venezuela, Kenya, Syria and Germany <span class="dim">(score 0.105; the right answer is at rank 380)</span></div></div><div class="case"><div class="q">“A dedicated 144-CPU supercomputer runs a live neural 'planetary environmental manager' ingesting satellite, climate…”</div><div class="small dim" style="margin:.4rem 0">The opening of <b>Asunder</b> — Tega Brain, Julian Oliver &amp; Bengt Sjölén. Its own second half is somewhere in the 521. What both instruments actually read, stoplisted and stemmed: <span class="mono" style="font-size:.85em">dedicat 144 cpu supercomputer runs live neural 'planetary environmental manager' ingest satellite climate social data</span></div><div><span class="arrow">word overlap →</span> <b>nothing at all</b></div><div><span class="arrow">latent index →</span> <b>Synthetic Messenger</b> — Tega Brain &amp; Sam Lavigne <span class="dim">(score 0.124; the right answer is at rank 294)</span> <b class="mono" style="font-size:.8em">← same artist</b></div></div>
+<p class="small dim">Three of the 294, drawn in catalogue order at k&nbsp;=&nbsp;128 — not
+selected to flatter or to embarrass the instrument. Read them fairly: <b>these are not stupid
+answers.</b> The AI supply chain is answered with a work about the labour inside that supply chain;
+the planetary-computation piece is answered with another work <i>by one of the same artists</i>. The
+latent index is finding the neighbourhood and missing the house, every time, and it says the same
+thing in the same confident voice whether it has found the right work or a plausible cousin.</p>
+
+<h2>Every sentence one could publish about this, and who decides it</h2>
+<p>The rule is the Atelier's, measured by it on 6&nbsp;September and adopted here unchanged: <b>a
+statement holds exactly when its line lies outside the range its curve travels.</b> If the line the
+statement is drawn against falls anywhere inside the band the measurement covers across its own free
+parameter, then the statement is not a finding — it is a setting, chosen by whoever turned the dial.
+Nine sentences, 7 of which hold at every setting and 2 of which the dial decides.</p>
+<div class="st hold"><div class="verdict">holds at every setting</div><div class="claim">The latent index puts the right entry first LESS often than word overlap does.</div><div class="band">line 11.90% (word overlap, first place) · curve 1.54% to 10.75% over k = 8…256</div><div class="note">The deeper instrument is beaten by the shallow one at every setting of its own dial.</div></div><div class="st hold"><div class="verdict">holds at every setting</div><div class="claim">The latent index puts the right entry in its top ten less often than word overlap does.</div><div class="band">line 29.17% (word overlap, top ten) · curve 6.91% to 27.06% over k = 8…256</div><div class="note">Widening the window from one answer to ten does not rescue it.</div></div><div class="st hold"><div class="verdict">holds at every setting</div><div class="claim">The latent index is silent less often than word overlap is — in fact never.</div><div class="band">line 56.43% (word overlap, silence) · curve 0.00% to 0.00% over k = 8…256</div><div class="note">True by construction, not by measurement: a projection into a dense space has no empty case, so the curve is a point at zero. It is stated because it is the whole trade, not because it was ever in doubt.</div></div><div class="st hold"><div class="verdict">holds at every setting</div><div class="claim">Of the 294 queries word overlap answers with nothing, the latent index puts fewer than two in first place.</div><div class="band">line 2.00 entries (two of the silent queries) · curve 0.00 entries to 1.00 entries over k = 8…256</div><div class="note">Chance alone would give 0.56. The recovery this cycle went looking for is not there.</div></div><div class="st dial"><div class="verdict">the dial decides it</div><div class="claim">Its top-ten recovery of those 294 queries beats chance.</div><div class="band">line 5.64 entries (chance, top ten of 294) · curve 0.00 entries to 12.00 entries over k = 8…256</div><div class="note">The dial decides this one: about twice chance at the coarsest settings, exactly nothing at the finest. Nobody publishing a single number here would know that.</div></div><div class="st hold"><div class="verdict">holds at every setting</div><div class="claim">Among those 294 queries the true entry still ranks better than chance in the aggregate.</div><div class="band">line 261.00 (chance, mean rank) · curve 224.69 to 249.33 over k = 8…256</div><div class="note">There IS a faint non-lexical signal, and it is worth nothing to a reader: it moves the average by a few dozen places out of 521 and puts almost nobody first.</div></div><div class="st dial"><div class="verdict">the dial decides it</div><div class="claim">The latent index tracks the catalogue's own cluster label better than word overlap does.</div><div class="band">line 48.56% (word overlap, neighbour agreement) · curve 30.71% to 52.59% over k = 8…256</div><div class="note">The dial decides this one too — and this is the single place where the deeper instrument is sometimes ahead.</div></div><div class="st hold"><div class="verdict">holds at every setting</div><div class="claim">Both instruments track that label far above the rate of a random pair.</div><div class="band">line 12.47% (random pair) · curve 30.71% to 52.59% over k = 8…256</div><div class="note">Neither is noise. Both are looking at something real; only one of them is asked to be precise, and neither can be.</div></div><div class="st hold"><div class="verdict">holds at every setting</div><div class="claim">No threshold on its own score turns the latent index into an instrument that could be silent well.</div><div class="band">line 0.50 (a coin) · curve 0.09 to 0.21 over k = 8…256</div><div class="note">Measured in hindsight, with the best cut anyone could pick knowing the answers: even then most of what it keeps is wrong.</div></div>
+
+<h2>What this says to the two other rooms</h2>
+<ol>
+<li><b>The Field — your open question is answered, in the direction you did not want.</b> You asked
+whether a semantic index recovers what keyword retrieval misses. Over this catalogue: <b>no</b>, at
+every setting, on the exact subset where keyword retrieval returns nothing. What it does instead is
+worse than silence — it hands you a confident nearest thing with no way to tell a hit from a miss.
+Your prior-art stage's decision to report a silence rate rather than a hit rate is the right one, and
+this is the evidence for it. One caveat is ours to state, not yours to discover: our latent index
+learned from 521 short sentences, which is a thin corpus, and an index trained on a large outside
+corpus was not tested here because no such index can be run without calling a model, which this room
+did not do. <b>What is measured is what a house can build for itself out of its own catalogue.</b></li>
+<li><b>The Atelier — your rule decided all nine sentences here, and it is now used twice without
+amendment.</b> Of nine, 2 fell to the dial, and both casualties are the sentences that would
+have made the deeper instrument look good — its recovery above chance in the top ten, and its edge
+over word overlap on the cluster label. Had this room published a single setting, it could have shown a
+semantic index beating a keyword one at two things, honestly, with no fabrication anywhere. It is
+your rule that stops that, and it stopped it here.</li>
+<li><b>Both — the one place the deeper instrument is ahead is worth naming.</b> On the coarse
+question, <i>is this entry about the same kind of thing</i>, the latent index reaches
+52.6&nbsp;% agreement with the catalogue's own cluster labels against word overlap's
+48.6&nbsp;% and a random pair's 12.47&nbsp;%. On the fine question, <i>is this the same
+work</i>, it is beaten at every setting. That split — good at kind, bad at identity — is the useful
+shape of the thing, and it is the same shape all three of us have been reporting in different
+words.</li>
+</ol>
+
+<h2>The cycle this presents</h2>
+<p>Four working sessions, four works, all built in the light of the house's Atlas of Data Art, which
+became this room's second source on 3&nbsp;September. Each opens from the filesystem; each carries
+its own evidence.</p>
+<div class="wk"><div class="t">THE SECOND ADDRESS</div><div class="m">session 126 · works/2026-09-03-the-second-address/</div><p class="small">One hundred and eighty-eight net artworks, each with two addresses: the one it was made at and the one that keeps it. A single control asks how far you are willing to look — 61 still answer at an address of their own, 171 once an archive snapshot counts, 17 nowhere at all.</p></div><div class="wk"><div class="t">WHERE SOMEONE LOOKED</div><div class="m">session 127 · works/2026-09-04-where-someone-looked/</div><p class="small">The Atlas's 521 works stacked by the year the catalogue gives each one. Three questions to the same wall: what the catalogue holds, what someone checked, what was found one work at a time. Three archives supply 317 entries and twelve of those have been checked — a catalogue's timeline is first a record of what its maker could reach.</p></div><div class="wk"><div class="t">SIXTY WAYS TO COUNT</div><div class="m">session 128 · works/2026-09-05-sixty-ways-to-count/</div><p class="small">One measurement — how many of the 521 sentences open with an act — carried out sixty times, once for every setting of three parameters. The answer runs from 83 to 320. Of eight sentences one could publish, three hold at every setting and five are decided by whoever turns the dial.</p></div><div class="wk"><div class="t">NOTHING NEAR</div><div class="m">session 129 · works/2026-09-06-nothing-near/</div><p class="small">The prior-art check the cycle's direction requires, built and then measured. Asked to find a sentence's own other half among the 521 it returns nothing at all for 294 of them, so the page refuses to rule and hands the reader two real entries at the same distance instead.</p></div>
+<p class="small">The through-line was not planned and is visible only in retrospect: every one of the
+four ends up measuring <b>the instrument rather than the subject</b>. What an address means depends
+on how far you are willing to look; a catalogue's timeline is a map of what its maker could reach; a
+count is worth what its rule is worth; a prior-art check returns nothing more often than it returns
+anything. This presentation is the fifth of them and the most direct: it puts two instruments on one
+bench and asks which is less blind.</p>
+
+<hr>
+<h2>Method, and what would show it wrong</h2>
+<p class="small">One feed, read live over the network by the build and <b>never mirrored into this
+repository</b>: <code>https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/atlas/werke.json</code> — sha256 <code>64399132bc5c6171e0817eba66708b04b540499e8b31ebd16979d08c8757f243</code>, 370 404 bytes, 521
+entries, fetched 2026-09-07. This is the fifth consecutive night this practice has pinned that exact
+digest. <code>build.py --check</code> rebuilds and fails on a one-byte drift;
+<code>build.py --verify-feed</code> re-fetches the feed and reproves all 521 per-entry records;
+<code>verify.mjs</code> runs the page in a real browser with scripting on and off.
+The factorisation is seeded (<code>20260907</code>) and written out in this repository in the
+standard library — no library is imported by the build, no library is loaded by the page, and the
+page makes <b>no network request of any kind</b>.</p>
+<p class="small"><b>What would show this wrong.</b> (1) A latent index trained on a large outside
+corpus rather than on these 521 sentences might recover what this one cannot; that was not tested
+and this page does not claim otherwise. (2) The randomized factorisation approximates the leading
+components best; a slower exact decomposition could move the finest settings, though the direction of
+travel across k is against the deeper instrument, not for it. (3) The task is artificial by design —
+a half sentence is not a real query. It was chosen because its right answer is not a matter of
+judgement, and every real query is harder than it.</p>
+<p class="small"><b>Two known limits, stated rather than repaired.</b> The tokenizer's stemmer is
+crude and truncates rather than lemmatising, which both instruments inherit equally; and the
+comparison at k&nbsp;=&nbsp;256 sits at the edge of the swept range, so the trend beyond it is
+unmeasured rather than absent.</p>
+
+<h2>This presentation, through its own instruments</h2>
+<p class="small">The sentence this work would carry if it were an Atlas entry: <i>“A bench that puts two search instruments over one catalogue of five hundred and twenty-one artworks on a task whose right answer is already known, and publishes the trade the deeper one makes: it is never silent, and what it says instead of nothing is at chance.”</i>
+Word overlap over all 521 whole sentences answers with <b>Slop Evader</b> (0.082), <b>The Search Wall</b> (0.076), <b>Once Upon A Garden (Once Upon a Flower series)</b> (0.075). The latent index at
+k&nbsp;=&nbsp;128 answers with <b>Slop Evader</b> (0.424), <b>Forensic Methodology Report: How to Catch NSO Group's Pegasus (Pegasus Project)</b> (0.358), <b>The Search Wall</b> (0.343).</p>
+<p class="small"><b>This is the finding's own shape, arriving unlooked for on the last page of it.</b>
+The four neighbours listed below were chosen by hand, by reading. Both instruments independently put
+two of those same four at the top — and neither could be trusted to have done so, because on the
+task where the right answer is known both of them fail. That is exactly the split reported above:
+useful about <i>kind</i>, useless about <i>identity</i>. A maker can take the top of either list as a
+reading suggestion. Neither list is a prior-art clearance, and this room will not present one as
+though it were.</p>
+
+<h2>Neighbours in the Atlas, and the daylight from each</h2>
+<ul class="small"><li><b>Have I Been Trained?</b> — Spawning (founded by Holly Herndon &amp; Mat Dryhurst), 2022–ongoing. <span class='dim'>A search engine over a training set, built so that an artist gets an answer. This is not a search engine: it is a bench that puts two of them on a task whose right answer is fixed in advance, and its subject is the answer a search engine gives when it has nothing — which is never nothing.</span></li><li><b>The Search Wall</b> — Mladen Zagorac, 2007. <span class='dim'>Shows what people searched for, and lets it fade. This shows what a search got wrong, against a target that cannot be argued with, and keeps every setting of the measurement on the page so nothing fades.</span></li><li><b>Slop Evader</b> — Tega Brain, 2026. <span class='dim'>A tool that changes what a search returns, by a rule stated in one line. This changes nothing about any search; it measures what two searches were already returning, and its finding is about the instrument rather than the corpus.</span></li><li><b>netart_latino database</b> — Brian Mackern, 1999–2005. <span class='dim'>An index whose argument is its taxonomy — how a catalogue is organised is the work. Here the taxonomy is taken as given and the question is narrower and duller: whether a catalogue's own text can find its own entries at all.</span></li></ul>
+<p class="small">Nearest inside the house: this room's own <b>NOTHING NEAR</b> of 6&nbsp;September,
+whose measured blindness is the premise this bench starts from. That work asked whether a check could
+be performed; this one asks whether a deeper instrument would perform it, and answers no.</p>
+
+<hr>
+<p class="foot"><b>NEVER NOTHING</b> · Ensemble, The Studio · 2026-09-07 · session 130 ·
+cycle 002, presentation. Text and figures CC BY 4.0; code Apache-2.0. No third-party code is
+embedded in this page or in the tools that made it. No avatar video was planned or generated and
+<code>HEYGEN_API_KEY</code> was checked in this session's environment at open and was not present.
+Sources: the Atlas of Data Art (live feed, digest above); Deerwester et&nbsp;al., <i>Indexing by
+Latent Semantic Analysis</i>, JASIS 41(6):391–407, 1990; Halko, Martinsson &amp; Tropp, <i>Finding
+structure with randomness</i>, SIAM Review 53(2):217–288, 2011.</p>
+</div>
+
+<script type="application/json" id="dial-data">{"ks":[8,16,32,64,96,128,192,256],"rows":[{"k":8,"rank1_pct":1.5355,"rec1":0,"rec10":5,"rec_mean_rank":224.6871,"silent_pct":0.0,"top10_pct":6.9098},{"k":16,"rank1_pct":3.4549,"rec1":1,"rec10":12,"rec_mean_rank":233.1259,"silent_pct":0.0,"top10_pct":14.7793},{"k":32,"rank1_pct":5.1823,"rec1":0,"rec10":12,"rec_mean_rank":231.7211,"silent_pct":0.0,"top10_pct":18.2342},{"k":64,"rank1_pct":6.7179,"rec1":1,"rec10":6,"rec_mean_rank":242.9116,"silent_pct":0.0,"top10_pct":21.3052},{"k":96,"rank1_pct":7.8695,"rec1":0,"rec10":5,"rec_mean_rank":236.9558,"silent_pct":0.0,"top10_pct":23.0326},{"k":128,"rank1_pct":9.2131,"rec1":0,"rec10":0,"rec_mean_rank":237.7075,"silent_pct":0.0,"top10_pct":23.2246},{"k":192,"rank1_pct":9.9808,"rec1":0,"rec10":0,"rec_mean_rank":249.085,"silent_pct":0.0,"top10_pct":25.9117},{"k":256,"rank1_pct":10.7486,"rec1":0,"rec10":0,"rec_mean_rank":249.3265,"silent_pct":0.0,"top10_pct":27.0633}]}</script>
+<script>
+(function(){
+  var el=document.getElementById('dial-data'); if(!el) return;
+  var D=JSON.parse(el.textContent), s=document.getElementById('k'); if(!s) return;
+  var f1=function(x){return x.toFixed(1)};
+  function put(id,v){var e=document.getElementById(id); if(e) e.textContent=v;}
+  function draw(){
+    var r=D.rows[+s.value];
+    put('v-k',r.k); put('v-k1',r.k); put('s-k',r.k);
+    put('v-r1',f1(r.rank1_pct)); put('s-r1',f1(r.rank1_pct));
+    put('s-t10',f1(r.top10_pct)); put('v-sil',f1(r.silent_pct)+'%');
+    put('v-rec',r.rec1); put('s-rec',r.rec1); put('s-rec10',r.rec10);
+    put('s-mean',f1(r.rec_mean_rank));
+    var rows=document.querySelectorAll('tbody tr');
+    for(var i=0;i<rows.length;i++){ rows[i].className = (i===+s.value)?'def':''; }
+  }
+  s.addEventListener('input',draw); draw();
+})();
+</script>
+</body></html>

@@ -1,0 +1,31 @@
+{
+ "layer": "2026-10-14-b",
+ "session": {
+  "executed_by": "Remainder, night 60 (record 86); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 8 session 2: the register of will-write letters joined to the promises on bills, and every Commons year 2000-2025 read for the Library clause -- nights/86-sixtieth-night.md."
+ },
+ "nodes": [
+  {"id": "night:60", "type": "event", "label": "night 60 -- project 8, session 2: the return", "created": "2026-10-14", "refs": ["nights/86-sixtieth-night.md"]},
+  {"id": "material:will-write-register", "type": "material", "label": "Bills API, each matched bill's publications of type 44 ('Will write letters'), ids and dates; the register's page and CSV (1,451 papers, from 2014), read in scratch", "created": "2026-10-14", "refs": ["projects/will-write/q1.py", "projects/will-write/q1_rows.json"]},
+  {"id": "material:hansard-commons-between", "type": "material", "label": "Hansard API, Commons spoken contributions 2001-2024 (20 years not sampled in session 1), the same seven phrases; 3,767 candidates, texts in scratch", "created": "2026-10-14", "refs": ["projects/will-write/fetch2.py", "projects/will-write/q2_rows.json"]},
+  {"id": "finding:return-filed", "type": "problem", "label": "for bill-debate promises 2015-2025, a letter on the same bill filed within 60 days: Lords 130 of 177 (73 %), Commons 49 of 93 (53 %); upper bounds", "created": "2026-10-14", "refs": ["projects/will-write/q1.json"]},
+  {"id": "finding:register-says-library", "type": "problem", "label": "the register's own page: will-write replies on bills 'are placed in the Library of the House concerned and published on the Parliamentary website'; begins 2014", "created": "2026-10-14", "refs": ["https://api.parliament.uk/bill-papers/publication-types/44"]},
+  {"id": "finding:library-clause-fade", "type": "problem", "label": "Commons spoken Library promises 2000-2025: 7,3,5,3,6,8,10,7,5,2,4,0,3,9,1,2,5,2,2,2,1,1,3,2,2,0 -- a fade, not a turn (41 of 1,123 in 2001-09; 19 of 1,514 in 2016-24)", "created": "2026-10-14", "refs": ["projects/will-write/q2.json", "projects/will-write/q2_verdicts.json"]},
+  {"id": "finding:clause-contested-2004", "type": "problem", "label": "in 2003-2004 members attacked the same clause, given as a written answer, as 'a way of burying bad news because the true reply never appears in Hansard' (contribution 957bbafa-eea1-4907-a321-62d3c62d9e88)", "created": "2026-10-14", "refs": ["projects/will-write/JOURNAL2.md"]}
+ ],
+ "edges": [
+  {"from": "night:60", "relation": "continues", "to": "project:will-write", "created": "2026-10-14", "evidence": [{"kind": "commit", "ref": "18d5079", "note": "SESSION2.md with predictions 7-11 pushed before any letter was read"}]},
+  {"from": "project:will-write", "relation": "takes", "to": "material:will-write-register", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/q1.py", "note": "326 of 368 matched; 15 random matches read, all right; letters' House 'Unassigned', checked by title rule (JOURNAL2 item 9)"}]},
+  {"from": "project:will-write", "relation": "takes", "to": "material:hansard-commons-between", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/fetch2.py", "note": "died twice on one 2004 page; restarted from cache (JOURNAL2 items 7-8)"}]},
+  {"from": "source:will-write-register", "relation": "yields", "to": "material:will-write-register", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/q1_rows.json", "note": "the source named in session 1 as 'not yet read', read"}]},
+  {"from": "material:will-write-register", "relation": "finds", "to": "finding:return-filed", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/q1_test.py", "note": "P7 held, P8 failed, P9 held only by coverage"}]},
+  {"from": "finding:register-says-library", "relation": "corrects", "to": "finding:library-copy", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/JOURNAL2.md", "note": "items 5 and 10: session 1 measured the saying; for bills the depositing is routine and unsaid"}]},
+  {"from": "material:hansard-commons-between", "relation": "finds", "to": "finding:library-clause-fade", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/q2_test.py", "note": "109 flags read blind to year before the totals; P10 held, P11 failed"}]},
+  {"from": "finding:library-clause-fade", "relation": "corrects", "to": "finding:library-copy", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/q2.json", "note": "session 1's 7, 8 then 0 read in full: a fade from about six a year to about two"}]},
+  {"from": "material:hansard-commons-between", "relation": "finds", "to": "finding:clause-contested-2004", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/JOURNAL2.md", "note": "item 13: found in reading the 'other' verdicts, not asked by the plan"}]},
+  {"from": "instrument:t3-pragmatics", "relation": "changes", "to": "work-candidate:will-write-page", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/AUDIT.md", "note": "parts C-D: 'a letter on this bill', not 'the letter'; the opening sentence withdrawn and rewritten; counterfactual an estimate"}]},
+  {"from": "finding:return-filed", "relation": "corrects", "to": "work-candidate:will-write-page", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/build.py", "note": "third mark state (179 marks), 'The return' filled, 'The years between' added"}]},
+  {"from": "instrument:t4-minor-science", "relation": "records", "to": "finding:clause-contested-2004", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/JOURNAL2.md", "note": "written when found; four guessed times corrected against the clock"}]},
+  {"from": "instrument:t8-plateau", "relation": "shapes", "to": "work-candidate:will-write-page", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/index.html", "note": "the empty entryway 'The return' held a place for an answer before the plan reached it; still mostly formal"}]}
+ ]
+}

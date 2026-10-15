@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One Day, Sixty-One Times</title>
+<style>
+:root{--ground:#eeeae1;--ink:#1c1a17;--quiet:#8b8476}
+html,body{margin:0;height:100%;background:var(--ground)}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden}
+canvas{display:block}
+</style></head><body>
+<canvas id="c" role="img" aria-label="Below, a record of 1,464 values drawn as a thin strip of dots, cut every 24 values into 61 pieces. Above, the 61 pieces laid on top of one another: one arch, rising quickly and falling slowly, made of all the days at once."></canvas>
+<script>
+/* Material, taken from record.jpg (300 x 90 px) and nothing else.
+   PX: every dark pixel  -> x, height above the bottom edge, darkness/16
+   DT: dot centres found in the picture (sub-pixel) -> x, height, darkness/16
+   LV: each day's level, fitted to the pixels of that day (picture units)
+   The record holds 61 x 24 values; its strongest rhythm repeats exactly 61 times. */
+const PX="__PX__";
+const DT="__DT__";
+const LV=__LV__;
+const W=1100,H=800,N=61,P=__P__,X0=3,PH0=__PH0__;
+const c=document.getElementById('c'),dpr=Math.max(1,window.devicePixelRatio||1);
+c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px';
+const g=c.getContext('2d');g.scale(dpr,dpr);
+const css=k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+g.fillStyle=css('--ground');g.fillRect(0,0,W,H);
+const parse=s=>{const a=s.split(',').map(Number),o=[];for(let i=0;i<a.length;i+=3)o.push([a[i],a[i+1],a[i+2]]);return o;};
+const px=parse(PX),dt=parse(DT);
+// day colour: first days amber, middle madder, last indigo
+const stops=[[196,124,52],[160,58,52],[34,52,90]];
+const dayCol=t=>{const s=Math.max(0,Math.min(1,t/N))*2,i=Math.min(1,Math.floor(s)),f=s-i;return stops[i].map((q,j)=>Math.round(q+(stops[i+1][j]-q)*f));};
+const level=t=>{const u=t-0.5,i=Math.max(0,Math.min(N-2,Math.floor(u))),f=Math.max(0,Math.min(1,u-i));return LV[i]*(1-f)+LV[i+1]*f;};
+const day=x=>(x-X0)/P;
+
+/* ---- above: the 61 days laid on one another ---- */
+const L=96,R=W-96,CY=352,K=5.7;
+const fx=t=>L+((((t-PH0)%1)+1)%1)*(R-L);
+const fy=(t,y)=>CY-(y-level(t))*K;
+for(const [x,y,w] of px){const t=day(x);if(t<0||t>N)continue;
+  g.fillStyle=`rgb(${dayCol(t)})`;g.globalAlpha=0.08*w/15;
+  g.beginPath();g.arc(fx(t),fy(t,y),2.6,0,7);g.fill();}
+for(const [x,y,w] of dt){const t=day(x);if(t<0||t>N)continue;
+  g.fillStyle=`rgb(${dayCol(t)})`;g.globalAlpha=0.30+0.55*w/15;
+  g.beginPath();g.arc(fx(t),fy(t,y),2.3,0,7);g.fill();}
+g.globalAlpha=1;
+
+/* ---- below: the record as it came, with its 61 cuts ---- */
+const SL=L,SR=R,SB=726,SK=1.25,sx=x=>SL+(x-X0)/(N*P)*(SR-SL),sy=y=>SB-y*SK;
+g.strokeStyle=css('--quiet');g.lineWidth=0.5;g.globalAlpha=0.55;
+for(let k=0;k<=N;k++){const x=X0+P*(k+PH0-1);if(x<X0-0.01)continue;if(x>X0+N*P)break;
+  const X=Math.round(sx(x))+0.5;g.beginPath();g.moveTo(X,SB-92*SK+4);g.lineTo(X,SB+4);g.stroke();}
+for(const [x,y,w] of px){const t=day(x);
+  g.fillStyle=`rgb(${dayCol(t)})`;g.globalAlpha=0.20+0.6*w/15;
+  g.fillRect(sx(x)-0.9,sy(y)-0.9,1.8,1.8);}
+g.globalAlpha=1;
+
+/* ---- words ---- */
+g.fillStyle=css('--quiet');g.font='italic 13px Georgia, "Times New Roman", serif';g.textBaseline='alphabetic';
+g.textAlign='left';g.fillText('1,464 values, as recorded, cut after every 24th',SL,SB+28);
+g.textAlign='right';g.fillText('the 61 pieces, laid on one another',SR,566);
+g.fillStyle=css('--ink');g.font='15px Georgia, "Times New Roman", serif';g.textAlign='left';
+g.fillText('One Day, Sixty-One Times',L,58);
+</script></body></html>

@@ -1,0 +1,7 @@
+# THE UNPAID NUMBER — cycle 006, session 3 (2026-10-08)
+Page: `index.html` (script, SVG), built from `template.html` + `data.json` by `python3 build.py`.
+Checks: `python3 check_sources.py` (fetches the report, checks its SHA-256 and that every number's evidence string stands verbatim on its PDF page; 33 checks) and `node verify_browser.mjs` (390 px light, 1100 px dark, every control; 36 checks).
+Source, read in full text: Karger et al., *Forecasting Existential Risks: Evidence from a Long-Run Forecasting Tournament*, Forecasting Research Institute Working Paper #1 (2023), 754 pages. Not committed (a third-party document); its hash and URL are in `data.json`.
+Move: the tournament scored its forecasters' guesses of each other's medians and published their own, unscored forecasts as the groups' beliefs. The page lets a visitor fill in the same three numbers, prints a pay slip in which the own forecast cannot earn anything, sets the public's two instruments (1.5 % typed, 1 in 40 million on a ladder, N 405) against the visitor's own pair, and draws the four-month stage medians.
+Points on the slip are this page's own declared rule (100 minus 40 per factor of ten), not the tournament's. Medians only; no individual forecaster is drawn. No model called, no third-party code.
+Neighbours (Atlas): *Dear Data* (Lupi & Posavec), *Survey of Common Sense* (Niazmand). Daylight on the page and in `meta.json`.

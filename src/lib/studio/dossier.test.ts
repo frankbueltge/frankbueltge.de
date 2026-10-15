@@ -135,7 +135,13 @@ describe('buildStudioDossiers over the committed record', () => {
     expect(Object.keys(METAS), `${newest} shipped but the mirror carries no meta.json`).toContain(newest)
     expect(byId.get(newest)?.id).toBe(newest)
     expect(byId.get(newest)?.title).toBe(METAS[newest].title)
-    expect(byId.get(newest)?.date).toBe(NEWEST_SHIP.date)
+    // Dated from the work's PREMIERE — its first ship — not from the entry that happens to be
+    // newest. A work can be shipped again when the practice revises it (2026-09-02), and buildDossiers
+    // has always filed one dossier per work under its premiere; re-dating it to the revision would
+    // claim the work is newer than it is. Which work then counts as the *current* premiere is a
+    // separate question the record does not settle, and the test above is left as it stands.
+    const premiereOf = [...CHRONICLE].find((e) => e.move === 'ship' && e.works[0] === newest)!
+    expect(byId.get(newest)?.date).toBe(premiereOf.date)
   })
 
   it('leads with the current premiere, derived from the record and never typed', () => {

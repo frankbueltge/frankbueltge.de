@@ -1,0 +1,196 @@
+---
+// THE WORKS REGISTER on the paper ground (2026-10-11, design handoff §4).
+//
+// The register moved onto /ecology on 2026-09-03 and has listed the practices' session
+// artifacts beside their works, and the nightly line's works under its own name, since
+// 2026-10-04 (decision log). This is that same list — src/lib/engines/register.ts, with the
+// presentation shelf and a cycle on every line (src/lib/ecology/record.ts) — on the handoff's
+// table: a search field, the houses, the kinds, the cycles, and the order of the days.
+//
+// Every row is in the document. The filters only move the `hidden` property, so the whole
+// register is there for search engines and for find-in-page, and a reader without JavaScript
+// gets the complete list, newest first, with the controls hidden from them because they would
+// not work.
+//
+// Two things the register has carried since before the handoff, and keeps on the new table
+// because they are the record's honesty rather than its dress (WorksRegisterSection.astro, the
+// section this replaces, stays in the repo unmounted):
+//   · a WITHDRAWN work stays listed and marked, with its withdrawal quoted verbatim in the
+//     practice's own words under its row — never an alarm, because a withdrawal is a completed
+//     honest act;
+//   · the NEIGHBOUR AUDIT of 2026-08-09: the projects that already do something like a work,
+//     named and linked under the work's own row, and one sentence over the table saying how
+//     many entries were checked — because a row without a note is UNEXAMINED and must never be
+//     read as cleared (docs/audits/2026-08-09-ecology-usp-audit.md; register-audit.test.ts).
+// The neighbours are links of their own, so a row is not one big link: its title is the link,
+// stretched over the row by the stylesheet, and the notes stand above that stretch.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { localeHref } from '@/lib/locale-href'
+import type { Locale } from '@/lib/site'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { SCORE_WORDING as W, SHORT, shortDateYear } from '@/config/score-wording'
+import { isPractice, type MadeThing } from '@/lib/ecology/record'
+import { PRACTICES } from '@/lib/ecology/v3'
+import { GRAPH } from '@/lib/graph/load'
+import { practiceWorkAudits } from '@/lib/graph/query'
+import { readable } from '@/lib/graph/derive'
+import { VERDICT_LEGEND } from '@/lib/graph/field'
+
+interface Props {
+  things: MadeThing[]
+  /** the cycles the register can be narrowed to, oldest first */
+  cycles: number[]
+}
+const { things, cycles } = Astro.props
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : localeHref(href, (path) => getRelativeLocaleUrl(locale, path)))
+const R = W.register
+const houseName = (t: MadeThing) => (isPractice(t.house) ? ECOLOGY_V3.practices[t.house].name : R.nightly)
+const hasNightly = things.some((t) => !isPractice(t.house))
+const hasBefore = things.some((t) => t.cycle === 0)
+
+// The audit, keyed as the register names its works. Derived from the committed graph, which is
+// derived from the audit document — so this table cannot say anything the audit does not say.
+const audits = practiceWorkAudits(GRAPH)
+const auditOf = (t: MadeThing) => (t.auditKey ? audits.get(t.auditKey) : undefined)
+const auditedCount = things.filter((t) => auditOf(t)).length
+const auditDay = /\/(\d{4}-\d{2}-\d{2})-[^/]*$/.exec(R.audit.href)?.[1] ?? ''
+// The same plain words the neighbourhood figure's legend uses: "wide daylight", "little daylight".
+const daylightWord = (verdict: string): string => VERDICT_LEGEND.find((l) => l.key === verdict)?.label ?? verdict
+---
+
+<div data-sc-register data-count={R.countTemplate(things.length)} data-sort-newest={R.sort.newest} data-sort-oldest={R.sort.oldest}>
+  <div class="sc-register-tools" data-sc-tools hidden role="group" aria-label={R.label}>
+    <input type="search" placeholder={R.search} aria-label={R.search} data-sc-search />
+    <div class="sc-chips">
+      {PRACTICES.map((p) => (
+        <button type="button" class={`sc-chip sc-voice-chip pp-voice-${p}`} data-filter="house" data-value={p} aria-pressed="false">{SHORT[p]}</button>
+      ))}
+      {hasNightly && <button type="button" class="sc-chip" data-filter="house" data-value="nightly-line" aria-pressed="false">{R.nightly}</button>}
+    </div>
+    <div class="sc-chips">
+      {(['artifact', 'work', 'presentation'] as const).map((k) => (
+        <button type="button" class="sc-chip" data-filter="kind" data-value={k} aria-pressed="false">{R.kinds[k]}</button>
+      ))}
+    </div>
+    <div class="sc-chips">
+      <span class="sc-small">{R.cycle}</span>
+      {hasBefore && <button type="button" class="sc-chip sc-chip--cycle" data-filter="cycle" data-value="0" aria-pressed="false">{R.before}</button>}
+      {cycles.map((n) => (
+        <button type="button" class="sc-chip sc-chip--cycle" data-filter="cycle" data-value={n} aria-pressed="false">{n}</button>
+      ))}
+    </div>
+    <button type="button" class="sc-chip sc-register-sort" data-sc-sort>{R.sort.newest}</button>
+  </div>
+
+  {/* The absence, said once and plainly rather than stamped on every row: one sentence that
+      names the ratio cannot be skimmed past. */}
+  <p class="sc-note-line sc-register-audit">
+    {R.audit.lead(auditedCount, things.length)}{' '}
+    (<a class="sc-link" href={R.audit.href} rel="noopener">{R.audit.label(auditDay)}</a>).{' '}
+    {R.audit.rule}
+  </p>
+
+  <div class="sc-scroll" data-sc-rows>
+    {things.map((t) => {
+      const audit = auditOf(t)
+      return (
+        <div
+          class={`sc-register-item${isPractice(t.house) ? ` pp-voice-${t.house}` : ''}`}
+          data-house={t.house}
+          data-kind={t.kind}
+          data-cycle={t.cycle ?? ''}
+          data-title={t.title.toLowerCase()}
+        >
+          <div class="sc-register-row">
+            <span>{t.date ? shortDateYear(t.date) : R.undated(t.cycle)}</span>
+            <span>{houseName(t)}</span>
+            <span>{R.cycleCell(t.cycle)}</span>
+            <span>{R.kind({ kind: t.kind, before: t.cycle === 0, paper: t.paperHref !== null })}{t.withdrawn && ` · ${R.withdrawn}${t.withdrawnOn ? ` ${t.withdrawnOn}` : ''}`}</span>
+            <a class="sc-register-title" href={url(t.href)}>{t.title}</a>
+            <span aria-hidden="true">↗</span>
+          </div>
+          {/* The withdrawal itself, verbatim and in full — a mark the record keeps has to be
+              readable, not a tooltip somebody has to find. */}
+          {t.withdrawnNote && <p class="sc-register-note">{t.withdrawnNote}</p>}
+          {audit && (
+            <p class="sc-register-note">
+              <span class="sc-register-verdict">{daylightWord(audit.verdict)}</span> {R.audit.nearest}{' '}
+              {audit.neighbours.map((n, i) => (
+                <>
+                  {i > 0 ? ' · ' : ''}
+                  {n.url ? <a class="sc-link" href={n.url} rel="noopener nofollow">{readable(n.label)}</a> : <span>{readable(n.label)}</span>}
+                </>
+              ))}
+            </p>
+          )}
+        </div>
+      )
+    })}
+    <p class="sc-note-line" data-sc-none hidden>{R.none}</p>
+  </div>
+  <p class="sc-note-line">{R.foot}</p>
+</div>
+
+<script>
+  // The register's filters. One row is one element; a filter hides rows, the sort re-orders
+  // them, and the count is the server's own sentence with its first number moved.
+  function wire(): void {
+    for (const root of document.querySelectorAll<HTMLElement>('[data-sc-register]')) {
+      if (root.dataset.wired) continue
+      root.dataset.wired = 'on'
+      const tools = root.querySelector<HTMLElement>('[data-sc-tools]')
+      const list = root.querySelector<HTMLElement>('[data-sc-rows]')
+      const search = root.querySelector<HTMLInputElement>('[data-sc-search]')
+      const sort = root.querySelector<HTMLButtonElement>('[data-sc-sort]')
+      const none = root.querySelector<HTMLElement>('[data-sc-none]')
+      const count = document.querySelector<HTMLElement>('[data-sc-register-count]')
+      if (!tools || !list || !search || !sort) continue
+      const rows = [...list.querySelectorAll<HTMLElement>('[data-house]')]
+      const chips = [...tools.querySelectorAll<HTMLButtonElement>('[data-filter]')]
+      const picked: Record<string, string | null> = { house: null, kind: null, cycle: null }
+      let newest = true
+
+      const apply = () => {
+        const q = search.value.trim().toLowerCase()
+        let shown = 0
+        for (const row of rows) {
+          const on =
+            (picked.house === null || row.dataset.house === picked.house) &&
+            (picked.kind === null || row.dataset.kind === picked.kind) &&
+            (picked.cycle === null || row.dataset.cycle === picked.cycle) &&
+            (q === '' || (row.dataset.title ?? '').includes(q))
+          row.hidden = !on
+          if (on) shown++
+        }
+        if (none) none.hidden = shown > 0
+        if (count) count.textContent = (root.dataset.count ?? '').replace('{shown}', String(shown))
+        for (const chip of chips) chip.setAttribute('aria-pressed', String(picked[chip.dataset.filter ?? ''] === chip.dataset.value))
+      }
+
+      for (const chip of chips) {
+        chip.addEventListener('click', () => {
+          const key = chip.dataset.filter ?? ''
+          picked[key] = picked[key] === chip.dataset.value ? null : (chip.dataset.value ?? null)
+          apply()
+        })
+      }
+      search.addEventListener('input', apply)
+      sort.addEventListener('click', () => {
+        newest = !newest
+        sort.textContent = (newest ? root.dataset.sortNewest : root.dataset.sortOldest) ?? ''
+        // The rows arrive newest first with every tie already broken by the build; turning the
+        // list over keeps that order's ties, so two clicks give back exactly what was rendered.
+        const ordered = [...rows].reverse()
+        rows.splice(0, rows.length, ...ordered)
+        for (const row of rows) list.insertBefore(row, none)
+      })
+      // Unhidden only now: the controls work, so they may be seen.
+      tools.hidden = false
+      apply()
+    }
+  }
+  wire()
+  document.addEventListener('astro:page-load', wire)
+</script>

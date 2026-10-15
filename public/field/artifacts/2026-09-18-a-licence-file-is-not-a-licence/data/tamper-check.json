@@ -1,0 +1,170 @@
+{
+ "note": "Deliberate corruptions of this artifact's own evidence, each applied to a copy and put to check.py. A corruption the checker does not catch is a hole in the checker.",
+ "n": 27,
+ "n_caught": 27,
+ "n_missed": 0,
+ "corruptions": [
+  {
+   "corruption": "headline numerator raised by one",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "headline counts"
+  },
+  {
+   "corruption": "headline percentage set to 100",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "headline percentage"
+  },
+  {
+   "corruption": "a delivering repository flipped to not delivering",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "AGI4Sci/SciForge: delivers_any is the disjunction over its files"
+  },
+  {
+   "corruption": "a delivering file flipped to not delivering",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "AGI4Sci/SciForge: delivers_any is the disjunction over its files"
+  },
+  {
+   "corruption": "an identified file's families emptied",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "AGI4Sci/SciForge: voices are the families of its files, in file order"
+  },
+  {
+   "corruption": "P1's verdict flipped",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "P1: verdict follows from threshold and observation"
+  },
+  {
+   "corruption": "P4's threshold moved after the fact",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "P4: threshold is the pre-registered one"
+  },
+  {
+   "corruption": "D1 size understated by one",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "D1 size matches counts"
+  },
+  {
+   "corruption": "one repository row deleted",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "144 repository rows"
+  },
+  {
+   "corruption": "population digest replaced",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "population digest equals session 162's"
+  },
+  {
+   "corruption": "K2 failures inflated while the verdict stays false",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "K2 failure count"
+  },
+  {
+   "corruption": "a no-holder file relabelled as named",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "AI-in-Health/BioMedArena:LICENSE: delivers follows from L0, L1 and L2"
+  },
+  {
+   "corruption": "a blob digest truncated",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "AGI4Sci/SciForge:LICENSE: sha256 is 64 hex characters"
+  },
+  {
+   "corruption": "post-hoc root count raised by three",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "post hoc: root counts"
+  },
+  {
+   "corruption": "the defective first run's headline rewritten",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "post hoc: the defective first run is recorded with its headline"
+  },
+  {
+   "corruption": "licence text injected into the committed evidence",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "no licence text committed: 'Permission is hereby granted, free' absent"
+  },
+  {
+   "corruption": "the empty repositories hidden",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "empty repositories"
+  },
+  {
+   "corruption": "a door removed from the retrievability count",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "doors answering tonight"
+  },
+  {
+   "corruption": "a family added to a repository's voices",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "AGI4Sci/SciForge: voices are the families of its files, in file order"
+  },
+  {
+   "corruption": "a cohort label flipped",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "AARR-bench/AARRI-bench: cohort matches session 162"
+  },
+  {
+   "corruption": "a repository promoted into D1",
+   "file": "data.json",
+   "caught": true,
+   "first_failure": "D1 size matches counts"
+  },
+  {
+   "corruption": "a canonical text made to fail its own identification",
+   "file": "control-check.json",
+   "caught": true,
+   "first_failure": "K1: MIT identifies its own canon"
+  },
+  {
+   "corruption": "the MIT canon's placeholder result flipped",
+   "file": "control-check.json",
+   "caught": true,
+   "first_failure": "the placeholder rule fires on the MIT canonical template"
+  },
+  {
+   "corruption": "the canon fetch count understated",
+   "file": "control-check.json",
+   "caught": true,
+   "first_failure": "every canonical text was fetched"
+  },
+  {
+   "corruption": "a hand-reading class invented",
+   "file": "hand-reading.json",
+   "caught": true,
+   "first_failure": "hand reading: docs/license-risk-scan.md has a declared class"
+  },
+  {
+   "corruption": "a hand-reading path pointed at nothing",
+   "file": "hand-reading.json",
+   "caught": true,
+   "first_failure": "hand reading: AGI4Sci/SciForge:NOT/A/REAL/PATH is an unidentified file in data.json"
+  },
+  {
+   "corruption": "a hand-reading tally inflated",
+   "file": "hand-reading.json",
+   "caught": true,
+   "first_failure": "hand reading counts match its own rows"
+  }
+ ]
+}

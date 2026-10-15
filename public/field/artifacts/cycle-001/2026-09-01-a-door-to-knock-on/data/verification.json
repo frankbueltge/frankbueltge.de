@@ -1,0 +1,77 @@
+{
+  "_note": "Independent re-checks run by the session conductor, after the probes and before any figure was computed. Each was fetched here, in this session, and the quotation below was read in the returned page text. These override the probe records where they differ, and they set the evidence grade to 'verified_here'.",
+  "date": "2026-09-01",
+  "checks": [
+    {
+      "publisher": "Elsevier",
+      "urls_fetched": [
+        "https://www.elsevier.com/about/policies-and-standards/publishing-ethics",
+        "https://www.elsevier.com/about/research-integrity",
+        "https://www.elsevier.com/about/research-integrity/research-integrity-initiatives"
+      ],
+      "http": "200, 200, 200",
+      "finding": "No email address of any kind, and no reader-facing route to raise a concern, appears in the text of the publishing-ethics page or of either research-integrity hub page. The only instruction found anywhere is the author-facing one already recorded by the probe.",
+      "quote": "contact the journal as soon as possible using the contact details listed on the journal's home page",
+      "class_confirmed": "B",
+      "changes_probe": false
+    },
+    {
+      "publisher": "Springer",
+      "urls_fetched": ["https://www.springernature.com/gp/editors/research-integrity"],
+      "http": "200",
+      "finding": "The route is on the page as recorded. The address is obfuscated in the rendered text and was read in the page source.",
+      "quote": "If no publishing contact is identified, please share your concerns with our team below by sending an email to ethics.reporting",
+      "class_confirmed": "A",
+      "changes_probe": false
+    },
+    {
+      "publisher": "SAGE Publications",
+      "urls_fetched": ["https://www.sagepub.com/complaints-and-appeals-procedure-msg"],
+      "http": "200",
+      "finding": "Route present and explicitly open to anybody, not only to authors.",
+      "quote": "Anybody wishing to raise a concern or make a complaint about any aspect of being published in a Sage journal or working with Sage or our publishing partners may email publication_ethics@sagepub.com",
+      "class_confirmed": "A",
+      "changes_probe": false
+    },
+    {
+      "publisher": "PLoS (Public Library of Science)",
+      "urls_fetched": ["https://plos.org/research-integrity-and-ethics/"],
+      "http": "200",
+      "finding": "Route present, reader-scoped. The address is obfuscated in the rendered text.",
+      "quote": "If you have concerns about the integrity of a PLOS article, please email",
+      "class_confirmed": "A",
+      "changes_probe": false
+    },
+    {
+      "publisher": "Taylor and Francis",
+      "urls_fetched": ["https://authorservices.taylorandfrancis.com/publishing-your-research/after-publication/what-to-expect-when-raising-a-concern/"],
+      "http": "200 with a browser user-agent",
+      "finding": "Route present, reader-scoped, and the only one in the census that states a response time. The address was obfuscated in the page source and decoded from it here.",
+      "quote": "If you have a concern about an article, please contact Taylor & Francis via our contact form ... Alternatively, you can contact the PEI team by emailing",
+      "class_confirmed": "A",
+      "changes_probe": false
+    },
+    {
+      "publisher": "Royal Society Publishing",
+      "urls_fetched": ["https://royalsociety.org/journals/ethics-policies/"],
+      "http": "200",
+      "finding": "The probe's class A is confirmed: the page names a concrete address as the alternative to the editorial office.",
+      "quote": "Complaints against a journal, its staff, editorial board or publisher should be directed to the editorial office or alternatively publishing@royalsociety.org",
+      "class_confirmed": "A",
+      "changes_probe": false
+    },
+    {
+      "publisher": "American Association for Cancer Research (AACR)",
+      "urls_fetched": [
+        "https://aacrjournals.org/pages/editorial-policies",
+        "https://www.aacr.org/professionals/journals/",
+        "https://www.aacr.org/about-the-aacr/contact-us/"
+      ],
+      "http": "403, 200, 200",
+      "finding": "The journals domain refused every automated request made here. The society's own reachable pages, including its contact page, carry no email address at all. The probe's 'unresolved' stands: this is a door that could not be reached by this protocol, not a door shown to be absent.",
+      "quote": "",
+      "class_confirmed": "unresolved",
+      "changes_probe": false
+    }
+  ]
+}

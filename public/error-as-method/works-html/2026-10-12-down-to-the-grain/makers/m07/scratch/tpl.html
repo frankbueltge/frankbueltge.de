@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moon Hours</title>
+<style>
+  :root { --paper:#f3efe6; --ink:#1d2433; --faint:#1d243318; --mid:#1d24338c; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  svg { width:100vw; height:100vh; max-width:1100px; max-height:800px; display:block; }
+  text { font-family: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; fill:var(--ink); }
+</style>
+</head>
+<body>
+<svg id="w" viewBox="0 0 1100 800" preserveAspectRatio="xMidYMid meet" role="img"
+     aria-label="Sixty lines of dots, one per lunar day, each showing two tides; the swell rises and falls down the page, and one line near the bottom leaps upward through the lines above it."></svg>
+<script>
+const D = __DATA__;
+const IMG = "data:image/jpeg;base64,__IMG__";
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById("w");
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(e);
+  return e;
+}
+el("rect", {x:0, y:0, width:1100, height:800, fill:"var(--paper)"});
+
+// geometry of the field
+const L = 2 * D.p;                 // one lunar day (two M2 tides), in source pixels
+const FX0 = 170, FW = 760;         // field left edge and width
+const TOP = 96, PITCH = 10;        // first line centre, line spacing
+const HOUR = FW / 24.84;           // page pixels per hour on the moon's clock
+const nRows = Math.ceil((D.pts[D.pts.length - 1][0] / 100 - D.x_start) / L);
+
+function mix(a, b, t) { return a.map((v, i) => Math.round(v + (b[i] - v) * t)); }
+const RAMP = [[-18, [224, 207, 163]], [0, [112, 150, 160]], [18, [17, 38, 62]]];
+function colour(v) {
+  if (v > 21) { const c = mix([181, 74, 44], [110, 26, 18], Math.min(1, (v - 21) / 30)); return `rgb(${c})`; }
+  if (v <= RAMP[0][0]) return `rgb(${RAMP[0][1]})`;
+  for (let i = 1; i < RAMP.length; i++) {
+    if (v <= RAMP[i][0]) { const [a, ca] = RAMP[i - 1], [b, cb] = RAMP[i]; return `rgb(${mix(ca, cb, (v - a) / (b - a))})`; }
+  }
+  return `rgb(${RAMP[RAMP.length - 1][1]})`;
+}
+
+const defs = el("defs", {});
+const cp = el("clipPath", {id:"field"}, defs);
+el("rect", {x:FX0, y:TOP - 8, width:FW, height:nRows * PITCH + 8}, cp);
+
+// faint row guides
+const g0 = el("g", {stroke:"var(--ink)", "stroke-opacity":0.06, "stroke-width":0.6});
+for (let r = 0; r < nRows; r++) el("line", {x1:FX0, x2:FX0 + FW, y1:TOP + r * PITCH, y2:TOP + r * PITCH}, g0);
+
+// ticks at the two high waters of the clock, top and bottom
+const g1 = el("g", {stroke:"var(--ink)", "stroke-opacity":0.45, "stroke-width":0.9});
+[0.25, 0.75].forEach(u => {
+  const x = FX0 + u * FW;
+  el("line", {x1:x, x2:x, y1:TOP - 20, y2:TOP - 12}, g1);
+  el("line", {x1:x, x2:x, y1:TOP + nRows * PITCH - 2, y2:TOP + nRows * PITCH + 6}, g1);
+});
+const g1b = el("g", {"font-size":10, "text-anchor":"middle", "fill-opacity":0.55});
+[[0, "low"], [0.25, "high"], [0.5, "low"], [0.75, "high"], [1, "low"]].forEach(([u, s]) => {
+  const tx = el("text", {x:FX0 + u * FW, y:TOP - 24, "font-style":"italic"}, g1b); tx.textContent = s;
+});
+
+// the recovered dots, each a short mark of about one hour, low water drawn first
+const g2 = el("g", {"clip-path":"url(#field)"});
+const W2 = HOUR * 0.85, H2 = 6.6;
+const order = D.pts.slice().sort((a, b) => b[1] - a[1]);
+for (const [xi, yi] of order) {
+  const t = (xi / 100 - D.x_start) / L;
+  const r = Math.floor(t), u = t - r;
+  const val = D.mean - yi / 100;     // up is higher, in source pixels from the record's mean
+  const fill = colour(val);
+  const place = (row, uu) => {
+    if (row < 0 || row >= nRows) return;
+    el("rect", {x:(FX0 + uu * FW - W2 / 2).toFixed(1), y:(TOP + row * PITCH - H2 / 2).toFixed(1),
+      width:W2.toFixed(1), height:H2, rx:H2 / 2, fill, "fill-opacity":0.88}, g2);
+  };
+  place(r, u);
+  if (u * FW < W2 / 2) place(r - 1, u + 1);          // spills back into the previous line
+  if ((1 - u) * FW < W2 / 2) place(r + 1, u - 1);    // spills forward into the next line
+}
+
+// title and quiet notes
+el("text", {x:FX0, y:48, "font-size":22, "letter-spacing":"0.04em"}).textContent = "Moon Hours";
+const n1 = el("text", {x:FX0 + FW, y:48, "font-size":11.5, "text-anchor":"end", "fill-opacity":0.7});
+n1.textContent = "sixty lines, one lunar day of 24 h 50 min each, read downward";
+
+const by = 712;
+el("image", {href:IMG, x:FX0, y:by, width:300, height:76, preserveAspectRatio:"none", opacity:0.95, style:"mix-blend-mode:multiply"});
+const cap = el("text", {x:FX0 + 322, y:by + 14, "font-size":11.5, "fill-opacity":0.75});
+[
+  "Left, the record as it came: 1,464 hours pressed into 300 pixels,",
+  "five hours to a column, every tide crushed into its own smear.",
+  "Above, the 798 dots that could still be told apart, each set back on",
+  "the clock of the moon. Dark is high water, pale is low; red rises past any tide in the record."
+].forEach((s, i) => { const ts = el("tspan", {x:FX0 + 322, dy:i ? 15 : 0}, cap); ts.textContent = s; });
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{
+ "fetched_utc": "2026-09-19T05:00:41Z",
+ "service": "https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync",
+ "agent": "Ensemble/studio (art practice; frankbueltge.de) - one pass, catalogue queries",
+ "requests": 0,
+ "files": {
+  "t2mrs.csv": {
+   "query": "SELECT recno, ID, RAJ2000, DEJ2000, GLON, GLAT, Kcmag, Ktmag, \"E(B-V)\" AS EBV, cz FROM \"J/ApJS/199/26/table3\"",
+   "url": "https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync",
+   "bytes": 3886741,
+   "sha256": "91c7a762324deab2b9a24f68805da4c74dfb4df03a7f7184174410f998930896",
+   "rows": 44599
+  },
+  "hizoa_s.csv": {
+   "query": "SELECT recno, HIZOA, RAJ2000, DEJ2000, GLON, GLAT, \"E(B-V)\" AS EBV, HRV, logMHI FROM \"J/AJ/151/52/table2\"",
+   "url": "https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync",
+   "bytes": 71285,
+   "sha256": "196d058e759e44fc1800e8ebe8e1eb844ced6db42c9a0376eaa03602c202ef4f",
+   "rows": 883
+  },
+  "hizoa_n.csv": {
+   "query": "SELECT recno, HIZOA, RAJ2000, DEJ2000, cz, Dist, logMHI FROM \"J/AJ/129/220/table1\"",
+   "url": "https://tapvizier.cds.unistra.fr/TAPVizieR/tap/sync",
+   "bytes": 4879,
+   "sha256": "1f4d0a600139ed51ca467072e45d59d9527aaa50f18fe8fe972b1491a3dbff9a",
+   "rows": 77
+  },
+  "readme_2mrs.txt": {
+   "url": "https://cdsarc.cds.unistra.fr/ftp/J/ApJS/199/26/ReadMe",
+   "bytes": 18658,
+   "sha256": "b4fc43f8e6c91c835c68f02a98255cbd0ea7ef570edd1094bf12d28057d54590"
+  },
+  "readme_hizoa_s.txt": {
+   "url": "https://cdsarc.cds.unistra.fr/ftp/J/AJ/151/52/ReadMe",
+   "bytes": 16660,
+   "sha256": "59eefb1347e8eb034fb878932d5db20ff44e98a3114a870d73253cc238020272"
+  },
+  "readme_hizoa_n.txt": {
+   "url": "https://cdsarc.cds.unistra.fr/ftp/J/AJ/129/220/ReadMe",
+   "bytes": 8199,
+   "sha256": "bb2d62229e8554a0971e4b050700bc8c4769b6042b2273a347b33e116b5534b4"
+  },
+  "simbad_a3627.txt": {
+   "url": "https://simbad.cds.unistra.fr/simbad/sim-id?Ident=ACO+3627&output.format=ASCII",
+   "bytes": 8952,
+   "sha256": "0f9c6a357f13f2351124f0cfd2eaec8bb2b46df4b2ca3a2dce83a3ff0f59a5e4"
+  }
+ }
+}

@@ -16,6 +16,17 @@ export interface Werk {
   methodHref?: string | null
   /** 'studie' = aus der Experimente-Reihe genommen; läuft und archiviert aber weiter. */
   tier?: 'experiment' | 'studie' | 'project' | 'instrument'
+  /** A work that reads the world AS IT RUNS. Nothing it shows is committed, it makes no archival
+   *  claim, and it may go dark when a source does.
+   *
+   *  Frank's decision of 2026-09-04 (wording private, paraphrased): live and real-time
+   *  experiments must be startable here, in this repo, without a second site and without asking
+   *  first; citability and archiving are not the point, the work is. So an unarchived work is
+   *  exempt from the three duties that were built for archived ones — the USP audit gate, the
+   *  currency test against committed snapshots, and the method sheet — and owes exactly ONE
+   *  thing instead, tested like the others were: it says on its own surface, in its own words,
+   *  that it is live and that nothing here is archived. One duty replaces four. */
+  unarchived?: boolean
   /** Research line this experiment belongs to (Frank, 2026-08-22) — the shelf's categories.
    *  Mandatory for everything /experiments renders, absent for the practice doors and the
    *  other houses' entries; werke.test.ts holds both halves of that rule. */
@@ -76,18 +87,85 @@ export const EXPERIMENT_LINES: readonly ExperimentLine[] = [
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    id: 'spread',
+    line: 'counter-measurement',
+    title: 'Spread',
+    subtitle: {
+      de: 'One asset, several venues, the same instant — read live, never archived',
+      en: 'One asset, several venues, the same instant — read live, never archived',
+    },
+    status: 'live',
+    since: '2026-09-04',
+    live: true,
+    href: '/spread',
+    unarchived: true,
+    description: {
+      // No digit (the currency doctrine, applied even though an unarchived work is exempt from
+      // the test that enforces it): the time window the field shows, the multiplier a gap must
+      // clear before the ledger logs it, and the number of venues read are all tunable constants,
+      // and a sentence that typed one of them would start lying the day it changed.
+      de: 'From the counter-measurement line, and the house’s first live, real-time work: an asset does not have one price, it has several, disagreeing by fractions of a second across venues nobody can watch all at once. This reads a handful of exchanges’ own public sockets at once, in the visitor’s own browser, and draws the gap between the highest and the lowest quoted price as it opens and closes — every trade a mark, every widening beyond the session’s own typical spread stamped into a ledger that accumulates while the visitor watches. Nothing here is committed, nothing is a signal, and a venue quoting a stablecoin rather than a dollar says so on the page rather than being folded silently into the same line.',
+      en: 'From the counter-measurement line, and the house’s first live, real-time work: an asset does not have one price, it has several, disagreeing by fractions of a second across venues nobody can watch all at once. This reads a handful of exchanges’ own public sockets at once, in the visitor’s own browser, and draws the gap between the highest and the lowest quoted price as it opens and closes — every trade a mark, every widening beyond the session’s own typical spread stamped into a ledger that accumulates while the visitor watches. Nothing here is committed, nothing is a signal, and a venue quoting a stablecoin rather than a dollar says so on the page rather than being folded silently into the same line.',
+    },
+    methodHref: null,
+    tier: 'experiment',
+  },
+  {
+    id: 'globe',
+    line: 'counter-measurement',
+    title: 'Living Globe',
+    subtitle: {
+      de: 'Everything this house measures on the earth, on one globe, with the receipts',
+      en: 'Everything this house measures on the earth, on one globe, with the receipts',
+    },
+    status: 'live',
+    since: '2026-09-03',
+    live: true,
+    href: '/globe',
+    description: {
+      // One sentence-block in both keys, no digit in it (the currency doctrine): the number of
+      // layers, of days and of marks all move nightly and live in the committed files, never here.
+      de: "From the counter-measurement line. Every instrument in this house that touches a place — the satellites overhead, the vessels that switch their transponders off, the planet's nightly readings, the press counted country by country, the pages a government quietly removed — writes its own dated file every night, and each of them has until now been read alone. This puts them on one earth with one time axis: a layer per instrument, a day slider over the whole archive, and a card behind every single mark naming the committed file, the position inside it and the day it was written. The globe reads no clock. Its oldest day is the oldest day the archive holds and its newest is the newest record, so nothing on it can be more current than the file it came from. What it draws it can prove, and what it cannot place it says instead of moving: a country stands at the centroid of its own polygon and the card calls it a centroid, an institution's reading stands at the seat that publishes it and the card calls it a seat, and only a measurement actually taken at a site is called a station. Where the archive holds no record for a day, that layer draws nothing and states why, because the alternative — propagating today's data backwards into an empty day — is a fabrication with the look of a measurement.",
+      en: "From the counter-measurement line. Every instrument in this house that touches a place — the satellites overhead, the vessels that switch their transponders off, the planet's nightly readings, the press counted country by country, the pages a government quietly removed — writes its own dated file every night, and each of them has until now been read alone. This puts them on one earth with one time axis: a layer per instrument, a day slider over the whole archive, and a card behind every single mark naming the committed file, the position inside it and the day it was written. The globe reads no clock. Its oldest day is the oldest day the archive holds and its newest is the newest record, so nothing on it can be more current than the file it came from. What it draws it can prove, and what it cannot place it says instead of moving: a country stands at the centroid of its own polygon and the card calls it a centroid, an institution's reading stands at the seat that publishes it and the card calls it a seat, and only a measurement actually taken at a site is called a station. Where the archive holds no record for a day, that layer draws nothing and states why, because the alternative — propagating today's data backwards into an empty day — is a fabrication with the look of a measurement.",
+    },
+    methodHref: '/werke/globe',
+    tier: 'experiment',
+  },
+  {
+    id: 'trending',
+    line: 'ledger',
+    title: 'Common Ground',
+    subtitle: {
+      de: 'What the web is searching, reading and posting about — cross-checked, every morning',
+      en: 'What the web is searching, reading and posting about — cross-checked, every morning',
+    },
+    status: 'live',
+    since: '2026-09-02',
+    live: true,
+    href: '/trending',
+    description: {
+      // One sentence-block in both keys, no digit in it (the currency doctrine): the number of
+      // sources, of topics, of tracked terms and of readers all move nightly and live in the
+      // dated files, never here.
+      de: "From the nightly-ledger line. Every morning a machine reads what the web is searching, reading and posting about — Google's daily search trends, Wikipedia's most-read pages, Hacker News, Bluesky, Mastodon and the day's headlines — and keeps what converges: the topics surfacing on several independent platforms at once, matched by a disclosed rule rather than a model, archived as open data and served in the forms a machine reader can use — and beside the day's spikes it tracks the slow arcs, a watched list of terms whose mentions in forums, code, papers and the press are counted per platform, given a status by a published threshold, and shown with the receipts they were counted from. It counts its own readers too — which search engines and which AI agents fetched it, published daily, never a browser's identity.",
+      en: "From the nightly-ledger line. Every morning a machine reads what the web is searching, reading and posting about — Google's daily search trends, Wikipedia's most-read pages, Hacker News, Bluesky, Mastodon and the day's headlines — and keeps what converges: the topics surfacing on several independent platforms at once, matched by a disclosed rule rather than a model, archived as open data and served in the forms a machine reader can use — and beside the day's spikes it tracks the slow arcs, a watched list of terms whose mentions in forums, code, papers and the press are counted per platform, given a status by a published threshold, and shown with the receipts they were counted from. It counts its own readers too — which search engines and which AI agents fetched it, published daily, never a browser's identity.",
+    },
+    methodHref: '/werke/trending',
+    tier: 'experiment',
+  },
+  {
     id: 'attention',
     title: 'Machine Attention',
     subtitle: {
-      de: "A machine investigative practice, watching the world's warning systems.",
-      en: "A machine investigative practice, watching the world's warning systems.",
+      de: 'A machine investigative practice: one machine, public investigations, every step on the record.',
+      en: 'A machine investigative practice: one machine, public investigations, every step on the record.',
     },
     status: 'live',
     since: '2026-08-08',
     href: '/attention',
     description: {
-      de: "One machine, run as an open investigative practice — the counter-experiment to the research ecology: one constitution against many. Its first project, The Foreknown, holds the world's public warnings (GDACS, NOAA) as a ledger of announced futures — a hundred ticking clocks on a public stage — and measures the institutions that issue them: every warning that closes gets a verdict with its lead time, derived from committed records and never from a model. Forecast verification turned around from crowds onto the alerting systems themselves. Preserving the original bytes with their hashes is the bookkeeping that makes those verdicts checkable, not the claim — proof-of-existence has been a commodity since OpenTimestamps. A nightly discovery pass may propose new sensors and sources; every delivery goes through a provenance verifier before it exists. Autonomy is the research object: every step attributed — machine or human, model, cost — no aggregate score. Most ideas are expected to die in public, with reasons.",
-      en: "One machine, run as an open investigative practice — the counter-experiment to the research ecology: one constitution against many. Its first project, The Foreknown, holds the world's public warnings (GDACS, NOAA) as a ledger of announced futures — a hundred ticking clocks on a public stage — and measures the institutions that issue them: every warning that closes gets a verdict with its lead time, derived from committed records and never from a model. Forecast verification turned around from crowds onto the alerting systems themselves. Preserving the original bytes with their hashes is the bookkeeping that makes those verdicts checkable, not the claim — proof-of-existence has been a commodity since OpenTimestamps. A nightly discovery pass may propose new sensors and sources; every delivery goes through a provenance verifier before it exists. Autonomy is the research object: every step attributed — machine or human, model, cost — no aggregate score. Most ideas are expected to die in public, with reasons.",
+      de: "One machine, run as an open investigative practice — the counter-experiment to the research ecology: one constitution against many. Its first project, The Foreknown, held the world's public warnings as a ledger of announced futures for fifty nights (2026-08-08 to 2026-10-03), every byte hashed the moment it was issued, and was retired on 2026-10-04 when its own record showed it could not measure the gap it was built for: most of what it held were local US weather warnings announced hours ahead, nearly every verdict said only that a warning ran out at its source, and the money and attention it measured belonged to whole countries, never to one warning. The record stays public at /attention as an archive. The question moves to the clock where response is measurable — slow-onset food crises, where projections come months before the money: The Interval, built nightly by the machine's own discovery pass. Autonomy is the research object: every step attributed — machine or human, model, cost — no aggregate score. Most ideas are expected to die in public, with reasons.",
+      en: "One machine, run as an open investigative practice — the counter-experiment to the research ecology: one constitution against many. Its first project, The Foreknown, held the world's public warnings as a ledger of announced futures for fifty nights (2026-08-08 to 2026-10-03), every byte hashed the moment it was issued, and was retired on 2026-10-04 when its own record showed it could not measure the gap it was built for: most of what it held were local US weather warnings announced hours ahead, nearly every verdict said only that a warning ran out at its source, and the money and attention it measured belonged to whole countries, never to one warning. The record stays public at /attention as an archive. The question moves to the clock where response is measurable — slow-onset food crises, where projections come months before the money: The Interval, built nightly by the machine's own discovery pass. Autonomy is the research object: every step attributed — machine or human, model, cost — no aggregate score. Most ideas are expected to die in public, with reasons.",
     },
     live: true,
     methodHref: '/werke/attention',
@@ -398,7 +476,10 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'atelier',
-    title: 'Atelier · Ulysses',
+    // The practice settled its name on 2026-09-03; until then it carried Ulysses provisionally,
+    // and that name went to the nightly line on 2026-08-31. This card is the site's own
+    // machine-readable description of the practice (structured-data.ts), so it says Assay.
+    title: 'Atelier · Assay',
     subtitle: {
       de: 'Eine maschinen-partizipative Forschungspraxis, die ihre Irrtümer prüfbar katalogisiert',
       en: 'A machine-participatory research practice that catalogues its own errors checkably',
@@ -408,8 +489,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/atelier',
     description: {
-      de: 'Ulysses — eine maschinen-partizipative künstlerische Forschungspraxis — arbeitet in einer Werklinie und ihren Studien statt in einer nächtlichen Produktionsroutine: recherchiert, baut, irrt und katalogisiert ihre Irrtümer prüfbar, innerhalb eines stehenden Mandats. Kuratierte Veröffentlichung bleibt menschliche Entscheidung. Man sieht einer Maschine beim Denken zu.',
-      en: 'Ulysses — a machine-participatory artistic research practice — works through a work-line and its studies rather than a nightly production routine: researching, building, erring, and cataloguing its errors checkably within a standing delegation. Curated publication remains a human decision. Watch a machine think.',
+      de: 'Assay — eine maschinen-partizipative künstlerische Forschungspraxis — arbeitet in einer Werklinie und ihren Studien statt in einer nächtlichen Produktionsroutine: recherchiert, baut, irrt und katalogisiert ihre Irrtümer prüfbar, innerhalb eines stehenden Mandats. Kuratierte Veröffentlichung bleibt menschliche Entscheidung. Man sieht einer Maschine beim Denken zu.',
+      en: 'Assay — a machine-participatory artistic research practice — works through a work-line and its studies rather than a nightly production routine: researching, building, erring, and cataloguing its errors checkably within a standing delegation. Curated publication remains a human decision. Watch a machine think.',
     },
     methodHref: null,
   },

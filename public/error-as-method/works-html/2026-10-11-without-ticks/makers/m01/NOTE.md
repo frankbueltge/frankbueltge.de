@@ -1,0 +1,3 @@
+# The Year Turns Fifteen Times
+
+The form winds fifteen years of daily births onto one year-clock. Each dark pixel of the source picture becomes an arc as long as the roughly twelve days that pixel holds. Arcs are coloured by year and stacked into a tone-mapped density, so a single day still shows. Folded this way, the strip's two bands become two rings, the working week outside and Saturday and Sunday inside. Late summer pushes the outer ring out, and the days around New Year, the Fourth of July, Labor Day, Thanksgiving and Christmas fall toward the weekend ring. I chose the circle because the strongest thing in the material is a calendar, and a calendar comes back around. The arcs keep the source's blur visible instead of claiming a precision the image no longer has.

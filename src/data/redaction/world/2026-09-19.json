@@ -1,0 +1,149 @@
+{
+  "date": "2026-09-19",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-19T10:10:31Z",
+    "counts": {
+      "botwall": 24,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 270,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 5
+    },
+    "decided": 271,
+    "excluded_unverifiable": 29,
+    "gone": 1,
+    "gone_ci95": [
+      0.0007,
+      0.0206
+    ],
+    "gone_rate": 0.0037,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.014
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-17",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "640wxsm.com",
+        "first_seen": "20260917190000",
+        "http_code": 404,
+        "title": "Cal strives for 2nd win for new coach in matchup vs. Wagner",
+        "url": "https://www.640wxsm.com/2026/09/17/cal-strives-for-2nd-win-for-new-coach-in-matchup-vs-wagner/"
+      }
+    ],
+    "sample_drawn_at": "2026-09-18T10:28:51Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5337,
+      "replaced": 5079,
+      "trivial": 1376,
+      "update": 446
+    },
+    "day": "2026-09-18",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Beaver",
+          "Impact",
+          "on",
+          "Flow",
+          "water"
+        ],
+        "after": "Beaver Impact on Water Flow: After 400 years, beavers are back in England; 9 dams are estimated to store 3 million litres of water and slow flood flows",
+        "before": "Beavers in UK: After 400 years, beavers are back in England; 9 dams are estimated to store 3 million litres of water and slow flood flows",
+        "detected": "2026-09-18T18:48:08Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "UK",
+          "beavers",
+          "in"
+        ],
+        "similarity": 0.815,
+        "url": "https://economictimes.indiatimes.com/news/international/us/after-400-years-beavers-are-back-in-england-9-dams-are-estimated-to-store-3-million-litres-of-water-and-slow-flood-flows/articleshow/134317043.cms",
+        "weight": 10,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "OPINION",
+          "SPORTSMAN",
+          "Arkansas"
+        ],
+        "after": "OPINION | ARKANSAS SPORTSMAN: Use big guns for pig hunting | The Arkansas Democrat-Gazette",
+        "before": "HUNTING: Use big guns for pig hunting | The Arkansas Democrat-Gazette",
+        "detected": "2026-09-18T09:33:34Z",
+        "domain": "arkansasonline.com",
+        "removed": [
+          "hunting"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.arkansasonline.com/news/2026/sep/17/hunting-use-big-guns-for-pig-hunting/",
+        "weight": 7,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "OPINION",
+          "SPORTSMAN",
+          "Arkansas"
+        ],
+        "after": "OPINION | ARKANSAS SPORTSMAN: Use big guns for pig hunting | Northwest Arkansas Democrat-Gazette",
+        "before": "HUNTING: Use big guns for pig hunting | Northwest Arkansas Democrat-Gazette",
+        "detected": "2026-09-18T10:19:51Z",
+        "domain": "nwaonline.com",
+        "removed": [
+          "hunting"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.nwaonline.com/news/2026/sep/17/hunting-use-big-guns-for-pig-hunting/",
+        "weight": 7,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 16844,
+      "PAGE_TEXTCHANGE": 132622,
+      "PAGE_TITLECHANGE": 50146,
+      "UNCHANGED_CONTENT": 776784
+    },
+    "title_changes_en": 12238,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1789812354694",
+        "job_id": "world_gdg_counts_20260918",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 244318208,
+        "created": "1789812359209",
+        "job_id": "world_gdg_titles_20260918",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-19T10:10:31Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-18.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

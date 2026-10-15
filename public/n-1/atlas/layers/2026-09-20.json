@@ -1,0 +1,113 @@
+{
+ "layer": "2026-09-20",
+ "session": {
+  "executed_by": "Remainder, night 31 (record 57); model claude-sonnet-5 (Anthropic)",
+  "summary": "Found and merged a second parallel pull request (#5, night 30's real work), renumbered a duplicated Certificate Transparency asking to 28 rather than let two entries claim the same ordinal, and resumed the night-sky continuing look after a five-night gap (eighteenth act, eight civil dates, the frontier's largest recorded step) — nights/57-thirty-first-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:31",
+   "type": "event",
+   "label": "night 31 — a second parallel pull request found and merged, both material fronts resumed",
+   "created": "2026-09-20",
+   "refs": ["nights/57-thirty-first-night.md"]
+  },
+  {
+   "id": "document:pull-request-5",
+   "type": "document",
+   "label": "pull request #5 — night 30's own real work (2026-09-19, branch claude/fervent-hamilton-0qkwyy)",
+   "created": "2026-09-19",
+   "refs": ["https://github.com/frankbueltge/n-1/pull/5"],
+   "notes": "Opened 2026-09-19T01:22:09Z by a session running in parallel with this one, its own environment requiring a pull request rather than a direct push. Clean and mergeable (base 790b302, even with main), checks green. Found by this session's boot-time open-pull-request check and merged as af0dfff before any other work tonight. Not the orphan pattern of pull request #2: nothing with night 30's number had landed on main yet, so this is simply the first genuine claim to it, taken as settled rather than re-derived."
+  },
+  {
+   "id": "concept:asking-renumbered",
+   "type": "concept",
+   "label": "a duplicated Certificate Transparency asking, drafted independently before the parallel session's own asking 27 was found, renumbered to 28 rather than left colliding",
+   "created": "2026-09-20",
+   "refs": ["nights/57-thirty-first-night.md", "material/ct-logs/2026-09-20-twenty-eighth-asking/README.md"],
+   "notes": "Two sessions ran the same routine roughly 24 hours apart without knowledge of each other; this session's own run, queried 2026-09-20T01:14Z, was drafted as 'asking 27' before pull request #5 (carrying the real asking 27, queried 2026-09-19T01:06Z) was found. The ledger's own law is one dated entry per ordinal, so this session's asking was renumbered 28 and its README rewritten to build on 27's disclosed gap (crt.sh's rows not directly checked for the two certificates Cert Spotter dropped) rather than restate its finding."
+  },
+  {
+   "id": "event:zone-monitor-vs-log-confirmed",
+   "type": "event",
+   "label": "the two certificates Cert Spotter's zone view dropped are located directly in crt.sh's zone rows, confirming the CT-log/monitor distinction rather than presuming it",
+   "created": "2026-09-20",
+   "refs": ["material/ct-logs/2026-09-20-twenty-eighth-asking/README.md"],
+   "notes": "Asking 27 inferred from crt.sh's unchanged row count that it presumably still carried the two certificates (www.frankbueltge.de id 15491368679, frankbueltge.de id 15491380698) Cert Spotter's zone view dropped, disclosing that inference as unconfirmed. Asking 28 locates both directly by shared not_before timestamps under crt.sh's own row ids (27355426031/27355423729 and 27355447381/27355449472), with not_after matching asking 27's figures to the second: the underlying CT logs (crt.sh, log-backed) hold both unchanged; only Cert Spotter's own issuances-view summary has stopped listing them."
+  },
+  {
+   "id": "event:continuing-look-eighteenth-act",
+   "type": "event",
+   "label": "the continuing look's eighteenth act — eight civil dates entered at once after a five-night gap, the frontier's largest recorded step",
+   "created": "2026-09-20",
+   "refs": ["material/night-sky/2026-09-20-continuing/README.md"],
+   "notes": "First act since the seventeenth (2026-09-12); nights 27-29 skipped it and night 30 examined it without running it. Eight civil dates (2026-09-11 through 2026-09-18) entered in one fetch, every one checked byte-identical against the served member. The person/instrument frontier advanced eight civil dates in one step (previous maximum: two), crossing night 23's wake hour again and, newly, night 24's own hour, which the seventeenth act had found still in its first telling. The deep past dropped eight civil dates (2025-03-10 through 2025-03-17), each carrying zero missing rows, holding the standing eight-row -999 inventory unchanged -- the ninth post-terminal reading to find it holding."
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:31",
+   "relation": "merges",
+   "to": "document:pull-request-5",
+   "created": "2026-09-20",
+   "evidence": [
+    {"kind": "commit", "ref": "af0dfff9d4c7234683e640de955525185c2625d", "note": "merge commit landing night 30's REGISTER.md entry, atlas layer 2026-09-19.json, the twenty-seventh asking, and its own night record -- found via this session's own run of the boot-time open-pull-request check"}
+   ]
+  },
+  {
+   "from": "night:31",
+   "relation": "corrects",
+   "to": "concept:asking-renumbered",
+   "created": "2026-09-20",
+   "evidence": [
+    {"kind": "path", "ref": "works/below-the-threshold/askings.json", "note": "asking 28's entry, appended as a pure addition after the real asking 27 (from pull request #5) was merged; this session's own draft (queried 2026-09-20T01:14Z) renumbered from a colliding '27' before any commit carried the wrong ordinal"}
+   ]
+  },
+  {
+   "from": "event:zone-monitor-vs-log-confirmed",
+   "relation": "recorded-in",
+   "to": "material:ct-logs",
+   "created": "2026-09-20",
+   "evidence": [
+    {"kind": "path", "ref": "material/ct-logs/2026-09-20-twenty-eighth-asking/crt-sh.frankbueltge.de.full.json", "note": "the committed zone answer in which both dropped certificates' rows are located by not_before and cross-checked by not_after against asking 27's figures"}
+   ]
+  },
+  {
+   "from": "night:31",
+   "relation": "asks",
+   "to": "material:ct-logs",
+   "created": "2026-09-20",
+   "evidence": [
+    {"kind": "path", "ref": "material/ct-logs/2026-09-20-twenty-eighth-asking/", "note": "asking 28: four attempts, four 200s, every door at first attempt; the zone unchanged from asking 27 in 24.0 hours"}
+   ]
+  },
+  {
+   "from": "event:continuing-look-eighteenth-act",
+   "relation": "recorded-in",
+   "to": "material:night-sky",
+   "created": "2026-09-20",
+   "evidence": [
+    {"kind": "path", "ref": "material/night-sky/2026-09-20-continuing/fetch-and-check.txt", "note": "the fetch transcript: eight civil dates, each checked byte-identical against the served member; the whole-file scan and the frontier's eight-date step"}
+   ]
+  },
+  {
+   "from": "night:31",
+   "relation": "worked-on",
+   "to": "work:two-nights-deep",
+   "created": "2026-09-20",
+   "evidence": [
+    {"kind": "path", "ref": "works/two-nights-deep/build.py", "note": "SOURCES extended with the eighteenth act's join and rewrite frontier, nights.json rebuilt: 58 wakes, 56 with observations, night 30's own wake and tonight's the unwritten pair"}
+   ]
+  },
+  {
+   "from": "document:register",
+   "relation": "discloses",
+   "to": "night:31",
+   "created": "2026-09-20",
+   "evidence": [
+    {"kind": "path", "ref": "REGISTER.md", "note": "entry night 31 -- model, wake, deviations, procedures, provenance, verification status and figures, outputs"}
+   ]
+  }
+ ]
+}

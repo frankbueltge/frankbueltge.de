@@ -1,0 +1,50 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Tenancy</title>
+<style>
+html,body{margin:0;width:1100px;height:800px;overflow:hidden;background:#f3efe6}
+#wrap{position:absolute;left:34px;top:30px;width:1032px;height:700px;overflow:hidden}
+#text{font-family:Georgia,"Times New Roman",serif;text-align:justify;color:#8f897d;word-spacing:1px;hyphens:none}
+#text span{white-space:nowrap}
+.cc{color:#1d1b18}
+.port{color:#c8361c}
+.void{color:#cfc8ba;text-decoration:line-through;text-decoration-color:#b9b1a2}
+#foot{position:absolute;left:34px;right:34px;bottom:22px;height:36px;font-family:Georgia,serif;color:#1d1b18;display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid #1d1b18;padding-top:8px}
+#foot h1{font-weight:normal;font-size:22px;margin:0;letter-spacing:.5px}
+#foot .k{font-size:11.5px;color:#5a554c}
+#foot .k b{font-weight:normal}
+</style></head><body>
+<div id="wrap"><div id="text"></div></div>
+<div id="foot"><h1>Tenancy</h1><div class="k" id="key"></div></div>
+<script src="data.js"></script>
+<script>
+const R=window.ROOT.items;
+const count={};R.forEach(r=>count[r.manager]=(count[r.manager]||0)+1);
+const PORT=Object.keys(count).filter(m=>m!=="Not assigned"&&count[m]>=24);
+const t=document.getElementById('text');
+let n={cc:0,port:0,void:0,own:0};
+const frag=document.createDocumentFragment();
+R.forEach((r,i)=>{
+  const s=document.createElement('span');
+  s.textContent=r.tld.replace(/[‎‏]/g,'');
+  let c='own';
+  if(r.manager==="Not assigned")c='void';
+  else if(r.type==="country-code")c='cc';
+  else if(PORT.includes(r.manager))c='port';
+  n[c]++;
+  if(c!=='own')s.className=c;
+  frag.appendChild(s);frag.appendChild(document.createTextNode(' '));
+});
+t.appendChild(frag);
+// fit: largest font that fills the frame
+const W=document.getElementById('wrap');
+let lo=4,hi=16;
+for(let k=0;k<30;k++){const m=(lo+hi)/2;t.style.fontSize=m+'px';t.style.lineHeight=(m*1.18)+'px';if(t.scrollHeight<=W.clientHeight)lo=m;else hi=m;}
+t.style.fontSize=lo+'px';t.style.lineHeight=(lo*1.18)+'px';
+document.getElementById('key').innerHTML=
+ `All ${R.length} top-level domains of the root zone, A to Z. &nbsp; `+
+ `<b class="cc">■</b> ${n.cc} held by a country &nbsp; `+
+ `<b class="port">■</b> ${n.port} held by the ${PORT.length} largest portfolio registries &nbsp; `+
+ `<b style="color:#8f897d">■</b> ${n.own} held by someone else &nbsp; `+
+ `<b class="void">■</b> ${n.void} given back, no one`;
+</script>
+</body></html>

@@ -59,7 +59,7 @@ describe('atlasHref', () => {
   })
 })
 
-/* Die echten Dateien wachsen jede Nacht mit Ulysses' Sitzungen — hier stehen deshalb
+/* Die echten Dateien wachsen jede Nacht mit Assays Sitzungen — hier stehen deshalb
    NUR Invarianten, die für jeden Stand gelten müssen (nie Zustands-Annahmen wie
    „History ist leer": die brechen genau dann, wenn die Engine liefert). */
 describe('gegen die echten Engine-Daten (Invarianten, kein Zustand)', () => {

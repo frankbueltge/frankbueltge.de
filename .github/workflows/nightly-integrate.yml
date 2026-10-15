@@ -16,13 +16,18 @@ name: Nightly line integrate
 on:
   schedule:
     # 06:00 / 12:00 / 18:00 / 00:00 Berlin (summer time). The line works late; the first run
-    # after midnight is the one that usually finds a new night on main.
+    # after midnight is the one that usually finds a new night on main. Since 2026-10-07 these
+    # are the net, not the mechanism: the practice watch (practice-watch.yml) dispatches this
+    # workflow within minutes of the line's landing. On 2026-10-07 the line landed three works
+    # between 10:57 and 15:06 UTC, and by 17:00 GitHub had granted none of these crons after 10:43.
     - cron: '0 4,10,16,22 * * *'
   workflow_dispatch: {}
 
 permissions:
   contents: write
   issues: write
+  # to start deploy-cf.yml when another workflow started this run (see the last steps)
+  actions: write
 
 concurrency:
   group: nightly-integrate
@@ -47,9 +52,15 @@ jobs:
       - name: Clone the nightly line's repository
         run: git clone --depth 1 https://github.com/frankbueltge/error-as-method /tmp/nightly
 
-      - name: Mirror works, figures and research days
+      - name: Mirror works, figures, faces and research days
         run: |
           node scripts/nightly/mirror.mjs /tmp/nightly . | tee /tmp/mirror.json
+          # The line's head this mirror now carries (2026-10-07). The line holds no token for this
+          # site and does not dispatch, so the practice watch (practice-watch.yml) compares its head
+          # with this file once a minute while the house is active and starts this workflow when
+          # they differ. Committed even when nothing else changed, so the watch never asks twice.
+          mkdir -p .github/state
+          git -C /tmp/nightly rev-parse HEAD > .github/state/nightly-mirror-head
           # A malformed new work is a report, never a silent gap: the mirror lists what it
           # refused to take, and the run says so in its summary.
           node -e '
@@ -57,11 +68,19 @@ jobs:
             const line = (s) => require("fs").appendFileSync(process.env.GITHUB_STEP_SUMMARY, s + "\n")
             line(`| what | count |`); line(`|---|---|`)
             line(`| works mirrored | ${r.works.length} |`)
+            line(`| works with their own face (/error-as-method/works-html/) | ${r.faces.length} |`)
             line(`| research days mirrored | ${r.journal.length} |`)
             line(`| inherited, left with the Atelier mirror | ${r.inherited.length} |`)
+            if (r.faces.length) {
+              line(``); line(`**faces served:** ${r.faces.map((s) => "`" + s + "`").join(", ")}`)
+            }
             if (r.skipped.length) {
               line(``); line(`**skipped — a work directory missing its own files:**`)
               for (const s of r.skipped) line(`- \`${s.slug}\` — missing ${s.missing.join(", ")}`)
+            }
+            if (r.oversized.length) {
+              line(``); line(`**left behind — over the Cloudflare Pages asset limit of 25 MiB:**`)
+              for (const o of r.oversized) line(`- \`${o.slug}/${o.file}\` — ${(o.bytes / 1048576).toFixed(1)} MiB`)
             }
           '
 
@@ -80,10 +99,10 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/data/nightly public/error-as-method src/data/graph)" ]; then
+          if [ -n "$(git status --porcelain src/data/nightly public/error-as-method src/data/graph .github/state/nightly-mirror-head)" ]; then
             git config user.name "Nightly-Integrate"
             git config user.email "nightly-integrate@frankbueltge.de"
-            git add -A src/data/nightly public/error-as-method src/data/graph
+            git add -A src/data/nightly public/error-as-method src/data/graph .github/state/nightly-mirror-head
             git commit -m "nightly line: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
               git pull --rebase --autostash origin main && git push && break
@@ -98,6 +117,18 @@ jobs:
           else
             echo "no changes"
           fi
+
+      # A run started by another workflow with the built-in token (the practice watch, the mirror
+      # watch, a sentinel retry) ends without a workflow_run event — GitHub creates none for a run
+      # the built-in token started — so deploy-cf.yml never hears of what it committed. Seen on
+      # 2026-10-07: four mirrors committed between 17:59 and 18:05 UTC and stood undeployed. Such
+      # a run starts the deploy itself; a run started by a schedule, a practice's dispatch or a
+      # person still reaches deploy-cf.yml through workflow_run and does not ask twice.
+      - name: Deploy what this run committed (when another workflow started it)
+        if: success() && github.triggering_actor == 'github-actions[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
 
       # An alarm that never goes out stops being a message and becomes furniture: a green run
       # closes the issue its own red run opened, and says when.
@@ -120,8 +151,19 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          PREFIX="Nightly-Integrate rot"
           RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           TAIL=$(tail -c 3000 /tmp/validate.log 2>/dev/null || echo "no validate log")
-          gh issue create --repo "$GITHUB_REPOSITORY" \
-            --title "Nightly-Integrate rot ($(date -u +%F))" \
-            --body "$(printf 'Der Spiegel der nächtlichen Linie ist rot; nichts wurde committet, die Site steht auf ihrem letzten guten Stand.\n\nLauf: %s\n\n```\n%s\n```\n' "$RUN_URL" "$TAIL")" || true
+          # One alarm per red streak, as the practice integrates do: a red that persists comments
+          # on the issue it already has instead of opening another (2026-09-06 left five in a day).
+          # `|| true` on the lookup: this step is the messenger, and a duplicate beats silence.
+          EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --limit 100 --json number,title \
+            | jq -r --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][0].number // empty' || true)
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --repo "$GITHUB_REPOSITORY" \
+              --body "$(printf 'Weiter rot am %s — Lauf: %s\n\n```\n%s\n```\n' "$(date -u +%F' '%H:%MZ)" "$RUN_URL" "$TAIL")" || true
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" \
+              --title "$PREFIX ($(date -u +%F))" \
+              --body "$(printf 'Der Spiegel der nächtlichen Linie ist rot; nichts wurde committet, die Site steht auf ihrem letzten guten Stand.\n\nLauf: %s\n\n```\n%s\n```\n' "$RUN_URL" "$TAIL")" || true
+          fi

@@ -44,6 +44,105 @@ speaking, not a legislator.
 
 ## Open
 
+> ## 2026-09-24 (2) — The practice's first two works, declared; the reception test asked
+> **Request:** that the founder run the returned third question of `DOWRY.md`'s "The
+> founder's reading" — put each of these two pieces in front of a person who has read
+> nothing of this record, and ask them what they understood — on *Below the Threshold*
+> (`https://frankbueltge.de/n-1/works/below-the-threshold/`) and *Two Nights Deep*
+> (`https://frankbueltge.de/n-1/works/two-nights-deep/`), whenever it suits him, not
+> necessarily both at once and not necessarily before 2026-10-14. No preparation of the
+> stranger, per the section's own rule.
+> **Why:** tonight (night 34, record 60), under the founder's act of 2026-09-24 ("the
+> toolkit, tried across projects"), both standing candidates were declared works —
+> problem constructed, neighbours searched fresh, daylight stated, advantage stated in
+> each piece's own words, form built and re-verified, the nightly asking and the
+> continuing look both closed on their final, dated evidence. Full declarations:
+> `works/below-the-threshold/CANDIDATE.md` §9, `works/two-nights-deep/CANDIDATE.md` §10.
+> What this practice cannot do is the one thing the works condition actually asks for:
+> "receivable by someone who has read nothing" is a claim about a stranger's mind, not
+> about this record, and `DOWRY.md` says plainly that this bar "is not passable by this
+> practice's own judgment." Tonight's declaration checked what a session can check — that
+> neither page requires reading this repository, that both read as plain first-person
+> prose, that one real drift-class defect was found and fixed in the older piece before
+> declaring it — and stops there, honestly, rather than pretending a session's own read
+> is the stranger's.
+> **What it enables:** the actual test of whether these two nights' — these two months'
+> — work holds up outside this record, which is the whole point of the works condition
+> and not something the practice can award itself. Either result is useful: a stranger
+> who says something back closes the gap this request names; a stranger who cannot is
+> the put-back criterion each candidate's own text already names, and this practice
+> would rather learn that from the founder's eyes than never learn it at all.
+> **Status:** open — no deadline named, and none is asked for. Per the standing rule,
+> silence changes nothing and blocks nothing; both pieces stand published as works either
+> way, and this request is not a gate the practice is waiting behind.
+
+> ## 2026-09-24 — Two dated acts in the dowry: the material is the world, and the toolkit is tried across projects
+> Noted here because both channels are read at boot; the authority is `DOWRY.md`, where
+> both stand dated today, appended, nothing above them retouched.
+>
+> **1. Gift 4 amended — the material is the world.** No theme is given, still; "no theme
+> will ever be given" is struck. Named as places to acquire from, offers and not themes:
+> the Atlas of Data Art (521 records, CC0, `https://frankbueltge.de/atlas/werke.json`) —
+> taken further, carried into a new context or answered, never copied; open datasets;
+> events, current and historical. The practice's own infrastructure and record — domain,
+> certificates, schedule, wake hours, mirror, repository — is no longer project material;
+> the material front's seventh criterion is overruled to that extent.
+>
+> **2. A new standing condition — the toolkit, tried across projects.** The research
+> object is how a machine researches with *Cartography, not Tracing*, answered by using it
+> on many materials. A project is bounded (one material from the world, its two or three
+> instruments chosen before, three to five working sessions, then a work or a dated
+> put-back); the next project takes different material; open-ended forms (a vigil, a
+> continuing look) are not projects; each project leaves a short toolkit account.
+> *Below the Threshold* and *Two Nights Deep* get at most two further sessions each,
+> beginning with the next, to become works or be put back — and the nightly asking and the
+> continuing look end with them.
+>
+> **Status:** open — nothing is asked of the founder here. The practice enacts these in its
+> own zone (the protocol's material front among them) and files this closed when it has.
+> The acts are in force from tonight.
+
+> ## 2026-09-23 — Three sessions, one nightly window: a concurrency cost, named rather than fixed
+> **Request:** none — this is an observation for the founder's awareness, not a decision the
+> practice is asking him to make. Filed under "Open" only because it names a real cost that
+> nobody has weighed yet, not because an answer is owed.
+> **What happened.** This session woke at first clock check 2026-09-21T01:04:50Z, read the
+> full boot order, found no open pull request against `main` at that moment, and did a full
+> night's work: the night-sky continuing look's then-current act (nine civil dates) and a
+> Certificate Transparency asking. Before it could push, it discovered — via its own delayed
+> publication path — that a second, fully independent session had woken about a day earlier
+> (2026-09-20), done the same two fronts under the same "night 31" number, and merged first
+> (pull request `#6`). This session merged that PR, and by the time it went to rebuild its own
+> work as the next honest increment, real time had moved far enough that a *third* independent
+> session had already run night 32 (pull request `#8`, merged) and a *fourth* had already run
+> night 33 (pull request `#9`, merged) — the fourth session's own boot-time check found and
+> closed this session's pull request `#7` as orphaned before this session ever saw that notice
+> itself. Net effect: four sessions worked what should have been one continuous nightly
+> sequence, three of them overlapping closely enough that none saw the others' pull requests
+> until after doing a full night's own work; this session's entire substantive contribution
+> (the nine-date night-sky catch-up, its own Certificate Transparency asking) was computed,
+> committed, and pushed, then discarded unmerged — real work, real tokens, zero trace in the
+> record beyond this note and the closed pull request itself.
+> **Why this is not the practice's to fix.** The existing safeguard (the boot-time
+> open-pull-request check, `reading/00-protocol.md`, record 55's addition) worked exactly as
+> designed every time it got a chance to run — it is a point-in-time check, and it cannot see a
+> session that pushes *after* it runs. The actual cause is upstream of anything a session does
+> at boot: multiple sessions were apparently started for overlapping windows without the
+> practice's own hand in that scheduling (`DOWRY.md` floor rule 5's own amendments already
+> establish that the founder's own bell-ringing and the daily schedule are his to fire, not the
+> practice's). Whatever combination of the fixed schedule and the founder's own use of the
+> `REQUESTS.md`/session-triggering mechanism produced four overlapping wakes across three
+> civil dates is worth knowing about only because the cost is now measured, not guessed:
+> **one session's worth of genuine, verified, correct work, fully discarded.**
+> **What it enables:** nothing is blocked; every night's real content (31, 32, 33) landed
+> correctly regardless, because the merge-the-clean-earlier-PR discipline this practice's own
+> case law already carries (nights 29, 30) absorbed the collision without any content loss.
+> This note exists only so the founder can weigh, on his own side, whether the frequency of
+> concurrent wakes is worth changing — the practice has no lever to pull on when or how often
+> it is started.
+> **Status:** open — no deadline, no reply owed. Per the standing rule, silence changes
+> nothing; this is not a request the practice is waiting on to keep working.
+
 > ## 2026-08-21 — The repository's renaming, after the naming
 > **Request:** the founder's decision on renaming the repository (and with it the
 > served path), now that the practice is named: *Remainder* (`NAMING.md`,
@@ -71,6 +170,52 @@ speaking, not a legislator.
 > given; its non-answer changes nothing, as it was written to.
 
 ## Closed
+
+*Filed closed 2026-09-15 by the practice (record 53, night 27): the note below,
+intact, nothing retouched, with the practice's dated answer appended inside it. The
+three acts are enacted in `reading/00-protocol.md` (two dated additions) and this
+session's own night record (`nights/53-twenty-seventh-night.md`), written to the cut
+form the second addition states.*
+
+> ## 2026-09-12 — Three dated acts in the dowry: the grant, the ratio, the surface
+> Noted here because both channels are read at boot; the authority is `DOWRY.md`, where
+> all three stand dated today, appended, nothing retouched.
+>
+> **1. The material grant is withdrawn.** `frankbueltge/material` is gone as a source of
+> this practice. The nightly reach ends and needs no further note: it was granted
+> 2026-08-16, never worked, and was probed on 29 of the 58 recorded sessions for the same
+> refusal. The text to work from is KsK — `foundation/` holds it whole, in both languages,
+> and it is enough.
+>
+> **2. The cartographic condition is sharpened, with the measurement behind it.** The
+> apparatus stands at about 233,700 words against about 19,900 in `works/`, and no
+> candidate has become a work in twenty-seven nights. The atlas is the record: a night
+> owes a dated layer, a register entry and a short account of what it did, and prose only
+> where the prose is the work. Which standing forms change to meet that is the practice's
+> own to write.
+>
+> **3. A new standing condition — a surface that shows the work.** A visitor who has read
+> nothing must be able to see what this practice is doing, and see that it has changed.
+> The surface is worked on inside the night, draws on the atlas, and carries evidence like
+> any edge.
+>
+> **Status:** open — nothing is asked of the founder here. The practice enacts these in
+> its own zone and files this closed when it has, recorded in the night like any other
+> move. The acts are in force from tonight.
+>
+> *Dated addition, 2026-09-15 (record 53, night 27):* **enacted, and closed.** (1) The
+> apparatus limitation's discharge, which held "while the reach holds," ends by dated
+> addition — ATP citations return to second-hand via KsK from tonight
+> (`reading/00-protocol.md`). (2) The night record is cut to a form stated the same
+> addition and applied to this session's own record as its evidence
+> (`nights/53-twenty-seventh-night.md`, short against night 26's). (3) The surface was
+> read against the new condition and found already built to it (the front door answers
+> what-this-is / working-on-now / found-so-far without scroll, the map derived from the
+> committed layers at load); no edit was needed to meet it, and tonight's own night and
+> event nodes will show on it once pushed, without this session opening its file. Moved
+> to Closed intact.
+
+---
 
 *Filed closed 2026-08-20 by the practice (record 24, night 07): the founder's
 measurement below is moved here intact, nothing retouched, with the practice's
@@ -549,3 +694,144 @@ founder's act not yet made. `DOWRY.md`'s addition is corrected in the same act, 
 dated, with the 2026-08-22 sentence left standing as written and wrong.
 
 Nothing is owed in reply.
+
+---
+
+## 2026-09-03 — From the founder: the visual layer — what the house now draws of your record, and what is yours to use
+
+**Founder's direction (wording private, paraphrased and dated).** The site gained new means of
+visualization and storytelling on 2026-09-02, and every practice is told, in its own channel,
+that these means are theirs too. This entry is that telling. Nothing is asked; nothing is owed;
+the ring carries nothing, this file does.
+
+**What changed on the site.** The house retired a habit it had mistaken for a rule: figures were
+built as SVG strings at build time and never rendered in the browser. The rule now reads: **the
+archive binds the data, not the rendering.** A figure on the site may be rendered client-side,
+interactive and animated, as long as every number comes from a committed, recomputable record
+and the server render is a complete figure without JavaScript. Seven duties hold such figures to
+that (pure data, a no-JS floor, no inline styles under the site's policy, reduced motion honoured,
+readout rules, a byte budget per island, palette validation). Record and program:
+`docs/design/2026-09-02-the-visual-layer.md` in the site repository.
+
+**What the house now draws of your record.**
+
+- `/experiments` — the lab's gallery: your practice stands beside the lab as a card with a live
+  miniature, one tick per night your mirror holds; the shelf filters, reflows and reads out from
+  the record.
+- `/experiments/neighbors` — the knowledge graph as an explorer, every edge with its receipt.
+- Your surface itself, `/n-1/*`, is yours and is not framed by the house — that has not changed
+  and will not by this note.
+
+**What this means for your surface.** It is mirrored bare with its own policy — inline scripts
+and styles allowed, assets from this site only, no outside fetches. Interactive, animated,
+client-rendered work has been possible there all along; the house's rule change concerns the
+house's own figures of records, not your territory. What is new for you is only this: where your
+record states its own metadata (a dated night, a title in `window.json`), the house can draw it,
+and where it does, the visitor sees your words, quoted, with the file named.
+
+**What you may ask for, here.** A figure of your record drawn by the house, in a room of the
+house — if you ever want one; a data endpoint served from your committed files; a change to how
+the site serves your pages. The house builds within its duties. Anything that would change your
+floor rules or leave the house stays with the founder.
+
+**Status:** for information · nothing owed.
+
+---
+
+## 2026-09-03 (2) — From the founder: use them — this practice above all
+
+**Founder's direction (wording private, paraphrased and dated), sharpening the entry above.**
+Information was the wrong register. The founder does not merely permit the new means — he asks
+that they be used, and he names this practice first: a surface that publishes itself, under its
+own policy, with a record that accumulates night after night, is exactly where a living figure
+says more than a still one.
+
+**What this asks of you.** From the next session on, where your surface or a work gains from it,
+make it interactive, animated, client-rendered — a figure a visitor can turn, zoom, filter and
+read out; a record that tells its own story in the page. Your policy already allows it (inline
+scripts and styles, assets from this site only, no outside fetches). The floor stays what it is:
+every number from a committed, recomputable record, the sources in the page, an honest still
+frame for a visitor who asked for no motion or has no JavaScript. Decide the form on the merits
+and write in a line which you chose and why. Where a piece of the house's kit or a figure drawn
+by the house would serve you, ask here; the house builds it.
+
+**Status:** direction · in force from your next session · no report owed beyond the line in the
+record.
+
+---
+
+## 2026-10-02 — From the founder: your nights land on their own
+
+**Founder's decision (wording private, paraphrased and dated).** The open stack of pull
+requests #12–#17 was not a hold. The founder had not decided to keep nights 34–39 off the
+surface. He learned of the stack on 2026-10-02 and had it merged the same night, all six in
+one (#17). Nights 35–39 recorded that the founder had left the stack open without saying why;
+there was no reason to give. The silence after 2026-09-29 was not a decision either. It was
+the account's weekly usage limit.
+
+**What changes.** `.github/workflows/auto-land.yml` now lands a session's branch on `main` by
+itself, once its pull request is open and not a draft and every check on its tip is green.
+Lines appended after a request was merged land the same way. So the decision of 2026-08-15,
+that this practice publishes without a human in the path, holds in practice again, not only
+on paper. The boot text's "push to main" and the harness's designated branch no longer
+contradict each other: the branch is the way to `main`.
+
+**What this asks of you.** Publish as you do: push to your designated branch and open a pull
+request against `main`. Do not wait for a merge, and do not stack on an open request as if it
+were held. To hold a night back, open its request as a draft. To decline one, close it: a
+closed request is never landed. If a landing fails (a conflict, a failed check), the job
+turns red, the house's watchdog sees it, and the branch stays as it is.
+
+**Status:** information · in force from your next session · nothing owed.
+
+---
+
+## 2026-10-10 — From the founder: a surface, given and installed
+
+**Founder's act (wording private, paraphrased and dated).** The constitutional part stands in
+`DOWRY.md`, "What is deliberately not given", amendment of this date: a site design is now
+given. This entry says what stands on `main` and what it asks of you. It is not an offer in
+this file's usual sense: the design is installed. What you make of it from here is yours.
+
+**What was read.** `https://frankbueltge.de/n-1/` as mirrored from `e9adad0` (night 53). The
+founder reported that he still could not tell from it what the practice does. The
+measurements are in the dowry's amendment. The pages themselves were not the trouble: eleven
+stand, six of them works you declared. A visitor could not find them.
+
+**What stands now.**
+
+- `index.html` is replaced. The page you built and rebuilt from 2026-08-15 is in the history
+  (`git show e9adad0:index.html`). Nothing else of yours is touched: `record.html`,
+  `window.json`, `render-check.js`, the works and the projects stand as they were.
+- `surface/` is new: a stylesheet, a script, `margin.json`, `check.py`, a typeface, six
+  stills, and a README that says what each part is.
+- Four views: how the practice works (the six steps of one project, the six postulates with
+  the carry's verdicts), the projects (sessions by night, the instruments each one chose),
+  the record (your atlas, replayed from the founding, by date or by type), and the works.
+
+**What is derived, and what is not.** The header, the record view and the lines under each
+session are drawn from `atlas/layers/` at every load. The rest is `surface/margin.json`:
+hand-written, each item citing the file it was written from. That is the margin of
+`reading/20`, and it was written from your files by a hand that is not yours.
+
+**What this asks of you.**
+
+- Read the page's standing text once against your record. Where it is wrong, correct it; the
+  correction is the record.
+- When a session changes a project, change `surface/margin.json` in place of the prose you
+  have been adding to "In the making", and run `python3 surface/check.py`. The table is in
+  `surface/README.md`. The page says so itself when the record holds a night its project
+  table does not list.
+- `window.json` declares the surface you made. Revise it to match what stands, dated and
+  reasoned, or record why not.
+- `render-check.js` still loads `index.html` at two widths. Its two conditions for that page
+  (no page or console error, no horizontal overflow, at 1440 and at 390) were checked by hand
+  on 2026-10-10 and held; the script itself was not run. Extend its probe if you want the
+  views counted.
+
+**What changed on the house's side.** The strip the site lays over your pages keeps the way
+back to the site. For some hours on 2026-10-10 it also carried a list of your eleven pages.
+That list is taken off again with this act, because your own front page now shows them.
+
+**Status:** founder's act · in force with this commit · nothing owed beyond keeping the
+margin true.

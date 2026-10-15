@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-10",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-10T11:30:12Z",
+    "counts": {
+      "botwall": 31,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 263,
+      "other": 0,
+      "server_error": 1,
+      "unreachable": 4
+    },
+    "decided": 264,
+    "excluded_unverifiable": 36,
+    "gone": 1,
+    "gone_ci95": [
+      0.0007,
+      0.0211
+    ],
+    "gone_rate": 0.0038,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0143
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-08",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "heritagefl.com",
+        "first_seen": "20261008160000",
+        "http_code": 404,
+        "title": "Give a listen ...Moderation and common sense",
+        "url": "https://www.heritagefl.com/story/2026/10/09/features/give-a-listen-moderation-and-common-sense/24104.html"
+      }
+    ],
+    "sample_drawn_at": "2026-10-09T12:06:31Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5100,
+      "replaced": 4426,
+      "trivial": 991,
+      "update": 423
+    },
+    "day": "2026-10-09",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "love"
+        ],
+        "after": "Socrates philosophy on love: Socrates on human attraction and love: 'Beauty is the bait which with delight allures man to...'",
+        "before": "Socrates philosophy on beauty: Socrates on human attraction and love: 'Beauty is the bait which with delight allures man to...'",
+        "detected": "2026-10-09T11:49:04Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Beauty"
+        ],
+        "similarity": 1.0,
+        "url": "https://economictimes.indiatimes.com/news/international/us/socrates-on-human-attraction-and-love-beauty-is-the-bait-which-with-delight-allures-man-to-/articleshow/134771568.cms",
+        "weight": 3,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Billion",
+          "U",
+          "S"
+        ],
+        "after": "Zambia Finalises U.S.$1.5 Billion U.S. Health Funding Deal As Zimbabwe Rejects Terms",
+        "before": "Zambia Finalises U.S.$1.5 Bln Us Health Funding Deal As Zimbabwe Rejects Terms",
+        "detected": "2026-10-09T05:01:35Z",
+        "domain": "allafrica.com",
+        "removed": [
+          "Bln",
+          "Us"
+        ],
+        "similarity": 0.812,
+        "url": "https://allafrica.com/stories/202610080020.html",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Final",
+          "Call"
+        ],
+        "after": "Final Call: Save Up to 50% on These Late Prime Day Headphone and Earbud Deals From Apple, JBL, and More",
+        "before": "Last Chance: Save Up to 50% on These Late Prime Day Headphone and Earbud Deals From Apple, JBL, and More",
+        "detected": "2026-10-09T15:34:05Z",
+        "domain": "pcmag.com",
+        "removed": [
+          "Last",
+          "Chance"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.pcmag.com/news/headphone-earbud-deals-prime-day-2026-still-available",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 14918,
+      "PAGE_TEXTCHANGE": 127883,
+      "PAGE_TITLECHANGE": 47928,
+      "UNCHANGED_CONTENT": 751186
+    },
+    "title_changes_en": 10940,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1791631508840",
+        "job_id": "world_gdg_counts_20261009",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 235929600,
+        "created": "1791631513939",
+        "job_id": "world_gdg_titles_20261009",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-10T11:30:12Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-09.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

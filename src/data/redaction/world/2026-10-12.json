@@ -1,0 +1,139 @@
+{
+  "date": "2026-10-12",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-12T13:50:35Z",
+    "counts": {
+      "botwall": 38,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 259,
+      "other": 1,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 260,
+    "excluded_unverifiable": 40,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0146
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0146
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-10",
+    "receipts": [],
+    "sample_drawn_at": "2026-10-11T11:42:09Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3135,
+      "replaced": 3468,
+      "trivial": 486,
+      "update": 525
+    },
+    "day": "2026-10-11",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "East",
+          "Coast"
+        ],
+        "after": "This East Coast Beach Town Is an Affordable Alternative to the Hamptons—With Coastal Charm and 20 Miles of Beaches",
+        "before": "This New England Beach Town Is an Affordable Alternative to the Hamptons—With Coastal Charm and 20 Miles of Beaches",
+        "detected": "2026-10-11T14:17:13Z",
+        "domain": "aol.com",
+        "removed": [
+          "New",
+          "England"
+        ],
+        "similarity": 0.818,
+        "url": "https://www.aol.com/articles/england-beach-town-affordable-alternative-111500000.html",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "lessons",
+          "life"
+        ],
+        "after": "Life lessons: Quote of the day by Kate Hudson: 'If you're not mindful about sugar...' - inspiring life advice on moderation and what too much sugar can do to your health",
+        "before": "Kate Hudson quote on health: Quote of the day by Kate Hudson: 'If you're not mindful about sugar...' - inspiring life advice on moderation and what too much sugar can do to your health",
+        "detected": "2026-10-11T20:47:54Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Quote",
+          "Kate",
+          "Hudson",
+          "on",
+          "health"
+        ],
+        "similarity": 0.966,
+        "url": "https://economictimes.indiatimes.com/news/international/us/quote-of-the-day-by-kate-hudson-if-youre-not-mindful-about-sugar-inspiring-life-advice-on-moderation-and-what-too-much-sugar-can-do-to-your-health/articleshow/134677182.cms",
+        "weight": 9,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "in",
+          "Great",
+          "Britain"
+        ],
+        "after": "'The violence is off the scale': staff and passengers at risk as assaults on trains in Great Britain soar to record high",
+        "before": "'The violence is off the scale': staff and passengers at risk as assaults on UK trains soar to record high",
+        "detected": "2026-10-11T10:16:48Z",
+        "domain": "aol.co.uk",
+        "removed": [
+          "UK"
+        ],
+        "similarity": 0.818,
+        "url": "https://www.aol.co.uk/articles/violence-off-scale-staff-passengers-100025000.html",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 10111,
+      "PAGE_TEXTCHANGE": 80132,
+      "PAGE_TITLECHANGE": 33338,
+      "UNCHANGED_CONTENT": 517576
+    },
+    "title_changes_en": 7614,
+    "trace": [
+      {
+        "bytes_billed": 17825792,
+        "created": "1791812784208",
+        "job_id": "world_gdg_counts_20261011",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 160432128,
+        "created": "1791812790739",
+        "job_id": "world_gdg_titles_20261011",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-12T13:50:35Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-11.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

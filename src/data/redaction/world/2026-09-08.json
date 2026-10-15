@@ -1,0 +1,161 @@
+{
+  "date": "2026-09-08",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-08T10:10:52Z",
+    "counts": {
+      "botwall": 33,
+      "gone_404": 1,
+      "gone_410": 1,
+      "legal_451": 0,
+      "ok": 263,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 265,
+    "excluded_unverifiable": 35,
+    "gone": 2,
+    "gone_ci95": [
+      0.0021,
+      0.0271
+    ],
+    "gone_rate": 0.0075,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0143
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-06",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "mega979.com",
+        "first_seen": "20260906220000",
+        "http_code": 404,
+        "title": "Sabrina Carpenter Adds Primetime Emmy to Growing List of Achievements",
+        "url": "https://www.mega979.com/2026/09/06/sabrina-carpenter-adds-primetime-emmy-to-growing-list-of-achievements/"
+      },
+      {
+        "class": "gone_410",
+        "domain": "indiatimes.com",
+        "first_seen": "20260906050000",
+        "http_code": 410,
+        "title": "Report from Cuttack ( 13.02) ( 1709 - HC flags \"disturbing incidents\" at NLUO, orders police outpost and 24x7 beat house ) | Bhubaneswar News",
+        "url": "https://timesofindia.indiatimes.com/city/bhubaneswar/report-from-cuttack-13-02-1709-hc-flags-disturbing-incidents-at-nluo-orders-police-outpost-and-24x7-beat-house-/articleshow/133824405.cms"
+      }
+    ],
+    "sample_drawn_at": "2026-09-07T10:57:25Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5100,
+      "replaced": 4869,
+      "trivial": 919,
+      "update": 335
+    },
+    "day": "2026-09-07",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "More"
+        ],
+        "after": "Madhya Pradesh August 31, 2026, Weather Update: Heavy Rain Alert In 11 Districts; Showers In Indore, Bhopal & More",
+        "before": "Madhya Pradesh August 31, 2026, Weather Update: Madhya Pradesh August 31, 2026, Weather Update: Heavy Rain Alert In 11 Districts; Showers In Indore, Bhopal",
+        "detected": "2026-09-07T06:02:55Z",
+        "domain": "freepressjournal.in",
+        "removed": [
+          "Madhya",
+          "Pradesh",
+          "August",
+          "31",
+          "2026",
+          "Weather",
+          "Update"
+        ],
+        "similarity": 0.941,
+        "url": "https://www.freepressjournal.in/bhopal/madhya-pradesh-august-31-2026-weather-update-madhya-pradesh-august-31-2026-weather-update-heavy-rain-alert-in-11-districts-showers-in-indore-bhopal",
+        "weight": 14,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Claim",
+          "Appreciating"
+        ],
+        "after": "Tesla Cybertruck Owners Claim Their Vehicles Are Appreciating in Value – One Owner Says, \"I Paid $85,000 for My Cybertruck, and After 2 Years and 35,000 Miles, Carvana Is Offering Me $70,000\"",
+        "before": "Early Tesla Cybertruck Owners Are Seeing Their Vehicles Appreciate in Value – One Owner Says, \"I Paid $85,000 For My Cybertruck, and After 2 Years and 35,000 Miles, Carvana Is Offering Me $70,000\"",
+        "detected": "2026-09-07T15:49:12Z",
+        "domain": "torquenews.com",
+        "removed": [
+          "Early",
+          "Seeing",
+          "Appreciate"
+        ],
+        "similarity": 0.848,
+        "url": "https://www.torquenews.com/11826/early-tesla-cybertruck-owners-are-seeing-their-vehicles-appreciate-value-one-owner-says-i",
+        "weight": 10,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "30"
+        ],
+        "after": "16-year-old UP girl gang-raped inside moving bus during 30-km ride to Delhi's Kashmere Gate",
+        "before": "Delhi Gang Rape: 16-year-old UP girl gang-raped inside moving bus during 47-km ride to Delhi's Kashmere Gate | Delhi News",
+        "detected": "2026-09-07T04:46:49Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Rape",
+          "gang",
+          "47",
+          "Delhi",
+          "Delhi",
+          "News"
+        ],
+        "similarity": 0.818,
+        "url": "https://timesofindia.indiatimes.com/city/delhi/16-year-old-up-girl-gang-raped-inside-moving-bus-during-47-km-ride-to-delhis-kashmere-gate/articleshow/133641447.cms",
+        "weight": 11,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 16038,
+      "PAGE_TEXTCHANGE": 108817,
+      "PAGE_TITLECHANGE": 44615,
+      "UNCHANGED_CONTENT": 613572
+    },
+    "title_changes_en": 11223,
+    "trace": [
+      {
+        "bytes_billed": 20971520,
+        "created": "1788862035059",
+        "job_id": "world_gdg_counts_20260907",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 197132288,
+        "created": "1788862040627",
+        "job_id": "world_gdg_titles_20260907",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-08T10:10:52Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-07.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

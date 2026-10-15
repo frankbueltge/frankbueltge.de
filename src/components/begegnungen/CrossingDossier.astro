@@ -162,10 +162,10 @@ const rowsFor = (c: Crossing): CrossingRow[] => c.rows.slice(0, movesShown)
       </div>
 
       {/* — who is in it: each voice with its own account, in its own words — */}
-      {/* The long blocks fold (Frank, 2026-08-02: "ansonsten wird man von endlosen
-          textpassagen erschlagen") — native <details>, closed at rest, the heading itself is
-          the summary so nothing is added and nothing hides without a name. Question and
-          status stay open above: they are the orientation. */}
+      {/* The long blocks fold (Frank's objection of 2026-08-02, wording private: otherwise the
+          reader is buried under endless passages of text) — native <details>, closed at rest,
+          the heading itself is the summary so nothing is added and nothing hides without a
+          name. Question and status stay open above: they are the orientation. */}
       <details class="d-block d-fold">
         <summary class="d-h">{w.fields.voices} {c.voices.length > 0 && <span class="d-count">{c.voices.length}</span>}</summary>
         {c.voices.length > 0 ? (

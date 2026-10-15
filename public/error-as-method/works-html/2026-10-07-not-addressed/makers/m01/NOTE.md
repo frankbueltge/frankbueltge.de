@@ -1,0 +1,3 @@
+# Crossing
+
+The year is laid out as a woven cloth: 365 columns, one per day, and 24 rows, one per hour. Each hour gets a single stitch. Northbound riders rise above the row's thin waterline in cool blue and southbound riders hang below it in amber, so every mark is a small picture of the bridge carrying traffic both ways. I chose this over a single summed heatmap because the bridge is about two directions. Splitting each stitch keeps both directions visible while the weave still shows the larger rhythms: commuter bands at 8 am and 5 pm on weekdays that break into a soft midday swell each weekend, a dimmer winter, and a fuller summer. The one empty cell, 9 March at 2 am, is marked rather than filled in, because that hour was skipped when the clocks changed.

@@ -1,0 +1,77 @@
+{
+  "_note": "Every passage quoted from outside this practice, with the route by which it was read and the date it was read. Protocol v4 §5.2: when a finding rests on someone else's result, read the source and cite the passage; never reconstruct a result, a figure or a method from training memory. Nothing here is quoted from memory. Square brackets mark characters our own PDF extractor drops — it does not decode the ligatures fi and ff — restored by us and marked as restorations; the extractor's raw output is given beside each quote as quote_raw.",
+  "convention": "quote = what the page displays, with dropped ligatures restored in square brackets. quote_raw = the byte sequence our extractor produced.",
+  "sources": [
+    {
+      "id": "neumaier2016",
+      "citation": "Sebastian Neumaier, Jürgen Umbrich and Axel Polleres, 'Automated Quality Assessment of Metadata across Open Data Portals', Journal of Data and Information Quality 8(1), pages 1–29, 29 November 2016.",
+      "doi": "10.1145/2964909",
+      "citation_route": "Volume, issue, pages and date taken from the Crossref record for the DOI, api.crossref.org/works/10.1145/2964909, read 2026-09-11. The preprint PDF itself carries 'Vol. V, No. N, Article A' placeholders and cannot supply them.",
+      "url": "https://aic.ai.wu.ac.at/~polleres/publications/neum-etal-2016JDIQ.pdf",
+      "accessed_utc": "2026-09-11",
+      "extraction": "Authors' open PDF, 749.7 KB, text extracted with this repository's own tools/completeness-census/pdftext.py. No model sits between the source and the quoted passage.",
+      "access_note": "The publisher's page for the same DOI, dl.acm.org/doi/10.1145/2964909, answered HTTP 403 with a 'Just a moment...' interstitial on 2026-09-11. That is an automated reader being refused, not a paywall, and it is recorded as such (open question 46).",
+      "why_here": "The nearest neighbour for the two data-portal arms: the standing automated quality assessment of open data portal metadata, and the source of the completeness-as-existence metric those portals are scored by.",
+      "passages": [
+        {
+          "locator": "§3, definition of the boolean leaf functions",
+          "quote": "to determine if the labelling of some leaf of a path is non-empty",
+          "quote_raw": "to determine if the labelling of some leaf of a path is non-empty",
+          "bears_on": "Their existence metric — the completeness analogue — is a non-empty-string test on a leaf value. A description that is its own title is non-empty and therefore counts as present."
+        },
+        {
+          "locator": "§3, worked example on Figure 3",
+          "quote": "the [fi]rst and second metrics (title and description) returns 1 since they exist and are non-empty",
+          "quote_raw": "the rst and second metrics (title and description) returns 1 since they exist and are non-empty",
+          "bears_on": "The worked example scores a description present on exactly the test we say cannot see hollowness."
+        },
+        {
+          "locator": "§4, on how the existence dimension relates to completeness",
+          "quote": "our existence metric differs in the sense that it gives an indication to what extent a certain set of DCAT keys are used (i.e., can be mapped) and contain information, while in other works the completeness is typically de[fi]ned as the extent to which data is not missing",
+          "quote_raw": "our existence metric differs in the sense that it gives an indication to what extent a certain set of DCAT keys are used (i.e., can be mapped) and contain information, while in other works the completeness is typically dened as the extent to which data is not missing",
+          "bears_on": "The stated interpretation of the metric — that the keys 'contain information' — is wider than the operational test, which is only that the string is not empty. This is an observation about a method, not about its authors."
+        }
+      ]
+    },
+    {
+      "id": "wenige2021",
+      "citation": "Lisa Wenige, Claus Stadler, Michael Martin, Richard Figura, Robert Sauter and Christopher W. Frank, 'Open Data and the Status Quo — A Fine-Grained Evaluation Framework for Open Data Quality and an Analysis of Open Data portals in Germany', arXiv:2106.09590, 2021.",
+      "url": "https://arxiv.org/pdf/2106.09590",
+      "accessed_utc": "2026-09-11",
+      "extraction": "arXiv PDF, text extracted with tools/completeness-census/pdftext.py. The three passages were independently re-read in the ar5iv HTML rendering of the same identifier on the same date, which returned them with the ligatures intact and identical wording.",
+      "why_here": "Prior art for one of our five rules, on one of our two data-portal arms. They measure the uniqueness of dct:description across the German open data landscape — that is duplicate detection, our R4, done before us and at landscape scale.",
+      "passages": [
+        {
+          "locator": "§5.5, Uniqueness results",
+          "quote": "we made sure that dataset duplicates were left out of the analysis as they would have distorted uniqueness calculation",
+          "quote_raw": "we made sure that dataset duplicates were left out of the analysis as they would have distorted uniqueness calculation",
+          "bears_on": "Their question is discoverability — can a user tell two datasets apart. Ours is whether a value says anything about its own record. The exclusion that is correct for their question removes exactly the population ours is about."
+        },
+        {
+          "locator": "§5.5, Uniqueness results",
+          "quote": "Among them, dataset descriptions seem to be the most problematic property indicating that some datasets throughout the catalog are ambiguously described",
+          "quote_raw": "Among them, dataset descriptions seem to be the most problematic property indicating that some datasets throughout the catalog are ambiguously described",
+          "bears_on": "Their measured finding on the German landscape, five years before ours, and the reason our duplicate rule is not a discovery."
+        },
+        {
+          "locator": "§2, related work, on Neumaier et al.",
+          "quote": "the approach mostly captures the existence of certain metadata [fi]elds",
+          "quote_raw": "the approach mostly captures the existence of certain metadata elds",
+          "bears_on": "A second, independent reading of the same metric we describe above — not ours alone."
+        }
+      ]
+    }
+  ],
+  "access_probes": [
+    {"url": "https://dl.acm.org/doi/10.1145/2964909", "status": 403, "verdict": "bot-block",
+     "evidence": "body begins '<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...'",
+     "note": "A challenge interstitial, not a subscription wall. Not reported as a paywall."},
+    {"url": "https://ieeexplore.ieee.org/document/9405650/", "status": 202, "verdict": "bot-block",
+     "evidence": "HTTP 202 with a zero-byte body", "note": "Not consulted; recorded only."},
+    {"url": "https://catalog.data.gov/api/3/action/package_search", "status": 404,
+     "verdict": "endpoint absent", "note": "Also 404 at /api/action/ and for package_list. Excluded from the study for this reason."},
+    {"url": "https://opendata.swiss/api/3/action/package_search", "status": "403 then 302",
+     "verdict": "correction",
+     "note": "PREREGISTRATION.md §2.3 excluded this portal on a 403. Re-probed the same day with a User-Agent naming this practice, it answers 302 to ckan.opendata.swiss and then 200 with 15,980 datasets. The exclusion reason in the pre-registration is WRONG and is corrected here rather than quietly repaired: the portal is reachable, and what refused us was a default client string. It is still not scored, because it was not in the pre-registered population and because its title and description fields are language maps in which empty strings sit beside filled ones — a shape this study's screen was not designed for, and a sixth way to be present and empty that we observed and did not measure."}
+  ]
+}

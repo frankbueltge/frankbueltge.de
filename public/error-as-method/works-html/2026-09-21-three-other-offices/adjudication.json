@@ -1,0 +1,156 @@
+{
+ "note": "Scored mechanically from results.json. PREDICTIONS.md was committed before port.py existed; git ancestry is asserted by verify.py.",
+ "predictions": [
+  {
+   "id": "P1",
+   "called": "yes",
+   "claim": "All three R3b fire rates fall outside [21.42, 41.42] on the narrow list.",
+   "observed": {
+    "EU acts": 67.59,
+    "RFCs": 28.15,
+    "WHATWG standards": 55.52
+   },
+   "won": false,
+   "why": "RFCs lands in the band"
+  },
+  {
+   "id": "P2",
+   "called": "yes",
+   "claim": "WHATWG standards give the highest R3b fire rate of the three.",
+   "observed": {
+    "EU acts": 67.59,
+    "RFCs": 28.15,
+    "WHATWG standards": 55.52
+   },
+   "won": false,
+   "why": "highest is EU acts at 67.59 %"
+  },
+  {
+   "id": "P3",
+   "called": "yes",
+   "claim": "At least one corpus comes in above 41.42 %, i.e. above the band.",
+   "observed": {
+    "EU acts": 67.59,
+    "RFCs": 28.15,
+    "WHATWG standards": 55.52
+   },
+   "won": true,
+   "why": "above the band: EU acts, WHATWG standards"
+  },
+  {
+   "id": "P4",
+   "called": "yes",
+   "claim": "No corpus comes in below 10 % on the narrow list.",
+   "observed": {
+    "EU acts": 67.59,
+    "RFCs": 28.15,
+    "WHATWG standards": 55.52
+   },
+   "won": true,
+   "why": "lowest is RFCs at 28.15 %"
+  },
+  {
+   "id": "P5",
+   "called": "yes",
+   "claim": "The three rank by R3b fire rate in the same order as by median in-reach carrier-block length in words.",
+   "observed": {
+    "by_R3b": [
+     "EU acts",
+     "WHATWG standards",
+     "RFCs"
+    ],
+    "by_median_carrier_block_words": [
+     "EU acts",
+     "RFCs",
+     "WHATWG standards"
+    ],
+    "median_carrier_block_words": {
+     "EU acts": 392,
+     "RFCs": 48.0,
+     "WHATWG standards": 38
+    }
+   },
+   "won": false,
+   "why": "EU acts > WHATWG standards > RFCs against EU acts > RFCs > WHATWG standards"
+  },
+  {
+   "id": "P6",
+   "called": "yes",
+   "claim": "The reach span across base/narrow/wide at word window 36 exceeds 20 points in at least two of the three corpora.",
+   "observed": {
+    "EU acts": 52.69,
+    "RFCs": 19.88,
+    "WHATWG standards": 42.86
+   },
+   "won": true,
+   "why": "2 of 3 exceed 20 points (EU acts 52.69; RFCs 19.88; WHATWG standards 42.86)"
+  },
+  {
+   "id": "P7",
+   "called": "no",
+   "claim": "The fire-rate ordering R1 < R2 < R3 < R3b holds in all three corpora. Called NO: the prediction was that it would break somewhere.",
+   "observed": {
+    "fire_pcts_in_rule_order": {
+     "EU acts": [
+      17.62,
+      26.5,
+      66.65,
+      67.59
+     ],
+     "RFCs": [
+      6.29,
+      18.21,
+      19.21,
+      28.15
+     ],
+     "WHATWG standards": [
+      27.26,
+      42.18,
+      50.22,
+      55.52
+     ]
+    },
+    "strictly_increasing": {
+     "EU acts": true,
+     "RFCs": true,
+     "WHATWG standards": true
+    }
+   },
+   "won": false,
+   "why": "the ordering holds in all three, so the call of NO is lost"
+  }
+ ],
+ "won": [
+  "P3",
+  "P4",
+  "P6"
+ ],
+ "lost": [
+  "P1",
+  "P2",
+  "P5",
+  "P7"
+ ],
+ "tally": "3 of 7 won",
+ "S91.RULEBOUND": {
+  "condition": "falsified if R3b's fire rate over the rows in reach comes in within 10 points of 31.42 % in any one of the three",
+  "band": [
+   21.42,
+   41.42
+  ],
+  "narrow_R3b_by_corpus": {
+   "EU acts": 67.59,
+   "RFCs": 28.15,
+   "WHATWG standards": 55.52
+  },
+  "inside_the_band": [
+   "RFCs"
+  ],
+  "verdict": "FALSIFIED",
+  "margin": {
+   "EU acts": 36.17,
+   "RFCs": -3.27,
+   "WHATWG standards": 24.1
+  }
+ }
+}

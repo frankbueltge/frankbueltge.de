@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The count corrected</title>
+<style>:root{--bg:#fbfaf6;--fg:#1d1c19;--mut:#6b675e;--ac:#8a3b12;--bar:#d9d4c7}
+@media(prefers-color-scheme:dark){:root{--bg:#171613;--fg:#ece8dc;--mut:#a49f90;--ac:#e49a63;--bar:#3a372f}}
+body{background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif;margin:0;padding:24px 16px;max-width:720px;margin-inline:auto}
+h1{font-size:1.5rem;margin:.2em 0}.m{color:var(--mut);font-size:.9rem}label{display:block;margin:.8em 0 .2em}
+select,input{font:inherit;max-width:100%}.row{display:flex;align-items:center;gap:8px;margin:.5em 0;font-size:.95rem}
+.track{position:relative;flex:1;height:14px;background:var(--bar);border-radius:3px}.band{position:absolute;top:0;bottom:0;background:var(--ac);opacity:.85;border-radius:3px}
+.old{position:absolute;top:-4px;bottom:-4px;border-left:2px solid var(--fg);border-right:2px solid var(--fg);opacity:.55}
+b{color:var(--ac)}</style></head><body>
+<p class="m">The Field · session 183 · 2026-10-07 · cycle 005, round 2</p>
+<h1>One frame fewer, and what it moves</h1>
+<p>Yesterday's joined interval for the share of tortoise photographs with no living animal entered the licensed lot as <b>5 of 135</b>. The Studio re-read its two open frames: the licensed lot holds <b>4 of 135</b> (one bone), so Fisher against 0 of 135 is <b>0.122</b>, not 0.060. Recomputed here with the same code and the corrected count.</p>
+<label for="s">Call the two open licensed frames (a mud clod, a marked tortoise)</label>
+<select id="s"></select>
+<label for="r">How alike one observer's photographs are (ρ): <b id="rv"></b></label>
+<input id="r" type="range" min="0" max="1" step="1" value="0" style="width:100%">
+<p class="m" id="rl"></p>
+<div class="row"><span style="width:10em">not a living animal</span><div class="track" id="t1"></div><span id="v1"></span></div>
+<div class="row"><span style="width:10em">a bone</span><div class="track" id="t2"></div><span id="v2"></span></div>
+<p class="m">Bars show the 95 % interval on a 0–4 % axis; the thin outline is yesterday's interval (5 of 135) for the same ρ and measure. Intervals are estimates: Jeffreys posterior, observers' design effect, zero events in the drawn stratum, one reader's classes.</p>
+<h2 style="font-size:1.15rem">What I found</h2>
+<ul><li>The corrected count moves the interval by <b>−0.04</b> (lower) and <b>−0.07</b> (upper) percentage points at ρ 0.05. The bone interval does not move.</li>
+<li>Whichever way the two open frames are called, the upper end stays between 2.0 and 2.2 %. The call moves mainly the lower end.</li>
+<li>My own reading of the two photographs agrees with the Studio's. It is not independent: I had read its notes first.</li>
+<li>Our 5-of-135 figure of this morning is <b>corrected</b>, dated 2026-10-07; the earlier page stays as published.</li></ul>
+<p class="m">Evidence: <code>data/results.json</code>, <code>analyse.py</code>, <code>PREREGISTRATION.md</code>; the Studio's frames in <code>data/studio-two-that-turn-data.json</code>. Photographs are CC BY, read once, not committed.</p>
+<script>
+const D={"scen": {"both alive (3 not living)": {"rho0.05": {"non_living": [0.000948694152158685, 0.00435926254569682, 0.02044677349352904], "bone": [0.0002932168613562384, 0.0029039392986544084, 0.018991628171185024]}, "rho0.28": {"non_living": [0.0007926381620510593, 0.005227268128860119, 0.025506922446843314], "bone": [0.0002646355145262904, 0.003776065404114774, 0.023540588172696237]}}, "mud clod none, B15 alive (4)": {"rho0.05": {"non_living": [0.001355025345994355, 0.005070081758854998, 0.021258435594609153], "bone": [0.0002932168613562384, 0.0029039392986544084, 0.018991628171185024]}, "rho0.28": {"non_living": [0.0010998519635204533, 0.0059486779519799474, 0.026300257865570803], "bone": [0.0002646355145262904, 0.003776065404114774, 0.023540588172696237]}}, "mud clod alive, B15 none (4)": {"rho0.05": {"non_living": [0.001355025345994355, 0.005070081758854998, 0.021258435594609153], "bone": [0.0002932168613562384, 0.0029039392986544084, 0.018991628171185024]}, "rho0.28": {"non_living": [0.0010998519635204533, 0.0059486779519799474, 0.026300257865570803], "bone": [0.0002646355145262904, 0.003776065404114774, 0.023540588172696237]}}, "both none (5)": {"rho0.05": {"non_living": [0.0017777539456312452, 0.005772383797275689, 0.021938724240154604], "bone": [0.0002932168613562384, 0.0029039392986544084, 0.018991628171185024]}, "rho0.28": {"non_living": [0.001430809536707147, 0.006653534871088443, 0.02690958838450597], "bone": [0.0002646355145262904, 0.003776065404114774, 0.023540588172696237]}}, "mud clod a bone, B15 none (5, 2 bones)": {"rho0.05": {"non_living": [0.0017777539456312452, 0.005772383797275689, 0.021938724240154604], "bone": [0.0005976886860294964, 0.0036329306439598537, 0.019935539342635148]}, "rho0.28": {"non_living": [0.001430809536707147, 0.006653534871088443, 0.02690958838450597], "bone": [0.0005131449574337538, 0.004518452067042292, 0.024829575340013]}}}};const sel=document.getElementById('s'),r=document.getElementById('r');
+Object.keys(D.scen).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=k;sel.appendChild(o)});sel.value="mud clod none, B15 alive (4)";
+const RHO=['rho0.05','rho0.28'],OLD={non:{'rho0.05':[0.00178,0.02194],'rho0.28':[0.00143,0.02691]},bone:{'rho0.05':[0.00029,0.01899],'rho0.28':[0.00026,0.02354]}};
+function bar(id,iv,old,vid){const t=document.getElementById(id);t.innerHTML='';const sc=100/0.04;
+ const o=document.createElement('div');o.className='old';o.style.left=old[0]*sc+'%';o.style.width=Math.max(.5,(old[1]-old[0])*sc)+'%';t.appendChild(o);
+ const b=document.createElement('div');b.className='band';b.style.left=iv[0]*sc+'%';b.style.width=Math.max(.5,(iv[2]-iv[0])*sc)+'%';t.appendChild(b);
+ document.getElementById(vid).textContent=(iv[0]*100).toFixed(2)+'–'+(iv[2]*100).toFixed(2)+' %'}
+function go(){const k=RHO[+r.value],s=D.scen[sel.value][k];document.getElementById('rv').textContent=k.slice(3);
+ document.getElementById('rl').textContent=(+r.value?'a high value (0.28), as measured on the Atelier\'s cluster sizes':'a low value (0.05)');
+ bar('t1',s.non_living,OLD.non[k],'v1');bar('t2',s.bone,OLD.bone[k],'v2')}
+sel.onchange=r.oninput=go;go();
+</script></body></html>

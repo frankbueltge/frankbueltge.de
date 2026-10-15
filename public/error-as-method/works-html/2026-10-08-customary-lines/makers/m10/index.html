@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thirteen Turns</title>
+<style>
+  :root { --bg:#0b0d12; --ink:#e9e3d2; --dim:#7d8090; --faint:#2a2d38; --sun:#d9a35a; }
+  html,body { margin:0; background:var(--bg); }
+  body { width:1100px; height:800px; overflow:hidden; font-family: Georgia, "Times New Roman", serif; color:var(--ink); }
+  svg { display:block; }
+  text { font-family: Georgia, "Times New Roman", serif; }
+</style>
+</head>
+<body>
+<svg id="v" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script>
+(function(){
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById("v");
+  const days = window.VIEWS.days;
+  const N = days.length;
+  const C = { bg:"#0b0d12", ink:"#e9e3d2", dim:"#80838f", faint:"#262a35", sun:"#d9a35a" };
+
+  function el(name, attrs, parent){
+    const e = document.createElementNS(NS, name);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(e);
+    return e;
+  }
+  function txt(s, x, y, attrs, parent){
+    const t = el("text", Object.assign({x, y}, attrs || {}), parent);
+    t.textContent = s; return t;
+  }
+
+  // ---- geometry -------------------------------------------------------
+  // Earth at the centre, the Sun straight down. A day's angle is the Moon's
+  // elongation from the Sun that day: new moon at the bottom, first quarter
+  // to the right, full at the top, last quarter to the left.
+  // Its distance from the centre is time: 1 Jan at the inside, 31 Dec outside.
+  const P = 29.530588853;                              // synodic month, days
+  const NEW0 = Date.UTC(2025,0,29,12,36) / 864e5;      // new moon 29 Jan 2025 12:36 UTC
+  const T0 = Date.UTC(2025,0,1,12) / 864e5;            // noon, 1 Jan 2025
+  const cx = 404, cy = 404;
+  const R0 = 44, R1 = 336;                             // baseline radius, first & last day
+  const K = 0.00205;                                   // px of spike per page view
+
+  const elong = d => 2*Math.PI * ((T0 + d - NEW0) / P); // radians, 0 = new
+  const rad = d => R0 + (R1 - R0) * d / (N - 1);
+  const pt = (a, r) => [cx + r*Math.sin(a), cy + r*Math.cos(a)];
+  const views = d => {                                  // linear between noons
+    const i = Math.max(0, Math.min(N-1, Math.floor(d))), j = Math.min(N-1, i+1), f = d - i;
+    return days[i]*(1-f) + days[j]*f;
+  };
+
+  // ---- faint frame: phase rays and the Sun --------------------------
+  const sunGrad = el("defs", {});
+  sunGrad.innerHTML =
+    '<radialGradient id="sg" cx="50%" cy="100%" r="60%">' +
+      '<stop offset="0" stop-color="'+C.sun+'" stop-opacity="0.22"/>' +
+      '<stop offset="1" stop-color="'+C.sun+'" stop-opacity="0"/>' +
+    '</radialGradient>';
+  el("rect", {x:cx-260, y:640, width:520, height:160, fill:"url(#sg)"});
+
+  const rays = [
+    {a:0,           lab:"new moon",      sub:"toward the Sun"},
+    {a:Math.PI/2,   lab:"first quarter"},
+    {a:Math.PI,     lab:"full moon",     sub:"opposite the Sun"},
+    {a:3*Math.PI/2, lab:"last quarter"}
+  ];
+  rays.forEach(r => {
+    const [x1,y1] = pt(r.a, 18), [x2,y2] = pt(r.a, 384);
+    el("line", {x1,y1,x2,y2, stroke: r.a===Math.PI ? "#3a3e4c" : C.faint, "stroke-width":1,
+                "stroke-dasharray": r.a===Math.PI ? "none" : "2 4"});
+  });
+  txt("full moon", cx+8, 16, {fill:C.ink, "font-size":13, "font-style":"italic"});
+  txt("opposite the Sun", cx+8, 31, {fill:C.dim, "font-size":11});
+  txt("new moon", cx+8, 776, {fill:C.dim, "font-size":13, "font-style":"italic"});
+  txt("toward the Sun ↓", cx+8, 791, {fill:C.sun, "font-size":11, "fill-opacity":0.8});
+  txt("first quarter", cx+376, cy, {fill:C.dim, "font-size":12, "font-style":"italic", "text-anchor":"middle", transform:"rotate(90 "+(cx+376)+" "+cy+")"});
+  txt("last quarter", cx-376, cy, {fill:C.dim, "font-size":12, "font-style":"italic", "text-anchor":"middle", transform:"rotate(-90 "+(cx-376)+" "+cy+")"});
+
+  // ---- the baseline spiral (the Moon's path, unwound through the year)
+  let base = "";
+  for (let d = 0; d <= N-1; d += 0.1) {
+    const [x,y] = pt(elong(d), rad(d));
+    base += (d === 0 ? "M" : "L") + x.toFixed(2) + " " + y.toFixed(2);
+  }
+  el("path", {d:base, fill:"none", stroke:"#3b3f4d", "stroke-width":0.8});
+
+  // ---- the readers: a ribbon standing out from the path, its height
+  //      proportional to that day's views. Drawn one lunation at a time so
+  //      a tall day that crosses into the next turn stays legible.
+  const step = 0.05;
+  const mix = (c0, c1, u) => "rgb(" + c0.map((c,i) => Math.round(c + (c1[i]-c)*u)).join(",") + ")";
+  const segs = [];
+  let start = 0;
+  for (let d = 0; d < N-1; d += step) {
+    const nextNew = Math.floor((T0 + d - NEW0)/P) !== Math.floor((T0 + d + step - NEW0)/P);
+    if (nextNew) { segs.push([start, d+step]); start = d+step; }
+  }
+  segs.push([start, N-1]);
+
+  const ribbon = el("g", {});
+  segs.forEach(([a,b]) => {
+    const outer = [], inner = [];
+    for (let d = a; d <= b + 1e-9; d += step) {
+      const dd = Math.min(d, N-1), an = elong(dd), r = rad(dd);
+      outer.push(pt(an, r + K*views(dd)));
+      inner.push(pt(an, r));
+    }
+    const pts = outer.concat(inner.reverse());
+    const dstr = "M" + pts.map(p => p[0].toFixed(2)+" "+p[1].toFixed(2)).join("L") + "Z";
+    el("path", {d:dstr, fill:C.ink, "fill-opacity":0.07}, ribbon);
+    // the line brightens with the number of readers: moonlight
+    for (let i = 0; i + 1 < outer.length; i += 4) {
+      const j = Math.min(outer.length - 1, i + 4);
+      const dm = Math.min(a + (i+2)*step, N-1);
+      const u = Math.max(0, Math.min(1, (views(dm) - 5300) / 2600));
+      const col = mix([74,78,94], [255,246,220], Math.pow(u, 0.8));
+      const seg = "M" + outer.slice(i, j+1).map(p => p[0].toFixed(2)+" "+p[1].toFixed(2)).join("L");
+      el("path", {d:seg, fill:"none", stroke:col, "stroke-width":(0.9 + 1.6*u).toFixed(2),
+                  "stroke-linecap":"round", "stroke-linejoin":"round"}, ribbon);
+    }
+  });
+
+  // end markers
+  (function(){
+    const [x,y] = pt(elong(0), rad(0));
+    el("circle", {cx:x, cy:y, r:2, fill:C.dim});
+    txt("1 Jan", x-6, y+3, {fill:C.dim, "font-size":10, "text-anchor":"end"});
+    const [x2,y2] = pt(elong(N-1), rad(N-1));
+    el("circle", {cx:x2, cy:y2, r:2, fill:C.dim});
+    txt("31 Dec", x2+6, y2+12, {fill:C.dim, "font-size":10});
+  })();
+
+  // Earth
+  el("circle", {cx, cy, r:5, fill:"#5d7fa8"});
+  txt("Earth", cx+9, cy+4, {fill:C.dim, "font-size":10, "font-style":"italic"});
+
+  // ---- notes on the tallest days
+  const notes = [
+    {date:[2025,8,7],  t:"7 Sep · 17,284", s:"total lunar eclipse", dx: 120, dy:-46},
+    {date:[2025,6,20], t:"20 Jul · 13,576", s:"Apollo 11 anniversary,", s2:"a waning crescent", dx:-70, dy:30},
+    {date:[2025,2,14], t:"14 Mar · 11,854", s:"total lunar eclipse", dx:-40, dy:-48},
+    {date:[2025,9,7],  t:"7 Oct · 10,896", s:"supermoon", dx:-90, dy:-66},
+    {date:[2025,1,28], t:"28 Feb · 8,534", s:"the day of a new moon", dx: 60,  dy:40}
+  ];
+  const ng = el("g", {});
+  notes.forEach(n => {
+    const d = Date.UTC(n.date[0], n.date[1], n.date[2], 12)/864e5 - T0;
+    const an = elong(d), r = rad(d) + K*days[Math.round(d)];
+    const [x,y] = pt(an, r);
+    const lx = x + n.dx, ly = y + n.dy;
+    el("line", {x1:x, y1:y, x2:lx, y2:ly, stroke:C.ink, "stroke-opacity":0.55, "stroke-width":0.7}, ng);
+    el("circle", {cx:x, cy:y, r:1.8, fill:C.ink}, ng);
+    const anchor = n.dx < 0 ? "end" : "start";
+    const ox = n.dx < 0 ? -4 : 4;
+    const yoff = n.dy < 0 ? -4 : 10;
+    // background plate so the label reads over the spiral
+    const lines = [n.t, n.s, n.s2].filter(Boolean);
+    const w = Math.max(...lines.map(s => s.length)) * 5.6 + 8;
+    const h = 13*lines.length + 4;
+    const bx = anchor === "end" ? lx + ox - w + 4 : lx + ox - 4;
+    const by = yoff < 0 ? ly + yoff - h + 6 : ly + yoff - 11;
+    el("rect", {x:bx, y:by, width:w, height:h, fill:C.bg, "fill-opacity":0.82, rx:2}, ng);
+    lines.forEach((s, i) => {
+      const yy = yoff < 0 ? ly + yoff - (lines.length-1-i)*13 : ly + yoff + i*13;
+      txt(s, lx + ox, yy, {fill: i===0 ? C.ink : C.dim, "font-size": i===0 ? 11.5 : 10.5,
+        "font-style": i===0 ? "normal" : "italic", "text-anchor":anchor}, ng);
+    });
+  });
+
+  // ---- side column ----------------------------------------------------
+  const X = 838;
+  txt("Thirteen Turns", X, 92, {fill:C.ink, "font-size":30});
+  const para = [
+    "Daily human readers of the English",
+    "Wikipedia article “Moon”, 2025.",
+    "",
+    "Earth sits at the centre and the Sun",
+    "lies below. Each day is placed at the",
+    "angle the Moon stood from the Sun",
+    "that day, so the year winds round",
+    "thirteen times, once per lunation,",
+    "from 1 January inside to 31 December",
+    "at the rim. Every full moon falls on",
+    "the vertical line at the top.",
+    "",
+    "The height of the line above the faint",
+    "path is the number of readers; the",
+    "line brightens as readers rise."
+  ];
+  para.forEach((s, i) => txt(s, X, 130 + i*17, {fill: i<2 ? C.ink : C.dim, "font-size":12.5}));
+
+  // scale
+  const sy = 410;
+  [5000, 10000, 15000].forEach((v, i) => {
+    const x = X + i*64, h = K*v;
+    el("rect", {x, y:sy + 40 - h, width:20, height:h, fill:C.ink, "fill-opacity":0.16, stroke: mix([74,78,94],[255,246,220], Math.pow(Math.max(0,Math.min(1,(v-5300)/2600)),0.8)), "stroke-width":1.1});
+    el("line", {x1:x-3, y1:sy+40, x2:x+23, y2:sy+40, stroke:"#3b3f4d"});
+    txt(v.toLocaleString("en-US"), x, sy+56, {fill:C.dim, "font-size":10.5});
+  });
+  txt("readers that day", X, sy - 4, {fill:C.dim, "font-size":11, "font-style":"italic"});
+
+  // mean by lunar age, a small unrolled profile
+  const bins = Array(30).fill(0), cnt = Array(30).fill(0);
+  days.forEach((v, i) => {
+    const age = ((T0 + i - NEW0) % P + P) % P;
+    const b = Math.min(29, Math.floor(age)); bins[b] += v; cnt[b]++;
+  });
+  const mean = bins.map((b,i) => b/cnt[i]);
+  const py = 600, pw = 220, ph = 70;
+  txt("average readers by the Moon’s age", X, py - ph - 14, {fill:C.dim, "font-size":11, "font-style":"italic"});
+  const mx = 8000;
+  mean.forEach((m, i) => {
+    const bw = pw/30, h = ph * m / mx;
+    el("rect", {x:X + i*bw + 0.5, y:py - h, width:bw - 1, height:h,
+      fill:C.ink, "fill-opacity": i===14 ? 0.95 : 0.45});
+  });
+  el("line", {x1:X, y1:py, x2:X+pw, y2:py, stroke:"#3b3f4d"});
+  txt("new", X, py+14, {fill:C.dim, "font-size":10});
+  txt("full", X + 14.5*pw/30, py+14, {fill:C.ink, "font-size":10, "text-anchor":"middle"});
+  txt("new", X+pw, py+14, {fill:C.dim, "font-size":10, "text-anchor":"end"});
+  const peak = Math.round(mean[14]/10)*10, low = Math.round(Math.min(...mean)/10)*10;
+  txt(peak.toLocaleString("en-US"), X + 14.5*pw/30 + 6, py - ph*mean[14]/mx + 2, {fill:C.ink, "font-size":10});
+
+  txt("On the day of the full moon, readers", X, py + 44, {fill:C.dim, "font-size":12});
+  txt("average " + peak.toLocaleString("en-US") + "; on other days, about", X, py + 61, {fill:C.dim, "font-size":12});
+  txt("5,000. People look up, then look it up.", X, py + 78, {fill:C.dim, "font-size":12});
+
+  txt("Data: Wikimedia pageviews (CC0). Phase from the", X, 762, {fill:"#5c5f6c", "font-size":10});
+  txt("mean synodic month, new moon 29 Jan 12:36 UTC.", X, 776, {fill:"#5c5f6c", "font-size":10});
+})();
+</script>
+</body>
+</html>

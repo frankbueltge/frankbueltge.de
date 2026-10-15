@@ -10,11 +10,11 @@
 //   3. CSP-Regel: keine Inline-style-Attribute in Templates/SVG-Buildern — die Site-CSP
 //      führt Style-Hashes, Inline-Styles werden vom Browser verworfen (Befund 25.07.:
 //      die e2e-automation-Balken standen deshalb alle auf 100 %).
-//   3b. Dieselbe CSP-Regel über den Werk-Spiegel — dort gilt die Voice-Ausnahme nicht,
-//      denn ob ein Style-Attribut die Policy überlebt, ist eine Tatsache über die Seite und
-//      keine Meinung über das Werk (angeboten von field-research, Issue #254). Die bereits
-//      betroffenen Werke stehen datiert mit Zählstand in Quarantäne: Neues und Wachstum
-//      sind harte Befunde, Repariertes verlangt seine Streichung aus der Liste.
+//   3b. The same CSP rule over the native Astro works of the mirror (offered by field-research,
+//      issue #254). Since 2026-10-05 it reports NOTICES only, never a finding: the practices'
+//      works are not limited in form (Frank's decision, wording private), and one work's inline
+//      styles must not take every practice's deploy down. The works already affected stay
+//      quarantined with their dated counts, so the tally remains visible.
 //   4. (nur mit DRIFT_NETWORK=1) Spiegel-Frische: gespiegelte Engine-Verfassungen gegen
 //      die Engine-Repos auf GitHub — Abweichung heißt, die Site erzählt einen alten Stand.
 //   5. (nur mit DRIFT_NETWORK=1) MRR-Journal-Frische: die Runtime-Linie wird nicht
@@ -29,6 +29,17 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = join(fileURLToPath(import.meta.url), '..', '..')
 const findings = []
+// Notices are defects the gate REPORTS but does not fail on. The distinction is not severity,
+// it is blast radius: this script is the first gate in five integrate workflows, so a finding
+// here stops the deploy of the WHOLE house — every practice, not the one that caused it. That
+// is the right response to a page that is wrong, and the wrong response to a page that is
+// merely incomplete in a way the site already renders honestly. (2026-09-18, after one work
+// published without a wall text on 09-14 took the deploy down for four days: Studio, the
+// Atelier, the Field and the Plenum each received a nightly "build is red" letter over it, and
+// the Plenum landed nothing else for two weeks. The letters say truthfully that they cannot
+// tell whose defect it is. That one was nobody's — the nightly teaser routine had not run,
+// because the account's weekly usage limit was exhausted.)
+const notices = []
 
 function* walk(dir, exts) {
   if (!existsSync(dir)) return
@@ -57,11 +68,16 @@ const RETIRED = [
   'artistic research with data and AI',
   '(private) website repository',
 ]
+// .tsx joined the walks on 2026-09-02 with the first React island (docs/design/2026-09-02-the-
+// visual-layer.md): a JSX `style={{…}}` prop is the same inline attribute rule 3 forbids, and
+// rules 1/2/6/7 apply to an island's voice and colours exactly as to a .astro file's. Before
+// that day the walkers saw only .astro/.ts, so "no style= in React" would have been enforced
+// by nothing.
 const voiceFiles = [
-  ...walk(join(ROOT, 'src/pages'), ['.astro', '.ts']),
-  ...walk(join(ROOT, 'src/components'), ['.astro', '.ts']),
+  ...walk(join(ROOT, 'src/pages'), ['.astro', '.ts', '.tsx']),
+  ...walk(join(ROOT, 'src/components'), ['.astro', '.ts', '.tsx']),
   ...walk(join(ROOT, 'src/config'), ['.ts']),
-  ...walk(join(ROOT, 'src/lib'), ['.ts']),
+  ...walk(join(ROOT, 'src/lib'), ['.ts', '.tsx']),
   join(ROOT, 'README.md'),
 ]
 for (const f of voiceFiles) {
@@ -130,10 +146,16 @@ for (const f of voiceFiles) {
 // It cannot hard-fail the whole mirror today: 286 attributes across 7 works are already
 // live, the fix belongs in the engine repo (this mirror is wiped and re-copied on every
 // integrate run), and a red gate here would block every nightly sync and every deploy.
-// So the known-affected are quarantined WITH THEIR COUNTS, dated — anything new fails, any
-// regression fails, and a repaired work fails until it is struck from the list, so the list
-// cannot quietly rot into an allowlist. The tally prints on every run: visible debt, never
-// a silent cap.
+// So the known-affected are quarantined WITH THEIR COUNTS, dated, and the tally prints on
+// every run: visible debt, never a silent cap.
+//
+// NOTICES, NOT FINDINGS, since 2026-10-05 (Frank's decision, wording private: the practices'
+// works are not limited in form). A new work with inline styles, a regression, a repaired work
+// still on the list — each is reported to the practice and to the house, and none of them
+// takes the deploy down any more. Whether its inline styles take effect is the practice's
+// call to make about its own work; a gate that stops every practice's deploy over one work's
+// form is the blast radius the notices exist to avoid. (A standalone work is not affected at
+// all: it is served bare under the practices' shared policy, which allows inline styles.)
 const WERK_INLINE_STYLE_QUARANTINE = {
   // Measured 2026-08-01. Shrinking is free; growing is a finding; reaching 0 means: delete the line.
   'src/components/field/werke/2026-07-01-the-edition/index.astro': 95,
@@ -158,16 +180,16 @@ for (const f of walk(join(ROOT, 'src/components'), ['.astro'])) {
   const allowed = WERK_INLINE_STYLE_QUARANTINE[rel]
   if (allowed === undefined) {
     if (count > 0) {
-      findings.push(
-        `${rel} — ${count} inline style attribute(s) in a mirrored work (the CSP carries style hashes and no 'unsafe-hashes', so the browser drops them and whatever they carry has no effect; use a component <style> block, which the build hashes)`,
+      notices.push(
+        `${rel} — ${count} inline style attribute(s) in a native Astro work (the house CSP carries style hashes and no 'unsafe-hashes', so the browser drops them and whatever they carry has no effect; a component <style> block is hashed by the build, and a standalone index.html work keeps its inline styles)`,
       )
     }
   } else if (count > allowed) {
-    findings.push(
-      `${rel} — inline style attributes grew from ${allowed} (quarantined 2026-08-01) to ${count}; the repair moves one way only`,
+    notices.push(
+      `${rel} — inline style attributes grew from ${allowed} (quarantined 2026-08-01) to ${count}; they have no effect on the page`,
     )
   } else if (count === 0) {
-    findings.push(`${rel} — repaired, no inline styles left: strike it from WERK_INLINE_STYLE_QUARANTINE so the list stays honest`)
+    notices.push(`${rel} — repaired, no inline styles left: strike it from WERK_INLINE_STYLE_QUARANTINE so the list stays honest`)
   } else {
     werkInlineTally.push(`${rel}: ${count}/${allowed}`)
   }
@@ -183,10 +205,11 @@ if (werkInlineTally.length) {
 }
 
 // ——— 8. Every work carries a wall text, and it stays plain ————————————————————
-// Frank, 2026-08-01: "genau solche Texte machen die Arbeit fassbar … und erzeugen Staunen
-// statt Stirnrunzeln." Visitors open works, not records. The teaser store already held a
-// plain-language line for 56 of 57 works; what was missing was that it appeared on the work's
-// own page (now in wrapper.ts) and that nothing kept it plain or kept it from being forgotten.
+// Frank's reading of 2026-08-01, wording private: plain texts like these make a work graspable,
+// and they produce wonder rather than frowns. Visitors open works, not records. The teaser
+// store already held a plain-language line for 56 of 57 works; what was missing was that it
+// appeared on the work's own page (now in wrapper.ts) and that nothing kept it plain or kept
+// it from being forgotten.
 //
 // Two checks, both cheap:
 //   (a) Coverage — a work without a wall text is a finding, but only after the nightly teaser
@@ -197,6 +220,12 @@ if (werkInlineTally.length) {
 //       in it defeats its entire purpose, and a 400-word "teaser" is the apparatus returning
 //       through the front door. Measured, not trusted.
 const WALL_TEXT_GRACE_DAYS = 3
+// Past the grace window a missing wall text is a notice, not a finding: the work is published
+// and the site renders the gap honestly (wrapper.ts shows nothing rather than a paragraph of
+// apparatus), so the visitor meets an undescribed work — a real defect, and one that does not
+// justify taking every other practice's deploy with it. It becomes a finding only once it has
+// been ignored for long enough that no routine is going to fix it on its own.
+const WALL_TEXT_STALE_DAYS = 14
 const WALL_TEXT_MAX_WORDS = 90
 // Terms that exist ONLY inside the practices. Kept deliberately narrow: the first draft of this
 // list also held `tick`, `disposition`, `inviolable` and `swerve`, and immediately flagged a
@@ -232,9 +261,13 @@ if (existsSync(teaserPath)) {
       if (!text) {
         // The slug's own date is the work's date — no file mtime, which the mirror resets.
         const ageDays = (today - new Date(slug.slice(0, 10))) / 86_400_000
-        if (ageDays > WALL_TEXT_GRACE_DAYS) {
+        if (ageDays > WALL_TEXT_STALE_DAYS) {
           findings.push(
-            `${key} — published work without a wall text (${Math.floor(ageDays)} days old, grace ${WALL_TEXT_GRACE_DAYS}); a visitor opens the work and meets it cold`,
+            `${key} — published work still without a wall text after ${Math.floor(ageDays)} days (notice since day ${WALL_TEXT_GRACE_DAYS}); no routine is going to write it now`,
+          )
+        } else if (ageDays > WALL_TEXT_GRACE_DAYS) {
+          notices.push(
+            `${key} — published work without a wall text (${Math.floor(ageDays)} days old, grace ${WALL_TEXT_GRACE_DAYS}); a visitor opens the work and meets it cold. Fails the gate at day ${WALL_TEXT_STALE_DAYS}`,
           )
         } else {
           waiting++
@@ -270,8 +303,8 @@ if (existsSync(teaserPath)) {
 // are the two sanctioned homes for hex values).
 const DATAVIZ_HEX_EXEMPT = /\/palette(\.test)?\.ts$/
 for (const f of [
-  ...walk(join(ROOT, 'src/components/dataviz'), ['.astro', '.ts']),
-  ...walk(join(ROOT, 'src/lib/dataviz'), ['.ts']),
+  ...walk(join(ROOT, 'src/components/dataviz'), ['.astro', '.ts', '.tsx']),
+  ...walk(join(ROOT, 'src/lib/dataviz'), ['.ts', '.tsx']),
 ]) {
   const rel = relative(ROOT, f)
   if (DATAVIZ_HEX_EXEMPT.test(rel)) continue
@@ -294,7 +327,7 @@ const paletteSource = existsSync(join(ROOT, 'src/lib/dataviz/palette.ts'))
 const knownSetIds = new Set([...paletteSource.matchAll(/id: '([a-z0-9-]+)'/g)].map((m) => m[1]))
 const IDENTITY_TOKEN = /--[\w-]*(?:-c-|-out-)[\w-]*:\s*#[0-9a-fA-F]{3,8}/
 const MARKER_WINDOW = 30
-for (const f of [...walk(join(ROOT, 'src/styles'), ['.css']), ...voiceFiles.filter((p) => p.endsWith('.astro'))]) {
+for (const f of [...walk(join(ROOT, 'src/styles'), ['.css']), ...voiceFiles.filter((p) => /\.(astro|tsx)$/.test(p))]) {
   const rel = relative(ROOT, f)
   if (isWerkMirror(rel)) continue
   const lines = readFileSync(f, 'utf8').split('\n')
@@ -306,6 +339,23 @@ for (const f of [...walk(join(ROOT, 'src/styles'), ['.css']), ...voiceFiles.filt
       findings.push(`${rel}:${i + 1} — identity colour without a "PALETTE: <set-id>" marker in the ${MARKER_WINDOW} lines above`)
     } else if (!knownSetIds.has(marker[1])) {
       findings.push(`${rel}:${i + 1} — PALETTE marker names "${marker[1]}", which is not a set id in src/lib/dataviz/palette.ts`)
+    }
+  })
+}
+
+// ——— 9. Living Globe: no aggregation layers, no geo layers ——————————————————
+// deck.gl's aggregation layers do not work on the globe view at all, and the geo layers would
+// roughly double globe-deck.'s chunk for a tile source this site does not have and could not fetch
+// under `connect-src 'self'` (docs/design/2026-09-03-living-globe.md, scripts/budgets.json). Bound
+// as a vitest suite already (src/components/pages/globe-deck.test.ts, "the deck.gl boundary"); the
+// same rule stands here as a static gate that runs without a test runner.
+for (const f of voiceFiles) {
+  const rel = relative(ROOT, f)
+  const lines = readFileSync(f, 'utf8').split('\n')
+  lines.forEach((line, i) => {
+    if (line.trim().startsWith('//') || line.trim().startsWith('*')) return
+    if (/@deck\.gl\/(geo-layers|aggregation-layers)/.test(line)) {
+      findings.push(`${rel}:${i + 1} — imports @deck.gl/geo-layers or @deck.gl/aggregation-layers, banned on the living globe (see globe-deck.ts's own header)`)
     }
   })
 }
@@ -428,6 +478,20 @@ if (process.env.DRIFT_NETWORK === '1') {
 }
 
 // ——— Report ————————————————————————————————————————————————————————————————
+// Notices first, so they are visible whether or not a finding follows and are never buried
+// under a failure they did not cause.
+if (notices.length) {
+  console.warn(`drift-check: ${notices.length} notice(s) — reported, not blocking\n`)
+  for (const n of notices) console.warn('  ! ' + n)
+  console.warn('')
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    appendFileSync(
+      process.env.GITHUB_STEP_SUMMARY,
+      `## Drift-Wächter: ${notices.length} Hinweis(e), nicht blockierend\n\n` +
+        notices.map((n) => `- \`${n}\``).join('\n') + '\n',
+    )
+  }
+}
 if (findings.length) {
   console.error(`DRIFT: ${findings.length} finding(s)\n`)
   for (const f of findings) console.error('  ✗ ' + f)
@@ -439,4 +503,7 @@ if (findings.length) {
   }
   process.exit(1)
 }
-console.log('drift-check: clean' + (process.env.DRIFT_NETWORK === '1' ? ' (incl. mirror freshness)' : ' (static only)'))
+console.log(
+  `drift-check: clean${notices.length ? ` (${notices.length} notice(s) above)` : ''}` +
+    (process.env.DRIFT_NETWORK === '1' ? ' (incl. mirror freshness)' : ' (static only)'),
+)

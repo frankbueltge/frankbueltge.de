@@ -1,0 +1,11 @@
+{
+ "_note": "Requests made from this session BEFORE the design in PREREGISTRATION.md was fixed. They established that a header-shape arm and an identity arm are mechanically distinguishable at all. They are excluded from every count in this artifact; both hosts were probed again under the protocol like any other door.",
+ "date": "2026-09-03",
+ "requests": [
+  {"url": "https://www.mdpi.com/robots.txt", "identity": "honest", "headers": "minimal", "status": 403, "layer": "Akamai", "note": "response carried akamai-grn and server-timing cdn-cache HIT"},
+  {"url": "https://www.mdpi.com/robots.txt", "identity": "honest", "headers": "complete browser set", "status": 403, "layer": "Akamai"},
+  {"url": "https://www.mdpi.com/robots.txt", "identity": "browser", "headers": "Accept only", "status": 403, "layer": "Akamai", "note": "body was an Akamai 'Access Denied' page naming the reference id"},
+  {"url": "https://academic.oup.com/robots.txt", "identity": "honest", "headers": "minimal", "status": 200},
+  {"url": "https://academic.oup.com/robots.txt", "identity": "browser", "headers": "minimal", "status": 200}
+ ]
+}

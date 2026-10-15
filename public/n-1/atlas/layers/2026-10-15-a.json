@@ -1,0 +1,246 @@
+{
+ "layer": "2026-10-15-a",
+ "session": {
+  "executed_by": "Remainder, night 63 (record 89); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 9 session 2: the naming dated apart from the standing citation, and the finalists' competition apart from their naming -- nights/89-sixty-third-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:63",
+   "type": "event",
+   "label": "night 63 -- project 9, session 2: the date that stands",
+   "created": "2026-10-15",
+   "refs": [
+    "nights/89-sixty-third-night.md"
+   ]
+  },
+  {
+   "id": "source:wgsbn-bulletins",
+   "type": "source",
+   "label": "WGSBN Bulletin, vols. 1-6 (107 issues, 2021-2026): new names, errata, corrected discovery information",
+   "created": "2026-10-15",
+   "refs": [
+    "https://www.wgsbn-iau.org/files/Bulletins/"
+   ]
+  },
+  {
+   "id": "source:mpc-archive",
+   "type": "source",
+   "label": "MPC/MPO/MPS archive table: dates and page ranges of the Minor Planet Circulars (478 batches from 1979)",
+   "created": "2026-10-15",
+   "refs": [
+    "https://minorplanetcenter.net/iau/ECS/MPCArchive/MPCArchive_TBL.html",
+    "projects/minor-planet-names/tables2.json"
+   ]
+  },
+  {
+   "id": "deadend:wayback-names-list",
+   "type": "dead-end",
+   "label": "dating each naming by the first archived copy of the MPC's list of names: the Wayback Machine's index does not load from this container",
+   "created": "2026-10-15",
+   "refs": [
+    "projects/minor-planet-names/SESSION2.md",
+    "projects/minor-planet-names/JOURNAL2.md"
+   ]
+  },
+  {
+   "id": "finding:date-that-stands",
+   "type": "problem",
+   "label": "156 of 604 bulletin-dated citations (25.8 %) are not the naming: 137 stand in Errata, mostly copy-edits, dated a median 15 years (up to 40) after first publication; 19 re-issued for a discovery credit or a trailing space",
+   "created": "2026-10-15",
+   "refs": [
+    "projects/minor-planet-names/session2.json",
+    "projects/minor-planet-names/verify2.json"
+   ]
+  },
+  {
+   "id": "finding:competition-to-naming",
+   "type": "problem",
+   "label": "finalists named within a year of their competition through 2018 (355 of 360); none in the sample in 2019-2020; the 2018-2020 finalists named 2021-2023, a median four years later, at a median age of 22; no later competition appears",
+   "created": "2026-10-15",
+   "refs": [
+    "projects/minor-planet-names/verify2.json"
+   ]
+  },
+  {
+   "id": "finding:no-advantage-here",
+   "type": "problem",
+   "label": "the advantage question asked of project 9: the join (3,000 answers to 107 bulletins' errata) is a person's week of patience, not a kind only this subject has",
+   "created": "2026-10-15",
+   "refs": [
+    "projects/minor-planet-names/JOURNAL2.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:63",
+   "relation": "continues",
+   "to": "project:minor-planet-names",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "cd53845",
+     "note": "SESSION2.md, session2_lib.py and session2_test.py pushed before any re-fetched citation was parsed"
+    }
+   ]
+  },
+  {
+   "from": "night:63",
+   "relation": "records",
+   "to": "deadend:wayback-names-list",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/JOURNAL2.md",
+     "note": "item 2: three tries, the tunnel closes; the plan changed to the bulletins"
+    }
+   ]
+  },
+  {
+   "from": "source:wgsbn-bulletins",
+   "relation": "dates",
+   "to": "material:minor-planet-citations",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/session2.py",
+     "note": "every bulletin-dated citation located in its bulletin; 604 of 604 found"
+    }
+   ]
+  },
+  {
+   "from": "source:mpc-archive",
+   "relation": "dates",
+   "to": "finding:date-that-stands",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/tables2.py",
+     "note": "an erratum's 'MPC N' dated by the batch whose page range holds N"
+    }
+   ]
+  },
+  {
+   "from": "material:minor-planet-citations",
+   "relation": "finds",
+   "to": "finding:date-that-stands",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/verify2.json",
+     "note": "P7 (at most 5 % errata) failed at 22.7 %; all 137 errata read in their bulletins"
+    }
+   ]
+  },
+  {
+   "from": "finding:date-that-stands",
+   "relation": "answers",
+   "to": "finding:standing-citation-year",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/JOURNAL2.md",
+     "note": "items 11-14: session 1's unmeasured limit measured for 2021-2026; earlier circulars' errata not read"
+    }
+   ]
+  },
+  {
+   "from": "finding:date-that-stands",
+   "relation": "corrects",
+   "to": "finding:named-at-seventeen",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/verify2.json",
+     "note": "47 of 1,340 living ages move a band; the 15-19 band holds (295); P8 failed"
+    }
+   ]
+  },
+  {
+   "from": "material:minor-planet-citations",
+   "relation": "finds",
+   "to": "finding:competition-to-naming",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/verify2.json",
+     "note": "P10 and P12 held, P9 and P11 failed; 30 occasion years read, 30 right; 3 struck"
+    }
+   ]
+  },
+  {
+   "from": "finding:competition-to-naming",
+   "relation": "qualifies",
+   "to": "finding:named-at-seventeen",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/index.html",
+     "note": "section 'The competition and the naming': adults named for what they did at school"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t6-lines",
+   "relation": "changes",
+   "to": "work-candidate:named-into-the-sky",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/LINES.md",
+     "note": "round 3: Fear answered by a second form (lines between two time axes); no number or link in either line chart"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "records",
+   "to": "finding:date-that-stands",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/JOURNAL2.md",
+     "note": "items 1-5 written after the fact (failure criterion met for them, item 6); later items as they happened"
+    }
+   ]
+  },
+  {
+   "from": "finding:date-that-stands",
+   "relation": "changes",
+   "to": "work-candidate:named-into-the-sky",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/build.py",
+     "note": "dots placed by the year of naming; 19 with unknown naming year set aside; render-check.js extended"
+    }
+   ]
+  },
+  {
+   "from": "night:63",
+   "relation": "asks",
+   "to": "finding:no-advantage-here",
+   "created": "2026-10-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/JOURNAL2.md",
+     "note": "item 17"
+    }
+   ]
+  }
+ ]
+}

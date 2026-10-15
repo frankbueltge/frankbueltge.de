@@ -15,13 +15,15 @@ name: Ecology integrate
 
 on:
   repository_dispatch:
-    types: [irrtum-landed, field-landed, studio-landed]
+    # middle-landed (2026-10-05): research-ecology's own signal when it publishes the Middle's
+    # relay (relay/relay.json), so /encounters does not wait for the two-hourly net below.
+    types: [irrtum-landed, field-landed, studio-landed, middle-landed]
   schedule:
     - cron: '30 4 * * *'   # 06:30 Berlin — nach Engine-Nightlies (03:19–04:16 UTC) + Integrates
-    # Alle 2h (17.07., Frank: 'ich will NICHTS manuell nachziehen müssen'): research-ecology-
-    # Pushes (Middle Scribe, Akten, Profile) haben keinen eigenen Dispatch-Token — dieser Takt
-    # garantiert, dass Register und Encounter-Flächen der Site nie länger als 2h hinter dem
-    # Ledger liegen. Läufe ohne Änderungen enden im bestehenden No-op-Guard.
+    # Every 2h (Frank's decision of 2026-07-17, wording private: nothing should have to be pulled
+    # in by hand): research-ecology pushes (Middle Scribe, files, profiles) have no dispatch token
+    # of their own — this cadence guarantees that the site's register and encounter surfaces
+    # never trail the ledger by more than 2h. Runs without changes end in the existing no-op guard.
     - cron: '10 */2 * * *'
   workflow_dispatch: {}
 
@@ -64,6 +66,71 @@ jobs:
           # "the three ecology practices", and the plenum is not one of them. It is cloned only
           # for its post office packets.
           git clone --depth 1 https://github.com/frankbueltge/data-snack-plenum /tmp/plenum
+
+      # The Middle's relay (2026-10-05): research-ecology publishes relay/relay.json — who built on,
+      # answered or only noted whom, and the handoffs still open (contract "middle-relay/1") — and
+      # /encounters draws it. Mirrored verbatim; the site's loader (src/lib/ecology/relay.ts) judges
+      # the contract and turns anything it cannot read into an honest empty state, never a failed
+      # build. Absent upstream is a legal state: until the relay is first published there is nothing
+      # to copy, and a file removed upstream is removed here too — a mirror that kept it would keep
+      # drawing a relay nobody publishes. Committed on its own, BEFORE the encounter gate below: the
+      # relay is a record of its own, and a red export contract must not hold it back.
+      - name: Mirror the Middle's relay (relay/relay.json → src/data/middle/relay.json)
+        id: relay
+        run: |
+          set -euo pipefail
+          SRC=/tmp/ecology/relay/relay.json
+          DST=src/data/middle/relay.json
+          if [ -f "$SRC" ]; then
+            mkdir -p "$(dirname "$DST")"
+            cp "$SRC" "$DST"
+          elif [ -f "$DST" ]; then
+            git rm -q -- "$DST"
+          else
+            echo "relay/relay.json is not published yet — nothing to mirror (a legal state)"
+          fi
+          # --untracked-files=all: the first mirror creates src/data/middle/, and a collapsed
+          # untracked directory would not match the file's pathspec
+          if git status --porcelain --untracked-files=all -- "$DST" | grep -q .; then
+            git config user.name "Ecology-Integrate"
+            git config user.email "ecology-integrate@frankbueltge.de"
+            SHA=$(git -C /tmp/ecology rev-parse --short HEAD)
+            git add -A -- "$DST"
+            git commit -m "middle: relay mirrored from research-ecology $SHA"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              git rebase --abort 2>/dev/null || true
+              [ "$attempt" = 5 ] && { echo "relay push failed after 5 rebase attempts" >&2; exit 1; }
+              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
+            done
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "relay unchanged"
+          fi
+
+      # The convening (2026-10-07; docs/design/2026-10-07-the-convening.md): the relay carries the
+      # practices' tally, and the cycle clock opens the next cycle a day after it unless the
+      # architect objects. A cron that may run hours late would stretch that day, so the clock is
+      # started from here: whenever a relay mirror landed, and on every run of this workflow (every
+      # two hours) while a convening is open, so the veto day and the fallback day are acted on
+      # within hours. A dispatch is the one start the built-in token is allowed to make; the clock
+      # then deploys its own turn (cycle-sentinel.yml). Placed before the export gate on purpose:
+      # a red encounter export must not hold the clock back — and a failed dispatch must not hold
+      # the export back either: the sentinel's own daily run stays the net, so it only warns.
+      - name: Let the cycle clock read the relay
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PHASE=$(jq -r '.phase' src/data/ecology/cycle.json 2>/dev/null || echo unknown)
+          if [ "${{ steps.relay.outputs.changed }}" = "true" ] || [ "$PHASE" = "convening" ]; then
+            if gh workflow run cycle-sentinel.yml --repo "$GITHUB_REPOSITORY" --ref main; then
+              echo "cycle sentinel started (relay changed: ${{ steps.relay.outputs.changed || 'false' }}; phase: $PHASE)"
+            else
+              echo "::warning::could not start the cycle sentinel; its daily run at 06:50 UTC remains the net"
+            fi
+          else
+            echo "relay unchanged and no convening open — the clock's own schedule suffices"
+          fi
 
       - name: Install research-ecology
         working-directory: /tmp/ecology
@@ -198,6 +265,18 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh workflow run graph.yml --repo "$GITHUB_REPOSITORY" --ref main || true
+
+      # A run started by another workflow with the built-in token (the practice watch, the mirror
+      # watch, a sentinel retry) ends without a workflow_run event — GitHub creates none for a run
+      # the built-in token started — so deploy-cf.yml never hears of what it committed. Seen on
+      # 2026-10-07: four mirrors committed between 17:59 and 18:05 UTC and stood undeployed. Such
+      # a run starts the deploy itself; a run started by a schedule, a practice's dispatch or a
+      # person still reaches deploy-cf.yml through workflow_run and does not ask twice.
+      - name: Deploy what this run committed (when another workflow started it)
+        if: success() && github.triggering_actor == 'github-actions[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
 
       # Ein Alarm, der nie ausgeht, ist keine Meldung mehr, sondern Möblierung: Drei der vier
       # roten Issues in Franks Inbox am 2026-07-30 meldeten Probleme, die längst behoben waren.

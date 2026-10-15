@@ -1,0 +1,137 @@
+{
+  "date": "2026-09-18",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-18T10:33:20Z",
+    "counts": {
+      "botwall": 15,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 280,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 5
+    },
+    "decided": 280,
+    "excluded_unverifiable": 20,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0135
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0135
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-16",
+    "receipts": [],
+    "sample_drawn_at": "2026-09-17T10:44:03Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5782,
+      "replaced": 6286,
+      "trivial": 1438,
+      "update": 631
+    },
+    "day": "2026-09-17",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Xuanyi",
+          "Geng"
+        ],
+        "after": "Xuanyi Geng Rubik's Cube: Meet Xuanyi Geng, the Chinese speedcuber who solved a 3×3 Rubik's Cube in 3.05 seconds to break the world record in 2025",
+        "before": "Rubik's Cube world record: Meet Xuanyi Geng, the Chinese speedcuber who solved a 3×3 Rubik's Cube in 3.05 seconds to break the world record in 2025",
+        "detected": "2026-09-17T18:49:08Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "world",
+          "record"
+        ],
+        "similarity": 1.0,
+        "url": "https://economictimes.indiatimes.com/news/international/us/meet-xuanyi-geng-the-chinese-speedcuber-who-solved-a-33-rubiks-cube-in-3-05-seconds-to-break-the-world-record-in-2025/articleshow/134294116.cms",
+        "weight": 6,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Piddington",
+          "News",
+          "UK"
+        ],
+        "after": "Piddington village votes for independence from UK in protest against asylum seeker housing plan | News UK",
+        "before": "Oxfordshire village votes for independence from UK in protest against asylum seeker housing plan",
+        "detected": "2026-09-17T07:19:03Z",
+        "domain": "metro.co.uk",
+        "removed": [
+          "Oxfordshire"
+        ],
+        "similarity": 0.812,
+        "url": "https://metro.co.uk/2026/09/16/oxfordshire-village-votes-independence-uk-protest-asylum-seeker-housing-plan-29618950/",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Second",
+          "body",
+          "found"
+        ],
+        "after": "Second body found: Jet skier reported lost at sea between Playa del Carmen and Cozumel found off Isla Contoy",
+        "before": "Search Continues: Jet skier reported lost at sea between Playa del Carmen and Cozumel found off Isla Contoy",
+        "detected": "2026-09-17T17:17:39Z",
+        "domain": "riviera-maya-news.com",
+        "removed": [
+          "Search",
+          "Continues"
+        ],
+        "similarity": 0.8,
+        "url": "https://riviera-maya-news.com/search-continues-jet-skier-reported-lost-at-sea-between-playa-del-carmen-and-cozumel-found-off-isla-contoy/2026.html",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 18180,
+      "PAGE_TEXTCHANGE": 138918,
+      "PAGE_TITLECHANGE": 54801,
+      "UNCHANGED_CONTENT": 798975
+    },
+    "title_changes_en": 14137,
+    "trace": [
+      {
+        "bytes_billed": 27262976,
+        "created": "1789727308533",
+        "job_id": "world_gdg_counts_20260917",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 253755392,
+        "created": "1789727313606",
+        "job_id": "world_gdg_titles_20260917",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-18T10:33:20Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-17.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

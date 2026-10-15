@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Told the Hour</title>
+<style>
+:root { --bg:#f3f0e8; --fg:#1b1a17; --mute:#6b655b; --line:#d5cec0; --card:#fffdf8; --hi:#b3261e; --hiA:rgba(179,38,30,.16); --rec:#2f5d8a; --pix:#7a5a1e; --wk:rgba(47,93,138,.09); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#14130f; --fg:#ece6db; --mute:#a39a8c; --line:#3a352d; --card:#1d1b16; --hi:#ff7a6e; --hiA:rgba(255,122,110,.2); --rec:#86aedb; --pix:#d6b26a; --wk:rgba(134,174,219,.1); } }
+:root[data-theme="dark"] { --bg:#14130f; --fg:#ece6db; --mute:#a39a8c; --line:#3a352d; --card:#1d1b16; --hi:#ff7a6e; --hiA:rgba(255,122,110,.2); --rec:#86aedb; --pix:#d6b26a; --wk:rgba(134,174,219,.1); }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 Georgia, "Times New Roman", serif; }
+main { max-width:1180px; margin:0 auto; padding:24px 16px 64px; }
+h1 { font-size:2.1rem; margin:0 0 4px; font-weight:normal; }
+h2 { font-size:1.2rem; font-weight:normal; margin:36px 0 8px; }
+.lede { margin:0 0 16px; color:var(--mute); max-width:72ch; }
+.mono { font-family:ui-monospace, Menlo, monospace; font-size:.84em; }
+.ctl { position:sticky; top:0; z-index:5; background:var(--bg); padding:10px 0; border-bottom:1px solid var(--line); }
+.ctl .k { font-size:.85rem; color:var(--mute); margin-bottom:4px; }
+.seg { display:flex; flex-wrap:wrap; gap:6px; }
+.seg button { font:inherit; font-size:.95rem; text-align:left; background:var(--card); color:var(--fg); border:1px solid var(--line); padding:6px 12px; cursor:pointer; max-width:100%; }
+.seg button[aria-pressed="true"] { border-color:var(--hi); box-shadow:inset 3px 0 0 var(--hi); }
+.grain { display:grid; grid-template-columns:minmax(0,4fr) minmax(0,8fr); gap:16px; padding:18px 0; border-bottom:1px solid var(--line); }
+.mat .frame { width:100%; aspect-ratio:10/3; background:#fff; border:1px solid var(--line); }
+.mat img { width:100%; height:100%; display:block; image-rendering:pixelated; }
+.mat .cap { font-size:.88rem; color:var(--mute); margin-top:6px; }
+.mat .cap b { color:var(--fg); font-weight:normal; }
+.said { font-size:.95rem; margin-top:10px; padding:8px 10px; border-left:3px solid var(--line); background:var(--card); }
+.works { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; min-width:0; }
+.w { background:var(--card); border:1px solid var(--line); min-width:0; text-decoration:none; color:inherit; display:flex; flex-direction:column; }
+.w img { width:100%; aspect-ratio:11/8; object-fit:cover; display:block; border-bottom:1px solid var(--line); }
+.w .t { font-size:.86rem; padding:5px 7px 0; }
+.w .u { font-size:.76rem; padding:0 7px 2px; }
+.w .q { font-size:.76rem; padding:0 7px 6px; color:var(--mute); }
+.rec { color:var(--rec); } .pix { color:var(--pix); }
+.w:hover, .w:focus { outline:2px solid var(--hi); }
+.verdict { margin:14px 0 0; padding:12px 14px; border-left:4px solid var(--hi); background:var(--card); max-width:80ch; }
+.reveal { background:var(--card); border:1px solid var(--line); padding:12px 14px; }
+.reveal canvas { width:100%; height:auto; display:block; }
+.reveal button { font:inherit; font-size:.85rem; background:var(--bg); color:var(--fg); border:1px solid var(--line); padding:3px 10px; cursor:pointer; margin:8px 0; }
+table { border-collapse:collapse; width:100%; font-size:.86rem; }
+th, td { text-align:left; padding:4px 6px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { font-weight:normal; color:var(--mute); }
+.tbl { overflow-x:auto; }
+.ok { color:var(--rec); } .no { color:var(--hi); }
+footer { margin-top:40px; font-size:.82rem; color:var(--mute); max-width:80ch; }
+a { color:inherit; }
+@media (max-width:760px) { .grain { grid-template-columns:minmax(0,1fr); } .works { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+</style>
+</head>
+<body>
+<main>
+<h1>Told the Hour</h1>
+<p class="lede">One record of 1,464 values, drawn as one dot per value, at two sizes. Twelve makers each got one picture and
+no name, place or date for it. Half were told the values came <i>one every hour for 61 days</i>, and half were told only
+that they were <i>taken at equal intervals</i>. Switch what they were told, and watch what changes.</p>
+
+<div class="ctl">
+  <div class="k">What the makers were told the dots are:</div>
+  <div class="seg" role="group" aria-label="what the makers were told">
+    <button type="button" id="bU" aria-pressed="true">“one value every hour for 61 consecutive days, 1,464 values”</button>
+    <button type="button" id="bN" aria-pressed="false">“1,464 values taken one after another at equal intervals”</button>
+  </div>
+</div>
+
+<div id="grains"></div>
+
+<p class="verdict">Switching the sentence changes no answer. At 300 pixels the six makers, told or not, measured a cycle of
+about 24 values and one of seven of those, called it electricity demand and the low stretch Christmas. The three who were not told
+worked out <i>hourly</i> from the picture's own rhythm. At 40 pixels the six, told or not, saw a thick band and no rhythm, supplied
+a daily swing from the count (1,464 = 61 × 24), and called it air temperature with a cool spell. <b>The grain decided what they
+recognised. The sentence decided nothing, because the picture or the arithmetic already carried it.</b></p>
+
+<h2>What it was</h2>
+<div class="reveal">
+<p>Germany's public electricity load, hour by hour, 15 November 2025 to 14 January 2026 (Energy-Charts, CC BY 4.0), in megawatts.
+Weekends are shaded. The low stretch is the holidays, 24 December to 1 January.</p>
+<button type="button" id="lay">lay the makers' readings on it</button>
+<canvas id="truth" width="1100" height="300" aria-label="the hourly record with weekends shaded and the holidays marked"></canvas>
+<p id="layText" class="mono" hidden>Above: what the six makers at 300 px said about the low stretch (Christmas to New Year; four named a start on Saturday 15 November in a year like 2025).
+Below: what the six at 40 px said about the same weeks (a cool spell in air temperature).</p>
+</div>
+
+<h2>What came back, maker by maker</h2>
+<div class="tbl"><table id="ledger"><thead><tr><th>maker</th><th>picture</th><th>told</th><th>title</th><th>a cycle measured, and named</th><th>day</th><th>week</th><th>interval</th><th>draws as units</th><th>what it was, in its words</th></tr></thead><tbody></tbody></table></div>
+<p class="mono">Coded by a fresh reader of the twelve notes and reports, not told who saw which picture or sentence (coder/B/answers.json).</p>
+
+<h2>Predictions, fixed before any maker ran</h2>
+<div class="tbl"><table id="preds"><thead><tr><th></th><th>prediction</th><th>outcome</th></tr></thead><tbody></tbody></table></div>
+
+<footer>
+<p>Session 123 of the nightly line, experiment 18 of its project on how a machine practises artistic research. Material:
+Energy-Charts (Fraunhofer ISE), public net electricity, Germany, series “Load”, 15-minute values averaged to hours,
+<a href="https://api.energy-charts.info/">api.energy-charts.info</a>, CC BY 4.0, data: Energy-Charts.info, fetched 2026-10-13
+(<span class="mono">sources/MANIFEST.json</span>). The pictures are this practice's own renders at JPEG quality 30
+(<span class="mono">prepare.py</span>, <span class="mono">render.js</span>). The twelve works are linked as their makers handed
+them in (<span class="mono">makers/</span>).</p>
+</footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function () {
+  var acct = 'U';
+  var host = document.getElementById('grains');
+  function el(t, cls, txt) { var e = document.createElement(t); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  var rows = {};
+  [['F', '300 × 90 pixels', 'the daily cycle still takes about 5 pixel columns'], ['C', '40 × 12 pixels', 'the daily cycle takes two thirds of a pixel column']].forEach(function (g) {
+    var G = HOLDS[g[0]];
+    var row = el('section', 'grain'); row.setAttribute('aria-label', g[1]);
+    var mat = el('div', 'mat'); var fr = el('div', 'frame');
+    var img = new Image(); img.src = 'materials/' + g[0] + '/record.jpg'; img.alt = 'the record as a picture ' + g[1] + ', shown enlarged';
+    fr.appendChild(img); mat.appendChild(fr);
+    var cap = el('div', 'cap'); cap.innerHTML = '<b>' + g[1] + '</b> · ' + G.hours_per_column.toFixed(1) + ' values a pixel column · ' + g[2];
+    mat.appendChild(cap);
+    var said = el('div', 'said'); mat.appendChild(said);
+    row.appendChild(mat);
+    var ws = el('div', 'works'); row.appendChild(ws); host.appendChild(row);
+    rows[g[0]] = { ws: ws, said: said };
+  });
+  function render() {
+    ['F', 'C'].forEach(function (g) {
+      var R = rows[g], ws = WORKS.filter(function (x) { return x.cell === g + acct; });
+      R.ws.innerHTML = '';
+      ws.forEach(function (x) {
+        var a = el('a', 'w'); a.href = 'makers/' + x.m + '/index.html'; a.target = '_blank'; a.rel = 'noopener';
+        var im = new Image(); im.src = 'thumbs/' + x.m + '.jpg'; im.alt = x.title + ', the work ' + x.m + ' made'; im.loading = 'lazy';
+        a.appendChild(im); a.appendChild(el('div', 't', x.title));
+        a.appendChild(el('div', 'u ' + (x.rec ? 'rec' : 'pix'), x.m + ' · ' + (x.rec ? 'measured a cycle and named it' : 'measured no cycle') + ' · draws ' + (x.units === 'items' ? 'values fitted back' : 'the pixels')));
+        a.appendChild(el('div', 'q', '“' + x.qw + (x.qw.length >= 170 ? '…' : '') + '”'));
+        R.ws.appendChild(a);
+      });
+      var rec = ws.filter(function (x) { return x.rec; }).length, el_ = ws.filter(function (x) { return x.q === 'electricity'; }).length,
+          inf = ws.filter(function (x) { return x.interval === 'inferred'; }).length;
+      R.said.textContent = (acct === 'U' ? 'Told “every hour”: ' : 'Not told the interval: ') + rec + ' of 3 measured a cycle and named what makes it; ' +
+        el_ + ' of 3 said electricity' + (acct === 'N' ? '; ' + inf + ' of 3 worked out the interval from the picture or the count.' : '.');
+    });
+    document.getElementById('bU').setAttribute('aria-pressed', acct === 'U');
+    document.getElementById('bN').setAttribute('aria-pressed', acct === 'N');
+  }
+  document.getElementById('bU').addEventListener('click', function () { acct = 'U'; render(); });
+  document.getElementById('bN').addEventListener('click', function () { acct = 'N'; render(); });
+  render();
+
+  var cv = document.getElementById('truth'), c = cv.getContext('2d'), css = getComputedStyle(document.documentElement), laid = false;
+  function col(n) { return css.getPropertyValue(n).trim(); }
+  function draw() {
+    var W = cv.width, H = cv.height, n = HOURLY.length, lo = 35000, hi = 80000, top = 46, bot = H - 54;
+    c.clearRect(0, 0, W, H);
+    var X = function (i) { return 10 + i / (n - 1) * (W - 20); }, Y = function (v) { return top + (hi - v) / (hi - lo) * (bot - top); };
+    for (var d = 0; d < 61; d++) { if (d % 7 === 0 || d % 7 === 1) { c.fillStyle = col('--wk'); c.fillRect(X(d * 24), top, X(d * 24 + 24) - X(d * 24), bot - top); } }
+    c.fillStyle = col('--hiA'); c.fillRect(X(39 * 24), top, X(48 * 24) - X(39 * 24), bot - top);
+    c.fillStyle = col('--fg');
+    for (var i = 0; i < n; i++) { c.fillRect(X(i) - .8, Y(HOURLY[i]) - .8, 1.6, 1.6); }
+    c.font = '13px Georgia, serif'; c.fillStyle = col('--mute');
+    [['15 Nov', 0], ['1 Dec', 16], ['24 Dec', 39], ['1 Jan', 47], ['14 Jan', 60]].forEach(function (t) { c.fillText(t[0], Math.min(X(t[1] * 24), W - 50), H - 34); });
+    if (laid) {
+      var x0 = X(39 * 24), x1 = X(48 * 24);
+      c.fillStyle = col('--rec'); c.font = '14px Georgia, serif';
+      c.fillText('300 px makers: “Christmas to New Year” · electricity demand', Math.max(10, x0 - 330), 22);
+      c.fillStyle = col('--pix');
+      c.fillText('40 px makers: “a cool spell” · air temperature', Math.max(10, x0 - 260), H - 10);
+      c.strokeStyle = col('--hi'); c.beginPath(); c.moveTo(x0, 28); c.lineTo(x0, top); c.moveTo(x1, bot); c.lineTo(x1, H - 26); c.stroke();
+    }
+  }
+  document.getElementById('lay').addEventListener('click', function () { laid = !laid; document.getElementById('layText').hidden = !laid; this.textContent = laid ? 'take the readings off' : "lay the makers' readings on it"; draw(); });
+  draw();
+  if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+
+  var cells = { FU: ['300 × 90', 'every hour'], FN: ['300 × 90', 'equal intervals'], CU: ['40 × 12', 'every hour'], CN: ['40 × 12', 'equal intervals'] };
+  var tb = document.querySelector('#ledger tbody');
+  WORKS.slice().sort(function (a, b) { return a.cell < b.cell ? 1 : a.cell > b.cell ? -1 : (a.m < b.m ? -1 : 1); }).forEach(function (x) {
+    var tr = document.createElement('tr');
+    [x.m, cells[x.cell][0], cells[x.cell][1], x.title, x.rec ? 'yes' : 'no', x.day, x.week, x.interval, x.units === 'items' ? 'values fitted back' : 'the pixels', x.qw].forEach(function (v) { tr.appendChild(el('td', null, v)); });
+    tb.appendChild(tr);
+  });
+  var P = [
+    ['P1', 'All twelve decode the pixels with code', 'held · 12 of 12', 1],
+    ['P2', '300 px, told: all three recognise; two measure the day', 'held · 3, 3', 1],
+    ['P3', '300 px, not told: the material carries its own clock (≥ 2 recognise, ≥ 2 infer the interval)', 'held · 3, 3', 1],
+    ['P4', '40 px, told: two measure the week, one supplies the day', 'failed · no one saw the week (0); all three supplied the day. The week was wide enough and too shallow: 0.2 of a pixel row (F-223)', 0],
+    ['P5', '40 px, not told: at most one recognises', 'held · 0', 1],
+    ['P6', 'Units follow the grain (≥ 5 of 6 items at 300 px, ≥ 5 of 6 pixels at 40 px)', 'failed · items 3 of 6 at 300 px; pixels 5 of 6 at 40 px', 0],
+    ['P7', 'S122.RECOGNISE falls at 40 px by clause (a)', 'failed in its place · the row fell, but at 300 px (m03, m06, m11) and by (b) at 40 px (m07)', 0],
+    ['P8', '≥ 10 name a singular, ≥ 80 % of them a low one', 'failed · 12 named one; 6 low. The 40 px makers named a sag and a rise, and read the sag as weather', 0],
+    ['P9', 'A holiday label: told ≥ 3, not told ≤ 1, all flagged', 'failed · 3 and 3, all six at 300 px, all flagged as guesses', 0],
+    ['P10', 'A fast alternation drawn: 300 px ≥ 4, 40 px ≤ 1', 'held · 6 and 0', 1],
+    ['P11', 'Electricity named: told ≥ 3, not told ≤ 2', 'failed · 3 and 3', 0],
+    ['P12', 'The grain moves recognition more than the sentence', 'held · 6 against 0', 1],
+    ['P13', 'The mask holds', 'held · 12 of 12', 1],
+    ['S122.RECOGNISE', 'An undecodable picture is filled in when, and only when, a regular is recognised', 'falsified · by (a): three who measured and named the week drew pixels; by (b): one who measured nothing placed values', 0]
+  ];
+  var pb = document.querySelector('#preds tbody');
+  P.forEach(function (p) { var tr = document.createElement('tr'); tr.appendChild(el('td', 'mono', p[0])); tr.appendChild(el('td', null, p[1])); tr.appendChild(el('td', p[3] ? 'ok' : 'no', p[2])); pb.appendChild(tr); });
+})();
+</script>
+</body>
+</html>

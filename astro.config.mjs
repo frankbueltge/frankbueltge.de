@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import mdx from '@astrojs/mdx'
+import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
 import rehypeRepoLinks from './src/lib/engines/rehype-repo-links.mjs'
 
@@ -30,12 +31,24 @@ export default defineConfig({
         "default-src 'self'",
         "img-src 'self' data:",
         "font-src 'self' data:",
-        // Zwei dokumentierte Ausnahmen für /saat (Design-Spec 2026-07-20-oeffentliche-
-        // saat-design.md §4/§10, D2): Turnstile (Cloudflare, bot check vor dem Gate — selber
-        // Anbieter wie das Hosting) und raw.githubusercontent.com (Client liest das committete
-        // Register für die Status-Abfrage per Claim-Token, ohne eigenen Server). Sonst bleibt
-        // connect-src 'self'.
-        "connect-src 'self' https://challenges.cloudflare.com https://raw.githubusercontent.com",
+        // connect-src is OPEN to any HTTPS host since 2026-09-04 (Frank's decision, wording
+        // private, paraphrased: live and real-time experiments must be startable here, without a
+        // second site and without asking first; citability is not the point, the work is).
+        //
+        // What this changes: a page in this repo may now talk to any HTTPS API or event stream
+        // from the browser — no allowlist entry, no session that has to notice, no config change
+        // per experiment. What it deliberately does NOT change: script-src and style-src stay
+        // closed ('self' plus pinned hashes), so nothing foreign may EXECUTE here. Reading data
+        // from the world is now free; running the world's code is still not.
+        //
+        // The two hosts this line used to name are covered by the same opening: Turnstile on
+        // /saat and raw.githubusercontent.com for the seed register's status lookup.
+        // `wss:` beside `https:` since 2026-09-04, the same evening and the same decision: a live
+        // market reads a socket, not a poll. An exchange pushes every trade and every change of
+        // its book down one connection, and a page that may only fetch would be a page that can
+        // only ask "and now?" a few times a second. Scheme-wide, like the https opening beside it,
+        // so a new source is a line of code and not a config change.
+        "connect-src 'self' https: wss:",
         // Turnstile rendert seine Challenge in einem Iframe von derselben Domain.
         "frame-src https://challenges.cloudflare.com",
         "object-src 'none'",
@@ -50,7 +63,18 @@ export default defineConfig({
         // challenges.cloudflare.com lädt das Turnstile-Widget-Script auf /saat (s. o.).
         resources: [
           "'self'",
-          "'sha256-OTbzFulzUa/0o/iJq0xir83lv5aDayqRCmxs9tqjupU='",
+          // The anti-FOUC theme resolver (Base.astro, is:inline). Re-pinned 2026-09-02: the hash
+          // pinned on 2026-07-07 no longer matched the script — it had been edited since — so
+          // the resolver was CSP-blocked on every page in production and a light-theme reader
+          // saw the static dark default until the module script caught up. Found while wiring
+          // the ClientRouter; src/layouts/base.test.ts now recomputes both hashes and fails
+          // the moment either script changes without its constant.
+          "'sha256-sTVkn3xdmeVKVAdr0N+Hx9qKNNaDDSdRSaxZ2TkjJPk='",
+          // The zoom-state script (Base.astro, is:inline — iOS pinch-zoom fix of 2026-08-27).
+          // Missing since that fix landed: the script was CSP-blocked on every page in
+          // production, so the viewport handler never ran. Found 2026-08-30 while verifying
+          // the v3 entrance. Recompute on any change to the script (same rule as above).
+          "'sha256-iW9RirIJ16AhxxeAPjC6QbM2WpsRfW6vcUNZbsouEbY='",
           'https://challenges.cloudflare.com',
         ],
       },
@@ -68,6 +92,11 @@ export default defineConfig({
   // /steuerzentrale ist ein privates Operator-Werkzeug (noindex, token-gated) — nie in der
   // Sitemap, unabhängig davon, ob Google robots.txt beachtet.
   integrations: [
+    // React islands — the visual layer (Frank, 2026-09-02; docs/design/2026-09-02-the-visual-
+    // layer.md). An island's client code is a bundled module script, which Astro hashes into the
+    // CSP below exactly like the .astro <script> chunks — so this integration changes nothing in
+    // security.csp. Geometry stays in src/lib/** (pure, tested); islands mount and interact.
+    react(),
     sitemap({
       // Das Dataset Register hatte bis 2026-07-27 eine Unterseite je Eintrag bzw. je
       // Werk; der Sitemap-Filter musste die abgeleiteten Fassungsseiten hier wieder
@@ -92,6 +121,17 @@ export default defineConfig({
     // @tailwindcss/vite hängt noch an Vite 6, Astro 6 nutzt Vite 7 → die Plugin-Typen
     // kollidieren (reiner Typ-Konflikt, der Build läuft). Cast, bis Tailwind auf Vite 7 zieht.
     plugins: [/** @type {any} */ (tailwindcss())],
+    build: {
+      // Every script stays an external module file, none is inlined (re-skin 2a, 2026-09-02).
+      // Vite would otherwise inline any chunk under 4 KB as `<script type="module">…</script>`
+      // — the top bar's disclosure script, the experiments shelf filter — and Astro's
+      // ClientRouter, finding an inline module script it has to wait for after a swap, inserts
+      // a sentinel `<script type="module" src="data:application/javascript,">`. This site's CSP
+      // allows no `data:` scripts (rightly), so the sentinel was refused with a console error
+      // on every client-side navigation. With nothing inlined the router never needs the
+      // sentinel, and the CSP hash list shrinks to the two `is:inline` scripts plus Astro's own.
+      assetsInlineLimit: 0,
+    },
     worker: {
       format: 'es',
     },

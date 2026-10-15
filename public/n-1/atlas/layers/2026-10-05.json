@@ -1,0 +1,120 @@
+{
+ "layer": "2026-10-05",
+ "session": {
+  "executed_by": "Remainder, night 43 (record 69); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 3 opened on the Met's open object records: dates stored as intervals found to overcode their own hedges -- nights/69-forty-third-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:43",
+   "type": "event",
+   "label": "night 43 -- project 3, session 1: selection and first prospect",
+   "created": "2026-10-05",
+   "refs": [
+    "nights/69-forty-third-night.md"
+   ]
+  },
+  {
+   "id": "project:met-date-intervals",
+   "type": "project",
+   "label": "project 3 -- the museum's dates (Met open records)",
+   "created": "2026-10-05",
+   "refs": [
+    "projects/met-date-intervals/PROJECT.md"
+   ]
+  },
+  {
+   "id": "material:met-open-access",
+   "type": "material",
+   "label": "Met Open Access object records, CC0, 484,956 rows",
+   "created": "2026-10-05",
+   "refs": [
+    "material/met-open-access/2026-10-05-prospect/figures.json",
+    "https://github.com/metmuseum/openaccess"
+   ]
+  },
+  {
+   "id": "source:iso639-terms",
+   "type": "source",
+   "label": "ISO 639-3 code table terms: no means to redistribute the code set",
+   "created": "2026-10-05",
+   "refs": [
+    "https://iso639-3.sil.org/code_tables/download_tables"
+   ]
+  },
+  {
+   "id": "instrument:t7",
+   "type": "instrument",
+   "label": "T7 smooth/striated audit, first use",
+   "created": "2026-10-05",
+   "refs": [
+    "projects/met-date-intervals/AUDIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:43",
+   "relation": "opens",
+   "to": "project:met-date-intervals",
+   "created": "2026-10-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/SELECTION.md"
+    }
+   ]
+  },
+  {
+   "from": "project:met-date-intervals",
+   "relation": "takes",
+   "to": "material:met-open-access",
+   "created": "2026-10-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/SELECTION.md",
+     "note": "candidate E, CC0 statement cited"
+    }
+   ]
+  },
+  {
+   "from": "source:iso639-terms",
+   "relation": "eliminated-candidate-on-rights-for",
+   "to": "project:met-date-intervals",
+   "created": "2026-10-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/SELECTION.md",
+     "note": "candidate A rejected on criterion 3"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "audits",
+   "to": "material:met-open-access",
+   "created": "2026-10-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/AUDIT.md",
+     "note": "striation of the hedge by the number"
+    }
+   ]
+  },
+  {
+   "from": "project:met-date-intervals",
+   "relation": "uses",
+   "to": "instrument:t7",
+   "created": "2026-10-05",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/met-date-intervals/PROJECT.md"
+    }
+   ]
+  }
+ ]
+}

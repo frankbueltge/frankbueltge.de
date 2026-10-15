@@ -1,0 +1,3 @@
+# It Keeps the Sun's Time
+
+The 1,464 hourly readings, read back from the dot plot, are wound onto one spiral at one day per turn, with the first day at the centre. Each hour is a short band of colour: deep for high values, pale for low. Winding by the 24-hour day makes any daily rhythm show up as a spoke. Under that winding a real tide could not stay in one place, because its high waters come back about 50 minutes later each day. Two thin red spirals show where they would have drifted (the starting hour is arbitrary). The record does not follow them. Its low hours form a pale spoke at the same angle on almost every turn. I chose this form because it puts the label it came with and what the numbers actually do side by side, and lets the viewer see that the two disagree.

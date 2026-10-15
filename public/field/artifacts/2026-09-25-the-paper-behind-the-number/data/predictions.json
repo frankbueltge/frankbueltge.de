@@ -1,0 +1,82 @@
+{
+ "predictions": [
+  {
+   "id": "P1",
+   "claim": "15 % to 45 % of digest-matched corpus-M papers have an efetch-able PMC full text with a body",
+   "band": [
+    15,
+    45
+   ],
+   "observed": 54.1,
+   "verdict": "REFUTED",
+   "note": "above the band: 541 of 1,000"
+  },
+  {
+   "id": "P2",
+   "claim": "55 % to 90 % of sampled count-proportion units are RECOVERED",
+   "band": [
+    55,
+    90
+   ],
+   "observed": 65.08,
+   "verdict": "HELD",
+   "note": "the strict reading (58.73 %) also holds; the lower interval bound (52.75 %) falls below the band"
+  },
+  {
+   "id": "P3",
+   "claim": "20 % to 50 % of sampled units are N/A",
+   "band": [
+    20,
+    50
+   ],
+   "observed": 47.5,
+   "verdict": "HELD",
+   "note": "near the top of the band"
+  },
+  {
+   "id": "P4",
+   "claim": "RECOVERED-INCONSISTENT in 0 to 5 units",
+   "band": [
+    0,
+    5
+   ],
+   "observed": 1,
+   "verdict": "HELD",
+   "note": ""
+  },
+  {
+   "id": "P5",
+   "claim": "screen null hit rate >= 10 % and true-paper rate above null",
+   "band": [
+    10,
+    100
+   ],
+   "observed": 5.47,
+   "verdict": "REFUTED",
+   "note": "the null was lower than predicted (5.47 %); the second half (true 27.04 % > null) held"
+  }
+ ],
+ "kill_conditions": [
+  {
+   "id": "K1",
+   "condition": "fewer than 25 papers with full text and a unit",
+   "observed": 342,
+   "fired": false
+  },
+  {
+   "id": "K2",
+   "condition": "more than 5 % of re-fetched abstracts fail their digest",
+   "observed": 0,
+   "fired": false
+  },
+  {
+   "id": "K3",
+   "condition": "screen null rate at or above true-paper rate",
+   "observed": [
+    5.47,
+    27.04
+   ],
+   "fired": false
+  }
+ ]
+}

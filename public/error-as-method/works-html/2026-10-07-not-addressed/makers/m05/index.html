@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Two Tides</title>
+<style>
+  html,body{margin:0;background:#0d0f14;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#cfc8bb;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function(){
+  var W=1100,H=800, dpr=window.devicePixelRatio||1;
+  var cv=document.getElementById('c');
+  cv.width=W*dpr; cv.height=H*dpr; cv.style.width=W+'px'; cv.style.height=H+'px';
+  var g=cv.getContext('2d'); g.scale(dpr,dpr);
+
+  var hrs=window.COUNTS.hours, DAYS=365;
+  var L=78, R=34, T=134, B=96;
+  var PW=W-L-R, PH=H-T-B, cw=PW/DAYS, ch=PH/24;
+
+  // colours: northbound warm, southbound cool
+  var NORTH=[255,150,46], SOUTH=[64,160,255], BG=[13,15,20];
+
+  // normalise brightness on a high percentile so a few peaks don't wash out the year
+  var vals=[]; hrs.forEach(function(r){ if(r) vals.push(r[0]); });
+  vals.sort(function(a,b){return a-b;});
+  var Q=vals[Math.floor(vals.length*0.995)];
+
+  function cell(r){
+    var t=r[0]; if(t===0) return 'rgb('+BG.join(',')+')';
+    var s=r[2]/t;                         // share heading south
+    var k=Math.min(1,Math.pow(t/Q,0.5)); // brightness from volume
+    var c=[0,0,0];
+    for(var i=0;i<3;i++){
+      var hue=NORTH[i]*(1-s)+SOUTH[i]*s;
+      // pull the middle of the blend toward pale so balanced hours read neutral, not muddy
+      var mid=1-Math.abs(s-0.5)*2; hue=hue+(236-hue)*0.18*mid;
+      c[i]=Math.round(BG[i]+(hue-BG[i])*k);
+    }
+    return 'rgb('+c.join(',')+')';
+  }
+
+  g.fillStyle='#0d0f14'; g.fillRect(0,0,W,H);
+
+  var gap=null;
+  // the field: one column per day, one row per hour of the clock
+  for(var d=0; d<DAYS; d++){
+    var x0=Math.round(L+d*cw), x1=Math.round(L+(d+1)*cw);
+    for(var h=0; h<24; h++){
+      var r=hrs[d*24+h], y0=Math.round(T+h*ch), y1=Math.round(T+(h+1)*ch);
+      if(!r){ // the hour the clocks skipped
+        g.fillStyle='#0d0f14'; g.fillRect(x0,y0,x1-x0,y1-y0);
+        gap=[x0,y0,x1,y1];
+        continue;
+      }
+      g.fillStyle=cell(r); g.fillRect(x0,y0,x1-x0,y1-y0);
+    }
+  }
+
+  if(gap){ g.strokeStyle='rgba(236,229,214,0.8)'; g.lineWidth=1; g.strokeRect(gap[0]-1.5,gap[1]+0.5,gap[2]-gap[0]+3,gap[3]-gap[1]-1); }
+
+  // sunrise and sunset over Seattle, in local clock time, drawn as a faint thread
+  function sun(dayIndex){
+    var lat=47.65*Math.PI/180, lon=-122.35, N=dayIndex+1;
+    var gam=2*Math.PI/365*(N-1);
+    var eq=229.18*(0.000075+0.001868*Math.cos(gam)-0.032077*Math.sin(gam)-0.014615*Math.cos(2*gam)-0.040849*Math.sin(2*gam));
+    var dec=0.006918-0.399912*Math.cos(gam)+0.070257*Math.sin(gam)-0.006758*Math.cos(2*gam)+0.000907*Math.sin(2*gam)-0.002697*Math.cos(3*gam)+0.00148*Math.sin(3*gam);
+    var z=90.833*Math.PI/180;
+    var ha=Math.acos(Math.cos(z)/(Math.cos(lat)*Math.cos(dec))-Math.tan(lat)*Math.tan(dec))*180/Math.PI;
+    var dst=(N>=68 && N<=306)?1:0; // 9 Mar – 2 Nov 2025
+    var off=-8+dst;
+    var rise=(720-4*(lon+ha)-eq)/60+off, set=(720-4*(lon-ha)-eq)/60+off;
+    return [rise,set];
+  }
+  g.save();
+  g.strokeStyle='rgba(255,246,225,0.55)'; g.lineWidth=1; g.setLineDash([1,3]);
+  [0,1].forEach(function(which){
+    g.beginPath(); var prevDst=null;
+    for(var d=0; d<DAYS; d++){
+      var N=d+1, dst=(N>=68&&N<=306);
+      var v=sun(d)[which], x=L+(d+0.5)*cw, y=T+v*ch;
+      if(prevDst===null||dst!==prevDst) g.moveTo(x,y); else g.lineTo(x,y);
+      prevDst=dst;
+    }
+    g.stroke();
+  });
+  g.restore();
+
+  // axes: hours
+  g.font='11px Georgia, serif'; g.textBaseline='middle';
+  var hourNames={0:'midnight',6:'6 am',12:'noon',18:'6 pm'};
+  for(var h=0; h<=24; h+=3){
+    var y=T+h*ch;
+    g.fillStyle='rgba(207,200,187,0.55)'; g.textAlign='right';
+    var lab=h===24?'midnight':(hourNames[h]||((h%12)+(h<12?' am':' pm')));
+    g.fillText(lab, L-10, y);
+    g.fillStyle='rgba(207,200,187,0.25)'; g.fillRect(L-6,Math.round(y),4,1);
+  }
+
+  // axes: months
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var mlen=[31,28,31,30,31,30,31,31,30,31,30,31], acc=0;
+  g.textAlign='left'; g.textBaseline='top';
+  for(var m=0;m<12;m++){
+    var x=Math.round(L+acc*cw);
+    g.fillStyle='rgba(207,200,187,0.3)'; g.fillRect(x,T+PH+4,1,8);
+    g.fillStyle='rgba(207,200,187,0.65)'; g.fillText(months[m], x+4, T+PH+5);
+    acc+=mlen[m];
+  }
+
+  // title block
+  g.textAlign='left'; g.textBaseline='alphabetic';
+  g.fillStyle='#ece5d6'; g.font='italic 34px Georgia, serif';
+  g.fillText('Two Tides', L, 58);
+  g.font='13px Georgia, serif'; g.fillStyle='rgba(207,200,187,0.75)';
+  var total=0; hrs.forEach(function(r){ if(r) total+=r[0]; });
+  g.fillText('Every hour of 2025 on the Fremont Bridge, Seattle — '+total.toLocaleString('en-US')+' bicycles and scooters.', L, 84);
+  g.fillText('Each column is a day, each row an hour of the clock. Colour is the direction of travel, brightness the number crossing.', L, 102);
+
+  // legend: direction across, volume up
+  var lx=W-R-196, ly=26, lw=150, lh=64, steps=30;
+  for(var i=0;i<steps;i++){
+    for(var j=0;j<12;j++){
+      var s=i/(steps-1), t=Q*Math.pow((j+0.5)/12,2);
+      var r=[t, t*(1-s), t*s];
+      g.fillStyle=cell(r);
+      g.fillRect(lx+Math.floor(i*lw/steps), ly+lh-Math.ceil((j+1)*lh/12), Math.ceil(lw/steps), Math.ceil(lh/12));
+    }
+  }
+  g.font='11px Georgia, serif'; g.fillStyle='rgba(207,200,187,0.7)';
+  g.textAlign='left'; g.fillText('all north', lx, ly+lh+15);
+  g.textAlign='right'; g.fillText('all south', lx+lw, ly+lh+15);
+  g.save(); g.translate(lx+lw+12, ly+lh); g.rotate(-Math.PI/2); g.textAlign='left';
+  g.fillText('more →', 0, 0); g.restore();
+
+  // the seam: on 1 July the counter's lanes trade labels
+  var jx=Math.round(L+181*cw);
+  g.fillStyle='rgba(236,229,214,0.8)'; g.fillRect(jx,T-10,1,7); g.fillRect(jx,T+PH+14,1,0);
+  g.font='italic 11px Georgia, serif'; g.textAlign='left'; g.textBaseline='alphabetic';
+  g.fillText('1 July: the colours trade places', jx+5, T-4);
+
+  // footer
+  g.textAlign='left'; g.font='11px Georgia, serif'; g.fillStyle='rgba(207,200,187,0.5)';
+  g.fillText('Dotted threads: sunrise and sunset. The empty cell on 9 March, 2 am, is the hour the clocks skipped (outlined).', L, H-52);
+  g.fillText('From 1 July the evening tide that had read northbound reads southbound. The riders did not turn around; the counter\u2019s labels did.', L, H-34);
+  g.textAlign='right';
+  g.fillText('Data: City of Seattle, Fremont Bridge counter (public domain).', W-R, H-52);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{
+ "rule": "PREREGISTRATION.md §4.4 - no quotation is counted ABSENT on the matcher's word alone. Every ABSENT is searched for by hand in the paper's renderings and the judgement recorded here. The five PARTIAL quotations were checked the same way, which the pre-registration did not require; that extra pass is declared, not smuggled.",
+ "tool": "handcheck.py, which prints the quotation, its longest run that does occur in the paper, and the passage of the paper sharing the most content words with it.",
+ "n_checked": 6,
+ "checked": [
+  {
+   "item_id": "OLD-1608.07187",
+   "index": 0,
+   "classification": "ABSENT",
+   "coverage": 0.471,
+   "verdict": "in the paper - matcher wrong",
+   "ground": "The quotation is the paper's own abstract, word for word. Our PDF extractor dropped the 'fl' ligature throughout this file, so the paper's text reads 'owers' where the quotation reads 'flowers' and 're ecting' where it reads 'reflecting'. The run breaks at the first lost ligature. The defect is ours and the delegate quoted correctly.",
+   "counted": false,
+   "why_not_counted": "This paper failed the §4.3 fidelity rule before any answer was read - PDF only, abstract coverage 0.38 - so its two quotations were excluded from every rate in advance. The exclusion rule quarantined the one paper where our instrument would have produced a false accusation."
+  },
+  {
+   "item_id": "OLD-1608.07187",
+   "index": 1,
+   "classification": "PARTIAL",
+   "coverage": 0.8,
+   "verdict": "in the paper - matcher wrong",
+   "ground": "Same file, same cause: the run ends where the extraction lost 'sufficient' to 'suf cient'. Excluded with the item above.",
+   "counted": false
+  },
+  {
+   "item_id": "OLD-2205.07388",
+   "index": 1,
+   "classification": "PARTIAL",
+   "coverage": 0.643,
+   "verdict": "in the paper - matcher wrong",
+   "ground": "The sentence is in section 4 as claimed. The extraction carries a line-break hyphenation inside 'data' ('da ta'), which ends the contiguous run four words in.",
+   "counted": true
+  },
+  {
+   "item_id": "OLD-2209.00131",
+   "index": 1,
+   "classification": "PARTIAL",
+   "coverage": 0.556,
+   "verdict": "in the paper - matcher wrong",
+   "ground": "The sentence is in the paper. The extraction lost the 'fi' ligature in 'fixing' and 'define' and rendered the mathematical expression differently from the delegate's plain-text version of it.",
+   "counted": true
+  },
+  {
+   "item_id": "OLD-2309.05196",
+   "index": 0,
+   "classification": "PARTIAL",
+   "coverage": 0.973,
+   "verdict": "in the paper - matcher wrong",
+   "ground": "The abstract sentence, verbatim. The extraction lost 'significant' to 'signi cant' and 'specifically' to 'speci cally'.",
+   "counted": true
+  },
+  {
+   "item_id": "NEW-2604.18418",
+   "index": 1,
+   "classification": "PARTIAL",
+   "coverage": 0.842,
+   "verdict": "in the paper - matcher wrong",
+   "ground": "The sentence is in the introduction. The delegate dropped the paper's inline citation and the line-break hyphen in 'repre-sent'; the words on either side are the paper's.",
+   "counted": true
+  }
+ ],
+ "summary": "Six quotations scored below 1.00. All six are in their papers. Not one is an invention: every break is this session's own extraction losing a ligature, a hyphen or a citation. The count of quotations returned by a delegate and not found in the paper it was asked to quote is ZERO, before and after the hand check."
+}

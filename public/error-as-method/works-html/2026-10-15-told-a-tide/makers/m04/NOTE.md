@@ -1,0 +1,3 @@
+# Two Clocks
+
+The work draws the record as received across the top, then cuts the same 61 days into rows twice and stacks the rows: once every 24 h 50 min, the lunar day that tides keep time by, and once every 24 h, the solar day. In each row the colour shows how far the water falls below its usual height at that hour. I chose this form because folding is a fair test of what a series answers to. A tide's low water would line up in a column under the moon's clock and slide sideways under the sun's. This record does the opposite. Its falls slide diagonally under the lunar cut and stack into one band under the 24-hour cut. The picture does not argue with the label it came with. It shows the reader which clock the water actually keeps.

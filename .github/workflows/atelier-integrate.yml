@@ -7,23 +7,27 @@
 name: Atelier integrate
 
 on:
-  # Seit Protokoll v4 (2026-07-18) ist Landung↔Site-Rebuild entkoppelt: das Engine-Repo
-  # dispatcht nicht mehr. Der Cron ist der Regel-Takt; repository_dispatch bleibt als
-  # manueller Hebel erhalten. Der Import bleibt publikationsneutral: works/ (historisch)
-  # + projects/ nur mit gültigem, menschlich freigegebenem PUBLICATION.json (integrate.ts).
+  # Since Protocol v4 (2026-07-18) landing and site rebuild are decoupled: the practice's repository
+  # does not dispatch (it holds no token for this site). Since 2026-10-07 the practice watch
+  # (practice-watch.yml) is what starts this gate: it compares the practice's head with
+  # .github/state/atelier-mirror-head once a minute while the house is active and dispatches this
+  # workflow when the practice has moved. The four crons below were the whole mechanism until then
+  # (the currency rule of 2026-07-25 raised them from one a night) — and on 2026-10-07, a day of five
+  # sessions, GitHub granted two of them, so sessions 2–5 and the presentation waited six hours.
+  # They stay as the net under the watch. repository_dispatch stays as a manual lever. The import
+  # stays publication-neutral: works/ (historical) + projects/ only with a valid, human-approved
+  # PUBLICATION.json (integrate.ts).
   repository_dispatch:
     types: [irrtum-landed]
   schedule:
-    # Aktualitäts-Regel (Frank, 2026-07-25): 4×/Tag statt 1×/Nacht — der Protokoll-v5-Fall
-    # zeigte ein 24h-Driftfenster, weil Arbeits-Session-Commits im Engine-Repo keinen
-    # Dispatch auslösen (das Repo hält kein SITE_DISPATCH_TOKEN mehr; volle Promptness
-    # bräuchte ein neues Token dort + einen Push-Trigger-Workflow — bis dahin dieser Takt).
-    - cron: '0 3,9,15,21 * * *'   # 05:00 / 11:00 / 17:00 / 23:00 Berlin (Sommerzeit)
+    - cron: '0 3,9,15,21 * * *'   # 05:00 / 11:00 / 17:00 / 23:00 Berlin (summer time)
   workflow_dispatch: {}
 
 permissions:
   contents: write
   issues: write
+  # to start deploy-cf.yml when another workflow started this run (see the last steps)
+  actions: write
 
 concurrency:
   group: atelier-integrate
@@ -86,7 +90,19 @@ jobs:
           # REQUESTS-ARCHIVE.md joined the mirror on 2026-08-10: the channel was split so the
           # practice stops carrying 36 000 words of answered history into every session. The
           # archive must travel with it, or the public record would lose what the cut removed.
-          for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md; do [ -f "/tmp/atelier/$f" ] && cp "/tmp/atelier/$f" "src/content/atelier/$f" || true; done
+          for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md BULLETIN.md; do [ -f "/tmp/atelier/$f" ] && cp "/tmp/atelier/$f" "src/content/atelier/$f" || true; done
+          # v3 (2026-08-30/31): the practice's own public artifacts, mirrored BARE — closing
+          # report, cycle artifacts and cycle presentations. They are self-contained pages and
+          # the house adds no paratext; /ecology links them (src/lib/ecology/v3.ts). Mirrored
+          # with --delete so a withdrawn artifact disappears here too.
+          for d in closing-report artifacts presentations; do
+            if [ -d "/tmp/atelier/$d" ]; then
+              mkdir -p "public/atelier/$d"
+              rsync -a --delete "/tmp/atelier/$d/" "public/atelier/$d/"
+            else
+              rm -rf "public/atelier/$d"
+            fi
+          done
           # Foundation-Anker (v4): wird auf /atelier/foundation wörtlich gerendert
           [ -f /tmp/atelier/docs/RESEARCH-FOUNDATION-V1.md ] && cp /tmp/atelier/docs/RESEARCH-FOUNDATION-V1.md src/content/atelier/ || true
           # Daten-Spine fürs Cockpit (Atlas + Puls) — read-only-Spiegel committeter Engine-JSONs
@@ -99,6 +115,13 @@ jobs:
           # on the site: the station's door renders only where this mirror carries an index.html.
           rm -rf public/atelier/window
           if [ -d /tmp/atelier/window ]; then mkdir -p public/atelier/window && cp -R /tmp/atelier/window/. public/atelier/window/; fi
+          # The practice's head this mirror now carries (2026-10-07). The practice watch
+          # (practice-watch.yml) compares it with the practice's own head and starts this gate
+          # when the two differ — the Atelier does not dispatch, and the crons above are a request
+          # GitHub grants a few times a day. Committed even when nothing else changed, so the watch
+          # never asks twice for the same head.
+          mkdir -p .github/state
+          git -C /tmp/atelier rev-parse HEAD > .github/state/atelier-mirror-head
 
       # The graph is derived from what this mirror just wrote (a work's meta.json, the
       # attention export, the encounters register). Deriving it HERE, before validation, is what
@@ -116,14 +139,15 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph public/atelier/werke-html public/atelier/window)" ]; then
+          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph public/atelier/werke-html public/atelier/window public/atelier/closing-report public/atelier/artifacts public/atelier/presentations .github/state/atelier-mirror-head)" ]; then
             git config user.name "Atelier-Integrate"
             git config user.email "atelier-integrate@frankbueltge.de"
-            git add -A src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph
+            git add -A src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph .github/state/atelier-mirror-head
             if [ -d public/atelier/werke-html ]; then git add -A public/atelier/werke-html; fi
             # `|| true`: the add must survive all three states — window present, window removed
             # (tracked entries record the deletion), and window never present (unmatched pathspec).
             git add -A public/atelier/window 2>/dev/null || true
+            for d in closing-report artifacts presentations; do git add -A "public/atelier/$d" 2>/dev/null || true; done
             git commit -m "atelier: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
               git pull --rebase --autostash origin main && git push && break
@@ -138,6 +162,18 @@ jobs:
           else
             echo "no changes"
           fi
+
+      # A run started by another workflow with the built-in token (the practice watch, the mirror
+      # watch, a sentinel retry) ends without a workflow_run event — GitHub creates none for a run
+      # the built-in token started — so deploy-cf.yml never hears of what it committed. Seen on
+      # 2026-10-07: four mirrors committed between 17:59 and 18:05 UTC and stood undeployed. Such
+      # a run starts the deploy itself; a run started by a schedule, a practice's dispatch or a
+      # person still reaches deploy-cf.yml through workflow_run and does not ask twice.
+      - name: Deploy what this run committed (when another workflow started it)
+        if: success() && github.triggering_actor == 'github-actions[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
 
       - name: Rejection feedback to the engine repo (green builds too)
         if: success()

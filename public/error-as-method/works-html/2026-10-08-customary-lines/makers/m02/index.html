@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Waxing Attention</title>
+<style>
+  html,body{margin:0;height:100%;background:#0b0d12;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  svg{display:block;width:1100px;height:800px;}
+  text{font-family:Georgia,"Times New Roman",serif;fill:#8b8f9c;}
+</style>
+</head>
+<body>
+<svg id="s" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script>
+(function(){
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("s");
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+  function txt(s,a,p){var e=el("text",a,p);e.textContent=s;return e;}
+
+  var days=window.VIEWS.days;
+  // New moons (UTC), 30 Dec 2024 through 18 Jan 2026
+  var NM=[[2024,11,30,22,27],[2025,0,29,12,36],[2025,1,28,0,45],[2025,2,29,10,58],[2025,3,27,19,31],
+          [2025,4,27,3,2],[2025,5,25,10,31],[2025,6,24,19,11],[2025,7,23,6,6],[2025,8,21,19,54],
+          [2025,9,21,12,25],[2025,10,20,6,47],[2025,11,20,1,43],[2026,0,18,19,52]]
+          .map(function(a){return Date.UTC(a[0],a[1],a[2],a[3],a[4])/864e5;});
+  var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  var X0=150, X1=1010, SPAN=29.8, Y0=118, ROWH=47.5;
+  var xOf=function(age){return X0+(age/SPAN)*(X1-X0);};
+  var MED=5000;
+  var rOf=function(v){return 7.2*Math.pow(v/MED,0.78);};
+
+  // faint guides: new, quarters, full
+  var g0=el("g",{});
+  [0,0.25,0.5,0.75,1].forEach(function(f,i){
+    var x=xOf(f*29.53);
+    el("line",{x1:x,x2:x,y1:Y0-28,y2:Y0+12*ROWH+26,stroke:i==2?"#2a2d38":"#181b23","stroke-width":i==2?1:1},g0);
+  });
+  var labels=["new","first quarter","full","last quarter","new"];
+  [0,0.25,0.5,0.75,1].forEach(function(f,i){
+    txt(labels[i],{x:xOf(f*29.53),y:Y0+12*ROWH+46,"text-anchor":"middle","font-size":11,"font-style":"italic",fill:"#5d6170"});
+  });
+
+  // row baselines and labels
+  for(var r=0;r<13;r++){
+    var y=Y0+r*ROWH, d=new Date(NM[r]*864e5);
+    el("line",{x1:xOf(0),x2:xOf(NM[r+1]-NM[r]),y1:y,y2:y,stroke:"#14161d","stroke-width":1},g0);
+    txt(MON[d.getUTCMonth()]+" "+d.getUTCDate()+(d.getUTCFullYear()==2024?", 2024":""),
+        {x:X0-26,y:y+4,"text-anchor":"end","font-size":11,fill:"#5d6170"});
+  }
+
+  var defs=el("defs",{});
+  var gr=el("radialGradient",{id:"lit",cx:"45%",cy:"40%",r:"65%"},defs);
+  el("stop",{offset:"0%","stop-color":"#fbf6e6"},gr);
+  el("stop",{offset:"100%","stop-color":"#d9cfb4"},gr);
+
+  // phase path: lit part of disc radius R centred at (cx,cy), phase f in [0,1)
+  function phasePath(cx,cy,R,f){
+    var k=Math.cos(2*Math.PI*f);        // 1 new, -1 full
+    var waxing=f<0.5;
+    var top=(cx)+","+(cy-R), bot=(cx)+","+(cy+R);
+    var outerSweep=waxing?1:0;          // lit limb on right while waxing
+    var rx=Math.abs(k)*R;
+    // terminator: bulges toward lit side when gibbous (k<0)
+    var termSweep = waxing ? (k>0?0:1) : (k>0?1:0);
+    return "M"+top+" A"+R+","+R+" 0 0 "+outerSweep+" "+bot+
+           " A"+Math.max(rx,0.01)+","+R+" 0 0 "+termSweep+" "+top+"Z";
+  }
+
+  var gm=el("g",{});
+  var marks=[];
+  var start=Date.UTC(2025,0,1)/864e5;
+  days.forEach(function(v,i){
+    var t=start+i+0.5, r=0; while(NM[r+1]<=t) r++;
+    var len=NM[r+1]-NM[r], age=t-NM[r], f=age/len;
+    var cx=xOf(age), cy=Y0+r*ROWH, R=rOf(v);
+    el("circle",{cx:cx,cy:cy,r:R,fill:"#1a1d26",stroke:"#2b2f3b","stroke-width":0.6},gm);
+    var illum=(1-Math.cos(2*Math.PI*f))/2;
+    if(illum>0.01) el("path",{d:phasePath(cx,cy,R,f),fill:"url(#lit)",opacity:0.55+0.45*Math.min(1,v/9000)},gm);
+    marks.push({i:i,v:v,cx:cx,cy:cy,R:R});
+  });
+
+  // name the loudest nights
+  var notes={249:"total lunar eclipse",200:"Apollo 11 anniversary",72:"total lunar eclipse",279:"harvest supermoon",
+             58:"planetary parade",308:"largest supermoon of the year"};
+  var ga=el("g",{});
+  marks.filter(function(m){return notes[m.i];}).forEach(function(m){
+    var dt=new Date((start+m.i)*864e5);
+    var s=dt.getUTCDate()+" "+MON[dt.getUTCMonth()]+" · "+m.v.toLocaleString("en-US");
+    var left = m.cx>720, dir=left?-1:1;
+    var ty = m.cy - m.R - 6;
+    var tx = m.cx + dir*(m.R + 8);
+    el("line",{x1:m.cx+dir*m.R*0.7,y1:m.cy-m.R*0.7,x2:tx-dir*2,y2:ty-3,stroke:"#4a4e5c","stroke-width":0.6},ga);
+    var t=txt("",{x:tx,y:ty,"font-size":10.5,fill:"#a9a493","text-anchor":left?"end":"start"},ga);
+    var a=document.createElementNS(NS,"tspan");a.textContent=s;t.appendChild(a);
+    var b=document.createElementNS(NS,"tspan");b.textContent="  "+notes[m.i];b.setAttribute("fill","#6b6f7d");b.setAttribute("font-style","italic");t.appendChild(b);
+  });
+
+  // title & legend
+  txt("Waxing Attention",{x:X0-26,y:52,"font-size":26,fill:"#d9d3c0","letter-spacing":"0.5"});
+  txt("Every day of 2025 that readers opened the English Wikipedia article “Moon”, drawn as the Moon looked that night.",
+      {x:X0-26,y:76,"font-size":12.5,"font-style":"italic",fill:"#7c8090"});
+  txt("Each row is one lunation, new moon to new moon. Size of each disc follows that day’s page views.",
+      {x:X0-26,y:93,"font-size":12.5,"font-style":"italic",fill:"#7c8090"});
+
+  var lx=X0-26, ly=Y0+12*ROWH+88;
+  txt("page views",{x:lx,y:ly+4,"font-size":11,fill:"#5d6170"});
+  var px=lx+80;
+  [4000,6000,10000,17000].forEach(function(v){
+    var R=rOf(v);
+    el("circle",{cx:px+R,cy:ly,r:R,fill:"#1a1d26",stroke:"#3a3e4b","stroke-width":0.6});
+    txt(v.toLocaleString("en-US"),{x:px+2*R+6,y:ly+4,"font-size":10.5,fill:"#5d6170"});
+    px+=2*R+52;
+  });
+  txt("Source: Wikimedia pageviews, user agents, en.wikipedia (CC0). Phases from 2025 new-moon times (UTC).",
+      {x:1010,y:ly+4,"text-anchor":"end","font-size":10,fill:"#454955"});
+})();
+</script>
+</body>
+</html>

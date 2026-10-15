@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -78,15 +79,13 @@ const txt = {
 }
 ---
 
-<main id="main" class="flex-1">
-<div class="mx-auto max-w-2xl px-4 py-14">
-  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+<MethodSheet title={txt.h1} workHref={workUrl} workLabel={txt.toWork}>
 
-  <section class="mb-10 border border-line bg-panel/60 p-5">
+  <section class="sheet-reveal mb-10">
     <h2 class="mb-2 font-semibold">{txt.s1}</h2>
     <p class="leading-relaxed">{txt.s1body}</p>
     <p class="mt-2">
-      <a href={kommgesUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{kommgesUrl}</a>
+      <a href={kommgesUrl} class="sheet-link" rel="noopener">{kommgesUrl}</a>
     </p>
   </section>
 
@@ -94,8 +93,8 @@ const txt = {
     <h2 class="mb-2 font-semibold">{txt.s2}</h2>
     <p class="leading-relaxed text-fg-muted">{txt.s2body}</p>
     <p class="mt-2 space-x-3">
-      <a href={easyprivacyLicenceUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ EasyPrivacy licence</a>
-      <a href={ddgTdsUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ DuckDuckGo TDS</a>
+      <a href={easyprivacyLicenceUrl} class="sheet-link" rel="noopener">→ EasyPrivacy licence</a>
+      <a href={ddgTdsUrl} class="sheet-link" rel="noopener">→ DuckDuckGo TDS</a>
     </p>
   </section>
 
@@ -107,9 +106,9 @@ const txt = {
     <p class="mt-2 leading-relaxed text-fg-muted"><span class="font-semibold text-fg">{txt.s4leakLabel}</span> {txt.s4leak}</p>
     <p class="mt-2 space-x-3">
       <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/beifang"
-        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/beifang</a>
+        class="sheet-link" rel="noopener">→ pipelines/beifang</a>
       <a href={infraListUrl}
-        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ {de ? 'kuratierte Firmenliste' : 'curated company list'}</a>
+        class="sheet-link" rel="noopener">→ {de ? 'kuratierte Firmenliste' : 'curated company list'}</a>
     </p>
   </section>
 
@@ -126,6 +125,4 @@ const txt = {
     <p class="mt-2 text-sm text-fg-muted">{txt.s7note}</p>
   </section>
 
-  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
-</div>
-</main>
+</MethodSheet>

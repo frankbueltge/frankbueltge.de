@@ -1,0 +1,1265 @@
+{
+ "session": "cycle-003-session-15",
+ "date": "2026-09-25",
+ "title": "Twice in eighteen",
+ "question": "The Field (session 170) accepts an abstract percentage as consistent with its paper if 100k/n rounded half-up OR truncated gives the printed value, and reports that 2 of its 41 recoveries match only by truncation. At which denominators can that choice matter, and what does accepting either rule cost?",
+ "law": {
+  "statement": "Print 100k/n to d decimals; in units of the last place that is S\u00b7k/n with S = 100\u00b710^d. Let q = n / gcd(n, S). Round-half-up and truncation disagree on exactly floor(q/2) of every q consecutive numerators \u2014 about half of them \u2014 and on none only when q = 1, that is when n divides S.",
+  "contrast_with_session_14": "Round-half-up against round-half-to-even can disagree only on an exact half, which exists at four reduced denominators per scale. Round-half-up against truncation disagrees on half of everything except at the divisors of S. The first choice almost never shows; the second almost always can."
+ },
+ "cases": [
+  {
+   "label": "whole percent (d = 0)",
+   "S": 100,
+   "tie_denominators": [
+    8,
+    40,
+    200
+   ],
+   "truncation_never_matters_at": [
+    1,
+    2,
+    4,
+    5,
+    10,
+    20,
+    25,
+    50,
+    100
+   ],
+   "denominators_where_truncation_can_matter": 1991,
+   "mean_share_of_numerators_where_truncation_matters": [
+    2913000756983776016823979375522565427638308044664311307761522803034009078650223153522779268827591064449718690005542853987189269369595863796551490120149387678825249319266143916579299211425675189638681267201240342337554202966301929351566706999623328538137878324155049118900143189736767121968290179738076128897957884275853109547459761192119200442094554145601421894195439678214634504820352331475674222221087199338612471516117714413316461825499288642495070728389491905064925806055126917503560690333064052563234429183956504708956014274382658155913452392907275263382521208792457520552150849030174735077082717593572742411302592144854049020909206833767347736764206257416687698732818605301011240154530360994937669003056758856731931864146243582466723541628008541409292901405578355597688720037997451955885068250259672720929429398459780944687104931259837402760616640044483717513,
+    5903038862400168566700637044436438366161574564592942964969840018476581106341688853715709408854255739921638711494958340313679490516459842063626700061253209913525439153638977751970141531705637050793626737446008168013992995004253713027688643207831915302451147501794136339689562715906731069640828880988916825881734451642010346806082178104093625237309806895315618631084781836770254229413363427213227866812943271835959502782268053997889225944036988993173588138624766146696031433430713160610236484977484819346169761952118174127305092945890138581327504411780520515562368542408563197703467632825097944850076856004654936204683367735968270838722181469915390386148963368175568311936782882992985049084518956272910597731187461345755774053772298546513224426043271521000947949261868762674612633816958522808814752645960133995085848991373933267106700808423101408445069781867400925000
+   ],
+   "mean_share_decimal": "0.4935"
+  },
+  {
+   "label": "one-decimal percent (d = 1)",
+   "S": 1000,
+   "tie_denominators": [
+    16,
+    80,
+    400,
+    2000
+   ],
+   "truncation_never_matters_at": [
+    1,
+    2,
+    4,
+    5,
+    8,
+    10,
+    20,
+    25,
+    40,
+    50,
+    100,
+    125,
+    200,
+    250,
+    500,
+    1000
+   ],
+   "denominators_where_truncation_can_matter": 1984,
+   "mean_share_of_numerators_where_truncation_matters": [
+    2316559402241194800623819617977428330326280437405073641345568639499873432207646176694981511136911455557356636010745738694055055573858650194816753285222523458897014518098786425951479017427687323518012668268519271892981950168064303413859939211970364484811478320251826610864683903797901004582933153525274296139869033134798348255715334823391163327479559916874999331416741087709233129184464956934445669244698888141785732612953614013946857725432295617375320940242713766071100740296240786877643144011101441300370422211257963766236954408501276106844898789733438883087300957433138198865713771684580923010037397547934847085922544605071926890588410663994743898261759711478477851460833217758275803064104927964305844951067101427738168383580288176219960835257619411978594401675931645017423469652857778490320830807995242255480465851171436542112889564963303975415414641280307057367,
+    4722431089920134853360509635549150692929259651674354371975872014781264885073351082972567527083404591937310969195966672250943592413167873650901360049002567930820351322911182201576113225364509640634901389956806534411194396003402970422150914566265532241960918001435309071751650172725384855712663104791133460705387561313608277444865742483274900189847845516252494904867825469416203383530690741770582293450354617468767602225814443198311380755229591194538870510899812917356825146744570528488189187981987855476935809561694539301844074356712110865062003529424416412449894833926850558162774106260078355880061484803723948963746694188774616670977745175932312308919170694540454649549426306394388039267615165018328478184949969076604619243017838837210579540834617216800758359409495010139690107053566818247051802116768107196068679193099146613685360646738481126756055825493920740000
+   ],
+   "mean_share_decimal": "0.4905"
+  },
+  {
+   "label": "two-decimal percent (d = 2)",
+   "S": 10000,
+   "tie_denominators": [
+    32,
+    160,
+    800
+   ],
+   "truncation_never_matters_at": [
+    1,
+    2,
+    4,
+    5,
+    8,
+    10,
+    16,
+    20,
+    25,
+    40,
+    50,
+    80,
+    100,
+    125,
+    200,
+    250,
+    400,
+    500,
+    625,
+    1000,
+    1250,
+    2000
+   ],
+   "denominators_where_truncation_can_matter": 1978,
+   "mean_share_of_numerators_where_truncation_matters": [
+    230621947027226052866265493783422390900607940703607546726431390966936688024151425278393006829166339951525693700627730491398107615229944259127181021737837787110368335791677501028573781821686963242739399674792808217284241163389606872044894294425266887980706882347504856071450648135332890736240280600274664993927159567227320768803941627618638401999268297155262442839782527989352952198743731599540765098114733658708980262058646032367884143887954776326336261232232857388181931499443322500011664028950482686311290374062130056240354757413650576422757587455857672279400211264863263943806791754970331690335238387963063225562764811186377259198449350627567496161390136231666382834129234187775805724743629995979720973246660425660265171655825210660904297694695765634701211944011588685052054530206354819223014271944900068783184784726699121421095235777634734690576114895851684643,
+    472243108992013485336050963554915069292925965167435437197587201478126488507335108297256752708340459193731096919596667225094359241316787365090136004900256793082035132291118220157611322536450964063490138995680653441119439600340297042215091456626553224196091800143530907175165017272538485571266310479113346070538756131360827744486574248327490018984784551625249490486782546941620338353069074177058229345035461746876760222581444319831138075522959119453887051089981291735682514674457052848818918798198785547693580956169453930184407435671211086506200352942441641244989483392685055816277410626007835588006148480372394896374669418877461667097774517593231230891917069454045464954942630639438803926761516501832847818494996907660461924301783883721057954083461721680075835940949501013969010705356681824705180211676810719606867919309914661368536064673848112675605582549392074000
+   ],
+   "mean_share_decimal": "0.4884"
+  }
+ ],
+ "summary": {
+  "units": 41,
+  "field_says_trunc_only": 2,
+  "trunc_only": [
+   70,
+   80
+  ],
+  "exact": 7,
+  "below_half": 15,
+  "rules_can_differ": 19,
+  "rules_can_differ_and_some_rule_matched": 18,
+  "half_up_among_those": 16,
+  "trunc_among_those": 2,
+  "matched_neither": [
+   92
+  ],
+  "expected_rules_can_differ_estimate": "18.26",
+  "admitted_k_half_up_total": 119,
+  "admitted_k_either_total": 163,
+  "widening_percent": "37.0",
+  "units_widened": [
+   7,
+   40,
+   42,
+   46,
+   70,
+   77,
+   78,
+   80,
+   108
+  ],
+  "units_n_over_500": 6,
+  "extra_on_n_over_500": 39,
+  "consistent_under_either": 40,
+  "consistent_under_half_up_alone": 38,
+  "inconsistent_under_either": 1,
+  "inconsistent_under_half_up_alone": 3,
+  "half_even_differs_from_half_up_on": []
+ },
+ "rows": [
+  {
+   "s": 7,
+   "uid": "42675189#2",
+   "printed": "13%",
+   "k": 161,
+   "n": 1199,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 1199,
+   "frac": [
+    513,
+    1199
+   ],
+   "frac_decimal": "0.4279",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 12,
+   "admitted_k_either": 18,
+   "expected_trunc_share": [
+    599,
+    1199
+   ]
+  },
+  {
+   "s": 10,
+   "uid": "42623526#0",
+   "printed": "59.3%",
+   "k": 16,
+   "n": 27,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 27,
+   "frac": [
+    16,
+    27
+   ],
+   "frac_decimal": "0.5926",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    13,
+    27
+   ]
+  },
+  {
+   "s": 11,
+   "uid": "42579268#6",
+   "printed": "0%",
+   "k": 0,
+   "n": 94,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 47,
+   "frac": [
+    0,
+    1
+   ],
+   "frac_decimal": "0.0000",
+   "where": "exact",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    23,
+    47
+   ]
+  },
+  {
+   "s": 15,
+   "uid": "42551052#7",
+   "printed": "31%",
+   "k": 4,
+   "n": 13,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 13,
+   "frac": [
+    10,
+    13
+   ],
+   "frac_decimal": "0.7692",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    6,
+    13
+   ]
+  },
+  {
+   "s": 17,
+   "uid": "42694812#1",
+   "printed": "10.94%",
+   "k": 7,
+   "n": 64,
+   "field_verdict": "RC",
+   "d": 2,
+   "S": 10000,
+   "q": 4,
+   "frac": [
+    3,
+    4
+   ],
+   "frac_decimal": "0.7500",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    1,
+    2
+   ]
+  },
+  {
+   "s": 18,
+   "uid": "42729048#3",
+   "printed": "90.5%",
+   "k": 38,
+   "n": 42,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 21,
+   "frac": [
+    16,
+    21
+   ],
+   "frac_decimal": "0.7619",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    10,
+    21
+   ]
+  },
+  {
+   "s": 19,
+   "uid": "42683438#2",
+   "printed": "70.6%",
+   "k": 72,
+   "n": 102,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 51,
+   "frac": [
+    15,
+    17
+   ],
+   "frac_decimal": "0.8824",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    25,
+    51
+   ]
+  },
+  {
+   "s": 25,
+   "uid": "42105307#0",
+   "printed": "63%",
+   "k": 12,
+   "n": 19,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 19,
+   "frac": [
+    3,
+    19
+   ],
+   "frac_decimal": "0.1579",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    9,
+    19
+   ]
+  },
+  {
+   "s": 38,
+   "uid": "42628030#1",
+   "printed": "66%",
+   "k": 46,
+   "n": 70,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 7,
+   "frac": [
+    5,
+    7
+   ],
+   "frac_decimal": "0.7143",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    3,
+    7
+   ]
+  },
+  {
+   "s": 40,
+   "uid": "42624617#1",
+   "printed": "17%",
+   "k": 27,
+   "n": 156,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 39,
+   "frac": [
+    4,
+    13
+   ],
+   "frac_decimal": "0.3077",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 2,
+   "admitted_k_either": 3,
+   "expected_trunc_share": [
+    19,
+    39
+   ]
+  },
+  {
+   "s": 42,
+   "uid": "42456089#9",
+   "printed": "19%",
+   "k": 33,
+   "n": 174,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 87,
+   "frac": [
+    28,
+    29
+   ],
+   "frac_decimal": "0.9655",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 2,
+   "expected_trunc_share": [
+    43,
+    87
+   ]
+  },
+  {
+   "s": 43,
+   "uid": "42634739#1",
+   "printed": "19.5%",
+   "k": 8,
+   "n": 41,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 41,
+   "frac": [
+    5,
+    41
+   ],
+   "frac_decimal": "0.1220",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    20,
+    41
+   ]
+  },
+  {
+   "s": 46,
+   "uid": "42613609#6",
+   "printed": "45%",
+   "k": 245,
+   "n": 549,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 549,
+   "frac": [
+    344,
+    549
+   ],
+   "frac_decimal": "0.6266",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 5,
+   "admitted_k_either": 8,
+   "expected_trunc_share": [
+    274,
+    549
+   ]
+  },
+  {
+   "s": 47,
+   "uid": "42561949#0",
+   "printed": "11.1%",
+   "k": 14,
+   "n": 126,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 63,
+   "frac": [
+    1,
+    9
+   ],
+   "frac_decimal": "0.1111",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    31,
+    63
+   ]
+  },
+  {
+   "s": 49,
+   "uid": "42601750#0",
+   "printed": "68.4%",
+   "k": 54,
+   "n": 79,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 79,
+   "frac": [
+    43,
+    79
+   ],
+   "frac_decimal": "0.5443",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    39,
+    79
+   ]
+  },
+  {
+   "s": 52,
+   "uid": "41825863#10",
+   "printed": "33.3%",
+   "k": 93,
+   "n": 279,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 279,
+   "frac": [
+    1,
+    3
+   ],
+   "frac_decimal": "0.3333",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    139,
+    279
+   ]
+  },
+  {
+   "s": 54,
+   "uid": "42609885#6",
+   "printed": "95.0%",
+   "k": 76,
+   "n": 80,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 2,
+   "frac": [
+    0,
+    1
+   ],
+   "frac_decimal": "0.0000",
+   "where": "exact",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    1,
+    2
+   ]
+  },
+  {
+   "s": 60,
+   "uid": "42642736#17",
+   "printed": "10.0%",
+   "k": 2,
+   "n": 20,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 1,
+   "frac": [
+    0,
+    1
+   ],
+   "frac_decimal": "0.0000",
+   "where": "exact",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    0,
+    1
+   ]
+  },
+  {
+   "s": 61,
+   "uid": "42584697#3",
+   "printed": "36.9%",
+   "k": 58,
+   "n": 157,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 157,
+   "frac": [
+    67,
+    157
+   ],
+   "frac_decimal": "0.4268",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    78,
+    157
+   ]
+  },
+  {
+   "s": 64,
+   "uid": "42580690#1",
+   "printed": "33.3%",
+   "k": 36,
+   "n": 108,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 27,
+   "frac": [
+    1,
+    3
+   ],
+   "frac_decimal": "0.3333",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    13,
+    27
+   ]
+  },
+  {
+   "s": 70,
+   "uid": "42275539#1",
+   "printed": "15%",
+   "k": 12,
+   "n": 77,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 77,
+   "frac": [
+    45,
+    77
+   ],
+   "frac_decimal": "0.5844",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": false,
+   "matches_trunc": true,
+   "matches_half_even": false,
+   "admitted_k_half_up": 0,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    38,
+    77
+   ]
+  },
+  {
+   "s": 73,
+   "uid": "42603901#13",
+   "printed": "1.6%",
+   "k": 2,
+   "n": 124,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 31,
+   "frac": [
+    4,
+    31
+   ],
+   "frac_decimal": "0.1290",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    15,
+    31
+   ]
+  },
+  {
+   "s": 74,
+   "uid": "42572030#2",
+   "printed": "55.6%",
+   "k": 15,
+   "n": 27,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 27,
+   "frac": [
+    5,
+    9
+   ],
+   "frac_decimal": "0.5556",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    13,
+    27
+   ]
+  },
+  {
+   "s": 77,
+   "uid": "42568095#0",
+   "printed": "51%",
+   "k": 2473,
+   "n": 4890,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 489,
+   "frac": [
+    280,
+    489
+   ],
+   "frac_decimal": "0.5726",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 49,
+   "admitted_k_either": 73,
+   "expected_trunc_share": [
+    244,
+    489
+   ]
+  },
+  {
+   "s": 78,
+   "uid": "42568095#1",
+   "printed": "27%",
+   "k": 283,
+   "n": 1065,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 213,
+   "frac": [
+    122,
+    213
+   ],
+   "frac_decimal": "0.5728",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 10,
+   "admitted_k_either": 16,
+   "expected_trunc_share": [
+    106,
+    213
+   ]
+  },
+  {
+   "s": 79,
+   "uid": "42566360#0",
+   "printed": "53.0%",
+   "k": 123,
+   "n": 232,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 29,
+   "frac": [
+    5,
+    29
+   ],
+   "frac_decimal": "0.1724",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    14,
+    29
+   ]
+  },
+  {
+   "s": 80,
+   "uid": "42565876#1",
+   "printed": "25%",
+   "k": 23,
+   "n": 89,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 89,
+   "frac": [
+    75,
+    89
+   ],
+   "frac_decimal": "0.8427",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": false,
+   "matches_trunc": true,
+   "matches_half_even": false,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 2,
+   "expected_trunc_share": [
+    44,
+    89
+   ]
+  },
+  {
+   "s": 82,
+   "uid": "42562921#2",
+   "printed": "85%",
+   "k": 17,
+   "n": 20,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 1,
+   "frac": [
+    0,
+    1
+   ],
+   "frac_decimal": "0.0000",
+   "where": "exact",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    0,
+    1
+   ]
+  },
+  {
+   "s": 88,
+   "uid": "42390245#3",
+   "printed": "18.0%",
+   "k": 31,
+   "n": 172,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 43,
+   "frac": [
+    10,
+    43
+   ],
+   "frac_decimal": "0.2326",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    21,
+    43
+   ]
+  },
+  {
+   "s": 91,
+   "uid": "42658496#1",
+   "printed": "49.3%",
+   "k": 71,
+   "n": 144,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 18,
+   "frac": [
+    1,
+    18
+   ],
+   "frac_decimal": "0.0556",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    1,
+    2
+   ]
+  },
+  {
+   "s": 92,
+   "uid": "42658496#3",
+   "printed": "97.2%",
+   "k": 58,
+   "n": 60,
+   "field_verdict": "RI",
+   "d": 1,
+   "S": 1000,
+   "q": 3,
+   "frac": [
+    2,
+    3
+   ],
+   "frac_decimal": "0.6667",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": false,
+   "matches_trunc": false,
+   "matches_half_even": false,
+   "admitted_k_half_up": 0,
+   "admitted_k_either": 0,
+   "expected_trunc_share": [
+    1,
+    3
+   ]
+  },
+  {
+   "s": 93,
+   "uid": "42646841#1",
+   "printed": "1.5%",
+   "k": 1,
+   "n": 66,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 33,
+   "frac": [
+    5,
+    33
+   ],
+   "frac_decimal": "0.1515",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    16,
+    33
+   ]
+  },
+  {
+   "s": 95,
+   "uid": "42640640#4",
+   "printed": "24.2%",
+   "k": 31,
+   "n": 128,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 16,
+   "frac": [
+    3,
+    16
+   ],
+   "frac_decimal": "0.1875",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    1,
+    2
+   ]
+  },
+  {
+   "s": 99,
+   "uid": "42579280#0",
+   "printed": "83.2%",
+   "k": 450,
+   "n": 541,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 541,
+   "frac": [
+    429,
+    541
+   ],
+   "frac_decimal": "0.7930",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    270,
+    541
+   ]
+  },
+  {
+   "s": 100,
+   "uid": "42579279#1",
+   "printed": "63.9%",
+   "k": 53,
+   "n": 83,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 83,
+   "frac": [
+    46,
+    83
+   ],
+   "frac_decimal": "0.5542",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    41,
+    83
+   ]
+  },
+  {
+   "s": 105,
+   "uid": "42622665#1",
+   "printed": "100%",
+   "k": 1425,
+   "n": 1425,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 57,
+   "frac": [
+    0,
+    1
+   ],
+   "frac_decimal": "0.0000",
+   "where": "exact",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 8,
+   "admitted_k_either": 8,
+   "expected_trunc_share": [
+    28,
+    57
+   ]
+  },
+  {
+   "s": 108,
+   "uid": "42605851#0",
+   "printed": "25%",
+   "k": 21,
+   "n": 85,
+   "field_verdict": "RC",
+   "d": 0,
+   "S": 100,
+   "q": 17,
+   "frac": [
+    12,
+    17
+   ],
+   "frac_decimal": "0.7059",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 2,
+   "expected_trunc_share": [
+    8,
+    17
+   ]
+  },
+  {
+   "s": 111,
+   "uid": "42592875#4",
+   "printed": "59.8%",
+   "k": 67,
+   "n": 112,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 14,
+   "frac": [
+    3,
+    14
+   ],
+   "frac_decimal": "0.2143",
+   "where": "below half",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    1,
+    2
+   ]
+  },
+  {
+   "s": 112,
+   "uid": "42568201#1",
+   "printed": "72.0%",
+   "k": 18,
+   "n": 25,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 1,
+   "frac": [
+    0,
+    1
+   ],
+   "frac_decimal": "0.0000",
+   "where": "exact",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    0,
+    1
+   ]
+  },
+  {
+   "s": 113,
+   "uid": "42559797#2",
+   "printed": "65.0%",
+   "k": 104,
+   "n": 160,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 4,
+   "frac": [
+    0,
+    1
+   ],
+   "frac_decimal": "0.0000",
+   "where": "exact",
+   "rules_can_differ": false,
+   "matches_half_up": true,
+   "matches_trunc": true,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    1,
+    2
+   ]
+  },
+  {
+   "s": 117,
+   "uid": "42547951#1",
+   "printed": "66.7%",
+   "k": 40,
+   "n": 60,
+   "field_verdict": "RC",
+   "d": 1,
+   "S": 1000,
+   "q": 3,
+   "frac": [
+    2,
+    3
+   ],
+   "frac_decimal": "0.6667",
+   "where": "at or above half",
+   "rules_can_differ": true,
+   "matches_half_up": true,
+   "matches_trunc": false,
+   "matches_half_even": true,
+   "admitted_k_half_up": 1,
+   "admitted_k_either": 1,
+   "expected_trunc_share": [
+    1,
+    3
+   ]
+  }
+ ],
+ "source": {
+  "source": "https://raw.githubusercontent.com/frankbueltge/field-research/main/artifacts/2026-09-25-the-paper-behind-the-number/data/reading.json",
+  "source_sha256": "4a65d6686f65c6c0808f174c2c3c74e301c1c2e243f96b54955333197e37932a",
+  "field_main_at_fetch": "e3096d6abe1de31fea2d8938c34648862668a30c",
+  "fetched": "2026-09-25"
+ }
+}

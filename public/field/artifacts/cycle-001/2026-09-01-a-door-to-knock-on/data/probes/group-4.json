@@ -1,0 +1,98 @@
+[
+  {
+    "publisher": "PLoS (Public Library of Science)",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "pub-ethics@plos.org",
+    "evidence_url": "https://plos.org/research-integrity-and-ethics/",
+    "quote": "If you have concerns about the integrity of a PLOS article, please email pub-ethics@plos.org",
+    "http_status": "200",
+    "fetch_note": "Fetched directly with curl (200) and confirmed with a fetch tool. The address is Cloudflare-obfuscated in the raw HTML as a data-cfemail attribute; decoded it to pub-ethics@plos.org using the standard XOR scheme and cross-checked against a fetch-tool render of the same page, which showed the same address in plain text.",
+    "evidence_note": "",
+    "second_page_url": ""
+  },
+  {
+    "publisher": "Nature Portfolio (the journals arm within Springer Nature; probe its own site)",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "ethics.reporting@springernature.com",
+    "evidence_url": "https://www.nature.com/nature-portfolio/editorial-policies/appealsandcomplaints",
+    "quote": "please contact the Springer Nature Research Integrity Group by email",
+    "http_status": "200",
+    "fetch_note": "Fetched directly with curl -L (200); a browser-style User-Agent was needed. A first a fetch tool attempt hit a 303 redirect to an idp.nature.com authorize URL, so the page was retrieved and parsed via curl instead; the mailto:ethics.reporting@springernature.com link was found twice in the raw HTML.",
+    "evidence_note": "",
+    "second_page_url": ""
+  },
+  {
+    "publisher": "BMC (BioMed Central) — probe the imprint's own site",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "ethics.reporting@springernature.com",
+    "evidence_url": "https://www.biomedcentral.com/getpublished/editorial-policies",
+    "quote": "please approach the editorial and publishing management team by email to ethics.reporting@springernature.com",
+    "http_status": "200",
+    "fetch_note": "Fetched directly with curl -L (200). Page is a single long editorial-policies document with an in-page 'Appeals and complaints' section carrying the address.",
+    "evidence_note": "",
+    "second_page_url": ""
+  },
+  {
+    "publisher": "The Company of Biologists",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "dev@biologists.com (and the parallel per-journal addresses jcs@biologists.com, jeb@biologists.com, dmm@biologists.com, bio@biologists.com)",
+    "evidence_url": "https://www.biologists.com/publishing-policies/",
+    "quote": "Contacts for complaints and appeals Development: dev@biologists.com Journal of Cell Science: jcs@biologists.com",
+    "http_status": "200",
+    "fetch_note": "Fetched directly with curl -L (200) and cross-checked with a fetch tool.",
+    "evidence_note": "The page's 'Complaint about publication ethics' section names these same per-journal addresses as the contacts for complaints and appeals (an in-house Ethics Coordinator is also named but no separate address is given for that role), so they are treated as dedicated ethics/complaint routes rather than plain general-enquiry addresses.",
+    "second_page_url": ""
+  },
+  {
+    "publisher": "MDPI",
+    "class": "A",
+    "route_kind": "dedicated_form",
+    "route_value": "https://www.mdpi.com/about/ethics_contactform",
+    "evidence_url": "https://www.mdpi.com/ethics",
+    "quote": "Should you have any concerns about a published manuscript, we encourage you to use this form",
+    "http_status": "403",
+    "fetch_note": "Direct curl (with default, browser, and a crawler user agents) and a fetch tool all returned 403 Forbidden. Page content was instead obtained via fetch tool a fetch tool, which returned the full page text and the 'this form' hyperlink target, https://www.mdpi.com/about/ethics_contactform. That form URL itself also returns 403 to direct curl, so it could not be independently status-checked; its existence and purpose come from the fetch-tool-rendered link and surrounding 'Comments and Complaints'/'Contact' sections of the ethics page.",
+    "evidence_note": "Page content came from a fetch tool's rendering a fetch tool, not a direct 200 fetch, because MDPI's servers return 403 to this session's direct HTTP client for both the ethics page and the form URL. The quoted text and the form URL were both present in the fetched page content.",
+    "second_page_url": "https://www.mdpi.com/about/ethics_contactform"
+  },
+  {
+    "publisher": "Cambridge University Press",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "publishingethics@cambridge.org",
+    "evidence_url": "https://www.cambridge.org/core/services/publishing-ethics/core-editorial-policies-journals",
+    "quote": "should raise their concern with the relevant editor or email publishingethics@cambridge.org",
+    "http_status": "200",
+    "fetch_note": "Fetched directly with curl -L (200); mailto:publishingethics@cambridge.org link found in raw HTML.",
+    "evidence_note": "",
+    "second_page_url": ""
+  },
+  {
+    "publisher": "BioMed Central (BMC) — record this as a SECOND, separate probe of the same imprint reached by a different search route",
+    "class": "A",
+    "route_kind": "dedicated_email",
+    "route_value": "ethics.reporting@springernature.com",
+    "evidence_url": "https://www.biomedcentral.com/getpublished/editorial-policies",
+    "quote": "If no publishing contact is identified send the query to ethics.reporting@springernature.com",
+    "http_status": "200",
+    "fetch_note": "Fetched directly with curl -L (200).",
+    "evidence_note": "This second probe used a differently worded search ('BMC journals corrections retractions matters arising how to raise a concern') and independently landed on the same URL as row 3, https://www.biomedcentral.com/getpublished/editorial-policies -- same page, not a different one. A mirror of the identical content was also found at https://link.springer.com/brands/bmc/editorial-policies (checked, HTTP 200), confirming this is BMC's one canonical editorial-policies document rather than a second distinct page.",
+    "second_page_url": "https://link.springer.com/brands/bmc/editorial-policies"
+  },
+  {
+    "publisher": "International Scientific Information, Inc (the publisher of Medical Science Monitor)",
+    "class": "B",
+    "route_kind": "generic_email",
+    "route_value": "danielle.benz@isi-science.com",
+    "evidence_url": "https://medscimonit.com/contactUs",
+    "quote": "Danielle Benz (Managing Editor) danielle.benz@isi-science.com",
+    "http_status": "200",
+    "fetch_note": "Fetched directly with curl -L (200). Also checked https://medscimonit.com/instructions (200) and the errata/retraction listing at https://medscimonit.com/errates/index/pg/1 for a dedicated ethics-complaint route; neither described one.",
+    "evidence_note": "No page on medscimonit.com names a dedicated research-integrity, publication-ethics, or post-publication-concerns contact or form. The Contact Us page lists a phone number and a staff directory (Editor-in-Chief, Managing Editor, Production, Language Editors, an 'Ethics and Publication Policy Advisor' named with no email of her own) with the Managing Editor's personal email as the only address plausibly reachable by a stranger; treated as a generic named-editor contact rather than a dedicated ethics channel. The Instructions for Authors page mentions image/data concerns leading to rejection or retraction but gives no complaint route, and the errata/retraction page is only a list of past notices with no submission channel.",
+    "second_page_url": "https://medscimonit.com/instructions"
+  }
+]

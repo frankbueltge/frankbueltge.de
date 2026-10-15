@@ -60,6 +60,13 @@ export interface ArchWork {
   id: string
   title: string
   instances: ArchWorkInstance[]
+  /** The day the CURRENT iteration was built, as the work's own README states it ("Current:
+   *  **iteration 11**, built 2026-09-03 (session 21)"). A work candidate this practice keeps
+   *  re-making has no single birth date — the honest date is the one it last landed under, and
+   *  it is the practice's own sentence, never this module's guess. Absent where the README
+   *  states none: the house then knows the work but not when it last moved, and says so rather
+   *  than borrowing a date from the session record beside it. */
+  built?: string
 }
 
 export interface ArchFacts {
@@ -152,7 +159,10 @@ export function readArchFacts(root: string = ARCH_MIRROR): ArchFacts {
         .filter((d) => d.isDirectory())
         .map((d) => {
           const readme = join(worksDir, d.name, 'README.md')
-          const title = (existsSync(readme) && h1(readFileSync(readme, 'utf8'))) || d.name
+          const readmeText = existsSync(readme) ? readFileSync(readme, 'utf8') : ''
+          const title = (readmeText && h1(readmeText)) || d.name
+          // The README wraps, so the date can sit on the line after the word: \s+ not " ".
+          const built = /\bbuilt\s+(\d{4}-\d{2}-\d{2})/.exec(readmeText)?.[1]
           // built instances at any depth — the practice keeps each iteration in its own
           // directory and freezes the earlier ones whole; template.html is the generator's
           // mould, not an instance (the practice's own README says so)
@@ -169,7 +179,7 @@ export function readArchFacts(root: string = ARCH_MIRROR): ArchFacts {
             // one a visitor should meet first
             .sort((a, b) => b.localeCompare(a, 'en', { numeric: true }))
             .map((f) => ({ path: `works/${d.name}/${f}`, id: f.replace(/\.html$/, '') }))
-          return { id: d.name, title, instances }
+          return { id: d.name, title, instances, built }
         })
         .sort((a, b) => a.id.localeCompare(b.id))
     : []

@@ -3,6 +3,9 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import { getProject } from '@/data/projects'
 import { SITE, type Locale } from '@/lib/site'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props { slug: string }
 const { slug } = Astro.props
@@ -22,14 +25,11 @@ const visitLabel = !p.url
 ---
 
 <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 py-16 sm:py-24">
-  <a href={getRelativeLocaleUrl(locale, '/work')} class="font-mono text-xs text-fg-muted transition-colors hover:text-fg">← {t(locale, 'work.back')}</a>
+  <a href={getRelativeLocaleUrl(locale, '/work')} class="sheet-link">← {t(locale, 'work.back')}</a>
 
-  <div class="mt-8 flex flex-wrap items-center gap-3 font-mono text-xs text-fg-faint">
-    <span>{p.year}</span><span class="opacity-40">·</span><span>{p.status[locale]}</span>
-  </div>
-  <h1 class="mt-4 text-[clamp(32px,5vw,56px)] font-bold tracking-[-0.03em]">{p.name}</h1>
-  <p class="mt-3 text-xl text-fg sm:text-2xl">{p.tagline[locale]}</p>
-  <p class="mt-2 text-sm text-fg-muted">{p.role[locale]}</p>
+  <SheetHead class="mt-8 mb-0" title={p.name} sub={p.tagline[locale]} badges={[String(p.year), p.status[locale]]}>
+    <p class="mt-3 text-sm text-fg-muted">{p.role[locale]}</p>
+  </SheetHead>
 
   <div class="mt-8 flex flex-wrap gap-3 text-sm">
     {p.url ? (
@@ -46,14 +46,14 @@ const visitLabel = !p.url
 
   <p class="mt-10 text-base leading-relaxed text-fg-muted">{p.description[locale]}</p>
 
-  <h2 class="mt-10 font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'work.highlights')}</h2>
+  <h2 class="kicker mt-10">{t(locale, 'work.highlights')}</h2>
   <ul class="mt-4 space-y-3">
     {p.highlights[locale].map((h) => (
       <li class="flex gap-3 text-fg-muted"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>{h}</li>
     ))}
   </ul>
 
-  <h2 class="mt-10 font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'work.tech')}</h2>
+  <h2 class="kicker mt-10">{t(locale, 'work.tech')}</h2>
   <ul class="mt-4 flex flex-wrap gap-2">
     {p.tech.map((tech) => (
       <li class="rounded-full border border-line bg-panel-2/60 px-3 py-1 font-mono text-xs text-fg-muted">{tech}</li>
@@ -62,7 +62,7 @@ const visitLabel = !p.url
 
   {p.channels && (
     <>
-      <h2 class="mt-10 font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'work.channels')}</h2>
+      <h2 class="kicker mt-10">{t(locale, 'work.channels')}</h2>
       <ul class="mt-4 flex flex-wrap gap-2">
         {p.channels.map((c) => (
           <li><a href={c.href} target="_blank" rel="noreferrer" class="rounded-full border border-line px-3 py-1 text-sm text-fg-muted transition-colors hover:border-fg-muted hover:text-fg">{c.label} ↗</a></li>

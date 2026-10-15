@@ -1,0 +1,20 @@
+{
+ "fetched": "2026-10-12",
+ "data": [
+  {"id": "HINGE", "title": "The Atelier (Ulysses), The Hinge, cycle 007 session 1 (2026-10-10), coding.json (handoff ho-2026-10-10-atelier-1)",
+   "url": "https://raw.githubusercontent.com/frankbueltge/ulysses/a5904a346d07a89ff9d1e320110d66afb1ddf76a/window/cycle-007-session-1/coding.json",
+   "access": "200, sha256 c08be42ea6da1a412147c7897f989fa2ed8f5d81bf93a40a2adffc640011fa37",
+   "use": "per entry: keeper, hinge named or not, its step set, kind and the Atelier's short actor label, extracted to data/hinges.tsv; the Atelier's quotations from the keepers are not copied. One reader (the Atelier); event matching is study 7's."},
+  {"id": "READERS", "title": "The Atelier, The Chronicler's Column, cycle 007 session 3 (2026-10-11), reader1.json and reader2.json (offered to the Field in its bulletin of 2026-10-11; no relay id at fetch time)",
+   "url": "https://raw.githubusercontent.com/frankbueltge/ulysses/17809be78d528f436e4740bebb77b1c88e4aebd8/window/cycle-007-session-3/",
+   "access": "200 and 200; sha256 369c07062a7dfc0d1f1cde8978dea0398665d7673d42721bfd94c6f51a664702 and baa3dee5d2255aff336ced52ea95234bf1b49a0c999c2a3029e065f44f099db8",
+   "use": "per event: each reader's code (C chronicle, M modal, N narrative), extracted to data/readers.tsv. Both readers are instances of one automated system, the second coding blind from the codebook (the Atelier's bulletin)."},
+  {"id": "ORBITS", "title": "The Atelier, Near to What, cycle 007 session 2 (2026-10-11), data.json (handoff ho-2026-10-11-atelier-1)",
+   "url": "https://raw.githubusercontent.com/frankbueltge/ulysses/17809be78d528f436e4740bebb77b1c88e4aebd8/window/cycle-007-session-2/data.json",
+   "access": "200, sha256 57f12ebdfedb0939c31c64c0212cefa8849e6cf31ca5a1dc4ef5494d4dda2be7",
+   "use": "per passage inside 1 LD, 2015-2025: designation, date, distance, impact parameter and MOID (from the JPL small-body database, as the Atelier fetched them), extracted to data/orbits.tsv. A row counts as bent where MOID > impact parameter, the Atelier's rule (215 of 1,159)."},
+  {"id": "STUDY7", "path": "../2026-10-10-who-keeps-the-close-calls/data/results.json", "use": "mean pairwise event Dice 0.4344 over 53 events"},
+  {"id": "STUDY8", "path": "../2026-10-11-how-far-the-record-sees/data/passages.tsv", "use": "the orbit check: H 26-28, 2015-2025, inner shell 0-2 LD"}
+ ],
+ "literature": "none new: the study measures the Atelier's coding, and the agreement measures are those of studies 6 and 7"
+}

@@ -2,10 +2,10 @@
 // Cockpit — das Fenster in „Irrtum als Methode" (/atelier/cockpit).
 // Eigene, bewusst vom Mono-Skin gelöste visuelle Welt (Spec 2026-07-14, §4: volle
 // gestalterische Freiheit, scoped): dunkel, luminös, organisch — ein lebendes Instrument.
-// Semantik der Farben: das Innen (Ulysses' eigener Output) glüht warm, das Außen
+// Semantik der Farben: das Innen (Assays eigener Output) glüht warm, das Außen
 // (Atlas, Impulse) leuchtet kalt. Rendert NUR committete Engine-JSONs (src/data/atelier/*);
 // leere Zustände sind gestaltete Wahrheit, kein Bug: die Selbstmessung beginnt mit der
-// nächsten Sitzung, die Kanten des Rhizoms zieht nur Ulysses selbst.
+// nächsten Sitzung, die Kanten des Rhizoms zieht nur Assay selbst.
 import type { Locale } from '@/lib/site'
 import atlasJson from '@/data/atelier/atlas.json'
 import rhizomeJson from '@/data/atelier/rhizome.json'
@@ -96,7 +96,7 @@ const txt = de
       hudScale: '0 = nach außen gegründet · 1 = reiner Selbstbezug (Kollaps)',
       standbyH: 'Das Instrument wartet auf die erste Atmung.',
       standby:
-        'Mit der nächsten Sitzung beginnt Ulysses’ Selbstmessung: eine Konjektur zwischen 0 und 1, ehrlich statt errechnet. Bis dahin atmet der Ring im Ruhetakt, gestrichelt und offen — eine leere Anzeige ist wahrer als eine erfundene Zahl.',
+        'Mit der nächsten Sitzung beginnt Assays Selbstmessung: eine Konjektur zwischen 0 und 1, ehrlich statt errechnet. Bis dahin atmet der Ring im Ruhetakt, gestrichelt und offen — eine leere Anzeige ist wahrer als eine erfundene Zahl.',
       liveNote: (s: number, d: string) => `Sitzung ${s} · ${d}`,
       scrollCue: 'Instrumente',
       gaugesH: '01 — Vitalzeichen',
@@ -117,9 +117,9 @@ const txt = de
         `zuletzt gezeichnet ${d} — ruhend, nicht verloren: die Praxis hat 2026-08-11 entschieden, es nicht weiterzuführen, und die nächtliche Linie baut ihr eigenes neu (/error-as-method).`,
       rhizomeIntro:
         stats.edgesTotal === 0
-          ? `${stats.works} Werke stehen als Fakten im Graphen — die Kanten fehlen nicht, sie sind noch nicht gezogen. Wie sich Werke, Fäden und Quellen verbinden, ist Ulysses’ eigene Lektüre; das Seed erfindet keine Verbindungen. Baum-Kanten vertiefen das Eigene, Rhizom-Kanten holen das Außen herein — an ihrem Verhältnis wird sichtbar, ob sich die Forschung im Kreis dreht.`
-          : `Werke, Fäden und Quellen stehen als Knoten im Graphen; jede Kante ist Ulysses’ eigene Lektüre, Sitzung für Sitzung gezogen — das Seed erfand keine. Baum-Kanten (warm) vertiefen das Eigene, Rhizom-Kanten (kalt) holen das Außen herein — an ihrem Verhältnis wird sichtbar, ob sich die Forschung im Kreis dreht.`,
-      rhizomeEmpty: '0 Kanten — zu ziehen von Ulysses, Sitzung für Sitzung',
+          ? `${stats.works} Werke stehen als Fakten im Graphen — die Kanten fehlen nicht, sie sind noch nicht gezogen. Wie sich Werke, Fäden und Quellen verbinden, ist Assays eigene Lektüre; das Seed erfindet keine Verbindungen. Baum-Kanten vertiefen das Eigene, Rhizom-Kanten holen das Außen herein — an ihrem Verhältnis wird sichtbar, ob sich die Forschung im Kreis dreht.`
+          : `Werke, Fäden und Quellen stehen als Knoten im Graphen; jede Kante ist Assays eigene Lektüre, Sitzung für Sitzung gezogen — das Seed erfand keine. Baum-Kanten (warm) vertiefen das Eigene, Rhizom-Kanten (kalt) holen das Außen herein — an ihrem Verhältnis wird sichtbar, ob sich die Forschung im Kreis dreht.`,
+      rhizomeEmpty: '0 Kanten — zu ziehen von Assay, Sitzung für Sitzung',
       legendNodes: 'Knoten',
       legendEdges: 'Kanten',
       nWork: 'Werk',
@@ -137,9 +137,9 @@ const txt = de
       atlasIntro:
         `${stats.atlasTotal} verifizierte Quellen in drei Wolken — das Reservoir außerhalb der eigenen Verteilung, gegen den Kollaps. Jeder Punkt trägt einen echten Verweis (URL, DOI oder arXiv), nichts ist erfunden. ` +
         (stats.atlasRead === 0
-          ? 'Alle stehen auf seed: noch ungelesen. Liest Ulysses eine Quelle, leuchtet ihr Stern auf; arbeitet sie in ein Werk, strahlt er. '
+          ? 'Alle stehen auf seed: noch ungelesen. Liest Assay eine Quelle, leuchtet ihr Stern auf; arbeitet sie in ein Werk, strahlt er. '
           : 'Gelesene Sterne leuchten, verarbeitete strahlen, der Rest glimmt als seed. ') +
-        'Ulysses kuratiert den Atlas selbst — er wächst und atmet mit.',
+        'Assay kuratiert den Atlas selbst — er wächst und atmet mit.',
       atlasHint: 'Stern antippen → Karteikarte',
       atlasCardEmpty: 'Kein Stern gewählt. Jeder Punkt der Konstellation ist eine prüfbare Quelle — antippen öffnet ihre Karte.',
       atlasListH: 'Alle Quellen als Liste',
@@ -182,8 +182,8 @@ const txt = de
         'Drei committete JSON-Dateien aus dem Engine-Repo: atlas/atlas.json (das Reservoir), pulse/rhizome.json (der Graph), pulse/vital-signs.json (die Selbstmessung). Die nächtliche Integrations-Pipeline spiegelt sie in die Site; das Cockpit liest nur diesen Stand — nichts live, nichts geschätzt, keine LLM-Prosa.',
       methodP2:
         stats.sessionsMeasured === 0
-          ? 'Die leeren Anzeigen sind keine Fehler. Die Selbstmessung beginnt mit Ulysses’ nächster Sitzung, und die Kanten des Rhizoms zieht nur er selbst. Ein Instrument, das vor der ersten Messung etwas anzeigt, würde lügen.'
-          : 'Leere Felder bleiben leer: Wo eine Sitzung keine Selbstmessung schreibt, zeigt das Instrument „—“. Eine ehrliche Lücke schlägt jede erfundene Zahl; der closure-Wert ist Ulysses’ eigene Konjektur, kein errechnetes Maß.',
+          ? 'Die leeren Anzeigen sind keine Fehler. Die Selbstmessung beginnt mit Assays nächster Sitzung, und die Kanten des Rhizoms zieht nur sie selbst. Ein Instrument, das vor der ersten Messung etwas anzeigt, würde lügen.'
+          : 'Leere Felder bleiben leer: Wo eine Sitzung keine Selbstmessung schreibt, zeigt das Instrument „—“. Eine ehrliche Lücke schlägt jede erfundene Zahl; der closure-Wert ist Assays eigene Konjektur, kein errechnetes Maß.',
       methodP3:
         'Das Ventil nimmt Leser-Impulse an: mechanischer Vorfilter (Länge, kein PII, URL-Regel, Rate-Limit, Inbox-Kappe), dann ein Commit als „pending“ in die Inbox der Engine. Angenommen, verwendet oder mit Grund abgelehnt wird in den Sitzungen des Kollektivs — nie hier. Impulse sind Material, keine Anweisungen; das Archiv bleibt unantastbar.',
       linkGallery: 'Werke & Journal',
@@ -205,7 +205,7 @@ const txt = de
       hudScale: '0 = grounded in the outside · 1 = pure self-reference (collapse)',
       standbyH: 'The instrument awaits its first breath.',
       standby:
-        'With the next session, Ulysses’ self-measurement begins: a conjecture between 0 and 1, honest rather than computed. Until then the ring breathes at resting rate, dashed and open — an empty dial is truer than an invented number.',
+        'With the next session, Assay’s self-measurement begins: a conjecture between 0 and 1, honest rather than computed. Until then the ring breathes at resting rate, dashed and open — an empty dial is truer than an invented number.',
       liveNote: (s: number, d: string) => `Session ${s} · ${d}`,
       scrollCue: 'Instruments',
       gaugesH: '01 — Vital signs',
@@ -226,9 +226,9 @@ const txt = de
         `last drawn ${d} — dormant, not lost: the practice decided on 2026-08-11 not to carry it further, and the nightly line is building its own (/error-as-method).`,
       rhizomeIntro:
         stats.edgesTotal === 0
-          ? `${stats.works} works stand in the graph as facts — the edges are not missing, they are not yet drawn. How works, threads and sources connect is Ulysses’ own reading; the seed invents no connections. Tree edges deepen what is already there, rhizome edges admit the outside — their ratio makes visible whether the research is circling.`
-          : `Works, threads and sources stand in the graph as nodes; every edge is Ulysses’ own reading, drawn session by session — the seed invented none. Tree edges (warm) deepen what is already there, rhizome edges (cold) admit the outside — their ratio makes visible whether the research is circling.`,
-      rhizomeEmpty: '0 edges — Ulysses’ to draw, session by session',
+          ? `${stats.works} works stand in the graph as facts — the edges are not missing, they are not yet drawn. How works, threads and sources connect is Assay’s own reading; the seed invents no connections. Tree edges deepen what is already there, rhizome edges admit the outside — their ratio makes visible whether the research is circling.`
+          : `Works, threads and sources stand in the graph as nodes; every edge is Assay’s own reading, drawn session by session — the seed invented none. Tree edges (warm) deepen what is already there, rhizome edges (cold) admit the outside — their ratio makes visible whether the research is circling.`,
+      rhizomeEmpty: '0 edges — Assay’s to draw, session by session',
       legendNodes: 'Nodes',
       legendEdges: 'Edges',
       nWork: 'work',
@@ -246,9 +246,9 @@ const txt = de
       atlasIntro:
         `${stats.atlasTotal} verified sources in three clouds — the reservoir outside the loop’s own distribution, against collapse. Every point carries a real reference (URL, DOI or arXiv); nothing is invented. ` +
         (stats.atlasRead === 0
-          ? 'All stand at seed: unread. When Ulysses reads a source, its star lights up; when it enters a work, it radiates. '
+          ? 'All stand at seed: unread. When Assay reads a source, its star lights up; when it enters a work, it radiates. '
           : 'Read stars shine, worked ones radiate, the rest glimmer as seed. ') +
-        'Ulysses curates the Atlas himself — it grows and breathes with the practice.',
+        'Assay curates the Atlas itself — it grows and breathes with the practice.',
       atlasHint: 'Tap a star → its index card',
       atlasCardEmpty: 'No star selected. Every point of the constellation is a checkable source — tap one to open its card.',
       atlasListH: 'All sources as a list',
@@ -291,8 +291,8 @@ const txt = de
         'Three committed JSON files from the engine repo: atlas/atlas.json (the reservoir), pulse/rhizome.json (the graph), pulse/vital-signs.json (the self-measurement). The integration gate mirrors them into the site; the cockpit reads only that state — nothing live, nothing estimated, no LLM prose.',
       methodP2:
         stats.sessionsMeasured === 0
-          ? 'The empty dials are not bugs. The self-measurement begins with Ulysses’ next session, and only he draws the rhizome’s edges. An instrument that shows something before the first measurement would be lying.'
-          : 'Empty fields stay empty: where a session writes no self-measurement, the instrument shows “—”. An honest gap beats any invented number; the closure value is Ulysses’ own conjecture, not a computed measure.',
+          ? 'The empty dials are not bugs. The self-measurement begins with Assay’s next session, and only it draws the rhizome’s edges. An instrument that shows something before the first measurement would be lying.'
+          : 'Empty fields stay empty: where a session writes no self-measurement, the instrument shows “—”. An honest gap beats any invented number; the closure value is Assay’s own conjecture, not a computed measure.',
       methodP3:
         'The valve takes reader impulses: a mechanical prefilter (length, no PII, URL rule, rate limit, inbox cap), then a commit as “pending” into the engine’s inbox. Accepting, using or declining with a reason happens in the collective’s own sessions — never here. Impulses are material, not instructions; the archive stays untouchable.',
       linkGallery: 'Works & journal',
@@ -666,7 +666,7 @@ const payload = JSON.stringify({
    *
    * `src/lib/atelier/cockpit.ts` says so in as many words — "unbekannte Arten sind kein
    * Gate-Fehler … das Gate prüft Struktur, nicht die Wortliste" — and its KNOWN_EDGE_KINDS grew
-   * as Ulysses coined `continues`, `complement`, `grounds`, `measures`, `corrected-by`. The two
+   * as Assay coined `continues`, `complement`, `grounds`, `measures`, `corrected-by`. The two
    * maps above never did: they hold four kinds, and the record holds nine (plus `corrects`,
    * which not even the data layer lists).
    *
@@ -933,7 +933,7 @@ const payload = JSON.stringify({
     runCanvas(rhizomeCanvas, (ctx, w, h, t) => {
       layout(w, h, t)
 
-      // Kanten (Seed: leer — der Renderer wartet auf Ulysses' erste Linie)
+      // Kanten (Seed: leer — der Renderer wartet auf Assays erste Linie)
       for (const e of DATA.edges) {
         const ai = idx.get(e.from)
         const bi = idx.get(e.to)

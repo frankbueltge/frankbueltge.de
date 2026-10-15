@@ -3,10 +3,17 @@
 // Datenschutz, the license line, GitHub. The previous four-column footer (Explore/Projects/
 // Connect) duplicated what the hub-era TopBar nav + hub's own "where works travel"/"also on
 // this site" sections already cover; this keeps only what belongs on every single page.
+// Re-skin 2a (2026-09-02): same six links, same two lines, cut from the same recipe as the
+// top bar — ghost buttons on the shadcn primitive, so a footer link now has a hover surface
+// and a focus ring instead of only a colour change. The forced-dark island stays exactly as
+// it was (see the style block): the footer is black under both themes.
 import { SITE } from '@/lib/site'
 import { NAMING } from '@/config/naming'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/ui/cn'
 
 const year = 2026
+const link = cn(buttonVariants({ variant: 'ghost', size: 'sm' }), '-mx-2 px-2 text-fg-muted hover:text-fg')
 ---
 
 <footer class="mt-24 border-t border-line/60 footer-dark">
@@ -19,17 +26,17 @@ const year = 2026
          here, and "Frank Bültge" already reaches screen readers from that line. -->
     <img src="/logo.webp" alt="" width="96" height="96" class="h-24 w-24 rounded-full" />
 
-    <nav aria-label="Footer" class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-fg-muted">
-      <a href="/seed" class="transition-colors hover:text-fg">Offer a seed</a>
-      <a href="/post#digest" class="transition-colors hover:text-fg">Digest</a>
-      <a href="/contact" class="transition-colors hover:text-fg">Contact</a>
-      <a href="/impressum" class="transition-colors hover:text-fg">Impressum</a>
-      <a href="/datenschutz" class="transition-colors hover:text-fg">Datenschutz</a>
-      <a href={SITE.social.github} target="_blank" rel="noreferrer" class="transition-colors hover:text-fg">GitHub</a>
+    <nav aria-label="Footer" class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+      <a href="/seed" class={link}>Offer a seed</a>
+      <a href="/post#digest" class={link}>Digest</a>
+      <a href="/contact" class={link}>Contact</a>
+      <a href="/impressum" class={link}>Impressum</a>
+      <a href="/datenschutz" class={link}>Datenschutz</a>
+      <a href={SITE.social.github} target="_blank" rel="noreferrer" class={link}>GitHub</a>
     </nav>
   </div>
 
-  <div class="mx-auto flex max-w-5xl flex-col gap-2 px-6 pb-10 font-mono text-xs text-fg-faint sm:flex-row sm:items-center sm:justify-between">
+  <div class="mx-auto flex max-w-5xl flex-col gap-2 px-6 pb-10 font-mono text-mono text-fg-faint sm:flex-row sm:items-center sm:justify-between">
     <span>© {year} {SITE.name}</span>
     <span>{NAMING.footer.licenseLine}</span>
   </div>
@@ -49,5 +56,13 @@ const year = 2026
     --color-fg-faint: #8b8b92;
     --color-line: #242427;
     --color-accent: #c2c2c8;
+    /* The island's surfaces, added with the ghost-button links of the re-skin (2026-09-02):
+       a hover surface reads bg-hover → --color-panel-2, and under the LIGHT theme that token
+       is pure white — a white plate flashing on a black footer. The ring is re-declared for
+       the same reason: --color-ring is substituted once, at :root, so the value inherited
+       down here would be the light theme's near-black ink, invisible on this ground. */
+    --color-panel: #141414;
+    --color-panel-2: #1c1c1c;
+    --color-ring: var(--color-accent);
   }
 </style>

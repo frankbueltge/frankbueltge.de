@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sediment</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #ebe6dc; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = window.devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var PAPER = '#ebe6dc', INK = '#26241f', SOFT = '#7d776c', FAINT = '#b9b2a5';
+  var items = window.FALLS.items.slice();
+
+  // --- scale: every stone drawn at its true size relative to the others.
+  // Same density assumed, so radius goes with the cube root of mass.
+  var maxMass = 0; items.forEach(function (d) { if (d.grams > maxMass) maxMass = d.grams; });
+  var RMAX = 58;                                   // Hoba
+  function radius(g_) { return RMAX * Math.cbrt(g_ / maxMass); }
+
+  var FLOOR = 610;
+  var X0 = 70, X1 = 930;                           // timeline
+  var Y0 = 1570, Y1 = 2025;
+  function xOf(y) { return X0 + (y - Y0) / (Y1 - Y0) * (X1 - X0); }
+  var UX0 = 985, UX1 = 1060;                       // undated heap
+
+  // seeded random from the name
+  function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function rng(seed) { return function () { seed = (seed + 0x6D2B79F5) | 0; var t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+
+  // --- lay them down in the order Wikidata dates them; undated ones last, in their own heap
+  var dated = items.filter(function (d) { return d.year != null; })
+                   .sort(function (a, b) { return a.year - b.year || b.grams - a.grams; });
+  var undated = items.filter(function (d) { return d.year == null; })
+                     .sort(function (a, b) { return b.grams - a.grams; });
+
+  var placed = [];
+  function restY(x, r) {
+    var y = FLOOR - r;
+    for (var j = 0; j < placed.length; j++) {
+      var p = placed[j], dx = Math.abs(p.x - x), s = p.r + r;
+      if (dx < s) { var c = p.y - Math.sqrt(s * s - dx * dx); if (c < y) y = c; }
+    }
+    return y;
+  }
+  function drop(d, x, lo, hi) {
+    var r = radius(d.grams), rand = rng(hash(d.name));
+    var L = lo + r, R = hi - r;
+    x = Math.max(L, Math.min(R, x));
+    var y = restY(x, r), step = 0.5;
+    // roll: keep moving whichever way the resting place gets lower, until it stops getting lower
+    for (var k = 0; k < 2000; k++) {
+      var xl = Math.max(L, x - step), xr = Math.min(R, x + step);
+      var yl = restY(xl, r), yr = restY(xr, r);
+      if (yl <= y + 1e-6 && yr <= y + 1e-6) break;
+      if (yl > yr || (yl === yr && rand() < 0.5)) { x = xl; y = yl; } else { x = xr; y = yr; }
+    }
+    var p = { d: d, x: x, y: y, r: r, rand: rand };
+    placed.push(p);
+    return p;
+  }
+  dated.forEach(function (d) { drop(d, xOf(d.year), X0 - 40, X1 + 30); });
+  undated.forEach(function (d, i) { drop(d, (UX0 + UX1) / 2 + (rng(hash(d.name))() - 0.5) * 30, UX0 - 20, UX1 + 25); });
+
+  // --- ground
+  g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+  // faint century lines rising from the floor
+  g.lineWidth = 1;
+  for (var c = 1600; c <= 2000; c += 50) {
+    var x = Math.round(xOf(c)) + 0.5;
+    g.strokeStyle = c % 100 === 0 ? 'rgba(38,36,31,0.13)' : 'rgba(38,36,31,0.06)';
+    g.beginPath(); g.moveTo(x, 150); g.lineTo(x, FLOOR); g.stroke();
+  }
+
+  // shadow along floor
+  placed.forEach(function (p) {
+    if (FLOOR - (p.y + p.r) < 1.5) {
+      g.fillStyle = 'rgba(38,36,31,0.10)';
+      g.beginPath(); g.ellipse(p.x + p.r * 0.15, FLOOR + 1.5, p.r * 1.05, Math.max(1.2, p.r * 0.07), 0, 0, Math.PI * 2); g.fill();
+    }
+  });
+
+  // floor line
+  g.strokeStyle = INK; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(X0 - 40, FLOOR + 0.5); g.lineTo(X1 + 30, FLOOR + 0.5); g.stroke();
+  g.beginPath(); g.moveTo(UX0 - 20, FLOOR + 0.5); g.lineTo(UX1 + 25, FLOOR + 0.5); g.stroke();
+
+  // --- stones
+  function pebble(p) {
+    var r = Math.max(p.r, 0.45), n = r < 3 ? 7 : 15, pts = [];
+    var a0 = p.rand() * Math.PI * 2, rough = r < 3 ? 0.12 : 0.16;
+    for (var i = 0; i < n; i++) {
+      var a = a0 + i / n * Math.PI * 2;
+      var k = 1 + (p.rand() - 0.5) * 2 * rough;
+      pts.push([p.x + Math.cos(a) * r * k, p.y + Math.sin(a) * r * k * 0.97]);
+    }
+    g.beginPath();
+    for (var i = 0; i <= n; i++) {
+      var a = pts[i % n], b = pts[(i + 1) % n];
+      var mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+      if (i === 0) g.moveTo(mx, my); else g.quadraticCurveTo(a[0], a[1], mx, my);
+    }
+    g.closePath();
+    var located = p.d.lat != null;
+    if (r > 4) {
+      var gr = g.createRadialGradient(p.x - r * 0.35, p.y - r * 0.4, r * 0.1, p.x, p.y, r * 1.1);
+      if (located) { gr.addColorStop(0, '#5a5348'); gr.addColorStop(1, '#1d1b17'); }
+      else { gr.addColorStop(0, '#c9c1b2'); gr.addColorStop(1, '#8f877a'); }
+      g.fillStyle = gr;
+    } else {
+      g.fillStyle = located ? '#24221d' : '#958d80';
+    }
+    g.fill();
+    if (r > 4) {
+      g.strokeStyle = located ? 'rgba(0,0,0,0.5)' : 'rgba(60,55,48,0.45)';
+      g.lineWidth = 0.6; g.stroke();
+      // a few regmaglypt thumbprints on the larger stones
+      if (r > 14) {
+        var m = Math.round(r / 6);
+        for (var i = 0; i < m; i++) {
+          var aa = p.rand() * Math.PI * 2, dd = Math.sqrt(p.rand()) * r * 0.7, rr = r * (0.06 + p.rand() * 0.08);
+          g.fillStyle = located ? 'rgba(0,0,0,0.22)' : 'rgba(70,64,55,0.16)';
+          g.beginPath(); g.ellipse(p.x + Math.cos(aa) * dd, p.y + Math.sin(aa) * dd, rr, rr * 0.75, aa, 0, Math.PI * 2); g.fill();
+        }
+      }
+    }
+  }
+  placed.forEach(pebble);
+
+  // --- type
+  function txt(s, x, y, size, color, align, style) {
+    g.font = (style || '') + ' ' + size + 'px Georgia, "Times New Roman", serif';
+    g.fillStyle = color; g.textAlign = align || 'left'; g.textBaseline = 'alphabetic';
+    g.fillText(s, x, y);
+  }
+  function fmtMass(gr) {
+    if (gr >= 1e6) return (gr / 1e6).toLocaleString('en', { maximumFractionDigits: 1 }) + ' t';
+    if (gr >= 1e3) return (gr / 1e3).toLocaleString('en', { maximumFractionDigits: 0 }) + ' kg';
+    return gr.toLocaleString('en') + ' g';
+  }
+  function clean(n) { return n.replace(/ meteorite$/i, '').replace(/ Meteorite$/, ''); }
+
+  // century labels under the floor
+  for (var c = 1600; c <= 2000; c += 100) txt(String(c), xOf(c), FLOOR + 22, 12, SOFT, 'center');
+  txt('no year', (UX0 + UX1) / 2 + 2, FLOOR + 22, 12, SOFT, 'center', 'italic');
+
+  // labels for the heaviest, and the lightest
+  var byMass = placed.slice().sort(function (a, b) { return b.d.grams - a.d.grams; });
+  var labelled = byMass.slice(0, 9);
+  var lightest = byMass[byMass.length - 1];
+  labelled.push(lightest);
+  function skyline(x0, x1) {
+    var top = FLOOR;
+    placed.forEach(function (q) { if (q.x + q.r > x0 && q.x - q.r < x1) top = Math.min(top, q.y - q.r * 1.05); });
+    return top;
+  }
+  function halo(s, x, y, size, color, align, style) {
+    g.font = (style || '') + ' ' + size + 'px Georgia, "Times New Roman", serif';
+    g.textAlign = align || 'left'; g.textBaseline = 'alphabetic';
+    g.lineJoin = 'round'; g.strokeStyle = PAPER; g.lineWidth = 4; g.strokeText(s, x, y);
+    g.fillStyle = color; g.fillText(s, x, y);
+  }
+  var used = [];
+  labelled.sort(function (a, b) { return b.r - a.r; }).forEach(function (p) {
+    var name = clean(p.d.name);
+    if (/^Q\d+$/.test(name)) name = name + ', unnamed in Wikidata';
+    var line2 = fmtMass(p.d.grams) + (p.d.year ? ', ' + p.d.year : ', no year');
+    g.font = '13px Georgia'; var w = Math.max(g.measureText(name).width, g.measureText(line2).width) + 10;
+    var align = p.x > 900 ? 'right' : 'left';
+    var bx0 = align === 'left' ? p.x - 3 : p.x - w + 3, bx1 = bx0 + w;
+    var ly = Math.min(skyline(bx0, bx1), skyline(p.x - 2, p.x + 2)) - 26;
+    for (var tries = 0; tries < 60; tries++) {
+      var hit = used.some(function (u) { return bx0 < u[2] && bx1 > u[0] && ly - 15 < u[3] && ly + 19 > u[1]; });
+      if (!hit) break; ly -= 6;
+    }
+    used.push([bx0, ly - 15, bx1, ly + 19]);
+    g.strokeStyle = 'rgba(38,36,31,0.55)'; g.lineWidth = 0.7;
+    var tipY = p.y - p.r - 3;
+    if (p.r < 2) {
+      tipY = p.y - 5;
+      g.beginPath(); g.arc(p.x, p.y, 4.5, 0, Math.PI * 2); g.stroke();
+    }
+    g.beginPath(); g.moveTo(p.x + 0.5, ly + 21); g.lineTo(p.x + 0.5, tipY); g.stroke();
+    halo(name, p.x, ly, 13, INK, align);
+    halo(line2, p.x, ly + 15, 11.5, SOFT, align, 'italic');
+  });
+
+  // title block
+  txt('Sediment', 70, 82, 40, INK, 'left');
+  txt('568 meteorites that Wikidata records with a mass, laid down in the order', 72, 110, 14, SOFT, 'left', 'italic');
+  txt('of the year it gives them, each stone drawn at its true size against the others.', 72, 128, 14, SOFT, 'left', 'italic');
+
+  // footer / legend
+  var total = 0; items.forEach(function (d) { total += d.grams; });
+  var nLoc = items.filter(function (d) { return d.lat != null; }).length;
+  var top2 = byMass[0].d.grams + byMass[1].d.grams;
+  var fy = 690;
+  g.fillStyle = '#24221d'; g.beginPath(); g.arc(78, fy - 4, 6, 0, Math.PI * 2); g.fill();
+  txt('a place is recorded (' + nLoc + ')', 92, fy, 13, INK);
+  g.fillStyle = '#958d80'; g.beginPath(); g.arc(298, fy - 4, 6, 0, Math.PI * 2); g.fill();
+  txt('no place recorded (' + (items.length - nLoc) + ')', 312, fy, 13, INK);
+
+  txt('Together ' + Math.round(total / 1e6) + ' tonnes. The two largest hold ' + Math.round(top2 / total * 100) +
+      ' per cent of it; the median stone weighs ' + fmtMass(byMass[Math.floor(byMass.length / 2)].d.grams) +
+      ' and is barely a grain here.', 72, fy + 30, 13, SOFT, 'left', 'italic');
+  txt('Size: radius proportional to the cube root of mass, one density for all. The smallest grains are drawn no finer than half a pixel.',
+      72, fy + 50, 13, SOFT, 'left', 'italic');
+  txt('Source: ' + window.FALLS.source + '.', 72, fy + 70, 11, FAINT, 'left');
+})();
+</script>
+</body>
+</html>

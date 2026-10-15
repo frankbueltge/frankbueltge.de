@@ -1,0 +1,158 @@
+{
+  "date": "2026-10-14",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-14T10:37:32Z",
+    "counts": {
+      "botwall": 13,
+      "gone_404": 1,
+      "gone_410": 1,
+      "legal_451": 0,
+      "ok": 283,
+      "other": 0,
+      "server_error": 1,
+      "unreachable": 1
+    },
+    "decided": 285,
+    "excluded_unverifiable": 15,
+    "gone": 2,
+    "gone_ci95": [
+      0.0019,
+      0.0252
+    ],
+    "gone_rate": 0.007,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0133
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-12",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "vol.at",
+        "first_seen": "20261012120000",
+        "http_code": 404,
+        "title": "Test - VOL.AT",
+        "url": "https://www.vol.at/test/10537547"
+      },
+      {
+        "class": "gone_410",
+        "domain": "breakingnews.ie",
+        "first_seen": "20261012140000",
+        "http_code": 410,
+        "title": "Speculation over future of US envoy to Greece Kimberly Guilfoyle after 'improper conduct' reports",
+        "url": "https://www.breakingnews.ie/world/speculation-over-future-of-us-envoy-to-greece-kimberly-guilfoyle-after-improper-conduct-reports-1953356.html"
+      }
+    ],
+    "sample_drawn_at": "2026-10-13T12:58:10Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 6046,
+      "replaced": 4721,
+      "trivial": 1051,
+      "update": 448
+    },
+    "day": "2026-10-13",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Tabu"
+        ],
+        "after": "'Drishyam 3: The Conclusion' box office collection Day 4; Ajay Devgn, Tabu starrer sees big dip in collections on first Monday; film crosses Rs 300 crore worldwide",
+        "before": "Drishyam 3 Full Movie Collection: 'Drishyam 3: The Conclusion' box office collection Day 4; Ajay Devgn starrer sees big dip in collections on first Monday; film crosses Rs 300 crore worldwide | Hindi Movie News",
+        "detected": "2026-10-13T01:02:46Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Full",
+          "Movie",
+          "Drishyam",
+          "3",
+          "collection",
+          "Hindi",
+          "Movie",
+          "News"
+        ],
+        "similarity": 0.839,
+        "url": "https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/box-office/drishyam-3-the-conclusion-box-office-collection-day-4-ajay-devgn-starrer-sees-big-dip-in-collections-on-first-monday-film-crosses-rs-300-crore-worldwide/articleshow/134720323.cms",
+        "weight": 16,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Juanita",
+          "Sanchez"
+        ],
+        "after": "Inexperience an issue for Tigers in 28-6 loss to Juanita Sanchez | EastBayRI.com - News, Opinion, Things to Do in the East Bay",
+        "before": "Inexperience an issue for Tigers in 28-6 loss to Janita Sancez | EastBayRI.com - News, Opinion, Things to Do in the East Bay",
+        "detected": "2026-10-13T18:31:55Z",
+        "domain": "eastbayri.com",
+        "removed": [
+          "Janita",
+          "Sancez"
+        ],
+        "similarity": 0.826,
+        "url": "http://www.eastbayri.com/stories/inexperience-an-issue-for-tigers-in-28-6-loss-to-janita-sancez,143259",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "ECGâ",
+          "GHÂ"
+        ],
+        "after": "Afenyo-Markin Drops Bombshell on ECGâ€™s GHÂ¢12.16bn Forex Gains, Reveals What Ghanaians Need to Know – Ghanamma.com",
+        "before": "Afenyo-Markin Drops Bombshell on ECG's GH¢12.16bn Forex Gains, Reveals What Ghanaians Need to Know – Ghanamma.com",
+        "detected": "2026-10-13T18:46:14Z",
+        "domain": "ghanamma.com",
+        "removed": [
+          "ECG",
+          "GH"
+        ],
+        "similarity": 0.818,
+        "url": "https://www.ghanamma.com/2026/10/12/afenyo-markin-drops-bombshell-on-ecgs-gh%C2%A212-16bn-forex-gains-reveals-what-ghanaians-need-to-know/",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 15520,
+      "PAGE_TEXTCHANGE": 127011,
+      "PAGE_TITLECHANGE": 47644,
+      "UNCHANGED_CONTENT": 726356
+    },
+    "title_changes_en": 12266,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1791973977255",
+        "job_id": "world_gdg_counts_20261013",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 230686720,
+        "created": "1791973981709",
+        "job_id": "world_gdg_titles_20261013",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-14T10:37:32Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-13.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

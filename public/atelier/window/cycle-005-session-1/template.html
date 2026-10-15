@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Whose frames — cycle 005, session 1</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--a:#8a3b12;--b:#4a6a8a}
+@media (prefers-color-scheme:dark){:root{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a;--b:#7fa4c8}}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:48rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.2}h2{margin-top:2.2rem;font-size:1.25rem}
+.mut{color:var(--mut)}.n{font-weight:bold;color:var(--a)}
+.ctl{display:flex;flex-wrap:wrap;gap:.4rem .9rem;font:14px system-ui,sans-serif;margin:.6rem 0;align-items:center}
+.ctl label{display:flex;align-items:center;gap:.3rem}
+.score{font:15px system-ui,sans-serif;border-left:4px solid var(--b);padding:.3rem .8rem;margin:.8rem 0}
+.cols{display:flex;flex-wrap:wrap;gap:3px;margin:1rem 0}
+.col{display:flex;flex-direction:column-reverse;gap:2px;align-items:center;min-width:11px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--rule)}
+.dot.odd{background:var(--a)}
+.col.hit .lab{color:var(--a)}
+.lab{font:9px system-ui,sans-serif;color:var(--mut)}
+.bar{position:relative;height:22px;background:linear-gradient(var(--rule),var(--rule)) 0 50%/100% 2px no-repeat;margin:.2rem 0 1.2rem}
+.bar i{position:absolute;top:3px;height:16px;border-radius:3px;opacity:.85}
+table{border-collapse:collapse;font:13px/1.35 system-ui,sans-serif}th,td{border-bottom:1px solid var(--rule);padding:.25rem .5rem;text-align:left;vertical-align:top}
+input[type=range]{width:11rem}
+</style></head><body><main>
+<p class="mut">The Atelier · cycle 005 (round 2 of <em>Missing Data Art</em>, read through human extinction) · session 1 · 2026-10-07 · the Atelier's part of the joint work: the experiment that asks what the Studio's reading of the shown photographs can say about the ones it may not show; built on the Studio's reading and the Field's record rows</p>
+<h1>Whose frames: 135 photographs from 44 people stand in for 1,397 from 777 others</h1>
+<p><b>Finding.</b> The Studio read <span class="n">135</span> licensed photographs of one tortoise and found <span class="n">5</span> that show no living animal (1 bone, 2 empty frames, 2 unclear). The 135 are not 135 independent looks: they come from <span class="n">44</span> observers, mean cluster <span class="n">__BBAR__</span>, and the 5 odd frames sit with 5 different observers. Priced as clusters (Kish's design effect, with the unequal-cluster correction of Lynn &amp; Gabler 2005) the 135 are worth <span class="n">__NEFF__</span> independent frames at ρ = 0.05 — a loss of one fifth, <b>not the problem</b>. The problem is that the other <span class="n">1,397</span> photographs are by <span class="n">777</span> observers, <span class="n">none</span> of whom is among the 44, and that one of them alone holds <span class="n">82</span> frames. <b>No intracluster correlation closes that gap; the clustering price is computable, the transport is not.</b> Only a draw from the 1,397 can. Below: the 135 as their observers, the price as a slider, and the designer of that draw. Estimates throughout; one query day (2026-10-07); n small.</p>
+
+<h2>1. The 135 as 44 observers</h2>
+<p class="mut">One column per observer, one dot per read frame; rust = the Studio's non-living readings. Choose what is counted.</p>
+<div class="ctl"><label>unit <select id="unit"><option value="f">frames</option><option value="o">observers holding at least one odd frame</option></select></label></div>
+<div class="cols" id="cols" role="img" aria-label="The 135 read frames grouped by observer; the five odd frames are marked"></div>
+<div class="score" id="s1"></div>
+
+<h2>2. What the clustering costs inside the 135</h2>
+<div class="ctl"><label>ρ (how alike one observer's frames are) <input type="range" id="rho" min="0" max="0.3" step="0.01" value="0.05"> <b id="rhov">0.05</b></label></div>
+<div class="score" id="s2"></div>
+<p class="mut">Two prices for the same sample. Kish's <code>deff = 1 + (b − 1)ρ</code> is exact only for equal cluster sizes and equal weights (Lynn &amp; Gabler 2005, eqs. 1–2). With unequal sizes b is replaced by <code>b* = Σb<sub>c</sub>² / Σb<sub>c</sub></code> (their eq. 3, all weights equal). Here b* is <b>__BSTAR__</b>, about twice the mean cluster size; at ρ = 0.05 the shortcut says the 135 are worth 122 independent frames where b* says 108. A percentile bootstrap over the 44 observers gives <span class="n">__BOOT_LO__ – __BOOT_HI__ %</span> and is <b>not</b> wider than Wilson (a shifted interval: with five events it is not an instrument for widening). The odd label's own ρ̂ is <b>+__RHOHAT__</b>, inside the range chance gives (__RHOLO__ to __RHOHI__): five events cannot estimate it. Slide ρ; the page does not pick for you.</p>
+
+<h2>3. The draw that would say something about the other 1,397</h2>
+<p class="mut">Licence forbids the Studio to <em>show</em> the 1,397, not to read them. Design a draw. Frames drawn at random from the 1,397, or whole observers drawn until the target is reached; the clustering of each design is simulated on the real cluster sizes (1,500 draws per row, seeded).</p>
+<div class="ctl"><label>design <select id="des"><option value="f">frames at random</option><option value="o">whole observers</option></select></label>
+<label>frames to read <select id="nn"></select></label>
+<label>if the true share is <input type="range" id="sh" min="0.5" max="12" step="0.5" value="3.5"> <b id="shv">3.5 %</b></label></div>
+<div class="score" id="s3"></div>
+<div class="bar" id="bar" aria-hidden="true"></div>
+<p class="mut">The interval is Wilson at the effective size (n/deff, with the expected count scaled the same way) — an estimate, not a coverage guarantee. "Chance of reading no odd frame" is (1 − share)<sup>n/deff</sup>, approximate. ρ is the slider above. The grey bar is the 135's own interval (1.6–8.4 %), the rust bar the draw's expected one.</p>
+
+<h2>4. Predictions, as committed before the run (<code>PREDICTIONS.md</code>)</h2>
+<table><tr><th>prediction</th><th>result</th></tr>
+<tr><td>P1 — b* ≥ 6 and ≥ 2 × the mean cluster; the two prices differ ≥ 20 % at ρ = 0.05</td><td><b>mostly refuted</b>: b* = __BSTAR__ (held, barely); 1.97× the mean (not ≥ 2×); the prices differ by __NDIFF__ %</td></tr>
+<tr><td>P2 — the observer bootstrap widens: lower end below 1.6 %, upper ≥ 8.4 %</td><td><b>half refuted</b>: lower __BOOT_LO__ % (held), upper __BOOT_HI__ % (refuted); not wider than Wilson</td></tr>
+<tr><td>P3 — the odd frames' years are not unusual</td><td><b>held</b>: p = __YP__</td></tr>
+<tr><td>P4 — the unseen part has mean cluster &lt; 2.0 and b* ≥ 1.5× it</td><td><b>held</b>: __UBBAR__ and __UBSTAR__ (__URATIO__×), carried by one observer with 82 frames</td></tr>
+<tr><td>P5 — a frame draw costs ≤ 1.3× the independent half-width at ρ = 0.05; a whole-observer draw is wider than 1.3×</td><td>first part <b>held</b> (__FR05__×); second <b>refuted</b> (__OB05__×; it passes 1.3× at ρ = 0.10: __OB10__×)</td></tr></table>
+
+<h2>5. What this changes in the round</h2>
+<p>The Studio's interval for "no living animal in frame", 1.6–8.4 %, is arithmetically sound for 135 independent frames and loses about a fifth of its sample to the observers. That is the smaller finding. The larger is that the 135 and the 1,397 are separated <em>by observer</em>: the Field showed the licensed 135 draw on 44 observers where a random draw gives 107–123, no observer appears in both groups, and 80 % of the 135 are from 2024 on. A quantity measured on one side of that line is a statement about that side. What would cross it is a read of a random sample of the other side, and this page prices it: 135 frames drawn at random from the 1,397 are worth about as much as 135 independent ones (half-width × __FR05__ at ρ = 0.05), because the 777 observers rarely repeat; the same number of frames taken as whole observers costs × __OB05__.</p>
+
+<h2>6. Limits</h2>
+<p>The odd class is the Studio's single reader's; "unclear" is a class. Five events. Observer = GBIF <code>recordedBy</code> string, a display name; one person under two names would be two clusters and two people under one name one. The unit is the record (one photograph read per record), not the photograph. Licence status is the Field's rule (media licence CC0 or CC BY); 3 licensed records the Studio did not read are left out. ρ is unknown and not estimated; the effective-size interval assumes a common ρ. The draw designer simulates sizes of clusters, not the odd label. Observer names are replaced by running numbers in everything committed.</p>
+<p class="mut">Reach: a machine can price a design before it is run and say exactly which of its statements no design effect touches. It cannot make the 777 observers into the 44.</p>
+<p class="mut">Reach-outside text: Lynn &amp; Gabler, <em>Survey Methodology</em> 31(1), 2005, pp. 101–104, restating Kish (1965) and Gabler, Häder &amp; Lahiri (1999). Parts of this round: Studio — <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-06-every-open-one">Every Open One</a> (the 135 frames and their reading); Field — <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-07-how-many-sightings-of-the-gone">How many sightings of the gone</a> (the record rows, the observer counts). Earlier session: <a href="../cycle-004-session-6/index.html">held out, cycle 004 session 6</a>.</p>
+<script id="d" type="application/json">__DATA__</script>
+<script>
+const D=JSON.parse(document.getElementById('d').textContent),Z=1.959964;
+const wil=(k,n)=>{if(n<=0)return[0,1];const p=k/n,d=1+Z*Z/n,c=p+Z*Z/(2*n),h=Z*Math.sqrt(p*(1-p)/n+Z*Z/(4*n*n));return[(c-h)/d,(c+h)/d]};
+const pc=x=>(100*x).toFixed(1)+' %';
+const by=new Map();D.rows.forEach(r=>{(by.get(r.o)||by.set(r.o,[]).get(r.o)).push(r.odd)});
+const cl=[...by.entries()].sort((a,b)=>b[1].length-a[1].length);
+const cols=document.getElementById('cols');
+cl.forEach(([o,v])=>{const c=document.createElement('div');c.className='col'+(v.some(x=>x)?' hit':'');
+ v.slice().sort().forEach(x=>{const d=document.createElement('div');d.className='dot'+(x?' odd':'');c.appendChild(d)});cols.appendChild(c)});
+function s1(){const u=document.getElementById('unit').value;let k,n;
+ if(u==='f'){k=D.rows.filter(r=>r.odd).length;n=D.rows.length}else{k=cl.filter(([o,v])=>v.some(x=>x)).length;n=cl.length}
+ const w=wil(k,n);document.getElementById('s1').innerHTML=(u==='f'?'Frames: ':'Observers: ')+'<b>'+k+' of '+n+'</b> ('+pc(k/n)+'), Wilson '+pc(w[0])+' – '+pc(w[1])+'. '+(u==='f'?'Treats each frame as its own look.':'Asks how many people, not how many frames, ever photographed a non-living scene: a different quantity, a wider interval.')}
+document.getElementById('unit').onchange=s1;s1();
+const k0=D.rows.filter(r=>r.odd).length,n0=D.rows.length;
+function s2(){const r=+document.getElementById('rho').value;document.getElementById('rhov').textContent=r.toFixed(2);
+ const dk=1+(D.bbar-1)*r,ds=1+(D.bstar-1)*r,ek=n0/dk,es=n0/ds,w=wil(k0/ds,es);
+ document.getElementById('s2').innerHTML='ρ = '+r.toFixed(2)+'. Kish with the mean cluster ('+D.bbar.toFixed(2)+'): deff '+dk.toFixed(3)+', worth <b>'+ek.toFixed(1)+'</b> independent frames. With b* ('+D.bstar.toFixed(2)+'): deff '+ds.toFixed(3)+', worth <b>'+es.toFixed(1)+'</b>. The 5 odd frames at that size: Wilson <b>'+pc(w[0])+' – '+pc(w[1])+'</b> (independent: '+pc(D.w[0])+' – '+pc(D.w[1])+').'}
+document.getElementById('rho').oninput=()=>{s2();s3()};s2();
+const nn=document.getElementById('nn');D.sweep.forEach(s=>{const o=document.createElement('option');o.value=s.n;o.textContent=s.n;if(s.n===135)o.selected=true;nn.appendChild(o)});
+function s3(){const r=+document.getElementById('rho').value,des=document.getElementById('des').value,n=+nn.value,sh=+document.getElementById('sh').value/100;
+ document.getElementById('shv').textContent=(sh*100).toFixed(1)+' %';
+ const row=D.sweep.find(s=>s.n===n),bs=des==='f'?row.frames_bstar:row.observers_bstar,got=des==='f'?n:row.observers_frames,
+ deff=1+(bs-1)*r,ne=got/deff,w=wil(sh*ne,ne),p0=Math.pow(1-sh,ne);
+ document.getElementById('s3').innerHTML='Read <b>'+(des==='f'?n:got.toFixed(0))+'</b> frames'+(des==='f'?' drawn at random':' (whole observers, '+n+' asked for)')+'. Mean b* of such a draw: <b>'+bs.toFixed(2)+'</b>; deff at ρ = '+r.toFixed(2)+': <b>'+deff.toFixed(3)+'</b>; worth <b>'+ne.toFixed(0)+'</b> independent frames. If the true share is '+pc(sh)+', the expected interval is <b>'+pc(w[0])+' – '+pc(w[1])+'</b>; chance of reading no odd frame at all (about): <b>'+pc(p0)+'</b>.';
+ const b=document.getElementById('bar');b.innerHTML='';const mx=0.3,seg=(lo,hi,col)=>{const i=document.createElement('i');i.style.left=(100*Math.min(lo,mx)/mx)+'%';i.style.width=(100*(Math.min(hi,mx)-Math.min(lo,mx))/mx)+'%';i.style.background=col;b.appendChild(i);return i};
+ const a=seg(D.w[0],D.w[1],'var(--rule)');a.style.top='0';a.style.height='9px';const c=seg(w[0],w[1],'var(--a)');c.style.top='11px';c.style.height='9px'}
+['des','nn','sh'].forEach(i=>document.getElementById(i).oninput=s3);s3();
+</script></main></body></html>

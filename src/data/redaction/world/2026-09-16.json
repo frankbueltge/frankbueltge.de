@@ -1,0 +1,141 @@
+{
+  "date": "2026-09-16",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-16T10:37:37Z",
+    "counts": {
+      "botwall": 26,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 273,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 273,
+    "excluded_unverifiable": 27,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0139
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0139
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-14",
+    "receipts": [],
+    "sample_drawn_at": "2026-09-15T10:46:49Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5563,
+      "replaced": 5152,
+      "trivial": 1464,
+      "update": 394
+    },
+    "day": "2026-09-15",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Programme",
+          "F",
+          "A",
+          "XX"
+        ],
+        "after": "F/A-XX Programme : Boeing or Northrop Grumman? Pentagon nears decision on US Navy's F/A-XX stealth fighter contract |",
+        "before": "Us Navy Next-Generation Stealth Fighter: Boeing or Northrop Grumman? Pentagon nears decision on US Navy's F/A-XX stealth fighter contract",
+        "detected": "2026-09-15T18:48:08Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Next",
+          "Generation",
+          "US",
+          "Navy",
+          "stealth",
+          "fighter"
+        ],
+        "similarity": 0.85,
+        "url": "https://timesofindia.indiatimes.com/defence/international/boeing-or-northrop-grumman-pentagon-nears-decision-on-us-navys-f/a-xx-stealth-fighter-contract/articleshow/133935771.cms",
+        "weight": 16,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Railway",
+          "Road"
+        ],
+        "after": "Woman left with broken eye socket and nose after being headbutted while working on King's Lynn's Railway Road",
+        "before": "Woman left with broken eye socket and nose after being headbutted while working on King's Lynn's Norfolk Street",
+        "detected": "2026-09-15T13:04:51Z",
+        "domain": "lynnnews.co.uk",
+        "removed": [
+          "Norfolk",
+          "Street"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.lynnnews.co.uk/news/man-arrested-after-woman-headbutted-and-left-with-broken-nos-9481898/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "First",
+          "Nations"
+        ],
+        "after": "Indigenous leaders condemn Pauline Hanson for 'primitive race' remarks on First Nations' Australians",
+        "before": "Indigenous leaders condemn Pauline Hanson for 'primitive race' remarks on Indigenous Australians",
+        "detected": "2026-09-15T06:48:26Z",
+        "domain": "abc.net.au",
+        "removed": [
+          "Indigenous"
+        ],
+        "similarity": 0.846,
+        "url": "https://www.abc.net.au/news/2026-09-14/indigenous-leaders-condemn-pauline-hanson/107151108",
+        "weight": 6,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 17427,
+      "PAGE_TEXTCHANGE": 134820,
+      "PAGE_TITLECHANGE": 50240,
+      "UNCHANGED_CONTENT": 761404
+    },
+    "title_changes_en": 12573,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1789554816353",
+        "job_id": "world_gdg_counts_20260915",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 242221056,
+        "created": "1789554821775",
+        "job_id": "world_gdg_titles_20260915",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-16T10:37:37Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-15.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

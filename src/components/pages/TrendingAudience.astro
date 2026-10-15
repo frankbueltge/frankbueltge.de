@@ -1,0 +1,163 @@
+---
+/** Common Ground — who read /trending. One stacked bar per counted day (oldest left), six
+ *  audience classes told apart by stacking order AND fill pattern, an always-on table beneath.
+ *  Counts are Cloudflare edge requests to /trending*, classified by self-declared user agent
+ *  and committed the morning after (src/data/trending/audience/<day>.json). A day without a
+ *  count is drawn as a hollow tick and reads "standby" in the table — never as zero.
+ *
+ *  The count is taken at the edge ALONE since the contract bump to `trending-audience/2`
+ *  (2026-09-03, docs/design/2026-09-02-common-ground.md §12): a client-side beacon needs
+ *  JavaScript and therefore cannot see the crawlers this page is built for. The two `/1` days
+ *  that still carry a beacon half keep reporting it, and the column exists only while such a
+ *  day is in the window — a half that reads "unavailable" for ever would imply something is
+ *  missing when nothing is. */
+import '@/styles/trending-figures.css'
+import Readout from '@/components/dataviz/Readout.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { classLabel, compact, fmtDateLong } from '@/lib/trending/format'
+import { AUDIENCE_CLASSES, type TrendingAudience } from '@/lib/trending/types'
+import { audienceDimensionRows, audienceHasUmami, audienceMissingDimensions, audienceStrip, audienceTableRows } from '@/lib/trending/view'
+
+import TrendingAudienceStrip, { type AudienceStripWording } from './TrendingAudienceStrip'
+
+interface Props {
+  /** newest first */
+  audience: TrendingAudience[]
+  /** the record this page speaks about (the day before the ledger day), if any */
+  yesterday?: TrendingAudience
+}
+const { audience, yesterday } = Astro.props
+const live = yesterday && yesterday.edge.status === 'ok'
+const strip = audienceStrip(audience, 30)
+const counted = strip.bars.filter((b) => b.total !== null).length
+const rows = audienceTableRows(audience)
+const hasUmami = audienceHasUmami(audience)
+const botRows = live
+  ? yesterday!.edge.bots.slice(0, 10).map((b) => ({ name: b.name, cls: classLabel(b.class), requests: compact(b.requests), ok: compact(b.ok_2xx), other: compact(b.other_status) }))
+  : []
+const countryRows = live ? audienceDimensionRows(yesterday!.edge.countries) : []
+const refererRows = live ? audienceDimensionRows(yesterday!.edge.referers) : []
+const missingDims = live ? audienceMissingDimensions(yesterday!) : []
+// A dimension the record reports as null is an absence with a reason, never a zero: the reason
+// travels in the file as extra_note and is printed here instead of an empty table.
+const missingLine = missingDims.length
+  ? ` Not in this record: ${missingDims.map((k) => (k === 'countries' ? 'countries' : 'referring hosts')).join(' and ')} — ${yesterday!.edge.extra_note || 'the file gives no reason'}.`
+  : ''
+const umamiLine = hasUmami
+  ? ' The last column holds the browser-beacon count of the days whose file still had that half; it was retired on 2026-09-03 because a beacon needs JavaScript and so cannot see a crawler, and a dash marks a day counted at the edge alone.'
+  : ''
+const sampled = live && yesterday!.edge.sample_interval_avg && yesterday!.edge.sample_interval_avg > 1
+const provenance = live
+  ? `${yesterday!.edge.source}; window ${yesterday!.edge.window?.[0] ?? '—'} to ${yesterday!.edge.window?.[1] ?? '—'}${sampled ? `; sampled, average sample interval ${yesterday!.edge.sample_interval_avg}` : '; unsampled'}. Classes by self-declared user agent; only the class and the bot name from a fixed table are kept, never the string.${missingLine}${umamiLine}`
+  : `No edge count is connected yet. The table shows every committed audience file; a day reads standby until a Cloudflare Analytics token exists — nothing is estimated.${umamiLine}`
+const columns = [
+  { key: 'day', label: 'Day', nowrap: true },
+  { key: 'total', label: 'Edge requests', align: 'right' as const },
+  { key: 'browser', label: 'Browsers', align: 'right' as const },
+  { key: 'search', label: 'Search', align: 'right' as const },
+  { key: 'ai-retrieval', label: 'AI retrieval', align: 'right' as const },
+  { key: 'ai-user-fetch', label: 'AI user fetch', align: 'right' as const },
+  { key: 'ai-training', label: 'AI training', align: 'right' as const },
+  { key: 'other-bot', label: 'Other bots', align: 'right' as const },
+  ...(hasUmami ? [{ key: 'pageviews', label: 'Beacon views', align: 'right' as const }] : []),
+]
+const READOUT_ID = 'trending-audience-readout'
+const FIGURE_ID = 'trending-audience'
+const stripWording: AudienceStripWording = {
+  figureLabel: `Stacked bars: requests to /trending per day over the last ${counted} counted days, split into ${AUDIENCE_CLASSES.length} audience classes.`,
+  legendLabel: 'The audience classes, as a filter',
+  standby: 'standby (no edge count)',
+  requestsWord: 'requests',
+}
+---
+
+<section class="mb-12 border-t border-line pt-6" id="audience">
+  <p class="kicker">Who is reading this</p>
+  {live ? (
+    <p class="mt-3 max-w-2xl leading-relaxed">
+      On {fmtDateLong(yesterday!.day)} the edge counted <span class="tabular-nums">{compact(yesterday!.edge.total)}</span> requests to this page and its machine editions:
+      {AUDIENCE_CLASSES.map((c, i) => (
+        <span class="whitespace-nowrap">{i > 0 ? ' · ' : ''}<span class="tabular-nums">{compact(yesterday!.edge.classes?.[c] ?? 0)}</span> {classLabel(c)}</span>
+      ))}.
+      {yesterday!.umami?.status === 'ok' && (
+        <span> Script-executing browsers only, counted by the browser beacon this file carried until 2026-09-03: <span class="tabular-nums">{compact(yesterday!.umami!.pageviews)}</span> page views.</span>
+      )}
+    </p>
+  ) : (
+    <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">Audience counter in standby — no analytics token is connected yet; nothing here is estimated.</p>
+  )}
+
+  {counted > 0 && (
+    <figure class="mt-5">
+      <div class="tr-figure">
+        <TrendingAudienceStrip client:visible model={strip} wording={stripWording} id={FIGURE_ID} readoutId={READOUT_ID} />
+        <Readout id={READOUT_ID} maxWidth="30ch" />
+      </div>
+      <figcaption class="mt-2 max-w-2xl font-mono text-mono-sm text-fg-faint">
+        One bar per counted day, oldest on the left, tallest bar = {compact(strip.max)} requests. A class in the legend
+        washes the others out; nothing moves. Legend totals cover the drawn window, and the table below is the same
+        data, day by day.
+      </figcaption>
+    </figure>
+  )}
+
+  <div class="mt-4 text-sm">
+    <TableFallback
+      summary="The audience, day by day, as a table"
+      open={!live}
+      columns={columns}
+      rows={rows}
+      caption={`Requests to /trending and its machine editions per day, by audience class${hasUmami ? ', plus the browser-beacon page views of the days that carried them' : ''}`}
+      provenance={provenance}
+    />
+  </div>
+
+  {(countryRows.length > 0 || refererRows.length > 0) && (
+    <div class="tra-dims mt-3 text-sm">
+      {countryRows.length > 0 && (
+        <TableFallback
+          summary={`Where they came from on ${fmtDateLong(yesterday!.day)}`}
+          open={true}
+          columns={[
+            { key: 'name', label: 'Country', nowrap: true },
+            { key: 'requests', label: 'Requests', align: 'right' },
+          ]}
+          rows={countryRows}
+          caption="The countries the edge attributed the most requests to, on the day this page speaks about"
+          provenance="The edge's own country attribution, at most ten, by requests. A country is a property of the request, never of a person: no address, session or identifier is read or kept."
+        />
+      )}
+      {refererRows.length > 0 && (
+        <TableFallback
+          summary={`What sent them on ${fmtDateLong(yesterday!.day)}`}
+          open={true}
+          columns={[
+            { key: 'name', label: 'Referring host', nowrap: true },
+            { key: 'requests', label: 'Requests', align: 'right' },
+          ]}
+          rows={refererRows}
+          caption="The referring hosts the edge saw the most requests from, on the day this page speaks about"
+          provenance="Host names only, at most ten, by requests — never a full referring URL. A request that declares no referrer is in none of these rows, so the rows do not add up to the day's total."
+        />
+      )}
+    </div>
+  )}
+
+  {botRows.length > 0 && (
+    <div class="mt-3 text-sm">
+      <TableFallback
+        summary={`Named bots on ${fmtDateLong(yesterday!.day)}`}
+        columns={[
+          { key: 'name', label: 'Bot', nowrap: true },
+          { key: 'cls', label: 'Class' },
+          { key: 'requests', label: 'Requests', align: 'right' },
+          { key: 'ok', label: '2xx', align: 'right' },
+          { key: 'other', label: 'Other status', align: 'right' },
+        ]}
+        rows={botRows}
+        caption="The most active named bots, by requests"
+        provenance="Bot names come from a fixed classification table in the pipeline; a user agent not in the table is counted only as its class."
+      />
+    </div>
+  )}
+</section>

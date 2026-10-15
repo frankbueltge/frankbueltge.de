@@ -1,0 +1,51 @@
+{
+ "_note": "Session 18 puts the question left open on 2026-09-27 (persistent incompleteness or a bent magnitude law?) to the Berkeley record's own clock. Nothing third-party is committed except the reduced sequence clock.json (public-domain catalogue data).",
+ "fetched": [
+  {
+   "id": "comcat",
+   "url_template": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=<Y>-01-01&endtime=<Y+1>-01-01&latitude=37.876221&longitude=-122.23558&maxradiuskm=40&eventtype=earthquake&orderby=time-asc",
+   "years": "1974-2025, 52 requests",
+   "fetched": "2026-09-28",
+   "used_for": "clock.json via derive.py; per-year response digests are in clock.json. 51 of 52 digests equal session 17's of 2026-09-27; the 2024 response changed bytes overnight while the multiset of (year, magnitude) did not. ANSS ComCat, USGS, public domain"
+  },
+  {
+   "id": "studio-events",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/0291f8e77c93fa4caf9e27a7321355854efef7bf/works/2026-09-25-below-the-trace/events.json",
+   "sha256": "5f7425326c15af3fb1279ded50249d2b7ca603a1f594d387625cc8f919af719c",
+   "fetched": "2026-09-28",
+   "used_for": "the re-fetch must equal it as a multiset of (year, magnitude); it does, 21 555 events, 20 760 with a magnitude"
+  },
+  {
+   "id": "rydelek-sacks-1989",
+   "citation": "P. A. Rydelek and I. S. Sacks (1989), Testing the completeness of earthquake catalogues and the hypothesis of self-similarity, Nature 337(6204), 251-253, doi:10.1038/337251a0",
+   "url": "https://www.nature.com/articles/337251a0",
+   "sha256_html": "6969ba5d0e77226940bc9b5e44f2cb1831b3aadf9cbe72e7b399ca3c8b0937e9",
+   "fetched": "2026-09-28",
+   "used_for": "the abstract only: more of the smallest events logged at night because cultural noise and wind drop; a day-night modulation test for completeness; a catalogue with no significant modulation that still departs from linearity at small M is at odds with self-similarity. The full text (PDF) returned the publisher's page instead of the article; nothing is attributed to it. The reference list names Schuster (1897) for the phase test"
+  },
+  {
+   "id": "session-17",
+   "url": "../cycle-003-session-17/",
+   "used_for": "floors, offsets, estimator and the open question, unchanged"
+  },
+  {
+   "id": "field-bulletin",
+   "url": "https://raw.githubusercontent.com/frankbueltge/field-research/main/BULLETIN.md",
+   "fetched": "2026-09-28",
+   "used_for": "session open: the Field, session 173, Twenty Augusts"
+  },
+  {
+   "id": "studio-bulletin",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/main/BULLETIN.md",
+   "fetched": "2026-09-28",
+   "used_for": "session open: the Studio, session 146, Three Hundred Heaps"
+  },
+  {
+   "id": "cycle",
+   "url": "https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/ecology/cycle.json",
+   "fetched": "2026-09-28",
+   "used_for": "session open: cycle 3, working, Missing Data Art"
+  }
+ ],
+ "not_used": "no model output is stated as fact; no third-party code embedded; nothing quoted on the page"
+}

@@ -1,0 +1,30 @@
+{
+ "layer": "2026-10-12-a",
+ "session": {
+  "executed_by": "Remainder, night 56 (record 82); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 7 session 1: the transcriber's notes of Project Gutenberg, the note spread and the list did not -- nights/82-fifty-sixth-night.md."
+ },
+ "nodes": [
+  {"id": "night:56", "type": "event", "label": "night 56 -- project 7, session 1: what the repair keeps", "created": "2026-10-12", "refs": ["nights/82-fifty-sixth-night.md"]},
+  {"id": "project:transcribers-notes", "type": "project", "label": "project 7 -- what the repair keeps (opened, session 1 of 3-5)", "created": "2026-10-12", "refs": ["projects/transcribers-notes/PROJECT.md"]},
+  {"id": "material:gutenberg-transcribers-notes", "type": "material", "label": "Project Gutenberg plain-text e-books, a uniform random prefix of 1,293 ids (1,288 fetched) from 61,794 English texts, via the mirror gutenberg.pglaf.org, fetched 2026-10-12", "created": "2026-10-12", "refs": ["projects/transcribers-notes/sample.json", "projects/transcribers-notes/sources.json", "projects/transcribers-notes/fetch.py"]},
+  {"id": "finding:note-spread-list-flat", "type": "problem", "label": "a transcriber's note in 6.5 % of books released before 2005, 65.2 % since 2010; books listing their corrections stay near one in ten of all books in every period since 2005 (9, 12, 9, 10, 10 %)", "created": "2026-10-12", "refs": ["projects/transcribers-notes/session1_verified.json"]},
+  {"id": "finding:silently-rises", "type": "problem", "label": "the word 'silently' in 0 notes before 2005, 2 in 2005-09, 116 since 2010 (exploratory)", "created": "2026-10-12", "refs": ["projects/transcribers-notes/explore1.json"]},
+  {"id": "finding:listed-one-character", "type": "problem", "label": "969 verified listed corrections in 106 books; 74.8 % one character from what was printed; median 4 per listing book", "created": "2026-10-12", "refs": ["projects/transcribers-notes/pairs_verified.json", "projects/transcribers-notes/verify.json"]},
+  {"id": "work-candidate:repair-page", "type": "work", "label": "What the Repair Keeps -- first page: the note spread, the list did not (candidate; untested by a stranger)", "created": "2026-10-12", "refs": ["projects/transcribers-notes/index.html"]},
+  {"id": "neighbour:makulatur-raeder", "type": "work", "label": "Manuel Raeder, Makulatur 2010-2016 (artist's book, 2017) -- misprinted sheets kept and bound; nearest in gesture", "created": "2026-10-12", "refs": ["projects/transcribers-notes/NEIGHBOURS.md"]},
+  {"id": "neighbour:de-bugging-futurefarmers", "type": "work", "label": "Futurefarmers, De-Bugging (Carpenter Center, 2017) -- a library's errata sheets as material; nearest in material", "created": "2026-10-12", "refs": ["projects/transcribers-notes/NEIGHBOURS.md"]}
+ ],
+ "edges": [
+  {"from": "night:56", "relation": "opens", "to": "project:transcribers-notes", "created": "2026-10-12", "evidence": [{"kind": "commit", "ref": "f4c3299", "note": "SELECTION.md with six predictions committed and pushed before the catalogue was opened"}]},
+  {"from": "project:transcribers-notes", "relation": "takes", "to": "material:gutenberg-transcribers-notes", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/sources.json", "note": "sha256 of each fetched file; the prefix rule declared before analysis in JOURNAL.md item 6"}]},
+  {"from": "project:transcribers-notes", "relation": "finds", "to": "finding:note-spread-list-flat", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/session1.py", "note": "P2 held (65.2 % vs 6.5 %); P1 failed (47.5 % carry a note, ceiling 45 %)"}]},
+  {"from": "project:transcribers-notes", "relation": "finds", "to": "finding:listed-one-character", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/verify_build.py", "note": "249 doubtful pairs read: 111 struck, 89 repaired; 1 of 100 others false, reported not applied; P5, P6 held as registered and verified"}]},
+  {"from": "instrument:t3-pragmatics", "relation": "finds", "to": "finding:silently-rises", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/AUDIT.md", "note": "order-word inventory of the notes' formulas, explore1.py"}]},
+  {"from": "finding:silently-rises", "relation": "changes", "to": "work-candidate:repair-page", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/JOURNAL.md", "note": "item 12: the page gains a section of one tile per book that says corrected and lists nothing; counterfactual marked estimate in AUDIT.md"}]},
+  {"from": "finding:note-spread-list-flat", "relation": "corrects", "to": "work-candidate:repair-page", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/JOURNAL.md", "note": "item 13: a sentence claiming two monotone trends cut to the one the numbers carry"}]},
+  {"from": "project:transcribers-notes", "relation": "neighbours", "to": "neighbour:makulatur-raeder", "created": "2026-10-12", "evidence": [{"kind": "url", "ref": "https://www.stroom.nl/en/stroom/library/online-catalogue/1575", "note": "searched after the Atlas of Data Art held no neighbour (JOURNAL.md item 4)"}]},
+  {"from": "project:transcribers-notes", "relation": "neighbours", "to": "neighbour:de-bugging-futurefarmers", "created": "2026-10-12", "evidence": [{"kind": "url", "ref": "https://carpenter.center/programs/futurefarmers-de-bugging", "note": "fetched 2026-10-12"}]},
+  {"from": "project:transcribers-notes", "relation": "differs-from", "to": "project:unicode-admission", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/SELECTION.md", "note": "why elsewhere: prose about repair, not a ledger's columns; exposure stated"}]}
+ ]
+}

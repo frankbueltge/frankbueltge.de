@@ -1,0 +1,159 @@
+{
+  "date": "2026-09-03",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-03T10:27:44Z",
+    "counts": {
+      "botwall": 25,
+      "gone_404": 3,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 269,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 272,
+    "excluded_unverifiable": 28,
+    "gone": 3,
+    "gone_ci95": [
+      0.0038,
+      0.0319
+    ],
+    "gone_rate": 0.011,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0139
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-01",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "digg.com",
+        "first_seen": "20260901120000",
+        "http_code": 404,
+        "title": "Investor Says LLMs Lack Self-Calibration on Errors · Digg",
+        "url": "https://digg.com/tech/n387bok7"
+      },
+      {
+        "class": "gone_404",
+        "domain": "fox969.com",
+        "first_seen": "20260901000000",
+        "http_code": 404,
+        "title": "Wisconsin woman arrested after attacking first responders during water rescue",
+        "url": "https://www.fox969.com/2026/08/31/wisconsin-woman-arrested-after-attacking-first-responders-during-water-rescue/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "thescore1260.com",
+        "first_seen": "20260901210000",
+        "http_code": 404,
+        "title": "Dodgers activate pair of All-Stars in C Will Smith, LHP Justin Wrobleski",
+        "url": "https://www.thescore1260.com/2026/09/01/dodgers-activate-pair-of-all-stars-in-c-will-smith-lhp-justin-wrobleski/"
+      }
+    ],
+    "sample_drawn_at": "2026-09-02T09:57:07Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 6737,
+      "replaced": 6633,
+      "trivial": 1415,
+      "update": 571
+    },
+    "day": "2026-09-02",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Rahul",
+          "Gandhi"
+        ],
+        "after": "Rahul Gandhi: 'Shouldn't it begin with Congress?' BJP targets Rahul Gandhi over 'smash the patriarchy' remark | India News",
+        "before": "Bjp: 'Shouldn't it begin with Congress?' BJP targets Rahul Gandhi over 'smash the patriarchy' remark | India News",
+        "detected": "2026-09-02T09:50:04Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "BJP"
+        ],
+        "similarity": 1.0,
+        "url": "https://timesofindia.indiatimes.com/india/shouldnt-it-begin-with-congress-bjp-targets-rahul-gandhi-over-smash-the-patriarchy-remark/articleshow/133535896.cms",
+        "weight": 6,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "South",
+          "Western",
+          "Railway"
+        ],
+        "after": "Mangaluru's integration with South Western Railway should be used for aggressive Railway development in the region: Kanyakumari Association",
+        "before": "Mangaluru's integration with SWR should be used for aggressive Railway development in the region: Kanyakumari Association",
+        "detected": "2026-09-02T09:49:56Z",
+        "domain": "thehindu.com",
+        "removed": [
+          "SWR"
+        ],
+        "similarity": 0.842,
+        "url": "https://www.thehindu.com/news/cities/Mangalore/mangalurus-integration-with-swr-should-be-used-for-aggressive-railway-development-in-the-region-kanyakumari-association/article71392057.ece",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Sheffield"
+        ],
+        "after": "Five held by police after newborn baby dies from stab wounds in Sheffield",
+        "before": "Five held by police after newborn baby dies from stab wounds in South Yorkshire",
+        "detected": "2026-09-02T18:02:13Z",
+        "domain": "aol.co.uk",
+        "removed": [
+          "South",
+          "Yorkshire"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.aol.co.uk/articles/five-held-police-newborn-baby-174656000.html",
+        "weight": 6,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 19280,
+      "PAGE_TEXTCHANGE": 144523,
+      "PAGE_TITLECHANGE": 55926,
+      "UNCHANGED_CONTENT": 786402
+    },
+    "title_changes_en": 15356,
+    "trace": [
+      {
+        "bytes_billed": 27262976,
+        "created": "1788430982957",
+        "job_id": "world_gdg_counts_20260902",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 252706816,
+        "created": "1788430989153",
+        "job_id": "world_gdg_titles_20260902",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-03T10:27:44Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-02.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

@@ -1,0 +1,1350 @@
+{
+ "session": 87,
+ "date": "2026-09-11",
+ "status": "POST HOC; scores no prediction",
+ "question": "does the by-phrase the instrument found name the party that must act?",
+ "n_agentful": 133,
+ "n_occurrences": 3603,
+ "agentful_share_of_all_occurrences": 0.0369,
+ "verdicts": {
+  "AGENT-IS-ARTEFACT": 36,
+  "NOT-AGENTIVE": 59,
+  "BEARER": 11,
+  "OTHER-CLAUSE": 23,
+  "AGENT-NOT-BEARER": 4
+ },
+ "precision_bearer_named": 0.0827,
+ "bearer_named_share_of_all_occurrences": 0.00305,
+ "rows": [
+  {
+   "id": "A001",
+   "doc": "compression",
+   "modal": "must",
+   "slot_token": "created",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must not be created by CompressionStream, and are errors for DecompressionStream.",
+   "sentence": "Non-[RFC7932]-conforming blocks must not be created by CompressionStream, and are errors for DecompressionStream."
+  },
+  {
+   "id": "A002",
+   "doc": "compression",
+   "modal": "must",
+   "slot_token": "created",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must not be created by CompressionStream, and are errors for DecompressionStream.",
+   "sentence": "Field values described as invalid in [RFC1950] must not be created by CompressionStream, and are errors for DecompressionStream."
+  },
+  {
+   "id": "A003",
+   "doc": "compression",
+   "modal": "must",
+   "slot_token": "created",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must not be created by CompressionStream, and are errors for DecompressionStream.",
+   "sentence": "Non-[RFC1951]-conforming blocks must not be created by CompressionStream, and are errors for DecompressionStream."
+  },
+  {
+   "id": "A004",
+   "doc": "compression",
+   "modal": "must",
+   "slot_token": "created",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must not be created by CompressionStream, and are errors for DecompressionStream.",
+   "sentence": "Field values described as invalid in [RFC1952] must not be created by CompressionStream, and are errors for DecompressionStream."
+  },
+  {
+   "id": "A005",
+   "doc": "compression",
+   "modal": "must",
+   "slot_token": "ignored",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be ignored by DecompressionStream.",
+   "sentence": "The FTEXT flag must be ignored by DecompressionStream."
+  },
+  {
+   "id": "A006",
+   "doc": "compression",
+   "modal": "must",
+   "slot_token": "ignored",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be ignored by DecompressionStream, except to verify that they are terminated correctly.",
+   "sentence": "The contents of any FEXTRA, FNAME and FCOMMENT fields must be ignored by DecompressionStream, except to verify that they are terminated correctly."
+  },
+  {
+   "id": "A007",
+   "doc": "compression",
+   "modal": "must",
+   "slot_token": "ignored",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be ignored by DecompressionStream.",
+   "sentence": "The contents of the MTIME, XFL and OS fields must be ignored by DecompressionStream."
+  },
+  {
+   "id": "A008",
+   "doc": "console",
+   "modal": "should",
+   "slot_token": "expanded",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should be expanded by default.",
+   "sentence": "Optionally, if the environment supports interactive groups, group should be expanded by default."
+  },
+  {
+   "id": "A009",
+   "doc": "console",
+   "modal": "should",
+   "slot_token": "collapsed",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should be collapsed by default.",
+   "sentence": "Optionally, if the environment supports interactive groups, group should be collapsed by default."
+  },
+  {
+   "id": "A010",
+   "doc": "fullscreen",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported by Element and Document objects as event handler IDL attributes:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported by Element and Document objects as event handler IDL attributes:"
+  },
+  {
+   "id": "A011",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "read",
+   "register": "NONNORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should be read by picking random sections from the contents list and following all the cross-references.",
+   "sentence": "Then it should be read by picking random sections from the contents list and following all the cross-references."
+  },
+  {
+   "id": "A012",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "used",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be used by elements that have no additional requirements, is the HTMLElement interface.",
+   "sentence": "The basic interface, from which all the HTML elements' interfaces inherit, and which must be used by elements that have no additional requirements, is the HTMLElement interface."
+  },
+  {
+   "id": "A013",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be a valid non-empty URL potentially surrounded by spaces.",
+   "sentence": "If the href attribute is present, then its value must be a valid non-empty URL potentially surrounded by spaces."
+  },
+  {
+   "id": "A014",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "either",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be either an ASCII case-insensitive match for the string \"any\", or a value that consists of two valid non-negative integers that do not have a leading U+0030 DIGIT ZERO (0) character and that are separated by a single U+0078 LATIN SMALL LETTER X or U+0058",
+   "sentence": "Each value must be either an ASCII case-insensitive match for the string \"any\", or a value that consists of two valid non-negative integers that do not have a leading U+0030 DIGIT ZERO (0) character and that are separated by a single U+0078 LATIN SMALL LETTER X or U+0058 LATIN CAPITAL LETTER X character."
+  },
+  {
+   "id": "A015",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "used",
+   "register": "NORM",
+   "verdict": "BEARER",
+   "window": "must not be used by authors.",
+   "sentence": "Unless the name is theme-color, the media attribute has no effect on the processing model and must not be used by authors."
+  },
+  {
+   "id": "A016",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "used",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must not be used on pages whose markup is not generated by software, e.g. pages whose markup was written by a user in a text editor.",
+   "sentence": "This value must not be used on pages whose markup is not generated by software, e.g. pages whose markup was written by a user in a text editor."
+  },
+  {
+   "id": "A017",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "cautious",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should be cautious about this mismatch, and avoid perpetuating the existing confusion by adding the same or similar behavior to both an HTTP header and an http-equiv pragma.",
+   "sentence": "Implementers or specification writers contemplating adding new document-level pragmas or HTTP header-controlled switches should be cautious about this mismatch, and avoid perpetuating the existing confusion by adding the same or similar behavior to both an HTTP header and an http-equiv pragma."
+  },
+  {
+   "id": "A018",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be a valid URL potentially surrounded by spaces.",
+   "sentence": "If the cite attribute is present, it must be a valid URL potentially surrounded by spaces."
+  },
+  {
+   "id": "A019",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be a valid URL potentially surrounded by spaces.",
+   "sentence": "If the cite attribute is present, it must be a valid URL potentially surrounded by spaces."
+  },
+  {
+   "id": "A020",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "obtained",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be obtained from the element's datetime value by using the following algorithm:",
+   "sentence": "The machine-readable equivalent of the element's contents must be obtained from the element's datetime value by using the following algorithm:"
+  },
+  {
+   "id": "A021",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "used",
+   "register": "NORM",
+   "verdict": "BEARER",
+   "window": "should be used by the user agent when representing the page in the user interface.",
+   "sentence": "The specified resource is an icon representing the page or site, and should be used by the user agent when representing the page in the user interface."
+  },
+  {
+   "id": "A022",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be a valid URL potentially surrounded by spaces that explains the change.",
+   "sentence": "If the cite attribute is present, it must be a valid URL potentially surrounded by spaces that explains the change."
+  },
+  {
+   "id": "A023",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be a valid non-empty URL potentially surrounded by spaces.",
+   "sentence": "The value must be a valid non-empty URL potentially surrounded by spaces."
+  },
+  {
+   "id": "A024",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "the",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be the type given by the image's associated Content-Type headers.",
+   "sentence": "If these rules are not applied, then the type of the image must be the type given by the image's associated Content-Type headers."
+  },
+  {
+   "id": "A025",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be a valid non-empty URL potentially surrounded by spaces.",
+   "sentence": "The attribute, if present, must be a valid non-empty URL potentially surrounded by spaces."
+  },
+  {
+   "id": "A026",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "present",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be present, and must contain a valid non-empty URL potentially surrounded by spaces.",
+   "sentence": "It must be present, and must contain a valid non-empty URL potentially surrounded by spaces."
+  },
+  {
+   "id": "A027",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be a valid non-empty URL potentially surrounded by spaces.",
+   "sentence": "The value must be a valid non-empty URL potentially surrounded by spaces."
+  },
+  {
+   "id": "A028",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the AudioTrackList and VideoTrackList interfaces:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the AudioTrackList and VideoTrackList interfaces:"
+  },
+  {
+   "id": "A029",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "sorted",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be sorted by their start time, earliest first; then, any cues with the same start time must be sorted by their end time, latest first; and finally, any cues with identical end times must be sorted in the order they were last added to their respective text",
+   "sentence": "The text track cues of a media element's text tracks are ordered relative to each other in the text track cue order, which is determined as follows: first group the cues by their text track, with the groups being sorted in the same order as their text tracks appear in the media element's list of text tracks; then, within each group, cues must be sorted by their start time, earliest first; then, any cues with the same start time must be sorted by their end time, latest first; and finally, any cues with identical end times must be sorted in the order they were last added to their respective text track list of cues, oldest first (so e.g. for cues from a WebVTT file, that would initially be the order in which the cues were listed in the file). [WEBVTT]"
+  },
+  {
+   "id": "A030",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "sorted",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be sorted by their end time, latest first; and finally, any cues with identical end times must be sorted in the order they were last added to their respective text track list of cues, oldest first (so e.g. for cues from a WebVTT file, that would initially",
+   "sentence": "The text track cues of a media element's text tracks are ordered relative to each other in the text track cue order, which is determined as follows: first group the cues by their text track, with the groups being sorted in the same order as their text tracks appear in the media element's list of text tracks; then, within each group, cues must be sorted by their start time, earliest first; then, any cues with the same start time must be sorted by their end time, latest first; and finally, any cues with identical end times must be sorted in the order they were last added to their respective text track list of cues, oldest first (so e.g. for cues from a WebVTT file, that would initially be the order in which the cues were listed in the file). [WEBVTT]"
+  },
+  {
+   "id": "A031",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the TextTrackList interface:",
+   "sentence": "The following are the event handlers that (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the TextTrackList interface:"
+  },
+  {
+   "id": "A032",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the TextTrack interface:",
+   "sentence": "The following are the event handlers that (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the TextTrack interface:"
+  },
+  {
+   "id": "A033",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the TextTrackCue interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the TextTrackCue interface:"
+  },
+  {
+   "id": "A034",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "implemented",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be implemented by only changing the playbackRate attribute (and not the defaultPlaybackRate attribute).",
+   "sentence": "Features such as fast-forward or rewind must be implemented by only changing the playbackRate attribute (and not the defaultPlaybackRate attribute)."
+  },
+  {
+   "id": "A035",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "interpreted",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be interpreted relative to the displayed image after any stretching caused by the CSS 'width' and 'height' properties (or, for non-CSS browsers, the image element's width and height attributes \u2014 CSS browsers map those attributes to the aforementioned CSS ",
+   "sentence": "For historical reasons, the coordinates must be interpreted relative to the displayed image after any stretching caused by the CSS 'width' and 'height' properties (or, for non-CSS browsers, the image element's width and height attributes \u2014 CSS browsers map those attributes to the aforementioned CSS properties)."
+  },
+  {
+   "id": "A036",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "ordered",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be ordered such that those elements whose parent is a thead are included first, in tree order, followed by those elements whose parent is either this or a tbody element, again in tree order, followed finally by those elements whose parent is a tfoot eleme",
+   "sentence": "The elements in the collection must be ordered such that those elements whose parent is a thead are included first, in tree order, followed by those elements whose parent is either this or a tbody element, again in tree order, followed finally by those elements whose parent is a tfoot element, still in tree order."
+  },
+  {
+   "id": "A037",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "targeted",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must not be targeted by itself.",
+   "sentence": "A th element must not be targeted by itself."
+  },
+  {
+   "id": "A038",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "editable",
+   "register": "NORM",
+   "verdict": "AGENT-NOT-BEARER",
+   "window": "should be editable by the user.",
+   "sentence": "If the element is mutable, its value should be editable by the user."
+  },
+  {
+   "id": "A039",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "editable",
+   "register": "NORM",
+   "verdict": "AGENT-NOT-BEARER",
+   "window": "should be editable by the user.",
+   "sentence": "If the element is mutable, its value should be editable by the user."
+  },
+  {
+   "id": "A040",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "editable",
+   "register": "NORM",
+   "verdict": "AGENT-NOT-BEARER",
+   "window": "should be editable by the user.",
+   "sentence": "If the element is mutable, its value should be editable by the user."
+  },
+  {
+   "id": "A041",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "present",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be present, and must contain a valid non-empty URL potentially surrounded by spaces referencing a non-interactive, optionally animated, image resource that is neither paged nor scripted.",
+   "sentence": "The src attribute must be present, and must contain a valid non-empty URL potentially surrounded by spaces referencing a non-interactive, optionally animated, image resource that is neither paged nor scripted."
+  },
+  {
+   "id": "A042",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "the",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be the type given by the image's associated Content-Type headers.",
+   "sentence": "If these rules are not applied, then the type of the image must be the type given by the image's associated Content-Type headers."
+  },
+  {
+   "id": "A043",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "applied",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "should be applied so that different underlying Unicode code point sequences, caused by different keyboard- or input-specific mechanisms, do not interfere with the matching process.",
+   "sentence": "Unicode normalization should be applied so that different underlying Unicode code point sequences, caused by different keyboard- or input-specific mechanisms, do not interfere with the matching process."
+  },
+  {
+   "id": "A044",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "editable",
+   "register": "NORM",
+   "verdict": "AGENT-NOT-BEARER",
+   "window": "should be editable by the user: the user agent should allow the user to edit, insert, and remove text, and to insert and remove line breaks in the form of U+000A LINE FEED (LF) characters.",
+   "sentence": "When a textarea is mutable, its raw value should be editable by the user: the user agent should allow the user to edit, insert, and remove text, and to insert and remove line breaks in the form of U+000A LINE FEED (LF) characters."
+  },
+  {
+   "id": "A045",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "implemented",
+   "register": "NORM",
+   "verdict": "BEARER",
+   "window": "must be implemented by the user agent acting as if the user had modified the control's data, and must be done at a time where the element is mutable (e.g. just after the element has been inserted into the document, or when the user agent stops parsing).",
+   "sentence": "The autocompletion mechanism must be implemented by the user agent acting as if the user had modified the control's data, and must be done at a time where the element is mutable (e.g. just after the element has been inserted into the document, or when the user agent stops parsing)."
+  },
+  {
+   "id": "A046",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "escaped",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be escaped by replacing any 0x0A (LF) bytes with the byte sequence `%0A`, 0x0D (CR) with `%0D` and 0x22 (\") with `%22`.",
+   "sentence": "For field names and filenames for file fields, the result of the encoding in the previous bullet point must be escaped by replacing any 0x0A (LF) bytes with the byte sequence `%0A`, 0x0D (CR) with `%0D` and 0x22 (\") with `%22`."
+  },
+  {
+   "id": "A047",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "scrolled",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should not be scrolled by doing this step.",
+   "sentence": "If subject's node document's focused area of the document's DOM anchor is a shadow-including inclusive descendant of subject, or wasModal is true, then run the focusing steps for element; the viewport should not be scrolled by doing this step."
+  },
+  {
+   "id": "A048",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "a",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be a valid non-empty URL potentially surrounded by spaces.",
+   "sentence": "If src is specified, it must be a valid non-empty URL potentially surrounded by spaces."
+  },
+  {
+   "id": "A049",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "treated",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be treated as if it was an unknown font, falling back to another as described by the relevant CSS specifications. [CSSFONTS] [CSSFONTLOAD]",
+   "sentence": "(Each font style source object has a font source, which determines what fonts are available.) If a font is used before it is fully loaded, or if the font style source object does not have that font in scope at the time the font is to be used, then it must be treated as if it was an unknown font, falling back to another as described by the relevant CSS specifications. [CSSFONTS] [CSSFONTLOAD]"
+  },
+  {
+   "id": "A050",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "affected",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must not be affected by the transformation matrix when used to draw on bitmaps.",
+   "sentence": "When the value is a CSS color, it must not be affected by the transformation matrix when used to draw on bitmaps."
+  },
+  {
+   "id": "A051",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "transformed",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be transformed as described by the current transformation matrix when rendering.",
+   "sentence": "The points in the linear gradient must be transformed as described by the current transformation matrix when rendering."
+  },
+  {
+   "id": "A052",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "rendered",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be rendered by following these steps:",
+   "sentence": "Radial gradients must be rendered by following these steps:"
+  },
+  {
+   "id": "A053",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "transformed",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be transformed according to the current transformation matrix on the object implementing the CanvasTransform interface when used by these methods (without affecting the Path2D object itself).",
+   "sentence": "When the intended path is a Path2D object, the coordinates and lines of its subpaths must be transformed according to the current transformation matrix on the object implementing the CanvasTransform interface when used by these methods (without affecting the Path2D object itself)."
+  },
+  {
+   "id": "A054",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "set",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be set to the largest infinite surface (i.e. by default, no clipping occurs).",
+   "sentence": "When the context is initialized, its current clipping region must be set to the largest infinite surface (i.e. by default, no clipping occurs)."
+  },
+  {
+   "id": "A055",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the OffscreenCanvas interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the OffscreenCanvas interface:"
+  },
+  {
+   "id": "A056",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "overridden",
+   "register": "NONNORM",
+   "verdict": "BEARER",
+   "window": "should not be overridden by users of the custom element.",
+   "sentence": "Custom element authors are encouraged to state what aspects of their accessibility semantics are strong native semantics, i.e., should not be overridden by users of the custom element."
+  },
+  {
+   "id": "A057",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "specified",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must not be specified on elements with an itemscope attribute whose itemtype attribute specifies a vocabulary that does not support global identifiers for items, as defined by that vocabulary's specification.",
+   "sentence": "The itemid attribute must not be specified on elements that do not have both an itemscope attribute and an itemtype attribute specified, and must not be specified on elements with an itemscope attribute whose itemtype attribute specifies a vocabulary that does not support global identifiers for items, as defined by that vocabulary's specification."
+  },
+  {
+   "id": "A058",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the CloseWatcher interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the CloseWatcher interface:"
+  },
+  {
+   "id": "A059",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "scrolled",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should not be scrolled by doing this step.",
+   "sentence": "If focusPreviousElement is true and document's focused area of the document's DOM anchor is a shadow-including inclusive descendant of element, then run the focusing steps for previouslyFocusedElement; the viewport should not be scrolled by doing this step."
+  },
+  {
+   "id": "A060",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the Navigation interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the Navigation interface:"
+  },
+  {
+   "id": "A061",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the NavigationHistoryEntry interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the NavigationHistoryEntry interface:"
+  },
+  {
+   "id": "A062",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "used",
+   "register": "NORM",
+   "verdict": "BEARER",
+   "window": "should not be used by new specifications, as they are excessively complicated and unintuitive to work with.",
+   "sentence": "The incumbent and entry concepts should not be used by new specifications, as they are excessively complicated and unintuitive to work with."
+  },
+  {
+   "id": "A063",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "used",
+   "register": "NORM",
+   "verdict": "BEARER",
+   "window": "should not be used directly by other specifications.",
+   "sentence": "The following algorithms are meant for internal use by this specification only as part of fetching an external module script graph or other similar concepts above, and should not be used directly by other specifications."
+  },
+  {
+   "id": "A064",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported by all HTML elements, as both event handler content attributes and event handler IDL attributes; and that must be supported by all Document and Window objects, as event handler IDL attributes:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported by all HTML elements, as both event handler content attributes and event handler IDL attributes; and that must be supported by all Document and Window objects, as event handler IDL attributes:"
+  },
+  {
+   "id": "A065",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported by all Document and Window objects, as event handler IDL attributes:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported by all HTML elements, as both event handler content attributes and event handler IDL attributes; and that must be supported by all Document and Window objects, as event handler IDL attributes:"
+  },
+  {
+   "id": "A066",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported by all HTML elements other than body and frameset elements, as both event handler content attributes and event handler IDL attributes; that must be supported by all Document objects, as event handler IDL attributes; and that must be supported",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported by all HTML elements other than body and frameset elements, as both event handler content attributes and event handler IDL attributes; that must be supported by all Document objects, as event handler IDL attributes; and that must be supported by all Window objects, as event handler IDL attributes on the Window objects themselves, and with corresponding event handler content attributes and event handler IDL attributes exposed on all body and frameset elements that are owned by that Window object's associated Document:"
+  },
+  {
+   "id": "A067",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported by all Document objects, as event handler IDL attributes; and that must be supported by all Window objects, as event handler IDL attributes on the Window objects themselves, and with corresponding event handler content attributes and event ha",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported by all HTML elements other than body and frameset elements, as both event handler content attributes and event handler IDL attributes; that must be supported by all Document objects, as event handler IDL attributes; and that must be supported by all Window objects, as event handler IDL attributes on the Window objects themselves, and with corresponding event handler content attributes and event handler IDL attributes exposed on all body and frameset elements that are owned by that Window object's associated Document:"
+  },
+  {
+   "id": "A068",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported by all Window objects, as event handler IDL attributes on the Window objects themselves, and with corresponding event handler content attributes and event handler IDL attributes exposed on all body and frameset elements that are owned by that",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported by all HTML elements other than body and frameset elements, as both event handler content attributes and event handler IDL attributes; that must be supported by all Document objects, as event handler IDL attributes; and that must be supported by all Window objects, as event handler IDL attributes on the Window objects themselves, and with corresponding event handler content attributes and event handler IDL attributes exposed on all body and frameset elements that are owned by that Window object's associated Document:"
+  },
+  {
+   "id": "A069",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported by Window objects, as event handler IDL attributes on the Window objects themselves, and with corresponding event handler content attributes and event handler IDL attributes exposed on all body and frameset elements that are owned by that Win",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported by Window objects, as event handler IDL attributes on the Window objects themselves, and with corresponding event handler content attributes and event handler IDL attributes exposed on all body and frameset elements that are owned by that Window object's associated Document:"
+  },
+  {
+   "id": "A070",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "defaulted",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be defaulted to the value given by default.",
+   "sentence": "The response must be defaulted to the value given by default."
+  },
+  {
+   "id": "A071",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "rendered",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "should be rendered to a bitmap of the size specified by the resizeWidth and the resizeHeight options.",
+   "sentence": "If image's media data has no natural dimensions (e.g., it's a vector graphic with no specified content size), it should be rendered to a bitmap of the size specified by the resizeWidth and the resizeHeight options."
+  },
+  {
+   "id": "A072",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "left",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be left untouched and that is premultiplied by alpha must have its color components divided by alpha.",
+   "sentence": "If val is \"none\", the output that is not premultiplied by alpha must be left untouched and that is premultiplied by alpha must have its color components divided by alpha."
+  },
+  {
+   "id": "A073",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the EventSource interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the EventSource interface:"
+  },
+  {
+   "id": "A074",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "separated",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be separated by either a U+000D CARRIAGE RETURN U+000A LINE FEED (CRLF) character pair, a single U+000A LINE FEED (LF) character, or a single U+000D CARRIAGE RETURN (CR) character.",
+   "sentence": "Lines must be separated by either a U+000D CARRIAGE RETURN U+000A LINE FEED (CRLF) character pair, a single U+000A LINE FEED (LF) character, or a single U+000D CARRIAGE RETURN (CR) character."
+  },
+  {
+   "id": "A075",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by objects implementing the MessageEventTarget interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by objects implementing the MessageEventTarget interface:"
+  },
+  {
+   "id": "A076",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the MessagePort interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the MessagePort interface:"
+  },
+  {
+   "id": "A077",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "garbage",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must not be garbage collected while there exists an event referenced by a task in a task queue that is to be dispatched on that MessagePort object, or while the MessagePort object's port message queue is enabled and not empty.",
+   "sentence": "Furthermore, a MessagePort object must not be garbage collected while there exists an event referenced by a task in a task queue that is to be dispatched on that MessagePort object, or while the MessagePort object's port message queue is enabled and not empty."
+  },
+  {
+   "id": "A078",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the BroadcastChannel interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the BroadcastChannel interface:"
+  },
+  {
+   "id": "A079",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by objects implementing the WorkerGlobalScope interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by objects implementing the WorkerGlobalScope interface:"
+  },
+  {
+   "id": "A080",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by objects implementing the SharedWorkerGlobalScope interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by objects implementing the SharedWorkerGlobalScope interface:"
+  },
+  {
+   "id": "A081",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "initially",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be initially false, but which can get set to true by the algorithms in the processing model section below.",
+   "sentence": "Each WorkerGlobalScope object has a closing flag, which must be initially false, but which can get set to true by the algorithms in the processing model section below."
+  },
+  {
+   "id": "A082",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by objects implementing the AbstractWorker interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by objects implementing the AbstractWorker interface:"
+  },
+  {
+   "id": "A083",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "separated",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be separated from each other by one or more ASCII whitespace.",
+   "sentence": "Attributes must be separated from each other by one or more ASCII whitespace."
+  },
+  {
+   "id": "A084",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "used",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should be used only with caution \u2014 especially since, if directly preceded by an unquoted attribute value, it becomes part of the attribute value rather than being discarded by the parser.",
+   "sentence": "For such void elements, it should be used only with caution \u2014 especially since, if directly preceded by an unquoted attribute value, it becomes part of the attribute value rather than being discarded by the parser."
+  },
+  {
+   "id": "A085",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "closed",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be closed by a U+003E GREATER-THAN SIGN character (>).",
+   "sentence": "Finally, start tags must be closed by a U+003E GREATER-THAN SIGN character (>)."
+  },
+  {
+   "id": "A086",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "closed",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be closed by a U+003E GREATER-THAN SIGN character (>).",
+   "sentence": "Finally, end tags must be closed by a U+003E GREATER-THAN SIGN character (>)."
+  },
+  {
+   "id": "A087",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "written",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be written using the name given by the third cell from the same row.",
+   "sentence": "When a foreign element has one of the namespaced attributes given by the local name and namespace of the first and second cells of a row from the following table, it must be written using the name given by the third cell from the same row."
+  },
+  {
+   "id": "A088",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "followed",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be followed by one of the names given in the named character references section, using the same case.",
+   "sentence": "The ampersand must be followed by one of the names given in the named character references section, using the same case."
+  },
+  {
+   "id": "A089",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "one",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be one that is terminated by a U+003B SEMICOLON character (;).",
+   "sentence": "The name must be one that is terminated by a U+003B SEMICOLON character (;)."
+  },
+  {
+   "id": "A090",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "followed",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be followed by a U+0023 NUMBER SIGN character (#), followed by one or more ASCII digits, representing a base-ten integer that corresponds to a code point that is allowed according to the definition below.",
+   "sentence": "The ampersand must be followed by a U+0023 NUMBER SIGN character (#), followed by one or more ASCII digits, representing a base-ten integer that corresponds to a code point that is allowed according to the definition below."
+  },
+  {
+   "id": "A091",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "followed",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be followed by a U+0023 NUMBER SIGN character (#), which must be followed by either a U+0078 LATIN SMALL LETTER X character (x) or a U+0058 LATIN CAPITAL LETTER X character (X), which must then be followed by one or more ASCII hex digits, representing a h",
+   "sentence": "The ampersand must be followed by a U+0023 NUMBER SIGN character (#), which must be followed by either a U+0078 LATIN SMALL LETTER X character (x) or a U+0058 LATIN CAPITAL LETTER X character (X), which must then be followed by one or more ASCII hex digits, representing a hexadecimal integer that corresponds to a code point that is allowed according to the definition below."
+  },
+  {
+   "id": "A092",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "followed",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be followed by either a U+0078 LATIN SMALL LETTER X character (x) or a U+0058 LATIN CAPITAL LETTER X character (X), which must then be followed by one or more ASCII hex digits, representing a hexadecimal integer that corresponds to a code point that is al",
+   "sentence": "The ampersand must be followed by a U+0023 NUMBER SIGN character (#), which must be followed by either a U+0078 LATIN SMALL LETTER X character (x) or a U+0058 LATIN CAPITAL LETTER X character (X), which must then be followed by one or more ASCII hex digits, representing a hexadecimal integer that corresponds to a code point that is allowed according to the definition below."
+  },
+  {
+   "id": "A093",
+   "doc": "html",
+   "modal": "should",
+   "slot_token": "used",
+   "register": "NORM",
+   "verdict": "BEARER",
+   "window": "should be used by conformance checkers in reports.",
+   "sentence": "Some parse errors have dedicated codes outlined in the table below that should be used by conformance checkers in reports."
+  },
+  {
+   "id": "A094",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "converted",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be converted to characters for the tokenizer's input stream, by passing the input byte stream and character encoding to decode.",
+   "sentence": "Given a character encoding, the bytes in the input byte stream must be converted to characters for the tokenizer's input stream, by passing the input byte stream and character encoding to decode."
+  },
+  {
+   "id": "A095",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "preprocessed",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be preprocessed by normalizing newlines.",
+   "sentence": "Before the tokenization stage, the input stream must be preprocessed by normalizing newlines."
+  },
+  {
+   "id": "A096",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "compared",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be compared as they were when the elements were created by the parser; two elements have the same attributes if all their parsed attributes can be paired such that the two attributes in each pair have identical names, namespaces, and values (the order of ",
+   "sentence": "For these purposes, the attributes must be compared as they were when the elements were created by the parser; two elements have the same attributes if all their parsed attributes can be paired such that the two attributes in each pair have identical names, namespaces, and values (the order of the attributes does not matter)."
+  },
+  {
+   "id": "A097",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "used",
+   "register": "NORM",
+   "verdict": "BEARER",
+   "window": "must not be used by authors:",
+   "sentence": "Elements in the following list are entirely obsolete, and must not be used by authors:"
+  },
+  {
+   "id": "A098",
+   "doc": "html",
+   "modal": "must",
+   "slot_token": "used",
+   "register": "NORM",
+   "verdict": "BEARER",
+   "window": "must not be used by authors:",
+   "sentence": "The following attributes are obsolete (though the elements are still part of the language), and must not be used by authors:"
+  },
+  {
+   "id": "A099",
+   "doc": "infra",
+   "modal": "must",
+   "slot_token": "evaluated",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be evaluated, not as-written, but by additionally inserting a step before each of them that evaluates condition, and if condition evaluates to true, skips the remaining steps.",
+   "sentence": "This indicates that the specified steps must be evaluated, not as-written, but by additionally inserting a step before each of them that evaluates condition, and if condition evaluates to true, skips the remaining steps."
+  },
+  {
+   "id": "A100",
+   "doc": "notifications",
+   "modal": "should",
+   "slot_token": "displayed",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should be displayed to the end user, if the notification platform displays them side by side.",
+   "sentence": "The notification\u2019s direction also determines the relative order in which the notification\u2019s actions should be displayed to the end user, if the notification platform displays them side by side."
+  },
+  {
+   "id": "A101",
+   "doc": "notifications",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported as attributes by the Notification object.",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported as attributes by the Notification object."
+  },
+  {
+   "id": "A102",
+   "doc": "notifications",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported as attribute by the ServiceWorkerGlobalScope object:",
+   "sentence": "The following is the event handler (and its corresponding event handler event type) that must be supported as attribute by the ServiceWorkerGlobalScope object:"
+  },
+  {
+   "id": "A103",
+   "doc": "streams",
+   "modal": "should",
+   "slot_token": "handled",
+   "register": "NORM",
+   "verdict": "BEARER",
+   "window": "should be handled by the calling specification.",
+   "sentence": "They can all fail in various operation-specific ways, and these failures should be handled by the calling specification."
+  },
+  {
+   "id": "A104",
+   "doc": "streams",
+   "modal": "should",
+   "slot_token": "handled",
+   "register": "NORM",
+   "verdict": "BEARER",
+   "window": "should be handled by the calling specification.",
+   "sentence": "They can all fail in various operation-specific ways, and these failures should be handled by the calling specification."
+  },
+  {
+   "id": "A105",
+   "doc": "url",
+   "modal": "must",
+   "slot_token": "four",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be four shortest possible strings of ASCII digits, representing a decimal number in the range 0 to 255, inclusive, separated from each other by U+002E (.).",
+   "sentence": "A valid IPv4-address string must be four shortest possible strings of ASCII digits, representing a decimal number in the range 0 to 255, inclusive, separated from each other by U+002E (.)."
+  },
+  {
+   "id": "A106",
+   "doc": "url",
+   "modal": "must",
+   "slot_token": "an",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be an absolute-URL string, optionally followed by U+0023 (#) and a URL-fragment string.",
+   "sentence": "An absolute-URL-with-fragment string must be an absolute-URL string, optionally followed by U+0023 (#) and a URL-fragment string."
+  },
+  {
+   "id": "A107",
+   "doc": "url",
+   "modal": "must",
+   "slot_token": "one",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be one ASCII alpha, followed by zero or more of ASCII alphanumeric, U+002B (+), U+002D (-), and U+002E (.).",
+   "sentence": "A URL-scheme string must be one ASCII alpha, followed by zero or more of ASCII alphanumeric, U+002B (+), U+002D (-), and U+002E (.)."
+  },
+  {
+   "id": "A108",
+   "doc": "url",
+   "modal": "must",
+   "slot_token": "u",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be U+0023 (#) followed by a URL-fragment string, if base URL has an opaque path; otherwise, a relative-URL string, optionally followed by U+0023 (#) and a URL-fragment string.",
+   "sentence": "A relative-URL-with-fragment string must be U+0023 (#) followed by a URL-fragment string, if base URL has an opaque path; otherwise, a relative-URL string, optionally followed by U+0023 (#) and a URL-fragment string."
+  },
+  {
+   "id": "A109",
+   "doc": "url",
+   "modal": "must",
+   "slot_token": "either",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be either the empty string or: a valid opaque-host string, optionally followed by U+003A (:) and a URL-port string.",
+   "sentence": "An opaque-host-and-port string must be either the empty string or: a valid opaque-host string, optionally followed by U+003A (:) and a URL-port string."
+  },
+  {
+   "id": "A110",
+   "doc": "url",
+   "modal": "must",
+   "slot_token": "u",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be U+002F (/), followed by zero or more URL-path-segment strings, separated from each other by U+002F (/).",
+   "sentence": "A path-absolute-URL string must be U+002F (/), followed by zero or more URL-path-segment strings, separated from each other by U+002F (/)."
+  },
+  {
+   "id": "A111",
+   "doc": "url",
+   "modal": "must",
+   "slot_token": "zero",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be zero or more URL-path-segment strings, separated from each other by U+002F (/), and not start with U+002F (/).",
+   "sentence": "A path-relative-URL string must be zero or more URL-path-segment strings, separated from each other by U+002F (/), and not start with U+002F (/)."
+  },
+  {
+   "id": "A112",
+   "doc": "url",
+   "modal": "must",
+   "slot_token": "a",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be a path-relative-URL string that does not start with: a URL-scheme string, followed by U+003A (:).",
+   "sentence": "A path-relative-scheme-less-URL string must be a path-relative-URL string that does not start with: a URL-scheme string, followed by U+003A (:)."
+  },
+  {
+   "id": "A113",
+   "doc": "urlpattern",
+   "modal": "should",
+   "slot_token": "clearly",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should be clearly documented (with reference to has regexp groups) and the operation should report an error as soon as possible (e.g., by throwing a JavaScript exception).",
+   "sentence": "If so, this should be clearly documented (with reference to has regexp groups) and the operation should report an error as soon as possible (e.g., by throwing a JavaScript exception)."
+  },
+  {
+   "id": "A114",
+   "doc": "webidl",
+   "modal": "should",
+   "slot_token": "introduced",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should be introduced using text of the form \u201cThe attr getter steps are:\u201d followed by a list, or \u201cThe attr getter steps are to\u201d followed by an inline description.",
+   "sentence": "The getter steps of an attribute attr should be introduced using text of the form \u201cThe attr getter steps are:\u201d followed by a list, or \u201cThe attr getter steps are to\u201d followed by an inline description."
+  },
+  {
+   "id": "A115",
+   "doc": "webidl",
+   "modal": "should",
+   "slot_token": "introduced",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should be introduced using text of the form \u201cThe attr setter steps are:\u201d followed by a list, or \u201cThe attr setter steps are to\u201d followed by an inline description.",
+   "sentence": "The setter steps of an attribute attr should be introduced using text of the form \u201cThe attr setter steps are:\u201d followed by a list, or \u201cThe attr setter steps are to\u201d followed by an inline description."
+  },
+  {
+   "id": "A116",
+   "doc": "webidl",
+   "modal": "should",
+   "slot_token": "introduced",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should be introduced using text of the form \u201cThe operation(arg1, arg2, ...) method steps are:\u201d followed by a list, or \u201cThe operation(arg1, arg2, ...) method steps are to\u201d followed by an inline description.",
+   "sentence": "The method steps of an operation operation should be introduced using text of the form \u201cThe operation(arg1, arg2, ...) method steps are:\u201d followed by a list, or \u201cThe operation(arg1, arg2, ...) method steps are to\u201d followed by an inline description."
+  },
+  {
+   "id": "A117",
+   "doc": "webidl",
+   "modal": "should",
+   "slot_token": "introduced",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "should be introduced using text of the form \u201cThe new interface(arg1, arg2, ...) constructor steps are:\u201d followed by a list, or \u201cThe new interface(arg1, arg2, ...) constructor steps are to\u201d followed by an inline description.",
+   "sentence": "The constructor steps of a constructor operation that is a member of an interface named interface should be introduced using text of the form \u201cThe new interface(arg1, arg2, ...) constructor steps are:\u201d followed by a list, or \u201cThe new interface(arg1, arg2, ...) constructor steps are to\u201d followed by an inline description."
+  },
+  {
+   "id": "A118",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "accompanied",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be accompanied by a description of what indices the object can be indexed with at any given time.",
+   "sentence": "If an interface supports indexed properties, then the interface definition must be accompanied by a description of what indices the object can be indexed with at any given time."
+  },
+  {
+   "id": "A119",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "accompanied",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be accompanied by a description of how to determine the value of an indexed property for a given index.",
+   "sentence": "If the operation used to declare the indexed property getter did not have an identifier, then the interface definition must be accompanied by a description of how to determine the value of an indexed property for a given index."
+  },
+  {
+   "id": "A120",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "accompanied",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be accompanied by a description of how to set the value of an existing indexed property and how to set the value of a new indexed property for a given property index and value.",
+   "sentence": "If the operation used to declare the indexed property setter did not have an identifier, then the interface definition must be accompanied by a description of how to set the value of an existing indexed property and how to set the value of a new indexed property for a given property index and value."
+  },
+  {
+   "id": "A121",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "accompanied",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be accompanied by a description of the ordered set of names that can be used to index the object at any given time.",
+   "sentence": "If an interface supports named properties, then the interface definition must be accompanied by a description of the ordered set of names that can be used to index the object at any given time."
+  },
+  {
+   "id": "A122",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "accompanied",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be accompanied by a description of how to determine the value of a named property for a given property name.",
+   "sentence": "If the operation used to declare the named property getter did not have an identifier, then the interface definition must be accompanied by a description of how to determine the value of a named property for a given property name."
+  },
+  {
+   "id": "A123",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "accompanied",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be accompanied by a description of how to set the value of an existing named property and how to set the value of a new named property for a given property name and value.",
+   "sentence": "If the operation used to declare the named property setter did not have an identifier, then the interface definition must be accompanied by a description of how to set the value of an existing named property and how to set the value of a new named property for a given property name and value."
+  },
+  {
+   "id": "A124",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "accompanied",
+   "register": "NORM",
+   "verdict": "NOT-AGENTIVE",
+   "window": "must be accompanied by a description of how to delete an existing named property for a given property name.",
+   "sentence": "If the operation used to declare the named property deleter did not have an identifier, then the interface definition must be accompanied by a description of how to delete an existing named property for a given property name."
+  },
+  {
+   "id": "A125",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "the",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be the same as the type returned by the indexed property getter.",
+   "sentence": "The value-type of the value iterator must be the same as the type returned by the indexed property getter."
+  },
+  {
+   "id": "A126",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "taken",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be taken when writing specification text that writes into a buffer source type instance, as the underlying data can easily be changed by the script author or other APIs at unpredictable times.",
+   "sentence": "Extreme care must be taken when writing specification text that writes into a buffer source type instance, as the underlying data can easily be changed by the script author or other APIs at unpredictable times."
+  },
+  {
+   "id": "A127",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "the",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must not be the same as that used by a [LegacyFactoryFunction] extended attribute on another interface, must not be the same as an identifier used by a [LegacyWindowAlias] extended attribute on this interface or another interface, must not be the same as an id",
+   "sentence": "The identifier used for the legacy factory function must not be the same as that used by a [LegacyFactoryFunction] extended attribute on another interface, must not be the same as an identifier used by a [LegacyWindowAlias] extended attribute on this interface or another interface, must not be the same as an identifier of an interface that has an interface object, and must not be one of the reserved identifiers."
+  },
+  {
+   "id": "A128",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "the",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must not be the same as an identifier used by a [LegacyWindowAlias] extended attribute on this interface or another interface, must not be the same as an identifier of an interface that has an interface object, and must not be one of the reserved identifiers.",
+   "sentence": "The identifier used for the legacy factory function must not be the same as that used by a [LegacyFactoryFunction] extended attribute on another interface, must not be the same as an identifier used by a [LegacyWindowAlias] extended attribute on this interface or another interface, must not be the same as an identifier of an interface that has an interface object, and must not be one of the reserved identifiers."
+  },
+  {
+   "id": "A129",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "the",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must not be the same as one used by a [LegacyWindowAlias] extended attribute on this interface or another interface, must not be the same as the identifier used by a [LegacyFactoryFunction] extended attribute on this interface or another interface, must not be",
+   "sentence": "Each of the identifiers of [LegacyWindowAlias] must not be the same as one used by a [LegacyWindowAlias] extended attribute on this interface or another interface, must not be the same as the identifier used by a [LegacyFactoryFunction] extended attribute on this interface or another interface, must not be the same as an identifier of an interface that has an interface object, and must not be one of the reserved identifiers."
+  },
+  {
+   "id": "A130",
+   "doc": "webidl",
+   "modal": "must",
+   "slot_token": "the",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must not be the same as the identifier used by a [LegacyFactoryFunction] extended attribute on this interface or another interface, must not be the same as an identifier of an interface that has an interface object, and must not be one of the reserved identifi",
+   "sentence": "Each of the identifiers of [LegacyWindowAlias] must not be the same as one used by a [LegacyWindowAlias] extended attribute on this interface or another interface, must not be the same as the identifier used by a [LegacyFactoryFunction] extended attribute on this interface or another interface, must not be the same as an identifier of an interface that has an interface object, and must not be one of the reserved identifiers."
+  },
+  {
+   "id": "A131",
+   "doc": "websockets",
+   "modal": "must",
+   "slot_token": "the",
+   "register": "NORM",
+   "verdict": "OTHER-CLAUSE",
+   "window": "must be the integer given by code. [WSP]",
+   "sentence": "If code is present, then the status code to use in the WebSocket Close message must be the integer given by code. [WSP]"
+  },
+  {
+   "id": "A132",
+   "doc": "websockets",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported, as event handler IDL attributes, by all objects implementing the WebSocket interface:",
+   "sentence": "The following are the event handlers (and their corresponding event handler event types) that must be supported, as event handler IDL attributes, by all objects implementing the WebSocket interface:"
+  },
+  {
+   "id": "A133",
+   "doc": "xhr",
+   "modal": "must",
+   "slot_token": "supported",
+   "register": "NORM",
+   "verdict": "AGENT-IS-ARTEFACT",
+   "window": "must be supported as attribute solely by the XMLHttpRequest object:",
+   "sentence": "The following is the event handler (and its corresponding event handler event type) that must be supported as attribute solely by the XMLHttpRequest object:"
+  }
+ ]
+}

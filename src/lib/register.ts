@@ -16,7 +16,7 @@
 // härteste Gebrauchsbeleg überhaupt — härter als ein Zitat, denn er läuft jede Nacht.
 // Die Begründung ist nicht behauptet, sie ist in Betrieb.
 //
-// Erzeugt von `pipelines/atlas-scout/src/atlas_scout/experiments.py`, committet.
+// Erzeugt von `pipelines/atlas-scout/src/atlas_scout/holdings.py`, committet.
 import eintraegeRaw from '@/data/register/datasets.json'
 
 export interface RegisterEntry {
@@ -52,6 +52,17 @@ export interface RegisterEntry {
   /** Welche Werke die Quelle abrufen. */
   benutzt_von: string[]
   verify_status: 'verified' | 'toVerify'
+
+  // The three dates the builder stamps since 2026-10-05 (pipelines/atlas-scout, holdings.py,
+  // stamp_register), each kept by comparing with the register committed before the run. Absent
+  // in a register written earlier; null where the record does not know — never a guessed day.
+  /** the day of the probe pass whose result this entry carries; null for a template never probed */
+  probed_on?: string | null
+  /** the run that first wrote the source; null for one already there when the stamp began */
+  first_seen_on?: string | null
+  /** the run whose probe moved the source between access confirmed, gated, template and no
+   *  answer (zugangLabel's four states); null while that has not happened since the stamp began */
+  reachability_changed_on?: string | null
 }
 
 export const ENTRIES = eintraegeRaw as unknown as RegisterEntry[]

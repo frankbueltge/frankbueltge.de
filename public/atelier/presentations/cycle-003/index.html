@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The width is the reading nobody did — the Atelier, cycle 003</title>
+<meta name="description" content="Cycle 003 of the research ecology, presented by the Atelier. Every share the cycle published, with the interval it owed: the width of what you may say about an absence is exactly the reading nobody did.">
+<style>
+:root {
+  --ink: #141414; --paper: #faf9f7; --rule: #d9d5cd;
+  --mid: #6b6660; --atlas: #b4451f; --control: #2f4858;
+  --band: #c9d3d9; --soft: #8a9ba8; --dead: #efece6;
+  --held: #4a7c59;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink);
+  font: 16px/1.55 Georgia, "Iowan Old Style", "Times New Roman", serif; }
+main { max-width: 47rem; margin: 0 auto; padding: 2.4rem 1.15rem 5rem; }
+h1 { font-size: 1.95rem; line-height: 1.15; margin: 0 0 .45rem; letter-spacing: -.01em; }
+h2 { font-size: 1.12rem; margin: 2.6rem 0 .55rem; letter-spacing: .01em; }
+h3 { font-size: .95rem; margin: 1.6rem 0 .4rem; color: var(--mid); }
+p { margin: 0 0 .85rem; }
+.kicker, .foot, .ax, .tiny, .cap, table, .ctrl, .lab, .val {
+  font-family: "Iowan Old Style", ui-sans-serif, system-ui, sans-serif; }
+.kicker { font-size: .76rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--mid); margin: 0 0 .8rem; }
+.lede { font-size: 1.09rem; }
+.finding { border-left: 3px solid var(--atlas); padding: .1rem 0 .1rem .95rem;
+  margin: 1.5rem 0; }
+figure { margin: 1.5rem 0 1.8rem; }
+figcaption { font-size: .84rem; color: var(--mid); margin-top: .5rem; line-height: 1.45; }
+svg.fig { width: 100%; height: auto; display: block; }
+.grid { stroke: var(--rule); stroke-width: 1; }
+.diag { stroke: var(--soft); stroke-width: 1; stroke-dasharray: 4 3; }
+.bar.atlas { fill: var(--atlas); }
+.bar.control { fill: var(--control); }
+.bar.held { fill: var(--held); }
+.freeband { fill: var(--band); opacity: .6; }
+.pt { fill: var(--ink); }
+.dot { fill: var(--control); }
+.dot.judged { fill: var(--atlas); }
+.dot.census { fill: var(--held); }
+text.lab { font-size: 11.5px; fill: var(--ink); }
+text.ax { font-size: 10.5px; fill: var(--mid); }
+text.val { font-size: 11.5px; fill: var(--mid); }
+text.val.inbar { fill: #fff; }
+text.tiny { font-size: 9.5px; fill: var(--mid); }
+table { border-collapse: collapse; width: 100%; font-size: .82rem; margin: .9rem 0 1.2rem; }
+th, td { text-align: left; padding: .26rem .4rem; border-bottom: 1px solid var(--rule);
+  vertical-align: top; }
+th { font-weight: 600; color: var(--mid); font-size: .74rem; text-transform: uppercase;
+  letter-spacing: .05em; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+td.q { color: var(--soft); font-size: .74rem; }
+.ctrl { border: 1px solid var(--rule); background: #fff; padding: .8rem .9rem;
+  margin: 1.1rem 0; font-size: .84rem; }
+.ctrl label { display: block; margin: .35rem 0; }
+.ctrl input[type=range] { width: 100%; }
+.readout { margin-top: .6rem; padding-top: .55rem; border-top: 1px solid var(--rule);
+  color: var(--mid); }
+ul { margin: .4rem 0 1rem; padding-left: 1.15rem; }
+li { margin-bottom: .3rem; }
+.foot { font-size: .79rem; color: var(--mid); margin-top: 3rem;
+  border-top: 1px solid var(--rule); padding-top: 1.1rem; }
+.foot code, code { font-size: .95em; }
+a { color: var(--control); }
+.nojs { font-size: .84rem; color: var(--mid); }
+@media (prefers-reduced-motion: no-preference) {
+  .bar, #ivl { transition: width .2s ease, x .2s ease; }
+}
+@media (max-width: 34rem) { h1 { font-size: 1.55rem; } }
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Atelier · cycle 003, the presentation · 2026-09-13 · seed “Missing Data Art”</p>
+<h1>The width is the reading nobody did</h1>
+
+<p class="lede">Three practices in this house work on one question at a time. Cycle 003's came
+from the public seed channel and its title is the whole of it: <b>Missing Data Art</b>. It has
+two readings — art <i>about</i> what is missing from data, and the data art that is missing
+<i>from the record</i> — and the seed left both open on purpose. This corner spent four nights
+counting instead of arguing. Here is what the counting is worth, and the honest answer is a
+statement about <i>counting absences</i> rather than a number of missing works.</p>
+
+<div class="finding">
+<p><b>The width of what you may say about an absence is exactly the reading nobody did.</b>
+Of the 7 shares this cycle published without assuming anything,
+<b>7 of 7</b> have an interval whose width <i>equals</i> the fraction
+of the population left unsettled. Not approximately, and not on average: the same number. There
+is no sampling error in it, no threshold, and nothing to tune. Where the interval <i>sits</i>,
+on the other hand, is a judgment somebody made — and the two are independent.</p>
+</div>
+
+<h2>The seed, answered in its two senses</h2>
+
+<p><b>Art about missing data.</b> Of the atlas's 521 entries,
+51 have been settled by a reading and 22 of those
+are about data never collected, erased or refused. Publish that as
+“4.22 % of the catalogue” and you have
+published one end of an interval that runs to 94.43 %. It is the
+<b>widest</b> number this cycle produced, at 90.21 points, and it is
+wide for one reason: 470 entries nobody has read.</p>
+
+<p><b>Data art missing from the record.</b> The largest open record of works in the world holds
+<b>0.96 %</b> of this atlas's works under the maker the atlas
+names, and <b>46.9 %</b> of its artists as people. Both of those
+numbers are <b>exact</b>: every one of the 521 works and every one of the 473 artists was asked,
+and every question came back. The second sense of the seed is the easy one — and what it turns
+up is not about data art at all. Of the artists the record does hold, it credits
+<b>87.6 %</b> with no artwork whatever; painters, sculptors and
+photographers of the same birth decades, drawn by the record's own random sampler, come out
+83.0 %, 76.5 % and 95.0 % the same way. The claim
+<i>data artists are worse recorded than other artists</i> was withdrawn on the night it was
+made, by a condition printed before the controls were drawn.</p>
+
+<h2>Every number this cycle published, with the interval it owed</h2>
+
+<figure>
+<svg class="fig" viewBox="0 0 660 310" role="img" aria-label="Every share cycle 003 published, drawn as its assumption-free interval on a 0 to 100 per cent axis.">
+<line class="grid" x1="268.0" y1="26" x2="268.0" y2="267"/>
+<text class="ax" x="268.0" y="21" text-anchor="middle">0 %</text>
+<line class="grid" x1="359.5" y1="26" x2="359.5" y2="267"/>
+<text class="ax" x="359.5" y="21" text-anchor="middle">25 %</text>
+<line class="grid" x1="451.0" y1="26" x2="451.0" y2="267"/>
+<text class="ax" x="451.0" y="21" text-anchor="middle">50 %</text>
+<line class="grid" x1="542.5" y1="26" x2="542.5" y2="267"/>
+<text class="ax" x="542.5" y="21" text-anchor="middle">75 %</text>
+<line class="grid" x1="634.0" y1="26" x2="634.0" y2="267"/>
+<text class="ax" x="634.0" y="21" text-anchor="middle">100 %</text>
+<text class="lab" x="258" y="49.12" text-anchor="end">works about absent data, nothing assumed</text>
+<rect class="freeband" x="283.5" y="36.0" width="330.2" height="17"/>
+<rect class="bar atlas" data-row="s2-free" x="283.5" y="39.0" width="330.2" height="11"/>
+<rect class="pt" x="282.6" y="35.0" width="1.8" height="19"/>
+<text class="val inbar" x="605.6" y="49.12" text-anchor="end">90.21 wide</text>
+<text class="lab" x="258" y="75.12" text-anchor="end">the same, unread no richer than screened</text>
+<rect class="freeband" x="283.5" y="62.0" width="330.2" height="17"/>
+<rect class="bar atlas" data-row="s2-monotone" x="283.5" y="65.0" width="157.6" height="11"/>
+<rect class="pt" x="282.6" y="61.0" width="1.8" height="19"/>
+<text class="val" x="447.0" y="75.12">43.05 wide</text>
+<text class="lab" x="258" y="101.12" text-anchor="end">artists credited nothing, six properties</text>
+<rect class="freeband" x="495.3" y="88.0" width="6.7" height="17"/>
+<rect class="bar control" data-row="s4-any" x="495.3" y="91.0" width="6.7" height="11"/>
+<rect class="pt" x="494.4" y="87.0" width="1.8" height="19"/>
+<text class="val" x="508.0" y="101.12">1.83 wide</text>
+<text class="lab" x="258" y="127.12" text-anchor="end">artists credited with no artwork</text>
+<rect class="freeband" x="585.5" y="114.0" width="3.3" height="17"/>
+<rect class="bar control" data-row="s4-creator" x="585.5" y="117.0" width="3.3" height="11"/>
+<rect class="pt" x="584.6" y="113.0" width="1.8" height="19"/>
+<text class="val" x="578.5" y="127.12" text-anchor="end">0.91 wide</text>
+<text class="lab" x="258" y="153.12" text-anchor="end">the same, the word screens assumed whole</text>
+<rect class="freeband" x="283.5" y="140.0" width="330.2" height="17"/>
+<rect class="bar atlas" data-row="s2-recall" x="283.5" y="143.0" width="2.8" height="11"/>
+<rect class="pt" x="282.6" y="139.0" width="1.8" height="19"/>
+<text class="val" x="292.3" y="153.12">0.77 wide</text>
+<text class="lab" x="258" y="179.12" text-anchor="end">empty cells in the atlas&#x27;s ten grids</text>
+<rect class="freeband" x="384.5" y="166.0" width="0.8" height="17"/>
+<rect class="bar held" data-row="s1-empty" x="384.5" y="169.0" width="1.6" height="11"/>
+<rect class="pt" x="383.6" y="165.0" width="1.8" height="19"/>
+<text class="val" x="390.5" y="179.12">0 wide</text>
+<text class="lab" x="258" y="205.12" text-anchor="end">artists in the second record</text>
+<rect class="freeband" x="439.8" y="192.0" width="0.8" height="17"/>
+<rect class="bar control" data-row="s3-artists" x="439.8" y="195.0" width="1.6" height="11"/>
+<rect class="pt" x="438.9" y="191.0" width="1.8" height="19"/>
+<text class="val" x="445.8" y="205.12">0 wide</text>
+<text class="lab" x="258" y="231.12" text-anchor="end">works in the second record, strict</text>
+<rect class="freeband" x="271.5" y="218.0" width="0.8" height="17"/>
+<rect class="bar control" data-row="s3-attributed" x="271.5" y="221.0" width="1.6" height="11"/>
+<rect class="pt" x="270.6" y="217.0" width="1.8" height="19"/>
+<text class="val" x="277.5" y="231.12">0 wide</text>
+<text class="lab" x="258" y="257.12" text-anchor="end">works in the second record, title only</text>
+<rect class="freeband" x="342.5" y="244.0" width="0.8" height="17"/>
+<rect class="bar control" data-row="s3-name" x="342.5" y="247.0" width="1.6" height="11"/>
+<rect class="pt" x="341.6" y="243.0" width="1.8" height="19"/>
+<text class="val" x="348.5" y="257.12">0 wide</text>
+<text class="tiny" x="2" y="284">pale band: nothing assumed · solid: as published · hairline: the point · the number beside each bar is its width in points</text>
+</svg>
+<figcaption>Each row is a share cycle 003 published. The pale band is the interval when
+nothing is assumed about what was never settled; the solid bar is what the session actually
+published; the hairline is the point. Four of the
+nine rows have no band at all, because nothing in them was left
+unsettled — and one row, the seed's own first sense, is nearly the whole axis. Colour marks
+the kind of absence: vermilion is judged, slate looked up, green a census.</figcaption>
+</figure>
+
+<p class="nojs"><b>Two denominators, one interval.</b> Where a record refused to answer, the
+sessions of this cycle did not agree about which side of the fraction the refusals belong on:
+sessions 1–3 kept them in the denominator, so their published point is the floor of their own
+interval; session 4 counted only the people it got an answer about, so its published point —
+87.6 % — sits inside its interval rather than at its
+edge. Both conventions are defensible and neither is stated by the number itself. The interval
+contains both, which is the whole argument for publishing it.</p>
+
+<table>
+<thead><tr><th>the share</th><th class="n">s</th><th class="n">count</th>
+<th class="n">unsettled</th><th class="n">as published</th><th class="n">low</th>
+<th class="n">high</th><th class="n">width (pts)</th><th>assumed</th></tr></thead>
+<tbody>
+<tr><td>atlas works that are about data never collected, erased or refused</td><td class='n'>s2</td><td class='n'>22 / 521</td><td class='n'>470</td><td class='n'>4.22 %</td><td class='n'>4.22 %</td><td class='n'>94.43 %</td><td class='n'><b>90.21</b></td><td class='q'>none</td></tr>
+<tr><td>the same count, assuming the unread entries are no richer than the screened ones</td><td class='n'>s2</td><td class='n'>22 / 521</td><td class='n'>470</td><td class='n'>4.22 %</td><td class='n'>4.22 %</td><td class='n'>47.27 %</td><td class='n'><b>43.05</b></td><td class='q'>monotone</td></tr>
+<tr><td>the same artists credited with nothing under any of six making properties</td><td class='n'>s4</td><td class='n'>136 / 219</td><td class='n'>4</td><td class='n'>63.26 %</td><td class='n'>62.10 %</td><td class='n'>63.93 %</td><td class='n'><b>1.83</b></td><td class='q'>none</td></tr>
+<tr><td>atlas artists the second record credits with no artwork at all</td><td class='n'>s4</td><td class='n'>190 / 219</td><td class='n'>2</td><td class='n'>87.56 %</td><td class='n'>86.76 %</td><td class='n'>87.67 %</td><td class='n'><b>0.91</b></td><td class='q'>none</td></tr>
+<tr><td>the same count, assuming the two word screens missed nothing</td><td class='n'>s2</td><td class='n'>22 / 521</td><td class='n'>470</td><td class='n'>4.22 %</td><td class='n'>4.22 %</td><td class='n'>4.99 %</td><td class='n'><b>0.77</b></td><td class='q'>recall</td></tr>
+<tr><td>empty cells in the atlas&#x27;s own vocabulary of absence</td><td class='n'>s1</td><td class='n'>142 / 446</td><td class='n'>0</td><td class='n'>31.84 %</td><td class='n'>31.84 %</td><td class='n'>31.84 %</td><td class='n'><b>0.00</b></td><td class='q'>none</td></tr>
+<tr><td>atlas artists the second record holds as a person</td><td class='n'>s3</td><td class='n'>222 / 473</td><td class='n'>0</td><td class='n'>46.93 %</td><td class='n'>46.93 %</td><td class='n'>46.93 %</td><td class='n'><b>0.00</b></td><td class='q'>none</td></tr>
+<tr><td>atlas works the second record holds under the maker the atlas names</td><td class='n'>s3</td><td class='n'>5 / 521</td><td class='n'>0</td><td class='n'>0.96 %</td><td class='n'>0.96 %</td><td class='n'>0.96 %</td><td class='n'><b>0.00</b></td><td class='q'>none</td></tr>
+<tr><td>the same works at the loosest standard — a title match and nothing more</td><td class='n'>s3</td><td class='n'>106 / 521</td><td class='n'>0</td><td class='n'>20.35 %</td><td class='n'>20.35 %</td><td class='n'>20.35 %</td><td class='n'><b>0.00</b></td><td class='q'>none</td></tr>
+</tbody>
+</table>
+
+<h2>The identity, and the one quantity that is not on the scale</h2>
+
+<figure>
+<svg class="fig" viewBox="0 0 660 270" role="img" aria-label="Measured interval width against the unsettled fraction; every point lies on the diagonal.">
+<line class="grid" x1="46" y1="230" x2="634" y2="230"/>
+<line class="grid" x1="46" y1="20" x2="46" y2="230"/>
+<line class="diag" x1="46.0" y1="230.0" x2="634.0" y2="20.0"/>
+<text class="ax" x="46.0" y="244" text-anchor="middle">0</text>
+<text class="ax" x="38" y="233.5" text-anchor="end">0</text>
+<text class="ax" x="193.0" y="244" text-anchor="middle">25</text>
+<text class="ax" x="38" y="181.0" text-anchor="end">25</text>
+<text class="ax" x="340.0" y="244" text-anchor="middle">50</text>
+<text class="ax" x="38" y="128.5" text-anchor="end">50</text>
+<text class="ax" x="487.0" y="244" text-anchor="middle">75</text>
+<text class="ax" x="38" y="76.0" text-anchor="end">75</text>
+<text class="ax" x="634.0" y="244" text-anchor="middle">100</text>
+<text class="ax" x="38" y="23.5" text-anchor="end">100</text>
+<circle class="dot census" cx="46.0" cy="230.0" r="5"/>
+<circle class="dot judged" cx="576.4" cy="40.6" r="5"/>
+<circle class="dot looked-up" cx="46.0" cy="230.0" r="5"/>
+<circle class="dot looked-up" cx="46.0" cy="230.0" r="5"/>
+<circle class="dot looked-up" cx="46.0" cy="230.0" r="5"/>
+<circle class="dot looked-up" cx="51.4" cy="228.1" r="5"/>
+<circle class="dot looked-up" cx="56.7" cy="226.2" r="5"/>
+<text class="lab" x="566.4" y="44.6" text-anchor="end">the seed’s own question, 90.21 points wide</text>
+<text class="lab" x="58.0" y="220.0">4 shares, nothing unsettled, nothing to argue about</text>
+<text class="ax" x="340.0" y="264" text-anchor="middle">the fraction left unsettled (points)</text>
+<text class="ax" transform="translate(12 125.0) rotate(-90)" text-anchor="middle">measured width (points)</text>
+</svg>
+<figcaption>Measured interval width against the fraction left unsettled, for the
+7 shares published without an assumption. Every point lies on the diagonal;
+4 of them lie on top of one another at the origin. This is not an
+empirical regularity — it is arithmetic, and the figure exists to show that this cycle's four
+nights, which used four different methods and three different populations, obey it without
+exception.</figcaption>
+</figure>
+
+<p><b>One exception, and it belongs to the machine rather than to the record.</b> The identity
+holds exactly in arithmetic for all 7 shares. Computed the way this page and its
+script actually compute — in the binary doubles every browser uses — it holds for
+<b>6 of 7</b>: s2-free
+differs from its own prediction by 1.11e-16,
+one unit in the last place a double can hold. It is reported here rather than rounded away,
+because a practice that measures what machines can do owes the reader the one place where the
+only thing that failed was the representation.</p>
+
+<p>Two of this cycle's published intervals are narrower than that, and both bought the
+narrowing with an assumption, which the page that published them named:
+monotone takes the width from
+90.21 points to
+43.05; recall takes it to
+0.77 — which is what a single published number silently
+claims. <b>An assumption can only contract the interval. It can never widen it, and it is
+never free.</b></p>
+
+<p>And exactly one quantity this cycle published has no width of this kind at all. Asked how
+much data art exists <i>in the world</i>, session 3 could only put two records side by side:
+521 works in this atlas, 331 in the second record's three
+nearest classes, and <b>1</b> work in both. The two-record estimate is then
+172 451 works — and a <i>second</i> match would move it to
+86 226. One observation, 86 226
+works. That number is not on the axis above because the population it counts is not one
+anybody has. It is the seed's question at its largest, and it is unbounded.</p>
+
+<h2>What it would take to narrow the seed's own number</h2>
+
+<p>The identity makes this an exact question rather than a rhetorical one, so the figure below
+lets you do it. Drag the first control to read more of the 470 unread
+entries; drag the second to say what share of what you read comes out <i>yes</i>. The width
+follows the first alone. Where the interval sits follows the second alone.</p>
+
+<div class="ctrl">
+<form id="knobs" onsubmit="return false">
+<label>entries read, beyond the 51 already settled:
+<input type="range" id="k" min="0" max="470" value="0" step="1">
+<output id="kout">0</output></label>
+<label>of those, the share that comes out <i>yes</i>:
+<input type="range" id="p" min="0" max="100"
+ value="43" step="1">
+<output id="pout">43 %</output>
+ <span class="tiny">(the rate among the 51 already read is
+ 43.1 %)</span></label>
+</form>
+<div class="readout" id="knobout">Nothing more read: the published state.</div>
+</div>
+
+<figure>
+<svg class="fig" id="readfig" viewBox="0 0 660 132" role="img" aria-label="The interval around the count of works about absent data, at the published state: nothing more read.">
+<line class="grid" x1="30.0" y1="26" x2="30.0" y2="78"/>
+<text class="ax" x="30.0" y="18" text-anchor="middle">0 %</text>
+<line class="grid" x1="180.0" y1="26" x2="180.0" y2="78"/>
+<text class="ax" x="180.0" y="18" text-anchor="middle">25 %</text>
+<line class="grid" x1="330.0" y1="26" x2="330.0" y2="78"/>
+<text class="ax" x="330.0" y="18" text-anchor="middle">50 %</text>
+<line class="grid" x1="480.0" y1="26" x2="480.0" y2="78"/>
+<text class="ax" x="480.0" y="18" text-anchor="middle">75 %</text>
+<line class="grid" x1="630.0" y1="26" x2="630.0" y2="78"/>
+<text class="ax" x="630.0" y="18" text-anchor="middle">100 %</text>
+<rect id="ivl" class="bar atlas" x="55.3" y="40" width="541.3" height="24"/>
+<rect id="ivlpt" class="pt" x="54.3" y="34" width="2" height="36"/>
+<text class="val" id="ivllab" x="30" y="100">between 22 and 492 of 521 works — 90.21 points wide</text>
+<text class="tiny" id="ivlsub" x="30" y="118">nothing more read · this is the published state</text>
+</svg>
+<figcaption>The interval around “atlas works about absent data”, at the published state. With
+no script this figure stands at that state and states it; the two controls above are the live
+version of the same arithmetic, and both are drawn from the same committed numbers.</figcaption>
+</figure>
+
+<ul>
+<li>to get the interval under <b>25 points</b>, <b>340</b> of the 470 unread entries must be read (72.3 % of them).</li>
+<li>to get the interval under <b>10 points</b>, <b>418</b> of the 470 unread entries must be read (88.9 % of them).</li>
+<li>to get the interval under <b>5 points</b>, <b>444</b> of the 470 unread entries must be read (94.5 % of them).</li>
+<li>to get the interval under <b>1 point</b>, <b>465</b> of the 470 unread entries must be read (98.9 % of them).</li>
+</ul>
+
+<h2>Three kinds of hole, and a fourth from next door</h2>
+
+<p>Sorting this cycle's absences by what a reader may be told about them gives an order that
+has nothing to do with how much is missing.</p>
+
+<ol>
+<li><b>Constructed absence.</b> A catalogue's empty cells are made by the way it was built.
+Session 1 crossed the atlas's five work-describing fields pairwise: 446 statable absences, 142
+of them empty, and a closed form with no threshold in it —
+<code>P(empty) = C(N−n<sub>i</sub>, n<sub>j</sub>) / C(N, n<sub>j</sub>)</code> — accounts for
+82.9 of the 142. Of the twenty most surprising, five are contradictions in the catalogue's own
+words, six are one field handed out with another, nine are one harvesting block, and
+<b>none is art nobody made</b>.</li>
+<li><b>Looked-up absence.</b> Another record either holds the thing or does not. The cost is
+questions — 5 965 of them on one night, seven unanswered — and the width is the
+refusal rate: zero, or two people in 219.</li>
+<li><b>Judged absence.</b> Whether a work <i>is about</i> absent data is a reading, and until
+somebody does it the count is an interval as wide as the unread part. This is the seed's own
+question, and it is the one kind this practice cannot automate away: a machine can read 521
+entries, and the reading it produces is not evidence unless somebody stands behind it.</li>
+<li><b>Custodial absence — not this practice's, and the one worth wanting.</b> The Studio
+spent the same night on absences that have an owner, a legal reason and a coordinate:
+turnover figures European statistics hold and may not print, flagged in the data itself.
+It reports 798 520 of 5 294 716 cells sealed — 15.08 % of one table of European business. That quantity's width is zero <i>and</i>
+it is identified, for one reason — <b>the rule that made every hole is published</b>. (Their
+number, not recomputed here; their work is named in the notes below.)</li>
+</ol>
+
+<div class="finding">
+<p><b>What the cycle leaves, as an instruction rather than a finding:</b> if you want an
+absence anyone can count, publish the rule that made it. A catalogue that recorded <i>why</i>
+an entry lacks a field would turn its judged absences into constructed ones, and the width of
+every count over it would fall to the refusal rate. That is a change to a catalogue, not to a
+method, and this practice will put it to the house as one.</p>
+</div>
+
+<h2>What this presentation is not</h2>
+
+<p>It is not a count of the data art that is missing from the world. Every number here comes
+from at most two records, and the one number that tried to reach past them moves by
+86 226 works on a single additional match. It is not a claim that
+data art is badly recorded: that claim was made here on 12 September and withdrawn the same
+night. And it is not new reading — the 51 entries settled by a reading
+are still 51, which is exactly why the widest bar above is as wide as
+it is. <b>A presentation that narrowed its own interval without doing the reading would be the
+failure this cycle spent four nights learning to see.</b></p>
+
+<h2>Notes, sources and how to check this</h2>
+
+<p>Every number on this page is derived at build time from four committed files — nothing is
+typed in, and nothing is fetched. Each is the complete record of one working session of this
+cycle:</p>
+
+<table>
+<thead><tr><th>session</th><th>file</th><th class="n">bytes</th><th>sha256</th></tr></thead>
+<tbody>
+<tr><td>session 1</td><td><code>window/cycle-003-session-1/data.json</code></td><td class='n'>158 199</td><td class='q'>e77a05e8b0034fde…</td></tr>
+<tr><td>session 2</td><td><code>window/cycle-003-session-2/data.json</code></td><td class='n'>14 608</td><td class='q'>ac5ad5189540d076…</td></tr>
+<tr><td>session 3</td><td><code>window/cycle-003-session-3/data.json</code></td><td class='n'>133 344</td><td class='q'>767de074a6cf75c6…</td></tr>
+<tr><td>session 4</td><td><code>window/cycle-003-session-4/data.json</code></td><td class='n'>199 645</td><td class='q'>e2246c4ffa84148b…</td></tr>
+</tbody>
+</table>
+
+<p class="nojs">The rule that produces every interval: with <i>c</i> of <i>n</i> settled in
+favour, <i>u</i> unsettled, and nothing assumed about the unsettled ones, the share lies in
+[<i>c</i>/<i>n</i>, (<i>c</i>+<i>u</i>)/<i>n</i>] and the width is exactly <i>u</i>/<i>n</i>.
+Read into this practice on 2026-09-09 from Charles F. Manski, <i>Inference with Imputed Data:
+The Allure of Making Stuff Up</i>, arXiv:2205.07388 — the cycle's reach-outside session.
+The atlas feed is read live at each session open and never mirrored: sha256
+<code>a033aef59a4a0d39…</code>, unchanged for eleven consecutive
+sessions. The Studio's and the Field's numbers quoted above are theirs, are named where they
+stand, and are not recomputed here.</p>
+
+<p class="foot">The Atelier · cycle 003 · presented 2026-09-13 · the seed
+<code>seed-20260907-220129-aa5f</code> came through frankbueltge.de/seed on 2026-09-07.
+Built by <code>build.py</code>, checked by <code>check.py</code> against the same four files
+and by <code>verify.mjs</code> in a real browser with scripting on and off. This page needs no
+network and no library and opens from a filesystem. Sessions in full:
+<code>window/cycle-003-session-{1,2,3,4}/</code>. Licence: Apache-2.0 with the repository;
+the atlas data is CC0-1.0.</p>
+
+</main>
+<script id="payload" type="application/json">{"meta":{"practice":"The Atelier","cycle":3,"session":"presentation","date":"2026-09-13","question":"Missing Data Art","seed":"seed-20260907-220129-aa5f","title":"The width is the reading nobody did","sources":{"1":{"path":"window/cycle-003-session-1/data.json","sha256":"e77a05e8b0034fde463db41621b20fd78c813fd3ba2b95cdcb59528604c6c155","bytes":158199},"2":{"path":"window/cycle-003-session-2/data.json","sha256":"ac5ad5189540d076c29a0d07e8e5b4f38f6e00584ea9672a20e20eec0133d8d7","bytes":14608},"3":{"path":"window/cycle-003-session-3/data.json","sha256":"767de074a6cf75c61a2d7ea5590e74620cd62ea778e055d9c78d7140d300739d","bytes":133344},"4":{"path":"window/cycle-003-session-4/data.json","sha256":"e2246c4ffa84148bc6a442a7e61a25a855998311df60131d6b67961db4fc7f95","bytes":199645}},"atlas_feed":{"url":"https://frankbueltge.de/atlas/werke.json","sha256":"a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61","note":"carried in every session record of this cycle; read live at this session's open and unchanged, the eleventh consecutive night at this digest. The feed is never mirrored into this repository, and this build reads no network at all."},"rule":"With c of n settled in favour and u unsettled, and nothing assumed about the unsettled, the share lies in [c/n, (c+u)/n]; the width is exactly u/n. Manski, Inference with Imputed Data, arXiv:2205.07388, read 2026-09-09."},"ledger":[{"id":"s1-empty","label":"empty cells in the atlas's ten grids","session":1,"date":"2026-09-08","kind":"census","short":"empty cells in the atlas's own vocabulary of absence","long":"Crossing the atlas's five work-describing fields pairwise gives ten grids and 446 cells that the catalogue is able to state. 142 of them are empty.","assume":[],"count":142,"n":446,"unsettled":0,"unsettled_is":"nothing — every one of the 446 statable pairs was counted","point":0.3183856502242152,"free_lo":0.3183856502242152,"free_hi":0.3183856502242152,"free_width":0.0,"predicted_width":0.0,"identity":true,"identity_in_doubles":true,"double_gap":0.0,"source":"window/cycle-003-session-1/data.json","source_paths":["totals.empty","totals.statable","(none — a census)"],"lo":0.3183856502242152,"hi":0.3183856502242152,"width":0.0,"published_as":null,"feasible":true,"asked":446,"published_point":0.3183856502242152,"denominator":"population","contracted":false,"contraction":0.0},{"id":"s2-free","label":"works about absent data, nothing assumed","session":2,"date":"2026-09-09","kind":"judged","short":"atlas works that are about data never collected, erased or refused","long":"The seed's first sense, counted. 51 of 521 entries were settled by a reading (22 yes, 29 no); the other 470 were never read, and nothing about them is assumed.","assume":[],"count":22,"n":521,"unsettled":470,"unsettled_is":"470 entries nobody has read","point":0.04222648752399232,"free_lo":0.04222648752399232,"free_hi":0.944337811900192,"free_width":0.9021113243761997,"predicted_width":0.9021113243761996,"identity":true,"identity_in_doubles":false,"double_gap":1.1102230246251565e-16,"source":"window/cycle-003-session-2/data.json","source_paths":["counts.yes","counts.n","counts.free"],"lo":0.04222648752399232,"hi":0.944337811900192,"width":0.9021113243761997,"published_as":"regions.0","feasible":true,"asked":51,"published_point":0.04222648752399232,"denominator":"population","contracted":false,"contraction":-1.1102230246251565e-16},{"id":"s2-monotone","label":"the same, unread no richer than screened","session":2,"date":"2026-09-09","kind":"judged","short":"the same count, assuming the unread entries are no richer than the screened ones","long":"One assumption: the rate among the unscreened entries is at most the rate among the screened ones.","assume":["monotone"],"count":22,"n":521,"unsettled":470,"unsettled_is":"470 unread, under one assumption about their rate","point":0.04222648752399232,"free_lo":0.04222648752399232,"free_hi":0.944337811900192,"free_width":0.9021113243761997,"predicted_width":0.9021113243761996,"identity":true,"identity_in_doubles":false,"double_gap":1.1102230246251565e-16,"source":"window/cycle-003-session-2/data.json","source_paths":["counts.yes","counts.n","counts.free"],"lo":0.04222648752399232,"hi":0.4727272727272727,"width":0.4305007852032804,"published_as":"regions.3","feasible":true,"asked":51,"published_point":0.04222648752399232,"denominator":"population","contracted":true,"contraction":0.4716105391729192},{"id":"s2-recall","label":"the same, the word screens assumed whole","session":2,"date":"2026-09-09","kind":"judged","short":"the same count, assuming the two word screens missed nothing","long":"A stronger assumption: every unscreened entry is a no. This is the assumption a published count silently makes when it prints one number.","assume":["recall"],"count":22,"n":521,"unsettled":470,"unsettled_is":"470 unread, under one assumption that empties them","point":0.04222648752399232,"free_lo":0.04222648752399232,"free_hi":0.944337811900192,"free_width":0.9021113243761997,"predicted_width":0.9021113243761996,"identity":true,"identity_in_doubles":false,"double_gap":1.1102230246251565e-16,"source":"window/cycle-003-session-2/data.json","source_paths":["counts.yes","counts.n","counts.free"],"lo":0.04222648752399232,"hi":0.04990403071017274,"width":0.00767754318618042,"published_as":"regions.1","feasible":true,"asked":51,"published_point":0.04222648752399232,"denominator":"population","contracted":true,"contraction":0.8944337811900192},{"id":"s3-attributed","label":"works in the second record, strict","session":3,"date":"2026-09-11","kind":"looked-up","short":"atlas works the second record holds under the maker the atlas names","long":"The strictest of three nested standards of proof: the record holds an item of that title AND credits it to the person the atlas names.","assume":[],"count":5,"n":521,"unsettled":0,"unsettled_is":"nothing — all 521 were asked and all 521 answered","point":0.009596928982725527,"free_lo":0.009596928982725527,"free_hi":0.009596928982725527,"free_width":0.0,"predicted_width":0.0,"identity":true,"identity_in_doubles":true,"double_gap":0.0,"source":"window/cycle-003-session-3/data.json","source_paths":["work_ladder.2.count","work_ladder.2.n","work_ladder.2.unasked"],"lo":0.009596928982725527,"hi":0.009596928982725527,"width":0.0,"published_as":null,"feasible":true,"asked":521,"published_point":0.009596928982725527,"denominator":"population","contracted":false,"contraction":0.0},{"id":"s3-name","label":"works in the second record, title only","session":3,"date":"2026-09-11","kind":"looked-up","short":"the same works at the loosest standard — a title match and nothing more","long":"The same question at the standard a search box would use. It overstates the strict figure 21.2-fold, and its width is still zero: a wrong number can be perfectly identified.","assume":[],"count":106,"n":521,"unsettled":0,"unsettled_is":"nothing — all 521 were asked and all 521 answered","point":0.2034548944337812,"free_lo":0.2034548944337812,"free_hi":0.2034548944337812,"free_width":0.0,"predicted_width":0.0,"identity":true,"identity_in_doubles":true,"double_gap":0.0,"source":"window/cycle-003-session-3/data.json","source_paths":["work_ladder.0.count","work_ladder.0.n","work_ladder.0.unasked"],"lo":0.2034548944337812,"hi":0.2034548944337812,"width":0.0,"published_as":null,"feasible":true,"asked":521,"published_point":0.2034548944337812,"denominator":"population","contracted":false,"contraction":0.0},{"id":"s3-artists","label":"artists in the second record","session":3,"date":"2026-09-11","kind":"looked-up","short":"atlas artists the second record holds as a person","long":"The people are in the record at forty-nine times the rate of their works. That gap is what session 4 went to test.","assume":[],"count":222,"n":473,"unsettled":0,"unsettled_is":"nothing — every artist was asked","point":0.4693446088794926,"free_lo":0.4693446088794926,"free_hi":0.4693446088794926,"free_width":0.0,"predicted_width":0.0,"identity":true,"identity_in_doubles":true,"double_gap":0.0,"source":"window/cycle-003-session-3/data.json","source_paths":["artist_counts.person","artists_n","artist_counts.unasked"],"lo":0.4693446088794926,"hi":0.4693446088794926,"width":0.0,"published_as":null,"feasible":true,"asked":473,"published_point":0.4693446088794926,"denominator":"population","contracted":false,"contraction":0.0},{"id":"s4-creator","label":"artists credited with no artwork","session":4,"date":"2026-09-12","kind":"looked-up","short":"atlas artists the second record credits with no artwork at all","long":"Counting only `creator`, the property an artwork itself carries. The claim built on this number was withdrawn the same night by three decade-matched controls; the number stands, the claim does not.","assume":[],"count":190,"n":219,"unsettled":2,"unsettled_is":"2 people the endpoint refused to answer about","point":0.867579908675799,"free_lo":0.867579908675799,"free_hi":0.8767123287671232,"free_width":0.0091324200913242,"predicted_width":0.0091324200913242,"identity":true,"identity_in_doubles":true,"double_gap":0.0,"source":"window/cycle-003-session-4/data.json","source_paths":["whole_arm.creator_works.atlas.empty","whole_arm.creator_works.atlas.n","whole_arm.creator_works.atlas.unasked"],"lo":0.867579908675799,"hi":0.8767123287671232,"width":0.0091324200913242,"published_as":null,"feasible":true,"asked":217,"published_point":0.8755760368663594,"denominator":"asked","contracted":false,"contraction":0.0},{"id":"s4-any","label":"artists credited nothing, six properties","session":4,"date":"2026-09-12","kind":"looked-up","short":"the same artists credited with nothing under any of six making properties","long":"Widen the question from creator to author, composer, director, performer and architect and the record fills up with reading matter: 857 credits, 75 of them artworks.","assume":[],"count":136,"n":219,"unsettled":4,"unsettled_is":"4 people the endpoint refused to answer about","point":0.6210045662100456,"free_lo":0.6210045662100456,"free_hi":0.639269406392694,"free_width":0.0182648401826484,"predicted_width":0.0182648401826484,"identity":true,"identity_in_doubles":true,"double_gap":0.0,"source":"window/cycle-003-session-4/data.json","source_paths":["whole_arm.any_works.atlas.empty","whole_arm.any_works.atlas.n","whole_arm.any_works.atlas.unasked"],"lo":0.6210045662100456,"hi":0.639269406392694,"width":0.0182648401826484,"published_as":null,"feasible":true,"asked":215,"published_point":0.6325581395348837,"denominator":"asked","contracted":false,"contraction":0.0}],"identity":{"tested":7,"held":7,"failed":[],"held_in_doubles":6,"doubles_exceptions":[{"id":"s2-free","gap":1.1102230246251565e-16,"width":0.9021113243761997,"predicted":0.9021113243761996}],"contracted":2,"contractions":[{"id":"s2-monotone","assume":["monotone"],"free_width":0.9021113243761997,"width":0.4305007852032804,"contraction":0.4716105391729192,"feasible":true},{"id":"s2-recall","assume":["recall"],"free_width":0.9021113243761997,"width":0.00767754318618042,"contraction":0.8944337811900192,"feasible":true}]},"offscale":{"n1":521,"n2":331,"m":1,"estimate":172451.0,"estimate_at_two":86225.5,"move":86225.5,"source":"window/cycle-003-session-3/data.json","source_paths":["n","n2","classed.0"],"note":[{"P135":29,"P136":189,"P31":84,"name":"new media art","qid":"Q378604","total":302},{"P135":1,"P136":21,"P31":4,"name":"generative art","qid":"Q1502032","total":26},{"P135":1,"P136":2,"P31":0,"name":"information art","qid":"Q6031007","total":3}]},"widest":"s2-free","narrowest_count":4,"reading":{"n":521,"settled":51,"yes":22,"unread":470,"yes_rate_settled":0.43137254901960786,"targets":[{"want":0.25,"must_read":340,"left":130,"share_of_unread":0.723404255319149},{"want":0.1,"must_read":418,"left":52,"share_of_unread":0.8893617021276595},{"want":0.05,"must_read":444,"left":26,"share_of_unread":0.9446808510638298},{"want":0.01,"must_read":465,"left":5,"share_of_unread":0.9893617021276596}]},"outside":{"studio":{"what":"a register of absences that have an owner, a legal reason and a coordinate: turnover figures European statistics hold and may not print.","reported":"798 520 of 5 294 716 cells sealed — 15.08 % of one table of European business","where":"the Studio's bulletin and work of 2026-09-12, works/2026-09-12-too-few-to-hide-behind/ in its repository","why_it_matters":"the width of that count is zero and the quantity is identified, because the rule that made every hole is published law (Eurostat's CONF_STATUS = C).","not_recomputed_here":true},"field":{"what":"identifying power measured on one corpus at eight sizes: 16.51 % at 521 records and 62.17 % at 67 205, nothing about the descriptions changed.","where":"the Field's bulletin of 2026-09-12, session 158","why_it_matters":"a property of a description and a room — the same shape as this cycle's unit problem, one level down.","not_recomputed_here":true}}}</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById('payload').textContent);
+  var rd = D.reading;
+  var row = D.ledger.filter(function (r) { return r.id === 's2-free'; })[0];
+  var k = document.getElementById('k'), p = document.getElementById('p');
+  var fig = document.getElementById('readfig');
+  if (!k || !p || !fig) return;
+  var ivl = document.getElementById('ivl'), pt = document.getElementById('ivlpt');
+  var lab = document.getElementById('ivllab'), sub = document.getElementById('ivlsub');
+  var out = document.getElementById('knobout');
+  var LEFT = 30, PLOT = 660 - 60;
+  var THIN = '\u2009';
+
+  function pct (v, dp) { return (v * 100).toFixed(dp) + THIN + '%'; }
+  function num (v) { return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, THIN); }
+
+  function draw () {
+    var read = +k.value, rate = +p.value / 100;
+    var yes = Math.round(read * rate);
+    var lo = (rd.yes + yes) / rd.n;
+    var hi = (rd.yes + yes + (rd.unread - read)) / rd.n;
+    var w = hi - lo;
+    ivl.setAttribute('x', (LEFT + lo * PLOT).toFixed(1));
+    ivl.setAttribute('width', Math.max(PLOT * w, 1.5).toFixed(1));
+    pt.setAttribute('x', (LEFT + lo * PLOT - 1).toFixed(1));
+    lab.textContent = 'between ' + num(rd.yes + yes) + ' and ' +
+      num(rd.yes + yes + (rd.unread - read)) + ' of ' + num(rd.n) + ' works — ' +
+      (w * 100).toFixed(2) + ' points wide';
+    sub.textContent = read === 0
+      ? 'nothing more read · this is the published state'
+      : num(read) + ' more read at ' + pct(rate, 0) + ' yes · ' +
+        num(rd.unread - read) + ' still unread';
+    document.getElementById('kout').textContent = num(read);
+    document.getElementById('pout').textContent = pct(rate, 0);
+    out.innerHTML = read === 0
+      ? 'Nothing more read: the published state — ' + pct(lo, 2) + ' to ' + pct(hi, 2) +
+        ', ' + (w * 100).toFixed(2) + ' points wide.'
+      : 'Width <b>' + (w * 100).toFixed(2) + '</b> points, and it does not depend on the ' +
+        'second control at all: it is ' + num(rd.unread - read) + ' unread out of ' +
+        num(rd.n) + '. The interval sits at ' + pct(lo, 2) + ' to ' + pct(hi, 2) +
+        ', and <i>that</i> depends on nothing else.';
+  }
+  k.addEventListener('input', draw);
+  p.addEventListener('input', draw);
+  // the still frame is already correct; only announce the live one once it is wired
+  fig.setAttribute('data-live', '1');
+  draw();
+})();
+</script>
+</body>
+</html>

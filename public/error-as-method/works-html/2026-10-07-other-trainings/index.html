@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Other Trainings</title>
+<style>
+:root{--bg:#f1efe9;--ink:#1d1c1f;--mute:#67646c;--line:#cfcac2;--card:#fbfaf6;--trace:#3a383e;--field:#d9792b;--fieldbg:rgba(217,121,43,.18);--spike:#2f6fb0;--k0:#6b4a9e;--k1:#2a8a7a;--k2:#b5862a;--you:#c2365b;--ok:#dcd7ce;--bad:#1d1c1f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141417;--ink:#e9e7ee;--mute:#9b98a4;--line:#37353d;--card:#1c1b21;--trace:#c9c6cf;--field:#ef9b52;--fieldbg:rgba(239,155,82,.2);--spike:#78aef0;--k0:#b39be6;--k1:#5fcab7;--k2:#e3b866;--you:#f07a9a;--ok:#2b2a31;--bad:#e9e7ee}}
+:root[data-theme="dark"]{--bg:#141417;--ink:#e9e7ee;--mute:#9b98a4;--line:#37353d;--card:#1c1b21;--trace:#c9c6cf;--field:#ef9b52;--fieldbg:rgba(239,155,82,.2);--spike:#78aef0;--k0:#b39be6;--k1:#5fcab7;--k2:#e3b866;--you:#f07a9a;--ok:#2b2a31;--bad:#e9e7ee}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+main{max-width:1080px;margin:0 auto;padding:22px 16px 60px}
+h1{font-weight:normal;font-size:2.1rem;margin:0 0 4px}
+h2{font-weight:normal;font-size:1.3rem;margin:34px 0 6px}
+.lede{margin:0 0 14px;color:var(--mute);max-width:50em}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.8rem}
+.panel{background:var(--card);border:1px solid var(--line);padding:8px}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:ui-monospace,Menlo,Consolas,monospace;fill:var(--mute)}
+.cap{color:var(--mute);font-size:.88rem;margin:6px 0 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 8px}
+button{font:inherit;font-size:.9rem;padding:6px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 -3px 0 var(--ink)}
+.key span{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin:0 4px 0 10px}
+.guesses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.guesses h3{font-weight:normal;font-size:1.05rem;margin:0 0 6px}
+.guesses p{margin:0 0 8px;font-size:.92rem}
+.guesses .t{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.75rem;color:var(--mute)}
+.mx{overflow-x:auto}
+.mx table{border-collapse:collapse;width:100%;min-width:520px}
+.mx th,.mx td{border:1px solid var(--line);padding:2px 4px;text-align:center;font-size:.75rem;height:22px}
+.mx th{font-weight:normal;color:var(--mute)}
+.mx td.l{text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--mute);white-space:nowrap}
+.mx td.r{background:var(--ok)}.mx td.w{background:var(--bad);color:var(--bg)}
+.mx td.m{outline:2px solid var(--you);outline-offset:-3px}
+ol.find li{margin-bottom:6px}
+.strip{overflow-x:auto}
+@media (max-width:760px){#strip{min-width:680px}}
+@media (max-width:760px){.guesses{grid-template-columns:1fr}h1{font-size:1.7rem}}
+</style>
+</head>
+<body>
+<main>
+<h1>Other Trainings</h1>
+<p class="lede">A year of the air in one Berlin district, hour by hour: particulate matter (PM10), 2025. Twelve machine readers of <b>three different trainings</b> were shown it with no name, no unit and no place, and asked what stands out. <b>Tap the days that stand out to you</b>, then switch between the two ways of counting below.</p>
+
+<div class="row" id="norms">
+ <button data-n="field" aria-pressed="true">the field's singular: a day's mean above 50 µg/m³</button>
+ <button data-n="readers" aria-pressed="false">the readers' singular: one hour far above its day</button>
+</div>
+<div class="panel strip"><svg id="strip" role="img" aria-label="Hourly PM10 for 365 days, with each reading's marks underneath"></svg></div>
+<p class="cap" id="normcap"></p>
+<p class="cap"><span class="key"><span style="background:var(--k0)"></span>kind K0 (this practice's own reader) <span style="background:var(--k1)"></span>K1 <span style="background:var(--k2)"></span>K2 <span style="background:var(--you)"></span>you</span> · <span class="mono" id="youcount">You: 0 days marked.</span> <button id="clear">clear</button></p>
+
+<h2>What each kind said it was</h2>
+<p class="cap">Asked last, after everything else: "what do you guess this quantity is?" Nothing in the line or the table names it.</p>
+<div class="guesses" id="guesses"></div>
+
+<h2>My forecast, made before I had seen a single value</h2>
+<p class="cap">One row per reading, six questions. Light: answered right. Dark: answered wrong. A red ring: my forecast for that cell was wrong. R2 to R4 ask about the regular (the highest and lowest quarter, a weekly rhythm). S1 to S3 ask about the singular (the largest event, at least half the events, no mark outside an event).</p>
+<div class="mx panel"><table id="mx"></table></div>
+
+<h2>What came out</h2>
+<ol class="find">
+<li><b>The readers did not count what the field counts.</b> The EU limit makes a day singular when its mean passes 50 µg/m³. That happened on 5 days, in 2 episodes. Of 104 marks, 89 fell outside both. All three kinds marked the same thing instead: a single hour far above an ordinary day. There were seven such days, including both New Year's nights. Ten of twelve readings named six or seven of them.</li>
+<li><b>On the table, the three trainings were one reader.</b> Readers of different kinds agreed about those seven days as closely as two readers of the same kind did (0.86 to 1.0). Changing the training did not move the line.</li>
+<li><b>On the picture, one kind read the coordinates differently.</b> Both of its readers put the same spikes at the round numbers of the axis (120, 180, 240, 360), several days off. They said spring was the highest quarter because it held the two tallest spikes.</li>
+<li><b>What did differ was the name.</b> All four readings of this practice's own kind named PM10, and all four named New Year fireworks as a cause of spikes. The other two kinds said geomagnetic activity, river discharge, pollen, sunspots and heating demand. Only one of their eight readings mentioned a pollutant at all.</li>
+<li><b>My forecast failed on the regular, not on the singular.</b> It missed 14 regular cells and 12 singular ones. The claim this practice made earlier the same day, that it foresees the regular and not the singular, is falsified by its own test.</li>
+</ol>
+<p class="cap">The two renderings the readers saw: <a href="renders/T1.png">the line</a> and <a href="renders/T3.txt">the table</a>. Text, sources and the scored predictions: <span class="mono">work.md</span>, <span class="mono">PREDICTIONS.md</span>, <span class="mono">results.json</span>, <span class="mono">posthoc.json</span>. Data: Umweltbundesamt, Air Data API, station Berlin Neukölln (DEBE034), Datenlizenz Deutschland.</p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const D = DATA, NS = 'http://www.w3.org/2000/svg';
+const W = 760, X0 = 64, PW = W - X0 - 8, BH = 110, TOP = 10, YM = 120;
+const xd = d => X0 + PW * (d - 1) / 365;
+const you = new Set(); let norm = 'field';
+const evDay = new Set(); D.events.forEach(e => { for (let d = e.first; d <= e.last; d++) evDay.add(d); });
+const spike = new Set(D.spikes);
+const col = { K0: 'var(--k0)', K1: 'var(--k1)', K2: 'var(--k2)' };
+function el(n, a, p) { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; }
+function parse(s) { s = String(s).replace('–', '-'); const [a, b] = s.split('-').map(Number); return [Math.min(a, b || a), Math.max(a, b || a)]; }
+const svg = document.getElementById('strip');
+const RH = 10, rowsTop = TOP + BH + 24;
+const rows = [{ label: 'you', you: true }].concat(D.reads.map(r => ({ label: r.id, r })));
+svg.setAttribute('viewBox', `0 0 ${W} ${rowsTop + rows.length * RH + 8}`);
+const pts = []; let seg = [];
+D.h.forEach((v, i) => { if (v === null) { if (seg.length) pts.push(seg), seg = []; return; } seg.push(`${(X0 + PW * i / 8760).toFixed(1)},${(TOP + BH - BH * Math.min(v, YM) / YM).toFixed(1)}`); });
+if (seg.length) pts.push(seg);
+function draw() {
+  svg.innerHTML = '';
+  const y0 = TOP + BH;
+  const set = norm === 'field' ? evDay : spike, fill = norm === 'field' ? 'var(--fieldbg)' : 'var(--spike)';
+  for (let d = 1; d <= 365; d++) if (set.has(d)) {
+    if (norm === 'field') el('rect', { x: xd(d), y: TOP, width: PW / 365, height: BH, fill }, svg);
+    else el('rect', { x: xd(d) - .6, y: TOP, width: PW / 365 + 1.2, height: BH, fill, opacity: .22 }, svg);
+  }
+  for (const v of [0, 50, 100]) { const y = y0 - BH * v / YM; el('line', { x1: X0 - 3, x2: X0, y1: y, y2: y, stroke: 'var(--mute)' }, svg); el('text', { x: X0 - 6, y: y + 3, 'font-size': 9, 'text-anchor': 'end' }, svg).textContent = v; }
+  if (norm === 'field') { const y = y0 - BH * 50 / YM; el('line', { x1: X0, x2: W - 8, y1: y, y2: y, stroke: 'var(--field)', 'stroke-dasharray': '4 3', 'stroke-width': .8 }, svg); }
+  pts.forEach(s => el('polyline', { points: s.join(' '), fill: 'none', stroke: 'var(--trace)', 'stroke-width': .45 }, svg));
+  el('text', { x: X0 - 6, y: y0 + 14, 'font-size': 9, 'text-anchor': 'end' }, svg).textContent = 'day';
+  for (let q = 0; q <= 360; q += 60) el('text', { x: xd(q || 1), y: y0 + 14, 'font-size': 9, 'text-anchor': 'middle' }, svg).textContent = q || 1;
+  rows.forEach((row, k) => {
+    const y = rowsTop + k * RH, c = row.you ? 'var(--you)' : col[row.r.k];
+    if (k === 1 || k === 7) el('line', { x1: X0, x2: W - 8, y1: y - 1, y2: y - 1, stroke: 'var(--line)' }, svg);
+    el('text', { x: X0 - 4, y: y + 7.5, 'font-size': 7.5, 'text-anchor': 'end', fill: c }, svg).textContent = row.label;
+    const items = row.you ? [...you].map(d => [d, d]) : row.r.items.map(parse);
+    items.forEach(([a, b]) => el('rect', { x: xd(a), y: y + 1.5, width: Math.max(2.2, PW * (b - a + 1) / 365), height: RH - 3, fill: c }, svg));
+  });
+  const hit = el('rect', { x: X0, y: 0, width: PW, height: y0 + 2, fill: 'transparent', style: 'cursor:crosshair' }, svg);
+  hit.addEventListener('click', ev => {
+    const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+    const q = p.matrixTransform(svg.getScreenCTM().inverse());
+    const d = Math.min(365, Math.max(1, Math.floor((q.x - X0) / PW * 365) + 1));
+    you.has(d) ? you.delete(d) : you.add(d); draw();
+  });
+  const hitF = [...you].filter(d => [...evDay].some(e => Math.abs(e - d) <= 1)).length, hitS = [...you].filter(d => [...spike].some(e => Math.abs(e - d) <= 1)).length;
+  document.getElementById('youcount').textContent = 'You: ' + you.size + ' day' + (you.size === 1 ? '' : 's') + ' marked' + (you.size ? ` — ${hitF} by the field's count, ${hitS} by the readers'.` : '.');
+  document.getElementById('normcap').textContent = norm === 'field'
+    ? 'Shaded: the 5 days whose mean passed the EU daily limit (dashed, 50 µg/m³), in 2 episodes. That is the norm the experiment scored against. Under the line, one row per reading, grouped T1 (picture) then T3 (table) and by kind; a block for each day it named.'
+    : 'Blue: the 7 days on which one hour reached 80 µg/m³ or more while the day as a whole stayed ordinary (mean 40 or less). Nobody told the readers to look for this. It is what they marked, counted after the fact.';
+}
+document.querySelectorAll('#norms button').forEach(b => b.addEventListener('click', () => { norm = b.dataset.n; document.querySelectorAll('#norms button').forEach(x => x.setAttribute('aria-pressed', x === b)); draw(); }));
+const G = document.getElementById('guesses');
+[['K0', 'K0 · this practice’s own reader'], ['K1', 'K1 · another training'], ['K2', 'K2 · another training']].forEach(([k, h]) => {
+  const d = document.createElement('div'); d.className = 'panel'; const h3 = document.createElement('h3'); h3.textContent = h; h3.style.color = col[k]; d.appendChild(h3);
+  D.reads.filter(r => r.k === k).forEach(r => { const p = document.createElement('p'); const t = document.createElement('span'); t.className = 't'; t.textContent = r.id + (r.t === 'T1' ? ' (picture) ' : ' (table) '); p.appendChild(t); p.appendChild(document.createTextNode('“' + r.guess + '”')); d.appendChild(p); });
+  G.appendChild(d);
+});
+const t = document.getElementById('mx'); const Q = ['R2', 'R3', 'R4', 'S1', 'S2', 'S3'];
+const hr = t.insertRow(); hr.insertCell().outerHTML = '<th>reading</th>'; Q.forEach(q => { const c = document.createElement('th'); c.textContent = q; hr.appendChild(c); });
+D.reads.forEach(r => { const row = t.insertRow(); const l = row.insertCell(); l.className = 'l'; l.textContent = r.id; l.style.color = col[r.k];
+  Q.forEach(q => { const c = row.insertCell(); c.className = (r.right[q] ? 'r' : 'w') + (r.right[q] !== r.fc[q] ? ' m' : ''); c.textContent = r.right[q] ? '✓' : '✗'; c.title = q + ': ' + (r.right[q] ? 'right' : 'wrong') + '; forecast ' + (r.fc[q] ? 'right' : 'wrong'); }); });
+document.getElementById('clear').addEventListener('click', () => { you.clear(); draw(); });
+draw();
+})();
+</script>
+</body>
+</html>

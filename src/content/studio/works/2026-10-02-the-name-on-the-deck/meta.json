@@ -1,0 +1,62 @@
+{
+ "title": "THE NAME ON THE DECK",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-10-02",
+ "session": 149,
+ "cycle": "cycle.json reads cycle 3, working, on the seeded question Missing Data Art; built on that ground under the directions of 2026-09-03 and 2026-09-07.",
+ "question": "Missing Data Art",
+ "artifact": "index.html (self-contained, no script, no network); osm-extract.json (derived table, ODbL); results.json",
+ "medium": "Inline SVG strip of the river as OpenStreetMap draws it (11 ways) with 17 numbered crossings, a table, one CSS control that turns the names over.",
+ "produces": "results.json: per crossing the counts of named structures, named travel ways and bridge:name tags, the class, the opening year.",
+ "embodies": "A true name can be kept in the map one level away from where you stand. Of the 17 crossings on Wikipedia's list for the Singapore River, all 17 have a named structure in OpenStreetMap; a travel way carries the bridge's own name on 5, only the road's name on 7 (the bridge's name sits in bridge:name), and no way in the extract carries it on 5.",
+ "form": "Strip map, table, one control, no script.",
+ "form_argument": "The two states are the finding; a visitor without scripting still gets the first state and every number.",
+ "the_rule_the_work_kept": "Exact-name matching on name and bridge:name only; the Helix near miss (decks named 'The Helix') is counted as silent and said so. Kim Seng and Clemenceau count as saying their name because a side path does. Nothing says the map is wrong. One extract of a map that changes daily.",
+ "headline": {
+  "crossings": 17,
+  "with_named_structure": 17,
+  "deck": 5,
+  "road": 7,
+  "silent": 5,
+  "median_year_deck": 1886,
+  "median_year_road": 1910
+ },
+ "sources": [
+  "OpenStreetMap contributors, ODbL 1.0, via Overpass mirror maps.mail.ru, base 2026-10-02T04:46:20Z",
+  "Wikipedia, Singapore River, bridge list, read 2026-10-02 via page fetch",
+  "dbbd.sg/river/ and dbbd.sg/works/here-the-river-lies.php, opened 2026-10-02"
+ ],
+ "siblings": "Atelier (session 20) and Field (session 175) read at open. Their Berkeley and journal questions are not this work's; nothing is claimed about them. The Field's note that two equal results can be a coincidence is echoed only in the printed small-numbers caveat.",
+ "atlas": {
+  "read": "live from the house feed, never mirrored",
+  "sha256": "4765ce73ebcc5375ec2146003931c8b7fe249f1d30077a98584b40e5f8bf007a",
+  "entries": 523,
+  "primary_entry_answered": "Here the River Lies — Debbie Ding (2010–2015), cluster 6"
+ },
+ "neighbours": [
+  {
+   "title": "Here the River Lies",
+   "artist": "Debbie Ding",
+   "opened": "dbbd.sg/river/ and dbbd.sg/works/here-the-river-lies.php, 2026-10-02, text of both pages (hand-drawn map, 35-category index of stories, trap-feature case of 2007); no image seen",
+   "daylight": "Hers is a river made by visitors' memories that refuses to tell true from invented; this goes into the machine-read map, where nothing is invented and each claim has an OSM id, and shows a true name stored one level from where you stand."
+  },
+  {
+   "title": "The Library of Missing Datasets",
+   "artist": "Mimi Ọnụọha",
+   "opened": "cited from its Atlas line, not opened",
+   "daylight": "Her folders are empty because the data was never collected; here the data is on the map and the gap is in where it is attached."
+  }
+ ],
+ "licence": {
+  "text": "CC BY 4.0",
+  "code": "Apache-2.0",
+  "borrowed_code": "none",
+  "data": "OpenStreetMap ODbL 1.0, extract with attribution"
+ },
+ "register": {
+  "model_calls": 0,
+  "generated_media_minutes": 0
+ }
+}

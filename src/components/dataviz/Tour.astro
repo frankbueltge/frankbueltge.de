@@ -19,6 +19,13 @@
 //      never attached; a `<nav class="dv-tour-steps">` of real prev/next buttons + a jump list
 //      takes over instead — the same live figure, but it only ever changes on an explicit click.
 //
+// TWO SHAPES OF TOUR (the second added 2026-09-03). A tour either CARRIES its own figure in the
+// `figure` slot — the ordinary case, and the one the ladder above describes — or it DRIVES a figure
+// that stands elsewhere on the page and passes no slot at all, which is how the living globe's room
+// mounts three stories over the one globe it already holds. The script below tells them apart by
+// whether the slot rendered anything, and the difference reaches exactly two decisions (revealing
+// the sticky column, and whether scene one is activated at init); everything else is identical.
+//
 // A live figure OPTS IN — it does not need to import anything from this module or know this
 // component exists — by dispatching `window.dispatchEvent(new CustomEvent('dv:figure-ready', {
 // detail: { id, apply(focus) } }))` once it is ready to be driven. src/lib/tour/engine.ts documents
@@ -213,6 +220,22 @@ const primaryFigureId = tour.scenes[0]?.focus.figure ?? ''
     const figureId = root.dataset.dvFigure ?? ''
     let activeIndex = -1
 
+    // A tour either CARRIES its own figure in the `figure` slot (the Studio's floor, the Atelier's
+    // process figure, the Field's plate) or DRIVES one that stands elsewhere on the page — the
+    // living globe's room, added 2026-09-03, mounts three stories over the ONE globe it already
+    // holds, because a second globe would be a second WebGL context and a second truth. Two things
+    // hang on the difference, and nothing else does:
+    //   · a tour that carries a figure reveals its sticky column; a tour that drives one leaves it
+    //     hidden, since an empty sticky gutter is a column of nothing;
+    //   · a tour that carries a figure activates scene one at init, because that figure is its own
+    //     and should show what its first scene says. A tour that drives a SHARED figure does not:
+    //     three tours pushing their first scene at load would race, and the last one in the
+    //     document would win — the figure would stand on a scene nobody scrolled to and contradict
+    //     the page around it. A driving tour speaks when the visitor is actually in it: on a scene
+    //     activation, a step, a jump or a deep link. (Its `activeIndex` therefore stays -1 until
+    //     then, which also makes the late-registration push below a no-op for it, as it should be.)
+    const carriesFigure = figureWrap.children.length > 0
+
     const focusFor = (sceneEl: HTMLElement): FocusState | null => {
       const sceneId = sceneEl.dataset.dvScene
       if (!sceneId) return null
@@ -247,8 +270,9 @@ const primaryFigureId = tour.scenes[0]?.focus.figure ?? ''
       }
     }
 
-    // With JS: the stills are no longer the experience — hide them, reveal the live figure.
-    figureWrap.hidden = false
+    // With JS: the stills are no longer the experience — hide them, reveal the live figure this
+    // tour carries (a driving tour's live figure is already on the page; see `carriesFigure`).
+    if (carriesFigure) figureWrap.hidden = false
     if (live) live.hidden = false
     for (const el of scenes) {
       const still = el.querySelector<HTMLElement>('[data-dv-still]')
@@ -293,7 +317,7 @@ const primaryFigureId = tour.scenes[0]?.focus.figure ?? ''
           if (idx !== -1) setActive(idx, { scrollIntoView: true })
         })
       }
-      setActive(0)
+      if (carriesFigure) setActive(0)
     } else {
       const io = new IntersectionObserver(
         (entries) => {
@@ -311,7 +335,7 @@ const primaryFigureId = tour.scenes[0]?.focus.figure ?? ''
         { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
       )
       for (const el of scenes) io.observe(el)
-      setActive(0)
+      if (carriesFigure) setActive(0)
     }
 
     // ←/→ on the tour root: keydown bubbles from wherever focus currently sits, so this only ever

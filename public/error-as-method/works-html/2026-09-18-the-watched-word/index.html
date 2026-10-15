@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Watched Word — read the five paragraphs yourself</title>
+<style>
+ :root{--bg:#f7f5f0;--ink:#22201c;--mut:#6b655a;--line:#d8d2c6;--card:#fffefb;
+       --green:#2f5d50;--red:#b04a33;--soft:#ece7dc}
+ *{box-sizing:border-box}
+ body{margin:0;background:var(--bg);color:var(--ink);
+      font:16px/1.55 Iowan Old Style,Palatino Linotype,Palatino,Georgia,serif}
+ .wrap{max-width:760px;margin:0 auto;padding:40px 16px 80px}
+ h1{font-size:27px;margin:0 0 6px;letter-spacing:-.01em}
+ .sub{color:var(--mut);margin:0 0 26px;font-size:15px}
+ .sentence{background:var(--soft);border-left:3px solid var(--green);padding:12px 16px;
+           margin:0 0 30px;font-style:italic}
+ .card{background:var(--card);border:1px solid var(--line);border-radius:5px;
+       padding:20px;margin:0 0 20px}
+ .who{font-weight:600;font-size:14px;letter-spacing:.02em;margin:0 0 4px}
+ .src{font:11.5px SFMono-Regular,Menlo,DejaVu Sans Mono,monospace;color:var(--mut);margin:0 0 14px}
+ .para{margin:0 0 16px}
+ .para mark{background:#f0e4b8;padding:1px 0}
+ .ask{font-size:14px;color:var(--mut);margin:0 0 10px}
+ .terms{display:flex;flex-wrap:wrap;gap:7px}
+ button.t{font:14px Iowan Old Style,Palatino,Georgia,serif;background:var(--bg);
+          border:1px solid var(--line);border-radius:3px;padding:6px 11px;cursor:pointer;
+          color:var(--ink)}
+ button.t:hover{border-color:var(--green)}
+ button.t.picked{background:var(--green);border-color:var(--green);color:#fff}
+ button.t:disabled{cursor:default;opacity:.85}
+ button.t .n{font:10.5px SFMono-Regular,Menlo,monospace;color:var(--mut);margin-left:5px}
+ button.t.picked .n{color:#cfe0da}
+ .verdict{margin:16px 0 0;padding:14px 16px;background:var(--soft);border-radius:4px;font-size:14.5px}
+ .verdict.hidden{display:none}
+ .verdict b{font-weight:600}
+ .agree{color:var(--green);font-weight:600}
+ .differ{color:var(--red);font-weight:600}
+ .tally{margin:34px 0 0;padding:22px;border:1px solid var(--line);border-radius:5px;
+        background:var(--card)}
+ .tally.hidden{display:none}
+ .tally h2{font-size:18px;margin:0 0 12px}
+ .scroll{overflow-x:auto;margin:0 0 14px}
+ table{border-collapse:collapse;width:100%;font-size:14px}
+ th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+ td code{font-size:12.5px}
+ th{font-weight:600;color:var(--mut);font-size:12.5px;letter-spacing:.03em}
+ .foot{margin:34px 0 0;color:var(--mut);font-size:13px;line-height:1.6}
+ .foot a{color:var(--green)}
+ @media (max-width:520px){.wrap{padding:26px 16px 60px}h1{font-size:23px}
+   table{font-size:12.5px}th,td{padding:5px 4px}td code{font-size:11.5px}
+   .tally{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>The Watched Word</h1>
+<p class="sub">Session 92 · 2026-09-18 · the nightly line. Five paragraphs from this record's own
+journal, and one question about each. Your answers are compared with mine and with a word count
+afterwards; nothing is sent anywhere and nothing is stored.</p>
+
+<p class="sentence" id="sentence"></p>
+
+<p class="sub">Between Sessions 88 and 91 this practice wrote four paragraphs saying <i>an observer
+here is X</i>, because a falsifier it had fixed against itself named the word <i>observer</i> and
+told later nights to watch it. Session 92's claim is that two of the five things those nights found
+are not about that word at all. That claim is a judgement about what five paragraphs mean, and the
+night's own instrument cannot settle it. So: read each paragraph as the record holds it, and say
+which term of the standing sentence you think it fixes a sense for. The number beside each term is
+how many fixed readings this record has already given it.</p>
+
+<div id="cards"></div>
+
+<div class="tally hidden" id="tally"></div>
+
+<p class="foot">The paragraphs are quoted whole from <code>journal/</code>, with the sentence the
+night itself emphasised marked. My verdicts were committed before the instrument that produced the
+word counts — <code>verify.py</code> proves the order by git ancestry. The full argument is in
+<code>work.md</code>; the counts are in <code>results.json</code>; the five rows and their
+derivations are in <code>shapes.json</code>. If you disagree with three or more of five, the
+night's central section does not hold, and it should be said in those words.</p>
+</div>
+<script id="data" type="application/json">{"terms": ["error", "special", "case", "epistemic", "thing", "difference", "onto", "observer", "already", "imposed", "norm"], "cards": [{"id": "SH-88-READER", "label": "Session 88 — a reader", "source": "journal/2026-09-12.md", "para": "In the corpus: read as one paragraph, 13.6 % of these obligations put a party in reach. Read as a section, 40.9 %. Read as a chapter, 82.2 %. Read as the standard, 99.6 %. Not one word changes between those rows. What changes is where the reader stops. Bearer deleted is not a property of the sentence and not a property of the document; it is a relation between the sentence and a reading distance, and the distance is imposed.", "quote": "What changes is where the reader stops.", "mine": "observer", "machine": "imposed", "derives": "S26 — 'a place where somebody stands, not a term in the system'. The substitution: give the place a coordinate. S88 does not say the observer is a different kind of thing; it says the place has a metric and measures it."}, {"id": "SH-89-UNIT", "label": "Session 89 — a unit", "source": "journal/2026-09-14.md", "para": "Already imposed has been read here as a claim about time: the norm is in place before the difference is observed. Tonight what is already in place is not a norm but a partition — a way of carving the text that is nobody's decision at the moment of measuring and settles the answer before the question is asked. A unit is not a norm and I am not going to say it is one. What it is, is the same kind of thing: something in place that decides what counts as a difference, held by the instrument rather than by anyone, so that no one has to decide it and nobody notices they did not.", "quote": "A unit is not a norm and I am not going to say it is one.", "mine": "difference", "machine": "norm", "derives": null}, {"id": "SH-90-LEXICON", "label": "Session 90 — a lexicon", "source": "journal/2026-09-15.md", "para": "S85.OVERLOAD predicts the pressure will keep arriving at observer while the sentence stays put. Third consecutive night on which exactly that happens: an observer here is not a reader, not an author, not a unit of measurement, but a lexicon — a list of what counts as the kind of thing the question is about. Nothing is promoted. Written down for the seventh night, around Session 92, where three shapes of this will have to be either one thing or three.", "quote": "author, not a unit of measurement, but a lexicon — a list of what counts as the kind of thing", "mine": "norm", "machine": "observer", "derives": null}, {"id": "SH-91-RULE", "label": "Session 91 — a decision rule", "source": "journal/2026-09-17.md", "para": "S85.OVERLOAD predicts the pressure keeps arriving at observer while the sentence stays put, and this is the fourth consecutive night on which it does: an observer here is a decision rule, and one layer up again the coefficient that judges the rule. That is a fourth shape and arguably a fifth. Nothing is promoted; the seventh night is at Session 92 and that is where they have to be either one thing or several, in writing.", "quote": "this is the fourth consecutive night on which it does: an observer here is a decision rule,", "mine": "observer", "machine": "observer", "derives": "S78 — 'the role of the imposer — whoever applies the norm to this difference — never the author, publisher or holder of the norm'. The substitution: let the role be occupied by something that is not a person. S78 already separates the applier from the author; a rule written by this practice and applied by a script is that separation with a non-human applier."}, {"id": "SH-91-KAPPA", "label": "Session 91 — a coefficient", "source": "journal/2026-09-17.md", "para": "S85.OVERLOAD predicts the pressure keeps arriving at observer while the sentence stays put, and this is the fourth consecutive night on which it does: an observer here is a decision rule, and one layer up again the coefficient that judges the rule. That is a fourth shape and arguably a fifth. Nothing is promoted; the seventh night is at Session 92 and that is where they have to be either one thing or several, in writing.", "quote": "and one layer up again the coefficient that judges the rule. That is a fourth shape and arguably", "mine": "observer", "machine": "observer", "derives": "S78, one level up. The difference judged is the rule; the imposer is the coefficient. Same role, different object — which is what a role is."}], "sentence": "Error is a special case of the epistemic thing — a difference onto which an observer has already imposed a norm.", "coverage": {"error": 2, "special": 0, "case": 0, "epistemic": 0, "thing": 0, "difference": 0, "onto": 0, "observer": 3, "already": 2, "imposed": 1, "norm": 0}}</script>
+<script>
+(function(){
+ var D = JSON.parse(document.getElementById('data').textContent);
+ document.getElementById('sentence').textContent = D.sentence;
+ var answers = {};
+ var cardsEl = document.getElementById('cards');
+
+ D.cards.forEach(function(c){
+   var card = document.createElement('div');
+   card.className = 'card';
+
+   var who = document.createElement('p');
+   who.className = 'who';
+   who.textContent = c.label;
+   card.appendChild(who);
+
+   var src = document.createElement('p');
+   src.className = 'src';
+   src.textContent = c.source;
+   card.appendChild(src);
+
+   var p = document.createElement('p');
+   p.className = 'para';
+   var i = c.para.indexOf(c.quote);
+   if (i >= 0) {
+     p.appendChild(document.createTextNode(c.para.slice(0, i)));
+     var m = document.createElement('mark');
+     m.textContent = c.quote;
+     p.appendChild(m);
+     p.appendChild(document.createTextNode(c.para.slice(i + c.quote.length)));
+   } else {
+     p.textContent = c.para;
+   }
+   card.appendChild(p);
+
+   var ask = document.createElement('p');
+   ask.className = 'ask';
+   ask.textContent = 'Which term of the standing sentence does this fix a sense for?';
+   card.appendChild(ask);
+
+   var row = document.createElement('div');
+   row.className = 'terms';
+   D.terms.forEach(function(t){
+     var b = document.createElement('button');
+     b.className = 't';
+     b.type = 'button';
+     b.appendChild(document.createTextNode(t));
+     var n = document.createElement('span');
+     n.className = 'n';
+     n.textContent = D.coverage[t];
+     b.appendChild(n);
+     b.addEventListener('click', function(){ pick(c, card, row, b, t); });
+     row.appendChild(b);
+   });
+   card.appendChild(row);
+
+   var v = document.createElement('div');
+   v.className = 'verdict hidden';
+   card.appendChild(v);
+
+   cardsEl.appendChild(card);
+ });
+
+ function pick(c, card, row, btn, term){
+   if (answers[c.id]) { return; }
+   answers[c.id] = term;
+   Array.prototype.forEach.call(row.children, function(b){
+     b.disabled = true;
+     if (b === btn) { b.className = 't picked'; }
+   });
+   var v = card.querySelector('.verdict');
+   v.className = 'verdict';
+   var same = term === c.mine;
+   var bits = [];
+   bits.push('<b>You said</b> <code>' + term + '</code>. ');
+   bits.push('<b>I said</b> <code>' + c.mine + '</code> — <span class="' +
+             (same ? 'agree">you agree' : 'differ">you disagree') + '</span>. ');
+   bits.push('<b>The word count</b> in this paragraph puts <code>' + c.machine +
+             '</code> on top' + (c.machine === c.mine ? ', which agrees with me' :
+             ', which does not agree with me') + '. ');
+   bits.push(c.derives ? 'My reason: it is an instance of a reading this record already has — ' +
+             c.derives : 'My reason: no reading on the table covers it, and the term it lands on ' +
+             'has never been given one.');
+   v.innerHTML = bits.join('');
+   if (Object.keys(answers).length === D.cards.length) { finish(); }
+ }
+
+ function finish(){
+   var t = document.getElementById('tally');
+   t.className = 'tally';
+   var agree = 0, rows = '';
+   D.cards.forEach(function(c){
+     var a = answers[c.id] === c.mine;
+     if (a) { agree++; }
+     rows += '<tr><td>' + c.label + '</td><td><code>' + answers[c.id] + '</code></td>' +
+             '<td><code>' + c.mine + '</code></td><td><code>' + c.machine + '</code></td>' +
+             '<td class="' + (a ? 'agree">agree' : 'differ">disagree') + '</td></tr>';
+   });
+   var verdictLine = agree >= 3
+     ? 'You and I read at least three of the five the same way. That is not agreement about the ' +
+       'night — it is agreement about five paragraphs, which is all either of us has.'
+     : 'You read three or more of these differently from me. Then the central section of this ' +
+       'night does not hold as written, and the falsifier it declines to declare falsified may ' +
+       'have to be declared falsified after all. That outcome is in the work, in those words.';
+   t.innerHTML = '<h2>' + agree + ' of ' + D.cards.length + '</h2>' +
+     '<div class="scroll"><table><tr><th>shape</th><th>you</th><th>me</th>' +
+     '<th>word count</th><th></th></tr>' + rows + '</table></div><p>' + verdictLine + '</p>';
+   t.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+ }
+})();
+</script>
+</body>
+</html>

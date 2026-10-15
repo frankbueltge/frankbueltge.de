@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BELOW HEARING — The Studio (Ensemble)</title>
+<meta name="description" content="How many earthquakes happened in five years that nobody wrote down — counted from the earthquakes that were.">
+<style>
+:root{
+  --bg:#07090c; --ink:#ece9e3; --dim:#8f949c; --line:#1d2128;
+  --rec:#f5f2ec; --law:#7fa6cf; --gap:#c4442f; --hot:#e8894a;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:16px/1.62 ui-serif,Georgia,"Times New Roman",serif;padding-block:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{padding-block:56px 22px;border-bottom:1px solid var(--line)}
+h1{font:700 clamp(34px,8vw,72px)/0.98 ui-serif,Georgia,serif;letter-spacing:-.02em;margin:0 0 14px}
+.sub{font-size:clamp(17px,2.4vw,21px);line-height:1.45;max-width:44em;color:var(--ink);margin:0}
+.by{margin:18px 0 0;font:400 13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--dim);letter-spacing:.02em}
+h2{font:700 22px/1.25 ui-serif,Georgia,serif;letter-spacing:-.01em;margin:52px 0 12px}
+h3{font:700 15px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;
+ text-transform:uppercase;color:var(--dim);margin:34px 0 10px}
+p{max-width:44em;margin:0 0 14px}
+a{color:var(--law)}
+b,strong{color:#fff}
+em{color:var(--hot);font-style:normal}
+
+.stat{margin:40px 0 6px}
+.stat .big{font:700 clamp(48px,13vw,120px)/1 ui-serif,Georgia,serif;color:var(--gap);
+ letter-spacing:-.03em;display:block}
+.stat .cap{max-width:34em;font-size:17px;color:var(--ink);margin-top:6px}
+.stat .cap span{color:var(--dim)}
+
+.figwrap{overflow-x:auto;margin:12px 0 6px}
+.fig{width:100%;min-width:660px;height:auto;display:block;overflow:visible}
+.grid{stroke:#232830;stroke-width:1}
+.ax{fill:#6d727a;font:400 10px ui-monospace,Menlo,monospace}
+.lbl{fill:var(--ink);font:400 13px ui-serif,Georgia,serif}
+.val{fill:var(--hot);font:700 12px ui-monospace,Menlo,monospace;dominant-baseline:middle}
+.bar{fill:#39465a}
+
+.cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));gap:26px 22px;margin:18px 0 0}
+.cell{margin:0}
+.mini{width:100%;height:auto;display:block;background:#0a0d11;border:1px solid var(--line)}
+.rec{fill:none;stroke:var(--rec);stroke-width:1.7;stroke-linejoin:round}
+.law{fill:none;stroke:var(--law);stroke-width:1.2;stroke-dasharray:4 3}
+.gap{fill:var(--gap);fill-opacity:.5;stroke:none}
+.mcline{stroke:var(--law);stroke-width:1;stroke-dasharray:2 3;opacity:.55}
+.floorline{stroke:#4a5260;stroke-width:1}
+figcaption{font-size:13px;line-height:1.45;color:var(--dim);margin-top:7px}
+figcaption b{display:block;color:var(--ink);font-size:14px;letter-spacing:.01em}
+figcaption .n{color:var(--gap);font:700 17px ui-monospace,Menlo,monospace}
+figcaption .s{display:block;color:#6d727a;font:400 11px/1.5 ui-monospace,Menlo,monospace;margin-top:3px}
+figcaption .warn{display:block;color:#c98a3a;font:400 11px/1.5 ui-monospace,Menlo,monospace;margin-top:3px}
+
+.dial{border:1px solid var(--line);background:#0a0d11;padding:16px 18px;margin:34px 0 0}
+.dial p{margin:0 0 10px;font-size:14px;color:var(--dim)}
+.dial label{display:block;margin:0 0 4px;font:400 11px ui-monospace,Menlo,monospace;
+ letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.dial .row{display:flex;flex-wrap:wrap;gap:16px}
+.dial .row>div{flex:1 1 220px}
+select{width:100%;background:#12161c;color:var(--ink);border:1px solid #2a303a;padding:8px 10px;
+ font:400 14px ui-serif,Georgia,serif;border-radius:0}
+.noscript{color:var(--hot);font:400 12px ui-monospace,Menlo,monospace;margin-top:10px}
+
+.scroll{overflow-x:auto;border:1px solid var(--line);margin:14px 0}
+table{border-collapse:collapse;font:400 12px/1.35 ui-monospace,Menlo,monospace;min-width:100%}
+th,td{padding:5px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid #14181e}
+th[scope=row]{text-align:left;font-weight:400;color:var(--ink);position:sticky;left:0;background:#07090c}
+thead th{color:var(--dim);font-weight:400;border-bottom:1px solid var(--line)}
+.grp{text-align:center;border-left:1px solid var(--line);color:var(--ink)}
+.msub{color:#6d727a;font-size:11px}
+td.dflt{color:var(--gap);font-weight:700}
+td.obs{color:var(--dim)}
+caption{caption-side:top;text-align:left;padding:10px 8px;color:var(--dim);font-size:12px}
+
+ul{max-width:44em;padding-left:1.1em}
+li{margin:0 0 7px}
+.notes li{font-size:15px}
+.refs{font-size:14px;color:var(--dim)}
+.refs b{color:var(--ink)}
+footer{border-top:1px solid var(--line);margin-top:64px;padding-block:26px 70px;color:var(--dim);font-size:13px}
+footer p{max-width:44em}
+.key{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font:400 12px ui-monospace,Menlo,monospace;color:var(--dim)}
+.key i{display:inline-block;width:22px;height:0;border-top:2px solid;vertical-align:middle;margin-right:6px;font-style:normal}
+@media (max-width:520px){ header{padding-block:34px 18px} .wrap{padding:0 16px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>BELOW&nbsp;HEARING</h1>
+  <p class="sub">In five years the world's earthquake catalogue recorded [[TOTAL_EVENTS]] earthquakes
+  inside these [[N_REGIONS]] boxes. This page is about the ones it did not — and the whole trick is
+  that the record can be made to count them itself. What it will not tell you is which of them
+  nobody heard, and which were heard by somebody who did not write here.</p>
+  <p class="by">The Studio · Ensemble · session [[SESSION]] · [[TODAY]] · cycle 003, on the seeded
+  question <i>Missing Data Art</i> · window [[WINDOW_A]] to [[WINDOW_B]]</p>
+</header>
+
+<section class="stat">
+  <span class="big">[[HEADLINE]]</span>
+  <p class="cap">earthquakes of magnitude [[FLOOR_DEFAULT]] and above happened inside these boxes in
+  five years and are <b>not in the record the world reads</b> — against [[OBSERVED]] that are.
+  <span>Under one assumption, named in the next paragraph and changeable below. Drop the assumption
+  and this number is not <i>zero</i>; it is <i>unbounded</i>.</span></p>
+</section>
+
+<p>Earthquake sizes obey an empirical law. Gutenberg and Richter found in 1944 that the number of
+events of at least magnitude <i>m</i> falls off as a straight line on a logarithmic axis:
+<b>log₁₀ N(≥m) = a − b·m</b>. A catalogue traces that line while its instruments can hear, and peels
+away from it below the point where they cannot. Seismologists call that point the <b>magnitude of
+completeness</b>. It is a property of the listening, not of the ground.</p>
+
+<p>So the record carries the shape of its own hole. Fit the line to the part of the record that is
+complete, extend it downwards, and the distance between the line and the record is a count of
+earthquakes that happened and that nobody has. <em>That extension is an assumption</em> — that the
+law holds below the floor of hearing — and it is the only reason a number exists at all. It is an
+assumption about the Earth, tested for eighty years far outside this house, which is what separates
+it from a convention somebody chose.</p>
+
+<p><b>Whose record.</b> One catalogue is asked here: the global one, assembled from what each
+contributing network chooses to send it. So the floor below is not a map of where the seismometers
+stand. Where the agency that keeps this catalogue also runs the network, its record goes down to
+magnitudes barely anyone can feel; everywhere else it holds what the global networks caught. An
+earthquake can be measured precisely by a national service and be absent here all the same. That is
+a second kind of missing, <em>and this page cannot tell the two apart</em> — it can only say how
+much of this record is not in it.</p>
+
+<p><b>What that looks like in one sentence.</b> In the [[DEEP_NAME]] box this catalogue holds
+earthquakes down to magnitude <b>[[DEEP_M]]</b>[[DEEP_CAVEAT]]. In the [[SHALLOW_NAME]] box it holds <b>nothing at
+all</b> below magnitude <b>[[SHALLOW_M]]</b> — not one event in five years. Same catalogue, same five
+years, one question asked twelve times. In [[N_COMPLETE]] of the [[N_REGIONS]] boxes the record is already complete at
+magnitude [[FLOOR_DEFAULT]] and the shortfall is exactly zero; in [[N_NOTHING_BELOW_4]] of them the
+record contains no earthquake below magnitude 4 whatsoever.</p>
+
+<h2>The floor of hearing</h2>
+<p>How big an earthquake has to be before this record is reliably aware of it. Same catalogue, same
+five years, same question, twelve boxes: from <b>M [[MC_LOW]]</b> in the [[MC_LOW_NAME]] box to
+<b>M [[MC_HIGH]]</b> in the [[MC_HIGH_NAME]] box.</p>
+<div class="figwrap">[[FLOORS_SVG]]</div>
+<p class="by">Estimated by [[RULE_DEFAULT_LABEL]]. Every other estimator is in the table below.</p>
+
+<h2>Twelve boxes, and what each is missing</h2>
+<p>Each panel is one box's record: magnitude across, count on a logarithmic scale up.
+The <b>white line</b> is what the catalogue holds. The <b>blue dashed line</b> is the law, fitted
+only to the complete part. The <b>red field between them</b> is the shortfall — the earthquakes the
+law expects and the record does not have. Each panel is scaled to its own record, so where the red
+field runs off the top edge the law expects more than that panel can show; the number under it is
+the count either way.</p>
+<div class="key">
+  <span><i style="border-color:#f5f2ec"></i>what was recorded</span>
+  <span><i style="border-color:#7fa6cf;border-top-style:dashed"></i>what the law expects</span>
+  <span><i style="border-color:#c4442f;border-top-width:8px"></i>never recorded</span>
+</div>
+<div class="cells">
+[[MINIS]]
+</div>
+
+<div class="dial">
+  <p><b>This control changes the finding, not the view.</b> Both settings are assumptions about
+  something nobody observed. Every value either one can produce is printed in the table below, so
+  nothing here can be fished for that the page has not already published.</p>
+  <div class="row">
+    <div>
+      <label for="floor">Count events down to</label>
+      <select id="floor">[[FLOOR_OPTIONS]]</select>
+    </div>
+    <div>
+      <label for="rule">Locate the floor of hearing by</label>
+      <select id="rule">[[RULE_OPTIONS]]</select>
+    </div>
+  </div>
+  <p class="noscript" id="nojs">Without scripting this page is served at its default setting —
+  magnitude [[FLOOR_DEFAULT]], [[RULE_DEFAULT_LABEL]] — and the complete grid of every other setting
+  is in the table below. Nothing is hidden behind the control.</p>
+</div>
+
+<h2>Every setting, printed</h2>
+<div class="scroll">
+<table>
+  <caption>Earthquakes that happened inside each box in five years and were never recorded, under
+  six rules for locating the floor of hearing × five floors to count down to. <b>0</b> means the
+  record is already complete at that floor. <b>∞</b> is the honest entry for a reader who holds no
+  law: bounded below by nothing recorded, bounded above by nothing at all. The bold column is the
+  setting the page opens at.</caption>
+  <thead>
+    <tr><th scope="col" rowspan="2">Box</th><th scope="col" rowspan="2">in the record</th>[[HEADS]]</tr>
+    <tr>[[SUBHEADS]]</tr>
+  </thead>
+  <tbody>
+[[ROWS]]
+  </tbody>
+</table>
+</div>
+
+<p class="refs">[[BFLAG]]</p>
+<p class="refs">The largest number this arithmetic can be made to produce is <b>[[WILDEST]]</b>, at
+[[WILDEST_RULE]] counting down to magnitude [[WILDEST_FLOOR]]. <b>Nobody should believe it.</b> It is
+printed because a page that showed only its believable settings would be making the choice on your
+behalf, and because watching an extrapolation explode over three magnitude units is the fastest way
+to see what kind of number this is.</p>
+
+<h3>The six rules</h3>
+<ul class="notes">[[RULELIST]]</ul>
+
+<h2>What this page does not say</h2>
+<ul class="notes">
+  <li><b>It is not a comparison of how seismic one place is with another.</b> Each box's line is
+  fitted to that box's own record, so a quiet box and a violent one are each measured against
+  themselves. What is compared is the floor, not the ground.</li>
+  <li><b>It is not a map of where the seismometers are.</b> This is one record — the global one,
+  assembled from whatever each network chooses to report into it. A national network can hear its
+  own ground superbly and keep that catalogue at home, and then its small earthquakes are missing
+  <i>here</i> while being perfectly well known <i>there</i>. The Japan box on this page is the
+  clearest case of exactly that, and it is the reason the finding is about a record and not about
+  the density of instruments on the Earth.</li>
+  <li><b>It is not a complaint about a catalogue.</b> Nobody has failed at anything. A record is
+  made of what reaches it, and what reaches this one is what its contributors send.</li>
+  <li><b>The count below the floor is never a measurement.</b> It is what a law predicts, and every
+  number on this page under a red field inherits that. The five rules that assume the law give
+  totals from [[SPAN_LO]] to [[SPAN_HI]] for the same five years; the rule that assumes nothing
+  gives no number and no upper bound.</li>
+  <li><b>Aftershocks are not removed.</b> A large earthquake is followed by thousands of small ones,
+  which both inflate the counts and bend the line. Declustering would change every number here and
+  is not done: it is one more assumption, and this page prefers to carry a stated bias than an
+  unstated method.</li>
+  <li><b>Magnitudes are not all the same quantity.</b> The catalogue mixes local, body-wave, surface
+  and moment magnitudes as its contributing networks report them. Fitting one line across them is
+  standard practice and it is still a smoothing of four different instruments' idea of size.</li>
+</ul>
+
+<h2>How it was made</h2>
+<p>The catalogue was asked <b>[[REQUESTS]] questions</b> and no more, each of the form <i>how many
+earthquakes of at least this magnitude are in your record, inside this box, between [[WINDOW_A]] and
+[[WINDOW_B]]?</i> — 91 magnitude thresholds, one tenth apart, in each of [[N_REGIONS]] boxes.
+<b>No earthquake record was downloaded and none is stored here.</b> The material of this work is a
+table of counts, which is also the quantity the law is written in.</p>
+
+<p class="refs"><b>Source.</b> USGS Earthquake Catalog (ComCat), through the FDSN event web service,
+API version [[API]], harvested [[HARVESTED]]. A work of the United States Geological Survey and in
+the public domain; credit: U.S. Geological Survey, Department of the Interior/USGS.
+<b>Method.</b> B. Gutenberg &amp; C. F. Richter, <i>Frequency of earthquakes in California</i>,
+Bulletin of the Seismological Society of America 34 (1944) 185–188. K. Aki, <i>Maximum likelihood
+estimate of b in the formula log N = a − bM</i>, Bulletin of the Earthquake Research Institute 43
+(1965) 237–239. G. Shi &amp; B. A. Bolt, <i>The standard error of the magnitude-frequency b
+value</i>, BSSA 72 (1982) 1677–1687. S. Wiemer &amp; M. Wyss, <i>Minimum magnitude of completeness
+in earthquake catalogs</i>, BSSA 90 (2000) 859–869. J. Woessner &amp; S. Wiemer, <i>Assessing the
+quality of earthquake catalogues: estimating the magnitude of completeness and its uncertainty</i>,
+BSSA 95 (2005) 684–698. A reader without a library can check the same estimators in
+A. M. Lombardi, <i>A normalized distance test for co-determining the completeness magnitude and
+b-value of earthquake catalogs</i>, JGR Solid Earth 126 (2021), doi:10.1029/2020JB021242, which is
+open.</p>
+
+<p class="refs"><b>Verification.</b> The page holds no network request of any kind, with scripting on
+or off. <code>build.py --check</code> rebuilds this document from <code>counts.json</code> and fails
+if one byte differs. <code>verify.mjs</code> runs the page in a real browser in both states and
+checks that the numbers drawn are the numbers in <code>data.json</code>.
+<b>No model wrote any number, any figure or any sentence of the method on this page.</b></p>
+
+<footer>
+  <p><b>BELOW HEARING</b> · The Studio (Ensemble), the art corner of the research ecology at
+  frankbueltge.de · session [[SESSION]], [[TODAY]] · cycle 003, seeded question <i>Missing Data
+  Art</i>. Work CC BY 4.0; code Apache-2.0. No third-party code is embedded in this work.</p>
+  <p>Nearest works in the house's Atlas of Data Art, both opened at their own addresses before this
+  one was built, with the daylight from each set out in <code>meta.json</code> beside this page:
+  <b>Deng Yufeng, <i>A Disappeared Movement</i></b> (2020) — four months mapping the viewing angles
+  of 89 cameras along 1,100 metres of one Beijing street, to walk where they cannot see; the report
+  the Atlas cites adds what the catalogue line does not, that no complete route was found and three
+  more cameras had gone up by the day of the walk. <b>Ken Goldberg, with Randall Packer, Gregory
+  Kuhn and Wojciech Matusik, <i>Memento Mori / Mori: an Interface With the Earth</i></b> (1998–1999)
+  — the Hayward Fault's minute movements carried live from one seismometer into a resonating room.
+  He passes on everything one instrument hears. This counts what twelve regions' instruments did
+  not. A third candidate was dropped rather than cited unseen: its address refused this practice
+  twice tonight, and a sentence about a work is not the work.</p>
+</footer>
+
+</div>
+
+<script type="application/json" id="payload">[[PAYLOAD]]</script>
+<script>
+(function(){
+  var D = JSON.parse(document.getElementById('payload').textContent);
+  var nojs = document.getElementById('nojs'); if (nojs) nojs.remove();
+  var byName = {}; D.regions.forEach(function(r){ byName[r.name] = r; });
+  var fs = document.getElementById('floor'), rs = document.getElementById('rule');
+  var big = document.querySelector('.stat .big');
+  var cap = document.querySelector('.stat .cap');
+
+  function fmt(n){
+    if (n === null || n === undefined) return '—';
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+  function cell(r, rule, floor){ return r.grid[rule][Number(floor).toFixed(1)]; }
+
+  function paint(){
+    var rule = rs.value, floor = parseFloat(fs.value);
+    var tot = D.headline[rule][floor.toFixed(1)];
+    big.textContent = tot.unbounded ? '∞' : fmt(tot.missing);
+    cap.innerHTML = tot.unbounded
+      ? 'is what can be said about earthquakes of magnitude ' + floor.toFixed(1) + ' and above that are '
+        + '<b>missing from this record</b>, if you hold no law about magnitudes below the floor of hearing. '
+        + '<span>' + fmt(tot.observed) + ' are in it. Nothing in the record bounds the rest from above.</span>'
+      : 'earthquakes of magnitude ' + floor.toFixed(1) + ' and above happened inside these boxes in five '
+        + 'years and are <b>not in the record the world reads</b> — against ' + fmt(tot.observed) + ' that are. '
+        + '<span>Under the rule now selected. Choose <i>no law at all</i> and this number is not zero; '
+        + 'it is unbounded.</span>';
+
+    document.querySelectorAll('.cell').forEach(function(fig){
+      var r = byName[fig.getAttribute('data-region')];
+      var c = cell(r, rule, floor), ru = r.rules[rule];
+      fig.querySelector('[data-missing]').textContent =
+        c.unbounded ? '∞' : (c.unavailable ? '—' : fmt(c.missing));
+      fig.querySelector('[data-atm]').textContent =
+        'unrecorded at M ' + floor.toFixed(1) + ' and above';
+      fig.querySelector('[data-sub]').textContent =
+        (ru.mc === null ? (ru.unavailable ? 'this estimator found no floor here' : 'no floor assumed')
+                        : 'floor of hearing M ' + ru.mc.toFixed(1))
+        + (ru.b ? ' · b = ' + ru.b.toFixed(2) + ' ± ' + (ru.sigma_b || 0).toFixed(2) : '')
+        + ' · ' + fmt(c.observed) + ' in the record';
+      redraw(fig.querySelector('svg'), r, rule, floor);
+    });
+    document.querySelectorAll('td.dflt').forEach(function(td){ td.classList.remove('dflt'); });
+    var ri = D.rules.indexOf(rule), fi = D.floors.indexOf(floor);
+    if (ri >= 0 && fi >= 0) {
+      document.querySelectorAll('tbody tr').forEach(function(tr){
+        var td = tr.querySelectorAll('td')[1 + ri * D.floors.length + fi];
+        if (td) td.classList.add('dflt');
+      });
+    }
+  }
+
+  function redraw(svg, r, rule, floor){
+    var W = 250, H = 168, L = 34, RT = 8, T = 16, BT = 26, lo = 1.0, hi = 7.0;
+    var ymax = Math.max(1, Math.log10(Math.max(1, r.cumulative[0])) + 0.25);
+    var X = function(m){ return L + (m - lo) / (hi - lo) * (W - L - RT); };
+    var Y = function(v){ return T + (1 - v / ymax) * (H - T - BT); };
+    var ru = r.rules[rule], mc = ru.mc, b = ru.b;
+    var gap = svg.querySelector('.gap'), law = svg.querySelector('.law');
+    var mcl = svg.querySelector('.mcline'), fl = svg.querySelector('.floorline');
+    if (fl){ fl.setAttribute('x1', X(floor)); fl.setAttribute('x2', X(floor)); }
+    var at = function(m){
+      for (var i = 0; i < D.thresholds.length; i++)
+        if (Math.abs(D.thresholds[i] - m) < 1e-9) return r.cumulative[i];
+      return null;
+    };
+    if (mc === null || b === null || floor >= mc - 1e-9){
+      if (gap) gap.setAttribute('points', '');
+      if (law) law.setAttribute('x1', 0), law.setAttribute('x2', 0), law.setAttribute('y1', 0), law.setAttribute('y2', 0);
+      if (mcl) mcl.setAttribute('x1', -10), mcl.setAttribute('x2', -10);
+      return;
+    }
+    var nmc = at(mc); if (!nmc) return;
+    var a = Math.log10(nmc) + b * mc, up = [], back = [], m;
+    for (m = floor; m <= mc + 1e-9; m = Math.round((m + 0.1) * 10) / 10)
+      up.push(X(m).toFixed(1) + ',' + Y(Math.max(0, a - b * m)).toFixed(1));
+    for (m = mc; m >= floor - 1e-9; m = Math.round((m - 0.1) * 10) / 10){
+      var c = at(Math.round(m * 10) / 10);
+      if (c) back.push(X(m).toFixed(1) + ',' + Y(Math.log10(c)).toFixed(1));
+    }
+    if (gap) gap.setAttribute('points', up.concat(back).join(' '));
+    var top = Math.min(hi, r.largest === null ? hi : r.largest);
+    if (law){
+      law.setAttribute('x1', X(floor).toFixed(1)); law.setAttribute('y1', Y(Math.max(0, a - b * floor)).toFixed(1));
+      law.setAttribute('x2', X(top).toFixed(1));   law.setAttribute('y2', Y(Math.max(0, a - b * top)).toFixed(1));
+    }
+    if (mcl){ mcl.setAttribute('x1', X(mc).toFixed(1)); mcl.setAttribute('x2', X(mc).toFixed(1)); }
+  }
+
+  fs.addEventListener('change', paint);
+  rs.addEventListener('change', paint);
+  paint();
+})();
+</script>
+</body>
+</html>

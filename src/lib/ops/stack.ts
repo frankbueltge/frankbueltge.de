@@ -15,6 +15,7 @@
 // on the invisible `.ops-track` paths), so the moving part never re-implements the maths below
 // and cannot drift from the drawn line.
 
+import { curveMonotoneX, line as d3Line } from 'd3'
 import type { PulseSnapshot, PulseWeek } from '@/lib/pulse/render'
 
 // ---------------------------------------------------------------- geometry (mock 3a, verbatim)
@@ -74,6 +75,8 @@ export interface StackLine {
   base: number
   /** the polyline, already tapered, smoothed and peak-normalised to AMP */
   points: { x: number; y: number }[]
+  /** the half-week's bins as the archive holds them, unshaped — what the hover readout states */
+  raw: number[]
 }
 
 /**
@@ -98,12 +101,12 @@ export function buildStackLines(snapshot: PulseSnapshot): StackLine[] {
 
   // Shape first, place second: the step between baselines depends on how many lines survived the
   // clipping above, so nothing can be positioned until they are all known.
-  const shapedLines: { isoWeek: number; half: 0 | 1; values: number[] }[] = []
+  const shapedLines: { isoWeek: number; half: 0 | 1; values: number[]; raw: number[] }[] = []
   weeks.forEach((week, w) => {
     halves(week, w === weeks.length - 1).forEach((raw, half) => {
       // Two bins cannot carry a shape; below that the taper collapses the line to nothing anyway.
       if (raw.length < 3) return
-      shapedLines.push({ isoWeek: week.iso_week, half: half as 0 | 1, values: taper(smoothOnce(raw)) })
+      shapedLines.push({ isoWeek: week.iso_week, half: half as 0 | 1, values: taper(smoothOnce(raw)), raw })
     })
   })
 
@@ -117,6 +120,7 @@ export function buildStackLines(snapshot: PulseSnapshot): StackLine[] {
       half: line.half,
       base,
       points: line.values.map((v, j) => ({ x: (j * W) / last, y: base - (v / peak) * AMP })),
+      raw: line.raw,
     })
   })
   return lines
@@ -124,8 +128,29 @@ export function buildStackLines(snapshot: PulseSnapshot): StackLine[] {
 
 const fmt = (n: number): string => n.toFixed(1)
 
-const polyline = (pts: { x: number; y: number }[]): string =>
-  pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${fmt(p.x)} ${fmt(p.y)}`).join('')
+/** The ridge as a monotone cubic through its points (2026-09-01, on d3). Straight segments
+ *  between 2-hour bins drew a ridge with 41 visible corners; the monotone curve passes through
+ *  every point, never overshoots (a zero bin stays on the baseline, a peak keeps its height) and
+ *  reads as the line the data describes rather than as the sampling that recorded it. The dots
+ *  walk this same path, so the moving marks follow the curve too. */
+const ridgeCurve = d3Line<{ x: number; y: number }>()
+  .x((p) => p.x)
+  .y((p) => p.y)
+  .curve(curveMonotoneX)
+  .digits(1)
+const polyline = (pts: { x: number; y: number }[]): string => ridgeCurve(pts) ?? ''
+
+export interface StackOptions {
+  /**
+   * Draw each wandering dot as an ellipse with these radii (in viewBox units) instead of the
+   * default circle. The stack is drawn with preserveAspectRatio="none", so a circle is only
+   * round where the panel happens to have the viewBox's own proportions; a surface that
+   * stretches the figure states the radii that come out round at ITS size (the entrance of
+   * 2026-10-11: 1312 × 240 px for a 1000 × 220 box, hence rx 2, ry 2.4). Left out, the markup
+   * is byte for byte what it was — the board on /now keeps its circles.
+   */
+  dot?: { rx: number; ry: number }
+}
 
 /**
  * The stack as SVG markup. Two paths per line:
@@ -140,18 +165,30 @@ const polyline = (pts: { x: number; y: number }[]): string =>
  * after the ridge it walks, so every nearer ridge occludes it exactly as it occludes the line
  * itself. Occlusion is the figure's one law, and the dots live under it too.
  */
-export function buildStackSvg(snapshot: PulseSnapshot): string {
+export function buildStackSvg(snapshot: PulseSnapshot, opts: StackOptions = {}): string {
   const lines = buildStackLines(snapshot)
-  const dots = buildDots(lines)
+  const dots = buildDots(lines, opts.dot)
   const parts: string[] = []
+  // where in its week a half begins, in bins — the readout turns (offset + bin) into a weekday
+  // and an hour, so it needs the same split buildStackLines used
+  const halfLength = Math.floor(snapshot.bins_per_week / 2)
 
   lines.forEach((line, i) => {
     const open = polyline(line.points)
     const closed = `${open}L${fmt(line.points.at(-1)!.x)} ${fmt(line.base)}L${fmt(line.points[0].x)} ${fmt(line.base)}Z`
-    parts.push(`<path class="ops-ridge" d="${closed}"/>`)
+    // The ridge carries its own facts as data: which week and half it is, and the unshaped bins
+    // it was drawn from. The hover readout reads THESE, so what it states is the archive's number,
+    // not the tapered height the eye sees.
+    parts.push(
+      `<path class="ops-ridge" data-line="${i}" data-week="${line.isoWeek}" data-half="${line.half}" ` +
+        `data-offset="${line.half * halfLength}" data-values="${line.raw.join(',')}" d="${closed}"/>`,
+    )
     parts.push(`<path class="ops-track" id="ops-track-${i}" d="${open}"/>`)
     parts.push(...dots.filter((d) => d.track === i).map((d) => d.svg))
   })
+  // The hairline the pointer drags across the stack — painted last so no ridge covers it, hidden
+  // by the stylesheet until the script has a position to give it.
+  parts.push(`<line class="ops-hair" data-ops-hair x1="0" x2="0" y1="0" y2="${H}"/>`)
 
   const label =
     `The commit pulse of all ${snapshot.repos.length} repositories behind this site, ` +
@@ -181,7 +218,7 @@ export function buildStackSvg(snapshot: PulseSnapshot): string {
  * this function's call: buildStackSvg interleaves each dot behind the ridges in front of its
  * line, so the stack's occlusion applies to the dots too.
  */
-function buildDots(lines: readonly StackLine[]): { track: number; svg: string }[] {
+function buildDots(lines: readonly StackLine[], shape?: StackOptions['dot']): { track: number; svg: string }[] {
   if (lines.length === 0) return []
   const cfg = [
     { at: 0.95, speed: 0.021, phase: 0.1, opacity: 0.95 },
@@ -196,11 +233,13 @@ function buildDots(lines: readonly StackLine[]): { track: number; svg: string }[
     // the dots stay spread however many lines the snapshot produced.
     const track = Math.min(lines.length - 1, Math.round(d.at * (lines.length - 1)))
     const p = pointAt(lines[track], d.phase)
+    const mark = shape ? `ellipse` : `circle`
+    const radii = shape ? `rx="${shape.rx}" ry="${shape.ry}"` : `r="2.4"`
     return {
       track,
       svg:
-        `<circle class="ops-dot" id="ops-dot-${i}" data-track="${track}" data-speed="${d.speed}" ` +
-        `data-phase="${d.phase}" r="2.4" opacity="${d.opacity}" cx="${fmt(p.x)}" cy="${fmt(p.y)}"/>`,
+        `<${mark} class="ops-dot" id="ops-dot-${i}" data-track="${track}" data-speed="${d.speed}" ` +
+        `data-phase="${d.phase}" ${radii} opacity="${d.opacity}" cx="${fmt(p.x)}" cy="${fmt(p.y)}"/>`,
     }
   })
 }

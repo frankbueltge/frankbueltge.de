@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orchard</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #efe9dc; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800;
+  const cv = document.getElementById('c');
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  const hours = window.COUNTS.hours;
+  const MAXH = hours.reduce((m, r) => r ? Math.max(m, r[0]) : m, 0);
+
+  // deterministic jitter so the planting looks hand-set but stays the same every time
+  let seed = 20250101;
+  const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+
+  // paper
+  g.fillStyle = '#efe9dc';
+  g.fillRect(0, 0, W, H);
+  // faint paper grain
+  for (let i = 0; i < 9000; i++) {
+    g.fillStyle = rnd() < 0.5 ? 'rgba(120,100,70,0.035)' : 'rgba(255,255,255,0.05)';
+    g.fillRect(rnd() * W, rnd() * H, 1, 1);
+  }
+
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const mdays = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+  const left = 96, right = 1074, top = 92, bottom = 772;
+  const colW = (right - left) / 31;
+  const rowH = (bottom - top) / 12;
+  const crown = rowH * 0.70;   // longest possible branch
+
+  // colour of a fruit by direction share: northbound -> warm ochre, southbound -> deep plum-red
+  function fruitColor(nShare, a) {
+    const n = [214, 150, 48], s = [150, 36, 58];
+    const t = Math.max(0, Math.min(1, nShare));
+    const c = s.map((v, i) => Math.round(v + (n[i] - v) * t));
+    return `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+  }
+
+  // ground lines for each row
+  g.lineCap = 'round';
+  for (let m = 0; m < 12; m++) {
+    const gy = top + rowH * (m + 1) - 6;
+    g.strokeStyle = 'rgba(92,78,54,0.22)';
+    g.lineWidth = 0.8;
+    g.beginPath();
+    g.moveTo(left - 6, gy + 0.5);
+    g.lineTo(left + colW * mdays[m] + 2, gy + 0.5);
+    g.stroke();
+    g.fillStyle = 'rgba(70,58,40,0.62)';
+    g.font = 'italic 12px Georgia, "Times New Roman", serif';
+    g.textAlign = 'right';
+    g.textBaseline = 'alphabetic';
+    g.fillText(months[m], left - 14, gy - 2);
+  }
+
+  let idx = 0;
+  const jan1 = 3; // 2025-01-01 is a Wednesday (0 = Sunday)
+  let dayOfYear = 0;
+  for (let m = 0; m < 12; m++) {
+    for (let d = 0; d < mdays[m]; d++, dayOfYear++) {
+      const day = hours.slice(idx, idx + 24); idx += 24;
+      const cx = left + colW * (d + 0.5) + (rnd() - 0.5) * 2.4;
+      const gy = top + rowH * (m + 1) - 6;
+      const weekday = (jan1 + dayOfYear) % 7;
+      let total = 0;
+      day.forEach(r => { if (r) total += r[0]; });
+
+      // trunk: thickness from the day's total
+      const trunkH = rowH * 0.16;
+      const tx = cx, ty = gy - trunkH;
+      const tw = 0.7 + Math.sqrt(total / 5800) * 2.6;
+      g.strokeStyle = '#5b4632';
+      g.lineWidth = tw;
+      g.beginPath();
+      g.moveTo(cx, gy);
+      g.quadraticCurveTo(cx + (rnd() - 0.5) * 1.5, gy - trunkH * 0.5, tx, ty);
+      g.stroke();
+
+      // branches: one per hour, fanned from lower-left (midnight) through upright (noon) to lower-right (23h)
+      const branches = [];
+      for (let h = 0; h < 24; h++) {
+        const ang = (-150 + (h + 0.5) * (300 / 24)) * Math.PI / 180; // 0 = straight up
+        const r = day[h];
+        if (r === null || r === undefined) { branches.push({ h, ang, missing: true }); continue; }
+        const L = 2 + crown * Math.sqrt(r[0] / MAXH);
+        branches.push({ h, ang, L, r });
+      }
+
+      // branches (wood)
+      for (const b of branches) {
+        const sx = Math.sin(b.ang), sy = -Math.cos(b.ang);
+        if (b.missing) {
+          // the hour that never happened: a sawn-off stub
+          g.strokeStyle = 'rgba(91,70,50,0.9)';
+          g.lineWidth = 0.9;
+          g.beginPath();
+          g.moveTo(tx, ty);
+          g.lineTo(tx + sx * 3, ty + sy * 3);
+          g.stroke();
+          continue;
+        }
+        const ex = tx + sx * b.L, ey = ty + sy * b.L;
+        // slight upward bow, as if branches reach for light
+        const mx = tx + sx * b.L * 0.5, my = ty + sy * b.L * 0.5 - b.L * 0.12 * Math.abs(sx);
+        g.strokeStyle = 'rgba(78,92,58,' + (0.35 + 0.45 * Math.min(1, b.L / crown)) + ')';
+        g.lineWidth = 0.35 + 1.1 * Math.min(1, b.L / crown);
+        g.beginPath();
+        g.moveTo(tx, ty);
+        g.quadraticCurveTo(mx, my, ex, ey);
+        g.stroke();
+        b.ex = ex; b.ey = ey;
+      }
+
+      // leaves: soft green dabs along the crown
+      for (const b of branches) {
+        if (b.missing || b.r[0] < 4) continue;
+        const k = Math.min(1, b.L / crown);
+        g.fillStyle = 'rgba(96,124,70,' + (0.10 + 0.22 * k) + ')';
+        g.beginPath();
+        g.arc(b.ex, b.ey, 1 + 2.4 * k, 0, Math.PI * 2);
+        g.fill();
+      }
+
+      // fruit: the busy hours ripen
+      for (const b of branches) {
+        if (b.missing) continue;
+        const c = b.r[0];
+        if (c < 90) continue;
+        const nShare = c > 0 ? b.r[1] / c : 0.5;
+        const rad = 0.6 + 2.6 * Math.sqrt((c - 90) / (MAXH - 90));
+        g.fillStyle = fruitColor(nShare, 0.92);
+        g.beginPath();
+        g.arc(b.ex, b.ey, rad, 0, Math.PI * 2);
+        g.fill();
+        g.fillStyle = 'rgba(255,248,230,0.55)';
+        g.beginPath();
+        g.arc(b.ex - rad * 0.35, b.ey - rad * 0.35, rad * 0.3, 0, Math.PI * 2);
+        g.fill();
+      }
+
+      // Sundays get a small mark in the soil, so the weeks can be counted
+      if (weekday === 0) {
+        g.fillStyle = 'rgba(92,78,54,0.45)';
+        g.beginPath();
+        g.arc(cx, gy + 4, 1, 0, Math.PI * 2);
+        g.fill();
+      }
+    }
+  }
+
+  // title + quiet key
+  g.fillStyle = '#3a2f22';
+  g.textAlign = 'left';
+  g.textBaseline = 'alphabetic';
+  g.font = '34px Georgia, "Times New Roman", serif';
+  g.fillText('Orchard', left - 76, 52);
+  g.font = 'italic 13px Georgia, "Times New Roman", serif';
+  g.fillStyle = 'rgba(58,47,34,0.72)';
+  g.fillText('Fremont Bridge, Seattle — every day of 2025 planted as a tree, every hour a branch', left + 60, 52);
+
+  // tiny key: one fan, labelled
+  const kx = 1010, ky = 62;
+  g.strokeStyle = 'rgba(78,92,58,0.6)';
+  g.lineWidth = 0.7;
+  [0, 6, 12, 18, 23].forEach(h => {
+    const a = (-150 + (h + 0.5) * 12.5) * Math.PI / 180;
+    g.beginPath(); g.moveTo(kx, ky); g.lineTo(kx + Math.sin(a) * 22, ky - Math.cos(a) * 22); g.stroke();
+  });
+  g.strokeStyle = '#5b4632'; g.lineWidth = 1.2;
+  g.beginPath(); g.moveTo(kx, ky); g.lineTo(kx, ky + 8); g.stroke();
+  g.font = '9px Georgia, serif';
+  g.fillStyle = 'rgba(58,47,34,0.7)';
+  g.textAlign = 'center';
+  g.fillText('noon', kx, ky - 26);
+  g.textAlign = 'right'; g.fillText('midnight', kx - 22, ky + 14);
+  g.textAlign = 'left'; g.fillText('11 pm', kx + 22, ky + 14);
+  // fruit key
+  g.textAlign = 'right';
+  g.fillStyle = fruitColor(1, 0.92); g.beginPath(); g.arc(kx - 70, ky - 14, 3, 0, 7); g.fill();
+  g.fillStyle = 'rgba(58,47,34,0.7)'; g.fillText('north', kx - 76, ky - 11);
+  g.fillStyle = fruitColor(0, 0.92); g.beginPath(); g.arc(kx - 70, ky - 2, 3, 0, 7); g.fill();
+  g.fillStyle = 'rgba(58,47,34,0.7)'; g.fillText('south', kx - 76, ky + 1);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-04",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-04T11:38:07Z",
+    "counts": {
+      "botwall": 33,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 263,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 264,
+    "excluded_unverifiable": 36,
+    "gone": 1,
+    "gone_ci95": [
+      0.0007,
+      0.0211
+    ],
+    "gone_rate": 0.0038,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0143
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-02",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "elliotlakestandard.ca",
+        "first_seen": "20261002230000",
+        "http_code": 404,
+        "title": "Boissoinneault wants to bring solutions to Ward 5 | Elliot Lake Standard",
+        "url": "https://www.elliotlakestandard.ca:443/news/bossoinneault-wants-to-bring-solutions-to-ward-5"
+      }
+    ],
+    "sample_drawn_at": "2026-10-03T10:47:30Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3485,
+      "replaced": 4197,
+      "trivial": 735,
+      "update": 203
+    },
+    "day": "2026-10-03",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "BJYM"
+        ],
+        "after": "Bhopal DB Mall Electrocution: BMC Engineer Suspended After Probe Finds Negligence In BJYM Leader's Death",
+        "before": "Bhopal DB Mall Electrocution: BMC Engineer Suspended After Probe Finds Negligence In BJP Youth Leader's Death",
+        "detected": "2026-10-03T18:03:52Z",
+        "domain": "freepressjournal.in",
+        "removed": [
+          "BJP",
+          "Youth"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.freepressjournal.in/bhopal/bhopal-db-mall-electrocution-bmc-engineer-suspended-after-probe-finds-negligence-in-bjp-youth-leaders-death",
+        "weight": 6,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "ShÃ²ck",
+          "Heâ"
+        ],
+        "after": "Ghanaians Left In ShÃ²ck As GES Deputy Director Reveals The Amount Heâ€™s Been Paid After 34 Years – Ghanamma.com",
+        "before": "Ghanaians Left In Shòck As GES Deputy Director Reveals The Amount He's Been Paid After 34 Years – Ghanamma.com",
+        "detected": "2026-10-03T20:48:17Z",
+        "domain": "ghanamma.com",
+        "removed": [
+          "Shòck",
+          "He"
+        ],
+        "similarity": 0.818,
+        "url": "https://www.ghanamma.com/2026/10/02/ghanaians-left-in-shock-as-ges-deputy-director-reveals-the-amount-hes-been-paid-after-34-years-6/",
+        "weight": 6,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Middleton",
+          "Kate"
+        ],
+        "after": "Kylie Kelce Admits She Did Not Know Calling Kate Middleton 'Princess Kate' Was Seen as Offensive Until Now",
+        "before": "Kylie Kelce Admits She Did Not Know Calling the Royal 'Princess Kate' Was Seen as Offensive Until Now",
+        "detected": "2026-10-03T06:33:41Z",
+        "domain": "ibtimes.co.uk",
+        "removed": [
+          "the",
+          "Royal"
+        ],
+        "similarity": 0.842,
+        "url": "https://www.ibtimes.co.uk/kylie-kelce-apologises-princess-kate-title-error-1823245",
+        "weight": 6,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 12927,
+      "PAGE_TEXTCHANGE": 99272,
+      "PAGE_TITLECHANGE": 37838,
+      "UNCHANGED_CONTENT": 638961
+    },
+    "title_changes_en": 8620,
+    "trace": [
+      {
+        "bytes_billed": 22020096,
+        "created": "1791113647813",
+        "job_id": "world_gdg_counts_20261003",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 197132288,
+        "created": "1791113652697",
+        "job_id": "world_gdg_titles_20261003",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-04T11:38:07Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-03.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

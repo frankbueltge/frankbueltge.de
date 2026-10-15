@@ -8,54 +8,70 @@
 // buttons, headed "Or right here · no mail client needed" — the right framing while the
 // buttons were the page and the form an afterthought. Now the page sits in the top nav as
 // the site's contact door, so the form comes first and the buttons follow as alternatives.
+//
+// Re-skin 2d (2026-09-02): the page wears the frame's recipe — kicker as .kicker, the head on
+// the display step, the form as a panel with the fields cut from src/lib/ui/field.ts (the same
+// recipe the shadcn Input/Textarea primitives wear), the send button on the primary recipe, the
+// other channels as outline buttons. The form's names, the honeypot, the Turnstile widget and
+// the script below are untouched: the wire to functions/api/post.js is exactly what it was.
 import { t } from '@/i18n/ui'
 import { SITE, type Locale } from '@/lib/site'
+import { buttonVariants } from '@/components/ui/button'
+import { fieldLabel, fieldVariants } from '@/lib/ui/field'
+import { cn } from '@/lib/ui/cn'
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
+
+const kicker = 'kicker'
+const panel = 'rounded-md border border-line bg-panel panel-raised'
+const input = cn(fieldVariants({ kind: 'input' }), 'mt-1.5')
+const textarea = cn(fieldVariants({ kind: 'textarea' }), 'mt-1.5')
+const primary = cn(buttonVariants({ variant: 'default' }))
+const channel = cn(buttonVariants({ variant: 'outline' }), 'text-fg')
 ---
 
 <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-6 py-20 sm:py-28">
-  <p class="font-mono text-xs uppercase tracking-[0.28em] text-accent-soft">{t(locale, 'contact.title')}</p>
-  <h1 class="mt-5 text-[clamp(40px,7vw,80px)] font-bold tracking-[-0.03em]">{t(locale, 'contact.title')}</h1>
-  <p class="mt-5 max-w-lg text-lg text-fg-muted">{t(locale, 'contact.body')}</p>
+  <p class={kicker}>{t(locale, 'contact.title')}</p>
+  <h1 class="mt-5 text-display font-bold">{t(locale, 'contact.title')}</h1>
+  <p class="mt-5 max-w-lg text-h3 font-normal text-fg-muted">{t(locale, 'contact.body')}</p>
 
-  <section class="mt-10" aria-label="Contact form">
-    <p class="max-w-[60ch] text-sm leading-relaxed text-fg-muted">
+  <section class={cn(panel, 'mt-10 p-5 sm:p-6')} aria-label="Contact form">
+    <p class="max-w-[60ch] text-small leading-relaxed text-fg-muted">
       Write right here — it lands in a private queue read by me. Nothing is published, nothing
       is fed to a model. Leave an email if you want an answer; without one your message is
       read all the same, it just can't be replied to.
     </p>
     <form id="contact-form" class="mt-6 space-y-4" novalidate>
       <div class="grid gap-4 sm:grid-cols-2">
-        <label class="block text-xs text-fg-muted">
-          <span class="font-mono uppercase tracking-[0.12em]">from</span>
-          <input name="fromMark" required maxlength="80" placeholder="your name" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+        <label class={fieldLabel}>
+          <span>from</span>
+          <input name="fromMark" required maxlength="80" placeholder="your name" class={input} />
         </label>
-        <label class="block text-xs text-fg-muted">
-          <span class="font-mono uppercase tracking-[0.12em]">email <span class="normal-case text-fg-faint">(optional, for a reply)</span></span>
-          <input name="contact" maxlength="200" type="email" placeholder="you@example.org" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+        <label class={fieldLabel}>
+          <span>email <span class="normal-case text-fg-faint">(optional, for a reply)</span></span>
+          <input name="contact" maxlength="200" type="email" placeholder="you@example.org" class={input} />
         </label>
       </div>
-      <label class="block text-xs text-fg-muted">
-        <span class="font-mono uppercase tracking-[0.12em]">message</span>
-        <textarea name="text" required minlength="10" maxlength="4000" rows="6" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm leading-relaxed text-fg"></textarea>
+      <label class={fieldLabel}>
+        <span>message</span>
+        <textarea name="text" required minlength="10" maxlength="4000" rows="6" class={textarea}></textarea>
       </label>
       {/* honeypot — invisible to people, filled by bots */}
       <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
       {turnstileSiteKey && <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="auto"></div>}
       <div class="flex items-center gap-4">
-        <button type="submit" class="rounded-[8px] border border-line bg-panel px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-fg transition-colors hover:border-fg-faint">send</button>
-        <p id="contact-status" class="text-xs text-fg-muted" aria-live="polite"></p>
+        <button type="submit" class={primary}>send</button>
+        <p id="contact-status" class="font-mono text-mono-sm text-fg-muted" aria-live="polite"></p>
       </div>
     </form>
   </section>
 
   <section class="mt-14 border-t border-line/60 pt-8" aria-label="Other channels">
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Prefer your own client?</b> · or another channel</p>
+    <p class={kicker}><b class="text-fg">Prefer your own client?</b> · or another channel</p>
     <div class="mt-5 flex flex-wrap gap-3">
-      <a href={`mailto:${SITE.email}`} class="rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-fg transition hover:-translate-y-0.5 hover:border-fg">{SITE.email} →</a>
-      <a href={SITE.social.linkedin} target="_blank" rel="noreferrer" class="rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-fg transition hover:-translate-y-0.5 hover:border-fg">LinkedIn ↗</a>
-      <a href={SITE.social.github} target="_blank" rel="noreferrer" class="rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-fg transition hover:-translate-y-0.5 hover:border-fg">GitHub ↗</a>
+      <a href={`mailto:${SITE.email}`} class={channel}>{SITE.email} →</a>
+      <a href={SITE.social.linkedin} target="_blank" rel="noreferrer" class={channel}>LinkedIn ↗</a>
+      <a href={SITE.social.github} target="_blank" rel="noreferrer" class={channel}>GitHub ↗</a>
     </div>
   </section>
 </main>

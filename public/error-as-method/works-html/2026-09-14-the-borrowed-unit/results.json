@@ -1,0 +1,767 @@
+{
+ "note": "Session 88's reach scan, ported to three traditions and run in two units. A party term in reach is a ceiling on a bearer named, never naming itself.",
+ "term_lists": {
+  "whatwg": {
+   "base": "\\b(specification authors|conformance checkers|specification author|conformance checker|markup generators|markup generator|implementations|implementation|implementers|user agents|implementer|user agent|validators|validator|browsers|browser|authors|parsers|servers|clients|editors|author|parser|server|client|editor)\\b",
+   "row": "\\b(specification authors|conformance checkers|specification author|conformance checker|markup generators|markup generator|implementations|implementation|implementers|user agents|implementer|user agent|validators|validator|browsers|browser|authors|parsers|servers|clients|editors|author|parser|server|client|editor)\\b",
+   "extension": []
+  },
+  "eu": {
+   "base": "\\b(specification authors|conformance checkers|specification author|conformance checker|markup generators|markup generator|implementations|implementation|implementers|user agents|implementer|user agent|validators|validator|browsers|browser|authors|parsers|servers|clients|editors|author|parser|server|client|editor)\\b",
+   "row": "\\b(specification authors|conformance checkers|specification author|conformance checker|markup generators|markup generator|implementations|implementation|the Commission|Member States|implementers|Member State|user agents|implementer|user agent|validators|validator|browsers|browser|authors|parsers|servers|clients|editors|author|parser|server|client|editor)\\b",
+   "extension": [
+    "Member State",
+    "Member States",
+    "the Commission"
+   ]
+  },
+  "rfc": {
+   "base": "\\b(specification authors|conformance checkers|specification author|conformance checker|markup generators|markup generator|implementations|implementation|implementers|user agents|implementer|user agent|validators|validator|browsers|browser|authors|parsers|servers|clients|editors|author|parser|server|client|editor)\\b",
+   "row": "\\b(specification authors|conformance checkers|specification author|conformance checker|markup generators|markup generator|implementations|implementation|implementers|user agents|implementer|user agent|validators|validator|receivers|browsers|receiver|browser|authors|parsers|servers|clients|editors|senders|author|parser|server|client|editor|sender)\\b",
+   "extension": [
+    "sender",
+    "senders",
+    "receiver",
+    "receivers"
+   ]
+  }
+ },
+ "block_windows": [
+  0,
+  1,
+  2,
+  3,
+  5,
+  8,
+  13,
+  20,
+  35,
+  50,
+  100,
+  200
+ ],
+ "word_windows": [
+  0,
+  5,
+  10,
+  25,
+  36,
+  50,
+  100,
+  200,
+  400,
+  800,
+  1600,
+  3200,
+  6400
+ ],
+ "corpora": {
+  "whatwg": {
+   "row": {
+    "blocks": {
+     "population": 1190,
+     "counts": {
+      "0": 162,
+      "1": 266,
+      "2": 322,
+      "3": 393,
+      "5": 487,
+      "8": 598,
+      "13": 685,
+      "20": 790,
+      "35": 911,
+      "50": 978,
+      "100": 1089,
+      "200": 1176
+     },
+     "pct": {
+      "0": 13.61,
+      "1": 22.35,
+      "2": 27.06,
+      "3": 33.03,
+      "5": 40.92,
+      "8": 50.25,
+      "13": 57.56,
+      "20": 66.39,
+      "35": 76.55,
+      "50": 82.18,
+      "100": 91.51,
+      "200": 98.82
+     },
+     "whole_document": 1185,
+     "whole_document_pct": 99.58,
+     "none_anywhere": 5,
+     "median_where_present": 8,
+     "mean_where_present": 26.9
+    },
+    "words": {
+     "population": 1190,
+     "counts": {
+      "0": 5,
+      "5": 19,
+      "10": 39,
+      "25": 129,
+      "36": 187,
+      "50": 241,
+      "100": 428,
+      "200": 622,
+      "400": 809,
+      "800": 989,
+      "1600": 1118,
+      "3200": 1180,
+      "6400": 1185
+     },
+     "pct": {
+      "0": 0.42,
+      "5": 1.6,
+      "10": 3.28,
+      "25": 10.84,
+      "36": 15.71,
+      "50": 20.25,
+      "100": 35.97,
+      "200": 52.27,
+      "400": 67.98,
+      "800": 83.11,
+      "1600": 93.95,
+      "3200": 99.16,
+      "6400": 99.58
+     },
+     "whole_document": 1185,
+     "whole_document_pct": 99.58,
+     "none_anywhere": 5,
+     "median_where_present": 184,
+     "mean_where_present": 431.3
+    }
+   },
+   "population": 1190,
+   "rows_with_a_duplicated_sentence_in_their_block": [],
+   "base": {
+    "blocks": {
+     "population": 1190,
+     "counts": {
+      "0": 162,
+      "1": 266,
+      "2": 322,
+      "3": 393,
+      "5": 487,
+      "8": 598,
+      "13": 685,
+      "20": 790,
+      "35": 911,
+      "50": 978,
+      "100": 1089,
+      "200": 1176
+     },
+     "pct": {
+      "0": 13.61,
+      "1": 22.35,
+      "2": 27.06,
+      "3": 33.03,
+      "5": 40.92,
+      "8": 50.25,
+      "13": 57.56,
+      "20": 66.39,
+      "35": 76.55,
+      "50": 82.18,
+      "100": 91.51,
+      "200": 98.82
+     },
+     "whole_document": 1185,
+     "whole_document_pct": 99.58,
+     "none_anywhere": 5,
+     "median_where_present": 8,
+     "mean_where_present": 26.9
+    },
+    "words": {
+     "population": 1190,
+     "counts": {
+      "0": 5,
+      "5": 19,
+      "10": 39,
+      "25": 129,
+      "36": 187,
+      "50": 241,
+      "100": 428,
+      "200": 622,
+      "400": 809,
+      "800": 989,
+      "1600": 1118,
+      "3200": 1180,
+      "6400": 1185
+     },
+     "pct": {
+      "0": 0.42,
+      "5": 1.6,
+      "10": 3.28,
+      "25": 10.84,
+      "36": 15.71,
+      "50": 20.25,
+      "100": 35.97,
+      "200": 52.27,
+      "400": 67.98,
+      "800": 83.11,
+      "1600": 93.95,
+      "3200": 99.16,
+      "6400": 99.58
+     },
+     "whole_document": 1185,
+     "whole_document_pct": 99.58,
+     "none_anywhere": 5,
+     "median_where_present": 184,
+     "mean_where_present": 431.3
+    }
+   }
+  },
+  "eu": {
+   "row": {
+    "blocks": {
+     "population": 3864,
+     "counts": {
+      "0": 2641,
+      "1": 3087,
+      "2": 3317,
+      "3": 3499,
+      "5": 3663,
+      "8": 3746,
+      "13": 3803,
+      "20": 3849,
+      "35": 3864,
+      "50": 3864,
+      "100": 3864,
+      "200": 3864
+     },
+     "pct": {
+      "0": 68.35,
+      "1": 79.89,
+      "2": 85.84,
+      "3": 90.55,
+      "5": 94.8,
+      "8": 96.95,
+      "13": 98.42,
+      "20": 99.61,
+      "35": 100.0,
+      "50": 100.0,
+      "100": 100.0,
+      "200": 100.0
+     },
+     "whole_document": 3864,
+     "whole_document_pct": 100.0,
+     "none_anywhere": 0,
+     "median_where_present": 0.0,
+     "mean_where_present": 1.2
+    },
+    "words": {
+     "population": 3864,
+     "counts": {
+      "0": 142,
+      "5": 215,
+      "10": 301,
+      "25": 629,
+      "36": 900,
+      "50": 1158,
+      "100": 1709,
+      "200": 2231,
+      "400": 2777,
+      "800": 3245,
+      "1600": 3577,
+      "3200": 3739,
+      "6400": 3831
+     },
+     "pct": {
+      "0": 3.67,
+      "5": 5.56,
+      "10": 7.79,
+      "25": 16.28,
+      "36": 23.29,
+      "50": 29.97,
+      "100": 44.23,
+      "200": 57.74,
+      "400": 71.87,
+      "800": 83.98,
+      "1600": 92.57,
+      "3200": 96.77,
+      "6400": 99.15
+     },
+     "whole_document": 3860,
+     "whole_document_pct": 99.9,
+     "none_anywhere": 4,
+     "median_where_present": 134.0,
+     "mean_where_present": 500.6
+    }
+   },
+   "population": 3864,
+   "rows_with_a_duplicated_sentence_in_their_block": [
+    {
+     "doc": "32009R1223",
+     "block": 101,
+     "sentence": "Those measures, designed to amend non-essential elements of this Regulation, shall be adopted in accordance with the reg"
+    },
+    {
+     "doc": "32009R1223",
+     "block": 101,
+     "sentence": "Those measures, designed to amend non-essential elements of this Regulation, shall be adopted in accordance with the reg"
+    },
+    {
+     "doc": "32012R0500",
+     "block": 9,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 38a.\u2019;"
+    },
+    {
+     "doc": "32012R0500",
+     "block": 9,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 38a."
+    },
+    {
+     "doc": "32012R0500",
+     "block": 9,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 38a.\u2019;"
+    },
+    {
+     "doc": "32013R0575",
+     "block": 155,
+     "sentence": "The decision shall be set out in a document containing the fully reasoned decision and shall take into account the views"
+    },
+    {
+     "doc": "32013R0575",
+     "block": 155,
+     "sentence": "The six-month period shall be deemed the conciliation period within the meaning of that Regulation."
+    },
+    {
+     "doc": "32013R0575",
+     "block": 155,
+     "sentence": "The decision shall be set out in a document containing the fully reasoned decision and shall take into account the views"
+    },
+    {
+     "doc": "32013R0575",
+     "block": 155,
+     "sentence": "The six-month period shall be deemed the conciliation period within the meaning of that Regulation."
+    },
+    {
+     "doc": "32013R0575",
+     "block": 519,
+     "sentence": "However, for that purpose, M i shall not be capped at five years but at the longest contractual remaining maturity in th"
+    },
+    {
+     "doc": "32013R1308",
+     "block": 316,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 337,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 337,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 380,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 388,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 400,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 400,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 400,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 401,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 401,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 411,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 411,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 428,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32013R1308",
+     "block": 241,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 229(2)."
+    },
+    {
+     "doc": "32014L0024",
+     "block": 209,
+     "sentence": "Such consecutive modifications shall not be aimed at circumventing this Directive;"
+    },
+    {
+     "doc": "32014L0024",
+     "block": 209,
+     "sentence": "Such consecutive modifications shall not be aimed at circumventing this Directive;"
+    },
+    {
+     "doc": "32017R0625",
+     "block": 227,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 145(2)."
+    },
+    {
+     "doc": "32017R0625",
+     "block": 152,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 145(2)."
+    },
+    {
+     "doc": "32017R0625",
+     "block": 171,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 145(2)."
+    },
+    {
+     "doc": "32017R0745",
+     "block": 196,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 114(3)."
+    },
+    {
+     "doc": "32017R0745",
+     "block": 198,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 114(3)."
+    },
+    {
+     "doc": "32018R1139",
+     "block": 110,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 127(3)."
+    },
+    {
+     "doc": "32018R1139",
+     "block": 110,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 127(3)."
+    },
+    {
+     "doc": "32018R1139",
+     "block": 147,
+     "sentence": "That authorisation shall be issued upon application, when the applicant has demonstrated its capability, and the availab"
+    },
+    {
+     "doc": "32018R1139",
+     "block": 147,
+     "sentence": "That authorisation shall be issued upon application, when the applicant has demonstrated its capability, and the availab"
+    },
+    {
+     "doc": "32018R1139",
+     "block": 149,
+     "sentence": "Those implementing acts shall be adopted in accordance with the examination procedure referred to in Article 127(3)."
+    },
+    {
+     "doc": "32018R1139",
+     "block": 154,
+     "sentence": "Those implementing acts shall be adopted in accordance with the advisory procedure referred to in Article 127(2)."
+    },
+    {
+     "doc": "32018R1139",
+     "block": 154,
+     "sentence": "Those implementing acts shall be adopted in accordance with the advisory procedure referred to in Article 127(2)."
+    },
+    {
+     "doc": "32019R0631",
+     "block": 64,
+     "sentence": "An application shall be made to the Commission and shall include:"
+    },
+    {
+     "doc": "32019R0631",
+     "block": 64,
+     "sentence": "An application shall be made to the Commission and shall include:"
+    },
+    {
+     "doc": "32021R2115",
+     "block": 202,
+     "sentence": "For enterprises not covered by Article 2(1) of the Annex to Recommendation 2003/361/EC, with fewer than 750 employees or"
+    },
+    {
+     "doc": "32024R1689",
+     "block": 287,
+     "sentence": "When adopting delegated acts pursuant to paragraphs 1 and 2 concerning Artificial Intelligence systems which are safety "
+    },
+    {
+     "doc": "32024R1689",
+     "block": 287,
+     "sentence": "When adopting delegated acts pursuant to paragraphs 1 and 2 concerning Artificial Intelligence systems which are safety "
+    }
+   ],
+   "base": {
+    "blocks": {
+     "population": 3864,
+     "counts": {
+      "0": 508,
+      "1": 818,
+      "2": 1067,
+      "3": 1278,
+      "5": 1673,
+      "8": 2040,
+      "13": 2441,
+      "20": 2903,
+      "35": 3381,
+      "50": 3596,
+      "100": 3757,
+      "200": 3757
+     },
+     "pct": {
+      "0": 13.15,
+      "1": 21.17,
+      "2": 27.61,
+      "3": 33.07,
+      "5": 43.3,
+      "8": 52.8,
+      "13": 63.17,
+      "20": 75.13,
+      "35": 87.5,
+      "50": 93.06,
+      "100": 97.23,
+      "200": 97.23
+     },
+     "whole_document": 3757,
+     "whole_document_pct": 97.23,
+     "none_anywhere": 107,
+     "median_where_present": 7,
+     "mean_where_present": 13.3
+    },
+    "words": {
+     "population": 3864,
+     "counts": {
+      "0": 2,
+      "5": 11,
+      "10": 20,
+      "25": 41,
+      "36": 60,
+      "50": 75,
+      "100": 151,
+      "200": 286,
+      "400": 526,
+      "800": 909,
+      "1600": 1451,
+      "3200": 2129,
+      "6400": 2860
+     },
+     "pct": {
+      "0": 0.05,
+      "5": 0.28,
+      "10": 0.52,
+      "25": 1.06,
+      "36": 1.55,
+      "50": 1.94,
+      "100": 3.91,
+      "200": 7.4,
+      "400": 13.61,
+      "800": 23.52,
+      "1600": 37.55,
+      "3200": 55.1,
+      "6400": 74.02
+     },
+     "whole_document": 3755,
+     "whole_document_pct": 97.18,
+     "none_anywhere": 109,
+     "median_where_present": 2507,
+     "mean_where_present": 4383.7
+    }
+   }
+  },
+  "rfc": {
+   "row": {
+    "blocks": {
+     "population": 956,
+     "counts": {
+      "0": 175,
+      "1": 240,
+      "2": 286,
+      "3": 333,
+      "5": 419,
+      "8": 521,
+      "13": 635,
+      "20": 731,
+      "35": 867,
+      "50": 913,
+      "100": 951,
+      "200": 956
+     },
+     "pct": {
+      "0": 18.31,
+      "1": 25.1,
+      "2": 29.92,
+      "3": 34.83,
+      "5": 43.83,
+      "8": 54.5,
+      "13": 66.42,
+      "20": 76.46,
+      "35": 90.69,
+      "50": 95.5,
+      "100": 99.48,
+      "200": 100.0
+     },
+     "whole_document": 956,
+     "whole_document_pct": 100.0,
+     "none_anywhere": 0,
+     "median_where_present": 7.0,
+     "mean_where_present": 13.5
+    },
+    "words": {
+     "population": 956,
+     "counts": {
+      "0": 16,
+      "5": 35,
+      "10": 50,
+      "25": 100,
+      "36": 149,
+      "50": 189,
+      "100": 306,
+      "200": 452,
+      "400": 634,
+      "800": 832,
+      "1600": 915,
+      "3200": 953,
+      "6400": 956
+     },
+     "pct": {
+      "0": 1.67,
+      "5": 3.66,
+      "10": 5.23,
+      "25": 10.46,
+      "36": 15.59,
+      "50": 19.77,
+      "100": 32.01,
+      "200": 47.28,
+      "400": 66.32,
+      "800": 87.03,
+      "1600": 95.71,
+      "3200": 99.69,
+      "6400": 100.0
+     },
+     "whole_document": 956,
+     "whole_document_pct": 100.0,
+     "none_anywhere": 0,
+     "median_where_present": 215.0,
+     "mean_where_present": 402.5
+    }
+   },
+   "population": 956,
+   "rows_with_a_duplicated_sentence_in_their_block": [],
+   "base": {
+    "blocks": {
+     "population": 956,
+     "counts": {
+      "0": 149,
+      "1": 203,
+      "2": 251,
+      "3": 292,
+      "5": 375,
+      "8": 475,
+      "13": 581,
+      "20": 678,
+      "35": 823,
+      "50": 883,
+      "100": 947,
+      "200": 956
+     },
+     "pct": {
+      "0": 15.59,
+      "1": 21.23,
+      "2": 26.26,
+      "3": 30.54,
+      "5": 39.23,
+      "8": 49.69,
+      "13": 60.77,
+      "20": 70.92,
+      "35": 86.09,
+      "50": 92.36,
+      "100": 99.06,
+      "200": 100.0
+     },
+     "whole_document": 956,
+     "whole_document_pct": 100.0,
+     "none_anywhere": 0,
+     "median_where_present": 9.0,
+     "mean_where_present": 16.7
+    },
+    "words": {
+     "population": 956,
+     "counts": {
+      "0": 16,
+      "5": 35,
+      "10": 46,
+      "25": 83,
+      "36": 124,
+      "50": 159,
+      "100": 261,
+      "200": 408,
+      "400": 578,
+      "800": 790,
+      "1600": 883,
+      "3200": 947,
+      "6400": 956
+     },
+     "pct": {
+      "0": 1.67,
+      "5": 3.66,
+      "10": 4.81,
+      "25": 8.68,
+      "36": 12.97,
+      "50": 16.63,
+      "100": 27.3,
+      "200": 42.68,
+      "400": 60.46,
+      "800": 82.64,
+      "1600": 92.36,
+      "3200": 99.06,
+      "6400": 100.0
+     },
+     "whole_document": 956,
+     "whole_document_pct": 100.0,
+     "none_anywhere": 0,
+     "median_where_present": 261.0,
+     "mean_where_present": 498.0
+    }
+   }
+  }
+ },
+ "spreads": {
+  "block_window_0": {
+   "by_corpus": {
+    "whatwg": 13.61,
+    "eu": 68.35,
+    "rfc": 18.31
+   },
+   "spread": 54.74
+  },
+  "word_window_36": {
+   "by_corpus": {
+    "whatwg": 15.71,
+    "eu": 23.29,
+    "rfc": 15.59
+   },
+   "spread": 7.7
+  }
+ },
+ "median_word_distance": {
+  "whatwg": 184,
+  "eu": 134.0,
+  "rfc": 215.0
+ }
+}

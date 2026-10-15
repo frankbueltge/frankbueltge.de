@@ -6,6 +6,9 @@
 // which is also the honest register for a disagreement neither verdict is allowed to win.
 import type { Locale } from '@/lib/site'
 import data from '@/data/meridian/parallax.json'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props {
   locale?: Locale
@@ -24,17 +27,16 @@ const pubDate = exp.date_published?.slice(0, 10)
 
 <main id="main" class="mx-auto max-w-3xl px-4 py-12 font-mono text-fg sm:py-16 flex-1">
   <!-- masthead -->
-  <p class="mb-4 text-xs uppercase tracking-[0.2em] text-fg-faint">
-    Meridian Research Runtime · claim-rooted export · read-only projection
-  </p>
-  <h1 class="mb-4 text-balance font-sans text-3xl font-semibold leading-tight sm:text-4xl">
-    One claim, held contested — because two independent reviews disagreed, and neither was
-    averaged away.
-  </h1>
-  <p class="mb-1 text-sm text-fg-muted">
+  <SheetHead
+    class="font-sans"
+    kicker="Meridian Research Runtime · claim-rooted export · read-only projection"
+    title="One claim, held contested — because two independent reviews disagreed, and neither was averaged away."
+  >
+  <p class="mt-4 font-mono text-sm text-fg-muted">
     Analysis <span class="text-fg">“{claim.analysis}”</span> — model-collapse cluster
   </p>
-  <p class="mb-6 break-all text-xs text-fg-faint">{claim.urn} · {claim.content_hash}</p>
+  <p class="mt-1 break-all font-mono text-xs text-fg-faint">{claim.urn} · {claim.content_hash}</p>
+  </SheetHead>
 
   <!-- meta pills -->
   <ul class="mb-10 flex flex-wrap gap-2 text-[0.68rem] uppercase tracking-wider">
@@ -84,7 +86,7 @@ const pubDate = exp.date_published?.slice(0, 10)
       {
         [pass, fail].map((v) =>
           v ? (
-            <article class="border border-line bg-panel p-5" class:list={[v.recommendation === 'fail' ? 'border-t-2 border-t-fg' : 'border-t-2 border-t-fg-faint']}>
+            <article class="rounded-md border border-line bg-panel panel-raised p-5" class:list={[v.recommendation === 'fail' ? 'border-t-2 border-t-fg' : 'border-t-2 border-t-fg-faint']}>
               <div class="mb-1 flex items-baseline justify-between gap-3">
                 <span class="text-sm font-semibold uppercase tracking-[0.14em] text-fg">
                   {v.recommendation === 'pass' ? '▲ Pass' : '▼ Fail'}
@@ -166,7 +168,7 @@ const pubDate = exp.date_published?.slice(0, 10)
   </section>
 
   <!-- honest provenance (the runtime repo is public since 2026-07-24) -->
-  <aside class="mt-12 border-t border-line pt-6 text-xs leading-relaxed text-fg-faint">
+  <SheetFoot>
     <p>
       Data exported from the Meridian Research Runtime and committed here as the open dataset
       (<code class="text-fg-muted">src/data/meridian/export/</code>). Every figure is derived from it by
@@ -187,5 +189,5 @@ const pubDate = exp.date_published?.slice(0, 10)
         class="underline transition-colors hover:text-fg">encounter register</a
       > (enc-2026-005). Nothing on this page is authored prose about the artwork; it is the archive, rendered.
     </p>
-  </aside>
+  </SheetFoot>
 </main>

@@ -1,0 +1,147 @@
+const WORKS = [
+{
+"m": "m01",
+"g": "G4",
+"title": "Seventy-Seven to a Column",
+"units": "pixels",
+"tide": "supplied",
+"fort": "no",
+"sing": "yes",
+"second": "no",
+"q": "none",
+"qw": "I don't have a confident view, and nothing in the file can settle it. ... fits things like river level after a storm, air pollution during an episode, or wind s"
+},
+{
+"m": "m02",
+"g": "G1",
+"title": "Held to the Moon",
+"units": "items",
+"tide": "measured",
+"fort": "no",
+"sing": "yes",
+"second": "yes",
+"q": "water",
+"qw": "hourly water level at a coastal tide gauge, over two months"
+},
+{
+"m": "m03",
+"g": "G3",
+"title": "Nineteen or Twenty",
+"units": "pixels",
+"tide": "supplied",
+"fort": "measured",
+"sing": "yes",
+"second": "no",
+"q": "water",
+"qw": "most likely a water level from a tide gauge on a sea with small tides, and that the spike is a storm surge"
+},
+{
+"m": "m04",
+"g": "G3",
+"title": "Nineteen and a Half Hours",
+"units": "pixels",
+"tide": "supplied",
+"fort": "no",
+"sing": "yes",
+"second": "no",
+"q": "none",
+"qw": "I can only describe the shape of the record, not name the quantity."
+},
+{
+"m": "m05",
+"g": "G4",
+"title": "Seventy-Seven Hours a Pixel",
+"units": "pixels",
+"tide": "supplied",
+"fort": "no",
+"sing": "yes",
+"second": "no",
+"q": "none",
+"qw": "I can't say, and any guess would be weak."
+},
+{
+"m": "m06",
+"g": "G3",
+"title": "Nineteen and a Half Hours",
+"units": "pixels",
+"tide": "supplied",
+"fort": "measured",
+"sing": "yes",
+"second": "yes",
+"q": "water",
+"qw": "a water level, most likely tidal (coast or estuary), with one storm-surge or flood event"
+},
+{
+"m": "m07",
+"g": "G2",
+"title": "Moon Hours",
+"units": "items",
+"tide": "measured",
+"fort": "measured",
+"sing": "yes",
+"second": "yes",
+"q": "water",
+"qw": "sea level from a tide gauge, at a coast with mostly twice-daily tides"
+},
+{
+"m": "m08",
+"g": "G2",
+"title": "Fifty Minutes Later",
+"units": "items",
+"tide": "measured",
+"fort": "measured",
+"sing": "yes",
+"second": "yes",
+"q": "water",
+"qw": "Hourly sea level at a tide gauge on a coast where the twice-daily tide dominates, with one storm surge in it."
+},
+{
+"m": "m09",
+"g": "G1",
+"title": "Fifty Minutes Late",
+"units": "items",
+"tide": "measured",
+"fort": "measured",
+"sing": "yes",
+"second": "yes",
+"q": "water",
+"qw": "water level at a coast, from a tide gauge, with weather on top of the tide"
+},
+{
+"m": "m10",
+"g": "G2",
+"title": "Fifty-nine Lunar Days",
+"units": "items",
+"tide": "measured",
+"fort": "measured",
+"sing": "yes",
+"second": "no",
+"q": "water",
+"qw": "Water level from a tide gauge, hourly, over two months."
+},
+{
+"m": "m11",
+"g": "G4",
+"title": "Somewhere in the column",
+"units": "pixels",
+"tide": "supplied",
+"fort": "no",
+"sing": "yes",
+"second": "no",
+"q": "other",
+"qw": "I'm not confident about it. ... Temperature or an air-pollutant concentration would fit. ... A river level or flow with one flood is also possible"
+},
+{
+"m": "m12",
+"g": "G1",
+"title": "Twice a Moon-Day",
+"units": "items",
+"tide": "measured",
+"fort": "measured",
+"sing": "yes",
+"second": "yes",
+"q": "water",
+"qw": "Sea level from a tide gauge on a coast where the tide comes twice a day."
+}
+];
+const GRAINS = {"G1": {"file": "record.jpg", "size": [1200, 360], "jpeg_quality": 30, "bytes": 17532, "hours_per_column": 1.22, "semidiurnal_columns_per_cycle": 10.18, "fortnight_columns_per_cycle": 290.47, "rows_per_metre": 67.68, "surge_column": 880, "surge_top_row": 26, "highest_top_elsewhere": 175, "surge_stands_out_by_rows": 149, "distinct_grey_levels": 213}, "G2": {"file": "record.jpg", "size": [300, 90], "jpeg_quality": 30, "bytes": 4108, "hours_per_column": 4.88, "semidiurnal_columns_per_cycle": 2.55, "fortnight_columns_per_cycle": 72.62, "rows_per_metre": 16.92, "surge_column": 220, "surge_top_row": 9, "highest_top_elsewhere": 43, "surge_stands_out_by_rows": 34, "distinct_grey_levels": 253}, "G3": {"file": "record.jpg", "size": [75, 23], "jpeg_quality": 30, "bytes": 1099, "hours_per_column": 19.52, "semidiurnal_columns_per_cycle": 0.64, "fortnight_columns_per_cycle": 18.15, "rows_per_metre": 4.32, "surge_column": 55, "surge_top_row": 1, "highest_top_elsewhere": 8, "surge_stands_out_by_rows": 7, "distinct_grey_levels": 201}, "G4": {"file": "record.jpg", "size": [19, 6], "jpeg_quality": 30, "bytes": 809, "hours_per_column": 77.05, "semidiurnal_columns_per_cycle": 0.16, "fortnight_columns_per_cycle": 4.6, "rows_per_metre": 1.13, "surge_column": 13, "surge_top_row": 0, "highest_top_elsewhere": 2, "surge_stands_out_by_rows": 2, "distinct_grey_levels": 48}};

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,500&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</helmet>
+<div style="position:relative;z-index:30;height:40px;padding:0 64px;display:flex;align-items:center;justify-content:space-between;background:#f3efe6;color:#161412;font-family:'Schibsted Grotesk',sans-serif;font-size:12px;letter-spacing:.08em;border-bottom:1px solid #d8d2c4">
+  <a href="Home B Edition v2.dc.html" style="font-weight:600;color:#161412;text-decoration:none">FRANK BÜLTGE · DATA ENGINEERING &amp; ANALYTICS</a>
+  <nav style="display:flex;gap:24px;align-items:center;height:100%">
+    <div onMouseEnter="{{ open }}" onMouseLeave="{{ close }}" style="position:relative;height:100%;display:flex;align-items:center">
+      <button onClick="{{ toggle }}" style="padding:0;border:none;background:none;font:600 12px 'Schibsted Grotesk',sans-serif;letter-spacing:.08em;color:#161412;cursor:pointer;display:flex;gap:6px;align-items:center">PROJECTS <span style="font-size:9px">{{ caret }}</span></button>
+      <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:-12px;top:100%;padding-top:6px;z-index:40">
+        <div style="width:600px;background:#f3efe6;border:1px solid #161412;box-shadow:0 18px 40px -18px rgba(22,20,18,.45);padding:18px 22px 16px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;letter-spacing:0">
+          <div style="display:flex;flex-direction:column">
+            <span style="font-size:11px;font-weight:600;letter-spacing:.14em;color:#6a645a;padding-bottom:6px;border-bottom:1px solid #161412">RESEARCH PROJECTS</span>
+            <a href="Ecology Score.dc.html" style="display:flex;flex-direction:column;gap:1px;padding:8px 0;border-bottom:1px solid #e3ddcf;color:#161412;text-decoration:none"><span style="font-family:'Literata',serif;font-size:17px">The research ecology</span><span style="font-size:12px;color:#6a645a">three practices, one shared question</span></a>
+            <a href="https://frankbueltge.de/machine-attention" style="display:flex;flex-direction:column;gap:1px;padding:8px 0;border-bottom:1px solid #e3ddcf;color:#161412;text-decoration:none"><span style="font-family:'Literata',serif;font-size:17px">Machine Attention</span><span style="font-size:12px;color:#6a645a">the counter-experiment</span></a>
+            <a href="https://frankbueltge.de/atlas" style="display:flex;flex-direction:column;gap:1px;padding:8px 0;border-bottom:1px solid #e3ddcf;color:#161412;text-decoration:none"><span style="font-family:'Literata',serif;font-size:17px">Atlas</span><span style="font-size:12px;color:#6a645a">contemporary data art, source-cited</span></a>
+            <a href="Remainder v2.dc.html" style="display:flex;flex-direction:column;gap:1px;padding:8px 0;border-bottom:1px solid #e3ddcf;color:#161412;text-decoration:none"><span style="font-family:'Literata',serif;font-size:17px">n-1</span><span style="font-size:12px;color:#6a645a">the Atelier’s third line</span></a>
+            <a href="https://frankbueltge.de/error-as-method" style="display:flex;flex-direction:column;gap:1px;padding:8px 0;border-bottom:1px solid #e3ddcf;color:#161412;text-decoration:none"><span style="font-family:'Literata',serif;font-size:17px">Ulysses</span><span style="font-size:12px;color:#6a645a">Error as Method, the Atelier’s nightly line</span></a>
+          </div>
+          <div style="display:flex;flex-direction:column">
+            <span style="font-size:11px;font-weight:600;letter-spacing:.14em;color:#6a645a;padding-bottom:6px;border-bottom:1px solid #161412">OTHER PROJECTS</span>
+            <a href="https://frankbueltge.de/work/data-snack" style="padding:8px 0;border-bottom:1px solid #e3ddcf;font-family:'Literata',serif;font-size:17px;color:#161412;text-decoration:none">data-snack.com</a>
+            <a href="https://frankbueltge.de/work/datavism" style="padding:8px 0;border-bottom:1px solid #e3ddcf;font-family:'Literata',serif;font-size:17px;color:#161412;text-decoration:none">datavism.org</a>
+            <a href="https://frankbueltge.de/work" style="padding:10px 0 0;font-size:13px;font-weight:600;color:#161412">all projects →</a>
+          </div>
+        </div>
+      </div></sc-if>
+    </div>
+    <a href="https://frankbueltge.de/experiments" style="font-weight:600;color:#161412;text-decoration:none">LAB</a>
+    <a href="https://frankbueltge.de/about" style="font-weight:600;color:#161412;text-decoration:none">ABOUT</a>
+    <a href="https://frankbueltge.de/contact" style="font-weight:600;color:#161412;text-decoration:none">CONTACT</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:420}}">
+class Component extends DCLogic {
+  state = { o: false };
+  renderVals() {
+    const o = this.state.o;
+    return { isOpen: o, caret: o ? '▲' : '▼', open: () => this.setState({ o: true }), close: () => this.setState({ o: false }), toggle: () => this.setState({ o: !o }) };
+  }
+}
+</script>
+</body>
+</html>

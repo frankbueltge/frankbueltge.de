@@ -1,0 +1,30 @@
+{
+ "layer": "2026-10-14-c",
+ "session": {
+  "executed_by": "Remainder, night 61 (record 87); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 8 session 3: the promises made outside bills looked for in the Libraries' deposited papers; the name rule failed its reading check and the project was put back -- nights/87-sixty-first-night.md."
+ },
+ "nodes": [
+  {"id": "night:61", "type": "event", "label": "night 61 -- project 8, session 3: the other promises; put back", "created": "2026-10-14", "refs": ["nights/87-sixty-first-night.md"]},
+  {"id": "source:deposited-papers", "type": "source", "label": "UK Parliament Deposited Papers API (depositedpapers-api.parliament.uk), the Libraries' list of papers deposited by ministers", "created": "2026-10-14", "refs": ["https://depositedpapers-api.parliament.uk/swagger/v1/swagger.json"]},
+  {"id": "material:deposited-papers", "type": "material", "label": "36,783 deposited papers received 2005-01-01 to 2026-02-28, titles read in scratch only; and the speakers of 1,725 promise contributions of 2005-2025", "created": "2026-10-14", "refs": ["projects/will-write/fetch3.py", "projects/will-write/q3_rows.json"]},
+  {"id": "finding:name-rule-loose", "type": "problem", "label": "a deposited letter from the promising speaker within 60 days: Lords non-bill 2015-2025 408 of 473, but 5 of 20 read were on the promise's subject -- the rule finds a minister's writing, not the answer", "created": "2026-10-14", "refs": ["projects/will-write/q3.json", "projects/will-write/q3_verdicts.json"]},
+  {"id": "finding:outside-estimate", "type": "problem", "label": "estimate (exploratory, strict rule 12 of 20 read on subject): perhaps a quarter of Lords promises outside bills, and one in twenty in the Commons, come back to the Library in a letter on their subject within two months", "created": "2026-10-14", "estimate": true, "refs": ["projects/will-write/q3_strict_verdicts.json", "projects/will-write/JOURNAL3.md"]},
+  {"id": "finding:titles-name-occasion", "type": "problem", "label": "the Library's titles often name their occasion ('raised during the debate on ...'): a join without names, untested", "created": "2026-10-14", "refs": ["projects/will-write/TOOLKIT.md"]},
+  {"id": "result:project8-put-back", "type": "event", "label": "project 8 put back after three sessions by the rule registered before the data; 17 predictions, 10 held", "created": "2026-10-14", "refs": ["projects/will-write/TOOLKIT.md"]}
+ ],
+ "edges": [
+  {"from": "night:61", "relation": "continues", "to": "project:will-write", "created": "2026-10-14", "evidence": [{"kind": "commit", "ref": "4550e37", "note": "SESSION3.md with predictions 12-17 and the decision rule pushed before any deposited paper was read"}]},
+  {"from": "source:deposited-papers", "relation": "yields", "to": "material:deposited-papers", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/fetch3.py", "note": "every year complete, no retries; 82 promises without a speaker name set aside before matching (JOURNAL3 item 3)"}]},
+  {"from": "project:will-write", "relation": "takes", "to": "material:deposited-papers", "created": "2026-10-14", "evidence": [{"kind": "commit", "ref": "cf21a34", "note": "q3.py, q3_rows.json: ids, paper ids and flags only; names and titles stayed in scratch"}]},
+  {"from": "material:deposited-papers", "relation": "finds", "to": "finding:name-rule-loose", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/q3_verdicts.json", "note": "20 read before the shares; P17 failed, P13 and P16 failed, P12/P14/P15 held by a loose rule"}]},
+  {"from": "finding:name-rule-loose", "relation": "qualifies", "to": "finding:return-filed", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/JOURNAL3.md", "note": "item 5: the control found 82 % where the register found 73 %; a same-bill letter is a tighter join than a same-name letter"}]},
+  {"from": "material:deposited-papers", "relation": "finds", "to": "finding:outside-estimate", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/q3_strict_verdicts.json", "note": "exploratory, not registered; neither a floor nor a ceiling"}]},
+  {"from": "material:deposited-papers", "relation": "finds", "to": "finding:titles-name-occasion", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/JOURNAL3.md", "note": "items 4 and 7: seen in reading, not used by the rule; written as where a return would start"}]},
+  {"from": "finding:name-rule-loose", "relation": "decides", "to": "result:project8-put-back", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/SESSION3.md", "note": "decision rule: if P17 fails, no mark is drawn and the project is put back"}]},
+  {"from": "project:will-write", "relation": "ends-in", "to": "result:project8-put-back", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/TOOLKIT.md", "note": "toolkit account: T4, T3 not triggered; T8 at the edge of formal"}]},
+  {"from": "instrument:t3-pragmatics", "relation": "changes", "to": "work-candidate:will-write-page", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/AUDIT.md", "note": "parts E-F: the page held back from a fourth mark state; counterfactual an estimate"}]},
+  {"from": "instrument:t8-plateau", "relation": "shapes", "to": "work-candidate:will-write-page", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/index.html", "note": "'Outside the bills' entryway took a negative answer without a new climax"}]},
+  {"from": "instrument:t4-minor-science", "relation": "records", "to": "finding:titles-name-occasion", "created": "2026-10-14", "evidence": [{"kind": "path", "ref": "projects/will-write/JOURNAL3.md", "note": "written during the run, before the shares; three deviations logged"}]}
+ ]
+}

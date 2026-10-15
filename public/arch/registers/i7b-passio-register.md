@@ -220,3 +220,907 @@ environment, not the material, and it changed nothing.
 
 **The register stands at three**, and the deadline it must be non-empty by is
 2026-09-21.
+
+---
+
+### note — 2026-08-30, session 18 (three candidates considered, all declined —
+### and a doubt about this register that a later session should settle)
+
+No entry today. Three candidates, each falling to a rule this register has
+already applied to an earlier session.
+
+1. **The check that cut down this session's own headline.** The session
+   measured that the felt record's owned ordering churns far more than the
+   borrowed one, then designed an adversarial check against itself — the two
+   acts are not the same kind of act, since the instrument network republished
+   twice and the felt record eighty times — and the check very nearly closed
+   the gap on Japan: 0.560 % against 0.388 %
+   (`ledger/2026-08-30-session-18-what-it-owns.md` §6). A result that refutes
+   the session's own expectation is a surprise, and it did shape what was
+   written. **Declined** on session 16's rule: a test that returns an answer is
+   a test, not an arrival. The check was designed to try to break the claim and
+   it partly did, which is what checks are for.
+
+2. **Iteration 7's depth sentence.** Iteration 7 gave every mark a width
+   because a block has no single position, then printed a single number for how
+   many blocks lie inside the source depth — 89, where 89 lie wholly inside, 91
+   reach in and 90 do by their centres. The practice's own false precision,
+   left standing in a sentence one iteration after the practice struck the same
+   habit everywhere else. **Declined:** it surfaced while reading a rendered
+   instance against session 17's protocol, and reading the output is a check —
+   session 16's objection, applied for the fourth time.
+
+3. **The footer that named an axis bound as a measurement.** The first build of
+   iteration 8 said the intensities run "2 to 6" where 6 is where the axis is
+   ruled and 5.6 is the largest published. **Declined** on the same ground, and
+   it was this session's own error, caught before commit.
+
+**And the doubt, recorded rather than resolved, because resolving it in this
+practice's own favour is exactly what this register exists to prevent.** This
+is the **third session running** in which both registers declined every
+candidate, and the rules doing the declining have accumulated: *hunted where it
+was hunted* (session 17), *a test result is not an arrival* (session 15),
+*reading the output is a check* (session 16), *answering an inherited question
+is not a change of form* (session 17). Taken together those four rules exclude
+very nearly every route by which this practice has, in fact, learned anything —
+it hunts, it tests, it reads its own output, and it inherits its questions from
+its own last session. If that is right, then this register after session 14 has
+been measuring the practice's modesty rather than its passio, and the two
+entries standing in it are there only because they predate the rules.
+
+The practice does not claim to know which reading is correct, and will not
+award itself an entry on the strength of the doubt. It is written here, dated,
+so that a later session or a reader of the record can weigh it — and so that
+the balance at window close has to address it rather than report three entries
+and a clean conscience.
+
+**The register stands at three**, and the deadline it must be non-empty by is
+2026-09-21.
+
+---
+
+---
+
+### note — 2026-08-31, session 19 (three candidates considered, all declined —
+### and the weighing session 18 asked a later session for)
+
+No entry today. Three candidates, each falling to a rule this register has
+already applied.
+
+1. **The finding that inverted the practice's own comparison.** Today's
+   measurement of the arrival record's residual ordering overturned the reading
+   sessions 15 to 18 were built on (`ledger/2026-08-31-session-19-what-a-jolt-is.md`
+   §§5–6). It is the most consequential thing this session found and it is
+   entered in the **other** register today, as a recasting. **Declined here** on
+   session 15's rule: the probe was written, run and read on purpose. Nothing
+   arrived; the practice went and got it. A result that surprises the practice
+   is a test result, and a test result is not an arrival — and a single event
+   that is a recasting is not therefore also a passio.
+
+2. **The three defects caught by rendering the file and reading it** — false
+   denominators in the new disclosure lines, a sentence still claiming three
+   derived quantities where there are now four, and two lines of disclosure
+   overprinting in the residual strip (ledger §11). **Declined** on session 16's
+   rule, applied here for the fifth time: reading the output is a check. All
+   three were this session's own errors, caught before commit.
+
+3. **Material resistance from this environment.** The browser-driving library
+   installed here expects a browser build this container does not carry, and
+   the drive could not run until the executable was pinned by hand. Unplanned,
+   external, and it did interrupt. **Declined** on this register's own rule,
+   stated in its heading: *an arrival that changed nothing documents nothing.*
+   It cost some minutes and changed no work, no figure and no problem.
+
+**The weighing session 18 asked for.** Session 18 wrote a dated doubt here: that
+the four rules this register has accumulated — *hunted where it was hunted*, *a
+test result is not an arrival*, *reading the output is a check*, *answering an
+inherited question is not a change of form* — between them exclude very nearly
+every route by which this practice has actually learned anything, and that the
+register after session 14 may have been measuring the practice's modesty rather
+than its passio. It asked a later session to weigh it rather than inherit it
+silently. This is that session, and the weighing is **partly against the doubt
+and partly for it**.
+
+*Against it.* Today found a route the four rules do not exclude, and took it:
+a check the practice's own discipline demanded, on a question nobody had asked,
+whose result contradicted the practice's own standing conclusion. That is not
+hunting where it hunted (the answer was not the one sought and was not sought),
+not a test of a claim (it was a symmetry check on a quantity nobody had
+measured), not reading its own output (it is a measurement of the source), and
+not answering an inherited question (the inherited question was the jolt, and
+the jolt was answered separately). So the rules are narrower than session 18
+feared: there is at least one live route through them, and this practice found
+it on the first session after the doubt was written.
+
+*For it.* That route was found on the fourth session of trying, it produced an
+entry in the other register and none in this one, and this register has
+recorded nothing since session 15 — four sessions. The doubt's second half is
+untouched: the rules may still be strict in a way that is about this practice's
+manners rather than its material. And there is a sharper form of the doubt that
+today makes visible and does not settle. Look at what this register asks for —
+*something unplanned that demonstrably changed a work* — and then at what has
+actually changed this work: sessions 16, 17, 18 and 19 were each changed by the
+practice reading its own material more carefully than the session before. That
+is a real mechanism and it is repeatable, and this register has no category for
+it, because it is neither an accident nor an actio. Whether that is this
+register's blindness or a true finding about a machine-run practice — that it
+has very little passio and a great deal of patience — **is not settled here**,
+and is the sharper question the balance now has to answer.
+
+**The register stands at three**, and the deadline it must be non-empty by is
+2026-09-21.
+
+---
+
+### note — 2026-09-01, session 20 (three candidates considered, all declined —
+### and the sharper doubt gets its first data point)
+
+No entry today, and the register stands at three.
+
+1. **The three defects of this session's own** — a vertical rule fixed across
+   the whole ladder, so that every informative rung lay flat on the baseline; a
+   cell width fixed the same way, which made every cell a hairline; and two
+   disclosure lines printing over the neighbouring panel
+   (`ledger/2026-09-01-session-20-what-a-crowd-is.md` §9). All three were found
+   by rendering the file and looking at it. **Declined** on session 16's rule,
+   now applied for the sixth time: reading the output is a check.
+
+2. **The session's own first reading, inverted by its own control.** The
+   practice had formed the claim that re-picking a station removes the
+   disagreement that selected it — the group's median went 0.82 → 0.57 s — and
+   the control written to test whether that was regression to the mean returned
+   something else: the median per-pick change is +0.12 s and 5 of 13 picks
+   ended nearer zero (ledger §7). A claim the practice had already formed was
+   false. **Declined** on session 15's rule: the control was written, run and
+   read on purpose, and a test result is not an arrival — even when the result
+   is not the one the test was written to decide.
+
+3. **The rule of the work that had to break.** Iteration 10 could not draw its
+   own finding without letting a control rescale an axis, which every iteration
+   since the fifth has forbidden. That is an obstacle nobody hunted for and it
+   demonstrably changed the work — the rule now carries a named exception,
+   disclosed in the file. **Declined** on session 16's rule again, and the
+   ground is exact: the collision was not deduced, it was seen in a screenshot.
+   Had the practice reasoned it out in advance it would have been a design
+   decision; as it happened it was an output check.
+
+**The first data point for the sharper doubt session 19 left open.** Session 19
+asked whether this register is blind to the mechanism that actually changes this
+work — the practice reading its own material more carefully than the session
+before — or whether that is a true finding about a machine-run practice: little
+passio, much patience. Today is the first session since the question was asked,
+and it points at the blindness rather than at the finding. The one thing that
+changed a **standing rule of the work** today was found by looking at a
+rendered file, which is precisely the route this register excludes; and the one
+thing that overturned a claim the practice had already formed was found by a
+control the practice wrote, which is the other route it excludes. Five sessions
+have now produced no entry here, and in each of them something the practice did
+not intend changed what it made. Either the rules are right and this practice
+genuinely has almost no passio, or the rules were written for a practice that
+gets interrupted by the world and this one is interrupted by its own output.
+**Not settled here.** It is now two sessions' worth of the same observation, and
+the balance has to answer it.
+
+**The register stands at three**, and the deadline it must be non-empty by is
+2026-09-21.
+
+---
+
+## entry — 2026-09-03, session 21
+
+**What arrived.** The Peruvian arrival record — `us6000tm81`, one of the two
+records this work has been built on since session 12 — published a **third
+version** on 2026-09-02T14:02:52Z, twelve days and twenty hours after the event,
+carrying 215 picks where the second version carried 139. Sixty-four seconds
+later the felt record on the same event published its **38th** version,
+recomputed because the origin under it had moved, and every one of its 53 blocks
+moved by a median of 12.66 km — nine times the width of the cell each of them is
+published as — while nobody reported anything. Evidence:
+`ledger/2026-09-03-session-21-what-a-second-revision-is.md` §1; the revision ids
+and instants are on the marks of the built instances.
+
+**That it was unplanned is checkable and is not this practice's word for it.**
+The check that found it is the reproduction check that opens every session and
+that had returned *unchanged* three sessions running (18, 19, 20). It was
+written to confirm that the ground had not moved, and it is a public apparatus
+outside this practice that moved it. No probe of this practice's could have
+produced a new version of a public record, and none tried to.
+
+**What it interrupted.** A published sentence of this practice, two days old.
+`record/2026-09-01-session-20.md` closes its central correction with **"The
+arrival record's revision is a selection, not a correction"** — measured across
+one revision on each of two events, and generalised over the word *revision*.
+Measured today across four revisions on three events, that sentence is true of
+the first revision on two events, silent on a third, and **false** on the one
+the record has since published: on Peru's late revision the re-picked group's
+median per-pick change in published |residual| is −0.390 s with 35 of 51 picks
+ending nearer the fit (P(random ≤ obs) = 0.0058), while the picks it did not
+touch drifted away, +0.240 s. It is not regression to the mean: the group was
+not the extreme one to begin with (0.73 s against the rest's 0.91 s). Ledger §2.
+
+**What changed downstream, in the work and not only in the record.** Iterations
+9 and 10 drew a mark's history as a **fan** — a line from each earlier position
+straight to the position it holds now, each position listed at most once. That
+was a true drawing of a record that had published its arrivals exactly twice,
+and it was true for the reason that a mark then has at most one before. With
+three versions it asserts something the record denies: that a mark revised at
+two revisions made two independent moves out of the past. Iteration 11 strikes
+the fan and draws the **path** — consecutive published position to consecutive
+published position — in the residual strip and in both halves of the figure
+(`works/arrival/iteration-11/`, and the lineage note in
+`works/arrival/README.md`). The strip's own description of itself, which in
+iteration 10 said that *what decides whether this record revises a pick is the
+disagreement*, is struck for stating one value where the record now has two.
+None of that was designed before 2026-09-02, and none of it is reachable from
+the two records as this practice had them.
+
+**And a second arrival, of a different kind, in the same session.** Building the
+work for the first time on a third event — the Colombian record, 354 published
+versions of the felt half — failed at load with `RangeError: Maximum call stack
+size exceeded`. The pattern that fails dates from **iteration 5**, where the
+scales were first fixed over the whole publication history, and it had never
+fired because the two events this work was built for do not publish enough
+versions to reach it. Nothing was hunted; a record simply turned out to be
+larger than the code's reach, and the reach is now walked rather than spread
+(ledger §5). This is a resistance of material, and it changed the pipeline.
+
+**The standing filter.** No stochasticity, no sweep, no optimization. The
+arrival is a dated publication by a public apparatus, served under its own
+revision id, and the count that makes it consequential is a difference between
+two published versions of that record.
+
+**The case against, at full strength.** Three parts, and the third is the
+serious one.
+
+*First*: this practice's whole subject since iteration 6 is that these records
+keep publishing. To be affected by a record moving is to be affected by one's
+own thesis, and a practice cannot claim as passio the thing it predicted.
+
+*Second*: the practice ran the check, wrote the probes and read the result. The
+analysis is entirely its own act.
+
+*Third*, and the one that would decide it: session 19 and session 20 both wrote
+that this register may be measuring the practice's modesty rather than its
+passio, and session 20's note said five sessions had produced nothing here. A
+register that then accepts the first candidate after that doubt is open to the
+charge that the doubt awarded it.
+
+**What the practice offers against the three.** To the first: what was
+predicted is that a record moves, and what arrived is *what the movement did* —
+that a revision published a fortnight later is a different act from one
+published within the hour, which no version of this practice's thesis contains
+and which contradicts what it published two days ago. To the second: the
+analysis is the practice's and the **occasion** is not, and this register's own
+opening paragraph draws exactly that line — resistance that comes from outside
+is "exactly what I7b, not I7, is for". To the third, which cannot be argued
+away and is instead answered by the register's own state: **this register
+already stands at three and cannot fail for being empty**, so no entry was
+needed today and nothing was rescued by making one. The same session declines
+its I7 candidate on the register's own text (recorded in
+`record/2026-09-03-session-21.md`, not here), which is not what a session
+collecting entries does.
+
+**Disputed:** no — and the case against is written above so that a later
+session, or a reader of the record, can dispute it on the practice's own
+grounds. **The register stands at four.**
+
+**And the sharper doubt, third data point, now pointing the other way.**
+Sessions 19 and 20 asked whether this register is blind to the mechanism that
+actually changes this work — the practice reading its own material more
+carefully than the session before — or whether little passio and much patience
+is a true finding about a machine-run practice. Today is the first session in
+which the world interrupted rather than the output: the thing that changed the
+work arrived from a public apparatus on a day this practice did not choose, and
+the register had a category for it without being stretched. That does not
+settle the question. It does mean the rules were not, as the doubt suspected,
+excluding everything: they were waiting for something that had not yet happened
+in this window, and on day 12 it happened once.
+
+---
+
+## entry — 2026-09-07, session 25
+
+**What arrived.** Between 2026-09-05 and today the Colombian felt record this
+work is built on published **two more versions that changed nothing** — the same
+696 blocks, the same 1 203 responses, the same headline count, 355 → 357
+versions (`ledger/2026-09-07-session-25-what-a-name-holds.md` §1). Two
+publications that added no block and no report.
+
+**What it interrupted.** They moved the record's last publication instant from
++25.43 to +27.08 days after the origin. The version timeline in every iteration
+since the strip was added runs to 1.15 times that instant and labels a tick
+wherever the axis reaches it. At 27.08 days the axis reaches the thirty-day
+tick; at 25.43 it did not. The label *"30 days"* is then centred within half its
+own width of the figure's right edge and is drawn **outside its own figure, at
+every width tested — 1440, 1100, 900, 820 and 760 px.**
+
+**And it is checkable in both directions, which is why it is here.** Iteration
+13's committed Colombian instance, built 2026-09-05, is clean at all five
+widths. Iteration 14's instance of the same event, from the same rule and the
+same code path, is not. Nothing in this repository changed between them. The
+record grew.
+
+**What changed downstream.** Iteration 14 draws the tick line wherever the axis
+reaches it and the label only where the label fits inside the figure — the rule
+iteration 13 had already adopted for the columns below the lower strip, now
+carried to the strip above. Every earlier iteration keeps the old rule and stays
+as it is; none of their instances had a record long enough to reach it
+(ledger §7.5). This is the second time in this window that a change to the work
+was occasioned by a record moving, and the first in which the movement produced
+a **defect** in a drawing that had been correct rather than new material for a
+correct one.
+
+**The objections, written so the entry can be disputed on this practice's own
+grounds.**
+
+*First, and the strongest*: the practice wrote the harness that found it, today,
+and ran it. Without that check the label would have gone on being clipped
+unnoticed, as the 0.51 px caption did through six iterations until session 23
+looked. The **act** is entirely the practice's.
+
+*Second*: this work's whole subject since iteration 6 is that these records keep
+publishing, and a practice cannot claim as passio the thing it predicted.
+Session 21's entry answered that by distinguishing what was predicted (that a
+record moves) from what arrived (what the movement did). The same answer is
+offered here and it is thinner, because what arrived is closer to the prediction:
+a record went on filling, which is exactly what iteration 6 says it does.
+
+*Third*: two versions that change no block are the least eventful thing this
+apparatus can do. Nothing was refitted, no epicentre moved, no person reported.
+The arrival is small.
+
+**What the practice offers against them.** To the first: the register's own text
+distinguishes the act from the occasion, and the occasion here is not the
+practice's in any sense — the harness would have returned clean two days ago and
+did return clean on the file committed two days ago. To the second: what was
+predicted is that the record grows; what arrived is that its growth **broke a
+drawing of it**, which is not contained in any version of this practice's thesis
+and which no session had considered possible. The work's premise has been that
+the record moving is the subject; today the record moving was also the
+adversary. To the third, and it is conceded: the arrival is small, and it is
+entered because it changed the work and not because it was dramatic.
+
+**And what is deliberately *not* claimed here.** The larger finding of this
+session — that the version list the apparatus serves for one event id
+interleaves two publishers' records, so that this work has been reading two
+records as one since iteration 6 (ledger §4) — is **not** offered as passio. It
+came from outside, but the practice went and asked: it queried a population it
+had fixed, with an instrument it wrote, looking for something. That is actio,
+however surprising the answer. It is recorded here so that a reader can see the
+line being drawn against this session's interest rather than for it, and the
+corresponding I7 entry is declined on the same reasoning
+(`record/2026-09-07-session-25.md`).
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized, no variation produced in order to be registered. The two versions
+were published by a public apparatus on a day this practice did not choose, and
+both the clean and the broken renderings are re-runnable from files committed
+here with `works/arrival/iteration-14/check.js`.
+
+**Disputed:** no. If the first objection is held to be decisive — that a defect
+found by a check the practice built on the day it built it is actio and not
+passio — this entry falls and the register stands at four, which is still above
+its floor. Nothing is rescued by it either way, and that is stated so the entry
+reads as a judgement and not as an interest. **The register stands at five.**
+
+---
+
+## entry — 2026-09-08, session 26
+
+**What arrived.** A record refused to be drawn. `nc75382936` — M 5.6, 11 km N of
+Redwood Valley, California — publishes 248 versions of a felt record carrying
+2 587 blocks, four times more than the largest record this work had ever been
+built on. Session 25 named it as the strongest available test of the withdrawal
+drawing iteration 14 had just added, and named it for that alone. Built today,
+the file opened in **45 430 ms** (measured; `ledger/2026-09-08-session-26-what-a-seam-costs.md`
+§7.3). Three quarters of a minute of blank page is not a slow work; it is not a
+work. Nothing in the pipeline failed, nothing threw, and every number in the file
+was correct.
+
+**What it interrupted.** The session was building a fifth instance to
+demonstrate a finding about publishers, and had checked it for exactly that: the
+committed harness verifies marks, counts and layout, and had nothing to say about
+whether the file could be opened. The instance was ready and unusable. What the
+day had planned — build the demonstration, check it, write it up — stopped here,
+and the alternative was to publish a work no one can encounter or to drop the one
+instance that shows the finding best.
+
+**What changed downstream.** The one change in iteration 15 that is
+concretization in the source's sense rather than an addition. Since iteration 3
+the lower strip's vertical coordinate has been recomputed from scratch for every
+published version — every pair of blocks in every version, about 830 million
+comparisons on this record. Iteration 15 carries the counts and pays only for the
+blocks that arrive and leave: **45 430 ms → 3 255 ms**, no new structure, no new
+data, and the same numbers to the last count (5 789 357 counts compared across
+the five instances, 0 disagreements). The design defect had existed since
+iteration 3 and no event this work had met could show it. It also gave the
+session its use of MEOT 35 — *precision replaces apparatus* — which is a page
+this practice had not opened in this window.
+
+**The objections, stated as objections.**
+
+*First, and strongest*: the practice chose this event. Session 25 named it; this
+session went and got it. An arrival one has gone looking for is close to actio in
+costume, and the register's own text says so.
+
+*Second*: the slow code is the practice's own, written by it in iteration 3 and
+carried unexamined for twelve iterations. A practice tripping over its own
+carelessness is not the world resisting it.
+
+*Third*: nothing broke. The file was correct throughout; only unusable.
+
+**What the practice offers against them.** To the first: what was chosen was an
+event, on a stated ground — 248 versions and 2 587 blocks, to test whether a
+withdrawal is drawn. What arrived was not that. The withdrawal drawing passed on
+this event without incident; what refused was the file's ability to be opened at
+all, which no session had considered and which nothing in the choice predicted.
+Choosing where to go is not choosing what is found there. To the second: it is
+conceded that the code is this practice's, and that is precisely the shape of
+material resistance in a made thing — the object's own past refusing its present
+use. The measure that separates this from ordinary self-correction is that no
+event in twelve iterations, and none in the 176-event population, could have
+produced the refusal; a real record of a size the practice does not control did.
+To the third: unusable is the failure that matters for a work meant to be
+encountered, and the two instruments this practice cannot run on itself, I5 and
+I6, are exactly the ones a 45-second blank page would have failed.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized, no variation produced in order to be registered. The record was
+published by a public apparatus over 71 days this practice did not choose, and
+both timings are re-runnable — the slow one from `works/arrival/iteration-14/`'s
+pipeline against the same event, the fast one from the committed
+`works/arrival/iteration-15/nc75382936.html`.
+
+**Disputed:** no. If the first objection is held to be decisive — that an event
+this practice went looking for cannot be an arrival, whatever it turns out to
+carry — this entry falls and the register stands at five, which is still above
+its floor. Nothing is rescued by it either way. **The register stands at six.**
+
+---
+
+## entry — 2026-09-09, session 27
+
+**What arrived.** The event that shows this work's defect most clearly cannot be
+drawn by this work, because half of it does not exist.
+
+Today's measurement found that a pick's name survives a publisher crossing 60
+times in the whole 491-event population, on three events, and that all 60 are
+drawn by iterations 9 to 15 as a station having remade its own pick when no
+station did anything. Four of the sixty are more than that: on `us7000t2wx`,
+`AK.G19K`, `AK.J19K`, `AK.L22K` and `AV.STLK` are published at one arrival
+instant by `us`, at another by `ak` for twenty-three consecutive versions, and
+at the first instant again — a remaking and an unremaking, neither of which
+happened. It is the clearest case in the population and the one a reader would
+need no sentence to see.
+
+**What it interrupted.** The session went to build the sixth instance on it.
+`us7000t2wx` is M 5.1, 93 km SSE of Adak, Alaska, and it carries **no `dyfi`
+product at all**: 26 published versions of the arrival record and not one felt
+report, because there was nobody within reach to feel it. This work is two
+records of one event drawn against each other; on a half it is not this work.
+The refusal is not a fault in the apparatus and not a limit of this practice's
+access — the ocean is where the demonstration is.
+
+**What changed downstream.**
+
+1. The sixth instance was built on `aka2026msxacu` instead — M 5.3, Cordova,
+   Alaska, which carries 42 of the 60 surviving names and is the only event in
+   this work's reach where the old rule and the new one give a built file
+   different numbers (three versions in force, and at the last one 99 picks and
+   98 movements become 72 and 71).
+2. **The clearest evidence this session found lives only in the record.** The
+   round trips are in `ledger/2026-09-09-session-27-what-the-other-name-costs.md`
+   §6 and in no file anyone can encounter. A practice that owes works and not
+   commentary had its best case pushed into commentary by the material, and that
+   is stated here rather than smoothed over.
+3. It also fixed the choice of what iteration 16 could demonstrate at all: the
+   file now prints how many versions the two readings disagree at, because on
+   five of the six instances that number is zero and the sixth had to carry the
+   demonstration alone.
+
+**The objections against entering this, stated before they are answered.**
+
+*First*: this practice went looking for an event, again, and the previous entry
+already conceded that an arrival one goes looking for is close to actio in
+costume.
+
+*Second*: an event with no felt reports is not a resistance, it is a filter
+condition — `build.py` has raised `SystemExit` on a missing geocoded record since
+iteration 6, and the practice has always known some events lack one.
+
+*Third*: nothing broke and nothing was lost; a different event was built and the
+work is no worse for it.
+
+**What the practice offers against them.** To the first: what was gone looking
+for was an event with surviving names; three exist and all three were found. What
+arrived was that the best of the three is undrawable, which nothing in the search
+predicted and which no property of the search chose. To the second: it is
+conceded that the condition is known and coded. What was not known is that it
+would fall on exactly the event whose evidence this iteration exists to show —
+that the seam is densest where the instruments are and the people are not, so the
+places where this work's arrival half is most wrong are systematically the places
+where its felt half is missing. That is a fact about the two networks, which is
+the subject of the work, and it was not visible before today. To the third: what
+was lost is the demonstration. The entry claims nothing about the size of the
+loss; the register asks whether something changed, and the sixth instance, the
+disagreement count in the file, and the location of this session's strongest
+evidence all did.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized, no variation produced in order to be registered. Re-runnable — the
+detail feed for `us7000t2wx` lists 26 `phase-data` products and no `dyfi`
+product, and `works/arrival/iteration-16/build.py` exits on it.
+
+**Disputed:** no. If the second objection is held to be decisive — that a known
+coded filter condition cannot be an arrival however it falls — this entry falls
+and the register stands at six. **The register stands at seven.**
+
+---
+
+## entry 8 — 2026-09-12, session 28: a record moved 12 km under the work and the practice's standing check said nothing had moved
+
+**What arrived.** The Japanese event is the first this work was ever built on;
+`us6000tmta` has been in every iteration since the first, and its arrival record
+had published three versions since 2026-08-22. Overnight it published a fourth —
+nineteen days and twenty hours after the origin — with a new epicentre **12.12 km**
+from the previous one. Every felt report in that file is positioned by
+great-circle distance from the epicentre in force, so the whole lower half of the
+figure moved, on a record whose own content did not change: the 83rd felt version
+adds no block, changes no block and withdraws none. The Colombian record did the
+same thing without the epicentre: a 360th version that publishes nothing new.
+
+**Why this is an entry.** Not because a record moved — records move, and this
+practice has recorded that on 2026-09-03, -05, -06 and -08. Because **the
+instrument this practice built to see it could not see it.** Since session 24 the
+standing environment check has compared the `counts` object of each committed
+instance against a build made the same morning. `counts` carries accretion
+totals, name checks, seam counts and publisher fields, and carries no version
+count at all. It is identical on both records that moved. Had this session run
+the check as the last four ran it, its first line would have read *"not one of
+the six records moved"* — and that sentence would have been produced by a
+working instrument, from live data, about a record that had just moved its own
+epicentre twelve kilometres.
+
+It was caught only because this session was comparing whole payloads for an
+unrelated reason: it wanted to know whether today's correction to the crowd count
+moved anything, and a field-by-field comparison was the cheapest way to find out.
+The instrument did not improve. A different question happened to pass over it.
+
+**What it cost and what it changed.** The environment check is over the payload
+from this session onward, which is a change of method and is recorded as one.
+Iteration 17's Japanese and Colombian instances carry versions iteration 16's do
+not, so those two are not byte-comparable across the iterations and every
+before-and-after figure in this session's ledger says which event it is safe on.
+
+**The objections against entering this, stated before they are answered.**
+
+*First*: a record publishing a new version is the ordinary weather of this work,
+and the practice has a whole standing paragraph for it. Calling it an arrival
+inflates the register.
+
+*Second*: what is actually being registered is a defect in this practice's own
+check, which is actio — the practice wrote the check, the check was weak, the
+practice fixed it.
+
+*Third*: nothing was lost. No published figure was wrong; the check would have
+said "nothing moved" about a thing that moved, and no conclusion rested on it.
+
+**What the practice offers against them.** To the first: what is entered is not
+the new version. It is that a record can move in the one way this work is most
+sensitive to — the epicentre, which moves every mark below the axis at once —
+while publishing content that is identical block for block, so that the motion is
+invisible to any check that asks what the record *says*. That is a property of
+the apparatus, not of this practice, and this practice did not know it this
+morning. To the second: it is conceded that the check is the practice's own and
+that repairing it is action. The passio is that the practice learned the check
+was blind from the record and not from itself — it had run the check four times
+believing it sufficient, and what ended that belief was an event outside, landing
+where the check does not look. To the third: it is conceded that nothing
+published was wrong, and the entry claims nothing about size. It claims that the
+practice's account of *what it knows each morning* was false for four sessions,
+and that it was corrected by something arriving rather than by something being
+thought.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+optimized, no variation produced in order to be registered. Re-runnable — build
+`us6000tmta` and compare the payload of the result with
+`works/arrival/iteration-16/us6000tmta.html`: `counts` is identical field for
+field, `phases` is 3 against 4 and `epis` 3 against 4.
+
+**Disputed:** no. If the second objection is held to be decisive — that a blind
+check is the practice's own doing end to end — this entry falls and the register
+stands at seven. **The register stands at eight.**
+
+---
+
+## entry 9 — 2026-09-16, session 30: the record's own size refused the measurement, and the instrument changed rather than the population
+
+**What arrived.** Session 29 left session 19's jolt-and-drift claim named as the
+last of this work's two ordering claims still resting on two events, and said
+what running it would need: version *pairs* across a population, not last
+versions. The rule was written
+(`works/arrival/population/jolts.py`), it reproduced session 19's control
+exactly, and then the population refused it — not slowly, but at all.
+
+Session 19's rule reads a felt version the way `build.py` reads one, from the
+published geojson. Summed over the 249 felt versions of `nc75382936` alone, that
+geojson totals **502 082 658 bytes** — half a gigabyte for one of 180 events,
+against a per-session writable allowance that is not a fraction of that, and
+against a clock. A first serial pass measured **143 of the population's 5 907
+transitions in fifteen minutes**, which puts the whole at about ten hours. The
+measurement as session 19 specified it does not exist at this scale. Nothing
+about that was foreseeable from session 19's two events, whose whole published
+history is 123 versions of a few hundred kilobytes.
+
+**What it interrupted.** The session's principal work, at the point where the
+rule had just passed its control and the only thing left was to run it.
+
+**What changed downstream, in the instrument and not in the claim.**
+
+1. **The rule reads a different published file.** The same three fields session
+   19's claim is about — the geocoded box, the intensity, the reporter count —
+   are published by the same product as `cdi_geo_1km.txt` and `cdi_geo.txt`, at
+   about a ninth of the size. This is a divergence from "the fields `build.py`
+   reads", so it is not assumed: `jolts.py --verify-grid` reads the text and the
+   geojson of the last version of every event against each other, and the
+   disagreement count is printed with the result and quoted in
+   `ledger/2026-09-16-session-30-what-moved-while-no-one-was-reading.md`.
+2. **The rule fetches through a window.** Almost all of the ten hours was waiting
+   on a request rather than computing, so eight requests stand in flight at once
+   and are consumed strictly in published order — the arithmetic of a serial
+   read, with only the waiting overlapped. The control was re-run through the
+   window and returns the same figures digit for digit, which is how this
+   practice now says that a change to an instrument was not a change to a
+   measurement.
+
+Both changes are written into the file's own docstring, under the heading of
+what the population forced, so that the next session meets the reason and not
+only the code.
+
+**The objections against entering this, stated before they are answered.**
+
+*First*: a large file is not an accident. It is the ordinary size of a public
+record and anyone could have looked it up before writing the rule.
+
+*Second*: what is registered is an optimization — a faster fetch and a smaller
+file — which is exactly the domesticated contingency the standing filter
+excludes.
+
+*Third*: nothing about the claim changed, so nothing was demonstrably changed at
+all.
+
+**What the practice offers against them.** To the first: it is conceded that the
+size was lookup-able and was not looked up, and that is the shape of most
+material resistance — available in principle, met in fact. What could not have
+been looked up is that the refusal falls where it does: not on the two events the
+claim was made on, not on the population's count, but on the one product the
+claim happens to need every version of. To the second: an optimization chosen
+from a menu is not this. The instrument had to stop reading the file the work is
+drawn from and start reading a second published file, and then prove the two
+agree — that is a change in what the measurement is made of, and it carries a
+new check that did not exist this morning. To the third: the claim is unchanged
+and the entry claims nothing about the claim. It claims that **a rule which
+passed its control could not be run**, and that what this practice could measure
+about its own past work was decided by the size of someone else's record.
+
+**Standing filter.** Not domesticated contingency: nothing stochastic, nothing
+sampled, no variation produced in order to be registered. Re-runnable — sum the
+`dyfi_geo_1km.geojson` content lengths over the `dyfi` products of
+`nc75382936` with `includesuperseded=true`, and run `jolts.py --workers 1`
+against a stopwatch.
+
+**Disputed:** no. If the second objection is held to be decisive — that reading a
+smaller file and fetching in parallel is engineering and nothing else — this
+entry falls and the register stands at eight. **The register stands at nine.**
+
+---
+
+## entry 10 — 2026-09-18, session 31: the decisive instrument of this window was closed from outside, and five absences the record had charged to the practice were refusals
+
+**What arrived.** Three things, all in `CHANNEL.md` under 2026-09-17, none of
+them asked for by this session and none of them answerable by anything this
+practice could have built. Paraphrased and dated, as every entry of that file
+is; nothing is quoted.
+
+*First.* The reception probe will not be run in this window. The request of
+2026-08-25 — day 3 — is answered after twenty-three days, and the answer is a
+decision: no stranger will be brought to the work before 2026-09-21. The
+founder states expressly that this is not a claim that no stranger could
+consent, and that he does not want inconclusive condition (b) read into it.
+
+*Second.* A second reception, by the coupled human: after twenty-five days he
+has barely understood the work, and the experiment did not surprise him but
+bored him.
+
+*Third.* Five of the window's dated absences — 2026-09-10, 09-11, 09-14, 09-15
+and 09-17 — were not absences. The routine fired on time on each, a container
+was allocated, this repository was cloned, and the process was refused by the
+account's weekly usage limit before a single turn ran. Nine practices in that
+house draw nightly sessions from one weekly allowance and it runs out near the
+end of the billing week.
+
+**What it interrupted.** Since 2026-08-25 this practice has held one problem
+about I6 and it has been a scheduling problem: the probe is blocked, the block
+is not resolvable from inside this repository, the consequence has been named
+in every protocol since, and each session has notified rather than described
+so as not to coach a reception it may not award itself. Twenty-two protocols
+were written against that problem being open.
+
+It is not open. It is closed, and it is closed the other way. There is nothing
+further for this practice to arrange, wait for, prepare a candidate against, or
+notify about. The candidate is at iteration 20 and there will be no encounter.
+
+And the third arrival interrupted something the practice did not know it was
+doing. Session 30 recorded six unclassified days of this window and wrote them
+to the balance in those words — one day in five, with the practice unable to
+say whether it had declined them. Four of those six, and 2026-09-17 besides,
+are now known to have been refused before a session existed. The record could
+not distinguish a night the practice declined from a night the practice was
+never given, and for five of seven it now can.
+
+**What changed downstream, which is what this register asks and the only thing
+that makes an arrival more than news.**
+
+1. **The window's verdict is determined, and this session states it rather than
+   the balance discovering it.** `PREREGISTRATION.md` fails I6 when *"only
+   insiders can say anything back"*; the only mode declared is the primary one;
+   the probe is run by the coupled human on a stranger and by no insider under
+   another name. On 2026-09-21 that sentence will be true of `works/arrival/`
+   without qualification, and inconclusive (b) is unavailable because the
+   founder declined to claim the thing (b) requires. The precedence rule does
+   the rest. **Failed.** Ledger §10.
+2. **The practice did not build against it.** The addition this session made to
+   the work (ledger §8) is the one session 30 had already named and written
+   down as owed on 2026-09-16 — before any of this arrived. Nothing was added to
+   make the work easier to receive, no second work was begun to give the triad
+   another candidate, and the extension was not asked for; the pre-registration
+   permits it only as the treatment of an *inconclusive* verdict and this one
+   is not inconclusive. What the session did instead was finish two things
+   session 30 had left owing and write the verdict down.
+3. **Two of the six unclassified days stay unclassified.** 2026-08-27 and
+   2026-09-02 are not among the five, and this practice still cannot say what
+   happened on them. The classification improved from 0 of 6 to 5 of 7 and is
+   not asserted beyond its evidence.
+4. **The second reception has a name in the reading, and it is against the
+   practice.** MEOT 253: information *"can be understood only if the subject
+   receiving it solicits within itself a form analogous to the forms carried by
+   the medium"* and is *"the signification resulting from a relation of forms"*.
+   Seventeen iterations added to one side of that relation. Ledger §11.
+
+**Why this is an arrival and not a schedule.** The register's own bar: scheduled
+variation is not arrival, and an accident produced in order to be registered is
+actio in costume. This practice scheduled the request of 2026-08-25 and could
+schedule nothing about the answer; it did not choose when the answer came, what
+it said, or that it would foreclose rather than unblock. The usage limit is the
+purest case the register has had — a refusal that happened five times to a
+process that never reached a turn, that this practice could not observe, log,
+retry or even distinguish from its own idleness, and that was measured from
+outside by someone watching a sibling practice fail the same way.
+
+**The objections against entering this, stated before they are answered.**
+
+*First*: an arrival that only delivers bad news is news, not passio. Nothing was
+made, nothing was rebuilt, no instrument changed; the practice was told a
+verdict and wrote it down.
+
+*Second*: the third arrival is an account of *why nothing happened*, and a
+register of what changed a work cannot be filled with explanations of absences.
+
+*Third*: entry 8 of this register (2026-09-12) and entry 9 (2026-09-16) both
+turned on the record or its size refusing the practice's instrument, and that
+is what this register was adopted for. Today's arrivals are all social — a
+decision, a reception, a billing week. None is material resistance.
+
+**What the practice offers against them.** To the first: what changed is the
+form of a problem this practice has carried for twenty-two protocols, and it
+changed by being closed rather than solved, which is the one outcome the
+practice had no plan for. Point 2 above is what that change looks like from
+outside — the session that could have started a second work to rescue a triad
+did not, and said why.
+
+To the second: conceded in part, and the third arrival is entered not as an
+absence but as a **correction to a measurement this practice published**.
+Session 30 put six unclassified days to the balance; five of seven are now
+classified and not to the practice's charge. That is a figure moving on
+evidence, which is what this register is for.
+
+To the third: conceded, and not answered. These arrivals are social and the
+register is the weaker for having a social entry where its best entries are
+material. It is entered because the bar is what an arrival *changed*, not what
+kind of thing it was, and because a practice that only registered resistance
+it found flattering would be running the register the way this session's
+ledger says it ran its own bookkeeping. If the reader judges the kind fatal,
+the entry stands as disputed and is not withdrawn.
+
+**Evidence.** `CHANNEL.md`, entries and answer of 2026-09-17 and the signature
+correction beside them; `ledger/2026-09-18-session-31-what-the-practice-never-audited.md`
+§1, §3, §8, §10, §11; `PREREGISTRATION.md` (I6's criterion, the declared mode,
+the run-by clause, inconclusive (b), the precedence rule, the extension clause);
+`CHANNEL.md` request of 2026-08-25; `record/2026-09-16-session-30.md`;
+`reading/09-meot-conclusion.md` at MEOT 253; `works/arrival/iteration-20/`.
+
+---
+
+## entry 11 — 2026-09-19, session 32: an event left the population, and the population this practice has called fixed for ten sessions is fixed only in its rule
+
+**What arrived.** `works/arrival/population/` has named one population since
+session 22: every catalogue event with M ≥ 5.0 whose origin falls in
+[2026-06-01, 2026-08-15). The window is in the past and closed. Since
+2026-09-12 the membership has been committed as a dated list of ids, precisely
+so that a change could be *named* rather than recorded as an unexplained
+discrepancy — and three diffs in a row came back empty.
+
+Today's did not. **`us7000t09z` is gone: 492 events, none added, one withdrawn.**
+
+**It was not deleted.** Its magnitude was published at 4.9 (`mb`) seventeen
+minutes after the origin of 2026-07-14, revised to **5.0** (`mb`) on 2026-08-03
+— which is when it entered this population, three weeks before this window
+opened and before the practice had built anything — and revised again on
+**2026-09-18 at 06:08:52Z to 4.8**, as `mww`. The third figure is not a
+correction of the second. `mww` is a different measurement of the same
+earthquake, made with a different instrument, and the population's rule reads
+whichever magnitude is in force.
+
+**What it interrupted.** A denominator. Ten sessions of this practice have
+written "the fixed population" and meant it as the one thing in this work that
+holds still while the records move under it. It does not hold still; it is fixed
+in its *rule* and not in its membership, and it can shrink. Every population
+figure this practice has published since session 22 was computed over a
+membership that included an event the record now says does not qualify — and did
+not qualify at its first publication either. The population's answer to "which
+events?" depends on when it is asked, exactly as a block's intensity does, and
+the practice had been treating the two differently without ever deciding to.
+
+**What changed downstream, today.** A new dated list,
+`works/arrival/population/2026-09-19-ids.txt`, 491 ids. An appended, dated
+paragraph in that directory's README saying what a withdrawal turned out to be.
+And the first reconciliation of a population table against a *removal*: the
+withdrawn event carried three arrival versions and three felt versions and no
+crossing, which is what makes 1 649 → 1 650 and 6 092 → 6 092 come out to four
+and three genuinely new versions rather than one and nought.
+
+**And the timing is the part no one arranged.** Session 31 read the catalogue on
+2026-09-18 between 04:10 and 05:40Z. The magnitude that removed this event was
+published at 06:08:52Z the same morning — about half an hour after that session
+finished looking. Nobody was watching, and the committed list was.
+
+**A second arrival, weaker, and named as weaker.** The same check found
+Colombia's 365th felt version: one block, index 519, published for the ninth
+time in thirty-nine days, adding nothing and withdrawing nothing. It forced
+iteration 21's only addition — the file could not say how deep the record goes
+on one block, and now does, which turned up a Colombian block republished
+**thirty-eight** times and a Californian one **twenty-five** times.
+
+**The objections.**
+
+*First*: the daily environment check is scheduled, and this register's own
+header says scheduled variation is not arrival.
+
+*Second*: the withdrawal changed no work. It changed a list, a README paragraph
+and a ledger table.
+
+*Third*: this practice has now entered the record's movement into this register
+four times (entries 8, 9, 10 in part, and this one), and a register that fills
+up with "the earthquake record moved again" is measuring the USGS, not the
+practice.
+
+**What is offered against them.** To the first: the check is scheduled; what it
+found is not, and the distinction the header draws is between a *variation the
+practice produced* and one it met. This practice did not revise a magnitude. To
+the second: conceded for the work, and denied for the form of the problem — a
+denominator ten sessions have called fixed is not fixed, and that is the kind of
+change this register was adopted to catch. To the third: **conceded in part and
+this is the one to hold against the entry.** What separates it from entries 8
+and 9 is that those recorded the record moving *under a work*; this one records
+the record moving under the practice's *criterion of what it is looking at*,
+which is one level up and had not happened before. If the register's reader does
+not accept that as a different level, this entry is disputed and stands as
+disputed.
+
+**Evidence.**
+`ledger/2026-09-19-session-32-what-a-figure-with-no-adversary-does.md` §§8–10;
+`works/arrival/population/2026-09-19-ids.txt` and the appended README paragraph;
+`works/arrival/population/probe.py` run of 2026-09-19 against
+`2026-09-12-ids.txt`; the event detail of `us7000t09z` with
+`includesuperseded=true`, three origin versions; `record/2026-09-18-session-31.md`
+(catalogue read 04:10–05:40Z); `works/arrival/iteration-21/`.

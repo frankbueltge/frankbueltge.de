@@ -1,0 +1,62 @@
+{
+ "_status": "POST-HOC, DECLARED. Written after P6 fired. It does not revise P6's verdict, which stands refuted as written; it measures what the control was built to detect, and files the bar itself as a defect of the pre-registration.",
+ "generated_by": "presentations/cycle-003/p6.py",
+ "date": "2026-09-13",
+ "session": 159,
+ "defect": "PREREGISTRATION.md §3.3 P6 set an absolute bar of 0.05 points between a rung that is the mean of five seeded 521-record draws and a rung that is the whole population. The standard error of such a mean is about 1 point for a rate near one half, so the bar could not be met by any correct implementation. This is the same class of defect as the unreachable concentration bar of 2026-09-11 and is filed beside it. The verdict is left as written.",
+ "bottom_rung_n": 521,
+ "bottom_rung_draws": 5,
+ "full_population_n": 152155,
+ "rules": {
+  "r1_chrome_pct": {
+   "at_bottom_rung": 0.15,
+   "bottom_rung_sd_across_draws": 0.21,
+   "bottom_rung_standard_error_of_the_mean": 0.0939,
+   "at_full_population": 0.29,
+   "difference_points": 0.14,
+   "difference_in_standard_errors": 1.49,
+   "size_free_by_construction": true
+  },
+  "r2_truncated_tail_pct": {
+   "at_bottom_rung": 49.9,
+   "bottom_rung_sd_across_draws": 1.273,
+   "bottom_rung_standard_error_of_the_mean": 0.5693,
+   "at_full_population": 50.4,
+   "difference_points": 0.5,
+   "difference_in_standard_errors": 0.88,
+   "size_free_by_construction": true
+  },
+  "r3_truncated_head_pct": {
+   "at_bottom_rung": 1.11,
+   "bottom_rung_sd_across_draws": 0.497,
+   "bottom_rung_standard_error_of_the_mean": 0.2223,
+   "at_full_population": 0.97,
+   "difference_points": -0.14,
+   "difference_in_standard_errors": 0.63,
+   "size_free_by_construction": true
+  },
+  "not_unique_pct": {
+   "at_bottom_rung": 52.78,
+   "bottom_rung_sd_across_draws": 2.378,
+   "bottom_rung_standard_error_of_the_mean": 1.0635,
+   "at_full_population": 79.43,
+   "difference_points": 26.65,
+   "difference_in_standard_errors": 25.06,
+   "size_free_by_construction": false
+  },
+  "r4_duplicate_pct": {
+   "at_bottom_rung": 24.84,
+   "bottom_rung_sd_across_draws": 2.484,
+   "bottom_rung_standard_error_of_the_mean": 1.1109,
+   "at_full_population": 44.18,
+   "difference_points": 19.34,
+   "difference_in_standard_errors": 17.41,
+   "size_free_by_construction": false
+  }
+ },
+ "reading": {
+  "size_free_rules_max_standard_errors": 1.49,
+  "narrowing_standard_errors": 25.06,
+  "_note": "R1-R3 are computed once per record in tools/room/room.py, before any subsample is drawn, so nothing in the code can make them depend on catalogue size; the only source of movement is which records the draw contains. That is an argument from reading the code. The numbers above are the measurement."
+ }
+}

@@ -19,6 +19,8 @@ on:
 permissions:
   contents: write
   issues: write
+  # to start deploy-cf.yml when another workflow started this run (see the last steps)
+  actions: write
 
 concurrency:
   group: studio-integrate
@@ -66,7 +68,19 @@ jobs:
           # the channel was split so the practice stops carrying 34 142 words of answered history
           # into every session. The archive must travel with it, or the public record would lose
           # exactly what the cut removed.
-          for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md SITE-API.md; do [ -f "/tmp/studio/$f" ] && cp "/tmp/studio/$f" "src/content/studio/$f" || true; done
+          for f in PROTOCOL.md README.md REQUESTS.md REQUESTS-ARCHIVE.md SITE-API.md BULLETIN.md; do [ -f "/tmp/studio/$f" ] && cp "/tmp/studio/$f" "src/content/studio/$f" || true; done
+          # v3 (2026-08-30/31): the practice's own public artifacts, mirrored BARE — closing
+          # report, cycle artifacts and cycle presentations. They are self-contained pages and
+          # the house adds no paratext; /ecology links them (src/lib/ecology/v3.ts). Mirrored
+          # with --delete so a withdrawn artifact disappears here too.
+          for d in closing-report artifacts presentations; do
+            if [ -d "/tmp/studio/$d" ]; then
+              mkdir -p "public/studio/$d"
+              rsync -a --delete "/tmp/studio/$d/" "public/studio/$d/"
+            else
+              rm -rf "public/studio/$d"
+            fi
+          done
           # Chronicle self-report from the engine repo root (see the chronicle contract in
           # SITE-API.md) — absence is not an error; malformed content fails the build gate
           # below via the zod validation in src/lib/studio/chronicle.ts.
@@ -82,6 +96,12 @@ jobs:
           # on the site: the station's door renders only where this mirror carries an index.html.
           rm -rf public/studio/window
           if [ -d /tmp/studio/window ]; then mkdir -p public/studio/window && cp -R /tmp/studio/window/. public/studio/window/; fi
+          # The practice's head this mirror now carries (2026-10-07): the practice watch
+          # (practice-watch.yml) starts this gate when the practice's head and this file differ
+          # for longer than the practice's own dispatch takes — the net under a lost dispatch.
+          # Committed even when nothing else changed, so the watch never asks twice for one head.
+          mkdir -p .github/state
+          git -C /tmp/studio rev-parse HEAD > .github/state/studio-mirror-head
 
       # The graph is derived from what this mirror just wrote (a work's meta.json, the
       # attention export, the encounters register). Deriving it HERE, before validation, is what
@@ -99,14 +119,15 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph public/studio/werke-html public/studio/window)" ]; then
+          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph public/studio/werke-html public/studio/window public/studio/closing-report public/studio/artifacts public/studio/presentations .github/state/studio-mirror-head)" ]; then
             git config user.name "Studio-Integrate"
             git config user.email "studio-integrate@frankbueltge.de"
-            git add -A src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph
+            git add -A src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json src/data/graph .github/state/studio-mirror-head
             if [ -d public/studio/werke-html ]; then git add -A public/studio/werke-html; fi
             # `|| true`: the add must survive all three states — window present, window removed
             # (tracked entries record the deletion), and window never present (unmatched pathspec).
             git add -A public/studio/window 2>/dev/null || true
+            for d in closing-report artifacts presentations; do git add -A "public/studio/$d" 2>/dev/null || true; done
             git commit -m "studio: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
               git pull --rebase --autostash origin main && git push && break
@@ -121,6 +142,18 @@ jobs:
           else
             echo "no changes"
           fi
+
+      # A run started by another workflow with the built-in token (the practice watch, the mirror
+      # watch, a sentinel retry) ends without a workflow_run event — GitHub creates none for a run
+      # the built-in token started — so deploy-cf.yml never hears of what it committed. Seen on
+      # 2026-10-07: four mirrors committed between 17:59 and 18:05 UTC and stood undeployed. Such
+      # a run starts the deploy itself; a run started by a schedule, a practice's dispatch or a
+      # person still reaches deploy-cf.yml through workflow_run and does not ask twice.
+      - name: Deploy what this run committed (when another workflow started it)
+        if: success() && github.triggering_actor == 'github-actions[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main
 
       - name: Rejection feedback to the engine repo (green builds too)
         if: success()

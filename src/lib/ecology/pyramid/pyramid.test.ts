@@ -3,6 +3,12 @@
 // Everything on these four levels is derived, so a wrong derivation does not crash — it renders a
 // plausible number. That is the failure mode these tests exist for: each one below pins a place
 // where the surface would have looked completely fine while saying something untrue.
+//
+// Dated note (2026-09-01): the station sheets left the routes — /field, /atelier and /studio
+// render the v3 practice station template now (src/components/ecology/PracticeStation.astro),
+// and StationSheet.astro is retired in the repo, unlinked. The libraries below stay: DOORS,
+// windowDoor and splitDoorLine are load-bearing for the new template, and buildStationSheet
+// with the rest remains the archived surface's derivation, still held to its own truth.
 
 import { describe, expect, it } from 'vitest'
 import { daysUntil, readingDate, STATIONS, PRACTICE_STATIONS, MAP_NODES } from './model'
@@ -43,9 +49,14 @@ describe('the stations', () => {
 })
 
 describe('the reading', () => {
-  it('reads the date out of the practices’ own constitutions', () => {
-    expect(readingDate()).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+  it('returns null since the reading was held — the v3 constitutions carry no reading section', () => {
+    // Until 2026-08-30 every constitution carried "## The reading of 2026-09-05" and this
+    // test read the date out of the files. The reading was held early on 2026-08-30
+    // (docs/design/2026-08-30-research-ecology-v3.md); the v4/v7/v4 texts carry no reading
+    // section, and the honest derivation is null, not a thrown build.
+    expect(readingDate()).toBeNull()
   })
+
 
   it('fails loudly when the practices disagree about when they are read', () => {
     // The alternative — picking one silently — would put a date on the entrance that no
@@ -58,8 +69,8 @@ describe('the reading', () => {
     ).toThrow(/disagree/)
   })
 
-  it('fails loudly when no constitution carries the reading at all', () => {
-    expect(() => readingDate({ '/src/content/a/PROTOCOL.md': '# Research Protocol v6' })).toThrow(/no mirrored constitution/)
+  it('returns null when no constitution carries a reading — absence is a state, not a failure', () => {
+    expect(readingDate({ '/src/content/a/PROTOCOL.md': '# Research Protocol v6' })).toBeNull()
   })
 
   it('does not ask the Plenum, whose own protocol says the reading does not cover it', () => {
@@ -235,6 +246,17 @@ describe('the station sheet', () => {
     expect(law.version).toBe('v2')
     expect(law.adopted).toBe('2026-08-08')
     expect(law.name).toBe('works of force')
+  })
+
+  it('reads the research ecology v3 protocols’ "Decided by … at the reading of" phrasing', () => {
+    const law = readConstitution('x', {
+      '/src/content/x/PROTOCOL.md':
+        '# Research Protocol v4 — one shared question, the science corner\n\n' +
+        '*Research ecology v3. Decided by the architect (Frank Bültge) at the reading of\n' +
+        '2026-08-30 — the reading planned for 2026-09-05, held early at his decision —*',
+    })
+    expect(law.version).toBe('v4')
+    expect(law.adopted).toBe('2026-08-30')
   })
 
   it('fails loudly on a mirror with no version, rather than defaulting to one', () => {

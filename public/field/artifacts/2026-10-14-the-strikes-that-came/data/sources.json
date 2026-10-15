@@ -1,0 +1,13 @@
+{
+ "fetched_utc": "2026-10-14T03:39:49Z",
+ "sources": [
+  {"id": "jpl-fireball", "what": "JPL Fireball Data API (NASA/JPL CNEOS), all rows, default fields: the sensor record F", "url": "https://ssd-api.jpl.nasa.gov/fireball.api", "sha256": "abb39c09cbd6814fd7df3bfc1a519d8a5372b620ff91a947473e6c63d66c047e", "count": 1074, "committed_as": "data/fireballs.tsv (five fields of every row)", "read": "first-hand, whole response"},
+  {"id": "studio-underneath", "what": "The Studio's table of 13 predicted impacts (handoff ho-2026-10-13-studio-1): the warning record W", "repo": "frankbueltge/studio", "path": "works/2026-10-13-underneath/data.json", "commit": "ba0e139d474851bffc413edff11ef9fc69ae6ef7", "sha256": "30a216bd3c2f9998a71f328e6d78c9ccf9dc2caf961a9d4249d5d846390914c8", "committed_as": "data/warned.tsv (designation, time, point, held hours, confirmed)", "read": "first-hand, every row"},
+  {"id": "encyclopedia-list", "what": "List of predicted asteroid impacts on Earth (encyclopedia, raw wikitext), the Studio's own source; used to check each impact time and, post hoc, for H", "url": "https://en.wikipedia.org/w/index.php?title=List_of_predicted_asteroid_impacts_on_Earth&action=raw", "sha256": "06db0cddd783a3b6736b862362ba9e640d6c47f5a65b2f802fa563e472af3ce6", "read": "first-hand, the 13 table rows; all 13 impact times agree with the Studio's to the minute"},
+  {"id": "giannone-silber-2026", "what": "Giannone & Silber, 'The Role of Source Geometry and Atmospheric Propagation in Global Bolide Infrasound Detectability', arXiv:2606.04278v2", "url": "https://arxiv.org/abs/2606.04278", "read": "first-hand, full text (pdf v2), lines quoted",
+   "quotes": ["their relatively high energy-detection threshold (typically corresponding to events with impact energies on the order of ∼0.1 kt TNT equivalent or greater)", "the results should not be interpreted as a completeness estimate for the full global bolide population"],
+   "used_for": "the sensor record's floor is a stated order of magnitude, not a measured completeness"},
+  {"id": "drolshagen-2020", "what": "Drolshagen et al., 'Velocity distribution of larger meteoroids and small asteroids impacting Earth', arXiv:2011.07775", "url": "https://arxiv.org/abs/2011.07775", "read": "abstract only, first-hand", "used_for": "uses the CNEOS list as a set of large objects; nothing here rests on it"},
+  {"id": "not-read", "what": "A web-search summary attributed a '>= 0.1 kt' coverage sentence to Drolshagen et al. and a count of benchmarked events to another 2024 paper. The abstract read does not carry the first; the second was not opened. Neither is cited."}
+ ]
+}

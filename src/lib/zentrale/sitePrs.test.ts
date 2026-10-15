@@ -48,8 +48,8 @@ describe('enginePrs', () => {
       {
         number: 93,
         ns: 'atelier',
-        persona: 'Ulysses',
-        label: 'Atelier · Ulysses',
+        persona: 'Assay',
+        label: 'Atelier · Assay',
         slug: 'insel-swerve',
         title: 'Insel im Rhizom',
         url: 'https://github.com/frankbueltge/frankbueltge.de/pull/93',

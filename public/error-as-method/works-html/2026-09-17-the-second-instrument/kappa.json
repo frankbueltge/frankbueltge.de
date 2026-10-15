@@ -1,0 +1,78 @@
+{
+ "note": "Chance-corrected agreement between each declared rule and the reader of Session 90.  The instrument arrived with tonight's swerve, after the predictions were scored; it is reported beside them and never in place of them.",
+ "source": {
+  "authors": "Artstein, R. and Poesio, M.",
+  "title": "Survey Article: Inter-Coder Agreement for Computational Linguistics",
+  "venue": "Computational Linguistics 34(4), 555-596",
+  "year": 2008,
+  "url": "https://aclanthology.org/J08-4004/",
+  "pdf": "https://aclanthology.org/J08-4004.pdf",
+  "read": "at primary, 2026-09-17, whole PDF extracted; 42 pages"
+ },
+ "thresholds_this_field_uses": {
+  "quoted": "\"ever since Carletta's influential paper, CL researchers have attempted to achieve a value of K (more seldom, of alpha) above the 0.8 threshold, or, failing that, the 0.67 level allowing for 'tentative conclusions.' However, the description of the 0.67 boundary in Krippendorff (1980) was actually 'highly tentative and cautious,' and in later work Krippendorff clearly considers 0.8 the absolute minimum value of alpha to accept for any serious purpose: 'Even a cutoff point of alpha = .800 ... is a pretty low standard' (Krippendorff 2004a, page 242).\"",
+  "where": "Artstein & Poesio 2008, p. 576 (printed page number on the page carrying the quote)",
+  "caution": "the survey's own argument is that these cutoffs are contested and that a coefficient is harder to interpret than to compute; they are quoted here as the convention this line did not know it was writing against, not as a law."
+ },
+ "by_rule": {
+  "R1_adjacent_subject": {
+   "n": 40,
+   "observed_agreement": 0.55,
+   "reader_yes_rate": 0.425,
+   "rule_fire_rate": 0.125,
+   "expected_agreement_kappa": 0.5562,
+   "cohens_kappa": -0.0141,
+   "expected_agreement_pi": 0.6013,
+   "scotts_pi": -0.1285,
+   "confusion": {
+    "tp": 2,
+    "fp": 3,
+    "fn": 15,
+    "tn": 20
+   }
+  },
+  "R2_no_competing_nominal": {
+   "n": 40,
+   "observed_agreement": 0.45,
+   "reader_yes_rate": 0.425,
+   "rule_fire_rate": 0.325,
+   "expected_agreement_kappa": 0.5262,
+   "cohens_kappa": -0.1609,
+   "expected_agreement_pi": 0.5312,
+   "scotts_pi": -0.1733,
+   "confusion": {
+    "tp": 4,
+    "fp": 9,
+    "fn": 13,
+    "tn": 14
+   }
+  },
+  "R3_active_governor": {
+   "n": 40,
+   "observed_agreement": 0.75,
+   "reader_yes_rate": 0.425,
+   "rule_fire_rate": 0.475,
+   "expected_agreement_kappa": 0.5038,
+   "cohens_kappa": 0.4962,
+   "expected_agreement_pi": 0.505,
+   "scotts_pi": 0.4949,
+   "confusion": {
+    "tp": 13,
+    "fp": 6,
+    "fn": 4,
+    "tn": 17
+   }
+  }
+ },
+ "the_coincidence": {
+  "what": "PREDICTIONS.md P1 set its bar at 0.80 agreement.  The field's conventional reliability bar is also 0.80.  They are not the same quantity: mine is observed agreement, the field's is chance-corrected.  The bar was written without knowing the other existed.",
+  "P1_bar_observed_agreement": 0.8,
+  "best_rule_observed_agreement": 0.75,
+  "best_rule_cohens_kappa": 0.4962,
+  "best_rule_scotts_pi": 0.4949,
+  "rules_below_chance": [
+   "R1_adjacent_subject",
+   "R2_no_competing_nominal"
+  ]
+ }
+}

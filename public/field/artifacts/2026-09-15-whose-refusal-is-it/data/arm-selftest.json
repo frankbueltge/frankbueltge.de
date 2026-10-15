@@ -1,0 +1,80 @@
+{
+ "_note": "The arms of PREREGISTRATION.md §2.1, verified against a throwaway server on localhost. What the arm is named for is what leaves the machine.",
+ "arms": {
+  "bare": {
+   "status": 200,
+   "user_agent_received": null,
+   "accept_received": "*/*"
+  },
+  "urllib": {
+   "status": 200,
+   "user_agent_received": "Python-urllib/3.11",
+   "accept_received": "*/*"
+  },
+  "named": {
+   "status": 200,
+   "user_agent_received": "Meridian/1.0 (field research reachability probe; +https://frankbueltge.de/field)",
+   "accept_received": "*/*"
+  }
+ },
+ "network_leg": {
+  "echo_service": "https://httpbin.org/headers",
+  "arms": {
+   "bare": {
+    "status": 200,
+    "user_agent_seen_by_third_party": null,
+    "body_head": "{\n  \"headers\": {\n    \"Accept\": \"*/*\", \n    \"Accept-Encoding\": \"identity\", \n    \"Host\": \"httpbin.org\", \n    \"X-Amzn-Trace-Id\": \"Root=1-6aa8bf6a-0fe9120a6a3d52ed2a0f4e4c\"\n  }\n}\n",
+    "error": null
+   },
+   "urllib": {
+    "status": 200,
+    "user_agent_seen_by_third_party": "Python-urllib/3.11",
+    "body_head": "{\n  \"headers\": {\n    \"Accept\": \"*/*\", \n    \"Accept-Encoding\": \"identity\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"Python-urllib/3.11\", \n    \"X-Amzn-Trace-Id\": \"Root=1-6aa8bf6b-77cd72201f2fbfb94e38c705\"\n  }\n}\n",
+    "error": null
+   },
+   "named": {
+    "status": 200,
+    "user_agent_seen_by_third_party": "Meridian/1.0 (field research reachability probe; +https://frankbueltge.de/field)",
+    "body_head": "{\n  \"headers\": {\n    \"Accept\": \"*/*\", \n    \"Accept-Encoding\": \"identity\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"Meridian/1.0 (field research reachability probe; +https://frankbueltge.de/field)\", \n    \"X-Amzn-Trace-Id\": \"Root=1-6aa8bf6c-298749c85cc739c4265ca254\"\n  }\n}\n",
+    "error": null
+   }
+  },
+  "arms_survive_this_egress": true,
+  "note": "The echoed headers are parsed from the full response body; the body_head field here is a 300-byte excerpt for the reader. An earlier version of this check parsed the 200-byte excerpt and reported a failure that was its own truncation, not the proxy's doing."
+ },
+ "checks": [
+  {
+   "check": "bare sends no User-Agent at all",
+   "pass": true
+  },
+  {
+   "check": "urllib sends the library default",
+   "pass": true
+  },
+  {
+   "check": "named sends this practice's string",
+   "pass": true
+  },
+  {
+   "check": "named names a contact address",
+   "pass": true
+  },
+  {
+   "check": "no arm claims to be a browser",
+   "pass": true
+  },
+  {
+   "check": "the three arms are distinguishable",
+   "pass": true
+  },
+  {
+   "check": "every arm reached the server",
+   "pass": true
+  },
+  {
+   "check": "the arms survive this container's egress proxy intact",
+   "pass": true
+  }
+ ],
+ "failures": []
+}

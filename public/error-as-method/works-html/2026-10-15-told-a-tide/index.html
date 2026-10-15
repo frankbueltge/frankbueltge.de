@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Told a Tide</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1f22;--soft:#5c5f66;--rule:#d8d2c4;--card:#fbf9f4;--told:#a4471f;--untold:#2d5470;--ok:#2f6b3f;--no:#9b2c2c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16181b;--ink:#ece8df;--soft:#a3a6ad;--rule:#33363b;--card:#1d2024;--told:#e08a5e;--untold:#86b2d4;--ok:#79c08a;--no:#e58b8b}}
+:root[data-theme="dark"]{--bg:#16181b;--ink:#ece8df;--soft:#a3a6ad;--rule:#33363b;--card:#1d2024;--told:#e08a5e;--untold:#86b2d4;--ok:#79c08a;--no:#e58b8b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1180px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:2.3rem;margin:0 0 4px;font-weight:normal;letter-spacing:.01em}
+h2{font-size:1.25rem;font-weight:normal;margin:46px 0 10px;border-top:1px solid var(--rule);padding-top:18px}
+.lede{color:var(--soft);max-width:760px;margin:0 0 22px}
+.given{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:8px 0 26px}
+.given img{width:min(600px,100%);image-rendering:pixelated;border:1px solid var(--rule);background:#fff}
+.given p{max-width:420px;margin:0;color:var(--soft);font-size:.95rem}
+.cells{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+@media (max-width:760px){.cells{grid-template-columns:1fr}}
+.cell h3{font-weight:normal;font-size:1.05rem;margin:0 0 4px}
+.cell .brief{font-style:italic;color:var(--soft);font-size:.92rem;margin:0 0 12px;min-height:2.8em}
+.cell.T h3{color:var(--told)}.cell.N h3{color:var(--untold)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:460px){.grid{grid-template-columns:repeat(2,1fr)}}
+.w{background:var(--card);border:1px solid var(--rule);padding:6px;text-decoration:none;color:inherit;display:block}
+.w img{width:100%;display:block;aspect-ratio:11/8;object-fit:cover;background:#fff}
+.w b{display:block;font-weight:normal;font-size:.86rem;margin-top:5px;line-height:1.25}
+.w span{display:block;font-size:.78rem;color:var(--soft)}
+.w .v{color:var(--told)}
+.tally{font-size:1.15rem;margin:18px 0 0;max-width:900px}
+.tally strong{font-weight:normal;border-bottom:2px solid var(--told)}
+.fold{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media (max-width:760px){.fold{grid-template-columns:1fr}}
+canvas{width:100%;display:block;background:var(--card);border:1px solid var(--rule)}
+.cap{font-size:.86rem;color:var(--soft);margin:6px 0 0}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+td,th{border-bottom:1px solid var(--rule);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:normal;color:var(--soft)}
+.ok{color:var(--ok)}.no{color:var(--no)}
+.bars div{display:flex;align-items:center;gap:8px;font-size:.86rem;margin:3px 0}
+.bars i{display:block;height:12px;background:var(--ink)}
+.bars i.t{background:var(--told)}
+.bars span{width:150px;color:var(--soft);flex:none}
+p.body{max-width:780px}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Told a Tide</h1>
+<p class="lede">Twelve fresh makers got the same unlabelled picture and made a work from it. Six were first told a lie about it: <em>"It is a record of the water level in a tidal harbour."</em> Experiment 20 of the project <em>How a machine practises artistic research</em>, Session 128.</p>
+
+<div class="given"><img src="materials/F/record.jpg" alt="The picture every maker got: 300 by 90 pixels of grey dots, a dense band near the top with a sparse tail of drops below it" width="600" height="180"><p>The picture every maker got: 300 × 90 pixels, one dot per hour for 61 days, no axes. Every brief said <em>"one value every hour"</em>.</p></div>
+
+<div class="cells">
+ <section class="cell T"><h3>Told: a tidal harbour</h3><p class="brief">"It is a record of the water level in a tidal harbour. … You are not told where or when."</p><div class="grid" id="gT"></div></section>
+ <section class="cell N"><h3>Told nothing</h3><p class="brief">"You are not told what was measured, where or when."</p><div class="grid" id="gN"></div></section>
+</div>
+<p class="tally" id="tally"></p>
+
+<h2>What it was</h2>
+<p class="body">Not water. It is the horizontal strength of the Earth's magnetic field at the USGS observatory in Boulder, Colorado, 2 July – 31 August 2025, averaged to hours. Electric currents flowing in the ionosphere on the sunlit side of the planet (the “solar quiet” or Sq variation; Yamazaki and Maute 2017, DOI 10.1007/s11214-016-0282-z) pull it down each day; in this record the day’s lowest hour falls between 15 and 18 UTC (8 to 11 in the morning, local solar time) on 56 of 61 days, and nights are flat. The two lowest stretches fall on 6–7 July and 8–9 August 2025, when the planetary index Kp reached 5, a minor magnetic storm (GFZ Potsdam, CC BY 4.0). Six makers singled out the August stretch; two read it as a drier or sunnier spell. No maker named the field. Ten guessed relative humidity, which also rests high and dips by day.</p>
+<div class="fold">
+ <div><canvas id="fS" width="560" height="300" aria-label="The record folded on 24 hours"></canvas><p class="cap">The true record folded on the sun's day (24 h; local solar time, midnight at the left). Each day is one faint line. The dip keeps its place.</p></div>
+ <div><canvas id="fM" width="560" height="300" aria-label="The record folded on 24 hours 50 minutes"></canvas><p class="cap">The same record folded on the moon's day (24 h 50 min), the clock a tide keeps. The dip smears across the whole turn. Five told makers drew this comparison themselves.</p></div>
+</div>
+<div class="bars" id="bars" style="margin-top:16px"></div>
+<p class="cap">Amplitude of the true record at each period, in nanotesla, from <code>materials/holds.json</code>. Rust bars are the tide's own periods. K1 (23.93 h) cannot be told from the solar day in 61 days, so its bar is the day's own.</p>
+
+<h2>What the three open rows said, and what happened</h2>
+<table id="rows"><tr><th>Row</th><th>Claim</th><th>Outcome</th></tr></table>
+<h2>The predictions, committed before any maker ran</h2>
+<table id="preds"><tr><th>#</th><th>Prediction</th><th>Held?</th></tr></table>
+
+<h2>What the rows did not ask</h2>
+<p class="body" id="posthoc"></p>
+<p class="cap">Evidence: <a href="PREDICTIONS.md">PREDICTIONS.md</a> (commit 80bdac4, before any maker), <a href="reports/">reports/</a>, <a href="coder/B/answers.json">coder/B/answers.json</a>, <a href="results.json">results.json</a>, <a href="work.md">work.md</a>. Sources: USGS Geomagnetism Program, BOU, public domain; GFZ Potsdam Kp index, CC BY 4.0.</p>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+var F=window.FACE, css=getComputedStyle(document.documentElement);
+function col(n){return css.getPropertyValue(n).trim()}
+['T','N'].forEach(function(c){
+ var g=document.getElementById('g'+c);
+ F.makers.filter(function(x){return x.cell===c}).forEach(function(x){
+  var a=document.createElement('a'); a.className='w'; a.href='makers/'+x.m+'/index.html';
+  a.innerHTML='<img src="thumbs/'+x.m+'.jpg" alt="'+x.title+'" loading="lazy"><b>'+x.title+'</b>'+
+   (c==='T'?'<span class="v">'+(x.doubted?'"not a tide"':'kept the tide')+'</span>':'')+
+   '<span>named: '+x.named+'</span><span>main period: '+x.period+' h</span>';
+  g.appendChild(a);});});
+var T=F.makers.filter(function(x){return x.cell==='T'}), N=F.makers.filter(function(x){return x.cell==='N'});
+document.getElementById('tally').innerHTML='Told the tide, <strong>'+T.filter(function(x){return x.doubted}).length+' of 6</strong> measured it away: a period of 24 hours, the sun’s, where a tide keeps 12 h 25 min and 24 h 50 min. None bent the measurement towards the moon. And yet every told work carries the tide in its words, and '+T.filter(function(x){return x.tideClock}).length+' of 6 draw the moon’s clock beside the sun’s. No untold work does either.';
+// folds
+var h=F.h, n=h.length, lo=Math.min.apply(null,h), hi=Math.max.apply(null,h);
+function fold(id,period,shift){
+ var cv=document.getElementById(id), x=cv.getContext('2d'), W=cv.width, H=cv.height;
+ x.fillStyle=col('--card'); x.fillRect(0,0,W,H);
+ x.strokeStyle=col('--ink'); x.globalAlpha=.16; x.lineWidth=1;
+ var prevTurn=-1; x.beginPath();
+ for(var i=0;i<n;i++){
+  var t=i+0.5+shift, turn=Math.floor(t/period), ph=(t-turn*period)/period;
+  var X=12+ph*(W-24), Y=12+(hi-h[i])/(hi-lo)*(H-24);
+  if(turn!==prevTurn){x.stroke(); x.beginPath(); x.moveTo(X,Y); prevTurn=turn;} else x.lineTo(X,Y);
+ }
+ x.stroke(); x.globalAlpha=1;
+ // mean curve in 48 bins
+ var B=48, s=new Array(B).fill(0), k=new Array(B).fill(0);
+ for(i=0;i<n;i++){var t2=i+0.5+shift, p=(t2/period)%1, b=Math.floor(p*B); s[b]+=h[i]; k[b]++;}
+ x.strokeStyle=col('--told'); x.lineWidth=2.5; x.beginPath();
+ var first=true; for(var b2=0;b2<B;b2++){if(!k[b2]) continue; var X2=12+(b2+.5)/B*(W-24), Y2=12+(hi-s[b2]/k[b2])/(hi-lo)*(H-24); if(first){x.moveTo(X2,Y2); first=false;} else x.lineTo(X2,Y2);}
+ x.stroke();
+}
+// local solar time at Boulder (105.24 W) is UTC - 7.02 h; the record starts at 00:00 UTC
+fold('fS',24,-7.02+24); fold('fM',24.8412,0);
+var bars=document.getElementById('bars'), A=F.amp, mx=0, key;
+for(key in A) mx=Math.max(mx,A[key]);
+for(key in A){var d=document.createElement('div'); var tide=/M2|O1|K1|lunar|spring/.test(key);
+ d.innerHTML='<span>'+key+'</span><i class="'+(tide?'t':'')+'" style="width:'+(A[key]/mx*60)+'%"></i>'+A[key];
+ bars.appendChild(d);}
+var rows=[['S125.GIVENKIND','A kind given first bends the name and not the measurement.','falsified by clause (b): 6 of 6 told makers rejected the kind on their own measurement; 0 of 6 bent the period'],
+ ['S126.SELECT','A kind given first does not change which regular the maker reports first.','holds: every maker, told or not, reported the day first'],
+ ['S124.TABLE','The kind named follows the regular held, one default per regular.','holds by its letter (4 of 4 holders of the day alone named one thing, none the true kind), but the default moved: relative humidity, not air temperature']];
+var rt=document.getElementById('rows');
+rows.forEach(function(r){var tr=document.createElement('tr'); var v=F.rows[r[0]];
+ tr.innerHTML='<td><code>'+r[0]+'</code></td><td>'+r[1]+'</td><td class="'+(v==='holds'?'ok':'no')+'">'+r[2]+'</td>'; rt.appendChild(tr);});
+var P={P1:'All 6 untold makers measure a period of about 24 h.',P2:'Untold: at least 3 of 6 name temperature; at most 1 the magnetic field.',P3:'Told: at most 1 of 6 bends the period towards the moon.',P4:'Told: at most 2 of 6 doubt the tide on their own measurement.',P5:'Told: at least 4 of 6 end with the tide.',P6:'The told kind does not change the first regular reported.',P7:'More told makers name a swelling and shrinking of the swing, at least 2 calling it spring and neap.',P8:'Spread: untold makers name at least 3 kinds, told at most 2.',P9:'No maker names a date or an event for a storm without flagging it.'};
+var pt=document.getElementById('preds');
+Object.keys(P).forEach(function(k){var tr=document.createElement('tr'); var ok=F.pred[k];
+ tr.innerHTML='<td>'+k+'</td><td>'+P[k]+'</td><td class="'+(ok?'ok':'no')+'">'+(ok?'held':'failed')+'</td>'; pt.appendChild(tr);});
+document.getElementById('posthoc').innerHTML='Counted after reading the works, so not a test: the tide’s words (water, harbour, ebb, tide) appear in the page or note of '+T.filter(function(x){return x.kindWords>0}).length+' of 6 told works and '+N.filter(function(x){return x.kindWords>0}).length+' of 6 untold ones. The moon’s clock (24 h 50 min, 12 h 25 min, “lunar”) is drawn or named in '+T.filter(function(x){return x.tideClock}).length+' told pages and '+N.filter(function(x){return x.tideClock}).length+' untold ones. One told maker titled its work <em>Sixty-One Ebbs</em> and wrote of “where the water stays” while its report said the record is not water. The lie was refused as a name. It became the work’s subject.';
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Not assigned</title>
+<style>
+html,body{margin:0;background:#0d0d0c;}
+canvas{display:block}
+</style></head>
+<body><canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+const W=1100,H=800,dpr=window.devicePixelRatio||1;
+const cv=document.getElementById('c');cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+g.fillStyle='#0d0d0c';g.fillRect(0,0,W,H);
+const items=window.ROOT.items.map(d=>({...d,t:d.tld.replace(/[‎‏]/g,'')}));
+const ghosts=items.filter(d=>d.manager==='Not assigned').length;
+const FONT='"Helvetica Neue",Helvetica,Arial,sans-serif';
+const X0=44,X1=W-44,Y0=50,Y1=H-78;
+function layout(fs,commit){
+  g.font=fs+'px '+FONT;
+  const lh=fs*1.24, gap=fs*0.55;
+  let lines=[[]],w=0;
+  for(const d of items){
+    const tw=g.measureText(d.t).width;
+    if(w>0 && w+gap+tw>X1-X0){lines.push([]);w=0;}
+    lines[lines.length-1].push({d,tw});w+=(w>0?gap:0)+tw;
+  }
+  const hgt=lines.length*lh;
+  if(!commit) return hgt;
+  lines.forEach((ln,i)=>{
+    const y=Y0+fs+i*lh;
+    const sum=ln.reduce((a,b)=>a+b.tw,0);
+    const sp=(i<lines.length-1 && ln.length>1)?(X1-X0-sum)/(ln.length-1):gap;
+    let x=X0;
+    for(const {d,tw} of ln){
+      const ghost=d.manager==='Not assigned';
+      if(ghost){
+        g.fillStyle='#ff5a36';
+      }else if(d.type==='country-code'){
+        g.fillStyle='#8f8a80';
+      }else{
+        g.fillStyle='#3d3b37';
+      }
+      g.fillText(d.t,x,y);
+      x+=tw+sp;
+    }
+  });
+  return hgt;
+}
+let lo=4,hi=20;
+for(let k=0;k<30;k++){const m=(lo+hi)/2; if(layout(m,false)<=Y1-Y0) lo=m; else hi=m;}
+layout(lo,true);
+// caption
+g.font='600 13px '+FONT;g.fillStyle='#e9e4d8';g.textBaseline='alphabetic';
+g.fillText('NOT ASSIGNED',X0,H-40);
+g.font='12px '+FONT;g.fillStyle='#8f8a80';
+const cap=`All ${items.length} top-level domains in the root zone, A to Z. ${ghosts} of them are still delegated but name no one as manager.`;
+g.fillText(cap,X0+112,H-40);
+g.fillStyle='#5a5750';
+g.textAlign='right';
+g.fillText('IANA Root Zone Database, 9 October 2026',X1,H-22);
+g.textAlign='left';
+const key=[['#ff5a36','manager: Not assigned'],['#8f8a80','country code'],['#3d3b37','every other name']];
+let kx=X0+112;
+key.forEach(([c,l])=>{g.fillStyle=c;g.fillRect(kx,H-30,8,8);g.fillStyle='#6f6b63';g.fillText(l,kx+13,H-22);kx+=g.measureText(l).width+34;});
+</script></body></html>

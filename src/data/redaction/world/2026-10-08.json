@@ -1,0 +1,140 @@
+{
+  "date": "2026-10-08",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-08T12:38:48Z",
+    "counts": {
+      "botwall": 18,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 274,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 8
+    },
+    "decided": 274,
+    "excluded_unverifiable": 26,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0138
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0138
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-06",
+    "receipts": [],
+    "sample_drawn_at": "2026-10-07T12:24:44Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5955,
+      "replaced": 5825,
+      "trivial": 935,
+      "update": 432
+    },
+    "day": "2026-10-07",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Meekins",
+          "business",
+          "brothers"
+        ],
+        "after": "Meekins brothers business: Three brothers pooled $1,000 to start an English muffin side hustle in 2014; it reached its first $100,000 month in its second year and became an eight-figure company",
+        "before": "How Stone & Skillet became successful: Three brothers pooled $1,000 to start an English muffin side hustle in 2014; it reached its first $100,000 month in its second year and became an eight-figure company",
+        "detected": "2026-10-07T15:50:54Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "How",
+          "Stone",
+          "Skillet",
+          "successful",
+          "became"
+        ],
+        "similarity": 0.818,
+        "url": "https://economictimes.indiatimes.com/news/international/us/three-brothers-pooled-1000-to-start-an-english-muffin-side-hustle-in-2014-it-reached-its-first-100000-month-in-its-second-year-and-became-an-eight-figure-company/articleshow/134597669.cms",
+        "weight": 12,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Video",
+          "Resurfaces"
+        ],
+        "after": "'When Things Go Wrong, You Need Them': Capt Smit Machchhar's Old Video On Cabin Crew Resurfaces After Flydubai FZ1073 Stabbing Case",
+        "before": "'When Things Go Wrong, You Need Them': Capt Smit Machchhar's Old Words On Cabin Crew Resurface After Flydubai FZ1073 Stabbing Case",
+        "detected": "2026-10-07T19:31:16Z",
+        "domain": "freepressjournal.in",
+        "removed": [
+          "Words",
+          "Resurface"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.freepressjournal.in/india/when-things-go-wrong-you-need-them-capt-smit-machchhars-old-words-on-cabin-crew-resurface-after-flydubai-fz1073-stabbing-case",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Deal",
+          "Days"
+        ],
+        "after": "Amazon Apple Prime Big Deal Days deals 2026 - save on AirPods, iPhones and more",
+        "before": "Amazon Apple Prime Big Deals Day deals 2026 - save on AirPods, iPhones and more",
+        "detected": "2026-10-07T17:04:53Z",
+        "domain": "digitalspy.com",
+        "removed": [
+          "Day",
+          "deals"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.digitalspy.com/tech/best-tech-deals/a61568690/amazon-prime-apple-deals-day-4/",
+        "weight": 7,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 17471,
+      "PAGE_TEXTCHANGE": 136692,
+      "PAGE_TITLECHANGE": 53206,
+      "UNCHANGED_CONTENT": 771585
+    },
+    "title_changes_en": 13147,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1791462775117",
+        "job_id": "world_gdg_counts_20261007",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 246415360,
+        "created": "1791462780638",
+        "job_id": "world_gdg_titles_20261007",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-08T12:38:48Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-07.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

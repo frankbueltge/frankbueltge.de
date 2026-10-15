@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seven Nights to a Line</title>
+<style>
+  :root { --paper:#f2eee5; --ink:#1c2030; --rule:#d9d2c3; --soft:#8a8476; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --paper:#f2eee5; --ink:#1c2030; --rule:#d9d2c3; --soft:#8a8476; }
+  }
+  html,body { margin:0; padding:0; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+  canvas { display:block; width:1100px; height:800px; max-width:100vw; height:auto; aspect-ratio:1100/800; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="A record of 1,464 values cut into lengths of one week and stacked like lines of text; five raised days and two lowered days repeat down the page, except for a stretch near the bottom where the raised days are missing."></canvas>
+<script>
+// The material: darkness of every pixel of record.jpg (300 x 90), row by row, quantised 0-9.
+const D = "__DATA__";
+const SW = 300, SH = 90;
+
+// Readings from the file (see NOTE.md):
+//  - the dots repeat every 4.82 px (one cycle of 24 values),
+//  - and every 33.74 px (seven such cycles); the deepest nightly trough sits at x = 2.65 (mod 4.82).
+const DAY = 4.82, WEEK = 7 * DAY;
+const X0 = 12.29 - WEEK;          // each line begins at the trough that ends the two low days
+const ROWS = 10;
+
+const cv = document.getElementById('c');
+const dpr = Math.max(1, window.devicePixelRatio || 1);
+cv.width = 1100 * dpr; cv.height = 800 * dpr;
+const g = cv.getContext('2d');
+g.scale(dpr, dpr);
+
+const css = getComputedStyle(document.documentElement);
+const PAPER = css.getPropertyValue('--paper').trim();
+const INK = css.getPropertyValue('--ink').trim();
+const RULE = css.getPropertyValue('--rule').trim();
+const SOFT = css.getPropertyValue('--soft').trim();
+
+g.fillStyle = PAPER; g.fillRect(0, 0, 1100, 800);
+
+const S = 28;                     // horizontal stretch: one source pixel column (about five values) -> 28 px
+const YS = 0.93;                  // vertical scale
+const Y_TOP = 6;                  // first source row that can carry ink
+const PITCH = 77.5;
+const LEFT = (1100 - WEEK * S) / 2;
+const TOP = 16;
+
+// faint seams at every nightly trough, one per day, on every line
+g.strokeStyle = RULE; g.lineWidth = 1;
+for (let r = 0; r < ROWS; r++) {
+  const yb = TOP + r * PITCH;
+  for (let j = 0; j <= 7; j++) {
+    const X = Math.round(LEFT + j * DAY * S) + 0.5;
+    g.beginPath(); g.moveTo(X, yb + 4); g.lineTo(X, yb + PITCH - 8); g.stroke();
+  }
+}
+
+// the ink
+g.fillStyle = INK;
+const DASH = S * 0.74;
+for (let x = 0; x < SW; x++) {
+  const cx = x + 0.5;
+  const r = Math.floor((cx - X0) / WEEK);
+  if (r < 0 || r >= ROWS) continue;
+  const u = cx - X0 - r * WEEK;
+  const X = LEFT + u * S;
+  const yb = TOP + r * PITCH;
+  for (let y = 0; y < SH; y++) {
+    const q = D.charCodeAt(y * SW + x) - 48;
+    if (q <= 1) continue;
+    g.globalAlpha = Math.min(1, (q / 9) * 1.15);
+    g.fillRect(X - DASH / 2, yb + (y - Y_TOP) * YS, DASH, YS + 0.35);
+  }
+}
+g.globalAlpha = 1;
+
+// colophon in the empty end of the last line
+const lastY = TOP + (ROWS - 1) * PITCH;
+const cxText = LEFT + WEEK * S;
+g.textAlign = 'right';
+g.fillStyle = INK;
+g.font = '500 15px Georgia, "Times New Roman", serif';
+g.fillText('Seven Nights to a Line', cxText, lastY + 30);
+g.fillStyle = SOFT;
+g.font = 'italic 12.5px Georgia, "Times New Roman", serif';
+g.fillText('1,464 values, cut after every seventh nightly low and set one week beneath another', cxText, lastY + 50);
+</script>
+</body>
+</html>

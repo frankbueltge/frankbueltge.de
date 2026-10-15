@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { classifyWork, siteTargets } from './paths'
+import { classifyWork, isHousekeeping, siteTargets, type ClassifiedWork } from './paths'
 
 describe('classifyWork', () => {
   it('classifies an astro work', () => {
@@ -42,14 +42,77 @@ describe('classifyWork', () => {
     expect((w as { ignored: string[] }).ignored).toEqual([])
   })
 
-  it('still leaves prose, notebooks and executables behind', () => {
-    const w = classifyWork('mixed', ['index.html', 'README.md', 'notes.py', 'run.sh'])
-    expect((w as { ignored: string[] }).ignored).toEqual(['README.md', 'notes.py', 'run.sh'])
-  })
-
   it('still rejects a directory with no entry file', () => {
     const w = classifyWork('x', ['README.md', 'notes.txt'])
     expect(w.kind).toBeNull()
+  })
+})
+
+// 2026-10-05 (Frank's decision, wording private): the practices may publish rich works, size
+// and form not limited. A standalone work is served bare and never compiled here, so it travels
+// whole; until today the allow-list dropped .wasm, .glb, LICENSE and every subdirectory.
+describe('classifyWork — a standalone work travels whole', () => {
+  const tree = [
+    'index.html',
+    'meta.json',
+    'LICENSE',
+    'README.md',
+    'assets/index-3f2a.js',
+    'assets/index-9c1d.css',
+    'vendor/three/three.module.min.js',
+    'vendor/three/LICENSE',
+    'models/scene.glb',
+    'models/scene.bin',
+    'textures/ground.ktx2',
+    'audio/score.opus',
+    'video/loop.mov',
+    'py/pyodide.asm.wasm',
+    'py/python_stdlib.zip',
+    'data/counts.csv',
+    'fonts/Inter.ttf',
+    'chapter/2/index.html',
+    '.gitignore',
+    'assets/.DS_Store',
+    '.cache/stale.json',
+  ]
+
+  it('carries every file at every depth, whatever its extension', () => {
+    const w = classifyWork('rich', tree)
+    expect(w.kind).toBe('html')
+    const files = (w as { files: string[] }).files
+    for (const f of tree.filter((f) => !f.split('/').some((s) => s.startsWith('.')))) expect(files).toContain(f)
+  })
+
+  it('leaves only housekeeping behind: dotfiles and dot-directories, at any depth', () => {
+    const w = classifyWork('rich', tree) as { files: string[]; ignored: string[] }
+    expect(w.ignored).toEqual(['.gitignore', 'assets/.DS_Store', '.cache/stale.json'])
+    expect(w.files.some((f) => isHousekeeping(f))).toBe(false)
+  })
+
+  it('maps every nested file beside index.html, at the same relative path', () => {
+    const w = classifyWork('rich', tree) as ClassifiedWork
+    const targets = siteTargets(w, 'studio')
+    expect(targets).toContainEqual({ from: 'models/scene.glb', to: 'public/studio/werke-html/rich/models/scene.glb' })
+    expect(targets).toContainEqual({ from: 'chapter/2/index.html', to: 'public/studio/werke-html/rich/chapter/2/index.html' })
+    expect(targets).toContainEqual({ from: 'meta.json', to: 'src/content/studio/works/rich/meta.json' })
+    // only the top-level meta.json is the work's metadata; a nested one is data of the work
+    expect(siteTargets({ ...w, files: ['index.html', 'data/meta.json'] }, 'studio')).toContainEqual({
+      from: 'data/meta.json',
+      to: 'public/studio/werke-html/rich/data/meta.json',
+    })
+  })
+
+  it('decides the form at the top level only', () => {
+    expect(classifyWork('deep', ['site/index.html', 'meta.json']).kind).toBeNull()
+  })
+
+  it('keeps a native Astro work to its top level and its allow-list', () => {
+    const w = classifyWork('native', ['work.astro', 'meta.json', 'lib/geo.ts', 'lib/more.ts', 'model.glb']) as {
+      files: string[]
+      ignored: string[]
+    }
+    expect(w.files).toEqual(['work.astro', 'meta.json'])
+    expect(w.ignored).toEqual(['lib', 'model.glb'])
   })
 })
 

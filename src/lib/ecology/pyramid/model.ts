@@ -2,9 +2,10 @@
 // house is under. The one place the surfaces agree on who exists.
 //
 // Design handoff: docs/design_handoff_research_ecology/README.md ("Research Ecology v3 — the
-// top-down rebuild"). Its diagnosis, in Frank's words on 2026-08-12: too many pages, too much
-// text, nobody grasps the ecology without hours of reading. The cure is a four-level pyramid, and
-// the first thing a pyramid needs is a single answer to "which stations are there?" — otherwise
+// top-down rebuild"). Its diagnosis (Frank, 2026-08-12, wording private): too many pages and too
+// much text — the ecology could not be grasped without hours of reading. The cure is a
+// four-level pyramid, and the first thing a pyramid needs is a single answer to "which stations
+// are there?" — otherwise
 // Level 0's map, Level 1's sheets and Level 2's breadcrumbs each grow their own list and drift
 // apart, which is precisely how the site came to have eight pages per practice.
 //
@@ -126,7 +127,7 @@ const PROTOCOLS = import.meta.glob('/src/content/*/PROTOCOL.md', {
 
 const READING_HEADING = /^## The reading of (\d{4}-\d{2}-\d{2})/m
 
-export function readingDate(protocols: Record<string, string> = PROTOCOLS): string {
+export function readingDate(protocols: Record<string, string> = PROTOCOLS): string | null {
   const dates = new Set<string>()
   for (const [path, raw] of Object.entries(protocols)) {
     // The Plenum is a guest voice, not a practice of this house, and its own protocol says the
@@ -136,9 +137,9 @@ export function readingDate(protocols: Record<string, string> = PROTOCOLS): stri
     if (found) dates.add(found)
   }
   if (dates.size === 0) {
-    throw new Error(
-      'ecology/pyramid: no mirrored constitution carries a "## The reading of YYYY-MM-DD" section — mirror broken or the reading was retired',
-    )
+    // v3 (2026-08-30): the reading was held and the new constitutions carry no reading
+    // section — absence is the current truth, not a broken mirror.
+    return null
   }
   if (dates.size > 1) {
     throw new Error(

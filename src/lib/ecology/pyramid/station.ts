@@ -73,7 +73,10 @@ export function readConstitution(ns: string, protocols: Record<string, string> =
   }
   return {
     version: `v${heading[2]}`,
-    adopted: /(?:Decided and drafted|Adopted)[^.]*?(\d{4}-\d{2}-\d{2})/.exec(raw)?.[1] ?? null,
+    // "Decided by" covers the research ecology v3 protocols (2026-08-30 rewrite, all three
+    // practices): the older "Decided and drafted"/"Adopted" phrasing stays matched too, so an
+    // archived text keeps parsing the same way it always did.
+    adopted: /(?:Decided and drafted|Decided by|Adopted)[^.]*?(\d{4}-\d{2}-\d{2})/.exec(raw)?.[1] ?? null,
     name: (heading[3] ?? '').trim() || heading[1],
   }
 }
@@ -160,7 +163,7 @@ export const DOORS: Record<StationId, Door[]> = {
     // a house window, so this door is the only thing the house owns about it. The door's title
     // is the route's name; the status rows above render whatever title the practice currently
     // declares in its window contract.
-    { title: 'n-1 — the third line', sub: 'founded 2026-08-15 on this practice’s own paper — its own record, its own surface', href: '/n-1' },
+    { title: 'n-1 — the third line', sub: 'founded 2026-08-15 on this practice’s own paper, the practice named itself Remainder on 2026-08-21 — its own record, its own surface', href: '/n-1' },
     // The rhizome and the closure index, as the first nightly phase left them. Archived and, until
     // 2026-08-13, unlinked: the pyramid rewrite removed the way in, and the only references left
     // anywhere in the build were a 301 from its old route and the sitemap. A retired instrument may
@@ -262,7 +265,7 @@ export function buildStationSheet({ id, snapshot, works = allWorks(), log, made 
   // runs, and what governs each strand. A single constitution row on a multi-line practice would
   // be a lie by omission — it would name one law and leave the other lines ungoverned on the page.
   //
-  // Each line states itself in its own unit. The two Ulysses-run strands land works in the
+  // Each line states itself in its own unit. The two Atelier-run strands land works in the
   // register, so they are counted from it; n-1 keeps its whole record in its own mirrored
   // repository, so its row states what the mirror states — the practice's current title (its
   // own window declaration; the working title is a placeholder the practice will replace) and

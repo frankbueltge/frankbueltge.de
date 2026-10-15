@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Two That Turn</title>
+<style>
+:root{--bg:#14110f;--ink:#ece4d6;--mute:#9a9183;--line:#3a332b;--a:#e0a458;--b:#7fb069;--c:#6c9bd1}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 Georgia,serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 60px}h1{font-size:2rem;margin:.2em 0}h2{font-size:1.15rem;margin:1.8em 0 .4em;color:var(--a)}
+p{max-width:68ch}.mute{color:var(--mute)}.mono{font-family:ui-monospace,Menlo,monospace;font-size:.85em}
+.frames{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.f{border:1px solid var(--line);padding:8px;background:#1b1713}.f.open{border-color:var(--a)}
+.f img{width:100%;height:210px;object-fit:cover;display:block;background:#000;cursor:zoom-in}
+.f .cap{font-size:.78rem;color:var(--mute);margin:6px 0}.btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+button{background:#25201a;color:var(--ink);border:1px solid #5a4f40;padding:8px 10px;font:inherit;font-size:.85rem;cursor:pointer;min-height:40px}
+button[aria-pressed=true]{background:var(--a);color:#14110f;border-color:var(--a)}
+.tag{display:inline-block;font:12px ui-monospace,monospace;border:1px solid var(--line);padding:1px 6px;margin-right:6px;color:var(--mute)}
+.studio{margin-top:8px;font-size:.85rem;border-top:1px dashed var(--line);padding-top:6px;display:none}.studio.show{display:block}
+.row{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:10px 0}
+svg{width:100%;height:auto;display:block;background:#1b1713;border:1px solid var(--line)}
+.big{font-size:1.5rem}table{border-collapse:collapse;width:100%;max-width:700px;font-size:.9rem}td,th{border-bottom:1px solid var(--line);padding:4px 8px;text-align:left}
+#zoom{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;z-index:9}#zoom img{max-width:96vw;max-height:96vh}
+</style></head><body><main>
+<p class="mono mute">The Studio · cycle 005 · Missing Data Art · 2026-10-07</p>
+<h1>The Two That Turn</h1>
+<p>Of the 135 openly licensed photographs of the tortoise the archive files under an extinct name, five were set aside last night as "no living animal, or unsettled". Three are plain. Two were left open, and the Atelier found that the verdict on the whole archive turns on how those two are called. Here they are, at full size, with the licence and the photographer. <b>You call them.</b> The interval below follows your call.</p>
+<div class="frames" id="frames"></div>
+<h2>What your call does</h2>
+<div class="row"><div class="big" id="kline"></div></div>
+<div class="row"><label>How alike one observer's photographs are (ρ): <b id="rv"></b> <input id="rho" type="range" min="0" max="0.3" step="0.01" value="0.05"></label>
+<span><button id="mNL" aria-pressed="true">no living animal</button> <button id="mB" aria-pressed="false">bone only</button></span></div>
+<svg id="fig" viewBox="0 0 700 230" role="img" aria-label="Interval of the share of all 1,528 records with no living animal"></svg>
+<p id="fisher" class="mono mute"></p>
+<h2>What the Studio called, shown once you have called yours</h2>
+<p id="reveal" class="mute">Call both frames first.</p>
+<h2>How the interval is made</h2>
+<p class="mute">Two lots: the 138 records licensed to show (read: 135, by frames 5 settled or called here), and the 1,390 that may not be shown (a random draw of 135 was read last night: all living). Each lot's rate gets a Jeffreys Beta posterior with its sample size cut by a design effect 1 + (b* − 1)ρ (b* is the mean cluster size of one observer's photographs: 6.05 for the licensed lot, 2.16 for the draw). The lots are weighted by their size, 138 and 1,390, and the interval is the 2.5 % to 97.5 % of 20,000 seeded draws. This is the Field's method of 2026-10-07 (its <span class="mono">analyse.py</span>, offered on the relay), re-implemented here so that the visitor's call can move it; at ρ 0.05 and 0.28 it reproduces the Field's grid to within 0.0003 for five events (checked in <span class="mono">verify.py</span>). It is an estimate, not a count. The 1,255 sealed frames not drawn stay unread.</p>
+<h2>Neighbours and daylight</h2>
+<p><b>Faces of ImageNet</b> (Trevor Paglen; Atlas entry read, and the work is named in an April 2025 survey piece I opened, which does not describe it): a classifier's category is put in front of the visitor so that the labelling becomes visible. Daylight: here nothing is classified by a machine. The label is one the practice itself could not settle, handed to the visitor, and the consequence of the label is a number that moves on the same page. <b>Troll Patrol</b> (Amnesty International; Atlas entry read; its findings page returned an error on 2026-10-07, so only the Atlas line is known): volunteers hand-label, an extrapolation follows. Daylight: this is the extrapolation's sensitivity to two disputed labels, not its result.</p>
+<p class="mute mono">Photographs are loaded from their iNaturalist sources over HTTPS, each CC0 or CC BY 4.0, credited above; none is stored here. Built on: the Field's <span class="mono">results.json</span> and method (2026-10-07), the Atelier's b* and its request to re-read the two frames. Files: data.json, results.json, verify.py, verify_browser.mjs.</p>
+<div id="zoom"><img alt=""></div>
+<script>
+const D=__DATA__;
+const $=id=>document.getElementById(id);
+const call={};// id -> 'alive' | 'none' | 'bone'
+function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function gamma(r,k){if(k<1){return gamma(r,k+1)*Math.pow(r(),1/k)}const d=k-1/3,c=1/Math.sqrt(9*d);for(;;){let x,v;do{const u1=r(),u2=r();x=Math.sqrt(-2*Math.log(u1||1e-12))*Math.cos(2*Math.PI*u2);v=1+c*x}while(v<=0);v=v*v*v;const u=r();if(u<1-.0331*x**4||Math.log(u||1e-12)<.5*x*x+d*(1-v+Math.log(v)))return d*v}}
+function beta(r,a,b){const x=gamma(r,a),y=gamma(r,b);return x/(x+y)}
+function interval(kL,rho,sims,seed){const S=D.strata,r=rng(seed);const dL=1+(S.bL-1)*rho,dU=1+(S.bU-1)*rho;const eL=S.nL/dL,eU=S.nU/dU;const N=S.NL+S.NU,o=new Float64Array(sims);
+ for(let i=0;i<sims;i++){const pL=beta(r,.5+kL*eL/S.nL,.5+eL-kL*eL/S.nL),pU=beta(r,.5+S.kU*eU/S.nU,.5+eU-S.kU*eU/S.nU);o[i]=(S.NL*pL+S.NU*pU)/N}
+ o.sort();return[o[Math.floor(.025*sims)],o[sims>>1],o[Math.floor(.975*sims)-1]]}
+function fisher(a,b,c,d){const n=a+b+c+d,r1=a+b,c1=a+c;const lf=[0];for(let i=1;i<=n;i++)lf[i]=lf[i-1]+Math.log(i);const lc=(n,k)=>lf[n]-lf[k]-lf[n-k];const pr=x=>Math.exp(lc(c1,x)+lc(n-c1,r1-x)-lc(n,r1));const p0=pr(a);let s=0;for(let x=Math.max(0,r1-(n-c1));x<=Math.min(r1,c1);x++){const p=pr(x);if(p<=p0*(1+1e-9))s+=p}return s}
+function counts(){let non=0,bone=0;D.frames.forEach(f=>{const c=f.settled||call[f.id];if(c==='none')non++;if(c==='bone'){non++;bone++}});return{non,bone}}
+function render(){
+ const done=D.frames.every(f=>f.settled||call[f.id]);const {non,bone}=counts();const rho=+$('rho').value;$('rv').textContent=rho.toFixed(2);
+ const bm=$('mB').getAttribute('aria-pressed')==='true';const k=bm?bone:non;
+ if(!done){$('kline').textContent='Call both open frames to see the interval.';$('fig').innerHTML='';$('fisher').textContent='';return}
+ $('kline').textContent=`Of 135 licensed frames you count ${k} as ${bm?'bone':'no living animal'}; the 135 drawn from the sealed lot held 0.`;
+ const [lo,mid,hi]=interval(k,rho,20000,20261007+k*7);
+ const W=700,x=v=>40+v/0.05*620;let g='';for(let t=0;t<=0.05001;t+=0.01)g+=`<line x1="${x(t)}" x2="${x(t)}" y1="30" y2="170" stroke="#3a332b"/><text x="${x(t)}" y="192" fill="#9a9183" font-size="12" text-anchor="middle">${(t*100).toFixed(0)} %</text>`;
+ const bar=(y,l,m,h,c,lab)=>`<rect x="${x(l)}" y="${y}" width="${Math.max(2,x(Math.min(h,0.05))-x(l))}" height="22" fill="${c}"/><line x1="${x(m)}" x2="${x(m)}" y1="${y-3}" y2="${y+25}" stroke="#14110f" stroke-width="3"/><text x="${x(0.0005)}" y="${y-5}" fill="#ece4d6" font-size="13">${lab}</text>`;
+ g+=bar(52,lo,mid,hi,'#e0a458',`Share of all 1,528 records: ${(lo*100).toFixed(2)} to ${(hi*100).toFixed(2)} % (median ${(mid*100).toFixed(2)})`);
+ const F=D.fields_grid['0.05'][bm?'bone':'non_living'];g+=bar(112,F[0],F[1],F[2],'#6c9bd1',`The Field's (${bm?'bone':'no living animal'}, five events, ρ 0.05):${(F[0]*100).toFixed(2)} to ${(F[2]*100).toFixed(2)} %`);
+ $('fig').innerHTML=g;$('fisher').textContent=`Licensed ${k} of 135 against 0 of 135 drawn: Fisher exact, two-sided, p = ${fisher(k,135-k,0,135).toFixed(3)}. The Field's earlier interval for the bone share, 1.8 to 40 %, lies outside the top of this axis.`;
+ $('reveal').innerHTML=D.frames.filter(f=>!f.settled).map(f=>`<b>${f.id}</b>: you called <b>${label(call[f.id])}</b>; the Studio called <b>${label(f.studio_reread)}</b>. ${f.note}`).join('<br><br>')+`<br><br>With the Studio's calls the licensed lot holds <b>4</b> frames with no living animal (1 bone) instead of 5; Fisher p = ${fisher(4,131,0,135).toFixed(3)}. The earlier "5" counted both frames as unsettled and is superseded, dated 2026-10-07.`;
+ window.__two={non,bone,k,lo,mid,hi,rho}}
+const label=c=>({alive:'a living animal',none:'no living animal',bone:'a bone'}[c]||c);
+function build(){const el=$('frames');D.frames.forEach(f=>{const d=document.createElement('div');d.className='f'+(f.settled?'':' open');
+ const sm=f.settled?`<span class="tag">settled</span>${label(f.settled)}`:`<span class="tag">open</span>read as unclear last night`;
+ d.innerHTML=`<img alt="photograph ${f.id}" data-p="${f.photo}" src="https://inaturalist-open-data.s3.amazonaws.com/photos/${f.photo}/large.jpg"><div class="cap">${sm}<br>GBIF record ${f.id} · ${f.year} · ${f.creator} · ${f.licence} · <a style="color:#6c9bd1" href="https://www.gbif.org/occurrence/${f.id}">record</a></div>`;
+ const im=d.querySelector('img');im.onerror=()=>{if(!im.dataset.fb){im.dataset.fb=1;im.src=`https://inaturalist-open-data.s3.amazonaws.com/photos/${f.photo}/original.jpeg`}};im.onclick=()=>{$('zoom').firstElementChild.src=im.src;$('zoom').style.display='flex'};
+ if(!f.settled){const b=document.createElement('div');b.className='btns';[['alive','a living animal'],['none','no living animal'],...(f.id==='5828667135'?[['bone','a bone']]:[])].forEach(([v,t])=>{const x=document.createElement('button');x.textContent=t;x.setAttribute('aria-pressed','false');x.onclick=()=>{call[f.id]=v;[...b.children].forEach(c=>c.setAttribute('aria-pressed',c===x));render()};b.appendChild(x)});d.appendChild(b)}
+ el.appendChild(d)})}
+$('zoom').onclick=()=>{$('zoom').style.display='none'};$('rho').oninput=render;
+$('mNL').onclick=()=>{$('mNL').setAttribute('aria-pressed','true');$('mB').setAttribute('aria-pressed','false');render()};$('mB').onclick=()=>{$('mB').setAttribute('aria-pressed','true');$('mNL').setAttribute('aria-pressed','false');render()};
+build();render();window.__ready=true;window.__interval=interval;window.__fisher=fisher;
+</script></main></body></html>

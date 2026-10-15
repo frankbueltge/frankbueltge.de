@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Ice, Breathing</title>
+<style>
+  html,body{margin:0;height:100%;background:#0b1220;overflow:hidden}
+  body{display:flex;align-items:center;justify-content:center}
+  canvas{display:block;cursor:pointer;touch-action:none}
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="Animated polar trace of daily Arctic sea-ice extent, 1978 to 2026"></canvas>
+<script src="../../data/extent.js"></script>
+<script>
+(function(){
+  const W = 1100, H = 800;
+  const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+  let scale = 1;
+  function fit(){
+    const dpr = window.devicePixelRatio || 1;
+    scale = Math.min(window.innerWidth / W, window.innerHeight / H);
+    cv.style.width = (W*scale)+'px'; cv.style.height = (H*scale)+'px';
+    cv.width = Math.round(W*scale*dpr); cv.height = Math.round(H*scale*dpr);
+    ctx.setTransform(scale*dpr,0,0,scale*dpr,0,0);
+    draw();
+  }
+
+  // ---- data ----
+  const DAY = 86400000;
+  const pts = (window.EXTENT || []).map(function(r){
+    const y=r[0], ms=Date.UTC(y,r[1]-1,r[2]);
+    const y0=Date.UTC(y,0,1), y1=Date.UTC(y+1,0,1);
+    const f=(ms-y0)/(y1-y0);
+    return {y:y,m:r[1],d:r[2],e:r[3],f:f,t:y+f,ms:ms};
+  }).sort(function(a,b){return a.ms-b.ms});
+  if(!pts.length) return;
+  const N = pts.length;
+  const T0 = pts[0].t, T1 = pts[N-1].t;
+  const Y0 = pts[0].y, Y1 = pts[N-1].y;
+  const byYear = {};
+  pts.forEach(function(p,i){ (byYear[p.y]=byYear[p.y]||[]).push(i); });
+  const GAP = 6*DAY;
+
+  // yearly minima (skip the partial first year)
+  const mins = {};
+  let recY = null;
+  for(let y=Y0+1;y<=Y1;y++){
+    const idx = byYear[y]; if(!idx) continue;
+    let best = null;
+    idx.forEach(function(i){ if(!best || pts[i].e < best.e) best = pts[i]; });
+    mins[y] = best;
+    if(!recY || best.e < mins[recY].e) recY = y;
+  }
+
+  function idxAt(T){ // last index with t<=T
+    let lo=0, hi=N-1;
+    if(T<pts[0].t) return -1;
+    while(lo<hi){ const mid=(lo+hi+1)>>1; if(pts[mid].t<=T) lo=mid; else hi=mid-1; }
+    return lo;
+  }
+  function valueAt(T){
+    const i = idxAt(T); if(i<0) return null;
+    if(i>=N-1) return pts[N-1].e;
+    const a=pts[i], b=pts[i+1];
+    if(b.ms-a.ms>GAP) return null;
+    const k=(T-a.t)/(b.t-a.t);
+    return a.e+(b.e-a.e)*k;
+  }
+  function dateAt(T){
+    const y=Math.floor(T), y0=Date.UTC(y,0,1), y1=Date.UTC(y+1,0,1);
+    return new Date(y0+(T-y)*(y1-y0));
+  }
+
+  // ---- geometry ----
+  const CX=405, CY=402, RMAX=330, EMAX=17;
+  const rad = function(e){ return RMAX*Math.sqrt(e/EMAX); };   // area-true: disc area ∝ extent
+  const ang = function(f){ return -Math.PI/2 + f*2*Math.PI; };
+  function xy(f,e){ const a=ang(f), r=rad(e); return [CX+r*Math.cos(a), CY+r*Math.sin(a)]; }
+
+  function lerp(a,b,k){return a+(b-a)*k}
+  function yearColor(y,alpha){
+    const k=Math.max(0,Math.min(1,(y-(Y0+1))/(Y1-Y0-1)));
+    const c0=[150,190,222], c1=[232,140,96];
+    return 'rgba('+Math.round(lerp(c0[0],c1[0],k))+','+Math.round(lerp(c0[1],c1[1],k))+','+Math.round(lerp(c0[2],c1[2],k))+','+alpha+')';
+  }
+
+  const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const MONTHS_L=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const SERIF='Georgia, "Times New Roman", serif';
+  const SANS='-apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
+
+  // ---- state ----
+  let T = T0, playing = false, last = 0;
+  const YEARS_PER_SEC = 0.85;
+
+  function traceYear(y, Tcut, stroke, width){
+    const idx = byYear[y]; if(!idx) return;
+    ctx.beginPath();
+    let started=false, prev=null;
+    const first=idx[0];
+    if(first>0 && pts[first].ms-pts[first-1].ms<=GAP){
+      // continue from the last point of the previous year, unwrapping the angle
+      const p=pts[first-1]; const q=xy(p.f-1,p.e); ctx.moveTo(q[0],q[1]); started=true; prev=p;
+    }
+    for(let j=0;j<idx.length;j++){
+      const p=pts[idx[j]];
+      if(p.t>Tcut){
+        if(prev && started && p.ms-prev.ms<=GAP){
+          const k=(Tcut-prev.t)/(p.t-prev.t);
+          const f=(prev.y===y?prev.f:prev.f-1)+((p.f)-(prev.y===y?prev.f:prev.f-1))*k;
+          const q=xy(f, prev.e+(p.e-prev.e)*k); ctx.lineTo(q[0],q[1]);
+        }
+        break;
+      }
+      const q=xy(p.f,p.e);
+      if(!started || (prev && p.ms-prev.ms>GAP)){ ctx.moveTo(q[0],q[1]); started=true; }
+      else ctx.lineTo(q[0],q[1]);
+      prev=p;
+    }
+    ctx.strokeStyle=stroke; ctx.lineWidth=width; ctx.lineJoin='round'; ctx.stroke();
+  }
+
+  function draw(){
+    ctx.fillStyle='#0b1220'; ctx.fillRect(0,0,W,H);
+    const curY=Math.floor(T);
+    const e=valueAt(T);
+
+    // grid: circles of equal area
+    ctx.save();
+    ctx.font='11px '+SANS; ctx.textAlign='left'; ctx.textBaseline='middle';
+    [5,10,15].forEach(function(v){
+      ctx.beginPath(); ctx.arc(CX,CY,rad(v),0,Math.PI*2);
+      ctx.strokeStyle='rgba(160,185,210,0.10)'; ctx.lineWidth=1; ctx.stroke();
+    });
+    ctx.fillStyle='rgba(160,185,210,0.45)';
+    [5,10,15].forEach(function(v){
+      const a=ang(0.5/12*1.0)-0.0; // just right of 12 o'clock
+      ctx.fillText(v+(v===15?' million km²':''), CX+4, CY-rad(v)-7);
+    });
+    // month spokes & labels
+    for(let m=0;m<12;m++){
+      const a=ang(m/12);
+      ctx.beginPath(); ctx.moveTo(CX+rad(2.2)*Math.cos(a),CY+rad(2.2)*Math.sin(a));
+      ctx.lineTo(CX+(RMAX+6)*Math.cos(a),CY+(RMAX+6)*Math.sin(a));
+      ctx.strokeStyle='rgba(160,185,210,0.06)'; ctx.stroke();
+      const am=ang((m+0.5)/12), rr=RMAX+22;
+      ctx.fillStyle='rgba(180,200,222,0.55)'; ctx.textAlign='center';
+      ctx.fillText(MONTHS[m], CX+rr*Math.cos(am), CY+rr*Math.sin(am));
+    }
+    ctx.restore();
+
+    // reference: the first full year's smallest disc
+    const ref=mins[Y0+1];
+    if(ref){
+      ctx.save(); ctx.setLineDash([2,4]);
+      ctx.beginPath(); ctx.arc(CX,CY,rad(ref.e),0,Math.PI*2);
+      ctx.strokeStyle='rgba(220,235,250,0.45)'; ctx.lineWidth=1; ctx.stroke();
+      ctx.restore();
+    }
+
+    // the disc: same area as today's ice
+    if(e!=null){
+      const r=rad(e);
+      const g=ctx.createRadialGradient(CX,CY,0,CX,CY,r);
+      g.addColorStop(0,'rgba(240,248,255,0.30)'); g.addColorStop(1,'rgba(225,240,252,0.12)');
+      ctx.beginPath(); ctx.arc(CX,CY,r,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
+      ctx.strokeStyle='rgba(245,250,255,0.9)'; ctx.lineWidth=1.5; ctx.stroke();
+    }
+
+    // past years' loops
+    for(let y=Y0;y<curY;y++){
+      traceYear(y, Infinity, yearColor(y, y>=curY-1?0.55:0.28), 1);
+    }
+    // current year, bright
+    traceYear(curY, T, '#ffffff', 2.2);
+
+    // hand & head
+    if(e!=null){
+      const f=T-curY, p=xy(f,e);
+      ctx.beginPath(); ctx.moveTo(CX,CY); ctx.lineTo(p[0],p[1]);
+      ctx.strokeStyle='rgba(255,255,255,0.18)'; ctx.lineWidth=1; ctx.stroke();
+      ctx.beginPath(); ctx.arc(p[0],p[1],3.5,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill();
+    }
+
+    // centre label: year
+    ctx.fillStyle='rgba(235,244,252,0.92)'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.font='34px '+SERIF; ctx.fillText(String(curY), CX, CY-4);
+    if(ref){
+      ctx.font='11px '+SANS; ctx.fillStyle='rgba(220,235,250,0.6)';
+      ctx.fillText('dotted ring: smallest of '+(Y0+1), CX, CY+24);
+    }
+
+    // ---- right panel ----
+    const PX=790;
+    const dt=dateAt(T);
+    ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+    ctx.fillStyle='rgba(180,200,222,0.7)'; ctx.font='12px '+SANS;
+    ctx.fillText('ARCTIC SEA ICE, DAY BY DAY', PX, 52);
+    ctx.fillStyle='#eef5fb'; ctx.font='26px '+SERIF;
+    ctx.fillText(dt.getUTCDate()+' '+MONTHS_L[dt.getUTCMonth()]+' '+dt.getUTCFullYear(), PX, 88);
+    ctx.font='15px '+SANS; ctx.fillStyle= e!=null ? 'rgba(235,244,252,0.9)' : 'rgba(232,140,96,0.9)';
+    ctx.fillText(e!=null ? e.toFixed(2)+' million km² of ice' : 'no measurements for these days', PX, 112);
+
+    // bars: smallest extent each year
+    const BY=158, RH=11, BX=PX+40, BW=230;
+    ctx.fillStyle='rgba(180,200,222,0.7)'; ctx.font='11px '+SANS;
+    ctx.fillText('SMALLEST EXTENT EACH YEAR', PX, BY-14);
+    for(let y=Y0+1;y<=Y1;y++){
+      const row=BY+(y-(Y0+1))*RH;
+      if((y%5)===0){ ctx.fillStyle='rgba(180,200,222,0.5)'; ctx.font='10px '+SANS; ctx.fillText(String(y),PX,row+8); }
+      let v=null, partial=false;
+      if(y<curY && mins[y]) v=mins[y].e;
+      else if(y===curY && byYear[y]){
+        // running minimum so far this year
+        byYear[y].forEach(function(i){ if(pts[i].t<=T && (v==null||pts[i].e<v)) v=pts[i].e; });
+        partial=true;
+      }
+      if(v==null) continue;
+      const w=BW*v/8;
+      ctx.fillStyle = partial ? 'rgba(255,255,255,0.9)' : yearColor(y,0.75);
+      ctx.fillRect(BX,row+1,w,RH-3);
+      if(y===recY && y<curY){
+        ctx.fillStyle='rgba(235,244,252,0.85)'; ctx.font='10px '+SANS;
+        ctx.fillText(v.toFixed(2)+'  lowest on record', BX+w+6, row+8);
+      } else if(partial){
+        ctx.fillStyle='rgba(235,244,252,0.85)'; ctx.font='10px '+SANS;
+        ctx.fillText(v.toFixed(2)+(T>=T1?'  (to '+pts[N-1].d+' '+MONTHS[pts[N-1].m-1]+')':'  so far'), BX+w+6, row+8);
+      } else if(y===Y0+1){
+        ctx.fillStyle='rgba(235,244,252,0.6)'; ctx.font='10px '+SANS;
+        ctx.fillText(v.toFixed(2), BX+w+6, row+8);
+      }
+    }
+
+    // explanation
+    ctx.fillStyle='rgba(190,208,226,0.72)'; ctx.font='13px '+SANS;
+    const ly=BY+(Y1-Y0)*RH+30;
+    ctx.fillText('The white disc has the same area as', PX, ly);
+    ctx.fillText('the sea ice on that day. Each year', PX, ly+18);
+    ctx.fillText('leaves its loop behind.', PX, ly+36);
+
+    // ---- scrubber ----
+    const SX0=40, SX1=1060, SY=762;
+    ctx.beginPath(); ctx.moveTo(SX0,SY); ctx.lineTo(SX1,SY);
+    ctx.strokeStyle='rgba(160,185,210,0.25)'; ctx.lineWidth=1; ctx.stroke();
+    const sx=SX0+(T-T0)/(T1-T0)*(SX1-SX0);
+    ctx.beginPath(); ctx.moveTo(SX0,SY); ctx.lineTo(sx,SY);
+    ctx.strokeStyle='rgba(235,244,252,0.8)'; ctx.lineWidth=2; ctx.stroke();
+    ctx.font='10px '+SANS; ctx.textAlign='center'; ctx.fillStyle='rgba(180,200,222,0.5)';
+    for(let y=1980;y<=Y1;y+=5){
+      const x=SX0+(y-T0)/(T1-T0)*(SX1-SX0);
+      ctx.fillRect(x-0.5,SY-3,1,6); ctx.fillText(String(y),x,SY+18);
+    }
+    ctx.beginPath(); ctx.arc(sx,SY,5,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill();
+    ctx.textAlign='left'; ctx.fillStyle='rgba(180,200,222,0.5)';
+    ctx.fillText(playing ? 'click or space to pause · drag the line to travel' : (T>=T1 ? 'click to watch again · drag the line to travel' : 'click or space to play · drag the line to travel'), SX0, SY-14);
+    ctx.textAlign='right';
+    ctx.fillText('Data: NSIDC Sea Ice Index v4, Northern Hemisphere', SX1, SY-14);
+  }
+
+  function tick(now){
+    if(!playing){ return; }
+    const dt=last?Math.min(0.1,(now-last)/1000):0; last=now;
+    T+=dt*YEARS_PER_SEC;
+    if(T>=T1){ T=T1; playing=false; }
+    draw();
+    if(playing) requestAnimationFrame(tick);
+  }
+  function play(){ if(T>=T1) T=T0; playing=true; last=0; requestAnimationFrame(tick); }
+  function pause(){ playing=false; draw(); }
+  function toggle(){ playing?pause():play(); }
+
+  // input
+  let dragging=false, moved=false, wasPlaying=false;
+  function local(ev){ const b=cv.getBoundingClientRect(); return [(ev.clientX-b.left)/scale,(ev.clientY-b.top)/scale]; }
+  function scrubTo(x){ T=T0+Math.max(0,Math.min(1,(x-40)/1020))*(T1-T0); draw(); }
+  cv.addEventListener('pointerdown',function(ev){
+    const p=local(ev);
+    if(p[1]>735){ dragging=true; wasPlaying=playing; playing=false; cv.setPointerCapture(ev.pointerId); scrubTo(p[0]); }
+    else toggle();
+  });
+  cv.addEventListener('pointermove',function(ev){ if(dragging) scrubTo(local(ev)[0]); });
+  cv.addEventListener('pointerup',function(){ if(dragging){ dragging=false; if(wasPlaying && T<T1) play(); else draw(); } });
+  window.addEventListener('keydown',function(ev){
+    if(ev.code==='Space'){ ev.preventDefault(); toggle(); }
+    else if(ev.key==='ArrowRight'){ T=Math.min(T1,T+1); draw(); }
+    else if(ev.key==='ArrowLeft'){ T=Math.max(T0,T-1); draw(); }
+  });
+  window.addEventListener('resize',fit);
+
+  fit();
+  setTimeout(play, 700);
+})();
+</script>
+</body>
+</html>

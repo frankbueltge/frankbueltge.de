@@ -1,0 +1,223 @@
+{
+ "_status": "POST-HOC, DECLARED. The numbers here were seen before presentations/cycle-003/PREREGISTRATION.md was written; that document declares it in §0.1. Scores no prediction.",
+ "generated_by": "presentations/cycle-003/agreement.py",
+ "date": "2026-09-13",
+ "session": 159,
+ "cycle": 3,
+ "source": "artifacts/cycle-003/2026-09-12-what-a-description-is-for/data/task-rows.json",
+ "source_committed": "2026-09-12, before this session existed; untouched tonight",
+ "operationalisations": {
+  "screen_broad": "screen, broad (R1-R4)",
+  "screen_strict": "screen, strict",
+  "narrowing": "narrowing: does not pick out one record",
+  "task_fail": "blind reader picked the wrong record"
+ },
+ "cannot_join": {
+  "which": "the blind reader's opinion of emptiness, 2026-09-11 (artifacts/cycle-003/2026-09-11-does-it-travel/data/audit-labels.json)",
+  "why": "its sheet was anonymised by design - an opaque identifier and the value text and nothing else - so its 60 items cannot be matched to any other measurement's items. Its kappa against the screen (0.0919) is therefore a number from a different sample and may not be read as a cell of this matrix.",
+  "kappa_against_screen_2026_09_11": 0.0919
+ },
+ "arms": {
+  "atlas-masked": {
+   "n": 60,
+   "positives": {
+    "screen_broad": 29,
+    "screen_strict": 12,
+    "narrowing": 0,
+    "task_fail": 3
+   },
+   "pairs": {
+    "screen_broad|screen_strict": {
+     "kappa": 0.4218,
+     "agreement_pct": 71.67,
+     "degenerate": false,
+     "note": null
+    },
+    "screen_broad|narrowing": {
+     "kappa": 0.0,
+     "agreement_pct": 51.67,
+     "degenerate": true,
+     "note": "one rater has zero variance on this arm, so kappa is identically 0 whatever the other says - no information, not disagreement"
+    },
+    "screen_broad|task_fail": {
+     "kappa": 0.0378,
+     "agreement_pct": 53.33,
+     "degenerate": false,
+     "note": null
+    },
+    "screen_strict|narrowing": {
+     "kappa": 0.0,
+     "agreement_pct": 80.0,
+     "degenerate": true,
+     "note": "one rater has zero variance on this arm, so kappa is identically 0 whatever the other says - no information, not disagreement"
+    },
+    "screen_strict|task_fail": {
+     "kappa": -0.087,
+     "agreement_pct": 75.0,
+     "degenerate": false,
+     "note": null
+    },
+    "narrowing|task_fail": {
+     "kappa": 0.0,
+     "agreement_pct": 95.0,
+     "degenerate": true,
+     "note": "one rater has zero variance on this arm, so kappa is identically 0 whatever the other says - no information, not disagreement"
+    }
+   }
+  },
+  "uk-masked": {
+   "n": 60,
+   "positives": {
+    "screen_broad": 30,
+    "screen_strict": 20,
+    "narrowing": 33,
+    "task_fail": 4
+   },
+   "pairs": {
+    "screen_broad|screen_strict": {
+     "kappa": 0.6667,
+     "agreement_pct": 83.33,
+     "degenerate": false,
+     "note": null
+    },
+    "screen_broad|narrowing": {
+     "kappa": 0.5,
+     "agreement_pct": 75.0,
+     "degenerate": false,
+     "note": null
+    },
+    "screen_broad|task_fail": {
+     "kappa": -0.0667,
+     "agreement_pct": 46.67,
+     "degenerate": false,
+     "note": null
+    },
+    "screen_strict|narrowing": {
+     "kappa": 0.5161,
+     "agreement_pct": 75.0,
+     "degenerate": false,
+     "note": null
+    },
+    "screen_strict|task_fail": {
+     "kappa": -0.0313,
+     "agreement_pct": 63.33,
+     "degenerate": false,
+     "note": null
+    },
+    "narrowing|task_fail": {
+     "kappa": -0.0123,
+     "agreement_pct": 45.0,
+     "degenerate": false,
+     "note": null
+    }
+   }
+  },
+  "atlas-unmasked": {
+   "n": 60,
+   "positives": {
+    "screen_broad": 29,
+    "screen_strict": 12,
+    "narrowing": 0,
+    "task_fail": 5
+   },
+   "pairs": {
+    "screen_broad|screen_strict": {
+     "kappa": 0.4218,
+     "agreement_pct": 71.67,
+     "degenerate": false,
+     "note": null
+    },
+    "screen_broad|narrowing": {
+     "kappa": 0.0,
+     "agreement_pct": 51.67,
+     "degenerate": true,
+     "note": "one rater has zero variance on this arm, so kappa is identically 0 whatever the other says - no information, not disagreement"
+    },
+    "screen_broad|task_fail": {
+     "kappa": 0.04,
+     "agreement_pct": 53.33,
+     "degenerate": false,
+     "note": null
+    },
+    "screen_strict|narrowing": {
+     "kappa": 0.0,
+     "agreement_pct": 80.0,
+     "degenerate": true,
+     "note": "one rater has zero variance on this arm, so kappa is identically 0 whatever the other says - no information, not disagreement"
+    },
+    "screen_strict|task_fail": {
+     "kappa": -0.0,
+     "agreement_pct": 75.0,
+     "degenerate": false,
+     "note": null
+    },
+    "narrowing|task_fail": {
+     "kappa": 0.0,
+     "agreement_pct": 91.67,
+     "degenerate": true,
+     "note": "one rater has zero variance on this arm, so kappa is identically 0 whatever the other says - no information, not disagreement"
+    }
+   }
+  }
+ },
+ "summary": {
+  "atlas-masked": {
+   "machine_machine_kappas": [
+    0.4218
+   ],
+   "machine_machine_min": 0.4218,
+   "machine_machine_max": 0.4218,
+   "machine_human_kappas": [
+    0.0378,
+    -0.087
+   ],
+   "machine_human_min": -0.087,
+   "machine_human_max": 0.0378,
+   "degenerate_cells": [
+    "screen_broad|narrowing",
+    "screen_strict|narrowing",
+    "narrowing|task_fail"
+   ]
+  },
+  "uk-masked": {
+   "machine_machine_kappas": [
+    0.6667,
+    0.5,
+    0.5161
+   ],
+   "machine_machine_min": 0.5,
+   "machine_machine_max": 0.6667,
+   "machine_human_kappas": [
+    -0.0667,
+    -0.0313,
+    -0.0123
+   ],
+   "machine_human_min": -0.0667,
+   "machine_human_max": -0.0123,
+   "degenerate_cells": []
+  },
+  "atlas-unmasked": {
+   "machine_machine_kappas": [
+    0.4218
+   ],
+   "machine_machine_min": 0.4218,
+   "machine_machine_max": 0.4218,
+   "machine_human_kappas": [
+    0.04,
+    -0.0
+   ],
+   "machine_human_min": -0.0,
+   "machine_human_max": 0.04,
+   "degenerate_cells": [
+    "screen_broad|narrowing",
+    "screen_strict|narrowing",
+    "narrowing|task_fail"
+   ]
+  }
+ },
+ "published_range_2026_09_12": {
+  "as_written": "four operationalisations agree pairwise at kappa between -0.0667 and 0.0378",
+  "where": "STATE-OF-THE-FIELD.md §4.6 and artifacts/cycle-003/2026-09-12-what-a-description-is-for/SUMMARY.md",
+  "what_is_wrong_with_it": "the kappas in it come from different item sets in different sessions, and at least one is a degenerate cell where a rater had no variance. On a common item set the picture is not one range: the mechanical instruments agree with each other, and neither agrees with the human task."
+ }
+}

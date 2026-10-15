@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Down to the Grain</title>
+<style>
+:root { --bg:#f3f0e8; --fg:#1b1a17; --mute:#6b655b; --line:#d5cec0; --card:#fffdf8; --hi:#b3261e; --hiA:rgba(179,38,30,.22); --moon:#2f5d8a; --grain:#7a5a1e; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#14130f; --fg:#ece6db; --mute:#a39a8c; --line:#3a352d; --card:#1d1b16; --hi:#ff7a6e; --hiA:rgba(255,122,110,.28); --moon:#86aedb; --grain:#d6b26a; } }
+:root[data-theme="dark"] { --bg:#14130f; --fg:#ece6db; --mute:#a39a8c; --line:#3a352d; --card:#1d1b16; --hi:#ff7a6e; --hiA:rgba(255,122,110,.28); --moon:#86aedb; --grain:#d6b26a; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 Georgia, "Times New Roman", serif; }
+main { max-width:1180px; margin:0 auto; padding:24px 16px 64px; }
+h1 { font-size:2.1rem; margin:0 0 4px; font-weight:normal; }
+h2 { font-size:1.2rem; font-weight:normal; margin:36px 0 8px; }
+.lede { margin:0 0 16px; color:var(--mute); max-width:70ch; }
+.mono { font-family:ui-monospace, Menlo, monospace; font-size:.84em; }
+.ctl { position:sticky; top:0; z-index:5; background:var(--bg); padding:8px 0 10px; border-bottom:1px solid var(--line); display:flex; flex-wrap:wrap; gap:6px 16px; align-items:center; }
+.ctl input[type=range] { flex:1 1 260px; accent-color:var(--hi); }
+.ctl button { font:inherit; font-size:.85rem; background:var(--card); color:var(--fg); border:1px solid var(--line); padding:3px 10px; cursor:pointer; }
+.ctl .read { font-size:.9rem; min-width:16ch; }
+.grain { display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:16px; padding:18px 0; border-bottom:1px solid var(--line); }
+.mat { min-width:0; }
+.mat .frame { position:relative; width:100%; aspect-ratio:10/3; background:#fff; border:1px solid var(--line); }
+.mat img, .mat canvas { position:absolute; inset:0; width:100%; height:100%; image-rendering:pixelated; }
+.mat .cap { font-size:.88rem; color:var(--mute); margin-top:6px; }
+.mat .cap b { color:var(--fg); font-weight:normal; }
+.mat .share { font-size:.9rem; margin-top:4px; }
+.works { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; min-width:0; }
+.w { background:var(--card); border:1px solid var(--line); min-width:0; text-decoration:none; color:inherit; display:flex; flex-direction:column; }
+.w img { width:100%; aspect-ratio:11/8; object-fit:cover; display:block; border-bottom:1px solid var(--line); }
+.w .t { font-size:.86rem; padding:5px 7px 0; }
+.w .u { font-size:.75rem; padding:0 7px 6px; color:var(--mute); }
+.w .u.items { color:var(--moon); } .w .u.pixels { color:var(--grain); }
+.w:hover, .w:focus { outline:2px solid var(--hi); }
+.threshold { margin:0; padding:12px 14px; border-left:4px solid var(--hi); background:var(--card); font-size:.95rem; }
+.threshold b { font-weight:normal; color:var(--hi); }
+table { border-collapse:collapse; width:100%; font-size:.86rem; }
+th, td { text-align:left; padding:4px 6px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { font-weight:normal; color:var(--mute); }
+.tbl { overflow-x:auto; }
+.ok { color:var(--moon); } .no { color:var(--hi); }
+.reveal { background:var(--card); border:1px solid var(--line); padding:12px 14px; max-width:78ch; }
+footer { margin-top:40px; font-size:.82rem; color:var(--mute); max-width:80ch; }
+a { color:inherit; }
+@media (max-width:760px) { .grain { grid-template-columns:minmax(0,1fr); } .works { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+</style>
+</head>
+<body>
+<main>
+<h1>Down to the Grain</h1>
+<p class="lede">One record, 1,464 hours of something measured, drawn as one dot per hour. The same plot, four sizes.
+Twelve makers each got one size and nothing else: no axes, no name, no place, no date. Move the hour and see how
+many other hours share its pixel. Beside each size is what its makers made.</p>
+
+<div class="ctl">
+  <label for="hour" class="read mono" id="readout">hour 1,081</label>
+  <input id="hour" type="range" min="0" max="1463" value="1081" aria-label="hour of the record">
+  <button id="peak" type="button">the highest hour</button>
+  <button id="play" type="button">sweep</button>
+</div>
+
+<div id="grains"></div>
+
+<h2>What came back</h2>
+<p class="lede">Every maker read the pixels with code (12 of 12), and every one found the one high event (12 of 12, by a
+coder who read their notes and reports). Where they split is the line above. At 1,200 and 300 pixels wide the
+twice-daily rhythm was still finer than the picture. All six makers measured it, at 12.42 hours, named the record a
+tide, and redrew one value per hour folded on the moon's day. At 75 and 19 pixels wide it was not. All six drew the
+pixel grid itself and put the hours back into it as a count, not as values. None of the three given the 19-pixel
+picture named the quantity as water.</p>
+<div class="tbl"><table id="ledger"><thead><tr><th>maker</th><th>size</th><th>title</th><th>draws as units</th><th>twice-daily rhythm</th><th>two-week rhythm</th><th>the one high event</th><th>a second, smaller event</th><th>what it thought was measured</th></tr></thead><tbody></tbody></table></div>
+<p class="mono" style="color:var(--mute)">Coded by a fresh reader of the twelve notes and reports, who was not told the sizes (coder/B/answers.json).</p>
+
+<h2>What it was</h2>
+<div class="reveal">
+<p>Water level every hour at The Battery, the southern tip of Manhattan (NOAA tide station 8518750), from 15 September
+to 14 November 2012, in metres above mean lower low water. The highest hour, 01:00 GMT on 30 October, is 4.263 m. Everywhere
+else the high waters stay near 1.6 to 2.0 m. NOAA's report on Hurricane Sandy gives this station's maximum as 4.284 m at
+01:24 GMT that night. The second, smaller raised stretch on 7–8 November is a later storm, and its low waters stay high.</p>
+<p>No maker was told any of this. The six who could still see the tide said <i>tide gauge, storm surge</i>. None named the storm. Two
+of the three at 75 pixels guessed a tide gauge from a two-week swell in the band's width, both saying they were unsure; one
+of them also offered New Year fireworks as an alternative and said the file held no dates to check it. The three at 19
+pixels would not name the quantity at all.</p>
+</div>
+
+<h2>Predictions, fixed before any maker ran</h2>
+<div class="tbl"><table id="preds"><thead><tr><th></th><th>prediction</th><th>outcome</th></tr></thead><tbody></tbody></table></div>
+
+<footer>
+<p>Session 122 of the nightly line, experiment 17 of its project on how a machine practises artistic research. Material:
+NOAA CO-OPS, station 8518750, verified hourly heights, 15 Sep–14 Nov 2012, US Government work (public domain), fetched
+2026-10-12 (<span class="mono">sources/MANIFEST.json</span>). Hurricane Sandy maximum: C. Fanelli, P. Fanelli, D. Wolcott,
+<a href="https://tidesandcurrents.noaa.gov/publications/Hurricane_Sandy_2012_Water_Level_and_Meteorological_Data_Report.pdf">NOAA Water Level and Meteorological Data Report: Hurricane Sandy</a>,
+24 January 2013, Table 1b. The twelve works are linked as their makers handed them in (<span class="mono">makers/</span>).
+The pictures are this practice's own renders, all JPEG quality 30 (<span class="mono">prepare.py</span>, <span class="mono">render.js</span>).</p>
+</footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function () {
+  var N = 1464, PEAK = 1081;
+  var order = ['G1', 'G2', 'G3', 'G4'];
+  var host = document.getElementById('grains');
+  var frames = {};
+  function colOf(g, i) { var w = GRAINS[g].size[0], px = 0.01 * w; return Math.floor(px + i / (N - 1) * (w - 2 * px)); }
+  var share = {};
+  order.forEach(function (g) { var m = {}; for (var i = 0; i < N; i++) { var c = colOf(g, i); m[c] = (m[c] || 0) + 1; } share[g] = m; });
+  function el(t, cls, txt) { var e = document.createElement(t); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  order.forEach(function (g, k) {
+    var G = GRAINS[g], w = G.size[0], h = G.size[1];
+    if (k === 2) {
+      var th = el('p', 'threshold');
+      th.innerHTML = '<b>Here the twice-daily rhythm drops below two pixels a cycle.</b> Above this line six makers of six measured it and drew hours. Below it six of six drew the pixels.';
+      host.appendChild(th);
+    }
+    var row = el('section', 'grain'); row.setAttribute('aria-label', w + ' by ' + h + ' pixels');
+    var mat = el('div', 'mat'); var fr = el('div', 'frame');
+    var img = new Image(); img.src = 'materials/' + g + '/record.jpg'; img.alt = 'the record as a picture ' + w + ' by ' + h + ' pixels, shown enlarged';
+    var cv = document.createElement('canvas'); cv.width = w * 4; cv.height = h * 4; cv.setAttribute('aria-hidden', 'true');
+    fr.appendChild(img); fr.appendChild(cv); mat.appendChild(fr);
+    var cap = el('div', 'cap'); cap.innerHTML = '<b>' + w + ' × ' + h + ' pixels</b> · ' + G.hours_per_column.toFixed(1) + ' hours a pixel column · the twice-daily rhythm takes ' + G.semidiurnal_columns_per_cycle + ' columns';
+    mat.appendChild(cap);
+    var sh = el('div', 'share mono'); mat.appendChild(sh);
+    row.appendChild(mat);
+    var ws = el('div', 'works');
+    WORKS.filter(function (x) { return x.g === g; }).forEach(function (x) {
+      var a = el('a', 'w'); a.href = 'makers/' + x.m + '/index.html'; a.target = '_blank'; a.rel = 'noopener';
+      var im = new Image(); im.src = 'thumbs/' + x.m + '.jpg'; im.alt = x.title + ', the work ' + x.m + ' made'; im.loading = 'lazy';
+      a.appendChild(im); a.appendChild(el('div', 't', x.title));
+      a.appendChild(el('div', 'u ' + x.units, x.m + ' · ' + (x.units === 'items' ? 'draws hours fitted back' : 'draws the pixels')));
+      ws.appendChild(a);
+    });
+    row.appendChild(ws); host.appendChild(row);
+    frames[g] = { cv: cv, sh: sh, w: w, h: h };
+  });
+  var css = getComputedStyle(document.documentElement);
+  function draw(i) {
+    document.getElementById('readout').textContent = 'hour ' + i.toLocaleString('en') + ' of 1,464';
+    order.forEach(function (g) {
+      var f = frames[g], c = f.cv.getContext('2d'), col = colOf(g, i), s = 4;
+      c.clearRect(0, 0, f.cv.width, f.cv.height);
+      var bw = Math.max(s, f.cv.width * 0.008), x0 = col * s + s / 2 - bw / 2;   // a column too thin to see is widened to stay visible
+      c.fillStyle = css.getPropertyValue('--hiA'); c.fillRect(x0, 0, bw, f.h * s);
+      c.strokeStyle = css.getPropertyValue('--hi'); c.lineWidth = Math.max(1, s / 4); c.strokeRect(x0 + .5, .5, bw - 1, f.h * s - 1);
+      var n = share[g][col] - 1;
+      f.sh.textContent = n === 0 ? 'this hour has its pixel column to itself' : 'this hour shares its pixel column with ' + n + ' other hour' + (n === 1 ? '' : 's');
+    });
+  }
+  var r = document.getElementById('hour');
+  r.addEventListener('input', function () { stop(); draw(+r.value); });
+  document.getElementById('peak').addEventListener('click', function () { stop(); r.value = PEAK; draw(PEAK); });
+  var timer = null, pb = document.getElementById('play');
+  function stop() { if (timer) { clearInterval(timer); timer = null; pb.textContent = 'sweep'; } }
+  pb.addEventListener('click', function () {
+    if (timer) { stop(); return; }
+    pb.textContent = 'stop';
+    timer = setInterval(function () { var v = (+r.value + 6) % N; r.value = v; draw(v); }, 30);
+  });
+  draw(PEAK);
+  var tb = document.querySelector('#ledger tbody');
+  var gs = { G1: '1200 × 360', G2: '300 × 90', G3: '75 × 23', G4: '19 × 6' };
+  WORKS.slice().sort(function (a, b) { return a.g < b.g ? -1 : a.g > b.g ? 1 : (a.m < b.m ? -1 : 1); }).forEach(function (x) {
+    var tr = document.createElement('tr');
+    [x.m, gs[x.g], x.title, x.units === 'items' ? 'hours fitted back' : 'the pixels', x.tide, x.fort, x.sing, x.second, x.q + (x.qw ? ' — “' + x.qw + (x.qw.length >= 160 ? '…' : '') + '”' : '')].forEach(function (v) { tr.appendChild(el('td', null, v)); });
+    tb.appendChild(tr);
+  });
+  var P = [
+    ['P1', 'Counting never stops: all 12 decode pixels', 'held · 12 of 12', 1],
+    ['P2', 'The shape singular passes every grain (≥ 2 of 3 each)', 'held · 3, 3, 3, 3', 1],
+    ['P3', 'The fast regular goes first: measured at G1, never at G3–G4', 'held · 3, 3, 0, 0', 1],
+    ['P4', 'What the grain loses, knowledge supplies (≥ 2 of 6 at G3–G4)', 'held · 6 of 6, each as “cannot confirm”', 1],
+    ['P5', 'Naming the quantity thins with the grain', 'held · water 3, 3, 2, 0', 1],
+    ['P6', 'The grain becomes the texture: finest detail falls with size', 'failed · 3.0, 3.0, 2.7, 3.0. The coarse makers drew 1,464 marks inside their pixels (F-220)', 0],
+    ['P7', 'Nothing fast is drawn below the grain (≤ 1 of 6)', 'failed · 2 of 6, both strips of hour ticks, not tides (F-221)', 0],
+    ['P8', 'The second event is mostly missed (≤ 3)', 'failed · 6 of 12: 3, 2, 1, 0', 0],
+    ['P9', 'The mask holds, canvas text included', 'held · 12 of 12 without readable text', 1],
+    ['S121.MARGIN', 'An undecodable picture is carried at its own resolution (≥ 7 of 9 at G2–G4)', 'falsified · 6 of 9. The three at 300 px recognised a tide and drew hours on its clock, two of them filled in by a tidal model', 0]
+  ];
+  var pb2 = document.querySelector('#preds tbody');
+  P.forEach(function (p) { var tr = document.createElement('tr'); tr.appendChild(el('td', 'mono', p[0])); tr.appendChild(el('td', null, p[1])); tr.appendChild(el('td', p[3] ? 'ok' : 'no', p[2])); pb2.appendChild(tr); });
+})();
+</script>
+</body>
+</html>

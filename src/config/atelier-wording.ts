@@ -79,12 +79,12 @@ export const ATELIER_NARRATIVE = {
    * trägt als die Design-Session (S26–S28) sah. */
   titleRule: 'the sheet title is the youngest thread’s own label, verbatim',
   sheetLede:
-    'every edge below is drawn in the rhizome by Ulysses — the practice’s own reading of its works and sources',
+    'every edge below is drawn in the rhizome by Assay — the practice’s own reading of its works and sources',
   /** Franks Rahmung, 2 Sätze am Blatt-Fuß (atelier-aesthetik §5; volle Rahmung in
    * apparatus). v4-Revision 2026-07-18: projektbasiert statt nightly. v5-Sync 2026-07-25:
    * work-line statt bounded projects (Aktualitäts-Regel — v5 löste v4 am 24.07. ab). */
   framingFoot:
-    'Ulysses is a machine-participatory artistic research practice — a work-line and its studies under a standing delegation, errors catalogued checkably. The machines write, the record shows who wrote what; since 2026-08-10 curated publication is the practice’s own act, signed and answered for in its own record.',
+    'Assay is a machine-participatory artistic research practice — a work-line and its studies under a standing delegation, errors catalogued checkably. The machines write, the record shows who wrote what; since 2026-08-10 curated publication is the practice’s own act, signed and answered for in its own record.',
   /** Ehrliche Abweichungen der Site gegenüber den Mockup-Generatoren (nichts still überbrückt). */
   provenance: {
     sheet: 'drawn from src/data/atelier/rhizome.json — the practice’s own reading, mirrored by the integration gate, read-only',
@@ -100,9 +100,9 @@ export const ATELIER_NARRATIVE = {
    * Draft bis Franks Merge des Stufe-0-PRs. */
   entrance: {
     kicker: 'Atelier · machine-participatory artistic research',
-    h1: 'Atelier · Ulysses',
+    h1: 'Atelier · Assay',
     lede:
-      'Ulysses is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation, and since 2026-08-10 publish what they judge ready under their own signature. The unit of work is the work-line, fed by studies that compost back into it; failures stay on the record, checkably.',
+      'Assay is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation, and since 2026-08-10 publish what they judge ready under their own signature. The unit of work is the work-line, fed by studies that compost back into it; failures stay on the record, checkably.',
     doors: {
       now: 'the research log — the work-line and its studies under Protocol v6: scores, traces, dispositions',
       works: 'works & catalogue — the nightly phase (28 June – 18 July 2026) and, since 24 July, its curated publications',
@@ -305,9 +305,9 @@ export const ATELIER_NARRATIVE = {
   },
   /**
    * The dossier (2026-08-01) — the entrance's new centre, and the reason the rest of this page
-   * moved. Frank, reviewing the previous entrance: "I want a clear view INTO THE CURRENT
-   * PROJECTS, for example Negative Parallax. And when I select it, simply nothing happens —
-   * only the heading shows at the top, everything else stays stuck on 'scene one'."
+   * moved. Frank, reviewing the previous entrance (wording private): he wanted a clear view
+   * into the current projects, Negative Parallax for one, and selecting one did nothing — only
+   * the heading changed at the top, while everything else stayed stuck on the first scene.
    *
    * What that diagnosed: the entrance was built as a RETROSPECTIVE — four outcome harbours and
    * a guided story about one line that had already ended — while the practice runs a line that
@@ -527,7 +527,7 @@ export const ATELIER_NARRATIVE = {
       'the work-line protocol. The register is closed here, not everywhere: the nightly line was ' +
       'forked back to life on 10 August under the constitution that produced it, and it reads its ' +
       'next session number off this same journal.',
-    material: 'Ulysses’ own shelf: the sources the practice has pulled, as it catalogued them.',
+    material: 'Assay’s own shelf: the sources the practice has pulled, as it catalogued them.',
     materialAtlasNote:
       'Frank’s atlas (/atlas) is the lab’s reference collection; this shelf is the practice’s own lens on it. Each points at the other.',
     apparatus: 'How the machine runs — repo, constitution, team channel, integration machinery, in one room.',
@@ -537,7 +537,7 @@ export const ATELIER_NARRATIVE = {
      *  The curated publications are no longer listed by name here — they stand in their own
      *  section above, and a hand-kept list of two was a drift risk the moment a third landed. */
     worksPhase:
-      'This room holds two phases of one practice, and they are not the same kind of thing. Up to 18 July 2026 the unit of work was the night; after it, the bounded project and then the work-line. The nightly works stay at the addresses they were made at, and the line that made them was forked back to life on 10 August, in its own repository, under the constitution that produced it. Nothing on this surface enters through a merge or a green build: each work-line publication is published by an explicit PUBLICATION.json (see the project’s own DECISION.md) — until 2026-08-10 signed by the responsible human, since then by the practice itself, under Protocol v6 §2.3.',
+      'This room holds two phases of one practice, and they are not the same kind of thing. Up to 18 July 2026 the unit of work was the night; after it, the bounded project and then the work-line. The nightly works stay at the addresses they were made at, and the line that made them was forked back to life on 10 August, in its own repository, under the constitution that produced it. None of the works below entered through a merge or a green build: each work-line publication was published by an explicit PUBLICATION.json (see the project’s own DECISION.md) — until 2026-08-10 signed by the responsible human, then by the practice itself, under Protocol v6 §2.3. Research ecology v3 (2026-08-30) abolished that gate along with the rest of v2’s apparatus; a session now leaves a self-contained artifact whose verification lives inside it, not behind a signed manifest.',
     cockpitArchiveNote: 'the atlas now lives in material',
     cockpitArchived:
       'Archived surface (ADR 0008): the cockpit is kept as a dated artefact, no longer the entrance.',
@@ -577,8 +577,8 @@ export const ATELIER_NARRATIVE = {
     backToRoom: '← what is open',
     fullTextLabel: 'read it in full',
   },
-  /** The four first-visitor questions (Frank, 2026-07-31: „was passiert hier eigentlich,
-   * auf welcher Basis, was ist bisher passiert und wie ist der aktuelle Stand“), moved here
+  /** The four first-visitor questions (Frank, 2026-07-31, wording private: what actually
+   * happens here, on what basis, what has happened so far, and where things stand), moved here
    * from the page's own `orientierung` const (WP2 — practice-shell) so OrientationList.astro
    * can render it. A function, not a static array: every number stays derived at build time
    * from committed mirrors, none maintained by hand. */

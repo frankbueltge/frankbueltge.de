@@ -1,0 +1,371 @@
+{
+ "note": "Forty rows drawn blind from the RFC block-window-0 frame with random.seed(95), before any verdict was written and before any rule was run over them. The nearest party term is NOT named here on purpose: the reader names the bearer in their own words, and whether that answer coincides with the term the rule reads is decided afterwards, mechanically, by adjudicate.py.",
+ "corpus": "Session 86's 63 RFCs, binding register (the keyword in capitals, RFC 8174)",
+ "frame": "B-FORM, AGENTLESS, block window 0 under the NARROW list (Session 88's base terms + Session 94's RFC_OWN)",
+ "population_b_form_agentless_binding": 956,
+ "population_in_frame": 346,
+ "sampled": 40,
+ "seed": 95,
+ "rows": [
+  {
+   "n": 1,
+   "rfc": "9427",
+   "block": 96,
+   "offset": 94,
+   "modal": "must",
+   "sentence": "If the TLS negotiation is unsuccessful, then the application data is untrusted; therefore, it MUST be discarded without being examined.",
+   "block_text": "In order to correct this failure, we require that implementations MUST NOT send or expect to receive application data in the TLS session if the underlying TLS connection is still performing negotiation. Implementations MUST delay processing of application data until such time as the TLS negotiation has finished. If the TLS negotiation is successful, then the application data can be examined. If the TLS negotiation is unsuccessful, then the application data is untrusted; therefore, it MUST be discarded without being examined."
+  },
+  {
+   "n": 2,
+   "rfc": "9421",
+   "block": 522,
+   "offset": 41,
+   "modal": "must",
+   "sentence": "The JWS algorithm MUST NOT be \"none\" and MUST NOT be any algorithm with a JOSE Implementation Requirement of \"Prohibited\".",
+   "block_text": "The JWS algorithm MUST NOT be \"none\" and MUST NOT be any algorithm with a JOSE Implementation Requirement of \"Prohibited\"."
+  },
+  {
+   "n": 3,
+   "rfc": "9427",
+   "block": 154,
+   "offset": 120,
+   "modal": "must",
+   "sentence": "There may be additional protocol exchanges in order to exchange more detailed failure indications, but the final result MUST be a failed authentication.",
+   "block_text": "When the inner authentication protocol indicates that authentication has failed, then implementations MUST fail authentication for the entire session. There may be additional protocol exchanges in order to exchange more detailed failure indications, but the final result MUST be a failed authentication. As noted earlier, any session tickets for this failed authentication MUST be either invalidated or discarded."
+  },
+  {
+   "n": 4,
+   "rfc": "8196",
+   "block": 50,
+   "offset": 71,
+   "modal": "must",
+   "sentence": "System ID change as part of the System ID collision resolution process MUST be supported.",
+   "block_text": "- After its initial generation, the System ID SHOULD remain stable. Changes such as interface enable/disable, interface connect/disconnect, device reboot, firmware update, or configuration changes SHOULD NOT cause the System ID to change. System ID change as part of the System ID collision resolution process MUST be supported. Implementations SHOULD allow the System ID to be cleared by a user-initiated system reset."
+  },
+  {
+   "n": 5,
+   "rfc": "9420",
+   "block": 1107,
+   "offset": 14,
+   "modal": "must",
+   "sentence": "GREASE values MUST be handled using normal logic for processing unsupported values.",
+   "block_text": "GREASE values MUST be handled using normal logic for processing unsupported values. When comparing lists of capabilities to identify mutually supported capabilities, clients MUST represent their own capabilities with a list containing only the capabilities actually supported, without any GREASE values. In other words, lists including GREASE values are only sent to other clients; representations of a client's own capabilities MUST NOT contain GREASE values."
+  },
+  {
+   "n": 6,
+   "rfc": "8175",
+   "block": 117,
+   "offset": 65,
+   "modal": "must",
+   "sentence": "If the session is terminated, canceling transactions in progress MUST be performed as part of resetting the state machine.",
+   "block_text": "DLEP transactions do not time out and are not cancellable, except for transactions in flight when the DLEP session is reset. If the session is terminated, canceling transactions in progress MUST be performed as part of resetting the state machine. An implementation can detect if its peer has failed in some way by use of the session heartbeat mechanism during the In-Session state; see Section 7.3."
+  },
+  {
+   "n": 7,
+   "rfc": "8196",
+   "block": 77,
+   "offset": 27,
+   "modal": "must",
+   "sentence": "The System ID of each node MUST be unique.",
+   "block_text": "The System ID of each node MUST be unique. As described in Section 3.4.5, the System ID is generated based on entropies (e.g., Media Access Control (MAC) address) that are generally expected to be unique. However, since there may be limitations to the available entropies, there is still the possibility of System ID duplication. This section defines how IS-IS detects and resolves System ID duplication. A duplicate system ID may occur between neighbors or between routers in the same area that are not neighbors."
+  },
+  {
+   "n": 8,
+   "rfc": "8175",
+   "block": 80,
+   "offset": 43,
+   "modal": "must",
+   "sentence": "If TLS is to be used, then the TLS session MUST be established before any Messages are passed between peers.",
+   "block_text": "Implementations of DLEP SHOULD implement, and use, Transport Layer Security (TLS) [RFC5246] to protect the TCP session. The \"dedicated deployments\" discussed in \"Implementation Scenarios\" (Section 4) MAY consider the use of DLEP without TLS. For all \"networked deployments\" (again, discussed in \"Implementation Scenarios\"), the implementation and use of TLS are STRONGLY RECOMMENDED. If TLS is to be used, then the TLS session MUST be established before any Messages are passed between peers. Routers supporting TLS MUST prioritize connection points using TLS over those that do not."
+  },
+  {
+   "n": 9,
+   "rfc": "9429",
+   "block": 293,
+   "offset": 62,
+   "modal": "should",
+   "sentence": "The value of the <nettype> <addrtype> <unicast-address> tuple SHOULD be set to a non-meaningful address, such as IN IP4 0.0.0.0, to prevent leaking a local IP address in this field; this problem is discussed in [RFC8828].",
+   "block_text": "* The second SDP line MUST be an \"o=\" line as defined in [RFC4566], Section 5.2. The value of the <username> field SHOULD be \"-\". The <sess-id> MUST be representable by a 64-bit signed integer, and the value MUST be less than (2^63)-1. This is to ensure that the <sess-id> value, when expressed as a string, is always a non- negative integer, as some SDP parsers may fail to parse a negative <sess-id>. It is RECOMMENDED that the <sess-id> be constructed by generating a 64-bit quantity with the highest bit set to zero and the remaining 63 bits being cryptographically random. The value of the <nettype> <addrtype> <unicast-address> tuple SHOULD be set to a non-meaningful address, such as IN IP4 0.0.0.0, to prevent leaking a local IP address in this field; this problem is discussed in [RFC8828]. As mentioned in [RFC4566], the entire \"o=\" line needs to be unique, but selecting a random number for <sess-id> is sufficient to accomplish this."
+  },
+  {
+   "n": 10,
+   "rfc": "8180",
+   "block": 102,
+   "offset": 3,
+   "modal": "should",
+   "sentence": "Sp SHOULD be calculated as (3*ETX)-2.",
+   "block_text": "An implementation MUST follow OF0's normalization guidance as discussed in Sections 1 and 4.1 of [RFC6552]. Sp SHOULD be calculated as (3*ETX)-2. The minimum value of Sp (MINIMUM_STEP_OF_RANK) indicates a good quality link. The maximum value of Sp (MAXIMUM_STEP_OF_RANK) indicates a poor quality link. The default value of Sp (DEFAULT_STEP_OF_RANK) indicates an average quality link. Candidate parents with ETX greater than 3 SHOULD NOT be selected. This avoids having ETX values on used links that are larger that the maximum allowed transmission attempts."
+  },
+  {
+   "n": 11,
+   "rfc": "9429",
+   "block": 392,
+   "offset": 121,
+   "modal": "must",
+   "sentence": "For codecs that have their own internal silence suppression support, the appropriate fmtp parameters for each such codec MUST be specified to indicate that silence suppression for received audio is not desired.",
+   "block_text": "If the VoiceActivityDetection option is specified, with a value of \"false\", the JSEP implementation MUST NOT emit \"CN\" codecs. For codecs that have their own internal silence suppression support, the appropriate fmtp parameters for each such codec MUST be specified to indicate that silence suppression for received audio is not desired. For example, when using the Opus codec, the \"usedtx=0\" parameter would be specified in the offer. In addition, the implementation MUST NOT use silence suppression for media it generates, regardless of whether the \"CN\" codecs or related fmtp parameters appear in the peer's description. The impact of these rules is that silence suppression in JSEP depends on mutual agreement of both sides, which ensures consistent handling regardless of which codec is used."
+  },
+  {
+   "n": 12,
+   "rfc": "8806",
+   "block": 20,
+   "offset": 51,
+   "modal": "must",
+   "sentence": "Specifically, the root service on the local system MUST be configured to only answer queries from resolvers on the same host and MUST NOT answer queries from any other resolver.",
+   "block_text": "This design explicitly only allows the new root zone service to be run on the same server as the recursive resolver in order to prevent the server from serving authoritative answers to any other system. Specifically, the root service on the local system MUST be configured to only answer queries from resolvers on the same host and MUST NOT answer queries from any other resolver."
+  },
+  {
+   "n": 13,
+   "rfc": "8801",
+   "block": 90,
+   "offset": 58,
+   "modal": "should",
+   "sentence": "In all of these cases, the recursive DNS server addresses SHOULD be associated with the corresponding PvD.",
+   "block_text": "PvD-aware hosts can be provisioned with recursive DNS servers via RA options passed within an Explicit PvD, via RA options associated with an Implicit PvD, via DHCPv6 or DHCPv4, or from some other provisioning mechanism that creates an Explicit PvD (such as a VPN). In all of these cases, the recursive DNS server addresses SHOULD be associated with the corresponding PvD. Specifically, queries sent to a configured recursive DNS server SHOULD be sent from a local IP address that was provisioned for the PvD via RA or DHCP. Answers received from the DNS server SHOULD only be used on the same PvD."
+  },
+  {
+   "n": 14,
+   "rfc": "8175",
+   "block": 226,
+   "offset": 60,
+   "modal": "must",
+   "sentence": "If any optional extensions are supported by the modem, they MUST be enumerated in the Extensions Supported Data Item.",
+   "block_text": "If any optional extensions are supported by the modem, they MUST be enumerated in the Extensions Supported Data Item. If an Extensions Supported Data Item does not exist in a Session Initialization Response Message, the router MUST conclude that there is no support for extensions in the modem."
+  },
+  {
+   "n": 15,
+   "rfc": "9429",
+   "block": 111,
+   "offset": 12,
+   "modal": "must",
+   "sentence": "These rules MUST be followed as long as the attributes remain present in the remote description, including cases in which the track changes its resolution or is replaced with a different track.",
+   "block_text": "This specification prescribes behavior that is more specific. When a MediaStreamTrack, which is producing video of a certain resolution (the \"track resolution\"), is attached to an RtpSender, which is encoding the track video at the same or lower resolution(s) (the \"encoder resolutions\"), and a remote description is applied that references the sender and contains valid \"a=imageattr recv\" attributes, it MUST follow the rules below to ensure that the sender does not transmit a resolution that would exceed the size criteria specified in the attributes. These rules MUST be followed as long as the attributes remain present in the remote description, including cases in which the track changes its resolution or is replaced with a different track."
+  },
+  {
+   "n": 16,
+   "rfc": "9427",
+   "block": 94,
+   "offset": 11,
+   "modal": "must",
+   "sentence": "This check MUST be performed before proceeding with another round trip of TLS negotiation.",
+   "block_text": "As a result, implementations MUST check for application data once the TLS session has been established. This check MUST be performed before proceeding with another round trip of TLS negotiation. TLS- based EAP methods, such as EAP-TTLS, PEAP, and EAP-FAST, each have method-specific application data that MUST be processed according to the EAP Type."
+  },
+  {
+   "n": 17,
+   "rfc": "9429",
+   "block": 319,
+   "offset": 46,
+   "modal": "must",
+   "sentence": "Any header extensions that require encryption MUST be specified as indicated in [RFC6904], Section 4.",
+   "block_text": "* For each RTP header extension supported by the application, an \"a=extmap\" line, as specified in [RFC5285], Section 5. The list of header extensions that SHOULD/MUST be supported is specified in [RFC8834], Section 5.2. Any header extensions that require encryption MUST be specified as indicated in [RFC6904], Section 4."
+  },
+  {
+   "n": 18,
+   "rfc": "9429",
+   "block": 501,
+   "offset": 95,
+   "modal": "must",
+   "sentence": "RtpTransceivers that were created by applying a remote offer that was subsequently rolled back MUST be stopped and removed from the PeerConnection.",
+   "block_text": "A rollback disassociates any RtpTransceivers that were associated with \"m=\" sections by the application of the rolled-back session description (see Sections 5.10 and 5.9). This means that some RtpTransceivers that were previously associated will no longer be associated with any \"m=\" section; in such cases, the value of the RtpTransceiver's mid property MUST be set to null, and the mapping between the transceiver and its \"m=\" section index MUST be discarded. RtpTransceivers that were created by applying a remote offer that was subsequently rolled back MUST be stopped and removed from the PeerConnection. However, an RtpTransceiver MUST NOT be removed if a track was attached to the RtpTransceiver via the addTrack method. This is so that an application may call addTrack, then call setRemoteDescription with an offer, then roll back that offer, then call createOffer and have an \"m=\" section for the added track appear in the generated offer."
+  },
+  {
+   "n": 19,
+   "rfc": "8186",
+   "block": 27,
+   "offset": 145,
+   "modal": "must",
+   "sentence": "The endpoint of the test session, Session-Sender and Session-Receiver (for OWAMP) or Session-Reflector (for TWAMP), that supports this extension MUST be capable of interpreting the NTP and PTPv2 timestamp formats.",
+   "block_text": "OWAMP connection establishment follows the procedure defined in Section 3.1 of [RFC4656] and additional steps in TWAMP described in Section 3.1 of [RFC5357]. In these procedures, the Modes field has been used to identify and select specific communication capabilities. At the same time, the Modes field has been recognized and used as an extension mechanism [RFC6038]. The new feature requires one bit position for the Server and Control-Client to negotiate which timestamp format can be used in some or all test sessions invoked with this control connection. The endpoint of the test session, Session-Sender and Session-Receiver (for OWAMP) or Session-Reflector (for TWAMP), that supports this extension MUST be capable of interpreting the NTP and PTPv2 timestamp formats. If the endpoint does not support this extension, then the value of the PTPv2 Timestamp flag MUST be 0 because it is in Must Be Zero field. If the value of the PTPv2 Timestamp flag is 0, then the advertising node can use and interpret only the NTP timestamp format. Implementations of OWAMP and/or TWAMP MAY provide a configuration knob to bypass the"
+  },
+  {
+   "n": 20,
+   "rfc": "9411",
+   "block": 84,
+   "offset": 20,
+   "modal": "must",
+   "sentence": "Client IP addresses MUST be distributed between IPv4 and IPv6 based on the deployment and use case scenario.",
+   "block_text": "Client IP addresses MUST be distributed between IPv4 and IPv6 based on the deployment and use case scenario. The following options MAY be considered for a selection of ratios for both IP addresses and traffic load distribution."
+  },
+  {
+   "n": 21,
+   "rfc": "8806",
+   "block": 40,
+   "offset": 113,
+   "modal": "must",
+   "sentence": "A corollary of the above list is that authoritative data in the root zone used on the local authoritative server MUST be identical to the same data in the root zone for the DNS.",
+   "block_text": "A corollary of the above list is that authoritative data in the root zone used on the local authoritative server MUST be identical to the same data in the root zone for the DNS. It is possible to change the unsigned data (the glue records) in the copy of the root zone, but such changes could cause problems for the recursive server that accesses the local root zone, and therefore any changes to the glue records SHOULD NOT be made."
+  },
+  {
+   "n": 22,
+   "rfc": "9411",
+   "block": 135,
+   "offset": 84,
+   "modal": "must",
+   "sentence": "The sampling interval for collecting the raw results and calculating the statistics MUST be less than 2 seconds.",
+   "block_text": "Sustain phase: This phase starts when all required clients are active and operating at their desired load condition. In the sustain phase, the test equipment MUST continue generating traffic to a constant target value for a constant number of active clients. The minimum RECOMMENDED time duration for the sustain phase is 300 seconds. This is the phase where measurements occur. The test equipment MUST measure and record statistics continuously. The sampling interval for collecting the raw results and calculating the statistics MUST be less than 2 seconds."
+  },
+  {
+   "n": 23,
+   "rfc": "9411",
+   "block": 123,
+   "offset": 59,
+   "modal": "must",
+   "sentence": "* The server IP address distribution between IPv4 and IPv6 MUST be identical to the client IP address distribution ratio.",
+   "block_text": "* The server IP address distribution between IPv4 and IPv6 MUST be identical to the client IP address distribution ratio."
+  },
+  {
+   "n": 24,
+   "rfc": "8205",
+   "block": 98,
+   "offset": 100,
+   "modal": "shall",
+   "sentence": "When sending the route advertisement to an internal BGPsec-speaking peer, the BGPsec_PATH attribute SHALL NOT be modified.",
+   "block_text": "When a BGPsec speaker receives a BGPsec UPDATE message containing a BGPsec_PATH attribute (with one or more signatures) from an (internal or external) peer, it may choose to propagate the route advertisement by sending it to its other (internal or external) peers. When sending the route advertisement to an internal BGPsec-speaking peer, the BGPsec_PATH attribute SHALL NOT be modified. When sending the route advertisement to an external BGPsec-speaking peer, the following procedures are used to form or update the BGPsec_PATH attribute."
+  },
+  {
+   "n": 25,
+   "rfc": "8800",
+   "block": 175,
+   "offset": 12,
+   "modal": "should",
+   "sentence": "An operator SHOULD be allowed to configure the Disjoint Association Groups and disjoint parameters at the PCEP peers and associate them with the LSPs.",
+   "block_text": "An operator SHOULD be allowed to configure the Disjoint Association Groups and disjoint parameters at the PCEP peers and associate them with the LSPs. The operator MUST be allowed to set the Operator- configured Association Range. The operator SHOULD be allowed to set the local policies to define various disjoint computational behavior at the PCE."
+  },
+  {
+   "n": 26,
+   "rfc": "8801",
+   "block": 61,
+   "offset": 81,
+   "modal": "must",
+   "sentence": "In such cases, the PvD Option header (i.e., all fields except the Options field) MUST be repeated in all the transmitted RAs.",
+   "block_text": "As specified in [RFC4861] and [RFC6980], when the set of options causes the size of an advertisement to exceed the link MTU, multiple router advertisements MUST be sent to avoid fragmentation, each containing a subset of the options. In such cases, the PvD Option header (i.e., all fields except the Options field) MUST be repeated in all the transmitted RAs. The options within the Options field MAY be transmitted only once, included in one of the transmitted PvD Options."
+  },
+  {
+   "n": 27,
+   "rfc": "9411",
+   "block": 212,
+   "offset": 97,
+   "modal": "must",
+   "sentence": "However, the measured layer (e.g., layer 3 throughput) MUST be noted in the report, and the user MUST be aware of the implication while comparing the throughput performance of multiple DUTs/SUTs measured in different OSI layers.",
+   "block_text": "Inspected Throughput The number of bits per second of examined and allowed traffic a network security device is able to transmit to the correct destination interface(s) in response to a specified offered load. The throughput benchmarking tests defined in Section 7 SHOULD measure the average layer 2 throughput value when the DUT/SUT is \"inspecting\" traffic. It is also acceptable to measure other OSI layer throughput. However, the measured layer (e.g., layer 3 throughput) MUST be noted in the report, and the user MUST be aware of the implication while comparing the throughput performance of multiple DUTs/SUTs measured in different OSI layers. This document recommends presenting the inspected throughput value in Gbit/s rounded to two places of precision with a more specific kbit/s in parenthesis."
+  },
+  {
+   "n": 28,
+   "rfc": "9401",
+   "block": 44,
+   "offset": 50,
+   "modal": "must",
+   "sentence": "When both Evil bit and DTH flag are present, they MUST be interpreted independently.",
+   "block_text": "Some experimental implementations use the Evil bit [RFC3514] of the IP header to indicate if the session portrays an evil character. The DTH flag is not designed to characterize a TCP session. It is intended to show the fate of the session irrespective of the nature of the session. When both Evil bit and DTH flag are present, they MUST be interpreted independently."
+  },
+  {
+   "n": 29,
+   "rfc": "9429",
+   "block": 335,
+   "offset": 70,
+   "modal": "must",
+   "sentence": "The <media> field MUST be set to \"application\", and the <proto> field MUST be set to \"UDP/DTLS/SCTP\" [RFC8841].",
+   "block_text": "Lastly, if a data channel has been created, an \"m=\" section MUST be generated for data. The <media> field MUST be set to \"application\", and the <proto> field MUST be set to \"UDP/DTLS/SCTP\" [RFC8841]. The <fmt> value MUST be set to \"webrtc-datachannel\" as specified in [RFC8841], Section 4.4.2."
+  },
+  {
+   "n": 30,
+   "rfc": "9411",
+   "block": 230,
+   "offset": 62,
+   "modal": "must",
+   "sentence": "Any configuration changes for this specific benchmarking test MUST be documented.",
+   "block_text": "DUT/SUT parameters MUST conform to the requirements defined in Section 4.2. Any configuration changes for this specific benchmarking test MUST be documented. If the DUT/SUT is configured without TLS inspection, the test report MUST explain how this impacts the encrypted traffic of the relevant application traffic mix."
+  },
+  {
+   "n": 31,
+   "rfc": "9429",
+   "block": 267,
+   "offset": 34,
+   "modal": "must",
+   "sentence": "* ICE, as specified in [RFC8445], MUST be used.",
+   "block_text": "* ICE, as specified in [RFC8445], MUST be used. Note that the remote endpoint may use a lite implementation; implementations MUST properly handle remote endpoints that use ICE-lite. The remote endpoint may also use an older version of ICE; implementations MUST properly handle remote endpoints that use ICE as specified in [RFC5245]."
+  },
+  {
+   "n": 32,
+   "rfc": "8803",
+   "block": 206,
+   "offset": 27,
+   "modal": "must",
+   "sentence": "The Remote Peer IP Address MUST be encoded as an IPv6 address.",
+   "block_text": "The Remote Peer IP Address MUST be encoded as an IPv6 address. IPv4 addresses MUST be encoded using the IPv4-mapped IPv6 address format defined in [RFC4291]. Further, the Remote Peer IP Address field MUST NOT include multicast, broadcast, or host loopback addresses [RFC6890]. If a Converter receives a Connect TLV with such invalid addresses, it MUST reply with a Malformed Message Error TLV and close the associated TCP connection."
+  },
+  {
+   "n": 33,
+   "rfc": "9421",
+   "block": 217,
+   "offset": 33,
+   "modal": "should",
+   "sentence": "The @authority derived component SHOULD be used instead of signing the Host header field directly.",
+   "block_text": "The @authority derived component SHOULD be used instead of signing the Host header field directly. See Section 7.2.4."
+  },
+  {
+   "n": 34,
+   "rfc": "9429",
+   "block": 559,
+   "offset": 23,
+   "modal": "must",
+   "sentence": "* The \"m=\" <fmt> value MUST be parsed as specified in [RFC8841], Section 4.3, and the application protocol value stored.",
+   "block_text": "* The \"m=\" <fmt> value MUST be parsed as specified in [RFC8841], Section 4.3, and the application protocol value stored."
+  },
+  {
+   "n": 35,
+   "rfc": "8205",
+   "block": 148,
+   "offset": 197,
+   "modal": "must",
+   "sentence": "For example, when a given RPKI router certificate ceases to be valid (e.g., it expires or is revoked), all UPDATE messages containing a signature whose SKI matches the SKI in the given certificate MUST be reassessed to determine if they are still valid.",
+   "block_text": "The validity of BGPsec UPDATE messages is a function of the current RPKI state. When a BGPsec speaker learns that the RPKI state has changed (e.g., from an RPKI validating cache via the RPKI-Router protocol [RFC8210]), the BGPsec speaker MUST rerun validation on all affected UPDATE messages stored in its Adj-RIB-In [RFC4271]. For example, when a given RPKI router certificate ceases to be valid (e.g., it expires or is revoked), all UPDATE messages containing a signature whose SKI matches the SKI in the given certificate MUST be reassessed to determine if they are still valid. If this reassessment determines that the validity state of an UPDATE message has changed, then, depending on local policy, it may be necessary to rerun best path selection."
+  },
+  {
+   "n": 36,
+   "rfc": "8186",
+   "block": 39,
+   "offset": 36,
+   "modal": "must",
+   "sentence": "Otherwise, the PTPv2 Timestamp flag MUST be set to 0.",
+   "block_text": "o The Server MUST set the PTPv2 Timestamp flag value to 1 in its greeting message if the Session-Reflector can set the timestamp in the PTPv2 format. Otherwise, the PTPv2 Timestamp flag MUST be set to 0."
+  },
+  {
+   "n": 37,
+   "rfc": "8180",
+   "block": 156,
+   "offset": 52,
+   "modal": "must",
+   "sentence": "Accepting timing information from unsecured sources MUST be avoided during normal network operation, as described in Section 4.5.2.",
+   "block_text": "Maintaining accurate time synchronization is critical for network operation. Accepting timing information from unsecured sources MUST be avoided during normal network operation, as described in Section 4.5.2. During joining, a node may be susceptible to timing attacks before key K1 and K2 are learned. During network operation, a node MAY maintain statistics on time updates from neighbors and monitor for anomalies."
+  },
+  {
+   "n": 38,
+   "rfc": "9429",
+   "block": 443,
+   "offset": 81,
+   "modal": "must",
+   "sentence": "The <media> field MUST be set to \"application\", and the <proto> and <fmt> fields MUST be set to exactly match the fields in the offer.",
+   "block_text": "If a data channel \"m=\" section has been offered, an \"m=\" section MUST also be generated for data. The <media> field MUST be set to \"application\", and the <proto> and <fmt> fields MUST be set to exactly match the fields in the offer."
+  },
+  {
+   "n": 39,
+   "rfc": "9420",
+   "block": 692,
+   "offset": 50,
+   "modal": "should",
+   "sentence": "KeyPackages are intended to be used only once and SHOULD NOT be reused except in the case of a \"last resort\" KeyPackage (see Section 16.8).",
+   "block_text": "KeyPackages are intended to be used only once and SHOULD NOT be reused except in the case of a \"last resort\" KeyPackage (see Section 16.8). Clients MAY generate and publish multiple KeyPackages to support multiple cipher suites."
+  },
+  {
+   "n": 40,
+   "rfc": "8817",
+   "block": 76,
+   "offset": 10,
+   "modal": "must",
+   "sentence": "Note CODA MUST be filled with 0 and CODB SHOULD be filled with 1 as per Section 3.1.",
+   "block_text": "The 600 bps MELPe RTP payload is constructed as per Figure 4. Note CODA MUST be filled with 0 and CODB SHOULD be filled with 1 as per Section 3.1. CODB MAY contain an end-to-end framing bit if required by the endpoints."
+  }
+ ]
+}

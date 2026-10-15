@@ -1,0 +1,142 @@
+{
+ "note": "Mutation test of the rungs of session 162. Each rule broken on purpose; the fixture suite must fail. A survivor is an unexercised rule.",
+ "written": "2026-09-16, before any repository was cloned",
+ "baseline_fixtures": 69,
+ "mutants": 19,
+ "survivors": 0,
+ "results": [
+  {
+   "rung": "R1_content",
+   "breakage": "dotfiles no longer count as boilerplate",
+   "fixtures_failed": 1,
+   "caught": true,
+   "first_catch": "the full GitHub boilerplate set and nothing else"
+  },
+  {
+   "rung": "R1_content",
+   "breakage": "an empty tree counts as content",
+   "fixtures_failed": 3,
+   "caught": true,
+   "first_catch": "an empty tree"
+  },
+  {
+   "rung": "R2_code",
+   "breakage": "a YAML config counts as source code",
+   "fixtures_failed": 1,
+   "caught": true,
+   "first_catch": "a YAML config alone is not source code"
+  },
+  {
+   "rung": "R2_code",
+   "breakage": "extensions matched case-sensitively",
+   "fixtures_failed": 1,
+   "caught": true,
+   "first_catch": "an extension is matched case-insensitively"
+  },
+  {
+   "rung": "R3_licence",
+   "breakage": "any name beginning with 'licen' is a licence",
+   "fixtures_failed": 2,
+   "caught": true,
+   "first_catch": "COPYING"
+  },
+  {
+   "rung": "R3_licence",
+   "breakage": "only a root-level licence grants",
+   "fixtures_failed": 1,
+   "caught": true,
+   "first_catch": "a licence nested in a subdirectory still grants"
+  },
+  {
+   "rung": "R3b_licence_declared_only",
+   "breakage": "a licence classifier counts as a declaration",
+   "fixtures_failed": 1,
+   "caught": true,
+   "first_catch": "pyproject mentioning a licence classifier only"
+  },
+  {
+   "rung": "R4_manifest",
+   "breakage": "a container recipe counts as a dependency manifest",
+   "fixtures_failed": 1,
+   "caught": true,
+   "first_catch": "a Dockerfile is a container recipe, not a manifest"
+  },
+  {
+   "rung": "R4_manifest",
+   "breakage": "'requirements' anywhere in the path counts",
+   "fixtures_failed": 1,
+   "caught": true,
+   "first_catch": "a text file that merely mentions requirements"
+  },
+  {
+   "rung": "R4b_container",
+   "breakage": "a compose file counts as a container recipe",
+   "fixtures_failed": 1,
+   "caught": true,
+   "first_catch": "a compose file is not a recipe for an image"
+  },
+  {
+   "rung": "R5_pinning",
+   "breakage": "the threshold becomes strictly more than half",
+   "fixtures_failed": 1,
+   "caught": true,
+   "first_catch": "exactly half pinned counts as pinned (the boundary, stated)"
+  },
+  {
+   "rung": "R5_pinning",
+   "breakage": "options and comments count as requirement lines",
+   "fixtures_failed": 2,
+   "caught": true,
+   "first_catch": "a commit-pinned VCS requirement counts"
+  },
+  {
+   "rung": "R6_entry",
+   "breakage": "the whole README is scanned, not only its code blocks",
+   "fixtures_failed": 1,
+   "caught": true,
+   "first_catch": "a requirements sentence outside any code block"
+  },
+  {
+   "rung": "R6_entry",
+   "breakage": "'make' is a command again",
+   "fixtures_failed": 2,
+   "caught": true,
+   "first_catch": "a fenced block that is output, not a command"
+  },
+  {
+   "rung": "R6_entry",
+   "breakage": "a runner anywhere in the tree counts as a root runner",
+   "fixtures_failed": 7,
+   "caught": true,
+   "first_catch": "a Makefile"
+  },
+  {
+   "rung": "R7_tests",
+   "breakage": "a test path need not hold code",
+   "fixtures_failed": 3,
+   "caught": true,
+   "first_catch": "data used for testing is not a test"
+  },
+  {
+   "rung": "R7_tests",
+   "breakage": "evaluation splits are no longer excluded",
+   "fixtures_failed": 1,
+   "caught": true,
+   "first_catch": "an evaluation split holding code is still a split, not a suite"
+  },
+  {
+   "rung": "R8_ci",
+   "breakage": "a workflow-shaped path anywhere counts as CI",
+   "fixtures_failed": 3,
+   "caught": true,
+   "first_catch": "a GitHub Actions workflow"
+  },
+  {
+   "rung": "FLOOR",
+   "breakage": "the floor becomes a disjunction",
+   "fixtures_failed": 4,
+   "caught": true,
+   "first_catch": "everything but the licence"
+  }
+ ]
+}

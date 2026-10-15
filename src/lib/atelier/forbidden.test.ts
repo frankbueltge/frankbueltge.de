@@ -23,19 +23,25 @@ describe('checkForbidden — links yes, loads no', () => {
     expect(checkForbidden(`<script src="https://evil.example/x.js"></script>`).join(' '))
       .toContain('external resource')
   })
-  it('rejects fetch() and dynamic import() of external URLs', () => {
-    expect(checkForbidden(`fetch("https://api.example.com/data")`)).toHaveLength(1)
+  it('rejects dynamic import() of external code', () => {
     expect(checkForbidden(`import("https://cdn.example.com/mod.js")`)).toHaveLength(1)
+  })
+  // 2026-10-05: reading data from another host is not loading its code. The house CSP has
+  // allowed it since 2026-09-04; this scan was the last thing refusing a live feed.
+  it('allows live data: fetch(), XHR, WebSocket and EventSource to any HTTPS host', () => {
+    expect(checkForbidden(`fetch("https://api.example.com/data")`)).toEqual([])
+    expect(checkForbidden(`xhr.open("GET", "https://api.example.com/data")`)).toEqual([])
+    expect(checkForbidden(`new WebSocket("https://stream.example.com/ws")`)).toEqual([])
+    expect(checkForbidden(`new EventSource("https://stream.example.com/events")`)).toEqual([])
   })
   it('rejects external img src, css url() and @import', () => {
     expect(checkForbidden(`<img src="https://cdn.example.com/a.png">`)).toHaveLength(1)
     expect(checkForbidden(`.x { background: url(https://cdn.example.com/b.png) }`)).toHaveLength(1)
     expect(checkForbidden(`@import "https://cdn.example.com/style.css";`)).toHaveLength(1)
   })
-  it('rejects Worker/WebSocket/EventSource and XHR open', () => {
+  it('rejects a Worker or SharedWorker from another host — that is foreign code', () => {
     expect(checkForbidden(`new Worker("https://evil.example/w.js")`)).toHaveLength(1)
-    expect(checkForbidden(`new WebSocket("https://evil.example/ws")`)).toHaveLength(1)
-    expect(checkForbidden(`xhr.open("GET", "https://evil.example/api")`)).toHaveLength(1)
+    expect(checkForbidden(`new SharedWorker("https://evil.example/w.js")`)).toHaveLength(1)
   })
   it('allows w3/schema hosts even in loading contexts (svg namespaces)', () => {
     expect(checkForbidden(`<image src="https://www.w3.org/2000/svg" />`)).toEqual([])
@@ -44,7 +50,7 @@ describe('checkForbidden — links yes, loads no', () => {
     expect(checkForbidden('const x = <img src={`https://cdn.example.com/a.png`} />')).toHaveLength(1)
   })
   it('dedupes: same URL in two loading contexts is reported once', () => {
-    const src = `fetch("https://evil.example/x")\nnew WebSocket("https://evil.example/x")`
+    const src = `import("https://evil.example/x")\nnew Worker("https://evil.example/x")`
     expect(checkForbidden(src)).toHaveLength(1)
   })
 })

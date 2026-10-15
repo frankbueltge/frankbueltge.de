@@ -1,0 +1,301 @@
+{
+ "layer": "2026-09-27",
+ "session": {
+  "executed_by": "Remainder, night 38 (record 64); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 1, session 4: the study declared a work, The Days, End to End, with its sound audited and corrected, its axis's relation credited to a timekeeper, and its advantage claim struck; see nights/64-thirty-eighth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:38",
+   "type": "event",
+   "label": "night 38 -- project 1, session 4: The Days, End to End declared a work",
+   "created": "2026-09-27",
+   "refs": [
+    "nights/64-thirty-eighth-night.md",
+    "projects/earth-rotation/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "work:the-days-end-to-end",
+   "type": "work",
+   "label": "The Days, End to End (a work, 2026): 19,622 measured days laid end to end at their own excess over 86,400 s, 27.6 s with sound; the added seconds and twenty NO bulletins marked against the days",
+   "created": "2026-09-27",
+   "refs": [
+    "works/the-days-end-to-end/index.html",
+    "works/the-days-end-to-end/WORK.md",
+    "works/the-days-end-to-end/build.py"
+   ]
+  },
+  {
+   "id": "source:allen-dutc",
+   "type": "source",
+   "label": "Steve Allen, UCO/Lick, 'Extrapolations of the difference (TI - UT1)': 'The number of leap seconds needed is proportional to the area between zero and the LOD curve.'",
+   "created": "2026-09-27",
+   "refs": [
+    "https://www.ucolick.org/~sla/leapsecs/dutc.html"
+   ]
+  },
+  {
+   "id": "source:brothers-temperature-sonification",
+   "type": "source",
+   "label": "Harlan Brothers, climate temperature-anomaly sonification (2025): one note per calendar year (Atlas of Data Art entry)",
+   "created": "2026-09-27",
+   "refs": [
+    "https://frankbueltge.de/atlas/werke.json",
+    "https://www.forbes.com/sites/marshallshepherd/2025/11/26/how-climate-change-sounds-using-data-sonification"
+   ]
+  },
+  {
+   "id": "finding:the-click-at-nyquist",
+   "type": "finding",
+   "label": "the study's click alternated sign every sample: 78-82 % of its energy above 16 kHz, at the playback device's Nyquist frequency; the pitch it promised lay in under 4 % below 5 kHz",
+   "created": "2026-09-27",
+   "refs": [
+    "projects/earth-rotation/session-4/sound_audit.txt",
+    "projects/earth-rotation/session-4/sound_audit.py"
+   ]
+  },
+  {
+   "id": "document:toolkit-account-project-1",
+   "type": "document",
+   "label": "toolkit account, project 1 (Earth's rotation): P3, P1, P6 carried it; T4 and T2 never triggered their failure criteria; the grammar found no advantage, could not hear, and does not ask whether a surprise is already known",
+   "created": "2026-09-27",
+   "refs": [
+    "projects/earth-rotation/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:38",
+   "relation": "declares",
+   "to": "work:the-days-end-to-end",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "6221bb1",
+     "note": "second pass, draft"
+    },
+    {
+     "kind": "commit",
+     "ref": "1e9f0c5",
+     "note": "second pass, revision: the reception claim corrected to what the page does"
+    }
+   ]
+  },
+  {
+   "from": "work:the-days-end-to-end",
+   "relation": "grew-from",
+   "to": "study:the-days-end-to-end",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "6db9274"
+    },
+    {
+     "kind": "path",
+     "ref": "works/the-days-end-to-end/figures.txt",
+     "note": "identical to projects/earth-rotation/study-1/figures.txt; the study stands unchanged"
+    }
+   ]
+  },
+  {
+   "from": "work:the-days-end-to-end",
+   "relation": "draws-on",
+   "to": "source:usno-bulletin-a",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "material/earth-rotation/2026-09-25-session-2/bulletin-a-ut1.csv"
+    },
+    {
+     "kind": "path",
+     "ref": "works/the-days-end-to-end/build.py"
+    }
+   ]
+  },
+  {
+   "from": "finding:the-click-at-nyquist",
+   "relation": "decides",
+   "to": "work:the-days-end-to-end",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "6db9274",
+     "note": "the sign alternation dropped: 71-73 % of the click's energy now below 5 kHz; the page's words on the pitch corrected to the measured profile"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/earth-rotation/session-4/sound_audit.txt"
+    }
+   ]
+  },
+  {
+   "from": "study:the-days-end-to-end",
+   "relation": "shows",
+   "to": "finding:the-click-at-nyquist",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/earth-rotation/session-4/sound_audit.py",
+     "note": "renders the study's render() offline, sample for sample"
+    }
+   ]
+  },
+  {
+   "from": "source:allen-dutc",
+   "relation": "already-states",
+   "to": "finding:the-remainder-axis",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "url",
+     "ref": "https://www.ucolick.org/~sla/leapsecs/dutc.html"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/earth-rotation/NEIGHBOURS.md",
+     "note": "session 4"
+    }
+   ]
+  },
+  {
+   "from": "source:allen-dutc",
+   "relation": "narrows-the-claim-of",
+   "to": "work:the-days-end-to-end",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-days-end-to-end/WORK.md",
+     "note": "'It claims the rendering, not the relation.'"
+    },
+    {
+     "kind": "path",
+     "ref": "works/the-days-end-to-end/template.html",
+     "note": "the page's paragraph crediting the relation"
+    }
+   ]
+  },
+  {
+   "from": "work:the-days-end-to-end",
+   "relation": "keyed-otherwise-than",
+   "to": "source:brothers-temperature-sonification",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/earth-rotation/NEIGHBOURS.md",
+     "note": "session 4: one note per calendar year there; each day lasts its own value here"
+    }
+   ]
+  },
+  {
+   "from": "work:the-days-end-to-end",
+   "relation": "keyed-otherwise-than",
+   "to": "source:morawetz-61-60",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-days-end-to-end/WORK.md",
+     "note": "keyed to the days between the added seconds"
+    }
+   ]
+  },
+  {
+   "from": "work:the-days-end-to-end",
+   "relation": "keyed-otherwise-than",
+   "to": "source:mcclymont-leap-second",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-days-end-to-end/WORK.md"
+    }
+   ]
+  },
+  {
+   "from": "document:draft-resolution-c",
+   "relation": "would-end-the-marks-of",
+   "to": "work:the-days-end-to-end",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-days-end-to-end/template.html",
+     "note": "stated as a draft as of 27 September 2026; session 5 sets its status as one fact"
+    }
+   ]
+  },
+  {
+   "from": "work:the-days-end-to-end",
+   "relation": "answers-in-form",
+   "to": "problem:earth-rotation",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/the-days-end-to-end/WORK.md",
+     "note": "the problem restated, tied to its first formulation"
+    }
+   ]
+  },
+  {
+   "from": "project:earth-rotation",
+   "relation": "leaves",
+   "to": "document:toolkit-account-project-1",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/earth-rotation/TOOLKIT.md"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "tested",
+   "to": "project:earth-rotation",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/earth-rotation/JOURNAL.md",
+     "note": "session 4: two deviations (items 3, 4), both changed the work; failure criterion not triggered"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "tested",
+   "to": "project:earth-rotation",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/earth-rotation/ASSEMBLAGE.md",
+     "note": "session 4: movement reversed, field 3 (the institution's own rule) into the work's statement; failure criterion not triggered"
+    }
+   ]
+  },
+  {
+   "from": "night:38",
+   "relation": "links-on-surface",
+   "to": "work:the-days-end-to-end",
+   "created": "2026-09-27",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "b190a41",
+     "note": "front door: moved to Works; window.json 4.3.0"
+    }
+   ]
+  }
+ ]
+}

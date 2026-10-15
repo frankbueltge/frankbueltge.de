@@ -50,7 +50,7 @@ Path in this repository: `src/data/attention/moments.json`. One object:
 | `practice.id` / `.label` | yes | as in the export |
 | `moments[].project` | yes | slug of the producing project |
 | `moments[].occurred_at` | yes | ISO UTC timestamp of the real event, from the committed record |
-| `moments[].mode` | yes | the producer's own word (`revision`, `correction`, `closure`, `dissipation`, `reappearance`, `notarization`, `resolution`) — displayed, not interpreted |
+| `moments[].mode` | yes | the producer's own word (`revision`, `correction`, `closure`, `dissipation`, `reappearance`, `notarization`, `resolution`; since 2026-10-04 `retirement`, the end of a project itself) — displayed, not interpreted |
 | `moments[].statement` | yes | one plain English sentence a stranger can meet cold |
 | `moments[].subject` | yes | what the moment is about, in the record's own words |
 | `moments[].enter` | yes | a site-absolute route into the project's own depth (the ENTER level) |

@@ -200,8 +200,8 @@ sichtbar, nicht vergessen.
 - **D6 — Sprache:** Die Spec-Annahme „/saat (DE) + /en/seed (EN)" beruhte auf einem veralteten
   Stand — die Site ist seit 2026-07-16 englisch-only („German dropped site-wide", decision-log).
   Umgesetzt ist EINE Route `/saat` mit englischem Inhalt; der deutsche Slug folgt dem etablierten
-  Muster deutscher Routen mit englischem Inhalt (`/werke`, `/bestaende` „Holdings"). Frank hat am
-  2026-07-20 „nur englisch überall" für die gesamte Site bestätigt; die zunächst mitgeführte
+  Muster deutscher Routen mit englischem Inhalt (`/werke`, `/bestaende` „Holdings"). Frank
+  confirmed on 2026-07-20 (wording private) that the entire site is English only; die zunächst mitgeführte
   vollständige deutsche Textfassung in `SaatPage.astro` (locale-Prop) wurde daraufhin ganz aus
   dem Code entfernt — sie bleibt über die Git-History des Branches auffindbar, ist aber kein
   aktiver Code-Pfad mehr. Zug um Zug: der Gate-Prompt (`gate.ts`) ist jetzt englisch, das

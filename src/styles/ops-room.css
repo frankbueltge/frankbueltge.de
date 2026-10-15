@@ -6,11 +6,19 @@
  * them again.
  *
  * ── colour ────────────────────────────────────────────────────────────────────────────────────
- * The room has its OWN ground and its OWN accent, scoped to `.ops-room` and to nothing else — the
- * site's mono skin is untouched everywhere but here. Two token sets, one per theme, with their own
- * steps: never an automatic flip of the dark values (the rule every palette in this repo follows).
- * The dark set is the handoff's; the light set is this file's own, chosen so the room reads as a
- * printed instrument panel rather than as a dark room with the lights turned up.
+ * REVISED 2026-09-02 (re-skin 2d, "the entrance on its tokens"): the room's own greyscale is gone.
+ * It used to carry a full second set of neutrals — ground, panel, hairline, three text steps, per
+ * theme — that said the same thing as the site's tokens one hue to the green. Two greyscales in
+ * one house is how an entrance drifts away from the rooms behind it, and it drifted: after the
+ * type scale, the radius scale and the elevation tokens landed in global.css (re-skin 2a), the
+ * entrance was the one surface still deciding its own depth and its own corners. So the neutrals
+ * now POINT at the frame's tokens (var(--color-bg), --color-panel, --color-line, --color-fg …),
+ * which already flip per theme — which is why the two theme blocks below hold only what is still
+ * the room's own.
+ *
+ * What stays the room's own: `--ops-accent`, the "live" ink, and the faint grid, wash and
+ * underline mixed from it. Two sets, one per theme, with their own steps: never an automatic flip
+ * of the dark values (the rule every palette in this repo follows).
  *
  * `--ops-accent` is deliberately NOT an identity colour and carries no `-c-` in its name: it means
  * "live", and it means the same thing on every LED, dot and marked bar in the room. The identity
@@ -29,48 +37,43 @@
  */
 
 .ops-room {
-  --ops-radius: 8px;
+  /* The frame's own steps, named in the room's vocabulary so the ~180 rules below need not be
+     rewritten one by one (re-skin 2d, 2026-09-02). Every one of these is a var() reference: the
+     mono skin stays the single source of tone, and the light theme keeps flowing through. */
+  --ops-radius: var(--radius-lg);
   --ops-gap: 14px;
+
+  --ops-bg: var(--color-bg);
+  --ops-panel: var(--color-panel);
+  --ops-panel-solid: var(--color-panel);
+  --ops-line: var(--color-line);
+  --ops-line-soft: var(--color-line);
+  --ops-fg: var(--color-fg);
+  --ops-muted: var(--color-fg-muted);
+  --ops-faint: var(--color-fg-faint);
+  /* The pulse instrument's ridge line, at the weight the mock drew it: the frame's ink, held
+     just off full so the ridges behind it stay legible through the stack. */
+  --ops-pulse-line: var(--color-fg-muted);
 }
 
+/* What is still the room's own: the live ink, and the three faint mixes of it — the engineering
+   grid on the ground, the wash a row takes under the pointer, and the underline of a link that
+   leads deeper. A signal, not a surface. Own steps per theme, never an automatic flip. */
 :root[data-theme='dark'] .ops-room {
-  --ops-bg: #0b1210;
-  --ops-panel: rgba(13, 21, 19, 0.7);
-  --ops-panel-solid: #0d1513;
-  --ops-line: #1c2624;
-  --ops-line-soft: rgba(28, 38, 36, 0.7);
-  --ops-fg: #dfe6e2;
-  --ops-muted: #8fa09b;
-  /* The handoff's #5f6f6a, lifted two steps. It carries the stamps, dates and group labels at
-     9–11px, and at 3.6:1 on this ground those are hard to read for anyone who is not looking for
-     them; #74847e measures 4.8:1 on the ground and 4.7:1 on the panel. High fidelity to a design
-     does not extend to copying an oversight in it. */
-  --ops-faint: #74847e;
   --ops-accent: #7fd0e8;
   --ops-accent-dim: #26413d;
   --ops-grid: rgba(127, 208, 232, 0.022);
-  --ops-hover: rgba(127, 208, 232, 0.045);
-  --ops-pulse-line: rgba(223, 230, 226, 0.85);
+  --ops-hover: rgba(127, 208, 232, 0.055);
   --ops-underline: rgba(127, 208, 232, 0.35);
 }
 
 :root[data-theme='light'] .ops-room {
-  --ops-bg: #eef1f0;
-  --ops-panel: #ffffff;
-  --ops-panel-solid: #ffffff;
-  --ops-line: #cfd8d5;
-  --ops-line-soft: rgba(207, 216, 213, 0.85);
-  --ops-fg: #16201d;
-  --ops-muted: #4d5b57;
-  /* 5.6:1 on the paper, 6.4:1 on a panel — the light twin of the lift above */
-  --ops-faint: #556260;
   /* deep petrol: the same "live" signal one register down, 6.1:1 on the room's paper and 6.9:1 on
      a panel, so it can carry small mono text as well as marks */
   --ops-accent: #10627a;
   --ops-accent-dim: #b9ccd2;
   --ops-grid: rgba(16, 98, 122, 0.05);
   --ops-hover: rgba(16, 98, 122, 0.05);
-  --ops-pulse-line: rgba(22, 32, 29, 0.8);
   --ops-underline: rgba(16, 98, 122, 0.4);
 }
 
@@ -110,12 +113,11 @@
   gap: 16px;
   flex-wrap: wrap;
 }
+/* The section kickers wear the frame's .kicker class in the markup (re-skin 2d, 2026-09-02);
+    what is left here is the room's own: no margin, and a step brighter than fg-faint, because
+    in a status board the section label is read, not skimmed past. */
 .ops-kicker {
   margin: 0;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
   color: var(--ops-muted);
 }
 .ops-kicker b {
@@ -124,21 +126,37 @@
 }
 .ops-headlink {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-mono-sm);
   color: var(--ops-faint);
   text-decoration: underline;
   text-decoration-color: var(--ops-line);
   text-underline-offset: 4px;
-  transition: color 0.15s ease;
+  transition: color 0.2s var(--ease-frame);
 }
 .ops-headlink:hover {
   color: var(--ops-fg);
 }
 
+/* Every panel of the room sits at the frame's resting depth now, instead of being a flat
+   rectangle with a hairline (re-skin 2d, 2026-09-02). */
 .ops-panel {
   border: 1px solid var(--ops-line);
   border-radius: var(--ops-radius);
   background: var(--ops-panel);
+  box-shadow: var(--elev-rest);
+}
+
+/* The frame's one hover gesture (.lift, global.css) gives a tile or a house card its rise. Its
+   HAIRLINE and its CAST have to be restated here: `.ops-panel` above is unlayered CSS, and
+   unlayered CSS outranks every `@layer utilities` rule no matter how specific — so .lift's
+   border-color and box-shadow reached nothing on this page. Measured on 2026-09-02: the tile
+   rose by its pixel and kept the resting shadow. The hairline travels through the room's own
+   line token so a single declaration serves both states. */
+.ops-room .lift:hover,
+.ops-room .lift:focus-visible,
+.ops-room .lift:focus-within {
+  --ops-line: var(--color-line-lift);
+  box-shadow: var(--elev-lift);
 }
 
 /* The live indicator. Two facts in one mark: it is lit (the system runs) and it breathes (the
@@ -184,7 +202,7 @@
   padding: 0 40px;
   border-bottom: 1px solid var(--ops-line);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-mono-sm);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ops-muted);
@@ -201,10 +219,53 @@
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.06em;
 }
+.ops-strip-live {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── the day dial (src/lib/ops/dial.ts) ─────────────────────────────────────────────────────
+   The clock's face: twelve arcs, one per two-hour slot of the UTC day, each as long as the commits
+   the record holds for that slot. The arcs wear the live ink dimmed; the one the hand points into
+   wears it full. The hand is hidden until the script has set it — a hand at a build-time angle
+   would be a stopped clock claiming to be live, the same reason the text clock renders empty. */
+.ops-dial {
+  display: block;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  overflow: visible;
+}
+.ops-dial-ring {
+  fill: none;
+  stroke: var(--ops-line);
+  stroke-width: 1;
+}
+.ops-dial-arc {
+  fill: var(--ops-accent);
+  opacity: 0.45;
+  transition: opacity 0.2s var(--ease-frame);
+}
+.ops-dial-arc.is-now {
+  opacity: 1;
+}
+.ops-dial-hand {
+  stroke: var(--ops-fg);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  visibility: hidden;
+}
+.ops-dial-hand.is-set {
+  visibility: visible;
+}
+.ops-dial-pin {
+  fill: var(--ops-accent);
+}
 @media (max-width: 720px) {
   .ops-strip {
     padding: 0 20px;
-    font-size: 10px;
+    font-size: var(--text-mono-xs);
   }
   .ops-strip-name span:not(.ops-led) {
     display: none;
@@ -237,35 +298,32 @@
    the person stands above it the way a byline does, not the way a headline does. Muted ink rather
    than the live accent for the same reason: the accent means "running", and a name is not a
    system. */
+/* Both wear the frame's .kicker class in the markup; the eyebrow keeps a step more size,
+   because it carries the person's name and is the strongest on-page signal for a name query. */
 .ops-hero-eyebrow {
   margin: 0 0 10px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-size: var(--text-mono);
   color: var(--ops-muted);
 }
 .ops-hero-kicker {
   margin: 0;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
   color: var(--ops-accent);
 }
+/* The head on the frame's own h1 step (re-skin 2d): the room used to draw its own clamp, one
+   pixel off the scale every other page's head sits on. */
 .ops-hero h1 {
   margin: 16px 0 0;
   max-width: 16ch;
-  font-size: clamp(32px, 4.4vw, 47px);
+  font-size: var(--text-h1);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   line-height: 1.08;
 }
 .ops-hero-sub {
   margin: 16px 0 0;
   max-width: 50ch;
-  font-size: 15.5px;
-  line-height: 1.6;
+  font-size: var(--text-body);
+  line-height: 1.65;
   color: var(--ops-muted);
 }
 .ops-hero-links {
@@ -274,14 +332,14 @@
   gap: 22px;
   margin-top: 24px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--text-mono);
 }
 .ops-hero-links a {
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-color: var(--ops-line);
   color: var(--ops-muted);
-  transition: color 0.15s ease;
+  transition: color 0.2s var(--ease-frame);
 }
 .ops-hero-links a:first-child {
   color: var(--ops-accent);
@@ -342,16 +400,54 @@
   fill: var(--ops-accent);
   transition: cx 0.12s linear, cy 0.12s linear;
 }
+/* The ridge under the pointer takes the live ink; the hairline marks the bin the readout states.
+   Both are hidden or quiet until the script has a position to give them. */
+.ops-ridge.is-hot {
+  stroke: var(--ops-accent);
+}
+.ops-hair {
+  stroke: var(--ops-accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.7;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ops-hair.is-on {
+  visibility: visible;
+}
+/* The reading under the pointer, as a chip in the figure's top-right corner — on the panel's own
+   ground so the ridges never show through the digits, and hidden until the script has a bin to
+   name. It lives inside the body, not in the footer strip: the strip's two captions take its
+   width, and a reading cut short by an ellipsis is no reading. */
+.ops-instrument-readout {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--ops-line);
+  border-radius: var(--radius-sm);
+  background: var(--ops-panel-solid);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: var(--ops-accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ops-instrument-readout.is-on {
+  visibility: visible;
+}
 
 /* ── 3 · the board ──────────────────────────────────────────────────────────────────────────── */
 
+/* Wears the frame's .kicker class in the markup; a group label sits one step below a section
+   kicker, which is the only thing left to say here. */
 .ops-group-label {
   margin: 24px 0 8px;
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ops-faint);
+  font-size: var(--text-mono-xs);
 }
 .ops-board {
   overflow: hidden;
@@ -365,17 +461,20 @@
   gap: 14px;
   align-items: center;
   padding: 13px 18px;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.2s var(--ease-frame);
 }
 .ops-board li + li .ops-row {
   border-top: 1px solid var(--ops-line-soft);
 }
-.ops-row:hover {
+/* A board row is read by running down the board, so it washes rather than rises — the register
+   gesture, at the frame's 200 ms. :focus-visible so a row reached by Tab shows the same state. */
+.ops-row:hover,
+.ops-row:focus-visible {
   background: var(--ops-hover);
 }
 .ops-row-name {
   display: block;
-  font-size: 14.5px;
+  font-size: var(--text-h3);
   font-weight: 600;
 }
 .ops-row-resident,
@@ -383,11 +482,11 @@
   display: block;
   margin-top: 2px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-mono-xs);
   color: var(--ops-faint);
 }
 .ops-row-what {
-  font-size: 13px;
+  font-size: var(--text-small);
   line-height: 1.45;
   color: var(--ops-muted);
   display: -webkit-box;
@@ -399,7 +498,7 @@
 .ops-row-last {
   display: block;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-mono-sm);
   color: var(--ops-fg);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -407,7 +506,7 @@
 }
 .ops-row-status {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: var(--text-mono-xs);
   letter-spacing: 0.14em;
   text-align: right;
   color: var(--ops-accent);
@@ -417,16 +516,58 @@
 .ops-row-status[data-status='RECORDING'] {
   color: var(--ops-muted);
 }
+.ops-spark-cell {
+  position: relative;
+}
 .ops-spark {
   display: block;
   width: 96px;
   height: 26px;
+  overflow: visible;
 }
-.ops-spark path {
+/* PALETTE: ecology-voices — the sparkline wears its row's identity through the same --led slot as
+   the LED: the line full, the fill under it faint, the newest bucket as a point. */
+.ops-spark-line {
   fill: none;
   stroke: var(--led, var(--ops-accent));
   stroke-width: 1.2;
   stroke-linejoin: round;
+}
+.ops-spark-area {
+  fill: var(--led, var(--ops-accent));
+  opacity: 0.14;
+  stroke: none;
+}
+.ops-spark-end {
+  fill: var(--led, var(--ops-accent));
+}
+.ops-spark-probe {
+  stroke: var(--ops-fg);
+  stroke-width: 1;
+  opacity: 0.8;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ops-spark-probe.is-on {
+  visibility: visible;
+}
+/* The bucket's count, above the line while the pointer is on it — the room's small mono, the
+   room's own ink, and gone the moment the pointer leaves. */
+.ops-spark-readout {
+  position: absolute;
+  right: 0;
+  top: -13px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--ops-fg);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ops-spark-readout.is-on {
+  visibility: visible;
 }
 /* Whatever a row cannot show, it says. */
 .ops-absent {
@@ -485,7 +626,7 @@
   gap: 14px;
   align-items: baseline;
   padding: 12px 20px;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.2s var(--ease-frame);
 }
 .ops-log a:hover {
   background: var(--ops-hover);
@@ -494,17 +635,24 @@
   width: 6.5em;
   flex: none;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-mono-sm);
   font-variant-numeric: tabular-nums;
   color: var(--ops-faint);
 }
 .ops-log-ns {
-  /* Wide enough for the longest practice name plus its 5px mark — "The Atelier" wrapped onto two
-     lines at 7em, which turned a quiet label column into the noisiest thing in the strip. */
-  width: 9.5em;
+  /* Wide enough for the longest HOUSE name plus its 5px mark. Was 9.5em, which fitted "The
+     Atelier" (7em wrapped it, and a wrapping label turned a quiet column into the noisiest thing
+     in the strip). The log widened to the whole house on 2026-09-03 and the longest name became
+     "Error as Method", which the browser measures at 12.2em in this face including the mark and
+     its gap — so the column is set from that measurement with a little air, not from an eyeball.
+     A shorter guess (11.5em was tried) wraps it, which is the very defect this width exists to
+     prevent. Re-measured 2026-10-05, when the live updates brought longer houses in: "Machine
+     Attention" measures 13.7em and "The research ecology" (the cycle's turn) 15.9em — the
+     latter sets the column now. Re-measure if a longer house name ever joins. */
+  width: 16.4em;
   flex: none;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-mono-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ops-muted);
@@ -524,38 +672,142 @@
   background: var(--led, var(--ops-muted));
 }
 .ops-log-title {
-  font-size: 14px;
+  font-size: var(--text-h3);
+  line-height: var(--text-h3--line-height);
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.008em;
+}
+/* The one fact a row carries (2026-10-05): the reading of the day, a count, a moment's own
+   statement. It reads as the title's continuation, one register quieter — the title says which
+   instrument or catalogue, the fact says what it recorded. */
+.ops-log-fact {
+  font-size: var(--text-small);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--ops-muted);
 }
 .ops-log-kind {
   margin-left: auto;
   flex: none;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-mono-xs);
   color: var(--ops-faint);
 }
+/* The stagger. Declared steps rather than an inline delay per row, because this site's CSP drops
+   inline style attributes — the rows would simply all have arrived at once, silently. They live
+   here, beside the rows they time, since 2026-10-05: until then they stood in the pages' scoped
+   <style> blocks, whose selectors carry the page's scope and so never reached the rows the
+   SignalLog component renders. Twenty steps for the entrance's twenty rows, the whole cascade in
+   about half a second; SignalLog.astro clamps any later row to the last step. */
+.ops-log-row-0 { animation-delay: 0s; }
+.ops-log-row-1 { animation-delay: 0.03s; }
+.ops-log-row-2 { animation-delay: 0.06s; }
+.ops-log-row-3 { animation-delay: 0.09s; }
+.ops-log-row-4 { animation-delay: 0.12s; }
+.ops-log-row-5 { animation-delay: 0.15s; }
+.ops-log-row-6 { animation-delay: 0.18s; }
+.ops-log-row-7 { animation-delay: 0.21s; }
+.ops-log-row-8 { animation-delay: 0.24s; }
+.ops-log-row-9 { animation-delay: 0.27s; }
+.ops-log-row-10 { animation-delay: 0.3s; }
+.ops-log-row-11 { animation-delay: 0.33s; }
+.ops-log-row-12 { animation-delay: 0.36s; }
+.ops-log-row-13 { animation-delay: 0.39s; }
+.ops-log-row-14 { animation-delay: 0.42s; }
+.ops-log-row-15 { animation-delay: 0.45s; }
+.ops-log-row-16 { animation-delay: 0.48s; }
+.ops-log-row-17 { animation-delay: 0.51s; }
+.ops-log-row-18 { animation-delay: 0.54s; }
+.ops-log-row-19 { animation-delay: 0.57s; }
 .ops-log-withdrawn {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-mono-xs);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ops-faint);
   border: 1px solid var(--ops-line);
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   padding: 0 5px;
   margin-left: 8px;
 }
+/* The log's pager (Frank, 2026-09-03: seven rows in view, the rest one click away). Every page
+   is in the document and only visibility moves, so this is a control over static content — which
+   is why it ships hidden and the script unhides it: two dead words under a complete log would be
+   worse than no control at all. The buttons wear the head-link's quiet mono, not a filled
+   button: the log is read, and a pager that shouts sits louder than the rows it pages. */
+.ops-signal-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 0 2px;
+}
+.ops-signal-step {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  letter-spacing: 0.08em;
+  color: var(--ops-muted);
+  background: none;
+  border: 1px solid var(--ops-line);
+  border-radius: var(--radius-xs);
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-frame), color 0.2s var(--ease-frame);
+}
+.ops-signal-step:hover:not(:disabled) {
+  background: var(--ops-hover);
+  color: var(--ops-ink);
+}
+/* Disabled, not removed: the ends of the log stay visible as ends. Kept above the 3:1 the frame
+   asks of a disabled control's own outline by keeping the border and dimming only the ink. */
+.ops-signal-step:disabled {
+  color: var(--ops-faint);
+  cursor: default;
+  opacity: 0.55;
+}
+.ops-signal-pos {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--ops-faint);
+  text-align: center;
+}
+@media (max-width: 480px) {
+  /* At this width the position line and two buttons cannot share a row without the buttons
+     shrinking below a comfortable target; the line moves under them instead. */
+  .ops-signal-pager {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .ops-signal-pos {
+    order: 3;
+    width: 100%;
+  }
+}
+
 @keyframes opsRise {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
 }
+/* At phone width a row is two lines, not three (2026-10-05, for the entrance's twenty rows): the
+   date, the house and the kind share the first — the kind still pushed to the right edge — and the
+   title with its fact takes the whole second. The house column lets go of its fixed width here:
+   it heads its line instead of aligning a column. */
 @media (max-width: 720px) {
   .ops-log a {
     flex-wrap: wrap;
-    gap: 6px 12px;
+    gap: 3px 12px;
+    padding: 10px 16px;
+  }
+  .ops-log-ns {
+    width: auto;
+  }
+  .ops-log-kind {
+    order: 1;
   }
   .ops-log-title {
+    order: 2;
     width: 100%;
   }
 }
@@ -563,7 +815,7 @@
 .ops-foot-line {
   margin: 10px 0 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-mono-sm);
   color: var(--ops-faint);
 }
 .ops-cursor {
@@ -591,18 +843,20 @@
 @media (max-width: 800px) {
   .ops-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+/* minmax(0, …) like the wider steps: a bare 1fr lets a tile's unwrapped stamp line set the
+   column's minimum, and at phone width that pushed the single column wider than the screen. */
 @media (max-width: 520px) {
-  .ops-tiles { grid-template-columns: 1fr; }
+  .ops-tiles { grid-template-columns: minmax(0, 1fr); }
 }
 
+/* A tile IS a destination — it links a live experiment — so it takes the frame's .lift in the
+   markup: it rises a pixel, brightens its hairline and deepens its cast. The transition and the
+   hover state live in global.css now; nothing of either is repeated here, because an unlayered
+   rule at this spot would silently outrank the utility that draws them. */
 .ops-tile {
   display: flex;
   flex-direction: column;
   padding: 16px 18px 14px;
-  transition: border-color 0.15s ease;
-}
-.ops-tile:hover {
-  border-color: var(--ops-faint);
 }
 .ops-tile-head {
   display: flex;
@@ -612,8 +866,11 @@
 }
 .ops-tile-name {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-mono-xs);
   letter-spacing: 0.16em;
+  /* The capitals are this board's dress, not the name's spelling: NAMING carries each tile's
+     name as the piece is titled (2026-10-11), because the entrance's readings print it so. */
+  text-transform: uppercase;
   color: var(--ops-muted);
 }
 .ops-tile .ops-led {
@@ -624,7 +881,7 @@
   display: block;
   margin-top: 12px;
   font-family: var(--font-mono);
-  font-size: 25px;
+  font-size: var(--text-h2);
   font-weight: 500;
   letter-spacing: -0.01em;
   color: var(--ops-fg);
@@ -633,8 +890,8 @@
   display: block;
   margin-top: 6px;
   min-height: 51px;
-  font-size: 11.5px;
-  line-height: 1.5;
+  font-size: var(--text-small);
+  line-height: 1.55;
   color: var(--ops-muted);
 }
 .ops-tile-viz {
@@ -657,19 +914,53 @@
   stroke-linejoin: round;
   opacity: 0.85;
 }
+/* The mark under the pointer: full ink with a hairline edge, so the one the readout speaks of is
+   the one that stands out — the emphasis of the reading (marked/dim) stays underneath it. */
+.ops-tile-viz rect {
+  transition: opacity 0.2s var(--ease-frame);
+}
+.ops-tile-viz rect.is-hot {
+  opacity: 1;
+  stroke: var(--ops-fg);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.ops-tile-probe {
+  stroke: var(--ops-fg);
+  stroke-width: 1;
+  opacity: 0.8;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ops-tile-probe.is-on {
+  visibility: visible;
+}
 .ops-tile-stamp {
   display: block;
   margin-top: 10px;
+  min-height: 1.4em;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--text-mono-xs);
   letter-spacing: 0.12em;
   color: var(--ops-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s var(--ease-frame);
+}
+/* While the pointer rests on a mark, the stamp line carries that mark's readout in the room's
+   reading ink; it returns to the stamp when the pointer leaves. Letter-spacing relaxes so a
+   sentence fits where a label stood. */
+.ops-tile-stamp.is-readout {
+  color: var(--ops-fg);
+  letter-spacing: 0.04em;
+  text-transform: none;
 }
 
 .ops-catalogues {
   margin: 14px 0 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-mono-sm);
   color: var(--ops-faint);
 }
 .ops-catalogues a {
@@ -677,7 +968,7 @@
   text-decoration: underline;
   text-decoration-color: var(--ops-line);
   text-underline-offset: 4px;
-  transition: color 0.15s ease;
+  transition: color 0.2s var(--ease-frame);
 }
 .ops-catalogues a:hover {
   color: var(--ops-fg);
@@ -696,48 +987,242 @@
 @media (max-width: 720px) {
   .ops-houses { grid-template-columns: 1fr; }
 }
+/* Same as a tile: a house card leads out of this house, so it lifts (see .ops-tile above). */
 .ops-house {
   display: block;
   padding: 18px 20px;
-  transition: border-color 0.15s ease;
-}
-.ops-house:hover {
-  border-color: var(--ops-faint);
 }
 .ops-house-name {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 10px;
-  font-size: 16px;
+  font-size: var(--text-h3);
   font-weight: 600;
 }
 .ops-house-name span:last-child {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-mono-sm);
   color: var(--ops-faint);
 }
 .ops-house-line {
   display: block;
   margin-top: 6px;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: var(--text-small);
+  line-height: 1.55;
   color: var(--ops-muted);
 }
 .ops-house-resident {
   display: block;
   margin-top: 8px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-mono-sm);
   line-height: 1.5;
   color: var(--ops-faint);
+}
+
+/* ── 1b · the sky: the globe under the hero (visual layer, Phase 3b, 2026-09-02) ─────────────── */
+/* One panel across both hero columns. The stage on the left carries two figures of the same
+   record: the build-time plate (an SVG, the accessible one) and, once the island has mounted a
+   WebGL globe over it, the canvas. The plate fades under the canvas but never leaves the tree.
+   The aside on the right lists the longest gaps and the key, so the panel reads without a pointer
+   and without WebGL. Marks wear the room's own tokens; the gaps wear the Field's recorded hue —
+   PALETTE: ecology-voices — because the ghost fleet is Meridian's instrument. */
+.ops-sky {
+  grid-column: 1 / -1;
+}
+.ops-sky-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+}
+@media (max-width: 1000px) {
+  .ops-sky-body {
+    grid-template-columns: 1fr;
+  }
+}
+.ops-sky-stage {
+  position: relative;
+  min-width: 0;
+}
+/* The stage, the plate's fade, the canvas and the status line moved to src/styles/living-globe.css
+   with G1 of the living globe (2026-09-03): the hero mounts the one globe island in its compact
+   form, so those four boxes are the island's (.lg-*) and are declared once, beside the room they
+   also serve. What stays here is the plate's own drawing — the marks the sky floor puts on it. */
+.sky-floor-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* the plate's marks */
+.sky-sea {
+  fill: var(--ops-panel-solid);
+}
+.sky-grat {
+  fill: none;
+  stroke: var(--ops-line);
+  stroke-width: 0.5;
+}
+.sky-land {
+  fill: var(--ops-line);
+  stroke: var(--ops-muted);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}
+.sky-sat {
+  fill: var(--ops-accent);
+  opacity: 0.92;
+}
+.sky-arc {
+  fill: none;
+  stroke: var(--hub-c-meridian);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+.sky-arc-off {
+  fill: none;
+  stroke: var(--hub-c-meridian);
+  stroke-width: 1.2;
+}
+.sky-arc-on {
+  fill: var(--hub-c-meridian);
+}
+.sky-gap:hover .sky-arc {
+  opacity: 1;
+  stroke-width: 2.2;
+}
+/* the readout the island fills, in the pulse chip's clothes */
+.ops-sky .dv-readout {
+  padding: 4px 8px;
+  border: 1px solid var(--ops-line);
+  border-radius: var(--radius-sm);
+  background: var(--ops-panel-solid);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ops-accent);
+  white-space: nowrap;
+}
+/* the aside */
+.ops-sky-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 18px 18px;
+  border-left: 1px solid var(--ops-line);
+  font-family: var(--font-mono);
+}
+@media (max-width: 1000px) {
+  .ops-sky-aside {
+    border-left: 0;
+    border-top: 1px solid var(--ops-line);
+  }
+}
+.ops-sky-kicker {
+  margin: 0;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ops-faint);
+}
+.ops-sky-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ops-sky-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 10px;
+  padding-left: 12px;
+  border-left: 2px solid var(--hub-c-meridian);
+  font-size: 11px;
+  line-height: 1.35;
+}
+.ops-sky-vessel {
+  color: var(--ops-fg);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ops-sky-hours {
+  color: var(--ops-accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ops-sky-waters {
+  grid-column: 1 / -1;
+  color: var(--ops-muted);
+  font-size: 10px;
+}
+.ops-sky-legend {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--ops-muted);
+}
+.ops-sky-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sky-key {
+  display: inline-block;
+  flex: none;
+  width: 14px;
+  height: 8px;
+}
+.sky-key-sat {
+  width: 6px;
+  height: 6px;
+  margin: 0 4px;
+  border-radius: 9999px;
+  background: var(--ops-accent);
+}
+.sky-key-gap {
+  height: 2px;
+  background: var(--hub-c-meridian);
+}
+.sky-key-land {
+  border: 1px solid var(--ops-muted);
+  background: var(--ops-line);
+}
+.ops-sky-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: auto 0 0;
+  font-size: 11px;
+}
+.ops-sky-links a {
+  color: var(--ops-muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--ops-line);
+}
+.ops-sky-links a:hover {
+  color: var(--ops-fg);
 }
 
 /* ── motion, refused ────────────────────────────────────────────────────────────────────────── */
 /* Everything ambient stops: the LEDs hold lit (the fact stays, the breathing goes), the log rows
    are simply there instead of rising in, the cursor stops blinking. The pulse dots are stopped by
-   the script itself, which never starts its loop under this preference. */
+   the script itself, which never starts its loop under this preference — and so is the globe:
+   under this preference the island computes one frame and holds it, no turn, no walk. */
 @media (prefers-reduced-motion: reduce) {
+  .ops-room .lg-floor {
+    transition: none;
+  }
   .ops-room .ops-led,
   .ops-room .ops-cursor,
   .ops-room .ops-log li {
@@ -747,7 +1232,10 @@
     opacity: 1;
     transform: none;
   }
-  .ops-room .ops-dot {
+  .ops-room .ops-dot,
+  .ops-room .ops-dial-arc,
+  .ops-room .ops-tile-viz rect,
+  .ops-room .ops-tile-stamp {
     transition: none;
   }
 }

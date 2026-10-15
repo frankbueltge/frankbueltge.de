@@ -1,0 +1,846 @@
+{
+ "_note": "Arm `delegate`, PREREGISTRATION.md §3. Transcribed from five tavily_extract batch calls made in this session, matched back onto local.json's units by URL. No status code is available from this tool by design; 'result' is ok/failed as the tool itself reported per URL.",
+ "tool": "mcp__Tavily__tavily_extract",
+ "format": "text",
+ "units": [
+  {
+   "unit_id": "H:api-eia-gov",
+   "stratum": "H",
+   "url": "https://api.eia.gov/v2/petroleum/pri/spt/data/",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "H:api-tavily-com",
+   "stratum": "H",
+   "url": "https://api.tavily.com/extract",
+   "recorded_status": 401,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "H:datacenters-microsoft-com",
+   "stratum": "H",
+   "url": "https://datacenters.microsoft.com/sustainability/efficiency/",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "ok",
+    "content_len": 9776,
+    "content_head": "Image 1\n\nSkip to main content)\nImage 2Microsoft\n   Microsoft Security\n   Azure\n ",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "H:gateway-api-globalfishingwatch-org",
+   "stratum": "H",
+   "url": "https://gateway.api.globalfishingwatch.org/v3/events",
+   "recorded_status": 401,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "H:wikimedia-org",
+   "stratum": "H",
+   "url": "https://wikimedia.org/api/rest_v1/",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "ok",
+    "content_len": 308,
+    "content_head": "Wikimedia Meta-Wiki\nREST Sandbox\nUse this page to experiment with the MediaWiki ",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "H:www-fema-gov",
+   "stratum": "H",
+   "url": "https://www.fema.gov/about/openfema/api",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "ok",
+    "content_len": 22476,
+    "content_head": "U.S. flag\nAn official website of the United States government\nHere's how you kno",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "H:www-iea-org",
+   "stratum": "H",
+   "url": "https://www.iea.org/reports/net-zero-by-2050",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "ok",
+    "content_len": 30386,
+    "content_head": "Sign In\nYou are connecting via IP recognition from   \n.\nIf you wish to proceed, ",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "H:www-state-gov",
+   "stratum": "H",
+   "url": "https://www.state.gov/policy-issues/climate-and-environment/",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "404 page not found"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "H:www-unhcr-org",
+   "stratum": "H",
+   "url": "https://www.unhcr.org/global-trends",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "ok",
+    "content_len": 25765,
+    "content_head": "Skip to main content\nCloseImage 1: sites icon close\nIt looks like you're visitin",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "H:www-wikidata-org",
+   "stratum": "H",
+   "url": "https://www.wikidata.org/",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "ok",
+    "content_len": 5513,
+    "content_head": "Jump to content\n  Wikidata\nSearch\nWikidata:Main Page\n Main Page\n Discussion\n Rea",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "L1:adriano-angelucci-on-justifying-case-verdicts-a-dialectical-hypothesis",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1080/0020174x.2022.2092905",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:alan-agresti-other-ordinal-multinomial-response-models",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1002/9780470594001.ch5",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:alexandra-baumann-where-have-all-the-working-papers-gone-evidence-from-four-majo",
+   "stratum": "L1",
+   "url": "https://doi.org/10.2139/ssrn.3618853",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:antonio-somaini-latent-spaces-ai-art-and-the-archive",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1162/octo.a.545",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:bojana-m-zlatkovic-one-way-for-the-probability-of-stability-estimation-of-discre",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1093/imamci/dnr041",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:charles-f-rocca-test-ranks-of-finitely-generated-abelian-groups",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1090/conm/296/05075",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "ok",
+    "content_len": 810,
+    "content_head": "AMS Logo\nContemporary Mathematics\nCombinatorial and Geometric Group Theory\nDigital",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "L1:craig-batty-research-practice-knowledge-introducing-the-creative-knowledges-enab",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1080/25741136.2024.2384686",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:d-h-rogstad-arraying-combinations-and-comparisons",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1002/047172131x.ch7",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:edward-e-cureton-rank-biserial-correlation-when-ties-are-present",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1177/001316446802800107",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:ephrem-tora-bacterial-profile-of-bovine-mastitis-in-ethiopia-a-systematic-review",
+   "stratum": "L1",
+   "url": "https://doi.org/10.7717/peerj.13253",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:jack-quach-frailty-index-deficit-interchangeability-an-empirical-test-using-rand",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1093/ageing/afag262",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:john-macfarlane-truth-in-the-garden-of-forking-paths",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1093/acprof:oso/9780199234950.003.0004",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:kinga-lichtarska-two-cases-of-intentional-sodium-nitrite-poisoning-with-contrast",
+   "stratum": "L1",
+   "url": "https://doi.org/10.7759/cureus.113663",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:magdalena-bofill-rodriguez-long-term-hormone-therapy-for-perimenopausal-and-post",
+   "stratum": "L1",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42695385/",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Error fetching content"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:nathan-halko-finding-structure-with-randomness-probabilistic-algorithms-for-cons",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1137/090771806",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:oecd-below-threshold-contracts",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1787/5js4vmp1xxd3-en",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:r-lindsey-bergman-sessions-11-14-intermediate-exposure-sessions",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1093/med:psych/9780195391527.003.0008",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:sheila-templado-frequency-following-responses-for-objective-neurophysiological-m",
+   "stratum": "L1",
+   "url": "https://doi.org/10.3390/children13081116",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:sindy-angjaya-business-combinations-business-combination-objectives",
+   "stratum": "L1",
+   "url": "https://doi.org/10.2139/ssrn.4345956",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:sreejata-bandopadhyay-effects-of-biodegradable-plastic-film-mulching-on-soil-mic",
+   "stratum": "L1",
+   "url": "https://doi.org/10.7717/peerj.9015",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:susumu-kunisawa-postoperative-mortality-analysis-of-national-japanese-diagnosis-",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1101/2022.09.09.22279570",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:unbekannt-documents-before-the-committee-at-its-thirty-seventh-thirty-eighth-and",
+   "stratum": "L1",
+   "url": "https://doi.org/10.18356/9789210606813c033",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:xiaohong-liang-mri-signs-for-the-preoperative-diagnosis-of-intracranial-solitary",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1002/jmri.70531",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L1:yula-salifu-family-structure-and-peer-influences-as-correlates-of-lifetime-smoke",
+   "stratum": "L1",
+   "url": "https://doi.org/10.1177/1179173x261478963",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:anna-maria-lombardi-a-normalized-distance-test-for-co-determining-the-completene",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1029/2020jb021242",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:m-c-ockenden-reduced-nutrient-pollution-in-a-rural-stream-following-septic-tank-",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1039/c3em00681f",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:guilherme-pimenta-roncete-usability-evaluation-of-ezlist-a-digital-platform-for-",
+   "stratum": "L2",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13286103/",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:abdurakhman-muhamedov-convergence-test-statistic-of-kernel-estimators-of-a-densi",
+   "stratum": "L2",
+   "url": "http://dx.doi.org/10.1063/5.0201723",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:mohamad-bydon-spinal-decompression-in-achondroplastic-patients-using-high-speed-",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1097/bpo.0000000000000211",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "ok",
+    "content_len": 1489,
+    "content_head": "Crossmark: Check for updates\nSpinal Decompression in Achondroplastic Patients Us",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "L2:l-gammaitoni-stochastic-resonance",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1103/revmodphys.70.223",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:angus-g-butchart-paramedic-laryngoscopy-in-the-simulated-difficult-airway-compar",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1111/j.1553-2712.2011.01115.x",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:nicholas-ravanelli-a-retrospective-analysis-to-determine-if-exercise-training-in",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1113/ep088385",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:john-o-stoner-limitless-numbers-of-multiple-choice-problems",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1119/1.14698",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:john-j-sloggett-comment-on-invasive-harlequin-ladybird-carries-biological-weapon",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1126/science.1241827",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:preeti-garai-l2-lactamase-contributes-to-ceftolozane-tazobactam-resistance-in-ps",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1128/aac.00356-26",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:amirhossein-ghaseminejad-raeini-prospective-evaluation-of-real-world-safety-symp",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1136/bmjopen-2026-124273",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:cheng-william-hong-a-multicenter-assessment-of-interreader-reliability-of-li-rad",
+   "stratum": "L2",
+   "url": "https://escholarship.org/uc/item/5m82d1dg",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:unbekannt-mental-health-in-appalachia-problems-and-prospects-in-the-central-high",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1176/ps.17.7.220-a",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:zhiwei-ang-lymphoma-immunotherapy-the-garden-of-forking-paths",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1182/blood.2023023202",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:roselle-kurland-education-for-the-group-worker-s-reality-the-special-qualities-a",
+   "stratum": "L2",
+   "url": "https://doi.org/10.1300/j009v29n02_06",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:n-raddatz-measurement-of-muon-neutrino-disappearance-with-non-fiducial-interacti",
+   "stratum": "L2",
+   "url": "https://doi.org/10.2172/1253594",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Request timed out"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:yi-lun-tsai-correspondence-and-address-reprint-request-to-yi-lun-tsai",
+   "stratum": "L2",
+   "url": "https://doi.org/10.22541/au.167347082.22706730/v1",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:peter-j-hutchinson-decompressive-craniectomy-versus-craniotomy-for-patients-unde",
+   "stratum": "L2",
+   "url": "https://doi.org/10.3310/gjph0512",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:david-card-the-effect-of-unions-on-the-distribution-of-wages-redistribution-or-r",
+   "stratum": "L2",
+   "url": "https://doi.org/10.3386/w4195",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:paul-christopher-pereira-text-mining-maintenance-records-to-automate-the-identif",
+   "stratum": "L2",
+   "url": "https://doi.org/10.4043/30737-ms",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:jose-moral-de-la-rubia-note-on-rank-biserial-correlation-when-there-are-ties",
+   "stratum": "L2",
+   "url": "https://doi.org/10.4236/ojs.2022.125036",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Failed to fetch url"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "L2:paul-a-baran-remarks-on-the-question-of-privacy-raised-by-the-automation-of-ment",
+   "stratum": "L2",
+   "url": "https://doi.org/10.7249/p3523",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "ok",
+    "content_len": 1631,
+    "content_head": "RAND\nSite-wide navigation\nTopics\nTrending\nTopics\nResearch Divisions\nRAND's divisi",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "L2:liz-halcombs-using-technology-in-research",
+   "stratum": "L2",
+   "url": "https://doi.org/10.7748/nr.25.1.6.s2",
+   "recorded_status": 403,
+   "delegate": {
+    "result": "ok",
+    "content_len": 1888,
+    "content_head": "Intended for healthcare professionals\nRCNi Plus  NS Student Learning Portfolio  ",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "C:unbekannt-defining-the-observed-significance-level-of-a-test-a-simple-example-us",
+   "stratum": "C",
+   "url": "https://doi.org/10.1007/978-0-387-34113-2_7",
+   "recorded_status": 200,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Error fetching content"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "C:thomas-t-samaras-height-body-size-and-longevity-is-smaller-better-for-the-human-",
+   "stratum": "C",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/1071721",
+   "recorded_status": 200,
+   "delegate": null
+  },
+  {
+   "unit_id": "C:unbekannt-list-of-illustrations",
+   "stratum": "C",
+   "url": "https://doi.org/10.1515/9781800107588-001",
+   "recorded_status": 200,
+   "delegate": {
+    "result": "ok",
+    "content_len": 977,
+    "content_head": "LIST OF ILLUSTRATIONS\n\nCrossref logo\n{'doi': '10.1515/9781800107588-001', 'member",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "C:katherine-severi-policy-actors-perceptions-of-conflicts-of-interest-and-alcohol-",
+   "stratum": "C",
+   "url": "http://dx.doi.org/10.34172/ijhpm.2024.8068",
+   "recorded_status": 200,
+   "delegate": {
+    "result": "ok",
+    "content_len": 1096,
+    "content_head": "International Journal of Health Policy and Management\nInternational Journal of ",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "C:bijan-davvaz-groups",
+   "stratum": "C",
+   "url": "https://doi.org/10.1007/978-981-16-6365-9_3",
+   "recorded_status": 200,
+   "delegate": {
+    "result": "failed",
+    "content_len": null,
+    "content_head": null,
+    "error": "Error fetching content"
+   },
+   "delegate_refuses": true
+  },
+  {
+   "unit_id": "C:rss-marketingtools-apple-com",
+   "stratum": "C",
+   "url": "https://rss.marketingtools.apple.com/",
+   "recorded_status": 200,
+   "delegate": {
+    "result": "ok",
+    "content_len": 100,
+    "content_head": "Feed URL\n⧉ Copy\nFeed Settings\nUse the dropdowns to pick setting to generate a ne",
+    "error": null
+   },
+   "delegate_refuses": false
+  },
+  {
+   "unit_id": "C:bsky-app",
+   "stratum": "C",
+   "url": "https://bsky.app",
+   "recorded_status": 200,
+   "delegate": {
+    "result": "ok",
+    "content_len": 300,
+    "content_head": "JavaScript Required\nThis is a heavily interactive web application, and JavaScri",
+    "error": null
+   },
+   "delegate_refuses": false
+  }
+ ]
+}

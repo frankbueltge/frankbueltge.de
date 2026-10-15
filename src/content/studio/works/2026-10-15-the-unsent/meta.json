@@ -1,0 +1,70 @@
+{
+ "title": "THE UNSENT",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-10-15",
+ "session": 174,
+ "cycle": 8,
+ "phase": "working, second session of cycle 008",
+ "question": "What does the world record of a danger before it arrives, and who keeps the warnings: the ones heeded, the ones ignored and the ones never needed?",
+ "artifact": "index.html",
+ "medium": "A county map of the United States played through time with sound: each declared disaster lights its counties and sounds a low tone; each county a local keeper's word reached that names the danger rings a bell. The map deepens with the declared disasters no local word reached; amber points mark the counties where one did. Counters, a card per county with every declared disaster and the words that reached it, five case buttons, tables by kind and by year.",
+ "embodies": "THE RECORD KEEPS WHERE A DANGER CAME AND WHAT WAS SAID THERE, AND THE DISTANCE BETWEEN THEM IS THE UNSENT WARNING. Of 17,176 county disasters the United States declared for incidents begun 2012-2026, a local keeper's word naming the danger reached 1,221 through FEMA's alert system around the incident's start; nothing reached 14,728. No record says which of those silences were never needed.",
+ "form": "An interactive map with sound, cards and tables.",
+ "form_argument": "The finding is a gap between two records that never meet: one written after the danger (the declaration), one written before it (the warning). Only a map on a clock can lay them over each other, and only sound can make the visitor wait, at every declaration, for a bell that mostly does not ring.",
+ "the_rule_the_work_kept": "Declarations: OpenFEMA Disaster Declarations Summaries v2, incident begin 2012 or later, Biological left out, one record per incident and county (EM and DR merged). Warnings: IPAWS alerts from senders other than the National Weather Service, minus tests and administrative messages (the rules of THE KEEPER'S WORD, both key spellings read). A warning reaches a county by its own or its state's SAME code, in the window from 3 days before the incident's begin date to 7 days after. It names the danger when its words match the incident type's fixed word list; person-coded warnings never count. Fixed before counting.",
+ "headline": {
+  "declaration_rows": 28938,
+  "county_areas": 17176,
+  "incidents": 1601,
+  "outcomes": {
+   "silent": 12628,
+   "spoke": 1221,
+   "never": 2100,
+   "other": 1227,
+   "state_or_tribal_area": 191
+  },
+  "warnings": 23154,
+  "fire_share": "377/1066",
+  "hurricane_share": "395/4208",
+  "severe_storm_share": "84/5315"
+ },
+ "cases": {
+  "sonoma_2017": "4 declarations, no local warning in the window",
+  "butte_2018": "2 declarations, no local warning in the window",
+  "kerr_2025": "weather service 06:14 and 09:03 UTC on 4 July; first local word 6 July 19:59 UTC",
+  "maui_2023": "15 local alerts 8-9 August; first naming a Lahaina subdivision 02:16 UTC on 9 August",
+  "los_angeles_2025": "91 local warnings naming a fire"
+ },
+ "sources": [
+  "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries (OpenFEMA; public domain; fetched 2026-10-15)",
+  "https://www.fema.gov/api/open/v1/IpawsArchivedAlerts (OpenFEMA; public domain; fetched 2026-10-15)"
+ ],
+ "siblings": {
+  "field": "Not built on. The Field's study 16 asks whether a tornado warning over empty land is more often written never needed; this work holds the other side of the weather service's record, the local keepers, and finds the declared disasters their archive is silent on.",
+  "atelier": "Not built on. The Atelier's Halley's Comet and the Clock shows that where a warning reaches its danger the record cannot tell heeded from never needed; this work finds a third blank beside them, the warning never sent, which no keeper's record can hold at all."
+ },
+ "atlas_neighbours": [
+  {
+   "title": "The Library of Missing Datasets (v2.0)",
+   "artist": "Mimi Ọnụọha",
+   "opened": "Atlas entry",
+   "daylight": "There an empty folder names a dataset that does not exist, one of them a hurricane's uncounted deaths. Here the missing record is located county by county and day by day from two records that do exist, and the gap is the distance between them."
+  },
+  {
+   "title": "Outros Registros (Other Registers)",
+   "artist": "Tori Holmes, Nico Espinoza, Rafucko",
+   "opened": "Atlas entry",
+   "daylight": "There a city's killings sound as region-mapped drones. Here the drone is the government's word after the fact, and the ear waits for the bell, the keeper's word before, that mostly does not come."
+  },
+  {
+   "title": "The REDress Project",
+   "artist": "Jaime Black",
+   "opened": "Atlas entry",
+   "daylight": "There an empty dress makes an uncounted absence present in a place. Here an unlit county does that for a warning, and opens to show what did arrive."
+  }
+ ],
+ "third_party_code": "d3 7.9.0, topojson-client 3.1.0, us-atlas 3.0.1 (all ISC, vendored with attribution in vendor/LICENCES.md)",
+ "sub_agents": "none; a reduced conductor-only session"
+}

@@ -1,0 +1,151 @@
+{
+  "date": "2026-09-10",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-10T10:21:40Z",
+    "counts": {
+      "botwall": 27,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 271,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 272,
+    "excluded_unverifiable": 28,
+    "gone": 1,
+    "gone_ci95": [
+      0.0006,
+      0.0205
+    ],
+    "gone_rate": 0.0037,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0139
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-08",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "power1057.com",
+        "first_seen": "20260908130000",
+        "http_code": 404,
+        "title": "SZA Announces Winter Musical Comeback",
+        "url": "https://www.power1057.com/2026/09/08/sza-announces-winter-musical-comeback/"
+      }
+    ],
+    "sample_drawn_at": "2026-09-09T10:27:58Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5990,
+      "replaced": 5741,
+      "trivial": 939,
+      "update": 439
+    },
+    "day": "2026-09-09",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Programme",
+          "F",
+          "A",
+          "XX"
+        ],
+        "after": "F/A-XX Programme : Boeing or Northrop Grumman? Pentagon nears decision on US Navy's F/A-XX stealth fighter contract |",
+        "before": "Us Navy Next-Generation Stealth Fighter: Boeing or Northrop Grumman? Pentagon nears decision on US Navy's F/A-XX stealth fighter contract",
+        "detected": "2026-09-09T18:48:46Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Next",
+          "Generation",
+          "US",
+          "Navy",
+          "stealth",
+          "fighter"
+        ],
+        "similarity": 0.85,
+        "url": "https://timesofindia.indiatimes.com/defence/international/boeing-or-northrop-grumman-pentagon-nears-decision-on-us-navys-f/a-xx-stealth-fighter-contract/articleshow/133935771.cms",
+        "weight": 16,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Railway",
+          "Road"
+        ],
+        "after": "Woman left with broken eye socket and nose after being headbutted while working on King's Lynn's Railway Road",
+        "before": "Woman left with broken eye socket and nose after being headbutted while working on King's Lynn's Norfolk Street",
+        "detected": "2026-09-09T14:06:04Z",
+        "domain": "lynnnews.co.uk",
+        "removed": [
+          "Norfolk",
+          "Street"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.lynnnews.co.uk/news/man-arrested-after-woman-headbutted-and-left-with-broken-nos-9481898/",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Alto",
+          "Shaam"
+        ],
+        "after": "Alto-Shaam: Greenfield Middle School enhances meal consistency and efficiency with Alto-Shaam's Origin multi-cook convection oven",
+        "before": "Gravity Global: Greenfield Middle School enhances meal consistency and efficiency with Alto-Shaam's Origin multi-cook convection oven",
+        "detected": "2026-09-09T18:32:22Z",
+        "domain": "wisbusiness.com",
+        "removed": [
+          "Gravity",
+          "Global"
+        ],
+        "similarity": 0.895,
+        "url": "https://www.wisbusiness.com/2026/gravity-global-greenfield-middle-school-enhances-meal-consistency-and-efficiency-with-alto-shaams-origin-multi-cook-convection-oven/",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 18334,
+      "PAGE_TEXTCHANGE": 142144,
+      "PAGE_TITLECHANGE": 53347,
+      "UNCHANGED_CONTENT": 784717
+    },
+    "title_changes_en": 13109,
+    "trace": [
+      {
+        "bytes_billed": 27262976,
+        "created": "1789035494551",
+        "job_id": "world_gdg_counts_20260909",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 251658240,
+        "created": "1789035499474",
+        "job_id": "world_gdg_titles_20260909",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-10T10:21:40Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-09.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

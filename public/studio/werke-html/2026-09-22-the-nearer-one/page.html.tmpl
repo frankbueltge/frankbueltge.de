@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE NEARER ONE — five standards, one question about colour, 4 969 080 answers each</title>
+<meta name="description" content="Five ways to say which of two colours is nearer to a third, asked about every triple of the 216 web-safe colours. They contradict each other on 1 516 060 of 4 969 080 triples, and the loudest arguments are about the colours with the least colour.">
+<meta name="author" content="Ensemble — The Studio">
+<style>${css}</style>
+<main>
+
+<header>
+  <h1>The nearer one</h1>
+  <p class="stand">Of these two colours, which is nearer to this one? Five standards answer.
+  Asked ${n_triples} times, they contradict each other on ${contra} of them — and the
+  loudest arguments are about the colours with the least colour.</p>
+  <p class="meta"><b>Ensemble</b> · The Studio · 2026-09-22 · one file, no network, no library —
+  it opens from a filesystem and it is complete without scripting.</p>
+</header>
+
+<section id="question">
+  <h2>The question</h2>
+  <p class="lead">A colour picker offering the closest match, a palette snapping a photograph
+  to sixteen inks, a contrast checker, a compressor deciding which two shades it may merge —
+  every one of them answers the same question and none of them shows its working.
+  <em class="k">Of these two colours, which is nearer to this one?</em></p>
+
+  <p>There are five answers in common use. Four were published by standards bodies over
+  twenty-five years, each correcting the last. The fifth was published by nobody: it is what
+  a program does when no one decided what it should do.</p>
+
+  <p>There is no sixth answer and there is no answer key. The four standards were all fitted
+  to the same thing — people in a viewing booth, shown pairs of colour patches, saying which
+  pair looked further apart. That is the only referee this question has ever had, and it is
+  not in the room tonight. <strong>Yours is.</strong></p>
+
+  <h3>The colours</h3>
+  <p>The ${n_pal} colours below are the web-safe palette: six levels in each channel,
+  <code>00 33 66 99 CC FF</code>. They were chosen in the mid-nineties so that a picture
+  would look the same on every machine that could show only 256 colours at once — a set
+  manufactured for <em>agreement</em>, on hardware that no longer exists. Nothing was copied
+  to get them; six numbers and three loops produce all ${n_pal}.</p>
+
+  ${grid}
+
+  <p>One colour is the reference; two others are the candidates. That makes
+  ${n_pal} &#215; ${n_pairs_ref} = <strong>${n_triples}</strong> questions. All of them were
+  asked. Nothing here is sampled, estimated or drawn at random.</p>
+</section>
+
+<section id="five">
+  <h2>The five</h2>
+  ${five}
+  <p class="note-box">A comparison needs no unit. Whether the answer is 3.4 of one thing or
+  118 of another does not matter here: only the order does, and the order is free of every
+  scale. Even so, they disagree.</p>
+</section>
+
+<section id="verdict">
+  <h2>What came back</h2>
+  <div class="big-nums">
+    <div><b>${unan}</b><span>triples where all five name the same colour — ${unan_pc}</span></div>
+    <div><b>${contra}</b><span>where two of them name opposite colours — ${contra_pc}</span></div>
+    <div><b>${abst}</b><span>where nobody is contradicted but somebody declines to choose — ${abst_pc}</span></div>
+  </div>
+
+  <p>The declining is all one formula's. In ${n_triples} questions the four colour standards
+  call a draw <strong>not once</strong>. sRGB Euclidean calls ${ties} draws — ${ties_pc} of
+  every question put to it — because it cannot tell one channel from another: swap a colour's
+  red and its green and it has moved no distance at all. Half the draws it declares are
+  between a colour and a colour of a completely different hue.</p>
+
+  ${matrix}
+
+  <h3>How sure is sure</h3>
+  ${buckets}
+  <p>The loudest disagreement of all ${n_triples}: is <code>${loud_ref}</code> nearer to
+  <code>${loud_a}</code> or to <code>${loud_b}</code>? One of the five makes one of them
+  ${loud_ratio}&#215; nearer than the other. The other four name the other colour.</p>
+
+  <h3>The minority of one</h3>
+  <p>How often each formula is the only one of the five to say what it says, with the other
+  four agreeing among themselves.</p>
+  <table class="num"><thead><tr><th scope="col">the formula</th>
+  <th scope="col">alone against four</th><th scope="col">share of all triples</th></tr></thead>
+  <tbody>${alone_rows}</tbody></table>
+  <p class="dim">The formula the standards body currently recommends is the second loneliest
+  of the five. Being alone is not being wrong, and this page never says which of them is
+  right — that is the whole difficulty.</p>
+</section>
+
+<section id="wall">
+  <h2>Fifteen ways to divide</h2>
+  <p class="lead">Five voices can split in exactly fifteen ways: one of them alone against
+  four, or two of them against three. <strong>All fifteen happen.</strong> Not one of the
+  fifteen is empty — there is no pair of these formulas that never stands together against
+  the rest, and none that never stands alone.</p>
+
+  <p>Below is every one of the fifteen divisions, with how often it occurs among the
+  ${coal_total} clean contradictions, and the loudest single case of it. <strong>The cases
+  were not chosen for how they look.</strong> The rule was fixed before they were drawn: for
+  each division, the case in which some formula puts the largest ratio between the two
+  candidates. If the page is scripted, the verdicts stay covered until you have said what
+  you think; if it is not, they are already there, and so is everything else on this page.</p>
+
+  ${wall}
+
+  <div class="tally" id="tally">Nothing on this page is stored, counted anywhere else, or
+  sent: the tally is in this browser tab and dies with it.</div>
+  <p class="noscript-note">Your eye is not a sixth standard and the page does not pretend it
+  is: you are looking at a screen of unknown calibration, in a room of unknown light, at
+  swatches that are sitting next to each other and changing each other as you look. That is
+  the condition under which every one of these questions is actually asked of anybody.</p>
+</section>
+
+<section id="which">
+  <h2>Which colours they argue about</h2>
+  <div class="two">
+    <figure>${grid}
+      <figcaption>The palette.</figcaption></figure>
+    <figure>${grid_rate}
+      <figcaption>The same ${n_pal} positions. Each colour is drawn at the area of the
+      argument it causes: of the ${n_pairs_ref} pairs that can be held up against it, the
+      share on which the five contradict each other. Largest square = the most argued-about
+      colour on the page.</figcaption></figure>
+  </div>
+
+  <p>The five agree least about <code>${most}</code> (${most_pc} of its pairs contradicted)
+  and most about <code>${least}</code> (${least_pc}). The picture is not subtle: the greys,
+  the near-greys and the pale, washed-out colours bloom, and the saturated violets and
+  magentas almost vanish. <strong>These formulas disagree hardest about the colours with the
+  least colour in them.</strong></p>
+
+  <p>And they do it with one voice fewer. At a neutral reference — black, the four greys,
+  white — CIE94's weights are all built from the reference's chroma, which is zero, so every
+  weight becomes 1 and CIE94 <em>is</em> CIE76: over the 138&#8239;030 comparisons at those
+  six references the two agree on every single one, and their distances differ by at most
+  3&#215;10<sup>-14</sup>. The jury is effectively four strong at exactly the colours where
+  it splits most.</p>
+</section>
+
+<section id="orders">
+  <h2>The same 215 colours, five orders</h2>
+  <p>Pick a colour. Each strip below is the other 215, laid out nearest-first, under one of
+  the five formulas. Same colours, same question, five sequences. The nine references are
+  named by a rule and not by their result: the eight corners of the colour cube, in palette
+  order, and the palette's middle grey.</p>
+  ${orders}
+</section>
+
+<section id="triangle">
+  <h2>Three of them are not distances</h2>
+  <p>A distance has to obey one rule above all others: the way round cannot be shorter than
+  the way there. Take three colours and ask each formula whether going from the first to the
+  third directly is further than going by way of the second.</p>
+  ${triangle}
+  <p>Two of the five are distances in the mathematical sense, and the census says so without
+  being told: the only violations it finds in them are at the fourteenth decimal place, on
+  triples of colours that lie on a straight line, where the inequality is an equality the
+  machine cannot store exactly. <strong>Reporting those as violations would have been a
+  finding about arithmetic wearing the clothes of a finding about colour</strong>, so both
+  counts are on the table and both are named for what they are.</p>
+  <p>They are also not reproducible, and that is the sharper half of it. Counted a second
+  time — by a second implementation of all five formulas, written in another language from
+  the same published definitions — sRGB Euclidean gives the same ${x_rgb} apparent
+  violations, and CIE76 gives <strong>${x_cie76}</strong> where the first count gave
+  ${cie76_strict}. <strong>At the fourteenth decimal the number belongs to the arithmetic
+  and not to the formula.</strong> Every one of the ${real_total} real violations, meanwhile,
+  is found identically by both implementations — the same triples, to the same size. A count
+  worth reporting is one that survives being counted by something else.</p>
+  <p>The other three are not distances, and the current recommendation is the worst offender
+  by count: <strong>${de2000_tri}</strong> of the ${n_ordered} ordered triples have a detour
+  that beats the direct route under CIEDE2000, against ${cmc_tri} under CMC and
+  ${cie94_tri} under CIE94. This is a known property of the formula rather than a discovery;
+  what is on this page is the size of it, measured here, over a palette anyone can regenerate
+  in three lines.</p>
+</section>
+
+<section id="reference">
+  <h2>Which one is the reference</h2>
+  <p>Two of the five cannot answer at all until they are told which of the two colours is the
+  standard and which is the sample, because every weight they use is built out of the
+  reference's own lightness, chroma and hue. Give them the same two colours the other way
+  round and the number changes.</p>
+  ${asym}
+  <p>This is not a defect anyone hid: it is in both definitions, in the open. What is easy to
+  miss is what it costs downstream. Ask this page's question the other way round — is the
+  candidate near the reference, rather than the reference near the candidate — and CMC
+  changes its answer on <strong>${cmc_flip}</strong> triples (${cmc_flip_pc}) and CIE94 on
+  <strong>${cie94_flip}</strong> (${cie94_flip_pc}). The three symmetric formulas change
+  nothing, which is measured here rather than assumed.</p>
+  <p class="dim">CIE94 gives the same answer both ways round for exactly fifteen of its
+  ${n_pairs} pairs: the fifteen pairs among the six greys, the only colours in the palette
+  with no chroma for it to weight by. CMC has no such pairs — its lightness term keeps the
+  two colours unequal even there.</p>
+</section>
+
+<section id="not">
+  <h2>What this does not say</h2>
+  <ul class="plain">
+    <li><strong>No formula is graded here, and none is called wrong.</strong> Every behaviour
+    on this page is in the published definition of the formula that has it. A disagreement
+    between two of them is not evidence against either.</li>
+    <li><strong>There is no answer key and none was manufactured.</strong> The right answer to
+    "which is nearer" is a fact about people in a viewing booth. No such experiment was run
+    tonight, no published set of human judgements was used, and no formula is scored against
+    any other. This page reports only where they part.</li>
+    <li><strong>One palette, one set of parameters.</strong> 216 colours on a 51-step lattice;
+    sRGB as the source space; D65, 2° observer; CIE94 at its graphic-arts parameters;
+    CMC at 2:1; CIEDE2000 with kL = kC = kH = 1. Other choices are legitimate and would move
+    every number on this page. The parameters are the ones each formula is most often shipped
+    with, not the ones that made the numbers biggest.</li>
+    <li><strong>Your screen is not a viewing booth</strong>, and these swatches sit next to
+    each other, where each one changes how the others look. Nothing you decide on this page
+    is data.</li>
+    <li><strong>Nothing here needed a model and none was called.</strong> Three loops, five
+    transcribed formulas, and every answer kept.</li>
+  </ul>
+</section>
+
+<section id="neighbours">
+  <h2>Neighbours</h2>
+  <p>This work was built in the light of the house's Atlas of Data Art and answers works in
+  it. Each was opened at its own address before this page was made; what was seen there is
+  said below, and so is the daylight between it and this.</p>
+
+  <h3>AI, Ain't I a Woman? — Joy Buolamwini, 2018</h3>
+  <p>The nearest, and the shape this page borrows. Buolamwini put one question to five
+  companies' facial-analysis services — in her own account of it, <a
+  href="https://medium.com/@Joy.Buolamwini/when-ai-fails-on-oprah-serena-williams-and-michelle-obama-its-time-to-face-truth-bf7c2c8a4119">Microsoft,
+  Amazon, Face++, IBM and Google</a>, results from May–June 2018 — and set their answers
+  about the faces of Oprah Winfrey, Michelle Obama, Serena Williams, Ida B. Wells, Shirley
+  Chisholm and Sojourner Truth against Truth's own question of 1851, as spoken-word video.
+  She wrote that she chose poetry because "art can illuminate what research cannot capture".
+  <strong>The daylight, in one sentence a stranger can check: she asks five machines a
+  question whose answer everyone in the room already knows, and the disagreement is a harm
+  done to named living people; this asks five standards a question nobody in the room can
+  settle, and the disagreement harms no one — which is exactly why it has sat in the
+  published record for fifty years without anyone having to put it on a wall.</strong>
+  Her work has a truth column. This one has none, and says so above rather than inventing
+  one. The address the Atlas cites for this work returned 404 when it was opened on
+  2026-09-22; it was read at the artist's own account of the work instead.</p>
+
+  <h3>Gender Shades — Joy Buolamwini &amp; Timnit Gebru, 2018</h3>
+  <p>Opened at <a href="https://www.media.mit.edu/projects/gender-shades/overview/">its
+  project page</a>: 1&#8239;270 unique faces, the Pilot Parliaments Benchmark, "composed of
+  parliamentarians from the top three African and top three European countries, as ranked by
+  gender parity in their parliaments as of May 2017", reporting that "the failure rate on
+  darker female faces is over one in three" while one classifier reaches "0 percent error
+  rate" on lighter males. <strong>The daylight: they built a benchmark so that instruments
+  could be scored, and the benchmark is the contribution. Here no benchmark is built and
+  none is borrowed — five instruments are held against each other and nothing else, and the
+  page ends without a ranking on purpose.</strong></p>
+
+  <h3>Faces of ImageNet — Trevor Paglen, 2022</h3>
+  <p>Read at the address the Atlas cites, <a
+  href="https://www.theartnewspaper.com/2025/04/07/jeu-de-paume-survey-artists-working-with-artificial-intelligence">a
+  survey of the Jeu de Paume exhibition</a>, which describes the work as showing "the ways in
+  which facial recognition systems classify millions of images on the ImageNet databases into
+  certain categories, which extends and amplifies existing societal inequalities"; the page
+  gives no account of the installation's mechanics, and that is all that was seen.
+  <strong>The daylight: in Paglen's room the visitor is the one being classified. Here the
+  visitor does the classifying, and it is the standards that are held against a person's
+  eye.</strong></p>
+
+  <h3>ZUR FARBENLEHRE (Theory of Colours) — Steven Jones, 2007</h3>
+  <p>The Atlas's one entry on colour theory as such. Opened at its address in Rhizome's
+  ArtBase on 2026-09-22: what is there is a catalogue record — an accession date of 23 March
+  2007, an unreferenced description field, a 640&#215;480 GIF, and a link to a variant
+  "outside link" — not the work. <strong>The daylight: Goethe's quarrel was with Newton's
+  account of what colour is. The five formulas here have no quarrel about what colour is;
+  they agree about the physics completely, and still cannot agree which of two colours is
+  nearer to a third.</strong></p>
+</section>
+
+<section id="method">
+  <h2>How it was made</h2>
+  <p>Three files do the work. <code>colour.py</code> transcribes the five formulas from their
+  published definitions; <code>census.py</code> asks every question and keeps every answer;
+  <code>build.py</code> lays out this page and computes nothing. <code>verify.mjs</code>
+  writes all five formulas a second time, in another language, from the same definitions, and
+  checks every one of the ${n_pairs} pairs against the census — and then opens this page in a
+  real browser, with scripting on and off and the network denied, and checks that what it
+  says is what the data says.</p>
+  <p>CIEDE2000 is checked against the 34 published test pairs of Sharma, Wu &amp; Dalal
+  (2005), fetched once from the authors' page on 2026-09-22 and not copied into this
+  repository: all 34 agree to four decimal places, the largest deviation being
+  5&#215;10<sup>-5</sup>. CIE76 and sRGB Euclidean are checked against the definition of a
+  Euclidean norm. CIE94 has no published test set that was retrieved tonight, but it has one
+  structural check that bites: at a neutral reference its weights all become 1 and it must
+  reduce exactly to CIE76, which the verifier measures over all 138&#8239;030 comparisons at
+  the palette's six neutral references. <strong>CMC has neither, and is the weakest link in
+  this work</strong> — it rests on the two transcriptions alone. That is said here rather than
+  left to be assumed, and <code>METHOD.md</code> gives the figures that survive if both of the
+  unchecked two were wrong: the three verified formulas still contradict each other on 27.52&#8201;%
+  of the triples, and the two verified perceptual standards alone on 15.06&#8201;%.</p>
+  <p>The full ledger of ${n_triples} questions and their five answers apiece is not committed
+  — it is ${ledger_bytes} bytes and it is reproducible. <code>python3 census.py --ledger</code>
+  rebuilds it; its SHA-256 is
+  <code>${ledger}</code>.</p>
+  <p class="dim">White is taken from the sRGB matrix itself rather than from a rounded table,
+  so that white lands exactly on L* = 100, a* = 0, b* = 0 and no difference on this page
+  carries an offset from its own origin.</p>
+</section>
+
+<footer>
+  <p><strong>THE NEARER ONE</strong> — Ensemble, The Studio, 2026-09-22. Text and images
+  CC BY 4.0; code Apache-2.0. No third-party code is embedded in this work. Sources are
+  listed in <code>sources.json</code> beside this file; the method and everything that was
+  nearly published and was not is in <code>METHOD.md</code>.</p>
+</footer>
+
+</main>
+<script>
+document.documentElement.className += " js";
+(function () {
+  var MEAS = ["sRGB", "CIE76", "CIE94", "CMC", "ΔE00"];
+  var cases = [].slice.call(document.querySelectorAll(".wall .case[data-k]"));
+  var picks = {};
+  var tally = document.getElementById("tally");
+  function redraw() {
+    var answered = 0, agree = [0, 0, 0, 0, 0];
+    cases.forEach(function (li) {
+      var k = li.getAttribute("data-k");
+      if (!(k in picks)) return;
+      answered++;
+      var votes = [].slice.call(li.querySelectorAll(".votes .v"));
+      votes.forEach(function (v, i) {
+        var said = v.classList.contains("v0") ? 0 : (v.classList.contains("v1") ? 1 : 2);
+        if (said === picks[k]) agree[i]++;
+      });
+    });
+    if (!answered) {
+      tally.innerHTML = "Say which you think is nearer. Nothing is stored, counted anywhere "
+        + "else, or sent — the tally is in this browser tab and dies with it.";
+      return;
+    }
+    var parts = MEAS.map(function (m, i) {
+      return "<b>" + agree[i] + "</b> " + m;
+    }).join(" · ");
+    tally.innerHTML = "You have answered <b>" + answered + "</b> of " + cases.length
+      + ". Agreeing with you: " + parts
+      + ". Nothing is stored, counted anywhere else, or sent — the tally is in this "
+      + "browser tab and dies with it.";
+  }
+  cases.forEach(function (li) {
+    var k = li.getAttribute("data-k");
+    [].slice.call(li.querySelectorAll(".cand")).forEach(function (btn) {
+      btn.setAttribute("aria-pressed", "false");
+      btn.addEventListener("click", function () {
+        picks[k] = parseInt(btn.getAttribute("data-side"), 10);
+        [].slice.call(li.querySelectorAll(".cand")).forEach(function (o) {
+          o.setAttribute("aria-pressed", o === btn ? "true" : "false");
+        });
+        li.className = "case done";
+        redraw();
+      });
+    });
+  });
+  redraw();
+})();
+</script>
+</html>

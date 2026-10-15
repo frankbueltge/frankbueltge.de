@@ -1,0 +1,138 @@
+{
+  "date": "2026-09-13",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-13T10:37:06Z",
+    "counts": {
+      "botwall": 34,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 260,
+      "other": 3,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 263,
+    "excluded_unverifiable": 37,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0144
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0144
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-11",
+    "receipts": [],
+    "sample_drawn_at": "2026-09-12T09:52:51Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3519,
+      "replaced": 4373,
+      "trivial": 611,
+      "update": 363
+    },
+    "day": "2026-09-12",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Turns",
+          "Meme",
+          "Fest"
+        ],
+        "after": "'Amrapali Dubey Ke Liye Aaye Hain': Dinesh Lal Yadav AKA Nirahua's Bigg Boss 20 Appearance Turns Meme Fest Amid Bhojpuri Bawal Actress' Entry Rumours",
+        "before": "'Amrapali Dubey Ke Liye Aaye Hain': Dinesh Lal Yadav aka Nirahua's Bigg Boss 20 Appearance Sparks Memes Amid Bhojpuri Bawal Actress' Entry Rumours",
+        "detected": "2026-09-12T19:33:00Z",
+        "domain": "freepressjournal.in",
+        "removed": [
+          "Sparks",
+          "Memes"
+        ],
+        "similarity": 0.815,
+        "url": "https://www.freepressjournal.in/entertainment/amrapali-dubey-ke-liye-aaye-hain-dinesh-lal-yadav-aka-nirahuas-bigg-boss-20-appearance-sparks-memes-amid-bhojpuri-bawal-actress-entry-rumours",
+        "weight": 10,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Rs"
+        ],
+        "after": "'Mirzapur: The Movie' box office collection Day 1: Pankaj Tripathi, Ali Fazal and Ravi Kishan starrer grosses Rs 29 crore; ranks among highest opening day collections of 2026",
+        "before": "Mirzapur Full Movie Collection: 'Mirzapur: The Movie' box office collection Day 1: Pankaj Tripathi, Ali Fazal and Ravi Kishan starrer grosses 29 crore; ranks among highest opening day collections of 2026 |",
+        "detected": "2026-09-12T01:02:05Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Full",
+          "Mirzapur",
+          "Movie",
+          "collection"
+        ],
+        "similarity": 0.929,
+        "url": "https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/box-office/mirzapur-the-movie-box-office-collection-day-1-pankaj-tripathi-ali-fazal-and-ravi-kishan-starrer-grosses-29-crore-ranks-among-highest-opening-day-collections-of-2026/articleshow/133781813.cms",
+        "weight": 9,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "President",
+          "Falklands"
+        ],
+        "after": "Argentina a 'weak country', slams Badenoch as President Milei announces 'act of justice' sanctions on Falklands oil exploration",
+        "before": "Argentina a 'weak country', slams Badenoch as Milei announces 'act of justice' sanctions on Falkland Islands oil exploration",
+        "detected": "2026-09-12T09:02:32Z",
+        "domain": "lbc.co.uk",
+        "removed": [
+          "Falkland",
+          "Islands"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.lbc.co.uk/article/argentinas-government-falkland-islands-oil-sanctions-5Hjdh24_2/",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 13313,
+      "PAGE_TEXTCHANGE": 105261,
+      "PAGE_TITLECHANGE": 39883,
+      "UNCHANGED_CONTENT": 669074
+    },
+    "title_changes_en": 8866,
+    "trace": [
+      {
+        "bytes_billed": 23068672,
+        "created": "1789295589789",
+        "job_id": "world_gdg_counts_20260912",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 207618048,
+        "created": "1789295595775",
+        "job_id": "world_gdg_titles_20260912",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-13T10:37:06Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-12.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

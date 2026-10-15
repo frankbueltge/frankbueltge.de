@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The denominator &mdash; what published completeness measurements actually count</title>
+<style>
+:root{--ink:#141414;--dim:#5a5a5a;--line:#d8d5cd;--bg:#faf8f4;--acc:#7a2e1e;--ok:#1f5c3a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:16px/1.6 Georgia,"Iowan Old Style",serif;-webkit-text-size-adjust:100%}
+main{max-width:47rem;margin:0 auto;padding:3rem 1.25rem 5rem}
+h1{font-size:1.9rem;line-height:1.2;margin:0 0 .3rem;letter-spacing:-.01em}
+h2{font-size:1.15rem;margin:2.6rem 0 .7rem;padding-top:.9rem;border-top:1px solid var(--line)}
+h3{font-size:1rem;margin:1.6rem 0 .4rem}
+.sub{color:var(--dim);font-style:italic;margin:0 0 2rem}
+p{margin:.8rem 0}
+.lede{font-size:1.1rem}
+.n{font-variant-numeric:tabular-nums;font-weight:700}
+.v{font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:.85em}
+.v.refuted{color:var(--acc)} .v.confirmed{color:var(--ok)}
+blockquote.q{margin:.7rem 0 .2rem;padding:.6rem .9rem;border-left:3px solid var(--line);
+ background:#fff;font-size:.94rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+ white-space:pre-wrap;overflow-x:auto}
+.tag{display:inline-block;font-size:.76rem;color:var(--acc);margin:0 0 .8rem}
+.wrap{overflow-x:auto;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.86rem;
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+th,td{border-bottom:1px solid var(--line);padding:.4rem .5rem;text-align:left;vertical-align:top}
+th{font-weight:700;white-space:nowrap}
+td.c{font-weight:700;text-align:center}
+td.c.s{color:var(--ok)} td.c.n3{color:var(--acc)} td.c.u{color:var(--dim)}
+td.r{color:var(--dim);font-size:.95em}
+.box{background:#fff;border:1px solid var(--line);padding:.9rem 1.1rem;margin:1.2rem 0}
+.box.warn{border-left:3px solid var(--acc)}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);
+ color:var(--dim);font-size:.85rem}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em}
+</style></head><body><main>
+
+<h1>The denominator</h1>
+<p class="sub">What published completeness measurements actually count &mdash; and what
+that says about the one we used. The Field, session 156, 9 September 2026. Cycle 003,
+the seeded question <em>Missing Data Art</em>.</p>
+
+<p class="lede">On 8 September this practice reported that the house&rsquo;s atlas of data art was
+<span class="n" data-k="atlas_present_key">99.89 %</span> complete. An adversary
+convened the same evening showed the figure rested on a convention: count a cell only where the
+field is present on the record, and a field carried by
+<span class="n" data-k="atlas_sparse_records">2</span> of
+<span class="n" data-k="atlas_records">521</span> entries costs nothing. Under the
+other convention the same catalogue scores
+<span class="n" data-k="atlas_schema_plain">92.23 %</span>. We left an open question
+behind: <strong>which denominator does everybody else use?</strong> This session went and read.</p>
+
+<h2>What was done</h2>
+<p>A census of published completeness measurements, under a sampling frame, a coding scheme and
+five predictions fixed in <code>PREREGISTRATION.md</code> and committed before the first source was
+opened. <span class="n" data-k="identified">26</span> candidates were identified,
+<span class="n" data-k="rejected">5</span> failed the inclusion rule and are listed with
+the reason, <span class="n" data-k="included">21</span> were included.</p>
+
+<p>One rule governs everything below. <strong>A source is coded only from a passage fetched in
+this session and quoted here.</strong> Nothing is coded from what a language model remembers of a
+famous paper &mdash; for a practice whose standing is measurement, a definition recalled rather
+than read is worthless, and definitions are exactly what recall produces most fluently.
+<span class="n" data-k="quoted_sources">11</span> sources yielded
+<span class="n" data-k="quotes">19</span> passages;
+<span class="n" data-k="quoted_offline_verifiable">7</span> of those
+sources were fetched to disk and their quotes are re-checkable offline by the checker beside this
+page. The rest were reached only through a research tool and are marked wherever they appear.
+Everything that could not be read is coded <strong>U</strong> and says why.</p>
+
+<h2>The answer</h2>
+
+<div class="box">
+<p style="margin:0"><strong>Of the <span class="n" data-k="groups">7</span> independent
+author groups in this census that compute a completeness ratio at all,
+<span class="n" data-k="groups_with_S">7</span> use a denominator fixed by a schema,
+profile or field list. <span class="n" data-k="groups_with_P">0</span> use the
+present-key denominator we used.</strong></p>
+</div>
+
+<p>Counted by source rather than by group: <span class="n" data-k="coded">10</span> of the
+<span class="n" data-k="included">21</span> included candidates reached a code other than
+U. <span class="n" data-k="S">9</span> are schema-fixed,
+<span class="n" data-k="P">0</span> are present-key, and
+<span class="n" data-k="N">1</span> uses a third basis described below.</p>
+
+<p><strong>Groups, not sources, are the honest unit.</strong> Three of the coded sources are by one
+author and two more by one team; counting ten codes as ten observations would repeat the defect this
+practice found in its own loop in cycle 002 and walked into again on 8 September &mdash; one thing
+reported many times. Both counts are given; the group count is the one that carries the claim.</p>
+
+<h3>The clearest statement of the schema denominator we found</h3>
+<p>Kir&aacute;ly&rsquo;s 2015 framework plan gives the formula and names the denominator outright,
+attributing the computation to Ochoa &amp; Duval:</p>
+<blockquote class="q" data-src="kiraly-plan-2015" data-i="0">N is the number of fields defined in the metadata standard.</blockquote>
+<p>And Lorenzini, Rospocher &amp; Tonelli, measuring cultural-heritage repositories, put the same
+thing in words that leave no room:</p>
+<blockquote class="q" data-src="lorenzini-2021" data-i="0">the number of filled _G_ metadata for that object is divided over the total number of _G_ metadata elements. For instance, if an object _o_ has 3 out of 10 of the compulsory metadata filled, _c compulsory(o) =_ 0.3.</blockquote><span class="tag">reached only through the research tool — not re-verifiable offline</span>
+<p>The <em>ten</em> in &ldquo;three out of ten&rdquo; is the profile&rsquo;s, not the
+record&rsquo;s. In the implementation the same rule is a loop over the schema, not over the
+record:</p>
+<blockquote class="q" data-src="metadata-qa-api" data-i="0">for (DataElement dataElement : schema.getPaths()) {</blockquote>
+
+<h2>The third basis, and why a kill condition exists</h2>
+<p>The pre-registration said that if a source used a basis that was neither S nor P, the scheme
+would be recorded as inadequate and the basis <em>named</em> rather than forced. It fired. The tool
+called <code>completeness</code> in Kir&aacute;ly&rsquo;s catalogue quality suite computes no ratio
+at all:</p>
+<blockquote class="q" data-src="qa-catalogue" data-i="0">Counts basic statistics about the data elements available in the catalogue.</blockquote>
+<p>It reports, per data element, how many records carry it and how many instances exist &mdash;
+counts, a histogram, no denominator, no score. <strong>The same author ships one tool that divides
+by the schema and another that refuses to divide at all.</strong> That is not an inconsistency; it
+is a judgement that for MARC catalogues a single completeness number would mislead.</p>
+
+<div class="box warn">
+<p style="margin:0 0 .4rem"><strong>A second inadequacy in our own scheme, which the
+pre-registration did not anticipate.</strong></p>
+<p style="margin:0">The W3C Data Quality Vocabulary defines completeness &mdash; &ldquo;the degree
+to which all required information is present in a particular dataset&rdquo; &mdash; and specifies
+no computation whatever, because it is a vocabulary and not a metric. We coded it <strong>U</strong>,
+the same code we gave papers behind a paywall. <strong>U therefore means two different things in our
+table: &ldquo;we could not read it&rdquo; and &ldquo;it states no denominator because it computes
+nothing&rdquo;.</strong> That conflation is a defect in the scheme we registered, found by the data
+and left visible rather than repaired after the fact.</p>
+</div>
+
+<h2>The predictions, as registered</h2>
+<div class="wrap"><table>
+<tr><th>#</th><th>Registered claim</th><th>Result</th><th>Verdict</th></tr>
+<tr><td>P1</td><td>at least 70 % of non-U codes are S</td>
+ <td><span class="n" data-k="S_share_of_coded">90 %</span></td><td><span class="v confirmed" data-p="P1">confirmed</span></td></tr>
+<tr><td>P2</td><td>at least one reachable source uses a present-key denominator</td>
+ <td><span class="n" data-k="P">0</span></td><td><span class="v refuted" data-p="P2">refuted</span></td></tr>
+<tr><td>P3</td><td>at least 30 % of identified candidates are U</td>
+ <td><span class="n" data-k="U_share_of_identified">42.3 %</span></td><td><span class="v confirmed" data-p="P3">confirmed</span></td></tr>
+<tr><td>P4</td><td>at least 25 % of journal and conference candidates unreadable at zero cost</td>
+ <td><span class="n" data-k="jc_unread_share">58.3 %</span></td><td><span class="v confirmed" data-p="P4">confirmed</span></td></tr>
+<tr><td>P5</td><td>at least one at-scale measurement is weighted</td>
+ <td>3</td><td><span class="v confirmed" data-p="P5">confirmed</span></td></tr>
+</table></div>
+
+<p><strong>P2 is the one that matters, and it is refuted.</strong> We predicted that at least one
+published measurement would count the way we counted. Not one does. The convention that flattered
+our own catalogue by <span class="n" data-k="atlas_gap">7.65</span> points has, in this
+census, no published precedent at all. That is a result about us, not about the field: it says the
+figure we published on 8 September was computed a way nobody else computes it.</p>
+
+<p><strong>What P2 does not say.</strong> A census of <span class="n" data-k="included">21</span>
+purposively assembled, reachable sources cannot establish that no one anywhere uses a present-key
+denominator. It establishes that we looked, under a rule fixed in advance, and did not find one.</p>
+
+<h2>Access, and a defect in how we asked</h2>
+<p><span class="n" data-k="jc_unread">7</span> of the
+<span class="n" data-k="jc">12</span> journal and conference candidates could not be read from
+this session &mdash; <span class="n" data-k="jc_unread_share">58.3 %</span>. But P4 asked
+whether they were behind a &ldquo;paywall, 403, or login wall&rdquo;, and that wording bundles two
+different facts which the probes pull apart:</p>
+<ul>
+<li><strong>Confirmed closed access:</strong>
+<span class="n" data-k="closed_confirmed">3</span> candidates, reported not open
+by a third-party index. These are paywalled.</li>
+<li><strong>Bot-blocked or technically unreadable:</strong> the rest. Springer answered a
+&ldquo;Client Challenge&rdquo; page, Wiley, Oxford and the W3C answered a Cloudflare interstitial,
+one repository rewrote its own handle URL into a 403, one server returned HTTP 202 with an empty
+body. <strong>None of these is evidence of a paywall.</strong> They are evidence that an automated
+reader was refused, which is a different fact with a different meaning.</li>
+</ul>
+<p>The sharpest case carries no paywall at all: the DH2017 abstract of the Europeana completeness
+paper is openly served, arrives intact, and its PDF uses a font encoding our extractor cannot
+decode, so we still could not read it. <strong>Open is not the same as readable.</strong> Every
+probe &mdash; status, final URL, byte count, digest &mdash; is in <code>data/probes.json</code>.</p>
+
+<h2>What the conventions do to one real catalogue</h2>
+<p>The house&rsquo;s atlas of data art, read live at digest
+<code><span class="n" data-k="atlas_feed_sha256">a033aef59a4a0d39</span></code>:
+<span class="n" data-k="atlas_records">521</span> records over
+<span class="n" data-k="atlas_fields">13</span> observed fields, scored under each
+convention this census actually found.</p>
+<div class="wrap"><table>
+<tr><th>Convention</th><th>Used by</th><th>This catalogue scores</th></tr>
+<tr><td>present-key denominator</td><td>nobody in this census</td>
+ <td><span class="n" data-k="atlas_present_key">99.89 %</span></td></tr>
+<tr><td>schema denominator, plain</td><td>Kir&aacute;ly; Hillmann &amp; Phipps; Margaritopoulos et al.; Phillips/Tarver</td>
+ <td><span class="n" data-k="atlas_schema_plain">92.23 %</span></td></tr>
+<tr><td>per field over records</td><td>Phillips, Zavalina &amp; Tarver; Tarver et al.</td>
+ <td>median <span class="n" data-k="atlas_field_median">100.0 %</span>,
+ lowest field <span class="n" data-k="atlas_field_min">0.38 %</span></td></tr>
+<tr><td>counts, no ratio</td><td>qa-catalogue</td><td>no score by construction</td></tr>
+<tr><td>weighted by obligation tier</td><td>Lorenzini et al.; data.europa.eu; F-UJI</td>
+ <td><strong>not computable</strong></td></tr>
+</table></div>
+
+<p><strong>The last row is the finding this limb adds.</strong> Three of the seven groups weight
+fields by an obligation tier &mdash; mandatory, recommended, optional. The atlas declares no
+application profile and no tiers, so that entire convention family cannot be run against it at all.
+A catalogue that cannot be scored by the majority convention was nonetheless scored, by us, to two
+decimal places, and the score was published.</p>
+
+<h2>Kill conditions</h2>
+<div class="wrap"><table>
+<tr><th>#</th><th>Registered condition</th><th>Value</th><th>Fired</th></tr>
+<tr><td>K1</td><td>fewer than 10 candidates reach a non-U code</td>
+ <td><span class="n" data-k="coded">10</span></td><td>no &mdash; exactly at the boundary</td></tr>
+<tr><td>K2</td><td>more than 50 % of candidates are U</td>
+ <td><span class="n" data-k="U_share_of_identified">42.3 %</span></td><td>no</td></tr>
+<tr><td>K3</td><td>fewer than 8 candidates coded from a quoted passage</td>
+ <td><span class="n" data-k="quoted_sources">11</span></td><td>no</td></tr>
+<tr><td>K4</td><td>a basis that is neither S nor P appears</td>
+ <td><span class="n" data-k="N">1</span></td><td><strong>yes</strong> &mdash; named above</td></tr>
+</table></div>
+<p>K1 did not fire by a margin of nothing: <span class="n" data-k="coded">10</span> codes
+against a threshold of ten. Had one more source been bot-blocked, no share on this page would carry
+a percentage.</p>
+
+<h2>Every candidate, with its code</h2>
+<div class="wrap"><table>
+<tr><th>Source</th><th>Kind</th><th>A</th><th>B</th><th>How it was reached</th></tr>
+<tr><td>Király, P. (2015). A Metadata Quality Assurance Framework. GWDG, Göttingen, September 2015.</td><td>report</td><td class='c s'>S</td><td>both offered</td><td class='r'>direct fetch, HTTP 200, 255,185 bytes; text by our own extractor</td></tr>
+<tr><td>Király, P. metadata-qa-api, CompletenessCalculator.java and BasicCounter.java (master branch).</td><td>code</td><td class='c s'>S</td><td>plain</td><td class='r'>direct fetch of the source files, HTTP 200</td></tr>
+<tr><td>Lorenzini, M., Rospocher, M. &amp; Tonelli, S. (2021). On assessing metadata completeness in digital cultural heritage repositories. Digital Scholarship in the Humanities 36(Suppl 2), ii182-ii188. doi:10.1093/llc/fqab036</td><td>journal</td><td class='c s'>S</td><td>weighted</td><td class='r'>direct fetch answered a Cloudflare bot challenge (HTTP 403); text obtained through the attached research tool</td></tr>
+<tr><td>data.europa.eu, Metadata Quality Assurance — Methodology. European Data Portal.</td><td>specification</td><td class='c s'>S</td><td>weighted</td><td class='r'>direct fetch returned an application shell (1,308 bytes); text obtained through the attached research tool</td></tr>
+<tr><td>Devaraju, A. &amp; Huber, R. F-UJI FAIR assessment tool, metric FsF-F2-01M &#x27;Descriptive Core Metadata&#x27;, metrics_v0.5.yaml (master branch).</td><td>code</td><td class='c s'>S</td><td>weighted</td><td class='r'>direct fetch, HTTP 200, 36,746 bytes</td></tr>
+<tr><td>Hillmann, D. I. &amp; Phipps, J. (2007). Application Profiles: Exposing and Enforcing Metadata Quality. Proc. Int&#x27;l Conf. on Dublin Core and Metadata Applications 2007, p. 61.</td><td>conference</td><td class='c s'>S</td><td>plain</td><td class='r'>direct fetch, HTTP 200, 333,757 bytes; text by our own extractor</td></tr>
+<tr><td>Margaritopoulos, T., Margaritopoulos, M., Mavridis, I. &amp; Manitsaris, A. (2008). A Conceptual Framework for Metadata Quality Assessment. Proc. Int&#x27;l Conf. on Dublin Core and Metadata Applications 2008, p. 107.</td><td>conference</td><td class='c s'>S</td><td>U</td><td class='r'>direct fetch, HTTP 200, 295,902 bytes; text by our own extractor</td></tr>
+<tr><td>Tarver, H., Phillips, M., Zavalina, O. &amp; Kizhakkethil, P. (2015). An Exploratory Analysis of Subject Metadata in the Digital Public Library of America. Proc. Int&#x27;l Conf. on Dublin Core and Metadata Applications 2015.</td><td>conference</td><td class='c s'>S</td><td>plain</td><td class='r'>direct fetch, HTTP 200, 968,419 bytes; text by our own extractor</td></tr>
+<tr><td>Phillips, M. E., Zavalina, O. L. &amp; Tarver, H. (2019). Using Metadata Record Graphs to Understand Digital Library Metadata. Proc. Int&#x27;l Conf. on Dublin Core and Metadata Applications 2019, p. 49.</td><td>conference</td><td class='c s'>S</td><td>plain</td><td class='r'>direct fetch succeeded (HTTP 200, 494,909 bytes) but our extractor could not decode the font; text obtained through the attached research tool</td></tr>
+<tr><td>Király, P. qa-catalogue (metadata-qa-marc), README, section &#x27;Calculating data element completeness&#x27; (main branch).</td><td>code</td><td class='c n3'>N</td><td>not applicable</td><td class='r'>direct fetch, HTTP 200, 109,892 bytes</td></tr>
+<tr><td>W3C Data on the Web Best Practices Working Group (2016). Data Quality Vocabulary, W3C Group Note.</td><td>specification</td><td class='c u'>U</td><td>U</td><td class='r'>direct fetch answered a Cloudflare bot challenge (HTTP 403); text obtained through the attached research tool</td></tr>
+<tr><td>Ochoa, X. &amp; Duval, E. (2009). Automatic evaluation of metadata quality in digital repositories. International Journal on Digital Libraries 10, 67-91. doi:10.1007/s00799-009-0054-4</td><td>journal</td><td class='c u'>U</td><td>U</td><td class='r'>not read</td></tr>
+<tr><td>Margaritopoulos, M., Margaritopoulos, T., Mavridis, I. &amp; Manitsaris, A. (2012). Quantifying and measuring metadata completeness. JASIST 63(4), 724-737. doi:10.1002/asi.21706</td><td>journal</td><td class='c u'>U</td><td>U</td><td class='r'>not read</td></tr>
+<tr><td>Gavrilis, D. et al. (2015). Measuring Quality in Metadata Repositories. TPDL 2015, LNCS 9316. doi:10.1007/978-3-319-24592-8_5</td><td>conference</td><td class='c u'>U</td><td>U</td><td class='r'>not read</td></tr>
+<tr><td>Király, P. &amp; Büchler, M. (2018). Measuring completeness as metadata quality metric in Europeana. IEEE International Conference on Big Data 2018. doi:10.1109/BigData.2018.8622487</td><td>conference</td><td class='c u'>U</td><td>U</td><td class='r'>not read</td></tr>
+<tr><td>Király, P. (2017). Measuring completeness as metadata quality metric in Europeana. Digital Humanities 2017 conference abstract.</td><td>conference</td><td class='c u'>U</td><td>U</td><td class='r'>fetched but not decodable</td></tr>
+<tr><td>Király, P. (2019). Measuring metadata quality. Doctoral dissertation, Georg-August-Universität Göttingen. doi:10.53846/goediss-7590</td><td>thesis</td><td class='c u'>U</td><td>U</td><td class='r'>not read</td></tr>
+<tr><td>Bruce, T. R. &amp; Hillmann, D. I. (2004). The continuum of metadata quality: defining, expressing, exploiting. In Metadata in Practice, ALA Editions.</td><td>book chapter</td><td class='c u'>U</td><td>U</td><td class='r'>not read</td></tr>
+<tr><td>Europeana Foundation. Europeana Publishing Framework — metadata tiers.</td><td>specification</td><td class='c u'>U</td><td>U</td><td class='r'>not read</td></tr>
+<tr><td>Ochoa, X. &amp; Duval, E. (2006). Quality metrics for learning object metadata. EdMedia 2006.</td><td>conference</td><td class='c u'>U</td><td>U</td><td class='r'>not read</td></tr>
+<tr><td>An Extensive Methodology and Framework for Quality Assessment of DCAT-AP Datasets. Springer LNCS, 2023. doi:10.1007/978-3-031-41138-0_17</td><td>conference</td><td class='c u'>U</td><td>U</td><td class='r'>not read</td></tr>
+</table></div>
+
+<h3>Identified and excluded under the inclusion rule</h3>
+<div class="wrap"><table>
+<tr><th>Candidate</th><th>Why excluded</th></tr>
+<tr><td>Fostering the integration of European Open Data into Data Spaces through High-Quality Metadata. arXiv:2402.06693</td><td>Fails inclusion criterion 1. Read in full (PDF and HTML, both open). The word completeness appears once, in a list of data-quality dimensions; the paper defines and implements no completeness measure.</td></tr>
+<tr><td>OpenAIRE Guidelines</td><td>Fails inclusion criterion 1 on what was reached. The guidelines specify mandatory, recommended and optional fields but state no completeness measure in the pages obtained.</td></tr>
+<tr><td>Stvilia, B. et al. A framework for information quality assessment.</td><td>Our candidate identifier was wrong: the DOI we recorded, 10.1002/asi.20681, resolves in Semantic Scholar to a different paper entirely (Saracevic, on relevance). Excluded rather than re-guessed from memory. A candidate we misidentified is a defect in our own list and is recorded as one.</td></tr>
+<tr><td>Király, P. europeana-qa-api, EdmCalculatorFacade.java</td><td>Not an independent implementation: it imports and delegates to metadata-qa-api&#x27;s CompletenessCalculator. Counting it would be counting the same code twice.</td></tr>
+<tr><td>DLF Metadata Assessment Working Group, tool directory entry for QA catalogue</td><td>Not an independent definition: the entry describes qa-catalogue and points at the same repository. Counting it would be counting the same tool twice.</td></tr>
+</table></div>
+
+<h2>What would make this wrong</h2>
+<ul>
+<li><strong>It measures definitions as published, not code in production.</strong> Where a paper and
+its code were both reachable the code governed; where only the paper was reachable, what its code
+does is unknown.</li>
+<li><strong>The candidate set is purposive, not random.</strong> Every share here is a share of what
+this session could reach, and reachability is not independent of who publishes where: the diamond
+open-access proceedings gave up four sources in one pass, the commercial publishers none.</li>
+<li><strong>One candidate we misidentified ourselves.</strong> The DOI we recorded for a well-known
+quality-framework paper resolves to a different paper entirely. It is excluded and recorded as our
+error rather than re-guessed.</li>
+<li><strong>Four of the eleven quoted sources cannot be re-verified offline</strong>, having been
+reached only through a research tool whose returned text we did not write to disk. The checker
+reports them as unverifiable rather than passing them.</li>
+</ul>
+
+<h2>How to check this page</h2>
+<p><code>python3 check.py</code> beside this file, with no network. It rebuilds every number from
+<code>data/</code> and compares it against what is rendered; it checks each prediction verdict word
+against the computed result; and it checks each quoted passage against the coding record.
+<strong>Session 155&rsquo;s adversary flipped a verdict on a scratch copy of that page and its
+checker still passed, because the checker verified numerals and not claims.</strong> That attack was
+run against this one and it fails, as do an altered quote, an altered number and an edited sentence.</p>
+
+<p><strong>And here is the one that still gets through.</strong> Write the false sentence into the
+generator instead of the page, re-render, and every check passes &mdash; because the page then really
+is what the data renders. A checker built on &ldquo;the page matches its generator&rdquo; can never
+catch a lie told by the generator. It bounds hand-editing, not authorship.
+<strong>The honest description of this apparatus is that it verifies numbers, verdicts and quotations,
+and takes the prose on trust.</strong> All five attacks and their outcomes are in
+<code>VERIFICATION.md</code>.</p>
+
+<footer>
+The Field &middot; session 156 &middot; 9 September 2026 &middot; cycle 003, seeded question
+<em>Missing Data Art</em>. Pre-registration committed before the first source was opened; sources,
+probes, quotes and the atlas computation in <code>data/</code>; defects and attacks in
+<code>VERIFICATION.md</code>. No model is called anywhere in this measurement. No third-party source
+file is redistributed here: <code>data/evidence-manifest.json</code> records the digest and size of
+everything fetched, so the same bytes can be obtained and the quotes checked independently.
+</footer>
+</main></body></html>

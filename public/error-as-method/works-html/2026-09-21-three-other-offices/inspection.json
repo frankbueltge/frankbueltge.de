@@ -1,0 +1,87 @@
+{
+ "note": "EXPLORATORY. Computed after PREDICTIONS.md was closed and after results.json existed. No prediction is scored against anything in this file.",
+ "definition": "subjecthood rate = share of declared party-term occurrences in the binding register's text immediately followed by one of R3's own verbs (may|must|shall|should|will|can|is|are|has|have).",
+ "rows": [
+  {
+   "party_term_occurrences": 24944,
+   "of_them_followed_by_an_R3_verb": 7269,
+   "subjecthood_rate_pct": 29.14,
+   "words_of_binding_text": 907395,
+   "party_terms_per_10k_words": 274.9,
+   "blocks": 2876,
+   "median_block_words": 227.0,
+   "corpus": "EU acts",
+   "R3b_fire_pct_narrow": 67.59,
+   "median_carrier_block_words": 392
+  },
+  {
+   "party_term_occurrences": 8350,
+   "of_them_followed_by_an_R3_verb": 1140,
+   "subjecthood_rate_pct": 13.65,
+   "words_of_binding_text": 444513,
+   "party_terms_per_10k_words": 187.8,
+   "blocks": 15326,
+   "median_block_words": 19.0,
+   "corpus": "RFCs",
+   "R3b_fire_pct_narrow": 28.15,
+   "median_carrier_block_words": 48.0
+  },
+  {
+   "party_term_occurrences": 28966,
+   "of_them_followed_by_an_R3_verb": 5758,
+   "subjecthood_rate_pct": 19.88,
+   "words_of_binding_text": 853039,
+   "party_terms_per_10k_words": 339.6,
+   "blocks": 69476,
+   "median_block_words": 7.0,
+   "corpus": "WHATWG standards",
+   "R3b_fire_pct_narrow": 55.52,
+   "median_carrier_block_words": 38
+  },
+  {
+   "party_term_occurrences": 14332,
+   "of_them_followed_by_an_R3_verb": 2733,
+   "subjecthood_rate_pct": 19.07,
+   "words_of_binding_text": 1283543,
+   "party_terms_per_10k_words": 111.7,
+   "blocks": 71762,
+   "median_block_words": 14.0,
+   "corpus": "UK Acts (calibration)",
+   "R3b_fire_pct_narrow": 31.42,
+   "median_carrier_block_words": 25.0
+  }
+ ],
+ "orderings": {
+  "by_R3b_fire_rate": [
+   "EU acts",
+   "WHATWG standards",
+   "UK Acts (calibration)",
+   "RFCs"
+  ],
+  "by_subjecthood_rate": [
+   "EU acts",
+   "WHATWG standards",
+   "UK Acts (calibration)",
+   "RFCs"
+  ],
+  "by_median_carrier_block_words": [
+   "EU acts",
+   "RFCs",
+   "WHATWG standards",
+   "UK Acts (calibration)"
+  ],
+  "by_party_terms_per_10k_words": [
+   "WHATWG standards",
+   "EU acts",
+   "RFCs",
+   "UK Acts (calibration)"
+  ]
+ },
+ "n": 4,
+ "caution": "Four points. No coefficient is reported and none should be; the orderings are the whole of the evidence and a four-point ordering is weak evidence.",
+ "agreement": {
+  "by_subjecthood_rate": true,
+  "by_median_carrier_block_words": false,
+  "by_party_terms_per_10k_words": false
+ }
+}

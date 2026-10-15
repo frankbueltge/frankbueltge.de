@@ -1,0 +1,210 @@
+{
+ "inputs": {
+  "coding_sha256": "c08be42ea6da1a412147c7897f989fa2ed8f5d81bf93a40a2adffc640011fa37",
+  "readers_sha256": [
+   "369c07062a7dfc0d1f1cde8978dea0398665d7673d42721bfd94c6f51a664702",
+   "baa3dee5d2255aff336ced52ea95234bf1b49a0c999c2a3029e065f44f099db8"
+  ],
+  "orbits_sha256": "57f12ebdfedb0939c31c64c0212cefa8849e6cf31ca5a1dc4ef5494d4dda2be7",
+  "events": 14,
+  "entries": 45,
+  "entries_with_hinge": 26
+ },
+ "pairs": {
+  "pairs": 51,
+  "named_both": 22,
+  "same_hinge": 16,
+  "share_named_both": 0.4314,
+  "share_same": 0.3137,
+  "same_given_named_both": 0.7273,
+  "dice_named": 0.7586
+ },
+ "ci95_by_event": {
+  "share_same": [
+   0.1333,
+   0.5208
+  ],
+  "share_named_both": [
+   0.2037,
+   0.6889
+  ],
+  "same_given_named_both": [
+   0.5217,
+   0.9412
+  ]
+ },
+ "per_event": {
+  "E03": {
+   "pairs": 3,
+   "named_both": 0,
+   "same": 0
+  },
+  "E10": {
+   "pairs": 3,
+   "named_both": 0,
+   "same": 0
+  },
+  "E14": {
+   "pairs": 3,
+   "named_both": 3,
+   "same": 2
+  },
+  "E17": {
+   "pairs": 3,
+   "named_both": 1,
+   "same": 1
+  },
+  "E23": {
+   "pairs": 6,
+   "named_both": 6,
+   "same": 3
+  },
+  "E24": {
+   "pairs": 3,
+   "named_both": 3,
+   "same": 3
+  },
+  "E30": {
+   "pairs": 3,
+   "named_both": 0,
+   "same": 0
+  },
+  "E35": {
+   "pairs": 3,
+   "named_both": 1,
+   "same": 1
+  },
+  "E40": {
+   "pairs": 3,
+   "named_both": 3,
+   "same": 3
+  },
+  "E42": {
+   "pairs": 6,
+   "named_both": 0,
+   "same": 0
+  },
+  "E44": {
+   "pairs": 3,
+   "named_both": 1,
+   "same": 0
+  },
+  "E46": {
+   "pairs": 3,
+   "named_both": 3,
+   "same": 3
+  },
+  "E47": {
+   "pairs": 3,
+   "named_both": 1,
+   "same": 0
+  },
+  "E52": {
+   "pairs": 6,
+   "named_both": 0,
+   "same": 0
+  }
+ },
+ "per_keeper_pair": {
+  "FLI-PH": {
+   "pairs": 11,
+   "same": 4
+  },
+  "FLI-WP": {
+   "pairs": 13,
+   "same": 5
+  },
+  "PH-WP": {
+   "pairs": 10,
+   "same": 3
+  },
+  "CH-FLI": {
+   "pairs": 7,
+   "same": 2
+  },
+  "CH-PH": {
+   "pairs": 4,
+   "same": 0
+  },
+  "CH-WP": {
+   "pairs": 6,
+   "same": 2
+  }
+ },
+ "hinge_kinds": {
+  "person": 20,
+  "system": 4,
+  "chance": 2
+ },
+ "funnel": {
+  "event_dice_study7": 0.4344,
+  "events_on_3_or_4_lists": 14,
+  "events_union_study7": 53,
+  "event_agreeing_pairs": 51,
+  "hinge_agreeing_pairs": 16
+ },
+ "readers_kappa": {
+  "n": 34,
+  "raw_agreement": 0.9412,
+  "kappa": 0.9,
+  "kappa_ci95": [
+   0.7547,
+   1.0
+  ],
+  "codes_reader1": {
+   "C": 19,
+   "M": 5,
+   "N": 10
+  },
+  "codes_reader2": {
+   "C": 19,
+   "M": 7,
+   "N": 8
+  },
+  "disagreements": [
+   [
+    "E04",
+    "N",
+    "M"
+   ],
+   [
+    "E24",
+    "N",
+    "M"
+   ]
+  ]
+ },
+ "orbit_check": {
+  "atelier_rows": 1159,
+  "bent_rows": 215,
+  "bent_matched_in_study8_2015_2025": 215,
+  "h26_28_inner_shell": 876,
+  "h26_28_inner_shell_bent": 54,
+  "h26_28_total": 6166,
+  "held_vs_inner_density_as_published": 0.0744,
+  "held_vs_inner_density_bent_set_aside": 0.0786
+ },
+ "predictions": {
+  "H1": {
+   "bar": "share of event-agreeing pairs with the same hinge < 0.50",
+   "value": 0.3137,
+   "verdict": "held",
+   "blind": false
+  },
+  "H2": {
+   "bar": "same hinge among pairs where both name one >= 0.60",
+   "value": 0.7273,
+   "verdict": "held",
+   "blind": false
+  },
+  "H3": {
+   "bar": "share with the same hinge < study 7 mean event Dice",
+   "value": [
+    0.3137,
+    0.4344
+   ],
+   "verdict": "held",
+   "blind": false
+  }
+ }
+}

@@ -1,12 +1,22 @@
+// RETIRED WITH THE PYRAMID ENTRANCE (2026-08-30, research ecology v3). This module quoted
+// the v1/v2 constitutions line by line for /ecology's anatomy surface, and its test held
+// every quote against the mirrored files. The v3 rebuild replaced those constitutions
+// (ulysses v7, field-research v4, studio v4) and the entrance that displayed this anatomy
+// (decision: docs/design/2026-08-30-research-ecology-v3.md). The quotes below freeze at
+// their last true state and are NO LONGER held against the mirrors — the test went with the
+// surface. Nothing imports this module except the archived EcologyAnatomy.astro.
+// The Atelier's persona froze with them: the practice settled its name as Assay on 2026-09-03,
+// and every current-state surface of this site says so. What stands below is the record as the
+// v2 constitutions wrote it, name included — a frozen quote is not corrected, it is dated.
 // src/lib/ecology/anatomy.ts — what the research ecology IS and how it works, as data.
 //
 // The apparatus map (src/lib/apparatus/) draws the wiring: repositories, workflows, deploy hops.
 // It cannot answer the question a reader actually arrives with — what is this, and how does a
 // piece of research here become public? That needs the constitutional layer: what governs a
 // practice, what one working session produces, what has to pass before anything is published,
-// and who decides. Frank, 2026-08-03: "so hat man immer noch kein holistische visualisierung von
-// dem, was die 'research ecology' ist und wie sie funktioniert mit ihren verfassungen,
-// protokollen, journals, works etc."
+// and who decides. Frank's finding of 2026-08-03, wording private: there was still no holistic
+// picture of what the research ecology is and how it works — its constitutions, protocols,
+// journals, works and the rest.
 //
 // THE ONE RULE THIS MODULE ENFORCES: every line it shows is a QUOTE from a committed file, with
 // the path it came from, and anatomy.test.ts fails if the quote is no longer there. The notation

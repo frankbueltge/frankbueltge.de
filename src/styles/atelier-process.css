@@ -1,8 +1,8 @@
 /* src/styles/atelier-process.css — the atelier's own image language for The Passage
  * (components/atelier/ProcessFigure.astro, drawn by src/lib/atelier/passage.ts).
  *
- * Frank, 2026-07-30: "just make it interactive and smart, not always this minimal boring
- * monochrome — that does not fit here any more, because this is a project of its own."
+ * Frank's direction of 2026-07-30, wording private: interactive and clever rather than the
+ * usual minimal monochrome, which no longer fits here, because this is a project of its own.
  * So: colour, depth, movement, something to take hold of.
  *
  * The idiom, in one line: a MEASURED DRAWING ON WARM PAPER. The atelier's own paper
@@ -336,9 +336,10 @@
   color: var(--at-ink);
   max-width: 68ch;
 }
-/* AN 11px FLOOR ON EVERY HTML STRING IN THIS FILE (2026-08-01). Frank, on the entrance: "in
-   mini type nobody can read". The offender he named was the SVG ledger gutter and that is gone
-   from the entrance's figure entirely, but the same objection applies to the labels, buttons,
+/* AN 11px FLOOR ON EVERY HTML STRING IN THIS FILE (2026-08-01). Frank's objection on the
+   entrance, wording private: type too small to read. The offender he named was the SVG
+   ledger gutter and that is gone from the entrance's figure entirely, but the same objection
+   applies to the labels, buttons,
    citations and provenance lines around it, which sat at 10 and 10.5px. They are all 11px now.
    The remaining 10px values in this file are SVG `font:` declarations — those are USER UNITS in
    a scaled viewBox, not screen pixels, and the sheet's own measures (GUTTER_CHARS in
@@ -489,8 +490,8 @@
 .atelier-surface .dv-tour-body:has(.dv-tour-figure:not([hidden])) {
   grid-template-columns: minmax(0, 1fr);
 }
-/* THE BOARD BUDGETS ITSELF (rewritten 2026-08-01, Frank: "the visualisation is not tall enough —
-   you cannot see everything").
+/* THE BOARD BUDGETS ITSELF (rewritten 2026-08-01; Frank's finding, wording private: the
+   visualisation was too short to show everything).
    What went wrong is worth stating, because the shape of the fix follows from it: the board's
    height was capped at 46vh while the DRAWING inside it was capped, independently, at 30vh. The
    two numbers knew nothing about each other and nothing about the chrome between them — the key

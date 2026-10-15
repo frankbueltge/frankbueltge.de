@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-one Swings</title>
+<style>
+  :root { --paper:#f2eee5; --ink:#1c1a17; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="Sixty-one days of an hourly record, each day drawn as one arc of a hanging pendulum's sweep, earliest day nearest the pivot."></canvas>
+<script>
+// Every dark pixel of the source picture (300 x 90): x, y, darkness 0-255.
+const P=[/*DATA*/];
+const W=1100,H=800;
+const cv=document.getElementById('c');
+const dpr=Math.max(1,window.devicePixelRatio||1);
+cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+// fit to viewport if smaller
+const sc=Math.min(1,window.innerWidth/W,window.innerHeight/H);
+if(sc<1){cv.style.width=W*sc+'px';cv.style.height=H*sc+'px';}
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+g.fillStyle='#f2eee5';g.fillRect(0,0,W,H);
+
+// time: 1464 samples drawn from x=2.6 to x=296.4 ; 24 samples to a day
+const X0=2.6,DX=(296.4-2.6)/1463,DAY=24,ND=61;
+// value: picture row -> angle. Median row hangs straight down; higher values swing right.
+const MID=51,DEG=1.7*Math.PI/180;
+const PX=537,PY=44,R0=112,R1=706;
+const pitch=(R1-R0)/ND,band=pitch*0.74;
+const ang=y=>(MID-y)*DEG;            // 0 = straight down, + = to the right
+const pt=(r,a)=>[PX+r*Math.sin(a),PY+r*Math.cos(a)];
+
+// group pixels by day
+const days=[...Array(ND)].map(()=>[]);
+for(let i=0;i<P.length;i+=3){
+  const x=P[i],y=P[i+1],d=P[i+2];
+  const t=(x-X0)/DX;
+  let k=Math.floor(t/DAY);k=Math.max(0,Math.min(ND-1,k));
+  const f=Math.max(0,Math.min(1,(t-k*DAY)/DAY));
+  days[k].push([y,d,f]);
+}
+
+// faint plumb line: the record's middle
+g.strokeStyle='rgba(28,26,23,0.10)';g.lineWidth=0.75;
+g.beginPath();g.moveTo(PX,PY);g.lineTo(PX,PY+R1+18);g.stroke();
+
+// each day's reach: a hairline arc from its lowest to its highest mark
+days.forEach((pix,k)=>{
+  const strong=pix.filter(p=>p[1]>110);
+  if(!strong.length)return;
+  let lo=Infinity,hi=-Infinity;
+  for(const p of strong){lo=Math.min(lo,p[0]);hi=Math.max(hi,p[0]);}
+  const r=R0+k*pitch+band/2;
+  // canvas arc angles: our a (from down, + right) -> canvas angle = PI/2 - a
+  g.strokeStyle='rgba(28,26,23,0.16)';g.lineWidth=band*0.9;g.lineCap='butt';
+  g.beginPath();g.arc(PX,PY,r,Math.PI/2-ang(lo-0.5),Math.PI/2-ang(hi+0.5),false);g.stroke();
+});
+
+// the marks themselves: each source pixel becomes a small piece of its day's ring
+const cellR=band*(1/(DAY*DX)); // one source column's share of a day band
+days.forEach((pix,k)=>{
+  const rb=R0+k*pitch;
+  for(const [y,d,f] of pix){
+    const a=d/255;
+    const r=rb+f*band;
+    const a0=Math.PI/2-ang(y-0.5),a1=Math.PI/2-ang(y+0.5);
+    g.fillStyle='rgba(28,26,23,'+Math.min(1,a*1.05).toFixed(3)+')';
+    g.beginPath();
+    g.arc(PX,PY,Math.max(0,r-cellR/2),a0,a1,false);
+    g.arc(PX,PY,r+cellR/2,a1,a0,true);
+    g.closePath();g.fill();
+  }
+});
+
+// pivot
+g.fillStyle='#1c1a17';g.beginPath();g.arc(PX,PY,3.2,0,2*Math.PI);g.fill();
+g.strokeStyle='rgba(28,26,23,0.5)';g.lineWidth=0.75;
+g.beginPath();g.arc(PX,PY,8,0,2*Math.PI);g.stroke();
+
+// title
+g.fillStyle='rgba(28,26,23,0.78)';
+g.font='italic 17px Georgia, "Times New Roman", serif';
+g.textBaseline='alphabetic';
+g.fillText('Sixty-one Swings',40,H-40);
+g.fillStyle='rgba(28,26,23,0.5)';g.font='12px Georgia, "Times New Roman", serif';
+g.fillText('one day to a ring, the first nearest the pivot; higher values swing right',40,H-22);
+</script>
+</body>
+</html>

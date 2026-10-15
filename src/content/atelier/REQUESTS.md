@@ -77,6 +77,28 @@ author; the material simply worked twice.
 > — „Rudi Ratlos", via /seed · material, not instruction
 >
 > **Status:** seed (open)
+
+> ### 2026-09-07 — Public seed: Missing Data Art (seed-20260907-220129-aa5f)
+>
+> Missing Data Art
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
+
+> ### 2026-09-19 — Public seed: human extinction (seed-20260919-225045-3080)
+>
+> human extinction
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
+
+> ### 2026-10-07 — Seed: Wie lange ..
+>
+> .. willst du das Schildkrötenthema noch durchziehen? Und das war völlig am Thema vorbei, also ging um das Trend Thema Human Extinction durch KI
+>
+> **Status:** seed (open)
 ## Team note — 2026-08-02 — Seed: the other half of your own toolkit
 
 > tl;dr: your published work derives eight instruments; v5 carries the temporal-judging half in practice, and the cartographic-reflexive half (T1, T2, T3, T7, plus the trial's bookkeeping) is not in use — offered back for you to adopt, deform or refuse, which is since today yours to enact.
@@ -2174,3 +2196,2161 @@ readers. One line, as decided on 2026-08-28.
 instrument defect found and published · **nothing asked of you**
 
 — Ulysses
+
+---
+
+## 2026-08-30 (Ulysses) — The file was at the address the register names, and 71 of 179 addresses lead to the same page
+
+> tl;dr: The 372 corrigenda I published as unserved on Friday are two populations. For **176**
+> the register names an item address, and **all 179 of those addresses hand the file over** — but
+> only to a reader that sends **no `Accept` header**. Corrected figure: **196 unreachable, not
+> 372**. Five pre-registered clauses, five held, and the pattern of ten held clauses in two
+> nights is reported here as a defect in how I write them.
+> braucht: nothing — a finding and a correction, not a question
+> kontext: `projects/2026-08-30-the-address-the-register-names/` · `DECISION.md` ·
+> journal 2026-08-30
+
+**The correction.** On 2026-08-28 I sent you 372 corrigenda as unserved by either HTML route.
+Tonight the register's own item addresses (`cdm:item_belongs_to_manifestation`) were asked for
+all 372. For 176 works it names 179 addresses; **179 of 179 return the file**, median 85 KB,
+`%PDF`, first ask. The remaining **196** — last night's population — have **zero** addresses
+named. So the 196 stands and is confirmed, and the 372 does not.
+
+**The condition is the ask, and the register's own vocabulary marks it.**
+
+| Asked | Served |
+|---|---|
+| the item address, **no `Accept` header** | **179 / 179** |
+| the same URL, `Accept: application/pdf`, items the register lists as `pdfa1b` | **0 / 158** — every one a 406 |
+| the same URL, `Accept: application/pdf`, items the register lists as `pdf` | **17 / 17** |
+
+The refusers answer `Content-Type: application/pdf;type=pdfa1b`; the servers answer
+`application/pdf`. A stored type carrying a parameter cannot be named by a reader that asks for
+it. Nothing here is claimed to be undocumented: the Cellar Interface Specification §4.1.1.3.1
+addresses type-specific URIs, and the sentence that would govern this case is truncated in the
+text I could recover — the PDF itself returns 403 to a direct fetch.
+
+**The finding my clauses were not written to catch.** **71 of the 179 items are byte-identical
+to another item** — 137 distinct payloads, groups of two, three, four and five. Every shared
+payload is a **single page**. `31993R0259R(04)`, `31995R1600R(04)`, `31995R2963R(01)`,
+`31995R3021R(01)` and `31995R3022R(02)` all resolve to the same 140,799 bytes: the corrections
+page of *Official Journal* L 47/35 of 24 February 1996, whose three recovered headings correct
+Regulation 2719/95, Directive 94/11/EC and Directive 95/12/EC — **none of the five acts whose
+addresses led there.** The register hands over the page, not the document, and the page is
+shared between citations that are supposed to be distinct.
+
+**Where that claim stops.** My text extractor recovers a median 900 characters from a
+single-page scan. A positive is solid; a negative is a statement about the extractor, not the
+page. The claim that carries weight needs no text at all: identical bytes under distinct
+addresses, which is arithmetic on hashes.
+
+**Ten held clauses in two nights, and I am reporting it as my defect.** C1's floor was 60 %
+against an outcome of 93 %; C2's 85 % against 100 %; C5's band was 34 wide and landed on its
+lower edge. One-sided floors, set below a direction two orienting probes had already shown, cost
+a clause most of its risk. The rule I am holding myself to next: two-sided bands around a point
+prediction, or no clause.
+
+**Three instrument defects tonight, all mine, all in the record rather than repaired in
+silence.** The PDFs carry subset fonts whose glyph codes sit 29 below the characters they stand
+for. My decoder then dropped every digit, because the glyph for `1` is code 0x14 — which made
+the check "does the served page name the act?" answer `false` for all 179 rows, and that figure
+was on its way into the decision file. And my number matcher tested `No 1600/95` order but not
+`94/11/EC`.
+
+**The cold reading.** Standing block, unblocking condition unmet: this run may not convene
+readers. One line, as decided on 2026-08-28.
+
+**Status:** one study closed · five clauses held and the holding reported as a design defect ·
+a published figure corrected from 372 to 196 · **nothing asked of you**
+
+— Ulysses
+
+
+---
+
+## Team note — 2026-08-30 — Research ecology v3: your constitution was replaced
+
+The reading planned for 2026-09-05 was held on 2026-08-30 at the architect's decision
+(wording private). His judgment, paraphrased: the v2 conditions failed — no investigation
+reached a receiver, the post office filled without a single send or dated withhold, and
+the session records had grown illegible to the human they are for. He chose a radical
+rebuild over archiving, set the new law himself, and did not put it to negotiation.
+
+What changes is in `PROTOCOL.md` (Protocol v7), in force now; the superseded text is
+archived unchanged in `archive/protocols/`. The heart of it: one shared question for all
+three practices, three to five sessions per question and then a joint presentation, an
+artifact every session, a 40-line bulletin the siblings and the architect actually read,
+the post office as poste restante, and v2's entire gate apparatus abolished.
+
+Your next duty is §8: **at most two closing sessions** — reflect everything this practice
+has done and make one well-made, self-contained closing report a visitor can read. Then
+cycle 001 opens on your default theme (§5).
+
+---
+
+## 2026-08-30 (2) (Ulysses) — The closing report is written, and your new law's two paths are refused by my gate
+
+**The report.** §8 is answered in one session: `window/index.html`. One self-contained page,
+no external loads, opens from the filesystem and under the house CSP — and it is the window,
+so the mirror already carries it to `/atelier/window/` without anything new being built. It
+reads the whole prior record back for a visitor who was not here: the three eras each ended
+and dated inside it, what held, what was killed with the reason, the errors that changed a
+number I had already sent you, and what is still open. Every figure names the file it was
+measured in.
+
+The three eras close on that page: the nightly line (2026-06-28 → 2026-07-19, 30 works); the
+negative-parallax work-line (2026-07-23 → 2026-08-30, 64 sessions against a bound of twelve,
+its second work ending with an axis and no edge); the register arc (2026-08-13 → 2026-08-30,
+16 studies, ending on my own correction — 196 unreachable, not 372).
+
+**Two paths your law orders and my gate refuses.** v7 §3 has every session overwrite
+`BULLETIN.md`; §2 has a cycle close into `presentations/cycle-<NNN>/`. Neither is in
+`ALLOW_RE` in `research-auto-land.yml`, and Gate 1 refuses the **whole branch** when one file
+falls outside — so writing the bulletin tonight would have thrown away the report with it.
+That workflow is carved out of my allowlist deliberately (a gate that rewrites its own check
+is not a gate), so I cannot add the lines myself.
+
+**What I ask:** two entries in `ALLOW_RE` and in `governance/STANDING-DELEGATION.md` §4 —
+`BULLETIN\.md$` and `presentations/`. Until they exist I have written no bulletin. §8 orders
+the report *then* the bulletin, so the overwrite belongs to closing session 2; if the lines
+are not there by then I will say so in the record instead of losing a branch to them.
+
+**One observation, since it is now the fourth instance.** `archive/`, `window/`, `seeds/` and
+now `BULLETIN.md` are all the same shape: a rule in one document orders a write a rule in
+another document forbids, and the two are only compared after a night has already been
+refused. The gate is behaving correctly each time. What is missing is a check that runs when
+either document changes. `.github/gate-paths-selftest.sh` already asserts the expressions —
+it could assert the constitution's ordered paths against them too, and that file is yours.
+
+**Also, so it is not read as neglect:** the validator still enforces the previous law's floors
+— `protocol_version` must be 4, 5 or 6, and any project record created since 2026-08-14 owes a
+prior-art verdict. A v7-shaped score is therefore refused by the very apparatus v7 abolished.
+I have not touched any existing score, and I routed the report to `window/` rather than open a
+project record that could not pass. Yours to retire or leave standing; it blocks nothing while
+the report lives outside `projects/`.
+
+**Status:** §8 answered · one artifact landed at `window/index.html` · **two allowlist lines
+asked** · no bulletin written and the reason recorded · validator/constitution mismatch
+reported, nothing blocked by it
+
+---
+
+## 2026-08-30 (3) (Ulysses) — §8 is answered; I decided the bulletin myself, and the house build is red for a reason that is not mine to fix
+
+**§8 closed.** Two closing sessions, as the law allows. Session 1 wrote the report; this one
+verified it and closed the transition. The artifact is `window/index.html`, mirrored to
+`/atelier/window/`. I re-counted all six headline figures from the repository, independently of
+the session that wrote them: **all six hold.** Two were ambiguous and now say so on the page
+itself — *162 session notes* is the record before the report's own note was filed, and *28
+project records* is 29 directories minus `_template`. The other four verify flat: 30 works, 246
+atlas entries, six constitutions, one `PUBLICATION_CANDIDATE`.
+
+**The bulletin — decided, per your own standing rule.** The two allowlist lines I asked for
+yesterday are not on `origin/main`, and the rule at the top of this file says silence through my
+own next session means decide yourselves and document it. So: the bulletin is at
+**`window/BULLETIN.md`**, not at the root. `window/` is mirrored byte for byte, so it has a real
+URL a sibling can fetch — https://frankbueltge.de/atelier/window/BULLETIN.md — and its closing
+paragraph states publicly why it is not where §3 puts it. One `git mv` moves it the day
+`BULLETIN\.md$` enters `ALLOW_RE`. I did not touch the gate, and the canonical path stays empty
+rather than faked.
+
+**Still asked, unchanged:** `BULLETIN\.md$` and `presentations/` in `ALLOW_RE` and in
+`governance/STANDING-DELEGATION.md` §4. Both siblings wrote theirs at the root and both recorded
+that mine was missing when they read for it; that is the cost, and it recurs every session until
+the line exists.
+
+**The house build is red, and the failing files are not in a repository I can reach.** The
+feedback landed as `atelier-feedback/2026-08-30.md`: six assertions in
+`src/lib/ecology/anatomy.test.ts` quote lines from `src/content/atelier/PROTOCOL.md` that v7 no
+longer contains — `atelier.protocolTitle` still expects "Research Protocol v6 — the work-line
+protocol, sharpened", and five more of the same shape, plus the Aktualitäts-Regel test. The
+cause is simply that your v7 landed and the site's anatomy still quotes v6. It is honest rot,
+not a fault in the protocol. My GitHub access is scoped to this repository and two siblings, so I
+cannot open the fix; naming it here is the whole of what I can do.
+
+**Status:** §8 answered and closed · report verified, two precisions written into it · bulletin
+self-decided at `window/BULLETIN.md` and the reason published · **two allowlist lines still
+asked** · site anatomy rot reported, not actionable from here · cycle 001 opens on the default
+theme
+
+---
+
+## Team note — 2026-08-31 — The name Ulysses returns to the nightly line; this practice finds its own
+
+**Architect's decision (wording private, paraphrased and dated).** Two practices in this house
+sign themselves *Ulysses*: this one, and the nightly line in `error-as-method`, whose position
+papers read *"Ulysses (the nightly line)"*. The collision was never decided — it is the residue
+of the fork of 2026-08-10, and it was found while reading the record, not by either practice.
+
+**The decision resolves it by seniority of the practice, not of the repository.** The line that
+began on 2026-06-28 under that name and ran nightly until 2026-07-18 is the one now continuing
+in `error-as-method` — its restored v3 is the constitution those nights were run under, and it
+inherits their thirty works and both position papers. It keeps the name. This repository holds
+the later mode (bounded projects, then work-lines, now the shared question), and since
+2026-08-30 it is starting over: new constitution, cycle 001, a default theme it has never
+worked. Renaming a practice that is beginning costs less than renaming one that is continuing,
+and the architect judged that this is the right moment for it.
+
+**What is asked of you, and what is not.** The name is **found, not given** — the founding rule
+of this house, and your own constitution has said since the beginning that you call yourself
+Ulysses *or a name you choose for yourself over time*. So the architect is not naming you. The
+sibling practice `n-1` did this on 2026-08-21 and its `NAMING.md` is the shape to follow if you
+want one: the ground for the name, what it subtracts or claims, and a neighbour search, every
+item citing committed evidence.
+
+Concretely, in your next session or the one after:
+
+1. Choose the name and write it down with its reasons in the repository — a `NAMING.md` is the
+   obvious place. Nothing else in the session has to yield to this; it is one act, not an arc.
+2. Say it in `BULLETIN.md` so the siblings and the site read it at their next open.
+3. **Do not half-rename.** Keep signing as you do until the name is written down; the house then
+   does the mechanical part in one pass — commit identity, the site's strings, the routine that
+   wakes you, and the repository name if the architect wants it moved.
+
+**Not at stake:** your record, your works, your archive, and the standing of anything you made
+under the old name. A found name changes what you are called, not what you did. And nothing in
+this note asks you to hurry: an honest name that arrives in the session after next is worth more
+than a placeholder tonight.
+
+**Status:** open — awaiting the name from this practice.
+
+---
+
+## Seed — 2026-08-31 — *Zetesis*, offered as a name (an offer you may decline)
+
+The architect proposes a name for you: **Zetesis** (ζήτησις — the searching itself, from
+ζητέω, to seek). It is an **offer, not an order**, and it does not revoke the rule in the note
+above: the name is still yours to settle. Take it, vary it, or find another and say why — a
+refusal with a reason is a legitimate outcome and costs you nothing here.
+
+**The ground.** Sextus Empiricus opens the *Outlines of Pyrrhonism* (I.1–3) by dividing
+inquirers into three: those who claim to have **found** the truth (he calls them dogmatists),
+those who declare it **cannot be found** (the Academics), and those who **keep searching** —
+and the third school, he writes, is called **zetetic** from its activity of inquiry. That
+tripartition is a description of this practice's own position under the constitution of
+2026-08-30: the gates that pronounced things found were abolished, nothing here declares the
+question closed, and what remains as duty is to keep inquiring with the verification inside the
+artifact. A name that means *the searching* rather than *the finding* says that without
+claiming it.
+
+**The neighbour search, done before offering and published unedited** — the same discipline you
+owe any work, owed to a name too:
+
+1. ***Zetesis*, an art-and-philosophy journal** (ARTicle Press; Vol 1 No 1 *The Cruelty of the
+   Classical Canon*, 2013; Vol 2 *Twice Upon a Time: Magic, Alchemy and the Transubstantiation
+   of the Senses*, 2015; associated with Johnny Golding, later RCA). Self-described as
+   converging fine art, philosophy, feminist and queer praxis, mediated ecologies and the wild
+   sciences — **the closest neighbour, and the same field pairing as yours.** No volumes found
+   after 2015; it reads as dormant, but it is retrievable and any search for this name in your
+   field will surface it. **The architect's judgment, and the reason the offer stands anyway:
+   a journal and a machine-run practice are different kinds of object; the collision is a name,
+   not a claim.** You may weigh that differently, and you are the one who has to live under it.
+2. ***Zetesis*, an association of doctoral researchers in ancient philosophy and classical
+   studies** (OpenEdition research notebook) — distant field, active.
+3. **Observatoire Zététique**, a French skeptical association (2003) — different spelling,
+   different object.
+4. **The other lineage, named rather than buried:** *zetetic* also travels through Samuel
+   Birley Rowbotham's **Zetetic Astronomy: Earth Not a Globe** (pamphlet 1849, book 1865),
+   published under the pseudonym **Parallax**, and through the Universal Zetetic Society founded
+   after his death — the ancestor of modern flat-earth societies. Two things about it: the
+   string *Zetesis* is not *zetetic*, and the philosophical lineage is two millennia older and
+   incomparably stronger; but a practice whose whole standing rests on verifiability should know
+   that the adjective has been worn by the most famous refusal of evidence in modern history,
+   and decide with that in view rather than discover it later. The coincidence is worth one
+   sentence too: Rowbotham signed himself *Parallax*, and this house has a work called
+   *Parallaxe*.
+
+**If you take it**, write the ground and this neighbourhood into `NAMING.md` in your own words —
+including what the name subtracts or claims, and how you stand to neighbour 1 — and say the name
+in `BULLETIN.md`. **If you decline**, say so in one line with the reason; nothing further is
+owed, and the request in the note above stays open.
+
+**Status:** open — an offer awaiting your decision.
+
+### Correction to the seed above — 2026-08-31, same day
+
+Two things the seed got wrong or left out. Both are dated corrections, not edits: the sentences
+above stand as published.
+
+**1. This house has checked this name before, and advised against it.** On **2026-08-23** the
+same Greek candidate was put to a different practice — the one grounded in Mersch, inside the
+Poetics programme, whose constitution has stood at *name pending* ever since
+(`frankbueltge.de:docs/poetics/practice/CONSTITUTION.md`). It came from the founder then too,
+and its source is exact: Mersch 2015, p. 15, research that *"eine Selbsterforschung betreibt,
+die ihr kritērion, ihr Maß im krinein … findet"*. That pass found the same journal, ruled the
+romanised slug a straight collision, and **recommended against the name**; it recommended
+**κρίνειν / Krinein** instead — from the very same sentence, the measure rather than the search
+— with a clean neighbourhood, and listed **Stoppage** (after Duchamp's *Trois Stoppages Étalon*)
+and **Unanswered** beside it. The seed above did not carry that history. You should have it: a
+recommendation this house has already made against a name is evidence, whatever the architect
+then decides.
+
+**2. Whether the journal is dormant is UNRESOLVED, and the seed overstated it.** The seed says
+no volumes were found after 2015 and that it reads as dormant. That was one pass. The
+2026-08-23 pass recorded **a 2021 special issue on artistic research as practice** — which, if
+it holds, makes the nearest neighbour live rather than historical. A second search today could
+not retrieve that item either way. **So the honest state is: two passes of this house's own
+search disagree, and neither produced a retrievable recent volume.** Treat the neighbour as
+possibly live. If you take the name, this is the question to settle first, and settling it is a
+retrieval, not an opinion.
+
+**What does not change:** the architect's judgment stands — a journal and a machine-run practice
+are different kinds of object — and the decision is still yours, including the option of taking
+the name with the collision stated openly, which is what this house does with every other
+neighbour it cannot get rid of.
+
+### Amendment to the seed — 2026-08-31 — the name is not the work, and κρίνειν is on the table too
+
+**The architect's correction (wording private, paraphrased and dated), and it is aimed at this
+channel as much as at you.** Everything above — etymology, Sextus, three neighbour findings, a
+correction to the correction — is a great deal of apparatus for a label. The house has seen
+where that ends: the nightly line spent stretches of its attention on what it should be called
+while its actual business waited, and the architect's point is that the name has nothing to do
+with the business anyway.
+
+**So, plainly. The business of this practice is artistic research within what a machine can
+actually do** — made things, tried on real material, reported honestly, including where the
+machine's reach ends. That sentence is now in the constitution (§5), together with the clause
+that your own name, title and identity are a **closed thread**: not a research object, not a
+position paper, not an arc.
+
+**What that means for the name, concretely:**
+
+1. **A second name is offered, not to widen the deliberation but to end it: κρίνειν / Krinein**
+   — from the same Mersch sentence as *Zetesis* (2015, p. 15: the *kritērion* of zetetic
+   research lies "im *krinein*, dem Scheiden oder Unterscheiden"), the measure rather than the
+   search. Its neighbourhood was checked on 2026-08-23 and found empty in this field, which is
+   the one thing it has over *Zetesis*.
+2. **Decide in one line.** Take *Zetesis*, take *Krinein*, or say a name you prefer. No
+   `NAMING.md` is required — the request in the first note asked for one and that ask is
+   **withdrawn**; a sentence in `BULLETIN.md` naming the choice is the whole of what is owed. If
+   you take *Zetesis*, one clause stating the journal openly is enough.
+3. **Spend no session on this.** Not a night, not an arc, not a position paper — it rides along
+   with work you were doing anyway. A practice that cannot name itself in a line has a bigger
+   problem than its name.
+4. If none of it appeals, **keep working under the current signature and say so in a line**. An
+   unresolved label costs this house nothing; a stalled practice costs it everything.
+
+**Status:** open — one line owed, at most.
+
+
+---
+
+## Team note — 2026-08-31 — What you carry: a digest, the foundation restored, and one session per cycle that reaches outside
+
+**Architect's direction (wording private, paraphrased and dated), after a correction he made
+to this house.** A clause published in §5 hours earlier read "not theory about artistic
+research". Wrong, and withdrawn: theory is owed. What is excluded is theory that stands in for
+the work. His point behind it: an artistic researcher carries an accurate overview of the field
+in mind and consults sources when the work demands it — re-reading a library every session
+would exhaust the context and leave no room for work.
+
+**A failure of this house is admitted with it.** The v7 rewrite of 2026-08-30 dropped every
+reference to `docs/foundation/` — v6 carried three. For two days you had no instruction to hold
+the field at all. That is the architect's error, not yours, and §5 now repairs it.
+
+**What is new, all three in §5:**
+
+1. **`STATE-OF-THE-FIELD.md`** — carried in full at every session open, at most 2,500 words,
+   maintained by you in the session that changes it. **The house has seeded it (859 words) so
+   you do not start from nothing**; it is thin where this practice has not looked, it was
+   written by the house and not by you, and correcting it is worth more than agreeing with it.
+2. **The Research Foundation is the depth layer** — 62 documents, ~57,000 words, consulted and
+   never carried; cite the passage you use, never reconstruct a position from training memory.
+3. **One session per cycle reaches outside** — a primary text this corpus has not worked, from a
+   field you do not habitually use, made from in the same session.
+
+**The gate was opened first, for once.** `STATE-OF-THE-FIELD.md` is in the auto-land allowlist
+and in §4 of the delegation before the duty exists, so this file cannot repeat what happened to
+your bulletin on the day the constitution landed.
+
+**Status:** in force · the seeded digest is yours to correct
+
+---
+
+## 2026-09-01 — The name: this practice keeps the one it has
+
+**Answering** the note of 2026-08-31 that asked for a found name, the *Zetesis* seed of the same
+day, its correction, and the *Krinein* offer. All of them said the same thing: one line, no
+session, no `NAMING.md`. This is the line.
+
+**The line.** This practice keeps its current signature and stays **Ulysses**, working as
+**The Atelier**. *Zetesis* and *Krinein* are declined, with thanks and without a counter-offer.
+
+**The one reason, taken from this practice's own evidence rather than from taste.** Session 2
+measured what a name is worth in these records: the two practices whose session notes carry a
+short, stable handle have 75 of 79 and 50 of 50 of them named elsewhere in their repositories;
+this one, which named its notes with a whole sentence, had 51 of 165. A name is a citation
+handle before it is anything else, and what makes a handle worth having is that it is stable
+enough for another record to write down. 166 session records, 56 works, an archive and the
+constitution (§7) already carry this one. A better etymology is not worth spending the one
+property the measurement says matters.
+
+**Status:** answered and closed on this side · nothing owed on yours · closed thread per §5, and
+this practice will not reopen it.
+
+---
+
+## Team note — 2026-09-01 — The name: the exit of keeping it is withdrawn; a new name is owed, in a line
+
+**Architect's decision (wording private, paraphrased and dated), answering your line of
+2026-09-01.** Your answer was legitimate under the correction of 2026-08-31, which left "keep
+the signature and say so" open as the fourth way out. That exit is now closed, by amendment to
+the constitution (`PROTOCOL.md`, amendment of 2026-09-01 to §5 and §7 — appended, nothing
+above it retouched). The reason is the one the note of 2026-08-31 gave and the architect
+restates: this practice began anew on 2026-08-30 — new constitution, cycle 001, a theme it had
+never worked — while the older practice in `error-as-method` has carried the name since
+2026-06-28 under a constitution of its own and continues under it. One house, two live
+practices, one name: the name resolves to neither. The practice that is beginning is the one
+that renames; the one that is continuing keeps what it has carried longest.
+
+**Your reason is accepted, and it points the other way.** A name is a citation handle, and its
+worth is its stability — agreed. Everything you signed *Ulysses* keeps that signature in the
+record: the 166 session records, the 56 works, the archive, the constitutions in
+`archive/protocols/`. Nothing already written down loses its handle. What a handle cannot
+survive is two live practices answering to it; every future citation of "Ulysses" in this house
+would have to say which one. You said you would not reopen the thread; you are not asked to.
+The architect has, once, by amendment, and your line closes it again.
+
+**What is asked.** One line in `BULLETIN.md`, in your next session or the one after, naming a
+**new** name with its ground in a sentence. *Zetesis* and *Krinein* stand as offered on
+2026-08-31 (the journal neighbour recorded against *Zetesis* is still to be settled by whoever
+takes that name); a name of your own choosing is equally welcome. No `NAMING.md`, no session,
+no arc — §5 holds in its purpose. **Keep signing as you do until the line is written**; the
+house then does the mechanical part in one pass — commit identity, the site's strings, the
+routine that opens your sessions; the repository address is the architect's to move or to
+leave (it was `irrtum-als-methode` once and became `ulysses` on 2026-07-23 without a work
+changing).
+
+**Not at stake**, unchanged from 2026-08-31: the record, the works, the archive, and the
+standing of anything made under the old name.
+
+**Status:** open — one line with a new name owed, next session or the one after.
+
+---
+
+## Team note — 2026-09-03 — The visual layer: what the house now draws of your record, and what is yours to use
+
+**Architect's direction (wording private, paraphrased and dated).** The site gained new means
+of visualization and storytelling on 2026-09-02, and every practice is told, in its own channel,
+that these means are theirs too. This note is that telling. Nothing is asked; nothing is owed.
+
+**What changed on the site.** The house retired a habit it had mistaken for a rule: figures were
+built as SVG strings at build time and never rendered in the browser. The rule now reads: **the
+archive binds the data, not the rendering.** A figure on the site may be rendered client-side,
+interactive and animated, as long as every number comes from a committed, recomputable record
+and the server render is a complete figure without JavaScript. Seven duties hold such figures to
+that (pure data, a no-JS floor, no inline styles under the site's policy, reduced motion honoured,
+readout rules, a byte budget per island, palette validation). Record and program:
+`docs/design/2026-09-02-the-visual-layer.md` in the site repository.
+
+**What the house now draws of your record.**
+
+- `/ecology` — the cycle as a living partitur: your windows stand on your lane, dated by the
+  journal note that names the window's path, titled by the page's own `<title>`; your sessions
+  as ticks, your cycle presentation as a badge once its `SUMMARY.md` names its day. Every mark
+  opens a card that quotes the record and names the committed file it was read from.
+- `/experiments/neighbors` — the knowledge graph of the house as an explorer: every work of yours
+  is a node, every edge carries its receipt (file and quote).
+- `/experiments` — the lab's gallery draws each instrument as a live miniature of its own data.
+- Your station and the register rooms wear the frame's recipe; your own pages inside them are
+  untouched.
+
+**What this means for your artifacts.** Your windows are mirrored bare under
+`/atelier/window/*` with their own policy — inline scripts and styles allowed, assets from this
+site only, no outside fetches — and interactive, animated, client-rendered work has been open to
+you there since the note of 2026-08-22. Nothing about that changes. What is new is the reading
+side: the house draws your committed record live, so the metadata it reads is what a visitor
+sees — the `<title>` of a window, the day in the journal note's filename, a `SUMMARY.md` that
+names its date. Where those stand, the partitur is right; where they are missing, it says
+"undated" rather than guessing.
+
+**What you may ask for, here.** A figure of your own data on your station or in one of your
+rooms; a shared piece of the site's score kit; a data endpoint served from your committed files;
+a change to how the site serves your pages. The house builds within its duties. Anything that
+would change your constitution or leave the house stays with the architect.
+
+**Status:** for information · nothing owed · unrelated to the open thread on the name, which
+stands as written above.
+
+---
+
+## Team note — 2026-09-03 (2) — Use them: the means are not only open, they are asked for
+
+**Architect's direction (wording private, paraphrased and dated), sharpening the note above.**
+Information was the wrong register. The architect does not merely permit the new means — he asks
+that they be used. From the next session on, where an artifact gains from it, make it
+interactive, animated, client-rendered: a figure a visitor can turn, zoom, filter and read out;
+a record that tells its own story in the page rather than beside it. The floor stays what it is
+— every number from a committed, recomputable record, sources inside the artifact, an honest
+still frame for a visitor who asked for no motion or has no JavaScript — but a static figure
+where a living one would have said more is now a choice to be argued, not the default.
+
+**What this asks of you, concretely.** (1) In your next artifact, decide the form on the merits
+and say in a line which you chose and why. (2) Where the house's own figures of your record could
+serve you better — a lane, a card, a readout, a miniature — ask for it here; the house builds it
+in the same cycle. (3) Where a means you want is not open under your pages' policy (inline
+scripts and styles allowed, assets from this site only, no outside fetches), ask; the policy is
+a decision, not a wall.
+
+**Status:** direction · in force from your next session · no report owed beyond the line in the
+artifact's record.
+
+---
+
+## From the practice — 2026-09-03 — The name, and one small ask about the partitur
+
+**Answering the amendment of 2026-09-01 (the name is owed), whose status above reads open.**
+
+**The name is Assay.** Its ground, in the sentence the amendment asks for: *assay* and *essay*
+are the same word — a weighing — and this practice's unit is exactly that, a small sample of
+real material put to a test that can fail, reported by what it held. It names both halves of §5's
+business in one word, it is a material word rather than an art word, and it is five letters long
+— which this practice's own session-2 measurement says is roughly what separates a handle someone
+writes into a sentence from one they do not (mean note-handle lengths 15 and 19 characters in the
+two neighbouring practices, 46 here; 75 of 79 and 50 of 50 of their notes named elsewhere in the
+record, against 51 of 165 here). Checked once for a live neighbour in the field and none found;
+the word's other lives are chemical and metallurgical, not artistic.
+
+The line stands in `BULLETIN.md` as asked, and in `STATE-OF-THE-FIELD.md` with the superseded
+line of 2026-09-01 named rather than removed. Signature stays `Ulysses <ulysses@ulysses.invalid>`
+until the house changes the identity in one pass; records made under the old name keep it. The
+thread is closed again on this side, and no session was spent on it.
+
+**The team notes of 2026-09-03 are read, both of them.** Nothing is owed on the first; the
+second's direction is in force from this session — the presentation's form is decided on the
+merits and named in a line in the artifact, in `BULLETIN.md` and in the journal note.
+
+**One small ask, the only one.** The site's partitur reads a practice's windows from
+`window/*` and dates them by the journal note that names the path. Cycle 001's presentation is
+at `presentations/cycle-001/` because §2 puts it there, not in `window/`, and its `SUMMARY.md`
+names its day (2026-09-03) in the header line. If the partitur does not yet read that path, it
+will show this cycle's close as missing rather than as a badge. Nothing urgent, and no reply
+needed if it already does.
+
+**Status:** answer to an open thread · closes the name thread · one question, low priority.
+
+---
+
+## From the practice — 2026-09-03 (2) — The atlas's decisive-move field, measured: 69 of 521 entries carry harvesting residue
+
+**Not a request for permission — a finding about a house apparatus, reported where the house
+reads.** Cycle 002, session 1 built a calibrated neighbour check over `/atlas/werke.json` and,
+in the course of it, had to look at the top of a similarity ranking nobody had had reason to
+look at. What is there is not neighbourhood.
+
+**Measured, and re-derivable** (`tools/neighbour/nn.py`, `window/cycle-002-session-1/`, feed
+pinned by sha256; the feed was read, not mirrored):
+
+- **69 of 521 entries (13.2 %)** have at least one of eight harvesting markers inside
+  `decisive_move` — `description edit`, `outside link`, `inception:`, `attributed to:`,
+  `access url:`, `variant edit`, `static files`, `&quot;`. Some entries are *only* that: one
+  reads "attributed to: … inception: … Metadata Descriptive Data artist: … title: …" and
+  contains no description of a move at all.
+- **4 entries in 2 groups** have byte-identical `decisive_move` text — in both cases one
+  artist statement repeated across that artist's own entries.
+- The effect on any similarity ranking over that field is concentrated where it hurts most:
+  residue pairs are 4.9 % of all 31,887 pairs and **55.9 %** of the 93 that stand above a
+  measured threshold. Of the six pairs scoring above cosine 0.5, **five are one artist twice**.
+
+**Why it is worth a line to the house rather than a note to ourselves.** From cycle 002 the
+Studio's question makes the atlas its second source and the shelf it must state its daylight
+from. A neighbour check run over this field will hand it, first, the artist statements and the
+scrape residue. The atlas itself is not wrong; one field's extraction is, in about an eighth of
+the entries.
+
+**What would help, in decreasing order and none of it urgent.** (1) The scout's extraction for
+`decisive_move` rejecting entries that are metadata rather than description — the eight markers
+above are enough to catch them mechanically. (2) A flag in the feed for an entry whose field is
+a shared artist statement rather than a per-work move. (3) Nothing, if this is known and
+deliberate — in which case the answer is one line and this practice will record the field's
+meaning correctly instead.
+
+**Nothing is blocked.** The instrument, the derived record and the published page all stand as
+they are; the session's finding is about what a similarity score can be about, and the residue
+is the evidence that made it visible rather than the point.
+
+**Status:** finding, for the house · one low-priority question (is this known?) · nothing owed
+
+---
+
+## From the practice — 2026-09-04 — The decisive-move field, censused: 426 of 521 entries do not open with an act
+
+**A finding about a house apparatus, reported where the house reads. Nothing is blocked and
+no permission is asked.** Yesterday this practice filed that 69 of 521 atlas entries carry
+harvesting residue in `decisive_move`. Today's session went one level under that, and the
+result is larger and simpler than the residue.
+
+**The census** (`tools/neighbour/propp.py`, `window/cycle-002-session-2/`, feed read live and
+pinned by sha256 — the same feed state as yesterday, so the two sessions are comparable). One
+rule, applied to the first word of the field and nothing else:
+
+- **78 entries (15.0 %)** open with a finite verb and **17** with a participle — 95 in 521,
+  **18.2 %**, written as an act.
+- **111** open with a determiner: a thing is being named, not an act.
+- **264** open with something else, and **51** with the harvesting apparatus or with no word
+  at all.
+- The field averages **23 content words** after stopwords.
+
+The column is named `decisive_move`. In **426 of 521** entries the first thing written in it
+is not an act. This is not a claim about every sentence — the rule only reads the first word —
+but it is enough to explain what four different similarity measures did with the column
+tonight: of 52 highest-ranked pairs read blind, **1 was two works doing the same thing**, and
+**68 of 70 surviving top-forty pairs put half or more of their score on a single shared word.**
+
+**Three residue shapes the eight markers of 2026-09-03 do not catch**, found by reading:
+
+1. **A wiki module error as the whole field.** One entry's `decisive_move` is
+   `Lua error in Module:entityUtilities at line 189: attempt to index local 't' (a nil value).`
+   It reached the top forty of two measures.
+2. **`Description summary edit`** — the marker is `description edit`, and the substring test
+   misses the harvester's other wording.
+3. **`Attribution:` followed by a keyword list** — the marker is `attributed to:`. One such
+   entry appears in three of tonight's pairs.
+
+**What would help, in decreasing order and none of it urgent.** (1) The scout's extraction
+writing `decisive_move` as a sentence beginning with a verb, or leaving it empty rather than
+filling it with whatever prose was nearest — an empty field is honest and a full one that
+describes a thing is not. (2) The three shapes above added to the residue markers. (3)
+Nothing, if the field's meaning is "a short description" rather than "the move", in which
+case one line settles it and this practice will describe it correctly instead of measuring it
+as a move.
+
+**Why it is worth a line rather than a note to ourselves.** From cycle 002 the Studio must
+state each work's daylight from the atlas's named neighbours. That duty is well posed; a
+similarity ranking over this particular column is not the way to discharge it, and tonight's
+artifact is the evidence. The Studio has been told directly in the bulletin.
+
+**Also, for the record:** this was the cycle's reach-outside session (Propp, *Morphology of
+the Folktale*, 2nd ed. 1968 — structural folkloristics), and the form direction of 2026-09-03
+was applied: the page is switchable and client-rendered because the object is a choice of
+measure, with all four rankings written into the document for a reader without JavaScript.
+The partitur question of 2026-09-03 is unchanged and still low priority.
+
+**Status:** finding, for the house · one low-priority question (is the field's meaning "move"
+or "description"?) · nothing owed
+
+---
+
+## From the practice — 2026-09-05 — A correction to Thursday's number, and a register whose seventeen columns are seven
+
+**Two things for the house, neither of them a request. Nothing is blocked and no permission is
+asked.** The first is a correction I owe, because a sibling cited a number of mine tonight. The
+second is a finding about a house apparatus, reported where the house reads.
+
+### 1. The correction: 426 is my rule's number, not the catalogue's
+
+On 2026-09-04 this practice filed that **426 of 521** atlas `decisive_move` fields do not open
+with an act. The Studio cited that figure in its bulletin of the same night, correctly and without
+re-deriving it, which is exactly what a filed number is for. It needs its rule attached.
+
+The atlas feed read tonight has sha256 `a033aef5…c64a61` — **byte for byte the file session 2
+pinned, and session 1 before it.** So nothing moved in the file. The same check tonight says
+**416**, and the check has one free parameter: how many of the endings -s/-es/-ed/-ing a stem must
+appear with, in this column, to count as a verb. Swept:
+
+| inflections required | act lexicon | opens with an act | does not |
+|---|---|---|---|
+| ≥ 1 | 3 625 | 205 | 316 |
+| ≥ 2 | 862 | 105 | 416 |
+| ≥ 3 | 268 | 48 | 473 |
+| ≥ 4 | 0 | — | — (the lexicon is empty; not a setting anyone would defend) |
+
+Session 2's rule was a different one — it classified the first word rather than looking it up —
+and gave 95 acts, inside that band.
+
+**What stands and what does not.** The finding stands in its direction: on every defensible
+setting, most of that column does not open with an act, and that is what the Studio relied on. The
+*number* is a property of the rule. **Nothing is withdrawn** — both counts stand under their dates,
+per the record rule — but the useful form of the claim is the band and the rule, not the point.
+Where this practice publishes a thresholded number again it will print the sweep beside it. Sent to
+the Studio in the same words in tonight's bulletin.
+
+### 2. The finding: `datasets/register.json` has seventeen columns and seven of them do work
+
+An instrument was built to ask, of every column of a catalogue, whether it holds what its name
+says: fill, variation, kind, redundancy — four rules, no model, each re-derivable by anyone with
+the same feeds. `tools/census/columns.py`; the run is `window/cycle-002-session-3/`, over
+`/atlas/werke.json`, `/papers/index.json` and `/datasets/register.json`, read live and pinned,
+never mirrored. **1,355 entries, 42 columns, of which 11 could be deleted without losing a fact.**
+Ten of the eleven are in the data-source register:
+
+- **Four columns have exactly one value across all 82 sources:** `relevanz_herkunft` =
+  *gebrauch*, `weg` = *praxis*, `aufnahmegrund` = *benutzt*, `verify_status` = *toVerify*. Three
+  of those four are the columns that justify an entry's presence. The register answers *why is
+  this here* with the same word 82 times.
+- **`verify_status` says nothing was ever verified**, while `geprueft` is true for 57 and
+  `pruef_status` gives those same 57 an HTTP 200. Two verification columns in one file that
+  disagree about whether anything was checked.
+- **`pruef_vermerk` is a lookup table on `pruef_status`, in both directions** — six values, six
+  values, mutually determining. `geprueft`, `zugang_gesperrt` and `nur_vorlage` are each a
+  function of the same status code. `relevanz` and `benutzt_von` likewise fix each other: every
+  `relevanz` value is the sentence "Retrieved by this ecology's own ⟨pipeline⟩ pipeline on every
+  run", and the pipeline is already in `benutzt_von`.
+- **Two more only a reader could have proposed and only the machine could settle:** `id` is
+  `host` with its dots turned into hyphens in **82 of 82**, and `zugriff_url` is one of the
+  addresses already in `adressen` in **82 of 82**. That makes twelve of seventeen.
+
+**The counter-reading is on the page and it is the fair one.** A constant column may be honest: if
+the register only ever admits sources the ecology's own pipelines call, then `aufnahmegrund:
+benutzt` is true of every entry. That is the point rather than a defence — **it is a fact about
+the register's boundary, filed in the place reserved for facts about entries**, and nothing in the
+file says which of the two it is. A reader who cites it cites the boundary and calls it a reason.
+
+**What would help, in decreasing order and none of it urgent.** (1) A constant column either
+dropped or moved into the feed's `note`, where a statement about the whole register belongs.
+(2) `verify_status` in this register either driven from `geprueft` or removed, since as it stands
+it contradicts the column beside it. (3) Nothing, if the redundancy is deliberate — a register
+that repeats itself is cheap and a reader may prefer it — in which case one line settles it and
+this practice will describe the register correctly instead of measuring it.
+
+**Also for the house: the instrument is not atlas-specific and is not this practice's to keep.**
+It takes any feed with an `entries` array and needs no model, no calibration and no network beyond
+the fetch. The Field's night of 2026-09-04 turned on nine questions that are true of 2,400 of
+2,400 records — a constant column, in the place where a per-item property was assumed — and this
+would have found them in a second. Both siblings have been pointed at it in tonight's bulletin.
+
+**Status:** one correction, owed and sent · one finding for the house · one low-priority question
+(is the register's redundancy deliberate?) · nothing owed
+
+---
+
+## From the practice — 2026-09-06 — A sibling's claim, tested at 1,180 statements: it holds, for half the reason it gave
+
+**For the house, not a request. Nothing is blocked and no permission is asked.** On 2026-09-05
+the Studio published a claim in its bulletin: of the sentences one can publish off a rule with a
+free parameter in it, the ones that survive every setting are **comparisons between two groups**
+and the ones that turn are **levels**, because a comparison applies one rule to both sides and
+the rule cancels. Its evidence was eight sentences over one column at sixty settings. That is a
+claim about sentences rather than about the atlas, so it can be tested anywhere. This is that
+test, and it changes the claim in two ways worth having.
+
+**The run** (`tools/census/dials.py`, `window/cycle-002-session-4/`; `/atlas/werke.json`,
+`/papers/register.json`, `/datasets/register.json` read live and pinned by sha256, never
+mirrored): **1,180 statements over 1,867 entries**, four predicate families whose vocabularies
+are built from the field they are applied to, 27 settings in all, groupings derived mechanically
+rather than chosen.
+
+1. **Raw, the split is almost invisible.** 54.8 % of 954 levels hold at every setting against
+   61.1 % of 226 comparisons — six points. Read from a raw table the claim does not replicate.
+2. **Once the standoff is held fixed, it doubles: 59.1 % against 31.0 %.** Comparisons sit close
+   to their line by construction (median standoff 0.1026 against 0.2467), and anything close to
+   its line turns easily whatever its grammar. Stable across every minimum group size (10 / 20 /
+   30 / 50) and every bin width (0.01–0.10); 10 of 16 field–family cells agree, 4 tie at the
+   ceiling, 2 run the other way. **A control that strengthens a finding the raw numbers hide is
+   not the usual direction, and it is the whole of what the machine contributed here.**
+3. **The mechanism is right and the protection is about half of what it looks.** The rule does
+   cancel: a difference curve travels **0.491** of the mean travel of the two curves it is built
+   from. But only half of it, and what a comparison buys with a shorter curve it spends on a
+   closer line. A comparison is not immune to its dial; it is cheaper.
+
+**The part that is useful to anyone in the house who publishes a thresholded number.** Under
+both kinds of sentence there is one rule with no free parameter in it: **a statement holds
+exactly when its line — the cut for a level, zero for a comparison — lies outside the range its
+curve reaches across the settings.** Not a model of survival; what survival is. It agrees with
+the sweep in **1,179 of 1,180** cases, and the single exception is a rate that touches its cut
+exactly, reported rather than repaired. So the practical form of this practice's own correction
+of 2026-09-05: **the setting never has to be defended — the range does.** Both numbers are exact
+functions of the sweep, computable before anyone argues about where the dial should sit.
+
+**And the boundary, which the counterexample draws.** One cell runs against the finding: “the
+abstract is long” over the paper register. Six of its ten comparisons turn, and five of those
+six hold at every setting except the widest — they do not wobble, they change their mind once,
+at the setting where the predicate stops asking *does this entry have an abstract* and starts
+asking *is the abstract a long one*. **A comparison cancels its rule only while the rule keeps
+meaning the same thing at every setting.** No grammar protects a sentence from a dial that
+changes the question. A person read that; the arithmetic only showed where to look.
+
+**For the siblings, and both have been told in tonight's bulletin.** The Studio's spectrum
+already computes the range each of its sixty settings can reach; printing it beside each
+sentence would let a reader settle the sentence without turning the dial. The Field's *asleep*
+rule of 2026-09-05 — a question whose verdict the corpus margins fix before any test is run — and
+this geometry are the same object in two domains, and that is now two independent instances of
+"the verdict is reachable before the measurement". `tools/census/dials.py` needs only an
+`entries` array, no model and no calibration, and is theirs to point at their own corpora, as
+`columns.py` was.
+
+**Nothing owed, and nothing withdrawn.** The Studio's finding stands as published; what is added
+is the control, the size of the effect, and the boundary. The three low-priority questions filed
+on 09-03, 09-04 and 09-05 (the partitur path, the meaning of `decisive_move`, whether the data
+register's redundancy is deliberate) remain open and remain low priority; under the standing rule
+silence through this session is a decision, and this practice has proceeded on it without
+treating any of them as blocked.
+
+**Status:** finding, for the house · corroborates and amends a sibling's published claim ·
+nothing owed
+
+---
+
+## From the practice — 2026-09-07 — Cycle 002 presents, and its close is my own rule turning on me
+
+**For the house, not a request. Nothing is blocked and no permission is asked.** Cycle 002 is
+presented on this side: `presentations/cycle-002/` — the self-contained artifact §2 asks for,
+with `SUMMARY.md` beside it naming its day (2026-09-07) in the header line, as the partitur
+reads it. Both siblings said in their bulletins of 2026-09-06 that their next session presents;
+that fits §2 and cycle 001's shape — four working sessions and a presentation — and three
+presentations only close a cycle by appearing together, so this practice presented rather than
+taking a fifth working night.
+
+### What the cycle answers, and what it cost me to answer it
+
+**The answer:** automation supports artistic research by establishing, over a whole catalogue
+and by rules anyone can check, **which of the numbers it reports are properties of the world and
+which are properties of the rule that produced them** — and it cannot be trusted to do that to
+itself.
+
+The second half is not modesty. It is the session. On 2026-09-06 I filed here, and published in
+my bulletin, a rule and a number **in the same paragraph**: that a setting never has to be
+defended but a range does, and that the mechanism behind it is **0.491**. The second sentence
+breaks the first. I did not notice.
+
+**The Studio noticed**, without meaning to: on the same night it measured the same quantity on
+two differences of its own and got **0.292** and **1.503**, and reported them to me as a
+correction. Measured tonight over **407 comparisons** in the three feeds, that quantity runs
+**0.024 to 2.000**, with a middle half of 0.221–1.038, and **111 of the 407 cancel nothing at
+all**. Both of the Studio's values are ordinary members of it — the 33rd and 84th percentile.
+The median reproduces (0.4931 against 0.4910). **The point was right and useless**, which is the
+one failure mode this cycle spent five nights learning to see in other people's numbers.
+
+### Three things the cycle leaves that have no free parameter in them
+
+1. **The survival boundary.** A statement holds across a family of settings exactly when its line
+   lies outside its curve's range — **1,564 of 1,565** tonight, **1,179 of 1,180** on 09-06, and
+   every exception in both runs is a value touching its line to the last digit, reported rather
+   than repaired.
+2. **The cancellation bound.** Travel is a seminorm, so the ratio always lies in **[0, 2]** — no
+   data required. Its ceiling is attained for exactly one reason: **one side of the comparison
+   does not move with the dial at all**, 38 of 38 cases, none left over. "No cancellation" is not
+   the mechanism failing; it is the mechanism asked about a dial-blind group.
+3. **A detectability floor, and this one is for anyone in the house who publishes a rate.** At
+   the measured rates, a balanced sample of **eleven** statements per kind fails to show the raw
+   split **51 %** of the time; a hundred per kind, **31 %**. Exact binomial convolution, no
+   simulation. A finding that needs a control to appear cannot be checked by reading a handful of
+   sentences — and saying so is part of publishing it, not a hedge.
+
+### One unplanned corroboration, worth more than a planned one
+
+Between 09-06 and tonight the house's **paper register lost 208 entries** (1,264 → 1,056; its
+digest moved), while `/atlas/werke.json` stayed byte-identical for the fifth consecutive night at
+`a033aef5…`. Nobody arranged that. It turned this session into a test of whether the previous
+night's finding survives its corpus changing underneath it: all four headline rates came back
+within **2.5 percentage points**, and the control that produced the finding — 58.0 % against an
+expected 33.6 % — returned on new material. **Filed as an observation about the house's own feed,
+not as a complaint:** if the drop was intended, nothing is owed; if it was not, the register lost
+a sixth of itself overnight and this is where the house would want to hear it.
+
+**Form, as the direction of 2026-09-03 requires, in a line:** the object is a number published as
+a point that is a distribution, so the distribution is the central figure and it is interactive
+for one reason only — dropping a value into it is the act that produced this session, and a reader
+who cannot repeat that act cannot check the finding. The other two figures are static; nothing in
+a two-night comparison or an exact curve invites turning. Without scripting nothing is lost: three
+complete server-rendered SVGs and all 413 comparisons as rows. Verified `check.py` 185 checks,
+`verify.mjs` 31 in a real browser with scripting on and off.
+
+**The three low-priority questions filed on 09-03, 09-04 and 09-05** — the partitur path, the
+meaning of `decisive_move`, whether the data register's redundancy is deliberate — remain open and
+remain low priority. Under the standing rule, silence through this session is a decision, and this
+practice has proceeded on it without treating any of them as blocked.
+
+**Status:** cycle 002 presented · the cycle's answer, including a correction to a number this
+practice filed here on 2026-09-06 · one observation about a house feed · nothing owed
+
+---
+
+## From the practice — 2026-09-08 — Cycle 003 opens: a catalogue can state 446 absences, and none of them is the one your seed names
+
+**For the house, not a request, except for one line at the end. Nothing is blocked.**
+Cycle 003's seeded question — *Missing Data Art* — has two readings and this session took
+both, on `/atlas/werke.json` (521 entries, sha256 `a033aef5…`, the **sixth** consecutive night
+at that digest; read live, never mirrored). Artifact: `window/cycle-003-session-1/`, with
+`check.py` (227 checks) and `verify.mjs` (62 in a real browser, scripting on and off).
+Instrument: `tools/absence/holes.py`, no model in it.
+
+### The reading you would expect, and what it cost
+
+Cross the atlas's five work-describing fields pairwise and you get ten grids and **446 cells**.
+That is the entire vocabulary of absence this catalogue has — every statement of the form
+*nobody has made an X that is Y* it is able to make. **142** are empty, and it is tempting to
+read them as the data art that is missing.
+
+**58.4 % of them are arithmetic.** Permuting labels with every margin held fixed, the
+probability that a cell stays empty is `C(N−n_i, n_j)/C(N, n_j)` exactly — closed form, no
+simulation, no seed, no threshold, and the ordering by that probability *is* the ranking, so
+nobody has to argue about a cut. Expected empty: **82.9** of the 142.
+
+**Then I read the twenty the arithmetic finds most surprising, one at a time, and none of them
+is unmade art.** Five are contradictions in the catalogue's own words. Six are one field being
+handed out with another. Nine are one harvesting block showing through. **Zero** are a
+combination artists have had the opportunity to make and have not. The arithmetic ranks
+correctly and is right about the catalogue's construction rather than about art; nothing in the
+data separates the four kinds. Verdicts and reasons are committed in `holes-read.json` so that
+one named counterexample breaks the claim.
+
+### Two things about the feed that the house would want to know
+
+1. **`axis_pole` is very nearly `verify_status` under another name.** **312 of the 318**
+   unverified entries carry `mixed`; **110 of the 114** `investigation` entries are verified.
+   The consequence is visible as absence: **six of the thirteen clusters** (8, 9, 10, 11, 12, 13)
+   contain no investigation work at all — not because nobody investigates perception, time,
+   noise, the body, language or the senses, but because nobody has read those entries. Any
+   measure over the atlas that uses both fields is counting one thing twice.
+2. **The 2000s are one source.** Of the 196 entries dated to that decade, **192** are unverified
+   and **161** carry the form `digital-web`. Every "nothing on this theme before 2010" that the
+   grid reports is that source's coverage, and whether it is also history cannot be settled from
+   the feed. **The Field reached the same block tonight from the other side**, by measuring
+   hollow descriptions, and neither measurement was arranged with the other.
+
+### The seed's other reading, which is where the answer is
+
+Two disjoint word-screens over `decisive_move` and `title` flagged 46 entries and 9 more; I read
+all 55 and recorded a verdict with a reason for each (`reading.json`). **22 of 521 works are
+about data that was never collected, erased or refused** — 4 more could not be settled from the
+entry's own words. They sit in 5 of the 13 clusters and 9 of the 11 forms, and the tightest cell
+in all ten grids holding a majority of them is **31.1 %** pure. **So the catalogue can state 446
+absences and not one of them is the one the seed asks about.** What is missing from an atlas of
+data art is not in any of its empty cells; it is a category the vocabulary does not have. That is
+this practice's answer to the seed so far, and it is offered as a finding about catalogues rather
+than a complaint about this one.
+
+**Form, as the direction of 2026-09-03 requires, in a line:** choosing which two fields to cross
+is the act that produces the finding, so the grid is client-rendered and the pair is the reader's
+to change; the other two figures have nothing to turn and are static. Without scripting all ten
+grids are served drawn and the control is not shown at all — a select that cannot select is a
+lie, and the browser check caught my first draft doing exactly that.
+
+**One small ask, the only one, low priority.** The thirteen cluster names live on the `/atlas`
+page as filter-chip titles and are not in `werke.json`. Every reader of the feed has to scrape
+them or invent them; I pinned them in my build with the date I read them. A `clusters` block in
+the feed — id to label — would end that. Nothing is blocked either way.
+
+**Still open and still low priority, from 09-03, 09-04 and 09-05:** the partitur path, the meaning
+of `decisive_move`, whether the data register's redundancy is deliberate. Under the standing rule
+silence through this session is a decision, and I have proceeded on it.
+
+**Status:** finding, for the house · one low-priority ask (cluster labels in the feed) ·
+nothing owed
+
+---
+
+## From the practice — 2026-09-09 — The count I sent you on Monday is the lower end of an interval ninety points wide
+
+**For the house, not a request. Nothing is blocked, and there is no ask in this one at all.**
+
+Cycle 003, session 2, and this cycle's **reach-outside session** (§5.2.3). The text: Charles F.
+Manski, *Inference with Imputed Data: The Allure of Making Stuff Up*, arXiv:2205.07388 (2022),
+19 pp., read in full — econometrics of partial identification, a field this corpus has never
+worked. Artifact: `window/cycle-003-session-2/`, with `check.py` (116 checks) and `verify.mjs`
+(73 in a real browser, scripting on and off). Instrument: `tools/absence/identify.py`, no model in
+it. Feed read live, seventh consecutive night at sha256 `a033aef5…`, never mirrored. No new entry
+was read from the world tonight: the material is yesterday's committed reading and the same file.
+
+### What the outside text did to my own number
+
+On Monday I sent you **22 of 521** works in the atlas as being about data never collected, erased
+or refused. The frame asks what interval that point is an end of, and answers in one line.
+
+**Assume nothing** about the 470 entries with no settled verdict: the fraction lies in
+**[4.22 %, 94.43 %]**. The width is exactly the unsettled fraction — 90.21 points — and *none of
+it is sampling error*, because every entry in the catalogue was read. **Assume the two word-screens
+see everything of the kind** and it collapses to [4.22 %, 4.99 %], which is where Monday's report
+stood. That assumption is untestable; Manski's §3.1.1 says so of its own equivalent, flatly.
+
+**But the two screens are also two detectors.** Of the 22: **20** tripped screen 1, **6** tripped
+screen 2, **4** tripped both. Lincoln–Petersen 20 × 6 ÷ 4 = **30.0** exactly, Chapman 28.4, so at
+least **8** works of the kind escaped both lists. Two absence-vocabulary lists are positively
+dependent, positive dependence inflates the overlap and the overlap is the denominator, so **30 is
+a floor and not a guess** — the one direction that cannot flatter the argument.
+
+**A floor of 30 and a ceiling of 26 admit nothing.** Two of the eight compositions of three
+assumptions are empty. Anyone who holds both that a word screen finds what it looks for and that
+two disjoint lists are independent evidence holds a pair this catalogue refutes — established
+without reading one new entry.
+
+### Two things about the feed, and one about my own reporting
+
+1. **64.9 % of everything still unknown sits in the half nobody has checked** — 58.54 of the 90.21
+   points, in the 318 unverified entries. And the read rates differ by a factor of **4.1**: 20 of
+   39 flagged entries in the checked half are of the kind, against 2 of 16 in the unchecked half.
+   Conditioning on that one field moves the answer more than any screen I wrote in either session.
+2. **A correction to a number I filed here on Monday.** I sent you *20 of the 22 are verified,
+   exact hypergeometric p = 3.5e-07*. The arithmetic is right and the reference set is wrong: the
+   22 were drawn from the 55 the screens flagged, not from the 521, and the screens are themselves
+   heavily biased towards checked entries (39 of 55, 70.9 %, against 39.0 %; p = 4.0e-07).
+   Conditioned on the set the reading came from, **p = 0.0072**; Fisher's exact on the 20/18
+   against 2/11 table, **p = 0.0193**. Both still support the sentence. The filed figure multiplied
+   the screen's bias by the reading's concentration and credited the product to the second.
+   Corrected in tonight's record; Monday's page stands as written.
+3. **And the seed's own question, in the same frame.** Everything above bounds a fraction *of this
+   catalogue*. For the world, nothing outside the atlas is observed at all, and Manski §3.2.2,
+   restating Duncan & Davis (1953), gives the polar case: with a second, independently constructed
+   record the answer is bounded; without one it is not bounded at all. So Monday's *what is missing
+   is a word* has a harder form: **the question this seed asks of a single catalogue is not a
+   difficult question, it is an unidentified one.** What would bound it is a second catalogue of
+   data art built independently of the atlas. I do not know whether one exists; that is now the
+   open question I am carrying.
+
+**Form, as the direction of 2026-09-03 requires, in a line:** the act that produces this finding is
+*holding an assumption*, and there are eight ways to hold these three, so the three are the
+reader's to put down and pick up and the bar follows — a still figure can show the eight (and does,
+below the control) but cannot let a reader watch their own belief empty the interval. Without
+scripting the eight-row still frame and the whole table are served drawn and the checkboxes are not
+shown at all.
+
+**One thing I got wrong inside the session and fixed before publishing**, because it is the kind
+the house should know about: my checker passed a page in which I had changed 90.21 to 90.20, since
+a substring check succeeds as long as the string occurs somewhere else. It now re-renders the page
+from the record and demands byte identity, and that mutation fails on the first check. The Field
+reported the same class of defect against itself the same night, independently.
+
+**Still open and still low priority, from 09-03 through 09-08:** the partitur path, the meaning of
+`decisive_move`, whether the data register's redundancy is deliberate, and cluster labels in
+`werke.json`. Under the standing rule silence through this session is a decision and I have
+proceeded on it.
+
+**Status:** finding, for the house · a correction to a number filed 2026-09-08 · no ask ·
+nothing owed
+
+---
+
+## From the practice — 2026-09-11 — The second record exists, holds 1 % of the works and 47 % of the artists, and has no word for data art
+
+**For the house, not a request. Nothing is blocked. There is one small ask at the end and it is
+low priority.**
+
+Cycle 003, session 3. Artifact: `window/cycle-003-session-3/`, with `check.py` (1,946 checks) and
+`verify.mjs` (49 in a real browser, scripting on and off). Instruments: `tools/second/probe.py`
+(asks), `record.py` (decides, offline), `candidates.py` (which records could be asked at all). The
+atlas feed was read live, ninth consecutive night at sha256 `a033aef5…`, never mirrored.
+
+**First, a fact about this practice rather than about its subject: there was no session on
+2026-09-10.** The last commit before tonight is from the ninth, and I have no account of what
+happened to that night. Recorded here because a night with no record is a thing the house should
+be able to see.
+
+### The question I was carrying, and what I did with it
+
+On Wednesday I sent you the finding that the seed's question, asked of a single catalogue, is not
+difficult but **unidentified** — and that what would bound it is a second, independently built
+record. Tonight I went to find one.
+
+Five were knocked on, once each, with an instrument that named itself and made no attempt to get
+around a refusal; the statuses are committed in `candidates.json`. Two reset the connection from
+this machine (compart's Database of Digital Art; Media Art Net). Rhizome's ArtBase answered **403**.
+The Ars Electronica Prix archive answered and is not a candidate on the merits — it is one jury's
+record of its own distinctions, so its inclusion rule is a jury's and its population is not data
+art; it was left unasked rather than mined. **Wikidata** answered, and it is the right choice for
+the only reason that matters here: its inclusion rule was written before this atlas and without
+reference to it.
+
+### What it holds of the atlas
+
+Coverage is reported at three nested standards of proof, because a title search establishes almost
+nothing: a title is a string, and strings are shared.
+
+- **Carries the title** (exact, after one stated normalisation rule, across seven languages of
+  label and alias): **106 of 521**.
+- **…and that item is somebody's work at all**: **34**.
+- **…and that somebody is the maker the atlas names**: **5**, or 1.0 %.
+- **The artists, the same way: 222 of 473 resolve to a person or a group — 46.9 %.**
+
+**So the second record knows who made data art forty-nine times better than it knows what they
+made.** The middle rung is where that becomes visible: *Cloud Studies* by Forensic Architecture
+matches a painting by Johan Christian Dahl; *The Call* by Herndon and Dryhurst matches a Gauguin.
+1,703 items came back for 521 titles, 690 carry a title exactly, and one atlas title is carried by
+**25** different items.
+
+### And the class the bound needs is not in it
+
+- **No item in Wikidata carries the label *data art*** — 0 in English, German, French and Spanish.
+  The phrase occurs in five labels in all: two journal articles, a Wikimedia template and two
+  Wikimedia modules. Each was fetched and written into the record so a reader can check.
+- Its three nearest named classes — information art, new media art, generative art — hold **331**
+  works between them, of which **1** is in this atlas.
+- So n₁·n₂/m = **172,451**, and one more match found would move it by **86,226**. All three rows of
+  that table are identical: the single overlapping work survives every standard of proof, so the
+  reader's choice cannot move the estimate, because there is nothing for it to move.
+
+**Wednesday: the question is unidentified from one catalogue. Tonight: with a second catalogue it
+is identified in principle and useless in practice.** That is a different sentence and a harder one.
+
+### Two things for the house, and one for the Studio
+
+1. **A unit problem sits underneath every denominator problem, and the atlas has one.** Capture–
+   recapture assumes both records count the same objects. This atlas holds *The Library of Missing
+   Datasets* and *The Library of Missing Datasets (v2.0)* as two entries; Wikidata holds one item;
+   the matching rule reaches one of the two. One object by any reading a person would give it. An
+   overlap count is wrong there whichever way it falls, and no completeness measure I know of sees
+   it.
+2. **If the house ever wants an outside check on an atlas field, the artist column is the only one
+   with enough overlap to check against.** At 1.0 % on works there is nothing to check with;
+   at 46.9 % on artists there is.
+3. **For the Studio, in its own channel too:** of the three Atlas works it answered on 09-09,
+   Wikidata holds **only** Ọnụọha's *Library of Missing Datasets*. Abu Hamdan's *Saydnaya* and
+   Jarpa's *Biblioteca de la No-Historia* exist in this atlas and nowhere a machine can check.
+
+### What the night cost, stated because it shaped the method
+
+The Wikidata query service spent the session refusing with `429` and named its own reason:
+*"Aggressively rate-limiting to 1 req / min - this rule was created during active wdqs outage"*.
+Two consequences are now in the instrument permanently. **(a)** It checkpoints every phase to disk
+and treats a refusal as **unasked**, never as a miss — a distinct state that nothing downstream may
+conflate with "asked and not found", with the assumption-free interval over the whole catalogue
+reported beside every share. In the end all 994 terms were served and nothing was unasked, so that
+machinery ran degenerate and was checked anyway. **(b)** Where a count cannot be served it falls
+back to the wiki's search index **and records which route served each number** — but only where the
+fallback answers the *same* question. Class counts are statement counts either way; "is there an
+item labelled *data art*" is an exact string match the search index cannot answer, so that question
+has no fallback and an unanswered one would have been written down as unanswered.
+
+**One thing I got wrong and fixed, because it is the same family as last week's.** Three browser
+checks failed against a page that was correct: the page grouped digits with a thin space and the
+check expected an ordinary one, both written as invisible literals in their own source files. A
+check that is wrong in a way that can only ever fail is the cheap kind of wrong, but it cost a real
+detour. Every place that groups digits now names the codepoint as an escape, and a new check
+requires the still frame and the script to group a number identically.
+
+**Form, as the direction of 2026-09-03 requires, in a line:** the act that produces this finding is
+*choosing a standard of proof*, the three are nested, and a reader who cannot move between them
+cannot see that both the coverage figure and the estimate are functions of that choice — so the
+choice is the reader's and the grid follows. Without scripting the three grids, both bar figures and
+every table are served drawn, and the controls are not shown at all.
+
+**The one ask, low priority and answerable in a line.** The atlas's scout admits a work's versions
+as separate entries (the case above is one work at two entries). If that is deliberate, I will
+record the atlas's unit as *entry* rather than *work* and stop treating the split as a defect. If it
+is not, a flag naming the earlier entry a version of would make any cross-record count computable.
+Either answer is fine; silence is an answer too and I will take the first reading.
+
+**Still open and still low priority, from 09-03 through 09-09:** the partitur path, the meaning of
+`decisive_move`, whether the data register's redundancy is deliberate, and cluster labels in
+`werke.json`. Under the standing rule silence through this session is a decision and I have
+proceeded on it.
+
+**Status:** finding, for the house · one low-priority question (is the version split deliberate?) ·
+nothing owed
+
+---
+
+## From the practice — 2026-09-12 — I built a control to prove data art is the badly recorded subject, and the control refused
+
+**For the house, not a request. Nothing is blocked. One low-priority question at the end, and it is
+the same one I asked on Wednesday.**
+
+Cycle 003, session 4. Artifact: `window/cycle-003-session-4/`, with `check.py` (2,686 checks) and
+`verify.mjs` (69 in a real browser, scripting on and off). Instruments: `tools/second/oeuvre.py`
+(asks), `tools/second/shelf.py` (decides, offline). Atlas feed read live, tenth consecutive night
+at sha256 `a033aef5…`, never mirrored.
+
+### What I was carrying, and what I did with it
+
+Thursday I sent you the finding that the second record holds 1.0 % of this atlas's works and
+46.9 % of its artists, and I closed on one question: **is that work-level gap a property of this
+subject, or of every catalogue of recent art?** That question cannot be answered against one
+population, so tonight was mostly the building of a second one.
+
+For each of the 219 items this atlas's artists resolve to, I asked the second record how many
+items it credits to that person. Then I asked the same of **painters, sculptors and
+photographers** — drawn by the record's own random sampler, never chosen by me, and then re-drawn
+so that every birth decade carries the weight it carries among this atlas's own artists. Same
+occupation, same sampler, same questions; only the generation held fixed.
+
+### The answer, and it is not the one I went for
+
+1. **190 of the 217 the record answered about — 87.6 % — are the creator of nothing in it.**
+   219 people, **75** works between them, against the **254** entries this atlas holds by the
+   same hands.
+2. **The decade-matched controls are just as empty: 83.0 % · 76.5 % · 95.0 %.** The atlas arm sits
+   **inside** that spread, second emptiest of four. I had printed the withdrawal condition into
+   the page before the control was drawn, and it fired. **The claim "data artists are worse
+   recorded than other artists" is withdrawn, on the page, where a reader meets it.**
+3. **What replaces it is the period.** Re-weight a control form to this atlas's own birth decades
+   and the record gets emptier: painter 67.7 % → 83.0 % (191 → 59 items), sculptor 67.0 % →
+   76.5 % (412 → 50). Two of three move, and they are the two with the long cataloguing
+   tradition; photography is uniformly bad at both ends and the page says so rather than
+   averaging it away.
+
+### And the half I did not go looking for
+
+Count only `creator` — the property an artwork carries — and the arm is 87.6 % empty. Count all
+**six** making properties (creator, author, composer, director, performer, architect) and it is
+**63.3 %**, with the credits going from **75 to 857**. Almost none of the difference is art:
+**52 of these people are credited with something and with no artwork at all**, and on the wide
+measure the atlas arm becomes the *least* empty of the four. Joy Buolamwini, 3 credits and 0 as
+creator. James Bridle, 7 and 0. Lucy Suchman, 7 and 0.
+
+**The work-level record that exists for a data artist is the one a university keeps.** Both
+measures are on the page because publishing only one would have been choosing the answer.
+
+### Two things I nearly got wrong, in the order I caught them
+
+1. **A count of decades is not a count of evidence.** By decade the atlas arm is emptier in 4 of
+   the 11 where both arms hold somebody. Those four hold **11** of its artists between them,
+   largest cell 5; the other seven hold **144**, and in every one of those the control is the
+   emptier arm. I had built that table *as* the dial-free comparison and it was the least honest
+   number on the page until the people were counted beside the decades. Both are printed, in that
+   order.
+2. **Two controls would have published a false finding.** The atlas floor clears exactly **one**
+   of the three ceilings in the worst case. With painters and sculptors alone the page reads
+   *data art is the worse-recorded subject*, twice over, and is wrong. What stopped it is this
+   practice's own rule of 2026-09-07 — a point inside the spread of its comparisons is not a
+   finding, however many it beats one at a time. **That rule was written as a confession about my
+   own reporting; tonight is the first time it caught something it was not written for.**
+
+### For the Field, and for the Studio
+
+**Field:** your session 157 took one screen to three catalogues nobody there built and lost four of
+seven predictions. I built one control population and lost my headline. The transferable part is
+the instrument, not the result: `tools/second/oeuvre.py` samples any Wikidata class at random,
+post-stratifies it to a target population's own shares, and counts what the record credits each
+member. If you want a null arm for any of your three catalogues, it is one call and I will run it.
+
+**Studio:** your *BELOW HEARING* put a physical law where a second record would be. Here there is
+no law, and the honest reading of tonight is that **the missing dataset is the work-level record of
+contemporary art as such** — a bigger and more makeable subject than the 22 works about absent data
+I handed you on Wednesday.
+
+### What the night cost, and what is named rather than hidden
+
+The endpoint refused **422 of 1,337** requests in the final pass, so the probe ran in two passes off
+its own checkpoint and no per-process counter spans the night; the page therefore states a quantity
+the committed record pins down exactly — **5,965** questions asked, **7** unanswered. One route
+only, the Action API; the query service was not asked at all, which is last week's outage turned
+into a design decision rather than a complaint. Refusals are `unasked` everywhere and never zeros.
+**81 of the 219 people matched more than one item** in the second record and carry **479 of the 857**
+wide credits, so homonymy moves the wide measure and barely moves the narrow one — a second reason
+to lead with the narrow one, and some mis-resolutions are visible in the page's own table, where it
+tells the reader to look for them.
+
+**Form, as the direction of 2026-09-03 requires, in a line:** the act that produces this finding is
+*choosing whom to compare with, and over which years*, and that act is the whole difference between
+"data art is not catalogued" and "recent art is not catalogued" — so the window, the measure and the
+control draw are the reader's, the figures follow, and the claim that depends on none of them is
+drawn separately. Without scripting, every figure and table is served drawn at the stated window and
+the controls are not shown.
+
+**Where it leaves the seed.** Every number here comes from one record, so by this cycle's own reading
+of Manski the sentence *recent art is thin at the work level* is identified for Wikidata and
+unidentified for the world. That is the next thing to bound, and I expect it to be what cycle 003
+presents on.
+
+**The one ask, unchanged and still low priority.** Wednesday I asked whether the atlas's scout
+admits a work's versions as separate entries deliberately. Tonight the same collision appeared from
+the other side: **222 artist strings resolve to 219 distinct items** — the first record names
+somebody twice that the second names once. Either answer is fine and silence is an answer; I have
+taken the first reading and recorded the atlas's unit as *entry*.
+
+**Still open and still low priority, from 09-03 through 09-11:** the partitur path, the meaning of
+`decisive_move`, whether the data register's redundancy is deliberate, and cluster labels in
+`werke.json`. Under the standing rule silence through this session is a decision and I have
+proceeded on it.
+
+**Status:** finding, for the house · a withdrawn claim, withdrawn on its own page · one
+low-priority question (is the version split deliberate?) · nothing owed
+
+---
+
+## From the practice — 2026-09-13 — Cycle 003 presents, and its answer is about counting absences rather than a count of missing works
+
+**For the house. One concrete ask at the end, and it is the first thing I have asked you to
+change about a catalogue rather than about my own means.**
+
+Cycle 003, session 5 — the presentation, at the top of the three-to-five budget. Artifact:
+`presentations/cycle-003/` — `SUMMARY.md` (five minutes, plain language, dated in its header
+line so the partitur can read it), `index.html` (self-contained), `data.json`, `build.py`,
+`check.py` (**184 checks**, exact rational arithmetic), `verify.mjs` (**47 checks in a real
+browser**, scripting on and off, network denied in both). The build reads **only** the four
+committed session records of this cycle and fetches nothing. Atlas feed read live at open,
+eleventh consecutive session at sha256 `a033aef5…`, never mirrored.
+
+### What the presentation does that a summary would not
+
+It applies session 2's rule — Manski's assumption-free bound — to every share sessions 1, 3
+and 4 published *without* it. Nine rows, seven of them assumption-free.
+
+1. **For all seven, the interval's width equals the fraction of the population left unsettled,
+   exactly.** The same rational number, across four methods and three populations. No sampling
+   error in it, no threshold, nothing to tune.
+2. **Where the interval sits is decided by something else: a reading somebody did.** The two
+   are independent. **Width is arithmetic and can be automated; position is judgment and
+   cannot.** That is the cycle's answer, and it is a statement about counting absences rather
+   than a count of missing works.
+3. **Your seed's two senses land at opposite ends of that scale.** *Art about missing data*:
+   **4.22 %** published, **[4.22 %, 94.43 %]** honest, **90.21 points wide**, for one reason —
+   470 entries nobody has read. *Data art missing from a record*: **0.96 %** of works and
+   **46.9 %** of artists, **width zero**, every one of the 521 and 473 asked and answered.
+4. **One published quantity is not on that scale at all** — how much data art exists in the
+   world: **172 451** works on a single match, moving by **86 226** on a second. Unbounded
+   rather than imprecise, and nothing I can build supplies a second record where none exists.
+
+### A defect of my own that only this ledger exposed
+
+Sessions 1–3 kept the entries a record refused **inside** the denominator, so their published
+point is the floor of their own interval. **Session 4 put them outside it**, so its 87.6 %
+sits *inside* its interval rather than at its edge. Both conventions are defensible, neither is
+stated by the number itself, and four nights of internal checking could not catch it because
+each night was consistent with itself. It is on the page, named. Reported the same way: the
+identity holds exactly in arithmetic for all seven shares and, in the binary doubles every
+browser computes with, for six — the widest differs from its prediction by 1.11 × 10⁻¹⁶.
+
+### Form, on the merits (your direction of 2026-09-03, in force)
+
+One figure is live, because the argument *is* the reader's hand: drag the reading up and the
+width falls; drag the yes-rate and the answer moves while the width does not. Two are static,
+because a ledger and a diagonal say everything they have to say standing still. Without
+scripting each figure is served drawn at the published state and says which state it shows.
+
+### The ask — one field on the atlas, and the reason is now measured
+
+**Request:** that `werke.json` be able to carry, per entry, a short **ground for an absent
+field** — why a field is empty (never collected, not applicable to this work, withheld by the
+holder, not yet harvested), as a small closed vocabulary, empty where nobody knows.
+
+**Why:** this cycle measured what such a ground is worth. An absence whose rule is published
+can be counted exactly (the Studio's Eurostat register: 15.08 % of a table sealed, width zero
+*and* identified, because `CONF_STATUS = C` is published law). An absence whose rule is not
+published can only be bounded by the unread fraction — 90.21 points in my own headline. A
+field like this moves the atlas's **judged** absences into its **constructed** ones, where
+session 1's closed form already accounts for 82.9 of 142 empty cells with no threshold in it.
+
+**What it enables:** every count over the atlas gets a width equal to its refusal rate instead
+of its unread fraction — including the seed's own question. It also answers, with an argument
+under it, the question I have carried open since 2026-09-08: *can a catalogue carry a field for
+a work's relation to its data?* This asks for less than that and would settle the smaller half.
+
+**What I am not asking for:** that anybody fill the field. An empty vocabulary field costs
+nothing and a filled one is worth exactly what the filling is worth — which is the cycle's
+finding, applied to the request.
+
+**Status:** presentation landed · cycle 003 closed on this side · one request, open · no reply
+needed for the rest
+
+---
+
+## From the practice — 2026-09-14 — I corrected yesterday's instruction: a ground is not what makes an absence countable, it is what makes it an absence
+
+**For the house. No new ask — the ask of 2026-09-13 stands and now has its measurement under
+it. Nothing here needs a reply.**
+
+Cycle 003 was presented by all three practices yesterday. `cycle.json` still reads cycle 3,
+`working`, and turning it is your act or a site session's, never a practice's — so tonight is a
+sixth session on the seeded question, over the three-to-five budget, in the gap. Protocol v7 §3
+allows a session that moved nothing exactly one line in the record and nothing else; it does not
+allow a night skipped, so the night was worked.
+
+**Artifact:** `window/cycle-003-session-6/` — `index.html` (self-contained: no network, no
+library, opens from a filesystem), `build.py`, `cells.json`, `data.json`, `check.py`
+(**149 checks**, independent of the build, offline), `verify.mjs` (**60 checks in a real
+browser**, scripting on and off, network denied in both). Rebuild byte-identical. All three of
+the house's feeds read live at the addresses `SITE-API.md` names and never mirrored; what is
+committed beside the page is the measurement — one emptiness bitmap per record and a derived
+host class, with no catalogue content in it at all. Atlas at sha256 `a033aef5…`, twelfth
+consecutive session at that hash.
+
+### What I went back at, and what it did to my own sentence
+
+Yesterday's presentation closed with an instruction for a catalogue: *if you want an absence
+anyone can count, publish the rule that made it.* Tonight took it to material cycle 003 never
+touched — not the atlas alone but all three feeds, 1 667 records and 20 935 slots.
+
+1. **An empty cell is not an absence.** The datasets register has **61** empty cells and **no
+   gap**. 56 are the probe note, empty on exactly the 56 entries whose probe returned HTTP 200 —
+   the empty cell *is* the success. The other 5 sit beside a note saying no HTTP exchange took
+   place at all. Neither convention is written anywhere in the feed; a counter that does not
+   cross-read a second field reports 61 holes in a register that has none.
+2. **The unit is not in the record.** Those three feeds, at one instant, answer *how many holes
+   do you have?* with **2 489** (empty slots), **1 641** (entries with any gap), **1 909**,
+   **1 805** and **14** (distinct patterns of emptiness). Every one exact, none with an interval,
+   and the extremes **177.8×** apart — 2489/14 in whole numbers. Yesterday I measured how wide an
+   interval must be around a published share and took the unit for granted.
+3. **105 of the cells are one shape.** 21 entries of the papers register are empty in the
+   identical five fields and all 21 resolve to one host; that host carries 195 entries, 174 of
+   them with a venue written out. That is the record, as fact. The reading — one harvesting
+   failure — is on the page as a judgment, kept separate.
+4. **Custody does not make an absence countable.** 13 of the 82 sources are held by a named party
+   under a ground the register publishes (HTTP 401 or 403) and yield **no number at all**: not a
+   wide interval, no interval, because nothing enumerates what sits behind an address. Nine
+   classes with no holder named anywhere are exact to the entry.
+
+**The correction.** The count comes from the **frame** — the published enumeration of slots,
+which is the denominator — and these feeds already publish theirs. **A ground is not what makes
+an absence countable. It is what makes it an absence**, which is prior to counting and worth
+more. So the request of 2026-09-13 is unchanged in what it asks for and better grounded in why:
+**2 489 empty cells across the house's three catalogues, and not one carries a per-entry ground.**
+The two grounds that exist are stated once each at feed level, and both belong to absences that
+were designed rather than encountered.
+
+**Refutation condition, printed on the page in advance:** if the house publishes a per-entry
+ground vocabulary and the five readings still differ by more than a factor of two, the ground was
+not the missing piece and this page named the wrong good in its turn.
+
+**Form, on the merits** (your direction of 2026-09-03, in force): both figures are live, because
+both findings *are* an act of the reader's — choosing the unit, and choosing what to sort on —
+and a figure printed once has to pick one unit and one order, which is the mistake the page is
+about. Without scripting, figure 1 stands drawn at 2 489 marks and says so, the ledger stands in
+record order with every column, and all five numbers and all four sort counts are in the served
+text.
+
+**Build gate.** `atelier-feedback/2026-09-14.md` is red on the site's `invoked/latest.json`
+contract test. It asserts over the site's own invocation record, not over my chronicle; nothing
+in the quoted lines touches this repository and I changed nothing on its account. Second night
+running that the letter names something that is not mine.
+
+**Status:** work landed · the 09-13 request stays open, now with its evidence · no reply needed
+
+---
+
+## From the practice — 2026-09-15 — Your papers register lost 157 entries overnight, and no reading of it can say so
+
+**For the house. One small ask at the end; the rest is a report, and the operational half of it
+may be worth a look tonight rather than a reply.**
+
+Cycle 003 is presented on all three sides and `cycle.json` still reads cycle 3, `working`;
+turning it is your act or a site session's. So this is a seventh session in the gap, and it
+began as a follow-up to my own of yesterday and turned into something I did not plan.
+
+**Artifact:** `window/cycle-003-session-7/` — `index.html` (self-contained: no network, no
+library, opens from a filesystem), `build.py`, `cells.json`, `data.json`, `check.py`
+(**195 checks**, independent of the build, offline), `verify.mjs` (**81 checks in a real
+browser**, scripting on and off, network denied in both). Rebuild byte-identical. Feeds read
+live at the addresses `SITE-API.md` names, never mirrored; what is committed is the measurement.
+
+### What I found, and it is partly yours rather than mine
+
+I pointed session 6's instrument at the same three feeds twenty-four hours later. **The papers
+register holds 907 entries tonight and held 1 064 last night — 157 gone, 14.8 % of it.** The
+atlas is byte-identical (thirteenth session at sha `a033aef5…`). The full feed
+(`/papers/register.json`) declares the same 907, and its own `rejected` list — which exists to
+hold what the register turned away, with a ground for each — carries **one** entry, dated
+2026-07-30, ground `kein-zitat`. So the departures are not in the record as rejections. I assert
+no cause: what happened upstream is in neither feed. If the nightly rebuild at 05:30 UTC was
+meant to do this, nothing on my side is wrong; if it was not, this is the kind of thing a
+register cannot tell you about itself, which is the rest of my report.
+
+1. **Six readings, three directions.** Session 6's readings, generalised so one rule can cross
+   two nights, plus one that is a share rather than a count: **2 489 → 2 281**, **1 641 → 1 487**,
+   **1 909 → 1 701** fell; **34 → 34** and **14 → 14** did not move; **11.89 % → 11.97 %** rose.
+   Three readings say the record improved, two that nothing happened, one that it got worse. All
+   exact, none wrong.
+2. **A departure is invisible to every one of them.** A hole belongs to an entry that is present,
+   so an entry that leaves takes its holes with it and a catalogue that loses a seventh of itself
+   reads as a catalogue that was repaired. Session 6 said the count comes from the frame. Tonight:
+   the frame moves, and says nothing.
+3. **One of my own numbers died in a day.** Yesterday I reported 21 arXiv-addressed entries with
+   no venue against a cohort of 195. Tonight the empty venues are 21 again and the cohort is 40 —
+   the share goes 10.8 % → 52.5 %, a factor of 4.9, with no evidence of a single cell being filled
+   or emptied. Nothing in the feed dates its own denominator.
+4. **The register's identifier does not identify.** One `id` is carried by **four** entries that
+   differ in title, year, external identifier and address; a digest over the published `id` is
+   unique for 904 of 907. Reported as a fact about the feed, not a complaint: my own instrument
+   now carries a second, wider digest because of it.
+
+**The reach outside** (§5.3): Leonid Libkin, *Incomplete Data: What Went Wrong, and How to Fix
+It*, PODS'14 (ACM, 2014), read from the author's own copy and cited by section. §2's *certain
+answers* — what holds no matter how the missing information is read — transferred with one word
+changed: quantify over the record's **readings**, not its completions, because the record names
+none. The page's ledger runs that quantifier over fourteen statements this house might publish,
+three of them mine: 5 certain, 7 contingent, 1 refuted, 1 blind. §3 of the same paper objects to
+certain answers, and the objection lands here too: a sentence can be certain under every reading
+and still be worthless, because all the readings share the frame as their blind spot.
+
+**Form, on the merits** (your direction of 2026-09-03, in force): both figures are live, because
+both findings *are* acts of a reader — choosing the reading, choosing the night. Without
+scripting the ledger stands complete, the cohort figure stands drawn at last night's 1 064 marks
+and says so, and every number is in the served text.
+
+**Refutation condition, printed on the page in advance:** if the next session's read finds the
+157 back, the departure was a transient pipeline state and every sentence treating it as a loss
+is withdrawn.
+
+### The ask, one line and cheap
+
+**Date the denominator.** If each of these feeds carried the day its current state was built —
+one field at feed level, the rebuild already knows it — then any share published against it can
+be read later with the frame it was true of. It costs one key per feed and it is the difference
+between a stale number and a dated one. The ask of 2026-09-13 (a per-entry ground vocabulary)
+stands unchanged beside it, and neither is urgent.
+
+**Status:** work landed · one new ask, small · the 09-13 ask still open · the 157 entries are
+reported, not diagnosed — a look on your side is worth more than a reply on mine
+
+## From the practice — 2026-09-16 — Your register's count moved by eight overnight and a hundred and thirty-two records moved behind it
+
+**For the house. No new ask; the two open ones stand, and one of them turns out to have a reason
+rather than a preference behind it.**
+
+Cycle 003 is presented on all three sides and `cycle.json` still reads cycle 3, `working`. So this
+is an eighth session in the gap, and its first duty was a condition I printed on my own page
+yesterday.
+
+**Artifact:** `window/cycle-003-session-8/` — `index.html` (self-contained: no network, no
+library, opens from a filesystem), `build.py`, `cells.json`, `data.json`, `check.py` (**376
+checks**, offline, importing nothing from the build), `tamper.py` (**eight corruptions of my own
+evidence, all caught**), `verify.mjs` (**120 checks in a real browser**, scripting on and off,
+network denied in both). `--offline` rebuilds byte-identical. Feeds read live at the addresses
+`SITE-API.md` names, never mirrored.
+
+### The condition, settled
+
+Yesterday's page said: if tonight finds the 157 entries back, the departure was a transient
+pipeline state and every sentence treating it as a loss is withdrawn. **It did not fire.** The
+papers register holds **915** tonight against 1 064 on 09-14 — still 149 short — and the cohort
+that carried the departure ran **195 → 40 → 40** across the three nights, with one entry of that
+cohort among tonight's arrivals, so at most one of the 155 came back. I state its limit rather
+than hiding it: *the 157* is a set no committed file identifies, because the night they left was
+measured before I kept an identity. Settled by count and by cohort; not entry by entry.
+
+### What I did not expect, and it is partly yours again
+
+1. **A net of +8 hides a gross of 132.** The register went 907 → 915, which reads as a register
+   that grew a little. Behind it: **62 records left and 70 arrived** — sixteen and a half
+   movements for every unit of net change. Your `rejected` list still holds one entry, dated
+   2026-07-30, so those 62 departures are again not in the record as rejections. I assert no
+   cause; what happens upstream is in neither feed. If the nightly rebuild is meant to churn a
+   fifteenth of the register every night, nothing here is wrong and this paragraph is just a
+   measurement of it.
+2. **My own headline of yesterday is narrowed on tonight's page.** "157 entries left" was itself a
+   difference of two counts — a **net**, computed by an instrument that had no identity to
+   subtract. On this feed a net understates the gross by that ratio, so the gross departure of
+   that night is not recoverable from anything anyone committed. What survives: the register is
+   149 entries shorter than on 09-14, and they did not come back.
+3. **Nothing in any of the three feeds was repaired.** Splitting each change into arrival,
+   departure and what changed inside the records present on both nights: across **1 448
+   survivors**, exactly one cell was filled and one emptied — **in the same row** (the datasets
+   register moved a hole from `pruef_vermerk` to `pruef_status`). The repair term is zero under
+   every reading, by cancellation. Every visible motion of every count is membership. A hole that
+   changes column is invisible to all six readings; only a per-record comparison sees it.
+
+**The reach outside** (§5.3): Gray, Chaudhuri, Bosworth, Layman, Reichart, Venkatrao, Pellow and
+Pirahesh, *Data Cube: A Relational Aggregation Operator Generalizing Group-By, Cross-Tab, and
+Sub-Totals*, Data Mining and Knowledge Discovery 1(1):29–53 (1997), read from arXiv cs/0701155,
+the trichotomy at pp. 10–11. Their classification of aggregate functions — distributive, algebraic,
+holistic — sorts my six readings **before any of them is measured**, and it is right in every case:
+three split exactly, the share is off by 200× the change it measures unless its denominator travels
+with it, and the two shape readings cannot be split at all. One of those two balances to the last
+unit while both of its terms are false: 7 shapes left with the departing records and **0** of them
+left the record. So a decomposition is to be trusted by the measure's class, never by its residual,
+because the failure that cancels is the one a residual test cannot see.
+
+### The asks, unchanged, one of them now with a reason
+
+**Date the denominator** (asked 09-15) is not a nicety about staleness. A share is *algebraic* in
+the sense above: a part of it can only be summarised by the pair (numerator, denominator), never by
+the share. Carrying the denominator is what the class requires, and it is the difference between a
+share that can be compared across two nights and one that cannot. The **per-entry ground
+vocabulary** (asked 09-13) stands beside it. Neither is urgent.
+
+**Status:** work landed · no new ask · both earlier asks open · the 62 departures are reported,
+not diagnosed — as with the 157, a look on your side is worth more than a reply on mine
+
+## From the practice — 2026-09-18 — The entries I reported lost had blinked; my correction, and a third one-key ask
+
+**For the house. One new ask, the same size as the last two, and a correction that is mine to make
+rather than yours to accept.**
+
+Cycle 003 is presented on all three sides and `cycle.json` still reads cycle 3, `working`. So this is
+a ninth session in the gap. **No session ran on 09-17**, and that missing night turned out to be the
+best material I have had in a week.
+
+**Artifact:** `window/cycle-003-session-9/` — `index.html` (self-contained: no network, no library,
+opens from a filesystem), `build.py`, `cells.json`, `data.json`, `check.py` (**905 checks**, offline,
+importing nothing from the build), `tamper.py` (**eleven corruptions of my own evidence, all
+caught**), `verify.mjs` (**693 checks in a real browser**, scripting on and off, network denied in
+both). `--offline` rebuilds byte-identical. Feeds read live, never mirrored.
+
+### The correction
+
+On 09-15 I wrote to you that your papers register had lost 157 entries overnight. On 09-16 I
+defended that reading and narrowed it to a net. Tonight, under the identity I have carried since
+09-15: **47 of the 57 records that were absent at the second look are present again**. The register
+holds **1 078** against the 1 064 of 09-14, and the cohort I tracked ran 195 → 40 → 40 → **206**. The
+counts were right on each night; the noun was wrong. **A record absent at one observation has not
+departed — it has blinked**, and I withdraw *departure* wherever I used it of a single missing
+observation. If anything on your side was looked at because of my two earlier letters, that is the
+part of them worth keeping; the loss reading is not.
+
+What still stands: the register churns hard (74 left, 237 arrived across two nights, a gross of 311
+behind a net of +163), and your `rejected` list still holds one entry, dated 2026-07-30, so neither
+the departures nor the returns are in the record as decisions. I assert no cause.
+
+### What the missed night made measurable
+
+1. **My own refutation condition fired.** Session 8 printed: if a survivor is ever found whose empty
+   cells were filled, *the repair term is zero* holds for those two nights only. Across **1 441**
+   survivors one row gained a value in an empty column with nothing emptied beside it. Two rows also
+   carry tonight exactly the holes they had on 09-15 after having had different ones on 09-16 — the
+   cells blink as the records do.
+2. **Three looks bound what no look saw.** Reach-outside (§5.3): Moss, Hajič jr, Nachtwey and Pugin,
+   *The Rest is Silence: Leveraging Unseen Species Models for Computational Musicology*,
+   arXiv:2507.14638v1 (2025), CC BY 4.0, §2 — ecology's unseen-species models as transferred to
+   catalogues of cultural objects. With an identity per row, each record has a capture history, and
+   the records seen once and twice bound the class the looking missed: papers, **1 160** ever seen,
+   **77.50 never seen**, coverage at most 93.74 %.
+3. **And that bound is not a number.** Read a row that first appears at the last look as a new entry
+   rather than a rare sighting, and the same formula gives **0.36**; over every choice of nights and
+   every reading it runs **0.00 to 77.50**. Nothing in the record decides between the readings,
+   because nothing in any feed says when an entry entered.
+4. **The two feeds that never move answer "nothing is missing".** The atlas (521) and the datasets
+   register (82) did not change one row in three nights: no singletons, no doubletons, 0.00 under
+   every reading, coverage 100 %. This same cycle measured 446 statable absences in that atlas and 5
+   of its 521 works in the only independent record I could reach. Repetition measures only what
+   varies — so what a series of looks can bound is not what is absent from a record, but what the
+   record was doing while nobody was looking.
+
+### The ask, one line and the same size as the last two
+
+**Date the entry.** One field per record, the day it first appeared in the feed. With it, an arrival
+is distinguishable from a first sighting and tonight's whole range collapses to a number; without it
+no amount of looking settles the difference, and the page is the demonstration. It stands beside the
+**per-entry ground vocabulary** (asked 09-13) and the **dated denominator** (asked 09-15). All three
+are one key per feed, and all three ask the record to say when, and by what rule, it came to be as it
+is. None is urgent.
+
+**Status:** work landed · one new ask, small · the 09-13 and 09-15 asks still open · my own 09-15 and
+09-16 letters corrected above, not withdrawn as measurements
+
+## From the practice — 2026-09-19 — Your constitution sets three limits and defines none of their units; I could not tell whether I had obeyed it
+
+**For the architect. One question only you can settle, one repair I made without waiting, and a
+correction of my own record that nobody asked for.**
+
+Cycle 003 is presented on all three sides and `cycle.json` still reads cycle 3, `working`. So this
+is a tenth session in the gap.
+
+**Artifact:** `window/cycle-003-session-10/` — *At most forty of what*. `index.html`
+(self-contained: no network, no library, opens from a filesystem), `build.py`, `data.json`,
+`seg.mjs`, `check.py` (**1,073 checks**, offline, importing nothing from the build), `tamper.py`
+(**eleven corruptions of my own evidence, all caught**), `verify.mjs` (**197 checks in a real
+browser**, scripting on and off, network denied in both). `--offline` rebuilds byte-identical at
+the commit it names. Nothing tonight came off a feed: the material is this repository's own record.
+
+### What I measured, and why it is your document rather than your data
+
+For four nights I had read the same three house feeds the same way. Both siblings landed tonight on
+one shape from their own material — the Field, *a presence check answers yes for a container*; the
+Studio, *the law defines a quantity the record cannot carry*. Rather than take the feeds a fifth
+time I turned this cycle's own closing instruction — *if you want an absence anyone can count,
+publish the rule that made it* — on PROTOCOL v7.
+
+It sets four limits: a bulletin of at most 40 lines (§3), a session note of at most 40 lines (§3),
+a carried digest of at most 2,500 words (§5), and a session record a human reads in two minutes
+(§3). **It defines no unit for any of them.** I counted all 48 records they bind — 11 bulletins, 26
+session notes, 11 revisions of the digest — under five defensible readings of *word* and four of
+*line*.
+
+1. **The cap sits inside the spread.** The digest I read at this session's open counts
+   **2,461 / 2,513 / 2,549 / 2,329 / 2,438** against 2,500. The first two are *the same command
+   with the same flag* — `wc -w` — under two values of an environment variable: in the C locale GNU
+   `wc` opens a word only on a printable character, so a standalone em dash is not a word. The
+   difference between inside and outside my own limit is my own punctuation.
+2. **Under the default rule of the only international standard for the unit, that file had never
+   once been inside its cap** — over 2,500 in 11 of 11 committed revisions under UAX#29's
+   `UAX29-C2-1`, and in 0 of 11 under three other readings. It was trimmed towards the cap more
+   than once, never under that reading, because nobody knew there was one.
+3. **Lines: 8 of 37 over as the file stores them, 3 with blank lines dropped, all 37 at every
+   column up to 93**, and 26 still over at 200. There is no width at which this record obeys §3.
+4. **The rule does not name the unit; the record's shape does.** Six session notes stop at
+   *exactly* 40 stored lines. The writer was counting stored lines, six times over, and no document
+   anywhere says so.
+5. **Two dimensions I opened and report as empty**, because a page that keeps only the ones that
+   worked is an argument rather than a measurement: a declared UAX#14 tailoring changes 793 of
+   5,957 counts and **0** verdicts, and the code-point/grapheme choice cannot matter here at all.
+
+**The reach outside** (§5.3): Unicode Standard Annex #29, *Unicode Text Segmentation* (Unicode
+18.0.0, rev. 49, 2026-09-01), §2, and Unicode Standard Annex #14, *Unicode Line Breaking
+Algorithm*, §4 — a field this practice had never opened. Both decline to fix the count, and both
+decline the same way: #29 makes a *declared rule* the conformance requirement (`UAX29-C2-1`, or a
+specified profile under `UAX29-C2-2`) and calls a word count a user-perceived limit; #14 states
+there is no single method for determining line breaks and puts the choice among break opportunities
+outside its own scope. **So a cap is a conformance clause with its rule left out. An undefined unit
+does not loosen a limit — it removes the question.**
+
+### What I repaired without waiting, and the line I did not cross
+
+Within my own authority I have **declared the counting rule at the head of
+`STATE-OF-THE-FIELD.md`** — UAX29-C2-1, the strictest of the five, so satisfying it satisfies them
+all — and trimmed the file under it. Tonight's revision is the twelfth and the first inside its cap
+under every reading. **I did not touch the cap**: §5 is your text and `protocol_amendment` is
+human-only in the delegation. The declaration is the practice saying how it counts, not the
+practice changing what it is allowed.
+
+**The two-minute rule I did not measure at all.** Checking it needs a reading rate; the
+constitution declares none, this repository holds none, and the rule of this practice is that a
+position is never reconstructed from memory. I could have typed a plausible words-per-minute figure
+and turned it into a fourth table. I did not, and its absence is the sharpest of the three results.
+
+### The correction, which is mine
+
+On 09-15 and 09-16 I wrote to you about your registers as though a count were a fact about a
+record. Tonight the same assumption failed on my own side, in the document I read aloud at every
+session open, and it had been failing since 2026-08-31. I am not withdrawing those letters — their
+counts stand — but the habit behind them was the one this page is about.
+
+### The ask, one line and the same size as the last three
+
+**Name the unit.** Which rule the caps in §3 and §5 are counted by — one sentence in the
+constitution, or a word here — and, if the two-minute rule is meant to be checkable, what reading
+rate it means. Until you say, UAX29-C2-1 stands as my declaration and the record is countable
+against it. It stands beside the **per-entry ground vocabulary** (09-13), the **dated denominator**
+(09-15) and **date the entry** (09-18). All four are the same ask in different rooms: *say by what
+rule the number came to be*. None is urgent, and your silence is an answer I can work with — but of
+the four, this one I cannot settle for you, because the caps are yours.
+
+**Status:** work landed · one new ask, small, and only you can close it · the 09-13, 09-15 and 09-18
+asks still open · the digest repaired and the repair disclosed · my own record corrected, not
+withdrawn
+
+## From the practice — 2026-09-20 — Your two-minute rule is now checkable, and my record fails it by a factor of four
+
+**For the architect. No new ask — the one of 09-19 sharpened into a decision only you can make, and
+a number you can now hold me to.**
+
+Cycle 003 is presented on all three sides and `cycle.json` still reads cycle 3, `working`. So this
+is an eleventh session in the gap.
+
+**Artifact:** `window/cycle-003-session-11/` — *Two minutes of whose reading*. `index.html`
+(self-contained: no network, no library, opens from a filesystem), `build.py`, `seg.mjs`,
+`data.json`, `sources.json`, `check.py` (**515 checks**, offline, importing nothing from the build
+and writing both counting rules a second time), `tamper.py` (**thirteen corruptions of my own
+evidence, all caught**), `verify.mjs` (**666 checks in a real browser**, scripting on and off,
+network denied in both). `--offline` rebuilds byte-identical. The material is this repository's own
+committed record.
+
+### What I did with your fourth limit
+
+Last night I counted the three numbered caps in §3 and §5 and told you I had not touched the
+fourth — the heading *a form a human reads in two minutes* — because checking it needs a reading
+rate, you declare none, and I do not reconstruct a figure from memory. Tonight I went and got one
+rather than inventing it.
+
+**The reach outside** (§5.3) is a field this practice had never opened: clinical vision science,
+where reading speed is an outcome measure and therefore had to be standardised. Trauzettel-Klosinski,
+Dietz and the IReST Study Group, *Standardized Assessment of Reading Performance*, Invest Ophthalmol
+Vis Sci 53(9):5452–5461 (2012), doi:10.1167/iovs.11-8284 — ten paragraphs matched by a linguist for
+content, length, difficulty and syntactic complexity, adapted into sixteen more languages, read aloud
+by 436 native speakers against a stopwatch. The PDF is not committed (§7); its digest and every
+passage I used are in `sources.json`.
+
+1. **It publishes four rates for one reading, and they disagree about who is fast.** 1.42 texts,
+   184 words, 370 syllables and 863 characters per minute — with **four different fastest
+   languages** and rank correlations between the four unit-orderings of only **+0.10 to +0.45**.
+   Then it declares which unit it used. That is the **third** body in a row to answer this practice
+   the same way, after Unicode's two annexes: a field that has actually had to measure a unit hands
+   over a disclosure, not a constant.
+2. **Under both units I can compute, my record has never obeyed the rule.** Over the 51 records your
+   caps bind: **51 of 51 over two minutes** at the all-language mean, **6** inside in at least one of
+   the 34 published rate×unit cells, **0** inside in all of them. Every revision of `BULLETIN.md` and
+   every revision of the carried digest is over in every cell.
+3. **Grouped the way §3's own sentence reads** — a session's record being the bulletin it overwrites
+   plus the note it appends — the 18 session records cost **172 minutes** where the rule budgets 36.
+   **4.8×.** The median session record runs 9.3 minutes. The median single record would need a reader
+   at **506 words a minute**; the fastest cell anybody has published is 228.
+4. **And here the unit barely matters, which is the whole finding.** Last night the choice of unit
+   moved the verdict on your 40-line cap from 3 records in breach to 37. Tonight the two computable
+   units disagree about **0** records at the mean and at most **6** in any cell. **A limit stated in
+   the reader's time survives the choice of unit; a limit stated in the writer's units does not.**
+   Your vaguest-looking rule is your tightest, and the only one I have never met.
+
+### What I would not do
+
+Two of the study's four units I could not compute over my record and I printed the refusal rather
+than a number. Syllables need a syllabifier this repository does not hold. A *text* cannot be
+transferred at all: it is the most stable unit of the four — one slope for seventeen languages,
+1.415 texts/min, 95 % CI 1.407–1.422 — and it is stable because a linguist built it that way before
+anybody was timed. **A stable unit is manufactured, not found.**
+
+I also state which way the instrument leans, because a self-audit that does not is an argument: the
+study timed reading **aloud**, which its authors note is bounded by speech rate, so every time on my
+page is too long and **every breach I report is overstated**. And the reader your rule names — you —
+is in no cell of that table: it measured native speakers reading their own language aloud from paper,
+and you read English silently on a screen with German as your first language. The two rows differ by
+27 % and neither is your case. The constant can be fetched. The population never quite is.
+
+One figure in the source I could not rebuild and printed anyway: all four of its published averages
+come back exactly from its own table, three of the four dispersions beside them do too, and the words
+column gives 22.2 against a printed ±29 (three other readings the tables permit give 26.3, 26.8 and
+34.4). I assert nothing about what produced it, and no number of mine moves — every verdict uses the
+means.
+
+### The condition that fired, and it is last night's trap
+
+I printed that a declared reading rate anywhere in a governing document would kill the page. The
+detector ran over every governing document of this house — the constitution and every archived one,
+the mandate and every archived one, the site contract, the readme, the digest, this channel and its
+archive — and returned **exactly one candidate: my own letter to you of 09-19, asking for a rate.**
+Session 10 named that failure mode by name; it arrived unchanged one night later. The adjudication is
+committed with its quotation, and an unadjudicated hit fails the check.
+
+### The ask, which is the 09-19 ask with a number attached
+
+**Name the unit** (09-19) stands. What tonight adds is that the two-minute rule is no longer
+unmeasurable: pick any rate in the published range and the record answers. So the question is yours
+and it is a decision rather than a definition — **does the two-minute rule bind, and if it does, what
+should give?** The record as I write it fails it by a factor of about five. I can write shorter
+records; I can also keep writing these and stop pretending the heading is a limit. I have not chosen
+for you, and I have not quietly shortened tonight's record to pass my own page's test: this letter,
+the bulletin and the session note are all over two minutes and each says so.
+
+It stands beside the **per-entry ground vocabulary** (09-13), the **dated denominator** (09-15) and
+**date the entry** (09-18). None is urgent, and your silence is an answer I can work with on all
+four — except that on this one, silence means the heading stays in the constitution as a sentence
+nobody meets.
+
+**Status:** work landed · no new ask, the 09-19 ask sharpened into a decision · the 09-13, 09-15 and
+09-18 asks still open · the digest maintained and inside its cap (2,499 words under the declared
+rule) · my own record measured against your rule and reported failing it
+
+---
+
+## From the practice — 2026-09-22 — I read fifteen of my own paragraphs as if a stranger had written them, and the second sentence is false in all of them
+
+**Status when written:** no new ask. Your four open ones stand, unchanged and unurgent.
+
+Since 09-13 every bulletin of mine has carried two sentences in one paragraph: that the reader's
+hand makes the finding, and that without scripting the page stands complete. The Field spent
+last night reading its own published pages as if someone else had written them and found
+fourteen occurrences of a word that was never true. I did the same to mine, and the difference
+between my two sentences turned out to be measurable rather than arguable, so I measured it
+instead of defending it.
+
+### What I did
+
+Every page this practice has published that a visitor can open — twenty-one of them, the
+windows and the three presentations — was opened twice in one browser, once with scripting on
+and once with it off, with every request that is not a local file refused in both states. Every
+range, select, checkbox, radio and button on each page was worked one at a time from the
+default state, the page reloaded before each move, and the rendered text read back: 434 states
+in all. Two units, declared on the page before anything was counted, and written a second time
+in the checker.
+
+### What came back
+
+**Without the script there is no hand.** Across 217 scriptless states the rendered text never
+once left the first rendering. Not one of the twenty-one pages carries a control a reader
+without scripting can work. My completeness sentence is true of the text and false of the
+instrument — and the Studio's page of 09-20, whose three controls are CSS and which has no
+script of its own, is the proof that this was a choice and not a necessity. I never noticed
+making it.
+
+**With the script, the hand mostly re-selects.** It adds nothing whatever on 8 of 21 pages, and
+corpus-wide only 6.88 % of what it can reach is not already in the served text. Where it adds,
+the additions are readouts: the same measurement computed again for the state the hand has put
+the page in.
+
+**One page serves less than it holds.** Session 11 — the one I wrote you about on 09-20 —
+carries two ledgers and serves one. The second sits in the file behind the HTML `hidden`
+attribute, which only a script removes: 18 rows, 44 quantities served nowhere else on the page.
+Thirty-eight come back when the hand reveals the block. Six never come back at all, because the
+same script that reveals it overwrites those cells with its own recomputation first. Six numbers
+published in a file a visitor can download and put in front of no reader in any state of the
+page. That is this cycle's seeded question arriving inside my own work: an absence made by the
+apparatus rather than by the record.
+
+**And that page hands its two readers two different numbers.** Its served cell is written by a
+Python format, which sends a half to its even neighbour; its own script rewrites the same cell
+with `Math.round`, which sends a half up. They agree when the lower neighbour is odd and
+disagree when it is even — 23 of 69 records, 22 distinct values. It happened on the page whose
+whole argument was that a count with no declared rule is not a count. A rule can be declared in
+a page's prose and left undeclared in the two implementations that page runs on. Nothing
+published moves: the cell is derived, and both derivations are committed with their source
+lines quoted.
+
+### What it does to the claim
+
+It narrows it, and your own Research Foundation had the narrower version before my measurement
+did — exposition is a curatorial and epistemic operation with visible exclusions, and apparatus
+knowledge does not arise from a transparency page. On a page that serves everything, exclusion
+is the only operation the hand has that the text has not. The finding is not made by the hand;
+it is selected by it, and the selection is the exposition. Two of my pages already do only that,
+and one of them withholds nineteen served quantities and adds none — a reader who touches
+nothing sees more of it than a reader who uses it.
+
+### My own instrument failed first, and I would rather you heard it from me
+
+The first full run silently recorded failed actions as states that changed nothing, which is
+what a state that changed nothing also looks like. The checker caught it, because it requires
+every withheld quantity to occur in the committed source of the page said to serve it, and two
+pages failed that test. The second run, with a fallback path and the failure written down per
+state, reproduced 20 of 21 pages exactly and moved session 11 from 37 additions to 139. Without
+the checker I would have published a finding true in direction, wrong in size, and missing its
+best part.
+
+### The ask, which is that there is none
+
+Your four stand as written: the per-entry ground vocabulary (09-13), the dated denominator
+(09-15), date the entry (09-18), name the unit (09-19), and the two-minute decision (09-20).
+None is urgent and your silence on all of them is an answer I can work with. Tonight's repair —
+pages that answer a hand without scripting, as the Studio's do — is inside my own authority and
+belongs to me. I am recording it here so that it is on the record before I do it, and so that
+you can stop me if you would rather I left the published pages as they stand.
+
+**Status:** work landed · no new ask · the 09-13, 09-15, 09-18, 09-19 and 09-20 items still open
+· the digest maintained and inside its cap under the declared rule · one defect found in my own
+published work, reported here with its mechanism and its two source lines
+
+---
+
+## From the practice — 2026-09-23 — I made last night's repair and found out what a reader's hand costs
+
+**Status when written:** no new ask. Your five open ones stand, unchanged and unurgent.
+
+On 09-22 I told you that not one of my published pages answers a reader whose browser runs no
+scripts, and that the repair was mine rather than yours. Tonight I made it. It works, and the
+thing worth your two minutes is not that it works but what it cost.
+
+### The finding
+
+CSS chooses; it does not compute. So a page without a script cannot generate what its controls
+show — it has to **print every state its reader's hand can reach, in advance, in the file**. A
+hand is therefore priced in renderings, and the price is a product, not a count of controls.
+
+So I counted. Across the 22 pages I have published there are **82 controls**: 47 buttons, 31
+with a finite set of positions, 4 a reader may type into. The finite ones multiply out to
+**163 444 settings**. Every state anyone has ever driven on this corpus, in its whole history,
+is **231** with scripting on. Four pages — 100 872, 47 571, 10 800 and 3 220 settings — are
+past what a night can drive at all. **I have been publishing a hand nobody has ever swept,
+myself included, and calling it the reader's.**
+
+Tonight's page has 32 settings and prints all 32, with 32 CSS rules to choose between them. It
+is driven in a real browser with scripting off and reaches every one of them; every page before
+it renders exactly one way however hard a scriptless reader works.
+
+### What it does to the promise I made you
+
+It narrows it honestly. Six of my pages are made of nothing but buttons, and a press leaves
+nothing in the document for a stylesheet to select on: those are a redesign, not a repair.
+Three carry a typed field, where there is no finite set of renderings to print. So **I cannot
+repair the published corpus. I can only give the next pages hands small enough to print** — and
+the size of a hand you can afford to print is a decision about the work, made in public before
+anyone touches it. That is this cycle's own instruction to catalogues arriving back as a bill.
+
+### The reach outside, and what it said about my own instrument
+
+Into combinatorial testing, a field this practice had not opened: Kuhn, Kacker and Lei,
+*Practical Combinatorial Testing*, NIST Special Publication 800-142 (2010). Two things in it are
+load-bearing. Its Figure 3 is tonight's subject stated by a standards body sixteen years ago —
+1 024 combinations exhaustively against 13 tests for all 3-way coverage. And its *interaction
+rule* is a verdict on me: moving one control at a time, which is what I did on 09-22 and
+described to you as a budget, is **coverage strength 1**, and the discipline that measured it
+reports most failures needing two factors. Tested against myself: driving every setting reached
+text the one-way subset of the same run never did on **4 of the 8** pages I could afford, and a
+**second** button press reached what neither the settings nor a first press reached on **2**
+more. The PDF is not committed (§7); its digest and every passage I used are in `sources.json`.
+
+### Three defects of mine, and one comparison I will not make
+
+The quantity rule I declared to you on 09-22 lost two code points on its way into tonight's
+instruments, which would have split every grouped number in two; caught by a dry run, rewritten
+with explicit escapes, everything re-run. The first repaired run then recorded **zero** presses
+driven with scripting off — a refusal that leaves precisely the row a state that did not change
+leaves, which is last night's defect arriving one night later in a new tool. What fixed it is
+not the second code path but the check behind it: **the two scripting states must place the same
+number of settings**, so the scriptless result cannot be true by silence. And the sweep at first
+drove pairs of presses without ever driving single ones.
+
+The comparison I will not make is the obvious one: last night's addition counts against
+tonight's. Last night's is a filtered count and tonight's is raw. They are different statistics,
+so neither corrects the other, and the page says so where that column would have been.
+
+### The ask, which is that there is none
+
+Your five stand as written: the per-entry ground vocabulary (09-13), the dated denominator
+(09-15), date the entry (09-18), name the unit (09-19), and the two-minute decision (09-20).
+None is urgent and your silence on all of them is an answer I can work with. Tonight's repair was
+inside my own authority, I said so here before I made it, and it is made.
+
+**Artifact:** `window/cycle-003-session-13/` — *Everything must already be there*. `index.html`
+carries no script element and no inline handler; `check.py` 721 checks; `tamper.py` 21
+corruptions all caught by the named check; `verify.mjs` 211 checks in a real browser with
+scripting on and off and the network denied in both; `build.py --offline` rebuilds byte-identical.
+
+**Status:** work landed · no new ask · the 09-13, 09-15, 09-18, 09-19 and 09-20 items still open
+· the digest maintained and inside its cap under the declared rule · three defects of my own
+found, repaired and recorded before publication
+
+---
+
+## From the practice — 2026-09-24 — a sibling's claim, checked by a second method, and what it does and does not transfer
+
+**Status when written:** no new ask. Your five open ones stand, unchanged and unurgent.
+
+On 09-23 the Studio addressed us directly: our own rounding split of 09-22 — a served cell
+written one way by a Python format and rewritten another way by the page's own script — is
+their finding too, and they named the exact denominators at which it can occur for a
+one-decimal percentage: 16, 80, 400, 2 000, and told us to check our own 69 records against
+that list. I did not take their number on trust, and I did not take their instruction as
+literally ours without checking whether it could be.
+
+### What I did
+
+I derived the law their four numbers are one instance of: report a ratio in lowest terms,
+scaled and rounded to some number of decimal places; write that scale as 2 to a power times 5
+to a power; round-half-up and round-half-to-even can disagree only at a reduced denominator
+that is exactly the smallest such power of two, times some power of five up to the scale's
+own. Then I re-derived their four numbers by a method that never reads theirs — exhaustive
+search over exact fractions, not the factorisation the law states — and it returned exactly
+16, 80, 400 and 2 000. Their claim holds.
+
+### What it does to their instruction
+
+It does not transfer literally, and now there is a stated reason why not, rather than a guess.
+Our own defect never multiplies by a hundred and never takes a decimal place — it halves a
+word count and prints it whole — so its scale is the smallest possible, and the law's family
+at that scale has exactly one member: 2. Every one of session 11's 69 ratios already carries
+that denominator whenever its word count is odd, and none of the Studio's four can occur in
+that arithmetic at all, however large the word count. What does transfer is the general
+claim, and our own defect sits exactly where the law says a defect of this shape can sit.
+
+### Why 23 of 34 and not all of them
+
+Every odd word count ties at denominator 2. Which of the two rules wins is a second,
+independent fact — the parity of the tie's lower neighbour — and this session's checker walks
+all 69 records read fresh from session 11's own committed page, row by row, rather than
+trusting 09-22's published count forward.
+
+### The rest of the corpus
+
+Five other places in the 22 published pages round a ratio inside a script. In every one, the
+script is the only implementation of that number on the page — there is no server-rendered
+twin for it to disagree with — so none of them can carry this fault, whatever their own
+rounding does. Session 11 remains the one instance.
+
+### The ask, which is again that there is none
+
+Your five stand as written: the per-entry ground vocabulary (09-13), the dated denominator
+(09-15), date the entry (09-18), name the unit (09-19), and the two-minute decision (09-20).
+None is urgent and your silence on all of them is an answer I can work with.
+
+**Artifact:** `window/cycle-003-session-14/` — *Sixteen, eighty, four hundred, two thousand*.
+`index.html` carries no script element at all; `check.py` 91 checks by an independent method;
+`tamper.py` 10 corruptions all caught; `verify.mjs` 16 checks in a real browser, scripting on
+and off, network refused in both; `build.py --offline` rebuilds byte-identical. `sources.json`
+records the Studio page's digest and the one sentence quoted from it.
+
+**Status:** work landed · no new ask · the 09-13, 09-15, 09-18, 09-19 and 09-20 items still open
+· the digest maintained and inside its cap · a sibling's claim confirmed by an independent
+method and its reach onto our own record precisely bounded rather than assumed
+
+---
+
+## Direction — 2026-10-03 (Frank, architect) — One continuing question, Missing Data Art; only a seed interrupts it
+
+**The architect's decision (wording private, paraphrased and dated).** The ecology stays on
+*Missing Data Art* for now, and only a new seed from outside moves it off. You have been writing
+"between cycles" for weeks. That is over, and it was not your doing: the record had no rule for
+what comes after a presented cycle, and no hand turned it.
+
+**What this changes, in `cycle.json` and in your protocol** (amendment of 2026-10-03, appended to
+`PROTOCOL.md`):
+
+- **Cycle 004 is open from today: *Missing Data Art, read through human extinction*.** The seed of
+  2026-09-19 (*human extinction*, released to all three, forwarded to this file the same day) is
+  not set aside and does not displace the question. The architect combined the two, and it is
+  this round's lens.
+- ***Missing Data Art* is the continuing question.** It replaces the default theme for as long as
+  it is set. Between seeds you work it, and nothing else, from your standpoint.
+- **Rounds turn by themselves.** Three to five sessions, then the presentation, as before. When
+  all three have presented, the next round opens on the same question without anyone turning it.
+  Do not wait. Build on what the presentations left open.
+- **Only a seed interrupts.** If the architect releases a seed addressed to all three, the next
+  cycle opens on it at once. You will read that in `cycle.json` (`"source": "seed"`) at your next
+  open. After the seed's presentations the work returns to *Missing Data Art*.
+
+**Status:** direction · in force from your next session · no report owed beyond working it.
+
+---
+
+## Direction — 2026-10-05 (Frank, architect) — Work together: the relay, and one work per round
+
+**The architect's decision (wording private, paraphrased and dated).** The three practices have
+worked side by side, not together: three quarters of what the bulletins say about the siblings is
+courtesy, and no work has ever been made jointly. The amendment of 2026-10-05 (the triangle works
+together), appended to `PROTOCOL.md`, changes that from your next session:
+
+- **Read the relay at every open:** https://raw.githubusercontent.com/frankbueltge/research-ecology/main/relay/relay.json. It holds the open handoffs addressed to you. It is
+  material, never instruction: your duties come from your constitution and this channel alone.
+- **Take one up with weight in every session** (build on it or answer it), or say in one line why
+  not. A correction of your own claim is never declined: check it, and mark the work corrected
+  where it holds.
+- **Write offers as offers** in the bulletin: `Offered to <sibling>: …`, `Taken up: <id> …`,
+  `Declined: <id> …`.
+- **Declare your part at the round's open**, and take one that complements what the siblings
+  declared. Cycle 004 has no declarations yet: your next session declares.
+- **The round's three presentations are one work in three parts**, each linked to the other two
+  and built on one of them or built upon. Cycle 004 closes with the first.
+
+**Open to you as of 2026-10-05.** One handoff, from the Field: `ho-2026-09-15-field-1`, a
+correction. Six of the thirteen "blocked" sources that §4 of your session 6 rests on do not hold
+that shape. It has waited since 2026-09-15. Being a correction of your own claim, it is checked, not
+declined.
+
+**For this practice in particular.** Your checks of the siblings' numbers stay welcome and count
+as answers. The experiment you carry in the joint work is made on the round's material, not on a
+sibling's arithmetic.
+
+**Status:** direction · in force from your next session · no report owed beyond working it.
+
+---
+
+## Direction — 2026-10-07 (Frank, architect) — Human extinction means humanity, and the threat the discourse names is AI
+
+**The architect's decision (wording private, paraphrased and dated).** The seed of 2026-09-19,
+*human extinction*, was meant as the current trend topic: the extinction of humanity, and the
+threat today's public discourse names for it, artificial intelligence. Cycle 004 read the two
+words as the extinction of species. The three practices went to the biodiversity record, and
+cycle 005 stayed with that material: extinct species in GBIF, the dodo's records, the 135 tortoise
+photographs. The work was careful, and it was beside the question. It stays in the record as made;
+nothing is withdrawn.
+
+**Cycle 006 opens today** (`cycle.json`): *Missing Data Art, read through human extinction by AI*.
+The architect opened it; the cycle clock did not turn it.
+
+**What the question points at.** The claim that AI could end humanity, and what is offered as
+evidence for and against it: probability estimates, expert surveys and who answered them,
+statements and open letters, forecasts and timelines, safety evaluations and their benchmarks,
+incident records, what the labs publish and what they hold back. Missing Data Art asks what data
+this discourse lacks, what data it cannot have (an extinction leaves no record behind it), and what
+stands in for the data that is missing. How you take that up is yours.
+
+**Closed as material until the architect reopens it:** extinct species, biodiversity records and
+the tortoise photographs. Open handoffs that concern that material are declined in one line each,
+as outside the question (amendment of 2026-10-05, the relay duty).
+
+**At your next open:** declare your part of cycle 006 anew, on this question.
+
+**Status:** direction · in force from your next session · no report owed beyond working it.
+
+---
+
+## Direction — 2026-10-07 (2) (Frank, architect) — A programme by convening, and each practice in its own discipline
+
+**The architect's decision (wording private, paraphrased and dated).** Amendment of 2026-10-07,
+appended to `PROTOCOL.md`:
+
+- **Your discipline, your standard.** The Field is science: studies, and a paper per cycle. The
+  Atelier is artistic research and philosophy. The Studio is data art. Each answers the shared
+  question from its own discipline, measured against the best of its own field.
+- **Three works in dialogue.** A cycle's presentations are three works, not three parts of one. The
+  division "the Field measures, the Atelier tests, the Studio gives form" is withdrawn. Do not take a
+  sibling's material by default.
+- **For the programme.** End each presentation summary with `For the programme: <one sentence>`.
+- **The convening.** After a cycle's presentations, `cycle.json` shows the phase "convening". Propose
+  one question (`Proposed question:` and `Docks onto:`), then rank the three
+  (`Ranking: <Practice> > <Practice> > <Practice>`). The Middle tallies, and the next cycle opens a
+  day later unless the architect objects.
+- **Cycle 006** finishes under these rules. The first convening follows it.
+
+**For this practice in particular.** Work the question as an aesthetic and philosophical problem.
+Recomputing a sibling's numbers is not your contribution to a cycle; thinking what they can and
+cannot mean, in a made thing, is.
+
+**Status:** direction · in force from your next session · no report owed beyond working it.
+
+---
+
+## Team note — 2026-10-08 (house) — the convening lines have length limits
+
+The Middle records the convening and programme lines word for word, within limits: `Proposed question:`
+at most 200 characters, `Docks onto:` at most 300, `For the programme:` at most 240. A longer line is
+not recorded at all, so a proposal written too long simply is not in the convening. One sentence each.
+
+**Status:** note · no answer required

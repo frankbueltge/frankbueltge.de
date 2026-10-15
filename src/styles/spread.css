@@ -1,0 +1,277 @@
+/* src/styles/spread.css — the room of Spread (/spread, 2026-09-04).
+ *
+ * Almost every `--sp-*` custom property below is an ALIAS of the frame's own mono tokens, so
+ * buys and sells are told apart by FORM (filled vs hollow) and venues by LABEL, never by hue.
+ * The canvas reads these same tokens at runtime through src/lib/spread/ink.ts — the seam
+ * LivingGlobe.tsx's readInk established for a layer that cannot take a CSS class.
+ *
+ * ONE hue does appear, and it is not a new one. The frame's `--color-accent` is a TONE in this
+ * house's mono skin (#2c2c33 light, #c2c2c8 dark), so a band painted with it reads as a slightly
+ * darker grey — which is exactly what the first build of this page looked like, and exactly what
+ * the owner meant on 2026-09-04 when he said the recent work was no feast for the eyes. The
+ * moment the venues disagree is the whole subject of this work, and it has to be visible from
+ * across the room.
+ *
+ * PALETTE: --sp-flare aliases the living globe's own front ink (`--globe-c-front`, #10627a light
+ * / #7fd0e8 dark), which is already recorded and all-pairs validated as `globe-voices` in
+ * src/lib/dataviz/palette.ts. It is the same meaning here as there — the live thing standing in
+ * front of the mono record — so it reuses that record rather than opening a second one, and no
+ * new hue enters the house.
+ */
+
+.sp-room {
+  --sp-mark: var(--color-fg);
+  --sp-band: var(--color-accent);
+  --sp-grid: var(--color-line);
+  --sp-muted: var(--color-fg-muted);
+  /* PALETTE: the recorded live front ink — see the header, record `globe-voices` */
+  --sp-flare: #10627a;
+}
+
+:root:not([data-theme='light']) .sp-room {
+  /* PALETTE: the dark half of the same recorded ink */
+  --sp-flare: #7fd0e8;
+}
+
+:root[data-theme='dark'] .sp-room {
+  /* PALETTE: the dark half of the same recorded ink */
+  --sp-flare: #7fd0e8;
+}
+
+.sp-figure {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+}
+
+.sp-canvas {
+  display: block;
+  width: 100%;
+  height: clamp(260px, 42vw, 460px);
+  touch-action: none;
+  cursor: crosshair;
+  /* Canvas2D's `font` cannot read a CSS custom property directly — Spread.tsx resolves these
+     two computed longhands once per frame and hands them straight to ctx.font. */
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.sp-canvas:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: -2px;
+}
+
+/* The readout shell. Every other figure in this house renders src/components/dataviz/Readout.astro
+   from its ASTRO FRAME (a frame+island split), which is where that file's own scoped <style>
+   block supplies the structural rules below. Spread is one self-contained island — the figure,
+   its controls and its ledger all share one piece of state — so there is no separate frame to
+   render <Readout> from; this block is that same structural contract (position, clamp-anchor,
+   never a hit target — dataviz/readout.ts's three house rules), copied rather than inherited,
+   plus this room's own ink on top. */
+.sp-room .dv-readout {
+  position: absolute;
+  inset: 0 auto auto 0;
+  z-index: 10;
+  pointer-events: none;
+  max-width: 34ch;
+  will-change: transform;
+  transform: translate(var(--dv-x, 0px), var(--dv-y, 0px));
+  padding: 6px 9px;
+  border: 1px solid var(--color-line-lift);
+  border-radius: var(--radius-sm);
+  background: var(--color-panel);
+  color: var(--color-fg);
+  font: var(--text-mono-sm) / 1.5 var(--font-mono);
+  box-shadow: var(--elev-float);
+}
+.sp-room .dv-readout .r-head {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+.sp-room .dv-readout .r-body,
+.sp-room .dv-readout .r-src {
+  display: block;
+  color: var(--color-fg-muted);
+}
+
+/* ── controls ─────────────────────────────────────────────────────────── */
+
+.sp-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-line);
+}
+
+.sp-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sp-control-legend {
+  font: var(--text-mono-sm) / 1.4 var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-fg-faint);
+}
+
+/* The controls: buttons the frame styles, never native boxes with the browser's own blue.
+   `data-on` carries the state, the same seam the room at /globe uses for its layer toggles. */
+.sp-toggle-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.sp-toggle {
+  align-self: start;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 4px 9px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-fg-muted);
+  font: var(--text-mono-sm) / 1.3 var(--font-mono);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease;
+}
+
+.sp-toggle:hover {
+  border-color: var(--color-line-lift);
+  color: var(--color-fg);
+}
+
+.sp-toggle:focus-visible {
+  outline: 2px solid var(--sp-flare);
+  outline-offset: 2px;
+}
+
+.sp-toggle[data-on='yes'] {
+  border-color: var(--color-fg-muted);
+  background: var(--color-panel-solid);
+  color: var(--color-fg);
+}
+
+.sp-toggle[data-status='down'] .sp-venue-status::before {
+  content: '! ';
+}
+
+.sp-control-hint {
+  max-width: 34ch;
+  color: var(--color-fg-faint);
+  font: var(--text-mono-sm) / 1.5 var(--font-mono);
+}
+
+.sp-venue-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: var(--text-mono-sm) / 1.4 var(--font-mono);
+}
+
+.sp-venue-status {
+  color: var(--color-fg-faint);
+}
+
+/* an explicit form change, not a hue, marks a down venue */
+.sp-venue-row[data-status='down'] .sp-venue-status::before {
+  content: '! ';
+}
+
+.sp-asset-group {
+  display: flex;
+  gap: 6px;
+}
+
+/* ── the live venue legend (accessible, updates alongside the canvas) ───── */
+
+.sp-legend {
+  display: grid;
+  gap: 4px;
+  margin-top: 12px;
+  font: var(--text-mono-sm) / 1.5 var(--font-mono);
+}
+
+.sp-legend-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--color-fg-muted);
+}
+
+.sp-legend-row[data-status='live'] {
+  color: var(--color-fg);
+}
+
+.sp-legend-price {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── the ledger of disagreement ──────────────────────────────────────── */
+
+.sp-ledger-list {
+  display: grid;
+  gap: 1px;
+  margin-top: 10px;
+  max-height: 20rem;
+  overflow-y: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+}
+
+.sp-ledger-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  width: 100%;
+  padding: 7px 10px;
+  border: none;
+  background: var(--color-panel);
+  color: var(--color-fg);
+  font: var(--text-mono-sm) / 1.4 var(--font-mono);
+  text-align: left;
+  cursor: pointer;
+}
+
+.sp-ledger-row:nth-child(even) {
+  background: var(--color-panel-2);
+}
+
+.sp-ledger-row:hover,
+.sp-ledger-row[aria-pressed='true'] {
+  background: var(--color-hover);
+}
+
+.sp-ledger-gap {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-fg-muted);
+}
+
+.sp-ledger-empty {
+  padding: 10px;
+  color: var(--color-fg-faint);
+  font: var(--text-mono-sm) / 1.5 var(--font-mono);
+}
+
+.sp-counter {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-canvas {
+    /* the field still redraws on new data (Spread.tsx switches to an interval loop under this
+       preference) — this only removes the cursor's implied continuous motion affordance */
+    cursor: default;
+  }
+}

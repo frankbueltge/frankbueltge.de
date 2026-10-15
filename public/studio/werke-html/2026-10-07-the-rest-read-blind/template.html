@@ -1,0 +1,83 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Long Read</title>
+<style>
+:root{--bg:#14110f;--ink:#ece4d6;--mute:#9a9183;--line:#3a332b;--a:#e0a458;--b:#7fb069;--c:#6c9bd1;--r:#d9695f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 Georgia,serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 60px}h1{font-size:2rem;margin:.2em 0}h2{font-size:1.15rem;margin:1.8em 0 .4em;color:var(--a)}
+p{max-width:68ch}.mute{color:var(--mute)}.mono{font-family:ui-monospace,Menlo,monospace;font-size:.85em}
+.row{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:10px 0}
+button{background:#25201a;color:var(--ink);border:1px solid #5a4f40;padding:8px 12px;font:inherit;font-size:.9rem;cursor:pointer;min-height:40px}
+button[aria-pressed=true]{background:var(--a);color:#14110f;border-color:var(--a)}
+svg{width:100%;height:auto;display:block;background:#1b1713;border:1px solid var(--line)}
+.big{font-size:1.45rem}table{border-collapse:collapse;width:100%;font-size:.88rem}td,th{border-bottom:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+input[type=range]{width:260px;max-width:100%}.cells{display:flex;flex-wrap:wrap;gap:2px;margin:8px 0}.cells i{width:11px;height:11px;background:#3b4a33;display:block}.cells i.o{background:var(--r)}.cells i.u{background:var(--a)}.cells i.off{opacity:.18}
+</style></head><body><main>
+<p class="mono mute">The Studio · cycle 005 · Missing Data Art · 2026-10-07</p>
+<h1>The Long Read</h1>
+<p>Last night 135 photographs the archive may not show were read, drawn by lot from the tortoise records, and none held anything but a living animal. Against 4 of 135 among the photographs it may show, that looked like a difference. The Atelier asked for at least 85 more, drawn the same way. <b>Ninety were read.</b> Three held no living animal. This page replays what the reading is worth, frame by frame, and lets you change the order it came in.</p>
+<h2>225 frames the licence forbids showing, one square each</h2>
+<div class="cells" id="cells" aria-label="225 squares, one per frame read"></div>
+<p class="mute" id="legend"></p>
+<h2>The running share, in the order you choose</h2>
+<div class="row"><label>Frames read so far: <b id="nv"></b> <input id="n" type="range" min="1" max="225" value="225"></label>
+<span><button id="shuf">draw another order</button> <button id="orig" aria-pressed="false">order as read</button></span>
+<span>The one unclear shell is: <button id="uL" aria-pressed="true">living</button> <button id="uN" aria-pressed="false">no living animal</button></span></div>
+<div class="big" id="line"></div>
+<svg id="fig" viewBox="0 0 700 300" role="img" aria-label="Running share of frames with no living animal against frames read, with the licensed lot's interval as a band"></svg>
+<p class="mono mute" id="seed"></p>
+<h2>Against the photographs that may be shown</h2>
+<table id="tab"></table>
+<h2>The four frames that were not plain</h2>
+<table id="odd"></table>
+<h2>What this does to last night's claim</h2>
+<p id="claim"></p>
+<h2>How it is made, and where it can be wrong</h2>
+<p class="mute" id="how"></p>
+<p class="mono mute" id="nb"></p>
+</main>
+<script>
+const D=__DATA__;
+const F=D.frames,R=D.results;
+const $=id=>document.getElementById(id);
+function wilson(k,n,z=1.96){const p=k/n,d=1+z*z/n,c=(p+z*z/2/n)/d,h=z*Math.sqrt(p*(1-p)/n+z*z/4/n/n)/d;return[c-h,c+h]}
+function lc(n,k){let s=0;for(let i=1;i<=n;i++)s+=Math.log(i);for(let i=1;i<=k;i++)s-=Math.log(i);for(let i=1;i<=n-k;i++)s-=Math.log(i);return s}
+function fisher(a,n1,b,n2){const N=n1+n2,K=a+b,pr=x=>Math.exp(lc(n1,x)+lc(n2,K-x)-lc(N,K)),p0=pr(a);let s=0;for(let x=Math.max(0,K-n2);x<=Math.min(n1,K);x++){const p=pr(x);if(p<=p0*(1+1e-9))s+=p}return Math.min(1,s)}
+function rng(s){return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const pct=x=>(100*x).toFixed(1)+' %';
+let unc='L',seed=157,order=null,asRead=false;
+const isOdd=f=>f.cls==='remains'||f.cls==='no_animal'||(f.cls==='unclear'&&unc==='N');
+function mkOrder(s){const r=rng(s),a=F.map((_,i)=>i);for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function path(ord){let k=0;return ord.map((i,t)=>{if(isOdd(F[i]))k++;return k})}
+const LIC=[4,135],LW=wilson(4,135);
+function draw(){
+ const ord=asRead?F.map((_,i)=>i):order,n=+$('n').value;$('nv').textContent=n;
+ const P=path(ord),k=P[n-1],w=wilson(k,n);
+ $('line').innerHTML=`${k} of ${n} with no living animal: <b>${pct(k/n)}</b> <span class="mute">(${pct(w[0])} to ${pct(w[1])})</span>`;
+ const X=t=>50+(t-1)/224*630,ymax=0.10,Y=v=>260-Math.min(v,ymax)/ymax*230;let s='';
+ s+=`<rect x="50" y="${Y(LW[1])}" width="630" height="${Y(LW[0])-Y(LW[1])}" fill="#6c9bd1" opacity=".22"/><line x1="50" x2="680" y1="${Y(4/135)}" y2="${Y(4/135)}" stroke="#6c9bd1" stroke-dasharray="4 3"/><text x="684" y="${Y(4/135)-4}" fill="#6c9bd1" font-size="10" text-anchor="end">licensed lot, 4 of 135</text>`;
+ for(let g=0;g<=10;g+=2)s+=`<line x1="50" x2="680" y1="${Y(g/100)}" y2="${Y(g/100)}" stroke="#3a332b"/><text x="44" y="${Y(g/100)+4}" fill="#9a9183" font-size="10" text-anchor="end">${g} %</text>`;
+ for(let t=0;t<=225;t+=45)s+=`<text x="${X(Math.max(1,t))}" y="282" fill="#9a9183" font-size="10" text-anchor="middle">${t}</text>`;
+ const rr=rng(seed*7+1);
+ if(!asRead)for(let q=0;q<40;q++){const o=mkOrder(Math.floor(rr()*1e9)),p=path(o);let d='';for(let t=20;t<=225;t++)d+=(t==20?'M':'L')+X(t).toFixed(1)+' '+Y(p[t-1]/t).toFixed(1);s+=`<path d="${d}" fill="none" stroke="#9a9183" stroke-width=".7" opacity=".28"/>`}
+ let d='',band='',up='',lo='';for(let t=8;t<=225;t++){const q=wilson(P[t-1],t);d+=(t==8?'M':'L')+X(t).toFixed(1)+' '+Y(P[t-1]/t).toFixed(1);up+=(t==8?'':'L')+X(t).toFixed(1)+' '+Y(q[1]).toFixed(1)+' ';lo=`L${X(t).toFixed(1)} ${Y(q[0]).toFixed(1)} `+lo}
+ s+=`<path d="M${up}${lo}Z" fill="#e0a458" opacity=".14"/><path d="${d}" fill="none" stroke="#e0a458" stroke-width="2"/>`;
+ s+=`<line x1="${X(n)}" x2="${X(n)}" y1="30" y2="260" stroke="#ece4d6" opacity=".5"/><text x="50" y="18" fill="#9a9183" font-size="10">share with no living animal · amber: this order, with its 95 % band · grey: 40 other orders</text><text x="365" y="297" fill="#9a9183" font-size="10" text-anchor="middle">frames read</text>`;
+ $('fig').innerHTML=s;
+ $('seed').textContent=asRead?'Order as read: the 135 of last night, then these 90 (each sorted by record key).':'Order seed '+seed+' (a seeded shuffle of all 225; press again for another).';
+ $('orig').setAttribute('aria-pressed',asRead);
+ $('uL').setAttribute('aria-pressed',unc==='L');$('uN').setAttribute('aria-pressed',unc==='N');
+ const cs=$('cells');cs.innerHTML='';ord.forEach((i,t)=>{const e=document.createElement('i');if(isOdd(F[i]))e.className='o';else if(F[i].cls==='unclear')e.className='u';if(t>=n)e.classList.add('off');e.title=(F[i].lot==='A'?'last night':'tonight')+' · record '+F[i].key;cs.appendChild(e)});
+ const K=P[224],kk=K,w2=wilson(K,225),f1=fisher(4,135,K,225);
+ $('tab').innerHTML=`<tr><th></th><th>no living animal</th><th>share (95 %)</th></tr><tr><td>licensed to show (read in full)</td><td>4 of 135</td><td>${pct(4/135)} (${pct(LW[0])} to ${pct(LW[1])})</td></tr><tr><td>forbidden to show, first draw (last night)</td><td>0 of 135</td><td>0 % (0 to ${pct(wilson(0,135)[1])})</td></tr><tr><td>forbidden to show, further draw (tonight)</td><td>${unc==='N'?4:3} of 90</td><td>${pct((unc==='N'?4:3)/90)} (${pct(wilson(unc==='N'?4:3,90)[0])} to ${pct(wilson(unc==='N'?4:3,90)[1])})</td></tr><tr><td><b>forbidden to show, both draws</b></td><td><b>${K} of 225</b></td><td>${pct(K/225)} (${pct(w2[0])} to ${pct(w2[1])})</td></tr><tr><td>Fisher exact, licensed v both draws</td><td colspan="2">p = ${f1.toFixed(2)}</td></tr><tr><td>Fisher exact, the two draws of the same lot against each other</td><td colspan="2">p = ${fisher(0,135,unc==='N'?4:3,90).toFixed(3)}</td></tr>`;
+}
+function init(){
+ order=mkOrder(seed);
+ $('legend').innerHTML='Red: no living animal (3 settled). Amber: one unclear. Green: a living animal, as read. Squares beyond the slider are dimmed. Hover for the record key.';
+ $('odd').innerHTML='<tr><th>Frame</th><th>What the Studio reads</th><th>Record</th></tr>'+D.odd.map(o=>`<tr><td>${o.tag}</td><td>${o.note}</td><td><a style="color:#e0a458" href="https://www.gbif.org/occurrence/${o.key}">${o.key}</a></td></tr>`).join('');
+ $('claim').innerHTML=`Last night's page set 0 of 135 against 4 of 135 and called the difference not settled (p 0.12). The further draw settles part of it: the two draws of the <i>same</i> lot disagree with each other more (0 of 135, then 3 of 90; p 0.063) than the licensed lot disagrees with either. Together the forbidden-to-show frames hold <b>3 of 225</b> with no living animal (0.5 to 3.8 %), the licensed 4 of 135 (1.2 to 7.4 %); p 0.43. The Atelier's pointer to one population holds up: the licence line shows no difference the data can tell from chance. The single bone is also what it was: 1 in 135 licensed, 1 in 225 not. What does not follow is "no difference": two lots of this size cannot rule out a factor of two either way. Whether the unclear shell is called living moves the pooled count between 3 and 4 and the p between 0.43 and 0.48.`;
+ $('how').innerHTML=`Frames: GBIF human-observation records with a still image of <i>Chelonoidis niger</i>, 2010 on, retrieved 2026-10-07 (1,528). Further draw: 90 simple random from the 1,255 forbidden-to-show records not yet read, seed 20261007157, sorted by key; 81 distinct observers (hashed). Read by one reader (the Studio) from contact sheets at about 500 px, four frames in doubt (the unclear shell, a pond scene, a distant pond, a dropping) again at up to 2048 px; the empty shell and the second dung frame on the sheet only. A frame counts as "no living animal" if the frame holds no animal at all or only remains. Seven frames show animals tiny or half-submerged and were called living. Photographs are neither stored nor shown: their licence forbids showing. The 95 % bands are Wilson intervals that treat frames as independent; the Field's observer-clustering correction (rho) would widen them slightly (181 observers over 225 frames, so little). The licensed lot's 4 of 135 is the Studio's corrected reading (2026-10-07). Estimates are marked as estimates.`;
+ $('nb').innerHTML='Neighbours (Atlas of Data Art): Mushroom Clouds, Zheng Mahler (a small, hand-made, hand-sorted dataset set against data scale; Atlas line, source page not readable); 100% City, Rimini Protokoll (a chosen sample stands for a population; page read 2026-10-07). Daylight: neither asks how many items must be read before the sample can say anything; here the order of reading is the visitor’s.';
+ draw();
+}
+$('n').oninput=draw;$('shuf').onclick=()=>{asRead=false;seed=seed+1;order=mkOrder(seed);draw()};$('orig').onclick=()=>{asRead=!asRead;draw()};$('uL').onclick=()=>{unc='L';draw()};$('uN').onclick=()=>{unc='N';draw()};
+init();
+</script></body></html>

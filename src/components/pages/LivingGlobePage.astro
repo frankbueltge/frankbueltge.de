@@ -1,0 +1,173 @@
+---
+/** Living Globe (/globe) — one globe over everything this house measures on the earth.
+ *
+ *  G0 laid the floor: the plate, the legend and the tables, all drawn at build time from committed
+ *  files. G1 puts the room on top of it. The island (LivingGlobe.tsx) mounts ON this plate and
+ *  takes over the drawing — layers on and off, the day axis, a card with receipts behind every
+ *  mark — and what a reader sees without JavaScript is exactly what stays when WebGL never
+ *  arrives: the plate, the legend with every layer's provenance, and one table per layer holding
+ *  every mark on it.
+ *
+ *  G2 puts guided stories beside it (2026-09-03): three that shipped the same day the room did, and
+ *  three more — Balance, Consensus and Redaction, deliberately left unwritten until G3 registered
+ *  the layers they read — added later the same day once those layers existed. All six are ordinary
+ *  tours on the house's own tour engine, and they drive the ONE island this page already mounts — a
+ *  second globe would be a second WebGL context and a second truth. The figure therefore stands in
+ *  a sticky column while the stories scroll past it: each scene asks for a set of layers, a night
+ *  of the archive, a place to stand and at most one selected mark, and nothing else. Without
+ *  JavaScript the column is an ordinary figure at the top of an ordinary page and every story is a
+ *  complete article under it.
+ *
+ *  Every number on the page is derived: the days come from the archive's filenames, the counts
+ *  from the frames themselves, the as-of dates from the records. Not one is typed. Every mark in
+ *  the plate and every row in the tables carries the file it came from and the locator inside it,
+ *  which is the whole claim this experiment makes — a globe of one house's own nightly archive,
+ *  where every dot can be followed back into a committed file.
+ */
+import type { Topology } from 'topojson-specification'
+import land from '@/data/globe/land-110m.json'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import Readout from '@/components/dataviz/Readout.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import Tour from '@/components/dataviz/Tour.astro'
+import { GLOBE_FIGURE, GLOBE_STORIES } from '@/lib/tour/globe-stories'
+import { GLOBE, placePhrase } from '@/config/globe-wording'
+import { buildLayeredFloorSvg } from '@/lib/globe/floor'
+import { LAYERS } from '@/lib/globe/layers'
+import type { LayerRecord } from '@/lib/globe/layers/types'
+import { buildLivingGlobe, frameAt } from '@/lib/globe/living'
+import { buildManifest } from '@/lib/globe/feeds'
+import '@/styles/experiment-sheet.css'
+import '@/styles/living-globe.css'
+
+import LivingGlobe from './LivingGlobe'
+
+const model = buildLivingGlobe()
+const moment = frameAt(model, model.newest)
+const manifest = buildManifest(model)
+
+const place = (record: LayerRecord): string => placePhrase(record, GLOBE.island.place)
+
+const markLabel = (record: LayerRecord, layerId: string): string =>
+  GLOBE.floor.mark(LAYERS.find((l) => l.id === layerId)?.title ?? layerId, record.receipt.words, place(record))
+
+const marksToday = LAYERS.reduce((sum, layer) => sum + moment.layers[layer.id].records.length, 0)
+
+const floor = buildLayeredFloorSvg({
+  land: land as unknown as Topology,
+  layers: LAYERS.map((layer) => ({ id: layer.id, kind: layer.kind, frame: moment.layers[layer.id] })),
+  labels: {
+    title: GLOBE.floor.title,
+    desc: GLOBE.floor.desc(model.newest, marksToday, LAYERS.length),
+    mark: markLabel,
+  },
+})
+
+/** Every registered layer is on when the room opens, and the ghost fleet stands in front: its
+ *  arcs are the marks that read at a glance on a sphere, and it is the one layer this house
+ *  already records a colour for. Derived from the registry, so a layer added in a later phase
+ *  joins the room without an edit here. */
+const FRONT = 'ghost-fleet'
+const defaultLayers = [...LAYERS.map((l) => l.id).filter((id) => id !== FRONT), ...LAYERS.filter((l) => l.id === FRONT).map((l) => l.id)]
+
+const READOUT_ID = 'living-globe-readout'
+/** the one figure id in this house's globe: exported by the stories module, so the room and the
+ *  scenes that drive it cannot drift into two figures that never find each other */
+const FIGURE_ID = GLOBE_FIGURE
+
+const tables = LAYERS.map((layer) => {
+  const frame = moment.layers[layer.id]
+  return {
+    layer,
+    frame,
+    entry: manifest.layers.find((l) => l.id === layer.id)!,
+    rows: frame.records.map((record) => ({
+      mark: record.receipt.words,
+      where: place(record),
+      read: `${record.receipt.file} · ${record.receipt.locator}`,
+    })),
+  }
+})
+---
+
+<main id="main" class="flex-1">
+  <article class="sheet-body mx-auto max-w-5xl px-4 py-14">
+    <SheetHead
+      kicker={GLOBE.sheet.kicker}
+      title={GLOBE.sheet.title}
+      sub={GLOBE.sheet.sub}
+      stamp={model.newest}
+      badges={GLOBE.sheet.badges}
+    />
+
+    {/* The room: ONE figure, and the stories that drive it beside it. The figure comes first in
+        the document, so with no JavaScript (or no WebGL) the page reads as it always did — plate,
+        legend, tables — and the stories follow as three ordinary articles. With JavaScript the
+        figure holds its place in a sticky column while the scenes scroll past it. */}
+    <div class="globe-room">
+      <div class="globe-room-figure">
+        <figure>
+          <div class="globe-stage">
+            <LivingGlobe
+              client:idle
+              floorSvg={floor}
+              manifest={manifest}
+              wording={GLOBE.island}
+              readoutId={READOUT_ID}
+              figureId={FIGURE_ID}
+              defaultLayers={defaultLayers}
+            />
+            <Readout id={READOUT_ID} maxWidth="44ch" />
+          </div>
+          <figcaption class="mt-3 font-mono text-mono text-fg-faint">
+            {GLOBE.sheet.caption(model.newest, marksToday, LAYERS.length)}
+          </figcaption>
+        </figure>
+      </div>
+
+      <section class="globe-stories" aria-labelledby="globe-stories-heading">
+        <h2 class="kicker mb-3" id="globe-stories-heading">{GLOBE.stories.heading}</h2>
+        <p class="mb-3 text-body text-fg-muted">{GLOBE.stories.lead}</p>
+        <p class="mb-6 font-mono text-mono text-fg-faint">{GLOBE.stories.hint}</p>
+        {
+          /* No `figure` slot: each story DRIVES the island above rather than carrying a globe of
+             its own (see Tour.astro's `carriesFigure`). Six tours, one figure id, one globe — in
+             the order GLOBE_STORIES fixes (see that array's own comment for why). */
+          GLOBE_STORIES.map((story) => <Tour tour={story} />)
+        }
+      </section>
+    </div>
+
+    <section class="mb-10">
+      <h2 class="kicker mb-3">{GLOBE.sheet.recordHeading}</h2>
+      <p class="mb-3 max-w-3xl text-body text-fg-muted">{GLOBE.sheet.recordLead}</p>
+      <div class="globe-tables">
+        {
+          tables.map(({ layer, rows, entry }) => (
+            <TableFallback
+              summary={GLOBE.sheet.tableSummary(layer.title, rows.length, model.newest)}
+              columns={[
+                { key: 'mark', label: GLOBE.sheet.columns.mark },
+                { key: 'where', label: GLOBE.sheet.columns.where, nowrap: false },
+                { key: 'read', label: GLOBE.sheet.columns.read },
+              ]}
+              rows={rows}
+              caption={GLOBE.sheet.tableCaption(layer.title, model.newest)}
+              provenance={GLOBE.sheet.tableProvenance(entry.source.file, entry.source.name, entry.source.license, entry.href)}
+            />
+          ))
+        }
+      </div>
+    </section>
+
+    <SheetFoot>
+      <p>{GLOBE.sheet.foot(model.days.length, model.days[0], model.newest)}</p>
+      <p class="mt-1">
+        {GLOBE.sheet.footSources} · <a href={GLOBE.sheet.links.method.href}>{GLOBE.sheet.links.method.label}</a> ·
+        {' '}<a href={GLOBE.sheet.links.manifest.href}>{GLOBE.sheet.links.manifest.label}</a> ·
+        {' '}<a href={GLOBE.sheet.links.experiments.href}>{GLOBE.sheet.links.experiments.label}</a>
+      </p>
+    </SheetFoot>
+  </article>
+</main>

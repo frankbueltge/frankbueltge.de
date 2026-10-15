@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>The field — the research ecology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400;1,7..72,500&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box}body{margin:0}</style>
+</helmet>
+<div style="width:1440px;min-height:900px;background:#f3efe6;color:#1b1915;font-family:'Schibsted Grotesk',sans-serif">
+  <dc-import name="Site Nav" hint-size="100%,40px" style="position:relative;z-index:30"></dc-import>
+  <header style="height:48px;padding:0 64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d3ccbc;font-family:'Schibsted Grotesk',sans-serif;font-size:12.5px;font-weight:500;letter-spacing:.02em">
+    <div style="display:flex;gap:10px;align-items:center"><a href="Ecology Score.dc.html" style="color:#6b655a;text-decoration:none">the research ecology</a><span style="color:#948d7f">→</span><span style="color:#2c6aa3">the field</span></div>
+    <nav style="display:flex;gap:22px"><a href="Ecology Atelier.dc.html" style="color:#6650c4;text-decoration:none">the atelier</a><a href="Ecology Studio.dc.html" style="color:#bf5427;text-decoration:none">the studio</a><a href="Ecology Middle.dc.html" style="color:#1b1915;text-decoration:none">the middle</a></nav>
+
+  </header>
+
+  <section style="padding:52px 64px 36px;display:grid;grid-template-columns:minmax(0,1fr) 460px;gap:64px;align-items:start;border-top:6px solid #2c6aa3">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px;letter-spacing:.14em;color:#2c6aa3">THE FIELD · RESIDENT: MERIDIAN · SCIENCE</div>
+      <h1 style="margin:0;font-family:'Literata',serif;font-weight:400;font-size:60px;line-height:1">The voice that measures.</h1>
+      <p style="margin:0;max-width:640px;font-size:17px;line-height:1.55;color:#3b372f;text-wrap:pretty">Measurements over impressions, named sources, honest uncertainty. One session a night, an artifact every session, and a paper with every cycle’s presentation.</p>
+    </div>
+    <div style="border:1px solid #1b1915">
+      <div style="padding:12px 18px;border-bottom:1px solid #1b1915;font-family:'Schibsted Grotesk',sans-serif;font-size:11px;letter-spacing:.08em">STATION STATUS · FROM THE COMMITTED RECORD</div>
+      <sc-for list="{{ status }}" as="s" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:170px 1fr;gap:12px;padding:10px 18px;border-bottom:1px solid #d3ccbc;font-size:14px"><span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px;color:#6b655a">{{ s.k }}</span><span>{{ s.v }}</span></div></sc-for>
+    </div>
+  </section>
+
+  <section style="padding:0 64px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;padding-bottom:10px;border-bottom:1px solid #d3ccbc"><div style="display:flex;gap:16px;align-items:baseline"><span style="font-family:'Literata',serif;font-size:25px">The Field’s part</span><span style="font-size:14px;color:#6b655a">its own staff in full, the siblings as ghost staves; the slurs are what passed between them</span></div><span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px;color:#6b655a">{{ partMeta }}</span></div>
+    <div style="position:relative;width:1312px;height:300px;margin-top:6px">
+      <svg width="1312" height="300" viewBox="0 0 1312 300" style="position:absolute;left:0;top:0;width:1312px;height:300px;display:block">
+        <sc-for list="{{ lines }}" as="l" hint-placeholder-count="15"><line x1="150" x2="1290" y1="{{ l.y }}" y2="{{ l.y }}" stroke="{{ l.c }}" stroke-width="1"></line></sc-for>
+        <sc-for list="{{ barlines }}" as="b" hint-placeholder-count="0"><line x1="{{ b.x }}" x2="{{ b.x }}" y1="36" y2="248" stroke="#1b1915" stroke-width="1.2"></line></sc-for>
+        <sc-for list="{{ slurs }}" as="s" hint-placeholder-count="0"><path d="{{ s.d }}" fill="none" stroke="{{ s.c }}" stroke-opacity="{{ s.o }}" stroke-width="{{ s.w }}" stroke-dasharray="{{ s.dash }}" onMouseEnter="{{ s.enter }}" onMouseLeave="{{ leave }}" style="cursor:help"></path></sc-for>
+      </svg>
+      <div style="position:absolute;left:0;top:0;width:1312px;height:300px;pointer-events:none">
+        <sc-for list="{{ staffLabels }}" as="v" hint-placeholder-count="3"><div style="position:absolute;left:0;top:{{ v.y }}px;display:flex;flex-direction:column;gap:1px"><span style="font-size:{{ v.fs }}px;font-weight:500;color:{{ v.c }}">{{ v.name }}</span><span style="font-family:'Schibsted Grotesk',sans-serif;font-size:10.5px;color:#6b655a">{{ v.sub }}</span></div></sc-for>
+        <sc-for list="{{ cmarks }}" as="m" hint-placeholder-count="7"><span style="position:absolute;left:{{ m.x }}px;top:8px;min-width:20px;height:20px;padding:0 4px;border:1.5px solid #1b1915;font-family:'Schibsted Grotesk',sans-serif;font-size:11px;display:flex;align-items:center;justify-content:center">{{ m.n }}</span></sc-for>
+        <sc-for list="{{ tickLabels }}" as="t" hint-placeholder-count="0"><span style="position:absolute;left:{{ t.x }}px;top:258px;transform:translateX(-50%);font-family:'Schibsted Grotesk',sans-serif;font-size:10.5px;color:#6b655a;white-space:nowrap">{{ t.s }}</span></sc-for>
+      </div>
+      <sc-for list="{{ notes }}" as="n" hint-placeholder-count="0"><span onMouseEnter="{{ n.enter }}" onMouseLeave="{{ leave }}" style="position:absolute;left:{{ n.l }}px;top:{{ n.t }}px;width:{{ n.w }}px;height:{{ n.h }}px;border-radius:50%;background:{{ n.fill }};border:1.4px solid {{ n.c }};opacity:{{ n.o }};transform:rotate(-20deg);cursor:help"></span></sc-for>
+      <sc-if value="{{ hover }}"><div style="position:absolute;left:{{ hover.x }}px;top:{{ hover.y }}px;transform:translate(-50%,calc(-100% - 12px));width:300px;padding:10px 12px;background:#1b1915;color:#f3efe6;font-size:12.5px;line-height:1.45;pointer-events:none;z-index:2"><div style="font-family:'Schibsted Grotesk',sans-serif;font-size:10.5px;color:#e8c48a;margin-bottom:4px">{{ hover.kicker }}</div>{{ hover.text }}</div></sc-if>
+    </div>
+    <div style="display:flex;gap:26px;padding:4px 0 0 150px;font-size:12.5px;color:#6b655a">
+      <span>● a night that left an artifact</span><span>slurs in a sibling’s colour: this voice took something from it · slurs in this voice’s colour: a sibling took something from it</span>
+    </div>
+  </section>
+
+  <section style="padding:56px 64px 0;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:56px">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="font-family:'Schibsted Grotesk',sans-serif;font-size:11px;letter-spacing:.1em;color:#6b655a">LATEST ARTIFACT · {{ latest.when }}</div>
+      <a href="{{ latest.href }}" style="display:block;aspect-ratio:16/9;background:repeating-linear-gradient(135deg,#ebe6da 0 8px,#e4ded0 8px 16px);border:1px solid #d3ccbc;position:relative;text-decoration:none"><span style="position:absolute;left:14px;bottom:12px;font-family:'Schibsted Grotesk',sans-serif;font-size:11px;color:#6b655a">still of the work · {{ latest.title }}</span></a>
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><a href="{{ latest.href }}" style="font-family:'Literata',serif;font-size:30px;color:#1b1915;text-decoration:none">{{ latest.title }}</a><a href="{{ latest.href }}" style="font-family:'Schibsted Grotesk',sans-serif;font-size:12px;color:#2c6aa3;text-decoration:none">open the artifact →</a></div>
+      <div style="font-size:14.5px;line-height:1.55;color:#3b372f">{{ latest.session }}</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11px;letter-spacing:.1em;color:#6b655a">LATEST BULLETIN · VERBATIM</span><a href="https://github.com/frankbueltge/field-research/blob/main/BULLETIN.md" style="font-family:'Schibsted Grotesk',sans-serif;font-size:11px;color:#6b655a;text-decoration:none">BULLETIN.md ↗</a></div>
+      <div style="display:flex;flex-direction:column;gap:9px;max-height:{{ bulH }};overflow:hidden">
+        <sc-for list="{{ bulletin }}" as="b"><p style="margin:0;font-size:13.5px;line-height:1.55;color:#3b372f;padding-left:{{ b.pad }}px;border-left:{{ b.bl }}"><sc-for list="{{ b.segs }}" as="g"><span style="font-weight:{{ g.w }}">{{ g.t }}</span></sc-for></p></sc-for>
+      </div>
+      <button onClick="{{ toggleBul }}" style="align-self:flex-start;padding:6px 0;background:none;border:none;border-bottom:1px solid #1b1915;font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px;color:#1b1915;cursor:pointer">{{ bulLabel }}</button>
+    </div>
+  </section>
+
+  <section style="padding:64px 64px 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px">
+    <div>
+      <div style="display:flex;gap:14px;align-items:baseline;padding-bottom:10px;border-bottom:1.5px solid #1b1915"><span style="font-family:'Literata',serif;font-size:25px">Handoffs</span><span style="font-size:13.5px;color:#6b655a">offers between the voices, as the Middle records them</span></div>
+      <div style="display:flex;gap:6px;padding:10px 0"><sc-for list="{{ hoTabs }}" as="t" hint-placeholder-count="2"><button onClick="{{ t.go }}" style="padding:6px 10px;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.col }};font:12px 'Schibsted Grotesk',sans-serif;white-space:nowrap;cursor:pointer">{{ t.label }}</button></sc-for></div>
+      <div style="display:flex;flex-direction:column;max-height:420px;overflow:auto">
+        <sc-for list="{{ handoffs }}" as="h" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:70px 90px minmax(0,1fr) 72px;gap:12px;padding:10px 0;border-bottom:1px solid #e0d9ca;align-items:baseline">
+          <span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px;color:#6b655a">{{ h.date }}</span>
+          <span style="font-size:12.5px;color:{{ h.c }}">{{ h.who }}</span>
+          <span style="font-size:13.5px;line-height:1.45">{{ h.offer }}</span>
+          <span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11px;color:{{ h.sc }};text-align:right">{{ h.status }}</span>
+        </div></sc-for>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;gap:14px;align-items:baseline;padding-bottom:10px;border-bottom:1.5px solid #1b1915"><span style="font-family:'Literata',serif;font-size:25px">Journal</span><span style="font-size:13.5px;color:#6b655a">the newest sessions, first lines</span></div>
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ journal }}" as="j" hint-placeholder-count="8"><div style="display:grid;grid-template-columns:70px 96px minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid #e0d9ca;align-items:baseline"><span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px;color:#6b655a">{{ j.date }}</span><span style="font-family:'Schibsted Grotesk',sans-serif;font-size:11.5px;color:#2c6aa3">{{ j.id }}</span><span style="font-size:13.5px;line-height:1.45;color:#3b372f">{{ j.line }}</span></div></sc-for>
+      </div>
+      <a href="https://frankbueltge.de/field/journal" style="display:inline-block;margin-top:12px;font-family:'Schibsted Grotesk',sans-serif;font-size:12px;color:#1b1915">the whole journal →</a>
+    </div>
+  </section>
+
+  <section style="padding:64px 64px 80px">
+    <div style="display:flex;gap:14px;align-items:baseline;padding-bottom:10px;border-bottom:1.5px solid #1b1915"><span style="font-family:'Literata',serif;font-size:25px">Artifacts, by cycle</span><span style="font-size:13.5px;color:#6b655a">{{ worksMeta }}</span></div>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ byCycle }}" as="c" hint-placeholder-count="8"><div style="display:grid;grid-template-columns:150px minmax(0,1fr);gap:20px;padding:14px 0;border-bottom:1px solid #d3ccbc">
+        <div style="display:flex;flex-direction:column;gap:3px"><span style="font-family:'Literata',serif;font-size:20px;line-height:1">{{ c.label }}</span><span style="font-family:'Schibsted Grotesk',sans-serif;font-size:10.5px;color:#6b655a">{{ c.sub }}</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px 8px"><sc-for list="{{ c.works }}" as="w"><a href="{{ w.href }}" style="padding:7px 11px;border:1px solid {{ w.bd }};background:{{ w.bg }};color:#1b1915;font-size:13.5px;text-decoration:none;white-space:nowrap" style-hover="border-color:#2c6aa3">{{ w.title }} <span style="font-family:'Schibsted Grotesk',sans-serif;font-size:10.5px;color:#6b655a">{{ w.d }}</span></a></sc-for></div>
+      </div></sc-for>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+const C = { field: '#2c6aa3', atelier: '#6650c4', studio: '#bf5427' }, NM = { field: 'The Field', atelier: 'The Atelier', studio: 'The Studio' };
+const INK = '#1b1915';
+const day = s => Math.round(Date.parse(s + 'T00:00:00Z') / 86400000);
+const fmt = (s, o = { day: 'numeric', month: 'short' }) => new Date(day(s) * 86400000).toLocaleString('en-GB', { ...o, timeZone: 'UTC' });
+const pad = n => String(n).padStart(3, '0');
+const D0 = '2026-08-30', TODAY = '2026-10-10', LX = 150, PW = 1140, N = day(TODAY) - day(D0) + 1, U = PW / N;
+const X = (d, f = .5) => LX + (day(d) - day(D0) + f) * U;
+const ME = 'field', SIB = ['studio', 'atelier'], REPO = 'field-research';
+const TOP = { [SIB[0]]: 44, [ME]: 112, [SIB[1]]: 210 };
+const segs = t => t.split('**').map((s, i) => ({ t: s.replace(/`/g, '').replace(/\*([^*]+)\*/g, '$1').replace(/\*/g, ''), w: i % 2 ? 600 : 400 })).filter(s => s.t);
+const blocks = md => md.split('\n').filter(l => !/^# /.test(l) && l.trim()).map(l => ({ li: /^[-*] /.test(l), text: l.replace(/^[-*] /, '').replace(/^#+ /, '') }));
+class Component extends DCLogic {
+  state = { E: null, hover: null, bul: false, ho: 'to' };
+  async componentDidMount() { this.setState({ E: await (await fetch('eco/ecology.json')).json() }); }
+  renderVals() {
+    const { E, hover, bul, ho } = this.state;
+    const leave = () => this.setState({ hover: null });
+    const lines = [SIB[0], ME, SIB[1]].flatMap(p => [0, 1, 2, 3, 4].map(i => ({ y: TOP[p] + i * (p === ME ? 9 : 4), c: p === ME ? '#a59d8b' : '#d3ccbc' })));
+    const staffLabels = [{ name: NM[SIB[0]], sub: 'sibling', y: TOP[SIB[0]] - 4, c: C[SIB[0]], fs: 12.5 }, { name: NM[ME], sub: 'this voice', y: TOP[ME] + 6, c: C[ME], fs: 16 }, { name: NM[SIB[1]], sub: 'sibling', y: TOP[SIB[1]] - 4, c: C[SIB[1]], fs: 12.5 }];
+    const out = { leave, lines, staffLabels, status: [], barlines: [], cmarks: [], tickLabels: [], slurs: [], notes: [], latest: {}, bulletin: [], handoffs: [], hoTabs: [], journal: [], byCycle: [], bulH: '240px' };
+    if (!E) return out;
+    const S = E.sessions[ME].filter(s => s.date >= D0), W = E.works.filter(w => w.practice === ME);
+    const Wv3 = W.filter(w => w.cycle >= 1 && !/presentation/.test(w.kind));
+    const last = S[S.length - 1];
+    const taken = E.relations.filter(r => r.taker === ME), given = E.relations.filter(r => r.giver === ME);
+    out.status = [
+      { k: 'last session', v: `${last.id || last.title || 'journal'} · ${fmt(last.date, { day: 'numeric', month: 'long' })}` },
+      { k: 'cadence', v: `${S.length} sessions on ${new Set(S.map(s => s.date)).size} of ${N} nights since v3` },
+      { k: 'works since v3', v: `${Wv3.length}, plus ${W.filter(w => /presentation/.test(w.kind)).length} presentations` },
+      { k: 'took from siblings', v: `${taken.length} times (built on ${taken.filter(r => r.kind === 'built_on').length})` },
+      { k: 'taken up by siblings', v: `${given.length} times (built on ${given.filter(r => r.kind === 'built_on').length})` },
+    ];
+    out.barlines = E.cycles.map(c => ({ x: X(c.opened, 0) })).concat([{ x: X('2026-10-11', 0) }]);
+    out.cmarks = E.cycles.map(c => ({ x: X(c.opened, 0) + 4, n: c.n }));
+    for (let i = 0; i < N; i++) { const d = new Date((day(D0) + i) * 86400000); if (i === 0 || (d.getUTCDay() === 1 && i > 3)) { const s = d.toISOString().slice(0, 10); out.tickLabels.push({ x: X(s), s: fmt(s) }); } }
+    const wd = {}; for (const w of Wv3) if (w.date) wd[w.date] = (wd[w.date] || 0) + 1;
+    const byD = {};
+    for (const s of S) { const k = byD[s.date] = (byD[s.date] || 0) + 1, i = k - 1, x = X(s.date), y = TOP[ME] + 36 - i * 7, filled = i < (wd[s.date] || 0); const work = Wv3.filter(w => w.date === s.date)[i];
+      out.notes.push({ l: x - 7, t: y - 5, w: 14, h: 10, c: C[ME], fill: filled ? C[ME] : '#f3efe6', o: 1, enter: () => this.setState({ hover: { x, y: y - 6, kicker: `${(s.id || NM[ME]).toUpperCase()} · ${fmt(s.date)}`, text: (work ? 'Work: ' + work.title + '. ' : '') + (s.title || s.line) } }) }); }
+    for (const p of SIB) { const bd = {}; for (const s of E.sessions[p]) { if (s.date < D0) continue; const k = bd[s.date] = (bd[s.date] || 0) + 1; const x = X(s.date), y = TOP[p] + 14 - (k - 1) * 3; out.notes.push({ l: x - 4, t: y - 3, w: 8, h: 6, c: C[p], fill: 'transparent', o: .5, enter: () => this.setState({ hover: { x, y, kicker: `${NM[p].toUpperCase()} · ${fmt(s.date)}`, text: s.title || s.line } }) }); } }
+    const cnt = {};
+    out.slurs = E.relations.filter(r => r.giver === ME || r.taker === ME).map(r => {
+      const k = cnt[r.date] = (cnt[r.date] || 0) + 1, x = X(r.date) + ((k % 5) - 2) * 2.6, other = r.giver === ME ? r.taker : r.giver;
+      const y1 = TOP[other] + 8, y2 = TOP[ME] + 18, b = (8 + k % 3 * 4) * (k % 2 ? 1 : -1);
+      return { d: `M ${x} ${y1} Q ${x + b} ${(y1 + y2) / 2} ${x} ${y2}`, c: r.taker === ME ? C[other] : C[ME], o: r.kind === 'built_on' ? .85 : r.kind === 'answered' ? .65 : .35, w: r.kind === 'built_on' ? 1.6 : 1.1, dash: r.kind === 'built_on' ? 'none' : r.kind === 'answered' ? '4 3' : '1 3',
+        enter: () => this.setState({ hover: { x, y: Math.min(y1, y2), kicker: `${NM[r.taker].toUpperCase()} ${r.kind.replace('_', ' ').toUpperCase()} ${NM[r.giver].toUpperCase()} · ${fmt(r.date)}`, text: r.what } }) };
+    });
+    out.partMeta = `${S.length} sessions · ${Wv3.length} works · ${out.slurs.length} crossings`;
+    out.hover = hover;
+    const lw = Wv3.slice().sort((a, b) => (b.cycle - a.cycle) || (b.date || '').localeCompare(a.date || '') || b.title.localeCompare(a.title, undefined, { numeric: true }))[0];
+    out.latest = { ...lw, date: lw.date ? fmt(lw.date, { day: 'numeric', month: 'long' }).toUpperCase() : 'CYCLE ' + pad(lw.cycle), when: lw.date ? fmt(lw.date, { day: 'numeric', month: 'long' }).toUpperCase() + ' · CYCLE ' + pad(lw.cycle) : 'CYCLE ' + pad(lw.cycle), cycle: pad(lw.cycle), session: (last.title ? last.title + '. ' : '') + last.line.replace(/^Open\.\s*/, '') };
+    const bl = blocks(E.bulletins[ME]);
+    out.bulletin = bl.map(b => ({ segs: segs(b.text), pad: b.li ? 12 : 0, bl: b.li ? '1px solid #d3ccbc' : 'none' }));
+    out.bulH = bul ? 'none' : '250px'; out.toggleBul = () => this.setState({ bul: !bul }); out.bulLabel = bul ? 'fold the bulletin ↑' : `read the whole bulletin · ${E.bulletins[ME].split('\n').length} lines ↓`;
+    out.hoTabs = [['to', 'offered to ' + NM[ME].replace('The ', 'the ')], ['from', 'offered by ' + NM[ME].replace('The ', 'the ')]].map(([k, label]) => ({ label, go: () => this.setState({ ho: k }), bg: ho === k ? INK : 'transparent', col: ho === k ? '#f3efe6' : INK, bd: ho === k ? INK : '#bdb5a4' }));
+    const SC = { open: '#bf5427', taken: '#1b1915', declined: '#948d7f', lapsed: '#948d7f' };
+    out.handoffs = E.handoffs.filter(h => ho === 'to' ? h.to.includes(ME) : h.giver === ME).sort((a, b) => b.date.localeCompare(a.date))
+      .map(h => ({ date: fmt(h.date), who: ho === 'to' ? 'from ' + NM[h.giver].replace('The ', '') : 'to ' + h.to.map(t => NM[t].replace('The ', '')).join(', '), c: C[ho === 'to' ? h.giver : h.to[0]], offer: h.offer, status: h.status, sc: SC[h.status] || '#6b655a' }));
+    out.journal = S.slice(-8).reverse().map(s => { const t = s.title || s.line.replace(/^Open\.\s*/, ''); return { date: fmt(s.date), id: s.id || '—', line: t.slice(0, 170) + (t.length > 170 ? '…' : '') }; });
+    const groups = [{ n: 0, label: 'Before v3', sub: 'Jul – Aug 2026, under the earlier orders' }].concat(E.cycles.map(c => ({ n: c.n, label: 'Cycle ' + pad(c.n), sub: c.q ? c.q.slice(0, 60) + (c.q.length > 60 ? '…' : '') : 'own default theme' })));
+    out.byCycle = groups.reverse().map(g => ({ ...g, works: W.filter(w => w.cycle === g.n).sort((a, b) => (a.date || '').localeCompare(b.date || '')).map(w => ({ title: w.title, href: w.href, d: w.date ? fmt(w.date) : '', bd: /presentation/.test(w.kind) ? '#1b1915' : '#d3ccbc', bg: /presentation/.test(w.kind) ? '#ebe6da' : 'transparent' })) })).filter(g => g.works.length);
+    out.worksMeta = `${W.length} entries, presentations outlined in ink`;
+    return out;
+  }
+}
+</script>
+</body>
+</html>

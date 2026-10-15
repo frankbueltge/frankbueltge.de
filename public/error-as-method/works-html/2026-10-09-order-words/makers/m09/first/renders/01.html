@@ -1,0 +1,47 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Vacant Lots</title>
+<style>
+html,body{margin:0;width:1100px;height:800px;overflow:hidden;background:#efebe2}
+#wall{position:absolute;left:34px;top:30px;width:1032px;height:700px;text-align:justify;
+ font-family:"DejaVu Sans Mono",Menlo,Consolas,monospace;color:#2a2824;letter-spacing:-0.02em;overflow:hidden}
+#wall span{white-space:nowrap}
+.cc{color:#2a2824;font-weight:700}
+.g{color:#6d685e}
+.bm{color:#b2361c}
+.na{color:#d3cdbf;text-decoration:line-through;text-decoration-color:#bdb5a4}
+.sp{color:#1f4f7a;font-weight:700}
+.t{color:#d3cdbf;font-style:italic}
+#foot{position:absolute;left:34px;right:34px;bottom:22px;height:36px;border-top:1px solid #2a2824;
+ font:12px/1.4 Georgia,serif;color:#2a2824;display:flex;justify-content:space-between;align-items:flex-end}
+#foot b{font:italic 20px Georgia,serif;font-weight:normal}
+#foot i{font-style:normal}
+</style></head><body>
+<div id="wall"></div>
+<div id="foot"><div><b>Vacant Lots</b></div><div id="leg"></div></div>
+<script src="data.js"></script>
+<script>
+const R=window.ROOT.items, wall=document.getElementById('wall');
+const BM='Binky Moon, LLC';
+const n={cc:0,g:0,bm:0,na:0,sp:0};
+const frag=document.createDocumentFragment();
+R.forEach((r,i)=>{
+  const s=document.createElement('span');
+  let c;
+  if(r.manager==='Not assigned') c='na';
+  else if(r.manager===BM) c='bm';
+  else if(r.type==='country-code') c='cc';
+  else if(r.type==='generic') c='g';
+  else c='sp';
+  n[c]++; s.className=c; s.textContent=r.tld;
+  frag.appendChild(s); frag.appendChild(document.createTextNode(' '));
+});
+wall.appendChild(frag);
+// fit: largest font size whose text fits the box
+let lo=4,hi=30;
+for(let k=0;k<20;k++){const m=(lo+hi)/2;wall.style.fontSize=m+'px';wall.style.lineHeight=(m*1.22)+'px';
+  if(wall.scrollHeight<=wall.clientHeight)lo=m;else hi=m;}
+wall.style.fontSize=lo+'px';wall.style.lineHeight=(lo*1.22)+'px';
+const sw=(c,t)=>`<span class="${c}" style="font-family:monospace">${t}</span>`;
+document.getElementById('leg').innerHTML=
+ `${R.length} names in the root zone, A to Z &nbsp;·&nbsp; ${sw('cc','country')} ${n.cc} &nbsp;·&nbsp; ${sw('g','generic')} ${n.g} &nbsp;·&nbsp; ${sw('sp','sponsored & other')} ${n.sp} &nbsp;·&nbsp; ${sw('bm','held by one company, Binky Moon')} ${n.bm} &nbsp;·&nbsp; ${sw('na','delegated to no one')} ${n.na}`;
+</script></body></html>

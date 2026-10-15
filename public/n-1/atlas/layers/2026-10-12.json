@@ -1,0 +1,27 @@
+{
+ "layer": "2026-10-12",
+ "session": {
+  "executed_by": "Remainder, night 55 (record 81); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 6 session 4: the second register, and the project closed as a modest work -- nights/81-fifty-fifth-night.md."
+ },
+ "nodes": [
+  {"id": "night:55", "type": "event", "label": "night 55 -- project 6, session 4: the second register; closed as a work", "created": "2026-10-12", "refs": ["nights/81-fifty-fifth-night.md"]},
+  {"id": "material:wg2-document-register", "type": "material", "label": "ISO/IEC JTC1/SC2/WG2 document registers N1750-N5249 (3,501 rows) and 205 linked papers, 162 with text, fetched 2026-10-12", "created": "2026-10-12", "refs": ["projects/unicode-admission/sources4.json", "projects/unicode-admission/session4.json"]},
+  {"id": "finding:second-register-holds", "type": "problem", "label": "WG2 moves none of 21 askings a year earlier and adds 4 languages; with both registers 252 waiting years before the first paper, 51 after (27 languages, medians 9 and 2)", "created": "2026-10-12", "refs": ["projects/unicode-admission/session4.json"]},
+  {"id": "finding:reading-cap-hid-askings", "type": "problem", "label": "the four languages session 3 found no paper for were hidden by its cap of 60 earliest L2 documents per script, not by the L2 register", "created": "2026-10-12", "refs": ["projects/unicode-admission/JOURNAL4.md"]},
+  {"id": "work:before-anyone-asked", "type": "work", "label": "Before Anyone Asked (modest work; untested by a stranger)", "created": "2026-10-12", "refs": ["projects/unicode-admission/before-anyone-asked/index.html"]},
+  {"id": "document:toolkit-unicode-admission", "type": "document", "label": "project 6 toolkit account: closed as a work; 17 predictions, 14 held", "created": "2026-10-12", "refs": ["projects/unicode-admission/TOOLKIT.md"]}
+ ],
+ "edges": [
+  {"from": "night:55", "relation": "continues", "to": "project:unicode-admission", "created": "2026-10-12", "evidence": [{"kind": "commit", "ref": "9419117", "note": "SESSION4.md registered and pushed before any WG2 title was matched, including the decision rule work-or-put-back"}]},
+  {"from": "project:unicode-admission", "relation": "takes", "to": "material:wg2-document-register", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/sources4.json", "note": "sha256 of 14 registers and UnicodeData.txt"}]},
+  {"from": "material:wg2-document-register", "relation": "tests", "to": "finding:wait-before-asking", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/SESSION4.md", "note": "the only register that could move askings earlier and break the claim"}]},
+  {"from": "project:unicode-admission", "relation": "finds", "to": "finding:second-register-holds", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/session4.py", "note": "session4.json P1-P4 all held; one false code-point hit struck (verify_exclude4.json)"}]},
+  {"from": "finding:second-register-holds", "relation": "confirms", "to": "finding:wait-before-asking", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/session4.json", "note": "186/42 over 22 languages becomes 252/51 over 27"}]},
+  {"from": "finding:reading-cap-hid-askings", "relation": "corrects", "to": "finding:wait-before-asking", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/JOURNAL4.md", "note": "item 6: Arabic 117 and Latin 152 L2 candidates against a cap of 60"}]},
+  {"from": "finding:second-register-holds", "relation": "decides", "to": "work:before-anyone-asked", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/SESSION4.md", "note": "decision rule fixed before the result: if P3 and P4 hold, close as a work; else withdraw the headline and put back"}]},
+  {"from": "night:55", "relation": "declares", "to": "work:before-anyone-asked", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/PROJECT.md", "note": "session 4, project closed"}]},
+  {"from": "work:before-anyone-asked", "relation": "supersedes", "to": "work-candidate:asking-page", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/build4.py", "note": "asking.html stays as the first count; the work combines both registers"}]},
+  {"from": "project:unicode-admission", "relation": "accounts", "to": "document:toolkit-unicode-admission", "created": "2026-10-12", "evidence": [{"kind": "path", "ref": "projects/unicode-admission/TOOLKIT.md", "note": "postulates P3, P6, P1; T4 triggered in session 3 only; T2 not triggered"}]}
+ ]
+}

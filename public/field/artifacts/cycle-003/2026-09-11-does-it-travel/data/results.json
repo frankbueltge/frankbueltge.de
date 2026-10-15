@@ -1,0 +1,3176 @@
+{
+  "generated_by": "tools/travel/travel.py",
+  "predictions": {
+    "P1": {
+      "statement": "declared completeness >= 95 % and broad flag rate >= 5 % on the held-out half, in each of C1-C3",
+      "arms": {
+        "cma": {
+          "completeness_pct": 31.74,
+          "held_broad_pct": 53.17,
+          "pass": false
+        },
+        "uk": {
+          "completeness_pct": 98.81,
+          "held_broad_pct": 62.16,
+          "pass": true
+        },
+        "govdata": {
+          "completeness_pct": 97.39,
+          "held_broad_pct": 77.93,
+          "pass": true
+        }
+      },
+      "verdict": "refuted"
+    },
+    "P2": {
+      "statement": "hollowness concentrates by provenance stratum: BH survivor at q = 0.05 and top-stratum flag share at least 2x its record share",
+      "arms": {
+        "cma": {
+          "p_perm": 9.999000099990002e-05,
+          "bh_survivor": true,
+          "ratio": 1.562,
+          "top_stratum": "Medieval Art",
+          "flag_share_pct": 29.23,
+          "record_share_pct": 18.72,
+          "pass": false
+        },
+        "uk": {
+          "p_perm": 9.999000099990002e-05,
+          "bh_survivor": true,
+          "ratio": 1.448,
+          "top_stratum": "Office for National Statistics",
+          "flag_share_pct": 12.05,
+          "record_share_pct": 8.32,
+          "pass": false
+        },
+        "govdata": {
+          "p_perm": 9.999000099990002e-05,
+          "bh_survivor": true,
+          "ratio": 1.142,
+          "top_stratum": "Land Schleswig-Holstein",
+          "flag_share_pct": 22.98,
+          "record_share_pct": 20.13,
+          "pass": false
+        }
+      },
+      "verdict": "refuted"
+    },
+    "P3": {
+      "statement": "the broad aggregate and R2 alone agree on at least 95 % of held-out values in each scored catalogue",
+      "arms": {
+        "cma": {
+          "pct": 48.46,
+          "pass": false
+        },
+        "uk": {
+          "pct": 82.78,
+          "pass": false
+        },
+        "govdata": {
+          "pct": 72.32,
+          "pass": false
+        }
+      },
+      "verdict": "refuted"
+    },
+    "P4": {
+      "statement": "against a blind reader on 60 held-out values: agreement >= 75 % and Cohen's kappa >= 0.42",
+      "agreement_pct": 53.33,
+      "kappa": 0.0919,
+      "verdict": "refuted"
+    },
+    "P5": {
+      "statement": "R3's English opener limb fires on under 1 % of German held-out values and on 1 % or more of English ones",
+      "govdata_pct": 0.01,
+      "uk_pct": 1.27,
+      "verdict": "confirmed"
+    },
+    "P6": {
+      "statement": "R5 fires on at least 1 % of held-out values in at least one catalogue and flags at least 20 values no frozen rule flags",
+      "arms": {
+        "cma": {
+          "pct": 0.0,
+          "r5_only": 0
+        },
+        "uk": {
+          "pct": 2.59,
+          "r5_only": 220
+        },
+        "govdata": {
+          "pct": 11.06,
+          "r5_only": 1204
+        }
+      },
+      "verdict": "confirmed"
+    },
+    "P7": {
+      "statement": "the home arm reproduces the published figures of 2026-09-08",
+      "published_2026_09_08": {
+        "records": 521,
+        "all_broad_pct": 40.5,
+        "held_broad_pct": 44.05,
+        "r4_held_k": 0,
+        "broad_is_r2_held_agree": 249,
+        "held_n": 252
+      },
+      "measured_today": {
+        "entries": 521,
+        "records": 521,
+        "all_broad_pct": 40.5,
+        "held_broad_pct": 44.05,
+        "r4_held_k": 0,
+        "broad_is_r2_held_agree": 249,
+        "held_n": 252
+      },
+      "verdict": "confirmed"
+    },
+    "K4_fired": false,
+    "_tally": {
+      "total": 7,
+      "refuted": 4,
+      "confirmed": 3,
+      "split": 0
+    }
+  },
+  "date": "2026-09-11",
+  "session": 157,
+  "cycle": 3,
+  "question": "Missing Data Art",
+  "preregistration": "artifacts/cycle-003/2026-09-11-does-it-travel/PREREGISTRATION.md",
+  "manifest": {
+    "atlas": {
+      "catalogue": "atlas",
+      "api_total": 521,
+      "harvested": 521,
+      "pages": 1,
+      "endpoint": "https://frankbueltge.de/atlas/werke.json",
+      "field": "decisive_move",
+      "stratum_field": "venue_prize (provenance families, frozen 2026-09-08)",
+      "sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+      "bytes": 387847,
+      "seconds": 0.5,
+      "fetched_utc": "2026-09-11T03:44:16Z",
+      "ok": true
+    },
+    "cma": {
+      "catalogue": "cma",
+      "api_total": 68771,
+      "harvested": 68771,
+      "pages": 69,
+      "endpoint": "https://openaccess-api.clevelandart.org/api/artworks/",
+      "field": "description",
+      "stratum_field": "department",
+      "seconds": 603.6,
+      "fetched_utc": "2026-09-11T03:54:19Z",
+      "ok": true
+    },
+    "uk": {
+      "catalogue": "uk",
+      "api_total": 67975,
+      "harvested": 67975,
+      "pages": 68,
+      "endpoint": "https://ckan.publishing.service.gov.uk/api/3/action/package_search",
+      "field": "notes",
+      "stratum_field": "organization",
+      "seconds": 182.7,
+      "fetched_utc": "2026-09-11T03:57:22Z",
+      "ok": true
+    },
+    "govdata": {
+      "catalogue": "govdata",
+      "api_total": 146492,
+      "harvested": 146492,
+      "pages": 147,
+      "endpoint": "https://www.govdata.de/ckan/api/3/action/package_search",
+      "field": "notes",
+      "stratum_field": "organization",
+      "seconds": 395.3,
+      "fetched_utc": "2026-09-11T04:03:57Z",
+      "ok": true
+    },
+    "aic": {
+      "catalogue": "aic",
+      "api_total": 132744,
+      "harvested": 2000,
+      "pages": 20,
+      "endpoint": "https://api.artic.edu/api/v1/artworks",
+      "field": "description",
+      "stratum_field": "department_title",
+      "sampling": "20 seeded-random pages of 100, seed 20260911",
+      "seed": 20260911,
+      "seconds": 35.7,
+      "fetched_utc": "2026-09-11T04:04:33Z",
+      "ok": true
+    }
+  },
+  "catalogues": {
+    "atlas": {
+      "catalogue": "atlas",
+      "label": "Atlas of Data Art (home arm)",
+      "records": 521,
+      "present": 521,
+      "declared_completeness_pct": 100.0,
+      "k1_fired": false,
+      "held": {
+        "r1_chrome": {
+          "k": 47,
+          "n": 252,
+          "pct": 18.65,
+          "ci95": [
+            14.33,
+            23.92
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 108,
+          "n": 252,
+          "pct": 42.86,
+          "ci95": [
+            36.9,
+            49.03
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 76,
+          "n": 252,
+          "pct": 30.16,
+          "ci95": [
+            24.83,
+            36.09
+          ]
+        },
+        "r4_duplicate": {
+          "k": 0,
+          "n": 252,
+          "pct": 0.0,
+          "ci95": [
+            0.0,
+            1.5
+          ]
+        },
+        "r5_title_echo": {
+          "k": 0,
+          "n": 252,
+          "pct": 0.0,
+          "ci95": [
+            0.0,
+            1.5
+          ]
+        },
+        "r3_lower": {
+          "k": 74,
+          "n": 252,
+          "pct": 29.37,
+          "ci95": [
+            24.09,
+            35.26
+          ]
+        },
+        "r3_opener": {
+          "k": 9,
+          "n": 252,
+          "pct": 3.57,
+          "ci95": [
+            1.89,
+            6.65
+          ]
+        },
+        "hollow_strict": {
+          "k": 47,
+          "n": 252,
+          "pct": 18.65,
+          "ci95": [
+            14.33,
+            23.92
+          ]
+        },
+        "hollow_broad": {
+          "k": 111,
+          "n": 252,
+          "pct": 44.05,
+          "ci95": [
+            38.05,
+            50.22
+          ]
+        },
+        "hollow_broad5": {
+          "k": 111,
+          "n": 252,
+          "pct": 44.05,
+          "ci95": [
+            38.05,
+            50.22
+          ]
+        }
+      },
+      "dev": {
+        "r1_chrome": {
+          "k": 31,
+          "n": 269,
+          "pct": 11.52,
+          "ci95": [
+            8.24,
+            15.89
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 99,
+          "n": 269,
+          "pct": 36.8,
+          "ci95": [
+            31.26,
+            42.71
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 76,
+          "n": 269,
+          "pct": 28.25,
+          "ci95": [
+            23.21,
+            33.91
+          ]
+        },
+        "r4_duplicate": {
+          "k": 4,
+          "n": 269,
+          "pct": 1.49,
+          "ci95": [
+            0.58,
+            3.76
+          ]
+        },
+        "r5_title_echo": {
+          "k": 0,
+          "n": 269,
+          "pct": 0.0,
+          "ci95": [
+            0.0,
+            1.41
+          ]
+        },
+        "r3_lower": {
+          "k": 72,
+          "n": 269,
+          "pct": 26.77,
+          "ci95": [
+            21.83,
+            32.36
+          ]
+        },
+        "r3_opener": {
+          "k": 7,
+          "n": 269,
+          "pct": 2.6,
+          "ci95": [
+            1.27,
+            5.27
+          ]
+        },
+        "hollow_strict": {
+          "k": 35,
+          "n": 269,
+          "pct": 13.01,
+          "ci95": [
+            9.51,
+            17.56
+          ]
+        },
+        "hollow_broad": {
+          "k": 100,
+          "n": 269,
+          "pct": 37.17,
+          "ci95": [
+            31.62,
+            43.09
+          ]
+        },
+        "hollow_broad5": {
+          "k": 100,
+          "n": 269,
+          "pct": 37.17,
+          "ci95": [
+            31.62,
+            43.09
+          ]
+        }
+      },
+      "all": {
+        "r1_chrome": {
+          "k": 78,
+          "n": 521,
+          "pct": 14.97,
+          "ci95": [
+            12.16,
+            18.29
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 207,
+          "n": 521,
+          "pct": 39.73,
+          "ci95": [
+            35.62,
+            43.99
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 152,
+          "n": 521,
+          "pct": 29.17,
+          "ci95": [
+            25.44,
+            33.22
+          ]
+        },
+        "r4_duplicate": {
+          "k": 4,
+          "n": 521,
+          "pct": 0.77,
+          "ci95": [
+            0.3,
+            1.96
+          ]
+        },
+        "r5_title_echo": {
+          "k": 0,
+          "n": 521,
+          "pct": 0.0,
+          "ci95": [
+            0.0,
+            0.73
+          ]
+        },
+        "r3_lower": {
+          "k": 146,
+          "n": 521,
+          "pct": 28.02,
+          "ci95": [
+            24.34,
+            32.03
+          ]
+        },
+        "r3_opener": {
+          "k": 16,
+          "n": 521,
+          "pct": 3.07,
+          "ci95": [
+            1.9,
+            4.93
+          ]
+        },
+        "hollow_strict": {
+          "k": 82,
+          "n": 521,
+          "pct": 15.74,
+          "ci95": [
+            12.86,
+            19.12
+          ]
+        },
+        "hollow_broad": {
+          "k": 211,
+          "n": 521,
+          "pct": 40.5,
+          "ci95": [
+            36.37,
+            44.77
+          ]
+        },
+        "hollow_broad5": {
+          "k": 211,
+          "n": 521,
+          "pct": 40.5,
+          "ci95": [
+            36.37,
+            44.77
+          ]
+        }
+      },
+      "split": {
+        "dev": 269,
+        "held": 252,
+        "rule": "sha256(id) mod 2"
+      },
+      "p3_broad_is_r2": {
+        "agree": 249,
+        "n": 252,
+        "pct": 98.81
+      },
+      "p6_r5_increment": {
+        "r5_only": 0,
+        "r5_total": 0,
+        "n": 252
+      },
+      "k2_fired": false,
+      "association": {
+        "chi2": 214.794,
+        "df": 3,
+        "levels": 4,
+        "p_perm": 9.999000099990002e-05,
+        "p_chi2": 2.6798467595151347e-46,
+        "reps": 10000,
+        "flagged": 111,
+        "n": 252,
+        "table": {
+          "Rhizome ArtBase": {
+            "records": 96,
+            "flagged": 96,
+            "pct": 100.0
+          },
+          "(small strata)": {
+            "records": 25,
+            "flagged": 12,
+            "pct": 48.0
+          },
+          "other": {
+            "records": 96,
+            "flagged": 2,
+            "pct": 2.08
+          },
+          "S+T+ARTS / Ars Electronica": {
+            "records": 35,
+            "flagged": 1,
+            "pct": 2.86
+          }
+        },
+        "bh_survivor": null,
+        "bh_note": "not in the corrected family: the BH family is the three primary tests, C1-C3"
+      },
+      "exploratory_spread": {
+        "strata": 4,
+        "strata_above_90pct": 1,
+        "strata_below_10pct": 2,
+        "min_rate_pct": 2.08,
+        "max_rate_pct": 100.0,
+        "median_rate_pct": 25.43,
+        "top5_flag_share_pct": 100.0
+      },
+      "concentration": {
+        "top_stratum": "Rhizome ArtBase",
+        "flag_share_pct": 86.49,
+        "record_share_pct": 38.1,
+        "ratio": 2.27,
+        "strata_total": 4
+      },
+      "harvest_fraction": 1.0,
+      "k5_applies": true,
+      "k5_fired": false
+    },
+    "cma": {
+      "catalogue": "cma",
+      "label": "Cleveland Museum of Art",
+      "records": 68771,
+      "present": 21828,
+      "declared_completeness_pct": 31.74,
+      "k1_fired": false,
+      "held": {
+        "r1_chrome": {
+          "k": 29,
+          "n": 10920,
+          "pct": 0.27,
+          "ci95": [
+            0.18,
+            0.38
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 178,
+          "n": 10920,
+          "pct": 1.63,
+          "ci95": [
+            1.41,
+            1.89
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 517,
+          "n": 10920,
+          "pct": 4.73,
+          "ci95": [
+            4.35,
+            5.15
+          ]
+        },
+        "r4_duplicate": {
+          "k": 5444,
+          "n": 10920,
+          "pct": 49.85,
+          "ci95": [
+            48.92,
+            50.79
+          ]
+        },
+        "r5_title_echo": {
+          "k": 0,
+          "n": 10920,
+          "pct": 0.0,
+          "ci95": [
+            0.0,
+            0.04
+          ]
+        },
+        "r3_lower": {
+          "k": 3,
+          "n": 10920,
+          "pct": 0.03,
+          "ci95": [
+            0.01,
+            0.08
+          ]
+        },
+        "r3_opener": {
+          "k": 514,
+          "n": 10920,
+          "pct": 4.71,
+          "ci95": [
+            4.33,
+            5.12
+          ]
+        },
+        "hollow_strict": {
+          "k": 5460,
+          "n": 10920,
+          "pct": 50.0,
+          "ci95": [
+            49.06,
+            50.94
+          ]
+        },
+        "hollow_broad": {
+          "k": 5806,
+          "n": 10920,
+          "pct": 53.17,
+          "ci95": [
+            52.23,
+            54.1
+          ]
+        },
+        "hollow_broad5": {
+          "k": 5806,
+          "n": 10920,
+          "pct": 53.17,
+          "ci95": [
+            52.23,
+            54.1
+          ]
+        }
+      },
+      "dev": {
+        "r1_chrome": {
+          "k": 39,
+          "n": 10908,
+          "pct": 0.36,
+          "ci95": [
+            0.26,
+            0.49
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 172,
+          "n": 10908,
+          "pct": 1.58,
+          "ci95": [
+            1.36,
+            1.83
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 488,
+          "n": 10908,
+          "pct": 4.47,
+          "ci95": [
+            4.1,
+            4.88
+          ]
+        },
+        "r4_duplicate": {
+          "k": 5427,
+          "n": 10908,
+          "pct": 49.75,
+          "ci95": [
+            48.81,
+            50.69
+          ]
+        },
+        "r5_title_echo": {
+          "k": 1,
+          "n": 10908,
+          "pct": 0.01,
+          "ci95": [
+            0.0,
+            0.05
+          ]
+        },
+        "r3_lower": {
+          "k": 2,
+          "n": 10908,
+          "pct": 0.02,
+          "ci95": [
+            0.01,
+            0.07
+          ]
+        },
+        "r3_opener": {
+          "k": 486,
+          "n": 10908,
+          "pct": 4.46,
+          "ci95": [
+            4.08,
+            4.86
+          ]
+        },
+        "hollow_strict": {
+          "k": 5439,
+          "n": 10908,
+          "pct": 49.86,
+          "ci95": [
+            48.92,
+            50.8
+          ]
+        },
+        "hollow_broad": {
+          "k": 5763,
+          "n": 10908,
+          "pct": 52.83,
+          "ci95": [
+            51.9,
+            53.77
+          ]
+        },
+        "hollow_broad5": {
+          "k": 5763,
+          "n": 10908,
+          "pct": 52.83,
+          "ci95": [
+            51.9,
+            53.77
+          ]
+        }
+      },
+      "all": {
+        "r1_chrome": {
+          "k": 68,
+          "n": 21828,
+          "pct": 0.31,
+          "ci95": [
+            0.25,
+            0.39
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 350,
+          "n": 21828,
+          "pct": 1.6,
+          "ci95": [
+            1.45,
+            1.78
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 1005,
+          "n": 21828,
+          "pct": 4.6,
+          "ci95": [
+            4.33,
+            4.89
+          ]
+        },
+        "r4_duplicate": {
+          "k": 10871,
+          "n": 21828,
+          "pct": 49.8,
+          "ci95": [
+            49.14,
+            50.47
+          ]
+        },
+        "r5_title_echo": {
+          "k": 1,
+          "n": 21828,
+          "pct": 0.0,
+          "ci95": [
+            0.0,
+            0.03
+          ]
+        },
+        "r3_lower": {
+          "k": 5,
+          "n": 21828,
+          "pct": 0.02,
+          "ci95": [
+            0.01,
+            0.05
+          ]
+        },
+        "r3_opener": {
+          "k": 1000,
+          "n": 21828,
+          "pct": 4.58,
+          "ci95": [
+            4.31,
+            4.87
+          ]
+        },
+        "hollow_strict": {
+          "k": 10899,
+          "n": 21828,
+          "pct": 49.93,
+          "ci95": [
+            49.27,
+            50.59
+          ]
+        },
+        "hollow_broad": {
+          "k": 11569,
+          "n": 21828,
+          "pct": 53.0,
+          "ci95": [
+            52.34,
+            53.66
+          ]
+        },
+        "hollow_broad5": {
+          "k": 11569,
+          "n": 21828,
+          "pct": 53.0,
+          "ci95": [
+            52.34,
+            53.66
+          ]
+        }
+      },
+      "split": {
+        "dev": 10908,
+        "held": 10920,
+        "rule": "sha256(id) mod 2"
+      },
+      "p3_broad_is_r2": {
+        "agree": 5292,
+        "n": 10920,
+        "pct": 48.46
+      },
+      "p6_r5_increment": {
+        "r5_only": 0,
+        "r5_total": 0,
+        "n": 10920
+      },
+      "k2_fired": false,
+      "association": {
+        "chi2": 1504.454,
+        "df": 19,
+        "levels": 20,
+        "p_perm": 9.999000099990002e-05,
+        "p_chi2": 4.890188899715833e-308,
+        "reps": 10000,
+        "flagged": 5806,
+        "n": 10920,
+        "table": {
+          "Medieval Art": {
+            "records": 2044,
+            "flagged": 1697,
+            "pct": 83.02
+          },
+          "Photography": {
+            "records": 1624,
+            "flagged": 979,
+            "pct": 60.28
+          },
+          "Prints": {
+            "records": 1510,
+            "flagged": 729,
+            "pct": 48.28
+          },
+          "Japanese Art": {
+            "records": 717,
+            "flagged": 412,
+            "pct": 57.46
+          },
+          "Drawings": {
+            "records": 762,
+            "flagged": 372,
+            "pct": 48.82
+          },
+          "Decorative Art and Design": {
+            "records": 543,
+            "flagged": 305,
+            "pct": 56.17
+          },
+          "Chinese Art": {
+            "records": 595,
+            "flagged": 258,
+            "pct": 43.36
+          },
+          "Indian and Southeast Asian Art": {
+            "records": 655,
+            "flagged": 212,
+            "pct": 32.37
+          },
+          "Textiles": {
+            "records": 577,
+            "flagged": 188,
+            "pct": 32.58
+          },
+          "Korean Art": {
+            "records": 222,
+            "flagged": 113,
+            "pct": 50.9
+          },
+          "Contemporary Art": {
+            "records": 186,
+            "flagged": 107,
+            "pct": 57.53
+          },
+          "Egyptian and Ancient Near Eastern Art": {
+            "records": 196,
+            "flagged": 105,
+            "pct": 53.57
+          },
+          "Art of the Americas": {
+            "records": 246,
+            "flagged": 100,
+            "pct": 40.65
+          },
+          "European Painting and Sculpture": {
+            "records": 269,
+            "flagged": 69,
+            "pct": 25.65
+          },
+          "Islamic Art": {
+            "records": 91,
+            "flagged": 45,
+            "pct": 49.45
+          },
+          "African Art": {
+            "records": 168,
+            "flagged": 43,
+            "pct": 25.6
+          },
+          "Greek and Roman Art": {
+            "records": 167,
+            "flagged": 32,
+            "pct": 19.16
+          },
+          "American Painting and Sculpture": {
+            "records": 143,
+            "flagged": 16,
+            "pct": 11.19
+          },
+          "Modern European Painting and Sculpture": {
+            "records": 168,
+            "flagged": 13,
+            "pct": 7.74
+          },
+          "Oceania": {
+            "records": 37,
+            "flagged": 11,
+            "pct": 29.73
+          }
+        },
+        "bh_survivor": true
+      },
+      "exploratory_spread": {
+        "strata": 20,
+        "strata_above_90pct": 0,
+        "strata_below_10pct": 1,
+        "min_rate_pct": 7.74,
+        "max_rate_pct": 83.02,
+        "median_rate_pct": 45.82,
+        "top5_flag_share_pct": 72.15
+      },
+      "concentration": {
+        "top_stratum": "Medieval Art",
+        "flag_share_pct": 29.23,
+        "record_share_pct": 18.72,
+        "ratio": 1.562,
+        "strata_total": 20
+      },
+      "harvest_fraction": 1.0,
+      "k5_applies": true,
+      "k5_fired": false,
+      "exploratory_second_field": {
+        "field": "did_you_know",
+        "records_with_it": 11442,
+        "records": 68771,
+        "records_with_neither": 46267
+      }
+    },
+    "uk": {
+      "catalogue": "uk",
+      "label": "data.gov.uk",
+      "records": 67975,
+      "present": 67163,
+      "declared_completeness_pct": 98.81,
+      "k1_fired": false,
+      "held": {
+        "r1_chrome": {
+          "k": 1632,
+          "n": 33778,
+          "pct": 4.83,
+          "ci95": [
+            4.61,
+            5.07
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 15177,
+          "n": 33778,
+          "pct": 44.93,
+          "ci95": [
+            44.4,
+            45.46
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 591,
+          "n": 33778,
+          "pct": 1.75,
+          "ci95": [
+            1.62,
+            1.9
+          ]
+        },
+        "r4_duplicate": {
+          "k": 10466,
+          "n": 33778,
+          "pct": 30.98,
+          "ci95": [
+            30.49,
+            31.48
+          ]
+        },
+        "r5_title_echo": {
+          "k": 874,
+          "n": 33778,
+          "pct": 2.59,
+          "ci95": [
+            2.42,
+            2.76
+          ]
+        },
+        "r3_lower": {
+          "k": 165,
+          "n": 33778,
+          "pct": 0.49,
+          "ci95": [
+            0.42,
+            0.57
+          ]
+        },
+        "r3_opener": {
+          "k": 429,
+          "n": 33778,
+          "pct": 1.27,
+          "ci95": [
+            1.16,
+            1.4
+          ]
+        },
+        "hollow_strict": {
+          "k": 11757,
+          "n": 33778,
+          "pct": 34.81,
+          "ci95": [
+            34.3,
+            35.32
+          ]
+        },
+        "hollow_broad": {
+          "k": 20995,
+          "n": 33778,
+          "pct": 62.16,
+          "ci95": [
+            61.64,
+            62.67
+          ]
+        },
+        "hollow_broad5": {
+          "k": 21215,
+          "n": 33778,
+          "pct": 62.81,
+          "ci95": [
+            62.29,
+            63.32
+          ]
+        }
+      },
+      "dev": {
+        "r1_chrome": {
+          "k": 1643,
+          "n": 33385,
+          "pct": 4.92,
+          "ci95": [
+            4.69,
+            5.16
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 14929,
+          "n": 33385,
+          "pct": 44.72,
+          "ci95": [
+            44.18,
+            45.25
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 580,
+          "n": 33385,
+          "pct": 1.74,
+          "ci95": [
+            1.6,
+            1.88
+          ]
+        },
+        "r4_duplicate": {
+          "k": 10276,
+          "n": 33385,
+          "pct": 30.78,
+          "ci95": [
+            30.29,
+            31.28
+          ]
+        },
+        "r5_title_echo": {
+          "k": 832,
+          "n": 33385,
+          "pct": 2.49,
+          "ci95": [
+            2.33,
+            2.66
+          ]
+        },
+        "r3_lower": {
+          "k": 197,
+          "n": 33385,
+          "pct": 0.59,
+          "ci95": [
+            0.51,
+            0.68
+          ]
+        },
+        "r3_opener": {
+          "k": 388,
+          "n": 33385,
+          "pct": 1.16,
+          "ci95": [
+            1.05,
+            1.28
+          ]
+        },
+        "hollow_strict": {
+          "k": 11542,
+          "n": 33385,
+          "pct": 34.57,
+          "ci95": [
+            34.06,
+            35.08
+          ]
+        },
+        "hollow_broad": {
+          "k": 20653,
+          "n": 33385,
+          "pct": 61.86,
+          "ci95": [
+            61.34,
+            62.38
+          ]
+        },
+        "hollow_broad5": {
+          "k": 20849,
+          "n": 33385,
+          "pct": 62.45,
+          "ci95": [
+            61.93,
+            62.97
+          ]
+        }
+      },
+      "all": {
+        "r1_chrome": {
+          "k": 3275,
+          "n": 67163,
+          "pct": 4.88,
+          "ci95": [
+            4.72,
+            5.04
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 30106,
+          "n": 67163,
+          "pct": 44.83,
+          "ci95": [
+            44.45,
+            45.2
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 1171,
+          "n": 67163,
+          "pct": 1.74,
+          "ci95": [
+            1.65,
+            1.85
+          ]
+        },
+        "r4_duplicate": {
+          "k": 20742,
+          "n": 67163,
+          "pct": 30.88,
+          "ci95": [
+            30.53,
+            31.23
+          ]
+        },
+        "r5_title_echo": {
+          "k": 1706,
+          "n": 67163,
+          "pct": 2.54,
+          "ci95": [
+            2.42,
+            2.66
+          ]
+        },
+        "r3_lower": {
+          "k": 362,
+          "n": 67163,
+          "pct": 0.54,
+          "ci95": [
+            0.49,
+            0.6
+          ]
+        },
+        "r3_opener": {
+          "k": 817,
+          "n": 67163,
+          "pct": 1.22,
+          "ci95": [
+            1.14,
+            1.3
+          ]
+        },
+        "hollow_strict": {
+          "k": 23299,
+          "n": 67163,
+          "pct": 34.69,
+          "ci95": [
+            34.33,
+            35.05
+          ]
+        },
+        "hollow_broad": {
+          "k": 41648,
+          "n": 67163,
+          "pct": 62.01,
+          "ci95": [
+            61.64,
+            62.38
+          ]
+        },
+        "hollow_broad5": {
+          "k": 42064,
+          "n": 67163,
+          "pct": 62.63,
+          "ci95": [
+            62.26,
+            62.99
+          ]
+        }
+      },
+      "split": {
+        "dev": 33385,
+        "held": 33778,
+        "rule": "sha256(id) mod 2"
+      },
+      "p3_broad_is_r2": {
+        "agree": 27960,
+        "n": 33778,
+        "pct": 82.78
+      },
+      "p6_r5_increment": {
+        "r5_only": 220,
+        "r5_total": 874,
+        "n": 33778
+      },
+      "k2_fired": false,
+      "association": {
+        "chi2": 14814.698,
+        "df": 130,
+        "levels": 131,
+        "p_perm": 9.999000099990002e-05,
+        "p_chi2": 0.0,
+        "reps": 10000,
+        "flagged": 20995,
+        "n": 33778,
+        "table": {
+          "Office for National Statistics": {
+            "records": 2810,
+            "flagged": 2529,
+            "pct": 90.0
+          },
+          "Sunderland City Council": {
+            "records": 2239,
+            "flagged": 2215,
+            "pct": 98.93
+          },
+          "(small strata)": {
+            "records": 3109,
+            "flagged": 1716,
+            "pct": 55.19
+          },
+          "Wakefield Metropolitan District Council": {
+            "records": 1281,
+            "flagged": 1278,
+            "pct": 99.77
+          },
+          "OpenDataNI": {
+            "records": 1497,
+            "flagged": 1275,
+            "pct": 85.17
+          },
+          "North Tyneside Metropolitan Borough Council": {
+            "records": 1275,
+            "flagged": 1274,
+            "pct": 99.92
+          },
+          "Environmental Information Data Centre": {
+            "records": 1163,
+            "flagged": 1104,
+            "pct": 94.93
+          },
+          "Marine Environmental Data & Information Network": {
+            "records": 1978,
+            "flagged": 833,
+            "pct": 42.11
+          },
+          "Scottish Government SpatialData.gov.scot": {
+            "records": 1186,
+            "flagged": 812,
+            "pct": 68.47
+          },
+          "Rural Payments Agency": {
+            "records": 583,
+            "flagged": 573,
+            "pct": 98.28
+          },
+          "North Sea Transition Authority": {
+            "records": 482,
+            "flagged": 476,
+            "pct": 98.76
+          },
+          "Joint Nature Conservation Committee": {
+            "records": 689,
+            "flagged": 444,
+            "pct": 64.44
+          },
+          "Animal and Plant Health Agency": {
+            "records": 466,
+            "flagged": 430,
+            "pct": 92.27
+          },
+          "City of York Council": {
+            "records": 755,
+            "flagged": 378,
+            "pct": 50.07
+          },
+          "British Geological Survey (BGS)": {
+            "records": 2092,
+            "flagged": 323,
+            "pct": 15.44
+          },
+          "Ministry of Housing, Communities and Local Government": {
+            "records": 509,
+            "flagged": 311,
+            "pct": 61.1
+          },
+          "Greater London Authority": {
+            "records": 615,
+            "flagged": 261,
+            "pct": 42.44
+          },
+          "London Borough of Camden": {
+            "records": 352,
+            "flagged": 186,
+            "pct": 52.84
+          },
+          "Leicester City Council": {
+            "records": 190,
+            "flagged": 186,
+            "pct": 97.89
+          },
+          "Department for Environment, Food and Rural Affairs": {
+            "records": 285,
+            "flagged": 174,
+            "pct": 61.05
+          },
+          "Cambridgeshire Insight": {
+            "records": 169,
+            "flagged": 164,
+            "pct": 97.04
+          },
+          "Marine Management Organisation": {
+            "records": 182,
+            "flagged": 160,
+            "pct": 87.91
+          },
+          "Natural England": {
+            "records": 2398,
+            "flagged": 131,
+            "pct": 5.46
+          },
+          "London Borough of Barnet": {
+            "records": 219,
+            "flagged": 130,
+            "pct": 59.36
+          },
+          "NHS Digital": {
+            "records": 255,
+            "flagged": 128,
+            "pct": 50.2
+          },
+          "Crown Commercial Service": {
+            "records": 128,
+            "flagged": 128,
+            "pct": 100.0
+          },
+          "London Borough of Lambeth": {
+            "records": 105,
+            "flagged": 104,
+            "pct": 99.05
+          },
+          "Department for Transport": {
+            "records": 178,
+            "flagged": 98,
+            "pct": 55.06
+          },
+          "Centre for Environment, Fisheries & Aquaculture Science": {
+            "records": 135,
+            "flagged": 96,
+            "pct": 71.11
+          },
+          "Scottish Government": {
+            "records": 92,
+            "flagged": 90,
+            "pct": 97.83
+          },
+          "Barrow Borough Council": {
+            "records": 104,
+            "flagged": 89,
+            "pct": 85.58
+          },
+          "Ministry of Defence": {
+            "records": 171,
+            "flagged": 87,
+            "pct": 50.88
+          },
+          "Colchester Borough Council": {
+            "records": 92,
+            "flagged": 85,
+            "pct": 92.39
+          },
+          "Department for Work and Pensions": {
+            "records": 133,
+            "flagged": 84,
+            "pct": 63.16
+          },
+          "Department for Children, Schools and Families": {
+            "records": 97,
+            "flagged": 78,
+            "pct": 80.41
+          },
+          "Tunbridge Wells Borough Council": {
+            "records": 77,
+            "flagged": 71,
+            "pct": 92.21
+          },
+          "Ministry of Justice": {
+            "records": 103,
+            "flagged": 70,
+            "pct": 67.96
+          },
+          "Leeds City Council": {
+            "records": 148,
+            "flagged": 68,
+            "pct": 45.95
+          },
+          "Department for Business, Energy and Industrial Strategy": {
+            "records": 115,
+            "flagged": 68,
+            "pct": 59.13
+          },
+          "Department for Education": {
+            "records": 126,
+            "flagged": 67,
+            "pct": 53.17
+          },
+          "Department of Health and Social Care": {
+            "records": 84,
+            "flagged": 66,
+            "pct": 78.57
+          },
+          "ISD Scotland": {
+            "records": 66,
+            "flagged": 64,
+            "pct": 96.97
+          },
+          "Forestry Commission": {
+            "records": 262,
+            "flagged": 64,
+            "pct": 24.43
+          },
+          "Centre for Environmental Data Analysis": {
+            "records": 65,
+            "flagged": 64,
+            "pct": 98.46
+          },
+          "Wigan Metropolitan Borough Council": {
+            "records": 65,
+            "flagged": 64,
+            "pct": 98.46
+          },
+          "Public Health England": {
+            "records": 86,
+            "flagged": 62,
+            "pct": 72.09
+          },
+          "North Lincolnshire Council": {
+            "records": 89,
+            "flagged": 58,
+            "pct": 65.17
+          },
+          "The Food and Environment Research Agency": {
+            "records": 81,
+            "flagged": 57,
+            "pct": 70.37
+          },
+          "Home Office": {
+            "records": 159,
+            "flagged": 56,
+            "pct": 35.22
+          },
+          "Environment Agency": {
+            "records": 982,
+            "flagged": 51,
+            "pct": 5.19
+          },
+          "Calderdale Metropolitan Borough Council": {
+            "records": 151,
+            "flagged": 50,
+            "pct": 33.11
+          },
+          "Cheshire East Council": {
+            "records": 65,
+            "flagged": 49,
+            "pct": 75.38
+          },
+          "HM Revenue and Customs": {
+            "records": 74,
+            "flagged": 48,
+            "pct": 64.86
+          },
+          "North Yorkshire County Council": {
+            "records": 68,
+            "flagged": 48,
+            "pct": 70.59
+          },
+          "Cabinet Office": {
+            "records": 88,
+            "flagged": 46,
+            "pct": 52.27
+          },
+          "City of Bradford Metropolitan District Council": {
+            "records": 68,
+            "flagged": 42,
+            "pct": 61.76
+          },
+          "Cheshire West and Chester Council": {
+            "records": 52,
+            "flagged": 42,
+            "pct": 80.77
+          },
+          "Healthcare Quality Improvement Partnership": {
+            "records": 173,
+            "flagged": 42,
+            "pct": 24.28
+          },
+          "Service Personnel and Veterans Agency": {
+            "records": 50,
+            "flagged": 41,
+            "pct": 82.0
+          },
+          "Plymouth City Council": {
+            "records": 83,
+            "flagged": 38,
+            "pct": 45.78
+          },
+          "City of London": {
+            "records": 68,
+            "flagged": 38,
+            "pct": 55.88
+          },
+          "Wycombe District Council": {
+            "records": 51,
+            "flagged": 38,
+            "pct": 74.51
+          },
+          "Basildon Borough Council": {
+            "records": 58,
+            "flagged": 38,
+            "pct": 65.52
+          },
+          "NHS Kent and Medway ICB": {
+            "records": 38,
+            "flagged": 38,
+            "pct": 100.0
+          },
+          "Gedling Borough Council": {
+            "records": 36,
+            "flagged": 36,
+            "pct": 100.0
+          },
+          "Met Office": {
+            "records": 69,
+            "flagged": 36,
+            "pct": 52.17
+          },
+          "Thurrock Council": {
+            "records": 36,
+            "flagged": 36,
+            "pct": 100.0
+          },
+          "North Somerset Council": {
+            "records": 34,
+            "flagged": 34,
+            "pct": 100.0
+          },
+          "Musgrove Park Hospital": {
+            "records": 32,
+            "flagged": 32,
+            "pct": 100.0
+          },
+          "NHS Sheffield CCG": {
+            "records": 29,
+            "flagged": 29,
+            "pct": 100.0
+          },
+          "Department of Health, Social Services and Public Safety": {
+            "records": 28,
+            "flagged": 28,
+            "pct": 100.0
+          },
+          "Skills Funding Agency": {
+            "records": 61,
+            "flagged": 27,
+            "pct": 44.26
+          },
+          "United Kingdom Hydrographic Office": {
+            "records": 31,
+            "flagged": 26,
+            "pct": 83.87
+          },
+          "Northern Ireland Statistics and Research Agency": {
+            "records": 31,
+            "flagged": 26,
+            "pct": 83.87
+          },
+          "Mole Valley District Council": {
+            "records": 35,
+            "flagged": 26,
+            "pct": 74.29
+          },
+          "South Yorkshire Integrated Care Board": {
+            "records": 26,
+            "flagged": 26,
+            "pct": 100.0
+          },
+          "National Records of Scotland": {
+            "records": 25,
+            "flagged": 25,
+            "pct": 100.0
+          },
+          "Oxford City Council": {
+            "records": 43,
+            "flagged": 23,
+            "pct": 53.49
+          },
+          "Halton Borough Council": {
+            "records": 22,
+            "flagged": 22,
+            "pct": 100.0
+          },
+          "Rochford District Council": {
+            "records": 22,
+            "flagged": 22,
+            "pct": 100.0
+          },
+          "Bristol City Council": {
+            "records": 70,
+            "flagged": 21,
+            "pct": 30.0
+          },
+          "Milton Keynes Council": {
+            "records": 26,
+            "flagged": 21,
+            "pct": 80.77
+          },
+          "Crown Prosecution Service": {
+            "records": 32,
+            "flagged": 21,
+            "pct": 65.62
+          },
+          "Wolverhampton City Council": {
+            "records": 21,
+            "flagged": 21,
+            "pct": 100.0
+          },
+          "Northern Ireland Office": {
+            "records": 27,
+            "flagged": 21,
+            "pct": 77.78
+          },
+          "Allerdale Borough Council": {
+            "records": 59,
+            "flagged": 20,
+            "pct": 33.9
+          },
+          "Tendring District Council": {
+            "records": 20,
+            "flagged": 20,
+            "pct": 100.0
+          },
+          "Scarborough Borough Council": {
+            "records": 35,
+            "flagged": 19,
+            "pct": 54.29
+          },
+          "Southend-on-Sea Borough Council": {
+            "records": 21,
+            "flagged": 19,
+            "pct": 90.48
+          },
+          "Department for Energy Security and Net Zero": {
+            "records": 31,
+            "flagged": 18,
+            "pct": 58.06
+          },
+          "East Cambridgeshire District Council": {
+            "records": 28,
+            "flagged": 17,
+            "pct": 60.71
+          },
+          "Maritime and Coastguard Agency": {
+            "records": 21,
+            "flagged": 17,
+            "pct": 80.95
+          },
+          "The Insolvency Service": {
+            "records": 28,
+            "flagged": 17,
+            "pct": 60.71
+          },
+          "Gateshead Council": {
+            "records": 31,
+            "flagged": 15,
+            "pct": 48.39
+          },
+          "Braintree District Council": {
+            "records": 20,
+            "flagged": 15,
+            "pct": 75.0
+          },
+          "Driving Standards Agency": {
+            "records": 35,
+            "flagged": 15,
+            "pct": 42.86
+          },
+          "Manchester City Council": {
+            "records": 21,
+            "flagged": 14,
+            "pct": 66.67
+          },
+          "The National Archives": {
+            "records": 29,
+            "flagged": 14,
+            "pct": 48.28
+          },
+          "Department for International Development": {
+            "records": 39,
+            "flagged": 13,
+            "pct": 33.33
+          },
+          "Stockport Metropolitan Borough Council": {
+            "records": 24,
+            "flagged": 13,
+            "pct": 54.17
+          },
+          "Foreign and Commonwealth Office": {
+            "records": 31,
+            "flagged": 13,
+            "pct": 41.94
+          },
+          "Craven District Council": {
+            "records": 23,
+            "flagged": 13,
+            "pct": 56.52
+          },
+          "London Borough of Hackney": {
+            "records": 52,
+            "flagged": 13,
+            "pct": 25.0
+          },
+          "Department for Digital, Culture, Media and Sport": {
+            "records": 25,
+            "flagged": 12,
+            "pct": 48.0
+          },
+          "Cranfield University": {
+            "records": 32,
+            "flagged": 12,
+            "pct": 37.5
+          },
+          "Financial Conduct Authority (FCA)": {
+            "records": 67,
+            "flagged": 12,
+            "pct": 17.91
+          },
+          "Vehicle Certification Agency": {
+            "records": 20,
+            "flagged": 11,
+            "pct": 55.0
+          },
+          "Bath and North East Somerset Council": {
+            "records": 20,
+            "flagged": 11,
+            "pct": 55.0
+          },
+          "Ordnance Survey": {
+            "records": 84,
+            "flagged": 9,
+            "pct": 10.71
+          },
+          "Cambridgeshire County Council": {
+            "records": 23,
+            "flagged": 9,
+            "pct": 39.13
+          },
+          "Harrogate Borough Council": {
+            "records": 24,
+            "flagged": 9,
+            "pct": 37.5
+          },
+          "Food Standards Agency": {
+            "records": 59,
+            "flagged": 8,
+            "pct": 13.56
+          },
+          "National College for Teaching and Leadership": {
+            "records": 23,
+            "flagged": 7,
+            "pct": 30.43
+          },
+          "Ipswich Borough Council": {
+            "records": 21,
+            "flagged": 7,
+            "pct": 33.33
+          },
+          "HM Treasury": {
+            "records": 25,
+            "flagged": 7,
+            "pct": 28.0
+          },
+          "Warwickshire County Council": {
+            "records": 33,
+            "flagged": 7,
+            "pct": 21.21
+          },
+          "Salford City Council": {
+            "records": 26,
+            "flagged": 6,
+            "pct": 23.08
+          },
+          "Lincolnshire County Council": {
+            "records": 32,
+            "flagged": 5,
+            "pct": 15.62
+          },
+          "Health and Safety Executive": {
+            "records": 30,
+            "flagged": 5,
+            "pct": 16.67
+          },
+          "Northumberland County Council": {
+            "records": 22,
+            "flagged": 5,
+            "pct": 22.73
+          },
+          "Sheffield City Council": {
+            "records": 28,
+            "flagged": 4,
+            "pct": 14.29
+          },
+          "Maldon District Council": {
+            "records": 29,
+            "flagged": 4,
+            "pct": 13.79
+          },
+          "Blaby District Council": {
+            "records": 20,
+            "flagged": 4,
+            "pct": 20.0
+          },
+          "Ofsted": {
+            "records": 23,
+            "flagged": 4,
+            "pct": 17.39
+          },
+          "North York Moors National Park Authority": {
+            "records": 25,
+            "flagged": 4,
+            "pct": 16.0
+          },
+          "Nottingham City Council": {
+            "records": 43,
+            "flagged": 3,
+            "pct": 6.98
+          },
+          "Higher Education Statistics Agency": {
+            "records": 41,
+            "flagged": 3,
+            "pct": 7.32
+          },
+          "The Disclosure and Barring Service": {
+            "records": 21,
+            "flagged": 2,
+            "pct": 9.52
+          },
+          "Newark and Sherwood District Council": {
+            "records": 38,
+            "flagged": 1,
+            "pct": 2.63
+          },
+          "Runnymede Borough Council": {
+            "records": 25,
+            "flagged": 1,
+            "pct": 4.0
+          },
+          "Transport for Greater Manchester": {
+            "records": 26,
+            "flagged": 1,
+            "pct": 3.85
+          }
+        },
+        "bh_survivor": true
+      },
+      "exploratory_spread": {
+        "strata": 131,
+        "strata_above_90pct": 31,
+        "strata_below_10pct": 8,
+        "min_rate_pct": 2.63,
+        "max_rate_pct": 100.0,
+        "median_rate_pct": 60.71,
+        "top5_flag_share_pct": 42.93
+      },
+      "concentration": {
+        "top_stratum": "Office for National Statistics",
+        "flag_share_pct": 12.05,
+        "record_share_pct": 8.32,
+        "ratio": 1.448,
+        "strata_total": 131
+      },
+      "harvest_fraction": 1.0,
+      "k5_applies": true,
+      "k5_fired": false
+    },
+    "govdata": {
+      "catalogue": "govdata",
+      "label": "govdata.de",
+      "records": 146492,
+      "present": 142674,
+      "declared_completeness_pct": 97.39,
+      "k1_fired": false,
+      "held": {
+        "r1_chrome": {
+          "k": 80,
+          "n": 71272,
+          "pct": 0.11,
+          "ci95": [
+            0.09,
+            0.14
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 35814,
+          "n": 71272,
+          "pct": 50.25,
+          "ci95": [
+            49.88,
+            50.62
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 726,
+          "n": 71272,
+          "pct": 1.02,
+          "ci95": [
+            0.95,
+            1.1
+          ]
+        },
+        "r4_duplicate": {
+          "k": 33038,
+          "n": 71272,
+          "pct": 46.35,
+          "ci95": [
+            45.99,
+            46.72
+          ]
+        },
+        "r5_title_echo": {
+          "k": 7884,
+          "n": 71272,
+          "pct": 11.06,
+          "ci95": [
+            10.83,
+            11.29
+          ]
+        },
+        "r3_lower": {
+          "k": 722,
+          "n": 71272,
+          "pct": 1.01,
+          "ci95": [
+            0.94,
+            1.09
+          ]
+        },
+        "r3_opener": {
+          "k": 4,
+          "n": 71272,
+          "pct": 0.01,
+          "ci95": [
+            0.0,
+            0.01
+          ]
+        },
+        "hollow_strict": {
+          "k": 33095,
+          "n": 71272,
+          "pct": 46.43,
+          "ci95": [
+            46.07,
+            46.8
+          ]
+        },
+        "hollow_broad": {
+          "k": 55541,
+          "n": 71272,
+          "pct": 77.93,
+          "ci95": [
+            77.62,
+            78.23
+          ]
+        },
+        "hollow_broad5": {
+          "k": 56745,
+          "n": 71272,
+          "pct": 79.62,
+          "ci95": [
+            79.32,
+            79.91
+          ]
+        }
+      },
+      "dev": {
+        "r1_chrome": {
+          "k": 57,
+          "n": 71402,
+          "pct": 0.08,
+          "ci95": [
+            0.06,
+            0.1
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 36134,
+          "n": 71402,
+          "pct": 50.61,
+          "ci95": [
+            50.24,
+            50.97
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 730,
+          "n": 71402,
+          "pct": 1.02,
+          "ci95": [
+            0.95,
+            1.1
+          ]
+        },
+        "r4_duplicate": {
+          "k": 33026,
+          "n": 71402,
+          "pct": 46.25,
+          "ci95": [
+            45.89,
+            46.62
+          ]
+        },
+        "r5_title_echo": {
+          "k": 7751,
+          "n": 71402,
+          "pct": 10.86,
+          "ci95": [
+            10.63,
+            11.09
+          ]
+        },
+        "r3_lower": {
+          "k": 721,
+          "n": 71402,
+          "pct": 1.01,
+          "ci95": [
+            0.94,
+            1.09
+          ]
+        },
+        "r3_opener": {
+          "k": 9,
+          "n": 71402,
+          "pct": 0.01,
+          "ci95": [
+            0.01,
+            0.02
+          ]
+        },
+        "hollow_strict": {
+          "k": 33063,
+          "n": 71402,
+          "pct": 46.31,
+          "ci95": [
+            45.94,
+            46.67
+          ]
+        },
+        "hollow_broad": {
+          "k": 55566,
+          "n": 71402,
+          "pct": 77.82,
+          "ci95": [
+            77.52,
+            78.12
+          ]
+        },
+        "hollow_broad5": {
+          "k": 56737,
+          "n": 71402,
+          "pct": 79.46,
+          "ci95": [
+            79.16,
+            79.76
+          ]
+        }
+      },
+      "all": {
+        "r1_chrome": {
+          "k": 137,
+          "n": 142674,
+          "pct": 0.1,
+          "ci95": [
+            0.08,
+            0.11
+          ]
+        },
+        "r2_truncated_tail": {
+          "k": 71948,
+          "n": 142674,
+          "pct": 50.43,
+          "ci95": [
+            50.17,
+            50.69
+          ]
+        },
+        "r3_truncated_head": {
+          "k": 1456,
+          "n": 142674,
+          "pct": 1.02,
+          "ci95": [
+            0.97,
+            1.07
+          ]
+        },
+        "r4_duplicate": {
+          "k": 66064,
+          "n": 142674,
+          "pct": 46.3,
+          "ci95": [
+            46.05,
+            46.56
+          ]
+        },
+        "r5_title_echo": {
+          "k": 15635,
+          "n": 142674,
+          "pct": 10.96,
+          "ci95": [
+            10.8,
+            11.12
+          ]
+        },
+        "r3_lower": {
+          "k": 1443,
+          "n": 142674,
+          "pct": 1.01,
+          "ci95": [
+            0.96,
+            1.06
+          ]
+        },
+        "r3_opener": {
+          "k": 13,
+          "n": 142674,
+          "pct": 0.01,
+          "ci95": [
+            0.01,
+            0.02
+          ]
+        },
+        "hollow_strict": {
+          "k": 66158,
+          "n": 142674,
+          "pct": 46.37,
+          "ci95": [
+            46.11,
+            46.63
+          ]
+        },
+        "hollow_broad": {
+          "k": 111107,
+          "n": 142674,
+          "pct": 77.87,
+          "ci95": [
+            77.66,
+            78.09
+          ]
+        },
+        "hollow_broad5": {
+          "k": 113482,
+          "n": 142674,
+          "pct": 79.54,
+          "ci95": [
+            79.33,
+            79.75
+          ]
+        }
+      },
+      "split": {
+        "dev": 71402,
+        "held": 71272,
+        "rule": "sha256(id) mod 2"
+      },
+      "p3_broad_is_r2": {
+        "agree": 51545,
+        "n": 71272,
+        "pct": 72.32
+      },
+      "p6_r5_increment": {
+        "r5_only": 1204,
+        "r5_total": 7884,
+        "n": 71272
+      },
+      "k2_fired": false,
+      "association": {
+        "chi2": 8391.468,
+        "df": 31,
+        "levels": 32,
+        "p_perm": 9.999000099990002e-05,
+        "p_chi2": 0.0,
+        "reps": 10000,
+        "flagged": 55541,
+        "n": 71272,
+        "table": {
+          "Land Schleswig-Holstein": {
+            "records": 14349,
+            "flagged": 12766,
+            "pct": 88.97
+          },
+          "GDI-DE": {
+            "records": 13823,
+            "flagged": 11481,
+            "pct": 83.06
+          },
+          "Open Data Brandenburg": {
+            "records": 9832,
+            "flagged": 9162,
+            "pct": 93.19
+          },
+          "open.bydata": {
+            "records": 13318,
+            "flagged": 8845,
+            "pct": 66.41
+          },
+          "Transparenzportal Hamburg": {
+            "records": 5169,
+            "flagged": 3599,
+            "pct": 69.63
+          },
+          "Land Rheinland-Pfalz": {
+            "records": 4587,
+            "flagged": 3279,
+            "pct": 71.48
+          },
+          "Statistisches Bundesamt": {
+            "records": 1622,
+            "flagged": 1478,
+            "pct": 91.12
+          },
+          "Freistaat Sachsen": {
+            "records": 1961,
+            "flagged": 1007,
+            "pct": 51.35
+          },
+          "Mobilithek": {
+            "records": 1567,
+            "flagged": 983,
+            "pct": 62.73
+          },
+          "Bundesministerium des Innern und Heimat": {
+            "records": 669,
+            "flagged": 616,
+            "pct": 92.08
+          },
+          "Open Data Baden-Württemberg": {
+            "records": 1061,
+            "flagged": 554,
+            "pct": 52.21
+          },
+          "Open Data Hessen": {
+            "records": 759,
+            "flagged": 526,
+            "pct": 69.3
+          },
+          "Berlin Open Data": {
+            "records": 517,
+            "flagged": 359,
+            "pct": 69.44
+          },
+          "OpenData.HRO": {
+            "records": 137,
+            "flagged": 124,
+            "pct": 90.51
+          },
+          "Metropolregion Rhein-Neckar": {
+            "records": 137,
+            "flagged": 86,
+            "pct": 62.77
+          },
+          "Transparenzportal Bremen": {
+            "records": 85,
+            "flagged": 85,
+            "pct": 100.0
+          },
+          "Land Niedersachsen": {
+            "records": 257,
+            "flagged": 84,
+            "pct": 32.68
+          },
+          "OpenAgrar": {
+            "records": 121,
+            "flagged": 75,
+            "pct": 61.98
+          },
+          "Bundesministerium für Forschung, Technologie und Raumfahrt": {
+            "records": 75,
+            "flagged": 63,
+            "pct": 84.0
+          },
+          "Land Brandenburg": {
+            "records": 65,
+            "flagged": 52,
+            "pct": 80.0
+          },
+          "(small strata)": {
+            "records": 120,
+            "flagged": 49,
+            "pct": 40.83
+          },
+          "Umweltbundesamt": {
+            "records": 113,
+            "flagged": 42,
+            "pct": 37.17
+          },
+          "Stadt Oldenburg (Oldb)": {
+            "records": 38,
+            "flagged": 38,
+            "pct": 100.0
+          },
+          "Land Sachsen-Anhalt": {
+            "records": 72,
+            "flagged": 32,
+            "pct": 44.44
+          },
+          "Bundesministerium für Arbeit und Soziales": {
+            "records": 49,
+            "flagged": 32,
+            "pct": 65.31
+          },
+          "Bundesministerium für Bildung und Forschung": {
+            "records": 29,
+            "flagged": 29,
+            "pct": 100.0
+          },
+          "Bundesministerium der Finanzen": {
+            "records": 29,
+            "flagged": 22,
+            "pct": 75.86
+          },
+          "Robert Koch-Institut": {
+            "records": 24,
+            "flagged": 19,
+            "pct": 79.17
+          },
+          "Paul-Ehrlich-Institut": {
+            "records": 24,
+            "flagged": 19,
+            "pct": 79.17
+          },
+          "Bundesministerium für Familie, Senioren, Frauen und Jugend": {
+            "records": 33,
+            "flagged": 18,
+            "pct": 54.55
+          },
+          "Bundesministerium für Wirtschaft und Energie": {
+            "records": 27,
+            "flagged": 12,
+            "pct": 44.44
+          },
+          "Bundesamt für Justiz": {
+            "records": 603,
+            "flagged": 5,
+            "pct": 0.83
+          }
+        },
+        "bh_survivor": true
+      },
+      "exploratory_spread": {
+        "strata": 32,
+        "strata_above_90pct": 7,
+        "strata_below_10pct": 1,
+        "min_rate_pct": 0.83,
+        "max_rate_pct": 100.0,
+        "median_rate_pct": 69.53,
+        "top5_flag_share_pct": 82.56
+      },
+      "concentration": {
+        "top_stratum": "Land Schleswig-Holstein",
+        "flag_share_pct": 22.98,
+        "record_share_pct": 20.13,
+        "ratio": 1.142,
+        "strata_total": 32
+      },
+      "harvest_fraction": 1.0,
+      "k5_applies": true,
+      "k5_fired": false
+    },
+    "aic": {
+      "catalogue": "aic",
+      "label": "Art Institute of Chicago",
+      "records": 2000,
+      "present": 190,
+      "declared_completeness_pct": 9.5,
+      "k1_fired": true,
+      "note": "K1: descriptive field non-empty on under 20 % of records; no screen run.",
+      "harvest_fraction": 0.0151,
+      "k5_applies": false,
+      "k5_note": "K5 is a census check; C4 is a seeded sample of 20 pages by design, so K5 is not evaluated here. The sampled fraction is reported instead.",
+      "fill_rates": {
+        "text": {
+          "filled": 190,
+          "of": 2000,
+          "pct": 9.5
+        },
+        "short_description": {
+          "filled": 10,
+          "of": 2000,
+          "pct": 0.5
+        },
+        "provenance_text": {
+          "filled": 736,
+          "of": 2000,
+          "pct": 36.8
+        },
+        "credit_line": {
+          "filled": 1999,
+          "of": 2000,
+          "pct": 99.95
+        }
+      }
+    }
+  },
+  "audit": {
+    "rows": [
+      {
+        "aid": "092f413545",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "0e17fec3fe",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "0f104a9deb",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "13f88d544b",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "1518a59158",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "16287336e0",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "2cc8c4b210",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "3665971b1c",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "39758116d3",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "39f561628d",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "3b8c80472d",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "4081573deb",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "411a4a2ce1",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "4120005be2",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "4225f3c4ca",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "4385a5b833",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "449b6e0447",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "50f2bc1f1e",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 0
+      },
+      {
+        "aid": "5b12433b0d",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "5c3ed34d2f",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "6a12c79e35",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 0
+      },
+      {
+        "aid": "6bf64a8f04",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "6c2adca38b",
+        "catalogue": "cma",
+        "reader_hollow": 1,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "6c2fbd2808",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "75121d32a6",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "77dcec3eae",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "7a5a7c8756",
+        "catalogue": "uk",
+        "reader_hollow": 1,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "81bd276c15",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 0
+      },
+      {
+        "aid": "85bb51d10b",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "885f51a3f7",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "96c39e0b09",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "9c0751d3f4",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "a03bc2e033",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "a1021663db",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "a20638e2a4",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "a5dff9ea79",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "a7a34db5df",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 0
+      },
+      {
+        "aid": "b3e02bd99d",
+        "catalogue": "cma",
+        "reader_hollow": 1,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "b78ec4c86e",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "bbc30777bb",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 0
+      },
+      {
+        "aid": "c23d2db5a2",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "c58999122c",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "c7e3b2621c",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 0
+      },
+      {
+        "aid": "d5a5e2caa5",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "d7066eaca8",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "d7fbbb2fb9",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "d8722458c9",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "da779a63d1",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 0
+      },
+      {
+        "aid": "dd520e3931",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "e0203cf0d4",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "e10fa53fa2",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "e11f08be56",
+        "catalogue": "cma",
+        "reader_hollow": 1,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "ea4e63b1e0",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "f1789707e6",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "f4d20bb0f7",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "f50e7d0e8d",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "f570611d4c",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "f6034866e1",
+        "catalogue": "cma",
+        "reader_hollow": 1,
+        "screen_broad": 1,
+        "screen_broad5": 1,
+        "screen_strict": 1
+      },
+      {
+        "aid": "fa09dd4cb2",
+        "catalogue": "uk",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      },
+      {
+        "aid": "ffb0cb2bff",
+        "catalogue": "cma",
+        "reader_hollow": 0,
+        "screen_broad": 0,
+        "screen_broad5": 0,
+        "screen_strict": 0
+      }
+    ],
+    "labelled": 60,
+    "joined": 60,
+    "cannot_tell": 0,
+    "reader_says_nothing": 5,
+    "screen_flags": 31,
+    "agreement_pct": 53.33,
+    "kappa": 0.0919,
+    "kappa_broad5": 0.0919,
+    "confusion": {
+      "tp": 4,
+      "fp": 27,
+      "fn": 1,
+      "tn": 28
+    },
+    "precision": 0.129,
+    "recall": 0.8,
+    "informed_pass": {
+      "_note": "Post-hoc, declared: a second labelling of the same 60 values in which the reader was told how many records carry the identical value, and nothing else. R4 is a relation between values; a reader of one value alone cannot see it, so the blind pass cannot validate R4 even in principle.",
+      "joined": 60,
+      "reader_says_nothing": 17,
+      "screen_flags": 31,
+      "agreement_pct": 73.33,
+      "kappa": 0.4743
+    },
+    "blindness_probe": {
+      "_note": "The sheet withheld the duplicate count. If the blind labels were independent of it, these two rows would look alike. They do not. Two readings are available and this measurement cannot separate them: the sheet leaked, or texts copied across many records really are more often generic.",
+      "says_nothing_with_dup_ge_10": 4,
+      "says_nothing_with_dup_lt_10": 1,
+      "usable_with_dup_ge_10": 12,
+      "usable_with_dup_lt_10": 43,
+      "fisher_p": 0.0155
+    },
+    "cma": {
+      "n": 30,
+      "reader_says_nothing": 4,
+      "screen_flags": 15,
+      "agreement_pct": 56.67,
+      "kappa": 0.1333
+    },
+    "uk": {
+      "n": 30,
+      "reader_says_nothing": 1,
+      "screen_flags": 16,
+      "agreement_pct": 50.0,
+      "kappa": 0.0586
+    }
+  },
+  "quotes": [
+    {
+      "catalogue": "cma",
+      "title": "Notes (pg 18) ",
+      "value": "Dove frequently listened to music as he painted, and was particularly interested in the improvisational qualities of jazz. His diaries make reference to favorite music ranging from…",
+      "chars": 698,
+      "url": "https://clevelandart.org/art/1992.208.l",
+      "rules": [
+        "r4_duplicate"
+      ]
+    },
+    {
+      "catalogue": "cma",
+      "title": "Hours of Queen Isabella the Catholic, Queen of Spain:  Fol. 103r",
+      "value": "This manuscript was illuminated by a circle of at least five highly organized manuscript painters active in the Flemish cities of Ghent and Bruges. The principal illuminator was Al…",
+      "chars": 1059,
+      "url": "https://clevelandart.org/art/1963.256.103.a",
+      "rules": [
+        "r4_duplicate"
+      ]
+    },
+    {
+      "catalogue": "cma",
+      "title": "Text, folio 239 (recto), from a Gospel Book with Commentaries",
+      "value": "Each of the four gospels in this book opens on a page with brilliantly illuminated borders depicting the author of the text as well as birds—principally peacocks, symbols of the im…",
+      "chars": 451,
+      "url": "https://clevelandart.org/art/1942.152.239.a",
+      "rules": [
+        "r4_duplicate"
+      ]
+    },
+    {
+      "catalogue": "cma",
+      "title": "Man Overboard",
+      "value": "This print was published in <em>Le Charivari </em>(June 11, 1843) as plate 14 from the series <em>Parisian Boatmen.</em>",
+      "chars": 120,
+      "url": "https://clevelandart.org/art/1942.1019",
+      "rules": [
+        "r2_truncated_tail"
+      ]
+    },
+    {
+      "catalogue": "uk",
+      "title": "Tree Preservation Orders",
+      "value": "A Tree Preservation Order (TPO) is made when a tree is considered to bring amenity value to the surrounding area. The order makes it an offence to cut down, uproot, prune, lop or d…",
+      "chars": 318,
+      "url": "https://data.gov.uk/dataset/tree-preservation-orders107",
+      "rules": [
+        "r2_truncated_tail"
+      ]
+    },
+    {
+      "catalogue": "uk",
+      "title": "Leeds Let's Get Active",
+      "value": "Leeds City Council and Sport England have teamed up to provide Leeds Let's Get Active, a programme of free gym and swim sessions at all Leeds City Council leisure centres, as well …",
+      "chars": 1168,
+      "url": "https://data.gov.uk/dataset/leeds-lets-get-active4",
+      "rules": [
+        "r2_truncated_tail",
+        "r4_duplicate"
+      ]
+    },
+    {
+      "catalogue": "uk",
+      "title": "Secondary School Preferences",
+      "value": "This data set shows the number of preferences, for admission to secondary school in September, each school received during the annual cycle school admissions process.",
+      "chars": 166,
+      "url": "https://data.gov.uk/dataset/secondary-school-preferences13",
+      "rules": [
+        "r4_duplicate"
+      ]
+    },
+    {
+      "catalogue": "uk",
+      "title": "Lower Layer Super Output Areas (December 2011) Super Generalised Clipped  Boundaries in England and Wales",
+      "value": "This file contains the digital vector boundaries for lower layer super output areas as at 31 December 2011 in England and Wales. <div><br /></div><div>The boundaries available are:…",
+      "chars": 2290,
+      "url": "https://data.gov.uk/dataset/lower-layer-super-output-areas-december-2011-super-generalised-clipped-boundaries-in-england-an5",
+      "rules": [
+        "r2_truncated_tail",
+        "r4_duplicate"
+      ]
+    },
+    {
+      "catalogue": "govdata",
+      "title": "Mei - 3.1 Vor dem Teiche (1. vereinfachte Änderung)",
+      "value": "Mei - 3.1 Vor dem Teiche (1. vereinfachte Änderung) im Datenformat INSPIRE PLU Version 4.0.1",
+      "chars": 92,
+      "url": "https://www.govdata.de/dataset/mei-3-1-vor-dem-teiche-1-vereinfachte-anderung",
+      "rules": [
+        "r2_truncated_tail"
+      ]
+    },
+    {
+      "catalogue": "govdata",
+      "title": "Messergebnisse zur Radioaktivität in: Roggenkörner (12.08.2019)",
+      "value": "Messdaten zur Überwachung der Radioaktivität in der Umwelt, in Lebens- und Futtermitteln",
+      "chars": 88,
+      "url": "https://www.govdata.de/dataset/messergebnisse-zur-radioaktivitat-in-roggenkorner-12-08-2019",
+      "rules": [
+        "r2_truncated_tail",
+        "r4_duplicate"
+      ]
+    },
+    {
+      "catalogue": "govdata",
+      "title": "Beherbergung im Reiseverkehr in Schleswig-Holstein im Januar 2008",
+      "value": "Beherbergung im Reiseverkehr in Schleswig-Holstein im Januar 2008 - Gäste und Übernachtungen im Fremdenverkehr Vorläufige Zahlen",
+      "chars": 128,
+      "url": "https://www.govdata.de/dataset/beherbergung-im-reiseverkehr-in-schleswig-holstein-im-januar-2008",
+      "rules": [
+        "r2_truncated_tail"
+      ]
+    },
+    {
+      "catalogue": "govdata",
+      "title": "Wissenschaftliche Bibliotheken: 33: Sprach- und Literaturwissenschaft sonstiger Sprachen in 2016",
+      "value": "Die deutsche Bibliotheksstatistik (DBS) stellt die nationale Statistik des deutschen Bibliothekswesens dar und beinhaltet statistische Kennzahlen. Sie umfasst öffentliche Bibliothe…",
+      "chars": 732,
+      "url": "https://www.govdata.de/dataset/wissenschaftliche-bibliotheken-33-sprach-und-literaturwissenschaft-sonstiger-sprachen-in-20165db2d",
+      "rules": [
+        "r2_truncated_tail",
+        "r4_duplicate"
+      ]
+    }
+  ],
+  "params": {
+    "seed": 20260911,
+    "perm_reps": 10000,
+    "min_stratum": 20,
+    "audit_per_catalogue": 30,
+    "sheet_cap_chars": 1200,
+    "informed_pass_threshold": 10
+  }
+}

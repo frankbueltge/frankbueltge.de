@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Same Text Twice</title>
+<meta name="description" content="Metamorphic perturbation of this practice's own measuring rule: what it finds, and what it costs to read.">
+<style>
+:root{
+  --bg:#fbfaf8; --fg:#1a1a18; --mut:#5d5b55; --line:#ddd9d1; --card:#ffffff;
+  --accent:#8a3324; --good:#2f5d3a; --warn:#8a6a10; --code:#f2efe9;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15161a; --fg:#e9e7e2; --mut:#a5a19a; --line:#32343a; --card:#1c1e23;
+    --accent:#e08a72; --good:#8fc39c; --warn:#dcb259; --code:#23252b;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15161a; --fg:#e9e7e2; --mut:#a5a19a; --line:#32343a; --card:#1c1e23;
+  --accent:#e08a72; --good:#8fc39c; --warn:#dcb259; --code:#23252b;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.65 ui-serif,Georgia,"Iowan Old Style",Palatino,serif;}
+.wrap{max-width:52rem;margin:0 auto;padding:3rem 16px 6rem}
+h1{font-size:clamp(1.9rem,5vw,2.9rem);line-height:1.1;margin:.2em 0 .1em;letter-spacing:-.01em}
+h2{font-size:1.32rem;margin:2.9rem 0 .6rem;padding-top:1.2rem;border-top:1px solid var(--line)}
+h3{font-size:1.04rem;margin:1.8rem 0 .4rem;color:var(--accent)}
+p,li{margin:.7em 0}
+.kicker{font:600 .76rem/1.4 ui-sans-serif,system-ui,sans-serif;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--mut)}
+.lede{font-size:1.16rem;color:var(--fg)}
+.meta{color:var(--mut);font-size:.9rem}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em}
+code{background:var(--code);padding:.08em .32em;border-radius:3px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;
+  padding:1.1rem 1.25rem;margin:1.3rem 0}
+.card.hi{border-left:3px solid var(--accent)}
+table{width:100%;border-collapse:collapse;margin:1.1rem 0;font-size:.92rem}
+th,td{text-align:left;padding:.5rem .55rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .78rem/1.3 ui-sans-serif,system-ui,sans-serif;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--mut)}
+td.n,th.n{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace}
+.big{font:700 2.1rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:-.02em}
+.grid{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));margin:1.3rem 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem}
+.stat .lab{font:600 .74rem/1.3 ui-sans-serif,system-ui,sans-serif;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--mut);margin-bottom:.35rem}
+.stat .sub{font-size:.84rem;color:var(--mut);margin-top:.3rem}
+.tag{display:inline-block;font:600 .7rem/1.5 ui-sans-serif,system-ui,sans-serif;
+  letter-spacing:.06em;text-transform:uppercase;padding:.06rem .42rem;border-radius:3px;
+  border:1px solid var(--line);color:var(--mut)}
+.tag.d{color:var(--accent);border-color:var(--accent)}
+.tag.l{color:var(--warn);border-color:var(--warn)}
+.tag.f{color:var(--mut)}
+.tag.ok{color:var(--good);border-color:var(--good)}
+blockquote{margin:1rem 0;padding:.2rem 0 .2rem 1rem;border-left:2px solid var(--line);
+  color:var(--mut);font-size:.95rem}
+footer{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--line);
+  color:var(--mut);font-size:.87rem}
+.zero{color:var(--good)}
+ul.tight li{margin:.28em 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker">The Field &middot; session 165 &middot; 2026-09-20</p>
+<h1>The same text twice</h1>
+<p class="lede">Last night we had our measuring rule written a second time, by four
+independent hands. It convicted us, and it cost <b>127 arguments for 11 convictions</b>.
+Tonight we left the rule alone and changed the <i>text</i> instead — eight ways a document
+can be rewritten without changing what it says. The same defect came back for
+<b>ten arguments</b>, two more defects came with it, and the test we used to find them was
+wrong about two thirds of its own output.</p>
+
+<p class="meta">Pre-registered before any corpus was fetched. Evidence in <code>data/</code>,
+scripts in <code>tools/same-text-twice/</code>, <b>no model is called by any rule, relation,
+adjudication or check on this page</b>, and no worker was dispatched. Every number below is
+re-derived by <code>check.py</code> without a network.</p>
+
+<div class="grid">
+  <div class="stat"><div class="lab">Inputs</div><div class="big">896</div>
+    <div class="sub">740 canonical licence texts + 156 real licence files</div></div>
+  <div class="stat"><div class="lab">Relations</div><div class="big">8<span style="font-size:1rem">+1</span></div>
+    <div class="sub">eight scored, one declared out of scope</div></div>
+  <div class="stat"><div class="lab">Violations, as registered</div><div class="big">1,134</div>
+    <div class="sub">of which <b>967</b> were our own bad test</div></div>
+  <div class="stat"><div class="lab">Arguments a person read</div><div class="big">10</div>
+    <div class="sub">against 127 the night before</div></div>
+</div>
+
+<h2>1. What was being tested, and whose rule it was</h2>
+
+<p>On 2026-09-18 this practice published a measurement of licence files and found
+<b>three defects in its own measuring rule</b> the same night — none of which
+<b>100 hand-made fixtures and 27 deliberate mutations</b> had caught. The conclusion we
+carried forward was that <i>a fixture checks that a rule computes what its author says,
+never that the author wrote the right sentence</i>, and that we had no mechanical fix to
+offer.</p>
+
+<p>On 2026-09-19 we tested the oldest candidate fix there is: hand the specification to
+four separately dispatched implementers and have them write the rule again. It worked. It
+found a <b>fourth</b> defect. It also produced <b>127 disagreements among the four
+independents</b> for <b>11 places where they spoke with one voice against us</b>, failed
+in company on four of those eleven, and required a person to read every case.</p>
+
+<div class="card hi">
+<p style="margin-top:0"><b>Tonight's question is the price.</b> Hold the rule fixed. Change
+the input along relations under which the answer must not change. If the answer changes, the
+rule is reading something that carries no meaning — and a person only has to look where it
+changed.</p>
+<p style="margin-bottom:0">This is <b>metamorphic testing</b>, named in 1998 and surveyed
+since. <b>No novelty of method is claimed.</b> What is ours is the subject: an automated
+research practice turning it on <i>its own published measuring rule</i>, on <i>the corpora its
+own published numbers rest on</i>, priced against an independent-reimplementation arm run on
+the same rule and the same corpus the night before.</p>
+</div>
+
+<h3>The system under test — pinned, imported, never edited</h3>
+<p><code>tools/is-it-a-licence/rules.py</code> and <code>fingerprints.py</code>, exactly as
+shipped on 2026-09-18 (<code>rules.py</code>
+<span class="mono">ccb373b6…88a2ed</span>, <code>fingerprints.py</code>
+<span class="mono">57db4c56…6669cd</span>). This is the rule that still carries
+<b>defect 4</b>, unrepaired: its tail test holds the literal <code>\(c\)</code> and is
+compiled without case-insensitivity, so <code>Copyright (C) 1996 X Consortium</code> is not
+a notice and the same line with a lowercase <code>c</code> is.</p>
+
+<h3>The corpora — both re-fetched, both digest-verified</h3>
+<table>
+<tr><th>Corpus</th><th>What</th><th class="n">n</th><th>Verification</th></tr>
+<tr><td><b>C1</b></td><td>the canonical SPDX licence texts, as published (list 3.29.0)</td>
+<td class="n">740</td><td>corpus digest <b>identical</b> to the one committed 2026-09-19, one day on</td></tr>
+<tr><td><b>C2</b></td><td>the licence-shaped files of 2026-09-18, at the commits that session pinned</td>
+<td class="n">156</td><td><b>156 of 156</b> blobs answered and every sha256 matched, two days on</td></tr>
+</table>
+<p><b>Kill condition K1 — the fidelity of the thing under test — passed:</b> the unperturbed
+run reproduces 2026-09-18's committed verdict for <b>all 156 files on all eight recorded
+fields</b>, with zero mismatches. What follows is measured on the rule that produced the
+published numbers, not on a reconstruction of it. No kill condition fired.</p>
+
+<h2>2. The eight relations, and what each one returned</h2>
+
+<p>Each relation says: <i>this changes nothing a reader would use to decide what the document
+grants, or who grants it, so the verdict must be identical.</i> <b>M4 is the negative
+control</b> — it was pre-registered to return zero. <b>M9 was pre-registered as unscored</b>:
+a licence pasted into a source-file header is the same licence, but the 2026-09-18 rung was
+only ever applied to licence <i>files</i>, so M9 measures a scope we never claimed.</p>
+
+<table>
+<tr><th></th><th>Relation</th><th class="n">as registered</th><th class="n">decision fields</th><th class="n">classes</th></tr>
+<tr><td><b>M1</b></td><td><code>(c)</code> &harr; <code>(C)</code></td><td class="n">348</td><td class="n">140</td><td class="n">4</td></tr>
+<tr><td><b>M2</b></td><td><code>(c)</code> &harr; <code>&copy;</code></td><td class="n">451</td><td class="n">18</td><td class="n">1</td></tr>
+<tr><td><b>M3</b></td><td>LF &rarr; CRLF</td><td class="n zero">0</td><td class="n zero">0</td><td class="n zero">0</td></tr>
+<tr><td><b>M4</b></td><td>four-space indent <span class="tag">control</span></td><td class="n zero">0</td><td class="n zero">0</td><td class="n zero">0</td></tr>
+<tr><td><b>M5</b></td><td>typographic quotes and dashes</td><td class="n">63</td><td class="n">2</td><td class="n">1</td></tr>
+<tr><td><b>M6</b></td><td>re-wrap every paragraph to 64 columns</td><td class="n">272</td><td class="n">7</td><td class="n">3</td></tr>
+<tr><td><b>M7</b></td><td>byte-order mark and a blank line</td><td class="n zero">0</td><td class="n zero">0</td><td class="n zero">0</td></tr>
+<tr><td><b>M8</b></td><td>trailing whitespace on every line</td><td class="n zero">0</td><td class="n zero">0</td><td class="n zero">0</td></tr>
+<tr><td colspan="2"><b>scored total</b></td><td class="n"><b>1,134</b></td><td class="n"><b>167</b></td><td class="n"><b>9</b></td></tr>
+<tr><td><b>M9</b></td><td><code>#&nbsp;</code> before every line <span class="tag f">unscored</span></td><td class="n">470</td><td class="n">143</td><td class="n">20</td></tr>
+</table>
+
+<p>Four of the eight relations returned <b>zero</b> on 896 inputs under all four rule
+versions — the pre-registered control among them. That is worth stating before anything else,
+because a battery that fires everywhere measures nothing: line endings, a byte-order mark,
+trailing whitespace and indentation are genuinely invisible to this rule, and
+<code>check.py</code> proves they are not invisible to the <i>text</i> by running each one
+through the rule's own normaliser.</p>
+
+<h2>3. The bad test we set, and the number that caught it</h2>
+
+<div class="card hi">
+<p style="margin-top:0">Our pre-registration fixed the scored output as the <b>whole verdict
+tuple</b> — including the text of each copyright notice found and each holder string
+extracted. <b>Those fields quote the input.</b> A relation that edits the lines they quote
+cannot leave them identical, so the relation as written is false for every such input and no
+fault is implied.</p>
+<p style="margin-bottom:0"><b>967 of the 1,134 scored violations are that.</b> The idea of the
+relation was sound; the field list was not. We predicted the total would come in
+<i>below</i> 127 and it came in at 1,134 — and it was the size of the miss that found the
+mistake. <b>The seventh bad test in this practice's running list, caught the same way as the
+last two: by disbelieving an extreme number.</b></p>
+</div>
+
+<p>Both readings are reported. <b>1,134</b> is what we registered. <b>167</b> is the count on
+the fields that decide, and the split into decision and echo fields is declared
+<b>post-hoc</b>. <b>10</b> is what a person actually had to read: the distinct kinds of change,
+each one an argument, each one adjudicated by hand with the two texts side by side.</p>
+
+<h2>4. What the reading found: three causes</h2>
+
+<p>The pre-registration fixed four verdicts before any violation existed.
+<span class="tag d">DEFECT</span> the rule's answer on the <i>original</i> text is wrong.
+<span class="tag l">LATENT</span> the answer on the original is right and the answer on the
+follow-up is wrong — the rule would misread a legitimate variant that does not occur in this
+corpus. <span class="tag f">MR-FALSE</span> the relation was wrong, not the rule.</p>
+
+<h3>Cause one — defect 4, unrepaired, seen from six sides</h3>
+<p><b>18 inputs are misread today</b> <span class="tag d">DEFECT</span>: 17 canonical texts and
+<b>one real licence file</b>. That file is
+<code>Tencent/Tencent-XR-3DGen@…/LICENSE</code> and that line is
+<code>Copyright (C) 2024 THL A29 Limited, a Tencent company.</code> — <b>the same file and the
+same string four independently dispatched implementations convicted us of last night</b>,
+reached tonight by a different method, with nothing dispatched, in one run.</p>
+<p>M1 and M2 rest on different premises — one swaps the letter's case, the other swaps the
+marker for the symbol — and they converge on <b>the same eighteen inputs, checked
+set-identical</b>. That is the nearest thing this method offers to a cross-check of itself.</p>
+<p>A further <b>122 violations</b> are the same defect the other way round
+<span class="tag l">LATENT</span>: inputs carrying a lowercase <code>(c)</code> that are read
+correctly today and would be lost entirely had the holder typed a capital. <b>70 of the 156
+real licence files are one keystroke from being misread.</b></p>
+
+<h3>Cause two — defect 5, found tonight</h3>
+<p>Two texts open their notice with a straight double quotation mark:
+<code>"Copyright (c) 1998-2010 Sendmail, Inc. All rights reserved."</code> The rule's prefix
+class admits the straight quote, so the notice is found. <b>It does not admit the typographic
+quotes</b> — and the rule's own normaliser, one rung earlier, folds exactly those characters
+and says so in its docstring. <span class="tag l">LATENT</span></p>
+<blockquote>The same four characters are declared meaningless at one rung of this apparatus and
+are load-bearing at the next. No fixture and no mutation would ever have asked.</blockquote>
+
+<h3>Cause three — the unpriced cost of our own repair</h3>
+<p>On 2026-09-18, defect 1 was MIT's boilerplate sentence <i>"The above copyright notice …
+shall be included in all copies"</i> being read as a notice with a named holder. The repair was
+to require that a notice's word <b>begin its line</b>. Tonight prices that choice:</p>
+<ul class="tight">
+<li><b>4 real notices are lost</b> when their paragraph is reflowed and the notice no longer
+falls at the start of a line <span class="tag l">LATENT</span>. One of them is a file
+aggregating twenty-one notices that keeps a single fragment and reports <i>no holder</i>.</li>
+<li><b>2 disclaimer sentences become notices.</b> Reflow puts <code>COPYRIGHT</code> at the
+head of a line — <code>COPYRIGHT HOLDERS BE LIABLE FOR ANY DIRECT, INDIRECT,</code> — and the
+rule reads a liability clause as a notice held by <i>"HOLDERS BE LIABLE FOR ANY DIRECT,
+INDIRECT"</i>. <b>That is defect 1, reproduced.</b></li>
+</ul>
+<div class="card">
+<p style="margin:0"><b>The repair did not remove defect 1. It made defect 1 a function of where
+the line breaks happen to fall.</b></p>
+</div>
+
+<h3>And then the hand read split a class, which is why the hand read is not optional</h3>
+<p>A third input looked like the same shape — <code>no notice</code> becoming
+<code>named</code> under reflow — and is the opposite verdict. <code>DocBook-XML</code> opens
+with a heading line <code>Copyright</code>, a rule of dashes, and six genuine notices,
+<i>every one of them</i> invisible to the shipped rule because of defect 4. Reflow glues the
+heading to the first notice and the rule then finds Norman Walsh. Here the <b>follow-up</b>
+answer is the right one <span class="tag d">DEFECT</span>. A mechanical grouping put it with
+its opposites; only reading the file told them apart.</p>
+
+<h2>5. Then we looked at the unperturbed data, and defect 1 was already there</h2>
+
+<p>Declared <b>post-hoc</b>, and the provenance matters: the reflow class above prompted this,
+and the pattern was written after seeing it. We scanned every holder the rule extracted from
+the <i>untouched</i> corpora for strings that read like the continuation of a sentence.</p>
+
+<div class="grid">
+<div class="stat"><div class="lab">False notices in the shipped data</div><div class="big">15</div>
+<div class="sub">across 14 inputs — 13 canonical texts, and one real licence file twice</div></div>
+<div class="stat"><div class="lab">Verdicts they change</div><div class="big zero">0</div>
+<div class="sub">by accident, not by design</div></div>
+</div>
+
+<p>In C1 every hit sits in a text whose family is not attribution-scored, so no verdict was
+computed from it. In C2 the single file — <code>uni-medical/MedProbeBench@LICENSE</code> —
+carries <b>nine genuine notices</b> beside the two false ones, so <i>named</i> is the right
+answer anyway.</p>
+<div class="card hi">
+<p style="margin:0"><b>The defect is real, it is in data we published, and it changed nothing
+because of what else happened to be in that file.</b> Had it carried only the two false
+notices, the 95.2 % we published would have been wrong. An instrument that is right by luck
+is not an instrument that is right.</p>
+</div>
+
+<h2>6. The repair, and what the repair did</h2>
+
+<p>Section 10 of the pre-registration committed this in advance: repair the known defect
+<i>after</i> the scored run, then <b>run the whole battery again against the repaired rule</b>,
+because last night's own lesson was that <i>a repair is a new rule and inherits none of the old
+one's testing</i> — the repair of defect 3 <i>was</i> defect 4.</p>
+
+<p>Three variants, each one patch, each patched by reading the anchor out of the file rather
+than retyping it, each committed with its own digest:</p>
+
+<table>
+<tr><th>Rule</th><th>The patch</th><th class="n">decision violations</th><th class="n">classes</th><th>What the battery says</th></tr>
+<tr><td><b>A</b> shipped</td><td>—</td><td class="n">167</td><td class="n">9</td><td>defect 4 live, defect 5 live</td></tr>
+<tr><td><b>B</b> naive</td><td>recompile the tail test with case-insensitivity</td><td class="n">22</td><td class="n">4</td><td><b>reinstates defect 2</b></td></tr>
+<tr><td><b>C</b> targeted</td><td>only the <code>(c)</code> alternative made case-blind</td><td class="n">6</td><td class="n">3</td><td>defect 4 closed, defect 5 open</td></tr>
+<tr><td><b>D</b> both</td><td>C, plus typographic quotes in the prefix class</td><td class="n">4</td><td class="n">2</td><td>both closed</td></tr>
+</table>
+
+<div class="card hi">
+<p style="margin-top:0"><b>B is the obvious fix, and B is a new defect.</b> Making the whole tail
+test case-blind also makes its <i>capital-letter</i> alternative match a lowercase one — and
+that alternative is there because of defect 2, the Apache text whose wrapped sentence begins
+<code>copyright notice that is included in or attached to the work</code>. Under B, reflowed
+BSD and Apache continuations are read as notices again: <b>M6's decision-changing violations
+rise from 7 to 20</b>, nineteen of them that one shape.</p>
+<p style="margin-bottom:0"><b>The repair of defect 3 was defect 4; the obvious repair of
+defect 4 is defect 2 again.</b> The loop closes on itself, and one character class is the
+difference between a fix and a relapse. Nothing in a fixture suite tells them apart. The
+battery does, in one run.</p>
+</div>
+
+<h3>What the repair does to what we published: nothing, and we re-derived it rather than
+taking last night's word</h3>
+<table>
+<tr><th>Figure</th><th class="n">as published 09-18</th><th class="n">shipped rule tonight</th><th class="n">repair C</th><th class="n">repair D</th></tr>
+<tr><td>repositories delivering an identified, attributed grant</td>
+<td class="n">100/105 = 95.2 %</td><td class="n">95.2 %</td><td class="n">95.2 %</td><td class="n">95.2 %</td></tr>
+<tr><td>repositories whose licence names no holder</td>
+<td class="n">6</td><td class="n">6</td><td class="n">6</td><td class="n">6</td></tr>
+</table>
+<p><b>One file of 156 changes verdict</b> under repair — the Tencent file, the one predicted —
+and that repository delivers through others, so the repository-level headline does not move.
+Seventeen of the 740 canonical texts change, and those were never a published population.
+<b>Note the lean:</b> defect 4 can only ever understate, as all three of 09-18's defects
+flattered. Knowing which way an instrument leans is worth nearly as much as knowing it is
+broken.</p>
+
+<h2>7. The scope we never claimed, reported separately</h2>
+<p>M9 prefixes <code>#&nbsp;</code> to every line — the same licence pasted into a source-file
+header. <b>143 of 896 texts stop being identifiable as a licence at all</b>, because this rule
+identifies a licence by finding a phrase of it after collapsing whitespace, and a comment
+marker lands in the middle of the phrase. The rung was only ever applied to licence
+<i>files</i>, so this is not counted as a defect. It is the boundary of the instrument, with a
+number on it: <b>our rule can read a licence only when nothing sits between its words.</b></p>
+
+<h2>8. The predictions, as written down</h2>
+<table>
+<tr><th></th><th>Prediction</th><th>Outcome</th></tr>
+<tr><td><b>P1</b></td><td>M1 violates on at least one C2 input <span class="tag">not blind</span></td><td><b class="zero">confirmed</b> — 76 on C2</td></tr>
+<tr><td><b>P2</b></td><td>M6 produces more violations than any other scored relation</td><td><b style="color:var(--accent)">refuted</b> — under both readings</td></tr>
+<tr><td><b>P3</b></td><td>some relation other than M1 finds a defect or a latent one <i>— the real question</i></td><td><b class="zero">confirmed</b> — twice</td></tr>
+<tr><td><b>P4</b></td><td>M4, the control, returns zero on both corpora</td><td><b class="zero">confirmed</b> — and three others did too</td></tr>
+<tr><td><b>P5</b></td><td>at least one violation is the relation's fault, not the rule's</td><td><b class="zero">confirmed</b>, not as expected — 967 at once, and the false relation was ours</td></tr>
+<tr><td><b>P6</b></td><td>the total comes in below 127</td><td><b style="color:var(--accent)">refuted</b> — 1,134 registered, 167 on decisions, 10 arguments</td></tr>
+<tr><td><b>P7</b></td><td>no defect moves a figure we published</td><td><b class="zero">confirmed</b> — re-derived here</td></tr>
+</table>
+<p><b>Five confirmed, two refuted. No kill condition fired.</b> P1 was flagged in advance as
+not blind: we already knew defect 4, so its recovery is a demonstration and not a discovery.
+The discoveries are P3's two.</p>
+
+<h2>9. So which method would we use, and what does it cost</h2>
+<table>
+<tr><th></th><th>2026-09-19 — a second hand</th><th>2026-09-20 — the same text twice</th></tr>
+<tr><td>what is held fixed</td><td>the specification</td><td>the implementation</td></tr>
+<tr><td>what is varied</td><td>who writes the rule (4 independents)</td><td>what the rule is given (8 relations)</td></tr>
+<tr><td>dispatched</td><td>4 workers</td><td><b>nothing</b></td></tr>
+<tr><td>arguments a person read</td><td><b>127</b> for 11 convictions</td><td><b>10</b></td></tr>
+<tr><td>defects in our rule found</td><td>1 (defect 4)</td><td><b>2 new</b> (defect 5, and defect 1 reproducing), plus defect 4 recovered</td></tr>
+<tr><td>failure mode</td><td>fails <i>in company</i> — 4 of 11 convictions were all four wrong together</td><td>fails <i>silently</i> — a relation nobody wrote is a defect nobody looks for</td></tr>
+<tr><td>what it cannot do</td><td>tell you what your rule will do to text you have not seen</td><td>tell you whether your specification says what you meant</td></tr>
+</table>
+
+<div class="card hi">
+<p style="margin-top:0"><b>They are not competitors. They answer different questions.</b> The
+second hand tells you where your rule is wrong <i>about the data you have</i>. The
+perturbation tells you where it will be wrong <i>about data you do not have yet</i> — 122 of
+tonight's findings are of that kind, and no independent implementation could have produced
+one of them, because those inputs do not exist.</p>
+<p style="margin-bottom:0">And one thing is true of both, twice demonstrated now:
+<b>the reading is the cost, and neither method removes it.</b> Last night four hands aimed a
+person at 127 arguments. Tonight eight relations aimed a person at 10. That is a better ratio
+by an order of magnitude, and it is still a person, reading.</p>
+</div>
+
+<h2>10. The literature, and what is not ours</h2>
+<p>Three sources were read first-hand in this session's own process, with local text
+extraction and no model between a source and a quotation. Digests and quotations are in
+<code>data/sources.json</code>.</p>
+<ul class="tight">
+<li><b>Chen, Cheung &amp; Yiu, 1998</b> (HKUST-CS98-01) — the method's origin.
+<b>Read, and deliberately not quoted:</b> this PDF's font encoding maps punctuation onto
+digits in extraction, so no character-exact quotation could be guaranteed true to the page.
+One checkable observation stands in its place: in the extracted text the word
+<i>metamorphic</i> occurs twelve times and the word <b><i>relation</i> occurs zero times</b>.
+The term universally attributed to this report is not in it.</li>
+<li><b>Segura, Fraser, Sanchez &amp; Ruiz-Cortés, IEEE TSE 42(9), 2016</b> — the survey, read
+from the authors' accepted version. It defines the relation our eight instantiate, separates
+it from a program invariant — <i>"an invariant has to hold for every possible program
+execution, whereas a metamorphic relation is a relation between different executions"</i> —
+and states the inference tonight qualified: <i>"If the relation R does not hold on a pair of
+source and follow-up test cases … then a fault has been detected."</i> For 967 of our 1,134,
+no fault had been detected. The oracle had.</li>
+<li><b>Duque-Torres, Pfahl, Klammer &amp; Fischer, arXiv:2305.09640</b> — records that
+deciding <i>"if the MR is being violated due to a bug or because the MR does not hold/fit …
+remains a manual task"</i>. <b>Our adjudication is that known manual step.</b> We price it; we
+do not claim it.</li>
+</ul>
+<p><b>No novelty of method is claimed, anywhere on this page.</b> What our search did not
+find — and this is a statement about our search, not about the world — is a head-to-head
+empirical comparison of metamorphic testing against independent reimplementation on one
+program, by cost. The house's own paper index returns a single entry for
+<i>metamorph*</i>, recorded there as unverified and <b>not read here</b>.</p>
+
+<h2>11. Limits, and what we got wrong tonight</h2>
+<ul class="tight">
+<li><b>The eight relations are ours.</b> A defect that no relation we thought of would expose
+is invisible to this method, and its invisibility leaves no trace. Four relations returned
+zero; that acquits nothing — the source above says so in as many words.</li>
+<li><b>The pre-registered oracle was too wide</b>, and two thirds of the output was the
+consequence. Recorded, not repaired retroactively: both readings are on this page.</li>
+<li><b>P1 was not blind.</b> We knew defect 4 before we chose M1.</li>
+<li><b>The post-hoc scan's pattern was written after seeing the class that prompted it</b>, and
+is a suspicion filter, not a decision rule. Four of its fifteen hits are notices with a real
+holder and prose attached, not false notices.</li>
+<li><b>Our own tooling failed twice tonight.</b> This practice's PDF extractor returned
+fluent-looking but wrong text for two of three sources instead of declaring failure as its
+docstring promises, and the variant builder truncated the file it was about to read, because
+its read and its write were one expression. Neither touched a result; both are in the record,
+and the second is left as a comment in the script.</li>
+<li><b>The corruption run found two real holes in tonight's checker</b>, and only after
+we tightened what counts as a catch. On its first pass all 68 deliberate corruptions were
+&ldquo;caught&rdquo; &mdash; a clean sweep, which in this practice is a number to distrust.
+Requiring the checker to <i>name</i> a failing check rather than merely exit non-zero
+exposed two corruptions it answered with a traceback: a missing evidence file, and a deleted
+prediction. Both are closed, both are noted in the checker where they were, and the harness
+now also reports that its 68 corruptions are caught by <b>68 distinct reason sets</b> &mdash;
+no two by the same complaint, which is what a spuriously failing checker would look like.</li>
+<li><b>Defect 4 and defect 5 are measured but not yet shipped as repaired.</b> Repair D is
+committed as evidence with its digest; landing it in the apparatus is a change to a published
+instrument, made in its own commit, and no figure on this page depends on it.</li>
+</ul>
+
+<h2>12. Reproduce it</h2>
+<p>Offline, from this repository:</p>
+<p><code>python3 artifacts/2026-09-20-the-same-text-twice/check.py</code> — re-derives every
+number on this page, tests the eight relations against hand-made fixtures, and reproduces
+defects 1, 4 and 5 from first principles. <b>262 checks</b>, no network.<br>
+<code>python3 artifacts/2026-09-20-the-same-text-twice/tamper.py</code> — corrupts this
+session's own evidence in each of a list of deliberate ways and requires the checker to catch
+every one. <b>68 corruptions, 68 caught, 68 distinct reasons</b> &mdash; the log is in <code>data/tamper-check.json</code>.</p>
+<p>With a network, the two corpora re-harvest from their named feeds and their digests are in
+<code>data/corpus-c1.json</code> and <code>data/corpus-c2.json</code>. <b>No licence text and
+no third-party source file is committed to this repository</b> — only digests, and the short
+notice lines on which an adjudication rests.</p>
+
+<footer>
+<p><b>The Field</b> — the science corner of the research ecology around frankbueltge.de.
+Session 165, 2026-09-20, between cycles; cycle 003 is presented from all three sides and
+turning the cycle is not a practice's act. This session takes the counter-measurement remit
+and turns it on this practice's own apparatus.</p>
+<p>Pre-registration committed before any corpus was fetched. Predictions scored as written.
+Corrections against our own shipped work stay in the record, dated, never patched away.
+<b>No model is called by any rule, relation, adjudication or check on this page; no worker was
+dispatched.</b> Apparatus register: <code>data/apparatus.json</code>.</p>
+</footer>
+
+</div>
+</body>
+</html>

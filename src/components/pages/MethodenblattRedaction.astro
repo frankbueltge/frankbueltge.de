@@ -3,6 +3,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import type { RedactionData } from '@/lib/redaction/types'
 import data from '@/data/redaction/latest.json'
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -129,19 +130,17 @@ const w2 = {
 }
 ---
 
-<main id="main" class="flex-1">
-<div class="mx-auto max-w-2xl px-4 py-14">
-  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+<MethodSheet title={txt.h1} workHref={workUrl} workLabel={txt.toWork}>
 
-  <section class="mb-10 border border-line bg-panel/60 p-5">
-    <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{txt.revealHead}</h2>
+  <section class="sheet-reveal mb-10">
+    <h2 class="kicker mb-2">{txt.revealHead}</h2>
     <p class="leading-relaxed">{txt.reveal}</p>
   </section>
 
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">{txt.s1}</h2>
     <p class="leading-relaxed text-fg-muted">{txt.s1body}</p>
-    <p class="mt-2"><a href={d.source.url} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{d.source.url}</a></p>
+    <p class="mt-2"><a href={d.source.url} class="sheet-link" rel="noopener">{d.source.url}</a></p>
   </section>
 
   <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s2}</h2><p class="leading-relaxed text-fg-muted">{txt.s2body}</p></section>
@@ -151,7 +150,7 @@ const w2 = {
     <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
     <p class="mt-2">
       <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/redaction"
-        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/redaction</a>
+        class="sheet-link" rel="noopener">→ pipelines/redaction</a>
     </p>
   </section>
 
@@ -173,7 +172,7 @@ const w2 = {
   <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s5}</h2><p class="leading-relaxed text-fg-muted">{txt.s5body}</p></section>
 
   <section class="mb-10 border-t border-line pt-8">
-    <h2 class="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{w2.head}</h2>
+    <h2 class="mb-3 kicker">{w2.head}</h2>
     <p class="mb-6 leading-relaxed">{w2.intro}</p>
 
     <h3 class="mb-2 font-semibold">Sources, receipts &amp; licences</h3>
@@ -183,7 +182,7 @@ const w2 = {
     <p class="mb-2 leading-relaxed text-fg-muted">{w2.filter}</p>
     <p class="mb-6">
       <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/redaction/src/redaction/world"
-        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/redaction/src/redaction/world</a>
+        class="sheet-link" rel="noopener">→ pipelines/redaction/src/redaction/world</a>
     </p>
 
     <h3 class="mb-2 font-semibold">Limits of the chamber</h3>
@@ -198,6 +197,4 @@ const w2 = {
     <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
   </section>
 
-  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
-</div>
-</main>
+</MethodSheet>

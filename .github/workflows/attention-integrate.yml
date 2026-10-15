@@ -15,6 +15,8 @@ on:
 
 permissions:
   contents: write
+  # to start deploy-cf.yml when another workflow started this run (see the last steps)
+  actions: write
 
 concurrency:
   group: attention-integrate
@@ -60,6 +62,13 @@ jobs:
           if [ -f /tmp/machine-attention/moments.json ]; then
             cp /tmp/machine-attention/moments.json src/data/attention/moments.json
           fi
+          # The practice's head this mirror now carries (2026-10-07). The practice does not
+          # dispatch, so the practice watch (practice-watch.yml) compares its head with this file
+          # once a minute while the house is active and starts this workflow when they differ; the
+          # two crons above are the net under it. Committed even when nothing else changed, so the
+          # watch never asks twice for one head.
+          mkdir -p .github/state
+          git -C /tmp/machine-attention rev-parse HEAD > .github/state/attention-mirror-head
 
       # src/data/attention/export.json is a declared graph source, so the derived artifact
       # travels in the same commit as the export it was derived from. Without this the graph
@@ -72,7 +81,7 @@ jobs:
         run: |
           git config user.name "Attention-Integrate"
           git config user.email "attention-integrate@frankbueltge.de"
-          git add public/attention src/data/attention src/data/graph
+          git add public/attention src/data/attention src/data/graph .github/state/attention-mirror-head
           if git diff --cached --quiet; then
             echo "stage unchanged"
             exit 0
@@ -84,3 +93,15 @@ jobs:
           done
           echo "push failed after 5 attempts" >&2
           exit 1
+
+      # A run started by another workflow with the built-in token (the practice watch, the mirror
+      # watch, a sentinel retry) ends without a workflow_run event — GitHub creates none for a run
+      # the built-in token started — so deploy-cf.yml never hears of what it committed. Seen on
+      # 2026-10-07: four mirrors committed between 17:59 and 18:05 UTC and stood undeployed. Such
+      # a run starts the deploy itself; a run started by a schedule, a practice's dispatch or a
+      # person still reaches deploy-cf.yml through workflow_run and does not ask twice.
+      - name: Deploy what this run committed (when another workflow started it)
+        if: success() && github.triggering_actor == 'github-actions[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-cf.yml --repo "$GITHUB_REPOSITORY" --ref main

@@ -1,0 +1,62 @@
+{
+  "_note": "Sources read in session 158 (2026-09-12). Every passage below was extracted from the publisher's own PDF by tools/completeness-census/pdftext.py, this house's own extractor, so that no model sits between a source and a quoted passage (protocol §5.2). Nothing here is reconstructed from memory.",
+  "_ligature_note": "The extractor drops the fi/ff/ti ligature glyphs, so 'effectiveness' extracts as 'e ectiveness' and 'findability' as 'ndability'. Both forms are recorded: quote_as_extracted is what the file actually yielded, quote_restored is the same sentence with the dropped ligatures put back. Only unambiguous restorations were made, and the page quotes the restored form.",
+  "sources": [
+    {
+      "key": "autoddg",
+      "authors": "Haoxiang Zhang, Yurong Liu, Aécio Santos, Wei-Lun Hung, Juliana Freire",
+      "title": "AutoDDG: Automated Dataset Description Generation using Large Language Models",
+      "year": 2025,
+      "identifier": "arXiv:2502.01050 [cs.DB]",
+      "url": "https://arxiv.org/pdf/2502.01050",
+      "access": "open; PDF fetched and extracted in-session 2026-09-12",
+      "why_read": "The nearest neighbour to this session's construct: it evaluates dataset descriptions by a retrieval task rather than by counting non-empty fields.",
+      "quotes": [
+        {
+          "id": "autoddg-three-strategies",
+          "quote_as_extracted": "We use three complementary strategies to evaluate description quality: (1) dataset retrieval evalua- tion , which assesses the impact of descriptions on search e ectiveness, (2) reference-based evaluation , which compares generated descriptions to existing ones using natural language generation metrics, and (3) reference-free evaluation , which leverages LLMs to assess descriptions without reference texts.",
+          "quote_restored": "We use three complementary strategies to evaluate description quality: (1) dataset retrieval evaluation, which assesses the impact of descriptions on search effectiveness, (2) reference-based evaluation, which compares generated descriptions to existing ones using natural language generation metrics, and (3) reference-free evaluation, which leverages LLMs to assess descriptions without reference texts.",
+          "locator": "§3.1 Evaluating Description Quality"
+        },
+        {
+          "id": "autoddg-ndcg",
+          "quote_as_extracted": "To measure retrieval performance, we use the Normalized Discounted Cumulative Gain (NDCG@k) metric [ 41 ], a widely-used standard for ranking evaluation.",
+          "quote_restored": "To measure retrieval performance, we use the Normalized Discounted Cumulative Gain (NDCG@k) metric [41], a widely-used standard for ranking evaluation.",
+          "locator": "§3.1, Dataset Retrieval Evaluation"
+        }
+      ],
+      "what_it_does": "Generates descriptions for tabular datasets and evaluates them three ways. Its retrieval arm indexes the generated descriptions in a keyword search engine, runs queries, and scores NDCG@k against relevance judgments.",
+      "what_it_does_not_do": "It does not score a description by whether that description picks out its own record among the catalogue's other records, and it does not remove the record's title from its description before scoring. Searched in the extracted text: 'self-retrieval' 0 occurrences; 'relevant if' 0 occurrences."
+    },
+    {
+      "key": "faithful-or-findable",
+      "authors": "Riccardo Terrenzi, Serkan Ayvaz",
+      "title": "Faithful or Findable? Evaluating LLM-Generated Metadata for RDF Dataset Search",
+      "year": 2026,
+      "identifier": "arXiv:2607.05970; SynthIR @ SIGIR 2026",
+      "url": "https://arxiv.org/pdf/2607.05970",
+      "access": "open; PDF fetched and extracted in-session 2026-09-12",
+      "why_read": "The newest measurement of description quality by retrieval, and therefore the other place a self-identification criterion could already exist.",
+      "quotes": [
+        {
+          "id": "faithful-acordar",
+          "quote_as_extracted": "ted search performance on the ACORDAR benchmark [ 6 ], which supports the full retrieval loop needed for this study: a corpus of dataset metadata records, a topic set, and relevance judgments ( qrels ).",
+          "quote_restored": "…search performance on the ACORDAR benchmark [6], which supports the full retrieval loop needed for this study: a corpus of dataset metadata records, a topic set, and relevance judgments (qrels).",
+          "locator": "experimental setup"
+        }
+      ],
+      "what_it_does": "Compares six metadata-generation settings for RDF datasets on a topic-and-qrels retrieval benchmark, jointly for retrieval effectiveness and faithfulness.",
+      "what_it_does_not_do": "Same as above: queries come from a topic set with relevance judgments, not from the record's own description. Searched in the extracted text: 'self-retrieval' 0 occurrences; 'known-item' 0 occurrences."
+    }
+  ],
+  "standing_claim_and_its_limits": {
+    "claim": "Neither of the two nearest published measurements of description quality by retrieval scores a description by whether it identifies its own record, and neither removes the record's title first.",
+    "limits": "This is a two-paper check, not a census. Session 156 (2026-09-09) showed what a census of this literature actually costs — 26 candidates, 21 included, 11 unreadable. Nothing in this artifact claims the construct is new; it claims only that these two neighbours do not carry it. Known-item retrieval is an old paradigm in information retrieval and this practice has not searched it.",
+    "date": "2026-09-12"
+  },
+  "a_delegated_read_that_invented_its_evidence": {
+    "_what_happened": "A delegated full-text read of the AutoDDG PDF returned two sentences presented as verbatim quotations — one defining relevance as a description retrieving the dataset it describes from a collection, one defining findability — and stated that the paper's primary metric is self-retrieval. The house's own extractor was then run over the same PDF. Neither sentence occurs in it. The paper's retrieval arm is NDCG@k against a query set, which is a different method.",
+    "_why_it_is_recorded_here": "Protocol §5.2.2: when a finding rests on someone else's result, read the source and cite the passage; never reconstruct from a model. Had the delegated read been trusted, this artifact would have attributed to five named authors a method they do not use, and would have under-claimed its own increment. This is open question 46 with the sign reversed: the danger is not only what an automated reader is refused, it is what an automated reader is given that was never there.",
+    "_verification": "Both the fabricated sentences and their absence are checkable: fetch the PDF, extract it with tools/completeness-census/pdftext.py, and search. The searched strings and their counts are in the two entries above."
+  }
+}

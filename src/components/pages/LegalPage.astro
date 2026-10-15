@@ -9,7 +9,14 @@
 // festhalten „Impressum/Datenschutz bleiben deutsch (Rechtstexte)". Die deutsche Fassung
 // lag ungenutzt in legal.ts. Eine Übersetzung als maßgebliche Fassung auszuliefern ist
 // bei einer Datenschutzerklärung kein Schönheitsfehler.
+//
+// Re-skin 2d (2026-09-02): only the frame changed — the head on the type scale, the notes as
+// panels on the frame's depth, the language link as a ghost button. The draft note lost its
+// amber: a status colour has no place in this frame, the ⚠ glyph and the sentence carry it.
+// The legal texts themselves are untouched.
 import type { LegalPage } from '@/data/legal'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/ui/cn'
 
 interface Props {
   page: LegalPage
@@ -19,34 +26,35 @@ interface Props {
   istUebersetzung?: boolean
 }
 const { page, andereFassung, istUebersetzung = false } = Astro.props
+
+const panel = 'rounded-md border border-line bg-panel panel-raised'
+const quietLink = cn(buttonVariants({ variant: 'ghost', size: 'sm' }), '-mx-2 px-2 font-mono text-mono-sm text-fg-faint hover:text-fg')
 ---
 
 <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-6 py-16 sm:py-24">
   {andereFassung && (
-    <p class="mb-6 font-mono text-xs text-fg-faint">
-      <a href={andereFassung.href} class="underline decoration-line underline-offset-4 hover:text-fg">
-        {andereFassung.label}
-      </a>
+    <p class="mb-6">
+      <a href={andereFassung.href} class={quietLink}>{andereFassung.label}</a>
     </p>
   )}
-  <h1 class="text-[clamp(30px,4vw,44px)] font-bold tracking-[-0.02em]">{page.heading}</h1>
+  <h1 class="text-h1 font-bold">{page.heading}</h1>
   {istUebersetzung && (
-    <p class="mt-4 rounded-lg border border-line bg-panel p-3 text-sm text-fg-muted">
+    <p class={cn(panel, 'mt-4 p-4 text-small text-fg-muted')}>
       This is a courtesy translation. The binding version is the German one — the
       controller is based in Germany and the text cites German legal grounds.
     </p>
   )}
   {page.draftNote && (
-    <div class="mt-6 flex gap-3 rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-amber-200">
-      <span>⚠</span><p>{page.draftNote}</p>
+    <div class={cn(panel, 'mt-6 flex gap-3 border-line-lift bg-panel-2 p-4 text-small text-fg')}>
+      <span aria-hidden="true">⚠</span><p>{page.draftNote}</p>
     </div>
   )}
   <div class="mt-10 space-y-8">
     {page.sections.map((s) => (
       <section>
-        <h2 class="text-lg font-semibold">{s.heading}</h2>
+        <h2 class="text-h3 font-semibold">{s.heading}</h2>
         <div class="mt-3 space-y-2">
-          {s.paragraphs.map((p) => <p class="text-sm leading-relaxed text-fg-muted">{p}</p>)}
+          {s.paragraphs.map((p) => <p class="text-small leading-relaxed text-fg-muted">{p}</p>)}
         </div>
       </section>
     ))}

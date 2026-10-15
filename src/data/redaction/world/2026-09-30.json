@@ -1,0 +1,166 @@
+{
+  "date": "2026-09-30",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-30T11:41:50Z",
+    "counts": {
+      "botwall": 48,
+      "gone_404": 2,
+      "gone_410": 1,
+      "legal_451": 0,
+      "ok": 248,
+      "other": 0,
+      "server_error": 1,
+      "unreachable": 0
+    },
+    "decided": 251,
+    "excluded_unverifiable": 49,
+    "gone": 3,
+    "gone_ci95": [
+      0.0041,
+      0.0345
+    ],
+    "gone_rate": 0.012,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0151
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-28",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "finanznachrichten.de",
+        "first_seen": "20260928130000",
+        "http_code": 404,
+        "title": "Anemoi International Ltd: 2026 Interim Results -4-",
+        "url": "https://www.finanznachrichten.de/nachrichten-2026-09/69693271-anemoi-international-ltd-2026-interim-results-4-015.htm"
+      },
+      {
+        "class": "gone_404",
+        "domain": "klif.com",
+        "first_seen": "20260928200000",
+        "http_code": 404,
+        "title": "Primrose School In Melissa Closes After Shooting Threat",
+        "url": "https://www.klif.com/2026/09/28/primrose-school-in-melissa-closes-after-shooting-threat/"
+      },
+      {
+        "class": "gone_410",
+        "domain": "breakingnews.ie",
+        "first_seen": "20260928010000",
+        "http_code": 410,
+        "title": "NI Secretary to face fresh demands to block any Orange parade down Garvaghy Road",
+        "url": "https://www.breakingnews.ie/ireland/ni-secretary-to-face-fresh-demands-to-block-any-orange-parade-down-garvaghy-road-1951096.html"
+      }
+    ],
+    "sample_drawn_at": "2026-09-29T12:18:17Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5456,
+      "replaced": 5332,
+      "trivial": 1189,
+      "update": 394
+    },
+    "day": "2026-09-29",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Lady",
+          "Shri",
+          "Ram",
+          "College",
+          "park",
+          "Delhi"
+        ],
+        "after": "Lady Shri Ram College: 'Safety, security paramount': Lady Shri Ram College cancels classes, goes online after Delhi park gang rape case | Delhi News",
+        "before": "'Safety, security paramount': Lady Shri Ram College cancels classes, goes online after Kalkaji Mandir gang rape case | Delhi News",
+        "detected": "2026-09-29T18:34:39Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Kalkaji",
+          "Mandir"
+        ],
+        "similarity": 0.85,
+        "url": "https://timesofindia.indiatimes.com/city/delhi/safety-security-paramount-lady-shri-ram-college-cancels-classes-goes-online-after-kalkaji-mandir-gang-rape-case/articleshow/134417900.cms",
+        "weight": 15,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Officially"
+        ],
+        "after": "Scarlett Johansson & Adam Driver's New Crime Thriller Officially Unveiled In Paper Tiger Trailer",
+        "before": "Scarlett Johansson & Adam Driver's New Adrenaline-Fueling Crime Thriller Unveiled In New Paper Tiger Trailer",
+        "detected": "2026-09-29T17:21:15Z",
+        "domain": "screenrant.com",
+        "removed": [
+          "Adrenaline",
+          "Fueling",
+          "New"
+        ],
+        "similarity": 0.812,
+        "url": "https://screenrant.com/scarlett-johansson-paper-tiger-trailer-adam-driver/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Status",
+          "NSE",
+          "IPO",
+          "allotment"
+        ],
+        "after": "NSE IPO Allotment Status: How to check NSE IPO allotment online, step-by-step guide",
+        "before": "How to check NSE IPO allotment today online: Step-by-step guide",
+        "detected": "2026-09-29T05:18:02Z",
+        "domain": "hindustantimes.com",
+        "removed": [
+          "today"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.hindustantimes.com/business/how-to-check-nse-ipo-allotment-online-step-by-step-guide-pan-card-mufg-intime-101790045768972.html",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 17919,
+      "PAGE_TEXTCHANGE": 131561,
+      "PAGE_TITLECHANGE": 48164,
+      "UNCHANGED_CONTENT": 752695
+    },
+    "title_changes_en": 12371,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1790768294361",
+        "job_id": "world_gdg_counts_20260929",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 238026752,
+        "created": "1790768300066",
+        "job_id": "world_gdg_titles_20260929",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-30T11:41:50Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-29.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

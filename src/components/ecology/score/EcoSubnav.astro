@@ -1,0 +1,55 @@
+---
+// The strip under the top bar on the research ecology's pages (2026-10-11, design handoff
+// docs/design_handoff_homepage_ecology/README.md §4–§6). On /ecology it names the page's own
+// sections and the way to pose a question; on a practice's page and on the Middle's it is a
+// breadcrumb back to the ecology and the way across to the other voices.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { localeHref } from '@/lib/locale-href'
+import type { Locale } from '@/lib/site'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { SCORE_WORDING as W } from '@/config/score-wording'
+import { PRACTICES, type PracticeId } from '@/lib/ecology/v3'
+
+interface Props {
+  /** which page the strip stands on */
+  here: 'ecology' | 'middle' | PracticeId
+}
+const { here } = Astro.props
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('#') ? href : localeHref(href, (path) => getRelativeLocaleUrl(locale, path)))
+const N = W.subnav
+const lower = (name: string) => name.toLowerCase()
+const voices = PRACTICES.filter((p) => p !== here).map((p) => ({ id: p, label: lower(ECOLOGY_V3.practices[p].name), href: ECOLOGY_V3.practices[p].href }))
+const hereName = here === 'ecology' ? null : here === 'middle' ? lower(W.middle) : lower(ECOLOGY_V3.practices[here].name)
+---
+
+<div class="sc-subnav">
+  <div class="paper-sheet sc-wrap sc-subnav-row">
+    {here === 'ecology' ? (
+      <>
+        <a href={N.sections[0].href}>{N.home.label}</a>
+        <nav aria-label={N.label}>
+          {N.sections.map((s, i) => (
+            <a href={url(s.href)} class={i === 0 ? 'is-first' : undefined}>{s.label}</a>
+          ))}
+        </nav>
+        <a class="sc-subnav-seed" href={url(N.seed.href)}>{N.seed.label}</a>
+      </>
+    ) : (
+      <>
+        <div class="sc-crumb">
+          <a href={url(N.home.href)}>{N.home.label}</a>
+          <span class="sc-crumb-arrow" aria-hidden="true">→</span>
+          <span class={here === 'middle' ? undefined : `sc-voice pp-voice-${here}`} aria-current="page">{hereName}</span>
+        </div>
+        <nav aria-label={N.label}>
+          {voices.map((v) => (
+            <a class={`sc-voice pp-voice-${v.id}`} href={url(v.href)}>{v.label}</a>
+          ))}
+          {here !== 'middle' && <a class="is-first" href={url(N.middle.href)}>{N.middle.label}</a>}
+        </nav>
+      </>
+    )}
+  </div>
+</div>

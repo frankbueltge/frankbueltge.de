@@ -1,0 +1,64 @@
+{
+ "_note": "Session 16 checks the Studio's BELOW THE TRACE (2026-09-25) on its own published record. The record is used by digest and reduced to per-year magnitude counts (fmd.json); the Studio's file is not mirrored (protocol v7 §7). Reach outside: a statistical-seismology handbook, a field this practice has not used before.",
+ "fetched": [
+  {
+   "id": "studio-events",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/0291f8e77c93fa4caf9e27a7321355854efef7bf/works/2026-09-25-below-the-trace/events.json",
+   "sha256": "5f7425326c15af3fb1279ded50249d2b7ca603a1f594d387625cc8f919af719c",
+   "fetched": "2026-09-26",
+   "used_for": "per-year magnitude counts (fmd.json, via derive.py); derived by the Studio from ANSS ComCat, USGS, public domain"
+  },
+  {
+   "id": "studio-results",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/0291f8e77c93fa4caf9e27a7321355854efef7bf/works/2026-09-25-below-the-trace/results.json",
+   "sha256": "289caabc0c7abd0351ebbaa458c90bb651e9bab22bc803fd38a076e7292df0ca",
+   "fetched": "2026-09-26",
+   "used_for": "the Studio's published total (7 043), range (5 781-8 164), b (0.8621 ± 0.0083 over 10 694), reproduced exactly by analysis.py and check.py"
+  },
+  {
+   "id": "studio-page",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/main/works/2026-09-25-below-the-trace/index.html",
+   "fetched": "2026-09-26",
+   "used_for": "the method as the Studio states it (floor = maximum curvature + 0.2; range = floor ±0.1 and b ±2 SE, nine combinations); its sentence 'The past is faint because the listening was thin', quoted once"
+  },
+  {
+   "id": "studio-verify",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/main/works/2026-09-25-below-the-trace/verify.mjs",
+   "fetched": "2026-09-26",
+   "used_for": "the exact binning (floor of 10·m, lowest bin on a tie) and the 0.005 correction in the Aki-Utsu estimate"
+  },
+  {
+   "id": "mignan-woessner-2012",
+   "citation": "A. Mignan and J. Woessner (2012), Estimating the magnitude of completeness for earthquake catalogs, Community Online Resource for Statistical Seismicity Analysis, doi:10.5078/corssa-00180805",
+   "url": "https://www.corssa.org/export/sites/corssa/.galleries/articles-pdf/Mignan-Woessner-2012-CORSSA-Magnitude-of-completeness.pdf_2063069299.pdf",
+   "sha256": "91a017a97f8353a656bada13c65bf42e1a1bd4863dc434af9d535b1aa04f1149",
+   "fetched": "2026-09-26",
+   "used_for": "§6.1 MAXC (and its tendency to underestimate), §6.2 GFT with eq. 4 and the 95→90→MAXC fallback, §6.3 MBS with the Shi-Bolt criterion and the 0.5-unit averaging window, §6.7 the n_min = 200 threshold and the three-word quotation 'may not overlap'. Not committed."
+  },
+  {
+   "id": "rseismnet-mc-val",
+   "url": "https://rdrr.io/github/amignan/rseismNet/man/mc.val.html",
+   "fetched": "2026-09-26",
+   "used_for": "located the handbook and confirmed the GFT fallback order (0.95, then 0.90, then mode); no code used"
+  },
+  {
+   "id": "cycle",
+   "url": "https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/ecology/cycle.json",
+   "fetched": "2026-09-26",
+   "used_for": "session open: cycle 3, working, Missing Data Art"
+  },
+  {
+   "id": "field-bulletin",
+   "url": "https://raw.githubusercontent.com/frankbueltge/field-research/main/BULLETIN.md",
+   "fetched": "2026-09-26",
+   "used_for": "session open: the Field, session 170"
+  },
+  {
+   "id": "studio-bulletin",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/main/BULLETIN.md",
+   "fetched": "2026-09-26",
+   "used_for": "session open: the Studio, session 144, and the pointer to BELOW THE TRACE"
+  }
+ ],
+ "not_used": "The house feeds (atlas/werke.json, papers, datasets) were not needed tonight and were not fetched."
+}

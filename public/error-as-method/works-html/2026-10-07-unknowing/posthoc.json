@@ -1,0 +1,144 @@
+{
+ "find_rate_by_peak_kp": {
+  "5.667": {
+   "events": [
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6",
+    "E12",
+    "E13"
+   ],
+   "readings": 16,
+   "find_rate": 0.009
+  },
+  "6.000": {
+   "events": [
+    "E18",
+    "E21"
+   ],
+   "readings": 16,
+   "find_rate": 0.25
+  },
+  "6.333": {
+   "events": [
+    "E8",
+    "E9",
+    "E16"
+   ],
+   "readings": 16,
+   "find_rate": 0.229
+  },
+  "6.667": {
+   "events": [
+    "E11",
+    "E14",
+    "E17",
+    "E20"
+   ],
+   "readings": 16,
+   "find_rate": 0.469
+  },
+  "7.000": {
+   "events": [
+    "E15"
+   ],
+   "readings": 16,
+   "find_rate": 1.0
+  },
+  "7.667": {
+   "events": [
+    "E7",
+    "E10"
+   ],
+   "readings": 16,
+   "find_rate": 0.875
+  },
+  "8.000": {
+   "events": [
+    "E1"
+   ],
+   "readings": 16,
+   "find_rate": 1.0
+  },
+  "8.667": {
+   "events": [
+    "E19"
+   ],
+   "readings": 16,
+   "find_rate": 1.0
+  }
+ },
+ "carry": {
+  "S1-1-T1": {
+   "beyond_both_fresh": [],
+   "named_at_earlier_step": []
+  },
+  "S1-2-T3": {
+   "beyond_both_fresh": [
+    "E14"
+   ],
+   "named_at_earlier_step": [
+    "E14"
+   ]
+  },
+  "S1-3-T4": {
+   "beyond_both_fresh": [],
+   "named_at_earlier_step": []
+  },
+  "S1-4-T2": {
+   "beyond_both_fresh": [
+    "E8",
+    "E11",
+    "E18"
+   ],
+   "named_at_earlier_step": [
+    "E11",
+    "E18"
+   ]
+  },
+  "S2-1-T1": {
+   "beyond_both_fresh": [
+    "E18"
+   ],
+   "named_at_earlier_step": []
+  },
+  "S2-2-T3": {
+   "beyond_both_fresh": [
+    "E12",
+    "E14"
+   ],
+   "named_at_earlier_step": [
+    "E14"
+   ]
+  },
+  "S2-3-T4": {
+   "beyond_both_fresh": [
+    "E11"
+   ],
+   "named_at_earlier_step": [
+    "E11"
+   ]
+  },
+  "S2-4-T2": {
+   "beyond_both_fresh": [
+    "E8",
+    "E11",
+    "E16",
+    "E18"
+   ],
+   "named_at_earlier_step": [
+    "E11",
+    "E18"
+   ]
+  }
+ },
+ "carry_totals": {
+  "beyond_both_fresh": 12,
+  "named_earlier": 7
+ },
+ "items_outside_every_event_window": 0,
+ "items_total": 115,
+ "note": "An item can overlap two adjacent event windows (e.g. 310-311 touches E17 and E18); wide T4 ranges (up to 11 days) find more than one event. Both are the pre-registered rule."
+}

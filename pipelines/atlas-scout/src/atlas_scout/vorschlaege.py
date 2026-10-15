@@ -1,8 +1,8 @@
 """Die Suche nach außen — was die Praxen noch nicht kennen, aber brauchen könnten.
 
-Frank, 2026-07-28: „es geht auch um datensätze oder papers, die potentiell relevant und
-interessant sind für die forschung". Der Katalog aus `katalog.py` verzeichnet, was
-tatsächlich gebraucht WURDE; dieses Modul sucht die Umgebung davon ab.
+Frank's decision of 2026-07-28, wording private: the catalogues should also hold datasets
+and papers that are potentially relevant and interesting for the research. The catalogue
+from `katalog.py` records what WAS actually used; this module searches its surroundings.
 
 Der Weg ist die Zitationsnachbarschaft (OpenAlex, schlüsselfrei): Wer zitiert einen Text,
 den eine Praxis benutzt, arbeitet mit hoher Wahrscheinlichkeit an derselben Frage weiter.

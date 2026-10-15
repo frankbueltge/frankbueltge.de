@@ -1,0 +1,151 @@
+{
+  "date": "2026-09-05",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-05T09:25:31Z",
+    "counts": {
+      "botwall": 24,
+      "gone_404": 1,
+      "gone_410": 1,
+      "legal_451": 0,
+      "ok": 270,
+      "other": 1,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 273,
+    "excluded_unverifiable": 27,
+    "gone": 2,
+    "gone_ci95": [
+      0.002,
+      0.0263
+    ],
+    "gone_rate": 0.0073,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0139
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-03",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "kmjnow.com",
+        "first_seen": "20260903210000",
+        "http_code": 404,
+        "title": "Pirates turn small-ball approach into 5-2 win over Giants",
+        "url": "https://www.kmjnow.com/2026/09/03/pirates-turn-small-ball-approach-into-5-2-win-over-giants/"
+      },
+      {
+        "class": "gone_410",
+        "domain": "indiatimes.com",
+        "first_seen": "20260903100000",
+        "http_code": 410,
+        "title": "Cotecna and Geo-Chem India expand food safety testing with new Navi Mumbai lab",
+        "url": "https://economictimes.indiatimes.com/industry/cons-products/food/cotecna-and-geo-chem-india-expand-food-safety-testing-with-new-navi-mumbai-lab/articleshow/133729245.cms"
+      }
+    ],
+    "sample_drawn_at": "2026-09-04T10:04:39Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5322,
+      "replaced": 6169,
+      "trivial": 1139,
+      "update": 488
+    },
+    "day": "2026-09-04",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "cattle"
+        ],
+        "after": "Dalit man transporting cattle forced to eat cattle dung by 'cow vigilantes' in Maharashtra; no arrest made yet",
+        "before": "Dalit man transporting cattle forced to eat cow dung by 'cow vigilantes' in Maharashtra; no arrest made yet",
+        "detected": "2026-09-04T13:35:18Z",
+        "domain": "thehindu.com",
+        "removed": [
+          "cow"
+        ],
+        "similarity": 1.0,
+        "url": "https://www.thehindu.com/news/national/maharashtra/six-cow-vigilantes-in-maharashtra-accused-of-assaulting-a-dalit-man/article71399255.ece",
+        "weight": 2,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Anne",
+          "Bowen"
+        ],
+        "after": "How many boys DID she seduce? Chemistry teacher was found guilty of grooming and seducing two boys in the 80s. So were there more victims... and why has it taken so long for Sally-Anne-Bowen to face justice?",
+        "before": "How many boys DID she seduce? Chemistry teacher was found guilty of grooming and seducing two boys in the 80s. So were there more victims... and why has it taken so long for Sally-Ann Bowden to face justice?",
+        "detected": "2026-09-04T01:48:16Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Ann",
+          "Bowden"
+        ],
+        "similarity": 0.895,
+        "url": "https://www.dailymail.com/news/article-16085859/Former-chemistry-teacher-guilty-grooming-schoolboys.html",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Allegedly",
+          "Incident"
+        ],
+        "after": "'It Hurt Me, I Felt Unsafe': Nepal Woman Allegedly Harassed By Man In Kathmandu's Thamel; CCTV Footage Of Incident Goes Viral, Calls For Police Action",
+        "before": "'It Hurt Me, I Felt Unsafe': Nepal Woman Harassed By Man In Kathmandu's Thamel; CCTV Footage Of Alleged Misconduct Goes Viral, Calls For Police Action",
+        "detected": "2026-09-04T09:05:20Z",
+        "domain": "freepressjournal.in",
+        "removed": [
+          "Alleged",
+          "Misconduct"
+        ],
+        "similarity": 0.857,
+        "url": "https://www.freepressjournal.in/viral/it-hurt-me-i-felt-unsafe-nepal-woman-harassed-by-man-in-kathmandus-thamel-cctv-footage-of-alleged-misconduct-goes-viral-sparks-calls-for-police-action",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 17347,
+      "PAGE_TEXTCHANGE": 135786,
+      "PAGE_TITLECHANGE": 52134,
+      "UNCHANGED_CONTENT": 770826
+    },
+    "title_changes_en": 13118,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1788600083277",
+        "job_id": "world_gdg_counts_20260904",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 244318208,
+        "created": "1788600088894",
+        "job_id": "world_gdg_titles_20260904",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-05T09:25:31Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-04.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

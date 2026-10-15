@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Somewhere in the Column</title>
+<style>
+  html,body{margin:0;background:#fbfaf7;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#2a2926;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script>
+// The whole of the material: the 19 x 6 grey levels of record.jpg, row by row, top to bottom.
+var G=[
+[255,255,254,253,252,251,250,250,255,255,232,255,255, 18,  0,255,253,255,255],
+[251,251,252,254,255,255,255,255,255,255,247,255,245, 94, 63,242,247,249,252],
+[ 24, 25, 28, 32, 36, 39, 42, 44, 10, 38, 26, 15, 22,  0,  0, 27, 26, 29, 32],
+[ 15, 16, 18, 21, 24, 26, 28, 29,  6, 17, 25, 17, 20, 53, 62, 30, 28, 30, 33],
+[ 12, 11, 11, 11, 11, 10, 10, 10, 38, 15, 28, 31,  8, 22, 35,  2, 22, 24, 27],
+[ 27, 26, 25, 24, 23, 21, 20, 20, 43, 10, 21, 42, 21,  9, 21, 21, 28, 30, 33]];
+var W=19,H=6,N=1464,DAYS=61;
+var cv=document.getElementById('c'),x=cv.getContext('2d');
+var dpr=window.devicePixelRatio||1;
+cv.width=1100*dpr;cv.height=800*dpr;cv.style.width='1100px';cv.style.height='800px';
+x.scale(dpr,dpr);
+x.fillStyle='#fbfaf7';x.fillRect(0,0,1100,800);
+
+var L=70,T=96,PW=960,PH=564,rowH=PH/H;
+var ink='26,25,23';
+
+// one hairline per hour; the hour's value is lost, so it is drawn across every
+// band of its column that the picture says was inked, as dark as the picture says.
+for(var h=0;h<N;h++){
+  var col=Math.min(W-1,Math.floor(h*W/N));
+  var px=L+(h+0.5)*PW/N;
+  for(var r=0;r<H;r++){
+    var d=(255-G[r][col])/255;
+    if(d<0.035)continue; // fainter than this is compression noise, not ink
+    x.strokeStyle='rgba('+ink+','+(0.62*d).toFixed(3)+')';
+    x.lineWidth=0.55;
+    x.beginPath();
+    x.moveTo(px,T+r*rowH+(r===0?0:0));
+    x.lineTo(px,T+(r+1)*rowH);
+    x.stroke();
+  }
+}
+
+// day marks: 61 small points under the field
+x.fillStyle='rgba('+ink+',0.55)';
+for(var dd=0;dd<=DAYS;dd++){
+  var dx=L+dd*24*PW/N;
+  x.beginPath();x.arc(dx,T+PH+16,dd%7===0?1.6:0.9,0,Math.PI*2);x.fill();
+}
+// the 19 pixel edges, very faint
+x.strokeStyle='rgba('+ink+',0.18)';x.lineWidth=0.6;
+for(var c=0;c<=W;c++){
+  var ex=L+c*PW/W;
+  x.beginPath();x.moveTo(ex,T+PH+28);x.lineTo(ex,T+PH+34);x.stroke();
+}
+
+// words
+x.fillStyle='#2a2926';
+x.font='italic 26px Georgia, "Times New Roman", serif';
+x.fillText('Somewhere in the column',L,62);
+x.font='13px Georgia, "Times New Roman", serif';
+x.fillStyle='#6b6862';
+x.textAlign='right';
+x.fillText('1,464 hours  ·  61 days  ·  114 pixels',L+PW,62);
+x.textAlign='left';
+x.font='italic 13px Georgia, "Times New Roman", serif';
+x.fillText('Each hairline is one hour. Its value did not survive the picture, only the bands it might have been in.',L,T+PH+66);
+x.fillText('Points mark days; ticks below them mark where one pixel gave way to the next.',L,T+PH+86);
+</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Cairn</title>
+<style>
+  html,body{margin:0;background:#ece8df;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#2a2622;}
+  canvas{position:absolute;left:0;top:0;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function(){
+  var W=1100,H=800,GROUND=640,CX=560;
+  var cv=document.getElementById('c'),dpr=window.devicePixelRatio||1;
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+  var g=cv.getContext('2d');g.scale(dpr,dpr);
+
+  var items=window.FALLS.items.slice();
+  var total=items.reduce(function(a,f){return a+f.grams;},0);
+
+  // area is mass: the heaviest stone gets a fixed radius, everything else follows
+  var maxG=Math.max.apply(null,items.map(function(f){return f.grams;}));
+  var K=Math.PI*126*126/maxG;            // px^2 per gram
+  items.forEach(function(f){f.r=Math.sqrt(f.grams*K/Math.PI);});
+
+  // they fall in the order they entered the record; the undated come last
+  items.sort(function(a,b){
+    var ya=a.year==null?1e9:a.year, yb=b.year==null?1e9:b.year;
+    return ya-yb || b.grams-a.grams;
+  });
+
+  // a deterministic jitter so the heap is not too tidy
+  var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
+
+  var placed=[];
+  function restHeight(x,r){
+    var h=r;
+    for(var i=0;i<placed.length;i++){
+      var p=placed[i],d=r+p.r,dx=x-p.x;
+      if(dx>-d&&dx<d){var y=p.h+Math.sqrt(d*d-dx*dx);if(y>h)h=y;}
+    }
+    return h;
+  }
+  items.forEach(function(f){
+    var r=Math.max(f.r,0.35),best=null,bs=1e18;
+    var span=420,step=Math.max(0.6,r*0.25);
+    for(var x=CX-span;x<=CX+span;x+=step){
+      var xx=x+(rnd()-0.5)*step;
+      var h=restHeight(xx,r);
+      var s=h+0.95*Math.abs(xx-CX);
+      if(s<bs){bs=s;best={x:xx,h:h};}
+    }
+    f.x=best.x;f.h=best.h;f.rr=r;
+    placed.push({x:f.x,h:f.h,r:r});
+  });
+
+  // ---- drawing ----
+  // ground
+  g.fillStyle='#ece8df';g.fillRect(0,0,W,H);
+  g.strokeStyle='#2a2622';g.lineWidth=1;
+  g.beginPath();g.moveTo(60,GROUND+0.5);g.lineTo(W-60,GROUND+0.5);g.stroke();
+
+  function tone(year){
+    if(year==null) return [150,140,128];
+    var t=Math.max(0,Math.min(1,(year-1750)/(2024-1750)));
+    t=Math.pow(t,1.6);
+    // old: deep iron; recent: pale stone
+    return [Math.round(40+t*150),Math.round(36+t*140),Math.round(32+t*124)];
+  }
+  items.forEach(function(f){
+    var y=GROUND-f.h,c=tone(f.year);
+    var a=1;
+    if(f.r<0.6){ a=Math.max(0.22,Math.min(1,(f.r*f.r)/(0.36))); }
+    g.globalAlpha=a;
+    g.beginPath();g.arc(f.x,y,f.rr,0,Math.PI*2);
+    g.fillStyle='rgb('+c[0]+','+c[1]+','+c[2]+')';g.fill();
+    if(f.r>3){g.globalAlpha=1;g.lineWidth=f.r>20?1.2:0.7;g.strokeStyle='#ece8df';g.stroke();}
+  });
+  g.globalAlpha=1;
+
+  // ---- labels for the stones that carry the weight ----
+  function clean(n){
+    n=n.replace(/\s*\(meteorite\)/i,'').replace(/\s+meteorite$/i,'');
+    if(/^Q\d+$/.test(n)) n=n+' (no name)';
+    return n;
+  }
+  function fmtMass(gr){
+    if(gr>=1e6) return (gr/1e6).toLocaleString('en',{maximumFractionDigits:1})+' t';
+    if(gr>=1e3) return (gr/1e3).toLocaleString('en',{maximumFractionDigits:0})+' kg';
+    return gr+' g';
+  }
+  var big=items.filter(function(f){return f.r>=29;});
+  g.textAlign='center';g.textBaseline='middle';
+  big.forEach(function(f){
+    var y=GROUND-f.h,c=tone(f.year),lum=(c[0]*0.3+c[1]*0.59+c[2]*0.11);
+    var fs=Math.max(10,Math.min(17,f.r*0.2));
+    var nm=clean(f.name);
+    g.font='italic '+fs+'px Georgia, serif';
+    while(g.measureText(nm).width>f.r*1.75&&fs>8){fs-=0.5;g.font='italic '+fs+'px Georgia, serif';}
+    var ink=lum<120?'#ece8df':'#2a2622';
+    g.fillStyle=ink;g.fillText(nm,f.x,y-fs*0.55);
+    g.font=(fs*0.78)+'px Georgia, serif';g.globalAlpha=0.8;
+    g.fillText(fmtMass(f.grams)+'  \u00b7  '+(f.year||'undated'),f.x,y+fs*0.6);
+    g.globalAlpha=1;
+  });
+  // ---- title & text ----
+  g.textAlign='left';g.textBaseline='alphabetic';
+  g.fillStyle='#2a2622';g.font='32px Georgia, serif';
+  g.fillText('Cairn',60,78);
+  g.fillStyle='#4a443d';g.font='14px Georgia, serif';
+  var lines=[
+    '568 meteorites that Wikidata gives a mass, dropped onto one heap in the order',
+    'of their recorded year. Each stone’s area is its mass: 217 tonnes in all.'
+  ];
+  lines.forEach(function(s,i){g.fillText(s,60,106+i*20);});
+
+  // foot notes under the ground
+  g.font='13px Georgia, serif';g.fillStyle='#4a443d';
+  var sorted=items.map(function(f){return f.grams;}).sort(function(a,b){return a-b;});
+  var smallHalf=0;for(var i=0;i<284;i++)smallHalf+=sorted[i];
+  var top5=sorted.slice(-5).reduce(function(a,b){return a+b;},0);
+  var foot=[
+    'Five stones hold '+Math.round(top5/total*100)+'% of the weight. The lighter half of the record — 284 stones — weighs '+Math.round(smallHalf/1000)+' kg together,',
+    'about the mass of one child, and lies on the heap as the faint grain you have to look for. The lightest, Revelstoke, is one gram.'
+  ];
+  foot.forEach(function(s,i){g.fillText(s,60,GROUND+40+i*19);});
+
+  // year key
+  var kx=60,ky=GROUND+96;
+  g.font='11px Georgia, serif';g.fillStyle='#6d665d';
+  g.fillText('tone: year recorded',kx,ky-8);
+  for(var yy=1750;yy<=2024;yy+=2){var c=tone(yy);g.fillStyle='rgb('+c[0]+','+c[1]+','+c[2]+')';g.fillRect(kx+(yy-1750)*0.8,ky,1.8,8);}
+  g.fillStyle='#6d665d';
+  g.fillText('1750',kx,ky+22);g.textAlign='right';g.fillText('2024',kx+219,ky+22);
+  g.textAlign='left';
+  var c0=tone(null);g.fillStyle='rgb('+c0[0]+','+c0[1]+','+c0[2]+')';g.fillRect(kx+240,ky,8,8);
+  g.fillStyle='#6d665d';g.fillText('undated, fell last',kx+254,ky+8);
+
+  // scale: one tonne
+  var r1=Math.sqrt(1e6*K/Math.PI);
+  var sx2=W-60-r1, sy2=ky+4;
+  g.beginPath();g.arc(sx2,sy2,r1,0,Math.PI*2);g.fillStyle='#8a8174';g.fill();
+  g.textAlign='right';g.fillStyle='#6d665d';g.fillText('one tonne',sx2-r1-8,sy2+4);
+  var rk=Math.max(0.6,Math.sqrt(1e3*K/Math.PI));
+  g.beginPath();g.arc(sx2-r1-110,sy2,rk,0,Math.PI*2);g.fillStyle='#2a2622';g.fill();
+  g.fillText('one kilogram',sx2-r1-118,sy2+4);
+
+  g.textAlign='right';g.font='11px Georgia, serif';g.fillStyle='#8a8174';
+  g.fillText('Data: Wikidata (CC0). Year and mass as recorded there; some years are of finding, not falling.',W-60,H-24);
+})();
+</script>
+</body>
+</html>

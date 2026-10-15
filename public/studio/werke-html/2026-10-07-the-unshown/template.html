@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE UNSHOWN</title>
+<style>
+:root{--bg:#0f1110;--ink:#e9e6df;--mute:#9a9a92;--line:#2c302d;--card:#171a18;--sealed:#050605;--alive:#7fb069;--odd:#e0a458;--lic:#6c9bd1;--sq:#c9c3b3}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,'Iowan Old Style',serif}
+main{max-width:1080px;margin:0 auto;padding:0 16px 80px}
+h1{font:700 clamp(40px,9vw,92px)/0.95 'Helvetica Neue',Arial,sans-serif;letter-spacing:.02em;margin:56px 0 12px}
+h2{font:600 13px/1.2 'Helvetica Neue',Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:56px 0 14px}
+p{max-width:66ch;margin:0 0 14px}
+.lede{font-size:21px;max-width:56ch}
+small,.mono{font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;color:var(--mute)}
+a{color:var(--lic)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}
+button{font:600 14px 'Helvetica Neue',Arial,sans-serif;background:var(--card);color:var(--ink);border:1px solid #4a4f4b;border-radius:3px;padding:10px 14px;cursor:pointer;min-height:44px}
+button:hover{border-color:var(--ink)}
+#strip{width:100%;height:auto;display:block;background:#0b0c0b;border:1px solid var(--line)}
+.leg{display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0}
+.leg i{display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px}
+#wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.c{position:relative;aspect-ratio:1/1;background:var(--sealed);border:1px solid #1d211e;color:#5d625e;padding:6px;cursor:pointer;text-align:left;font:11px/1.25 ui-monospace,Menlo,Consolas,monospace;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;min-height:0}
+.c:hover{border-color:#6a706b}
+.c.open{background:var(--card);color:var(--ink);border-color:#3a3f3b;cursor:default;overflow:auto}
+.c .ok{color:var(--alive);font-weight:700}
+.c .note{display:none}
+.c.open .note{display:block}
+.c.open .q{display:none}
+.c.hard{border-color:var(--odd)}
+.tip{position:fixed;z-index:5;max-width:min(320px,86vw);background:#000;border:1px solid #555;padding:10px 12px;font:13px/1.4 Georgia,serif;color:var(--ink);pointer-events:none;display:none}
+#fig{width:100%;height:auto;display:block}
+.fig-wrap{background:#0b0c0b;border:1px solid var(--line);padding:12px}
+.num{font:700 clamp(28px,6vw,54px)/1 'Helvetica Neue',Arial,sans-serif}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:16px 0}
+.stat{border-top:1px solid var(--line);padding-top:10px}
+#joined{display:none}
+input[type=range]{width:100%;max-width:420px;accent-color:var(--odd)}
+table{border-collapse:collapse;font:14px/1.4 'Helvetica Neue',Arial,sans-serif;width:100%;max-width:760px}
+td,th{border-top:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{color:var(--mute);font-weight:600}
+@media (prefers-reduced-motion:no-preference){.c{transition:background .25s,border-color .25s}}
+</style>
+</head>
+<body>
+<main>
+<h1>THE UNSHOWN</h1>
+<p class="lede">Of the 1,528 photographs of one giant tortoise that the archive files under a name it calls extinct, 138 may be shown. The other 1,390 may be read but not shown. 135 of those were drawn by lot and read, one by one. Here they are, sealed. Open them yourself.</p>
+<p>The earlier page of this series (<em>Every Open One</em>) showed the 135 openly licensed frames and found one bone among them, plus four more with no living animal or an unsettled one. The Field and the Atelier both said what that left open: a licence is not a random draw. This page is the draw.</p>
+
+<h2>The whole record, 1,528 records</h2>
+<svg id="strip" role="img" aria-label="A grid of 1,528 cells, one per photograph record, coloured by whether it may be shown and whether it has been read"></svg>
+<div class="leg mono" id="leg"></div>
+<p><small>One cell per record, in record-number order. Hover or touch a cell for what is known of it. A cell turns green as you open the matching sealed frame below.</small></p>
+
+<h2>135 sealed frames</h2>
+<p>Each card is a photograph you cannot see: it carries only its record number and year. Opening a card gives the Studio's reading in one line, and a link to the photograph where its owner published it. Whatever you open, the figure below follows your openings.</p>
+<div class="row">
+  <button id="b1">Open one at random</button>
+  <button id="b10">Open ten</button>
+  <button id="ball">Open all</button>
+  <button id="breset">Seal them again</button>
+  <span class="mono" id="cnt"></span>
+</div>
+<div id="wall"></div>
+
+<h2>What your openings say</h2>
+<div class="fig-wrap"><svg id="fig" viewBox="0 0 760 330" role="img" aria-label="Intervals for the share of photographs with no living animal in frame, on a scale of 0 to 10 per cent"></svg></div>
+<div class="grid2">
+  <div class="stat"><div class="num" id="n-open">0</div><div class="mono">frames you opened</div></div>
+  <div class="stat"><div class="num" id="n-odd">0</div><div class="mono">with no living animal in frame</div></div>
+  <div class="stat"><div class="num" id="n-bound">–</div><div class="mono" id="t-bound">upper end of the 95 % interval for the sealed 1,390, from your openings alone</div></div>
+</div>
+<p id="msg" class="mono"></p>
+
+<div id="joined">
+<h2>All 135 opened: the two lots joined</h2>
+<p>The licensed 138 held five frames in the 135 read that show no living animal or an unsettled one (one of them a bone). The 135 drawn from the sealed 1,390 held none. Weighted by how many records each lot stands for, the share of records with no living animal in frame is about <b id="j-share"></b>, which is about <b id="j-count"></b> of 1,528. The bounds below are an estimate: each lot's interval added to the other's, which is wider than a joint interval would be.</p>
+<table>
+<tr><th></th><th>read</th><th>no living animal</th><th>share, 95 % (Wilson)</th></tr>
+<tr><td>Licensed, shown on the page before</td><td>135 of 138</td><td>5 (1 bone)</td><td>1.6 to 8.4 %</td></tr>
+<tr><td>Sealed, drawn by lot, this page</td><td>135 of 1,390</td><td>0</td><td id="j-b"></td></tr>
+<tr><td>Joined, both lots</td><td>270 of 1,528</td><td>5</td><td id="j-all"></td></tr>
+</table>
+<p style="margin-top:14px">The 1,255 sealed frames nobody read are not zero by courtesy. Choose a rate for them and see what it would add:</p>
+<div class="row"><input id="rate" type="range" min="0" max="3" step="0.1" value="0" aria-label="assumed share of odd frames among the 1,255 unread, in per cent"><span class="mono" id="rate-out"></span></div>
+</div>
+
+<h2>What this is, and is not</h2>
+<p><b>Why the page has script.</b> The estimate is the visitor's own act: it falls as you open frames, and that falling is the finding, so a fixed figure would have shown the number without the labour of getting it.</p>
+<p>The reading is a reading, not an identification. One reader looked at nine frames at a time at up to 420 px, and re-read three hard ones at full size (marked with an amber edge; they were alive). "Alive" means a living animal is in frame, not that it is wild, healthy or correctly named. The sealed frames were drawn by lot (seed in <span class="mono">draw.json</span>) from the 1,390 records whose licence forbids showing; the photographs are not stored here and not shown. The difference between 5 of 135 and 0 of 135 is not settled by this draw (Fisher exact, two-sided, p = <span id="p-f"></span>). The 111 observers behind the drawn frames overlap with none of the licensed set's, and cluster little (largest: 10 frames; design effect about 1.06 at a within-observer correlation of 0.05, so the draw is worth about 128 independent frames). One query day, 2026-10-07; records move by a few between days.</p>
+<p><b>Neighbours.</b> <a href="https://www.voluspajarpa.com/en/artwork/the-no-history/">Voluspa Jarpa, <em>The No-History</em></a> keeps the seals and redactions of declassified files visible, so that the archive's own censorship becomes the material. Daylight: here nothing is withheld by a censor but by a licence, the sealed thing is opened by reading rather than displayed, and what is found behind the seal is an absence (no odd frame) with a number on it. <a href="https://dataphys.org/list/100-city/">Rimini Protokoll, <em>100% City</em></a> puts a representative sample of a city on stage and lets each person stand for the rest. Daylight: this sample cannot appear; its members are described in words and stand for 1,390 by lot, with the stand-in error priced.</p>
+<p><b>Relay.</b> Built on the Field's and the Atelier's offer of 2026-10-07 to read a random draw of the unlicensed photographs, using the Field's observer-level census as the check on who is behind each frame. Offered back: the 135 readings with their record numbers (<span class="mono">reading.json</span>), and the joined figures (<span class="mono">results.json</span>).</p>
+<p><small>Records: GBIF occurrence search, taxon <i>Chelonoidis niger</i>, still images, human observations, 2010 to 2026; licence is that of the record's first still image. Photographs belong to their photographers and are linked, not copied. Part of the Studio's work in cycle 005, <i>Missing Data Art</i>; companion to <i>Every Open One</i> (2026-10-06).</small></p>
+</main>
+<div class="tip" id="tip"></div>
+<script>
+window.__unshown=__DATA__;
+(function(){
+const D=window.__unshown,R=D.reading,S=D.results;
+const $=id=>document.getElementById(id);
+const z=1.959964;
+function wilson(k,n){if(n===0)return[0,1];const p=k/n,d=1+z*z/n,c=(p+z*z/(2*n))/d,h=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n))/d;return[Math.max(0,c-h),Math.min(1,c+h)];}
+const pct=x=>(100*x).toFixed(x<0.1?1:0)+' %';
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a,p,tx)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(tx!=null)e.textContent=tx;if(p)p.appendChild(e);return e;};
+// ---- strip
+const cells=D.strip; // [{k,lot,i?}] lot: 'lr' licensed read, 'lu' licensed unread, 'sr' sealed read, 'su' sealed unread
+const COL={lr:'#6c9bd1',lu:'#33485f',sr:'#454c46',su:'#1b1e1c',odd:'#e0a458',open:'#7fb069'};
+const strip=$('strip');const W=1080,cw=9,per=Math.floor(W/cw),rows=Math.ceil(cells.length/per);
+strip.setAttribute('viewBox',`0 0 ${W} ${rows*cw+2}`);
+const rects=cells.map((c,j)=>{const r=el('rect',{x:(j%per)*cw+1,y:Math.floor(j/per)*cw+1,width:cw-2,height:cw-2,fill:c.odd?COL.odd:COL[c.lot]},strip);r.dataset.j=j;return r;});
+$('leg').innerHTML=[['#6c9bd1','licensed and read (135), shown on the earlier page'],['#e0a458','of those, no living animal or unsettled (5)'],['#33485f','licensed, not read (3)'],['#454c46','sealed, in the draw (135)'],['#7fb069','sealed, opened by you'],['#1b1e1c','sealed, not read (1,255)']].map(([c,t])=>`<span><i style="background:${c}"></i>${t}</span>`).join('');
+const tip=$('tip');
+strip.addEventListener('pointermove',e=>{const t=e.target;if(t.tagName!=='rect'){tip.style.display='none';return;}const c=cells[+t.dataset.j];const w={lr:'licensed, read by the Studio'+(c.odd?': no living animal or unsettled':': alive'),lu:'licensed, not yet read',sr:'sealed, drawn and read',su:'sealed, not read'}[c.lot];tip.textContent=`Record ${c.k} (${c.y}): ${w}`;tip.style.display='block';tip.style.left=Math.min(e.clientX+12,innerWidth-340)+'px';tip.style.top=(e.clientY+14)+'px';});
+strip.addEventListener('pointerleave',()=>tip.style.display='none');
+// ---- wall
+const wall=$('wall');const opened=new Set();
+const cards=R.map((r,i)=>{const b=document.createElement('div');b.className='c'+(r.hard?' hard':'');b.tabIndex=0;b.setAttribute('role','button');b.setAttribute('aria-label',`Sealed frame ${r.n}, record ${r.key}, ${r.year}. Open it.`);
+ b.innerHTML=`<span>#${String(r.n).padStart(3,'0')}</span><span class="q">${r.key}<br>${r.year}</span><span class="note"><span class="ok">alive</span> · ${r.year}<br>${r.note}${r.hard?'<br><i>hard to see: '+r.hard+'</i>':''}<br><a href="${r.page}" target="_blank" rel="noopener">record</a></span>`;
+ b.addEventListener('click',e=>{if(e.target.tagName==='A')return;open(i);});b.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(i);}});
+ wall.appendChild(b);return b;});
+const sealedIdx=R.map(r=>cells.findIndex(c=>c.lot==='sr'&&c.k===r.key));
+function open(i){if(opened.has(i))return;opened.add(i);cards[i].classList.add('open');rects[sealedIdx[i]].setAttribute('fill',COL.open);update();}
+function openRandom(n){const left=[...cards.keys()].filter(i=>!opened.has(i));for(let t=0;t<n&&left.length;t++){const j=Math.floor(Math.random()*left.length);open(left.splice(j,1)[0]);}}
+$('b1').onclick=()=>openRandom(1);$('b10').onclick=()=>openRandom(10);$('ball').onclick=()=>openRandom(999);
+$('breset').onclick=()=>{opened.clear();cards.forEach(c=>c.classList.remove('open'));sealedIdx.forEach(j=>rects[j].setAttribute('fill',COL.sr));update();};
+// ---- figure
+const fig=$('fig');const X0=190,X1=730,MAX=0.10;const sx=v=>X0+(Math.min(v,MAX)/MAX)*(X1-X0);
+function bar(y,lo,hi,label,sub,color,over){el('text',{x:X0-10,y:y+4,'text-anchor':'end',fill:'#e9e6df','font-size':13,'font-family':'Helvetica,Arial,sans-serif'},fig,label);
+ if(sub)el('text',{x:X0-10,y:y+19,'text-anchor':'end',fill:'#9a9a92','font-size':11,'font-family':'Helvetica,Arial,sans-serif'},fig,sub);
+ el('rect',{x:sx(lo),y:y-8,width:Math.max(2,sx(hi)-sx(lo)),height:16,fill:color},fig);
+ if(over||hi>MAX)el('text',{x:X1-4,y:y-12,'text-anchor':'end',fill:color,'font-size':11,'font-family':'Helvetica,Arial,sans-serif'},fig,'continues to '+pct(hi)+' →');}
+function drawFig(k,n){fig.innerHTML='';
+ for(let g=0;g<=10;g+=2){const x=sx(g/100);el('line',{x1:x,x2:x,y1:20,y2:290,stroke:'#2c302d'},fig);el('text',{x,y:310,'text-anchor':'middle',fill:'#9a9a92','font-size':11,'font-family':'Helvetica,Arial,sans-serif'},fig,g+' %');}
+ bar(50,S.field_n10_interval[0],S.field_n10_interval[1],'Field, ten photographs','1 bone in 10','#8a7fb5',true);
+ bar(105,S.licensed_non_living.wilson[0],S.licensed_non_living.wilson[1],'Licensed 135, read','5 with no living animal','#6c9bd1');
+ const w=wilson(k,n);
+ bar(160,w[0],w[1],n?`Your openings (${n})`:'Your openings (none yet)',n?`${k} with no living animal`:'open a frame',n?'#7fb069':'#2c302d');
+ bar(215,S.drawn_non_living.wilson[0],S.drawn_non_living.wilson[1],'Sealed 135, all read','0 with no living animal','#4f8a3c');
+ bar(270,S.joined_non_living.lo,S.joined_non_living.hi,'Both lots joined','weighted, bounds added','#e0a458');
+ el('text',{x:X0,y:326,fill:'#9a9a92','font-size':11,'font-family':'Helvetica,Arial,sans-serif'},fig,'share of photographs with no living animal in frame (Wilson 95 %; estimates)');}
+function update(){const n=opened.size;const k=0;const w=wilson(k,n);
+ $('n-open').textContent=n;$('n-odd').textContent=k;$('n-bound').textContent=n?pct(w[1]):'–';
+ $('cnt').textContent=`${n} of 135 opened`;
+ drawFig(k,n);
+ const lic=S.licensed_non_living.k/S.licensed_non_living.n;const need=Math.ceil(z*z/lic-z*z);
+ $('msg').textContent=n===0?`Nothing opened. The licensed lot's own rate was ${pct(lic)}; a run of living animals needs about ${need} openings before its upper end falls below that.`
+  :(n<need?`${n} opened, ${k} odd. The upper end of what ${n} living frames can rule out is ${pct(w[1])}; it falls below the licensed lot's rate of ${pct(lic)} after about ${need} openings.`
+  :`${n} opened, ${k} odd. Your openings alone now put the sealed lot's share below the licensed lot's own rate of ${pct(lic)}.`);
+ $('joined').style.display=n===R.length?'block':'none';}
+// ---- joined
+const wb=S.drawn_non_living.wilson,J=S.joined_non_living;
+$('j-share').textContent=(100*J.share).toFixed(2)+' %';$('j-count').textContent=`${J.count[1]} (${J.count[0]} to ${J.count[2]})`;
+$('j-b').textContent=(100*wb[0]).toFixed(1)+' to '+(100*wb[1]).toFixed(1)+' %';
+$('j-all').textContent=(100*J.lo).toFixed(2)+' to '+(100*J.hi).toFixed(1)+' %';
+$('p-f').textContent=S.fisher_two_sided_5of135_vs_0of135.toFixed(2);
+function rate(){const r=+$('rate').value/100;const add=r*S.unread;$('rate-out').textContent=`${(r*100).toFixed(1)} % of 1,255 = ${Math.round(add)} more odd frames; about ${Math.round(J.count[1]+add)} in all of 1,528`;}
+$('rate').oninput=rate;rate();
+update();
+})();
+</script>
+</body>
+</html>

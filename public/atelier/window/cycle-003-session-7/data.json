@@ -1,0 +1,1380 @@
+{
+ "arxiv": {
+  "now_entries": 40,
+  "now_share": 0.525,
+  "now_without": 21,
+  "was_entries": 195,
+  "was_share": 0.1076923076923077,
+  "was_without": 21
+ },
+ "date": "2026-09-15",
+ "departure": {
+  "feed": "papers",
+  "gone": 157,
+  "host_delta": {
+   "arxiv": -155,
+   "doi": -5,
+   "other": 3
+  },
+  "hosts_now": {
+   "arxiv": 40,
+   "doi": 711,
+   "other": 156
+  },
+  "hosts_was": {
+   "arxiv": 195,
+   "doi": 716,
+   "other": 153
+  },
+  "now": 907,
+  "share": 0.1475563909774436,
+  "turned_away": {
+   "count": 907,
+   "rejected_count": 1,
+   "rejected_dates": [
+    "2026-07-30"
+   ],
+   "rejected_grounds": {
+    "kein-zitat": 1
+   },
+   "sha256": "413b0e146c7b192affedb3705e469621b10fbf29f639e46d1d8be1a241ddfbc2",
+   "url": "https://frankbueltge.de/papers/register.json"
+  },
+  "was": 1064
+ },
+ "directions": [
+  {
+   "dir": "down",
+   "id": "R1",
+   "kind": "count",
+   "name": "every empty slot",
+   "now": 2281,
+   "rule": "One hole per (entry, field) pair whose value is absent, null, an empty string, an empty list or an empty object.",
+   "unit": "slots",
+   "was": 2489,
+   "why": "The only reading a machine can take without knowing what any field means."
+  },
+  {
+   "dir": "down",
+   "id": "R2",
+   "kind": "count",
+   "name": "every entry carrying a gap",
+   "now": 1487,
+   "rule": "One hole per entry with at least one empty slot, however many it has.",
+   "unit": "entries",
+   "was": 1641,
+   "why": "A catalogue is repaired entry by entry, so this is the number of repairs owed."
+  },
+  {
+   "dir": "down",
+   "id": "R4",
+   "kind": "count",
+   "name": "slots the record shows are gaps",
+   "now": 1701,
+   "rule": "R1 less every empty cell the record itself explains: the datasets register's success convention (an empty probe note beside an HTTP 200) and the atlas's optional curator's note.",
+   "unit": "slots",
+   "was": 1909,
+   "why": "Session 6's finding, kept as a reading: an empty cell is not an absence."
+  },
+  {
+   "dir": "flat",
+   "id": "R5",
+   "kind": "count",
+   "name": "every distinct shape of gap",
+   "now": 34,
+   "rule": "One hole per (shape, field): entries empty in exactly the same fields are one shape, counted once however many entries carry it.",
+   "unit": "shape-slots",
+   "was": 34,
+   "why": "A repeated identical shape is one event upstream, not one event per entry. This is the general form of the rule session 6 fitted to a single case."
+  },
+  {
+   "dir": "flat",
+   "id": "R3",
+   "kind": "count",
+   "name": "every distinct shape, once",
+   "now": 14,
+   "rule": "One hole per distinct set of empty fields occurring in the record.",
+   "unit": "shapes",
+   "was": 14,
+   "why": "The coarsest defensible reading: how many kinds of absence are there at all."
+  },
+  {
+   "dir": "up",
+   "id": "R6",
+   "kind": "rate",
+   "name": "the share of slots left empty",
+   "now": 0.11973124770353262,
+   "rule": "Empty slots divided by all slots the schema declares.",
+   "unit": "share",
+   "was": 0.11889180797707188,
+   "why": "The only reading that is not a count — and the one a reader reaches for when comparing records of different size."
+  }
+ ],
+ "identity": {
+  "digests_now": 1510,
+  "digests_was": 0,
+  "id_collisions": {
+   "atlas": 0,
+   "datasets": 0,
+   "papers": 3
+  },
+  "wide_collisions": {
+   "atlas": 0,
+   "datasets": 0,
+   "papers": 0
+  },
+  "worst_id": {
+   "entries_on_shared_ids": 4,
+   "entries_sharing_one_id": 4,
+   "feed": "papers",
+   "fields_that_differ": [
+    "jahr",
+    "kennung",
+    "titel",
+    "url"
+   ],
+   "ids_shared": 1
+  }
+ },
+ "now": {
+  "feeds": [
+   {
+    "by_host": {
+     "none": {
+      "R1": 526,
+      "R2": 519,
+      "R3": 2,
+      "R4": 7,
+      "R5": 3,
+      "R6": 0.07766130222944043,
+      "n": 521,
+      "slots": 6773
+     }
+    },
+    "crossreads": {},
+    "declared_count": 521,
+    "fields": {
+     "artist": 0,
+     "axis_pole": 0,
+     "clusters": 7,
+     "curator_note": 519,
+     "decisive_move": 0,
+     "form": 0,
+     "lab_renderable": 0,
+     "medium_class": 0,
+     "source_url": 0,
+     "title": 0,
+     "venue_prize": 0,
+     "verify_status": 0,
+     "year": 0
+    },
+    "hosts": {
+     "none": 521
+    },
+    "id_collisions": 0,
+    "key": "atlas",
+    "label": "Atlas of data art",
+    "m": {
+     "R1": 526,
+     "R2": 519,
+     "R3": 2,
+     "R4": 7,
+     "R5": 3,
+     "R6": 0.07766130222944043,
+     "n": 521,
+     "slots": 6773
+    },
+    "n": 521,
+    "schema": [
+     "title",
+     "artist",
+     "year",
+     "venue_prize",
+     "clusters",
+     "axis_pole",
+     "form",
+     "medium_class",
+     "lab_renderable",
+     "decisive_move",
+     "source_url",
+     "verify_status",
+     "curator_note"
+    ],
+    "sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+    "shapes": [
+     {
+      "count": 512,
+      "fields": [
+       "curator_note"
+      ]
+     },
+     {
+      "count": 7,
+      "fields": [
+       "clusters",
+       "curator_note"
+      ]
+     }
+    ],
+    "url": "https://frankbueltge.de/atlas/werke.json",
+    "wide_collisions": 0
+   },
+   {
+    "by_host": {
+     "arxiv": {
+      "R1": 136,
+      "R2": 40,
+      "R3": 3,
+      "R4": 136,
+      "R5": 8,
+      "R6": 0.2833333333333333,
+      "n": 40,
+      "slots": 480
+     },
+     "doi": {
+      "R1": 1309,
+      "R2": 711,
+      "R3": 8,
+      "R4": 1309,
+      "R5": 20,
+      "R6": 0.1534224097515237,
+      "n": 711,
+      "slots": 8532
+     },
+     "other": {
+      "R1": 249,
+      "R2": 156,
+      "R3": 5,
+      "R4": 249,
+      "R5": 12,
+      "R6": 0.1330128205128205,
+      "n": 156,
+      "slots": 1872
+     }
+    },
+    "crossreads": {
+     "arxiv_entries": 40,
+     "arxiv_with_venue": 19,
+     "arxiv_without_venue": 21,
+     "entries_on_shared_ids": 4,
+     "fields_differing_within_a_shared_id": [
+      "jahr",
+      "kennung",
+      "titel",
+      "url"
+     ],
+     "identifier_present": 907,
+     "ids_shared": 1,
+     "max_entries_on_one_id": 4
+    },
+    "declared_count": 907,
+    "fields": {
+     "felder": 521,
+     "frei_zugaenglich": 0,
+     "id": 0,
+     "jahr": 22,
+     "kennung": 0,
+     "ort": 148,
+     "titel": 0,
+     "urheber": 97,
+     "url": 0,
+     "urteil": 906,
+     "verify_status": 0,
+     "zitiert_von": 0
+    },
+    "hosts": {
+     "arxiv": 40,
+     "doi": 711,
+     "other": 156
+    },
+    "id_collisions": 3,
+    "key": "papers",
+    "label": "Papers register (index form)",
+    "m": {
+     "R1": 1694,
+     "R2": 907,
+     "R3": 10,
+     "R4": 1694,
+     "R5": 29,
+     "R6": 0.15564130834252113,
+     "n": 907,
+     "slots": 10884
+    },
+    "n": 907,
+    "schema": [
+     "id",
+     "titel",
+     "urheber",
+     "jahr",
+     "ort",
+     "kennung",
+     "url",
+     "frei_zugaenglich",
+     "felder",
+     "urteil",
+     "verify_status",
+     "zitiert_von"
+    ],
+    "sha256": "02ea344c61f5db352fa736597c31d6c0abf29947cdbce4e956cad243924c89a3",
+    "shapes": [
+     {
+      "count": 374,
+      "fields": [
+       "felder",
+       "urteil"
+      ]
+     },
+     {
+      "count": 336,
+      "fields": [
+       "urteil"
+      ]
+     },
+     {
+      "count": 58,
+      "fields": [
+       "felder",
+       "ort",
+       "urteil"
+      ]
+     },
+     {
+      "count": 46,
+      "fields": [
+       "felder",
+       "urheber",
+       "urteil"
+      ]
+     },
+     {
+      "count": 42,
+      "fields": [
+       "ort",
+       "urteil"
+      ]
+     },
+     {
+      "count": 21,
+      "fields": [
+       "felder",
+       "jahr",
+       "ort",
+       "urheber",
+       "urteil"
+      ]
+     },
+     {
+      "count": 21,
+      "fields": [
+       "felder",
+       "ort",
+       "urheber",
+       "urteil"
+      ]
+     },
+     {
+      "count": 5,
+      "fields": [
+       "ort",
+       "urheber",
+       "urteil"
+      ]
+     },
+     {
+      "count": 3,
+      "fields": [
+       "urheber",
+       "urteil"
+      ]
+     },
+     {
+      "count": 1,
+      "fields": [
+       "felder",
+       "jahr",
+       "ort",
+       "urheber"
+      ]
+     }
+    ],
+    "url": "https://frankbueltge.de/papers/index.json",
+    "wide_collisions": 0
+   },
+   {
+    "by_host": {
+     "other": {
+      "R1": 61,
+      "R2": 61,
+      "R3": 2,
+      "R4": 0,
+      "R5": 2,
+      "R6": 0.04375896700143472,
+      "n": 82,
+      "slots": 1394
+     }
+    },
+    "crossreads": {
+     "access_blocked": 13,
+     "blank_note": 57,
+     "blank_note_with_probe_ok": 57,
+     "blank_status": 4,
+     "blank_status_with_note": 4,
+     "probe_ok": 57,
+     "probe_ok_with_blank_note": 57
+    },
+    "declared_count": 82,
+    "fields": {
+     "adressen": 0,
+     "aufnahmegrund": 0,
+     "benutzt_von": 0,
+     "fundstellen": 0,
+     "geprueft": 0,
+     "host": 0,
+     "id": 0,
+     "nur_vorlage": 0,
+     "pruef_status": 4,
+     "pruef_vermerk": 57,
+     "relevanz": 0,
+     "relevanz_herkunft": 0,
+     "titel": 0,
+     "verify_status": 0,
+     "weg": 0,
+     "zugang_gesperrt": 0,
+     "zugriff_url": 0
+    },
+    "hosts": {
+     "other": 82
+    },
+    "id_collisions": 0,
+    "key": "datasets",
+    "label": "Register of data sources called",
+    "m": {
+     "R1": 61,
+     "R2": 61,
+     "R3": 2,
+     "R4": 0,
+     "R5": 2,
+     "R6": 0.04375896700143472,
+     "n": 82,
+     "slots": 1394
+    },
+    "n": 82,
+    "schema": [
+     "id",
+     "titel",
+     "host",
+     "adressen",
+     "zugriff_url",
+     "geprueft",
+     "pruef_status",
+     "pruef_vermerk",
+     "zugang_gesperrt",
+     "nur_vorlage",
+     "relevanz",
+     "relevanz_herkunft",
+     "weg",
+     "aufnahmegrund",
+     "fundstellen",
+     "benutzt_von",
+     "verify_status"
+    ],
+    "sha256": "17985634d4503f7d2a04696bc77ff0b6c291b535155745502c34563e2791f6f7",
+    "shapes": [
+     {
+      "count": 57,
+      "fields": [
+       "pruef_vermerk"
+      ]
+     },
+     {
+      "count": 4,
+      "fields": [
+       "pruef_status"
+      ]
+     }
+    ],
+    "url": "https://frankbueltge.de/datasets/register.json",
+    "wide_collisions": 0
+   }
+  ],
+  "total": {
+   "R1": 2281,
+   "R2": 1487,
+   "R3": 14,
+   "R4": 1701,
+   "R5": 34,
+   "R6": 0.11973124770353262,
+   "n": 1510,
+   "slots": 19051
+  }
+ },
+ "prior_date": "2026-09-14",
+ "prior_file": "window/cycle-003-session-6/cells.json",
+ "prior_sha256": "b30e2557c1f1487404664356b2795f178f3e7a7fb06e6702c542c601be7186a8",
+ "readings": [
+  {
+   "id": "R1",
+   "kind": "count",
+   "name": "every empty slot",
+   "rule": "One hole per (entry, field) pair whose value is absent, null, an empty string, an empty list or an empty object.",
+   "unit": "slots",
+   "why": "The only reading a machine can take without knowing what any field means."
+  },
+  {
+   "id": "R2",
+   "kind": "count",
+   "name": "every entry carrying a gap",
+   "rule": "One hole per entry with at least one empty slot, however many it has.",
+   "unit": "entries",
+   "why": "A catalogue is repaired entry by entry, so this is the number of repairs owed."
+  },
+  {
+   "id": "R4",
+   "kind": "count",
+   "name": "slots the record shows are gaps",
+   "rule": "R1 less every empty cell the record itself explains: the datasets register's success convention (an empty probe note beside an HTTP 200) and the atlas's optional curator's note.",
+   "unit": "slots",
+   "why": "Session 6's finding, kept as a reading: an empty cell is not an absence."
+  },
+  {
+   "id": "R5",
+   "kind": "count",
+   "name": "every distinct shape of gap",
+   "rule": "One hole per (shape, field): entries empty in exactly the same fields are one shape, counted once however many entries carry it.",
+   "unit": "shape-slots",
+   "why": "A repeated identical shape is one event upstream, not one event per entry. This is the general form of the rule session 6 fitted to a single case."
+  },
+  {
+   "id": "R3",
+   "kind": "count",
+   "name": "every distinct shape, once",
+   "rule": "One hole per distinct set of empty fields occurring in the record.",
+   "unit": "shapes",
+   "why": "The coarsest defensible reading: how many kinds of absence are there at all."
+  },
+  {
+   "id": "R6",
+   "kind": "rate",
+   "name": "the share of slots left empty",
+   "rule": "Empty slots divided by all slots the schema declares.",
+   "unit": "share",
+   "why": "The only reading that is not a count — and the one a reader reaches for when comparing records of different size."
+  }
+ ],
+ "session6_published": {
+  "R1": 2489,
+  "R2": 1641,
+  "R3": 14,
+  "R4": 1909,
+  "R5_hand_fitted": 1805
+ },
+ "statements": [
+  {
+   "cells": {
+    "R1": {
+     "v": true
+    },
+    "R2": {
+     "v": true
+    },
+    "R3": {
+     "v": true
+    },
+    "R4": {
+     "v": true
+    },
+    "R5": {
+     "v": true
+    },
+    "R6": {
+     "v": true
+    }
+   },
+   "evaluable": 6,
+   "id": "S1",
+   "kind": "composition",
+   "note": "",
+   "practice": false,
+   "text": "Of the three catalogues, the papers register is the one missing most.",
+   "true_under": 6,
+   "verdict": "certain"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": true
+    },
+    "R2": {
+     "v": true
+    },
+    "R3": {
+     "v": false
+    },
+    "R4": {
+     "v": true
+    },
+    "R5": {
+     "v": true
+    },
+    "R6": {
+     "v": true
+    }
+   },
+   "evaluable": 6,
+   "id": "S2",
+   "kind": "composition",
+   "note": "",
+   "practice": false,
+   "text": "The datasets register is the most complete of the three.",
+   "true_under": 5,
+   "verdict": "contingent"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": true
+    },
+    "R2": {
+     "v": true
+    },
+    "R3": {
+     "v": true
+    },
+    "R4": {
+     "v": true
+    },
+    "R5": {
+     "v": true
+    },
+    "R6": {
+     "v": null,
+     "why": "this reading is a share, and the statement compares parts of one total"
+    }
+   },
+   "evaluable": 5,
+   "id": "S3",
+   "kind": "composition",
+   "note": "",
+   "practice": false,
+   "text": "More than half of what this house is missing sits in a single catalogue.",
+   "true_under": 5,
+   "verdict": "certain"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": true
+    },
+    "R2": {
+     "v": true
+    },
+    "R3": {
+     "v": true
+    },
+    "R4": {
+     "v": false
+    },
+    "R5": {
+     "v": true
+    },
+    "R6": {
+     "v": null,
+     "why": "this reading is a share, and the statement compares parts of one total"
+    }
+   },
+   "evaluable": 5,
+   "id": "S4",
+   "kind": "column",
+   "note": "this practice published the count behind it on 2026-09-14",
+   "practice": true,
+   "text": "In the atlas, more than half of what is missing is the curator's note.",
+   "true_under": 4,
+   "verdict": "contingent"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": true
+    },
+    "R2": {
+     "v": true
+    },
+    "R3": {
+     "v": true
+    },
+    "R4": {
+     "v": true
+    },
+    "R5": {
+     "v": true
+    },
+    "R6": {
+     "v": true
+    }
+   },
+   "evaluable": 6,
+   "id": "S5",
+   "kind": "column",
+   "note": "",
+   "practice": false,
+   "text": "In the papers register, the verdict field is the one most often missing.",
+   "true_under": 6,
+   "verdict": "certain"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": false
+    },
+    "R2": {
+     "v": false
+    },
+    "R3": {
+     "v": false
+    },
+    "R4": {
+     "v": false
+    },
+    "R5": {
+     "v": false
+    },
+    "R6": {
+     "v": true
+    }
+   },
+   "evaluable": 6,
+   "id": "S6",
+   "kind": "cohort",
+   "note": "",
+   "practice": false,
+   "text": "Entries at an arXiv address are missing more than entries at a DOI address.",
+   "true_under": 1,
+   "verdict": "contingent"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": true
+    },
+    "R2": {
+     "v": true
+    },
+    "R3": {
+     "v": false
+    },
+    "R4": {
+     "v": true
+    },
+    "R5": {
+     "v": false
+    },
+    "R6": {
+     "v": null,
+     "why": "a share is not a number of things"
+    }
+   },
+   "evaluable": 5,
+   "id": "S7",
+   "kind": "level",
+   "note": "",
+   "practice": false,
+   "text": "This house's catalogues are missing more than a thousand things.",
+   "true_under": 3,
+   "verdict": "contingent"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": false
+    },
+    "R2": {
+     "v": false
+    },
+    "R3": {
+     "v": false
+    },
+    "R4": {
+     "v": true
+    },
+    "R5": {
+     "v": false
+    },
+    "R6": {
+     "v": false
+    }
+   },
+   "evaluable": 6,
+   "id": "S8",
+   "kind": "level",
+   "note": "this practice published it on 2026-09-14, and it is true under one reading of five",
+   "practice": true,
+   "text": "The datasets register is missing nothing.",
+   "true_under": 1,
+   "verdict": "contingent"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": true
+    },
+    "R2": {
+     "v": true
+    },
+    "R3": {
+     "v": false
+    },
+    "R4": {
+     "v": true
+    },
+    "R5": {
+     "v": false
+    },
+    "R6": {
+     "v": false
+    }
+   },
+   "evaluable": 6,
+   "id": "S9",
+   "kind": "change",
+   "note": "",
+   "practice": false,
+   "text": "This house's catalogues are missing less tonight than last night.",
+   "true_under": 3,
+   "verdict": "contingent"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": true
+    },
+    "R2": {
+     "v": true
+    },
+    "R3": {
+     "v": false
+    },
+    "R4": {
+     "v": true
+    },
+    "R5": {
+     "v": false
+    },
+    "R6": {
+     "v": false
+    }
+   },
+   "evaluable": 6,
+   "id": "S10",
+   "kind": "change",
+   "note": "",
+   "practice": false,
+   "text": "The papers register is missing less tonight than last night.",
+   "true_under": 3,
+   "verdict": "contingent"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": true
+    },
+    "R2": {
+     "v": true
+    },
+    "R3": {
+     "v": true
+    },
+    "R4": {
+     "v": true
+    },
+    "R5": {
+     "v": true
+    },
+    "R6": {
+     "v": true
+    }
+   },
+   "evaluable": 6,
+   "id": "S11",
+   "kind": "change",
+   "note": "true, and the readings are right for once: the bytes are identical",
+   "practice": false,
+   "text": "The atlas did not change between the two nights.",
+   "true_under": 6,
+   "verdict": "certain"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": null,
+     "why": "a slot count cannot say whether every entry is touched"
+    },
+    "R2": {
+     "v": true
+    },
+    "R3": {
+     "v": null,
+     "why": "this reading counts shapes, and the statement is about a level"
+    },
+    "R4": {
+     "v": null,
+     "why": "a slot count cannot say whether every entry is touched"
+    },
+    "R5": {
+     "v": null,
+     "why": "this reading counts shapes, and the statement is about a level"
+    },
+    "R6": {
+     "v": null,
+     "why": "a share of slots cannot say whether every entry is touched"
+    }
+   },
+   "evaluable": 1,
+   "id": "S12",
+   "kind": "level",
+   "note": "false last night (1 061 of 1 064), true tonight — and no cell was filled or emptied to make it so",
+   "practice": false,
+   "text": "Every entry of the papers register is missing something.",
+   "true_under": 1,
+   "verdict": "certain"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": null,
+     "why": "a hole is a property of an entry that is present"
+    },
+    "R2": {
+     "v": null,
+     "why": "a hole is a property of an entry that is present"
+    },
+    "R3": {
+     "v": null,
+     "why": "a hole is a property of an entry that is present"
+    },
+    "R4": {
+     "v": null,
+     "why": "a hole is a property of an entry that is present"
+    },
+    "R5": {
+     "v": null,
+     "why": "a hole is a property of an entry that is present"
+    },
+    "R6": {
+     "v": null,
+     "why": "a hole is a property of an entry that is present"
+    }
+   },
+   "evaluable": 0,
+   "id": "S13",
+   "kind": "frame",
+   "note": "false: 157 of 1 064 are gone. Establishing it took two nights of the record, not a better reading of one",
+   "practice": false,
+   "text": "No entry left the papers register between the two nights.",
+   "true_under": 0,
+   "verdict": "blind"
+  },
+  {
+   "cells": {
+    "R1": {
+     "v": false
+    },
+    "R2": {
+     "v": false
+    },
+    "R3": {
+     "v": false
+    },
+    "R4": {
+     "v": false
+    },
+    "R5": {
+     "v": false
+    },
+    "R6": {
+     "v": false
+    }
+   },
+   "evaluable": 6,
+   "id": "S14",
+   "kind": "cohort",
+   "note": "this practice published the count behind it on 2026-09-14 (21 of 195). Tonight the empty venues are 21 again and the cohort is 40",
+   "practice": true,
+   "text": "About one in ten of the register's arXiv-addressed entries is missing its venue.",
+   "true_under": 0,
+   "verdict": "refuted"
+  }
+ ],
+ "verdicts": {
+  "blind": 1,
+  "certain": 5,
+  "contingent": 7,
+  "refuted": 1
+ },
+ "was": {
+  "feeds": [
+   {
+    "by_host": {
+     "none": {
+      "R1": 526,
+      "R2": 519,
+      "R3": 2,
+      "R4": 7,
+      "R5": 3,
+      "R6": 0.07766130222944043,
+      "n": 521,
+      "slots": 6773
+     }
+    },
+    "crossreads": {},
+    "declared_count": 521,
+    "fields": {
+     "artist": 0,
+     "axis_pole": 0,
+     "clusters": 7,
+     "curator_note": 519,
+     "decisive_move": 0,
+     "form": 0,
+     "lab_renderable": 0,
+     "medium_class": 0,
+     "source_url": 0,
+     "title": 0,
+     "venue_prize": 0,
+     "verify_status": 0,
+     "year": 0
+    },
+    "hosts": {
+     "none": 521
+    },
+    "id_collisions": null,
+    "key": "atlas",
+    "label": "Atlas of data art",
+    "m": {
+     "R1": 526,
+     "R2": 519,
+     "R3": 2,
+     "R4": 7,
+     "R5": 3,
+     "R6": 0.07766130222944043,
+     "n": 521,
+     "slots": 6773
+    },
+    "n": 521,
+    "schema": [
+     "title",
+     "artist",
+     "year",
+     "venue_prize",
+     "clusters",
+     "axis_pole",
+     "form",
+     "medium_class",
+     "lab_renderable",
+     "decisive_move",
+     "source_url",
+     "verify_status",
+     "curator_note"
+    ],
+    "sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+    "shapes": [
+     {
+      "count": 512,
+      "fields": [
+       "curator_note"
+      ]
+     },
+     {
+      "count": 7,
+      "fields": [
+       "clusters",
+       "curator_note"
+      ]
+     }
+    ],
+    "url": "https://frankbueltge.de/atlas/werke.json",
+    "wide_collisions": null
+   },
+   {
+    "by_host": {
+     "arxiv": {
+      "R1": 337,
+      "R2": 192,
+      "R3": 3,
+      "R4": 337,
+      "R5": 8,
+      "R6": 0.144017094017094,
+      "n": 195,
+      "slots": 2340
+     },
+     "doi": {
+      "R1": 1322,
+      "R2": 716,
+      "R3": 8,
+      "R4": 1322,
+      "R5": 20,
+      "R6": 0.15386405959031657,
+      "n": 716,
+      "slots": 8592
+     },
+     "other": {
+      "R1": 243,
+      "R2": 153,
+      "R3": 5,
+      "R4": 243,
+      "R5": 12,
+      "R6": 0.1323529411764706,
+      "n": 153,
+      "slots": 1836
+     }
+    },
+    "crossreads": {
+     "arxiv_entries": 195,
+     "arxiv_venue_is_arxiv": 173,
+     "arxiv_with_venue": 174,
+     "arxiv_without_venue": 21,
+     "identifier_present": 1064,
+     "not_freely_accessible": 461
+    },
+    "declared_count": 1064,
+    "fields": {
+     "felder": 577,
+     "frei_zugaenglich": 0,
+     "id": 0,
+     "jahr": 22,
+     "kennung": 0,
+     "ort": 141,
+     "titel": 0,
+     "urheber": 102,
+     "url": 0,
+     "urteil": 1060,
+     "verify_status": 0,
+     "zitiert_von": 0
+    },
+    "hosts": {
+     "arxiv": 195,
+     "doi": 716,
+     "other": 153
+    },
+    "id_collisions": null,
+    "key": "papers",
+    "label": "Papers register (index form)",
+    "m": {
+     "R1": 1902,
+     "R2": 1061,
+     "R3": 10,
+     "R4": 1902,
+     "R5": 29,
+     "R6": 0.14896616541353383,
+     "n": 1064,
+     "slots": 12768
+    },
+    "n": 1064,
+    "schema": [
+     "id",
+     "titel",
+     "urheber",
+     "jahr",
+     "ort",
+     "kennung",
+     "url",
+     "frei_zugaenglich",
+     "felder",
+     "urteil",
+     "verify_status",
+     "zitiert_von"
+    ],
+    "sha256": "6cc8a967f47e8e026c7513b50d8ee0e9cdbf563a91c99331888bef55d54fcc43",
+    "shapes": [
+     {
+      "count": 438,
+      "fields": [
+       "urteil"
+      ]
+     },
+     {
+      "count": 428,
+      "fields": [
+       "felder",
+       "urteil"
+      ]
+     },
+     {
+      "count": 56,
+      "fields": [
+       "felder",
+       "ort",
+       "urteil"
+      ]
+     },
+     {
+      "count": 50,
+      "fields": [
+       "felder",
+       "urheber",
+       "urteil"
+      ]
+     },
+     {
+      "count": 37,
+      "fields": [
+       "ort",
+       "urteil"
+      ]
+     },
+     {
+      "count": 21,
+      "fields": [
+       "felder",
+       "jahr",
+       "ort",
+       "urheber",
+       "urteil"
+      ]
+     },
+     {
+      "count": 21,
+      "fields": [
+       "felder",
+       "ort",
+       "urheber",
+       "urteil"
+      ]
+     },
+     {
+      "count": 5,
+      "fields": [
+       "ort",
+       "urheber",
+       "urteil"
+      ]
+     },
+     {
+      "count": 4,
+      "fields": [
+       "urheber",
+       "urteil"
+      ]
+     },
+     {
+      "count": 1,
+      "fields": [
+       "felder",
+       "jahr",
+       "ort",
+       "urheber"
+      ]
+     }
+    ],
+    "url": "https://frankbueltge.de/papers/index.json",
+    "wide_collisions": null
+   },
+   {
+    "by_host": {
+     "other": {
+      "R1": 61,
+      "R2": 61,
+      "R3": 2,
+      "R4": 0,
+      "R5": 2,
+      "R6": 0.04375896700143472,
+      "n": 82,
+      "slots": 1394
+     }
+    },
+    "crossreads": {
+     "access_blocked": 13,
+     "access_blocked_with_ground": 13,
+     "access_blocked_with_host": 13,
+     "blank_note": 56,
+     "blank_note_with_probe_ok": 56,
+     "blank_status": 5,
+     "blank_status_with_note": 5,
+     "probe_ok": 56,
+     "probe_ok_with_blank_note": 56
+    },
+    "declared_count": 82,
+    "fields": {
+     "adressen": 0,
+     "aufnahmegrund": 0,
+     "benutzt_von": 0,
+     "fundstellen": 0,
+     "geprueft": 0,
+     "host": 0,
+     "id": 0,
+     "nur_vorlage": 0,
+     "pruef_status": 5,
+     "pruef_vermerk": 56,
+     "relevanz": 0,
+     "relevanz_herkunft": 0,
+     "titel": 0,
+     "verify_status": 0,
+     "weg": 0,
+     "zugang_gesperrt": 0,
+     "zugriff_url": 0
+    },
+    "hosts": {
+     "other": 82
+    },
+    "id_collisions": null,
+    "key": "datasets",
+    "label": "Register of data sources called",
+    "m": {
+     "R1": 61,
+     "R2": 61,
+     "R3": 2,
+     "R4": 0,
+     "R5": 2,
+     "R6": 0.04375896700143472,
+     "n": 82,
+     "slots": 1394
+    },
+    "n": 82,
+    "schema": [
+     "id",
+     "titel",
+     "host",
+     "adressen",
+     "zugriff_url",
+     "geprueft",
+     "pruef_status",
+     "pruef_vermerk",
+     "zugang_gesperrt",
+     "nur_vorlage",
+     "relevanz",
+     "relevanz_herkunft",
+     "weg",
+     "aufnahmegrund",
+     "fundstellen",
+     "benutzt_von",
+     "verify_status"
+    ],
+    "sha256": "c6b070e320ae31d957b106b74ddfa30d045db02214e89870e976e685b0e11519",
+    "shapes": [
+     {
+      "count": 56,
+      "fields": [
+       "pruef_vermerk"
+      ]
+     },
+     {
+      "count": 5,
+      "fields": [
+       "pruef_status"
+      ]
+     }
+    ],
+    "url": "https://frankbueltge.de/datasets/register.json",
+    "wide_collisions": null
+   }
+  ],
+  "total": {
+   "R1": 2489,
+   "R2": 1641,
+   "R3": 14,
+   "R4": 1909,
+   "R5": 34,
+   "R6": 0.11889180797707188,
+   "n": 1667,
+   "slots": 20935
+  }
+ }
+}

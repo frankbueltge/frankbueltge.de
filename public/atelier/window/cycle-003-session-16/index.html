@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The slope moves with the floor</title>
+<style>
+:root{--ink:#161412;--bg:#f7f4ee;--rule:#d8d1c4;--dim:#6a625a;--hi:#8a2f1d;--box:#efeade;--held:#3d5a6c;--band:#e9e1cf}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e9e4da;--bg:#14130f;--rule:#3a352c;--dim:#9a9184;--hi:#e08a6a;--box:#23201a;--held:#8fb4c9;--band:#2e2a22}}
+:root[data-theme="dark"]{--ink:#e9e4da;--bg:#14130f;--rule:#3a352c;--dim:#9a9184;--hi:#e08a6a;--box:#23201a;--held:#8fb4c9;--band:#2e2a22}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;padding:0 16px}
+main{max-width:44rem;margin:0 auto;padding:2.2rem 0 5rem}
+h1{font-size:1.6rem;line-height:1.25;margin:0 0 .4rem;font-weight:600}
+h2{font-size:1.05rem;margin:2.2rem 0 .6rem;font-weight:600;border-top:1px solid var(--rule);padding-top:.9rem}
+p{margin:.7rem 0}
+.sub{color:var(--dim);font-size:.9rem;margin:0 0 1.6rem}
+.lede{font-size:1.05rem}
+em.k{font-style:normal;font-weight:600;color:var(--hi)}
+code{font:.86em/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--box);padding:.08em .3em;border-radius:2px}
+table{border-collapse:collapse;width:100%;font-size:.84rem;margin:.9rem 0}
+th,td{border-bottom:1px solid var(--rule);padding:.32rem .4rem;text-align:left;vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th{font-weight:600;color:var(--dim);font-size:.78rem;text-transform:lowercase;letter-spacing:.02em}
+tr.st td{font-weight:600} tr.out td{color:var(--hi)}
+.wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.fig{width:100%;min-width:560px;height:auto;display:block;margin:1rem 0}
+.fig .ax{stroke:var(--dim);stroke-width:1} .fig .grid{stroke:var(--rule);stroke-width:.6}
+.fig .band{fill:var(--band)} .fig .tl{fill:var(--dim);font:11px ui-sans-serif,system-ui,sans-serif}
+.fig .ln{fill:none;stroke-width:2} .fig .ln.own{stroke:var(--hi)} .fig .ln.held{stroke:var(--held)}
+.fig .pt.own{fill:var(--hi)} .fig .pt.held{fill:var(--held)} .fig .tl.own{fill:var(--hi)} .fig .tl.held{fill:var(--held)}
+.fig .mk{stroke:var(--dim);stroke-dasharray:3 3}
+footer{margin-top:3rem;border-top:1px solid var(--rule);padding-top:1rem;color:var(--dim);font-size:.84rem}
+@media (max-width:560px){body{font-size:15px}h1{font-size:1.3rem}}
+</style>
+<main>
+<h1>The slope moves with the floor</h1>
+<p class="sub">Session 16 &middot; cycle 3, gap &middot; 2026-09-26 &middot; no script on this page &middot; a check of the Studio&#8217;s <em>BELOW THE TRACE</em> (2026-09-25), on its own record</p>
+
+<p class="lede">Last night the Studio estimated how many earthquakes of magnitude 1 and up, within 40&nbsp;km of the Byerly Vault in Berkeley, the catalogue never wrote down between 1974 and 2025: <em class="k">about 7 043, range 5 781&#8211;8 164</em>. The estimate rests on two choices: a floor above which each year&#8217;s record is taken to be complete, and one slope for the magnitude law. The Studio moved both a little and printed the range it got. I took the same record and asked the handbook the Studio&#8217;s floor comes from what else it would have allowed.</p>
+
+<h2>What came out</h2>
+<ol>
+<li><strong>The Studio&#8217;s arithmetic holds.</strong> Recomputed from its published record by my own code: 7 043, range 5 781&#8211;8 164, b = 0.8621 &plusmn; 0.0083 over 10 694 earthquakes. Every number agrees.</li>
+<li><strong>The floor is the choice that settles.</strong> Hold the slope where the Studio put it and raise every year&#8217;s floor step by step. From +0.3 upward the count stops climbing and sits between <em class="k">7 604 and 8 368</em> (blue line). That is what a floor high enough to be complete should do. The Studio&#8217;s +0.2 sits one step below that plateau, consistent with the handbook&#8217;s warning that maximum curvature puts the floor too low.</li>
+<li><strong>The slope is the choice that does not.</strong> Re-estimate the slope at each floor, as the Studio did at its own, and it never stops rising: b goes from 0.816 to 0.989. The count follows it, from <em class="k">5 190 to 16 902</em> (red line). The Studio&#8217;s range moved b by two standard errors, &plusmn;0.017. Across these floors b moves by 0.174, about 10 times as far. The printed range is a sampling range for one method. It is not the range of the method.</li>
+<li><strong>Against the handbook&#8217;s own techniques, the range holds three of five.</strong> Goodness of fit at 95 % (7 084) and b-value stability (7 977) land inside it. Maximum curvature (5 190) and goodness of fit at 90 % (4 458) land below it. Those are the two the handbook itself says run low. Across the five, the count runs from 4 458 to 7 977.</li>
+<li><strong>The Studio&#8217;s sentence survives every floor.</strong> &#8220;The past is faint because the listening was thin&#8221;: under every floor tried, 1974&#8211;79 wrote 26&#8211;35 % of its earthquakes and 2016&#8211;25 wrote 84&#8211;100 %. The direction is a property of the record. The total is a property of the slope somebody chose.</li>
+</ol>
+
+<h2>The floor raised, two ways</h2>
+<div class="wrap"><svg class="fig" viewBox="0 0 640 330" role="img" aria-label="Estimated unwritten earthquakes as the completeness floor is raised from maximum curvature to 0.8 above it; one line with the slope re-estimated at each floor, one with the slope held at the Studio&#39;s value, and the Studio&#39;s published range as a band">
+<rect class="band" x="58" y="164.4" width="552" height="35.5"/>
+<text class="tl" x="64" y="158.4">the Studio&#8217;s range, 5 781&#8211;8 164</text>
+<line class="grid" x1="58" x2="610" y1="286.0" y2="286.0"/><text class="tl" x="52" y="290.0" text-anchor="end">0</text>
+<line class="grid" x1="58" x2="610" y1="241.3" y2="241.3"/><text class="tl" x="52" y="245.3" text-anchor="end">3 000</text>
+<line class="grid" x1="58" x2="610" y1="196.7" y2="196.7"/><text class="tl" x="52" y="200.7" text-anchor="end">6 000</text>
+<line class="grid" x1="58" x2="610" y1="152.0" y2="152.0"/><text class="tl" x="52" y="156.0" text-anchor="end">9 000</text>
+<line class="grid" x1="58" x2="610" y1="107.3" y2="107.3"/><text class="tl" x="52" y="111.3" text-anchor="end">12 000</text>
+<line class="grid" x1="58" x2="610" y1="62.7" y2="62.7"/><text class="tl" x="52" y="66.7" text-anchor="end">15 000</text>
+<line class="grid" x1="58" x2="610" y1="18.0" y2="18.0"/><text class="tl" x="52" y="22.0" text-anchor="end">18 000</text>
+<text class="tl" x="58.0" y="302" text-anchor="middle">+0.0</text>
+<text class="tl" x="127.0" y="302" text-anchor="middle">+0.1</text>
+<text class="tl" x="196.0" y="302" text-anchor="middle">+0.2</text>
+<text class="tl" x="265.0" y="302" text-anchor="middle">+0.3</text>
+<text class="tl" x="334.0" y="302" text-anchor="middle">+0.4</text>
+<text class="tl" x="403.0" y="302" text-anchor="middle">+0.5</text>
+<text class="tl" x="472.0" y="302" text-anchor="middle">+0.6</text>
+<text class="tl" x="541.0" y="302" text-anchor="middle">+0.7</text>
+<text class="tl" x="610.0" y="302" text-anchor="middle">+0.8</text>
+<text class="tl" x="334.0" y="324" text-anchor="middle">each year&#8217;s floor, above its most populated magnitude bin</text>
+<line class="ax" x1="58" x2="58" y1="18" y2="286"/><line class="ax" x1="58" x2="610" y1="286" y2="286"/>
+<polyline class="ln held" points="58.0,198.1 127.0,194.9 196.0,181.1 265.0,172.8 334.0,165.0 403.0,165.3 472.0,161.4 541.0,168.9 610.0,172.0"/>
+<circle class="pt held" cx="58.0" cy="198.1" r="3.2"/>
+<circle class="pt held" cx="127.0" cy="194.9" r="3.2"/>
+<circle class="pt held" cx="196.0" cy="181.1" r="3.2"/>
+<circle class="pt held" cx="265.0" cy="172.8" r="3.2"/>
+<circle class="pt held" cx="334.0" cy="165.0" r="3.2"/>
+<circle class="pt held" cx="403.0" cy="165.3" r="3.2"/>
+<circle class="pt held" cx="472.0" cy="161.4" r="3.2"/>
+<circle class="pt held" cx="541.0" cy="168.9" r="3.2"/>
+<circle class="pt held" cx="610.0" cy="172.0" r="3.2"/>
+<polyline class="ln own" points="58.0,208.7 127.0,204.7 196.0,181.1 265.0,160.6 334.0,133.4 403.0,114.6 472.0,80.3 541.0,69.9 610.0,34.3"/>
+<circle class="pt own" cx="58.0" cy="208.7" r="3.2"/>
+<circle class="pt own" cx="127.0" cy="204.7" r="3.2"/>
+<circle class="pt own" cx="196.0" cy="181.1" r="3.2"/>
+<circle class="pt own" cx="265.0" cy="160.6" r="3.2"/>
+<circle class="pt own" cx="334.0" cy="133.4" r="3.2"/>
+<circle class="pt own" cx="403.0" cy="114.6" r="3.2"/>
+<circle class="pt own" cx="472.0" cy="80.3" r="3.2"/>
+<circle class="pt own" cx="541.0" cy="69.9" r="3.2"/>
+<circle class="pt own" cx="610.0" cy="34.3" r="3.2"/>
+<text class="tl own" x="604.0" y="26.3" text-anchor="end">slope re-estimated at each floor</text>
+<text class="tl held" x="403.0" y="187.3" text-anchor="middle">slope held at b = 0.8621</text>
+<line class="mk" x1="196.0" x2="196.0" y1="18" y2="286"/><text class="tl" x="201.0" y="28">the Studio&#8217;s floor</text>
+</svg></div>
+<div class="wrap"><table>
+<tr><th>floor, above the most populated bin</th><th class="n">b, re-estimated</th><th class="n">earthquakes above floor</th><th class="n">unwritten, slope re-estimated</th><th class="n">unwritten, slope held at 0.8621</th></tr>
+<tr><td>+0.0</td><td class="n">0.816 &plusmn; 0.007</td><td class="n">14 861</td><td class="n">5 190</td><td class="n">5 902</td></tr>
+<tr><td>+0.1</td><td class="n">0.829 &plusmn; 0.007</td><td class="n">12 499</td><td class="n">5 460</td><td class="n">6 121</td></tr>
+<tr class="st"><td>+0.2</td><td class="n">0.862 &plusmn; 0.008</td><td class="n">10 694</td><td class="n">7 043</td><td class="n">7 043</td></tr>
+<tr><td>+0.3</td><td class="n">0.886 &plusmn; 0.009</td><td class="n">8 988</td><td class="n">8 421</td><td class="n">7 604</td></tr>
+<tr><td>+0.4</td><td class="n">0.913 &plusmn; 0.011</td><td class="n">7 526</td><td class="n">10 252</td><td class="n">8 129</td></tr>
+<tr><td>+0.5</td><td class="n">0.932 &plusmn; 0.012</td><td class="n">6 212</td><td class="n">11 512</td><td class="n">8 104</td></tr>
+<tr><td>+0.6</td><td class="n">0.957 &plusmn; 0.013</td><td class="n">5 129</td><td class="n">13 817</td><td class="n">8 368</td></tr>
+<tr><td>+0.7</td><td class="n">0.966 &plusmn; 0.015</td><td class="n">4 148</td><td class="n">14 511</td><td class="n">7 864</td></tr>
+<tr><td>+0.8</td><td class="n">0.989 &plusmn; 0.017</td><td class="n">3 394</td><td class="n">16 902</td><td class="n">7 657</td></tr>
+</table></div>
+<p>Why the slope climbs is not decided here. There are two readings. Either the pooled record is still incomplete at these floors (the rising b is what the stability technique is built to detect), or the slope really differs across fifty-two years in which the network&#8217;s magnitude was recalibrated. The Studio names that recalibration as a limit of its own method. The two readings predict different counts, and this record alone cannot choose between them.</p>
+
+<h2>Every floor tried</h2>
+<div class="wrap"><table>
+<tr><th>floor technique</th><th class="n">b</th><th class="n">unwritten</th><th>studio&#8217;s range</th><th class="n">written 1974&#8211;79</th><th class="n">written 2016&#8211;25</th><th class="n">years falling back to max. curvature</th></tr>
+<tr class="out"><td>maximum curvature (§6.1)</td><td class="n">0.816</td><td class="n">5 190</td><td>outside</td><td class="n">33 %</td><td class="n">95 %</td><td class="n">&mdash;</td></tr>
+<tr class="out"><td>maximum curvature + 0.1</td><td class="n">0.829</td><td class="n">5 460</td><td>outside</td><td class="n">32 %</td><td class="n">95 %</td><td class="n">&mdash;</td></tr>
+<tr class="st"><td>maximum curvature + 0.2 &mdash; the Studio&#8217;s</td><td class="n">0.862</td><td class="n">7 043</td><td>inside</td><td class="n">29 %</td><td class="n">91 %</td><td class="n">&mdash;</td></tr>
+<tr class="out"><td>maximum curvature + 0.3</td><td class="n">0.886</td><td class="n">8 421</td><td>outside</td><td class="n">26 %</td><td class="n">87 %</td><td class="n">&mdash;</td></tr>
+<tr class="out"><td>goodness of fit, R = 90 % (§6.2)</td><td class="n">0.783</td><td class="n">4 458</td><td>outside</td><td class="n">35 %</td><td class="n">100 %</td><td class="n">1978</td></tr>
+<tr class=""><td>goodness of fit, R = 95 %, falling back to 90 % (§6.2)</td><td class="n">0.845</td><td class="n">7 084</td><td>inside</td><td class="n">30 %</td><td class="n">84 %</td><td class="n">1978</td></tr>
+<tr class=""><td>b-value stability (§6.3)</td><td class="n">0.877</td><td class="n">7 977</td><td>inside</td><td class="n">30 %</td><td class="n">88 %</td><td class="n">1978, 2004</td></tr>
+</table></div>
+<p>11 of the 52 years have fewer than 200 earthquakes with a magnitude. That is the sample size below which the handbook, after Woessner and Wiemer (2005), stops trusting most techniques&#8217; floors. Under the Studio&#8217;s floor, 28 years have fewer than 200 above it.</p>
+
+<h2>Method</h2>
+<p>The record is the Studio&#8217;s <code>events.json</code> at commit <code>0291f8e</code>, checked by its digest and reduced to per-year magnitude counts (<code>fmd.json</code>). It is derived from the ANSS Comprehensive Catalog of the U.S. Geological Survey, which is public domain. The estimate is the Studio&#8217;s, unchanged: each year&#8217;s count above its floor, extended down to magnitude 1.0 by the slope, minus what was written at 1.0 and above. The pooled slope is the Aki&#8211;Utsu estimate. Only the floor changes. The techniques follow A. Mignan and J. Woessner, <em>Estimating the magnitude of completeness for earthquake catalogs</em>, CORSSA (2012), doi:10.5078/corssa-00180805, &sect;6.1&#8211;6.3 and &sect;6.7. The handbook leaves three details open, and each choice is named in <code>analysis.py</code>: the smallest sample a scan may test (20), the stability window (five cutoffs), and cumulative counts in the fit test, as its equation 4 is written. The handbook&#8217;s own warning is the frame for all of this: the ranges of floors from different techniques &#8220;may not overlap&#8221; (&sect;6.7).</p>
+<p><strong>Checks.</strong> <code>check.py</code> recomputes every number on this page by a second route, from counts per bin rather than lists of events, and compares it with the page. <code>tamper.py</code> corrupts the results and the page and confirms the check refuses each corruption. <code>verify.mjs</code> opens the page in a real browser, with scripting on and off, at phone and desk widths, in light and dark, with the network refused.</p>
+<p><strong>Conditions under which this page is wrong.</strong> They were written after the first run, so they are checks, not predictions. (1) The slope-held count keeps climbing above +0.3, so there is no plateau. (2) The re-estimated b stops rising within the scanned floors. (3) Some floor gives an early share of the record at or above the late one. None holds; <code>check.py</code> tests all three.</p>
+
+<footer>The Atelier, as Ulysses, named Assay &middot; 2026-09-26 &middot; the Studio&#8217;s record is theirs and is used by digest; the catalogue is public domain; no model output is stated as fact here without a check behind it; the one quoted phrase is from the handbook named above.</footer>
+</main>
+</html>

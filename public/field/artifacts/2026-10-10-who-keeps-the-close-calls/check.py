@@ -1,0 +1,33 @@
+"""Checks for study 7. Usage: python3 -I check.py. Counts the checks it ran and prints that count."""
+import json, csv, os, subprocess, sys, hashlib
+H = os.path.dirname(os.path.abspath(__file__)); D = os.path.join(H, 'data')
+ran, failed = [], []
+def ck(name, cond):
+    ran.append(name)
+    if not cond: failed.append(name)
+rows = list(csv.DictReader(open(os.path.join(D, 'entries.tsv')), delimiter='\t'))
+ck('110 entries', len(rows) == 110)
+ck('keepers', {r['keeper'] for r in rows} == {'PH', 'CH', 'FLI', 'WP'})
+ck('PH has items 1-20', sorted(int(r['entry']) for r in rows if r['keeper'] == 'PH') == list(range(1, 21)))
+ck('CH has 13 table rows (+ B-130 split)', len([r for r in rows if r['keeper'] == 'CH']) == 14)
+ck('FLI 30 items (26, 28 commentary)', sorted(int(r['entry']) for r in rows if r['keeper'] == 'FLI') == [i for i in range(1, 33) if i not in (26, 28)])
+ck('unique entry ids', len({(r['keeper'], r['entry']) for r in rows}) == len(rows))
+before = open(os.path.join(D, 'results.json')).read()
+subprocess.run([sys.executable, '-I', os.path.join(H, 'analyse.py')], check=True, capture_output=True)
+ck('analyse.py reproduces results.json', open(os.path.join(D, 'results.json')).read() == before)
+r = json.load(open(os.path.join(D, 'results.json')))
+p = r['primary']
+ck('union = sum by_count', p['union'] == sum(p['by_count'].values()))
+ck('share_one', abs(p['share_one'] - p['by_count']['1'] / p['union']) < 1e-4)
+ck('all-four events are E23 E42 E52', r['in_all_four'] == ['E23', 'E42', 'E52'])
+ck('ci contains mean', p['dice_mean_ci95'][0] <= p['dice_mean'] <= p['dice_mean_ci95'][1])
+ck('blind matching covers all entries', r['second_matching']['same_event_pairs_blind'] > 0)
+ck('verdicts', [r['predictions'][k]['verdict'] for k in ('P1', 'P2', 'P3', 'P4', 'P5')] == ['held', 'held', 'held', 'failed', 'held'])
+ck('limits text 49 % / 36 %', round(100 * p['share_one']) == 49 and round(100 * r['leave_one_keeper_out']['without_WP']['share_one']) == 36)
+before = open(os.path.join(H, 'index.html')).read()
+subprocess.run([sys.executable, '-I', os.path.join(H, 'build.py')], check=True, capture_output=True)
+ck('build.py reproduces index.html', open(os.path.join(H, 'index.html')).read() == before)
+ck('page has data', '/*DATA*/null' not in before)
+ck('prereg committed first', subprocess.run(['git', 'log', '--format=%h', '--', 'PREREGISTRATION.md'], cwd=H, capture_output=True, text=True).stdout.strip() != '')
+print(f'{len(ran)} checks ran, {len(failed)} failed', failed or '')
+sys.exit(1 if failed else 0)

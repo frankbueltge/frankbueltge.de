@@ -1,0 +1,163 @@
+{
+  "date": "2026-09-07",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-07T11:00:45Z",
+    "counts": {
+      "botwall": 36,
+      "gone_404": 3,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 259,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 262,
+    "excluded_unverifiable": 38,
+    "gone": 3,
+    "gone_ci95": [
+      0.0039,
+      0.0331
+    ],
+    "gone_rate": 0.0115,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0145
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-05",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "thescore1260.com",
+        "first_seen": "20260905050000",
+        "http_code": 404,
+        "title": "Yankees OF Trent Grisham leaves game with apparent leg injury",
+        "url": "https://www.thescore1260.com/2026/09/04/yankees-of-trent-grisham-leaves-game-with-apparent-leg-injury/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "wa1a.com",
+        "first_seen": "20260905080000",
+        "http_code": 404,
+        "title": "Kelly Rowland Shares Advice for KATSEYE Amid Member Hiatuses",
+        "url": "https://www.wa1a.com/2026/09/05/kelly-rowland-shares-advice-for-katseye-amid-member-hiatuses/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "wbnq.com",
+        "first_seen": "20260905090000",
+        "http_code": 404,
+        "title": "Kelly Rowland Shares Advice for KATSEYE Amid Member Hiatuses",
+        "url": "https://www.wbnq.com/2026/09/05/kelly-rowland-shares-advice-for-katseye-amid-member-hiatuses/"
+      }
+    ],
+    "sample_drawn_at": "2026-09-06T09:43:32Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 2939,
+      "replaced": 4554,
+      "trivial": 567,
+      "update": 467
+    },
+    "day": "2026-09-06",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Turns",
+          "Meme",
+          "Fest"
+        ],
+        "after": "'Amrapali Dubey Ke Liye Aaye Hain': Dinesh Lal Yadav AKA Nirahua's Bigg Boss 20 Appearance Turns Meme Fest Amid Bhojpuri Bawal Actress' Entry Rumours",
+        "before": "'Amrapali Dubey Ke Liye Aaye Hain': Dinesh Lal Yadav aka Nirahua's Bigg Boss 20 Appearance Sparks Memes Amid Bhojpuri Bawal Actress' Entry Rumours",
+        "detected": "2026-09-06T19:33:34Z",
+        "domain": "freepressjournal.in",
+        "removed": [
+          "Sparks",
+          "Memes"
+        ],
+        "similarity": 0.815,
+        "url": "https://www.freepressjournal.in/entertainment/amrapali-dubey-ke-liye-aaye-hain-dinesh-lal-yadav-aka-nirahuas-bigg-boss-20-appearance-sparks-memes-amid-bhojpuri-bawal-actress-entry-rumours",
+        "weight": 10,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Rs"
+        ],
+        "after": "'Mirzapur: The Movie' box office collection Day 1: Pankaj Tripathi, Ali Fazal and Ravi Kishan starrer grosses Rs 29 crore; ranks among highest opening day collections of 2026",
+        "before": "Mirzapur Full Movie Collection: 'Mirzapur: The Movie' box office collection Day 1: Pankaj Tripathi, Ali Fazal and Ravi Kishan starrer grosses 29 crore; ranks among highest opening day collections of 2026 |",
+        "detected": "2026-09-06T01:02:47Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Full",
+          "Mirzapur",
+          "Movie",
+          "collection"
+        ],
+        "similarity": 0.929,
+        "url": "https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/box-office/mirzapur-the-movie-box-office-collection-day-1-pankaj-tripathi-ali-fazal-and-ravi-kishan-starrer-grosses-29-crore-ranks-among-highest-opening-day-collections-of-2026/articleshow/133781813.cms",
+        "weight": 9,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "President",
+          "Falklands"
+        ],
+        "after": "Argentina a 'weak country', slams Badenoch as President Milei announces 'act of justice' sanctions on Falklands oil exploration",
+        "before": "Argentina a 'weak country', slams Badenoch as Milei announces 'act of justice' sanctions on Falkland Islands oil exploration",
+        "detected": "2026-09-06T09:02:21Z",
+        "domain": "lbc.co.uk",
+        "removed": [
+          "Falkland",
+          "Islands"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.lbc.co.uk/article/argentinas-government-falkland-islands-oil-sanctions-5Hjdh24_2/",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 12610,
+      "PAGE_TEXTCHANGE": 86352,
+      "PAGE_TITLECHANGE": 35800,
+      "UNCHANGED_CONTENT": 533551
+    },
+    "title_changes_en": 8527,
+    "trace": [
+      {
+        "bytes_billed": 17825792,
+        "created": "1788778624394",
+        "job_id": "world_gdg_counts_20260906",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 167772160,
+        "created": "1788778630052",
+        "job_id": "world_gdg_titles_20260906",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-07T11:00:45Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-06.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

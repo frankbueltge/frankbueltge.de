@@ -1,0 +1,167 @@
+{
+  "date": "2026-10-07",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-07T12:29:43Z",
+    "counts": {
+      "botwall": 34,
+      "gone_404": 4,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 255,
+      "other": 0,
+      "server_error": 1,
+      "unreachable": 6
+    },
+    "decided": 259,
+    "excluded_unverifiable": 41,
+    "gone": 4,
+    "gone_ci95": [
+      0.006,
+      0.039
+    ],
+    "gone_rate": 0.0154,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0146
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-05",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "1063thebuzz.com",
+        "first_seen": "20261005170000",
+        "http_code": 404,
+        "title": "Bad Omens Just Had Chris Hansen Announce 2027 U.S. Tour Dates",
+        "url": "https://1063thebuzz.com/ixp/366/p/bad-omens-2027-us-tour-dates/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "hotspotatl.com",
+        "first_seen": "20261005160000",
+        "http_code": 404,
+        "title": "Enter to Win Doja Cat Tickets",
+        "url": "https://hotspotatl.com/6823509/enter-to-win-doja-cat-tickets/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "southsideweekly.com",
+        "first_seen": "20261005190000",
+        "http_code": 404,
+        "title": "Clutch Hitting and Nasty Pitching Power the Sox to a 1-0 Series Lead in the ALDS",
+        "url": "https://southsideweekly.com/clutch-hitting-and-nasty-pitching-power-the-sox-to-a-1-0-series-lead-in-the-alds-2/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "wbap.com",
+        "first_seen": "20261005170000",
+        "http_code": 404,
+        "title": "$90 Medicare Payments: Who Qualifies And When To Expect Them",
+        "url": "https://www.wbap.com/2026/10/05/90-medicare-payments-who-qualifies-and-when-to-expect-them/"
+      }
+    ],
+    "sample_drawn_at": "2026-10-06T12:34:05Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5926,
+      "replaced": 5746,
+      "trivial": 816,
+      "update": 390
+    },
+    "day": "2026-10-06",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Third",
+          "QB"
+        ],
+        "after": "Third-string QB Case Keenum leaves no doubt he should start vs. Jets, even with Tyson Bagent healthy",
+        "before": "Bears 3rd-string Case Keenum leaves no doubt he should start vs. Jets, even with Tyson Bagent healthy",
+        "detected": "2026-10-06T19:33:43Z",
+        "domain": "suntimes.com",
+        "removed": [
+          "Bears",
+          "3rd"
+        ],
+        "similarity": 0.8,
+        "url": "https://chicago.suntimes.com/bears/2026/09/29/bears-3rd-string-case-keenum-leaves-no-doubt-he-should-start-vs-jets-even-with-tyson-bagent-healthy",
+        "weight": 7,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Imminent",
+          "Defeat"
+        ],
+        "after": "More Oil, Same War: Why Increased Exports Aren't a Sign of Iran's Imminent Defeat",
+        "before": "More Oil, Same War: Why Increased Exports Aren't a Sign of Iran's Collapse",
+        "detected": "2026-10-06T15:19:08Z",
+        "domain": "cfr.org",
+        "removed": [
+          "Collapse"
+        ],
+        "similarity": 0.824,
+        "url": "https://www.cfr.org/articles/more-oil-same-war-why-increased-exports-arent-a-sign-of-irans-collapse",
+        "weight": 6,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Rihanna"
+        ],
+        "after": "Anya Taylor-Joy dares to bare in a sheer lace top as she joins Jennifer Lawrence and Rihanna at Dior's Paris Fashion Week showcase",
+        "before": "Anya Taylor-Joy dares to bare in a sheer lace top as she joins Jennifer Lawrence and Miranda Kerr at Dior's Paris Fashion Week showcase",
+        "detected": "2026-10-06T14:02:20Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Miranda",
+          "Kerr"
+        ],
+        "similarity": 0.889,
+        "url": "https://www.dailymail.com/tvshowbiz/article-16169479/Anya-Taylor-Joy-dares-bare-sheer-lace-joins-Jennifer-Lawrence-Miranda-Kerr-Diors-Paris-Fashion-Week-showcase.html",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 16763,
+      "PAGE_TEXTCHANGE": 133202,
+      "PAGE_TITLECHANGE": 50620,
+      "UNCHANGED_CONTENT": 743023
+    },
+    "title_changes_en": 12878,
+    "trace": [
+      {
+        "bytes_billed": 25165824,
+        "created": "1791375863165",
+        "job_id": "world_gdg_counts_20261006",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 236978176,
+        "created": "1791375868816",
+        "job_id": "world_gdg_titles_20261006",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-07T12:29:43Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-06.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

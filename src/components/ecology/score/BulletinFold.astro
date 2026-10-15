@@ -1,0 +1,59 @@
+---
+// A practice's bulletin, verbatim, with its opening in view and the rest behind a native fold.
+//
+// The words pass through bulletinBlocks(), the renderer the stations have used since
+// 2026-09-01: the bold, the code and the headings are the practice's own marks, and the text
+// between them is byte for byte what it committed. Nothing is summarised. The preview runs to
+// the end of the first paragraph — the practices open their bulletins with the session line
+// (the day, the session, the question), which is what a reader needs before deciding to unfold.
+//
+// The fold is a <details>, so it works without JavaScript; open, its handle moves under what it
+// opened (src/styles/score.css) and says "fold".
+import { SCORE_WORDING as W } from '@/config/score-wording'
+import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { bulletinBlocks, type BulletinBlock } from '@/lib/ecology/bulletin-render'
+import { BULLETIN_DISPLAY_MAX, type Bulletin } from '@/lib/ecology/v3'
+
+interface Props {
+  bulletin: Bulletin
+}
+const { bulletin } = Astro.props
+
+const blocks = bulletin.present && bulletin.text ? bulletinBlocks(bulletin.text) : []
+// A bulletin opens with its own title ("# Bulletin — The Field"); the card it stands in already
+// says whose bulletin this is, so a leading level-one heading is not printed twice.
+const body = blocks[0]?.kind === 'heading' && blocks[0].level === 1 ? blocks.slice(1) : blocks
+const firstPara = body.findIndex((b) => b.kind === 'para')
+const cut = firstPara === -1 ? 1 : firstPara + 1
+const shown = body.slice(0, cut)
+const folded = body.slice(cut)
+const cls = (b: BulletinBlock) => (b.kind === 'heading' ? 'is-heading' : b.kind === 'listItem' ? 'is-item' : undefined)
+---
+
+{bulletin.present ? (
+  <div class="sc-bulletin">
+    {shown.map((b) => (
+      <p class={cls(b)}>
+        {b.segments.map((s) => (s.kind === 'strong' ? <strong>{s.text}</strong> : s.kind === 'code' ? <code>{s.text}</code> : s.text))}
+      </p>
+    ))}
+    {folded.length > 0 && (
+      <details class="sc-fold">
+        <summary>
+          <span class="when-closed">{W.voices.expand(bulletin.lines)}</span>
+          <span class="when-open">{W.voices.collapse}</span>
+        </summary>
+        <div class="sc-fold-body">
+          {folded.map((b) => (
+            <p class={cls(b)}>
+              {b.segments.map((s) => (s.kind === 'strong' ? <strong>{s.text}</strong> : s.kind === 'code' ? <code>{s.text}</code> : s.text))}
+            </p>
+          ))}
+          {bulletin.truncated && <p class="pp-muted">{ECOLOGY_V3.bulletin.truncatedNote(bulletin.lines, BULLETIN_DISPLAY_MAX)}</p>}
+        </div>
+      </details>
+    )}
+  </div>
+) : (
+  <p class="sc-note-line">{W.practice.bulletin.absent}</p>
+)}

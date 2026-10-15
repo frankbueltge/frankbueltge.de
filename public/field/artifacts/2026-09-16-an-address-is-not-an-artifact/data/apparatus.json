@@ -1,0 +1,26 @@
+{
+ "session": 162,
+ "date": "2026-09-16",
+ "note": "The apparatus register is the place of full disclosure. This practice does not name AI products, companies or tool vendors in its own voice, and records them exactly here.",
+ "session_runner": {
+  "role": "the whole of this session - built the population from a shipped artifact, wrote the rungs, the fixtures and the mutation test, read the neighbouring papers, ran the probes and clones, computed every number and wrote the record",
+  "provider": "Anthropic",
+  "model_configured": "claude-opus-5",
+  "version_caveat": "the configured identifier is what this session can state. The runtime may fall back to another model of the same family within a session and does not expose which model served each turn, so the serving model is not asserted here."
+ },
+ "delegates": {
+  "count": 0,
+  "note": "No sub-agent was convened. Every rung is a mechanical rule in tools/behind-the-door/rungs.py and no rule calls a model. This is deliberate: the nearest neighbour in aim (arXiv:2606.18237) audits repositories with LLM agents, and this practice's session of 2026-09-12 recorded a delegate returning quoted sentences that do not occur in the paper it cited."
+ },
+ "retrieval_by_the_session": {
+  "repository_doors": "git ls-remote --heads --tags over HTTPS, git protocol, no hosting API. The session's egress answers 403 for github.com over plain HTTP regardless of whether the target exists, which is why the git protocol is used - the same hazard session 141 disclosed on 2026-08-31.",
+  "repository_trees": "git clone --filter=blob:none --no-checkout --depth 1, then git ls-tree -r HEAD --name-only. A blobless partial clone transfers no file contents.",
+  "repository_blobs": "git cat-file on a fixed list of file names only (README*, LICENSE*, requirements*.txt, pyproject.toml, setup.py, setup.cfg, environment.y*ml, package.json, Pipfile, Cargo.toml, go.mod, DESCRIPTION, Makefile), capped at 256 KiB each. No third-party file is committed to this repository; only path lists, rung outcomes and SHA-256 digests are recorded.",
+  "neighbouring_papers": "curl with a user-agent naming this practice and a contact address, to arxiv.org and publikationen.bibliothek.kit.edu. Text extracted by tools/completeness-census/pdftext.py for the PDF and a tag-stripper for HTML. No model read a source.",
+  "house_feeds": "https://frankbueltge.de/papers/index.json, /datasets/register.json, /atlas/werke.json - fetched once each into a scratch directory outside this repository, not mirrored.",
+  "search": "one general web search to locate candidate neighbours; every paper used as evidence was then fetched directly and quoted from the fetched text."
+ },
+ "refusals_met": {
+  "arxiv_export_api": "export.arxiv.org/api/query refused this session three times: its first contact tonight timed out at 60 s with zero bytes, and two later requests answered 429 'Rate exceeded.' (14 bytes each). arxiv.org itself answered 200 to every request throughout. This reproduces 2026-09-14's observation two days on, from a container built fresh tonight, and the 429 cannot be a rate this session set: at its first contact the session had issued no request at all to that host. Recorded against open question 46. Candidate neighbours were located by web search instead, and each was then fetched directly from arxiv.org and quoted from the fetched text."
+ }
+}

@@ -1,0 +1,3128 @@
+{
+ "declared": "post-hoc, after scoring; nothing here moves a prediction",
+ "1_confound": {
+  "note": "the recitals are 99.2 % `should` and the articles 99.1 % `shall`.  The two halves of the comparison share almost no modal, so the recital/article contrast and the should/shall contrast are the same contrast measured twice.  Where the within-modal comparison has any observations at all it runs the OTHER way.",
+  "by_part": {
+   "recitals": {
+    "modal_share": {
+     "shall": 0.0016,
+     "should": 0.9924,
+     "must": 0.0061
+    },
+    "per_modal_rate": {
+     "shall": 0.1818,
+     "should": 0.3751,
+     "must": 0.5238
+    },
+    "overall_rate": 0.3757
+   },
+   "articles": {
+    "modal_share": {
+     "shall": 0.9912,
+     "should": 0.0045,
+     "must": 0.0043
+    },
+    "per_modal_rate": {
+     "shall": 0.2453,
+     "should": 0.5352,
+     "must": 0.4478
+    },
+    "overall_rate": 0.2475
+   }
+  }
+ },
+ "2_gapped": {
+  "rule": "<modal> <one or two tokens, not `be`> be <token>",
+  "counts": {
+   "recitals": {
+    "total": 686,
+    "agentless": 529
+   },
+   "articles": {
+    "total": 477,
+    "agentless": 378
+   }
+  },
+  "share_of_the_measured_agentless_class": {
+   "recitals": 0.2028,
+   "articles": 0.0978
+  },
+  "top_tokens": {
+   "recitals": {
+    "considered": 48,
+    "able": 38,
+    "allowed": 34,
+    "amended": 26,
+    "subject": 25,
+    "required": 21,
+    "made": 20,
+    "used": 19,
+    "understood": 19,
+    "covered": 18,
+    "clarified": 18,
+    "affected": 14,
+    "possible": 13,
+    "laid": 10,
+    "empowered": 10
+   },
+   "articles": {
+    "required": 32,
+    "considered": 28,
+    "used": 23,
+    "subject": 17,
+    "deemed": 14,
+    "taken": 13,
+    "less": 13,
+    "made": 11,
+    "included": 11,
+    "based": 10,
+    "granted": 10,
+    "recognised": 8,
+    "deducted": 8,
+    "binding": 7,
+    "higher": 7
+   }
+  },
+  "first_300_rows": [
+   {
+    "celex": "32009R1223",
+    "part": "recitals",
+    "division": "14",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "adapted",
+    "agentless": true,
+    "text": "ence to the distributor. The obligations of the distributor should therefore be adapted to the respective role and part of the activity of each of "
+   },
+   {
+    "celex": "32009R1223",
+    "part": "recitals",
+    "division": "41",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "laid",
+    "agentless": false,
+    "text": "ns prohibiting animal testing of finished cosmetic products should therefore be laid down. The application, in particular by small and medium-si"
+   },
+   {
+    "celex": "32009R1223",
+    "part": "recitals",
+    "division": "47",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "intended",
+    "agentless": true,
+    "text": "tate identification of cosmetics ingredients. This glossary should not be intended to constitute a limitative list of substances used in cosme"
+   },
+   {
+    "celex": "32009R1223",
+    "part": "articles",
+    "division": "16",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "extended",
+    "agentless": true,
+    "text": "uch data within an explicitly stated reasonable time, which shall not be extended. The SCCS shall deliver its final opinion within six months"
+   },
+   {
+    "celex": "32009R1223",
+    "part": "articles",
+    "division": "19",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "mandatory",
+    "agentless": true,
+    "text": "ed durability. Indication of the date of minimum durability shall not be mandatory for cosmetic products with a minimum durability of more tha"
+   },
+   {
+    "celex": "32009R1223",
+    "part": "articles",
+    "division": "19",
+    "modal": "shall",
+    "gap": "not, however,",
+    "slot_token": "regarded",
+    "agentless": true,
+    "text": " product during the process of manufacturing. The following shall not, however, be regarded as ingredients: (i) impurities in the raw materials used; ("
+   },
+   {
+    "celex": "32009R1223",
+    "part": "articles",
+    "division": "2",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": false,
+    "text": "ngested, inhaled, injected or implanted into the human body shall not be considered to be a cosmetic product. 3. In view of the various definit"
+   },
+   {
+    "celex": "32009R1223",
+    "part": "articles",
+    "division": "20",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": true,
+    "text": " names, trade marks, pictures and figurative or other signs shall not be used to imply that these products have characteristics or functi"
+   },
+   {
+    "celex": "32009R1223",
+    "part": "articles",
+    "division": "4",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "relating to a cosmetic product already placed on the market shall not be considered as a modification of that product of such a nature that com"
+   },
+   {
+    "celex": "32010L0075",
+    "part": "recitals",
+    "division": "16",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "exceeded",
+    "agentless": true,
+    "text": "iteria. The emission limit values set out in this Directive should not be exceeded. In any event, no significant pollution should be caused an"
+   },
+   {
+    "celex": "32010L0075",
+    "part": "recitals",
+    "division": "18",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "made",
+    "agentless": true,
+    "text": "ificant negative effects on human health or the environment should not be made without a permit granted in accordance with this Directive."
+   },
+   {
+    "celex": "32010L0075",
+    "part": "articles",
+    "division": "25",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "deemed",
+    "agentless": true,
+    "text": "cient for the purpose of paragraph 1(a). Such organisations shall also be deemed to have rights capable of being impaired for the purpose of"
+   },
+   {
+    "celex": "32010L0075",
+    "part": "articles",
+    "division": "29",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "al combustion plants with a rated thermal input below 15 MW shall not be considered."
+   },
+   {
+    "celex": "32010L0075",
+    "part": "articles",
+    "division": "32",
+    "modal": "shall",
+    "gap": "at least",
+    "slot_token": "maintained",
+    "agentless": true,
+    "text": "to the requirements of Directives 2001/80/EC and 2008/1/EC, shall at least be maintained. Combustion plants with a total rated thermal input of more"
+   },
+   {
+    "celex": "32010L0075",
+    "part": "articles",
+    "division": "33",
+    "modal": "shall",
+    "gap": "at least",
+    "slot_token": "maintained",
+    "agentless": true,
+    "text": "to the requirements of Directives 2001/80/EC and 2008/1/EC, shall at least be maintained during the remaining operational life of the combustion pla"
+   },
+   {
+    "celex": "32010L0075",
+    "part": "articles",
+    "division": "34",
+    "modal": "shall",
+    "gap": "at least",
+    "slot_token": "maintained",
+    "agentless": true,
+    "text": "to the requirements of Directives 2001/80/EC and 2008/1/EC, shall at least be maintained. 2. Combustion plants with a total rated thermal input of m"
+   },
+   {
+    "celex": "32010L0075",
+    "part": "articles",
+    "division": "50",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "used",
+    "agentless": true,
+    "text": "air falls below the temperatures set out in paragraph 2. It shall also be used during plant start-up and shut-down operations in order to "
+   },
+   {
+    "celex": "32010L0075",
+    "part": "articles",
+    "division": "50",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "fed",
+    "agentless": true,
+    "text": "ed waste is in the combustion chamber. The auxiliary burner shall not be fed with fuels which can cause higher emissions than those resu"
+   },
+   {
+    "celex": "32010L0075",
+    "part": "articles",
+    "division": "55",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "made",
+    "agentless": true,
+    "text": " at least a copy of the permit, and any subsequent updates, shall also be made available to the public. 2. For waste incineration plants o"
+   },
+   {
+    "celex": "32010L0075",
+    "part": "articles",
+    "division": "72",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "reported",
+    "agentless": true,
+    "text": " emission limit values referred to in Article 30(2) and (3) shall also be reported; and (b) for combustion plants which do not operate more th"
+   },
+   {
+    "celex": "32011L0083",
+    "part": "recitals",
+    "division": "17",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "ominant in the overall context of the contract, that person should also be considered as a consumer."
+   },
+   {
+    "celex": "32011L0083",
+    "part": "recitals",
+    "division": "20",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": false,
+    "text": "er and finally concluded by means of distance communication should not be considered a distance contract. Neither should a contract initiated by"
+   },
+   {
+    "celex": "32011L0083",
+    "part": "recitals",
+    "division": "22",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "regarded",
+    "agentless": true,
+    "text": " business activities as well as private homes or workplaces should not be regarded as business premises. The business premises of a person act"
+   },
+   {
+    "celex": "32011L0083",
+    "part": "recitals",
+    "division": "24",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "purposes which are at the disposal of consumers and traders should not be considered as a public auction within the meaning of this Directive."
+   },
+   {
+    "celex": "32011L0083",
+    "part": "recitals",
+    "division": "35",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "altered",
+    "agentless": true,
+    "text": "vided by the trader to the consumer should be mandatory and should not be altered. Nevertheless, the contracting parties should be able to ex"
+   },
+   {
+    "celex": "32011L0083",
+    "part": "recitals",
+    "division": "39",
+    "modal": "should",
+    "gap": "specifically",
+    "slot_token": "drawn",
+    "agentless": true,
+    "text": "tion to pay the trader. Therefore, the consumer’s attention should specifically be drawn, through an unambiguous formulation, to the fact that placi"
+   },
+   {
+    "celex": "32011L0083",
+    "part": "recitals",
+    "division": "41",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "y during which that event occurs or that action takes place should not be considered as falling within the period in question."
+   },
+   {
+    "celex": "32011L0083",
+    "part": "recitals",
+    "division": "46",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "made",
+    "agentless": false,
+    "text": " trader to deliver goods to the consumer. The reimbursement should not be made by voucher unless the consumer has used vouchers for the in"
+   },
+   {
+    "celex": "32011L0083",
+    "part": "recitals",
+    "division": "47",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "allowed",
+    "agentless": true,
+    "text": " For example, the consumer should only try on a garment and should not be allowed to wear it. Consequently, the consumer should handle and in"
+   },
+   {
+    "celex": "32011L0083",
+    "part": "recitals",
+    "division": "51",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "affected",
+    "agentless": false,
+    "text": " place, should remain subject to national law and therefore should not be affected by this Directive. The rules on delivery laid down in this "
+   },
+   {
+    "celex": "32011L0083",
+    "part": "recitals",
+    "division": "58",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "deprived",
+    "agentless": false,
+    "text": "The consumer should not be deprived of the protection granted by this Directive. Where the law "
+   },
+   {
+    "celex": "32011L0083",
+    "part": "articles",
+    "division": "13",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "required",
+    "agentless": false,
+    "text": "h reimbursement. 2. Notwithstanding paragraph 1, the trader shall not be required to reimburse the supplementary costs, if the consumer has e"
+   },
+   {
+    "celex": "32011L0083",
+    "part": "articles",
+    "division": "14",
+    "modal": "shall",
+    "gap": "only",
+    "slot_token": "liable",
+    "agentless": true,
+    "text": " goods cannot normally be returned by post. 2. The consumer shall only be liable for any diminished value of the goods resulting from the ha"
+   },
+   {
+    "celex": "32011L0083",
+    "part": "articles",
+    "division": "18",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "applicable",
+    "agentless": true,
+    "text": " entitled to terminate the contract. The first subparagraph shall not be applicable to sales contracts where the trader has refused to deliver "
+   },
+   {
+    "celex": "32011L0083",
+    "part": "articles",
+    "division": "25",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "binding",
+    "agentless": true,
+    "text": " waive or restrict the rights resulting from this Directive shall not be binding on the consumer."
+   },
+   {
+    "celex": "32011L0083",
+    "part": "articles",
+    "division": "5",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "required",
+    "agentless": true,
+    "text": "hich is not supplied on a tangible medium. 3. Member States shall not be required to apply paragraph 1 to contracts which involve day-to-day "
+   },
+   {
+    "celex": "32011L0083",
+    "part": "articles",
+    "division": "6",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "altered",
+    "agentless": true,
+    "text": " integral part of the distance or off-premises contract and shall not be altered unless the contracting parties expressly agree otherwise. 6"
+   },
+   {
+    "celex": "32011L0083",
+    "part": "articles",
+    "division": "8",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "bound",
+    "agentless": false,
+    "text": "rader has not complied with this subparagraph, the consumer shall not be bound by the contract or order. 3. Trading websites shall indicat"
+   },
+   {
+    "celex": "32011R1300",
+    "part": "recitals",
+    "division": "2",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "entered",
+    "agentless": true,
+    "text": " No 510/2006 has been received by the Commission, that name should therefore be entered in the register, HAS ADOPTED THIS REGULATION:"
+   },
+   {
+    "celex": "32012L0027",
+    "part": "recitals",
+    "division": "19",
+    "modal": "should",
+    "gap": "not however",
+    "slot_token": "affected",
+    "agentless": false,
+    "text": "The provisions of the Union’s public procurement directives should not however be affected. For products other than those covered by the energy effici"
+   },
+   {
+    "celex": "32012L0027",
+    "part": "recitals",
+    "division": "20",
+    "modal": "should",
+    "gap": "in particular",
+    "slot_token": "allowed",
+    "agentless": true,
+    "text": "y savings target laid down in this Directive. Member States should in particular be allowed not to impose this obligation on small energy distributors,"
+   },
+   {
+    "celex": "32012L0027",
+    "part": "recitals",
+    "division": "26",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": false,
+    "text": " smart meters. Where smart meters have been installed, they should not be used by companies for unjustified back billing."
+   },
+   {
+    "celex": "32012L0027",
+    "part": "recitals",
+    "division": "36",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "able",
+    "agentless": false,
+    "text": "ing or cooling network is not cost-effective. Member States should therefore be able to exempt those installations from the obligation to carry "
+   },
+   {
+    "celex": "32012L0027",
+    "part": "recitals",
+    "division": "36",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "possible",
+    "agentless": true,
+    "text": "te heat by means of a high-efficiency cogeneration unit. It should also be possible to exempt peak-load and back-up electricity generation inst"
+   },
+   {
+    "celex": "32012L0027",
+    "part": "recitals",
+    "division": "48",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "tackled",
+    "agentless": true,
+    "text": " split of incentives between the different actors concerned should also be tackled at national level."
+   },
+   {
+    "celex": "32012L0027",
+    "part": "articles",
+    "division": "10",
+    "modal": "shall",
+    "gap": "billing",
+    "slot_token": "based",
+    "agentless": true,
+    "text": "s not provided a meter reading for a given billing interval shall billing be based on estimated consumption or a flat rate. 2. Meters installe"
+   },
+   {
+    "celex": "32012L0027",
+    "part": "articles",
+    "division": "10",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "he final customer, the information contained in these bills shall not be considered to constitute a request for payment. In such cases, Member "
+   },
+   {
+    "celex": "32012L0027",
+    "part": "articles",
+    "division": "14",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "geologically stored as provided for in Directive 2009/31/EC shall not be considered as refurbishment for the purpose of points (b), (c) and (d)"
+   },
+   {
+    "celex": "32012L0027",
+    "part": "articles",
+    "division": "7",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "used",
+    "agentless": false,
+    "text": "chosen for expressing the required amount of energy savings shall also be used for calculating the savings claimed by obligated parties. T"
+   },
+   {
+    "celex": "32012L0027",
+    "part": "articles",
+    "division": "9",
+    "modal": "shall",
+    "gap": "always",
+    "slot_token": "provided",
+    "agentless": true,
+    "text": "l time of use. Such a competitively priced individual meter shall always be provided when: (a) an existing meter is replaced, unless this is tec"
+   },
+   {
+    "celex": "32012L0027",
+    "part": "articles",
+    "division": "9",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "installed",
+    "agentless": false,
+    "text": "e serving multiple buildings, individual consumption meters shall also be installed by 31 December 2016 to measure the consumption of heat or c"
+   },
+   {
+    "celex": "32012R0100",
+    "part": "recitals",
+    "division": "8",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "amended",
+    "agentless": true,
+    "text": "Regulation (EC) No 748/2009 should therefore be amended accordingly, HAS ADOPTED THIS REGULATION:"
+   },
+   {
+    "celex": "32012R0500",
+    "part": "recitals",
+    "division": "9",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "amended",
+    "agentless": true,
+    "text": "Regulation (EC) No 302/2009 should therefore be amended accordingly, HAVE ADOPTED THIS REGULATION:"
+   },
+   {
+    "celex": "32012R0500",
+    "part": "articles",
+    "division": "1",
+    "modal": "shall",
+    "gap": "only",
+    "slot_token": "accepted",
+    "agentless": true,
+    "text": "the lists referred to in paragraph 1 during a calendar year shall only be accepted if the notified fishing vessel is prevented from participat"
+   },
+   {
+    "celex": "32012R0500",
+    "part": "articles",
+    "division": "1",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "permitted",
+    "agentless": false,
+    "text": "ragraph is added: ‘Joint fishing operations with other CPCs shall not be permitted.’; (10) Article 22 is replaced by the following: ‘Article 2"
+   },
+   {
+    "celex": "32012R0500",
+    "part": "articles",
+    "division": "1",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "authorised",
+    "agentless": true,
+    "text": "the farm. Pending the results of this investigation, caging shall not be authorised and the catch section of the bluefin tuna catch document sh"
+   },
+   {
+    "celex": "32012R0500",
+    "part": "articles",
+    "division": "1",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "validated",
+    "agentless": true,
+    "text": "ed and the catch section of the bluefin tuna catch document shall not be validated. 9. The ICCAT regional observers shall sign the ICCAT trans"
+   },
+   {
+    "celex": "32012R0500",
+    "part": "articles",
+    "division": "1",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "validated",
+    "agentless": true,
+    "text": " and the farming section of the bluefin tuna catch document shall not be validated. If the investigation is not concluded within 10 working da"
+   },
+   {
+    "celex": "32012R0500",
+    "part": "articles",
+    "division": "1",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "interrupted",
+    "agentless": true,
+    "text": "ssels that are authorised to fish actively for bluefin tuna shall not be interrupted when vessels are in port unless a system of hailing in and "
+   },
+   {
+    "celex": "32012R0500",
+    "part": "articles",
+    "division": "1",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "authorised",
+    "agentless": true,
+    "text": "d to in (a), (b) and (c) without an ICCAT regional observer shall not be authorised to fish or to operate in the bluefin tuna fishery.’; (b) in"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "recitals",
+    "division": "28",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "treated",
+    "agentless": true,
+    "text": "ers of pension scheme arrangements in the case of a default should also be treated as a pension scheme for the purpose of this Regulation."
+   },
+   {
+    "celex": "32012R0648",
+    "part": "recitals",
+    "division": "38",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "ragroup transaction in respect of one counterparty, then it should also be considered an intragroup transaction in respect of the other counterpa"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "recitals",
+    "division": "45",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "in",
+    "agentless": true,
+    "text": "half of a counterparty, in accordance with this Regulation, should not be in breach of any restriction on disclosure. When preparing the"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "recitals",
+    "division": "57",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "authorised",
+    "agentless": false,
+    "text": "A CCP should not be authorised where all the members of the college, excluding the compete"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "recitals",
+    "division": "57",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "authorised",
+    "agentless": true,
+    "text": "hed, reach a joint opinion by mutual agreement that the CCP should not be authorised. If, however, a sufficient majority of the college has expr"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "recitals",
+    "division": "62",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "outsourced",
+    "agentless": false,
+    "text": "uch outsourcing. Major activities linked to risk management should not be outsourced unless this is approved by the competent authority."
+   },
+   {
+    "celex": "32012R0648",
+    "part": "recitals",
+    "division": "77",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "incorrect",
+    "agentless": true,
+    "text": "event that it does so voluntarily, the information provided should not be incorrect or misleading. Such information should be made available wi"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "recitals",
+    "division": "80",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "able",
+    "agentless": true,
+    "text": "adopted by the Commission by means of a delegated act. ESMA should not be able to delegate the power to adopt decisions on registration."
+   },
+   {
+    "celex": "32012R0648",
+    "part": "recitals",
+    "division": "83",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "able",
+    "agentless": true,
+    "text": "ESMA should also be able to impose fines on trade repositories where it finds that t"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "10",
+    "modal": "shall",
+    "gap": "no longer",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "ver 30 working days does not exceed the clearing threshold, shall no longer be subject to the clearing obligation set out in Article 4. 3. In calc"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "13",
+    "modal": "shall",
+    "gap": "automatically",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "mplementing act on equivalence is withdrawn, counterparties shall automatically be subject again to all requirements laid down in this Regulation. TIT"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "17",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "authorised",
+    "agentless": false,
+    "text": "y significant deviation from that positive opinion. The CCP shall not be authorised where all the members of the college, excluding the authori"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "17",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "referred",
+    "agentless": true,
+    "text": "its decision in conformity with ESMA’s decision. The matter shall not be referred to ESMA after the end of the 30-day period referred to in t"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "2",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "regarded",
+    "agentless": true,
+    "text": "linked to one and the same person by a control relationship shall also be regarded as constituting a close link between such persons. (25) ‘ca"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "27",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "linked",
+    "agentless": true,
+    "text": "he independent and other non-executive members of the board shall not be linked to the business performance of the CCP. The members of a CC"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "28",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "allowed",
+    "agentless": true,
+    "text": "al conflict of interest on a particular matter, that member shall not be allowed to vote on that matter. 5. A CCP shall promptly inform the "
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "39",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "posted",
+    "agentless": true,
+    "text": "gregation, any margin in excess of the client’s requirement shall also be posted to the CCP and distinguished from the margins of other clie"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "39",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "exposed",
+    "agentless": true,
+    "text": "d from the margins of other clients or clearing members and shall not be exposed to losses connected to positions recorded in another accoun"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "4",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": " that are intragroup transactions as described in Article 3 shall not be subject to the clearing obligation. The exemption set out in the fi"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "41",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "sufficient",
+    "agentless": true,
+    "text": "occur until the liquidation of the relevant positions. They shall also be sufficient to cover losses that result from at least 99 % of the expos"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "43",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": true,
+    "text": "ources of the CCP, shall be freely available to the CCP and shall not be used to meet the capital required under Article 16. 2. The defau"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "47",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "taken",
+    "agentless": true,
+    "text": " CCP which are not invested in accordance with paragraph 1, shall not be taken into account for the purposes of Article 16(2) or Article 4"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "5",
+    "modal": "shall",
+    "gap": "cease to",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "cognised to clear those contracts under this Regulation, it shall cease to be subject to the clearing obligation referred to in Article 4, and pa"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "60",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": true,
+    "text": " of or other person authorised by ESMA by Articles 61 to 63 shall not be used to require the disclosure of information or documents which"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "61",
+    "modal": "must",
+    "gap": "not",
+    "slot_token": "incorrect",
+    "agentless": true,
+    "text": "f a voluntary reply to the request the information provided must not be incorrect and misleading; and (f) indicate the fine provided for in A"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "64",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "involved",
+    "agentless": true,
+    "text": "ithin ESMA to investigate the matter. The appointed officer shall not be involved or have been directly or indirectly involved in the supervi"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "74",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "delegated",
+    "agentless": true,
+    "text": "sessments and follow-up decisions concerning infringements, shall not be delegated. CHAPTER 2 Relations with third countries"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "78",
+    "modal": "shall",
+    "gap": "only",
+    "slot_token": "permitted",
+    "agentless": false,
+    "text": " have provided their consent. Criteria that restrict access shall only be permitted to the extent that their objective is to control the risk t"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "85",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "submitted",
+    "agentless": true,
+    "text": " by 30 September 2014 for the purposes of paragraph 1. They shall also be submitted to the European Parliament and the Council. 4. The Commissi"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "87",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "affected",
+    "agentless": false,
+    "text": "f the providing system operator to that collateral security shall not be affected by insolvency proceedings against the receiving system oper"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "89",
+    "modal": "shall",
+    "gap": "continue to",
+    "slot_token": "supervised",
+    "agentless": false,
+    "text": "and recognition of CCPs shall continue to apply and the CCP shall continue to be supervised by the competent authority of its Member State of establish"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "89",
+    "modal": "shall",
+    "gap": "continue to",
+    "slot_token": "supervised",
+    "agentless": false,
+    "text": "positories shall continue to apply and the trade repository shall continue to be supervised by the competent authority of its Member State of establish"
+   },
+   {
+    "celex": "32012R0648",
+    "part": "articles",
+    "division": "9",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": false,
+    "text": "t reports such details on behalf of a counterparty or a CCP shall not be considered in breach of any restriction on disclosure of information i"
+   },
+   {
+    "celex": "32012R0900",
+    "part": "recitals",
+    "division": "7",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "translated",
+    "agentless": true,
+    "text": " component of the designation ‘Agneau de lait des Pyrénées’ should not be translated into other languages when marketing the product correspondi"
+   },
+   {
+    "celex": "32012R0900",
+    "part": "articles",
+    "division": "2",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "translated",
+    "agentless": true,
+    "text": "Article 2 References to the term ‘Pyrénées’ shall not be translated when marketing products conforming to the specification of "
+   },
+   {
+    "celex": "32013R0100",
+    "part": "recitals",
+    "division": "16",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "in",
+    "agentless": true,
+    "text": "arch framework should be avoided. In particular, the Agency should not be in charge of the management of research projects."
+   },
+   {
+    "celex": "32013R0100",
+    "part": "recitals",
+    "division": "22",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "used",
+    "agentless": false,
+    "text": "urrently used to provide evidence of oil spills from ships, should also be used by the Agency to detect and report oil spills from offshore"
+   },
+   {
+    "celex": "32013R0100",
+    "part": "recitals",
+    "division": "23",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "detrimental",
+    "agentless": true,
+    "text": "e should be subject to a detailed cost/benefit analysis and should not be detrimental to the Agency’s core tasks."
+   },
+   {
+    "celex": "32013R0100",
+    "part": "recitals",
+    "division": "40",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "covered",
+    "agentless": false,
+    "text": "ission inspections in the field of maritime security ( 19 ) should not be covered by Regulation (EC) No 1406/2002."
+   },
+   {
+    "celex": "32013R0100",
+    "part": "recitals",
+    "division": "47",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "amended",
+    "agentless": true,
+    "text": "Regulation (EC) No 1406/2002 should therefore be amended accordingly, HAVE ADOPTED THIS REGULATION:"
+   },
+   {
+    "celex": "32013R0100",
+    "part": "articles",
+    "division": "1",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "part",
+    "agentless": true,
+    "text": "ents for inland waterway vessels ( *10 ) . This information shall also be part of the reports referred to in Article 3(4) and (5) of this "
+   },
+   {
+    "celex": "32013R0500",
+    "part": "recitals",
+    "division": "13",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "amended",
+    "agentless": true,
+    "text": "Regulation (EC) No 396/2005 should therefore be amended accordingly."
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "100",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "taken",
+    "agentless": true,
+    "text": "sector and should be avoided. A broad set of quality assets should therefore be taken into consideration during an initial observation period whi"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "105",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "taken",
+    "agentless": true,
+    "text": "It should not be taken for granted that institutions will receive liquidity suppor"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "111",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "a",
+    "agentless": false,
+    "text": " general funding obligation. The general funding obligation should not be a ratio requirement. If, pending the introduction of the NSFR"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "123",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "permitted",
+    "agentless": true,
+    "text": "epositors and preserving financial stability, Member States should also be permitted to adopt structural measures that require credit institutio"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "123",
+    "modal": "should",
+    "gap": "only",
+    "slot_token": "approved",
+    "agentless": true,
+    "text": " a negative impact by fragmenting the internal market, they should only be approved subject to strict conditions pending the entry into force o"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "125",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "delegated",
+    "agentless": true,
+    "text": "The power to adopt acts in accordance with Article 290 TFEU should also be delegated to the Commission in respect of prescribing a temporary red"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "130",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "empowered",
+    "agentless": false,
+    "text": "The Commission should also be empowered to adopt implementing technical standards developed by EBA "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "21",
+    "modal": "should",
+    "gap": "furthermore",
+    "slot_token": "empowered",
+    "agentless": true,
+    "text": "The Commission should furthermore be empowered to adopt a delegated act temporarily increasing the level o"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "21",
+    "modal": "should",
+    "gap": "only",
+    "slot_token": "empowered",
+    "agentless": true,
+    "text": "the reasons for the use of such a procedure. The Commission should only be empowered to impose stricter prudential requirements for exposures wh"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "49",
+    "modal": "should",
+    "gap": "wherever possible",
+    "slot_token": "recognised",
+    "agentless": true,
+    "text": "nt customary banking collateral for mitigating credit risks should wherever possible be recognised in the Standardised Approach, but also in the other approac"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "5",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "read",
+    "agentless": true,
+    "text": "eferred to collectively as \"institutions\"). This Regulation should therefore be read together with that Directive"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "50",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "action or scheme used to finance or operate physical assets should not be considered an exposure to a securitisation, even if the transaction or"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "55",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "sk is not well-diversified. The effects of those techniques should therefore be subject to prudential safeguards. In this context, it is necessary "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "57",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "structured",
+    "agentless": true,
+    "text": "ns in question. More generally, securitisation transactions should not be structured in such a way as to avoid the application of the retention "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "58",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "n which is subject to the investment. Purchased receivables should not be subject to the retention requirement if they arise from corporate a"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "64",
+    "modal": "should",
+    "gap": "generally not",
+    "slot_token": "considered",
+    "agentless": false,
+    "text": "n the latter situation, a pool- specific liquidity facility should generally not be considered a re-securitisation exposure because it represents a tranch"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "64",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "lying pools or assets, then that commercial paper generally should not be considered a re-securitisation exposure."
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "67",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "able",
+    "agentless": false,
+    "text": "Originator or sponsor institutions should not be able to circumvent the prohibition of implicit support by using "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "68",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "required",
+    "agentless": true,
+    "text": "g the risk profile of individual institutions. Institutions should therefore be required to disclose additional information not explicitly listed in"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "69",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "able",
+    "agentless": true,
+    "text": "ovided by the investing institution itself, the institution should not be able to benefit from the lower risk weight resulting from that p"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "69",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "deducted",
+    "agentless": true,
+    "text": "resulting from that protection. The securitisation position should not be deducted from capital if there are other ways to determine a risk we"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "71",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "required",
+    "agentless": true,
+    "text": " in accordance with the standardised measurement method. It should not be required to subject those exposures to the incremental risk charge b"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "75",
+    "modal": "should",
+    "gap": "only",
+    "slot_token": "computed",
+    "agentless": true,
+    "text": "apital instruments. In those cases such capital instruments should only be computed towards the institution's Additional Tier 1 capital or Tier"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "78",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "laid",
+    "agentless": true,
+    "text": "ot. Appropriate transitional provisions for the latter case should therefore be laid down in this Regulation."
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "83",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "required",
+    "agentless": false,
+    "text": "ransactions to certain financial institutions. Institutions should also be required to considerably improve measurement and management of count"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "84",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "uence, they involve a very low counterparty credit risk and should therefore be subject to a very low own funds requirement. At the same time, this"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "86",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "understood",
+    "agentless": false,
+    "text": "xposures from its contributions to a CCP's default fund. It should not be understood as anything else. In particular, it should not be understoo"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "86",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "understood",
+    "agentless": false,
+    "text": "hould not be understood as anything else. In particular, it should not be understood as the amount of capital that a CCP is required to hold by "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "recitals",
+    "division": "88",
+    "modal": "should",
+    "gap": "continue to",
+    "slot_token": "applied",
+    "agentless": false,
+    "text": "sues, the Commission should review whether those exemptions should continue to be applied in a discretionary or in a more general way and on whether "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "101",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "reported",
+    "agentless": true,
+    "text": "h in another Member State, the data relating to that branch shall also be reported to the competent authorities of the host Member State. The "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "105",
+    "modal": "shall",
+    "gap": "ultimately",
+    "slot_token": "to",
+    "agentless": true,
+    "text": "ear and independent of the front office. The reporting line shall ultimately be to the management body. 3. Institutions shall revalue trading "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "106",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "primarily",
+    "agentless": true,
+    "text": "shall in particular meet the following requirements: (a) it shall not be primarily intended to avoid or reduce own funds requirements; (b) it "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "106",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "deemed",
+    "agentless": true,
+    "text": "the non-trading book exposure or counterparty risk exposure shall not be deemed to be hedged for the purposes of calculating risk weighted "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "115",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "applied",
+    "agentless": true,
+    "text": "rm exposures specified in Article 119(2) and Article 120(2) shall not be applied. 2. Exposures to regional governments or local authorities "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "115",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "excluded",
+    "agentless": true,
+    "text": "le 150(1)(a), permission to apply the Standardised Approach shall not be excluded. 4. When competent authorities of a third country jurisdict"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "116",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "applied",
+    "agentless": true,
+    "text": "ort-term exposures specified in Articles 119(2) and 120(2), shall not be applied to those entities. 3. For exposures to public sector entiti"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "117",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "applied",
+    "agentless": true,
+    "text": "xposures as specified in Articles 119(2), 120(2) and 121(3) shall not be applied. The Inter-American Investment Corporation, the Black Sea T"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "120",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": false,
+    "text": "the general preferential treatment for short-term exposures shall not be used and all unrated short-term claims shall be assigned the sam"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "123",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "eligible",
+    "agentless": true,
+    "text": "take reasonable steps to acquire this knowledge. Securities shall not be eligible for the retail exposure class. Exposures that do not comply"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "123",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "eligible",
+    "agentless": true,
+    "text": " referred to in points (a) to (c) of the first subparagraph shall not be eligible for the retail exposures class. The present value of retail"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "124",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "higher",
+    "agentless": true,
+    "text": " an exposure treated as fully secured by immovable property shall not be higher than the pledged amount of the market value or in those Mem"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "129",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "comprised",
+    "agentless": false,
+    "text": "tutions in the Union with a maturity not exceeding 100 days shall not be comprised by the step 1 requirement but those institutions shall as a"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "129",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "comprised",
+    "agentless": true,
+    "text": "y pledged properties of the senior units or debt securities shall not be comprised in calculating the limits referred to in those points. The "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "138",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": true,
+    "text": "educe the capital adequacy requirements. Credit assessments shall not be used selectively. An institution shall use solicited credit asse"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "140",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": true,
+    "text": "the item the short-term credit assessment refers to, and it shall not be used to derive risk weights for any other item, except in the fo"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "140",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "assigned",
+    "agentless": true,
+    "text": "d exposures on that obligor whether short-term or long-term shall also be assigned a 150 % risk weight; (b) if a short-term rated facility is "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "152",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "higher",
+    "agentless": false,
+    "text": " the risk weight shall be multiplied by a factor of two but shall not be higher than 1 250 %; (ii) for all other exposures, the risk weight"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "154",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "taken",
+    "agentless": true,
+    "text": "account. In this case amounts recovered from the collateral shall not be taken into account in the LGD estimate. Competent authorities sha"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "155",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "determined",
+    "agentless": false,
+    "text": "ternal risk management of the relevant equity exposure, and shall not be determined by regulatory arbitrage considerations. Institutions may tr"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "155",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "less",
+    "agentless": false,
+    "text": "isk weighted exposure amounts at the equity portfolio level shall not be less than the total of the sums of the following: (a) the risk w"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "159",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": true,
+    "text": "s. Specific credit risk adjustments on exposures in default shall not be used to cover expected loss amounts on other exposures. Expected"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "159",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "included",
+    "agentless": true,
+    "text": "specific credit risk adjustments related to these exposures shall not be included in this calculation. Section 4 PD, LGD and maturity Sub-Sec"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "161",
+    "modal": "shall",
+    "gap": "either",
+    "slot_token": "the",
+    "agentless": true,
+    "text": " of a comparable direct exposure to the protection provider shall either be the LGD associated with an unhedged facility to the guarantor o"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "162",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "used",
+    "agentless": true,
+    "text": "ty, where M shall be at least 90 days. This same value of M shall also be used for undrawn amounts under a committed purchase facility pro"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "164",
+    "modal": "shall",
+    "gap": "either",
+    "slot_token": "the",
+    "agentless": true,
+    "text": "re to the protection provider referred to in Article 153(3) shall either be the LGD associated with an unhedged facility to the guarantor o"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "164",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "lower",
+    "agentless": false,
+    "text": "and not benefiting from guarantees from central governments shall not be lower than 10 %. The exposure weighted average LGD for all retail"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "164",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "lower",
+    "agentless": true,
+    "text": "and not benefiting from guarantees from central governments shall not be lower than 15 %. 5. Based on the data collected under Article 101"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "171",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "consistent",
+    "agentless": true,
+    "text": "s of the assignments to a grade or a pool; (c) the criteria shall also be consistent with the institution's internal lending standards and its p"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "172",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "assigned",
+    "agentless": true,
+    "text": "d conversion factors pursuant to Article 143, each exposure shall also be assigned to a facility grade as part of the credit approval process;"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "174",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "distorted",
+    "agentless": true,
+    "text": "l shall have good predictive power and capital requirements shall not be distorted as a result of its use. The input variables shall form a re"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "175",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "documented",
+    "agentless": true,
+    "text": "ating assignment process and the internal control structure shall also be documented. 3. The institutions shall document the specific definition"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "181",
+    "modal": "shall",
+    "gap": "not solely",
+    "slot_token": "based",
+    "agentless": true,
+    "text": "e into account the existence of collateral, these estimates shall not solely be based on the collateral's estimated market value. LGD estimates s"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "181",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "taken",
+    "agentless": true,
+    "text": " 6, any amount expected to be recovered from the collateral shall not be taken into account in the LGD estimates; (h) for the specific cas"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "19",
+    "modal": "shall",
+    "gap": "nevertheless",
+    "slot_token": "included",
+    "agentless": true,
+    "text": "everal undertakings meet the criteria set out therein, they shall nevertheless be included in the consolidation where collectively they are of non-neg"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "194",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "too",
+    "agentless": true,
+    "text": "d upon for protection and the credit quality of the obligor shall not be too high. 5. In the case of unfunded credit protection, a prote"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "20",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "referred",
+    "agentless": true,
+    "text": "n. EBA shall take its decision within one month. The matter shall not be referred to EBA after the end of the six month period or after a joi"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "20",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "referred",
+    "agentless": true,
+    "text": "n. EBA shall take its decision within one month. The matter shall not be referred to EBA after the end of the six month period or after a joi"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "21",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "referred",
+    "agentless": true,
+    "text": "the level of the Member State of the subsidiary. The matter shall not be referred to EBA after the end of the six month period or after a joi"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "212",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "requested",
+    "agentless": false,
+    "text": "ce in a timely manner upon request; (i) the surrender value shall not be requested without the prior consent of the institution; (j) the compa"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "215",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "the protection is provided and the payment by the guarantor shall not be subject to the lending institution first having to pursue the oblig"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "216",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "unreasonably",
+    "agentless": true,
+    "text": "ligation provide that any required consent to such transfer shall not be unreasonably withheld; (d) the identity of the parties responsible for d"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "243",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "decide on a case-by-case basis that significant credit risk shall not be considered to have been transferred to third parties. 3. For the purpo"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "244",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "ecide on a case- by-case basis that significant credit risk shall not be considered to have been transferred to third parties. 3. For the purpo"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "248",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "itisation beyond its contractual obligations. A transaction shall not be considered to provide support if it is executed at arm's length condit"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "253",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "higher",
+    "agentless": true,
+    "text": "ld including that tranche itself. The resulting risk weight shall not be higher than 1 250 % or lower than any risk weight applicable to a "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "255",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "possible",
+    "agentless": false,
+    "text": "circumstances under which the facility may be drawn; (b) it shall not be possible for the facility to be drawn so as to provide credit suppor"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "255",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": true,
+    "text": "to acquire assets at more than fair value; (c) the facility shall not be used to provide permanent or regular funding for the securitisat"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "255",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "subordinated",
+    "agentless": true,
+    "text": " the securitisation; (d) repayment of draws on the facility shall not be subordinated to the claims of investors other than to claims arising in "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "255",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "possible",
+    "agentless": true,
+    "text": "such payments, nor be subject to waiver or deferral; (e) it shall not be possible for the facility to be drawn after all applicable credit en"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "256",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "subordinate",
+    "agentless": true,
+    "text": " positions in the securitisation. The originator's interest shall not be subordinate to the investors' interest. The exposure value of the inves"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "259",
+    "modal": "shall",
+    "gap": "only",
+    "slot_token": "granted",
+    "agentless": true,
+    "text": "to the prior permission of the competent authorities, which shall only be granted where the institution fulfils the condition provided in the"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "259",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "material",
+    "agentless": false,
+    "text": "t. The aggregated exposure values treated by this exception shall not be material and in any case less than 10 % of the aggregate exposure va"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "262",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "included",
+    "agentless": false,
+    "text": "sures that have been securitised. Capitalised future income shall not be included in the measured L. Amounts due by counterparties to derivat"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "265",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "subordinate",
+    "agentless": true,
+    "text": "nts sold into the securitisation. The originator's interest shall not be subordinate to the investors' interest. The exposure value of the Inves"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "266",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "taken",
+    "agentless": false,
+    "text": "edit adjustments are taken account of for this purpose they shall not be taken account of for the purposes of the calculation laid down in"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "268",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": false,
+    "text": "that is made available only to a limited number of entities shall not be considered to have been published. The credit assessments shall be inc"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "268",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "based",
+    "agentless": false,
+    "text": " in the ECAI's transition matrix; (c) the credit assessment shall not be based or partly based on unfunded support provided by the institu"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "269",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "recognised",
+    "agentless": true,
+    "text": "tion is not eligible under Chapter 4, the credit assessment shall not be recognised. Where the credit protection is not provided to the SSPE bu"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "269",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "recognised",
+    "agentless": true,
+    "text": "irectly to a securitisation position, the credit assessment shall not be recognised."
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "27",
+    "modal": "shall",
+    "gap": "continue to",
+    "slot_token": "classified",
+    "agentless": true,
+    "text": "uch under applicable national law prior to 31 December 2012 shall continue to be classified as such for the purposes of this Part, provided that they c"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "277",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "mapped",
+    "agentless": true,
+    "text": "foreign currency, that payment leg or underlying instrument shall also be mapped to a risk position in that currency. 2. For the purposes of"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "282",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "included",
+    "agentless": true,
+    "text": "sitions from different n-th to default credit default swaps shall not be included in the same hedging set; (c) the CCR multiplier applicable "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "282",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "one",
+    "agentless": true,
+    "text": ". When a payment leg emulates such a debt instrument, there shall also be one hedging set for each issuer of the reference debt instrumen"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "282",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "recognised",
+    "agentless": true,
+    "text": "institution to use the method set out in Section 3. Netting shall not be recognised (that is, the exposure value shall be determined as if ther"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "285",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "less",
+    "agentless": true,
+    "text": "pose of modelling the exposure value with margin agreements shall not be less than: (a) 5 business days for netting sets consisting only "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "285",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "less",
+    "agentless": true,
+    "text": "uarter, the margin period of risk for the following quarter shall not be less than 20 business days. This exception shall not apply to in"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "285",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "less",
+    "agentless": true,
+    "text": "e that cannot be easily replaced, the margin period of risk shall not be less than 20 business days. An institution shall determine wheth"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "291",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "included",
+    "agentless": true,
+    "text": "s: (a) the instruments where Specific Wrong-Way risk exists shall not be included in the same netting set as other transactions with the coun"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "291",
+    "modal": "shall",
+    "gap": "each",
+    "slot_token": "treated",
+    "agentless": true,
+    "text": "etting set as other transactions with the counterparty, and shall each be treated as a separate netting set; (b) within any such separate net"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "295",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "recognised",
+    "agentless": true,
+    "text": "actions entered into by different legal entities of a group shall not be recognised for the purposes of calculating the own funds requirements."
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "296",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "recognised",
+    "agentless": false,
+    "text": " referred to in point (b) the contractual netting agreement shall not be recognised as risk-reducing for either of the counterparties. Competen"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "304",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "less",
+    "agentless": false,
+    "text": "ethod. The margin period of risk applied by the institution shall not be less than five days. 4. An institution acting as a clearing memb"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "322",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "k databases and shall identify them separately. Such losses shall not be subject to the operational risk charge, provided that the instituti"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "338",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "part",
+    "agentless": false,
+    "text": "e custom. 2. Positions which reference any of the following shall not be part of the correlation trading portfolio: (a) an underlying tha"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "339",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "made",
+    "agentless": true,
+    "text": "thin the same maturity band. A reduction in the requirement shall also be made when the opposite weighted positions fall into different ma"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "339",
+    "modal": "shall",
+    "gap": "then",
+    "slot_token": "calculated",
+    "agentless": true,
+    "text": "d. The total of the matched weighted positions in all bands shall then be calculated. 4. The institution shall compute the totals of the unmatch"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "339",
+    "modal": "shall",
+    "gap": "then",
+    "slot_token": "the",
+    "agentless": true,
+    "text": "y the unmatched weighted short or long position in zone two shall then be the matched weighted position between zones one and two. The sa"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "339",
+    "modal": "shall",
+    "gap": "then",
+    "slot_token": "undertaken",
+    "agentless": true,
+    "text": "ed position between zones one and two. The same calculation shall then be undertaken with regard to that part of the unmatched weighted position"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "339",
+    "modal": "shall",
+    "gap": "then",
+    "slot_token": "matched",
+    "agentless": true,
+    "text": "he remainder of the unmatched weighted position in zone one shall then be matched with what remains of that for zone three after the latter's"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "340",
+    "modal": "shall",
+    "gap": "then",
+    "slot_token": "calculated",
+    "agentless": true,
+    "text": "e 339(5) to (8). 7. The institution's own funds requirement shall then be calculated as the sum of the following: (a) 2 % of the matched duratio"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "346",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "applied",
+    "agentless": true,
+    "text": " In these situations, a specific risk own funds requirement shall not be applied to either side of the position. 4. An 80 % offset will be a"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "352",
+    "modal": "shall",
+    "gap": "then",
+    "slot_token": "summed",
+    "agentless": true,
+    "text": "e converted at spot rates into the reporting currency. They shall then be summed separately to form the total of the net short positions and"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "369",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "conducted",
+    "agentless": true,
+    "text": "cant changes are made to the internal model. The validation shall also be conducted on a periodic basis but especially where there have been an"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "369",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "limited",
+    "agentless": true,
+    "text": "tions shall apply these advances. Internal model validation shall not be limited to back-testing, but shall, at a minimum, also include the "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "370",
+    "modal": "shall",
+    "gap": "in particular",
+    "slot_token": "sensitive",
+    "agentless": true,
+    "text": "sistent manner; (e) it captures name-related basis risk and shall in particular be sensitive to material idiosyncratic differences between similar but n"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "374",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "reflected",
+    "agentless": true,
+    "text": "within and across product classes under stressed conditions shall also be reflected. 3. The internal IRC model shall reflect the impact of corr"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "374",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "reflected",
+    "agentless": true,
+    "text": "migration events and, on the other hand, other risk factors shall not be reflected. 4. The internal model shall be based on the assumption of "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "376",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "limited",
+    "agentless": true,
+    "text": " with regard to the treatment of concentrations. Such tests shall not be limited to the range of events experienced historically; (c) apply "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "380",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "deemed",
+    "agentless": true,
+    "text": " this case, the failure of a counterparty to settle a trade shall not be deemed a default for purposes of credit risk. TITLE VI OWN FUNDS R"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "384",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "capped",
+    "agentless": true,
+    "text": "ance with Article 162(2)(g). However, for that purpose, M i shall not be capped at five years but at the longest contractual remaining matu"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "384",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "capped",
+    "agentless": true,
+    "text": "point (b) of Article 162(2). However, for that purpose, M i shall not be capped at five years but at the longest contractual remaining matu"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "386",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "included",
+    "agentless": true,
+    "text": " the calculation of the own funds requirements for CVA risk shall not be included in the calculation of the own funds requirements for specif"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "39",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "deducted",
+    "agentless": false,
+    "text": " do not rely on future profitability 1. The following items shall not be deducted from own funds and shall be subject to a risk weight in acc"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "4",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "xercises a dominant influence. Subsidiaries of subsidiaries shall also be considered to be subsidiaries of the undertaking that is their origina"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "40",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "reduced",
+    "agentless": false,
+    "text": "o be deducted in accordance with point (d) of Article 36(1) shall not be reduced by a rise in the level of deferred tax assets that rely on "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "402",
+    "modal": "shall",
+    "gap": "continue to",
+    "slot_token": "treated",
+    "agentless": true,
+    "text": "The remainder of the exposure to the counter party, if any, shall continue to be treated as an exposure to the counter party."
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "403",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": false,
+    "text": "approach referred to in point (b) of the first subparagraph shall not be used by an institution where there is a mismatch between the mat"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "405",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "less",
+    "agentless": true,
+    "text": "asis, a material net economic interest which, in any event, shall not be less than 5 %. Only any of the following qualifies as retention "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "405",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "subject",
+    "agentless": false,
+    "text": "erest, including retained positions, interest or exposures, shall not be subject to any credit risk mitigation or any short positions or any"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "405",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "sold",
+    "agentless": false,
+    "text": "sk mitigation or any short positions or any other hedge and shall not be sold. The net economic interest shall be determined by the notio"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "408",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "applied",
+    "agentless": false,
+    "text": "st subparagraph of this Article are not met, Article 245(1) shall not be applied by an originator institution and that originator institutio"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "408",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "allowed",
+    "agentless": true,
+    "text": "y an originator institution and that originator institution shall not be allowed to exclude the securitised exposures from the calculation o"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "415",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "less",
+    "agentless": true,
+    "text": "hall report the items in Title III. The reporting frequency shall not be less than monthly for items referred to in Title II and Annex II"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "416",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": false,
+    "text": "ria listed in Article 509(3), (4) and (5). 2. The following shall not be considered liquid assets: (a) assets that are issued by a credit insti"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "416",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "treated",
+    "agentless": true,
+    "text": "rst sentence of Article 418(4), shares or units in that CIU shall not be treated as liquid assets. 7. Where a liquid asset ceases to be elig"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "418",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "less",
+    "agentless": true,
+    "text": " haircuts in periods of general market stress. The haircuts shall not be less than 15 % for the assets referred to in point (d) of Articl"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "423",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "considered",
+    "agentless": true,
+    "text": "sent of the institution. 6. Deposits received as collateral shall not be considered liabilities for the purposes of Article 422 but will be sub"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "424",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "assets",
+    "agentless": false,
+    "text": " accordance with Article 416. The collateral to be provided shall not be assets issued by the counterparty of the facility or one of its af"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "424",
+    "modal": "shall",
+    "gap": "only",
+    "slot_token": "possible",
+    "agentless": true,
+    "text": "d/or that Member State's central or regional government. It shall only be possible to draw on such facilities following the reasonably expecte"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "425",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "taken",
+    "agentless": true,
+    "text": "eralised by liquid assets as referred to in Article 416(1), shall not be taken into account up to the value net of haircuts of the liquid "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "425",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "taken",
+    "agentless": false,
+    "text": " or liquidity facilities and any other commitments received shall not be taken into account. 3. Outflows and inflows expected over the 30 "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "429",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": true,
+    "text": " collateral, guarantees or credit risk mitigation purchased shall not be used to reduce exposure values of assets; (c) loans shall not be"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "429",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "netted",
+    "agentless": true,
+    "text": " not be used to reduce exposure values of assets; (c) loans shall not be netted with deposits. 6. Institutions shall determine the exposure"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "431",
+    "modal": "shall",
+    "gap": "only",
+    "slot_token": "required",
+    "agentless": true,
+    "text": "that required in accordance with paragraph 1. However, they shall only be required to disclose information which is material and not proprieta"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "450",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "made",
+    "agentless": true,
+    "text": "s, the quantitative information referred to in this Article shall also be made available to the public at the level of members of the mana"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "456",
+    "modal": "shall",
+    "gap": "also",
+    "slot_token": "empowered",
+    "agentless": true,
+    "text": "e findings are that such action is necessary the Commission shall also be empowered to adopt a delegated act in accordance with Article 462 to "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "46",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "deducted",
+    "agentless": true,
+    "text": "ovisions laid down in points (a)(i) to (iii) of paragraph 1 shall not be deducted and shall be subject to the applicable risk weights in acco"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "468",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "removed",
+    "agentless": true,
+    "text": " the profit and loss account. The resulting residual amount shall not be removed from Common Equity Tier 1 items. 2. For the purposes of par"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "472",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "deducted",
+    "agentless": true,
+    "text": "e liabilities arising from an institution's own credit risk shall not be deducted. 3. Institutions shall apply the following to the residual "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "472",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "deducted",
+    "agentless": true,
+    "text": "ferred tax assets referred to in point (c) of Article 36(1) shall not be deducted and shall be subject to a risk weight of 0 %. 6. The residu"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "472",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "deducted",
+    "agentless": true,
+    "text": "efit pension fund referred to in point (e) of Article 36(1) shall not be deducted from any element of own funds and shall be included in Comm"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "475",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "deducted",
+    "agentless": true,
+    "text": "educted in accordance with points (c) and (d) of Article 56 shall not be deducted and shall be subject to a risk weight in accordance with Ch"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "489",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "nts shall not qualify as Additional Tier 1 instruments, and shall not be subject to Article 484(4), from 1 January 2014 where the following "
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "495",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "olding the part of the holding which constitutes the excess shall not be subject to the exemption. Nor shall the exemption apply to holdings"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "53",
+    "modal": "shall",
+    "gap": "not otherwise",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "or dividend by a payment in any other form. The institution shall not otherwise be subject to such an obligation."
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "6",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "required",
+    "agentless": true,
+    "text": "ution included in the consolidation pursuant to Article 19, shall not be required to comply with the obligations laid down in Articles 89, 90"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "6",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "required",
+    "agentless": true,
+    "text": "ution included in the consolidation pursuant to Article 19, shall not be required to comply with the obligations laid down in Part Eight on a"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "60",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "deducted",
+    "agentless": true,
+    "text": "s laid down in points (a)(i), (ii) and (iii) of paragraph 1 shall not be deducted and shall be subject to the applicable risk weights in acco"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "70",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "deducted",
+    "agentless": true,
+    "text": "ovisions laid down in points (a)(i) to (iii) of paragraph 1 shall not be deducted and shall be subject to the applicable risk weights in acco"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "73",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "capable",
+    "agentless": true,
+    "text": "utions in a form other than cash or an own funds instrument shall not be capable of qualifying as Common Equity Tier 1, Additional Tier 1 or"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "73",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "capable",
+    "agentless": true,
+    "text": "e made in a form other than cash or an own funds instrument shall not be capable of qualifying as Common Equity Tier 1, Additional Tier 1 or"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "8",
+    "modal": "shall",
+    "gap": "only",
+    "slot_token": "applied",
+    "agentless": true,
+    "text": "-group are authorised in several Member States, paragraph 1 shall only be applied after following the procedure laid down in Article 21 and o"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "84",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "recognised",
+    "agentless": true,
+    "text": "rest within the subsidiaries to which the waiver is applied shall not be recognised in own funds at the sub-consolidated or at the consolidated"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "85",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "recognised",
+    "agentless": true,
+    "text": "ents within the subsidiaries to which the waiver is applied shall not be recognised in own funds at the sub-consolidated or at the consolidated"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "87",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "recognised",
+    "agentless": true,
+    "text": "ents within the subsidiaries to which the waiver is applied shall not be recognised in own funds at the sub-consolidated or at the consolidated"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "91",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "included",
+    "agentless": true,
+    "text": "ings not referred to in points (a) and (b) of Article 89(1) shall not be included in calculating the eligible capital limits specified in tha"
+   },
+   {
+    "celex": "32013R0575",
+    "part": "articles",
+    "division": "91",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "included",
+    "agentless": true,
+    "text": "ets as referred to in Article 35(2) of Directive 86/635/EEC shall not be included in the calculation specified in Article 89. PART THREE CAPI"
+   },
+   {
+    "celex": "32013R1300",
+    "part": "recitals",
+    "division": "7",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "eligible",
+    "agentless": true,
+    "text": "3/87/EC of the European Parliament and of the Council ( 5 ) should not be eligible for support from the Cohesion Fund as it already benefits f"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "108",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "laid",
+    "agentless": true,
+    "text": "impede the smooth functioning of the internal market. Rules should therefore be laid down which take into account the legitimate interests of co"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "128",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "the",
+    "agentless": true,
+    "text": " in the rules and decisions based thereon, those conditions should not be the subject of negotiations through a producer organisation."
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "133",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "harmonised",
+    "agentless": true,
+    "text": "isations, their associations, and interbranch organisations should therefore be harmonised, streamlined and extended to provide for possible recogniti"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "142",
+    "modal": "must",
+    "gap": "not",
+    "slot_token": "pursued",
+    "agentless": false,
+    "text": "n respect of: rules on the specific aims which may, must or must not be pursued by such organisations and associations and, where applicabl"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "154",
+    "modal": "should",
+    "gap": "continue to",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": "n, imports of hemp seed intended for uses other than sowing should continue to be subject to a control system which provides for the importers concer"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "16",
+    "modal": "should",
+    "gap": "nevertheless",
+    "slot_token": "made",
+    "agentless": false,
+    "text": "ct the social cohesion objectives of that scheme. Provision should nevertheless be made in this Regulation to allow for the disposal of products he"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "179",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "authorised",
+    "agentless": true,
+    "text": " the general effects of the sugar reform. That Member State should therefore be authorised, on a permanent basis, to make national payments to its sug"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "203",
+    "modal": "should",
+    "gap": "further",
+    "slot_token": "empowered",
+    "agentless": true,
+    "text": "The Commission should further be empowered to carry out certain administrative or management tasks whi"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "207",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "applied",
+    "agentless": true,
+    "text": "he dairy market and the structure of the supply chain. They should therefore be applied in that sector for a sufficiently long period (both before "
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "24",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "promoted",
+    "agentless": true,
+    "text": " to children in educational establishments of such products should therefore be promoted."
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "25",
+    "modal": "should",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": true,
+    "text": "te provisions for each one should be established. Union aid should not be used to replace funding for any existing national school fruit a"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "25",
+    "modal": "should",
+    "gap": "nonetheless",
+    "slot_token": "able",
+    "agentless": true,
+    "text": "hemes. In the light of budgetary constraints, Member States should nonetheless be able to replace their financial contribution to those schemes wi"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "37",
+    "modal": "should",
+    "gap": "continue to",
+    "slot_token": "integrated",
+    "agentless": true,
+    "text": " crisis management should be established and those measures should continue to be integrated into operational programmes."
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "39",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "discontinued",
+    "agentless": true,
+    "text": "cy. The specific support in the fruit and vegetables sector should therefore be discontinued."
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "40",
+    "modal": "should",
+    "gap": "only",
+    "slot_token": "used",
+    "agentless": true,
+    "text": " should be permitted in particular cases. Operational funds should only be used to finance operational programmes in the fruit and vegetabl"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "44",
+    "modal": "should",
+    "gap": "continue to",
+    "slot_token": "covered",
+    "agentless": true,
+    "text": "grapevine products. Restructuring and conversion activities should continue to be covered on account of their positive structural effects on the wine"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "44",
+    "modal": "should",
+    "gap": "also",
+    "slot_token": "available",
+    "agentless": false,
+    "text": "eir positive structural effects on the wine sector. Support should also be available for investments in the wine sector which are geared towards"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "53",
+    "modal": "should",
+    "gap": "therefore",
+    "slot_token": "discontinued",
+    "agentless": true,
+    "text": "nates has not proved effective in supporting the market and should therefore be discontinued, along with the rules concerning the use of casein and case"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "76",
+    "modal": "should",
+    "gap": "only",
+    "slot_token": "used",
+    "agentless": true,
+    "text": "sales descriptions for those sectors and/or products, which should only be used in the Union for the marketing of products which comply wit"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "recitals",
+    "division": "81",
+    "modal": "should",
+    "gap": "continue to",
+    "slot_token": "responsible",
+    "agentless": true,
+    "text": "mber States producing more than 50 000 hectolitres per year should continue to be responsible for classifying the wine grape varieties from which wine ma"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "articles",
+    "division": "100",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "registered",
+    "agentless": true,
+    "text": "er into believing that products come from another territory shall not be registered even if the name is accurate as far as the actual territory"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "articles",
+    "division": "100",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "used",
+    "agentless": true,
+    "text": "of origin or a protected geographical indication, that name shall not be used for the purposes of labelling agricultural products. In ord"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "articles",
+    "division": "101",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "protected",
+    "agentless": true,
+    "text": "for refusal of protection 1. A name that has become generic shall not be protected as a designation of origin or a geographical indication. Fo"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "articles",
+    "division": "101",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "protected",
+    "agentless": true,
+    "text": "sumption; (b) the relevant Union or national law. 2. A name shall not be protected as a designation of origin or geographical indication where"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "articles",
+    "division": "145",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "subject",
+    "agentless": true,
+    "text": " in accordance with Article 81(2) is less than 500 hectares shall not be subject to the obligation laid down in paragraph 1 of this Article."
+   },
+   {
+    "celex": "32013R1308",
+    "part": "articles",
+    "division": "148",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "required",
+    "agentless": false,
+    "text": "from paragraph 1, a contract and/or an offer for a contract shall not be required where raw milk is delivered by a farmer to a co-operative o"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "articles",
+    "division": "149",
+    "modal": "should",
+    "gap": "either",
+    "slot_token": "reopened",
+    "agentless": true,
+    "text": " that a particular negotiation by the producer organisation should either be reopened or should not take place at all if it considers that this i"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "articles",
+    "division": "168",
+    "modal": "shall",
+    "gap": "not",
+    "slot_token": "required",
+    "agentless": false,
+    "text": "ion from paragraph 1, a contract or an offer for a contract shall not be required where the products concerned are delivered by a producer to"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "articles",
+    "division": "169",
+    "modal": "should",
+    "gap": "either",
+    "slot_token": "reopened",
+    "agentless": true,
+    "text": " that a particular negotiation by the producer organisation should either be reopened or should not take place at all if it considers that this i"
+   },
+   {
+    "celex": "32013R1308",
+    "part": "articles",
+    "division": "170",
+    "modal": "should",
+    "gap": "either",
+    "slot_token": "reopened",
+    "agentless": false,
+    "text": " that a particular negotiation by the producer organisation should either be reopened or should not take place at all if it considers that this i"
+   }
+  ]
+ },
+ "3_audited_headline": {
+  "note": "the per-part precisions rest on 13 and 27 rows.  They are reported because the over-count is plainly not evenly distributed -- `able`, the single most frequent recital slot token at 267, is a copula -- and they are not to be read as estimates with any width worth the name.",
+  "by_part": {
+   "recitals": {
+    "raw_agentless": 2608,
+    "raw_rate": 0.3757,
+    "audit_n": 13,
+    "audit_precision": 0.9231,
+    "audited_agentless_estimate": 2407,
+    "audited_rate": 0.3468
+   },
+   "articles": {
+    "raw_agentless": 3864,
+    "raw_rate": 0.2475,
+    "audit_n": 27,
+    "audit_precision": 0.6296,
+    "audited_agentless_estimate": 2433,
+    "audited_rate": 0.1558
+   }
+  },
+  "opposite_signs": "the copular over-count (3) shrinks the class; the gapped miss (2) grows it.  They are not the same size and they do not cancel; both are reported."
+ },
+ "4_the_sentence_that_crossed": {
+  "celex": "32021R0241",
+  "needle": "be encouraged to foster synergies",
+  "occurrences": [
+   {
+    "part": "recitals",
+    "division": "43",
+    "text": "echnical support. Member States might also request support under the Technical Support Instrument. Member States should be encouraged to foster synergies with recovery and resilience plans of other Member States."
+   },
+   {
+    "part": "articles",
+    "division": "18",
+    "text": "er States. Member States may also request technical support under the Technical Support Instrument. Member States shall be encouraged to foster synergies with recovery and resilience plans of other Member States."
+   }
+  ],
+  "checked": "found in both halves of the same act"
+ }
+}

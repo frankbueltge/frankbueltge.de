@@ -1,0 +1,18 @@
+{
+ "preregistration": "PREREGISTRATION.md, committed alone before any full text was fetched",
+ "kill_conditions": [
+  {"id": "K1", "condition": "fewer than 10 papers with a full text", "fired": true, "observed": "6 full texts (7 arXiv matches, one without HTML)", "consequence": "no rate is reported; tokens are described; the finding becomes the door"},
+  {"id": "K2", "condition": "a title match whose arXiv paper is not the listed paper", "fired": false, "observed": "3 of 7 matches have a conference blurb; each first sentence was read against the arXiv abstract's first sentence and judged the same paper (2509.06996 reworded, same subject). The 4 without a blurb rest on the title match alone."}
+ ],
+ "predictions": [
+  {"id": "P1", "band": "15 to 35 of 48 with an arXiv HTML full text", "observed": "6", "verdict": "refuted"},
+  {"id": "P2", "band": "pooled rule hand-over 2 % to 15 %", "observed": "2 of 304 tokens (0.66 %), described only", "verdict": "not assessed (K1); the description falls below the band"},
+  {"id": "P3", "band": "at least half of 60 sampled unrecomputable tokens are not count proportions", "observed": "15 of 60 (other 11, difference 4, threshold 0); 45 are shares of counted things whose counts are not in the sentence", "verdict": "refuted, as description (K1)"},
+  {"id": "P4", "band": "more than half of flags are rule errors", "observed": "1 flag, 1 rule error", "verdict": "held, on one flag"},
+  {"id": "P5", "band": "0 to 3 papers with a real arithmetic inconsistency", "observed": "0", "verdict": "held"}
+ ],
+ "amendments": [
+  {"id": "A-1", "written": "2026-09-26, after pass 1 was seen", "text": "A second search pass with a different query shape for every pass-1 miss, and a web-search check on 6 random misses. The admission rule is unchanged."},
+  {"id": "A-2", "written": "2026-09-26, after K1 fired", "text": "A byline comparison (conference list, arXiv author list, arXiv comments, the AI involvement checklist in the arXiv text), added as description; not pre-registered."}
+ ]
+}

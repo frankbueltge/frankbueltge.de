@@ -1,6 +1,6 @@
 // src/lib/atelier/integrate.test.ts
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from 'node:fs'
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync, readFileSync, symlinkSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { integrate } from './integrate'
@@ -178,6 +178,16 @@ describe('assets a work needs to be a work (2026-08-16)', () => {
     expect(existsSync(join(site, 'public/atelier/werke-html/loud/score.mp3'))).toBe(true)
   })
 
+  it('rejects an asset over the deploy limit at any depth of a standalone work', () => {
+    mkdirSync(join(src, 'works/deep-heavy/video'), { recursive: true })
+    writeFileSync(join(src, 'works/deep-heavy/index.html'), '<video src="video/film.mp4"></video>')
+    writeFileSync(join(src, 'works/deep-heavy/meta.json'), JSON.stringify({ title: 'Deep heavy' }))
+    writeFileSync(join(src, 'works/deep-heavy/video/film.mp4'), Buffer.alloc(26 * 1024 * 1024))
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.rejected.find((x) => x.slug === 'deep-heavy')?.reason).toContain('video/film.mp4')
+    expect(existsSync(join(site, 'public/atelier/werke-html/deep-heavy'))).toBe(false)
+  })
+
   it('rejects an asset over the deploy limit, with a reason, instead of failing at deploy', () => {
     // Cloudflare Pages refuses a single asset over 25 MiB — after the mirror is committed.
     mkdirSync(join(src, 'works/heavy'), { recursive: true })
@@ -189,5 +199,74 @@ describe('assets a work needs to be a work (2026-08-16)', () => {
     expect(rejected?.reason).toContain('film.mp4')
     expect(rejected?.reason).toContain('25 MiB')
     expect(existsSync(join(site, 'public/atelier/werke-html/heavy/film.mp4'))).toBe(false)
+  })
+})
+
+// 2026-10-05 (Frank's decision, wording private): the practices may publish rich works — 3D
+// scenes, built apps, WebAssembly, whole multi-page sites. A standalone work arrives whole.
+describe('a standalone work travels whole (2026-10-05)', () => {
+  const mk = (p: string, c: string | Buffer) => {
+    mkdirSync(join(src, p, '..'), { recursive: true })
+    writeFileSync(join(src, p), c)
+  }
+  const out = (p: string) => join(site, 'public/studio/werke-html/scene', p)
+  const VENDORED = '/*! three.js r170 — vendored, MIT */\nexport const REVISION = "170"\n'
+  const PNG = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0xff])
+
+  beforeEach(() => {
+    mk('works/scene/index.html', '<!doctype html><script type="module" src="assets/app.js"></script>')
+    mk('works/scene/meta.json', JSON.stringify({ title: 'Scene' }))
+    mk('works/scene/assets/app.js', 'import { REVISION } from "../vendor/three.module.js"\nconsole.log(REVISION)\n')
+    mk('works/scene/vendor/three.module.js', VENDORED)
+    mk('works/scene/vendor/LICENSE', 'MIT License')
+    mk('works/scene/models/scene.glb', Buffer.from('glTF\x02\x00\x00\x00'))
+    mk('works/scene/runtime/engine.wasm', Buffer.from([0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00]))
+    mk('works/scene/thumbs/V01.png', PNG)
+    mk('works/scene/thumbs/V02.png', PNG)
+    mk('works/scene/pages/about/index.html', '<!doctype html><p>about</p>')
+    mk('works/scene/types/scene.ts', 'const n: number = "not a number"\nexport default n\n')
+    mk('works/scene/.gitignore', 'node_modules/\n')
+    mk('works/scene/assets/.DS_Store', 'x')
+  })
+
+  it('brings every subdirectory and every file type a rich work needs', () => {
+    const r = integrate({ sourceDir: src, siteDir: site, ns: 'studio' })
+    expect(r.rejected.map((x) => x.slug)).not.toContain('scene')
+    for (const p of [
+      'index.html', 'assets/app.js', 'vendor/three.module.js', 'vendor/LICENSE', 'models/scene.glb',
+      'runtime/engine.wasm', 'thumbs/V01.png', 'thumbs/V02.png', 'pages/about/index.html', 'types/scene.ts',
+    ]) expect(existsSync(out(p)), p).toBe(true)
+    expect(existsSync(join(site, 'src/content/studio/works/scene/meta.json'))).toBe(true)
+    expect(existsSync(out('meta.json'))).toBe(false)
+  })
+
+  it('copies binary files and vendored scripts byte for byte, unshielded', () => {
+    integrate({ sourceDir: src, siteDir: site, ns: 'studio' })
+    expect(readFileSync(out('thumbs/V01.png')).equals(PNG)).toBe(true)
+    // A rewritten library would fail its integrity hash; public/ is outside the type check.
+    expect(readFileSync(out('vendor/three.module.js'), 'utf8')).toBe(VENDORED)
+    expect(readFileSync(out('types/scene.ts'), 'utf8')).not.toContain('@ts-nocheck')
+  })
+
+  it('frames only the entry page, never a page further in', () => {
+    integrate({ sourceDir: src, siteDir: site, ns: 'studio' })
+    expect(readFileSync(out('pages/about/index.html'), 'utf8')).toBe('<!doctype html><p>about</p>')
+  })
+
+  it('leaves dotfiles behind and reports them', () => {
+    const r = integrate({ sourceDir: src, siteDir: site, ns: 'studio' })
+    expect(existsSync(out('.gitignore'))).toBe(false)
+    expect(existsSync(out('assets/.DS_Store'))).toBe(false)
+    expect(r.accepted.find((x) => x.slug === 'scene')?.ignored?.sort()).toEqual(['.gitignore', 'assets/.DS_Store'])
+  })
+
+  it('never follows a symbolic link out of the work', () => {
+    writeFileSync(join(src, 'secret.txt'), 'not part of any work')
+    symlinkSync(join(src, 'secret.txt'), join(src, 'works/scene/leak.txt'))
+    symlinkSync(join(src, 'works'), join(src, 'works/scene/up'))
+    const r = integrate({ sourceDir: src, siteDir: site, ns: 'studio' })
+    expect(r.accepted.find((x) => x.slug === 'scene')).toBeDefined()
+    expect(existsSync(out('leak.txt'))).toBe(false)
+    expect(existsSync(out('up'))).toBe(false)
   })
 })

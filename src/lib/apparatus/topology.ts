@@ -208,6 +208,24 @@ export const NODES: readonly ApparatusNode[] = [
     ],
   },
 
+  {
+    id: 'src-web',
+    label: 'Platform trend feeds',
+    layer: 'world',
+    kind: 'source',
+    owner: 'shared',
+    what: 'What the platforms themselves publish about what is being searched, read and posted, plus the search APIs the term tracker asks how often a watched word was mentioned and the discovery pass reads its corpus of titles from — and the edge’s own count of who fetched the page that reads them all.',
+    members: [
+      { label: 'Google Trends RSS', what: 'the daily search trends of six countries, ten items each', ref: 'https://trends.google.com/trending/rss?geo=US' },
+      { label: 'Wikimedia REST', what: 'the most-read articles of the day before, English and German', ref: 'https://wikimedia.org/api/rest_v1/' },
+      { label: 'Hacker News API', what: 'the front page', ref: 'https://github.com/HackerNews/API' },
+      { label: 'Bluesky public API', what: 'the network’s own trending topics with category and post count', ref: 'https://public.api.bsky.app/xrpc/app.bsky.unspecced.getTrends' },
+      { label: 'Mastodon API', what: 'trending tags and links on mastodon.social', ref: 'https://docs.joinmastodon.org/methods/trends/' },
+      { label: 'Google News RSS · Reddit RSS · GitHub search', what: 'the day’s headlines, the popular feed, the week’s most-starred new repositories', ref: 'https://news.google.com/rss' },
+      { label: 'Cloudflare GraphQL Analytics', what: 'the edge’s count of who fetched /trending the day before — classes and bot names, never a browser’s identity', ref: 'https://developers.cloudflare.com/analytics/graphql-api/', secrets: ['CF_ANALYTICS_TOKEN'] },
+    ],
+  },
+
   // ── the instruments ────────────────────────────────────────────────────
   {
     id: 'in-protokoll',
@@ -239,6 +257,18 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'Ghost Fleet nightly', what: 'vessels that go dark', ref: '.github/workflows/ghost-fleet.yml', workflowName: 'Ghost Fleet nightly', cron: ['0 4 * * *'], secrets: ['GFW_TOKEN'] },
       { label: 'Beifang weekly', what: 'what a consent wall takes before you consent', ref: '.github/workflows/beifang.yml', workflowName: 'Beifang weekly', cron: ['17 2 * * 1'] },
       { label: 'Spielraum watch', what: 'monthly watch on hyperscaler efficiency claims; writes a watch file, never the register', ref: '.github/workflows/spielraum-watch.yml', workflowName: 'Spielraum watch', cron: ['17 6 3 * *'] },
+    ],
+  },
+  {
+    id: 'in-trending',
+    label: 'Morgenlese',
+    layer: 'instruments',
+    kind: 'pipeline',
+    owner: 'shared',
+    what: 'The morning reader of what the web is searching, reading and posting about: one dated ledger per day, a term tracker that counts how a watched word is building across platforms, the n-grams a discovery pass noticed on its own, and a day later the count of who read it.',
+    commitsAs: 'Morgenlese <morgenlese@frankbueltge.de>',
+    members: [
+      { label: 'Trending nightly', what: 'the day’s keyless sources and one disclosed convergence rule, then the term tracker with its discovery pass, then the edge audience of the day before', ref: '.github/workflows/trending.yml', workflowName: 'Trending nightly', cron: ['40 6 * * *'], secrets: ['CF_ANALYTICS_TOKEN'] },
     ],
   },
   {
@@ -294,11 +324,11 @@ export const NODES: readonly ApparatusNode[] = [
   // ── the practices ──────────────────────────────────────────────────────
   {
     id: 'repo-ulysses',
-    label: 'Ulysses',
+    label: 'Assay',
     layer: 'practices',
     kind: 'repo',
     owner: 'atelier',
-    what: 'A situated artistic research practice, machine-participatory, working in a work-line and its studies. Private since 2026-07-23.',
+    what: 'A situated artistic research practice, machine-participatory, working the ecology’s shared question from its own corner. Private since 2026-07-23. It named itself Assay on 2026-09-03 (until then, provisionally: Ulysses) and keeps the old signature on its commits until the practice changes it — the repository address stays as it is.',
     ref: 'https://github.com/frankbueltge/ulysses',
     commitsAs: 'Ulysses <ulysses@ulysses.invalid>',
   },
@@ -360,7 +390,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'gates',
     kind: 'gate',
     owner: 'atelier',
-    what: 'Four times a day, because landing and rebuild were decoupled with Protocol v4 — the practice lands on its own main and this gate comes to fetch.',
+    what: 'Started by the practice watch within minutes of a landing, with four daily crons as the net: landing and rebuild were decoupled with Protocol v4, so the practice lands on its own main and this gate comes to fetch.',
     ref: '.github/workflows/atelier-integrate.yml',
     commitsAs: 'Atelier-Integrate <atelier-integrate@frankbueltge.de>',
     members: [
@@ -416,7 +446,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'gates',
     kind: 'gate',
     owner: 'shared',
-    what: 'Imports all three practices, runs the export contract, and then decides: a regenerated projection commits itself; new meaning waits for Frank in a pull request.',
+    what: 'Mirrors the Middle’s relay as research-ecology publishes it, on its own commit; then imports all three practices, runs the export contract, and decides: a regenerated projection commits itself; new meaning waits for Frank in a pull request.',
     ref: '.github/workflows/ecology-integrate.yml',
     commitsAs: 'Ecology-Integrate <ecology-integrate@frankbueltge.de>',
   },
@@ -461,6 +491,7 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'src/data/spielraum', what: 'headroom — watch file only; the register is ingested by hand' },
       { label: 'src/data/pulse', what: 'the ecology’s own commit pulse' },
       { label: 'src/content/beifang', what: 'bycatch' },
+      { label: 'src/data/trending', what: 'the trending ledger, and its audience the day after' },
     ],
   },
   {
@@ -496,7 +527,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'archive',
     kind: 'store',
     owner: 'shared',
-    what: 'The Middle’s record: what happened when the practices met — crossings, and the joint inquiries that ran until 2026-08-08.',
+    what: 'The Middle’s record: what happened when the practices met — crossings, and the joint inquiries that ran until 2026-08-08; an archive since 2026-10-05, when the relay (src/data/middle) took its place on /encounters.',
     ref: 'src/data/begegnungen',
   },
   {
@@ -550,7 +581,12 @@ export const NODES: readonly ApparatusNode[] = [
     owner: 'shared',
     what: 'They repair nothing. They make silence visible — a stranded session, a stale mirror, a drifting figure — and then they close their own alarm when it clears.',
     members: [
-      { label: 'Mirror watch', what: 'hourly: has an engine moved since its mirror last did?', ref: '.github/workflows/mirror-watch.yml', workflowName: 'Mirror watch', cron: ['40 * * * *'] },
+      // Since 2026-10-07 (five sessions per practice landed in one day, and the hourly mirror watch
+      // ran three or four times a day): the practices are watched once a minute against the head
+      // each mirror records, while the house is active; the mirror watch keeps the two houses the
+      // practice watch does not cover.
+      { label: 'Practice watch', what: 'once a minute while the house is active: has a practice moved past the head its mirror carries? Then start its gate', ref: '.github/workflows/practice-watch.yml', workflowName: 'Practice watch', cron: ['50 22 * * *', '7 */2 * * *'] },
+      { label: 'Mirror watch', what: 'hourly, as GitHub grants it: has the plenum or the ecology moved since its mirror last did?', ref: '.github/workflows/mirror-watch.yml', workflowName: 'Mirror watch', cron: ['40 * * * *'] },
       { label: 'Drift watch', what: 'nightly: mirror and figure freshness, with network checks on', ref: '.github/workflows/drift-watch.yml', workflowName: 'Drift watch', cron: ['45 4 * * *'] },
       { label: 'Landing watchdog', what: 'nightly: sessions that ran but never landed', ref: '.github/workflows/landing-watchdog.yml', workflowName: 'Landing watchdog', cron: ['45 5 * * *'] },
       { label: 'Requests watchdog', what: 'twice daily: a new section in a practice’s REQUESTS.md becomes an issue', ref: '.github/workflows/requests-watchdog.yml', workflowName: 'Requests watchdog', cron: ['15 6 * * *', '15 21 * * *'] },
@@ -566,7 +602,7 @@ export const NODES: readonly ApparatusNode[] = [
     what: 'The request-time doors. Nothing a stranger types reaches a repository unchecked: a seed waits in a private queue for a human review, and a declined one is deleted rather than recorded.',
     members: [
       { label: 'POST /api/seed', what: 'ten fail-closed stages, then a private queue — commits nothing', ref: 'functions/api/seed.js', secrets: ['TURNSTILE_SECRET_KEY', 'GEMINI_API_KEY', 'SEED_PENDING_KV'] },
-      { label: 'POST /api/impulse', what: 'writes into Ulysses’ own impulse inbox', ref: 'functions/api/impulse.js', secrets: ['IMPULSE_GITHUB_TOKEN'] },
+      { label: 'POST /api/impulse', what: 'writes into Assay’s own impulse inbox', ref: 'functions/api/impulse.js', secrets: ['IMPULSE_GITHUB_TOKEN'] },
       { label: 'POST /api/post', what: 'the post office', ref: 'functions/api/post.js' },
       { label: '/api/zentrale/*', what: 'the control room: answer a request, review a seed, merge an engine PR', secrets: ['ZENTRALE_SECRET', 'ZENTRALE_GITHUB_TOKEN'] },
     ],
@@ -595,11 +631,12 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'src-economy', to: 'in-gegenmessung', kind: 'https', mechanism: 'World Bank and Philadelphia Fed series', checked: 'declared', ref: 'pipelines/revision/refresh.py' },
   { from: 'src-scholarly', to: 'in-gegenmessung', kind: 'https', mechanism: 'Wayback snapshots and publisher pages read pre-consent', checked: 'declared', ref: 'pipelines/redaction' },
   { from: 'src-scholarly', to: 'in-scouts', kind: 'https', mechanism: 'OpenAlex, arXiv, ArtBase, dataphys, S+T+ARTS', checked: 'declared', ref: 'pipelines/atlas-scout' },
+  { from: 'src-web', to: 'in-trending', kind: 'https', mechanism: 'HTTPS in the source modules, one quoted-phrase search per watched term, then one GraphQL query for the audience of the day before', checked: 'declared', ref: 'pipelines/trending' },
 
   // practices → their own mirrors, through the gates
   { from: 'repo-field', to: 'gate-field', kind: 'repository_dispatch', mechanism: 'repository_dispatch `field-landed`, sent by the practice when a session lands', checked: 'derived', ref: '.github/workflows/field-integrate.yml' },
   { from: 'repo-studio', to: 'gate-studio', kind: 'repository_dispatch', mechanism: 'repository_dispatch `studio-landed`, sent by the practice when a session lands', checked: 'derived', ref: '.github/workflows/studio-integrate.yml' },
-  { from: 'repo-ulysses', to: 'gate-atelier', kind: 'cron', mechanism: 'no dispatch — the gate fetches four times a day (landing and rebuild are decoupled since Protocol v4)', checked: 'derived', ref: '.github/workflows/atelier-integrate.yml' },
+  { from: 'repo-ulysses', to: 'gate-atelier', kind: 'cron', mechanism: 'no dispatch (landing and rebuild are decoupled since Protocol v4) — the practice watch starts the gate when the practice moves; four daily crons are the net under it', checked: 'derived', ref: '.github/workflows/atelier-integrate.yml' },
   { from: 'repo-plenum', to: 'gate-plenum', kind: 'cron', mechanism: 'nightly cron; the guest engine does not dispatch yet', checked: 'derived', ref: '.github/workflows/plenum-integrate.yml' },
   { from: 'repo-ecology', to: 'gate-ecology', kind: 'clone', mechanism: 'the gate clones the ecology and all three practices, then imports and exports', checked: 'derived', ref: '.github/workflows/ecology-integrate.yml' },
   { from: 'repo-ulysses', to: 'gate-sitepr', kind: 'repository_dispatch', mechanism: 'a practice proposes site changes under `site-prs/<slug>/` in its own repository', checked: 'derived', ref: '.github/workflows/engine-site-pr.yml' },
@@ -612,6 +649,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'in-protokoll', to: 'st-protokoll', kind: 'commit', mechanism: 'commits one dated protocol per night', checked: 'derived', ref: '.github/workflows/protokoll.yml' },
   { from: 'in-protokoll', to: 'st-instruments', kind: 'commit', mechanism: 'commits the policy, the parallax register and the overflight snapshot', checked: 'derived', ref: '.github/workflows/praemie.yml' },
   { from: 'in-gegenmessung', to: 'st-instruments', kind: 'commit', mechanism: 'each instrument commits its own dated findings', checked: 'derived', ref: '.github/workflows/gegenmessung.yml' },
+  { from: 'in-trending', to: 'st-instruments', kind: 'commit', mechanism: 'commits one day file and one terms file every morning, plus the audience file of the day before, never rewriting any of them', checked: 'derived', ref: '.github/workflows/trending.yml' },
   { from: 'in-scouts', to: 'st-catalogues', kind: 'commit', mechanism: 'commits the atlas nightly, capped at thirty new entries a run', checked: 'derived', ref: '.github/workflows/atlas-scout.yml' },
   { from: 'in-pulse', to: 'st-instruments', kind: 'commit', mechanism: 'commits the commit pulse of five repositories', checked: 'derived', ref: '.github/workflows/pulse-refresh.yml' },
   { from: 'in-saat', to: 'st-inlets', kind: 'commit', mechanism: 'commits each practice’s public answer to an offered seed', checked: 'derived', ref: '.github/workflows/requests-watchdog.yml' },
@@ -645,9 +683,9 @@ export const EDGES: readonly ApparatusEdge[] = [
   },
 
   // oversight
-  { from: 'ov-watchdogs', to: 'gate-atelier', kind: 'github-api', mechanism: 'hourly: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/mirror-watch.yml' },
-  { from: 'ov-watchdogs', to: 'gate-field', kind: 'github-api', mechanism: 'hourly: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/mirror-watch.yml' },
-  { from: 'ov-watchdogs', to: 'gate-studio', kind: 'github-api', mechanism: 'hourly: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/mirror-watch.yml' },
+  { from: 'ov-watchdogs', to: 'gate-atelier', kind: 'github-api', mechanism: 'once a minute while the house is active: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/practice-watch.yml' },
+  { from: 'ov-watchdogs', to: 'gate-field', kind: 'github-api', mechanism: 'once a minute while the house is active: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/practice-watch.yml' },
+  { from: 'ov-watchdogs', to: 'gate-studio', kind: 'github-api', mechanism: 'once a minute while the house is active: if the practice moved and its mirror did not, start the gate', checked: 'derived', ref: '.github/workflows/practice-watch.yml' },
   { from: 'ov-watchdogs', to: 'conductor', kind: 'issue', mechanism: 'an issue per finding, deduplicated by title — and closed again by the same workflow when it clears', checked: 'derived', ref: '.github/workflows/morning-digest.yml' },
   { from: 'gate-atelier', to: 'repo-ulysses', kind: 'github-api', mechanism: 'on refusal: a letter into the practice’s own repository, naming what was rejected and why', checked: 'derived', ref: '.github/workflows/atelier-integrate.yml' },
   { from: 'gate-field', to: 'repo-field', kind: 'github-api', mechanism: 'on refusal: a letter into the practice’s own repository, naming what was rejected and why', checked: 'derived', ref: '.github/workflows/field-integrate.yml' },
@@ -666,8 +704,8 @@ export const EDGES: readonly ApparatusEdge[] = [
 /**
  * Which undertaking a part belongs to. This distinction is load-bearing and was missing from the
  * first version of the figure, which stood the ecology's gates and the lab's nightly instruments
- * side by side as if they were one thing (Frank, 2026-08-03: "da sind auch workflows dabei die
- * nichts mit der research ecology zu tun haben").
+ * side by side as if they were one thing (Frank's finding of 2026-08-03, wording private: some
+ * of those workflows have nothing to do with the research ecology).
  *
  * The wording canon keeps them apart: the research ecology stands ALONGSIDE the site's other
  * undertakings, and `/experiments` — the Experiments, the counter-measurement line — is "our own
@@ -703,6 +741,7 @@ const DOMAIN: Record<string, Domain> = {
   // the counter-measurement line and the protocol — this site's own experiments
   'in-protokoll': 'lab',
   'in-gegenmessung': 'lab',
+  'in-trending': 'lab',
   'st-protokoll': 'lab',
   'st-instruments': 'lab',
   // read by whoever needs them; belonging to no undertaking
@@ -711,6 +750,7 @@ const DOMAIN: Record<string, Domain> = {
   'src-economy': 'shared',
   'src-scholarly': 'shared',
   'src-model': 'shared',
+  'src-web': 'shared',
   // infrastructure that would still be needed if either undertaking stopped
   'in-scouts': 'shared',
   'in-pulse': 'shared',

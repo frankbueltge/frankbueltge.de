@@ -1,0 +1,514 @@
+{
+ "identity": {
+  "contracted": 2,
+  "contractions": [
+   {
+    "assume": [
+     "monotone"
+    ],
+    "contraction": 0.4716105391729192,
+    "feasible": true,
+    "free_width": 0.9021113243761997,
+    "id": "s2-monotone",
+    "width": 0.4305007852032804
+   },
+   {
+    "assume": [
+     "recall"
+    ],
+    "contraction": 0.8944337811900192,
+    "feasible": true,
+    "free_width": 0.9021113243761997,
+    "id": "s2-recall",
+    "width": 0.00767754318618042
+   }
+  ],
+  "doubles_exceptions": [
+   {
+    "gap": 1.1102230246251565e-16,
+    "id": "s2-free",
+    "predicted": 0.9021113243761996,
+    "width": 0.9021113243761997
+   }
+  ],
+  "failed": [],
+  "held": 7,
+  "held_in_doubles": 6,
+  "tested": 7
+ },
+ "ledger": [
+  {
+   "asked": 446,
+   "assume": [],
+   "contracted": false,
+   "contraction": 0.0,
+   "count": 142,
+   "date": "2026-09-08",
+   "denominator": "population",
+   "double_gap": 0.0,
+   "feasible": true,
+   "free_hi": 0.3183856502242152,
+   "free_lo": 0.3183856502242152,
+   "free_width": 0.0,
+   "hi": 0.3183856502242152,
+   "id": "s1-empty",
+   "identity": true,
+   "identity_in_doubles": true,
+   "kind": "census",
+   "label": "empty cells in the atlas's ten grids",
+   "lo": 0.3183856502242152,
+   "long": "Crossing the atlas's five work-describing fields pairwise gives ten grids and 446 cells that the catalogue is able to state. 142 of them are empty.",
+   "n": 446,
+   "point": 0.3183856502242152,
+   "predicted_width": 0.0,
+   "published_as": null,
+   "published_point": 0.3183856502242152,
+   "session": 1,
+   "short": "empty cells in the atlas's own vocabulary of absence",
+   "source": "window/cycle-003-session-1/data.json",
+   "source_paths": [
+    "totals.empty",
+    "totals.statable",
+    "(none — a census)"
+   ],
+   "unsettled": 0,
+   "unsettled_is": "nothing — every one of the 446 statable pairs was counted",
+   "width": 0.0
+  },
+  {
+   "asked": 51,
+   "assume": [],
+   "contracted": false,
+   "contraction": -1.1102230246251565e-16,
+   "count": 22,
+   "date": "2026-09-09",
+   "denominator": "population",
+   "double_gap": 1.1102230246251565e-16,
+   "feasible": true,
+   "free_hi": 0.944337811900192,
+   "free_lo": 0.04222648752399232,
+   "free_width": 0.9021113243761997,
+   "hi": 0.944337811900192,
+   "id": "s2-free",
+   "identity": true,
+   "identity_in_doubles": false,
+   "kind": "judged",
+   "label": "works about absent data, nothing assumed",
+   "lo": 0.04222648752399232,
+   "long": "The seed's first sense, counted. 51 of 521 entries were settled by a reading (22 yes, 29 no); the other 470 were never read, and nothing about them is assumed.",
+   "n": 521,
+   "point": 0.04222648752399232,
+   "predicted_width": 0.9021113243761996,
+   "published_as": "regions.0",
+   "published_point": 0.04222648752399232,
+   "session": 2,
+   "short": "atlas works that are about data never collected, erased or refused",
+   "source": "window/cycle-003-session-2/data.json",
+   "source_paths": [
+    "counts.yes",
+    "counts.n",
+    "counts.free"
+   ],
+   "unsettled": 470,
+   "unsettled_is": "470 entries nobody has read",
+   "width": 0.9021113243761997
+  },
+  {
+   "asked": 51,
+   "assume": [
+    "monotone"
+   ],
+   "contracted": true,
+   "contraction": 0.4716105391729192,
+   "count": 22,
+   "date": "2026-09-09",
+   "denominator": "population",
+   "double_gap": 1.1102230246251565e-16,
+   "feasible": true,
+   "free_hi": 0.944337811900192,
+   "free_lo": 0.04222648752399232,
+   "free_width": 0.9021113243761997,
+   "hi": 0.4727272727272727,
+   "id": "s2-monotone",
+   "identity": true,
+   "identity_in_doubles": false,
+   "kind": "judged",
+   "label": "the same, unread no richer than screened",
+   "lo": 0.04222648752399232,
+   "long": "One assumption: the rate among the unscreened entries is at most the rate among the screened ones.",
+   "n": 521,
+   "point": 0.04222648752399232,
+   "predicted_width": 0.9021113243761996,
+   "published_as": "regions.3",
+   "published_point": 0.04222648752399232,
+   "session": 2,
+   "short": "the same count, assuming the unread entries are no richer than the screened ones",
+   "source": "window/cycle-003-session-2/data.json",
+   "source_paths": [
+    "counts.yes",
+    "counts.n",
+    "counts.free"
+   ],
+   "unsettled": 470,
+   "unsettled_is": "470 unread, under one assumption about their rate",
+   "width": 0.4305007852032804
+  },
+  {
+   "asked": 51,
+   "assume": [
+    "recall"
+   ],
+   "contracted": true,
+   "contraction": 0.8944337811900192,
+   "count": 22,
+   "date": "2026-09-09",
+   "denominator": "population",
+   "double_gap": 1.1102230246251565e-16,
+   "feasible": true,
+   "free_hi": 0.944337811900192,
+   "free_lo": 0.04222648752399232,
+   "free_width": 0.9021113243761997,
+   "hi": 0.04990403071017274,
+   "id": "s2-recall",
+   "identity": true,
+   "identity_in_doubles": false,
+   "kind": "judged",
+   "label": "the same, the word screens assumed whole",
+   "lo": 0.04222648752399232,
+   "long": "A stronger assumption: every unscreened entry is a no. This is the assumption a published count silently makes when it prints one number.",
+   "n": 521,
+   "point": 0.04222648752399232,
+   "predicted_width": 0.9021113243761996,
+   "published_as": "regions.1",
+   "published_point": 0.04222648752399232,
+   "session": 2,
+   "short": "the same count, assuming the two word screens missed nothing",
+   "source": "window/cycle-003-session-2/data.json",
+   "source_paths": [
+    "counts.yes",
+    "counts.n",
+    "counts.free"
+   ],
+   "unsettled": 470,
+   "unsettled_is": "470 unread, under one assumption that empties them",
+   "width": 0.00767754318618042
+  },
+  {
+   "asked": 521,
+   "assume": [],
+   "contracted": false,
+   "contraction": 0.0,
+   "count": 5,
+   "date": "2026-09-11",
+   "denominator": "population",
+   "double_gap": 0.0,
+   "feasible": true,
+   "free_hi": 0.009596928982725527,
+   "free_lo": 0.009596928982725527,
+   "free_width": 0.0,
+   "hi": 0.009596928982725527,
+   "id": "s3-attributed",
+   "identity": true,
+   "identity_in_doubles": true,
+   "kind": "looked-up",
+   "label": "works in the second record, strict",
+   "lo": 0.009596928982725527,
+   "long": "The strictest of three nested standards of proof: the record holds an item of that title AND credits it to the person the atlas names.",
+   "n": 521,
+   "point": 0.009596928982725527,
+   "predicted_width": 0.0,
+   "published_as": null,
+   "published_point": 0.009596928982725527,
+   "session": 3,
+   "short": "atlas works the second record holds under the maker the atlas names",
+   "source": "window/cycle-003-session-3/data.json",
+   "source_paths": [
+    "work_ladder.2.count",
+    "work_ladder.2.n",
+    "work_ladder.2.unasked"
+   ],
+   "unsettled": 0,
+   "unsettled_is": "nothing — all 521 were asked and all 521 answered",
+   "width": 0.0
+  },
+  {
+   "asked": 521,
+   "assume": [],
+   "contracted": false,
+   "contraction": 0.0,
+   "count": 106,
+   "date": "2026-09-11",
+   "denominator": "population",
+   "double_gap": 0.0,
+   "feasible": true,
+   "free_hi": 0.2034548944337812,
+   "free_lo": 0.2034548944337812,
+   "free_width": 0.0,
+   "hi": 0.2034548944337812,
+   "id": "s3-name",
+   "identity": true,
+   "identity_in_doubles": true,
+   "kind": "looked-up",
+   "label": "works in the second record, title only",
+   "lo": 0.2034548944337812,
+   "long": "The same question at the standard a search box would use. It overstates the strict figure 21.2-fold, and its width is still zero: a wrong number can be perfectly identified.",
+   "n": 521,
+   "point": 0.2034548944337812,
+   "predicted_width": 0.0,
+   "published_as": null,
+   "published_point": 0.2034548944337812,
+   "session": 3,
+   "short": "the same works at the loosest standard — a title match and nothing more",
+   "source": "window/cycle-003-session-3/data.json",
+   "source_paths": [
+    "work_ladder.0.count",
+    "work_ladder.0.n",
+    "work_ladder.0.unasked"
+   ],
+   "unsettled": 0,
+   "unsettled_is": "nothing — all 521 were asked and all 521 answered",
+   "width": 0.0
+  },
+  {
+   "asked": 473,
+   "assume": [],
+   "contracted": false,
+   "contraction": 0.0,
+   "count": 222,
+   "date": "2026-09-11",
+   "denominator": "population",
+   "double_gap": 0.0,
+   "feasible": true,
+   "free_hi": 0.4693446088794926,
+   "free_lo": 0.4693446088794926,
+   "free_width": 0.0,
+   "hi": 0.4693446088794926,
+   "id": "s3-artists",
+   "identity": true,
+   "identity_in_doubles": true,
+   "kind": "looked-up",
+   "label": "artists in the second record",
+   "lo": 0.4693446088794926,
+   "long": "The people are in the record at forty-nine times the rate of their works. That gap is what session 4 went to test.",
+   "n": 473,
+   "point": 0.4693446088794926,
+   "predicted_width": 0.0,
+   "published_as": null,
+   "published_point": 0.4693446088794926,
+   "session": 3,
+   "short": "atlas artists the second record holds as a person",
+   "source": "window/cycle-003-session-3/data.json",
+   "source_paths": [
+    "artist_counts.person",
+    "artists_n",
+    "artist_counts.unasked"
+   ],
+   "unsettled": 0,
+   "unsettled_is": "nothing — every artist was asked",
+   "width": 0.0
+  },
+  {
+   "asked": 217,
+   "assume": [],
+   "contracted": false,
+   "contraction": 0.0,
+   "count": 190,
+   "date": "2026-09-12",
+   "denominator": "asked",
+   "double_gap": 0.0,
+   "feasible": true,
+   "free_hi": 0.8767123287671232,
+   "free_lo": 0.867579908675799,
+   "free_width": 0.0091324200913242,
+   "hi": 0.8767123287671232,
+   "id": "s4-creator",
+   "identity": true,
+   "identity_in_doubles": true,
+   "kind": "looked-up",
+   "label": "artists credited with no artwork",
+   "lo": 0.867579908675799,
+   "long": "Counting only `creator`, the property an artwork itself carries. The claim built on this number was withdrawn the same night by three decade-matched controls; the number stands, the claim does not.",
+   "n": 219,
+   "point": 0.867579908675799,
+   "predicted_width": 0.0091324200913242,
+   "published_as": null,
+   "published_point": 0.8755760368663594,
+   "session": 4,
+   "short": "atlas artists the second record credits with no artwork at all",
+   "source": "window/cycle-003-session-4/data.json",
+   "source_paths": [
+    "whole_arm.creator_works.atlas.empty",
+    "whole_arm.creator_works.atlas.n",
+    "whole_arm.creator_works.atlas.unasked"
+   ],
+   "unsettled": 2,
+   "unsettled_is": "2 people the endpoint refused to answer about",
+   "width": 0.0091324200913242
+  },
+  {
+   "asked": 215,
+   "assume": [],
+   "contracted": false,
+   "contraction": 0.0,
+   "count": 136,
+   "date": "2026-09-12",
+   "denominator": "asked",
+   "double_gap": 0.0,
+   "feasible": true,
+   "free_hi": 0.639269406392694,
+   "free_lo": 0.6210045662100456,
+   "free_width": 0.0182648401826484,
+   "hi": 0.639269406392694,
+   "id": "s4-any",
+   "identity": true,
+   "identity_in_doubles": true,
+   "kind": "looked-up",
+   "label": "artists credited nothing, six properties",
+   "lo": 0.6210045662100456,
+   "long": "Widen the question from creator to author, composer, director, performer and architect and the record fills up with reading matter: 857 credits, 75 of them artworks.",
+   "n": 219,
+   "point": 0.6210045662100456,
+   "predicted_width": 0.0182648401826484,
+   "published_as": null,
+   "published_point": 0.6325581395348837,
+   "session": 4,
+   "short": "the same artists credited with nothing under any of six making properties",
+   "source": "window/cycle-003-session-4/data.json",
+   "source_paths": [
+    "whole_arm.any_works.atlas.empty",
+    "whole_arm.any_works.atlas.n",
+    "whole_arm.any_works.atlas.unasked"
+   ],
+   "unsettled": 4,
+   "unsettled_is": "4 people the endpoint refused to answer about",
+   "width": 0.0182648401826484
+  }
+ ],
+ "meta": {
+  "atlas_feed": {
+   "note": "carried in every session record of this cycle; read live at this session's open and unchanged, the eleventh consecutive night at this digest. The feed is never mirrored into this repository, and this build reads no network at all.",
+   "sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+   "url": "https://frankbueltge.de/atlas/werke.json"
+  },
+  "cycle": 3,
+  "date": "2026-09-13",
+  "practice": "The Atelier",
+  "question": "Missing Data Art",
+  "rule": "With c of n settled in favour and u unsettled, and nothing assumed about the unsettled, the share lies in [c/n, (c+u)/n]; the width is exactly u/n. Manski, Inference with Imputed Data, arXiv:2205.07388, read 2026-09-09.",
+  "seed": "seed-20260907-220129-aa5f",
+  "session": "presentation",
+  "sources": {
+   "1": {
+    "bytes": 158199,
+    "path": "window/cycle-003-session-1/data.json",
+    "sha256": "e77a05e8b0034fde463db41621b20fd78c813fd3ba2b95cdcb59528604c6c155"
+   },
+   "2": {
+    "bytes": 14608,
+    "path": "window/cycle-003-session-2/data.json",
+    "sha256": "ac5ad5189540d076c29a0d07e8e5b4f38f6e00584ea9672a20e20eec0133d8d7"
+   },
+   "3": {
+    "bytes": 133344,
+    "path": "window/cycle-003-session-3/data.json",
+    "sha256": "767de074a6cf75c61a2d7ea5590e74620cd62ea778e055d9c78d7140d300739d"
+   },
+   "4": {
+    "bytes": 199645,
+    "path": "window/cycle-003-session-4/data.json",
+    "sha256": "e2246c4ffa84148bc6a442a7e61a25a855998311df60131d6b67961db4fc7f95"
+   }
+  },
+  "title": "The width is the reading nobody did"
+ },
+ "narrowest_count": 4,
+ "offscale": {
+  "estimate": 172451.0,
+  "estimate_at_two": 86225.5,
+  "m": 1,
+  "move": 86225.5,
+  "n1": 521,
+  "n2": 331,
+  "note": [
+   {
+    "P135": 29,
+    "P136": 189,
+    "P31": 84,
+    "name": "new media art",
+    "qid": "Q378604",
+    "total": 302
+   },
+   {
+    "P135": 1,
+    "P136": 21,
+    "P31": 4,
+    "name": "generative art",
+    "qid": "Q1502032",
+    "total": 26
+   },
+   {
+    "P135": 1,
+    "P136": 2,
+    "P31": 0,
+    "name": "information art",
+    "qid": "Q6031007",
+    "total": 3
+   }
+  ],
+  "source": "window/cycle-003-session-3/data.json",
+  "source_paths": [
+   "n",
+   "n2",
+   "classed.0"
+  ]
+ },
+ "outside": {
+  "field": {
+   "not_recomputed_here": true,
+   "what": "identifying power measured on one corpus at eight sizes: 16.51 % at 521 records and 62.17 % at 67 205, nothing about the descriptions changed.",
+   "where": "the Field's bulletin of 2026-09-12, session 158",
+   "why_it_matters": "a property of a description and a room — the same shape as this cycle's unit problem, one level down."
+  },
+  "studio": {
+   "not_recomputed_here": true,
+   "reported": "798 520 of 5 294 716 cells sealed — 15.08 % of one table of European business",
+   "what": "a register of absences that have an owner, a legal reason and a coordinate: turnover figures European statistics hold and may not print.",
+   "where": "the Studio's bulletin and work of 2026-09-12, works/2026-09-12-too-few-to-hide-behind/ in its repository",
+   "why_it_matters": "the width of that count is zero and the quantity is identified, because the rule that made every hole is published law (Eurostat's CONF_STATUS = C)."
+  }
+ },
+ "reading": {
+  "n": 521,
+  "settled": 51,
+  "targets": [
+   {
+    "left": 130,
+    "must_read": 340,
+    "share_of_unread": 0.723404255319149,
+    "want": 0.25
+   },
+   {
+    "left": 52,
+    "must_read": 418,
+    "share_of_unread": 0.8893617021276595,
+    "want": 0.1
+   },
+   {
+    "left": 26,
+    "must_read": 444,
+    "share_of_unread": 0.9446808510638298,
+    "want": 0.05
+   },
+   {
+    "left": 5,
+    "must_read": 465,
+    "share_of_unread": 0.9893617021276596,
+    "want": 0.01
+   }
+  ],
+  "unread": 470,
+  "yes": 22,
+  "yes_rate_settled": 0.43137254901960786
+ },
+ "widest": "s2-free"
+}

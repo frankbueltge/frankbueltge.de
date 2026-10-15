@@ -1,0 +1,156 @@
+{
+  "date": "2026-09-06",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-06T09:46:45Z",
+    "counts": {
+      "botwall": 33,
+      "gone_404": 2,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 265,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 0
+    },
+    "decided": 267,
+    "excluded_unverifiable": 33,
+    "gone": 2,
+    "gone_ci95": [
+      0.0021,
+      0.0269
+    ],
+    "gone_rate": 0.0075,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0142
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-04",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "klif.com",
+        "first_seen": "20260904220000",
+        "http_code": 404,
+        "title": "Fort Worth Police Seek Suspect After Security Guard Shot At Crescent Hotel",
+        "url": "https://www.klif.com/2026/09/04/fort-worth-police-seek-suspect-after-security-guard-shot-at-crescent-hotel/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "wbap.com",
+        "first_seen": "20260904010000",
+        "http_code": 404,
+        "title": "Treasury Moves To Strip Tax-Exempt Status From Schools Using Racial Preferences",
+        "url": "https://www.wbap.com/2026/09/03/treasury-moves-to-strip-tax-exempt-status-from-schools-using-racial-preferences/"
+      }
+    ],
+    "sample_drawn_at": "2026-09-05T09:21:43Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 4170,
+      "replaced": 5424,
+      "trivial": 603,
+      "update": 567
+    },
+    "day": "2026-09-05",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Flood",
+          "Nepal",
+          "compensation"
+        ],
+        "after": "Nepal Flood Compensation: Nepal minister clarifies 'compensation from world' remark after flash floods - what he said | India News",
+        "before": "Climate Change: Nepal minister clarifies 'compensation from world' remark after flash floods - what he said | India News",
+        "detected": "2026-09-05T05:16:15Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Climate",
+          "Change"
+        ],
+        "similarity": 0.833,
+        "url": "https://timesofindia.indiatimes.com/india/never-asked-any-country-including-india-nepal-minister-goes-back-on-flash-flood-compensation-claim/articleshow/133751915.cms",
+        "weight": 9,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Twisted",
+          "Sister"
+        ],
+        "after": "Watch Sebastian Bach Play His First Show With Twisted Sister",
+        "before": "Watch Sebastian Bach Play His First Show With Sebastian Bach",
+        "detected": "2026-09-05T13:16:30Z",
+        "domain": "991thewhale.com",
+        "removed": [
+          "Sebastian",
+          "Bach"
+        ],
+        "similarity": 0.8,
+        "url": "https://991thewhale.com/ixp/295/p/twisted-sister-sebastian-bach-2026/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "from",
+          "Crime",
+          "Desk",
+          "the"
+        ],
+        "after": "A decapitated body, cracked skulls and charred limbs strewn everywhere: WHO were the 37 young men dumped in a pit beneath a prestigious Oxford college? New podcast from The Crime Desk lays bare the sinister secrets of the St Brice's Day massacre",
+        "before": "A decapitated body, cracked skulls and charred limbs strewn everywhere: WHO were the 37 young men dumped in a pit beneath a prestigious Oxford college? New Daily Mail podcast lays bare the sinister secrets of the St Brice's Day massacre",
+        "detected": "2026-09-05T06:32:13Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Daily",
+          "Mail"
+        ],
+        "similarity": 0.875,
+        "url": "https://www.dailymail.com/crime-desk/article-16102721/st-brices-day-massacre-oxford-mass-grave-buried-evidence-podcast.html",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 14028,
+      "PAGE_TEXTCHANGE": 109030,
+      "PAGE_TITLECHANGE": 42338,
+      "UNCHANGED_CONTENT": 658308
+    },
+    "title_changes_en": 10764,
+    "trace": [
+      {
+        "bytes_billed": 22020096,
+        "created": "1788687793393",
+        "job_id": "world_gdg_counts_20260905",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 206569472,
+        "created": "1788687798506",
+        "job_id": "world_gdg_titles_20260905",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-06T09:46:45Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-05.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

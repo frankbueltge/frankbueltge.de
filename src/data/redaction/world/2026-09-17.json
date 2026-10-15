@@ -1,0 +1,146 @@
+{
+  "date": "2026-09-17",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-17T10:47:59Z",
+    "counts": {
+      "botwall": 33,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 264,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 265,
+    "excluded_unverifiable": 35,
+    "gone": 1,
+    "gone_ci95": [
+      0.0007,
+      0.0211
+    ],
+    "gone_rate": 0.0038,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0143
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-15",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "nbcmontana.com",
+        "first_seen": "20260915140000",
+        "http_code": 404,
+        "title": "One dead, four injured in crash on U.S. Highway 93 near Lolo",
+        "url": "https://nbcmontana.com/news/know-your-candidates/one-dead-four-injured-in-crash-on-us-highway-93-near-lolo"
+      }
+    ],
+    "sample_drawn_at": "2026-09-16T10:34:00Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5736,
+      "replaced": 5600,
+      "trivial": 1118,
+      "update": 537
+    },
+    "day": "2026-09-16",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "govt"
+        ],
+        "after": "TVK govt's gold ring scheme for newborns postponed due to CM Vijay's foreign trip",
+        "before": "Cm Vijay: TVK's gold ring scheme for newborns postponed due to CM Vijay's foreign trip | Chennai News",
+        "detected": "2026-09-16T07:34:47Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "CM",
+          "Vijay",
+          "Chennai",
+          "News"
+        ],
+        "similarity": 0.824,
+        "url": "https://timesofindia.indiatimes.com/city/chennai/tvks-gold-ring-scheme-for-newborns-postponed-due-to-cm-vijays-foreign-trip/articleshow/133957504.cms",
+        "weight": 9,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Georgia",
+          "Harrison"
+        ],
+        "after": "Bleary-eyed Tina O'Brien and Georgia Harrison look all partied out as they lead TV's finest heading home after the NTAs",
+        "before": "Bleary-eyed Olivia Attwood and Tina O'Brien look all partied out as they lead TV's finest heading home after the NTAs",
+        "detected": "2026-09-16T09:32:13Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Olivia",
+          "Attwood"
+        ],
+        "similarity": 0.84,
+        "url": "https://www.dailymail.com/tvshowbiz/article-16116831/Bleary-eyed-Olivia-Attwood-Tina-OBrien-look-partied-lead-TVs-finest-heading-home-NTAs.html",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Response",
+          "Sheet"
+        ],
+        "after": "NBEMS NEET PG 2026 Answer Key By September 15? Check Response Sheet Expected Date, How to Download, Raise Objections",
+        "before": "NEET PG 2026 Answer Key By September 15? Check NBEMS Answer Key Expected Date, How to Download, Raise Objections",
+        "detected": "2026-09-16T07:47:46Z",
+        "domain": "jagranjosh.com",
+        "removed": [
+          "Answer",
+          "Key"
+        ],
+        "similarity": 0.895,
+        "url": "https://www.jagranjosh.com/news/neet-pg-2026-answer-key-by-september-15-check-nbems-answer-key-expected-date-how-to-download-raise-objections-187260",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 18739,
+      "PAGE_TEXTCHANGE": 142702,
+      "PAGE_TITLECHANGE": 52995,
+      "UNCHANGED_CONTENT": 797126
+    },
+    "title_changes_en": 12991,
+    "trace": [
+      {
+        "bytes_billed": 27262976,
+        "created": "1789641819829",
+        "job_id": "world_gdg_counts_20260916",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 253755392,
+        "created": "1789641825405",
+        "job_id": "world_gdg_titles_20260916",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-17T10:47:59Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-16.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

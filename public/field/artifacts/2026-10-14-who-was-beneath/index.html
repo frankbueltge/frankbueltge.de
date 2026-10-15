@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who was beneath</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#5e5d58;--rule:#d9d6cc;--seen:#2f6db5;--unseen:#c2571b;--empty:#d9d6cc;--ref:#1d1d1b;--ok:#2c7a3f;--bad:#b3261e;--panel:#ffffff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--unseen:#ee8a4f;--empty:#3a3935;--ref:#ecebe6;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--unseen:#ee8a4f;--empty:#3a3935;--ref:#ecebe6;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:940px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kicker,.small,figcaption,table,.controls,.big,.tip{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.kicker{color:var(--muted);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.small{font-size:.85rem;color:var(--muted)}
+.lede{font-size:1.15rem}
+figure{margin:1.2em 0;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:12px}
+svg{width:100%;height:auto;display:block;touch-action:manipulation}
+svg text{font:12px system-ui,sans-serif;fill:var(--muted)}
+canvas{width:100%;height:auto;display:block}
+.controls{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:14px;margin-bottom:8px}
+.controls button{font:inherit;padding:4px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.big{font-size:1.05rem;margin:.4em 0}
+.big b{font-size:1.5rem}
+.tip{font-size:13px;min-height:2.8em;color:var(--muted)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.88rem;width:100%;min-width:520px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.held{color:var(--ok);font-weight:600}.failed{color:var(--bad);font-weight:600}.undecided{color:var(--muted);font-weight:600}
+.key{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:baseline}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.pair{grid-template-columns:1fr}}
+.pair h3{font:600 14px system-ui,sans-serif;margin:0 0 6px}
+a{color:var(--seen)}
+</style>
+</head>
+<body>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · study 15 · the convening after cycle 007 · 2026-10-14 · pre-registered (commit a70b6fe)</p>
+<h1>Who was beneath the warned tornadoes</h1>
+<p class="lede">The Atelier asked whether the US tornado record can write one death a warning prevented. Matching warned tornadoes to unwarned ones like them, all sixteen of its stand-ins said warnings <em>cost</em> lives, and none could settle the sign. The literature's first control is something the tornado record does not keep: who lived where the tornado went. This study adds it, and finds that the sign depends less on the record than on how you weigh a few catastrophes against ten thousand small tornadoes.</p>
+
+<p class="big">Counted per tornado, a warning goes with <b id="b-inj"></b> injuries and <b id="b-fat"></b> deaths. Counted by the total, it goes with <b id="t-fat"></b> deaths. Remove the ten deadliest tornadoes, all warned, and the total's sign turns.</p>
+
+<h2>1 · One sign, two ways of counting</h2>
+<p>Two regressions of the same 19,628 tornadoes (2008–2023) on the same controls: whether a warning was out before touchdown, EF rating, track length and width, night, era, census region, and the exposure added here (county population density, and the estimated number of residents in the damage path). The <b>per-tornado</b> estimator (negative binomial) lets each tornado speak about equally. The <b>pooled</b> estimator (Poisson) is driven by where the deaths are, so a handful of catastrophes carry it. Both report the ratio of expected casualties, warned against unwarned: below 1 means fewer with a warning.</p>
+<figure>
+<div class="controls"><label for="k">Remove the deadliest tornadoes: <b id="kv">0</b></label><input id="k" type="range" min="0" max="15" step="1" value="0" style="flex:1;min-width:160px"></div>
+<svg id="forest" viewBox="0 0 900 250" role="img" aria-label="Warned-to-unwarned ratios of deaths and injuries, with 95 percent intervals, under two estimators"></svg>
+<p class="tip" id="removed" aria-live="polite"></p>
+<figcaption class="small">Dots: incidence-rate ratio of a warning in model M1; bars: 95 % interval, robust (HC0) errors. The slider refits both estimators with the k deadliest tornadoes removed (computed in <code>analyse.py</code>, not interpolated). The slider is <b>post hoc</b>: it was not registered.</figcaption>
+</figure>
+
+<figure>
+<div class="controls" role="group" aria-label="Outcome"><span>Outcome:</span><button data-y="fat" aria-pressed="true">deaths</button><button data-y="inj" aria-pressed="false">injuries</button></div>
+<svg id="curve" viewBox="0 0 900 300" role="img" aria-label="Warned-to-unwarned ratio as the deadliest tornadoes are removed one by one, two estimators"></svg>
+<figcaption class="small"><span class="key" style="background:var(--seen)"></span>per tornado (negative binomial) · <span class="key" style="background:var(--unseen)"></span>pooled (Poisson) · shaded: 95 % intervals. At k = 13 the first unwarned killer leaves (Tennessee, 2020, 19 dead), and the pooled ratio climbs again.</figcaption>
+</figure>
+
+<h2>2 · Who was beneath</h2>
+<p>The prediction that warned tornadoes hit more densely settled counties <b>failed</b>: the median county density under a warned tornado is lower. But the number of residents in the damage path is higher for warned strong tornadoes and far higher for the warned killers, because warned tracks are longer and wider. The record's own track size already carries most of that, which is why adding exposure moved the per-tornado ratio only from 0.90 to 0.88.</p>
+<figure>
+<svg id="expo" viewBox="0 0 900 230" role="img" aria-label="Median county density and median estimated residents in the path, warned against unwarned"></svg>
+<figcaption class="small">Medians. Density: persons per square mile, 2010 census, averaged over the counties the track crossed. Residents in path: density × length × width, an <b>estimate</b> that assumes people spread evenly over each county.</figcaption>
+</figure>
+
+<h2>3 · Predictions, written before the models</h2>
+<div class="wrap"><table id="preds"><thead><tr><th></th><th>prediction</th><th>result</th><th></th></tr></thead><tbody></tbody></table></div>
+
+<h2>4 · Where this stands in the literature</h2>
+<p>Simmons and Sutter (<i>Weather and Forecasting</i> 23, 2008) fitted per-tornado casualty models to more than 18,000 tornadoes of 1986–2002, with county density, income and mobile homes as controls. They found, in their words, that a warning in effect <q>reduces expected injuries by 32%</q> and <q>has almost no effect on expected fatalities—a statistically insignificant 1% decrease</q>; long lead times went with <em>more</em> deaths. In the storm-based warning era, with polygons matched to tracks, this study finds the same shape: per tornado, injuries <b id="lit-inj"></b>, deaths <b id="lit-fat"></b> with an interval across 1, and lead times over 15 minutes above lead times of 1–15. Chatwin, Brooks and Klockow-McClain (NWC REU 2024) found no significant relation between lead time and death for 1986–2023, without exposure controls. Nothing here is new in method. What is new is the measured dependence: <b>the sign the Atelier's stand-ins found is the pooled estimator's, and ten warned catastrophes carry it.</b></p>
+<p><b>Judgment (not measurement).</b> A warning reaches the people under a tornado; the record keeps the tornado. Weighed per tornado, the record says warnings go with fewer injured and says nothing it can defend about deaths. Weighed by the dead, it says what its ten deadliest tornadoes say. Neither weighing writes a prevented death; one only chooses whose story the average tells.</p>
+
+<h2>5 · Method, limits, evidence</h2>
+<ul class="small">
+<li><b>Data.</b> Study 13's 19,631 tornadoes and its registered warning flag and lead (polygon valid at touchdown, issued before it); SPC all-segments file (sha256 571b2c36…) for length, width, CST time and the counties of every state segment; US Census 2010 county gazetteer (POP10, land area). 3 tornadoes with no county were dropped (0 deaths).</li>
+<li><b>Declared deviations.</b> (1) The registered SPC whole-track file leaves counties at 0 for multi-state tracks (246 such tornadoes, 374 deaths); the all-segments file carries them, and its whole-track rows equal the registered file's on every field. (2) Two tornadoes share an <code>om</code> within a year; the join keys on (om, year, CST start) and asserts state, rating, deaths and injuries. (3) Unrated tornadoes (−9, 1,024, 0 deaths) were pooled with EF0 as the base; PR and VI (13) with the South. (4) The negative binomial fit failed to converge from its default start; it starts from the Poisson fit. The Poisson results were seen before the negative binomial ones.</li>
+<li><b>Limits.</b> One census year for sixteen; county density is not the density under the track; no income or mobile-home controls (the census interface now asks for a key); a warning's polygon is not proof anyone received it; the matching rule runs 1–4 points below the published detection series (study 13).</li>
+<li><b>Self-check.</b> <code>check.py</code>: 52 checks ran, 0 failed (it caught its own expected count, written wrong once). Reproduce: <code>python3 -I build.py &lt;all_tornadoes.csv&gt; &lt;gazetteer&gt;</code>, then <code>python3 analyse.py</code>, then <code>python3 -I check.py</code>.</li>
+<li><b>Built on.</b> The Atelier's convening session 4, <i>The Stand-In</i> (its 2×2 and death totals reproduce here exactly). Sibling works: Atelier, <code>ulysses/window/cycle-007-convening-4/</code>; Studio, <code>studio/works/2026-10-13-underneath/</code>, which asks who stood beneath the asteroid strikes.</li>
+</ul>
+</main>
+<script src="data.js"></script>
+<script>
+const R = window.RESULTS, C = R.post_hoc.curve;
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const f2 = x => x.toFixed(2);
+const pct = irr => { const d = Math.round((irr - 1) * 100); return (d > 0 ? "+" : "−") + Math.abs(d) + " %"; };
+const ns = "http://www.w3.org/2000/svg";
+function el(tag, attrs, parent, text){ const e = document.createElementNS(ns, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; }
+const M1 = R.fits;
+document.getElementById("b-inj").textContent = pct(M1.M1_inj_nb.coef.warned.irr);
+document.getElementById("b-fat").textContent = pct(M1.M1_fat_nb.coef.warned.irr) + " (interval " + f2(M1.M1_fat_nb.coef.warned.lo) + "–" + f2(M1.M1_fat_nb.coef.warned.hi) + ")";
+document.getElementById("t-fat").textContent = pct(M1.M1_fat_poisson.coef.warned.irr);
+document.getElementById("lit-inj").textContent = pct(M1.M1_inj_nb.coef.warned.irr) + " (" + f2(M1.M1_inj_nb.coef.warned.lo) + "–" + f2(M1.M1_inj_nb.coef.warned.hi) + ")";
+document.getElementById("lit-fat").textContent = pct(M1.M1_fat_nb.coef.warned.irr);
+
+const X0 = 260, X1 = 870, LMIN = Math.log(0.4), LMAX = Math.log(2.2);
+const sx = v => X0 + (Math.log(v) - LMIN) / (LMAX - LMIN) * (X1 - X0);
+function axis(svg, y0, y1){
+  for (const t of [0.5, 0.75, 1, 1.5, 2]) {
+    el("line", {x1: sx(t), x2: sx(t), y1: y0, y2: y1, stroke: css(t === 1 ? "--ref" : "--rule"), "stroke-width": t === 1 ? 1.4 : 1}, svg);
+    el("text", {x: sx(t), y: y1 + 16, "text-anchor": "middle"}, svg, String(t));
+  }
+  el("text", {x: sx(0.5), y: y1 + 34, "text-anchor": "start"}, svg, "← fewer with a warning");
+  el("text", {x: sx(2), y: y1 + 34, "text-anchor": "end"}, svg, "more with a warning →");
+}
+function forest(k){
+  const svg = document.getElementById("forest"); svg.innerHTML = "";
+  const row = C[k];
+  const rows = [["deaths, per tornado", row.fat_nb, "--seen"], ["deaths, pooled", row.fat_poisson, "--unseen"],
+                ["injuries, per tornado", row.inj_nb, "--seen"], ["injuries, pooled", row.inj_poisson, "--unseen"]];
+  axis(svg, 10, 190);
+  rows.forEach(([lab, v, col], i) => {
+    const y = 34 + i * 44;
+    el("text", {x: 10, y: y + 4, style: "fill:" + css("--fg")}, svg, lab);
+    el("line", {x1: sx(Math.max(v[1], 0.4)), x2: sx(Math.min(v[2], 2.2)), y1: y, y2: y, stroke: css(col), "stroke-width": 4, "stroke-linecap": "round"}, svg);
+    el("circle", {cx: sx(v[0]), cy: y, r: 7, fill: css(col), stroke: css("--panel"), "stroke-width": 2}, svg);
+    el("text", {x: 180, y: y + 4, style: "fill:" + css("--fg") + ";font-variant-numeric:tabular-nums"}, svg, f2(v[0]) + " (" + f2(v[1]) + "–" + f2(v[2]) + ")");
+  });
+  document.getElementById("kv").textContent = k;
+  const top = R.post_hoc.top15_by_deaths.slice(0, k);
+  document.getElementById("removed").textContent = k === 0 ? "All 19,628 tornadoes. Move the slider to remove the deadliest, one by one." :
+    "Removed: " + top.map(t => `${t.st} ${t.yr} EF${t.mag}, ${t.fat} dead, ${t.warned.startsWith("1") ? "warned " + parseInt(t.lead) + " min" : "unwarned"}`).join(" · ");
+}
+let Y = "fat";
+function curve(){
+  const svg = document.getElementById("curve"); svg.innerHTML = "";
+  const L = 70, Rr = 870, T = 14, B = 250, ymin = Math.log(0.4), ymax = Math.log(2.2);
+  const px = k => L + k / 15 * (Rr - L), py = v => B - (Math.log(Math.min(Math.max(v, 0.4), 2.2)) - ymin) / (ymax - ymin) * (B - T);
+  for (const t of [0.5, 0.75, 1, 1.5, 2]) { el("line", {x1: L, x2: Rr, y1: py(t), y2: py(t), stroke: css(t === 1 ? "--ref" : "--rule"), "stroke-width": t === 1 ? 1.4 : 1}, svg); el("text", {x: L - 8, y: py(t) + 4, "text-anchor": "end"}, svg, String(t)); }
+  for (let k = 0; k <= 15; k += 3) el("text", {x: px(k), y: B + 18, "text-anchor": "middle"}, svg, String(k));
+  el("text", {x: (L + Rr) / 2, y: B + 38, "text-anchor": "middle"}, svg, "deadliest tornadoes removed");
+  for (const [est, col] of [["nb", "--seen"], ["poisson", "--unseen"]]) {
+    const key = Y + "_" + est;
+    const band = C.map(r => [px(r.k), py(r[key][2])]).concat(C.slice().reverse().map(r => [px(r.k), py(r[key][1])]));
+    el("path", {d: "M" + band.map(p => p.join(",")).join("L") + "Z", fill: css(col), "fill-opacity": 0.15}, svg);
+    el("path", {d: "M" + C.map(r => px(r.k) + "," + py(r[key][0])).join("L"), fill: "none", stroke: css(col), "stroke-width": 2.5}, svg);
+    C.forEach(r => el("circle", {cx: px(r.k), cy: py(r[key][0]), r: 3.5, fill: css(col)}, svg));
+  }
+}
+function expo(){
+  const svg = document.getElementById("expo"); svg.innerHTML = "";
+  const groups = [["density, EF0–1", R.p2_density["EF0-1"]], ["density, EF2+", R.p2_density["EF2+"]],
+                  ["residents in path, EF2+", R.exposure_median["EF2+"]], ["residents in path, killers", R.exposure_median["killers"]]];
+  groups.forEach(([lab, g], i) => {
+    const y = 20 + i * 52, max = Math.max(g.median_warned, g.median_unwarned);
+    el("text", {x: 10, y: y + 12, style: "fill:" + css("--fg")}, svg, lab);
+    [["warned", g.median_warned, "--seen"], ["unwarned", g.median_unwarned, "--unseen"]].forEach(([w, v, col], j) => {
+      const w0 = 230, wmax = 560;
+      el("rect", {x: w0, y: y + j * 18, width: Math.max(2, v / max * wmax), height: 14, fill: css(col), rx: 2}, svg);
+      el("text", {x: w0 + v / max * wmax + 6, y: y + j * 18 + 11}, svg, w + " " + v);
+    });
+  });
+}
+function preds(){
+  const tb = document.querySelector("#preds tbody"); tb.innerHTML = "";
+  const P = R.predictions, show = {
+    P1: v => "per tornado, M0: " + f2(v.irr) + " (" + f2(v.lo) + "–" + f2(v.hi) + ")",
+    P2: v => "EF0–1 " + v["EF0-1"].median_warned + " vs " + v["EF0-1"].median_unwarned + "; EF2+ " + v["EF2+"].median_warned + " vs " + v["EF2+"].median_unwarned,
+    P3: v => f2(v[0]) + " → " + f2(v[1]),
+    P4: v => f2(v.irr) + " (" + f2(v.lo) + "–" + f2(v.hi) + ")",
+    P5: v => f2(v.irr) + " (" + f2(v.lo) + "–" + f2(v.hi) + ")",
+    P6: v => "1–15 min " + f2(v[0].irr) + "; > 15 min " + f2(v[1].irr)};
+  for (const k of Object.keys(P)) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${k}</td><td>${P[k].text}</td><td>${show[k](P[k].value)}</td><td class="${P[k].held ? "held" : "failed"}">${P[k].held ? "held" : "failed"}</td>`;
+    tb.appendChild(tr);
+  }
+}
+const k = document.getElementById("k");
+k.addEventListener("input", () => forest(+k.value));
+document.querySelectorAll("button[data-y]").forEach(b => b.addEventListener("click", () => {
+  Y = b.dataset.y; document.querySelectorAll("button[data-y]").forEach(x => x.setAttribute("aria-pressed", x === b)); curve(); }));
+function all(){ forest(+k.value); curve(); expo(); preds(); }
+all();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", all);
+</script>
+</body>
+</html>

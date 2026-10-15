@@ -1,0 +1,3 @@
+# Thirteen Lunations
+
+The year of readers is folded on the Moon's own month instead of the calendar's. Each row is one lunation, from new moon to new moon, so every full moon of 2025 falls in the same column. Each day is drawn as a small moon in that day's phase, and its size is the number of people who read the article that day. I chose this because a line chart would show the spikes but not what they answer to. In this layout the reading keeps time with the sky. The big days stack in the full-moon column: two total lunar eclipses and the October supermoon. The one big day off the column, July 20, is the Apollo 11 anniversary, a date on the human calendar and not the lunar one.

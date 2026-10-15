@@ -1,0 +1,136 @@
+{
+  "date": "2026-09-24",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-24T10:54:02Z",
+    "counts": {
+      "botwall": 14,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 284,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 2
+    },
+    "decided": 284,
+    "excluded_unverifiable": 16,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0133
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0133
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-22",
+    "receipts": [],
+    "sample_drawn_at": "2026-09-23T10:25:42Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 6084,
+      "replaced": 5859,
+      "trivial": 1141,
+      "update": 582
+    },
+    "day": "2026-09-23",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Xuanyi",
+          "Geng"
+        ],
+        "after": "Xuanyi Geng Rubik's Cube: Meet Xuanyi Geng, the Chinese speedcuber who solved a 3×3 Rubik's Cube in 3.05 seconds to break the world record in 2025",
+        "before": "Rubik's Cube world record: Meet Xuanyi Geng, the Chinese speedcuber who solved a 3×3 Rubik's Cube in 3.05 seconds to break the world record in 2025",
+        "detected": "2026-09-23T18:49:29Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "world",
+          "record"
+        ],
+        "similarity": 1.0,
+        "url": "https://economictimes.indiatimes.com/news/international/us/meet-xuanyi-geng-the-chinese-speedcuber-who-solved-a-33-rubiks-cube-in-3-05-seconds-to-break-the-world-record-in-2025/articleshow/134294116.cms",
+        "weight": 6,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Piddington",
+          "News",
+          "UK"
+        ],
+        "after": "Piddington village votes for independence from UK in protest against asylum seeker housing plan | News UK",
+        "before": "Oxfordshire village votes for independence from UK in protest against asylum seeker housing plan",
+        "detected": "2026-09-23T07:17:09Z",
+        "domain": "metro.co.uk",
+        "removed": [
+          "Oxfordshire"
+        ],
+        "similarity": 0.812,
+        "url": "https://metro.co.uk/2026/09/16/oxfordshire-village-votes-independence-uk-protest-asylum-seeker-housing-plan-29618950/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Officially"
+        ],
+        "after": "Scarlett Johansson & Adam Driver's New Crime Thriller Officially Unveiled In Paper Tiger Trailer",
+        "before": "Scarlett Johansson & Adam Driver's New Adrenaline-Fueling Crime Thriller Unveiled In New Paper Tiger Trailer",
+        "detected": "2026-09-23T17:17:16Z",
+        "domain": "screenrant.com",
+        "removed": [
+          "Adrenaline",
+          "Fueling",
+          "New"
+        ],
+        "similarity": 0.812,
+        "url": "https://screenrant.com/scarlett-johansson-paper-tiger-trailer-adam-driver/",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 18649,
+      "PAGE_TEXTCHANGE": 138337,
+      "PAGE_TITLECHANGE": 52968,
+      "UNCHANGED_CONTENT": 783996
+    },
+    "title_changes_en": 13666,
+    "trace": [
+      {
+        "bytes_billed": 27262976,
+        "created": "1790247011920",
+        "job_id": "world_gdg_counts_20260923",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 249561088,
+        "created": "1790247017139",
+        "job_id": "world_gdg_titles_20260923",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-24T10:54:02Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-23.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

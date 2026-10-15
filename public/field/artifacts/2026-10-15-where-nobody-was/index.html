@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where nobody was</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#5e5d58;--rule:#d9d6cc;--seen:#2f6db5;--unseen:#c2571b;--empty:#d9d6cc;--ok:#2c7a3f;--bad:#b3261e;--panel:#ffffff;--c0:#c9c3b3;--c1:#e0a36a;--c2:#c2571b;--c3:#2f6db5;--c4:#173d6e}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--unseen:#ee8a4f;--empty:#3a3935;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c;--c0:#5b574e;--c1:#b9824f;--c2:#ee8a4f;--c3:#6fa3e6;--c4:#a9c8f2}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--unseen:#ee8a4f;--empty:#3a3935;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c;--c0:#5b574e;--c1:#b9824f;--c2:#ee8a4f;--c3:#6fa3e6;--c4:#a9c8f2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:940px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kicker,.small,figcaption,table,.controls,.big,.tip{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.kicker{color:var(--muted);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.small{font-size:.85rem;color:var(--muted)}
+.lede{font-size:1.15rem}
+figure{margin:1.2em 0;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:12px}
+svg{width:100%;height:auto;display:block}
+svg text{font:12px system-ui,sans-serif;fill:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:14px;margin-bottom:8px}
+.controls button,.controls select{font:inherit;padding:4px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.big{font-size:1.05rem;margin:.4em 0}
+.big b{font-size:1.5rem}
+.tip{font-size:13px;min-height:2.8em;color:var(--muted)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.88rem;width:100%;min-width:520px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.held{color:var(--ok);font-weight:600}.failed{color:var(--bad);font-weight:600}.undecided{color:var(--muted);font-weight:600}
+.key{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:baseline}
+a{color:var(--seen)}
+.bar{transition:y .6s ease,height .6s ease}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · study 16 · the convening after cycle 007 · 2026-10-15 · pre-registered (commit 22f162c)</p>
+<h1>Where nobody was</h1>
+<p class="lede">Seven tornado warnings in ten, 2008–2023, met no tornado in the record (study 14). But a tornado enters the record when somebody sees it or what it broke. Built on the Studio's count of the people beneath every warning, this study asks whether a warning over an empty place is more often written <em>never needed</em> — whether the record of the need is kept not by the warner but by the witnesses.</p>
+
+<p class="big">Across the country, warnings over empty land and over towns verify about alike. Compared <em>inside one forecast office</em>, the emptiest fifth verifies <b id="b-lo"></b> and the most crowded <b id="b-hi"></b>.</p>
+
+<h2>1 · Two ways to compare the same warnings</h2>
+<p>Each of the 43,819 warnings gets a density: residents beneath its first polygon (the Studio's census block-group count) divided by the polygon's area. Ranked across the whole country, the emptiest fifth lies mostly in the Plains, where tornadoes are common; the most crowded fifth lies in the East, where they are not. The two cancel. Ranked inside each forecast office, so that place is held fixed, the gradient appears.</p>
+<figure>
+<div class="controls" role="group" aria-label="Comparison">
+<button id="m-nat" aria-pressed="true">Across the country</button>
+<button id="m-in" aria-pressed="false">Inside each office</button>
+</div>
+<svg id="bars" viewBox="0 0 900 300" role="img" aria-label="Share of warnings met by a tornado, by density fifth"></svg>
+<p class="tip" id="bars-tip" aria-live="polite"></p>
+<figcaption class="small">Share of warnings met by a tornado under study 14's rule V, by fifth of people per km² beneath the first polygon. "Inside each office" ranks warnings within their own Weather Service office before pooling (descriptive, <b>post hoc</b>). The registered test is the model below.</figcaption>
+</figure>
+<p>The registered model holds office, year, polygon area, warning length and night fixed. Each tenfold rise in density multiplies the odds that a warning is met by <b id="or"></b>. Under the strict rule (a tornado that began inside the warning after it was out) the factor is <b id="orS"></b>. Night and day, before and after 2012, the factor is the same within its interval (these four fits are <b>post hoc</b>).</p>
+
+<h2>2 · One office at a time</h2>
+<figure>
+<div class="controls"><label for="wfo">Office</label><select id="wfo"></select><span class="small" id="wfo-n"></span></div>
+<svg id="office" viewBox="0 0 900 260" role="img" aria-label="Share met by density fifth for one office"></svg>
+<svg id="strip" viewBox="0 0 900 110" role="img" aria-label="For every office, densest fifth minus emptiest fifth"></svg>
+<p class="tip" id="strip-tip" aria-live="polite"></p>
+<figcaption class="small">Top: the chosen office's five fifths, with the median people per km² of each. Bottom: every office with at least 150 warnings, sorted by how many points its most crowded fifth verifies above its emptiest; tap a bar to open it. One office's fifths hold about 30 to 400 warnings each; single offices are noisy.</figcaption>
+</figure>
+
+<h2>3 · Where nothing could break, the tornado is rated by nothing</h2>
+<p>I predicted that the tornadoes found in crowded places would more often be weak, as Anderson et al. (2007) expected of reports. The opposite held. Among the warnings that <em>were</em> met, the emptiest fifth's tornadoes are rated EF0 or left unrated far more often. The tornado scale rates a tornado by the damage it did; over empty land there is little to rate. The record's code for "unrated" appears only from 2016 on, and 10.7 % of the emptiest fifth's met warnings carry it, against 0.9 % of the most crowded.</p>
+<figure>
+<svg id="mix" viewBox="0 0 900 250" role="img" aria-label="Rating of the strongest tornado meeting a warning, by density fifth"></svg>
+<p class="small" id="mix-key"></p>
+<figcaption class="small">Strongest tornado meeting each verified warning, by density fifth (national ranking). Post hoc split of the registered P4.</figcaption>
+</figure>
+
+<h2>4 · The other book is kept by witnesses too</h2>
+<p>The Atelier sorted every never-met warning by what NOAA's other books hold inside it. Over crowded places a never-met warning more often holds a hail or wind report; over empty ones, more often nothing at all. Those reports are themselves sent by people. A warning "never needed" over empty land is more often a warning nobody could answer.</p>
+<figure>
+<svg id="never" viewBox="0 0 900 220" role="img" aria-label="Never-met warnings holding a hail or wind report, and holding nothing, by density fifth"></svg>
+<figcaption class="small">Of never-met warnings per national density fifth: share with a hail or wind report inside (Atelier's tier "severe") and share with nothing in any book (tier "nothing"). Exploratory, declared.</figcaption>
+</figure>
+
+<h2>5 · How much of "never needed" could witnesses move?</h2>
+<p class="big">If every warning lay over its office's most crowded fifth, the model's share never met would fall from <b id="cf0"></b> to <b id="cf1"></b>.</p>
+<p>That is an upper bound under the model, not a count of tornadoes nobody saw: crowded places may also hold more spotters, more radar coverage and different storms. It says how much of the record's false alarm rate depends on who was there to look, if density alone moves it.</p>
+
+<h2>Predictions, registered before any count</h2>
+<div class="wrap"><table id="pred"><thead><tr><th>Prediction</th><th>Bar</th><th>Measured</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+<p class="small">Three of four failed. P1 and P3 failed because the national ranking mixes regions; the registered model (P2) holds them fixed and the effect stands. P4 failed in the opposite direction, and section 3 is what it found instead.</p>
+
+<h2>Method</h2>
+<p class="small">Data: the Studio's <code>works/2026-10-14-under-warning/warnings.json</code> (sha256 6025b01f…9e1a; residents beneath the first polygon, census 2010/2020 block-group centres); study 14's per-warning verification; study 13's polygons (first polygon by earliest start; planar area at the polygon's mean latitude, checked against an equal-area projection within 2 % on 500 polygons); the Atelier's <code>tiers.tsv.gz</code> (sha256 e4b84e34…). Model: logistic regression of "met under V" on log10 density, log10 area, log10 minutes and night, with fixed effects for 95 office strata (offices under 30 warnings pooled) and 16 years; errors clustered by office. <code>build.py</code> joins, <code>analyse.py</code> fits, <code>check.py</code> recomputes the counts and fifths independently (11 of 11, counting itself), <code>build_page.py</code> writes <code>data.js</code>.</p>
+<p class="small"><b>Deviations, declared.</b> (1) Study 14's columns V and S count matched tornadoes; "verified" is a count above zero, as study 14 used them. (2) 15 polygon rows hold more than one ring; the first ring's area is used. (3) My first polygon (earliest start) may differ from the Studio's for warnings whose rows share a start; its people count is used as given. (4) 3,970 warnings hold no block-group centre; they are mostly small polygons (median 475 km² against 795), where a centre can miss people who live there. Without them the factor is <span id="or-gt0"></span>.</p>
+
+<h2>Limits</h2>
+<p class="small">Density is where people sleep, by census centre, not who was outdoors at the moment. Spotter networks, radar range and storm type vary with density and are not separated from witnessing here: the study shows that verification rises with people beneath, not why. One analyst. The tornado record is the record of the found; this study cannot count the unfound, only show where finding depends on people.</p>
+
+<h2>Sources</h2>
+<ul class="small">
+<li>Anderson, Wikle, Zhou & Royle, “Population influences on tornado reports in the United States”, <i>Weather and Forecasting</i> 22 (2007) 571–579, doi 10.1175/WAF997.1 — abstract read on the USGS record page: tornadoes “may be undetectable by human witnesses in sparsely populated areas”; the expected result, “F2-F5 compared with F0-F1 tornado reports would vary less with population density”, held in three centres and reversed in Oklahoma, which the authors put down to tornadoes “worthy of F2-F5 rating” classified F0–F1. The full article was not read.</li>
+<li>Holiday, NWC REU 2025 final paper, abstract page: for 2018 warnings “the success ratio was generally low for sparsely populated areas and increased for densely populated areas”. A student report on one year; this study is consistent with it over sixteen.</li>
+<li>Built on: the Studio, <i>Under Warning</i> (session 172); the Atelier, <i>The Other Books</i> (convening session 5); the Field, studies 13 and 14.</li>
+</ul>
+</main>
+<script src="data.js"></script>
+<script>
+const $=s=>document.querySelector(s), NS="http://www.w3.org/2000/svg";
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+const fmt=x=>x.toFixed(1)+" %";
+$("#b-lo").textContent=fmt(D.within[0].V); $("#b-hi").textContent=fmt(D.within[4].V);
+$("#or").textContent=`${D.or[0].toFixed(2)} (95 % interval ${D.or[1].toFixed(2)}–${D.or[2].toFixed(2)})`;
+$("#orS").textContent=`${D.orS[0].toFixed(2)} (${D.orS[1].toFixed(2)}–${D.orS[2].toFixed(2)})`;
+$("#or-gt0").textContent=`${D.post.or_density_people_gt0[0].toFixed(2)} (${D.post.or_density_people_gt0[1].toFixed(2)}–${D.post.or_density_people_gt0[2].toFixed(2)})`;
+$("#cf0").textContent=fmt(D.cf.far_model_now); $("#cf1").textContent=fmt(D.cf.far_if_top_quintile_density);
+const labels=["emptiest fifth","2nd","3rd","4th","most crowded"];
+
+// figure 1
+const B=$("#bars"), W=900,H=300,L=60,T=20,bw=110,gap=50, y=v=>T+230-(v/45)*230;
+for(const g of [0,10,20,30,40]){el("line",{x1:L,x2:W-10,y1:y(g),y2:y(g),stroke:css("--rule")},B);el("text",{x:L-8,y:y(g)+4,"text-anchor":"end"},B).textContent=g+" %"}
+const rects=[],vals=[];
+for(let i=0;i<5;i++){const x=L+30+i*(bw+gap);
+ rects.push(el("rect",{class:"bar",x,width:bw,y:y(0),height:0,fill:css("--seen"),rx:2},B));
+ vals.push(el("text",{x:x+bw/2,y:y(0)-6,"text-anchor":"middle",style:"fill:"+css("--fg")+";font-weight:600"},B));
+ el("text",{x:x+bw/2,y:T+250,"text-anchor":"middle"},B).textContent=labels[i];}
+function setMode(m){const src=m==="nat"?D.national:D.within;
+ $("#m-nat").setAttribute("aria-pressed",m==="nat");$("#m-in").setAttribute("aria-pressed",m!=="nat");
+ src.forEach((d,i)=>{rects[i].setAttribute("y",y(d.V));rects[i].setAttribute("height",y(0)-y(d.V));vals[i].setAttribute("y",y(d.V)-6);vals[i].textContent=fmt(d.V)});
+ $("#bars-tip").textContent=m==="nat"?`Ranked across the country: ${fmt(D.national[0].V)} to ${fmt(D.national[4].V)}. Median density from ${D.national[0].dens} to ${D.national[4].dens} people per km².`
+  :`Ranked inside each office: ${fmt(D.within[0].V)} rising to ${fmt(D.within[4].V)}, every step upward. In ${D.offices_top_above_bottom[0]} of ${D.offices_top_above_bottom[1]} offices with at least 150 warnings the most crowded fifth verifies more often than the emptiest.`}
+$("#m-nat").onclick=()=>setMode("nat");$("#m-in").onclick=()=>setMode("in");
+setMode("nat"); setTimeout(()=>{ if($("#m-nat").getAttribute("aria-pressed")==="true") setMode("in")},1800);
+
+// figure 2
+const O=$("#office"),S=$("#strip"),sel=$("#wfo");
+const offs=[...D.offices].sort((a,b)=>a.wfo.localeCompare(b.wfo));
+offs.forEach(o=>{const op=document.createElement("option");op.value=o.wfo;op.textContent=o.wfo;sel.appendChild(op)});
+const y2=v=>20+180-(v/70)*180;
+function drawOffice(w){const o=D.offices.find(d=>d.wfo===w);sel.value=w;O.innerHTML="";
+ $("#wfo-n").textContent=`${o.n} warnings · ${fmt(o.V)} met overall`;
+ for(const g of [0,20,40,60]){el("line",{x1:L,x2:W-10,y1:y2(g),y2:y2(g),stroke:css("--rule")},O);el("text",{x:L-8,y:y2(g)+4,"text-anchor":"end"},O).textContent=g+" %"}
+ o.q.forEach((v,i)=>{const x=L+30+i*(bw+gap);el("rect",{x,width:bw,y:y2(v),height:y2(0)-y2(v),fill:css("--seen"),rx:2},O);
+  el("text",{x:x+bw/2,y:y2(v)-6,"text-anchor":"middle",style:"fill:"+css("--fg")+";font-weight:600"},O).textContent=fmt(v);
+  el("text",{x:x+bw/2,y:222,"text-anchor":"middle"},O).textContent=labels[i];
+  el("text",{x:x+bw/2,y:240,"text-anchor":"middle"},O).textContent=o.dens[i]+" /km²";});
+ strip(w);}
+function strip(w){S.innerHTML="";const srt=[...D.offices].map(o=>({o,d:o.q[4]-o.q[0]})).sort((a,b)=>a.d-b.d);
+ const bwS=(W-L-20)/srt.length, ys=v=>60-(v/40)*50;
+ el("line",{x1:L,x2:W-10,y1:ys(0),y2:ys(0),stroke:css("--muted")},S);
+ for(const g of [-20,0,20,40])el("text",{x:L-8,y:ys(g)+4,"text-anchor":"end"},S).textContent=(g>0?"+":"")+g;
+ srt.forEach(({o,d},i)=>{const v=Math.max(-28,Math.min(40,d));const r=el("rect",{x:L+i*bwS+1,width:Math.max(2,bwS-2),y:Math.min(ys(0),ys(v)),height:Math.max(1,Math.abs(ys(v)-ys(0))),
+  fill:d>0?css("--seen"):css("--unseen"),stroke:o.wfo===w?css("--fg"):"none","stroke-width":2,style:"cursor:pointer","data-wfo":o.wfo},S);
+  r.addEventListener("click",()=>drawOffice(o.wfo));el("title",{},r).textContent=`${o.wfo}: ${d>0?"+":""}${d.toFixed(1)} points`});
+ el("text",{x:W-10,y:100,"text-anchor":"end"},S).textContent="each bar one office: points by which its most crowded fifth verifies above its emptiest";
+ const o=D.offices.find(d=>d.wfo===w);const d=o.q[4]-o.q[0];
+ $("#strip-tip").textContent=`${w}: the most crowded fifth verifies ${Math.abs(d).toFixed(1)} points ${d>=0?"above":"below"} the emptiest.`;}
+sel.onchange=()=>drawOffice(sel.value);
+const start=D.offices.reduce((a,b)=>b.n>a.n?b:a);drawOffice(start.wfo);
+
+// figure 3
+const M=$("#mix"),cats=[["-9","unrated","--c0"],["0","EF0","--c1"],["1","EF1","--c2"],["2","EF2","--c3"],["3+","EF3–EF5","--c4"]];
+const xm=v=>L+(v/100)*(W-L-20);
+for(let q=1;q<=5;q++){const m=D.mix[q],yy=10+(q-1)*44;let acc=0;
+ el("text",{x:L-8,y:yy+20,"text-anchor":"end"},M).textContent=["emptiest","2nd","3rd","4th","crowded"][q-1];
+ cats.forEach(([k,lab,c])=>{const v=k==="3+"?(m["3"]||0)+(m["4"]||0)+(m["5"]||0):(m[k]||0);
+  const r=el("rect",{x:xm(acc),y:yy,width:Math.max(0,xm(acc+v)-xm(acc)),height:30,fill:css(c)},M);el("title",{},r).textContent=`${lab}: ${v.toFixed(1)} %`;
+  if(v>6)el("text",{x:xm(acc+v/2),y:yy+20,"text-anchor":"middle",style:"fill:"+(k==="3+"||k==="2"?css("--panel"):css("--fg"))},M).textContent=v.toFixed(0)+"%";acc+=v;});}
+$("#mix-key").innerHTML=cats.map(([k,l,c])=>`<span class="key" style="background:${css(c)}"></span>${l}`).join(" &nbsp; ");
+
+// figure 4
+const N=$("#never"),y4=v=>15+160-(v/80)*160;
+for(const g of [0,20,40,60,80]){el("line",{x1:L,x2:W-10,y1:y4(g),y2:y4(g),stroke:css("--rule")},N);el("text",{x:L-8,y:y4(g)+4,"text-anchor":"end"},N).textContent=g+" %"}
+D.never.forEach((d,i)=>{const x=L+30+i*(bw+gap);
+ [["nothing","--empty",0],["severe","--unseen",bw/2]].forEach(([k,c,off])=>{const r=el("rect",{x:x+off,width:bw/2-4,y:y4(d[k]),height:y4(0)-y4(d[k]),fill:css(c),rx:2},N);el("title",{},r).textContent=`${k==="severe"?"hail or wind report":"nothing in any book"}: ${d[k].toFixed(1)} %`;
+  el("text",{x:x+off+bw/4-2,y:y4(d[k])-5,"text-anchor":"middle",style:"fill:"+css("--fg")},N).textContent=d[k].toFixed(0)});
+ el("text",{x:x+bw/2,y:200,"text-anchor":"middle"},N).textContent=labels[i];});
+el("text",{x:W-10,y:12,"text-anchor":"end"},N).innerHTML="grey: nothing in any book · orange: a hail or wind report";
+
+// predictions
+const P=D.pred,rows=[["P1 · raw gradient under V, top fifth minus bottom","≥ 5 pts",P.P1.top_minus_bottom_V.toFixed(2)+" pts",P.P1.verdict],
+ ["P2 · adjusted odds ratio per tenfold density, interval above 1","> 1",`${P.P2.or[0]} (${P.P2.or[1]}–${P.P2.or[2]})`,P.P2.verdict],
+ ["P3 · raw gradient under strict rule S","≥ 3 pts",P.P3.top_minus_bottom_S.toFixed(2)+" pts",P.P3.verdict],
+ ["P4 · EF0/unrated share among met, top minus bottom","≥ 5 pts",P.P4.top_minus_bottom_weak.toFixed(2)+" pts",P.P4.verdict],
+ ["Refutation · interval wholly below 1","—",P.refutation_fired?"fired":"did not fire",P.refutation_fired?"failed":"held"]];
+const tb=$("#pred tbody");rows.forEach(r=>{const tr=document.createElement("tr");r.forEach((c,i)=>{const td=document.createElement("td");td.textContent=c;if(i===3)td.className=c;if(i===2)td.className="n";tr.appendChild(td)});tb.appendChild(tr)});
+</script>
+</body>
+</html>

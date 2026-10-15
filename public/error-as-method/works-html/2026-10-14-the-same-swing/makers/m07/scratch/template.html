@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Sixty-One Turns</title>
+<style>
+  html,body{margin:0;padding:0;background:#f2eee5;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#2b2a28;}
+  canvas{display:block;position:absolute;left:0;top:0;}
+  .t{position:absolute;left:90px;top:34px;font-size:22px;letter-spacing:.02em;}
+  .c{position:absolute;left:90px;top:752px;width:920px;font-size:12.5px;line-height:1.45;color:#6d6a63;font-style:italic;}
+</style>
+</head>
+<body>
+<canvas id="v" width="1100" height="800"></canvas>
+<div class="t">Sixty-one turns</div>
+<div class="c">1,464 readings, cut at the low point of each turn into lengths of about twenty-four, and the lengths laid over one another: sixty-one turns, the first and last broken off. Earliest in blue-black, latest in red-brown. Below, the same lengths side by side in order, each reduced to its span.</div>
+<script>
+(function(){
+const B64="__DATA__";
+const W=300,H=90;
+const raw=atob(B64);const g=new Float32Array(W*H);
+for(let i=0;i<W*H;i++){let d=(255-raw.charCodeAt(i))/255;d=(d-0.14)/0.86;g[i]=d>0?d:0;}
+{const kk=[0.27,0.46,0.27],h=new Float32Array(W*H);for(let y=0;y<H;y++)for(let x=0;x<W;x++){let s=0;for(let j=-1;j<=1;j++){const yy=Math.min(H-1,Math.max(0,y+j));s+=kk[j+1]*g[yy*W+x];}h[y*W+x]=s;}g.set(h);}
+const ink=(x,y)=>{ // bilinear darkness at fractional source coords
+  if(x<0||x>W-1||y<0||y>H-1)return 0;
+  const x0=Math.floor(x),y0=Math.floor(y),x1=Math.min(x0+1,W-1),y1=Math.min(y0+1,H-1),fx=x-x0,fy=y-y0;
+  return (g[y0*W+x0]*(1-fx)+g[y0*W+x1]*fx)*(1-fy)+(g[y1*W+x0]*(1-fx)+g[y1*W+x1]*fx)*fy;
+};
+const P=4.84, X0=-0.48, XMIN=0.5, XMAX=298;
+const days=[];for(let k=0;;k++){const a=X0+k*P;if(a>=XMAX)break;if(a+P>XMIN)days.push(a);}
+const N=days.length;
+// inks as absorption (r,g,b)
+const A0=[1.05,0.82,0.42], A1=[0.30,0.78,1.10];
+const absorb=k=>{const t=k/(N-1);return A0.map((v,i)=>v+(A1[i]-v)*t);};
+const cv=document.getElementById('v'),ctx=cv.getContext('2d');
+const paper=[242,238,229];
+ctx.fillStyle='rgb(242,238,229)';ctx.fillRect(0,0,1100,800);
+// ---- fold panel
+const L=90,T=86,PW=920,PH=500;
+const acc=new Float32Array(PW*PH*3);
+for(let k=0;k<N;k++){
+  const a=days[k],ab=absorb(k);
+  for(let u=0;u<PW;u++){
+    const sx=a+(u+0.5)/PW*P; if(sx<XMIN||sx>XMAX)continue;
+    for(let v=0;v<PH;v++){
+      const d=ink(sx,(v+0.5)/PH*H-0.5); if(d<=0.01)continue;
+      const o=(v*PW+u)*3; acc[o]+=d*ab[0];acc[o+1]+=d*ab[1];acc[o+2]+=d*ab[2];
+    }
+  }
+}
+const img=ctx.getImageData(L,T,PW,PH),px=img.data,K=0.16;
+for(let i=0;i<PW*PH;i++){for(let c=0;c<3;c++)px[i*4+c]=paper[c]*Math.exp(-K*acc[i*3+c]);px[i*4+3]=255;}
+ctx.putImageData(img,L,T);
+// hairlines at the cuts
+ctx.strokeStyle='rgba(43,42,40,0.28)';ctx.lineWidth=1;
+[L-0.5,L+PW+0.5].forEach(x=>{ctx.beginPath();ctx.moveTo(x,T-6);ctx.lineTo(x,T+PH+6);ctx.stroke();});
+// ---- day spans
+const ST=600,SH=130,gap=PW/N;
+for(let k=0;k<N;k++){
+  const a=days[k],ab=absorb(k);
+  let lo=1e9,hi=-1,sw=0,sy=0;
+  for(let sx=Math.max(a,XMIN);sx<Math.min(a+P,XMAX);sx+=0.25){
+    for(let y=0;y<H;y+=0.5){const d=ink(sx,y);if(d>0.35){if(y<lo)lo=y;if(y>hi)hi=y;sw+=d;sy+=d*y;}}
+  }
+  if(hi<0)continue;
+  const col=ab.map((v,i)=>Math.round(paper[i]*Math.exp(-1.6*v)));
+  const x=L+(k+0.5)*gap,s=SH/H;
+  ctx.strokeStyle=`rgb(${col})`;ctx.lineWidth=Math.max(2,gap*0.32);ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(x,ST+lo*s);ctx.lineTo(x,ST+hi*s);ctx.stroke();
+  ctx.fillStyle=`rgb(${col})`;ctx.beginPath();ctx.arc(x,ST+(sy/sw)*s,gap*0.3,0,7);ctx.fill();
+  ctx.fillStyle='rgb(242,238,229)';ctx.beginPath();ctx.arc(x,ST+(sy/sw)*s,gap*0.12,0,7);ctx.fill();
+}
+})();
+</script>
+</body>
+</html>

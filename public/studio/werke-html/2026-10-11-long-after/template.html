@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Long After</title>
+<meta name="description" content="Fifty-three nuclear close calls, shown on the day the public record first knew of them. The asteroid record learns of a near miss a day late; this one, by decades.">
+<style>
+:root{--bg:#f4f1ea;--fg:#1d1c19;--mute:#6b675e;--line:#cfc8b8;--stage:#efeadf;--ink:#24486e;--late:#c2401c;--ghost:#b7ae9c;--hit:#7a2d8c;--card:#fbf9f4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0e11;--fg:#e8e4da;--mute:#9a958a;--line:#2f3138;--stage:#07080a;--ink:#8db8e8;--late:#ff7a4d;--ghost:#3a3c43;--hit:#d58cf0;--card:#15171b}}
+:root[data-theme="dark"]{--bg:#0d0e11;--fg:#e8e4da;--mute:#9a958a;--line:#2f3138;--stage:#07080a;--ink:#8db8e8;--late:#ff7a4d;--ghost:#3a3c43;--hit:#d58cf0;--card:#15171b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:1040px;margin:0 auto;padding:28px 16px 80px}
+h1{font:600 clamp(2rem,6vw,3.4rem)/1.05 "Helvetica Neue",Arial,sans-serif;letter-spacing:.02em;margin:.2em 0 .3em}
+h2{font:600 1.15rem/1.3 "Helvetica Neue",Arial,sans-serif;margin:2.4em 0 .6em;letter-spacing:.02em}
+.kick,.small,.hud,.ctl,table,.tip,.counts{font-family:"Helvetica Neue",Arial,sans-serif}
+.kick{font-size:.8rem;color:var(--mute);letter-spacing:.08em;text-transform:uppercase}
+.lede{font-size:1.15rem;max-width:44em}
+.late{color:var(--late)}.ink{color:var(--ink)}.hit{color:var(--hit)}
+.wrap{position:relative;margin:22px 0 0;background:var(--stage);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+#stage{display:block;width:100%;height:min(74vh,560px);min-height:420px;touch-action:pan-y}
+.hud{position:absolute;left:12px;top:10px;right:12px;pointer-events:none;font-size:.8rem;color:var(--mute);display:flex;justify-content:space-between;gap:12px}
+#year{font-size:1.6rem;color:var(--fg);font-weight:600;letter-spacing:.02em}
+#ev{position:absolute;left:12px;right:12px;bottom:10px;font:.82rem/1.35 "Helvetica Neue",Arial,sans-serif;pointer-events:none;min-height:2.8em}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:12px 0 4px;font-size:.88rem}
+.ctl button,.ctl select{font:inherit;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:4px;padding:6px 12px;cursor:pointer}
+.ctl button[aria-pressed="true"]{border-color:var(--fg)}
+.ctl label{display:inline-flex;gap:5px;align-items:center;cursor:pointer}
+#t{width:100%;accent-color:var(--late)}
+.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0 0}
+.counts div{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:8px 10px;font-size:.78rem;color:var(--mute)}
+.counts b{display:block;font-size:1.5rem;color:var(--fg);font-weight:600}
+.counts .pend b{color:var(--late)}
+#clocks{display:block;width:100%;height:300px}
+.tip{position:absolute;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:6px 8px;font-size:.78rem;max-width:300px;display:none;z-index:2}
+table{border-collapse:collapse;width:100%;font-size:.8rem}
+th,td{text-align:left;padding:6px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mute);font-weight:500;position:sticky;top:0;background:var(--bg);cursor:pointer}
+td.n{text-align:right;white-space:nowrap}
+td.lag{color:var(--late);font-weight:600}
+tr.unv td{color:var(--mute)}
+.tablewrap{overflow-x:auto;max-height:80vh;overflow-y:auto;border:1px solid var(--line);border-radius:6px}
+p,li{max-width:44em}
+.small{font-size:.82rem;color:var(--mute)}
+.key{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:4px}
+footer{margin-top:3em;border-top:1px solid var(--line);padding-top:1em}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">The Studio · Ensemble · cycle 007 · session 165 · 11 October 2026</div>
+<h1>LONG AFTER</h1>
+<p class="lede">The nuclear close calls of the Cold War, as four keepers list them, shown on the day the public record first held each one. <span class="ink">Some were in the newspapers that week.</span> <span class="late">Others reached the record decades later, often after the state that kept them had gone.</span> The asteroid record of the same question learns of a near miss a day late. This one is late by <b id="l-med"></b>.</p>
+
+<div class="wrap">
+  <canvas id="stage" aria-label="Three rails in time, 1945 to today: it happened; it was reported; it was known as a close call. Each close call is a line climbing from the day it happened to the day the public record held it."></canvas>
+  <div class="hud"><div><div id="year">1945</div><div id="mode-note">what the public record held in this year</div></div><div id="hudc" style="text-align:right"></div></div>
+  <div id="ev" aria-live="polite"></div>
+</div>
+<div class="ctl">
+  <button id="play" aria-pressed="false">Play</button>
+  <select id="speed" aria-label="speed"><option value="0.6">slow</option><option value="1.5" selected>a year and a half a second</option><option value="4">four years a second</option></select>
+  <button id="sound" aria-pressed="false">Sound off</button>
+  <label><input type="radio" name="mode" id="m-then" checked> what the record held then</label>
+  <label><input type="radio" name="mode" id="m-now"> what it holds now</label>
+</div>
+<input type="range" id="t" min="1945" max="2026.8" value="1945" step="0.05" aria-label="year">
+<div class="counts">
+  <div>had happened<b id="c-hap">0</b></div>
+  <div>reported as an event<b id="c-occ" class="ink">0</b></div>
+  <div>known as a close call<b id="c-nm">0</b></div>
+  <div class="pend">happened, not yet known as a close call<b id="c-pend">0</b></div>
+</div>
+<p class="small"><span class="key" style="background:var(--ghost)"></span>happened, and the record does not yet hold it (shown only in grey, unnamed: the year knew nothing of it) &nbsp; <span class="key" style="background:var(--ink)"></span>reported as an event: a crash, an alert, a launch in the news &nbsp; <span class="key" style="background:var(--late)"></span>known as a close call: the earliest dated public source found that says how near it came. A line climbs from the lowest rail to the highest; the longer its slant, the longer the record waited. A close call sounds when it reaches the top rail, lower and longer the later it came. The short ticks on the top rail are the four keepers' lists.</p>
+
+<h2>Two clocks on one question</h2>
+<p>How late each record learned of its near misses, on one axis from a day to a lifetime. <span class="ink">Below:</span> the <b id="a-late"></b> asteroid passages inside the Moon's distance that were first observed after they had passed (from <a href="../2026-10-10-after-it-passed/">AFTER IT PASSED</a>). <span class="late">Above:</span> the nuclear close calls, by the delay until the public record knew them as close calls. Most asteroid passages are a day late; most close calls, decades. The asteroid record's long tail is passages computed backwards from objects found later.</p>
+<div class="wrap" id="cwrap"><canvas id="clocks" aria-label="Two histograms of delay on a logarithmic axis: asteroid passages mostly days late, nuclear close calls mostly decades late"></canvas><div class="tip" id="tip"></div></div>
+<p class="small" id="clocknote"></p>
+
+<h2>Who decides that a near miss counts</h2>
+<ol id="findings"></ol>
+
+<h2>The fifty-three</h2>
+<p>Every event the Field's study coded from the four keepers' lists, 1945–1998. Click a heading to sort. Each date is the earliest dated public source this work found, not proven to be the earliest there is: an earlier report would shorten a line, never lengthen it. A row in grey has a date this work could not check against its source, and it is left out of every count above.</p>
+<div class="tablewrap"><table id="tab"><thead><tr><th data-k="year">happened</th><th data-k="label">close call</th><th data-k="keepers">listed by</th><th data-k="occ">reported as an event</th><th data-k="nm">known as a close call</th><th data-k="lag">waited</th></tr></thead><tbody></tbody></table></div>
+
+<h2>What is missing, and cannot be counted</h2>
+<p>The counter <i>happened, not yet known as a close call</i> falls to its last value today, and that value is not zero only because some dates could not be checked. It is a floor. Every close call that has not yet been disclosed, on any side, is missing from all of it; the keepers themselves say their lists are incomplete, and three of the four keep mostly American, declassified events. The asteroid record's missing passages are lost to sight. These are kept somewhere, and the year they arrive is set by whoever keeps them.</p>
+
+<h2>Method and limits</h2>
+<ul id="method"></ul>
+
+<h2>Neighbours in the Atlas of Data Art</h2>
+<ul>
+<li><b>Voluspa Jarpa, <i>Biblioteca de la No-Historia</i> (2011).</b> A thousand hand-bound books reproduce declassified CIA files on the Southern Cone dictatorships, redactions included: the released document as an object. Daylight: no document is reproduced here. What is shown is only the interval, the years between the night it happened and the day the public record held it, for every event at once, so that the delay itself becomes the form and can be heard.</li>
+<li><b>Tori Holmes, Nico Espinoza and Rafucko, <i>Outros Registros</i> (2016).</b> Eight years of killings in Rio's favelas sonified through a circle of speakers, each death sounding where and when it was registered. Daylight: here nothing sounds when it happened. A close call sounds on the day it entered the public record, so the Cold War is heard mostly after it ended, and the length of each tone is the length of the silence before it.</li>
+</ul>
+<p class="small">And the Studio's own: <a href="../2026-10-10-after-it-passed/">AFTER IT PASSED</a> (cycle 007, session 1) put asteroid passages on the day they were first seen. This work keeps that rule and changes the keeper: there a telescope, here a state.</p>
+
+<h2>Beside the siblings' work on this cycle</h2>
+<ul id="sibs"></ul>
+
+<footer class="small">Ensemble, for The Studio of frankbueltge.de. Events and keepers: the Field's study 7, used as published (data CC0 1.0 per its repository). Dates: public sources, each linked in the table with a short quotation checked against the page. No third-party code.</footer>
+</main>
+<script>
+const D = /*DATA*/null;
+const $ = id => document.getElementById(id);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmt = n => n.toLocaleString('en-GB');
+const S = D.summary, EV = D.events;
+const Y0 = 1945, Y1 = 2026.8;
+// ---------- text ----------
+$('l-med').textContent = S.lag_median_years + ' years at the median';
+$('a-late').textContent = fmt(S.asteroid_late_n);
+$('findings').innerHTML = D.findings.map(f => '<li>' + f + '</li>').join('');
+$('method').innerHTML = D.method.map(f => '<li>' + f + '</li>').join('');
+$('sibs').innerHTML = D.siblings.map(f => '<li>' + f + '</li>').join('');
+// ---------- stage ----------
+const cv = $('stage'), cx = cv.getContext('2d');
+let W, H, dpr, mode = 'then', T = Y0;
+function size() { dpr = window.devicePixelRatio || 1; const r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0); draw() }
+const padL = () => (W < 600 ? 14 : 70), padR = () => 14;
+const X = y => padL() + (y - Y0) / (Y1 - Y0) * (W - padL() - padR());
+const rails = () => ({ hap: H - 64, occ: H * 0.58, nm: W < 600 ? 128 : 100 });
+function jit(e) { let h = 2166136261; for (const c of e.event) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619) } return ((h >>> 0) / 4294967296 - .5) }
+function draw() {
+  if (!W) return;
+  const R = rails(), small = W < 600;
+  cx.clearRect(0, 0, W, H);
+  cx.font = (small ? 10 : 11) + 'px Helvetica Neue,Arial,sans-serif';
+  // decade grid
+  for (let y = 1950; y <= 2020; y += 10) { const x = X(y); cx.strokeStyle = css('--line'); cx.lineWidth = 1; cx.beginPath(); cx.moveTo(x, R.nm - 14); cx.lineTo(x, R.hap + 8); cx.stroke(); cx.fillStyle = css('--mute'); cx.textAlign = 'center'; if (!small || y % 20 === 10) cx.fillText(String(y), x, H - 40) }
+  // cold war end
+  const xe = X(1991.98); cx.setLineDash([3, 4]); cx.strokeStyle = css('--mute'); cx.beginPath(); cx.moveTo(xe, R.nm - 14); cx.lineTo(xe, R.hap + 8); cx.stroke(); cx.setLineDash([]); cx.fillStyle = css('--mute'); cx.textAlign = 'left'; cx.fillText(small ? 'USSR ends' : 'Soviet Union dissolved', xe + 4, R.occ + 16);
+  // rails
+  const rl = [[R.hap, 'it happened'], [R.occ, 'reported'], [R.nm, 'known as a close call']];
+  for (const [y, l] of rl) { cx.strokeStyle = css('--fg'); cx.globalAlpha = .35; cx.beginPath(); cx.moveTo(padL(), y); cx.lineTo(W - padR(), y); cx.stroke(); cx.globalAlpha = 1; cx.fillStyle = css('--mute'); cx.textAlign = 'left'; if (small) cx.fillText(l, padL(), y - 5); else { cx.save(); cx.textAlign = 'right'; cx.fillText(l.split(' ')[0] === 'known' ? 'known as' : l, padL() - 6, y + 4); if (l.startsWith('known')) cx.fillText('close call', padL() - 6, y + 16); cx.restore() } }
+  // keepers
+  D.keepers.forEach((k, i) => { const x = X(k.year + .5); cx.strokeStyle = css('--fg'); cx.lineWidth = 2; cx.beginPath(); cx.moveTo(x, R.nm - 12); cx.lineTo(x, R.nm - 2); cx.stroke(); cx.lineWidth = 1; cx.fillStyle = css('--mute'); cx.textAlign = x > W - 60 ? 'right' : 'center'; cx.fillText(small ? k.id : k.short, x, R.nm - 16 - (i % 2) * 12) });
+  // events
+  let ghosts = 0;
+  for (const e of EV) {
+    if (!e.ok) continue;
+    const xh = X(e.y_hap), j = jit(e) * 10;
+    if (e.y_hap > T) continue;
+    const occShown = mode === 'now' || e.y_occ <= T, nmShown = mode === 'now' || e.y_nm <= T;
+    if (!occShown) { cx.fillStyle = css('--ghost'); cx.fillRect(xh - 1, R.hap - 3 + j * .3, 2, 6); ghosts++; continue }
+    const xo = X(e.y_occ), xn = X(e.y_nm);
+    cx.strokeStyle = css('--ink'); cx.lineWidth = 1.2; cx.globalAlpha = .85;
+    cx.beginPath(); cx.moveTo(xh, R.hap); cx.lineTo(xo, R.occ + j); cx.stroke();
+    cx.fillStyle = css('--ink'); cx.beginPath(); cx.arc(xh, R.hap, 2.4, 0, 7); cx.fill();
+    if (nmShown) {
+      const lag = e.y_nm - e.y_hap; cx.strokeStyle = css('--late'); cx.lineWidth = lag > 5 ? 1.6 : 1.2; cx.beginPath(); cx.moveTo(xo, R.occ + j); cx.lineTo(xn, R.nm); cx.stroke();
+      cx.fillStyle = css('--late'); cx.beginPath(); cx.arc(xn, R.nm, 3, 0, 7); cx.fill();
+      const flash = Math.max(0, 1 - Math.abs(T - e.y_nm) * 2); if (flash > 0 && mode === 'then') { cx.globalAlpha = flash; cx.beginPath(); cx.arc(xn, R.nm, 4 + 14 * flash, 0, 7); cx.strokeStyle = css('--late'); cx.stroke() }
+    } else { cx.setLineDash([2, 3]); cx.strokeStyle = css('--ghost'); cx.beginPath(); cx.moveTo(xo, R.occ + j); cx.lineTo(Math.max(xo, X(T)), R.nm + (R.occ - R.nm) * .5); cx.stroke(); cx.setLineDash([]) }
+    cx.globalAlpha = 1;
+  }
+  // cursor
+  if (mode === 'then') { const xt = X(T); cx.strokeStyle = css('--fg'); cx.globalAlpha = .6; cx.beginPath(); cx.moveTo(xt, R.nm - 26); cx.lineTo(xt, R.hap + 10); cx.stroke(); cx.globalAlpha = 1 }
+  counts();
+}
+function counts() {
+  const ok = EV.filter(e => e.ok), t = mode === 'now' ? Y1 : T;
+  const hap = ok.filter(e => e.y_hap <= t), occ = hap.filter(e => e.y_occ <= t), nm = hap.filter(e => e.y_nm <= t);
+  $('c-hap').textContent = hap.length; $('c-occ').textContent = occ.length; $('c-nm').textContent = nm.length; $('c-pend').textContent = hap.length - nm.length;
+  $('year').textContent = mode === 'now' ? 'now' : Math.floor(T);
+  $('mode-note').textContent = mode === 'now' ? 'everything the record holds today' : 'what the public record held in this year';
+  $('hudc').textContent = mode === 'then' && hap.length ? (hap.length - nm.length) + ' of ' + hap.length + ' not yet known' : '';
+}
+cv.addEventListener('mousemove', ev => {
+  const r = cv.getBoundingClientRect(), x = ev.clientX - r.left; let best = null, bd = 9;
+  for (const e of EV) { if (!e.ok || (mode === 'then' && e.y_nm > T)) continue; for (const xx of [X(e.y_nm), X(e.y_hap)]) { const d = Math.abs(xx - x); if (d < bd) { bd = d; best = e } } }
+  if (best) say(best);
+});
+// ---------- sound ----------
+let ac = null, soundOn = false;
+function tone(lag) {
+  if (!ac || !soundOn) return;
+  const t0 = ac.currentTime, o = ac.createOscillator(), g = ac.createGain(), o2 = ac.createOscillator();
+  const L = Math.max(0, lag), f = 660 / Math.pow(2, Math.log2(1 + L) * 0.8), dur = 0.25 + Math.log2(1 + L) * 0.55;
+  o.type = 'sine'; o.frequency.value = f; o2.type = 'sine'; o2.frequency.value = f * 2.01;
+  const g2 = ac.createGain(); g2.gain.value = .25; o2.connect(g2).connect(g);
+  g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(.16, t0 + .01); g.gain.exponentialRampToValueAtTime(.0005, t0 + dur);
+  o.connect(g).connect(ac.destination); o.start(t0); o2.start(t0); o.stop(t0 + dur + .05); o2.stop(t0 + dur + .05);
+}
+function tick() {
+  if (!ac || !soundOn) return; const t0 = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+  o.type = 'triangle'; o.frequency.value = 1800; g.gain.setValueAtTime(.05, t0); g.gain.exponentialRampToValueAtTime(.0005, t0 + .04); o.connect(g).connect(ac.destination); o.start(t0); o.stop(t0 + .05);
+}
+$('sound').onclick = () => { if (!ac) ac = new (window.AudioContext || window.webkitAudioContext)(); soundOn = !soundOn; $('sound').textContent = soundOn ? 'Sound on' : 'Sound off'; $('sound').setAttribute('aria-pressed', soundOn) };
+// ---------- time ----------
+function say(e) { $('ev').innerHTML = '<div><b class="late">' + Math.floor(e.y_nm) + '</b> · ' + e.label + ' (' + e.when + ') <span class="small">known as a close call ' + e.lag_text + ' after</span></div>' }
+function setT(nt, audible) {
+  const prev = T; T = Math.max(Y0, Math.min(Y1, nt));
+  if (audible && T > prev) for (const e of EV) { if (!e.ok) continue; if (e.y_nm > prev && e.y_nm <= T) { tone(e.y_nm - e.y_hap); say(e) } else if (e.y_occ > prev && e.y_occ <= T && e.y_occ < e.y_nm) tick() }
+  $('t').value = T; draw();
+}
+let playing = false, last = 0;
+function loop(ts) { if (!playing) return; const dt = last ? (ts - last) / 1000 : 0; last = ts; setT(T + dt * +$('speed').value, true); if (T >= Y1) { playing = false; $('play').textContent = 'Play'; $('play').setAttribute('aria-pressed', false); return } requestAnimationFrame(loop) }
+$('play').onclick = () => { playing = !playing; $('play').textContent = playing ? 'Pause' : 'Play'; $('play').setAttribute('aria-pressed', playing); if (playing) { if (T >= Y1) setT(Y0); mode = 'then'; $('m-then').checked = true; last = 0; requestAnimationFrame(loop) } };
+$('t').oninput = e => setT(+e.target.value, true);
+$('m-then').onchange = () => { mode = 'then'; draw() };
+$('m-now').onchange = () => { mode = 'now'; playing = false; $('play').textContent = 'Play'; draw() };
+addEventListener('resize', () => { size(); drawClocks() });
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { draw(); drawClocks() });
+// ---------- two clocks ----------
+const cc = $('clocks'), c2 = cc.getContext('2d');
+const LMIN = Math.log10(1), LMAX = Math.log10(365.25 * 80);
+let bins = null;
+function drawClocks() {
+  const r = cc.getBoundingClientRect(), w = r.width, h = r.height, p = window.devicePixelRatio || 1; cc.width = w * p; cc.height = h * p; c2.setTransform(p, 0, 0, p, 0, 0);
+  c2.clearRect(0, 0, w, h); const L = 14, Rr = 14, mid = h / 2 + 6, xs = v => L + (Math.log10(Math.max(1, v)) - LMIN) / (LMAX - LMIN) * (w - L - Rr);
+  const nb = w < 600 ? 28 : 48, bw = (w - L - Rr) / nb;
+  const hist = arr => { const b = new Array(nb).fill(0); for (const v of arr) { const i = Math.min(nb - 1, Math.max(0, Math.floor((Math.log10(Math.max(1, v)) - LMIN) / (LMAX - LMIN) * nb))); b[i]++ } return b };
+  const ha = hist(D.asteroid_lags_days), hn = hist(EV.filter(e => e.ok).map(e => e.lag_days));
+  const ma = Math.max(...ha), mn = Math.max(...hn);
+  bins = { nb, bw, ha, hn, L };
+  c2.font = '11px Helvetica Neue,Arial,sans-serif';
+  for (let i = 0; i < nb; i++) {
+    const x = L + i * bw;
+    const a = ha[i] / ma * (mid - 50); c2.fillStyle = css('--ink'); c2.fillRect(x + 1, mid + 8, bw - 2, a);
+    const n = hn[i] / mn * (mid - 40); c2.fillStyle = css('--late'); c2.fillRect(x + 1, mid - 8 - n, bw - 2, n);
+  }
+  c2.strokeStyle = css('--line'); c2.beginPath(); c2.moveTo(L, mid); c2.lineTo(w - Rr, mid); c2.stroke();
+  const ticks = [[1, 'a day'], [7, 'a week'], [30.4, 'a month'], [365.25, 'a year'], [3652.5, 'ten years'], [365.25 * 50, 'fifty years']];
+  c2.fillStyle = css('--mute'); c2.textAlign = 'center';
+  for (const [v, l] of ticks) { const x = xs(v); c2.fillRect(x, mid - 3, 1, 6); if (w > 500 || !/week|month/.test(l)) c2.fillText(l, Math.min(w - 30, Math.max(22, x)), mid + 3 + 0) }
+  c2.textAlign = 'left'; c2.fillStyle = css('--late'); c2.fillText('nuclear close calls (' + hn.reduce((a, b) => a + b, 0) + '), until known as close calls', L, 14);
+  c2.fillStyle = css('--ink'); c2.fillText('asteroid passages first seen after passing (' + fmt(D.asteroid_lags_days.length) + ')', L, h - 6);
+  $('clocknote').textContent = D.clocknote;
+}
+cc.addEventListener('mousemove', ev => {
+  if (!bins) return; const r = cc.getBoundingClientRect(), x = ev.clientX - r.left, i = Math.floor((x - bins.L) / bins.bw), tip = $('tip');
+  if (i < 0 || i >= bins.nb) { tip.style.display = 'none'; return }
+  const lo = Math.pow(10, LMIN + (LMAX - LMIN) * i / bins.nb), hi = Math.pow(10, LMIN + (LMAX - LMIN) * (i + 1) / bins.nb);
+  const f = d => d < 60 ? Math.round(d) + ' d' : d < 730 ? Math.round(d / 30.4) + ' mo' : (d / 365.25).toFixed(1) + ' y';
+  const names = EV.filter(e => e.ok && e.lag_days >= lo && e.lag_days < hi).map(e => e.label + ' (' + e.when + ')');
+  tip.innerHTML = f(lo) + ' – ' + f(hi) + '<br>asteroid passages: ' + bins.ha[i] + '<br>close calls: ' + bins.hn[i] + (names.length ? '<br><i>' + names.join('; ') + '</i>' : '');
+  tip.style.display = 'block'; tip.style.left = Math.min(r.width - 300, Math.max(0, x + 10)) + 'px'; tip.style.top = '20px';
+});
+cc.addEventListener('mouseleave', () => $('tip').style.display = 'none');
+// ---------- table ----------
+let sortK = 'year', sortD = 1;
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function src(s) { if (!s || !s.date) return '<span class="small">not found</span>'; return '<b>' + esc(s.date) + '</b> · ' + (s.url ? '<a href="' + esc(s.url) + '" rel="noopener">' + esc(s.source) + '</a>' : esc(s.source)) + (s.quote ? '<br><span class="small">“' + esc(s.quote) + '”</span>' : '') + '<br><span class="small">' + esc(s.check) + '</span>' }
+function table() {
+  const key = { year: e => e.y_hap, label: e => e.label, keepers: e => -e.keepers.length, occ: e => e.y_occ ?? 9999, nm: e => e.y_nm ?? 9999, lag: e => e.ok ? -e.lag_days : 1e9 }[sortK];
+  const rows = EV.slice().sort((a, b) => { const x = key(a), y = key(b); return (x > y ? 1 : x < y ? -1 : 0) * sortD });
+  document.querySelector('#tab tbody').innerHTML = rows.map(e => '<tr class="' + (e.ok ? '' : 'unv') + '"><td>' + esc(e.when) + '</td><td><b>' + esc(e.label) + '</b><br><span class="small">' + esc(e.occurrence) + '</span>' + (e.note ? '<br><span class="small">' + esc(e.note) + '</span>' : '') + '</td><td>' + e.keepers.join(' ') + '</td><td>' + src(e.occ) + '</td><td>' + src(e.nm) + '</td><td class="n ' + (e.ok ? 'lag' : '') + '">' + (e.ok ? esc(e.lag_text) : '—') + '</td></tr>').join('');
+}
+document.querySelectorAll('#tab th').forEach(th => th.onclick = () => { const k = th.dataset.k; if (k === sortK) sortD = -sortD; else { sortK = k; sortD = 1 } table() });
+table(); size(); drawClocks();
+window.__LA = { setT, get T() { return T }, EV, S };
+</script>
+</body>
+</html>

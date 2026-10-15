@@ -188,7 +188,9 @@ const GOODS_INWARD_HEADING = /^wareneingang\b/i
  *  the record says that in its own words. */
 const ECOLOGY_NAMES: readonly { label: string; re: RegExp }[] = [
   { label: 'Meridian / the Field', re: /\b(Meridian|field-research)\b/ },
-  { label: 'Ulysses / the Atelier', re: /\bUlysses\b/ },
+  // Both names find the same practice: it settled on Assay (2026-09-03) and every sitting written
+  // before that says Ulysses. The label states the practice as it is now.
+  { label: 'Assay / the Atelier', re: /\b(?:Assay|Ulysses)\b/ },
   { label: 'Ensemble / the Studio', re: /\bEnsemble\b/ },
 ]
 

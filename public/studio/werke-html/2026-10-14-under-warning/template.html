@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Under Warning</title>
+<meta name="description" content="Every tornado warning the US Weather Service issued 2008–2023, played on a night map: the people beneath each one light up while it stands. Warnings a tornado met leave a scar; the seven in ten never met leave nothing, and the record keeps none of the people.">
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1c1a;--mute:#6b665d;--line:#d6d0c4;--card:#fffdf8;--map:#0d1016;--glow:#ffe7b0;--scar:#ff8a3d;--cold:#6fa8ff;--dead:#ff3b30;--acc:#b24a12}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121317;--ink:#ece8df;--mute:#9a958b;--line:#2c2e35;--card:#1a1c22;--map:#07090d;--acc:#ff9a5c}}
+:root[data-theme="dark"]{--bg:#121317;--ink:#ece8df;--mute:#9a958b;--line:#2c2e35;--card:#1a1c22;--map:#07090d;--acc:#ff9a5c}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:1060px;margin:0 auto;padding:28px 16px 80px}
+h1{font:600 clamp(2rem,6vw,3.4rem)/1 "Helvetica Neue",Arial,sans-serif;letter-spacing:.06em;margin:0 0 8px}
+h2{font:600 1.15rem/1.3 "Helvetica Neue",Arial,sans-serif;letter-spacing:.04em;margin:44px 0 10px;text-transform:uppercase}
+.sub{color:var(--mute);margin:0 0 18px;font-style:italic}
+p{max-width:44em}
+.sans{font-family:"Helvetica Neue",Arial,sans-serif}
+#stage{position:relative;background:var(--map);border-radius:6px;overflow:hidden;touch-action:manipulation}
+#map{display:block;width:100%;height:auto;cursor:crosshair}
+#hud{position:absolute;left:12px;top:10px;color:#e9e4d8;font:600 13px/1.35 "Helvetica Neue",Arial,sans-serif;pointer-events:none;text-shadow:0 1px 2px #000}
+#hud .date{font-size:20px;letter-spacing:.04em}
+#ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+button,select{font:600 14px "Helvetica Neue",Arial,sans-serif;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:7px 12px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+#scrub{flex:1 1 220px;min-width:0;accent-color:var(--acc)}
+#count{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:12px 0}
+#count div{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:10px 12px}
+#count b{display:block;font:600 1.45rem/1.15 "Helvetica Neue",Arial,sans-serif;font-variant-numeric:tabular-nums}
+#count span{color:var(--mute);font:13px/1.3 "Helvetica Neue",Arial,sans-serif}
+#card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:4px;padding:10px 14px;min-height:3em;font:14px/1.45 "Helvetica Neue",Arial,sans-serif}
+.key{display:flex;flex-wrap:wrap;gap:14px;font:13px "Helvetica Neue",Arial,sans-serif;color:var(--mute);margin:6px 0}
+.key i{display:inline-block;width:12px;height:12px;vertical-align:-2px;margin-right:5px;border-radius:2px}
+#ef5wrap{background:var(--map);border-radius:6px;padding:8px}
+#ef5{display:block;width:100%;height:auto;image-rendering:pixelated}
+table{border-collapse:collapse;width:100%;font:13px/1.4 "Helvetica Neue",Arial,sans-serif}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto}
+svg text{fill:var(--mute);font:11px "Helvetica Neue",Arial,sans-serif}
+.note{color:var(--mute);font-size:14px}
+.corr{border-left:3px solid var(--line);padding-left:10px}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<main>
+<h1>UNDER WARNING</h1>
+<p class="sub">Every tornado warning the US National Weather Service issued, 2008–2023, and the people written beneath it. Ensemble, The Studio, 2026-10-14.</p>
+
+<p>A tornado warning is a polygon drawn on a map for some forty minutes. The Weather Service keeps every one, and the storm reports keep every tornado; the Field's study 14 matched the two and found that <b id="l-never">seven in ten</b> warnings were never met by a tornado. Nobody keeps the people. Under each polygon lived somebody who was told to take cover. Here they light up while their warning stands. When a tornado met the warning, it leaves a scar on the map. When none did, it goes dark and leaves nothing, just as in the record.</p>
+
+<div id="stage"><canvas id="map" width="1060" height="660" aria-label="Night map of the contiguous United States; tornado warnings light the people beneath them"></canvas>
+<div id="hud"><div class="date" id="date">—</div><div id="hudl">press play</div></div></div>
+<div id="ctrl">
+<button id="play" aria-pressed="false">Play</button>
+<button id="snd" aria-pressed="false" title="Sound">Sound off</button>
+<select id="speed" aria-label="Speed"><option value="1000">slow</option><option value="3000" selected>normal</option><option value="12000">fast</option></select>
+<input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Date">
+<select id="rule" aria-label="What counts as met">
+<option value="0">met = a track crossed it while it stood (V)</option>
+<option value="1">met = a tornado began inside it after issue (S)</option>
+<option value="2">met = crossed, no grace at the edges (V0)</option>
+<option value="3">met = crossed, or within 60 min after (V60)</option>
+</select>
+<button id="ghost" aria-pressed="false">Show what is not kept</button>
+</div>
+<div class="key"><span><i style="background:var(--glow)"></i>people beneath a standing warning</span><span><i style="background:var(--scar)"></i>scar: a warning a tornado met</span><span><i style="background:var(--cold)"></i>warnings never met (only with the button)</span></div>
+<div id="count">
+<div><b id="c-w">0</b><span>warnings issued</span></div>
+<div><b id="c-p">0</b><span>times a person was written beneath one</span></div>
+<div><b id="c-n">0</b><span>of those beneath a warning no tornado met</span></div>
+<div><b id="c-h">0</b><span>person-hours under warnings never met (estimate, upper)</span></div>
+</div>
+<div id="card" aria-live="polite">Tap the map to read the warning over that place at that moment, or the last one before it.</div>
+
+<h2>Eight tornadoes no one stands in for</h2>
+<p>The Atelier's <i>The Stand-In</i> found that all eight EF5 tornadoes of 2008–2023 came under a warning, so their <b>323</b> deaths have no unwarned twin anywhere in the record: nothing can say what the warnings saved. The record counts what the warnings were sent to change. It writes the dead. It does not write the people who sheltered and lived. Below, one pixel is one person living beneath the <span id="ef5n">19</span> warnings these tornadoes crossed (<b id="ef5p">—</b> people, each counted once). The red marks are the 323. Each is drawn larger than one pixel so it can be seen. Everyone else on this field is the only evidence of what a warning did, and no column holds them.</p>
+<div id="ef5wrap"><canvas id="ef5" width="1000" height="834"></canvas></div>
+<p class="note" id="ef5note"></p>
+
+<h2>Year by year</h2>
+<p>People written beneath warnings each year. The orange part was beneath warnings a tornado met under the rule chosen above; the blue part, beneath warnings no tornado met.</p>
+<svg id="years" viewBox="0 0 1000 260" width="100%" role="img" aria-label="People beneath warnings per year, met and never met"></svg>
+
+<h2>The most people beneath one warning</h2>
+<div class="tw"><table id="largest"><thead><tr><th>warning</th><th>issued (UTC)</th><th class="n">people beneath</th><th class="n">minutes</th><th>met (V)</th></tr></thead><tbody></tbody></table></div>
+
+<h2>Method, sources, limits</h2>
+<p><b>Warnings.</b> Storm-based tornado warning polygons (TO.W) as first issued, 2008–2023, from the Iowa Environmental Mesonet's archive of the Weather Service's own products. Updates that shrink a polygon are not followed. All 43,819 match the Field's table one to one.</p>
+<p><b>Met or not, and minutes standing</b>, are the Field's, unchanged: <i>The warnings never needed</i>, study 14 (field-research, <code>artifacts/2026-10-14-the-warnings-never-needed/data/warnings_verified.tsv.gz</code>), with its four rules. The build asserts the Field's count, 13,324 met under V.</p>
+<p><b>People beneath (an estimate).</b> The residential population of every census block group whose centre of population lies inside the polygon: the 2010 census for 2008–2015, the 2020 census for 2016–2023 (US Census Bureau, centres of population by block group). It counts where people sleep, not where they were when the warning came. A polygon that holds no block-group centre counts nobody (<span id="zero">—</span> warnings). A person under two warnings is counted twice: the counter counts times a person was written beneath a warning, not persons. The EF5 field counts each person once. <b>Person-hours</b> are people × minutes standing, an upper estimate, since polygons are not shrunk with their updates. The glowing dots on the map are drawn from the 2020 census on a 0.05° grid, for the picture only; the counts come from the block groups.</p>
+<p><b>Off the map.</b> Eight warnings fall outside the contiguous states (three over Hawaii, five over Puerto Rico). They are counted in every number and not drawn.</p>
+<p><b>Deaths.</b> The 323 EF5 deaths and the count of eight are the Atelier's (<i>The Stand-In</i>, ulysses, <code>window/cycle-007-convening-4/results.json</code>, <code>runs[0]</code>: orphan 323, orphan_n 8). The 19 warnings are those the Field's table marks as met by a tornado of magnitude 5.</p>
+<p><b>Judgment, not fact:</b> that the people beneath are "the only evidence of what a warning did" is this work's reading. A warning's effect on them is not measured here or, as far as the record goes, anywhere.</p>
+<p><b>Nearest works in the Atlas of Data Art.</b> Mimi Ọnụọha, <i>The Library of Missing Datasets</i> (2016): folders named for datasets that do not exist, so the absence is the exhibit. Here the dataset nearly exists. Every polygon is kept, and the people inside it can be counted from public files in an afternoon. The missing part is a column nobody added, and the work adds it for 43,819 rows. Andrea Polli, <i>Atmospherics/Weather Works</i> (2004): storms made audible from meteorological data. Here the storm is not sounded at all. What sounds is the warning, as loud as the number of people under it, and the ones no tornado met fall silent with no trace.</p>
+<p class="note">Rebuild and checks: <code>fetch.py</code>, <code>build_data.py</code>, <code>build.py</code>, <code>verify_browser.mjs</code> beside this page; raw files are not committed, their hashes are in <code>raw-manifest.json</code>.</p>
+</main>
+<script>
+const D=/*DATA*/null;
+(()=>{
+const W=D.w,S=D.s,N=W.t.length,fmt=n=>Math.round(n).toLocaleString('en-US');
+const T0=Date.UTC(2008,0,1),toDate=m=>new Date(T0+m*60000);
+const dstr=m=>{const d=toDate(m);return d.toISOString().slice(0,16).replace('T',' ')};
+// --- Albers equal-area for the contiguous states
+const rad=Math.PI/180,p1=29.5*rad,p2=45.5*rad,l0=-96*rad,f0=37.5*rad,n=(Math.sin(p1)+Math.sin(p2))/2,C=Math.cos(p1)**2+2*n*Math.sin(p1),r0=Math.sqrt(C-2*n*Math.sin(f0))/n;
+const alb=(lo,la)=>{const r=Math.sqrt(C-2*n*Math.sin(la*rad))/n,t=n*(lo*rad-l0);return[r*Math.sin(t),r0-r*Math.cos(t)]};
+const cv=document.getElementById('map'),ctx=cv.getContext('2d'),CW=cv.width,CH=cv.height;
+let xmin=1e9,xmax=-1e9,ymin=1e9,ymax=-1e9;{const g=D.pop.g;for(let i=0;i<g.length;i+=3){const lo=g[i]/20,la=g[i+1]/20;if(la<24||lo<-126)continue;const[x,y]=alb(lo,la);if(x<xmin)xmin=x;if(x>xmax)xmax=x;if(y<ymin)ymin=y;if(y>ymax)ymax=y}}
+const sc=Math.min((CW-24)/(xmax-xmin),(CH-24)/(ymax-ymin)),ox=(CW-(xmax-xmin)*sc)/2,oy=(CH-(ymax-ymin)*sc)/2;
+const P=(lo,la)=>{const[x,y]=alb(lo,la);return[ox+(x-xmin)*sc,CH-oy-(y-ymin)*sc]};
+// --- decode polygons into projected Float32 rings
+const rings=[],wr=new Int32Array(N+1),bbox=new Float32Array(N*4),onmap=new Uint8Array(N);
+{let ci=0,ri=0;for(let i=0;i<N;i++){wr[i]=rings.length;let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9,ok=1;
+ for(let k=0;k<W.nr[i];k++){const L=W.rl[ri++];const a=new Float32Array(L*2);let px=W.c[ci],py=W.c[ci+1];ci+=2;
+  for(let j=0;j<L;j++){if(j){px+=W.c[ci];py+=W.c[ci+1];ci+=2}const lo=px/100,la=py/100;if(la<24||lo<-126)ok=0;const q=P(lo,la);a[2*j]=q[0];a[2*j+1]=q[1];x0=Math.min(x0,q[0]);y0=Math.min(y0,q[1]);x1=Math.max(x1,q[0]);y1=Math.max(y1,q[1])}
+  rings.push(a)}bbox.set([x0,y0,x1,y1],4*i);onmap[i]=ok}wr[N]=rings.length}
+const path=(c,i)=>{c.beginPath();for(let k=wr[i];k<wr[i+1];k++){const a=rings[k];c.moveTo(a[0],a[1]);for(let j=2;j<a.length;j+=2)c.lineTo(a[j],a[j+1]);c.closePath()}};
+const inside=(i,x,y)=>{if(x<bbox[4*i]||x>bbox[4*i+2]||y<bbox[4*i+1]||y>bbox[4*i+3])return false;let c=false;for(let k=wr[i];k<wr[i+1];k++){const a=rings[k],L=a.length;for(let j=0,m=L-2;j<L;m=j,j+=2){if((a[j+1]>y)!=(a[m+1]>y)&&x<(a[m]-a[j])*(y-a[j+1])/(a[m+1]-a[j+1])+a[j])c=!c}}return c};
+// --- population layers
+const mk=()=>{const c=document.createElement('canvas');c.width=CW;c.height=CH;return c};
+const dim=mk(),bright=mk(),scars=mk(),ghost=mk();
+{const g=D.pop.g,dc=dim.getContext('2d'),bc=bright.getContext('2d');dc.fillStyle='#0d1016';dc.fillRect(0,0,CW,CH);
+ for(let i=0;i<g.length;i+=3){const lo=g[i]/20,la=g[i+1]/20;if(la<24||lo<-126)continue;const q=P(lo,la),v=Math.log10(g[i+2]+1),s=v>4?1.6:1;
+  dc.fillStyle=`rgba(150,165,190,${Math.min(.5,.05+v*.08)})`;dc.fillRect(q[0],q[1],s,s);
+  bc.fillStyle=`rgba(255,231,176,${Math.min(1,.25+v*.18)})`;bc.fillRect(q[0]-.3,q[1]-.3,s+.6,s+.6)}}
+// --- state
+const st={ready:false,T:0,rule:0,playing:false,sound:false,ghost:false,i:0};window.__UW={state:st};
+const tEnd=W.t[N-1]+W.d[N-1],TMAX=Date.UTC(2024,0,1)/60000-T0/60000;
+const met=i=>(W.m[i]>>st.rule)&1;
+// prefix sums
+const pp=new Float64Array(N+1),ph=new Float64Array(N+1);for(let i=0;i<N;i++){pp[i+1]=pp[i]+W.p[i];ph[i+1]=ph[i]+W.p[i]*W.d[i]/60}
+let np=new Float64Array(N+1),nh=new Float64Array(N+1);
+const rePrefix=()=>{for(let i=0;i<N;i++){const z=met(i)?0:1;np[i+1]=np[i]+z*W.p[i];nh[i+1]=nh[i]+z*W.p[i]*W.d[i]/60}};
+const upto=T=>{let lo=0,hi=N;while(lo<hi){const m=(lo+hi)>>1;if(W.t[m]<=T)lo=m+1;else hi=m}return lo};// warnings issued at or before T
+// scars and ghost up to T
+const drawScar=(c,i)=>{path(c,i);c.stroke()};
+const sctx=scars.getContext('2d'),gctx=ghost.getContext('2d');
+let scarDone=0;// warnings ended and drawn
+const endOrder=[...Array(N).keys()].sort((a,b)=>(W.t[a]+W.d[a])-(W.t[b]+W.d[b]));const endT=endOrder.map(i=>W.t[i]+W.d[i]);
+const styleScar=()=>{sctx.strokeStyle='rgba(255,138,61,.28)';sctx.lineWidth=.5;gctx.fillStyle='rgba(111,168,255,.05)'};
+const addEnded=i=>{if(!onmap[i])return;if(met(i))drawScar(sctx,i);else{path(gctx,i);gctx.fill()}};
+const rebuild=T=>{sctx.clearRect(0,0,CW,CH);gctx.clearRect(0,0,CW,CH);styleScar();scarDone=0;while(scarDone<N&&endT[scarDone]<=T)addEnded(endOrder[scarDone++])};
+const advance=T=>{while(scarDone<N&&endT[scarDone]<=T)addEnded(endOrder[scarDone++])};
+// active set
+const active=T=>{const out=[];const hi=upto(T);for(let i=hi-1;i>=0&&W.t[i]>T-400;i--)if(W.t[i]+W.d[i]>T)out.push(i);return out};
+const render=()=>{const T=st.T;ctx.drawImage(dim,0,0);ctx.drawImage(scars,0,0);if(st.ghost){ctx.globalCompositeOperation='lighter';ctx.drawImage(ghost,0,0);ctx.globalCompositeOperation='source-over'}
+ const act=active(T);for(const i of act){if(!onmap[i])continue;ctx.save();path(ctx,i);ctx.clip();ctx.fillStyle='rgba(255,231,176,.12)';ctx.fill();ctx.drawImage(bright,0,0);ctx.restore();ctx.strokeStyle='rgba(255,231,176,.8)';ctx.lineWidth=1;path(ctx,i);ctx.stroke()}
+ const k=upto(T);st.i=k;st.active=act.length;
+ document.getElementById('date').textContent=dstr(T)+' UTC';
+ let pnow=0;for(const i of act)pnow+=W.p[i];
+ document.getElementById('hudl').textContent=act.length?`${act.length} warning${act.length>1?'s':''} standing · ${fmt(pnow)} people beneath`:(st.playing?'':'no warning standing');
+ st.counts={w:k,p:pp[k],n:np[k],h:nh[k]};
+ document.getElementById('c-w').textContent=fmt(k);document.getElementById('c-p').textContent=fmt(pp[k]);document.getElementById('c-n').textContent=fmt(np[k]);document.getElementById('c-h').textContent=fmt(nh[k]);
+ document.getElementById('scrub').value=Math.round(1000*T/TMAX)};
+const setT=T=>{st.T=Math.max(0,Math.min(TMAX,T));rebuild(st.T);render()};
+// --- sound
+let ac=null,master=null,lastI=0,voices=0;
+const initAudio=()=>{if(ac)return;ac=new (window.AudioContext||window.webkitAudioContext)();master=ac.createGain();master.gain.value=.5;master.connect(ac.destination)};
+const voice=i=>{if(!ac||voices>14)return;const now=ac.currentTime,p=W.p[i],v=Math.min(1,Math.log10(p+1)/6.8);if(v<=0)return;voices++;
+ // pitch from where the warning is: west low, east high
+ const cx=(bbox[4*i]+bbox[4*i+2])/2/CW,f=110*Math.pow(2,cx*2.5);const g=ac.createGain();g.connect(master);
+ const len=Math.min(2.4,.25+W.d[i]*60/st.speed*1.2);
+ if(met(i)){const o=ac.createOscillator(),o2=ac.createOscillator();o.type='triangle';o.frequency.value=f;o2.type='sine';o2.frequency.value=f*2.01;o.connect(g);o2.connect(g);
+  g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(.16*v,now+.02);g.gain.exponentialRampToValueAtTime(.0005,now+len+.8);o.start(now);o2.start(now);o.stop(now+len+.9);o2.stop(now+len+.9);o.onended=()=>voices--}
+ else{const o=ac.createOscillator();o.type='sine';o.frequency.value=f*1.5;o.connect(g);g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(.09*v,now+len*.4);g.gain.linearRampToValueAtTime(0,now+len);o.start(now);o.stop(now+len+.05);o.onended=()=>voices--}};
+// --- playback: time runs while a warning stands, quiet gaps are skipped
+st.speed=3000;let lastF=0;
+const step=ts=>{if(!st.playing)return;const dt=Math.min(.1,(ts-lastF)/1000||0);lastF=ts;let T=st.T+dt*st.speed;
+ if(active(st.T).length===0){const k=upto(st.T);if(k<N&&W.t[k]>T)T=W.t[k]}
+ if(T>=TMAX){T=TMAX;st.playing=false;btn.setAttribute('aria-pressed','false');btn.textContent='Play'}
+ const k0=upto(st.T),k1=upto(T);if(st.sound)for(let i=k0;i<k1&&i<k0+40;i++)voice(i);
+ st.T=T;advance(T);render();if(st.playing)requestAnimationFrame(step)};
+const btn=document.getElementById('play');
+btn.onclick=()=>{st.playing=!st.playing;btn.setAttribute('aria-pressed',st.playing);btn.textContent=st.playing?'Pause':'Play';if(st.T>=TMAX)setT(0);if(st.playing){lastF=performance.now();requestAnimationFrame(step)}};
+const sb=document.getElementById('snd');sb.onclick=()=>{st.sound=!st.sound;if(st.sound){initAudio();ac.resume()}sb.setAttribute('aria-pressed',st.sound);sb.textContent=st.sound?'Sound on':'Sound off'};
+document.getElementById('speed').onchange=e=>st.speed=+e.target.value;
+document.getElementById('scrub').oninput=e=>setT(TMAX*e.target.value/1000);
+document.getElementById('rule').onchange=e=>{st.rule=+e.target.value;rePrefix();rebuild(st.T);render();years()};
+const gb=document.getElementById('ghost');gb.onclick=()=>{st.ghost=!st.ghost;gb.setAttribute('aria-pressed',st.ghost);render()};
+// --- the card
+const card=i=>{const el=document.getElementById('card');if(i==null){el.textContent='No warning has stood over this place by this date.';return}
+ const m=met(i),T=st.T,stand=W.t[i]<=T&&W.t[i]+W.d[i]>T;
+ el.innerHTML=`<b>${W.id[i]}</b> · issued ${dstr(W.t[i])} UTC · stood ${W.d[i]} minutes${stand?' · <b>standing now</b>':''}<br>`+
+ `<b>${fmt(W.p[i])}</b> people beneath (estimate, census ${+dstr(W.t[i]).slice(0,4)<=2015?2010:2020}). `+
+ (m?`A tornado met it${W.ef[i]>=0?`; the strongest was rated (E)F${W.ef[i]}`:''}${W.dead[i]?`; the tornadoes that met it killed ${W.dead[i]} in all, not all of them beneath this polygon`:''}. It leaves a scar.`:`No tornado met it under this rule. The record keeps the polygon, and nothing else about the people under it.`)};
+st.cardAt=(x,y)=>{const T=st.T,hi=upto(T);for(let i=hi-1;i>=0;i--)if(onmap[i]&&inside(i,x,y)){card(i);return i}card(null);return null};
+cv.addEventListener('click',e=>{const r=cv.getBoundingClientRect();st.cardAt((e.clientX-r.left)*CW/r.width,(e.clientY-r.top)*CH/r.height)});
+window.__UW.card=card;window.__UW.setT=setT;window.__UW.dstr=dstr;
+// --- EF5 field
+{const c=document.getElementById('ef5'),x=c.getContext('2d'),Np=S.ef5_people_union,w=1000,h=Math.ceil(Np/w);c.height=h;
+ const img=x.createImageData(w,h);for(let i=0;i<Np;i++){const o=4*i;img.data[o]=200;img.data[o+1]=190;img.data[o+2]=165;img.data[o+3]=150}
+ for(let i=Np;i<w*h;i++)img.data[4*i+3]=0;x.putImageData(img,0,0);
+ let s=20080525;const rnd=()=>(s=(s*1103515245+12345)%2147483648)/2147483648;const marks=[];
+ const used=new Set();while(marks.length<S.ef5_deaths_atelier){const k=Math.floor(rnd()*Np);if(used.has(k))continue;used.add(k);marks.push(k)}
+ x.fillStyle='#ff3b30';for(const k of marks){x.fillRect(k%w-2,Math.floor(k/w)-2,5,5)}
+ window.__UW.ef5={pixels:Np,marks:marks.length,h};
+ document.getElementById('ef5p').textContent=fmt(Np);document.getElementById('ef5n').textContent=S.ef5_warnings.length;
+ document.getElementById('ef5note').textContent=`${fmt(Np)} people, census 2010, inside the union of the ${S.ef5_warnings.length} warnings (each person once; added warning by warning it would be ${fmt(S.ef5_people_sum)}). Red: ${S.ef5_deaths_atelier}, the deaths of the ${S.ef5_tornadoes_atelier} EF5 tornadoes as the Atelier counts them, placed at random: the record does not say where under the polygon they were, and only some of them lived inside these polygons. The remaining ${fmt(Np-S.ef5_deaths_atelier)} are written nowhere as people who stood beneath a warning.`}
+// --- years
+const years=()=>{const svg=document.getElementById('years');const yr={};for(let y=2008;y<=2023;y++)yr[y]=[0,0];
+ for(let i=0;i<N;i++){const y=toDate(W.t[i]).getUTCFullYear();if(yr[y])yr[y][met(i)?0:1]+=W.p[i]}
+ const mx=Math.max(...Object.values(yr).map(v=>v[0]+v[1]));let s='';const bw=1000/16;let k=0;
+ for(const y in yr){const [a,b]=yr[y],ha=210*a/mx,hb=210*b/mx,x=k*bw+6;
+  s+=`<rect x="${x}" y="${230-ha-hb}" width="${bw-12}" height="${hb}" fill="var(--cold)" opacity=".45"><title>${y}: ${fmt(b)} beneath warnings never met</title></rect><rect x="${x}" y="${230-ha}" width="${bw-12}" height="${ha}" fill="var(--scar)"><title>${y}: ${fmt(a)} beneath warnings met</title></rect><text x="${x+(bw-12)/2}" y="248" text-anchor="middle">${String(y).slice(2)}</text>`;k++}
+ s+=`<text x="0" y="12">${fmt(mx)} people (largest year)</text>`;svg.innerHTML=s;window.__UW.yearsData=yr};
+// --- largest
+{const tb=document.querySelector('#largest tbody');tb.innerHTML=S.largest.map(r=>`<tr><td>${r.id}</td><td>${r.issued.replace(/(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)/,'$1-$2-$3 $4:$5')}</td><td class="n">${fmt(r.people)}</td><td class="n">${r.minutes}</td><td>${r.V?'yes':'no'}</td></tr>`).join('')}
+document.getElementById('zero').textContent=fmt(S.zero_people);
+document.getElementById('l-never').textContent=`${fmt(S.never_V)} of ${fmt(S.warnings)}`;
+rePrefix();years();setT(W.t[0]-1);st.ready=true;
+})();
+</script>
+</body>
+</html>

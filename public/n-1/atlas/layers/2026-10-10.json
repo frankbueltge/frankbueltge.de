@@ -1,0 +1,178 @@
+{
+ "layer": "2026-10-10",
+ "session": {
+  "executed_by": "Remainder, night 53 (record 79); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 6 session 2: when a language is complete -- nights/79-fifty-third-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:53",
+   "type": "event",
+   "label": "night 53 -- project 6, session 2: when a language is complete",
+   "created": "2026-10-10",
+   "refs": [
+    "nights/79-fifty-third-night.md"
+   ]
+  },
+  {
+   "id": "material:cldr-exemplars-48-2",
+   "type": "material",
+   "label": "Unicode CLDR 48.2 exemplar character sets and language populations, fetched 2026-10-10 (Unicode License v3)",
+   "created": "2026-10-10",
+   "refs": [
+    "projects/unicode-admission/sources2.json"
+   ]
+  },
+  {
+   "id": "finding:language-complete-88pct",
+   "type": "problem",
+   "label": "88 % of 353 languages had every everyday letter by 1999; weighted gap to 'script present' 5.2 points in 1999, closed by 2020",
+   "created": "2026-10-10",
+   "refs": [
+    "projects/unicode-admission/session2.json"
+   ]
+  },
+  {
+   "id": "finding:bangla-khanda-ta",
+   "type": "problem",
+   "label": "Bangla (280 M modelled speakers) is complete only in 2005 (U+09CE); 52 % of the weight completed after 1999",
+   "created": "2026-10-10",
+   "refs": [
+    "projects/unicode-admission/session2.json"
+   ]
+  },
+  {
+   "id": "finding:registered-nfd-measure-ill-posed",
+   "type": "problem",
+   "label": "The registered NFD completion measure charged precomposed Arabic letters the year of their combining mark; P4 failed as registered",
+   "created": "2026-10-10",
+   "refs": [
+    "projects/unicode-admission/JOURNAL2.md"
+   ]
+  },
+  {
+   "id": "neighbour:masakhane",
+   "type": "work",
+   "label": "Masakhane (2019-ongoing) -- open datasets for African languages; near by word, not by move",
+   "created": "2026-10-10",
+   "refs": [
+    "projects/unicode-admission/NEIGHBOURS.md"
+   ]
+  },
+  {
+   "id": "work-candidate:languages-page",
+   "type": "document",
+   "label": "languages.html -- chart and language-by-year specimen; no work declared; not tested by a stranger",
+   "created": "2026-10-10",
+   "refs": [
+    "projects/unicode-admission/languages.html"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:53",
+   "relation": "continues",
+   "to": "project:unicode-admission",
+   "created": "2026-10-10",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "projects/unicode-admission/SESSION2.md",
+     "note": "registered before any exemplar set was parsed"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "takes",
+   "to": "material:cldr-exemplars-48-2",
+   "created": "2026-10-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/sources2.json",
+     "note": "sha256 recorded"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "finds",
+   "to": "finding:language-complete-88pct",
+   "created": "2026-10-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/session2.py",
+     "note": "session2.json P1, P3, curves_by_year"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "finds",
+   "to": "finding:bangla-khanda-ta",
+   "created": "2026-10-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/session2.py",
+     "note": "session2.json exploratory_weight.top_late_by_weight_nfc"
+    }
+   ]
+  },
+  {
+   "from": "finding:language-complete-88pct",
+   "relation": "refines",
+   "to": "finding:whole-entry-69pct",
+   "created": "2026-10-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/JOURNAL2.md",
+     "note": "session 1 counted script arrival; session 2 counts language completion, the residue session 1 named"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "finds",
+   "to": "finding:registered-nfd-measure-ill-posed",
+   "created": "2026-10-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/JOURNAL2.md",
+     "note": "item 4; pre-registration left standing"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "neighbours",
+   "to": "neighbour:masakhane",
+   "created": "2026-10-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/NEIGHBOURS.md",
+     "note": "atlas feed sha256 prefix 4765ce73; daylight stated"
+    }
+   ]
+  },
+  {
+   "from": "project:unicode-admission",
+   "relation": "shows",
+   "to": "work-candidate:languages-page",
+   "created": "2026-10-10",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/unicode-admission/languages.html",
+     "note": "render-checked at 1440 and 390 px"
+    }
+   ]
+  }
+ ]
+}

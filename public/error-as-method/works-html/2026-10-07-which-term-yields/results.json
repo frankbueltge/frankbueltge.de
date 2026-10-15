@@ -1,0 +1,211 @@
+{
+ "n": 29,
+ "practice": {
+  "J": 14,
+  "R": 13,
+  "B": 1,
+  "X": 1
+ },
+ "by_changed": {
+  "y": {
+   "J": 5,
+   "R": 3
+  },
+  "n": {
+   "J": 9,
+   "R": 10,
+   "B": 1,
+   "X": 1
+  }
+ },
+ "P1": {
+  "rule": "R >= 10 of 29",
+  "R": 13,
+  "holds": true
+ },
+ "P2": {
+  "rule": "one pair, same reference, opposite bearers",
+  "pairs": [
+   {
+    "pair": [
+     "F-182",
+     "F-181"
+    ],
+    "reference": "the ear of experiment 5, held byte-identical (perceive.py)",
+    "wrong": [
+     "J",
+     "R"
+    ]
+   }
+  ],
+  "holds": true
+ },
+ "P3": {
+  "rule": "X <= 3",
+  "X": 1,
+  "holds": true
+ },
+ "readers": {
+  "A": {
+   "counts": {
+    "B": 5,
+    "R": 8,
+    "J": 14,
+    "X": 2
+   },
+   "agreement_with_practice": 0.586,
+   "kappa_with_practice": 0.348,
+   "P1_under_this_reader": false,
+   "disagreements": {
+    "F-164": {
+     "practice": "J",
+     "reader": "B"
+    },
+    "F-165": {
+     "practice": "J",
+     "reader": "R"
+    },
+    "F-166": {
+     "practice": "R",
+     "reader": "B"
+    },
+    "F-169": {
+     "practice": "R",
+     "reader": "J"
+    },
+    "F-170": {
+     "practice": "R",
+     "reader": "J"
+    },
+    "F-172": {
+     "practice": "R",
+     "reader": "J"
+    },
+    "F-174": {
+     "practice": "J",
+     "reader": "B"
+    },
+    "F-175": {
+     "practice": "J",
+     "reader": "B"
+    },
+    "F-176": {
+     "practice": "R",
+     "reader": "J"
+    },
+    "F-177": {
+     "practice": "J",
+     "reader": "R"
+    },
+    "F-179": {
+     "practice": "R",
+     "reader": "J"
+    },
+    "F-192": {
+     "practice": "R",
+     "reader": "X"
+    }
+   }
+  },
+  "B": {
+   "counts": {
+    "B": 4,
+    "R": 10,
+    "J": 13,
+    "X": 2
+   },
+   "agreement_with_practice": 0.586,
+   "kappa_with_practice": 0.335,
+   "P1_under_this_reader": true,
+   "disagreements": {
+    "F-164": {
+     "practice": "J",
+     "reader": "B"
+    },
+    "F-165": {
+     "practice": "J",
+     "reader": "R"
+    },
+    "F-169": {
+     "practice": "R",
+     "reader": "J"
+    },
+    "F-170": {
+     "practice": "R",
+     "reader": "J"
+    },
+    "F-172": {
+     "practice": "R",
+     "reader": "J"
+    },
+    "F-174": {
+     "practice": "J",
+     "reader": "B"
+    },
+    "F-177": {
+     "practice": "J",
+     "reader": "R"
+    },
+    "F-180": {
+     "practice": "R",
+     "reader": "B"
+    },
+    "F-183": {
+     "practice": "B",
+     "reader": "J"
+    },
+    "F-185": {
+     "practice": "R",
+     "reader": "B"
+    },
+    "F-190": {
+     "practice": "J",
+     "reader": "R"
+    },
+    "F-192": {
+     "practice": "R",
+     "reader": "X"
+    }
+   }
+  }
+ },
+ "readers_with_each_other": {
+  "agreement": 0.724,
+  "kappa": 0.582
+ },
+ "R_by_all_three": [
+  "F-181",
+  "F-184",
+  "F-186",
+  "F-189"
+ ],
+ "J_by_all_three": [
+  "F-167",
+  "F-168",
+  "F-171",
+  "F-173",
+  "F-178",
+  "F-182",
+  "F-188",
+  "F-191"
+ ],
+ "posthoc_reference_implicated": {
+  "practice": 14,
+  "A": 13,
+  "B": 14
+ },
+ "posthoc_reference_implicated_by_all_three": [
+  "F-166",
+  "F-180",
+  "F-181",
+  "F-184",
+  "F-185",
+  "F-186",
+  "F-189"
+ ],
+ "posthoc_seam": [
+  "F-169",
+  "F-170",
+  "F-172"
+ ]
+}

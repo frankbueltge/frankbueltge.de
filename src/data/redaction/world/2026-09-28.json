@@ -1,0 +1,152 @@
+{
+  "date": "2026-09-28",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-28T12:29:28Z",
+    "counts": {
+      "botwall": 36,
+      "gone_404": 2,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 259,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 261,
+    "excluded_unverifiable": 39,
+    "gone": 2,
+    "gone_ci95": [
+      0.0021,
+      0.0275
+    ],
+    "gone_rate": 0.0077,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0145
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-26",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "ktbb.com",
+        "first_seen": "20260926120000",
+        "http_code": 404,
+        "title": "Pleasant Grove beats C.E. Byrd to remain undefeated – KTBB News, Weather, Talk",
+        "url": "https://ktbb.com/post/?p=1544606"
+      },
+      {
+        "class": "gone_404",
+        "domain": "steinbachonline.com",
+        "first_seen": "20260926040000",
+        "http_code": 404,
+        "title": "Event: Children's Hospital Book Market Fall Sale - SteinbachOnline.com - Local news, Weather, Sports, Free Classifieds and Job Listings for Steinbach, Manitoba",
+        "url": "https://steinbachonline.com/events/232002"
+      }
+    ],
+    "sample_drawn_at": "2026-09-27T10:53:59Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 2753,
+      "replaced": 3853,
+      "trivial": 423,
+      "update": 165
+    },
+    "day": "2026-09-27",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Oprotim",
+          "Oprotim"
+        ],
+        "after": "Cumilla Ishiat Shahriar Oprotim Killing Trial | Govt will assist in speedy trial of Oprotim killing, says home minister",
+        "before": "Cumilla Ishiat Shahriar Opratim Killing Trial | Govt will assist in speedy trial of Opratim killing, says home minister",
+        "detected": "2026-09-27T10:01:42Z",
+        "domain": "thedailystar.net",
+        "removed": [
+          "Opratim",
+          "Opratim"
+        ],
+        "similarity": 0.875,
+        "url": "https://www.thedailystar.net/news/crime-justice/news/govt-will-assist-speedy-trial-opratim-killing-says-home-minister-4277711",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Dade",
+          "Miami"
+        ],
+        "after": "United Way Miami and Miami-Dade Community Services Department work together to upgrade community center - WSVN 7News | Miami News, Weather, Sports",
+        "before": "United Way Miami and M-DC Community Services Department work together to upgrade community center - WSVN 7News | Miami News, Weather, Sports",
+        "detected": "2026-09-27T19:17:04Z",
+        "domain": "wsvn.com",
+        "removed": [
+          "M",
+          "DC"
+        ],
+        "similarity": 0.85,
+        "url": "https://wsvn.com/news/local/miami-dade/united-way-miami-and-m-dc-community-services-department-work-together-to-upgrade-community-center/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "SC"
+        ],
+        "after": "SC ruling on 22A sent to Speaker's Office – Sri Lanka Mirror – Right to Know. Power to Change",
+        "before": "Supreme Court ruling on 22A sent to Speaker's Office – Sri Lanka Mirror – Right to Know. Power to Change",
+        "detected": "2026-09-27T05:49:13Z",
+        "domain": "srilankamirror.com",
+        "removed": [
+          "Supreme",
+          "Court"
+        ],
+        "similarity": 0.833,
+        "url": "https://srilankamirror.com/news/supreme-court-ruling-on-22a-sent-to-speakers-office/",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 12290,
+      "PAGE_TEXTCHANGE": 82079,
+      "PAGE_TITLECHANGE": 32447,
+      "UNCHANGED_CONTENT": 528947
+    },
+    "title_changes_en": 7194,
+    "trace": [
+      {
+        "bytes_billed": 17825792,
+        "created": "1790598353514",
+        "job_id": "world_gdg_counts_20260927",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 163577856,
+        "created": "1790598359242",
+        "job_id": "world_gdg_titles_20260927",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-28T12:29:28Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-27.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

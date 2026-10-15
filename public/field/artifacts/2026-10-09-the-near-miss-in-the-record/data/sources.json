@@ -1,0 +1,40 @@
+{
+ "aiid_snapshot": {
+  "url": "https://pub-72b2b2fc36ec423189843747af98f80e.r2.dev/backup-20261005101424.tar.bz2",
+  "sha256": "46af6f306e09a2a0cbe18d50d6c81fd362047876572e5fc4022bc0dd4419e378",
+  "downloaded": "2026-10-09, hash equal to studies 187-189",
+  "files_used": ["aiidprod/classifications.bson", "aiidprod/taxa.bson (definitions only)", "incidents.csv"],
+  "license_txt": "Unless otherwise noted, the database is shared under (CC BY-SA 4.0).",
+  "not_committed": "the snapshot; only incident ids, years, class codes and the pseudonymous annotator codes the snapshot carries"
+ },
+ "cset_taxonomy_description": {
+  "where": "taxa.bson, namespace CSETv1, field 'description' (read 2026-10-09)",
+  "passage": "Every incident is independently classified by two CSET annotators. Annotations are peer reviewed and finally randomly selected for quality control ahead of publication."
+ },
+ "cset_ai_harm_level_values": ["AI tangible harm event", "AI tangible harm near-miss", "AI tangible harm issue", "none", "unclear"],
+ "hoffmann_frase_2023": {
+  "source": "Mia Hoffmann and Heather Frase, Adding Structure to AI Harm: An Introduction to CSET's AI Harm Framework, CSET Issue Brief, July 2023",
+  "url": "https://cset.georgetown.edu/wp-content/uploads/20230022-Adding-structure-to-AI-Harm-FINAL.pdf",
+  "sha256": "81c84c8b9723a05f0cc0e574a079896f294d906bf32347cda2b8f4c7181666a4",
+  "read": "full text, first-hand, 2026-10-09",
+  "near_miss_definition": "AI is considered to present an imminent potential for harm in incidents describing “near miss” situations, where harm would have occurred had it not been for randomness, luck, or atypical intervention.",
+  "glossary": "Harm near-miss: An entity experienced a harm near-miss when harm did not occur, but there was an imminent potential for harm; harm near-misses are a subset of harm issues.",
+  "on_agreement": "These differences tend to be smaller for tangible harms, with death—included under “harm to physical health or safety— being the most consistently identified harm. Conversely, annotators more frequently disagreed in their assessments of whether intangible harm occurred.",
+  "footnote_30": "Such a near-miss occurred in 2016, when an Uber in self-driving mode ran a red-light and nearly collided with another car on the intersection. See ... Incident Number 8.",
+  "agreement_statistic": "none found in the brief (searched for annotator, agreement, reliab, kappa)"
+ },
+ "lee_et_al_2020": {
+  "source": "Kwangmi Lee, Kyeongsuk Yoon, Byeongsook Yoon, Eunhee Shin, Differences in the perception of harm assessment among nurses in the patient safety classification system, PLoS One 15(12): e0243583, 2020, doi 10.1371/journal.pone.0243583",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7721130/",
+  "read": "abstract and methods passage, first-hand on the page, 2026-10-09",
+  "passage": "The survey tool was distributed to 287 nurses working at two hospitals. Results The overall kappa value for interrater agreement was k = 0.21 for harm and k = 0.28 for harm duration.",
+  "near_miss": "The harm was categorized as near miss (A): an circumstances or events that have the capacity to cause error, such as disorganized medical equipment; near miss (B): an error occurred but the error did not reach the patient",
+  "use": "a neighbouring measurement only: nine scenarios rated by many nurses, not incidents rated by pairs; not comparable as a number"
+ },
+ "house_paper_index": {
+  "url": "https://frankbueltge.de/papers/index.json",
+  "fetched": "2026-10-09, 1,068 entries",
+  "hits": "zero for near miss, CSET, harm taxonomy, incident database, inter-rater, annotator agreement, incident report"
+ },
+ "web_research": "one search for the brief, one for near-miss classification reliability; a search summary named further patient-safety studies (Danish ICPS, PRISMA) which were not opened and are not cited"
+}

@@ -12,6 +12,9 @@ const REPOS = {
   field: 'https://github.com/frankbueltge/field-research',
   studio: 'https://github.com/frankbueltge/studio',
   ecology: 'https://github.com/frankbueltge/research-ecology',
+  // Common Ground's pipeline lives in THIS repository, not in lab-pipelines — the byline links
+  // the directory that actually produces the nightly ledger.
+  trending: 'https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/trending',
   meridian: 'https://github.com/frankbueltge/meridian-runtime', // On Record — seit 24.07. öffentlich
   instruments: SITE.sourceCode, // lab-pipelines — die Messinstrumente der Holdings-Ära
 } as const
@@ -22,6 +25,10 @@ const BY_PREFIX: ReadonlyArray<readonly [string, string]> = [
   // '/werke' mapping below so /werke/on-record resolves to the runtime, not lab-pipelines.
   ['/werke/on-record', REPOS.meridian],
   ['/on-record', REPOS.meridian],
+  // Same reason as On Record: both must precede the generic '/werke' mapping below, so
+  // /werke/trending resolves to the trending pipeline and not to lab-pipelines.
+  ['/werke/trending', REPOS.trending],
+  ['/trending', REPOS.trending],
   ['/atelier', REPOS.atelier],
   ['/field', REPOS.field],
   ['/studio', REPOS.studio],

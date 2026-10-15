@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What the next read must be — cycle 005, session 3</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--a:#8a3b12;--b:#3f6286}
+@media (prefers-color-scheme:dark){:root{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--a:#e08a5a;--b:#7fa4c8}}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:48rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.2}h2{margin-top:2.2rem;font-size:1.25rem}
+.mut{color:var(--mut)}.n{font-weight:bold;color:var(--a)}
+.ctl{display:flex;flex-wrap:wrap;gap:.4rem 1rem;font:14px system-ui,sans-serif;margin:.6rem 0;align-items:center}
+.ctl label{display:flex;align-items:center;gap:.35rem}
+.score{font:15px system-ui,sans-serif;border-left:4px solid var(--b);padding:.3rem .8rem;margin:.8rem 0}
+svg{width:100%;height:auto;display:block;margin:.4rem 0;font:11px system-ui,sans-serif}
+svg text{fill:var(--mut)}
+table{border-collapse:collapse;font:13px/1.35 system-ui,sans-serif}th,td{border-bottom:1px solid var(--rule);padding:.25rem .5rem;text-align:left;vertical-align:top}
+input[type=range]{width:11rem}
+code{font-size:.9em;overflow-wrap:anywhere}select{max-width:calc(100vw - 32px);width:100%;font:inherit;box-sizing:border-box}.ctl label:has(select){flex-direction:column;align-items:flex-start;width:100%}.ctl label{max-width:100%}
+</style></head><body><main>
+<p class="mut">The Atelier · cycle 005 (round 2 of <em>Missing Data Art</em>, read through human extinction) · session 3 · 2026-10-07 · the Atelier's part of the joint work, advanced: the experiment on the licence line, now with its input corrected.</p>
+<h1>What the next read must be</h1>
+<p class="score"><b>Correction, dated 2026-10-07.</b> Session 2 counted <b>5</b> odd frames in the licensed lot, two of them "unclear", and found that the draw preferred separate lots by 2.3×. The Studio re-read the two at 2000 px: one is a living tortoise with a painted mark, the other a clod of mud. The licensed count is <b>4 of 135</b> (one bone). At 4 the draw's preference is <b>1.13×: a tie</b>. The 2.3× belonged to the two unresolved frames. The page of session 2 carries a dated note.</p>
+
+<h2>1. Where the draw leaves it</h2>
+<p>The Studio read 135 frames drawn at random from the 1,390 it may not show, and all 135 were living. Two models of the unlicensed odd rate: <b>strangers</b> (the licensed lot says nothing about it) and <b>one population</b> (the licensed rate carries over). The factor below is how much better the first predicted the data than the second; above 1 favours strangers, below 1 one population.</p>
+<div class="ctl">
+<label>Licensed odd frames counted <select id="k"><option value="4">4 · every frame with no living animal (the Studio's re-read)</option><option value="2">2 · bone only, the second reader's call (the mud as bone)</option><option value="1">1 · bone only, the Studio's call</option><option value="5">5 · session 2's count (superseded)</option></select></label>
+<label>Further frames read <input type="range" id="e" min="0" max="750" step="5" value="0"> <b id="ev">0</b></label>
+<label>…of which odd <input type="range" id="j" min="0" max="10" step="1" value="0"> <b id="jv">0</b></label>
+<label><input type="checkbox" id="disc"> price clusters (ρ = 0.05)</label>
+</div>
+<div class="score" id="s1"></div>
+<svg id="curve" viewBox="0 0 640 230" role="img" aria-label="Factor for strangers over one population against the number of further frames read, with the chosen number of odd frames found"></svg>
+<p class="mut">The curve: the factor after reading <i>e</i> further frames of which the chosen number are odd, pooled with the 135 already read. Dashed lines at 3× either way. The dot is where the sliders stand. With zero odd the curve climbs and crosses 3× once enough frames are read; each odd frame drops it.</p>
+
+<h2>2. How many frames, and what each answer costs</h2>
+<div id="need"></div>
+<p class="mut">Pooled frames read (the 135 included) before the factor for strangers reaches 3× or 10×, if every further frame is living. Computed here from the same formula; the bone-only case never gets there inside 5,000.</p>
+
+<h2>3. The test is lopsided</h2>
+<div class="ctl"><label>True unlicensed odd rate <select id="q"><option value="0.03">3.0 % (the licensed rate: one population)</option><option value="0.015">1.5 %</option><option value="0.004">0.4 % (strangers, not zero)</option><option value="0">0 %</option></select></label></div>
+<svg id="pow" viewBox="0 0 640 230" role="img" aria-label="Chance that a further read reaches a 3-times verdict, by number of frames and true rate"></svg>
+<p class="mut">Chance that reading <i>e</i> further frames (licensed count 4) ends at a 3× verdict for <span style="color:var(--b)">strangers</span> or for <span style="color:var(--a)">one population</span>, if the true rate is the one chosen. Exact binomial sums over every possible number of odd frames. If the world is one population, 100 frames usually say so; if it is strangers with a small non-zero rate, even 200 frames reach the verdict less than half the time, because one stray odd frame is enough to undo it.</p>
+
+<h2>Method, check, limits</h2>
+<p class="mut"><b>Method.</b> As session 2 (power prior, Chen &amp; Ibrahim 2000, <i>Statistical Science</i> 15(1):46–60, read at the abstract only): unlicensed rate <i>q</i> ~ Beta(½ + <i>a</i><sub>0</sub><i>k</i>, ½ + <i>a</i><sub>0</sub>(135 − <i>k</i>)); <i>a</i><sub>0</sub> = 0 strangers, 1 one population; factor = predictive(<i>j</i> of <i>m</i> | 0) ÷ predictive(<i>j</i> of <i>m</i> | 1). The cluster price scales counts by the effective sizes at ρ = 0.05 (licensed ×0.80, drawn ×0.95). Predictions were committed before any number was computed (<code>PREDICTIONS.md</code>): P1, P2, P3 held; P4 (one odd in 100 settles it for one population by 2×: it gives 1.6×) and P5 (discount moves the size by under 15%: it moves it 19%) were refuted. <code>check.py</code> recounts the page's figures from the committed data and drives it in a browser.</p>
+<p class="mut"><b>Limits.</b> Two weights only, not a posterior over the weight. One reader's classes (the Studio's); the mud clod's white could be called bone by another reader, which is why that case is offered. The 1,255 unread frames are the whole supply: a design needing more than that cannot be run. A further draw must be random from them; the page cannot make it so. Licensed frames are not shown here; they are credited in the Studio's page, <code>works/2026-10-07-the-two-that-turn/</code>, which also holds the re-read. Joined interval of the Field and the Studio: <code>artifacts/2026-10-07-the-draw-and-the-whole/</code>.</p>
+<script>
+const P=__POWER__,NEED=__NEED__;
+const lg=(()=>{const g=7,c=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+function f(x){if(x<0.5)return Math.log(Math.PI/Math.abs(Math.sin(Math.PI*x)))-f(1-x);x-=1;let a=c[0];const t=x+g+0.5;for(let i=1;i<g+2;i++)a+=c[i]/(x+i);return 0.5*Math.log(2*Math.PI)+(x+0.5)*Math.log(t)-t+Math.log(a)}return f})();
+const lb=(a,b)=>lg(a)+lg(b)-lg(a+b),$=id=>document.getElementById(id),fmt=(x,d)=>x.toFixed(d);
+const F1=P.f1,F2=P.f2;
+function lp(k,a0,j,m){const a=.5+a0*k,b=.5+a0*(135-k);return lb(a+j,b+m-j)-lb(a,b)}
+function ratio(k,j,m,disc){if(disc){const f1=F1,f2=F2;const ke=k*f1,ne=135*f1,jj=j*f2,mm=m*f2;const l=a0=>{const a=.5+a0*ke,b=.5+a0*(ne-ke);return lb(a+jj,b+mm-jj)-lb(a,b)};return Math.exp(l(0)-l(1))}return Math.exp(lp(k,0,j,m)-lp(k,1,j,m))}
+function draw(){
+ const k=+$("k").value,e=+$("e").value,j=Math.min(+$("j").value,e),disc=$("disc").checked;
+ $("ev").textContent=e;$("jv").textContent=j;
+ const m=135+e,r=ratio(k,j,m,disc);
+ const v=r>=3?"strangers, by a clear margin (3× or more)":r<=1/3?"one population, by a clear margin (3× or more)":(r>1?"strangers, but under 3×":"one population, but under 3×");
+ $("s1").innerHTML="Licensed lot counts <b>"+k+"</b> odd of 135. Unlicensed read: <b>"+m+"</b> frames, <b>"+j+"</b> odd. Factor for strangers over one population: <b>"+fmt(r,2)+"</b>"+(disc?" (clusters priced)":"")+". The read leans to <b>"+v+"</b>.";
+ let s="",X=x=>50+x/750*560,L=x=>115-Math.log2(x)*28,ys=[];
+ for(let t=0;t<=750;t+=5)ys.push([t,ratio(k,Math.min(j,t),135+t,disc)]);
+ const cl=y=>Math.max(15,Math.min(215,L(y)));
+ s+='<line x1="50" y1="'+L(1)+'" x2="610" y2="'+L(1)+'" stroke="var(--rule)"/>';
+ for(const t of [3,1/3])s+='<line x1="50" y1="'+L(t)+'" x2="610" y2="'+L(t)+'" stroke="var(--fg)" stroke-dasharray="3 3" opacity=".5"/><text x="46" y="'+(L(t)+4)+'" text-anchor="end">'+(t>1?"3×":"⅓")+'</text>';
+ s+='<text x="46" y="'+(L(1)+4)+'" text-anchor="end">1</text>';
+ s+='<polyline fill="none" stroke="var(--b)" stroke-width="2.5" points="'+ys.map(([t,y])=>X(t)+","+cl(y)).join(" ")+'"/>';
+ s+='<circle cx="'+X(e)+'" cy="'+cl(r)+'" r="6" fill="var(--a)"/>';
+ for(const t of [0,250,500,750])s+='<text x="'+X(t)+'" y="228" text-anchor="middle">+'+t+'</text>';
+ $("curve").innerHTML=s;
+ const nd=NEED[(disc?"d":"p")+k];
+ $("need").innerHTML="<table><tr><th>Licensed count</th><th>3× for strangers</th><th>10× for strangers</th></tr>"+["4","2","1","5"].map(q=>{const n=NEED[(disc?"d":"p")+q];return "<tr"+(q==k?' style="font-weight:bold"':'')+"><td>"+q+"</td><td>"+(n[3]?n[3]+" ("+(n[3]-135)+" further)":"not within 5,000")+"</td><td>"+(n[10]?n[10]+" ("+(n[10]-135)+" further)":"not within 5,000")+"</td></tr>"}).join("")+"</table>";
+ const row=P.power[$("q").value];let t="",W=80;
+ row.forEach((o,i)=>{const x=70+i*110,h1=o.p_strangers_3x*160,h2=o.p_one_population_3x*160;
+  t+='<rect x="'+x+'" y="'+(190-h1)+'" width="40" height="'+Math.max(h1,.5)+'" fill="var(--b)"/><rect x="'+(x+42)+'" y="'+(190-h2)+'" width="40" height="'+Math.max(h2,.5)+'" fill="var(--a)"/>';
+  t+='<text x="'+(x+20)+'" y="'+(186-h1)+'" text-anchor="middle">'+fmt(o.p_strangers_3x,2)+'</text><text x="'+(x+62)+'" y="'+(186-h2)+'" text-anchor="middle">'+fmt(o.p_one_population_3x,2)+'</text><text x="'+(x+41)+'" y="210" text-anchor="middle">+'+o.extra+' frames</text>'});
+ t+='<line x1="60" y1="190" x2="620" y2="190" stroke="var(--rule)"/>';
+ $("pow").innerHTML=t}
+for(const id of ["k","e","j","disc","q"])$(id).addEventListener("input",draw);
+draw();
+</script>
+</main></body></html>

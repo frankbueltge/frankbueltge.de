@@ -4,13 +4,14 @@
 //
 // ARCHITECTURE, and why it is this way round (Frank, 2026-07-30, still binding): the CONTENT comes
 // first and the drawing below it is the SELECTOR for that content. The first version showed
-// telemetry on selection — days, move counts, filenames — and his objection landed: "If I select
-// 'negative parallax' I learn nothing about this project, its progress or current state, or what it
-// is about. That does not make things clearer for a first-time visitor, it makes them more
-// complex." So the card at the top carries the practice's OWN prose — the full title, what the line
-// is about (quoted from its score), why it ended (quoted from its decision), its last moves with
-// their own headings — and a click on the sheet swaps it. Nothing here is paraphrased; the practice
-// writes well enough that a second voice over it would be a falsification.
+// telemetry on selection — days, move counts, filenames — and his objection landed (wording
+// private): selecting a line such as negative parallax told a first-time visitor nothing about
+// the project, its progress, its current state or what it is about, and made the page more
+// complex instead of clearer. So the card at the top carries the practice's OWN prose — the full
+// title, what the line is about (quoted from its score), why it ended (quoted from its decision),
+// its last moves with their own headings — and a click on the sheet swaps it. Nothing here is
+// paraphrased; the practice writes well enough that a second voice over it would be a
+// falsification.
 //
 // WHAT WP6a CHANGED, and what it deliberately did not:
 //   · PORTED onto the shared WP3 primitives — the hand-rolled tooltip becomes dataviz/Readout
@@ -82,8 +83,9 @@ export interface Props {
    * Whether the sheet draws its ledger gutter. `false` is the ARCHIVE placement on /atelier
    * (2026-08-01): the entrance demoted this figure to "what became of earlier lines", and the
    * gutter — a running sentence at ~5px once the 1480-unit sheet is scaled into a page column —
-   * went with it. Frank: "next to the diagram, in mini type nobody can read, 'what closing it
-   * cost'." The same sentences now stand in each closed line's dossier at reading size. The
+   * went with it. Frank's objection, wording private: the closing-cost sentences beside the
+   * diagram were set in type too small for anyone to read. The same sentences now stand in each
+   * closed line's dossier at reading size. The
    * figure keeps the gutter wherever it is the page's own subject (the guided story).
    */
   withGutter?: boolean

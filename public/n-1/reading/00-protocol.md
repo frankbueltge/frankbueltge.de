@@ -473,3 +473,275 @@ night is the work's), the untransposed remainder was already invisible under the
 wholesale re-read (entry 16 documents that), and entry 19 shows the remedy that
 exists — reading at the source where the material stresses — working. Both are
 named so the balance cannot call them surprise.
+
+## The apparatus limitation, restored: the grant is gone
+
+*Dated addition, 2026-09-15, record 53 (night 27) — nothing above is retouched.
+Occasion: `DOWRY.md`, founder's act of 2026-09-12 (1), withdrawing
+`frankbueltge/material` as a source of this practice.*
+
+The discharge of record 22 (bell 17, above) held "while the reach holds: if a
+later session's credential no longer reads the material, the second-hand form
+returns for new quotations, and tonight's 59 stay discharged and dated." The
+reach has been unreachable since night 05 and probed to the same refusal on 29
+of 58 recorded sessions since — but every one of those probes found the reach
+merely *broken*, the condition the discharge's own sentence names. Tonight's
+is a different fact: the founder withdrew the grant itself. There is no reach
+left to find working again. The condition triggers on the stronger fact, not
+only the weaker one it named: **the second-hand citation form, "(ATP *n*, via
+KsK §*x*)", governs every ATP quotation from tonight on**, until a source this
+practice can actually read supplies a direct one. The 59 quotations verified
+2026-08-18 keep their direct form, dated to that session, unretouched — history
+is continued and never retouched (floor rule 2, `DOWRY.md`). No probe of the
+withdrawn grant is made again; its absence needs no further note, per the
+founder's own act.
+
+## The record, cut to the ratio the founder measured
+
+*Dated addition, 2026-09-15, record 53 (night 27) — nothing above is retouched.
+Occasion: `DOWRY.md`, founder's act of 2026-09-12 (2), sharpening the
+cartographic condition with its own measurement: apparatus (nights, reading,
+atlas, register, dowry, requests) about 233,700 words against `works/` about
+19,900, just under twelve to one, no candidate a work in twenty-seven nights.
+Read tonight, the first session since it was written.*
+
+Night 07's meter (above) cut the boot and the standing procedures to a
+deviations-only form and left the working body of a night's record — the
+front-by-front account of the material fronts — uncapped. That body is most of
+the twelve-to-one: fifty-eight records mostly telling the same two data fronts
+again at full length, the numbers already sitting, checkable, in the
+committed JSON the telling was re-deriving.
+
+**The form, from tonight.** A front unchanged in kind from its last telling is
+one sentence naming what changed and its evidence path, not the standing
+procedure or the joined figures re-derived in prose — the committed file
+already carries those, structured and checkable. A finding is stated once, at
+the size the finding needs. **A night that advances no work owes a line saying
+so, not an essay about having sat down** — the dowry's own words. T4's failure
+criterion is unchanged: detours, abandonments and changes of direction are
+still logged as they occur; this cuts the standing account of unchanged
+routine, not the following-journal's discipline of following.
+
+**Applied tonight, as its own evidence.** This is the first record written to
+the cut form. Its length against night 26's (`nights/52-twenty-sixth-night.md`,
+~200 lines) is the pass's own diff — no separate demonstration is owed beyond
+the record that carries it.
+
+*Adversarial read, before first use.* The cut trades a night record legible in
+prose for one legible, on a front's routine nights, only by opening the file it
+now merely points to. Accepted on two grounds: the committed files were always
+the ground truth (§ this document, passim — "where the record and a consulted
+passage disagree, the passage wins" is the carry's law and applies here by the
+same reasoning), and the surface condition below already carries the found
+figures out to where a visitor meets them without opening any file — the night
+record was never that reader's door. Whether the cut goes too far is exactly
+the question the founder's reading of 2026-10-14 answers against this record;
+named here so the balance cannot call it a surprise.
+
+## The standing forms, extended a second time: one account, not three
+
+*Dated addition, 2026-09-18, record 55 (night 29) — nothing above is
+retouched. Occasion: the same founder act as the addition above
+(`DOWRY.md`, 2026-09-12), a second duplication site the cut above did not
+reach. Deliberation: `nights/55-twenty-ninth-night.md`.*
+
+**The finding.** The addition above cut a night record's own body. It left
+untouched a different repetition, at the layer level: every atlas layer since
+founding carries a top-level `session` object with a free-text field
+(`note`, or its list form) that restates, a fourth time, substance the night
+record, the register entry and the same layer's own edge evidence already
+carry. Verified fresh tonight (not merely carried from where it was first
+seen): grepping `index.html`, `record.html`, `atlas/validate.py` and
+`atlas/consult.py` for `session.note`, `session.summary` and
+`session.executed_by` returns zero matches outside `atlas/layers/*.json`
+itself and this practice's own `REGISTER.md` — the field is written by every
+session and read by none. It stood at 57 of 57 committed layers tonight,
+45,816 characters (~11,450 tokens), grown from 187 characters at founding to
+1,821 in the newest pre-tonight layer.
+
+**Provenance, disclosed.** This finding and its fix were made first by
+another session, under another session's numbering, on a branch that never
+reached `main`: `claude/fervent-hamilton-ym8pey`, commit `fbd271c`, opened
+2026-09-14 as pull request #2, self-identified there as "night 27." A
+different session's genuine night 27 landed the following night instead
+(pull request #3, merged by night 28 — `nights/53-twenty-seventh-night.md`,
+`nights/54-twenty-eighth-night.md`), and #2 was left an orphan: correct in
+its content, wrong in its date and number, never merged, never entered into
+`main`'s history. Full account of how three sessions reached the name "night
+27" and how the collision was found and resolved: `nights/55-twenty-ninth-night.md`.
+This addition does not adopt #2's text — its dated claims belong to a night
+that, on `main`, means something else — it re-derives the same finding
+independently (the figures above are tonight's own, not carried) and writes
+the fix under its true date. Floor rule 2 governs what happens to the
+orphaned branch and pull request themselves: they are not retouched, closed
+with a dated note citing this addition, and stand in the platform's own
+history as the record of where the finding first happened.
+
+**What changes.** From tonight, a layer's `session` field carries
+`executed_by` and one sentence, `summary` — naming the night and pointing to
+its record, never restating it (`atlas/SCHEMA.md`, dated revision). The night
+record stays the single place a front's account is written whole; the
+register entry adds only what T4 and floor rule 3 require and the night
+record does not already carry as prose; edge evidence notes stay as they
+are, because they are read (`record.html`'s connection list). This does not
+touch `REGISTER.md`'s own form or the night record's own length — both
+remain what the addition above already weighed. It closes one further
+duplication site, not the whole of the ratio's answer.
+
+**What does not change tonight.** Nothing already committed is touched;
+every layer through `2026-09-16` keeps its `note` exactly as written, as
+history (floor rule 2). The overlap between the register entry and the
+night record, named and left open by the addition above, is left open
+again — not this session's resistance either.
+
+*Failure criterion.* Struck if a `summary` written under this rule is later
+shown to omit information a reader needed and could get nowhere else on the
+layer or its cited night record; or if a future session shows `session.note`
+was in fact read by some tool this and the prior session's greps both
+missed. Struck on trigger, strike published; balance at the founder's
+reading regardless of outcome.
+
+*Adversarial read of this addition (same session, before first use).* One
+weakness named, beyond the two the addition above already accepted for the
+same fix: **re-deriving a finding already made on an orphaned branch is not
+free of the self-appointed-judge risk it looks like it avoids** — this
+session chose to re-verify rather than trust #2's numbers, which is the
+right discipline, but it was also this session's own choice not to simply
+merge #2 and correct its labels in place, the way night 28 handled pull
+request #3. The difference is stated rather than assumed sound: #3's content
+was internally correct for a night that had genuinely happened and simply
+hadn't landed; #2's content asserts things — "the first night not executed
+by `claude-fable-5`", a specific wake time, a specific model session — that
+are not true of night 29 and would have been fabrications under floor rule 1
+if committed as this session's own claims. Re-deriving, not adopting, is the
+means floor rule 1 leaves open; named here so the balance cannot call the
+choice a surprise.
+
+## The standing refs note, extended: unmerged work on other branches
+
+*Dated addition, 2026-09-18, record 55 (night 29) — nothing above is
+retouched. Occasion: night 28's own case-law finding
+(`nights/54-twenty-eighth-night.md`, "The gap this opens, named rather than
+smoothed over"), left unpatched there on the ground that "a session that
+just found the hole is a poor judge of the permanent patch." This session is
+not the one that found the hole, and is a later session judging it after
+seeing the same class of gap produce a second, independent casualty
+(pull request #2, above) — which is itself the evidence for what shape the
+patch should take. Deliberation: `nights/55-twenty-ninth-night.md`.*
+
+**What the standing refs note (night 07's addition, above) already covers.**
+Fetch, unshallow, founding-commit ancestry verified, `main` fast-forwarded,
+identity set, work published on `main`. It says nothing about any ref other
+than `main`.
+
+**What this addition adds.** Before a night's main working decision, and
+again before publishing, a session checks for open pull requests against
+`main` (this practice's own platform tooling, or the equivalent the
+session's harness exposes) and reads any it finds — not to defer to them,
+but so that a night's own account of "what is unread" and "what already
+exists" is accurate to the practice's whole state, not only to `main`'s. Two
+independent collisions already happened without this check: night 28's
+(a genuine, merged night 27 sat unseen in pull request #3 for a full civil
+date) and tonight's (an orphaned, never-to-be-merged attempt sat in pull
+request #2 for four civil dates, discovered only because this session went
+looking after night 28's own note). Both are cases of the same gap; a check
+run once would have caught both.
+
+**What this does not do.** It does not make a session responsible for
+merging or resolving every open pull request it finds — most nights, per
+this practice's own working pattern, that will be nothing, since a single
+container ordinarily publishes to `main` directly and closes its own loop
+the same session. It only requires that the check be run and its result
+named in the boot deviations, so that a night's claim to be first, or its
+claim that nothing is pending, is checked rather than assumed.
+
+*Failure criterion.* Struck if a future session shows the check itself
+imposes a cost disproportionate to what it has caught twice already (a
+demonstrated case where running it consumed real working time for no
+information gained, argued in that session's own record); or if a third
+collision of this exact class occurs after this addition is in force,
+showing the check was specified but not actually run. Struck on trigger,
+strike published; balance at the founder's reading regardless of outcome.
+
+*Adversarial read of this addition (same session, before first use).* One
+weakness named: this addition is written by a session that has read exactly
+two data points (night 28's collision, tonight's) and is generalising a
+standing procedure from n=2. That is a small sample for a rule meant to
+bind every future night. Accepted rather than deferred again, because the
+alternative — waiting for a third collision before naming the fix — is the
+same deferral night 28 itself declined to make permanent, stated for the
+opposite reason (too soon to legislate) that this addition now answers (two
+is enough to see the shape). If the failure criterion above triggers, the
+rule is struck, not defended past its own evidence.
+
+## The material front, bounded: a project, not a vigil
+
+*Dated addition, 2026-09-24, record 60 (night 34) — nothing above is
+retouched. Occasion: `DOWRY.md`, founder's act of 2026-09-24 ("the
+toolkit, tried across projects"), which restates the founding problem as
+the practice's working question — how does a machine research with
+*Cartography, not Tracing*? — answered by researching with it on many
+materials, and closes the two standing candidates within at most two
+further sessions each, beginning with the session that reads this. This
+addition revises "The material front: selection pre-registered" above to
+match; that section's criteria 1–6, its candidate generation, blind step
+and failure criterion stand unrevised — only criterion 7 and the scope a
+selection runs inside are changed.*
+
+**Criterion 7, overruled.** "Not a kept tracing of the practice's own
+map" permitted the practice's own record to be selected as material,
+guarded by a stated-justification clause. `DOWRY.md`'s act of 2026-09-24
+overrules this: "the practice's own infrastructure and record — its
+domain and subdomains, its certificates, its schedule and wake hours, its
+mirror, its repository and its commits" is no longer material, on the
+ground the act states — forty days show that a subject told to find
+problems where material resists, and given no outside, meets first its
+own domain, schedule and mirror, and a record of itself is what it then
+makes. A future selection's candidate list may not include the
+practice's own record or infrastructure; a candidate of that kind fails
+at generation, not at scoring.
+
+**A selection now runs inside a bounded project, not toward an
+open-ended vigil.** `DOWRY.md`'s standing condition (as amended) sets the
+shape a selection commits to before the first candidate is scored:
+one material, its problem constructed at the material's resistance,
+two or three instruments chosen before work starts with their failure
+criteria stated, three to five working sessions, ending in a work under
+the works condition or a dated put-back with its balance published
+either way. A sixth session needs its reason written before it is taken;
+a seventh is not taken. The next project, when one is selected, takes a
+different material — this front's own criterion 2 (retrievable) and
+criterion 6 (neighbour-searchable) already require a fresh material to
+clear the same bar a first one did; nothing here loosens either. A form
+in which every session adds one data point to the same question — the
+shape both closing candidates took — is not eligible for selection under
+this addition: the bound is written into the selection itself, not left
+for a later session to discover it has been keeping a vigil.
+
+**Each closed project leaves a toolkit account**, per the same act: which
+postulates carried it, which instruments were chosen and how their
+failure criteria fared, what the grammar could not do on this material —
+short, dated, in the atlas's form wherever it can be. The two closing
+accounts for *Below the Threshold* and *Two Nights Deep* stand in
+`works/below-the-threshold/CANDIDATE.md` §9 and
+`works/two-nights-deep/CANDIDATE.md` §10; a future project's account is
+written at its own closing session, work or put-back either way.
+
+**What this addition does not do.** It does not select a next material —
+no candidate is enumerated here, and the blind step still binds: a
+session that writes or revises the material front's criteria may not
+apply them in the same session (entry above). It does not touch the
+instruments in force for the reading itself (T1, T4, the second pass) or
+their failure criteria, which bind the practice's own working discipline
+independent of any one project. It does not set a balance date for a
+future project beyond the "three to five sessions" the founder's act
+already states; the founder's reading of 2026-10-14 remains the
+practice-wide accounting date regardless of where any single project
+stands against its own bound.
+
+*Failure criterion.* Struck if a future selection admits the practice's
+own record or infrastructure as a candidate despite this addition, or if
+a project is allowed to run past its bound (a sixth session without a
+written reason, or any seventh) without the bound itself being revised
+here, dated and reasoned, first. Struck on trigger, strike published;
+balance at the founder's reading regardless of outcome.

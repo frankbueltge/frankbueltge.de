@@ -43,9 +43,15 @@ const REPOS = [
   // pulse counts it like the other machine-run repos — and the ops room's board draws its
   // sparkline from this repo's own bins.
   'error-as-method',
-  // Arch, founded 2026-08-22 beside the ecology under its own dowry; its sessions commit to
-  // this repository, so the ops room's board draws its sparkline from these bins.
-  'arch',
+  // Arch stood here from 2026-08-22 (founded beside the ecology under its own dowry) until
+  // 2026-10-11: its pre-registered window closed on 2026-09-21, and a pulse of what RUNS here
+  // stopped counting a trial that has ended. Snapshots written before this change still carry
+  // its bins; src/lib/pulse/without.ts takes them out of what the surfaces draw.
+  // n-1 (the practice named itself Remainder), founded 2026-08-15 as the Atelier's third line
+  // and given a board row of its own on 2026-09-03. It was the one practice standing beside the
+  // ecology whose commits the pulse did not count — so the hero's total was short by a machine
+  // that works every night, and its board row could draw no sparkline.
+  'n-1',
   'frankbueltge.de',
 ]
 

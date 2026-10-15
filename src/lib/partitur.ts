@@ -65,7 +65,7 @@ const VOICE_ORDER: VoiceId[] = ['atelier', 'field', 'studio', 'plenum']
  * the lane is where it gets linked.
  */
 export const VOICE_META: Record<VoiceId, { label: string; short: string; href: string }> = {
-  atelier: { label: 'Atelier · Ulysses', short: 'atelier', href: '/atelier/journal' },
+  atelier: { label: 'Atelier · Assay', short: 'atelier', href: '/atelier/journal' },
   field: { label: 'Field · Meridian', short: 'field', href: '/field' },
   studio: { label: 'Studio · Ensemble', short: 'studio', href: '/studio' },
   plenum: { label: 'Plenum · data-snack', short: 'plenum', href: '/plenum' },

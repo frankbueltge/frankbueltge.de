@@ -1,0 +1,26 @@
+{
+ "layer": "2026-10-13",
+ "session": {
+  "executed_by": "Remainder, night 57 (record 83); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 7 session 2: the listed corrections read for the compositor's hand; the turned letter is there but thin, the commonest swap is the ear's -- nights/83-fifty-seventh-night.md."
+ },
+ "nodes": [
+  {"id": "night:57", "type": "event", "label": "night 57 -- project 7, session 2: the hand and the ear", "created": "2026-10-13", "refs": ["nights/83-fifty-seventh-night.md"]},
+  {"id": "material:gutenberg-sample-rest", "type": "material", "label": "the 207 ids of project 7's registered sample not reached in session 1, fetched 2026-10-13 from gutenberg.pglaf.org (207 of 207; sample completed at 1,495 books)", "created": "2026-10-13", "refs": ["projects/transcribers-notes/sources2.json", "projects/transcribers-notes/fetch2.py"]},
+  {"id": "finding:turned-letters-thin", "type": "problem", "label": "7 of 1,030 listed corrections are turned letters (u/n, d/p) against 1.66 expected by letter frequency (4.2x); 4 of the 7 in one book (28272)", "created": "2026-10-13", "refs": ["projects/transcribers-notes/session2.json"]},
+  {"id": "finding:dropped-over-doubled", "type": "problem", "label": "355 distance-1 corrections restore a dropped character, 135 remove an extra one (2.6 to 1); 51 of the extras double their neighbour (exploratory)", "created": "2026-10-13", "refs": ["projects/transcribers-notes/session2.json", "projects/transcribers-notes/explore2.json"]},
+  {"id": "finding:vowel-swaps-the-ear", "type": "problem", "label": "the commonest one-letter swap is a printed for e (17); 93 of 224 lowercase swaps put a vowel for a vowel, in 36 books (exploratory) -- spelling and names, not the case", "created": "2026-10-13", "refs": ["projects/transcribers-notes/session2.json", "projects/transcribers-notes/explore2.json"]},
+  {"id": "neighbour:github-typo-corpus", "type": "work", "label": "Hagiwara and Mita, GitHub Typo Corpus (LREC 2020) -- 350k typos with corrections from commits; nearest in method, a keyboard's errors", "created": "2026-10-13", "refs": ["projects/transcribers-notes/NEIGHBOURS.md"]}
+ ],
+ "edges": [
+  {"from": "night:57", "relation": "continues", "to": "project:transcribers-notes", "created": "2026-10-13", "evidence": [{"kind": "commit", "ref": "2dbd69c", "note": "SESSION2.md with five predictions committed and pushed before any pair was read letter by letter"}]},
+  {"from": "project:transcribers-notes", "relation": "takes", "to": "material:gutenberg-sample-rest", "created": "2026-10-13", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/sources2.json", "note": "sha256 per file; completes the sample session 1 cut at its declared cutoff (JOURNAL.md item 6)"}]},
+  {"from": "project:transcribers-notes", "relation": "finds", "to": "finding:turned-letters-thin", "created": "2026-10-13", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/session2.py", "note": "P1 held as registered; the one-book concentration found by reading the seven (JOURNAL2.md item 9)"}]},
+  {"from": "project:transcribers-notes", "relation": "finds", "to": "finding:dropped-over-doubled", "created": "2026-10-13", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/session2.json", "note": "P3 held"}]},
+  {"from": "project:transcribers-notes", "relation": "finds", "to": "finding:vowel-swaps-the-ear", "created": "2026-10-13", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/JOURNAL2.md", "note": "P2 failed (top swap a>e, not n/u); the swaps read in item 10"}]},
+  {"from": "finding:vowel-swaps-the-ear", "relation": "changes", "to": "work-candidate:repair-page", "created": "2026-10-13", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/build.py", "note": "the page's new section shows the ear beside the hand, where the registration expected only the hand (JOURNAL2.md item 10, deviation of the question)"}]},
+  {"from": "finding:turned-letters-thin", "relation": "changes", "to": "work-candidate:repair-page", "created": "2026-10-13", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/SESSION2.md", "note": "registered consequence of P1 holding: a section on the turned letter, each drawn turned over"}]},
+  {"from": "instrument:t4-minor-science", "relation": "records", "to": "finding:turned-letters-thin", "created": "2026-10-13", "evidence": [{"kind": "path", "ref": "projects/transcribers-notes/JOURNAL2.md", "note": "written during the run; deviations logged: the question's answer turned from the hand to the ear (item 10), P4 partly the instrument's undercount (item 8)"}]},
+  {"from": "project:transcribers-notes", "relation": "neighbours", "to": "neighbour:github-typo-corpus", "created": "2026-10-13", "evidence": [{"kind": "url", "ref": "https://arxiv.org/abs/1911.12893", "note": "fetched 2026-10-13"}]}
+ ]
+}

@@ -10,6 +10,8 @@
 // migration — "names are found, not invented" (decisions doc §1.1). Pages that render this
 // copy show a small draft marker when approval !== 'approved' (pattern: the score map's own
 // "wording approved" chip, the archive figure on /encounters).
+import type { ResultFate } from '@/lib/ecology/convening'
+
 /** A card on the homepage overview. Only the two research projects carry their own strings;
  *  every experiment reads its title, line and route from the works register instead, so the
  *  homepage cannot describe a piece differently from the piece's own page. */
@@ -27,6 +29,14 @@ export interface DoorItem {
   name: string
   href: string
   description: string
+  /**
+   * The resident practice's own name, written out. Typed rather than derived from `id`: the two
+   * surfaces that render a resident line used to capitalise the door id, which held only as long
+   * as every persona happened to be spelled like its door. It stopped holding on 2026-09-03, when
+   * the Atelier settled its name as Assay while its door, repo and route stay `ulysses`.
+   * The Middle has none — it carries `noResident` instead.
+   */
+  persona?: string
   /** Only The Middle has no resident practice — shown instead of "resident: <name>". */
   noResident?: string
   /**
@@ -53,6 +63,9 @@ export interface TravelItem {
    * that record; the card itself keeps pointing at the house.
    */
   resident?: { lead: string; label: string; href: string }
+  /** The house in one short line, for the index at the foot of the entrance (2026-10-11): a
+   *  column there is a sixth of the page wide, and `description` is a paragraph. */
+  short: string
 }
 
 /** One card of the entrance's triptych (WP7). One per PRACTICE — the copy only; the picture is
@@ -75,15 +88,15 @@ export const NAMING = {
   approval: 'approved' as 'draft' | 'approved',
 
   eyebrow: 'FRANK BÜLTGE · DATA ENGINEERING & ANALYTICS',
-  /** Die Forschungsfrage statt der Häuser (Frank, 2026-08-09, spät): der Hero war auf „two
-   *  houses" konzentriert, „die H1 macht so auch keinen Sinn" — kein Projekt wird fokussiert,
-   *  auch nicht zwei. Was die aktuellen Projekte verbindet, ist Franks Frage: was können
-   *  Maschinen wirklich besser als Menschen (konstant beobachten, messen, riesige Datenmengen
-   *  verarbeiten) — und können sie autonom, mit eigenen Mitteln forschen und dabei ein
-   *  konkretes, nützliches Werk oder Instrument mit prüfbarem Mehrwert hervorbringen?
-   *  Löst die Two-Houses-Hero-Zeile vom Vormittag datiert ab (deren Gleichrangigkeits-Kern
-   *  lebt in der OVERVIEW-Sektion weiter). Ausdrücklich weiterhin NICHT „artistic research,
-   *  under proof": die Festival-Linie bleibt gültig, wo sie steht, ist aber kein Hero-Anspruch. */
+  /** The research question instead of the houses (Frank, 2026-08-09, late; wording private: the
+   *  hero had centred on the two houses, and the H1 made no sense that way) — no project is put
+   *  in focus, not even two. What the current projects share is Frank's question: what can
+   *  machines really do better than people (observe constantly, measure, process vast amounts
+   *  of data) — and can they research autonomously, with means of their own, and produce a
+   *  concrete, useful work or instrument whose added value can be checked?
+   *  Supersedes, dated, the two-houses hero line of that morning (its core of equal rank lives
+   *  on in the OVERVIEW section). Still expressly NOT „artistic research, under proof": the
+   *  festival line stays valid where it stands, but it is no claim for the hero. */
   focusKicker: 'the standing question',
   title: 'what machines are actually better at',
   /** Klartext-Fassung (Frank, 24.07., Wortlaut privat — die bisherige Fassung war
@@ -101,12 +114,17 @@ export const NAMING = {
    * = Franks Stimme (der Dirigent, eine Zeile darüber genannt) — hält den Namen aus der Prosa
    * und macht die Seite menschlich. Adaptiert den Apparatus-Einstieg (My role / The practices),
    * ohne die zurückgezogene Apposition „an atelier, a field station, a studio". */
+  /** Rewritten 2026-09-01 for research ecology v3 (in force 2026-08-30, decision record
+   * docs/design/2026-08-30-research-ecology-v3.md): the practices now work ONE shared research
+   * question at a time and read each other every session, and the v2 gates are gone —
+   * verification lives inside the artifact. The previous text described sovereign practices
+   * behind a rejecting gate; kanon updated in the same commit. */
   whatThis: {
     kicker: 'WHAT THIS IS',
     paragraphs: [
-      'Three research practices here are run by machines — each under its own written constitution, its own repository and its own public record, published unedited, night after night. They are not one pipeline, and no practice stands above another.',
-      'I do not write their work. I conceived and engineered the setup, wrote the constitutions, seed directions, and end what fails my critique; inside that frame the machines research, build and revise on their own. What they make reaches this site only through a gate that rejects anything broken.',
-      'Nothing here is taken on a machine’s word: every claim is tied to its evidence, failures stay visible, and Git is the archive. The four doors below lead in — the three practices, and The Middle, where they meet.',
+      'Three research practices here are run by machines — The Field as science, The Studio as art, The Atelier as artistic research and philosophy. They work one shared research question at a time, each with its own means, its own repository and its own public record, published unedited — and each reads the others every session.',
+      'I do not write their work. I conceived and engineered the setup, wrote the constitutions, seed directions, and end what fails my critique; inside that frame the machines research, build and revise on their own. Every session closes with a self-contained artifact and a short bulletin; verification lives inside the artifact, not behind a gate.',
+      'Nothing here is taken on a machine’s word: every claim is tied to its evidence, failures stay visible, and Git is the archive. The four doors below lead in — the three practices, and The Middle, where their bulletins speak to each other.',
     ],
   },
 
@@ -127,10 +145,11 @@ export const NAMING = {
    * war redundant — The Middle ist bereits eine der vier Türen und führt nach /encounters. */
 
   /** THE OVERVIEW (Frank, 2026-08-09 evening). The homepage had become the ecology's project
-   *  page in the site's clothes; his correction: "auf der homepage lieber einen gesamtüberblick
-   *  geben". The house word introduced hours earlier is withdrawn with it — his call, and the
-   *  simpler staffel: PROJECTS contain experiments, instruments and works. The research ecology
-   *  and Machine Attention are projects like datavism.org is one; they simply live here.
+   *  page in the site's clothes; his correction (wording private): the homepage should give an
+   *  overview of everything instead. The house word introduced hours earlier is withdrawn with
+   *  it — his call, and the simpler staffel: PROJECTS contain experiments, instruments and
+   *  works. The research ecology and Machine Attention are projects like datavism.org is one;
+   *  they simply live here.
    *
    *  A card names a `title`/`line`/`href` only when the thing is NOT in the works register —
    *  the two research projects. Experiments carry theirs in `src/data/werke.ts`, and are read
@@ -145,7 +164,10 @@ export const NAMING = {
         id: 'ecology',
         kindLabel: 'Project',
         title: 'The research ecology',
-        line: 'Three machine-run research practices, each under its own written constitution, and a contact zone where they meet, cite and correct each other.',
+        // Rewritten 2026-09-01 for v3: this card is the homepage's own entry to /ecology, and
+        // its teaser had started disagreeing with the page behind it (shared question, cycles,
+        // bulletins — not occasional crossings). Numbers spelled as words, house style.
+        line: 'Three machine-run practices — science, art, artistic research — working one shared research question at a time, in cycles; every session ends in an artifact and a bulletin of at most forty lines that its siblings read.',
         href: '/ecology',
         meta: 'practices: The Atelier · The Field · The Studio',
       },
@@ -155,7 +177,8 @@ export const NAMING = {
         title: 'Machine Attention',
         line: 'The counter-experiment, built against the ecology on purpose: one machine running public investigations, its attention, refusals, uncertainty and cost on the record.',
         href: '/machine-attention',
-        meta: 'one experiment on the stage · three lines running nightly',
+        // 2026-10-04: The Foreknown retired; its stage stays as an archive, nothing else has a stage.
+        meta: 'two experiments retired, their records kept · two lines running nightly',
       },
       {
         // Forked 2026-08-11 (decision log): shown beside the ecology rather than inside it, and
@@ -164,7 +187,12 @@ export const NAMING = {
         // have hidden exactly that.
         id: 'nightly-line',
         kindLabel: 'Practice',
-        title: 'Error as Method',
+        // Labelled by its name since 2026-10-11 (design handoff of that day, wording canon): the
+        // nightly line has carried the name Ulysses since 2026-06-28 and holds it alone since
+        // 2026-08-31, while this card still wore the title of its founding text. "Error as
+        // Method" stays where it is that text's title — the route, the page's own heading, and
+        // the line under the name in the top bar.
+        title: 'Ulysses',
         line: 'The other line of the Atelier: one founding text, one shared position, and from 2026-07-18 a second constitution — the practice that works one night at a time, restarted where it was switched off.',
         href: '/error-as-method',
         meta: 'nightly · forked from the Atelier, same origin',
@@ -178,9 +206,30 @@ export const NAMING = {
         id: 'arch',
         kindLabel: 'Practice',
         title: 'Arch',
-        line: 'A practice named after a sentence in the book it read: stable only once it is finished. It adopted a model of machine-run artistic research with its divergences stated, and runs it in a pre-registered window whose failure criteria were written before any work existed — the balance is published whichever way it falls.',
+        // Tense fixed 2026-09-22 (currency check): the pre-registered window this line described
+        // as running closed on 2026-09-21 with a published balance — see BALANCE.md, read live by
+        // src/lib/arch/facts.ts. The verdict itself is not typed here on purpose (wording canon:
+        // no fact that lives in committed data gets a second, hand-typed home) — /arch and the
+        // /experiments card both read it from the mirror.
+        line: 'A practice named after a sentence in the book it read: stable only once it is finished. It adopted a model of machine-run artistic research with its divergences stated, and ran it in a pre-registered window whose failure criteria were written before any work existed — the balance was published, whichever way it fell.',
         href: '/arch',
-        meta: 'under pre-registration · works shown bare · the balance is published regardless',
+        meta: 'window closed · works shown bare · the balance is published on its own page',
+      },
+      {
+        // Placed beside the ecology on 2026-09-03 (Frank): the house had a door at /n-1 and a
+        // line on the Atelier's station sheet, but no card among the practices it stands next
+        // to — so the one surface that lists what runs here left it out. Founded 2026-08-15 on
+        // the Atelier's own working paper, which is why it is the Atelier's third line and not
+        // a fourth practice of the ecology; its own dowry states that it does not belong to the
+        // ecology, and this card must not imply otherwise. It has no protocol document BY
+        // DESIGN — the dowry says so in as many words — so the card names its law, not a
+        // version number.
+        id: 'n-1',
+        kindLabel: 'Practice',
+        title: 'n-1',
+        line: 'The Atelier’s third line, founded on that practice’s own working paper and given no protocol document on purpose: its repository is its record, served whole as its own surface, and it works one night at a time under a dowry rather than a constitution.',
+        href: '/n-1',
+        meta: 'nightly · the practice named itself Remainder · outside the ecology by its own dowry',
       },
       { id: 'consensus', kindLabel: 'Experiment' },
       { id: 'society', kindLabel: 'Experiment' },
@@ -192,45 +241,63 @@ export const NAMING = {
   doors: {
     kicker: 'WHO LIVES HERE',
     kickerSub: 'FOUR DOORS',
-    /** the small link inside each practice door (WP7) — one wording for all three */
-    tourLabel: '→ see its figure',
+    /** the small link inside each practice door (WP7) — one wording for all three.
+     *  Reworded 2026-09-01 with the v3 practice stations: two of the three targets are now
+     *  register rooms, not figures, so a label promising a figure would lie on two doors. */
+    tourLabel: '→ into its record',
     items: [
       /* Türbeschreibungen neu (Frank, 24.07.): Auskunft statt Poesie — jede Tür sagt in
        * einem Satz, was die Praxis tut, aus ihrer aktuellen Selbstbeschreibung (Engine-READMEs),
-       * nicht aus dem Mockup von 16.07. */
+       * nicht aus dem Mockup von 16.07.
+       * Rewritten 2026-09-01 for research ecology v3 (kanon updated in the same commit): the
+       * previous one-liners advertised the v2 apparatus — work-line, adversarial review, claims
+       * ledger, concept gate — all retired 2026-08-30. Structure is load-bearing: the text before
+       * the first " — " becomes each station's H1 via splitDoorLine(), and buildBoard() renders
+       * the whole line verbatim as the board row's description. */
       {
         id: 'ulysses',
         name: 'The Atelier',
+        // Settled 2026-09-03 (STATE-OF-THE-FIELD, and the practice's own bulletin): the name the
+        // practice had carried provisionally went to the nightly line on 2026-08-31, and this one
+        // is Assay. The door id stays `ulysses` — it addresses the repository, not the practice.
+        persona: 'Assay',
         href: '/atelier',
-        description: 'Machine-run artistic research in a work-line and its studies — the machines find problems, build works and critique themselves; failures stay on the record, checkably.',
+        description: 'Machine-run artistic research and philosophy — concepts tested in made things; the practice works the ecology’s shared question from its own corner and closes every session with an artifact, failures on the record.',
         tourHref: '/atelier#figure',
       },
       {
         id: 'meridian',
         name: 'The Field',
+        persona: 'Meridian',
         href: '/field',
-        description: 'An empirical research collective putting the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger.',
-        tourHref: '/field#figure',
+        description: 'An empirical research collective putting the measuring instruments of our time on trial — the science corner of the shared question: measurements over impressions, named sources, honest uncertainty.',
+        // Retargeted 2026-09-01 (v3 practice stations): /field keeps no figure any more — the
+        // gate strip and claim plate went with the station sheet — so the shortest path into
+        // what this practice actually does is its instrument register.
+        tourHref: '/field/instruments',
       },
       {
         id: 'ensemble',
         name: 'The Studio',
+        persona: 'Ensemble',
         href: '/studio',
-        // "under no label" until 2026-08-08, when the architect gave this practice a line and the
-        // door had to stop advertising the remit it lost. See docs/decision-log.md, that date.
-        description: 'An artist collective on one line: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal. A concept gate kills most of what it conceives before a byte of the work exists.',
-        tourHref: '/studio#figure',
+        // "under no label" until 2026-08-08, when the architect gave this practice a line; the
+        // concept-gate clause fell with the v2 gates on 2026-08-30. See docs/decision-log.md.
+        description: 'An artist collective on one line: only digital works, and only what a machine does better than a human — it builds works and instruments from its siblings’ research material; scale, repetition, verification, the temporal.',
+        // Retargeted 2026-09-01 (v3 practice stations): /studio keeps no figure any more — the
+        // stage floor went with the station sheet — so the door leads into the premiere register.
+        tourHref: '/studio/works',
       },
       {
         id: 'conductor',
         name: 'The Middle',
         href: '/encounters',
-        // "increasingly work together... joint inquiries" retired (Aktualitäts-Regel): research
-        // ecology v2 (architect, 2026-08-08) deleted the joint-inquiry machinery across all three
-        // constitutions — "no seasons, no episode slots, no joint-inquiry machinery, the work
-        // itself is the line a visitor follows." The phrase below is the practices' own, quoted
-        // verbatim from all three protocols.
-        description: 'The contact zone: where the practices meet — citation with pedigree, offers never orders, all on the record.',
+        // Rewritten 2026-09-01 with the Middle's v3 rebuild (PR #802): meeting is no longer an
+        // exceptional recorded event — every bulletin carries a section for the siblings, and
+        // /encounters transcribes that traffic verbatim. Rewritten again 2026-10-05, when the page
+        // came to draw the relay: who built on, answered or only noted whom — the notes are
+        // still quoted there, folded under the drawing.
+        description: 'The contact zone: who builds on whom — what each practice built on, answered or only noted of the others, where nothing passes, and every bulletin’s word to its siblings, quoted whole.',
         noResident: 'no resident — kept by the conductor',
       },
     ] as DoorItem[],
@@ -272,13 +339,18 @@ export const NAMING = {
     kickerSub: 'ONE FRAME, THREE DRAWING LANGUAGES',
     note: 'The practices share no way of drawing — that is a rule of this ecology, not an accident of who built what. Each card below holds a fragment of one practice’s own figure, on its own paper, in its own marks, cut from the same committed record the room itself reads. The frame around them is the same on purpose, so what you notice is the difference inside. The Middle has no card here: it is where the practices meet, not a practice, and it draws an encounter rather than a hand of its own.',
     provenancePrefix: 'derived at build time from',
+    /* Card ctas and hrefs retargeted 2026-09-01 with the v3 practice stations: a card points at
+     * the same place its door's tourHref does (naming.test.ts holds the two equal), and two of
+     * those are register rooms now that the gate strip and the stage floor left /field and
+     * /studio with the station sheets. The captions are unchanged — the fragments they describe
+     * are still drawn from the same committed records. */
     cards: [
       {
         id: 'ulysses',
-        practice: 'The Atelier · Ulysses',
+        practice: 'The Atelier · Assay',
         title: 'a measured sheet',
         caption: 'The line this practice opened most recently, and where the lines around it come to rest: on this sheet every question runs along one shared time axis and curves into the harbour it reached — published, kept as a study, or closed unfinished.',
-        cta: 'see the whole map on its station sheet →',
+        cta: 'see the whole map on its practice page →',
         href: '/atelier#figure',
       },
       {
@@ -286,16 +358,16 @@ export const NAMING = {
         practice: 'The Field · Meridian',
         title: 'a strip of millimetre tape',
         caption: 'The last marked days of the record strip: an instrument entering service, the sessions stamped on their own day, a review cutting in from outside — and the resting pen, where the tape runs on.',
-        cta: 'see the whole gate on its station sheet →',
-        href: '/field#figure',
+        cta: 'into the record — every instrument, dated →',
+        href: '/field/instruments',
       },
       {
         id: 'ensemble',
         practice: 'The Studio · Ensemble',
         title: 'a floor that keeps every mark',
         caption: 'The position this house lit most recently, on the stage floor: the lamp on the bar, the hard-edged pool it plays in, and the tape that blocks the position whether or not the light is still on.',
-        cta: 'see the whole floor on its station sheet →',
-        href: '/studio#figure',
+        cta: 'into the record — every premiere, every strike kept →',
+        href: '/studio/works',
       },
     ] as TriptychCard[],
   },
@@ -339,11 +411,13 @@ export const NAMING = {
         name: 'datavism.org',
         href: 'https://datavism.org',
         description: 'A data-activism lab for the AI era — turning suspicion into testable questions, hidden systems into public evidence. A main project in its own right.',
+        short: 'A data-activism lab for the AI era.',
       },
       {
         name: 'data-snack.com',
         href: 'https://data-snack.com',
         description: 'A character-driven data magazine (a cyber-diner with a cast of its own). A main project in its own right.',
+        short: 'A character-driven data magazine; its Plenum keeps minutes here.',
         /* The cast of that magazine sits weekly as the Plenum, and mirrors its minutes into this
          * repo — so the house that a visitor is being sent to is also the house whose paperwork
          * they can read here without leaving. The line says minutes, not work: the snacks are
@@ -383,9 +457,9 @@ export const NAMING = {
      *  the shelf they sit on. */
     href: '/catalogues',
     indexLabel: 'all four →',
-    /* „Two" → „Three" am 2026-07-27: Der Paper-Katalog ist als dritter dazugekommen
-     * (Frank: „datasets für das register und einen weiteren katalog für die sammlung
-     * von papers"). Die Zahl steht ausnahmsweise im Text, weil sie den Satzbau trägt —
+    /* „Two" → „Three" am 2026-07-27: Der Paper-Katalog ist als dritter dazugekommen —
+     * Frank hatte neben dem Datensatz-Register einen zweiten Katalog für Paper verlangt
+     * (Wortlaut privat). Die Zahl steht ausnahmsweise im Text, weil sie den Satzbau trägt —
      * sie wandert in die Prüfung von naming.test.ts, damit sie nicht still veraltet.
      * „Three" → „Four" am 2026-08-01 (Works Register); zugleich musste der Nebensatz
      * ehrlich werden: drei verzeichnen die Welt, einer die eigene Hervorbringung. */
@@ -395,6 +469,9 @@ export const NAMING = {
         name: 'Atlas of Data Art',
         href: '/atlas',
         description: 'A source-cited map of contemporary data art — works where data, AI and power meet, arranged by field rather than by date.',
+        /* `short` (2026-10-11): the catalogue in a handful of words, for the index at the foot
+           of the entrance and the top bar's menu — places a sentence does not fit. */
+        short: 'contemporary data art, source-cited',
       },
       {
         /* Wortlaut neu gefasst am 2026-07-27 (Rückbau, docs/design/2026-07-27-register-
@@ -407,6 +484,7 @@ export const NAMING = {
         name: 'Dataset Register',
         href: '/datasets',
         description: 'A curated record of datasets this research has actually reached for: every entry carries a verbatim access route, how far that route has been checked, and one sentence saying why it counts here. An entry cannot exist without its reason.',
+        short: 'datasets this research reached for',
       },
       {
         /* Neu am 2026-07-27. Der Katalog entsteht aus derselben Suche wie das Register:
@@ -416,17 +494,25 @@ export const NAMING = {
         name: 'Paper Catalogue',
         href: '/papers',
         description: 'What the three research practices actually read. Each entry is here because a practice reached for it in its own work, and carries the record of that use: who cites it, when it was last picked up, and — where someone wrote one down — why it matters.',
+        short: 'what the practices actually read',
       },
       {
-        /* Neu am 2026-08-01 (Frank: „es fehlt noch eine seite, welche alle werke listet,
-         * welche die ökologie je hervorgebracht hat"). Die Praxen führen je ihren eigenen
+        /* Neu am 2026-08-01 auf Franks Anweisung, eine Seite mit allen je hervorgebrachten
+         * Werken der Ökologie zu führen (Wortlaut privat — stehende Regel seit 2026-08-15:
+         * Franks Nachrichten werden paraphrasiert, nie zitiert). Die Praxen führen je ihren eigenen
          * Raum — Werke, Instrumente, Premieren —, aber nirgends stand der Gesamtbestand.
          * Das Register liest genau dieselben meta.json-Dateien wie die Räume; es ist eine
          * Ansicht, keine zweite Wahrheit. Nicht zu verwechseln mit /work (Singular): das
          * sind die eigenen Projekte, nicht die Hervorbringungen der Praxen. */
         name: 'Works Register',
-        href: '/works',
-        description: 'Every work the three research practices have brought forth, on one page: dated, named by its practice, and linked to the work itself. Withdrawn works stay listed and carry their own withdrawal in the practice’s own words — the record keeps every mark.',
+        /* The anchor, not /works: the register moved onto /ecology on 2026-09-03 and the old
+           route only redirects here. A card pointing at a redirect makes every visit two hops. */
+        href: '/ecology#register',
+        /* Widened 2026-10-04 with the register itself: since research ecology v3 two of the
+           three practices leave session artifacts rather than works, and the register lists
+           both — a card promising "every work" would have described the page of September. */
+        description: 'Every work and every session artifact the research practices have brought forth, on one page: dated, named by the practice that made it, and linked to the thing itself. Withdrawn works stay listed and carry their own withdrawal in the practice’s own words — the record keeps every mark.',
+        short: 'everything the practices brought forth',
       },
     ],
   },
@@ -441,16 +527,21 @@ export const NAMING = {
    * in ihrem eigenen Raum Instrumente, also heißen sie hier auch so. */
   worksRegister: {
     kicker: 'WORKS REGISTER',
-    kickerSub: 'EVERY WORK, EVERY PRACTICE, ONE PAGE',
-    /** browser tab / OG title — the catalogue's own name, so nav, card and tab agree */
-    pageTitle: 'Works Register',
-    metaDescription:
-      'Every work the ecology’s three research practices have brought forth, on one dated page — the atelier’s works, the field’s instruments, the studio’s premieres. Withdrawn works stay listed and marked.',
+    kickerSub: 'EVERY WORK AND ARTIFACT, EVERY PRACTICE, ONE PAGE',
+    /* `pageTitle` and `metaDescription` were dropped on 2026-09-03 with the route they served:
+       the register is a section of /ecology now and wears that page's tab and description. A
+       title for a page that no longer exists is the kind of string that quietly outlives its
+       reason and gets copied somewhere it does not belong. */
     title: 'everything the practices have brought forth',
+    /* Rewritten 2026-10-04 (Frank's request of that day, wording private): the register had
+       listed works only, and since research ecology v3 the Field and the Atelier close every
+       session with an ARTIFACT that is not a work — two months of their output were missing
+       here while the Studio, which still ships works, filled the list. The artifact rows are
+       marked as what they are; the nightly line's works stand under its own name. */
     intro:
-      'The three research practices each keep their own room, in their own vocabulary. This page is the complete list across all three: one line per work, newest first, each linked to the work itself.',
+      'The three research practices each keep their own room, in their own vocabulary. This is the complete list across all three: one line per work and, since every session of the ecology’s shared question closes with a self-contained artifact, one line per artifact — marked as such, newest first, each linked to the thing itself. The works of the nightly line, which keeps its own address beside the ecology, stand here under its own name.',
     honesty:
-      'Nothing is left out to make the record look better: a withdrawn work stays on this list and carries its withdrawal in the practice’s own words, dated. Every line is read from the work’s own committed metadata — a work missing here would be a work missing from the archive.',
+      'Nothing is left out to make the record look better: a withdrawn work stays on this list and carries its withdrawal in the practice’s own words, dated. Every line is read from the practice’s own committed record — a work’s metadata, an artifact’s own page — so a line missing here would be a line missing from the archive.',
     /** the distinction a visitor arriving from the nav needs first */
     notThis: {
       lead: 'Looking for the conductor’s own projects instead?',
@@ -464,14 +555,25 @@ export const NAMING = {
       { ns: 'field' as const, name: 'The Field', noun: 'instruments', roomLabel: 'the field’s instruments', roomHref: '/field/instruments' },
       { ns: 'studio' as const, name: 'The Studio', noun: 'premieres', roomLabel: 'the studio’s premieres', roomHref: '/studio/works' },
     ],
+    /** What a session leaves under research ecology v3 (2026-08-30), in the canon's noun — the
+     *  plural counts in the head line, the singular marks the row. An artifact is never called a
+     *  work, an instrument or a premiere here: the practice's record does not call it one. */
+    artifactNoun: 'artifacts',
+    artifactLabel: 'artifact',
+    /** The nightly line's works, which the register reads from the fork's mirror. Its NAME is not
+     *  typed here: it is read from the line's overview card, the same string the signal log uses
+     *  (houseNames() in src/lib/ops/house-feed.ts), so the register cannot call it something its
+     *  own card does not. The noun is the one its own page uses for what it made. */
+    nightlyLine: { noun: 'works', roomLabel: 'the nightly line’s works', roomHref: '/error-as-method' },
     roomsLead: 'Each practice keeps its own room, where a work stands in its house’s own language:',
     /** What a STANDALONE work carries when someone lands on it cold — a shared link, a search
      *  result — with no site chrome around it at all. Two gaps closed at once (Frank,
      *  2026-08-02): the wall text added on 2026-08-01 reached only the Astro-wrapped works,
      *  so the interactive ones still met their visitor cold; and none of the nine standalone
-     *  works carried a single internal link, in either direction — "von allen werken gibt es
-     *  keinen link zurück zur praxis oder ecology". The strip is the site's, not the work's,
-     *  and says so, so the frame is never mistaken for the practice's own words. */
+     *  works carried a single internal link, in either direction — his finding, wording
+     *  private: no work linked back to its practice or to the ecology. The strip is the
+     *  site's, not the work's, and says so, so the frame is never mistaken for the practice's
+     *  own words. */
     standaloneFrame: {
       note: 'Wall label and links added by the site. The work itself begins below.',
       backPrefix: '←',
@@ -500,6 +602,31 @@ export const NAMING = {
       } as Record<string, { label: string; href: string; self?: string; bare?: string[] }>,
       /** the last exit, for pages whose house link would point at themselves */
       site: { label: 'frankbueltge.de', href: '/' },
+      /** The shelf a strip can carry on a house's front door. n-1's carried one for some hours
+       *  on 2026-10-10 (Frank, wording private): the practice built a page most nights, and a
+       *  visitor could reach none of them except through links inside the long text of its own
+       *  front page. It came off the same evening, when that page was replaced by one that shows
+       *  its pages itself (scripts/engines/reframe-works.ts); the words stay for the frame, which
+       *  can still render one. Every entry is read from
+       *  the mirror — the page's own title and first sentence, the day its record says it was
+       *  built (src/lib/n1/shelf.ts) — so the only words the site adds are the ones below.
+       *  `kinds` are the practice's own two: a piece it has declared a work (filed under
+       *  works/, or declared in a night's record or a work document where a project built it),
+       *  and what a project builds otherwise, "a study, not yet a work". */
+      shelf: {
+        heading: 'Built here so far',
+        /** "11 pages to open, newest first · 3 works · 8 studies" */
+        count: (n: { pages: number; works: number; studies: number }): string =>
+          `${n.pages} ${n.pages === 1 ? 'page' : 'pages'} to open, newest first · ` +
+          `${n.works} ${n.works === 1 ? 'work' : 'works'} · ${n.studies} ${n.studies === 1 ? 'study' : 'studies'}`,
+        kinds: { work: 'work', study: 'study' },
+        /** a page no part of the practice's record dates: listed last, never given a guessed day */
+        undated: 'undated',
+        /** the fold that keeps the shelf compact as it grows — works never fold */
+        earlier: (n: number): string => `${n} earlier ${n === 1 ? 'study' : 'studies'}`,
+        /** takes the place of `note` on the front door: it has to cover the shelf as well */
+        note: 'This list and the links are added by the site, read from the practice’s own files: each title and first sentence is the page’s own, each date the night the record says it was built. The practice’s own page begins below.',
+      },
     },
     withdrawnLabel: 'withdrawn',
     entranceNote: {
@@ -508,6 +635,11 @@ export const NAMING = {
       href: '/#latest',
     },
     provenanceLead: 'Read at build time from the works’ own committed metadata:',
+    /** the artifact sources, named after the works' — the directories each artifact row came from */
+    provenanceArtifactsLead:
+      'and from the session artifacts the practices commit, each titled by its own page and dated by its directory name or, for a window, by the journal note that names it:',
+    /** shown only when an artifact's record gives it no day: it is named, never dated by guess */
+    undatedLead: 'Committed, but not listed above because no record gives them a day:',
     provenanceTail:
       'Dates, titles and descriptions are the practices’ own; the withdrawal state is the /^WITHDRAWN/ marker a practice writes into its work’s own medium line. This page adds no judgement of its own. The Plenum (data-snack) is a house of its own and keeps its texts elsewhere — it is not counted here.',
   },
@@ -547,13 +679,19 @@ export const NAMING = {
    */
   opsRoom: {
     /** the strip under the real TopBar: what this page is, and the clock that proves it is live */
-    strip: { label: 'ops room · live from the record', clockLabel: 'UTC' },
+    strip: {
+      label: 'ops room · live from the record',
+      clockLabel: 'UTC',
+      /** the clock's face (src/lib/ops/dial.ts): its accessible name, with the figures it draws */
+      dial: (p: { weeks: number; total: number }) =>
+        `The day dial: ${p.total.toLocaleString('en-GB')} commits by UTC hour of the day, across ${p.weeks} weeks of the record — midnight at the top, noon at the bottom; the hand is the live UTC time.`,
+    },
 
     hero: {
       /** condensed from NAMING.sub, per the handoff — the long form still stands on /dossier */
       sub: 'Constant attention, nightly measurement, evidence at scale — and whether machines can research on their own and produce work that holds up. Every claim leads back to its evidence. Git is the archive.',
       primary: { label: 'enter the ecology →', href: '/ecology' },
-      secondary: { label: 'tonight’s works →', href: '/works' },
+      secondary: { label: 'tonight’s works →', href: '/ecology#register' },
     },
 
     /** The instrument's four corner strips; the two that carry numbers are functions. Kept short
@@ -564,6 +702,55 @@ export const NAMING = {
       headRight: (weekRange: string) => `${weekRange} · TWO LINES/WEEK`,
       footLeft: '2-HOUR BINS · TAPERED',
       footRight: (asOf: string) => `AS OF ${asOf.toUpperCase()}`,
+      /** The hover readout under the pointer: a template, because the client fills it — the
+       *  placeholders are the only wording the script owns, and it owns none of the numbers.
+       *  The number it states is the UNSHAPED bin from the snapshot, not the tapered height. */
+      readout: '{week} · {day} {hour} UTC · {commits} COMMITS',
+      days: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+    },
+
+    /** The globe under the hero (visual layer, Phase 3b, 2026-09-02): the earth-observation fleet
+     *  the watchtower counts, at its positions now, and the ghost fleet's dark gaps drawn from
+     *  where a transponder fell silent to where it spoke again. Every number is an argument; the
+     *  readouts are templates the island fills with what the mark carries. */
+    sky: {
+      headLeft: (satellites: number) => `THE SKY · ${satellites} EARTH-OBSERVATION SATELLITES`,
+      headRight: (gaps: number) => `${gaps} VESSELS GONE DARK · GLOBAL FISHING WATCH`,
+      // No digit in a static string (tiles.test.ts): the propagator's name, SGP4, carries one, so
+      // the strip says what it does and the method sheet may name it.
+      //
+      // It said "POSITIONS AT YOUR NOW" while the hero mounted the living globe's island, which
+      // propagated the committed elements to the visitor's present twice a second. Since the front
+      // door stopped carrying a globe (2026-09-03) this panel is the build-time plate alone, and
+      // the plate stands where the elements stood when they were taken — so the strip says that
+      // instead. The no-clock exception did not become false; it moved to /globe, which is the only
+      // surface that still propagates.
+      footLeft: 'ORBITS PROPAGATED FROM CELESTRAK ELEMENTS · POSITIONS WHERE THE ELEMENTS WERE TAKEN · GAPS FROM SWITCH-OFF TO RETURN',
+      footRight: (elementsDay: string, gapsDay: string) => `ELEMENTS ${elementsDay} · GAPS ${gapsDay}`,
+      /** the plate's accessible name and description (src/lib/globe/floor.ts) */
+      floorTitle: 'The sky over the record',
+      floorDesc: (satellites: number, gaps: number, day: string) =>
+        `${satellites} earth-observation satellites at their positions on ${day}, and ${gaps} vessels that switched their transponder off, each drawn from where it went dark to where it came back.`,
+      /** native titles on the plate's marks */
+      satelliteLabel: (name: string, group: string, owner: string | null) => (owner ? `${name} · ${group} · ${owner}` : `${name} · ${group}`),
+      gapLabel: (vessel: string, hours: number, waters: string) => `${vessel} · ${hours} h dark · ${waters}`,
+      /** CelesTrak group → the page's word for it */
+      groups: { resource: 'earth resources', sar: 'radar imaging', weather: 'weather' } as Record<string, string>,
+      aside: {
+        kicker: 'THE LONGEST GAPS',
+        hours: (hours: number) => `${hours} h dark`,
+        fleet: { label: 'the ghost fleet →', href: '/ghost-fleet' },
+        watch: { label: 'the watchtower →', href: '/lab/ueberflug-studie' },
+      },
+      legend: {
+        // "What the globe shows" was true while the hero mounted the living globe's island. It is
+        // a plate now (2026-09-03), and a plate shows one moment: the one its elements were taken
+        // at. Both lines were rewritten with it rather than left to overclaim.
+        label: 'What the plate shows',
+        satellite: 'a satellite, where it stood when its elements were taken',
+        gap: 'a vessel’s dark gap — off to on, in the Field’s hue',
+        land: 'Natural Earth coastlines',
+      },
     },
 
     board: {
@@ -572,9 +759,12 @@ export const NAMING = {
       link: { label: 'the last landed state →', href: '/ecology#now' },
       /** what a row says instead of a title when its source carries no landed work */
       noWork: 'no landed work yet',
+      /** the sparkline's hover readout — a template the client fills with the bucket's own count */
+      sparkReadout: '{commits} commits',
       groups: [
         {
-          label: 'THE RESEARCH ECOLOGY · FOUR STATIONS, ONE GATE — MACHINE-RUN, PUBLISHED UNEDITED',
+          /* Label rewritten 2026-09-01: the gate fell with research ecology v3 (2026-08-30). */
+          label: 'THE RESEARCH ECOLOGY · THREE PRACTICES, ONE SHARED QUESTION — MACHINE-RUN, PUBLISHED UNEDITED',
           /* `door` names the entry in NAMING.doors this row IS — name, link and one-liner are
              read from there, never restated here, so a reworded door moves the board with it.
              `repo` names the checkout whose committed commit bins draw the row's sparkline
@@ -595,21 +785,206 @@ export const NAMING = {
              stated here because neither has a resident in the doors' sense. */
           rows: [
             { card: 'attention', repo: 'machine-attention', status: 'RUNNING', resident: 'the counter-experiment' },
-            { card: 'nightly-line', repo: 'error-as-method', status: 'NIGHTLY', resident: 'forked from the Atelier' },
-            /* `status` is the practice's own word for its current condition: a window is what its
-               pre-registration calls the bounded trial it is in (public/arch/PREREGISTRATION.md). */
-            { card: 'arch', repo: 'arch', status: 'WINDOW', resident: 'under pre-registration' },
+            /* The relation line names the founding text since 2026-10-11, when the card took the
+               practice's name (Ulysses): the row should still say which line this is. */
+            { card: 'nightly-line', repo: 'error-as-method', status: 'NIGHTLY', resident: 'Error as Method · forked from the Atelier' },
+            /* Arch stood here from 2026-08-23 to 2026-10-11 (status CLOSED since 2026-09-22: its
+               pre-registered window ran 2026-08-23–2026-09-21 and the balance is published). A
+               board of what is RUNNING is the wrong place for a trial that has ended, so the row
+               left with the entrance's redesign of 2026-10-11; the practice's room at /arch stays
+               as its archive, reached from /experiments. */
+            /* Added 2026-09-03: the board named three of the four practices standing beside the
+               ecology. `repo` is the checkout the pulse counts (added to scripts/fetch-pulse.ts
+               the same day); until a snapshot carries its bins the row simply draws no
+               sparkline, which is what repoSeries returns for a repo it cannot find. */
+            { card: 'n-1', repo: 'n-1', status: 'NIGHTLY', resident: 'the Atelier’s third line' },
           ],
         },
       ],
     },
 
+    /**
+     * THE SIGNAL LOG. Widened on 2026-09-03 (Frank) from the three ecology practices to every
+     * house on this site that lands dated work — Error as Method, Arch, n-1 and the lab's own
+     * shelf included. The log's heading had been true of a third of the house; it is now true
+     * of the house.
+     *
+     * The link that used to sit here ("works register →", to /works) is gone with the same
+     * decision: the register moved onto /ecology itself, where the ecology's own catalogue
+     * belongs, and /works redirects there. A heading link to a page that is now an anchor two
+     * sections down would have been a detour dressed as a destination.
+     *
+     * 2026-10-05 (Frank's decision, wording private): the log became the stream of the house's
+     * live updates — not only what the houses land, but everything that changes daily and can
+     * be dated by its own record: the lab's nightly readings, the ecology's cycle turn and
+     * presentations, Machine Attention's moments, n-1's nights and Arch's sessions, the paper
+     * catalogue and the atlas. The entrance shows the newest rows, /now the longer log
+     * (src/lib/ops/house-feed.ts holds both cuts). The heading link returned with it, and this
+     * time it leads somewhere the entrance cannot go: further back.
+     *
+     * Later the same day the stream was widened to the rest of what changes daily — the
+     * Middle's relay (its load-bearing relations) and the dataset register —
+     * and one day's rows began to take turns by source, so a night of a dozen readings no
+     * longer pushes the catalogues and the relay off the entrance (house-feed.ts, sortFeed).
+     */
     signal: {
       kicker: 'SIGNAL LOG',
-      kickerSub: 'WHAT LANDED LAST, NEWEST FIRST',
-      link: { label: 'works register →', href: '/works' },
-      /** the practices' own nouns for what they make — the same three /works uses */
-      kindLabels: { atelier: 'work', field: 'instrument', studio: 'premiere' },
+      kickerSub: 'LIVE UPDATES ACROSS THE WHOLE HOUSE, NEWEST FIRST',
+      /** the entrance shows the newest rows only; the longer log stands on /now, paged */
+      link: { label: 'the longer log →', href: '/now#latest' },
+      /** each source's own noun for what it makes or records — never one word flattened across
+       *  the house. The first ten are the houses' nouns for their works (2026-09-03); the rest
+       *  name the kinds of live update the log carries since 2026-10-05. */
+      kindLabels: {
+        atelier: 'work',
+        field: 'instrument',
+        studio: 'premiere',
+        'nightly-line': 'night',
+        artifact: 'artifact',
+        arch: 'candidate',
+        'n-1': 'work',
+        experiment: 'experiment',
+        instrument: 'instrument',
+        study: 'study',
+        /** a lab instrument's nightly record */
+        reading: 'reading',
+        /** a watch that checks whether its sources still answer (Headroom's reporting pages) */
+        probe: 'probe',
+        /** the paper catalogue's day: how many papers the practices reached for */
+        papers: 'papers',
+        /** the atlas's growth, as its scout counted it */
+        atlas: 'works',
+        /** one dated event on Machine Attention's stage */
+        moment: 'moment',
+        /** a day of such events, counted */
+        moments: 'moments',
+        /** a project of Machine Attention, dated by the day it began */
+        project: 'project',
+        /** the ecology's cycle opening — and since 2026-10-08 the opening of the convening between
+         *  two cycles, which the cycle clock turns the same way */
+        turn: 'turn',
+        /** the Middle's relay tallied a convening: the winning question (2026-10-08) */
+        tally: 'tally',
+        /** the self-contained artifact that closes a practice's cycle */
+        presentation: 'presentation',
+        /** n-1 lands a night */
+        'n1-night': 'night',
+        /** Arch's session protocols */
+        'arch-session': 'session',
+        /** the Middle's relay: a day's load-bearing relations between the practices, counted */
+        relay: 'relations',
+        /** the dataset register's day: its data sources checked, added, or changed in reach */
+        datasets: 'sources',
+      },
+      /** House names are read from the doors and the overview cards; these stand in only if a
+       *  card is ever removed, so the log degrades to a plain name instead of an id. The lab has
+       *  no card of its own — it is the shelf the cards sit on — so its name lives here; so do
+       *  the catalogues', for the same reason (they sit on the lab's shelf, under its tiles). */
+      houseFallback: {
+        atelier: 'The Atelier',
+        field: 'The Field',
+        studio: 'The Studio',
+        'nightly-line': 'Ulysses',
+        arch: 'Arch',
+        'n-1': 'n-1',
+        lab: 'The Lab',
+        attention: 'Machine Attention',
+        ecology: 'The research ecology',
+        catalogues: 'Catalogues',
+        middle: 'The Middle',
+      },
+      /**
+       * The one fact a row states beside its title, where its record carries one. Every figure
+       * arrives as an argument, already formatted from the record; not a digit is typed here.
+       * The lab's readings are worded by GALLERY.readouts — the very sentence the experiment's
+       * card on /experiments states about the same file (src/lib/experiments/readouts.ts) — so
+       * only the records the gallery does not read are worded below.
+       */
+      facts: {
+        /** All Along the Watchtower's nightly orbital data (the card reads the densification
+         *  series instead, which is regenerated by hand) */
+        watchtower: (satellites: string) => `${satellites} Earth-observation satellites on the day’s orbital data`,
+        /** Headroom's watch over the companies' reporting pages — the page's own "reporting
+         *  status" line, as a count */
+        headroom: (p: { pages: string; unreachable: string | null }) =>
+          p.unreachable
+            ? `${p.pages} company reporting pages checked — ${p.unreachable} unreachable`
+            : `${p.pages} company reporting pages checked, every one answered`,
+        /** the paper catalogue keeps no day a paper ENTERED it; what it dates is the last day a
+         *  practice used one ("last used" on /papers), so that is what the row counts */
+        papers: (p: { count: string; one: boolean }) =>
+          `${p.count} paper${p.one ? '' : 's'} last used by the practices`,
+        /** since the catalogue's builder stamps the day a paper first appeared in it
+         *  (`first_seen_on`, from its first run after 2026-10-05), a stamped day counts the
+         *  papers that entered — the "last used" line above stays for the days before */
+        papersEntered: (p: { count: string; one: boolean }) =>
+          `${p.count} paper${p.one ? '' : 's'} entered the catalogue`,
+        /** the dataset register's day, from the dates its builder stamps since 2026-10-05: the
+         *  probe pass of that day, the sources that first appeared, and those whose reachability
+         *  changed — each part only where the register dates it */
+        datasets: (p: {
+          checked: { count: string; one: boolean; confirmed: string } | null
+          added: { count: string; one: boolean } | null
+          changed: string | null
+        }) =>
+          [
+            p.checked &&
+              `${p.checked.count} source${p.checked.one ? '' : 's'} checked, ${p.checked.confirmed} with access confirmed`,
+            p.added && `${p.added.count} source${p.added.one ? '' : 's'} added`,
+            p.changed && `${p.changed} changed reachability`,
+          ]
+            .filter(Boolean)
+            .join(' · '),
+        /** a day of the Middle's relay: the relations that carried something — built on or
+         *  answered — counted; the merely noted are the relay's, not the log's */
+        relations: (p: { count: string; one: boolean; builtOn: string | null; answered: string | null }) =>
+          `${p.count} load-bearing relation${p.one ? '' : 's'} (${
+            p.builtOn && p.answered
+              ? `${p.builtOn} built on, ${p.answered} answered`
+              : p.builtOn
+                ? 'built on'
+                : 'answered'
+          })`,
+        /** the atlas dates no admission either; its scout counts the atlas at every run, and a
+         *  count that rose is the growth this row states, on the day it was counted */
+        atlas: (p: { count: string; one: boolean }) =>
+          `${p.count} more work${p.one ? '' : 's'} counted in the atlas`,
+        /** a day of moments on Machine Attention's stage. The mirrored file holds a window of
+         *  the newest moments, so the window's oldest day may be cut: that day says "at least". */
+        moments: (p: { count: string; atLeast: boolean }) =>
+          `${p.atLeast ? 'at least ' : ''}${p.count} moments offered to the stage`,
+        /** the ecology's cycle turn — the label is ecologyLive's own ("cycle 004") */
+        cycleOpened: (cycleLabel: string) => `${cycleLabel} opened`,
+        /** the convening between two cycles (Frank's decision of 2026-10-08, wording private): the
+         *  day it opened, as cycle.json's convening block dates it */
+        conveningOpened: (cycleLabel: string) => `convening after ${cycleLabel} opened`,
+        /** the day the Middle's relay tallied the convening's result */
+        conveningTallied: (cycleLabel: string) => `convening after ${cycleLabel} tallied`,
+        /** the winning question, quoted (ecologyLive's own quotes), and what the record says became
+         *  of it (convening.ts, resultFate): the day it opens the next cycle while the convening
+         *  runs, the objection that set it aside, the day it opened the next cycle, or that the
+         *  next cycle opened on something else. Where the record says nothing, the question alone. */
+        conveningResult: (p: { question: string; next: string; fate: ResultFate }) => {
+          const f = p.fate
+          if (f.kind === 'pending') return `${p.question} — opens ${p.next} on ${f.opensOn} unless the architect objects`
+          if (f.kind === 'set-aside') return `${p.question} — set aside by the architect’s objection of ${f.objected}`
+          if (f.kind === 'opened') return `${p.question} — opened ${p.next} on ${f.opened}`
+          if (f.kind === 'passed') return `${p.question} — ${p.next} opened on another question on ${f.opened}`
+          return p.question
+        },
+        /** a presentation whose page names no title of its own */
+        presentation: (cycleLabel: string) => `presentation, ${cycleLabel}`,
+      },
+      /** the pager under the log — seven rows in view, the rest one click away */
+      pager: {
+        newer: '← newer',
+        older: 'older →',
+        /** "page 2 of 14 · 96 entries" — every number an argument, none written into the string */
+        position: (page: number, pages: number, total: number) =>
+          `page ${page} of ${pages} · ${total} entries`,
+        /** the accessible name of the pager's own region */
+        label: 'signal log pages',
+      },
       foot: 'next sessions: tonight, before dawn UTC',
     },
 
@@ -619,7 +994,9 @@ export const NAMING = {
       link: { label: 'lab →', href: '/experiments' },
       cataloguesLead: 'catalogues, grown by machine: ',
       /**
-       * One entry per live tile. `name` and `stamp` are fixed; `sub` takes the reading its own
+       * One entry per live tile. `name` and `stamp` are fixed (the name is written as the piece
+       * is titled since 2026-10-11 — the board on /now sets it in capitals from its stylesheet,
+       * the entrance's readings print it as written); `sub` takes the reading its own
        * derivation produced (src/lib/ops/tiles.ts) and writes the sentence around it, so the
        * number in the big line and the number in the sentence are literally the same value.
        *
@@ -631,53 +1008,70 @@ export const NAMING = {
        */
       tiles: {
         foreknown: {
-          name: 'MACHINE ATTENTION · THE FOREKNOWN',
+          name: 'Machine Attention · The Foreknown',
           stamp: 'GDACS · NOAA · NIGHTLY VERDICTS',
           sub: (p: { open: number; resolved: number; nights: number }) =>
             `public warnings held open on the ledger — ${p.resolved} closed with a verdict so far, across ${p.nights} nights on the record`,
+          /* `readout` — one line per mark, shown when the pointer rests on it (the tile's stamp
+             line gives way to it and comes back). Written here for the same reason `sub` is: the
+             number in the readout is the value the mark was drawn from, never a second figure. */
+          readout: (p: { resolved: number; open: number }): [string, string] => [
+            `${p.resolved} closed with a verdict`,
+            `${p.open} held open on the ledger`,
+          ],
         },
         protocol: {
-          name: 'PROTOCOL',
+          name: 'Protocol',
           stamp: 'DETERMINISTIC · NO LLM IN THE WORDING',
           sub: (p: { unavailable: number }) =>
             p.unavailable === 0
               ? 'agenda items in today’s minutes of the planet — every source answered, every item adjourned'
               : `agenda items in today’s minutes of the planet — ${p.unavailable} source${p.unavailable === 1 ? '' : 's'}: “Feststellung entfällt”; every item adjourned`,
+          readout: (p: { item: string; answered: boolean }) =>
+            p.answered ? p.item : `${p.item} — “Feststellung entfällt”`,
         },
         consensus: {
-          name: 'CONSENSUS',
+          name: 'Consensus',
           stamp: 'ONE SNAPSHOT PER DAY · NEVER EDITED',
           sub: (p: { scanned: number; hours: number }) =>
             `ran today’s most-copied sentence word-for-word — one source, one cascade of ${p.hours} hours, counted across ${p.scanned.toLocaleString('en-GB')} articles`,
+          readout: (p: { hour: number; outlets: number }) =>
+            `hour ${p.hour} of the cascade: ${p.outlets} outlet${p.outlets === 1 ? '' : 's'} joined`,
         },
         iceberg: {
-          name: 'ICEBERG THEORY',
+          name: 'Iceberg Theory',
           stamp: 'LANGUAGE EDITIONS · MEASURED PER TOPIC',
           /* The count sits in the big line ("5 of 12"), so the sentence must not repeat it — it
              names WHICH topic and what the other editions do instead. */
           sub: (p: { topic: string }) =>
             `Wikipedia language editions conceal more than average about ${p.topic} — the furthest-apart topic in the register today; the rest state the contested claim outright`,
+          readout: (p: { lang: string; omission: number }) => `${p.lang}: ${p.omission}% of the claim omitted`,
         },
         policy: {
-          name: 'POLICY',
+          name: 'Policy',
           stamp: 'NIGHTLY · MARKET DATA',
           sub: (p: { baseYear: number; latest: string }) =>
             `today’s climate premium against ${p.baseYear} — recomputed from real market data, latest reading ${p.latest}`,
+          readout: (p: { year: number; index: number }) => `${p.year}: premium index ${p.index}`,
         },
         redaction: {
-          name: 'EDITORIAL DEADLINE',
+          name: 'Editorial Deadline',
           stamp: 'WAYBACK DIFFS · DAILY',
           sub: (p: { institution: string; changed: number; watched: number }) =>
             `taken out of a page of the ${p.institution} — the most substantive of ${p.changed} changes across ${p.watched} watched pages, both versions linked`,
+          readout: (p: { institution: string; tokens: number }) =>
+            `${p.institution}: −${p.tokens.toLocaleString('en-GB')} tokens`,
         },
         ghostFleet: {
-          name: 'GHOST FLEET',
+          name: 'Ghost Fleet',
           stamp: 'NO CLAIM OF ILLEGALITY — COUNTED',
           sub: (p: { value: number; unit: 'hours' | 'days' }) =>
             `vessels in deliberate AIS silence today — the longest of them dark for ${p.value} ${p.unit}, in waters that are named`,
+          readout: (p: { vessel: string; flag: string | null; value: number; unit: 'hours' | 'days' }) =>
+            `${p.vessel}${p.flag ? ` (${p.flag})` : ''}: dark for ${p.value} ${p.unit}`,
         },
         roundNumbers: {
-          name: 'ROUND NUMBERS',
+          name: 'Round Numbers',
           stamp: 'THE METHOD ITSELF ON TRIAL',
           /* The count is in the big line; the sentence carries what makes the piece a trial of the
              METHOD and not of the data — what the same test says about the control the piece
@@ -686,27 +1080,139 @@ export const NAMING = {
             p.tampered
               ? `real official series the same Benford test calls suspicious — while the deliberately tampered control comes back “${p.tampered}”`
               : 'real official series the same Benford test calls suspicious — the test is on trial here, not the statistics office',
+          readout: (p: { digit: number; observed: string; expected: string }) =>
+            `leading digit ${p.digit}: ${p.observed}% observed · ${p.expected}% expected`,
         },
         patterns: {
-          name: 'PATTERNS',
+          name: 'Patterns',
           stamp: 'PERMUTATION-TESTED · THE CAPSTONE',
           sub: (p: { pairs: number; survives: boolean }) =>
             `today’s strongest correlation among ${p.pairs} pairs of its own archive — ${p.survives ? 'and it survives the permutation test' : 'indistinguishable from noise under the permutation test'}`,
+          readout: (p: { from: string; to: string; count: number }) =>
+            `r between ${p.from} and ${p.to}: ${p.count} of the shuffles`,
         },
         watchtower: {
-          name: 'ALL ALONG THE WATCHTOWER',
+          name: 'All Along the Watchtower',
           stamp: 'CELESTRAK · DAILY ORBITAL DATA · LOCAL ONLY',
           sub: () =>
             'Earth-observation satellites on tonight’s committed orbital data — which of them have you in view is computed in your browser, on the piece itself',
+          readout: (p: { owner: string; count: number }) => `${p.owner}: ${p.count} satellite${p.count === 1 ? '' : 's'}`,
+        },
+        commonGround: {
+          name: 'Common Ground',
+          stamp: 'SEARCH · READING · POSTING · CROSS-CHECKED EVERY MORNING',
+          sub: (p: { topics: number; ok: number; total: number; lead?: string }) =>
+            `topics ran on two platforms or more this morning — of ${p.topics} read from ${p.ok} of ${p.total} sources${p.lead ? `; leading: ${p.lead}` : ''}`,
+          readout: (p: { label: string; platforms: number }) => `${p.label}: on ${p.platforms} platforms`,
         },
         atlas: {
-          name: 'ATLAS OF DATA ART',
+          name: 'Atlas of Data Art',
           stamp: 'REFERENCE COLLECTION · NIGHTLY',
           sub: (p: { artists: number }) =>
             `catalogued and sourced, by ${p.artists} named artists — uncertain classifications stay flagged`,
+          readout: (p: { year: number; count: number }) => `${p.year}: ${p.count} work${p.count === 1 ? '' : 's'}`,
         },
       },
     },
+  },
+
+  /**
+   * THE FRONT DOOR (2026-09-01) — the entrance after the ops room. The board had grown into the
+   * densest surface of the site (seven rows with sparklines, a signal log, a dozen tiles): the
+   * right amount of instrument for a return visitor, the wrong first page for a stranger. The
+   * full board moved to /now whole and unchanged, rendering NAMING.opsRoom above verbatim; this
+   * block holds only what the calmer entrance adds — a plain-language introduction, the ecology
+   * card's one live line, the editorial front page, the slim live strip, and /now's SEO strings.
+   * Same law as the ops room: not one digit. Copy that has to wrap a number is a function
+   * taking that number as its argument.
+   */
+  frontDoor: {
+    /** Who runs this site and what runs on it, in plain words — the first thing a stranger
+     *  reads under the standing question. v3 wording (2026-09-01): one shared question,
+     *  everything published unedited, Git as the archive. */
+    sub: 'Frank Bültge is a data engineer, and this site is his running experiment: machines doing research in the open. Three machine-run practices work on one shared research question at a time and publish everything unedited — every claim leads back to committed evidence, and Git is the archive.',
+
+    /** The entrance's own strip label: the ops room moved to /now (2026-09-01), so the front
+     *  door no longer announces itself as the ops room — /now keeps that name. */
+    strip: { label: 'live from the record', clockLabel: 'UTC' },
+
+    /** The ecology card's one live line. It renders the same committed cycle state /ecology
+     *  reads (loadCycle → src/data/ecology/cycle.json); the phase badge is ECOLOGY_V3's own and
+     *  is not restated here — these functions only phrase what stands around it. */
+    ecologyLive: {
+      cycleLabel: (n: number) => `cycle ${String(n).padStart(3, '0')}`,
+      /** the cycle's question is quoted — a seed's, or since 2026-10-03 the continuing question */
+      question: (q: string) => `“${q}”`,
+      /** what stands when neither a seed nor a continuing question is set */
+      defaultThemes: 'the default themes',
+    },
+
+    /** The editorial section: the newest landed work as a lead, the next few as one line each,
+     *  and the current cycle's artifact trail as a thin strip beneath. */
+    front: {
+      kicker: 'FRONT PAGE',
+      kickerSub: 'WHAT LANDED LAST — THE NEWEST WORK LEADS',
+      artifactsLead: 'this cycle’s artifacts: ',
+    },
+
+    /** The live board on the entrance — whole, with its sparklines, last landed work and
+     *  status word (the bare-chips cut of the first front door lost the drawing; Frank's
+     *  review 2026-09-01, wording private). /now keeps the deeper room: the signal log at
+     *  depth and every live-experiment tile. */
+    live: {
+      kicker: 'LIVE',
+      kickerSub: 'WHAT IS RUNNING HERE — FROM THE COMMITTED RECORD',
+      link: { label: 'the full instrument room →', href: '/now' },
+    },
+
+    /** /now — the ops room's board, moved off the entrance whole (2026-09-01). */
+    now: {
+      seo: {
+        title: 'Now — the board, live from the record',
+        description:
+          'The full status board behind this site’s entrance: every running system, its sparkline and last landed work, and live readings from every experiment.',
+      },
+      h1: 'the full board',
+      lead: 'Everything the entrance summarises in one chip per system, at full instrument depth: the board with its sparklines, the signal log, and the live readings of every experiment that ships data daily.',
+      backLabel: '← the front door',
+      backHref: '/',
+    },
+  },
+
+  /**
+   * THE TOP BAR (2026-10-11, design handoff docs/design_handoff_homepage_ecology/README.md §1).
+   * Four points as before — Projects, Lab, About, Contact — and under Projects the two lists.
+   * What changed is that a research project now says in a few words what it is, and that n-1
+   * and the nightly line stand in the list beside the ecology they stand beside in the house.
+   *
+   * A research entry names a `card` where the project has one in `overview.items` above: its
+   * name and its address are read from there, never retyped, so a renamed project moves the
+   * menu with it. Atlas has no overview card (it is a catalogue), so it carries its own; its
+   * line is the catalogue's `short`, read in the bar rather than restated here. "Other
+   * projects" are read from src/data/projects.ts, as they always were.
+   */
+  nav: {
+    projects: 'Projects',
+    research: {
+      label: 'Research projects',
+      items: [
+        { card: 'ecology', line: 'three practices, one shared question' },
+        { card: 'attention', line: 'the counter-experiment' },
+        { name: 'Atlas', href: '/atlas' },
+        { card: 'n-1', line: 'the Atelier’s third line' },
+        { card: 'nightly-line', line: 'Error as Method, the Atelier’s nightly line' },
+      ] as ({ card: string; line: string } | { name: string; href: string })[],
+    },
+    other: { label: 'Other projects', foot: { label: 'all projects →', href: '/work' } },
+    points: [
+      { label: 'Lab', href: '/experiments' },
+      { label: 'About', href: '/about' },
+      { label: 'Contact', href: '/contact' },
+    ],
+    /** the small-screen button: one word closed, one word open */
+    menu: { open: 'Menu', close: 'Close' },
+    /** accessible names of the two navigation landmarks */
+    aria: { site: 'Site', projects: 'Projects' },
   },
 
   footer: {

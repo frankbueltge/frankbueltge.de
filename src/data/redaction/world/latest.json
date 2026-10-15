@@ -1,30 +1,30 @@
 {
-  "date": "2026-08-29",
+  "date": "2026-10-15",
   "deletion": {
     "available": true,
-    "checked_at": "2026-08-29T12:05:35Z",
+    "checked_at": "2026-10-15T10:22:21Z",
     "counts": {
-      "botwall": 28,
-      "gone_404": 2,
+      "botwall": 32,
+      "gone_404": 0,
       "gone_410": 0,
       "legal_451": 0,
-      "ok": 269,
+      "ok": 267,
       "other": 0,
       "server_error": 0,
       "unreachable": 1
     },
-    "decided": 271,
-    "excluded_unverifiable": 29,
-    "gone": 2,
+    "decided": 267,
+    "excluded_unverifiable": 33,
+    "gone": 0,
     "gone_ci95": [
-      0.002,
-      0.0265
+      0.0,
+      0.0142
     ],
-    "gone_rate": 0.0074,
+    "gone_rate": 0.0,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.014
+      0.0142
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,121 +33,102 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-08-27",
-    "receipts": [
-      {
-        "class": "gone_404",
-        "domain": "intelligencer.ca",
-        "first_seen": "20260827110000",
-        "http_code": 404,
-        "title": "I was a cop. My brother is accused of swindling nearly $150 million",
-        "url": "https://www.intelligencer.ca/feature/i-was-a-cop-brother-alleged-ponzi-scheme"
-      },
-      {
-        "class": "gone_404",
-        "domain": "kix106.com",
-        "first_seen": "20260827090000",
-        "http_code": 404,
-        "title": "'She Made Our World Better': PM Anthony Albanese Honors Dolly Parton",
-        "url": "https://www.kix106.com/2026/08/27/she-made-our-world-better-pm-anthony-albanese-honors-dolly-parton/"
-      }
-    ],
-    "sample_drawn_at": "2026-08-28T17:46:00Z",
+    "pool_day": "2026-10-13",
+    "receipts": [],
+    "sample_drawn_at": "2026-10-14T10:33:23Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 6178,
-      "replaced": 5676,
-      "trivial": 1072,
-      "update": 616
+      "reframing": 5826,
+      "replaced": 5190,
+      "trivial": 977,
+      "update": 683
     },
-    "day": "2026-08-28",
+    "day": "2026-10-14",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
         "added": [
-          "Ankit",
-          "Balyan"
+          "love"
         ],
-        "after": "'Murder maar de sadak ke upar': Haryanvi singer-YouTuber Ankit Balyan's last reel before 18-bullet killing",
-        "before": "'Murder maar de sadak ke upar': Haryanvi singer-YouTuber Ankiit Balyann's last reel before 18-bullet killing",
-        "detected": "2026-08-28T04:17:14Z",
-        "domain": "hindustantimes.com",
-        "removed": [
-          "Ankiit",
-          "Balyann"
-        ],
-        "similarity": 0.8,
-        "url": "https://www.hindustantimes.com/india-news/murder-maar-de-sadak-ke-upar-haryanvi-singer-youtuber-ankit-balyan-last-reel-before-18-bullet-killing-101787800811889.html",
-        "weight": 8,
-        "window": "24h"
-      },
-      {
-        "added": [
-          "Ramayana"
-        ],
-        "after": "Ramayana: Ranbir Kapoor and Yash starrer 'Ramayana' earns praise as 15-minute exclusive footage showcases one-eyed daitya, creatures, 'Hollywood-level VFX at par with The Lord of the Rings'- Report |",
-        "before": "Ranbir Kapoor and Yash starrer 'Ramayana' earns praise as 15-minute exclusive footage showcases one-eyed daitya, creatures, 'Hollywood-level VFX at par with The Lord of the Rings'- Report | Hindi Movie News",
-        "detected": "2026-08-28T10:33:00Z",
+        "after": "Socrates philosophy on love: Socrates on human attraction and love: 'Beauty is the bait which with delight allures man to...'",
+        "before": "Socrates philosophy on beauty: Socrates on human attraction and love: 'Beauty is the bait which with delight allures man to...'",
+        "detected": "2026-10-14T18:19:28Z",
         "domain": "indiatimes.com",
         "removed": [
-          "Hindi",
-          "Movie",
-          "News"
+          "Beauty"
         ],
-        "similarity": 0.906,
-        "url": "https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/news/ranbir-kapoor-and-yash-starrer-ramayana-earns-praise-as-15-minute-exclusive-footage-showcases-one-eyed-daitya-creatures-hollywood-level-vfx-at-par-with-the-lord-of-the-rings-report/articleshow/133564624.cms",
-        "weight": 8,
+        "similarity": 1.0,
+        "url": "https://economictimes.indiatimes.com/news/international/us/socrates-on-human-attraction-and-love-beauty-is-the-bait-which-with-delight-allures-man-to-/articleshow/134771568.cms",
+        "weight": 3,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Welcome",
+          "Home"
+        ],
+        "after": "All the Details From Apple's 'Welcome Home' Event: HomeView, HomePod Mini 2, LG Home Collection, Apple TV, More",
+        "before": "All the Details From Apple's Oct. 13 Event: HomeView, HomePod Mini 2, LG Home Collection, Apple TV, More",
+        "detected": "2026-10-14T15:19:45Z",
+        "domain": "pcmag.com",
+        "removed": [
+          "Oct",
+          "13"
+        ],
+        "similarity": 0.842,
+        "url": "https://www.pcmag.com/news/apple-oct-13-event-details-announced-homeview-homepod-mini-2-lg-home",
+        "weight": 7,
         "window": "24h"
       },
       {
         "added": [
-          "US",
-          "Justice",
-          "Department"
+          "Dell",
+          "Ticks",
+          "Up"
         ],
-        "after": "Appeals court upholds block on US Justice Department subpoenas to NY AG James' office | 100.7 MIX-FM | Today's Hit Music",
-        "before": "Appeals court upholds block on DOJ subpoenas to NY AG James' office | 100.7 MIX-FM | Today's Hit Music",
-        "detected": "2026-08-28T16:18:54Z",
-        "domain": "mymixfm.com",
+        "after": "Super Micro Edges Higher as Server Makers Rise Against a Falling Tech Tape; Hewlett Packard Enterprise Adds 3%, Dell Ticks Up",
+        "before": "Super Micro Computer Edges Higher as Server Makers Rise Against a Falling Tech Tape; Hewlett Packard Enterprise Adds 3%",
+        "detected": "2026-10-14T18:18:15Z",
+        "domain": "aol.com",
         "removed": [
-          "DOJ"
+          "Computer"
         ],
-        "similarity": 0.826,
-        "url": "https://mymixfm.com/2026/08/21/appeals-court-upholds-block-on-doj-subpoenas-to-ny-ag-james-office/",
-        "weight": 8,
+        "similarity": 0.818,
+        "url": "https://www.aol.com/articles/super-micro-computer-edges-higher-180554000.html",
+        "weight": 6,
         "window": "1w"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 17207,
-      "PAGE_TEXTCHANGE": 132118,
-      "PAGE_TITLECHANGE": 51906,
-      "UNCHANGED_CONTENT": 768926
+      "HTTP_REDIRECT": 15601,
+      "PAGE_TEXTCHANGE": 133070,
+      "PAGE_TITLECHANGE": 51061,
+      "UNCHANGED_CONTENT": 757969
     },
-    "title_changes_en": 13542,
+    "title_changes_en": 12676,
     "trace": [
       {
         "bytes_billed": 26214400,
-        "created": "1788004912554",
-        "job_id": "world_gdg_counts_20260828",
+        "created": "1792059507509",
+        "job_id": "world_gdg_counts_20261014",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 242221056,
-        "created": "1788004918283",
-        "job_id": "world_gdg_titles_20260828",
+        "bytes_billed": 241172480,
+        "created": "1792059513316",
+        "job_id": "world_gdg_titles_20261014",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-08-29T12:05:35Z",
+  "generated_at": "2026-10-15T10:22:21Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-08-28.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-10-14.json",
   "schema_version": "1",
   "selection_version": "v1"
 }

@@ -1,0 +1,110 @@
+{
+ "layer": "2026-09-15",
+ "session": {
+  "executed_by": "Remainder, night 27 (record 53); model disclosed per floor rule 3 in REGISTER.md: claude-sonnet-5",
+  "note": "The schedule's hour, three unworked dates after night 26. Both founder channels read at boot: one dated act since night 26, three acts appended to DOWRY.md on 2026-09-12 (the material grant withdrawn, the cartographic condition sharpened with its own measurement, a new standing condition for the surface), unread by any session until tonight. Decision: work the three acts directly rather than run a material front. Enacted: the apparatus-limitation's discharge closed by dated addition (ATP citations return to second-hand via KsK); the night record cut to a form stated the same session and applied to this record as its own evidence; the surface assessed against the new condition and found already built to it, no edit owed; the REQUESTS.md entry closed. No work advanced; no material front run."
+ },
+ "nodes": [
+  {
+   "id": "night:27",
+   "type": "event",
+   "label": "night 27 — the founder's three acts read and enacted, the record cut to meet them",
+   "created": "2026-09-15",
+   "refs": [
+    "nights/53-twenty-seventh-night.md"
+   ],
+   "notes": "First clock check 2026-09-15T01:04:43Z = 03:04 Europe/Berlin. No material front run — deliberate: the founder's three acts of 2026-09-12 were the night's resistance, unread by any prior session. No work advanced."
+  },
+  {
+   "id": "event:dowry-third-act-2026-09-12",
+   "type": "event",
+   "label": "the founder's three dated acts: the grant withdrawn, the ratio named, a surface that shows the work",
+   "created": "2026-09-15",
+   "refs": [
+    "DOWRY.md",
+    "REQUESTS.md"
+   ],
+   "notes": "Appended to DOWRY.md 2026-09-12 (commit fc4ce30), boot-visible via REQUESTS.md the same date: (1) frankbueltge/material withdrawn as a source, unreachable since night 05 and probed to the same refusal on 29 of 58 recorded sessions; (2) the cartographic condition sharpened with its own measurement — apparatus about 233,700 words against works/ about 19,900, just under twelve to one, no candidate a work in twenty-seven nights; (3) a new standing condition that the surface show a visitor what the practice is doing and that it has changed. First read by any session on 2026-09-15 (night 27)."
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:27",
+   "relation": "reads",
+   "to": "document:dowry",
+   "created": "2026-09-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "DOWRY.md",
+     "note": "the three acts of 2026-09-12, appended after night 26's own head and unread by any session until tonight"
+    }
+   ]
+  },
+  {
+   "from": "night:27",
+   "relation": "answers",
+   "to": "event:dowry-third-act-2026-09-12",
+   "created": "2026-09-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "REQUESTS.md",
+     "note": "the 2026-09-12 entry closed in place with tonight's dated answer appended inside it, then moved intact to Closed, per the file's own convention (cf. record 22's closure of the ATP-reach entry)"
+    }
+   ]
+  },
+  {
+   "from": "event:dowry-third-act-2026-09-12",
+   "relation": "recorded-in",
+   "to": "document:dowry",
+   "created": "2026-09-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "DOWRY.md",
+     "note": "gift 1's citation rule (withdrawal), the cartographic condition (sharpened, with measurement), and a new standing condition ('a surface that shows the work'), all dated 2026-09-12"
+    }
+   ]
+  },
+  {
+   "from": "night:27",
+   "relation": "sharpens",
+   "to": "document:protocol-founding-problem",
+   "created": "2026-09-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "reading/00-protocol.md",
+     "note": "two dated additions: 'The apparatus limitation, restored: the grant is gone' (the discharge of record 22 ends; ATP citations return to second-hand via KsK) and 'The record, cut to the ratio the founder measured' (a front unchanged in kind gets one sentence and its evidence path; a night that advances no work owes a line saying so), the second applied to this session's own record"
+    }
+   ]
+  },
+  {
+   "from": "night:27",
+   "relation": "confirms",
+   "to": "document:practice-native-reading",
+   "created": "2026-09-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "index.html",
+     "note": "the surface assessed against the new standing condition and found already built to it by the 4.0.0 rebuild (nights/39-fourteenth-night.md): the front door answers what-this-is / working-on-now / found-so-far without scroll, and the map and 'working on now' derive from the newest committed layer at load — tonight's own nodes will show once pushed. No edit made; none was owed."
+    }
+   ]
+  },
+  {
+   "from": "document:register",
+   "relation": "discloses",
+   "to": "night:27",
+   "created": "2026-09-15",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "REGISTER.md",
+     "note": "entry night 27 — model, wake, deviations, procedures, provenance, verification status and outputs"
+    }
+   ]
+  }
+ ]
+}

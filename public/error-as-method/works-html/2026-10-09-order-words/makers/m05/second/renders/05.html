@@ -1,0 +1,52 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>The Whole Root</title>
+<style>
+html,body{margin:0;background:#f3efe6;}
+body{width:1100px;height:800px;overflow:hidden;font-family:"Helvetica Neue",Helvetica,Arial,"Noto Sans","Noto Sans CJK SC",sans-serif;color:#1d1b18;}
+#field{position:absolute;left:34px;top:30px;width:1032px;height:676px;overflow:hidden;text-align:justify;line-height:1.18;hyphens:none;word-break:keep-all;}
+#field span{white-space:nowrap}
+.cc{font-weight:700;color:#141210}
+.g{color:#5b564e}
+.na{color:transparent;-webkit-text-stroke:0.55px #7d7466;}
+.p0{color:#cc2a14}.p1{color:#1858c4}.p2{color:#2a8a36}.p3{color:#c98600}.p4{color:#6b3fd1}.p5{color:#0a95a8}.p6{color:#e0359a}
+#foot{position:absolute;left:34px;right:34px;bottom:22px;height:52px;border-top:1px solid #1d1b18;padding-top:10px;display:flex;justify-content:space-between;align-items:flex-start;font-size:11px;color:#3a362f}
+#foot h1{margin:0;font-size:19px;font-weight:700;letter-spacing:-0.01em;color:#1d1b18}
+#foot .sub{margin-top:3px}
+#key{display:grid;white-space:nowrap;flex:none;grid-template-columns:repeat(3,auto);gap:2px 18px;text-align:left}
+#key b{font-weight:700}
+</style></head>
+<body>
+<div id="field"></div>
+<div id="foot">
+  <div><h1>The Whole Root</h1><div class="sub" id="sub"></div></div>
+  <div id="key"></div>
+</div>
+<script src="data.js"></script>
+<script>
+const D=window.ROOT, R=D.items;
+const counts={};
+R.forEach(r=>{ if(r.manager!=="Not assigned") counts[r.manager]=(counts[r.manager]||0)+1; });
+const big=Object.entries(counts).filter(([m,c])=>c>=20).sort((a,b)=>b[1]-a[1]).map(e=>e[0]);
+const cls=r=>{
+  if(r.manager==="Not assigned") return "na";
+  const i=big.indexOf(r.manager); if(i>=0) return "p"+i;
+  return r.type==="country-code"?"cc":"g";
+};
+const f=document.getElementById('field');
+f.innerHTML=R.map(r=>`<span class="${cls(r)}">${r.tld}</span>`).join(' ');
+// largest font size that fits
+let lo=4,hi=20;
+for(let k=0;k<18;k++){const m=(lo+hi)/2;f.style.fontSize=m+'px';if(f.scrollHeight<=f.clientHeight)lo=m;else hi=m;}
+f.style.fontSize=lo+'px';
+const na=R.filter(r=>r.manager==="Not assigned").length;
+const cc=R.filter(r=>r.type==="country-code").length;
+const inBig=big.reduce((s,m)=>s+counts[m],0);
+document.getElementById('sub').textContent=
+  `All ${R.length} top-level domains in the IANA Root Zone Database, ${D.source.split("as of ")[1]}, in its own order.`;
+const key=document.getElementById('key');
+const short=m=>m.replace(/,? (Inc\.|LLC|Limited)$/,'').replace(/ Inc\.$/,'');
+let h=`<span class="cc">.bold — ${cc} country codes</span><span class="g">.plain — single owners</span><span><span class="na" style="-webkit-text-stroke:0.7px #7d7466">.hollow</span> — ${na} not assigned</span>`;
+big.forEach((m,i)=>h+=`<span class="p${i}"><b>${counts[m]}</b> ${short(m)}</span>`);
+key.innerHTML=h;
+</script>
+</body></html>

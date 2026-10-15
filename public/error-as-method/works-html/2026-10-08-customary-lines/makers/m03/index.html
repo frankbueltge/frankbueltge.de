@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thirteen Lunations</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #0a0c11; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  svg { display: block; }
+  text { font-family: Georgia, "Times New Roman", serif; fill: #8a8e98; }
+</style>
+</head>
+<body>
+<svg id="w" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("w");
+  var days = window.VIEWS.days;
+  var DAY = 86400000;
+  var P = 29.530588853;                         // synodic month, days
+  var NEW = Date.UTC(2025, 0, 29, 12, 36);      // new moon, 29 Jan 2025
+  var start = Date.UTC(2025, 0, 1, 12, 0);      // each day read at noon UTC
+  var MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(e);
+    return e;
+  }
+  function txt(s, attrs, parent) { var t = el("text", attrs, parent); t.textContent = s; return t; }
+  function fmt(ms) { var d = new Date(ms); return d.getUTCDate() + " " + MON[d.getUTCMonth()]; }
+
+  // geometry
+  var X0 = 150, W = 880, Y0 = 128, ROW = 49.5, RMAX = 24;
+  var max = Math.max.apply(null, days);
+
+  // place every day by its lunation (row) and the moon's age within it (column)
+  var pts = days.map(function (v, i) {
+    var t = start + i * DAY;
+    var L = (t - NEW) / (P * DAY);
+    var row = Math.floor(L) + 1;               // lunation that began 30 Dec 2024 is row 0
+    var f = L - Math.floor(L);
+    return { v: v, i: i, t: t, row: row, f: f,
+             x: X0 + f * W, y: Y0 + row * ROW, r: RMAX * Math.sqrt(v / max) };
+  });
+  var rows = pts[pts.length - 1].row + 1;
+
+  // title
+  txt("Thirteen Lunations", { x: 40, y: 50, "font-size": 22, style: "fill:#d9d4c4;letter-spacing:0.5px" });
+  txt("Readers of the English Wikipedia article “Moon”, each day of 2025, set beside the moon that hung over it.",
+      { x: 40, y: 74, "font-size": 12.5, "font-style": "italic" });
+
+  // phase guides
+  var guides = [[0, "new"], [0.25, "first quarter"], [0.5, "full"], [0.75, "last quarter"], [1, "new"]];
+  guides.forEach(function (g) {
+    var x = X0 + g[0] * W;
+    el("line", { x1: x, x2: x, y1: Y0 - 22, y2: Y0 + (rows - 1) * ROW + 22,
+                 stroke: g[0] === 0.5 ? "#2a2e38" : "#181b23", "stroke-width": 1 });
+    txt(g[1], { x: x, y: Y0 - 30, "font-size": 11, "text-anchor": "middle",
+                style: "letter-spacing:1.5px;font-variant:small-caps" });
+  });
+
+  // row labels: date of the new moon that opens each lunation
+  for (var r = 0; r < rows; r++) {
+    var nm = NEW + (r - 1) * P * DAY;
+    txt(fmt(nm), { x: X0 - 28, y: Y0 + r * ROW + 4, "font-size": 11, "text-anchor": "end" });
+  }
+
+  // the moons themselves: lit fraction drawn as seen from the north, size = readers
+  function litPath(f, R) {
+    var k = Math.cos(2 * Math.PI * f);
+    var rx = Math.abs(k) * R;
+    var waxing = f < 0.5;
+    var outer = waxing ? 1 : 0;
+    var sweep = k > 0 ? (waxing ? 0 : 1) : (waxing ? 1 : 0);
+    return "M0," + (-R) + " A" + R + "," + R + " 0 0 " + outer + " 0," + R +
+           " A" + rx.toFixed(2) + "," + R + " 0 0 " + sweep + " 0," + (-R) + " Z";
+  }
+
+  var layer = el("g", {});
+  pts.slice().sort(function (a, b) { return a.v - b.v; }).forEach(function (p) {
+    var g = el("g", { transform: "translate(" + p.x.toFixed(2) + "," + p.y.toFixed(2) + ")" }, layer);
+    el("circle", { r: p.r.toFixed(2), fill: "#161a22", stroke: "#0a0c11", "stroke-width": 1.2 }, g);
+    el("path", { d: litPath(p.f, p.r), fill: "#e8e2d0", opacity: 0.92 }, g);
+  });
+
+  // a few days named
+  var notes = {
+    72:  "14 Mar · total lunar eclipse",
+    200: "20 Jul · Apollo 11 anniversary",
+    249: "7 Sep · total lunar eclipse",
+    279: "7 Oct · harvest full moon"
+  };
+  Object.keys(notes).forEach(function (k) {
+    var p = pts[+k];
+    var right = p.f < 0.6;
+    var lx = p.x + (right ? p.r + 10 : -p.r - 10);
+    var ly = p.y - p.r + 4;
+    el("line", { x1: p.x + (right ? p.r * 0.7 : -p.r * 0.7), y1: p.y - p.r * 0.7,
+                 x2: lx + (right ? -3 : 3), y2: ly - 4, stroke: "#5b5f69", "stroke-width": 0.8 });
+    txt(notes[k] + " — " + p.v.toLocaleString("en-US"),
+        { x: lx, y: ly, "font-size": 10.5, "font-style": "italic",
+          "text-anchor": right ? "start" : "end", style: "fill:#b9b3a3" });
+  });
+
+  // scale
+  var sy = 770, sx = 150;
+  txt("disc area ∝ daily views", { x: 40, y: sy + 4, "font-size": 10.5 });
+  [4000, 8000, 16000].forEach(function (v, j) {
+    var R = RMAX * Math.sqrt(v / max);
+    var cx = sx + 60 + j * 90;
+    el("circle", { cx: cx, cy: sy, r: R, fill: "none", stroke: "#4a4e58", "stroke-width": 0.8 });
+    txt(v.toLocaleString("en-US"), { x: cx + R + 6, y: sy + 4, "font-size": 10 });
+  });
+  txt("Wikimedia pageviews, human readers, 1 Jan – 31 Dec 2025 · moon’s age taken at noon UTC",
+      { x: 1060, y: sy + 4, "font-size": 10.5, "text-anchor": "end" });
+})();
+</script>
+</body>
+</html>

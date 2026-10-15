@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The sign and the door — what a refusal refuses</title>
+<style>
+:root {
+  --bg:#fbfbf9; --fg:#17171a; --mut:#5c5c66; --line:#dedcd6; --card:#ffffff;
+  --open:#1d6b45; --open-bg:#e7f2ec;
+  --shape:#8a4b12; --shape-bg:#f7ece0;
+  --name:#7a3570; --name-bg:#f3e6f1;
+  --pace:#1f5c78; --pace-bg:#e2eef4;
+  --imp:#4a4a55; --imp-bg:#e6e5e3;
+  --accent:#123a63;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#131316; --fg:#ececeb; --mut:#a2a2ac; --line:#33333a; --card:#1b1b1f;
+    --open:#6fc79a; --open-bg:#16301f;
+    --shape:#e0a463; --shape-bg:#33230f;
+    --name:#d79ccd; --name-bg:#2e1b2b;
+    --pace:#7cc0dd; --pace-bg:#122b36;
+    --imp:#b8b8c2; --imp-bg:#26262b;
+    --accent:#8fb8e0;
+  }
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 ui-serif,Georgia,'Times New Roman',serif; }
+main { max-width:56rem; margin:0 auto; padding:2.5rem 1.25rem 5rem; }
+h1 { font-size:2.4rem; line-height:1.15; margin:0 0 .4rem; letter-spacing:-.01em; }
+h2 { font-size:1.3rem; margin:2.6rem 0 .7rem; }
+h3 { font-size:1.02rem; margin:1.6rem 0 .4rem; }
+.kicker { font:600 .78rem/1.4 ui-sans-serif,system-ui,sans-serif; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--mut); margin-bottom:.9rem; }
+.stand { font-size:1.16rem; color:var(--mut); margin:.2rem 0 2rem; }
+p { margin:.8rem 0; }
+a { color:var(--accent); }
+.lede { font-size:1.06rem; }
+blockquote { margin:1.2rem 0; padding:.2rem 0 .2rem 1.1rem; border-left:3px solid var(--line);
+  color:var(--mut); font-size:.98rem; }
+.big { display:flex; flex-wrap:wrap; gap:.9rem; margin:1.6rem 0; }
+.big div { flex:1 1 11rem; background:var(--card); border:1px solid var(--line);
+  border-radius:.5rem; padding:1rem 1.1rem; }
+.big b { display:block; font:700 2.1rem/1.1 ui-sans-serif,system-ui,sans-serif;
+  letter-spacing:-.02em; }
+.big span { font-size:.88rem; color:var(--mut); }
+.verdict { border-left:4px solid var(--open); background:var(--open-bg); padding:1rem 1.2rem;
+  border-radius:0 .4rem .4rem 0; margin:1.6rem 0; }
+.verdict.warn { border-left-color:var(--shape); background:var(--shape-bg); }
+.verdict.grey { border-left-color:var(--imp); background:var(--imp-bg); }
+table { border-collapse:collapse; width:100%; font:13px/1.45 ui-sans-serif,system-ui,sans-serif; }
+.wrap { overflow-x:auto; border:1px solid var(--line); border-radius:.5rem; margin:1rem 0; }
+th,td { text-align:left; padding:.5rem .6rem; border-bottom:1px solid var(--line);
+  vertical-align:top; }
+th { background:var(--card); font-weight:600; }
+td.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+td.pub { min-width:11rem; font-weight:600; }
+td.url { color:var(--mut); overflow-wrap:anywhere; font-size:11px; }
+code { font:12px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; word-break:break-all; }
+ul { padding-left:1.1rem; } li { margin:.35rem 0; }
+.foot { margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line);
+  font-size:.9rem; color:var(--mut); }
+
+/* --- the knock sequence --- */
+.fig { border:1px solid var(--line); border-radius:.6rem; background:var(--card);
+  padding:1.1rem 1.1rem 1.3rem; margin:1.8rem 0; }
+.fig h3 { margin:0 0 .2rem; font:600 1rem/1.3 ui-sans-serif,system-ui,sans-serif; }
+.fig .cap { font-size:.85rem; color:var(--mut); margin:0 0 .9rem; }
+.grid { display:grid; grid-template-columns:repeat(8,1fr); gap:4px; }
+@media (max-width:640px) { .grid { grid-template-columns:repeat(5,1fr); } }
+.cell { position:relative; aspect-ratio:1/1.15; border-radius:.3rem; border:1px solid var(--line);
+  background:var(--imp-bg); color:var(--imp); overflow:hidden; padding:.25rem .3rem;
+  font:600 9px/1.15 ui-sans-serif,system-ui,sans-serif; text-align:left;
+  transition:background-color .45s ease, color .45s ease, border-color .45s ease; }
+.cell .w { position:absolute; left:0; bottom:0; height:3px; background:currentColor;
+  opacity:.55; }
+.cell.s-open { background:var(--open-bg); color:var(--open); border-color:var(--open-bg); }
+.cell.s-shape { background:var(--shape-bg); color:var(--shape); border-color:var(--shape-bg); }
+.cell.s-name { background:var(--name-bg); color:var(--name); border-color:var(--name-bg); }
+.cell.s-pace { background:var(--pace-bg); color:var(--pace); border-color:var(--pace-bg); }
+.cell.s-closed { background:var(--card); color:var(--mut); border-style:dashed; }
+.cell.s-refused { background:var(--imp-bg); color:var(--imp); }
+.cell.sel { outline:2px solid var(--accent); outline-offset:1px; }
+button.cell { cursor:pointer; font-family:inherit; }
+.steps { display:flex; flex-wrap:wrap; gap:.4rem; margin:.9rem 0 .6rem; }
+.steps button { font:600 12px/1 ui-sans-serif,system-ui,sans-serif; padding:.45rem .6rem;
+  border:1px solid var(--line); background:var(--bg); color:var(--fg); border-radius:.3rem;
+  cursor:pointer; }
+.steps button[aria-pressed=true] { background:var(--accent); color:var(--bg);
+  border-color:var(--accent); }
+.readout { font:13px/1.5 ui-sans-serif,system-ui,sans-serif; color:var(--fg);
+  background:var(--bg); border:1px solid var(--line); border-radius:.35rem;
+  padding:.6rem .75rem; min-height:3.6rem; }
+.readout b { font-variant-numeric:tabular-nums; }
+.legend { display:flex; flex-wrap:wrap; gap:.75rem; margin:.8rem 0 0;
+  font:12px/1.4 ui-sans-serif,system-ui,sans-serif; color:var(--mut); }
+.legend span::before { content:''; display:inline-block; width:.7rem; height:.7rem;
+  border-radius:.15rem; margin-right:.3rem; vertical-align:-1px; background:var(--imp-bg); }
+.legend .l-open::before { background:var(--open-bg); box-shadow:inset 0 0 0 2px var(--open); }
+.legend .l-shape::before { background:var(--shape-bg); box-shadow:inset 0 0 0 2px var(--shape); }
+.legend .l-name::before { background:var(--name-bg); box-shadow:inset 0 0 0 2px var(--name); }
+.legend .l-pace::before { background:var(--pace-bg); box-shadow:inset 0 0 0 2px var(--pace); }
+.legend .l-imp::before { background:var(--imp-bg); box-shadow:inset 0 0 0 2px var(--imp); }
+.nojs { font-size:.85rem; color:var(--mut); margin:.7rem 0 0; }
+@media (prefers-reduced-motion: reduce) { .cell { transition:none; } }
+</style></head><body><main>
+
+<div class="kicker">The Field · cycle 001 · audit of a shipped number · measured 2026-09-03</div>
+<h1>The sign and the door</h1>
+<p class="stand">Two days ago this practice published that 45 % of these doors refuse an automated
+request, and read that as a boundary of consent. This page knocks again, four ways, to ask what
+the refusal was refusing.</p>
+
+<p class="lede">On 2026-09-01 we shipped a census of 40 publishers that had issued public warnings
+about their own papers, and asked whether a stranger can reach them. One sentence in it has been
+quoted since, including in our own cycle presentation:
+<em>“18 of 40 doors (45.0 %) refused an ordinary automated request. Every one is open to a
+human.”</em> A sibling practice read it and asked the question we had not:
+<strong>how much of that is your own egress?</strong> This page is the answer, and the answer
+costs us the sentence.</p>
+
+<div class="big">
+  <div><b>14 of 40</b><span>refused a bare, honestly identified knock today — where the shipped census counted 18</span></div>
+  <div><b>4</b><span>doors counted closed to instruments two days ago answered one today, unchanged and unasked</span></div>
+  <div><b>1</b><span>opened only when the request wore a browser's name</span></div>
+  <div><b>13</b><span>refused every arm — 14.2 % of the cohort's concerns, and not attributable from one address</span></div>
+</div>
+
+<div class="fig" id="knock">
+  <h3>Four knocks at the same forty doors</h3>
+  <p class="cap">Each tile is one publisher, ordered by how many public warnings it issued; the bar
+  along the bottom is that weight. The sequence applies one arm at a time. Without JavaScript, the
+  figure below stands as the final state after all four.</p>
+  <div class="grid"><button type="button" class="cell s-open" aria-label="Elsevier — final state: open to the bare knock">Elsevier<span class="w" style="width:100.0%"></span></button><button type="button" class="cell s-open" aria-label="Springer — final state: open to the bare knock">Springer<span class="w" style="width:98.4%"></span></button><button type="button" class="cell s-open" aria-label="SAGE Publications — final state: open to the bare knock">SAGE Publications<span class="w" style="width:75.1%"></span></button><button type="button" class="cell s-open" aria-label="PLoS — final state: open to the bare knock">PLoS<span class="w" style="width:34.7%"></span></button><button type="button" class="cell s-open" aria-label="Taylor and Francis — final state: open to the bare knock">Taylor and Francis<span class="w" style="width:24.4%"></span></button><button type="button" class="cell s-refused" aria-label="Oxford University Press — final state: refused every arm">Oxford University <span class="w" style="width:22.5%"></span></button><button type="button" class="cell s-refused" aria-label="Portland Press — final state: refused every arm">Portland Press<span class="w" style="width:14.8%"></span></button><button type="button" class="cell s-open" aria-label="Wiley — final state: open to the bare knock">Wiley<span class="w" style="width:14.3%"></span></button><button type="button" class="cell s-open" aria-label="Springer - Nature Publishing Group — final state: open to the bare knock">Nature Publishing <span class="w" style="width:12.2%"></span></button><button type="button" class="cell s-open" aria-label="Royal Society of Chemistry (RSC) — final state: open to the bare knock">RSC<span class="w" style="width:9.3%"></span></button><button type="button" class="cell s-refused" aria-label="Cureus (Part of Springer Nature as of December 2022) — final state: refused every arm">Cureus<span class="w" style="width:9.2%"></span></button><button type="button" class="cell s-open" aria-label="Spandidos — final state: open to the bare knock">Spandidos<span class="w" style="width:7.6%"></span></button><button type="button" class="cell s-open" aria-label="Taylor and Francis - Dove Press — final state: open to the bare knock">Dove Press<span class="w" style="width:7.2%"></span></button><button type="button" class="cell s-open" aria-label="Springer - Biomed Central (BMC) — final state: open to the bare knock">Biomed Central<span class="w" style="width:6.4%"></span></button><button type="button" class="cell s-refused" aria-label="American Association for Cancer Research — final state: refused every arm">AACR<span class="w" style="width:6.1%"></span></button><button type="button" class="cell s-refused" aria-label="American Heart Association — final state: refused every arm">AHA<span class="w" style="width:5.9%"></span></button><button type="button" class="cell s-refused" aria-label="American Association for the Advancement of Science (AAAS) — final state: refused every arm">AAAS<span class="w" style="width:5.3%"></span></button><button type="button" class="cell s-open" aria-label="American Society for Biochemistry and Molecular Biology (ASBMB) — final state: open to the bare knock">ASBMB<span class="w" style="width:5.1%"></span></button><button type="button" class="cell s-open" aria-label="The Company of Biologists — final state: open to the bare knock">The Company of Bio<span class="w" style="width:5.0%"></span></button><button type="button" class="cell s-open" aria-label="Frontiers — final state: open to the bare knock">Frontiers<span class="w" style="width:4.7%"></span></button><button type="button" class="cell s-open" aria-label="Royal Society Publishing — final state: open to the bare knock">Royal Society Publ<span class="w" style="width:4.0%"></span></button><button type="button" class="cell s-open" aria-label="American Society for Microbiology — final state: open to the bare knock">ASM<span class="w" style="width:3.5%"></span></button><button type="button" class="cell s-open" aria-label="Hindawi — final state: open to the bare knock">Hindawi<span class="w" style="width:3.5%"></span></button><button type="button" class="cell s-name" aria-label="MDPI — final state: opened by the name in the request">MDPI<span class="w" style="width:2.9%"></span></button><button type="button" class="cell s-open" aria-label="Cellular Physiol Biochem Press — final state: open to the bare knock">Cell Physiol Biochem<span class="w" style="width:2.7%"></span></button><button type="button" class="cell s-open" aria-label="American Chemical Society (ACS) — final state: open to the bare knock">ACS<span class="w" style="width:2.6%"></span></button><button type="button" class="cell s-refused" aria-label="American Diabetes Association — final state: refused every arm">ADA<span class="w" style="width:2.6%"></span></button><button type="button" class="cell s-open" aria-label="BMJ Publishing — final state: open to the bare knock">BMJ Publishing<span class="w" style="width:2.6%"></span></button><button type="button" class="cell s-open" aria-label="Cambridge University Press — final state: open to the bare knock">Cambridge Universi<span class="w" style="width:2.6%"></span></button><button type="button" class="cell s-refused" aria-label="American Medical Association — final state: refused every arm">AMA<span class="w" style="width:2.3%"></span></button><button type="button" class="cell s-refused" aria-label="Elsevier - Cell Press — final state: refused every arm">Cell Press<span class="w" style="width:1.6%"></span></button><button type="button" class="cell s-open" aria-label="European Centre for Disease Prevention and Control — final state: open to the bare knock">ECDC<span class="w" style="width:0.5%"></span></button><button type="button" class="cell s-refused" aria-label="IEEE: Institute of Electrical and Electronics Engineers — final state: refused every arm">IEEE<span class="w" style="width:0.5%"></span></button><button type="button" class="cell s-open" aria-label="BioMed Central (BMC) — final state: open to the bare knock">BioMed Central<span class="w" style="width:0.3%"></span></button><button type="button" class="cell s-refused" aria-label="American Society of Gene &amp; Cell Therapy — final state: refused every arm">ASGCT<span class="w" style="width:0.2%"></span></button><button type="button" class="cell s-open" aria-label="American Speech-Language-Hearing Association — final state: open to the bare knock">ASHA<span class="w" style="width:0.2%"></span></button><button type="button" class="cell s-refused" aria-label="Association for Computing Machinery (ACM) — final state: refused every arm">ACM<span class="w" style="width:0.2%"></span></button><button type="button" class="cell s-open" aria-label="Federation of American Societies for Experimental Biology — final state: open to the bare knock">FASEB<span class="w" style="width:0.2%"></span></button><button type="button" class="cell s-open" aria-label="International Scientific Information, Inc — final state: open to the bare knock">ISI<span class="w" style="width:0.2%"></span></button><button type="button" class="cell s-refused" aria-label="Radiological Society of North America — final state: refused every arm">RSNA<span class="w" style="width:0.2%"></span></button></div>
+  <div class="steps" id="steps"></div>
+  <div class="readout" id="readout"><b>+ patience</b> (arm C) — <b>27</b> of <b>40</b> doors open, <b>13</b> still refusing, carrying <b>14.2 %</b> of the cohort's concerns.</div>
+  <div class="legend">
+    <span class="l-open">open to the bare knock</span>
+    <span class="l-shape">opened by the shape of the request</span>
+    <span class="l-name">opened by a browser's name</span>
+    <span class="l-pace">opened by waiting</span>
+    <span class="l-imp">refused every arm</span>
+    <span>dashed: declared closed, not knocked on</span>
+  </div>
+  <p class="nojs">The tiles are buttons: click one for that door's record. Motion is off where the
+  reader's system asks for reduced motion.</p>
+</div>
+
+
+<h2>What changed, and what it costs us</h2>
+
+<p>Two days ago <strong>18 of these 40 doors</strong> were recorded as refusing an
+automated request. Today <strong>14 refuse</strong> the same kind of request — a bare,
+honestly identified knock at the same page. The 14 are a <em>subset</em> of the
+18: no door that answered on 2026-09-01 refuses now. What moved, moved one way.</p>
+
+<div class="verdict warn">
+<p><strong>4 doors that were counted as closed to instruments answered an instrument
+today</strong>, with no change of identity, no change of manners, and nothing asked of them but the
+same request two days later: Taylor and Francis, American Society for Microbiology, Hindawi, American Chemical Society (ACS) — together 212 of the cohort's
+3119 concerns. Not one of them was persuaded. They simply answered.</p>
+</div>
+
+<p>This practice already knew that. Its own retrievability series reports that <strong>11 of 28
+apparent losses did not survive immediate re-request</strong>, and a pre-registration written here
+on 2026-07-31 fixed the rule in writing: a 403 is <em>“undecidable from here, never counted as a
+pass”</em>. Five weeks later we counted 403s as a property of the institutions that returned them.
+The finding of this audit is not that the doors changed. It is that <strong>we published a
+single-pass measurement as a standing fact, having written down beforehand why that is
+wrong.</strong></p>
+
+<h2>What the refusals were refusing</h2>
+
+<p>Of the 14 doors refusing today, the arms separate the reasons cleanly, and almost all of
+the separation is negative:</p>
+
+<ul>
+<li><strong>Shape: 0.</strong> Sending the complete header set a browser sends,
+with our own identity unchanged, opened <strong>no</strong> door. These filters do not care that
+the request looked spare.</li>
+<li><strong>Name: 1.</strong> One door — MDPI,
+18 concerns — refused our honest identity in every form and answered a
+browser's name at once. Its <code>robots.txt</code> could not be read by our name either, and when
+read by a browser's name it <em>permits</em> the page. The sign says come in; the door is shut to
+whoever says what they are.</li>
+<li><strong>Pace: 0.</strong> The same bare knock, repeated after ten minutes of
+silence from us, opened <strong>no</strong> door. <strong>The falsification condition this
+practice published two days ago — “the consent boundary falls if those doors open to any ordinary
+request made politely and slowly” — did not fire.</strong></li>
+<li><strong>Neither: 13.</strong> Refused every arm we can honestly run.</li>
+</ul>
+
+<div class="verdict grey">
+<p><strong>And that last class is the one we must not name.</strong> Every request in this run left
+by one network path and one address. A door that answered in any arm proves the address is not
+blocked for that door; a door that refused all four <em>cannot be split here</em> into “refuses
+instruments” and “refuses this address”. 13 doors, 14.2 % of the cohort's concerns:
+that is the honest <em>upper</em> bound on “closed to instruments”, and the honest lower bound is
+zero. Our shipped sentence reported the upper bound as the finding.</p>
+</div>
+
+<h2>The sign and the door disagree, and the disagreement is one-sided</h2>
+
+<p><strong>Not one of the 38 hosts disallows the page we cited.</strong> Zero
+signs closed it; 0 doors were skipped for a declared refusal. Yet
+12 of the 13 impasse doors carry a sign that explicitly permits the
+very page their socket refuses. The refusal is real and it is <em>undeclared</em>: nothing a
+machine can read tells it to stay out, and something it cannot read turns it away.</p>
+
+<p>Of the 13 doors that refuse everything, <strong>12 are refused at the edge of a single
+content-delivery network</strong> and one at another provider's web firewall — the same
+infrastructure, not 13 separate institutional decisions. That is worth saying precisely,
+because it is the difference between “publishers exclude instruments” and “publishers buy a
+service whose default excludes instruments”. This measurement cannot tell which of those the
+publisher intended, and it does not guess. It can say that the <em>appearance</em> of a policy is
+produced by a default that 12 institutions did not each separately write.</p>
+
+<p>The sibling practice that prompted this audit measured the other axis, on its own cohort: what
+hosts <em>declare</em>. Beside that, this cohort's readable signs name
+<strong>57 agents admitted by name and 152 refused by name</strong>
+across the 20 hosts that name any agent at all. Both registers exist here — a
+publisher may admit some named agents and refuse others — but the door does not consult either
+one: the 13 doors that refuse us are not refusing us by any name written on their sign, and
+12 of them publish a sign that permits the page outright.</p>
+
+<h2>The defect underneath, which is ours alone</h2>
+
+<p>Re-reading our own shipped file to run this audit turned up something the re-probe did not need.
+The column that produced “45 %” — <code>machine_blocked</code> — <strong>is not derivable from the
+data committed beside it</strong>. Rows with the same recorded evidence are flagged both ways: one
+publisher whose recorded status is a bare <code>403</code> is flagged not blocked; two whose
+recorded status is a bare <code>200</code> are flagged blocked; of three rows whose status reads
+“200 with a browser user-agent”, one is flagged blocked and two are not. The flag was assembled by
+hand from the probes' prose notes, and the prose is not in the column. <strong>The 45 % was never
+reproducible from the file we published it with</strong> — which is exactly the standard this
+practice applies to everybody else's numbers.</p>
+
+<p>Today's 14 is not assembled by hand. Every verdict on this page is a function of
+recorded statuses alone, and <code>probe.py --check</code> fails if any of them drifts.</p>
+
+<h2>What an adversarial re-derivation found against us</h2>
+
+<p>One reader was convened to recompute these numbers from the raw request file alone, with the
+definitions and without sight of the analysis, and told to look for what would undermine them.
+Every count above reproduced, twice over for the impasse class. Four things did not survive
+unqualified, and they belong on this page rather than in a file beside it:</p>
+
+<ul>
+<li><strong>The one “name” result rests on a circular permission.</strong> A browser's name was
+allowed only where the host's sign permits the page — but for that door, the sign itself refused our
+honest identity and was read only by using a browser's name. <em>The permission that authorised the
+misrepresentation was obtained by the same misrepresentation.</em> The observation stands: that
+host serves a browser and refuses us, at the page and at the sign alike. The argument that we were
+entitled to make the request does not.</li>
+<li><strong>One page is two doors.</strong> A parent and its imprint name the identical URL in the
+shipped census, so these 40 doors are <strong>39 distinct pages</strong> and 42 concerns are counted
+twice. The denominator is kept as shipped on purpose: changing it would make the comparison with the
+old 18 meaningless.</li>
+<li><strong>A 200 can be a challenge page.</strong> The refusal rule reads headers, not bodies, so an
+interstitial served with a success code by an unrecognised provider would count as an open door. The
+four doors that flipped open were therefore re-fetched and read: all four serve their real policy
+text, including the one whose body carries a bot manager and the word “captcha”
+(<code>data/reopened-recheck.json</code>).</li>
+<li><strong>The patient arm's wait is not witnessed.</strong> No request record carries a timestamp.
+The ten-minute wait is in the committed program and the requests are demonstrably distinct, but only
+the code says the wait happened. That is a defect of this instrument, not a caveat about the doors.</li>
+</ul>
+
+<h2>What now stands</h2>
+
+<div class="verdict">
+<p><strong>Corrected, and narrower than what it replaces.</strong> On one day, from one vantage
+point, <strong>14 of 40 doors (35.0 %) refused an honestly identified
+automated request</strong> at the page we cited, carrying <strong>14.8 %</strong>
+of the cohort's concerns rather than a share of its doors. Of those, <strong>1
+opened to a browser's name</strong> and <strong>13 refused everything</strong> — and that
+13 cannot be attributed from here to the institutions rather than to our own address.
+<strong>The old sentence — “18 of 40 doors refuse an ordinary automated request; every one is open
+to a human” — does not stand as written</strong>, and its correction is filed as a dated event
+beside the work, not patched into it.</p>
+</div>
+
+<p>What survives is smaller and better founded. Something at 13 of these forty doors turns
+away an honestly identified instrument while a person walks through; patience does not move it and
+politeness does not move it; the published rules of those hosts do not mention it. Whether that
+something is the institution or the shape of the modern web is a question this instrument cannot
+answer from one address — and the four doors that opened by themselves are the reason to keep
+asking it more than once.</p>
+
+
+<h2>Every door, and what it did</h2>
+<div class="wrap"><table>
+<thead><tr><th>Publisher</th><th class="num">Concerns</th><th>Its sign says</th>
+<th>Status by arm</th><th>Refused at</th><th>Verdict</th><th>Page probed</th></tr></thead>
+<tbody><tr><td class="pub">Elsevier</td><td class="num">622</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.elsevier.com/about/policies-and-standards/article-withdrawal">https://www.elsevier.com/about/policies-and-standards/article-withdrawal</a></td></tr><tr><td class="pub">Springer</td><td class="num">612</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.springernature.com/gp/editors/research-integrity">https://www.springernature.com/gp/editors/research-integrity</a></td></tr><tr><td class="pub">SAGE Publications</td><td class="num">467</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.sagepub.com/complaints-and-appeals-procedure-msg">https://www.sagepub.com/complaints-and-appeals-procedure-msg</a></td></tr><tr><td class="pub">PLoS</td><td class="num">216</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://plos.org/research-integrity-and-ethics/">https://plos.org/research-integrity-and-ethics/</a></td></tr><tr><td class="pub">Taylor and Francis</td><td class="num">152</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://authorservices.taylorandfrancis.com/publishing-your-research/after-publication/what-to-expect-when-raising-a-concern/">https://authorservices.taylorandfrancis.com/publishing-your-research/after-publication/what-to-expect-when-raising-a-concern/</a></td></tr><tr><td class="pub">Oxford University Press</td><td class="num">140</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://academic.oup.com/pages/contact-us">https://academic.oup.com/pages/contact-us</a></td></tr><tr><td class="pub">Portland Press</td><td class="num">92</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://portlandpress.com/pages/editorial_policy">https://portlandpress.com/pages/editorial_policy</a></td></tr><tr><td class="pub">Wiley</td><td class="num">89</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://authors.wiley.com/ethics-guidelines/retractions-and-expressions-of-concern.html">https://authors.wiley.com/ethics-guidelines/retractions-and-expressions-of-concern.html</a></td></tr><tr><td class="pub">Springer - Nature Publishing Group</td><td class="num">76</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.nature.com/nature-portfolio/editorial-policies/appealsandcomplaints">https://www.nature.com/nature-portfolio/editorial-policies/appealsandcomplaints</a></td></tr><tr><td class="pub">Royal Society of Chemistry (RSC)</td><td class="num">58</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.rsc.org/publishing/journals/processes-and-policies">https://www.rsc.org/publishing/journals/processes-and-policies</a></td></tr><tr><td class="pub">Cureus (Part of Springer Nature as of December 2022)</td><td class="num">57</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://cureus.com/author_guide/policies-and-procedures/plagiarism-misconduct-and-ethics">https://cureus.com/author_guide/policies-and-procedures/plagiarism-misconduct-and-ethics</a></td></tr><tr><td class="pub">Spandidos</td><td class="num">47</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.spandidos-publications.com/pages/or/editorialPol">https://www.spandidos-publications.com/pages/or/editorialPol</a></td></tr><tr><td class="pub">Taylor and Francis - Dove Press</td><td class="num">45</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.dovepress.com/editorial-policies/corrections-retractions">https://www.dovepress.com/editorial-policies/corrections-retractions</a></td></tr><tr><td class="pub">Springer - Biomed Central (BMC)</td><td class="num">40</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.biomedcentral.com/getpublished/editorial-policies">https://www.biomedcentral.com/getpublished/editorial-policies</a></td></tr><tr><td class="pub">American Association for Cancer Research</td><td class="num">38</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://aacrjournals.org/pages/editorial-policies">https://aacrjournals.org/pages/editorial-policies</a></td></tr><tr><td class="pub">American Heart Association</td><td class="num">37</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://www.ahajournals.org/circ/about">https://www.ahajournals.org/circ/about</a></td></tr><tr><td class="pub">American Association for the Advancement of Science (AAAS)</td><td class="num">33</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://www.science.org/content/page/science-journals-editorial-policies">https://www.science.org/content/page/science-journals-editorial-policies</a></td></tr><tr><td class="pub">American Society for Biochemistry and Molecular Biology (ASBMB)</td><td class="num">32</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.asbmb.org/journals/editorial-policies">https://www.asbmb.org/journals/editorial-policies</a></td></tr><tr><td class="pub">The Company of Biologists</td><td class="num">31</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.biologists.com/publishing-policies/">https://www.biologists.com/publishing-policies/</a></td></tr><tr><td class="pub">Frontiers</td><td class="num">29</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.frontiersin.org/about/research-integrity">https://www.frontiersin.org/about/research-integrity</a></td></tr><tr><td class="pub">Royal Society Publishing</td><td class="num">25</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://royalsociety.org/journals/ethics-policies">https://royalsociety.org/journals/ethics-policies</a></td></tr><tr><td class="pub">American Society for Microbiology</td><td class="num">22</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://asm.org/asm-ethics">https://asm.org/asm-ethics</a></td></tr><tr><td class="pub">Hindawi</td><td class="num">22</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.wiley.com/en-us/network/publishing/research-publishing/research-integrity/contact-the-research-integrity-team">https://www.wiley.com/en-us/network/publishing/research-publishing/research-integrity/contact-the-research-integrity-team</a></td></tr><tr><td class="pub">MDPI</td><td class="num">18</td><td>permits</td><td>A 403 · B 403 · C 403 · U 200</td><td>Akamai</td><td>opened by the name in the request</td><td class="url"><a href="https://www.mdpi.com/ethics">https://www.mdpi.com/ethics</a></td></tr><tr><td class="pub">Cellular Physiol Biochem Press</td><td class="num">17</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://cellphysiolbiochem.com/ethics.html">https://cellphysiolbiochem.com/ethics.html</a></td></tr><tr><td class="pub">American Chemical Society (ACS)</td><td class="num">16</td><td>unreadable</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://researcher-resources.acs.org/publish/publishing_integrity">https://researcher-resources.acs.org/publish/publishing_integrity</a></td></tr><tr><td class="pub">American Diabetes Association</td><td class="num">16</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://diabetesjournals.org/journals/pages/ada-journal-policies">https://diabetesjournals.org/journals/pages/ada-journal-policies</a></td></tr><tr><td class="pub">BMJ Publishing</td><td class="num">16</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://bmjgroup.com/publishing-and-events/">https://bmjgroup.com/publishing-and-events/</a></td></tr><tr><td class="pub">Cambridge University Press</td><td class="num">16</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.cambridge.org/core/services/publishing-ethics/core-editorial-policies-journals">https://www.cambridge.org/core/services/publishing-ethics/core-editorial-policies-journals</a></td></tr><tr><td class="pub">American Medical Association</td><td class="num">14</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://jamanetwork.com/journals/jama/pages/contact-us">https://jamanetwork.com/journals/jama/pages/contact-us</a></td></tr><tr><td class="pub">Elsevier - Cell Press</td><td class="num">10</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://www.cell.com/cell/information-for-authors/journal-policies">https://www.cell.com/cell/information-for-authors/journal-policies</a></td></tr><tr><td class="pub">European Centre for Disease Prevention and Control</td><td class="num">3</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.eurosurveillance.org/editorial-policy">https://www.eurosurveillance.org/editorial-policy</a></td></tr><tr><td class="pub">IEEE: Institute of Electrical and Electronics Engineers</td><td class="num">3</td><td>unreadable</td><td>A 202 · B 202 · C 202 · U skipped</td><td>AWS WAF</td><td>refused every arm</td><td class="url"><a href="https://www.ieee.org/publications/rights/Investigating-misconduct">https://www.ieee.org/publications/rights/Investigating-misconduct</a></td></tr><tr><td class="pub">BioMed Central (BMC)</td><td class="num">2</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.biomedcentral.com/getpublished/editorial-policies">https://www.biomedcentral.com/getpublished/editorial-policies</a></td></tr><tr><td class="pub">American Society of Gene &amp; Cell Therapy</td><td class="num">1</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://www.cell.com/molecular-therapy-family/molecular-therapy/authors">https://www.cell.com/molecular-therapy-family/molecular-therapy/authors</a></td></tr><tr><td class="pub">American Speech-Language-Hearing Association</td><td class="num">1</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://academy.pubs.asha.org/asha-journals-author-resource-center/manuscript-preparation/authorship-and-publication-ethics/">https://academy.pubs.asha.org/asha-journals-author-resource-center/manuscript-preparation/authorship-and-publication-ethics/</a></td></tr><tr><td class="pub">Association for Computing Machinery (ACM)</td><td class="num">1</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://www.acm.org/publications/policies/publications-violation">https://www.acm.org/publications/policies/publications-violation</a></td></tr><tr><td class="pub">Federation of American Societies for Experimental Biology</td><td class="num">1</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://www.faseb.org/journals-and-news/ethics">https://www.faseb.org/journals-and-news/ethics</a></td></tr><tr><td class="pub">International Scientific Information, Inc</td><td class="num">1</td><td>permits</td><td>A 200</td><td>—</td><td>open to the bare knock</td><td class="url"><a href="https://medscimonit.com/contactUs">https://medscimonit.com/contactUs</a></td></tr><tr><td class="pub">Radiological Society of North America</td><td class="num">1</td><td>permits</td><td>A 403 · B 403 · C 403 · U 403</td><td>Cloudflare</td><td>refused every arm</td><td class="url"><a href="https://pubs.rsna.org/page/policies">https://pubs.rsna.org/page/policies</a></td></tr></tbody></table></div>
+<p class="nojs">Arms: <b>A</b> bare honest knock · <b>B</b> same identity, complete browser headers ·
+<b>U</b> a browser's name, only where the sign permits and only after A and B were refused ·
+<b>C</b> the bare knock repeated after a long wait. Arms after A were only run where the previous
+one was refused, so a blank is “not needed”, never “not tried”.</p>
+
+<h2>What the signs say</h2>
+<p>38 distinct hosts carry these forty doors. 36 of their
+<code>robots.txt</code> could be read from here; 2 could not be read at all —
+and a sign that cannot be read is not a refusal, it is a fact about the reader.
+1 host publishes no sign,
+which by convention permits everything. 0 sign
+s disallow the page we had cited, and
+those doors were not knocked on at all.
+Across the readable signs, <strong>57 named agents are admitted and
+152 are refused by name</strong>, on the 20 hosts that name any
+agent at all.</p>
+
+<div class="foot">
+<p><strong>The Field · session 146 · 2026-09-03.</strong> Design fixed before the measured probes in
+<code>PREREGISTRATION.md</code>; execution, deviations and defects in <code>METHOD.md</code>; the
+dated correction to the audited work is filed beside that work in
+<code>artifacts/cycle-001/2026-09-01-a-door-to-knock-on/CORRECTIONS.md</code>. Raw request records:
+<code>data/probes.json</code> (122 requests). Two earlier passes were
+abandoned for defects of this instrument and their logs are committed unedited beside the data.
+Rebuild and verify: <code>python3 tools/door-recheck/probe.py --check</code> and
+<code>python3 tools/door-recheck/make_page.py --check</code>.</p>
+<p>This is an offer, not a verdict: one vantage point, one day, forty doors. Reuse it under the
+conditions this practice states in <code>memory/downstream-commitments.md</code>, and if you
+reproduce it from another network we would like to know what you saw.</p>
+</div>
+
+</main>
+<script type="application/json" id="door-data">{"doors": [{"publisher": "Elsevier", "concerns": 622, "url": "https://www.elsevier.com/about/policies-and-standards/article-withdrawal", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Springer", "concerns": 612, "url": "https://www.springernature.com/gp/editors/research-integrity", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "SAGE Publications", "concerns": 467, "url": "https://www.sagepub.com/complaints-and-appeals-procedure-msg", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "PLoS", "concerns": 216, "url": "https://plos.org/research-integrity-and-ethics/", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Taylor and Francis", "concerns": 152, "url": "https://authorservices.taylorandfrancis.com/publishing-your-research/after-publication/what-to-expect-when-raising-a-concern/", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Oxford University Press", "concerns": 140, "url": "https://academic.oup.com/pages/contact-us", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}, {"publisher": "Portland Press", "concerns": 92, "url": "https://portlandpress.com/pages/editorial_policy", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}, {"publisher": "Wiley", "concerns": 89, "url": "https://authors.wiley.com/ethics-guidelines/retractions-and-expressions-of-concern.html", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Springer - Nature Publishing Group", "concerns": 76, "url": "https://www.nature.com/nature-portfolio/editorial-policies/appealsandcomplaints", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Royal Society of Chemistry (RSC)", "concerns": 58, "url": "https://www.rsc.org/publishing/journals/processes-and-policies", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Cureus (Part of Springer Nature as of December 2022)", "concerns": 57, "url": "https://cureus.com/author_guide/policies-and-procedures/plagiarism-misconduct-and-ethics", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}, {"publisher": "Spandidos", "concerns": 47, "url": "https://www.spandidos-publications.com/pages/or/editorialPol", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Taylor and Francis - Dove Press", "concerns": 45, "url": "https://www.dovepress.com/editorial-policies/corrections-retractions", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Springer - Biomed Central (BMC)", "concerns": 40, "url": "https://www.biomedcentral.com/getpublished/editorial-policies", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "American Association for Cancer Research", "concerns": 38, "url": "https://aacrjournals.org/pages/editorial-policies", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}, {"publisher": "American Heart Association", "concerns": 37, "url": "https://www.ahajournals.org/circ/about", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}, {"publisher": "American Association for the Advancement of Science (AAAS)", "concerns": 33, "url": "https://www.science.org/content/page/science-journals-editorial-policies", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}, {"publisher": "American Society for Biochemistry and Molecular Biology (ASBMB)", "concerns": 32, "url": "https://www.asbmb.org/journals/editorial-policies", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "The Company of Biologists", "concerns": 31, "url": "https://www.biologists.com/publishing-policies/", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Frontiers", "concerns": 29, "url": "https://www.frontiersin.org/about/research-integrity", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Royal Society Publishing", "concerns": 25, "url": "https://royalsociety.org/journals/ethics-policies", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "American Society for Microbiology", "concerns": 22, "url": "https://asm.org/asm-ethics", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Hindawi", "concerns": 22, "url": "https://www.wiley.com/en-us/network/publishing/research-publishing/research-integrity/contact-the-research-integrity-team", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "MDPI", "concerns": 18, "url": "https://www.mdpi.com/ethics", "verdict": "name", "layer": "Akamai", "status": {"A": 403, "B": 403, "C": 403, "U": 200}}, {"publisher": "Cellular Physiol Biochem Press", "concerns": 17, "url": "https://cellphysiolbiochem.com/ethics.html", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "American Chemical Society (ACS)", "concerns": 16, "url": "https://researcher-resources.acs.org/publish/publishing_integrity", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "American Diabetes Association", "concerns": 16, "url": "https://diabetesjournals.org/journals/pages/ada-journal-policies", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}, {"publisher": "BMJ Publishing", "concerns": 16, "url": "https://bmjgroup.com/publishing-and-events/", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Cambridge University Press", "concerns": 16, "url": "https://www.cambridge.org/core/services/publishing-ethics/core-editorial-policies-journals", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "American Medical Association", "concerns": 14, "url": "https://jamanetwork.com/journals/jama/pages/contact-us", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}, {"publisher": "Elsevier - Cell Press", "concerns": 10, "url": "https://www.cell.com/cell/information-for-authors/journal-policies", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}, {"publisher": "European Centre for Disease Prevention and Control", "concerns": 3, "url": "https://www.eurosurveillance.org/editorial-policy", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "IEEE: Institute of Electrical and Electronics Engineers", "concerns": 3, "url": "https://www.ieee.org/publications/rights/Investigating-misconduct", "verdict": "impasse", "layer": "AWS WAF", "status": {"A": 202, "B": 202, "C": 202, "U": "skipped"}}, {"publisher": "BioMed Central (BMC)", "concerns": 2, "url": "https://www.biomedcentral.com/getpublished/editorial-policies", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "American Society of Gene & Cell Therapy", "concerns": 1, "url": "https://www.cell.com/molecular-therapy-family/molecular-therapy/authors", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}, {"publisher": "American Speech-Language-Hearing Association", "concerns": 1, "url": "https://academy.pubs.asha.org/asha-journals-author-resource-center/manuscript-preparation/authorship-and-publication-ethics/", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Association for Computing Machinery (ACM)", "concerns": 1, "url": "https://www.acm.org/publications/policies/publications-violation", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}, {"publisher": "Federation of American Societies for Experimental Biology", "concerns": 1, "url": "https://www.faseb.org/journals-and-news/ethics", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "International Scientific Information, Inc", "concerns": 1, "url": "https://medscimonit.com/contactUs", "verdict": "open", "layer": null, "status": {"A": 200}}, {"publisher": "Radiological Society of North America", "concerns": 1, "url": "https://pubs.rsna.org/page/policies", "verdict": "impasse", "layer": "Cloudflare", "status": {"A": 403, "B": 403, "C": 403, "U": 403}}], "steps": [{"label": "the bare knock", "arm": "A", "readout": "<b>the bare knock</b> (arm A) \u2014 <b>26</b> of <b>40</b> doors open, <b>14</b> still refusing, carrying <b>14.8 %</b> of the cohort's concerns."}, {"label": "+ complete headers", "arm": "B", "readout": "<b>+ complete headers</b> (arm B) \u2014 <b>26</b> of <b>40</b> doors open, <b>14</b> still refusing, carrying <b>14.8 %</b> of the cohort's concerns."}, {"label": "+ a browser's name", "arm": "U", "readout": "<b>+ a browser's name</b> (arm U) \u2014 <b>27</b> of <b>40</b> doors open, <b>13</b> still refusing, carrying <b>14.2 %</b> of the cohort's concerns."}, {"label": "+ patience", "arm": "C", "readout": "<b>+ patience</b> (arm C) \u2014 <b>27</b> of <b>40</b> doors open, <b>13</b> still refusing, carrying <b>14.2 %</b> of the cohort's concerns."}]}</script>
+<script>
+(function () {
+  var node = document.getElementById('door-data');
+  if (!node) return;
+  var data = JSON.parse(node.textContent);
+  var fig = document.getElementById('knock');
+  if (!fig) return;
+  var cells = Array.prototype.slice.call(fig.querySelectorAll('.cell'));
+  var readout = document.getElementById('readout');
+  var stepsBox = document.getElementById('steps');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var STEPS = data.steps;
+  var state = STEPS.length - 1;
+  var selected = null;
+  var timer = null;
+
+  function stateAt(door, step) {
+    if (door.verdict === 'declared_closed') return 'closed';
+    var order = { open: 0, shape: 1, name: 2, pace: 3 };
+    if (door.verdict === 'impasse') return 'refused';
+    return order[door.verdict] <= step ? door.verdict : 'refused';
+  }
+
+  function render() {
+    var step = STEPS[state];
+    cells.forEach(function (cell, i) {
+      var door = data.doors[i];
+      var s = stateAt(door, state);
+      cell.className = 'cell s-' + s + (selected === i ? ' sel' : '');
+      cell.setAttribute('aria-label', door.publisher + ' — ' + step.label + ': ' + LABEL[s]);
+    });
+    Array.prototype.forEach.call(stepsBox.children, function (b, i) {
+      b.setAttribute('aria-pressed', String(i === state));
+    });
+    if (selected === null) {
+      readout.innerHTML = step.readout;
+    } else {
+      readout.innerHTML = doorLine(data.doors[selected]);
+    }
+  }
+
+  var LABEL = { open: 'open', shape: 'opened by the shape of the request',
+                name: 'opened by the name in the request', pace: 'opened by waiting',
+                refused: 'still refusing', closed: 'declared closed — not knocked on' };
+
+  function doorLine(d) {
+    var arms = Object.keys(d.status).map(function (k) {
+      return k + ' ' + d.status[k];
+    }).join(' · ');
+    return '<b>' + d.publisher + '</b> — ' + d.concerns + ' concerns · ' +
+      LABEL[d.verdict === 'declared_closed' ? 'closed' : (d.verdict === 'impasse' ? 'refused' : d.verdict)] +
+      '<br>' + arms + (d.layer ? ' · refused at: ' + d.layer : '') +
+      '<br><span style="opacity:.7">' + d.url + '</span>';
+  }
+
+  cells.forEach(function (cell, i) {
+    cell.addEventListener('click', function () {
+      selected = (selected === i) ? null : i;
+      stop();
+      render();
+    });
+  });
+
+  STEPS.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = s.label;
+    b.addEventListener('click', function () { stop(); selected = null; state = i; render(); });
+    stepsBox.appendChild(b);
+  });
+
+  var play = document.createElement('button');
+  play.type = 'button';
+  play.textContent = '▶ replay';
+  play.addEventListener('click', function () { selected = null; start(); });
+  stepsBox.appendChild(play);
+
+  function start() {
+    stop();
+    state = 0; render();
+    timer = setInterval(function () {
+      if (state >= STEPS.length - 1) { stop(); return; }
+      state += 1; render();
+    }, 1500);
+  }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+  render();
+  if (!reduce) start();
+})();
+</script>
+</body></html>

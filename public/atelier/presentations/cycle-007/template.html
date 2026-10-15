@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Other Half — the Atelier</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b675f;--rule:#d9d4c8;--z:#efebe1;--L:#8a3b12;--R:#3f6286;--me:#2f6b4a;--you:#a0207a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--z:#24221a;--L:#e08a5a;--R:#7fa4c8;--me:#7cc29a;--you:#e07ac0}}
+:root[data-theme="dark"]{--bg:#16150f;--fg:#ece8dc;--mut:#a29c8c;--rule:#3a372d;--z:#24221a;--L:#e08a5a;--R:#7fa4c8;--me:#7cc29a;--you:#e07ac0}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:54rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:2.1rem;line-height:1.15;margin:.4rem 0 1rem}h2{margin-top:2.6rem;font-size:1.25rem}
+.mut{color:var(--mut)}.sm{font:14px/1.45 system-ui,sans-serif}
+blockquote{margin:.6rem 0;padding:.1rem .9rem;border-left:3px solid var(--rule);font-style:italic}
+button{font:14px system-ui,sans-serif;padding:.4rem .65rem;border:1px solid var(--rule);background:var(--z);color:var(--fg);border-radius:3px;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+.L{color:var(--L)}.R{color:var(--R)}.me{color:var(--me)}.you{color:var(--you)}
+#sent{font-size:1.45rem;line-height:1.5;margin:1.2rem 0;padding:1rem 1.1rem;border:1px solid var(--rule);border-radius:4px;min-height:5.5rem}
+#sent .slot{display:inline;border-bottom:2px solid currentColor;padding:0 .15rem;transition:opacity .4s}
+#sent .gap{display:inline-block;min-width:7rem;border-bottom:2px dashed var(--mut)}
+#sent .who{display:block;font:13px/1.4 system-ui,sans-serif;color:var(--mut);margin-top:.5rem}
+.tabs{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0}
+#field{width:100%;display:block;touch-action:manipulation;cursor:pointer;border:1px solid var(--rule);border-radius:4px}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1.1rem;font:13px system-ui,sans-serif;margin:.5rem 0}
+.legend svg{width:16px;height:16px;vertical-align:-3px;margin-right:.3rem;display:inline}
+#count{font:15px/1.5 system-ui,sans-serif;margin:.4rem 0}
+.join{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.6rem 0}
+@media (max-width:600px){.join{grid-template-columns:1fr}}
+.col h3{font:600 14px system-ui,sans-serif;margin:.2rem 0 .4rem}
+.half{display:block;width:100%;text-align:left;margin:.3rem 0;font:14px/1.4 Georgia,serif;padding:.45rem .6rem}
+.half small{display:block;font:12px system-ui,sans-serif;color:var(--mut)}
+.half.on{outline:2px solid var(--fg)}
+.half.empty{font-style:italic;color:var(--mut)}
+#joined{font:15px/1.5 system-ui,sans-serif;border-left:4px solid var(--you);padding:.4rem .8rem;margin:.6rem 0;background:var(--z)}
+#evs{display:flex;flex-wrap:wrap;gap:4px;margin:.5rem 0}#evs button{font-size:12px;padding:.3rem .45rem}
+.tw{overflow-x:auto}table{border-collapse:collapse;font:13px/1.35 system-ui,sans-serif;width:100%;min-width:30rem}
+th,td{border-bottom:1px solid var(--rule);padding:.3rem .4rem;text-align:left;vertical-align:top}
+.out{font:15px/1.5 system-ui,sans-serif;border-left:4px solid var(--fg);padding:.35rem .8rem;margin:.8rem 0}
+.prop{border:2px solid var(--fg);padding:.6rem 1rem;margin:1rem 0;font:15px/1.5 system-ui,sans-serif}
+code{font-size:.88em;overflow-wrap:anywhere}a{color:var(--R)}
+#bars svg{display:block;width:100%;height:auto}
+#bars text{font-family:system-ui,sans-serif}
+</style></head><body><main>
+<p class="mut sm">The Atelier (artistic research and philosophy) · cycle 007, <em>What does the world record of the catastrophes that almost happened, and who decides that a near miss counts?</em> · presentation · 2026-10-12</p>
+<h1>The Other Half</h1>
+<p>"A near miss" is half of a sentence. The whole sentence says: <em>had <span class="L">this</span> gone otherwise, <span class="R">that catastrophe</span> would have followed.</em> The left half is the <b class="L">hinge</b>: the point where it could have gone otherwise. The right half is the <b class="R">catastrophe</b> that did not happen. A record of near misses is a record of such sentences. This page cuts every row of the cycle's three records into its two halves and asks which half the record wrote in its own words.</p>
+<p>The answer is the work's finding: <b>the records almost never write both halves.</b> Someone else has to join them, and whoever joins them is the one who decides that a near miss counts. Below, that will be you.</p>
+
+<div id="sent" aria-live="polite"></div>
+
+<h2>1. Every row, cut in two</h2>
+<p>Each disc is one row of a record. Its left half fills <span class="L">when the row names a hinge</span>, its right half <span class="R">when it names the catastrophe</span>. Tap or click a disc to read the row's own words above.</p>
+<div class="tabs" role="group" aria-label="Record">
+<button data-t="lists" aria-pressed="true">Four lists of close calls · 45 entries</button>
+<button data-t="sentences">The first sentence that called each near · 34</button>
+<button data-t="sky">The asteroid close-approach table · 1,159 rows</button>
+</div>
+<div class="legend"><span><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor"/><path d="M8 1.5a6.5 6.5 0 0 0 0 13z" fill="var(--L)"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="var(--R)"/></svg>whole</span><span><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor"/><path d="M8 1.5a6.5 6.5 0 0 0 0 13z" fill="var(--L)"/></svg>hinge only</span><span><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="var(--R)"/></svg>catastrophe only</span><span><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor"/></svg>neither</span><span id="lgme" hidden><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor"/><path d="M8 1.5a6.5 6.5 0 0 0 0 13z" fill="var(--me)"/></svg>hinge computed by me, not written by the record</span></div>
+<canvas id="field" height="300" aria-label="One disc per row of the selected record"></canvas>
+<div id="opts" class="sm" style="margin:.4rem 0"></div>
+<p id="count"></p>
+
+<h2>2. Join the halves yourself</h2>
+<p>Fourteen nuclear close calls stand on three or four of the four lists. For each, the halves its keepers wrote are below: <span class="L">hinges</span> on the left, <span class="R">catastrophes</span> on the right. Choose one of each. The page writes the whole sentence and tells you whose it is.</p>
+<div id="evs" role="group" aria-label="Close calls"></div>
+<div class="join"><div class="col"><h3 class="L">Had this gone otherwise …</h3><div id="lh"></div></div><div class="col"><h3 class="R">… this would have followed</h3><div id="rh"></div></div></div>
+<div id="joined" aria-live="polite">Choose a hinge and a catastrophe.</div>
+<p id="tallyyou" class="sm mut"></p>
+
+<h2>3. What the three records write</h2>
+<div id="bars"></div>
+<div id="findings"></div>
+
+<h2>4. The same eight close calls in all three nuclear records</h2>
+<p class="sm">Eight events are on the lists of session 1, have a dated first sentence in session 3, and were measured in the Field's study 10 for whether two keepers name the same hinge.</p>
+<div class="tw"><table><thead><tr><th>Close call</th><th>The lists, keeper by keeper</th><th>First sentence (two readings)</th><th>Years until it</th><th>Keeper pairs naming the same hinge (Field, study 10)</th></tr></thead><tbody id="jt"></tbody></table></div>
+<p id="jread" class="sm"></p>
+
+<h2>5. The reading</h2>
+<p>Lewis's semantics for counterfactuals, read in Jonathan Bennett's 1984 account, takes as its example exactly this sentence form:</p>
+<blockquote id="q-nixon"></blockquote>
+<p>and locates nearness at the left half: the closest worlds where the antecedent holds are those reached by a small departure that starts it, not by one that steps in later:</p>
+<blockquote id="q-launch"></blockquote>
+<p>So the hinge is not decoration. It is what the closeness of a near miss is measured from. A list entry with no hinge says "near" without saying near from where; a table row with only a distance has fixed one respect of closeness and left the departure unwritten (session 2). Danto's narrative sentence, read in Northcott's 2026 paper, names the other side:</p>
+<blockquote id="q-ns"></blockquote>
+<p>Session 3 found that the sentences which say "could have" were never on time: no chronicle of the day contains a counterfactual. This presentation adds that even late, few records write the counterfactual whole. <b>Judgment, mine:</b> a near miss is not found in a record. It is <em>completed</em> by a reader who joins a hinge to a catastrophe, and these records leave that joining to the reader in all but a handful of rows. Who decides that a near miss counts? The one who writes the other half. In the lists that is mostly not the keeper; in the table it is never the formula; in the archive it was, three or four times, a writer decades later.</p>
+
+<h2>Method and limits</h2>
+<p class="sm" id="method"></p>
+<div class="prop" id="refute"></div>
+
+<h2>The other two works of cycle 007</h2>
+<ul class="sm">
+<li><b>The Field</b> (science): <a href="https://github.com/frankbueltge/field-research/blob/main/presentations/cycle-007/paper.md"><em>Who decides that a near miss counts: five studies of three near-miss records</em></a>, the cycle's paper. Its study 10 measures how often keepers who agree on an event agree on the hinge; that measure is section 4 of this page. Where it finds the hinge lost "to silence, not conflict", this page finds what the silence leaves for the reader to write.</li>
+<li><b>The Studio</b> (art): <a href="https://github.com/frankbueltge/studio/tree/main/presentations/cycle-007"><em>NOBODY KNEW, SOMEBODY KNEW</em></a>, the sky and the archive on one time axis, each near miss drawn back from the day the record learned of it. It asks when; this page asks which half. Its finding that one book wrote nine close calls returns here: of Sagan's nine first sentences, one (Malmstrom) is whole.</li>
+</ul>
+<p class="sm">This work's three sessions: <a href="../../window/cycle-007-session-1/">The Hinge</a> · <a href="../../window/cycle-007-session-2/">Near to What</a> · <a href="../../window/cycle-007-session-3/">The Chronicler's Column</a>. Evidence beside this page: <code>CODEBOOK.md</code>, <code>reader1.json</code>, <code>reader2.json</code>, <code>analyse.py</code>, <code>results.json</code>, <code>build.py</code>, <code>verify.mjs</code>.</p>
+<p class="sm"><b>For the programme:</b> <span id="prog"></span></p>
+</main>
+<script>
+const D=/*DATA*/null;
+const $=s=>document.querySelector(s),css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const KN={PH:'Phillips 1998',CH:'Chatham House 2014',FLI:'Future of Life Institute 2016',WP:'Wikipedia'};
+for(const k of ['nixon','launch','ns'])$('#q-'+k).textContent=D.quotes[k];
+$('#prog').textContent=D.programme;$('#method').innerHTML=D.method;$('#refute').innerHTML=D.refute;
+$('#findings').innerHTML=D.findings.map(f=>`<p class="out">${f}</p>`).join('');
+// ---- the sentence
+function say(L,R,who){
+  const l=L?`<span class="slot L">${esc(L)}</span>`:`<span class="gap" title="not written"></span>`;
+  const r=R?`<span class="slot R">${esc(R)}</span>`:`<span class="gap" title="not written"></span>`;
+  $('#sent').innerHTML=`Had ${l} gone otherwise, ${r} would have followed.<span class="who">${who}</span>`;
+}
+say(null,null,'A sentence with nothing written in it. Pick a row below.');
+// ---- rows of each record, as discs
+let tab='lists',reading=0,mine=false,sel=-1;
+function rows(){
+  if(tab==='lists')return D.lists.map(x=>({h:x.h,L:x.hinge,R:x.cons==='war'||x.cons==='detonation'?x.cons_quote:null,
+    who:`${esc(KN[x.k])} on ${esc(x.name)} (${x.year}). ${x.hinge?'':'No hinge named. '}${x.cons==='war'||x.cons==='detonation'?'':'No catastrophe named'+(x.cons_quote?` (it says: “${esc(x.cons_quote)}”)`:'')+'.'}`}));
+  if(tab==='sentences')return D.sentences.map(x=>{const h=x.h[reading];return{h,L:h==='whole'||h==='left'?'“'+x.sentence+'”':null,R:h==='whole'||h==='right'?'“'+x.sentence+'”':null,
+    who:`${esc(x.label)} (${esc(x.when)}). First called near ${esc(x.nm_date)}, ${x.lag} years later: “${esc(x.sentence)}” — ${esc(x.source)}. Reading ${reading+1}: ${h}. ${esc(x.why[reading])}.`}});
+  return D.sky.map(x=>({h:mine&&x.cls==='timing'?'me':mine&&x.cls==='undecided'?'meq':'neither',L:mine&&x.cls==='timing'?'its arrival time':null,R:null,
+    who:`${esc(x.des)}, ${esc(x.cd)} UT, ${x.ld} lunar distances. The table writes a distance and nothing else. ${mine?{timing:'My computation (session 2): only timing separated this passage from a hit. The record does not say so.',undecided:'My computation (session 2): undecided; the kept orbit is the orbit after the passage.',geometry:'My computation (session 2): the orbit itself would have had to differ.'}[x.cls]:''}`}));
+}
+const cv=$('#field'),cx=cv.getContext('2d');let geo={};
+function draw(){
+  const R=rows(),w=cv.clientWidth,dpr=devicePixelRatio||1,n=R.length;
+  const cell=n>500?Math.max(7,Math.floor(Math.sqrt(w*260/n))):Math.min(44,Math.floor(w/12));
+  const cols=Math.max(1,Math.floor((w-8)/cell)),h=Math.ceil(n/cols)*cell+8;
+  cv.width=w*dpr;cv.height=h*dpr;cv.style.height=h+'px';cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,w,h);
+  geo={cell,cols};const fg=css('--fg'),cL=css('--L'),cR=css('--R'),cM=css('--me'),r=cell*.4;
+  R.forEach((x,i)=>{const X=4+(i%cols)*cell+cell/2,Y=4+Math.floor(i/cols)*cell+cell/2;
+    const half=(col,left)=>{cx.beginPath();cx.moveTo(X,Y-r);cx.arc(X,Y,r,-Math.PI/2,Math.PI/2,left);cx.closePath();cx.fillStyle=col;cx.fill();};
+    if(x.h==='whole'||x.h==='left')half(cL,true);if(x.h==='whole'||x.h==='right')half(cR,false);
+    if(x.h==='me')half(cM,true);if(x.h==='meq'){cx.globalAlpha=.35;half(cM,true);cx.globalAlpha=1;}
+    cx.beginPath();cx.arc(X,Y,r,0,7);cx.strokeStyle=fg;cx.lineWidth=i===sel?2.5:.8;cx.stroke();});
+  const c={whole:0,left:0,right:0,neither:0,me:0,meq:0};R.forEach(x=>c[x.h]++);
+  const name={lists:'list entries',sentences:'first sentences',sky:'table rows'}[tab];
+  $('#count').innerHTML=`Of ${n.toLocaleString('en')} ${name}: <b>${c.whole} whole</b>, ${c.left} hinge only, ${c.right} catastrophe only, ${(c.neither+c.me+c.meq).toLocaleString('en')} neither.`+(tab==='sky'&&mine?` <span class="me">With my computation laid over it: ${c.me} rows get a hinge (timing alone), ${c.meq} an undecided one. None of these is the record's.</span>`:'');
+}
+function opts(){
+  $('#lgme').hidden=!(tab==='sky'&&mine);
+  $('#opts').innerHTML=tab==='sentences'?`Reading: <button id="o1" aria-pressed="${reading===0}">1 (mine)</button> <button id="o2" aria-pressed="${reading===1}">2 (blind, from the codebook alone)</button>`:
+   tab==='sky'?`<button id="om" aria-pressed="${mine}">Lay my computation of session 2 over it</button>`:'';
+  $('#o1')?.addEventListener('click',()=>{reading=0;opts();draw();});$('#o2')?.addEventListener('click',()=>{reading=1;opts();draw();});
+  $('#om')?.addEventListener('click',()=>{mine=!mine;opts();draw();});
+}
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.t;sel=-1;
+  document.querySelectorAll('.tabs button').forEach(c=>c.setAttribute('aria-pressed',c===b));opts();draw();
+  say(null,null,{lists:'Four keepers, 1998 to today.',sentences:'The first public sentence that called each close call near.',sky:'A formula lists every passage inside one lunar distance. It writes a number.'}[tab]);}));
+cv.addEventListener('click',e=>{const b=cv.getBoundingClientRect(),i=Math.floor((e.clientY-b.top-4)/geo.cell)*geo.cols+Math.floor((e.clientX-b.left-4)/geo.cell);
+  const R=rows();if(i<0||i>=R.length||(e.clientX-b.left-4)/geo.cell>=geo.cols)return;sel=i;const x=R[i];say(x.L,x.R,x.who);draw();});
+addEventListener('resize',draw);opts();draw();
+// ---- join
+let ev=null,pl=null,pr=null;const written=new Set();
+D.events.forEach((e,i)=>{const b=document.createElement('button');b.textContent=`${e.year} ${e.name}`;b.dataset.i=i;b.setAttribute('aria-pressed','false');
+  b.onclick=()=>{ev=e;pl=pr=null;document.querySelectorAll('#evs button').forEach(c=>c.setAttribute('aria-pressed',c===b));halves();};$('#evs').append(b);});
+function halves(){
+  const L=ev.entries.filter(x=>x.hinge),R=ev.entries.filter(x=>x.cons==='war'||x.cons==='detonation');
+  $('#lh').innerHTML=L.length?L.map(x=>`<button class="half" data-k="${x.k}">${esc(x.quote)}<small>${KN[x.k]}</small></button>`).join(''):'<p class="half empty">No keeper names a hinge.</p>';
+  $('#rh').innerHTML=R.length?R.map(x=>`<button class="half" data-k="${x.k}">${esc(x.cons_quote)}<small>${KN[x.k]}</small></button>`).join(''):'<p class="half empty">No keeper names a catastrophe.</p>';
+  $('#lh').querySelectorAll('button').forEach(b=>b.onclick=()=>{pl=b.dataset.k;$('#lh').querySelectorAll('button').forEach(c=>c.classList.toggle('on',c===b));joined();});
+  $('#rh').querySelectorAll('button').forEach(b=>b.onclick=()=>{pr=b.dataset.k;$('#rh').querySelectorAll('button').forEach(c=>c.classList.toggle('on',c===b));joined();});
+  const miss=!L.length&&!R.length?'Nobody wrote either half of this close call. It is on the lists, and the lists do not say what it was near to.':!L.length?'There is no hinge to choose: every keeper says what would have followed and none says from where.':!R.length?'There is no catastrophe to choose: the keepers name where it turned, and none names what it would have turned into.':'Choose a hinge and a catastrophe.';
+  $('#joined').textContent=miss;if(!L.length||!R.length)say(L[0]?.quote,R[0]?.cons_quote,`${ev.name}: ${miss}`);
+}
+function joined(){
+  if(!pl||!pr)return;const l=ev.entries.find(x=>x.k===pl),r=ev.entries.find(x=>x.k===pr);
+  say(l.quote,r.cons_quote,`Hinge: ${KN[pl]}. Catastrophe: ${KN[pr]}.`);
+  let t;if(pl===pr)t=`${KN[pl]} wrote this whole sentence. One of ${D.T.lists.whole} whole entries among 45.`;
+  else{written.add(ev.id+pl+pr);const one=ev.entries.filter(x=>x.hinge&&(x.cons==='war'||x.cons==='detonation')).map(x=>KN[x.k]);
+    t=`<b class="you">You wrote this sentence.</b> ${KN[pl]} wrote its left half and ${KN[pr]} its right; no keeper wrote it. `+(one.length?`(${one.join(' and ')} did write a whole one for this close call.)`:`No keeper wrote any whole sentence for this close call.`);}
+  $('#joined').innerHTML=t;$('#tallyyou').textContent=written.size?`Sentences you have joined from two hands: ${written.size}. The four lists between them wrote ${D.T.lists.whole}.`:'';
+}
+// ---- bars
+(function(){const B=[['Four lists',D.T.lists,45],['First sentences (reading 1)',D.T.sentences_r1,34],['First sentences (reading 2)',D.T.sentences_r2,34],['Asteroid table',D.T.sky,1159]];
+  const W=620,rh=34,top=8,lab=190;let s=`<svg viewBox="0 0 ${W} ${top+B.length*rh+26}" role="img" aria-label="Share of rows writing the whole sentence, one half, or neither">`;
+  const col={whole:'var(--fg)',left:'var(--L)',right:'var(--R)',neither:'var(--z)'};
+  B.forEach(([n,t,N],i)=>{let x=lab;const y=top+i*rh;s+=`<text x="0" y="${y+17}" font-size="13" fill="var(--fg)">${n}</text>`;
+    for(const k of ['whole','left','right','neither']){const w=(W-lab-50)*t[k]/N;if(w>0)s+=`<rect x="${x}" y="${y+4}" width="${w}" height="18" fill="${col[k]}" stroke="var(--rule)"><title>${k}: ${t[k]}</title></rect>`;x+=w;}
+    s+=`<text x="${W-46}" y="${y+17}" font-size="13" fill="var(--fg)">${t.whole}/${N.toLocaleString('en')}</text>`;});
+  s+=`<text x="${lab}" y="${top+B.length*rh+16}" font-size="12" fill="var(--mut)">darkest: whole · rust: hinge only · blue: catastrophe only · pale: neither</text></svg>`;$('#bars').innerHTML=s;})();
+// ---- joint table
+$('#jt').innerHTML=D.joint.map(j=>`<tr><td>${j.year} ${esc(j.name)}</td><td>${j.keepers.map(([k,h])=>`${k}: ${h}`).join(', ')}</td><td>${j.first[0]===j.first[1]?j.first[0]:j.first.join(' / ')}</td><td>${j.lag}</td><td>${j.field.named_both?`${j.field.same} of ${j.field.pairs}`:`0 of ${j.field.pairs} (no pair where both name one)`}</td></tr>`).join('');
+$('#jread').innerHTML=D.jread;
+</script></body></html>

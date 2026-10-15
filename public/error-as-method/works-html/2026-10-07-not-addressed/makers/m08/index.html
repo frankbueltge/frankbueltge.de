@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Both Ways Across</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #f3efe6; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var dpr = Math.max(2, window.devicePixelRatio || 1);
+  var cv = document.getElementById('c');
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var PAPER = '#f3efe6', INK = '#22201c', MUTED = '#8a8378', RULE = '#cfc7b8';
+  var NORTH = '#c2452d', SOUTH = '#1f4e6b';
+  var SERIF = 'Georgia, "Times New Roman", serif';
+  var SANS = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+
+  g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+  var hours = (window.COUNTS && window.COUNTS.hours) || [];
+  var DAYS = 365;
+
+  // Layout: 7 rows (Mon..Sun) x 53 week-columns; each cell is one day.
+  var left = 58, right = 22, top = 104, bottom = 64;
+  var cols = 53, rows = 7;
+  var cw = (W - left - right) / cols;
+  var rh = (H - top - bottom) / rows;
+  var half = rh / 2 - 4;
+  var MAXC = 860;                       // just above the year's busiest hour (856)
+  var gap = 1.6;                        // breathing room between neighbouring days
+  var hw = (cw - gap) / 24;             // width of one hour
+
+  function cellOf(d) { var k = d + 2; return { c: Math.floor(k / 7), r: k % 7 }; } // 1 Jan 2025 = Wednesday
+
+  // Month seams: a faint vertical rule where each month starts.
+  var monthStarts = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  // Row baselines: the bridge deck, drawn once per weekday.
+  g.strokeStyle = RULE; g.lineWidth = 0.6;
+  for (var r = 0; r < rows; r++) {
+    var y0 = top + r * rh + rh / 2;
+    g.beginPath(); g.moveTo(left, y0 + 0.3); g.lineTo(W - right, y0 + 0.3); g.stroke();
+  }
+
+  // Draw each day as two mirrored profiles: northbound rises, southbound hangs.
+  function profile(d, k, sign, color) {
+    var p = cellOf(d);
+    var x0 = left + p.c * cw + gap / 2;
+    var yb = top + p.r * rh + rh / 2;
+    g.beginPath();
+    g.moveTo(x0, yb);
+    for (var h = 0; h < 24; h++) {
+      var v = hours[d * 24 + h];
+      var val = v ? v[k] : 0;
+      var y = yb - sign * (val / MAXC) * half * 2;
+      g.lineTo(x0 + h * hw, y);
+      g.lineTo(x0 + (h + 1) * hw, y);
+    }
+    g.lineTo(x0 + 24 * hw, yb);
+    g.closePath();
+    g.fillStyle = color;
+    g.fill();
+  }
+
+  for (var d = 0; d < DAYS; d++) {
+    profile(d, 1, 1, NORTH);
+    profile(d, 2, -1, SOUTH);
+  }
+
+  // The one missing hour (clocks sprang forward): a small open ring on the deck.
+  for (var i = 0; i < hours.length; i++) {
+    if (hours[i] === null) {
+      var dd = Math.floor(i / 24), hh = i % 24, p = cellOf(dd);
+      var mx = left + p.c * cw + gap / 2 + (hh + 0.5) * hw;
+      var my = top + p.r * rh + rh / 2;
+      g.strokeStyle = INK; g.lineWidth = 0.9;
+      g.beginPath(); g.arc(mx, my, 2.6, 0, Math.PI * 2); g.stroke();
+      g.beginPath(); g.moveTo(mx, my - 4); g.lineTo(mx, my - 15); g.stroke();
+      g.fillStyle = INK; g.font = 'italic 10px ' + SERIF; g.textAlign = 'left';
+      g.fillText('one hour lost to the clocks, 9 March', mx + 4, my - 12);
+    }
+  }
+
+  // Month labels and seams.
+  g.font = '10px ' + SANS; g.textAlign = 'left'; g.fillStyle = MUTED;
+  for (var m = 0; m < 12; m++) {
+    var pc = cellOf(monthStarts[m]);
+    var xm = left + pc.c * cw;
+    g.fillText(monthNames[m].toUpperCase(), xm + 2, top - 10);
+    g.strokeStyle = RULE; g.lineWidth = 0.6;
+    g.beginPath(); g.moveTo(xm + 0.3, top - 22); g.lineTo(xm + 0.3, top - 4); g.stroke();
+  }
+
+  // Weekday labels.
+  var wd = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  g.textAlign = 'right'; g.font = '11px ' + SERIF; g.fillStyle = INK;
+  for (var r2 = 0; r2 < rows; r2++) {
+    g.fillText(wd[r2], left - 12, top + r2 * rh + rh / 2 + 4);
+  }
+
+  // Title block.
+  g.textAlign = 'left'; g.fillStyle = INK;
+  g.font = '28px ' + SERIF;
+  g.fillText('Both Ways Across', left, 46);
+  g.font = 'italic 13px ' + SERIF; g.fillStyle = '#4a463f';
+  g.fillText('Every hour of 2025 on the Fremont Bridge, Seattle. Each day is one small figure on its weekday line,', left, 68);
+  g.fillText('its 24 hours left to right; bicycles and scooters heading north rise above the deck, those heading south hang below.', left, 84);
+
+  // Totals, top right.
+  var tn = 0, ts = 0;
+  hours.forEach(function (v) { if (v) { tn += v[1]; ts += v[2]; } });
+  function fmt(n) { return n.toLocaleString('en-US'); }
+  g.textAlign = 'right'; g.font = '12px ' + SANS;
+  g.fillStyle = NORTH; g.fillText('▲ north  ' + fmt(tn), W - right, 40);
+  g.fillStyle = SOUTH; g.fillText('▼ south  ' + fmt(ts), W - right, 58);
+
+  // Scale note and source, bottom.
+  var yS = H - 30;
+  g.textAlign = 'left'; g.fillStyle = MUTED; g.font = '10.5px ' + SANS;
+  var sx = left;
+  g.strokeStyle = INK; g.lineWidth = 0.8;
+  g.beginPath(); g.moveTo(sx, yS + 4); g.lineTo(sx, yS + 4 - (200 / MAXC) * half * 2); g.stroke();
+  g.beginPath(); g.moveTo(sx - 2, yS + 4 - (200 / MAXC) * half * 2); g.lineTo(sx + 2, yS + 4 - (200 / MAXC) * half * 2); g.stroke();
+  g.fillText('200 riders in an hour', sx + 7, yS + 2);
+  g.fillText('Busiest hour of the year: 856.  Quietest days fall where people stayed home — New Year, Thanksgiving, Christmas.', sx + 130, yS + 2);
+  g.textAlign = 'right';
+  g.fillText('Data: City of Seattle, Fremont Bridge bicycle counter (public domain)', W - right, yS + 18);
+})();
+</script>
+</body>
+</html>

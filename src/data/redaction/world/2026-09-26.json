@@ -1,0 +1,146 @@
+{
+  "date": "2026-09-26",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-26T10:23:28Z",
+    "counts": {
+      "botwall": 16,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 283,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 283,
+    "excluded_unverifiable": 17,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0134
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0134
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-24",
+    "receipts": [],
+    "sample_drawn_at": "2026-09-25T10:30:58Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5251,
+      "replaced": 5049,
+      "trivial": 1230,
+      "update": 438
+    },
+    "day": "2026-09-25",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Quote",
+          "of",
+          "day",
+          "by",
+          "Arthur",
+          "Conan",
+          "Doyle",
+          "the"
+        ],
+        "after": "Quote of the day by Arthur Conan Doyle: Wisdom of the day by Arthur Conan Doyle: 'To the man who loves art for its own sake, it is...' -inspiring life lessons on art, beauty and how the smallest things can bring the most joy",
+        "before": "Inspiring life lessons on art: Wisdom of the day by Arthur Conan Doyle: 'To the man who loves art for its own sake, it is...' -inspiring life lessons on art, beauty and how the smallest things can bring the most joy",
+        "detected": "2026-09-25T17:47:40Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "inspiring",
+          "life",
+          "lessons",
+          "on",
+          "art"
+        ],
+        "similarity": 0.97,
+        "url": "https://economictimes.indiatimes.com/news/international/us/wisdom-of-the-day-by-arthur-conan-doyle-to-the-man-who-loves-art-for-its-own-sake-it-is-inspiring-life-lessons-on-art-beauty-and-how-the-smallest-things-can-bring-the-most-joy/articleshow/134339051.cms",
+        "weight": 13,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Ray",
+          "Ban",
+          "Gen",
+          "3"
+        ],
+        "after": "'It's just because it's a new form factor': Qualcomm's XR SVP defends smart glasses against privacy panic ahead of Ray-Ban Meta Gen 3",
+        "before": "'It's just because it's a new form factor': Qualcomm's XR SVP defends smart glasses against privacy panic ahead of Meta Connect",
+        "detected": "2026-09-25T02:02:24Z",
+        "domain": "tomsguide.com",
+        "removed": [
+          "Connect"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.tomsguide.com/computing/smart-glasses/its-just-because-its-a-new-form-factor-qualcomms-xr-svp-defends-smart-glasses-against-privacy-panic-ahead-of-meta-connect",
+        "weight": 9,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "September",
+          "September"
+        ],
+        "after": "Heavy rain likely in Himachal from September 25, alerts issued for September 26-27",
+        "before": "Heavy rain likely in Himachal from Sep 25, alerts issued for Sep 26-27",
+        "detected": "2026-09-25T14:48:47Z",
+        "domain": "tribuneindia.com",
+        "removed": [
+          "Sep",
+          "Sep"
+        ],
+        "similarity": 0.857,
+        "url": "https://www.tribuneindia.com/news/himachal/heavy-rain-likely-in-himachal-from-sep-25-alerts-issued-for-sep-26-27/",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 17616,
+      "PAGE_TEXTCHANGE": 131335,
+      "PAGE_TITLECHANGE": 48769,
+      "UNCHANGED_CONTENT": 769054
+    },
+    "title_changes_en": 11968,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1790417966053",
+        "job_id": "world_gdg_counts_20260925",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 242221056,
+        "created": "1790417971534",
+        "job_id": "world_gdg_titles_20260925",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-26T10:23:28Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-25.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

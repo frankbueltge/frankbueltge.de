@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fremont, Woven</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #14130f; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var H = window.COUNTS.hours;
+  var cv = document.getElementById('c');
+  var dpr = window.devicePixelRatio || 1;
+  cv.width = 1100 * dpr; cv.height = 800 * dpr;
+  cv.style.width = '1100px'; cv.style.height = '800px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var BG = '#14130f', INK = '#e9e2d0', DIM = '#8a8475', FAINT = '#3a372f';
+  var NORTH = [236, 164, 72];   // amber: heading north, away from downtown
+  var SOUTH = [92, 170, 205];   // river blue: heading south, toward downtown
+  var MID = [226, 220, 204];
+
+  g.fillStyle = BG; g.fillRect(0, 0, 1100, 800);
+
+  var L = 74, R = 1062, T = 134, rowH = 24;
+  var days = Math.floor(H.length / 24);
+  var dw = (R - L) / days;
+  var maxT = 0;
+  H.forEach(function (v) { if (v && v[0] > maxT) maxT = v[0]; });
+
+  function mix(a, b, t) {
+    return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+  }
+  function colorFor(n, s) {
+    var tot = n + s; if (tot === 0) return MID;
+    var p = n / tot; // 1 = all north
+    var k = Math.min(1, Math.abs(p - 0.5) * 1.7);
+    return p >= 0.5 ? mix(MID, NORTH, k) : mix(MID, SOUTH, k);
+  }
+
+  // faint hour guides
+  g.strokeStyle = FAINT; g.lineWidth = 0.5;
+  [0, 6, 12, 18, 24].forEach(function (h) {
+    var y = T + h * rowH;
+    g.beginPath(); g.moveTo(L, y + 0.25); g.lineTo(R, y + 0.25); g.stroke();
+  });
+
+  // the weave: one thread per day, one knot per hour
+  var missing = null;
+  for (var d = 0; d < days; d++) {
+    var x = L + d * dw;
+    for (var h = 0; h < 24; h++) {
+      var v = H[d * 24 + h];
+      var cy = T + h * rowH + rowH / 2;
+      if (!v) { missing = { x: x, y: cy, d: d, h: h }; continue; }
+      var t = v[0] / maxT;
+      var len = Math.max(0.8, rowH * 0.96 * Math.sqrt(t));
+      var c = colorFor(v[1], v[2]);
+      var a = 0.22 + 0.78 * Math.sqrt(t);
+      g.fillStyle = 'rgba(' + (c[0] | 0) + ',' + (c[1] | 0) + ',' + (c[2] | 0) + ',' + a.toFixed(3) + ')';
+      g.fillRect(x + 0.15, cy - len / 2, Math.max(0.6, dw - 0.55), len);
+    }
+  }
+
+  // the hole left by the clocks
+  if (missing) {
+    var mx = missing.x + dw / 2, my = missing.y;
+    g.strokeStyle = INK; g.lineWidth = 0.8;
+    g.beginPath(); g.arc(mx, my, 7, 0, Math.PI * 2); g.stroke();
+    g.beginPath(); g.moveTo(mx + 7, my - 3); g.lineTo(mx + 34, my - 26); g.lineTo(mx + 42, my - 26); g.stroke();
+    g.font = 'italic 12px Georgia, "Times New Roman", serif';
+    g.textBaseline = 'middle'; g.textAlign = 'left';
+    var lbl = '9 March, 2 a.m. \u2014 the hour the clocks skipped';
+    g.fillStyle = 'rgba(20,19,15,0.85)';
+    g.fillRect(mx + 42, my - 35, g.measureText(lbl).width + 8, 18);
+    g.fillStyle = INK;
+    g.fillText('9 March, 2 a.m. — the hour the clocks skipped', mx + 46, my - 26);
+  }
+
+  // title
+  g.textBaseline = 'alphabetic'; g.textAlign = 'left';
+  g.fillStyle = INK;
+  g.font = '30px Georgia, "Times New Roman", serif';
+  g.fillText('Fremont, Woven', L, 58);
+  g.fillStyle = DIM;
+  g.font = '13px Georgia, "Times New Roman", serif';
+  var total = 0; H.forEach(function (v) { if (v) total += v[0]; });
+  g.fillText('Every hour of 2025 on the Fremont Bridge, Seattle — ' +
+    total.toLocaleString('en-US') + ' crossings by bicycle and scooter.', L, 84);
+  g.fillText('One thread per day, read downward from midnight; each knot is an hour, its length the crowd, its colour the direction.', L, 102);
+
+  // legend (top right)
+  var lx = R - 280, ly = 50;
+  g.font = '11px Georgia, "Times New Roman", serif';
+  var steps = 40;
+  for (var i = 0; i <= steps; i++) {
+    var p = 1 - i / steps;
+    var c2 = colorFor(p * 100, (1 - p) * 100);
+    g.fillStyle = 'rgb(' + (c2[0] | 0) + ',' + (c2[1] | 0) + ',' + (c2[2] | 0) + ')';
+    g.fillRect(lx + i * 4, ly - 7, 4, 10);
+  }
+  g.fillStyle = DIM; g.textAlign = 'left';
+  g.fillText('mostly north', lx, ly + 18);
+  g.textAlign = 'right';
+  g.fillText('mostly south', lx + steps * 4 + 4, ly + 18);
+  g.textAlign = 'left';
+  g.fillText('← away from', lx + steps * 4 + 14, ly - 4);
+  g.fillText('   toward downtown →', lx + steps * 4 + 14, ly + 10);
+
+  // hour labels
+  g.textAlign = 'right'; g.textBaseline = 'middle';
+  g.font = '11px Georgia, "Times New Roman", serif';
+  var hl = { 0: 'midnight', 6: '6 a.m.', 8: '8', 12: 'noon', 17: '5', 18: '6 p.m.', 23: '11' };
+  for (var hh in hl) {
+    g.fillStyle = (hh == 8 || hh == 17) ? INK : DIM;
+    g.fillText(hl[hh], L - 10, T + hh * rowH + rowH / 2);
+  }
+
+  // month labels along the bottom
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var mlen = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  var by = T + 24 * rowH;
+  g.textAlign = 'left'; g.textBaseline = 'top';
+  var acc = 0;
+  for (var m = 0; m < 12; m++) {
+    var mx0 = L + acc * dw;
+    g.strokeStyle = DIM; g.lineWidth = 0.6;
+    g.beginPath(); g.moveTo(mx0 + 0.3, by + 4); g.lineTo(mx0 + 0.3, by + 12); g.stroke();
+    g.fillStyle = DIM;
+    g.fillText(months[m], mx0 + 4, by + 6);
+    acc += mlen[m];
+  }
+
+  // the seam at 1 July
+  var sx = L + 181 * dw;
+  g.strokeStyle = INK; g.lineWidth = 0.7; g.setLineDash([2, 3]);
+  g.beginPath(); g.moveTo(sx, T - 10); g.lineTo(sx, T + 24 * rowH + 2); g.stroke();
+  g.setLineDash([]);
+  g.fillStyle = INK; g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  g.font = 'italic 12px Georgia, "Times New Roman", serif';
+  g.fillText('1 July, midnight: the cloth changes colour', sx + 6, T - 6);
+
+  // a single closing line
+  g.fillStyle = DIM;
+  g.font = 'italic 12px Georgia, "Times New Roman", serif';
+  g.fillText('Weekends open small gaps in the weave; the bright rows at 8 a.m. and 5 p.m. are the commute. From 1 July the counter records the river of riders', L, 762);
+  g.fillText('running the other way — whether the people or the sensor turned around, the numbers alone cannot say.', L, 779);
+})();
+</script>
+</body>
+</html>

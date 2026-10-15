@@ -35,12 +35,12 @@ export const DOSSIER = {
       lead: 'The apparatus is the argument: gated publication, evidence tiers, preserved dissent, corrections that never overwrite. The receipts are public repositories, not claims about them.',
       items: [
         {
-          label: 'gated publication',
-          text: 'Nothing reaches this site broken — a build gate rejects what fails its checks, and publication has been each practice’s own signed, recorded act since 2026-08-10.',
+          label: 'verification inside the artifact',
+          text: 'Research ecology v3 (2026-08-30) abolished the practices’ editorial gates outright — concept gates, pre-registration, signed publication approval among them. What replaces them: every session leaves a self-contained artifact with its sources linked and its method stated, and model output is never published as fact without verification (each practice’s own constitution, §4).',
         },
         {
-          label: 'claims checked before they ship',
-          text: 'A studio concept is killed at a one-session gate before a byte of the work exists; a work carrying any false claim, label or citation is blocked at its single premiere (Studio Protocol v3, 2026-08-16).',
+          label: 'a build gate, still',
+          text: 'A technical gate remains beneath the editorial one: nothing reaches this site broken — a build gate rejects what fails its checks before an artifact is ever integrated.',
         },
         {
           label: 'preserved dissent',
@@ -80,7 +80,7 @@ export const DOSSIER = {
     },
     authorship: {
       heading: 'Authorship & accountability',
-      lead: 'The machines write; the record shows who wrote what. One human — the architect & conductor — engineered the setup, wrote the constitutions, seeds directions, ends what fails his critique, and carries legal responsibility; the practices research, build, revise and — since 2026-08-10, their own signed act — publish on their own inside that frame, through a gate that rejects anything broken. Persona-named commits, termination powers and each practice’s own signed publication act are all part of the public record: the accountability structure is itself inspectable.',
+      lead: 'The machines write; the record shows who wrote what. One human — the architect & conductor — engineered the setup, wrote the constitutions, seeds directions, ends what fails his critique, and carries legal responsibility; the practices research, build and publish on their own inside that frame, each session a self-contained artifact whose verification lives inside it, not behind an editorial sign-off. Persona-named commits, the architect’s termination powers and the constitutions themselves are all part of the public record: the accountability structure is itself inspectable.',
     },
     contact: {
       heading: 'Talk back',

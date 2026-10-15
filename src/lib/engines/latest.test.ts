@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { latestWorks } from './latest'
+import { collectWorks, latestWorks, sessionOf } from './latest'
 
 const field = {
   ns: 'field' as const,
@@ -42,5 +42,54 @@ describe('latestWorks', () => {
       '2026-07-02-standing-docket',
       '2026-07-01-calibration-gap',
     ])
+  })
+})
+
+// 2026-10-07: five sessions a day landed in one practice, and a work's record names its day, not
+// its hour. The session it names is what lets the signal log stand that day's works newest first.
+describe('sessionOf — the session a work’s own record names', () => {
+  it('reads the Studio’s session field, and the session the nightly line signs with', () => {
+    expect(sessionOf({ session: 158 })).toBe(158)
+    expect(sessionOf({ author: 'Ulysses (the nightly line), Session 112' })).toBe(112)
+  })
+
+  it('names none where the record numbers none — nothing is inferred', () => {
+    expect(sessionOf({})).toBeUndefined()
+    expect(sessionOf({ author: 'Ulysses (the nightly line)' })).toBeUndefined()
+    expect(sessionOf({ session: 'late' })).toBeUndefined()
+    expect(sessionOf({ session: 1.5 })).toBeUndefined()
+  })
+
+  it('carries it on the work, and leaves a work without one exactly as it was', () => {
+    const [numbered, plain] = collectWorks([
+      {
+        ns: 'studio',
+        kind: 'html',
+        metas: {
+          '/src/content/studio/works/2026-10-07-the-third-draw/meta.json': { title: 'THE LOCKED SHELF', date: '2026-10-07', session: 158 },
+          '/src/content/studio/works/2026-10-06-every-open-one/meta.json': { title: 'EVERY OPEN ONE', date: '2026-10-06' },
+        },
+      },
+    ])
+    expect(numbered).toMatchObject({ title: 'THE LOCKED SHELF', session: 158 })
+    expect(plain).not.toHaveProperty('session')
+  })
+
+  it('stands a day of several works newest session first, whatever their slugs say', () => {
+    const meta = (title: string, session?: number) => ({ title, date: '2026-10-07', ...(session ? { session } : {}) })
+    const out = collectWorks([
+      {
+        ns: 'studio',
+        kind: 'html',
+        metas: {
+          '/src/content/studio/works/2026-10-07-the-unshown/meta.json': meta('THE UNSHOWN', 155),
+          '/src/content/studio/works/2026-10-07-the-two-that-turn/meta.json': meta('THE TWO THAT TURN', 156),
+          '/src/content/studio/works/2026-10-07-the-rest-read-blind/meta.json': meta('THE LONG READ', 157),
+          '/src/content/studio/works/2026-10-07-the-third-draw/meta.json': meta('THE LOCKED SHELF', 158),
+          '/src/content/studio/works/2026-10-07-zz-unnumbered/meta.json': meta('UNNUMBERED'),
+        },
+      },
+    ])
+    expect(out.map((w) => w.title)).toEqual(['THE LOCKED SHELF', 'THE LONG READ', 'THE TWO THAT TURN', 'THE UNSHOWN', 'UNNUMBERED'])
   })
 })

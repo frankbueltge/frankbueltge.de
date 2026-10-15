@@ -1,0 +1,71 @@
+# frankbueltge.de
+
+> The personal site of Frank Bültge (Data Engineering & Analytics, Karlsruhe): the public
+> entrance to a federated research ecology of machine-run practices, to the Machine Attention
+> project, and to a lab of experiments that measure what power leaves in the dark. Every
+> instrument here commits its findings to git as dated JSON, so a claim can be recomputed from
+> committed data rather than trusted.
+
+## Trending — Common Ground (daily, CC0)
+
+What the web is searching, reading, buying, playing and betting on, cross-checked across
+independent platforms every morning (about 06:40 UTC): daily search trends for ten countries,
+the most-read encyclopaedia pages in six languages, the day's headlines, link aggregators and
+social feeds, forums, app and game charts, new model releases and prediction markets. Topics that
+surface on several platforms at once are matched by a disclosed token rule — no language model
+writes anything. Data licence CC0 1.0; the page counts its own readers at the edge — every
+request that arrives, crawlers included, since 2026-09-03 from that source alone, because a
+browser beacon needs JavaScript and so cannot see a crawler at all — and publishes the classes
+(browser, search, AI retrieval, AI user-fetch, AI training, other bot) beside the content.
+
+- [Today](https://frankbueltge.de/trending): the human-readable page, rebuilt every morning
+- [latest.md](https://frankbueltge.de/trending/latest.md): the same day as plain Markdown, for readers that prefer text
+- [latest.json](https://frankbueltge.de/trending/latest.json): the full day file — sources, signals, converging topics, summary
+- [index.json](https://frankbueltge.de/trending/index.json): the archive register — every committed day with its URL and its JSON
+- [feed.xml](https://frankbueltge.de/trending/feed.xml): RSS, one item per day
+- [Archive day](https://frankbueltge.de/trending/2026-09-02): `/trending/YYYY-MM-DD` and `/trending/YYYY-MM-DD.json` for any committed day
+- [Method sheet](https://frankbueltge.de/werke/trending): sources and licences, cadence, the convergence rule, limits, change log
+
+### Trends in the making (the arcs, daily, CC0)
+
+The slower half of the same ledger. A watchlist of terms — phrases that build over weeks in
+forums, repositories, preprints and trade press before any search trend registers them — is put
+to each platform's own search interface once a day, as one quoted phrase per term and per
+declared alias: Hacker News, Google News, GitHub, arXiv and Reddit, plus Wikipedia page views
+where the watchlist names an article. Matching documents are deduplicated by URL and counted
+into three windows ending at the run (one day, seven days, thirty days). A term's status
+(emerging, rising, established, fading, quiet) is a threshold comparison of the last seven days
+against the three weeks before them, with the thresholds committed in the pipeline — no model, no
+editorial judgement. Every count carries receipts: the titles, URLs and dates the count was read
+from. A discovery pass over the house's own committed day files (plus four live archives for
+depth) publishes the n-grams it finds moving as candidates; since 2026-09-02 the list governs
+itself — a candidate proposed on three days in a row, on at least two platforms each time, is
+promoted onto the watchlist by the run (at most three a run, never past thirty-five tracked
+terms, never one struck before), a term the run promoted that then stays quiet for three weeks is
+let go by the run, and a person overrides both directions. A struck term keeps its line in the
+watchlist file as a tombstone and never returns. A promoted term is searched from the next run
+on, so it has no counts in the file that promoted it.
+
+- [Trends in the making](https://frankbueltge.de/trending/topics): the hub — every watched term with its status, both windows, whether a person or the run put it on the list, what came and went today, and the candidates on their way in
+- [topics.json](https://frankbueltge.de/trending/topics.json): the whole watchlist in one file — counts per platform and window, status, receipts, candidates, and what the run promoted (`promoted[]`) and let go of (`let_go[]`) that morning
+- [Term page](https://frankbueltge.de/trending/topics/loop-engineering): `/trending/topics/<slug>` for any watched term, with its daily series and its receipts
+- [Term JSON](https://frankbueltge.de/trending/topics/loop-engineering.json): `/trending/topics/<slug>.json` — the same term plus its series over every committed run
+- [topics/latest.md](https://frankbueltge.de/trending/topics/latest.md): the hub as plain Markdown, for readers that prefer text
+- [Method sheet, section 7](https://frankbueltge.de/werke/trending#arcs): the tracking rule, the status thresholds, the discovery corpus, the promotion and retirement rules, the limits
+
+## Other machine-readable surfaces
+
+- [Protocol feed](https://frankbueltge.de/protocol/feed.xml): the daily minutes of the planet's session, RSS
+- [Atlas of Data Art](https://frankbueltge.de/atlas/werke.json): the field atlas as JSON (CC0)
+- [Paper catalogue](https://frankbueltge.de/papers/register.json): the catalogue as JSON, with a slim variant at /papers/index.json
+- [Dataset register](https://frankbueltge.de/datasets/register.json): public datasets, JSON (CC0)
+- [Field chronicle](https://frankbueltge.de/field/chronicle.json): The Field's chronicle, JSON
+- [Studio chronicle](https://frankbueltge.de/studio/chronicle.json): The Studio's chronicle, JSON
+- [Sitemap](https://frankbueltge.de/sitemap-index.xml)
+
+## Policy
+
+- Site default (robots.txt): `Content-Signal: search=yes, ai-input=yes, ai-train=no` — cite, don't train.
+- Exception for `/trending*` (2026-09-02): open to every crawler, training included; the data there is CC0 and carries no text of the author's.
+- Cite with a link. Works and texts are CC BY 4.0 unless a page says otherwise; data and archive snapshots are CC0.
+- Source: https://github.com/frankbueltge/frankbueltge.de

@@ -251,8 +251,89 @@ def baue_register(quellen: list[Quelle], *, grenze: int | None = None) -> list[d
     return eintraege
 
 
+# ── The dates the register carries (since 2026-10-05) ────────────────────────────────
+#
+# Until this day neither an entry nor its probe carried a date, so the site's signal log —
+# the stream of everything in the house that changes daily, each row dated by its own
+# record — had nothing to file the register under. From now on every run stamps three
+# dates per entry, each kept by comparing with the register committed before the run:
+#
+#   probed_on                the day of the probe pass whose result the entry carries
+#   first_seen_on            the run that first wrote the source
+#   reachability_changed_on  the run whose probe moved it to another state of access
+#
+# Nothing is backfilled. A source already in the register when the stamp began gets null
+# for its first appearance. The committed history could date most of them (the first commit
+# of this file that holds the id), but until its reset on 2026-07-28 this file held another
+# register altogether, so such a derivation would first have to decide where its own history
+# begins; null is what the record states without that decision. A reachability date stays
+# null until a probe sees the state change. The run day is the only clock reading here: it
+# records when this run happened, and is never given to anything that happened before it.
+
+_DAY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def _day(value: object) -> str | None:
+    """A carried date, if it is one — anything else is not a date the record holds."""
+    return value if isinstance(value, str) and _DAY.match(value) else None
+
+
+def reachability(entry: dict) -> str:
+    """The register's four states of access, read in the order the site reads them
+    (src/lib/register.ts, `zugangLabel`): access confirmed, gated, template, no answer.
+
+    A move between two of them is a change of reachability. A new HTTP code inside one
+    state — a 404 that becomes a 500 — is not: the source answers no better or worse.
+    """
+    if entry.get("geprueft"):
+        return "confirmed"
+    if entry.get("zugang_gesperrt"):
+        return "gated"
+    if entry.get("nur_vorlage"):
+        return "template"
+    return "no answer"
+
+
+def stamp_register(entries: list[dict], previous: list[dict] | None, today: str) -> list[dict]:
+    """Dates every entry of this run against the register committed before it.
+
+    - `probed_on`: today, for every entry this run probed; null for an address that is
+      only a template, which no run probes.
+    - `first_seen_on`: today for a source the previous register did not hold; otherwise
+      carried — null, if the source was there before the stamp began.
+    - `reachability_changed_on`: today when the state of access differs from the previous
+      register's; otherwise carried. Null for a new source (it has not changed — it has
+      appeared) and for one unchanged since the stamp began.
+
+    Identity is the entry id, which is the host: the register keeps one entry per host.
+    """
+    before = {
+        e["id"]: e for e in (previous or []) if isinstance(e, dict) and isinstance(e.get("id"), str)
+    }
+    stamped: list[dict] = []
+    for entry in entries:
+        prior = before.get(entry["id"])
+        if prior is None:
+            first_seen, changed = today, None
+        else:
+            first_seen = _day(prior.get("first_seen_on"))
+            changed = (
+                today
+                if reachability(prior) != reachability(entry)
+                else _day(prior.get("reachability_changed_on"))
+            )
+        stamped.append({
+            **entry,
+            "probed_on": None if entry.get("nur_vorlage") else today,
+            "first_seen_on": first_seen,
+            "reachability_changed_on": changed,
+        })
+    return stamped
+
+
 def main(argv: list[str] | None = None) -> int:
     import argparse
+    from datetime import datetime, timezone
 
     parser = argparse.ArgumentParser(
         description="Dataset Register aus den Datenquellen der eigenen Werke."
@@ -260,6 +341,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--wurzel", type=Path, default=Path("."))
     parser.add_argument("--grenze", type=int, default=None)
     args = parser.parse_args(argv)
+    # The run day, read once before the probe pass: the date every probe of this run carries.
+    today = datetime.now(timezone.utc).date().isoformat()
 
     quellen, vermerke = sammle(args.wurzel)
     print(f"Datenquellen in den Werken: {len(quellen)}")
@@ -273,8 +356,11 @@ def main(argv: list[str] | None = None) -> int:
     # Dieselbe Bewahrung wie im Paper-Katalog: Urteile und Abnahmen folgen aus keiner
     # Quelle und kämen durch keinen Abruf zurück. Der Neubau darf sie nicht löschen.
     ziel = args.wurzel / "src/data/register/datasets.json"
+    # The register committed before this run: what the dates below are kept against.
+    vorher_liste: list[dict] | None = None
     if ziel.is_file():
-        alt = {e["id"]: e for e in json.loads(ziel.read_text(encoding="utf-8"))}
+        vorher_liste = json.loads(ziel.read_text(encoding="utf-8"))
+        alt = {e["id"]: e for e in vorher_liste}
         bewahrt = 0
         for e in eintraege:
             vorher = alt.get(e["id"])
@@ -288,6 +374,12 @@ def main(argv: list[str] | None = None) -> int:
             if vorher.get("verify_status") == "verified":
                 e["verify_status"] = "verified"
         print(f"Urteile aus dem Vorlauf übernommen: {bewahrt}")
+
+    eintraege = stamp_register(eintraege, vorher_liste, today)
+    added = sum(1 for e in eintraege if e["first_seen_on"] == today)
+    changed = sum(1 for e in eintraege if e["reachability_changed_on"] == today)
+    probed = sum(1 for e in eintraege if e["probed_on"] == today)
+    print(f"dated {today}: probed {probed} · first seen {added} · reachability changed {changed}")
 
     ziel.write_text(
         json.dumps(sorted(eintraege, key=lambda e: e["host"]), indent=1, ensure_ascii=False)

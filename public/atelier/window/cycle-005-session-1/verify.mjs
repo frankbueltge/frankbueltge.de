@@ -1,0 +1,24 @@
+// Drive index.html in a real browser; compare what it prints with results.json. Node + playwright (global).
+import { createRequire } from 'module'; import path from 'path'; import fs from 'fs'; import { fileURLToPath } from 'url';
+const require = createRequire('/opt/node-tools/node_modules/'); const { chromium } = require('playwright');
+const here = path.dirname(fileURLToPath(import.meta.url)); let bad = 0;
+const R = JSON.parse(fs.readFileSync(path.join(here, 'results.json')));
+const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) bad++; };
+const br = await chromium.launch({ executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
+const pg = await br.newPage({ viewport: { width: 390, height: 900 } }); const errs = [];
+pg.on('pageerror', e => errs.push(String(e))); pg.on('console', m => m.type() === 'error' && errs.push(m.text()));
+await pg.goto('file://' + path.join(here, 'index.html'));
+ok(await pg.locator('.col').count() === 44 && await pg.locator('.dot').count() === 135 && await pg.locator('.dot.odd').count() === 5, 'browser: 44 observer columns, 135 dots, 5 odd');
+let t = await pg.innerText('#s1'); ok(t.includes('5 of 135') && t.includes('1.6 % – 8.4 %'), 'browser: frames -> 5 of 135, Wilson 1.6-8.4');
+await pg.selectOption('#unit', 'o'); t = await pg.innerText('#s1'); ok(t.includes('5 of 44') && t.includes('11.4 %'), 'browser: observers -> 5 of 44, 11.4 %');
+t = await pg.innerText('#s2'); ok(t.includes('deff 1.103') && t.includes('122.3') && t.includes('deff 1.253') && t.includes('107.8'), 'browser: rho 0.05 -> 122.3 (mean cluster) vs 107.8 (b*)');
+await pg.fill('#rho', '0.2'); t = await pg.innerText('#s2'); ok(t.includes('deff 1.414') && t.includes('95.5') && t.includes('deff 2.010') && t.includes('67.2'), 'browser: rho 0.20 -> 95.5 vs 67.2');
+await pg.fill('#rho', '0.05');
+t = await pg.innerText('#s3'); ok(t.includes('Read 135 frames drawn at random') && t.includes('1.80') , 'browser: default draw = 135 frames at random, b* 1.80');
+await pg.selectOption('#des', 'o'); t = await pg.innerText('#s3'); ok(t.includes('139') && t.includes('9.13'), 'browser: whole observers -> 139 frames, b* 9.13');
+await pg.selectOption('#nn', '600'); await pg.selectOption('#des', 'f'); t = await pg.innerText('#s3'); ok(t.includes('Read 600 frames'), 'browser: n = 600 frames');
+ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'no horizontal scroll at 390 px');
+await pg.setViewportSize({ width: 1100, height: 900 }); ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'no horizontal scroll at 1100 px');
+ok(errs.length === 0, 'no console or page errors ' + errs.join('|'));
+await pg.screenshot({ path: '/tmp/claude-0/s/c5s1.png', fullPage: true });
+await br.close(); process.exit(bad ? 1 : 0);

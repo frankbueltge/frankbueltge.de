@@ -568,7 +568,11 @@ def law_test_block(register: dict | None, day: str) -> dict:
     """Candia's biexponential is the test hypothesis, and it needs a series. Saying so is
     the finding on day one; producing a number from a single day would be theatre."""
     if register is None:
-        have = len(archive_days()) + 1   # + the day this run is about to commit
+        # Exactly the days `maybe_found_register` counted: the committed archive, which at
+        # this point does not include the day this run is about to write. Counting that day
+        # too made the record contradict its own rule on the thirtieth run — it read "needs
+        # 30 ... holds 30" while still pending, because founding had seen only 29.
+        have = len(archive_days())
         return {
             "status": "pending",
             "hypothesis": "Candia et al. 2019, biexponential decay of collective attention",

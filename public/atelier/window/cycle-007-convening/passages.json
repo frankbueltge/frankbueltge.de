@@ -1,0 +1,52 @@
+{
+  "_note": "Six tellings of the Brzezinski telephone call, as gathered by the Studio (ho-2026-10-12-studio-1; studio main 10316da, works/2026-10-12-one-call-two-nights/tellings.json). For each, the passage that tells how the alarm began and how it ended, as short verbatim segments; build.py checks every segment word for word against the fetched source (sha256 pinned). No source file is committed. The seventh telling, Schlosser 2013, is held only as endnotes and has no passage on how the alarm ended: not coded.",
+  "tellings": [
+    {"id": "gates", "keeper": "Robert M. Gates, From the Shadows (1996), p. 114, as quoted in full by the National Security Archive, EBB 371", "published": 1996, "src": "nsa",
+     "segments": [
+       "As he recounted it to me, Brzezinski was awakened at three in the morning by [military assistant William] Odom, who told him that some 250 Soviet missiles had been launched against the United States.",
+       "Thus he told Odom he would stand by for a further call to confirm Soviet launch and the intended targets before calling the President.",
+       "Brzezinski was convinced we had to hit back and told Odom to confirm that the Strategic Air Command was launching its planes.",
+       "One minute before Brzezinski intended to call the President, Odom called a third time to say that other warning systems were not reporting Soviet launches.",
+       "It had been a false alarm. Someone had mistakenly put military exercise tapes into the computer system."]},
+    {"id": "nsa", "keeper": "William Burr, National Security Archive, EBB 371 (2012), the editor's own introduction", "published": 2012, "src": "nsa",
+     "segments": [
+       "It went to a national security adviser, Zbigniew Brzezinski, who was awakened on 9 November 1979, to be told that the North American Aerospace Defense Command (NORAD), the combined U.S.–Canada military command–was reporting a Soviet missile attack.",
+       "Just before Brzezinski was about to call President Carter, the NORAD warning turned out to be a false alarm.",
+       "The apparent cause? The routine testing of an overworked computer system."]},
+    {"id": "chatham", "keeper": "Chatham House, Too Close for Comfort (2014)", "published": 2014, "src": "chatham",
+     "segments": [
+       "At 02:26 on 3 June 1980, National Security Advisor Zbigniew Brzezinski received a telephone call from General William Odom informing him that the Soviet Union had launched 220 missiles at the United States.",
+       "Upon receiving confirmation of the attack in a subsequent phone call, with the amendment that it was in fact 2,200 missiles that were headed towards the country, Brzezinski prepared to inform President Carter.",
+       "With only a minute until Brzezinski was to notify the president, Odom telephoned for a third time to inform Brzezinski that no other early-warning systems had detected these Soviet missiles.",
+       "The false alarm was later determined to have been caused by a faulty computer chip."]},
+    {"id": "newyorker", "keeper": "Eric Schlosser, 'World War Three, by Mistake', The New Yorker (2016)", "published": 2016, "src": "ny",
+     "segments": [
+       "Brzezinski told Odom to get confirmation of the attack.",
+       "Odom called back and offered a correction: twenty-two hundred Soviet missiles had been launched.",
+       "As he prepared to call Carter and recommend an American counterattack, the phone rang for a third time.",
+       "Odom apologized—it was a false alarm.",
+       "An investigation later found that a defective computer chip in a communications device at NORAD headquarters had generated the erroneous warning."]},
+    {"id": "aca", "keeper": "Daryl G. Kimball, Arms Control Today (2019)", "published": 2019, "src": "aca",
+     "segments": [
+       "He was told that NORAD computers were reporting that 2,200 Soviet missiles had been launched against the United States.",
+       "According to Brzezinski, just one minute before he planned to call President Jimmy Carter to recommend an immediate U.S. nuclear retaliatory response, word came through that the NORAD message was a false alarm caused by software simulating a Soviet missile attack that was inexplicably transferred into the live warning system at the command’s headquarters."]},
+    {"id": "wikipedia", "keeper": "Wikipedia, 'List of nuclear close calls', read 2026-10-13", "published": 2026, "src": "wp",
+     "segments": [
+       "NORAD notified National Security Advisor Zbigniew Brzezinski that the Soviet Union had launched 250 ballistic missiles with a trajectory for the United States, stating that a decision to retaliate would need to be made by the president within three to seven minutes.",
+       "NORAD computers then placed the number of incoming missiles at 2,200.",
+       "Within six to seven minutes of the initial response, PAVE PAWS satellite and radar systems were able to confirm that the attack was a false alarm.",
+       "A General Accounting Office investigation found that a training scenario was inadvertently loaded into an operational computer in the Cheyenne Mountain Complex."]}
+  ],
+  "claim": {"keeper": "Harold Brown, Secretary of Defense, reports to President Carter (1980), as summarised and quoted by the National Security Archive, EBB 371", "src": "nsa",
+    "segments": [
+      "Nevertheless, Brown argued that \"human safeguards\"",
+      "people reading data produced by warning systems--ensured that there would be \"no chance that any irretrievable actions would be taken.\"",
+      "Because missile attack warning systems showed nothing unusual, the alert actions were suspended."]},
+  "sources": {
+    "nsa": {"url": "https://nsarchive2.gwu.edu/nukevault/ebb371/", "sha256": "2adbf8fd19b940b8d6814148adb7035a46065ba0709a3fdccccd339ec2a295f7", "enc": "latin-1"},
+    "chatham": {"url": "https://www.chathamhouse.org/sites/default/files/field/field_document/20140428TooCloseforComfortNuclearUseLewisWilliamsPelopidasAghlani.pdf", "sha256": "36034f8de3301efee226951b4185eea02f8cb671ac53eadc7c788f2e4dfff2af"},
+    "ny": {"url": "https://www.newyorker.com/news/news-desk/world-war-three-by-mistake", "sha256": "ca70ead805586512ef240ec51c45e6c63b66b3d2352eff547565a09c4bea6b17"},
+    "aca": {"url": "https://www.armscontrol.org/act/2019-12/focus/nuclear-false-warnings-and-risk-catastrophe", "sha256": "1dc17a1b196ad96254fdad0931db47910ce62818485625bc6cadb144e8d588e6"},
+    "wp": {"url": "https://en.wikipedia.org/wiki/List_of_nuclear_close_calls", "sha256": "63df7b7395b11f38e8514aad39cd57ff6d22fe658ab9499727ce40de96a4d9a2"}
+  }
+}

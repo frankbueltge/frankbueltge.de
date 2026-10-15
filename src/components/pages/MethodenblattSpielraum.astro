@@ -6,6 +6,7 @@ import type { Locale } from '@/lib/site'
 import registerJson from '@/data/spielraum/register.json'
 import watchJson from '@/data/spielraum/watch.json'
 import type { SpielraumRegister } from '@/lib/spielraum/types'
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -107,9 +108,7 @@ const txt = {
 }
 ---
 
-<main id="main" class="flex-1">
-<div class="mx-auto max-w-2xl px-4 py-14">
-  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+<MethodSheet title={txt.h1} workHref={workUrl} workLabel={txt.toWork}>
 
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">{txt.s1}</h2>
@@ -118,7 +117,7 @@ const txt = {
       {sources.map((s) => (
         <li>
           {s.name} —{' '}
-          <a href={s.official ?? s.url} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">
+          <a href={s.official ?? s.url} class="sheet-link" rel="noopener">
             {s.official ?? s.url}
           </a>{' '}
           <span class="text-fg-faint">({s.tier_note}, {de ? 'abgerufen' : 'fetched'} {s.fetched_at})</span>
@@ -139,7 +138,7 @@ const txt = {
     <ul class="mt-2 space-y-1">
       {txt.s3links.map((l) => (
         <li>
-          <a href={l.href} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{l.label}</a>
+          <a href={l.href} class="sheet-link" rel="noopener">{l.label}</a>
         </li>
       ))}
     </ul>
@@ -169,6 +168,4 @@ const txt = {
     </ul>
   </section>
 
-  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
-</div>
-</main>
+</MethodSheet>

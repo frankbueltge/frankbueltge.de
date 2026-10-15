@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Withdrawn</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1b18;--mute:#6f6a60;--rule:#cfc8ba;--bare:#1d1b18;--admin:#9a958b;--loc:#7a1712;--err:#c8553d;--rea:#d9c9a3;--dot:#f4f1ea}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141311;--ink:#ece6da;--mute:#9b958a;--rule:#38352f;--bare:#ece6da;--admin:#5e5a53;--loc:#e0624a;--err:#a8402c;--rea:#6b5f45;--dot:#141311}}
+:root[data-theme="dark"]{--bg:#141311;--ink:#ece6da;--mute:#9b958a;--rule:#38352f;--bare:#ece6da;--admin:#5e5a53;--loc:#e0624a;--err:#a8402c;--rea:#6b5f45;--dot:#141311}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+main{max-width:1080px;margin:0 auto;padding:28px 16px 64px}
+h1{font-weight:normal;font-size:clamp(28px,5vw,44px);margin:0 0 6px;letter-spacing:.01em}
+.lede{color:var(--mute);margin:0 0 18px;max-width:46em}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font:13px/1.3 ui-monospace,Menlo,Consolas,monospace;margin:0 0 14px;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none}
+.legend li.off{opacity:.3}
+.sw{width:11px;height:11px;display:inline-block}
+.wrap{position:relative}
+canvas{display:block;width:100%;touch-action:manipulation;cursor:crosshair}
+#card{position:sticky;bottom:0;background:var(--bg);min-height:8em;max-height:45vh;overflow:auto;border-top:1px solid var(--rule);margin-top:16px;padding:12px 0 14px}
+#card .meta{font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--mute)}
+#card .meta a{color:inherit}
+#card blockquote{margin:8px 0 0;font-size:clamp(18px,2.4vw,23px);line-height:1.35;max-width:40em}
+#card blockquote.bare{font-style:italic}
+button{font:13px ui-monospace,Menlo,Consolas,monospace;background:none;color:var(--ink);border:1px solid var(--ink);padding:6px 12px;cursor:pointer;margin-right:8px}
+.foot{margin-top:28px;color:var(--mute);font-size:14px;max-width:46em}
+.foot a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Withdrawn</h1>
+<p class="lede">{{N}} arXiv papers whose comment says <i>withdrawn</i>, one square each, from 1992 to 2026, in the order of their last version. Touch a square to read the notice.</p>
+<ul class="legend" id="legend">
+<li data-k="0"><span class="sw" id="s0"></span>said nothing else · {{C0}}</li>
+<li data-k="4"><span class="sw" id="s4"></span>gave a reason that is not an error · {{C4}}</li>
+<li data-k="3"><span class="sw" id="s3"></span>named an error, not where · {{C3}}</li>
+<li data-k="2"><span class="sw" id="s2"></span>named an error and where it is · {{C2}}</li>
+<li data-k="1"><span class="sw" id="s1"></span>withdrawn by the archive's administrators · {{C1}}</li>
+<li data-k="9"><span class="sw" id="s9"></span>someone else is named as having noticed</li>
+</ul>
+<div class="wrap"><canvas id="c" aria-label="One square per withdrawal notice, ordered by date of withdrawal"></canvas></div>
+<div id="card"><button id="rnd">read one</button><button id="rndb">read one that said nothing</button><div id="txt"></div></div>
+<p class="foot">Each colour is a machine's reading of one sentence, by rules fixed before the sentences were fetched, and checked against a hand reading of sixty of them; it is wrong on a few in every sixty. The squares that say nothing stop in 2013 and 2014, while the archive's help page asked for a reason both before and after. Metadata from the arXiv API, CC0, harvested 2026-10-04. Evidence, rules and counts: the directory this page lives in.</p>
+</main>
+<script>
+const D=/*DATA*/[];
+const cv=document.getElementById('c'),cx=cv.getContext('2d'),txt=document.getElementById('txt');
+const off=new Set();let geo={},sel=-1;
+function col(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function pal(){return [col('--bare'),col('--admin'),col('--loc'),col('--err'),col('--rea')]}
+function legend(){const p=pal();for(let k=0;k<5;k++){const s=document.getElementById('s'+k);if(k===0){s.style.border='1.5px solid '+p[0]}else s.style.background=p[k]}
+ const d=document.getElementById('s9');d.style.background=p[2];d.style.borderRadius='50%';d.style.boxShadow='inset 0 0 0 3px '+col('--bg')}
+function draw(){
+ const W=cv.parentNode.clientWidth,dpr=window.devicePixelRatio||1,lab=W<520?30:40;
+ const cell=W<520?6:8,gap=W<520?1:2,step=cell+gap,per=Math.floor((W-lab)/step);
+ const rowsN=Math.ceil(D.length/per),H=rowsN*step;
+ cv.width=W*dpr;cv.height=H*dpr;cv.style.height=H+'px';cx.setTransform(dpr,0,0,dpr,0,0);
+ geo={lab,cell,step,per};const p=pal(),bg=col('--bg');cx.clearRect(0,0,W,H);
+ cx.font=(W<520?9:11)+'px ui-monospace,Menlo,monospace';cx.fillStyle=col('--mute');cx.textBaseline='top';
+ let lastY='';const lab_rows=new Set();
+ for(let i=0;i<D.length;i++){
+  const r=D[i],x=lab+(i%per)*step,y=Math.floor(i/per)*step,y4=r[0].slice(0,4);
+  if(y4!==lastY){const row=Math.floor(i/per);if(!lab_rows.has(row)){lab_rows.add(row);cx.fillStyle=col('--mute');cx.fillText(y4,0,y-1)}lastY=y4}
+  const k=r[2],dim=off.has(k)||(off.has(9)&&!r[3]);cx.globalAlpha=dim?0.12:1;
+  if(k===0){cx.strokeStyle=p[0];cx.lineWidth=1;cx.strokeRect(x+.5,y+.5,cell-1,cell-1)}
+  else{cx.fillStyle=p[k];cx.fillRect(x,y,cell,cell)}
+  if(r[3]){cx.fillStyle=bg;cx.beginPath();cx.arc(x+cell/2,y+cell/2,cell/4.2,0,7);cx.fill()}
+  if(i===sel){cx.globalAlpha=1;cx.strokeStyle=col('--ink');cx.lineWidth=2;cx.strokeRect(x-1.5,y-1.5,cell+3,cell+3)}
+ }cx.globalAlpha=1}
+function show(i){sel=i;const r=D[i];const id=r[1].replace(/v\d+$/,'');
+ const kinds=['said nothing else','withdrawn by administrators','named an error and where','named an error, not where','gave a reason that is not an error'];
+ txt.innerHTML='';const m=document.createElement('div');m.className='meta';
+ const a=document.createElement('a');a.href='https://arxiv.org/abs/'+r[1];a.textContent='arXiv:'+r[1];a.rel='noopener';a.target='_blank';
+ m.append(a,document.createTextNode(' · last version '+r[0]+' · '+kinds[r[2]]+(r[3]?' · someone else noticed':'')));
+ const q=document.createElement('blockquote');q.textContent=r[4];if(r[2]===0)q.className='bare';txt.append(m,q);draw()}
+function hit(e){const b=cv.getBoundingClientRect(),x=e.clientX-b.left-geo.lab,y=e.clientY-b.top;if(x<0)return -1;
+ const c=Math.floor(x/geo.step),rr=Math.floor(y/geo.step);if(c>=geo.per)return -1;const i=rr*geo.per+c;return i<D.length?i:-1}
+cv.addEventListener('click',e=>{const i=hit(e);if(i>=0)show(i)});
+cv.addEventListener('mousemove',e=>{const i=hit(e);if(i>=0&&e.buttons===0&&window.matchMedia('(hover:hover)').matches)show(i)});
+document.getElementById('rnd').addEventListener('click',()=>show(Math.floor(Math.random()*D.length)));
+document.getElementById('rndb').addEventListener('click',()=>{const b=[];D.forEach((r,i)=>{if(r[2]===0)b.push(i)});show(b[Math.floor(Math.random()*b.length)])});
+document.getElementById('legend').addEventListener('click',e=>{const li=e.target.closest('li');if(!li)return;const k=+li.dataset.k;
+ off.has(k)?off.delete(k):off.add(k);li.classList.toggle('off');draw()});
+window.addEventListener('resize',draw);
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{legend();draw()});
+legend();draw();
+(function(){const i=D.findIndex(r=>r[1]==='1410.1583v4');if(i>=0)show(i)})();
+</script>
+</body>
+</html>

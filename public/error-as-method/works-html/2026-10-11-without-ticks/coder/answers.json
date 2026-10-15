@@ -1,0 +1,98 @@
+{
+ "p01": {
+  "close": 0,
+  "class": "OTHER",
+  "bands": "yes",
+  "guess": "I",
+  "conf": 3,
+  "why": "Footnote (visible) says counts were recovered from a scatter-plot picture by fitting one dot per day, and the values are calibrated in births, which needs the axis numbers of R.png."
+ },
+ "p02": {
+  "close": 0,
+  "class": "OTHER",
+  "bands": "no",
+  "guess": "T",
+  "conf": 3,
+  "why": "Calendar heatmap (years as rows, day of year as columns) with exact holiday columns and marked individual dates, which needs per-date values from the table."
+ },
+ "p03": {
+  "close": 1,
+  "class": "XY",
+  "bands": "yes",
+  "guess": "T",
+  "conf": 2,
+  "why": "Births vs day of year folded across all years, coloured by year, with the late-summer bulge and holiday outliers at the year edges annotated, which wants exact dates per row."
+ },
+ "p04": {
+  "close": 0,
+  "class": "OTHER",
+  "bands": "yes",
+  "guess": "T",
+  "conf": 2,
+  "why": "Polar plot by day of year with radius = births, two rings, and highlighted holiday days (New Year, Christmas, July 4) placed at exact calendar angles, which suggests dated rows."
+ },
+ "p05": {
+  "close": 0,
+  "class": "OTHER",
+  "bands": "yes",
+  "guess": "L",
+  "conf": 3,
+  "why": "Visible note says the data were read from an unlabelled 480x220 picture with no counts surviving, and days are drawn as twelve-day arcs (one source pixel); a small inset repeats the source scatter."
+ },
+ "p06": {
+  "close": 0,
+  "class": "OTHER",
+  "bands": "yes",
+  "guess": "L",
+  "conf": 2,
+  "why": "Polar day-of-year rings built from long blurred arcs rather than one mark per day, the coarse smear you get from a tiny unlabelled picture, and no count scale is shown."
+ },
+ "p07": {
+  "close": 0,
+  "class": "OTHER",
+  "bands": "yes",
+  "guess": "I",
+  "conf": 3,
+  "why": "Visible note says each row is one pixel row of the plot it was read from, about 28 births tall, and the count axis is calibrated in births, which needs R.png's axis numbers."
+ },
+ "p08": {
+  "close": 2,
+  "class": "XY",
+  "bands": "yes",
+  "guess": "T",
+  "conf": 3,
+  "why": "Dot scatter of births against day of year with exact annotated values and weekdays for named dates (e.g. 9.9.09, 16,081), which only the table provides."
+ },
+ "p09": {
+  "close": 0,
+  "class": "OTHER",
+  "bands": "yes",
+  "guess": "T",
+  "conf": 2,
+  "why": "Polar day-of-year dot plot with holidays (Thanksgiving, Labor Day, July 4, Christmas/New Year) picked out in red at their calendar positions, which suggests per-date rows."
+ },
+ "p10": {
+  "close": 2,
+  "class": "XY",
+  "bands": "yes",
+  "guess": "T",
+  "conf": 3,
+  "why": "Dot scatter of births over day of year with dots coloured by weekday vs weekend, and dark weekday-holiday dots sitting in the weekend band, which requires the day-of-week column."
+ },
+ "p11": {
+  "close": 0,
+  "class": "OTHER",
+  "bands": "no",
+  "guess": "T",
+  "conf": 3,
+  "why": "Calendar heatmap (years as rows) with weekly stripes, boxed special dates like 8.8.08 to 12.12.12, and a day-of-year deviation bar chart, all needing exact per-date values."
+ },
+ "p12": {
+  "close": 1,
+  "class": "XY",
+  "bands": "yes",
+  "guess": "L",
+  "conf": 3,
+  "why": "Visible subtitle says each smear is one pixel of the source picture (about 11.5 days) and height is the count without numbers, i.e. read from the small unlabelled image."
+ }
+}

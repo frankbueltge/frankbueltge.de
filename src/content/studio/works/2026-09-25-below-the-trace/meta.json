@@ -1,0 +1,69 @@
+{
+ "title": "BELOW THE TRACE",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-09-25",
+ "session": 144,
+ "cycle": "003 is presented from all three sides and cycle.json is not a practice's to turn; cycle.json still reads cycle 3, working, on the seeded question Missing Data Art. Built on that question's open ground under the Studio's default theme and the directions of 2026-09-03 and 2026-09-07.",
+ "question": "Ken Goldberg's Memento Mori shows one seismometer's live signal from the Hayward Fault as a trace that fades with time. What does the other record the same ground keeps — the earthquake catalogue — look like when it is drawn so that it fades by what it failed to write down?",
+ "artifact": "index.html — self-contained, no network, no library, no script",
+ "medium": "One self-contained HTML page with one SVG drum, drawn at build time, no script. Every earthquake within 40 km of the Byerly Seismographic Vault in Berkeley that the ANSS Comprehensive Catalog holds for 1974–2025 (21,555 of them) is a stroke on a helicorder-style drum, one row per year, its height set by its magnitude; 795 written with no magnitude are open rings. Each row's ink is the estimated share of that year's M ≥ 1.0 earthquakes the catalogue wrote down: the per-year completeness floor by maximum curvature, one pooled Aki–Utsu b-value, and the Gutenberg–Richter extrapolation of each year's own counts to M 1.0, with a nine-way sensitivity range.",
+ "produces": "events.json — the compact record (year, fraction of the year, magnitude or null) derived from the catalogue responses whose digests are in catalogue.sha256. results.json — per year: floor, counts written, the estimated count not written with its range, and the share written; the pooled b and the totals.",
+ "embodies": "THE PAST IS FAINT BECAUSE THE LISTENING WAS THIN, NOT BECAUSE IT IS PAST. Drawn as a seismologist's drum, fifty-two years of the catalogue under Berkeley fade toward the top — and the fading is measured, not styled: in 1974–1979 the catalogue wrote about 29 % of the M ≥ 1.0 earthquakes its own magnitude law says occurred, in 2016–2025 about 91 %. Over the whole record 16,981 were written and about 7,043 were not (range 5,781–8,164, an estimate and labelled one). The unwritten have no moment and no place, so they are counted at each row's end and never drawn. A second absence sits on the line itself: 795 earthquakes were written with a time and a place and no size, 706 of them in the seven years 2001–2007.",
+ "form": "A helicorder drum: one row per year, time left to right, strokes up from each row's line; row ink by share written; two numbers at each row's end, written and not written (estimated).",
+ "form_argument": "The drum is the seismologist's own reading form, so the record is shown in the shape it is usually trusted in — and then made to admit, row by row, how much of each year it holds. The only visual variable that carries the estimate is the ink of a whole row; no unwritten earthquake is ever drawn as a mark, because none has a time, a place or a size, and inventing one would publish a model as a fact.",
+ "the_rule_the_work_kept": "Every stroke and ring is an event the catalogue wrote. The estimate touches only row ink and the numbers labelled ≈; its method, its assumptions and what it cannot establish are on the page.",
+ "headline": {
+  "events": 21555,
+  "events_no_magnitude": 795,
+  "no_magnitude_2001_2007": 706,
+  "b": 0.8621,
+  "b_se": 0.0083,
+  "written_m1_total": 16981,
+  "not_written_m1_total_est": 7043,
+  "not_written_m1_total_range": [
+   5781,
+   8164
+  ],
+  "share_written_1974_1979_pct": 29,
+  "share_written_2016_2025_pct": 91
+ },
+ "sources": "ANSS Comprehensive Earthquake Catalog (ComCat), U.S. Geological Survey FDSN event service, fetched 2026-09-25, public domain; station metadata for BK.BKS from the Northern California Earthquake Data Center. sources.json records every fetch; catalogue.sha256 every response digest.",
+ "siblings": "The Field (session 170, 2026-09-25) found counts missing from abstracts are mostly displaced into the paper rather than lost; this work draws a record whose missing entries are not displaced anywhere — they were never made — and says how many there should be from the record's own law. The Atelier (session 15) is answered in the bulletin, on a count of this practice's own.",
+ "atlas": {
+  "read": "live from the house feed, never mirrored",
+  "sha256": "64399132bc5c6171e0817eba66708b04b540499e8b31ebd16979d08c8757f243",
+  "entries": 521,
+  "sessions_at_this_hash": 19,
+  "primary_entry_answered": "Memento Mori: an Interface With the Earth — Ken Goldberg (2001), cluster 9"
+ },
+ "neighbours": [
+  {
+   "title": "Memento Mori: an Interface With the Earth",
+   "artist": "Ken Goldberg",
+   "year": "2001",
+   "opened": "artbase.rhizome.org/wiki/Q1351 (via a web-research extraction service after a direct 403) and the 1998 Berkeleyan notice of the web version, both on 2026-09-25",
+   "seen": "the ArtBase description: live seismic signal from the Hayward Fault; a darkened soundproof room, a ramp and handrail, the smell of earth and wood, a resonating platform, and a portal onto a heart-monitor trace that decays left to right to black. The 1998 notice: Goldberg with Wojciech Matusik, the Byerly Vault in Strawberry Canyon, an STS-1 seismometer, a white trace fading until overwritten",
+   "daylight": "His trace shows one instrument's continuous signal and fades by elapsed time; this drum shows the catalogue made from that signal and its neighbours and fades, row by row, by the measured share of each year's earthquakes it failed to write down — including the thousands it holds no trace of."
+  },
+  {
+   "title": "Beyond Resolution",
+   "artist": "Rosa Menkman",
+   "year": "2020",
+   "opened": "not opened tonight — named from the Atlas entry as the nearest by argument",
+   "seen": "the decisive_move line only; stated plainly as such",
+   "daylight": "Hers treats resolutions as compromises inscribed in image standards; the compromise here is a network's detection floor, dated year by year and counted in earthquakes."
+  }
+ ],
+ "licence": {
+  "text": "CC BY 4.0",
+  "code": "Apache-2.0",
+  "borrowed_code": "none",
+  "data": "USGS ComCat — public domain"
+ },
+ "register": {
+  "model_calls": 0,
+  "generated_media_minutes": 0
+ }
+}

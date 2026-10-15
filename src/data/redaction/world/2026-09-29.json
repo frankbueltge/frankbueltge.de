@@ -1,0 +1,151 @@
+{
+  "date": "2026-09-29",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-29T12:22:06Z",
+    "counts": {
+      "botwall": 32,
+      "gone_404": 2,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 263,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 265,
+    "excluded_unverifiable": 35,
+    "gone": 2,
+    "gone_ci95": [
+      0.0021,
+      0.0271
+    ],
+    "gone_rate": 0.0075,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0143
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-27",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "klif.com",
+        "first_seen": "20260927200000",
+        "http_code": 404,
+        "title": "Dallas Family Violence Tops 10,000 Crimes In 2026; Intimate-Partner Offenses Up 9.6%",
+        "url": "https://www.klif.com/2026/09/27/dallas-family-violence-tops-10000-crimes-in-2026-intimate-partner-offenses-up-9-6/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "wmac-am.com",
+        "first_seen": "20260927110000",
+        "http_code": 404,
+        "title": "Taylor Swift Sets New Spotify Records With Patient Zero",
+        "url": "https://www.wmac-am.com/2026/09/27/taylor-swift-sets-new-spotify-records-with-patient-zero/"
+      }
+    ],
+    "sample_drawn_at": "2026-09-28T12:26:09Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 4310,
+      "replaced": 4204,
+      "trivial": 906,
+      "update": 318
+    },
+    "day": "2026-09-28",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Leftover",
+          "rice"
+        ],
+        "after": "Leftover Rice Recipes: Leftover rice? Try these simple Tamil Nadu-style recipes",
+        "before": "Tamil Nadu Recipes: Leftover rice? Try these simple Tamil Nadu-style recipes",
+        "detected": "2026-09-28T03:32:35Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Tamil",
+          "Nadu"
+        ],
+        "similarity": 1.0,
+        "url": "https://timesofindia.indiatimes.com/life-style/food-news/leftover-rice-try-these-simple-tamil-nadu-style-recipes/articleshow/134378503.cms",
+        "weight": 7,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Noncitizens"
+        ],
+        "after": "Trump Administration Seeks to Limit Tax Credits for Noncitizens Legally Working in the United States",
+        "before": "Trump Administration Seeks to Limit Tax Credits for Non-Citizens Legally Working in the United States",
+        "detected": "2026-09-28T22:33:10Z",
+        "domain": "aei.org",
+        "removed": [
+          "Non",
+          "Citizens"
+        ],
+        "similarity": 0.824,
+        "url": "https://www.aei.org/economics/trump-administration-seeks-to-limit-tax-credits-for-non-citizens-legally-working-in-the-united-states/",
+        "weight": 6,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Gallmetzer",
+          "Healthcare"
+        ],
+        "after": "Biting into high-margin niches; INITIATE with BUY: Gallmetzer Healthcare combines Gerhò's cash-generative dental distribution ...",
+        "before": "Biting into high-margin niches; INITIATE with BUY: GHC combines Gerhò's cash-generative dental distribution ...",
+        "detected": "2026-09-28T07:02:19Z",
+        "domain": "finanznachrichten.de",
+        "removed": [
+          "GHC"
+        ],
+        "similarity": 0.833,
+        "url": "https://www.finanznachrichten.de/nachrichten-2026-09/69628799-biting-into-high-margin-niches-initiate-with-buy-ghc-combines-gerho-s-cash-generative-dental-distribution-091.htm",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 14822,
+      "PAGE_TEXTCHANGE": 103724,
+      "PAGE_TITLECHANGE": 39247,
+      "UNCHANGED_CONTENT": 618671
+    },
+    "title_changes_en": 9738,
+    "trace": [
+      {
+        "bytes_billed": 20971520,
+        "created": "1790684276568",
+        "job_id": "world_gdg_counts_20260928",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 193986560,
+        "created": "1790684282591",
+        "job_id": "world_gdg_titles_20260928",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-29T12:22:06Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-28.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

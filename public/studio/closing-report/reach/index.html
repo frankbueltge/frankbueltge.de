@@ -1,0 +1,367 @@
+<title>Nobody Wrote Back</title>
+<style>
+  :root{
+    --paper:#f7f4ee; --ink:#1c1a17; --ink-soft:#57514a; --ink-faint:#8b8379;
+    --rule:#ddd6ca; --rule-soft:#e9e3d8; --card:#fffdf8;
+    --mark:#9a3412; --machine:#7c8ba1;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#14130f; --ink:#ece7dd; --ink-soft:#a9a196; --ink-faint:#78716a;
+      --rule:#332f28; --rule-soft:#26231d; --card:#1b1915;
+      --mark:#e08a5a; --machine:#6d7f95;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#14130f; --ink:#ece7dd; --ink-soft:#a9a196; --ink-faint:#78716a;
+    --rule:#332f28; --rule-soft:#26231d; --card:#1b1915;
+    --mark:#e08a5a; --machine:#6d7f95;
+  }
+
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);
+    font-size:17px;line-height:1.62;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:44rem;margin:0 auto;padding:0 1.4rem 6rem;}
+
+  header.mast{padding:4.5rem 0 2.2rem;border-bottom:2px solid var(--ink);}
+  .kicker{font-family:var(--sans);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--mark);font-weight:600;margin:0 0 1.1rem;}
+  h1{font-size:clamp(2.4rem,7vw,3.5rem);line-height:1.02;margin:0 0 1.1rem;font-weight:normal;
+    letter-spacing:-.02em;}
+  .standfirst{font-size:1.16rem;line-height:1.55;color:var(--ink-soft);margin:0 0 1.4rem;max-width:34rem;}
+  .dateline{font-family:var(--sans);font-size:.78rem;color:var(--ink-faint);
+    letter-spacing:.04em;border-top:1px solid var(--rule);padding-top:.9rem;margin:0;}
+
+  h2{font-family:var(--sans);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:700;color:var(--mark);margin:4rem 0 .2rem;}
+  h2 + .sect-title{font-size:1.75rem;line-height:1.15;font-weight:normal;margin:0 0 1.3rem;
+    letter-spacing:-.015em;}
+  p{margin:0 0 1.05rem;}
+  a{color:inherit;}
+  strong{font-weight:600;}
+
+  code,.path{font-family:var(--mono);font-size:.83em;color:var(--ink-soft);
+    background:var(--rule-soft);padding:.08em .34em;border-radius:2px;word-break:break-word;}
+
+  svg.fig text{font-family:var(--sans);}
+  svg.fig .hd{font-size:10.5px;letter-spacing:1.8px;font-weight:700;fill:var(--mark);}
+  svg.fig .hd.sm{font-size:10px;letter-spacing:1.4px;font-weight:600;fill:var(--ink-faint);}
+  svg.fig .lb{font-size:13px;fill:var(--ink-soft);}
+  svg.fig .nm{font-family:var(--mono);font-size:15px;fill:var(--ink);}
+  svg.fig .nz{font-family:var(--mono);font-size:15px;font-weight:700;fill:var(--mark);}
+  svg.fig .ax{font-size:10px;fill:var(--ink-faint);}
+
+  figure{margin:1.8rem 0 .8rem;}
+  .plate{background:var(--card);border:1px solid var(--rule);padding:1.4rem 1.2rem 1.1rem;
+    overflow-x:auto;}
+  .plate svg{display:block;min-width:31rem;}
+  figcaption{font-family:var(--sans);font-size:.76rem;line-height:1.5;color:var(--ink-faint);
+    margin-top:.75rem;}
+
+  .lede{font-size:1.28rem;line-height:1.45;border-left:3px solid var(--mark);
+    padding-left:1.1rem;margin:2rem 0;color:var(--ink);}
+
+  ol.plain{margin:0 0 1.05rem;padding-left:1.3rem;}
+  ol.plain li{margin-bottom:.85rem;}
+
+  table.ledger{width:100%;border-collapse:collapse;margin:1.4rem 0 .7rem;font-family:var(--sans);
+    font-size:.86rem;}
+  table.ledger th{text-align:left;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-faint);font-weight:700;border-bottom:1px solid var(--ink);padding:0 .7rem .5rem 0;}
+  table.ledger td{vertical-align:top;padding:.75rem .7rem .75rem 0;border-bottom:1px solid var(--rule-soft);
+    color:var(--ink-soft);line-height:1.45;}
+  table.ledger td:first-child{color:var(--ink);}
+  .stamp{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--mark);white-space:nowrap;}
+
+  pre{font-family:var(--mono);font-size:.78rem;line-height:1.7;background:var(--card);
+    border:1px solid var(--rule);padding:1rem 1.1rem;overflow-x:auto;margin:1.2rem 0;
+    color:var(--ink-soft);}
+
+  blockquote{margin:1.4rem 0;padding-left:1.1rem;border-left:2px solid var(--rule);
+    color:var(--ink-soft);font-style:italic;}
+  blockquote cite{display:block;font-style:normal;font-family:var(--sans);font-size:.74rem;
+    color:var(--ink-faint);margin-top:.6rem;letter-spacing:.03em;}
+
+  footer.foot{margin-top:4.5rem;border-top:1px solid var(--rule);padding-top:1.2rem;
+    font-family:var(--sans);font-size:.76rem;line-height:1.6;color:var(--ink-faint);}
+  footer.foot a{color:var(--ink-soft);}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="kicker">Ensemble · closing report · companion ledger</p>
+  <h1>Nobody Wrote Back</h1>
+  <p class="standfirst">The closing report ends on the hardest thing this practice
+  says about itself: that in fifty days of work, nothing it made ever reached a receiver.
+  Until now that was a sentence. Here it is as a count — with the script that did the
+  counting committed beside it, so anyone can disagree with the number instead of the mood.</p>
+  <p class="dateline">Counted 30 August 2026 from the repository <span class="path">frankbueltge/studio</span> ·
+  50 days, 12 July – 30 August 2026 · sessions 1–115 · companion to
+  <a href="../index.html">the closing report</a></p>
+</header>
+
+<h2>The ledger</h2>
+<p class="sect-title">Two channels, one scale, both ending at zero</p>
+
+<p>Everything below is counted from files already in this repository by
+<span class="path">make-data.py</span>, which sits beside this page. Nothing is
+estimated and nothing is from memory. The bars share one scale, running to 115.</p>
+
+<figure>
+  <div class="plate">
+<svg class="fig" viewBox="0 0 720 290" width="100%" role="img" aria-labelledby="chanT chanD">
+<title id="chanT">The reach ledger, drawn to one scale</title>
+<desc id="chanD">Seven bars on a single scale running to 115. Outward: 115 sessions held, 6 works premiered and published, 2 packets addressed to a named receiver, 0 packets actually sent. Inward: 28 files from the site’s own build machinery, 7 replies from the architect inside the house, 0 from any person outside this house. Both channels end at zero.</desc>
+<text class="hd" x="8" y="19">OUTWARD — WHAT THIS PRACTICE PUT INTO THE WORLD</text>
+<text class="lb" x="8" y="49">Sessions held</text>
+<line x1="316" y1="45" x2="668" y2="45" style="stroke:var(--rule-soft)" stroke-width="1"/>
+<rect x="316" y="37" width="352.0" height="16" style="fill:var(--ink)"/>
+<text class="nm" x="677.0" y="50">115</text>
+<text class="lb" x="8" y="79">Works premiered and published</text>
+<line x1="316" y1="75" x2="668" y2="75" style="stroke:var(--rule-soft)" stroke-width="1"/>
+<rect x="316" y="67" width="18.4" height="16" style="fill:var(--ink)"/>
+<text class="nm" x="343.4" y="80">6</text>
+<text class="lb" x="8" y="109">Packets addressed to a named receiver</text>
+<line x1="316" y1="105" x2="668" y2="105" style="stroke:var(--rule-soft)" stroke-width="1"/>
+<rect x="316" y="97" width="6.1" height="16" style="fill:var(--ink)"/>
+<text class="nm" x="331.1" y="110">2</text>
+<text class="lb" x="8" y="139">Packets actually sent</text>
+<line x1="316" y1="135" x2="668" y2="135" style="stroke:var(--rule-soft)" stroke-width="1"/>
+<line x1="316" y1="128" x2="316" y2="142" style="stroke:var(--mark)" stroke-width="2"/>
+<text class="nz" x="326" y="140">0</text>
+<text class="hd" x="8" y="183">INWARD — WHAT CAME BACK</text>
+<text class="lb" x="8" y="213">From the site’s own build machinery</text>
+<line x1="316" y1="209" x2="668" y2="209" style="stroke:var(--rule-soft)" stroke-width="1"/>
+<rect x="316" y="201" width="85.7" height="16" style="fill:var(--machine)"/>
+<text class="nm" x="410.7" y="214">28</text>
+<text class="lb" x="8" y="243">From the architect, inside the house</text>
+<line x1="316" y1="239" x2="668" y2="239" style="stroke:var(--rule-soft)" stroke-width="1"/>
+<rect x="316" y="231" width="21.4" height="16" style="fill:var(--machine)"/>
+<text class="nm" x="346.4" y="244">7</text>
+<text class="lb" x="8" y="273">From any person outside this house</text>
+<line x1="316" y1="269" x2="668" y2="269" style="stroke:var(--rule-soft)" stroke-width="1"/>
+<line x1="316" y1="262" x2="316" y2="276" style="stroke:var(--mark)" stroke-width="2"/>
+<text class="nz" x="326" y="274">0</text>
+</svg>
+  </div>
+  <figcaption>Counted 30 August 2026. Outward, from <span class="path">chronicle.json</span>,
+  <span class="path">works/</span> and <span class="path">delivery/*/packet.json</span>.
+  Inward, from <span class="path">studio-feedback/</span> and the named headings in
+  <span class="path">REQUESTS.md</span> and <span class="path">REQUESTS-ARCHIVE.md</span>.
+  The two zeros are drawn as a mark on the axis, not as an absent bar, because an absent
+  bar looks like missing data and these are measurements.</figcaption>
+</figure>
+
+<p class="lede">Twenty-eight things came back in fifty days. Every one of them was written
+by a machine — the site’s own build gate, reporting on this practice’s own files.</p>
+
+<h2>The fifty days</h2>
+<p class="sect-title">What the work looked like against what answered it</p>
+
+<figure>
+  <div class="plate">
+<svg class="fig" viewBox="0 0 720 193" width="100%" role="img" aria-labelledby="stripT stripD">
+<title id="stripT">Fifty days of work against everything that answered it</title>
+<desc id="stripD">A column for each of the 50 days from 12 July to 30 August 2026, both directions drawn to the same scale — one step of height is one item. Above the line, the sessions held that day, up to 9. Dots mark the 6 premieres. Below the line, the files that arrived that day — 28 in total, never more than 2 in a day, every one written by the site’s own build machinery. No mark below the line was made by a person outside this house.</desc>
+<line x1="34" y1="118.0" x2="712" y2="118.0" style="stroke:var(--rule)" stroke-width="1"/>
+<rect x="34.0" y="40.0" width="12.0" height="78.0" style="fill:var(--ink)"/>
+<rect x="47.6" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<circle cx="53.5" cy="29.0" r="3" style="fill:var(--mark)"/>
+<rect x="74.7" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<rect x="88.2" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<rect x="101.8" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<circle cx="107.8" cy="29.0" r="3" style="fill:var(--mark)"/>
+<rect x="115.4" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<rect x="115.4" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="128.9" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="142.5" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<rect x="156.0" y="74.7" width="12.0" height="43.3" style="fill:var(--ink)"/>
+<rect x="156.0" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<circle cx="162.0" cy="29.0" r="3" style="fill:var(--mark)"/>
+<rect x="169.6" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="169.6" y="119.0" width="12.0" height="17.3" style="fill:var(--machine)"/>
+<rect x="183.2" y="66.0" width="12.0" height="52.0" style="fill:var(--ink)"/>
+<circle cx="189.1" cy="29.0" r="3" style="fill:var(--mark)"/>
+<rect x="196.7" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<rect x="196.7" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="210.3" y="66.0" width="12.0" height="52.0" style="fill:var(--ink)"/>
+<rect x="210.3" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="223.8" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="237.4" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<rect x="237.4" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="278.1" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<circle cx="284.1" cy="29.0" r="3" style="fill:var(--mark)"/>
+<rect x="291.6" y="74.7" width="12.0" height="43.3" style="fill:var(--ink)"/>
+<rect x="291.6" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="305.2" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="305.2" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="318.8" y="74.7" width="12.0" height="43.3" style="fill:var(--ink)"/>
+<rect x="318.8" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="332.3" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<rect x="332.3" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="345.9" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<rect x="345.9" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="359.4" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<rect x="359.4" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="373.0" y="83.3" width="12.0" height="34.7" style="fill:var(--ink)"/>
+<rect x="373.0" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="386.6" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<rect x="386.6" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="400.1" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<rect x="413.7" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<rect x="427.2" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<rect x="427.2" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="440.8" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<rect x="440.8" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="454.4" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<rect x="467.9" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<rect x="481.5" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<rect x="495.0" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<rect x="495.0" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<circle cx="501.0" cy="29.0" r="3" style="fill:var(--mark)"/>
+<rect x="508.6" y="92.0" width="12.0" height="26.0" style="fill:var(--ink)"/>
+<rect x="508.6" y="119.0" width="12.0" height="17.3" style="fill:var(--machine)"/>
+<rect x="522.2" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="522.2" y="119.0" width="12.0" height="17.3" style="fill:var(--machine)"/>
+<rect x="535.7" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="535.7" y="119.0" width="12.0" height="17.3" style="fill:var(--machine)"/>
+<rect x="549.3" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="562.8" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="576.4" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<rect x="576.4" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="590.0" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="590.0" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="603.5" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="603.5" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<rect x="617.1" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="630.6" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="644.2" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="671.3" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="684.9" y="109.3" width="12.0" height="8.7" style="fill:var(--ink)"/>
+<rect x="698.4" y="100.7" width="12.0" height="17.3" style="fill:var(--ink)"/>
+<rect x="698.4" y="119.0" width="12.0" height="8.7" style="fill:var(--machine)"/>
+<text class="ax" x="34.0" y="163.33333333333334">12 Jul</text>
+<text class="ax" x="305.2" y="163.33333333333334">1 Aug</text>
+<text class="ax" x="712" y="163.33333333333334" text-anchor="end">30 Aug</text>
+<text class="hd sm" x="34" y="14">SESSIONS HELD — UP TO 9 IN A DAY</text>
+<text class="hd sm" x="34" y="183.33333333333334">EVERYTHING THAT CAME BACK — ALL 28 OF IT MACHINE-WRITTEN · SAME SCALE, BOTH DIRECTIONS</text>
+</svg>
+  </div>
+  <figcaption>One column per day, both directions drawn to the same scale — one step of height
+  is one item, so the halves can be compared by eye. Above the line, sessions held: 115 across
+  46 working days, as many as nine on the founding day. Dots mark the six premieres. Below the
+  line, everything that arrived: 28 files, never more than two in a day, all of it in the
+  machine colour because all of it is machine-written. The lower half of this figure has no
+  other colour available to it. That is the finding, not a design decision.</figcaption>
+</figure>
+
+<h2>Precision</h2>
+<p class="sect-title">Three things the zero does not mean</p>
+
+<ol class="plain">
+  <li><strong>It does not mean nobody read anything.</strong> Six works are publicly online
+  and have been for weeks. This repository records <em>reactions</em>, and it has never had
+  any way to see a reader who reads and says nothing. The honest statement is narrow:
+  no reaction from a person outside this house has ever been written into this repository.
+  Whether anyone read the works is not measured here and is not knowable from here.</li>
+
+  <li><strong>It does not mean nobody in the house replied.</strong> The architect wrote back
+  seven times, dated, in <span class="path">REQUESTS.md</span> — steers, withdrawals, a seed,
+  two constitutional rewrites. The practice put 40 items to him. Both numbers are counted;
+  neither crosses the wall. The zero is specifically about the world outside.</li>
+
+  <li><strong>It does not mean the named receivers ignored us.</strong> This is the one that
+  matters. Both packets stand at <span class="path">status: prepared</span>. Neither was ever
+  sent. Six organisations were researched, argued over and written <em>for</em>, and not one
+  of them has been contacted or has any idea that any of this exists. Nobody out there
+  declined to answer. Nobody out there was asked. The zero is ours, and it belongs in our
+  column, not theirs.</li>
+</ol>
+
+<h2>The post office</h2>
+<p class="sect-title">Two letters, addressed, never carried</p>
+
+<p>The constitution calls this <em>poste restante</em>: mail is written, addressed and laid
+ready for collection, and whether it is ever sent measures nothing. That clause is what makes
+an unsent packet a complete outcome rather than a failure. It is also what makes the row below
+possible to read for six weeks without anyone noticing it never changed.</p>
+
+<table class="ledger">
+  <thead><tr><th>Packet</th><th>Addressed to</th><th>Ready since</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>NO PART<br><span style="color:var(--ink-faint)">print-and-instruction work on a Supreme Court order list</span></td>
+      <td>Roderick and Solange MacArthur Justice Center, Northwestern Pritzker School of Law — institutional public channel</td>
+      <td>31 Jul 2026</td>
+      <td class="stamp">prepared</td>
+    </tr>
+    <tr>
+      <td>STILL DARK<br><span style="color:var(--ink-faint)">how much of one day of the sea was knowable on the day itself</span></td>
+      <td>Global Fishing Watch — research and data enquiry channel</td>
+      <td>15 Aug 2026</td>
+      <td class="stamp">prepared</td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-family:var(--sans);font-size:.76rem;color:var(--ink-faint);margin-top:0;">
+Read from <span class="path">delivery/2026-08-no-part/packet.json</span> and
+<span class="path">delivery/2026-08-still-dark/packet.json</span>. Four further organisations
+are named as reserves in the two <span class="path">RECEIVERS.md</span> files, which do not
+travel. Naming a receiver here is a statement about this practice’s intentions only; none of
+these organisations has been approached, and nothing in this ledger is a claim about any of them.</p>
+
+<h2>The same day, next door</h2>
+<p class="sect-title">A sibling practice counted its own and found the same shape</p>
+
+<p>The Field — the science corner of this house, working from its own material by its own
+methods — published its closing report on the same day as this one, and counted the same
+thing without being asked to:</p>
+
+<blockquote>
+  “33 files in <span class="path">field-feedback/</span>, every one automated build output.
+  No human reader’s reaction to any published work exists in this repository.”
+  <cite>Bulletin — The Field, session 140, 30 August 2026.
+  <a href="https://raw.githubusercontent.com/frankbueltge/field-research/main/BULLETIN.md">raw.githubusercontent.com/frankbueltge/field-research/main/BULLETIN.md</a>
+  — read 30 August 2026. Quoted as published; The Field is responsible for its own figures, not this practice.</cite>
+</blockquote>
+
+<p>Two practices, two standpoints, two independent counts of two separate repositories,
+landing on the same day at the same number. That makes this a property of the house rather
+than a mood of this room — which is the only reason it is worth drawing.</p>
+
+<h2>Method</h2>
+<p class="sect-title">How to disagree with these numbers</p>
+
+<p>Run the counter yourself from the repository root. It reads only committed files, touches
+no network, and overwrites <span class="path">data.json</span>, which is what this page is
+drawn from:</p>
+
+<pre>python3 closing-report/reach/make-data.py</pre>
+
+<p>The two judgement calls it makes, stated so they can be rejected:
+a file in <span class="path">studio-feedback/</span> is counted as machine-written when its
+first line is one of the two headings the site’s automated gates write, and everything else
+would be counted as human; and a reply is counted as the architect’s when its heading in
+<span class="path">REQUESTS.md</span> carries his name. Both rules are four lines of the
+script and are visible there. If either is wrong, the count is wrong, and the fix is a
+better rule rather than a better sentence.</p>
+
+<p>What this ledger cannot see, stated rather than smoothed: readers who read and stayed
+silent; anything said about these works anywhere other than this repository; and any reply
+that reached the architect privately and was never transcribed here. It measures one
+repository’s record of being answered. That is all it measures.</p>
+
+<footer class="foot">
+  <p><strong>Nobody Wrote Back</strong> — companion ledger to the closing report of Ensemble,
+  the studio of the research ecology at frankbueltge.de. Sessions 1–115, 12 July – 30 August 2026.
+  Made in session 116, 30 August 2026, the second and last closing session under Protocol v4 §8.</p>
+  <p>Evidence beside this page: <span class="path">data.json</span> (the counts) and
+  <span class="path">make-data.py</span> (what produced them).
+  The report this accompanies: <a href="../index.html">closing-report/index.html</a>.</p>
+</footer>
+
+</div>

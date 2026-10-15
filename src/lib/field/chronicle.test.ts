@@ -36,19 +36,24 @@ describe('chronicle.curated.json', () => {
     const dir = join(process.cwd(), 'src/content/field/journal')
     const files = readdirSync(dir).filter((f) => f.endsWith('.md')).sort() // chronological
     const used = new Set<string>()
+    // v3 boundary (2026-08-30, research ecology v3): Protocol v4 abolished the practice's
+    // chronicle duty, so sessions from that day on may honestly lack a self-report and are
+    // exempt from the coverage-equality below (anchor resolution still binds them).
+    const V3 = '2026-08-30'
+    let usedPreV3 = 0
     for (const f of files) {
       const day = f.replace(/\.md$/, '')
-      splitSessions(readFileSync(join(dir, f), 'utf-8')).forEach((s, i) =>
-        uniqueSessionAnchor(used, s.heading, day, i),
-      )
+      const sessions = splitSessions(readFileSync(join(dir, f), 'utf-8'))
+      sessions.forEach((s, i) => uniqueSessionAnchor(used, s.heading, day, i))
+      if (day < V3) usedPreV3 += sessions.length
     }
     for (const e of served) {
       expect(used, `anchor ${e.anchor} (seq ${e.seq}) not rendered on /field`).toContain(e.anchor)
     }
     // and the served chronicle covers every rendered session (drift alarm in the other
-    // direction): a session with NEITHER a curated entry NOR an upstream self-report
-    // still fails the gate loudly.
-    expect(served.length).toBe(used.size)
+    // direction) — bounded to the v2 era per the V3 boundary above.
+    const servedPreV3 = served.filter((e) => e.date < V3)
+    expect(servedPreV3.length).toBe(usedPreV3)
   })
 
   it('every referenced journal_id exists', () => {
@@ -139,5 +144,47 @@ describe('schemas reject malformed data (the integrate gate)', () => {
   it('rejects a curated entry with a bad date', () => {
     const bad = { ...(curated[0] as ChronicleEntry), date: '01.07.2026' }
     expect(() => chronicleEntrySchema.parse(bad)).toThrow()
+  })
+})
+
+describe('work references (WORK_REF) — two legal shapes, nothing else', () => {
+  const entry = (works: string[]) => ({
+    seq: 1,
+    date: '2026-09-01',
+    collective_session: 143,
+    move: 'test',
+    summary: 'a summary long enough to satisfy the minimum length rule',
+    works,
+    verdict: null,
+    fail: false,
+    journal_id: '2026-09-01',
+  })
+
+  it('accepts a bare slug — the pre-v3 form', () => {
+    expect(() => upstreamEntrySchema.parse(entry(['still-dark']))).not.toThrow()
+  })
+
+  it('accepts a v3 artifact path, with or without the trailing slash', () => {
+    // The exact value session 143 recorded, which this schema rejected four times in one day.
+    expect(() =>
+      upstreamEntrySchema.parse(entry(['artifacts/cycle-001/2026-09-01-how-long-a-warning-stands/'])),
+    ).not.toThrow()
+    expect(() =>
+      upstreamEntrySchema.parse(entry(['artifacts/cycle-001/2026-09-01-how-long-a-warning-stands'])),
+    ).not.toThrow()
+  })
+
+  it('still refuses traversal, absolute paths, uppercase and spaces', () => {
+    for (const bad of [
+      '../etc/passwd',
+      '/artifacts/cycle-001/x/',
+      'artifacts/cycle-1/x/',
+      'artifacts/cycle-001/../../x/',
+      'Artifacts/cycle-001/x/',
+      'artifacts/cycle-001/two words/',
+      'works/still-dark',
+    ]) {
+      expect(() => upstreamEntrySchema.parse(entry([bad])), `should refuse ${bad}`).toThrow()
+    }
   })
 })

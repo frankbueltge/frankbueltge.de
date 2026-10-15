@@ -1,0 +1,80 @@
+{
+ "note": "Predictions of PREREGISTRATION \u00a78, evaluated after the run. Each is left exactly as written.",
+ "kill_conditions": {
+  "K1": {
+   "fired": false,
+   "evidence": "Re-running R-ship over the 100 hand fixtures committed on 2026-09-18 reproduced data/fixture-check.json byte for byte. The instrument in this repository is the one that produced 09-18's numbers."
+  },
+  "K2": {
+   "fired": false,
+   "evidence": "SPDX licence list re-fetched at the end of the session: version 3.29.0 both times, corpus digest 73363f6622045c5a4cebc39af0bedf3bbe5cc5f212549a56aae249cdcf8315ec both times."
+  },
+  "K3": {
+   "fired": false,
+   "evidence": "All four independents: pure standard library (only `re`, and `__future__` in one), no forbidden import, no dynamic escape, a module-level score(), and 1,480 of 1,480 inputs returning the contract's shape with no exception. NOTE: the check itself had to be repaired twice before it measured what it said \u2014 see data/k3-run1-defective.json and data/k3-run2-defective.json."
+  },
+  "K4": {
+   "fired": false,
+   "evidence": "R-def returns attribution 'named' for the canonical MIT text where R-ship returns 'placeholder'. The positive control is really the defect."
+  }
+ },
+ "predictions": {
+  "P1": {
+   "text": "At least one pair among the delivered implementations disagrees on the family set of at least 10 of the 740 arm-C texts.",
+   "verdict": "CONFIRMED",
+   "expected": "confirmed",
+   "evidence": "Worst pair I-B vs I-C: 107 disagreements of 740. Best pair I-A vs R-ship: 29. All ten pairs exceed 10."
+  },
+  "P2": {
+   "text": "R-def returns 'named' for the canonical MIT text, and at least 3 of 4 independents return 'placeholder' for it.",
+   "verdict": "CONFIRMED",
+   "expected": "confirmed",
+   "evidence": "R-def: named. I-A, I-B, I-C, I-D: placeholder, 4 of 4. The second hand catches the known defect unanimously."
+  },
+  "P3": {
+   "text": "At least one independent reproduces defect 1 \u2014 returns 'named' for the canonical MIT text.",
+   "verdict": "REFUTED",
+   "expected": "refuted",
+   "evidence": "0 of 4. Every independent required a year-shaped token after the marker, which the boilerplate sentence has not. On THIS defect the failures were not correlated \u2014 but see the adjudication, where on four other inputs all four failed together."
+  },
+  "P4": {
+   "text": "On at least one input a majority of delivered independents agree on a verdict differing from R-ship, and hand-adjudication finds the independents right \u2014 a defect still shipped in the 09-18 instrument.",
+   "verdict": "CONFIRMED",
+   "expected": "confirmed",
+   "evidence": "6 of the 11 unanimous disagreements are one defect in R-ship: a copyright notice written 'Copyright (C) \u2026' with a capital C is not recognised at all. It sits inside 09-18's own repair of defect 3. See data/adjudication.json."
+  },
+  "P5": {
+   "text": "The number of arm-C texts on which the four independents disagree among themselves is greater than the number on which all four agree with each other but differ from R-ship.",
+   "verdict": "CONFIRMED",
+   "expected": "confirmed",
+   "evidence": "127 against 11. The second hand is noisy before it is right: for every case where it convicts, it produces about eleven where it cannot agree with itself."
+  },
+  "P6": {
+   "text": "Under the strict oracle, at least 95 % of R-ship's positive family identifications fall on member identifiers.",
+   "verdict": "REFUTED",
+   "expected": "refuted",
+   "evidence": "R-ship 25.35 %, and every independent between 13.56 % and 27.48 %. The refutation is about the oracle, not the instruments, and the pre-registration said so before the run: 740 SPDX identifiers against a 24-name vocabulary, with the list carrying dozens of texts that genuinely carry another family's operative grant. What the oracle delivered was not a score but a LIST, and the adjudication came out of it."
+  }
+ },
+ "headline_numbers": {
+  "n_inputs": 1480,
+  "n_identifiers": 740,
+  "n_implementations_compared": 5,
+  "all_five_agree_on_families_armC": 612,
+  "all_five_agree_on_families_armC_pct": 82.7,
+  "pairwise_family_agreement_range_pct": [
+   85.54,
+   96.08
+  ],
+  "independents_disagree_internally_armC": 127,
+  "independents_unanimous_against_R_ship_armC": 11,
+  "l2_transition_pct_correct": {
+   "R-ship": 81.82,
+   "I-A": 80.0,
+   "I-B": 81.82,
+   "I-C": 77.78,
+   "I-D": 80.0,
+   "R-def": 0.0
+  }
+ }
+}

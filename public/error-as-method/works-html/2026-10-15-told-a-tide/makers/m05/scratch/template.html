@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Two Clocks, One Harbour</title>
+<style>
+html,body{margin:0;background:#f2efe8;}
+body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#2a2f38;}
+canvas{display:block;position:absolute;left:0;top:0;}
+.t{position:absolute;font-size:13px;letter-spacing:.04em;color:#59606b}
+.h{position:absolute;left:60px;top:26px;font-size:22px;letter-spacing:.02em;color:#1f2530}
+</style></head><body>
+<canvas id="c" width="1100" height="800"></canvas>
+<div class="h">Two Clocks, One Harbour</div>
+<div class="t" style="left:60px;top:58px;width:470px">wound on the moon’s day, 24 h 50 min — the clock a tide keeps</div>
+<div class="t" style="left:590px;top:58px;width:470px">wound on the sun’s day, 24 h — the clock this record keeps</div>
+<div class="t" style="left:60px;top:760px;width:1000px;font-size:12px">61 days, one per row, each row showing two days side by side. Each soft dark shape is one column of the source picture, about five hours wide, hanging down by how far its lowest reading fell below the level around it. Where the falls line up down the page, the record is keeping that clock.</div>
+<script>
+const D=__DATA__;
+const cv=document.getElementById('c'),g=cv.getContext('2d');
+const W=1100,H=800,ratio=window.devicePixelRatio||1;
+cv.width=W*ratio;cv.height=H*ratio;cv.style.width=W+'px';cv.style.height=H+'px';g.scale(ratio,ratio);
+// decode: column x -> [[y,darkness]]
+const cols=D.map(s=>{const a=[];for(let i=0;i<s.length;i+=2)a.push([s.charCodeAt(i)-48,(s.charCodeAt(i+1)-48)/9]);return a;});
+const X0=2.5,X1=295.5,HPP=1463/(X1-X0),TOP=12,BOT=80;
+// per column: ceiling = upper band, floor = deepest dot
+const C=[];
+cols.forEach((c,x)=>{if(!c.length)return;const ys=c.filter(q=>q[1]>0.35).map(q=>q[0]);if(!ys.length)return;
+ const s=[...ys].sort((a,b)=>a-b);C.push({x,tc:(x-X0)*HPP,top:s[Math.floor(s.length*0.25)],bot:s[s.length-1],pix:c});});
+C.forEach((o,i)=>{const w=C.slice(Math.max(0,i-5),i+6).map(q=>q.top).sort((a,b)=>a-b);o.ceil=w[Math.floor(w.length/2)];o.dd=Math.max(0,o.bot-o.ceil);});
+function panel(px,P){
+ const top=100,rowH=10.3,wid=470,days=61,sc=0.5;
+ g.strokeStyle='rgba(42,47,56,.13)';g.lineWidth=.5;
+ for(let k=1;k<4;k++){const xx=px+wid*k/4;g.beginPath();g.moveTo(xx,top);g.lineTo(xx,top+days*rowH+8);g.stroke();}
+ g.globalCompositeOperation='multiply';
+ for(let d=0;d<days;d++){
+  const y0=top+d*rowH,s=d*P,e=(d+2)*P;
+  g.fillStyle='rgba(42,47,56,.10)';g.fillRect(px,y0,wid,.6);
+  for(const o of C){
+   const t0=o.tc-HPP,t1=o.tc+HPP;
+   if(t1<=s||t0>=e)continue;
+   const h=Math.max(0,o.dd-4)*sc;if(h<=0)continue;
+   const xa=px+(t0-s)/(2*P)*wid,xb=px+(t1-s)/(2*P)*wid,xc=(xa+xb)/2;
+   g.save();g.beginPath();g.rect(px,y0,wid,rowH*3);g.clip();
+   const gx=g.createLinearGradient(xa,0,xb,0);
+   gx.addColorStop(0,'rgba(30,44,78,0)');gx.addColorStop(.5,'rgba(30,44,78,.62)');gx.addColorStop(1,'rgba(30,44,78,0)');
+   g.fillStyle=gx;
+   g.beginPath();g.moveTo(xa,y0+.6);g.lineTo(xb,y0+.6);g.lineTo(xc+ (xb-xc)*0.25,y0+.6+h);g.lineTo(xc-(xc-xa)*0.25,y0+.6+h);g.closePath();g.fill();
+   g.restore();
+  }
+ }
+ g.globalCompositeOperation='source-over';
+}
+panel(60,24.8412);
+panel(590,24.0);
+</script></body></html>

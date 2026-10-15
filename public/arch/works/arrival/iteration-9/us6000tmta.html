@@ -1,0 +1,1200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrival</title>
+<style>
+  :root{
+    --bg:#0b0c0e; --ink:#e8e6e1; --dim:#7d8288; --line:#21242a;
+    --machine:#e0a33e; --body:#6fb3c9; --hot:#f4f2ee;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{
+    font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    padding:26px clamp(14px,3vw,40px) 40px;
+  }
+  header{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px}
+  h1{font-size:15px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;margin:0 0 9px}
+  .says{font-size:14.5px;color:var(--ink);margin:0 0 9px;letter-spacing:.01em}
+  .says em{font-style:normal;color:var(--machine)}
+  .says i{font-style:normal;color:var(--body)}
+  .ident{color:var(--dim);font-size:12.5px;word-spacing:.08em}
+  .ident b{color:var(--ink);font-weight:600}
+  figure{margin:0}
+  svg{display:block;width:100%;height:auto;overflow:visible;touch-action:manipulation}
+  .grid{stroke:var(--line);stroke-width:1}
+  .axis{stroke:#4a5058;stroke-width:1}
+  .tick{fill:var(--dim);font-size:11px}
+  .axlabel{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase}
+  .axlabel.d{fill:var(--dim)} .axlabel.m{fill:var(--machine)} .axlabel.b{fill:var(--body)}
+  .note{fill:var(--dim);font-size:11px}
+  .sta{fill:var(--machine);fill-opacity:.72;stroke:none}
+  .blk{fill:var(--body);fill-opacity:.62;stroke:none}
+  .stares{stroke:var(--machine);stroke-width:1.4;stroke-opacity:.85}
+  .apart{color:var(--hot)}
+  .cutm{fill:var(--machine);fill-opacity:.07}
+  .cutb{fill:var(--body);fill-opacity:.07}
+  .reach{stroke-width:1.5}
+  .reachm{stroke:var(--machine)} .reachb{stroke:var(--body)}
+  .ghost{stroke-width:1;stroke-dasharray:3 4;stroke-opacity:.55}
+  /* Where a mark has already been published. A trace is the same colour as the
+     mark it belongs to, because it is not another quantity — it is the same
+     quantity, published earlier. It is drawn thinner and fainter than the mark
+     so that what stands now stands in front of what stood before, and the two
+     are never confused for two marks. */
+  .wasm{stroke:var(--machine);stroke-width:1;stroke-opacity:.34}
+  .wasb{stroke:var(--body);stroke-width:1;stroke-opacity:.34}
+  .wasbr{fill:var(--body);fill-opacity:.16;stroke:none}
+  .wasdot{fill:none;stroke-width:1;stroke-opacity:.45}
+  .wasdot.m{stroke:var(--machine)} .wasdot.b{stroke:var(--body)}
+  .rlabel{font-size:11.5px}
+  .rlm{fill:var(--machine)} .rlb{fill:var(--body)}
+  /* The shared axis is where the two half-planes meet, so it is also where the
+     question "who was present at this distance" is answered: the strip above
+     the line belongs to the instruments, the strip below it to the people.
+     Both filled means both were there; neither filled means the event stood at
+     that distance in no record at all — at the instant being read. Nothing is
+     coded that the figure's own top-and-bottom convention does not already
+     say. */
+  .ribm{fill:var(--machine);fill-opacity:.62}
+  .ribb{fill:var(--body);fill-opacity:.62}
+  /* a band in which the event stands in no record at all is the one thing here
+     that is an absence, and an absence drawn faintly reads as nothing having
+     been drawn: it keeps the outline and the name of the others. */
+  .ribnone{fill:none;stroke:var(--hot);stroke-width:1;stroke-opacity:.75;stroke-dasharray:2 3}
+  .riblab{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+  .riblab.none{fill:var(--hot)}
+  .depth{stroke:var(--dim);stroke-width:1;stroke-opacity:.7}
+  .depthlab{fill:var(--dim);font-size:10.5px}
+  .tip{fill:var(--hot);font-size:12px}
+  .tipbg{fill:#000;fill-opacity:.85}
+  .hit{fill:transparent;cursor:crosshair}
+  footer{margin-top:20px;border-top:1px solid var(--line);padding-top:12px;
+         color:var(--dim);font-size:11.5px;line-height:1.7;word-break:break-all}
+  /* Two acts now, and they are not peers: choosing the instant decides which
+     record there is to question, so it stands first and alone, and the two
+     thresholds cut whatever it hands them. Each control is still set on a
+     drawing of the population it cuts, and never on a widget borrowed from
+     another. */
+  .act{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;
+       margin:22px 0 2px;padding-top:13px;border-top:1px solid var(--line)}
+  .act h2{font-size:12px;font-weight:600;letter-spacing:.19em;text-transform:uppercase;
+          color:var(--hot);margin:0}
+  .act .kept{color:var(--dim);font-size:12.5px}
+  .act .kept em{font-style:normal;color:var(--machine)}
+  .act .kept i{font-style:normal;color:var(--body)}
+  .act .kept b{color:var(--hot);font-weight:400}
+  .when{margin-top:4px}
+  .when svg{cursor:ew-resize}
+  .whennote{color:var(--dim);font-size:12.5px;margin:2px 0 0;min-height:1.5em}
+  .whennote b{color:var(--hot);font-weight:400}
+  .panels{display:grid;gap:6px 34px;grid-template-columns:repeat(auto-fit,minmax(330px,1fr))}
+  .panel{min-width:0;padding-top:11px}
+  .panel h3{margin:0 0 2px;font-size:11.5px;font-weight:600;letter-spacing:.13em;
+            text-transform:uppercase}
+  .panel.m h3{color:var(--machine)} .panel.b h3{color:var(--body)}
+  .set{display:flex;flex-wrap:wrap;gap:7px 9px;align-items:center;
+       margin:4px 0 0;font-size:12.5px;color:var(--dim)}
+  button{font:inherit;background:#15171b;color:var(--ink);border:1px solid #2e3238;
+         border-radius:3px;padding:2px 9px;cursor:pointer;line-height:1.4}
+  button:hover{border-color:var(--hot)}
+  button[disabled]{opacity:.32;cursor:default;border-color:#2e3238}
+  .val{color:var(--ink);min-width:4.9em;display:inline-block;text-align:center}
+  .val.wide{min-width:9.5em}
+  .swarm{fill:var(--machine);fill-opacity:.78;stroke:none}
+  .swarm.out{fill:none;stroke:var(--machine);stroke-opacity:.38;stroke-width:1}
+  /* A tail says the same station stood at another residual in an earlier
+     published version. Two kinds, and the difference is the whole of what this
+     strip now shows: a tail whose station published a different arrival
+     instant is a new observation, and one whose station published the same
+     instant is not — the number moved because the solution it is measured
+     against moved. The second kind is drawn in the colour this file uses for
+     something that changed while nothing was observed. */
+  .tail{stroke-width:1.1;stroke-opacity:.5}
+  .tail.repick{stroke:var(--machine)}
+  .tail.refit{stroke:var(--hot);stroke-opacity:.62}
+  .tailend{stroke-width:1;stroke-opacity:.55;fill:none}
+  .tailend.repick{stroke:var(--machine)}
+  .tailend.refit{stroke:var(--hot)}
+  .cell{fill:var(--body);fill-opacity:.8;stroke:none}
+  .cell.out{fill:var(--body);fill-opacity:.3}
+  .gate{fill:var(--machine);fill-opacity:.08}
+  .gateEdge{stroke:var(--machine);stroke-width:1.2}
+  .cut{stroke:var(--body);stroke-width:1.2}
+  .zero{stroke:#4a5058;stroke-width:1}
+  .ptick{fill:var(--dim);font-size:10.5px}
+  .pnote{fill:var(--dim);font-size:10.5px}
+  .pcount{font-size:10px}
+  .pcount.on{fill:var(--body)} .pcount.off{fill:var(--dim);fill-opacity:.8}
+  /* the publication history, drawn on the figure's own convention: a mark
+     above the line is a version of the arrival record, a mark below it a
+     version of the felt record. */
+  .vm{stroke:var(--machine);stroke-width:1.4;stroke-opacity:.85}
+  .vb{stroke:var(--body);stroke-width:1.4;stroke-opacity:.7}
+  .vb.moved{stroke:var(--hot);stroke-width:1.6;stroke-opacity:.95}
+  .vfuture{stroke-opacity:.22}
+  .nowline{stroke:var(--hot);stroke-width:1.4}
+  .nowgrip{fill:var(--hot)}
+  /* The table's cells must not wrap — a distance and its unit belong on one
+     line — so it is the table that scrolls when the viewport is narrow, never
+     the page. */
+  .tw{overflow-x:auto;max-width:100%}
+  table{border-collapse:collapse;margin-top:16px;font-size:12.5px;width:100%;max-width:920px}
+  th,td{text-align:left;padding:7px 16px 7px 0;border-bottom:1px solid var(--line);
+        white-space:nowrap}
+  th{color:var(--dim);font-weight:400;font-size:11px;letter-spacing:.11em;
+     text-transform:uppercase}
+  td.who{font-weight:600}
+  tr.m td.who{color:var(--machine)} tr.b td.who{color:var(--body)}
+  tr.both td.who{color:var(--hot)}
+  tr.none td.who{color:var(--hot)}
+  tr.none td{color:var(--hot)}
+  td.num{color:var(--dim)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const D = {"id":"us6000tmta","place":"4 km N of Toride, Japan","mag":5.8,"origin":"2026-08-22T17:00:39.472Z","lat":35.9375,"lon":140.0778,"depth":61,"kmPerDeg":111.195,"rKm":6371.0,"cellKm":1.0,"feltFile":"dyfi_geo_1km.geojson","noOutline":0,"epis":[{"lat":35.9344,"lon":140.0625,"depth":77.584,"rev":1787419238667,"min":19.99},{"lat":35.9375,"lon":140.0778,"depth":61.0,"rev":1787420874867,"min":47.26}],"blocks":[{"c":[35.259,139.7303],"lo":[80.236,81.074],"hi":[81.544,82.389],"km":[111.0,101.0]},{"c":[35.6913,139.6903],"lo":[42.391,43.687],"hi":[43.796,45.089],"km":[88.0,75.0]},{"c":[34.7586,139.3556],"lo":[144.948,145.871],"hi":[146.294,147.219],"km":[164.0,158.0]},{"c":[35.7219,140.0768],"lo":[23.143,23.468],"hi":[24.189,24.483],"km":[81.0,65.0]},{"c":[35.2944,139.6747],"lo":[78.654,79.578],"hi":[80.0,80.93],"km":[110.0,100.0]},{"c":[35.7506,139.3797],"lo":[64.226,65.643],"hi":[65.48,66.896],"km":[101.0,90.0]},{"c":[35.6834,139.801],"lo":[35.833,36.995],"hi":[37.244,38.408],"km":[85.0,71.0]},{"c":[35.6102,139.6916],"lo":[48.48,49.677],"hi":[49.893,51.091],"km":[91.0,79.0]},{"c":[35.7519,139.4792],"lo":[55.716,57.127],"hi":[57.001,58.41],"km":[95.0,84.0]},{"c":[35.2854,139.6749],"lo":[79.55,80.468],"hi":[80.893,81.818],"km":[111.0,101.0]},{"c":[35.9342,139.642],"lo":[37.36,38.742],"hi":[38.369,39.743],"km":[86.0,72.0]},{"c":[35.6382,139.7906],"lo":[40.36,41.469],"hi":[41.763,42.875],"km":[87.0,74.0]},{"c":[35.4718,139.4294],"lo":[76.198,77.458],"hi":[77.61,78.869],"km":[109.0,99.0]},{"c":[35.7103,139.7784],"lo":[35.03,36.266],"hi":[36.444,37.679],"km":[85.0,71.0]},{"c":[35.6287,139.7355],"lo":[44.303,45.474],"hi":[45.715,46.887],"km":[89.0,76.0]},{"c":[35.4384,139.6504],"lo":[65.841,66.904],"hi":[67.234,68.301],"km":[102.0,91.0]},{"c":[35.6651,139.7681],"lo":[39.318,40.498],"hi":[40.731,41.912],"km":[87.0,73.0]},{"c":[35.7105,139.8005],"lo":[33.612,34.819],"hi":[35.026,36.233],"km":[84.0,70.0]},{"c":[35.843,139.555],"lo":[46.248,47.667],"hi":[47.431,48.851],"km":[90.0,77.0]},{"c":[35.6556,139.724],"lo":[42.801,44.021],"hi":[44.215,45.435],"km":[88.0,75.0]},{"c":[35.6737,139.7348],"lo":[40.687,41.919],"hi":[42.101,43.333],"km":[87.0,74.0]},{"c":[35.8727,139.7981],"lo":[24.17,25.59],"hi":[25.399,26.817],"km":[81.0,66.0]},{"c":[35.6741,139.7679],"lo":[38.581,39.774],"hi":[39.994,41.188],"km":[86.0,73.0]},{"c":[35.3817,139.4311],"lo":[83.146,84.342],"hi":[84.56,85.756],"km":[114.0,104.0]},{"c":[35.5737,139.6591],"lo":[53.452,54.64],"hi":[54.866,56.054],"km":[94.0,82.0]},{"c":[35.7085,139.6127],"lo":[47.024,48.381],"hi":[48.396,49.75],"km":[91.0,78.0]},{"c":[35.6098,139.6585],"lo":[50.586,51.814],"hi":[52.001,53.229],"km":[93.0,80.0]},{"c":[35.6914,139.7014],"lo":[41.61,42.897],"hi":[43.017,44.301],"km":[88.0,74.0]},{"c":[35.665,139.757],"lo":[39.994,41.188],"hi":[41.408,42.603],"km":[87.0,74.0]},{"c":[35.7321,139.3469],"lo":[67.688,69.103],"hi":[68.952,70.366],"km":[103.0,92.0]},{"c":[35.7409,139.3246],"lo":[69.289,70.707],"hi":[70.539,71.955],"km":[104.0,93.0]},{"c":[34.7399,137.6925],"lo":[251.999,253.358],"hi":[253.385,254.744],"km":[264.0,261.0]},{"c":[36.1008,140.1057],"lo":[18.314,17.768],"hi":[19.507,18.904],"km":[79.0,63.0]},{"c":[35.6227,140.0669],"lo":[34.166,34.505],"hi":[35.17,35.544],"km":[84.0,70.0]},{"c":[35.6823,139.6905],"lo":[43.017,44.301],"hi":[44.424,45.707],"km":[89.0,75.0]},{"c":[35.5373,139.6266],"lo":[58.43,59.61],"hi":[59.844,61.025],"km":[97.0,85.0]},{"c":[35.8654,139.9754],"lo":[10.268,11.517],"hi":[11.682,12.927],"km":[78.0,62.0]},{"c":[35.2242,138.6212],"lo":[151.719,153.08],"hi":[153.086,154.445],"km":[171.0,165.0]},{"c":[35.6832,139.7789],"lo":[37.167,38.36],"hi":[38.581,39.774],"km":[86.0,72.0]},{"c":[35.5172,139.4505],"lo":[71.436,72.718],"hi":[72.844,74.124],"km":[105.0,95.0]},{"c":[35.3207,139.6083],"lo":[78.945,79.957],"hi":[80.322,81.338],"km":[111.0,101.0]},{"c":[35.6644,139.7018],"lo":[43.563,44.816],"hi":[44.976,46.228],"km":[89.0,76.0]},{"c":[36.0825,140.0726],"lo":[15.97,15.63],"hi":[17.034,16.651],"km":[79.0,63.0]},{"c":[35.6854,140.0219],"lo":[27.362,27.895],"hi":[28.494,29.066],"km":[82.0,67.0]},{"c":[35.6177,139.559],"lo":[56.775,58.08],"hi":[58.175,59.478],"km":[96.0,84.0]},{"c":[35.641,140.1108],"lo":[32.355,32.563],"hi":[33.472,33.643],"km":[84.0,69.0]},{"c":[35.535,139.4392],"lo":[70.974,72.274],"hi":[72.376,73.674],"km":[105.0,95.0]},{"c":[35.6922,139.7787],"lo":[36.44,37.648],"hi":[37.855,39.063],"km":[86.0,72.0]},{"c":[35.1151,139.0742],"lo":[126.964,128.181],"hi":[128.378,129.595],"km":[149.0,142.0]},{"c":[35.544,139.439],"lo":[null,71.674],"hi":[null,73.073],"km":[null,94.0]},{"c":[35.7276,139.7118],"lo":[null,39.718],"hi":[null,41.109],"km":[null,73.0]},{"c":[35.6554,139.7019],"lo":[null,45.482],"hi":[null,46.894],"km":[null,76.0]},{"c":[35.7868,140.3527],"lo":[null,29.207],"hi":[null,30.598],"km":[null,67.0]},{"c":[35.6197,139.7356],"lo":[null,46.217],"hi":[null,47.629],"km":[null,76.0]},{"c":[35.5998,139.5704],"lo":[null,58.51],"hi":[null,59.915],"km":[null,85.0]},{"c":[35.5247,138.7777],"lo":[null,125.367],"hi":[null,126.652],"km":[null,140.0]},{"c":[35.674,139.7569],"lo":[null,40.477],"hi":[null,41.892],"km":[null,73.0]},{"c":[35.6999,139.657],"lo":[null,45.535],"hi":[null,46.924],"km":[null,76.0]},{"c":[35.6558,139.7461],"lo":[null,42.603],"hi":[null,44.018],"km":[null,74.0]},{"c":[36.5586,139.877],"lo":[null,70.772],"hi":[null,71.985],"km":[null,93.0]},{"c":[35.6535,139.5363],"lo":[null,57.473],"hi":[null,58.852],"km":[null,84.0]},{"c":[35.9432,139.6418],"lo":[null,38.745],"hi":[null,39.771],"km":[null,72.0]},{"c":[35.7968,139.4673],"lo":[null,56.584],"hi":[null,57.809],"km":[null,83.0]},{"c":[35.8088,139.7216],"lo":[null,34.484],"hi":[null,35.798],"km":[null,70.0]},{"c":[35.6201,139.7798],"lo":[null,43.662],"hi":[null,45.067],"km":[null,75.0]},{"c":[35.7015,139.8007],"lo":[null,35.531],"hi":[null,36.945],"km":[null,70.0]},{"c":[35.7708,139.5452],"lo":[null,50.815],"hi":[null,52.1],"km":[null,79.0]},{"c":[35.6857,140.0551],"lo":[null,27.538],"hi":[null,28.619],"km":[null,67.0]},{"c":[35.6977,139.4692],"lo":[null,60.349],"hi":[null,61.678],"km":[null,86.0]},{"c":[35.7097,139.7232],"lo":[null,40.091],"hi":[null,41.494],"km":[null,73.0]},{"c":[35.7277,139.7229],"lo":[null,38.9],"hi":[null,40.294],"km":[null,72.0]},{"c":[35.6394,139.9121],"lo":[null,35.699],"hi":[null,37.027],"km":[null,70.0]},{"c":[35.8379,139.9315],"lo":[null,16.51],"hi":[null,17.918],"km":[null,63.0]},{"c":[35.7366,139.7117],"lo":[null,39.16],"hi":[null,40.545],"km":[null,72.0]},{"c":[35.7194,139.7894],"lo":[null,34.853],"hi":[null,36.266],"km":[null,70.0]},{"c":[36.0826,140.0837],"lo":[null,15.63],"hi":[null,16.673],"km":[null,63.0]},{"c":[35.6017,139.747],"lo":[null,47.096],"hi":[null,48.504],"km":[null,77.0]},{"c":[35.7106,139.8116],"lo":[null,34.116],"hi":[null,35.531],"km":[null,70.0]},{"c":[35.66,139.3484],"lo":[null,72.0],"hi":[null,73.322],"km":[null,94.0]},{"c":[35.6729,139.6575],"lo":[null,47.284],"hi":[null,48.685],"km":[null,77.0]},{"c":[35.2217,139.621],"lo":[null,88.999],"hi":[null,90.354],"km":[null,108.0]},{"c":[37.8991,139.0039],"lo":[null,237.439],"hi":[null,238.749],"km":[null,245.0]},{"c":[35.6842,139.8783],"lo":[null,32.732],"hi":[null,34.116],"km":[null,69.0]},{"c":[36.0054,139.5631],"lo":[null,46.354],"hi":[null,47.51],"km":[null,77.0]},{"c":[35.6194,139.7136],"lo":[null,47.569],"hi":[null,48.983],"km":[null,77.0]},{"c":[35.737,139.7449],"lo":[null,36.693],"hi":[null,38.089],"km":[null,71.0]},{"c":[35.2496,139.6975],"lo":[null,83.204],"hi":[null,84.532],"km":[null,103.0]},{"c":[35.6648,139.746],"lo":[null,41.892],"hi":[null,43.307],"km":[null,74.0]},{"c":[35.2327,139.1044],"lo":[null,117.15],"hi":[null,118.562],"km":[null,132.0]},{"c":[35.6377,139.7354],"lo":[null,44.74],"hi":[null,46.154],"km":[null,76.0]},{"c":[35.6884,139.4472],"lo":[null,62.581],"hi":[null,63.912],"km":[null,87.0]},{"c":[35.6942,139.9887],"lo":[null,27.602],"hi":[null,28.853],"km":[null,67.0]},{"c":[35.7195,139.8004],"lo":[null,34.122],"hi":[null,35.536],"km":[null,70.0]},{"c":[35.629,139.7686],"lo":[null,43.505],"hi":[null,44.913],"km":[null,75.0]},{"c":[35.7011,139.7675],"lo":[null,37.679],"hi":[null,39.092],"km":[null,72.0]},{"c":[35.7013,139.7896],"lo":[null,36.233],"hi":[null,37.648],"km":[null,71.0]},{"c":[36.3644,140.4705],"lo":[null,58.434],"hi":[null,59.834],"km":[null,84.0]},{"c":[36.2915,139.3797],"lo":[null,73.349],"hi":[null,74.731],"km":[null,95.0]},{"c":[35.6468,139.7463],"lo":[null,43.327],"hi":[null,44.74],"km":[null,75.0]},{"c":[35.6573,139.9008],"lo":[null,34.332],"hi":[null,35.683],"km":[null,70.0]},{"c":[35.628,139.6693],"lo":[null,49.72],"hi":[null,51.133],"km":[null,79.0]},{"c":[35.71,139.7563],"lo":[null,37.763],"hi":[null,39.173],"km":[null,72.0]},{"c":[35.4562,139.628],"lo":[null,66.484],"hi":[null,67.888],"km":[null,90.0]},{"c":[35.4473,139.6392],"lo":[null,66.68],"hi":[null,68.08],"km":[null,90.0]},{"c":[35.8306,140.1419],"lo":[null,12.552],"hi":[null,13.886],"km":[null,62.0]},{"c":[36.5591,139.9216],"lo":[null,69.933],"hi":[null,71.105],"km":[null,93.0]},{"c":[35.4349,139.364],"lo":[null,84.616],"hi":[null,86.025],"km":[null,104.0]},{"c":[35.6198,139.7467],"lo":[null,45.559],"hi":[null,46.97],"km":[null,76.0]},{"c":[35.5543,139.5381],"lo":[null,64.01],"hi":[null,65.419],"km":[null,88.0]},{"c":[38.2675,140.8685],"lo":[null,267.784],"hi":[null,269.016],"km":[null,274.0]},{"c":[35.747,139.8442],"lo":[null,29.161],"hi":[null,30.576],"km":[null,67.0]},{"c":[35.4732,139.5396],"lo":[null,70.197],"hi":[null,71.612],"km":[null,93.0]},{"c":[35.5909,139.5816],"lo":[null,58.372],"hi":[null,59.781],"km":[null,84.0]},{"c":[36.2467,139.4029],"lo":[null,69.03],"hi":[null,70.398],"km":[null,92.0]},{"c":[35.587,140.1225],"lo":[null,38.636],"hi":[null,39.727],"km":[null,72.0]},{"c":[35.5702,139.3723],"lo":[null,74.95],"hi":[null,76.327],"km":[null,97.0]},{"c":[35.5475,139.7368],"lo":[null,52.475],"hi":[null,53.873],"km":[null,80.0]},{"c":[35.6561,139.7682],"lo":[null,41.234],"hi":[null,42.647],"km":[null,74.0]},{"c":[35.4201,139.6286],"lo":[null,69.697],"hi":[null,71.094],"km":[null,93.0]},{"c":[35.6283,139.7024],"lo":[null,47.55],"hi":[null,48.964],"km":[null,77.0]},{"c":[37.4005,140.3616],"lo":[null,164.066],"hi":[null,165.217],"km":[null,175.0]},{"c":[35.7018,139.8338],"lo":[null,33.512],"hi":[null,34.924],"km":[null,69.0]},{"c":[35.8178,139.7214],"lo":[null,34.106],"hi":[null,35.405],"km":[null,70.0]},{"c":[35.7915,139.7883],"lo":[null,30.044],"hi":[null,31.417],"km":[null,68.0]},{"c":[35.8747,140.0196],"lo":[null,8.025],"hi":[null,9.429],"km":[null,61.0]},{"c":[35.6822,139.6794],"lo":[null,45.089],"hi":[null,46.492],"km":[null,76.0]},{"c":[35.4742,139.6277],"lo":[null,64.911],"hi":[null,66.318],"km":[null,89.0]},{"c":[35.9071,139.6424],"lo":[null,38.816],"hi":[null,39.885],"km":[null,72.0]},{"c":[35.6466,139.7242],"lo":[null,44.721],"hi":[null,46.136],"km":[null,76.0]}],"felt":[{"rev":1787419238667,"min":19.99,"e":0,"a":[[0,1,4.1],[1,1,3.8],[2,1,3.4],[3,1,3.1],[4,1,3.1],[5,1,2.7]],"c":[],"d":[]},{"rev":1787419549785,"min":25.17,"e":0,"a":[[6,1,4.1],[7,1,3.8],[8,1,3.8],[9,1,3.8],[10,1,3.4]],"c":[],"d":[]},{"rev":1787419853426,"min":30.23,"e":0,"a":[[11,1,5.4],[12,1,4.8],[13,1,4.8],[14,1,4.6],[15,1,4.6],[16,1,4.6],[17,1,4.6],[18,1,4.1],[19,1,4.1],[20,1,4.1],[21,1,4.1],[22,1,3.8],[23,1,3.8],[24,1,3.8],[25,1,3.4],[26,1,3.4],[27,1,3.4],[28,1,3.1],[29,1,2.7],[30,1,2.2],[31,1,2.0]],"c":[],"d":[]},{"rev":1787420173564,"min":35.57,"e":0,"a":[[32,1,5.3],[33,1,4.8],[34,1,4.1],[35,1,4.1],[36,1,4.1],[37,1,3.8],[38,1,3.4],[39,1,3.4],[40,1,2.0],[41,1,2.0]],"c":[],"d":[]},{"rev":1787420488125,"min":40.81,"e":0,"a":[[42,1,5.4],[43,1,3.8],[44,1,3.4],[45,1,3.4],[46,1,3.4],[47,1,3.4],[48,1,2.9]],"c":[[17,2,4.3],[1,2,4.1],[27,2,3.3]],"d":[]},{"rev":1787420874867,"min":47.26,"e":1,"a":[[49,1,5.0],[50,1,4.7],[51,1,4.6],[52,1,4.6],[53,1,3.8],[54,1,3.4],[55,1,3.1]],"c":[[28,2,3.6]],"d":[]},{"rev":1787421178849,"min":52.32,"e":1,"a":[[56,1,3.4]],"c":[],"d":[]},{"rev":1787421538308,"min":58.31,"e":1,"a":[[57,1,4.3],[58,1,4.3],[59,1,4.1],[60,1,3.8]],"c":[[20,2,4.7],[52,2,4.2],[1,3,4.0],[36,2,3.4]],"d":[]},{"rev":1787421852087,"min":63.54,"e":1,"a":[[61,1,4.3],[62,1,3.4]],"c":[],"d":[]},{"rev":1787422165199,"min":68.76,"e":1,"a":[[63,1,5.3],[64,1,3.4]],"c":[[13,2,3.9]],"d":[]},{"rev":1787422496379,"min":74.28,"e":1,"a":[[65,1,5.6],[66,1,4.1]],"c":[],"d":[]},{"rev":1787422916209,"min":81.28,"e":1,"a":[[67,1,3.4]],"c":[],"d":[]},{"rev":1787423497084,"min":90.96,"e":1,"a":[[68,1,4.3],[69,1,4.3]],"c":[],"d":[]},{"rev":1787423965939,"min":98.77,"e":1,"a":[],"c":[[27,3,3.4]],"d":[]},{"rev":1787424285279,"min":104.1,"e":1,"a":[[70,1,4.1]],"c":[],"d":[]},{"rev":1787425406934,"min":122.79,"e":1,"a":[[71,1,4.6]],"c":[],"d":[]},{"rev":1787426611906,"min":142.87,"e":1,"a":[[72,1,4.8]],"c":[],"d":[]},{"rev":1787430238176,"min":203.31,"e":1,"a":[[73,1,3.8]],"c":[],"d":[]},{"rev":1787431475875,"min":223.94,"e":1,"a":[[74,1,4.3]],"c":[],"d":[]},{"rev":1787431783857,"min":229.07,"e":1,"a":[[75,1,3.8]],"c":[],"d":[]},{"rev":1787432455242,"min":240.26,"e":1,"a":[[76,1,3.8]],"c":[],"d":[]},{"rev":1787433523224,"min":258.06,"e":1,"a":[[77,1,4.3]],"c":[],"d":[]},{"rev":1787434540753,"min":275.02,"e":1,"a":[],"c":[[14,2,5.4]],"d":[]},{"rev":1787435075230,"min":283.93,"e":1,"a":[[78,1,3.4]],"c":[],"d":[]},{"rev":1787435387797,"min":289.14,"e":1,"a":[[79,1,3.8]],"c":[],"d":[]},{"rev":1787435702522,"min":294.38,"e":1,"a":[[80,1,3.4]],"c":[],"d":[]},{"rev":1787436393986,"min":305.91,"e":1,"a":[[81,1,2.2]],"c":[],"d":[]},{"rev":1787438258544,"min":336.98,"e":1,"a":[[82,1,3.8]],"c":[],"d":[]},{"rev":1787439293494,"min":354.23,"e":1,"a":[[83,1,4.3]],"c":[],"d":[]},{"rev":1787439614381,"min":359.58,"e":1,"a":[[84,1,4.1]],"c":[],"d":[]},{"rev":1787440355765,"min":371.94,"e":1,"a":[],"c":[],"d":[]},{"rev":1787441682954,"min":394.06,"e":1,"a":[[85,1,2.7]],"c":[],"d":[]},{"rev":1787441998133,"min":399.31,"e":1,"a":[[86,1,5.0],[87,1,3.1]],"c":[],"d":[]},{"rev":1787442462153,"min":407.04,"e":1,"a":[],"c":[[1,4,4.0]],"d":[]},{"rev":1787442944047,"min":415.08,"e":1,"a":[[88,1,2.7]],"c":[],"d":[]},{"rev":1787443255579,"min":420.27,"e":1,"a":[[89,1,3.4],[90,1,3.1]],"c":[],"d":[]},{"rev":1787443727479,"min":428.13,"e":1,"a":[[91,1,4.3]],"c":[],"d":[]},{"rev":1787444075332,"min":433.93,"e":1,"a":[],"c":[[24,2,3.8]],"d":[]},{"rev":1787444619303,"min":443.0,"e":1,"a":[[92,1,3.4]],"c":[],"d":[]},{"rev":1787445824406,"min":463.08,"e":1,"a":[[93,1,4.1]],"c":[],"d":[]},{"rev":1787447134820,"min":484.92,"e":1,"a":[[94,1,4.3]],"c":[],"d":[]},{"rev":1787447973673,"min":498.9,"e":1,"a":[[95,1,5.3]],"c":[],"d":[]},{"rev":1787448275449,"min":503.93,"e":1,"a":[[96,1,3.4],[97,1,3.4]],"c":[],"d":[]},{"rev":1787448876251,"min":513.95,"e":1,"a":[[98,1,4.1]],"c":[],"d":[]},{"rev":1787449838419,"min":529.98,"e":1,"a":[],"c":[[41,2,3.1]],"d":[]},{"rev":1787452836592,"min":579.95,"e":1,"a":[[99,1,4.1]],"c":[],"d":[]},{"rev":1787453512937,"min":591.22,"e":1,"a":[[100,1,3.8]],"c":[],"d":[]},{"rev":1787456811510,"min":646.2,"e":1,"a":[],"c":[[99,2,5.5]],"d":[]},{"rev":1787458895753,"min":680.94,"e":1,"a":[],"c":[[13,3,4.0]],"d":[]},{"rev":1787459206589,"min":686.12,"e":1,"a":[[101,1,3.8]],"c":[],"d":[]},{"rev":1787459518595,"min":691.32,"e":1,"a":[[102,1,4.8]],"c":[],"d":[]},{"rev":1787460228203,"min":703.15,"e":1,"a":[[103,1,4.3]],"c":[],"d":[]},{"rev":1787460537540,"min":708.3,"e":1,"a":[[104,1,5.6]],"c":[],"d":[]},{"rev":1787462285417,"min":737.43,"e":1,"a":[[105,1,3.4]],"c":[],"d":[]},{"rev":1787468799580,"min":846.0,"e":1,"a":[[106,1,4.1]],"c":[],"d":[]},{"rev":1787470251029,"min":870.19,"e":1,"a":[[107,1,5.3]],"c":[],"d":[]},{"rev":1787473967688,"min":932.14,"e":1,"a":[[108,1,3.4]],"c":[],"d":[]},{"rev":1787475715987,"min":961.28,"e":1,"a":[[109,1,2.7]],"c":[],"d":[]},{"rev":1787476065707,"min":967.1,"e":1,"a":[[110,1,5.3],[111,1,3.4]],"c":[],"d":[]},{"rev":1787488078941,"min":1167.32,"e":1,"a":[],"c":[[22,2,3.9]],"d":[]},{"rev":1787488383551,"min":1172.4,"e":1,"a":[[112,1,4.3],[113,1,3.4]],"c":[],"d":[]},{"rev":1787490071890,"min":1200.54,"e":1,"a":[[114,1,3.4]],"c":[],"d":[]},{"rev":1787496962624,"min":1315.39,"e":1,"a":[],"c":[[75,2,4.2]],"d":[]},{"rev":1787498333865,"min":1338.24,"e":1,"a":[[115,1,4.1]],"c":[],"d":[]},{"rev":1787498646905,"min":1343.46,"e":1,"a":[[116,1,4.3]],"c":[],"d":[]},{"rev":1787516999310,"min":1649.33,"e":1,"a":[[117,1,3.8]],"c":[],"d":[]},{"rev":1787525403525,"min":1789.4,"e":1,"a":[[118,1,3.1]],"c":[],"d":[]},{"rev":1787530217735,"min":1869.64,"e":1,"a":[],"c":[[19,2,4.6]],"d":[]},{"rev":1787530531290,"min":1874.86,"e":1,"a":[],"c":[[92,2,3.6]],"d":[]},{"rev":1787576522339,"min":2641.38,"e":1,"a":[[119,1,3.4]],"c":[],"d":[]},{"rev":1787590948116,"min":2881.81,"e":1,"a":[[120,1,2.7]],"c":[],"d":[]},{"rev":1787616474669,"min":3307.25,"e":1,"a":[[121,1,5.3]],"c":[],"d":[]},{"rev":1787616780826,"min":3312.36,"e":1,"a":[],"c":[[36,3,4.3]],"d":[]},{"rev":1787618276147,"min":3337.28,"e":1,"a":[[122,1,4.3]],"c":[],"d":[]},{"rev":1787637422905,"min":3656.39,"e":1,"a":[[123,1,5.6]],"c":[],"d":[]},{"rev":1787644317892,"min":3771.31,"e":1,"a":[[124,1,3.1]],"c":[],"d":[]},{"rev":1787645636101,"min":3793.28,"e":1,"a":[],"c":[],"d":[]},{"rev":1787650035126,"min":3866.59,"e":1,"a":[[125,1,5.3]],"c":[],"d":[]},{"rev":1787650349123,"min":3871.83,"e":1,"a":[[126,1,5.4],[127,1,4.3]],"c":[[64,2,3.4]],"d":[]},{"rev":1787697737624,"min":4661.64,"e":1,"a":[[128,1,4.6]],"c":[],"d":[]}],"phases":[{"rev":1787419157040,"min":18.63,"t0":"2026-08-22T17:00:41.199Z","lat":35.9344,"lon":140.0625,"depth":77.584,"status":"reviewed","picks":[{"sta":"IM.MJAR","deg":1.6164,"t":26.72,"a":28.448,"ph":"Pn","res":-0.05,"mode":"manual","k":0},{"sta":"IU.MAJO","deg":1.6215,"t":26.57,"a":28.298,"ph":"Pn","res":-0.26,"mode":"manual","k":1},{"sta":"JP.JGF","deg":2.2269,"t":35.45,"a":37.178,"ph":"Pn","res":0.55,"mode":"manual","k":2},{"sta":"G.INU","deg":2.5386,"t":39.34,"a":41.068,"ph":"Pn","res":0.3,"mode":"manual","k":3},{"sta":"JP.JTM","deg":4.911,"t":70.9,"a":72.628,"ph":"Pn","res":-0.4,"mode":"manual","k":4},{"sta":"JP.JMN","deg":5.5417,"t":80.13,"a":81.858,"ph":"Pn","res":0.2,"mode":"manual","k":5},{"sta":"II.ERM","deg":6.5323,"t":89.85,"a":91.578,"ph":"Pn","res":-3.56,"mode":"manual","k":6},{"sta":"JP.JKA","deg":8.4013,"t":114.68,"a":116.408,"ph":"Pn","res":-4.2,"mode":"manual","k":7},{"sta":"JP.JTU","deg":8.8394,"t":124.55,"a":126.278,"ph":"Pn","res":-0.36,"mode":"manual","k":8},{"sta":"JP.JSU","deg":9.1384,"t":129.88,"a":131.608,"ph":"Pn","res":0.83,"mode":"manual","k":9},{"sta":"IM.KS31","deg":9.8967,"t":140.65,"a":142.378,"ph":"Pn","res":1.32,"mode":"manual","k":10},{"sta":"IM.KSAR","deg":9.8967,"t":141.01,"a":142.738,"ph":"Pn","res":1.68,"mode":"manual","k":11},{"sta":"IM.HILR","deg":20.1093,"t":265.08,"a":266.808,"ph":"P","res":-2.35,"mode":"manual","k":12},{"sta":"TW.TPUB","deg":21.0216,"t":275.08,"a":276.808,"ph":"P","res":-2.37,"mode":"manual","k":13},{"sta":"IM.PEA0B","deg":21.1834,"t":278.72,"a":280.448,"ph":"P","res":-0.18,"mode":"manual","k":14},{"sta":"TW.KMNB","deg":21.8946,"t":283.74,"a":285.468,"ph":"P","res":-2.98,"mode":"manual","k":15},{"sta":"IU.ULN","deg":27.099,"t":334.36,"a":336.088,"ph":"P","res":-1.19,"mode":"manual","k":16},{"sta":"IM.SONM","deg":27.5228,"t":337.81,"a":339.538,"ph":"P","res":-1.5,"mode":"manual","k":17},{"sta":"IM.LZAB","deg":29.3363,"t":354.63,"a":356.358,"ph":"P","res":-1.15,"mode":"manual","k":18},{"sta":"IM.LZDM","deg":29.3363,"t":355.01,"a":356.738,"ph":"P","res":-0.76,"mode":"manual","k":19},{"sta":"IM.PDYAR","deg":29.7209,"t":357.58,"a":359.308,"ph":"P","res":-0.95,"mode":"manual","k":20},{"sta":"AV.AMKA","deg":31.8726,"t":377.51,"a":379.238,"ph":"P","res":-0.01,"mode":"manual","k":21},{"sta":"AV.GAKI","deg":33.0608,"t":388.78,"a":390.508,"ph":"P","res":0.87,"mode":"manual","k":22},{"sta":"AV.KIWB","deg":34.1345,"t":397.57,"a":399.298,"ph":"P","res":0.31,"mode":"manual","k":23},{"sta":"IU.ADK","deg":34.4244,"t":400.53,"a":402.258,"ph":"P","res":0.78,"mode":"manual","k":24},{"sta":"AK.ATKA","deg":35.9918,"t":413.24,"a":414.968,"ph":"P","res":0.05,"mode":"manual","k":25},{"sta":"IU.MIDW","deg":36.6537,"t":419.09,"a":420.818,"ph":"P","res":-0.04,"mode":"manual","k":26},{"sta":"TM.CRAI","deg":38.067,"t":430.66,"a":432.388,"ph":"P","res":-0.54,"mode":"manual","k":27},{"sta":"PS.JAY","deg":38.2543,"t":432.76,"a":434.488,"ph":"P","res":-0.0,"mode":"manual","k":28},{"sta":"GE.FAKI","deg":39.3366,"t":441.55,"a":443.278,"ph":"P","res":-0.22,"mode":"manual","k":29},{"sta":"IU.CHTO","deg":39.9663,"t":446.46,"a":448.188,"ph":"P","res":-0.62,"mode":"manual","k":30},{"sta":"IM.CMAR","deg":40.1658,"t":448.49,"a":450.218,"ph":"P","res":-0.22,"mode":"manual","k":31},{"sta":"IM.CM31","deg":40.1658,"t":448.15,"a":449.878,"ph":"P","res":-0.56,"mode":"manual","k":32},{"sta":"TM.MHIT","deg":40.4665,"t":450.49,"a":452.218,"ph":"P","res":-0.7,"mode":"manual","k":33},{"sta":"GE.BNDI","deg":41.356,"t":457.61,"a":459.338,"ph":"P","res":-0.81,"mode":"manual","k":34},{"sta":"IM.ZAA0B","deg":41.8622,"t":461.71,"a":463.438,"ph":"P","res":-0.48,"mode":"manual","k":35},{"sta":"IM.ZALV","deg":41.8622,"t":461.52,"a":463.248,"ph":"P","res":-0.67,"mode":"manual","k":36},{"sta":"QZ.ZSN","deg":41.9704,"t":463.46,"a":465.188,"ph":"P","res":0.23,"mode":"manual","k":37},{"sta":"MY.SBM","deg":42.1187,"t":463.15,"a":464.878,"ph":"P","res":-1.58,"mode":"manual","k":38},{"sta":"IM.MKAR","deg":43.7894,"t":477.86,"a":479.588,"ph":"P","res":-0.08,"mode":"manual","k":39},{"sta":"AK.M14K","deg":43.9209,"t":480.48,"a":482.208,"ph":"P","res":1.79,"mode":"manual","k":40},{"sta":"IU.MAKZ","deg":44.0011,"t":479.63,"a":481.358,"ph":"P","res":-0.0,"mode":"manual","k":41},{"sta":"AK.O14K","deg":44.1067,"t":481.25,"a":482.978,"ph":"P","res":1.03,"mode":"manual","k":42},{"sta":"II.KAPI","deg":44.9685,"t":486.21,"a":487.938,"ph":"P","res":-1.39,"mode":"manual","k":43},{"sta":"IU.PMG","deg":45.5888,"t":492.13,"a":493.858,"ph":"P","res":-0.3,"mode":"manual","k":44},{"sta":"II.KURK","deg":45.7615,"t":492.82,"a":494.548,"ph":"P","res":-0.66,"mode":"manual","k":45},{"sta":"AV.PLBL","deg":46.3742,"t":496.5,"a":498.228,"ph":"P","res":-1.73,"mode":"manual","k":46},{"sta":"AK.R18K","deg":47.6511,"t":508.13,"a":509.858,"ph":"P","res":0.03,"mode":"manual","k":47},{"sta":"II.KDAK","deg":48.6421,"t":515.95,"a":517.678,"ph":"P","res":0.2,"mode":"manual","k":48},{"sta":"II.AAK","deg":50.0577,"t":527.17,"a":528.898,"ph":"P","res":0.17,"mode":"manual","k":49},{"sta":"GE.JAGI","deg":50.4595,"t":527.79,"a":529.518,"ph":"P","res":-2.26,"mode":"manual","k":50},{"sta":"II.BORK","deg":50.55,"t":530.22,"a":531.948,"ph":"P","res":-0.12,"mode":"manual","k":51},{"sta":"IU.COLA","deg":50.5815,"t":531.29,"a":533.018,"ph":"P","res":0.93,"mode":"manual","k":52},{"sta":"IM.ILAR","deg":51.0022,"t":533.49,"a":535.218,"ph":"P","res":-0.09,"mode":"manual","k":53},{"sta":"IM.KKAR","deg":52.7368,"t":546.69,"a":548.418,"ph":"P","res":-0.14,"mode":"manual","k":54},{"sta":"AU.CN1H","deg":52.8276,"t":547.77,"a":549.498,"ph":"P","res":0.19,"mode":"manual","k":55},{"sta":"IM.BCAR","deg":53.4124,"t":552.87,"a":554.598,"ph":"P","res":1.35,"mode":"manual","k":56},{"sta":"II.NIL","deg":53.9138,"t":555.98,"a":557.708,"ph":"P","res":0.36,"mode":"manual","k":57},{"sta":"II.JZAX","deg":55.6973,"t":567.81,"a":569.538,"ph":"P","res":-0.57,"mode":"manual","k":58},{"sta":"II.WRAB","deg":55.8244,"t":568.58,"a":570.308,"ph":"P","res":-0.74,"mode":"manual","k":59},{"sta":"IM.WRA","deg":55.8352,"t":568.82,"a":570.548,"ph":"P","res":-0.59,"mode":"manual","k":60},{"sta":"IU.CTAO","deg":56.0232,"t":570.43,"a":572.158,"ph":"P","res":-0.31,"mode":"manual","k":61},{"sta":"HV.MLOD","deg":58.4804,"t":588.79,"a":590.518,"ph":"P","res":0.25,"mode":"manual","k":62},{"sta":"IM.ASAR","deg":59.5627,"t":595.23,"a":596.958,"ph":"P","res":-0.28,"mode":"manual","k":63},{"sta":"IU.MBWA","deg":59.9576,"t":597.86,"a":599.588,"ph":"P","res":-0.35,"mode":"manual","k":64},{"sta":"CN.DLBC","deg":60.158,"t":601.02,"a":602.748,"ph":"P","res":1.69,"mode":"manual","k":65},{"sta":"IM.PSA00","deg":60.3122,"t":600.18,"a":601.908,"ph":"P","res":-0.46,"mode":"manual","k":66},{"sta":"AU.PSA00","deg":60.3122,"t":600.31,"a":602.038,"ph":"P","res":-0.33,"mode":"manual","k":67},{"sta":"GE.MALK","deg":60.524,"t":602.86,"a":604.588,"ph":"P","res":0.51,"mode":"manual","k":68},{"sta":"II.PALK","deg":61.0665,"t":606.51,"a":608.238,"ph":"P","res":0.42,"mode":"manual","k":69},{"sta":"CN.MOBC","deg":61.0742,"t":605.85,"a":607.578,"ph":"P","res":0.24,"mode":"manual","k":70},{"sta":"II.ALE","deg":61.2702,"t":607.02,"a":608.748,"ph":"P","res":0.57,"mode":"manual","k":71},{"sta":"IM.SPITS","deg":61.3873,"t":607.55,"a":609.278,"ph":"P","res":0.24,"mode":"automatic","k":72},{"sta":"IU.KBS","deg":61.5573,"t":609.02,"a":610.748,"ph":"P","res":0.61,"mode":"manual","k":73},{"sta":"CN.RUBB","deg":61.5652,"t":609.63,"a":611.358,"ph":"P","res":0.85,"mode":"manual","k":74},{"sta":"CN.JEDB","deg":61.8329,"t":611.15,"a":612.878,"ph":"P","res":0.48,"mode":"manual","k":75},{"sta":"QZ.FDRN","deg":61.9804,"t":611.57,"a":613.298,"ph":"P","res":-0.06,"mode":"manual","k":76},{"sta":"DK.NOR","deg":62.0717,"t":611.75,"a":613.478,"ph":"P","res":-0.08,"mode":"manual","k":77},{"sta":"CN.KUKN","deg":62.5112,"t":615.21,"a":616.938,"ph":"P","res":0.3,"mode":"manual","k":78},{"sta":"AU.GIRL","deg":63.1797,"t":620.72,"a":622.448,"ph":"P","res":0.86,"mode":"manual","k":79},{"sta":"AU.INKA","deg":63.3377,"t":620.8,"a":622.528,"ph":"P","res":0.0,"mode":"manual","k":80},{"sta":"CN.RES","deg":63.9306,"t":624.43,"a":626.158,"ph":"P","res":0.23,"mode":"manual","k":81},{"sta":"OI.FNUL","deg":64.0378,"t":626.75,"a":628.478,"ph":"P","res":1.13,"mode":"manual","k":82},{"sta":"IU.KEV","deg":64.0809,"t":625.42,"a":627.148,"ph":"P","res":0.17,"mode":"manual","k":83},{"sta":"II.MSVF","deg":64.3701,"t":629.1,"a":630.828,"ph":"P","res":1.2,"mode":"manual","k":84},{"sta":"IM.ARCES","deg":64.6387,"t":629.06,"a":630.788,"ph":"P","res":0.12,"mode":"manual","k":85},{"sta":"AU.FORT","deg":67.3135,"t":646.33,"a":648.058,"ph":"P","res":-0.11,"mode":"manual","k":86},{"sta":"AU.BBOO","deg":68.4896,"t":653.83,"a":655.558,"ph":"P","res":0.03,"mode":"manual","k":87},{"sta":"IM.FINES","deg":69.2748,"t":658.22,"a":659.948,"ph":"P","res":-0.2,"mode":"manual","k":88},{"sta":"IU.COR","deg":70.0158,"t":662.7,"a":664.428,"ph":"P","res":-0.58,"mode":"manual","k":89},{"sta":"II.UOSS","deg":71.1022,"t":669.74,"a":671.468,"ph":"P","res":-0.51,"mode":"manual","k":90},{"sta":"IU.NWAO","deg":71.7601,"t":673.76,"a":675.488,"ph":"P","res":-0.05,"mode":"manual","k":91},{"sta":"IM.AKASG","deg":74.4942,"t":689.62,"a":691.348,"ph":"P","res":-0.23,"mode":"automatic","k":92},{"sta":"IU.KIEV","deg":74.4942,"t":689.21,"a":690.938,"ph":"P","res":-0.65,"mode":"manual","k":93},{"sta":"IM.NC3","deg":74.541,"t":689.14,"a":690.868,"ph":"P","res":-0.82,"mode":"automatic","k":94},{"sta":"II.FFC","deg":75.2143,"t":694.24,"a":695.968,"ph":"P","res":0.28,"mode":"manual","k":95},{"sta":"IU.KONO","deg":76.356,"t":700.48,"a":702.208,"ph":"P","res":0.13,"mode":"automatic","k":96},{"sta":"IM.NVAR","deg":76.519,"t":703.1,"a":704.828,"ph":"P","res":1.11,"mode":"manual","k":97},{"sta":"IU.SFJD","deg":77.0662,"t":704.72,"a":706.448,"ph":"P","res":0.47,"mode":"manual","k":98},{"sta":"IM.BRTR","deg":78.7573,"t":714.52,"a":716.248,"ph":"P","res":0.2,"mode":"manual","k":99},{"sta":"IM.PDAR","deg":79.2116,"t":717.24,"a":718.968,"ph":"P","res":0.36,"mode":"manual","k":100},{"sta":"IM.PD31","deg":79.2116,"t":717.33,"a":719.058,"ph":"P","res":0.45,"mode":"manual","k":101},{"sta":"II.RAYN","deg":80.0574,"t":721.48,"a":723.208,"ph":"P","res":-0.05,"mode":"automatic","k":102},{"sta":"II.PFO","deg":80.5605,"t":724.93,"a":726.658,"ph":"P","res":0.75,"mode":"manual","k":103},{"sta":"IU.RSSD","deg":81.3713,"t":728.58,"a":730.308,"ph":"P","res":0.16,"mode":"manual","k":104},{"sta":"IM.GERES","deg":83.0623,"t":735.26,"a":736.988,"ph":"P","res":-1.74,"mode":"automatic","k":105},{"sta":"IU.GRFO","deg":83.4693,"t":739.49,"a":741.218,"ph":"P","res":0.55,"mode":"manual","k":106},{"sta":"II.ESK","deg":83.8222,"t":740.81,"a":742.538,"ph":"P","res":0.19,"mode":"manual","k":107},{"sta":"NZ.LBZ","deg":84.4901,"t":744.65,"a":746.378,"ph":"P","res":0.74,"mode":"manual","k":108},{"sta":"IU.TUC","deg":85.1051,"t":748.47,"a":750.198,"ph":"P","res":0.8,"mode":"manual","k":109},{"sta":"II.BFO","deg":85.7193,"t":750.22,"a":751.948,"ph":"P","res":-0.14,"mode":"manual","k":110},{"sta":"GS.ASLAR","deg":86.1266,"t":753.88,"a":755.608,"ph":"P","res":1.04,"mode":"manual","k":111},{"sta":"IU.ANMO","deg":86.1278,"t":753.62,"a":755.348,"ph":"P","res":0.8,"mode":"manual","k":112},{"sta":"II.MSEY","deg":88.3343,"t":764.23,"a":765.958,"ph":"P","res":0.67,"mode":"manual","k":113},{"sta":"IM.TXAR","deg":91.6546,"t":779.56,"a":781.288,"ph":"P","res":0.61,"mode":"automatic","k":114},{"sta":"IU.CCM","deg":92.3981,"t":782.21,"a":783.938,"ph":"P","res":0.13,"mode":"manual","k":115},{"sta":"IU.WCI","deg":94.6501,"t":792.73,"a":794.458,"ph":"P","res":0.31,"mode":"manual","k":116},{"sta":"IU.WVT","deg":95.5982,"t":796.68,"a":798.408,"ph":"P","res":-0.11,"mode":"manual","k":117},{"sta":"IU.HKT","deg":95.9966,"t":799.29,"a":801.018,"ph":"P","res":0.59,"mode":"manual","k":118},{"sta":"IU.HRV","deg":96.7584,"t":802.68,"a":804.408,"ph":"P","res":0.76,"mode":"manual","k":119},{"sta":"IU.PAB","deg":98.0365,"t":807.37,"a":809.098,"ph":"P","res":-0.52,"mode":"manual","k":120}],"noRes":0,"url":"https://earthquake.usgs.gov/product/phase-data/us6000tmta/us/1787419157040/quakeml.xml"},{"rev":1787420801040,"min":46.03,"t0":"2026-08-22T17:00:39.472Z","lat":35.9375,"lon":140.0778,"depth":61.0,"status":"reviewed","picks":[{"sta":"IM.MJAR","deg":1.6267,"t":28.45,"a":28.448,"ph":"Pn","res":2.01,"mode":"manual","k":0},{"sta":"IU.MAJO","deg":1.6318,"t":28.3,"a":28.298,"ph":"Pn","res":1.79,"mode":"manual","k":1},{"sta":"JP.JGF","deg":2.2397,"t":37.18,"a":37.178,"ph":"Pn","res":2.41,"mode":"manual","k":2},{"sta":"G.INU","deg":2.5514,"t":41.07,"a":41.068,"ph":"Pn","res":2.11,"mode":"manual","k":3},{"sta":"JP.JTM","deg":4.906,"t":71.64,"a":71.638,"ph":"Pn","res":0.46,"mode":"manual","k":4},{"sta":"JP.JMN","deg":5.5544,"t":81.2,"a":81.198,"ph":"Pn","res":1.1,"mode":"manual","k":5},{"sta":"II.ERM","deg":6.525,"t":91.58,"a":91.578,"ph":"Pn","res":-1.69,"mode":"manual","k":6},{"sta":"JP.JKA","deg":8.3956,"t":117.57,"a":117.568,"ph":"Pn","res":-1.29,"mode":"manual","k":7},{"sta":"JP.JTU","deg":8.8521,"t":126.28,"a":126.278,"ph":"Pn","res":1.13,"mode":"manual","k":8},{"sta":"JP.JSU","deg":9.1509,"t":131.61,"a":131.608,"ph":"Pn","res":2.32,"mode":"manual","k":9},{"sta":"IM.KS31","deg":9.9082,"t":141.27,"a":141.268,"ph":"Pn","res":1.69,"mode":"manual","k":10},{"sta":"IM.KSAR","deg":9.9082,"t":141.38,"a":141.378,"ph":"Pn","res":1.8,"mode":"manual","k":11},{"sta":"IM.HILR","deg":20.1151,"t":265.9,"a":265.898,"ph":"P","res":-2.86,"mode":"manual","k":12},{"sta":"TW.TPUB","deg":21.0338,"t":276.81,"a":276.808,"ph":"P","res":-2.04,"mode":"manual","k":13},{"sta":"IM.PEA0B","deg":21.1745,"t":280.45,"a":280.448,"ph":"P","res":0.36,"mode":"manual","k":14},{"sta":"MI.FLX","deg":21.2425,"t":280.69,"a":280.688,"ph":"P","res":-0.37,"mode":"manual","k":121},{"sta":"TW.KMNB","deg":21.9072,"t":285.47,"a":285.468,"ph":"P","res":-2.68,"mode":"manual","k":15},{"sta":"IU.ULN","deg":27.1071,"t":336.09,"a":336.088,"ph":"P","res":-1.09,"mode":"manual","k":16},{"sta":"IM.SONM","deg":27.531,"t":339.54,"a":339.538,"ph":"P","res":-1.4,"mode":"manual","k":17},{"sta":"IM.LZAB","deg":29.3479,"t":356.36,"a":356.358,"ph":"P","res":-1.09,"mode":"manual","k":18},{"sta":"IM.LZDM","deg":29.3479,"t":356.74,"a":356.738,"ph":"P","res":-0.71,"mode":"manual","k":19},{"sta":"IM.PDYAR","deg":29.7241,"t":359.31,"a":359.308,"ph":"P","res":-0.82,"mode":"manual","k":20},{"sta":"AV.AMKA","deg":31.8612,"t":379.24,"a":379.238,"ph":"P","res":0.23,"mode":"manual","k":21},{"sta":"AV.GAKI","deg":33.0494,"t":390.51,"a":390.508,"ph":"P","res":1.11,"mode":"manual","k":22},{"sta":"AV.KIWB","deg":34.1232,"t":399.3,"a":399.298,"ph":"P","res":0.54,"mode":"manual","k":23},{"sta":"IU.ADK","deg":34.413,"t":402.26,"a":402.258,"ph":"P","res":1.0,"mode":"manual","k":24},{"sta":"AK.ATKA","deg":35.9805,"t":414.95,"a":414.948,"ph":"P","res":0.24,"mode":"manual","k":25},{"sta":"IU.MIDW","deg":36.6413,"t":420.82,"a":420.818,"ph":"P","res":0.18,"mode":"manual","k":26},{"sta":"TM.CRAI","deg":38.0798,"t":432.39,"a":432.388,"ph":"P","res":-0.55,"mode":"manual","k":27},{"sta":"PS.JAY","deg":38.2572,"t":434.49,"a":434.488,"ph":"P","res":0.08,"mode":"manual","k":28},{"sta":"GE.FAKI","deg":39.3423,"t":443.28,"a":443.278,"ph":"P","res":-0.17,"mode":"manual","k":29},{"sta":"IU.CHTO","deg":39.9791,"t":448.19,"a":448.188,"ph":"P","res":-0.64,"mode":"manual","k":30},{"sta":"IM.CMAR","deg":40.1786,"t":450.22,"a":450.218,"ph":"P","res":-0.24,"mode":"manual","k":31},{"sta":"IM.CM31","deg":40.1786,"t":449.88,"a":449.878,"ph":"P","res":-0.58,"mode":"manual","k":32},{"sta":"TM.MHIT","deg":40.4793,"t":452.22,"a":452.218,"ph":"P","res":-0.72,"mode":"manual","k":33},{"sta":"GE.BNDI","deg":41.3623,"t":459.34,"a":459.338,"ph":"P","res":-0.78,"mode":"manual","k":34},{"sta":"IM.ZAA0B","deg":41.8692,"t":463.44,"a":463.438,"ph":"P","res":-0.47,"mode":"manual","k":35},{"sta":"IM.ZALV","deg":41.8692,"t":463.25,"a":463.248,"ph":"P","res":-0.66,"mode":"manual","k":36},{"sta":"QZ.ZSN","deg":41.979,"t":465.19,"a":465.188,"ph":"P","res":0.23,"mode":"manual","k":37},{"sta":"MY.SBM","deg":42.1296,"t":464.88,"a":464.878,"ph":"P","res":-1.59,"mode":"manual","k":38},{"sta":"IM.MKAR","deg":43.7982,"t":479.59,"a":479.588,"ph":"P","res":-0.09,"mode":"manual","k":39},{"sta":"AK.M14K","deg":43.911,"t":482.21,"a":482.208,"ph":"P","res":1.92,"mode":"manual","k":40},{"sta":"IU.MAKZ","deg":44.0099,"t":481.36,"a":481.358,"ph":"P","res":-0.02,"mode":"manual","k":41},{"sta":"AK.O14K","deg":44.0965,"t":482.98,"a":482.978,"ph":"P","res":1.17,"mode":"manual","k":42},{"sta":"II.KAPI","deg":44.9773,"t":487.94,"a":487.938,"ph":"P","res":-1.41,"mode":"manual","k":43},{"sta":"IU.PMG","deg":45.5897,"t":493.86,"a":493.858,"ph":"P","res":-0.26,"mode":"manual","k":44},{"sta":"II.KURK","deg":45.7693,"t":494.55,"a":494.548,"ph":"P","res":-0.68,"mode":"manual","k":45},{"sta":"AV.PLBL","deg":46.3636,"t":498.23,"a":498.228,"ph":"P","res":-1.61,"mode":"manual","k":46},{"sta":"AK.R18K","deg":47.6405,"t":509.22,"a":509.218,"ph":"P","res":-0.5,"mode":"manual","k":47},{"sta":"II.KDAK","deg":48.6316,"t":517.68,"a":517.678,"ph":"P","res":0.3,"mode":"manual","k":48},{"sta":"II.AAK","deg":50.0671,"t":528.9,"a":528.898,"ph":"P","res":0.1,"mode":"manual","k":49},{"sta":"GE.JAGI","deg":50.4691,"t":529.52,"a":529.518,"ph":"P","res":-2.32,"mode":"manual","k":50},{"sta":"II.BORK","deg":50.557,"t":531.95,"a":531.948,"ph":"P","res":-0.17,"mode":"manual","k":51},{"sta":"IU.COLA","deg":50.5723,"t":533.02,"a":533.018,"ph":"P","res":1.0,"mode":"manual","k":52},{"sta":"IM.ILAR","deg":50.9931,"t":535.22,"a":535.218,"ph":"P","res":-0.02,"mode":"manual","k":53},{"sta":"IM.KKAR","deg":52.746,"t":548.42,"a":548.418,"ph":"P","res":-0.22,"mode":"manual","k":54},{"sta":"AU.CN1H","deg":52.8292,"t":549.5,"a":549.498,"ph":"P","res":0.17,"mode":"manual","k":55},{"sta":"IM.BCAR","deg":53.4029,"t":554.72,"a":554.718,"ph":"P","res":1.52,"mode":"manual","k":56},{"sta":"II.NIL","deg":53.9246,"t":557.71,"a":557.708,"ph":"P","res":0.26,"mode":"manual","k":57},{"sta":"II.JZAX","deg":55.7069,"t":569.54,"a":569.538,"ph":"P","res":-0.67,"mode":"manual","k":58},{"sta":"II.WRAB","deg":55.8288,"t":570.31,"a":570.308,"ph":"P","res":-0.8,"mode":"manual","k":59},{"sta":"IM.WRA","deg":55.8397,"t":570.55,"a":570.548,"ph":"P","res":-0.65,"mode":"manual","k":60},{"sta":"IU.CTAO","deg":56.0247,"t":572.16,"a":572.158,"ph":"P","res":-0.35,"mode":"manual","k":61},{"sta":"HV.MLOD","deg":58.4679,"t":590.52,"a":590.518,"ph":"P","res":0.29,"mode":"manual","k":62},{"sta":"IM.ASAR","deg":59.5672,"t":596.96,"a":596.958,"ph":"P","res":-0.37,"mode":"manual","k":63},{"sta":"IU.MBWA","deg":59.9651,"t":599.59,"a":599.588,"ph":"P","res":-0.45,"mode":"manual","k":64},{"sta":"CN.DLBC","deg":60.148,"t":602.75,"a":602.748,"ph":"P","res":1.7,"mode":"manual","k":65},{"sta":"IM.PSA00","deg":60.3197,"t":601.91,"a":601.908,"ph":"P","res":-0.57,"mode":"manual","k":66},{"sta":"AU.PSA00","deg":60.3197,"t":602.04,"a":602.038,"ph":"P","res":-0.44,"mode":"manual","k":67},{"sta":"GE.MALK","deg":60.5368,"t":604.59,"a":604.588,"ph":"P","res":0.37,"mode":"manual","k":68},{"sta":"CN.MOBC","deg":61.0634,"t":607.58,"a":607.578,"ph":"P","res":0.25,"mode":"manual","k":70},{"sta":"II.PALK","deg":61.0793,"t":608.24,"a":608.238,"ph":"P","res":0.27,"mode":"manual","k":69},{"sta":"II.ALE","deg":61.2664,"t":608.75,"a":608.748,"ph":"P","res":0.53,"mode":"manual","k":71},{"sta":"IM.SPITS","deg":61.3867,"t":608.94,"a":608.938,"ph":"P","res":-0.17,"mode":"manual","k":72},{"sta":"CN.RUBB","deg":61.5546,"t":611.36,"a":611.358,"ph":"P","res":0.85,"mode":"manual","k":74},{"sta":"IU.KBS","deg":61.5564,"t":610.75,"a":610.748,"ph":"P","res":0.54,"mode":"manual","k":73},{"sta":"CN.JEDB","deg":61.822,"t":612.88,"a":612.878,"ph":"P","res":0.48,"mode":"manual","k":75},{"sta":"QZ.FDRN","deg":61.987,"t":613.3,"a":613.298,"ph":"P","res":-0.18,"mode":"manual","k":76},{"sta":"DK.NOR","deg":62.0694,"t":613.48,"a":613.478,"ph":"P","res":-0.14,"mode":"manual","k":77},{"sta":"CN.KUKN","deg":62.5032,"t":616.94,"a":616.938,"ph":"P","res":0.28,"mode":"manual","k":78},{"sta":"AU.GIRL","deg":63.1881,"t":622.45,"a":622.448,"ph":"P","res":0.73,"mode":"manual","k":79},{"sta":"AU.INKA","deg":63.3407,"t":622.53,"a":622.528,"ph":"P","res":-0.09,"mode":"manual","k":80},{"sta":"CN.RES","deg":63.9246,"t":626.16,"a":626.158,"ph":"P","res":0.19,"mode":"manual","k":81},{"sta":"OI.FNUL","deg":64.0317,"t":628.48,"a":628.478,"ph":"P","res":1.09,"mode":"manual","k":82},{"sta":"IU.KEV","deg":64.0824,"t":627.15,"a":627.148,"ph":"P","res":0.08,"mode":"manual","k":83},{"sta":"II.MSVF","deg":64.3644,"t":630.83,"a":630.828,"ph":"P","res":1.16,"mode":"manual","k":84},{"sta":"IM.ARCES","deg":64.6402,"t":630.79,"a":630.788,"ph":"P","res":0.02,"mode":"manual","k":85},{"sta":"AU.FORT","deg":67.319,"t":648.06,"a":648.058,"ph":"P","res":-0.24,"mode":"manual","k":86},{"sta":"AU.BBOO","deg":68.4935,"t":655.56,"a":655.558,"ph":"P","res":-0.1,"mode":"manual","k":87},{"sta":"IM.FINES","deg":69.2779,"t":659.95,"a":659.948,"ph":"P","res":-0.33,"mode":"manual","k":88},{"sta":"IU.COR","deg":70.0044,"t":664.43,"a":664.428,"ph":"P","res":-0.63,"mode":"manual","k":89},{"sta":"II.UOSS","deg":71.1131,"t":671.47,"a":671.468,"ph":"P","res":-0.7,"mode":"manual","k":90},{"sta":"IU.NWAO","deg":71.7673,"t":675.49,"a":675.488,"ph":"P","res":-0.22,"mode":"manual","k":91},{"sta":"IM.AKASG","deg":74.4994,"t":691.35,"a":691.348,"ph":"P","res":-0.41,"mode":"manual","k":92},{"sta":"IU.KIEV","deg":74.4994,"t":690.94,"a":690.938,"ph":"P","res":-0.82,"mode":"manual","k":93},{"sta":"IM.NC3","deg":74.543,"t":691.29,"a":691.288,"ph":"P","res":-0.55,"mode":"manual","k":94},{"sta":"II.FFC","deg":75.2051,"t":695.97,"a":695.968,"ph":"P","res":0.19,"mode":"manual","k":95},{"sta":"IU.KONO","deg":76.3581,"t":702.21,"a":702.208,"ph":"P","res":-0.03,"mode":"automatic","k":96},{"sta":"IM.NVAR","deg":76.5073,"t":704.83,"a":704.828,"ph":"P","res":1.03,"mode":"manual","k":97},{"sta":"IU.SFJD","deg":77.0621,"t":706.45,"a":706.448,"ph":"P","res":0.34,"mode":"manual","k":98},{"sta":"IM.BRTR","deg":78.7647,"t":716.25,"a":716.248,"ph":"P","res":-0.01,"mode":"manual","k":99},{"sta":"IM.PDAR","deg":79.2007,"t":718.97,"a":718.968,"ph":"P","res":0.26,"mode":"manual","k":100},{"sta":"IM.PD31","deg":79.2007,"t":719.06,"a":719.058,"ph":"P","res":0.35,"mode":"manual","k":101},{"sta":"II.RAYN","deg":80.0678,"t":723.21,"a":723.208,"ph":"P","res":-0.28,"mode":"manual","k":102},{"sta":"II.PFO","deg":80.5485,"t":726.66,"a":726.658,"ph":"P","res":0.64,"mode":"manual","k":103},{"sta":"IU.RSSD","deg":81.3608,"t":730.31,"a":730.308,"ph":"P","res":0.04,"mode":"manual","k":104},{"sta":"IM.GERES","deg":83.0663,"t":738.36,"a":738.358,"ph":"P","res":-0.57,"mode":"manual","k":105},{"sta":"IU.GRFO","deg":83.473,"t":741.22,"a":741.218,"ph":"P","res":0.35,"mode":"manual","k":106},{"sta":"IM.EKA","deg":83.7964,"t":741.63,"a":741.628,"ph":"P","res":-0.78,"mode":"manual","k":122},{"sta":"II.ESK","deg":83.8235,"t":742.54,"a":742.538,"ph":"P","res":-0.0,"mode":"manual","k":107},{"sta":"NZ.LBZ","deg":84.4885,"t":746.38,"a":746.378,"ph":"P","res":0.56,"mode":"manual","k":108},{"sta":"IU.TUC","deg":85.0933,"t":750.2,"a":750.198,"ph":"P","res":0.66,"mode":"manual","k":109},{"sta":"II.BFO","deg":85.7228,"t":751.95,"a":751.948,"ph":"P","res":-0.35,"mode":"manual","k":110},{"sta":"GS.ASLAR","deg":86.1152,"t":755.61,"a":755.608,"ph":"P","res":0.9,"mode":"manual","k":111},{"sta":"IU.ANMO","deg":86.1163,"t":755.35,"a":755.348,"ph":"P","res":0.66,"mode":"manual","k":112},{"sta":"II.MSEY","deg":88.347,"t":765.96,"a":765.958,"ph":"P","res":0.4,"mode":"manual","k":113},{"sta":"IM.TXAR","deg":91.643,"t":781.18,"a":781.178,"ph":"P","res":0.35,"mode":"manual","k":114},{"sta":"IU.CCM","deg":92.388,"t":783.94,"a":783.938,"ph":"P","res":-0.03,"mode":"manual","k":115},{"sta":"IU.WCI","deg":94.6404,"t":794.46,"a":794.458,"ph":"P","res":0.14,"mode":"manual","k":116},{"sta":"IU.WVT","deg":95.5883,"t":798.41,"a":798.408,"ph":"P","res":-0.28,"mode":"manual","k":117},{"sta":"IU.HKT","deg":95.9854,"t":801.02,"a":801.018,"ph":"P","res":0.42,"mode":"manual","k":118},{"sta":"IU.HRV","deg":96.7507,"t":804.41,"a":804.408,"ph":"P","res":0.57,"mode":"manual","k":119},{"sta":"IU.PAB","deg":98.0394,"t":809.1,"a":809.098,"ph":"P","res":-0.75,"mode":"manual","k":120}],"noRes":0,"url":"https://earthquake.usgs.gov/product/phase-data/us6000tmta/us/1787420801040/quakeml.xml"}],"counts":{"added":129,"changed":22,"removed":0,"decreases":0,"kmDisagree":0,"ringDisagree":0,"pickKeyCollisions":0},"sources":{"detail":"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventid=us6000tmta&includesuperseded=true","phase":"https://earthquake.usgs.gov/product/phase-data/us6000tmta/us/1787420801040/quakeml.xml","felt":"https://earthquake.usgs.gov/product/dyfi/us6000tmta/us/1787697737624/dyfi_geo_1km.geojson"},"built":"2026-08-31"};
+
+const KMD = D.kmPerDeg;
+
+// ---------------------------------------------------------------------------
+// The two records, each as a history rather than a state.
+//
+// Until iteration 5 this work built one instance from the current version of
+// each product and said, in the footer, that the two records had last moved at
+// different times. The apparatus publishes every version it ever served, each
+// with the instant it was published, so that sentence can be replaced by the
+// thing it described. Here the felt record is stored as what it is — a list of
+// changes — and replayed; the arrival record is stored whole per version,
+// because it is republished whole and there are only a few of them.
+// ---------------------------------------------------------------------------
+
+// the felt record, replayed: FELT[j] is the state of the record at its j-th
+// published version, as a list of blocks with the epicentre that version used
+const FELT = (() => {
+  const out = [];
+  const state = new Map();               // block index -> {n, cdi}
+  for(const v of D.felt){
+    for(const [i,n,cdi] of v.a) state.set(i, {n, cdi});
+    for(const [i,n,cdi] of v.c) state.set(i, {n, cdi});
+    for(const i of v.d) state.delete(i);
+    const rows = [];
+    for(const [i, s] of state){
+      const b = D.blocks[i];
+      if(b.lo[v.e] === null) continue;   // never published under this epicentre
+      // A block stands at a range of distances, not at one: lo and hi are the
+      // nearest and farthest vertex of the outline its own product publishes,
+      // measured from the epicentre in force at this version.
+      rows.push({i, lo:b.lo[v.e], hi:b.hi[v.e], km:b.km[v.e], n:s.n, cdi:s.cdi});
+    }
+    rows.sort((a,b) => a.lo - b.lo || a.hi - b.hi);
+    out.push({rev:v.rev, min:v.min, e:v.e, rows});
+  }
+  return out;
+})();
+
+const PH = D.phases;
+
+// ---- what each mark has already been published at --------------------------
+// Every iteration to the eighth drew each published version as though it had
+// no predecessor. Both records carry a name that survives republication — a
+// block by the centre of its published outline, a pick by its station and
+// phase label — so both can be asked where they have already stood, and the
+// answer is published data and not a reconstruction. These are lookups by that
+// name, one per version; nothing is compared here.
+const PHBY = PH.map(p => { const m = new Map(); for(const s of p.picks) m.set(s.k, s); return m; });
+const FEBY = FELT.map(v => { const m = new Map(); for(const r of v.rows) m.set(r.i, r); return m; });
+
+// Where a mark stood, at every version published at or before the instant
+// being read, ending before the version in force. A position is listed once: a
+// mark republished where it already was has not been anywhere else, and a mark
+// that came back to where it now stands has not either.
+const pkeyS = s => s.deg+'/'+s.t+'/'+s.res;
+const pkeyB = r => r.lo+'/'+r.hi+'/'+r.cdi;
+function priorsOf(by, name, upTo, cur, key){
+  const out = [], seen = new Set([key(cur)]);
+  for(let j=0; j<upTo; j++){
+    const r = by[j].get(name);
+    if(!r) continue;
+    const k = key(r);
+    if(seen.has(k)) continue;
+    seen.add(k); out.push(r);
+  }
+  return out;
+}
+const priorPicks  = (s, upTo) => priorsOf(PHBY, s.k, upTo, s, pkeyS);
+const priorBlocks = (r, upTo) => priorsOf(FEBY, r.i, upTo, r, pkeyB);
+
+// Whether a mark has a before at all. A mark first published in the version in
+// force has not stayed where it was — it has nowhere to have stayed — and
+// counting it in the denominator of "how many have moved" would state a
+// proportion of a population that could not have been in it.
+function publishedBefore(by, name, upTo){
+  for(let j=0; j<upTo; j++) if(by[j].has(name)) return true;
+  return false;
+}
+
+// the instants at which anything was published, in order: these are the states
+// the encounterer can stand in, and there are no others
+const WHEN = (() => {
+  const set = new Map();
+  for(const p of PH) set.set(p.min, true);
+  for(const v of FELT) set.set(v.min, true);
+  return [...set.keys()].sort((a,b)=>a-b);
+})();
+const atOrBefore = (arr, t) => { let k = -1; for(let i=0;i<arr.length;i++) if(arr[i].min <= t) k = i; return k; };
+const PHAT = WHEN.map(t => atOrBefore(PH, t));
+const FEAT = WHEN.map(t => atOrBefore(FELT, t));
+
+let wi = WHEN.length - 1;               // opens on the record as it now stands
+const phase = () => PHAT[wi] < 0 ? null : PH[PHAT[wi]];
+const felt  = () => FEAT[wi] < 0 ? null : FELT[FEAT[wi]];
+const S = () => (phase() ? phase().picks : []);
+const F = () => (felt() ? felt().rows : []);
+
+// ---- scales, fixed once over the whole history -----------------------------
+// Every scale in this file is fixed to the largest population any instant ever
+// held. Moving the instant, or raising a threshold, must shrink what is drawn;
+// it must never renormalise the loss away.
+const loDeg = b => b.lo / KMD;         // the block's near edge, in degrees
+const hiDeg = b => b.hi / KMD;         // its far edge
+const allDeg = [];
+for(const p of PH) for(const s of p.picks) allDeg.push(s.deg);
+for(const v of FELT) for(const r of v.rows){ allDeg.push(loDeg(r)); allDeg.push(hiDeg(r)); }
+const dLo = Math.min(...allDeg)*0.75, dHi = Math.max(...allDeg)*1.12;
+const L = Math.log10, span = L(dHi)-L(dLo);
+
+const W=1200, H=720, M={l:96,r:150,t:30,b:70};
+const AX = 452;                        // the shared axis, in figure coordinates
+const upTop = M.t+34, loBot = H-M.b;   // the two half-planes
+const RIB = 11;                        // half-height of the presence ribbon
+const px = d => M.l + (L(Math.max(d,dLo))-L(dLo))/span*(W-M.l-M.r);
+
+const tMax = Math.ceil(Math.max(...PH.map(p=>Math.max(...p.picks.map(s=>s.t))))/100)*100;
+const py = t => AX-58 - (t/tMax)*(AX-58-upTop);
+const allPicks = Math.max(...PH.map(p=>p.picks.length));
+const maxN = Math.max(...FELT.map(v => Math.max(...v.rows.map(x=>x.n), 1)), 1);
+
+// The one quantity the felt record measures for itself. It has been carried in
+// this file since the first iteration, shown under the pointer, and drawn
+// nowhere: until now the height of the lower half was a running count of
+// records, which is a census of the network and not a measurement of the
+// earthquake. Above the axis every mark's height is something a seismometer
+// published; below it, from here, every mark's height is something people
+// published. Fixed over the whole history, like every other scale in this file.
+const allCdi = [];
+for(const v of FELT) for(const r of v.rows) allCdi.push(r.cdi);
+const cLo = Math.floor(Math.min(...allCdi)*2)/2;
+const cHi = Math.ceil(Math.max(...allCdi)*2)/2;
+const bTop = AX+RIB+66, bBot = loBot-8;
+const by = c => bBot - ((c-cLo)/(cHi-cLo))*(bBot-bTop);
+
+// A mark narrower than this many of the figure's own units would not render at
+// all, and a published block would leave the axis. It is drawn this wide
+// instead — the one place in this file where a mark is wider than what it
+// measures, and the footer says how often that happens.
+const FLOOR = 0.6;
+// A block's mark has no published height: the intensity is one number, not a
+// range, and the record publishes no uncertainty for it. This is the thickness
+// a horizontal bar needs to be seen at all, and it stands for nothing.
+const BLKH = 2.4;
+const flooredAtLast = (() => {
+  const v = FELT[FELT.length-1];
+  return v.rows.filter(r => px(hiDeg(r)) - px(loDeg(r)) < FLOOR).length;
+})();
+
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const fmtDeg = d => d<0.1 ? d.toFixed(3) : (d<10 ? d.toFixed(2) : d.toFixed(1));
+const fmtKm  = k => k<10 ? k.toFixed(1) : String(Math.round(k));
+// Each network is shown in the unit its own source publishes, and the second
+// unit is added only where it is the one anybody uses: picks are published in
+// degrees and run teleseismic, felt blocks are published in kilometres and stay
+// near. Past ten degrees the kilometre figure would be an arc length nobody
+// reports, and it is not shown.
+const both   = d => d >= 10 ? `${fmtDeg(d)}°` : `${fmtKm(d*KMD)} km = ${fmtDeg(d)}°`;
+// the same, for a mark that occupies a range rather than a place
+const bothSpan = (a,b) => a >= 10
+  ? `${fmtDeg(a)}–${fmtDeg(b)}°`
+  : `${fmtKm(a*KMD)}–${fmtKm(b*KMD)} km = ${fmtDeg(a)}–${fmtDeg(b)}°`;
+
+// elapsed time, in the unit a person would use for it
+function since(mins){
+  if(mins < 90) return `${Math.round(mins)} min`;
+  if(mins < 2880) return `${(mins/60).toFixed(mins<600?1:0)} h`;
+  return `${(mins/1440).toFixed(1)} days`;
+}
+
+// ---- static frame ---------------------------------------------------------
+let f = '';
+const decades = [];
+for(let e=-3; e<=3; e++){
+  for(const m of [1,2,5]){
+    const v = m*Math.pow(10,e);
+    if(v>=dLo && v<=dHi) decades.push(v);
+  }
+}
+for(const v of decades){
+  f += `<line class="grid" x1="${px(v).toFixed(1)}" y1="${upTop}" x2="${px(v).toFixed(1)}" y2="${loBot}"/>`;
+  f += `<text class="tick" x="${px(v).toFixed(1)}" y="${loBot+19}" text-anchor="middle">${v}&deg;</text>`;
+}
+for(let t=0; t<=tMax; t+=100){
+  f += `<line class="grid" x1="${M.l}" y1="${py(t).toFixed(1)}" x2="${W-M.r}" y2="${py(t).toFixed(1)}"/>`;
+  f += `<text class="tick" x="${M.l-11}" y="${(py(t)+4).toFixed(1)}" text-anchor="end">${t}</text>`;
+}
+// The lower half now has a measured axis of its own, and it is fixed by the
+// whole history rather than by the instant on show, so that moving the instant
+// or raising a threshold can only take marks away and never rescale the loss.
+for(let c=Math.ceil(cLo); c<=cHi; c+=1){
+  f += `<line class="grid" x1="${M.l}" y1="${by(c).toFixed(1)}" x2="${W-M.r}" y2="${by(c).toFixed(1)}"/>`;
+  f += `<text class="tick" x="${M.l-11}" y="${(by(c)+4).toFixed(1)}" text-anchor="end">${c}</text>`;
+}
+f += `<text class="axlabel d" x="${(M.l+W-M.r)/2}" y="${loBot+45}" text-anchor="middle">distance from the epicentre &mdash; logarithmic, one scale for both networks</text>`;
+f += `<text class="axlabel m" transform="translate(${M.l-64},${(upTop+AX)/2}) rotate(-90)" text-anchor="middle">seconds after origin</text>`;
+f += `<text class="axlabel b" transform="translate(${M.l-64},${(AX+loBot)/2}) rotate(-90)" text-anchor="middle">intensity they reported</text>`;
+f += `<text class="axlabel m" x="${M.l}" y="${upTop-20}">machines that recorded it</text>`;
+f += `<text class="axlabel b" x="${M.l}" y="${AX+RIB+34}">people who reported feeling it</text>`;
+f += `<text class="note" x="${M.l}" y="${upTop-6}" id="noteM"></text>`;
+f += `<text class="note" x="${M.l}" y="${AX+RIB+50}">no arrival time is published for any felt report, so this half has no clock &mdash; it carries what they reported instead</text>`;
+f += `<text class="note" x="${M.l}" y="${AX-RIB-29}">who was present at each distance, in the records as they stood at the chosen instant</text>`;
+
+f += `<g id="cuts"></g><g id="stations"></g><g id="felt"></g><g id="ribbon"></g><g id="reaches"></g>`;
+f += `<rect class="hit" id="hit" x="${M.l}" y="${upTop-8}" width="${W-M.l-M.r}" height="${AX-RIB-upTop+8}"/>`;
+f += `<g id="tip"></g>`;
+
+// a label beside a marker near the right edge is placed on its left instead
+function beside(x, text, cls, y){
+  const w = text.length*6.4;
+  return x+8+w > W
+    ? `<text class="rlabel ${cls}" x="${(x-8).toFixed(1)}" y="${y}" text-anchor="end">${text}</text>`
+    : `<text class="rlabel ${cls}" x="${(x+8).toFixed(1)}" y="${y}">${text}</text>`;
+}
+
+// ---- the two records, in a sentence, from the data -------------------------
+const lastPh = PH[PH.length-1], lastFe = FELT[FELT.length-1];
+const finalTotal = lastFe.rows.reduce((a,x)=>a+x.n,0);
+const opening =
+  `One earthquake, and two records of it that were not written at the same speed.
+   <em>${allPicks} seismometers</em>: the arrival record was published
+   ${PH.length === 1 ? 'once' : (PH.length === 2 ? 'twice' : PH.length+' times')},
+   the last time ${since(lastPh.min)} after the origin.
+   <i>${finalTotal} people</i> in ${lastFe.rows.length} blocks: their record was
+   published ${FELT.length} times and was still filling ${since(lastFe.min)}
+   after the origin. Each half of the figure is a measurement its own network
+   made: seconds above the line, intensity below it. Choose an instant to read
+   them at, then ask each network for more corroboration, and see what waiting
+   buys.`;
+
+// ---- page -----------------------------------------------------------------
+document.getElementById('app').innerHTML = `
+<header>
+  <h1>Arrival</h1>
+  <p class="says">${opening}</p>
+  <div class="ident"><b>${esc(D.id)}</b> &nbsp;M&thinsp;${D.mag} &nbsp;${esc(D.place)}
+   &nbsp;&middot;&nbsp; <span id="solution"></span></div>
+</header>
+<figure><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="One earthquake as two networks recorded it, each half of the figure showing a measurement its own network published: above a shared logarithmic axis of distance from the epicentre, seismometer picks at the second the wave reached them; below it, blocks of human felt reports at the intensity published for each, every block drawn across the range of distances its own published outline occupies rather than at a point. The arrival times lie close to a curve; the intensities scatter. A strip along the axis shows which of the two networks was present at each distance. Where a mark was published somewhere else in an earlier version, that earlier position is drawn faintly behind it and joined to it. The instant at which the two records are read can be moved through their whole publication history, and each network can be asked for more corroboration."> ${f} </svg></figure>
+
+<div class="act">
+  <h2>read them at</h2>
+  <span class="kept" id="whenval"></span>
+  <button id="wDn">&larr;</button><button id="wUp">&rarr;</button>
+  <button id="rst">reset</button>
+</div>
+<div class="when">
+  <svg id="svgW" viewBox="0 0 1160 92" role="img" aria-label="Every instant at which either record was published, on a logarithmic time axis running from the first publication to the last: marks above the line are versions of the arrival record, marks below it versions of the felt record. A handle marks the instant currently being read."></svg>
+  <p class="whennote" id="whennote"></p>
+</div>
+
+<div class="act">
+  <h2>demand more corroboration</h2>
+  <span class="kept" id="kept"></span>
+  <button id="rstT">reset both</button>
+</div>
+<div class="panels">
+  <div class="panel m">
+    <h3>&hellip; of the seismometers</h3>
+    <svg id="svgM" viewBox="0 0 560 170" role="img" aria-label="Every pick in the arrival record as it stood at the chosen instant, drawn at its own published time residual in seconds, early to the left of zero and late to the right; a band around zero marks the picks currently kept. A pick published at another residual in an earlier version carries a tail back to it, in one colour where the station published a different arrival instant and in another where it published the same one."></svg>
+    <div class="set">
+      <span>keep a pick inside</span>
+      <button id="rDn">&minus;</button><span class="val" id="rVal"></span><button id="rUp">+</button>
+    </div>
+  </div>
+  <div class="panel b">
+    <h3>&hellip; of the people</h3>
+    <svg id="svgB" viewBox="0 0 560 170" role="img" aria-label="Every felt block in the record as it stood at the chosen instant, drawn as one cell, stacked in the column for the number of people who reported from it; a line marks the columns currently kept. A block published in another column in an earlier version is counted beneath the strip."></svg>
+    <div class="set">
+      <span>keep a block reported by</span>
+      <button id="nDn">&minus;</button><span class="val" id="nVal"></span><button id="nUp">+</button>
+      <span>or more</span>
+    </div>
+  </div>
+</div>
+
+<div class="tw"><table><thead><tr>
+  <th>at these distances</th><th>from</th><th>to</th>
+  <th>seismometers</th><th>felt reports</th><th>intensity</th>
+</tr></thead><tbody id="zones"></tbody></table></div>
+
+<footer>
+  Built ${D.built} from public USGS data, unauthenticated, and pinned into this file &mdash; it makes no network request when you open it. Not one version of either record: <b>every</b> version either record has ever had, ${PH.length} of the arrivals and ${FELT.length} of the felt reports, each with the instant the apparatus published it.<br>
+  event &nbsp;${esc(D.sources.detail)}<br>
+  arrivals &nbsp;${esc(D.sources.phase)}<br>
+  felt reports &nbsp;${esc(D.sources.felt)}<br>
+  Every version is served under its own revision id and the ids are on the marks above; the two shown here are the last of each.<br>
+  Pick provenance as published, quoted and not interpreted: QuakeML
+  <code>evaluationMode</code> &nbsp;<span id="modes"></span>.<span id="nores"></span><br>
+  <b>The felt record does not own the coordinate it is drawn on.</b> A block's
+  published distance is to the <b>hypocentre</b>; a pick's is to the
+  <b>epicentre</b>, and this axis is the epicentral one. Each block is therefore
+  placed at the distance from the epicentre to the outline its own product
+  publishes for it, and its published distance travels with it and is on it,
+  under the pointer. That epicentre is computed by the instrument network, and so
+  is the depth the published distance is measured from, and
+  ${D.epis.length > 1
+    ? 'both were revised while the felt record was filling: '
+      + D.epis.map(e => e.lat.toFixed(4)+', '+e.lon.toFixed(4)+' at '+e.depth+'&thinsp;km').join(' &rarr; ') + '.'
+    : 'neither was revised while the felt record was filling.'}<br>
+  <b>So no mark here is a point.</b> A block is published as a
+  ${D.cellKm}&thinsp;km cell and it is drawn across the distances that cell
+  actually occupies &mdash; from its nearest published vertex to its farthest,
+  measured from the epicentre in force &mdash; which on a logarithmic axis makes
+  the near field wide and the far field a hairline. A pick is drawn from the
+  instant it arrived to the instant the fitted solution predicted for it &mdash;
+  its published residual, at this axis's scale. One floor, and it is the only
+  place in this file where a mark is wider than what it measures: a block whose
+  drawn width would fall below ${FLOOR} of the figure's ${W} units is drawn
+  ${FLOOR} wide, so that no published block leaves the axis. At the last version
+  that binds on ${flooredAtLast} of ${lastFe.rows.length} blocks, all of them at
+  the far end.<br>
+  <b>And what a mark is high is now, on both halves, a measurement rather than a
+  tally.</b> Above the axis a mark stands at the second the wave reached that
+  seismometer; below it, at the intensity published for that block. The
+  intensities published on this event run from ${Math.min(...allCdi)} to
+  ${Math.max(...allCdi)}; the axis is ruled ${cLo} to ${cHi} so that no
+  threshold and no instant can rescale it. Until this version the lower half was
+  a running count of records inside a distance, which counts the network and not
+  the earthquake. Neither drawn quantity is raw and neither is this file's: a
+  pick's residual is computed by whoever fitted the solution, an intensity by
+  whoever runs the questionnaire, and each is taken as its own record published
+  it. <b>The two halves are not tightened alike, and the difference is not in
+  the drawing.</b> The arrivals lie near a curve because a solution was fitted
+  to put them there, and how near is the length of each mark; no comparable
+  thing is fitted to the intensities, and none is fitted here &mdash; they are
+  published one block at a time and stand where they are published. Nothing
+  about the felt record's height is borrowed from the instrument network
+  &mdash; that is the whole of what this half now says on its own.<br>
+  <b>And a mark that has stood somewhere else is drawn there too.</b> A faint mark joined
+  to a solid one is a position that same block or that same station was
+  published at in an earlier version &mdash; at or before the instant being
+  read, never after it. Both records name their own parts, and this file uses
+  those names rather than inventing one: a block is the centre of the outline
+  its product publishes, a pick is the network and station code with the phase
+  label its product publishes. The name is checked, not assumed, and the check
+  travels with the file: ${D.counts.pickKeyCollisions} arrival(s) in any one
+  version claim a name another arrival in that version already holds, and
+  ${D.counts.ringDisagree} block(s) were ever republished with a different
+  outline. ${(() => {
+    // What each record did to its own measurement, over its whole published
+    // history. Counted here, from the same versions the figure is drawn from.
+    let bMoved = 0, bSilent = 0;
+    const everBlocks = new Set(), st = new Map();
+    for(const v of D.felt){
+      for(const [i,n,cdi] of v.c){
+        const was = st.get(i);                     // the state before this version
+        if(was && was[1] !== cdi){
+          bMoved++; everBlocks.add(i);
+          if(was[0] === n) bSilent++;              // moved, and nobody was added
+        }
+      }
+      for(const [i,n,cdi] of v.a) st.set(i, [n,cdi]);
+      for(const [i,n,cdi] of v.c) st.set(i, [n,cdi]);
+      for(const i of v.d) st.delete(i);
+    }
+    let pMoved = 0, pSilent = 0, pElig = 0;
+    for(const s of PH[PH.length-1].picks){
+      if(!publishedBefore(PHBY, s.k, PH.length-1)) continue;
+      pElig++;
+      const pr = priorPicks(s, PH.length-1).filter(q => q.res !== s.res);
+      if(pr.length){ pMoved++; if(pr.every(q => q.a === s.a)) pSilent++; }
+    }
+    // Both denominators are the marks that have a before. A block or a pick
+    // first published in the last version cannot have moved, and counting it
+    // among those that did not would be a proportion of the wrong population.
+    const bElig = lastFe.rows.filter(x => publishedBefore(FEBY, x.i, FELT.length-1)).length;
+    return `Across the whole published history, of the ${bElig} block(s) `
+      + `standing now that some earlier version also published, `
+      + `${everBlocks.size} were published at a different intensity at least `
+      + `once over ${D.felt.length} versions; between them they account for `
+      + `${bMoved} such change(s), of which ${bSilent} came without the `
+      + `block's reporter count changing. Of the `
+      + `${pElig} pick(s) standing now that an earlier of the arrival record's `
+      + `${PH.length} version(s) also published, ${pMoved} were published at a `
+      + `different residual, and ${pSilent} of those were published with the `
+      + `same arrival instant throughout.`;
+  })()}
+  ${(() => {
+    const c = lastFe.rows.map(r=>r.cdi);
+    const u = new Set(c).size;
+    const n = lastFe.rows.map(r=>r.n), un = new Set(n).size;
+    return `At the last version the ${lastFe.rows.length} blocks take `
+      + `${u} distinct published intensities and ${un} distinct reporter `
+      + `counts; the threshold beside the figure cuts on the second of those.`;
+  })()}
+  ${D.noOutline ? D.noOutline+' block(s) published no outline, could not be placed on this coordinate, and are not in this file.' : ''}
+  ${D.counts.ringDisagree ? '<b>'+D.counts.ringDisagree+' block(s) were republished with a different outline</b> from the one they were first published with; the file keeps the first, and this count says how often that mattered.' : 'No block was ever republished with a different outline, so a block\'s width here is its own throughout.'}
+  Accretion is checked, not assumed: across the whole history
+  ${D.counts.added} block(s) appeared, ${D.counts.removed} disappeared and
+  ${D.counts.decreases} response count ever went down.<br>
+  Four quantities are derived and no others: a pick's travel time (its
+  published arrival instant minus the origin instant published in the same
+  version); the same published arrival instant counted instead from the event's
+  own origin instant, which belongs to no version and moves with none of them
+  &mdash; that is the fourth, added here, and it is what lets this file say
+  whether a station published a new observation or only a new residual; a felt
+  block's two distances from the epicentre (great-circle from the
+  epicentre published in the version that carries it to the nearest and the
+  farthest vertex of the outline published for it, on a sphere of
+  ${D.rKm}&thinsp;km &mdash; a vertex, never a point interpolated between two);
+  and the ${KMD}&thinsp;km per degree used to show one unit in the other. Nothing is smoothed, fitted or
+  interpolated: in the residual strip a pick's horizontal position is its
+  published residual, and in the figure above that same residual is the length
+  of its mark; below the axis a block's height is its published intensity,
+  unrounded and unbinned;
+  in the columns one cell is one published block, and the columns are the
+  published counts themselves, unbinned; on the history above, one mark is one
+  publication.
+</footer>`;
+
+const cutsG = document.getElementById('cuts');
+const staG  = document.getElementById('stations');
+const feltG = document.getElementById('felt');
+const ribG  = document.getElementById('ribbon');
+const reachG= document.getElementById('reaches');
+const tipg  = document.getElementById('tip');
+
+// ---- the two thresholds ----------------------------------------------------
+// One ladder per network, each built from that network's own published values,
+// and both fixed over the whole history: a rung must not appear or vanish
+// because the instant moved.
+const everyPick = [].concat(...PH.map(p=>p.picks));
+const RUNGS = [Infinity,3,2,1.5,1,0.75,0.5,0.35,0.25,0.15,0.1,0.05]
+  .filter((v,i) => i===0 || everyPick.filter(s=>Math.abs(s.res)<=v).length >= 2);
+let ri = 0, minN = 1, kept = [];
+
+function keptS(){ return S().filter(s => Math.abs(s.res) <= RUNGS[ri]); }
+function keptF(){ return F().filter(x => x.n >= minN); }
+
+// ---- the instant, set on a drawing of the publication history --------------
+// Same discipline as the two thresholds, and the same convention as the figure:
+// a mark above the line is a version of the arrival record, a mark below it a
+// version of the felt record. The asymmetry between the two networks is the
+// picture, not a caption about it.
+const VW = 1160, VH = 92, VM = {l:12, r:12, t:22, b:34};
+const VAX = 44;
+const wLo = Math.max(WHEN[0]*0.8, 0.5), wHi = WHEN[WHEN.length-1]*1.15;
+const wSpan = L(wHi) - L(wLo);
+const wx = m => VM.l + (L(Math.max(m,wLo))-L(wLo))/wSpan*(VW-VM.l-VM.r);
+
+function drawWhen(){
+  const now = WHEN[wi];
+  let g = '';
+  const TICKS = [[10,'10 min'],[30,'30 min'],[60,'1 h'],[180,'3 h'],[360,'6 h'],
+                 [720,'12 h'],[1440,'1 day'],[2880,'2 days'],[4320,'3 days'],
+                 [7200,'5 days'],[14400,'10 days'],[28800,'20 days'],
+                 [43200,'30 days'],[86400,'60 days']];
+  for(const [m,lab] of TICKS){
+    if(m < wLo || m > wHi) continue;
+    g += `<line class="grid" x1="${wx(m).toFixed(1)}" y1="${VM.t-8}" x2="${wx(m).toFixed(1)}" y2="${VH-VM.b}"/>`;
+    g += `<text class="ptick" x="${wx(m).toFixed(1)}" y="${VH-VM.b+15}" text-anchor="middle">${lab}</text>`;
+  }
+  for(const p of PH){
+    const fut = p.min > now;
+    g += `<line class="vm${fut?' vfuture':''}" x1="${wx(p.min).toFixed(1)}" y1="${VAX-19}" x2="${wx(p.min).toFixed(1)}" y2="${VAX-1}"><title>arrivals, published ${since(p.min)} after the origin — ${p.picks.length} picks — revision ${p.rev}</title></line>`;
+  }
+  for(let j=0; j<FELT.length; j++){
+    const v = FELT[j];
+    const fut = v.min > now;
+    const moved = j > 0 && FELT[j-1].e !== v.e;
+    g += `<line class="vb${moved?' moved':''}${fut?' vfuture':''}" x1="${wx(v.min).toFixed(1)}" y1="${VAX+1}" x2="${wx(v.min).toFixed(1)}" y2="${VAX+19}"><title>felt reports, published ${since(v.min)} after the origin — ${v.rows.length} blocks, ${v.rows.reduce((a,x)=>a+x.n,0)} reports${moved?' — the epicentre moved with this version':''} — revision ${v.rev}</title></line>`;
+  }
+  g += `<line class="axis" x1="${VM.l}" y1="${VAX}" x2="${VW-VM.r}" y2="${VAX}"/>`;
+  const X = wx(now);
+  g += `<line class="nowline" x1="${X.toFixed(1)}" y1="${VM.t-10}" x2="${X.toFixed(1)}" y2="${VH-VM.b+2}"/>`;
+  g += `<path class="nowgrip" d="M ${(X-5).toFixed(1)} ${VM.t-16} L ${(X+5).toFixed(1)} ${VM.t-16} L ${X.toFixed(1)} ${VM.t-8} Z"/>`;
+  g += `<text class="pnote" x="${VM.l}" y="${VM.t-8}">${PH.length} publication${PH.length>1?'s':''} of the arrival record</text>`;
+  g += `<text class="pnote" x="${VM.l}" y="${VH-VM.b+31}">${FELT.length} publication${FELT.length>1?'s':''} of the felt record &mdash; time after the origin, logarithmic</text>`;
+  document.getElementById('svgW').innerHTML = g;
+}
+
+function pickWhen(evt){
+  const svg = document.getElementById('svgW');
+  const r = svg.getBoundingClientRect();
+  const x = (evt.clientX-r.left)/r.width*VW;
+  let best = 0, bd = 1e9;
+  WHEN.forEach((m,i) => { const d = Math.abs(wx(m)-x); if(d<bd){bd=d;best=i;} });
+  if(best !== wi){ wi = best; redraw(); }
+}
+
+// ---- the two thresholds, each drawn on its own network's population ---------
+// PH2 and PM.b grew by 14 together in iteration 9, so that the axis stays
+// where it was and one more line of disclosure fits beneath it.
+const PW = 560, PH2 = 170, PM = {l:12, r:12, t:16, b:54};
+const pAxis = PH2 - PM.b, pTop = PM.t;
+
+// -- instruments: every pick at its own published residual, stacked only where
+//    two picks would otherwise overlap. Horizontal position is the measurement;
+//    vertical position separates, and means nothing else. The scale is fixed to
+//    the widest spread any version ever held.
+const resAbsMax = Math.max(...everyPick.map(s=>Math.abs(s.res)), 0.1);
+const RA = resAbsMax * 1.08;
+const rx = v => PM.l + (v + RA)/(2*RA) * (PW-PM.l-PM.r);
+
+function drawSwarm(){
+  const pop = S();
+  const R = 2.7, stepX = 2*R + 0.7;
+  const rows = [];
+  const placed = pop.slice().sort((a,b)=>a.res-b.res).map(s => {
+    const x = rx(s.res);
+    let lvl = 0;
+    while(rows[lvl] !== undefined && x - rows[lvl] < stepX) lvl++;
+    rows[lvl] = x;
+    return {s, x, lvl};
+  });
+  const maxLvl = Math.max(rows.length - 1, 0);
+  const avail = pAxis - 7 - pTop;
+  const stepY = Math.min(2*R + 0.7, maxLvl > 0 ? avail/maxLvl : avail);
+  const lim = RUNGS[ri];
+  let g = '';
+  if(lim !== Infinity){
+    g += `<rect class="gate" x="${rx(-lim).toFixed(1)}" y="${pTop-4}" width="${(rx(lim)-rx(-lim)).toFixed(1)}" height="${pAxis-pTop+4}"/>`;
+    for(const e of [-lim, lim])
+      g += `<line class="gateEdge" x1="${rx(e).toFixed(1)}" y1="${pTop-4}" x2="${rx(e).toFixed(1)}" y2="${pAxis}"/>`;
+  }
+  g += `<line class="zero" x1="${rx(0).toFixed(1)}" y1="${pTop-4}" x2="${rx(0).toFixed(1)}" y2="${pAxis}"/>`;
+  g += `<line class="axis" x1="${PM.l}" y1="${pAxis}" x2="${PW-PM.r}" y2="${pAxis}"/>`;
+  // The tails: where each of these picks has already been published on this
+  // same axis. They are drawn before the marks so that a pick stands in front
+  // of its own history, and they carry the one distinction this strip can make
+  // and the figure above cannot — whether the station published a different
+  // arrival instant, or the same one. Only the published instants are compared;
+  // nothing is inferred about why either moved.
+  const upTo = PHAT[wi];
+  // The denominator is the picks that could have moved — the ones some earlier
+  // version published — and not everything drawn. A pick first published in
+  // the version in force has not stayed where it was; it has no before.
+  let nMoved = 0, nRefit = 0, nElig = 0;
+  for(const p of placed){
+    const y = pAxis - 7 - p.lvl*stepY;
+    if(publishedBefore(PHBY, p.s.k, upTo)) nElig++;
+    const priors = priorPicks(p.s, upTo).filter(q => q.res !== p.s.res);
+    if(priors.length){
+      nMoved++;
+      // "no new arrival instant" means every version that published this
+      // station published the same instant for it. One differing instant is
+      // enough to make the pick a remade observation rather than a refitted
+      // one, so the test is over all of them and not the latest.
+      if(priors.every(q => q.a === p.s.a)) nRefit++;
+    }
+    for(const q of priors){
+      const same = q.a === p.s.a;
+      const cls = same ? 'refit' : 'repick';
+      g += `<line class="tail ${cls}" x1="${rx(q.res).toFixed(1)}" y1="${y.toFixed(1)}" x2="${p.x.toFixed(1)}" y2="${y.toFixed(1)}"><title>${esc(p.s.sta)} was published at residual ${q.res>0?'+':''}${q.res.toFixed(2)} s and now stands at ${p.s.res>0?'+':''}${p.s.res.toFixed(2)} s — ${same ? 'this station published the same arrival instant in both versions, so nothing was observed differently' : 'this station published a different arrival instant, so the pick itself was remade'}</title></line>`
+         + `<circle class="tailend ${cls}" cx="${rx(q.res).toFixed(1)}" cy="${y.toFixed(1)}" r="1.9"/>`;
+    }
+  }
+  for(const p of placed){
+    const inside = Math.abs(p.s.res) <= lim;
+    const y = pAxis - 7 - p.lvl*stepY;
+    g += `<circle class="swarm${inside?'':' out'}" cx="${p.x.toFixed(1)}" cy="${y.toFixed(1)}" r="${R}"><title>${esc(p.s.sta)} — ${fmtDeg(p.s.deg)}° from the epicentre, residual ${p.s.res>0?'+':''}${p.s.res.toFixed(2)} s</title></circle>`;
+  }
+  const step = RA > 6 ? 2 : 1;
+  for(let v = -Math.floor(RA/step)*step; v <= RA; v += step){
+    if(Math.abs(v) < 1e-9 && step !== 0) continue;
+    g += `<line class="grid" x1="${rx(v).toFixed(1)}" y1="${pAxis}" x2="${rx(v).toFixed(1)}" y2="${pAxis+4}"/>`;
+    g += `<text class="ptick" x="${rx(v).toFixed(1)}" y="${pAxis+15}" text-anchor="middle">${v>0?'+':''}${v} s</text>`;
+  }
+  g += `<text class="ptick" x="${rx(0).toFixed(1)}" y="${pAxis+15}" text-anchor="middle">0</text>`;
+  g += `<text class="pnote" x="${PM.l}" y="${pAxis+31}">sooner than the origin it fitted</text>`;
+  g += `<text class="pnote" x="${PW-PM.r}" y="${pAxis+31}" text-anchor="end">later</text>`;
+  if(nMoved){
+    g += `<text class="pnote" x="${PM.l}" y="${pAxis+45}">${nMoved} of the ${nElig} published before have moved</text>`;
+    g += `<text class="pnote" x="${PW-PM.r}" y="${pAxis+45}" text-anchor="end">${nRefit} published no new arrival instant</text>`;
+  } else if(nElig){
+    g += `<text class="pnote" x="${PM.l}" y="${pAxis+45}">none of the ${nElig} published before now stands at another residual</text>`;
+  } else if(pop.length){
+    g += `<text class="pnote" x="${PM.l}" y="${pAxis+45}">no pick here has been published before this version</text>`;
+  }
+  g += `<text class="pnote" x="${PM.l}" y="${pTop-6}">${pop.length ? pop.length+' picks, each at its own disagreement with the origin this network fitted from them' : 'no arrival record had been published at this instant'}</text>`;
+  document.getElementById('svgM').innerHTML = g;
+}
+
+// -- people: one cell per felt block, stacked in the column for the number of
+//    people who reported from it. The columns are the published counts
+//    themselves — integers, starting at one — and not a scale of seconds. The
+//    column height is fixed to the tallest column any version ever held.
+const colMax = (() => {
+  let m = 1;
+  for(const v of FELT)
+    for(let k=1;k<=maxN;k++) m = Math.max(m, v.rows.filter(x=>x.n===k).length);
+  return m;
+})();
+const cw = (PW-PM.l-PM.r) / maxN;
+const cxc = k => PM.l + (k-0.5)*cw;
+
+function drawCols(){
+  const pop = F();
+  let g = '';
+  const avail = pAxis - 12 - pTop;
+  const cellH = Math.min(5, avail/colMax);
+  const gap = cellH >= 2.6 ? 0.9 : 0;
+  const barW = Math.min(26, cw*0.62);
+  for(let k=1;k<=maxN;k++){
+    const blocks = pop.filter(x=>x.n===k).length;
+    const on = k >= minN;
+    for(let i=0; i<blocks; i++){
+      const y = pAxis - 3 - (i+1)*cellH + gap/2;
+      g += `<rect class="cell${on?'':' out'}" x="${(cxc(k)-barW/2).toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(cellH-gap,0.6).toFixed(2)}"/>`;
+    }
+    if(blocks)
+      g += `<text class="pcount ${on?'on':'off'}" x="${cxc(k).toFixed(1)}" y="${(pAxis-6-blocks*cellH).toFixed(1)}" text-anchor="middle">${blocks}</text>`;
+    g += `<text class="ptick" x="${cxc(k).toFixed(1)}" y="${pAxis+15}" text-anchor="middle">${k}</text>`;
+  }
+  if(minN > 1){
+    const x = cxc(minN) - cw/2;
+    g += `<line class="cut" x1="${x.toFixed(1)}" y1="${pTop-4}" x2="${x.toFixed(1)}" y2="${pAxis+4}"/>`;
+  }
+  g += `<line class="axis" x1="${PM.l}" y1="${pAxis}" x2="${PW-PM.r}" y2="${pAxis}"/>`;
+  g += `<text class="pnote" x="${PM.l}" y="${pAxis+31}">people who reported independently from one block</text>`;
+  // The same disclosure as the other strip, asked of this one. A block moves
+  // column only when someone reports from it, and the direction it moves is
+  // read off the record rather than assumed: `back` counts any block that has
+  // stood in a column to the right of the one it stands in now.
+  {
+    const upTo = FEAT[wi];
+    let mv = 0, back = 0, elig = 0;
+    for(const x of pop){
+      if(!publishedBefore(FEBY, x.i, upTo)) continue;   // it has no before
+      elig++;
+      let seen = false, higher = false;
+      for(let j=0; j<upTo; j++){
+        const r = FEBY[j].get(x.i);
+        if(!r || r.n === x.n) continue;
+        seen = true;
+        if(r.n > x.n) higher = true;        // it stood further right than now
+      }
+      if(seen){ mv++; if(higher) back++; }
+    }
+    if(mv){
+      g += `<text class="pnote" x="${PM.l}" y="${pAxis+45}">${mv} of the ${elig} published before have moved</text>`;
+      g += `<text class="pnote" x="${PW-PM.r}" y="${pAxis+45}" text-anchor="end">${back} ever moved left</text>`;
+    } else if(elig){
+      g += `<text class="pnote" x="${PM.l}" y="${pAxis+45}">none of the ${elig} published before now stands in another column</text>`;
+    } else if(pop.length){
+      g += `<text class="pnote" x="${PM.l}" y="${pAxis+45}">no block here has been published before this version</text>`;
+    }
+  }
+  g += `<text class="pnote" x="${PM.l}" y="${pTop-6}">${pop.length ? pop.length+' blocks, one cell each, in the column for how many reported it' : 'no felt report had been published at this instant'}</text>`;
+  document.getElementById('svgB').innerHTML = g;
+}
+
+// ---- the upper half: instruments -------------------------------------------
+function drawMachine(){
+  kept = keptS();
+  // The same act as below the axis: a mark is drawn as wide as its own record
+  // is imprecise. For a pick that is not a distance but a time — its published
+  // residual, the gap between when it arrived and when the fitted solution said
+  // it should have. The segment runs from the one to the other, on this axis,
+  // at this scale, and where the scale swallows it the mark is a point again.
+  // And the act this iteration adds, performed here as it is performed below
+  // the axis: where the mark has already been published. A pick that was in an
+  // earlier version at another distance or another travel time gets a trace
+  // back to it. On both work events that trace is a fraction of a pixel long,
+  // because the whole of what the revision did to a pick's place here was to
+  // move the origin its travel time is counted from. The same revision moves
+  // the pick's residual — the number the threshold beside this figure cuts on —
+  // far enough to change the answer for up to a third of them. Both are drawn:
+  // this one at the figure's scale, that one at the residual strip's.
+  const upTo = PHAT[wi];
+  staG.innerHTML = kept.map((s,i) => {
+    let w = '';
+    for(const p of priorPicks(s, upTo)){
+      w += `<line class="wasm" x1="${px(p.deg).toFixed(2)}" y1="${py(p.t).toFixed(2)}" x2="${px(s.deg).toFixed(2)}" y2="${py(s.t).toFixed(2)}"/>`
+         + `<circle class="wasdot m" cx="${px(p.deg).toFixed(2)}" cy="${py(p.t).toFixed(2)}" r="2.2"/>`;
+    }
+    return w
+      + `<line class="stares" x1="${px(s.deg).toFixed(1)}" y1="${py(s.t).toFixed(1)}" x2="${px(s.deg).toFixed(1)}" y2="${py(s.t-s.res).toFixed(1)}"/>`
+      + `<circle class="sta" data-i="${i}" cx="${px(s.deg).toFixed(1)}" cy="${py(s.t).toFixed(1)}" r="4"/>`;
+  }).join('');
+  document.getElementById('noteM').textContent = phase()
+    ? `${kept.length} of ${S().length} picks — each one instant, published to 10 ms`
+    : 'no arrival record had been published at this instant';
+  document.getElementById('rVal').textContent =
+    RUNGS[ri]===Infinity ? 'the whole spread' : '± '+RUNGS[ri].toFixed(2)+' s';
+  return kept.length ? [kept[0].deg, kept[kept.length-1].deg] : null;
+}
+
+// ---- the lower half: people -------------------------------------------------
+function drawBody(){
+  const k = keptF();
+  document.getElementById('nVal').textContent = minN + (minN===1?' person':' people');
+
+  if(!k.length){
+    feltG.innerHTML = `<text class="rlabel rlb" x="${M.l+8}" y="${(AX+loBot)/2}">${
+      felt() ? 'no block passes this threshold — the human network is nowhere on this axis'
+             : 'the felt record did not exist yet — nobody had reported anything'}</text>`;
+    return null;
+  }
+  // Each block is drawn across the distances it actually occupies, as in the
+  // iteration before this one: its near and far edge are published vertices of
+  // its own outline, so the mark is as wide as the record is imprecise about
+  // where it is. What is new is its height. It stands at the intensity its own
+  // product published for it — the one measurement of the earthquake this
+  // record makes and does not borrow. So the mark says both things the felt
+  // record has to say about one block: how strongly, and how vaguely where.
+  // What iteration 9 adds: where the block has already been published. A block
+  // that stood at another intensity, or at another distance, in any version
+  // published at or before this instant is drawn there too, faintly, with a
+  // line to where it stands now. The two kinds of move are different acts and
+  // they look different: when the instrument network revised its solution the
+  // whole lower half slid sideways at once and nobody had reported anything;
+  // when a second person answered in one block, that one block rose or fell.
+  // Neither is annotated. They are simply both drawn.
+  let g = '', wasG = '';
+  const upTo = FEAT[wi];
+  for(const x of k){
+    const X0 = px(loDeg(x)), X1 = px(hiDeg(x));
+    const w = Math.max(X1-X0, FLOOR), y = by(x.cdi);
+    for(const p of priorBlocks(x, upTo)){
+      const P0 = px(p.lo/KMD), P1 = px(p.hi/KMD);
+      const pw = Math.max(P1-P0, FLOOR), pyv = by(p.cdi);
+      wasG += `<rect class="wasbr" x="${P0.toFixed(2)}" y="${(pyv-BLKH/2).toFixed(1)}" width="${pw.toFixed(2)}" height="${BLKH}"><title>this block was published at intensity ${p.cdi}, spanning ${both(p.lo/KMD)} to ${both(p.hi/KMD)} from the epicentre in force then</title></rect>`
+           + `<line class="wasb" x1="${(P0+pw/2).toFixed(2)}" y1="${pyv.toFixed(1)}" x2="${(X0+w/2).toFixed(2)}" y2="${y.toFixed(1)}"/>`;
+    }
+    g += `<rect class="blk" x="${X0.toFixed(2)}" y="${(y-BLKH/2).toFixed(1)}" width="${w.toFixed(2)}" height="${BLKH}"><title>intensity ${x.cdi}, reported by ${x.n} ${x.n>1?'people':'person'} — this block spans ${both(loDeg(x))} to ${both(hiDeg(x))} from the epicentre, published as ${x.km} km to the hypocentre</title></rect>`;
+  }
+  feltG.innerHTML = wasG + g;
+  // The interval the human network occupies runs from the nearest near edge to
+  // the farthest far edge — both published vertices, neither a centre.
+  return [Math.min(...k.map(loDeg)), Math.max(...k.map(hiDeg))];
+}
+
+// ---- the partition: who is present at each distance ------------------------
+// Two intervals on one axis cut it into at most four pieces. The pieces are
+// computed, not assumed, so an interval that swallows the other, or two that
+// have come apart, are drawn by the same code as the ordinary case.
+function partition(mi, bi){
+  const edges = [];
+  for(const iv of [mi, bi]) if(iv) edges.push(iv[0], iv[1]);
+  if(!edges.length) return [];
+  const cuts = [...new Set(edges)].sort((a,b)=>a-b);
+  const out = [];
+  for(let i=0; i<cuts.length-1; i++){
+    const a = cuts[i], b = cuts[i+1];
+    if(!(b > a)) continue;
+    const mid = Math.sqrt(a*b);                       // midpoint of a log axis
+    const m = !!(mi && mid >= mi[0] && mid <= mi[1]);
+    const p = !!(bi && mid >= bi[0] && mid <= bi[1]);
+    const last = out[out.length-1];
+    if(last && last.m === m && last.p === p) last.b = b;   // never two alike
+    else out.push({a, b, m, p});
+  }
+  // a degenerate interval (one pick, or one block) still occupies a place
+  for(const iv of [[mi,'m'],[bi,'p']]){
+    if(iv[0] && iv[0][0] === iv[0][1] && !out.some(s => s[iv[1]]))
+      out.push({a: iv[0][0], b: iv[0][1], m: iv[1]==='m', p: iv[1]==='p'});
+  }
+  return out.sort((x,y)=>x.a-y.a);
+}
+
+const NAME = s => s.m && s.p ? 'both' : (s.m ? 'instruments only'
+                                             : (s.p ? 'people only' : 'neither'));
+
+function drawRibbon(segs){
+  let g = '';
+  for(const s of segs){
+    const x = px(s.a), w = Math.max(px(s.b)-px(s.a), 1);
+    if(s.m) g += `<rect class="ribm" x="${x.toFixed(1)}" y="${AX-RIB}" width="${w.toFixed(1)}" height="${RIB}"/>`;
+    if(s.p) g += `<rect class="ribb" x="${x.toFixed(1)}" y="${AX}" width="${w.toFixed(1)}" height="${RIB}"/>`;
+    if(!s.m && !s.p)
+      g += `<rect class="ribnone" x="${x.toFixed(1)}" y="${(AX-RIB).toFixed(1)}" width="${w.toFixed(1)}" height="${2*RIB}"/>`;
+    const label = NAME(s);
+    if(px(s.b)-px(s.a) > label.length*6.6 + 12){
+      g += `<text class="riblab${s.m||s.p?'':' none'}" x="${((px(s.a)+px(s.b))/2).toFixed(1)}" y="${AX-RIB-9}" text-anchor="middle" fill="${s.m&&s.p?'var(--hot)':(s.m?'var(--machine)':(s.p?'var(--body)':null))}">${label}</text>`;
+    }
+  }
+  g += `<line class="axis" x1="${M.l}" y1="${AX}" x2="${W-M.r}" y2="${AX}"/>`;
+  // the source is below the surface; a report at the epicentre was still this
+  // far from it, and the tick says where that distance falls on this axis. Both
+  // the depth and the epicentre it is measured from are published quantities
+  // that can be revised, so this is read from the version being looked at.
+  const fv = felt();
+  const dep0 = fv ? D.epis[fv.e].depth : D.depth;
+  const dep = dep0/KMD, yd = AX+RIB+11;
+  if(fv && dep > dLo && dep < dHi){
+    g += `<line class="depth" x1="${M.l}" y1="${yd}" x2="${px(dep).toFixed(1)}" y2="${yd}"/>`;
+    for(const e of [M.l, px(dep)])
+      g += `<line class="depth" x1="${(+e).toFixed(1)}" y1="${yd-4}" x2="${(+e).toFixed(1)}" y2="${yd+4}"/>`;
+    // How many blocks are inside this distance has no single answer, because a
+    // block has width and some of them straddle the line. Iteration 7 gave the
+    // width to the marks and then printed one number here anyway — the count of
+    // those wholly inside — which is the false precision this lineage keeps
+    // striking, left standing in a sentence. Both counts are given, and where
+    // they agree there is nothing straddling and one number is said.
+    const wholly = fv.rows.filter(b=>b.hi<dep0).length;
+    const reaching = fv.rows.filter(b=>b.lo<dep0).length;
+    const said = wholly === reaching
+      ? `${wholly} of ${fv.rows.length} blocks lie inside it`
+      : `${wholly} of ${fv.rows.length} blocks lie wholly inside it and ${reaching} reach into it`;
+    g += `<text class="depthlab" x="${(px(dep)+7).toFixed(1)}" y="${yd+4}">nearer the epicentre than the source is deep (${dep0} km): ${said}</text>`;
+  }
+  ribG.innerHTML = g;
+}
+
+// ---- what each threshold cost, at both ends of each network -----------------
+function drawEdges(mi, bi){
+  let c = '', r = '';
+  const s = S(), fr = F();
+  const fullM = s.length ? [s[0].deg, s[s.length-1].deg] : null;
+  const fullB = fr.length ? [Math.min(...fr.map(loDeg)), Math.max(...fr.map(hiDeg))] : null;
+  if(mi && fullM){
+    const yA = upTop, yB = AX-RIB;
+    if(mi[1] < fullM[1]) c += `<rect class="cutm" x="${px(mi[1]).toFixed(1)}" y="${yA}" width="${(px(fullM[1])-px(mi[1])).toFixed(1)}" height="${yB-yA}"/>`;
+    if(mi[0] > fullM[0]) c += `<rect class="cutm" x="${px(fullM[0]).toFixed(1)}" y="${yA}" width="${(px(mi[0])-px(fullM[0])).toFixed(1)}" height="${yB-yA}"/>`;
+    for(const e of fullM) if(e!==mi[0] && e!==mi[1])
+      r += `<line class="reach reachm ghost" x1="${px(e).toFixed(1)}" y1="${yA-4}" x2="${px(e).toFixed(1)}" y2="${yB}"/>`;
+    for(const e of mi)
+      r += `<line class="reach reachm" x1="${px(e).toFixed(1)}" y1="${yA-4}" x2="${px(e).toFixed(1)}" y2="${yB}"/>`;
+    r += beside(px(mi[1]), `${fmtDeg(mi[1])}° — farthest kept pick`, 'rlm', upTop+10);
+    r += beside(px(mi[0]), `${fmtDeg(mi[0])}° — nearest kept pick`, 'rlm', upTop+27);
+  }
+  if(bi && fullB){
+    const yA = AX+RIB+56, yB = loBot+4;
+    if(bi[1] < fullB[1]) c += `<rect class="cutb" x="${px(bi[1]).toFixed(1)}" y="${yA}" width="${(px(fullB[1])-px(bi[1])).toFixed(1)}" height="${yB-yA}"/>`;
+    if(bi[0] > fullB[0]) c += `<rect class="cutb" x="${px(fullB[0]).toFixed(1)}" y="${yA}" width="${(px(bi[0])-px(fullB[0])).toFixed(1)}" height="${yB-yA}"/>`;
+    for(const e of fullB) if(e!==bi[0] && e!==bi[1])
+      r += `<line class="reach reachb ghost" x1="${px(e).toFixed(1)}" y1="${yA}" x2="${px(e).toFixed(1)}" y2="${yB}"/>`;
+    for(const e of bi)
+      r += `<line class="reach reachb" x1="${px(e).toFixed(1)}" y1="${yA}" x2="${px(e).toFixed(1)}" y2="${yB}"/>`;
+    // Neither edge is a place. The nearest kept block occupies the whole of its
+    // own span, and the label says the span rather than choosing a point in it.
+    const kb = keptF();
+    const nearB = kb.length ? kb.reduce((a,x)=> loDeg(x) < loDeg(a) ? x : a) : null;
+    const farB  = kb.length ? kb.reduce((a,x)=> hiDeg(x) > hiDeg(a) ? x : a) : null;
+    if(farB)  r += beside(px(bi[1]), `${bothSpan(loDeg(farB), hiDeg(farB))} — the farthest kept block, edge to edge`, 'rlb', loBot-2);
+    if(nearB) r += beside(px(bi[0]), `${bothSpan(loDeg(nearB), hiDeg(nearB))} — the nearest kept block, edge to edge`, 'rlb', AX+RIB+62);
+  }
+  cutsG.innerHTML = c;
+  reachG.innerHTML = r;
+}
+
+// ---- the partition, in figures ---------------------------------------------
+function drawTable(segs){
+  const kM = kept, kF = keptF();
+  // A pick or a block sitting exactly on a boundary lies in two closed
+  // segments at once. It belongs to the first of them that its own network is
+  // present in — otherwise the outermost report would be counted again in the
+  // band named "instruments only", where by construction it cannot be.
+  const seg = (v, who) => segs.find(s => v >= s.a && v <= s.b && s[who]);
+  // A block is not a point and can lie across a boundary. It is counted in the
+  // first segment its own network is present in that its span reaches, so that
+  // it is counted once and never in a band named for the other network.
+  const segOf = (b) => segs.find(s => hiDeg(b) >= s.a && loDeg(b) <= s.b && s.p);
+  const rows = segs.map(s => {
+    const inM = kM.filter(x => seg(x.deg, 'm') === s).length;
+    const fB  = kF.filter(x => segOf(x) === s);
+    const tot = fB.reduce((a,x)=>a+x.n,0);
+    const cls = s.m && s.p ? 'both' : (s.m ? 'm' : (s.p ? 'b' : 'none'));
+    // The figure's lower half now draws intensity, so the table carries it too;
+    // the counts stay, because the count is what the threshold beside this
+    // table cuts on and a reader has to be able to see what it took away.
+    const cd = fB.map(x=>x.cdi);
+    const cds = cd.length
+      ? (Math.min(...cd) === Math.max(...cd)
+          ? Math.min(...cd).toFixed(1)
+          : Math.min(...cd).toFixed(1)+'–'+Math.max(...cd).toFixed(1))
+      : '—';
+    return `<tr class="${cls}">
+      <td class="who">${NAME(s)}</td>
+      <td>${both(s.a)}</td><td>${both(s.b)}</td>
+      <td class="num">${inM ? inM+' pick'+(inM>1?'s':'') : '—'}</td>
+      <td class="num">${fB.length ? tot+' report'+(tot>1?'s':'')+' in '+fB.length+' block'+(fB.length>1?'s':'') : '—'}</td>
+      <td class="num">${cds}</td>
+    </tr>`;
+  });
+  if(!segs.some(s => s.m && s.p)){
+    rows.push(`<tr class="none"><td class="who">nowhere</td>
+      <td colspan="5">no distance is left at which both networks are present</td></tr>`);
+  }
+  document.getElementById('zones').innerHTML = rows.join('');
+}
+
+// ---- the readout of the instant --------------------------------------------
+// Like "± 0.50 s" and "2 people", this says what the control is set to. What it
+// adds is what changed at this step, and it adds it only where the data says
+// something changed: a record appearing, or the ground moving under one.
+function drawWhenText(){
+  const now = WHEN[wi];
+  const p = phase(), v = felt();
+  document.getElementById('whenval').innerHTML =
+    `<b>${since(now)}</b> after the origin &nbsp;&middot;&nbsp; `
+    + (p ? `<em>${p.picks.length} picks</em>` : `<em>no arrival record yet</em>`)
+    + ` &nbsp;&middot;&nbsp; `
+    + (v ? `<i>${v.rows.reduce((a,x)=>a+x.n,0)} reports in ${v.rows.length} blocks</i>`
+         : `<i>no felt report yet</i>`);
+
+  // The located quantities are not properties of the earthquake: each is
+  // published per version, and the identity line reads the one in force.
+  // The two halves do not always stand on the same one. The arrival record is
+  // republished with a new solution the moment it is refitted; the felt record
+  // carries the solution of its own last publication, which can be older. In
+  // that gap the axis below is measured from one point and the axis above from
+  // another, and iteration 6 named only the first of them. Both are named here,
+  // and where they differ the file says the shared axis is not shared.
+  const fe = v ? D.epis[v.e] : null;
+  const apart = !!(p && fe && (p.lat.toFixed(4) !== fe.lat.toFixed(4)
+                            || p.lon.toFixed(4) !== fe.lon.toFixed(4)
+                            || p.depth !== fe.depth));
+  document.getElementById('solution').innerHTML = p
+    ? `the solution then in force: origin ${esc(p.t0)}, `
+      + `${p.lat.toFixed(4)}, ${p.lon.toFixed(4)} at ${p.depth}&thinsp;km`
+      + (apart
+          ? ` &nbsp;&middot;&nbsp; <b class="apart">but the felt half below is still measured`
+            + ` from ${fe.lat.toFixed(4)}, ${fe.lon.toFixed(4)} at ${fe.depth}&thinsp;km,`
+            + ` the solution its own last publication carried: at this instant the`
+            + ` two halves are not on one coordinate</b>`
+          : '')
+    : 'no solution had been published at this instant';
+
+  const said = [];
+  if(p && p.min === now){
+    const j = PHAT[wi];
+    let ch = '';
+    if(j > 0){
+      const q = PH[j-1];
+      const dt = (Date.parse(p.t0) - Date.parse(q.t0))/1000;
+      const dk = gcKm(q.lat, q.lon, p.lat, p.lon);
+      const bits = [];
+      if(dt) bits.push(`the origin instant by ${dt>0?'+':''}${dt.toFixed(3)} s`);
+      if(dk > 0.005) bits.push(`the epicentre by ${dk.toFixed(1)} km`);
+      if(q.depth !== p.depth) bits.push(`the depth from ${q.depth} to ${p.depth} km`);
+      if(bits.length) ch = `, moving ${bits.join(', ')}`;
+    }
+    said.push(`the arrival record was published at this instant, with ${p.picks.length} picks${ch}`);
+  }
+  if(v && v.min === now){
+    const j = FEAT[wi];
+    if(j === 0) said.push(`the first felt report was published at this instant`);
+    else {
+      const prev = FELT[j-1];
+      const gain = v.rows.reduce((a,x)=>a+x.n,0) - prev.rows.reduce((a,x)=>a+x.n,0);
+      if(prev.e !== v.e){
+        const a = D.epis[prev.e], b = D.epis[v.e];
+        const km = gcKm(a.lat, a.lon, b.lat, b.lon);
+        const dep = a.depth !== b.depth
+          ? ` and the depth published for it went from ${a.depth} to ${b.depth} km`
+          : '';
+        said.push(`<b>the epicentre moved ${km.toFixed(1)} km${dep} at this instant, and every felt report moved with it though nobody reported anything — the instrument network computes the point they are measured from</b>`);
+      }
+      if(gain > 0) said.push(`${gain} more report${gain>1?'s':''} than at the version before`);
+      else if(!said.length) said.push(`republished with nothing added`);
+    }
+  }
+  if(v && v === FELT[FELT.length-1] && now >= FELT[FELT.length-1].min)
+    said.push(`this is the last version either record has, ${since(now)} after the origin`);
+  document.getElementById('whennote').innerHTML = said.join(' &nbsp;&middot;&nbsp; ');
+}
+
+// the one geometric function this file needs at encounter time: the same
+// great-circle the build used, on the same sphere
+function gcKm(la1, lo1, la2, lo2){
+  const r = Math.PI/180, p1 = la1*r, p2 = la2*r, dl = (lo2-lo1)*r;
+  const a = Math.sin(p1)*Math.sin(p2) + Math.cos(p1)*Math.cos(p2)*Math.cos(dl);
+  return D.rKm * Math.acos(Math.max(-1, Math.min(1, a)));
+}
+
+function redraw(){
+  const mi = drawMachine(), bi = drawBody();
+  const segs = partition(mi, bi);
+  drawRibbon(segs);
+  drawEdges(mi, bi);
+  drawTable(segs);
+  const kF = keptF(), tot = kF.reduce((a,x)=>a+x.n,0);
+  const nowTot = F().reduce((a,x)=>a+x.n,0);
+  document.getElementById('kept').innerHTML =
+    `keeping <em>${kept.length} of ${S().length} picks</em> and `
+    + `<i>${tot} of ${nowTot} reports</i> published by then`;
+  drawSwarm();
+  drawCols();
+  drawWhen();
+  drawWhenText();
+  // provenance is read from the version being looked at, not from the last one
+  const p = phase();
+  const modes = {};
+  for(const s of (p ? p.picks : [])) modes[s.mode || '(absent)'] = (modes[s.mode || '(absent)']||0)+1;
+  document.getElementById('modes').innerHTML =
+    Object.entries(modes).map(([k,v])=>v+'×&thinsp;'+esc(k)).join(', ') || '—';
+  document.getElementById('nores').textContent =
+    p && p.noRes ? ' '+p.noRes+' arrival(s) in this version published no residual and are not in this file.' : '';
+  document.getElementById('rDn').disabled = ri <= 0;
+  document.getElementById('rUp').disabled = ri >= RUNGS.length-1;
+  document.getElementById('nDn').disabled = minN <= 1;
+  document.getElementById('nUp').disabled = minN >= maxN;
+  document.getElementById('wDn').disabled = wi <= 0;
+  document.getElementById('wUp').disabled = wi >= WHEN.length-1;
+  tipg.innerHTML = '';
+}
+
+// nearest kept station to the pointer — the far field is crowded on a log axis
+function nearest(evt){
+  const svg = document.querySelector('figure svg');
+  const r = svg.getBoundingClientRect();
+  const x = (evt.clientX-r.left)/r.width*W, y = (evt.clientY-r.top)/r.height*H;
+  let best = -1, bd = 1e9;
+  kept.forEach((s,i) => {
+    const dx = px(s.deg)-x, dy = py(s.t)-y, d = dx*dx+dy*dy;
+    if(d < bd){ bd = d; best = i; }
+  });
+  return bd <= 24*24 ? best : -1;
+}
+
+const hit = document.getElementById('hit');
+hit.addEventListener('pointermove', e => {
+  const i = nearest(e);
+  if(i < 0){ tipg.innerHTML=''; return; }
+  const s = kept[i];
+  const t = `${s.sta}  ${fmtDeg(s.deg)}°  ${s.t}s  ${s.ph}  residual ${s.res>0?'+':''}${s.res.toFixed(2)}s`;
+  let x = px(s.deg)+13, y = py(s.t)-13;
+  const w = t.length*7.1+14;
+  if(x+w > W-M.r) x = px(s.deg)-13-w;
+  tipg.innerHTML =
+    `<rect class="tipbg" x="${x.toFixed(1)}" y="${(y-14).toFixed(1)}" width="${w.toFixed(1)}" height="21" rx="2"/>
+     <text class="tip" x="${(x+7).toFixed(1)}" y="${(y+1).toFixed(1)}">${esc(t)}</text>`;
+});
+hit.addEventListener('pointerleave', () => tipg.innerHTML='');
+
+const wsvg = document.getElementById('svgW');
+let dragging = false;
+wsvg.addEventListener('pointerdown', e => {
+  dragging = true; wsvg.setPointerCapture(e.pointerId); pickWhen(e);
+});
+wsvg.addEventListener('pointermove', e => { if(dragging) pickWhen(e); });
+wsvg.addEventListener('pointerup', e => { dragging = false; });
+wsvg.addEventListener('pointercancel', () => { dragging = false; });
+
+document.getElementById('rUp').onclick = () => { ri = Math.min(RUNGS.length-1, ri+1); redraw(); };
+document.getElementById('rDn').onclick = () => { ri = Math.max(0, ri-1); redraw(); };
+document.getElementById('nUp').onclick = () => { minN = Math.min(maxN, minN+1); redraw(); };
+document.getElementById('nDn').onclick = () => { minN = Math.max(1, minN-1); redraw(); };
+document.getElementById('wUp').onclick = () => { wi = Math.min(WHEN.length-1, wi+1); redraw(); };
+document.getElementById('wDn').onclick = () => { wi = Math.max(0, wi-1); redraw(); };
+document.getElementById('rst').onclick = () => { wi = WHEN.length-1; redraw(); };
+document.getElementById('rstT').onclick = () => { ri = 0; minN = 1; redraw(); };
+
+redraw();
+</script>
+</body>
+</html>

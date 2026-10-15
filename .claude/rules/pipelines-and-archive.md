@@ -13,6 +13,12 @@ paths:
 Umgezogen aus `CLAUDE.md` am 2026-08-09 (CLAUDE.md-Diät). Inhalt unverändert; lädt jetzt,
 wenn eine Pipeline, ein Archiv-JSON, ein Skript oder ein Workflow angefasst wird.
 
+> **Zuschnitt seit 2026-09-04 (Frank, Wortlaut privat):** Die Pflichten in dieser Datei binden
+> die nächtlichen Instrumente — die Pipelines, ihre committeten JSONs und die Befunde, die daraus
+> gerechnet werden. Sie binden NICHT ein Werk mit `unarchived: true`, das die Welt zur Laufzeit
+> liest und nichts committet. Ein solches Werk darf ausfallen, wenn seine Quelle ausfällt, und
+> muss das nur sagen.
+
 ## Das Archiv
 
 - **Ausnahme — The Protocol bleibt deterministisch.** Die Prosa des Protokolls ist
@@ -51,7 +57,10 @@ Methodenblatt steht.
 Runbook: `pipelines/protokoll/README.md`. Pipelines = **GitHub-Actions-Workflows**
 (`.github/workflows/{protokoll,praemie,parallaxe}.yml`, nächtlich); GCP nur als gezielter
 Batch-Baustein unter den Bedingungen oben. Secrets (GitHub → Actions): `FIRMS_MAP_KEY`,
-`EIA_API_KEY`, `GEMINI_API_KEY` (Parallaxe, AI-Studio-Free-Tier), `CF` (Cloudflare).
+`EIA_API_KEY`, `GEMINI_API_KEY` (Parallaxe, AI-Studio-Free-Tier), `CF` (Cloudflare),
+`CF_ANALYTICS_TOKEN` (Zone · Analytics · Read — die Leserschaft von `/trending`, gelesen von
+`trending.yml`; dazu die Repo-Variable `CF_ZONE_ID`) und optional `INDEXNOW_KEY`
+(Schlüsseldatei + Ping in `deploy-cf.yml`; fehlt er, passiert dort nichts).
 Site: statisch (dist/) auf Cloudflare Pages via `deploy-cf.yml`; Rebuild-Trigger ist der
 `workflow_run` nach jedem Nightly (Push mit eingebautem GITHUB_TOKEN löst `on: push` nicht
 aus).

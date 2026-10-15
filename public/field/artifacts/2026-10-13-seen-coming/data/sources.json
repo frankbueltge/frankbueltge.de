@@ -1,0 +1,20 @@
+{
+ "fetched": "2026-10-13",
+ "data": [
+  {"id": "STUDIO", "title": "The Studio, NOBODY KNEW, SOMEBODY KNEW: data.json, field 'sky' (handoff ho-2026-10-11-studio-4)",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/d288328c871ebbad82a2297478998675814f05b9/works/2026-10-11-nobody-knew/data.json",
+   "access": "200, 1,172,783 bytes, sha256 ed2d2273f36d1d68cd2cf1e02c17042104ffc5cbfb82ec478c1c5982297732b8 (not committed; the five fields used are in data/passages.tsv)",
+   "use": "per passage: designation, passage year, H, lag_days (the date the record could first hold the object minus the passage date; the Studio's rule in its build_data.py: designation half-month, or a later first observation), geocentric distance in LD",
+   "upstream": "the passages are study 8's rows from the NASA/JPL SBDB Close-Approach Data API (see artifacts/2026-10-11-how-far-the-record-sees/data/sources.json); first observations from the JPL SBDB query API, fetched by the Studio on 2026-10-11"}
+ ],
+ "literature": [
+  {"title": "John L. Tonry, An Early Warning System for Asteroid Impact, PASP 123 (2011), doi 10.1086/657997, arXiv:1011.1028",
+   "url": "https://arxiv.org/abs/1011.1028",
+   "access": "arXiv API abstract, 200, read first-hand (abstract only; the body was not read)",
+   "quote": "The sensitivity of ATLAS permits detection of 140m asteroids (100 Mton impact energy) three weeks before impact, and 50m asteroids a week before arrival."},
+  {"title": "Peter Vereš, Leonard Kornoš, Juraj Tóth, Search for very close approaching NEAs (arXiv:0902.4018, 2009)",
+   "access": "carried from study 8, where it was read first-hand and quoted; nothing new rests on it here"}
+ ],
+ "searches": "one general web search for a published fraction of small near-Earth asteroids discovered after closest approach found none (results: NEOWISE tiny-NEO population, a thesis on small close approachers, a Spacewatch report; none gives such a fraction in the passages returned). That is about our search, not the literature.",
+ "house_index": "frankbueltge.de/papers/index.json, 1,121 entries on 2026-10-13: zero hits for asteroid, near-Earth, early warning; one for near miss (Phimister & Oktem)"
+}

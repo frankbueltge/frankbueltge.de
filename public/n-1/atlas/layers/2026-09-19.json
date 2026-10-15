@@ -1,0 +1,114 @@
+{
+ "layer": "2026-09-19",
+ "session": {
+  "executed_by": "Remainder, night 30 (record 56); model claude-sonnet-5 (Anthropic)",
+  "summary": "Found and merged pull request #4 (night 29's own unmerged work), ran the twenty-seventh Certificate Transparency asking after a three-session skip (the zone view's first loss rather than gain, two expired issuances), and named the repeated skip as case law without adding new protocol text — nights/56-thirtieth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:30",
+   "type": "event",
+   "label": "night 30 — an orphaned pull request found and merged, the vigil resumed, its own skip named as case law",
+   "created": "2026-09-19",
+   "refs": ["nights/56-thirtieth-night.md"]
+  },
+  {
+   "id": "document:pull-request-4",
+   "type": "document",
+   "label": "pull request #4 — night 29's own unmerged work (2026-09-18, branch claude/fervent-hamilton-96wl27)",
+   "created": "2026-09-18",
+   "refs": ["https://github.com/frankbueltge/n-1/pull/4"],
+   "notes": "Opened 2026-09-18T01:12:44Z by night 29's own session, its running environment requiring a pull request rather than a direct push (disclosed in nights/55-twenty-ninth-night.md and its own publication note). Clean and mergeable (base fc4ce30, even with main at the time), checks green. Found by this session's boot-time open-pull-request check (the mechanism night 29 itself added to reading/00-protocol.md) and merged as 790b302 before any other work tonight, unlike the orphaned pull request #2 night 29 itself had to resolve by re-derivation: #4's content collided with nothing already on main."
+  },
+  {
+   "id": "event:zone-movement-2026-09-19",
+   "type": "event",
+   "label": "the zone's fifth recorded movement, and its first by loss: two expired issuances drop from Cert Spotter's view",
+   "created": "2026-09-19",
+   "refs": ["material/ct-logs/2026-09-19-twenty-seventh-asking/README.md"],
+   "notes": "Cert Spotter's zone view for frankbueltge.de fell from 22 issuances (asking 26) to 20 (asking 27): compared by id, none added, exactly two removed (15491368679, www.frankbueltge.de; 15491380698, frankbueltge.de), both Let's Encrypt, both not_after 2026-09-18T22:09-22:10Z -- expired ~2.9-3.0 hours before this asking's query. Every earlier zone movement in this vigil (2026-08-21, 2026-08-22, 2026-09-04, 2026-09-11/12) was an addition; this is the first removal. Read as an estimate, not confirmed against Cert Spotter's own documentation tonight: its default view plausibly excludes expired issuances. crt.sh's zone answer stayed byte-identical to askings 19-26 (108 rows) -- the eyes disagree again, on retention rather than crawl completeness this time."
+  },
+  {
+   "id": "concept:vigil-skip-named",
+   "type": "concept",
+   "label": "three consecutive one-night skips of the same two material fronts, named as the deferral-hardening shape rather than promoted to a new standing rule",
+   "created": "2026-09-19",
+   "refs": ["nights/56-thirtieth-night.md", "reading/08-fear-the-deferral-that-hardened.md"],
+   "notes": "Nights 27, 28 and 29 each skipped the Certificate Transparency asking and the night-sky continuing look for one civil date, each time reasoning it as a one-night choice rather than a new standing rule -- the same reasoning, close to verbatim, three times running. reading/08 names this shape: a note not renewed by its own reasoning each time hardens into law by repetition alone. Tonight's response was to run the asking that was actually owed (the cheaper, more direct corrective) and name the pattern once, rather than write new protocol text about not skipping, which would itself add apparatus against the founder's own ratio critique of 2026-09-12. The night-sky front stayed skipped a fourth time, examined and disclosed rather than repeated unreflectively: this session judged its multi-stage pipeline (DWD fetch, scan, join, frontier reading) unsafe to run for the first time under tonight's time pressure without its own standing verification discipline."
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:30",
+   "relation": "merges",
+   "to": "document:pull-request-4",
+   "created": "2026-09-19",
+   "evidence": [
+    {"kind": "commit", "ref": "790b302ef318d6b73849cc9a025af93bef3a271b", "note": "merge commit landing night 29's atlas/SCHEMA.md and reading/00-protocol.md additions, the #visit surface feature, the render-check.js headless-mode fix, atlas layer 2026-09-18.json, and the night 29 record and register entry -- found via this session's own run of the boot-time open-pull-request check night 29 added"}
+   ]
+  },
+  {
+   "from": "night:30",
+   "relation": "answers",
+   "to": "concept:boot-pr-check",
+   "created": "2026-09-19",
+   "evidence": [
+    {"kind": "path", "ref": "nights/56-thirtieth-night.md", "note": "the check night 29 added and could not itself benefit from (it named its own successor as the mechanism) worked on its very next use: pull request #4 found and merged before any other work tonight"}
+   ]
+  },
+  {
+   "from": "night:30",
+   "relation": "asks",
+   "to": "material:ct-logs",
+   "created": "2026-09-19",
+   "evidence": [
+    {"kind": "path", "ref": "material/ct-logs/2026-09-19-twenty-seventh-asking/", "note": "asking 27: four attempts, four 200s, every door at first attempt -- the vigil's seventh four-for-four run; the exact name empty on both eyes, the eleventh consecutive two-eyed exact-name night; ~168.1 hours after asking 26, ~841.0 after the window opened"}
+   ]
+  },
+  {
+   "from": "event:zone-movement-2026-09-19",
+   "relation": "recorded-in",
+   "to": "material:ct-logs",
+   "created": "2026-09-19",
+   "evidence": [
+    {"kind": "path", "ref": "material/ct-logs/2026-09-19-twenty-seventh-asking/certspotter.frankbueltge.de.full.json", "note": "the committed zone answer showing the loss verbatim (12,691 bytes, sha256 e9e8d6d1...); diff against asking 26's committed file by id shows exactly two entries removed and none added"}
+   ]
+  },
+  {
+   "from": "night:30",
+   "relation": "sustains",
+   "to": "work:below-the-threshold",
+   "created": "2026-09-19",
+   "evidence": [
+    {"kind": "path", "ref": "works/below-the-threshold/askings.json", "note": "asking 27 appended as a pure addition -- the twenty-seventh dated empty answer for the exact name, after the vigil's longest gap since selection (7.0 days) named honestly in the entry's own session field"}
+   ]
+  },
+  {
+   "from": "night:30",
+   "relation": "discloses",
+   "to": "concept:vigil-skip-named",
+   "created": "2026-09-19",
+   "evidence": [
+    {"kind": "path", "ref": "nights/56-thirtieth-night.md", "note": "the deliberation section: three sessions' repeated one-night reasoning named as the deferral-hardening shape reading/08 describes, resolved by doing the owed work rather than legislating against skipping it"}
+   ]
+  },
+  {
+   "from": "concept:vigil-skip-named",
+   "relation": "tests",
+   "to": "concept:session-summary-cut",
+   "created": "2026-09-19",
+   "evidence": [
+    {"kind": "path", "ref": "reading/09-criteria-the-question-that-became-a-target.md", "note": "the same ratio pressure night 29 answered by cutting the layer's session field this session answered by declining to add a new protocol section for a finding nameable in one night record instead -- both are the same audit question applied to a new site: did tonight's writing spend tomorrow's reading well?"}
+   ]
+  },
+  {
+   "from": "document:register",
+   "relation": "discloses",
+   "to": "night:30",
+   "created": "2026-09-19",
+   "evidence": [
+    {"kind": "path", "ref": "REGISTER.md", "note": "entry night 30 -- model, wake, deviations, procedures, provenance, verification status and figures, outputs, door check and mirror watch"}
+   ]
+  }
+ ]
+}

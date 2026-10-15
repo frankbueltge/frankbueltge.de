@@ -1,0 +1,444 @@
+{
+  "generated_by": "tools/identify/score.py",
+  "date": "2026-09-12",
+  "session": 158,
+  "cycle": 3,
+  "question": "Missing Data Art",
+  "preregistration": "artifacts/cycle-003/2026-09-12-what-a-description-is-for/PREREGISTRATION.md",
+  "chance_accuracy_pct": 20.0,
+  "arms": {
+    "atlas-masked": {
+      "n": 60,
+      "accuracy_pct": 95.0,
+      "accuracy_ci": [
+        86.3,
+        98.29
+      ],
+      "correct": 57,
+      "cannot_tell": 0,
+      "cannot_tell_pct": 0.0,
+      "flagged": {
+        "n": 29,
+        "correct": 27,
+        "accuracy_pct": 93.1,
+        "accuracy_ci": [
+          78.04,
+          98.09
+        ],
+        "p_vs_chance": 0.0
+      },
+      "unflagged": {
+        "n": 31,
+        "correct": 30,
+        "accuracy_pct": 96.77,
+        "accuracy_ci": [
+          83.81,
+          99.43
+        ],
+        "p_vs_chance": 0.0
+      },
+      "gap_points": 3.67,
+      "screen_vs_task": {
+        "flagged_and_wrong": 2,
+        "flagged_but_right": 27,
+        "unflagged_and_wrong": 1,
+        "unflagged_and_right": 30,
+        "agreement_pct": 53.33,
+        "cohen_kappa": 0.0378,
+        "precision": 0.069,
+        "recall": 0.6667
+      }
+    },
+    "atlas-unmasked": {
+      "n": 60,
+      "accuracy_pct": 91.67,
+      "accuracy_ci": [
+        81.93,
+        96.39
+      ],
+      "correct": 55,
+      "cannot_tell": 2,
+      "cannot_tell_pct": 3.33,
+      "flagged": {
+        "n": 29,
+        "correct": 26,
+        "accuracy_pct": 89.66,
+        "accuracy_ci": [
+          73.61,
+          96.42
+        ],
+        "p_vs_chance": 0.0
+      },
+      "unflagged": {
+        "n": 31,
+        "correct": 29,
+        "accuracy_pct": 93.55,
+        "accuracy_ci": [
+          79.28,
+          98.21
+        ],
+        "p_vs_chance": 0.0
+      },
+      "gap_points": 3.89,
+      "screen_vs_task": {
+        "flagged_and_wrong": 3,
+        "flagged_but_right": 26,
+        "unflagged_and_wrong": 2,
+        "unflagged_and_right": 29,
+        "agreement_pct": 53.33,
+        "cohen_kappa": 0.04,
+        "precision": 0.1034,
+        "recall": 0.6
+      }
+    },
+    "uk-masked": {
+      "n": 60,
+      "accuracy_pct": 93.33,
+      "accuracy_ci": [
+        84.07,
+        97.38
+      ],
+      "correct": 56,
+      "cannot_tell": 3,
+      "cannot_tell_pct": 5.0,
+      "flagged": {
+        "n": 30,
+        "correct": 29,
+        "accuracy_pct": 96.67,
+        "accuracy_ci": [
+          83.33,
+          99.41
+        ],
+        "p_vs_chance": 0.0
+      },
+      "unflagged": {
+        "n": 30,
+        "correct": 27,
+        "accuracy_pct": 90.0,
+        "accuracy_ci": [
+          74.38,
+          96.54
+        ],
+        "p_vs_chance": 0.0
+      },
+      "gap_points": -6.67,
+      "screen_vs_task": {
+        "flagged_and_wrong": 1,
+        "flagged_but_right": 29,
+        "unflagged_and_wrong": 3,
+        "unflagged_and_right": 27,
+        "agreement_pct": 46.67,
+        "cohen_kappa": -0.0667,
+        "precision": 0.0333,
+        "recall": 0.25
+      }
+    }
+  },
+  "predictions": {
+    "P1": {
+      "statement": "home, masked: reader accuracy on FLAGGED items <= 40 % (<= 2x chance)",
+      "value_pct": 93.1,
+      "n": 29,
+      "verdict": "refuted"
+    },
+    "P2": {
+      "statement": "home, masked: reader accuracy on UNFLAGGED items >= 70 %",
+      "value_pct": 96.77,
+      "n": 31,
+      "verdict": "confirmed"
+    },
+    "P3": {
+      "statement": "home, masked: screen precision against the task > 0.30 (0.129 against the emptiness question, 2026-09-11)",
+      "precision": 0.069,
+      "prior_2026_09_11": 0.129,
+      "verdict": "refuted"
+    },
+    "P4": {
+      "statement": "home: kappa between 'not identifies_uniquely' and 'reader wrong' >= 0.30",
+      "kappa": 0.0,
+      "detail": {
+        "not_unique_and_wrong": 0,
+        "not_unique_but_right": 0,
+        "unique_and_wrong": 3,
+        "unique_and_right": 57,
+        "n_not_unique": 0,
+        "agreement_pct": 95.0,
+        "cohen_kappa": 0.0,
+        "precision": null,
+        "recall": 0.0
+      },
+      "verdict": "refuted"
+    },
+    "P5": {
+      "statement": "home: accuracy on R5-flagged items falls by >= 30 points unmasked -> masked, non-R5 falls by < 15 points",
+      "r5_items_in_sample": 0,
+      "r5_in_catalogue": 0,
+      "verdict": "not evaluable",
+      "note": "PREREGISTRATION §3 declared in advance: fewer than 5 R5-flagged items in the home sample makes P5 not evaluable. R5 fires on 0 of 521 atlas values, so no sample could have evaluated it."
+    },
+    "P6": {
+      "statement": "the flagged/unflagged accuracy gap is SMALLER on data.gov.uk than at home",
+      "gap_home_points": 3.67,
+      "gap_uk_points": -6.67,
+      "verdict": "confirmed"
+    },
+    "P7": {
+      "statement": "census, home: >= 10 % of the atlas's descriptions fail to identify their record uniquely",
+      "value_pct": 0.96,
+      "ci": [
+        0.41,
+        2.23
+      ],
+      "verdict": "refuted"
+    },
+    "_tally": {
+      "total": 7,
+      "scored": 6,
+      "confirmed": 2,
+      "refuted": 4,
+      "not_evaluable": 1
+    }
+  },
+  "kill_conditions": {
+    "K1": {
+      "condition": "home masked, UNFLAGGED accuracy < 40 %",
+      "value_pct": 96.77,
+      "fired": false
+    },
+    "K2": {
+      "condition": ">= 25 % of sampled masked values retain fewer than 3 tokens",
+      "arms": {
+        "atlas-masked": {
+          "under_3_tokens": 0,
+          "pct": 0.0,
+          "fired": false
+        },
+        "atlas-unmasked": {
+          "under_3_tokens": 0,
+          "pct": 0.0,
+          "fired": false
+        },
+        "uk-masked": {
+          "under_3_tokens": 1,
+          "pct": 1.67,
+          "fired": false
+        }
+      },
+      "fired": false
+    },
+    "K3": {
+      "condition": "a reader answers cannot_tell on >= 20 % of an arm's items",
+      "arms": {
+        "atlas-masked": {
+          "pct": 0.0,
+          "fired": false
+        },
+        "atlas-unmasked": {
+          "pct": 3.33,
+          "fired": false
+        },
+        "uk-masked": {
+          "pct": 5.0,
+          "fired": false
+        }
+      },
+      "fired": false
+    },
+    "K4": {
+      "condition": "data.gov.uk notes non-empty on < 80 % of records",
+      "value_pct": 98.81,
+      "fired": false
+    }
+  },
+  "narrowing_vs_task_home": {
+    "not_unique_and_wrong": 0,
+    "not_unique_but_right": 0,
+    "unique_and_wrong": 3,
+    "unique_and_right": 57,
+    "n_not_unique": 0,
+    "agreement_pct": 95.0,
+    "cohen_kappa": 0.0,
+    "precision": null,
+    "recall": 0.0
+  },
+  "exploratory": {
+    "_note": "Declared exploratory. No prediction is scored on anything in this block.",
+    "masking_cost_home": {
+      "unmasked_accuracy_pct": 91.67,
+      "masked_accuracy_pct": 95.0,
+      "drop_points": -3.33,
+      "caveat": "BETWEEN readers, not within: the two home arms were read by two independent readers (PREREGISTRATION §2.3, §5.4). The drop confounds masking with reader variation and nothing here may attribute it to masking alone.",
+      "unmasked_flagged_accuracy_pct": 89.66,
+      "unmasked_unflagged_accuracy_pct": 93.55
+    },
+    "strict_vs_task_home": {
+      "flagged_and_wrong": 0,
+      "flagged": 12
+    },
+    "narrowing_vs_task_uk": {
+      "not_unique_and_wrong": 2,
+      "not_unique_but_right": 31,
+      "unique_and_wrong": 2,
+      "unique_and_right": 25,
+      "n_not_unique": 33,
+      "agreement_pct": 45.0,
+      "cohen_kappa": -0.0123,
+      "precision": 0.0606,
+      "recall": 0.5
+    },
+    "accuracy_by_narrowing_home": {
+      "unique": 95.0,
+      "not_unique": null
+    },
+    "accuracy_by_narrowing_uk": {
+      "unique": 92.59,
+      "not_unique": 93.94
+    },
+    "narrowing_is_size_dependent": {
+      "note": "The narrowing set is an intersection of posting lists in the catalogue itself, so a larger catalogue makes unique identification harder for the SAME text. Home (N=521) and data.gov.uk (N=67,205) are therefore NOT comparable on not_unique_pct. Found by us this session; filed as a defect.",
+      "n_home": 521,
+      "n_uk": 67205
+    }
+  },
+  "census": {
+    "atlas": {
+      "catalogue": "atlas",
+      "label": "Atlas of Data Art (home arm)",
+      "field": "decisive_move",
+      "records": 521,
+      "present": 521,
+      "declared_completeness_pct": 100.0,
+      "narrowing": {
+        "not_unique": 5,
+        "not_unique_pct": 0.96,
+        "not_unique_ci": [
+          0.41,
+          2.23
+        ],
+        "identifies_nothing": 0,
+        "identifies_nothing_pct": 0.0,
+        "median_set_size": 1,
+        "mean_masked_tokens": 28.49,
+        "under_3_masked_tokens": 0,
+        "under_3_masked_tokens_pct": 0.0
+      },
+      "screen": {
+        "r1_chrome": {
+          "n": 78,
+          "pct": 14.97
+        },
+        "r2_truncated_tail": {
+          "n": 207,
+          "pct": 39.73
+        },
+        "r3_truncated_head": {
+          "n": 152,
+          "pct": 29.17
+        },
+        "r4_duplicate": {
+          "n": 4,
+          "pct": 0.77
+        },
+        "r5_title_echo": {
+          "n": 0,
+          "pct": 0.0
+        },
+        "hollow_strict": {
+          "n": 82,
+          "pct": 15.74
+        },
+        "hollow_broad": {
+          "n": 211,
+          "pct": 40.5
+        }
+      }
+    },
+    "uk": {
+      "catalogue": "uk",
+      "label": "data.gov.uk",
+      "field": "notes",
+      "records": 68017,
+      "present": 67205,
+      "declared_completeness_pct": 98.81,
+      "narrowing": {
+        "not_unique": 41784,
+        "not_unique_pct": 62.17,
+        "not_unique_ci": [
+          61.81,
+          62.54
+        ],
+        "identifies_nothing": 1895,
+        "identifies_nothing_pct": 2.82,
+        "median_set_size": 3,
+        "mean_masked_tokens": 81.45,
+        "under_3_masked_tokens": 2981,
+        "under_3_masked_tokens_pct": 4.44
+      },
+      "screen": {
+        "r1_chrome": {
+          "n": 3275,
+          "pct": 4.87
+        },
+        "r2_truncated_tail": {
+          "n": 30116,
+          "pct": 44.81
+        },
+        "r3_truncated_head": {
+          "n": 1181,
+          "pct": 1.76
+        },
+        "r4_duplicate": {
+          "n": 20783,
+          "pct": 30.92
+        },
+        "r5_title_echo": {
+          "n": 1706,
+          "pct": 2.54
+        },
+        "hollow_strict": {
+          "n": 23340,
+          "pct": 34.73
+        },
+        "hollow_broad": {
+          "n": 41689,
+          "pct": 62.03
+        }
+      }
+    }
+  },
+  "manifest": {
+    "atlas": {
+      "catalogue": "atlas",
+      "api_total": 521,
+      "harvested": 521,
+      "endpoint": "https://frankbueltge.de/atlas/werke.json",
+      "field": "decisive_move",
+      "stratum_field": "venue_prize (provenance families, frozen 2026-09-08)",
+      "sha256": "a033aef59a4a0d397de02f57cd7db50bd44b075fe1756c6d3490355528c64a61",
+      "bytes": 387847,
+      "seconds": 0.4,
+      "fetched_utc": "2026-09-12T03:41:45Z",
+      "ok": true
+    },
+    "uk": {
+      "catalogue": "uk",
+      "api_total": 68017,
+      "harvested": 68017,
+      "pages": 69,
+      "endpoint": "https://ckan.publishing.service.gov.uk/api/3/action/package_search",
+      "field": "notes",
+      "stratum_field": "organization",
+      "seconds": 174.7,
+      "fetched_utc": "2026-09-12T03:44:40Z",
+      "ok": true
+    }
+  },
+  "params": {
+    "seed": 20260912,
+    "n_sample": 60,
+    "n_candidates": 5,
+    "common_df_fraction": 0.1,
+    "n_rarest": 3,
+    "sheet_cap_chars": 1200
+  }
+}

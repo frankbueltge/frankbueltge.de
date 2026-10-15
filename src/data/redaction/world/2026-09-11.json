@@ -1,0 +1,137 @@
+{
+  "date": "2026-09-11",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-11T10:12:39Z",
+    "counts": {
+      "botwall": 29,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 271,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 0
+    },
+    "decided": 271,
+    "excluded_unverifiable": 29,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.014
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.014
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-09",
+    "receipts": [],
+    "sample_drawn_at": "2026-09-10T10:18:34Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5729,
+      "replaced": 5991,
+      "trivial": 845,
+      "update": 510
+    },
+    "day": "2026-09-10",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "govt"
+        ],
+        "after": "TVK govt's gold ring scheme for newborns postponed due to CM Vijay's foreign trip",
+        "before": "Cm Vijay: TVK's gold ring scheme for newborns postponed due to CM Vijay's foreign trip | Chennai News",
+        "detected": "2026-09-10T07:33:17Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "CM",
+          "Vijay",
+          "Chennai",
+          "News"
+        ],
+        "similarity": 0.824,
+        "url": "https://timesofindia.indiatimes.com/city/chennai/tvks-gold-ring-scheme-for-newborns-postponed-due-to-cm-vijays-foreign-trip/articleshow/133957504.cms",
+        "weight": 9,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Georgia",
+          "Harrison"
+        ],
+        "after": "Bleary-eyed Tina O'Brien and Georgia Harrison look all partied out as they lead TV's finest heading home after the NTAs",
+        "before": "Bleary-eyed Olivia Attwood and Tina O'Brien look all partied out as they lead TV's finest heading home after the NTAs",
+        "detected": "2026-09-10T11:33:45Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Olivia",
+          "Attwood"
+        ],
+        "similarity": 0.84,
+        "url": "https://www.dailymail.com/tvshowbiz/article-16116831/Bleary-eyed-Olivia-Attwood-Tina-OBrien-look-partied-lead-TVs-finest-heading-home-NTAs.html",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Allegedly",
+          "Incident"
+        ],
+        "after": "'It Hurt Me, I Felt Unsafe': Nepal Woman Allegedly Harassed By Man In Kathmandu's Thamel; CCTV Footage Of Incident Goes Viral, Calls For Police Action",
+        "before": "'It Hurt Me, I Felt Unsafe': Nepal Woman Harassed By Man In Kathmandu's Thamel; CCTV Footage Of Alleged Misconduct Goes Viral, Calls For Police Action",
+        "detected": "2026-09-10T09:01:53Z",
+        "domain": "freepressjournal.in",
+        "removed": [
+          "Alleged",
+          "Misconduct"
+        ],
+        "similarity": 0.857,
+        "url": "https://www.freepressjournal.in/viral/it-hurt-me-i-felt-unsafe-nepal-woman-harassed-by-man-in-kathmandus-thamel-cctv-footage-of-alleged-misconduct-goes-viral-sparks-calls-for-police-action",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 18249,
+      "PAGE_TEXTCHANGE": 141590,
+      "PAGE_TITLECHANGE": 52895,
+      "UNCHANGED_CONTENT": 798637
+    },
+    "title_changes_en": 13075,
+    "trace": [
+      {
+        "bytes_billed": 27262976,
+        "created": "1789121312402",
+        "job_id": "world_gdg_counts_20260910",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 254803968,
+        "created": "1789121317672",
+        "job_id": "world_gdg_titles_20260910",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-11T10:12:39Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-10.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

@@ -8,6 +8,7 @@ import {
   THEMEN_LABELS_DE,
   THEMEN_LABELS_EN,
 } from '@/config/themen'
+import { cn } from '@/lib/ui/cn'
 
 interface Props {
   locale: Locale
@@ -162,15 +163,24 @@ for (const w of works) {
 const dekadenKeys = Object.keys(dekadenCounts).map(Number).sort((a, b) => a - b)
 const mediumKeys = ['digital', 'hybrid', 'physical']
 const axisKeys = ['investigation', 'mixed', 'spectacle']
+
+// Re-skin 2d (2026-09-02): the atlas on the frame's recipe — the kicker as the one .kicker
+// class, the head and the cards on the type scale, panels on the frame's radius and resting
+// depth, and a card that answers the pointer at the frame's speed. The .chip below keeps its
+// own rule (there are a hundred of them on this page and they are the page's instrument), but
+// it now takes its radius and its easing from the frame's tokens instead of its own numbers.
+// The filter script, the data and every word are untouched.
+const kicker = 'kicker'
+const panel = 'rounded-md border border-line bg-panel panel-raised'
 ---
 
 <main id="main" class="mx-auto w-full max-w-6xl px-4 py-10 sm:py-14">
   <header class="mb-8 max-w-3xl">
-    <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">{copy.kicker}</p>
-    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+    <p class={cn(kicker, 'mb-2')}>{copy.kicker}</p>
+    <h1 class="text-h1 font-semibold">
       {de ? 'Atlas der Datenkunst' : 'Atlas of Data Art'}
     </h1>
-    <p class="mt-4 text-fg-muted">{copy.intro}</p>
+    <p class="mt-4 text-body text-fg-muted">{copy.intro}</p>
   </header>
 
   <!-- stats -->
@@ -181,9 +191,9 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
       { n: clusterKeys.length, l: copy.lClusters },
       { n: physical, l: copy.lPhysical },
     ].map((s) => (
-      <div class="rounded-xl border border-line bg-panel p-4">
-        <dd class="font-mono text-2xl font-semibold text-fg">{s.n}</dd>
-        <dt class="mt-0.5 text-xs text-fg-muted">{s.l}</dt>
+      <div class={cn(panel, 'p-4')}>
+        <dd class="font-mono text-h2 font-semibold text-fg">{s.n}</dd>
+        <dt class="mt-0.5 text-small text-fg-muted">{s.l}</dt>
       </div>
     ))}
   </dl>
@@ -194,14 +204,14 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
       <!-- Thema: je Familie eine Zeile, damit dreizehn Felder lesbar bleiben -->
       <div class="space-y-1.5">
         <div class="flex flex-wrap items-center gap-1.5">
-          <span class="mr-1 w-20 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fField}</span>
+          <span class="mr-1 w-20 shrink-0 font-mono text-mono uppercase tracking-wider text-fg-faint">{copy.fField}</span>
           <button type="button" data-filter="cluster" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
         </div>
         {familienKeys.map((f) => (
           <div class="flex flex-wrap items-center gap-1.5">
             {/* Familienname als eigene Zeile, damit die Chips linksbündig stehen und
                 nicht hinter einer Beschriftungsspalte eingerückt beginnen. */}
-            <span class="w-full font-mono text-[0.65rem] uppercase tracking-wider text-fg-faint">{FAMILIE_LABEL[f]}</span>
+            <span class="w-full font-mono text-mono-xs uppercase tracking-wider text-fg-faint">{FAMILIE_LABEL[f]}</span>
             {clusterKeys.filter((c) => FAMILIE[c] === f).map((c) => (
               <button type="button" data-filter="cluster" data-value={String(c)} aria-pressed="false" class="chip" title={CLUSTER[c]}>
                 <span class="font-mono text-fg-faint">{c}</span> {CLUSTER[c]} <span class="text-fg-faint">{clusterCounts[c] ?? 0}</span>
@@ -215,7 +225,7 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
       <div class="space-y-1.5 border-t border-line pt-4">
         {dekadenKeys.length > 1 && (
           <div class="flex flex-wrap items-center gap-1.5">
-            <span class="mr-1 w-20 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fJahr}</span>
+            <span class="mr-1 w-20 shrink-0 font-mono text-mono uppercase tracking-wider text-fg-faint">{copy.fJahr}</span>
             <button type="button" data-filter="dekade" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
             {dekadenKeys.map((d) => (
               <button type="button" data-filter="dekade" data-value={String(d)} aria-pressed="false" class="chip">
@@ -226,7 +236,7 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
         )}
         {epochenKeys.length > 1 && (
           <div class="flex flex-wrap items-center gap-1.5">
-            <span class="mr-1 w-20 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fEpoche}</span>
+            <span class="mr-1 w-20 shrink-0 font-mono text-mono uppercase tracking-wider text-fg-faint">{copy.fEpoche}</span>
             <button type="button" data-filter="epoche" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
             {epochenKeys.map((e) => (
               <button type="button" data-filter="epoche" data-value={e} aria-pressed="false" class="chip">
@@ -236,14 +246,14 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
           </div>
         )}
         <div class="flex flex-wrap items-center gap-1.5">
-          <span class="mr-1 w-20 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fMedium}</span>
+          <span class="mr-1 w-20 shrink-0 font-mono text-mono uppercase tracking-wider text-fg-faint">{copy.fMedium}</span>
           <button type="button" data-filter="medium" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
           {mediumKeys.map((m) => (
             <button type="button" data-filter="medium" data-value={m} aria-pressed="false" class="chip">{MEDIUM[m]}</button>
           ))}
         </div>
         <div class="flex flex-wrap items-center gap-1.5">
-          <span class="mr-1 w-20 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fAxis}</span>
+          <span class="mr-1 w-20 shrink-0 font-mono text-mono uppercase tracking-wider text-fg-faint">{copy.fAxis}</span>
           <button type="button" data-filter="axis" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
           {axisKeys.map((a) => (
             <button type="button" data-filter="axis" data-value={a} aria-pressed="false" class="chip">{AXIS[a]}</button>
@@ -252,7 +262,7 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
       </div>
 
       <div class="flex items-center gap-3 border-t border-line pt-3">
-        <p class="font-mono text-xs text-fg-faint"><span data-count>{total}</span> / {total} {copy.showing}</p>
+        <p class="font-mono text-mono text-fg-faint"><span data-count>{total}</span> / {total} {copy.showing}</p>
         <button type="button" data-reset class="chip hidden">{copy.reset}</button>
       </div>
     </div>
@@ -267,23 +277,23 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
           data-epoche={epocheVon(w.year)}
           data-dekade={String(dekadeVon(w.year) ?? '')}
           data-axis={w.axis_pole}
-          class="flex flex-col rounded-xl border border-line bg-panel p-4 transition-colors hover:border-fg-faint"
+          class={cn(panel, 'atlas-card flex flex-col break-words p-4')}
         >
           <div class="mb-2 flex flex-wrap items-center gap-1.5">
             {w.clusters.map((c) => (
-              <span class="rounded bg-panel-2 px-1.5 py-0.5 font-mono text-[10px] text-fg-muted" title={CLUSTER[c]}>{c}</span>
+              <span class="rounded-xs bg-panel-2 px-1.5 py-0.5 font-mono text-mono-xs text-fg-muted" title={CLUSTER[c]}>{c}</span>
             ))}
-            <span class="ml-auto font-mono text-[10px] uppercase tracking-wider text-fg-faint">{MEDIUM[w.medium_class]}</span>
+            <span class="ml-auto font-mono text-mono-xs uppercase tracking-wider text-fg-faint">{MEDIUM[w.medium_class]}</span>
             {w.verify_status !== 'verified' && (
-              <span class="rounded bg-panel-2 px-1.5 py-0.5 font-mono text-[10px] text-amber" title={copy.unverified}>?</span>
+              <span class="rounded-xs bg-panel-2 px-1.5 py-0.5 font-mono text-mono-xs text-fg-muted" title={copy.unverified}>?</span>
             )}
           </div>
-          <h2 class="text-[15px] font-semibold leading-snug text-fg">{w.title}</h2>
-          <p class="mt-0.5 text-sm text-fg-muted">{w.artist} · {w.year}</p>
-          <p class="mt-0.5 text-xs text-fg-faint">{w.venue_prize}</p>
-          {w.decisive_move && <p class="mt-2 text-[13px] leading-relaxed text-fg-muted">{w.decisive_move}</p>}
-          {w.curator_note && <p class="mt-2 text-[12px] italic leading-relaxed text-fg-faint">{w.curator_note}</p>}
-          <div class="mt-3 flex items-center justify-between gap-2 border-t border-line pt-2 text-xs">
+          <h2 class="text-h3 font-semibold leading-snug text-fg">{w.title}</h2>
+          <p class="mt-0.5 text-small text-fg-muted">{w.artist} · {w.year}</p>
+          <p class="mt-0.5 text-small text-fg-faint">{w.venue_prize}</p>
+          {w.decisive_move && <p class="mt-2 text-small leading-relaxed text-fg-muted">{w.decisive_move}</p>}
+          {w.curator_note && <p class="mt-2 text-small italic leading-relaxed text-fg-faint">{w.curator_note}</p>}
+          <div class="mt-3 flex items-center justify-between gap-2 border-t border-line pt-2 text-small">
             <span class="font-mono text-fg-faint">{AXIS[w.axis_pole]} · {w.form}</span>
             {w.source_url && (
               <a href={w.source_url} target="_blank" rel="noopener noreferrer" class="shrink-0 text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">{copy.source} ↗</a>
@@ -293,23 +303,45 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
       ))}
     </ul>
 
-    <p class="mt-10 max-w-3xl text-xs leading-relaxed text-fg-faint">{copy.method}</p>
+    <p class="mt-10 max-w-3xl text-small leading-relaxed text-fg-faint">{copy.method}</p>
   </section>
 </main>
 
 <style>
+  /* The atlas's own chip. It is not the shadcn Button recipe on purpose: a hundred of these
+     stand on one page as the instrument the atlas is read with, and they need to be smaller and
+     denser than a button of the frame. What changed on 2026-09-02 is where its numbers come
+     from — the frame's radius step and the frame's easing, instead of a 0.5rem corner and three
+     hand-typed 150 ms transitions. */
   .chip {
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
     border: 1px solid var(--color-line);
     background: var(--color-panel);
     padding: 0.25rem 0.6rem;
-    font-size: 12px;
+    font-size: var(--text-small);
     color: var(--color-fg-muted);
-    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    transition:
+      color 0.2s var(--ease-frame),
+      border-color 0.2s var(--ease-frame),
+      background-color 0.2s var(--ease-frame);
   }
   .chip:hover {
     color: var(--color-fg);
-    border-color: var(--color-fg-faint);
+    border-color: var(--color-line-lift);
+  }
+
+  /* The work card answers the pointer with the frame's gesture: it is read in place, so it
+     brightens its hairline and casts deeper rather than rising. The rule stands here because
+     the interactive rule in global.css cannot reach a <li>. */
+  .atlas-card {
+    transition:
+      border-color 0.2s var(--ease-frame),
+      box-shadow 0.2s var(--ease-frame);
+  }
+  .atlas-card:hover,
+  .atlas-card:focus-within {
+    border-color: var(--color-line-lift);
+    box-shadow: var(--elev-lift);
   }
   .chip[aria-pressed='true'] {
     background: var(--color-fg);

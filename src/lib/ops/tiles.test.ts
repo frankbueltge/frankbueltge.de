@@ -10,6 +10,7 @@ import ghostFleetLatest from '@/data/ghost-fleet/latest.json'
 import roundNumberLatest from '@/data/round-number/latest.json'
 import patternLatest from '@/data/pattern/latest.json'
 import atlasWorks from '@/data/atlas/werke.json'
+import { getLatestTrending } from '@/lib/trending/data'
 
 const tiles = readTiles()
 
@@ -45,6 +46,8 @@ const ANSWERS_TODAY: Record<string, () => boolean> = {
   patterns: () =>
     (patternLatest as unknown as { headline?: { r?: number } }).headline?.r !== undefined,
   atlas: () => (atlasWorks as unknown as unknown[]).length > 0,
+  // Common Ground (2026-10-04): the newest committed trending day with any topic in it.
+  commonGround: () => (getLatestTrending()?.summary.topics_total ?? 0) > 0,
 }
 
 describe('the live dashboard reads the archive', () => {
@@ -96,6 +99,25 @@ describe('the live dashboard reads the archive', () => {
     }
   })
 
+  it('gives every mark a readout of its own value, aligned by index — or none at all', () => {
+    // 2026-09-01: the entrance shows a mark's readout when the pointer rests on it. A readout
+    // list that is shorter or longer than the marks would put one value's words under another
+    // value's bar; a readout without a digit would be a caption, not a reading.
+    for (const tile of tiles) {
+      const v = tile.viz
+      if (!v.labels) continue
+      const marks =
+        v.kind === 'line' || v.kind === 'bars' ? v.values.length : v.kind === 'cells' ? Math.min(v.count, 24) : 2
+      expect(v.labels.length, `${tile.id}: readouts must match marks`).toBe(marks)
+      for (const label of v.labels) {
+        expect(label.trim().length, tile.id).toBeGreaterThan(0)
+        expect(label, `${tile.id}: a readout states a number`).toMatch(/\d/)
+      }
+    }
+    // every tile on the board today carries readouts — the derivations all know their marks
+    expect(tiles.every((t) => Array.isArray(t.viz.labels))).toBe(true)
+  })
+
   it('omits Protocol when no day file is handed in — absent, never blank', () => {
     const ids = readTiles({}).map((t) => t.id)
     expect(ids).not.toContain('protocol')
@@ -109,16 +131,22 @@ describe('the live dashboard reads the archive', () => {
       pipeline_version: '0.1.0',
       index: null,
       entries: [
-        { status: 'ok' },
-        { status: 'unavailable' },
-        { status: 'ok' },
+        { status: 'ok', label: 'Arctic sea ice' },
+        { status: 'unavailable', label: 'Methane' },
+        { status: 'ok', label: 'Sea level' },
       ],
     } as unknown as ProtokollDay
     const tile = readTiles({ protokoll: day }).find((t) => t.id === 'protocol')!
     expect(tile.big).toBe('3 items')
     expect(tile.sub).toContain('Feststellung entfällt')
-    // The dim cell is the source that did not answer, at its own position in the day.
-    expect(tile.viz).toEqual({ kind: 'cells', count: 3, marked: [1] })
+    // The dim cell is the source that did not answer, at its own position in the day — and its
+    // readout says so in the piece's own words, while an answered item is simply named.
+    expect(tile.viz).toEqual({
+      kind: 'cells',
+      count: 3,
+      marked: [1],
+      labels: ['Arctic sea ice', 'Methane — “Feststellung entfällt”', 'Sea level'],
+    })
   })
 })
 
@@ -165,8 +193,14 @@ describe('the cascade is binned against a measured span, not a counted one', () 
 describe('the copy dictionary carries no readings', () => {
   /** Constants of the method, not measurements — the only digits allowed to be written down. The
    *  bin width is a property of how the pulse is built, fixed in scripts/fetch-pulse.ts; it cannot
-   *  go stale the way a reading can. Anything else with a digit in it belongs in a derivation. */
-  const ALLOWED = new Set(['2-HOUR BINS · TAPERED'])
+   *  go stale the way a reading can. Anything else with a digit in it belongs in a derivation.
+   *
+   *  "n-1" is the second kind of allowed digit, added 2026-09-03: a proper name that happens to
+   *  contain one. It is the practice's own repository title, after the rhizome's writing rule
+   *  ("subtract the unique from the multiplicity"), and it appears here as a board row's id, its
+   *  repo and its fallback name. A name cannot go stale the way a reading can — and rewriting it
+   *  to satisfy a digit scan would be the site renaming a practice to suit its own test. */
+  const ALLOWED = new Set(['2-HOUR BINS · TAPERED', 'n-1'])
 
   function walk(value: unknown, path: string, found: string[]): void {
     if (typeof value === 'string') {

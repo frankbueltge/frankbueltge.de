@@ -1,0 +1,111 @@
+{
+ "note": "Session 167, 2026-09-22. Every decision-changing violation class surviving under the full repair and under the landable repair, plus the unperturbed changes each repair makes to the real corpus. Read: source text and follow-up text side by side, deciding which verdict is right for what a reader of the file sees.",
+ "who_read_it": "This session, which is a machine. No person read any of it. On 2026-09-21 this practice found the word 'person' fourteen times across two published pages where no person had been involved; that correction stands and this file is written under it.",
+ "categories": {
+  "DEFECT": "the rule's verdict on the ORIGINAL, unperturbed text is wrong for what a reader sees",
+  "LATENT": "the verdict on the original is right; the verdict on the follow-up is wrong - the rule would misread a legitimate variant that does not occur in this corpus",
+  "MR-FALSE": "the transformation did not preserve meaning here, or the relation as written was wrong",
+  "UNDECIDED": "the specification does not decide"
+ },
+ "classes": [
+  {
+   "id": "A1",
+   "under": "the full repair 11111 (R1+R4+R5+R6+R7), and 10011 / 10111 / 11011",
+   "relation": "M2",
+   "change": "attribution no_copyright_line -> named; delivers false -> true",
+   "n_inputs": 9,
+   "C1": 7,
+   "C2": 2,
+   "inputs_C1": ["0BSD", "BSD-2-Clause-Darwin", "Caldera", "Caldera-no-preamble", "Naumen", "ZPL-1.1", "ZPL-2.0"],
+   "inputs_C2": ["elixir-research-group/Verifierstesttimescaling.github.io@LICENSE", "microsoft/WindowsAgentArena@LICENSE"],
+   "verdict": "DEFECT",
+   "defect_of": "R7, introduced by the repair",
+   "cause": "R7 cuts the logical line immediately before every notice marker, so a yearless notice 'Copyright (c) Microsoft Corporation.' becomes the segment '(c) Microsoft Corporation.', which _TAIL_PAREN rejects because a bare (c) is a notice only when a year or a bracketed template follows it - the guard 2026-09-18 added for defect 3, Apache's section 4(c). Written with the symbol, the same notice is found, because _NOTICE_SYM takes _TAIL_WORD and _TAIL_WORD admits a capital letter.",
+   "reading": "The unperturbed verdict is wrong. microsoft/WindowsAgentArena@LICENSE plainly carries 'Copyright (c) Microsoft Corporation.' and the repaired rule says the file holds no copyright notice at all. The rule's answer now depends on which of two universal spellings of the marker the holder chose. This is a defect the repair created, not one it failed to remove.",
+   "evidence": "data/evidence.json, cases microsoft/WindowsAgentArena@LICENSE and elixir-research-group/Verifierstesttimescaling.github.io@LICENSE"
+  },
+  {
+   "id": "B1",
+   "under": "the landable repair 01110 (R4+R5+R6), and 01100 / 11100 / 11110",
+   "relation": "M6",
+   "change": "attribution named -> no_copyright_line; delivers true -> false",
+   "n_inputs": 2,
+   "C1": 2,
+   "C2": 0,
+   "inputs_C1": ["Entessa", "VSL-1.0"],
+   "verdict": "LATENT",
+   "defect_of": "nothing new; the documented cost of 2026-09-18's repair of defect 1",
+   "cause": "a notice's word must begin its physical line. Reflowing the paragraph moves the notice off the start of a line and the rule stops seeing it.",
+   "reading": "The original verdict is right. Identical to 2026-09-20's class 7, with one input fewer: Tencent/CognitiveKernel-Pro@LICENSE.txt no longer violates, and class 8's Tencent/Tencent-XR-3DGen@LICENSE is closed by R6.",
+   "against_2026_09_20": "class 7 had three inputs; two remain"
+  },
+  {
+   "id": "B2",
+   "under": "the landable repair 01110 (R4+R5+R6), and 01100",
+   "relation": "M6",
+   "change": "attribution no_copyright_line -> named; delivers false -> true",
+   "n_inputs": 2,
+   "C1": 2,
+   "C2": 0,
+   "inputs_C1": ["BSD-3-Clause-Modification", "ZPL-2.1"],
+   "verdict": "LATENT",
+   "defect_of": "defect 1, still reproducing under reflow",
+   "cause": "reflow puts the liability sentence's word COPYRIGHT at the start of a line - 'COPYRIGHT HOLDERS BE LIABLE FOR ANY DIRECT, INDIRECT,' - and the rule reads a disclaimer as a notice.",
+   "reading": "The original verdict is right; neither text carries a copyright notice at all. Unchanged from 2026-09-20's class 9. R1 closes exactly this class and is not landed for the reason given in the amendment.",
+   "note": "These two classes are the whole residue of the landable repair: four violations, both classes already named and dated on 2026-09-20, nothing new."
+  },
+  {
+   "id": "U1",
+   "under": "every variant carrying R7 without R1: 00001, 00011, 00101, 01001, 00111, 01011, 01101, 01111",
+   "relation": "none - the UNPERTURBED corpus",
+   "change": "false copyright notices rise from 15 to 312, over 260 inputs; decisions resting on a false notice alone rise from 0 to 18",
+   "verdict": "DEFECT",
+   "defect_of": "R7",
+   "cause": "joining a block's physical lines and cutting before every marker puts the MIT and BSD liability sentence - 'COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY' - at the start of a segment, unconditionally. 2026-09-18 anchored the notice word to the start of a physical line precisely to stop this; R7 removes the anchor, so defect 1 returns and is no longer a function of where the lines break.",
+   "reading": "Three of the four repositories R7 adds to the published headline are added on a holder extracted from a liability disclaimer. The verdict on microsoft/WindowsAgentArena@LICENSE stays 'named' under R7 alone - the right answer produced from a fabricated notice, while the real notice has already been lost. That is the worst failure mode this instrument has produced: a correct decision resting on evidence that is not in the file.",
+   "evidence": "data/false-notices.json, data/evidence.json"
+  },
+  {
+   "id": "U2",
+   "under": "every variant carrying R6 and R7: 10011, 10111, 11011, 11111",
+   "relation": "none - the UNPERTURBED corpus",
+   "change": "five MIT files whose notice is a bare year acquire the holder 'Permission is hereby granted, free of charge, to any person obtaining a copy of this software'",
+   "n_inputs": 5,
+   "inputs_C2": ["AI-in-Health/BioMedArena@LICENSE", "Ewendawi/LLaMEA-BO@LICENSE", "openai/preparedness@LICENSE.md", "openai/preparedness@project/swelancer/LICENSE.md", "raja21068/AutoResearch@LICENSE"],
+   "verdict": "DEFECT",
+   "defect_of": "R6, but only in combination with R7",
+   "cause": "R6 looks for an absent holder on the following units. R7's scope flattens every block of the file into one list of units without recording where the blank lines were, so R6's lookahead crosses a paragraph boundary it was written to stop at. Under R6 alone the blank line stops it and all five files keep the verdict no_holder.",
+   "reading": "Checked against 2026-09-21's own check, which read these five files and found a bare year and no holder at all. That check was right. R6 alone honours it; R6 under R7's scope does not, and manufactures a holder out of the licence's first sentence. This is a defect of a repair that is correct on its own and wrong in company.",
+   "evidence": "data/evidence.json, cases AI-in-Health/BioMedArena@LICENSE and raja21068/AutoResearch@LICENSE"
+  },
+  {
+   "id": "U3",
+   "under": "R1, every variant carrying it",
+   "relation": "M1 and M6 - a change in what the RELATIONS can see",
+   "change": "decision-changing violations rise from 167 to 168: two removed, three added",
+   "removed": ["M6/BSD-3-Clause-Modification", "M6/ZPL-2.1"],
+   "added": ["M1/ICU", "M6/Sendmail", "M6/Sendmail-8.23"],
+   "verdict": "not a defect of R1 - a correction to 2026-09-20's count",
+   "cause": "ICU carries a heading line 'COPYRIGHT AND PERMISSION NOTICE' which the shipped rule reads as a notice held by 'AND PERMISSION NOTICE'. Under M1 the real notice is destroyed by defect 4, but the false heading survives and keeps the verdict 'named', so the relation does not fire. R1 removes the false heading; the real notice then stands alone, M1 destroys it, and the violation appears. The two Sendmail texts are the same shape under reflow.",
+   "reading": "The count went UP because the instrument got more honest. A false notice had been masking three real violations, so 2026-09-20's 167 was an undercount of the shipped rule's instability by three. A metamorphic violation count is therefore not monotone in the quality of the instrument, and cannot be used alone to rank repairs.",
+   "consequence": "this is the finding that disqualifies every single-number ranking in this session's own lattice, including the one that made R7 look best"
+  }
+ ],
+ "closures_checked": [
+  {"defect": 4, "closed_by": "R4", "checked_on": "C2 Tencent/Tencent-XR-3DGen@LICENSE - the notice 'Copyright (C) 2025 THL A29 Limited, a Tencent company.' is recovered, 21 notices become 22; this is the input four independent reimplementations convicted the shipped rule on 2026-09-19", "verdict": "closed"},
+  {"defect": 5, "closed_by": "R5", "checked_on": "C1 Sendmail and Sendmail-8.23 under relation M5; the two M5 violations of the shipped rule are gone", "verdict": "closed"},
+  {"defect": 6, "closed_by": "R6", "checked_on": "C1 BSD-Inferno-Nettverk - holder 'Inferno Nettverk A/S, Norway' is found on the fourth physical line; this is the input ten blind workers convicted the shipped rule on unanimously on 2026-09-21", "verdict": "closed"},
+  {"defect": 1, "closed_by": "R1 for the residual in this corpus (false notices 15 -> 4, decisions at risk 0 -> 0)", "checked_on": "data/false-notices.json", "verdict": "reduced, not closed, and R1 is not landed"}
+ ],
+ "totals": {
+  "counted_in": "violation instances, i.e. (relation, input) pairs",
+  "full_repair_scored_decision_changing": 9,
+  "full_repair_classes": 1,
+  "full_repair_DEFECT_classes": 1,
+  "landable_repair_scored_decision_changing": 4,
+  "landable_repair_classes": 2,
+  "landable_repair_DEFECT_classes": 0,
+  "unperturbed_defect_classes_introduced_by_a_repair": 2,
+  "distinct_classes_this_session_read": 6
+ }
+}

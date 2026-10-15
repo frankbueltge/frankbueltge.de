@@ -1,7 +1,8 @@
 # Werk ⑤ „Prämie — Die Police" — Teilprojekt-Design
 
 **Datum:** 2026-06-14 · **Status:** Substanz-Gate bestanden (echte keyless Daten verifiziert);
-Bau autorisiert (Nutzer: „bestes, progressivstes Werk"). Übergeordnet: Werkgruppen-Spec §8.
+Bau autorisiert (Frank, 2026-06-14, wording private: the aim is the best and most progressive
+work). Übergeordnet: Werkgruppen-Spec §8.
 
 ## 1. These & Form — der dunkle Zwilling des Protokolls
 

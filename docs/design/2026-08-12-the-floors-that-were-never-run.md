@@ -125,8 +125,8 @@ standing and explicitly marked **unrefuted** rather than resolved in prose.
 
 ### 3.1 Correction — the warrant needs a session boundary, not months
 
-*Added 2026-08-12 after Frank's objection: „eight misprints ist aber in einer session
-entstanden und nicht wie negative parallax nach wochen."*
+*Added 2026-08-12 after Frank's objection (wording private): Eight Misprints came out of a
+single session, not out of weeks the way Negative Parallax did.*
 
 The objection is right and this section's first form was too generous to the work-line. The
 question it failed to ask was **how far apart a pre-registration and its test actually are.**
@@ -202,9 +202,9 @@ process record, capped journal entries, TRACE in proportion — all of it is wri
 of it is breached by one to two orders of magnitude.
 
 The failure is therefore not a missing rule. It is that **this house writes constitutions and
-does not run them.** That is the precise, defensible form of Frank's charge that each update
-"nicht wirklich optimiert, sondern einfach einen raum geschaffen" — each revision added text;
-none added enforcement.
+does not run them.** That is the precise, defensible form of Frank's charge (wording private)
+that no update really optimised anything, each one merely made more room — each revision added
+text; none added enforcement.
 
 The same shape appears in the tooling, and there it has a date. When the unit of work changed
 on 2026-07-18, the constitution was rewritten three times (v4, v5, v6) and the memory tool's

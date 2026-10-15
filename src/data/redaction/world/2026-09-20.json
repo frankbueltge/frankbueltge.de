@@ -1,0 +1,142 @@
+{
+  "date": "2026-09-20",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-20T10:11:40Z",
+    "counts": {
+      "botwall": 29,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 269,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 270,
+    "excluded_unverifiable": 30,
+    "gone": 1,
+    "gone_ci95": [
+      0.0007,
+      0.0207
+    ],
+    "gone_rate": 0.0037,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.014
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-09-18",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "kfru.com",
+        "first_seen": "20260918070000",
+        "http_code": 404,
+        "title": "Ozzy Osbourne's Final Concert Coming to Theaters in Back to the Beginning Film",
+        "url": "https://www.kfru.com/2026/09/18/ozzy-osbournes-final-concert-coming-to-theaters-in-back-to-the-beginning-film/"
+      }
+    ],
+    "sample_drawn_at": "2026-09-19T10:06:10Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3440,
+      "replaced": 4380,
+      "trivial": 1294,
+      "update": 278
+    },
+    "day": "2026-09-19",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "MS",
+          "NOW"
+        ],
+        "after": "Trump says CNN, MS NOW and Politico are banned from White House for 'fake news'",
+        "before": "Trump says CNN, MSNOW and Politico are banned from White House for 'fake news'",
+        "detected": "2026-09-19T20:18:51Z",
+        "domain": "10news.com",
+        "removed": [
+          "MSNOW"
+        ],
+        "similarity": 0.812,
+        "url": "https://www.10news.com/politics/the-president/trump-says-cnn-msnow-and-politico-are-banned-from-white-house-for-fake-news",
+        "weight": 6,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "TBWA",
+          "New"
+        ],
+        "after": "Rory McKechnie departs McCann NZ after nine years for ECD role at TBWA\\New Zealand",
+        "before": "Rory McKechnie departs McCann NZ after nine years for ECD role at TBWANew Zealand",
+        "detected": "2026-09-19T05:02:13Z",
+        "domain": "campaignbrief.com",
+        "removed": [
+          "TBWANew"
+        ],
+        "similarity": 0.812,
+        "url": "https://campaignbrief.com/rory-mckechnie-departs-mccann-nz-after-nine-years-for-ecd-role-at-tbwanew-zealand/",
+        "weight": 6,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "MS",
+          "NOW"
+        ],
+        "after": "Trump says he is banning CNN, Politico, and MS NOW from the White House",
+        "before": "Trump says he is banning CNN, Politico, and MSNBC from the White House",
+        "detected": "2026-09-19T19:33:47Z",
+        "domain": "cbs6albany.com",
+        "removed": [
+          "MSNBC"
+        ],
+        "similarity": 0.8,
+        "url": "https://cbs6albany.com/news/nation-world/trump-says-he-is-banning-cnn-politico-and-msnbc-from-the-white-house",
+        "weight": 6,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 12655,
+      "PAGE_TEXTCHANGE": 102747,
+      "PAGE_TITLECHANGE": 39487,
+      "UNCHANGED_CONTENT": 662905
+    },
+    "title_changes_en": 9392,
+    "trace": [
+      {
+        "bytes_billed": 22020096,
+        "created": "1789898845172",
+        "job_id": "world_gdg_counts_20260919",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 203423744,
+        "created": "1789898850241",
+        "job_id": "world_gdg_titles_20260919",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-20T10:11:40Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-09-19.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

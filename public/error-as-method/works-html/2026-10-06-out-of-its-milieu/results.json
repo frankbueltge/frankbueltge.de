@@ -1,0 +1,170 @@
+{
+ "claims": [
+  {
+   "id": "E1",
+   "instrument": "ear",
+   "blind": "G",
+   "verdict": "G",
+   "match": true
+  },
+  {
+   "id": "E2",
+   "instrument": "ear",
+   "blind": "G",
+   "verdict": "G",
+   "match": true
+  },
+  {
+   "id": "E3",
+   "instrument": "ear",
+   "blind": "G",
+   "verdict": "H",
+   "match": false
+  },
+  {
+   "id": "E4",
+   "instrument": "ear",
+   "blind": "G",
+   "verdict": "H",
+   "match": false
+  },
+  {
+   "id": "E5",
+   "instrument": "ear",
+   "blind": "H",
+   "verdict": "H",
+   "match": true
+  },
+  {
+   "id": "E6",
+   "instrument": "ear",
+   "blind": "H",
+   "verdict": "H",
+   "match": true
+  },
+  {
+   "id": "E7",
+   "instrument": "ear",
+   "blind": "G",
+   "verdict": "H",
+   "match": false
+  },
+  {
+   "id": "E8",
+   "instrument": "ear",
+   "blind": "H",
+   "verdict": "H",
+   "match": true
+  },
+  {
+   "id": "M1",
+   "instrument": "mould",
+   "blind": "G",
+   "verdict": "H",
+   "match": false
+  },
+  {
+   "id": "M2",
+   "instrument": "mould",
+   "blind": "G",
+   "verdict": "H",
+   "match": false
+  },
+  {
+   "id": "M3",
+   "instrument": "mould",
+   "blind": "G",
+   "verdict": "G",
+   "match": true
+  },
+  {
+   "id": "M4",
+   "instrument": "mould",
+   "blind": "H",
+   "verdict": "H",
+   "match": true
+  },
+  {
+   "id": "G1",
+   "instrument": "grid24",
+   "blind": "G",
+   "verdict": "G",
+   "match": true
+  },
+  {
+   "id": "G2",
+   "instrument": "grid24",
+   "blind": "G",
+   "verdict": "G",
+   "match": true
+  },
+  {
+   "id": "G3",
+   "instrument": "grid24",
+   "blind": "H",
+   "verdict": "H",
+   "match": true
+  },
+  {
+   "id": "G4",
+   "instrument": "grid24",
+   "blind": "H",
+   "verdict": "H",
+   "match": true
+  }
+ ],
+ "posthoc": {
+  "E3": "G, size wrong: the 60 s line is real and dashed, ratio 0.9-1.4 at 00-04 UTC and up to 5.3 at 06 UTC; the month-mean ratio 2.75 fell under the bar of 3",
+  "E4": "G, check wrong: the check measured 1 s increments (min hour 0.79 of median); in the band the ear heard (11-150 s) the night hours 00-03 UTC hold 0.37-0.47 of the median energy",
+  "E7": "G, size wrong: 94.1 % of seconds within +/-0.125 Hz, against a claimed 95 %",
+  "M1": "G, size wrong: 69.7 % of cells dip below 50 Hz, against a claimed 70 %",
+  "M2": "G, size wrong: 22.4 % of cells reach 49.9 Hz, against a claimed 25 %"
+ },
+ "literature": {
+  "E3": "G: a one-minute pattern in GB frequency is reported, 'a persistent one-minute oscillatory pattern' traced to battery storage energy management, its amplitude 'increased substantially in the Nordic and British grids' (Hartmann et al. 2025, arXiv:2510.09862)",
+  "E1": "G in kind: 'regular power dispatch actions every 15 minutes are clearly observable in the ... British (GB) ... grids' (Rydin Gorjao et al. 2020, arXiv:2006.02481); the half-hour itself not named there",
+  "E7": "consistent: NESO's operational target is 'within 0.2Hz of 50Hz in normal conditions' (neso.energy, What is frequency?)"
+ },
+ "P1": {
+  "rule": "H >= half of decided",
+  "value": "11/16",
+  "holds": true
+ },
+ "P2": {
+  "rule": "a claim G and new",
+  "value": [],
+  "holds": false,
+  "posthoc": "E3 and E4 both true of the grid (see posthoc); P2 would hold",
+  "literature": "E3 is G by the literature (arXiv:2510.09862); with the literature deciding, P2 holds"
+ },
+ "P3": {
+  "rule": "blind tag matches >= 70 %",
+  "value": "11/16",
+  "holds": false,
+  "posthoc": "by kind (instrument vs grid feature) 16/16: every H-tag confirmed, every G-tagged feature present in the grid; the five misses are sizes and one check"
+ },
+ "P4": {
+  "rule": "ear lowest share of G, grid24 highest",
+  "value": {
+   "ear": "2/8",
+   "mould": "1/4",
+   "grid24": "2/4"
+  },
+  "holds": false,
+  "note": "ear and mould tie at 25 %"
+ },
+ "P5": {
+  "rule": "ear rhythm finds the day; mould floor pale",
+  "value": "day found at 1.959 s; floor dark",
+  "holds": false
+ },
+ "F2": {
+  "rule": ">= 8 decided claims",
+  "value": 16,
+  "fires": false
+ },
+ "F4": {
+  "rule": "every claim tagged H and H",
+  "fires": false
+ }
+}

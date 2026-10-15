@@ -1,84 +1,77 @@
 ---
-// /studio — the Studio's station sheet (Level 1 of the ecology pyramid, 2026-08-12).
+// /studio — the Studio's page (the practice template of the design handoff of 2026-10-11).
 //
-// Replaces, as separate surfaces: this practice's index, its history, its apparatus page and its
-// tour. The stage floor — the practice's own grammar since its first season — survives as the
-// sheet's figure, drawn from the works register and the curated strike list where every reason is
-// a verbatim quotation from the session commit that made it.
+// Lineage: the station sheet of 2026-08-12 (StationSheet with the stage floor as its figure)
+// stood here until 2026-09-01; the v3 practice station (PracticeStation.astro) from then until
+// 2026-10-11. Both are archived in the repository history and their components stay in the repo
+// unlinked (decision log, 2026-09-01 and 2026-10-11). This page is thin on purpose: it names
+// the practice and renders one PracticePart, which derives everything else from the record.
+//
+// The one thing this page keeps that the handoff does not draw: the SEASON FLOOR, the
+// practice's own figure since 2026-07-31 — every premiere a lit pool, every strike a taped X,
+// every return a violet arc back into production. It had rendered on no page between the
+// station sheets of 2026-08-12 and 2026-09-01, and in that time its own bounds guard held the
+// whole studio mirror shut over a figure nobody saw; it was rebuilt that evening to hold a v3
+// record (src/lib/studio/season.ts). It stays mounted for the same reason, in the template's
+// figure slot, and mounted.test.ts holds it on a page.
 import Page from '@/layouts/Page.astro'
-import StationSheet from '@/components/ecology/StationSheet.astro'
+import PracticePart from '@/components/ecology/score/PracticePart.astro'
 import Figure from '@/components/ecology/figures/Figure.astro'
-import StageFloorFigure from '@/components/ecology/figures/StageFloor.astro'
-import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import SeasonFloor from '@/components/studio/SeasonFloor.astro'
+import '@/styles/hub-triptych.css'
+import '@/styles/ecology-pyramid.css'
+import '@/styles/studio-stage.css'
+import { PRACTICE_V3 } from '@/config/practice-wording'
 import { FIGURES } from '@/config/ecology-figure-wording'
-import pulseData from '@/data/pulse/pulse.json'
-import type { PulseSnapshot } from '@/lib/pulse/render'
-import { allWorks } from '@/lib/engines/register'
-import { buildStationSheet, splitDoorLine, type LogEntry } from '@/lib/ecology/pyramid/station'
-import { buildStageFloor } from '@/lib/ecology/pyramid/figures'
-import { recordLine, type ChronicleEntry } from '@/lib/ecology/pyramid/landings'
-import chronicle from '@/data/studio/chronicle.upstream.json'
-import stage from '@/data/studio/stage.curated.json'
+import { loadChronicle } from '@/lib/studio/chronicle'
+import { loadWorkMetas } from '@/lib/studio/dossier-data'
+import { buildSeasonModel, type SeasonKill } from '@/lib/studio/season'
+import stageData from '@/data/studio/stage.curated.json'
 
-const works = allWorks()
-const rows = chronicle as ChronicleEntry[]
-const studioWorks = works.filter((w) => w.ns === 'studio')
-
-const log: LogEntry[] = [...rows]
-  .filter((r) => r.date)
-  .sort((a, b) => (a.date! < b.date! ? 1 : -1))
-  .slice(0, 3)
-  .map((r) => ({
-    date: r.date!,
-    marker: r.collective_session ? `S${r.collective_session}` : null,
-    line: recordLine(r.move, r.summary) ?? PYRAMID.station.absent,
-  }))
-
-const sheet = buildStationSheet({
-  id: 'studio',
-  snapshot: pulseData as PulseSnapshot,
-  works,
-  log,
-  made: studioWorks.length,
+// The floor, from the same three committed sources it has always read: the chronicle (validated
+// on the way in), every work's own meta.json, and the curated strike list.
+const season = buildSeasonModel({
+  chronicle: loadChronicle(),
+  metas: loadWorkMetas(),
+  kills: stageData.kills as SeasonKill[],
 })
+const premieres = season.counts.premiered + season.counts.withdrawn
 
-const floor = buildStageFloor(works, stage as Parameters<typeof buildStageFloor>[1])
-const door = splitDoorLine(sheet.station.description)
-const SEO = PYRAMID.stationSeo.studio
-const F = FIGURES.studio
+const SEO = PRACTICE_V3.studio.seo
+const F = FIGURES.studio.seasonFloor
 ---
 
-<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
-  <StationSheet
-    id="studio"
-    kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()} · ${sheet.station.corner}`}
-    h1={door.lead}
-    sub={door.rest}
-    status={sheet.status}
-    figureColumns={1}
-    lede={sheet.lede && {
-      kicker: F.lede.kicker(sheet.lede.date),
-      title: sheet.lede.title,
-      teaser: sheet.ledeTeaser,
-      note: sheet.arc?.title ?? null,
-      noteLabel: F.lede.noteLabel,
-      links: [
-        { label: F.lede.open, href: sheet.lede.href },
-        { label: F.lede.record, href: '/studio/works' },
-      ],
-    }}
-    log={sheet.log}
-    logMore={{ label: PYRAMID.station.wholeJournal, href: '/studio/journal' }}
-    doors={sheet.doors}
-  >
-    <Figure
-      slot="figure-main"
-      title={F.floor.title}
-      sub={F.floor.sub}
-      link={{ label: F.floor.link(sheet.made.count), href: '/studio/works' }}
-      caption={F.floor.caption(floor.pools.length, floor.strikes.length)}
-    >
-      <StageFloorFigure floor={floor} />
-    </Figure>
-  </StationSheet>
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description} surface="paper">
+  <PracticePart id="studio">
+    {/* The station's shared frame (Figure, ecology-pyramid.css through the .eco ancestor) around
+        the practice's own skin: the stage is dark by default and keeps its Didone, its lamp gold
+        and its curtain crimson (studio-stage.css, scoped to .studio-surface). The frame is shared,
+        the drawing never is — ADR 0010, the same split the Atelier's line map sits in. */}
+    <div slot="figure" class="eco hub-voices rounded-sm">
+      <div class="p-3 sm:p-4">
+        <Figure
+          title={F.title}
+          sub={F.sub}
+          link={{ label: F.link(premieres), href: '/studio/works' }}
+          caption={F.caption(season.counts)}
+        >
+          <div class="studio-surface station-floor">
+            <SeasonFloor model={season} />
+          </div>
+        </Figure>
+      </div>
+    </div>
+  </PracticePart>
 </Page>
+
+<style>
+  /* .studio-surface is built as a whole page's surface — its own width, margin and border. Inside
+     the station's figure panel it is the drawing's skin only; the panel already frames it. */
+  .station-floor {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border: 0;
+    padding: 1rem 1.25rem 1.25rem;
+  }
+</style>

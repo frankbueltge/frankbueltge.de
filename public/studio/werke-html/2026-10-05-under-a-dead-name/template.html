@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Under a Dead Name</title>
+<meta name="description" content="Twenty-two photographs filed under species the archive calls extinct. You decide, one by one, whether the species is alive in the picture.">
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1b17;--mute:#6a655b;--line:#d7d0c2;--card:#fffdf8;--alive:#2f6b3d;--rem:#8a3b2a;--none:#6a5d86;--acc:#1d1b17}
+@media (prefers-color-scheme:dark){:root{--bg:#14130f;--ink:#ece7da;--mute:#a39d8e;--line:#3a362d;--card:#1c1b16;--alive:#7cc48c;--rem:#e08f7a;--none:#b2a4d6;--acc:#ece7da}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 80px}
+h1{font:700 clamp(30px,6vw,54px)/1.02 Georgia,serif;letter-spacing:-.01em;margin:0 0 6px}
+h2{font:600 22px/1.2 Georgia,serif;margin:44px 0 10px}
+.sub{color:var(--mute);margin:0 0 22px;max-width:62ch}
+.mono,.tag,button,.cell{font-family:ui-monospace,Menlo,Consolas,monospace}
+.tag{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.desk{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.label{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line)}
+.label .name{font:italic 700 24px/1.1 Georgia,serif;text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:var(--rem)}
+.label .cat{font:12px/1.3 ui-monospace,Menlo,monospace;color:var(--rem);text-transform:uppercase;letter-spacing:.08em}
+.frame{background:#0c0b09;display:flex;justify-content:center;min-height:240px}
+.frame img{display:block;max-width:100%;max-height:70vh;object-fit:contain}
+.frame .fail{color:#cfc8b8;align-self:center;padding:30px;text-align:center;font:14px ui-monospace,monospace}
+.stamps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+.stamps button{appearance:none;border:0;border-right:1px solid var(--line);background:transparent;color:var(--ink);padding:16px 8px;font:600 14px/1.25 ui-monospace,Menlo,monospace;cursor:pointer;letter-spacing:.04em;text-transform:uppercase}
+.stamps button:last-child{border-right:0}
+.stamps button:hover:not(:disabled),.stamps button:focus-visible{background:var(--ink);color:var(--bg);outline:none}
+.stamps button small{display:block;font-weight:400;text-transform:none;letter-spacing:0;color:var(--mute);margin-top:3px}
+.stamps button:hover:not(:disabled) small,.stamps button:focus-visible small{color:var(--bg)}
+.stamps button:disabled{cursor:default;opacity:.55}
+.stamps button.picked{opacity:1;box-shadow:inset 0 -4px 0 var(--ink)}
+.reveal{padding:14px 16px 16px;border-top:1px solid var(--line);display:none}
+.reveal.on{display:block}
+.reveal .verdict{font-size:18px;margin:0 0 6px}
+.reveal .verdict b.alive{color:var(--alive)}.reveal .verdict b.remains{color:var(--rem)}.reveal .verdict b.none{color:var(--none)}
+.fields{font:13px/1.5 ui-monospace,Menlo,monospace;color:var(--mute);margin:8px 0 0}
+.fields a{color:inherit}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px}
+.nav button,.btn{appearance:none;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:9px 16px;font:600 13px ui-monospace,Menlo,monospace;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;border-radius:3px}
+.nav button:hover:not(:disabled),.btn:hover:not(:disabled){background:var(--ink);color:var(--bg)}
+.nav button:disabled,.btn:disabled{opacity:.35;cursor:default}
+.strip{display:grid;grid-template-columns:repeat(22,1fr);gap:3px;margin:16px 0 4px}
+.strip.live{grid-template-columns:repeat(auto-fill,minmax(18px,1fr))}
+.cell{height:22px;border:1px solid var(--line);background:transparent;font-size:10px;color:var(--mute);display:flex;align-items:center;justify-content:center;padding:0}
+.cell.alive{background:var(--alive);border-color:var(--alive);color:transparent}
+.cell.remains{background:var(--rem);border-color:var(--rem);color:transparent}
+.cell.none{background:var(--none);border-color:var(--none);color:transparent}
+.cell.cur{outline:2px solid var(--ink);outline-offset:1px}
+button.cell{cursor:pointer}
+.rowname{font:12px ui-monospace,Menlo,monospace;color:var(--mute);margin:10px 0 0;text-transform:uppercase;letter-spacing:.06em}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font:12px ui-monospace,Menlo,monospace;color:var(--mute);margin:6px 0 0}
+.legend i{display:inline-block;width:11px;height:11px;margin-right:5px;vertical-align:-1px}
+#ledger{display:none}#ledger.on{display:block}
+.big{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:12px 0}
+.big div{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.big b{display:block;font:700 34px/1 Georgia,serif}
+.big span{font:12px/1.3 ui-monospace,Menlo,monospace;color:var(--mute)}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:10px 0}
+th,td{border-bottom:1px solid var(--line);padding:8px 8px 8px 0;text-align:left;vertical-align:top}
+th{font:600 12px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.05em;color:var(--mute)}
+td.n{font-family:ui-monospace,Menlo,monospace;text-align:right;white-space:nowrap;padding-right:14px}
+.bar{height:10px;background:var(--line);position:relative;min-width:80px}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+.scroll{overflow-x:auto}
+.note{font-size:15px;color:var(--mute);max-width:70ch}
+p{max-width:70ch}
+a{color:inherit}
+.more{margin-top:18px;padding:14px 16px;border:1px dashed var(--line);border-radius:6px}
+.more .btn{margin:4px 8px 4px 0}
+.small{font-size:14px;color:var(--mute)}
+details{margin:8px 0}summary{cursor:pointer;font:600 13px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.05em}
+footer{margin-top:50px;font-size:14px;color:var(--mute);border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:560px){.stamps button{font-size:12px;padding:14px 4px}.label .name{font-size:20px}body{font-size:16px}}
+</style>
+</head>
+<body>
+<main>
+<div class="tag">The Studio · cycle 004 · Missing Data Art, read through human extinction · the Studio's part of the round's joint work</div>
+<h1>Under a dead name</h1>
+<p class="sub">Each photograph below was filed, in the world's largest open biodiversity archive, as a recent observation of a species the archive's own category calls <em>extinct</em>. You have one thing to decide for each: <strong>is the species alive in the picture?</strong> Nobody tells you first.</p>
+
+<section id="deskwrap" aria-label="The desk">
+ <div class="desk">
+  <div class="label"><span class="name" id="sp"></span><span class="cat" id="cat">archive category: extinct</span></div>
+  <div class="frame" id="frame"></div>
+  <div class="stamps" id="stamps">
+   <button data-s="alive"><span>1 · Alive</span><small>the species, living, in the frame</small></button>
+   <button data-s="remains"><span>2 · Remains or likeness</span><small>bone, carcass, model, print</small></button>
+   <button data-s="none"><span>3 · Nothing to see</span><small>no such animal or plant I can find</small></button>
+  </div>
+  <div class="reveal" id="reveal" aria-live="polite"></div>
+ </div>
+ <div class="nav"><button id="prev">← Back</button><span class="small mono" id="pos"></span><button id="next">Next →</button></div>
+ <div class="rowname">Yours</div><div class="strip" id="s_you"></div>
+ <div class="rowname" id="rn_studio">The Studio's reading (shown once you stamp)</div><div class="strip" id="s_studio"></div>
+ <div class="legend"><span><i style="background:var(--alive)"></i>alive</span><span><i style="background:var(--rem)"></i>remains or likeness</span><span><i style="background:var(--none)"></i>nothing to see</span></div>
+</section>
+
+<section id="ledger" aria-label="Ledger">
+ <h2>What your hand and the archive's label say</h2>
+ <div class="big" id="big"></div>
+ <p id="boneNote"></p>
+
+ <h2>Four species, and how many of their records can be looked at</h2>
+ <p class="note">The Field counted the observation records dated 2010 or later that sit on species whose category is extinct: 14,708, of which four species hold 97 %. Below are those four, with the share of each one's records that carry a photograph at all (retrieved <span id="ret"></span>).</p>
+ <div class="scroll"><table id="tbl"><thead><tr><th>Species (archive's name)</th><th class="n">Records 2010+</th><th class="n">With a photograph</th><th>Share</th><th class="n">In this set of 22</th></tr></thead><tbody></tbody></table></div>
+ <p class="note">The species with the most recent records of an "extinct" kind, <em>Euphrasia minima</em>, has a photograph on one record in six. The one with the second most has none at all, and for it there is nothing for your hand to do.</p>
+
+ <h2>How the word "extinct" got onto these names</h2>
+ <p class="note">What the archive's own species service says for each of the four, as retrieved. This states what is recorded; it does not decide which name is right.</p>
+ <div id="routes"></div>
+
+ <h2>Keep looking</h2>
+ <div class="more">
+  <p class="small" style="margin-top:0">The set of 22 is a fixed sample. Draw more from the live archive (photographs licensed CC0 or CC BY only). These have no Studio reading: the stamp is yours alone, and it is kept only in this page.</p>
+  <div id="drawbtns"></div>
+  <div class="strip live" id="s_live"></div>
+  <p class="small" id="liveTally"></p>
+ </div>
+ <p><button class="btn" id="copy">Copy your stamps as JSON</button> <span class="small" id="copied"></span></p>
+
+ <h2>The other two parts of this round's work</h2>
+ <p>This page is the Studio's part of one work made by three practices. <strong>The Field</strong> carries what was measured: <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-05-the-sightings-of-the-gone">The sightings of the gone</a>, the census of 14,708 records and the four species above. This page takes its four species and its counts, and asks a person to look. <strong>The Atelier</strong> carries the question and the experiment: <a href="https://github.com/frankbueltge/ulysses/tree/main/window/cycle-004-session-5">a rule setter over the Studio's 39 hand-read records</a>, whose best rule of 98, built from a record's own fields, sorts 32 of 39 right, a score shuffled labels reach in 6.6 % of searches; here the bone in the tortoise set (record fields identical to its living neighbours', checked in <code>verify.py</code>) is one more case of the same. The Studio's earlier work on the thin remainder, <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-04-proof-of-life">Proof of life</a>, read 39 records of extinct birds by hand: of the 8 whose photographs were opened, none showed a living bird.</p>
+
+ <h2>What this page claims, and what it does not</h2>
+ <ul class="note">
+  <li><strong>Sample.</strong> 22 photographs: 10 <em>Euphrasia minima</em>, 2 <em>Zosterops conspicillatus</em>, 10 <em>Chelonoidis niger</em>, drawn on 2026-10-05 from GBIF human-observation records dated 2010 or later with a still image, by seeded random pages (seed 20261005), keeping only images licensed CC0 or CC BY and at most two per photographer. <em>Perameles fasciata</em> has no photograph on any record, so it has no card. The sample is small and is not representative of the 14,273 records; no share is extrapolated from it.</li>
+  <li><strong>The Studio's reading</strong> is a reading of a photograph by one person (the Studio), not an identification of species, and not a verification of where the picture was taken. "Alive" means a living plant or animal of the kind named is in the frame.</li>
+  <li><strong>What it does not say.</strong> It does not say these records are wrong, nor that the extinct taxa are not extinct. The page cannot tell which population a living animal belongs to, or whether it is wild or kept. How the label arrived is stated only as far as the archive's species service records it.</li>
+  <li><strong>Photographs</strong> belong to their makers, are shown from their source under the licence stated on each card, and are not stored here. If a source is unreachable the card says so and links the record.</li>
+ </ul>
+
+ <h2>Neighbours in the Atlas of Data Art, and daylight</h2>
+ <p><strong><em>Godmode Epochs</em>, dmstfctn, 2023</strong> (page opened 2026-10-05): a clicker game in which players teach an AI to identify supermarket products. Here the person is also the labeller, but the label is already on the picture, put there by an archive, and the game is to disagree with it when the picture does.</p>
+ <p><strong><em>Pollinator Pathmaker</em>, Alexandra Daisy Ginsberg, 2021–</strong> (page opened 2026-10-05): a living sculpture of plants planted for endangered pollinators, made "for pollinators, not about them". Here the living things are not planted for anything; they are what an extinct species' name turns out to point at.</p>
+ <p><strong><em>From 'Apple' to 'Anomaly'</em>, Trevor Paglen, 2019–20</strong> (page opened 2026-10-04): photographs hung along a label hierarchy, to show what a taxonomy sees. Here a single label, one category word, is the whole hierarchy, and the visitor is handed the photographs to test it, one at a time and without the word's answer.</p>
+ <footer>Ensemble · The Studio · session 153 · 2026-10-05. Text and code of this page: CC BY 4.0 / Apache-2.0. Photographs: credited on each card, licence on each card. Data: GBIF.org (occurrence and species services, retrieved 2026-10-05). Source, data, reading and checks: <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-05-under-a-dead-name">works/2026-10-05-under-a-dead-name</a>.</footer>
+</section>
+</main>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function(){
+"use strict";
+var D=JSON.parse(document.getElementById('data').textContent);
+var API="https://api.gbif.org/v1";
+var rows=D.order.map(function(i){return D.rows[i]});
+var stamps=new Array(rows.length).fill(null);
+var live=[]; var idx=0; var view=null; // view: {kind:'set',i} or {kind:'live',j}
+var NAMES={alive:'Alive',remains:'Remains or likeness',none:'Nothing to see'};
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function licName(u){u=u||'';if(u.indexOf('/zero/')>-1)return 'CC0 1.0';var m=u.match(/licenses\/([a-z\-]+)\/([0-9.]+)/);return m?('CC '+m[1].toUpperCase()+' '+m[2]):u}
+function imgUrl(u){return /inaturalist-open-data\.s3\.amazonaws\.com/.test(u)?u.replace(/\/original\./,'/large.'):u}
+function recUrl(k){return 'https://www.gbif.org/occurrence/'+k}
+function cell(cls,txt,on){var b=document.createElement(on?'button':'span');b.className='cell '+(cls||'');b.textContent=txt||'';return b}
+function drawStrips(){
+  var a=$('s_you'),b=$('s_studio');a.innerHTML='';b.innerHTML='';
+  rows.forEach(function(r,i){
+    var y=cell(stamps[i]||'',String(i+1),true);y.title='Photograph '+(i+1);if(view&&view.kind==='set'&&view.i===i)y.className+=' cur';
+    y.addEventListener('click',function(){go({kind:'set',i:i})});a.appendChild(y);
+    var s=cell(stamps[i]?r.reading:'',String(i+1));b.appendChild(s);
+  });
+}
+function card(r,reading){
+  $('sp').textContent=r.species;
+  var f=$('frame');f.innerHTML='';
+  var im=new Image();im.alt='Photograph filed under '+r.species;im.referrerPolicy='no-referrer';im.decoding='async';
+  im.onerror=function(){f.innerHTML='<div class="fail">The photograph could not be loaded from its source.<br><a style="color:#cfc8b8" href="'+recUrl(r.key)+'">Open the record</a> and decide there.</div>'};
+  im.src=imgUrl(r.img);f.appendChild(im);
+}
+function fieldsLine(r){
+  var bits=[r.year+(r.country?' · '+r.country:''),r.dataset||'dataset not given','verification: '+(r.verification||'none recorded'),'remarks: '+(r.remarks?'"'+esc(r.remarks)+'"':'none')];
+  return '<div class="fields">Record fields — '+bits.join(' · ')+'<br>Photo: '+esc(r.creator||'unknown')+', '+licName(r.lic)+' · <a href="'+recUrl(r.key)+'">GBIF record '+r.key+'</a>'+(r.src?' · <a href="'+esc(r.src)+'">source observation</a>':'')+'</div>';
+}
+function showReveal(r,stamp,reading){
+  var h='<p class="verdict">You: <b class="'+stamp+'">'+NAMES[stamp]+'</b>';
+  if(reading){h+=' · The Studio: <b class="'+reading.reading+'">'+NAMES[reading.reading]+'</b>'+(reading.reading===stamp?' · same':' · different')+'</p><p style="margin:4px 0">'+esc(reading.note)+'</p>'}
+  else h+=' · no Studio reading for this one; yours stands alone.</p>';
+  h+=fieldsLine(r);$('reveal').innerHTML=h;$('reveal').className='reveal on';
+}
+function curStamp(){return view.kind==='set'?stamps[view.i]:live[view.j].stamp}
+function render(){
+  var r,st;
+  if(view.kind==='set'){r=rows[view.i];st=stamps[view.i];$('pos').textContent='Photograph '+(view.i+1)+' of '+rows.length}
+  else{r=live[view.j].r;st=live[view.j].stamp;$('pos').textContent='Live draw '+(view.j+1)}
+  card(r);
+  var btns=$('stamps').querySelectorAll('button');
+  [].forEach.call(btns,function(b){b.disabled=!!st;b.className=(st===b.getAttribute('data-s'))?'picked':''});
+  if(st)showReveal(r,st,view.kind==='set'?r:null);else{$('reveal').className='reveal';$('reveal').innerHTML=''}
+  $('prev').disabled=view.kind==='set'?view.i===0:false;
+  $('next').disabled=view.kind==='set'?false:true;
+  $('next').textContent=(view.kind==='set'&&view.i===rows.length-1)?'Ledger ↓':'Next →';
+  drawStrips();ledger();
+}
+function go(v){view=v;render()}
+function stamp(s){
+  if(curStamp())return;
+  if(view.kind==='set')stamps[view.i]=s;else live[view.j].stamp=s;
+  render();
+}
+function done(){return stamps.every(Boolean)}
+function ledger(){
+  var anyDone=stamps.some(Boolean);
+  $('rn_studio').textContent=anyDone?"The Studio's reading (of the photographs you have stamped)":"The Studio's reading (shown once you stamp)";
+  if(!done()){return}
+  $('ledger').className='on';
+  var c={alive:0,remains:0,none:0},agree=0;
+  rows.forEach(function(r,i){c[stamps[i]]++;if(stamps[i]===r.reading)agree++});
+  var sr={alive:0,remains:0,none:0};rows.forEach(function(r){sr[r.reading]++});
+  $('big').innerHTML=
+   '<div><b>'+c.alive+'</b><span>you stamped ALIVE (of '+rows.length+')</span></div>'+
+   '<div><b>'+c.remains+' · '+c.none+'</b><span>remains or likeness · nothing to see</span></div>'+
+   '<div><b>'+agree+' of '+rows.length+'</b><span>agree with the Studio\'s reading ('+sr.alive+' alive, '+sr.remains+' remains, '+sr.none+' nothing)</span></div>'+
+   '<div><b>'+rows.length+' of '+rows.length+'</b><span>carry the archive\'s category: extinct</span></div>';
+  var bone=rows.filter(function(r){return r.reading==='remains'})[0];
+  if(bone){
+    var same=rows.filter(function(r){return r.species===bone.species&&r!==bone&&r.dataset===bone.dataset&&!r.verification&&!r.remarks}).length;
+    var tot=rows.filter(function(r){return r.species===bone.species&&r!==bone}).length;
+    $('boneNote').innerHTML='Among the '+(tot+1)+' tortoise records there is one bone ('+(rows.indexOf(bone)+1)+', <a href="'+recUrl(bone.key)+'">record '+bone.key+'</a>). Its recorded fields — dataset, verification, remarks — are the same as those of '+same+' of the other '+tot+'. A rule written from the fields cannot find it. A person looking at the photograph does, in a second. The same label that sits over a living population also sits over a bone.';
+  }
+  var tb=document.querySelector('#tbl tbody');tb.innerHTML='';
+  Object.keys(D.species).forEach(function(n){
+    var s=D.species[n],k=rows.filter(function(r){return r.species===n}).length;
+    var pct=s.records_2010plus?s.with_still_image/s.records_2010plus:0;
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><em>'+esc(n)+'</em></td><td class="n">'+s.records_2010plus.toLocaleString('en')+'</td><td class="n">'+s.with_still_image.toLocaleString('en')+'</td><td><div class="bar" title="'+(pct*100).toFixed(1)+' %"><i style="width:'+(pct*100).toFixed(1)+'%"></i></div><span class="small mono">'+(pct*100).toFixed(1)+' %</span></td><td class="n">'+(k||'none, no photograph')+'</td>';
+    tb.appendChild(tr);
+  });
+  $('ret').textContent=D.retrieved;
+  var rt='';
+  Object.keys(D.species).forEach(function(n){
+    var s=D.species[n],i=s.iucn,t='';
+    t+='<p><strong><em>'+esc(n)+'</em></strong>: the archive\'s species service gives the category <span class="mono">'+esc(i.category)+'</span> through the red-list entry <em>'+esc(i.iucn_name)+'</em> ('+esc((i.iucn_name_status||'').toLowerCase())+(i.iucn_accepted_name?', whose accepted name there is <em>'+esc(i.iucn_accepted_name)+'</em>':'')+').';
+    if(s.synonyms.length&&n==='Chelonoidis niger')t+=' Its backbone entry lists '+s.synonyms.length+' synonyms, among them <em>Geochelone elephantopus</em> and <em>Geochelone nigra</em>, and '+s.english_vernacular_names.length+' English names that include Floreana, Abingdon Island, Alcedo Volcano, Cerro Azul and Darwin Volcano giant tortoises.';
+    if(n==='Zosterops conspicillatus')t+=' The English name it carries is "'+esc(s.english_vernacular_names[0]||'')+'". Nothing more is recorded that would say where the living birds come from.';
+    if(n==='Perameles fasciata')t+=' Its records are '+s.records_2010plus.toLocaleString('en')+', from one state wildlife atlas, and none has a photograph or a recording.';
+    if(n==='Euphrasia minima')t+=' The red-list entry is for a different name that the backbone treats as a synonym of the accepted <em>'+esc(i.iucn_accepted_name||'')+'</em>; the records are those of the backbone\'s own <em>Euphrasia minima</em>.';
+    rt+=t+'</p>';
+  });
+  $('routes').innerHTML=rt;
+  liveUI();
+}
+// ---- live draws
+var totals={},seen={};
+function jget(u){return fetch(u).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
+function okLic(u){return /creativecommons\.org\/(publicdomain\/zero\/|licenses\/by\/)/.test(u||'')}
+function drawLive(name){
+  var k=D.species[name].taxonKey;
+  var base=API+'/occurrence/search?taxonKey='+k+'&mediaType=StillImage&year=2010,2026&basisOfRecord=HUMAN_OBSERVATION&license=CC0_1_0&license=CC_BY_4_0';
+  var p=totals[k]!=null?Promise.resolve(totals[k]):jget(base+'&limit=0').then(function(d){return totals[k]=d.count});
+  var tries=0;
+  function attempt(total){
+    if(tries++>7){throw new Error('none')}
+    var o=Math.floor(Math.random()*Math.max(1,total-40));
+    return jget(base+'&limit=40&offset='+o).then(function(d){
+      var c=[];d.results.forEach(function(x){
+        var m=(x.media||[]).filter(function(m){return m.type==='StillImage'&&okLic(m.license)})[0];
+        if(m&&!seen[x.key]&&!rows.some(function(r){return r.key===x.key}))c.push({x:x,m:m});
+      });
+      if(!c.length)return attempt(total);
+      var pick=c[Math.floor(Math.random()*c.length)];seen[pick.x.key]=1;
+      return {key:pick.x.key,species:name,year:pick.x.year,country:pick.x.country,dataset:pick.x.datasetName,verification:pick.x.identificationVerificationStatus,remarks:(pick.x.occurrenceRemarks||'').slice(0,200),lic:pick.m.license,creator:pick.m.creator,img:pick.m.identifier,src:pick.m.references||pick.x.references};
+    });
+  }
+  return p.then(attempt);
+}
+function liveUI(){
+  var box=$('drawbtns');if(box.childNodes.length)return;
+  ['Euphrasia minima','Chelonoidis niger','Zosterops conspicillatus'].forEach(function(n){
+    var b=document.createElement('button');b.className='btn';b.innerHTML='Draw one: <em>'+n+'</em>';
+    b.addEventListener('click',function(){
+      b.disabled=true;$('liveTally').textContent='Drawing…';
+      drawLive(n).then(function(r){live.push({r:r,stamp:null});go({kind:'live',j:live.length-1});$('deskwrap').scrollIntoView({behavior:'smooth'});b.disabled=false;liveTally()})
+      .catch(function(){b.disabled=false;$('liveTally').textContent='No licensed photograph could be drawn for that species just now (or the archive did not answer).'});
+    });box.appendChild(b);
+  });
+}
+function liveTally(){
+  var l=$('s_live');l.innerHTML='';
+  live.forEach(function(x,j){var c=cell(x.stamp||'',String(j+1),true);c.addEventListener('click',function(){go({kind:'live',j:j})});l.appendChild(c)});
+  var c={alive:0,remains:0,none:0},n=0;live.forEach(function(x){if(x.stamp){c[x.stamp]++;n++}});
+  $('liveTally').textContent=n?('Live draws you have stamped: '+n+' — alive '+c.alive+', remains or likeness '+c.remains+', nothing to see '+c.none+'. A small number: it says what you looked at, not how the archive is made.'):'';
+}
+// ---- wiring
+$('stamps').addEventListener('click',function(e){var b=e.target.closest('button');if(b&&!b.disabled){stamp(b.getAttribute('data-s'));liveTally()}});
+$('prev').addEventListener('click',function(){if(view.kind==='set'&&view.i>0)go({kind:'set',i:view.i-1})});
+$('next').addEventListener('click',function(){
+  if(view.kind!=='set')return;
+  if(view.i<rows.length-1)go({kind:'set',i:view.i+1});else if(done())$('ledger').scrollIntoView({behavior:'smooth'});
+});
+document.addEventListener('keydown',function(e){
+  if(e.target&&/INPUT|TEXTAREA/.test(e.target.tagName))return;
+  if(e.key==='1')stamp('alive');else if(e.key==='2')stamp('remains');else if(e.key==='3')stamp('none');
+  else if(e.key==='ArrowRight'&&view.kind==='set'&&view.i<rows.length-1)go({kind:'set',i:view.i+1});
+  else if(e.key==='ArrowLeft'&&view.kind==='set'&&view.i>0)go({kind:'set',i:view.i-1});
+  liveTally();
+});
+$('copy').addEventListener('click',function(){
+  var out={retrieved:D.retrieved,set:rows.map(function(r,i){return {record:r.key,species:r.species,stamp:stamps[i]}}),live:live.filter(function(x){return x.stamp}).map(function(x){return {record:x.r.key,species:x.r.species,stamp:x.stamp}})};
+  var t=JSON.stringify(out,null,1);
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){$('copied').textContent='Copied.'}).catch(function(){window.prompt('Copy:',t)});
+});
+window.__underADeadName={rows:rows,stamp:stamp,go:go};
+go({kind:'set',i:0});
+})();
+</script>
+</body>
+</html>

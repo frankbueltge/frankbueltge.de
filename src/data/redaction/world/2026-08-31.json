@@ -1,0 +1,161 @@
+{
+  "date": "2026-08-31",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-08-31T12:00:55Z",
+    "counts": {
+      "botwall": 25,
+      "gone_404": 3,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 260,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 12
+    },
+    "decided": 263,
+    "excluded_unverifiable": 37,
+    "gone": 3,
+    "gone_ci95": [
+      0.0039,
+      0.033
+    ],
+    "gone_rate": 0.0114,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0144
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-08-29",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "640wxsm.com",
+        "first_seen": "20260829110000",
+        "http_code": 404,
+        "title": "MLB roundup: Dodgers prevail in Tarik Skubal's return to Detroit",
+        "url": "https://www.640wxsm.com/2026/08/29/mlb-roundup-dodgers-prevail-in-tarik-skubals-return-to-detroit/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "thehindu.com",
+        "first_seen": "20260829070000",
+        "http_code": 404,
+        "title": "For vultures near Dehradun, 2.4 km separates survival from electrocution",
+        "url": "https://www.thehindu.com/news/national/other-states/for-vultures-near-dehradun-24-km-separates-survival-from-electrocution/article71403683.ece"
+      },
+      {
+        "class": "gone_404",
+        "domain": "wncv.com",
+        "first_seen": "20260829110000",
+        "http_code": 404,
+        "title": "Ariana Grande Honors Dolly Parton With Emotional London Concert Tribute",
+        "url": "https://www.wncv.com/2026/08/29/ariana-grande-honors-dolly-parton-with-emotional-london-concert-tribute/"
+      }
+    ],
+    "sample_drawn_at": "2026-08-30T10:47:57Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3178,
+      "replaced": 4046,
+      "trivial": 487,
+      "update": 415
+    },
+    "day": "2026-08-30",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "Twisted",
+          "Sister"
+        ],
+        "after": "Watch Sebastian Bach Play His First Show With Twisted Sister",
+        "before": "Watch Sebastian Bach Play His First Show With Sebastian Bach",
+        "detected": "2026-08-30T13:17:46Z",
+        "domain": "991thewhale.com",
+        "removed": [
+          "Sebastian",
+          "Bach"
+        ],
+        "similarity": 0.8,
+        "url": "https://991thewhale.com/ixp/295/p/twisted-sister-sebastian-bach-2026/",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "D",
+          "D",
+          "O"
+        ],
+        "after": "D.D.O. Bixi users forced to hoof it to REM station from dock 10 minutes away",
+        "before": "Bixi users forced to hoof it to Dollard REM station from dock 10 minutes away",
+        "detected": "2026-08-30T10:32:21Z",
+        "domain": "montrealgazette.com",
+        "removed": [
+          "Dollard"
+        ],
+        "similarity": 0.812,
+        "url": "https://montrealgazette.com/news/bixis-dollard-des-ormeaux-rem-connection/",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "NH"
+        ],
+        "after": "'The voters of this state do not suffer fools': Goodlander decries DNC decision to make NH third in 2028 primary",
+        "before": "\"The voters of this state do not suffer fools\": Rep. Goodlander decries DNC decision to make N.H. third in 2028 primary",
+        "detected": "2026-08-30T17:01:46Z",
+        "domain": "wcax.com",
+        "removed": [
+          "Rep",
+          "N",
+          "H"
+        ],
+        "similarity": 0.826,
+        "url": "https://www.wcax.com/2026/08/23/voters-this-state-do-not-suffer-fools-rep-goodlander-decries-dnc-decision-make-nh-third-2028-primary/",
+        "weight": 8,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 10930,
+      "PAGE_TEXTCHANGE": 81408,
+      "PAGE_TITLECHANGE": 33128,
+      "UNCHANGED_CONTENT": 528635
+    },
+    "title_changes_en": 8126,
+    "trace": [
+      {
+        "bytes_billed": 17825792,
+        "created": "1788177274440",
+        "job_id": "world_gdg_counts_20260830",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 163577856,
+        "created": "1788177279666",
+        "job_id": "world_gdg_titles_20260830",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-08-31T12:00:55Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-08-30.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

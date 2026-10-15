@@ -1,6 +1,7 @@
 # .github/workflows/requests-watchdog.yml
-# Franks Posteingang für die REQUESTS-Kanäle (16.07. nachts, Frank: "ich muss die requests
-# irgendwie bekommen"). Die Kollektive schreiben Anfragen an Frank in ihre REQUESTS.md —
+# Frank's inbox for the REQUESTS channels (night of 2026-07-16; his request, wording private:
+# a reliable way to actually receive the requests).
+# Die Kollektive schreiben Anfragen an Frank in ihre REQUESTS.md —
 # bisher las die niemand zuverlässig (Session 17 legte z. B. die Playthrough-Einladung dort
 # ab). Dieser Wächter liest zweimal täglich die REQUESTS.md aller vier Praktiken und macht
 # aus jedem NEUEN Abschnitt (##-Überschrift) ein Issue in diesem Repo — GitHub-Notifications
@@ -95,11 +96,11 @@ jobs:
               sys.exit(f"Issue-Liste nicht lesbar: {existing.stderr.strip()[:200]}")
           known_titles = {i["title"] for i in json.loads(existing.stdout or "[]")}
 
-          # Die offenen Issues MIT Nummer — für den Rückweg: eine Anfrage, deren Section in der
-          # REQUESTS.md beantwortet ist, gehört nicht mehr in Franks Posteingang. Bis 2026-08-02
-          # legte dieser Watchdog nur an und schloss nie; das Aufräumen war Handarbeit, und
-          # beantwortete Anfragen standen tagelang als offen da (Frank: "ich muss auch nicht
-          # jeden furz freigeben"). Der Bestand wird einmal geholt, nicht pro Section.
+          # The open issues WITH their numbers — for the way back: a request whose section in
+          # REQUESTS.md has been answered no longer belongs in Frank's inbox. Until 2026-08-02 this
+          # watchdog only opened issues and never closed them; tidying up was manual work, and
+          # answered requests stood as open for days (Frank's objection, wording private: not every
+          # single item needs his sign-off). The inventory is fetched once, not per section.
           open_issues = sh(["gh", "issue", "list", "--repo", "frankbueltge/frankbueltge.de",
                             "--state", "open", "--limit", "1000", "--json", "number,title"])
           if open_issues.returncode != 0:

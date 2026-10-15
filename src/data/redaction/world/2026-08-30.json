@@ -1,0 +1,161 @@
+{
+  "date": "2026-08-30",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-08-30T10:52:28Z",
+    "counts": {
+      "botwall": 18,
+      "gone_404": 3,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 276,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 279,
+    "excluded_unverifiable": 21,
+    "gone": 3,
+    "gone_ci95": [
+      0.0037,
+      0.0311
+    ],
+    "gone_rate": 0.0108,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0136
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-08-28",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "640wxsm.com",
+        "first_seen": "20260828010000",
+        "http_code": 404,
+        "title": "Royals put 2B Michael Massey on 7-day concussion list",
+        "url": "https://www.640wxsm.com/2026/08/27/royals-put-2b-michael-massey-on-7-day-concussion-list/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "975wabd.com",
+        "first_seen": "20260828110000",
+        "http_code": 404,
+        "title": "Harry Styles Pauses MSG Concert to Pay Emotional Tribute to Dolly Parton",
+        "url": "https://www.975wabd.com/2026/08/28/harry-styles-pauses-msg-concert-to-pay-emotional-tribute-to-dolly-parton/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "ksmb.com",
+        "first_seen": "20260828100000",
+        "http_code": 404,
+        "title": "Nicole Kidman Says She Plans to Attend Adéla's Nashville Concert",
+        "url": "https://www.ksmb.com/2026/08/28/nicole-kidman-says-she-plans-to-attend-adelas-nashville-concert/"
+      }
+    ],
+    "sample_drawn_at": "2026-08-29T12:02:13Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3322,
+      "replaced": 5778,
+      "trivial": 678,
+      "update": 329
+    },
+    "day": "2026-08-29",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "cattle"
+        ],
+        "after": "Dalit man transporting cattle forced to eat cattle dung by 'cow vigilantes' in Maharashtra; no arrest made yet",
+        "before": "Dalit man transporting cattle forced to eat cow dung by 'cow vigilantes' in Maharashtra; no arrest made yet",
+        "detected": "2026-08-29T13:31:31Z",
+        "domain": "thehindu.com",
+        "removed": [
+          "cow"
+        ],
+        "similarity": 1.0,
+        "url": "https://www.thehindu.com/news/national/maharashtra/six-cow-vigilantes-in-maharashtra-accused-of-assaulting-a-dalit-man/article71399255.ece",
+        "weight": 2,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Anne",
+          "Bowen"
+        ],
+        "after": "How many boys DID she seduce? Chemistry teacher was found guilty of grooming and seducing two boys in the 80s. So were there more victims... and why has it taken so long for Sally-Anne-Bowen to face justice?",
+        "before": "How many boys DID she seduce? Chemistry teacher was found guilty of grooming and seducing two boys in the 80s. So were there more victims... and why has it taken so long for Sally-Ann Bowden to face justice?",
+        "detected": "2026-08-29T00:48:21Z",
+        "domain": "dailymail.com",
+        "removed": [
+          "Ann",
+          "Bowden"
+        ],
+        "similarity": 0.895,
+        "url": "https://www.dailymail.com/news/article-16085859/Former-chemistry-teacher-guilty-grooming-schoolboys.html",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "TIME100",
+          "Anima",
+          "Anandkumar"
+        ],
+        "after": "2026 TIME100 AI: Meet Anima Anandkumar, the IIT Madras graduate named among TIME's 100 most influential people: Her work can predict weather thousands of times faster",
+        "before": "TIME100AI2026: Meet the IIT Madras graduate named among TIME's 100 most influential people in AI in 2026: Her work can predict weather thousands of times faster",
+        "detected": "2026-08-29T05:33:40Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "TIME100AI2026",
+          "in",
+          "in"
+        ],
+        "similarity": 0.828,
+        "url": "https://timesofindia.indiatimes.com/education/news/meet-the-iit-madras-graduate-named-among-times-100-most-influential-people-in-ai-her-work-can-predict-weather-thousands-of-times-faster/articleshow/133583311.cms",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 13239,
+      "PAGE_TEXTCHANGE": 102744,
+      "PAGE_TITLECHANGE": 41735,
+      "UNCHANGED_CONTENT": 648280
+    },
+    "title_changes_en": 10107,
+    "trace": [
+      {
+        "bytes_billed": 22020096,
+        "created": "1788086855877",
+        "job_id": "world_gdg_counts_20260829",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 201326592,
+        "created": "1788086860429",
+        "job_id": "world_gdg_titles_20260829",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-08-30T10:52:28Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-08-29.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

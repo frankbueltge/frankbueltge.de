@@ -61,6 +61,13 @@ function htmlUnder(dir: string): string[] {
   return out
 }
 
+// No front door carries a shelf. For some hours on 2026-10-10 n-1's did: a list of every page
+// the practice had built, read from the mirror (src/lib/n1/shelf.ts), because its own front
+// page did not show them. The same evening that page was replaced by one that does (the
+// founder's act in the practice's record, REQUESTS.md of that date), and the list came off
+// with it: a front page that shows its pages needs no second list above it. The frame can
+// still carry one (frameStandaloneWork, opts.shelf); nothing passes it here.
+
 for (const [ns, house] of Object.entries(HOUSES)) {
   if (!wanted(ns)) continue
   const root = join('public', ns)
@@ -78,7 +85,8 @@ for (const [ns, house] of Object.entries(HOUSES)) {
     if (after === before) { already++; continue }
     changed++
     if (!check) writeFileSync(file, after)
-    console.log(`${check ? 'would frame' : 'framed'}  ${file}${atHouseIndex ? '  (house front door)' : ''}`)
+    const door = atHouseIndex ? '  (house front door)' : ''
+    console.log(`${check ? 'would frame' : 'framed'}  ${file}${door}`)
   }
 }
 

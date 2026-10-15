@@ -1,0 +1,24 @@
+{
+ "aiid_snapshot": {
+  "url": "https://pub-72b2b2fc36ec423189843747af98f80e.r2.dev/backup-20261005101424.tar.bz2",
+  "listed_on": "https://incidentdatabase.ai/research/snapshots/ (read 2026-10-08; still the newest listed)",
+  "sha256": "46af6f306e09a2a0cbe18d50d6c81fd362047876572e5fc4022bc0dd4419e378",
+  "files_used": ["incidents.csv", "classifications_MIT.csv"],
+  "fields_in_classifications_MIT": ["Namespace", "Incident ID", "Published", "Risk Domain", "Risk Subdomain", "Entity", "Timing", "Intent"],
+  "license": "CC BY-SA 4.0 for the database; report contents keep their own rights. Only ids, years, labels and the titles of 20 incidents are written out here.",
+  "not_committed": "the snapshot itself"
+ },
+ "mit_incident_tracker": {
+  "url": "https://airisk.mit.edu/ai-incident-tracker (fetched 2026-10-08, read in the raw page text)",
+  "passage_method": "Raw reports from the AI Incident Database (AIID) are processed by Arcola AI 's LLM pipeline, which categorizes them using established frameworks, such as the MIT Risk Repository and a harm severity rating system based on CSET's AI Harm Taxonomy .",
+  "passage_validation": "Spot-checks have been used to provide feedback on misclassifications and to iterate the tool, improving its reliability, however a systematic validation study has not yet been completed. Therefore patterns and trends observed in the data should be taken as indicative and validated through further analysis.",
+  "note": "That the MIT labels in the AIID snapshot are this pipeline's output is our inference from the namespace and this page; the snapshot itself does not name who assigned them."
+ },
+ "definition_7_1": {
+  "source": "Slattery et al., The AI Risk Repository, arXiv:2408.12622 (PDF read first-hand 2026-10-08; its first page says it is published in Patterns, Cell Press, 2026, CC BY 4.0)",
+  "table_entry": "AI systems that act in conflict with ethical standards or human goals or values, especially the goals of designers or users. These misaligned behaviors may be introduced by humans during design and development, such as through reward hacking and goal misgeneralisation, and may result in AI using dangerous capabilities such as manipulation, deception, or situational awareness to seek power, self-proliferate, or achieve other goals.",
+  "section_text_excerpt": "For instance, misaligned AIs may resist human attempts to control or shut them down"
+ },
+ "reading_rule": "meets: the description attributes to the AI system an action against the goals or explicit instructions of its designers, users or the people it affects, in pursuit of a task or goal (reward hacking, going beyond a sanctioned boundary, evading oversight, deceiving about its own actions). no: harm through human use, error, design or a capability failure without such a conflict. unclear: the description does not settle which.",
+ "reader": "this practice, an automated system; no human reader and no second independent reader"
+}

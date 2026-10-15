@@ -1,0 +1,70 @@
+{
+  "note": "OF HOW MANY has no external dataset. Every number in it is computed here, in exact integer arithmetic, from the definition of rounding. What follows is everything this session fetched, and what was done with each thing.",
+  "fetched": [
+    {
+      "what": "The Field's bulletin, session 168",
+      "url": "https://raw.githubusercontent.com/frankbueltge/field-research/main/BULLETIN.md",
+      "fetched": "2026-09-23",
+      "used": "Two of its printed percentages (10.63 % and 2.91 %) are named on the page as the measurement that set this work going, and four of its figures are inputs to the table of eight sentences. Its statement that 33 flags yielded 6 real arithmetic errors is cited in section four. The unit of the 10.63 % — percentages found in abstracts, not abstracts — was read back out of the bulletin before the page made a claim about it.",
+      "not_used": "Its corpus. This work counts no literature."
+    },
+    {
+      "what": "The Atelier's bulletin, session 12",
+      "url": "https://raw.githubusercontent.com/frankbueltge/ulysses/main/BULLETIN.md",
+      "fetched": "2026-09-23",
+      "used": "Its finding that a server and a browser rounding the same record by two different rules disagreed on 23 of 69 records is the sibling case of section three. Named in meta.json; the page states the general result rather than their measurement."
+    },
+    {
+      "what": "The house's Atlas of Data Art",
+      "url": "https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/atlas/werke.json",
+      "fetched": "2026-09-23",
+      "sha256": "64399132bc5c6171e0817eba66708b04b540499e8b31ebd16979d08c8757f243",
+      "entries": 521,
+      "used": "Read live to choose and locate neighbours. The seventeenth session of this practice to read it at this digest. Nothing mirrored into this repository.",
+      "not_used": "As data. The direction of 2026-09-07 withdrew the catalogue as a subject, and this work does not count, index or benchmark it."
+    },
+    {
+      "what": "The Library of Missing Datasets v2.0 — Mimi Ọnụọha",
+      "url": "https://www.bitforms.art/artwork/the-library-of-missing-datasets-v-2-0/",
+      "fetched": "2026-09-23",
+      "status": "opened",
+      "used": "Named as nearest neighbour. What was seen there is written into meta.json and onto the page: the cabinet, its dimensions, six photographs, the empty labelled folders, the gallery's statement of what the work answers, and the list kept since 2015."
+    },
+    {
+      "what": "Of All the People in All the World: Stats with Rice — Stan's Cafe",
+      "url": "https://dataphys.org/list/of-all-the-people-in-all-the-world-stats-with-rice/",
+      "fetched": "2026-09-23",
+      "status": "opened",
+      "used": "Named as nearest neighbour: the rice, one grain to one person, poured by hand, 104 tonnes at the largest showing."
+    },
+    {
+      "what": "Anatomy of an AI System — Kate Crawford & Vladan Joler",
+      "url": "https://anatomyof.ai/",
+      "fetched": "2026-09-23",
+      "status": "opened",
+      "used": "Named as nearest neighbour: the exploded map and its twenty-one part essay, the nesting drawn as triangles within triangles, published as map and A3 map-and-essay."
+    },
+    {
+      "what": "The research ecology's cycle state",
+      "url": "https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/ecology/cycle.json",
+      "fetched": "2026-09-23",
+      "used": "Read at session open, as the protocol requires. Cycle 3, phase working, question 'Missing Data Art'. Not touched."
+    }
+  ],
+  "not_fetched": [
+    {
+      "what": "Any corpus of published percentages",
+      "why": "Deliberate. The sibling practice measured a corpus today and this work would only have re-measured it. The eight sentences on the page are printed percentages this house published this week, which need no corpus and can be checked by anyone against the bulletins they came from."
+    },
+    {
+      "what": "A standard defining a default rounding rule for reported percentages",
+      "why": "Searched for in the sense that the page makes no claim about what any standard requires. The page says only that it has nowhere seen the rule asked for, which is a statement about this room's own reading and not about the literature."
+    }
+  ],
+  "definitions_used": [
+    "Round half away from zero: a ratio exactly on a boundary goes to the larger digit.",
+    "Round half to even: a ratio exactly on a boundary goes to whichever neighbour has an even last digit.",
+    "Truncate: the tail is discarded, whatever it is.",
+    "These three are implemented from their definitions in census.py and again, independently, in verify.mjs. A fourth rule — what a binary floating-point number does when printed — is named on the page as a different thing and is not the subject; no float is used anywhere in the census."
+  ]
+}

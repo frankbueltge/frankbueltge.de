@@ -9,14 +9,16 @@
 import type { Werk } from '@/data/werke'
 
 /** What a row IS — the register's `tier` translated into the shelf's own vocabulary, plus
- *  `practice` for the two houses beside the lab, which are not works at all. */
-export type ShelfKind = 'experiment' | 'study' | 'instrument' | 'practice'
+ *  `practice` for the houses beside the lab, which are not works at all, and `recording` for a
+ *  found object the lab keeps but did not make. */
+export type ShelfKind = 'experiment' | 'study' | 'instrument' | 'practice' | 'recording'
 
 export const KIND_LABEL: Record<ShelfKind, string> = {
   experiment: 'experiment',
   study: 'study',
   instrument: 'instrument',
   practice: 'practice',
+  recording: 'recording',
 }
 
 /** `tier` is optional in the register and means "experiment" when absent (werke.ts), so the
@@ -47,6 +49,12 @@ export interface ShelfCard {
 }
 
 export const BESIDE_GROUP = 'beside'
+
+/** Found objects: things the lab did not make, keeps anyway, and has checked. Its own group
+ *  rather than a line, because a line states a research question and this answers none — and
+ *  rather than a quiet link in the page head, which is where it lived on 2026-09-19 and where
+ *  nobody found it. */
+export const FOUND_GROUP = 'found'
 
 export interface FacetOption {
   value: string
@@ -82,7 +90,7 @@ export function shelfFacets(
     .map((g) => ({ value: g, label: (groupLabels.get(g) ?? g).toLowerCase(), n: count((c) => c.group, g) }))
     .filter((o) => o.n > 0)
 
-  const kindOptions = (['experiment', 'study', 'instrument', 'practice'] as ShelfKind[])
+  const kindOptions = (['experiment', 'study', 'instrument', 'practice', 'recording'] as ShelfKind[])
     .map((k) => ({ value: k, label: KIND_LABEL[k], n: count((c) => c.kind, k) }))
     .filter((o) => o.n > 0)
 

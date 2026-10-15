@@ -1,0 +1,157 @@
+{
+  "date": "2026-09-01",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-09-01T10:33:55Z",
+    "counts": {
+      "botwall": 27,
+      "gone_404": 2,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 270,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 272,
+    "excluded_unverifiable": 28,
+    "gone": 2,
+    "gone_ci95": [
+      0.002,
+      0.0264
+    ],
+    "gone_rate": 0.0074,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0139
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-08-30",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "joxfm.com",
+        "first_seen": "20260830030000",
+        "http_code": 404,
+        "title": "Tyson Bagent, Bears blitz Titans, 24-15",
+        "url": "https://www.joxfm.com/2026/08/29/tyson-bagent-bears-blitz-titans-24-15/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "klif.com",
+        "first_seen": "20260830000000",
+        "http_code": 404,
+        "title": "Tarrant ICE-Hold Records Show 50% Face Sexual Or Violent Crime Charges",
+        "url": "https://www.klif.com/2026/08/29/tarrant-ice-hold-records-show-50-face-sexual-or-violent-crime-charges/"
+      }
+    ],
+    "sample_drawn_at": "2026-08-31T11:54:49Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 4520,
+      "replaced": 5121,
+      "trivial": 720,
+      "update": 585
+    },
+    "day": "2026-08-31",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "EQS",
+          "Newswire",
+          "DLK",
+          "Advisory",
+          "Limited"
+        ],
+        "after": "EQS Newswire: DLK Advisory Limited: Activation Group (9919.HK) Announces 2026 Interim Results with Revenue of approx. RMB 287 million; Client Portfolio Diversification Achieves Substantial Breakthrough; Healthy Cash Flow ...",
+        "before": "Activation Group (9919.HK) Announces 2026 Interim Results with Revenue of approx. RMB 287 million; Client Portfolio Diversification Achieves Substantial Breakthrough; Healthy Cash Flow Position",
+        "detected": "2026-08-31T10:32:27Z",
+        "domain": "finanznachrichten.de",
+        "removed": [
+          "Position"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.finanznachrichten.de/nachrichten-2026-08/69388483-activation-group-9919-hk-announces-2026-interim-results-with-revenue-of-approx-rmb-287-million-client-portfolio-diversification-achieves-substanti-015.htm",
+        "weight": 12,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Service",
+          "Centers",
+          "Price"
+        ],
+        "after": "Discount Tire & Service Centers Quotes Man $500. Then His Wife Shows Up—And They Change Their Price: 'Telling Them To Sneak It In'",
+        "before": "Discount Tire Quotes Man $500. Then His Wife Shows Up—And They Change Their Prices: 'They Are Telling Them To Sneak It In'",
+        "detected": "2026-08-31T13:01:25Z",
+        "domain": "motor1.com",
+        "removed": [
+          "Prices",
+          "They",
+          "Are"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.motor1.com:443/news/805806/discount-tire-charge-wife-200-dollars-more/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Further",
+          "Information",
+          "Saturday"
+        ],
+        "after": "Further Information on Saturday Semi-Truck Fire and Interstate Closure - Effingham's News and Sports Leader, 979XFM and KJ Country 102.3",
+        "before": "UPDATE on Semi-Truck Fire and Interstate Closure - Effingham's News and Sports Leader, 979XFM and KJ Country 102.3",
+        "detected": "2026-08-31T00:33:03Z",
+        "domain": "thexradio.com",
+        "removed": [
+          "UPDATE"
+        ],
+        "similarity": 0.81,
+        "url": "https://www.thexradio.com/news/local-news/45416-update-on-semi-truck-fire-and-interstate-closure/",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 14371,
+      "PAGE_TEXTCHANGE": 107295,
+      "PAGE_TITLECHANGE": 41869,
+      "UNCHANGED_CONTENT": 611523
+    },
+    "title_changes_en": 10946,
+    "trace": [
+      {
+        "bytes_billed": 20971520,
+        "created": "1788258573972",
+        "job_id": "world_gdg_counts_20260831",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 193986560,
+        "created": "1788258579864",
+        "job_id": "world_gdg_titles_20260831",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-09-01T10:33:55Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-08-31.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

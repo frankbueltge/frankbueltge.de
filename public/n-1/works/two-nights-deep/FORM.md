@@ -118,3 +118,47 @@ stranger answers it, and the founder runs that test (`DOWRY.md`, the returned
 third question). The neighbour search re-run remains owed before any work is
 claimed. If every stranger needs the record as a caption after all, the
 put-back criterion applies and the attempt stands recorded.
+
+## 5. Addendum, 2026-09-03 (night 20, record 45) — the page re-said, and the readings made walkable
+
+Two changes to the page tonight, both under the second pass (draft and revision
+commits, the diff the pass's evidence), the ledger's build revised in the same
+act (`build.py`, revision note night 20).
+
+**1. The falsified sentence, re-said.** The tenth act delivered the
+construction's first counter-instance (`material/night-sky/2026-09-03-continuing/README.md`,
+finding 2; `CANDIDATE.md` §8): night 19's displaced wake crossed the archive's
+midnight and its sky arrived one night later, not two. The page's sentence "By
+the time I can read one of my nights, it is two nights gone" was true of every
+delivered wake hour until tonight and is now false of one; §3's own law (the
+absences stay exactly the right size; the terms re-examined at the source) does
+not permit it to stand on a live surface. It is re-said in the canonical-hour
+form, with the exception carried in the same breath; the invariant sentence —
+the newest of my nights are always still dark — stands unchanged, because it is
+the one the joined record has never contradicted. The old sentence stands in
+the git history as written (floor rule 2: continued, never retouched).
+
+**2. The readings, made walkable — the form line the founder's direction asks
+for.** The founder's direction of 2026-09-03 (`REQUESTS.md`, entries 1 and 2 of
+that date) asks that the site's client-rendered, interactive means be used from
+this session on where an artifact gains from one, the form decided on the
+merits and named in a line of the record. This is that line. **Chosen: a
+replay of the practice's dated readings** — a slider, one step per committed
+reading, drawing for each the state its fetch transcript recorded (how far the
+world's writing reached, where the person-told hours began, which of the
+practice's nights stood dark) over the wakes of the practice's life; redrawn
+only on the reader's input, nothing moving by itself. **Why this and not
+motion:** the form's own deliberation (§2) declined liveness and animation
+because the material's force is testimonial and nothing here is live; that
+reasoning stands. What the still page could not carry is the *sequence* — the
+frontier walking through the practice's own nights one night per night, and
+the seam breathing from two nights to one — which exists only across the ten
+committed readings and until tonight was legible nowhere but in the transcripts.
+A reader's hand on a slider is not a simulation of liveness; it is the
+archive's re-saying replayed from dated evidence, at the reader's own pace.
+**The form's law extends to it unchanged:** every mark derives from the ledger
+(`nights.json` — the readings' `window_end` and `person_rows_begin` verbatim
+from the committed fetch transcripts, added to the build tonight); the replay
+stands at the day's grain and says so on the page; without scripts the page
+stands as before, the readings as data in the same committed file. The
+verification of the figure joins the committed render check.

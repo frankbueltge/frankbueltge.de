@@ -19,6 +19,10 @@ import { GET as atlasFeed } from '@/pages/atlas/werke.json'
 import { GET as papersFeed } from '@/pages/papers/register.json'
 import { GET as papersIndex } from '@/pages/papers/index.json'
 import { GET as datasetsFeed } from '@/pages/datasets/register.json'
+// The trending ledger's two parameter-free machine surfaces. /trending/<date>.json is left out
+// on purpose: it is a parameterised route, so calling it needs the day the build hands it.
+import { GET as trendingLatest } from '@/pages/trending/latest.json'
+import { GET as trendingIndex } from '@/pages/trending/index.json'
 
 const body = async (route: APIRoute) => {
   const res = await route({} as Parameters<APIRoute>[0])
@@ -61,7 +65,7 @@ describe('the catalogue feeds carry what the pages carry', () => {
   })
 
   it('every feed names its source, its page and its licence', async () => {
-    for (const route of [atlasFeed, papersFeed, papersIndex, datasetsFeed]) {
+    for (const route of [atlasFeed, papersFeed, papersIndex, datasetsFeed, trendingLatest, trendingIndex]) {
       const feed = await body(route)
       // A feed a machine can read but not cite is a dead end for exactly the practices this was
       // built for: their protocols require a retrievable reference for every factual claim.

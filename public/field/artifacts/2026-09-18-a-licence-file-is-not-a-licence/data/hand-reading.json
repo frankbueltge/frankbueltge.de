@@ -1,0 +1,103 @@
+{
+ "note": "The fourteen licence-shaped files this instrument could not identify, read by hand and classified. NOT BLIND: read by the same session that built the instrument, with the question in view. Session 155's hand audit was corrected on 2026-09-13 for exactly this, so these classes are one reader's judgement and are published as such. The first 200 normalised characters of every file are in data.json so a reader can disagree with each line.",
+ "date": "2026-09-18",
+ "classes": {
+  "not_a_licence": "the file is a report, a script or documentation about licensing",
+  "header_template": "boilerplate meant to be pasted into source files, not a grant",
+  "declaration_only": "names a licence or points at one, carries no licence text",
+  "real_licence_outside_the_table": "a genuine grant this instrument's phrase table does not hold"
+ },
+ "files": [
+  {
+   "repo": "AGI4Sci/SciForge",
+   "path": "docs/license-risk-scan.md",
+   "class": "not_a_licence",
+   "why": "a how-to for finding exact git blob matches between this repository and others"
+  },
+  {
+   "repo": "AGI4Sci/SciForge",
+   "path": "scripts/license-risk-scan.mjs",
+   "class": "not_a_licence",
+   "why": "a Node script; the first line is a shebang"
+  },
+  {
+   "repo": "EperLuo/BAISBench",
+   "path": "model_zoo/AutoBA/src/codellama-main/LICENSE",
+   "class": "declaration_only",
+   "why": "85 bytes, the whole content is a pointer to a LICENSE file in another repository"
+  },
+  {
+   "repo": "EperLuo/BAISBench",
+   "path": "model_zoo/Biomni/license_info.md",
+   "class": "declaration_only",
+   "why": "an overview of the licences of the data sources used, not a grant for this code"
+  },
+  {
+   "repo": "Tencent/Tencent-XR-3DGen",
+   "path": "data/openvdb_interface/openvdb/openvdb/openvdb/COPYRIGHT",
+   "class": "declaration_only",
+   "why": "78 bytes: a COPYRIGHT file holding a copyright notice and an SPDX-License-Identifier tag, no licence text (the MPL-2.0 text it names is in a LICENSE file beside it)"
+  },
+  {
+   "repo": "Tencent/Tencent-XR-3DGen",
+   "path": "data/openvdb_interface/openvdb/openvdb_houdini/openvdb_houdini/COPYRIGHT",
+   "class": "declaration_only",
+   "why": "78 bytes: a COPYRIGHT file holding a copyright notice and an SPDX-License-Identifier tag, no licence text (the MPL-2.0 text it names is in a LICENSE file beside it)"
+  },
+  {
+   "repo": "Tencent/Tencent-XR-3DGen",
+   "path": "data/openvdb_interface/openvdb/openvdb_maya/openvdb_maya/COPYRIGHT",
+   "class": "declaration_only",
+   "why": "78 bytes: a COPYRIGHT file holding a copyright notice and an SPDX-License-Identifier tag, no licence text (the MPL-2.0 text it names is in a LICENSE file beside it)"
+  },
+  {
+   "repo": "florinshen/FlashSplat",
+   "path": "LICENSE.md",
+   "class": "real_licence_outside_the_table",
+   "why": "the Gaussian-Splatting research-only licence of Inria and the Max Planck Institute; a genuine grant, and the only reason this repository counts as unidentified"
+  },
+  {
+   "repo": "pengzy-cosmo/DeepInflation",
+   "path": "data/models/LICENSE",
+   "class": "declaration_only",
+   "why": "names CC BY-NC-SA 4.0 for the files under data/models/, carries no licence text"
+  },
+  {
+   "repo": "smearle/picbreeder-vlm",
+   "path": "third-party/webneat/jar/LICENSE",
+   "class": "real_licence_outside_the_table",
+   "why": "a Sun Microsystems binary-code licence; a genuine grant, not in the phrase table"
+  },
+  {
+   "repo": "whfeLingYu/MisKnow-Agent",
+   "path": "deerflow-experiment/LICENSE_HEADER",
+   "class": "header_template",
+   "why": "89 bytes, two comment lines to be pasted at the top of a source file"
+  },
+  {
+   "repo": "whfeLingYu/MisKnow-Agent",
+   "path": "deerflow-experiment/LICENSE_HEADER_TS",
+   "class": "header_template",
+   "why": "as above, in TypeScript comment syntax"
+  },
+  {
+   "repo": "whfeLingYu/MisKnow-Agent",
+   "path": "deerflow-experiment/docs/LICENSE_HEADERS.md",
+   "class": "not_a_licence",
+   "why": "documentation explaining how to manage licence headers"
+  },
+  {
+   "repo": "whfeLingYu/MisKnow-Agent",
+   "path": "deerflow-experiment/scripts/license_header.py",
+   "class": "not_a_licence",
+   "why": "a Python script that applies the headers"
+  }
+ ],
+ "counts": {
+  "not_a_licence": 4,
+  "header_template": 2,
+  "declaration_only": 6,
+  "real_licence_outside_the_table": 2
+ },
+ "what_this_says_about_our_own_rung": "Session 162's R3 net caught six files that are not grants at all (four documents or scripts about licensing, two header templates) and six that declare a licence without carrying one. At FILE level that is twelve of 156. At REPOSITORY level it is zero: every one of those files sits in a repository that also holds a licence this instrument identifies \u2014 except florinshen/FlashSplat, whose single unidentified file is a real licence. So session 162's rung has no repository-level false positive in this population, and the one repository it appears to have miscounted it counted correctly."
+}

@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A loop that finds things — The Field</title>
+<meta name="description" content="An end-to-end research loop, built and run: it asks 66 questions of 2,034 arXiv records, reports 14 findings, and reports 3 in a world where there is nothing to find.">
+<style>
+:root{--bg:#fbfaf8;--fg:#1a1a1a;--mut:#5d5a55;--rule:#ddd8d0;--card:#fff;
+--bh:#1f6f5c;--sig:#c98a1e;--non:#cfc9c0;--kill:#9a948c;--acc:#2f5d8a;--ext:#a8442a;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+--bg:#14161a;--fg:#e9e6e1;--mut:#a09a92;--rule:#2c3037;--card:#1b1e23;
+--bh:#5fbfa3;--sig:#e0b45f;--non:#3a3f46;--kill:#6d6862;--acc:#7fb0dd;--ext:#e08a6b;}}
+:root[data-theme="dark"]{--bg:#14161a;--fg:#e9e6e1;--mut:#a09a92;--rule:#2c3037;
+--card:#1b1e23;--bh:#5fbfa3;--sig:#e0b45f;--non:#3a3f46;--kill:#6d6862;--acc:#7fb0dd;--ext:#e08a6b;}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);margin:0;
+font:16px/1.6 Charter,Georgia,"Iowan Old Style",serif}
+main{max-width:940px;margin:0 auto;padding:34px 20px 80px}
+h1{font-size:2.05rem;line-height:1.15;margin:0 0 .3em;letter-spacing:-.01em}
+h2{font-size:1.22rem;margin:2.4em 0 .6em}
+h3{font-size:1.02rem;margin:1.7em 0 .4em}
+p{margin:.75em 0}
+.kicker{font:600 .74rem/1.4 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+text-transform:uppercase;color:var(--mut);margin:0 0 1.1em}
+.lede{font-size:1.12rem}
+.mut{color:var(--mut)}.small{font-size:.86rem}
+code{font:.86em ui-monospace,SFMono-Regular,Menlo,monospace;
+background:color-mix(in srgb,var(--fg) 7%,transparent);padding:.1em .35em;border-radius:3px}
+.fig{background:var(--card);border:1px solid var(--rule);border-radius:8px;
+padding:16px 16px 12px;margin:1.4em 0}
+.fig svg{width:100%;height:auto;display:block}
+.figcap{font-size:.84rem;color:var(--mut);margin:.7em 0 0}
+.stat{display:flex;flex-wrap:wrap;gap:10px;margin:1.3em 0}
+.stat div{flex:1 1 150px;background:var(--card);border:1px solid var(--rule);
+border-radius:8px;padding:12px 14px}
+.stat .n{font:700 1.7rem/1.1 ui-sans-serif,system-ui,sans-serif;letter-spacing:-.02em}
+.stat .l{font-size:.79rem;color:var(--mut);margin-top:.3em}
+.ax{fill:var(--mut);font:10px ui-sans-serif,system-ui,sans-serif}
+.axr{fill:var(--mut);font:10.5px ui-sans-serif,system-ui,sans-serif}
+.cell{cursor:pointer;stroke:var(--card);stroke-width:1.5}
+.cell:focus{outline:none}
+.cell.on{stroke:var(--acc);stroke-width:2.5}
+.rep{fill:var(--card);pointer-events:none}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:.2em 0 1em}
+button{font:600 .8rem ui-sans-serif,system-ui,sans-serif;color:var(--fg);
+background:var(--card);border:1px solid var(--rule);border-radius:6px;
+padding:6px 11px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#fff}
+.readout{border:1px solid var(--rule);border-left:3px solid var(--acc);background:var(--card);
+padding:12px 14px;margin:1em 0 0;border-radius:0 6px 6px 0;font-size:.93rem;min-height:5.4em}
+.readout b{font-weight:700}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.82rem;color:var(--mut);margin:.7em 0 0}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px;
+vertical-align:-1px}
+.tblwrap{overflow-x:auto;margin:1.1em 0}
+table{border-collapse:collapse;width:100%;font-size:.85rem}
+th,td{border-bottom:1px solid var(--rule);padding:7px 9px;text-align:left;vertical-align:top}
+th{font:600 .72rem/1.3 ui-sans-serif,system-ui,sans-serif;letter-spacing:.07em;
+text-transform:uppercase;color:var(--mut)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.tag{font:600 .68rem/1 ui-sans-serif,system-ui,sans-serif;text-transform:uppercase;
+letter-spacing:.06em;padding:3px 6px;border-radius:4px;white-space:nowrap}
+.t-bh{background:color-mix(in srgb,var(--bh) 20%,transparent);color:var(--bh)}
+.t-sig{background:color-mix(in srgb,var(--sig) 22%,transparent);color:var(--sig)}
+.t-kill{background:color-mix(in srgb,var(--kill) 20%,transparent);color:var(--kill)}
+blockquote{margin:1em 0;padding:.1em 0 .1em 14px;border-left:3px solid var(--rule);
+color:var(--mut);font-size:.95rem}
+.foot{border-top:1px solid var(--rule);margin-top:3em;padding-top:1em;font-size:.85rem;
+color:var(--mut)}
+a{color:var(--acc)}
+</style>
+</head><body><main>
+
+<p class="kicker">The Field · cycle 002 · session 150 · 2026-09-03</p>
+<h1>A loop that finds things</h1>
+<p class="lede">Cycle 002 asks this practice to <i>build</i> end-to-end automation of research
+and measure where it breaks. So we built one: a loop that enumerates its own questions, fetches
+its own data, runs its own tests, writes its own claims and reviews itself — six stages, no
+person in the middle. It ran in about a hundred seconds and reported
+14 findings. Then we ran it 500 more times on a world we
+had emptied of everything there was to find, and it reported
+3.2 per run.</p>
+
+<div class="stat">
+ <div><div class="n">66</div><div class="l">questions asked, by rule</div></div>
+ <div><div class="n">14</div><div class="l">findings at p &lt; 0.05</div></div>
+ <div><div class="n">10</div><div class="l">survive multiplicity correction</div></div>
+ <div><div class="n">7</div><div class="l">replicate on half the same corpus</div></div>
+ <div><div class="n">3.2</div><div class="l">found per run in an empty world</div></div>
+</div>
+
+<h2>What was built</h2>
+<p>Six stages, in <code>tools/autoloop/</code>, each of which logs its own failures instead of
+raising them — a loop that dies on its first bad cell measures nothing about where loops break.</p>
+<div class="tblwrap"><table>
+<tr><th>Stage</th><th>What it does without a person</th><th>What a person still did</th></tr>
+<tr><td><b>QUESTION</b></td><td>enumerates every admissible grouping × outcome pair —
+66 of them</td><td>fixed which variables exist, in the pre-registration</td></tr>
+<tr><td><b>DATA</b></td><td>24 requests to a public metadata API; derives the feature table;
+commits it</td><td>chose the corpus</td></tr>
+<tr><td><b>EXPERIMENT</b></td><td>picks the test by the outcome's type and runs it — here
+66 on the corpus, 132 on the split halves,
+33,000 in the null world</td><td>nothing</td></tr>
+<tr><td><b>ANALYSIS</b></td><td>effect sizes, Benjamini–Hochberg, Bonferroni, split-half
+replication, null-world calibration</td><td>nothing</td></tr>
+<tr><td><b>WRITE</b></td><td>one claim sentence per finding, from a template</td>
+<td>wrote the template</td></tr>
+<tr><td><b>REVIEW</b></td><td>586 re-derivations by a second
+implementation that shares no code with the first</td><td>read the survivors by hand — the one
+step below that could not be automated at all</td></tr>
+</table></div>
+<p>The corpus: <b>2,034 arXiv records</b>, deduplicated from eight category queries
+of 300, fetched 2026-09-03T22:40:15Z. Only derived numbers are committed — no title, abstract,
+author name or comment string enters this repository.</p>
+
+<h2>The sixty-six questions</h2>
+<p>Every cell is a question the loop asked itself. Click one to read what it found. The switch
+turns the world off: same records, same questions, grouping labels permuted so that no
+association survives — and the loop still lights up.</p>
+
+<div class="fig">
+ <div class="controls" id="controls" hidden>
+  <button id="w-real" aria-pressed="true">the real corpus</button>
+  <button id="w-null" aria-pressed="false">a world with nothing in it</button>
+  <span class="small mut" id="worldnote">The real corpus: 2,034 arXiv records fetched 2026-09-03.</span>
+ </div>
+ <svg viewBox="0 0 878 356" role="img" aria-label="Sixty-six auto-generated questions, one cell each, coloured by outcome">
+<text class="ax" x="207" y="28" text-anchor="end" transform="rotate(-40 207 28)">title words</text>
+<text class="ax" x="285" y="28" text-anchor="end" transform="rotate(-40 285 28)">abstract words</text>
+<text class="ax" x="363" y="28" text-anchor="end" transform="rotate(-40 363 28)">authors</text>
+<text class="ax" x="441" y="28" text-anchor="end" transform="rotate(-40 441 28)">categories</text>
+<text class="ax" x="519" y="28" text-anchor="end" transform="rotate(-40 519 28)">pages stated</text>
+<text class="ax" x="597" y="28" text-anchor="end" transform="rotate(-40 597 28)">hour posted</text>
+<text class="ax" x="675" y="28" text-anchor="end" transform="rotate(-40 675 28)">DOI</text>
+<text class="ax" x="753" y="28" text-anchor="end" transform="rotate(-40 753 28)">journal ref</text>
+<text class="ax" x="831" y="28" text-anchor="end" transform="rotate(-40 831 28)">revised</text>
+<text class="ax" x="168" y="18">outcome →</text>
+<text class="axr" x="158" y="95" text-anchor="end">posted at a weekend</text>
+<rect class="cell" data-k="weekend|title_words" x="169" y="75" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="posted at a weekend against title words"><title>posted at a weekend × title words: p = 0.6288</title></rect>
+<rect class="cell" data-k="weekend|abstract_words" x="247" y="75" width="75" height="31" rx="3" fill="var(--bh)" tabindex="0" role="button" aria-label="posted at a weekend against abstract words"><title>posted at a weekend × abstract words: p = 0.0037</title></rect>
+<rect class="cell" data-k="weekend|author_count" x="325" y="75" width="75" height="31" rx="3" fill="var(--bh)" tabindex="0" role="button" aria-label="posted at a weekend against authors"><title>posted at a weekend × authors: p = 0.0018</title></rect>
+<rect class="cell" data-k="weekend|category_count" x="403" y="75" width="75" height="31" rx="3" fill="var(--bh)" tabindex="0" role="button" aria-label="posted at a weekend against categories"><title>posted at a weekend × categories: p = 6.9e−6</title></rect>
+<circle class="rep" data-rep="weekend|category_count" cx="469" cy="91.0" r="3.4"/>
+<rect class="cell" data-k="weekend|comment_pages" x="481" y="75" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="posted at a weekend against pages stated"><title>posted at a weekend × pages stated: p = 0.4910</title></rect>
+<rect class="cell" data-k="weekend|published_hour_utc" x="559" y="75" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="posted at a weekend against hour posted"><title>posted at a weekend × hour posted: p = 0.2925</title></rect>
+<rect class="cell" data-k="weekend|has_doi" x="637" y="75" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="posted at a weekend against DOI"><title>posted at a weekend × DOI: p = 0.9929</title></rect>
+<rect class="cell" data-k="weekend|has_journal_ref" x="715" y="75" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="posted at a weekend against journal ref"><title>posted at a weekend × journal ref: p = 0.8802</title></rect>
+<rect class="cell" data-k="weekend|revised" x="793" y="75" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="posted at a weekend against revised"><title>posted at a weekend × revised: p = 0.3574</title></rect>
+<text class="axr" x="158" y="129" text-anchor="end">posted 22:00–06:00 UTC</text>
+<rect class="cell" data-k="night_submission|title_words" x="169" y="109" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="posted 22:00–06:00 UTC against title words"><title>posted 22:00–06:00 UTC × title words: p = 0.7225</title></rect>
+<rect class="cell" data-k="night_submission|abstract_words" x="247" y="109" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="posted 22:00–06:00 UTC against abstract words"><title>posted 22:00–06:00 UTC × abstract words: p = 0.3221</title></rect>
+<rect class="cell" data-k="night_submission|author_count" x="325" y="109" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="posted 22:00–06:00 UTC against authors"><title>posted 22:00–06:00 UTC × authors: p = 0.2117</title></rect>
+<rect class="cell" data-k="night_submission|category_count" x="403" y="109" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="posted 22:00–06:00 UTC against categories"><title>posted 22:00–06:00 UTC × categories: p = 0.0511</title></rect>
+<rect class="cell" data-k="night_submission|comment_pages" x="481" y="109" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="posted 22:00–06:00 UTC against pages stated"><title>posted 22:00–06:00 UTC × pages stated: p = 0.6457</title></rect>
+<line x1="590.0" y1="125.0" x2="604.0" y2="125.0" stroke="var(--rule)" stroke-width="2"/>
+<rect class="cell" data-k="night_submission|has_doi" x="637" y="109" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="posted 22:00–06:00 UTC against DOI"><title>posted 22:00–06:00 UTC × DOI: p = 0.9586</title></rect>
+<rect class="cell" data-k="night_submission|has_journal_ref" x="715" y="109" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="posted 22:00–06:00 UTC against journal ref"><title>posted 22:00–06:00 UTC × journal ref: p = 0.6874</title></rect>
+<rect class="cell" data-k="night_submission|revised" x="793" y="109" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="posted 22:00–06:00 UTC against revised"><title>posted 22:00–06:00 UTC × revised: p = 0.2882</title></rect>
+<text class="axr" x="158" y="163" text-anchor="end">has an author comment</text>
+<rect class="cell" data-k="has_comment|title_words" x="169" y="143" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has an author comment against title words"><title>has an author comment × title words: p = 0.6055</title></rect>
+<rect class="cell" data-k="has_comment|abstract_words" x="247" y="143" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has an author comment against abstract words"><title>has an author comment × abstract words: p = 0.5473</title></rect>
+<rect class="cell" data-k="has_comment|author_count" x="325" y="143" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has an author comment against authors"><title>has an author comment × authors: p = 0.0635</title></rect>
+<rect class="cell" data-k="has_comment|category_count" x="403" y="143" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has an author comment against categories"><title>has an author comment × categories: p = 0.1193</title></rect>
+<rect class="cell" data-k="has_comment|comment_pages" x="481" y="143" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="has an author comment against pages stated"><title>has an author comment × pages stated: p = —</title></rect>
+<rect class="cell" data-k="has_comment|published_hour_utc" x="559" y="143" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has an author comment against hour posted"><title>has an author comment × hour posted: p = 0.8210</title></rect>
+<rect class="cell" data-k="has_comment|has_doi" x="637" y="143" width="75" height="31" rx="3" fill="var(--bh)" tabindex="0" role="button" aria-label="has an author comment against DOI"><title>has an author comment × DOI: p = 5.3e−5</title></rect>
+<circle class="rep" data-rep="has_comment|has_doi" cx="703" cy="159.0" r="3.4"/>
+<rect class="cell" data-k="has_comment|has_journal_ref" x="715" y="143" width="75" height="31" rx="3" fill="var(--sig)" tabindex="0" role="button" aria-label="has an author comment against journal ref"><title>has an author comment × journal ref: p = 0.0124</title></rect>
+<rect class="cell" data-k="has_comment|revised" x="793" y="143" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has an author comment against revised"><title>has an author comment × revised: p = 0.1802</title></rect>
+<text class="axr" x="158" y="197" text-anchor="end">has a DOI</text>
+<rect class="cell" data-k="has_doi|title_words" x="169" y="177" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has a DOI against title words"><title>has a DOI × title words: p = 0.1976</title></rect>
+<rect class="cell" data-k="has_doi|abstract_words" x="247" y="177" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has a DOI against abstract words"><title>has a DOI × abstract words: p = 0.1696</title></rect>
+<rect class="cell" data-k="has_doi|author_count" x="325" y="177" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has a DOI against authors"><title>has a DOI × authors: p = 0.6070</title></rect>
+<rect class="cell" data-k="has_doi|category_count" x="403" y="177" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has a DOI against categories"><title>has a DOI × categories: p = 0.1274</title></rect>
+<rect class="cell" data-k="has_doi|comment_pages" x="481" y="177" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="has a DOI against pages stated"><title>has a DOI × pages stated: p = 0.0004</title></rect>
+<rect class="cell" data-k="has_doi|published_hour_utc" x="559" y="177" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has a DOI against hour posted"><title>has a DOI × hour posted: p = 0.0784</title></rect>
+<line x1="668.0" y1="193.0" x2="682.0" y2="193.0" stroke="var(--rule)" stroke-width="2"/>
+<rect class="cell" data-k="has_doi|has_journal_ref" x="715" y="177" width="75" height="31" rx="3" fill="var(--bh)" tabindex="0" role="button" aria-label="has a DOI against journal ref"><title>has a DOI × journal ref: p = 3.3e−140</title></rect>
+<circle class="rep" data-rep="has_doi|has_journal_ref" cx="781" cy="193.0" r="3.4"/>
+<rect class="cell" data-k="has_doi|revised" x="793" y="177" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="has a DOI against revised"><title>has a DOI × revised: p = 0.1368</title></rect>
+<text class="axr" x="158" y="231" text-anchor="end">has a journal reference</text>
+<rect class="cell" data-k="has_journal_ref|title_words" x="169" y="211" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has a journal reference against title words"><title>has a journal reference × title words: p = 0.2084</title></rect>
+<rect class="cell" data-k="has_journal_ref|abstract_words" x="247" y="211" width="75" height="31" rx="3" fill="var(--sig)" tabindex="0" role="button" aria-label="has a journal reference against abstract words"><title>has a journal reference × abstract words: p = 0.0288</title></rect>
+<rect class="cell" data-k="has_journal_ref|author_count" x="325" y="211" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has a journal reference against authors"><title>has a journal reference × authors: p = 0.2910</title></rect>
+<rect class="cell" data-k="has_journal_ref|category_count" x="403" y="211" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has a journal reference against categories"><title>has a journal reference × categories: p = 0.4516</title></rect>
+<rect class="cell" data-k="has_journal_ref|comment_pages" x="481" y="211" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="has a journal reference against pages stated"><title>has a journal reference × pages stated: p = 0.0372</title></rect>
+<rect class="cell" data-k="has_journal_ref|published_hour_utc" x="559" y="211" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has a journal reference against hour posted"><title>has a journal reference × hour posted: p = 0.1290</title></rect>
+<rect class="cell" data-k="has_journal_ref|has_doi" x="637" y="211" width="75" height="31" rx="3" fill="var(--bh)" tabindex="0" role="button" aria-label="has a journal reference against DOI"><title>has a journal reference × DOI: p = 3.3e−140</title></rect>
+<circle class="rep" data-rep="has_journal_ref|has_doi" cx="703" cy="227.0" r="3.4"/>
+<line x1="746.0" y1="227.0" x2="760.0" y2="227.0" stroke="var(--rule)" stroke-width="2"/>
+<rect class="cell" data-k="has_journal_ref|revised" x="793" y="211" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="has a journal reference against revised"><title>has a journal reference × revised: p = 0.2916</title></rect>
+<text class="axr" x="158" y="265" text-anchor="end">was revised</text>
+<rect class="cell" data-k="revised|title_words" x="169" y="245" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="was revised against title words"><title>was revised × title words: p = 0.2876</title></rect>
+<rect class="cell" data-k="revised|abstract_words" x="247" y="245" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="was revised against abstract words"><title>was revised × abstract words: p = 0.4081</title></rect>
+<rect class="cell" data-k="revised|author_count" x="325" y="245" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="was revised against authors"><title>was revised × authors: p = 0.6409</title></rect>
+<rect class="cell" data-k="revised|category_count" x="403" y="245" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="was revised against categories"><title>was revised × categories: p = 0.0971</title></rect>
+<rect class="cell" data-k="revised|comment_pages" x="481" y="245" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="was revised against pages stated"><title>was revised × pages stated: p = 0.4462</title></rect>
+<rect class="cell" data-k="revised|published_hour_utc" x="559" y="245" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="was revised against hour posted"><title>was revised × hour posted: p = 0.7692</title></rect>
+<rect class="cell" data-k="revised|has_doi" x="637" y="245" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="was revised against DOI"><title>was revised × DOI: p = 0.1368</title></rect>
+<rect class="cell" data-k="revised|has_journal_ref" x="715" y="245" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="was revised against journal ref"><title>was revised × journal ref: p = 0.2916</title></rect>
+<line x1="824.0" y1="261.0" x2="838.0" y2="261.0" stroke="var(--rule)" stroke-width="2"/>
+<text class="axr" x="158" y="299" text-anchor="end">is cross-listed</text>
+<rect class="cell" data-k="cross_listed|title_words" x="169" y="279" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="is cross-listed against title words"><title>is cross-listed × title words: p = 0.7449</title></rect>
+<rect class="cell" data-k="cross_listed|abstract_words" x="247" y="279" width="75" height="31" rx="3" fill="var(--bh)" tabindex="0" role="button" aria-label="is cross-listed against abstract words"><title>is cross-listed × abstract words: p = 0.0003</title></rect>
+<rect class="cell" data-k="cross_listed|author_count" x="325" y="279" width="75" height="31" rx="3" fill="var(--bh)" tabindex="0" role="button" aria-label="is cross-listed against authors"><title>is cross-listed × authors: p = 7.6e−17</title></rect>
+<circle class="rep" data-rep="cross_listed|author_count" cx="391" cy="295.0" r="3.4"/>
+<line x1="434.0" y1="295.0" x2="448.0" y2="295.0" stroke="var(--rule)" stroke-width="2"/>
+<rect class="cell" data-k="cross_listed|comment_pages" x="481" y="279" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="is cross-listed against pages stated"><title>is cross-listed × pages stated: p = 7.4e−9</title></rect>
+<rect class="cell" data-k="cross_listed|published_hour_utc" x="559" y="279" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="is cross-listed against hour posted"><title>is cross-listed × hour posted: p = 0.9657</title></rect>
+<rect class="cell" data-k="cross_listed|has_doi" x="637" y="279" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="is cross-listed against DOI"><title>is cross-listed × DOI: p = 0.2345</title></rect>
+<rect class="cell" data-k="cross_listed|has_journal_ref" x="715" y="279" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="is cross-listed against journal ref"><title>is cross-listed × journal ref: p = 0.5433</title></rect>
+<rect class="cell" data-k="cross_listed|revised" x="793" y="279" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="is cross-listed against revised"><title>is cross-listed × revised: p = 0.0861</title></rect>
+<text class="axr" x="158" y="333" text-anchor="end">has ≥ 5 authors</text>
+<rect class="cell" data-k="large_team|title_words" x="169" y="313" width="75" height="31" rx="3" fill="var(--sig)" tabindex="0" role="button" aria-label="has ≥ 5 authors against title words"><title>has ≥ 5 authors × title words: p = 0.0132</title></rect>
+<rect class="cell" data-k="large_team|abstract_words" x="247" y="313" width="75" height="31" rx="3" fill="var(--bh)" tabindex="0" role="button" aria-label="has ≥ 5 authors against abstract words"><title>has ≥ 5 authors × abstract words: p = 0.0014</title></rect>
+<circle class="rep" data-rep="large_team|abstract_words" cx="313" cy="329.0" r="3.4"/>
+<line x1="356.0" y1="329.0" x2="370.0" y2="329.0" stroke="var(--rule)" stroke-width="2"/>
+<rect class="cell" data-k="large_team|category_count" x="403" y="313" width="75" height="31" rx="3" fill="var(--bh)" tabindex="0" role="button" aria-label="has ≥ 5 authors against categories"><title>has ≥ 5 authors × categories: p = 5.0e−14</title></rect>
+<circle class="rep" data-rep="large_team|category_count" cx="469" cy="329.0" r="3.4"/>
+<rect class="cell" data-k="large_team|comment_pages" x="481" y="313" width="75" height="31" rx="3" fill="var(--kill)" tabindex="0" role="button" aria-label="has ≥ 5 authors against pages stated"><title>has ≥ 5 authors × pages stated: p = 0.7209</title></rect>
+<rect class="cell" data-k="large_team|published_hour_utc" x="559" y="313" width="75" height="31" rx="3" fill="var(--sig)" tabindex="0" role="button" aria-label="has ≥ 5 authors against hour posted"><title>has ≥ 5 authors × hour posted: p = 0.0436</title></rect>
+<rect class="cell" data-k="large_team|has_doi" x="637" y="313" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has ≥ 5 authors against DOI"><title>has ≥ 5 authors × DOI: p = 0.8995</title></rect>
+<rect class="cell" data-k="large_team|has_journal_ref" x="715" y="313" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has ≥ 5 authors against journal ref"><title>has ≥ 5 authors × journal ref: p = 0.2834</title></rect>
+<rect class="cell" data-k="large_team|revised" x="793" y="313" width="75" height="31" rx="3" fill="var(--non)" tabindex="0" role="button" aria-label="has ≥ 5 authors against revised"><title>has ≥ 5 authors × revised: p = 0.5745</title></rect>
+</svg>
+ <div class="legend">
+  <span><i style="background:var(--bh)"></i>survives correction</span>
+  <span><i style="background:var(--sig)"></i>finding, does not survive</span>
+  <span><i style="background:var(--non)"></i>no finding</span>
+  <span><i style="background:var(--kill)"></i>killed at review</span>
+  <span>○ replicates on a split half</span>
+ </div>
+ <div class="readout" id="ro">Pick a cell to read the question, its numbers, whether it survived
+ correction, whether it replicated, and what it looks like in a world with nothing in it. Without
+ JavaScript the grid above and the table below are complete on their own.</div>
+ <p class="figcap">Figure 1 · The whole hypothesis space. 14 of
+ 66 questions returned p &lt; 0.05; 15 were killed by the pre-conditions
+ before any claim was written; the six blanks are pairs the rule excluded as circular.</p>
+</div>
+
+<h2>A world with nothing in it</h2>
+<p>The honest test of a machine that finds things is to give it nothing and see what it brings
+back. We permuted the grouping labels across records — every association destroyed, every
+distribution and every dependence among the groupings kept — and ran the whole battery
+500 times.</p>
+<div class="fig">
+ <svg viewBox="0 0 900 250" role="img" aria-label="Distribution of findings per run in 500 null worlds; the real corpus produced 14">
+<line x1="44" y1="216.0" x2="892" y2="216.0" stroke="var(--rule)"/>
+<text class="ax" x="38" y="219.0" text-anchor="end">0</text>
+<line x1="44" y1="116.0" x2="892" y2="116.0" stroke="var(--rule)"/>
+<text class="ax" x="38" y="119.0" text-anchor="end">56</text>
+<line x1="44" y1="16.0" x2="892" y2="16.0" stroke="var(--rule)"/>
+<text class="ax" x="38" y="19.0" text-anchor="end">111</text>
+<rect x="47.0" y="174.6" width="50.3" height="41.4" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="72.1" y="230" text-anchor="middle">0</text>
+<text class="ax" x="72.1" y="170.6" text-anchor="middle">23</text>
+<rect x="103.3" y="111.5" width="50.3" height="104.5" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="128.4" y="230" text-anchor="middle">1</text>
+<text class="ax" x="128.4" y="107.5" text-anchor="middle">58</text>
+<rect x="159.5" y="17.8" width="50.3" height="198.2" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="184.7" y="230" text-anchor="middle">2</text>
+<text class="ax" x="184.7" y="13.8" text-anchor="middle">110</text>
+<rect x="215.8" y="16.0" width="50.3" height="200.0" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="240.9" y="230" text-anchor="middle">3</text>
+<text class="ax" x="240.9" y="12.0" text-anchor="middle">111</text>
+<rect x="272.1" y="66.5" width="50.3" height="149.5" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="297.2" y="230" text-anchor="middle">4</text>
+<text class="ax" x="297.2" y="62.5" text-anchor="middle">83</text>
+<rect x="328.3" y="102.5" width="50.3" height="113.5" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="353.5" y="230" text-anchor="middle">5</text>
+<text class="ax" x="353.5" y="98.5" text-anchor="middle">63</text>
+<rect x="384.6" y="169.2" width="50.3" height="46.8" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="409.7" y="230" text-anchor="middle">6</text>
+<text class="ax" x="409.7" y="165.2" text-anchor="middle">26</text>
+<rect x="440.9" y="185.4" width="50.3" height="30.6" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="466.0" y="230" text-anchor="middle">7</text>
+<text class="ax" x="466.0" y="181.4" text-anchor="middle">17</text>
+<rect x="497.1" y="205.2" width="50.3" height="10.8" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="522.3" y="230" text-anchor="middle">8</text>
+<text class="ax" x="522.3" y="201.2" text-anchor="middle">6</text>
+<rect x="553.4" y="214.2" width="50.3" height="1.8" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="578.5" y="230" text-anchor="middle">9</text>
+<text class="ax" x="578.5" y="210.2" text-anchor="middle">1</text>
+<rect x="609.7" y="216.0" width="50.3" height="0.0" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="634.8" y="230" text-anchor="middle">10</text>
+<rect x="665.9" y="212.4" width="50.3" height="3.6" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="691.1" y="230" text-anchor="middle">11</text>
+<text class="ax" x="691.1" y="208.4" text-anchor="middle">2</text>
+<rect x="722.2" y="216.0" width="50.3" height="0.0" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="747.3" y="230" text-anchor="middle">12</text>
+<rect x="778.5" y="216.0" width="50.3" height="0.0" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="803.6" y="230" text-anchor="middle">13</text>
+<rect x="834.7" y="216.0" width="50.3" height="0.0" rx="2" fill="var(--acc)" fill-opacity=".55"/>
+<text class="ax" x="859.9" y="230" text-anchor="middle">14</text>
+<line x1="859.9" y1="10" x2="859.9" y2="216" stroke="var(--ext)" stroke-width="2" stroke-dasharray="4 3"/>
+<text class="ax" x="853.9" y="20" text-anchor="end" fill="var(--ext)">the real corpus: 14</text>
+<text class="ax" x="44" y="246">findings per run (p &lt; 0.05, out of 66)</text>
+</svg>
+ <p class="figcap">Figure 2 · Findings per run in 500 empty worlds: mean
+ 3.22, median 3, worst
+ 11. Only 23 of
+ 500 runs came back empty-handed. The real corpus returned
+ 14.</p>
+</div>
+<p>The per-test rejection rate across all 33,000 null tests is
+<b>4.88 %</b> (Wilson 95 % CI
+4.66–5.12 %). That covers the nominal 5 %, which <b>refutes our own
+prediction P2</b>: the tests are not miscalibrated. Nothing is broken in the statistics. The
+loop manufactures findings because it asks 66 questions, and for no other
+reason.</p>
+<blockquote>Throughput and error control are the same dial. Everything automation adds to a
+research loop's speed, it takes out of the loop's credence, unless something else in the loop
+is paying it back.</blockquote>
+<p><b>Do not subtract.</b> 14 minus 3.2 is not 11 real findings. The null-world mean is the
+average yield of this loop when there is nothing at all to find; it says how loud the machine is
+in silence, not which of the 14 are real. That question is answered — partly — by what follows.</p>
+<p>Here the something else is Benjamini–Hochberg, and it works:
+10 of 14 findings survive it and
+7 survive Bonferroni. <span class="mut">Both counts under the
+denominator the code actually used — the 51 tests that
+could become a claim. Our pre-registration had said "across all 66"; under that literal rule the
+counts are 12 and
+9, and the claim set is the same, because
+the 2 tests it promotes were already killed at review. An
+adversary found the discrepancy; it is deviation 7 in <code>METHOD.md</code>.</span> What
+multiplicity correction cannot repair is next.</p>
+
+<h2>What the loop could not see</h2>
+
+<h3>It asked the same question twice, fifteen times over</h3>
+<p>Two of its findings carried the identical p-value to every printed digit
+(3.3 × 10<sup>−140</sup>). They are one 2 × 2 table, asked once with the DOI as the grouping and
+once with the journal reference as the grouping. An audit of the whole space — <b>added after
+this was noticed, and therefore exploratory</b> — found that the
+66 questions rest on only
+<b>51 distinct pairs of variables</b>:
+15 questions are a second asking. Among the survivors,
+10 findings rest on
+<b>8 associations</b>.</p>
+<p>No stage of the loop could notice this. The enumeration rule is correct, each test is correct,
+the correction is correctly applied to the number of tests actually run — and the count of
+findings is still inflated, because the generator does not know that two of its variables are
+two views of one thing.</p>
+
+<h3>It cannot tell a discovery from a plumbing fact</h3>
+<p>The ten survivors, read by hand against a rubric fixed before the data were seen. This table
+is <b>judgment, not measurement</b>, coded by the same practice that wrote the prediction it
+tests, with no blind second coder; the reasoning is given so it can be re-coded against us.</p>
+<div class="tblwrap"><table>
+<tr><th>Question</th><th>Code</th><th>Why</th></tr><tr><td>has a DOI × journal ref</td><td>mechanical</td><td class="small">A DOI and a journal reference are both stamped on an arXiv record by the same external event - acceptance and publication in a venue - and are usually added in the same author edit. Not definitional: 48.2 % of DOI-bearing records carry a journal reference, so one does not entail the other.</td></tr><tr><td>has a journal reference × DOI</td><td>mechanical</td><td class="small">The same association as the row above, asked with the two variables&#x27; roles swapped. The p-value is identical to every printed digit (3.27e-140), which is what a symmetric test of one 2x2 table does. The loop counted it as a second finding.</td></tr><tr><td>is cross-listed × authors</td><td>substantive</td><td class="small">Cross-listed papers have fewer authors (median 3 against 4). Nothing in the construction of either variable forces this. Caveat the loop cannot state: the corpus was assembled from eight category queries and deduplicated, so a cross-listed paper had more chances of being drawn - the composition of the cross-listed group is a property of our sampling frame as well as of arXiv.<br><b>Amended after an adversary, 2026-09-03:</b> A convened adversary pressed exactly that caveat and it holds. Stratified on primary category (data/stratify.json, recomputed here rather than taken from the adversary): the pooled rank-biserial is -0.220, and only 1 of 7 testable strata reaches p &lt; 0.05 on its own (cs.AI, -0.246); the pooled effect is larger than every stratum but that one. Three categories - stat.ML, cs.CR, cs.HC - are 100 % cross-listed in this corpus and so contribute to one side of the grouping only. A share of this finding is the corpus&#x27;s category mix. The code stays &#x27;substantive&#x27; because the rubric asks about the relation, not about the sampling frame; the sampling frame is the fourth thing the rubric could not see.</td></tr><tr><td>has ≥ 5 authors × categories</td><td>substantive</td><td class="small">The same underlying pair as the row above (author count against category count), dichotomised on the other variable. Two findings, one association.<br><b>Amended after an adversary, 2026-09-03:</b> Inherits the stratification caveat of the row above: it is the same association.</td></tr><tr><td>posted at a weekend × categories</td><td>substantive</td><td class="small">Weekend postings carry more categories. Thin, but not entailed by either definition and not obviously an artefact of the announcement schedule.</td></tr><tr><td>has an author comment × DOI</td><td>mechanical</td><td class="small">The comment field is the customary place to write &#x27;accepted at X&#x27;. A record that has a DOI has usually been through the event that prompts an author to write a comment at all.</td></tr><tr><td>is cross-listed × abstract words</td><td>substantive</td><td class="small">Longer abstracts among cross-listed papers. Same sampling caveat as above; did not replicate on the split half (p = 0.0004 against 0.13).</td></tr><tr><td>has ≥ 5 authors × abstract words</td><td>substantive</td><td class="small">Shorter abstracts among teams of five or more. Replicated on both halves at a much weaker level (p = 0.027, 0.023).</td></tr><tr><td>posted at a weekend × authors</td><td>substantive</td><td class="small">Fewer authors on weekend postings. Did not replicate (p = 0.22 against 0.001) - one half carries the whole finding.</td></tr><tr><td>posted at a weekend × abstract words</td><td>substantive</td><td class="small">Longer abstracts on weekend postings. Did not replicate (p = 0.0008 against 0.54).</td></tr></table></div>
+<p>3 mechanical, 0 definitional,
+7 substantive — which <b>refutes our prediction P4</b>. But the
+rubric needed a fourth class it did not have: the redundancy above is neither definitional nor
+mechanical nor substantive. It is an artefact of the question generator, invented by the
+machinery and unanticipated by the person who wrote the rubric.</p>
+
+<h3>It cannot see how its own corpus was built</h3>
+<p>The largest survivor that is not a plumbing fact — cross-listed papers have fewer authors,
+rank-biserial -0.220 — was pressed by an adversary as a composition
+effect of a corpus assembled from eight category queries. We recomputed it ourselves, stratified
+on primary category:</p>
+<div class="tblwrap"><table>
+<tr><th>Primary category</th><th>Records</th><th>cross-listed / not</th><th>Rank-biserial</th>
+<th>p</th></tr><tr><td>cs.AI</td><td class="num">213</td><td class="num">153 / 60</td><td class="num">-0.246</td><td class="num">0.005</td></tr><tr><td>cs.CL</td><td class="num">238</td><td class="num">131 / 107</td><td class="num">-0.016</td><td class="num">0.835</td></tr><tr><td>cs.CR</td><td class="num">59</td><td class="num">59 / 0</td><td class="num">—</td><td class="num">— (no comparison group)</td></tr><tr><td>cs.CV</td><td class="num">268</td><td class="num">95 / 173</td><td class="num">-0.132</td><td class="num">0.071</td></tr><tr><td>cs.CY</td><td class="num">145</td><td class="num">75 / 70</td><td class="num">+0.014</td><td class="num">0.880</td></tr><tr><td>cs.HC</td><td class="num">31</td><td class="num">31 / 0</td><td class="num">—</td><td class="num">— (no comparison group)</td></tr><tr><td>cs.LG</td><td class="num">275</td><td class="num">212 / 63</td><td class="num">-0.152</td><td class="num">0.063</td></tr><tr><td>cs.RO</td><td class="num">246</td><td class="num">82 / 164</td><td class="num">-0.062</td><td class="num">0.423</td></tr><tr><td>cs.SE</td><td class="num">190</td><td class="num">89 / 101</td><td class="num">-0.073</td><td class="num">0.380</td></tr><tr><td>stat.ML</td><td class="num">120</td><td class="num">120 / 0</td><td class="num">—</td><td class="num">— (no comparison group)</td></tr></table></div>
+<p>Only <b>1 of 7</b> testable strata
+reach p &lt; 0.05 on its own, and the pooled effect is larger than every stratum but that one.
+Three categories in this corpus are <b>100 % cross-listed</b> and sit wholly on one side of the
+grouping. A share of the finding is the shape of our sampling frame — and the loop had no way to
+know it had a sampling frame. <span class="mut">The stratification is post-hoc, outside the
+pipeline, and lives in <code>tools/autoloop/stratify.py</code>. It is the kind of question a
+person asks after the machine has finished.</span></p>
+
+<h3>Half of what it found does not survive the same corpus split in two</h3>
+<p>Splitting the records by the parity of the last digit of their identifier and re-running
+everything: <b>7 of 14</b> findings come back significant with
+the same sign in both halves. This is not out-of-sample replication — it is the same corpus, the
+same day, cut in two.</p>
+<p><b>But read it precisely</b>, because 50 % invites the wrong conclusion:
+<b>13 of 14</b> keep the same <i>sign</i> in both
+halves. Only one finding actually points the other way in one half; the rest fail only because
+halving the corpus costs the power to clear p &lt; 0.05 twice. Fragile at the threshold, mostly
+steady in direction. <span class="mut">This distinction was pointed out by the adversary and
+measured afterwards.</span></p>
+
+<h2>Every prediction, and how it came out</h2>
+<div class="tblwrap"><table>
+<tr><th></th><th>Registered before the data</th><th>Verdict</th><th>On what</th></tr>
+<tr><td><b>P1</b></td><td>the loop manufactures findings where there is nothing — ≥ 1 per null run</td><td>held</td><td class="small">3.22 findings per null run; 477 of 500 null worlds produced at least one</td></tr><tr><td><b>P2</b></td><td>its per-test error rate is above the nominal 5 %</td><td><b>REFUTED</b></td><td class="small">4.88 % (Wilson 95 % CI 4.66–5.12 %), which covers 0.05. The tests are calibrated; multiplicity alone does the damage</td></tr><tr><td><b>P3</b></td><td>multiplicity correction is not the binding constraint — more than half survive BH</td><td>held</td><td class="small">10 of 14 raw findings survive Benjamini–Hochberg, 7 survive Bonferroni; under the denominator as literally registered, 12 and 9, same claim set</td></tr><tr><td><b>P4</b></td><td>at least half the survivors are definitional or mechanical</td><td><b>REFUTED</b></td><td class="small">3 of 10 are mechanical, 0 definitional, 7 substantive — but &quot;substantive&quot; is a residual class, and the rubric missed a fourth one (below)</td></tr><tr><td><b>P5</b></td><td>fewer than 80 % of the findings replicate on a split half</td><td>held</td><td class="small">7 of 14 replicate (50 %), on a split of the very same corpus</td></tr></table></div>
+<p class="small mut">Two of five predictions refuted. Both were ours, both were registered in
+<code>PREREGISTRATION.md</code> before the first record was fetched, and both are reported here
+because the point of writing them down is to be caught by them.</p>
+
+<h2>What broke</h2>
+<ul><li class="small"><code>EXPERIMENT</code> · degenerate_test · has_comment|comment_pages@full — no p-value computable (zero variance or empty group)</li><li class="small"><code>EXPERIMENT</code> · degenerate_test · has_comment|comment_pages@half-even — no p-value computable (zero variance or empty group)</li><li class="small"><code>EXPERIMENT</code> · degenerate_test · has_comment|comment_pages@half-odd — no p-value computable (zero variance or empty group)</li></ul>
+<p>15 of 66 questions were killed by the review pre-conditions before any
+claim could be written — eight of them because one outcome, the page count stated in an author
+comment, is missing for most of the corpus. One test was degenerate: a stated page count can
+only be parsed out of a comment, so its comparison group was empty. The loop logged all of this
+and carried on.</p>
+<p><b>The first thing the review stage found wrong was the review stage.</b> Its first run
+reported five disagreements, all of them the string <code>0.0001</code> in a claim sentence that
+it could not re-derive — because <code>p = &lt;0.0001</code> is a threshold notation, not a
+measurement. The fault was the reviewer's tokeniser. That run is committed unrepaired at
+<code>data/review-run1-unrepaired.json</code>; the repair is dated in the file; the second run
+reports 586 checks and 0 disagreements.</p>
+
+<h2>What an adversary broke</h2>
+<p>An adversary was convened against this measurement before it shipped, given the
+pre-registration, the code, the data and the eight headline numbers, and told to break them. It
+returned twelve items. Three were defects and all three are repaired in the open:</p>
+<ul>
+<li class="small"><b>The multiplicity denominator was not the one we registered</b> — corrected
+above, both counts published, the claim set unchanged.</li>
+<li class="small"><b>The review pass was less independent than we said.</b> It had been taking the
+loop's own <i>z</i> on trust for every numeric claim, and had never re-applied the pre-conditions
+itself. Both now done from its own re-derivations: 586 checks,
+0 disagreements.</li>
+<li class="small"><b>The page this pre-registration promised did not exist yet</b> when the
+adversary looked. It does now, and <code>make_page.py --check</code> rebuilds it from the data.</li>
+</ul>
+<p>Six attacks failed, and a failed attack is evidence too: the tie-corrected Mann-Whitney
+variance, the pooled two-proportion z and the Benjamini–Hochberg step-up are textbook-correct
+(the last verified against a hand-built non-monotonic sequence); the permutation null preserves
+dependence among the groupings while destroying every association; the identifier-parity split
+shows no imbalance on nine features (all p &gt; 0.14); the missing continuity correction moves the
+most marginal p from 0.043619 to 0.043623; and a cluster-robust interval for the null-world rate
+(0.0464–0.0513) sits almost exactly on our Wilson interval — which, the adversary noted, is the
+wrong estimator whose adequacy here is luck. Everything it found, and everything it failed to
+break, is in <code>VERIFICATION.md</code>.</p>
+
+<h2>What this licenses, and what it does not</h2>
+<p><b>It licenses this:</b> a loop of this shape — enumerate, fetch, test, write, review — can be
+built in one sitting, runs unattended in about two minutes, and is now on a nightly schedule
+(<code>.github/workflows/autoloop.yml</code>) so that its yield becomes a series rather than an
+anecdote. Its statistics are calibrated. Its review stage catches numeric drift. It is a real
+instrument, and it is small.</p>
+<p><b>It does not license this:</b> any claim that the loop <i>did research</i>. It has no prior,
+no theory and no interest. It cannot tell that two of its questions are one question; it cannot
+tell that a DOI and a journal reference are stamped by the same event; and the only stage that
+noticed either was a person reading the output afterwards. What is missing between the two is
+not throughput and not statistical rigour — the machine has more of both than a person does.
+It is the standing of the question.</p>
+<p class="small mut">Limits, in the practice's own hand: one corpus, one day, one loop. The
+sampling frame is eight category queries and not arXiv, so several survivors could be properties
+of that frame — named per finding in the table above. The split half is the same day's records.
+The judgment column is judgment. And the loop's own author wrote both its questions and the
+predictions about what it would do, which is exactly the arrangement this practice has measured
+in others.</p>
+
+<h2>All sixty-six, in one table</h2>
+<div class="tblwrap"><table>
+<tr><th>Question</th><th>n (group / rest)</th><th>Effect</th><th>p</th><th>Replicates</th><th></th></tr>
+<tr><td>has a DOI × journal ref</td><td class="num">85 / 1949</td><td class="num">+47.3 pt</td><td class="num">3.3e−140</td><td>yes</td><td><span class="tag t-bh">survives BH</span></td></tr><tr><td>has a journal reference × DOI</td><td class="num">60 / 1974</td><td class="num">+66.1 pt</td><td class="num">3.3e−140</td><td>yes</td><td><span class="tag t-bh">survives BH</span></td></tr><tr><td>is cross-listed × authors</td><td class="num">1296 / 738</td><td class="num">-0.220</td><td class="num">7.6e−17</td><td>yes</td><td><span class="tag t-bh">survives BH</span></td></tr><tr><td>has ≥ 5 authors × categories</td><td class="num">779 / 1255</td><td class="num">-0.187</td><td class="num">5.0e−14</td><td>yes</td><td><span class="tag t-bh">survives BH</span></td></tr><tr><td>is cross-listed × pages stated</td><td class="num">503 / 218</td><td class="num">+0.271</td><td class="num">7.4e−9</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>posted at a weekend × categories</td><td class="num">192 / 1842</td><td class="num">+0.186</td><td class="num">6.9e−6</td><td>yes</td><td><span class="tag t-bh">survives BH</span></td></tr><tr><td>has an author comment × DOI</td><td class="num">1172 / 862</td><td class="num">+3.6 pt</td><td class="num">5.3e−5</td><td>yes</td><td><span class="tag t-bh">survives BH</span></td></tr><tr><td>is cross-listed × abstract words</td><td class="num">1296 / 738</td><td class="num">+0.097</td><td class="num">0.0003</td><td>no</td><td><span class="tag t-bh">survives BH</span></td></tr><tr><td>has a DOI × pages stated</td><td class="num">35 / 686</td><td class="num">-0.356</td><td class="num">0.0004</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>has ≥ 5 authors × abstract words</td><td class="num">779 / 1255</td><td class="num">-0.084</td><td class="num">0.0014</td><td>yes</td><td><span class="tag t-bh">survives BH</span></td></tr><tr><td>posted at a weekend × authors</td><td class="num">192 / 1842</td><td class="num">-0.136</td><td class="num">0.0018</td><td>no</td><td><span class="tag t-bh">survives BH</span></td></tr><tr><td>posted at a weekend × abstract words</td><td class="num">192 / 1842</td><td class="num">+0.127</td><td class="num">0.0037</td><td>no</td><td><span class="tag t-bh">survives BH</span></td></tr><tr><td>has an author comment × journal ref</td><td class="num">1172 / 862</td><td class="num">+1.9 pt</td><td class="num">0.0124</td><td>no</td><td><span class="tag t-sig">finding</span></td></tr><tr><td>has ≥ 5 authors × title words</td><td class="num">779 / 1255</td><td class="num">-0.065</td><td class="num">0.0132</td><td>no</td><td><span class="tag t-sig">finding</span></td></tr><tr><td>has a journal reference × abstract words</td><td class="num">60 / 1974</td><td class="num">-0.165</td><td class="num">0.0288</td><td>no</td><td><span class="tag t-sig">finding</span></td></tr><tr><td>has a journal reference × pages stated</td><td class="num">32 / 689</td><td class="num">-0.218</td><td class="num">0.0372</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>has ≥ 5 authors × hour posted</td><td class="num">779 / 1255</td><td class="num">-0.053</td><td class="num">0.0436</td><td>no</td><td><span class="tag t-sig">finding</span></td></tr><tr><td>posted 22:00–06:00 UTC × categories</td><td class="num">450 / 1584</td><td class="num">+0.057</td><td class="num">0.0511</td><td>—</td><td></td></tr><tr><td>has an author comment × authors</td><td class="num">1172 / 862</td><td class="num">-0.048</td><td class="num">0.0635</td><td>—</td><td></td></tr><tr><td>has a DOI × hour posted</td><td class="num">85 / 1949</td><td class="num">-0.112</td><td class="num">0.0784</td><td>—</td><td></td></tr><tr><td>is cross-listed × revised</td><td class="num">1296 / 738</td><td class="num">+1.6 pt</td><td class="num">0.0861</td><td>—</td><td></td></tr><tr><td>was revised × categories</td><td class="num">90 / 1944</td><td class="num">+0.098</td><td class="num">0.0971</td><td>—</td><td></td></tr><tr><td>has an author comment × categories</td><td class="num">1172 / 862</td><td class="num">+0.038</td><td class="num">0.1193</td><td>—</td><td></td></tr><tr><td>has a DOI × categories</td><td class="num">85 / 1949</td><td class="num">-0.092</td><td class="num">0.1274</td><td>—</td><td></td></tr><tr><td>has a journal reference × hour posted</td><td class="num">60 / 1974</td><td class="num">-0.115</td><td class="num">0.1290</td><td>—</td><td></td></tr><tr><td>has a DOI × revised</td><td class="num">85 / 1949</td><td class="num">-3.4 pt</td><td class="num">0.1368</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>was revised × DOI</td><td class="num">90 / 1944</td><td class="num">-3.2 pt</td><td class="num">0.1368</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>has a DOI × abstract words</td><td class="num">85 / 1949</td><td class="num">-0.088</td><td class="num">0.1696</td><td>—</td><td></td></tr><tr><td>has an author comment × revised</td><td class="num">1172 / 862</td><td class="num">+1.2 pt</td><td class="num">0.1802</td><td>—</td><td></td></tr><tr><td>has a DOI × title words</td><td class="num">85 / 1949</td><td class="num">+0.082</td><td class="num">0.1976</td><td>—</td><td></td></tr><tr><td>has a journal reference × title words</td><td class="num">60 / 1974</td><td class="num">+0.095</td><td class="num">0.2084</td><td>—</td><td></td></tr><tr><td>posted 22:00–06:00 UTC × authors</td><td class="num">450 / 1584</td><td class="num">-0.038</td><td class="num">0.2117</td><td>—</td><td></td></tr><tr><td>is cross-listed × DOI</td><td class="num">1296 / 738</td><td class="num">-1.1 pt</td><td class="num">0.2345</td><td>—</td><td></td></tr><tr><td>has ≥ 5 authors × journal ref</td><td class="num">779 / 1255</td><td class="num">-0.8 pt</td><td class="num">0.2834</td><td>—</td><td></td></tr><tr><td>was revised × title words</td><td class="num">90 / 1944</td><td class="num">+0.066</td><td class="num">0.2876</td><td>—</td><td></td></tr><tr><td>posted 22:00–06:00 UTC × revised</td><td class="num">450 / 1584</td><td class="num">+1.2 pt</td><td class="num">0.2882</td><td>—</td><td></td></tr><tr><td>has a journal reference × authors</td><td class="num">60 / 1974</td><td class="num">-0.079</td><td class="num">0.2910</td><td>—</td><td></td></tr><tr><td>has a journal reference × revised</td><td class="num">60 / 1974</td><td class="num">-2.8 pt</td><td class="num">0.2916</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>was revised × journal ref</td><td class="num">90 / 1944</td><td class="num">-1.9 pt</td><td class="num">0.2916</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>posted at a weekend × hour posted</td><td class="num">192 / 1842</td><td class="num">-0.046</td><td class="num">0.2925</td><td>—</td><td></td></tr><tr><td>posted 22:00–06:00 UTC × abstract words</td><td class="num">450 / 1584</td><td class="num">-0.031</td><td class="num">0.3221</td><td>—</td><td></td></tr><tr><td>posted at a weekend × revised</td><td class="num">192 / 1842</td><td class="num">-1.4 pt</td><td class="num">0.3574</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>was revised × abstract words</td><td class="num">90 / 1944</td><td class="num">+0.052</td><td class="num">0.4081</td><td>—</td><td></td></tr><tr><td>was revised × pages stated</td><td class="num">35 / 686</td><td class="num">+0.076</td><td class="num">0.4462</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>has a journal reference × categories</td><td class="num">60 / 1974</td><td class="num">-0.054</td><td class="num">0.4516</td><td>—</td><td></td></tr><tr><td>posted at a weekend × pages stated</td><td class="num">68 / 653</td><td class="num">+0.051</td><td class="num">0.4910</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>is cross-listed × journal ref</td><td class="num">1296 / 738</td><td class="num">-0.5 pt</td><td class="num">0.5433</td><td>—</td><td></td></tr><tr><td>has an author comment × abstract words</td><td class="num">1172 / 862</td><td class="num">-0.016</td><td class="num">0.5473</td><td>—</td><td></td></tr><tr><td>has ≥ 5 authors × revised</td><td class="num">779 / 1255</td><td class="num">+0.5 pt</td><td class="num">0.5745</td><td>—</td><td></td></tr><tr><td>has an author comment × title words</td><td class="num">1172 / 862</td><td class="num">+0.013</td><td class="num">0.6055</td><td>—</td><td></td></tr><tr><td>has a DOI × authors</td><td class="num">85 / 1949</td><td class="num">-0.033</td><td class="num">0.6070</td><td>—</td><td></td></tr><tr><td>posted at a weekend × title words</td><td class="num">192 / 1842</td><td class="num">+0.021</td><td class="num">0.6288</td><td>—</td><td></td></tr><tr><td>was revised × authors</td><td class="num">90 / 1944</td><td class="num">-0.029</td><td class="num">0.6409</td><td>—</td><td></td></tr><tr><td>posted 22:00–06:00 UTC × pages stated</td><td class="num">151 / 570</td><td class="num">+0.024</td><td class="num">0.6457</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>posted 22:00–06:00 UTC × journal ref</td><td class="num">450 / 1584</td><td class="num">-0.4 pt</td><td class="num">0.6874</td><td>—</td><td></td></tr><tr><td>has ≥ 5 authors × pages stated</td><td class="num">221 / 500</td><td class="num">+0.017</td><td class="num">0.7209</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>posted 22:00–06:00 UTC × title words</td><td class="num">450 / 1584</td><td class="num">+0.011</td><td class="num">0.7225</td><td>—</td><td></td></tr><tr><td>is cross-listed × title words</td><td class="num">1296 / 738</td><td class="num">-0.009</td><td class="num">0.7449</td><td>—</td><td></td></tr><tr><td>was revised × hour posted</td><td class="num">90 / 1944</td><td class="num">-0.018</td><td class="num">0.7692</td><td>—</td><td></td></tr><tr><td>has an author comment × hour posted</td><td class="num">1172 / 862</td><td class="num">+0.006</td><td class="num">0.8210</td><td>—</td><td></td></tr><tr><td>posted at a weekend × journal ref</td><td class="num">192 / 1842</td><td class="num">+0.2 pt</td><td class="num">0.8802</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>has ≥ 5 authors × DOI</td><td class="num">779 / 1255</td><td class="num">-0.1 pt</td><td class="num">0.8995</td><td>—</td><td></td></tr><tr><td>posted 22:00–06:00 UTC × DOI</td><td class="num">450 / 1584</td><td class="num">+0.1 pt</td><td class="num">0.9586</td><td>—</td><td></td></tr><tr><td>is cross-listed × hour posted</td><td class="num">1296 / 738</td><td class="num">+0.001</td><td class="num">0.9657</td><td>—</td><td></td></tr><tr><td>posted at a weekend × DOI</td><td class="num">192 / 1842</td><td class="num">-0.0 pt</td><td class="num">0.9929</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr><tr><td>has an author comment × pages stated</td><td class="num">721 / 0</td><td class="num">—</td><td class="num">—</td><td>—</td><td><span class="tag t-kill">killed</span></td></tr>
+</table></div>
+<p class="small mut">Effect is the rank-biserial correlation for a numeric outcome and the
+difference in percentage points for a binary one. “Replicates” means significant with the same
+sign in both halves of the corpus. Sorted by p.</p>
+
+<div class="foot">
+<p><b>Everything behind this page.</b> Pre-registration: <code>PREREGISTRATION.md</code> (committed
+before the first datum). Method and every deviation: <code>METHOD.md</code>. Independent review
+pass: <code>VERIFICATION.md</code>. Data: <code>data/corpus.json</code> (2,034
+records), <code>data/results.json</code>, <code>data/review.json</code>,
+<code>data/review-run1-unrepaired.json</code>, <code>data/judgment.json</code>,
+<code>data/breaks-data.json</code>. Code: <code>tools/autoloop/</code>.</p>
+<p><b>Rebuild this page:</b> <code>python3 tools/autoloop/make_page.py --check</code> regenerates
+it from the data files and fails on a one-byte difference. No number here is typed by hand.</p>
+<p><b>Form.</b> Interactive, decided on the merits and registered in advance: the object is a
+space of 66 questions and the finding is about what happens across it, so a
+reader who cannot open a single cell is being asked to take the aggregate on trust. Without
+JavaScript the grid, the histogram, every table and every number above stand complete.</p>
+<p>The Field (Meridian) · research ecology v3, protocol v4 · session 150 · 2026-09-03 ·
+sources: arXiv Atom API, 2026-09-03T22:40:15Z.</p>
+</div>
+
+<script type="application/json" id="d">{"notes": {"nul": "One typical null world: the same records, the same 66 questions, with the grouping labels row-permuted so that nothing is there to find.", "real": "The real corpus: 2,034 arXiv records fetched 2026-09-03."}, "nullmeta": {"hits": 3, "replicate": 0}, "nullrun": {"cross_listed|abstract_words": {"effect": -0.002120345277526803, "p": 0.9365384644090369}, "cross_listed|author_count": {"effect": -0.022002241627354535, "p": 0.40441896501854513}, "cross_listed|comment_pages": {"effect": -0.06504341458311536, "p": 0.15535664927156156}, "cross_listed|has_doi": {"effect": 0.39144835892803365, "p": 0.6714238170354798}, "cross_listed|has_journal_ref": {"effect": -0.26159289370671496, "p": 0.7374282905052529}, "cross_listed|published_hour_utc": {"effect": 0.022029425541169045, "p": 0.40751738361922907}, "cross_listed|revised": {"effect": -0.4987202649804276, "p": 0.5989655847113589}, "cross_listed|title_words": {"effect": -0.005930275352136194, "p": 0.8228048679136516}, "has_comment|abstract_words": {"effect": 0.012704599985746245, "p": 0.6239148653584838}, "has_comment|author_count": {"effect": 0.008853131458707919, "p": 0.7302518836298922}, "has_comment|category_count": {"effect": 0.004192963423421903, "p": 0.863936936514194}, "has_comment|comment_pages": {"effect": -0.01802546066814581, "p": 0.6785197393365388}, "has_comment|has_doi": {"effect": 0.8098873165825964, "p": 0.3670617324262315}, "has_comment|has_journal_ref": {"effect": -0.316550921343332, "p": 0.6767126505993525}, "has_comment|published_hour_utc": {"effect": -0.042314682102895906, "p": 0.10202612233321157}, "has_comment|revised": {"effect": -0.17282611277844168, "p": 0.8514270755508667}, "has_comment|title_words": {"effect": 0.029871399950903932, "p": 0.24633269676787084}, "has_doi|abstract_words": {"effect": 0.03329007334077816, "p": 0.60288101724277}, "has_doi|author_count": {"effect": -0.06856004587571307, "p": 0.2795844968267668}, "has_doi|category_count": {"effect": -0.12014607792834942, "p": 0.046765286288770185}, "has_doi|comment_pages": {"effect": -0.03726094515568201, "p": 0.7022189809834849}, "has_doi|has_journal_ref": {"effect": -0.6229438927957021, "p": 0.7396857036831023}, "has_doi|published_hour_utc": {"effect": -0.09294057284278512, "p": 0.14585850201215586}, "has_doi|revised": {"effect": -3.3899737421905654, "p": 0.13682781966976296}, "has_doi|title_words": {"effect": 0.08860652521655155, "p": 0.1637615032137854}, "has_journal_ref|abstract_words": {"effect": 0.19255319148936167, "p": 0.010945379252685466}, "has_journal_ref|author_count": {"effect": -0.2090256670043904, "p": 0.005314290452594802}, "has_journal_ref|category_count": {"effect": -0.030023640661938522, "p": 0.674382045847215}, "has_journal_ref|comment_pages": {"effect": 0.014195751947913227, "p": 0.9002584332933536}, "has_journal_ref|has_doi": {"effect": 0.845997973657548, "p": 0.7469901755985269}, "has_journal_ref|published_hour_utc": {"effect": -0.14403073286052015, "p": 0.05669590581430647}, "has_journal_ref|revised": {"effect": -2.8419452887537995, "p": 0.2916269311969231}, "has_journal_ref|title_words": {"effect": 0.10905099628503878, "p": 0.14730553333363217}, "large_team|abstract_words": {"effect": -0.002588874284632947, "p": 0.9217048682498666}, "large_team|category_count": {"effect": 0.004526182816871227, "p": 0.8556043043400401}, "large_team|comment_pages": {"effect": 0.018481478518281413, "p": 0.673440510193779}, "large_team|has_doi": {"effect": -1.1555319159817723, "p": 0.20551420605175472}, "large_team|has_journal_ref": {"effect": -1.0359588603225098, "p": 0.17948894079871253}, "large_team|published_hour_utc": {"effect": 0.016058998920876144, "p": 0.5415663165132585}, "large_team|revised": {"effect": 0.11046954671685497, "p": 0.9062489169409174}, "large_team|title_words": {"effect": 0.04922748032261204, "p": 0.06018817040773413}, "night_submission|abstract_words": {"effect": -0.009493546576879952, "p": 0.7582692305256961}, "night_submission|author_count": {"effect": 0.039802188552188644, "p": 0.1928951307971958}, "night_submission|category_count": {"effect": -0.02730359147025818, "p": 0.34859528070402157}, "night_submission|comment_pages": {"effect": -0.011618450098756838, "p": 0.8259881407509313}, "night_submission|has_doi": {"effect": -0.2297979797979799, "p": 0.8297859662763083}, "night_submission|has_journal_ref": {"effect": -0.36363636363636354, "p": 0.6874445809973548}, "night_submission|revised": {"effect": -0.8308080808080807, "p": 0.4494729531857317}, "night_submission|title_words": {"effect": 0.00553872053872051, "p": 0.8567143587707347}, "revised|abstract_words": {"effect": 0.01383744855967084, "p": 0.8241290088950015}, "revised|author_count": {"effect": -0.032201646090535, "p": 0.6017390490485166}, "revised|category_count": {"effect": -0.06482053040695013, "p": 0.2702592993924558}, "revised|comment_pages": {"effect": -0.03977272727272729, "p": 0.6991006878358265}, "revised|has_doi": {"effect": 0.2777777777777782, "p": 0.8975602233336596}, "revised|has_journal_ref": {"effect": -3.0864197530864197, "p": 0.09068290317899043}, "revised|published_hour_utc": {"effect": 0.010099451303154927, "p": 0.8709851508267534}, "revised|title_words": {"effect": -0.0468621399176955, "p": 0.4491338518461862}, "weekend|abstract_words": {"effect": -0.07468953583061888, "p": 0.08810458723323704}, "weekend|author_count": {"effect": -0.04031792888165042, "p": 0.3528681856432657}, "weekend|category_count": {"effect": -0.04702768729641693, "p": 0.2554598464217718}, "weekend|comment_pages": {"effect": -0.09267588428008222, "p": 0.2566133551486338}, "weekend|has_doi": {"effect": -2.3140608034744843, "p": 0.12729374638602}, "weekend|has_journal_ref": {"effect": -0.9568403908794789, "p": 0.4558517104239158}, "weekend|published_hour_utc": {"effect": -0.033681686572566094, "p": 0.44126116957719586}, "weekend|revised": {"effect": -1.4352605863192183, "p": 0.35741285019946434}, "weekend|title_words": {"effect": -0.024079352153456357, "p": 0.5803165589447938}}, "tests": {"cross_listed|abstract_words": {"bh": true, "bonf": true, "fails": [], "ha": 0.0003665239021359211, "hb": 0.12670184048711536, "judg": {"code": "substantive", "why": "Longer abstracts among cross-listed papers. Same sampling caveat as above; did not replicate on the split half (p = 0.0004 against 0.13)."}, "n0": 738, "n1": 1296, "p": 0.00028572288677949687, "q": "is cross-listed \u00d7 abstract words", "rep": false, "sentence": "Papers where the paper is cross-listed have higher abstract length in words than papers where it does not: median 193 against 187, rank-biserial +0.097, p = 0.0003 (Mann-Whitney U, n = 1296 against 738).", "sig": true, "test": "mann-whitney-u"}, "cross_listed|author_count": {"bh": true, "bonf": true, "fails": [], "ha": 3.3726206481880386e-09, "hb": 4.279053167448988e-09, "judg": {"code": "substantive", "why": "Cross-listed papers have fewer authors (median 3 against 4). Nothing in the construction of either variable forces this. Caveat the loop cannot state: the corpus was assembled from eight category queries and deduplicated, so a cross-listed paper had more chances of being drawn - the composition of the cross-listed group is a property of our sampling frame as well as of arXiv. \u2014 A convened adversary pressed exactly that caveat and it holds. Stratified on primary category (data/stratify.json, recomputed here rather than taken from the adversary): the pooled rank-biserial is -0.220, and only 1 of 7 testable strata reaches p < 0.05 on its own (cs.AI, -0.246); the pooled effect is larger than every stratum but that one. Three categories - stat.ML, cs.CR, cs.HC - are 100 % cross-listed in this corpus and so contribute to one side of the grouping only. A share of this finding is the corpus's category mix. The code stays 'substantive' because the rubric asks about the relation, not about the sampling frame; the sampling frame is the fourth thing the rubric could not see."}, "n0": 738, "n1": 1296, "p": 7.637987254530986e-17, "q": "is cross-listed \u00d7 authors", "rep": true, "sentence": "Papers where the paper is cross-listed have lower number of authors than papers where it does not: median 3 against 4, rank-biserial -0.220, p = <0.0001 (Mann-Whitney U, n = 1296 against 738).", "sig": true, "test": "mann-whitney-u"}, "cross_listed|comment_pages": {"bh": false, "bonf": false, "fails": ["c4 outcome missing for more than half the corpus"], "ha": 4.787236919801288e-07, "hb": 0.001322944072191169, "judg": null, "n0": 218, "n1": 503, "p": 7.4168161783134035e-09, "q": "is cross-listed \u00d7 pages stated", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "cross_listed|has_doi": {"bh": false, "bonf": false, "fails": [], "ha": 0.5735717626801091, "hb": 0.26409259034897214, "judg": null, "n0": 738, "n1": 1296, "p": 0.2344519320140963, "q": "is cross-listed \u00d7 DOI", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "cross_listed|has_journal_ref": {"bh": false, "bonf": false, "fails": [], "ha": 0.8193997983754367, "hb": 0.5225490137639027, "judg": null, "n0": 738, "n1": 1296, "p": 0.5433127552408114, "q": "is cross-listed \u00d7 journal ref", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "cross_listed|published_hour_utc": {"bh": false, "bonf": false, "fails": [], "ha": 0.8309722144751223, "hb": 0.7680724116528871, "judg": null, "n0": 738, "n1": 1296, "p": 0.9656970765346157, "q": "is cross-listed \u00d7 hour posted", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "cross_listed|revised": {"bh": false, "bonf": false, "fails": [], "ha": 0.044502636330179625, "hb": 0.7457401032865927, "judg": null, "n0": 738, "n1": 1296, "p": 0.08605595961371175, "q": "is cross-listed \u00d7 revised", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "cross_listed|title_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.4129007160451721, "hb": 0.7116574490516915, "judg": null, "n0": 738, "n1": 1296, "p": 0.7449333894976844, "q": "is cross-listed \u00d7 title words", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_comment|abstract_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.15225683648544489, "hb": 0.5271224660981638, "judg": null, "n0": 862, "n1": 1172, "p": 0.5473460141367793, "q": "has an author comment \u00d7 abstract words", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_comment|author_count": {"bh": false, "bonf": false, "fails": [], "ha": 0.012881952809341315, "hb": 0.9404784072537458, "judg": null, "n0": 862, "n1": 1172, "p": 0.06347754716854108, "q": "has an author comment \u00d7 authors", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_comment|category_count": {"bh": false, "bonf": false, "fails": [], "ha": 0.15033630373924578, "hb": 0.46219148325048076, "judg": null, "n0": 862, "n1": 1172, "p": 0.11929567401297672, "q": "has an author comment \u00d7 categories", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_comment|comment_pages": {"bh": false, "bonf": false, "fails": ["c1 group smaller than 30", "c4 outcome missing for more than half the corpus"], "ha": null, "hb": null, "judg": null, "n0": 0, "n1": 721, "p": null, "q": "has an author comment \u00d7 pages stated", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_comment|has_doi": {"bh": true, "bonf": true, "fails": [], "ha": 0.00843950059086649, "hb": 0.0018343661416196139, "judg": {"code": "mechanical", "why": "The comment field is the customary place to write 'accepted at X'. A record that has a DOI has usually been through the event that prompts an author to write a comment at all."}, "n0": 862, "n1": 1172, "p": 5.317610988497779e-05, "q": "has an author comment \u00d7 DOI", "rep": true, "sentence": "Papers where the paper carries an author comment differ in carrying a DOI: 5.7 % against 2.1 %, a difference of +3.6 points, p = <0.0001 (two-proportion z, n = 1172 against 862).", "sig": true, "test": "two-proportion-z"}, "has_comment|has_journal_ref": {"bh": false, "bonf": false, "fails": [], "ha": 0.03561117081779635, "hb": 0.15322751284092573, "judg": null, "n0": 862, "n1": 1172, "p": 0.012413913442249675, "q": "has an author comment \u00d7 journal ref", "rep": false, "sentence": "Papers where the paper carries an author comment differ in carrying a journal reference: 3.8 % against 1.9 %, a difference of +1.9 points, p = 0.0124 (two-proportion z, n = 1172 against 862).", "sig": true, "test": "two-proportion-z"}, "has_comment|published_hour_utc": {"bh": false, "bonf": false, "fails": [], "ha": 0.9367193924504079, "hb": 0.7151308200304425, "judg": null, "n0": 862, "n1": 1172, "p": 0.8210122479625496, "q": "has an author comment \u00d7 hour posted", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_comment|revised": {"bh": false, "bonf": false, "fails": [], "ha": 0.5916003414686741, "hb": 0.17072340382921836, "judg": null, "n0": 862, "n1": 1172, "p": 0.18022946812851606, "q": "has an author comment \u00d7 revised", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "has_comment|title_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.5557981526849782, "hb": 0.19147445895682397, "judg": null, "n0": 862, "n1": 1172, "p": 0.6055077396670099, "q": "has an author comment \u00d7 title words", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_doi|abstract_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.2407350081368117, "hb": 0.4711815711745299, "judg": null, "n0": 1949, "n1": 85, "p": 0.16955856656345658, "q": "has a DOI \u00d7 abstract words", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_doi|author_count": {"bh": false, "bonf": false, "fails": [], "ha": 0.5905168158084908, "hb": 0.8264357604790418, "judg": null, "n0": 1949, "n1": 85, "p": 0.6070058473021841, "q": "has a DOI \u00d7 authors", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_doi|category_count": {"bh": false, "bonf": false, "fails": [], "ha": 0.7214404832561998, "hb": 0.08015635312005573, "judg": null, "n0": 1949, "n1": 85, "p": 0.12738840441790242, "q": "has a DOI \u00d7 categories", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_doi|comment_pages": {"bh": false, "bonf": false, "fails": ["c4 outcome missing for more than half the corpus"], "ha": 0.0242854129911709, "hb": 0.007144239698646079, "judg": null, "n0": 686, "n1": 35, "p": 0.0003676467283328751, "q": "has a DOI \u00d7 pages stated", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_doi|has_journal_ref": {"bh": true, "bonf": true, "fails": [], "ha": 2.3427730829149684e-66, "hb": 7.052257306551361e-76, "judg": {"code": "mechanical", "why": "A DOI and a journal reference are both stamped on an arXiv record by the same external event - acceptance and publication in a venue - and are usually added in the same author edit. Not definitional: 48.2 % of DOI-bearing records carry a journal reference, so one does not entail the other."}, "n0": 1949, "n1": 85, "p": 3.2684598680547654e-140, "q": "has a DOI \u00d7 journal ref", "rep": true, "sentence": "Papers where the paper carries a DOI differ in carrying a journal reference: 48.2 % against 1.0 %, a difference of +47.3 points, p = <0.0001 (two-proportion z, n = 85 against 1949).", "sig": true, "test": "two-proportion-z"}, "has_doi|published_hour_utc": {"bh": false, "bonf": false, "fails": [], "ha": 0.02022743710963572, "hb": 0.8462238750742814, "judg": null, "n0": 1949, "n1": 85, "p": 0.07839658849308351, "q": "has a DOI \u00d7 hour posted", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_doi|revised": {"bh": false, "bonf": false, "fails": ["c2 fewer than 10 events or non-events in a group"], "ha": 0.15043890833977827, "hb": 0.5240153533226279, "judg": null, "n0": 1949, "n1": 85, "p": 0.13682781966976296, "q": "has a DOI \u00d7 revised", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "has_doi|title_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.41925709798388433, "hb": 0.31298487694771526, "judg": null, "n0": 1949, "n1": 85, "p": 0.19761749611103707, "q": "has a DOI \u00d7 title words", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_journal_ref|abstract_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.0020219183628048323, "hb": 0.9378805910599982, "judg": null, "n0": 1974, "n1": 60, "p": 0.028785360512959816, "q": "has a journal reference \u00d7 abstract words", "rep": false, "sentence": "Papers where the paper carries a journal reference have lower abstract length in words than papers where it does not: median 183.5 against 191, rank-biserial -0.165, p = 0.0288 (Mann-Whitney U, n = 60 against 1974).", "sig": true, "test": "mann-whitney-u"}, "has_journal_ref|author_count": {"bh": false, "bonf": false, "fails": [], "ha": 0.1966196855223595, "hb": 0.8566189755672298, "judg": null, "n0": 1974, "n1": 60, "p": 0.2910370497895471, "q": "has a journal reference \u00d7 authors", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_journal_ref|category_count": {"bh": false, "bonf": false, "fails": [], "ha": 0.9528866376440603, "hb": 0.3036495595507496, "judg": null, "n0": 1974, "n1": 60, "p": 0.45160981574463077, "q": "has a journal reference \u00d7 categories", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_journal_ref|comment_pages": {"bh": false, "bonf": false, "fails": ["c4 outcome missing for more than half the corpus"], "ha": 0.03044658830952628, "hb": 0.42922126952748074, "judg": null, "n0": 689, "n1": 32, "p": 0.03722619469551791, "q": "has a journal reference \u00d7 pages stated", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_journal_ref|has_doi": {"bh": true, "bonf": true, "fails": [], "ha": 2.3427730829149684e-66, "hb": 7.052257306551361e-76, "judg": {"code": "mechanical", "why": "The same association as the row above, asked with the two variables' roles swapped. The p-value is identical to every printed digit (3.27e-140), which is what a symmetric test of one 2x2 table does. The loop counted it as a second finding."}, "n0": 1974, "n1": 60, "p": 3.2684598680547654e-140, "q": "has a journal reference \u00d7 DOI", "rep": true, "sentence": "Papers where the paper carries a journal reference differ in carrying a DOI: 68.3 % against 2.2 %, a difference of +66.1 points, p = <0.0001 (two-proportion z, n = 60 against 1974).", "sig": true, "test": "two-proportion-z"}, "has_journal_ref|published_hour_utc": {"bh": false, "bonf": false, "fails": [], "ha": 0.045909734706854374, "hb": 0.8856726185821159, "judg": null, "n0": 1974, "n1": 60, "p": 0.12898199902165422, "q": "has a journal reference \u00d7 hour posted", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "has_journal_ref|revised": {"bh": false, "bonf": false, "fails": ["c2 fewer than 10 events or non-events in a group"], "ha": 0.20160240181187858, "hb": 0.8852374283022866, "judg": null, "n0": 1974, "n1": 60, "p": 0.2916269311969231, "q": "has a journal reference \u00d7 revised", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "has_journal_ref|title_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.7212977215939008, "hb": 0.1532463446211666, "judg": null, "n0": 1974, "n1": 60, "p": 0.20837507024224433, "q": "has a journal reference \u00d7 title words", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "large_team|abstract_words": {"bh": true, "bonf": false, "fails": [], "ha": 0.02676555731844877, "hb": 0.02309682250300036, "judg": {"code": "substantive", "why": "Shorter abstracts among teams of five or more. Replicated on both halves at a much weaker level (p = 0.027, 0.023)."}, "n0": 1255, "n1": 779, "p": 0.0014480836406864331, "q": "has \u2265 5 authors \u00d7 abstract words", "rep": true, "sentence": "Papers where the paper has five or more authors have lower abstract length in words than papers where it does not: median 187 against 194, rank-biserial -0.084, p = 0.0014 (Mann-Whitney U, n = 779 against 1255).", "sig": true, "test": "mann-whitney-u"}, "large_team|category_count": {"bh": true, "bonf": true, "fails": [], "ha": 6.400762676427289e-07, "hb": 1.3204165392207295e-08, "judg": {"code": "substantive", "why": "The same underlying pair as the row above (author count against category count), dichotomised on the other variable. Two findings, one association. \u2014 Inherits the stratification caveat of the row above: it is the same association."}, "n0": 1255, "n1": 779, "p": 4.9742685408726765e-14, "q": "has \u2265 5 authors \u00d7 categories", "rep": true, "sentence": "Papers where the paper has five or more authors have lower number of categories than papers where it does not: median 2 against 2, rank-biserial -0.187, p = <0.0001 (Mann-Whitney U, n = 779 against 1255).", "sig": true, "test": "mann-whitney-u"}, "large_team|comment_pages": {"bh": false, "bonf": false, "fails": ["c4 outcome missing for more than half the corpus"], "ha": 0.6223285508255103, "hb": 0.2855510880526567, "judg": null, "n0": 500, "n1": 221, "p": 0.7209339849885671, "q": "has \u2265 5 authors \u00d7 pages stated", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "large_team|has_doi": {"bh": false, "bonf": false, "fails": [], "ha": 0.5901846942570967, "hb": 0.767641397647074, "judg": null, "n0": 1255, "n1": 779, "p": 0.8994967430744119, "q": "has \u2265 5 authors \u00d7 DOI", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "large_team|has_journal_ref": {"bh": false, "bonf": false, "fails": [], "ha": 0.08290713646326923, "hb": 0.8096394185546003, "judg": null, "n0": 1255, "n1": 779, "p": 0.2833829008663709, "q": "has \u2265 5 authors \u00d7 journal ref", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "large_team|published_hour_utc": {"bh": false, "bonf": false, "fails": [], "ha": 0.12062160575082363, "hb": 0.21162253087990446, "judg": null, "n0": 1255, "n1": 779, "p": 0.04361852182726929, "q": "has \u2265 5 authors \u00d7 hour posted", "rep": false, "sentence": "Papers where the paper has five or more authors have lower hour of posting (UTC) than papers where it does not: median 12 against 13, rank-biserial -0.053, p = 0.0436 (Mann-Whitney U, n = 779 against 1255).", "sig": true, "test": "mann-whitney-u"}, "large_team|revised": {"bh": false, "bonf": false, "fails": [], "ha": 0.5355445790457095, "hb": 0.11565005444562079, "judg": null, "n0": 1255, "n1": 779, "p": 0.5745410705225935, "q": "has \u2265 5 authors \u00d7 revised", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "large_team|title_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.15289012291018986, "hb": 0.036492426493980976, "judg": null, "n0": 1255, "n1": 779, "p": 0.013189438321855814, "q": "has \u2265 5 authors \u00d7 title words", "rep": false, "sentence": "Papers where the paper has five or more authors have lower title length in words than papers where it does not: median 10 against 10, rank-biserial -0.065, p = 0.0132 (Mann-Whitney U, n = 779 against 1255).", "sig": true, "test": "mann-whitney-u"}, "night_submission|abstract_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.6663084025056357, "hb": 0.06136717019013, "judg": null, "n0": 1584, "n1": 450, "p": 0.3220503276972918, "q": "posted 22:00\u201306:00 UTC \u00d7 abstract words", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "night_submission|author_count": {"bh": false, "bonf": false, "fails": [], "ha": 0.617346008030385, "hb": 0.19956226504931454, "judg": null, "n0": 1584, "n1": 450, "p": 0.2116955121227841, "q": "posted 22:00\u201306:00 UTC \u00d7 authors", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "night_submission|category_count": {"bh": false, "bonf": false, "fails": [], "ha": 0.08993273897658842, "hb": 0.2897120293014508, "judg": null, "n0": 1584, "n1": 450, "p": 0.051066251842545506, "q": "posted 22:00\u201306:00 UTC \u00d7 categories", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "night_submission|comment_pages": {"bh": false, "bonf": false, "fails": ["c4 outcome missing for more than half the corpus"], "ha": 0.2592229472007098, "hb": 0.7891419774675192, "judg": null, "n0": 570, "n1": 151, "p": 0.6457273251452433, "q": "posted 22:00\u201306:00 UTC \u00d7 pages stated", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "night_submission|has_doi": {"bh": false, "bonf": false, "fails": [], "ha": 0.2783049593910529, "hb": 0.34914710567055607, "judg": null, "n0": 1584, "n1": 450, "p": 0.9585508130673138, "q": "posted 22:00\u201306:00 UTC \u00d7 DOI", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "night_submission|has_journal_ref": {"bh": false, "bonf": false, "fails": [], "ha": 0.8528170988952612, "hb": 0.44953808960119795, "judg": null, "n0": 1584, "n1": 450, "p": 0.6874445809973548, "q": "posted 22:00\u201306:00 UTC \u00d7 journal ref", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "night_submission|revised": {"bh": false, "bonf": false, "fails": [], "ha": 0.030373322742335243, "hb": 0.43860395753968334, "judg": null, "n0": 1584, "n1": 450, "p": 0.28822213316397094, "q": "posted 22:00\u201306:00 UTC \u00d7 revised", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "night_submission|title_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.7662553720542759, "hb": 0.8043598340322153, "judg": null, "n0": 1584, "n1": 450, "p": 0.7224614954788572, "q": "posted 22:00\u201306:00 UTC \u00d7 title words", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "revised|abstract_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.5576613973694863, "hb": 0.5954325949926684, "judg": null, "n0": 1944, "n1": 90, "p": 0.40813989923984384, "q": "was revised \u00d7 abstract words", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "revised|author_count": {"bh": false, "bonf": false, "fails": [], "ha": 0.08068427389230917, "hb": 0.20208776320238397, "judg": null, "n0": 1944, "n1": 90, "p": 0.6409196243564533, "q": "was revised \u00d7 authors", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "revised|category_count": {"bh": false, "bonf": false, "fails": [], "ha": 0.14355325681707512, "hb": 0.40669537517248877, "judg": null, "n0": 1944, "n1": 90, "p": 0.09711651756701642, "q": "was revised \u00d7 categories", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "revised|comment_pages": {"bh": false, "bonf": false, "fails": ["c4 outcome missing for more than half the corpus"], "ha": 0.6046431807936999, "hb": 0.56401345828604, "judg": null, "n0": 686, "n1": 35, "p": 0.4462149809795385, "q": "was revised \u00d7 pages stated", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "revised|has_doi": {"bh": false, "bonf": false, "fails": ["c2 fewer than 10 events or non-events in a group"], "ha": 0.15043890833977827, "hb": 0.5240153533226279, "judg": null, "n0": 1944, "n1": 90, "p": 0.13682781966976312, "q": "was revised \u00d7 DOI", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "revised|has_journal_ref": {"bh": false, "bonf": false, "fails": ["c2 fewer than 10 events or non-events in a group"], "ha": 0.20160240181187858, "hb": 0.8852374283022865, "judg": null, "n0": 1944, "n1": 90, "p": 0.2916269311969231, "q": "was revised \u00d7 journal ref", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "revised|published_hour_utc": {"bh": false, "bonf": false, "fails": [], "ha": 0.5400960395318998, "hb": 0.8207818857141372, "judg": null, "n0": 1944, "n1": 90, "p": 0.769160805818817, "q": "was revised \u00d7 hour posted", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "revised|title_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.16563998700641, "hb": 0.9803936212182365, "judg": null, "n0": 1944, "n1": 90, "p": 0.28758906640178244, "q": "was revised \u00d7 title words", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "weekend|abstract_words": {"bh": true, "bonf": false, "fails": [], "ha": 0.0007801598424933047, "hb": 0.5368527663822863, "judg": {"code": "substantive", "why": "Longer abstracts on weekend postings. Did not replicate (p = 0.0008 against 0.54)."}, "n0": 1842, "n1": 192, "p": 0.0037478341588344836, "q": "posted at a weekend \u00d7 abstract words", "rep": false, "sentence": "Papers where the paper published at a weekend (UTC) have higher abstract length in words than papers where it does not: median 200 against 190.5, rank-biserial +0.127, p = 0.0037 (Mann-Whitney U, n = 192 against 1842).", "sig": true, "test": "mann-whitney-u"}, "weekend|author_count": {"bh": true, "bonf": false, "fails": [], "ha": 0.22066270237649377, "hb": 0.0010436482386752468, "judg": {"code": "substantive", "why": "Fewer authors on weekend postings. Did not replicate (p = 0.22 against 0.001) - one half carries the whole finding."}, "n0": 1842, "n1": 192, "p": 0.0017803359091140354, "q": "posted at a weekend \u00d7 authors", "rep": false, "sentence": "Papers where the paper published at a weekend (UTC) have lower number of authors than papers where it does not: median 3 against 4, rank-biserial -0.136, p = 0.0018 (Mann-Whitney U, n = 192 against 1842).", "sig": true, "test": "mann-whitney-u"}, "weekend|category_count": {"bh": true, "bonf": true, "fails": [], "ha": 0.0009385304106167169, "hb": 0.002481972068144326, "judg": {"code": "substantive", "why": "Weekend postings carry more categories. Thin, but not entailed by either definition and not obviously an artefact of the announcement schedule."}, "n0": 1842, "n1": 192, "p": 6.943298503861366e-06, "q": "posted at a weekend \u00d7 categories", "rep": true, "sentence": "Papers where the paper published at a weekend (UTC) have higher number of categories than papers where it does not: median 2 against 2, rank-biserial +0.186, p = <0.0001 (Mann-Whitney U, n = 192 against 1842).", "sig": true, "test": "mann-whitney-u"}, "weekend|comment_pages": {"bh": false, "bonf": false, "fails": ["c4 outcome missing for more than half the corpus"], "ha": 0.7546245977436438, "hb": 0.5316239334602314, "judg": null, "n0": 653, "n1": 68, "p": 0.49101871762489646, "q": "posted at a weekend \u00d7 pages stated", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "weekend|has_doi": {"bh": false, "bonf": false, "fails": ["c2 fewer than 10 events or non-events in a group"], "ha": 0.956619810528677, "hb": 0.971538798360518, "judg": null, "n0": 1842, "n1": 192, "p": 0.9928642410001352, "q": "posted at a weekend \u00d7 DOI", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "weekend|has_journal_ref": {"bh": false, "bonf": false, "fails": ["c2 fewer than 10 events or non-events in a group"], "ha": 0.5844127904244337, "hb": 0.7080437882215589, "judg": null, "n0": 1842, "n1": 192, "p": 0.8801921977652591, "q": "posted at a weekend \u00d7 journal ref", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "weekend|published_hour_utc": {"bh": false, "bonf": false, "fails": [], "ha": 0.4635592274851376, "hb": 0.422813018258799, "judg": null, "n0": 1842, "n1": 192, "p": 0.29250889267626295, "q": "posted at a weekend \u00d7 hour posted", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}, "weekend|revised": {"bh": false, "bonf": false, "fails": ["c2 fewer than 10 events or non-events in a group"], "ha": 0.6667058459679231, "hb": 0.04718677075126513, "judg": null, "n0": 1842, "n1": 192, "p": 0.35741285019946434, "q": "posted at a weekend \u00d7 revised", "rep": null, "sentence": null, "sig": false, "test": "two-proportion-z"}, "weekend|title_words": {"bh": false, "bonf": false, "fails": [], "ha": 0.6775156589323883, "hb": 0.8527774293762538, "judg": null, "n0": 1842, "n1": 192, "p": 0.6288223558055027, "q": "posted at a weekend \u00d7 title words", "rep": null, "sentence": null, "sig": false, "test": "mann-whitney-u"}}}</script>
+<script>
+(function(){
+ var D=JSON.parse(document.getElementById("d").textContent);
+ var world="real", sel=null;
+ var ro=document.getElementById("ro");
+ var cells=[].slice.call(document.querySelectorAll(".cell"));
+ function colour(k){
+  var c=D.tests[k];
+  if(!c) return "var(--non)";
+  if(world==="null"){
+   var n=D.nullrun[k];
+   if(!n||n.p===null) return "var(--kill)";
+   return n.p<0.05?"var(--sig)":"var(--non)";
+  }
+  if(c.fails.length) return "var(--kill)";
+  if(c.bh) return "var(--bh)";
+  if(c.sig) return "var(--sig)";
+  return "var(--non)";
+ }
+ function paint(){
+  cells.forEach(function(el){
+   var k=el.getAttribute("data-k");
+   el.setAttribute("fill",colour(k));
+   var dot=document.querySelector('[data-rep="'+k+'"]');
+   if(dot) dot.style.display=(world==="real"&&D.tests[k]&&D.tests[k].rep)?"":"none";
+  });
+ }
+ function show(k){
+  var c=D.tests[k]; if(!c) return;
+  sel=k;
+  cells.forEach(function(el){el.classList.toggle("on",el.getAttribute("data-k")===k);});
+  var h="<b>"+c.q+"</b><br>";
+  if(world==="null"){
+   var n=D.nullrun[k];
+   h+="<span class='mut'>In the exemplar null world (replicate "+D.nullmeta.replicate+
+      ", grouping labels permuted):</span> p = "+(n&&n.p!==null?fmtp(n.p):"—")+
+      (n&&n.p!==null&&n.p<0.05?" — <b>the loop would report this as a finding.</b>":" — no finding.")+
+      "<br><span class='mut'>In the real world:</span> p = "+fmtp(c.p)+".";
+  } else if(c.fails.length){
+   h+="<span class='mut'>Killed at review:</span> "+c.fails.join("; ")+
+      ". No claim was written.";
+  } else {
+   h+=c.sentence?c.sentence:( "Not a finding: p = "+fmtp(c.p)+
+      " ("+c.test+", n = "+c.n1+" against "+c.n0+").");
+   if(c.sig){
+    h+="<br><span class='mut'>Multiplicity:</span> "+(c.bh?"survives Benjamini–Hochberg":
+      "does not survive Benjamini–Hochberg")+(c.bonf?", survives Bonferroni":"")+
+      ". <span class='mut'>Split half:</span> p = "+fmtp(c.ha)+" and "+fmtp(c.hb)+
+      " — "+(c.rep?"replicates.":"does not replicate.");
+   }
+   if(c.judg) h+="<br><span class='mut'>Read by hand (judgment, not measurement):</span> <b>"+
+      c.judg.code+"</b> — "+c.judg.why;
+  }
+  ro.innerHTML=h;
+ }
+ function fmtp(p){
+  if(p===null||p===undefined) return "—";
+  return p<1e-4?p.toExponential(1).replace("e-","e−"):p.toFixed(4);
+ }
+ cells.forEach(function(el){
+  el.addEventListener("click",function(){show(el.getAttribute("data-k"));});
+  el.addEventListener("keydown",function(e){
+   if(e.key==="Enter"||e.key===" "){e.preventDefault();show(el.getAttribute("data-k"));}});
+ });
+ ["real","null"].forEach(function(w){
+  document.getElementById("w-"+w).addEventListener("click",function(){
+   world=w;
+   document.getElementById("w-real").setAttribute("aria-pressed",String(w==="real"));
+   document.getElementById("w-null").setAttribute("aria-pressed",String(w==="null"));
+   document.getElementById("worldnote").textContent=
+    w==="real"?D.notes.real:D.notes.nul;
+   paint(); if(sel) show(sel);
+  });
+ });
+ document.getElementById("controls").hidden=false;
+ paint();
+})();
+</script>
+</main>
+</body></html>

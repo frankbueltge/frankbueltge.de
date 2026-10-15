@@ -1,0 +1,56 @@
+{
+  "$note": "Client-side weight budgets of the visual layer (docs/design/2026-09-02-the-visual-layer.md \u00a73, duty 6). Checked by scripts/bundle-budget.mjs after every `astro build`, in CI and before deploy. Sizes are gzip (level 9) of the built chunks under dist/_astro/, matched by file-name prefix; a prefix that matches nothing fails too, so a renamed chunk is re-budgeted on purpose. Add a line when an island lands; raise a number only with the reason written next to it.",
+  "reportOverKB": 20,
+  "budgets": [
+    {
+      "prefix": "client.",
+      "maxGzipKB": 60,
+      "what": "React runtime (react-dom/client 19.2) plus Astro's React hydration client \u2014 ONE chunk shared by every island on the site, loaded only on pages that mount one. Measured 56.9 KB gz on 2026-09-02; the plan's 50 KB was an estimate, this is the number."
+    },
+    {
+      "prefix": "SeasonFloor.",
+      "maxGzipKB": 30,
+      "what": "the Studio's season floor on /studio (Phase 3d): the whole season on one stage floor with the legend filter, the readout, the record card and the tour handshake. Mounted client:visible on the station, client:load inside the One Tap tour (its figure column is hidden until the tour's own script reveals it)."
+    },
+    {
+      "prefix": "GraphExplorer.",
+      "maxGzipKB": 60,
+      "what": "the knowledge-graph explorer on /experiments/neighbors (Phase 3a): d3-force relaxing the model's radial layout, d3-zoom, the filters, a plain combobox search (no cmdk \u2014 its radix dialog dependency would have cost a third of this budget for a search box), the node card with receipts. Mounted client:visible; the receipts are fetched from /graph/view.json only when a card opens."
+    },
+    {
+      "prefix": "ExperimentGallery.",
+      "maxGzipKB": 25,
+      "what": "the /experiments gallery (Phase 3c): the cards with their build-time miniatures, the three-axis filter, the CSS view-transition reflow and the shared readout. No motion library and no d3 \u2014 the reflow is the browser's own view transition, the entrance a CSS animation. Mounted client:visible."
+    },
+    {
+      "prefix": "LivingGlobe.",
+      "maxGzipKB": 15,
+      "what": "the living globe's island (G1, 2026-09-03) \u2014 the ONE globe of this house: it carries the build-time plate, the layer toggles with their provenance, the day scrubber and the card with receipts, and it imports the WebGL half on demand. Mounted client:idle on /globe and, with `compact`, under the hero on /; it replaced EntranceGlobe. (12 KB gz) and holds no deck.gl of its own. G2 added the story handshake \u2014 a scene's layer set, day, camera and one pending selection \u2014 and G3's first evening added one fetch of the country polygons, asked for once when a country layer is first switched on; the island still decodes no geography of its own. G3's second evening added three layers and the repair that makes a country card read \u201ccentroid of Qatar\u201d instead of \u201ccentroid of the country QAT\u201d. G3's third evening (2026-09-03, closing G3) extended that repair to the four remaining country layers, added the first two STATIC layers \u2014 admissions and the mirrored attention warnings, each with no day of its own \u2014 the fallback that draws a static layer's one frame on whichever day is on screen, and the legend's own digit-free phrase for one (\u201cno day of its own\u201d, never \u201c0 days on file\u201d); none of it cost the island anything measurable, because every centroid a point-kind country record needs is resolved by its adapter at build time and travels inside the record \u2014 the island holds no crosswalk and must never grow one. The narrow-screen gate landed the same evening from a second PR (#857): below seven hundred and sixty pixels the island keeps the server's plate and fetches neither the drawing half nor a single archive until the visitor asks for the turn, because a phone was paying three hundred kilobytes over the wire and a third of a second of blocking for a figure that was already drawn. Measured 6.2 KB gz on 2026-09-03 (two chunks), against 5.8 KB gz for G1+G2 and 5.3 KB gz for G1 alone; still well under the 15 KB the plan allowed. Measured 6.3 KB gz on 2026-09-03 after the front door gave the globe back: the island is only mounted at /globe now, and the two-stage fetch that opens on the newest day and pulls a layer's whole archive the moment the visitor leaves that day is what the last tenth bought — the room's arrival fell from one thousand seven hundred kilobytes decoded to three hundred and seventy-five."
+    },
+    {
+      "prefix": "globe-deck.",
+      "maxGzipKB": 320,
+      "what": "the living globe's WebGL half (G1, 2026-09-03): deck.gl core + layers with the globe view (Scatterplot, Arc, Path, Column, GeoJson/SolidPolygon, Text) and the land TopoJSON decoder. Loaded by dynamic import() the first time a globe figure is on screen, never on any other page. Also carries SGP4 over the sky layer's committed elements \u2014 the one declared no-clock exception \u2014 through src/lib/globe/propagate.ts, which rollup hoists into a shared chunk (transforms.*, 9.9 KB gz on 2026-09-03) that the watchtower island already loads: one copy of satellite.js on this site, so the honest total for the WebGL half is this number plus that shared chunk. Since G3's first evening it also stitches the land across the antimeridian before drawing it (src/lib/globe/antimeridian.ts) \u2014 the fix that took the seam off the sphere. Measured 208.5 KB gz on 2026-09-03 and unchanged by G3's second AND third evenings: the third added two more `points`-kind layers (admissions, the mirrored attention warnings) and one more branch in `pointOf` reading a country record's own embedded centroid \u2014 a property read, not a new layer class, so the drawing half gained nothing to weigh. Against 208.1 KB gz for G1+G2 (whose guided stories added a boolean to the handle and nothing to the drawing) and 203.9 KB gz on 2026-09-02 (Path, Column, Text and the fly-to interpolator came in). The plan's 320 KB ceiling holds, G3 closed with room to spare."
+    },
+    {
+      "prefix": "TrendingConvergence.",
+      "maxGzipKB": 15,
+      "what": "the convergence matrix on /trending (visual layer, 2026-09-03): the day's crossing as a grid of topics \u00d7 sources, with the column filter, the readout, the keyboard walk along a row and the shadcn card carrying a topic's own labels and headlines. No d3 \u2014 the grid has no ruler to zoom. Mounted client:visible. Measured 2.3 KB gz on 2026-09-03."
+    },
+    {
+      "prefix": "TrendingAudienceStrip.",
+      "maxGzipKB": 12,
+      "what": "the audience strip on /trending (visual layer, 2026-09-03): the stacked bars audienceStrip() has drawn since 2026-09-01, now with the legend as a class filter, a per-day readout and the keyboard walk. The six SVG fill patterns travel in the island because a fill of url(#\u2026) needs its pattern in the same document. Measured 1.9 KB gz on 2026-09-03."
+    },
+    {
+      "prefix": "TrendingArc.",
+      "maxGzipKB": 12,
+      "what": "a watched term's arc on /trending/topics/<slug> (visual layer, 2026-09-03): the committed runs as bars plus the two windows the status word rests on, with a per-run readout and the keyboard walk. Mounted client:visible on every term page. Measured 1.3 KB gz on 2026-09-03."
+    },
+    {
+      "prefix": "Spread.",
+      "maxGzipKB": 15,
+      "what": "the live field of /spread (2026-09-04), the house's first live, real-time work: four exchanges' own WebSockets, opened and parsed in the browser, drawn to a Canvas 2D field (never SVG/DOM marks — thousands of trades over a session would be thousands of nodes). No d3, no chart library — the geometry is linear interpolation over a time window and the band/remarkable-gap math already tested in src/lib/spread/band.ts. Mounted client:visible. Measured 6.4 KB gz on 2026-09-04."
+    }
+  ]
+}

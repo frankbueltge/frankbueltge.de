@@ -21,7 +21,7 @@ import { nightlyLine } from '@/lib/engines/nightly-line'
 import { WERKE } from '@/data/werke'
 import encounters from '@/data/begegnungen/register.json'
 import attentionMoments from '@/data/attention/moments.json'
-import { lastArchProtocol } from '@/lib/arch/facts'
+import { lastN1Night, N1_RECORD_HREF, newestN1Page } from '@/lib/n1/works'
 
 /** Which door id drives which practice namespace — the only mapping the board needs, and the
  *  reason it is written down: the ids are the practices' resident names, the namespaces are the
@@ -41,7 +41,7 @@ export interface BoardRow {
   href: string
   /** the row's own one-liner, verbatim from the door or the overview card */
   what: string
-  /** "resident: Ulysses", or the relation a row has instead of a resident */
+  /** "resident: Assay", or the relation a row has instead of a resident */
   resident: string
   status: string
   /** the voice whose identity colour this row wears; null = no voice of the ecology quartet */
@@ -117,16 +117,63 @@ interface AttentionMoment {
   statement?: string
 }
 
+/** A board cell holds one line; a subject longer than this is a document, not a title. */
+const MOMENT_TITLE_MAX = 90
+
+/** Mirrored moment subjects arrive as the source wrote them, and sources dump lists: a GDACS
+ *  drought subject is a run of twenty-five country names with doubled spaces and a trailing
+ *  ", ,". The snapshot is the record and stays byte-exact — the cleaning lives here, in the
+ *  derivation, and only tidies what is shown: whitespace runs collapse, empty list items and
+ *  trailing separators fall, and anything past the cell's width is cut at a word with an
+ *  ellipsis. (Found on the entrance board 2026-09-01.) */
+export function cleanMomentTitle(raw: string): string {
+  const tidy = raw
+    .replace(/\s+/g, ' ')
+    .replace(/(,\s*)+,/g, ',')
+    .replace(/[,\s]+$/g, '')
+    .trim()
+  if (tidy.length <= MOMENT_TITLE_MAX) return tidy
+  const cut = tidy.slice(0, MOMENT_TITLE_MAX)
+  const atWord = cut.slice(0, cut.lastIndexOf(' '))
+  return `${(atWord || cut).replace(/[,\s]+$/g, '')} …`
+}
+
+/** Many mirrored moments share one timestamp (a feed lands in batches), and a sort whose
+ *  comparator never returns 0 leaves the pick among equals to engine internals. The tie-break
+ *  on the shown text keeps the same snapshot giving the same board row on every build. */
+export function newestMoment(list: AttentionMoment[]): AttentionMoment | null {
+  if (list.length === 0) return null
+  return [...list].sort(
+    (a, b) =>
+      b.occurred_at!.localeCompare(a.occurred_at!) ||
+      (a.subject ?? a.statement ?? '').localeCompare(b.subject ?? b.statement ?? ''),
+  )[0]
+}
+
 /** Machine Attention publishes moments rather than works; its newest one is what last landed. */
 function lastMoment(): BoardLast | null {
   const list = ((attentionMoments as { moments?: AttentionMoment[] }).moments ?? []).filter((m) => m.occurred_at)
-  if (list.length === 0) return null
-  const newest = [...list].sort((a, b) => (a.occurred_at! < b.occurred_at! ? 1 : -1))[0]
+  const newest = newestMoment(list)
+  if (!newest) return null
   return {
-    title: newest.subject ?? newest.statement ?? 'a moment on the record',
+    title: cleanMomentTitle(newest.subject ?? newest.statement ?? 'a moment on the record'),
     meta: newest.occurred_at!.slice(0, 10),
     href: '/attention',
   }
+}
+
+/** n-1's row names the newest page of the practice a visitor can open — a work or a study, by
+ *  the page's own title and the day its record says it was built (src/lib/n1/shelf.ts). Until
+ *  2026-10-10 the row named the newest night instead ("Night 53 — project 6, session 2: …"): a
+ *  count of sessions, on a row whose link leads to a front page where what those sessions built
+ *  could not be found. The nights still stand in the signal log, each leading to its page. A
+ *  mirror in which no page can be dated falls back to the newest night and the record, the way
+ *  the row read before. */
+function lastN1(): BoardLast | null {
+  const page = newestN1Page()
+  if (page) return { title: page.title, meta: page.date, href: page.href }
+  const night = lastN1Night()
+  return night ? { title: night.title, meta: night.date, href: N1_RECORD_HREF } : null
 }
 
 /** The forked nightly line: its newest mirrored work, from the same metadata /error-as-method counts. */
@@ -135,44 +182,11 @@ function lastNightly(): BoardLast | null {
   return work ? { title: work.title, meta: work.date, href: work.href } : null
 }
 
-export interface SignalEntry {
-  date: string
-  ns: EngineNs
-  /** the practice's own name, from the doors — not a label invented for this strip */
-  practice: string
-  title: string
-  /** the noun that practice uses for what it makes: work · instrument · premiere */
-  kind: string
-  href: string
-  withdrawn: boolean
-}
-
-/**
- * THE SIGNAL LOG — the newest works across the three practices, newest first. The same
- * derivation /works renders, cut to the top few: one register, two views, so a work can never
- * stand on the entrance under one date and in the catalogue under another.
- *
- * Withdrawn works are NOT filtered out. They stay listed and marked, because the record keeps
- * every mark — the rule /works states in its own honesty line, applied here rather than quietly
- * dropped for looking untidy on an entrance.
- */
-export function buildSignalLog(works: readonly LatestWork[] = allWorks(), limit = 5): SignalEntry[] {
-  const doors = new Map(NAMING.doors.items.map((d) => [d.id, d.name]))
-  const nsName: Record<EngineNs, string> = {
-    atelier: doors.get('ulysses') ?? 'The Atelier',
-    field: doors.get('meridian') ?? 'The Field',
-    studio: doors.get('ensemble') ?? 'The Studio',
-  }
-  return works.slice(0, limit).map((w) => ({
-    date: w.date,
-    ns: w.ns,
-    practice: nsName[w.ns],
-    title: w.title,
-    kind: NAMING.opsRoom.signal.kindLabels[w.ns],
-    href: w.href,
-    withdrawn: w.state === 'withdrawn',
-  }))
-}
+/* THE SIGNAL LOG moved out of this module on 2026-09-03. It used to read allWorks() here and
+   show the three ecology practices only; Frank widened it to every house that lands dated work,
+   which needed sources this module has no business knowing about (Arch's mirror, n-1's forms,
+   the lab's shelf). It now lives in src/lib/ops/house-feed.ts — buildHouseFeed() — and this
+   module keeps to the board. */
 
 /**
  * The board, group by group. `works` is injectable so the derivation can be tested against a
@@ -197,7 +211,9 @@ export function buildBoard(snapshot: PulseSnapshot, works: readonly LatestWork[]
           name: door.name,
           href: door.href,
           what: door.description,
-          resident: door.noResident ?? `resident: ${spec.door[0].toUpperCase()}${spec.door.slice(1)}`,
+          // The persona comes from the door, never from its id: a door addresses the repository
+          // (`ulysses`), the resident line names the practice (Assay since 2026-09-03).
+          resident: door.noResident ?? `resident: ${door.persona ?? door.name}`,
           status: spec.status,
           voice: spec.door,
           spark,
@@ -218,7 +234,11 @@ export function buildBoard(snapshot: PulseSnapshot, works: readonly LatestWork[]
         spark,
         // each card beside the ecology states its last landed output from its OWN record — a
         // third card reading the nightly line's would have put another practice's work on it
-        last: spec.card === 'attention' ? lastMoment() : spec.card === 'arch' ? lastArchProtocol() : lastNightly(),
+        // (Arch's branch — its newest session protocol — went with its row on 2026-10-11.)
+        last:
+          spec.card === 'attention' ? lastMoment()
+          : spec.card === 'n-1' ? lastN1()
+          : lastNightly(),
       }
     }),
   }))

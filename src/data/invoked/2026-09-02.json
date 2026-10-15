@@ -1,0 +1,3486 @@
+{
+ "generated_at": "2026-09-02T10:48:31+00:00",
+ "date": "2026-09-02",
+ "method": {
+  "version": "v1.1",
+  "since": "2026-08-15",
+  "field": "GDELT GKG 2.1 column 16, V2.1ENHANCEDDATES",
+  "resolution_codes": {
+   "1": "year_only",
+   "2": "month_year",
+   "3": "full_date",
+   "4": "month_day_no_year"
+  },
+  "rules": {
+   "a_year_window": "year-resolution mentions only, 1800..current year",
+   "b_self_reference": "drop dates equal to the article's own publication date +/- 2 days",
+   "c_per_article_dedup": "identical dates counted once per article",
+   "d_stoplist": "empty in v1 — the 2026-08-14 false-positive review found no systematic offender"
+  },
+  "stoplist_years": [],
+  "year_window": [
+   1800,
+   "current year"
+  ],
+  "register_size": 20,
+  "register_min_days": 30,
+  "standout": "the published finding is the year that most exceeds the median of the +/-5 years around it, scored as excess over that baseline in units of its square root (floor 30 mentions, and at least 2.0x the neighbourhood). Years within 5 of the observed range's edges are not eligible, because beyond the inherited ceiling every year is structurally zero and the edge would always look surprising. Not the most-invoked year: that is the ceiling, not a finding. Not a plain ratio either: that crowns the thinnest neighbourhood.",
+  "inherited_ceiling": "GDELT's extractor emits no year >= 2015 (measured as a clean cliff on 2026-08-14 and re-measured nightly as max_year_observed). The instrument's scope is the press's memory of 1800-2014; recent-decade invocation is not available from this field and is not substituted from another population.",
+  "why": "beside the standout year the file publishes the evidence for it, all measured from the same rows: GDELT theme codes, extracted persons and organisations, the headlines of the invoking articles, and the anniversary arithmetic (the year's most-invoked exact date against the record's own date). The event is never named here — the receipts are shown and the naming is the reader's.",
+  "stream": "GDELT English-monitored GKG 2.1 (translation stream not fetched — disclosed on the page)"
+ },
+ "headline": {
+  "year": 1996,
+  "mentions": 1418,
+  "per_1000_articles": 12.098,
+  "neighbourhood_median": 616.0,
+  "times_its_neighbourhood": 2.3,
+  "surprise": 32.3,
+  "top_country_share": 0.518,
+  "invoked_by": [
+   {
+    "fips": "US",
+    "name": "United States",
+    "mentions": 617
+   },
+   {
+    "fips": "UK",
+    "name": "United Kingdom",
+    "mentions": 287
+   },
+   {
+    "fips": "IN",
+    "name": "India",
+    "mentions": 78
+   },
+   {
+    "fips": "CA",
+    "name": "Canada",
+    "mentions": 39
+   },
+   {
+    "fips": "NI",
+    "name": "Nigeria",
+    "mentions": 22
+   },
+   {
+    "fips": "AS",
+    "name": "Australia",
+    "mentions": 18
+   }
+  ],
+  "why": {
+   "articles": 1323,
+   "top_exact_dates": [
+    {
+     "date": "1996-09-07",
+     "mentions": 148
+    },
+    {
+     "date": "1996-08-15",
+     "mentions": 13
+    },
+    {
+     "date": "1996-09-13",
+     "mentions": 8
+    },
+    {
+     "date": "1996-09-01",
+     "mentions": 6
+    },
+    {
+     "date": "1996-09-02",
+     "mentions": 3
+    }
+   ],
+   "anniversary": {
+    "date": "1996-09-07",
+    "mentions": 148,
+    "matches_today": false,
+    "today": "2026-09-02"
+   },
+   "themes": [
+    {
+     "code": "TAX_FNCACT_KNIGHT",
+     "articles": 299,
+     "share": 0.226,
+     "lift": 21.0
+    },
+    {
+     "code": "WB_2452_GANGS",
+     "articles": 391,
+     "share": 0.296,
+     "lift": 19.7
+    },
+    {
+     "code": "TAX_FNCACT_DISTRICT_ATTORNEY",
+     "articles": 286,
+     "share": 0.216,
+     "lift": 17.1
+    },
+    {
+     "code": "TAX_DISEASE_WOUNDS",
+     "articles": 123,
+     "share": 0.093,
+     "lift": 13.4
+    },
+    {
+     "code": "WB_2445_NON_STATE_SECURITY_ACTORS",
+     "articles": 395,
+     "share": 0.299,
+     "lift": 13.2
+    },
+    {
+     "code": "TAX_WEAPONS_GUN",
+     "articles": 266,
+     "share": 0.201,
+     "lift": 12.9
+    },
+    {
+     "code": "ORGANIZED_CRIME",
+     "articles": 394,
+     "share": 0.298,
+     "lift": 12.4
+    },
+    {
+     "code": "TAX_FNCACT_PROSECUTORS",
+     "articles": 383,
+     "share": 0.289,
+     "lift": 9.7
+    }
+   ],
+   "persons": [
+    {
+     "name": "tupac shakur",
+     "articles": 400
+    },
+    {
+     "name": "las vegas",
+     "articles": 350
+    },
+    {
+     "name": "duane keffe d davis",
+     "articles": 322
+    },
+    {
+     "name": "marion suge knight",
+     "articles": 287
+    },
+    {
+     "name": "michael sanft",
+     "articles": 275
+    },
+    {
+     "name": "binu palal",
+     "articles": 219
+    }
+   ],
+   "organisations": [
+    {
+     "name": "bmw",
+     "articles": 136
+    },
+    {
+     "name": "clark county district court",
+     "articles": 93
+    },
+    {
+     "name": "yorkshire council",
+     "articles": 90
+    },
+    {
+     "name": "united states",
+     "articles": 89
+    },
+    {
+     "name": "federal reserve",
+     "articles": 83
+    },
+    {
+     "name": "associated press",
+     "articles": 81
+    }
+   ],
+   "headlines": [
+    {
+     "domain": "philstar.com",
+     "title": "MILF, gov't peace office team up for BARMM election security",
+     "url": "https://www.philstar.com/nation/2026/09/01/2553318/milf-govt-peace-office-team-barmm-election-security"
+    },
+    {
+     "domain": "goss.ie",
+     "title": "Jury convicts man of murder over 1996 killing of rap star Tupac Shakur",
+     "url": "https://goss.ie/featured/jury-convicts-man-of-murder-over-1996-killing-of-rap-star-tupac-shakur-482840"
+    },
+    {
+     "domain": "irvinetimes.com",
+     "title": "Whitby's whale bone arch removed ahead of bronze replica replacement",
+     "url": "https://www.irvinetimes.com/news/national/26510755.whitbys-whale-bone-arch-removed-ahead-bronze-replica-replacement/"
+    },
+    {
+     "domain": "messengernewspapers.co.uk",
+     "title": "Whitby's whale bone arch removed ahead of bronze replica replacement",
+     "url": "https://www.messengernewspapers.co.uk/news/national/26510755.whitbys-whale-bone-arch-removed-ahead-bronze-replica-replacement/"
+    },
+    {
+     "domain": "london-now.co.uk",
+     "title": "Whitby's whale bone arch removed ahead of bronze replica replacement",
+     "url": "https://www.london-now.co.uk/news/national/26510755.whitbys-whale-bone-arch-removed-ahead-bronze-replica-replacement/"
+    }
+   ]
+  }
+ },
+ "most_invoked": {
+  "year": 2014,
+  "mentions": 2036,
+  "per_1000_articles": 17.37
+ },
+ "years": [
+  {
+   "year": 1801,
+   "mentions": 8
+  },
+  {
+   "year": 1802,
+   "mentions": 2
+  },
+  {
+   "year": 1803,
+   "mentions": 7
+  },
+  {
+   "year": 1804,
+   "mentions": 4
+  },
+  {
+   "year": 1805,
+   "mentions": 3
+  },
+  {
+   "year": 1806,
+   "mentions": 6
+  },
+  {
+   "year": 1807,
+   "mentions": 11
+  },
+  {
+   "year": 1808,
+   "mentions": 3
+  },
+  {
+   "year": 1809,
+   "mentions": 2
+  },
+  {
+   "year": 1810,
+   "mentions": 5
+  },
+  {
+   "year": 1811,
+   "mentions": 5
+  },
+  {
+   "year": 1812,
+   "mentions": 21
+  },
+  {
+   "year": 1813,
+   "mentions": 6
+  },
+  {
+   "year": 1814,
+   "mentions": 7
+  },
+  {
+   "year": 1815,
+   "mentions": 12
+  },
+  {
+   "year": 1816,
+   "mentions": 6
+  },
+  {
+   "year": 1817,
+   "mentions": 4
+  },
+  {
+   "year": 1818,
+   "mentions": 10
+  },
+  {
+   "year": 1819,
+   "mentions": 8
+  },
+  {
+   "year": 1820,
+   "mentions": 11
+  },
+  {
+   "year": 1821,
+   "mentions": 6
+  },
+  {
+   "year": 1822,
+   "mentions": 9
+  },
+  {
+   "year": 1823,
+   "mentions": 7
+  },
+  {
+   "year": 1824,
+   "mentions": 3
+  },
+  {
+   "year": 1825,
+   "mentions": 21
+  },
+  {
+   "year": 1826,
+   "mentions": 8
+  },
+  {
+   "year": 1827,
+   "mentions": 5
+  },
+  {
+   "year": 1828,
+   "mentions": 19
+  },
+  {
+   "year": 1829,
+   "mentions": 10
+  },
+  {
+   "year": 1830,
+   "mentions": 9
+  },
+  {
+   "year": 1831,
+   "mentions": 7
+  },
+  {
+   "year": 1832,
+   "mentions": 8
+  },
+  {
+   "year": 1833,
+   "mentions": 25
+  },
+  {
+   "year": 1834,
+   "mentions": 8
+  },
+  {
+   "year": 1835,
+   "mentions": 7
+  },
+  {
+   "year": 1836,
+   "mentions": 13
+  },
+  {
+   "year": 1837,
+   "mentions": 6
+  },
+  {
+   "year": 1838,
+   "mentions": 12
+  },
+  {
+   "year": 1839,
+   "mentions": 8
+  },
+  {
+   "year": 1840,
+   "mentions": 11
+  },
+  {
+   "year": 1841,
+   "mentions": 4
+  },
+  {
+   "year": 1842,
+   "mentions": 9
+  },
+  {
+   "year": 1843,
+   "mentions": 22
+  },
+  {
+   "year": 1844,
+   "mentions": 19
+  },
+  {
+   "year": 1845,
+   "mentions": 9
+  },
+  {
+   "year": 1846,
+   "mentions": 9
+  },
+  {
+   "year": 1847,
+   "mentions": 10
+  },
+  {
+   "year": 1848,
+   "mentions": 17
+  },
+  {
+   "year": 1849,
+   "mentions": 9
+  },
+  {
+   "year": 1850,
+   "mentions": 30
+  },
+  {
+   "year": 1851,
+   "mentions": 18
+  },
+  {
+   "year": 1852,
+   "mentions": 33
+  },
+  {
+   "year": 1853,
+   "mentions": 10
+  },
+  {
+   "year": 1854,
+   "mentions": 16
+  },
+  {
+   "year": 1855,
+   "mentions": 13
+  },
+  {
+   "year": 1856,
+   "mentions": 20
+  },
+  {
+   "year": 1857,
+   "mentions": 23
+  },
+  {
+   "year": 1858,
+   "mentions": 9
+  },
+  {
+   "year": 1859,
+   "mentions": 20
+  },
+  {
+   "year": 1860,
+   "mentions": 34
+  },
+  {
+   "year": 1861,
+   "mentions": 13
+  },
+  {
+   "year": 1862,
+   "mentions": 16
+  },
+  {
+   "year": 1863,
+   "mentions": 8
+  },
+  {
+   "year": 1864,
+   "mentions": 24
+  },
+  {
+   "year": 1865,
+   "mentions": 25
+  },
+  {
+   "year": 1866,
+   "mentions": 13
+  },
+  {
+   "year": 1867,
+   "mentions": 13
+  },
+  {
+   "year": 1868,
+   "mentions": 16
+  },
+  {
+   "year": 1869,
+   "mentions": 19
+  },
+  {
+   "year": 1870,
+   "mentions": 23
+  },
+  {
+   "year": 1871,
+   "mentions": 21
+  },
+  {
+   "year": 1872,
+   "mentions": 52
+  },
+  {
+   "year": 1873,
+   "mentions": 79
+  },
+  {
+   "year": 1874,
+   "mentions": 69
+  },
+  {
+   "year": 1875,
+   "mentions": 16
+  },
+  {
+   "year": 1876,
+   "mentions": 33
+  },
+  {
+   "year": 1877,
+   "mentions": 15
+  },
+  {
+   "year": 1878,
+   "mentions": 11
+  },
+  {
+   "year": 1879,
+   "mentions": 12
+  },
+  {
+   "year": 1880,
+   "mentions": 13
+  },
+  {
+   "year": 1881,
+   "mentions": 36
+  },
+  {
+   "year": 1882,
+   "mentions": 41
+  },
+  {
+   "year": 1883,
+   "mentions": 18
+  },
+  {
+   "year": 1884,
+   "mentions": 156
+  },
+  {
+   "year": 1885,
+   "mentions": 28
+  },
+  {
+   "year": 1886,
+   "mentions": 25
+  },
+  {
+   "year": 1887,
+   "mentions": 15
+  },
+  {
+   "year": 1888,
+   "mentions": 43
+  },
+  {
+   "year": 1889,
+   "mentions": 17
+  },
+  {
+   "year": 1890,
+   "mentions": 20
+  },
+  {
+   "year": 1891,
+   "mentions": 17
+  },
+  {
+   "year": 1892,
+   "mentions": 21
+  },
+  {
+   "year": 1893,
+   "mentions": 24
+  },
+  {
+   "year": 1894,
+   "mentions": 39
+  },
+  {
+   "year": 1895,
+   "mentions": 30
+  },
+  {
+   "year": 1896,
+   "mentions": 27
+  },
+  {
+   "year": 1897,
+   "mentions": 38
+  },
+  {
+   "year": 1898,
+   "mentions": 22
+  },
+  {
+   "year": 1899,
+   "mentions": 21
+  },
+  {
+   "year": 1900,
+   "mentions": 114
+  },
+  {
+   "year": 1901,
+   "mentions": 28
+  },
+  {
+   "year": 1902,
+   "mentions": 111
+  },
+  {
+   "year": 1903,
+   "mentions": 30
+  },
+  {
+   "year": 1904,
+   "mentions": 28
+  },
+  {
+   "year": 1905,
+   "mentions": 77
+  },
+  {
+   "year": 1906,
+   "mentions": 39
+  },
+  {
+   "year": 1907,
+   "mentions": 42
+  },
+  {
+   "year": 1908,
+   "mentions": 134
+  },
+  {
+   "year": 1909,
+   "mentions": 118
+  },
+  {
+   "year": 1910,
+   "mentions": 61
+  },
+  {
+   "year": 1911,
+   "mentions": 27
+  },
+  {
+   "year": 1912,
+   "mentions": 46
+  },
+  {
+   "year": 1913,
+   "mentions": 32
+  },
+  {
+   "year": 1914,
+   "mentions": 37
+  },
+  {
+   "year": 1915,
+   "mentions": 29
+  },
+  {
+   "year": 1916,
+   "mentions": 21
+  },
+  {
+   "year": 1917,
+   "mentions": 43
+  },
+  {
+   "year": 1918,
+   "mentions": 33
+  },
+  {
+   "year": 1919,
+   "mentions": 49
+  },
+  {
+   "year": 1920,
+   "mentions": 81
+  },
+  {
+   "year": 1921,
+   "mentions": 33
+  },
+  {
+   "year": 1922,
+   "mentions": 44
+  },
+  {
+   "year": 1923,
+   "mentions": 62
+  },
+  {
+   "year": 1924,
+   "mentions": 41
+  },
+  {
+   "year": 1925,
+   "mentions": 47
+  },
+  {
+   "year": 1926,
+   "mentions": 168
+  },
+  {
+   "year": 1927,
+   "mentions": 57
+  },
+  {
+   "year": 1928,
+   "mentions": 102
+  },
+  {
+   "year": 1929,
+   "mentions": 64
+  },
+  {
+   "year": 1930,
+   "mentions": 95
+  },
+  {
+   "year": 1931,
+   "mentions": 48
+  },
+  {
+   "year": 1932,
+   "mentions": 66
+  },
+  {
+   "year": 1933,
+   "mentions": 168
+  },
+  {
+   "year": 1934,
+   "mentions": 175
+  },
+  {
+   "year": 1935,
+   "mentions": 190
+  },
+  {
+   "year": 1936,
+   "mentions": 88
+  },
+  {
+   "year": 1937,
+   "mentions": 75
+  },
+  {
+   "year": 1938,
+   "mentions": 67
+  },
+  {
+   "year": 1939,
+   "mentions": 100
+  },
+  {
+   "year": 1940,
+   "mentions": 115
+  },
+  {
+   "year": 1941,
+   "mentions": 76
+  },
+  {
+   "year": 1942,
+   "mentions": 99
+  },
+  {
+   "year": 1943,
+   "mentions": 63
+  },
+  {
+   "year": 1944,
+   "mentions": 87
+  },
+  {
+   "year": 1945,
+   "mentions": 171
+  },
+  {
+   "year": 1946,
+   "mentions": 113
+  },
+  {
+   "year": 1947,
+   "mentions": 135
+  },
+  {
+   "year": 1948,
+   "mentions": 193
+  },
+  {
+   "year": 1949,
+   "mentions": 121
+  },
+  {
+   "year": 1950,
+   "mentions": 147
+  },
+  {
+   "year": 1951,
+   "mentions": 154
+  },
+  {
+   "year": 1952,
+   "mentions": 155
+  },
+  {
+   "year": 1953,
+   "mentions": 92
+  },
+  {
+   "year": 1954,
+   "mentions": 167
+  },
+  {
+   "year": 1955,
+   "mentions": 138
+  },
+  {
+   "year": 1956,
+   "mentions": 253
+  },
+  {
+   "year": 1957,
+   "mentions": 163
+  },
+  {
+   "year": 1958,
+   "mentions": 125
+  },
+  {
+   "year": 1959,
+   "mentions": 197
+  },
+  {
+   "year": 1960,
+   "mentions": 226
+  },
+  {
+   "year": 1961,
+   "mentions": 224
+  },
+  {
+   "year": 1962,
+   "mentions": 159
+  },
+  {
+   "year": 1963,
+   "mentions": 180
+  },
+  {
+   "year": 1964,
+   "mentions": 197
+  },
+  {
+   "year": 1965,
+   "mentions": 178
+  },
+  {
+   "year": 1966,
+   "mentions": 307
+  },
+  {
+   "year": 1967,
+   "mentions": 258
+  },
+  {
+   "year": 1968,
+   "mentions": 280
+  },
+  {
+   "year": 1969,
+   "mentions": 238
+  },
+  {
+   "year": 1970,
+   "mentions": 228
+  },
+  {
+   "year": 1971,
+   "mentions": 308
+  },
+  {
+   "year": 1972,
+   "mentions": 207
+  },
+  {
+   "year": 1973,
+   "mentions": 355
+  },
+  {
+   "year": 1974,
+   "mentions": 371
+  },
+  {
+   "year": 1975,
+   "mentions": 412
+  },
+  {
+   "year": 1976,
+   "mentions": 666
+  },
+  {
+   "year": 1977,
+   "mentions": 298
+  },
+  {
+   "year": 1978,
+   "mentions": 253
+  },
+  {
+   "year": 1979,
+   "mentions": 304
+  },
+  {
+   "year": 1980,
+   "mentions": 428
+  },
+  {
+   "year": 1981,
+   "mentions": 344
+  },
+  {
+   "year": 1982,
+   "mentions": 327
+  },
+  {
+   "year": 1983,
+   "mentions": 234
+  },
+  {
+   "year": 1984,
+   "mentions": 425
+  },
+  {
+   "year": 1985,
+   "mentions": 362
+  },
+  {
+   "year": 1986,
+   "mentions": 374
+  },
+  {
+   "year": 1987,
+   "mentions": 384
+  },
+  {
+   "year": 1988,
+   "mentions": 724
+  },
+  {
+   "year": 1989,
+   "mentions": 436
+  },
+  {
+   "year": 1990,
+   "mentions": 402
+  },
+  {
+   "year": 1991,
+   "mentions": 516
+  },
+  {
+   "year": 1992,
+   "mentions": 484
+  },
+  {
+   "year": 1993,
+   "mentions": 363
+  },
+  {
+   "year": 1994,
+   "mentions": 433
+  },
+  {
+   "year": 1995,
+   "mentions": 942
+  },
+  {
+   "year": 1996,
+   "mentions": 1418
+  },
+  {
+   "year": 1997,
+   "mentions": 699
+  },
+  {
+   "year": 1998,
+   "mentions": 877
+  },
+  {
+   "year": 1999,
+   "mentions": 533
+  },
+  {
+   "year": 2000,
+   "mentions": 1138
+  },
+  {
+   "year": 2001,
+   "mentions": 1199
+  },
+  {
+   "year": 2002,
+   "mentions": 1068
+  },
+  {
+   "year": 2003,
+   "mentions": 889
+  },
+  {
+   "year": 2004,
+   "mentions": 961
+  },
+  {
+   "year": 2005,
+   "mentions": 1040
+  },
+  {
+   "year": 2006,
+   "mentions": 1607
+  },
+  {
+   "year": 2007,
+   "mentions": 1226
+  },
+  {
+   "year": 2008,
+   "mentions": 1321
+  },
+  {
+   "year": 2009,
+   "mentions": 1427
+  },
+  {
+   "year": 2010,
+   "mentions": 1687
+  },
+  {
+   "year": 2011,
+   "mentions": 1729
+  },
+  {
+   "year": 2012,
+   "mentions": 1594
+  },
+  {
+   "year": 2013,
+   "mentions": 1790
+  },
+  {
+   "year": 2014,
+   "mentions": 2036
+  }
+ ],
+ "top_years": [
+  {
+   "year": 2014,
+   "mentions": 2036,
+   "per_1000_articles": 17.37,
+   "share": 0.0457,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 896
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 193
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 135
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 128
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 60
+    },
+    {
+     "fips": "NI",
+     "name": "Nigeria",
+     "mentions": 31
+    }
+   ]
+  },
+  {
+   "year": 2013,
+   "mentions": 1790,
+   "per_1000_articles": 15.271,
+   "share": 0.0402,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 937
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 227
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 178
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 44
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 30
+    },
+    {
+     "fips": "CH",
+     "name": "China",
+     "mentions": 17
+    }
+   ]
+  },
+  {
+   "year": 2011,
+   "mentions": 1729,
+   "per_1000_articles": 14.751,
+   "share": 0.0388,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 804
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 173
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 143
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 54
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 38
+    },
+    {
+     "fips": "NI",
+     "name": "Nigeria",
+     "mentions": 27
+    }
+   ]
+  },
+  {
+   "year": 2010,
+   "mentions": 1687,
+   "per_1000_articles": 14.393,
+   "share": 0.0379,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 917
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 171
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 127
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 29
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 29
+    },
+    {
+     "fips": "EI",
+     "name": "Ireland",
+     "mentions": 20
+    }
+   ]
+  },
+  {
+   "year": 2006,
+   "mentions": 1607,
+   "per_1000_articles": 13.71,
+   "share": 0.0361,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 1046
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 150
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 100
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 43
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 23
+    },
+    {
+     "fips": "NI",
+     "name": "Nigeria",
+     "mentions": 11
+    }
+   ]
+  },
+  {
+   "year": 2012,
+   "mentions": 1594,
+   "per_1000_articles": 13.599,
+   "share": 0.0358,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 831
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 164
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 108
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 56
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 25
+    },
+    {
+     "fips": "SF",
+     "name": "South Africa",
+     "mentions": 13
+    }
+   ]
+  },
+  {
+   "year": 2009,
+   "mentions": 1427,
+   "per_1000_articles": 12.175,
+   "share": 0.0321,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 880
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 85
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 83
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 75
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 25
+    },
+    {
+     "fips": "GM",
+     "name": "Germany",
+     "mentions": 17
+    }
+   ]
+  },
+  {
+   "year": 1996,
+   "mentions": 1418,
+   "per_1000_articles": 12.098,
+   "share": 0.0319,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 617
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 287
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 78
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 39
+    },
+    {
+     "fips": "NI",
+     "name": "Nigeria",
+     "mentions": 22
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 18
+    }
+   ]
+  },
+  {
+   "year": 2008,
+   "mentions": 1321,
+   "per_1000_articles": 11.27,
+   "share": 0.0297,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 604
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 171
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 107
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 84
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 27
+    },
+    {
+     "fips": "CH",
+     "name": "China",
+     "mentions": 16
+    }
+   ]
+  },
+  {
+   "year": 2007,
+   "mentions": 1226,
+   "per_1000_articles": 10.46,
+   "share": 0.0275,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 755
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 107
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 46
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 34
+    },
+    {
+     "fips": "NI",
+     "name": "Nigeria",
+     "mentions": 18
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 15
+    }
+   ]
+  },
+  {
+   "year": 2001,
+   "mentions": 1199,
+   "per_1000_articles": 10.229,
+   "share": 0.0269,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 717
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 83
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 64
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 50
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 20
+    },
+    {
+     "fips": "CH",
+     "name": "China",
+     "mentions": 17
+    }
+   ]
+  },
+  {
+   "year": 2000,
+   "mentions": 1138,
+   "per_1000_articles": 9.709,
+   "share": 0.0256,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 612
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 100
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 72
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 65
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 63
+    },
+    {
+     "fips": "GM",
+     "name": "Germany",
+     "mentions": 17
+    }
+   ]
+  },
+  {
+   "year": 2002,
+   "mentions": 1068,
+   "per_1000_articles": 9.112,
+   "share": 0.024,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 393
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 309
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 83
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 44
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 44
+    },
+    {
+     "fips": "CH",
+     "name": "China",
+     "mentions": 13
+    }
+   ]
+  },
+  {
+   "year": 2005,
+   "mentions": 1040,
+   "per_1000_articles": 8.873,
+   "share": 0.0234,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 611
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 94
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 59
+    },
+    {
+     "fips": "QA",
+     "name": "Qatar",
+     "mentions": 35
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 33
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 27
+    }
+   ]
+  },
+  {
+   "year": 2004,
+   "mentions": 961,
+   "per_1000_articles": 8.199,
+   "share": 0.0216,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 472
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 109
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 88
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 52
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 21
+    },
+    {
+     "fips": "RP",
+     "name": "Philippines",
+     "mentions": 9
+    }
+   ]
+  },
+  {
+   "year": 1995,
+   "mentions": 942,
+   "per_1000_articles": 8.037,
+   "share": 0.0212,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 499
+    },
+    {
+     "fips": "CH",
+     "name": "China",
+     "mentions": 112
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 55
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 52
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 44
+    },
+    {
+     "fips": "RP",
+     "name": "Philippines",
+     "mentions": 33
+    }
+   ]
+  },
+  {
+   "year": 2003,
+   "mentions": 889,
+   "per_1000_articles": 7.585,
+   "share": 0.02,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 505
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 66
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 53
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 32
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 19
+    },
+    {
+     "fips": "NI",
+     "name": "Nigeria",
+     "mentions": 15
+    }
+   ]
+  },
+  {
+   "year": 1998,
+   "mentions": 877,
+   "per_1000_articles": 7.482,
+   "share": 0.0197,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 376
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 203
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 55
+    },
+    {
+     "fips": "JA",
+     "name": "Japan",
+     "mentions": 35
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 15
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 11
+    }
+   ]
+  },
+  {
+   "year": 1988,
+   "mentions": 724,
+   "per_1000_articles": 6.177,
+   "share": 0.0163,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 476
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 80
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 43
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 8
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 4
+    },
+    {
+     "fips": "EI",
+     "name": "Ireland",
+     "mentions": 4
+    }
+   ]
+  },
+  {
+   "year": 1997,
+   "mentions": 699,
+   "per_1000_articles": 5.964,
+   "share": 0.0157,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 346
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 66
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 57
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 44
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 14
+    },
+    {
+     "fips": "NI",
+     "name": "Nigeria",
+     "mentions": 11
+    }
+   ]
+  },
+  {
+   "year": 1976,
+   "mentions": 666,
+   "per_1000_articles": 5.682,
+   "share": 0.015,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 409
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 45
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 14
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 11
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 10
+    },
+    {
+     "fips": "EI",
+     "name": "Ireland",
+     "mentions": 8
+    }
+   ]
+  },
+  {
+   "year": 1999,
+   "mentions": 533,
+   "per_1000_articles": 4.547,
+   "share": 0.012,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 239
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 59
+    },
+    {
+     "fips": "NI",
+     "name": "Nigeria",
+     "mentions": 45
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 41
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 22
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 19
+    }
+   ]
+  },
+  {
+   "year": 1991,
+   "mentions": 516,
+   "per_1000_articles": 4.402,
+   "share": 0.0116,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 302
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 43
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 20
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 12
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 12
+    },
+    {
+     "fips": "NI",
+     "name": "Nigeria",
+     "mentions": 10
+    }
+   ]
+  },
+  {
+   "year": 1992,
+   "mentions": 484,
+   "per_1000_articles": 4.129,
+   "share": 0.0109,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 249
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 40
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 24
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 17
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 9
+    },
+    {
+     "fips": "SP",
+     "name": "Spain",
+     "mentions": 8
+    }
+   ]
+  },
+  {
+   "year": 1989,
+   "mentions": 436,
+   "per_1000_articles": 3.72,
+   "share": 0.0098,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 202
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 60
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 42
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 28
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 7
+    },
+    {
+     "fips": "RP",
+     "name": "Philippines",
+     "mentions": 5
+    }
+   ]
+  },
+  {
+   "year": 1994,
+   "mentions": 433,
+   "per_1000_articles": 3.694,
+   "share": 0.0097,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 243
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 51
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 34
+    },
+    {
+     "fips": "CH",
+     "name": "China",
+     "mentions": 16
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 14
+    },
+    {
+     "fips": "KS",
+     "name": "South Korea",
+     "mentions": 6
+    }
+   ]
+  },
+  {
+   "year": 1980,
+   "mentions": 428,
+   "per_1000_articles": 3.652,
+   "share": 0.0096,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 261
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 36
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 22
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 6
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 5
+    },
+    {
+     "fips": "EI",
+     "name": "Ireland",
+     "mentions": 4
+    }
+   ]
+  },
+  {
+   "year": 1984,
+   "mentions": 425,
+   "per_1000_articles": 3.626,
+   "share": 0.0095,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 190
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 42
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 31
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 11
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 11
+    },
+    {
+     "fips": "NZ",
+     "name": "New Zealand",
+     "mentions": 5
+    }
+   ]
+  },
+  {
+   "year": 1975,
+   "mentions": 412,
+   "per_1000_articles": 3.515,
+   "share": 0.0093,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 174
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 20
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 9
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 8
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 5
+    },
+    {
+     "fips": "BU",
+     "name": "Bulgaria",
+     "mentions": 3
+    }
+   ]
+  },
+  {
+   "year": 1990,
+   "mentions": 402,
+   "per_1000_articles": 3.43,
+   "share": 0.009,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 211
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 34
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 31
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 15
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 5
+    },
+    {
+     "fips": "MY",
+     "name": "Malaysia",
+     "mentions": 5
+    }
+   ]
+  },
+  {
+   "year": 1987,
+   "mentions": 384,
+   "per_1000_articles": 3.276,
+   "share": 0.0086,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 200
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 80
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 20
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 10
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 5
+    },
+    {
+     "fips": "RP",
+     "name": "Philippines",
+     "mentions": 4
+    }
+   ]
+  },
+  {
+   "year": 1986,
+   "mentions": 374,
+   "per_1000_articles": 3.191,
+   "share": 0.0084,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 185
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 54
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 29
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 13
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 11
+    },
+    {
+     "fips": "RP",
+     "name": "Philippines",
+     "mentions": 5
+    }
+   ]
+  },
+  {
+   "year": 1974,
+   "mentions": 371,
+   "per_1000_articles": 3.165,
+   "share": 0.0083,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 239
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 35
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 18
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 13
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 4
+    },
+    {
+     "fips": "EI",
+     "name": "Ireland",
+     "mentions": 4
+    }
+   ]
+  },
+  {
+   "year": 1993,
+   "mentions": 363,
+   "per_1000_articles": 3.097,
+   "share": 0.0082,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 163
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 39
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 31
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 15
+    },
+    {
+     "fips": "NI",
+     "name": "Nigeria",
+     "mentions": 13
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 12
+    }
+   ]
+  },
+  {
+   "year": 1985,
+   "mentions": 362,
+   "per_1000_articles": 3.088,
+   "share": 0.0081,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 217
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 33
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 21
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 9
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 8
+    },
+    {
+     "fips": "EI",
+     "name": "Ireland",
+     "mentions": 5
+    }
+   ]
+  },
+  {
+   "year": 1973,
+   "mentions": 355,
+   "per_1000_articles": 3.029,
+   "share": 0.008,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 203
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 50
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 19
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 10
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 6
+    }
+   ]
+  },
+  {
+   "year": 1981,
+   "mentions": 344,
+   "per_1000_articles": 2.935,
+   "share": 0.0077,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 214
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 44
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 15
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 8
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 7
+    },
+    {
+     "fips": "EI",
+     "name": "Ireland",
+     "mentions": 5
+    }
+   ]
+  },
+  {
+   "year": 1982,
+   "mentions": 327,
+   "per_1000_articles": 2.79,
+   "share": 0.0073,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 181
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 22
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 15
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 12
+    },
+    {
+     "fips": "AS",
+     "name": "Australia",
+     "mentions": 6
+    },
+    {
+     "fips": "NI",
+     "name": "Nigeria",
+     "mentions": 5
+    }
+   ]
+  },
+  {
+   "year": 1971,
+   "mentions": 308,
+   "per_1000_articles": 2.628,
+   "share": 0.0069,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 219
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 22
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 12
+    },
+    {
+     "fips": "KS",
+     "name": "South Korea",
+     "mentions": 3
+    },
+    {
+     "fips": "MY",
+     "name": "Malaysia",
+     "mentions": 3
+    }
+   ]
+  },
+  {
+   "year": 1966,
+   "mentions": 307,
+   "per_1000_articles": 2.619,
+   "share": 0.0069,
+   "invoked_by": [
+    {
+     "fips": "US",
+     "name": "United States",
+     "mentions": 130
+    },
+    {
+     "fips": "UK",
+     "name": "United Kingdom",
+     "mentions": 22
+    },
+    {
+     "fips": "IN",
+     "name": "India",
+     "mentions": 10
+    },
+    {
+     "fips": "EI",
+     "name": "Ireland",
+     "mentions": 5
+    },
+    {
+     "fips": "CA",
+     "name": "Canada",
+     "mentions": 3
+    },
+    {
+     "fips": "GM",
+     "name": "Germany",
+     "mentions": 3
+    }
+   ]
+  }
+ ],
+ "age_profile": [
+  {
+   "from": 0,
+   "to": 10,
+   "mentions": 0,
+   "share": 0.0
+  },
+  {
+   "from": 11,
+   "to": 25,
+   "mentions": 19574,
+   "share": 0.4398
+  },
+  {
+   "from": 26,
+   "to": 50,
+   "mentions": 13364,
+   "share": 0.3003
+  },
+  {
+   "from": 51,
+   "to": 100,
+   "mentions": 8355,
+   "share": 0.1877
+  },
+  {
+   "from": 101,
+   "to": 200,
+   "mentions": 3026,
+   "share": 0.068
+  },
+  {
+   "from": 201,
+   "to": null,
+   "mentions": 187,
+   "share": 0.0042
+  }
+ ],
+ "exact_dates_top": [
+  {
+   "date": "2006-09-01",
+   "mentions": 306
+  },
+  {
+   "date": "2006-10-24",
+   "mentions": 304
+  },
+  {
+   "date": "1996-09-07",
+   "mentions": 148
+  },
+  {
+   "date": "2004-12-17",
+   "mentions": 126
+  },
+  {
+   "date": "2005-04-15",
+   "mentions": 126
+  },
+  {
+   "date": "2001-09-11",
+   "mentions": 70
+  },
+  {
+   "date": "1973-03-17",
+   "mentions": 46
+  },
+  {
+   "date": "1966-05-30",
+   "mentions": 45
+  },
+  {
+   "date": "1952-05-18",
+   "mentions": 44
+  },
+  {
+   "date": "2014-07-17",
+   "mentions": 41
+  },
+  {
+   "date": "1960-06-27",
+   "mentions": 33
+  },
+  {
+   "date": "1975-11-20",
+   "mentions": 32
+  },
+  {
+   "date": "1975-12-06",
+   "mentions": 32
+  },
+  {
+   "date": "1976-03-11",
+   "mentions": 32
+  },
+  {
+   "date": "1976-06-12",
+   "mentions": 32
+  },
+  {
+   "date": "2011-01-02",
+   "mentions": 28
+  },
+  {
+   "date": "2002-06-07",
+   "mentions": 23
+  },
+  {
+   "date": "2010-06-11",
+   "mentions": 23
+  },
+  {
+   "date": "1989-10-22",
+   "mentions": 18
+  },
+  {
+   "date": "1968-07-01",
+   "mentions": 15
+  },
+  {
+   "date": "2006-10-13",
+   "mentions": 15
+  },
+  {
+   "date": "2011-03-02",
+   "mentions": 14
+  },
+  {
+   "date": "1944-06-05",
+   "mentions": 13
+  },
+  {
+   "date": "1994-06-18",
+   "mentions": 13
+  },
+  {
+   "date": "1996-08-15",
+   "mentions": 13
+  },
+  {
+   "date": "2011-02-14",
+   "mentions": 13
+  },
+  {
+   "date": "1881-02-02",
+   "mentions": 12
+  },
+  {
+   "date": "2005-08-11",
+   "mentions": 12
+  },
+  {
+   "date": "2011-03-10",
+   "mentions": 12
+  },
+  {
+   "date": "2011-08-24",
+   "mentions": 12
+  },
+  {
+   "date": "1920-08-20",
+   "mentions": 11
+  },
+  {
+   "date": "1998-02-24",
+   "mentions": 11
+  },
+  {
+   "date": "2011-11-08",
+   "mentions": 11
+  },
+  {
+   "date": "1919-06-04",
+   "mentions": 10
+  },
+  {
+   "date": "1945-08-06",
+   "mentions": 9
+  },
+  {
+   "date": "1965-10-26",
+   "mentions": 9
+  },
+  {
+   "date": "2010-02-13",
+   "mentions": 9
+  },
+  {
+   "date": "1961-10-27",
+   "mentions": 8
+  },
+  {
+   "date": "1996-09-13",
+   "mentions": 8
+  },
+  {
+   "date": "1997-12-05",
+   "mentions": 8
+  },
+  {
+   "date": "2007-08-23",
+   "mentions": 8
+  },
+  {
+   "date": "1936-09-07",
+   "mentions": 7
+  },
+  {
+   "date": "1939-09-01",
+   "mentions": 7
+  },
+  {
+   "date": "1997-05-29",
+   "mentions": 7
+  },
+  {
+   "date": "1998-01-16",
+   "mentions": 7
+  },
+  {
+   "date": "1998-03-19",
+   "mentions": 7
+  },
+  {
+   "date": "1894-06-28",
+   "mentions": 6
+  },
+  {
+   "date": "1937-02-21",
+   "mentions": 6
+  },
+  {
+   "date": "1945-09-02",
+   "mentions": 6
+  },
+  {
+   "date": "1946-09-28",
+   "mentions": 6
+  },
+  {
+   "date": "1976-08-14",
+   "mentions": 6
+  },
+  {
+   "date": "1994-06-29",
+   "mentions": 6
+  },
+  {
+   "date": "1996-09-01",
+   "mentions": 6
+  },
+  {
+   "date": "1998-10-18",
+   "mentions": 6
+  },
+  {
+   "date": "2014-10-14",
+   "mentions": 6
+  },
+  {
+   "date": "1934-08-05",
+   "mentions": 5
+  },
+  {
+   "date": "1941-12-07",
+   "mentions": 5
+  },
+  {
+   "date": "1944-06-06",
+   "mentions": 5
+  },
+  {
+   "date": "1978-01-15",
+   "mentions": 5
+  },
+  {
+   "date": "1978-11-01",
+   "mentions": 5
+  },
+  {
+   "date": "2000-02-04",
+   "mentions": 5
+  },
+  {
+   "date": "2014-06-25",
+   "mentions": 5
+  },
+  {
+   "date": "2014-10-21",
+   "mentions": 5
+  },
+  {
+   "date": "1882-09-05",
+   "mentions": 4
+  },
+  {
+   "date": "1942-09-01",
+   "mentions": 4
+  },
+  {
+   "date": "1950-03-09",
+   "mentions": 4
+  },
+  {
+   "date": "1961-09-01",
+   "mentions": 4
+  },
+  {
+   "date": "1973-09-11",
+   "mentions": 4
+  },
+  {
+   "date": "1976-08-13",
+   "mentions": 4
+  },
+  {
+   "date": "1978-09-01",
+   "mentions": 4
+  },
+  {
+   "date": "1980-12-08",
+   "mentions": 4
+  },
+  {
+   "date": "1985-08-31",
+   "mentions": 4
+  },
+  {
+   "date": "1985-09-01",
+   "mentions": 4
+  },
+  {
+   "date": "1999-05-14",
+   "mentions": 4
+  },
+  {
+   "date": "2001-09-01",
+   "mentions": 4
+  },
+  {
+   "date": "2001-10-07",
+   "mentions": 4
+  },
+  {
+   "date": "2006-08-31",
+   "mentions": 4
+  },
+  {
+   "date": "2011-09-21",
+   "mentions": 4
+  },
+  {
+   "date": "2014-05-20",
+   "mentions": 4
+  },
+  {
+   "date": "1922-08-30",
+   "mentions": 3
+  },
+  {
+   "date": "1931-03-05",
+   "mentions": 3
+  },
+  {
+   "date": "1944-09-01",
+   "mentions": 3
+  },
+  {
+   "date": "1946-01-19",
+   "mentions": 3
+  },
+  {
+   "date": "1947-08-15",
+   "mentions": 3
+  },
+  {
+   "date": "1951-08-31",
+   "mentions": 3
+  },
+  {
+   "date": "1964-02-07",
+   "mentions": 3
+  },
+  {
+   "date": "1984-06-14",
+   "mentions": 3
+  },
+  {
+   "date": "1986-08-25",
+   "mentions": 3
+  },
+  {
+   "date": "1988-09-01",
+   "mentions": 3
+  },
+  {
+   "date": "1990-04-08",
+   "mentions": 3
+  },
+  {
+   "date": "1992-05-28",
+   "mentions": 3
+  },
+  {
+   "date": "1992-06-08",
+   "mentions": 3
+  },
+  {
+   "date": "1994-09-01",
+   "mentions": 3
+  },
+  {
+   "date": "1995-06-25",
+   "mentions": 3
+  },
+  {
+   "date": "1996-09-02",
+   "mentions": 3
+  },
+  {
+   "date": "1997-08-10",
+   "mentions": 3
+  },
+  {
+   "date": "1997-08-31",
+   "mentions": 3
+  },
+  {
+   "date": "2002-09-01",
+   "mentions": 3
+  },
+  {
+   "date": "2003-02-03",
+   "mentions": 3
+  },
+  {
+   "date": "2004-07-18",
+   "mentions": 3
+  },
+  {
+   "date": "2004-12-04",
+   "mentions": 3
+  },
+  {
+   "date": "2007-01-05",
+   "mentions": 3
+  },
+  {
+   "date": "2007-02-01",
+   "mentions": 3
+  },
+  {
+   "date": "2008-08-26",
+   "mentions": 3
+  },
+  {
+   "date": "2009-04-01",
+   "mentions": 3
+  },
+  {
+   "date": "2010-07-10",
+   "mentions": 3
+  },
+  {
+   "date": "2011-02-01",
+   "mentions": 3
+  },
+  {
+   "date": "2011-09-11",
+   "mentions": 3
+  },
+  {
+   "date": "2011-10-22",
+   "mentions": 3
+  },
+  {
+   "date": "2012-04-10",
+   "mentions": 3
+  },
+  {
+   "date": "2012-10-20",
+   "mentions": 3
+  },
+  {
+   "date": "2013-06-28",
+   "mentions": 3
+  },
+  {
+   "date": "2014-10-22",
+   "mentions": 3
+  },
+  {
+   "date": "1815-06-16",
+   "mentions": 2
+  },
+  {
+   "date": "1882-05-12",
+   "mentions": 2
+  },
+  {
+   "date": "1907-08-02",
+   "mentions": 2
+  },
+  {
+   "date": "1916-04-15",
+   "mentions": 2
+  },
+  {
+   "date": "1926-08-20",
+   "mentions": 2
+  },
+  {
+   "date": "1926-09-03",
+   "mentions": 2
+  },
+  {
+   "date": "1927-12-25",
+   "mentions": 2
+  },
+  {
+   "date": "1928-11-10",
+   "mentions": 2
+  },
+  {
+   "date": "1931-10-02",
+   "mentions": 2
+  },
+  {
+   "date": "1932-11-12",
+   "mentions": 2
+  },
+  {
+   "date": "1934-05-23",
+   "mentions": 2
+  },
+  {
+   "date": "1939-05-06",
+   "mentions": 2
+  },
+  {
+   "date": "1942-07-21",
+   "mentions": 2
+  },
+  {
+   "date": "1945-05-08",
+   "mentions": 2
+  },
+  {
+   "date": "1945-08-17",
+   "mentions": 2
+  },
+  {
+   "date": "1945-08-19",
+   "mentions": 2
+  },
+  {
+   "date": "1948-06-22",
+   "mentions": 2
+  },
+  {
+   "date": "1948-10-17",
+   "mentions": 2
+  },
+  {
+   "date": "1949-11-05",
+   "mentions": 2
+  },
+  {
+   "date": "1949-11-21",
+   "mentions": 2
+  },
+  {
+   "date": "1950-05-02",
+   "mentions": 2
+  },
+  {
+   "date": "1952-02-13",
+   "mentions": 2
+  },
+  {
+   "date": "1952-03-29",
+   "mentions": 2
+  },
+  {
+   "date": "1953-03-09",
+   "mentions": 2
+  },
+  {
+   "date": "1956-08-09",
+   "mentions": 2
+  },
+  {
+   "date": "1956-09-01",
+   "mentions": 2
+  },
+  {
+   "date": "1960-09-02",
+   "mentions": 2
+  },
+  {
+   "date": "1960-09-19",
+   "mentions": 2
+  },
+  {
+   "date": "1962-11-27",
+   "mentions": 2
+  },
+  {
+   "date": "1966-04-25",
+   "mentions": 2
+  },
+  {
+   "date": "1966-09-08",
+   "mentions": 2
+  },
+  {
+   "date": "1968-05-13",
+   "mentions": 2
+  },
+  {
+   "date": "1974-04-05",
+   "mentions": 2
+  },
+  {
+   "date": "1974-08-01",
+   "mentions": 2
+  },
+  {
+   "date": "1976-08-31",
+   "mentions": 2
+  },
+  {
+   "date": "1977-01-09",
+   "mentions": 2
+  },
+  {
+   "date": "1977-09-11",
+   "mentions": 2
+  },
+  {
+   "date": "1977-09-12",
+   "mentions": 2
+  },
+  {
+   "date": "1978-08-31",
+   "mentions": 2
+  },
+  {
+   "date": "1980-07-24",
+   "mentions": 2
+  },
+  {
+   "date": "1980-12-09",
+   "mentions": 2
+  },
+  {
+   "date": "1981-12-08",
+   "mentions": 2
+  },
+  {
+   "date": "1984-02-13",
+   "mentions": 2
+  },
+  {
+   "date": "1985-02-01",
+   "mentions": 2
+  },
+  {
+   "date": "1985-03-01",
+   "mentions": 2
+  },
+  {
+   "date": "1986-04-26",
+   "mentions": 2
+  },
+  {
+   "date": "1986-05-10",
+   "mentions": 2
+  },
+  {
+   "date": "1986-11-07",
+   "mentions": 2
+  },
+  {
+   "date": "1988-03-23",
+   "mentions": 2
+  },
+  {
+   "date": "1988-10-22",
+   "mentions": 2
+  },
+  {
+   "date": "1989-01-06",
+   "mentions": 2
+  },
+  {
+   "date": "1990-04-19",
+   "mentions": 2
+  },
+  {
+   "date": "1990-04-27",
+   "mentions": 2
+  },
+  {
+   "date": "1991-08-27",
+   "mentions": 2
+  },
+  {
+   "date": "1991-11-04",
+   "mentions": 2
+  },
+  {
+   "date": "1991-11-24",
+   "mentions": 2
+  },
+  {
+   "date": "1991-12-03",
+   "mentions": 2
+  },
+  {
+   "date": "1993-09-08",
+   "mentions": 2
+  },
+  {
+   "date": "1994-09-02",
+   "mentions": 2
+  },
+  {
+   "date": "1995-06-02",
+   "mentions": 2
+  },
+  {
+   "date": "1995-06-18",
+   "mentions": 2
+  },
+  {
+   "date": "1995-09-01",
+   "mentions": 2
+  },
+  {
+   "date": "1995-09-02",
+   "mentions": 2
+  },
+  {
+   "date": "1995-09-29",
+   "mentions": 2
+  },
+  {
+   "date": "1996-11-12",
+   "mentions": 2
+  },
+  {
+   "date": "1997-04-03",
+   "mentions": 2
+  },
+  {
+   "date": "1997-06-02",
+   "mentions": 2
+  },
+  {
+   "date": "1997-07-18",
+   "mentions": 2
+  },
+  {
+   "date": "1997-09-01",
+   "mentions": 2
+  },
+  {
+   "date": "1998-07-12",
+   "mentions": 2
+  },
+  {
+   "date": "1998-12-23",
+   "mentions": 2
+  },
+  {
+   "date": "1999-04-20",
+   "mentions": 2
+  },
+  {
+   "date": "1999-12-31",
+   "mentions": 2
+  },
+  {
+   "date": "2000-09-15",
+   "mentions": 2
+  },
+  {
+   "date": "2000-09-25",
+   "mentions": 2
+  },
+  {
+   "date": "2000-12-22",
+   "mentions": 2
+  },
+  {
+   "date": "2001-06-15",
+   "mentions": 2
+  },
+  {
+   "date": "2001-08-27",
+   "mentions": 2
+  },
+  {
+   "date": "2001-09-17",
+   "mentions": 2
+  },
+  {
+   "date": "2001-09-28",
+   "mentions": 2
+  },
+  {
+   "date": "2001-10-11",
+   "mentions": 2
+  },
+  {
+   "date": "2002-02-09",
+   "mentions": 2
+  },
+  {
+   "date": "2002-07-22",
+   "mentions": 2
+  },
+  {
+   "date": "2002-08-28",
+   "mentions": 2
+  },
+  {
+   "date": "2003-02-05",
+   "mentions": 2
+  },
+  {
+   "date": "2003-06-27",
+   "mentions": 2
+  },
+  {
+   "date": "2004-01-21",
+   "mentions": 2
+  }
+ ],
+ "tracked_events": null,
+ "law_test": {
+  "status": "pending",
+  "hypothesis": "Candia et al. 2019, biexponential decay of collective attention",
+  "reason": "the tracked-event register is not founded yet: it needs 30 archived days so that no single day's anniversaries can define it, and the archive holds 19",
+  "register_days_needed": 30,
+  "register_days_have": 19,
+  "first_possible": null
+ },
+ "stats": {
+  "mentions_raw": 110020,
+  "articles_scanned": 117212,
+  "articles_with_dates": 44763,
+  "articles_with_dates_share": 0.3819,
+  "articles_country_mapped": 39532,
+  "mentions_kept": 44506,
+  "mentions_removed": {
+   "a_no_year_resolution": 55695,
+   "c_per_article_dedup": 9819
+  },
+  "resolutions": {
+   "full_date": 4239,
+   "month_day_no_year": 55695,
+   "month_year": 2526,
+   "year_only": 47560
+  },
+  "max_year_observed": 2014,
+  "slots_expected": 96,
+  "slots_fetched": 96,
+  "slots_missing": [],
+  "window": "20260901104500 .. 20260902103000 UTC"
+ },
+ "source": {
+  "name": "GDELT Project — GKG 2.1 raw files (V2.1ENHANCEDDATES) + sourcesbycountry lookup",
+  "url": "https://www.gdeltproject.org/",
+  "license": "Open with attribution (citation + link)",
+  "retrieved_utc": "2026-09-02T10:48:31+00:00"
+ }
+}

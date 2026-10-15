@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Read by the Moon</title>
+<style>
+  html, body { margin: 0; background: #0a0b0f; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; width: 1100px; height: 800px; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = Math.max(1, window.devicePixelRatio || 1);
+  cv.width = W * dpr; cv.height = H * dpr;
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var days = window.VIEWS.days;
+  var max = Math.max.apply(null, days);
+  var min = Math.min.apply(null, days);
+
+  // Mean synodic month, anchored on the new moon of 2024-12-30 22:27 UTC.
+  var S = 29.530589;
+  var NEW0 = -(1 + 1.5 / 24 + 27 / 1440); // days before 2025-01-01 00:00 UTC
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function dateOf(i) {
+    var d = new Date(Date.UTC(2025, 0, 1 + i));
+    return d.getUTCDate() + ' ' + MON[d.getUTCMonth()];
+  }
+  function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  // Layout
+  var left = 118, right = 46, top = 132, rowH = 48;
+  var cw = (W - left - right) / S;
+  var RMAX = 15.5;
+  var rows = Math.floor((365 + 0.5 - NEW0) / S) + 1;
+
+  g.fillStyle = '#0a0b0f';
+  g.fillRect(0, 0, W, H);
+
+  // Title
+  g.textBaseline = 'alphabetic';
+  g.fillStyle = '#e9e4d6';
+  g.font = '300 26px Georgia, "Times New Roman", serif';
+  g.fillText('Read by the Moon', left, 58);
+  g.fillStyle = '#7d7a72';
+  g.font = '13px Georgia, "Times New Roman", serif';
+  g.fillText('Daily human views of the English Wikipedia article “Moon”, 2025, set out lunation by lunation.', left, 82);
+  g.fillText('Each day is drawn as that night’s moon; its size is the number of readers.', left, 100);
+
+  // Column guides: phases
+  var guides = [[0, 'new'], [S / 4, 'first quarter'], [S / 2, 'full'], [3 * S / 4, 'last quarter'], [S, 'new']];
+  g.font = 'italic 12px Georgia, "Times New Roman", serif';
+  g.textAlign = 'center';
+  guides.forEach(function (q) {
+    var x = left + q[0] * cw;
+    g.strokeStyle = q[1] === 'full' ? 'rgba(233,228,214,0.10)' : 'rgba(233,228,214,0.05)';
+    g.lineWidth = 1;
+    g.beginPath();
+    g.moveTo(Math.round(x) + 0.5, top - 14);
+    g.lineTo(Math.round(x) + 0.5, top + (rows - 1) * rowH + 22);
+    g.stroke();
+    g.fillStyle = '#6f6c65';
+    g.fillText(q[1], x, top - 20);
+  });
+
+  // Row labels: date of each new moon
+  g.textAlign = 'right';
+  g.font = '12px Georgia, "Times New Roman", serif';
+  for (var k = 0; k < rows; k++) {
+    var nm = NEW0 + k * S;
+    var d = new Date(Date.UTC(2025, 0, 1) + nm * 86400000);
+    g.fillStyle = '#6f6c65';
+    g.fillText(d.getUTCDate() + ' ' + MON[d.getUTCMonth()] + (d.getUTCFullYear() !== 2025 ? ' ' + d.getUTCFullYear() : ''),
+      left - 22, top + k * rowH + 4);
+  }
+
+  // A moon at a given phase (p in [0,1): 0 new, 0.5 full), lit side as seen from the north.
+  function moon(cx, cy, r, p, lit, dark) {
+    g.beginPath();
+    g.arc(cx, cy, r, 0, Math.PI * 2);
+    g.fillStyle = dark;
+    g.fill();
+
+    var n = 48, c = Math.cos(2 * Math.PI * p), side = p < 0.5 ? 1 : -1;
+    g.beginPath();
+    for (var i = 0; i <= n; i++) {           // limb, top to bottom
+      var t = -Math.PI / 2 + Math.PI * i / n;
+      var x = side * r * Math.cos(t), y = r * Math.sin(t);
+      if (i === 0) g.moveTo(cx + x, cy + y); else g.lineTo(cx + x, cy + y);
+    }
+    for (var j = n; j >= 0; j--) {           // terminator, bottom to top
+      var u = -Math.PI / 2 + Math.PI * j / n;
+      g.lineTo(cx + side * c * r * Math.cos(u), cy + r * Math.sin(u));
+    }
+    g.closePath();
+    g.fillStyle = lit;
+    g.fill();
+  }
+
+  // Days
+  var order = days.map(function (v, i) { return i; }).sort(function (a, b) { return days[a] - days[b]; });
+  var pos = [];
+  order.forEach(function (i) {
+    var t = i + 0.5 - NEW0;                 // noon of the day, days since first new moon
+    var k = Math.floor(t / S), age = t - k * S, p = age / S;
+    var v = days[i];
+    var r = RMAX * Math.sqrt(v / max);
+    var f = (v - min) / (max - min);        // 0..1
+    var a = 0.55 + 0.45 * Math.pow(f, 0.6);
+    var lit = 'rgba(' + Math.round(214 + 34 * f) + ',' + Math.round(206 + 30 * f) + ',' + Math.round(186 + 10 * f) + ',' + a.toFixed(3) + ')';
+    var cx = left + age * cw, cy = top + k * rowH;
+    pos[i] = [cx, cy, r];
+    moon(cx, cy, r, p, lit, 'rgba(120,124,140,0.13)');
+  });
+
+  // Name the brightest days
+  var top5 = [];
+  days.map(function (v, i) { return i; }).sort(function (a, b) { return days[b] - days[a]; }).forEach(function (i) {
+    if (top5.length < 5 && top5.every(function (j) { return Math.abs(j - i) > 2; })) top5.push(i);
+  });
+  g.textAlign = 'left';
+  top5.forEach(function (i) {
+    var P = pos[i];
+    var x = P[0] + P[2] + 5, y = P[1] - P[2] + 2;
+    g.strokeStyle = 'rgba(233,228,214,0.35)';
+    g.lineWidth = 0.75;
+    g.beginPath();
+    g.moveTo(P[0] + P[2] * 0.72, P[1] - P[2] * 0.72);
+    g.lineTo(x + 2, y - 4);
+    g.lineTo(x + 6, y - 4);
+    g.stroke();
+    g.fillStyle = '#cfc9b9';
+    g.font = '11px Georgia, "Times New Roman", serif';
+    g.fillText(dateOf(i) + '  ' + fmt(days[i]), x + 9, y);
+  });
+
+  // Scale key
+  var ky = H - 26;
+  g.font = '12px Georgia, "Times New Roman", serif';
+  g.fillStyle = '#6f6c65';
+  g.textAlign = 'left';
+  var kx = left;
+  [[min, 'fewest'], [5800, ''], [max, 'most']].forEach(function (s, idx) {
+    var r = RMAX * Math.sqrt(s[0] / max);
+    moon(kx + r, ky - 4, r, 0.5, 'rgba(226,218,196,0.85)', 'rgba(0,0,0,0)');
+    g.fillStyle = '#6f6c65';
+    var lab = fmt(Math.round(s[0] / 100) * 100) + (s[1] ? ' readers — ' + s[1] : ' readers');
+    g.fillText(lab, kx + 2 * r + 8, ky);
+    kx += 2 * r + 8 + g.measureText(lab).width + 26;
+  });
+  g.textAlign = 'right';
+  g.fillText('Phases from a mean synodic month of 29.53 days.  Data: Wikimedia pageviews, CC0.', W - right, ky);
+})();
+</script>
+</body>
+</html>

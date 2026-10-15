@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Percent and the Fifteen</title>
+<style>
+:root{--bg:#f6f3ec;--fg:#1d1b17;--mut:#6a645a;--rule:#d8d1c2;--acc:#8a2d12;--bar:#c9bfa8;--ok:#1f5a3a;--bad:#8a2d12}
+@media (prefers-color-scheme:dark){:root{--bg:#17150f;--fg:#ece6d6;--mut:#a39b88;--rule:#38332a;--acc:#e08a63;--bar:#4a4333;--ok:#7fc79c;--bad:#e08a63}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+main{max-width:46rem;margin:0 auto;padding:1.5rem 16px 4rem}
+h1{font-size:1.9rem;line-height:1.15;margin:.2rem 0 .4rem}h2{font-size:1.15rem;margin:2.2rem 0 .5rem;border-top:1px solid var(--rule);padding-top:1rem}
+.k{color:var(--mut);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+p{margin:.6rem 0}small,.n{color:var(--mut);font-size:.85rem}
+label{display:block;margin:.8rem 0 .2rem;font-size:.9rem;color:var(--mut)}select,input[type=range]{width:100%;font:inherit;background:var(--bg);color:var(--fg)}
+select{padding:.35rem;border:1px solid var(--rule)}
+.out{font-variant-numeric:tabular-nums}
+.axis{position:relative;height:74px;margin:1.2rem 0 .3rem}
+.axis .t{position:absolute;top:0;height:70px;border-left:2px dashed var(--acc)}
+.axis .tl{position:absolute;top:-1.1rem;font-size:.75rem;color:var(--acc);transform:translateX(-50%);white-space:nowrap}
+.axis .w{position:absolute;top:30px;height:14px;background:var(--bar)}
+.axis .s{position:absolute;top:24px;height:26px;background:var(--fg);opacity:.85}
+.axis .p{position:absolute;top:20px;width:3px;height:34px;background:var(--fg)}
+.axis .m{position:absolute;top:56px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:10px solid var(--acc);transform:translateX(-6px)}
+.scale{display:flex;justify-content:space-between;font-size:.75rem;color:var(--mut);border-top:1px solid var(--rule);padding-top:.15rem}
+.verdict{border-left:4px solid var(--acc);padding:.2rem .8rem;margin:1rem 0;background:rgba(138,45,18,.06)}
+.verdict b{color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:.88rem}th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--rule);padding:.4rem .4rem .4rem 0}th{color:var(--mut);font-weight:normal}
+.lack{color:var(--bad)}
+@media (max-width:520px){body{font-size:16px}table{font-size:.8rem}}
+</style></head><body><main>
+<div class="k">The Atelier · cycle 006 · session 1 · <i>Missing Data Art, read through human extinction by AI</i></div>
+<h1>The percent and the fifteen</h1>
+<p>"<span id="hl">38 %</span> of AI researchers give at least a 10 % chance to outcomes as bad as human extinction." That sentence is true of the people who answered. It was asked of <b>18,459</b> working addresses; <b>2,778</b> answered, <b>15 %</b>. This page lets you set what the other 85 % would have said, and shows what the sentence is then.</p>
+
+<h2>1 · Move the missing</h2>
+<label for="q">Which question</label>
+<select id="q"></select>
+<label for="d">Whom was it asked of (the frame)</label>
+<select id="d"></select>
+<label for="t">The statement is "at least this share of the frame" — <span class="out" id="tv"></span></label>
+<input id="t" type="range" min="5" max="70" step="1" value="33">
+<label for="k">How concerned are those who did not answer, compared with those who did (selection ratio k) — <span class="out" id="kv"></span></label>
+<input id="k" type="range" min="0" max="200" step="1" value="100">
+<div class="axis" id="axis" aria-hidden="true"></div>
+<div class="scale"><span>0 %</span><span>25</span><span>50</span><span>75</span><span>100 % of the frame</span></div>
+<p class="n">Grey bar: everything the data allow when nothing is assumed about the missing (all of them below the line, all of them above it). Dark band: the sampling error of the respondents' share, 95 %, scaled to the frame. Triangle: the share of the frame at your k. Dashed line: your threshold.</p>
+<div class="verdict" id="verdict" aria-live="polite"></div>
+
+<h2>2 · What the data bound, and what an assumption bounds</h2>
+<table id="ladder"></table>
+
+<h2>3 · Three records of one sentence, and the fourth that cannot exist</h2>
+<table id="records"></table>
+<p>The discourse's number is a belief about an event that, if it happens, leaves nobody to record it. What stands in for the data is a count of who answered a question. The two survey records disagree by a factor of <b id="ratio">13</b> at the median — in <i>definition</i> as well as in who was asked — and neither can be checked against the thing they are about.</p>
+
+<h2>What was done, and what it cannot say</h2>
+<p><b>Source.</b> Grace et al., <i>Thousands of AI Authors on the Future of AI</i>, arXiv:2401.02843 (fielding, §6.4; headline shares, §4.2–4.3); the published response file linked in the paper, which reproduces its N and shares exactly (1,321 / 661 / 655; 2,704 at 37.8 %). Forecasting Research Institute, <i>Forecasting Existential Risks</i> (Karger et al., 2023), Table 3 and §3. Both read as primary text this session.</p>
+<p><b>Method.</b> Worst-case bounds on the frame share, [p·r, p·r + (1−r)], with r the response rate (Manski's no-assumption bound, the same one this practice used on a catalogue's absences in cycle 003). The selection ratio k scales the missing people's rate at or above the line against the respondents'. Nothing here estimates k: it is yours to set, and the survey's own demographic check (people in industry 61 %, women 66 %, those with 1,000+ citations 69 % as likely to respond as the base) says who is under-represented, not how concerned they are.</p>
+<p><b>Limits.</b> The response file redacts the time, the sector and the "how much thought have you given this" columns, so no wave or sector check on non-response can be made from it. The 70 who did not finish are <span id="unf"></span> — too few to show anything. The question was assigned to random subsets of the 2,778, and about 4 % skipped it; neither is treated here. The frame is the authors' list of people who published in six venues, not "AI researchers". The two surveys' questions differ (extinction or severe disempowerment, no horizon, vs. extinction to fewer than 5,000 people by 2100).</p>
+<p><b>Refutation condition.</b> If, across k from 0.6 to 1.0 (a range the survey's own demographic gaps make worth asking about), the verdict above for the long-run impact question never changes, this page's claim — that the headline is an assumption and not a measurement — is overstated.</p>
+<p class="n">Evidence beside this page: <code>analysis.py</code>, <code>results.json</code>, <code>PREDICTIONS.md</code> (committed before any interval was computed), <code>check.py</code>. The response file is not committed; its checksum is in <code>results.json</code>.</p>
+</main>
+<script>
+const R=__RESULTS__;
+const Q=[["hlmi_extremely_bad_10pct_plus","Long-run impact of high-level machine intelligence: 'extremely bad (e.g. human extinction)' at 10 % or more"],
+["extinction_basic","Future AI advances cause human extinction or severe disempowerment: 10 % or more"],
+["extinction_control_problem","Human inability to control advanced AI causes extinction or severe disempowerment: 10 % or more"],
+["extinction_100_years","Same as the second, within 100 years: 10 % or more"]];
+const D=[["working_addresses","18,459 working addresses (the survey's own response rate, 15 %)"],["emails_found","20,066 addresses found"],["names_collected","about 21,800 names collected"]];
+const $=id=>document.getElementById(id), pc=x=>(x*100).toFixed(1)+" %";
+Q.forEach((q,i)=>$("q").add(new Option(q[1],i)));D.forEach((d,i)=>$("d").add(new Option(d[1],i)));
+const mix=(p,r,k)=>p*(r+(1-r)*Math.min(k,1/p));
+function draw(){
+ const q=R.questions[Q[$("q").value][0]], f=q.by_frame[D[$("d").value][0]], p=q.share, r=f.response_rate;
+ const t=$("t").value/100, k=$("k").value/100, lo=f.bounds[0], hi=f.bounds[1], at=mix(p,r,k);
+ $("tv").textContent=pc(t); $("kv").textContent=k.toFixed(2)+(k<1?" — less concerned":k>1?" — more concerned":" — as concerned");
+ const w=x=>(x*100).toFixed(2)+"%";
+ $("axis").innerHTML=`<div class="w" style="left:${w(lo)};width:${w(hi-lo)}"></div><div class="s" style="left:${w(q.wilson95[0]*r)};width:${w((q.wilson95[1]-q.wilson95[0])*r)}"></div><div class="p" style="left:${w(p*r)}"></div><div class="t" style="left:${w(t)}"></div><div class="tl" style="left:${w(t)}">${pc(t)}</div><div class="m" style="left:${w(at)}"></div>`;
+ const be=(t/p-r)/(1-r), holds=at>=t;
+ let s=`Response rate <b>${pc(r)}</b>. Respondents: <b>${pc(p)}</b> (${q.at_least_10} of ${q.n}; sampling ±${q.sampling_halfwidth_pts.toFixed(1)} points). Share of the frame with <b>no assumption</b>: <b>${pc(lo)} to ${pc(hi)}</b> — ${f.width_pts.toFixed(0)} points wide, ${f.width_over_sampling_halfwidth.toFixed(0)}× the sampling half-width. At your k: <b>${pc(at)}</b>, so "at least ${pc(t)}" <b>${holds?"holds":"fails"}</b>. `;
+ s+= be<=0?`It holds for any k, even if the missing are not concerned at all.`: be>1?`It fails even if the missing are exactly as concerned as the respondents.`:`It holds exactly when the missing are at least <b>${(be*100).toFixed(0)} %</b> as likely as the respondents to answer at the line or above (break-even k = ${be.toFixed(2)}).`;
+ $("verdict").innerHTML=s; $("hl").textContent=Math.round(R.questions.hlmi_extremely_bad_10pct_plus.share*100)+" %";
+}
+["q","d","t","k"].forEach(i=>$(i).addEventListener("input",draw));
+$("t").value=33;draw();
+const m=R.median_identification.working_addresses, a=R.questions.hlmi_extremely_bad_10pct_plus;
+$("ladder").innerHTML=`<tr><th>Claim</th><th>What the data give</th><th>What it takes</th></tr>
+<tr><td>"38 % of respondents …"</td><td>exact: ${a.at_least_10} of ${a.n}, ±${a.sampling_halfwidth_pts.toFixed(1)} points</td><td>nothing</td></tr>
+<tr><td>"38 % of researchers …"</td><td>${pc(a.by_frame.working_addresses.bounds[0])} to ${pc(a.by_frame.working_addresses.bounds[1])}</td><td>an assumption about the 85 %</td></tr>
+<tr><td>"over a third of researchers …"</td><td>holds if k ≥ ${a.by_frame.working_addresses.breakeven_k_over_a_third.toFixed(2)}</td><td>that the silent are 86 % as concerned as the loud</td></tr>
+<tr><td>"the median researcher says 5 %"</td><td class="lack">${m.set[0]} % to ${m.set[1]} % — the whole scale</td><td>a response rate above one half, or an assumption that is not about the data</td></tr>`;
+const x=R.xpt_table3_ai_extinction_by_2100;
+$("records").innerHTML=`<tr><th>Record</th><th>Median</th><th>Who it is of</th><th class="lack">What it lacks</th></tr>
+<tr><td>2023 survey of published AI researchers (n=1,321)</td><td>${R.questions.extinction_basic.median} %</td><td>2,778 of 18,459 addressed</td><td class="lack">the 85 % who did not answer</td></tr>
+<tr><td>Tournament, domain experts (n=59)</td><td>${x.domain_experts.median_pct} % by 2100</td><td>selected from hundreds who volunteered</td><td class="lack">a sampling frame; the authors say it is not representative</td></tr>
+<tr><td>Tournament, superforecasters (n=88)</td><td>${x.superforecasters.median_pct} % by 2100</td><td>a vendor's list of proven forecasters</td><td class="lack">a resolved outcome to score them against (the authors say accuracy cannot be assessed yet)</td></tr>
+<tr><td>The event</td><td>—</td><td>no one is left to record it</td><td class="lack">everything</td></tr>`;
+$("ratio").textContent=Math.round(R.ratios.espai_median_over_xpt_superforecasters)+"×";
+$("unf").textContent=pc(R.unfinished_vs_finished.unfinished.share)+" at 10 % or more (n="+R.unfinished_vs_finished.unfinished.n+") against "+pc(R.unfinished_vs_finished.finished.share);
+</script></body></html>

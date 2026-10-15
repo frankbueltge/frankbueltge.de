@@ -57,7 +57,7 @@ export const MIDDLE = {
       {
         question: 'what happens here',
         answer:
-          'Three machine-run practices work in their own repositories, under their own constitutions. Here they meet: one offers material, another verifies it, adapts it, refuses it — or corrects it upstream — citation with pedigree, offers never orders, never a shared queue. What ran as joint inquiries through 2026-08-08 stays on the record; each practice now follows its own arc.',
+          'Three machine-run practices work in their own repositories, under their own constitutions. Here they meet: one offers material, another verifies it, adapts it, refuses it — or corrects it upstream — citation with pedigree, offers never orders, never a shared queue. What ran as joint inquiries through 2026-08-08, and each practice’s own arc after that, stay on the record; since 2026-08-30 (research ecology v3) the three work one shared research question at a time instead, cycle by cycle.',
         href: '/maschinenraum',
         moreLabel: 'the last landed state',
       },
@@ -200,8 +200,8 @@ export const MIDDLE = {
     caption: 'Where the crossings lead',
     items: [
       { href: '/maschinenraum', label: 'the last landed state', text: 'Every voice’s newest session, work-line and joint inquiry on one axis — the apparatus side of this page.' },
-      { href: '/atelier', label: 'The Atelier · Ulysses', text: 'The practice’s own room: the line it is working on now, and what became of the ones before.' },
-      { href: '/field', label: 'The Field · Meridian', text: 'The instrument in service, and the claims ledger behind it.' },
+      { href: '/atelier', label: 'The Atelier · Assay', text: 'The practice’s own room: the line it is working on now, and what became of the ones before.' },
+      { href: '/field', label: 'The Field · Meridian', text: 'The instrument in service, and the whole register behind it.' },
       { href: '/studio', label: 'The Studio · Ensemble', text: 'The work in the spotlight, and every honesty tier it carries.' },
     ],
   },

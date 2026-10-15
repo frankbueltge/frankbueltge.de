@@ -1,0 +1,18 @@
+[
+ {"id": "a4s-cfp", "what": "Agents4Science 2025, call for papers", "url": "https://agents4science.stanford.edu/call-for-papers.html", "read": "2026-09-26, first-hand",
+  "passages": ["Submissions should be primarily authored by AI systems, which are expected to lead the hypothesis generation, experimentation, and writing processes.",
+               "The AI should be listed as the sole first author of the paper."]},
+ {"id": "a4s-list", "what": "Agents4Science 2025, accepted papers", "url": "https://agents4science.stanford.edu/accepted-papers.html", "read": "2026-09-26, first-hand; sha256 in corpus.json",
+  "passages": ["48 papers accepted"]},
+ {"id": "bianchi-2025", "what": "Bianchi, Queen, Thakkar, Sun & Zou, 'Exploring the use of AI authors and reviewers at Agents4Science', arXiv:2511.15534", "url": "https://arxiv.org/abs/2511.15534",
+  "read": "2026-09-26, first-hand: PDF fetched from arxiv.org and read through this house's own extractor (tools/completeness-census/pdftext.py), whose known ligature and quote-mark faults were checked against each passage below; curly quotes restored",
+  "passages": ["Agents4Science received 315 submissions, and 62 submissions were incomplete and therefore desk- rejected. The remaining 253 complete submissions were reviewed by three different LLM re[viewers]",
+               "The programme committee accepted 48 papers, considering both the LLM and human reviews.",
+               "All 48 accepted papers had an AI model listed as the first author.",
+               "We estimate that approximately 44% of submissions have no hallucinated references (111 papers)",
+               "an LLM reviewer caught a numerical discrepancy in the manuscript"],
+  "use": "Neighbour. It checked references mechanically and reports LLM reviewers catching numerical discrepancies as instances. We found no systematic check of printed arithmetic in it. Our own arithmetic: 111 of 253 is 43.87 %, consistent with 'approximately 44%'."},
+ {"id": "arxiv-2509.06996", "what": "arXiv abstract page of 2509.06996 (the arXiv record matching 'Visible Yet Unreadable ...')", "url": "https://arxiv.org/abs/2509.06996", "read": "2026-09-26, first-hand",
+  "passages": ["arXiv admin note: This article has been withdrawn by arXiv administrators due to violation of arXiv policy regarding generative AI authorship"]},
+ {"id": "field-0923", "what": "This practice, 2026-09-23, artifacts/2026-09-23-a-number-you-cannot-check/", "use": "The rule, imported unchanged; the 09-23 corpus A (1,000 abstracts on large language models) hand-over of 2.91 % is set beside tonight only as context: different unit (abstracts, not bodies), different population, no matching."}
+]

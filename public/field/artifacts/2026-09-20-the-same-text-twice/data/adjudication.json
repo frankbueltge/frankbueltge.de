@@ -1,0 +1,201 @@
+{
+ "note": "Session 165, 2026-09-20. Every violation class of the shipped rule, read by hand under the rule fixed in PREREGISTRATION.md §7: source text and follow-up text side by side, deciding which of the two verdicts is right for what a reader sees. Nine classes cover all 167 decision-changing scored violations. The tenth entry adjudicates the 967 that changed only fields quoting the input.",
+ "categories": {
+  "DEFECT": "the rule's verdict on the ORIGINAL text is wrong for what a reader sees",
+  "LATENT": "the verdict on the original is right; the verdict on the follow-up is wrong - the rule would misread a legitimate variant that does not occur in this corpus",
+  "MR-FALSE": "the transformation did not preserve meaning here, or the relation as written was wrong",
+  "UNDECIDED": "the specification does not decide"
+ },
+ "classes": [
+  {
+   "n": 1,
+   "relation": "M1",
+   "change": "attribution no_copyright_line -> named; delivers False -> True",
+   "n_inputs": 18,
+   "C1": 17,
+   "C2": 1,
+   "verdict": "DEFECT",
+   "cause": "defect 4: _TAIL_WORD carries the literal \\(c\\) and is compiled without re.I, so 'Copyright (C) 1996 X Consortium' is not recognised as a notice while the same line with a lowercase c is.",
+   "reading": "The original text plainly carries a copyright notice with a named holder; the rule says there is no notice at all. The original verdict is wrong.",
+   "inputs_C1": [
+    "0BSD",
+    "BSD-2-Clause-first-lines",
+    "BSD-Systemics",
+    "BSD-Systemics-W3Works",
+    "Caldera",
+    "Caldera-no-preamble",
+    "CryptoSwift",
+    "Cube",
+    "DocBook-XML",
+    "MIT-advertising",
+    "MIT-enna",
+    "SGI-B-2.0",
+    "SSLeay-standalone",
+    "Saxpath",
+    "TrustedQSL",
+    "X11",
+    "XFree86-1.1"
+   ],
+   "inputs_C2": [
+    "Tencent/Tencent-XR-3DGen@geometry/neusdfusion_test/LICENSE"
+   ],
+   "note": "The single C2 input is the same file and the same line - 'Copyright (C) 2024 THL A29 Limited, a Tencent company.' - that four independently dispatched implementations convicted this rule of on 2026-09-19. Reached tonight by a different method, with no dispatch, in one run."
+  },
+  {
+   "n": 2,
+   "relation": "M2",
+   "change": "attribution no_copyright_line -> named; delivers False -> True",
+   "n_inputs": 18,
+   "C1": 17,
+   "C2": 1,
+   "verdict": "DEFECT",
+   "cause": "defect 4, reached by a second relation: replacing (C) with the copyright symbol also repairs the misreading.",
+   "reading": "Set-identical to class 1, checked: the same 18 inputs. Two relations built on different premises converge on the same population, which is the nearest thing this method offers to a cross-check of itself."
+  },
+  {
+   "n": 3,
+   "relation": "M1",
+   "change": "attribution named -> no_copyright_line; delivers True -> False",
+   "n_inputs": 106,
+   "C1": 36,
+   "C2": 70,
+   "verdict": "LATENT",
+   "cause": "defect 4, mirror direction",
+   "reading": "These inputs carry a lowercase '(c)' notice and are read correctly today. The rule would lose the notice entirely if the same holder had written '(C)'. Nothing is wrong in the published data; 70 of the 156 real licence files are one keystroke away from being misread."
+  },
+  {
+   "n": 4,
+   "relation": "M1",
+   "change": "attribution no_holder -> no_copyright_line",
+   "n_inputs": 6,
+   "C1": 1,
+   "C2": 5,
+   "verdict": "LATENT",
+   "cause": "defect 4",
+   "reading": "A notice with no holder becomes no notice at all. Both verdicts fail the file, so no decision moves; the rule's stated REASON becomes wrong, and this practice publishes reasons."
+  },
+  {
+   "n": 5,
+   "relation": "M1",
+   "change": "attribution placeholder -> no_copyright_line",
+   "n_inputs": 10,
+   "C1": 10,
+   "C2": 0,
+   "verdict": "LATENT",
+   "cause": "defect 4",
+   "reading": "An unfilled template notice becomes invisible. The same: the verdict survives, the reason does not."
+  },
+  {
+   "n": 6,
+   "relation": "M5",
+   "change": "attribution named -> no_copyright_line; delivers True -> False",
+   "n_inputs": 2,
+   "C1": 2,
+   "C2": 0,
+   "inputs": [
+    "Sendmail",
+    "Sendmail-8.23"
+   ],
+   "verdict": "LATENT",
+   "cause": "DEFECT 5, FOUND TONIGHT. Both notices open with a straight double quotation mark: \"Copyright (c) 1998-2010 Sendmail, Inc. All rights reserved.\" The prefix class _PREFIX admits the straight quote, so the notice is found. It does not admit the typographic quotes - and normalise(), one rung earlier, folds exactly those characters and says so in its own docstring.",
+   "reading": "The original verdict is right. A notice opened with a typographic quotation mark would be lost. The same four characters are declared meaningless at rung L1 and are load-bearing at rung L2, in one apparatus, and no fixture or mutation would ever have asked."
+  },
+  {
+   "n": 7,
+   "relation": "M6",
+   "change": "attribution named -> no_copyright_line; delivers True -> False",
+   "n_inputs": 3,
+   "C1": 2,
+   "C2": 1,
+   "inputs": [
+    "Entessa",
+    "VSL-1.0",
+    "Tencent/CognitiveKernel-Pro@LICENSE.txt"
+   ],
+   "verdict": "LATENT",
+   "cause": "the priced cost of 2026-09-18's repair of defect 1: a notice's word must BEGIN its line.",
+   "reading": "The original verdict is right. Reflowing the paragraph moves the notice off the start of a line and the rule stops seeing it. This is not an oversight - it is the documented design that 2026-09-18 chose in order to stop MIT's boilerplate sentence being read as a notice. What was never priced is what the choice costs, and the price is that the rule's answer depends on where the line breaks happen to fall."
+  },
+  {
+   "n": 8,
+   "relation": "M6",
+   "change": "attribution named -> no_holder; delivers True -> False",
+   "n_inputs": 1,
+   "C1": 0,
+   "C2": 1,
+   "inputs": [
+    "Tencent/Tencent-XR-3DGen@LICENSE"
+   ],
+   "verdict": "LATENT",
+   "cause": "the same line-initial anchoring",
+   "reading": "A file aggregating twenty-one notices keeps one after reflow, a rule-of-dashes line followed by 'Copyright (c) 2022', whose holder extracts empty. The original verdict is right and the failure mode is worse than losing the notice: it keeps one and reports no holder."
+  },
+  {
+   "n": 9,
+   "relation": "M6",
+   "change": "attribution no_copyright_line -> named; delivers False -> True",
+   "n_inputs": 2,
+   "C1": 2,
+   "C2": 0,
+   "inputs": [
+    "BSD-3-Clause-Modification",
+    "ZPL-2.1"
+   ],
+   "verdict": "LATENT",
+   "cause": "DEFECT 1, REPRODUCED. Reflow puts the liability sentence's word 'COPYRIGHT' at the start of a line - 'COPYRIGHT HOLDERS BE LIABLE FOR ANY DIRECT, INDIRECT,' - and the rule reads a disclaimer as a notice held by 'HOLDERS BE LIABLE FOR ANY DIRECT, INDIRECT'.",
+   "reading": "The original verdict is right and the follow-up verdict is the exact failure 2026-09-18 believed it had repaired. The repair did not remove defect 1; it made defect 1 a function of where the lines break. This class is what prompted the post-hoc scan in data/false-notices.json, which found the failure already present in the unperturbed data. Checked by hand: neither text carries a copyright notice at all - both refer to an 'accompanying copyright notice' held elsewhere - so the original verdict no_copyright_line is right."
+  },
+  {
+   "n": 10,
+   "relation": "all scored",
+   "change": "only fields that QUOTE the input changed (notices, holders, n_notices, placeholders)",
+   "n_inputs": 967,
+   "verdict": "MR-FALSE",
+   "cause": "OUR OWN BAD TEST, the seventh in this practice's live pattern.",
+   "reading": "PREREGISTRATION.md §5 fixed the scored output as the whole verdict tuple, including the text of each notice line and each extracted holder string. Those fields quote the input. A relation that edits the lines they quote cannot leave them identical, so the relation as registered is false for every such input and no fault is implied. The idea of the relation was sound; the field list was not. Caught the way the last two were caught: by disbelieving an extreme number, here 1,134 where 127 was predicted."
+  },
+  {
+   "n": "9b",
+   "relation": "M6",
+   "change": "attribution no_copyright_line -> named; delivers False -> True",
+   "n_inputs": 1,
+   "C1": 1,
+   "C2": 0,
+   "inputs": [
+    "DocBook-XML"
+   ],
+   "verdict": "DEFECT",
+   "cause": "defect 4 again, surfaced by a relation that has nothing to do with case.",
+   "reading": "Split out of class 9 on the hand read, which is why the hand read is not optional. DocBook-XML opens with a heading line 'Copyright', a rule of dashes, and six genuine notices - 'Copyright (C) 1999-2007 Norman Walsh' and five more - every one of them invisible to the shipped rule because of defect 4. Reflow glues the heading to the first notice, and the rule then finds Norman Walsh. Here the FOLLOW-UP verdict is the right one and the original is wrong, so this is a DEFECT and not the LATENT its class-mates are. The input is already among class 1's eighteen; it is not a nineteenth."
+  }
+ ],
+ "false_notice_scan": {
+  "declared": "post-hoc, prompted by class 9",
+  "found": "15 false notices across 14 inputs of the unperturbed data (13 in C1, 1 in C2, that one twice)",
+  "verdict": "DEFECT, present in the shipped data",
+  "decisions_at_risk": 0,
+  "reading": "In C1 every hit sits in a text whose family is not attribution-scored, so no verdict was computed from it. In C2 the single file, uni-medical/MedProbeBench@LICENSE, carries nine genuine notices beside the two false ones, so 'named' is right anyway. The defect is real, it is in the published data, and it changed nothing BY ACCIDENT rather than by design: had that file carried only the two false notices, the published 95.2 % would have been wrong."
+ },
+ "totals": {
+  "counted_in": "violation instances, i.e. (relation, input) pairs; an input reached by two relations counts twice",
+  "DEFECT_instances": 37,
+  "LATENT_instances": 130,
+  "MR_FALSE_instances": 967,
+  "UNDECIDED": 0,
+  "decision_changing_scored_violations": 167,
+  "DEFECT_distinct_inputs": 18,
+  "distinct_causes": 3,
+  "causes": [
+   "defect 4 (unrepaired since 2026-09-19): classes 1, 2, 3, 4, 5, 9b",
+   "defect 5 (found tonight): class 6",
+   "the unpriced cost of 2026-09-18's repair of defect 1, including defect 1 itself reproducing under reflow: classes 7, 8, 9"
+  ],
+  "distinct_classes_a_person_had_to_read": 10,
+  "second_hand_comparison_2026_09_19": {
+   "internal_disagreements": 127,
+   "unanimous_convictions": 11,
+   "workers_dispatched": 4
+  }
+ },
+ "note_on_double_counting": "Classes 1 and 2 are the same 18 inputs reached by two relations, checked set-identical, so DEFECT covers 18 distinct inputs and 37 violation instances. Classes 1, 2, 3, 4, 5 and 9b are one cause - defect 4 - seen from six sides. 167 = 37 + 130."
+}

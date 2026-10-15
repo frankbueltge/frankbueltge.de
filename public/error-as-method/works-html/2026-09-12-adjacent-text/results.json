@@ -1,0 +1,275 @@
+{
+ "session": 88,
+ "date": "2026-09-12",
+ "n": 60,
+ "population": 1190,
+ "stage1": {
+  "UNNAMED": 29,
+  "NO-ACTOR": 29,
+  "NAMED": 2
+ },
+ "stage2": {
+  "UNNAMED": 25,
+  "NO-ACTOR": 24,
+  "NAMED": 11
+ },
+ "named_stage1": [
+  "S12",
+  "S53"
+ ],
+ "named_stage2": [
+  "S07",
+  "S12",
+  "S14",
+  "S20",
+  "S29",
+  "S31",
+  "S48",
+  "S49",
+  "S50",
+  "S52",
+  "S53"
+ ],
+ "recovered": [
+  "S07",
+  "S14",
+  "S20",
+  "S29",
+  "S31",
+  "S48",
+  "S49",
+  "S50",
+  "S52"
+ ],
+ "recovery_distances": {
+  "S07": 0,
+  "S14": 0,
+  "S20": 0,
+  "S29": 1,
+  "S31": 5,
+  "S48": 5,
+  "S49": 0,
+  "S50": 0,
+  "S52": 2
+ },
+ "recovery_kinds": {
+  "ACTOR": 9
+ },
+ "recovered_with_class_declaration_somewhere_in_window": [
+  "S14"
+ ],
+ "transitions": {
+  "UNNAMED->UNNAMED": 24,
+  "NO-ACTOR->NO-ACTOR": 24,
+  "NO-ACTOR->NAMED": 4,
+  "NO-ACTOR->UNNAMED": 1,
+  "NAMED->NAMED": 2,
+  "UNNAMED->NAMED": 5
+ },
+ "predictions": {
+  "P1": {
+   "claim": "with context, more than 30 of 60 come back NAMED",
+   "value": 11,
+   "won": false
+  },
+  "P2": {
+   "claim": "in isolation, NAMED is more than 0 and fewer than 9 of 60",
+   "value": 2,
+   "won": true
+  },
+  "P3": {
+   "claim": "of the rows recovered by context, more than half are recovered from a class declaration rather than an actor noun",
+   "value": 0,
+   "of": 9,
+   "won": false
+  },
+  "P4": {
+   "claim": "of the rows recovered by context, the median distance is 0 blocks",
+   "value": 0,
+   "won": true
+  }
+ },
+ "mechanical_ceiling": {
+  "party_terms": "\\b(user agent|user agents|browser|browsers|author|authors|implementation|implementations|implementer|implementers|markup generator|markup generators|conformance checker|conformance checkers|parser|parsers|server|servers|client|clients|validator|validators|editor|editors|specification author|specification authors)\\b",
+  "windows": {
+   "0": {
+    "windows_containing_a_party_term": 7,
+    "median_distance_where_present": 0
+   },
+   "1": {
+    "windows_containing_a_party_term": 9,
+    "median_distance_where_present": 0
+   },
+   "2": {
+    "windows_containing_a_party_term": 11,
+    "median_distance_where_present": 0
+   },
+   "3": {
+    "windows_containing_a_party_term": 14,
+    "median_distance_where_present": 0.5
+   },
+   "5": {
+    "windows_containing_a_party_term": 18,
+    "median_distance_where_present": 1.5
+   },
+   "8": {
+    "windows_containing_a_party_term": 26,
+    "median_distance_where_present": 3.0
+   },
+   "13": {
+    "windows_containing_a_party_term": 30,
+    "median_distance_where_present": 5.0
+   },
+   "20": {
+    "windows_containing_a_party_term": 37,
+    "median_distance_where_present": 6
+   },
+   "35": {
+    "windows_containing_a_party_term": 48,
+    "median_distance_where_present": 7.5
+   },
+   "50": {
+    "windows_containing_a_party_term": 50,
+    "median_distance_where_present": 8.0
+   },
+   "100": {
+    "windows_containing_a_party_term": 56,
+    "median_distance_where_present": 11.0
+   },
+   "200": {
+    "windows_containing_a_party_term": 60,
+    "median_distance_where_present": 14.0
+   }
+  },
+  "whole_document_before_the_sentence": 60,
+  "per_row_nearest_party_term_5": {
+   "S01": 3,
+   "S02": null,
+   "S03": 3,
+   "S04": null,
+   "S05": null,
+   "S06": null,
+   "S07": 0,
+   "S08": 1,
+   "S09": null,
+   "S10": null,
+   "S11": null,
+   "S12": 0,
+   "S13": null,
+   "S14": 0,
+   "S15": null,
+   "S16": null,
+   "S17": null,
+   "S18": null,
+   "S19": null,
+   "S20": 0,
+   "S21": null,
+   "S22": null,
+   "S23": null,
+   "S24": 2,
+   "S25": null,
+   "S26": null,
+   "S27": null,
+   "S28": null,
+   "S29": 1,
+   "S30": 3,
+   "S31": 5,
+   "S32": null,
+   "S33": null,
+   "S34": null,
+   "S35": null,
+   "S36": null,
+   "S37": null,
+   "S38": null,
+   "S39": null,
+   "S40": null,
+   "S41": null,
+   "S42": null,
+   "S43": null,
+   "S44": null,
+   "S45": null,
+   "S46": null,
+   "S47": 5,
+   "S48": 5,
+   "S49": 0,
+   "S50": 0,
+   "S51": null,
+   "S52": 2,
+   "S53": 0,
+   "S54": null,
+   "S55": null,
+   "S56": null,
+   "S57": null,
+   "S58": null,
+   "S59": 5,
+   "S60": null
+  },
+  "per_row_nearest_party_term_whole_document": {
+   "S01": 3,
+   "S02": 139,
+   "S03": 3,
+   "S04": 23,
+   "S05": 59,
+   "S06": 48,
+   "S07": 0,
+   "S08": 1,
+   "S09": 20,
+   "S10": 8,
+   "S11": 24,
+   "S12": 0,
+   "S13": 16,
+   "S14": 0,
+   "S15": 32,
+   "S16": 6,
+   "S17": 8,
+   "S18": 34,
+   "S19": 20,
+   "S20": 0,
+   "S21": 21,
+   "S22": 7,
+   "S23": 15,
+   "S24": 2,
+   "S25": 7,
+   "S26": 6,
+   "S27": 64,
+   "S28": 23,
+   "S29": 1,
+   "S30": 3,
+   "S31": 5,
+   "S32": 6,
+   "S33": 22,
+   "S34": 109,
+   "S35": 77,
+   "S36": 106,
+   "S37": 109,
+   "S38": 22,
+   "S39": 9,
+   "S40": 16,
+   "S41": 99,
+   "S42": 13,
+   "S43": 32,
+   "S44": 28,
+   "S45": 7,
+   "S46": 46,
+   "S47": 5,
+   "S48": 5,
+   "S49": 0,
+   "S50": 0,
+   "S51": 53,
+   "S52": 2,
+   "S53": 0,
+   "S54": 21,
+   "S55": 11,
+   "S56": 16,
+   "S57": 85,
+   "S58": 15,
+   "S59": 5,
+   "S60": 11
+  }
+ },
+ "naming_precision_at_5": {
+  "windows_with_a_party_term": 18,
+  "hand_named": 11,
+  "hand_named_among_them": 11
+ }
+}

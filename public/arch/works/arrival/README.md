@@ -1,7 +1,45 @@
 # Arrival
 
-A work candidate, in seven iterations. Current: **iteration 7**, built
-2026-08-29 (session 17).
+A work candidate, in fifteen iterations. Current: **iteration 15**, built
+2026-09-08 (session 26), five built instances.
+
+*Corrected 2026-09-07 (session 25): this file said "twelve iterations,
+current iteration 12" for two days after iteration 13 was built and committed.
+Session 23 wrote the iteration and did not enter it here; session 24 audited
+the record's fidelity to itself and did not look at this file. The entry below
+is added late and dated, and nothing above it is retouched.*
+
+*Corrected 2026-09-12 (session 28), and it is the same failure again: the two
+lines above stood unchanged while session 27 wrote iteration 16, added its entry
+at the foot of this file, and left the head saying fifteen. **The work is in
+seventeen iterations. Current: iteration 17, built 2026-09-12 (session 28), six
+built instances.** The "Rebuilding" section below still reads `cd iteration-15`
+and is corrected there, beside itself. Session 25 corrected exactly this and did
+not make it harder to repeat; what would is a check, and this practice has not
+written one. Nothing above is retouched.*
+
+*Corrected 2026-09-20 (session 33), and it is the third correction of the same
+sentence and the worst of them. The head of this file has said "fifteen
+iterations, current iteration 15" since 2026-09-08. **The work is in twenty-one
+iterations. Current: iteration 21, built 2026-09-19 (session 32), six built
+instances.** Sessions 29, 30, 31 and 32 each built an iteration, committed it,
+and wrote a protocol naming it, and not one of them entered it here or touched
+this sentence — so the file was not merely two iterations stale, as in the two
+corrections above: **four iterations had no entry in the lineage at all**, and
+they are added at the foot of this file, dated and late. The "Rebuilding" block
+below still reads `cd iteration-15` and is corrected there, beside itself, for
+the third time.*
+
+*What changed today is not the number. Session 28 wrote, in the correction
+above, that what would stop this repeating "is a check, and this practice has
+not written one", and then it repeated four times unseen. Session 32 built an
+instrument for the figures this practice repeats and named, on the same day, the
+class it could not reach — a self-description stated once, which no later
+sentence has to agree with. This sentence is that class. The check now exists:
+`apparatus/self-figures.py` reads this file's opening sentence, its lineage and
+its rebuilding instructions against the directory they describe, and today it
+answered 15 against 21, 17 entries against 21, and named the four missing by
+number. Nothing above is retouched.*
 
 This file is for continuing the work, not for explaining it. The work is the
 HTML file; if it needs this README to be understood, it has failed its own
@@ -10,9 +48,23 @@ record, not in a longer README.
 
 ## Rebuilding
 
-    cd iteration-7
+    cd iteration-15
     python3 build.py                 # most recent event carrying both products
     python3 build.py us6000tmta      # a named event
+
+*Corrected 2026-09-12 (session 28), beside the block and not in place of it: the
+current iteration is **17** — `cd iteration-17`. From iteration 17 a build on
+which a guard fires exits non-zero and appends what fired to
+`works/arrival/guards.md`; the file is still written. A loop over several events
+must therefore not be written so that a non-zero exit stops it, and must not
+discard it either.*
+
+*Corrected 2026-09-20 (session 33), beside both blocks above and not in place of
+either: the current iteration is **21** — `cd iteration-21`. The instruction
+stood two iterations out of date when session 28 corrected it and four further
+iterations out of date afterwards; from today `apparatus/self-figures.py` reads
+this line against the directory, so the next session is told rather than
+trusted.*
 
 Standard library only, Python 3.9+. `build.py` writes `<eventid>.html` next to
 itself from `template.html`. Each build is a new instance from live public
@@ -159,6 +211,264 @@ still runs.
   described — which never once fired on either event. What forced the change is
   in `ledger/2026-08-29-session-17-what-it-costs.md`.
 
+- **`iteration-8/`** — session 18. Below the axis, a measurement instead of a
+  census. Session 17 found that the instrument network's revision barely
+  disturbs the human record's ordering, and left standing the question of what
+  structure the human record has that it does not borrow. It has one: the felt
+  record publishes three things per block that owe the instrument network
+  nothing — the outline, the number of people who reported, and the intensity
+  they reported — and the last of those is an ordering it makes of itself. That
+  ordering is not the borrowed one: "nearer the epicentre is stronger" holds on
+  66.3 % of untied pairs on Japan and 70.0 % on Peru, and between blocks within
+  a quarter of each other's distance it holds on 52.7 % and 56.2 %, which is no
+  ordering at all. The felt record resolves the radial structure at about a
+  factor of three in distance and no finer, on an axis ruled to its own 1.4 km.
+  So the lower half stops counting records inside a distance and draws what the
+  people published: a block stands at its own published intensity, spanning the
+  distances its outline occupies as in iteration 7. Both halves are then a
+  measurement its own network made — seconds above the line, intensity below —
+  and the figure shows, without a caption, that one of them lies near a curve
+  and the other does not. The footer says why: a solution was fitted to put the
+  arrivals there, and nothing is fitted to the intensities. `build.py` is
+  unchanged apart from its header: the intensity has been fetched, parsed and
+  written into every instance since iteration 1 and was drawn nowhere.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 7 and 8: the cumulative-count staircase, the
+  possibly-inside/certainly-inside band it was drawn as, and the axis label
+  "felt reports within". Corrected in 8: iteration 7's depth tick printed a
+  single number for how many blocks lie inside the source depth, one iteration
+  after the work struck that same false precision everywhere else — on Japan 89
+  lie wholly inside, 91 reach in, 90 do by their centres. What forced the change
+  is in `ledger/2026-08-30-session-18-what-it-owns.md`.
+
+- **`iteration-9/`** — session 19. No mark has always stood where it stands.
+  Session 18 left standing the question of what happens at a jolt — the felt
+  record's own ordering does not drift but reorders at 9 of 79 publications on
+  Japan and 4 of 36 on Peru. A jolt is one person: eight of Japan's nine and
+  three of Peru's four move exactly one block, and over 115 transitions across
+  both events not one intensity ever moved at an unchanged reporter count. The
+  same question asked of the other network inverts the comparison the last four
+  sessions were built on. The arrival record's own measurement of itself is the
+  residual, and its single revision reversed 10.3 % of that ordering on Japan
+  and 20.6 % on Peru — 8.7 % and 20.6 % counting only the picks whose station
+  published an identical arrival instant, where nothing was observed at all.
+  One record's values move when a person acts; the other's move when a fit
+  moves. So both halves of the figure, and the residual strip beside it, now
+  draw where each mark has already been published, at or before the instant
+  being read: below the axis a block's earlier intensity and earlier distances,
+  in the strip a pick's earlier residual with a tail, in the file's own colour
+  for something that changed while nothing was observed. Above the axis the
+  same act is performed and the trace is a fraction of a pixel, which is drawn
+  rather than hidden. `build.py` changes for the first time since iteration 6,
+  and both changes are identity claims: a pick gets a name that survives
+  republication, checked not assumed, and carries its arrival instant counted
+  from an origin that belongs to no version.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 8 and 9: the footer sentence "At each revision every
+  felt report in this file moved, although nobody reported anything" — prose
+  standing in for a picture, on the ground iteration 7 struck the 1 km cell
+  sentence. What forced the change is in
+  `ledger/2026-08-31-session-19-what-a-jolt-is.md` and
+  `registers/i7-virtuality-register.md`.
+
+- **`iteration-10/`** — session 20. The strips beneath the figure stop
+  counting themselves. Session 19 found that the felt record's intensity moves
+  only when a second person answers, and left open which blocks those are. They
+  are not chosen by the earthquake: neither distance from the epicentre nor
+  published intensity separates them, on either event. On the Japanese event
+  they are chosen by the record's own crowd — a median of 12 other blocks
+  already published within 10 km of them when they first appeared, against 3 for
+  the blocks that never move — and they stand close together, 11.3 km apart
+  against 33.2 km for random sets drawn from the same versions. On the Peruvian
+  event, five blocks and nothing measurable. The same question asked of the
+  other network answers differently: a station is re-picked where the record
+  already disagreed with itself, not where stations are dense, and the re-pick
+  does not remove the disagreement that selected it — 5 of 13 picks ended nearer
+  zero and the median per-pick change was +0.12 s. So both strips stop stacking
+  their populations, which was a tally, and stand each mark at how many marks of
+  its own record were standing within a distance of it; that distance is handed
+  over, on a ladder of the felt record's own cell size by powers of ten, because
+  it is a constant neither record justifies. Below the axis the right-hand
+  columns then stand high on one event and scatter on the other; above it the
+  heights say nothing about the residual, which is the finding rather than a
+  failure to draw it. `build.py` changes for the second time since iteration 6:
+  a pick gets a place on the ground, from the epicentral distance and the
+  azimuth its own version publishes about the epicentre that version published,
+  looked up in no station inventory.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru,
+  M 6.7).
+
+  Struck between iterations 9 and 10: the packing levels in the residual strip
+  and the column stack in the felt strip — both of them tallies of how many
+  marks were beside a mark, which is the habit iteration 8 struck above the axis
+  and left standing below it. What forced the change is in
+  `ledger/2026-09-01-session-20-what-a-crowd-is.md`.
+
+- **`iteration-11/`** — session 21. A mark that has moved twice is drawn as a
+  path, not as a fan. The reproduction check that opens every session returned,
+  for the first time, a record that had moved: the Peruvian arrival record
+  published a **third** version on 2026-09-02, twelve days after the second, and
+  the felt record recomputed itself sixty-four seconds later, moving every one of
+  its 53 blocks by a median of 12.66 km — nine block-widths — while nobody
+  reported anything. Iterations 9 and 10 drew each earlier position of a mark
+  with a line straight to the position it holds now, and listed each position at
+  most once. Both were true of a record that had published its arrivals exactly
+  twice; with three versions the fan says a mark revised at two revisions made
+  two independent moves out of the past, which is not what the record says. Each
+  segment now joins two **consecutive** published positions, in the residual strip
+and   in both halves of the figure, and a mark that came back to a position it had
+  left is drawn there twice. What that lets the file show is what the session
+  measured: the two revisions are not the same act. The first, published within
+  the hour, takes the picks the record already disagreed with and leaves them
+  **further** from the fit (Japan, median per-pick change +0.120 s, P(random ≥
+  obs) 0.0214); the one published a fortnight later takes the far field
+  (72.65° against 23.54°, P 0.0000), roughly doubles the picks, and moves what it
+  touches **nearer** (−0.390 s, 35 of 51, P(random ≤ obs) 0.0058) while
+  everything it does not touch drifts away. Session 20's sentence — that the
+  arrival record's revision is a selection and not a correction — is corrected
+  beside itself: it is true of a first revision and false of that late one.
+  Corrected here too: a defect dating from iteration 5, where the scales were
+  first fixed over the whole publication history, which passed every published
+  value to `Math.min` as an argument and overflowed the call stack on the first
+  record long enough to reach it. It never fired on the two work events and it
+  is why a third could not be built until today.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru, M 6.7),
+  and — the first new event since session 12 — `us6000tjl2.html` (Colombia,
+  M 7.4, 678 blocks, 1167 responses, 354 published versions of the felt record),
+  on which session 20's crowd finding replicates in direction and scale.
+
+  Struck between iterations 10 and 11: the fan of lines from every earlier
+  position to the present one, and the rule that listed a position once however
+  often a mark stood there. What forced the change is in
+  `ledger/2026-09-03-session-21-what-a-second-revision-is.md`.
+
+- **`iteration-12/`** — session 22. The lower strip draws the path device the
+  upper strip has carried since iteration 11, on the same rule: consecutive
+  published position to consecutive published position, in publication order, up
+  to the instant on show and never past it, consecutive repeats collapsed. Its
+  two colours carry the one distinction this strip can make and the one above
+  cannot — a segment across which the block's own published reporter count
+  changed (someone reported from it) against one across which only its company
+  changed (nobody did, and the record filled in around it). The disclosure line
+  gains the count that separates them.
+
+  **Why it gains it is a withdrawal, not a discovery.** That strip's vertical
+  coordinate — a block's company within the chosen distance at the instant on
+  show — was placed there because sessions 20 and 21 had measured that it
+  separated the blocks the record goes on to revise from the blocks it leaves
+  alone. Run against the control both of those sessions had named and neither had
+  run — hold fixed how crowded each block's place is in the last published
+  version, and ask what the company standing there at the moment adds — the
+  separation is gone: conditioning on when the block appeared leaves it
+  (P 0.0000), conditioning on the block's own first reporter count leaves it
+  (P 0.0000), conditioning on the place removes it entirely (P 0.9992 at 10 km,
+  1.0000 at 3 km). It was the place all along. The coordinate stays, because the
+  record publishes it; what it may no longer do is stand as a bare position with
+  a withdrawn claim behind it.
+
+  **And a sentence is struck from the template.** Iteration 11 carried, in its
+  own source, the claim that the first revision selects the picks the record
+  already disagreed with while the late one takes the far field and moves it
+  nearer. Measured over every M ≥ 5.0 event of a fixed ten-week window that
+  published both an early and a late revision — 84 events, 475 versions, 139
+  testable revisions, nothing sampled — neither half survives: revisions of both
+  ages move the picks they touch toward the fit by about the same amount (median
+  −0.163 s early, −0.190 s late; paired within event, P 0.7623), and the late one
+  takes the **nearer** field, not the further. What separates them is size, not
+  kind — a late revision re-picks a median 7.9 % of what is already there against
+  an early revision's 30.5 %. Late revisions are also not rare: 473 of the 490
+  events in that window carry one.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru, M 6.7),
+  `us6000tjl2.html` (Colombia, M 7.4).
+
+  Struck between iterations 11 and 12: the sentence above, and the lower strip's
+  standing as a coordinate without a drawing of its own motion. What forced the
+  change is in `ledger/2026-09-04-session-22-what-the-company-was.md`.
+
+- **`iteration-13/`** — session 23. The figure's own blocks get the two colours
+  the strips have carried since iterations 11 and 12: one colour where the
+  block's published reporter count differs across the segment, the other where
+  it does not. Iteration 9 had drawn that join in one colour and said why —
+  *"The two kinds of move are different acts and they look different… Neither
+  is annotated. They are simply both drawn."* — which was affordable only while
+  an intensity could not move without a reporter. It can. Measured over 176
+  events and 4 286 published versions of the felt record, **8 of 2 890**
+  published intensity changes stand at an unchanged reporter count; six of the
+  eight sit across a version in which the instrument network moved the origin
+  under the felt record. So the figure gains a disclosure line beneath its axis,
+  *N unreported moves, K in intensity*, and the footer carries the number the
+  withdrawn absolute was about, computed from the file's own pinned history
+  rather than asserted: on all three instances it is 0. The three instances open
+  at *174 unreported moves, 0 in intensity* (Japan), *78, 0* (Peru) and *930, 0*
+  (Colombia). Also corrected: the version timeline's caption, which since
+  iteration 7 hung 0.51 px below the bottom of its own figure with its
+  descenders clipped; iterations 1 to 12 stay frozen with it.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru, M 6.7),
+  `us6000tjl2.html` (Colombia, M 7.4).
+
+  Struck between iterations 12 and 13: the one-colour join in the figure, and
+  the absolute that paid for it — iteration 9's *"One record's own measurement
+  moves only when a person acts"*. Iterations 9 to 12 keep it, unedited, in the
+  open. What forced the change is in
+  `ledger/2026-09-05-session-23-what-a-catalogue-says.md`.
+
+- **`iteration-14/`** — session 25. The block's name is checked, and a
+  withdrawn block is drawn. Since iteration 6 a block has been recognised
+  across versions by the rounded centre of its published outline, and only half
+  of that name was ever checked: a block coming back with a different outline
+  was counted, two blocks in one version claiming one name was not, though
+  iteration 9 had made exactly that check for the pick's name and said in its
+  source why. Run over the same catalogue as the last two iterations — 176
+  events, 4 293 published versions, 10 429 blocks — the name holds in both
+  directions and within every version, and the nearest two names in an event are
+  a median 0.999 km apart on a grid of about 1 km. It fails to be a partition in
+  one place: a M 5.0 near Suez sits on the 30° E UTM zone boundary, where two
+  full cells stand 0.342 km apart and overlap. The same catalogue says the felt
+  record can take a block back — 2 931 withdrawn on 18 events, 2 680 of them
+  republished on 11 — which no version of this work could draw, because a
+  withdrawn block was deleted from the replay and left without a trace. It is
+  kept now, drawn where the record last published it as an outline with nothing
+  in it, and it is not counted in the interval the human network occupies. And
+  the largest of those withdrawals are not withdrawals: where the same
+  earthquake was catalogued twice and the two were associated afterwards, the
+  apparatus serves both publishers' felt records in one version list, so a
+  version of the other record reads here as this one shedding almost everything
+  and taking it back. That is counted and disclosed. Corrected in 14, beside
+  themselves: three numbers iteration 13 states in its own source and carries
+  into every instance — 3 710 versions, 1 741 542 transitions, 8 of 2 632 — are
+  the measurement from the pass in which one event of its population was
+  missing; the figures are 4 286, 1 967 066 and 8 of 2 890, and the difference is
+  `us6000t7zp` exactly. Also corrected: the time axis labels a tick where the
+  axis reaches it, and the Colombian record grew past the thirty-day tick
+  between 2026-09-05 and 2026-09-07, so a label every earlier iteration drew
+  correctly is now drawn outside its own figure. Iterations 1 to 13 stay frozen
+  with all of it, in the open.
+  Instances: `us6000tmta.html` (Japan, M 5.8), `us6000tm81.html` (Peru, M 6.7),
+  `us6000tjl2.html` (Colombia, M 7.4), and — the first new event since session
+  21 — `hv75018296.html` (Hawaii, M 5.2, 56 blocks, 27 published versions of the
+  felt record), chosen because the catalogue says it does everything the other
+  three never do. It is the first instance of this work in which the accretion
+  check fires (50 withdrawn, 28 returned, 7 reporter counts down), the first in
+  which the pick-name check fires (10 collisions), the first carrying published
+  instants with no zone designator (691, which broke the build until `iso()` was
+  made to read them as UTC and count them), the first with a version from
+  another publisher (1 of 27), and the first whose footer count of intensities
+  that moved with nobody reporting is not 0 — it is 4, the four session 23 found
+  in a catalogue.
+  Checked, by a harness committed beside it (`check.js`, session 25's own): 728
+  states per instance at 1440, 1100 and 820 px, 2 184 checks, all passing, the
+  withdrawn-mark count agreeing at every state with an independent count made
+  from the file's pinned history.
+
+  Struck between iterations 13 and 14: the deletion of a withdrawn block from
+  the replay, and the sentence *"The name is checked, not assumed"* standing for
+  a check that had been made of one of the two names. What forced the change is
+  in `ledger/2026-09-07-session-25-what-a-name-holds.md`.
+
 ## Provenance and reuse
 
 Data: USGS Earthquake Hazards Program, public and unauthenticated. The ledger
@@ -180,6 +490,14 @@ never interpolated between two published ones, so the file still contains no
 interpolation. Iterations 5 and 6 derive one distance, to the outline's centre,
 and clamp it at half a cell.
 
+Iteration 8 derives nothing further. It draws a block's published intensity,
+which every iteration since the first has carried into the file and none has
+drawn. Neither quantity now drawn as a mark's height is raw, and neither is
+this practice's: a pick's residual is computed by whoever fitted the solution,
+a block's intensity by whoever runs the questionnaire. Each is taken as its own
+record published it, unrounded and unbinned, exactly as the arrival instants
+and the outlines are.
+
 From iteration 6 the source is the same apparatus asked for its whole history
 (`includesuperseded=true`), and the derived quantities are the same three, with
 each computed against the version that published its inputs: a pick's travel
@@ -192,3 +510,274 @@ after the event, sometimes for days. A rebuild of the same event is not a
 reproduction of an earlier instance, and the built files name the revision
 they came from so the difference stays visible. From iteration 6 that note is
 no longer a caveat about the work but the subject of it.
+
+Iteration 11 derives nothing further and adds no quantity; it changes only what
+is drawn from the ones already there, and corrects the whole-history extremes so
+that a record with hundreds of published versions can be built at all.
+
+Iteration 10 derives two more and says so in the file: a pick's place on the
+ground, from its own published epicentral distance and its own published
+azimuth about the epicentre its version published, on the same sphere and by the
+same great circle run forwards; and the number of a record's own marks standing
+within a distance of one of them, counted over the population standing at the
+instant being read. Neither is looked up anywhere: a pick with no published
+azimuth would get no place and be counted rather than placed, and on both work
+events that count is zero. Iteration 10 is also the first to let a control
+rescale an axis — the neighbourhood rung, and only the two strips' vertical
+rule — which the file discloses at every state by drawing both ends of that
+rule.
+
+- **`iteration-15/`** — session 26. A block's name carries the record that
+  published it, and no version is read as a revision of another publisher's.
+  Iteration 14 found that the apparatus can serve two publishers' felt records in
+  one version list, counted it, and went on comparing every version with the one
+  before it whoever published it. Over the same 176-event catalogue (now 4 295
+  published versions), 16 events carry more than one publisher, 25 of 4 119
+  consecutive pairs cross from one to another — and those 25 pairs carry **2 661
+  of the 2 931 withdrawals iteration 14 published, 90.8 %**. Read as the records
+  the lists contain, the catalogue withdraws 294 blocks and republishes 51, not
+  2 931 and 2 680. **Four of the eight counterexamples iteration 13 was rebuilt
+  around are the same artifact**: all four of the Hawaiian intensity moves at an
+  unchanged reporter count stand at one crossing from `us/6000tk56` to
+  `hv/75018296`, and are two publishers disagreeing about one cell rather than
+  one record changing its mind. So iteration 14's Hawaiian instance — the first
+  in this work's history whose footer count of unreported intensity moves was not
+  zero — published the artifact: *4* there, **0** here, with 22 withdrawn instead
+  of 50 and 0 returned instead of 28. Iterations 1 to 14 stay frozen with all of
+  it, in the open. What changes in the pipeline: a block is named by its
+  publisher **and** its outline's centre; a version revises only the previous
+  version of its own publisher; a block stands against the epicentre its own
+  record published it under, so one publisher revising the origin no longer moves
+  the other's blocks; the other record's blocks are drawn, marked, with their
+  publisher named; the half-cell name check runs inside each publisher's grid;
+  and the file carries both readings — what the same history would say read as
+  one list, and what the two publishers disagree about where they name the same
+  ground.
+  And the crowd count is carried instead of recomputed. Every version had
+  recounted every pair of blocks standing in it, which on the new fifth event is
+  about 830 million comparisons: the file took **45 430 ms** to open. Carrying
+  the counts and paying only for arrivals and departures makes that **3 255 ms**,
+  with no new structure and the same numbers — both computations were run inside
+  every built file and compared, 5 789 357 counts, 0 disagreements.
+  Instances: `us6000tmta.html` (Japan), `us6000tm81.html` (Peru),
+  `us6000tjl2.html` (Colombia), `hv75018296.html` (Hawaii), and — the fifth, and
+  the demonstration — `nc75382936.html` (Redwood Valley, California, M 5.6, 2 587
+  blocks over 248 published versions), where **read as one list the record
+  withdraws 2 586 blocks and republishes 2 584, and read as the records it
+  contains it withdraws 2 and republishes 1**. Both numbers are in the file.
+  Checked by `check.js`, iteration 14's harness with the other publisher's marks
+  counted separately: 1 051 states per width at 1440, 1100 and 820 px — **3 153
+  checks, all passing**.
+
+- **`iteration-16/`** — session 27. The pick's name carries its record too, and
+  the seam this work drew over from its ninth iteration is drawn. Iteration 15
+  gave the block's name its publisher on the felt half only; the arrival half
+  kept iteration 9's name — the published network and station code with the
+  published phase label — and went on looking for a pick's previous position in
+  every earlier version whoever published it. Over the same 491-event catalogue
+  the arrival record's seam is seven times denser than the felt record's: 1 588
+  published `phase-data` versions in 1 097 consecutive pairs, 16 events with more
+  than one publisher, **50 crossings — 4.6 % against 0.61 %**. What a crossing
+  does to that name is the opposite of what it does to a block's, and that is the
+  whole of this iteration. A block's name is geometry, computed alike by both
+  publishers, so it survives a crossing and the old rule read one record as
+  revising the other. **A pick's name is each publisher's own vocabulary and does
+  not survive one at all**: median survival across the 50 crossings is **0.000**,
+  8 037 of 8 097 names dropped and 8 784 added, against a median of 1.000 within
+  one publisher — because the regional networks publish only `P` and `S` where
+  `us` publishes `Pn`, `Pg`, `Sn`, `Sg` for the same near field, and only about a
+  third of the stations are shared anyway. **So the seam was not corrupting this
+  work's arrival arithmetic; it was truncating it.** Every arrival figure in
+  iteration 15's five instances is correct — not one name survives any of the
+  eight crossings on its two seam instances — and this is the first seam check in
+  three sessions to leave a published number standing. What was wrong is what the
+  file said: a denominator counting versions of a record the picks were never in,
+  a readout asserting *"moving the epicentre by X km"* where nothing moved and
+  another record was served, and a timeline drawing a crossing as an unexplained
+  collapse. All three are corrected. Where the name *does* survive it survives
+  into a falsehood: **60 names survive a crossing in the whole population, on
+  three events, and all 60 publish a different arrival instant** — the condition
+  under which this work draws a re-picked tail and says the station remade its own
+  pick. None did. Four of them, on `us7000t2wx`, are remade and unremade: one
+  instant by `us`, another by `ak` for twenty-three versions, the first again.
+  That event has no felt record at all — 93 km off Adak — so the clearest case in
+  the population is undrawable by this work, and lives only in the record.
+  What changes in the pipeline: an arrival version carries its publisher; a pick
+  is named by that publisher with its station code and phase label; a version
+  revises only the previous version of its own record; both readings are computed
+  inside every build at every version in force and the count of disagreements
+  travels into the file; and the build ends by listing every guard that fired,
+  marked `!!`, where the build is read rather than only in the artifact — because
+  iteration 9's pick-name guard fired 10 on the Hawaiian instance, was published
+  by iterations 14 and 15, and went unread here for two sessions (MEOT 143, the
+  Watt governor: regulation on the same channel as the thing regulated).
+  Instances: the five of iteration 15, whose `counts` are identical to iteration
+  15's but for seven added fields, and — the sixth, and the demonstration —
+  `aka2026msxacu.html` (Cordova, Alaska, M 5.3), which carries 42 of the 60
+  surviving names and is the only event in this work's reach where the two rules
+  give a built file different numbers: at its last version **99 picks with a
+  predecessor and 98 movements become 72 and 71**. Both numbers are in the file.
+  Checked by `check.js`, unchanged from iteration 15: 1 250 states per width at
+  1440, 1100 and 820 px — **3 750 checks, all passing**.
+
+  *Corrected 2026-09-12 (session 28), beside the figure and not in place of it:
+  the state count in the line above does not agree with session 27's own
+  protocol, its ledger or its addendum, all three of which say **1 146 states
+  per width and 3 438 checks**. Re-measured today by running the committed
+  harness over the committed instances: `us6000tmta` 131, `us6000tm81` 100,
+  `us6000tjl2` 424, `hv75018296` 76, `nc75382936` 320 — five of the six, summing
+  to 1 051, which is exactly iteration 15's published figure for those same five
+  — and `aka2026msxacu` 95 from session 27's addendum, giving **1 146**. The
+  sixth was not re-measured: the run was stopped to free the container for
+  iteration 17's own check, so 95 is cited and not measured here. 1 250 and
+  3 750 are entries in this file and nowhere else. Nothing above is retouched.*
+
+- **`iteration-17/`** — session 28. **The one count that still crossed the seam,
+  and it crossed inside a single version.** Session 27 left it as reasoned and
+  not measured: whether a publisher crossing can reach the *crowd* — how many
+  other marks of a record stand within a chosen distance of one of its marks,
+  which is the vertical coordinate of both strips — and argued it cannot,
+  because the crowd is computed inside one published version. Measured, the
+  argument points the wrong way. A felt version's standing population is every
+  block the record has **not withdrawn**, not the blocks that version published,
+  so where two publishers publish a felt record of the same ground under one
+  event id that population holds both, in every version, with no crossing needed
+  at that instant. Being inside one version is not the protection; on the felt
+  half it is the mechanism. **On `nc75382936` a single block of the second
+  record — one, standing among 2 586 — changes 2 581 of the counts drawn at the
+  widest rung** and 12 902 over the record's 610 328 published block-counts; on
+  `hv75018296`, where 28 of 62 standing blocks are the second record's, all 62
+  change. The file has said the other thing since iteration 12, in bold in the
+  disclosure, in the figure's own description for a reader who cannot see it,
+  and in the comment beside the code: three statements and one implementation,
+  and the implementation was the odd one out. The arrival half was never
+  affected and not by a rule — a version of the arrival record is one
+  publisher's whole list of picks, so a pick's company is its own record's by
+  construction, and that is now checked on every build rather than inferred.
+  Iterations 12 to 16 keep the numbers they drew, in the open.
+  **And a number this work has published for five versions is not a possible
+  count.** `countsIn()` held each version's counts in a map keyed by the mark's
+  *name*, so a name a version publishes twice collected both marks' company into
+  one entry and drew both marks at that height. On `hv75018296` five
+  station-and-phase names are published twice in one version (`HV.PUHI` S and P,
+  `HV.UWE` S and P, `IU.POHA` P, all automatic) in each of the first two
+  versions, which belong to the `hv` record — and the arrival strip's rule there
+  was topped at **224**, where the largest version in the file holds **141**
+  picks and the two the 224 comes out of hold 113 each. The panel a reader opens
+  on is a `us` version with no collisions, scaled by a doubled count out of the
+  other record: the seam and the collision compound, and neither was visible in
+  the other's terms. The largest count any pick there actually has is 117. This is
+  iteration 9's own `pickKeyCollisions` guard, which has read 10 on that instance
+  since iteration 14 and which session 27 recorded as unread for two sessions and
+  read as a fact about naming. It is not only a fact about naming; it is drawn.
+  Counts are now held by a mark's position in its own version.
+  Also corrected: the rule's upper tick claimed to be "the most any mark of this
+  record ever had at this rung" and is the most any mark in the *file* ever had —
+  on `aka2026msxacu` 279 against the in-force record's own 82, at every one of
+  the seven rungs. The maximum stays pooled, because this file's oldest
+  discipline is that moving the instant must not rescale an axis, and the tick
+  now says whose height it is (`42 hv` on a panel whose record in force is `us`).
+  And the opening sentence, the last place in the file where the reading
+  iterations 6 to 14 used survived: it counted every version in the list as one
+  record's and took its seismometer count from the largest version whoever
+  published it. On `aka2026msxacu` it said *390 seismometers, published 10
+  times*; the record in force is another network's, published **twice**, its
+  largest version carrying **291**.
+  What changes in the pipeline: a block's company is counted against its own
+  record only; `feltForeignStanding` travels into the file as a count and a
+  guard; the build's and the page's two rules for resolving a repeated pick name
+  become one (last wins — checked, no published figure moves); and **the guards
+  leave the terminal**. A firing is appended to `works/arrival/guards.md`, dated,
+  with the event and the iteration, and a build on which a guard fires exits
+  non-zero — the file is still written, because refusing to write it would hide
+  the evidence the guard is about. Neither makes a session read it; the
+  obligation that would is in `record/2026-09-12-session-28.md` and not in the
+  code, and the ledger says so rather than letting the code look as though it had
+  solved MEOT 143.
+  Instances: the six of iteration 16, of which `us6000tmta` and `us6000tjl2` are
+  rebuilt from records that moved overnight and are therefore not comparable
+  across the iterations — the Japanese record published a fourth version of its
+  arrivals with a fourth epicentre **12.12 km** from the third, and the `counts`
+  object this practice has compared every morning since session 24 did not change
+  by one digit.
+  What forced the change is in
+  `ledger/2026-09-12-session-28-what-a-fixed-scale-is-fixed-over.md`, and the
+  reading that names it is `reading/03-meot-part-i-ch2-individualization.md` at
+  MEOT 63–66 — a laboratory "is thus above all constituted by un-coupling
+  devices, in order to avoid creating associated milieus by accident", which is
+  what this iteration is and also the objection to the three scales it leaves
+  pooled.
+
+*Added 2026-09-20 (session 33), late and dated. The four entries below were
+owed by sessions 29, 30, 31 and 32 and written by none of them: the lineage
+stopped at iteration 17 while four more iterations were built, committed and
+named in four protocols. Nothing above is retouched. They are written here from
+those protocols and from the iterations' own headers, by a session that did not
+build them, and they say less than an entry written on the day would have.*
+
+- **`iteration-18/`** — session 29. **The first thing this work says about how
+  finely to read it.** One addition and nothing else: a paragraph under the felt
+  half, and the computation behind it, giving from the file's own record the
+  separation at which its horizontal axis can be read — **57.3 % of pairs
+  correctly ordered within a quarter of a block's own distance and 99.5 % beyond
+  five times on the Californian instance, 55.1 % and 91.3 % on the Japanese
+  one** — with each band's pair count printed beside its share, because Peru's
+  100.0 % beyond five times rests on six pairs. The paragraph carries the
+  population figures of session 18's ordering claim, dated and with the ledger
+  named, and says in the file's own words that two events gave the right shape
+  and the wrong confidence. The figure is identical to iteration 17's; no number
+  this work draws changes and no sentence it published is struck. Two
+  implementations that were not written against each other agree on the measure
+  — the population probe places a block at its outline's centre and reads one
+  published version, `build.py` at the midpoint of its published extent over
+  every block not withdrawn — 70.8 % of 1 308 pairs on Peru from both, 76.9 % of
+  233 390 and of 233 388 on Colombia. Nothing was tuned. Instances: six.
+  `ledger/2026-09-13-session-29-what-a-claim-of-three-events-was.md`.
+
+- **`iteration-19/`** — session 30. **The bands are measured from an epicentre,
+  and the epicentre moves.** Session 29 left that as an inheritance in its own
+  words — *the bands are sensitive to the epicentre in force … and a reader is
+  not told*. One addition and nothing else: the same blocks at the same
+  intensities, measured from the **first** epicentre the record published
+  instead of the one in force, with the distance between the two and the count
+  of pairs that fall into a different band once the origin moves. The record
+  then demonstrated the point without being asked: Peru's fourth epicentre,
+  3.811 km away, left the overall ordering count at exactly **926 of 1 308** —
+  the same 54 blocks, the same intensities — while **32 of 1 431 pairs changed
+  band**. Session 29 had written that expectation into a protocol on 2026-09-13;
+  it is the first prediction of this practice the record confirmed by moving
+  under it. Instances: six. `ledger/2026-09-16-session-30-what-moved-while-no-one-was-reading.md`.
+
+- **`iteration-20/`** — session 31. **The first published origin is not the
+  worst one.** Iteration 19 measured the bound against the first origin only,
+  and did not tell a reader that the first is not the worst. The same measure is
+  now taken against **every** origin the record published and then left, and the
+  one that moves the most pairs is printed beside the first. On three of six
+  records the first understates the bound, by up to a factor of **2.3** — Peru's
+  second origin moves 143 of 1 431 pairs where its first moves 62 — and on the
+  other three the first *is* the worst, which matters as much: the measure is
+  not built so that something always moves. On Japan the two do not order
+  together at all: the origin that disturbs the most pairs stands **12.122 km**
+  from the one in force, *nearer* than the first at 12.671 km, and still moves
+  2 930 pairs against 2 878. The distance this file already printed is therefore
+  not a proxy for how much the bands move — a band is a ratio of two distances,
+  and the ratio depends on the direction the origin left in as well as on how
+  far. Instances: six.
+  `ledger/2026-09-18-session-31-what-the-practice-never-audited.md`.
+
+- **`iteration-21/`** — session 32. **How deep the record goes over one square
+  of ground, and a field that had carried the wrong count since iteration 19.**
+  The addition is a measurement and not a fourth consecutive disclosure about
+  how to read the last one: over every block the record ever published, how many
+  were republished at all, how many more than once, how often the deepest was
+  republished, and how long after its first publication the last of those came.
+  Colombia's deepest block was published again **38 times** over 27.72 days,
+  California's **25 times** inside 2.91 days, and nothing in twenty iterations
+  would have told a reader that such a block exists. The repair, named as a
+  repair and not a second addition: `counts.changed` had carried the
+  epicentre-shift band count since iteration 19, because a second assignment in
+  the same scope reached the first — wrong in **twelve built instances**, by
+  between 4.4 and 131 times and larger every time. Nothing draws the field, so
+  no reader was shown a wrong number; the file publishes it nonetheless.
+  Iterations 19 and 20 are not edited. Instances: six.
+  `ledger/2026-09-19-session-32-what-a-figure-with-no-adversary-does.md`.

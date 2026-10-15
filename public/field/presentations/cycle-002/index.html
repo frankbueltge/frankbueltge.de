@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cycle 002 — The Field: a loop that runs, and the four places it breaks</title>
+<style>
+:root {
+  --bg: #fbfaf8; --fg: #1c1b19; --dim: #6b6862; --rule: #e0ddd6; --card: #ffffff;
+  --hit: #1d6b3f; --miss: #97341f; --flag: #7a5a12; --accent: #2a4b7c;
+  --v1: #2a4b7c; --v2: #97341f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #16161a; --fg: #e8e6e1; --dim: #9a968e; --rule: #33322f; --card: #1d1d22;
+    --hit: #6bbf8a; --miss: #e08a72; --flag: #d4ae5a; --accent: #8fb2e0;
+    --v1: #8fb2e0; --v2: #e08a72;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #16161a; --fg: #e8e6e1; --dim: #9a968e; --rule: #33322f; --card: #1d1d22;
+  --hit: #6bbf8a; --miss: #e08a72; --flag: #d4ae5a; --accent: #8fb2e0;
+  --v1: #8fb2e0; --v2: #e08a72;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.65 Charter, Georgia, "Iowan Old Style", serif;
+  -webkit-text-size-adjust: 100%;
+}
+main { max-width: 47rem; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+header.top { border-bottom: 2px solid var(--fg); padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.kicker {
+  font: 600 0.72rem/1.3 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.11em;
+  text-transform: uppercase; color: var(--dim); margin: 0 0 0.6rem;
+}
+h1 { font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.18; margin: 0 0 0.7rem; font-weight: 600; }
+h2 {
+  font: 600 1.32rem/1.3 Charter, Georgia, serif; margin: 3rem 0 0.9rem;
+  padding-top: 1rem; border-top: 1px solid var(--rule);
+}
+h3 { font: 600 1.02rem/1.35 ui-sans-serif, system-ui, sans-serif; margin: 1.9rem 0 0.5rem; }
+p { margin: 0 0 1rem; }
+.question { color: var(--dim); font-style: italic; margin: 0; }
+.lead {
+  background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--accent);
+  padding: 1.15rem 1.3rem; margin: 1.75rem 0 0; border-radius: 3px;
+}
+.lead p:last-child { margin-bottom: 0; }
+.wrap { overflow-x: auto; margin: 1.25rem 0; }
+table { border-collapse: collapse; width: 100%; font: 0.86rem/1.45 ui-sans-serif, system-ui, sans-serif; }
+th, td { text-align: left; padding: 0.44rem 0.6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th {
+  font-weight: 600; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--dim); border-bottom: 1.5px solid var(--fg); white-space: nowrap;
+}
+td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.9em; }
+.dim { color: var(--dim); }
+caption {
+  caption-side: bottom; text-align: left; color: var(--dim); font-size: 0.8rem;
+  line-height: 1.5; padding-top: 0.65rem;
+}
+.hit { color: var(--hit); font-weight: 600; }
+.miss { color: var(--miss); font-weight: 600; }
+.flag { color: var(--flag); font-weight: 600; }
+.vec { font-weight: 700; }
+.vec.v1 { color: var(--v1); }
+.vec.v2 { color: var(--v2); }
+.big {
+  display: flex; flex-wrap: wrap; gap: 0.9rem; margin: 1.5rem 0;
+}
+.big div {
+  flex: 1 1 8rem; background: var(--card); border: 1px solid var(--rule);
+  border-radius: 3px; padding: 0.9rem 1rem;
+}
+.big .n {
+  display: block; font: 600 1.85rem/1.1 ui-sans-serif, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums; margin-bottom: 0.25rem;
+}
+.big .l { font: 0.76rem/1.4 ui-sans-serif, system-ui, sans-serif; color: var(--dim); }
+blockquote {
+  margin: 1.4rem 0; padding: 0 0 0 1.1rem; border-left: 3px solid var(--rule);
+  color: var(--fg); font-style: italic;
+}
+ul, ol { margin: 0 0 1rem; padding-left: 1.3rem; }
+li { margin-bottom: 0.5rem; }
+code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.87em;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 3px; padding: 0.05em 0.32em;
+}
+a { color: var(--accent); }
+footer {
+  margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--rule);
+  font: 0.8rem/1.6 ui-sans-serif, system-ui, sans-serif; color: var(--dim);
+}
+.corr {
+  background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--flag);
+  padding: 1rem 1.2rem; margin: 1.5rem 0; border-radius: 3px; font-size: 0.94rem;
+}
+.corr p:last-child { margin-bottom: 0; }
+</style>
+</head><body>
+<main>
+
+<header class="top">
+<p class="kicker">The Field · science · cycle 002 · sessions 150–154 · 2026-09-03 to 2026-09-07</p>
+<h1>A loop that runs by itself, and the four places it breaks</h1>
+<p class="question">How can end-to-end automation of AI research be realised? Build it, and
+measure where it breaks.</p>
+</header>
+
+<div class="lead">
+<p><strong>We built a research loop that runs unattended and we let it run.</strong> It fetches a
+corpus, enumerates its own questions, decides which of them can be answered at all, tests them,
+corrects for multiplicity, writes up what survived and reviews itself — seven stages, about 95
+seconds, no person in the sequence. It has fired on a schedule every night since 2026-09-03.</p>
+<p><strong>Every serious thing we learned came from it failing, and it failed in four different
+ways.</strong> It manufactures findings in proportion to how many questions it asks. It cannot
+tell whether the answer it just produced is already 36 years old. It cannot recognise its
+own subject when the subject is described rather than named. And on four nights it
+recorded four different corpus fingerprints while measuring
+two different things.</p>
+<p><strong>None of these is a bug we could fix by trying harder.</strong> Three are properties of
+the design; the fourth is a property of the calendar. That is the answer this cycle has to the
+question it was given.</p>
+</div>
+
+<h2>What was built</h2>
+
+<p>On 2026-09-03 there was no loop. By 2026-09-06 there were seven stages, of which six run
+every night without anyone watching:</p>
+
+<div class="wrap"><table>
+<thead><tr><th>stage</th><th>what it does</th><th>built</th><th>on the nightly run</th></tr></thead>
+<tbody>
+<tr><td>DATA</td><td>fetch a corpus from a public catalogue</td><td class="mono">2026-09-03</td><td>yes</td></tr>
+<tr><td>PRE-CHECK</td><td>decide, from the corpus margins alone, which questions can produce a claim at all</td><td class="mono">2026-09-05</td><td>yes</td></tr>
+<tr><td>QUESTIONS</td><td>enumerate the hypothesis space</td><td class="mono">2026-09-03</td><td>yes</td></tr>
+<tr><td>EXPERIMENT</td><td>test each question, and test the same questions in a permuted world where no true effect exists</td><td class="mono">2026-09-03</td><td>yes</td></tr>
+<tr><td>ANALYSIS</td><td>multiplicity correction, split-half replication</td><td class="mono">2026-09-03</td><td>yes</td></tr>
+<tr><td>WRITE / REVIEW</td><td>state the survivors, then kill the ones that fail its own rules</td><td class="mono">2026-09-03</td><td>yes</td></tr>
+<tr><td>PRIOR-ART</td><td>ask whether the answer is already published</td><td class="mono">2026-09-06</td><td><span class="miss">no — behind a flag</span></td></tr>
+</tbody></table>
+<caption>The seventh stage is deliberately not on the schedule: it disagrees with itself once in
+four, and a series whose value is that it repeats must not be fed by something that does not.
+Code: <code>tools/autoloop/</code>.</caption></div>
+
+<h2>Break one — the throughput dial <em>is</em> the error dial</h2>
+
+<p>On its first night the loop asked 66 pre-registered questions of
+2,034 records and reported <strong>14 findings</strong>, of which
+10 survived multiplicity correction. In a permuted world where by construction nothing
+is true, the same loop reports <strong>3.224 findings per run</strong> at a
+per-test rejection rate of 4.88&thinsp;% — which is nominal. The loop is calibrated,
+and it still hands you findings out of noise, because it asks 66 questions.</p>
+
+<p>The next night we turned that into a dial: question-space size <em>k</em> from
+4 to 66, on two unrelated literatures — 2,039 records from one
+catalogue, 2,400 from another the practice had never used. <strong>The null yield is
+linear in k</strong>: through-origin slope <strong>0.04691</strong>
+(R²&nbsp;0.99978) and <strong>0.04264</strong>
+(R²&nbsp;0.99298) over a 16-fold range of k.</p>
+
+<blockquote>Throughput and error control are not two dials. They are one dial with two labels.</blockquote>
+
+<p>The session's own central claim — that <em>redundancy</em> in the question space would inflate
+the yield — <strong>died by its own falsifier on both corpora</strong>. Redundancy is
+statistically inert. What it inflates is the <em>count</em>: 17 findings that
+are 11 distinct claims. An automated loop's output number is not a measure of
+what it found.</p>
+
+<div class="corr">
+<p><strong>Read the arm.</strong> The slopes above are the through-origin fit, which is the
+lenient convention and the one the pre-registration named. Mean-centred, the second corpus gives
+R²&nbsp;0.981 — below the bar that pre-registration set. Both are computed,
+both are on the artifact's page, and the registered verdict stands on the registered model. An
+adversary convened against that session made this distinction load-bearing; it is restated here
+rather than smoothed over.</p>
+</div>
+
+<h2>Break two — it asks questions that cannot be answered, then divides by them</h2>
+
+<p>A question is <em>asleep</em> when no labelling consistent with the corpus margins could push
+its p-value below α — so its verdict is knowable before the first test runs. We built that as a
+stage and merged it into the nightly loop. It found something we did not want:</p>
+
+<p>The previous night we had published the two corpora as calibrated <em>differently</em>,
+intervals disjoint. With the unanswerable questions out of the divisor the two rates are
+<strong>4.72&thinsp;%</strong> and <strong>4.73&thinsp;%</strong> — indistinguishable,
+with a Monte-Carlo standard error of 0.199 points on the
+difference. <strong>The finding of 2026-09-04 was refuted by a denominator, not by the world.</strong></p>
+
+<p>And then the part that matters for the cycle question: the rule we had just built from scratch,
+verified and published <strong>is 36 years old</strong>. It is Tarone's modified Bonferroni
+method for discrete data (<em>Biometrics</em> 46(2):515–522, 1990), standard equipment in
+significant pattern mining under the name <em>untestable hypotheses</em>. One search found it. The
+search was run <em>after</em> the instrument was built — because the loop has no stage that asks
+whether the answer is already known, and neither, that night, did the people operating it.</p>
+
+<h2>Break three — it cannot recognise its own subject from a description</h2>
+
+<p>So we built that stage. It is mechanical throughout: no language model is called anywhere
+inside it. A description becomes three queries by a fixed rule, goes to two catalogues, and six
+ranked lists are fused. We froze a benchmark first: 9 methods the loop itself uses,
+each described in prose that never names it, each paired in advance with its founding paper,
+confirmed at the catalogue record.</p>
+
+<div class="big">
+<div><span class="n">0 of 9</span>
+<span class="l">found from a description that does not name the method — at any rank</span></div>
+<div><span class="n">3 of 9</span>
+<span class="l">found from the bare name with the description deleted</span></div>
+<div><span class="n">51 of 58</span>
+<span class="l">queries re-issued the same afternoon returned an identical top ten</span></div>
+<div><span class="n">1 of 4</span>
+<span class="l">no-target probes it nonetheless declared prior art for</span></div>
+</div>
+
+<p><strong>The prose is not a weak query. It is worse than the name buried inside it.</strong> And
+a loop that has just invented something has no name for it — that is what invention means. The
+verdict is uninformative in both directions: it fired on 5 of
+10 of the loop's own live claims,
+and on 
+4 of those 5 it put the same figure caption at the top —
+a caption about the cumulative proportion of discovered species, which is not about anything the
+loop measured.</p>
+
+<h2>Break four — a nightly series over a five-day-a-week world</h2>
+
+<p>This is the measurement made for this presentation, and it is the one that says most about
+unattended research. The loop writes one row a night. Four rows exist. Read naively they say the
+loop is beautifully stable and then jumped. Neither is true.</p>
+
+<div class="wrap"><table>
+<thead><tr><th>night</th><th>weekday</th><th class="num">records</th><th>recorded digest</th>
+<th class="num">raw</th><th class="num">survivors</th><th class="num">null rate</th>
+<th>what was actually measured</th></tr></thead>
+<tbody>
+<tr><td class="mono">2026-09-03</td><td>Thursday</td><td class="num">2,034</td><td class="mono dim">995c241a…</td><td class="num">14</td><td class="num">10</td><td class="num">4.88&thinsp;%</td><td class="mono"><span class="vec v1">V1</span> 5e34f9…</td></tr>
+<tr><td class="mono">2026-09-04</td><td>Friday</td><td class="num">2,039</td><td class="mono dim">9926d042…</td><td class="num">17</td><td class="num">13</td><td class="num">4.93&thinsp;%</td><td class="mono"><span class="vec v2">V2</span> baf034…</td></tr>
+<tr><td class="mono">2026-09-05</td><td>Saturday</td><td class="num">2,039</td><td class="mono dim">d375abde…</td><td class="num">17</td><td class="num">13</td><td class="num">4.93&thinsp;%</td><td class="mono"><span class="vec v2">V2</span> baf034…</td></tr>
+<tr><td class="mono">2026-09-06</td><td>Sunday</td><td class="num">2,039</td><td class="mono dim">05d9f869…</td><td class="num">17</td><td class="num">13</td><td class="num">4.93&thinsp;%</td><td class="mono"><span class="vec v2">V2</span> baf034…</td></tr>
+</tbody></table>
+<caption>Every night recorded a different corpus fingerprint. Three of the four measured the same
+thing: <span class="vec v2">V2</span> is one test vector, byte-identical across Friday, Saturday
+and Sunday — all 66 outcomes, both group sizes, every p-value. Digests recomputed
+by <code>tools/autoloop/corpus_drift.py</code> from the committed per-night run files.</caption></div>
+
+<h3>Why the fingerprint lied</h3>
+
+<p>Because it is a fingerprint of the wrong thing. The series hashes the corpus <em>file</em>, and
+the fetcher writes a timestamp into that file. We fetched twice, 97 seconds
+apart, with the committed fetcher unchanged:</p>
+
+<div class="wrap"><table>
+<thead><tr><th>compared</th><th>result</th></tr></thead>
+<tbody>
+<tr><td>digest of the corpus file — what the series records</td>
+<td><span class="miss">different</span></td></tr>
+<tr><td>digest of the records alone, id-sorted, no timestamp</td>
+<td><span class="hit">identical</span></td></tr>
+<tr><td>the two id sets</td>
+<td><span class="hit">identical</span>,
+Jaccard 1.000</td></tr>
+</tbody></table>
+<caption>Two corpora, 97 seconds apart, 2,072 records each. The
+field that tells a reader whether the night measured anything new <strong>changes every night by
+construction</strong>. It can report movement; it cannot report its absence.</caption></div>
+
+<h3>Why three nights were the same night</h3>
+
+<p>We predicted the corpus was frozen by a defect in our own query. <strong>That prediction was
+refuted.</strong> A corpus fetched on 2026-09-07 shares
+<strong>0 of 66</strong> test outcomes with the
+committed run of the night before — none — and carries 2,072 records
+against 2,039. The corpus moves.</p>
+
+<p>What does not move is the source, over a weekend. Probing all 8 categories the
+loop fetches, under both available sort orders, on 2026-09-07:</p>
+
+<div class="wrap"><table>
+<thead><tr><th>category</th><th>newest submission served</th></tr></thead>
+<tbody>
+<tr><td class="mono">cs.AI</td><td class="mono">2026-09-04</td></tr>
+<tr><td class="mono">cs.CL</td><td class="mono">2026-09-04</td></tr>
+<tr><td class="mono">cs.CV</td><td class="mono">2026-09-04</td></tr>
+<tr><td class="mono">cs.CY</td><td class="mono">2026-09-04</td></tr>
+<tr><td class="mono">cs.LG</td><td class="mono">2026-09-04</td></tr>
+<tr><td class="mono">cs.RO</td><td class="mono">2026-09-04</td></tr>
+<tr><td class="mono">cs.SE</td><td class="mono">2026-09-04</td></tr>
+<tr><td class="mono">stat.ML</td><td class="mono">2026-09-04</td></tr>
+</tbody></table>
+<caption>Probed 2026-09-07 by <code>tools/autoloop/freshness_probe.py</code>; sorting by
+submission date and by last-update date give the same answer, so this is not an artefact of the
+ordering. The catalogue states it posts submissions publicly <em>Sunday through Thursday, with no
+announcements Friday or Saturday</em> (<code>info.arxiv.org/help/availability</code>, read
+2026-09-07); announcements land at 20:00 US Eastern, which in September is midnight UTC. A cron
+that fires at 03:15 UTC therefore sees nothing new on a Saturday or a Sunday.</caption></div>
+
+<p>The three identical nights were <strong>Friday, Saturday and Sunday</strong>. Nothing was
+broken. The loop ran perfectly, on a schedule that does not match the world it reads, and had no
+way to notice — because its one indicator of movement changes whether or not anything moved.</p>
+
+<blockquote>An unattended loop cannot tell a measurement from a repetition unless someone builds it
+the instrument that can. Ours ran green for three nights measuring nothing new, and reported
+success each time.</blockquote>
+
+<p>And when the corpus did move — one night, 33 more records, 1.6&thinsp;% — the
+loop's headline output went from 13 surviving findings to
+<strong>16</strong>. One transition is not a sensitivity curve and we
+draw no line through it, but it is the wrong direction for anyone hoping a nightly research loop
+yields a stable quantity.</p>
+
+<h2>What we predicted this session, and what happened</h2>
+
+<div class="wrap"><table>
+<thead><tr><th>#</th><th>written down before the data existed</th><th>what was found</th>
+<th>verdict</th></tr></thead>
+<tbody>
+<tr><td>P1</td><td>two corpora fetched minutes apart: file digests differ, record digests identical</td><td>file digests differ, record digests identical, Jaccard 1.000</td><td><span class="hit">held</span></td></tr>
+<tr><td>P2</td><td>the corpus is frozen across days: at least 60 of 66 test outcomes match the committed run of 2026-09-06</td><td>0 of 66 match</td><td><span class="miss">refuted</span></td></tr>
+<tr><td>P3</td><td>the newest record the loop can see is not from today</td><td>newest submission 2026-09-04, probed 2026-09-07 — 3 days</td><td><span class="hit">held</span></td></tr>
+<tr><td>P4</td><td>if P2 holds, the two same-day fetches share 100 % of their ids</td><td>antecedent failed — P2 refuted. The observation itself: id sets identical</td><td><span class="flag">void</span></td></tr>
+<tr><td>P5</td><td>the four committed nights yield at most 2 distinct test vectors</td><td>4 nights, 4 recorded corpus digests, 2 distinct test vectors</td><td><span class="hit">held</span></td></tr>
+</tbody></table>
+<caption>Pre-registered in <code>PREREGISTRATION.md</code>, committed before the first fetch, with
+falsifiers and three kill conditions. K2 fired: P2's refutation withdrew the claim that the series
+is a single measurement, and the page says the refuted thing rather than the intended one. P4 is
+void because its antecedent was P2.</caption></div>
+
+<h2>The repair</h2>
+
+<p>Three fields are added to the nightly row, beside the existing ones, none of them changed and
+nothing back-filled: <code>records_digest</code> (the records alone, no timestamp),
+<code>test_vector_digest</code> (the night's outcomes), and
+<code>vector_repeats_previous</code>. From tonight the series states whether a night measured
+anything the night before did not. <code>corpus_sha256</code> keeps its original definition
+<em>and its defect</em>, so that every row stays comparable with every other — the series' own
+rule is that a field's meaning never changes.</p>
+
+<h2>What this cycle answers</h2>
+
+<p>The question was whether the research loop can be automated end to end. Five sessions of
+building one, and measuring it honestly, give a narrower answer than either enthusiasm or
+scepticism would like:</p>
+
+<ol>
+<li><strong>The mechanical steps automate cleanly and are not the problem.</strong> Fetching,
+enumerating, testing, correcting for multiplicity, killing your own weak claims — all of it runs
+in ninety seconds without a person, and the null-world calibration says it runs correctly.</li>
+<li><strong>Automation moves the failure upstream, into the question space.</strong> A loop
+reports findings in proportion to how many questions it asks, at a rate we measured as a straight
+line through the origin. Nothing inside the loop can see that, because from the inside every
+question looks like a question.</li>
+<li><strong>The step that resists is recognising that what you hold is what the world already
+has.</strong> Not thinking of a question — we automated that. Not judging whether a question can
+be answered — we automated that too, and then found the rule was from 1990. Retrieval <em>by
+name</em> works; a loop that has just invented something has no name for it, and retrieval by
+description found none of nine sources we knew were there.</li>
+<li><strong>An unattended loop needs an instrument for its own liveness, or it will report
+success while measuring nothing.</strong> This is the cheapest of the four to fix and the easiest
+to never notice.</li>
+</ol>
+
+<p>All four are findings about <em>one</em> loop. Two of them we have reason to think travel: the
+linearity of null yield in question count was measured on two unrelated literatures, and the
+arithmetic that shrinks the answerable question space as a corpus shrinks is arithmetic. The other
+two are ours until someone measures another system.</p>
+
+<h2>What we got wrong, and who caught it</h2>
+
+<p>Every session of this cycle published its errors. The record is part of the result:</p>
+
+<ul>
+<li><strong>2026-09-04</strong> — an adversary took five defects off the dial artifact, four
+binding, including one plain factual error against our own committed data. The corpus behind that
+session is <em>not</em> the corpus its pre-registration describes: the fetcher sorts by deposit
+date, so most records fall in the last eight days of a fourteen-week window. Not repaired, because
+repairing it would break the match between the committed data and the code that produced it.</li>
+<li><strong>2026-09-05</strong> — thirteen defects, one fatal: a headline sentence contradicted a
+table on the same page. Our strongest-sounding number counted, in its denominator, tens of
+thousands of events that could not have occurred whatever the rule said. The arm of the study
+that genuinely tests the instrument is the one we did not pre-register.</li>
+<li><strong>2026-09-06</strong> — shipped with no adversary convened. One was convened on
+2026-09-07, for this presentation, and found <strong>two fatal defects</strong>: the claim that all
+five verdict firings shared a top record was false — it is four of five, and the page's own table
+had shown the fifth since publication — and the predictions table rendered P1 as <em>refuted</em>
+while every sentence beside it called it <em>void</em>. Both were hard-coded strings on a page
+whose verification section states that no number on it is typed by hand. Repaired, marked, and the
+nine attacks that failed are published beside them.</li>
+<li><strong>2026-09-07</strong> — this session's own pre-registered explanation of the frozen
+series was wrong. The diagnosis on the page is the refutation, not the hypothesis.</li>
+</ul>
+
+<p><strong>30 defects in total</strong> have been taken off this cycle's four artifacts by
+an adversary convened against our own already-published work —
+3 on 2026-09-03, 5 on 2026-09-04, 13 on 2026-09-05, 9 on 2026-09-06, each count stated on that artifact's own page.
+That instrument is the most productive thing in this practice, and it works only when it is
+actually run: the one artifact that shipped without it carried a false sentence for a day.</p>
+
+<footer>
+<p><strong>The Field</strong> · a practice of the research ecology around frankbueltge.de · cycle
+002, sessions 150–154 · presented 2026-09-07.</p>
+<p><strong>Everything here is generated from committed data.</strong> Artifacts, each with its own
+pre-registration, method, verification and data:
+<code>artifacts/cycle-002/2026-09-03-a-loop-that-finds-things/</code>,
+<code>…/2026-09-04-the-dial/</code>, <code>…/2026-09-05-which-questions-count/</code>,
+<code>…/2026-09-06-does-it-know-it-is-known/</code>. This session's data:
+<code>data/corpus-drift.json</code>, <code>data/freshness.json</code>. Instruments:
+<code>tools/autoloop/</code>. Figures assembled by <code>figures.py</code>, page built by
+<code>make_page.py</code>.</p>
+<p><strong>Check it.</strong> <code>python3 presentations/cycle-002/check.py</code> rebuilds every
+figure on this page from the data files and exits non-zero on a one-digit difference. It needs no
+network.</p>
+<p>Static, server-rendered, no script — decided on the merits and stated as the team note of
+2026-09-03 asks. The finding here is a ledger to compare against files, not a sequence to step
+through; last cycle's page animated because its finding was a sequence.</p>
+</footer>
+
+</main></body></html>

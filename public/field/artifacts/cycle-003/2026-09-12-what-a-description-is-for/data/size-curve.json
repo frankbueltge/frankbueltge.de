@@ -1,0 +1,105 @@
+{
+  "_status": "POST-HOC, DECLARED. Written after the pre-registered numbers were seen. Scores no prediction. The pre-registered analysis is tools/identify/score.py.",
+  "_question": "How much of Instrument 1's reading is catalogue size rather than description quality?",
+  "params": {
+    "seed": 20260912,
+    "repeats_per_size": 5,
+    "common_df_fraction": 0.1,
+    "n_rarest": 3
+  },
+  "uk_ladder": [
+    {
+      "n": 521,
+      "repeats": 5,
+      "not_unique_pct": 16.51,
+      "not_unique_pct_sd": 1.436,
+      "identifies_nothing_pct": 2.88,
+      "r4_duplicate_pct": 4.84,
+      "hollow_broad_pct": 48.21
+    },
+    {
+      "n": 1000,
+      "repeats": 5,
+      "not_unique_pct": 21.38,
+      "not_unique_pct_sd": 1.847,
+      "identifies_nothing_pct": 3.02,
+      "r4_duplicate_pct": 6.86,
+      "hollow_broad_pct": 49.78
+    },
+    {
+      "n": 2000,
+      "repeats": 5,
+      "not_unique_pct": 27.8,
+      "not_unique_pct_sd": 1.757,
+      "identifies_nothing_pct": 2.74,
+      "r4_duplicate_pct": 10.74,
+      "hollow_broad_pct": 52.27
+    },
+    {
+      "n": 4000,
+      "repeats": 5,
+      "not_unique_pct": 35.33,
+      "not_unique_pct_sd": 1.474,
+      "identifies_nothing_pct": 2.78,
+      "r4_duplicate_pct": 15.58,
+      "hollow_broad_pct": 54.55
+    },
+    {
+      "n": 8000,
+      "repeats": 5,
+      "not_unique_pct": 43.05,
+      "not_unique_pct_sd": 0.807,
+      "identifies_nothing_pct": 2.81,
+      "r4_duplicate_pct": 20.88,
+      "hollow_broad_pct": 57.05
+    },
+    {
+      "n": 16000,
+      "repeats": 5,
+      "not_unique_pct": 49.9,
+      "not_unique_pct_sd": 0.286,
+      "identifies_nothing_pct": 2.84,
+      "r4_duplicate_pct": 24.97,
+      "hollow_broad_pct": 59.02
+    },
+    {
+      "n": 32000,
+      "repeats": 5,
+      "not_unique_pct": 55.53,
+      "not_unique_pct_sd": 0.242,
+      "identifies_nothing_pct": 2.83,
+      "r4_duplicate_pct": 27.63,
+      "hollow_broad_pct": 60.23
+    },
+    {
+      "n": 67205,
+      "repeats": 1,
+      "not_unique_pct": 62.17,
+      "not_unique_pct_sd": null,
+      "identifies_nothing_pct": 2.82,
+      "r4_duplicate_pct": 30.92,
+      "hollow_broad_pct": 62.03
+    }
+  ],
+  "home_at_its_own_size": {
+    "n": 521,
+    "repeats": 1,
+    "not_unique_pct": 0.96,
+    "identifies_nothing_pct": 0.0
+  },
+  "comparison_at_n_521": {
+    "uk_subsampled": 16.51,
+    "uk_subsampled_sd": 1.436,
+    "home": 0.96,
+    "uk_at_full_size": 62.17
+  },
+  "is_the_screen_itself_size_dependent": {
+    "_why": "An adversary objected on 2026-09-12 that the page asserted 'so is duplication' by analogy, having measured only the narrowing instrument. So it is measured here, on the same ladder, with the frozen rules untouched.",
+    "r4_duplicate_pct_at_521": 4.84,
+    "r4_duplicate_pct_at_full": 30.92,
+    "r4_ratio_full_over_521": 6.39,
+    "hollow_broad_pct_at_521": 48.21,
+    "hollow_broad_pct_at_full": 62.03,
+    "r1_r3_are_size_free": "R1, R2 and R3 are properties of a single value and cannot move with catalogue size; any movement in hollow_broad across the ladder is R4's alone."
+  }
+}

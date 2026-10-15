@@ -1,0 +1,11 @@
+## v0
+
+A beam balance weighs, day by day from 1978 to 2026, the Northern Hemisphere sea-ice extent on that date against the average for the same calendar day in 1979–1988; each pan carries a stack of white slabs, one per million km², and the beam tips toward the heavier side with a little damped inertia, while a ledger line beneath records the difference as it accumulates and can be hovered to look back. I chose the balance because comparing against the same day of the year removes the huge seasonal swing that otherwise hides the change, and because a scale turns an abstract anomaly into something the body already understands: at first the beam wavers near level, and then, over the decades, it settles and stays tipped toward what used to be there.
+
+## v1
+
+In the screenshot the two stacks of slabs look alike, and the whole comparison is carried by a tilt of a few degrees and by the chart below, so the pans, the most physical part of the work, say almost nothing about the loss. I keep everything and add one thing: on the lighter pan, the slabs it lacks are drawn as hollow outlines up to the height of the heavier stack, warm on the "now" pan when ice is missing and grey on the "then" pan in the rare days when there is more. The absence then has a shape you can count, slab by slab, in the same unit as the ice still there; early on the outline is a sliver that comes and goes, and in the late summers it becomes two or three empty slabs that the scale will not let you forget.
+
+## v2
+
+In the screenshot the caption says the Arctic "holds what it held" while the beam visibly leans the other way: the beam's spring is so slow that, at 290 days a second, it reports weather from a month before, and the one place on the instrument that should give the reading, the little dial above the pivot, is drawn so faint it can hardly be seen. I make the beam stiffer and nearly critically damped, so it still sways but tells the truth about the day it shows, and I turn the dial into a real gauge, larger, geared so its needle turns four times the beam and marked in million km² of difference, which wears as it is used: every day weighed leaves a mark on the arc where the beam came to rest, so by the end the scale itself carries its history, a worn patch near level from the early years and a second one, ever deeper, on the side of what used to be there.

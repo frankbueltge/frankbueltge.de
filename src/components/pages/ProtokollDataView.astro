@@ -9,6 +9,10 @@ import { renderDay } from '@/lib/protokoll/render'
 import { areaPath, buildTopSeries, linePath } from '@/lib/protokoll/series'
 import type { ComparisonLabel, ProtokollDay } from '@/lib/protokoll/types'
 import BefundPanel from '@/components/pages/BefundPanel.astro'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
+import SheetFold from '@/components/experiments/SheetFold.astro'
 
 interface Props { days: ProtokollDay[]; locale: Locale }
 const { days, locale } = Astro.props
@@ -103,11 +107,7 @@ const txt = {
 ---
 
 <div class="mx-auto max-w-5xl px-4 py-14">
-  <header class="mb-10">
-    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">{txt.eyebrow}</p>
-    {latest && (
-      <h1 class="mt-2 text-[clamp(30px,5vw,52px)] font-bold leading-none tracking-tight">{dateLong(latest.date)}</h1>
-    )}
+  <SheetHead kicker={txt.eyebrow} title={latest ? dateLong(latest.date) : txt.eyebrow}>
     <p class="mt-4 max-w-2xl text-fg-muted">{txt.intro}</p>
     {oldest && <p class="mt-2 font-mono text-xs text-fg-faint">{txt.count(metricTops.length, dateShort(oldest.date))}</p>}
     {latest?.index && latest.index.established > 0 && (
@@ -117,7 +117,7 @@ const txt = {
           : `Index-eligible items: ${latest.index.eligible} · with established trend: ${latest.index.established} · improved against the yearly trend: ${latest.index.improved} · worsened: ${latest.index.worsened}. Resolution: adjourned.`}
       </p>
     )}
-  </header>
+  </SheetHead>
 
   <div class="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {metricTops.map((top) => {
@@ -134,7 +134,7 @@ const txt = {
         .replace('{value}', hasVal ? nf.format(e.value!) : '—')
         .replace('{label}', e.label ?? '—')
       return (
-        <section class="flex flex-col rounded-[16px] border border-line bg-panel panel-raised p-5">
+        <section class="flex flex-col rounded-md border border-line bg-panel panel-raised p-5">
           <div class="flex items-baseline justify-between gap-x-3">
             <h2 class="font-semibold">{top.title[locale]}</h2>
             {e.record && (
@@ -189,7 +189,7 @@ const txt = {
   </div>
 
   {verlusteTop && (
-    <section class="mt-8 rounded-[16px] border border-line bg-panel panel-raised p-6">
+    <section class="mt-8 rounded-md border border-line bg-panel panel-raised p-6">
       <h2 class="font-semibold">{de ? 'Verluste' : 'Losses'}</h2>
       <div class="mt-3 space-y-1">
         {verlusteTop.lines.map((line) => <p class="leading-relaxed text-fg-muted">{line}</p>)}
@@ -200,9 +200,8 @@ const txt = {
   )}
 
   {r && (
-    <details class="mt-12 border-t border-line pt-6">
-      <summary class="cursor-pointer font-semibold text-fg-muted">{txt.wortlaut}</summary>
-      <div class="protokoll mx-auto mt-6 max-w-2xl">
+    <SheetFold class="mt-12 border-t border-line pt-6" label={txt.wortlaut}>
+      <div class="protokoll mx-auto mt-3 max-w-2xl">
         <div class="mb-8 space-y-1">{r.kopf.map((line) => <p class="text-[15px] leading-relaxed">{line}</p>)}</div>
         {r.tops.map((top) => (
           <section class="mb-6">
@@ -217,11 +216,11 @@ const txt = {
           <p class="pt-2 font-mono text-xs text-fg-faint">{r.meta}</p>
         </div>
       </div>
-    </details>
+    </SheetFold>
   )}
 
   <section class="mt-10 border-t border-line pt-6">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="kicker">
       {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
     </p>
     <ul class="mt-3 space-y-2 text-sm text-fg-muted">
@@ -245,9 +244,11 @@ const txt = {
     </p>
   </section>
 
-  <nav class="mt-10 flex gap-4 text-sm text-fg-muted print:hidden">
+  <SheetFoot>
+  <nav class="print:hidden">
     <a href={archivUrl} class="transition-colors hover:text-fg">{t(locale, 'prot.archive')}</a>
     <a href={methodUrl} class="transition-colors hover:text-fg">{t(locale, 'prot.method')}</a>
     <a href={feedUrl} class="transition-colors hover:text-fg">RSS</a>
   </nav>
+  </SheetFoot>
 </div>

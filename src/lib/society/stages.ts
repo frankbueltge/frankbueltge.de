@@ -7,8 +7,9 @@
 //
 // stages.test.ts holds the record to the roster: the agentsAdded across all entries must
 // account for every agent in agents.ts — a future stage that adds machinery without adding
-// its chronicle entry fails the build. That is the answer to "willst du jede stage
-// überschreiben?" (Frank, 2026-08-05): no — the record is load-bearing, not decorative.
+// its chronicle entry fails the build. That is the answer to Frank's question of 2026-08-05
+// (wording private), whether every stage is to be overwritten: no — the record is
+// load-bearing, not decorative.
 
 export interface StageEntry {
   /** running number for stages; corrections share the number of the stage they amend */

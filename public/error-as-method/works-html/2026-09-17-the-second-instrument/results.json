@@ -1,0 +1,970 @@
+{
+ "note": "Three decision rules declared in PREDICTIONS.md \u00a73, in a commit that precedes this file, scored against Session 90's 40 hand verdicts and then run over every row in reach under each of Session 90's three vocabularies.",
+ "rules": {
+  "R1_adjacent_subject": "ADJACENT SUBJECT: nothing between the carrier and the modal but a relative pronoun.",
+  "R2_no_competing_nominal": "NO COMPETING NOMINAL: nothing in between that could displace the carrier as subject.",
+  "R3_active_governor": "ACTIVE GOVERNOR: the carrier string acts somewhere in this block.",
+  "R3b_active_governor_own_block": "ACTIVE GOVERNOR, asked of the carrier's own block (the repair; not declared in advance)."
+ },
+ "rule_literals": {
+  "R1_gap_pattern": "^[\\s,;:.()\\[\\]'\u2018\u2019\u201c\u201d-]*(?:(?:who|which|that)[\\s,;:.()\\[\\]'\u2018\u2019\u201c\u201d-]*)?$",
+  "R2_nominal_pattern": "\\b(?:the|a|an|any|each|every|such)\\s+\\w",
+  "R2_boundary_pattern": "\\b(?:and|or|but|if|where|unless|because|which|who|that)\\b",
+  "R3_verb_alternation": "(?:may|must|shall|should|will|can|is|are|has|have)"
+ },
+ "against_the_reader": {
+  "n_scored": 40,
+  "unmatched_against_the_population": 0,
+  "reader_yes": 17,
+  "reader_no": 23,
+  "carrier_direction": {
+   "before": 30,
+   "after": 10
+  },
+  "by_rule": {
+   "R1_adjacent_subject": {
+    "fires": 5,
+    "agreements": 22,
+    "disagreements": 18,
+    "agreement": 0.55,
+    "precision_on_yes": 0.4,
+    "recall": 0.1176,
+    "tp": 2,
+    "fp": 3,
+    "fn": 15,
+    "tn": 20
+   },
+   "R2_no_competing_nominal": {
+    "fires": 13,
+    "agreements": 18,
+    "disagreements": 22,
+    "agreement": 0.45,
+    "precision_on_yes": 0.3077,
+    "recall": 0.2353,
+    "tp": 4,
+    "fp": 9,
+    "fn": 13,
+    "tn": 14
+   },
+   "R3_active_governor": {
+    "fires": 19,
+    "agreements": 30,
+    "disagreements": 10,
+    "agreement": 0.75,
+    "precision_on_yes": 0.6842,
+    "recall": 0.7647,
+    "tp": 13,
+    "fp": 6,
+    "fn": 4,
+    "tn": 17
+   }
+  },
+  "blind_only": {
+   "R1_adjacent_subject": {
+    "fires": 5,
+    "agreements": 20,
+    "disagreements": 18,
+    "agreement": 0.5263,
+    "precision_on_yes": 0.4,
+    "recall": 0.1176,
+    "tp": 2,
+    "fp": 3,
+    "fn": 15,
+    "tn": 18
+   },
+   "R2_no_competing_nominal": {
+    "fires": 13,
+    "agreements": 16,
+    "disagreements": 22,
+    "agreement": 0.4211,
+    "precision_on_yes": 0.3077,
+    "recall": 0.2353,
+    "tp": 4,
+    "fp": 9,
+    "fn": 13,
+    "tn": 12
+   },
+   "R3_active_governor": {
+    "fires": 18,
+    "agreements": 29,
+    "disagreements": 9,
+    "agreement": 0.7632,
+    "precision_on_yes": 0.7222,
+    "recall": 0.7647,
+    "tp": 13,
+    "fp": 5,
+    "fn": 4,
+    "tn": 16
+   }
+  },
+  "pairwise_rule_disagreement": {
+   "R1_adjacent_subject vs R2_no_competing_nominal": 8,
+   "R1_adjacent_subject vs R3_active_governor": 16,
+   "R2_no_competing_nominal vs R3_active_governor": 20
+  },
+  "max_rule_to_rule_disagreement": 20,
+  "max_rule_to_reader_disagreement": 22,
+  "reader_base_rate": 0.425,
+  "rows": [
+   {
+    "n": 1,
+    "act": "2013/18",
+    "block": 246,
+    "modal": "should",
+    "reader": false,
+    "reader_reason": "the Secretary of State decided; the bearer of 'should not be disclosed' is whoever holds the information",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 4,
+    "blind": false,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 2,
+    "act": "2014/26",
+    "block": 2180,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "'officer' is the giver of the stop notice; the obligation attaches to the arrangements' user",
+    "carrier": "client",
+    "direction": "before",
+    "word_distance": 18,
+    "blind": false,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 3,
+    "act": "2012/10",
+    "block": 2193,
+    "modal": "must",
+    "reader": true,
+    "reader_reason": "'before a court makes a clamping order, it must be satisfied' -- the court is the bearer",
+    "carrier": "court",
+    "direction": "before",
+    "word_distance": 10,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 4,
+    "act": "2013/32",
+    "block": 2112,
+    "modal": "should",
+    "reader": true,
+    "reader_reason": "the Secretary of State apportions; bearer of 'should be apportioned'",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 8,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 5,
+    "act": "2014/20",
+    "block": 192,
+    "modal": "must",
+    "reader": true,
+    "reader_reason": "'the Secretary of State or an authorised person ... must be satisfied' -- bearer is the grammatical subject",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 8,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 6,
+    "act": "2014/2",
+    "block": 1747,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "the relevant authority is the recipient of service, not the server",
+    "carrier": "authority",
+    "direction": "before",
+    "word_distance": 0,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": true,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 7,
+    "act": "2014/6",
+    "block": 978,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "the Secretary of State prescribes the form; the publisher is somebody else",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 17,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 8,
+    "act": "2013/24",
+    "block": 528,
+    "modal": "must",
+    "reader": true,
+    "reader_reason": "'the Secretary of State must be satisfied' -- bearer as subject",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 0,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": true,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 9,
+    "act": "2014/12",
+    "block": 1663,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "'courts and tribunals' are what the fee finances, not who must use it",
+    "carrier": "courts",
+    "direction": "after",
+    "word_distance": 11,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 10,
+    "act": "2013/25",
+    "block": 207,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "the responsible authority receives the copy; the sender is unnamed",
+    "carrier": "authority",
+    "direction": "after",
+    "word_distance": 12,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 11,
+    "act": "2013/32",
+    "block": 258,
+    "modal": "should",
+    "reader": true,
+    "reader_reason": "as 4, the same provision one section earlier",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 8,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 12,
+    "act": "2014/26",
+    "block": 2361,
+    "modal": "should",
+    "reader": true,
+    "reader_reason": "the authorised officer determines what 'should be regarded as significant'",
+    "carrier": "officer",
+    "direction": "before",
+    "word_distance": 22,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 13,
+    "act": "2014/26",
+    "block": 2238,
+    "modal": "should",
+    "reader": true,
+    "reader_reason": "the officer both determines and regards",
+    "carrier": "officer",
+    "direction": "after",
+    "word_distance": 6,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 14,
+    "act": "2013/22",
+    "block": 3365,
+    "modal": "shall",
+    "reader": false,
+    "reader_reason": "'family court' is the object of the substituted reference",
+    "carrier": "court",
+    "direction": "before",
+    "word_distance": 1,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 15,
+    "act": "2013/32",
+    "block": 2510,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "the ONR submits; the Secretary of State receives",
+    "carrier": "Secretary of State",
+    "direction": "after",
+    "word_distance": 5,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 16,
+    "act": "2013/22",
+    "block": 3724,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "a heading citation; the appointer is the Senior President, not the Tribunal",
+    "carrier": "Tribunals",
+    "direction": "after",
+    "word_distance": 14,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 17,
+    "act": "2013/29",
+    "block": 1374,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "an officer of Revenue and Customs receives the return; the taxpayer delivers it",
+    "carrier": "officer",
+    "direction": "after",
+    "word_distance": 5,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 18,
+    "act": "2012/9",
+    "block": 162,
+    "modal": "must",
+    "reader": true,
+    "reader_reason": "the relevant authority is the notifier in 'who must be notified'",
+    "carrier": "authority",
+    "direction": "before",
+    "word_distance": 17,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 19,
+    "act": "2014/2",
+    "block": 69,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "the accounts belong to the authority; the auditing is somebody else's act",
+    "carrier": "authority",
+    "direction": "before",
+    "word_distance": 4,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 20,
+    "act": "2012/19",
+    "block": 1698,
+    "modal": "must",
+    "reader": true,
+    "reader_reason": "'the Competition and Markets Authority ... it must be published' -- the matched string is the bearer",
+    "carrier": "Authority",
+    "direction": "before",
+    "word_distance": 26,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 21,
+    "act": "2012/7",
+    "block": 3445,
+    "modal": "must",
+    "reader": true,
+    "reader_reason": "the substituted words name the Secretary of State, the Board and each CCG as the exercisers",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 7,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 22,
+    "act": "2014/21",
+    "block": 1967,
+    "modal": "shall",
+    "reader": false,
+    "reader_reason": "the Secretary of State certifies; the powers belong to whoever holds them",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 43,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 23,
+    "act": "2014/26",
+    "block": 2231,
+    "modal": "should",
+    "reader": true,
+    "reader_reason": "the authorised officer determines",
+    "carrier": "officer",
+    "direction": "before",
+    "word_distance": 16,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 24,
+    "act": "2013/29",
+    "block": 1406,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "as 17",
+    "carrier": "officer",
+    "direction": "after",
+    "word_distance": 5,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 25,
+    "act": "2014/26",
+    "block": 2207,
+    "modal": "should",
+    "reader": true,
+    "reader_reason": "as 13",
+    "carrier": "officer",
+    "direction": "after",
+    "word_distance": 6,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 26,
+    "act": "2013/32",
+    "block": 565,
+    "modal": "should",
+    "reader": true,
+    "reader_reason": "the Secretary of State holds the licence modification power in this provision",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 13,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 27,
+    "act": "2012/14",
+    "block": 5316,
+    "modal": "should",
+    "reader": false,
+    "reader_reason": "the tribunal decides; the person is the one who should be liable",
+    "carrier": "tribunal",
+    "direction": "before",
+    "word_distance": 4,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 28,
+    "act": "2012/19",
+    "block": 1467,
+    "modal": "must",
+    "reader": true,
+    "reader_reason": "the CMA's own decision must be taken by the CMA",
+    "carrier": "Authority",
+    "direction": "before",
+    "word_distance": 6,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 29,
+    "act": "2014/26",
+    "block": 2205,
+    "modal": "should",
+    "reader": true,
+    "reader_reason": "the officer determines twice in one sentence",
+    "carrier": "officer",
+    "direction": "before",
+    "word_distance": 11,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 30,
+    "act": "2013/33",
+    "block": 623,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "the CMA receives the appeal; the appellant makes it",
+    "carrier": "Authority",
+    "direction": "after",
+    "word_distance": 8,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 31,
+    "act": "2013/18",
+    "block": 93,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "'the court must be authorised' -- the court is what is authorised, by the rules",
+    "carrier": "court",
+    "direction": "before",
+    "word_distance": 0,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": true,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 32,
+    "act": "2012/7",
+    "block": 4281,
+    "modal": "should",
+    "reader": false,
+    "reader_reason": "Monitor pays the compensation; the Secretary of State only decides",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 11,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 33,
+    "act": "2014/26",
+    "block": 2205,
+    "modal": "should",
+    "reader": true,
+    "reader_reason": "the same block as 29, drawn twice by the sample",
+    "carrier": "officer",
+    "direction": "before",
+    "word_distance": 11,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 34,
+    "act": "2012/5",
+    "block": 1139,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "'magistrates' court' is inside the reference being construed",
+    "carrier": "court",
+    "direction": "before",
+    "word_distance": 0,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": true,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 35,
+    "act": "2012/19",
+    "block": 1008,
+    "modal": "should",
+    "reader": false,
+    "reader_reason": "'rules of court' is not a party; the sender is unnamed",
+    "carrier": "court",
+    "direction": "before",
+    "word_distance": 7,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 36,
+    "act": "2013/32",
+    "block": 3093,
+    "modal": "must",
+    "reader": true,
+    "reader_reason": "'the Secretary of State must be satisfied'",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 0,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": true,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 37,
+    "act": "2013/22",
+    "block": 3912,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "a heading citation; 'court' is where the judge is appointed, not the appointer",
+    "carrier": "court",
+    "direction": "after",
+    "word_distance": 7,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": true,
+     "R3_active_governor": false
+    }
+   },
+   {
+    "n": 38,
+    "act": "2013/18",
+    "block": 249,
+    "modal": "should",
+    "reader": false,
+    "reader_reason": "the same block as 1",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 4,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 39,
+    "act": "2014/6",
+    "block": 1182,
+    "modal": "must",
+    "reader": false,
+    "reader_reason": "the Secretary of State makes the regulations; the policy is written by somebody else",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 8,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": true
+    }
+   },
+   {
+    "n": 40,
+    "act": "2014/21",
+    "block": 1967,
+    "modal": "should",
+    "reader": false,
+    "reader_reason": "the same block as 22, the other modal in it",
+    "carrier": "Secretary of State",
+    "direction": "before",
+    "word_distance": 32,
+    "blind": true,
+    "rules": {
+     "R1_adjacent_subject": false,
+     "R2_no_competing_nominal": false,
+     "R3_active_governor": false
+    }
+   }
+  ]
+ },
+ "over_the_population": {
+  "base": {
+   "rows_in_reach_at_word_36": 5,
+   "of_them_carrier_in_the_obligation_s_own_block": 1,
+   "session_90_published_reach_pct": 0.76,
+   "by_rule": {
+    "R1_adjacent_subject": {
+     "fires": 0,
+     "fire_rate": 0.0,
+     "corrected_reach_pct": 0.0
+    },
+    "R2_no_competing_nominal": {
+     "fires": 0,
+     "fire_rate": 0.0,
+     "corrected_reach_pct": 0.0
+    },
+    "R3_active_governor": {
+     "fires": 0,
+     "fire_rate": 0.0,
+     "corrected_reach_pct": 0.0
+    },
+    "R3b_active_governor_own_block": {
+     "fires": 0,
+     "fire_rate": 0.0,
+     "corrected_reach_pct": 0.0
+    }
+   },
+   "carriers_in_reach": {
+    "client": 4,
+    "implementation": 1
+   },
+   "R3_fire_share_by_carrier": {
+    "client": 0.0,
+    "implementation": 0.0
+   },
+   "R3b_fire_share_by_carrier": {
+    "client": 0.0,
+    "implementation": 0.0
+   }
+  },
+  "narrow": {
+   "rows_in_reach_at_word_36": 226,
+   "of_them_carrier_in_the_obligation_s_own_block": 75,
+   "session_90_published_reach_pct": 34.24,
+   "by_rule": {
+    "R1_adjacent_subject": {
+     "fires": 13,
+     "fire_rate": 0.0575,
+     "corrected_reach_pct": 1.97
+    },
+    "R2_no_competing_nominal": {
+     "fires": 23,
+     "fire_rate": 0.1018,
+     "corrected_reach_pct": 3.48
+    },
+    "R3_active_governor": {
+     "fires": 43,
+     "fire_rate": 0.1903,
+     "corrected_reach_pct": 6.51
+    },
+    "R3b_active_governor_own_block": {
+     "fires": 71,
+     "fire_rate": 0.3142,
+     "corrected_reach_pct": 10.76
+    }
+   },
+   "carriers_in_reach": {
+    "secretary of state": 74,
+    "court": 39,
+    "authority": 39,
+    "officer": 36,
+    "tribunal": 11,
+    "local authority": 5,
+    "treasury": 4,
+    "courts": 4,
+    "minister": 3,
+    "client": 3,
+    "constable": 2,
+    "tribunals": 2
+   },
+   "R3_fire_share_by_carrier": {
+    "secretary of state": 0.2703,
+    "court": 0.1026,
+    "authority": 0.1538,
+    "officer": 0.3611,
+    "tribunal": 0.0,
+    "local authority": 0.0,
+    "treasury": 0.0,
+    "courts": 0.0,
+    "minister": 0.0,
+    "client": 0.0,
+    "constable": 0.0,
+    "tribunals": 0.0
+   },
+   "R3b_fire_share_by_carrier": {
+    "secretary of state": 0.473,
+    "court": 0.2051,
+    "authority": 0.2564,
+    "officer": 0.3889,
+    "tribunal": 0.0,
+    "local authority": 0.2,
+    "treasury": 0.25,
+    "courts": 0.0,
+    "minister": 0.3333,
+    "client": 0.0,
+    "constable": 0.5,
+    "tribunals": 0.0
+   }
+  },
+  "wide": {
+   "rows_in_reach_at_word_36": 336,
+   "of_them_carrier_in_the_obligation_s_own_block": 120,
+   "session_90_published_reach_pct": 50.91,
+   "by_rule": {
+    "R1_adjacent_subject": {
+     "fires": 23,
+     "fire_rate": 0.0685,
+     "corrected_reach_pct": 3.48
+    },
+    "R2_no_competing_nominal": {
+     "fires": 48,
+     "fire_rate": 0.1429,
+     "corrected_reach_pct": 7.27
+    },
+    "R3_active_governor": {
+     "fires": 56,
+     "fire_rate": 0.1667,
+     "corrected_reach_pct": 8.48
+    },
+    "R3b_active_governor_own_block": {
+     "fires": 88,
+     "fire_rate": 0.2619,
+     "corrected_reach_pct": 13.33
+    }
+   },
+   "carriers_in_reach": {
+    "person": 119,
+    "secretary of state": 67,
+    "authority": 36,
+    "court": 35,
+    "officer": 29,
+    "persons": 19,
+    "tribunal": 6,
+    "local authority": 4,
+    "treasury": 4,
+    "courts": 4,
+    "minister": 3,
+    "constable": 2
+   },
+   "R3_fire_share_by_carrier": {
+    "person": 0.1765,
+    "secretary of state": 0.2537,
+    "authority": 0.1389,
+    "court": 0.1143,
+    "officer": 0.3103,
+    "persons": 0.0,
+    "tribunal": 0.0,
+    "local authority": 0.0,
+    "treasury": 0.0,
+    "courts": 0.0,
+    "minister": 0.0,
+    "constable": 0.0
+   },
+   "R3b_fire_share_by_carrier": {
+    "person": 0.2185,
+    "secretary of state": 0.4627,
+    "authority": 0.25,
+    "court": 0.2286,
+    "officer": 0.3448,
+    "persons": 0.0,
+    "tribunal": 0.0,
+    "local authority": 0.25,
+    "treasury": 0.25,
+    "courts": 0.0,
+    "minister": 0.3333,
+    "constable": 0.5
+   }
+  }
+ }
+}

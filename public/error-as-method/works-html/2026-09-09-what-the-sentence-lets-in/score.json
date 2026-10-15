@@ -1,0 +1,134 @@
+{
+ "_what": "The scoring pass. Predictions scored against the instrument as pre-registered; the repaired scan is beside them and scores nothing.",
+ "adjudicated": {
+  "S60": {
+   "name": "genesis",
+   "population": 72,
+   "drawn": 20,
+   "census": false,
+   "use": 16,
+   "attendance": 4,
+   "noise": 0,
+   "use_rate_of_real_contexts": 0.8,
+   "noise_rate": 0.0,
+   "estimated_uses_in_population": 57.6
+  },
+  "S71": {
+   "name": "the temporal index",
+   "population": 91,
+   "drawn": 20,
+   "census": false,
+   "use": 13,
+   "attendance": 7,
+   "noise": 0,
+   "use_rate_of_real_contexts": 0.65,
+   "noise_rate": 0.0,
+   "estimated_uses_in_population": 59.1
+  },
+  "S78": {
+   "name": "the offer",
+   "population": 29,
+   "drawn": 20,
+   "census": false,
+   "use": 6,
+   "attendance": 2,
+   "noise": 12,
+   "use_rate_of_real_contexts": 0.75,
+   "noise_rate": 0.6,
+   "estimated_uses_in_population": 8.7
+  },
+  "S84": {
+   "name": "the agentless register",
+   "population": 0,
+   "drawn": 0,
+   "census": true,
+   "use": 0,
+   "attendance": 0,
+   "noise": 0,
+   "use_rate_of_real_contexts": null,
+   "noise_rate": null,
+   "estimated_uses_in_population": 0
+  },
+  "S50": {
+   "name": "the promoted wording",
+   "population": 0,
+   "drawn": 0,
+   "census": true,
+   "use": 0,
+   "attendance": 0,
+   "noise": 0,
+   "use_rate_of_real_contexts": null,
+   "noise_rate": null,
+   "estimated_uses_in_population": 0
+  }
+ },
+ "predictions": [
+  {
+   "id": "P1",
+   "prediction": "no candidate entered the sentence",
+   "observed": "1 did (B3)",
+   "verdict": "LOST"
+  },
+  {
+   "id": "P2",
+   "prediction": "every outside candidate needs a new word",
+   "observed": "10 of 10",
+   "verdict": "WON"
+  },
+  {
+   "id": "P3",
+   "prediction": "'observer' carries the most readings, >= 3",
+   "observed": "observer, 3",
+   "verdict": "WON"
+  },
+  {
+   "id": "P4",
+   "prediction": "all four satellites have >= 1 use",
+   "observed": "3 of 4",
+   "verdict": "LOST"
+  },
+  {
+   "id": "P5",
+   "prediction": "the promoted claim beats the median satellite",
+   "observed": "59.1 vs 8.7",
+   "verdict": "WON"
+  },
+  {
+   "id": "P6",
+   "prediction": "the most-used satellite is the offer (unscorable)",
+   "observed": "S71",
+   "verdict": "wrong"
+  }
+ ],
+ "repaired_post_hoc": {
+  "S60": {
+   "name": "genesis",
+   "n_contexts": 67,
+   "n_files": 16
+  },
+  "S71": {
+   "name": "the temporal index",
+   "n_contexts": 85,
+   "n_files": 23
+  },
+  "S78": {
+   "name": "the offer",
+   "n_contexts": 12,
+   "n_files": 5
+  },
+  "S84": {
+   "name": "the agentless register",
+   "n_contexts": 0,
+   "n_files": 0
+  },
+  "S50": {
+   "name": "the promoted wording",
+   "n_contexts": 0,
+   "n_files": 0
+  }
+ },
+ "repair_rules": [
+  "keys matched on word boundaries",
+  "only files this practice wrote: *.md and hand-written meta.json"
+ ]
+}

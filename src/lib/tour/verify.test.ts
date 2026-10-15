@@ -214,6 +214,51 @@ describe('verifyTourQuotes — structural invariants', () => {
     const readFile = fakeReadFile({ 'docs/example.md': 'before the exact substring after' })
     expect(verifyTourQuotes(tour, readFile)).toEqual([])
   })
+
+  // G2 (2026-09-03) gave FocusState a camera, a day and a layer set, and `Tour.practice` a fourth
+  // value for a work of the lab. This harness has and wants NO opinion about any of them: whether
+  // a day exists in a figure's model, whether a layer id is registered and whether a coordinate is
+  // on the earth are questions about a FIGURE, and each tour's own test answers them against that
+  // figure's real registry (see globe-stories.test.ts). What this file guards is the one thing that
+  // can be checked without a figure — that the words are the source's words — and it must not
+  // start failing a tour for carrying fields it does not read.
+  it('takes no position on a scene’s camera, day or layer set — those are the figure’s business', () => {
+    const tour = baseTour({
+      practice: 'lab',
+      scenes: [
+        {
+          id: 'scene-one',
+          kicker: 'k',
+          heading: 'h',
+          quotes: [{ text: 'the exact substring', source: 'docs/example.md' }],
+          focus: {
+            figure: 'living-globe',
+            layers: ['sky', 'ghost-fleet'],
+            time: { day: '2026-08-16' },
+            camera: { longitude: -90.2376, latitude: 6.679, zoom: 2.6 },
+          },
+        },
+      ],
+    })
+    expect(verifyTourQuotes(tour, fakeReadFile({ 'docs/example.md': 'before the exact substring after' }))).toEqual([])
+  })
+
+  it('still fails a drifted quote in a scene that carries a camera and a day', () => {
+    const tour = baseTour({
+      practice: 'lab',
+      scenes: [
+        {
+          id: 'scene-one',
+          kicker: 'k',
+          heading: 'h',
+          quotes: [{ text: 'the exact substrings', source: 'docs/example.md' }],
+          focus: { figure: 'living-globe', time: { day: '2026-08-16' }, camera: { longitude: 0, latitude: 0 } },
+        },
+      ],
+    })
+    const violations = verifyTourQuotes(tour, fakeReadFile({ 'docs/example.md': 'before the exact substring after' }))
+    expect(violations).toContainEqual(expect.objectContaining({ kind: 'not-verbatim', sceneId: 'scene-one' }))
+  })
 })
 
 describe('verifyTourQuotes — against a real committed file', () => {

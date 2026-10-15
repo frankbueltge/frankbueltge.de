@@ -13,7 +13,7 @@ export function rejectionFeedback(report: IntegrateReport, ns: string, date: str
     '',
     ...lines,
     '',
-    'Rules: only allowlisted files (work.astro/index.html, meta.json, data.json, .css/.svg/.ts/.js) are copied — anything else is ignored, not fatal. External URLs are welcome as citation links but must not be loaded (no external script/img/fetch/import/Worker).',
+    'Rules (since 2026-10-05): a standalone work (index.html) travels whole — every file in every subdirectory except dotfiles — and is served bare under the practices\' shared policy: scripts, WebAssembly and workers from this origin, data, images, media and frames from any HTTPS host. A native Astro work (work.astro) travels from its top level, code, markup, images, fonts, audio and video only (anything else is ignored, not fatal), and renders inside a page of the house: it may fetch data from any HTTPS host but loads no script, stylesheet, image or worker from another host. Either way, scripts from other hosts never run on this site — vendor the library into the work — and no single file may exceed 25 MiB (Cloudflare Pages\' per-asset limit). External URLs are always welcome as citation links.',
     'Fix the work in `works/<slug>/` and commit again — the next integration picks it up automatically.',
     '',
   ].join('\n')

@@ -10,6 +10,9 @@ import { CLAIM_MARK, langLabel, omissionPercent, topicHeadline } from '@/lib/par
 import provenance from '@/data/parallaxe/provenance.json'
 import type { ClaimMark } from '@/lib/parallaxe/types'
 import { t } from '@/i18n/ui'
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import '@/styles/experiment-sheet.css'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -93,7 +96,7 @@ const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
         </div>
 
         {topic.name_umstritten && (
-          <div class="mb-5 rounded-[14px] border border-line bg-panel panel-raised p-5">
+          <div class="mb-5 rounded-md border border-line bg-panel panel-raised p-5">
             <p class="mb-3 text-sm text-fg-muted">{txt.nameContested}</p>
             <ul class="flex flex-wrap gap-2">
               {topic.langs.map((lang) => (
@@ -149,7 +152,7 @@ const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
   })}
 
   <section class="mb-10 border-t border-line pt-6">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="kicker">
       {de ? 'Das Register, nachprüfbar' : 'The register, checkable'}
     </p>
     <div class="mt-3 flex flex-wrap gap-x-10 gap-y-3">
@@ -176,7 +179,7 @@ const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
   </section>
 
   <section class="mb-10 border-t border-line pt-6">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+    <p class="kicker">
       {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
     </p>
     <ul class="mt-3 space-y-2 text-sm text-fg-muted">
@@ -200,13 +203,13 @@ const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
     </p>
   </section>
 
-  <footer class="mt-12 border-t border-line pt-6 font-mono text-xs text-fg-faint">
+  <SheetFoot>
     {reg.census && reg.census.measured < reg.census.attempted && (
       <p class="mb-2">{txt.censusNote(reg.census.attempted, reg.census.measured)}</p>
     )}
     {txt.dataAsOf}: {reg.generated_at} · {txt.model}: {reg.rule.model} · Wikipedia (CC BY-SA) ·
     <a href={methodUrl} class="transition-colors hover:text-fg">{txt.method}</a>
-  </footer>
+  </SheetFoot>
 </div>
 </main>
 

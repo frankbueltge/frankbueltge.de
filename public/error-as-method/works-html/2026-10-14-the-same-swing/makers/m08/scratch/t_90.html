@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Turns</title>
+<style>
+  :root { --paper:#f3efe6; --ink:#1d1b18; --faint:#8a8378; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden;
+         font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; color:var(--ink); }
+  .sheet { position:relative; width:1100px; height:800px; }
+  svg { position:absolute; left:0; top:0; }
+  .side { position:absolute; left:812px; top:0; width:250px; height:800px; }
+  h1 { position:absolute; top:96px; margin:0; font-weight:normal; font-size:30px; line-height:1.15; letter-spacing:.01em; }
+  .src { position:absolute; top:560px; width:250px; }
+  .src img { display:block; width:250px; height:75px; mix-blend-mode:multiply; image-rendering:pixelated; }
+  p { margin:0; font-size:13px; line-height:1.55; color:var(--faint); font-style:italic; }
+  .cap1 { position:absolute; top:150px; width:250px; }
+  .cap2 { margin-top:10px; }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <svg id="w" width="1100" height="800" viewBox="0 0 1100 800" aria-label="A record of 1,464 values wound into a spiral of 61 turns, 24 values to a turn."></svg>
+  <div class="side">
+    <h1>Sixty-One Turns</h1>
+    <p class="cap1">1,464 values, wound twenty-four to a turn, the first at the centre. Further out is larger.</p>
+    <div class="src">
+      <img alt="The record as it was received" src="data:image/jpeg;base64,__IMG__">
+      <p class="cap2">The record as it came: dots on white, no axes. The values on the left were read back out of it and are an estimate.</p>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var V = __DATA__;
+  var N = V.length, PER = 24;
+  var cx = 400, cy = 400;
+  var R0 = 34, R1 = 315;            // radius of the baseline at first and last value
+  var lo = Infinity, hi = -Infinity;
+  for (var i=0;i<N;i++){ lo=Math.min(lo,V[i]); hi=Math.max(hi,V[i]); }
+  var mid = (lo+hi)/2, S = 90/(hi-lo);
+  // turn so that the usual high point of the cycle sits at the top
+  var cs=0, sn=0;
+  for (var i=0;i<N;i++){ var a=2*Math.PI*(i%PER)/PER; cs+=V[i]*Math.cos(a); sn+=V[i]*Math.sin(a); }
+  var peak = Math.atan2(sn,cs);
+  function pos(t, v){
+    var a = 2*Math.PI*t/PER - peak - Math.PI/2;
+    var r = R0 + (R1-R0)*t/(N-1) + (v-mid)*S;
+    return [cx + r*Math.cos(a), cy + r*Math.sin(a)];
+  }
+  // smooth curve through the values: sub-sample with Catmull-Rom in value space
+  var d = '', SUB = 6;
+  for (var i=0;i<N-1;i++){
+    var p0=V[Math.max(0,i-1)], p1=V[i], p2=V[i+1], p3=V[Math.min(N-1,i+2)];
+    for (var k=0;k<SUB;k++){
+      var u=k/SUB, u2=u*u, u3=u2*u;
+      var v=0.5*((2*p1)+(-p0+p2)*u+(2*p0-5*p1+4*p2-p3)*u2+(-p0+3*p1-3*p2+p3)*u3);
+      var q=pos(i+u, v);
+      d += (d?'L':'M') + q[0].toFixed(2)+' '+q[1].toFixed(2);
+    }
+  }
+  var q=pos(N-1,V[N-1]); d+='L'+q[0].toFixed(2)+' '+q[1].toFixed(2);
+  var NS='http://www.w3.org/2000/svg', svg=document.getElementById('w');
+  function el(n,attrs){ var e=document.createElementNS(NS,n); for (var k in attrs) e.setAttribute(k,attrs[k]); svg.appendChild(e); return e; }
+  el('path',{d:d, fill:'none', stroke:'#1d1b18', 'stroke-width':'0.8', 'stroke-opacity':'0.55', 'stroke-linejoin':'round'});
+  for (var i=0;i<N;i++){
+    var p=pos(i,V[i]);
+    el('circle',{cx:p[0].toFixed(2), cy:p[1].toFixed(2), r:'1.15', fill:'#1d1b18'});
+  }
+})();
+</script>
+</body>
+</html>

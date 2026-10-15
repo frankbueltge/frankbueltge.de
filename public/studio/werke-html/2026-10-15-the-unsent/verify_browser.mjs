@@ -1,0 +1,62 @@
+// node verify_browser.mjs — THE UNSENT in a real browser at 390 px (light) and 1100 px (dark)
+import { createRequire } from 'module';
+const require = createRequire('/opt/node-tools/node_modules/');
+const { chromium } = require('playwright');
+import { dirname, join } from 'path'; import fs from 'fs'; import { fileURLToPath } from 'url';
+const here = dirname(fileURLToPath(import.meta.url));
+const S = JSON.parse(fs.readFileSync(join(here, 'summary.json')));
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--autoplay-policy=no-user-gesture-required', '--allow-file-access-from-files'] });
+let pass = 0, fail = 0; const t = (n, ok) => { ok ? pass++ : fail++; console.log(ok ? 'ok  ' : 'FAIL', n) };
+for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
+  const p = await b.newPage({ viewport: { width: w, height: 900 }, colorScheme: scheme }); const errs = [];
+  p.on('pageerror', e => errs.push(String(e))); p.on('console', x => x.type() === 'error' && errs.push(x.text()));
+  await p.goto('file://' + join(here, 'index.html')); await p.waitForFunction(() => window.__UN.state.ready, null, { timeout: 15000 });
+  t(w + ' no errors on load', errs.length === 0);
+  t(w + ' no horizontal overflow', await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
+  const k = await p.evaluate(() => window.__UN.state.counts);
+  t(`${w} end: declared ${k.all}`, k.all === S.county_areas - 0 && k.all === S.outcomes.spoke + S.outcomes.other + S.outcomes.silent + S.outcomes.never);
+  t(`${w} end: word named it ${k.spoke}`, k.spoke === S.outcomes.spoke);
+  t(`${w} end: nothing ${k.silent + k.never}`, k.silent === S.outcomes.silent && k.never === S.outcomes.never);
+  const cases = await p.evaluate(() => {
+    const I = window.INC, out = {};
+    const find = (id, from, to) => I.filter(i => i.b >= from && i.b <= to).map(i => [i, i.a.find(a => a[0] === id)]).filter(x => x[1]);
+    const d = s => Math.floor(Date.parse(s) / 864e5);
+    out.sonoma = find('06097', d('2017-10-07'), d('2017-10-10')).map(x => x[1][1]);
+    out.butte = find('06007', d('2018-11-07'), d('2018-11-09')).map(x => x[1][1]);
+    out.maui = find('15009', d('2023-08-07'), d('2023-08-10')).map(x => x[1][1]);
+    out.la = find('06037', d('2025-01-06'), d('2025-01-08')).map(x => [x[1][1], x[1][3]]);
+    const k = find('48265', d('2025-07-01'), d('2025-07-03'))[0];
+    out.kerr = k && [k[0].b, k[1][1], k[1][2].map(j => window.WORDS[j][0])];
+    return out;
+  });
+  t(`${w} Sonoma 2017: 4 declarations, all silent`, cases.sonoma.length === 4 && cases.sonoma.every(s => s === 'silent'));
+  t(`${w} Butte 2018: 2 declarations, all silent`, cases.butte.length === 2 && cases.butte.every(s => s === 'silent'));
+  t(`${w} Maui 2023: 4 declarations, a word named it`, cases.maui.length === 4 && cases.maui.every(s => s === 'spoke'));
+  t(`${w} LA 2025: 4 declarations, 91 words`, cases.la.length === 4 && cases.la.every(x => x[0] === 'spoke' && x[1] === 91));
+  t(`${w} Kerr 2025: begins 2 July, first local word 6 July`, cases.kerr && new Date(cases.kerr[0] * 864e5).toISOString().startsWith('2025-07-02') && new Date(cases.kerr[2][0] * 6e4).toISOString().startsWith('2025-07-06'));
+  await p.click('text=Kerr, July 2025');
+  const card = await p.locator('#card').innerText();
+  t(`${w} Kerr card names the weather service times`, card.includes('06:14 UTC') && card.includes('09:03 UTC') && /Kerr/.test(card));
+  await p.click('text=Butte, November 2018');
+  t(`${w} Butte card says nothing reached it`, /nothing reached it/i.test(await p.locator('#card').innerText()));
+  const rows = await p.locator('#bytype tr').count();
+  t(`${w} kinds table ${rows - 1} rows`, rows - 1 === Object.keys(S.by_type).length);
+  // a county click
+  const box = await p.locator('#cv').boundingBox();
+  await p.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.45);
+  t(`${w} a map click opens a county card`, /FIPS \d{5}/.test(await p.locator('#card').innerText()));
+  await p.click('#play'); await p.waitForTimeout(1500);
+  const t1 = await p.evaluate(() => window.__UN.state.t - window.__UN.D0);
+  t(`${w} play advances time (${Math.round(t1)} days)`, t1 > 20);
+  await p.click('#play');
+  await p.selectOption('#view', 'share');
+  t(w + ' no errors after play and view switch', errs.length === 0);
+  await p.selectOption('#view', 'silence');
+  await p.evaluate(() => window.__UN.set(window.__UN.D1));
+  t(`${w} ends on the fetch day`, await p.evaluate(() => document.getElementById('date').textContent) === S.fetched);
+  await p.locator('#stage').scrollIntoViewIfNeeded();
+  await p.screenshot({ path: join(here, `shot-${w}.png`), fullPage: false });
+  await p.close();
+}
+await b.close();
+console.log(`${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

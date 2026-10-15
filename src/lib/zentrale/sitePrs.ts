@@ -26,13 +26,15 @@ export interface EnginePr {
 const HEAD_RE = /^(atelier|field|studio|currency)\/pr-([a-z0-9-]+)$/
 
 const PERSONA: Record<string, string> = {
-  atelier: 'Ulysses',
+  // The Atelier settled its name on 2026-09-03 (until then, provisionally: Ulysses). The branch
+  // prefix stays `atelier/pr-…` — it names the channel, not the practice.
+  atelier: 'Assay',
   field: 'Meridian',
   studio: 'Ensemble',
   currency: 'Currency check',
 }
 const LABEL: Record<string, string> = {
-  atelier: 'Atelier · Ulysses',
+  atelier: 'Atelier · Assay',
   field: 'Field · Meridian',
   studio: 'Studio · Ensemble',
   currency: 'Currency · site freshness',

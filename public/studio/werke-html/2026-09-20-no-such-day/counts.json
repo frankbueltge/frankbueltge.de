@@ -1,0 +1,342 @@
+{
+ "what_was_asked": {
+  "written_dates": 160332,
+  "from": "1500-01-01",
+  "to": "1930-12-31",
+  "rule": "every year 1500..1930, every month 1..12, every day 1..31",
+  "readers": 16,
+  "readers_you_get_without_asking": 11,
+  "readers_you_must_name": 5,
+  "yardstick": "Julian Day Number, an integer naming one day of the world with no calendar in it"
+ },
+ "the_loud_disagreement": {
+  "written_dates_some_reader_refuses_and_another_accepts_defaults": 2923,
+  "of_those_a_calendar_reform_explains": 14,
+  "which_are": [
+   "1500-02-29",
+   "1582-10-05",
+   "1582-10-06",
+   "1582-10-07",
+   "1582-10-08",
+   "1582-10-09",
+   "1582-10-10",
+   "1582-10-11",
+   "1582-10-12",
+   "1582-10-13",
+   "1582-10-14",
+   "1700-02-29",
+   "1800-02-29",
+   "1900-02-29"
+  ],
+  "the_rest_are_strictness_not_history": 2909,
+  "the_rest_by_slot": {
+   "02-29": 323,
+   "02-30": 431,
+   "02-31": 431,
+   "04-31": 431,
+   "06-31": 431,
+   "09-31": 431,
+   "11-31": 431
+  }
+ },
+ "the_silent_disagreement": {
+  "written_dates_every_default_accepts_and_they_do_not_all_mean_one_day": 30797,
+  "share_of_the_range": 19.21,
+  "span": [
+   "1500-01-01",
+   "1582-10-14"
+  ],
+  "span_is_every_written_date_in_it": true,
+  "none_of_them_raises_an_error_anywhere": true
+ },
+ "the_whole_bench": {
+  "written_dates_all_sixteen_agree_exist_and_mean_one_day": 0,
+  "written_dates_contested_in_identity_among_all_sixteen": 160332,
+  "written_dates_no_reader_at_all_accepts": 0,
+  "written_dates_every_default_accepts_and_all_mean_one_day": 127182,
+  "share": 79.32
+ },
+ "refuses_nothing": [
+  "c-timegm",
+  "java-gregoriancalendar",
+  "js-date",
+  "php-juliantojd",
+  "php-mktime",
+  "sqlite-julianday"
+ ],
+ "carries_the_cutover_of_1582_among_the_defaults": [
+  "java-gregoriancalendar",
+  "ruby-default-italy"
+ ],
+ "refuses_the_eleven_days_of_the_act": [
+  "ruby-england"
+ ],
+ "refuses_any_day_of_february_1918": [],
+ "per_reader": {
+  "python-date": {
+   "language": "Python 3.11.15",
+   "call": "datetime.date(y, m, d)",
+   "is_default": true,
+   "calendar": "proleptic Gregorian",
+   "accepted": 157419,
+   "refused": 2913,
+   "distinct_days": 157419,
+   "answers_a_day_already_named": 0,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "06712d0bbe0d5f2c21086ff38eb50ed6938878075dc6d73205174621dd379e46"
+  },
+  "sqlite-julianday": {
+   "language": "SQLite 3.45.1",
+   "call": "julianday('y-mm-dd')",
+   "is_default": true,
+   "calendar": "proleptic Gregorian",
+   "accepted": 160332,
+   "refused": 0,
+   "distinct_days": 157419,
+   "answers_a_day_already_named": 5826,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "85284ea13ca7cd75a7910edce691fb2124c058a7b48f92d516aec29ea0cf2535"
+  },
+  "ruby-default-italy": {
+   "language": "Ruby 3.3.6",
+   "call": "Date.new(y, m, d)",
+   "is_default": true,
+   "calendar": "Julian to 1582-10-04, then Gregorian",
+   "accepted": 157410,
+   "refused": 2922,
+   "distinct_days": 157410,
+   "answers_a_day_already_named": 0,
+   "reform_read_off_its_own_answers": [
+    {
+     "from": "1582-10-05",
+     "to": "1582-10-14",
+     "days": 10
+    }
+   ],
+   "sha256_of_its_answers": "0b4a560816f543a0fb6777af657013cb0b7da8e5fbf7cbe31d9ef94013f1e3ba"
+  },
+  "ruby-england": {
+   "language": "Ruby 3.3.6",
+   "call": "Date.new(y, m, d, Date::ENGLAND)",
+   "is_default": false,
+   "calendar": "Julian to 1752-09-02, then Gregorian",
+   "accepted": 157410,
+   "refused": 2922,
+   "distinct_days": 157410,
+   "answers_a_day_already_named": 0,
+   "reform_read_off_its_own_answers": [
+    {
+     "from": "1752-09-03",
+     "to": "1752-09-13",
+     "days": 11
+    }
+   ],
+   "sha256_of_its_answers": "fd7f6dd2ec860a29c933bfb3a8240190e00acb22e9599ca777badaa208ff082d"
+  },
+  "ruby-julian": {
+   "language": "Ruby 3.3.6",
+   "call": "Date.new(y, m, d, Date::JULIAN)",
+   "is_default": false,
+   "calendar": "proleptic Julian",
+   "accepted": 157423,
+   "refused": 2909,
+   "distinct_days": 157423,
+   "answers_a_day_already_named": 0,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "3a16ffaedcacb28367e47eaed47477b14691c5029cbb5cefdf9f517ea738c520"
+  },
+  "ruby-gregorian": {
+   "language": "Ruby 3.3.6",
+   "call": "Date.new(y, m, d, Date::GREGORIAN)",
+   "is_default": false,
+   "calendar": "proleptic Gregorian",
+   "accepted": 157419,
+   "refused": 2913,
+   "distinct_days": 157419,
+   "answers_a_day_already_named": 0,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "06712d0bbe0d5f2c21086ff38eb50ed6938878075dc6d73205174621dd379e46"
+  },
+  "java-localdate": {
+   "language": "Java 21.0.10",
+   "call": "LocalDate.of(y, m, d)",
+   "is_default": true,
+   "calendar": "proleptic ISO",
+   "accepted": 157419,
+   "refused": 2913,
+   "distinct_days": 157419,
+   "answers_a_day_already_named": 0,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "06712d0bbe0d5f2c21086ff38eb50ed6938878075dc6d73205174621dd379e46"
+  },
+  "java-gregoriancalendar": {
+   "language": "Java 21.0.10",
+   "call": "new GregorianCalendar(); set(...)",
+   "is_default": true,
+   "calendar": "Julian to 1582-10-04, then Gregorian",
+   "accepted": 160332,
+   "refused": 0,
+   "distinct_days": 157410,
+   "answers_a_day_already_named": 5844,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "1bc6d5d0392f49577df9b76dda67b5879135b35c577492cf4aaa4f015f6c76e7"
+  },
+  "java-gregcal-strict": {
+   "language": "Java 21.0.10",
+   "call": "the same, setLenient(false)",
+   "is_default": false,
+   "calendar": "Julian to 1582-10-04, then Gregorian",
+   "accepted": 157410,
+   "refused": 2922,
+   "distinct_days": 157410,
+   "answers_a_day_already_named": 0,
+   "reform_read_off_its_own_answers": [
+    {
+     "from": "1582-10-05",
+     "to": "1582-10-14",
+     "days": 10
+    }
+   ],
+   "sha256_of_its_answers": "0b4a560816f543a0fb6777af657013cb0b7da8e5fbf7cbe31d9ef94013f1e3ba"
+  },
+  "js-date": {
+   "language": "Node 22.22.2",
+   "call": "new Date(y, m-1, d)",
+   "is_default": true,
+   "calendar": "proleptic Gregorian",
+   "accepted": 160332,
+   "refused": 0,
+   "distinct_days": 157419,
+   "answers_a_day_already_named": 5826,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "85284ea13ca7cd75a7910edce691fb2124c058a7b48f92d516aec29ea0cf2535"
+  },
+  "php-checkdate": {
+   "language": "PHP 8.4.19",
+   "call": "checkdate(m, d, y)",
+   "is_default": true,
+   "calendar": "proleptic Gregorian",
+   "accepted": 157419,
+   "refused": 2913,
+   "distinct_days": 157419,
+   "answers_a_day_already_named": 0,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "06712d0bbe0d5f2c21086ff38eb50ed6938878075dc6d73205174621dd379e46"
+  },
+  "php-mktime": {
+   "language": "PHP 8.4.19",
+   "call": "mktime(12, 0, 0, m, d, y)",
+   "is_default": true,
+   "calendar": "proleptic Gregorian",
+   "accepted": 160332,
+   "refused": 0,
+   "distinct_days": 157419,
+   "answers_a_day_already_named": 5826,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "85284ea13ca7cd75a7910edce691fb2124c058a7b48f92d516aec29ea0cf2535"
+  },
+  "php-juliantojd": {
+   "language": "PHP 8.4.19",
+   "call": "juliantojd(m, d, y)",
+   "is_default": false,
+   "calendar": "proleptic Julian",
+   "accepted": 160332,
+   "refused": 0,
+   "distinct_days": 157423,
+   "answers_a_day_already_named": 5818,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "e49a8db6ea5f31b309a4d7bec95f9febb9aedfe9d4f2a5b6f4c902bd8dd9266c"
+  },
+  "c-timegm": {
+   "language": "glibc, gcc 13.3.0",
+   "call": "timegm(&tm)",
+   "is_default": true,
+   "calendar": "proleptic Gregorian",
+   "accepted": 160332,
+   "refused": 0,
+   "distinct_days": 157419,
+   "answers_a_day_already_named": 5826,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "85284ea13ca7cd75a7910edce691fb2124c058a7b48f92d516aec29ea0cf2535"
+  },
+  "perl-timegm": {
+   "language": "Perl 5.38.2",
+   "call": "Time::Local::timegm_modern(...)",
+   "is_default": true,
+   "calendar": "proleptic Gregorian",
+   "accepted": 157419,
+   "refused": 2913,
+   "distinct_days": 157419,
+   "answers_a_day_already_named": 0,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "06712d0bbe0d5f2c21086ff38eb50ed6938878075dc6d73205174621dd379e46"
+  },
+  "gnu-date": {
+   "language": "coreutils 9.4",
+   "call": "date -f",
+   "is_default": true,
+   "calendar": "proleptic Gregorian",
+   "accepted": 157419,
+   "refused": 2913,
+   "distinct_days": 157419,
+   "answers_a_day_already_named": 0,
+   "reform_read_off_its_own_answers": [],
+   "sha256_of_its_answers": "06712d0bbe0d5f2c21086ff38eb50ed6938878075dc6d73205174621dd379e46"
+  }
+ },
+ "two_written_dates_in_detail": {
+  "1712-02-30": {
+   "refused_by": [
+    "gnu-date",
+    "java-gregcal-strict",
+    "java-localdate",
+    "perl-timegm",
+    "php-checkdate",
+    "python-date",
+    "ruby-default-italy",
+    "ruby-england",
+    "ruby-gregorian",
+    "ruby-julian"
+   ],
+   "accepted_by": [
+    "c-timegm",
+    "java-gregoriancalendar",
+    "js-date",
+    "php-juliantojd",
+    "php-mktime",
+    "sqlite-julianday"
+   ],
+   "and_of_those_how_many_hand_back_a_day_already_named": 6
+  },
+  "1700-02-29": {
+   "refused_by": [
+    "gnu-date",
+    "java-gregcal-strict",
+    "java-localdate",
+    "perl-timegm",
+    "php-checkdate",
+    "python-date",
+    "ruby-default-italy",
+    "ruby-gregorian"
+   ],
+   "accepted_by": [
+    "c-timegm",
+    "java-gregoriancalendar",
+    "js-date",
+    "php-juliantojd",
+    "php-mktime",
+    "ruby-england",
+    "ruby-julian",
+    "sqlite-julianday"
+   ],
+   "and_of_those_how_many_hand_back_a_day_already_named": 5
+  }
+ },
+ "the_collapse": {
+  "reader": "java-gregoriancalendar",
+  "1582-10-05_is_answered_with": 2299161,
+  "1582-10-15_is_answered_with": 2299161,
+  "same_day": true,
+  "note": "ten written dates and the ten that follow them name ten days between them"
+ }
+}

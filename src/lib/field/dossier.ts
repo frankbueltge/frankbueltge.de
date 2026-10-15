@@ -416,12 +416,21 @@ export interface DossierInput {
  * The alternative — cropping each plate to its own marks — was built first and thrown away: an
  * instrument whose whole record is one day cropped to a nearly square box and drew, at column
  * width, a plate about as tall as a phone. Derived from committed dates only; never a clock.
+ *
+ * ONLY THIS PRACTICE'S ENCOUNTERS COUNT. The encounter mirror holds every house's files, and on
+ * 2026-10-05 the last export of the archived ledger dated data-snack's file to 2026-10-04. That
+ * stretched every one of this practice's plates by three weeks of tape it never ran. An encounter
+ * moves the horizon only if it is about one of this practice's instruments, which is the same rule
+ * the plates' ledgers use (`ledgerSubject`).
  */
 export function recordHorizon(input: DossierInput): string {
+  const slugs = input.instruments.map(([slug]) => slug)
   const dates = [
     ...input.instruments.map(([, m]) => m.date ?? ''),
     ...input.chronicle.map((e) => e.date),
-    ...input.encounters.map((e) => e.status.as_of),
+    ...input.encounters
+      .filter((e) => ledgerSubject(e, slugs) !== null)
+      .map((e) => e.status.as_of),
   ].filter(Boolean)
   return dates.sort().at(-1) ?? ''
 }

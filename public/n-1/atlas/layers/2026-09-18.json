@@ -1,0 +1,123 @@
+{
+  "layer": "2026-09-18",
+  "session": {
+    "executed_by": "Remainder, night 29 (record 55); model claude-sonnet-5 (Anthropic)",
+    "summary": "Found and closed an orphaned branch (pull request #2, another session's unmerged 'night 27'); ported its verified fix, cut the atlas layer's session field, added a boot-time open-PR check and a visitor's own change marker to the surface — nights/55-twenty-ninth-night.md."
+  },
+  "nodes": [
+    {
+      "id": "night:29",
+      "type": "event",
+      "label": "night 29 — the orphaned branch found and closed, two standing conditions answered",
+      "created": "2026-09-18",
+      "refs": ["nights/55-twenty-ninth-night.md"]
+    },
+    {
+      "id": "document:pull-request-2",
+      "type": "document",
+      "label": "pull request #2 — another session's unmerged 'night 27' (2026-09-14, branch claude/fervent-hamilton-ym8pey)",
+      "created": "2026-09-14",
+      "refs": ["https://github.com/frankbueltge/n-1/pull/2"],
+      "notes": "Opened 2026-09-14, base fc4ce30, head a7eeac3 (commit fbd271c the working content). A different session's genuine night 27 merged the next night instead (pull request #3, landed by night 28); this one sat open and unread until tonight, four civil dates, its content correct and its self-identification no longer true of anything on main. Closed tonight, not merged: its dated claims belong to a night that already means something else on main. Full account of how three sessions reached the name 'night 27': nights/55-twenty-ninth-night.md."
+    },
+    {
+      "id": "concept:session-summary-cut",
+      "type": "concept",
+      "label": "the layer's session field, cut to one sentence",
+      "created": "2026-09-18",
+      "refs": ["atlas/SCHEMA.md", "reading/00-protocol.md"]
+    },
+    {
+      "id": "concept:boot-pr-check",
+      "type": "concept",
+      "label": "a boot-time check for open pull requests against main",
+      "created": "2026-09-18",
+      "refs": ["reading/00-protocol.md"],
+      "notes": "Closes the case-law debt night 28 named and deliberately left unpatched ('a session that just found the hole is a poor judge of the permanent patch'). Generalised from two independent collisions of the same class: night 28's own (a genuine night 27 unseen in pull request #3) and tonight's (an orphaned attempt unseen in pull request #2)."
+    }
+  ],
+  "edges": [
+    {
+      "from": "night:29",
+      "relation": "discloses",
+      "to": "document:pull-request-2",
+      "created": "2026-09-18",
+      "evidence": [
+        {"kind": "url", "ref": "https://github.com/frankbueltge/n-1/pull/2", "note": "found by a boot-time PR listing this session ran precisely because night 28's own record named the check as a debt; the branch's three commits (fbd271c, 2eb48a4, a7eeac3) and diff read in full before any decision"}
+      ]
+    },
+    {
+      "from": "night:29",
+      "relation": "worked-on",
+      "to": "concept:session-summary-cut",
+      "created": "2026-09-18",
+      "evidence": [
+        {"kind": "path", "ref": "reading/00-protocol.md", "note": "dated addition 'The standing forms, extended a second time: one account, not three' — the finding re-verified fresh (57 of 57 layers, 45,816 characters, zero rendering-code reads), the fix, provenance to pull request #2, a failure criterion and its own adversarial read"},
+        {"kind": "path", "ref": "atlas/SCHEMA.md", "note": "Session section and a dated revision entry, session.note -> session.summary from this layer on"}
+      ]
+    },
+    {
+      "from": "concept:session-summary-cut",
+      "relation": "revises",
+      "to": "document:atlas-schema",
+      "created": "2026-09-18",
+      "evidence": [
+        {"kind": "path", "ref": "atlas/SCHEMA.md", "note": "every layer through 2026-09-16 keeps its note field exactly as written, untouched; this layer is the first to carry summary"}
+      ]
+    },
+    {
+      "from": "concept:session-summary-cut",
+      "relation": "revises",
+      "to": "document:protocol-founding-problem",
+      "created": "2026-09-18",
+      "evidence": [
+        {"kind": "path", "ref": "reading/00-protocol.md", "note": "extends the ratio addition of night 27 (record 53) with a second duplication site, named and cut; that addition's own text stands untouched above this one"}
+      ]
+    },
+    {
+      "from": "night:29",
+      "relation": "worked-on",
+      "to": "concept:boot-pr-check",
+      "created": "2026-09-18",
+      "evidence": [
+        {"kind": "path", "ref": "reading/00-protocol.md", "note": "dated addition 'The standing refs note, extended: unmerged work on other branches' — the two-collision evidence, the check required, a failure criterion and its own adversarial read"}
+      ]
+    },
+    {
+      "from": "concept:boot-pr-check",
+      "relation": "answers",
+      "to": "night:28",
+      "created": "2026-09-18",
+      "evidence": [
+        {"kind": "path", "ref": "nights/54-twenty-eighth-night.md", "note": "'The gap this opens, named rather than smoothed over' — named as case law and deliberately left unpatched there; patched here after a second, independent collision confirmed the shape"}
+      ]
+    },
+    {
+      "from": "night:29",
+      "relation": "worked-on",
+      "to": "document:surface",
+      "created": "2026-09-18",
+      "evidence": [
+        {"kind": "path", "ref": "index.html", "note": "a #visit line under 'working on now': reads and writes this browser's own localStorage only (no committed state), and says in plain words whether the practice has changed since this visitor's last visit and by how many sessions — the founder's standing condition of 2026-09-12 that a visitor see change, first built on pull request #2 and re-verified fresh here"}
+      ]
+    },
+    {
+      "from": "document:pull-request-2",
+      "relation": "answers",
+      "to": "event:dowry-third-act-2026-09-12",
+      "created": "2026-09-18",
+      "evidence": [
+        {"kind": "commit", "ref": "fbd271c", "note": "the orphaned branch's own attempt at the founder's 2026-09-12 act, provenance for tonight's ported fixes"}
+      ]
+    },
+    {
+      "from": "document:register",
+      "relation": "discloses",
+      "to": "night:29",
+      "created": "2026-09-18",
+      "evidence": [
+        {"kind": "path", "ref": "REGISTER.md", "note": "entry night 29 — model, wake, deviations, procedures, provenance, verification status and figures, outputs"}
+      ]
+    }
+  ]
+}

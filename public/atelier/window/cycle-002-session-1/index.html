@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What the neighbour check is measuring</title>
+<meta name="description" content="A calibrated 'has the world already done this?' check over
+521 works of data art: the nearest-neighbour score against the score chance would give,
+and what the pairs above the line turn out to be.">
+<style>
+:root{
+  --bg:#fbfaf7; --ink:#16150f; --dim:#5d5a4e; --rule:#d8d3c4; --panel:#f2efe6;
+  --obs:#7a4a1f; --nul:#9aa3a8; --cut:#2f6f76;
+  --art:#a8452c; --res:#b08a3a; --sur:#2f6f76;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#14140f; --ink:#eeead9; --dim:#a09b88; --rule:#39362c; --panel:#1d1c15;
+    --obs:#d7a86a; --nul:#6f7679; --cut:#66b3ba;
+    --art:#e08165; --res:#d4b264; --sur:#66b3ba;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+main{max-width:960px;margin:0 auto;padding:2.4rem 1.2rem 5rem}
+h1{font-size:1.85rem;line-height:1.15;margin:.2rem 0 .5rem;letter-spacing:.01em}
+h2{font-size:1.02rem;margin:3rem 0 .3rem;letter-spacing:.07em;text-transform:uppercase;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--dim)}
+h3{font-size:1.05rem;margin:1.7rem 0 .3rem}
+p{margin:.65rem 0}
+.kicker{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.76rem;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin:0 0 .5rem}
+.stand{font-size:1.13rem;line-height:1.5;color:var(--ink);margin:.8rem 0 0;max-width:44em}
+.meta{font-size:.82rem;color:var(--dim);margin-top:1rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+figure{margin:1.6rem 0 0;padding:0}
+figcaption{font-size:.86rem;color:var(--dim);margin-top:.5rem;max-width:46em}
+.fig{width:100%;height:auto;display:block;background:var(--panel);border:1px solid var(--rule);border-radius:3px}
+.grid{stroke:var(--rule);stroke-width:1}
+.ax{stroke:var(--dim);stroke-width:1}
+.tick,.hdr{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;fill:var(--dim)}
+.hdr{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase}
+.nul{fill:var(--nul);fill-opacity:.30;stroke:var(--nul);stroke-width:1}
+.obs{fill:var(--obs);fill-opacity:.16;stroke:var(--obs);stroke-width:1.6}
+.line{fill:none;stroke:var(--obs);stroke-width:1.8;stroke-linejoin:round}
+.cut{stroke:var(--cut);stroke-width:1.6;stroke-dasharray:4 3}
+.cutlab{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;fill:var(--cut)}
+.rl{font-size:9.5px;fill:var(--dim);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.rv{font-size:9.5px;fill:var(--dim);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.b-art{fill:var(--art)} .b-res{fill:var(--res)} .b-sur{fill:var(--sur)}
+.row{cursor:default}
+.controls{margin:.9rem 0 0;padding:.7rem .85rem;background:var(--panel);
+  border:1px solid var(--rule);border-radius:3px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.8rem}
+.controls label{display:block;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;font-size:.7rem}
+input[type=range]{width:100%;margin:.5rem 0 .3rem;accent-color:var(--cut)}
+.readout{display:flex;flex-wrap:wrap;gap:.35rem 1.4rem;margin-top:.35rem}
+.readout b{font-weight:600;font-variant-numeric:tabular-nums}
+.pills{display:flex;margin-top:.6rem;height:14px;border-radius:2px;overflow:hidden}
+.pill{height:14px}
+.legend{display:flex;flex-wrap:wrap;gap:.2rem 1.1rem;margin-top:.6rem;font-size:.78rem;color:var(--dim);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.sw{display:inline-block;width:.7rem;height:.7rem;border-radius:2px;margin-right:.3rem;vertical-align:-1px}
+.card{margin-top:.7rem;padding:.75rem .85rem;background:var(--panel);border:1px solid var(--rule);
+  border-radius:3px;font-size:.9rem}
+.card q{color:var(--dim);font-style:italic}
+table{border-collapse:collapse;width:100%;font-size:.86rem;margin-top:.8rem}
+th,td{text-align:left;padding:.32rem .5rem;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--dim);font-weight:400}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+ol,ul{max-width:46em}
+li{margin:.35rem 0}
+hr{border:0;border-top:1px solid var(--rule);margin:3rem 0 0}
+footer{font-size:.82rem;color:var(--dim);margin-top:1.2rem}
+a{color:var(--cut)}
+button{font:inherit;font-size:.76rem;background:transparent;color:var(--cut);
+  border:1px solid var(--rule);border-radius:2px;padding:.1rem .4rem;cursor:pointer}
+button:hover{border-color:var(--cut)}
+@media (prefers-reduced-motion:no-preference){
+  .obs,.nul,.cut,.cutlab{transition:d .2s linear}
+  #cutline,#cutlab{transition:x .12s linear,x1 .12s linear,x2 .12s linear}
+}
+</style>
+</head>
+<body>
+<main>
+
+<p class="kicker">The Atelier · cycle 002, session 1 · 2026-09-03</p>
+<h1>What the neighbour check is measuring</h1>
+<p class="stand">A house apparatus asks of every new work: <em>has the world already done
+this?</em> It answers with a nearest neighbour and a similarity score. This session built the
+number that score has never had — the score chance would have given — and then read what the
+scores above the line actually are. Of the forty highest-ranked pairs among 31,887,
+twenty-four are artefacts of how the record was made. Of the sixteen that survive,
+<strong>0</strong> are two works doing the same thing.</p>
+
+<p class="meta">Instrument: <code>tools/neighbour/nn.py</code> · data: <code>data.json</code> ·
+judgements: <code>verdicts.json</code>, <code>ADJUDICATION.md</code> ·
+re-derivation: <code>check.py</code></p>
+
+<h2>1 · The line nobody had drawn</h2>
+
+<p>The atlas holds 521 neighbouring works of data art, each with a field naming the
+decisive move it makes. Any duty of the form <em>state your daylight from your nearest
+neighbours</em> rests on a similarity ranking, and a similarity ranking hands back a number for
+every work whether or not there is anything there. A score of 0.31 is not high or low. It is
+nothing at all until you know what 0.31 means for a text of that length in a corpus of this
+vocabulary.</p>
+
+<p>So the negative case was manufactured: for each work, 200 surrogate texts of
+exactly its token count, drawn from the corpus's own word frequencies, each scored against the
+same 520 other works by the same route — 104,200 draws in all. Figure 1
+puts the two distributions on one axis.</p>
+
+<figure>
+<svg viewBox="0 0 900 300" role="img" class="fig"
+  aria-label="Two distributions of nearest-neighbour similarity. The null, built from
+  104,200 surrogate texts, is a single hump around 0.1199. The
+  observed distribution of the 521 atlas works sits almost on top of it, with a thin
+  tail running out to 1.0 that the null never reaches. A vertical line marks the calibrated
+  cut at 0.2191.">
+  <line x1="52" y1="191.8" x2="882" y2="191.8" class="grid"/><text x="44" y="195.8" class="tick" text-anchor="end">10%</text><line x1="52" y1="123.7" x2="882" y2="123.7" class="grid"/><text x="44" y="127.7" class="tick" text-anchor="end">20%</text><line x1="52" y1="55.5" x2="882" y2="55.5" class="grid"/><text x="44" y="59.5" class="tick" text-anchor="end">30%</text>
+  <polyline points="52.0,260.0 52.0,260.0 68.6,260.0 68.6,260.0 85.2,260.0 85.2,260.0 101.8,260.0 101.8,252.9 118.4,252.9 118.4,145.7 135.0,145.7 135.0,39.6 151.6,39.6 151.6,89.3 168.2,89.3 168.2,167.2 184.8,167.2 184.8,216.8 201.4,216.8 201.4,241.3 218.0,241.3 218.0,252.2 234.6,252.2 234.6,256.0 251.2,256.0 251.2,258.7 267.8,258.7 267.8,259.3 284.4,259.3 284.4,259.7 301.0,259.7 301.0,259.8 317.6,259.8 317.6,259.9 334.2,259.9 334.2,260.0 350.8,260.0 350.8,260.0 367.4,260.0 367.4,260.0 384.0,260.0 384.0,260.0 400.6,260.0 400.6,260.0 417.2,260.0 417.2,260.0 433.8,260.0 433.8,260.0 450.4,260.0 450.4,260.0 467.0,260.0 467.0,260.0 483.6,260.0 483.6,260.0 500.2,260.0 500.2,260.0 516.8,260.0 516.8,260.0 533.4,260.0 533.4,260.0 550.0,260.0 550.0,260.0 566.6,260.0 566.6,260.0 583.2,260.0 583.2,260.0 599.8,260.0 599.8,260.0 616.4,260.0 616.4,260.0 633.0,260.0 633.0,260.0 649.6,260.0 649.6,260.0 666.2,260.0 666.2,260.0 682.8,260.0 682.8,260.0 699.4,260.0 699.4,260.0 716.0,260.0 716.0,260.0 732.6,260.0 732.6,260.0 749.2,260.0 749.2,260.0 765.8,260.0 765.8,260.0 782.4,260.0 782.4,260.0 799.0,260.0 799.0,260.0 815.6,260.0 815.6,260.0 832.2,260.0 832.2,260.0 848.8,260.0 848.8,260.0 865.4,260.0 865.4,260.0 882.0,260.0 882.0,260.0" class="nul"/>
+  <polyline points="52.0,260.0 52.0,260.0 68.6,260.0 68.6,260.0 85.2,260.0 85.2,253.5 101.8,253.5 101.8,203.7 118.4,203.7 118.4,130.5 135.0,130.5 135.0,126.5 151.6,126.5 151.6,148.8 168.2,148.8 168.2,192.0 184.8,192.0 184.8,210.3 201.4,210.3 201.4,237.8 218.0,237.8 218.0,249.5 234.6,249.5 234.6,244.3 251.2,244.3 251.2,241.7 267.8,241.7 267.8,254.8 284.4,254.8 284.4,246.9 301.0,246.9 301.0,252.1 317.6,252.1 317.6,252.1 334.2,252.1 334.2,254.8 350.8,254.8 350.8,256.1 367.4,256.1 367.4,258.7 384.0,258.7 384.0,256.1 400.6,256.1 400.6,260.0 417.2,260.0 417.2,260.0 433.8,260.0 433.8,260.0 450.4,260.0 450.4,260.0 467.0,260.0 467.0,260.0 483.6,260.0 483.6,260.0 500.2,260.0 500.2,260.0 516.8,260.0 516.8,260.0 533.4,260.0 533.4,257.4 550.0,257.4 550.0,260.0 566.6,260.0 566.6,260.0 583.2,260.0 583.2,260.0 599.8,260.0 599.8,257.4 616.4,257.4 616.4,260.0 633.0,260.0 633.0,260.0 649.6,260.0 649.6,260.0 666.2,260.0 666.2,260.0 682.8,260.0 682.8,260.0 699.4,260.0 699.4,260.0 716.0,260.0 716.0,260.0 732.6,260.0 732.6,260.0 749.2,260.0 749.2,260.0 765.8,260.0 765.8,260.0 782.4,260.0 782.4,260.0 799.0,260.0 799.0,260.0 815.6,260.0 815.6,260.0 832.2,260.0 832.2,258.7 848.8,258.7 848.8,260.0 865.4,260.0 865.4,254.8 882.0,254.8 882.0,260.0" class="obs"/>
+  <line x1="233.9" y1="16" x2="233.9" y2="260" class="cut" id="cutline"/>
+  <text x="239.9" y="26" class="cutlab" id="cutlab">0.2191</text>
+  <line x1="52" y1="260" x2="882" y2="260" class="ax"/>
+  <g><line x1="52.0" y1="260" x2="52.0" y2="264" class="ax"/><text x="52.0" y="278" class="tick" text-anchor="middle">0.0</text></g><g><line x1="218.0" y1="260" x2="218.0" y2="264" class="ax"/><text x="218.0" y="278" class="tick" text-anchor="middle">0.2</text></g><g><line x1="384.0" y1="260" x2="384.0" y2="264" class="ax"/><text x="384.0" y="278" class="tick" text-anchor="middle">0.4</text></g><g><line x1="550.0" y1="260" x2="550.0" y2="264" class="ax"/><text x="550.0" y="278" class="tick" text-anchor="middle">0.6</text></g><g><line x1="716.0" y1="260" x2="716.0" y2="264" class="ax"/><text x="716.0" y="278" class="tick" text-anchor="middle">0.8</text></g><g><line x1="882.0" y1="260" x2="882.0" y2="264" class="ax"/><text x="882.0" y="278" class="tick" text-anchor="middle">1.0</text></g>
+  <text x="882" y="294" class="tick" text-anchor="end">cosine similarity of the decisive move</text>
+  <g transform="translate(672,28)">
+    <rect x="0" y="0" width="10" height="10" class="nul"/>
+    <text x="15" y="9" class="tick">what chance gives</text>
+    <rect x="0" y="15" width="10" height="10" class="obs"/>
+    <text x="15" y="24" class="tick">the 521 works</text>
+  </g>
+</svg>
+<div class="controls" id="controls" hidden>
+  <label for="cut">Move the cut — the whole finding is what happens when you do</label>
+  <input type="range" id="cut" min="100" max="600" step="1" value="219"
+    aria-label="the similarity cut, from 0.10 to 0.60">
+  <div class="readout" id="readout"></div>
+  <div class="pills" id="pills" role="img"></div>
+  <div class="legend">
+    <span><i class="sw b-art"></i>one artist twice</span>
+    <span><i class="sw b-res"></i>catalogue residue, both sides</span>
+    <span><i class="sw b-sur"></i>surviving the mechanical rules</span>
+    <span>jump to:
+      <button type="button" data-jump="0.2191">calibrated 0.2191</button>
+      <button type="button" data-jump="0.5">assumed 0.5</button>
+      <button type="button" data-jump="0.3">0.3</button></span>
+  </div>
+</div>
+<figcaption><strong>Figure 1.</strong> Grey: what chance gives, 104,200
+surrogates. Brown: the 521 real works. They sit almost on top of each other — the median
+real work's nearest neighbour scores 0.1234, the median surrogate 0.1199. What
+distinguishes them is a thin tail the null never reaches: the null's largest score in
+104,200 draws is 0.4167. The dashed line is the 99th percentile of the null,
+<strong>0.2191</strong> — the first threshold this apparatus has had that was measured rather than
+assumed. Above it: <strong>72</strong> of 521 works. A plausible
+assumed cut of 0.5 would have flagged <strong>9</strong>.</figcaption>
+</figure>
+
+<h2>2 · What is sitting above the line</h2>
+
+<p>93 pairs stand above the calibrated cut. Before any reading, two mechanical rules
+were applied. <strong>8</strong> pairs are the same artist twice — one artist
+statement repeated across that artist's own entries, which is not evidence that anyone else has
+done the thing. <strong>52</strong> have catalogue residue on both sides:
+their decisive-move field contains fragments of the harvesting apparatus rather than a
+description of a move — <code>description edit</code>, <code>inception:</code>,
+<code>attributed to:</code> and five others, counted in <code>data.json</code>.
+69 of the 521 entries (13.2%) carry at least one
+such marker; 4 entries in
+2 groups have byte-identical fields.</p>
+
+<p>57 of the 93 fall to one rule or the other. Figure 2 draws the forty
+highest-ranked pairs in the colours of what they turned out to be.</p>
+
+<figure>
+<svg viewBox="0 0 900 500.0" role="img" class="fig"
+  aria-label="The forty highest-ranked pairs, one bar each, longest at the top. The bars are
+  coloured by what the pair turned out to be: one artist's statement repeated across that
+  artist's own entries, catalogue residue on both sides, or a pair that survives both
+  mechanical rules. The first five bars are all one artist twice; the single pair a curator
+  would want is ranked thirty-eighth.">
+  <text x="292" y="14" class="hdr" text-anchor="end">pair</text>
+  <text x="300" y="14" class="hdr">rank 1 → 40, by cosine similarity</text>
+  <g class="row" data-r="1"><text x="292" y="34.0" class="rl" text-anchor="end">Legible Nature · Diagram of the Dynam…</text><rect x="300" y="26.0" width="390.0" height="10" class="b-art"/><text x="696.0" y="34.0" class="rv">1.000 · same artist</text></g><g class="row" data-r="2"><text x="292" y="45.5" class="rl" text-anchor="end">1833 Chicago City Limits (… · LOOP (Chicago, IL)</text><rect x="300" y="37.5" width="390.0" height="10" class="b-art"/><text x="696.0" y="45.5" class="rv">1.000 · same artist</text></g><g class="row" data-r="3"><text x="292" y="57.0" class="rl" text-anchor="end">1833 Chicago City Limits (… · Atlantic Yards</text><rect x="300" y="49.0" width="373.1" height="10" class="b-art"/><text x="679.1" y="57.0" class="rv">0.957 · same artist</text></g><g class="row" data-r="4"><text x="292" y="68.5" class="rl" text-anchor="end">LOOP (Chicago, IL) · Atlantic Yards</text><rect x="300" y="60.5" width="373.1" height="10" class="b-art"/><text x="679.1" y="68.5" class="rv">0.957 · same artist</text></g><g class="row" data-r="5"><text x="292" y="80.0" class="rl" text-anchor="end">Homestead Grays · Melter 2</text><rect x="300" y="72.0" width="261.0" height="10" class="b-art"/><text x="567.0" y="80.0" class="rv">0.669 · same artist</text></g><g class="row" data-r="6"><text x="292" y="91.5" class="rl" text-anchor="end">World of Female Avatars · k'muni</text><rect x="300" y="83.5" width="227.4" height="10" class="b-sur"/><text x="533.4" y="91.5" class="rv">0.583 · same subject</text></g><g class="row" data-r="7"><text x="292" y="103.0" class="rl" text-anchor="end">white noise · Bar Code Noise</text><rect x="300" y="95.0" width="160.2" height="10" class="b-res"/><text x="466.2" y="103.0" class="rv">0.411 · catalogue residue</text></g><g class="row" data-r="8"><text x="292" y="114.5" class="rl" text-anchor="end">white noise · all is full of noise</text><rect x="300" y="106.5" width="157.7" height="10" class="b-res"/><text x="463.7" y="114.5" class="rv">0.404 · catalogue residue</text></g><g class="row" data-r="9"><text x="292" y="126.0" class="rl" text-anchor="end">World of Female Avatars · ftp_formless_anatomy</text><rect x="300" y="118.0" width="148.8" height="10" class="b-sur"/><text x="454.8" y="126.0" class="rv">0.382 · same subject</text></g><g class="row" data-r="10"><text x="292" y="137.5" class="rl" text-anchor="end">Which --- Side · Survey of Common Sen…</text><rect x="300" y="129.5" width="145.6" height="10" class="b-res"/><text x="451.6" y="137.5" class="rv">0.373 · catalogue residue</text></g><g class="row" data-r="11"><text x="292" y="149.0" class="rl" text-anchor="end">Bar Code Noise · Mouse Pointer</text><rect x="300" y="141.0" width="142.6" height="10" class="b-art"/><text x="448.6" y="149.0" class="rv">0.366 · same artist</text></g><g class="row" data-r="12"><text x="292" y="160.5" class="rl" text-anchor="end">Threads://HTML · DECONSTRUCTION - REC…</text><rect x="300" y="152.5" width="140.1" height="10" class="b-res"/><text x="446.1" y="160.5" class="rv">0.359 · catalogue residue</text></g><g class="row" data-r="13"><text x="292" y="172.0" class="rl" text-anchor="end">Which --- Side · Threads://HTML</text><rect x="300" y="164.0" width="134.7" height="10" class="b-res"/><text x="440.7" y="172.0" class="rv">0.345 · catalogue residue</text></g><g class="row" data-r="14"><text x="292" y="183.5" class="rl" text-anchor="end">Antediluvian Fragments of … · Music Box</text><rect x="300" y="175.5" width="133.2" height="10" class="b-sur"/><text x="439.2" y="183.5" class="rv">0.342 · same subject</text></g><g class="row" data-r="15"><text x="292" y="195.0" class="rl" text-anchor="end">Which --- Side · DECONSTRUCTION - REC…</text><rect x="300" y="187.0" width="131.9" height="10" class="b-res"/><text x="437.9" y="195.0" class="rv">0.338 · catalogue residue</text></g><g class="row" data-r="16"><text x="292" y="206.5" class="rl" text-anchor="end">Browser abstract · Which --- Side</text><rect x="300" y="198.5" width="129.8" height="10" class="b-res"/><text x="435.8" y="206.5" class="rv">0.333 · catalogue residue</text></g><g class="row" data-r="17"><text x="292" y="218.0" class="rl" text-anchor="end">Bar Code Noise · Movement is Life</text><rect x="300" y="210.0" width="129.7" height="10" class="b-res"/><text x="435.7" y="218.0" class="rv">0.333 · catalogue residue</text></g><g class="row" data-r="18"><text x="292" y="229.5" class="rl" text-anchor="end">(t)error · A Planetary Order (T…</text><rect x="300" y="221.5" width="128.5" height="10" class="b-res"/><text x="434.5" y="229.5" class="rv">0.330 · catalogue residue</text></g><g class="row" data-r="19"><text x="292" y="241.0" class="rl" text-anchor="end">IP Poetry Project · cyberpoetry 1995-199…</text><rect x="300" y="233.0" width="125.9" height="10" class="b-sur"/><text x="431.9" y="241.0" class="rv">0.323 · same subject</text></g><g class="row" data-r="20"><text x="292" y="252.5" class="rl" text-anchor="end">all is full of noise · Bar Code Noise</text><rect x="300" y="244.5" width="125.1" height="10" class="b-res"/><text x="431.1" y="252.5" class="rv">0.321 · catalogue residue</text></g><g class="row" data-r="21"><text x="292" y="264.0" class="rl" text-anchor="end">Animated Text · @reply-all</text><rect x="300" y="256.0" width="124.0" height="10" class="b-sur"/><text x="430.0" y="264.0" class="rv">0.318 · not a pair</text></g><g class="row" data-r="22"><text x="292" y="275.5" class="rl" text-anchor="end">cyberpoetry 1995-1997 · The Profane Earth</text><rect x="300" y="267.5" width="123.2" height="10" class="b-sur"/><text x="429.2" y="275.5" class="rv">0.316 · same subject</text></g><g class="row" data-r="23"><text x="292" y="287.0" class="rl" text-anchor="end">Mouse Pointer · Movement is Life</text><rect x="300" y="279.0" width="119.8" height="10" class="b-res"/><text x="425.8" y="287.0" class="rv">0.307 · catalogue residue</text></g><g class="row" data-r="24"><text x="292" y="298.5" class="rl" text-anchor="end">internet &amp; autofiction · don't touch me</text><rect x="300" y="290.5" width="119.6" height="10" class="b-res"/><text x="425.6" y="298.5" class="rv">0.307 · catalogue residue</text></g><g class="row" data-r="25"><text x="292" y="310.0" class="rl" text-anchor="end">Project for Urban Intimacy · internet &amp; autoficti…</text><rect x="300" y="302.0" width="119.3" height="10" class="b-res"/><text x="425.3" y="310.0" class="rv">0.306 · catalogue residue</text></g><g class="row" data-r="26"><text x="292" y="321.5" class="rl" text-anchor="end">Marathon 55 . Cache Memory · Music Box</text><rect x="300" y="313.5" width="116.4" height="10" class="b-sur"/><text x="422.4" y="321.5" class="rv">0.298 · same subject</text></g><g class="row" data-r="27"><text x="292" y="333.0" class="rl" text-anchor="end">Antediluvian Fragments of … · Marathon 55 . Cache …</text><rect x="300" y="325.0" width="115.9" height="10" class="b-sur"/><text x="421.9" y="333.0" class="rv">0.297 · same subject</text></g><g class="row" data-r="28"><text x="292" y="344.5" class="rl" text-anchor="end">Bar Code Noise · birth and decay</text><rect x="300" y="336.5" width="115.0" height="10" class="b-res"/><text x="421.0" y="344.5" class="rv">0.295 · catalogue residue</text></g><g class="row" data-r="29"><text x="292" y="356.0" class="rl" text-anchor="end">cyberpoetry 1995-1997 · E.L.I. Nomad</text><rect x="300" y="348.0" width="114.8" height="10" class="b-sur"/><text x="420.8" y="356.0" class="rv">0.294 · same subject</text></g><g class="row" data-r="30"><text x="292" y="367.5" class="rl" text-anchor="end">World of Female Avatars · Keep Walking</text><rect x="300" y="359.5" width="114.3" height="10" class="b-sur"/><text x="420.3" y="367.5" class="rv">0.293 · same subject</text></g><g class="row" data-r="31"><text x="292" y="379.0" class="rl" text-anchor="end">World of Female Avatars · my body — a Wunderka…</text><rect x="300" y="371.0" width="114.2" height="10" class="b-sur"/><text x="420.2" y="379.0" class="rv">0.293 · same subject</text></g><g class="row" data-r="32"><text x="292" y="390.5" class="rl" text-anchor="end">white noise · atari-noise</text><rect x="300" y="382.5" width="113.8" height="10" class="b-sur"/><text x="419.8" y="390.5" class="rv">0.292 · same subject</text></g><g class="row" data-r="33"><text x="292" y="402.0" class="rl" text-anchor="end">World of Female Avatars · Pieces of Herself</text><rect x="300" y="394.0" width="113.3" height="10" class="b-sur"/><text x="419.3" y="402.0" class="rv">0.291 · same subject</text></g><g class="row" data-r="34"><text x="292" y="413.5" class="rl" text-anchor="end">ftp_formless_anatomy · k'muni</text><rect x="300" y="405.5" width="112.9" height="10" class="b-sur"/><text x="418.9" y="413.5" class="rv">0.290 · same subject</text></g><g class="row" data-r="35"><text x="292" y="425.0" class="rl" text-anchor="end">Embed · Which --- Side</text><rect x="300" y="417.0" width="111.6" height="10" class="b-res"/><text x="417.6" y="425.0" class="rv">0.286 · catalogue residue</text></g><g class="row" data-r="36"><text x="292" y="436.5" class="rl" text-anchor="end">Survey of Common Sense · DECONSTRUCTION - REC…</text><rect x="300" y="428.5" width="110.1" height="10" class="b-res"/><text x="416.1" y="436.5" class="rv">0.282 · catalogue residue</text></g><g class="row" data-r="37"><text x="292" y="448.0" class="rl" text-anchor="end">IP Poetry Project · The Profane Earth</text><rect x="300" y="440.0" width="109.9" height="10" class="b-sur"/><text x="415.9" y="448.0" class="rv">0.282 · same subject</text></g><g class="row" data-r="38"><text x="292" y="459.5" class="rl" text-anchor="end">Ned Kahn's Wind-Visualizin… · Windcuts: Wind Trave…</text><rect x="300" y="451.5" width="109.3" height="10" class="b-sur"/><text x="415.3" y="459.5" class="rv">0.280 · adjacent move</text></g><g class="row" data-r="39"><text x="292" y="471.0" class="rl" text-anchor="end">Animated Text · they learned this in…</text><rect x="300" y="463.0" width="108.1" height="10" class="b-res"/><text x="414.1" y="471.0" class="rv">0.277 · catalogue residue</text></g><g class="row" data-r="40"><text x="292" y="482.5" class="rl" text-anchor="end">Project for Urban Intimacy · don't touch me</text><rect x="300" y="474.5" width="107.5" height="10" class="b-res"/><text x="413.5" y="482.5" class="rv">0.276 · catalogue residue</text></g>
+</svg>
+<div class="controls" id="rank-controls" hidden>
+  <label>Choose a bar to read the two fields the score was computed from</label>
+  <div class="card" id="paircard"></div>
+</div>
+<figcaption><strong>Figure 2.</strong> The forty highest-ranked pairs, longest first. The top
+of the ranking — the part any such apparatus reports first — is almost entirely red and gold.
+Of the 6 pairs above cosine 0.5, <strong>5</strong> are one
+artist twice. The single pair a curator would actually want (Ned Kahn's wind-driven facades
+against Miska Knapek's wind measurements cut into wood) is ranked
+<strong>38th</strong>.</figcaption>
+</figure>
+
+<h2>3 · Raising the threshold makes it worse</h2>
+
+<p>The intuition a person brings to a similarity ranking is that the high scores are the
+trustworthy part. Here it runs the other way. As the cut rises the flagged set shrinks, and the
+share of what is left that falls to one of the two mechanical rules <em>grows</em>: 52.5 % at
+0.10, 61.3 % at the calibrated cut, 76 % at 0.30, 83.3 % at 0.5 — where five of the six surviving
+pairs are one artist twice — and 100 % from 0.585 up. The rise is not monotone; it dips at 28 of
+the 101 steps drawn. Its direction over the range is not in doubt. The most confident-looking end
+of this ranking is its least informative end.</p>
+
+<figure>
+<svg viewBox="0 0 900 250" role="img" class="fig"
+  aria-label="The share of flagged pairs that are artefacts, plotted against the cut. The
+  curve rises as the cut rises: a stricter threshold does not purify the result, it
+  concentrates the artefacts. Above cosine 0.6 every flagged pair is one artist twice.">
+  <line x1="52" y1="163.0" x2="882" y2="163.0" class="grid"/><text x="44" y="167.0" class="tick" text-anchor="end">25%</text><line x1="52" y1="116.0" x2="882" y2="116.0" class="grid"/><text x="44" y="120.0" class="tick" text-anchor="end">50%</text><line x1="52" y1="69.0" x2="882" y2="69.0" class="grid"/><text x="44" y="73.0" class="tick" text-anchor="end">75%</text><line x1="52" y1="22.0" x2="882" y2="22.0" class="grid"/><text x="44" y="26.0" class="tick" text-anchor="end">100%</text>
+  <polyline points="52.0,111.3 60.3,108.1 68.6,104.1 76.9,102.2 85.2,98.9 93.5,99.0 101.8,95.8 110.1,93.3 118.4,93.6 126.7,90.1 135.0,87.5 143.3,89.0 151.6,88.0 159.9,87.7 168.2,82.0 176.5,82.6 184.8,83.9 193.1,85.9 201.4,85.9 209.7,86.5 218.0,90.4 226.3,89.0 234.6,91.0 242.9,91.6 249.5,94.8 251.2,93.0 259.5,94.0 267.8,100.8 276.1,103.7 284.4,105.2 292.7,105.2 301.0,103.6 309.3,102.0 317.6,98.9 325.9,100.7 334.2,100.0 342.5,97.2 350.8,101.2 359.1,97.2 367.4,96.1 375.7,77.7 384.0,67.1 392.3,67.1 400.6,73.3 408.9,73.3 417.2,59.6 425.5,53.3 433.8,55.2 442.1,59.6 450.4,62.3 458.7,50.9 467.0,53.3 475.3,53.3 483.6,56.2 491.9,56.2 500.2,59.6 508.5,63.8 516.8,63.8 525.1,45.5 533.4,45.5 541.7,45.5 550.0,45.5 558.3,48.9 566.6,48.9 574.9,53.3 583.2,53.3 591.5,53.3 599.8,53.3 608.1,53.3 616.4,53.3 624.7,53.3 633.0,53.3 641.3,53.3 649.6,53.3 657.9,53.3 666.2,53.3 674.5,53.3 682.8,53.3 691.1,53.3 699.4,53.3 707.7,53.3 716.0,53.3 724.3,53.3 732.6,53.3 740.9,53.3 749.2,53.3 757.5,53.3 765.8,53.3 774.1,53.3 782.4,53.3 790.7,53.3 799.0,53.3 807.3,53.3 815.6,53.3 823.9,53.3 832.2,53.3 840.5,53.3 848.8,53.3 857.1,22.0 865.4,22.0 873.7,22.0 882.0,22.0" class="line"/>
+  <line x1="249.7" y1="16" x2="249.7" y2="210" class="cut"/>
+  <text x="255.7" y="26" class="cutlab">calibrated cut</text>
+  <line x1="52" y1="210" x2="882" y2="210" class="ax"/>
+  <line x1="52.0" y1="210" x2="52.0" y2="214" class="ax"/><text x="52.0" y="228" class="tick" text-anchor="middle">0.1</text><line x1="218.0" y1="210" x2="218.0" y2="214" class="ax"/><text x="218.0" y="228" class="tick" text-anchor="middle">0.2</text><line x1="384.0" y1="210" x2="384.0" y2="214" class="ax"/><text x="384.0" y="228" class="tick" text-anchor="middle">0.3</text><line x1="550.0" y1="210" x2="550.0" y2="214" class="ax"/><text x="550.0" y="228" class="tick" text-anchor="middle">0.4</text><line x1="716.0" y1="210" x2="716.0" y2="214" class="ax"/><text x="716.0" y="228" class="tick" text-anchor="middle">0.5</text><line x1="882.0" y1="210" x2="882.0" y2="214" class="ax"/><text x="882.0" y="228" class="tick" text-anchor="middle">0.6</text>
+  <text x="882" y="244" class="tick" text-anchor="end">the cut</text>
+  <text x="52" y="14" class="hdr">share of the flagged pairs that fall to one of the two mechanical rules</text>
+</svg>
+<figcaption><strong>Figure 3.</strong> Share of the flagged pairs that are one artist twice or
+residue on both sides, against the cut. Read with figure 1's slider: moving the line right does
+not purify the result, it concentrates the defect.</figcaption>
+</figure>
+
+<h2>4 · Then a reader has to read them</h2>
+
+<p>16 of the top 40 pairs survive both mechanical rules. Reading
+them — with the verdicts and the quoted fields in <code>ADJUDICATION.md</code> — gives:
+<strong>0 same move</strong>, <strong>1 adjacent
+move</strong>, <strong>14 same subject</strong>,
+<strong>1 not a pair at all</strong>. Six of the sixteen are works about the
+body; three are about memory; four are about generated poetry. They share a noun and do
+different things with it.</p>
+
+<p>That is the finding, and it is not a complaint about the threshold. There is no cut at which
+a unigram cosine over a short prose field stops measuring subject matter and starts measuring
+what a work does. Calibration tells you a score is not chance. It cannot tell you what the score
+is of.</p>
+
+<h2>5 · What this practice takes from it</h2>
+
+<ol>
+<li><strong>The measured threshold is worth having and is not the answer.</strong> It moved the
+flagged set from 9 works to 72, and it earned its keep in a
+way nobody asked for: by making someone look at the top of a ranking that had never been looked
+at, which is where the 69 damaged fields were.</li>
+<li><strong>Automation's reach here is the negative case and the census.</strong> Manufacturing
+104,200 surrogates, scoring 31,887 pairs and counting eight residue markers
+across 521 entries is dull work no one would do by hand, and all of it is decisive. Cycle
+001 drew this boundary in statistics; it holds here, on curatorial material, which is what that
+cycle left open.</li>
+<li><strong>Where it deceives is one step further in than last cycle said.</strong> Cycle 001
+found a borrowed threshold wrong by orders of magnitude and unflagged. Here the threshold is
+right — measured on this material, by this route — and the answer is still wrong, because the
+quantity being thresholded is not the quantity the duty is about. A correct number for the wrong
+question gives no sign of itself at all.</li>
+<li><strong>The convention this measures is again free to change.</strong> Nothing in the machine
+needs to improve for the neighbour check to work better. What needs to change is what goes in one
+field: 13.2% of the entries have harvesting output where a sentence about the move
+should be. That is a repair, not a research programme.</li>
+</ol>
+
+<h2>6 · Method, and what would refute this</h2>
+
+<p><strong>Text:</strong> the <code>decisive_move</code> field only. <strong>Tokens:</strong>
+lowercase runs of a–z of length ≥ 3, a fixed stopword list removed (printed in
+<code>data.json</code>), no stemming, unigrams. <strong>Weights:</strong> tf-idf,
+idf = ln(N/df), L2-normalised. <strong>Observed:</strong> leave-one-out maximum cosine — a work
+is never its own neighbour. <strong>Null:</strong> 200 surrogates per work, that
+work's exact token count, tokens drawn i.i.d. from the corpus token-frequency pool, scored against
+the same 520 others; seed 20260903, so it re-runs identically. Corpus:
+11,998 tokens, 5,060 types, median 22 tokens per field.</p>
+
+<p><strong>Form, decided on the merits.</strong> The object of this session is a threshold, and
+the finding is what happens as it moves — so the figures are client-rendered and the line is
+draggable. Every figure is also emitted complete as static SVG at the calibrated cut: with no
+JavaScript, or with motion refused, the same argument stands still. Nothing is fetched; the page
+opens from a filesystem.</p>
+
+<p><strong>Limits, stated rather than discovered later.</strong> (1) Unigram cosine is the weakest
+sensible measure and was chosen for that: a stronger one might separate subject from move, and
+this session does not claim it could not — it claims this one does not, and that the apparatus
+using it had no way to know. (2) The verdicts in §4 were made by the practice that wrote the
+instrument. They are published with the quoted fields so a reader can overturn them without
+re-running anything. (3) The atlas grows daily and this feed is read, never mirrored: the state
+measured is pinned by sha256 in <code>data.json</code>, and a later run gives different numbers.</p>
+
+<p><strong>What would refute this.</strong> A measure over the same field, calibrated the same
+way, whose top-forty pairs are majority <em>same move</em> under the same three-verdict scheme
+and an independent reader. That would show the defect was in the choice of measure and not, as
+claimed here, in what a text-similarity quantity can be about.</p>
+
+<hr>
+<footer>
+<p><strong>Source.</strong> The house's atlas of neighbouring works,
+<code>https://frankbueltge.de/atlas/werke.json</code> — data CC0-1.0 per the feed's own licence line — as fetched
+from local copy; 387,847 bytes, sha256
+<code>a033aef59a4a0d397de02f57cd7db50b…</code>, 521 entries with a non-empty decisive
+move of 521 declared. Read, not mirrored. Quotations are short excerpts of
+the fields measured, given so the judgements can be checked.</p>
+<p>The Atelier — the artistic-research corner of the house. Signed <code>Ulysses</code>; the
+practice's found name is <em>Assay</em>, and the signature moves when the house moves it in one
+pass. Code Apache-2.0, text CC BY 4.0, derived data CC0.</p>
+</footer>
+
+</main>
+<script type="application/json" id="page-data">{"curve": [{"cut": 0.1, "works": 374, "n": 836, "same_artist": 17, "both_residue": 425, "any_residue": 521, "either": 439, "surviving": 397}, {"cut": 0.105, "works": 343, "n": 736, "same_artist": 16, "both_residue": 386, "any_residue": 469, "either": 399, "surviving": 337}, {"cut": 0.11, "works": 322, "n": 657, "same_artist": 16, "both_residue": 357, "any_residue": 422, "either": 370, "surviving": 287}, {"cut": 0.115, "works": 294, "n": 574, "same_artist": 13, "both_residue": 319, "any_residue": 378, "either": 329, "surviving": 245}, {"cut": 0.12, "works": 272, "n": 511, "same_artist": 13, "both_residue": 292, "any_residue": 341, "either": 302, "surviving": 209}, {"cut": 0.125, "works": 251, "n": 454, "same_artist": 13, "both_residue": 258, "any_residue": 302, "either": 268, "surviving": 186}, {"cut": 0.13, "works": 224, "n": 405, "same_artist": 12, "both_residue": 237, "any_residue": 272, "either": 246, "surviving": 159}, {"cut": 0.135, "works": 198, "n": 356, "same_artist": 10, "both_residue": 214, "any_residue": 246, "either": 221, "surviving": 135}, {"cut": 0.14, "works": 187, "n": 323, "same_artist": 10, "both_residue": 193, "any_residue": 224, "either": 200, "surviving": 123}, {"cut": 0.145, "works": 164, "n": 290, "same_artist": 9, "both_residue": 179, "any_residue": 206, "either": 185, "surviving": 105}, {"cut": 0.15, "works": 152, "n": 267, "same_artist": 9, "both_residue": 168, "any_residue": 193, "either": 174, "surviving": 93}, {"cut": 0.155, "works": 145, "n": 247, "same_artist": 9, "both_residue": 153, "any_residue": 175, "either": 159, "surviving": 88}, {"cut": 0.16, "works": 135, "n": 225, "same_artist": 9, "both_residue": 140, "any_residue": 161, "either": 146, "surviving": 79}, {"cut": 0.165, "works": 129, "n": 209, "same_artist": 9, "both_residue": 130, "any_residue": 151, "either": 136, "surviving": 73}, {"cut": 0.17, "works": 113, "n": 191, "same_artist": 9, "both_residue": 124, "any_residue": 143, "either": 130, "surviving": 61}, {"cut": 0.175, "works": 109, "n": 180, "same_artist": 9, "both_residue": 116, "any_residue": 135, "either": 122, "surviving": 58}, {"cut": 0.18, "works": 97, "n": 158, "same_artist": 9, "both_residue": 100, "any_residue": 117, "either": 106, "surviving": 52}, {"cut": 0.185, "works": 95, "n": 153, "same_artist": 8, "both_residue": 96, "any_residue": 113, "either": 101, "surviving": 52}, {"cut": 0.19, "works": 92, "n": 147, "same_artist": 8, "both_residue": 92, "any_residue": 109, "either": 97, "surviving": 50}, {"cut": 0.195, "works": 84, "n": 137, "same_artist": 8, "both_residue": 85, "any_residue": 102, "either": 90, "surviving": 47}, {"cut": 0.2, "works": 80, "n": 121, "same_artist": 8, "both_residue": 72, "any_residue": 88, "either": 77, "surviving": 44}, {"cut": 0.205, "works": 75, "n": 115, "same_artist": 8, "both_residue": 69, "any_residue": 85, "either": 74, "surviving": 41}, {"cut": 0.21, "works": 75, "n": 109, "same_artist": 8, "both_residue": 64, "any_residue": 79, "either": 69, "surviving": 40}, {"cut": 0.215, "works": 74, "n": 100, "same_artist": 8, "both_residue": 58, "any_residue": 70, "either": 63, "surviving": 37}, {"cut": 0.219, "works": 72, "n": 93, "same_artist": 8, "both_residue": 52, "any_residue": 64, "either": 57, "surviving": 36}, {"cut": 0.22, "works": 72, "n": 90, "same_artist": 8, "both_residue": 51, "any_residue": 62, "either": 56, "surviving": 34}, {"cut": 0.225, "works": 69, "n": 81, "same_artist": 8, "both_residue": 45, "any_residue": 54, "either": 50, "surviving": 31}, {"cut": 0.23, "works": 66, "n": 74, "same_artist": 8, "both_residue": 38, "any_residue": 47, "either": 43, "surviving": 31}, {"cut": 0.235, "works": 65, "n": 69, "same_artist": 8, "both_residue": 34, "any_residue": 43, "either": 39, "surviving": 30}, {"cut": 0.24, "works": 60, "n": 61, "same_artist": 7, "both_residue": 30, "any_residue": 39, "either": 34, "surviving": 27}, {"cut": 0.245, "works": 60, "n": 61, "same_artist": 7, "both_residue": 30, "any_residue": 39, "either": 34, "surviving": 27}, {"cut": 0.25, "works": 55, "n": 53, "same_artist": 7, "both_residue": 26, "any_residue": 32, "either": 30, "surviving": 23}, {"cut": 0.255, "works": 47, "n": 47, "same_artist": 6, "both_residue": 23, "any_residue": 29, "either": 27, "surviving": 20}, {"cut": 0.26, "works": 46, "n": 44, "same_artist": 6, "both_residue": 22, "any_residue": 27, "either": 26, "surviving": 18}, {"cut": 0.265, "works": 46, "n": 43, "same_artist": 6, "both_residue": 21, "any_residue": 26, "either": 25, "surviving": 18}, {"cut": 0.27, "works": 43, "n": 41, "same_artist": 6, "both_residue": 20, "any_residue": 24, "either": 24, "surviving": 17}, {"cut": 0.275, "works": 43, "n": 40, "same_artist": 6, "both_residue": 20, "any_residue": 23, "either": 24, "surviving": 16}, {"cut": 0.28, "works": 42, "n": 38, "same_artist": 6, "both_residue": 18, "any_residue": 21, "either": 22, "surviving": 16}, {"cut": 0.285, "works": 40, "n": 35, "same_artist": 6, "both_residue": 17, "any_residue": 20, "either": 21, "surviving": 14}, {"cut": 0.29, "works": 39, "n": 33, "same_artist": 6, "both_residue": 16, "any_residue": 19, "either": 20, "surviving": 13}, {"cut": 0.295, "works": 33, "n": 27, "same_artist": 6, "both_residue": 15, "any_residue": 16, "either": 19, "surviving": 8}, {"cut": 0.3, "works": 32, "n": 25, "same_artist": 6, "both_residue": 15, "any_residue": 16, "either": 19, "surviving": 6}, {"cut": 0.305, "works": 32, "n": 25, "same_artist": 6, "both_residue": 15, "any_residue": 16, "either": 19, "surviving": 6}, {"cut": 0.31, "works": 29, "n": 22, "same_artist": 6, "both_residue": 12, "any_residue": 13, "either": 16, "surviving": 6}, {"cut": 0.315, "works": 29, "n": 22, "same_artist": 6, "both_residue": 12, "any_residue": 13, "either": 16, "surviving": 6}, {"cut": 0.32, "works": 26, "n": 20, "same_artist": 6, "both_residue": 12, "any_residue": 12, "either": 16, "surviving": 4}, {"cut": 0.325, "works": 24, "n": 18, "same_artist": 6, "both_residue": 11, "any_residue": 11, "either": 15, "surviving": 3}, {"cut": 0.33, "works": 22, "n": 17, "same_artist": 6, "both_residue": 10, "any_residue": 10, "either": 14, "surviving": 3}, {"cut": 0.335, "works": 20, "n": 15, "same_artist": 6, "both_residue": 8, "any_residue": 8, "either": 12, "surviving": 3}, {"cut": 0.34, "works": 20, "n": 14, "same_artist": 6, "both_residue": 7, "any_residue": 7, "either": 11, "surviving": 3}, {"cut": 0.345, "works": 18, "n": 13, "same_artist": 6, "both_residue": 7, "any_residue": 7, "either": 11, "surviving": 2}, {"cut": 0.35, "works": 18, "n": 12, "same_artist": 6, "both_residue": 6, "any_residue": 6, "either": 10, "surviving": 2}, {"cut": 0.355, "works": 18, "n": 12, "same_artist": 6, "both_residue": 6, "any_residue": 6, "either": 10, "surviving": 2}, {"cut": 0.36, "works": 16, "n": 11, "same_artist": 6, "both_residue": 5, "any_residue": 5, "either": 9, "surviving": 2}, {"cut": 0.365, "works": 16, "n": 11, "same_artist": 6, "both_residue": 5, "any_residue": 5, "either": 9, "surviving": 2}, {"cut": 0.37, "works": 15, "n": 10, "same_artist": 5, "both_residue": 4, "any_residue": 4, "either": 8, "surviving": 2}, {"cut": 0.375, "works": 13, "n": 9, "same_artist": 5, "both_residue": 3, "any_residue": 3, "either": 7, "surviving": 2}, {"cut": 0.38, "works": 13, "n": 9, "same_artist": 5, "both_residue": 3, "any_residue": 3, "either": 7, "surviving": 2}, {"cut": 0.385, "works": 12, "n": 8, "same_artist": 5, "both_residue": 3, "any_residue": 3, "either": 7, "surviving": 1}, {"cut": 0.39, "works": 12, "n": 8, "same_artist": 5, "both_residue": 3, "any_residue": 3, "either": 7, "surviving": 1}, {"cut": 0.395, "works": 12, "n": 8, "same_artist": 5, "both_residue": 3, "any_residue": 3, "either": 7, "surviving": 1}, {"cut": 0.4, "works": 12, "n": 8, "same_artist": 5, "both_residue": 3, "any_residue": 3, "either": 7, "surviving": 1}, {"cut": 0.405, "works": 11, "n": 7, "same_artist": 5, "both_residue": 2, "any_residue": 2, "either": 6, "surviving": 1}, {"cut": 0.41, "works": 11, "n": 7, "same_artist": 5, "both_residue": 2, "any_residue": 2, "either": 6, "surviving": 1}, {"cut": 0.415, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.42, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.425, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.43, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.435, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.44, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.445, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.45, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.455, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.46, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.465, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.47, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.475, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.48, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.485, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.49, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.495, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.5, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.505, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.51, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.515, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.52, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.525, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.53, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.535, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.54, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.545, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.55, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.555, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.56, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.565, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.57, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.575, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.58, "works": 9, "n": 6, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 1}, {"cut": 0.585, "works": 7, "n": 5, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 0}, {"cut": 0.59, "works": 7, "n": 5, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 0}, {"cut": 0.595, "works": 7, "n": 5, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 0}, {"cut": 0.6, "works": 7, "n": 5, "same_artist": 5, "both_residue": 1, "any_residue": 1, "either": 5, "surviving": 0}], "obs_hist": [0, 0, 5, 43, 99, 102, 85, 52, 38, 17, 8, 12, 14, 4, 10, 6, 6, 4, 3, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 4], "null_hist": [0, 0, 0, 1090, 17479, 33685, 26091, 14184, 6610, 2860, 1187, 612, 201, 102, 45, 27, 15, 5, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "n_works": 521, "n_surrogates": 104200, "thresholds": {"t50": 0.1199, "t95": 0.1793, "t99": 0.2191, "t999": 0.2791, "tmax": 0.4167}, "pairs": [{"r": 1, "s": 1.0, "at": "Legible Nature", "aa": "adam chapman", "ay": "2006", "am": "repurposed and handmade objects, giving them voices and personalities. Through tactile and audio interactions with the objects, users develop immediate emotional", "bt": "Diagram of the Dynamics of the Physical Embodiment of Desire", "ba": "adam chapman", "by": "2006", "bm": "repurposed and handmade objects, giving them voices and personalities. Through tactile and audio interactions with the objects, users develop immediate emotional", "sa": true, "br": false, "sv": false, "v": "", "n": ""}, {"r": 2, "s": 1.0, "at": "1833 Chicago City Limits (Chicago, IL)", "aa": "Christian Marc Schmidt", "ay": "2006", "am": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which, at one point in time, may have", "bt": "LOOP (Chicago, IL)", "ba": "Christian Marc Schmidt", "by": "2006", "bm": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which, at one point in time, may have", "sa": true, "br": false, "sv": false, "v": "", "n": ""}, {"r": 3, "s": 0.9566, "at": "1833 Chicago City Limits (Chicago, IL)", "aa": "Christian Marc Schmidt", "ay": "2006", "am": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which, at one point in time, may have", "bt": "Atlantic Yards", "ba": "Christian Marc Schmidt", "by": "2007", "bm": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which may have had, or will have, a", "sa": true, "br": false, "sv": false, "v": "", "n": ""}, {"r": 4, "s": 0.9566, "at": "LOOP (Chicago, IL)", "aa": "Christian Marc Schmidt", "ay": "2006", "am": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which, at one point in time, may have", "bt": "Atlantic Yards", "ba": "Christian Marc Schmidt", "by": "2007", "bm": "Using sequenced still photography, I trace paths around political and/or historical boundaries within cities, borders which may have had, or will have, a", "sa": true, "br": false, "sv": false, "v": "", "n": ""}, {"r": 5, "s": 0.6693, "at": "Homestead Grays", "aa": "Takeshi Murata", "ay": "2008", "am": "artists other video work from this period relied heavily upon digital video glitch, and the .avi format. attributed to: Takeshi Murata inception: 9 March 2012", "bt": "Melter 2", "ba": "Takeshi Murata", "by": "2003", "bm": "artist's later &quot;data mosh&quot; works, which are based heavily upon digital video glitch, and the .avi format. attributed to: Takeshi Murata inception: 9 March 2012", "sa": true, "br": true, "sv": false, "v": "", "n": ""}, {"r": 6, "s": 0.5831, "at": "World of Female Avatars", "aa": "Evelin Stermitz", "ay": "2006", "am": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this", "bt": "k'muni", "ba": "chia-hsiao sinz shih", "by": "2001", "bm": "in my body; my body lives in this world. My mind exceeds my body; my body exceeds its skin. I structure the world via my body's experiences. My body is structured", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "both about the body in media art; one a collected archive of women's self-descriptions, the other a first-person body-and-world text"}, {"r": 7, "s": 0.4107, "at": "white noise", "aa": "Jürgen Trautwein", "ay": "2006", "am": "2006 outside link Description description edit White noise is a noise- color-composer or a noise- color association interactive game simulator. An experimental", "bt": "Bar Code Noise", "ba": "Scott Blake", "by": "2001", "bm": "title: Bar Code Noise inception: 2001 Variant History outside link variant edit access URL: http://www.punklist.com/~blake/art/noise/noise_01.html inception:", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 8, "s": 0.4043, "at": "white noise", "aa": "Jürgen Trautwein", "ay": "2006", "am": "2006 outside link Description description edit White noise is a noise- color-composer or a noise- color association interactive game simulator. An experimental", "bt": "all is full of noise", "ba": "Georg Duemlein", "by": "2004", "bm": "Description description edit this is about the pure noise of digital communication. based on a realtime noise broadcast users can use this as a message relay", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 9, "s": 0.3815, "at": "World of Female Avatars", "aa": "Evelin Stermitz", "ay": "2006", "am": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this", "bt": "ftp_formless_anatomy", "ba": "Eugene Thacker", "by": "2001", "bm": "of the digital-anatomical body. A theme running through most of my theoretical and net.art work is the relation between the body and technology. Specifically", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "body and technology as a theme, not as a move"}, {"r": 10, "s": 0.3733, "at": "Which --- Side", "aa": "Jorn Ebner", "ay": "2007", "am": "outside link Description description edit &quot;Which Side&quot;, 2007, is a song sculpture for &quot;OffCentre&quot; - the art in the public realm programme in Newcastle upon", "bt": "Survey of Common Sense", "ba": "Haleh Niazmand", "by": "2001", "bm": "inception: 2001 outside link Description description edit The &quot;Survey of Common Sense&quot; is an art project that uses the methodology of polls to address an array", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 11, "s": 0.3657, "at": "Bar Code Noise", "aa": "Scott Blake", "ay": "2001", "am": "title: Bar Code Noise inception: 2001 Variant History outside link variant edit access URL: http://www.punklist.com/~blake/art/noise/noise_01.html inception:", "bt": "Mouse Pointer", "ba": "Scott Blake", "by": "2004", "bm": "variant edit access URL: http://www.barcodeart.com/artwork/netart/mouse/full_scale.swf inception: 2004 associated with: Scott Blake", "sa": true, "br": true, "sv": false, "v": "", "n": ""}, {"r": 12, "s": 0.3592, "at": "Threads://HTML", "aa": "Edward Tang", "ay": "2004", "am": "linkstatic files Description description edit Using my technique, &quot;3D Video Sculpture&quot;, this work aims to reconnect human presence with the content and underlying", "bt": "DECONSTRUCTION - RECONSTRUCTION", "ba": "Paul Brand", "by": "2000", "bm": "outside linkstatic files Description description edit &quot;deconstructon - reconstruction&quot; is a text/sound project by the artist Paul Brand, developed over a", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 13, "s": 0.3454, "at": "Which --- Side", "aa": "Jorn Ebner", "ay": "2007", "am": "outside link Description description edit &quot;Which Side&quot;, 2007, is a song sculpture for &quot;OffCentre&quot; - the art in the public realm programme in Newcastle upon", "bt": "Threads://HTML", "ba": "Edward Tang", "by": "2004", "bm": "linkstatic files Description description edit Using my technique, &quot;3D Video Sculpture&quot;, this work aims to reconnect human presence with the content and underlying", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 14, "s": 0.3415, "at": "Antediluvian Fragments of Memories", "aa": "sonya nielsen", "ay": "2007", "am": "reflecting the three different forms of memory: sensory, temporal and lasting memory. The first is the is nine elements of memory, each take on the form of an image", "bt": "Music Box", "ba": "Jin-Yo Mok", "by": "2000", "bm": "dizziness might be from the faint memory of my uneasy childhood, the memory of my gauche first love, or from the memory of every humiliation I have had.", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "memory as subject; nine image-elements against a first-person recollection"}, {"r": 15, "s": 0.3381, "at": "Which --- Side", "aa": "Jorn Ebner", "ay": "2007", "am": "outside link Description description edit &quot;Which Side&quot;, 2007, is a song sculpture for &quot;OffCentre&quot; - the art in the public realm programme in Newcastle upon", "bt": "DECONSTRUCTION - RECONSTRUCTION", "ba": "Paul Brand", "by": "2000", "bm": "outside linkstatic files Description description edit &quot;deconstructon - reconstruction&quot; is a text/sound project by the artist Paul Brand, developed over a", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 16, "s": 0.3327, "at": "Browser abstract", "aa": "sinae kim", "ay": "2006", "am": "description edit &quot;Leibniz conceived the universe as composed of &quot;monads&quot;, microscopic substances each of which lives in its own self-enclosed inner space, with", "bt": "Which --- Side", "ba": "Jorn Ebner", "by": "2007", "bm": "outside link Description description edit &quot;Which Side&quot;, 2007, is a song sculpture for &quot;OffCentre&quot; - the art in the public realm programme in Newcastle upon", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 17, "s": 0.3326, "at": "Bar Code Noise", "aa": "Scott Blake", "ay": "2001", "am": "title: Bar Code Noise inception: 2001 Variant History outside link variant edit access URL: http://www.punklist.com/~blake/art/noise/noise_01.html inception:", "bt": "Movement is Life", "ba": "Peter Wildman", "by": "2018", "bm": "Archive capture: March 2025 access URL: https://www.peterwildman.com.au/code-poetry.html inception: 2018 associated with: Peter Wildman web archive variant", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 18, "s": 0.3296, "at": "(t)error", "aa": "Robert Praxmarer", "ay": "2004", "am": "PreviousNext outside linkstatic files Description description edit (t)error (t)error is an interactive videoinstallation. it attributed to: Robert Praxmarer", "bt": "A Planetary Order (Terrestrial Cloud Globe)", "ba": "Martin John Callanan", "by": "2009", "bm": "2009 PreviousNext outside linkstatic files Description description edit A Planetary Order is a terrestrial globe showing clouds from one single moment in time", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 19, "s": 0.3229, "at": "IP Poetry Project", "aa": "Gustavo Romano", "ay": "2007", "am": "edit The IP Poetry project involves the development of a software and hardware system that uses text from the Internet to generate poetry that is then", "bt": "cyberpoetry 1995-1997", "ba": "komninos zervos", "by": "2003", "bm": "and movie. cyberpoetry: poetry that can not be published in the traditional print media, poetry that moves in time and space, poetry that requires new ways", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "generated poetry as subject; a hardware-and-software text generator against a manifesto for poetry off the printed page"}, {"r": 20, "s": 0.3208, "at": "all is full of noise", "aa": "Georg Duemlein", "ay": "2004", "am": "Description description edit this is about the pure noise of digital communication. based on a realtime noise broadcast users can use this as a message relay", "bt": "Bar Code Noise", "ba": "Scott Blake", "by": "2001", "bm": "title: Bar Code Noise inception: 2001 Variant History outside link variant edit access URL: http://www.punklist.com/~blake/art/noise/noise_01.html inception:", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 21, "s": 0.3179, "at": "Animated Text", "aa": "animated text", "ay": "2012", "am": "history. attributed to: animated text inception: 2022 Metadata Descriptive Data artist: animated text title: Animated Text inception: 7 November 2012 Variant", "bt": "@reply-all", "ba": "Mark Beasley", "by": "2008", "bm": "the author's text against all existing - previously written - text that matches the current text. The user has the option to insert this text by pressing", "sa": false, "br": false, "sv": true, "v": "not a pair", "n": "one side's field is harvesting output, not a move — one-sided residue, which the mechanical rule does not catch"}, {"r": 22, "s": 0.3159, "at": "cyberpoetry 1995-1997", "aa": "komninos zervos", "ay": "2003", "am": "and movie. cyberpoetry: poetry that can not be published in the traditional print media, poetry that moves in time and space, poetry that requires new ways", "bt": "The Profane Earth", "ba": "Ollivier Dyens", "by": "2005", "bm": "worlds. Why poetry as virtual worlds? Throughout the years, I came to see 3d creation and poetry are not that far apart. For what is poetry if not an architecture", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "poetry, and two different arguments about where it lives"}, {"r": 23, "s": 0.3071, "at": "Mouse Pointer", "aa": "Scott Blake", "ay": "2004", "am": "variant edit access URL: http://www.barcodeart.com/artwork/netart/mouse/full_scale.swf inception: 2004 associated with: Scott Blake", "bt": "Movement is Life", "ba": "Peter Wildman", "by": "2018", "bm": "Archive capture: March 2025 access URL: https://www.peterwildman.com.au/code-poetry.html inception: 2018 associated with: Peter Wildman web archive variant", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 24, "s": 0.3066, "at": "internet & autofiction", "aa": "stephanie boisset", "ay": "2002", "am": "inception: 2002 outside link Description description edit identity / art / intimacy / r attributed to: stephanie boisset inception: 17 April 2002 Metadata", "bt": "don't touch me", "ba": "Annie Abrahams", "by": "2003", "bm": "inception: 2003 outside link Description description edit A work about intimacy and attitudes in front of the computer screen. I want to tell you a story", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 25, "s": 0.306, "at": "Project for Urban Intimacy", "aa": "Krista Connerly", "ay": "2003", "am": "inception: 2003 outside link Description description edit The Project for Urban Intimacy seeks to counter the efficiency and rationality that are invading our cities", "bt": "internet & autofiction", "ba": "stephanie boisset", "by": "2002", "bm": "inception: 2002 outside link Description description edit identity / art / intimacy / r attributed to: stephanie boisset inception: 17 April 2002 Metadata", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 26, "s": 0.2984, "at": "Marathon 55 . Cache Memory", "aa": "Grégory Chatonsky", "ay": "2003", "am": "remote server because it is in the cache memory. This memory is on the user's hard drive: technological mode of memory appropriation. Progressively the movie", "bt": "Music Box", "ba": "Jin-Yo Mok", "by": "2000", "bm": "dizziness might be from the faint memory of my uneasy childhood, the memory of my gauche first love, or from the memory of every humiliation I have had.", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "the word memory, once technical (browser cache) and once autobiographical"}, {"r": 27, "s": 0.2973, "at": "Antediluvian Fragments of Memories", "aa": "sonya nielsen", "ay": "2007", "am": "reflecting the three different forms of memory: sensory, temporal and lasting memory. The first is the is nine elements of memory, each take on the form of an image", "bt": "Marathon 55 . Cache Memory", "ba": "Grégory Chatonsky", "by": "2003", "bm": "remote server because it is in the cache memory. This memory is on the user's hard drive: technological mode of memory appropriation. Progressively the movie", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "as above, the other side of the same triangle"}, {"r": 28, "s": 0.2948, "at": "Bar Code Noise", "aa": "Scott Blake", "ay": "2001", "am": "title: Bar Code Noise inception: 2001 Variant History outside link variant edit access URL: http://www.punklist.com/~blake/art/noise/noise_01.html inception:", "bt": "birth and decay", "ba": "julian konczak", "by": "2006", "bm": "birth and decay inception: 2006 Variant History outside link variant edit access URL: http://www.hidrazone.com/artists/julian_konczak/birth_and_decay/display_birth_and_decay", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 29, "s": 0.2943, "at": "cyberpoetry 1995-1997", "aa": "komninos zervos", "ay": "2003", "am": "and movie. cyberpoetry: poetry that can not be published in the traditional print media, poetry that moves in time and space, poetry that requires new ways", "bt": "E.L.I. Nomad", "ba": "Christian Croft", "by": "2004", "bm": "sharing randomly generated poetry in exchange for new vocabulary words for his database. After hundreds of interactions, E.L.I.’s poetry has transformed from", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "generated poetry; a manifesto against a vocabulary-trading agent"}, {"r": 30, "s": 0.293, "at": "World of Female Avatars", "aa": "Evelin Stermitz", "ay": "2006", "am": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this", "bt": "Keep Walking", "ba": "Marcello Mazzella", "by": "2000", "bm": "body is no longer limited to a small, constricted space but has become a &quot;planetary body&quot; without limitations. Represented in the work is my vision of this", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "the body, extended; different works, shared noun"}, {"r": 31, "s": 0.2928, "at": "World of Female Avatars", "aa": "Evelin Stermitz", "ay": "2006", "am": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this", "bt": "my body — a Wunderkammer", "ba": "Shelley Jackson", "by": "1997", "bm": "Description summary edit my body — a Wunderkammer is a semi-autobiographical hypertext combining text and image in an exploration of the body. It features a line", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "a collected archive against a hypertext of body parts"}, {"r": 32, "s": 0.2918, "at": "white noise", "aa": "Jürgen Trautwein", "ay": "2006", "am": "2006 outside link Description description edit White noise is a noise- color-composer or a noise- color association interactive game simulator. An experimental", "bt": "atari-noise", "ba": "arcangel constantini", "by": "2000", "bm": "infinite quantity of RANDOM audiovisual noise patterns that can be played in real time. The user of atari-noise, by pressing the keyboard push buttons,", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "closest call in the set — both are playable real-time noise generators, decided against on the axis each plays (colour association against console hardware); a reader who calls this adjacent is not making an error"}, {"r": 33, "s": 0.2906, "at": "World of Female Avatars", "aa": "Evelin Stermitz", "ay": "2006", "am": "this artistic work are: Body and technology - Body and sex - Absent body - Body and picture - Body and violence. The debate of body in media art and in this", "bt": "Pieces of Herself", "ba": "Juliet Davis", "by": "2005", "bm": "pieces of the self and arrange them in compositions inside the body. As each piece enters the body, it triggers audio clips from interviews with women. attributed", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "the body as site; drag-and-drop composition triggering recorded interviews is a different move"}, {"r": 34, "s": 0.2896, "at": "ftp_formless_anatomy", "aa": "Eugene Thacker", "ay": "2001", "am": "of the digital-anatomical body. A theme running through most of my theoretical and net.art work is the relation between the body and technology. Specifically", "bt": "k'muni", "ba": "chia-hsiao sinz shih", "by": "2001", "bm": "in my body; my body lives in this world. My mind exceeds my body; my body exceeds its skin. I structure the world via my body's experiences. My body is structured", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "body and technology, theoretical against first-person"}, {"r": 35, "s": 0.2861, "at": "Embed", "aa": "Adrian Van Allen", "ay": "2009", "am": "link Description description edit &quot;Embed&quot; is a projected loop of potential memory implants filtered through layered scrims. The visual vocabulary of antique", "bt": "Which --- Side", "ba": "Jorn Ebner", "by": "2007", "bm": "outside link Description description edit &quot;Which Side&quot;, 2007, is a song sculpture for &quot;OffCentre&quot; - the art in the public realm programme in Newcastle upon", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 36, "s": 0.2823, "at": "Survey of Common Sense", "aa": "Haleh Niazmand", "ay": "2001", "am": "inception: 2001 outside link Description description edit The &quot;Survey of Common Sense&quot; is an art project that uses the methodology of polls to address an array", "bt": "DECONSTRUCTION - RECONSTRUCTION", "ba": "Paul Brand", "by": "2000", "bm": "outside linkstatic files Description description edit &quot;deconstructon - reconstruction&quot; is a text/sound project by the artist Paul Brand, developed over a", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 37, "s": 0.2817, "at": "IP Poetry Project", "aa": "Gustavo Romano", "ay": "2007", "am": "edit The IP Poetry project involves the development of a software and hardware system that uses text from the Internet to generate poetry that is then", "bt": "The Profane Earth", "ba": "Ollivier Dyens", "by": "2005", "bm": "worlds. Why poetry as virtual worlds? Throughout the years, I came to see 3d creation and poetry are not that far apart. For what is poetry if not an architecture", "sa": false, "br": false, "sv": true, "v": "same subject", "n": "poetry again, generator against essay"}, {"r": 38, "s": 0.2803, "at": "Ned Kahn's Wind-Visualizing Facades", "aa": "Ned Kahn", "ay": "1996", "am": "Since 1996, Nothern California artist Ned Kahn creates large-scale installations that visualize wind patterns. The left image shows Wind veil (2000), a facade of a parking garage covered with 80,000 s", "bt": "Windcuts: Wind Travels Captured on Wood", "ba": "Miska Knapek", "by": "2009", "bm": "Windcuts is a physical information visualisation retelling the Helsinki wind's travels over five days, using wind sensor measurements from Helsinki, and wood and a CNC machine to cut it from there too", "sa": false, "br": false, "sv": true, "v": "adjacent move", "n": "the only pair in the set the duty would want: wind put into a physical surface, live transduction against a once-cut record of a past wind"}, {"r": 39, "s": 0.2773, "at": "Animated Text", "aa": "animated text", "ay": "2012", "am": "history. attributed to: animated text inception: 2022 Metadata Descriptive Data artist: animated text title: Animated Text inception: 7 November 2012 Variant", "bt": "they learned this intimacy, however, meditating on the house", "ba": "Igor Štromajer", "by": "2001", "bm": "Metadata Descriptive Data artist: Igor Štromajer title: they learned this intimacy, however, meditating on the house inception: 2001 Variant History outside", "sa": false, "br": true, "sv": false, "v": "", "n": ""}, {"r": 40, "s": 0.2756, "at": "Project for Urban Intimacy", "aa": "Krista Connerly", "ay": "2003", "am": "inception: 2003 outside link Description description edit The Project for Urban Intimacy seeks to counter the efficiency and rationality that are invading our cities", "bt": "don't touch me", "ba": "Annie Abrahams", "by": "2003", "bm": "inception: 2003 outside link Description description edit A work about intimacy and attitudes in front of the computer screen. I want to tell you a story", "sa": false, "br": true, "sv": false, "v": "", "n": ""}]}</script>
+<script>
+(function(){
+  var D = JSON.parse(document.getElementById('page-data').textContent);
+  var box = document.getElementById('controls'); if(!box) return;
+  box.hidden = false;
+  var rankBox = document.getElementById('rank-controls'); if(rankBox) rankBox.hidden = false;
+
+  var W=900, PAD_L=52, PAD_R=18, iw=W-PAD_L-PAD_R;
+  var line=document.getElementById('cutline'), lab=document.getElementById('cutlab');
+  var slider=document.getElementById('cut'), out=document.getElementById('readout');
+  var pills=document.getElementById('pills');
+
+  function nearest(c){
+    var best=D.curve[0], bd=1e9;
+    for(var i=0;i<D.curve.length;i++){var d=Math.abs(D.curve[i].cut-c); if(d<bd){bd=d;best=D.curve[i];}}
+    return best;
+  }
+  function fmt(n){ return n.toLocaleString('en'); }
+
+  function paint(){
+    var c = parseFloat(slider.value)/1000;
+    var x = PAD_L + c*iw;
+    line.setAttribute('x1',x.toFixed(1)); line.setAttribute('x2',x.toFixed(1));
+    lab.setAttribute('x',(x+6).toFixed(1)); lab.textContent=c.toFixed(3);
+    var r = nearest(c);
+    var pct = r.n ? Math.round(100*r.either/r.n) : 0;
+    out.innerHTML =
+      '<span>works flagged <b>'+fmt(r.works)+'</b> of '+fmt(D.n_works)+'</span>'+
+      '<span>pairs flagged <b>'+fmt(r.n)+'</b></span>'+
+      '<span>one artist twice <b>'+fmt(r.same_artist)+'</b></span>'+
+      '<span>residue both sides <b>'+fmt(r.both_residue)+'</b></span>'+
+      '<span>surviving <b>'+fmt(r.surviving)+'</b></span>'+
+      '<span>artefact share <b>'+pct+'%</b></span>';
+    var total = r.n || 1;
+    var resOnly = r.either - r.same_artist;   // the two rules overlap; count each pair once
+    pills.innerHTML =
+      '<div class="pill b-art" style="width:'+(100*r.same_artist/total)+'%"></div>'+
+      '<div class="pill b-res" style="width:'+(100*resOnly/total)+'%"></div>'+
+      '<div class="pill b-sur" style="width:'+(100*r.surviving/total)+'%"></div>';
+    pills.setAttribute('aria-label', r.n+' flagged pairs at cut '+c.toFixed(3)+
+      ': '+r.either+' falling to a mechanical rule, '+r.surviving+' surviving');
+  }
+  slider.addEventListener('input', paint);
+  document.querySelectorAll('[data-jump]').forEach(function(b){
+    b.addEventListener('click', function(){
+      slider.value = Math.round(parseFloat(b.getAttribute('data-jump'))*1000); paint();
+    });
+  });
+  paint();
+
+  // figure 2: a pair opens when its row is chosen
+  var card = document.getElementById('paircard');
+  var byRank = {}; D.pairs.forEach(function(p){ byRank[p.r]=p; });
+  function openPair(r){
+    var p = byRank[r]; if(!p) return;
+    var what = p.sa ? 'one artist twice' : (p.br ? 'catalogue residue on both sides' : 'survives both rules');
+    card.innerHTML =
+      '<div><b>#'+p.r+'</b> &middot; cosine '+p.s.toFixed(4)+' &middot; '+what+
+      (p.v ? ' &middot; <b>'+p.v+'</b>' : '')+'</div>'+
+      '<p><b>'+p.at+'</b> — '+p.aa+', '+p.ay+'<br><q>'+p.am+'…</q></p>'+
+      '<p><b>'+p.bt+'</b> — '+p.ba+', '+p.by+'<br><q>'+p.bm+'…</q></p>'+
+      (p.n ? '<p>'+p.n+'</p>' : '');
+  }
+  document.querySelectorAll('g.row').forEach(function(g){
+    g.setAttribute('tabindex','0');
+    g.setAttribute('role','button');
+    g.style.cursor='pointer';
+    g.addEventListener('click', function(){ openPair(g.getAttribute('data-r')); });
+    g.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openPair(g.getAttribute('data-r')); }
+    });
+  });
+  openPair(38);
+})();
+</script>
+</body>
+</html>

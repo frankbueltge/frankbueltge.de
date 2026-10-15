@@ -1,0 +1,69 @@
+
+// Darkness (0 = white, 1 = black) of each of the 12 pixels in each of the 40 columns
+// of record.jpg, top row first. This grid is all the source contains.
+const D=[[0.02,0.0,0.71,0.94,0.8,0.93,0.86,0.89,0.85,1.0,0.83,0.02],[0.0,0.01,0.69,0.92,0.81,0.93,0.87,0.89,0.95,0.8,0.55,0.01],[0.0,0.1,0.69,0.9,0.84,0.92,0.89,0.91,0.96,0.48,0.18,0.0],[0.0,0.3,0.75,0.91,0.88,0.91,0.9,0.9,0.85,0.35,0.04,0.0],[0.13,0.56,0.84,0.93,0.91,0.87,0.9,0.89,0.84,0.56,0.3,0.0],[0.24,0.79,0.9,0.91,0.93,0.84,0.89,0.88,0.92,0.9,0.68,0.02],[0.28,0.93,0.91,0.87,0.91,0.79,0.9,0.89,0.91,1.0,0.84,0.11],[0.29,0.98,0.89,0.82,0.89,0.77,0.91,0.91,0.81,0.91,0.79,0.11],[0.0,0.34,0.69,0.82,0.85,0.93,0.93,0.85,0.87,0.9,0.89,0.06],[0.03,0.07,0.0,0.15,0.66,0.84,0.79,0.91,0.92,0.92,0.76,0.07],[0.08,0.07,0.0,0.15,0.92,1.0,0.83,1.0,0.95,0.88,0.53,0.08],[0.0,0.02,0.0,0.18,0.67,0.83,0.76,0.86,0.91,0.72,0.24,0.05],[0.0,0.02,0.02,0.0,0.03,0.54,0.9,0.85,0.85,0.45,0.01,0.02],[0.11,0.06,0.05,0.0,0.0,0.69,1.0,0.89,0.82,0.16,0.0,0.0],[0.0,0.0,0.0,0.0,0.22,0.77,1.0,0.8,0.86,0.0,0.0,0.02],[0.0,0.08,0.0,0.03,0.42,0.77,0.91,1.0,0.91,0.0,0.0,0.04],[0.03,0.0,0.0,0.13,0.69,0.99,0.91,0.81,0.85,0.51,0.0,0.01],[0.08,0.01,0.0,0.12,0.58,0.84,0.86,0.9,0.96,0.67,0.0,0.0],[0.01,0.02,0.14,0.5,0.86,0.91,0.84,0.9,0.91,0.84,0.19,0.0],[0.0,0.0,0.21,0.7,1.0,0.94,0.84,0.89,0.83,1.0,0.52,0.0],[0.04,0.0,0.04,0.5,0.79,0.81,0.84,0.96,0.91,0.99,0.62,0.09],[0.01,0.0,0.16,0.63,0.85,0.86,0.88,0.91,0.92,0.58,0.28,0.0],[0.0,0.02,0.45,0.92,1.0,0.96,0.91,0.84,0.82,0.13,0.0,0.0],[0.01,0.11,0.51,0.84,0.84,0.83,0.9,0.89,0.79,0.0,0.0,0.07],[0.01,0.02,0.49,0.89,0.84,0.87,0.98,0.85,0.26,0.0,0.06,0.0],[0.0,0.14,0.57,0.91,0.92,0.93,0.95,0.84,0.35,0.0,0.0,0.0],[0.0,0.38,0.8,0.98,0.95,0.88,0.87,0.91,0.6,0.06,0.0,0.02],[0.0,0.53,0.93,0.97,0.91,0.8,0.81,0.99,0.71,0.29,0.09,0.0],[0.0,0.35,0.62,0.75,0.87,0.86,0.84,0.95,0.91,0.75,0.5,0.0],[0.0,0.01,0.17,0.53,0.87,1.0,0.92,0.82,0.97,1.0,0.77,0.07],[0.02,0.0,0.13,0.62,0.87,0.96,0.95,0.81,0.78,0.86,0.69,0.11],[0.04,0.0,0.39,0.89,0.85,0.8,0.92,0.9,0.91,0.94,0.85,0.49],[0.0,0.0,0.0,0.03,0.29,0.91,0.82,0.88,0.89,0.95,0.71,0.12],[0.0,0.05,0.05,0.36,0.57,1.0,0.86,0.89,0.9,0.57,0.26,0.0],[0.0,0.07,0.18,0.72,0.86,1.0,0.86,0.88,0.89,0.18,0.0,0.0],[0.0,0.03,0.16,0.89,0.95,0.96,0.83,0.86,0.87,0.03,0.0,0.05],[0.0,0.02,0.08,0.9,0.91,0.84,0.85,0.9,0.86,0.02,0.0,0.11],[0.04,0.04,0.02,0.89,0.88,0.8,0.95,0.94,0.73,0.0,0.0,0.02],[0.01,0.03,0.0,0.89,0.89,0.81,1.0,0.89,0.38,0.0,0.0,0.0],[0.0,0.0,0.0,0.88,0.89,0.82,1.0,0.8,0.04,0.0,0.08,0.0]];
+const W=1100,H=800,dpr=Math.max(1,window.devicePixelRatio||1);
+const cv=document.getElementById('c');cv.width=W*dpr;cv.height=H*dpr;
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+const ink='26,24,22';
+g.fillStyle='#f4f1ea';g.fillRect(0,0,W,H);
+
+const L=90,R=1010,span=R-L,NC=40,NH=1464,PER=NH/NC; // 36.6 hours per column
+const top=70,bot=470,rowH=(bot-top)/12;
+const colW=span/NC,gap=3;
+
+// 1. the forty columns: each pixel's darkness, smoothed only between its own row centres
+for(let c=0;c<NC;c++){
+  const x0=L+c*colW+gap/2,w=colW-gap,d=D[c];
+  for(let y=top;y<bot;y++){
+    const r=(y+0.5-top)/rowH-0.5;
+    let v;
+    if(r<=0)v=d[0];else if(r>=11)v=d[11];
+    else{const i=Math.floor(r),f=r-i;v=d[i]*(1-f)+d[i+1]*f;}
+    v=Math.max(0,Math.min(1,v));
+    g.fillStyle='rgba('+ink+','+(v*0.92).toFixed(3)+')';
+    g.fillRect(x0,y,w,1);
+  }
+}
+
+// 2. the hours: 1,464 hairlines on a ruler, each drawn up to the column that swallowed it
+const hy=700,fy=520; // ruler line, mouth of the funnel
+g.lineWidth=0.35;
+for(let h=0;h<NH;h++){
+  const xh=L+(h+0.5)*span/NH;
+  const c=Math.min(NC-1,Math.floor((h+0.5)/PER));
+  const xc=L+(c+0.5)*colW;
+  // position of this hour inside its column's 36.6, spread across the mouth
+  const u=((h+0.5)-c*PER)/PER-0.5;
+  const xm=xc+u*3;
+  g.strokeStyle='rgba('+ink+',0.22)';
+  g.beginPath();g.moveTo(xh,hy);
+  g.bezierCurveTo(xh,hy-70,xm,fy+120,xm,fy);
+  g.lineTo(xm,bot+2);
+  g.stroke();
+}
+/* mouth */
+g.strokeStyle='rgba('+ink+',0.5)';g.lineWidth=0.6;
+
+
+// ruler: an hour tick each, a longer tick at each day's start
+for(let h=0;h<=NH;h++){
+  const x=L+h*span/NH,day=h%24===0;
+  g.strokeStyle='rgba('+ink+','+(day?0.85:0.35)+')';
+  g.lineWidth=day?0.8:0.4;
+  g.beginPath();g.moveTo(x,hy);g.lineTo(x,hy+(day?14:5));g.stroke();
+}
+
+// captions
+g.fillStyle='rgba('+ink+',0.8)';
+g.font='12px Georgia, "Times New Roman", serif';
+g.textBaseline='alphabetic';
+g.fillText('1,464 hours, one value each',L,hy+36);
+g.textAlign='right';
+g.fillText('61 days',R,hy+36);
+g.textAlign='left';
+g.fillStyle='rgba('+ink+',0.55)';
+g.font='italic 12px Georgia, "Times New Roman", serif';
+g.fillText('what reached us: 40 columns of 12 grey pixels, each holding 36.6 hours',L,top-22);
+g.textAlign='right';
+g.fillText('higher is more',R,top-22);

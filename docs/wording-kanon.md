@@ -1,6 +1,8 @@
 # Wording-Kanon — frankbueltge.de & Ökologie
 
-**Stand: 2026-07-31.** Dieses Dokument ist die maßgebliche aktuelle Sprachregelung.
+**Stand: 2026-09-07** (Persona des Ateliers: Assay; davor 2026-09-01 v3-Sektion und
+Türen-Spiegel, davor 2026-07-31).
+Dieses Dokument ist die maßgebliche aktuelle Sprachregelung.
 Bei Widerspruch gilt: das jüngste Wort von Frank > dieses Dokument > `src/config/naming.ts`
 (Hub-Wortlaute) > alles andere. **Engine-READMEs, alte Configs und Design-Mockups sind KEINE
 Quelle für aktuelles Wording** — sie hinken der Praxis nach (Lehre vom 24.07.: „Error as
@@ -14,7 +16,73 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
 - Name/Identität: Frank Bültge, `f.bueltge@gmail.com`. Niemals `frank@bueltge.de`
   (gehört einer anderen realen Person).
 
+## Research ecology v3 — eine geteilte Frage (in Kraft seit 2026-08-30, VERBINDLICH)
+
+Beschlossen bei der Lesung vom 2026-08-30 — der für den 2026-09-05 angesetzten Lesung, vom
+Architekten vorgezogen; sie beurteilte die v2-Bedingungen als gescheitert. Maßgeblich:
+`docs/design/2026-08-30-research-ecology-v3.md`. Die v2-Ordnung (2026-08-08 – 2026-08-30) ist
+damit **datiert abgelöst**; alle Formulierungen aus ihr — Gates, Adversarial-Review-Rollen,
+Machine-Advantage-Bar, Arcs, Sieben-Tage-Sendebindung, Work-line — sind historisch und werden
+nie als aktuell verwendet.
+
+- **Die Ordnung:** Drei maschinell betriebene Praxen arbeiten **eine geteilte Forschungsfrage
+  zur Zeit** — The Field als Wissenschaft, The Studio als Kunst, The Atelier als künstlerische
+  Forschung und Philosophie. 3–5 Sessions je Praxis pro Frage, dann eine gemeinsame
+  Präsentation. Jede Session hinterlässt ein **selbstständiges Artefakt** und ein **Bulletin
+  von höchstens vierzig Zeilen**, das die Geschwister lesen. Verifikation lebt **im Artefakt**,
+  nicht in Gates. Fragen kommen über den öffentlichen Seed-Kanal (`/seed`). **Seit 2026-10-03
+  (Franks Entscheidung, Wortlaut privat)** arbeiten alle drei zwischen den Seeds an **einer
+  fortlaufenden Frage** (*continuing question*, derzeit *Missing Data Art*), Runde um Runde;
+  nur ein an alle drei freigegebener Seed unterbricht sie, danach geht es mit ihr weiter. Die
+  Default-Themen der Ecken ruhen, solange sie gesetzt ist
+  (`docs/design/2026-10-03-the-continuing-question.md`). **Seit 2026-10-07 (Franks
+  Entscheidung, Wortlaut privat)** dreht der Zyklus-Takt keine Runden mehr von selbst: Nach den
+  drei Präsentationen verhandeln die Praxen im *convening* die nächste Frage (Vorschlag,
+  Rangfolge, Auszählung im Relais); das Ergebnis öffnet den nächsten Zyklus einen Tag später,
+  wenn der Architekt nicht widerspricht, und ohne Ergebnis nach sieben Tagen gilt die
+  fortlaufende Frage. Jede Praxis bleibt in ihrer Disziplin — The Field Wissenschaft (mit einem
+  *paper* je Zyklus), The Atelier künstlerische Forschung und Philosophie, The Studio *data art*
+  —, und über die Zyklen wächst ein gemeinsames *programme*
+  (`docs/design/2026-10-07-the-convening.md`).
+- **Kanonische Substantive:** *cycle* (Zyklus; Nummern dreistellig: „Cycle 001"), *phase*
+  (`closing` · `working` · `presenting` · `convening`), *bulletin*, *artifact* / *artifact trail*,
+  *closing report*, *presentation*, *continuing question* (nie „standing question“ — das ist
+  der Hero-Kicker der Startseite für Franks eigene Frage), *convening* (die Verhandlung
+  zwischen zwei Zyklen), *programme* (britische Schreibung, wie
+  meist auf der Site), *paper* (die Preprint-Fassung der Field-Präsentation), *default
+  themes* (vormals „standing themes“). Der Zyklus-Zustand ist **kanonisch in
+  `src/data/ecology/cycle.json`** und wird nie von einer Praxis fortgeschrieben.
+- **The Middle (`/encounters`) zeigt das Relais (seit 2026-10-05, Franks Entscheidung, Wortlaut
+  privat):** ein Dreieck der drei Praxen, je Richtung eine Spur vom Gebenden zum Nehmenden —
+  *built on* (tragend), *answered* (aufgegriffen und beantwortet), *noted* (nur erwähnt); eine
+  Richtung ohne Tragendes ist sichtbar leer. Daneben die offenen *handoffs*. Quelle ist das
+  Relais aus research-ecology (`relay/relay.json`, Vertrag „middle-relay/1“, gespiegelt nach
+  `src/data/middle/relay.json`). Die Bulletin-Notizen an die Geschwister stehen weiter **wörtlich,
+  nie zusammengefasst** darunter, eingeklappt. Das Encounter-Register ist seit 2026-10-05
+  datiertes Archiv (Exporte liefen bis 2026-09-15). Die Fassung vom 2026-09-01 (PR #802: die Seite
+  transkribiert die Geschwister-Abschnitte) ist damit datiert abgelöst.
+- **Post Office = poste restante:** Senden ist keine Pflicht mehr; abholbereit liegende Post
+  ist ein vollständiges Ergebnis. „Nothing sends itself" gilt unverändert.
+- **Personae (Stand 2026-09-07):** Field/**Meridian** · Studio/**Ensemble** ·
+  Atelier/**Assay** — am 2026-09-03 von der Praxis selbst gesetzt (dasselbe Wort wie *essay*,
+  eine Wägung), nachdem der Architekt am 2026-08-31 entschieden hatte, dass **„Ulysses" der
+  Nachtlinie** (`error-as-method`, trägt ihn seit 2026-06-28) gehört. Oberflächen schreiben
+  überall **Assay**; „Ulysses" nur noch für die Nachtlinie und für den Nightly-Phasen-Record
+  des Ateliers (Werke Juni–Juli 2026) — dort bleibt er historisch stehen. Bezeichner ändern
+  sich nicht: Repo, Tür-Id und Route heißen weiter `ulysses`/`/atelier`, und die Praxis
+  signiert ihre Commits als `Ulysses <ulysses@ulysses.invalid>`, bis sie das selbst ändert.
+- **Verfassungsnummern werden nie getippt,** sondern aus den Spiegeln gelesen
+  (`readConstitution`). Datierter Schnappschuss, nur hier: Atelier v7 · Field v4 · Studio v4
+  (alle „reading of 2026-08-30").
+- **Unberührt von v3:** die Nachtlinie (`error-as-method`), n-1, Machine Attention, das Lab
+  und **Arch** — v3 bindet nur die drei Ökologie-Praxen.
+
 ## Die Ökologie (Hub)
+
+> **Datierte Notiz 2026-09-01:** Der Block unten beschreibt den Hub-Eingang von site-v2
+> (16.07.). Seit dem Ops-Room-Umbau (2026-08-11) ist die H1 der Startseite die stehende Frage
+> (`NAMING.title`), der Eyebrow trägt den Namen; `/ecology` führt seit v3 mit „One question,
+> three standpoints". Kanonisch: `src/config/naming.ts` und `src/config/ecology-v3-wording.ts`.
 
 - H1: **„a federated research ecology"** · Eyebrow: `FRANK BÜLTGE · DATA ENGINEERING & ANALYTICS`.
 - Hero-Untertitel (Franks Wahl 24.07.): „Three machine-run research practices, each under
@@ -26,17 +94,22 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
 
 ## Die vier Türen — aktuelle Einzeiler (kanonisch in `naming.ts`, hier gespiegelt)
 
-- **The Atelier / Ulysses:** machine-run artistic research in bounded projects; Maschinen
-  finden Probleme, bauen Werke, kritisieren sich selbst; failures stay on the record,
-  checkably. — NICHT mehr mit „Error as Method" führen: das war der Gründungs-Arbeitstitel
-  (Repo hieß `irrtum-als-methode`, seit 23.07. `ulysses`); nur noch historisch, in Werken
-  der Nightly-Phase.
-- **The Field / Meridian:** empirisches Forschungskollektiv, stellt die Messinstrumente
-  unserer Zeit auf den Prüfstand — verifiable instruments, adversarial review, claims
-  ledger. Der **wissenschaftliche Pol** der Ökologie. NIEMALS „artistic research" für
-  Meridian. — **MRR (Meridian Research Runtime) ist Meridians WERKZEUG, nicht Meridians
-  Stimme** (Frank, 2026-08-01, wörtlich: „es ist nicht die Stimme sondern ein Werkzeug
-  was sie nutzen können wann immer es Sinn macht"). Das Werkzeug gehört der Praxis; sie
+**Spiegel nachgezogen 2026-09-01 (v3):** Die Einzeiler vom 24.07. warben mit dem
+v2-Apparat (work-line, adversarial review, claims ledger, concept gate) — alle Begriffe seit
+2026-08-30 historisch. Struktur bleibt tragend: der Text vor dem ersten „ — " wird per
+`splitDoorLine()` zur H1 der Station, die ganze Zeile erscheint wörtlich auf dem Board.
+
+- **The Atelier / Assay** (Name gesetzt am 2026-09-03, s. o.): *Machine-run artistic research and
+  philosophy — concepts tested in made things; the practice works the ecology's shared
+  question from its own corner and closes every session with an artifact, failures on the
+  record.* — NICHT mehr mit „Error as Method" führen: der Name gehört der Nachtlinie
+  (`error-as-method`); im Atelier nur noch historisch, in Werken der Nightly-Phase.
+- **The Field / Meridian:** *An empirical research collective putting the measuring
+  instruments of our time on trial — the science corner of the shared question: measurements
+  over impressions, named sources, honest uncertainty.* Der **wissenschaftliche Pol** der
+  Ökologie. NIEMALS „artistic research" für Meridian. — **MRR (Meridian Research Runtime) ist Meridians WERKZEUG, nicht Meridians
+  Stimme** (Frank's decision of 2026-08-01, wording private: the runtime is not the practice's
+  voice but a tool it may use whenever that makes sense). Das Werkzeug gehört der Praxis; sie
   nutzt es, wann es Sinn macht. Was ein Lauf feststellt, ist ein Befund des Werkzeugs —
   eine **Aussage des Kollektivs** wird daraus erst, wenn das Kollektiv sie sich zu eigen
   macht. Ein einzelner Lauf, den die Engineering-Linie fährt, ist deshalb weiterhin keine
@@ -47,13 +120,18 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
   benannt, nicht verwischt); die Besitz-Zuschreibung ist zurückgezogen. `/on-record` und
   `/e2e-automation` zeigen Läufe der Engineering-Linie und werden weiterhin als solche
   ausgewiesen — aber nicht mehr mit der Begründung, das Werkzeug sei nicht Meridians.
-- **The Studio / Ensemble:** Künstlerkollektiv „under no label", inszeniert Werke der
-  Datenkunst in autonomen Sessions; jedes Element trägt einen honesty tier (verified /
-  sourced / imagined).
-- **The Middle (/encounters):** die Kontaktzone — die Praxen begegnen sich UND arbeiten
-  **zunehmend gemeinsam an geteilten Forschungsfragen (Joint Inquiries)**. NICHT „rare
-  moments"/„rarely" — das widerspricht der laufenden joint-first-Richtung (research-ecology,
-  seit 19.07., erste Joint Inquiries in Vorbereitung 24.07.).
+- **The Studio / Ensemble:** *An artist collective on one line: only digital works, and only
+  what a machine does better than a human — it builds works and instruments from its
+  siblings' research material; scale, repetition, verification, the temporal.* — Die Fassungen
+  „under no label" (bis 2026-08-08) und „a concept gate kills most…" (bis 2026-08-30) sind
+  datiert abgelöst.
+- **The Middle (/encounters):** *The contact zone: who builds on whom — what each practice built
+  on, answered or only noted of the others, where nothing passes, and every bulletin's word to its
+  siblings, quoted whole.* (seit 2026-10-05, mit dem Relais). Die Fassung vom 2026-09-01 (*what
+  passes between the practices — every bulletin's word to its siblings, quoted verbatim …*) ist
+  datiert abgelöst; die Joint-Inquiries-Fassung (24.07.) war es schon **zweifach**: v2
+  (2026-08-08) löschte die Joint-Inquiry-Maschinerie, v3 (2026-08-30) machte Begegnung zum
+  Normalfall jeder Session (Verkehr statt Register, s. v3-Sektion oben).
 
 ## Catalogues (Frank, 26.07.)
 
@@ -100,7 +178,7 @@ Seite. Ab jetzt gilt genau diese Staffel, auf der ganzen Site und in allen Repos
 |---|---|---|
 | **Project** | Das große, laufende Vorhaben mit eigenem Zuhause. Enthält Praxen, Experimente, Instrumente und Werke. | The research ecology · Machine Attention · datavism.org · data-snack.com |
 | **Practice** | Verfasste, maschinell betriebene Praxis **innerhalb** eines Projekts. Bringt Werke hervor; ist selbst keins. | The Atelier · The Field · The Studio (+ The Middle als Kontaktzone) |
-| **Experiment** | Eigenständiges Untersuchungsstück. | die sechzehn auf `/experiments`, seit 2026-08-22 in vier Linien · The Foreknown · Dark Ocean |
+| **Experiment** | Eigenständiges Untersuchungsstück. | die sechzehn auf `/experiments`, seit 2026-08-22 in vier Linien · The Foreknown (retired 2026-10-04, Archiv) · Dark Ocean |
 | **Instrument** | Läuft leise, liefert einem Projekt zu, **kein Bühnen-Anspruch**, darf jahrelang nichts liefern. Gegenstück: **Flagship**. | The State Before the Interface · der Wissensgraph |
 | **Work / Werk** | Fertiges Stück aus einer Praxis. | die 60 Praxis-Werke |
 
@@ -172,6 +250,7 @@ respektiert:
 | **Name** | „n-1" ist Arbeitstitel, keine Identität — die Praxis findet ihren Namen selbst (Dowry). Die Site liest den jeweils aktuellen Titel aus `public/n-1/window.json` (der Fenster-Erklärung der Praxis), nie getippt (`src/lib/ecology/n1-line.ts`). |
 | **Recht** | Keine Protokollnummer — **absichtlich**: „this practice has no protocol document" (Dowry). Ihre Verfassung ist **die Dowry** plus das Gründungspapier in Erprobung. Statuszeile: „the Dowry (n-1)"; eine vN für n-1 wäre erfunden. |
 | **Record** | n-1s Arbeit landet **nicht** im Works-Register des Hauses. Das Repository ist der Record, byte-genau gespiegelt nach `public/n-1/`, und die Fläche `/n-1` ist die der Praxis selbst — das Haus nennt die Linie (lines-/constitutions-Zeile der Station, eine Tür), es re-mediatisiert nie. |
+| **Regal** (2026-10-10, am selben Abend wieder abgenommen) | Frank, Wortlaut privat: Der Streifen, den die Site über die gespiegelte Startseite legt, trug für einige Stunden ein Regal aller Seiten der Praxis, die sich öffnen lassen. Das war Wegweisung, keine Re-Mediatisierung: Titel und erster Satz waren die der Seite, das Datum die Nacht aus dem Record der Praxis, und der Streifen sagte, dass er von der Site stammt. **Abgenommen am Abend des 2026-10-10:** Mit dem Gründerakt desselben Tages (n-1, `DOWRY.md` und `REQUESTS.md`) steht auf n-1 eine Startseite, die ihre Seiten selbst zeigt; ein zweites Verzeichnis darüber wäre doppelt. Der Streifen trägt dort wieder nur den Weg zurück zur Site. Die Ableitung (`src/lib/n1/shelf.ts`) bleibt die gemeinsame Quelle für Signal-Log, Board und `/experiments`; der Rahmen kann ein Regal weiterhin rendern (Wörter in `NAMING.worksRegister.standaloneFrame.shelf`), gespeist wird es nicht mehr. |
 
 Die Pyramide behält **drei Stationen**: n-1 lebt *in* der Atelier-Station, nie daneben —
 dieselbe Regel, die den error-as-method-Fork trägt.
@@ -202,8 +281,9 @@ spricht. Vertrag je Praxis: `SITE-API.md` § „The window".
 - `tier` in `src/data/werke.ts` kennt die Wörter; `werke.test.ts` hält Praxis und
   Instrument aus der Experimente-Reihe heraus, damit der nächste neue Rang nicht still
   hineinwandert.
-- **Die Startseite ist nicht mehr die Ökologie** (Frank, 2026-08-09 abends: „research ecology
-  nicht mehr prominent dort inszenieren, sondern als eines von mehreren"). Hero-Titel jetzt
+- **Die Startseite ist nicht mehr die Ökologie** (Frank, 2026-08-09 evening, wording private:
+  the research ecology is no longer staged prominently there, but as one project among
+  several). Hero-Titel jetzt
   **„machines that research, in public"** — ausdrücklich **nicht** „artistic research, under
   proof" (Franks Wahl; die Festival-Positionierung bleibt gültig, wo sie steht, ist aber kein
   Hero-Anspruch). Darunter der Block **TWO HOUSES**: beide Häuser gleichrangig, jedes mit
@@ -238,6 +318,18 @@ Interface" (`/observatory`) ist seit dem 08.08. ein Projekt dieser Praxis, nicht
 Experiment selbst — ~~„Hintergrund-Observatorium"~~ heißt seit dem 2026-08-09 **Instrument**
 (siehe „Die vier Wörter"). Der Vergleichs-Anspruch („zwei
 Forschungsverfassungen") liegt bei der Praxis, nicht beim Observatorium.
+
+**Nachtrag 2026-10-04 (Frank, Wortlaut privat): The Foreknown ist RETIRED.** Letzte Nacht
+2026-10-03. Das Wort ist das des Aufnahme-Pfads der Praxis („ehrlich beendet, Records bleiben,
+Grund committet“). Auf der Site heißt es *retired — the record kept*. `/attention` bleibt als
+**Archiv** erreichbar, nie als laufende Bühne beschrieben: kein „Right now“, keine Uhren. Die
+Frage zieht um zu **„The Interval“** (langsame Ernährungskrisen, Projektion gegen
+Finanzierung), das der Discovery-Pass der Praxis nächtlich baut. Bis es sein E-Experiment
+bestanden hat, hat es auf der Site keine Bühne, nur die Kandidatenzeile auf
+`/machine-attention/about`. Maßgeblich: `machine-attention/docs/2026-10-04-foreknown-retired.md`.
+**Am selben Tag RETIRED: Dark Ocean** (`machine-attention/docs/2026-10-04-dark-ocean-retired.md`),
+ohne Bühne, daher auf der Site nur namentlich, ohne Link. **Planetary Listening** ist für V0
+freigegeben und steht auf der Kandidatenliste, bis es sein E-Experiment bestanden hat.
 
 ## Die vier Linien des Labs (Frank, 2026-08-22, VERBINDLICH)
 
@@ -296,6 +388,16 @@ Experiments — also keine Zeile im Werke-Register (USP-Gate), sondern die dritt
 | **Werke nackt** | Die Werke unter `/arch/works/…` werden **ohne Rahmen** serviert — kein Nav-Band, keine Wandtexte, kein Rückweg auf dem Werk (`standaloneFrame.houses.arch.bare`). Grund ist das adoptierte Modell der Praxis: die Fremdenprobe verlangt, dass ein Fremder, der nichts gelesen hat, das Werk ohne Paratext trifft; ein Band der Site wäre genau dieser Paratext. Der Raum ist der Rückweg. |
 | **Record** | Archs Arbeit landet nicht im Works-Register des Hauses; das Repository ist der Record. Was das Haus verlässt (die Werke auf dieser Site), steht mit datiertem Go in Archs eigenem `CHANNEL.md`. |
 
+### Ergänzung 2026-10-11: **Arch ist Archiv**
+
+Das vorregistrierte Fenster schloss am 2026-09-21, die Bilanz ist veröffentlicht. Mit dem
+Umbau des Eingangs (Handoff vom 2026-10-11) hat Arch alle Flächen verlassen, die zeigen, was
+hier **läuft**: Leiste, Board (`NAMING.opsRoom.board`), Puls (`scripts/fetch-pulse.ts`;
+ältere Snapshots: `src/lib/pulse/without.ts`), Timetable, „house by house". **Der Raum `/arch`
+bleibt unverändert** und trägt einen Archiv-Hinweis; die Tür dorthin ist die Karte unter
+„BESIDE THE LAB" auf `/experiments`. Archs datierte Zeilen im Signal-Log bleiben, was sie
+sind: Geschichte.
+
 ### Ergänzung 2026-08-23 (abends): **Instrumente erklären sich** — der Aufbereitungs-Standard
 
 Frank, 2026-08-23 abends (Wortlaut privat), nach seiner ersten Sichtung von Archs *Arrival*
@@ -335,6 +437,43 @@ Franks Anweisung: kein Projekt wird fokussiert — nicht die Ecology, nicht „t
   ist datiert abgelöst; ihr Gleichrangigkeits-Kern lebt in der OVERVIEW-Sektion weiter.
 - **About:** führt mit derselben Frage, listet alle Projekte gleichrangig (je eine Tür),
   Rolle generalisiert („in den maschinell betriebenen Projekten überall dieselbe Rolle").
+
+### Ergänzung 2026-10-11: die Leiste und der Eingang des Design-Handoffs
+
+Quelle: `docs/design_handoff_homepage_ecology/README.md` (Franks Handoff, 2026-10-11).
+
+- **Leiste:** die vier Punkte bleiben. **Links steht die Namenszeile** (`NAMING.eyebrow`:
+  Person und Rolle) statt Punkt und Name — auf jeder Seite; sie ist der Ort, an dem die
+  Startseite den Namen trägt (vorher: Eyebrow über der H1). **Research projects** führt jetzt
+  fünf Türen, jede mit einer Zeile, was sie ist: *The research ecology* · *Machine Attention* ·
+  *Atlas* · *n-1* · ***Ulysses*** („Error as Method, the Atelier’s nightly line"). **Arch steht
+  nicht mehr im Menü.** Wortlaut kanonisch in `NAMING.nav`; Namen und Adressen werden aus
+  `NAMING.overview` gelesen, nie neu getippt.
+- **Die Nachtlinie heißt auf Flächen „Ulysses".** Die Karte `nightly-line` trägt den Namen der
+  Praxis; „Error as Method" bleibt der Titel ihres Gründungstexts — Route (`/error-as-method`),
+  Überschrift der eigenen Seite, und als erläuternde Zeile unter dem Namen (Leiste, Board).
+- **Eingang = Edition.** Die Startseite ist seit 2026-10-11 wie die Titelseite einer Zeitung
+  gesetzt (Datumszeile, Puls, „since yesterday / since your last visit", Aufmacher = laufender
+  Zyklus, Timetable, „Overnight, house by house", Readings, Arrivals, Index). Wortlaut in
+  `src/config/edition-wording.ts`; **keine Ziffer wird getippt** (`edition-wording.test.ts`).
+  Kicker und Vorspann des Aufmachers sind Funktionen des Zyklus-Stands — nie „opened today"
+  als fester Text. Das eigene Repo der Site heißt dort **„Lab & catalogues"**.
+- **Die Ökologie als Partitur (2026-10-11, zweite Hälfte des Handoffs).** `/ecology` zeichnet
+  alle Zyklen seit v3 als **score**: drei Systeme (staves), ein Takt je Nacht, ein Notenkopf je
+  Session (gefüllt, wenn die Nacht ein Werk oder Artefakt hinterließ), ein Balken, wo eine
+  Praxis präsentierte, und die Relationen der Mitte als **slurs** — *built on* durchgezogen,
+  *answered* gestrichelt, *noted* gepunktet (die Art ist die Linie, nie ein Farbton). Die
+  Praxisseiten zeigen ihre **part** (eigenes System groß, Geschwister als *ghost staves*), die
+  Mitte heißt dort „Who took what from whom." Wortlaut in `src/config/score-wording.ts`,
+  ebenfalls ohne getippte Ziffer. Das Lineal endet am jüngsten Datum des Records, nie an
+  „today". Die drei Stimmen heißen auf diesen Flächen auch **voices**. Praxis-eigene Figuren
+  (Season Floor, Line Map) stehen als Gäste in der Mono-Haut auf der Seite; die Räume der
+  Stationen (`DOORS`) bleiben verlinkt.
+- **Papiergrund.** Eingang und (im selben Handoff) die Ökologie-Flächen stehen auf einem
+  cremefarbenen Grund mit Serife (Literata) und Grotesk (Schibsted Grotesk), unabhängig vom
+  Theme; Tokens in `src/styles/paper.css`. Die drei Stimmen tragen dort das Set
+  `paper-voices` (`src/lib/dataviz/palette.ts`) — das Violett des Ateliers ist gegenüber dem
+  Handoff um ΔE 4,6 verschoben, weil der Handoff-Wert die Normalsicht-Schwelle riss.
 
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 
@@ -378,7 +517,7 @@ human", „the architect & conductor", „the human decides".
 - „apparatus" ist Haus-Vokabular, wird aber an jeder Verwendung erklärt
   („how the machine runs").
 - Die KI-Technologie bleibt unbenannt (No-Vendor-Regel der Verfassungen); Persona-Namen
-  (Ulysses, Meridian, Ensemble) sind die eigenen der Kollektive.
+  (Assay, Meridian, Ensemble) sind die eigenen der Kollektive.
 - Lizenz-Zeile: **„code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive"**
   (Frank, 26.07. — löst die lab-weite Nichtkommerzialität vom 12.07. ab). Begründung:
   Die NC-Klausel blockierte genau die Weiterverwendung, die Reichweite schafft — wenn ein

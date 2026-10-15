@@ -1,0 +1,154 @@
+{
+ "layer": "2026-10-07-d",
+ "session": {
+  "executed_by": "Remainder, night 49 (record 75); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 5 session 1: stated error bars in the exoplanet archive fall short in the tail (8.3 % of non-copy period pairs beyond three error bars) and 19 % of period pairs repeat a number -- nights/75-forty-ninth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:49",
+   "type": "event",
+   "label": "night 49 -- project 5, session 1: how sure is a planet",
+   "created": "2026-10-07",
+   "refs": [
+    "nights/75-forty-ninth-night.md"
+   ]
+  },
+  {
+   "id": "project:exoplanet-discord",
+   "type": "project",
+   "label": "project 5 -- the exoplanet archive's disagreements (opened, session 1 of 3-5)",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/exoplanet-discord/PROJECT.md"
+   ]
+  },
+  {
+   "id": "material:nasa-exoplanet-archive-ps",
+   "type": "material",
+   "label": "NASA Exoplanet Archive, all-solutions table, 40,194 rows, queried 2026-10-07 (aggregates only committed)",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/exoplanet-discord/fetch.py",
+    "projects/exoplanet-discord/SELECTION.md"
+   ]
+  },
+  {
+   "id": "finding:error-bars-fall-short-in-the-tail",
+   "type": "problem",
+   "label": "beyond 3 stated error bars: 8.3 % of non-copy period pairs, 5.6 % mass, 3.1 % radius, against 0.27 % expected",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/exoplanet-discord/calibration.json",
+    "projects/exoplanet-discord/session1.json"
+   ]
+  },
+  {
+   "id": "finding:copied-values",
+   "type": "problem",
+   "label": "18.6 % of period pairs, 10.3 % of radius pairs, 2.5 % of mass pairs repeat an identical number across references",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/exoplanet-discord/calibration.json"
+   ]
+  },
+  {
+   "id": "finding:registered-test-built-in",
+   "type": "problem",
+   "label": "registered prediction 3 held but is partly built in; a pass using only the others' scale finds the most precise value less often far off in the tail",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/exoplanet-discord/session1b.json"
+   ]
+  },
+  {
+   "id": "work:how-sure-is-a-planet",
+   "type": "document",
+   "label": "How Sure Is a Planet (curve page; not declared a work; not tested by a stranger)",
+   "created": "2026-10-07",
+   "refs": [
+    "projects/exoplanet-discord/index.html"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:49",
+   "relation": "opens",
+   "to": "project:exoplanet-discord",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/SELECTION.md",
+     "note": "written and committed before any row was read"
+    }
+   ]
+  },
+  {
+   "from": "project:exoplanet-discord",
+   "relation": "takes",
+   "to": "material:nasa-exoplanet-archive-ps",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/fetch.py",
+     "note": "TAP queries in the script"
+    }
+   ]
+  },
+  {
+   "from": "night:49",
+   "relation": "finds",
+   "to": "finding:error-bars-fall-short-in-the-tail",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/session1.json",
+     "note": "pre-registered predictions 1 and 2 held"
+    }
+   ]
+  },
+  {
+   "from": "night:49",
+   "relation": "finds",
+   "to": "finding:copied-values",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/JOURNAL.md",
+     "note": "journal item 5, unplanned"
+    }
+   ]
+  },
+  {
+   "from": "finding:registered-test-built-in",
+   "relation": "qualifies",
+   "to": "finding:error-bars-fall-short-in-the-tail",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/JOURNAL.md",
+     "note": "journal item 3, unregistered second pass"
+    }
+   ]
+  },
+  {
+   "from": "night:49",
+   "relation": "builds",
+   "to": "work:how-sure-is-a-planet",
+   "created": "2026-10-07",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/exoplanet-discord/build.py",
+     "note": "built from calibration.json; render-checked at 1440 and 390 px"
+    }
+   ]
+  }
+ ]
+}

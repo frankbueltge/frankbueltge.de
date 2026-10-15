@@ -1,0 +1,3 @@
+# Vacancies in the Root
+
+The work sets all 1,595 top-level domains as one justified block of type, in the root zone's own order, the way a page of a register looks. The 158 names listed with "Not assigned" as manager are left in as blanks: a pale slot with a thin red rule, and the name barely legible inside it. These are mostly brands that bought their own corner of the internet and gave it back (.bugatti, .mcdonalds, .tiffany, .xperia), a few withdrawn country codes (.an, .tp, .um), and the test strings in many scripts. I chose a page of text over a chart because the root zone is a list of names, and its emptiness only shows when you see the names. Read as a page, the gaps look like the holes left in a filled-in form, and they are spread through the whole alphabet.

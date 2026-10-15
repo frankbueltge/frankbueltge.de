@@ -1,12 +1,12 @@
 // Paper-Katalog (/papers) — Typen und reine Hilfsfunktionen.
 //
-// Der zweite der beiden Kataloge, die aus derselben Suche abfallen (Frank, 2026-07-27:
-// „datasets für das register und einen weiteren katalog für die sammlung von papers").
+// The second of the two catalogues that fall out of the same search (Frank's decision of
+// 2026-07-27, wording private: datasets go to the register, papers get a catalogue of their own).
 // Warum getrennt vom Register: Die Praxen zitieren ganz überwiegend PAPER, nicht
 // Datensätze — gemessen am 27.07. waren von 89 je zitierten DOIs null im Dataset-Register.
 // Ein Katalog, der nur Datensätze führt, hätte die Forschung nur zur Hälfte bedient.
 //
-// Abgrenzung zu `src/data/atelier/atlas.json` (Ulysses' Theorie-Atlas, 98 Einträge): Der
+// Abgrenzung zu `src/data/atelier/atlas.json` (Assays Theorie-Atlas, 98 Einträge): Der
 // ist die Bibliothek EINER Praxis und bleibt es. Dieser Katalog ist ökologieweit und
 // vermerkt je Eintrag, WER ihn zitiert. Überschneidung ist erlaubt und wird sichtbar —
 // ein Eintrag, den mehrere Praxen brauchen, ist ein stärkerer Eintrag, kein doppelter.
@@ -92,6 +92,10 @@ export interface PaperEntry {
   /** ISO-Datum der jüngsten Nennung — das Maß für „gerade in Arbeit". */
   zuletzt_gebraucht: string | null
   verify_status: VerifyStatus
+  /** The day the catalogue's builder first wrote this paper (stamped since 2026-10-05 by
+   *  katalog.py, stamp_first_seen, against the catalogue committed before the run). Null for a
+   *  paper already there when the stamp began; absent in a catalogue written earlier. */
+  first_seen_on?: string | null
 }
 
 export const PAPERS = eintraegeRaw as unknown as PaperEntry[]
@@ -133,6 +137,8 @@ const praxisNamen: Record<string, string> = {
   field: 'Field',
   studio: 'Studio',
   meridian: 'Meridian',
+  // 2026-10-04: the nightly line (error-as-method), read by the scout again since its fork.
+  nightly: 'Nightly line',
 }
 export const praxisLabel = (p: string): string => praxisNamen[p] ?? p
 

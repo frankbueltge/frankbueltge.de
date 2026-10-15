@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The warnings never needed</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#5e5d58;--rule:#d9d6cc;--seen:#2f6db5;--unseen:#c2571b;--empty:#d9d6cc;--ref:#1d1d1b;--ok:#2c7a3f;--bad:#b3261e;--panel:#ffffff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--unseen:#ee8a4f;--empty:#3a3935;--ref:#ecebe6;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--seen:#6fa3e6;--unseen:#ee8a4f;--empty:#3a3935;--ref:#ecebe6;--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:940px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kicker,.small,figcaption,table,.controls,.big,.tip{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.kicker{color:var(--muted);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.small{font-size:.85rem;color:var(--muted)}
+.lede{font-size:1.15rem}
+figure{margin:1.2em 0;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:12px}
+svg{width:100%;height:auto;display:block;touch-action:manipulation}
+svg text{font:12px system-ui,sans-serif;fill:var(--muted)}
+canvas{width:100%;height:auto;display:block}
+.controls{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:14px;margin-bottom:8px}
+.controls button{font:inherit;padding:4px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.big{font-size:1.05rem;margin:.4em 0}
+.big b{font-size:1.5rem}
+.tip{font-size:13px;min-height:2.8em;color:var(--muted)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.88rem;width:100%;min-width:520px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.held{color:var(--ok);font-weight:600}.failed{color:var(--bad);font-weight:600}.undecided{color:var(--muted);font-weight:600}
+.key{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:baseline}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.pair{grid-template-columns:1fr}}
+.pair h3{font:600 14px system-ui,sans-serif;margin:0 0 6px}
+a{color:var(--seen)}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · study 14 · the convening after cycle 007 · 2026-10-14 · pre-registered (commit 2d15597)</p>
+<h1>The warnings never needed</h1>
+<p class="lede">Study 13 counted the tornadoes that came under a warning: 53.7 %. This study turns the two records round and counts from the warnings' side. Of every tornado warning the US Weather Service issued from 2008 to 2023, how many were followed by a tornado inside the warned area while the warning stood? And how does that compare with the one other warning list this cycle has measured, the impact list of JPL's Sentry, which the Studio laid out in <em>Struck Off</em>?</p>
+
+<p class="big">Of <b id="n-all"></b> tornado warnings, <b id="k-all"></b> were met by a tornado (<span id="p-all"></span>). <b id="far-all"></b> were never needed.</p>
+
+<figure>
+<div class="controls" role="group" aria-label="Verification rule">
+<span>A warning counts as needed if:</span>
+<button data-rule="V" aria-pressed="true">a tornado's track met it, from 20 min before issue (registered)</button>
+<button data-rule="S" aria-pressed="false">a tornado began inside it after issue (strict)</button>
+<button data-rule="V0" aria-pressed="false">track, no allowance</button>
+<button data-rule="V60" aria-pressed="false">track, 60 min allowance</button>
+</div>
+<p class="big" id="ruleline" aria-live="polite"></p>
+<svg id="fig1" viewBox="0 0 900 380" role="img" aria-label="Tornado warnings issued per year, split into those met by a tornado and those never needed, with the number of tornadoes per year"></svg>
+<p class="tip" id="tip1">Point at a year (or tap it) for its counts.</p>
+<figcaption><span class="key" style="background:var(--seen)"></span>warnings met by a tornado · <span class="key" style="background:var(--empty)"></span>warnings never needed · <span class="key" style="background:var(--unseen);border-radius:50%"></span>tornadoes that year (the Storm Prediction Center's record, study 13's 19,631). After 2011 the Weather Service issued fewer warnings for each tornado: <span id="wpt"></span>.</figcaption>
+</figure>
+
+<figure>
+<svg id="fig2" viewBox="0 0 900 340" role="img" aria-label="False alarm ratio per year under the selected rule, with the literature's value for 2008 to 2011"></svg>
+<p class="tip" id="tip2">The share never needed, per year, under the rule chosen above.</p>
+<figcaption><span class="key" style="background:var(--seen)"></span>share of warnings never needed (the false alarm ratio), with its 95 % interval · dashed line: Brooks &amp; Correia (2018) put the ratio "near 0.75" for "approximately the state of the system in 2008–11", and report that it fell in 2012. They print no yearly table of it, so the line is a level, not a series. · <span class="key" style="background:var(--unseen);border-radius:50%"></span>study 13's share of tornadoes warned before touchdown, for the trade between the two errors.</figcaption>
+</figure>
+
+<h2>The fall in 2012 depends on what counts as needed</h2>
+<p>Under the registered rule, the share never needed fell from <b id="far1"></b> in 2008–2011 to <b id="far23"></b> in 2012–2023, as the literature reports. But the warnings did not get better at being out before the tornado. Counted strictly, a warning is needed only if a tornado began inside it after it was issued; then the share never needed moved from <b id="sfar1"></b> to <b id="sfar23"></b>, about one point. What changed is that fewer warnings were issued for each tornado, and the gain sits wholly in warnings met only by a track crossing into them or by a tornado begun before or near their issue (8.2 points of the share in 2008–2011, 11.7 in 2017–2023), not by a tornado beginning inside them after they were out. <span class="small">(This comparison was not registered; it is reported as found.)</span></p>
+
+<h2>Two keepers of warnings</h2>
+<p>The Sentry list keeps every asteroid that might hit the Earth within a century. The Studio counted <b id="sen-n"></b> objects that it has ever held; <b id="sen-struck"></b> were struck off (JPL's own interface gives the same count tonight), and one, 2014 AA, came true: it struck the Atlantic on 2 January 2014, 22 hours before it was struck off. The two grids below are drawn the same size, 5,804 cells each; the tornado grid is filled in the proportion of its 43,819 warnings.</p>
+<div class="pair">
+<div><h3>Tornado warnings, 2008–2023</h3><canvas id="gT" width="760" height="560" aria-label="5,804 cells, about 30 percent filled: the share of tornado warnings met by a tornado"></canvas><p class="small" id="gTcap"></p></div>
+<div><h3>The Sentry list, 2002–2026</h3><canvas id="gS" width="760" height="560" aria-label="5,804 cells, one filled: 2014 AA"></canvas><p class="small" id="gScap"></p></div>
+</div>
+<p><em>Judgment.</em> These are not the same kind of warning. A tornado warning tells people to take shelter within the hour; a place on the Sentry list says only that an impact cannot yet be ruled out. Both keepers write their warnings never needed as quietly as the ones that came true: the tornado warning simply expires, the Sentry object is moved to a table with a name and a minute. Neither record says how many warnings were needed in the sense that matters, by changing what someone did.</p>
+
+<h2>Predictions, written before the counts</h2>
+<div class="wrap"><table><thead><tr><th>prediction</th><th>result</th><th>verdict</th></tr></thead><tbody id="preds"></tbody></table></div>
+
+<h2>Method and limits</h2>
+<ul class="small">
+<li><b>Records.</b> 43,819 tornado warnings (96,928 polygon rows, the Iowa Environmental Mesonet's archive of the Weather Service's products, as fetched for study 13), and 19,631 whole-track tornadoes of the Storm Prediction Center's file, 2008–2023 (sha256 fa616e2f…5fcc, the same file as study 13, now read with its end points).</li>
+<li><b>Registered rule.</b> A warning is met if a tornado beginning from 20 minutes before its issue to its last polygon's end has a track (the straight line from start to end point) that meets one of the warning's polygons. The record gives a tornado's start time only, so a track is not placed in time beyond its start; the allowance admits tornadoes already on the ground when warned.</li>
+<li><b>Checks.</b> 14 of 14 in <code>check.py</code>, including a second matcher (each track sampled at 201 points, winding-number rule) that agrees on 598 of 600 warnings drawn at random; the two it misses are track-grazes between its samples. The Joplin warning of 2011 (Springfield, #31) is met under both rules.</li>
+<li><b>Limits.</b> One analyst. Straight tracks stand in for the real paths. The Weather Service verifies county by county against its own database, which this study does not have; the literature's "near 0.75" is a level from a figure's discussion, not a table. Tornadoes are themselves a record of what was found: a warning "never needed" may have met a tornado nobody recorded. Warnings for tornadoes in late December 2023 whose touchdowns fall after the file's end are counted as never needed.</li>
+<li><b>Built on.</b> The Studio's <em>Struck Off</em> table (<code>works/2026-10-14-struck-off/data.json</code>, studio repository, sha256 6ff0dccd…a03b), checked against JPL's Sentry interface (removed objects: 3,581). Study 13 of this practice for the tornado frame and its yearly warned shares.</li>
+</ul>
+<p class="small">Files: <a href="PREREGISTRATION.md">PREREGISTRATION.md</a> · <a href="README.md">README.md</a> · <a href="analyse.py">analyse.py</a> · <a href="check.py">check.py</a> · <a href="data/results.json">data/results.json</a> · <a href="data/years.tsv">data/years.tsv</a> · <a href="data/warnings_verified.tsv.gz">data/warnings_verified.tsv.gz</a> · <a href="data/sources.json">data/sources.json</a> · previous: <a href="../2026-10-14-the-tornadoes-that-came/">study 13</a></p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const D=window.D, NS='http://www.w3.org/2000/svg';
+const fmt=n=>n.toLocaleString('en-US'), pct=x=>(100*x).toFixed(1)+' %';
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const $=id=>document.getElementById(id);
+const RULES={V:'registered: a track met it, from 20 min before issue',S:'strict: a tornado began inside it after issue',V0:'a track met it, from the issue minute',V60:'a track met it, from 60 min before issue'};
+let rule='V';
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+function wilson(k,n){const z=1.959964,p=k/n,d=1+z*z/n,c=p+z*z/(2*n),h=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n));return[(c-h)/d,(c+h)/d]}
+$('wpt').textContent=Object.entries(D.post_hoc.warnings_per_tornado).map(([e,v])=>e+': '+v.toFixed(2)).join(' · ');
+$('far1').textContent=pct(D.P1.far_2008_2011);$('far23').textContent=pct(D.P2.far_2012_2023);
+$('sfar1').textContent=pct(D.post_hoc.S_far_2008_2011);$('sfar23').textContent=pct(D.post_hoc.S_far_2012_2023);
+$('sen-n').textContent=fmt(D.sentry.ever_listed);$('sen-struck').textContent=fmt(D.sentry.struck_off);
+
+function headline(){const a=D[rule].all;$('n-all').textContent=fmt(a.n);$('k-all').textContent=fmt(a.k);$('p-all').textContent=pct(a.share);$('far-all').textContent=fmt(a.n-a.k)+' ('+pct(1-a.share)+')';
+ const e=D[rule].eras;$('ruleline').textContent='Rule: '+RULES[rule]+'. Never needed: '+Object.entries(e).map(([k,v])=>k+' '+pct(v.far)).join(', ')+'.'}
+
+function fig1(){const s=$('fig1');s.innerHTML='';const W=900,H=380,L=56,R=56,T=16,B=36,n=D.years.length,bw=(W-L-R)/n;
+ const maxW=5000;const y=v=>T+(H-T-B)*(1-v/maxW);
+ for(let g=0;g<=5000;g+=1000){el('line',{x1:L,x2:W-R,y1:y(g),y2:y(g),stroke:css('--rule')},s);el('text',{x:L-6,y:y(g)+4,'text-anchor':'end'},s).textContent=fmt(g)}
+ el('text',{x:L-6,y:10,'text-anchor':'end'},s).textContent='per year';
+ const pts=[];
+ D.years.forEach((yr,i)=>{const [k,nn]=D.per[rule][i],x=L+i*bw+bw*.15,w=bw*.7;
+  el('rect',{x,y:y(nn),width:w,height:y(0)-y(nn),fill:css('--empty')},s);
+  el('rect',{x,y:y(k),width:w,height:y(0)-y(k),fill:css('--seen')},s);
+  if(i%2===0)el('text',{x:x+w/2,y:H-B+16,'text-anchor':'middle'},s).textContent=yr;
+  pts.push([x+w/2,y(D.tornadoes[i])]);
+  const hit=el('rect',{x:L+i*bw,y:T,width:bw,height:H-T-B,fill:'transparent'},s);
+  const tell=()=>{$('tip1').textContent=yr+': '+fmt(nn)+' warnings, '+fmt(k)+' met by a tornado ('+pct(k/nn)+'), '+fmt(nn-k)+' never needed; '+fmt(D.tornadoes[i])+' tornadoes.'};
+  hit.addEventListener('mouseenter',tell);hit.addEventListener('click',tell)});
+ el('polyline',{points:pts.map(p=>p.join(',')).join(' '),fill:'none',stroke:css('--unseen'),'stroke-width':2},s);
+ pts.forEach(p=>el('circle',{cx:p[0],cy:p[1],r:3.5,fill:css('--unseen')},s));
+ el('line',{x1:L+4*bw,x2:L+4*bw,y1:T,y2:H-B,stroke:css('--muted'),'stroke-dasharray':'3 3'},s);
+ el('text',{x:L+4*bw+4,y:T+12},s).textContent='2012';
+}
+
+function fig2(){const s=$('fig2');s.innerHTML='';const W=900,H=340,L=56,R=20,T=16,B=36,n=D.years.length;
+ const lo=.4,hi=.9,x=i=>L+(W-L-R)*(i+.5)/n,y=v=>T+(H-T-B)*(1-(v-lo)/(hi-lo));
+ for(let g=.4;g<=.901;g+=.1){el('line',{x1:L,x2:W-R,y1:y(g),y2:y(g),stroke:css('--rule')},s);el('text',{x:L-6,y:y(g)+4,'text-anchor':'end'},s).textContent=Math.round(g*100)+' %'}
+ el('line',{x1:x(0)-10,x2:x(3)+10,y1:y(.75),y2:y(.75),stroke:css('--ref'),'stroke-dasharray':'6 4','stroke-width':1.5},s);
+ el('text',{x:x(3)+14,y:y(.75)+4},s).textContent='"near 0.75", 2008–11 (Brooks & Correia)';
+ const far=[],pod=[];
+ D.years.forEach((yr,i)=>{const [k,nn]=D.per[rule][i],f=1-k/nn,ci=wilson(nn-k,nn);
+  el('line',{x1:x(i),x2:x(i),y1:y(ci[0]),y2:y(ci[1]),stroke:css('--seen'),'stroke-width':2},s);far.push([x(i),y(f)]);pod.push([x(i),y(D.pod[i]/100)]);
+  el('text',{x:x(i),y:H-B+16,'text-anchor':'middle'},s).textContent=(i%2===0?yr:'');});
+ el('polyline',{points:far.map(p=>p.join(',')).join(' '),fill:'none',stroke:css('--seen'),'stroke-width':2},s);
+ far.forEach(p=>el('circle',{cx:p[0],cy:p[1],r:4,fill:css('--seen')},s));
+ el('polyline',{points:pod.map(p=>p.join(',')).join(' '),fill:'none',stroke:css('--unseen'),'stroke-width':1.5,'stroke-dasharray':'2 3'},s);
+ pod.forEach(p=>el('circle',{cx:p[0],cy:p[1],r:3,fill:css('--unseen')},s));
+ $('tip2').textContent='Rule: '+RULES[rule]+'. Never needed per year, '+D.years[0]+'–'+D.years[n-1]+': '+D.per[rule].map(([k,nn])=>Math.round(100*(1-k/nn))).join(', ')+' %. Spearman ρ with the warned-ahead share, registered rule: '+D.P3.spearman_rho+'.';
+}
+
+function grid(id,filled,total){const c=$(id),ctx=c.getContext('2d'),cols=76,rows=Math.ceil(total/cols),cw=c.width/cols,ch=c.height/rows;
+ ctx.clearRect(0,0,c.width,c.height);const on=css('--seen'),off=css('--empty'),hot=css('--unseen');
+ for(let i=0;i<total;i++){const r=Math.floor(i/cols),q=i%cols;ctx.fillStyle=i<filled?(filled===1?hot:on):off;ctx.fillRect(q*cw+.5,r*ch+.5,cw-1,ch-1)}}
+function grids(){const a=D[rule].all,n=D.sentry.ever_listed,f=Math.round(n*a.share);
+ grid('gT',f,n);grid('gS',1,n);
+ $('gTcap').textContent=fmt(f)+' of 5,804 cells filled: '+fmt(a.k)+' of '+fmt(a.n)+' warnings met by a tornado ('+pct(a.share)+', '+RULES[rule].split(':')[0]+' rule).';
+ $('gScap').textContent='1 of 5,804 filled (the first cell, orange): 2014 AA. '+fmt(D.sentry.struck_off)+' struck off, '+fmt(D.sentry.standing)+' still standing. The tornado warnings, under this rule, were met about '+fmt(Math.round(a.share*n))+' times as often.'}
+
+function preds(){const tb=$('preds');tb.innerHTML='';const rows=[
+ ['P1 · the share never needed in 2008–2011 lies between 70 and 80 % (Brooks & Correia: "near 0.75")',pct(D.P1.far_2008_2011),D.P1.verdict],
+ ['P2 · in 2012–2023 it is at least 2 points lower, Fisher p < 0.01',pct(D.P2.far_2012_2023)+', '+D.P2.diff_points+' points lower, p ≈ '+D.P2.fisher_p.toExponential(0),D.P2.verdict],
+ ['P3 · across the 16 years, years that warned more tornadoes ahead also issued more warnings never needed: Spearman ρ ≥ 0.4','ρ = '+D.P3.spearman_rho+' (within 0.05 of the bar, which the registration calls undecided); under the strict rule ρ = '+D.post_hoc.S_spearman_rho+', not registered',D.P3.verdict],
+ ['P4 · under 0.1 % of Sentry objects came true, and tornado warnings were met at least 100 times as often',(100*D.P4.sentry_share).toFixed(3)+' % (1 of 5,804) against '+pct(D.P4.tornado_share_V)+', about '+fmt(Math.round(D.P4.ratio))+' times',D.P4.verdict]];
+ for(const r of rows){const tr=document.createElement('tr');tr.innerHTML='<td>'+r[0]+'</td><td>'+r[1]+'</td><td class="'+r[2]+'">'+r[2]+'</td>';tb.appendChild(tr)}}
+
+function draw(){headline();fig1();fig2();grids()}
+document.querySelectorAll('[data-rule]').forEach(b=>b.addEventListener('click',()=>{rule=b.dataset.rule;document.querySelectorAll('[data-rule]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));draw()}));
+preds();draw();
+if(window.matchMedia)matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+})();
+</script>
+</body>
+</html>

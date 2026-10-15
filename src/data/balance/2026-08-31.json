@@ -1,0 +1,3179 @@
+{
+ "generated_at": "2026-08-31T12:50:03+00:00",
+ "date": "2026-08-31",
+ "method": {
+  "version": "v1",
+  "since": "2026-08-14",
+  "min_pool": 25,
+  "min_words": 100,
+  "bootstrap": {
+   "resamples": 800,
+   "subsample_cap": 2000
+  },
+  "dimensions": {
+   "tone": {
+    "label": "Tone",
+    "source": "V1.5TONE",
+    "unit": "tone -100..+100"
+   },
+   "valence": {
+    "code": "v19.1",
+    "label": "Valence (ANEW)",
+    "unit": "dictionary score"
+   },
+   "happiness": {
+    "code": "v21.1",
+    "label": "Happiness (labMT)",
+    "unit": "dictionary score"
+   },
+   "anxiety": {
+    "code": "c5.33",
+    "label": "Anxiety (LIWC)",
+    "unit": "matches per 1,000 words"
+   },
+   "anger": {
+    "code": "c5.32",
+    "label": "Anger (LIWC)",
+    "unit": "matches per 1,000 words"
+   },
+   "sadness": {
+    "code": "c5.31",
+    "label": "Sadness (LIWC)",
+    "unit": "matches per 1,000 words"
+   }
+  },
+  "stream": "GDELT English-monitored GKG 2.1 (translation stream not yet fetched — disclosed on the page)"
+ },
+ "headline": {
+  "fips": "MU",
+  "name": "Oman",
+  "n_self": 48,
+  "n_foreign": 347,
+  "tone_self": 1.759,
+  "tone_foreign": -4.571,
+  "gap": 6.33,
+  "gap_ci95": [
+   5.153,
+   7.618
+  ],
+  "direction": "self_brighter"
+ },
+ "countries": [
+  {
+   "fips": "MU",
+   "name": "Oman",
+   "n_self": 48,
+   "n_foreign": 347,
+   "dims": {
+    "tone": {
+     "self": 1.759,
+     "foreign": -4.571,
+     "gap_ci95": [
+      5.153,
+      7.618
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.81,
+     "foreign": 5.166,
+     "gap_ci95": [
+      0.491,
+      0.802
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.466,
+     "foreign": 5.181,
+     "gap_ci95": [
+      0.235,
+      0.331
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 1.966,
+     "foreign": 3.135,
+     "gap_ci95": [
+      -2.048,
+      -0.192
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 2.992,
+     "foreign": 23.516,
+     "gap_ci95": [
+      -22.634,
+      -18.182
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 3.848,
+     "foreign": 6.053,
+     "gap_ci95": [
+      -3.469,
+      -0.926
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "QA",
+   "name": "Qatar",
+   "n_self": 65,
+   "n_foreign": 541,
+   "dims": {
+    "tone": {
+     "self": 3.381,
+     "foreign": -2.854,
+     "gap_ci95": [
+      5.434,
+      6.984
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.989,
+     "foreign": 5.358,
+     "gap_ci95": [
+      0.5,
+      0.756
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.569,
+     "foreign": 5.266,
+     "gap_ci95": [
+      0.264,
+      0.343
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 1.382,
+     "foreign": 4.081,
+     "gap_ci95": [
+      -3.283,
+      -2.02
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 1.235,
+     "foreign": 16.4,
+     "gap_ci95": [
+      -16.574,
+      -13.72
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 5.089,
+     "foreign": 6.648,
+     "gap_ci95": [
+      -2.689,
+      -0.283
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "AJ",
+   "name": "Azerbaijan",
+   "n_self": 98,
+   "n_foreign": 65,
+   "dims": {
+    "tone": {
+     "self": 2.542,
+     "foreign": -2.035,
+     "gap_ci95": [
+      3.609,
+      5.578
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.961,
+     "foreign": 5.46,
+     "gap_ci95": [
+      0.348,
+      0.648
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.501,
+     "foreign": 5.355,
+     "gap_ci95": [
+      0.101,
+      0.19
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 0.739,
+     "foreign": 2.999,
+     "gap_ci95": [
+      -3.203,
+      -1.324
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 2.244,
+     "foreign": 10.549,
+     "gap_ci95": [
+      -10.159,
+      -6.344
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 2.887,
+     "foreign": 7.017,
+     "gap_ci95": [
+      -5.612,
+      -2.673
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "SA",
+   "name": "Saudi Arabia",
+   "n_self": 37,
+   "n_foreign": 831,
+   "dims": {
+    "tone": {
+     "self": 2.306,
+     "foreign": -1.425,
+     "gap_ci95": [
+      2.665,
+      4.768
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.912,
+     "foreign": 5.539,
+     "gap_ci95": [
+      0.197,
+      0.561
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.453,
+     "foreign": 5.319,
+     "gap_ci95": [
+      0.084,
+      0.181
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 0.811,
+     "foreign": 2.194,
+     "gap_ci95": [
+      -1.944,
+      -0.684
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 4.047,
+     "foreign": 13.966,
+     "gap_ci95": [
+      -11.947,
+      -7.614
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 4.604,
+     "foreign": 4.887,
+     "gap_ci95": [
+      -1.699,
+      1.245
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "VM",
+   "name": "Vietnam",
+   "n_self": 28,
+   "n_foreign": 358,
+   "dims": {
+    "tone": {
+     "self": 2.023,
+     "foreign": -0.626,
+     "gap_ci95": [
+      1.211,
+      4.004
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.968,
+     "foreign": 5.787,
+     "gap_ci95": [
+      -0.009,
+      0.383
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.524,
+     "foreign": 5.45,
+     "gap_ci95": [
+      0.014,
+      0.13
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 1.014,
+     "foreign": 2.761,
+     "gap_ci95": [
+      -2.282,
+      -1.206
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 2.382,
+     "foreign": 8.291,
+     "gap_ci95": [
+      -8.07,
+      -3.205
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 7.015,
+     "foreign": 7.868,
+     "gap_ci95": [
+      -3.197,
+      1.989
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "CU",
+   "name": "Cuba",
+   "n_self": 68,
+   "n_foreign": 99,
+   "dims": {
+    "tone": {
+     "self": -3.679,
+     "foreign": -1.042,
+     "gap_ci95": [
+      -4.009,
+      -1.314
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.632,
+     "foreign": 5.801,
+     "gap_ci95": [
+      -0.324,
+      -0.014
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.326,
+     "foreign": 5.408,
+     "gap_ci95": [
+      -0.122,
+      -0.037
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 3.585,
+     "foreign": 3.635,
+     "gap_ci95": [
+      -1.28,
+      0.971
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 7.921,
+     "foreign": 8.81,
+     "gap_ci95": [
+      -3.715,
+      2.332
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 6.502,
+     "foreign": 9.925,
+     "gap_ci95": [
+      -5.171,
+      -1.74
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "CH",
+   "name": "China",
+   "n_self": 498,
+   "n_foreign": 4466,
+   "dims": {
+    "tone": {
+     "self": 1.196,
+     "foreign": -1.368,
+     "gap_ci95": [
+      2.247,
+      2.918
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.906,
+     "foreign": 5.729,
+     "gap_ci95": [
+      0.12,
+      0.207
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.505,
+     "foreign": 5.402,
+     "gap_ci95": [
+      0.087,
+      0.115
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 1.718,
+     "foreign": 3.09,
+     "gap_ci95": [
+      -1.634,
+      -1.017
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 3.218,
+     "foreign": 6.198,
+     "gap_ci95": [
+      -3.574,
+      -2.266
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 5.674,
+     "foreign": 8.228,
+     "gap_ci95": [
+      -3.139,
+      -1.987
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "FJ",
+   "name": "Fiji",
+   "n_self": 57,
+   "n_foreign": 126,
+   "dims": {
+    "tone": {
+     "self": 0.808,
+     "foreign": -1.465,
+     "gap_ci95": [
+      1.167,
+      3.51
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.812,
+     "foreign": 5.738,
+     "gap_ci95": [
+      -0.087,
+      0.227
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.471,
+     "foreign": 5.455,
+     "gap_ci95": [
+      -0.035,
+      0.061
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.927,
+     "foreign": 4.674,
+     "gap_ci95": [
+      -2.988,
+      -0.383
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 3.088,
+     "foreign": 4.306,
+     "gap_ci95": [
+      -2.897,
+      0.927
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 4.328,
+     "foreign": 10.091,
+     "gap_ci95": [
+      -7.394,
+      -4.152
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "NL",
+   "name": "Netherlands",
+   "n_self": 27,
+   "n_foreign": 603,
+   "dims": {
+    "tone": {
+     "self": -1.99,
+     "foreign": 0.262,
+     "gap_ci95": [
+      -3.644,
+      -0.969
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.733,
+     "foreign": 5.938,
+     "gap_ci95": [
+      -0.424,
+      -0.01
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.372,
+     "foreign": 5.464,
+     "gap_ci95": [
+      -0.151,
+      -0.034
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 3.212,
+     "foreign": 1.75,
+     "gap_ci95": [
+      -0.436,
+      4.276
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 4.082,
+     "foreign": 3.935,
+     "gap_ci95": [
+      -2.158,
+      2.99
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 5.567,
+     "foreign": 6.965,
+     "gap_ci95": [
+      -3.95,
+      1.21
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "MI",
+   "name": "Malawi",
+   "n_self": 44,
+   "n_foreign": 44,
+   "dims": {
+    "tone": {
+     "self": -0.019,
+     "foreign": 2.013,
+     "gap_ci95": [
+      -3.804,
+      -0.174
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.796,
+     "foreign": 6.163,
+     "gap_ci95": [
+      -0.581,
+      -0.135
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.404,
+     "foreign": 5.539,
+     "gap_ci95": [
+      -0.206,
+      -0.054
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 3.236,
+     "foreign": 3.027,
+     "gap_ci95": [
+      -1.419,
+      1.754
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 6.106,
+     "foreign": 3.562,
+     "gap_ci95": [
+      -0.244,
+      5.688
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 9.339,
+     "foreign": 9.16,
+     "gap_ci95": [
+      -2.784,
+      3.626
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "MY",
+   "name": "Malaysia",
+   "n_self": 127,
+   "n_foreign": 400,
+   "dims": {
+    "tone": {
+     "self": 0.832,
+     "foreign": -1.101,
+     "gap_ci95": [
+      1.253,
+      2.666
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.907,
+     "foreign": 5.833,
+     "gap_ci95": [
+      -0.023,
+      0.18
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.428,
+     "foreign": 5.444,
+     "gap_ci95": [
+      -0.045,
+      0.016
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.673,
+     "foreign": 2.487,
+     "gap_ci95": [
+      -0.646,
+      1.099
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 3.668,
+     "foreign": 4.023,
+     "gap_ci95": [
+      -1.406,
+      0.75
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 6.869,
+     "foreign": 7.875,
+     "gap_ci95": [
+      -2.271,
+      0.292
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "BR",
+   "name": "Brazil",
+   "n_self": 30,
+   "n_foreign": 440,
+   "dims": {
+    "tone": {
+     "self": -1.116,
+     "foreign": 0.559,
+     "gap_ci95": [
+      -2.553,
+      -0.812
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.728,
+     "foreign": 5.88,
+     "gap_ci95": [
+      -0.292,
+      -0.022
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.405,
+     "foreign": 5.478,
+     "gap_ci95": [
+      -0.115,
+      -0.028
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 3.599,
+     "foreign": 2.024,
+     "gap_ci95": [
+      0.201,
+      3.35
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 3.105,
+     "foreign": 4.286,
+     "gap_ci95": [
+      -2.315,
+      0.377
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 5.455,
+     "foreign": 5.263,
+     "gap_ci95": [
+      -0.871,
+      1.324
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "GM",
+   "name": "Germany",
+   "n_self": 46,
+   "n_foreign": 1601,
+   "dims": {
+    "tone": {
+     "self": -0.013,
+     "foreign": -1.6,
+     "gap_ci95": [
+      0.64,
+      2.472
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.693,
+     "foreign": 5.646,
+     "gap_ci95": [
+      -0.092,
+      0.196
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.418,
+     "foreign": 5.383,
+     "gap_ci95": [
+      -0.004,
+      0.075
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.181,
+     "foreign": 2.537,
+     "gap_ci95": [
+      -1.169,
+      0.543
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 3.565,
+     "foreign": 7.914,
+     "gap_ci95": [
+      -5.87,
+      -2.611
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 6.235,
+     "foreign": 5.461,
+     "gap_ci95": [
+      -0.473,
+      2.061
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "KE",
+   "name": "Kenya",
+   "n_self": 118,
+   "n_foreign": 192,
+   "dims": {
+    "tone": {
+     "self": -1.359,
+     "foreign": 0.131,
+     "gap_ci95": [
+      -2.373,
+      -0.527
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.671,
+     "foreign": 5.908,
+     "gap_ci95": [
+      -0.346,
+      -0.126
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.365,
+     "foreign": 5.487,
+     "gap_ci95": [
+      -0.162,
+      -0.08
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 3.776,
+     "foreign": 1.788,
+     "gap_ci95": [
+      0.828,
+      3.504
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 5.944,
+     "foreign": 4.235,
+     "gap_ci95": [
+      0.133,
+      3.253
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 5.539,
+     "foreign": 6.344,
+     "gap_ci95": [
+      -1.972,
+      0.515
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "CY",
+   "name": "Cyprus",
+   "n_self": 42,
+   "n_foreign": 746,
+   "dims": {
+    "tone": {
+     "self": 0.297,
+     "foreign": -1.068,
+     "gap_ci95": [
+      0.434,
+      2.341
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.865,
+     "foreign": 6.108,
+     "gap_ci95": [
+      -0.39,
+      -0.103
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.424,
+     "foreign": 5.373,
+     "gap_ci95": [
+      0.007,
+      0.101
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 1.306,
+     "foreign": 1.209,
+     "gap_ci95": [
+      -0.519,
+      0.79
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 3.809,
+     "foreign": 1.428,
+     "gap_ci95": [
+      0.964,
+      3.901
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 9.138,
+     "foreign": 9.422,
+     "gap_ci95": [
+      -2.792,
+      2.956
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "RS",
+   "name": "Russia",
+   "n_self": 52,
+   "n_foreign": 2061,
+   "dims": {
+    "tone": {
+     "self": -0.662,
+     "foreign": -2.009,
+     "gap_ci95": [
+      0.388,
+      2.171
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.747,
+     "foreign": 5.68,
+     "gap_ci95": [
+      -0.035,
+      0.174
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.402,
+     "foreign": 5.369,
+     "gap_ci95": [
+      -0.002,
+      0.067
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.205,
+     "foreign": 2.815,
+     "gap_ci95": [
+      -1.274,
+      0.121
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 7.424,
+     "foreign": 12.155,
+     "gap_ci95": [
+      -7.242,
+      -2.13
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 6.691,
+     "foreign": 5.873,
+     "gap_ci95": [
+      -0.774,
+      2.533
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "AS",
+   "name": "Australia",
+   "n_self": 3543,
+   "n_foreign": 1630,
+   "dims": {
+    "tone": {
+     "self": -1.374,
+     "foreign": -0.087,
+     "gap_ci95": [
+      -1.492,
+      -1.082
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.795,
+     "foreign": 5.908,
+     "gap_ci95": [
+      -0.138,
+      -0.084
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.418,
+     "foreign": 5.457,
+     "gap_ci95": [
+      -0.049,
+      -0.03
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 2.817,
+     "foreign": 3.451,
+     "gap_ci95": [
+      -0.778,
+      -0.336
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 6.664,
+     "foreign": 5.741,
+     "gap_ci95": [
+      0.536,
+      1.604
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 11.534,
+     "foreign": 7.338,
+     "gap_ci95": [
+      3.902,
+      4.686
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "LI",
+   "name": "Liberia",
+   "n_self": 39,
+   "n_foreign": 40,
+   "dims": {
+    "tone": {
+     "self": -1.518,
+     "foreign": -2.668,
+     "gap_ci95": [
+      -0.457,
+      2.757
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.542,
+     "foreign": 5.592,
+     "gap_ci95": [
+      -0.281,
+      0.186
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.329,
+     "foreign": 5.331,
+     "gap_ci95": [
+      -0.066,
+      0.071
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 3.193,
+     "foreign": 2.214,
+     "gap_ci95": [
+      -0.283,
+      2.214
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 7.243,
+     "foreign": 5.816,
+     "gap_ci95": [
+      -1.147,
+      4.558
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 7.236,
+     "foreign": 6.868,
+     "gap_ci95": [
+      -1.836,
+      2.83
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "NI",
+   "name": "Nigeria",
+   "n_self": 791,
+   "n_foreign": 173,
+   "dims": {
+    "tone": {
+     "self": -0.991,
+     "foreign": 0.14,
+     "gap_ci95": [
+      -1.714,
+      -0.54
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.706,
+     "foreign": 5.954,
+     "gap_ci95": [
+      -0.322,
+      -0.177
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.359,
+     "foreign": 5.498,
+     "gap_ci95": [
+      -0.171,
+      -0.108
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 3.769,
+     "foreign": 2.309,
+     "gap_ci95": [
+      0.909,
+      2.058
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 6.647,
+     "foreign": 4.878,
+     "gap_ci95": [
+      0.569,
+      2.966
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 5.885,
+     "foreign": 5.047,
+     "gap_ci95": [
+      0.114,
+      1.548
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "ID",
+   "name": "Indonesia",
+   "n_self": 58,
+   "n_foreign": 478,
+   "dims": {
+    "tone": {
+     "self": -0.154,
+     "foreign": -1.244,
+     "gap_ci95": [
+      -0.138,
+      2.235
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.716,
+     "foreign": 5.705,
+     "gap_ci95": [
+      -0.113,
+      0.139
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.432,
+     "foreign": 5.406,
+     "gap_ci95": [
+      -0.014,
+      0.069
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.92,
+     "foreign": 2.89,
+     "gap_ci95": [
+      -0.77,
+      0.828
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 5.538,
+     "foreign": 10.238,
+     "gap_ci95": [
+      -7.041,
+      -2.026
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 4.445,
+     "foreign": 7.04,
+     "gap_ci95": [
+      -3.652,
+      -1.423
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "RP",
+   "name": "Philippines",
+   "n_self": 334,
+   "n_foreign": 238,
+   "dims": {
+    "tone": {
+     "self": -0.175,
+     "foreign": 0.845,
+     "gap_ci95": [
+      -1.608,
+      -0.414
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.695,
+     "foreign": 6.021,
+     "gap_ci95": [
+      -0.407,
+      -0.249
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.427,
+     "foreign": 5.507,
+     "gap_ci95": [
+      -0.105,
+      -0.056
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 2.4,
+     "foreign": 1.731,
+     "gap_ci95": [
+      0.213,
+      1.227
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 3.348,
+     "foreign": 4.434,
+     "gap_ci95": [
+      -2.204,
+      -0.054
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 6.735,
+     "foreign": 7.23,
+     "gap_ci95": [
+      -1.8,
+      0.87
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "UG",
+   "name": "Uganda",
+   "n_self": 42,
+   "n_foreign": 56,
+   "dims": {
+    "tone": {
+     "self": -0.135,
+     "foreign": -1.151,
+     "gap_ci95": [
+      -0.386,
+      2.573
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.678,
+     "foreign": 5.81,
+     "gap_ci95": [
+      -0.329,
+      0.084
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.4,
+     "foreign": 5.388,
+     "gap_ci95": [
+      -0.051,
+      0.081
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 1.849,
+     "foreign": 3.01,
+     "gap_ci95": [
+      -2.439,
+      0.015
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 4.32,
+     "foreign": 6.931,
+     "gap_ci95": [
+      -5.629,
+      -0.012
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 9.494,
+     "foreign": 6.309,
+     "gap_ci95": [
+      0.66,
+      6.144
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "ZI",
+   "name": "Zimbabwe",
+   "n_self": 33,
+   "n_foreign": 209,
+   "dims": {
+    "tone": {
+     "self": -0.602,
+     "foreign": 0.373,
+     "gap_ci95": [
+      -2.693,
+      0.579
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.726,
+     "foreign": 5.87,
+     "gap_ci95": [
+      -0.325,
+      0.043
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.409,
+     "foreign": 5.446,
+     "gap_ci95": [
+      -0.092,
+      0.018
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.605,
+     "foreign": 1.564,
+     "gap_ci95": [
+      0.03,
+      2.101
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 3.158,
+     "foreign": 3.529,
+     "gap_ci95": [
+      -1.612,
+      0.915
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 6.87,
+     "foreign": 9.384,
+     "gap_ci95": [
+      -4.489,
+      -0.278
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "BG",
+   "name": "Bangladesh",
+   "n_self": 152,
+   "n_foreign": 301,
+   "dims": {
+    "tone": {
+     "self": -0.703,
+     "foreign": 0.14,
+     "gap_ci95": [
+      -1.514,
+      -0.053
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.615,
+     "foreign": 5.817,
+     "gap_ci95": [
+      -0.299,
+      -0.101
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.368,
+     "foreign": 5.444,
+     "gap_ci95": [
+      -0.109,
+      -0.039
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 1.655,
+     "foreign": 2.329,
+     "gap_ci95": [
+      -1.253,
+      -0.113
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 3.204,
+     "foreign": 3.749,
+     "gap_ci95": [
+      -1.647,
+      0.626
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 4.416,
+     "foreign": 6.364,
+     "gap_ci95": [
+      -3.021,
+      -0.883
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "CE",
+   "name": "Sri Lanka",
+   "n_self": 138,
+   "n_foreign": 116,
+   "dims": {
+    "tone": {
+     "self": -0.613,
+     "foreign": 0.189,
+     "gap_ci95": [
+      -1.775,
+      0.146
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.69,
+     "foreign": 6.029,
+     "gap_ci95": [
+      -0.47,
+      -0.217
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.4,
+     "foreign": 5.461,
+     "gap_ci95": [
+      -0.099,
+      -0.022
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 2.975,
+     "foreign": 1.837,
+     "gap_ci95": [
+      0.351,
+      1.977
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 4.741,
+     "foreign": 4.046,
+     "gap_ci95": [
+      -0.93,
+      2.191
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 5.888,
+     "foreign": 6.779,
+     "gap_ci95": [
+      -2.394,
+      0.689
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "SF",
+   "name": "South Africa",
+   "n_self": 291,
+   "n_foreign": 531,
+   "dims": {
+    "tone": {
+     "self": -0.588,
+     "foreign": 0.2,
+     "gap_ci95": [
+      -1.399,
+      -0.279
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.761,
+     "foreign": 5.882,
+     "gap_ci95": [
+      -0.185,
+      -0.047
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.407,
+     "foreign": 5.474,
+     "gap_ci95": [
+      -0.089,
+      -0.045
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 2.723,
+     "foreign": 3.239,
+     "gap_ci95": [
+      -1.054,
+      0.037
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 4.454,
+     "foreign": 3.997,
+     "gap_ci95": [
+      -0.476,
+      1.361
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 6.384,
+     "foreign": 7.52,
+     "gap_ci95": [
+      -2.033,
+      -0.207
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "IS",
+   "name": "Israel",
+   "n_self": 271,
+   "n_foreign": 1758,
+   "dims": {
+    "tone": {
+     "self": -3.189,
+     "foreign": -3.944,
+     "gap_ci95": [
+      0.275,
+      1.245
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.579,
+     "foreign": 5.407,
+     "gap_ci95": [
+      0.116,
+      0.226
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.29,
+     "foreign": 5.253,
+     "gap_ci95": [
+      0.018,
+      0.056
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 3.733,
+     "foreign": 2.685,
+     "gap_ci95": [
+      0.455,
+      1.763
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 11.807,
+     "foreign": 19.199,
+     "gap_ci95": [
+      -8.777,
+      -6.043
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 5.898,
+     "foreign": 5.626,
+     "gap_ci95": [
+      -0.343,
+      0.982
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "TW",
+   "name": "Taiwan",
+   "n_self": 65,
+   "n_foreign": 552,
+   "dims": {
+    "tone": {
+     "self": -0.936,
+     "foreign": -1.634,
+     "gap_ci95": [
+      -0.34,
+      1.725
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.618,
+     "foreign": 5.658,
+     "gap_ci95": [
+      -0.172,
+      0.11
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.39,
+     "foreign": 5.387,
+     "gap_ci95": [
+      -0.043,
+      0.044
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.582,
+     "foreign": 3.127,
+     "gap_ci95": [
+      -1.331,
+      0.296
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 4.206,
+     "foreign": 8.525,
+     "gap_ci95": [
+      -5.899,
+      -2.702
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 6.825,
+     "foreign": 7.434,
+     "gap_ci95": [
+      -1.733,
+      0.517
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "GR",
+   "name": "Greece",
+   "n_self": 31,
+   "n_foreign": 413,
+   "dims": {
+    "tone": {
+     "self": 0.163,
+     "foreign": -0.511,
+     "gap_ci95": [
+      -0.032,
+      1.44
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.898,
+     "foreign": 5.945,
+     "gap_ci95": [
+      -0.2,
+      0.101
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.433,
+     "foreign": 5.451,
+     "gap_ci95": [
+      -0.064,
+      0.03
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.662,
+     "foreign": 2.509,
+     "gap_ci95": [
+      -0.955,
+      1.516
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 4.318,
+     "foreign": 7.734,
+     "gap_ci95": [
+      -5.136,
+      -1.857
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 4.918,
+     "foreign": 7.037,
+     "gap_ci95": [
+      -3.88,
+      -0.394
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "TH",
+   "name": "Thailand",
+   "n_self": 48,
+   "n_foreign": 521,
+   "dims": {
+    "tone": {
+     "self": 0.272,
+     "foreign": -0.374,
+     "gap_ci95": [
+      -0.643,
+      1.992
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.825,
+     "foreign": 5.763,
+     "gap_ci95": [
+      -0.094,
+      0.21
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.471,
+     "foreign": 5.449,
+     "gap_ci95": [
+      -0.031,
+      0.074
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.83,
+     "foreign": 3.182,
+     "gap_ci95": [
+      -1.236,
+      0.619
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 5.402,
+     "foreign": 6.841,
+     "gap_ci95": [
+      -3.439,
+      0.644
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 7.642,
+     "foreign": 5.933,
+     "gap_ci95": [
+      0.154,
+      3.526
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "GH",
+   "name": "Ghana",
+   "n_self": 66,
+   "n_foreign": 138,
+   "dims": {
+    "tone": {
+     "self": 1.046,
+     "foreign": 0.406,
+     "gap_ci95": [
+      -0.47,
+      1.8
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.97,
+     "foreign": 5.904,
+     "gap_ci95": [
+      -0.078,
+      0.195
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.459,
+     "foreign": 5.47,
+     "gap_ci95": [
+      -0.052,
+      0.037
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.825,
+     "foreign": 2.213,
+     "gap_ci95": [
+      -0.306,
+      1.732
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 4.388,
+     "foreign": 3.584,
+     "gap_ci95": [
+      -0.964,
+      2.596
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 3.624,
+     "foreign": 5.367,
+     "gap_ci95": [
+      -2.931,
+      -0.701
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "SP",
+   "name": "Spain",
+   "n_self": 50,
+   "n_foreign": 816,
+   "dims": {
+    "tone": {
+     "self": 0.482,
+     "foreign": -0.151,
+     "gap_ci95": [
+      -0.326,
+      1.408
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 6.055,
+     "foreign": 5.947,
+     "gap_ci95": [
+      -0.027,
+      0.237
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.466,
+     "foreign": 5.451,
+     "gap_ci95": [
+      -0.024,
+      0.051
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.286,
+     "foreign": 2.627,
+     "gap_ci95": [
+      -1.215,
+      0.705
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 5.225,
+     "foreign": 4.409,
+     "gap_ci95": [
+      -1.334,
+      3.656
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 6.483,
+     "foreign": 7.187,
+     "gap_ci95": [
+      -2.065,
+      0.707
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "WA",
+   "name": "Namibia",
+   "n_self": 27,
+   "n_foreign": 91,
+   "dims": {
+    "tone": {
+     "self": 0.662,
+     "foreign": 1.295,
+     "gap_ci95": [
+      -2.285,
+      1.146
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.8,
+     "foreign": 5.869,
+     "gap_ci95": [
+      -0.339,
+      0.164
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.437,
+     "foreign": 5.468,
+     "gap_ci95": [
+      -0.095,
+      0.033
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 4.395,
+     "foreign": 2.8,
+     "gap_ci95": [
+      -0.58,
+      3.893
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 4.635,
+     "foreign": 3.055,
+     "gap_ci95": [
+      -0.893,
+      4.463
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 6.026,
+     "foreign": 8.525,
+     "gap_ci95": [
+      -4.5,
+      -0.444
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "JM",
+   "name": "Jamaica",
+   "n_self": 29,
+   "n_foreign": 60,
+   "dims": {
+    "tone": {
+     "self": 0.475,
+     "foreign": -0.147,
+     "gap_ci95": [
+      -0.924,
+      2.176
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.79,
+     "foreign": 5.954,
+     "gap_ci95": [
+      -0.399,
+      0.102
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.45,
+     "foreign": 5.475,
+     "gap_ci95": [
+      -0.096,
+      0.039
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 3.243,
+     "foreign": 2.606,
+     "gap_ci95": [
+      -0.715,
+      2.231
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 4.782,
+     "foreign": 5.324,
+     "gap_ci95": [
+      -3.16,
+      2.374
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 7.016,
+     "foreign": 5.365,
+     "gap_ci95": [
+      -0.43,
+      3.85
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "CA",
+   "name": "Canada",
+   "n_self": 1032,
+   "n_foreign": 2547,
+   "dims": {
+    "tone": {
+     "self": 0.245,
+     "foreign": -0.331,
+     "gap_ci95": [
+      0.339,
+      0.774
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.932,
+     "foreign": 5.876,
+     "gap_ci95": [
+      0.019,
+      0.085
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.482,
+     "foreign": 5.479,
+     "gap_ci95": [
+      -0.008,
+      0.013
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 1.914,
+     "foreign": 2.83,
+     "gap_ci95": [
+      -1.131,
+      -0.699
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 3.902,
+     "foreign": 6.013,
+     "gap_ci95": [
+      -2.444,
+      -1.55
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 6.879,
+     "foreign": 6.607,
+     "gap_ci95": [
+      -0.116,
+      0.764
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "TU",
+   "name": "Turkey",
+   "n_self": 65,
+   "n_foreign": 1264,
+   "dims": {
+    "tone": {
+     "self": -0.571,
+     "foreign": -1.137,
+     "gap_ci95": [
+      -0.248,
+      1.324
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.846,
+     "foreign": 5.962,
+     "gap_ci95": [
+      -0.215,
+      -0.007
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.371,
+     "foreign": 5.373,
+     "gap_ci95": [
+      -0.032,
+      0.03
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.243,
+     "foreign": 1.63,
+     "gap_ci95": [
+      -0.113,
+      1.445
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 6.581,
+     "foreign": 4.687,
+     "gap_ci95": [
+      -0.16,
+      3.73
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 6.853,
+     "foreign": 8.0,
+     "gap_ci95": [
+      -3.053,
+      0.829
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "SN",
+   "name": "Singapore",
+   "n_self": 134,
+   "n_foreign": 561,
+   "dims": {
+    "tone": {
+     "self": -0.012,
+     "foreign": 0.514,
+     "gap_ci95": [
+      -1.149,
+      0.102
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.757,
+     "foreign": 5.823,
+     "gap_ci95": [
+      -0.155,
+      0.024
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.432,
+     "foreign": 5.477,
+     "gap_ci95": [
+      -0.071,
+      -0.017
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 2.266,
+     "foreign": 2.14,
+     "gap_ci95": [
+      -0.478,
+      0.765
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 4.8,
+     "foreign": 4.054,
+     "gap_ci95": [
+      -0.825,
+      2.614
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 7.019,
+     "foreign": 6.486,
+     "gap_ci95": [
+      -0.789,
+      1.795
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "JA",
+   "name": "Japan",
+   "n_self": 96,
+   "n_foreign": 1595,
+   "dims": {
+    "tone": {
+     "self": -0.966,
+     "foreign": -0.449,
+     "gap_ci95": [
+      -1.28,
+      0.281
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.802,
+     "foreign": 5.786,
+     "gap_ci95": [
+      -0.088,
+      0.12
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.434,
+     "foreign": 5.441,
+     "gap_ci95": [
+      -0.042,
+      0.03
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.823,
+     "foreign": 2.717,
+     "gap_ci95": [
+      -0.629,
+      0.975
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 6.418,
+     "foreign": 7.248,
+     "gap_ci95": [
+      -2.479,
+      1.055
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 7.257,
+     "foreign": 6.707,
+     "gap_ci95": [
+      -0.675,
+      1.834
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "IR",
+   "name": "Iran",
+   "n_self": 57,
+   "n_foreign": 3884,
+   "dims": {
+    "tone": {
+     "self": -3.816,
+     "foreign": -3.353,
+     "gap_ci95": [
+      -1.514,
+      0.656
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.475,
+     "foreign": 5.4,
+     "gap_ci95": [
+      -0.057,
+      0.202
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.25,
+     "foreign": 5.277,
+     "gap_ci95": [
+      -0.06,
+      0.01
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 5.045,
+     "foreign": 3.375,
+     "gap_ci95": [
+      0.24,
+      3.1
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 18.288,
+     "foreign": 17.556,
+     "gap_ci95": [
+      -2.847,
+      4.964
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 6.203,
+     "foreign": 5.451,
+     "gap_ci95": [
+      -0.397,
+      2.159
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "IN",
+   "name": "India",
+   "n_self": 4866,
+   "n_foreign": 2054,
+   "dims": {
+    "tone": {
+     "self": -0.806,
+     "foreign": -0.36,
+     "gap_ci95": [
+      -0.596,
+      -0.104
+     ],
+     "significant": true
+    },
+    "valence": {
+     "self": 5.698,
+     "foreign": 5.757,
+     "gap_ci95": [
+      -0.079,
+      -0.016
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.401,
+     "foreign": 5.437,
+     "gap_ci95": [
+      -0.043,
+      -0.023
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 2.127,
+     "foreign": 2.92,
+     "gap_ci95": [
+      -0.961,
+      -0.532
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 5.001,
+     "foreign": 4.77,
+     "gap_ci95": [
+      -0.18,
+      0.695
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 5.528,
+     "foreign": 6.882,
+     "gap_ci95": [
+      -1.92,
+      -1.091
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "NP",
+   "name": "Nepal",
+   "n_self": 50,
+   "n_foreign": 1891,
+   "dims": {
+    "tone": {
+     "self": -2.961,
+     "foreign": -3.4,
+     "gap_ci95": [
+      -0.36,
+      1.242
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.573,
+     "foreign": 5.683,
+     "gap_ci95": [
+      -0.207,
+      -0.01
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.305,
+     "foreign": 5.336,
+     "gap_ci95": [
+      -0.059,
+      -0.001
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 3.557,
+     "foreign": 3.308,
+     "gap_ci95": [
+      -0.498,
+      1.071
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 4.091,
+     "foreign": 4.155,
+     "gap_ci95": [
+      -1.253,
+      1.207
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 13.806,
+     "foreign": 13.633,
+     "gap_ci95": [
+      -1.839,
+      2.284
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "PK",
+   "name": "Pakistan",
+   "n_self": 195,
+   "n_foreign": 832,
+   "dims": {
+    "tone": {
+     "self": -0.969,
+     "foreign": -1.209,
+     "gap_ci95": [
+      -0.437,
+      0.846
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.7,
+     "foreign": 5.681,
+     "gap_ci95": [
+      -0.065,
+      0.098
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.34,
+     "foreign": 5.351,
+     "gap_ci95": [
+      -0.038,
+      0.016
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.856,
+     "foreign": 2.555,
+     "gap_ci95": [
+      -0.437,
+      1.251
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 6.305,
+     "foreign": 9.964,
+     "gap_ci95": [
+      -5.023,
+      -2.144
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 6.558,
+     "foreign": 5.426,
+     "gap_ci95": [
+      0.123,
+      2.138
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "EI",
+   "name": "Ireland",
+   "n_self": 397,
+   "n_foreign": 395,
+   "dims": {
+    "tone": {
+     "self": -0.249,
+     "foreign": -0.01,
+     "gap_ci95": [
+      -0.703,
+      0.235
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.958,
+     "foreign": 5.961,
+     "gap_ci95": [
+      -0.066,
+      0.062
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.457,
+     "foreign": 5.471,
+     "gap_ci95": [
+      -0.033,
+      0.005
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 1.958,
+     "foreign": 2.818,
+     "gap_ci95": [
+      -1.278,
+      -0.415
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 3.212,
+     "foreign": 4.697,
+     "gap_ci95": [
+      -2.178,
+      -0.761
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 7.219,
+     "foreign": 7.618,
+     "gap_ci95": [
+      -1.506,
+      0.776
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "FR",
+   "name": "France",
+   "n_self": 38,
+   "n_foreign": 1786,
+   "dims": {
+    "tone": {
+     "self": -0.08,
+     "foreign": -0.266,
+     "gap_ci95": [
+      -1.008,
+      1.179
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 6.028,
+     "foreign": 5.934,
+     "gap_ci95": [
+      -0.05,
+      0.228
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.448,
+     "foreign": 5.464,
+     "gap_ci95": [
+      -0.057,
+      0.018
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.722,
+     "foreign": 2.405,
+     "gap_ci95": [
+      -0.52,
+      1.252
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 5.534,
+     "foreign": 5.498,
+     "gap_ci95": [
+      -2.525,
+      3.225
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 6.442,
+     "foreign": 7.139,
+     "gap_ci95": [
+      -2.394,
+      1.45
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "KS",
+   "name": "South Korea",
+   "n_self": 116,
+   "n_foreign": 646,
+   "dims": {
+    "tone": {
+     "self": -0.35,
+     "foreign": -0.533,
+     "gap_ci95": [
+      -0.465,
+      0.882
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.847,
+     "foreign": 5.767,
+     "gap_ci95": [
+      -0.025,
+      0.178
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.446,
+     "foreign": 5.427,
+     "gap_ci95": [
+      -0.014,
+      0.049
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 1.359,
+     "foreign": 2.766,
+     "gap_ci95": [
+      -1.929,
+      -0.875
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 4.404,
+     "foreign": 6.733,
+     "gap_ci95": [
+      -3.66,
+      -0.787
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 6.047,
+     "foreign": 7.266,
+     "gap_ci95": [
+      -2.458,
+      0.188
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "RO",
+   "name": "Romania",
+   "n_self": 48,
+   "n_foreign": 126,
+   "dims": {
+    "tone": {
+     "self": 0.428,
+     "foreign": 0.579,
+     "gap_ci95": [
+      -1.245,
+      0.863
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.88,
+     "foreign": 6.025,
+     "gap_ci95": [
+      -0.296,
+      0.025
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.446,
+     "foreign": 5.486,
+     "gap_ci95": [
+      -0.093,
+      0.007
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 1.691,
+     "foreign": 3.388,
+     "gap_ci95": [
+      -2.646,
+      -0.687
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 2.516,
+     "foreign": 5.407,
+     "gap_ci95": [
+      -4.711,
+      -1.063
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 4.093,
+     "foreign": 8.55,
+     "gap_ci95": [
+      -6.315,
+      -2.424
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "US",
+   "name": "United States",
+   "n_self": 14348,
+   "n_foreign": 6101,
+   "dims": {
+    "tone": {
+     "self": -1.054,
+     "foreign": -1.194,
+     "gap_ci95": [
+      -0.264,
+      0.167
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.786,
+     "foreign": 5.757,
+     "gap_ci95": [
+      0.032,
+      0.094
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.425,
+     "foreign": 5.411,
+     "gap_ci95": [
+      0.005,
+      0.025
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 2.225,
+     "foreign": 2.995,
+     "gap_ci95": [
+      -0.921,
+      -0.528
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 6.6,
+     "foreign": 8.659,
+     "gap_ci95": [
+      -2.689,
+      -1.488
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 6.74,
+     "foreign": 6.514,
+     "gap_ci95": [
+      0.006,
+      0.656
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "NZ",
+   "name": "New Zealand",
+   "n_self": 335,
+   "n_foreign": 917,
+   "dims": {
+    "tone": {
+     "self": -0.362,
+     "foreign": -0.263,
+     "gap_ci95": [
+      -0.465,
+      0.272
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.765,
+     "foreign": 5.827,
+     "gap_ci95": [
+      -0.117,
+      -0.003
+     ],
+     "significant": true
+    },
+    "happiness": {
+     "self": 5.442,
+     "foreign": 5.446,
+     "gap_ci95": [
+      -0.021,
+      0.014
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.916,
+     "foreign": 4.681,
+     "gap_ci95": [
+      -2.224,
+      -1.266
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 3.475,
+     "foreign": 6.423,
+     "gap_ci95": [
+      -3.82,
+      -2.119
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 7.957,
+     "foreign": 7.259,
+     "gap_ci95": [
+      0.021,
+      1.448
+     ],
+     "significant": true
+    }
+   }
+  },
+  {
+   "fips": "UK",
+   "name": "United Kingdom",
+   "n_self": 4814,
+   "n_foreign": 3117,
+   "dims": {
+    "tone": {
+     "self": -0.674,
+     "foreign": -0.7,
+     "gap_ci95": [
+      -0.188,
+      0.262
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.814,
+     "foreign": 5.841,
+     "gap_ci95": [
+      -0.054,
+      0.0
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.465,
+     "foreign": 5.43,
+     "gap_ci95": [
+      0.031,
+      0.05
+     ],
+     "significant": true
+    },
+    "anxiety": {
+     "self": 3.16,
+     "foreign": 2.797,
+     "gap_ci95": [
+      0.143,
+      0.569
+     ],
+     "significant": true
+    },
+    "anger": {
+     "self": 6.819,
+     "foreign": 7.356,
+     "gap_ci95": [
+      -1.646,
+      -0.469
+     ],
+     "significant": true
+    },
+    "sadness": {
+     "self": 6.568,
+     "foreign": 6.709,
+     "gap_ci95": [
+      -0.421,
+      0.316
+     ],
+     "significant": false
+    }
+   }
+  },
+  {
+   "fips": "UP",
+   "name": "Ukraine",
+   "n_self": 40,
+   "n_foreign": 1089,
+   "dims": {
+    "tone": {
+     "self": -3.292,
+     "foreign": -3.309,
+     "gap_ci95": [
+      -1.101,
+      1.239
+     ],
+     "significant": false
+    },
+    "valence": {
+     "self": 5.499,
+     "foreign": 5.534,
+     "gap_ci95": [
+      -0.176,
+      0.114
+     ],
+     "significant": false
+    },
+    "happiness": {
+     "self": 5.292,
+     "foreign": 5.307,
+     "gap_ci95": [
+      -0.063,
+      0.031
+     ],
+     "significant": false
+    },
+    "anxiety": {
+     "self": 2.991,
+     "foreign": 2.666,
+     "gap_ci95": [
+      -0.553,
+      1.39
+     ],
+     "significant": false
+    },
+    "anger": {
+     "self": 16.455,
+     "foreign": 14.811,
+     "gap_ci95": [
+      -1.399,
+      4.859
+     ],
+     "significant": false
+    },
+    "sadness": {
+     "self": 7.141,
+     "foreign": 7.36,
+     "gap_ci95": [
+      -2.027,
+      1.846
+     ],
+     "significant": false
+    }
+   }
+  }
+ ],
+ "stats": {
+  "articles_scanned": 65905,
+  "articles_mapped": 45665,
+  "mapping_rate": 0.778,
+  "domains_seen": 4857,
+  "slots_expected": 96,
+  "slots_fetched": 96,
+  "slots_missing": [],
+  "window": "20260830124500 .. 20260831123000 UTC"
+ },
+ "source": {
+  "name": "GDELT Project — GKG 2.1 raw files + sourcesbycountry lookup",
+  "url": "https://www.gdeltproject.org/",
+  "license": "Open with attribution (citation + link)",
+  "retrieved_utc": "2026-08-31T12:50:03+00:00"
+ }
+}

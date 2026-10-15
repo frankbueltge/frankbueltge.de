@@ -1,0 +1,6771 @@
+{
+ "object": "postgresql-18.6 source tarball",
+ "vocabulary": {
+  "file": "src/backend/utils/errcodes.txt",
+  "file_lines": 502,
+  "n_rows": 268,
+  "V": [
+   "00000",
+   "01000",
+   "01003",
+   "01004",
+   "01006",
+   "01007",
+   "01008",
+   "0100C",
+   "01P01",
+   "02000",
+   "02001",
+   "03000",
+   "08000",
+   "08001",
+   "08003",
+   "08004",
+   "08006",
+   "08007",
+   "08P01",
+   "09000",
+   "0A000",
+   "0B000",
+   "0F000",
+   "0F001",
+   "0L000",
+   "0LP01",
+   "0P000",
+   "0Z000",
+   "0Z002",
+   "10608",
+   "20000",
+   "21000",
+   "22000",
+   "22001",
+   "22002",
+   "22003",
+   "22004",
+   "22005",
+   "22007",
+   "22008",
+   "22009",
+   "2200B",
+   "2200C",
+   "2200D",
+   "2200F",
+   "2200G",
+   "2200H",
+   "2200L",
+   "2200M",
+   "2200N",
+   "2200S",
+   "2200T",
+   "22010",
+   "22011",
+   "22012",
+   "22013",
+   "22014",
+   "22015",
+   "22016",
+   "22018",
+   "22019",
+   "2201B",
+   "2201E",
+   "2201F",
+   "2201G",
+   "2201W",
+   "2201X",
+   "22021",
+   "22022",
+   "22023",
+   "22024",
+   "22025",
+   "22026",
+   "22027",
+   "2202E",
+   "2202G",
+   "2202H",
+   "22030",
+   "22031",
+   "22032",
+   "22033",
+   "22034",
+   "22035",
+   "22036",
+   "22037",
+   "22038",
+   "22039",
+   "2203A",
+   "2203B",
+   "2203C",
+   "2203D",
+   "2203E",
+   "2203F",
+   "2203G",
+   "22P01",
+   "22P02",
+   "22P03",
+   "22P04",
+   "22P05",
+   "22P06",
+   "23000",
+   "23001",
+   "23502",
+   "23503",
+   "23505",
+   "23514",
+   "23P01",
+   "24000",
+   "25000",
+   "25001",
+   "25002",
+   "25003",
+   "25004",
+   "25005",
+   "25006",
+   "25007",
+   "25008",
+   "25P01",
+   "25P02",
+   "25P03",
+   "25P04",
+   "26000",
+   "27000",
+   "28000",
+   "28P01",
+   "2B000",
+   "2BP01",
+   "2D000",
+   "2F000",
+   "2F002",
+   "2F003",
+   "2F004",
+   "2F005",
+   "34000",
+   "38000",
+   "38001",
+   "38002",
+   "38003",
+   "38004",
+   "39000",
+   "39001",
+   "39004",
+   "39P01",
+   "39P02",
+   "39P03",
+   "3B000",
+   "3B001",
+   "3D000",
+   "3F000",
+   "40000",
+   "40001",
+   "40002",
+   "40003",
+   "40P01",
+   "42000",
+   "42501",
+   "42601",
+   "42602",
+   "42611",
+   "42622",
+   "42701",
+   "42702",
+   "42703",
+   "42704",
+   "42710",
+   "42712",
+   "42723",
+   "42725",
+   "42803",
+   "42804",
+   "42809",
+   "42830",
+   "42846",
+   "42883",
+   "428C9",
+   "42939",
+   "42P01",
+   "42P02",
+   "42P03",
+   "42P04",
+   "42P05",
+   "42P06",
+   "42P07",
+   "42P08",
+   "42P09",
+   "42P10",
+   "42P11",
+   "42P12",
+   "42P13",
+   "42P14",
+   "42P15",
+   "42P16",
+   "42P17",
+   "42P18",
+   "42P19",
+   "42P20",
+   "42P21",
+   "42P22",
+   "44000",
+   "53000",
+   "53100",
+   "53200",
+   "53300",
+   "53400",
+   "54000",
+   "54001",
+   "54011",
+   "54023",
+   "55000",
+   "55006",
+   "55P02",
+   "55P03",
+   "55P04",
+   "57000",
+   "57014",
+   "57P01",
+   "57P02",
+   "57P03",
+   "57P04",
+   "57P05",
+   "58000",
+   "58030",
+   "58P01",
+   "58P02",
+   "58P03",
+   "F0000",
+   "F0001",
+   "HV000",
+   "HV001",
+   "HV002",
+   "HV004",
+   "HV005",
+   "HV006",
+   "HV007",
+   "HV008",
+   "HV009",
+   "HV00A",
+   "HV00B",
+   "HV00C",
+   "HV00D",
+   "HV00J",
+   "HV00K",
+   "HV00L",
+   "HV00M",
+   "HV00N",
+   "HV00P",
+   "HV00Q",
+   "HV00R",
+   "HV010",
+   "HV014",
+   "HV021",
+   "HV024",
+   "HV090",
+   "HV091",
+   "P0000",
+   "P0001",
+   "P0002",
+   "P0003",
+   "P0004",
+   "XX000",
+   "XX001",
+   "XX002"
+  ],
+  "n_V": 262,
+  "A": [
+   "00000",
+   "01000",
+   "01003",
+   "01004",
+   "01006",
+   "01007",
+   "01008",
+   "0100C",
+   "01P01",
+   "02000",
+   "02001",
+   "03000",
+   "08000",
+   "08001",
+   "08003",
+   "08004",
+   "08006",
+   "08007",
+   "08P01",
+   "09000",
+   "0A000",
+   "0B000",
+   "0F000",
+   "0F001",
+   "0L000",
+   "0LP01",
+   "0P000",
+   "0Z000",
+   "0Z002",
+   "10608",
+   "20000",
+   "21000",
+   "22000",
+   "22001",
+   "22002",
+   "22003",
+   "22004",
+   "22005",
+   "22007",
+   "22008",
+   "22009",
+   "2200B",
+   "2200C",
+   "2200D",
+   "2200F",
+   "2200G",
+   "2200H",
+   "2200L",
+   "2200M",
+   "2200N",
+   "2200S",
+   "2200T",
+   "22010",
+   "22011",
+   "22012",
+   "22013",
+   "22014",
+   "22015",
+   "22016",
+   "22018",
+   "22019",
+   "2201B",
+   "2201E",
+   "2201F",
+   "2201G",
+   "2201W",
+   "2201X",
+   "22021",
+   "22022",
+   "22023",
+   "22024",
+   "22025",
+   "22026",
+   "22027",
+   "2202E",
+   "2202G",
+   "2202H",
+   "22030",
+   "22031",
+   "22032",
+   "22033",
+   "22034",
+   "22035",
+   "22036",
+   "22037",
+   "22038",
+   "22039",
+   "2203A",
+   "2203B",
+   "2203C",
+   "2203D",
+   "2203E",
+   "2203F",
+   "2203G",
+   "22P01",
+   "22P02",
+   "22P03",
+   "22P04",
+   "22P05",
+   "22P06",
+   "23000",
+   "23001",
+   "23502",
+   "23503",
+   "23505",
+   "23514",
+   "23P01",
+   "24000",
+   "25000",
+   "25001",
+   "25002",
+   "25003",
+   "25004",
+   "25005",
+   "25006",
+   "25007",
+   "25008",
+   "25P01",
+   "25P02",
+   "25P03",
+   "25P04",
+   "26000",
+   "27000",
+   "28000",
+   "28P01",
+   "2B000",
+   "2BP01",
+   "2D000",
+   "2F000",
+   "2F002",
+   "2F003",
+   "2F004",
+   "2F005",
+   "34000",
+   "38000",
+   "38001",
+   "38002",
+   "38003",
+   "38004",
+   "39000",
+   "39001",
+   "39004",
+   "39P01",
+   "39P02",
+   "39P03",
+   "3B000",
+   "3B001",
+   "3D000",
+   "3F000",
+   "40000",
+   "40001",
+   "40002",
+   "40003",
+   "40P01",
+   "42000",
+   "42501",
+   "42601",
+   "42602",
+   "42611",
+   "42622",
+   "42701",
+   "42702",
+   "42703",
+   "42704",
+   "42710",
+   "42712",
+   "42723",
+   "42725",
+   "42803",
+   "42804",
+   "42809",
+   "42830",
+   "42846",
+   "42883",
+   "428C9",
+   "42939",
+   "42P01",
+   "42P02",
+   "42P03",
+   "42P04",
+   "42P05",
+   "42P06",
+   "42P07",
+   "42P08",
+   "42P09",
+   "42P10",
+   "42P11",
+   "42P12",
+   "42P13",
+   "42P14",
+   "42P15",
+   "42P16",
+   "42P17",
+   "42P18",
+   "42P19",
+   "42P20",
+   "42P21",
+   "42P22",
+   "44000",
+   "53000",
+   "53100",
+   "53200",
+   "53300",
+   "53400",
+   "54000",
+   "54001",
+   "54011",
+   "54023",
+   "55000",
+   "55006",
+   "55P02",
+   "55P03",
+   "55P04",
+   "57000",
+   "57014",
+   "57P01",
+   "57P02",
+   "57P03",
+   "57P04",
+   "57P05",
+   "58000",
+   "58030",
+   "58P01",
+   "58P02",
+   "58P03",
+   "F0000",
+   "F0001",
+   "HV000",
+   "HV001",
+   "HV002",
+   "HV004",
+   "HV005",
+   "HV006",
+   "HV007",
+   "HV008",
+   "HV009",
+   "HV00A",
+   "HV00B",
+   "HV00C",
+   "HV00D",
+   "HV00J",
+   "HV00K",
+   "HV00L",
+   "HV00M",
+   "HV00N",
+   "HV00P",
+   "HV00Q",
+   "HV00R",
+   "HV010",
+   "HV014",
+   "HV021",
+   "HV024",
+   "HV090",
+   "HV091",
+   "P0000",
+   "P0001",
+   "P0002",
+   "P0003",
+   "P0004",
+   "XX000",
+   "XX001",
+   "XX002"
+  ],
+  "n_A": 262,
+  "n_A_rows": 262,
+  "duplicate_codes": {
+   "22008": [
+    {
+     "sqlstate": "22008",
+     "line": 166,
+     "section": "Class 22 - Data Exception",
+     "severity": "E",
+     "macro": "ERRCODE_DATETIME_FIELD_OVERFLOW",
+     "condition": "datetime_field_overflow",
+     "nfields": 4
+    },
+    {
+     "sqlstate": "22008",
+     "line": 167,
+     "section": "Class 22 - Data Exception",
+     "severity": "E",
+     "macro": "ERRCODE_DATETIME_VALUE_OUT_OF_RANGE",
+     "condition": null,
+     "nfields": 3
+    }
+   ],
+   "2202E": [
+    {
+     "sqlstate": "2202E",
+     "line": 162,
+     "section": "Class 22 - Data Exception",
+     "severity": "E",
+     "macro": "ERRCODE_ARRAY_ELEMENT_ERROR",
+     "condition": null,
+     "nfields": 3
+    },
+    {
+     "sqlstate": "2202E",
+     "line": 164,
+     "section": "Class 22 - Data Exception",
+     "severity": "E",
+     "macro": "ERRCODE_ARRAY_SUBSCRIPT_ERROR",
+     "condition": "array_subscript_error",
+     "nfields": 4
+    }
+   ],
+   "26000": [
+    {
+     "sqlstate": "26000",
+     "line": 266,
+     "section": "Class 26 - Invalid SQL Statement Name",
+     "severity": "E",
+     "macro": "ERRCODE_INVALID_SQL_STATEMENT_NAME",
+     "condition": "invalid_sql_statement_name",
+     "nfields": 4
+    },
+    {
+     "sqlstate": "26000",
+     "line": 372,
+     "section": "Class 42 - Syntax Error or Access Rule Violation",
+     "severity": "E",
+     "macro": "ERRCODE_UNDEFINED_PSTATEMENT",
+     "condition": null,
+     "nfields": 3
+    }
+   ],
+   "34000": [
+    {
+     "sqlstate": "34000",
+     "line": 296,
+     "section": "Class 34 - Invalid Cursor Name",
+     "severity": "E",
+     "macro": "ERRCODE_INVALID_CURSOR_NAME",
+     "condition": "invalid_cursor_name",
+     "nfields": 4
+    },
+    {
+     "sqlstate": "34000",
+     "line": 369,
+     "section": "Class 42 - Syntax Error or Access Rule Violation",
+     "severity": "E",
+     "macro": "ERRCODE_UNDEFINED_CURSOR",
+     "condition": null,
+     "nfields": 3
+    }
+   ],
+   "3D000": [
+    {
+     "sqlstate": "3D000",
+     "line": 322,
+     "section": "Class 3D - Invalid Catalog Name",
+     "severity": "E",
+     "macro": "ERRCODE_INVALID_CATALOG_NAME",
+     "condition": "invalid_catalog_name",
+     "nfields": 4
+    },
+    {
+     "sqlstate": "3D000",
+     "line": 370,
+     "section": "Class 42 - Syntax Error or Access Rule Violation",
+     "severity": "E",
+     "macro": "ERRCODE_UNDEFINED_DATABASE",
+     "condition": null,
+     "nfields": 3
+    }
+   ],
+   "3F000": [
+    {
+     "sqlstate": "3F000",
+     "line": 326,
+     "section": "Class 3F - Invalid Schema Name",
+     "severity": "E",
+     "macro": "ERRCODE_INVALID_SCHEMA_NAME",
+     "condition": "invalid_schema_name",
+     "nfields": 4
+    },
+    {
+     "sqlstate": "3F000",
+     "line": 373,
+     "section": "Class 42 - Syntax Error or Access Rule Violation",
+     "severity": "E",
+     "macro": "ERRCODE_UNDEFINED_SCHEMA",
+     "condition": null,
+     "nfields": 3
+    }
+   ]
+  },
+  "n_duplicate_codes": 6,
+  "classes": [
+   "00",
+   "01",
+   "02",
+   "03",
+   "08",
+   "09",
+   "0A",
+   "0B",
+   "0F",
+   "0L",
+   "0P",
+   "0Z",
+   "10",
+   "20",
+   "21",
+   "22",
+   "23",
+   "24",
+   "25",
+   "26",
+   "27",
+   "28",
+   "2B",
+   "2D",
+   "2F",
+   "34",
+   "38",
+   "39",
+   "3B",
+   "3D",
+   "3F",
+   "40",
+   "42",
+   "44",
+   "53",
+   "54",
+   "55",
+   "57",
+   "58",
+   "F0",
+   "HV",
+   "P0",
+   "XX"
+  ],
+  "n_classes": 43,
+  "non_code_lines": 234,
+  "severity_by_code": {
+   "00000": [
+    "S"
+   ],
+   "01000": [
+    "W"
+   ],
+   "0100C": [
+    "W"
+   ],
+   "01008": [
+    "W"
+   ],
+   "01003": [
+    "W"
+   ],
+   "01007": [
+    "W"
+   ],
+   "01006": [
+    "W"
+   ],
+   "01004": [
+    "W"
+   ],
+   "01P01": [
+    "W"
+   ],
+   "02000": [
+    "W"
+   ],
+   "02001": [
+    "W"
+   ],
+   "03000": [
+    "E"
+   ],
+   "08000": [
+    "E"
+   ],
+   "08003": [
+    "E"
+   ],
+   "08006": [
+    "E"
+   ],
+   "08001": [
+    "E"
+   ],
+   "08004": [
+    "E"
+   ],
+   "08007": [
+    "E"
+   ],
+   "08P01": [
+    "E"
+   ],
+   "09000": [
+    "E"
+   ],
+   "0A000": [
+    "E"
+   ],
+   "0B000": [
+    "E"
+   ],
+   "0F000": [
+    "E"
+   ],
+   "0F001": [
+    "E"
+   ],
+   "0L000": [
+    "E"
+   ],
+   "0LP01": [
+    "E"
+   ],
+   "0P000": [
+    "E"
+   ],
+   "0Z000": [
+    "E"
+   ],
+   "0Z002": [
+    "E"
+   ],
+   "10608": [
+    "E"
+   ],
+   "20000": [
+    "E"
+   ],
+   "21000": [
+    "E"
+   ],
+   "22000": [
+    "E"
+   ],
+   "2202E": [
+    "E"
+   ],
+   "22021": [
+    "E"
+   ],
+   "22008": [
+    "E"
+   ],
+   "22012": [
+    "E"
+   ],
+   "22005": [
+    "E"
+   ],
+   "2200B": [
+    "E"
+   ],
+   "22022": [
+    "E"
+   ],
+   "22015": [
+    "E"
+   ],
+   "2201E": [
+    "E"
+   ],
+   "22014": [
+    "E"
+   ],
+   "22016": [
+    "E"
+   ],
+   "2201F": [
+    "E"
+   ],
+   "2201G": [
+    "E"
+   ],
+   "22018": [
+    "E"
+   ],
+   "22007": [
+    "E"
+   ],
+   "22019": [
+    "E"
+   ],
+   "2200D": [
+    "E"
+   ],
+   "22025": [
+    "E"
+   ],
+   "22P06": [
+    "E"
+   ],
+   "22010": [
+    "E"
+   ],
+   "22023": [
+    "E"
+   ],
+   "22013": [
+    "E"
+   ],
+   "2201B": [
+    "E"
+   ],
+   "2201W": [
+    "E"
+   ],
+   "2201X": [
+    "E"
+   ],
+   "2202H": [
+    "E"
+   ],
+   "2202G": [
+    "E"
+   ],
+   "22009": [
+    "E"
+   ],
+   "2200C": [
+    "E"
+   ],
+   "2200G": [
+    "E"
+   ],
+   "22004": [
+    "E"
+   ],
+   "22002": [
+    "E"
+   ],
+   "22003": [
+    "E"
+   ],
+   "2200H": [
+    "E"
+   ],
+   "22026": [
+    "E"
+   ],
+   "22001": [
+    "E"
+   ],
+   "22011": [
+    "E"
+   ],
+   "22027": [
+    "E"
+   ],
+   "22024": [
+    "E"
+   ],
+   "2200F": [
+    "E"
+   ],
+   "22P01": [
+    "E"
+   ],
+   "22P02": [
+    "E"
+   ],
+   "22P03": [
+    "E"
+   ],
+   "22P04": [
+    "E"
+   ],
+   "22P05": [
+    "E"
+   ],
+   "2200L": [
+    "E"
+   ],
+   "2200M": [
+    "E"
+   ],
+   "2200N": [
+    "E"
+   ],
+   "2200S": [
+    "E"
+   ],
+   "2200T": [
+    "E"
+   ],
+   "22030": [
+    "E"
+   ],
+   "22031": [
+    "E"
+   ],
+   "22032": [
+    "E"
+   ],
+   "22033": [
+    "E"
+   ],
+   "22034": [
+    "E"
+   ],
+   "22035": [
+    "E"
+   ],
+   "22036": [
+    "E"
+   ],
+   "22037": [
+    "E"
+   ],
+   "22038": [
+    "E"
+   ],
+   "22039": [
+    "E"
+   ],
+   "2203A": [
+    "E"
+   ],
+   "2203B": [
+    "E"
+   ],
+   "2203C": [
+    "E"
+   ],
+   "2203D": [
+    "E"
+   ],
+   "2203E": [
+    "E"
+   ],
+   "2203F": [
+    "E"
+   ],
+   "2203G": [
+    "E"
+   ],
+   "23000": [
+    "E"
+   ],
+   "23001": [
+    "E"
+   ],
+   "23502": [
+    "E"
+   ],
+   "23503": [
+    "E"
+   ],
+   "23505": [
+    "E"
+   ],
+   "23514": [
+    "E"
+   ],
+   "23P01": [
+    "E"
+   ],
+   "24000": [
+    "E"
+   ],
+   "25000": [
+    "E"
+   ],
+   "25001": [
+    "E"
+   ],
+   "25002": [
+    "E"
+   ],
+   "25008": [
+    "E"
+   ],
+   "25003": [
+    "E"
+   ],
+   "25004": [
+    "E"
+   ],
+   "25005": [
+    "E"
+   ],
+   "25006": [
+    "E"
+   ],
+   "25007": [
+    "E"
+   ],
+   "25P01": [
+    "E"
+   ],
+   "25P02": [
+    "E"
+   ],
+   "25P03": [
+    "E"
+   ],
+   "25P04": [
+    "E"
+   ],
+   "26000": [
+    "E"
+   ],
+   "27000": [
+    "E"
+   ],
+   "28000": [
+    "E"
+   ],
+   "28P01": [
+    "E"
+   ],
+   "2B000": [
+    "E"
+   ],
+   "2BP01": [
+    "E"
+   ],
+   "2D000": [
+    "E"
+   ],
+   "2F000": [
+    "E"
+   ],
+   "2F005": [
+    "E"
+   ],
+   "2F002": [
+    "E"
+   ],
+   "2F003": [
+    "E"
+   ],
+   "2F004": [
+    "E"
+   ],
+   "34000": [
+    "E"
+   ],
+   "38000": [
+    "E"
+   ],
+   "38001": [
+    "E"
+   ],
+   "38002": [
+    "E"
+   ],
+   "38003": [
+    "E"
+   ],
+   "38004": [
+    "E"
+   ],
+   "39000": [
+    "E"
+   ],
+   "39001": [
+    "E"
+   ],
+   "39004": [
+    "E"
+   ],
+   "39P01": [
+    "E"
+   ],
+   "39P02": [
+    "E"
+   ],
+   "39P03": [
+    "E"
+   ],
+   "3B000": [
+    "E"
+   ],
+   "3B001": [
+    "E"
+   ],
+   "3D000": [
+    "E"
+   ],
+   "3F000": [
+    "E"
+   ],
+   "40000": [
+    "E"
+   ],
+   "40002": [
+    "E"
+   ],
+   "40001": [
+    "E"
+   ],
+   "40003": [
+    "E"
+   ],
+   "40P01": [
+    "E"
+   ],
+   "42000": [
+    "E"
+   ],
+   "42601": [
+    "E"
+   ],
+   "42501": [
+    "E"
+   ],
+   "42846": [
+    "E"
+   ],
+   "42803": [
+    "E"
+   ],
+   "42P20": [
+    "E"
+   ],
+   "42P19": [
+    "E"
+   ],
+   "42830": [
+    "E"
+   ],
+   "42602": [
+    "E"
+   ],
+   "42622": [
+    "E"
+   ],
+   "42939": [
+    "E"
+   ],
+   "42804": [
+    "E"
+   ],
+   "42P18": [
+    "E"
+   ],
+   "42P21": [
+    "E"
+   ],
+   "42P22": [
+    "E"
+   ],
+   "42809": [
+    "E"
+   ],
+   "428C9": [
+    "E"
+   ],
+   "42703": [
+    "E"
+   ],
+   "42883": [
+    "E"
+   ],
+   "42P01": [
+    "E"
+   ],
+   "42P02": [
+    "E"
+   ],
+   "42704": [
+    "E"
+   ],
+   "42701": [
+    "E"
+   ],
+   "42P03": [
+    "E"
+   ],
+   "42P04": [
+    "E"
+   ],
+   "42723": [
+    "E"
+   ],
+   "42P05": [
+    "E"
+   ],
+   "42P06": [
+    "E"
+   ],
+   "42P07": [
+    "E"
+   ],
+   "42712": [
+    "E"
+   ],
+   "42710": [
+    "E"
+   ],
+   "42702": [
+    "E"
+   ],
+   "42725": [
+    "E"
+   ],
+   "42P08": [
+    "E"
+   ],
+   "42P09": [
+    "E"
+   ],
+   "42P10": [
+    "E"
+   ],
+   "42611": [
+    "E"
+   ],
+   "42P11": [
+    "E"
+   ],
+   "42P12": [
+    "E"
+   ],
+   "42P13": [
+    "E"
+   ],
+   "42P14": [
+    "E"
+   ],
+   "42P15": [
+    "E"
+   ],
+   "42P16": [
+    "E"
+   ],
+   "42P17": [
+    "E"
+   ],
+   "44000": [
+    "E"
+   ],
+   "53000": [
+    "E"
+   ],
+   "53100": [
+    "E"
+   ],
+   "53200": [
+    "E"
+   ],
+   "53300": [
+    "E"
+   ],
+   "53400": [
+    "E"
+   ],
+   "54000": [
+    "E"
+   ],
+   "54001": [
+    "E"
+   ],
+   "54011": [
+    "E"
+   ],
+   "54023": [
+    "E"
+   ],
+   "55000": [
+    "E"
+   ],
+   "55006": [
+    "E"
+   ],
+   "55P02": [
+    "E"
+   ],
+   "55P03": [
+    "E"
+   ],
+   "55P04": [
+    "E"
+   ],
+   "57000": [
+    "E"
+   ],
+   "57014": [
+    "E"
+   ],
+   "57P01": [
+    "E"
+   ],
+   "57P02": [
+    "E"
+   ],
+   "57P03": [
+    "E"
+   ],
+   "57P04": [
+    "E"
+   ],
+   "57P05": [
+    "E"
+   ],
+   "58000": [
+    "E"
+   ],
+   "58030": [
+    "E"
+   ],
+   "58P01": [
+    "E"
+   ],
+   "58P02": [
+    "E"
+   ],
+   "58P03": [
+    "E"
+   ],
+   "F0000": [
+    "E"
+   ],
+   "F0001": [
+    "E"
+   ],
+   "HV000": [
+    "E"
+   ],
+   "HV005": [
+    "E"
+   ],
+   "HV002": [
+    "E"
+   ],
+   "HV010": [
+    "E"
+   ],
+   "HV021": [
+    "E"
+   ],
+   "HV024": [
+    "E"
+   ],
+   "HV007": [
+    "E"
+   ],
+   "HV008": [
+    "E"
+   ],
+   "HV004": [
+    "E"
+   ],
+   "HV006": [
+    "E"
+   ],
+   "HV091": [
+    "E"
+   ],
+   "HV00B": [
+    "E"
+   ],
+   "HV00C": [
+    "E"
+   ],
+   "HV00D": [
+    "E"
+   ],
+   "HV090": [
+    "E"
+   ],
+   "HV00A": [
+    "E"
+   ],
+   "HV009": [
+    "E"
+   ],
+   "HV014": [
+    "E"
+   ],
+   "HV001": [
+    "E"
+   ],
+   "HV00P": [
+    "E"
+   ],
+   "HV00J": [
+    "E"
+   ],
+   "HV00K": [
+    "E"
+   ],
+   "HV00Q": [
+    "E"
+   ],
+   "HV00R": [
+    "E"
+   ],
+   "HV00L": [
+    "E"
+   ],
+   "HV00M": [
+    "E"
+   ],
+   "HV00N": [
+    "E"
+   ],
+   "P0000": [
+    "E"
+   ],
+   "P0001": [
+    "E"
+   ],
+   "P0002": [
+    "E"
+   ],
+   "P0003": [
+    "E"
+   ],
+   "P0004": [
+    "E"
+   ],
+   "XX000": [
+    "E"
+   ],
+   "XX001": [
+    "E"
+   ],
+   "XX002": [
+    "E"
+   ]
+  },
+  "rows": [
+   {
+    "sqlstate": "00000",
+    "line": 79,
+    "section": "Class 00 - Successful Completion",
+    "severity": "S",
+    "macro": "ERRCODE_SUCCESSFUL_COMPLETION",
+    "condition": "successful_completion",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "01000",
+    "line": 84,
+    "section": "Class 01 - Warning",
+    "severity": "W",
+    "macro": "ERRCODE_WARNING",
+    "condition": "warning",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "0100C",
+    "line": 85,
+    "section": "Class 01 - Warning",
+    "severity": "W",
+    "macro": "ERRCODE_WARNING_DYNAMIC_RESULT_SETS_RETURNED",
+    "condition": "dynamic_result_sets_returned",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "01008",
+    "line": 86,
+    "section": "Class 01 - Warning",
+    "severity": "W",
+    "macro": "ERRCODE_WARNING_IMPLICIT_ZERO_BIT_PADDING",
+    "condition": "implicit_zero_bit_padding",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "01003",
+    "line": 87,
+    "section": "Class 01 - Warning",
+    "severity": "W",
+    "macro": "ERRCODE_WARNING_NULL_VALUE_ELIMINATED_IN_SET_FUNCTION",
+    "condition": "null_value_eliminated_in_set_function",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "01007",
+    "line": 88,
+    "section": "Class 01 - Warning",
+    "severity": "W",
+    "macro": "ERRCODE_WARNING_PRIVILEGE_NOT_GRANTED",
+    "condition": "privilege_not_granted",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "01006",
+    "line": 89,
+    "section": "Class 01 - Warning",
+    "severity": "W",
+    "macro": "ERRCODE_WARNING_PRIVILEGE_NOT_REVOKED",
+    "condition": "privilege_not_revoked",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "01004",
+    "line": 90,
+    "section": "Class 01 - Warning",
+    "severity": "W",
+    "macro": "ERRCODE_WARNING_STRING_DATA_RIGHT_TRUNCATION",
+    "condition": "string_data_right_truncation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "01P01",
+    "line": 91,
+    "section": "Class 01 - Warning",
+    "severity": "W",
+    "macro": "ERRCODE_WARNING_DEPRECATED_FEATURE",
+    "condition": "deprecated_feature",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "02000",
+    "line": 96,
+    "section": "Class 02 - No Data (this is also a warning class per the SQL standard)",
+    "severity": "W",
+    "macro": "ERRCODE_NO_DATA",
+    "condition": "no_data",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "02001",
+    "line": 97,
+    "section": "Class 02 - No Data (this is also a warning class per the SQL standard)",
+    "severity": "W",
+    "macro": "ERRCODE_NO_ADDITIONAL_DYNAMIC_RESULT_SETS_RETURNED",
+    "condition": "no_additional_dynamic_result_sets_returned",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "03000",
+    "line": 101,
+    "section": "Class 03 - SQL Statement Not Yet Complete",
+    "severity": "E",
+    "macro": "ERRCODE_SQL_STATEMENT_NOT_YET_COMPLETE",
+    "condition": "sql_statement_not_yet_complete",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "08000",
+    "line": 105,
+    "section": "Class 08 - Connection Exception",
+    "severity": "E",
+    "macro": "ERRCODE_CONNECTION_EXCEPTION",
+    "condition": "connection_exception",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "08003",
+    "line": 106,
+    "section": "Class 08 - Connection Exception",
+    "severity": "E",
+    "macro": "ERRCODE_CONNECTION_DOES_NOT_EXIST",
+    "condition": "connection_does_not_exist",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "08006",
+    "line": 107,
+    "section": "Class 08 - Connection Exception",
+    "severity": "E",
+    "macro": "ERRCODE_CONNECTION_FAILURE",
+    "condition": "connection_failure",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "08001",
+    "line": 108,
+    "section": "Class 08 - Connection Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SQLCLIENT_UNABLE_TO_ESTABLISH_SQLCONNECTION",
+    "condition": "sqlclient_unable_to_establish_sqlconnection",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "08004",
+    "line": 109,
+    "section": "Class 08 - Connection Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SQLSERVER_REJECTED_ESTABLISHMENT_OF_SQLCONNECTION",
+    "condition": "sqlserver_rejected_establishment_of_sqlconnection",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "08007",
+    "line": 110,
+    "section": "Class 08 - Connection Exception",
+    "severity": "E",
+    "macro": "ERRCODE_TRANSACTION_RESOLUTION_UNKNOWN",
+    "condition": "transaction_resolution_unknown",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "08P01",
+    "line": 111,
+    "section": "Class 08 - Connection Exception",
+    "severity": "E",
+    "macro": "ERRCODE_PROTOCOL_VIOLATION",
+    "condition": "protocol_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "09000",
+    "line": 115,
+    "section": "Class 09 - Triggered Action Exception",
+    "severity": "E",
+    "macro": "ERRCODE_TRIGGERED_ACTION_EXCEPTION",
+    "condition": "triggered_action_exception",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "0A000",
+    "line": 119,
+    "section": "Class 0A - Feature Not Supported",
+    "severity": "E",
+    "macro": "ERRCODE_FEATURE_NOT_SUPPORTED",
+    "condition": "feature_not_supported",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "0B000",
+    "line": 123,
+    "section": "Class 0B - Invalid Transaction Initiation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_TRANSACTION_INITIATION",
+    "condition": "invalid_transaction_initiation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "0F000",
+    "line": 127,
+    "section": "Class 0F - Locator Exception",
+    "severity": "E",
+    "macro": "ERRCODE_LOCATOR_EXCEPTION",
+    "condition": "locator_exception",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "0F001",
+    "line": 128,
+    "section": "Class 0F - Locator Exception",
+    "severity": "E",
+    "macro": "ERRCODE_L_E_INVALID_SPECIFICATION",
+    "condition": "invalid_locator_specification",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "0L000",
+    "line": 132,
+    "section": "Class 0L - Invalid Grantor",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_GRANTOR",
+    "condition": "invalid_grantor",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "0LP01",
+    "line": 133,
+    "section": "Class 0L - Invalid Grantor",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_GRANT_OPERATION",
+    "condition": "invalid_grant_operation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "0P000",
+    "line": 137,
+    "section": "Class 0P - Invalid Role Specification",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ROLE_SPECIFICATION",
+    "condition": "invalid_role_specification",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "0Z000",
+    "line": 141,
+    "section": "Class 0Z - Diagnostics Exception",
+    "severity": "E",
+    "macro": "ERRCODE_DIAGNOSTICS_EXCEPTION",
+    "condition": "diagnostics_exception",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "0Z002",
+    "line": 142,
+    "section": "Class 0Z - Diagnostics Exception",
+    "severity": "E",
+    "macro": "ERRCODE_STACKED_DIAGNOSTICS_ACCESSED_WITHOUT_ACTIVE_HANDLER",
+    "condition": "stacked_diagnostics_accessed_without_active_handler",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "10608",
+    "line": 148,
+    "section": "Class 10 - XQuery Error",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ARGUMENT_FOR_XQUERY",
+    "condition": "invalid_argument_for_xquery",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "20000",
+    "line": 152,
+    "section": "Class 20 - Case Not Found",
+    "severity": "E",
+    "macro": "ERRCODE_CASE_NOT_FOUND",
+    "condition": "case_not_found",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "21000",
+    "line": 157,
+    "section": "Class 21 - Cardinality Violation",
+    "severity": "E",
+    "macro": "ERRCODE_CARDINALITY_VIOLATION",
+    "condition": "cardinality_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22000",
+    "line": 161,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_DATA_EXCEPTION",
+    "condition": "data_exception",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2202E",
+    "line": 162,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_ARRAY_ELEMENT_ERROR",
+    "condition": null,
+    "nfields": 3
+   },
+   {
+    "sqlstate": "2202E",
+    "line": 164,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_ARRAY_SUBSCRIPT_ERROR",
+    "condition": "array_subscript_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22021",
+    "line": 165,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_CHARACTER_NOT_IN_REPERTOIRE",
+    "condition": "character_not_in_repertoire",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22008",
+    "line": 166,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_DATETIME_FIELD_OVERFLOW",
+    "condition": "datetime_field_overflow",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22008",
+    "line": 167,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_DATETIME_VALUE_OUT_OF_RANGE",
+    "condition": null,
+    "nfields": 3
+   },
+   {
+    "sqlstate": "22012",
+    "line": 168,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_DIVISION_BY_ZERO",
+    "condition": "division_by_zero",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22005",
+    "line": 169,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_ERROR_IN_ASSIGNMENT",
+    "condition": "error_in_assignment",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2200B",
+    "line": 170,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_ESCAPE_CHARACTER_CONFLICT",
+    "condition": "escape_character_conflict",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22022",
+    "line": 171,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INDICATOR_OVERFLOW",
+    "condition": "indicator_overflow",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22015",
+    "line": 172,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INTERVAL_FIELD_OVERFLOW",
+    "condition": "interval_field_overflow",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2201E",
+    "line": 173,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ARGUMENT_FOR_LOG",
+    "condition": "invalid_argument_for_logarithm",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22014",
+    "line": 174,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ARGUMENT_FOR_NTILE",
+    "condition": "invalid_argument_for_ntile_function",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22016",
+    "line": 175,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ARGUMENT_FOR_NTH_VALUE",
+    "condition": "invalid_argument_for_nth_value_function",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2201F",
+    "line": 176,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ARGUMENT_FOR_POWER_FUNCTION",
+    "condition": "invalid_argument_for_power_function",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2201G",
+    "line": 177,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ARGUMENT_FOR_WIDTH_BUCKET_FUNCTION",
+    "condition": "invalid_argument_for_width_bucket_function",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22018",
+    "line": 178,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_CHARACTER_VALUE_FOR_CAST",
+    "condition": "invalid_character_value_for_cast",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22007",
+    "line": 179,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_DATETIME_FORMAT",
+    "condition": "invalid_datetime_format",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22019",
+    "line": 180,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ESCAPE_CHARACTER",
+    "condition": "invalid_escape_character",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2200D",
+    "line": 181,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ESCAPE_OCTET",
+    "condition": "invalid_escape_octet",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22025",
+    "line": 182,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ESCAPE_SEQUENCE",
+    "condition": "invalid_escape_sequence",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22P06",
+    "line": 183,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_NONSTANDARD_USE_OF_ESCAPE_CHARACTER",
+    "condition": "nonstandard_use_of_escape_character",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22010",
+    "line": 184,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_INDICATOR_PARAMETER_VALUE",
+    "condition": "invalid_indicator_parameter_value",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22023",
+    "line": 185,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_PARAMETER_VALUE",
+    "condition": "invalid_parameter_value",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22013",
+    "line": 186,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_PRECEDING_OR_FOLLOWING_SIZE",
+    "condition": "invalid_preceding_or_following_size",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2201B",
+    "line": 187,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_REGULAR_EXPRESSION",
+    "condition": "invalid_regular_expression",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2201W",
+    "line": 188,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ROW_COUNT_IN_LIMIT_CLAUSE",
+    "condition": "invalid_row_count_in_limit_clause",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2201X",
+    "line": 189,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ROW_COUNT_IN_RESULT_OFFSET_CLAUSE",
+    "condition": "invalid_row_count_in_result_offset_clause",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2202H",
+    "line": 190,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_TABLESAMPLE_ARGUMENT",
+    "condition": "invalid_tablesample_argument",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2202G",
+    "line": 191,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_TABLESAMPLE_REPEAT",
+    "condition": "invalid_tablesample_repeat",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22009",
+    "line": 192,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_TIME_ZONE_DISPLACEMENT_VALUE",
+    "condition": "invalid_time_zone_displacement_value",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2200C",
+    "line": 193,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_USE_OF_ESCAPE_CHARACTER",
+    "condition": "invalid_use_of_escape_character",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2200G",
+    "line": 194,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_MOST_SPECIFIC_TYPE_MISMATCH",
+    "condition": "most_specific_type_mismatch",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22004",
+    "line": 195,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_NULL_VALUE_NOT_ALLOWED",
+    "condition": "null_value_not_allowed",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22002",
+    "line": 196,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_NULL_VALUE_NO_INDICATOR_PARAMETER",
+    "condition": "null_value_no_indicator_parameter",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22003",
+    "line": 197,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE",
+    "condition": "numeric_value_out_of_range",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2200H",
+    "line": 198,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SEQUENCE_GENERATOR_LIMIT_EXCEEDED",
+    "condition": "sequence_generator_limit_exceeded",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22026",
+    "line": 199,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_STRING_DATA_LENGTH_MISMATCH",
+    "condition": "string_data_length_mismatch",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22001",
+    "line": 200,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_STRING_DATA_RIGHT_TRUNCATION",
+    "condition": "string_data_right_truncation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22011",
+    "line": 201,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SUBSTRING_ERROR",
+    "condition": "substring_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22027",
+    "line": 202,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_TRIM_ERROR",
+    "condition": "trim_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22024",
+    "line": 203,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_UNTERMINATED_C_STRING",
+    "condition": "unterminated_c_string",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2200F",
+    "line": 204,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_ZERO_LENGTH_CHARACTER_STRING",
+    "condition": "zero_length_character_string",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22P01",
+    "line": 205,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_FLOATING_POINT_EXCEPTION",
+    "condition": "floating_point_exception",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22P02",
+    "line": 206,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_TEXT_REPRESENTATION",
+    "condition": "invalid_text_representation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22P03",
+    "line": 207,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_BINARY_REPRESENTATION",
+    "condition": "invalid_binary_representation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22P04",
+    "line": 208,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_BAD_COPY_FILE_FORMAT",
+    "condition": "bad_copy_file_format",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22P05",
+    "line": 209,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_UNTRANSLATABLE_CHARACTER",
+    "condition": "untranslatable_character",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2200L",
+    "line": 210,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_NOT_AN_XML_DOCUMENT",
+    "condition": "not_an_xml_document",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2200M",
+    "line": 211,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_XML_DOCUMENT",
+    "condition": "invalid_xml_document",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2200N",
+    "line": 212,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_XML_CONTENT",
+    "condition": "invalid_xml_content",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2200S",
+    "line": 213,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_XML_COMMENT",
+    "condition": "invalid_xml_comment",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2200T",
+    "line": 214,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_XML_PROCESSING_INSTRUCTION",
+    "condition": "invalid_xml_processing_instruction",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22030",
+    "line": 215,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_DUPLICATE_JSON_OBJECT_KEY_VALUE",
+    "condition": "duplicate_json_object_key_value",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22031",
+    "line": 216,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_ARGUMENT_FOR_SQL_JSON_DATETIME_FUNCTION",
+    "condition": "invalid_argument_for_sql_json_datetime_function",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22032",
+    "line": 217,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_JSON_TEXT",
+    "condition": "invalid_json_text",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22033",
+    "line": 218,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_SQL_JSON_SUBSCRIPT",
+    "condition": "invalid_sql_json_subscript",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22034",
+    "line": 219,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_MORE_THAN_ONE_SQL_JSON_ITEM",
+    "condition": "more_than_one_sql_json_item",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22035",
+    "line": 220,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_NO_SQL_JSON_ITEM",
+    "condition": "no_sql_json_item",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22036",
+    "line": 221,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_NON_NUMERIC_SQL_JSON_ITEM",
+    "condition": "non_numeric_sql_json_item",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22037",
+    "line": 222,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_NON_UNIQUE_KEYS_IN_A_JSON_OBJECT",
+    "condition": "non_unique_keys_in_a_json_object",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22038",
+    "line": 223,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SINGLETON_SQL_JSON_ITEM_REQUIRED",
+    "condition": "singleton_sql_json_item_required",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "22039",
+    "line": 224,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SQL_JSON_ARRAY_NOT_FOUND",
+    "condition": "sql_json_array_not_found",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2203A",
+    "line": 225,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SQL_JSON_MEMBER_NOT_FOUND",
+    "condition": "sql_json_member_not_found",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2203B",
+    "line": 226,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SQL_JSON_NUMBER_NOT_FOUND",
+    "condition": "sql_json_number_not_found",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2203C",
+    "line": 227,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SQL_JSON_OBJECT_NOT_FOUND",
+    "condition": "sql_json_object_not_found",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2203D",
+    "line": 228,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_TOO_MANY_JSON_ARRAY_ELEMENTS",
+    "condition": "too_many_json_array_elements",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2203E",
+    "line": 229,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_TOO_MANY_JSON_OBJECT_MEMBERS",
+    "condition": "too_many_json_object_members",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2203F",
+    "line": 230,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SQL_JSON_SCALAR_REQUIRED",
+    "condition": "sql_json_scalar_required",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2203G",
+    "line": 231,
+    "section": "Class 22 - Data Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SQL_JSON_ITEM_CANNOT_BE_CAST_TO_TARGET_TYPE",
+    "condition": "sql_json_item_cannot_be_cast_to_target_type",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "23000",
+    "line": 235,
+    "section": "Class 23 - Integrity Constraint Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INTEGRITY_CONSTRAINT_VIOLATION",
+    "condition": "integrity_constraint_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "23001",
+    "line": 236,
+    "section": "Class 23 - Integrity Constraint Violation",
+    "severity": "E",
+    "macro": "ERRCODE_RESTRICT_VIOLATION",
+    "condition": "restrict_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "23502",
+    "line": 237,
+    "section": "Class 23 - Integrity Constraint Violation",
+    "severity": "E",
+    "macro": "ERRCODE_NOT_NULL_VIOLATION",
+    "condition": "not_null_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "23503",
+    "line": 238,
+    "section": "Class 23 - Integrity Constraint Violation",
+    "severity": "E",
+    "macro": "ERRCODE_FOREIGN_KEY_VIOLATION",
+    "condition": "foreign_key_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "23505",
+    "line": 239,
+    "section": "Class 23 - Integrity Constraint Violation",
+    "severity": "E",
+    "macro": "ERRCODE_UNIQUE_VIOLATION",
+    "condition": "unique_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "23514",
+    "line": 240,
+    "section": "Class 23 - Integrity Constraint Violation",
+    "severity": "E",
+    "macro": "ERRCODE_CHECK_VIOLATION",
+    "condition": "check_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "23P01",
+    "line": 241,
+    "section": "Class 23 - Integrity Constraint Violation",
+    "severity": "E",
+    "macro": "ERRCODE_EXCLUSION_VIOLATION",
+    "condition": "exclusion_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "24000",
+    "line": 245,
+    "section": "Class 24 - Invalid Cursor State",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_CURSOR_STATE",
+    "condition": "invalid_cursor_state",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25000",
+    "line": 249,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_TRANSACTION_STATE",
+    "condition": "invalid_transaction_state",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25001",
+    "line": 250,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_ACTIVE_SQL_TRANSACTION",
+    "condition": "active_sql_transaction",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25002",
+    "line": 251,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_BRANCH_TRANSACTION_ALREADY_ACTIVE",
+    "condition": "branch_transaction_already_active",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25008",
+    "line": 252,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_HELD_CURSOR_REQUIRES_SAME_ISOLATION_LEVEL",
+    "condition": "held_cursor_requires_same_isolation_level",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25003",
+    "line": 253,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_INAPPROPRIATE_ACCESS_MODE_FOR_BRANCH_TRANSACTION",
+    "condition": "inappropriate_access_mode_for_branch_transaction",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25004",
+    "line": 254,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_INAPPROPRIATE_ISOLATION_LEVEL_FOR_BRANCH_TRANSACTION",
+    "condition": "inappropriate_isolation_level_for_branch_transaction",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25005",
+    "line": 255,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_NO_ACTIVE_SQL_TRANSACTION_FOR_BRANCH_TRANSACTION",
+    "condition": "no_active_sql_transaction_for_branch_transaction",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25006",
+    "line": 256,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_READ_ONLY_SQL_TRANSACTION",
+    "condition": "read_only_sql_transaction",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25007",
+    "line": 257,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_SCHEMA_AND_DATA_STATEMENT_MIXING_NOT_SUPPORTED",
+    "condition": "schema_and_data_statement_mixing_not_supported",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25P01",
+    "line": 258,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_NO_ACTIVE_SQL_TRANSACTION",
+    "condition": "no_active_sql_transaction",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25P02",
+    "line": 259,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_IN_FAILED_SQL_TRANSACTION",
+    "condition": "in_failed_sql_transaction",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25P03",
+    "line": 260,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_IDLE_IN_TRANSACTION_SESSION_TIMEOUT",
+    "condition": "idle_in_transaction_session_timeout",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "25P04",
+    "line": 261,
+    "section": "Class 25 - Invalid Transaction State",
+    "severity": "E",
+    "macro": "ERRCODE_TRANSACTION_TIMEOUT",
+    "condition": "transaction_timeout",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "26000",
+    "line": 266,
+    "section": "Class 26 - Invalid SQL Statement Name",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_SQL_STATEMENT_NAME",
+    "condition": "invalid_sql_statement_name",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "27000",
+    "line": 270,
+    "section": "Class 27 - Triggered Data Change Violation",
+    "severity": "E",
+    "macro": "ERRCODE_TRIGGERED_DATA_CHANGE_VIOLATION",
+    "condition": "triggered_data_change_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "28000",
+    "line": 274,
+    "section": "Class 28 - Invalid Authorization Specification",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_AUTHORIZATION_SPECIFICATION",
+    "condition": "invalid_authorization_specification",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "28P01",
+    "line": 275,
+    "section": "Class 28 - Invalid Authorization Specification",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_PASSWORD",
+    "condition": "invalid_password",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2B000",
+    "line": 279,
+    "section": "Class 2B - Dependent Privilege Descriptors Still Exist",
+    "severity": "E",
+    "macro": "ERRCODE_DEPENDENT_PRIVILEGE_DESCRIPTORS_STILL_EXIST",
+    "condition": "dependent_privilege_descriptors_still_exist",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2BP01",
+    "line": 280,
+    "section": "Class 2B - Dependent Privilege Descriptors Still Exist",
+    "severity": "E",
+    "macro": "ERRCODE_DEPENDENT_OBJECTS_STILL_EXIST",
+    "condition": "dependent_objects_still_exist",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2D000",
+    "line": 284,
+    "section": "Class 2D - Invalid Transaction Termination",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_TRANSACTION_TERMINATION",
+    "condition": "invalid_transaction_termination",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2F000",
+    "line": 288,
+    "section": "Class 2F - SQL Routine Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SQL_ROUTINE_EXCEPTION",
+    "condition": "sql_routine_exception",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2F005",
+    "line": 289,
+    "section": "Class 2F - SQL Routine Exception",
+    "severity": "E",
+    "macro": "ERRCODE_S_R_E_FUNCTION_EXECUTED_NO_RETURN_STATEMENT",
+    "condition": "function_executed_no_return_statement",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2F002",
+    "line": 290,
+    "section": "Class 2F - SQL Routine Exception",
+    "severity": "E",
+    "macro": "ERRCODE_S_R_E_MODIFYING_SQL_DATA_NOT_PERMITTED",
+    "condition": "modifying_sql_data_not_permitted",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2F003",
+    "line": 291,
+    "section": "Class 2F - SQL Routine Exception",
+    "severity": "E",
+    "macro": "ERRCODE_S_R_E_PROHIBITED_SQL_STATEMENT_ATTEMPTED",
+    "condition": "prohibited_sql_statement_attempted",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "2F004",
+    "line": 292,
+    "section": "Class 2F - SQL Routine Exception",
+    "severity": "E",
+    "macro": "ERRCODE_S_R_E_READING_SQL_DATA_NOT_PERMITTED",
+    "condition": "reading_sql_data_not_permitted",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "34000",
+    "line": 296,
+    "section": "Class 34 - Invalid Cursor Name",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_CURSOR_NAME",
+    "condition": "invalid_cursor_name",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "38000",
+    "line": 300,
+    "section": "Class 38 - External Routine Exception",
+    "severity": "E",
+    "macro": "ERRCODE_EXTERNAL_ROUTINE_EXCEPTION",
+    "condition": "external_routine_exception",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "38001",
+    "line": 301,
+    "section": "Class 38 - External Routine Exception",
+    "severity": "E",
+    "macro": "ERRCODE_E_R_E_CONTAINING_SQL_NOT_PERMITTED",
+    "condition": "containing_sql_not_permitted",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "38002",
+    "line": 302,
+    "section": "Class 38 - External Routine Exception",
+    "severity": "E",
+    "macro": "ERRCODE_E_R_E_MODIFYING_SQL_DATA_NOT_PERMITTED",
+    "condition": "modifying_sql_data_not_permitted",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "38003",
+    "line": 303,
+    "section": "Class 38 - External Routine Exception",
+    "severity": "E",
+    "macro": "ERRCODE_E_R_E_PROHIBITED_SQL_STATEMENT_ATTEMPTED",
+    "condition": "prohibited_sql_statement_attempted",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "38004",
+    "line": 304,
+    "section": "Class 38 - External Routine Exception",
+    "severity": "E",
+    "macro": "ERRCODE_E_R_E_READING_SQL_DATA_NOT_PERMITTED",
+    "condition": "reading_sql_data_not_permitted",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "39000",
+    "line": 308,
+    "section": "Class 39 - External Routine Invocation Exception",
+    "severity": "E",
+    "macro": "ERRCODE_EXTERNAL_ROUTINE_INVOCATION_EXCEPTION",
+    "condition": "external_routine_invocation_exception",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "39001",
+    "line": 309,
+    "section": "Class 39 - External Routine Invocation Exception",
+    "severity": "E",
+    "macro": "ERRCODE_E_R_I_E_INVALID_SQLSTATE_RETURNED",
+    "condition": "invalid_sqlstate_returned",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "39004",
+    "line": 310,
+    "section": "Class 39 - External Routine Invocation Exception",
+    "severity": "E",
+    "macro": "ERRCODE_E_R_I_E_NULL_VALUE_NOT_ALLOWED",
+    "condition": "null_value_not_allowed",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "39P01",
+    "line": 311,
+    "section": "Class 39 - External Routine Invocation Exception",
+    "severity": "E",
+    "macro": "ERRCODE_E_R_I_E_TRIGGER_PROTOCOL_VIOLATED",
+    "condition": "trigger_protocol_violated",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "39P02",
+    "line": 312,
+    "section": "Class 39 - External Routine Invocation Exception",
+    "severity": "E",
+    "macro": "ERRCODE_E_R_I_E_SRF_PROTOCOL_VIOLATED",
+    "condition": "srf_protocol_violated",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "39P03",
+    "line": 313,
+    "section": "Class 39 - External Routine Invocation Exception",
+    "severity": "E",
+    "macro": "ERRCODE_E_R_I_E_EVENT_TRIGGER_PROTOCOL_VIOLATED",
+    "condition": "event_trigger_protocol_violated",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "3B000",
+    "line": 317,
+    "section": "Class 3B - Savepoint Exception",
+    "severity": "E",
+    "macro": "ERRCODE_SAVEPOINT_EXCEPTION",
+    "condition": "savepoint_exception",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "3B001",
+    "line": 318,
+    "section": "Class 3B - Savepoint Exception",
+    "severity": "E",
+    "macro": "ERRCODE_S_E_INVALID_SPECIFICATION",
+    "condition": "invalid_savepoint_specification",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "3D000",
+    "line": 322,
+    "section": "Class 3D - Invalid Catalog Name",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_CATALOG_NAME",
+    "condition": "invalid_catalog_name",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "3F000",
+    "line": 326,
+    "section": "Class 3F - Invalid Schema Name",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_SCHEMA_NAME",
+    "condition": "invalid_schema_name",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "40000",
+    "line": 330,
+    "section": "Class 40 - Transaction Rollback",
+    "severity": "E",
+    "macro": "ERRCODE_TRANSACTION_ROLLBACK",
+    "condition": "transaction_rollback",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "40002",
+    "line": 331,
+    "section": "Class 40 - Transaction Rollback",
+    "severity": "E",
+    "macro": "ERRCODE_T_R_INTEGRITY_CONSTRAINT_VIOLATION",
+    "condition": "transaction_integrity_constraint_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "40001",
+    "line": 332,
+    "section": "Class 40 - Transaction Rollback",
+    "severity": "E",
+    "macro": "ERRCODE_T_R_SERIALIZATION_FAILURE",
+    "condition": "serialization_failure",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "40003",
+    "line": 333,
+    "section": "Class 40 - Transaction Rollback",
+    "severity": "E",
+    "macro": "ERRCODE_T_R_STATEMENT_COMPLETION_UNKNOWN",
+    "condition": "statement_completion_unknown",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "40P01",
+    "line": 334,
+    "section": "Class 40 - Transaction Rollback",
+    "severity": "E",
+    "macro": "ERRCODE_T_R_DEADLOCK_DETECTED",
+    "condition": "deadlock_detected",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42000",
+    "line": 338,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_SYNTAX_ERROR_OR_ACCESS_RULE_VIOLATION",
+    "condition": "syntax_error_or_access_rule_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42601",
+    "line": 340,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_SYNTAX_ERROR",
+    "condition": "syntax_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42501",
+    "line": 341,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INSUFFICIENT_PRIVILEGE",
+    "condition": "insufficient_privilege",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42846",
+    "line": 342,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_CANNOT_COERCE",
+    "condition": "cannot_coerce",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42803",
+    "line": 343,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_GROUPING_ERROR",
+    "condition": "grouping_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P20",
+    "line": 344,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_WINDOWING_ERROR",
+    "condition": "windowing_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P19",
+    "line": 345,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_RECURSION",
+    "condition": "invalid_recursion",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42830",
+    "line": 346,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_FOREIGN_KEY",
+    "condition": "invalid_foreign_key",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42602",
+    "line": 347,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_NAME",
+    "condition": "invalid_name",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42622",
+    "line": 348,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_NAME_TOO_LONG",
+    "condition": "name_too_long",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42939",
+    "line": 349,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_RESERVED_NAME",
+    "condition": "reserved_name",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42804",
+    "line": 350,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_DATATYPE_MISMATCH",
+    "condition": "datatype_mismatch",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P18",
+    "line": 351,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INDETERMINATE_DATATYPE",
+    "condition": "indeterminate_datatype",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P21",
+    "line": 352,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_COLLATION_MISMATCH",
+    "condition": "collation_mismatch",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P22",
+    "line": 353,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INDETERMINATE_COLLATION",
+    "condition": "indeterminate_collation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42809",
+    "line": 354,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_WRONG_OBJECT_TYPE",
+    "condition": "wrong_object_type",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "428C9",
+    "line": 355,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_GENERATED_ALWAYS",
+    "condition": "generated_always",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42703",
+    "line": 368,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_UNDEFINED_COLUMN",
+    "condition": "undefined_column",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "34000",
+    "line": 369,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_UNDEFINED_CURSOR",
+    "condition": null,
+    "nfields": 3
+   },
+   {
+    "sqlstate": "3D000",
+    "line": 370,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_UNDEFINED_DATABASE",
+    "condition": null,
+    "nfields": 3
+   },
+   {
+    "sqlstate": "42883",
+    "line": 371,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_UNDEFINED_FUNCTION",
+    "condition": "undefined_function",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "26000",
+    "line": 372,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_UNDEFINED_PSTATEMENT",
+    "condition": null,
+    "nfields": 3
+   },
+   {
+    "sqlstate": "3F000",
+    "line": 373,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_UNDEFINED_SCHEMA",
+    "condition": null,
+    "nfields": 3
+   },
+   {
+    "sqlstate": "42P01",
+    "line": 374,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_UNDEFINED_TABLE",
+    "condition": "undefined_table",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P02",
+    "line": 375,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_UNDEFINED_PARAMETER",
+    "condition": "undefined_parameter",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42704",
+    "line": 376,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_UNDEFINED_OBJECT",
+    "condition": "undefined_object",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42701",
+    "line": 377,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_DUPLICATE_COLUMN",
+    "condition": "duplicate_column",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P03",
+    "line": 378,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_DUPLICATE_CURSOR",
+    "condition": "duplicate_cursor",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P04",
+    "line": 379,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_DUPLICATE_DATABASE",
+    "condition": "duplicate_database",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42723",
+    "line": 380,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_DUPLICATE_FUNCTION",
+    "condition": "duplicate_function",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P05",
+    "line": 381,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_DUPLICATE_PSTATEMENT",
+    "condition": "duplicate_prepared_statement",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P06",
+    "line": 382,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_DUPLICATE_SCHEMA",
+    "condition": "duplicate_schema",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P07",
+    "line": 383,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_DUPLICATE_TABLE",
+    "condition": "duplicate_table",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42712",
+    "line": 384,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_DUPLICATE_ALIAS",
+    "condition": "duplicate_alias",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42710",
+    "line": 385,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_DUPLICATE_OBJECT",
+    "condition": "duplicate_object",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42702",
+    "line": 386,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_AMBIGUOUS_COLUMN",
+    "condition": "ambiguous_column",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42725",
+    "line": 387,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_AMBIGUOUS_FUNCTION",
+    "condition": "ambiguous_function",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P08",
+    "line": 388,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_AMBIGUOUS_PARAMETER",
+    "condition": "ambiguous_parameter",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P09",
+    "line": 389,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_AMBIGUOUS_ALIAS",
+    "condition": "ambiguous_alias",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P10",
+    "line": 390,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_COLUMN_REFERENCE",
+    "condition": "invalid_column_reference",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42611",
+    "line": 391,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_COLUMN_DEFINITION",
+    "condition": "invalid_column_definition",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P11",
+    "line": 392,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_CURSOR_DEFINITION",
+    "condition": "invalid_cursor_definition",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P12",
+    "line": 393,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_DATABASE_DEFINITION",
+    "condition": "invalid_database_definition",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P13",
+    "line": 394,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_FUNCTION_DEFINITION",
+    "condition": "invalid_function_definition",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P14",
+    "line": 395,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_PSTATEMENT_DEFINITION",
+    "condition": "invalid_prepared_statement_definition",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P15",
+    "line": 396,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_SCHEMA_DEFINITION",
+    "condition": "invalid_schema_definition",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P16",
+    "line": 397,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_TABLE_DEFINITION",
+    "condition": "invalid_table_definition",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "42P17",
+    "line": 398,
+    "section": "Class 42 - Syntax Error or Access Rule Violation",
+    "severity": "E",
+    "macro": "ERRCODE_INVALID_OBJECT_DEFINITION",
+    "condition": "invalid_object_definition",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "44000",
+    "line": 402,
+    "section": "Class 44 - WITH CHECK OPTION Violation",
+    "severity": "E",
+    "macro": "ERRCODE_WITH_CHECK_OPTION_VIOLATION",
+    "condition": "with_check_option_violation",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "53000",
+    "line": 407,
+    "section": "Class 53 - Insufficient Resources",
+    "severity": "E",
+    "macro": "ERRCODE_INSUFFICIENT_RESOURCES",
+    "condition": "insufficient_resources",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "53100",
+    "line": 408,
+    "section": "Class 53 - Insufficient Resources",
+    "severity": "E",
+    "macro": "ERRCODE_DISK_FULL",
+    "condition": "disk_full",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "53200",
+    "line": 409,
+    "section": "Class 53 - Insufficient Resources",
+    "severity": "E",
+    "macro": "ERRCODE_OUT_OF_MEMORY",
+    "condition": "out_of_memory",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "53300",
+    "line": 410,
+    "section": "Class 53 - Insufficient Resources",
+    "severity": "E",
+    "macro": "ERRCODE_TOO_MANY_CONNECTIONS",
+    "condition": "too_many_connections",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "53400",
+    "line": 411,
+    "section": "Class 53 - Insufficient Resources",
+    "severity": "E",
+    "macro": "ERRCODE_CONFIGURATION_LIMIT_EXCEEDED",
+    "condition": "configuration_limit_exceeded",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "54000",
+    "line": 416,
+    "section": "Class 54 - Program Limit Exceeded",
+    "severity": "E",
+    "macro": "ERRCODE_PROGRAM_LIMIT_EXCEEDED",
+    "condition": "program_limit_exceeded",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "54001",
+    "line": 417,
+    "section": "Class 54 - Program Limit Exceeded",
+    "severity": "E",
+    "macro": "ERRCODE_STATEMENT_TOO_COMPLEX",
+    "condition": "statement_too_complex",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "54011",
+    "line": 418,
+    "section": "Class 54 - Program Limit Exceeded",
+    "severity": "E",
+    "macro": "ERRCODE_TOO_MANY_COLUMNS",
+    "condition": "too_many_columns",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "54023",
+    "line": 419,
+    "section": "Class 54 - Program Limit Exceeded",
+    "severity": "E",
+    "macro": "ERRCODE_TOO_MANY_ARGUMENTS",
+    "condition": "too_many_arguments",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "55000",
+    "line": 424,
+    "section": "Class 55 - Object Not In Prerequisite State",
+    "severity": "E",
+    "macro": "ERRCODE_OBJECT_NOT_IN_PREREQUISITE_STATE",
+    "condition": "object_not_in_prerequisite_state",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "55006",
+    "line": 425,
+    "section": "Class 55 - Object Not In Prerequisite State",
+    "severity": "E",
+    "macro": "ERRCODE_OBJECT_IN_USE",
+    "condition": "object_in_use",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "55P02",
+    "line": 426,
+    "section": "Class 55 - Object Not In Prerequisite State",
+    "severity": "E",
+    "macro": "ERRCODE_CANT_CHANGE_RUNTIME_PARAM",
+    "condition": "cant_change_runtime_param",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "55P03",
+    "line": 427,
+    "section": "Class 55 - Object Not In Prerequisite State",
+    "severity": "E",
+    "macro": "ERRCODE_LOCK_NOT_AVAILABLE",
+    "condition": "lock_not_available",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "55P04",
+    "line": 428,
+    "section": "Class 55 - Object Not In Prerequisite State",
+    "severity": "E",
+    "macro": "ERRCODE_UNSAFE_NEW_ENUM_VALUE_USAGE",
+    "condition": "unsafe_new_enum_value_usage",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "57000",
+    "line": 433,
+    "section": "Class 57 - Operator Intervention",
+    "severity": "E",
+    "macro": "ERRCODE_OPERATOR_INTERVENTION",
+    "condition": "operator_intervention",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "57014",
+    "line": 434,
+    "section": "Class 57 - Operator Intervention",
+    "severity": "E",
+    "macro": "ERRCODE_QUERY_CANCELED",
+    "condition": "query_canceled",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "57P01",
+    "line": 435,
+    "section": "Class 57 - Operator Intervention",
+    "severity": "E",
+    "macro": "ERRCODE_ADMIN_SHUTDOWN",
+    "condition": "admin_shutdown",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "57P02",
+    "line": 436,
+    "section": "Class 57 - Operator Intervention",
+    "severity": "E",
+    "macro": "ERRCODE_CRASH_SHUTDOWN",
+    "condition": "crash_shutdown",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "57P03",
+    "line": 437,
+    "section": "Class 57 - Operator Intervention",
+    "severity": "E",
+    "macro": "ERRCODE_CANNOT_CONNECT_NOW",
+    "condition": "cannot_connect_now",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "57P04",
+    "line": 438,
+    "section": "Class 57 - Operator Intervention",
+    "severity": "E",
+    "macro": "ERRCODE_DATABASE_DROPPED",
+    "condition": "database_dropped",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "57P05",
+    "line": 439,
+    "section": "Class 57 - Operator Intervention",
+    "severity": "E",
+    "macro": "ERRCODE_IDLE_SESSION_TIMEOUT",
+    "condition": "idle_session_timeout",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "58000",
+    "line": 444,
+    "section": "Class 58 - System Error (errors external to PostgreSQL itself)",
+    "severity": "E",
+    "macro": "ERRCODE_SYSTEM_ERROR",
+    "condition": "system_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "58030",
+    "line": 445,
+    "section": "Class 58 - System Error (errors external to PostgreSQL itself)",
+    "severity": "E",
+    "macro": "ERRCODE_IO_ERROR",
+    "condition": "io_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "58P01",
+    "line": 446,
+    "section": "Class 58 - System Error (errors external to PostgreSQL itself)",
+    "severity": "E",
+    "macro": "ERRCODE_UNDEFINED_FILE",
+    "condition": "undefined_file",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "58P02",
+    "line": 447,
+    "section": "Class 58 - System Error (errors external to PostgreSQL itself)",
+    "severity": "E",
+    "macro": "ERRCODE_DUPLICATE_FILE",
+    "condition": "duplicate_file",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "58P03",
+    "line": 448,
+    "section": "Class 58 - System Error (errors external to PostgreSQL itself)",
+    "severity": "E",
+    "macro": "ERRCODE_FILE_NAME_TOO_LONG",
+    "condition": "file_name_too_long",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "F0000",
+    "line": 453,
+    "section": "Class F0 - Configuration File Error",
+    "severity": "E",
+    "macro": "ERRCODE_CONFIG_FILE_ERROR",
+    "condition": "config_file_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "F0001",
+    "line": 454,
+    "section": "Class F0 - Configuration File Error",
+    "severity": "E",
+    "macro": "ERRCODE_LOCK_FILE_EXISTS",
+    "condition": "lock_file_exists",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV000",
+    "line": 459,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_ERROR",
+    "condition": "fdw_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV005",
+    "line": 460,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_COLUMN_NAME_NOT_FOUND",
+    "condition": "fdw_column_name_not_found",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV002",
+    "line": 461,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_DYNAMIC_PARAMETER_VALUE_NEEDED",
+    "condition": "fdw_dynamic_parameter_value_needed",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV010",
+    "line": 462,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_FUNCTION_SEQUENCE_ERROR",
+    "condition": "fdw_function_sequence_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV021",
+    "line": 463,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INCONSISTENT_DESCRIPTOR_INFORMATION",
+    "condition": "fdw_inconsistent_descriptor_information",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV024",
+    "line": 464,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_ATTRIBUTE_VALUE",
+    "condition": "fdw_invalid_attribute_value",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV007",
+    "line": 465,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_COLUMN_NAME",
+    "condition": "fdw_invalid_column_name",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV008",
+    "line": 466,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_COLUMN_NUMBER",
+    "condition": "fdw_invalid_column_number",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV004",
+    "line": 467,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_DATA_TYPE",
+    "condition": "fdw_invalid_data_type",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV006",
+    "line": 468,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_DATA_TYPE_DESCRIPTORS",
+    "condition": "fdw_invalid_data_type_descriptors",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV091",
+    "line": 469,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_DESCRIPTOR_FIELD_IDENTIFIER",
+    "condition": "fdw_invalid_descriptor_field_identifier",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00B",
+    "line": 470,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_HANDLE",
+    "condition": "fdw_invalid_handle",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00C",
+    "line": 471,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_OPTION_INDEX",
+    "condition": "fdw_invalid_option_index",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00D",
+    "line": 472,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_OPTION_NAME",
+    "condition": "fdw_invalid_option_name",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV090",
+    "line": 473,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_STRING_LENGTH_OR_BUFFER_LENGTH",
+    "condition": "fdw_invalid_string_length_or_buffer_length",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00A",
+    "line": 474,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_STRING_FORMAT",
+    "condition": "fdw_invalid_string_format",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV009",
+    "line": 475,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_INVALID_USE_OF_NULL_POINTER",
+    "condition": "fdw_invalid_use_of_null_pointer",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV014",
+    "line": 476,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_TOO_MANY_HANDLES",
+    "condition": "fdw_too_many_handles",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV001",
+    "line": 477,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_OUT_OF_MEMORY",
+    "condition": "fdw_out_of_memory",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00P",
+    "line": 478,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_NO_SCHEMAS",
+    "condition": "fdw_no_schemas",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00J",
+    "line": 479,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_OPTION_NAME_NOT_FOUND",
+    "condition": "fdw_option_name_not_found",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00K",
+    "line": 480,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_REPLY_HANDLE",
+    "condition": "fdw_reply_handle",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00Q",
+    "line": 481,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_SCHEMA_NOT_FOUND",
+    "condition": "fdw_schema_not_found",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00R",
+    "line": 482,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_TABLE_NOT_FOUND",
+    "condition": "fdw_table_not_found",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00L",
+    "line": 483,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_UNABLE_TO_CREATE_EXECUTION",
+    "condition": "fdw_unable_to_create_execution",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00M",
+    "line": 484,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_UNABLE_TO_CREATE_REPLY",
+    "condition": "fdw_unable_to_create_reply",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "HV00N",
+    "line": 485,
+    "section": "Class HV - Foreign Data Wrapper Error (SQL/MED)",
+    "severity": "E",
+    "macro": "ERRCODE_FDW_UNABLE_TO_ESTABLISH_CONNECTION",
+    "condition": "fdw_unable_to_establish_connection",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "P0000",
+    "line": 490,
+    "section": "Class P0 - PL/pgSQL Error",
+    "severity": "E",
+    "macro": "ERRCODE_PLPGSQL_ERROR",
+    "condition": "plpgsql_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "P0001",
+    "line": 491,
+    "section": "Class P0 - PL/pgSQL Error",
+    "severity": "E",
+    "macro": "ERRCODE_RAISE_EXCEPTION",
+    "condition": "raise_exception",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "P0002",
+    "line": 492,
+    "section": "Class P0 - PL/pgSQL Error",
+    "severity": "E",
+    "macro": "ERRCODE_NO_DATA_FOUND",
+    "condition": "no_data_found",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "P0003",
+    "line": 493,
+    "section": "Class P0 - PL/pgSQL Error",
+    "severity": "E",
+    "macro": "ERRCODE_TOO_MANY_ROWS",
+    "condition": "too_many_rows",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "P0004",
+    "line": 494,
+    "section": "Class P0 - PL/pgSQL Error",
+    "severity": "E",
+    "macro": "ERRCODE_ASSERT_FAILURE",
+    "condition": "assert_failure",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "XX000",
+    "line": 499,
+    "section": "Class XX - Internal Error",
+    "severity": "E",
+    "macro": "ERRCODE_INTERNAL_ERROR",
+    "condition": "internal_error",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "XX001",
+    "line": 500,
+    "section": "Class XX - Internal Error",
+    "severity": "E",
+    "macro": "ERRCODE_DATA_CORRUPTED",
+    "condition": "data_corrupted",
+    "nfields": 4
+   },
+   {
+    "sqlstate": "XX002",
+    "line": 501,
+    "section": "Class XX - Internal Error",
+    "severity": "E",
+    "macro": "ERRCODE_INDEX_CORRUPTED",
+    "condition": "index_corrupted",
+    "nfields": 4
+   }
+  ]
+ },
+ "ecpg_face": {
+  "n_E": 20,
+  "E": [
+   "00000",
+   "02000",
+   "07001",
+   "07006",
+   "07009",
+   "08001",
+   "08003",
+   "08007",
+   "21000",
+   "22002",
+   "23505",
+   "25001",
+   "25P01",
+   "26000",
+   "33000",
+   "34000",
+   "42804",
+   "42P03",
+   "YE001",
+   "YE002"
+  ],
+  "hits": {
+   "00000": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5235,
+     "context": "CPG_NO_ERROR</symbol>)</term> <listitem> <para> Indicates no error. (SQLSTATE 00000) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "02000": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5246,
+     "context": "retrieved or processed zero rows, or that you are at the end of the cursor. (SQLSTATE 02000) </para> <para> When processing a curso"
+    }
+   ],
+   "YE001": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5272,
+     "context": "mory is exhausted. The numeric value is defined as <literal>-ENOMEM</literal>. (SQLSTATE YE001) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "YE002": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5285,
+     "context": "you are running incompatible versions of the preprocessor and the library. (SQLSTATE YE002) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5425,
+     "context": "ally happen in an embedded SQL program, so it might point to an internal error.) (SQLSTATE YE002) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5486,
+     "context": "cess a connection that does exist but is not open. (This is an internal error.) (SQLSTATE YE002) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5536,
+     "context": "> An invalid descriptor item was requested. (This is an internal error.) (SQLSTATE YE002) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "07001": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5295,
+     "context": "means that the command specified more host variables than the command expected. (SQLSTATE 07001 or 07002) </para> </listitem> </varlistentry"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5305,
+     "context": "means that the command specified fewer host variables than the command expected. (SQLSTATE 07001 or 07002) </para> </listitem> </varlistentry"
+    }
+   ],
+   "21000": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5316,
+     "context": "re one result row (for example, because the specified variables are not arrays). (SQLSTATE 21000) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5568,
+     "context": "A result of the subquery is not single row (Informix compatibility mode). (SQLSTATE 21000) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5619,
+     "context": "</term> <listitem> <para> A result for the subquery is not single row. (SQLSTATE 21000) </para> </listitem> </varlistentry> <!"
+    }
+   ],
+   "42804": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5328,
+     "context": "int</type>. The library uses <function>strtol()</function> for this conversion. (SQLSTATE 42804) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5342,
+     "context": "nt</type>. The library uses <function>strtoul()</function> for this conversion. (SQLSTATE 42804) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5355,
+     "context": "ype>. The library uses <function>strtod()</function> for this conversion. (SQLSTATE 42804) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5367,
+     "context": "ntains a value that cannot be interpreted as a <type>numeric</type> value. (SQLSTATE 42804) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5379,
+     "context": "ains a value that cannot be interpreted as an <type>interval</type> value. (SQLSTATE 42804) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5391,
+     "context": "contains a value that cannot be interpreted as a <type>date</type> value. (SQLSTATE 42804) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5403,
+     "context": "ains a value that cannot be interpreted as a <type>timestamp</type> value. (SQLSTATE 42804) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5414,
+     "context": "um in the database is neither <literal>'t'</literal> nor <literal>'f'</literal>. (SQLSTATE 42804) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5446,
+     "context": "<para> An ordinary variable was used in a place that requires an array. (SQLSTATE 42804) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5456,
+     "context": "The database returned an ordinary variable in a place that requires array value. (SQLSTATE 42804) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5465,
+     "context": "rm> <listitem> <para> The value could not be inserted into the array. (SQLSTATE 42804) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "22002": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5436,
+     "context": "a> A null value was returned and no null indicator variable was supplied. (SQLSTATE 22002) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "08003": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5476,
+     "context": "<para> The program tried to access a connection that does not exist. (SQLSTATE 08003) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "26000": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5496,
+     "context": "m> <para> The statement you are trying to use has not been prepared. (SQLSTATE 26000) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "23505": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5506,
+     "context": "plicate key error, violation of unique constraint (Informix compatibility mode). (SQLSTATE 23505) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5609,
+     "context": "<listitem> <para> Duplicate key error, violation of unique constraint. (SQLSTATE 23505) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "33000": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5516,
+     "context": "ified was not found. The statement you are trying to use has not been prepared. (SQLSTATE 33000) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "07009": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5525,
+     "context": "m> <listitem> <para> The descriptor index specified was out of range. (SQLSTATE 07009) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "07006": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5547,
+     "context": "e database returned a numeric value and the host variable was not numeric. (SQLSTATE 07006) </para> </listitem> </varlistentry> <v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5558,
+     "context": "e database returned a non-numeric value and the host variable was numeric. (SQLSTATE 07006) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "08007": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5590,
+     "context": "server signaled that we cannot start, commit, or rollback the transaction. (SQLSTATE 08007) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "08001": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5600,
+     "context": "item> <para> The connection attempt to the database did not succeed. (SQLSTATE 08001) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "34000": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5650,
+     "context": "ymbol>)</term> <listitem> <para> An invalid cursor name was specified. (SQLSTATE 34000) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "25001": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5659,
+     "context": "SACTION</symbol>)</term> <listitem> <para> Transaction is in progress. (SQLSTATE 25001) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "25P01": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5668,
+     "context": "/term> <listitem> <para> There is no active (in-progress) transaction. (SQLSTATE 25P01) </para> </listitem> </varlistentry> <v"
+    }
+   ],
+   "42P03": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5677,
+     "context": "mbol>)</term> <listitem> <para> An existing cursor name was specified. (SQLSTATE 42P03) </para> </listitem> </varlistentry> </v"
+    }
+   ]
+  },
+  "E_minus_V": [
+   "07001",
+   "07006",
+   "07009",
+   "33000",
+   "YE001",
+   "YE002"
+  ],
+  "n_E_minus_V": 6,
+  "E_and_V": [
+   "00000",
+   "02000",
+   "08001",
+   "08003",
+   "08007",
+   "21000",
+   "22002",
+   "23505",
+   "25001",
+   "25P01",
+   "26000",
+   "34000",
+   "42804",
+   "42P03"
+  ],
+  "entries": [
+   {
+    "line": 5231,
+    "term": "0 (ECPG_NO_ERROR)",
+    "codes": [
+     "00000"
+    ],
+    "text": "Indicates no error. (SQLSTATE 00000)"
+   },
+   {
+    "line": 5240,
+    "term": "100 (ECPG_NOT_FOUND)",
+    "codes": [
+     "02000"
+    ],
+    "text": "This is a harmless condition indicating that the last command retrieved or processed zero rows, or that you are at the end of the cursor. (SQLSTATE 02000) When processing a cursor in a loop, you could use this code as a way to detect when to abort the loop, like this: while (1) { EXEC SQL FETCH ... ; if (sqlca.sqlcode == ECPG_NOT_FOUND) break; } But WHENEVER NOT FOUND DO BREAK effectively does this internally, so there is usually no advantage in writing this out explicitly."
+   },
+   {
+    "line": 5267,
+    "term": "-12 (ECPG_OUT_OF_MEMORY)",
+    "codes": [
+     "YE001"
+    ],
+    "text": "Indicates that your virtual memory is exhausted. The numeric value is defined as -ENOMEM . (SQLSTATE YE001)"
+   },
+   {
+    "line": 5278,
+    "term": "-200 (ECPG_UNSUPPORTED)",
+    "codes": [
+     "YE002"
+    ],
+    "text": "Indicates the preprocessor has generated something that the library does not know about. Perhaps you are running incompatible versions of the preprocessor and the library. (SQLSTATE YE002)"
+   },
+   {
+    "line": 5290,
+    "term": "-201 (ECPG_TOO_MANY_ARGUMENTS)",
+    "codes": [
+     "07001"
+    ],
+    "text": "This means that the command specified more host variables than the command expected. (SQLSTATE 07001 or 07002)"
+   },
+   {
+    "line": 5300,
+    "term": "-202 (ECPG_TOO_FEW_ARGUMENTS)",
+    "codes": [
+     "07001"
+    ],
+    "text": "This means that the command specified fewer host variables than the command expected. (SQLSTATE 07001 or 07002)"
+   },
+   {
+    "line": 5310,
+    "term": "-203 (ECPG_TOO_MANY_MATCHES)",
+    "codes": [
+     "21000"
+    ],
+    "text": "This means a query has returned multiple rows but the statement was only prepared to store one result row (for example, because the specified variables are not arrays). (SQLSTATE 21000)"
+   },
+   {
+    "line": 5321,
+    "term": "-204 (ECPG_INT_FORMAT)",
+    "codes": [
+     "42804"
+    ],
+    "text": "The host variable is of type int and the datum in the database is of a different type and contains a value that cannot be interpreted as an int . The library uses strtol() for this conversion. (SQLSTATE 42804)"
+   },
+   {
+    "line": 5334,
+    "term": "-205 (ECPG_UINT_FORMAT)",
+    "codes": [
+     "42804"
+    ],
+    "text": "The host variable is of type unsigned int and the datum in the database is of a different type and contains a value that cannot be interpreted as an unsigned int . The library uses strtoul() for this conversion. (SQLSTATE 42804)"
+   },
+   {
+    "line": 5347,
+    "term": "-206 (ECPG_FLOAT_FORMAT)",
+    "codes": [
+     "42804"
+    ],
+    "text": "The host variable is of type float and the datum in the database is of another type and contains a value that cannot be interpreted as a float . The library uses strtod() for this conversion. (SQLSTATE 42804)"
+   },
+   {
+    "line": 5360,
+    "term": "-207 (ECPG_NUMERIC_FORMAT)",
+    "codes": [
+     "42804"
+    ],
+    "text": "The host variable is of type numeric and the datum in the database is of another type and contains a value that cannot be interpreted as a numeric value. (SQLSTATE 42804)"
+   },
+   {
+    "line": 5372,
+    "term": "-208 (ECPG_INTERVAL_FORMAT)",
+    "codes": [
+     "42804"
+    ],
+    "text": "The host variable is of type interval and the datum in the database is of another type and contains a value that cannot be interpreted as an interval value. (SQLSTATE 42804)"
+   },
+   {
+    "line": 5384,
+    "term": "-209 (ECPG_DATE_FORMAT)",
+    "codes": [
+     "42804"
+    ],
+    "text": "The host variable is of type date and the datum in the database is of another type and contains a value that cannot be interpreted as a date value. (SQLSTATE 42804)"
+   },
+   {
+    "line": 5396,
+    "term": "-210 (ECPG_TIMESTAMP_FORMAT)",
+    "codes": [
+     "42804"
+    ],
+    "text": "The host variable is of type timestamp and the datum in the database is of another type and contains a value that cannot be interpreted as a timestamp value. (SQLSTATE 42804)"
+   },
+   {
+    "line": 5408,
+    "term": "-211 (ECPG_CONVERT_BOOL)",
+    "codes": [
+     "42804"
+    ],
+    "text": "This means the host variable is of type bool and the datum in the database is neither 't' nor 'f' . (SQLSTATE 42804)"
+   },
+   {
+    "line": 5419,
+    "term": "-212 (ECPG_EMPTY)",
+    "codes": [
+     "YE002"
+    ],
+    "text": "The statement sent to the PostgreSQL server was empty. (This cannot normally happen in an embedded SQL program, so it might point to an internal error.) (SQLSTATE YE002)"
+   },
+   {
+    "line": 5431,
+    "term": "-213 (ECPG_MISSING_INDICATOR)",
+    "codes": [
+     "22002"
+    ],
+    "text": "A null value was returned and no null indicator variable was supplied. (SQLSTATE 22002)"
+   },
+   {
+    "line": 5441,
+    "term": "-214 (ECPG_NO_ARRAY)",
+    "codes": [
+     "42804"
+    ],
+    "text": "An ordinary variable was used in a place that requires an array. (SQLSTATE 42804)"
+   },
+   {
+    "line": 5451,
+    "term": "-215 (ECPG_DATA_NOT_ARRAY)",
+    "codes": [
+     "42804"
+    ],
+    "text": "The database returned an ordinary variable in a place that requires array value. (SQLSTATE 42804)"
+   },
+   {
+    "line": 5461,
+    "term": "-216 (ECPG_ARRAY_INSERT)",
+    "codes": [
+     "42804"
+    ],
+    "text": "The value could not be inserted into the array. (SQLSTATE 42804)"
+   },
+   {
+    "line": 5471,
+    "term": "-220 (ECPG_NO_CONN)",
+    "codes": [
+     "08003"
+    ],
+    "text": "The program tried to access a connection that does not exist. (SQLSTATE 08003)"
+   },
+   {
+    "line": 5481,
+    "term": "-221 (ECPG_NOT_CONN)",
+    "codes": [
+     "YE002"
+    ],
+    "text": "The program tried to access a connection that does exist but is not open. (This is an internal error.) (SQLSTATE YE002)"
+   },
+   {
+    "line": 5491,
+    "term": "-230 (ECPG_INVALID_STMT)",
+    "codes": [
+     "26000"
+    ],
+    "text": "The statement you are trying to use has not been prepared. (SQLSTATE 26000)"
+   },
+   {
+    "line": 5501,
+    "term": "-239 (ECPG_INFORMIX_DUPLICATE_KEY)",
+    "codes": [
+     "23505"
+    ],
+    "text": "Duplicate key error, violation of unique constraint (Informix compatibility mode). (SQLSTATE 23505)"
+   },
+   {
+    "line": 5511,
+    "term": "-240 (ECPG_UNKNOWN_DESCRIPTOR)",
+    "codes": [
+     "33000"
+    ],
+    "text": "The descriptor specified was not found. The statement you are trying to use has not been prepared. (SQLSTATE 33000)"
+   },
+   {
+    "line": 5521,
+    "term": "-241 (ECPG_INVALID_DESCRIPTOR_INDEX)",
+    "codes": [
+     "07009"
+    ],
+    "text": "The descriptor index specified was out of range. (SQLSTATE 07009)"
+   },
+   {
+    "line": 5531,
+    "term": "-242 (ECPG_UNKNOWN_DESCRIPTOR_ITEM)",
+    "codes": [
+     "YE002"
+    ],
+    "text": "An invalid descriptor item was requested. (This is an internal error.) (SQLSTATE YE002)"
+   },
+   {
+    "line": 5541,
+    "term": "-243 (ECPG_VAR_NOT_NUMERIC)",
+    "codes": [
+     "07006"
+    ],
+    "text": "During the execution of a dynamic statement, the database returned a numeric value and the host variable was not numeric. (SQLSTATE 07006)"
+   },
+   {
+    "line": 5552,
+    "term": "-244 (ECPG_VAR_NOT_CHAR)",
+    "codes": [
+     "07006"
+    ],
+    "text": "During the execution of a dynamic statement, the database returned a non-numeric value and the host variable was numeric. (SQLSTATE 07006)"
+   },
+   {
+    "line": 5563,
+    "term": "-284 (ECPG_INFORMIX_SUBSELECT_NOT_ONE)",
+    "codes": [
+     "21000"
+    ],
+    "text": "A result of the subquery is not single row (Informix compatibility mode). (SQLSTATE 21000)"
+   },
+   {
+    "line": 5584,
+    "term": "-401 (ECPG_TRANS)",
+    "codes": [
+     "08007"
+    ],
+    "text": "The PostgreSQL server signaled that we cannot start, commit, or rollback the transaction. (SQLSTATE 08007)"
+   },
+   {
+    "line": 5595,
+    "term": "-402 (ECPG_CONNECT)",
+    "codes": [
+     "08001"
+    ],
+    "text": "The connection attempt to the database did not succeed. (SQLSTATE 08001)"
+   },
+   {
+    "line": 5605,
+    "term": "-403 (ECPG_DUPLICATE_KEY)",
+    "codes": [
+     "23505"
+    ],
+    "text": "Duplicate key error, violation of unique constraint. (SQLSTATE 23505)"
+   },
+   {
+    "line": 5615,
+    "term": "-404 (ECPG_SUBSELECT_NOT_ONE)",
+    "codes": [
+     "21000"
+    ],
+    "text": "A result for the subquery is not single row. (SQLSTATE 21000)"
+   },
+   {
+    "line": 5646,
+    "term": "-602 (ECPG_WARNING_UNKNOWN_PORTAL)",
+    "codes": [
+     "34000"
+    ],
+    "text": "An invalid cursor name was specified. (SQLSTATE 34000)"
+   },
+   {
+    "line": 5655,
+    "term": "-603 (ECPG_WARNING_IN_TRANSACTION)",
+    "codes": [
+     "25001"
+    ],
+    "text": "Transaction is in progress. (SQLSTATE 25001)"
+   },
+   {
+    "line": 5664,
+    "term": "-604 (ECPG_WARNING_NO_TRANSACTION)",
+    "codes": [
+     "25P01"
+    ],
+    "text": "There is no active (in-progress) transaction. (SQLSTATE 25P01)"
+   },
+   {
+    "line": 5673,
+    "term": "-605 (ECPG_WARNING_PORTAL_EXISTS)",
+    "codes": [
+     "42P03"
+    ],
+    "text": "An existing cursor name was specified. (SQLSTATE 42P03)"
+   }
+  ],
+  "rule_misses_in_ecpg_sgml": {
+   "00000": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5074,
+     "context": "be 0 and <literal>sqlca.sqlstate</literal> will be <literal>\"00000\"</literal>. If a warning or error occu"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5077,
+     "context": "literal>sqlca.sqlstate</literal> will be different from <literal>\"00000\"</literal>. A positive <literal>sq"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5196,
+     "context": "condition. A successful state is indicated by the code <literal>00000</literal>. The <literal>SQLSTATE</lite"
+    }
+   ],
+   "07002": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5295,
+     "context": "host variables than the command expected. (SQLSTATE 07001 or 07002) </para> </listitem> </v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5305,
+     "context": "host variables than the command expected. (SQLSTATE 07001 or 07002) </para> </listitem> </v"
+    }
+   ],
+   "11510": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1364,
+     "context": "end on local circumstances.) <screen> oid=1, dbname=template1 oid=11510, dbname=template0 oid=11511, dbname=pos"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1432,
+     "context": "l circumstances.) <screen> oid=1, datname=template1, size=4324580 oid=11510, datname=template0, size=4243460 oid=11"
+    }
+   ],
+   "11511": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1365,
+     "context": "es.) <screen> oid=1, dbname=template1 oid=11510, dbname=template0 oid=11511, dbname=postgres oid=313780, dbname=tes"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1433,
+     "context": "emplate1, size=4324580 oid=11510, datname=template0, size=4243460 oid=11511, datname=postgres, size=4324580 oid=313"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4786,
+     "context": "(type: 9) tup_updated = 0 (type: 9) tup_deleted = 0 (type: 9) oid = 11511 (type: 1) datname = postgres (type: 1)"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4798,
+     "context": "e = 1663 (type: 1) datconfig = (type: 1) datacl = (type: 1) datid = 11511 (type: 1) datname = postgres (type: 1)"
+    }
+   ],
+   "32767": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8911,
+     "context": "oductname>Informix</productname> limits an integer to the range from -32767 to 32767, while the limits in t"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8912,
+     "context": "x</productname> limits an integer to the range from -32767 to 32767, while the limits in the ECPG implement"
+    }
+   ],
+   "42P01": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5169,
+     "context": "st on line 38 sqlerrd: 0 0 0 0 0 0 sqlwarn: 0 0 0 0 0 0 0 0 sqlstate: 42P01 =============== </screen> </para>"
+    }
+   ],
+   "49E07": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2165,
+     "context": "794</literal>, <literal>+3.44</literal>, <literal>592.49E07</literal> or <literal>-32.84e-4"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8700,
+     "context": "4</literal>, <literal>+3.44</literal>, <literal>592.49E07</literal> or <literal>-32.84e-"
+    }
+   ],
+   "74874": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 9622,
+     "context": "mlisting><![CDATA[ $char c[] = \"abc \"; $short s = 17; $int i = -74874; rsetnull(CCHARTYPE, (char *) c); rset"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 9651,
+     "context": "mlisting><![CDATA[ $char c[] = \"abc \"; $short s = 17; $int i = -74874; risnull(CCHARTYPE, (char *) c); risnu"
+    }
+   ],
+   "ASCII": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1136,
+     "context": "ample, the <type>timestamp</type> value is converted into text (ASCII) form with the <function>PGTYPESt"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8686,
+     "context": "term> <listitem> <para> Convert a value from its ASCII representation into a decimal type. <sy"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8706,
+     "context": "<literal>ECPG_INFORMIX_NUM_UNDERFLOW</literal> is returned. If the ASCII representation could not be par"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8847,
+     "context": "item> <para> Convert a variable of type decimal to its ASCII representation in a C char* str"
+    }
+   ],
+   "BEGIN": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 238,
+     "context": "stgresql://sql.mydomain.com/mydb AS myconnection USER john; EXEC SQL BEGIN DECLARE SECTION; const char *target = \""
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 315,
+     "context": "e connections: <programlisting><![CDATA[ #include <stdio.h> EXEC SQL BEGIN DECLARE SECTION; char dbname[1024];"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 372,
+     "context": "g this option: <programlisting><![CDATA[ #include <stdio.h> EXEC SQL BEGIN DECLARE SECTION; char dbname[128]; char"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 781,
+     "context": "a> <para> This section starts with: <programlisting> EXEC SQL BEGIN DECLARE SECTION; </programlisting>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 842,
+     "context": "is table: * CREATE TABLE test1 (a int, b varchar(50)); */ EXEC SQL BEGIN DECLARE SECTION; int v1; VARCHAR v2; EX"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 861,
+     "context": "using the command <command>FETCH</command>: <programlisting> EXEC SQL BEGIN DECLARE SECTION; int v1; VARCHAR v2; EX"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1034,
+     "context": "mon way to handle character data in C. <programlisting> EXEC SQL BEGIN DECLARE SECTION; char str[50]; EXEC"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1127,
+     "context": "estamp</type> in the declare section: <programlisting> EXEC SQL BEGIN DECLARE SECTION; timestamp ts; EXEC SQL"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1181,
+     "context": "stdlib.h> #include &lt;pgtypes_interval.h> int main(void) { EXEC SQL BEGIN DECLARE SECTION; interval *in; EXEC"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1234,
+     "context": "meric.h> EXEC SQL WHENEVER SQLERROR STOP; int main(void) { EXEC SQL BEGIN DECLARE SECTION; numeric *num;"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1336,
+     "context": "available databases: <programlisting> int main(void) { EXEC SQL BEGIN DECLARE SECTION; int dbid[8]; c"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1395,
+     "context": "the <literal>FETCH</literal> statement. <programlisting> EXEC SQL BEGIN DECLARE SECTION; typedef struct"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1445,
+     "context": "name> variable outside the structure: <programlisting> EXEC SQL BEGIN DECLARE SECTION; typedef struct"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1489,
+     "context": "new types to already existing types. <programlisting> EXEC SQL BEGIN DECLARE SECTION; typedef char mycha"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1507,
+     "context": "program. For example, this won't work: <programlisting> EXEC SQL BEGIN DECLARE SECTION; typedef int start;"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1547,
+     "context": "auto-allocation. </para> <para> <programlisting> EXEC SQL BEGIN DECLARE SECTION; int *intp; c"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1609,
+     "context": "ost variable of type <type>int</type>: <programlisting> EXEC SQL BEGIN DECLARE SECTION; int ii; EXEC SQL END D"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1639,
+     "context": "to be managed separately, for example: <programlisting> EXEC SQL BEGIN DECLARE SECTION; int ii_a[8]; EXEC SQL"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1659,
+     "context": "</para> <para> Note again that <programlisting> EXEC SQL BEGIN DECLARE SECTION; int ii_a[8]; EXEC SQL"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1714,
+     "context": "e type <type>comp_t</type> separately: <programlisting> EXEC SQL BEGIN DECLARE SECTION; int intval; varchar te"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1748,
+     "context": "ed on the <command>FETCH</command> command. <programlisting> EXEC SQL BEGIN DECLARE SECTION; typedef struct { i"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1834,
+     "context": "elect them from the table after that. <programlisting> EXEC SQL BEGIN DECLARE SECTION; varchar a[64];"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1879,
+     "context": "g> After this definition, the following <programlisting> EXEC SQL BEGIN DECLARE SECTION; double a, b, c, d; EXE"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1913,
+     "context": "the retrieval of null values correctly: <programlisting> EXEC SQL BEGIN DECLARE SECTION; VARCHAR val; int val_i"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1966,
+     "context": ">EXECUTE IMMEDIATE</command>. For example: <programlisting> EXEC SQL BEGIN DECLARE SECTION; const char *stmt = \"CR"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1993,
+     "context": "stitute parameters later. For example: <programlisting> EXEC SQL BEGIN DECLARE SECTION; const char *stmt = \"IN"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2020,
+     "context": "an <literal>INTO</literal> clause. <programlisting><![CDATA[ EXEC SQL BEGIN DECLARE SECTION; const char *stmt = \"SE"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2042,
+     "context": "\"/> for more details about the cursor.) <programlisting> EXEC SQL BEGIN DECLARE SECTION; char dbaname[128]; cha"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2085,
+     "context": "ver. See the following example: <programlisting><![CDATA[ EXEC SQL BEGIN DECLARE SECTION; date date1; time"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3800,
+     "context": "used to get the metadata of the result set: <programlisting> EXEC SQL BEGIN DECLARE SECTION; char *sql_stmt = \"SELE"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4007,
+     "context": "es that the variable is an array. E.g.: <programlisting> EXEC SQL BEGIN DECLARE SECTION; int id[5]; EXEC SQL EN"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4397,
+     "context": "a> First, create a prepared statement. <programlisting> EXEC SQL BEGIN DECLARE SECTION; char query[1024] = \"SE"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4494,
+     "context": "he prepared statement. <programlisting> int main(void) { EXEC SQL BEGIN DECLARE SECTION; char query[1024] ="
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4653,
+     "context": "REAK; EXEC SQL WHENEVER SQLERROR STOP; int main(void) { EXEC SQL BEGIN DECLARE SECTION; char query[1024] ="
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 6085,
+     "context": "called in a transaction block, so when autocommit is off, <command>BEGIN</command> commands have to be issued"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 6236,
+     "context": "o an error will occur. <programlisting> class TestCpp { EXEC SQL BEGIN DECLARE SECTION; char dbname[1024];"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 6280,
+     "context": "es performance. <programlisting> void TestCpp::test() { EXEC SQL BEGIN DECLARE SECTION; char tmp[1024];"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 6335,
+     "context": "_path', '', false); EXEC SQL COMMIT; } void db_test() { EXEC SQL BEGIN DECLARE SECTION; char dbname[1024];"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 6712,
+     "context": "ify connection parameters: <programlisting> int main(void) { EXEC SQL BEGIN DECLARE SECTION; char *dbname ="
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7434,
+     "context": "ngth, and the column data: <programlisting> int main(void) { EXEC SQL BEGIN DECLARE SECTION; int d_count;"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8018,
+     "context": "ort v_ind; short i_ind; }; int main(void) { EXEC SQL BEGIN DECLARE SECTION; tt t; tt_ind t"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8279,
+     "context": "<literal>typedef sometype string;</literal> <programlisting> EXEC SQL BEGIN DECLARE SECTION; string userid; /* this"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8573,
+     "context": "is doesn't need to be under embedded DECLARE SECTION */ EXEC SQL BEGIN DECLARE SECTION; char *prep_stmt ="
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 10060,
+     "context": "ch particular version of the preprocessor): <programlisting> EXEC SQL BEGIN DECLARE SECTION; int index; int result;"
+    }
+   ],
+   "BREAK": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 687,
+     "context": "et reached, break out of while loop */ EXEC SQL WHENEVER NOT FOUND DO BREAK; EXEC SQL OPEN foo_bar USING 100; ..."
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1412,
+     "context": "eached, break out of while loop */ EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { /* Fetch"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1462,
+     "context": "eached, break out of while loop */ EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { /* Fetch"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1616,
+     "context": "CT ii[4] FROM t3; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL FETCH FROM c"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1646,
+     "context": "], ii[4] FROM t3; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL FETCH FROM c"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1666,
+     "context": "ELECT ii FROM t3; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { /* WRONG */ EXEC"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1723,
+     "context": ".textval FROM t4; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { /* Fetch each element"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1762,
+     "context": ".textval FROM t4; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { /* Put all values in"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1785,
+     "context": "mpval).* FROM t4; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { /* Put all values in"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1844,
+     "context": "_complex; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2058,
+     "context": "SOR FOR stmt1; EXEC SQL OPEN cursor1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL FETCH cursor"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4647,
+     "context": "t *sqlda2; /* descriptor for input */ EXEC SQL WHENEVER NOT FOUND DO BREAK; EXEC SQL WHENEVER SQLERROR STOP; int"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4937,
+     "context": "<varlistentry id=\"ecpg-whenever-do-break\"> <term><literal>DO BREAK</literal></term> <listitem>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5260,
+     "context": "break; } </programlisting> But <literal>WHENEVER NOT FOUND DO BREAK</literal> effectively does this"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8160,
+     "context": "EXEC SQL WHENEVER NOT FOUND CONTINUE; EXEC SQL WHENEVER NOT FOUND DO BREAK; EXEC SQL WHENEVER NOT FOUND DO CONTINU"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8175,
+     "context": "A typical application is the use of <literal>WHENEVER NOT FOUND BREAK</literal> to handle looping through res"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8187,
+     "context": "eached, break out of while loop */ EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL"
+    }
+   ],
+   "CDATA": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 312,
+     "context": "le program managing multiple database connections: <programlisting><![CDATA[ #include <stdio.h> EXEC SQL BEGIN DEC"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 369,
+     "context": "> Here is an example program using this option: <programlisting><![CDATA[ #include <stdio.h> EXEC SQL BEGIN DEC"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2019,
+     "context": "result, add an <literal>INTO</literal> clause. <programlisting><![CDATA[ EXEC SQL BEGIN DECLARE SECTION; const"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2084,
+     "context": "productname> server. See the following example: <programlisting><![CDATA[ EXEC SQL BEGIN DECLARE SECTION; dat"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 6097,
+     "context": "title>ECPG Program Accessing Large Objects</title> <programlisting><![CDATA[ #include <stdio.h> #include <stdlib.h>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 9619,
+     "context": "Here is an example of a call to this function: <programlisting><![CDATA[ $char c[] = \"abc \"; $short s = 1"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 9648,
+     "context": "Here is an example of how to use this function: <programlisting><![CDATA[ $char c[] = \"abc \"; $short s = 1"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 10068,
+     "context": ":index; </programlisting> is translated into: <programlisting><![CDATA[ /* Processed by ecpg (2.6.0) */ /* The"
+    }
+   ],
+   "CLOSE": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 539,
+     "context": "EN foo_bar; EXEC SQL FETCH foo_bar INTO :FooBar, DooDad; ... EXEC SQL CLOSE foo_bar; EXEC SQL COMMIT; </programlist"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 696,
+     "context": "SQL FETCH NEXT FROM foo_bar INTO :dboid, :dbname; ... } EXEC SQL CLOSE foo_bar; </programlisting> </para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1423,
+     "context": "e=%lld\\n\", dbval.oid, dbval.datname, dbval.size); } EXEC SQL CLOSE cur1; </programlisting> </para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1473,
+     "context": "s, size=%lld\\n\", dbval.oid, dbval.datname, size); } EXEC SQL CLOSE cur1; </programlisting> </para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1624,
+     "context": "SQL FETCH FROM cur1 INTO :ii ; printf(\"ii=%d\\n\", ii); } EXEC SQL CLOSE cur1; </programlisting> This exam"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1733,
+     "context": "printf(\"intval=%d, textval=%s\\n\", intval, textval.arr); } EXEC SQL CLOSE cur1; </programlisting> </para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1772,
+     "context": "=%d, textval=%s\\n\", compval.intval, compval.textval.arr); } EXEC SQL CLOSE cur1; </programlisting> Although"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1852,
+     "context": ":b; printf(\"a=%s, b=%s\\n\", a.arr, b.arr); } EXEC SQL CLOSE cur1; </programlisting> This exam"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2066,
+     "context": "printf(\"dbaname=%s, datname=%s\\n\", dbaname, datname); } EXEC SQL CLOSE cursor1; EXEC SQL COMMIT; EXEC SQL DIS"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4621,
+     "context": "and disconnect from the database. <programlisting> EXEC SQL CLOSE cur1; EXEC SQL COMMIT; EXEC SQ"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4746,
+     "context": "} printf(\"\\n\"); } } EXEC SQL CLOSE cur1; EXEC SQL COMMIT; EXEC SQ"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7013,
+     "context": "OPEN cursor_name; EXEC SQL FETCH cursor_name INTO :column1; EXEC SQL CLOSE cursor_name; </programlisting> </ref"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7462,
+     "context": "ta = %s\\n\", d_data); /* Closing */ EXEC SQL CLOSE cur; EXEC SQL COMMIT; EXEC SQL"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8195,
+     "context": "NEXT FROM cur INTO SQL DESCRIPTOR d; ... } EXEC SQL CLOSE cur; EXEC SQL COMMIT; EXEC SQL"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8293,
+     "context": "ry id=\"ecpg-informix-statements-close-database\"> <term><literal>CLOSE DATABASE</literal></term> <listit"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8299,
+     "context": "m for ECPG's <literal>DISCONNECT CURRENT</literal>: <programlisting> $CLOSE DATABASE; /* close the c"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8300,
+     "context": "DATABASE; /* close the current connection */ EXEC SQL CLOSE DATABASE; </programlisting> </pa"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8597,
+     "context": "{ EXEC SQL FETCH mycursor USING sqlda; } EXEC SQL CLOSE mycursor; free(sqlda); /* The main"
+    }
+   ],
+   "COUNT": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3833,
+     "context": "Currently, there is only one header field defined: <replaceable>COUNT</replaceable>, which tells how many ite"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7362,
+     "context": "ying which header information item to retrieve. Only <literal>COUNT</literal>, to get the number of columns"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7407,
+     "context": "n a result set: <programlisting> EXEC SQL GET DESCRIPTOR d :d_count = COUNT; </programlisting> </para> <pa"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7450,
+     "context": "a number of total columns */ EXEC SQL GET DESCRIPTOR d :d_count = COUNT; printf(\"d_count ="
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7852,
+     "context": "entifying which header information item to set. Only <literal>COUNT</literal>, to set the number of descrip"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7894,
+     "context": "itle>Examples</title> <programlisting> EXEC SQL SET DESCRIPTOR indesc COUNT = 1; EXEC SQL SET DESCRIPTOR indesc VAL"
+    }
+   ],
+   "ERROR": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 6267,
+     "context": "s: <screen> <userinput>ecpg test_cpp.pgc</userinput> test_cpp.pgc:28: ERROR: variable \"dbname\" is not declared </sc"
+    }
+   ],
+   "FETCH": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 537,
+     "context": "r, ascii FROM foo ORDER BY ascii; EXEC SQL OPEN foo_bar; EXEC SQL FETCH foo_bar INTO :FooBar, DooDad; ... EXEC"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 693,
+     "context": "BREAK; EXEC SQL OPEN foo_bar USING 100; ... while (1) { EXEC SQL FETCH NEXT FROM foo_bar INTO :dboid, :dbname;"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 826,
+     "context": "of the usual commands <command>SELECT</command> and <command>FETCH</command>. These commands have a speci"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 830,
+     "context": "d> is used for a query that returns only single row, and <command>FETCH</command> is used for a query that"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 859,
+     "context": "</para> <para> Here is an example using the command <command>FETCH</command>: <programlisting> EXEC SQL BE"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 875,
+     "context": "oo CURSOR FOR SELECT a, b FROM test; ... do { ... EXEC SQL FETCH NEXT FROM foo INTO :v1, :v2; ... }"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1322,
+     "context": "multiple rows, it is required to use a cursor and the <command>FETCH</command> command. But with array host"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1393,
+     "context": "ult row without putting multiple host variables in the <literal>FETCH</literal> statement. <programlisting> E"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1417,
+     "context": "/* Fetch multiple columns into one structure. */ EXEC SQL FETCH FROM cur1 INTO :dbval; /* Prin"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1467,
+     "context": "/* Fetch multiple columns into one structure. */ EXEC SQL FETCH FROM cur1 INTO :dbval, :size;"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1620,
+     "context": "ur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL FETCH FROM cur1 INTO :ii ; printf(\"ii=%d\\"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1650,
+     "context": "ur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL FETCH FROM cur1 INTO :ii_a[0], :ii_a[1], :ii_"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1671,
+     "context": "HENEVER NOT FOUND DO BREAK; while (1) { /* WRONG */ EXEC SQL FETCH FROM cur1 INTO :ii_a; ... } </progr"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1728,
+     "context": "ent of the composite type column into host variables. */ EXEC SQL FETCH FROM cur1 INTO :intval, :textval;"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1739,
+     "context": "this example, the host variables to store values in the <command>FETCH</command> command can be gathered into"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1746,
+     "context": "tname> structure, and the structure is specified on the <command>FETCH</command> command. <programlisting> EXE"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1767,
+     "context": "Put all values in the SELECT list into one structure. */ EXEC SQL FETCH FROM cur1 INTO :compval; printf(\"i"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1775,
+     "context": "</programlisting> Although a structure is used in the <command>FETCH</command> command, the attribute n"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1790,
+     "context": "Put all values in the SELECT list into one structure. */ EXEC SQL FETCH FROM cur1 INTO :compval; printf(\"i"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1848,
+     "context": "QL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL FETCH FROM cur1 INTO :a, :b; printf(\""
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2062,
+     "context": "or1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL FETCH cursor1 INTO :dbaname,:datname; pri"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3752,
+     "context": "for processing the result of a <command>SELECT</command>, <command>FETCH</command> or a <command>DESCRIBE</co"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3790,
+     "context": "clause, instead of listing host variables: <programlisting> EXEC SQL FETCH NEXT FROM mycursor INTO SQL DESCRIPTOR"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3818,
+     "context": "</para> <para> In <command>DESCRIBE</command> and <command>FETCH</command> statements, the <literal>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4003,
+     "context": "PostgreSQL supports retrieving more that one record in one <command>FETCH</command> statement and storing the"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4011,
+     "context": "N DECLARE SECTION; int id[5]; EXEC SQL END DECLARE SECTION; EXEC SQL FETCH 5 FROM mycursor INTO SQL DESCRIPTOR myd"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4031,
+     "context": "isting> EXEC SQL include sqlda.h; sqlda_t *mysqlda; EXEC SQL FETCH 3 FROM mycursor INTO DESCRIPTOR mysqlda"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4134,
+     "context": "mand>SELECT</command>, <command>EXECUTE</command> or <command>FETCH</command> statements, its value"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4295,
+     "context": "the result set.</simpara></step> <step><simpara>Execute <command>FETCH</command>/<command>EXECUTE</command>/<c"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4315,
+     "context": "> Next, specify the SQLDA in a command. This is a <command>FETCH</command> command example. <programlist"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4317,
+     "context": "a <command>FETCH</command> command example. <programlisting> EXEC SQL FETCH NEXT FROM cur1 INTO DESCRIPTOR sqlda1;"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4543,
+     "context": "DA from the opened cursor. (Generally, you have to call <command>FETCH</command> repeatedly in the loop,"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4551,
+     "context": "lda; /* Assign descriptor to the cursor */ EXEC SQL FETCH NEXT FROM cur1 INTO DESCRIPTOR sqlda1;"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4688,
+     "context": "lda; /* Assign descriptor to the cursor */ EXEC SQL FETCH NEXT FROM cur1 INTO DESCRIPTOR sqlda1;"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5255,
+     "context": "abort the loop, like this: <programlisting> while (1) { EXEC SQL FETCH ... ; if (sqlca.sqlcode == ECPG_NOT"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7012,
+     "context": "REPARE sql_stmt FROM :dyn_string; EXEC SQL OPEN cursor_name; EXEC SQL FETCH cursor_name INTO :column1; EXEC SQL CLO"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7329,
+     "context": "iables. A descriptor area is typically populated using <command>FETCH</command> or <command>SELECT</command>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7447,
+     "context": "OR FOR SELECT current_database(); EXEC SQL OPEN cur; EXEC SQL FETCH NEXT FROM cur INTO SQL DESCRIPTOR d;"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8191,
+     "context": "QL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL FETCH NEXT FROM cur INTO SQL DESCRIPTOR d;"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8283,
+     "context": "will contain trimmed data */ EXEC SQL END DECLARE SECTION; EXEC SQL FETCH MYCUR INTO :userid; </programlisting>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8481,
+     "context": "ra> Pointer to the NULL indicator. If returned by DESCRIBE or FETCH then it's always a valid pointer."
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8594,
+     "context": "SQL WHENEVER NOT FOUND GOTO out; while (1) { EXEC SQL FETCH mycursor USING sqlda; } EXEC S"
+    }
+   ],
+   "FOUND": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 687,
+     "context": "result set reached, break out of while loop */ EXEC SQL WHENEVER NOT FOUND DO BREAK; EXEC SQL OPEN foo_bar USING"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1412,
+     "context": "ult set reached, break out of while loop */ EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) {"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1462,
+     "context": "ult set reached, break out of while loop */ EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) {"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1616,
+     "context": "FOR SELECT ii[4] FROM t3; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL FET"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1646,
+     "context": "[2], ii[3], ii[4] FROM t3; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL FET"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1666,
+     "context": "SOR FOR SELECT ii FROM t3; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { /* WRONG */"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1723,
+     "context": "(compval).textval FROM t4; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { /* Fetch eac"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1762,
+     "context": "(compval).textval FROM t4; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { /* Put all v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1785,
+     "context": "ELECT (compval).* FROM t4; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { /* Put all v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1844,
+     "context": "FROM test_complex; EXEC SQL OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) {"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2058,
+     "context": "rsor1 CURSOR FOR stmt1; EXEC SQL OPEN cursor1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { EXEC SQL FET"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4647,
+     "context": "*/ sqlda_t *sqlda2; /* descriptor for input */ EXEC SQL WHENEVER NOT FOUND DO BREAK; EXEC SQL WHENEVER SQLERROR ST"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4878,
+     "context": "<varlistentry id=\"ecpg-whenever-not-found\"> <term><literal>NOT FOUND</literal></term> <listitem>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5260,
+     "context": ") break; } </programlisting> But <literal>WHENEVER NOT FOUND DO BREAK</literal> effectively d"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8133,
+     "context": "pose> </refnamediv> <refsynopsisdiv> <synopsis> WHENEVER { NOT FOUND | SQLERROR | SQLWARNING } <replaceable"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8159,
+     "context": "> <title>Examples</title> <programlisting> EXEC SQL WHENEVER NOT FOUND CONTINUE; EXEC SQL WHENEVER NOT FOUND D"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8160,
+     "context": "mlisting> EXEC SQL WHENEVER NOT FOUND CONTINUE; EXEC SQL WHENEVER NOT FOUND DO BREAK; EXEC SQL WHENEVER NOT FOUND D"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8161,
+     "context": "CONTINUE; EXEC SQL WHENEVER NOT FOUND DO BREAK; EXEC SQL WHENEVER NOT FOUND DO CONTINUE; EXEC SQL WHENEVER SQLWARNI"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8174,
+     "context": "<para> A typical application is the use of <literal>WHENEVER NOT FOUND BREAK</literal> to handle looping"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8187,
+     "context": "ult set reached, break out of while loop */ EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) {"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8590,
+     "context": "SOR FOR mystmt; EXEC SQL OPEN mycursor; EXEC SQL WHENEVER NOT FOUND GOTO out; while (1) { EX"
+    }
+   ],
+   "INDEX": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 455,
+     "context": "TE TABLE foo (number integer, ascii char(16)); EXEC SQL CREATE UNIQUE INDEX num1 ON foo(number); EXEC SQL COMMIT; <"
+    }
+   ],
+   "LIMIT": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8026,
+     "context": "QL COMMIT; EXEC SQL SELECT current_database(), 256 INTO :t:t_ind LIMIT 1; printf(\"t.v = %s\\n\", t.v.arr);"
+    }
+   ],
+   "MYCUR": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8283,
+     "context": "contain trimmed data */ EXEC SQL END DECLARE SECTION; EXEC SQL FETCH MYCUR INTO :userid; </programlisting> </pa"
+    }
+   ],
+   "ORDER": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 535,
+     "context": "SQL DECLARE foo_bar CURSOR FOR SELECT number, ascii FROM foo ORDER BY ascii; EXEC SQL OPEN foo_bar; EXEC S"
+    }
+   ],
+   "POSIX": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3098,
+     "context": "<para> <literal>%E*</literal> <literal>%O*</literal> - POSIX locale extensions. The seque"
+    }
+   ],
+   "SCALE": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3970,
+     "context": "<varlistentry id=\"ecpg-named-descriptors-scale\"> <term><literal>SCALE</literal> (integer)</term> <listi"
+    }
+   ],
+   "SQLDA": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3813,
+     "context": "s mandatory, omitting the <literal>SQL</literal> keyword produces SQLDA Descriptor Areas, see <xref linkend"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4021,
+     "context": "</para> </sect2> <sect2 id=\"ecpg-sqlda-descriptors\"> <title>SQLDA Descriptor Areas</title> <para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4024,
+     "context": "criptors\"> <title>SQLDA Descriptor Areas</title> <para> An SQLDA Descriptor Area is a C language structu"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4045,
+     "context": "<procedure> <para> The general flow of a program that uses SQLDA is: </para> <step><simpara>Pr"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4048,
+     "context": "lare a cursor for it.</simpara></step> <step><simpara>Declare an SQLDA for the result rows.</simpara></step>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4049,
+     "context": "for the result rows.</simpara></step> <step><simpara>Declare an SQLDA for the input parameters, and initializ"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4050,
+     "context": "s).</simpara></step> <step><simpara>Open a cursor with the input SQLDA.</simpara></step> <step><simpara>F"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4051,
+     "context": "ep><simpara>Fetch rows from the cursor, and store them into an output SQLDA.</simpara></step> <step><simpara>R"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4052,
+     "context": "LDA.</simpara></step> <step><simpara>Read values from the output SQLDA into the host variables (with conversio"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4054,
+     "context": "tep> <step><simpara>Free the memory area allocated for the input SQLDA.</simpara></step> </procedure>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4058,
+     "context": "</procedure> <sect3 id=\"ecpg-sqlda-descriptors-sqlda\"> <title>SQLDA Data Structure</title> <para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4061,
+     "context": "tors-sqlda\"> <title>SQLDA Data Structure</title> <para> SQLDA uses three data structure types: <"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4068,
+     "context": "sqlname</type>. </para> <tip> <para> PostgreSQL's SQLDA has a similar data structure to the one"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4070,
+     "context": "DB2 Universal Database, so some technical information on DB2's SQLDA could help understanding PostgreSQL's o"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4079,
+     "context": "e structure type <type>sqlda_t</type> is the type of the actual SQLDA. It holds one record. And two or"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4112,
+     "context": "titem> <para> It contains the literal string <literal>\"SQLDA \"</literal>. </para> </li"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4155,
+     "context": "If the query returns more than one record, multiple linked SQLDA structures are returned, and <literal>d"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4287,
+     "context": "3 id=\"ecpg-sqlda-output\"> <title>Retrieving a Result Set Using an SQLDA</title> <procedure> <para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4292,
+     "context": "The general steps to retrieve a query result set through an SQLDA are: </para> <step><simpara>D"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4295,
+     "context": "ESCRIBE</command> commands to process a query specifying the declared SQLDA.</simpara></step> <step><simpara>C"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4303,
+     "context": "<para> Here is an example retrieving a result set through an SQLDA. </para> <para> First, de"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4314,
+     "context": "da1; </programlisting> </para> <para> Next, specify the SQLDA in a command. This is a <command>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4376,
+     "context": "3 id=\"ecpg-sqlda-input\"> <title>Passing Query Parameters Using an SQLDA</title> <procedure> <para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4380,
+     "context": "title> <procedure> <para> The general steps to use an SQLDA to pass input parameters to a pre"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4384,
+     "context": "></step> <step><simpara>Declare an sqlda_t structure as an input SQLDA.</simpara></step> <step><simpara>A"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4385,
+     "context": "ep><simpara>Allocate memory area (as sqlda_t structure) for the input SQLDA.</simpara></step> <step><simpara>S"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4387,
+     "context": "a></step> <step><simpara>Open a cursor with specifying the input SQLDA.</simpara></step> </procedure>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4406,
+     "context": "ramlisting> </para> <para> Next, allocate memory for an SQLDA, and set the number of input param"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4426,
+     "context": "(This is same array used for retrieving column values when the SQLDA is receiving a result set.) In th"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4443,
+     "context": "> </para> <para> By opening a cursor and specifying the SQLDA that was set up beforehand, the in"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4462,
+     "context": "<sect3 id=\"ecpg-sqlda-example\"> <title>A Sample Application Using SQLDA</title> <para> Here is an exa"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4478,
+     "context": "<literal>1</literal>). </para> <para> First, declare an SQLDA for input and an SQLDA for output. <pro"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4478,
+     "context": "</para> <para> First, declare an SQLDA for input and an SQLDA for output. <programlisting> EXEC SQL i"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4507,
+     "context": "ting> </para> <para> Next, put some values in the input SQLDA for the input parameters. Allocat"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4508,
+     "context": "t SQLDA for the input parameters. Allocate memory for the input SQLDA, and set the number of input param"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4515,
+     "context": "<literal>sqlvar</literal> structure. <programlisting> /* Create SQLDA structure for input parameters. */"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4532,
+     "context": "ogramlisting> </para> <para> After setting up the input SQLDA, open a cursor with the input SQLD"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4533,
+     "context": "After setting up the input SQLDA, open a cursor with the input SQLDA. <programlisting> /* Open a cursor"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4542,
+     "context": "ogramlisting> </para> <para> Fetch rows into the output SQLDA from the opened cursor. (Generally"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4556,
+     "context": "</para> <para> Next, retrieve the fetched records from the SQLDA, by following the linked list of t"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4634,
+     "context": "a> <example id=\"ecpg-sqlda-example-example\"> <title>Example SQLDA Program</title> <programlisting> #inclu"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4666,
+     "context": ":query; EXEC SQL DECLARE cur1 CURSOR FOR stmt1; /* Create an SQLDA structure for an input parameter */"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7089,
+     "context": "aceable></term> <listitem> <para> The name of an SQLDA variable. </para> </listit"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8331,
+     "context": "t2> <sect2 id=\"ecpg-informix-sqlda\"> <title>Informix-compatible SQLDA Descriptor Areas</title> <para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8382,
+     "context": "<listitem> <para> The number of fields in the <literal>SQLDA</literal> descriptor. </para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8418,
+     "context": "al></term> <listitem> <para> Pointer to the next SQLDA structure if the result set contains mo"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8516,
+     "context": "LSMINT when returning data from the server. When the <literal>SQLDA</literal> is used for a parameterized q"
+    }
+   ],
+   "START": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1511,
+     "context": "ON; typedef int start; EXEC SQL END DECLARE SECTION; ... EXEC SQL START TRANSACTION; </programlisting> EC"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1513,
+     "context": "</programlisting> ECPG will report a syntax error for <literal>START TRANSACTION</literal>, because it"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1515,
+     "context": "TRANSACTION</literal>, because it no longer recognizes <literal>START</literal> as an SQL keyword, only"
+    }
+   ],
+   "TABLE": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 454,
+     "context": "itle> <para> Creating a table: <programlisting> EXEC SQL CREATE TABLE foo (number integer, ascii char(16)); E"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 839,
+     "context": "re is an example: <programlisting> /* * assume this table: * CREATE TABLE test1 (a int, b varchar(50)); */ EXEC"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1594,
+     "context": "e is an example. Assume the following table: <programlisting> CREATE TABLE t3 ( ii integer[] ); testdb=&gt; S"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1705,
+     "context": "> CREATE TYPE comp_t AS (intval integer, textval varchar(32)); CREATE TABLE t4 (compval comp_t); INSERT INTO t4 VAL"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1967,
+     "context": "amlisting> EXEC SQL BEGIN DECLARE SECTION; const char *stmt = \"CREATE TABLE test1 (...);\"; EXEC SQL END DECLARE SEC"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8229,
+     "context": "L commands: <programlisting> $int j = 3; $CONNECT TO :dbname; $CREATE TABLE test(i INT PRIMARY KEY, j INT); $INSERT"
+    }
+   ],
+   "TZVAR": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5888,
+     "context": ">SET TIMEZONE</literal> commands: <programlisting> EXEC SQL ifdef TZVAR; EXEC SQL SET TIMEZONE TO TZVAR; EXEC S"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5889,
+     "context": "ands: <programlisting> EXEC SQL ifdef TZVAR; EXEC SQL SET TIMEZONE TO TZVAR; EXEC SQL elif TZNAME; EXEC SQL SET TIM"
+    }
+   ],
+   "UNDEF": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5775,
+     "context": "</literal> to remove a previous definition: <programlisting> EXEC SQL UNDEF MYNUMBER; </programlisting> </para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5800,
+     "context": "fects of <literal>EXEC SQL DEFINE</literal> and <literal>EXEC SQL UNDEF</literal> do not carry across files"
+    }
+   ],
+   "USING": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 190,
+     "context": "em> <simpara> <literal><replaceable>username</replaceable> USING <replaceable>password</replaceable></li"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 244,
+     "context": "SQL END DECLARE SECTION; ... EXEC SQL CONNECT TO :target USER :user USING :passwd; /* or EXEC SQL CONNECT TO :tar"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 670,
+     "context": "supplying the actual values for the placeholders with a <literal>USING</literal> clause: <programlisting>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 673,
+     "context": "clause: <programlisting> EXEC SQL EXECUTE stmt1 INTO :dboid, :dbname USING 1; </programlisting> </para> <pa"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 681,
+     "context": "d input parameters, the cursor must be opened with a <literal>USING</literal> clause: <programlisting> EXEC"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 689,
+     "context": "loop */ EXEC SQL WHENEVER NOT FOUND DO BREAK; EXEC SQL OPEN foo_bar USING 100; ... while (1) { EXEC SQL FETCH"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1999,
+     "context": "ON; EXEC SQL PREPARE mystmt FROM :stmt; ... EXEC SQL EXECUTE mystmt USING 42, 'foobar'; </programlisting> </pa"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2028,
+     "context": "RE mystmt FROM :stmt; ... EXEC SQL EXECUTE mystmt INTO :v1, :v2, :v3 USING 37; ]]> </programlisting> An <comma"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2032,
+     "context": "d> command can have an <literal>INTO</literal> clause, a <literal>USING</literal> clause, both, or neither."
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3819,
+     "context": "CH</command> statements, the <literal>INTO</literal> and <literal>USING</literal> keywords can be used to s"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3991,
+     "context": "statements, the effect of the <literal>INTO</literal> and <literal>USING</literal> keywords are different. A"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3994,
+     "context": "provide the input parameters for a query or a cursor and <literal>USING SQL DESCRIPTOR <replaceable>name</repla"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4034,
+     "context": "s about the use cases of the <literal>INTO</literal> and <literal>USING</literal> keywords in <xref linkend"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4132,
+     "context": "> or <command>EXECUTE</command> statements using the <literal>USING</literal> keyword. In case it's"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4447,
+     "context": "d to the prepared statement. <programlisting> EXEC SQL OPEN cur1 USING DESCRIPTOR sqlda2; </programlisting>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4537,
+     "context": "/* Open a cursor with input parameters. */ EXEC SQL OPEN cur1 USING DESCRIPTOR sqlda2; </programlisting>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4681,
+     "context": "/* Open a cursor with input parameters. */ EXEC SQL OPEN cur1 USING DESCRIPTOR sqlda2; while (1) {"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 6652,
+     "context": "></literal>, or <literal><replaceable>user_name</replaceable> USING <replaceable>password</replaceable></li"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 6686,
+     "context": "C SQL CONNECT TO :db AS :id; EXEC SQL CONNECT TO :db USER connectuser USING :pw; EXEC SQL CONNECT TO @localhost AS"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 6700,
+     "context": "SQL CONNECT TO unix:postgresql://localhost/connectdb USER connectuser USING \"connectpw\"; EXEC SQL CONNECT TO unix:p"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7045,
+     "context": "[ OUTPUT ] <replaceable class=\"parameter\">prepared_name</replaceable> USING [ SQL ] DESCRIPTOR <replaceable class=\""
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7507,
+     "context": "ceable> OPEN <replaceable class=\"parameter\">cursor_name</replaceable> USING <replaceable class=\"parameter\">value</r"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7508,
+     "context": ", ... ] OPEN <replaceable class=\"parameter\">cursor_name</replaceable> USING SQL DESCRIPTOR <replaceable class=\"para"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7568,
+     "context": "e>Examples</title> <programlisting> EXEC SQL OPEN a; EXEC SQL OPEN d USING 1, 'test'; EXEC SQL OPEN c1 USING SQL D"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7569,
+     "context": "g> EXEC SQL OPEN a; EXEC SQL OPEN d USING 1, 'test'; EXEC SQL OPEN c1 USING SQL DESCRIPTOR mydesc; EXEC SQL OPEN :c"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7675,
+     "context": "IPTOR outdesc; EXEC SQL PREPARE foo FROM :stmt; EXEC SQL EXECUTE foo USING SQL DESCRIPTOR indesc INTO SQL DESCRIPT"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8482,
+     "context": "ys a valid pointer. If used as input for <literal>EXECUTE ... USING sqlda;</literal> then NULL-pointer valu"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 8594,
+     "context": "OT FOUND GOTO out; while (1) { EXEC SQL FETCH mycursor USING sqlda; } EXEC SQL CLOSE mycurs"
+    }
+   ],
+   "VALUE": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3839,
+     "context": "ogramlisting> EXEC SQL GET DESCRIPTOR <replaceable>name</replaceable> VALUE <replaceable>num</replaceable> :<replac"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 3998,
+     "context": "ogramlisting> EXEC SQL SET DESCRIPTOR <replaceable>name</replaceable> VALUE <replaceable>num</replaceable> <replace"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4013,
+     "context": "mycursor INTO SQL DESCRIPTOR mydesc; EXEC SQL GET DESCRIPTOR mydesc VALUE 1 :id = DATA; </programlisting> </p"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7103,
+     "context": "RIBE stmt1 INTO SQL DESCRIPTOR mydesc; EXEC SQL GET DESCRIPTOR mydesc VALUE 1 :charvar = NAME; EXEC SQL DEALLOCATE"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7318,
+     "context": "SCRIPTOR <replaceable class=\"parameter\">descriptor_name</replaceable> VALUE <replaceable class=\"parameter\">column_n"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7414,
+     "context": "ength in the first column: <programlisting> EXEC SQL GET DESCRIPTOR d VALUE 1 :d_returned_octet_length = RETURNED_O"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7422,
+     "context": "d column as a string: <programlisting> EXEC SQL GET DESCRIPTOR d VALUE 2 :d_data = DATA; </programlisting>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7454,
+     "context": "/* Get length of a returned column */ EXEC SQL GET DESCRIPTOR d VALUE 1 :d_returned_octet_length = RETURNED_O"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7458,
+     "context": "etch the returned column as a string */ EXEC SQL GET DESCRIPTOR d VALUE 1 :d_data = DATA; printf(\"d_data"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7813,
+     "context": "SCRIPTOR <replaceable class=\"parameter\">descriptor_name</replaceable> VALUE <replaceable class=\"parameter\">number</"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7895,
+     "context": "C SQL SET DESCRIPTOR indesc COUNT = 1; EXEC SQL SET DESCRIPTOR indesc VALUE 1 DATA = 2; EXEC SQL SET DESCRIPTOR ind"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7896,
+     "context": "ET DESCRIPTOR indesc VALUE 1 DATA = 2; EXEC SQL SET DESCRIPTOR indesc VALUE 1 DATA = :val1; EXEC SQL SET DESCRIPTOR"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7897,
+     "context": "ESCRIPTOR indesc VALUE 1 DATA = :val1; EXEC SQL SET DESCRIPTOR indesc VALUE 2 INDICATOR = :val1, DATA = 'some strin"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7898,
+     "context": "DICATOR = :val1, DATA = 'some string'; EXEC SQL SET DESCRIPTOR indesc VALUE 2 INDICATOR = :val2null, DATA = :val2;"
+    }
+   ],
+   "WHERE": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 471,
+     "context": "<para> Deleting rows: <programlisting> EXEC SQL DELETE FROM foo WHERE number = 9999; EXEC SQL COMMIT; </progr"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 481,
+     "context": "es: <programlisting> EXEC SQL UPDATE foo SET ascii = 'foobar' WHERE number = 9999; EXEC SQL COMMIT; </progr"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 499,
+     "context": "select: <programlisting> EXEC SQL SELECT foo INTO :FooBar FROM table1 WHERE ascii = 'doodad'; </programlisting> <"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 662,
+     "context": "ng> EXEC SQL PREPARE stmt1 FROM \"SELECT oid, datname FROM pg_database WHERE oid = ?\"; </programlisting> </para>"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 683,
+     "context": "ing> EXEC SQL PREPARE stmt1 FROM \"SELECT oid,datname FROM pg_database WHERE oid &gt; ?\"; EXEC SQL DECLARE foo_bar C"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2021,
+     "context": "BEGIN DECLARE SECTION; const char *stmt = \"SELECT a, b, c FROM test1 WHERE a > ?\"; int v1, v2; VARCHAR v3[50]; EXE"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2047,
+     "context": "ame \" \" FROM pg_database d, pg_user u \" \" WHERE d.datdba = u.usesysid\"; EXEC SQL END DE"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 2093,
+     "context": "ate1); EXEC SQL SELECT started, duration INTO :ts1, :iv1 FROM datetbl WHERE d=:date1; PGTYPEStimestamp_add_interval"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4398,
+     "context": "query[1024] = \"SELECT d.oid, * FROM pg_database d, pg_stat_database s WHERE d.oid = s.datid AND (d.datname = ? OR d"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4495,
+     "context": "query[1024] = \"SELECT d.oid,* FROM pg_database d, pg_stat_database s WHERE d.oid=s.datid AND ( d.datname=? OR d.oi"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4654,
+     "context": "query[1024] = \"SELECT d.oid,* FROM pg_database d, pg_stat_database s WHERE d.oid=s.datid AND ( d.datname=? OR d.oi"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 7670,
+     "context": "e>Examples</title> <programlisting> char *stmt = \"SELECT * FROM test1 WHERE a = ? AND b = ?\"; EXEC SQL ALLOCATE DE"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 10065,
+     "context": "ND DECLARE SECTION; ... EXEC SQL SELECT res INTO :result FROM mytable WHERE index = :index; </programlisting> i"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 10082,
+     "context": "eclare section */ ... ECPGdo(__LINE__, NULL, \"SELECT res FROM mytable WHERE index = ? \", ECPGt_int,&(in"
+    }
+   ],
+   "WRONG": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 1670,
+     "context": "OPEN cur1; EXEC SQL WHENEVER NOT FOUND DO BREAK; while (1) { /* WRONG */ EXEC SQL FETCH FROM cur1 INTO :i"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 4997,
+     "context": "ram excerpts will have the desired effect: <programlisting> /* * WRONG */ int main(int argc, char *argv[]) {"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5013,
+     "context": "C SQL SELECT ...; ... } </programlisting> <programlisting> /* * WRONG */ int main(int argc, char *argv[]) {"
+    }
+   ]
+  }
+ },
+ "manual_face": {
+  "n_M": 20,
+  "M": [
+   "00000",
+   "02000",
+   "07001",
+   "07006",
+   "07009",
+   "08001",
+   "08003",
+   "08007",
+   "21000",
+   "22002",
+   "23505",
+   "25001",
+   "25P01",
+   "26000",
+   "33000",
+   "34000",
+   "42804",
+   "42P03",
+   "YE001",
+   "YE002"
+  ],
+  "M_minus_V": [
+   "07001",
+   "07006",
+   "07009",
+   "33000",
+   "YE001",
+   "YE002"
+  ],
+  "n_M_minus_V": 6,
+  "files_with_hits": [
+   "doc/src/sgml/ecpg.sgml"
+  ],
+  "outside_ecpg": {
+   "n": 0,
+   "codes": [],
+   "minus_V": [],
+   "n_minus_V": 0,
+   "hits": {}
+  }
+ },
+ "constant_face": {
+  "n_C": 20,
+  "C": [
+   "02000",
+   "07001",
+   "07002",
+   "07006",
+   "07009",
+   "08001",
+   "08003",
+   "08007",
+   "21000",
+   "22002",
+   "25001",
+   "25P01",
+   "26000",
+   "33000",
+   "34000",
+   "42601",
+   "42804",
+   "42P03",
+   "YE000",
+   "YE001"
+  ],
+  "C_minus_V": [
+   "07001",
+   "07002",
+   "07006",
+   "07009",
+   "33000",
+   "YE000",
+   "YE001"
+  ],
+  "n_C_minus_V": 7,
+  "defines": {
+   "02000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 245,
+     "name": "ECPG_SQLSTATE_NO_DATA"
+    }
+   ],
+   "07001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 246,
+     "name": "ECPG_SQLSTATE_USING_CLAUSE_DOES_NOT_MATCH_PARAMETERS"
+    }
+   ],
+   "07002": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 247,
+     "name": "ECPG_SQLSTATE_USING_CLAUSE_DOES_NOT_MATCH_TARGETS"
+    }
+   ],
+   "07006": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 248,
+     "name": "ECPG_SQLSTATE_RESTRICTED_DATA_TYPE_ATTRIBUTE_VIOLATION"
+    }
+   ],
+   "07009": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 249,
+     "name": "ECPG_SQLSTATE_INVALID_DESCRIPTOR_INDEX"
+    }
+   ],
+   "08001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 250,
+     "name": "ECPG_SQLSTATE_SQLCLIENT_UNABLE_TO_ESTABLISH_SQLCONNECTION"
+    }
+   ],
+   "08003": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 251,
+     "name": "ECPG_SQLSTATE_CONNECTION_DOES_NOT_EXIST"
+    }
+   ],
+   "08007": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 252,
+     "name": "ECPG_SQLSTATE_TRANSACTION_RESOLUTION_UNKNOWN"
+    }
+   ],
+   "21000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 253,
+     "name": "ECPG_SQLSTATE_CARDINALITY_VIOLATION"
+    }
+   ],
+   "22002": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 254,
+     "name": "ECPG_SQLSTATE_NULL_VALUE_NO_INDICATOR_PARAMETER"
+    }
+   ],
+   "25001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 255,
+     "name": "ECPG_SQLSTATE_ACTIVE_SQL_TRANSACTION"
+    }
+   ],
+   "25P01": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 256,
+     "name": "ECPG_SQLSTATE_NO_ACTIVE_SQL_TRANSACTION"
+    }
+   ],
+   "26000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 257,
+     "name": "ECPG_SQLSTATE_INVALID_SQL_STATEMENT_NAME"
+    }
+   ],
+   "33000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 258,
+     "name": "ECPG_SQLSTATE_INVALID_SQL_DESCRIPTOR_NAME"
+    }
+   ],
+   "34000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 259,
+     "name": "ECPG_SQLSTATE_INVALID_CURSOR_NAME"
+    }
+   ],
+   "42601": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 260,
+     "name": "ECPG_SQLSTATE_SYNTAX_ERROR"
+    }
+   ],
+   "42804": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 261,
+     "name": "ECPG_SQLSTATE_DATATYPE_MISMATCH"
+    }
+   ],
+   "42P03": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 262,
+     "name": "ECPG_SQLSTATE_DUPLICATE_CURSOR"
+    }
+   ],
+   "YE000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 265,
+     "name": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR"
+    }
+   ],
+   "YE001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 266,
+     "name": "ECPG_SQLSTATE_ECPG_OUT_OF_MEMORY"
+    }
+   ]
+  },
+  "sqlstate_named_assignments": {
+   "57014": [
+    {
+     "file": "src/test/modules/libpq_pipeline/libpq_pipeline.c",
+     "line": 105,
+     "via": "PG_DIAG_SQLSTATE",
+     "context": "PG_DIAG_SQLSTATE), \"57014\""
+    }
+   ],
+   "42601": [
+    {
+     "file": "src/test/modules/libpq_pipeline/libpq_pipeline.c",
+     "line": 883,
+     "via": "PG_DIAG_SQLSTATE",
+     "context": "PG_DIAG_SQLSTATE), \"42601\""
+    },
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 260,
+     "via": "ECPG_SQLSTATE_SYNTAX_ERROR",
+     "context": "ECPG_SQLSTATE_SYNTAX_ERROR \"42601\""
+    }
+   ],
+   "22012": [
+    {
+     "file": "src/test/modules/libpq_pipeline/libpq_pipeline.c",
+     "line": 922,
+     "via": "PG_DIAG_SQLSTATE",
+     "context": "PG_DIAG_SQLSTATE), \"22012\""
+    }
+   ],
+   "57P02": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/error.c",
+     "line": 259,
+     "via": "sqlstate",
+     "context": "sqlstate = \"57P02\""
+    }
+   ],
+   "23505": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/error.c",
+     "line": 272,
+     "via": "sqlstate",
+     "context": "sqlstate, \"23505\""
+    }
+   ],
+   "21000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/error.c",
+     "line": 274,
+     "via": "sqlstate",
+     "context": "sqlstate, \"21000\""
+    },
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 253,
+     "via": "ECPG_SQLSTATE_CARDINALITY_VIOLATION",
+     "context": "ECPG_SQLSTATE_CARDINALITY_VIOLATION \"21000\""
+    }
+   ],
+   "02000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 245,
+     "via": "ECPG_SQLSTATE_NO_DATA",
+     "context": "ECPG_SQLSTATE_NO_DATA \"02000\""
+    }
+   ],
+   "07001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 246,
+     "via": "ECPG_SQLSTATE_USING_CLAUSE_DOES_NOT_MATCH_PARAMETERS",
+     "context": "ECPG_SQLSTATE_USING_CLAUSE_DOES_NOT_MATCH_PARAMETERS \"07001\""
+    }
+   ],
+   "07002": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 247,
+     "via": "ECPG_SQLSTATE_USING_CLAUSE_DOES_NOT_MATCH_TARGETS",
+     "context": "ECPG_SQLSTATE_USING_CLAUSE_DOES_NOT_MATCH_TARGETS \"07002\""
+    }
+   ],
+   "07006": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 248,
+     "via": "ECPG_SQLSTATE_RESTRICTED_DATA_TYPE_ATTRIBUTE_VIOLATION",
+     "context": "ECPG_SQLSTATE_RESTRICTED_DATA_TYPE_ATTRIBUTE_VIOLATION \"07006\""
+    }
+   ],
+   "07009": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 249,
+     "via": "ECPG_SQLSTATE_INVALID_DESCRIPTOR_INDEX",
+     "context": "ECPG_SQLSTATE_INVALID_DESCRIPTOR_INDEX \"07009\""
+    }
+   ],
+   "08001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 250,
+     "via": "ECPG_SQLSTATE_SQLCLIENT_UNABLE_TO_ESTABLISH_SQLCONNECTION",
+     "context": "ECPG_SQLSTATE_SQLCLIENT_UNABLE_TO_ESTABLISH_SQLCONNECTION \"08001\""
+    }
+   ],
+   "08003": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 251,
+     "via": "ECPG_SQLSTATE_CONNECTION_DOES_NOT_EXIST",
+     "context": "ECPG_SQLSTATE_CONNECTION_DOES_NOT_EXIST \"08003\""
+    }
+   ],
+   "08007": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 252,
+     "via": "ECPG_SQLSTATE_TRANSACTION_RESOLUTION_UNKNOWN",
+     "context": "ECPG_SQLSTATE_TRANSACTION_RESOLUTION_UNKNOWN \"08007\""
+    }
+   ],
+   "22002": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 254,
+     "via": "ECPG_SQLSTATE_NULL_VALUE_NO_INDICATOR_PARAMETER",
+     "context": "ECPG_SQLSTATE_NULL_VALUE_NO_INDICATOR_PARAMETER \"22002\""
+    }
+   ],
+   "25001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 255,
+     "via": "ECPG_SQLSTATE_ACTIVE_SQL_TRANSACTION",
+     "context": "ECPG_SQLSTATE_ACTIVE_SQL_TRANSACTION \"25001\""
+    }
+   ],
+   "25P01": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 256,
+     "via": "ECPG_SQLSTATE_NO_ACTIVE_SQL_TRANSACTION",
+     "context": "ECPG_SQLSTATE_NO_ACTIVE_SQL_TRANSACTION \"25P01\""
+    }
+   ],
+   "26000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 257,
+     "via": "ECPG_SQLSTATE_INVALID_SQL_STATEMENT_NAME",
+     "context": "ECPG_SQLSTATE_INVALID_SQL_STATEMENT_NAME \"26000\""
+    }
+   ],
+   "33000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 258,
+     "via": "ECPG_SQLSTATE_INVALID_SQL_DESCRIPTOR_NAME",
+     "context": "ECPG_SQLSTATE_INVALID_SQL_DESCRIPTOR_NAME \"33000\""
+    }
+   ],
+   "34000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 259,
+     "via": "ECPG_SQLSTATE_INVALID_CURSOR_NAME",
+     "context": "ECPG_SQLSTATE_INVALID_CURSOR_NAME \"34000\""
+    }
+   ],
+   "42804": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 261,
+     "via": "ECPG_SQLSTATE_DATATYPE_MISMATCH",
+     "context": "ECPG_SQLSTATE_DATATYPE_MISMATCH \"42804\""
+    }
+   ],
+   "42P03": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 262,
+     "via": "ECPG_SQLSTATE_DUPLICATE_CURSOR",
+     "context": "ECPG_SQLSTATE_DUPLICATE_CURSOR \"42P03\""
+    }
+   ],
+   "YE000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 265,
+     "via": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR",
+     "context": "ECPG_SQLSTATE_ECPG_INTERNAL_ERROR \"YE000\""
+    }
+   ],
+   "YE001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 266,
+     "via": "ECPG_SQLSTATE_ECPG_OUT_OF_MEMORY",
+     "context": "ECPG_SQLSTATE_ECPG_OUT_OF_MEMORY \"YE001\""
+    },
+    {
+     "file": "src/interfaces/ecpg/ecpglib/misc.c",
+     "line": 577,
+     "via": "sqlstate",
+     "context": "sqlstate, \"YE001\""
+    }
+   ],
+   "BEGIN": [
+    {
+     "file": "src/bin/pg_dump/pg_dump.c",
+     "line": 1496,
+     "via": "ExecuteSqlStatement",
+     "context": "ExecuteSqlStatement(AH, \"BEGIN\""
+    }
+   ],
+   "00000": [
+    {
+     "file": "src/bin/psql/startup.c",
+     "line": 199,
+     "via": "LAST_ERROR_SQLSTATE",
+     "context": "LAST_ERROR_SQLSTATE\", \"00000\""
+    },
+    {
+     "file": "src/bin/psql/common.c",
+     "line": 469,
+     "via": "SQLSTATE",
+     "context": "SQLSTATE: code of error, or \"00000\""
+    },
+    {
+     "file": "src/bin/psql/common.c",
+     "line": 485,
+     "via": "SQLSTATE",
+     "context": "SQLSTATE\", \"00000\""
+    },
+    {
+     "file": "src/bin/psql/common.c",
+     "line": 2098,
+     "via": "SQLSTATE",
+     "context": "SQLSTATE\", \"00000\""
+    }
+   ]
+  }
+ },
+ "session_77_seven": {
+  "codes": [
+   "07001",
+   "07002",
+   "07006",
+   "07009",
+   "33000",
+   "YE000",
+   "YE001"
+  ],
+  "in_doc_sources": {
+   "07001": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5295,
+     "context": "fied more host variables than the command expected. (SQLSTATE 07001 or 07002) </para> </listitem"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5305,
+     "context": "ied fewer host variables than the command expected. (SQLSTATE 07001 or 07002) </para> </listitem"
+    }
+   ],
+   "07002": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5295,
+     "context": "host variables than the command expected. (SQLSTATE 07001 or 07002) </para> </listitem> </v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5305,
+     "context": "host variables than the command expected. (SQLSTATE 07001 or 07002) </para> </listitem> </v"
+    }
+   ],
+   "07006": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5547,
+     "context": "numeric value and the host variable was not numeric. (SQLSTATE 07006) </para> </listitem> </v"
+    },
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5558,
+     "context": "non-numeric value and the host variable was numeric. (SQLSTATE 07006) </para> </listitem> </v"
+    }
+   ],
+   "07009": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5526,
+     "context": "The descriptor index specified was out of range. (SQLSTATE 07009) </para> </listitem> </v"
+    }
+   ],
+   "33000": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5516,
+     "context": "tement you are trying to use has not been prepared. (SQLSTATE 33000) </para> </listitem> </v"
+    }
+   ],
+   "YE000": [],
+   "YE001": [
+    {
+     "file": "doc/src/sgml/ecpg.sgml",
+     "line": 5273,
+     "context": "value is defined as <literal>-ENOMEM</literal>. (SQLSTATE YE001) </para> </listitem> </v"
+    }
+   ]
+  },
+  "n_in_doc": 6
+ },
+ "ecpg_implementation": {
+  "codes_with_no_literal_under_src_interfaces_ecpg": [
+   "00000",
+   "YE002"
+  ],
+  "n_absent": 2,
+  "sites": {
+   "00000": [],
+   "02000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 245,
+     "context": "ld refer to the codes directly) */ #define ECPG_SQLSTATE_NO_DATA \"02000\" #define ECPG_SQLSTATE_USING_CLAUSE_DOE"
+    }
+   ],
+   "07001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 246,
+     "context": "\"02000\" #define ECPG_SQLSTATE_USING_CLAUSE_DOES_NOT_MATCH_PARAMETERS \"07001\" #define ECPG_SQLSTATE_USING_CLAUSE_DOE"
+    }
+   ],
+   "07006": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 248,
+     "context": "7002\" #define ECPG_SQLSTATE_RESTRICTED_DATA_TYPE_ATTRIBUTE_VIOLATION \"07006\" #define ECPG_SQLSTATE_INVALID_DESCRIPT"
+    }
+   ],
+   "07009": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 249,
+     "context": "TE_VIOLATION \"07006\" #define ECPG_SQLSTATE_INVALID_DESCRIPTOR_INDEX \"07009\" #define ECPG_SQLSTATE_SQLCLIENT_UNABLE"
+    }
+   ],
+   "08001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 250,
+     "context": "9\" #define ECPG_SQLSTATE_SQLCLIENT_UNABLE_TO_ESTABLISH_SQLCONNECTION \"08001\" #define ECPG_SQLSTATE_CONNECTION_DOES_"
+    }
+   ],
+   "08003": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 251,
+     "context": "LCONNECTION \"08001\" #define ECPG_SQLSTATE_CONNECTION_DOES_NOT_EXIST \"08003\" #define ECPG_SQLSTATE_TRANSACTION_RESO"
+    }
+   ],
+   "08007": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 252,
+     "context": "_EXIST \"08003\" #define ECPG_SQLSTATE_TRANSACTION_RESOLUTION_UNKNOWN \"08007\" #define ECPG_SQLSTATE_CARDINALITY_VIOL"
+    }
+   ],
+   "21000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/error.c",
+     "line": 274,
+     "context": "PLICATE_KEY : ECPG_DUPLICATE_KEY; else if (strncmp(sqlca->sqlstate, \"21000\", sizeof(sqlca->sqlstate)) == 0) sqlc"
+    },
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 253,
+     "context": "SOLUTION_UNKNOWN \"08007\" #define ECPG_SQLSTATE_CARDINALITY_VIOLATION \"21000\" #define ECPG_SQLSTATE_NULL_VALUE_NO_IN"
+    }
+   ],
+   "22002": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 254,
+     "context": "TION \"21000\" #define ECPG_SQLSTATE_NULL_VALUE_NO_INDICATOR_PARAMETER \"22002\" #define ECPG_SQLSTATE_ACTIVE_SQL_TRANS"
+    }
+   ],
+   "23505": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/error.c",
+     "line": 272,
+     "context": "SQLCODE for backward compatibility */ if (strncmp(sqlca->sqlstate, \"23505\", sizeof(sqlca->sqlstate)) == 0) sqlc"
+    }
+   ],
+   "25001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 255,
+     "context": "ATOR_PARAMETER \"22002\" #define ECPG_SQLSTATE_ACTIVE_SQL_TRANSACTION \"25001\" #define ECPG_SQLSTATE_NO_ACTIVE_SQL_TR"
+    }
+   ],
+   "25P01": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 256,
+     "context": "RANSACTION \"25001\" #define ECPG_SQLSTATE_NO_ACTIVE_SQL_TRANSACTION \"25P01\" #define ECPG_SQLSTATE_INVALID_SQL_STAT"
+    }
+   ],
+   "26000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 257,
+     "context": "RANSACTION \"25P01\" #define ECPG_SQLSTATE_INVALID_SQL_STATEMENT_NAME \"26000\" #define ECPG_SQLSTATE_INVALID_SQL_DESC"
+    }
+   ],
+   "33000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 258,
+     "context": "EMENT_NAME \"26000\" #define ECPG_SQLSTATE_INVALID_SQL_DESCRIPTOR_NAME \"33000\" #define ECPG_SQLSTATE_INVALID_CURSOR_N"
+    }
+   ],
+   "34000": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 259,
+     "context": "QL_DESCRIPTOR_NAME \"33000\" #define ECPG_SQLSTATE_INVALID_CURSOR_NAME \"34000\" #define ECPG_SQLSTATE_SYNTAX_ERROR \""
+    }
+   ],
+   "42804": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 261,
+     "context": "TATE_SYNTAX_ERROR \"42601\" #define ECPG_SQLSTATE_DATATYPE_MISMATCH \"42804\" #define ECPG_SQLSTATE_DUPLICATE_CURSOR"
+    }
+   ],
+   "42P03": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 262,
+     "context": "E_DATATYPE_MISMATCH \"42804\" #define ECPG_SQLSTATE_DUPLICATE_CURSOR \"42P03\" /* implementation-defined internal er"
+    }
+   ],
+   "YE001": [
+    {
+     "file": "src/interfaces/ecpg/ecpglib/ecpglib_extern.h",
+     "line": 266,
+     "context": "ECPG_INTERNAL_ERROR \"YE000\" #define ECPG_SQLSTATE_ECPG_OUT_OF_MEMORY \"YE001\" #endif /* _ECPG_ECPGLIB_EXTERN_"
+    },
+    {
+     "file": "src/interfaces/ecpg/ecpglib/misc.c",
+     "line": 577,
+     "context": "} sqlca->sqlcode = ECPG_OUT_OF_MEMORY; strncpy(sqlca->sqlstate, \"YE001\", sizeof(sqlca->sqlstate)); snprintf("
+    }
+   ],
+   "YE002": []
+  }
+ }
+}

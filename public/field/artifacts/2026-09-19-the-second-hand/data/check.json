@@ -1,0 +1,1034 @@
+{
+ "note": "Session 164, 2026-09-19. Every number on the page re-derived from the committed evidence. No network. A check that verifies numerals does not verify claims \u2014 the claims are argued on the page and in the adjudication, where a reader can disagree with them.",
+ "n_checks": 164,
+ "n_pass": 164,
+ "n_fail": 0,
+ "checks": [
+  {
+   "check": "corpus: 740 texts",
+   "pass": true,
+   "got": 740,
+   "want": 740
+  },
+  {
+   "check": "corpus: no harvest error",
+   "pass": true,
+   "got": {},
+   "want": {}
+  },
+  {
+   "check": "corpus: entry count matches",
+   "pass": true,
+   "got": 740,
+   "want": 740
+  },
+  {
+   "check": "corpus: digest recomputes from the committed entries",
+   "pass": true,
+   "got": "73363f6622045c5a4cebc39af0bedf3bbe5cc5f212549a56aae249cdcf8315ec",
+   "want": "73363f6622045c5a4cebc39af0bedf3bbe5cc5f212549a56aae249cdcf8315ec"
+  },
+  {
+   "check": "corpus: every sha256 is 64 hex",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "corpus: digest carried into verdicts",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "corpus: digest carried into analysis",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "corpus: digest printed on the page",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "corpus: no licence text is committed anywhere in data/",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "verdicts: 1,480 rows",
+   "pass": true,
+   "got": 1480,
+   "want": 1480
+  },
+  {
+   "check": "verdicts: 740 identifiers",
+   "pass": true,
+   "got": 740,
+   "want": 740
+  },
+  {
+   "check": "verdicts: identifiers match the corpus",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "verdicts: two arms, 740 each",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "verdicts: every implementation on every row",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "verdicts: no implementation ever returned nothing",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "verdicts: every family is in the contract vocabulary",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "verdicts: every attribution is in the contract vocabulary",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "verdicts: all six delivered, no failures",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "agreement recomputes: I-A vs I-B",
+   "pass": true,
+   "got": 671,
+   "want": 671
+  },
+  {
+   "check": "agreement pct recomputes: I-A vs I-B",
+   "pass": true,
+   "got": 90.68,
+   "want": 90.68
+  },
+  {
+   "check": "agreement recomputes: I-A vs I-C",
+   "pass": true,
+   "got": 692,
+   "want": 692
+  },
+  {
+   "check": "agreement pct recomputes: I-A vs I-C",
+   "pass": true,
+   "got": 93.51,
+   "want": 93.51
+  },
+  {
+   "check": "agreement recomputes: I-A vs I-D",
+   "pass": true,
+   "got": 694,
+   "want": 694
+  },
+  {
+   "check": "agreement pct recomputes: I-A vs I-D",
+   "pass": true,
+   "got": 93.78,
+   "want": 93.78
+  },
+  {
+   "check": "agreement recomputes: I-A vs R-ship",
+   "pass": true,
+   "got": 711,
+   "want": 711
+  },
+  {
+   "check": "agreement pct recomputes: I-A vs R-ship",
+   "pass": true,
+   "got": 96.08,
+   "want": 96.08
+  },
+  {
+   "check": "agreement recomputes: I-B vs I-C",
+   "pass": true,
+   "got": 633,
+   "want": 633
+  },
+  {
+   "check": "agreement pct recomputes: I-B vs I-C",
+   "pass": true,
+   "got": 85.54,
+   "want": 85.54
+  },
+  {
+   "check": "agreement recomputes: I-B vs I-D",
+   "pass": true,
+   "got": 653,
+   "want": 653
+  },
+  {
+   "check": "agreement pct recomputes: I-B vs I-D",
+   "pass": true,
+   "got": 88.24,
+   "want": 88.24
+  },
+  {
+   "check": "agreement recomputes: I-B vs R-ship",
+   "pass": true,
+   "got": 685,
+   "want": 685
+  },
+  {
+   "check": "agreement pct recomputes: I-B vs R-ship",
+   "pass": true,
+   "got": 92.57,
+   "want": 92.57
+  },
+  {
+   "check": "agreement recomputes: I-C vs I-D",
+   "pass": true,
+   "got": 671,
+   "want": 671
+  },
+  {
+   "check": "agreement pct recomputes: I-C vs I-D",
+   "pass": true,
+   "got": 90.68,
+   "want": 90.68
+  },
+  {
+   "check": "agreement recomputes: I-C vs R-ship",
+   "pass": true,
+   "got": 663,
+   "want": 663
+  },
+  {
+   "check": "agreement pct recomputes: I-C vs R-ship",
+   "pass": true,
+   "got": 89.59,
+   "want": 89.59
+  },
+  {
+   "check": "agreement recomputes: I-D vs R-ship",
+   "pass": true,
+   "got": 681,
+   "want": 681
+  },
+  {
+   "check": "agreement pct recomputes: I-D vs R-ship",
+   "pass": true,
+   "got": 92.03,
+   "want": 92.03
+  },
+  {
+   "check": "all five agree on families, arm C",
+   "pass": true,
+   "got": 612,
+   "want": 612
+  },
+  {
+   "check": "that number is 612",
+   "pass": true,
+   "got": 612,
+   "want": 612
+  },
+  {
+   "check": "82.70 % recomputes",
+   "pass": true,
+   "got": 82.7,
+   "want": 82.7
+  },
+  {
+   "check": "the headline figure appears on the page exactly twice, unaltered",
+   "pass": true,
+   "got": 2,
+   "want": 2
+  },
+  {
+   "check": "the headline count appears on the page exactly twice",
+   "pass": true,
+   "got": 2,
+   "want": 2
+  },
+  {
+   "check": "no other agreement percentage is passed off as the headline",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "independents disagree internally: 127",
+   "pass": true,
+   "got": 127,
+   "want": 127
+  },
+  {
+   "check": "analysis records that number unaltered",
+   "pass": true,
+   "got": 127,
+   "want": 127
+  },
+  {
+   "check": "analysis records the unanimous-against count unaltered",
+   "pass": true,
+   "got": 11,
+   "want": 11
+  },
+  {
+   "check": "independents unanimous against R-ship: 11",
+   "pass": true,
+   "got": 11,
+   "want": 11
+  },
+  {
+   "check": "P5 holds as stated (127 > 11)",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication covers exactly those 11",
+   "pass": true,
+   "got": [
+    "BSD-2-Clause-first-lines",
+    "BSD-4-Clause-UC",
+    "CAL-1.0",
+    "CAL-1.0-Combined-Work-Exception",
+    "Community-Spec-1.0",
+    "CryptoSwift",
+    "Cube",
+    "InnoSetup",
+    "MIT-advertising",
+    "MIT-enna",
+    "X11"
+   ],
+   "want": [
+    "BSD-2-Clause-first-lines",
+    "BSD-4-Clause-UC",
+    "CAL-1.0",
+    "CAL-1.0-Combined-Work-Exception",
+    "Community-Spec-1.0",
+    "CryptoSwift",
+    "Cube",
+    "InnoSetup",
+    "MIT-advertising",
+    "MIT-enna",
+    "X11"
+   ]
+  },
+  {
+   "check": "adjudication X11: independents' verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication X11: R-ship's verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication MIT-advertising: independents' verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication MIT-advertising: R-ship's verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication MIT-enna: independents' verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication MIT-enna: R-ship's verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication CryptoSwift: independents' verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication CryptoSwift: R-ship's verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication Cube: independents' verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication Cube: R-ship's verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication BSD-2-Clause-first-lines: independents' verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication BSD-2-Clause-first-lines: R-ship's verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication BSD-4-Clause-UC: independents' verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication BSD-4-Clause-UC: R-ship's verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication CAL-1.0: independents' verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication CAL-1.0: R-ship's verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication CAL-1.0-Combined-Work-Exception: independents' verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication CAL-1.0-Combined-Work-Exception: R-ship's verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication Community-Spec-1.0: independents' verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication Community-Spec-1.0: R-ship's verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication InnoSetup: independents' verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication InnoSetup: R-ship's verdict matches the rows",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "adjudication verdict counts",
+   "pass": true,
+   "got": {
+    "R-ship wrong": 6,
+    "R-ship right": 4,
+    "specification does not decide": 1
+   },
+   "want": {
+    "R-ship wrong": 6,
+    "R-ship right": 4,
+    "specification does not decide": 1
+   }
+  },
+  {
+   "check": "six convict us",
+   "pass": true,
+   "got": 6,
+   "want": 6
+  },
+  {
+   "check": "four acquit us",
+   "pass": true,
+   "got": 4,
+   "want": 4
+  },
+  {
+   "check": "one is undecidable",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "defect 4 is real: lowercase (c) notice is recognised",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "defect 4 is real: capital (C) notice is NOT recognised",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "defect 4: the holder is there either way",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "defect 4: _TAIL_WORD is compiled without re.I",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "09-18: 156 licence-shaped files in D1",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "09-18: exactly 3 scored files recorded with no copyright line",
+   "pass": true,
+   "got": 3,
+   "want": 3
+  },
+  {
+   "check": "09-18: they are the three named in the adjudication",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "09-18: the headline was 100 of 105 = 95.2 %",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "09-18: the misread repository delivers through other files",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "09-18: it holds 18 licence-shaped files",
+   "pass": true,
+   "got": 18,
+   "want": 18
+  },
+  {
+   "check": "09-18: 14 of them deliver",
+   "pass": true,
+   "got": 14,
+   "want": 14
+  },
+  {
+   "check": "the page says fourteen, not sixteen",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "09-18: the holderless six are still six",
+   "pass": true,
+   "got": 6,
+   "want": 6
+  },
+  {
+   "check": "09-18: the misread repository was never among them",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "the page says the headline does not move",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition R-ship: parts sum to the scored total",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition R-ship: pct recomputes",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition I-A: parts sum to the scored total",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition I-A: pct recomputes",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition I-B: parts sum to the scored total",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition I-B: pct recomputes",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition I-C: parts sum to the scored total",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition I-C: pct recomputes",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition I-D: parts sum to the scored total",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition I-D: pct recomputes",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition R-def: parts sum to the scored total",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "transition R-def: pct recomputes",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "R-def scores 0 on the transition",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "R-def is really the defect: named on canonical MIT",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "R-ship says placeholder on canonical MIT",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "all four independents say placeholder on canonical MIT",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "all four say named on the filled MIT",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-A: file is committed",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-A: sha256 matches",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-A: byte length matches",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-B: file is committed",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-B: sha256 matches",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-B: byte length matches",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-C: file is committed",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-C: sha256 matches",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-C: byte length matches",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-D: file is committed",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-D: sha256 matches",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "I-D: byte length matches",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "K3: the repaired scan passes all four",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "K3: four modules scanned",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "K3: no non-standard-library import anywhere",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "K3: both failing runs are kept",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "K3 run 1 failed all four",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "K3 run 1 failed on the word curly / the licence URLs",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "K3 run 2 failed all four on re.compile",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "six predictions recorded",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "four confirmed, two refuted",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "every prediction's expectation was recorded in advance",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "both refutations were the expected direction",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "all four kill conditions are on the record",
+   "pass": true,
+   "got": [
+    "K1",
+    "K2",
+    "K3",
+    "K4"
+   ],
+   "want": [
+    "K1",
+    "K2",
+    "K3",
+    "K4"
+   ]
+  },
+  {
+   "check": "no kill condition fired",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "K1 carries its evidence",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "K2 carries its evidence",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "K3 carries its evidence",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "K4 carries its evidence",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "P1 appears on the page",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "P2 appears on the page",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "P3 appears on the page",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "P4 appears on the page",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "P5 appears on the page",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "P6 appears on the page",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "Knight & Leveson is recorded as NOT read",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "nothing is quoted from it as the paper",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "the trap is recorded",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "the page says it was not read",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "silberzahn-2018 was read",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "silberzahn-2018 carries quoted passages",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "silberzahn-2018: quotation is not empty",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "silberzahn-2018: quotation is not empty",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "silberzahn-2018: quotation is not empty",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "wolter-2019 was read",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "wolter-2019 carries quoted passages",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "wolter-2019: quotation is not empty",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "wolter-2019: quotation is not empty",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "wolter-2019: quotation is not empty",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "Wolter's 83.24 % is quoted, not paraphrased",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "and it appears on the page",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "pre-registration names all six predictions",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "pre-registration names all four kill conditions",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "pre-registration publishes the fill table in full",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "pre-registration states the independence limitation",
+   "pass": true,
+   "got": null,
+   "want": null
+  },
+  {
+   "check": "the page states it too",
+   "pass": true,
+   "got": null,
+   "want": null
+  }
+ ]
+}

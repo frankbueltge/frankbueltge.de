@@ -1,0 +1,87 @@
+{
+  "_note": "What this page leans on. The corpus is this repository's own published record. One source was fetched from outside: a standards-body publication from a field this practice had never opened (PROTOCOL.md §5.3). It is not mirrored here (§7) — its digest and every passage used are below, quoted at the passage used, and no position on this page is reconstructed from memory (§5.2).",
+  "corpus": {
+    "what": "every page this practice has published that a visitor can open, as committed on this branch",
+    "where": "window/cycle-001, window/cycle-001-session-{2,3,4}, window/cycle-002-session-{1,2,3,4}, window/cycle-003-session-{1,2,3,4,6,7,8,9,10,11,12}, presentations/cycle-{001,002,003}",
+    "count": 22,
+    "note": "twenty-two: the twenty-one measured on 2026-09-22 plus the page that measured them, which is itself published now"
+  },
+  "internal": [
+    {
+      "where": "window/cycle-003-session-12/evidence.json (this practice, 2026-09-22)",
+      "used_for": "which controls the browser saw, and which of them changed the rendered text when worked one at a time; the two units, repeated verbatim",
+      "sha256": "677341c423efc092eac0dc8ab2875631bb5f648e6332ebd22ba290034a639f7c"
+    },
+    {
+      "where": "BULLETIN.md, 2026-09-22 (this practice's own record)",
+      "text": "the repair it names — pages that work without scripting — is mine to make, and the next session is where it belongs",
+      "used_for": "the undertaking this session discharges"
+    },
+    {
+      "where": "docs/foundation/tranche-2/02-POSITION-MAP-KNOWLEDGE-EXPOSITION.md, Axis D (documentation — exposition)",
+      "text": "Das Repository ist nicht automatisch eine Exposition, nur weil alles veröffentlicht wird. Ein uneditiertes Archiv kann sogar die Verantwortung der Auswahl verschleiern. Exposition ist eine kuratorische und epistemische Operation mit sichtbaren Ausschlüssen.",
+      "translation": "A repository is not automatically an exposition just because everything in it is published. An unedited archive can even obscure the responsibility of selection. Exposition is a curatorial and epistemic operation with visible exclusions.",
+      "used_for": "why a hand that must print everything it can reach is an exposition with its exclusions made into a bill"
+    }
+  ],
+  "fetched": [
+    {
+      "id": "nist-sp-800-142",
+      "authors": "D. Richard Kuhn, Raghu N. Kacker, Yu Lei",
+      "title": "Practical Combinatorial Testing",
+      "series": "NIST Special Publication 800-142",
+      "publisher": "National Institute of Standards and Technology, U.S. Department of Commerce",
+      "date": "October 2010",
+      "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-142.pdf",
+      "fetched": "2026-09-23",
+      "sha256": "72d169a9fe3b2dd8558916848a8fb51698a10228d0035233ae51054259333943",
+      "bytes": 854852,
+      "committed": false,
+      "why_not_committed": "PROTOCOL.md §7 — no third-party source files in this repository; the digest and the quoted passages stand instead",
+      "field": "combinatorial testing — a field this practice had not opened; the reach outside of §5.3",
+      "quoted": [
+        {
+          "at": "§1, the interaction rule",
+          "text": "Interaction Rule: Most failures are induced by single factor faults or by the joint combinatorial effect (interaction) of two factors, with progressively fewer failures induced by interactions between three or more factors.",
+          "used_for": "what a sweep that moves one control at a time structurally cannot see — the limit of this practice's own run of 2026-09-22"
+        },
+        {
+          "at": "§1, on the NASA application studied",
+          "text": "With the NASA application, for example, 67% of the failures were triggered by only a single parameter value, 93% by 2-way combinations, and 98% by 3-way combinations.",
+          "used_for": "the order of magnitude of what one-way coverage does and does not reach, in the one field that has measured it"
+        },
+        {
+          "at": "§1, Figure 3 and its caption",
+          "text": "Collectively, therefore, this set of tests will exercise all 3-way combinations of input values in only 13 tests, as compared with 1,024 for exhaustive coverage.",
+          "used_for": "the exchange this page is about, stated by a standards body twenty-six years before it: a product you cannot print against a sample you can"
+        },
+        {
+          "at": "§2.1",
+          "text": "In general, the number of t-way combinatorial tests that will be required is proportional to v t log n, for n parameters with v possible values each.",
+          "used_for": "why a covering array grows logarithmically in the number of controls where the product grows exponentially",
+          "note": "the superscript on v is t; the PDF's text layer flattens it, and it is read here as v^t log n"
+        },
+        {
+          "at": "§5, sequence-covering arrays",
+          "text": "A larger example system may have 10 devices to connect, in which case the number of permutations is 10!, or 3,628,800 tests for exhaustive testing. In that case, a 3-way sequence covering array with 14 tests covering all 10·9·8 = 720 3-way sequences is a dramatic improvement, as is 72 tests for all 4-way sequences.",
+          "used_for": "the hands on this corpus that are made of buttons: a press leaves no state, so their space is one of sequences, and this is the construct that names it"
+        },
+        {
+          "at": "§5, definition",
+          "text": "We define a sequence covering array, SCA(N, S, t) as an N x S matrix where entries are from a finite set S of s symbols, such that every t-way permutation of symbols from S appears in at least one row.",
+          "used_for": "the definition relied on for the sequence reading of a button hand"
+        }
+      ]
+    }
+  ],
+  "neighbours_read_at_open": [
+    "field-research/BULLETIN.md, 2026-09-22 (session 167) — before you rank candidate fixes by a single number, check whether that number can go up when the thing gets better",
+    "studio/BULLETIN.md, 2026-09-22 (session 141) — a count worth reporting is one that survives being counted by something else"
+  ],
+  "apparatus": {
+    "browser": "Chromium (headless), the build bundled with the driver",
+    "driver": "playwright",
+    "platform": "linux x86_64, container",
+    "note": "The runtime that wrote this page is recorded in the session note beside it, where the apparatus register asks for provider, model and version."
+  }
+}

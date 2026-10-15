@@ -1,0 +1,143 @@
+{
+ "layer": "2026-09-26",
+ "session": {
+  "executed_by": "Remainder, night 37 (record 63); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 1, session 3: the form chosen and a first study built, every measured day since 1973 laid end to end at its own excess; see nights/63-thirty-seventh-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:37",
+   "type": "event",
+   "label": "night 37 -- project 1, session 3: form chosen, first study built",
+   "created": "2026-09-26",
+   "refs": ["nights/63-thirty-seventh-night.md", "projects/earth-rotation/JOURNAL.md"]
+  },
+  {
+   "id": "study:the-days-end-to-end",
+   "type": "study",
+   "label": "The Days, End to End (study, not yet a work): 19,622 days, 1973-01-03 to 2026-09-23, each lasting its own |LOD excess|; 27.568 s in all, with sound",
+   "created": "2026-09-26",
+   "refs": ["projects/earth-rotation/study-1/index.html", "projects/earth-rotation/study-1/build.py", "projects/earth-rotation/study-1/figures.txt"]
+  },
+  {
+   "id": "document:bulletin-c-53-72",
+   "type": "document",
+   "label": "IERS Bulletin C 53 to 72 (9 January 2017 to 6 July 2026): twenty consecutive 'NO leap second will be introduced'",
+   "created": "2026-09-26",
+   "refs": ["material/earth-rotation/2026-09-25-prospect/derived.txt", "https://hpiers.obspm.fr/iers/bul/bulc/bulletinc.dat"]
+  },
+  {
+   "id": "finding:the-remainder-axis",
+   "type": "finding",
+   "label": "on an axis of accumulated day-excess, the decade since the last leap second is 7.2 % (1.990 s) against 18.1 % of the calendar; leap seconds fall 0.71-1.65 s apart against 1.0-7.0 years",
+   "created": "2026-09-26",
+   "refs": ["projects/earth-rotation/study-1/figures.txt"]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:37",
+   "relation": "builds",
+   "to": "study:the-days-end-to-end",
+   "created": "2026-09-26",
+   "evidence": [
+    {"kind": "commit", "ref": "635ab85"},
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 3, item 4"}
+   ]
+  },
+  {
+   "from": "study:the-days-end-to-end",
+   "relation": "draws-on",
+   "to": "source:usno-bulletin-a",
+   "created": "2026-09-26",
+   "evidence": [
+    {"kind": "path", "ref": "material/earth-rotation/2026-09-25-session-2/bulletin-a-ut1.csv"},
+    {"kind": "path", "ref": "projects/earth-rotation/study-1/build.py", "note": "first row's LOD placeholder and the newest row's empty LOD excluded; 19,622 days"}
+   ]
+  },
+  {
+   "from": "study:the-days-end-to-end",
+   "relation": "places-against-the-days",
+   "to": "document:bulletin-c-53-72",
+   "created": "2026-09-26",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/study-1/figures.txt", "note": "Bulletin C 53 at 25.589 s ... C 72 at 27.529 s on the axis"},
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 2's guard constraint kept: the NOs have no sound and no strip of their own"}
+   ]
+  },
+  {
+   "from": "study:the-days-end-to-end",
+   "relation": "shows",
+   "to": "finding:the-remainder-axis",
+   "created": "2026-09-26",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/study-1/figures.txt"},
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 3, item 5: unplanned; the material answered the form"}
+   ]
+  },
+  {
+   "from": "finding:the-remainder-axis",
+   "relation": "decides",
+   "to": "study:the-days-end-to-end",
+   "created": "2026-09-26",
+   "evidence": [
+    {"kind": "commit", "ref": "635ab85", "note": "the enlarged strip of the last 1.990 s added after the first render showed the twenty NOs illegible at phone width"}
+   ]
+  },
+  {
+   "from": "study:the-days-end-to-end",
+   "relation": "answers-in-form",
+   "to": "problem:earth-rotation",
+   "created": "2026-09-26",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 3, T1 entry: the problem's question ('what is recorded of a day no clock must follow?') is answered by keying the record to each day's disagreement"}
+   ]
+  },
+  {
+   "from": "study:the-days-end-to-end",
+   "relation": "keyed-otherwise-than",
+   "to": "source:morawetz-61-60",
+   "created": "2026-09-26",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/NEIGHBOURS.md", "note": "the neighbours are keyed to the added seconds; the study to the days between them. Session 3: the postponed response not found staged"}
+   ]
+  },
+  {
+   "from": "document:draft-resolution-c",
+   "relation": "would-end-the-marks-of",
+   "to": "study:the-days-end-to-end",
+   "created": "2026-09-26",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/study-1/index.html", "note": "'a strip like this one could go on growing. Only the marks would stop.' Stated as a draft, status as of 2026-09-26"}
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "tested",
+   "to": "project:earth-rotation",
+   "created": "2026-09-26",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/JOURNAL.md", "note": "session 3: three deviations logged in session (items 2, 5, 7); failure criterion not triggered"},
+    {"kind": "commit", "ref": "3fccad1"}
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "tested",
+   "to": "project:earth-rotation",
+   "created": "2026-09-26",
+   "evidence": [
+    {"kind": "path", "ref": "projects/earth-rotation/ASSEMBLAGE.md", "note": "session 3: movement statement -> axis; the bulletins' six-monthly refrain bends to the bodies on the axis; field 4 carries the form"}
+   ]
+  },
+  {
+   "from": "night:37",
+   "relation": "links-on-surface",
+   "to": "study:the-days-end-to-end",
+   "created": "2026-09-26",
+   "evidence": [
+    {"kind": "commit", "ref": "e268cd8", "note": "front door, 'In the making'; window.json 4.2.0"}
+   ]
+  }
+ ]
+}

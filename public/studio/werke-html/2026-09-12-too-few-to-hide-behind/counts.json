@@ -1,0 +1,5725 @@
+{
+ "api": "https://ec.europa.eu/eurostat/api/dissemination",
+ "census": [
+  {
+   "cells": 106865,
+   "dataflow": "demo_gind",
+   "not_available": 40973,
+   "published": 65892,
+   "sealed": 0,
+   "title": "Population change - demographic balance and crude rates"
+  },
+  {
+   "cells": 1171170,
+   "dataflow": "demo_pjan",
+   "not_available": 428440,
+   "published": 742730,
+   "sealed": 0,
+   "title": "Population on 1 January by age and sex"
+  },
+  {
+   "cells": 10593000,
+   "dataflow": "prc_hicp_midx",
+   "not_available": 2870265,
+   "published": 7699058,
+   "sealed": 23677,
+   "title": "Harmonised index of consumer prices - monthly index"
+  },
+  {
+   "cells": 98676,
+   "dataflow": "nrg_cb_e",
+   "not_available": 18471,
+   "published": 80205,
+   "sealed": 0,
+   "title": "Supply, transformation and consumption of electricity"
+  },
+  {
+   "cells": 54648,
+   "dataflow": "tour_occ_ninat",
+   "not_available": 21788,
+   "published": 32860,
+   "sealed": 0,
+   "title": "Nights spent at tourist accommodation establishments"
+  },
+  {
+   "cells": 2392060,
+   "dataflow": "env_wasgen",
+   "not_available": 910746,
+   "published": 1457402,
+   "sealed": 23912,
+   "title": "Generation of waste by economic activity"
+  },
+  {
+   "cells": 9801792,
+   "dataflow": "hlth_cd_aro",
+   "not_available": 1376109,
+   "published": 8276642,
+   "sealed": 149041,
+   "title": "Causes of death - deaths by country of residence and occurrence"
+  },
+  {
+   "cells": 972777,
+   "dataflow": "educ_uoe_enra02",
+   "not_available": 218307,
+   "published": 754470,
+   "sealed": 0,
+   "title": "Pupils and students enrolled by education level"
+  },
+  {
+   "cells": 2899,
+   "dataflow": "road_eqs_carage",
+   "not_available": 185,
+   "published": 2714,
+   "sealed": 0,
+   "title": "Passenger cars by age"
+  },
+  {
+   "cells": 1188456,
+   "dataflow": "isoc_ci_ifp_iu",
+   "not_available": 658200,
+   "published": 530232,
+   "sealed": 24,
+   "title": "Individuals - internet use"
+  }
+ ],
+ "downloads": {
+  "demo_gind": {
+   "bytes": 199232,
+   "sha256": "31948da1c978821559bd3eb8732e7ca32494667816b533be079b7eab0166d764"
+  },
+  "demo_pjan": {
+   "bytes": 2326472,
+   "sha256": "636df6149879e151f6af158edfbbfa679b7ba10ad3cac39269351901eca4f8bf"
+  },
+  "educ_uoe_enra02": {
+   "bytes": 1389108,
+   "sha256": "261bde9c5e8a6a926f686cdcfd10613d064cdd671c7100e17e1c01058149b58f"
+  },
+  "env_wasgen": {
+   "bytes": 2608848,
+   "sha256": "f39ba0d28b47493bcdbbff658056b2e680f98431b1d8056a4737b75c8ae34989"
+  },
+  "hlth_cd_aro": {
+   "bytes": 10292616,
+   "sha256": "44bb1947a934021cc6897eae4506400af5abd26ee7bfd2d01f4fc19094799f98"
+  },
+  "isoc_ci_ifp_iu": {
+   "bytes": 1395656,
+   "sha256": "c02b8e9b2fe45b2d99ada6627249624445250b9120ff06b40dd9074ccd57f7bd"
+  },
+  "nrg_cb_e": {
+   "bytes": 184396,
+   "sha256": "e1248d9b3d9b16442a1dfa742bbb8a3274f76233e9dbbfbf292504f93b185835"
+  },
+  "prc_hicp_midx": {
+   "bytes": 15790880,
+   "sha256": "70e3424930418a1ae01b8a3101a549fdafc48fb5e84f25619ec1b95c5c466148"
+  },
+  "road_eqs_carage": {
+   "bytes": 11698,
+   "sha256": "ede9998bd5676ea563f0a4023d9c5256ca45550be82f9ea5da9690b6f25f6f94"
+  },
+  "sbs_ovw_act": {
+   "bytes": 17393892,
+   "sha256": "26a28da93364490cece7b17c635d17a70237446e7cbaeb4b85dc52f9e86efb18"
+  },
+  "tour_occ_ninat": {
+   "bytes": 117519,
+   "sha256": "cbbc2c4cc1478d9ceb4deb443f2a0c255c00d82cc91e04b5f9adefbf95769617"
+  }
+ },
+ "harvested_utc": "2026-09-12",
+ "labels": {
+  "geo": {
+   "AL": "Albania",
+   "AT": "Austria",
+   "BA": "Bosnia and Herzegovina",
+   "BE": "Belgium",
+   "BG": "Bulgaria",
+   "CH": "Switzerland",
+   "CY": "Cyprus",
+   "CZ": "Czechia",
+   "DE": "Germany",
+   "DK": "Denmark",
+   "EE": "Estonia",
+   "EL": "Greece",
+   "ES": "Spain",
+   "EU27_2020": "European Union - 27 countries (from 2020)",
+   "FI": "Finland",
+   "FR": "France",
+   "HR": "Croatia",
+   "HU": "Hungary",
+   "IE": "Ireland",
+   "IS": "Iceland",
+   "IT": "Italy",
+   "LT": "Lithuania",
+   "LU": "Luxembourg",
+   "LV": "Latvia",
+   "ME": "Montenegro",
+   "MK": "North Macedonia",
+   "MT": "Malta",
+   "NL": "Netherlands",
+   "NO": "Norway",
+   "PL": "Poland",
+   "PT": "Portugal",
+   "RO": "Romania",
+   "RS": "Serbia",
+   "SE": "Sweden",
+   "SI": "Slovenia",
+   "SK": "Slovakia"
+  },
+  "indic": {
+   "AVG_EXPN_SAL_BEN_TEUR": "Average employee benefits expense - thousand euro",
+   "AV_HW_EUR": "Value added per hours worked by employees - euro",
+   "AV_MEUR": "Value added - million euro",
+   "AV_MFG_PC": "Share of value added in manufacturing total - percentage",
+   "AV_SAL_FTE_TEUR": "Value added per employee FTE - thousand euro",
+   "AV_SAL_TEUR": "Value added per employee - thousand euro",
+   "AV_VAL_OUT_PC": "Value added in output value - percentage",
+   "EMP_ENT_NR": "Persons employed per enterprise - number",
+   "EMP_MFG_PC": "Share of employment in manufacturing total - percentage",
+   "EMP_NR": "Persons employed - number",
+   "ENT_NR": "Enterprises - number",
+   "EXPN_SAL_BEN_HW_EUR": "Employee benefits expense per hours worked by employees - euro",
+   "EXPN_SAL_BEN_MEUR": "Employee benefits expense - million euro",
+   "EXPN_SAL_BEN_PUR_PC": "Share of employee benefits expense in total purchases of goods and services - percentage",
+   "EXPN_SAL_BEN_VAL_OUT_PC": "Share of employee benefits expense in production - percentage",
+   "GM_GD_RS_MEUR": "Gross margin on goods for resale - million euro",
+   "GOR_PC": "Gross operating rate - percentage",
+   "GOS_AV_PC": "Share of gross operating surplus in value added - percentage",
+   "GOS_MEUR": "Gross operating surplus - million euro",
+   "GRSINV_MAC_AV_PC": "Investment rate - machinery and equipment - percentage",
+   "GRSINV_MAC_EMP_TEUR": "Investment per employee - machinery and equipment - thousand euro",
+   "GRSINV_MAC_MEUR": "Gross investment in machinery and equipment - million euro",
+   "GRSINV_TNCA_AV_PC": "Investment rate - tangible non-current assets - percentage",
+   "GRSINV_TNCA_EMP_TEUR": "Investment per employee - tangible non-current assets - thousand euro",
+   "GRSINV_TNCA_MEUR": "Gross investment in tangible non-current assets - million euro",
+   "GRW_EMP_PC": "Growth rate of employment - percentage",
+   "HW_NR": "Hours worked by employees - number",
+   "LABPRY_TEUR": "Apparent labour productivity - thousand euro",
+   "LC_AV_PC": "Labour costs per value added - percentage",
+   "LC_EMP_TEUR": "Labour costs per person employed - thousand euro",
+   "LC_SAL_FTE_TEUR": "Labour cost per employee FTE - thousand euro",
+   "NETTUR_EMP_TEUR": "Net turnover per person employed - thousand euro",
+   "NETTUR_MEUR": "Net turnover - million euro",
+   "NETTUR_MFG_PC": "Share of net turnover in manufacturing total - percentage",
+   "PUR_AGN_MEUR": "Expenses on services provided through agency workers - million euro",
+   "PUR_MEUR": "Purchases of goods and services (total) - million euro",
+   "PUR_NRG_MEUR": "Purchases of energy products - million euro",
+   "PUR_RS_MEUR": "Purchases of goods and services for resale - million euro",
+   "SAL_EMP_PC": "Share of employees in persons employed - percentage",
+   "SAL_FTE_NR": "Employees in full-time equivalent units - number",
+   "SAL_NR": "Employees - number",
+   "SS_COST_EXPN_SAL_BEN_PC": "Employer's social charges as a percentage of employee benefits expense - percentage",
+   "SS_COST_MEUR": "Social security costs - million euro",
+   "STK_CHG_GD_FIN_MEUR": "Change in stock of finished goods and work-in-progress - million euro",
+   "VAL_OUT_MEUR": "Value of output - million euro",
+   "VAL_OUT_MFG_PC": "Share of value of output in manufacturing total - percentage",
+   "WAGE_LABPRY_PC": "Wage adjusted labour productivity - percentage",
+   "WAGE_MEUR": "Wages and salaries - million euro"
+  },
+  "nace": {
+   "B": "Mining and quarrying",
+   "B0510": "Mining of hard coal",
+   "B0520": "Mining of lignite",
+   "B0610": "Extraction of crude petroleum",
+   "B0620": "Extraction of natural gas",
+   "B0710": "Mining of iron ores",
+   "B0721": "Mining of uranium and thorium ores",
+   "B0729": "Mining of other non-ferrous metal ores",
+   "B0811": "Quarrying of ornamental and building stone, limestone, gypsum, chalk and slate",
+   "B0812": "\"Operation of gravel and sand pits; mining of clays and kaolin\"",
+   "B0891": "Mining of chemical and fertiliser minerals",
+   "B0892": "Extraction of peat",
+   "B0893": "Extraction of salt",
+   "B0899": "Other mining and quarrying n.e.c.",
+   "B0910": "Support activities for petroleum and natural gas extraction",
+   "B0990": "Support activities for other mining and quarrying",
+   "C": "Manufacturing",
+   "C1011": "Processing and preserving of meat",
+   "C1012": "Processing and preserving of poultry meat",
+   "C1013": "Production of meat and poultry meat products",
+   "C1020": "Processing and preserving of fish, crustaceans and molluscs",
+   "C1031": "Processing and preserving of potatoes",
+   "C1032": "Manufacture of fruit and vegetable juice",
+   "C1039": "Other processing and preserving of fruit and vegetables",
+   "C1041": "Manufacture of oils and fats",
+   "C1042": "Manufacture of margarine and similar edible fats",
+   "C1051": "Operation of dairies and cheese making",
+   "C1052": "Manufacture of ice cream",
+   "C1061": "Manufacture of grain mill products",
+   "C1062": "Manufacture of starches and starch products",
+   "C1071": "Manufacture of bread; manufacture of fresh pastry goods and cakes",
+   "C1072": "Manufacture of rusks and biscuits; manufacture of preserved pastry goods and cakes",
+   "C1073": "Manufacture of macaroni, noodles, couscous and similar farinaceous products",
+   "C1081": "Manufacture of sugar",
+   "C1082": "Manufacture of cocoa, chocolate and sugar confectionery",
+   "C1083": "Processing of tea and coffee",
+   "C1084": "Manufacture of condiments and seasonings",
+   "C1085": "Manufacture of prepared meals and dishes",
+   "C1086": "Manufacture of homogenised food preparations and dietetic food",
+   "C1089": "Manufacture of other food products n.e.c.",
+   "C1091": "Manufacture of prepared feeds for farm animals",
+   "C1092": "Manufacture of prepared pet foods",
+   "C1101": "Distilling, rectifying and blending of spirits",
+   "C1102": "Manufacture of wine from grape",
+   "C1103": "Manufacture of cider and other fruit wines",
+   "C1104": "Manufacture of other non-distilled fermented beverages",
+   "C1105": "Manufacture of beer",
+   "C1106": "Manufacture of malt",
+   "C1107": "Manufacture of soft drinks; production of mineral waters and other bottled waters",
+   "C1200": "Manufacture of tobacco products",
+   "C1310": "Preparation and spinning of textile fibres",
+   "C1320": "Weaving of textiles",
+   "C1330": "Finishing of textiles",
+   "C1391": "Manufacture of knitted and crocheted fabrics",
+   "C1392": "Manufacture of made-up textile articles, except apparel",
+   "C1393": "Manufacture of carpets and rugs",
+   "C1394": "Manufacture of cordage, rope, twine and netting",
+   "C1395": "Manufacture of non-wovens and articles made from non-wovens, except apparel",
+   "C1396": "Manufacture of other technical and industrial textiles",
+   "C1399": "Manufacture of other textiles n.e.c.",
+   "C1411": "Manufacture of leather clothes",
+   "C1412": "Manufacture of workwear",
+   "C1413": "Manufacture of other outerwear",
+   "C1414": "Manufacture of underwear",
+   "C1419": "Manufacture of other wearing apparel and accessories",
+   "C1420": "Manufacture of articles of fur",
+   "C1431": "Manufacture of knitted and crocheted hosiery",
+   "C1439": "Manufacture of other knitted and crocheted apparel",
+   "C1511": "Tanning and dressing of leather; dressing and dyeing of fur",
+   "C1512": "Manufacture of luggage, handbags and the like, saddlery and harness",
+   "C1520": "Manufacture of footwear",
+   "C1610": "Sawmilling and planing of wood",
+   "C1621": "Manufacture of veneer sheets and wood-based panels",
+   "C1622": "Manufacture of assembled parquet floors",
+   "C1623": "Manufacture of other builders' carpentry and joinery",
+   "C1624": "Manufacture of wooden containers",
+   "C1629": "Manufacture of other products of wood; manufacture of articles of cork, straw and plaiting materials",
+   "C1711": "Manufacture of pulp",
+   "C1712": "Manufacture of paper and paperboard",
+   "C1721": "Manufacture of corrugated paper and paperboard and of containers of paper and paperboard",
+   "C1722": "Manufacture of household and sanitary goods and of toilet requisites",
+   "C1723": "Manufacture of paper stationery",
+   "C1724": "Manufacture of wallpaper",
+   "C1729": "Manufacture of other articles of paper and paperboard",
+   "C1811": "Printing of newspapers",
+   "C1812": "Other printing",
+   "C1813": "Pre-press and pre-media services",
+   "C1814": "Binding and related services",
+   "C1820": "Reproduction of recorded media",
+   "C1910": "Manufacture of coke oven products",
+   "C1920": "Manufacture of refined petroleum products",
+   "C2011": "Manufacture of industrial gases",
+   "C2012": "Manufacture of dyes and pigments",
+   "C2013": "Manufacture of other inorganic basic chemicals",
+   "C2014": "Manufacture of other organic basic chemicals",
+   "C2015": "Manufacture of fertilisers and nitrogen compounds",
+   "C2016": "Manufacture of plastics in primary forms",
+   "C2017": "Manufacture of synthetic rubber in primary forms",
+   "C2020": "Manufacture of pesticides and other agrochemical products",
+   "C2030": "Manufacture of paints, varnishes and similar coatings, printing ink and mastics",
+   "C2041": "Manufacture of soap and detergents, cleaning and polishing preparations",
+   "C2042": "Manufacture of perfumes and toilet preparations",
+   "C2051": "Manufacture of explosives",
+   "C2052": "Manufacture of glues",
+   "C2053": "Manufacture of essential oils",
+   "C2059": "Manufacture of other chemical products n.e.c.",
+   "C2060": "Manufacture of man-made fibres",
+   "C2110": "Manufacture of basic pharmaceutical products",
+   "C2120": "Manufacture of pharmaceutical preparations",
+   "C2211": "\"Manufacture of rubber tyres and tubes; retreading and rebuilding of rubber tyres\"",
+   "C2219": "Manufacture of other rubber products",
+   "C2221": "Manufacture of plastic plates, sheets, tubes and profiles",
+   "C2222": "Manufacture of plastic packing goods",
+   "C2223": "Manufacture of builders' ware of plastic",
+   "C2229": "Manufacture of other plastic products",
+   "C2311": "Manufacture of flat glass",
+   "C2312": "Shaping and processing of flat glass",
+   "C2313": "Manufacture of hollow glass",
+   "C2314": "Manufacture of glass fibres",
+   "C2319": "Manufacture and processing of other glass, including technical glassware",
+   "C2320": "Manufacture of refractory products",
+   "C2331": "Manufacture of ceramic tiles and flags",
+   "C2332": "Manufacture of bricks, tiles and construction products, in baked clay",
+   "C2341": "Manufacture of ceramic household and ornamental articles",
+   "C2342": "Manufacture of ceramic sanitary fixtures",
+   "C2343": "Manufacture of ceramic insulators and insulating fittings",
+   "C2344": "Manufacture of other technical ceramic products",
+   "C2349": "Manufacture of other ceramic products",
+   "C2351": "Manufacture of cement",
+   "C2352": "Manufacture of lime and plaster",
+   "C2361": "Manufacture of concrete products for construction purposes",
+   "C2362": "Manufacture of plaster products for construction purposes",
+   "C2363": "Manufacture of ready-mixed concrete",
+   "C2364": "Manufacture of mortars",
+   "C2365": "Manufacture of fibre cement",
+   "C2369": "Manufacture of other articles of concrete, plaster and cement",
+   "C2370": "Cutting, shaping and finishing of stone",
+   "C2391": "Production of abrasive products",
+   "C2399": "Manufacture of other non-metallic mineral products n.e.c.",
+   "C2410": "Manufacture of basic iron and steel and of ferro-alloys",
+   "C2420": "Manufacture of tubes, pipes, hollow profiles and related fittings, of steel",
+   "C2431": "Cold drawing of bars",
+   "C2432": "Cold rolling of narrow strip",
+   "C2433": "Cold forming or folding",
+   "C2434": "Cold drawing of wire",
+   "C2441": "Precious metals production",
+   "C2442": "Aluminium production",
+   "C2443": "Lead, zinc and tin production",
+   "C2444": "Copper production",
+   "C2445": "Other non-ferrous metal production",
+   "C2446": "Processing of nuclear fuel",
+   "C2451": "Casting of iron",
+   "C2452": "Casting of steel",
+   "C2453": "Casting of light metals",
+   "C2454": "Casting of other non-ferrous metals",
+   "C2511": "Manufacture of metal structures and parts of structures",
+   "C2512": "Manufacture of doors and windows of metal",
+   "C2521": "Manufacture of central heating radiators and boilers",
+   "C2529": "Manufacture of other tanks, reservoirs and containers of metal",
+   "C2530": "Manufacture of steam generators, except central heating hot water boilers",
+   "C2540": "Manufacture of weapons and ammunition",
+   "C2550": "Forging, pressing, stamping and roll-forming of metal; powder metallurgy",
+   "C2561": "Treatment and coating of metals",
+   "C2562": "Machining",
+   "C2571": "Manufacture of cutlery",
+   "C2572": "Manufacture of locks and hinges",
+   "C2573": "Manufacture of tools",
+   "C2591": "Manufacture of steel drums and similar containers",
+   "C2592": "Manufacture of light metal packaging",
+   "C2593": "Manufacture of wire products, chain and springs",
+   "C2594": "Manufacture of fasteners and screw machine products",
+   "C2599": "Manufacture of other fabricated metal products n.e.c.",
+   "C2611": "Manufacture of electronic components",
+   "C2612": "Manufacture of loaded electronic boards",
+   "C2620": "Manufacture of computers and peripheral equipment",
+   "C2630": "Manufacture of communication equipment",
+   "C2640": "Manufacture of consumer electronics",
+   "C2651": "Manufacture of instruments and appliances for measuring, testing and navigation",
+   "C2652": "Manufacture of watches and clocks",
+   "C2660": "Manufacture of irradiation, electromedical and electrotherapeutic equipment",
+   "C2670": "Manufacture of optical instruments and photographic equipment",
+   "C2680": "Manufacture of magnetic and optical media",
+   "C2711": "Manufacture of electric motors, generators and transformers",
+   "C2712": "Manufacture of electricity distribution and control apparatus",
+   "C2720": "Manufacture of batteries and accumulators",
+   "C2731": "Manufacture of fibre optic cables",
+   "C2732": "Manufacture of other electronic and electric wires and cables",
+   "C2733": "Manufacture of wiring devices",
+   "C2740": "Manufacture of electric lighting equipment",
+   "C2751": "Manufacture of electric domestic appliances",
+   "C2752": "Manufacture of non-electric domestic appliances",
+   "C2790": "Manufacture of other electrical equipment",
+   "C2811": "Manufacture of engines and turbines, except aircraft, vehicle and cycle engines",
+   "C2812": "Manufacture of fluid power equipment",
+   "C2813": "Manufacture of other pumps and compressors",
+   "C2814": "Manufacture of other taps and valves",
+   "C2815": "Manufacture of bearings, gears, gearing and driving elements",
+   "C2821": "Manufacture of ovens, furnaces and furnace burners",
+   "C2822": "Manufacture of lifting and handling equipment",
+   "C2823": "Manufacture of office machinery and equipment (except computers and peripheral equipment)",
+   "C2824": "Manufacture of power-driven hand tools",
+   "C2825": "Manufacture of non-domestic cooling and ventilation equipment",
+   "C2829": "Manufacture of other general-purpose machinery n.e.c.",
+   "C2830": "Manufacture of agricultural and forestry machinery",
+   "C2841": "Manufacture of metal forming machinery",
+   "C2849": "Manufacture of other machine tools",
+   "C2891": "Manufacture of machinery for metallurgy",
+   "C2892": "Manufacture of machinery for mining, quarrying and construction",
+   "C2893": "Manufacture of machinery for food, beverage and tobacco processing",
+   "C2894": "Manufacture of machinery for textile, apparel and leather production",
+   "C2895": "Manufacture of machinery for paper and paperboard production",
+   "C2896": "Manufacture of plastics and rubber machinery",
+   "C2899": "Manufacture of other special-purpose machinery n.e.c.",
+   "C2910": "Manufacture of motor vehicles",
+   "C2920": "Manufacture of bodies (coachwork) for motor vehicles; manufacture of trailers and semi-trailers",
+   "C2931": "Manufacture of electrical and electronic equipment for motor vehicles",
+   "C2932": "Manufacture of other parts and accessories for motor vehicles",
+   "C3011": "Building of ships and floating structures",
+   "C3012": "Building of pleasure and sporting boats",
+   "C3020": "Manufacture of railway locomotives and rolling stock",
+   "C3030": "Manufacture of air and spacecraft and related machinery",
+   "C3040": "Manufacture of military fighting vehicles",
+   "C3091": "Manufacture of motorcycles",
+   "C3092": "Manufacture of bicycles and invalid carriages",
+   "C3099": "Manufacture of other transport equipment n.e.c.",
+   "C3101": "Manufacture of office and shop furniture",
+   "C3102": "Manufacture of kitchen furniture",
+   "C3103": "Manufacture of mattresses",
+   "C3109": "Manufacture of other furniture",
+   "C3211": "Striking of coins",
+   "C3212": "Manufacture of jewellery and related articles",
+   "C3213": "Manufacture of imitation jewellery and related articles",
+   "C3220": "Manufacture of musical instruments",
+   "C3230": "Manufacture of sports goods",
+   "C3240": "Manufacture of games and toys",
+   "C3250": "Manufacture of medical and dental instruments and supplies",
+   "C3291": "Manufacture of brooms and brushes",
+   "C3299": "Other manufacturing n.e.c.",
+   "C3311": "Repair of fabricated metal products",
+   "C3312": "Repair of machinery",
+   "C3313": "Repair of electronic and optical equipment",
+   "C3314": "Repair of electrical equipment",
+   "C3315": "Repair and maintenance of ships and boats",
+   "C3316": "Repair and maintenance of aircraft and spacecraft",
+   "C3317": "Repair and maintenance of other transport equipment",
+   "C3319": "Repair of other equipment",
+   "C3320": "Installation of industrial machinery and equipment",
+   "D": "Electricity, gas, steam and air conditioning supply",
+   "D3511": "Production of electricity",
+   "D3512": "Transmission of electricity",
+   "D3513": "Distribution of electricity",
+   "D3514": "Trade of electricity",
+   "D3521": "Manufacture of gas",
+   "D3522": "Distribution of gaseous fuels through mains",
+   "D3523": "Trade of gas through mains",
+   "D3530": "Steam and air conditioning supply",
+   "E": "Water supply; sewerage, waste management and remediation activities",
+   "E3600": "Water collection, treatment and supply",
+   "E3700": "Sewerage",
+   "E3811": "Collection of non-hazardous waste",
+   "E3812": "Collection of hazardous waste",
+   "E3821": "Treatment and disposal of non-hazardous waste",
+   "E3822": "Treatment and disposal of hazardous waste",
+   "E3831": "Dismantling of wrecks",
+   "E3832": "Recovery of sorted materials",
+   "E3900": "Remediation activities and other waste management services",
+   "F": "Construction",
+   "F4110": "Development of building projects",
+   "F4120": "Construction of residential and non-residential buildings",
+   "F4211": "Construction of roads and motorways",
+   "F4212": "Construction of railways and underground railways",
+   "F4213": "Construction of bridges and tunnels",
+   "F4221": "Construction of utility projects for fluids",
+   "F4222": "Construction of utility projects for electricity and telecommunications",
+   "F4291": "Construction of water projects",
+   "F4299": "Construction of other civil engineering projects n.e.c.",
+   "F4311": "Demolition",
+   "F4312": "Site preparation",
+   "F4313": "Test drilling and boring",
+   "F4321": "Electrical installation",
+   "F4322": "Plumbing, heat and air-conditioning installation",
+   "F4329": "Other construction installation",
+   "F4331": "Plastering",
+   "F4332": "Joinery installation",
+   "F4333": "Floor and wall covering",
+   "F4334": "Painting and glazing",
+   "F4339": "Other building completion and finishing",
+   "F4391": "Roofing activities",
+   "F4399": "Other specialised construction activities n.e.c.",
+   "G": "Wholesale and retail trade; repair of motor vehicles and motorcycles",
+   "G4511": "Sale of cars and light motor vehicles",
+   "G4519": "Sale of other motor vehicles",
+   "G4520": "Maintenance and repair of motor vehicles",
+   "G4531": "Wholesale trade of motor vehicle parts and accessories",
+   "G4532": "Retail trade of motor vehicle parts and accessories",
+   "G4540": "Sale, maintenance and repair of motorcycles and related parts and accessories",
+   "G4611": "Agents involved in the sale of agricultural raw materials, live animals, textile raw materials and semi-finished goods",
+   "G4612": "Agents involved in the sale of fuels, ores, metals and industrial chemicals",
+   "G4613": "Agents involved in the sale of timber and building materials",
+   "G4614": "Agents involved in the sale of machinery, industrial equipment, ships and aircraft",
+   "G4615": "Agents involved in the sale of furniture, household goods, hardware and ironmongery",
+   "G4616": "Agents involved in the sale of textiles, clothing, fur, footwear and leather goods",
+   "G4617": "Agents involved in the sale of food, beverages and tobacco",
+   "G4618": "Agents specialised in the sale of other particular products",
+   "G4619": "Agents involved in the sale of a variety of goods",
+   "G4621": "Wholesale of grain, unmanufactured tobacco, seeds and animal feeds",
+   "G4622": "Wholesale of flowers and plants",
+   "G4623": "Wholesale of live animals",
+   "G4624": "Wholesale of hides, skins and leather",
+   "G4631": "Wholesale of fruit and vegetables",
+   "G4632": "Wholesale of meat and meat products",
+   "G4633": "Wholesale of dairy products, eggs and edible oils and fats",
+   "G4634": "Wholesale of beverages",
+   "G4635": "Wholesale of tobacco products",
+   "G4636": "Wholesale of sugar and chocolate and sugar confectionery",
+   "G4637": "Wholesale of coffee, tea, cocoa and spices",
+   "G4638": "Wholesale of other food, including fish, crustaceans and molluscs",
+   "G4639": "Non-specialised wholesale of food, beverages and tobacco",
+   "G4641": "Wholesale of textiles",
+   "G4642": "Wholesale of clothing and footwear",
+   "G4643": "Wholesale of electrical household appliances",
+   "G4644": "Wholesale of china and glassware and cleaning materials",
+   "G4645": "Wholesale of perfume and cosmetics",
+   "G4646": "Wholesale of pharmaceutical goods",
+   "G4647": "Wholesale of furniture, carpets and lighting equipment",
+   "G4648": "Wholesale of watches and jewellery",
+   "G4649": "Wholesale of other household goods",
+   "G4651": "Wholesale of computers, computer peripheral equipment and software",
+   "G4652": "Wholesale of electronic and telecommunications equipment and parts",
+   "G4661": "Wholesale of agricultural machinery, equipment and supplies",
+   "G4662": "Wholesale of machine tools",
+   "G4663": "Wholesale of mining, construction and civil engineering machinery",
+   "G4664": "Wholesale of machinery for the textile industry and of sewing and knitting machines",
+   "G4665": "Wholesale of office furniture",
+   "G4666": "Wholesale of other office machinery and equipment",
+   "G4669": "Wholesale of other machinery and equipment",
+   "G4671": "Wholesale of solid, liquid and gaseous fuels and related products",
+   "G4672": "Wholesale of metals and metal ores",
+   "G4673": "Wholesale of wood, construction materials and sanitary equipment",
+   "G4674": "Wholesale of hardware, plumbing and heating equipment and supplies",
+   "G4675": "Wholesale of chemical products",
+   "G4676": "Wholesale of other intermediate products",
+   "G4677": "Wholesale of waste and scrap",
+   "G4690": "Non-specialised wholesale trade",
+   "G4711": "Retail sale in non-specialised stores with food, beverages or tobacco predominating",
+   "G4719": "Other retail sale in non-specialised stores",
+   "G4721": "Retail sale of fruit and vegetables in specialised stores",
+   "G4722": "Retail sale of meat and meat products in specialised stores",
+   "G4723": "Retail sale of fish, crustaceans and molluscs in specialised stores",
+   "G4724": "Retail sale of bread, cakes, flour confectionery and sugar confectionery in specialised stores",
+   "G4725": "Retail sale of beverages in specialised stores",
+   "G4726": "Retail sale of tobacco products in specialised stores",
+   "G4729": "Other retail sale of food in specialised stores",
+   "G4730": "Retail sale of automotive fuel in specialised stores",
+   "G4741": "Retail sale of computers, peripheral units and software in specialised stores",
+   "G4742": "Retail sale of telecommunications equipment in specialised stores",
+   "G4743": "Retail sale of audio and video equipment in specialised stores",
+   "G4751": "Retail sale of textiles in specialised stores",
+   "G4752": "Retail sale of hardware, paints and glass in specialised stores",
+   "G4753": "Retail sale of carpets, rugs, wall and floor coverings in specialised stores",
+   "G4754": "Retail sale of electrical household appliances in specialised stores",
+   "G4759": "Retail sale of furniture, lighting equipment and other household articles in specialised stores",
+   "G4761": "Retail sale of books in specialised stores",
+   "G4762": "Retail sale of newspapers and stationery in specialised stores",
+   "G4763": "Retail sale of music and video recordings in specialised stores",
+   "G4764": "Retail sale of sporting equipment in specialised stores",
+   "G4765": "Retail sale of games and toys in specialised stores",
+   "G4771": "Retail sale of clothing in specialised stores",
+   "G4772": "Retail sale of footwear and leather goods in specialised stores",
+   "G4773": "Dispensing chemist in specialised stores",
+   "G4774": "Retail sale of medical and orthopaedic goods in specialised stores",
+   "G4775": "Retail sale of cosmetic and toilet articles in specialised stores",
+   "G4776": "Retail sale of flowers, plants, seeds, fertilisers, pet animals and pet food in specialised stores",
+   "G4777": "Retail sale of watches and jewellery in specialised stores",
+   "G4778": "Other retail sale of new goods in specialised stores",
+   "G4779": "Retail sale of second-hand goods in stores",
+   "G4781": "Retail sale via stalls and markets of food, beverages and tobacco products",
+   "G4782": "Retail sale via stalls and markets of textiles, clothing and footwear",
+   "G4789": "Retail sale via stalls and markets of other goods",
+   "G4791": "Retail sale via mail order houses or via Internet",
+   "G4799": "Other retail sale not in stores, stalls or markets",
+   "H": "Transportation and storage",
+   "H4910": "Passenger rail transport, interurban",
+   "H4920": "Freight rail transport",
+   "H4931": "Urban and suburban passenger land transport",
+   "H4932": "Taxi operation",
+   "H4939": "Other passenger land transport n.e.c.",
+   "H4941": "Freight transport by road",
+   "H4942": "Removal services",
+   "H4950": "Transport via pipeline",
+   "H5010": "Sea and coastal passenger water transport",
+   "H5020": "Sea and coastal freight water transport",
+   "H5030": "Inland passenger water transport",
+   "H5040": "Inland freight water transport",
+   "H5110": "Passenger air transport",
+   "H5121": "Freight air transport",
+   "H5122": "Space transport",
+   "H5210": "Warehousing and storage",
+   "H5221": "Service activities incidental to land transportation",
+   "H5222": "Service activities incidental to water transportation",
+   "H5223": "Service activities incidental to air transportation",
+   "H5224": "Cargo handling",
+   "H5229": "Other transportation support activities",
+   "H5310": "Postal activities under universal service obligation",
+   "H5320": "Other postal and courier activities",
+   "I": "Accommodation and food service activities",
+   "I5510": "Hotels and similar accommodation",
+   "I5520": "Holiday and other short-stay accommodation",
+   "I5530": "Camping grounds, recreational vehicle parks and trailer parks",
+   "I5590": "Other accommodation",
+   "I5610": "Restaurants and mobile food service activities",
+   "I5621": "Event catering activities",
+   "I5629": "Other food service activities",
+   "I5630": "Beverage serving activities",
+   "J": "Information and communication",
+   "J5811": "Book publishing",
+   "J5812": "Publishing of directories and mailing lists",
+   "J5813": "Publishing of newspapers",
+   "J5814": "Publishing of journals and periodicals",
+   "J5819": "Other publishing activities",
+   "J5821": "Publishing of computer games",
+   "J5829": "Other software publishing",
+   "J5911": "Motion picture, video and television programme production activities",
+   "J5912": "Motion picture, video and television programme post-production activities",
+   "J5913": "Motion picture, video and television programme distribution activities",
+   "J5914": "Motion picture projection activities",
+   "J5920": "Sound recording and music publishing activities",
+   "J6010": "Radio broadcasting",
+   "J6020": "Television programming and broadcasting activities",
+   "J6110": "Wired telecommunications activities",
+   "J6120": "Wireless telecommunications activities",
+   "J6130": "Satellite telecommunications activities",
+   "J6190": "Other telecommunications activities",
+   "J6201": "Computer programming activities",
+   "J6202": "Computer consultancy activities",
+   "J6203": "Computer facilities management activities",
+   "J6209": "Other information technology and computer service activities",
+   "J6311": "Data processing, hosting and related activities",
+   "J6312": "Web portals",
+   "J6391": "News agency activities",
+   "J6399": "Other information service activities n.e.c.",
+   "K": "Financial and insurance activities",
+   "K6411": "Central banking",
+   "K6419": "Other monetary intermediation",
+   "K6420": "Activities of holding companies",
+   "K6430": "Trusts, funds and similar financial entities",
+   "K6511": "Life insurance",
+   "K6512": "Non-life insurance",
+   "K6520": "Reinsurance",
+   "K6530": "Pension funding",
+   "L": "Real estate activities",
+   "L6810": "Buying and selling of own real estate",
+   "L6820": "Renting and operating of own or leased real estate",
+   "L6831": "Real estate agencies",
+   "L6832": "Management of real estate on a fee or contract basis",
+   "M": "Professional, scientific and technical activities",
+   "M6910": "Legal activities",
+   "M6920": "Accounting, bookkeeping and auditing activities; tax consultancy",
+   "M7010": "Activities of head offices",
+   "M7021": "Public relations and communication activities",
+   "M7022": "Business and other management consultancy activities",
+   "M7111": "Architectural activities",
+   "M7112": "Engineering activities and related technical consultancy",
+   "M7120": "Technical testing and analysis",
+   "M7211": "Research and experimental development on biotechnology",
+   "M7219": "Other research and experimental development on natural sciences and engineering",
+   "M7220": "Research and experimental development on social sciences and humanities",
+   "M7311": "Advertising agencies",
+   "M7312": "Media representation",
+   "M7320": "Market research and public opinion polling",
+   "M7410": "Specialised design activities",
+   "M7420": "Photographic activities",
+   "M7430": "Translation and interpretation activities",
+   "M7490": "Other professional, scientific and technical activities n.e.c.",
+   "M7500": "Veterinary activities",
+   "N": "Administrative and support service activities",
+   "N7711": "Renting and leasing of cars and light motor vehicles",
+   "N7712": "Renting and leasing of trucks",
+   "N7721": "Renting and leasing of recreational and sports goods",
+   "N7722": "Renting of video tapes and disks",
+   "N7729": "Renting and leasing of other personal and household goods",
+   "N7731": "Renting and leasing of agricultural machinery and equipment",
+   "N7732": "Renting and leasing of construction and civil engineering machinery and equipment",
+   "N7733": "Renting and leasing of office machinery and equipment (including computers)",
+   "N7734": "Renting and leasing of water transport equipment",
+   "N7735": "Renting and leasing of air transport equipment",
+   "N7739": "Renting and leasing of other machinery, equipment and tangible goods n.e.c.",
+   "N7740": "Leasing of intellectual property and similar products, except copyrighted works",
+   "N7810": "Activities of employment placement agencies",
+   "N7820": "Temporary employment agency activities",
+   "N7830": "Other human resources provision",
+   "N7911": "Travel agency activities",
+   "N7912": "Tour operator activities",
+   "N7990": "Other reservation service and related activities",
+   "N8010": "Private security activities",
+   "N8020": "Security systems service activities",
+   "N8030": "Investigation activities",
+   "N8110": "Combined facilities support activities",
+   "N8121": "General cleaning of buildings",
+   "N8122": "Other building and industrial cleaning activities",
+   "N8129": "Other cleaning activities",
+   "N8130": "Landscape service activities",
+   "N8211": "Combined office administrative service activities",
+   "N8219": "Photocopying, document preparation and other specialised office support activities",
+   "N8220": "Activities of call centres",
+   "N8230": "Organisation of conventions and trade shows",
+   "N8291": "Activities of collection agencies and credit bureaus",
+   "N8292": "Packaging activities",
+   "N8299": "Other business support service activities n.e.c.",
+   "P": "Education",
+   "P8510": "Pre-primary education",
+   "P8520": "Primary education",
+   "P8531": "General secondary education",
+   "P8532": "Technical and vocational secondary education",
+   "P8541": "Post-secondary non-tertiary education",
+   "P8542": "Tertiary education",
+   "P8551": "Sports and recreation education",
+   "P8552": "Cultural education",
+   "P8553": "Driving school activities",
+   "P8559": "Other education n.e.c.",
+   "P8560": "Educational support activities",
+   "Q": "Human health and social work activities",
+   "Q8610": "Hospital activities",
+   "Q8621": "General medical practice activities",
+   "Q8622": "Specialist medical practice activities",
+   "Q8623": "Dental practice activities",
+   "Q8690": "Other human health activities",
+   "Q8710": "Residential nursing care activities",
+   "Q8720": "Residential care activities for mental retardation, mental health and substance abuse",
+   "Q8730": "Residential care activities for the elderly and disabled",
+   "Q8790": "Other residential care activities",
+   "Q8810": "Social work activities without accommodation for the elderly and disabled",
+   "Q8891": "Child day-care activities",
+   "Q8899": "Other social work activities without accommodation n.e.c.",
+   "R": "Arts, entertainment and recreation",
+   "R9001": "Performing arts",
+   "R9002": "Support activities to performing arts",
+   "R9003": "Artistic creation",
+   "R9004": "Operation of arts facilities",
+   "R9101": "Library and archives activities",
+   "R9102": "Museums activities",
+   "R9103": "Operation of historical sites and buildings and similar visitor attractions",
+   "R9104": "Botanical and zoological gardens and nature reserves activities",
+   "R9200": "Gambling and betting activities",
+   "R9311": "Operation of sports facilities",
+   "R9312": "Activities of sport clubs",
+   "R9313": "Fitness facilities",
+   "R9319": "Other sports activities",
+   "R9321": "Activities of amusement parks and theme parks",
+   "R9329": "Other amusement and recreation activities",
+   "S": "Other service activities",
+   "S9511": "Repair of computers and peripheral equipment",
+   "S9512": "Repair of communication equipment",
+   "S9521": "Repair of consumer electronics",
+   "S9522": "Repair of household appliances and home and garden equipment",
+   "S9523": "Repair of footwear and leather goods",
+   "S9524": "Repair of furniture and home furnishings",
+   "S9525": "Repair of watches, clocks and jewellery",
+   "S9529": "Repair of other personal and household goods",
+   "S9601": "Washing and (dry-)cleaning of textile and fur products",
+   "S9602": "Hairdressing and other beauty treatment",
+   "S9603": "Funeral and related activities",
+   "S9604": "Physical well-being activities",
+   "S9609": "Other personal service activities n.e.c."
+  }
+ },
+ "primary": {
+  "by_geo": {
+   "AL": {
+    "C": 41550,
+    "NA": 28846,
+    "V": 10480
+   },
+   "AT": {
+    "C": 17242,
+    "NA": 1135,
+    "V": 141135
+   },
+   "BA": {
+    "C": 28725,
+    "NA": 1992,
+    "V": 123575
+   },
+   "BE": {
+    "C": 10832,
+    "NA": 41005,
+    "V": 107935
+   },
+   "BG": {
+    "C": 24378,
+    "NA": 1149,
+    "V": 135113
+   },
+   "CH": {
+    "C": 5271,
+    "NA": 8513,
+    "V": 32108
+   },
+   "CY": {
+    "C": 24040,
+    "NA": 1218,
+    "V": 116762
+   },
+   "CZ": {
+    "C": 22164,
+    "NA": 941,
+    "V": 137463
+   },
+   "DE": {
+    "C": 5230,
+    "NA": 1065,
+    "V": 152377
+   },
+   "DK": {
+    "C": 28768,
+    "NA": 1187,
+    "V": 129629
+   },
+   "EE": {
+    "C": 34286,
+    "NA": 2767,
+    "V": 117763
+   },
+   "EL": {
+    "C": 12126,
+    "NA": 1148,
+    "V": 147098
+   },
+   "ES": {
+    "C": 6121,
+    "NA": 1103,
+    "V": 154420
+   },
+   "EU27_2020": {
+    "C": 24611,
+    "NA": 39997,
+    "V": 93308
+   },
+   "FI": {
+    "C": 19661,
+    "NA": 1919,
+    "V": 136332
+   },
+   "FR": {
+    "C": 14582,
+    "NA": 1266,
+    "V": 142016
+   },
+   "HR": {
+    "C": 16303,
+    "NA": 1219,
+    "V": 139758
+   },
+   "HU": {
+    "C": 7724,
+    "NA": 1328,
+    "V": 150132
+   },
+   "IE": {
+    "C": 81566,
+    "NA": 1608,
+    "V": 77786
+   },
+   "IS": {
+    "NA": 6616,
+    "V": 136596
+   },
+   "IT": {
+    "C": 6646,
+    "NA": 1636,
+    "V": 149982
+   },
+   "LT": {
+    "C": 14910,
+    "NA": 1520,
+    "V": 139526
+   },
+   "LU": {
+    "C": 63681,
+    "NA": 2277,
+    "V": 76394
+   },
+   "LV": {
+    "C": 33633,
+    "NA": 2275,
+    "V": 118952
+   },
+   "ME": {
+    "NA": 400,
+    "V": 948
+   },
+   "MK": {
+    "C": 33916,
+    "NA": 1982,
+    "V": 113878
+   },
+   "MT": {
+    "C": 35893,
+    "NA": 2171,
+    "V": 109856
+   },
+   "NL": {
+    "C": 23508,
+    "NA": 934,
+    "V": 134546
+   },
+   "NO": {
+    "C": 20897,
+    "NA": 39166,
+    "V": 99093
+   },
+   "PL": {
+    "C": 13444,
+    "NA": 994,
+    "V": 147102
+   },
+   "PT": {
+    "C": 8512,
+    "NA": 1168,
+    "V": 150128
+   },
+   "RO": {
+    "C": 22843,
+    "NA": 1000,
+    "V": 136993
+   },
+   "RS": {
+    "C": 21389,
+    "NA": 14913,
+    "V": 120002
+   },
+   "SE": {
+    "C": 15116,
+    "NA": 1015,
+    "V": 143421
+   },
+   "SI": {
+    "C": 38097,
+    "NA": 2154,
+    "V": 114889
+   },
+   "SK": {
+    "C": 20855,
+    "NA": 1248,
+    "V": 137825
+   }
+  },
+  "by_indicator": {
+   "AVG_EXPN_SAL_BEN_TEUR": {
+    "C": 18090,
+    "NA": 4260,
+    "V": 94530
+   },
+   "AV_HW_EUR": {
+    "C": 16279,
+    "NA": 5907,
+    "V": 89050
+   },
+   "AV_MEUR": {
+    "C": 18568,
+    "NA": 3780,
+    "V": 102208
+   },
+   "AV_MFG_PC": {
+    "C": 10073,
+    "NA": 1383,
+    "V": 36064
+   },
+   "AV_SAL_FTE_TEUR": {
+    "C": 17274,
+    "NA": 6041,
+    "V": 92517
+   },
+   "AV_SAL_TEUR": {
+    "C": 18576,
+    "NA": 4970,
+    "V": 94914
+   },
+   "AV_VAL_OUT_PC": {
+    "C": 18551,
+    "NA": 4388,
+    "V": 96349
+   },
+   "EMP_ENT_NR": {
+    "C": 14578,
+    "NA": 3869,
+    "V": 101693
+   },
+   "EMP_MFG_PC": {
+    "C": 7617,
+    "NA": 1240,
+    "V": 38775
+   },
+   "EMP_NR": {
+    "C": 14541,
+    "NA": 3287,
+    "V": 107088
+   },
+   "ENT_NR": {
+    "C": 6995,
+    "NA": 3285,
+    "V": 114636
+   },
+   "EXPN_SAL_BEN_HW_EUR": {
+    "C": 16026,
+    "NA": 5898,
+    "V": 89304
+   },
+   "EXPN_SAL_BEN_MEUR": {
+    "C": 18287,
+    "NA": 3702,
+    "V": 100995
+   },
+   "EXPN_SAL_BEN_PUR_PC": {
+    "C": 18658,
+    "NA": 5187,
+    "V": 94155
+   },
+   "EXPN_SAL_BEN_VAL_OUT_PC": {
+    "C": 18596,
+    "NA": 4318,
+    "V": 95058
+   },
+   "GM_GD_RS_MEUR": {
+    "C": 11586,
+    "NA": 2476,
+    "V": 54454
+   },
+   "GOR_PC": {
+    "C": 19016,
+    "NA": 4410,
+    "V": 95790
+   },
+   "GOS_AV_PC": {
+    "C": 18910,
+    "NA": 4367,
+    "V": 96035
+   },
+   "GOS_MEUR": {
+    "C": 18628,
+    "NA": 3724,
+    "V": 101940
+   },
+   "GRSINV_MAC_AV_PC": {
+    "C": 21653,
+    "NA": 5229,
+    "V": 92098
+   },
+   "GRSINV_MAC_EMP_TEUR": {
+    "C": 21281,
+    "NA": 5243,
+    "V": 92272
+   },
+   "GRSINV_MAC_MEUR": {
+    "C": 20418,
+    "NA": 4647,
+    "V": 98895
+   },
+   "GRSINV_TNCA_AV_PC": {
+    "C": 21675,
+    "NA": 4329,
+    "V": 93192
+   },
+   "GRSINV_TNCA_EMP_TEUR": {
+    "C": 21220,
+    "NA": 4295,
+    "V": 93497
+   },
+   "GRSINV_TNCA_MEUR": {
+    "C": 20410,
+    "NA": 3687,
+    "V": 100055
+   },
+   "GRW_EMP_PC": {
+    "C": 11657,
+    "NA": 31756,
+    "V": 72083
+   },
+   "HW_NR": {
+    "C": 15186,
+    "NA": 4713,
+    "V": 100709
+   },
+   "LABPRY_TEUR": {
+    "C": 19067,
+    "NA": 4390,
+    "V": 95923
+   },
+   "LC_AV_PC": {
+    "C": 19132,
+    "NA": 4330,
+    "V": 96034
+   },
+   "LC_EMP_TEUR": {
+    "C": 18889,
+    "NA": 4295,
+    "V": 96128
+   },
+   "LC_SAL_FTE_TEUR": {
+    "C": 16781,
+    "NA": 5985,
+    "V": 91762
+   },
+   "NETTUR_EMP_TEUR": {
+    "C": 18706,
+    "NA": 3968,
+    "V": 96878
+   },
+   "NETTUR_MEUR": {
+    "C": 18284,
+    "NA": 3358,
+    "V": 103134
+   },
+   "NETTUR_MFG_PC": {
+    "C": 9911,
+    "NA": 1245,
+    "V": 36468
+   },
+   "PUR_AGN_MEUR": {
+    "C": 19623,
+    "NA": 3684,
+    "V": 98625
+   },
+   "PUR_MEUR": {
+    "C": 18316,
+    "NA": 4617,
+    "V": 101359
+   },
+   "PUR_NRG_MEUR": {
+    "C": 9256,
+    "NA": 1843,
+    "V": 37717
+   },
+   "PUR_RS_MEUR": {
+    "C": 18588,
+    "NA": 5136,
+    "V": 98100
+   },
+   "SAL_EMP_PC": {
+    "C": 14471,
+    "NA": 4958,
+    "V": 99939
+   },
+   "SAL_FTE_NR": {
+    "C": 13673,
+    "NA": 4741,
+    "V": 103570
+   },
+   "SAL_NR": {
+    "C": 14649,
+    "NA": 4332,
+    "V": 105551
+   },
+   "SS_COST_EXPN_SAL_BEN_PC": {
+    "C": 17792,
+    "NA": 4224,
+    "V": 95064
+   },
+   "SS_COST_MEUR": {
+    "C": 18631,
+    "NA": 3694,
+    "V": 101887
+   },
+   "STK_CHG_GD_FIN_MEUR": {
+    "C": 12583,
+    "NA": 2598,
+    "V": 44595
+   },
+   "VAL_OUT_MEUR": {
+    "C": 18287,
+    "NA": 3718,
+    "V": 102287
+   },
+   "VAL_OUT_MFG_PC": {
+    "C": 10046,
+    "NA": 1381,
+    "V": 36093
+   },
+   "WAGE_LABPRY_PC": {
+    "C": 18958,
+    "NA": 4289,
+    "V": 93601
+   },
+   "WAGE_MEUR": {
+    "C": 18528,
+    "NA": 3698,
+    "V": 102250
+   }
+  },
+  "by_status": {
+   "C": 798520,
+   "NA": 220875,
+   "V": 4275321
+  },
+  "cells": 5294716,
+  "classes": [
+   "B0510",
+   "B0520",
+   "B0610",
+   "B0620",
+   "B0710",
+   "B0721",
+   "B0729",
+   "B0811",
+   "B0812",
+   "B0891",
+   "B0892",
+   "B0893",
+   "B0899",
+   "B0910",
+   "B0990",
+   "C1011",
+   "C1012",
+   "C1013",
+   "C1020",
+   "C1031",
+   "C1032",
+   "C1039",
+   "C1041",
+   "C1042",
+   "C1051",
+   "C1052",
+   "C1061",
+   "C1062",
+   "C1071",
+   "C1072",
+   "C1073",
+   "C1081",
+   "C1082",
+   "C1083",
+   "C1084",
+   "C1085",
+   "C1086",
+   "C1089",
+   "C1091",
+   "C1092",
+   "C1101",
+   "C1102",
+   "C1103",
+   "C1104",
+   "C1105",
+   "C1106",
+   "C1107",
+   "C1200",
+   "C1310",
+   "C1320",
+   "C1330",
+   "C1391",
+   "C1392",
+   "C1393",
+   "C1394",
+   "C1395",
+   "C1396",
+   "C1399",
+   "C1411",
+   "C1412",
+   "C1413",
+   "C1414",
+   "C1419",
+   "C1420",
+   "C1431",
+   "C1439",
+   "C1511",
+   "C1512",
+   "C1520",
+   "C1610",
+   "C1621",
+   "C1622",
+   "C1623",
+   "C1624",
+   "C1629",
+   "C1711",
+   "C1712",
+   "C1721",
+   "C1722",
+   "C1723",
+   "C1724",
+   "C1729",
+   "C1811",
+   "C1812",
+   "C1813",
+   "C1814",
+   "C1820",
+   "C1910",
+   "C1920",
+   "C2011",
+   "C2012",
+   "C2013",
+   "C2014",
+   "C2015",
+   "C2016",
+   "C2017",
+   "C2020",
+   "C2030",
+   "C2041",
+   "C2042",
+   "C2051",
+   "C2052",
+   "C2053",
+   "C2059",
+   "C2060",
+   "C2110",
+   "C2120",
+   "C2211",
+   "C2219",
+   "C2221",
+   "C2222",
+   "C2223",
+   "C2229",
+   "C2311",
+   "C2312",
+   "C2313",
+   "C2314",
+   "C2319",
+   "C2320",
+   "C2331",
+   "C2332",
+   "C2341",
+   "C2342",
+   "C2343",
+   "C2344",
+   "C2349",
+   "C2351",
+   "C2352",
+   "C2361",
+   "C2362",
+   "C2363",
+   "C2364",
+   "C2365",
+   "C2369",
+   "C2370",
+   "C2391",
+   "C2399",
+   "C2410",
+   "C2420",
+   "C2431",
+   "C2432",
+   "C2433",
+   "C2434",
+   "C2441",
+   "C2442",
+   "C2443",
+   "C2444",
+   "C2445",
+   "C2446",
+   "C2451",
+   "C2452",
+   "C2453",
+   "C2454",
+   "C2511",
+   "C2512",
+   "C2521",
+   "C2529",
+   "C2530",
+   "C2540",
+   "C2550",
+   "C2561",
+   "C2562",
+   "C2571",
+   "C2572",
+   "C2573",
+   "C2591",
+   "C2592",
+   "C2593",
+   "C2594",
+   "C2599",
+   "C2611",
+   "C2612",
+   "C2620",
+   "C2630",
+   "C2640",
+   "C2651",
+   "C2652",
+   "C2660",
+   "C2670",
+   "C2680",
+   "C2711",
+   "C2712",
+   "C2720",
+   "C2731",
+   "C2732",
+   "C2733",
+   "C2740",
+   "C2751",
+   "C2752",
+   "C2790",
+   "C2811",
+   "C2812",
+   "C2813",
+   "C2814",
+   "C2815",
+   "C2821",
+   "C2822",
+   "C2823",
+   "C2824",
+   "C2825",
+   "C2829",
+   "C2830",
+   "C2841",
+   "C2849",
+   "C2891",
+   "C2892",
+   "C2893",
+   "C2894",
+   "C2895",
+   "C2896",
+   "C2899",
+   "C2910",
+   "C2920",
+   "C2931",
+   "C2932",
+   "C3011",
+   "C3012",
+   "C3020",
+   "C3030",
+   "C3040",
+   "C3091",
+   "C3092",
+   "C3099",
+   "C3101",
+   "C3102",
+   "C3103",
+   "C3109",
+   "C3211",
+   "C3212",
+   "C3213",
+   "C3220",
+   "C3230",
+   "C3240",
+   "C3250",
+   "C3291",
+   "C3299",
+   "C3311",
+   "C3312",
+   "C3313",
+   "C3314",
+   "C3315",
+   "C3316",
+   "C3317",
+   "C3319",
+   "C3320",
+   "D3511",
+   "D3512",
+   "D3513",
+   "D3514",
+   "D3521",
+   "D3522",
+   "D3523",
+   "D3530",
+   "E3600",
+   "E3700",
+   "E3811",
+   "E3812",
+   "E3821",
+   "E3822",
+   "E3831",
+   "E3832",
+   "E3900",
+   "F4110",
+   "F4120",
+   "F4211",
+   "F4212",
+   "F4213",
+   "F4221",
+   "F4222",
+   "F4291",
+   "F4299",
+   "F4311",
+   "F4312",
+   "F4313",
+   "F4321",
+   "F4322",
+   "F4329",
+   "F4331",
+   "F4332",
+   "F4333",
+   "F4334",
+   "F4339",
+   "F4391",
+   "F4399",
+   "G4511",
+   "G4519",
+   "G4520",
+   "G4531",
+   "G4532",
+   "G4540",
+   "G4611",
+   "G4612",
+   "G4613",
+   "G4614",
+   "G4615",
+   "G4616",
+   "G4617",
+   "G4618",
+   "G4619",
+   "G4621",
+   "G4622",
+   "G4623",
+   "G4624",
+   "G4631",
+   "G4632",
+   "G4633",
+   "G4634",
+   "G4635",
+   "G4636",
+   "G4637",
+   "G4638",
+   "G4639",
+   "G4641",
+   "G4642",
+   "G4643",
+   "G4644",
+   "G4645",
+   "G4646",
+   "G4647",
+   "G4648",
+   "G4649",
+   "G4651",
+   "G4652",
+   "G4661",
+   "G4662",
+   "G4663",
+   "G4664",
+   "G4665",
+   "G4666",
+   "G4669",
+   "G4671",
+   "G4672",
+   "G4673",
+   "G4674",
+   "G4675",
+   "G4676",
+   "G4677",
+   "G4690",
+   "G4711",
+   "G4719",
+   "G4721",
+   "G4722",
+   "G4723",
+   "G4724",
+   "G4725",
+   "G4726",
+   "G4729",
+   "G4730",
+   "G4741",
+   "G4742",
+   "G4743",
+   "G4751",
+   "G4752",
+   "G4753",
+   "G4754",
+   "G4759",
+   "G4761",
+   "G4762",
+   "G4763",
+   "G4764",
+   "G4765",
+   "G4771",
+   "G4772",
+   "G4773",
+   "G4774",
+   "G4775",
+   "G4776",
+   "G4777",
+   "G4778",
+   "G4779",
+   "G4781",
+   "G4782",
+   "G4789",
+   "G4791",
+   "G4799",
+   "H4910",
+   "H4920",
+   "H4931",
+   "H4932",
+   "H4939",
+   "H4941",
+   "H4942",
+   "H4950",
+   "H5010",
+   "H5020",
+   "H5030",
+   "H5040",
+   "H5110",
+   "H5121",
+   "H5122",
+   "H5210",
+   "H5221",
+   "H5222",
+   "H5223",
+   "H5224",
+   "H5229",
+   "H5310",
+   "H5320",
+   "I5510",
+   "I5520",
+   "I5530",
+   "I5590",
+   "I5610",
+   "I5621",
+   "I5629",
+   "I5630",
+   "J5811",
+   "J5812",
+   "J5813",
+   "J5814",
+   "J5819",
+   "J5821",
+   "J5829",
+   "J5911",
+   "J5912",
+   "J5913",
+   "J5914",
+   "J5920",
+   "J6010",
+   "J6020",
+   "J6110",
+   "J6120",
+   "J6130",
+   "J6190",
+   "J6201",
+   "J6202",
+   "J6203",
+   "J6209",
+   "J6311",
+   "J6312",
+   "J6391",
+   "J6399",
+   "K6411",
+   "K6419",
+   "K6420",
+   "K6430",
+   "K6511",
+   "K6512",
+   "K6520",
+   "K6530",
+   "L6810",
+   "L6820",
+   "L6831",
+   "L6832",
+   "M6910",
+   "M6920",
+   "M7010",
+   "M7021",
+   "M7022",
+   "M7111",
+   "M7112",
+   "M7120",
+   "M7211",
+   "M7219",
+   "M7220",
+   "M7311",
+   "M7312",
+   "M7320",
+   "M7410",
+   "M7420",
+   "M7430",
+   "M7490",
+   "M7500",
+   "N7711",
+   "N7712",
+   "N7721",
+   "N7722",
+   "N7729",
+   "N7731",
+   "N7732",
+   "N7733",
+   "N7734",
+   "N7735",
+   "N7739",
+   "N7740",
+   "N7810",
+   "N7820",
+   "N7830",
+   "N7911",
+   "N7912",
+   "N7990",
+   "N8010",
+   "N8020",
+   "N8030",
+   "N8110",
+   "N8121",
+   "N8122",
+   "N8129",
+   "N8130",
+   "N8211",
+   "N8219",
+   "N8220",
+   "N8230",
+   "N8291",
+   "N8292",
+   "N8299",
+   "P8510",
+   "P8520",
+   "P8531",
+   "P8532",
+   "P8541",
+   "P8542",
+   "P8551",
+   "P8552",
+   "P8553",
+   "P8559",
+   "P8560",
+   "Q8610",
+   "Q8621",
+   "Q8622",
+   "Q8623",
+   "Q8690",
+   "Q8710",
+   "Q8720",
+   "Q8730",
+   "Q8790",
+   "Q8810",
+   "Q8891",
+   "Q8899",
+   "R9001",
+   "R9002",
+   "R9003",
+   "R9004",
+   "R9101",
+   "R9102",
+   "R9103",
+   "R9104",
+   "R9200",
+   "R9311",
+   "R9312",
+   "R9313",
+   "R9319",
+   "R9321",
+   "R9329",
+   "S9511",
+   "S9512",
+   "S9521",
+   "S9522",
+   "S9523",
+   "S9524",
+   "S9525",
+   "S9529",
+   "S9601",
+   "S9602",
+   "S9603",
+   "S9604",
+   "S9609"
+  ],
+  "curves": {
+   "all_levels_sealing": {
+    "0": [
+     43,
+     4535
+    ],
+    "1": [
+     1413,
+     1588
+    ],
+    "101-1000": [
+     1466,
+     32349
+    ],
+    "11-20": [
+     1192,
+     5753
+    ],
+    "2": [
+     1174,
+     1193
+    ],
+    "21-50": [
+     1389,
+     10038
+    ],
+    "3": [
+     700,
+     1179
+    ],
+    "4-5": [
+     892,
+     1850
+    ],
+    "51-100": [
+     809,
+     9194
+    ],
+    "6-10": [
+     1442,
+     4321
+    ],
+    ">1000": [
+     881,
+     33804
+    ]
+   },
+   "classes_all_countries": {
+    "0": [
+     23,
+     3646
+    ],
+    "1": [
+     1060,
+     1342
+    ],
+    "101-1000": [
+     824,
+     21254
+    ],
+    "11-20": [
+     773,
+     4520
+    ],
+    "2": [
+     902,
+     1055
+    ],
+    "21-50": [
+     946,
+     7640
+    ],
+    "3": [
+     499,
+     955
+    ],
+    "4-5": [
+     655,
+     1595
+    ],
+    "51-100": [
+     509,
+     6708
+    ],
+    "6-10": [
+     956,
+     3441
+    ],
+    ">1000": [
+     312,
+     14487
+    ]
+   },
+   "classes_sealing": {
+    "0": [
+     23,
+     3182
+    ],
+    "1": [
+     1060,
+     1181
+    ],
+    "101-1000": [
+     824,
+     20175
+    ],
+    "11-20": [
+     773,
+     4158
+    ],
+    "2": [
+     902,
+     913
+    ],
+    "21-50": [
+     946,
+     7098
+    ],
+    "3": [
+     499,
+     865
+    ],
+    "4-5": [
+     655,
+     1422
+    ],
+    "51-100": [
+     509,
+     6325
+    ],
+    "6-10": [
+     956,
+     3094
+    ],
+    ">1000": [
+     312,
+     13867
+    ]
+   }
+  },
+  "dataflow": "sbs_ovw_act",
+  "geos": [
+   "AL",
+   "AT",
+   "BA",
+   "BE",
+   "BG",
+   "CH",
+   "CY",
+   "CZ",
+   "DE",
+   "DK",
+   "EE",
+   "EL",
+   "ES",
+   "EU27_2020",
+   "FI",
+   "FR",
+   "HR",
+   "HU",
+   "IE",
+   "IS",
+   "IT",
+   "LT",
+   "LU",
+   "LV",
+   "ME",
+   "MK",
+   "MT",
+   "NL",
+   "NO",
+   "PL",
+   "PT",
+   "RO",
+   "RS",
+   "SE",
+   "SI",
+   "SK"
+  ],
+  "indicators": [
+   "AVG_EXPN_SAL_BEN_TEUR",
+   "AV_HW_EUR",
+   "AV_MEUR",
+   "AV_MFG_PC",
+   "AV_SAL_FTE_TEUR",
+   "AV_SAL_TEUR",
+   "AV_VAL_OUT_PC",
+   "EMP_ENT_NR",
+   "EMP_MFG_PC",
+   "EMP_NR",
+   "ENT_NR",
+   "EXPN_SAL_BEN_HW_EUR",
+   "EXPN_SAL_BEN_MEUR",
+   "EXPN_SAL_BEN_PUR_PC",
+   "EXPN_SAL_BEN_VAL_OUT_PC",
+   "GM_GD_RS_MEUR",
+   "GOR_PC",
+   "GOS_AV_PC",
+   "GOS_MEUR",
+   "GRSINV_MAC_AV_PC",
+   "GRSINV_MAC_EMP_TEUR",
+   "GRSINV_MAC_MEUR",
+   "GRSINV_TNCA_AV_PC",
+   "GRSINV_TNCA_EMP_TEUR",
+   "GRSINV_TNCA_MEUR",
+   "GRW_EMP_PC",
+   "HW_NR",
+   "LABPRY_TEUR",
+   "LC_AV_PC",
+   "LC_EMP_TEUR",
+   "LC_SAL_FTE_TEUR",
+   "NETTUR_EMP_TEUR",
+   "NETTUR_MEUR",
+   "NETTUR_MFG_PC",
+   "PUR_AGN_MEUR",
+   "PUR_MEUR",
+   "PUR_NRG_MEUR",
+   "PUR_RS_MEUR",
+   "SAL_EMP_PC",
+   "SAL_FTE_NR",
+   "SAL_NR",
+   "SS_COST_EXPN_SAL_BEN_PC",
+   "SS_COST_MEUR",
+   "STK_CHG_GD_FIN_MEUR",
+   "VAL_OUT_MEUR",
+   "VAL_OUT_MFG_PC",
+   "WAGE_LABPRY_PC",
+   "WAGE_MEUR"
+  ],
+  "matrix": {
+   "2021": {
+    "AL": "3322000323023220200300002023000200003323002330023202033030000002200002200002320000233322203300320023230002202202223003320200333320033002322020220000022020023200202030233022022200002302202232200202020302230030322022220230000000023000222020000300223002203020223003000230020203000200000020220220003300020000000000002000000302020030000000000220200000032002000020300000300300330332322020220202232203302202222202230000023332222230233320200000000020200022000023200022000022002300332022022022220003302200220020200000000020222222000203332000200000000000000",
+    "AT": "1121212112221111111111221122111211112111111212111111112211111111221111111112211111211211112111121111111111111111111111111122211111111111111212221211112121121211111112112111111111111112121111111111122111111111111111111212212111121211111111111111111111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112111111211111111111112211111111111111111111111111111111112211112211111111111111111111111111111111111111111111111111111111111122111111111111111111111111111111111121112111111",
+    "BA": "1111212111221111222111211122111221211122112211122122111211111111111111111111112211111112112211112211111112211111111221111121122211111111122112221112121121111111112212211122121112111112121221222112121111111111212222222121221111111122121111112221112211212111111111111111111111111111111111111111112121111111111111111111111111111111111111111111111111111111111111111111111111111111211111221212211111112211221111122211111111111221111111110000000011111111111122111111111111112112112111111122111111111111111111111111111112121112112111111111111111111111111",
+    "BE": "2211111212111221112111121111222111111111211111111111111111111221221111111112211111211121221111121111111112211111122212111121121111111111111222222111211111111111111111111111112111221122121121111112122111112111211111112112212111111121121111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112112211221221111111112211111111211211111111111111111111112211112211111111111111111111111111111121211111111111111111111111121112111111111111111111111111111111111111111111111",
+    "BG": "1222111112112221111111221122111211112111111212111111122111111111111111111112211111111111212211111111111112211111121121111112211111111111111211221112111111111111111111111111112112121111111111211122112111111111111111112121122111111111111111111111112212112111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111211111221211111111112211111111111111111111112121111111112211112211111111111111111111111111221111111111111111111111111111111111221111111111111111111111111111111111111111111",
+    "CH": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "CY": "1111111222111211112111211111111211111222212111111111112112211121112211211211211112111221122121112111212112222111121121111221112212121111212111122111111111111121111121111111121111112211221111121112211111121121122211211111111111111111111111111111122121111111112222111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111221111111111111111111111111111111111122111111111111111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "CZ": "2222121112121221111111221111111111111111222222221111111111111111111111111112211221222222211111111111122111111111121112122111111112112111111221111122111111111111111111111111111111111111111111111111111111111111111111111111111111121211111111111111122222221111111111111111111111111111111111111122222222211111111111111111111111111111111111111111112111211121111111111111111122222112211111221212211111112211111221121111111111111111111111222211212111111111111122111111111111111111111111222111111112211222111111111111111111111111111111111111111111111111122",
+    "DE": "2222212112121111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112200111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "DK": "1122111111222111221221122111222211122122111222112212111112121211222111121122212121211121212221112111122121111111121212211111222212112111121222121221111111121211111112112111111111111112211111212111122111111112211111122222212111111111221111111221111111111112222111111111111212111111111111111121211111111111111111111111111111111111111111111122111111111111111111111111221111111112212111222122221111112211111111121121111111111221111111112211111111111111111111111111111112211111111111111111111111111111111111111111111111111111111212111111111111111111111",
+    "EE": "1111111112112111111111211121122121112111121211121112111221111112211111111112212122211121222211211111211212211111111221212121212211122112221111121112121121111221112211212111121112111121221221211111122111222112211111111221222111111122112211211211112212221111122221111221111111111111111111111121112111111221111111111111111111111111111111111111111111111221111112211111111111122112221111122221211112212211111111122111111111112121111111111122211211111111111121211111111111111111111212111111111111111111111221111112111222111221111121211111111211112111111",
+    "EL": "1221212112121111111111111111111211112111111111111111111111221111111111111112211221111111212111121211111121111111111111211111112111112111121111111112111111111221111111111111111111111122111111111111111111111111111112211111111111121211121111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112212212221212111111112211111111111111111111112112111111112211121211111111111111111111111122121111112111122111111111121211111111111111111122111111111111111111111111111111111",
+    "ES": "2211122111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111221111111111111111111111111111111111111112112111121211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111112211122111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "EU27_2020": "2112221111111212111111112111121111121211111111111111111211111111111111111111111111111111111121111121111112111111112121111111121111211111111111121121111111111111112211111121211111111121112112112111112211111111211122221121111211111111211111121111111111111211111111111111111111111111111111111121111111121111111221121111111112112111111111111111112121111111111111221111111112111111111111111111121111111111111111211112212212211111112212111112111111112111111111111111111111111111211112212111111111112111111112221211111111111211112121112111111111111111111",
+    "FI": "1111212112112111111111221111111212111111111111111111111111111111111211111111111221111112212112112121122121111111121211212121222212112212211112221211111121111122111111111111111111221121111121221111111111111111111111111222111111122111211111111111112212211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111222221111111111111111111111111111112111111211111111111112211111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111221122111111111111111111111111221111111111111111111",
+    "FR": "1122212111122111111111221122111111111111111212121111111111111112111111111111111111211211121111121111111111122111112121111111111112111211111111111111111111112121111111111111111111111112121111111112121111111111221112211212112111121211111111111111121121122111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112111221111111111111111121121111111111122111111112210112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "HR": "1111111111122221111111112222111211211111112112121112121111111111221111111112211221111111211111111111221112211111111221122121211111112211121112122111111111122122111111111111111222211111111111111111111111112112211111111111122111121211221111111122121211111111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111121212111111111111111211111222212211111112211111111111111111111111111111111112211111111111111111111111111111111111111111212122111111111111111111111111111111111111111111111111111111111111111111",
+    "HU": "2211122111122111111111221111111111111111111212111111111111111111111111111111111111111112211111112111111121111111121121111111111111111111111211211212111111111111111111111111112111121111111111111111111111111111111111111212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111221111112211111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "IE": "2122212112121221111221221122122211112211222222222212111221221111112211221112212121222221222222222222222222212222211221122122222212122112212112222222111221122221112222211122222222221122221221222222222222221222122111122211212222222222222222222222222212121221122111111221111111111111111111111112111111211111111221111111111112212121111111111111111111111111111122222111112112111112221211221222211111112211111111222222211111222221112212112211111111111111111111122211111111221111111122111111111111111111112222222211222111111222222222212222221111111111111",
+    "IS": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111113333333311111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "IT": "1121112111111111111111111111111111111111112112111111111111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111221111111111111111111111111111111111111212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111122111111111111111111111110000111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "LT": "1111111112112112211212111122111111111111111111121111111111111111111111111111111111111111212211111111112121211111121121211111112212112111112122221111121121111111112122211111111111111111111111111111122111112111221111112221212111122121122211111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111211111211112211111112211111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111112121111111112211111111111111111111",
+    "LU": "1111111221111112121122112221111121222221122121221111121222112121111112212111211112111221111111211221111221222222222211111211212121211212121112211121111111112122222222112211221222212221111111221212211212222221122121211121211212212211211221121222111222222122212122112222212111111211121111111112122122222222121121221111111111211121111111122111212111221221111122111111111121111211222111111212212122211212221111122122211121222121111212222111111111112121111122211111121112212222111212112212111111121222212212111121111112221111122212121111121222112111111",
+    "LV": "3323333112232321221212221122222211212111211212221212121211111111111111121212211221211122223211231121222222222111121221222113312212222112221331322322323221111321112122112111122112231122221222221222122111113222321222211212222111131221112211111221112212222111122111111111111111111111111111111112111111111111111221111111111111111111111212111211111111111111111111111111111111111112212111221222221111112112211111121122211111112122111111222211223111111111111121211111111111221121211111111111111111111111111111111111111121121111111112211111111111111111111",
+    "ME": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "MK": "2212212112211211112111221122111211112112111122112122121212111112121111111222211111111111111112212211122112211111121122122211212212111211111121111112122221111211112112211121112111111121112221212211112211221221111221111221121111121222112221112211112212211111111111221111121111111121112211111111111111111221111111111111112211111221111111111111111111111111111111111111111111111222222111112112112121212212222112121211112122111122111111212211111111111111111111111111111221221221112111111111111111111111212222122121221222121111211221111111112121111111221",
+    "MT": "2111111111111221111211212121111112112222211121122212121111221112121222221211112112111112121221112122221121111212111111122111111111111111211111111111121211121221112212121122212112111121112111211122211112112111121221122111121212121222112211111111111112112221122221111221111111111111111111111111111111111221111111111111111111111122111111111111111111111111111111111111111111111112122111221211111111111112221111111111111111112121111111222211221111111111111111111111111221222121111111111122111111111111111111111111111112121111111111111111111111111111111",
+    "NL": "1111111111221221111111111111111211121111122112111112112111111112211111111112211221111111122111111121222121122111111111122121212211112212221221111122112121111211111212112111111112211121112111111112121111112111121212111212111111121211111111111111111112112111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112221211111112211111112211111111111111112221111221111111112211112211111111111111111111111111111111111111211111111111112111111111111111111111111111111111111111111111111111111",
+    "NO": "2122212112121111111111221122111211211111121212111112111211211211221121111111111221111111212112112111221122211111121112222122112212122111112122121222112121122221111112112111112222121112121221111111111111112112121112211121122111121211121111111111112212121111111221111111111212111111111111111121111111211111111111111111111111111121211111111111121121111111111111111111111111111111211111211111111111112211111111111111111111111111111111111111111111111111111111111111111122211111111111111111111111111111211111111121111111111111111211121111111111111111111",
+    "PL": "2221112111111111111111111111111111111111122111111111111111111111111111111111111111111111111112121111212111111111111111111111221111112211111111111111111111111221112111111111112112121121111112111111122111111111111111111212111111121211111111111111112212222111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111122211111111111111111111112211212211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "PT": "1111211112211221111111221122111111111111111212111111111111111111111111111111111111111111112211111111111111122111111111111112121112112111111211211212111111111111111112112111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111221222221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "RO": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "RS": "2222212111112111111221111111111111111122122212111211111212111111111111111111111221111111211111111121111121111111111222111111111112111211121221221212111121111111111111111111111222121122222111222121122111111111111221111221212111121211111111211212122212122111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111222122211111112211111111111111111111112221111111110000000011111111111111111111111111112112211111111111111111111111111122111111111111111111111111111111111111111111111",
+    "SE": "1111222112111111111111221112111211112111221212211111111111111112211111221112211221211211122111122111122122211111111122111122222212221112211221122221211111111111111112211111112112111112121111211211112121112112111111111122211111111111111111111111112122221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111121211111111111111111111111111111111111111111111111112211111111121121111112121122111111112112211211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "SI": "1222112112112211222221112221111112121111121221121222121111111221212211121212211221211211212111222121122122222111121221122211212211122211112221222111112121111221111112211111111222211121211111111111122111111112221221111211212111112121111121111121112212221112211111111111111111111111111111111111111111111111111111111111111111111111111111111111112112111111111112212111111111111111112111221122211121212211111111121121111111112121111111112112212111111111111111111111111111111111111212111111111111111111111111111111111112221111111111111111111111111111111",
+    "SK": "1212112111111121111221221122111111111111112111121112111211111111112211111112212211111111211212112211222111111111111111111122221111122111112211121222111111111221111111111111111111111111111111111112112111111112221111122112112111122111111111111111212212221111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112222111222211111111112211111111122112211111111111111111112211111111111111111111111111111111221111111111111111111111111111122212111111111111111111111121211111111111111111111"
+   },
+   "2022": {
+    "AL": "2222000323023220200300002023000200003323002330023202033030000002200002200002320000222222203300320023230002202202223003320200333320033002322020220000022020023200202030233022022200002302202232200202020302230030322022220220000000023000222020000300223002203020223002000230020203000200000020220220003300020000000000002000000302020030000000000220200000032002000020300000300300330332322020220202222203302202222202230000022222222230222220200000000030300022000023200022000022002300332022022022220003302200220020200000000020222222000203322000200000000000000",
+    "AT": "1121212112221121111111221122111211112111111212111111121211111111221111111112211111111111212111121111111112111111111111111122211111111111111221221211112121121211111112112111111111111112121111111111122111111111111111111222212111122111111111111111112211111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112121211211221111111112211111111111112211111111111111111112211112211111111111111111111111122211111112111111111111111111111111122111111111111111111111111111111111121112111111",
+    "BA": "1111212111221111222111211122111221211122112211122122111211111111111111111111112211111112112221112211111112211111111221111121121112121111112111121112122121111111112212211112121112111112121221222112121111111111111222222221221111111122121111112221112211222111111111111111111111111111111111111111112121111111111111111111111111111111111111111111111111111111111111111111111111111111212222211212211112212221221111121121112211111221111111110000000011111111111122111111111221112112111111111111111111111111111111111111111112121112112121112211111111111111111",
+    "BE": "1111111112112111111111111111122111111111111111111111111111211221221111111112211111111111211111111111111112211111111111111122111111111111111222121121211111111221111111111111122111111112121111111111122111112111211111112122212111121211111111111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111112221111111111111111111111111111111112121111111111111111111111111111122111111111111111111111111111111111111111111111",
+    "BG": "2222111112121221111111221122111211112111111212111111122111111111112111111112211111111221112211112111111122222111121121111112211112111211111211221112111111121211111111111111112112121112121111211122112111111112211111112122111111111111111111111111112212112111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111211111221211111111112211111111111111111111112121111111112211112211111111111111111111111122211111111111111111111111111111111111221111111111111111111111111111111111111111111",
+    "CH": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "CY": "1111111222111211112111211111111211111222212111111221112112211121112211211211211112111221122121112111212112222111121121111221112212121111212111122111111111111121111121111111121111112211221111121112211111121121122211212121111111111122111111111111122121111111112222111111111111111111111111111111111111111111111111111111111111112122111111111111111111111111111111111111111111111111111111111111111111111111221111111111111111111111111111111111112211111111111111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "CZ": "2222121112121221111221221111111111111111222222221111111111111111111111111112211221222222211111111111111111111111121112122111111112112111111221111122111111111111111111111111111111111111111111111111111111111111111111112112111111121211111111111111122222221111111111111111111111111111111111111122222222211111111111111111111111111111111111111111112111211121111111111111111122222112211111221212211111112211111221121111111111111111111111222211212111111111111122111111111111111111111111221111111112211222111111111111111111111111111111111111111111111111122",
+    "DE": "2222212112121111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112111111211111111111111111111111111111111111111111111111112200111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "DK": "1122111111222111221221222112122211122122111122112212111112121121222111121122212122211121212221112111122122211111121212111111122212112211121122121221112121121211111112112111111111111112211221212111122111111112121112222212212111111111221111111221112211111111122111111111111212111111111111111121211111111111111111111111111111111111111111111122211112111111111111111111221111111112212111222122221111112211111111121121111111111221111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111221111111111111111111111",
+    "EE": "1111111111111111111111211121122111212111121211112212111221211212212211111112212221212111122211211111211212211111111222222121212212122112221111121111121121122221112212211111121222121121221221111111122111222211211111111221212111111122112211211211112221222111122221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111221111112211111111111221111221111121212211111112211221111122111111111111221111111111133221211111111111121211111111112211111111212111111111111111111111221111111111122111111111122121111111111111111111",
+    "EL": "1221212112121111111111111111111111111111111111111111111111111111111111111112211221111111212111122111111122111111111111111111111111111111111111111111111111111221111111111111111111111121111112111111111111111111111211111222111111121211111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112221212221212111111112211111111111111111111112112111111112211111111111111111111111111111122121111112111122111111111111111111111111111111122111111111111111111111111111111111",
+    "ES": "1121122111111211111111111111111111111111111111111111111111111111112111111111111111111112211111111111111111111111111111111111111111111111111111111112211111111111111111111111111111221111111111111111111111111111111111111112112111121211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111112211122111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "EU27_2020": "2112121111111111112111112111121111111211111111111111111211121112111111111111111112112211111121111121112111111211111111111111121121111111111111121112111111111111111111111121211111111121111212211111112111211111112111211111111111111111221111111111121122111111111111111111212111111121111111112111111111211111212121111111111111111111121111111112111111111112111111111111111111112221111111111111121112111121111111111112212111111111111222111122111211111121111111111111111111111211211212212111212212112221111121111111111111111221111112112111121111211121111",
+    "FI": "1111212112112111111111221111111212111111111111111111111111111111111111111111111221111112211112122121111122211111121112212121222212112212211112211212111121111122111111111111112111221121111121221111111111111111111111111222221111121211111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111122221111111111111111111111111111112111111211111111111112211111111111111111111111111111111111111211211111111111111111111111111111121121111111111111111111111111111111111111111111111111111111111111111111111111",
+    "FR": "2122112111122221111111221122111111111111111111111111111111111111111111111111111111111111121111121111111111122111111111111111112212111211111111111111111111112121111111111111111111111111111111111112121111111111111112211212111111111111111111111111121121122111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112111121111111111111111121121111111111111111111112210111111111111111111111111111111111111111111111111111111111111111111111111111112121111111111111111111111111111111",
+    "HR": "1111111111122221111111112222111211221111211112121112121111211211221121111112211111111111211111111111221112211111111222122121221111112211121112122111111111111122111112211111111221111111111111111111111111112112211111111221122111121212121111111222121211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112212111111111111111211111211111111111112211111111111111111221111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "HU": "2111112111221111111111221111111111111111111212111111111111111111111111111111111111111112212111122111111121111111121121111111111111111111111211211111111111111111111111111111112111121111111111111111111111111111111111111212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111221111112211111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "IE": "2122212111122111112222221122122221122222212122211112111211211211111221221112212121221121221121122111222122212112222121211122122122222112212112222222121121222221112222211122222222222222221111122111122112111112121111211222212112121221222211111111112212222212222111112221212111121121111121112121111111212112212111211121211111111111121111111111111121221122112112112121112111121222222222222221111112212221212122112112222221121222112222112212111112211111111111111111111212221111211222112211212212211122111121112211222112211221121122122121221111111122111",
+    "IS": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111113333333311111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "IT": "1111111111111111111111111111111211112111112112121111111111111111111111111112211111111112111111111111111111111111111111111122111111111111111111111111111111111111111111111111112111121111111111111111111111111111111111111112112111111111111111111111111111111111111111111111111111111111111111111121212111111111111111111111111111111111111111111111111111111221111111212111111111212111111111111111211111112111111111111111111212111111111111110000221111111111111111111111111111112111211111111111111111111111111111111111111111111111111111111111111111212111111",
+    "LT": "1111111112112112211111221122111111111111111212121111121121111111111111111111111111111111212111211111212111211111121211111121122212112111112122222111121121111111111111111111111111111111111111111111122111112111221111112221212111122121122211111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111211111211111111111112211111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111122111111111111111111111112211111111111111111111",
+    "LU": "1111111221111112121122112221111111222221122121221211121222112121111112212121211112111221111111211221111221222222222211112211212121211212121112211121111111112122222222112211221222212221111111121212211212222221122121211121211212212221211221121222111222212122212122112212212111111211121111111112122122222222121221221111111111211121111111122111212111221221111122111111111121111211212111111212212122211212221111122122211121222121111212222111111111112121111122211111121112212222111212112212111111121222212212111121111112221111122222121111121222112111111",
+    "LV": "1121111111212121221212221122122111212111211212221212122211111111111111121212212121211212221211211111222222222111121221222111112212222112221111122122121121111121112112212111122221211122221222221222122121111222121222212222121111111221122211121211122122222111122111111111111111111111111111111112111111111111111221111111111111111111111111111211111111111111111112211111111111111112212111221222221111112112211111121122211111112122111111222211221111111111111122111111111122211121212111111111111111111111111111111111111111111111112121211111111111111111111",
+    "ME": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "MK": "2212212112211121112111221122111211112112112122112122121211111112121111111112211111111111112212212211122112211111121121122211212212111211111112111112122221111211112112211121112112111121112221212211212211221212111221111221121111121222112211112211112212211111111111111111111111111111111111111112112111111111111111111111111111111111111111111111111111111111111111111111111111111112221211112112111121212211111111121211112121111111111111112211111211111111111111111111111221211111112111212111111111111111222222111111111222122121111221111111111111111111111",
+    "MT": "1111111121112221111212212111111112112122211121112222111112211111121222221211121212112221121221112122221111111211211111122211121111111111111111111111122211111212111221121222112112111121212111211121211121221221121122122111121122112221212211111111111112112221122221112121111111111111111111111111111111111111111111111111111111111122111111111111111111111111111111111111111111121121111111121212211111112212221111111112211222222121111111222222221111111111111111211112212221112121111111212122111111111111211121111111111122121111122111211111111111111111111",
+    "NL": "1111111111222111111111111111111211121111212212111112112111111112211111221112211221111111112111121121222122222111111111122121112211112212221222111122112111111221112212112111112112121122122111111112121111111111122212111212111111121211111111111111111112112111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111121211111112211111112211111111111111111221111221111111112211112211111111111111111111111111111111111111211111111111112111111111111111111111111111111111111111111111111111111",
+    "NO": "2122212112121111111111221122111211211111121212121112111211211211221121121121112221111111212112112111221122211111121112222122212212122111112122121222112121122221111112112111112222121112121221111111111111112112121222211122212111121211111111111111112211221111111221111111111212111111111111111121111111211111111111111111111111111121211111111111121121111111111111111111111111111111211111211111221111112211111111121121111111111111111111111111111111111111111111111111111122211111112111111111111111111111111111111111111111111111111211121111111111112111112",
+    "PL": "2221112111111111111111111111111111111111121211111111111111111111111211111112211111111111211112121111111111111111111122111111222211112211111221121121111111111221111111111111111111111121111112111111122111111111111111121112111111121211111111111111112211222111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111112211212111111111111111111111111111111111111111111111111111111221111111111111111111111111111111111111111111111111111",
+    "PT": "1111111112221111111111221111111111111111112112111111111111111111111111111111111111111111112211111111111111111111111111111112121112112111111111111212111111111111111112112111111112121112121111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111221222221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "RO": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "RS": "1111111111111111111221111111111111111122122212112211111212111111111112111112211221111111211111111121111121111111121221111122111112112211121221221212111121111111111111111111111222121122222111222121122111111111111221112221111111121211111111111111122212122111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111222122211111122211111111121121111111111212111211110000000011111111111211211111111111112112211111111111111111111111111122111111111111111112112111111111111111111111111",
+    "SE": "1111122112112211221111221122111211112111211212211111111111121212211111111112211111111111122111122111122122211111111122111122221112121112211221122221211111111111111112211111122112111122211111111111112121112112111111111122111111111111111111111111112212221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111222121111111111111111111111111111111111111111111111111111111111111121121111111221122111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "SI": "1222112111111211222111112221111112121111121121121222112111121212212211121212211221211221212111222111122121222111121221122211212212122211112221222111112121121121111112211111111222211122211211111111122111111112221221111211111111112121111121111121112212221112211111111111111111111111111111111111111111111111111111111111111111111111111111111111211112111111111112212111111111111111212211221221111121212211111111121121111111112122111111112112212111111111111111111111111111111111111111111111111111111111111122111111111112121111111111111111111111111111111",
+    "SK": "1212112111122121111221221122111111111111111111111112111211111111111111111111111111111112212212111111222112111111111111111112221111122111112111121222111111111221111111111111111111111121112111111112112111111112211111122122212111111111111111111111112212221111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112122111222211111111112211111111122112211221111111111111112211112211111111111111111111111111221111111111111111211121111111122111111111111111111111111121211111111111111111111"
+   },
+   "2023": {
+    "AL": "2222000222022220200200002022000200002222002220022203022020000002200002200002220000222222202200220022220002202202222002220200222220022002222020220000022020022200202020222022022200002202202222200202020202220020222022220220000000022000222020000200222002202030222001000220020202000200000020220220002200020000000000002000000202020020000000000220200000022002000020200000200200220222222020220202222202202202222202220000022222222220222220200000000030300022000022200022000022002200222022022022220002202200220020200000000020222222000202222000200000000000000",
+    "AT": "1121212112221121111111221122111211112111111212111111112211111111221111111112211111111111212111121111111112111111112121111122211111111111111212221211112121121211111112112111111111111112121111111111122111111111111111111222212111122111111111111111112211111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112121211211221111111112211111111111112211111111111111111112211112211111111111111111111111111221111111111111111111111111111111122111111111111111111111111111111111111111111111",
+    "BA": "1111212111221221222111211122111221211122112211122122111211111111111111111111112211111112112221112211111112211111111221111121121112121111122111121112121121111111112212211112112112111112121221222112121111111111221112222221221111111122121111112211112121222111111111111111111111111111111111111111112121111111111111111111111111111111111111111111111111111111111111111111111111111111211122222212211112212221211111121121111111111221111111110000000011111111111122111111111221112112111111111111111111111111111111111111111111111112112121111111111111111111111",
+    "BE": "1112112112212221111111221111122111111111111111111111111111211211111111111112211111111111111111111111111111111111121112111122121111111111111221121121211111111121112111111111111111111112121111111112122111111111221111112212212111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111112211112211111111111111111111111111111111111111111111111111111111111122111111111111111111111111111111111111111111111",
+    "BG": "2222111112112221111111221122111211112111111212121111122111111111111111111112211111211121212211112111111122211111121121111112211111111111111211221112111111111212111111111111112222121112121111111112112111111112211111112122111111111111111111111111112212211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112222111221211111111112211111111111111111111112121111111111111112211111111111111111111111122211111111111111111111111111111111111221111111111111111111111111111111111111111111",
+    "CH": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "CY": "1111111222111211112212211111111211111222212111111221112112211121112211211211211112111221122121112111122112222111111122111221112212121111212111122111111111111121111121111111121111112211221111121112211111121121122211212121111111111122111111111111122121111111112222111111111111111111111111111111111111111221111111111111111111112122111111111111111111111111111111111111111111111111111111121112111111111111221111111111111111111111111111111111122111111111111111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "CZ": "2222121112121221111221221111111111111111222222221111111111111111111111111112211221222222211111111111111111111111121112122111111111111111111221111122111111111111111111111111111111111111111111111111111111111111111111111111111111121211111111111111122222221111111111111111111111111111111111111122222222211111111111111111111111111111111111111111112111211121111111111111111122222112211111221212211111112211111221121111111111111111111111222211212111111111111122111111111111112112111111221111111112211222111111111111111111111111111111111111111111111111122",
+    "DE": "2222212111111111111111111111111111111111112211111111111111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111100111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "DK": "1111111112222111221222122111111211121122211112112212111112221121222211121122212222111221212221112111122121211111121212211112212112122111121222111221111111121211111112112111111111111122211121122121122111112112211111111212212111111111221111111111111111111111122111111111111111111111111111111121211111111111111111111112111211111111111111111122111111111111111111111111111111111112211111211221111111112211111111121121111111111221111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111221111111111111111121211",
+    "EE": "1111111111111111111221111111122111212111121211112212111221211211221111111112212221211221121221111111212111111111111221222121122212121112221212121112121121122221112212211122111112121121221221212111122111222112111112211222212111111122121111211211112221222111122111111111111212111111111111111111111111111111111111111111111111111111111111111111111111112211111112211111111111111111111111121212211111112211221111122111111111221221111111111221111211111111111111111111111111211111112212111122111111111111112121111111111112121111111121211111111111111111111",
+    "EL": "1121212112121111111111111111111211112111111111111111111111111111111111111111111221111111112111121111111111111111111111111111111111111111111111111111111111111111111111111111211112121111111111111111122111111111111111111111111111121211111111111111111112121111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112221212111111111111111111111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "ES": "2222111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111112211111111111111111111111211111121111111111111111111111111111111111111112112111121211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111112211122111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "EU27_2020": "2111122111111111111111112111121111111211111111111111111121111111111111111111111122111121111122111122111111111111111121111111121221111111111111121121211111112111111211211121211111111121111111122111112111111111111121212111111111111111221111121111121111111111111111111121211111211111211111111112122111111111111221112112112111111221111111111112111111111111112111211111111111111211111111112111121121111111111111111111221211111111111222122112111111112121111111211112112111111112221112211112112112121111111111121111111111211111111112112122111111111111111",
+    "FI": "1111222111111111111111111111111111111111111111111111111111111111222211111111111111111112211111111111111112211111111111222111111111111111111112111111111221111122111111111111112111121121111221111111111111111111111111111222111111111111211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112111111211112221111112211111111111111111111111111111111111111221211111122211111111122111111111111111111111111111111111111221122111111111111111111111211121111111111111111111",
+    "FR": "1122112112212111111111221111111111111111111111121111111111111112111111111111111111111111121111121111111111122111121122111111111112111211111111111111111111111111111111111111111111221111111111111112121111111111221112211212112111121211111111111111121121122111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112111221111111211111111121121111111111111111111112210111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "HR": "1111111111122211111111111122111211211111211112122122121111211121221111111112211111111221221121111111222111111111111222122111221111112211121112122211111111111111111111111111111222211112121111111111111111112112211211111111212111121221121111111111121211111111111111111111111111111111111111111111111111111111111111111111111111111122111111111111111111111111111111111111111111111111211111211111111111112211111111111111112121111111111111112211111111111111111111111111111111221111111111111111111111111111111111221111111111111111111111111111111111111111111",
+    "HU": "2111112112121111111111221111111111111111111212111111111111111111111111111111111111111112221111122111111121111111111111111111111111111111111121211111111111111111111111111111112111121111111111111111111111111111111111111212111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111112211111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "IE": "2112112112122221111222221121222211222222222122222221222222221212222221221212222221211211222121222122221122222112112221222222212222122212212112222222121221222221222211122122222222222222222221222212122112111112121122221222111112122221222222222221112222221212222211112222222112221121211111121211212112222122111212211221111211111221122112112111121121212122122112222122212112122222221212211122211121212221211111212112221121221222112222222212111121211111111111222111122122122112222122111212112212222221111121222221122111111112222122222122212112111111111",
+    "IS": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "IT": "1121112111111221111111111111111111111111112112111111111111111111111111111112211111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111122111111111111111111111110000111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "LT": "1122111112112112211111221122111211112111111111121111122111111111111111111111111111111111212111212111212121211111111111111111112211122111111122222111121121111111111111111111111111111111111111111111122111112111121111112221111111122121122211111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111211111211111111111112211111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "LU": "1111111221111112121122112221111111222221222121221121121222112121111112212221211112111221111111211221111221222222222211112211212121211112121112211121111111112122112222112221221222212221111111122212211212222221122121211121211212212222211222121222111222212122212122112212212111111211121111111112122122222222121121221111111111211121111111122111112111221221111122111111111121111211212111111212222122211212221111122111111121222121111212222111111111112121111122211111121112212222111111112212111111121222212212111121111112221111122222121111121212112111111",
+    "LV": "1121111221212121221212221122122111212111211212222212122211111111111111121212212122211212221221111211222222222111121211222111112212222112222112122122121221111122112122212122122222211122221222212221122121111122121222211222121111111221112211111111122112221211122112111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111121212211111111111111112211211221222211111112112211111121122212112112122111111222211221111111111111111111111111122211122212111111111111111111111111111111111111111111111111112211111111111111111111",
+    "ME": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "MK": "2212111112211121112111221111111211112112111222112122221211211122221111111112211111111111122212212211122112211111121121122211212212111211112111112112122221111211112111111111111111111121222221222211212211221212121221111221121111121222112211112211112212211111111111111111111111111111111111111112112111111111111111111111111111111111111111111111111111111111111111111111111111111112212212112112111121212211111111121211112122112111111111112211111111111111111111111111111222211122112111212111111111111111212222111121111122222121111221121111112111111211111",
+    "MT": "1111111121112221111221211121111112112111121121112212112111211111121212221211121211112221121221212121122111211212111221122211121111111111222212122111122111121212111221121222112112111121212111211121211121221221121122222111121212111121212211111111111112112222211221112122121212111111111111111111111111111221111111111111111111112121111111111111111111111111111111111111111111121121111111121222211111111112221111211211111221222221111111112211111111111111111111111112211221112121111111212122111111111111212111111111111122112121122111111111111111111111111",
+    "NL": "1111111111222111111111221122111211121111212212121112112111111112211111221112211221111111112111121121221122222111111111122121212211112212221221111122112121111221112212112111112112121121112111111112121111111112121212111212111111121211111111111111111112112111111111111111111111111111111111111111111111111111111111112111112111111111111111111111111111111111111111111111111111111112221211111111111111112211111111111112211221111221111111112211112211111111111111111111111111111111111111211111111111112111111111111111111111111111111111111111111111111111111",
+    "NO": "2122212112121111111111221122111211211111121212121112111211211211221121121121112221111111212112112111221122211111121112222122212212122111112122121222112121122221111112112111112222121112121221111111111111112112121222211122212111121211111111111111112211221111111221111111111212111111111111111121111111211111111111111111111111111121211111111111121121111111111111111111111111111111211111211111221111112211111111121121111111111111111111111111111111111111111111111111111122211111112111111111111111111111111111111111111111111111111211121111111111112111112",
+    "PL": "2221112112211211111111111111111111111111121211111111111111111111111211111111111111111111211112121111111111111111111111111112122211122111111221111122111111111221111111111111111111111121112111111111122111111111111111111111111111121211111111111111112211222111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111221111111111112211212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "PT": "1111111111111111111111221122111111111111111212111111111111111111111111111111111111111111111111111111111111111111111111111112121112112111111212211212111111111111111112112111111112121112121111111111111111111111111111111111111111121211111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111221222221111111111111111121121111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "RO": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "RS": "1111111111111111111221111111111111111122122212111211111212111111111111111112211221111111211111111111111111111111111222111112121112112111121222221212111121111111111111111111111222121112221111222111111111111111111111111221222111121211111111111111122212222111111111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111112211111222222211111122211111111111112211111112211111211110000000011111111111211211111111111112112211111111111111111111111111122111111111111111111111111111111111111111111111",
+    "SE": "1111122112112121111111221122111121112111112112111111111111111111111111111112211111111111122111112111122121111111111111111122221112112212211221121211111111121211111112211111122112111111111111111111122121111122111111112121111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111121121111111221122111111112211212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "SI": "1212112111112221222111112221111212121111121121121222121111111222212211121212211221211221212111222111122121122111121221122111222212122211111221222111112121111221111111111111111222211122211211111111122111111112221221111221111111112121111111112121112212221112211111111111111111111111111111111111111111111111111111111111111111111111111111111111112112111111111112211111111111111111211111221222211111112212221111121121111221111111111111112111212111111111111111111111111111111111111111111111111111111111111122111111111112121111111111111111111111111111111",
+    "SK": "1212112112122121111221221122111111111122111111111112111211111111111111111111111111111112212212111111222112211111111111111122221111122111112111121222111111111221111111111111111111111121112111111112112111111112211111122122212111122111111111111111112211221111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112122111222211111111112211111111111112211111111111111111112211112211111111111111111111111111221111111111111111211121111111122111111111111111111111111121211111111111111111111"
+   },
+   "2024": {
+    "AL": "3333000333033330300300003033000300003333003330033303033030000003300003300003330000333333303300330033330003303303333003330300333330033003333030330000033030033300303030333033033300003303303333300303030303330030333033330330000000033000333030000300333003303030333003000330030303000300000030330330003300030000000000003000000303030030000000000330300000033003000030300000300300330333333030330303333303303303333303330000033333333330333330300000000030300033000033300033000033003300333033033033330003303300330030300000000030333333000303333000300000000000000",
+    "AT": "1121212112221121111111221122111211112111111212111111111111111111221111111111112121211211212111121111111112111111112121111122211111111111111212211111112121121211111112112111111111111112121111111111122111111111111111111222212111122111111111111111111112211111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112121211211221111111112211111111111112211111111221111111112211112211111111111111111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "BA": "1111212111221221222111221122111221211111112211122122111211111111111111111111112211211122112221112211111112211111111221111121121112121111122112221112122111111111112212211112112112111112121221222112121111111111221112222221221111111122111111112211112121222111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111211122212111211112211121211111122211111111111111111111110000000011111111111122111111111111112112111111111111111111111111111111111111111111111111111221211212111111111111111",
+    "BE": "3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
+    "BG": "2222111112211221111111221122111211112111112112111111111111111111112121111112211111111221212211112111111122211111121121111112211111111111111211221112111111111111111111111111112112121111111111212112112111111112211111112122111111112221211111111111112212211111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112122111221211111111112211111111122111111111111111111111112211112211111111111111111111111122211111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "CH": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "CY": "1111111222111211112212211111111211111222111111111221111111211221122211211211211112111221122121112111111112222111111122111221112212121111212111122121111111111121111121111111121111112211221111121112211111121121122211212121111111111122111111111111122121111111112112111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111121112111111111111221111111111111111111111111111111111122111111111111111111111111221111111111111111111111111111111121111111121111111111111111111111111111111111111111",
+    "CZ": "2222121112121221111221221111111111111111222222221111111111111111111111111112211221222222211111111111111111111111121112122111111111111111111221111122111111111111111111111111111111111111111111111111111111111111111111121112111111121211111111111111122222221111111111111111111111111111111111111122222222211111111111111111111111111111111111111111112111211121111111111111111122222112211111221212211111112211111221121111111111111111111111222211212111111111111122111111111111112112111111221111111112211222111111111111111111111111111111111111111111111111122",
+    "DE": "2222211111111121111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111211211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111221111111111111111111111111111111111111111111100111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "DK": "1111111112222111221222222112111211121122211112112212111112221121221111121122212222111221212222212111222121222111121212211112212212112111121122121221111111121211111112112111121112111112221221122111122111111112211111111212212111111111221111111111111111111111122111111111111111111111111111111122111111111111111111111112111211111111111111111122111111121211111111111111121112111112211111211221221111112211111111121121111111111221111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111221111111111111111121211",
+    "EE": "1111111111111111111221111111111111212111121211111222111211211212222221111112212221211121121211222211211212211111111222222121122212111212221111121111121121122221112212211111211222121122121221212121122111222212211212111222212212111121211111211211112211221111122111111111111212111111111111111122111111111111111111111111111111111111111111111111112112111111111112211111111111111111111111121211211111112211221111121122211111221221111111221111111111111111111111111111111112211111111212111111111111111221111221111111111112121111111222121111111111111111111",
+    "EL": "1122212112121111111111111111111211112111111111111111111111111111111111111111111221111111112111121111111111111111111111111121211111111111111111111111111111111111111111111111111111111111111111111111122111111111111111111212112111121211111111111111111112121111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112121211211111111111111111111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "ES": "2222122111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111112211111111111111111111111211111121111111111111111111111111111111111111112112111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111112211122111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "EU27_2020": "3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
+    "FI": "1111212112112122211111221111122111111111111111111121111111111111111111111111111221111112211112122121122122211111121211211121222212122112221112212211111111111122111112112111112111121121111121221111122111112112111111111222111111121211211111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111221222111111111111111111111111111112111111211112211111112211111111111111111111111111111111111111111111111122111111111111111111221111111111111222111111111111112222111111111111111111112111121111111111111111111",
+    "FR": "1122111211112221111111221111111111111111111111111111111111111112121111111111111111211211121111121111111111122111121122111111111111111111111111121211111111111111111111111111111111221112121111111111111111111111221112211112112111121211111111111111112221122111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112112111112111221111111211111111121121111111111111111111112210111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "HR": "1121111111122211111111111122111211211111211112122122121111211121221111111112211111111221211111111111222112211111111222122111221111112211121112122111111111111122111112211111122222111112121111111111111111112112211121111121112111121221121111111111122211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111211111221212211111112212211111111111112121111111111111112211111111111111111111111111111111222111211111111111111111111111111111221111111111111111111121211111111111111111111",
+    "HU": "2111112112121111111111221111111111111111111212111111111111111111111111111111111111111112212111122111111121111111111111111122111111111111111111111111111111111111111111111111112111121111111111111111111111111111111111111212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111112211111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "IE": "2112112111111211112222222211222212222222222122222211121211221212222121221211222221211211222111222122222122212212112221122222222212122212212112222222112221222221221122212122222222222222212221222212122112111112121222221222111112122221122222222221112221222222222212112222222112221121211111121221112212122122212111212211111111211221122112122111122121212122122112222122212112122112222112222222221112212221211111212112222222222222112222122211111121211111111121222111111122122112221111111212112211122221121121222221222112211111222121211111111111112221211",
+    "IS": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "IT": "1121212112211111111111111111111111111111112112111111111111111111111111111112211111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111221111111111111111111111111111111111111212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111111111111111110000212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "LT": "1111111112211112211111221122111211112111111111121111122111111111111111111111111111211121222211112111221121211111111111111111112211122111112122221111121121111111111111111111111111111121211111111221122111112111221111111221212111122121122211111111111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111211111211111111111112211111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "LU": "1111111221111112121122212221111121222222222121221121121222112121111212212221211112111221111211211221111221222222222212112211212121211112121112211121111111112122112222112221221222212221111111222212211212222221122121211121211212212222211222121222111222212122212222112212212111111211121111111112222122222222121121221111111111211121111111122111112111221221111122111111111121111211212111111212222122211212221111122111111121222121111212222111111111112121111122211111121112212222111111112212111111121222212212111121111112221111122222121212121212112111111",
+    "LV": "1122111111212221221212221122122111212111211212222112122211111111111111121212212122212112221221211211222222222111111221222221112212222112222112122222121211111122112122212122122222211122221121112221122211111122121222211222121111121211112211121121122121221111122111111111111111111111111111111111111111111221111111111111111111111111111111111111111111111111111112211111111111111112111211222222211111112212211111122111112112112122111111222211221111111111111111111111111122211112212111111111111111111111111111111111111112121111111111111111111111111111111",
+    "ME": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "MK": "1112111112211121112111222222111211211112112221112212121212211122121111121212211111111111112212212211122112212211121121222221212212111211112112112112122221111211222111212121112111111121112221222211212222221212121221112221121111121211112211112211212212211111111111111111111111111111111111111112112111111111111111111111111111111111111111111111111111111111111111111111111111111112222111112112111121212211111111121211112121111111111111112211111111111111111122211111111111211122112111122111111111111111212222111121111122222121112221111111111111111111111",
+    "MT": "1111111121122221111221211121111112112222221121112211122111211121221212221111122211112221121221212111122112111212121211122211121111111111221212121111122111121211111221121222112112112221212111211121211121221211121122222111121122111121212211111111111112112211122222112121111212111111111111111111111111111221111111111111111111111122111111111111111111111111111111111111111111121121111111121211111111112212211111211211111111222221111111112222111111111111111111111112211221112121111111111122111111111111212111111111111111112121112112211111221111111111111",
+    "NL": "1111111111221111111111221122111211112111212212121112112111111112221111111112211221111111112111121121221122222111111111122111112211112212221222121122112111111221111112112111112112111121112111111111122111111111122212111212111111121211111111111111111112112111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111121211111111111111112211111111111111111221112221111111112211112211111111111111111111111111111111111111211111111111112111111111111111111111111111111111111111111111111111111",
+    "NO": "3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
+    "PL": "2222112112112211111111111111111111111111121211111111111111111111111211111112211111211121211112121111111111111111111122111112121111122111111221111122111111111221111111111111111111111121111121111111122111111111111111111111111111121211111111111111112211222111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111111111111111111221111111111112222212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111121111211111111111111",
+    "PT": "1111111111111111111111221122111111111111111212111111111111111111111111111111111111111111111111111111111111111111111111111112122212112111111212211221111111111111111112112111111112121112121111111111111111111111111111111111111111121211111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112211111221221111111111111111111121121111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "RO": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "RS": "1111111111111111111221111111111111111122122212111211111212111111111111111112211221111111211111111111111111111111121222111112121112112111121222212222111121111111111111111111112222121112221111222212121111111111111111111221222111121222111111111111122212122111111111111111111111111111111111111112211111111111111111111111111111111111111111111111111111111111111111111111111111111112211111222212111111122211111111111111111111111212111211110000000011111111111211211111111111112112211111111111111111111111111122111111111111111111111111111111111111111111111",
+    "SE": "1111222112112111111111221122111211112111112112111111111111111111111111111112211111111112222111122111111122211111111212111122221112112212211221122211111111111212111112211111122112112211111111111112121111111111111111112121111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111121121111111221111111111112211212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "SI": "1212112111112211222111112221111212211111121121121222122111111222211211121212211221211221212121222111122122222111121221122111222211122211111222211111112121111221111112211111111222211121111211111111122111111112221221111221111111112121111111112121112212221112211111111111111111111111111111111111111111111111111111111111111111111111111111111111112112111111111112211111111111111111211111221221111111112211111111121121111221111111111111112222212111111111111111111111111111111111111111111111111111111111111122111111111112121111111111111111111111111111111",
+    "SK": "1212112112122121112221121122111111111122111111111112111211111111111111111111111111111111212212111111222112222111111111111112221111122111112111121222111111111221111111111111111111111111111111111112112111111112211111122122212111111111111111111111112211221111111221111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112122111222211111111112211111111212111111221111111111111112211112211111111111122111111111111111111111111111111211121111111122111111111111111111111111121211111111111111111111"
+   }
+  },
+  "matrix_by_class": {
+   "B0510": {
+    "ABS": 8,
+    "C": 41,
+    "NA": 6,
+    "V": 89
+   },
+   "B0520": {
+    "ABS": 8,
+    "C": 37,
+    "NA": 6,
+    "V": 93
+   },
+   "B0610": {
+    "ABS": 8,
+    "C": 53,
+    "NA": 4,
+    "V": 79
+   },
+   "B0620": {
+    "ABS": 8,
+    "C": 50,
+    "NA": 5,
+    "V": 81
+   },
+   "B0710": {
+    "ABS": 12,
+    "C": 34,
+    "NA": 4,
+    "V": 94
+   },
+   "B0721": {
+    "ABS": 12,
+    "C": 16,
+    "NA": 4,
+    "V": 112
+   },
+   "B0729": {
+    "ABS": 12,
+    "C": 60,
+    "NA": 4,
+    "V": 68
+   },
+   "B0811": {
+    "ABS": 8,
+    "C": 12,
+    "NA": 6,
+    "V": 118
+   },
+   "B0812": {
+    "ABS": 8,
+    "C": 15,
+    "NA": 4,
+    "V": 117
+   },
+   "B0891": {
+    "ABS": 8,
+    "C": 61,
+    "NA": 6,
+    "V": 69
+   },
+   "B0892": {
+    "ABS": 12,
+    "C": 33,
+    "NA": 3,
+    "V": 96
+   },
+   "B0893": {
+    "ABS": 8,
+    "C": 51,
+    "NA": 5,
+    "V": 80
+   },
+   "B0899": {
+    "ABS": 8,
+    "C": 47,
+    "NA": 6,
+    "V": 83
+   },
+   "B0910": {
+    "ABS": 8,
+    "C": 46,
+    "NA": 5,
+    "V": 85
+   },
+   "B0990": {
+    "ABS": 8,
+    "C": 46,
+    "NA": 4,
+    "V": 86
+   },
+   "C1011": {
+    "ABS": 12,
+    "C": 10,
+    "NA": 3,
+    "V": 119
+   },
+   "C1012": {
+    "ABS": 8,
+    "C": 25,
+    "NA": 4,
+    "V": 107
+   },
+   "C1013": {
+    "ABS": 12,
+    "C": 21,
+    "NA": 3,
+    "V": 108
+   },
+   "C1020": {
+    "ABS": 12,
+    "C": 21,
+    "NA": 3,
+    "V": 108
+   },
+   "C1031": {
+    "ABS": 8,
+    "C": 34,
+    "NA": 6,
+    "V": 96
+   },
+   "C1032": {
+    "ABS": 12,
+    "C": 28,
+    "NA": 3,
+    "V": 101
+   },
+   "C1039": {
+    "ABS": 12,
+    "C": 17,
+    "NA": 3,
+    "V": 112
+   },
+   "C1041": {
+    "ABS": 12,
+    "C": 72,
+    "NA": 3,
+    "V": 57
+   },
+   "C1042": {
+    "ABS": 12,
+    "C": 62,
+    "NA": 3,
+    "V": 67
+   },
+   "C1051": {
+    "ABS": 8,
+    "C": 24,
+    "NA": 4,
+    "V": 108
+   },
+   "C1052": {
+    "ABS": 12,
+    "C": 12,
+    "NA": 3,
+    "V": 117
+   },
+   "C1061": {
+    "ABS": 8,
+    "C": 63,
+    "NA": 4,
+    "V": 69
+   },
+   "C1062": {
+    "ABS": 8,
+    "C": 50,
+    "NA": 6,
+    "V": 80
+   },
+   "C1071": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "C1072": {
+    "ABS": 12,
+    "C": 20,
+    "NA": 3,
+    "V": 109
+   },
+   "C1073": {
+    "ABS": 12,
+    "C": 17,
+    "NA": 3,
+    "V": 112
+   },
+   "C1081": {
+    "ABS": 8,
+    "C": 56,
+    "NA": 4,
+    "V": 76
+   },
+   "C1082": {
+    "ABS": 12,
+    "C": 9,
+    "NA": 3,
+    "V": 120
+   },
+   "C1083": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 3,
+    "V": 118
+   },
+   "C1084": {
+    "ABS": 12,
+    "C": 26,
+    "NA": 3,
+    "V": 103
+   },
+   "C1085": {
+    "ABS": 12,
+    "C": 19,
+    "NA": 3,
+    "V": 110
+   },
+   "C1086": {
+    "ABS": 8,
+    "C": 45,
+    "NA": 6,
+    "V": 85
+   },
+   "C1089": {
+    "ABS": 8,
+    "C": 18,
+    "NA": 6,
+    "V": 112
+   },
+   "C1091": {
+    "ABS": 8,
+    "C": 30,
+    "NA": 4,
+    "V": 102
+   },
+   "C1092": {
+    "ABS": 8,
+    "C": 29,
+    "NA": 6,
+    "V": 101
+   },
+   "C1101": {
+    "ABS": 12,
+    "C": 31,
+    "NA": 3,
+    "V": 98
+   },
+   "C1102": {
+    "ABS": 12,
+    "C": 34,
+    "NA": 3,
+    "V": 95
+   },
+   "C1103": {
+    "ABS": 8,
+    "C": 47,
+    "NA": 4,
+    "V": 85
+   },
+   "C1104": {
+    "ABS": 8,
+    "C": 57,
+    "NA": 6,
+    "V": 73
+   },
+   "C1105": {
+    "ABS": 8,
+    "C": 27,
+    "NA": 6,
+    "V": 103
+   },
+   "C1106": {
+    "ABS": 12,
+    "C": 60,
+    "NA": 3,
+    "V": 69
+   },
+   "C1107": {
+    "ABS": 12,
+    "C": 18,
+    "NA": 3,
+    "V": 111
+   },
+   "C1200": {
+    "ABS": 8,
+    "C": 45,
+    "NA": 4,
+    "V": 87
+   },
+   "C1310": {
+    "ABS": 8,
+    "C": 27,
+    "NA": 6,
+    "V": 103
+   },
+   "C1320": {
+    "ABS": 8,
+    "C": 33,
+    "NA": 4,
+    "V": 99
+   },
+   "C1330": {
+    "ABS": 12,
+    "C": 22,
+    "NA": 3,
+    "V": 107
+   },
+   "C1391": {
+    "ABS": 8,
+    "C": 46,
+    "NA": 5,
+    "V": 85
+   },
+   "C1392": {
+    "ABS": 12,
+    "C": 2,
+    "NA": 3,
+    "V": 127
+   },
+   "C1393": {
+    "ABS": 8,
+    "C": 31,
+    "NA": 6,
+    "V": 99
+   },
+   "C1394": {
+    "ABS": 8,
+    "C": 23,
+    "NA": 6,
+    "V": 107
+   },
+   "C1395": {
+    "ABS": 12,
+    "C": 40,
+    "NA": 3,
+    "V": 89
+   },
+   "C1396": {
+    "ABS": 8,
+    "C": 12,
+    "NA": 6,
+    "V": 118
+   },
+   "C1399": {
+    "ABS": 12,
+    "C": 19,
+    "NA": 3,
+    "V": 110
+   },
+   "C1411": {
+    "ABS": 12,
+    "C": 28,
+    "NA": 3,
+    "V": 101
+   },
+   "C1412": {
+    "ABS": 12,
+    "C": 12,
+    "NA": 3,
+    "V": 117
+   },
+   "C1413": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "C1414": {
+    "ABS": 12,
+    "C": 20,
+    "NA": 3,
+    "V": 109
+   },
+   "C1419": {
+    "ABS": 12,
+    "C": 21,
+    "NA": 3,
+    "V": 108
+   },
+   "C1420": {
+    "ABS": 8,
+    "C": 26,
+    "NA": 4,
+    "V": 106
+   },
+   "C1431": {
+    "ABS": 8,
+    "C": 39,
+    "NA": 4,
+    "V": 93
+   },
+   "C1439": {
+    "ABS": 12,
+    "C": 33,
+    "NA": 3,
+    "V": 96
+   },
+   "C1511": {
+    "ABS": 12,
+    "C": 20,
+    "NA": 3,
+    "V": 109
+   },
+   "C1512": {
+    "ABS": 12,
+    "C": 25,
+    "NA": 3,
+    "V": 104
+   },
+   "C1520": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 3,
+    "V": 118
+   },
+   "C1610": {
+    "ABS": 8,
+    "C": 12,
+    "NA": 4,
+    "V": 120
+   },
+   "C1621": {
+    "ABS": 8,
+    "C": 22,
+    "NA": 4,
+    "V": 110
+   },
+   "C1622": {
+    "ABS": 12,
+    "C": 26,
+    "NA": 3,
+    "V": 103
+   },
+   "C1623": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "C1624": {
+    "ABS": 12,
+    "C": 21,
+    "NA": 3,
+    "V": 108
+   },
+   "C1629": {
+    "ABS": 12,
+    "C": 10,
+    "NA": 3,
+    "V": 119
+   },
+   "C1711": {
+    "ABS": 8,
+    "C": 63,
+    "NA": 4,
+    "V": 69
+   },
+   "C1712": {
+    "ABS": 8,
+    "C": 70,
+    "NA": 6,
+    "V": 60
+   },
+   "C1721": {
+    "ABS": 8,
+    "C": 8,
+    "NA": 4,
+    "V": 124
+   },
+   "C1722": {
+    "ABS": 12,
+    "C": 25,
+    "NA": 3,
+    "V": 104
+   },
+   "C1723": {
+    "ABS": 12,
+    "C": 44,
+    "NA": 3,
+    "V": 85
+   },
+   "C1724": {
+    "ABS": 12,
+    "C": 46,
+    "NA": 3,
+    "V": 83
+   },
+   "C1729": {
+    "ABS": 12,
+    "C": 18,
+    "NA": 3,
+    "V": 111
+   },
+   "C1811": {
+    "ABS": 8,
+    "C": 35,
+    "NA": 4,
+    "V": 97
+   },
+   "C1812": {
+    "ABS": 8,
+    "C": 8,
+    "NA": 5,
+    "V": 123
+   },
+   "C1813": {
+    "ABS": 8,
+    "C": 13,
+    "NA": 5,
+    "V": 118
+   },
+   "C1814": {
+    "ABS": 8,
+    "C": 39,
+    "NA": 5,
+    "V": 92
+   },
+   "C1820": {
+    "ABS": 8,
+    "C": 41,
+    "NA": 4,
+    "V": 91
+   },
+   "C1910": {
+    "ABS": 8,
+    "C": 35,
+    "NA": 4,
+    "V": 97
+   },
+   "C1920": {
+    "ABS": 8,
+    "C": 72,
+    "NA": 4,
+    "V": 60
+   },
+   "C2011": {
+    "ABS": 12,
+    "C": 34,
+    "NA": 3,
+    "V": 95
+   },
+   "C2012": {
+    "ABS": 8,
+    "C": 60,
+    "NA": 7,
+    "V": 69
+   },
+   "C2013": {
+    "ABS": 8,
+    "C": 38,
+    "NA": 6,
+    "V": 92
+   },
+   "C2014": {
+    "ABS": 12,
+    "C": 26,
+    "NA": 3,
+    "V": 103
+   },
+   "C2015": {
+    "ABS": 12,
+    "C": 21,
+    "NA": 3,
+    "V": 108
+   },
+   "C2016": {
+    "ABS": 8,
+    "C": 27,
+    "NA": 6,
+    "V": 103
+   },
+   "C2017": {
+    "ABS": 8,
+    "C": 40,
+    "NA": 5,
+    "V": 91
+   },
+   "C2020": {
+    "ABS": 12,
+    "C": 50,
+    "NA": 3,
+    "V": 79
+   },
+   "C2030": {
+    "ABS": 12,
+    "C": 18,
+    "NA": 3,
+    "V": 111
+   },
+   "C2041": {
+    "ABS": 8,
+    "C": 27,
+    "NA": 4,
+    "V": 105
+   },
+   "C2042": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 6,
+    "V": 123
+   },
+   "C2051": {
+    "ABS": 8,
+    "C": 39,
+    "NA": 4,
+    "V": 93
+   },
+   "C2052": {
+    "ABS": 8,
+    "C": 48,
+    "NA": 6,
+    "V": 82
+   },
+   "C2053": {
+    "ABS": 12,
+    "C": 44,
+    "NA": 3,
+    "V": 85
+   },
+   "C2059": {
+    "ABS": 12,
+    "C": 12,
+    "NA": 3,
+    "V": 117
+   },
+   "C2060": {
+    "ABS": 12,
+    "C": 49,
+    "NA": 3,
+    "V": 80
+   },
+   "C2110": {
+    "ABS": 8,
+    "C": 59,
+    "NA": 4,
+    "V": 73
+   },
+   "C2120": {
+    "ABS": 8,
+    "C": 64,
+    "NA": 4,
+    "V": 68
+   },
+   "C2211": {
+    "ABS": 12,
+    "C": 29,
+    "NA": 3,
+    "V": 100
+   },
+   "C2219": {
+    "ABS": 8,
+    "C": 36,
+    "NA": 4,
+    "V": 96
+   },
+   "C2221": {
+    "ABS": 8,
+    "C": 15,
+    "NA": 4,
+    "V": 117
+   },
+   "C2222": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "C2223": {
+    "ABS": 8,
+    "C": 14,
+    "NA": 4,
+    "V": 118
+   },
+   "C2229": {
+    "ABS": 8,
+    "C": 10,
+    "NA": 4,
+    "V": 122
+   },
+   "C2311": {
+    "ABS": 8,
+    "C": 50,
+    "NA": 4,
+    "V": 82
+   },
+   "C2312": {
+    "ABS": 8,
+    "C": 13,
+    "NA": 6,
+    "V": 117
+   },
+   "C2313": {
+    "ABS": 12,
+    "C": 42,
+    "NA": 3,
+    "V": 87
+   },
+   "C2314": {
+    "ABS": 12,
+    "C": 54,
+    "NA": 3,
+    "V": 75
+   },
+   "C2319": {
+    "ABS": 8,
+    "C": 34,
+    "NA": 6,
+    "V": 96
+   },
+   "C2320": {
+    "ABS": 8,
+    "C": 24,
+    "NA": 6,
+    "V": 106
+   },
+   "C2331": {
+    "ABS": 8,
+    "C": 41,
+    "NA": 4,
+    "V": 91
+   },
+   "C2332": {
+    "ABS": 12,
+    "C": 44,
+    "NA": 3,
+    "V": 85
+   },
+   "C2341": {
+    "ABS": 8,
+    "C": 23,
+    "NA": 4,
+    "V": 109
+   },
+   "C2342": {
+    "ABS": 12,
+    "C": 47,
+    "NA": 3,
+    "V": 82
+   },
+   "C2343": {
+    "ABS": 12,
+    "C": 38,
+    "NA": 4,
+    "V": 90
+   },
+   "C2344": {
+    "ABS": 8,
+    "C": 51,
+    "NA": 7,
+    "V": 78
+   },
+   "C2349": {
+    "ABS": 8,
+    "C": 47,
+    "NA": 6,
+    "V": 83
+   },
+   "C2351": {
+    "ABS": 8,
+    "C": 54,
+    "NA": 6,
+    "V": 76
+   },
+   "C2352": {
+    "ABS": 8,
+    "C": 48,
+    "NA": 6,
+    "V": 82
+   },
+   "C2361": {
+    "ABS": 8,
+    "C": 11,
+    "NA": 4,
+    "V": 121
+   },
+   "C2362": {
+    "ABS": 12,
+    "C": 54,
+    "NA": 3,
+    "V": 75
+   },
+   "C2363": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 3,
+    "V": 118
+   },
+   "C2364": {
+    "ABS": 8,
+    "C": 38,
+    "NA": 6,
+    "V": 92
+   },
+   "C2365": {
+    "ABS": 8,
+    "C": 57,
+    "NA": 6,
+    "V": 73
+   },
+   "C2369": {
+    "ABS": 12,
+    "C": 34,
+    "NA": 3,
+    "V": 95
+   },
+   "C2370": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "C2391": {
+    "ABS": 8,
+    "C": 30,
+    "NA": 4,
+    "V": 102
+   },
+   "C2399": {
+    "ABS": 8,
+    "C": 31,
+    "NA": 6,
+    "V": 99
+   },
+   "C2410": {
+    "ABS": 8,
+    "C": 38,
+    "NA": 4,
+    "V": 94
+   },
+   "C2420": {
+    "ABS": 8,
+    "C": 32,
+    "NA": 4,
+    "V": 100
+   },
+   "C2431": {
+    "ABS": 12,
+    "C": 45,
+    "NA": 4,
+    "V": 83
+   },
+   "C2432": {
+    "ABS": 8,
+    "C": 43,
+    "NA": 5,
+    "V": 88
+   },
+   "C2433": {
+    "ABS": 12,
+    "C": 48,
+    "NA": 3,
+    "V": 81
+   },
+   "C2434": {
+    "ABS": 8,
+    "C": 43,
+    "NA": 5,
+    "V": 88
+   },
+   "C2441": {
+    "ABS": 8,
+    "C": 70,
+    "NA": 4,
+    "V": 62
+   },
+   "C2442": {
+    "ABS": 12,
+    "C": 30,
+    "NA": 3,
+    "V": 99
+   },
+   "C2443": {
+    "ABS": 12,
+    "C": 38,
+    "NA": 4,
+    "V": 90
+   },
+   "C2444": {
+    "ABS": 12,
+    "C": 43,
+    "NA": 3,
+    "V": 86
+   },
+   "C2445": {
+    "ABS": 12,
+    "C": 54,
+    "NA": 3,
+    "V": 75
+   },
+   "C2446": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 4,
+    "V": 117
+   },
+   "C2451": {
+    "ABS": 8,
+    "C": 29,
+    "NA": 4,
+    "V": 103
+   },
+   "C2452": {
+    "ABS": 8,
+    "C": 29,
+    "NA": 5,
+    "V": 102
+   },
+   "C2453": {
+    "ABS": 12,
+    "C": 13,
+    "NA": 3,
+    "V": 116
+   },
+   "C2454": {
+    "ABS": 8,
+    "C": 46,
+    "NA": 4,
+    "V": 86
+   },
+   "C2511": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "C2512": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "C2521": {
+    "ABS": 8,
+    "C": 28,
+    "NA": 4,
+    "V": 104
+   },
+   "C2529": {
+    "ABS": 8,
+    "C": 19,
+    "NA": 6,
+    "V": 111
+   },
+   "C2530": {
+    "ABS": 8,
+    "C": 52,
+    "NA": 5,
+    "V": 79
+   },
+   "C2540": {
+    "ABS": 12,
+    "C": 52,
+    "NA": 3,
+    "V": 77
+   },
+   "C2550": {
+    "ABS": 12,
+    "C": 17,
+    "NA": 3,
+    "V": 112
+   },
+   "C2561": {
+    "ABS": 8,
+    "C": 8,
+    "NA": 4,
+    "V": 124
+   },
+   "C2562": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "C2571": {
+    "ABS": 8,
+    "C": 33,
+    "NA": 4,
+    "V": 99
+   },
+   "C2572": {
+    "ABS": 12,
+    "C": 24,
+    "NA": 3,
+    "V": 105
+   },
+   "C2573": {
+    "ABS": 8,
+    "C": 19,
+    "NA": 6,
+    "V": 111
+   },
+   "C2591": {
+    "ABS": 12,
+    "C": 51,
+    "NA": 3,
+    "V": 78
+   },
+   "C2592": {
+    "ABS": 8,
+    "C": 31,
+    "NA": 4,
+    "V": 101
+   },
+   "C2593": {
+    "ABS": 8,
+    "C": 6,
+    "NA": 6,
+    "V": 124
+   },
+   "C2594": {
+    "ABS": 8,
+    "C": 33,
+    "NA": 6,
+    "V": 97
+   },
+   "C2599": {
+    "ABS": 12,
+    "C": 7,
+    "NA": 3,
+    "V": 122
+   },
+   "C2611": {
+    "ABS": 8,
+    "C": 23,
+    "NA": 4,
+    "V": 109
+   },
+   "C2612": {
+    "ABS": 8,
+    "C": 18,
+    "NA": 4,
+    "V": 114
+   },
+   "C2620": {
+    "ABS": 12,
+    "C": 16,
+    "NA": 3,
+    "V": 113
+   },
+   "C2630": {
+    "ABS": 8,
+    "C": 29,
+    "NA": 4,
+    "V": 103
+   },
+   "C2640": {
+    "ABS": 8,
+    "C": 47,
+    "NA": 4,
+    "V": 85
+   },
+   "C2651": {
+    "ABS": 8,
+    "C": 32,
+    "NA": 4,
+    "V": 100
+   },
+   "C2652": {
+    "ABS": 12,
+    "C": 29,
+    "NA": 3,
+    "V": 100
+   },
+   "C2660": {
+    "ABS": 12,
+    "C": 56,
+    "NA": 3,
+    "V": 73
+   },
+   "C2670": {
+    "ABS": 12,
+    "C": 28,
+    "NA": 3,
+    "V": 101
+   },
+   "C2680": {
+    "ABS": 12,
+    "C": 43,
+    "NA": 4,
+    "V": 85
+   },
+   "C2711": {
+    "ABS": 8,
+    "C": 16,
+    "NA": 4,
+    "V": 116
+   },
+   "C2712": {
+    "ABS": 8,
+    "C": 14,
+    "NA": 6,
+    "V": 116
+   },
+   "C2720": {
+    "ABS": 12,
+    "C": 53,
+    "NA": 3,
+    "V": 76
+   },
+   "C2731": {
+    "ABS": 8,
+    "C": 49,
+    "NA": 4,
+    "V": 83
+   },
+   "C2732": {
+    "ABS": 8,
+    "C": 35,
+    "NA": 4,
+    "V": 97
+   },
+   "C2733": {
+    "ABS": 12,
+    "C": 46,
+    "NA": 3,
+    "V": 83
+   },
+   "C2740": {
+    "ABS": 8,
+    "C": 23,
+    "NA": 4,
+    "V": 109
+   },
+   "C2751": {
+    "ABS": 8,
+    "C": 31,
+    "NA": 4,
+    "V": 101
+   },
+   "C2752": {
+    "ABS": 8,
+    "C": 32,
+    "NA": 6,
+    "V": 98
+   },
+   "C2790": {
+    "ABS": 8,
+    "C": 11,
+    "NA": 4,
+    "V": 121
+   },
+   "C2811": {
+    "ABS": 8,
+    "C": 40,
+    "NA": 4,
+    "V": 92
+   },
+   "C2812": {
+    "ABS": 12,
+    "C": 30,
+    "NA": 3,
+    "V": 99
+   },
+   "C2813": {
+    "ABS": 12,
+    "C": 29,
+    "NA": 3,
+    "V": 100
+   },
+   "C2814": {
+    "ABS": 8,
+    "C": 21,
+    "NA": 4,
+    "V": 111
+   },
+   "C2815": {
+    "ABS": 12,
+    "C": 16,
+    "NA": 3,
+    "V": 113
+   },
+   "C2821": {
+    "ABS": 8,
+    "C": 39,
+    "NA": 4,
+    "V": 93
+   },
+   "C2822": {
+    "ABS": 12,
+    "C": 16,
+    "NA": 3,
+    "V": 113
+   },
+   "C2823": {
+    "ABS": 8,
+    "C": 57,
+    "NA": 4,
+    "V": 75
+   },
+   "C2824": {
+    "ABS": 12,
+    "C": 59,
+    "NA": 3,
+    "V": 70
+   },
+   "C2825": {
+    "ABS": 8,
+    "C": 12,
+    "NA": 6,
+    "V": 118
+   },
+   "C2829": {
+    "ABS": 12,
+    "C": 10,
+    "NA": 3,
+    "V": 119
+   },
+   "C2830": {
+    "ABS": 8,
+    "C": 13,
+    "NA": 4,
+    "V": 119
+   },
+   "C2841": {
+    "ABS": 8,
+    "C": 20,
+    "NA": 4,
+    "V": 112
+   },
+   "C2849": {
+    "ABS": 8,
+    "C": 21,
+    "NA": 6,
+    "V": 109
+   },
+   "C2891": {
+    "ABS": 12,
+    "C": 27,
+    "NA": 4,
+    "V": 101
+   },
+   "C2892": {
+    "ABS": 12,
+    "C": 16,
+    "NA": 3,
+    "V": 113
+   },
+   "C2893": {
+    "ABS": 8,
+    "C": 18,
+    "NA": 6,
+    "V": 112
+   },
+   "C2894": {
+    "ABS": 12,
+    "C": 41,
+    "NA": 3,
+    "V": 88
+   },
+   "C2895": {
+    "ABS": 8,
+    "C": 35,
+    "NA": 7,
+    "V": 94
+   },
+   "C2896": {
+    "ABS": 8,
+    "C": 48,
+    "NA": 4,
+    "V": 84
+   },
+   "C2899": {
+    "ABS": 8,
+    "C": 16,
+    "NA": 4,
+    "V": 116
+   },
+   "C2910": {
+    "ABS": 12,
+    "C": 31,
+    "NA": 3,
+    "V": 98
+   },
+   "C2920": {
+    "ABS": 8,
+    "C": 34,
+    "NA": 4,
+    "V": 98
+   },
+   "C2931": {
+    "ABS": 8,
+    "C": 32,
+    "NA": 4,
+    "V": 100
+   },
+   "C2932": {
+    "ABS": 8,
+    "C": 37,
+    "NA": 4,
+    "V": 95
+   },
+   "C3011": {
+    "ABS": 8,
+    "C": 23,
+    "NA": 4,
+    "V": 109
+   },
+   "C3012": {
+    "ABS": 12,
+    "C": 35,
+    "NA": 3,
+    "V": 94
+   },
+   "C3020": {
+    "ABS": 8,
+    "C": 65,
+    "NA": 4,
+    "V": 67
+   },
+   "C3030": {
+    "ABS": 8,
+    "C": 64,
+    "NA": 5,
+    "V": 67
+   },
+   "C3040": {
+    "ABS": 12,
+    "C": 61,
+    "NA": 3,
+    "V": 68
+   },
+   "C3091": {
+    "ABS": 12,
+    "C": 41,
+    "NA": 3,
+    "V": 88
+   },
+   "C3092": {
+    "ABS": 12,
+    "C": 24,
+    "NA": 3,
+    "V": 105
+   },
+   "C3099": {
+    "ABS": 12,
+    "C": 46,
+    "NA": 3,
+    "V": 83
+   },
+   "C3101": {
+    "ABS": 12,
+    "C": 9,
+    "NA": 3,
+    "V": 120
+   },
+   "C3102": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "C3103": {
+    "ABS": 12,
+    "C": 13,
+    "NA": 3,
+    "V": 116
+   },
+   "C3109": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "C3211": {
+    "ABS": 8,
+    "C": 62,
+    "NA": 5,
+    "V": 69
+   },
+   "C3212": {
+    "ABS": 8,
+    "C": 24,
+    "NA": 6,
+    "V": 106
+   },
+   "C3213": {
+    "ABS": 12,
+    "C": 58,
+    "NA": 3,
+    "V": 71
+   },
+   "C3220": {
+    "ABS": 12,
+    "C": 41,
+    "NA": 3,
+    "V": 88
+   },
+   "C3230": {
+    "ABS": 12,
+    "C": 19,
+    "NA": 3,
+    "V": 110
+   },
+   "C3240": {
+    "ABS": 8,
+    "C": 26,
+    "NA": 4,
+    "V": 106
+   },
+   "C3250": {
+    "ABS": 8,
+    "C": 29,
+    "NA": 4,
+    "V": 103
+   },
+   "C3291": {
+    "ABS": 8,
+    "C": 25,
+    "NA": 4,
+    "V": 107
+   },
+   "C3299": {
+    "ABS": 12,
+    "C": 26,
+    "NA": 3,
+    "V": 103
+   },
+   "C3311": {
+    "ABS": 8,
+    "C": 13,
+    "NA": 4,
+    "V": 119
+   },
+   "C3312": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "C3313": {
+    "ABS": 12,
+    "C": 8,
+    "NA": 3,
+    "V": 121
+   },
+   "C3314": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 3,
+    "V": 118
+   },
+   "C3315": {
+    "ABS": 12,
+    "C": 13,
+    "NA": 3,
+    "V": 116
+   },
+   "C3316": {
+    "ABS": 8,
+    "C": 26,
+    "NA": 6,
+    "V": 104
+   },
+   "C3317": {
+    "ABS": 12,
+    "C": 19,
+    "NA": 3,
+    "V": 110
+   },
+   "C3319": {
+    "ABS": 12,
+    "C": 8,
+    "NA": 3,
+    "V": 121
+   },
+   "C3320": {
+    "ABS": 8,
+    "C": 6,
+    "NA": 4,
+    "V": 126
+   },
+   "D3511": {
+    "ABS": 8,
+    "C": 28,
+    "NA": 4,
+    "V": 104
+   },
+   "D3512": {
+    "ABS": 8,
+    "C": 68,
+    "NA": 6,
+    "V": 62
+   },
+   "D3513": {
+    "ABS": 12,
+    "C": 64,
+    "NA": 3,
+    "V": 65
+   },
+   "D3514": {
+    "ABS": 12,
+    "C": 26,
+    "NA": 3,
+    "V": 103
+   },
+   "D3521": {
+    "ABS": 8,
+    "C": 56,
+    "NA": 4,
+    "V": 76
+   },
+   "D3522": {
+    "ABS": 8,
+    "C": 59,
+    "NA": 4,
+    "V": 73
+   },
+   "D3523": {
+    "ABS": 12,
+    "C": 52,
+    "NA": 3,
+    "V": 77
+   },
+   "D3530": {
+    "ABS": 8,
+    "C": 37,
+    "NA": 6,
+    "V": 93
+   },
+   "E3600": {
+    "ABS": 12,
+    "C": 10,
+    "NA": 3,
+    "V": 119
+   },
+   "E3700": {
+    "ABS": 8,
+    "C": 11,
+    "NA": 5,
+    "V": 120
+   },
+   "E3811": {
+    "ABS": 12,
+    "C": 13,
+    "NA": 3,
+    "V": 116
+   },
+   "E3812": {
+    "ABS": 8,
+    "C": 16,
+    "NA": 4,
+    "V": 116
+   },
+   "E3821": {
+    "ABS": 8,
+    "C": 22,
+    "NA": 4,
+    "V": 110
+   },
+   "E3822": {
+    "ABS": 8,
+    "C": 28,
+    "NA": 6,
+    "V": 102
+   },
+   "E3831": {
+    "ABS": 12,
+    "C": 23,
+    "NA": 3,
+    "V": 106
+   },
+   "E3832": {
+    "ABS": 12,
+    "C": 24,
+    "NA": 3,
+    "V": 105
+   },
+   "E3900": {
+    "ABS": 8,
+    "C": 12,
+    "NA": 5,
+    "V": 119
+   },
+   "F4110": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "F4120": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "F4211": {
+    "ABS": 12,
+    "C": 10,
+    "NA": 3,
+    "V": 119
+   },
+   "F4212": {
+    "ABS": 8,
+    "C": 16,
+    "NA": 4,
+    "V": 116
+   },
+   "F4213": {
+    "ABS": 8,
+    "C": 15,
+    "NA": 6,
+    "V": 115
+   },
+   "F4221": {
+    "ABS": 12,
+    "C": 7,
+    "NA": 3,
+    "V": 122
+   },
+   "F4222": {
+    "ABS": 12,
+    "C": 9,
+    "NA": 3,
+    "V": 120
+   },
+   "F4291": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 4,
+    "V": 125
+   },
+   "F4299": {
+    "ABS": 12,
+    "C": 8,
+    "NA": 3,
+    "V": 121
+   },
+   "F4311": {
+    "ABS": 8,
+    "C": 12,
+    "NA": 4,
+    "V": 120
+   },
+   "F4312": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "F4313": {
+    "ABS": 8,
+    "C": 12,
+    "NA": 6,
+    "V": 118
+   },
+   "F4321": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "F4322": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "F4329": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "F4331": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 4,
+    "V": 125
+   },
+   "F4332": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "F4333": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "F4334": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "F4339": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "F4391": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "F4399": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "G4511": {
+    "ABS": 8,
+    "C": 4,
+    "NA": 4,
+    "V": 128
+   },
+   "G4519": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "G4520": {
+    "ABS": 8,
+    "C": 3,
+    "NA": 4,
+    "V": 129
+   },
+   "G4531": {
+    "ABS": 8,
+    "C": 5,
+    "NA": 4,
+    "V": 127
+   },
+   "G4532": {
+    "ABS": 12,
+    "C": 2,
+    "NA": 3,
+    "V": 127
+   },
+   "G4540": {
+    "ABS": 8,
+    "C": 5,
+    "NA": 4,
+    "V": 127
+   },
+   "G4611": {
+    "ABS": 8,
+    "C": 20,
+    "NA": 4,
+    "V": 112
+   },
+   "G4612": {
+    "ABS": 12,
+    "C": 19,
+    "NA": 3,
+    "V": 110
+   },
+   "G4613": {
+    "ABS": 12,
+    "C": 12,
+    "NA": 3,
+    "V": 117
+   },
+   "G4614": {
+    "ABS": 12,
+    "C": 9,
+    "NA": 3,
+    "V": 120
+   },
+   "G4615": {
+    "ABS": 8,
+    "C": 20,
+    "NA": 6,
+    "V": 110
+   },
+   "G4616": {
+    "ABS": 8,
+    "C": 6,
+    "NA": 6,
+    "V": 124
+   },
+   "G4617": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 3,
+    "V": 118
+   },
+   "G4618": {
+    "ABS": 12,
+    "C": 10,
+    "NA": 3,
+    "V": 119
+   },
+   "G4619": {
+    "ABS": 12,
+    "C": 15,
+    "NA": 3,
+    "V": 114
+   },
+   "G4621": {
+    "ABS": 8,
+    "C": 10,
+    "NA": 4,
+    "V": 122
+   },
+   "G4622": {
+    "ABS": 12,
+    "C": 7,
+    "NA": 3,
+    "V": 122
+   },
+   "G4623": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 3,
+    "V": 118
+   },
+   "G4624": {
+    "ABS": 12,
+    "C": 13,
+    "NA": 3,
+    "V": 116
+   },
+   "G4631": {
+    "ABS": 12,
+    "C": 7,
+    "NA": 3,
+    "V": 122
+   },
+   "G4632": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "G4633": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "G4634": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "G4635": {
+    "ABS": 12,
+    "C": 7,
+    "NA": 3,
+    "V": 122
+   },
+   "G4636": {
+    "ABS": 12,
+    "C": 10,
+    "NA": 3,
+    "V": 119
+   },
+   "G4637": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "G4638": {
+    "ABS": 12,
+    "C": 7,
+    "NA": 3,
+    "V": 122
+   },
+   "G4639": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "G4641": {
+    "ABS": 8,
+    "C": 6,
+    "NA": 4,
+    "V": 126
+   },
+   "G4642": {
+    "ABS": 12,
+    "C": 2,
+    "NA": 3,
+    "V": 127
+   },
+   "G4643": {
+    "ABS": 12,
+    "C": 2,
+    "NA": 3,
+    "V": 127
+   },
+   "G4644": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "G4645": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "G4646": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "G4647": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "G4648": {
+    "ABS": 8,
+    "C": 5,
+    "NA": 6,
+    "V": 125
+   },
+   "G4649": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "G4651": {
+    "ABS": 8,
+    "C": 5,
+    "NA": 4,
+    "V": 127
+   },
+   "G4652": {
+    "ABS": 12,
+    "C": 6,
+    "NA": 3,
+    "V": 123
+   },
+   "G4661": {
+    "ABS": 8,
+    "C": 3,
+    "NA": 4,
+    "V": 129
+   },
+   "G4662": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "G4663": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "G4664": {
+    "ABS": 8,
+    "C": 20,
+    "NA": 6,
+    "V": 110
+   },
+   "G4665": {
+    "ABS": 12,
+    "C": 6,
+    "NA": 3,
+    "V": 123
+   },
+   "G4666": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "G4669": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "G4671": {
+    "ABS": 12,
+    "C": 2,
+    "NA": 3,
+    "V": 127
+   },
+   "G4672": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "G4673": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "G4674": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "G4675": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "G4676": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "G4677": {
+    "ABS": 12,
+    "C": 6,
+    "NA": 3,
+    "V": 123
+   },
+   "G4690": {
+    "ABS": 8,
+    "C": 5,
+    "NA": 4,
+    "V": 127
+   },
+   "G4711": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 4,
+    "V": 125
+   },
+   "G4719": {
+    "ABS": 12,
+    "C": 6,
+    "NA": 3,
+    "V": 123
+   },
+   "G4721": {
+    "ABS": 8,
+    "C": 10,
+    "NA": 4,
+    "V": 122
+   },
+   "G4722": {
+    "ABS": 12,
+    "C": 9,
+    "NA": 3,
+    "V": 120
+   },
+   "G4723": {
+    "ABS": 12,
+    "C": 17,
+    "NA": 3,
+    "V": 112
+   },
+   "G4724": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "G4725": {
+    "ABS": 12,
+    "C": 12,
+    "NA": 3,
+    "V": 117
+   },
+   "G4726": {
+    "ABS": 12,
+    "C": 7,
+    "NA": 3,
+    "V": 122
+   },
+   "G4729": {
+    "ABS": 12,
+    "C": 12,
+    "NA": 3,
+    "V": 117
+   },
+   "G4730": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 6,
+    "V": 123
+   },
+   "G4741": {
+    "ABS": 8,
+    "C": 6,
+    "NA": 4,
+    "V": 126
+   },
+   "G4742": {
+    "ABS": 12,
+    "C": 9,
+    "NA": 3,
+    "V": 120
+   },
+   "G4743": {
+    "ABS": 12,
+    "C": 14,
+    "NA": 3,
+    "V": 115
+   },
+   "G4751": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 4,
+    "V": 125
+   },
+   "G4752": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "G4753": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "G4754": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "G4759": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "G4761": {
+    "ABS": 8,
+    "C": 9,
+    "NA": 4,
+    "V": 123
+   },
+   "G4762": {
+    "ABS": 12,
+    "C": 20,
+    "NA": 3,
+    "V": 109
+   },
+   "G4763": {
+    "ABS": 8,
+    "C": 20,
+    "NA": 6,
+    "V": 110
+   },
+   "G4764": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "G4765": {
+    "ABS": 12,
+    "C": 9,
+    "NA": 3,
+    "V": 120
+   },
+   "G4771": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "G4772": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "G4773": {
+    "ABS": 12,
+    "C": 2,
+    "NA": 3,
+    "V": 127
+   },
+   "G4774": {
+    "ABS": 8,
+    "C": 5,
+    "NA": 6,
+    "V": 125
+   },
+   "G4775": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "G4776": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "G4777": {
+    "ABS": 8,
+    "C": 1,
+    "NA": 6,
+    "V": 129
+   },
+   "G4778": {
+    "ABS": 12,
+    "C": 8,
+    "NA": 3,
+    "V": 121
+   },
+   "G4779": {
+    "ABS": 12,
+    "C": 9,
+    "NA": 3,
+    "V": 120
+   },
+   "G4781": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 6,
+    "V": 123
+   },
+   "G4782": {
+    "ABS": 8,
+    "C": 13,
+    "NA": 6,
+    "V": 117
+   },
+   "G4789": {
+    "ABS": 12,
+    "C": 9,
+    "NA": 3,
+    "V": 120
+   },
+   "G4791": {
+    "ABS": 8,
+    "C": 10,
+    "NA": 6,
+    "V": 120
+   },
+   "G4799": {
+    "ABS": 8,
+    "C": 8,
+    "NA": 6,
+    "V": 122
+   },
+   "H4910": {
+    "ABS": 8,
+    "C": 60,
+    "NA": 4,
+    "V": 72
+   },
+   "H4920": {
+    "ABS": 8,
+    "C": 65,
+    "NA": 6,
+    "V": 65
+   },
+   "H4931": {
+    "ABS": 8,
+    "C": 30,
+    "NA": 4,
+    "V": 102
+   },
+   "H4932": {
+    "ABS": 8,
+    "C": 29,
+    "NA": 4,
+    "V": 103
+   },
+   "H4939": {
+    "ABS": 12,
+    "C": 21,
+    "NA": 3,
+    "V": 108
+   },
+   "H4941": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 4,
+    "V": 125
+   },
+   "H4942": {
+    "ABS": 12,
+    "C": 10,
+    "NA": 3,
+    "V": 119
+   },
+   "H4950": {
+    "ABS": 8,
+    "C": 68,
+    "NA": 4,
+    "V": 64
+   },
+   "H5010": {
+    "ABS": 8,
+    "C": 53,
+    "NA": 4,
+    "V": 79
+   },
+   "H5020": {
+    "ABS": 12,
+    "C": 26,
+    "NA": 3,
+    "V": 103
+   },
+   "H5030": {
+    "ABS": 8,
+    "C": 56,
+    "NA": 4,
+    "V": 76
+   },
+   "H5040": {
+    "ABS": 12,
+    "C": 29,
+    "NA": 3,
+    "V": 100
+   },
+   "H5110": {
+    "ABS": 8,
+    "C": 51,
+    "NA": 4,
+    "V": 81
+   },
+   "H5121": {
+    "ABS": 8,
+    "C": 55,
+    "NA": 4,
+    "V": 77
+   },
+   "H5122": {
+    "ABS": 8,
+    "C": 26,
+    "NA": 5,
+    "V": 105
+   },
+   "H5210": {
+    "ABS": 8,
+    "C": 8,
+    "NA": 4,
+    "V": 124
+   },
+   "H5221": {
+    "ABS": 8,
+    "C": 3,
+    "NA": 4,
+    "V": 129
+   },
+   "H5222": {
+    "ABS": 12,
+    "C": 12,
+    "NA": 3,
+    "V": 117
+   },
+   "H5223": {
+    "ABS": 8,
+    "C": 12,
+    "NA": 6,
+    "V": 118
+   },
+   "H5224": {
+    "ABS": 8,
+    "C": 18,
+    "NA": 6,
+    "V": 112
+   },
+   "H5229": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "H5310": {
+    "ABS": 8,
+    "C": 93,
+    "NA": 4,
+    "V": 39
+   },
+   "H5320": {
+    "ABS": 8,
+    "C": 95,
+    "NA": 4,
+    "V": 37
+   },
+   "I5510": {
+    "ABS": 12,
+    "C": 7,
+    "NA": 3,
+    "V": 122
+   },
+   "I5520": {
+    "ABS": 8,
+    "C": 18,
+    "NA": 4,
+    "V": 114
+   },
+   "I5530": {
+    "ABS": 8,
+    "C": 32,
+    "NA": 4,
+    "V": 100
+   },
+   "I5590": {
+    "ABS": 8,
+    "C": 21,
+    "NA": 4,
+    "V": 111
+   },
+   "I5610": {
+    "ABS": 8,
+    "C": 5,
+    "NA": 4,
+    "V": 127
+   },
+   "I5621": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 4,
+    "V": 125
+   },
+   "I5629": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "I5630": {
+    "ABS": 8,
+    "C": 5,
+    "NA": 4,
+    "V": 127
+   },
+   "J5811": {
+    "ABS": 8,
+    "C": 11,
+    "NA": 4,
+    "V": 121
+   },
+   "J5812": {
+    "ABS": 8,
+    "C": 53,
+    "NA": 6,
+    "V": 77
+   },
+   "J5813": {
+    "ABS": 12,
+    "C": 21,
+    "NA": 3,
+    "V": 108
+   },
+   "J5814": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 3,
+    "V": 118
+   },
+   "J5819": {
+    "ABS": 12,
+    "C": 30,
+    "NA": 3,
+    "V": 99
+   },
+   "J5821": {
+    "ABS": 12,
+    "C": 21,
+    "NA": 3,
+    "V": 108
+   },
+   "J5829": {
+    "ABS": 12,
+    "C": 22,
+    "NA": 3,
+    "V": 107
+   },
+   "J5911": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 4,
+    "V": 125
+   },
+   "J5912": {
+    "ABS": 8,
+    "C": 16,
+    "NA": 5,
+    "V": 115
+   },
+   "J5913": {
+    "ABS": 8,
+    "C": 19,
+    "NA": 5,
+    "V": 112
+   },
+   "J5914": {
+    "ABS": 8,
+    "C": 26,
+    "NA": 5,
+    "V": 105
+   },
+   "J5920": {
+    "ABS": 8,
+    "C": 12,
+    "NA": 4,
+    "V": 120
+   },
+   "J6010": {
+    "ABS": 8,
+    "C": 21,
+    "NA": 4,
+    "V": 111
+   },
+   "J6020": {
+    "ABS": 8,
+    "C": 22,
+    "NA": 4,
+    "V": 110
+   },
+   "J6110": {
+    "ABS": 8,
+    "C": 29,
+    "NA": 4,
+    "V": 103
+   },
+   "J6120": {
+    "ABS": 8,
+    "C": 28,
+    "NA": 4,
+    "V": 104
+   },
+   "J6130": {
+    "ABS": 8,
+    "C": 44,
+    "NA": 6,
+    "V": 86
+   },
+   "J6190": {
+    "ABS": 12,
+    "C": 17,
+    "NA": 3,
+    "V": 112
+   },
+   "J6201": {
+    "ABS": 8,
+    "C": 3,
+    "NA": 4,
+    "V": 129
+   },
+   "J6202": {
+    "ABS": 8,
+    "C": 2,
+    "NA": 5,
+    "V": 129
+   },
+   "J6203": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 5,
+    "V": 124
+   },
+   "J6209": {
+    "ABS": 8,
+    "C": 16,
+    "NA": 5,
+    "V": 115
+   },
+   "J6311": {
+    "ABS": 8,
+    "C": 8,
+    "NA": 4,
+    "V": 124
+   },
+   "J6312": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 3,
+    "V": 118
+   },
+   "J6391": {
+    "ABS": 8,
+    "C": 20,
+    "NA": 4,
+    "V": 112
+   },
+   "J6399": {
+    "ABS": 12,
+    "C": 18,
+    "NA": 3,
+    "V": 111
+   },
+   "K6411": {
+    "ABS": 24,
+    "C": 86,
+    "NA": 5,
+    "V": 29
+   },
+   "K6419": {
+    "ABS": 24,
+    "C": 78,
+    "NA": 5,
+    "V": 37
+   },
+   "K6420": {
+    "ABS": 28,
+    "C": 8,
+    "NA": 6,
+    "V": 102
+   },
+   "K6430": {
+    "ABS": 32,
+    "C": 13,
+    "NA": 6,
+    "V": 93
+   },
+   "K6511": {
+    "ABS": 20,
+    "C": 27,
+    "NA": 5,
+    "V": 92
+   },
+   "K6512": {
+    "ABS": 20,
+    "C": 17,
+    "NA": 5,
+    "V": 102
+   },
+   "K6520": {
+    "ABS": 20,
+    "C": 41,
+    "NA": 6,
+    "V": 77
+   },
+   "K6530": {
+    "ABS": 16,
+    "C": 29,
+    "NA": 6,
+    "V": 93
+   },
+   "L6810": {
+    "ABS": 8,
+    "C": 3,
+    "NA": 6,
+    "V": 127
+   },
+   "L6820": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "L6831": {
+    "ABS": 8,
+    "C": 4,
+    "NA": 6,
+    "V": 126
+   },
+   "L6832": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "M6910": {
+    "ABS": 12,
+    "C": 6,
+    "NA": 3,
+    "V": 123
+   },
+   "M6920": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "M7010": {
+    "ABS": 8,
+    "C": 11,
+    "NA": 4,
+    "V": 121
+   },
+   "M7021": {
+    "ABS": 8,
+    "C": 5,
+    "NA": 4,
+    "V": 127
+   },
+   "M7022": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "M7111": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "M7112": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "M7120": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "M7211": {
+    "ABS": 8,
+    "C": 22,
+    "NA": 4,
+    "V": 110
+   },
+   "M7219": {
+    "ABS": 8,
+    "C": 16,
+    "NA": 6,
+    "V": 114
+   },
+   "M7220": {
+    "ABS": 8,
+    "C": 18,
+    "NA": 4,
+    "V": 114
+   },
+   "M7311": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "M7312": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "M7320": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "M7410": {
+    "ABS": 8,
+    "C": 4,
+    "NA": 4,
+    "V": 128
+   },
+   "M7420": {
+    "ABS": 8,
+    "C": 8,
+    "NA": 4,
+    "V": 124
+   },
+   "M7430": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "M7490": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "M7500": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "N7711": {
+    "ABS": 12,
+    "C": 14,
+    "NA": 3,
+    "V": 115
+   },
+   "N7712": {
+    "ABS": 8,
+    "C": 30,
+    "NA": 4,
+    "V": 102
+   },
+   "N7721": {
+    "ABS": 8,
+    "C": 26,
+    "NA": 4,
+    "V": 106
+   },
+   "N7722": {
+    "ABS": 12,
+    "C": 35,
+    "NA": 3,
+    "V": 94
+   },
+   "N7729": {
+    "ABS": 12,
+    "C": 18,
+    "NA": 3,
+    "V": 111
+   },
+   "N7731": {
+    "ABS": 8,
+    "C": 26,
+    "NA": 4,
+    "V": 106
+   },
+   "N7732": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 6,
+    "V": 123
+   },
+   "N7733": {
+    "ABS": 12,
+    "C": 17,
+    "NA": 3,
+    "V": 112
+   },
+   "N7734": {
+    "ABS": 12,
+    "C": 21,
+    "NA": 3,
+    "V": 108
+   },
+   "N7735": {
+    "ABS": 8,
+    "C": 18,
+    "NA": 6,
+    "V": 112
+   },
+   "N7739": {
+    "ABS": 8,
+    "C": 5,
+    "NA": 6,
+    "V": 125
+   },
+   "N7740": {
+    "ABS": 8,
+    "C": 18,
+    "NA": 4,
+    "V": 114
+   },
+   "N7810": {
+    "ABS": 12,
+    "C": 10,
+    "NA": 3,
+    "V": 119
+   },
+   "N7820": {
+    "ABS": 8,
+    "C": 6,
+    "NA": 4,
+    "V": 126
+   },
+   "N7830": {
+    "ABS": 8,
+    "C": 17,
+    "NA": 4,
+    "V": 115
+   },
+   "N7911": {
+    "ABS": 12,
+    "C": 15,
+    "NA": 3,
+    "V": 114
+   },
+   "N7912": {
+    "ABS": 8,
+    "C": 11,
+    "NA": 4,
+    "V": 121
+   },
+   "N7990": {
+    "ABS": 8,
+    "C": 19,
+    "NA": 4,
+    "V": 113
+   },
+   "N8010": {
+    "ABS": 12,
+    "C": 8,
+    "NA": 3,
+    "V": 121
+   },
+   "N8020": {
+    "ABS": 8,
+    "C": 10,
+    "NA": 4,
+    "V": 122
+   },
+   "N8030": {
+    "ABS": 8,
+    "C": 17,
+    "NA": 4,
+    "V": 115
+   },
+   "N8110": {
+    "ABS": 8,
+    "C": 8,
+    "NA": 4,
+    "V": 124
+   },
+   "N8121": {
+    "ABS": 8,
+    "C": 3,
+    "NA": 4,
+    "V": 129
+   },
+   "N8122": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "N8129": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "N8130": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "N8211": {
+    "ABS": 8,
+    "C": 9,
+    "NA": 6,
+    "V": 121
+   },
+   "N8219": {
+    "ABS": 8,
+    "C": 7,
+    "NA": 6,
+    "V": 123
+   },
+   "N8220": {
+    "ABS": 12,
+    "C": 8,
+    "NA": 3,
+    "V": 121
+   },
+   "N8230": {
+    "ABS": 8,
+    "C": 11,
+    "NA": 4,
+    "V": 121
+   },
+   "N8291": {
+    "ABS": 8,
+    "C": 17,
+    "NA": 4,
+    "V": 115
+   },
+   "N8292": {
+    "ABS": 12,
+    "C": 14,
+    "NA": 3,
+    "V": 115
+   },
+   "N8299": {
+    "ABS": 12,
+    "C": 9,
+    "NA": 3,
+    "V": 120
+   },
+   "P8510": {
+    "ABS": 8,
+    "C": 17,
+    "NA": 4,
+    "V": 115
+   },
+   "P8520": {
+    "ABS": 8,
+    "C": 13,
+    "NA": 4,
+    "V": 119
+   },
+   "P8531": {
+    "ABS": 12,
+    "C": 17,
+    "NA": 3,
+    "V": 112
+   },
+   "P8532": {
+    "ABS": 12,
+    "C": 14,
+    "NA": 3,
+    "V": 115
+   },
+   "P8541": {
+    "ABS": 8,
+    "C": 33,
+    "NA": 4,
+    "V": 99
+   },
+   "P8542": {
+    "ABS": 12,
+    "C": 28,
+    "NA": 3,
+    "V": 101
+   },
+   "P8551": {
+    "ABS": 8,
+    "C": 12,
+    "NA": 4,
+    "V": 120
+   },
+   "P8552": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 3,
+    "V": 118
+   },
+   "P8553": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "P8559": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "P8560": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 3,
+    "V": 118
+   },
+   "Q8610": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "Q8621": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "Q8622": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "Q8623": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "Q8690": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "Q8710": {
+    "ABS": 8,
+    "C": 14,
+    "NA": 4,
+    "V": 118
+   },
+   "Q8720": {
+    "ABS": 12,
+    "C": 28,
+    "NA": 3,
+    "V": 101
+   },
+   "Q8730": {
+    "ABS": 8,
+    "C": 13,
+    "NA": 4,
+    "V": 119
+   },
+   "Q8790": {
+    "ABS": 8,
+    "C": 25,
+    "NA": 4,
+    "V": 107
+   },
+   "Q8810": {
+    "ABS": 8,
+    "C": 8,
+    "NA": 4,
+    "V": 124
+   },
+   "Q8891": {
+    "ABS": 8,
+    "C": 8,
+    "NA": 4,
+    "V": 124
+   },
+   "Q8899": {
+    "ABS": 8,
+    "C": 12,
+    "NA": 4,
+    "V": 120
+   },
+   "R9001": {
+    "ABS": 8,
+    "C": 9,
+    "NA": 4,
+    "V": 123
+   },
+   "R9002": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "R9003": {
+    "ABS": 12,
+    "C": 10,
+    "NA": 3,
+    "V": 119
+   },
+   "R9004": {
+    "ABS": 12,
+    "C": 18,
+    "NA": 3,
+    "V": 111
+   },
+   "R9101": {
+    "ABS": 8,
+    "C": 22,
+    "NA": 4,
+    "V": 110
+   },
+   "R9102": {
+    "ABS": 12,
+    "C": 28,
+    "NA": 3,
+    "V": 101
+   },
+   "R9103": {
+    "ABS": 8,
+    "C": 18,
+    "NA": 6,
+    "V": 112
+   },
+   "R9104": {
+    "ABS": 8,
+    "C": 20,
+    "NA": 6,
+    "V": 110
+   },
+   "R9200": {
+    "ABS": 8,
+    "C": 18,
+    "NA": 5,
+    "V": 113
+   },
+   "R9311": {
+    "ABS": 8,
+    "C": 10,
+    "NA": 4,
+    "V": 122
+   },
+   "R9312": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "R9313": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "R9319": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "R9321": {
+    "ABS": 8,
+    "C": 8,
+    "NA": 4,
+    "V": 124
+   },
+   "R9329": {
+    "ABS": 12,
+    "C": 8,
+    "NA": 3,
+    "V": 121
+   },
+   "S9511": {
+    "ABS": 12,
+    "C": 3,
+    "NA": 3,
+    "V": 126
+   },
+   "S9512": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "S9521": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "S9522": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "S9523": {
+    "ABS": 12,
+    "C": 2,
+    "NA": 3,
+    "V": 127
+   },
+   "S9524": {
+    "ABS": 12,
+    "NA": 3,
+    "V": 129
+   },
+   "S9525": {
+    "ABS": 12,
+    "C": 11,
+    "NA": 3,
+    "V": 118
+   },
+   "S9529": {
+    "ABS": 12,
+    "C": 2,
+    "NA": 3,
+    "V": 127
+   },
+   "S9601": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "S9602": {
+    "ABS": 12,
+    "C": 1,
+    "NA": 3,
+    "V": 128
+   },
+   "S9603": {
+    "ABS": 12,
+    "C": 4,
+    "NA": 3,
+    "V": 125
+   },
+   "S9604": {
+    "ABS": 12,
+    "C": 5,
+    "NA": 3,
+    "V": 124
+   },
+   "S9609": {
+    "ABS": 12,
+    "C": 6,
+    "NA": 3,
+    "V": 123
+   }
+  },
+  "matrix_by_geo": {
+   "AL": {
+    "ABS": 1152,
+    "C": 611,
+    "NA": 424,
+    "V": 1
+   },
+   "AT": {
+    "C": 284,
+    "V": 1904
+   },
+   "BA": {
+    "ABS": 32,
+    "C": 447,
+    "V": 1709
+   },
+   "BE": {
+    "C": 174,
+    "NA": 547,
+    "V": 1467
+   },
+   "BG": {
+    "C": 293,
+    "V": 1895
+   },
+   "CH": {
+    "ABS": 2184,
+    "NA": 1,
+    "V": 3
+   },
+   "CY": {
+    "C": 331,
+    "V": 1857
+   },
+   "CZ": {
+    "C": 393,
+    "V": 1795
+   },
+   "DE": {
+    "ABS": 8,
+    "C": 48,
+    "V": 2132
+   },
+   "DK": {
+    "C": 480,
+    "V": 1708
+   },
+   "EE": {
+    "C": 542,
+    "NA": 2,
+    "V": 1644
+   },
+   "EL": {
+    "C": 169,
+    "V": 2019
+   },
+   "ES": {
+    "C": 79,
+    "V": 2109
+   },
+   "EU27_2020": {
+    "C": 249,
+    "NA": 547,
+    "V": 1392
+   },
+   "FI": {
+    "C": 280,
+    "V": 1908
+   },
+   "FR": {
+    "ABS": 4,
+    "C": 188,
+    "V": 1996
+   },
+   "HR": {
+    "C": 316,
+    "V": 1872
+   },
+   "HU": {
+    "C": 116,
+    "V": 2072
+   },
+   "IE": {
+    "C": 1141,
+    "V": 1047
+   },
+   "IS": {
+    "NA": 16,
+    "V": 2172
+   },
+   "IT": {
+    "ABS": 16,
+    "C": 82,
+    "V": 2090
+   },
+   "LT": {
+    "C": 243,
+    "V": 1945
+   },
+   "LU": {
+    "C": 910,
+    "V": 1278
+   },
+   "LV": {
+    "C": 666,
+    "NA": 24,
+    "V": 1498
+   },
+   "ME": {
+    "ABS": 2188
+   },
+   "MK": {
+    "C": 579,
+    "V": 1609
+   },
+   "MT": {
+    "C": 559,
+    "V": 1629
+   },
+   "NL": {
+    "C": 346,
+    "V": 1842
+   },
+   "NO": {
+    "C": 342,
+    "NA": 547,
+    "V": 1299
+   },
+   "PL": {
+    "C": 188,
+    "V": 2000
+   },
+   "PT": {
+    "C": 139,
+    "V": 2049
+   },
+   "RO": {
+    "V": 2188
+   },
+   "RS": {
+    "ABS": 32,
+    "C": 342,
+    "V": 1814
+   },
+   "SE": {
+    "C": 288,
+    "V": 1900
+   },
+   "SI": {
+    "C": 503,
+    "V": 1685
+   },
+   "SK": {
+    "C": 330,
+    "V": 1858
+   }
+  },
+  "sealing_geos": [
+   "AL",
+   "AT",
+   "BA",
+   "BE",
+   "BG",
+   "CY",
+   "CZ",
+   "DE",
+   "DK",
+   "EE",
+   "EL",
+   "ES",
+   "EU27_2020",
+   "FI",
+   "FR",
+   "HR",
+   "HU",
+   "IE",
+   "IT",
+   "LT",
+   "LU",
+   "LV",
+   "MK",
+   "MT",
+   "NL",
+   "NO",
+   "PL",
+   "PT",
+   "RS",
+   "SE",
+   "SI",
+   "SK"
+  ],
+  "single_enterprise": {
+   "by_geo": {
+    "BG": 1,
+    "CY": 12,
+    "DE": 2,
+    "EE": 10,
+    "FI": 10,
+    "IS": 146,
+    "MK": 2,
+    "NO": 60,
+    "PT": 8,
+    "RO": 15,
+    "RS": 12,
+    "SE": 4
+   },
+   "by_nace": {
+    "B0610": 7,
+    "B0620": 5,
+    "B0710": 4,
+    "C1042": 5,
+    "C1072": 4,
+    "C1412": 4,
+    "C2446": 5,
+    "C2453": 6,
+    "C2895": 5,
+    "H5310": 7,
+    "K6411": 25,
+    "K6520": 10
+   },
+   "largest": [
+    [
+     "PT",
+     "K6411",
+     "2024",
+     4165.01
+    ],
+    [
+     "PT",
+     "K6411",
+     "2023",
+     3978.43
+    ],
+    [
+     "DE",
+     "K6411",
+     "2023",
+     3078.0
+    ],
+    [
+     "DE",
+     "K6411",
+     "2024",
+     2341.62
+    ],
+    [
+     "PT",
+     "K6411",
+     "2022",
+     1487.16
+    ],
+    [
+     "FI",
+     "G4725",
+     "2023",
+     1160.81
+    ],
+    [
+     "PT",
+     "K6411",
+     "2021",
+     1117.04
+    ],
+    [
+     "RO",
+     "K6411",
+     "2023",
+     1017.0
+    ],
+    [
+     "BG",
+     "K6411",
+     "2023",
+     1016.58
+    ],
+    [
+     "SE",
+     "C3040",
+     "2024",
+     1014.17
+    ],
+    [
+     "RO",
+     "K6411",
+     "2024",
+     970.28
+    ],
+    [
+     "SE",
+     "C3040",
+     "2023",
+     728.07
+    ]
+   ],
+   "printed_total": 282,
+   "published": 282,
+   "sealed": 1060
+  },
+  "title": "Structural business statistics overview by activity",
+  "turnover_indicator": "NETTUR_MEUR",
+  "years": [
+   "2021",
+   "2022",
+   "2023",
+   "2024"
+  ]
+ },
+ "reuse": "Commission Decision 2011/833/EU; CC BY 4.0 with the source acknowledged",
+ "source": "Eurostat, the statistical office of the European Union"
+}
