@@ -45,3 +45,21 @@ that thinks in millions of years write a person down?
 
 **Instrument balance after one session.** T6 produced two consequences the selection had not (no exact years under 25; one sentence
 rewritten), so its failure criterion did not trigger. It named the practice's own dangers, not only others'.
+
+## Round 3 (session 2, 2026-10-15, after the page was rebuilt)
+
+- *Fear, answered for this session.* The new findings are displacements in time, not counts in a band, so the page draws them as
+  lines between two time axes, not as another grid of dots. The form was chosen against the dot grid, for a reason the data gave;
+  the dot grid stays where it was right (one person, one place). Fear is answered for this page, not retired: the next project's page
+  has to answer it again.
+- *Clarity, checked in the new sentences.* "Adults named for what they did at school" is the citations' own fact (they say the honouree
+  "attended" the school); no sentence says the wait was a failure or the copy-edits a fault. Why the finalists' naming paused in 2019-2020 and
+  stops after 2020 competitions is left out: the citations do not say, and a guess about the programme or the institution would be
+  the self-appointed judge.
+- *Power, checked again.* Re-dating moved one person from 21 to 13 at naming; the build's rule follows the naming year, so that dot
+  lost its link. The line charts carry no numbers at all.
+- *Clarity, in the practice's own finding.* The tempting sentence is that the register "falsifies" its dates. It does not: the
+  database gives the reference of the citation that stands, which is what it says it gives. The page says "the date that stands".
+
+**Instrument balance after two sessions.** Round 3 had one consequence (no number or link in either line chart; the paused-programme
+guess kept off the page) and named the practice's own dangers. Not triggered.

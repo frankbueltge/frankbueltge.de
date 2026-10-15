@@ -25,3 +25,10 @@ Hessels, *Celestial Mechanics*, 2007; Adriana Knouf, *On your wrist is the unive
 **Daylight (conjecture until the data stands):** none of these draws the age at which a person is written into the sky, or how
 long after death the dead are named. If the distribution holds a shape (the predictions in `SELECTION.md`), that shape is what this
 project would add. Not yet claimed.
+
+## Session 2 (2026-10-15)
+
+Not searched again: the session's new finding is about the register's dating, and its nearest neighbours are the register's own
+pages, read whole in scratch (the WGSBN bulletins' Errata sections, the MPC's archive of circulars). No work or study found in
+session 1's search draws the dates of corrected citations. Daylight, still conjecture until session 3 closes: the age at naming, the
+distance between competition and naming, and the share of standing dates that are copy-edits.

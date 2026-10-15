@@ -138,9 +138,15 @@ const PAGES = [
         dead: document.querySelectorAll('#dead .d').length,
         year_bars: document.querySelectorAll('#yrs .yb').length,
         panel_changed: document.getElementById('say').textContent !== before,
+        redated_lines: (document.querySelectorAll('svg.sl')[0] || document).querySelectorAll('.ln').length,
+        lag_lines: (document.querySelectorAll('svg.sl')[1] || document).querySelectorAll('.ln').length,
       };
     },
-    ok: (r) => r.dots === 1735 && r.living === 1352 && r.dead === 383 && r.year_bars === 30 && r.panel_changed,
+    // session 2 (night 63): dots placed by the year of naming (12 living and 4 dead whose naming year is unknown set
+    // aside, so 34 years of naming carry a citation, not 30); two line charts, 156 re-dated citations and the
+    // competition-to-naming pairs
+    ok: (r) => r.dots === 1719 && r.living === 1340 && r.dead === 379 && r.year_bars === 34 && r.panel_changed
+      && r.redated_lines === 156 && r.lag_lines > 20,
   },
 ];
 
