@@ -1,0 +1,29 @@
+{
+ "_note": "Sources read first-hand in session 202 (2026-10-15). Short quotations only; the documents are not committed.",
+ "sources": [
+  {"id": "cap12", "title": "Common Alerting Protocol Version 1.2, OASIS Standard, 01 July 2010",
+   "url": "https://docs.oasis-open.org/emergency/cap/v1.2/CAP-v1.2-os.html",
+   "sha256": "f60183dc4f4bb587bac86902e84503ba99ca5ea59a481d11c23f3394ae29a2ac", "read": "first-hand, full page",
+   "passages": [
+    "expires: \"The expiry time of the information of the alert message (OPTIONAL)\"",
+    "\"(3) If this item is not provided, each recipient is free to set its own policy as to when the message is no longer in effect.\"",
+    "msgType: \"Cancel - Cancels the earlier message(s) identified in <references>\""]},
+  {"id": "ipaws-tip-31", "title": "FEMA IPAWS Tip #31: Updating and Canceling Alerts, October 2020",
+   "url": "https://www.fema.gov/sites/default/files/2020-11/fema_ipaws-tips_10-2020.pdf",
+   "read": "first-hand through a text-extraction service: a direct request was refused (Access Denied, 459-byte page, sha256 3bab1312...)",
+   "passages": [
+    "\"Canceling an alert stops continual re-broadcast of Wireless Emergency Alerts (WEAs) and removes the active alert from feeds. However, that cancellation won't be communicated to your public.\"",
+    "\"Forwarding to the public EAS updates or cancellations will likely not occur.\""]},
+  {"id": "openfema-ipaws", "title": "OpenFEMA Dataset: IPAWS Archived Alerts - v1",
+   "url": "https://www.fema.gov/openfema-data-page/ipaws-archived-alerts-v1",
+   "read": "first-hand through a text-extraction service: a direct request returned a 433-byte page without the text",
+   "passages": [
+    "\"raw, unedited data with no personally identifiable information from the IPAWS Alert Aggregator from June 2012 to the present\"",
+    "\"FEMA does not validate the content of each message.\""]},
+  {"id": "studio-keepers-word", "title": "The Studio, THE KEEPER'S WORD (session 173), build.py",
+   "url": "https://github.com/frankbueltge/studio/blob/bead2d96ab8a3c5ac09bbbb839abb689981bb174/works/2026-10-15-the-keepers-word/build.py",
+   "sha256": "4a6c58779e217b2937489962dda1fb2bfb1492c8cf259679e903a483594e87ff", "licence": "Apache-2.0",
+   "read": "first-hand; copied as keepers_word_build.py with one marked change"}
+ ],
+ "literature_search": "Two web searches (2026-10-15) for analyses of IPAWS cancellations, all-clear messages or expiry found operational guidance only, no measurement. About our search, not the world."
+}
