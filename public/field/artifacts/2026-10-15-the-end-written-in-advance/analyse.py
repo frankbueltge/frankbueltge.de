@@ -142,16 +142,29 @@ R["per_year"] = yr
 R["lifetime_bands"] = {b: sum(1 for x in Ls if lo <= x < hi) for b, lo, hi in
                        [("<30m", 0, 30), ("30m-1h", 30, 60), ("1-2h", 60, 120), ("2-6h", 120, 360),
                         ("6-24h", 360, 1440), ("1-7d", 1440, 10080), (">=7d", 10080, 1e12)]}
-hi_ = [t for t in T if t["id"] == "0c0f651e-b3d1-4141-9c5d-6159c153909c"]
+# every message, not only warnings: how many carry an info block, and how many an expiry
+withinfo = [r for r in G["rows"] if r["info"]]
+R["expires_coverage"] = {"messages": len(G["rows"]), "with_info": len(withinfo),
+                         "with_info_and_expires": sum(1 for r in withinfo if expires(r))}
+lc = collections.Counter(round(x, 1) for x in Ls)
+R["lifetime_menu"] = {"distinct": len(lc), "top12": [[v, c] for v, c in lc.most_common(12)],
+                      "whole_hours": sum(c for v, c in lc.items() if v % 60 == 0),
+                      "quarter_hours": sum(c for v, c in lc.items() if v % 15 == 0), "n": len(Ls)}
+late = [t for t in ec if t["c0"] >= t["L"]]
+R["P3"]["after_expiry"] = len(late)
+R["P3"]["after_expiry_codes"] = dict(collections.Counter(t["c"] for t in late))
+R["P3"]["cancel_minutes_median"] = statistics.median(t["c0"] for t in ec)
+R["P3"]["cancel_share_of_lifetime_median"] = statistics.median(t["c0"] / t["L"] for t in ec)
+hi = [t for t in T if t["id"] == "0c0f651e-b3d1-4141-9c5d-6159c153909c"]
 R["fetch"] = json.load(open(os.path.join(RAW, "fetch.json")))
 os.makedirs("data", exist_ok=True)
 json.dump(R, open("data/results.json", "w"), indent=1, default=float)
 with open("data/warnings.tsv", "w") as fh:
     fh.write("id\tyear\tcode\tfate\taccount_hash\tlifetime_min\tfirst_cancel_min\tlatest_declared_min\tfollowups\n")
     for t in T:
-        f = lambda x: "" if x is None else "%.1f" % x
+        f = lambda x: "" if x is None else "%.3f" % x
         fh.write("\t".join([t["id"], str(t["y"]), t["c"], t["f"], t["k"], f(t["L"]), f(t["c0"]), f(t["Lmax"]), str(t["n"])]) + "\n")
-# page data: compact rows [code, fate index, account index, L, c0, year]
+# page data: compact rows [code, fate index, account index, L, c0, year, cancel at/after expiry (exact)]
 FATES = ["silence", "update", "end-mute", "end-safe", "end-clear", "end-error"]
 ACC = sorted(acc, key=lambda k: -len(acc[k]))
 with open("data.js", "w") as fh:
@@ -159,6 +172,7 @@ with open("data.js", "w") as fh:
     fh.write("window.R=" + json.dumps(R, default=float) + ";\n")
     fh.write("window.FATES=" + json.dumps(FATES) + ";window.ACC=" + json.dumps(ACC) + ";\n")
     rows = [[t["c"], FATES.index(t["f"]), ACC.index(t["k"]) if t["k"] in acc else -1,
-             None if t["L"] is None else round(t["L"]), None if t["c0"] is None else round(t["c0"]), t["y"]] for t in T]
+             None if t["L"] is None else round(t["L"]), None if t["c0"] is None else round(t["c0"]), t["y"],
+             1 if (t["c0"] is not None and t["L"] is not None and t["c0"] >= t["L"]) else 0] for t in T]
     fh.write("window.T=" + json.dumps(rows, separators=(",", ":")) + ";\n")
 print(json.dumps({k: R[k] for k in ("reproduces", "P1", "P2", "P3", "P4", "P5", "exploratory")}, indent=1, default=float))
