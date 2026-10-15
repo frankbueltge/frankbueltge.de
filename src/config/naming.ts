@@ -59,7 +59,7 @@ export interface TravelItem {
   /**
    * The quiet second line a house gets when a collective of ITS OWN keeps a record on THIS site
    * (2026-08-02). Exactly one house has one today — data-snack.com, whose resident collective (the
-   * Plenum) sits weekly and mirrors its minutes here. The line is a link out of the card and into
+   * Plenum) sits and mirrors its minutes here. The line is a link out of the card and into
    * that record; the card itself keeps pointing at the house.
    */
   resident?: { lead: string; label: string; href: string }
@@ -418,7 +418,7 @@ export const NAMING = {
         href: 'https://data-snack.com',
         description: 'A character-driven data magazine (a cyber-diner with a cast of its own). A main project in its own right.',
         short: 'A character-driven data magazine; its Plenum keeps minutes here.',
-        /* The cast of that magazine sits weekly as the Plenum, and mirrors its minutes into this
+        /* The cast of that magazine sits as the Plenum, and mirrors its minutes into this
          * repo — so the house that a visitor is being sent to is also the house whose paperwork
          * they can read here without leaving. The line says minutes, not work: the snacks are
          * cooked and published over there (src/config/plenum-wording.ts, house boundary), and
