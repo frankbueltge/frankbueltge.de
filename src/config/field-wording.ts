@@ -23,7 +23,7 @@ export const FIELD_GRAMMAR = {
   /** v3 pyramid, 2026-08-12: the register and apparatus rooms were folded into the station sheet
    *  (their routes 301 there), so the rail is the sheet plus the registers under it. */
   rail: [
-    { label: 'the station', href: '/field', hint: 'the sheet — status, the gate, what is in service' },
+    { label: 'the station', href: '/field', hint: 'the cycle’s question, the bulletin, the last sessions' },
     { label: 'instruments', href: '/field/instruments', hint: 'all instruments — existing URLs stay' },
     { label: 'journal', href: '/field/journal', hint: 'day files, grouped — the unedited record' },
     { label: 'constitution', href: '/field/protocol', hint: 'the protocol, as mirrored' },
