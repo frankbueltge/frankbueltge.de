@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "230e3cc5eab5edfe",
-        "files": 56
+        "sha256": "daa6609c2bd709a3",
+        "files": 57
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 489,
-      "edges": 435,
+      "nodes": 490,
+      "edges": 436,
       "nodesByKind": {
         "decision": 139,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 186,
+        "practice-work": 187,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 186,
+        "made-by": 187,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 101
@@ -5646,8 +5646,23 @@
         "file": "src/content/studio/works/2026-10-15-the-keepers-word/meta.json",
         "quote": "\"title\": \"THE KEEPER'S WORD\""
       },
-      "embodies": "THE RECORD OF WARNINGS KEEPS ONE VERDICT, AND IT IS THE KEEPER'S ON ITSELF. 23,286 warnings written by 3,870 sending accounts through FEMA's alert system 2012-2026: 16,756 never spoken of again, 801 updated and never closed, 5,510 cancelled with no reason, 218 cancelled with a reason; 16 messages say a warning was sent in error. No message carries heeded, ignored or never needed.",
+      "embodies": "THE RECORD OF WARNINGS KEEPS ONE VERDICT, AND IT IS THE KEEPER'S ON ITSELF. 23,154 warnings written by 3,846 sending accounts through FEMA's alert system 2012-2026: 16,644 never spoken of again, 799 updated and never closed, 5,423 cancelled with no reason, 287 cancelled with a reason; 16 messages say a warning was sent in error. No message carries heeded, ignored or never needed.",
       "medium": "A canvas time line, one row per kind of warning, every warning a dot that arrives with a tone and changes when its keeper writes again: an update, a wordless cancel (a click), a cancel with a reason (a bell), a retraction as sent in error (a low note); a warning never spoken of again greys and sinks in silence. Counters, a card per warning with its words and its keeper's later words, seven drawers (three of them the question's, always empty), a table by kind, a Hawaii button."
+    },
+    {
+      "id": "practice-work:studio/2026-10-15-the-unsent",
+      "kind": "practice-work",
+      "label": "THE UNSENT",
+      "slug": "2026-10-15-the-unsent",
+      "practiceId": "ensemble",
+      "date": "2026-10-15",
+      "href": "/studio/works/2026-10-15-the-unsent",
+      "source": {
+        "file": "src/content/studio/works/2026-10-15-the-unsent/meta.json",
+        "quote": "\"title\": \"THE UNSENT\""
+      },
+      "embodies": "THE RECORD KEEPS WHERE A DANGER CAME AND WHAT WAS SAID THERE, AND THE DISTANCE BETWEEN THEM IS THE UNSENT WARNING. Of 17,176 county disasters the United States declared for incidents begun 2012-2026, a local keeper's word naming the danger reached 1,221 through FEMA's alert system around the incident's start; nothing reached 14,728. No record says which of those silences were never needed.",
+      "medium": "A county map of the United States played through time with sound: each declared disaster lights its counties and sounds a low tone; each county a local keeper's word reached that names the danger rings a bell. The map deepens with the declared disasters no local word reached; amber points mark the counties where one did. Counters, a card per county with every declared disaster and the words that reached it, five case buttons, tables by kind and by year."
     },
     {
       "id": "receiver:center-for-humane-technology",
@@ -8047,6 +8062,15 @@
       "to": "practice:ensemble",
       "source": {
         "file": "src/content/studio/works/2026-10-15-the-keepers-word/meta.json",
+        "quote": "\"date\": \"2026-10-15\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-15-the-unsent",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-15-the-unsent/meta.json",
         "quote": "\"date\": \"2026-10-15\""
       }
     },

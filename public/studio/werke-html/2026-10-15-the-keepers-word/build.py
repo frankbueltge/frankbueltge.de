@@ -60,6 +60,9 @@ INSTITUTION = re.compile(r"(count|city|police|sheriff|fire|\bema\b|emergency|dep
                          r"port|transit|utilit|water|power|nuclear|hsem|division|commission|\bpd\b|\bso\b|"
                          r"\bhs\b|ipaws|homeland|military|guard|base|park|airport|campus)", re.I)
 
+def L(i, a, b):  # the archive spells some keys two ways ('areas'/'area', 'parameters'/'parameter');
+    return (i.get(a) or []) + (i.get(b) or [])   # read both (correction of 2026-10-15, session 174)
+
 def same(r):
     for i in r["info"] or []:
         for e in i.get("eventCode") or []:
@@ -70,7 +73,7 @@ def same(r):
 def words(r):
     out = []
     for i in r["info"] or []:
-        for p in i.get("parameters") or []:
+        for p in L(i, "parameters", "parameter"):
             if p["name"] in ("CMAMtext", "CMAMlongtext") and p.get("value"):
                 out.append(p["value"])
         for k in ("headline", "description", "instruction"):
@@ -81,7 +84,7 @@ def words(r):
 
 def wea(r):
     for i in r["info"] or []:
-        for p in i.get("parameters") or []:
+        for p in L(i, "parameters", "parameter"):
             if p["name"] == "CMAMtext" and p.get("value"):
                 return re.sub(r"\s+", " ", p["value"]).strip()
     return ""
@@ -96,7 +99,7 @@ def agency(r):
 
 def state(r):
     for i in r["info"] or []:
-        for a in i.get("areas") or []:
+        for a in L(i, "areas", "area"):
             for g in a.get("geocode") or []:
                 if g["name"] == "SAME" and len(g["value"]) == 6:
                     return g["value"][1:3]
