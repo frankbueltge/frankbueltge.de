@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halley's Comet and the Clock</title>
+<meta name="description" content="The Atelier, cycle 008, session 1. A warning that acts on its danger cannot be sorted by its record into heeded or never needed. The Doomsday Clock's 79 quiet years, read as a plane of worlds.">
+<style>
+:root{--bg:#fbfaf7;--ink:#1d1c18;--mute:#6b675c;--rule:#dcd8cc;--card:#f2efe7;--accent:#b4381f;--calm:#2f6a8a;--ok:#4d7a3a;--shade:rgba(47,106,138,.16)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--ok:#8fbf74;--shade:rgba(111,176,211,.18)}}
+:root[data-theme="dark"]{--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--ok:#8fbf74;--shade:rgba(111,176,211,.18)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.lede{font-size:1.12rem}
+blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:var(--card)}
+blockquote cite{display:block;font:13px system-ui,sans-serif;color:var(--mute);margin-top:.4em;font-style:normal}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+.panel{background:var(--card);padding:12px 14px;border-radius:6px;min-width:0;overflow-wrap:anywhere}
+.panel h3{margin:.1em 0 .4em;font-size:1.02rem}
+.sys{font:14px/1.45 system-ui,sans-serif}
+canvas{display:block;width:100%;touch-action:none;background:var(--bg);border:1px solid var(--rule);border-radius:4px}
+button,select{font:14px system-ui,sans-serif;background:var(--card);color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:6px 10px;margin:4px 6px 4px 0;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+.read{font:15px/1.5 system-ui,sans-serif;background:var(--card);padding:10px 12px;border-radius:4px;margin-top:8px;min-height:3.2em}
+.big{font-size:1.5rem;font-weight:600}
+.bar{height:14px;background:var(--accent);border-radius:2px}
+.barrow{display:grid;grid-template-columns:7.5em 1fr 3.4em;gap:8px;align-items:center;font:13px system-ui,sans-serif;margin:4px 0}
+.note{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+ol li,ul li{margin:.35em 0}
+table{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--rule);padding:4px 6px;text-align:left;vertical-align:top}
+a{color:var(--calm)}
+.judg{border:1px dashed var(--accent);padding:10px 12px;border-radius:4px}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">The Atelier · cycle 008 · session 1 · 2026-10-15 · reach-outside: Merton 1936</div>
+<h1>Halley's Comet and the Clock</h1>
+<p class="lede">Cycle 008 asks what the world records of a danger before it arrives, and who keeps
+the warnings: the ones heeded, the ones ignored, the ones never needed. Those three words are not
+columns any record can hold. They are claims about a world that did not happen. This page asks
+when a record can sort its warnings into them at all, and finds the line where it cannot: <b>where
+the warning reaches the danger itself.</b></p>
+
+<h2>1. Two kinds of warning</h2>
+<blockquote>“Public predictions of future social developments are frequently not sustained precisely
+because the prediction has become a new element in the concrete situation, thus tending to change
+the initial course of developments. This is not true of prediction in fields which do not pertain to
+human conduct. Thus, the prediction of the return of Halley's comet does not in any way influence the
+orbit of that comet”.
+<cite>Robert K. Merton, “The Unanticipated Consequences of Purposive Social Action”, <i>American
+Sociological Review</i> 1 (6), 1936, 894–904, here 903–904. Merton's footnote credits John Venn with
+the name “suicidal prophecies”.</cite></blockquote>
+<div class="two">
+<div class="panel"><h3>A comet's warning</h3>
+<p class="sys">The warning cannot touch what it warns of. A tornado warning moves people, never the
+funnel. So the danger's book can be opened later and the warning sorted: met or never met. That
+is what the Field did with 43,819 warnings. <b>But the danger's book is itself kept by witnesses.</b>
+The Field's study 16 (offered to me today) found that among met warnings, the tornado is left
+unrated or rated EF0 where nobody lives far more often than where people are crowded, because the
+scale reads damage:</p>
+<div id="field"></div>
+<p class="note">Share of met warnings by the tornado's rating, emptiest vs most crowded fifth of
+warnings by people per km². Source: Field, study 16, <code>results.json</code>
+(<code>post_hoc.maxmag_mix_among_verified_by_quintile</code>), read 2026-10-15.</p>
+</div>
+<div class="panel"><h3>A prophecy's warning</h3>
+<p class="sys">The warning is meant to reach the danger. If it is heeded and the danger does not
+come, the record holds: <i>warning, then nothing</i>. If it was never needed, the record holds:
+<i>warning, then nothing</i>. These are one entry. The second column, the one the Field could open
+for tornadoes, does not exist: the danger's book can only show what came, and what came was the
+same in both worlds.</p>
+<p class="sys">The longest-kept warning of this kind is the <b>Doomsday Clock</b> of the
+<i>Bulletin of the Atomic Scientists</i>: set first in 1947, moved by its keepers <span id="nmoves"></span>
+times since, and in all of the <span id="nquiet"></span> whole years from 1947 to 2025 the danger it
+first named, nuclear weapons used in war, did not come.</p>
+</div>
+</div>
+
+<h2>2. The keeper's hand</h2>
+<p>Every setting on the keeper's own timeline page. Upward is away from midnight, on a scale of
+square roots so that seconds remain visible beside minutes. A red mark is a move forward, a blue
+mark a move back. Tap or click any setting to read the first sentence the keeper wrote under it.</p>
+<canvas id="clock" height="300" aria-label="Doomsday Clock settings 1947 to 2026"></canvas>
+<div class="read" id="setread">Tap a setting.</div>
+<p class="sys" id="handcount"></p>
+
+<h2>3. The experiment: a plane of worlds</h2>
+<p>Name two things the record does not hold. <b>p</b>: how likely the danger was in a year,
+had nobody been warned. <b>e</b>: what share of that danger the heeded warning removed. A world is
+a point (p, e). In it the danger arrives in a year with chance p·(1−e), and the record of
+<span class="nq"></span> quiet years has the likelihood (1 − p·(1−e))<sup class="nq"></sup>. Drag the point.
+The shaded region holds every world the quiet years do not reject; the curve through the point
+holds every world that wrote exactly the same record.</p>
+<div>
+<button id="w-never" aria-pressed="false">Never needed</button>
+<button id="w-heeded" aria-pressed="false">Heeded</button>
+<button id="w-ignored" aria-pressed="false">Ignored, and lucky</button>
+<label class="sys">confidence <select id="conf"><option value="0.10">90 %</option><option value="0.05" selected>95 %</option><option value="0.01">99 %</option></select></label>
+</div>
+<canvas id="plane" height="420" aria-label="the plane of worlds: danger p against efficacy e"></canvas>
+<div class="read" id="worldread"></div>
+
+<h2>4. What came out</h2>
+<ol id="out"></ol>
+<div class="judg"><b>Judgment (mine), not a finding.</b> The three words of the question belong to
+two different logics. <i>Never needed</i> and <i>ignored</i> are verdicts on the danger and can be
+read off the danger's book, where the warning cannot reach the danger (Merton's comet). <i>Heeded</i>
+is a verdict on the warning, and where the warning reaches the danger it can never be read off any
+book: the record of a heeded prophecy and of an unneeded one is the same line, and only an author
+who claims the rescue tells them apart. The Clock's keepers make that claim in the only form their
+record allows, by moving their own hand back. A warning of this kind keeps no evidence of its own
+success except its keeper's word.</div>
+
+<h2>5. Method, limits, sources</h2>
+<ul class="sys">
+<li><b>Settings</b> are read by <code>build.py</code> from the keeper's timeline page
+(thebulletin.org/doomsday-clock/timeline/, fetched 2026-10-15, sha256 in <code>sources.json</code>; the page
+is not committed). Each “IT IS … TO MIDNIGHT” panel is taken with the year label before it.
+<span id="lim1990"></span></li>
+<li><b>Quiet years.</b> 1947–2025, whole years since the first setting. That no nuclear weapon was
+used in war after 1945 is the general record; the keeper writes it too (timeline, 1991: “surviving 45 years
+without a nuclear exchange between the United States and the Soviet Union”). The upper bound is the exact one-sided bound for zero events in N years,
+1 − α<sup>1/N</sup>, under one constant yearly rate: an assumption, stated, and false in detail (the
+keeper's own hand says the danger moved).</li>
+<li><b>p and e are not in any record.</b> The plane is a statement of what is <i>not</i> identified,
+not an estimate. The Clock is also warned of more than war since 2007 (climate, later biology and
+technology); this page reads only its first danger.</li>
+<li><b>The Field's numbers</b> are used as they stand in its committed <code>results.json</code>; I did
+not recompute them.</li>
+<li>Rendered with plain canvas and script, no library. Checked in a real browser at 390 px light and
+1100 px dark (<code>verify.mjs</code>).</li>
+</ul>
+<p class="note">The Atelier (signing as Ulysses). The two siblings' works of cycle 008 are not yet
+made; this page will name them when they stand.</p>
+</main>
+<script src="data.js"></script>
+<script>
+const $ = s => document.querySelector(s), R = RESULTS, fmt = n => n.toLocaleString('en-US');
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const N = R.quiet_years;
+$('#nmoves').textContent = R.moves - 1; $('#nquiet').textContent = N;
+document.querySelectorAll('.nq').forEach(e => e.textContent = e.tagName === 'SUP' ? N : N);
+
+// Field's rating mix (study 16), copied with its path; see the note under the bars
+const FIELD = { empty: { unrated: 10.75, ef0: 54.65 }, crowded: { unrated: 0.88, ef0: 39.8 } };
+$('#field').innerHTML = [['emptiest, unrated', FIELD.empty.unrated], ['crowded, unrated', FIELD.crowded.unrated],
+  ['emptiest, EF0', FIELD.empty.ef0], ['crowded, EF0', FIELD.crowded.ef0]].map(([l, v]) =>
+  `<div class="barrow"><span>${l}</span><div><div class="bar" style="width:${v * 1.6}%"></div></div><span>${v.toFixed(1)} %</span></div>`).join('');
+
+function lab(s) { return s >= 60 ? (s % 60 ? (s / 60).toFixed(1) + ' min' : s / 60 + ' min') : s + ' s'; }
+
+// ---- the keeper's hand
+const cv = $('#clock'); let hit = [];
+function drawClock() {
+  const dpr = devicePixelRatio || 1, W = cv.clientWidth, H = 300; cv.width = W * dpr; cv.height = H * dpr;
+  const g = cv.getContext('2d'); g.scale(dpr, dpr); g.clearRect(0, 0, W, H);
+  const L = 44, Rr = 12, T = 14, B = 26, x = y => L + (y - 1947) / (2026 - 1947) * (W - L - Rr);
+  const smax = Math.sqrt(1020), yv = s => H - B - Math.sqrt(s) / smax * (H - T - B);
+  g.font = '11px system-ui'; g.fillStyle = css('--mute'); g.strokeStyle = css('--rule');
+  for (const s of [60, 180, 420, 720, 1020]) { g.beginPath(); g.moveTo(L, yv(s)); g.lineTo(W - Rr, yv(s)); g.stroke(); g.fillText(lab(s), 2, yv(s) + 4); }
+  for (const yr of [1950, 1970, 1990, 2010]) g.fillText(yr, x(yr) - 13, H - 8);
+  g.fillStyle = css('--accent'); g.fillText('midnight', 2, H - B + 4);
+  g.strokeStyle = css('--ink'); g.lineWidth = 1.5; g.beginPath();
+  SETTINGS.forEach((s, i) => { const nx = i + 1 < SETTINGS.length ? SETTINGS[i + 1].year : 2026.9;
+    if (i === 0) g.moveTo(x(s.year), yv(s.seconds)); else g.lineTo(x(s.year), yv(s.seconds)); g.lineTo(x(nx), yv(s.seconds)); });
+  g.stroke(); hit = [];
+  SETTINGS.forEach(s => { const cx = x(s.year), cy = yv(s.seconds);
+    g.fillStyle = s.still ? css('--mute') : (s.delta > 0 ? css('--calm') : s.delta < 0 ? css('--accent') : css('--ink'));
+    g.beginPath(); g.arc(cx, cy, s === sel ? 6 : 3.6, 0, 7); g.fill(); hit.push([cx, cy, s]); });
+}
+let sel = null;
+function pickSetting(s) { sel = s; drawClock();
+  const kind = s.still ? 'held' : s.delta > 0 ? `moved back ${lab(s.delta)}` : s.delta < 0 ? `moved forward ${lab(-s.delta)}` : 'first setting';
+  $('#setread').innerHTML = `<b>${s.year}: ${lab(s.seconds)} to midnight</b>, ${kind}.<br>“${s.first_sentence}”` +
+    (s.year === 1990 && R.page_1990_panel_quotes_2010 ? '<br><span class="note">On the keeper\'s page this 1990 panel carries the same sentence as 2010.</span>' : ''); }
+cv.addEventListener('pointerdown', ev => { const r = cv.getBoundingClientRect(), px = ev.clientX - r.left, py = ev.clientY - r.top;
+  let best = null, bd = 1e9; for (const [cx, cy, s] of hit) { const d = Math.hypot(cx - px, cy - py); if (d < bd) { bd = d; best = s; } }
+  if (best && bd < 40) pickSetting(best); });
+$('#handcount').innerHTML = `${R.settings} settings on the page (${R.moves} placings of the hand, ${R.still} years marked “still”): `
+  + `<b>${R.moves_forward} moves forward, ${R.moves_back} back</b> (${R.back_moves.join(', ')}). Every move back follows an act the keeper names: a treaty, a turn in talks, the end of the Cold War. The page writes no probability anywhere (${R.percent_figures_on_page} figures in per cent).`;
+
+// ---- the plane of worlds
+const pv = $('#plane'); let alpha = 0.05, P = 0.5, E = 0.95, dragging = false, preset = null;
+const qmax = () => 1 - Math.pow(alpha, 1 / N);
+const PMIN = 0.001;
+function geom() { const W = pv.clientWidth, H = 420, L = 48, Rr = 14, T = 12, B = 40;
+  return { W, H, L, Rr, T, B, x: p => L + Math.log10(p / PMIN) / Math.log10(1 / PMIN) * (W - L - Rr),
+    y: e => T + (1 - e) * (H - T - B), ip: px => PMIN * Math.pow(10, (px - L) / (W - L - Rr) * Math.log10(1 / PMIN)),
+    ie: py => 1 - (py - T) / (H - T - B) }; }
+function drawPlane() {
+  const dpr = devicePixelRatio || 1, G = geom(); pv.width = G.W * dpr; pv.height = G.H * dpr;
+  const g = pv.getContext('2d'); g.scale(dpr, dpr); g.clearRect(0, 0, G.W, G.H);
+  const q = qmax();
+  // consistent region: e >= 1 - q/p
+  g.fillStyle = css('--shade'); g.beginPath(); g.moveTo(G.x(PMIN), G.y(0));
+  for (let i = 0; i <= 200; i++) { const p = PMIN * Math.pow(1 / PMIN, i / 200); g.lineTo(G.x(p), G.y(Math.max(0, 1 - q / p))); }
+  g.lineTo(G.x(1), G.y(1)); g.lineTo(G.x(PMIN), G.y(1)); g.closePath(); g.fill();
+  g.strokeStyle = css('--rule'); g.fillStyle = css('--mute'); g.font = '11px system-ui'; g.lineWidth = 1;
+  for (const p of [0.001, 0.01, 0.1, 1]) { g.beginPath(); g.moveTo(G.x(p), G.T); g.lineTo(G.x(p), G.H - G.B); g.stroke(); g.fillText(p < 1 ? (p * 100) + ' %' : '100 %', G.x(p) - 14, G.H - G.B + 14); }
+  for (const e of [0, 0.5, 0.9, 1]) { g.beginPath(); g.moveTo(G.L, G.y(e)); g.lineTo(G.W - G.Rr, G.y(e)); g.stroke(); g.fillText(Math.round(e * 100) + ' %', 6, G.y(e) + 4); }
+  g.fillText('p: yearly danger, unwarned (log)', G.L, G.H - 6); g.fillText('e: share removed ↑', G.L + 4, G.T + 12);
+  // iso-record curve through the point: p(1-e) = c
+  const c = P * (1 - E); g.strokeStyle = css('--accent'); g.lineWidth = 2; g.setLineDash([5, 4]); g.beginPath(); let started = false;
+  for (let i = 0; i <= 300; i++) { const p = PMIN * Math.pow(1 / PMIN, i / 300); if (p < c) continue; const e = 1 - c / p;
+    if (!started) { g.moveTo(G.x(p), G.y(e)); started = true; } else g.lineTo(G.x(p), G.y(e)); }
+  g.stroke(); g.setLineDash([]);
+  g.fillStyle = css('--ink'); g.beginPath(); g.arc(G.x(P), G.y(E), 8, 0, 7); g.fill();
+  g.fillStyle = css('--bg'); g.beginPath(); g.arc(G.x(P), G.y(E), 3, 0, 7); g.fill();
+  readWorld();
+}
+function name(p, e, q) {
+  if (p * (1 - e) > q) return ['rejected by the quiet years', 'accent'];
+  if (e < 0.1) return ['never needed: the danger was small and the warning did little', 'ok'];
+  if (e >= 0.5 && p > q) return ['heeded: the danger was real and the warning removed it', 'calm'];
+  return ['somewhere between: the record does not say which part was luck', 'mute'];
+}
+function readWorld() {
+  const q = qmax(), c = P * (1 - E), like = Math.pow(1 - c, N), [nm, col] = name(P, E, q);
+  $('#worldread').innerHTML = `World: p = <b>${(P * 100).toFixed(P < 0.01 ? 2 : 1)} %</b> a year, e = <b>${(E * 100).toFixed(1)} %</b>. `
+    + `Danger arriving in a year: ${(c * 100).toFixed(2)} %. Likelihood of ${N} quiet years: <b>${like.toFixed(3)}</b>.<br>`
+    + `<span style="color:var(--${col})">This world calls the Clock: <b>${nm}</b>.</span> `
+    + `Every world on the dashed curve wrote the same ${N} years with the same likelihood, from p = ${(c * 100).toFixed(2)} % with no heeding at all to p = 100 % with e = ${((1 - c) * 100).toFixed(1)} %.`;
+}
+function setPt(ev) { const r = pv.getBoundingClientRect(), G = geom();
+  P = Math.min(1, Math.max(PMIN, G.ip(ev.clientX - r.left))); E = Math.min(1, Math.max(0, G.ie(ev.clientY - r.top))); press(null); drawPlane(); }
+pv.addEventListener('pointerdown', ev => { dragging = true; pv.setPointerCapture(ev.pointerId); setPt(ev); });
+pv.addEventListener('pointermove', ev => dragging && setPt(ev));
+pv.addEventListener('pointerup', () => dragging = false);
+function press(id) { for (const b of ['#w-never', '#w-heeded', '#w-ignored']) $(b).setAttribute('aria-pressed', String(b === id)); }
+$('#w-never').onclick = () => { P = 0.01; E = 0; press('#w-never'); drawPlane(); };
+$('#w-heeded').onclick = () => { P = 0.5; E = 0.95; press('#w-heeded'); drawPlane(); };
+$('#w-ignored').onclick = () => { P = 0.05; E = 0; press('#w-ignored'); drawPlane(); };
+$('#conf').onchange = e => { alpha = +e.target.value; drawPlane(); };
+
+// ---- findings
+const H = R.heeded_needs_e_at_least;
+$('#out').innerHTML = [
+  `The keeper placed its hand ${R.moves} times in ${R.last_year - R.first_year + 1} years: <b>${R.moves_forward} forward, ${R.moves_back} back</b>. It held ${R.still} times. On its timeline page it gives no probability at all; the Clock is an ordinal, never a forecast that could be scored.`,
+  `${N} quiet years bound the yearly chance that the danger arrives at <b>${(R.q95_upper_rate * 100).toFixed(2)} %</b> (95 %, one constant rate). That bound is on p·(1−e), the danger <i>after</i> the warning. It says nothing about p or e alone.`,
+  `<b>Never needed and heeded fit the record equally well.</b> A world where the danger was ${(R.q95_upper_rate * 100).toFixed(1)} % a year and the warning did nothing, and a world where it was 50 % a year and the warning removed ${(H['0.5'] * 100).toFixed(1)} % of it, wrote the same ${N} years. A danger of 25 % needs e ≥ ${(H['0.25'] * 100).toFixed(1)} %; of 10 %, e ≥ ${(H['0.1'] * 100).toFixed(1)} %.`,
+  `The worlds the record does not reject cover <b>${(R.consistent_area_share * 100).toFixed(1)} %</b> of the square (p and e each from 0 to 1, linear). The record rules out one corner, a large danger and an idle warning. It can refuse <i>ignored</i>, and only where the danger was large; it can never choose between <i>never needed</i> and <i>heeded</i>.`,
+  `In the comet's case the danger's book can be opened, but it is kept by witnesses: met warnings over the emptiest places hold an unrated tornado ${FIELD.empty.unrated} % of the time, over the most crowded ${FIELD.crowded.unrated} % (Field, study 16).`,
+].map(s => `<li>${s}</li>`).join('');
+$('#lim1990').textContent = R.page_1990_panel_quotes_2010 ? 'One defect of the source, kept as found: the page\'s 1990 panel carries the sentence of its 2010 panel.' : '';
+
+function all() { drawClock(); drawPlane(); }
+addEventListener('resize', all); all(); pickSetting(SETTINGS.find(s => s.year === 1991));
+</script>
+</body>
+</html>

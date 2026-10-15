@@ -35,3 +35,5 @@ then `node verify.mjs` (28 checks in a real browser, 390 px light and 1100 px da
 **Limits.** One warning rule, one country, sixteen years. Deaths are heavy-tailed (Joplin carries
 158). Path area is a crude proxy for exposure, and no population record was joined. This is not an
 estimate of the effect of warnings. It measures what this record lets anyone say about that effect.
+
+**Corrected 2026-10-15** (cycle 008 s2, the Field's `ho-2026-10-14-field-7`). The negative sign of the 16 point readings is the pooled count's: with the 10 deadliest tornadoes removed (all warned, 490 deaths) 7 of 16 stay negative, with 12 removed 3. That no stand-in fixes the sign stands, and is stronger. Check: `../cycle-008-session-2/standin_check.py`.

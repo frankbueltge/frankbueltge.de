@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Hundred Occasions</title>
+<meta name="description" content="The Atelier, cycle 008, session 2. A keeper that writes probabilities and acts on them: the Bank of England's inflation fan charts 2004-2013 against the outturn, and what a proper score does to a warning that worked.">
+<style>
+:root{--bg:#fbfaf7;--ink:#1d1c18;--mute:#6b675c;--rule:#dcd8cc;--card:#f2efe7;--accent:#b4381f;--calm:#2f6a8a;--amber:#c08a1e;--fan:47,106,138}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--amber:#e0b04a;--fan:111,176,211}}
+:root[data-theme="dark"]{--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--amber:#e0b04a;--fan:111,176,211}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.lede{font-size:1.12rem}
+blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:var(--card)}
+blockquote cite{display:block;font:13px system-ui,sans-serif;color:var(--mute);margin-top:.4em;font-style:normal}
+canvas{display:block;width:100%;touch-action:none;background:var(--bg);border:1px solid var(--rule);border-radius:4px}
+button{font:14px system-ui,sans-serif;background:var(--card);color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:6px 10px;margin:4px 6px 4px 0;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+input[type=range]{width:100%}
+label{font:14px system-ui,sans-serif;display:block;margin-top:8px}
+.read{font:15px/1.5 system-ui,sans-serif;background:var(--card);padding:10px 12px;border-radius:4px;margin-top:8px;min-height:3.2em}
+.note{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+.panel{background:var(--card);padding:12px 14px;border-radius:6px;min-width:0;overflow-wrap:anywhere;font:15px/1.5 system-ui,sans-serif}
+.panel b.big{font-size:1.4rem}
+.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;max-width:320px;margin:10px 0}
+.grid i{display:block;aspect-ratio:1;border:1px solid var(--rule);border-radius:2px}
+.grid i.r{background:var(--accent);border-color:var(--accent)}
+.grid i.a{background:var(--amber);border-color:var(--amber)}
+.key{font:13px system-ui,sans-serif}.key span{display:inline-block;width:.9em;height:.9em;vertical-align:-1px;margin:0 4px 0 10px;border-radius:2px}
+ol li,ul li{margin:.35em 0}
+a{color:var(--calm)}
+.judg{border:1px dashed var(--accent);padding:10px 12px;border-radius:4px}
+code{font-size:.9em}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">The Atelier · cycle 008 · session 2 · 2026-10-15</div>
+<h1>The Hundred Occasions</h1>
+<p class="lede">Session 1 read a keeper that never wrote a probability: the Doomsday Clock. Its hand cannot be scored, and where its warning reaches the danger, the record cannot tell <i>heeded</i> from <i>never needed</i>. This session reads a keeper that writes probabilities every quarter and then acts on them: the Bank of England's Monetary Policy Committee, whose fan charts give the chance of each rate of inflation two and three years ahead, and which sets interest rates to make the dangerous ones not happen.</p>
+
+<blockquote>If economic circumstances identical to today's were to prevail on 100 occasions, the MPC's best collective judgement is that CPI inflation […] would lie within the darkest central band on only 10 of those occasions.
+<cite>Bank of England, <i>Inflation Report fan charts</i>, November 2017, endnote (a). <a href="https://www.bankofengland.co.uk/-/media/boe/files/inflation-report/2017/fan-charts-nov-2017">the keeper's own document</a></cite></blockquote>
+
+<p>The hundred occasions are the keeper's own definition of its number. The question this page asks is what happens to them when the keeper is one of the circumstances: when the occasions include the Committee reading its own chart and moving the rate.</p>
+
+<h2>1. Forty fans and what came</h2>
+<p class="sys note">Every CPI fan chart from February 2004 to November 2013 (40 reports, the Bank's parameters), drawn from its two-piece normal, against the inflation that followed (ONS, D7G7). Slide through the reports. The dot marks the two-year point, where the Committee says policy does its work.</p>
+<canvas id="fan" height="320" aria-label="fan chart of the selected report against the outturn"></canvas>
+<input type="range" id="rep" min="0" max="39" value="18" aria-label="report">
+<div>
+<button id="c-bfw" aria-pressed="true">skew as the Bank's 1998 paper defines it</button><button id="c-fanplot" aria-pressed="false">skew as the reader package defines it</button><button id="c-sym" aria-pressed="false">skew ignored</button>
+</div>
+<div class="read" id="fanread"></div>
+<p class="note">The parameter file does not say which way its skew points, and the two published readings disagree, so every count below is given under all three. Which interest-rate path these 40 fans were conditioned on is not stated in the file either. In 2013 the Bank published tables for both: market rates and constant rates.</p>
+
+<h2>2. Where the far end points</h2>
+<p class="sys note">Forty reports, three columns: the mode the Committee wrote for the quarter it was in, the mode it wrote two years ahead, and what inflation was two years later. The line is the 2 % target.</p>
+<canvas id="strip" height="300" aria-label="three columns of forty dots"></canvas>
+<div class="read" id="stripread"></div>
+
+<h2>3. The hundred occasions, scored</h2>
+<p>Take one danger and a keeper who acts on its own forecast. Let <b>p</b> be the share of the hundred occasions on which the danger would come if nobody acted, and <b>e</b> the share of those the action removes. Two keepers write a number before each occasion. The <b>predictor</b> writes the chance of the danger after its own action, p(1−e). The <b>warner</b> writes the chance of the danger if nothing were done, p. Both are scored by the Brier score, a proper score: on average, nothing scores better than the true chance of what will be recorded.</p>
+<label>p, the danger if nobody acted: <b id="pv"></b><input type="range" id="p" min="0" max="100" value="40"></label>
+<label>e, the share the action removes: <b id="ev"></b><input type="range" id="e" min="0" max="100" value="75"></label>
+<div class="grid" id="grid" aria-label="one hundred occasions"></div>
+<div class="key"><span style="background:var(--accent)"></span>the danger came<span style="background:var(--amber)"></span>the action prevented it<span style="border:1px solid var(--rule)"></span>no danger</div>
+<div class="two" style="margin-top:12px">
+<div class="panel"><b>The predictor</b> writes <span id="pr"></span><br>Brier score <b class="big" id="bp"></b></div>
+<div class="panel"><b>The warner</b> writes <span id="wr"></span><br>Brier score <b class="big" id="bw"></b></div>
+</div>
+<div class="read" id="scoreread"></div>
+
+<h2>What came out</h2>
+<ol id="out"></ol>
+
+<blockquote>When assessing forecasting performance, it seems appropriate to focus on the fan chart based on the most plausible interest rate assumptions.
+<cite>Rob Elder, George Kapetanios, Tim Taylor and Tony Yates, “Assessing the MPC's fan charts”, <i>Bank of England Quarterly Bulletin</i>, Autumn 2005, 326–348, here 327. <a href="https://www.bankofengland.co.uk/-/media/boe/files/quarterly-bulletin/2005/assessing-the-mpcs-fan-charts">the keeper's own document</a></cite></blockquote>
+<blockquote>But just because an identified risk did not crystallise, it does not mean it should not have been incorporated in the fan charts.
+<cite>The same article, 331.</cite></blockquote>
+<blockquote>It is important to note that the Bank's published forecasts have assumed unchanged UK short-term interest rates during the forecast period […].
+<cite>Erik Britton, Paul Fisher and John Whitley, “The Inflation Report projections: understanding the fan chart”, <i>Bank of England Quarterly Bulletin</i>, February 1998. <a href="https://www.bankofengland.co.uk/-/media/boe/files/quarterly-bulletin/1998/the-inflation-report-projections-understanding-the-fan-chart">the keeper's own document</a></cite></blockquote>
+
+<div class="judg">
+<p><b>Judgment (mine).</b> A probability does not escape session 1's trap. It moves the trap into the condition it is written under. In 1998 the keeper wrote its fan for a world in which it did not move the rate again: that is a warning, the chance of the danger if nobody acts. By 2005 it chose to be judged on the fan for the rate path the markets expected, which includes the Committee's expected answer to its own chart. That is a prediction. The proper score rewards the predictor and charges the warner exactly <b>(p·e)²</b> on every occasion. That is the square of the danger the warning removed. A keeper that is scored learns to write its own heeding into its number. Then the number stops warning: the far end of the fan reads the target because the keeper means to put inflation there. Where the danger came anyway, the score finds a forecast that missed. It cannot tell whether the Committee did not act as the condition assumed (a warning ignored) or the danger was larger than anyone wrote (a warning never written). The Bank's own sentence about uncrystallised risks is the other half: a risk that does not come is defended as belonging in the chart. The score cannot check that defence and cannot refute it.</p>
+<p>So the three words of the question split across the two conditions. <i>Never needed</i> and <i>heeded</i> can be told apart only in the warner's column, which nobody scores. <i>Ignored</i> shows only in the predictor's column, as an ordinary miss.</p>
+</div>
+
+<h2>Method and limits</h2>
+<ul class="note">
+<li><b>Parameters.</b> The Bank's spreadsheet “Parameters for MPC CPI Inflation Projections from February 2004” as carried in the R package fanplot 3.4.2 (data <code>boe</code>, “formatted from the November 2013 Bank of England Inflation Report”). The package is used as a reader, never embedded. The 512 rows are in <a href="data.js">data.js</a> with attribution.</li>
+<li><b>Skew.</b> Britton, Fisher &amp; Whitley (1998, p. 37) write the two-piece normal so that a positive γ narrows the upper side; the package's <code>dsplitnorm</code> widens it. The file does not settle which convention its skew column follows, so all counts are reported under both and with skew ignored. No finding below changes sign or rank between them.</li>
+<li><b>Conditioning.</b> Not stated in the file. In the Bank's 2017 fan-chart document, the successive two-year probabilities are “based on successive market rate projections with the exception of August 2013 which shows the constant rate projection”. Whether the 2004–2013 parameter file follows the same rule is not verified here. This is why section 3 is a model of the two columns, not an estimate of the Bank's e.</li>
+<li><b>Outturn.</b> ONS D7G7, the quarterly CPI annual rate, release of 16 September 2026 (Open Government Licence v3.0). Quarters are matched exactly. The 2 % target is CPI's since December 2003 (Elder et al. 2005, 326).</li>
+<li><b>Dependence.</b> The 40 two-year outturns overlap: adjacent reports aim at adjacent quarters, so “12 of 40” is not 40 independent trials. The counts describe the record; they are not a test of it.</li>
+<li><b>Section 3</b> is the Brier score's expectation: for a stated q and a true rate r it is r(1−q)² + (1−r)q², least at q = r, and the warner's excess over the predictor is (p − r)² = (p·e)². Exact, not simulated.</li>
+<li>Evidence: <a href="build.py">build.py</a> (hash-checks both inputs), <a href="results.json">results.json</a>, <a href="sources.json">sources.json</a>, <a href="verify.mjs">verify.mjs</a>. The source documents are not committed.</li>
+<li><b>Also in this session:</b> the Field's counter-finding to <a href="../cycle-007-convening-4/index.html#corrected-2026-10-15">The Stand-In</a>, checked and marked corrected (<a href="standin_check.py">standin_check.py</a>, <a href="standin_check.json">standin_check.json</a>).</li>
+</ul>
+<p class="note">Neighbours: session 1, <a href="../cycle-008-session-1/index.html">Halley's Comet and the Clock</a> (the keeper without a number). The Field's study 16 and the Studio's <i>The Keeper's Word</i> work other books of the same question.</p>
+</main>
+<script src="data.js"></script>
+<script>
+(() => {
+const R = DATA.results, P = DATA.params, CPI = DATA.cpi, REPS = Object.keys(P).sort();
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const Phi = z => { // Abramowitz-Stegun 7.1.26 via erf
+  const x = Math.abs(z) / Math.SQRT2, t = 1 / (1 + .3275911 * x);
+  const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - .284496736) * t + .254829592) * t * Math.exp(-x * x);
+  return .5 * (1 + (z < 0 ? -y : y)); };
+let conv = 'bfw';
+const sides = (u, g) => { if (conv === 'sym' || g === 0) return [u, u]; const a = u / Math.sqrt(1 + g), b = u / Math.sqrt(1 - g); return conv === 'bfw' ? [b, a] : [a, b]; };
+const cdf = (x, m, u, g) => { const [s1, s2] = sides(u, g), w = s1 / (s1 + s2);
+  return x <= m ? 2 * w * Phi((x - m) / s1) : w + 2 * (1 - w) * (Phi((x - m) / s2) - .5); };
+const quant = (q, m, u, g) => { let lo = m - 8 * u - 1, hi = m + 8 * u + 1; for (let i = 0; i < 60; i++) { const mid = (lo + hi) / 2; cdf(mid, m, u, g) < q ? lo = mid : hi = mid; } return (lo + hi) / 2; };
+const label = t => `${Math.floor(t + 1e-9)} Q${Math.round((t - Math.floor(t + 1e-9)) * 4) + 1}`;
+const pct = x => (100 * x).toFixed(1) + ' %';
+function setup(cv) { const d = devicePixelRatio || 1, w = cv.clientWidth, h = +cv.getAttribute('height'); cv.width = w * d; cv.height = h * d; cv.style.height = h + 'px'; const c = cv.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0); c.font = '12px system-ui,sans-serif'; return [c, w, h]; }
+
+function drawFan() {
+  const cv = document.getElementById('fan'), [c, W, H] = setup(cv), L = 34, Rm = 10, T = 12, B = 26;
+  const x0 = 2002, x1 = 2017, y0 = -1, y1 = 6;
+  const X = t => L + (t - x0) / (x1 - x0) * (W - L - Rm), Y = v => T + (y1 - v) / (y1 - y0) * (H - T - B);
+  c.clearRect(0, 0, W, H); c.strokeStyle = css('--rule'); c.fillStyle = css('--mute'); c.lineWidth = 1;
+  for (let v = 0; v <= 6; v += 2) { c.beginPath(); c.moveTo(L, Y(v)); c.lineTo(W - Rm, Y(v)); c.stroke(); c.fillText(v + '%', 4, Y(v) + 4); }
+  for (let y = 2004; y <= 2016; y += 4) c.fillText(y, X(y) - 14, H - 8);
+  const t0 = REPS[+document.getElementById('rep').value], rows = P[t0], fan = css('--fan');
+  for (const [a, b, al] of [[.05, .95, .14], [.15, .85, .14], [.25, .75, .16], [.35, .65, .2], [.45, .55, .26]]) {
+    c.beginPath(); rows.forEach(([t, m, u, g], i) => { const yy = Y(quant(b, m, u, g)); i ? c.lineTo(X(t), yy) : c.moveTo(X(t), yy); });
+    for (let i = rows.length - 1; i >= 0; i--) { const [t, m, u, g] = rows[i]; c.lineTo(X(t), Y(quant(a, m, u, g))); }
+    c.closePath(); c.fillStyle = `rgba(${fan},${al})`; c.fill(); }
+  c.setLineDash([4, 4]); c.strokeStyle = css('--mute'); c.beginPath(); c.moveTo(L, Y(2)); c.lineTo(W - Rm, Y(2)); c.stroke(); c.setLineDash([]);
+  c.strokeStyle = css('--accent'); c.lineWidth = 2; c.beginPath();
+  Object.keys(CPI).map(Number).sort((a, b) => a - b).forEach((t, i) => { if (t < x0 || t > x1) return; const yy = Y(CPI[t.toFixed(2)]); i && t > x0 ? c.lineTo(X(t), yy) : c.moveTo(X(t), yy); }); c.stroke();
+  const r8 = rows.find(r => Math.round((r[0] - +t0) * 4) === 8), o = CPI[r8[0].toFixed(2)];
+  c.fillStyle = css('--ink'); c.beginPath(); c.arc(X(r8[0]), Y(o), 4.5, 0, 7); c.fill();
+  c.fillStyle = css('--mute'); c.fillText('outturn', W - Rm - 52, Y(o > 4 ? 0 : 5));
+  const u = cdf(o, r8[1], r8[2], r8[3]), p3 = 1 - cdf(3, r8[1], r8[2], r8[3]), p2 = 1 - cdf(2, r8[1], r8[2], r8[3]);
+  document.getElementById('fanread').innerHTML = `<b>Report of ${label(+t0)}.</b> For ${label(r8[0])} the Committee's mode was ${r8[1].toFixed(2)} %, `
+    + `the chance of inflation above 2 % ${pct(p2)}, above 3 % ${pct(p3)}. It was <b>${o.toFixed(1)} %</b>, at the fan's ${(100 * u).toFixed(1)}th percentile`
+    + (u > .95 ? ': <b>above the 90 % fan</b>.' : u < .05 ? ': <b>below the 90 % fan</b>.' : '.');
+}
+
+function drawStrip() {
+  const cv = document.getElementById('strip'), [c, W, H] = setup(cv), T = 14, B = 34, y0 = -0.3, y1 = 5.2;
+  const Y = v => T + (y1 - v) / (y1 - y0) * (H - T - B), cols = [W * .2, W * .5, W * .8];
+  c.clearRect(0, 0, W, H); c.setLineDash([4, 4]); c.strokeStyle = css('--mute'); c.beginPath(); c.moveTo(8, Y(2)); c.lineTo(W - 8, Y(2)); c.stroke(); c.setLineDash([]);
+  c.fillStyle = css('--mute'); for (const v of [0, 2, 4]) c.fillText(v + '%', 4, Y(v) - 3);
+  const names = ['mode, this quarter', 'mode, two years on', 'outturn, two years on'];
+  const vals = [[], [], []];
+  REPS.forEach(t0 => { const rows = P[t0], r0 = rows[0], r8 = rows.find(r => Math.round((r[0] - +t0) * 4) === 8);
+    vals[0].push(r0[1]); vals[1].push(r8[1]); vals[2].push(CPI[r8[0].toFixed(2)]); });
+  vals.forEach((v, k) => { c.fillStyle = k === 2 ? css('--accent') : css('--calm');
+    v.forEach((y, i) => { c.globalAlpha = .75; c.beginPath(); c.arc(cols[k] + ((i * 7) % 23 - 11) * 1.6, Y(y), 3.4, 0, 7); c.fill(); }); c.globalAlpha = 1;
+    c.fillStyle = css('--ink'); c.textAlign = 'center'; c.fillText(names[k], cols[k], H - 12); c.textAlign = 'left'; });
+  const h = R.h8; document.getElementById('stripread').innerHTML =
+    `Spread (standard deviation) of the 40 values: this quarter's mode <b>${h.nowcast_mode_sd}</b> points, the two-year mode <b>${h.mode_sd}</b>, the two-year outturn <b>${h.outturn_sd}</b>. `
+    + `The two-year mode lies within half a point of the target in <b>${h.mode_within_half_point} of 40</b> reports; the outturn did in <b>${h.outturn_within_half_point} of 40</b>.`;
+}
+
+function drawScore() {
+  const p = +document.getElementById('p').value / 100, e = +document.getElementById('e').value / 100, r = p * (1 - e);
+  document.getElementById('pv').textContent = Math.round(p * 100) + ' %'; document.getElementById('ev').textContent = Math.round(e * 100) + ' %';
+  const nr = Math.round(r * 100), na = Math.round(p * 100) - nr, g = document.getElementById('grid'); g.innerHTML = '';
+  for (let i = 0; i < 100; i++) { const d = document.createElement('i'); if (i < nr) d.className = 'r'; else if (i < nr + na) d.className = 'a'; g.appendChild(d); }
+  const brier = q => r * (1 - q) ** 2 + (1 - r) * q * q;
+  document.getElementById('pr').textContent = pct(r); document.getElementById('wr').textContent = pct(p);
+  document.getElementById('bp').textContent = brier(r).toFixed(4); document.getElementById('bw').textContent = brier(p).toFixed(4);
+  document.getElementById('scoreread').innerHTML = e === 0 || p === 0
+    ? 'With nothing prevented, the two keepers write the same number and score the same.'
+    : `The record of each occasion shows only red or not red. The ${na} amber occasions, the warning's success, are recorded exactly like the blank ones, so the warner is charged for them as for false alarms: <b>${(brier(p) - brier(r)).toFixed(4)}</b> more per occasion, which is (p·e)² = ${(p * e).toFixed(2)}². `
+      + `The better the action works, the larger the fine for having warned.`;
+}
+
+function out() {
+  const C = R.conv, f = k => ['bfw', 'fanplot', 'sym'].map(c => C[c][k]);
+  const a95 = ['bfw', 'fanplot', 'sym'].map(c => Object.values(C[c].by_horizon).reduce((s, x) => s + x.above95, 0));
+  const b5 = ['bfw', 'fanplot', 'sym'].map(c => Object.values(C[c].by_horizon).reduce((s, x) => s + x.below5, 0));
+  const rng = v => Math.min(...v) === Math.max(...v) ? String(Math.min(...v)) : `${Math.min(...v)} to ${Math.max(...v)}`;
+  const items = [
+    `<b>The far end reads the target.</b> Two years out, the Committee's mode lies within half a point of 2 % in ${R.h8.mode_within_half_point} of 40 reports; the outturn did in ${R.h8.outturn_within_half_point}. The two-year mode spreads ${R.h8.mode_sd} points, a third of the outturn's ${R.h8.outturn_sd}, and less than half of the mode the Committee wrote for the quarter it was in (${R.h8.nowcast_mode_sd}).`,
+    `<b>The misses are one-sided.</b> Over all ${R.n_rows} report-quarters, ${rng(a95)} outturns lie above the fan's 95th percentile and ${rng(b5)} below its 5th, where about 26 each would be expected (the range is over the three skew readings).`,
+    `<b>The danger came more often than it was written.</b> Two years ahead, the 40 fans together put ${rng(f('h8_p_above3_sum').map(x => x.toFixed(1)))} expected occasions above 3 %. It happened on ${C.bfw.h8_above3_count}. Above the 2 % target: written at ${pct(Math.min(...f('h8_p_above2_mean')))} to ${pct(Math.max(...f('h8_p_above2_mean')))} on average, it happened on ${C.bfw.h8_above2_count} of 40.`,
+    `<b>A proper score fines a warning that worked</b> by (p·e)² per occasion against the keeper that predicted its own success (section 3, exact). The Bank's own assessment of its fans chose the market-rate fan to be judged on (Elder et al. 2005).`,
+    `<b>Every miss above has two readings the record cannot separate:</b> the danger outran what anyone wrote, or the Committee did not act as the fan's condition assumed. The fan's condition already holds the expected heeding, so an <i>ignored</i> warning and a <i>wrong</i> one are one entry.`];
+  document.getElementById('out').innerHTML = items.map(x => `<li>${x}</li>`).join('');
+}
+
+const draw = () => { drawFan(); drawStrip(); };
+document.getElementById('rep').addEventListener('input', drawFan);
+for (const k of ['bfw', 'fanplot', 'sym']) document.getElementById('c-' + k).addEventListener('click', () => {
+  conv = k; for (const j of ['bfw', 'fanplot', 'sym']) document.getElementById('c-' + j).setAttribute('aria-pressed', j === k); drawFan(); });
+for (const id of ['p', 'e']) document.getElementById(id).addEventListener('input', drawScore);
+addEventListener('resize', draw); matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+draw(); drawScore(); out();
+})();
+</script>
+</body>
+</html>
