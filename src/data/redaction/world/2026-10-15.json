@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-15",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-15T10:22:21Z",
+    "counts": {
+      "botwall": 32,
+      "gone_404": 0,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 267,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 1
+    },
+    "decided": 267,
+    "excluded_unverifiable": 33,
+    "gone": 0,
+    "gone_ci95": [
+      0.0,
+      0.0142
+    ],
+    "gone_rate": 0.0,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0142
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-13",
+    "receipts": [],
+    "sample_drawn_at": "2026-10-14T10:33:23Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5826,
+      "replaced": 5190,
+      "trivial": 977,
+      "update": 683
+    },
+    "day": "2026-10-14",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "love"
+        ],
+        "after": "Socrates philosophy on love: Socrates on human attraction and love: 'Beauty is the bait which with delight allures man to...'",
+        "before": "Socrates philosophy on beauty: Socrates on human attraction and love: 'Beauty is the bait which with delight allures man to...'",
+        "detected": "2026-10-14T18:19:28Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Beauty"
+        ],
+        "similarity": 1.0,
+        "url": "https://economictimes.indiatimes.com/news/international/us/socrates-on-human-attraction-and-love-beauty-is-the-bait-which-with-delight-allures-man-to-/articleshow/134771568.cms",
+        "weight": 3,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Welcome",
+          "Home"
+        ],
+        "after": "All the Details From Apple's 'Welcome Home' Event: HomeView, HomePod Mini 2, LG Home Collection, Apple TV, More",
+        "before": "All the Details From Apple's Oct. 13 Event: HomeView, HomePod Mini 2, LG Home Collection, Apple TV, More",
+        "detected": "2026-10-14T15:19:45Z",
+        "domain": "pcmag.com",
+        "removed": [
+          "Oct",
+          "13"
+        ],
+        "similarity": 0.842,
+        "url": "https://www.pcmag.com/news/apple-oct-13-event-details-announced-homeview-homepod-mini-2-lg-home",
+        "weight": 7,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Dell",
+          "Ticks",
+          "Up"
+        ],
+        "after": "Super Micro Edges Higher as Server Makers Rise Against a Falling Tech Tape; Hewlett Packard Enterprise Adds 3%, Dell Ticks Up",
+        "before": "Super Micro Computer Edges Higher as Server Makers Rise Against a Falling Tech Tape; Hewlett Packard Enterprise Adds 3%",
+        "detected": "2026-10-14T18:18:15Z",
+        "domain": "aol.com",
+        "removed": [
+          "Computer"
+        ],
+        "similarity": 0.818,
+        "url": "https://www.aol.com/articles/super-micro-computer-edges-higher-180554000.html",
+        "weight": 6,
+        "window": "1w"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 15601,
+      "PAGE_TEXTCHANGE": 133070,
+      "PAGE_TITLECHANGE": 51061,
+      "UNCHANGED_CONTENT": 757969
+    },
+    "title_changes_en": 12676,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1792059507509",
+        "job_id": "world_gdg_counts_20261014",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 241172480,
+        "created": "1792059513316",
+        "job_id": "world_gdg_titles_20261014",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-15T10:22:21Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-14.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

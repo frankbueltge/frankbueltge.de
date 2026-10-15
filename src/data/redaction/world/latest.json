@@ -1,30 +1,30 @@
 {
-  "date": "2026-10-14",
+  "date": "2026-10-15",
   "deletion": {
     "available": true,
-    "checked_at": "2026-10-14T10:37:32Z",
+    "checked_at": "2026-10-15T10:22:21Z",
     "counts": {
-      "botwall": 13,
-      "gone_404": 1,
-      "gone_410": 1,
+      "botwall": 32,
+      "gone_404": 0,
+      "gone_410": 0,
       "legal_451": 0,
-      "ok": 283,
+      "ok": 267,
       "other": 0,
-      "server_error": 1,
+      "server_error": 0,
       "unreachable": 1
     },
-    "decided": 285,
-    "excluded_unverifiable": 15,
-    "gone": 2,
+    "decided": 267,
+    "excluded_unverifiable": 33,
+    "gone": 0,
     "gone_ci95": [
-      0.0019,
-      0.0252
+      0.0,
+      0.0142
     ],
-    "gone_rate": 0.007,
+    "gone_rate": 0.0,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.0133
+      0.0142
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,126 +33,102 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-10-12",
-    "receipts": [
-      {
-        "class": "gone_404",
-        "domain": "vol.at",
-        "first_seen": "20261012120000",
-        "http_code": 404,
-        "title": "Test - VOL.AT",
-        "url": "https://www.vol.at/test/10537547"
-      },
-      {
-        "class": "gone_410",
-        "domain": "breakingnews.ie",
-        "first_seen": "20261012140000",
-        "http_code": 410,
-        "title": "Speculation over future of US envoy to Greece Kimberly Guilfoyle after 'improper conduct' reports",
-        "url": "https://www.breakingnews.ie/world/speculation-over-future-of-us-envoy-to-greece-kimberly-guilfoyle-after-improper-conduct-reports-1953356.html"
-      }
-    ],
-    "sample_drawn_at": "2026-10-13T12:58:10Z",
+    "pool_day": "2026-10-13",
+    "receipts": [],
+    "sample_drawn_at": "2026-10-14T10:33:23Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 6046,
-      "replaced": 4721,
-      "trivial": 1051,
-      "update": 448
+      "reframing": 5826,
+      "replaced": 5190,
+      "trivial": 977,
+      "update": 683
     },
-    "day": "2026-10-13",
+    "day": "2026-10-14",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
         "added": [
-          "Tabu"
+          "love"
         ],
-        "after": "'Drishyam 3: The Conclusion' box office collection Day 4; Ajay Devgn, Tabu starrer sees big dip in collections on first Monday; film crosses Rs 300 crore worldwide",
-        "before": "Drishyam 3 Full Movie Collection: 'Drishyam 3: The Conclusion' box office collection Day 4; Ajay Devgn starrer sees big dip in collections on first Monday; film crosses Rs 300 crore worldwide | Hindi Movie News",
-        "detected": "2026-10-13T01:02:46Z",
+        "after": "Socrates philosophy on love: Socrates on human attraction and love: 'Beauty is the bait which with delight allures man to...'",
+        "before": "Socrates philosophy on beauty: Socrates on human attraction and love: 'Beauty is the bait which with delight allures man to...'",
+        "detected": "2026-10-14T18:19:28Z",
         "domain": "indiatimes.com",
         "removed": [
-          "Full",
-          "Movie",
-          "Drishyam",
-          "3",
-          "collection",
-          "Hindi",
-          "Movie",
-          "News"
+          "Beauty"
         ],
-        "similarity": 0.839,
-        "url": "https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/box-office/drishyam-3-the-conclusion-box-office-collection-day-4-ajay-devgn-starrer-sees-big-dip-in-collections-on-first-monday-film-crosses-rs-300-crore-worldwide/articleshow/134720323.cms",
-        "weight": 16,
+        "similarity": 1.0,
+        "url": "https://economictimes.indiatimes.com/news/international/us/socrates-on-human-attraction-and-love-beauty-is-the-bait-which-with-delight-allures-man-to-/articleshow/134771568.cms",
+        "weight": 3,
         "window": "1w"
       },
       {
         "added": [
-          "Juanita",
-          "Sanchez"
+          "Welcome",
+          "Home"
         ],
-        "after": "Inexperience an issue for Tigers in 28-6 loss to Juanita Sanchez | EastBayRI.com - News, Opinion, Things to Do in the East Bay",
-        "before": "Inexperience an issue for Tigers in 28-6 loss to Janita Sancez | EastBayRI.com - News, Opinion, Things to Do in the East Bay",
-        "detected": "2026-10-13T18:31:55Z",
-        "domain": "eastbayri.com",
+        "after": "All the Details From Apple's 'Welcome Home' Event: HomeView, HomePod Mini 2, LG Home Collection, Apple TV, More",
+        "before": "All the Details From Apple's Oct. 13 Event: HomeView, HomePod Mini 2, LG Home Collection, Apple TV, More",
+        "detected": "2026-10-14T15:19:45Z",
+        "domain": "pcmag.com",
         "removed": [
-          "Janita",
-          "Sancez"
+          "Oct",
+          "13"
         ],
-        "similarity": 0.826,
-        "url": "http://www.eastbayri.com/stories/inexperience-an-issue-for-tigers-in-28-6-loss-to-janita-sancez,143259",
-        "weight": 8,
+        "similarity": 0.842,
+        "url": "https://www.pcmag.com/news/apple-oct-13-event-details-announced-homeview-homepod-mini-2-lg-home",
+        "weight": 7,
         "window": "24h"
       },
       {
         "added": [
-          "ECGâ",
-          "GHÂ"
+          "Dell",
+          "Ticks",
+          "Up"
         ],
-        "after": "Afenyo-Markin Drops Bombshell on ECGâ€™s GHÂ¢12.16bn Forex Gains, Reveals What Ghanaians Need to Know – Ghanamma.com",
-        "before": "Afenyo-Markin Drops Bombshell on ECG's GH¢12.16bn Forex Gains, Reveals What Ghanaians Need to Know – Ghanamma.com",
-        "detected": "2026-10-13T18:46:14Z",
-        "domain": "ghanamma.com",
+        "after": "Super Micro Edges Higher as Server Makers Rise Against a Falling Tech Tape; Hewlett Packard Enterprise Adds 3%, Dell Ticks Up",
+        "before": "Super Micro Computer Edges Higher as Server Makers Rise Against a Falling Tech Tape; Hewlett Packard Enterprise Adds 3%",
+        "detected": "2026-10-14T18:18:15Z",
+        "domain": "aol.com",
         "removed": [
-          "ECG",
-          "GH"
+          "Computer"
         ],
         "similarity": 0.818,
-        "url": "https://www.ghanamma.com/2026/10/12/afenyo-markin-drops-bombshell-on-ecgs-gh%C2%A212-16bn-forex-gains-reveals-what-ghanaians-need-to-know/",
-        "weight": 8,
-        "window": "24h"
+        "url": "https://www.aol.com/articles/super-micro-computer-edges-higher-180554000.html",
+        "weight": 6,
+        "window": "1w"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 15520,
-      "PAGE_TEXTCHANGE": 127011,
-      "PAGE_TITLECHANGE": 47644,
-      "UNCHANGED_CONTENT": 726356
+      "HTTP_REDIRECT": 15601,
+      "PAGE_TEXTCHANGE": 133070,
+      "PAGE_TITLECHANGE": 51061,
+      "UNCHANGED_CONTENT": 757969
     },
-    "title_changes_en": 12266,
+    "title_changes_en": 12676,
     "trace": [
       {
-        "bytes_billed": 25165824,
-        "created": "1791973977255",
-        "job_id": "world_gdg_counts_20261013",
+        "bytes_billed": 26214400,
+        "created": "1792059507509",
+        "job_id": "world_gdg_counts_20261014",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 230686720,
-        "created": "1791973981709",
-        "job_id": "world_gdg_titles_20261013",
+        "bytes_billed": 241172480,
+        "created": "1792059513316",
+        "job_id": "world_gdg_titles_20261014",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-10-14T10:37:32Z",
+  "generated_at": "2026-10-15T10:22:21Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-10-13.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-10-14.json",
   "schema_version": "1",
   "selection_version": "v1"
 }
