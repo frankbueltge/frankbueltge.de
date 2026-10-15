@@ -265,3 +265,10 @@ Mails an reale Empfänger, Einreichungen, Bewerbungen; das Post Office bleibt be
 itself". (2) **Engine-Site-PRs** (`engine-site-pr.yml`), weil `/apparatus` öffentlich behauptet,
 ein Mensch merge sie — die Behauptung ändern, bevor der Automatismus kommt. (3) Verfassungs- und
 Lizenzänderungen in den Praxis-Repos.
+
+**Aktualitäts-PRs (`currency/pr-*`) laufen seit 2026-10-15 den normalen Weg** (Franks Auftrag,
+Wortlaut privat; decision-log 2026-10-15): Die Session, die eine öffnet, prüft sie gegen das
+heutige `main` und die CI und merged sie selbst, per Squash mit eigener Commit-Nachricht und nie
+blind auf Grün; keine Check-in-Erinnerungen. Die Schleuse vom 2026-07-25 („Frank entscheidet aus
+dem Panel“) stammte von vor der Merge-Vollmacht und ist abgelöst. Produkt-Attribution in Commits
+und PR-Texten schaltet `.claude/settings.json` (`attribution`) für Cloud-Sessions dieses Repos ab.
