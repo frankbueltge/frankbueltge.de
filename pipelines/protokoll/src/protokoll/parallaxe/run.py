@@ -88,7 +88,7 @@ def upsert(reg: dict[str, Any], measured: dict[str, Any], today: str,
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "rule": {"source": list(SOURCE_CATEGORIES), "min_langs": MIN_LANGS,
-                 "cap": TOPIC_CAP, "model": MODEL, "cadence": "ein Thema pro Tag, rotierend"},
+                 "cap": TOPIC_CAP, "model": MODEL, "cadence": "one topic per weekly run, rotating"},
         "census": {"attempted": 1, "measured": 1, "failed": {}},
         "mean_omission_index": round(sum(means) / len(means), 4) if means else None,
         "topics": kept,

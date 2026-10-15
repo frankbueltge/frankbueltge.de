@@ -29,17 +29,39 @@ jobs:
       - name: Abhängigkeiten (Correction/Pattern)
         run: pip install --no-cache-dir "pandas>=2,<3" openpyxl numpy
       - name: Pipelines laufen
+        # One failing instrument must not stop the others, so this step stays green and only
+        # records what failed. Until 2026-10-10 a failure became a `::warning::` inside a
+        # collapsed group and the run stayed green: The Correction missed four Mondays in a row
+        # (2026-08-03 to 2026-08-24) and nothing said so (issue #723). Now a pipeline counts as
+        # failed when it exits non-zero OR when it exits zero without stamping today's date into
+        # its latest.json, and the last step turns the run red after the good data is committed.
         run: |
           set -u
-          DOW=$(date -u +%u) # 1 = Montag … 7 = Sonntag
-          run () { echo "::group::$1"; python "$1" || echo "::warning::$1 fehlgeschlagen — übersprungen"; echo "::endgroup::"; }
-          run pipelines/consensus/refresh.py
-          run pipelines/balance/refresh.py
-          run pipelines/invoked/refresh.py
-          run pipelines/pattern/refresh.py
+          DOW=$(date -u +%u) # 1 = Monday … 7 = Sunday
+          TODAY=$(date -u +%F)
+          : > "$RUNNER_TEMP/failed.txt"
+          run () {
+            local name="$1" out="src/data/$1/latest.json"
+            echo "::group::$name"
+            if python "pipelines/$name/refresh.py"; then
+              stamp=$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["generated_at"][:10])' "$out" 2>/dev/null || echo none)
+              if [ "$stamp" != "$TODAY" ]; then
+                echo "::error::$name exited 0 but $out still carries $stamp, not $TODAY"
+                echo "$name: wrote nothing new ($out says $stamp)" >> "$RUNNER_TEMP/failed.txt"
+              fi
+            else
+              echo "::error::$name failed — its page keeps showing the last good reading"
+              echo "$name: refresh.py exited non-zero" >> "$RUNNER_TEMP/failed.txt"
+            fi
+            echo "::endgroup::"
+          }
+          run consensus
+          run balance
+          run invoked
+          run pattern
           if [ "$DOW" = "1" ]; then
-            run pipelines/tell/refresh.py
-            run pipelines/revision/refresh.py
+            run tell
+            run revision
           fi
       - name: Committen
         run: |
@@ -59,3 +81,14 @@ jobs:
             echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
           done
           echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1
+      - name: Fehlgeschlagene Pipelines melden
+        # After the commit, so the instruments that did run still land; the red run is what
+        # reaches a person. The pages say the same thing on their own (DataAge, issue #723).
+        if: always()
+        run: |
+          if [ -s "$RUNNER_TEMP/failed.txt" ]; then
+            { echo "### Gegenmessung: instruments that did not refresh"; echo; sed 's/^/- /' "$RUNNER_TEMP/failed.txt"; } >> "$GITHUB_STEP_SUMMARY"
+            cat "$RUNNER_TEMP/failed.txt"
+            exit 1
+          fi
+          echo "All scheduled instruments refreshed."

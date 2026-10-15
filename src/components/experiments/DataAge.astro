@@ -1,0 +1,25 @@
+---
+// Which reading a nightly instrument is showing, and — when its pipeline has stopped — a notice
+// that says so before any figure does (issue #723). The arithmetic lives in
+// src/lib/experiments/data-age.ts; this file only places the words. Monochrome on purpose: an
+// overdue reading is a fact about the instrument, not a verdict, so it gets weight and a rule,
+// not warning red.
+import { dataAge, ageStamp, overdueNotice, type Cadence } from '@/lib/experiments/data-age'
+
+interface Props {
+  generatedAt: string
+  cadence: Cadence
+}
+
+const { generatedAt, cadence } = Astro.props
+const age = dataAge(generatedAt, cadence)
+---
+
+<p class="data-age mt-3 font-mono text-mono text-fg-faint">{ageStamp(age)}</p>
+{
+  age.overdue && (
+    <p role="status" class="data-age-overdue mt-3 max-w-2xl border-l-2 border-fg pl-3 text-sm font-semibold leading-snug text-fg">
+      {overdueNotice(age)}
+    </p>
+  )
+}

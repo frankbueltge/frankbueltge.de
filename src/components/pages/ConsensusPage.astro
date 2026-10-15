@@ -13,6 +13,7 @@ import { byYear, standing, summarise, type Baseline } from '@/lib/consensus/base
 import data from '@/data/consensus/latest.json'
 import baselineJson from '@/data/consensus/baseline.json'
 import SheetHead from '@/components/experiments/SheetHead.astro'
+import DataAge from '@/components/experiments/DataAge.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import '@/styles/experiment-sheet.css'
 
@@ -88,6 +89,7 @@ const syn = h?.syndication
   <SheetHead title="Consensus">
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'cs.sub')}</p>
     <p class="mt-3 kicker">{dateLabel}</p>
+    <DataAge generatedAt={d.generated_at} cadence="daily" />
   </SheetHead>
 
   {h ? (
