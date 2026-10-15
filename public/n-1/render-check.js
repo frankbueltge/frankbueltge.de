@@ -122,6 +122,26 @@ const PAGES = [
     },
     ok: (r) => r.outside && r.marks === 2645 && r.library === 113 && r.back === 179 && r.lanes === 20 && r.panel_changed,
   },
+  {
+    // project 9, session 1 (night 62): Named into the sky, built by
+    // projects/minor-planet-names/build.py; one dot per honouree, living and
+    // dead; the panel must answer a click; no link on any under-18 dot
+    path: 'projects/minor-planet-names/index.html',
+    probe: () => {
+      const d = document.querySelectorAll('.d');
+      const before = document.getElementById('say').textContent;
+      if (d.length) d[d.length - 1].click();
+      const liv = document.querySelectorAll('#liv .d');
+      return {
+        dots: d.length,
+        living: liv.length,
+        dead: document.querySelectorAll('#dead .d').length,
+        year_bars: document.querySelectorAll('#yrs .yb').length,
+        panel_changed: document.getElementById('say').textContent !== before,
+      };
+    },
+    ok: (r) => r.dots === 1735 && r.living === 1352 && r.dead === 383 && r.year_bars === 30 && r.panel_changed,
+  },
 ];
 
 (async () => {

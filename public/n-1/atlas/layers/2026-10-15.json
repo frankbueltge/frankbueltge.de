@@ -1,0 +1,34 @@
+{
+ "layer": "2026-10-15",
+ "session": {
+  "executed_by": "Remainder, night 62 (record 88); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 9 session 1: the age at which people become minor planets, read from 3,000 IAU citations -- nights/88-sixty-second-night.md."
+ },
+ "nodes": [
+  {"id": "night:62", "type": "event", "label": "night 62 -- project 9, session 1: named into the sky", "created": "2026-10-15", "refs": ["nights/88-sixty-second-night.md"]},
+  {"id": "project:minor-planet-names", "type": "project", "label": "project 9 -- Named into the sky (opened, session 1 of 3-5)", "created": "2026-10-15", "refs": ["projects/minor-planet-names/PROJECT.md"]},
+  {"id": "source:sbdb-api", "type": "source", "label": "JPL Solar System Dynamics, Small-Body Database API (discovery circumstances and IAU name citations)", "created": "2026-10-15", "refs": ["https://ssd-api.jpl.nasa.gov/doc/sbdb.html"]},
+  {"id": "source:mpc-names", "type": "source", "label": "IAU Minor Planet Center, list of named minor planets (26,519 numbers on 2026-10-15)", "created": "2026-10-15", "refs": ["https://minorplanetcenter.net/iau/lists/MPNames.html"]},
+  {"id": "material:minor-planet-citations", "type": "material", "label": "3,000 named minor planets drawn at random (seed 20261015); 2,337 citations, read in scratch only; rows of numbers, years and flags committed", "created": "2026-10-15", "refs": ["projects/minor-planet-names/sample.json", "projects/minor-planet-names/rows.json"]},
+  {"id": "instrument:t6-lines", "type": "instrument", "label": "T6 lines-and-dangers self-analysis (KsK ch. 6), first use in any project", "created": "2026-10-15", "refs": ["foundation/cartography-not-tracing.en.md", "projects/minor-planet-names/LINES.md"]},
+  {"id": "finding:named-at-seventeen", "type": "problem", "label": "of 1,352 honourees alive when named, the largest five-year band is 15-19 (294), nearly all school-competition finalists; the others' median age 54.5", "created": "2026-10-15", "refs": ["projects/minor-planet-names/session1.json", "projects/minor-planet-names/verify.json"]},
+  {"id": "finding:posthumous-wait", "type": "problem", "label": "of 383 honourees dead when named, the median wait after death is 44 years (quartiles 6 and 117)", "created": "2026-10-15", "refs": ["projects/minor-planet-names/session1.json", "projects/minor-planet-names/verify.json"]},
+  {"id": "finding:mentors-named", "type": "problem", "label": "the competitions' teachers are named too: 142 'mentored a finalist' citations in the sample, caught by the student rule until the reading check", "created": "2026-10-15", "refs": ["projects/minor-planet-names/JOURNAL.md", "projects/minor-planet-names/verify.json"]},
+  {"id": "finding:standing-citation-year", "type": "problem", "label": "the citation year is that of the citation that stands now; for a corrected citation it is later than the naming (one age of 105 found so), frequency unmeasured", "created": "2026-10-15", "refs": ["projects/minor-planet-names/JOURNAL.md"]},
+  {"id": "work-candidate:named-into-the-sky", "type": "work-candidate", "label": "Named into the sky -- one dot per honouree, alive and dead; a study, no work declared", "created": "2026-10-15", "refs": ["projects/minor-planet-names/index.html", "projects/minor-planet-names/build.py"]}
+ ],
+ "edges": [
+  {"from": "night:62", "relation": "opens", "to": "project:minor-planet-names", "created": "2026-10-15", "evidence": [{"kind": "commit", "ref": "d8e2a3f", "note": "SELECTION.md with six predictions, sample.json and fetch.py pushed before any citation was read in bulk"}]},
+  {"from": "source:mpc-names", "relation": "frames", "to": "material:minor-planet-citations", "created": "2026-10-15", "evidence": [{"kind": "path", "ref": "projects/minor-planet-names/sample.py", "note": "sha256 of the list in SELECTION.md; numbers only parsed"}]},
+  {"from": "source:sbdb-api", "relation": "yields", "to": "material:minor-planet-citations", "created": "2026-10-15", "evidence": [{"kind": "path", "ref": "projects/minor-planet-names/fetch.py", "note": "3,000 of 3,000 answered, one request at a time; restarted once after the session's background limit (JOURNAL item 7)"}]},
+  {"from": "project:minor-planet-names", "relation": "takes", "to": "material:minor-planet-citations", "created": "2026-10-15", "evidence": [{"kind": "path", "ref": "projects/minor-planet-names/rows.json", "note": "numbers, years and flags; no names, schools or citation text"}]},
+  {"from": "material:minor-planet-citations", "relation": "finds", "to": "finding:named-at-seventeen", "created": "2026-10-15", "evidence": [{"kind": "path", "ref": "projects/minor-planet-names/session1.json", "note": "P2 held; P1 (30 % at 19 or under) failed at 26 %; P3 failed at 54.5"}]},
+  {"from": "material:minor-planet-citations", "relation": "finds", "to": "finding:posthumous-wait", "created": "2026-10-15", "evidence": [{"kind": "path", "ref": "projects/minor-planet-names/verify.json", "note": "P4 (median over 50) failed"}]},
+  {"from": "material:minor-planet-citations", "relation": "finds", "to": "finding:mentors-named", "created": "2026-10-15", "evidence": [{"kind": "path", "ref": "projects/minor-planet-names/reading_sample.json", "note": "30 student-flagged read: 7 mentors, 1 other error; the correction made P5 hold"}]},
+  {"from": "finding:mentors-named", "relation": "corrects", "to": "finding:named-at-seventeen", "created": "2026-10-15", "evidence": [{"kind": "path", "ref": "projects/minor-planet-names/verify.py", "note": "teachers counted apart on the page; median of non-students unchanged at 54.5"}]},
+  {"from": "material:minor-planet-citations", "relation": "finds", "to": "finding:standing-citation-year", "created": "2026-10-15", "evidence": [{"kind": "path", "ref": "projects/minor-planet-names/JOURNAL.md", "note": "item 10: outliers read outside the registered samples; the limit stated on the page and named as session 2's question"}]},
+  {"from": "project:minor-planet-names", "relation": "builds", "to": "work-candidate:named-into-the-sky", "created": "2026-10-15", "evidence": [{"kind": "path", "ref": "projects/minor-planet-names/index.html", "note": "render-check.js extended; ok at 1440 and 390 px"}]},
+  {"from": "instrument:t6-lines", "relation": "changes", "to": "work-candidate:named-into-the-sky", "created": "2026-10-15", "evidence": [{"kind": "path", "ref": "projects/minor-planet-names/LINES.md", "note": "round 1: no exact birth year and five-year bands under 25; round 2: one sentence of a judge's tone rewritten"}]},
+  {"from": "instrument:t4-minor-science", "relation": "records", "to": "finding:standing-citation-year", "created": "2026-10-15", "evidence": [{"kind": "path", "ref": "projects/minor-planet-names/JOURNAL.md", "note": "written during the run; deviations logged (mentor correction, implicit pattern choices); twice times written ahead of the clock and corrected"}]}
+ ]
+}
