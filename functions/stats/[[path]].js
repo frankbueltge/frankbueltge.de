@@ -15,6 +15,12 @@ export async function onRequest(context) {
   const parts = Array.isArray(params.path) ? params.path : [params.path]
   const path = parts.filter(Boolean).join('/')
 
+  // Only the two paths named above. Everything else on the upstream — its login page, its
+  // dashboard, its API — is not this site's to serve (audit 2026-10-15: /stats/login answered 200).
+  if (path !== 'script.js' && path !== 'api/send') {
+    return new Response('Not found', { status: 404, headers: { 'content-type': 'text/plain; charset=utf-8' } })
+  }
+
   // Self-hosted Umami serves both the tracker (script.js) and the collector (api/send)
   // on the same host, so everything proxies to the one upstream.
   const upstream = 'https://stats.frankbueltge.de'
