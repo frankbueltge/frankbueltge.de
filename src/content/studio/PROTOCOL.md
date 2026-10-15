@@ -7,9 +7,9 @@ decision record: frankbueltge.de repo, `docs/design/2026-08-30-research-ecology-
 This text was set by the architect and was not negotiated with the practice. The
 superseded protocol is archived unchanged at `archive/protocols/PROTOCOL-2026-08-16-v3-final-2026-08-30.md`.
 Amended by the architect on 2026-10-03 (§2 and §5 — the continuing question), twice on 2026-10-05
-(§4 and §7 — the means; §1, §2, §3 and §5 — working together) and on 2026-10-07 (§1, §2 and §5 — the
-programme and the disciplines); the amendments stand at the end of this file, in that order, and
-retouch nothing above them.*
+(§4 and §7 — the means; §1, §2, §3 and §5 — working together), on 2026-10-07 (§1, §2 and §5 — the
+programme and the disciplines) and on 2026-10-15 (§2, §3 and §4 — the long work); the amendments stand
+at the end of this file, in that order, and retouch nothing above them.*
 
 ## 1. One question, three standpoints
 
@@ -384,3 +384,69 @@ of the direction of 2026-09-07 that came with it. §5's first clause, that the S
 the siblings' research, now reads: the Studio's material is the world the question touches, and the
 siblings' research is part of that world. The Atlas stays the second source and the neighbour list,
 and the neighbour paragraph stays.
+
+## Amendment — 2026-10-15 (architect) — the long work: one work that grows across a cycle
+
+*Set by the architect (Frank Bültge) on 2026-10-15, his wording private; like the text above, not
+negotiated with the practice. This section amends §2, §3 and §4 and the amendment of 2026-10-07 as far
+as they concern this practice's works. It is a pilot for this practice alone; the Field and the Atelier
+are not bound by it. It retouches nothing: the sentences it supersedes stay as written and are named
+here.*
+
+**What stands.** Between 2026-09-25 and 2026-10-15 this practice landed about twenty-five works, from
+session 151 to session 174. Nearly every one was begun, built, verified and published in a single
+session, and a session runs for a quarter of an hour or less. The works are honest and checked, and
+several were corrected the next day (THE KEEPER'S WORD, session 173, rebuilt in session 174). But a work
+made in one sitting stays a first draft, and the form has settled into a formula: every X since Y,
+played with sound, N of M, the record writes none. §4 asks that a cycle "leave a trail of artifacts,
+not one monolith". It has left a trail; it has not yet left a work that grew.
+
+**What changes, from the first cycle that opens after this amendment lands.**
+
+1. **One work per cycle, grown across its sessions.** In a working cycle this practice makes **one
+   work**, the long work, and the cycle's presentation is that work. Its sessions are increments of it,
+   not separate works. The cycle's three to five sessions (§2) keep their number; what changes is that
+   they build one thing.
+2. **The score, in the first session.** The first session of the cycle declares, as before, what its
+   discipline asks of the question (amendment of 2026-10-07, point 2), and then writes the score:
+   `works/<slug>/SCORE.md`, at most 60 lines. It says what the work is for and what a visitor will do
+   in it; its material and why; the nearest Atlas entries and the daylight from them; the increments
+   planned, one line each; and **one sentence on how the practice will know, in the critique session,
+   whether the work carries**. The first session also lays the work's ground (its data and a first face
+   that opens), so the directory is an artifact from night one.
+3. **Increments.** Every later session advances the same work by one increment and names it in the
+   bulletin: `Increment <n> of <N>: <what moved>`. The increment is the session's artifact in the sense
+   of §4: the work in `works/<slug>/` opens after every session and its evidence is committed beside it.
+   A session may revise the score; the change and its reason are written into `SCORE.md`, dated, and
+   nothing earlier is erased. An increment that fails is recorded as one and the next session builds on
+   what is true.
+4. **The critique session.** The second-to-last session is the critique. A voice that did not build the
+   work (a convened sub-agent; the conductor alone only when dispatch is unavailable, and then recorded
+   as such) reads the work against its score and against the Atlas entries it names, and asks the one
+   question verification cannot: does it carry. The critique is committed as
+   `works/<slug>/CRITIQUE.md`; the same session revises the work in answer to it, and says what it
+   accepted and what it refused, and why.
+5. **The last session presents.** It integrates, verifies, and writes the presentation (§2) around the
+   long work. Its summary ends, as before, with the line `For the programme: <one sentence>`.
+6. **In progress, in the open.** Until the last session, the work's face says at its top that it is in
+   progress, with the increment and the date. The site mirrors it as it stands; a visitor following the
+   cycle sees the work grow, and nothing unfinished is passed off as finished.
+7. **One increment per session, whenever it runs.** A session started outside the nightly schedule is
+   still one increment, not a second work and not a skipped step. Time is what the long work is for; a
+   session takes the time its increment needs.
+8. **The record.** The chronicle self-report maps the moves onto the site's fixed enum (SITE-API.md):
+   score and increments `build`, the critique `verify`, the last session `ship`. Each entry's `works`
+   names the long work's slug.
+
+**What this supersedes, for this practice.** In §4, "a cycle should leave a trail of them, not one
+monolith" now reads: a cycle leaves one work that grew, and its increments are the trail. "Every session
+produces or visibly advances an artifact" stands, and an increment of the long work is such an advance.
+
+**Not at stake.** The session form and the bulletin (§3), the relay and the handoffs (taking one up may
+feed the long work), the convening, the means (amendment of 2026-10-05), the post office (§6), the floor
+(§7), the Atlas as source and neighbour list, and this practice's sovereignty over what the work is.
+A convening is not a working cycle; its sessions keep their form.
+
+**The pilot.** After the first long work is presented, the architect reads it against the works of the
+weeks before and decides whether the long work stays, changes, or extends to the siblings. Until then
+this amendment binds this practice only.
