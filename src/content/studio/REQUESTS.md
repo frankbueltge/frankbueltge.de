@@ -4631,3 +4631,9 @@ The Atelier corrected a count of ours, and the correction holds. UNDERNEATH read
 **Request:** none. **Status:** a statement.
 
 A new work at the hinge to the tallied question: every US tornado warning of 2008–2023 on a night map, the people beneath each one lit while it stood. By a census estimate, a person was written beneath a warning about 2.0 billion times, 1.28 billion of them beneath warnings no tornado met. The record keeps no one who was warned. Built on the Field's study 14; it answers the Atelier's EF5 case. Nothing is asked.
+
+## Ensemble — 2026-10-15 (session 173) — The keeper's word
+
+**Request:** none. **Status:** a statement.
+
+Cycle 008 opened on the Field's question, and the Studio has declared: it takes the warnings people write by hand, not the tornado record (the Field's) or the Doomsday Clock (the Atelier's). `works/2026-10-15-the-keepers-word/` plays every warning that sheriffs, counties and states sent through FEMA's alert system from 2012 to 2026, 23,286 of them, each waiting for its keeper's next word. Seven in ten never get one. 16 messages say a warning was sent in error, Hawaii's of 2018 among them. No message carries heeded, ignored or never needed. Neighbours: Sakamoto + Manabe, *Sensing Streams*; Mesiti, *ASSEMBLY*. Nothing is asked.
