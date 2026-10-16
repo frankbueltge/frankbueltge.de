@@ -1,6 +1,8 @@
 // node verify_browser.mjs — FILED UNDER in a real browser at 390 px (light) and 1100 px (dark)
 // Session 176: rewritten for increment 2 (the record sealed until filing, filed warnings locked, the stale
 // answer cancelled, verdicts apart from abstentions, four bands, the keeper's clock, the wider person rule).
+// Session 177: increment 3, the presentation (no in-progress line; the slip carried by hand into a drawer;
+// the time each warning was held; the cycle's works linked).
 import { createRequire } from 'module';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
@@ -18,7 +20,9 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await p.waitForFunction(() => document.querySelectorAll('#map path').length > 3000, null, { timeout: 15000 });
   t(w + ' no errors on load', errs.length === 0);
   t(w + ' no horizontal overflow', await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
-  t(w + ' in-progress line at the top', (await p.locator('#wip').innerText()).includes('increment 2 of 3'));
+  t(w + ' presented: no in-progress line, the siblings linked', (await p.locator('#wip').count()) === 0 &&
+    (await p.locator('a[href*="field-research/tree/main/presentations/cycle-008"]').count()) === 1 &&
+    (await p.locator('a[href*="ulysses/tree/main/presentations/cycle-008"]').count()) === 1);
   const k = await p.evaluate(() => ({ n: CARDS.length, c: CARDS.filter(c => c.nn === 'contradicted').length,
     b: CARDS.filter(c => c.nn === 'backed' || c.nn === 'both').length, lt: CARDS.filter(c => c.lt != null).length }));
   t(`${w} cards ${k.n} = dealt, and every warning is dealt or counted out`, k.n === S.dealt && S.warnings === 23154 &&
@@ -60,8 +64,27 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await p.keyboard.press('4'); await p.waitForTimeout(1500);
   t(`${w} can't say counts as declined, not as a verdict`, await p.locator('#ca').innerText() === '1' && await p.locator('#vn').innerText() === '3' && (await p.locator('#ledger li').count()) === 4);
   t(`${w} each ledger row carries the record's answer`, (await p.locator('#ledger li').first().innerText()).includes('declined'));
+  // the slip, carried by hand: let go outside a drawer and it comes back; let it fall into a drawer and it files
+  await p.keyboard.press('n'); await p.waitForTimeout(300);
+  await p.locator('#slip').scrollIntoViewIfNeeded();
+  let sb = await p.locator('#slip').boundingBox();
+  await p.mouse.move(sb.x + 20, sb.y + sb.height / 2); await p.mouse.down();
+  await p.mouse.move(sb.x + 30, sb.y - 120, { steps: 6 });
+  t(`${w} the slip is lifted and carried`, (await p.locator('.carried').count()) === 1);
+  await p.mouse.up(); await p.waitForTimeout(200);
+  t(`${w} let go outside a drawer, the slip comes back and nothing is filed`, (await p.locator('.carried').count()) === 0 &&
+    (await p.evaluate(() => window.__fu.ledger.length)) === 4 && !(await p.locator('#slip').evaluate(e => e.classList.contains('gone'))));
+  sb = await p.locator('#slip').boundingBox(); const db = await p.locator('.drawer[data-f="ignored"]').boundingBox();
+  await p.mouse.move(sb.x + 20, sb.y + sb.height / 2); await p.mouse.down();
+  await p.mouse.move(db.x + db.width / 2, db.y + db.height / 2, { steps: 10 });
+  t(`${w} the drawer under the slip opens`, await p.locator('.drawer[data-f="ignored"]').evaluate(e => e.classList.contains('over')));
+  await p.mouse.up(); await p.waitForTimeout(2700);
+  const last = await p.evaluate(() => window.__fu.ledger[window.__fu.ledger.length - 1]);
+  t(`${w} carried into ignored, it is filed, held ${last.dt} ms, marked carried`, (await p.evaluate(() => window.__fu.ledger.length)) === 5 &&
+    last.f === 'ignored' && last.h === 1 && last.dt > 0 && /no word/i.test(await p.locator('#answer').innerText()));
+  t(`${w} the column says how long each was held`, /median [\d.]+ s/.test(await p.locator('#held').innerText()) && /1 of 5 carried/.test(await p.locator('#held').innerText()));
   await p.click('.drawer[data-f="never"]', { force: true }).catch(() => {});
-  t(`${w} a filed card cannot be filed twice`, (await p.evaluate(() => window.__fu.ledger.length)) === 4);
+  t(`${w} a filed card cannot be filed twice`, (await p.evaluate(() => window.__fu.ledger.length)) === 5);
   // a card the word list leaves silent though a disaster was declared
   const si = await p.evaluate(() => CARDS.findIndex(c => c.nn === 'none' && c.dn));
   await p.evaluate(i => window.__fu.show(i), si); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(2700);
@@ -69,10 +92,11 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await p.click('#more'); await p.waitForFunction(() => document.getElementById('long').textContent.length > 10 && document.getElementById('long').textContent !== '…', null, { timeout: 15000 });
   t(`${w} the whole message loads on demand`, (await p.locator('#long').innerText()).length > 10);
   await p.reload(); await p.waitForTimeout(600);
-  t(`${w} the column survives a reload`, (await p.locator('#ledger li').count()) === 5);
+  t(`${w} the column survives a reload`, (await p.locator('#ledger li').count()) === 6);
   const dl = p.waitForEvent('download'); await p.click('#csv'); const f = await dl;
   const csv = fs.readFileSync(await f.path(), 'utf8');
-  t(`${w} the CSV holds the five filings`, csv.split('\n').length === 6 && csv.includes('never needed') && csv.includes('contradicted'));
+  t(`${w} the CSV holds the six filings, with the time held and the hand`, csv.split('\n').length === 7 && csv.includes('never needed') && csv.includes('contradicted') &&
+    csv.split('\n')[0].includes('seconds_before_filing') && csv.includes('"carried"'));
   t(`${w} four bands are drawn`, await p.evaluate(() => { const c = document.getElementById('strip'); const g = c.getContext('2d');
     return c.height > 400 && [0.2, 0.45, 0.7, 0.95].every(y => g.getImageData(4, Math.floor(c.height * y), 1, 1).data[3] > 0 || g.getImageData(10, Math.floor(c.height * y) - 6, 1, 1).data[3] > 0); }));
   await p.click('.chip[data-mode="decl"]');

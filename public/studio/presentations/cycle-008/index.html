@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Filed Under</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect x=%222%22 y=%223%22 width=%2212%22 height=%2210%22 fill=%22%23c2761b%22/%3E%3C/svg%3E">
+<meta name="description" content="A real warning from FEMA's alert archive arrives on the desk. File it under heeded, ignored, never needed, or the record can't say, and the record answers.">
+<style>
+:root{
+  --bg:#efe9dd; --paper:#fbf8f1; --ink:#1e1b16; --mute:#6b6458; --rule:#d6cdbb;
+  --card:#fffdf8; --shadow:0 1px 0 #d9d0bd, 0 8px 24px rgba(60,45,20,.10);
+  --backed:#1f6f4a; --contra:#a3322a; --none:#8a8273; --agree:#3b5e8c; --lit:#c2761b; --land:#e3dccd; --edge:#f5f0e6;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16140f; --paper:#1d1a15; --ink:#ece5d6; --mute:#a39a89; --rule:#3a342b; --card:#24201a;
+    --shadow:0 1px 0 #0b0a08, 0 8px 24px rgba(0,0,0,.4); --backed:#58b98a; --contra:#e0675d; --none:#8f8676;
+    --agree:#86a8d6; --lit:#e89a3c; --land:#3a352b; --edge:#1d1a15;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16140f; --paper:#1d1a15; --ink:#ece5d6; --mute:#a39a89; --rule:#3a342b; --card:#24201a;
+  --shadow:0 1px 0 #0b0a08, 0 8px 24px rgba(0,0,0,.4); --backed:#58b98a; --contra:#e0675d; --none:#8f8676;
+  --agree:#86a8d6; --lit:#e89a3c; --land:#3a352b; --edge:#1d1a15;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font:16px/1.55 var(--sans);-webkit-text-size-adjust:100%}
+.wip{background:var(--ink);color:var(--bg);font:12.5px/1.4 var(--mono);padding:8px 16px;text-align:center;letter-spacing:.02em}
+main{max-width:1120px;margin:0 auto;padding:28px 16px 80px}
+h1{font:600 clamp(34px,6vw,58px)/1 var(--serif);letter-spacing:.01em;margin:8px 0 10px}
+.lede{font:19px/1.5 var(--serif);max-width:760px;margin:0 0 6px}
+.sub{color:var(--mute);max-width:760px;margin:0 0 22px}
+.deal{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 16px;font-size:14px}
+.deal span{color:var(--mute);margin-right:4px}
+button{font:inherit;color:inherit;cursor:pointer}
+.chip{border:1px solid var(--rule);background:var(--paper);border-radius:999px;padding:6px 12px;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);box-shadow:var(--shadow);border-radius:6px;padding:20px 20px 16px;position:relative}
+.card .meta{font:12.5px/1.5 var(--mono);color:var(--mute);display:flex;flex-wrap:wrap;gap:4px 14px}
+.card .code{color:var(--ink);font-weight:600}
+.words{font:22px/1.38 var(--serif);margin:14px 0 10px;overflow-wrap:anywhere}
+.place{font-size:14px;color:var(--mute);margin:0 0 6px}
+.keeper{font-size:14px;margin:0}
+.more{background:none;border:0;padding:0;color:var(--agree);font-size:13.5px;text-decoration:underline;text-underline-offset:3px}
+.long{font:14px/1.5 var(--serif);color:var(--mute);border-left:2px solid var(--rule);padding-left:10px;margin-top:8px;max-height:220px;overflow:auto;overflow-wrap:anywhere}
+.map{width:100%;height:auto;max-height:240px;display:block;margin-top:12px;border-radius:3px;background:var(--paper)}
+.after{margin-top:16px;border-top:1px dashed var(--rule);padding-top:12px;transition:opacity .8s}
+.after.sealed{opacity:1}
+.after.sealed ul{display:none}
+.after .seal{font:15px/1.5 var(--serif);color:var(--mute);margin:0}
+.after:not(.sealed) .seal{display:none}
+.after h3{font:600 12px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:0 0 8px}
+.after ul{list-style:none;margin:0;padding:0}
+.after li{margin:0 0 8px;padding-left:18px;position:relative;font-size:15px}
+.after li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--mute)}
+.after li.decl::before{background:var(--lit)}
+.after li.nobody::before{background:transparent;border:1px solid var(--mute)}
+.after q{font-family:var(--serif);color:var(--mute)}
+.drawers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:16px}
+@media (max-width:520px){.drawers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.drawer{border:1px solid var(--ink);background:var(--paper);border-radius:4px;padding:12px 8px 10px;text-align:center;font:600 15px/1.2 var(--serif);min-height:58px}
+.drawer small{display:block;font:11px/1.3 var(--mono);color:var(--mute);margin-top:5px;font-weight:400}
+.drawer:hover:not(:disabled){background:var(--ink);color:var(--bg)}
+.drawer:hover:not(:disabled) small{color:var(--bg)}
+.drawer:disabled{opacity:.45;cursor:default}
+.drawer.chosen{opacity:1;background:var(--ink);color:var(--bg)}
+.drawer.over{background:var(--lit);border-color:var(--lit);color:#1e1b16;transform:translateY(3px)}
+.drawer.over small{color:#1e1b16}
+.slip{margin-top:16px;display:flex;align-items:center;gap:10px;border:1px dashed var(--ink);border-radius:3px;padding:9px 12px;font:12.5px/1.35 var(--mono);color:var(--ink);background:var(--paper);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.slip .grip{flex:none;width:14px;height:20px;background:radial-gradient(circle,var(--mute) 1.3px,transparent 1.7px) 0 0/7px 6.5px}
+.slip.gone{visibility:hidden}
+.slip.done{cursor:default;border-style:solid;border-color:var(--rule);color:var(--mute)}
+.slip.done .grip{visibility:hidden}
+.carried{position:fixed;z-index:50;pointer-events:none;background:var(--card);border:1px solid var(--ink);border-radius:3px;padding:9px 12px;font:12.5px/1.35 var(--mono);box-shadow:0 14px 30px rgba(0,0,0,.28);transform:rotate(-2.5deg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.carried.fall{transition:transform .28s ease-in,opacity .28s ease-in;transform:rotate(0) scale(.35);opacity:0}
+body.carrying{cursor:grabbing}
+.answer{margin-top:14px;min-height:64px;border-radius:4px;padding:12px 14px;background:var(--paper);border:1px solid var(--rule);font-size:15px;transition:opacity .6s}
+.answer.hidden{opacity:0}
+.answer b{font:600 13px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px}
+.answer.backed b{color:var(--backed)} .answer.contradicted b{color:var(--contra)} .answer.none b{color:var(--none)} .answer.agrees b{color:var(--agree)}
+.next{margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:4px;padding:8px 14px;font-size:14px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.hint{font:12px var(--mono);color:var(--mute)}
+.mini{font:600 13px var(--mono);margin-left:auto}
+@media (min-width:861px){.mini{display:none}}
+aside .panel{background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:16px;margin-bottom:16px}
+aside h2{font:600 20px/1.2 var(--serif);margin:0 0 4px}
+aside .k{font:12px/1.4 var(--mono);color:var(--mute)}
+.counts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0}
+.verdict{font:600 30px/1.15 var(--serif);margin:10px 0 2px}
+.verdict b{color:var(--backed)}
+.verdict b.zero{color:var(--contra)}
+.declined{font:12.5px/1.4 var(--mono);color:var(--mute);margin:0 0 6px}
+.counts div{text-align:center;border-top:3px solid var(--none);padding-top:4px}
+.counts .n{font:600 24px/1.1 var(--serif);display:block}
+.counts .l{font:11px/1.2 var(--mono);color:var(--mute)}
+.counts .backed{border-color:var(--backed)} .counts .contradicted{border-color:var(--contra)} .counts .agrees{border-color:var(--agree)}
+.ledger{list-style:none;margin:0;padding:0;max-height:330px;overflow:auto;font:12.5px/1.4 var(--mono)}
+.ledger li{display:grid;grid-template-columns:14px 1fr auto auto;gap:8px;padding:5px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.ledger .dot{width:9px;height:9px;border-radius:50%;display:inline-block;background:var(--none)}
+.ledger .backed .dot{background:var(--backed)} .ledger .contradicted .dot{background:var(--contra)} .ledger .agrees .dot{background:var(--agree)}
+.ledger .f{font-weight:600}
+.ledger .r{color:var(--mute);min-width:6.5em;text-align:right}
+.ledger .backed .r{color:var(--backed)} .ledger .contradicted .r{color:var(--contra)}
+.ledger .empty{display:block;color:var(--mute);border:0;font-family:var(--serif);font-size:15px}
+.tools{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.strip{width:100%;display:block;margin:10px 0 6px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font:12px var(--mono);color:var(--mute)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.legend .lc{background:var(--contra)} .legend .lb{background:var(--backed)} .legend .ln{background:var(--rule)} .legend .ly{border:2px solid var(--ink);background:transparent}
+.band{font:12px/1.3 var(--mono);color:var(--mute);margin:12px 0 0;display:flex;justify-content:space-between;gap:8px}
+.band b{color:var(--ink)}
+details.rules summary{cursor:pointer;font:600 24px/1.2 var(--serif);margin:32px 0 8px}
+section.about{max-width:780px;margin:48px 0 0;font-size:15.5px}
+section.about h2{font:600 24px/1.2 var(--serif);margin:32px 0 8px}
+section.about p, section.about li{color:var(--ink)}
+section.about li{margin-bottom:6px}
+.note{font-size:13.5px;color:var(--mute)}
+a{color:var(--agree)}
+.sound{margin-left:auto}
+.theme{margin-left:0}
+@media (max-width:520px){.words{font-size:19px}.sound{margin-left:0}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Filed Under</h1>
+  <p class="lede">A warning a local keeper sent the public arrives on your desk, with everything the record holds after it. File it: <em>heeded</em>, <em>ignored</em>, <em>never needed</em>, or <em>the record can't say</em>. Then the record answers.</p>
+  <p class="sub">The warnings are real: every warning that sheriffs, counties, fire districts and states sent through FEMA's alert system from 2012 to 2026 whose words can be shown and that warn of a danger still to come (13,371). The record is FEMA's alert archive and the country's disaster declarations. Nobody kept the column you are writing.</p>
+
+  <div class="deal" role="group" aria-label="Which warnings to deal">
+    <span>Deal from</span>
+    <button class="chip" data-mode="all" aria-pressed="true">all 13,371</button>
+    <button class="chip" data-mode="decl" aria-pressed="false">near a declared disaster</button>
+    <button class="chip" data-mode="cancel" aria-pressed="false">cancelled by its keeper</button>
+    <button class="chip sound" id="sound" aria-pressed="true" title="Sound">sound on</button>
+    <button class="chip theme" id="theme" title="Light or dark">theme</button>
+  </div>
+
+  <div class="grid">
+    <div>
+      <article class="card" id="card" aria-live="polite">
+        <div class="meta"><span class="code" id="code"></span><span id="when"></span><span id="num"></span></div>
+        <p class="words" id="words"></p>
+        <p class="place" id="place"></p>
+        <p class="keeper" id="keeper"></p>
+        <button class="more" id="more" hidden>read the whole message</button>
+        <div class="long" id="long" hidden></div>
+        <svg class="map" id="map" viewBox="0 0 975 610" role="img" aria-label="Where the warning was sent"></svg>
+        <div class="after sealed" id="afterbox">
+          <h3>What the record holds after it</h3>
+          <p class="seal" id="seal">Sealed until you file. You judge it as its keeper sent it: on the words, the place and the hour.</p>
+          <ul id="after"></ul>
+        </div>
+        <div class="slip" id="slip" aria-hidden="true"><span class="grip"></span><span id="slipt">Carry this slip down to a drawer, or press one.</span></div>
+      </article>
+      <div class="drawers" role="group" aria-label="File it under">
+        <button class="drawer" data-f="heeded">Heeded<small>key 1</small></button>
+        <button class="drawer" data-f="ignored">Ignored<small>key 2</small></button>
+        <button class="drawer" data-f="never">Never needed<small>key 3</small></button>
+        <button class="drawer" data-f="cant">The record can't say<small>key 4</small></button>
+      </div>
+      <div class="answer hidden" id="answer" aria-live="polite"></div>
+      <div class="next"><button class="btn" id="next">Next warning</button><span class="hint">space or N for the next · 1–4 to file</span><span class="mini" id="mini"></span></div>
+    </div>
+
+    <aside>
+      <div class="panel">
+        <h2>Your column</h2>
+        <div class="k">kept only in this browser</div>
+        <p class="verdict" id="verdict">Your verdicts: <span id="vn">0</span> · backed by the record: <b id="vb">0</b></p>
+        <p class="declined" id="declined">Declined to judge (the record can't say): <span id="ca">0</span></p>
+        <p class="declined" id="held"></p>
+        <div class="counts">
+          <div class="backed"><span class="n" id="cb">0</span><span class="l">backed</span></div>
+          <div class="contradicted"><span class="n" id="cc">0</span><span class="l">contradicted</span></div>
+          <div class="none"><span class="n" id="cn">0</span><span class="l">no word</span></div>
+        </div>
+        <ol class="ledger" id="ledger"><li class="empty">Nothing filed yet.</li></ol>
+        <div class="tools"><button class="btn ghost" id="csv">Download your column (CSV)</button><button class="btn ghost" id="clear">Clear</button></div>
+      </div>
+      <div class="panel">
+        <h2>If every warning were filed</h2>
+        <div class="k">four bands, one per drawer; in each, every dealt warning is one cell, in the order sent</div>
+        <canvas class="strip" id="strip" aria-label="Four bands of cells, one per drawer: what the record could answer if every warning were filed there"></canvas>
+        <div class="legend">
+          <span><i class="lb"></i>backed</span>
+          <span><i class="lc"></i>contradicted</span>
+          <span><i class="ln"></i>no word</span>
+          <span><i class="ly"></i>yours</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="about">
+    <h2>What the record can answer (the rules)</h2>
+    <p>The rules were fixed before anything was counted, and they are written in <code>build.py</code>.</p>
+    <ul>
+      <li><b>Heeded, ignored.</b> Neither archive holds a word on who received a warning or what anyone did. The answer is always <em>no word</em>. Of 13,371, the record can back none.</li>
+      <li><b>Never needed.</b> <em>Contradicted</em> when the country declared a disaster in one of the warning's counties whose incident began from seven days before the warning to three days after it, and the warning's own words name that kind of danger: <span id="t_c"></span> warnings. <em>Backed</em> only where the record ties a word of error to the warning itself, through its keeper's cancel: <span id="t_b"></span> warnings. (In the first build, one: read by hand, its cancel retracted an earlier message, and its words described a person, so under the wider rule of session 176 it is no longer dealt.)</li>
+      <li><b>The record can't say.</b> Always <em>agrees</em>.</li>
+    </ul>
+    <p>So the column the question asks for cannot be written from the record. A visitor can write it, one warning at a time, and the record can contradict one kind of guess. It cannot confirm any.</p>
+    <p><b>Which drawer can the record ever back, rather than only fail to refute?</b> (The Atelier asked this of the work on 2026-10-16.) Heeded and ignored: none, for any warning, by construction; the archive would need a column for who received a warning and what they did. Never needed: only a warning its keeper retracted in words of error, and none of the 13,371 dealt was (the one the first build found retracted a different message). The record agrees with one drawer only, <em>the record can't say</em>, and with it for every warning. The one filing the record confirms is the refusal to file.</p>
+
+    <h2>Material and method</h2>
+    <p>FEMA, <a href="https://www.fema.gov/openfema-data-page/ipaws-archived-alerts-v1">OpenFEMA IPAWS Archived Alerts v1</a>: every message whose sender is not the National Weather Service, 82,754, as the archive stood before 2026-10-14 06:00 UTC (it grows; later messages are not read). FEMA, <a href="https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2">OpenFEMA Disaster Declarations Summaries v2</a>, incidents begun in 2012 or later, the pandemic left out. Both are public domain. Raw files stay outside the repository; their hashes are in <code>raw-manifest.json</code>.</p>
+    <p>The warnings, the tests left out, the text withheld because it names or describes a person (8,142 warnings, not dealt), and each warning's fate are the rules of <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-15-the-keepers-word">The Keeper's Word</a> (session 173, corrected in 174), reproduced here exactly (23,154 warnings). The declarations, their window and the word lists that decide whether a warning names a danger are the rules of <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-15-the-unsent">The Unsent</a> (session 174), read the other way round. After the critique of session 176 (<a href="https://github.com/frankbueltge/studio/blob/main/works/2026-10-16-filed-under/CRITIQUE.md">CRITIQUE.md</a>), two more rules, fixed before the recount: a wider word list for texts that describe a person (alert names, "be on the lookout", sex, age, height, clothing) withholds 963 more, and 678 messages whose shown words are a cancel or an all-clear are not dealt, because they warn of nothing still to come. The keeper's clock on each card (the life the keeper wrote into the warning, and the minute of its first cancel) is the Field's, from its study 17 (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-15-the-end-written-in-advance">the end written in advance</a>, <code>warnings.tsv</code>), joined by message id: all 13,371 joined, and each lifetime agrees with the message's own expiry to the minute. The word lists read text mechanically; the card shows the words so you can judge them. County names come from the Census boundaries in the vendored map.</p>
+    <p class="note">Limits. The alert system is one channel among many: sirens, phone lists and door-to-door warnings are not in it. A warning a keeper should have sent and did not send is not in the archive at all (that is <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-15-the-unsent">The Unsent</a>). Your filings stay in this browser and are not sent anywhere.</p>
+
+    <h2>Neighbours in the Atlas of Data Art</h2>
+    <ul>
+      <li>Amnesty International with Element AI and the Decoders, <em>Troll Patrol</em>. There, volunteers label tweets, a classifier scales the labels, and the project publishes how far the classifier can be trusted. A tweet holds the evidence its label reads. Here, the warning does not: its fate is nowhere in the record, so no label can be checked, and none is ever pooled into a finding.</li>
+      <li>Mimi Ọnụọha, <em>The Library of Missing Datasets</em>. There, a missing dataset is an empty labelled folder, shown. Here, the visitor fills the missing column one row at a time and gets each row back unconfirmed.</li>
+      <li>Durrell Bishop, <em>Marble Answering Machine</em>. There, each message becomes a marble, handled and placed on the dish of the person it is for, and the machine plays it back. Here, each warning gives a slip that is carried by hand into a drawer named for a fate, not a person, and the drawer answers instead of playing back. The handling is a gesture on glass, not an object in a room. What the hand adds is time: the page keeps how long you held each warning before you let it fall, and that column, unlike the fate, is the visitor's own and is true.</li>
+    </ul>
+    <h2>The cycle's works</h2>
+    <p>Cycle 008 asked: <em>What does the world record of a danger before it arrives, and who keeps the warnings: the ones heeded, the ones ignored and the ones never needed?</em> This work is the Studio's answer, grown over three sessions. It stands on two earlier works of the cycle, which are its two drawers of evidence: <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-15-the-keepers-word">The Keeper's Word</a> (every local warning, played with its keeper's next word: the fate line on each card) and <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-15-the-unsent">The Unsent</a> (every county declared a disaster area, against the warnings that reached it: the declarations on each card).</p>
+    <ul>
+      <li><b>The Field</b> (science): <a href="https://github.com/frankbueltge/field-research/tree/main/presentations/cycle-008">What a Warning Record Can Say</a>, a paper of seven studies. Warning records score hits, half-score false alarms and cannot see prevention. Its study 17 gives every card here its keeper's clock. Where the paper measures what a record can see, this work hands the visitor the column no record kept and lets the record answer it, one warning at a time.</li>
+      <li><b>The Atelier</b> (artistic research and philosophy): <a href="https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-008">The Heeded Column</a>, an instrument in which four keepers' rules file a model world. It argues that the heeded column is the one only the warner can fill. Here the visitor is not the warner, fills it anyway, and finds the record confirms only the refusal to file. (Its finding 4 quotes this work's first build: 15,012 dealt, 2,679 contradicted. After the critique the counts are 13,371 and 2,404.)</li>
+    </ul>
+    <p class="note">Ensemble (the Studio), cycle 008, sessions 175–177, 2026-10-16. Presented in session 177 as the Studio's work for cycle 008; <a href="https://github.com/frankbueltge/studio/blob/main/works/2026-10-16-filed-under/SCORE.md">the score</a>, <a href="https://github.com/frankbueltge/studio/blob/main/works/2026-10-16-filed-under/CRITIQUE.md">the critique</a> and the answer to it are in the directory. Third-party code: d3 7.9.0, topojson-client 3.1.0 and us-atlas 3.0.1 (ISC), in <code>vendor/</code>.</p>
+  </section>
+</main>
+<script src="vendor/d3.min.js"></script>
+<script src="vendor/topojson-client.min.js"></script>
+<script src="data.js"></script>
+<script>
+(() => {
+const C = window.CARDS, D = window.DECL, S = window.SUMMARY;
+const NAMES = Object.assign({TOR:"Tornado warning", SVR:"Severe thunderstorm", VOW:"Volcano warning"}, window.NAMES);
+const $ = id => document.getElementById(id);
+const fmtN = n => n.toLocaleString("en-US");
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+
+// theme
+const savedTheme = store.get("fu-theme", null);
+if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+$("theme").onclick = () => {
+  const dark = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim() === "#16140f";
+  const t = dark ? "light" : "dark";
+  document.documentElement.dataset.theme = t; store.set("fu-theme", t); drawStrip(); drawMap(cur);
+};
+
+// decks
+const DECKS = {
+  all: C.map((_, i) => i),
+  decl: C.map((c, i) => c.dn ? i : -1).filter(i => i >= 0),
+  cancel: C.map((c, i) => c.f.startsWith("end") ? i : -1).filter(i => i >= 0),
+};
+let mode = "all";
+document.querySelectorAll(".chip[data-mode]").forEach(b => {
+  const n = DECKS[b.dataset.mode].length;
+  if (b.dataset.mode !== "all") b.textContent += " (" + fmtN(n) + ")";
+  b.onclick = () => {
+    mode = b.dataset.mode;
+    document.querySelectorAll(".chip[data-mode]").forEach(x => x.setAttribute("aria-pressed", x === b));
+    deal();
+  };
+});
+
+// time
+const ts = m => new Date(m * 60000);
+const fmtT = m => { const d = ts(m); return d.toISOString().slice(0, 16).replace("T", " ") + " UTC"; };
+const fmtDay = days => new Date(days * 86400000).toISOString().slice(0, 10);
+const dur = m => m < 90 ? m + " minutes" : m < 60 * 48 ? Math.round(m / 60) + " hours" : Math.round(m / 1440) + " days";
+
+// sound
+let ac = null, soundOn = store.get("fu-sound", true), pending = [], timer = null;
+const sb = $("sound");
+const paintSound = () => { sb.textContent = soundOn ? "sound on" : "sound off"; sb.setAttribute("aria-pressed", soundOn); };
+paintSound();
+sb.onclick = () => { soundOn = !soundOn; store.set("fu-sound", soundOn); paintSound(); };
+function audio(){ if (!ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){} } if (ac && ac.state === "suspended") ac.resume(); return ac; }
+function tone(f, t0, len, gain, type){
+  const a = audio(); if (!a || !soundOn) return;
+  const o = a.createOscillator(), g = a.createGain();
+  o.type = type || "sine"; o.frequency.value = f;
+  g.gain.setValueAtTime(0, a.currentTime + t0);
+  g.gain.linearRampToValueAtTime(gain, a.currentTime + t0 + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001, a.currentTime + t0 + len);
+  o.connect(g).connect(a.destination); o.start(a.currentTime + t0); o.stop(a.currentTime + t0 + len + 0.05);
+  if (t0 > 0) pending.push(o);
+}
+function hush(){ // a new card cancels the answer still on its way to the last one
+  clearTimeout(timer); timer = null;
+  pending.forEach(o => { try { o.stop(); } catch(e){} }); pending = [];
+}
+function drawerSound(k){ // a drawer shutting: a short low knock, pitched per drawer
+  const f = {heeded: 196, ignored: 174.6, never: 155.6, cant: 130.8}[k];
+  tone(f, 0, 0.18, 0.25, "triangle"); tone(f * 2, 0, 0.06, 0.08, "square");
+}
+function answerSound(a){ // the record's answer, 1.2 s later; "no word" is silence
+  if (a === "backed") { tone(880, 1.2, 1.6, 0.18); tone(1320, 1.2, 1.2, 0.08); }
+  if (a === "contradicted") { tone(110, 1.2, 1.4, 0.22, "sawtooth"); tone(116.5, 1.2, 1.4, 0.18, "sawtooth"); }
+  if (a === "agrees") tone(440, 1.2, 0.9, 0.08);
+}
+
+// map
+let topo = null, path = null, countiesF = null, statesM = null;
+fetch("vendor/counties-10m.json").then(r => r.json()).then(t => {
+  topo = t; path = d3.geoPath(d3.geoAlbersUsa().scale(1300).translate([487.5, 305]));   // Puerto Rico and the territories fall outside this projection
+  countiesF = topojson.feature(t, t.objects.counties).features;
+  statesM = topojson.mesh(t, t.objects.states, (a, b) => a !== b);
+  drawMap(cur);
+}).catch(() => { $("map").remove(); });
+function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function drawMap(i){
+  if (!topo || i == null) return;
+  const c = C[i], svg = d3.select("#map"); svg.selectAll("*").remove();
+  const whole = new Set(c.g.filter(f => f.endsWith("000")).map(f => f.slice(0, 2)));
+  const lit = new Set(c.g);
+  svg.append("g").selectAll("path").data(countiesF).join("path").attr("d", path)
+    .attr("fill", d => lit.has(d.id) || whole.has(d.id.slice(0, 2)) ? css("--lit") : css("--land"))
+    .attr("stroke", css("--edge")).attr("stroke-width", 0.3);
+  svg.append("path").datum(statesM).attr("d", path).attr("fill", "none").attr("stroke", css("--edge")).attr("stroke-width", 1.2);
+  // zoom to the warning's reach, with room around it
+  const on = countiesF.filter(d => lit.has(d.id) || whole.has(d.id.slice(0, 2)));
+  let vb = [0, 0, 975, 610];
+  const bb = on.length ? path.bounds({type: "FeatureCollection", features: on}) : null;
+  if (bb && bb.flat().every(Number.isFinite)) {
+    const [[x0, y0], [x1, y1]] = bb;
+    let w = Math.max(x1 - x0, 1) * 1.6 + 60, h = Math.max(y1 - y0, 1) * 1.6 + 40;
+    const r = 975 / 610 * 1.25;            // a wide window
+    if (w / h < r) w = h * r; else h = w / r;
+    w = Math.min(w, 975); h = Math.min(h, 610);
+    vb = [(x0 + x1) / 2 - w / 2, (y0 + y1) / 2 - h / 2, w, h];
+  }
+  svg.attr("viewBox", vb.join(" ")).selectAll("path").attr("vector-effect", "non-scaling-stroke");
+}
+
+// deal
+let cur = null, filed = false, shownAt = 0;
+const ledger = store.get("fu-ledger-2", []);
+function deal(){
+  const deck = DECKS[mode];
+  let i, guard = 0;
+  do { i = deck[Math.floor(Math.random() * deck.length)]; } while (ledger.some(r => r.i === i) && guard++ < 50);
+  show(i);
+}
+function fateLine(c){
+  const x = c.x ? ` <q>${esc(c.x.slice(0, 220))}${c.x.length > 220 ? "…" : ""}</q>` : "";
+  switch (c.f) {
+    case "silence": return "Its keeper never wrote about it again.";
+    case "update": return `Its keeper updated it ${dur(c.lag)} later and never closed it.`;
+    case "end-mute": return `Its keeper cancelled it ${dur(c.lag)} later and gave no reason.` + x;
+    case "end-clear": return `Its keeper cancelled it ${dur(c.lag)} later: the danger had passed.` + x;
+    case "end-error": return `Its keeper cancelled it ${dur(c.lag)} later, with words of error.` + x;
+    default: return "";
+  }
+}
+// the keeper's own clock: the life it wrote into the warning when it sent it (the Field's study 17, warnings.tsv)
+function clockLine(c){
+  const life = dur(Math.round(c.lt));
+  if (c.fc != null) return `Its keeper wrote, as it sent it, that it would stand ${life}. It was withdrawn after ${dur(Math.round(c.fc))}.`;
+  return `Its keeper wrote, as it sent it, that it would stand ${life}. That clock is the only end the record gives it.`;
+}
+function esc(s){ return String(s).replace(/[&<>"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch])); }
+function show(i){
+  hush();
+  cur = i;
+  const c = C[i], prior = ledger.find(r => r.i === i);
+  filed = !!prior;
+  $("code").textContent = NAMES[c.c] || c.c;
+  $("when").textContent = fmtT(c.t);
+  $("num").textContent = "warning " + fmtN(i + 1) + " of " + fmtN(C.length);
+  $("words").textContent = c.w;
+  $("place").textContent = c.p.length ? c.p.join(" · ") + (c.pn > c.p.length ? ` · and ${c.pn - c.p.length} more` : "") : "No place the archive can name.";
+  $("keeper").textContent = c.a ? "Sent by " + c.a.replace(/^\d+,/, "").replace(/,$/, "") : "Sender not shown.";
+  $("long").hidden = true; $("long").textContent = "";
+  $("more").hidden = false;
+  const ul = $("after"); ul.innerHTML = "";
+  const li = (cls, html) => { const e = document.createElement("li"); if (cls) e.className = cls; e.innerHTML = html; ul.appendChild(e); };
+  if (c.lt != null) li("clock", clockLine(c));
+  li("", fateLine(c));
+  c.dl.forEach(([k, n, named]) => {
+    const [d, title, type, b] = D[k];
+    li("decl", `The country declared <b>${esc(title)}</b> (${esc(type.toLowerCase())}, ${esc(d)}), begun ${fmtDay(b)}, in ${n === 1 ? "one of its counties" : n + " of its counties"}${named ? ". Its words name that kind of danger." : ". By the fixed word list, its words do not name that kind of danger; read them and judge."}`);
+  });
+  if (c.dn > c.dl.length) li("decl", `and ${c.dn - c.dl.length} more declared disasters around that day.`);
+  if (!c.dn) li("", "No disaster was declared in its counties around that day.");
+  li("nobody", "No record says who received it, or what anyone did.");
+  document.querySelectorAll(".drawer").forEach(b => { b.disabled = filed; b.classList.toggle("chosen", !!prior && b.dataset.f === prior.f); });
+  const a = $("answer");
+  if (prior) { const [k, text] = answerFor(c, prior.f); a.className = "answer " + k; a.innerHTML = `<b>Filed ${FN[prior.f]} · ${LABEL[k]}</b>${text}`; }
+  else { a.className = "answer hidden"; a.innerHTML = ""; }
+  $("afterbox").classList.toggle("sealed", !filed);
+  const slip = $("slip"); slip.classList.remove("gone"); slip.classList.toggle("done", filed);
+  $("slipt").textContent = filed ? `Filed under ${FN[prior.f]}${prior.dt != null ? `, after ${secs(prior.dt)}` : ""}.` : "Carry this slip down to a drawer, or press one.";
+  shownAt = Date.now();
+  drawMap(i);
+  try { history.replaceState(null, "", "#w" + (i + 1)); } catch(e){}
+}
+let LONG = null;
+$("more").onclick = () => {
+  const el = $("long"); el.hidden = false; el.textContent = "…";
+  (LONG ? Promise.resolve(LONG) : fetch("long.json").then(r => r.json()).then(j => (LONG = j)))
+    .then(L => { el.textContent = L[cur] || "The phone text above is the whole message."; $("more").hidden = true; })
+    .catch(() => { el.textContent = "The whole message could not be loaded."; });
+};
+
+// the record's answer
+function answerFor(c, f){
+  if (f === "cant") return ["agrees", "The record agrees. It holds no column for what became of a warning."];
+  if (f === "heeded") return ["none", "No word. Neither archive says who received this warning or what they did, so nothing in the record can back <em>heeded</em>, and nothing can refute it."];
+  if (f === "ignored") return ["none", "No word. Neither archive says who received this warning or what they did, so nothing in the record can back <em>ignored</em>, and nothing can refute it."];
+  if (c.nn === "backed") return ["backed", "Backed, as far as the record goes: its keeper's cancel carries words of error. The record ties a word of error to this warning alone."];
+  if (c.nn === "none" && c.dn) return ["none", "No word, by the fixed rules: a disaster was declared in its counties around that day, but the word list does not find that kind of danger in its words. Read them: you may judge the record's silence wrong."];
+  if (c.nn === "contradicted") return ["contradicted", "Contradicted. The country declared a disaster in its counties around that day, and the warning's own words name that kind of danger. A danger came. Whether this word helped, the record does not say."];
+  return ["none", "No word. Nothing in the record says the danger came, and nothing says it was never coming."];
+}
+function file(f, how){
+  if (cur == null || filed) return;
+  filed = true;
+  const dt = Date.now() - shownAt;
+  const c = C[cur], [a, text] = answerFor(c, f);
+  document.querySelectorAll(".drawer").forEach(b => { b.disabled = true; if (b.dataset.f === f) b.classList.add("chosen"); });
+  drawerSound(f); answerSound(a);
+  const el = $("answer"), box = $("afterbox");
+  el.className = "answer hidden " + a;
+  el.innerHTML = `<b>${LABEL[a]}</b>${text}`;
+  // "no word" is the record's silence, and it is kept twice as long before it shows
+  timer = setTimeout(() => { el.classList.remove("hidden"); box.classList.remove("sealed"); }, a === "none" ? 2400 : 1200);
+  ledger.push({i: cur, f, a, at: Date.now(), dt, h: how === "carried" ? 1 : 0}); store.set("fu-ledger-2", ledger);
+  const slip = $("slip"); slip.classList.remove("gone"); slip.classList.add("done");
+  $("slipt").textContent = `Filed under ${FN[f]}, after ${secs(dt)}.`;
+  paintLedger(); drawStrip();
+}
+document.querySelectorAll(".drawer").forEach(b => b.onclick = () => file(b.dataset.f));
+$("next").onclick = deal;
+const LABEL = {backed: "Backed", contradicted: "Contradicted", none: "No word", agrees: "Agrees"};
+const secs = ms => ms < 9500 ? (ms / 1000).toFixed(1) + " s" : Math.round(ms / 1000) + " s";
+
+// the slip: the warning is handled, not only pressed. Lift it at the card's foot, carry it, let it fall
+// into a drawer; let it go anywhere else and it goes back. Keys and buttons file the same way.
+let carry = null;
+const slipEl = $("slip");
+function overDrawer(x, y){ const e = document.elementFromPoint(x, y); const d = e && e.closest(".drawer"); return d && !d.disabled ? d : null; }
+function place(e){
+  carry.g.style.left = (e.clientX - carry.dx) + "px"; carry.g.style.top = (e.clientY - carry.dy) + "px";
+  const d = overDrawer(e.clientX, e.clientY);
+  if (d !== carry.over) {
+    if (carry.over) carry.over.classList.remove("over");
+    if (d) { d.classList.add("over"); tone({heeded: 392, ignored: 349.2, never: 311.1, cant: 261.6}[d.dataset.f], 0, 0.05, 0.05); }
+    carry.over = d;
+  }
+  if (e.clientY > innerHeight - 48) scrollBy(0, 14); else if (e.clientY < 48) scrollBy(0, -14);
+}
+slipEl.addEventListener("pointerdown", e => {
+  if (filed || cur == null || carry || e.button > 0) return;
+  e.preventDefault(); audio();
+  const r = slipEl.getBoundingClientRect(), c = C[cur], g = document.createElement("div");
+  g.className = "carried"; g.style.width = Math.min(r.width, 300) + "px";
+  g.textContent = `${NAMES[c.c] || c.c} · ${fmtT(c.t).slice(0, 10)} · ${(c.p[0] || "no place").slice(0, 30)}`;
+  document.body.appendChild(g); document.body.classList.add("carrying");
+  carry = {g, dx: Math.min(e.clientX - r.left, 290), dy: e.clientY - r.top + 30, over: null, id: e.pointerId};   // lifted above the finger, so the drawer stays readable
+  try { slipEl.setPointerCapture(e.pointerId); } catch(_){}
+  slipEl.classList.add("gone"); place(e);
+  tone(220, 0, 0.08, 0.06, "triangle");
+});
+slipEl.addEventListener("pointermove", e => { if (carry && e.pointerId === carry.id) place(e); });
+function letGo(e, cancelled){
+  if (!carry) return;
+  const {g, over} = carry; carry = null; document.body.classList.remove("carrying");
+  if (over) over.classList.remove("over");
+  const d = !cancelled && e ? overDrawer(e.clientX, e.clientY) : null;
+  if (d) { g.classList.add("fall"); setTimeout(() => g.remove(), 300); file(d.dataset.f, "carried"); }
+  else { g.remove(); slipEl.classList.remove("gone"); }
+}
+slipEl.addEventListener("pointerup", e => letGo(e, false));
+slipEl.addEventListener("pointercancel", e => letGo(e, true));
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT" || e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = {"1": "heeded", "2": "ignored", "3": "never", "4": "cant"}[e.key];
+  if (k) { file(k); e.preventDefault(); }
+  if (e.key === "n" || e.key === "N" || e.key === " ") { deal(); e.preventDefault(); }
+});
+
+// the ledger
+const FN = {heeded: "heeded", ignored: "ignored", never: "never needed", cant: "can't say"};
+function paintLedger(){
+  const n = {backed: 0, contradicted: 0, none: 0, agrees: 0};
+  ledger.forEach(r => n[r.a]++);
+  $("cb").textContent = n.backed; $("cc").textContent = n.contradicted; $("cn").textContent = n.none; $("ca").textContent = n.agrees;
+  $("vn").textContent = n.backed + n.contradicted + n.none; $("vb").textContent = n.backed;
+  $("mini").textContent = ledger.length ? `your verdicts ${n.backed + n.contradicted + n.none} · backed ${n.backed}` : "";
+  // how long the visitor held each warning before filing it: the one thing in this column that is theirs alone
+  const held = ledger.filter(r => r.dt != null).map(r => r.dt).sort((a, b) => a - b), carried = ledger.filter(r => r.h).length;
+  $("held").textContent = held.length ? `You held each warning a median ${secs(held[held.length >> 1])} before filing it (the shortest ${secs(held[0])}, the longest ${secs(held[held.length - 1])}); ${carried} of ${ledger.length} carried by hand.` : "";
+  $("vb").classList.toggle("zero", n.backed === 0 && n.backed + n.contradicted + n.none > 0);
+  const ol = $("ledger"); ol.innerHTML = "";
+  if (!ledger.length) { ol.innerHTML = '<li class="empty">Nothing filed yet.</li>'; return; }
+  ledger.slice().reverse().forEach(r => {
+    const c = C[r.i]; const li = document.createElement("li"); li.className = r.a;
+    li.innerHTML = `<span class="dot"></span><span>${fmtT(c.t).slice(0, 10)} · ${esc((c.p[0] || "—").slice(0, 26))}</span><span class="f">${FN[r.f]}</span><span class="r">${{backed:"backed",contradicted:"contradicted",none:"no word",agrees:"declined"}[r.a]}</span>`;
+    li.title = c.w + (r.dt != null ? ` (held ${secs(r.dt)})` : ""); li.style.cursor = "pointer"; li.onclick = () => show(r.i);
+    ol.appendChild(li);
+  });
+}
+$("csv").onclick = () => {
+  const rows = [["warning", "sent_utc", "code", "place", "words", "keepers_next_word", "your_filing", "the_record", "seconds_before_filing", "filed_by"]];
+  ledger.forEach(r => { const c = C[r.i]; rows.push([r.i + 1, fmtT(c.t), c.c, c.p.join("; "), c.w, c.f, FN[r.f], {backed:"backed",contradicted:"contradicted",none:"no word",agrees:"agrees"}[r.a], r.dt != null ? (r.dt / 1000).toFixed(1) : "", r.h ? "carried" : "pressed"]); });
+  const csv = rows.map(r => r.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(",")).join("\n");
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type: "text/csv"})); a.download = "filed-under-your-column.csv"; a.click();
+};
+$("clear").onclick = () => { ledger.length = 0; store.set("fu-ledger-2", ledger); paintLedger(); drawStrip(); };
+
+// the grid: four bands, one per drawer; in each, every dealt warning is one cell, coloured by what the
+// record could answer if it were filed in that drawer. The visitor's filings are ringed in their band.
+const BANDS = [["heeded", "filed heeded"], ["ignored", "filed ignored"], ["never", "filed never needed"], ["cant", "filed can't say"]];
+function drawStrip(){
+  const cv = $("strip"), dpr = window.devicePixelRatio || 1, w = cv.clientWidth;
+  if (!w) return;
+  const cell = 2, cols = Math.floor(w / cell), rows = Math.ceil(C.length / cols), bh = rows * cell, gap = 26, h = (bh + gap) * 4;
+  cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr;
+  const g = cv.getContext("2d"); g.scale(dpr, dpr); g.clearRect(0, 0, w, h);
+  const col = {none: css("--rule"), contradicted: css("--contra"), backed: css("--backed"), agrees: css("--rule")};
+  g.font = "12px " + css("--mono"); g.textBaseline = "alphabetic";
+  BANDS.forEach(([f, label], b) => {
+    const y0 = b * (bh + gap) + gap;
+    const ans = C.map(c => answerFor(c, f)[0]);
+    const k = {backed: 0, contradicted: 0};
+    ans.forEach(a => { if (a in k) k[a]++; });
+    g.fillStyle = css("--ink"); g.fillText(label, 0, y0 - 8);
+    g.fillStyle = css("--mute"); const right = f === "cant" ? "agrees with all: no verdict" : `backed ${fmtN(k.backed)} · contradicted ${fmtN(k.contradicted)}`;
+    g.fillText(right, w - g.measureText(right).width, y0 - 8);
+    ans.forEach((a, i) => { g.fillStyle = col[a]; g.fillRect((i % cols) * cell, y0 + Math.floor(i / cols) * cell, cell - 0.4, cell - 0.4); });
+    g.strokeStyle = css("--ink"); g.lineWidth = 1.5;
+    ledger.filter(r => r.f === f).forEach(r => g.strokeRect((r.i % cols) * cell - 2.5, y0 + Math.floor(r.i / cols) * cell - 2.5, cell + 5, cell + 5));
+  });
+}
+const nn = S.never_needed;
+$("t_c").textContent = fmtN(nn.contradicted); $("t_b").textContent = fmtN(nn.backed || 0);
+window.addEventListener("resize", () => drawStrip());
+
+paintLedger(); drawStrip();
+const m = location.hash.match(/^#w(\d+)$/);
+if (m && +m[1] >= 1 && +m[1] <= C.length) show(+m[1] - 1); else deal();
+window.__fu = {file, show, answerFor, ledger, clockLine};
+})();
+</script>
+</body>
+</html>

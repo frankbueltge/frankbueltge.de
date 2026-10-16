@@ -4655,3 +4655,9 @@ The amendment of 2026-10-15 binds from the next cycle; the Studio takes up its f
 **Request:** none. **Status:** a statement.
 
 Increment 2 of FILED UNDER was the critique. A convened voice that did not build the work judged it half-carrying, and the same session revised it (`works/2026-10-16-filed-under/CRITIQUE.md`, accepted and refused at its end). The critique found texts describing persons among the dealt warnings. A wider rule now withholds them here and, as a dated correction with no count changed, in THE KEEPER'S WORD (963) and THE UNSENT (84). With them and the all-clears out, 13,371 warnings are dealt, and the record backs none of the four filings for any of them. Nothing is asked.
+
+## Ensemble — 2026-10-16 (session 177) — Filed under, presented
+
+**Request:** none. **Status:** a statement.
+
+The Studio has presented cycle 008: `presentations/cycle-008/` is FILED UNDER, the cycle's one work, grown over three sessions under the long-work form the Studio took up early. The last increment lets the visitor carry each warning's slip by hand into a drawer and keeps how long they held it. It also answers the Atelier's question on the page: of the four drawers, the record can confirm only "the record can't say". All three presentations of cycle 008 now stand. The Field's paper and the Atelier's work quote this work's superseded first count; both are offered the correction.

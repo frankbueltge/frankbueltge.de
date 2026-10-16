@@ -71,6 +71,16 @@ button{font:inherit;color:inherit;cursor:pointer}
 .drawer:hover:not(:disabled) small{color:var(--bg)}
 .drawer:disabled{opacity:.45;cursor:default}
 .drawer.chosen{opacity:1;background:var(--ink);color:var(--bg)}
+.drawer.over{background:var(--lit);border-color:var(--lit);color:#1e1b16;transform:translateY(3px)}
+.drawer.over small{color:#1e1b16}
+.slip{margin-top:16px;display:flex;align-items:center;gap:10px;border:1px dashed var(--ink);border-radius:3px;padding:9px 12px;font:12.5px/1.35 var(--mono);color:var(--ink);background:var(--paper);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.slip .grip{flex:none;width:14px;height:20px;background:radial-gradient(circle,var(--mute) 1.3px,transparent 1.7px) 0 0/7px 6.5px}
+.slip.gone{visibility:hidden}
+.slip.done{cursor:default;border-style:solid;border-color:var(--rule);color:var(--mute)}
+.slip.done .grip{visibility:hidden}
+.carried{position:fixed;z-index:50;pointer-events:none;background:var(--card);border:1px solid var(--ink);border-radius:3px;padding:9px 12px;font:12.5px/1.35 var(--mono);box-shadow:0 14px 30px rgba(0,0,0,.28);transform:rotate(-2.5deg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.carried.fall{transition:transform .28s ease-in,opacity .28s ease-in;transform:rotate(0) scale(.35);opacity:0}
+body.carrying{cursor:grabbing}
 .answer{margin-top:14px;min-height:64px;border-radius:4px;padding:12px 14px;background:var(--paper);border:1px solid var(--rule);font-size:15px;transition:opacity .6s}
 .answer.hidden{opacity:0}
 .answer b{font:600 13px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px}
@@ -136,7 +146,6 @@ a{color:var(--agree)}
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
-<div class="wip" id="wip">In progress · increment 2 of 3 (the critique, answered) · 2026-10-16 · cycle 008 · the work grows over the cycle's sessions</div>
 <main>
   <h1>Filed Under</h1>
   <p class="lede">A warning a local keeper sent the public arrives on your desk, with everything the record holds after it. File it: <em>heeded</em>, <em>ignored</em>, <em>never needed</em>, or <em>the record can't say</em>. Then the record answers.</p>
@@ -166,6 +175,7 @@ a{color:var(--agree)}
           <p class="seal" id="seal">Sealed until you file. You judge it as its keeper sent it: on the words, the place and the hour.</p>
           <ul id="after"></ul>
         </div>
+        <div class="slip" id="slip" aria-hidden="true"><span class="grip"></span><span id="slipt">Carry this slip down to a drawer, or press one.</span></div>
       </article>
       <div class="drawers" role="group" aria-label="File it under">
         <button class="drawer" data-f="heeded">Heeded<small>key 1</small></button>
@@ -183,6 +193,7 @@ a{color:var(--agree)}
         <div class="k">kept only in this browser</div>
         <p class="verdict" id="verdict">Your verdicts: <span id="vn">0</span> · backed by the record: <b id="vb">0</b></p>
         <p class="declined" id="declined">Declined to judge (the record can't say): <span id="ca">0</span></p>
+        <p class="declined" id="held"></p>
         <div class="counts">
           <div class="backed"><span class="n" id="cb">0</span><span class="l">backed</span></div>
           <div class="contradicted"><span class="n" id="cc">0</span><span class="l">contradicted</span></div>
@@ -214,6 +225,7 @@ a{color:var(--agree)}
       <li><b>The record can't say.</b> Always <em>agrees</em>.</li>
     </ul>
     <p>So the column the question asks for cannot be written from the record. A visitor can write it, one warning at a time, and the record can contradict one kind of guess. It cannot confirm any.</p>
+    <p><b>Which drawer can the record ever back, rather than only fail to refute?</b> (The Atelier asked this of the work on 2026-10-16.) Heeded and ignored: none, for any warning, by construction; the archive would need a column for who received a warning and what they did. Never needed: only a warning its keeper retracted in words of error, and none of the 13,371 dealt was (the one the first build found retracted a different message). The record agrees with one drawer only, <em>the record can't say</em>, and with it for every warning. The one filing the record confirms is the refusal to file.</p>
 
     <h2>Material and method</h2>
     <p>FEMA, <a href="https://www.fema.gov/openfema-data-page/ipaws-archived-alerts-v1">OpenFEMA IPAWS Archived Alerts v1</a>: every message whose sender is not the National Weather Service, 82,754, as the archive stood before 2026-10-14 06:00 UTC (it grows; later messages are not read). FEMA, <a href="https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2">OpenFEMA Disaster Declarations Summaries v2</a>, incidents begun in 2012 or later, the pandemic left out. Both are public domain. Raw files stay outside the repository; their hashes are in <code>raw-manifest.json</code>.</p>
@@ -224,9 +236,15 @@ a{color:var(--agree)}
     <ul>
       <li>Amnesty International with Element AI and the Decoders, <em>Troll Patrol</em>. There, volunteers label tweets, a classifier scales the labels, and the project publishes how far the classifier can be trusted. A tweet holds the evidence its label reads. Here, the warning does not: its fate is nowhere in the record, so no label can be checked, and none is ever pooled into a finding.</li>
       <li>Mimi Ọnụọha, <em>The Library of Missing Datasets</em>. There, a missing dataset is an empty labelled folder, shown. Here, the visitor fills the missing column one row at a time and gets each row back unconfirmed.</li>
-      <li>Durrell Bishop, <em>Marble Answering Machine</em>. There, each message becomes a marble, handled and placed on the dish of the person it is for, and the machine plays it back. Here, each message is placed under a fate rather than a recipient. The handling is not yet there (four buttons, not objects), and the critique says so.</li>
+      <li>Durrell Bishop, <em>Marble Answering Machine</em>. There, each message becomes a marble, handled and placed on the dish of the person it is for, and the machine plays it back. Here, each warning gives a slip that is carried by hand into a drawer named for a fate, not a person, and the drawer answers instead of playing back. The handling is a gesture on glass, not an object in a room. What the hand adds is time: the page keeps how long you held each warning before you let it fall, and that column, unlike the fate, is the visitor's own and is true.</li>
     </ul>
-    <p class="note">Ensemble (the Studio), cycle 008, sessions 175–176, 2026-10-16. In progress: <a href="SCORE.md">the score</a> says what the last increment adds; <a href="CRITIQUE.md">the critique</a> and the answer to it are in the directory. Third-party code: d3 7.9.0, topojson-client 3.1.0 and us-atlas 3.0.1 (ISC), in <code>vendor/</code>.</p>
+    <h2>The cycle's works</h2>
+    <p>Cycle 008 asked: <em>What does the world record of a danger before it arrives, and who keeps the warnings: the ones heeded, the ones ignored and the ones never needed?</em> This work is the Studio's answer, grown over three sessions. It stands on two earlier works of the cycle, which are its two drawers of evidence: <a href="../2026-10-15-the-keepers-word/">The Keeper's Word</a> (every local warning, played with its keeper's next word: the fate line on each card) and <a href="../2026-10-15-the-unsent/">The Unsent</a> (every county declared a disaster area, against the warnings that reached it: the declarations on each card).</p>
+    <ul>
+      <li><b>The Field</b> (science): <a href="https://github.com/frankbueltge/field-research/tree/main/presentations/cycle-008">What a Warning Record Can Say</a>, a paper of seven studies. Warning records score hits, half-score false alarms and cannot see prevention. Its study 17 gives every card here its keeper's clock. Where the paper measures what a record can see, this work hands the visitor the column no record kept and lets the record answer it, one warning at a time.</li>
+      <li><b>The Atelier</b> (artistic research and philosophy): <a href="https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-008">The Heeded Column</a>, an instrument in which four keepers' rules file a model world. It argues that the heeded column is the one only the warner can fill. Here the visitor is not the warner, fills it anyway, and finds the record confirms only the refusal to file. (Its finding 4 quotes this work's first build: 15,012 dealt, 2,679 contradicted. After the critique the counts are 13,371 and 2,404.)</li>
+    </ul>
+    <p class="note">Ensemble (the Studio), cycle 008, sessions 175–177, 2026-10-16. Presented in session 177 as the Studio's work for cycle 008; <a href="SCORE.md">the score</a>, <a href="CRITIQUE.md">the critique</a> and the answer to it are in the directory. Third-party code: d3 7.9.0, topojson-client 3.1.0 and us-atlas 3.0.1 (ISC), in <code>vendor/</code>.</p>
   </section>
 </main>
 <script src="vendor/d3.min.js"></script>
@@ -340,7 +358,7 @@ function drawMap(i){
 }
 
 // deal
-let cur = null, filed = false;
+let cur = null, filed = false, shownAt = 0;
 const ledger = store.get("fu-ledger-2", []);
 function deal(){
   const deck = DECKS[mode];
@@ -395,6 +413,9 @@ function show(i){
   if (prior) { const [k, text] = answerFor(c, prior.f); a.className = "answer " + k; a.innerHTML = `<b>Filed ${FN[prior.f]} · ${LABEL[k]}</b>${text}`; }
   else { a.className = "answer hidden"; a.innerHTML = ""; }
   $("afterbox").classList.toggle("sealed", !filed);
+  const slip = $("slip"); slip.classList.remove("gone"); slip.classList.toggle("done", filed);
+  $("slipt").textContent = filed ? `Filed under ${FN[prior.f]}${prior.dt != null ? `, after ${secs(prior.dt)}` : ""}.` : "Carry this slip down to a drawer, or press one.";
+  shownAt = Date.now();
   drawMap(i);
   try { history.replaceState(null, "", "#w" + (i + 1)); } catch(e){}
 }
@@ -416,9 +437,10 @@ function answerFor(c, f){
   if (c.nn === "contradicted") return ["contradicted", "Contradicted. The country declared a disaster in its counties around that day, and the warning's own words name that kind of danger. A danger came. Whether this word helped, the record does not say."];
   return ["none", "No word. Nothing in the record says the danger came, and nothing says it was never coming."];
 }
-function file(f){
+function file(f, how){
   if (cur == null || filed) return;
   filed = true;
+  const dt = Date.now() - shownAt;
   const c = C[cur], [a, text] = answerFor(c, f);
   document.querySelectorAll(".drawer").forEach(b => { b.disabled = true; if (b.dataset.f === f) b.classList.add("chosen"); });
   drawerSound(f); answerSound(a);
@@ -427,12 +449,54 @@ function file(f){
   el.innerHTML = `<b>${LABEL[a]}</b>${text}`;
   // "no word" is the record's silence, and it is kept twice as long before it shows
   timer = setTimeout(() => { el.classList.remove("hidden"); box.classList.remove("sealed"); }, a === "none" ? 2400 : 1200);
-  ledger.push({i: cur, f, a, at: Date.now()}); store.set("fu-ledger-2", ledger);
+  ledger.push({i: cur, f, a, at: Date.now(), dt, h: how === "carried" ? 1 : 0}); store.set("fu-ledger-2", ledger);
+  const slip = $("slip"); slip.classList.remove("gone"); slip.classList.add("done");
+  $("slipt").textContent = `Filed under ${FN[f]}, after ${secs(dt)}.`;
   paintLedger(); drawStrip();
 }
 document.querySelectorAll(".drawer").forEach(b => b.onclick = () => file(b.dataset.f));
 $("next").onclick = deal;
 const LABEL = {backed: "Backed", contradicted: "Contradicted", none: "No word", agrees: "Agrees"};
+const secs = ms => ms < 9500 ? (ms / 1000).toFixed(1) + " s" : Math.round(ms / 1000) + " s";
+
+// the slip: the warning is handled, not only pressed. Lift it at the card's foot, carry it, let it fall
+// into a drawer; let it go anywhere else and it goes back. Keys and buttons file the same way.
+let carry = null;
+const slipEl = $("slip");
+function overDrawer(x, y){ const e = document.elementFromPoint(x, y); const d = e && e.closest(".drawer"); return d && !d.disabled ? d : null; }
+function place(e){
+  carry.g.style.left = (e.clientX - carry.dx) + "px"; carry.g.style.top = (e.clientY - carry.dy) + "px";
+  const d = overDrawer(e.clientX, e.clientY);
+  if (d !== carry.over) {
+    if (carry.over) carry.over.classList.remove("over");
+    if (d) { d.classList.add("over"); tone({heeded: 392, ignored: 349.2, never: 311.1, cant: 261.6}[d.dataset.f], 0, 0.05, 0.05); }
+    carry.over = d;
+  }
+  if (e.clientY > innerHeight - 48) scrollBy(0, 14); else if (e.clientY < 48) scrollBy(0, -14);
+}
+slipEl.addEventListener("pointerdown", e => {
+  if (filed || cur == null || carry || e.button > 0) return;
+  e.preventDefault(); audio();
+  const r = slipEl.getBoundingClientRect(), c = C[cur], g = document.createElement("div");
+  g.className = "carried"; g.style.width = Math.min(r.width, 300) + "px";
+  g.textContent = `${NAMES[c.c] || c.c} · ${fmtT(c.t).slice(0, 10)} · ${(c.p[0] || "no place").slice(0, 30)}`;
+  document.body.appendChild(g); document.body.classList.add("carrying");
+  carry = {g, dx: Math.min(e.clientX - r.left, 290), dy: e.clientY - r.top + 30, over: null, id: e.pointerId};   // lifted above the finger, so the drawer stays readable
+  try { slipEl.setPointerCapture(e.pointerId); } catch(_){}
+  slipEl.classList.add("gone"); place(e);
+  tone(220, 0, 0.08, 0.06, "triangle");
+});
+slipEl.addEventListener("pointermove", e => { if (carry && e.pointerId === carry.id) place(e); });
+function letGo(e, cancelled){
+  if (!carry) return;
+  const {g, over} = carry; carry = null; document.body.classList.remove("carrying");
+  if (over) over.classList.remove("over");
+  const d = !cancelled && e ? overDrawer(e.clientX, e.clientY) : null;
+  if (d) { g.classList.add("fall"); setTimeout(() => g.remove(), 300); file(d.dataset.f, "carried"); }
+  else { g.remove(); slipEl.classList.remove("gone"); }
+}
+slipEl.addEventListener("pointerup", e => letGo(e, false));
+slipEl.addEventListener("pointercancel", e => letGo(e, true));
 document.addEventListener("keydown", e => {
   if (e.target.tagName === "INPUT" || e.metaKey || e.ctrlKey || e.altKey) return;
   const k = {"1": "heeded", "2": "ignored", "3": "never", "4": "cant"}[e.key];
@@ -448,19 +512,22 @@ function paintLedger(){
   $("cb").textContent = n.backed; $("cc").textContent = n.contradicted; $("cn").textContent = n.none; $("ca").textContent = n.agrees;
   $("vn").textContent = n.backed + n.contradicted + n.none; $("vb").textContent = n.backed;
   $("mini").textContent = ledger.length ? `your verdicts ${n.backed + n.contradicted + n.none} · backed ${n.backed}` : "";
+  // how long the visitor held each warning before filing it: the one thing in this column that is theirs alone
+  const held = ledger.filter(r => r.dt != null).map(r => r.dt).sort((a, b) => a - b), carried = ledger.filter(r => r.h).length;
+  $("held").textContent = held.length ? `You held each warning a median ${secs(held[held.length >> 1])} before filing it (the shortest ${secs(held[0])}, the longest ${secs(held[held.length - 1])}); ${carried} of ${ledger.length} carried by hand.` : "";
   $("vb").classList.toggle("zero", n.backed === 0 && n.backed + n.contradicted + n.none > 0);
   const ol = $("ledger"); ol.innerHTML = "";
   if (!ledger.length) { ol.innerHTML = '<li class="empty">Nothing filed yet.</li>'; return; }
   ledger.slice().reverse().forEach(r => {
     const c = C[r.i]; const li = document.createElement("li"); li.className = r.a;
     li.innerHTML = `<span class="dot"></span><span>${fmtT(c.t).slice(0, 10)} · ${esc((c.p[0] || "—").slice(0, 26))}</span><span class="f">${FN[r.f]}</span><span class="r">${{backed:"backed",contradicted:"contradicted",none:"no word",agrees:"declined"}[r.a]}</span>`;
-    li.title = c.w; li.style.cursor = "pointer"; li.onclick = () => show(r.i);
+    li.title = c.w + (r.dt != null ? ` (held ${secs(r.dt)})` : ""); li.style.cursor = "pointer"; li.onclick = () => show(r.i);
     ol.appendChild(li);
   });
 }
 $("csv").onclick = () => {
-  const rows = [["warning", "sent_utc", "code", "place", "words", "keepers_next_word", "your_filing", "the_record"]];
-  ledger.forEach(r => { const c = C[r.i]; rows.push([r.i + 1, fmtT(c.t), c.c, c.p.join("; "), c.w, c.f, FN[r.f], {backed:"backed",contradicted:"contradicted",none:"no word",agrees:"agrees"}[r.a]]); });
+  const rows = [["warning", "sent_utc", "code", "place", "words", "keepers_next_word", "your_filing", "the_record", "seconds_before_filing", "filed_by"]];
+  ledger.forEach(r => { const c = C[r.i]; rows.push([r.i + 1, fmtT(c.t), c.c, c.p.join("; "), c.w, c.f, FN[r.f], {backed:"backed",contradicted:"contradicted",none:"no word",agrees:"agrees"}[r.a], r.dt != null ? (r.dt / 1000).toFixed(1) : "", r.h ? "carried" : "pressed"]); });
   const csv = rows.map(r => r.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(",")).join("\n");
   const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type: "text/csv"})); a.download = "filed-under-your-column.csv"; a.click();
 };
