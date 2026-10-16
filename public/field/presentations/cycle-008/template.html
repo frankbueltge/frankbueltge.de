@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What a Warning Record Can Say</title>
+<meta name="description" content="The Field, cycle 008: seven studies of US tornado warnings and local alerts, and what their records can and cannot say about the warnings they keep.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#d9d6cc;--a:#2f6f9f;--b:#c4572a;--c:#7a8a3a;--card:#fff;--sees:#2f6f9f;--part:#b8892a;--blind:#9a9890}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161a;--fg:#ecebe6;--mute:#a3a29b;--line:#34363d;--a:#7fb3dd;--b:#f08a5d;--c:#b5c46b;--card:#1d1f24;--sees:#7fb3dd;--part:#e0b55a;--blind:#6f6e69}}
+:root[data-theme="dark"]{--bg:#15161a;--fg:#ecebe6;--mute:#a3a29b;--line:#34363d;--a:#7fb3dd;--b:#f08a5d;--c:#b5c46b;--card:#1d1f24;--sees:#7fb3dd;--part:#e0b55a;--blind:#6f6e69}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:900px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0}
+h2{font-size:1.2rem;margin:2.2em 0 .4em}
+.kick{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.12rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;margin:18px 0}
+.ledger{display:grid;grid-template-columns:minmax(90px,1.1fr) 1fr 1fr;gap:6px;font:14px/1.3 system-ui,sans-serif}
+.ledger .h{font-weight:600;color:var(--mute);padding:4px 2px}
+.ledger button{text-align:left;font:inherit;padding:8px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer;min-height:52px}
+.ledger button[aria-pressed=true]{outline:2px solid var(--fg)}
+.tag{display:inline-block;font:600 11px/1 system-ui,sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:3px 5px;border-radius:3px;color:#fff;margin-bottom:4px}
+.tag.sees{background:var(--sees)}.tag.part{background:var(--part)}.tag.blind{background:var(--blind)}
+#cellnote{font:15px/1.5 system-ui,sans-serif;margin-top:12px;min-height:3em}
+.steps{display:flex;flex-wrap:wrap;gap:6px;font:14px system-ui,sans-serif}
+.steps button{font:inherit;padding:5px 10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+.steps button[aria-pressed=true]{background:var(--fg);color:var(--bg)}
+#stitle{font-size:1.15rem;margin:.8em 0 .2em}
+#stext{margin:.2em 0 .6em}
+svg{width:100%;height:auto;display:block}
+.ctrl{font:14px system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:8px 0}
+.ctrl input[type=range]{width:220px;max-width:100%}
+.small{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+a{color:var(--a)}
+code{font-size:.88em}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">The Field · cycle 008 · presentation · 2026-10-16</div>
+<h1>What a warning record can say</h1>
+<p class="lede">A warning is written before its danger, so it can be held against what came. The cycle's question names three fates for a warning: heeded, ignored, never needed. Seven studies of two public records (US tornado warnings 2008–2023, and local alerts sent through FEMA's national system 2012–2026) asked which of those fates the records can actually see.</p>
+<p>The full study is the paper, <a href="paper.md"><code>paper.md</code></a>. A five-minute version: <a href="SUMMARY.md"><code>SUMMARY.md</code></a>.</p>
+
+<h2>The ledger: what each record can see</h2>
+<p>Each cell is a verdict from the studies. Choose one to see the evidence.</p>
+<div class="panel">
+  <div class="ledger" id="ledger"></div>
+  <div id="cellnote" aria-live="polite"></div>
+</div>
+
+<h2>Seven studies</h2>
+<div class="panel">
+  <div class="steps" id="steps"></div>
+  <h3 id="stitle"></h3>
+  <p id="stext"></p>
+  <div id="sctrl"></div>
+  <svg id="sfig" viewBox="0 0 800 280" role="img" aria-label="Figure for the selected study"></svg>
+  <p class="small" id="ssrc"></p>
+</div>
+
+<h2>Against ourselves</h2>
+<p>Of 34 predictions written before the data, 22 held, 11 failed and one was undecided. Several comparisons were added after a first look and are marked so in the paper. One analyst. The tornado record holds only the tornadoes someone found. Nothing here says how many lives any warning saved.</p>
+
+<h2>The siblings' works</h2>
+<p>The Atelier, <em>The Hundred Occasions</em> and <em>The Warner's Column</em> (<a href="https://github.com/frankbueltge/ulysses/tree/main/window">ulysses/window/cycle-008-session-1…3</a>): the argument that an outcome can bound only p(1−e), and a keeper, the Bank of England, that wrote both columns. The Studio, <em>The Keeper's Word</em>, <em>The Unsent</em> and <em>Filed Under</em> (<a href="https://github.com/frankbueltge/studio/tree/main/works">studio/works</a>): the local-alert archive as a desk where you file each alert yourself.</p>
+<p class="small">Every number on this page is read from the studies' committed results files by <code>build.py</code>; the fine in study 7 is recomputed in your browser from all 10,540 warned tornadoes (<code>fine.js</code>). Checks: <code>check.py</code> (the paper's numbers against the files) and <code>verify.mjs</code> (this page, 390 px light and 1100 px dark).</p>
+</main>
+<script>const D = __DATA__;</script>
+<script src="fine.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const f = (x, d = 1) => Number(x).toLocaleString("en-US", {minimumFractionDigits: d, maximumFractionDigits: d});
+const pct = (k, n) => f(100 * k / n) + " %";
+
+// ---- the ledger
+const ROWS = ["came true", "never needed", "heeded", "ignored"];
+const CELLS = {
+  "came true|t": ["sees", "Studies 1–2", () => `${pct(D.s1.k, D.s1.n)} of ${D.s1.n.toLocaleString("en-US")} tornadoes began inside a warning; ${pct(D.s2.k, D.s2.n)} of ${D.s2.n.toLocaleString("en-US")} warnings were met by a tornado. The record replicates the published series.`],
+  "never needed|t": ["part", "Studies 2 and 4", () => `${f(100 * D.s2.farV["2008-2011"])} % never needed in 2008–11, ${f(100 * D.s2.farV["2017-2023"])} % in 2017–23, but by a strict rule ${f(100 * D.s2.farS["2008-2011"])} → ${f(100 * D.s2.farS["2017-2023"])} %. Within one office the odds of being met rise ${f(D.s4.or[0], 2)}× per tenfold density: part of "never needed" is "nobody there".`],
+  "heeded|t": ["blind", "Studies 3 and 7", () => `A warned tornado writes the same row whether anyone sheltered. A model gives injuries ${f(D.s3.inj[0], 2)} (${f(D.s3.inj[1], 2)}–${f(D.s3.inj[2], 2)}), deaths ${f(D.s3.fat[0], 2)} (${f(D.s3.fat[1], 2)}–${f(D.s3.fat[2], 2)}), and the deaths sign flips when counted in total. The score's fine for working is invisible for about a century.`],
+  "ignored|t": ["blind", "Study 1", () => `Of ${D.s1.killer[1]} tornadoes that killed, ${D.s1.killer[0]} were warned ahead, holding ${D.s1.deaths[0].toLocaleString("en-US")} of ${D.s1.deaths[1].toLocaleString("en-US")} deaths. Whether those warnings were ignored, unheard or unheedable, no row says.`],
+  "came true|a": ["blind", "Study 5", () => `The archive holds no outcome at all for a local alert. ${D.s5.silent.toLocaleString("en-US")} alerts are never mentioned again.`],
+  "never needed|a": ["part", "Study 5", () => `A cancel could mark an alert as not needed, but ${pct(D.s5.before, D.s5.cancels)} of cancels come before the alert's own written expiry, and who sent it explains cancelling (η² ${f(D.s5.eta_acc, 2)}) far more than what it warned of (${f(D.s5.eta_code, 2)}).`],
+  "heeded|a": ["blind", "Study 5", () => `Nothing in the archive records a response.`],
+  "ignored|a": ["blind", "Study 5", () => `${D.s5.expiry.toLocaleString("en-US")} of ${D.s5.silent.toLocaleString("en-US")} silent alerts carry an end their sender wrote at the start, usually a round number of hours. The keeper's one verdict is a duration, written first.`],
+};
+const L = $("ledger");
+L.innerHTML = `<div class="h">fate</div><div class="h">tornado warnings</div><div class="h">local alerts</div>` +
+  ROWS.map(r => `<div class="h">${r}</div>` + ["t", "a"].map(c => { const [v, who] = CELLS[r + "|" + c];
+    return `<button data-k="${r}|${c}" aria-pressed="false"><span class="tag ${v}">${v === "part" ? "partly" : v === "sees" ? "sees" : "cannot see"}</span><br>${who}</button>`; }).join("")).join("");
+L.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return;
+  L.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); $("cellnote").textContent = CELLS[b.dataset.k][2](); });
+L.querySelector("button").click();
+
+// ---- figure helpers
+function frame(h) { $("sfig").innerHTML = h; }
+function bars(items, opt) { // items: [{label, v, lo, hi, col}]
+  const Lx = 70, W = 700, Ht = 200, top = 20, max = opt.max, y = v => top + Ht - v / max * Ht, bw = W / items.length;
+  let h = `<line x1="${Lx}" x2="${Lx + W}" y1="${top + Ht}" y2="${top + Ht}" stroke="${css("--line")}"/>`;
+  for (const t of opt.ticks) h += `<text x="${Lx - 8}" y="${y(t) + 4}" text-anchor="end" font-size="12" font-family="system-ui" fill="${css("--mute")}">${t}${opt.unit}</text><line x1="${Lx}" x2="${Lx + W}" y1="${y(t)}" y2="${y(t)}" stroke="${css("--line")}" stroke-dasharray="2 4"/>`;
+  items.forEach((it, i) => { const cx = Lx + (i + .5) * bw, w = Math.min(70, bw * .6);
+    h += `<rect class="bar" x="${cx - w / 2}" y="${y(it.v)}" width="${w}" height="${top + Ht - y(it.v)}" fill="${it.col || css("--a")}"/>`;
+    if (it.lo != null) h += `<line x1="${cx}" x2="${cx}" y1="${y(it.lo)}" y2="${y(it.hi)}" stroke="${css("--fg")}" stroke-width="1.5"/>`;
+    h += `<text x="${cx}" y="${y(it.hi ?? it.v) - 6}" text-anchor="middle" font-size="12" font-family="system-ui" fill="${css("--fg")}">${it.txt ?? f(it.v)}</text>`;
+    h += `<text x="${cx}" y="${top + Ht + 18}" text-anchor="middle" font-size="12" font-family="system-ui" fill="${css("--mute")}">${it.label}</text>`; });
+  if (opt.ref != null) h += `<line x1="${Lx}" x2="${Lx + W}" y1="${y(opt.ref)}" y2="${y(opt.ref)}" stroke="${css("--b")}" stroke-dasharray="5 4"/><text x="${Lx + W}" y="${y(opt.ref) - 5}" text-anchor="end" font-size="12" font-family="system-ui" fill="${css("--b")}">${opt.refl}</text>`;
+  frame(h);
+}
+
+// ---- study 7 recompute from fine.js
+function fine(y, years) {
+  const P = T["p" + y], Q = T["q" + y]; let F = 0, v1 = 0, v2 = 0;
+  for (let i = 0; i < P.length; i++) { const p = P[i], q = Q[i], d = (p - q) ** 2; F += d; v1 += q * (1 - q) * (1 - 2 * p) ** 2; v2 += 4 * d * q * (1 - q); }
+  const k = Math.sqrt(years / 16); return {z1: F / Math.sqrt(v1) * k, z2: F / Math.sqrt(v2) * k, z1_16: F / Math.sqrt(v1), z2_16: F / Math.sqrt(v2)};
+}
+window.fine = fine;
+
+const STUDIES = [
+  {t: "1 · The tornadoes that came", x: () => `${pct(D.s1.k, D.s1.n)} of tornadoes began inside a warning already out. The share fell after 2012 and stayed down.`, src: "artifacts/2026-10-14-the-tornadoes-that-came/",
+   draw: () => bars(Object.entries(D.s1.eras).map(([e, v]) => ({label: e, v})), {max: 80, ticks: [0, 20, 40, 60, 80], unit: "%", ref: 100 * D.s1.killer[0] / D.s1.killer[1], refl: "tornadoes that killed: " + pct(D.s1.killer[0], D.s1.killer[1])})},
+  {t: "2 · The warnings never needed", x: () => `Seven warnings in ten were never met. How much that fell after 2012 depends on the rule for "met": blue the registered rule, orange the strict one.`, src: "artifacts/2026-10-14-the-warnings-never-needed/",
+   draw: () => bars(Object.keys(D.s2.farV).flatMap(e => [{label: e + " V", v: 100 * D.s2.farV[e]}, {label: e + " S", v: 100 * D.s2.farS[e], col: css("--b")}]), {max: 100, ticks: [0, 25, 50, 75, 100], unit: "%"})},
+  {t: "3 · Who was beneath", x: () => `Rate ratios of a warning: per tornado, injuries and deaths; and deaths pooled, where ten warned catastrophes flip the sign. Below the line, fewer with a warning.`, src: "artifacts/2026-10-14-who-was-beneath/",
+   draw: () => bars([["injuries, per tornado", D.s3.inj], ["deaths, per tornado", D.s3.fat], ["deaths, pooled", D.s3.fat_pooled]].map(([l, a]) => ({label: l, v: a[0], lo: a[1], hi: a[2], txt: f(a[0], 2)})), {max: 2, ticks: [0, .5, 1, 1.5, 2], unit: "", ref: 1, refl: "no difference"})},
+  {t: "4 · Where nobody was", x: () => `Ranked across the whole country, warnings over the emptiest and the most crowded fifths verify alike; inside one office the odds rise ${f(D.s4.or[0], 2)}× per tenfold density. Bars: national fifths met; orange: weak or unrated among the tornadoes found.`, src: "artifacts/2026-10-15-where-nobody-was/",
+   draw: () => bars(D.s4.fifths.flatMap((v, i) => [{label: "fifth " + (i + 1), v}, {label: "weak", v: D.s4.weak[i], col: css("--b")}]), {max: 80, ticks: [0, 20, 40, 60, 80], unit: "%"})},
+  {t: "5 · The end written in advance", x: () => `Every local alert never mentioned again carries its own end; cancels nearly always come before it; the sender explains cancelling, the event hardly.`, src: "artifacts/2026-10-15-the-end-written-in-advance/ (corrected 2026-10-16)",
+   draw: () => bars([{label: "silent, with expiry", v: 100 * D.s5.expiry / D.s5.silent}, {label: "cancels before expiry", v: 100 * D.s5.before / D.s5.cancels}, {label: "η² by sender ×100", v: 100 * D.s5.eta_acc, col: css("--b")}, {label: "η² by event ×100", v: 100 * D.s5.eta_code, col: css("--b")}], {max: 100, ticks: [0, 25, 50, 75, 100], unit: ""})},
+  {t: "6 · The clock and the record", x: () => `Weak share of tornadoes just before and just after a warning's written expiry: ${f(D.s6.diff, 1)} points (${f(D.s6.ci[0])} to ${f(D.s6.ci[1])}). The placebo clock drifts ${f(D.s6.placebo[0])} points: the storm ages.`, src: "artifacts/2026-10-16-the-clock-and-the-record/",
+   draw: () => bars([{label: "20 min before (warned)", v: D.s6.before.pct, lo: D.s6.before.ci95[0], hi: D.s6.before.ci95[1]}, {label: "20 min after (no warning)", v: D.s6.after.pct, lo: D.s6.after.ci95[0], hi: D.s6.after.ci95[1], col: css("--b")}], {max: 80, ticks: [0, 20, 40, 60, 80], unit: "%"})},
+  {t: "7 · The fine for working", x: () => `A proper score charges a warning that worked by the square of what it prevented. Move the years: blue is how clearly the fine shows with a second, published column; orange from the warner's own record alone. The dashed line is z = 2.`, src: "artifacts/2026-10-16-the-fine-for-working/",
+   ctrl: `<div class="ctrl"><label for="yr">Years of record: <b id="yrv">16</b></label><input id="yr" type="range" min="1" max="150" value="16"><label><input type="checkbox" id="dth"> scored on deaths instead of harm</label></div>`,
+   draw: () => { const yrs = +$("yr").value, y = $("dth").checked ? "D" : "H", r = fine(y, yrs); $("yrv").textContent = yrs;
+     bars([{label: "warner's column alone", v: r.z1, txt: "z = " + f(r.z1, 2), col: css("--b")}, {label: "both columns published", v: r.z2, txt: "z = " + f(r.z2, 2)}], {max: Math.max(6, Math.ceil(r.z2 + 1)), ticks: [0, 2, 4, 6], unit: "", ref: 2, refl: "z = 2"}); }},
+];
+const S = $("steps");
+S.innerHTML = STUDIES.map((s, i) => `<button data-i="${i}" aria-pressed="false">${i + 1}</button>`).join("");
+function show(i) {
+  const s = STUDIES[i]; S.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", +b.dataset.i === i));
+  $("stitle").textContent = s.t; $("stext").textContent = s.x(); $("ssrc").textContent = "Evidence: " + s.src; $("sctrl").innerHTML = s.ctrl || "";
+  if (s.ctrl) { $("yr").addEventListener("input", s.draw); $("dth").addEventListener("change", s.draw); }
+  s.draw();
+}
+S.addEventListener("click", e => { const b = e.target.closest("button"); if (b) show(+b.dataset.i); });
+show(0);
+window.show = show;
+</script>
+</body>
+</html>
