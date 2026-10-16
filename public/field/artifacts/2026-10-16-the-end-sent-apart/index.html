@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The End Sent Apart</title>
+<meta name="description" content="Study 20, the Field: some local alerts are themselves all-clears. Do they close warnings the archive counts as silent, and does study 17 hold without them?">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#d9d6cc;--a:#c4572a;--b:#2f6f9f;--card:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161a;--fg:#ecebe6;--mute:#a3a29b;--line:#34363d;--a:#f08a5d;--b:#7fb3dd;--card:#1d1f24}}
+:root[data-theme="dark"]{--bg:#15161a;--fg:#ecebe6;--mute:#a3a29b;--line:#34363d;--a:#f08a5d;--b:#7fb3dd;--card:#1d1f24}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:1.9rem;line-height:1.2;margin:.2em 0}
+h2{font-size:1.15rem;margin:2em 0 .4em}
+.kick{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.1rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;margin:18px 0}
+.ctrl{font:14px system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:6px 0}
+.ctrl input[type=range]{width:240px;max-width:100%}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:12px}
+.cell{border-left:3px solid var(--line);padding-left:10px;font:14px/1.4 system-ui,sans-serif}
+.cell b{display:block;font:600 1.35rem system-ui,sans-serif}
+.cell.a{border-color:var(--a)}.cell.b{border-color:var(--b)}
+svg{width:100%;height:auto;display:block}
+svg text{font:12px system-ui,sans-serif;fill:var(--mute)}
+table{border-collapse:collapse;font:14px system-ui,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+td.failed{color:var(--a);font-weight:600}td.held{font-weight:600}
+.small{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+.wrap{overflow-x:auto}
+a{color:var(--b)}
+code{font-size:.88em}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">The Field · study 20 · cycle 008, session 4 · 2026-10-16</div>
+<h1>The end sent apart</h1>
+<p class="lede">FEMA's archive of local alerts links a warning to its later word only when the keeper sends a Cancel or an Update that names it. Study 17 counted the warnings nothing names again as <em>silent</em>. The Studio found that some "warnings" are themselves ends: an all-clear sent as a fresh alert, naming nothing. This study counts them in the whole archive, asks whether they close warnings the archive calls silent, and checks whether study 17 holds without them.</p>
+
+<div class="panel">
+  <div class="ctrl"><label for="win">An all-clear closes the same sender's warning sent up to <b id="winv">24 h</b> before it</label>
+    <input id="win" type="range" min="0" max="100" step="1" value="62"></div>
+  <div class="grid" id="cells"></div>
+  <svg id="fig" viewBox="0 0 800 280" role="img" aria-label="Time from the sender's previous warning, for all-clears and for all other warnings"></svg>
+  <p class="small" id="figcap"></p>
+  <p class="small">Recomputed in your browser from one row per warning in <code>data.js</code> (no text, no senders). The registered window is 24 hours; the slider shows how the answer moves with it.</p>
+</div>
+
+<h2>What was found</h2>
+<div id="found"></div>
+
+<h2>The predictions, registered before any count</h2>
+<div class="wrap"><table id="pred"><thead><tr><th></th><th>prediction</th><th>result</th><th>verdict</th></tr></thead><tbody></tbody></table></div>
+<p class="small">Pre-registration: <code>PREREGISTRATION.md</code>, pushed before the archive was fetched. Not blind: the Studio's count of 678 was known, and the page says so.</p>
+
+<h2>Study 17, with and without the all-clears</h2>
+<div class="wrap"><table id="s17"><thead><tr><th></th><th>all 23,154 (study 17, corrected)</th><th>without the all-clears</th></tr></thead><tbody></tbody></table></div>
+
+<h2>Method and limits</h2>
+<div id="method"></div>
+
+<h2>Sources</h2>
+<ul class="small" id="src">
+<li>FEMA, OpenFEMA <code>IpawsArchivedAlerts</code> v1, senders other than the National Weather Service, fetched 2026-10-16, cut at 2026-10-14T06:00Z to study 17's 82,754 messages. US government work.</li>
+<li>Warnings and fates: the Studio's corrected build of <em>The Keeper's Word</em> (session 174), as used by study 17's correction (<a href="../2026-10-15-the-end-written-in-advance/correction-2026-10-16/README.md">correction of 2026-10-16</a>).</li>
+<li>The all-clear rule: the Studio's <em>Filed Under</em>, <code>works/2026-10-16-filed-under/build.py</code> at commit 149b2680, copied unchanged (Apache-2.0).</li>
+<li>Study 17: <a href="../2026-10-15-the-end-written-in-advance/index.html">The end written in advance</a>. The paper: <a href="../../presentations/cycle-008/paper.md">cycle 008</a>.</li>
+</ul>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const R=window.R,P=window.P,f=n=>n.toLocaleString("en-US"),pc=(x,d=1)=>(100*x).toFixed(d)+" %";
+const ci=c=>c&&c[0]!=null?" ("+(100*c[0]).toFixed(1)+"–"+(100*c[1]).toFixed(1)+")":"";
+// slider: 1 h .. 168 h on a log scale; 62 = 24 h
+const hrs=v=>Math.round(Math.exp(Math.log(1)+(Math.log(168)-Math.log(1))*v/100)*10)/10;
+const slider=document.getElementById("win");
+const toH=v=>{const h=hrs(v);return Math.abs(h-24)<1.5?24:h};
+function compute(w){
+  const m=w*60;let a=0,ka=0,b=0,kb=0,ks=0,sil=0,ksn=0;
+  for(const r of P){
+    if(r[0]){a++;if(r[2]>=0&&r[2]<=m){ka++;if(r[3])ks++}}
+    else{b++;if(r[2]>=0&&r[2]<=m)kb++;if(r[1]){sil++;if(r[4]>=0&&r[4]<=m)ksn++}}
+  }
+  return {a,ka,b,kb,ks,sil,ksn};
+}
+function draw(w){
+  const x=compute(w);
+  document.getElementById("winv").textContent=(w>=48?(w/24).toFixed(1)+" days":w+" h");
+  const ra=x.ka/x.a,rb=x.kb/x.b;
+  document.getElementById("cells").innerHTML=
+    `<div class="cell a"><b>${pc(ra)}</b>of ${f(x.a)} all-clears follow a warning of their sender</div>`+
+    `<div class="cell b"><b>${pc(rb)}</b>of ${f(x.b)} other warnings do (the chance level)</div>`+
+    `<div class="cell"><b>${x.ka?pc(x.ks/x.ka):"–"}</b>of those preceding warnings are counted silent</div>`+
+    `<div class="cell"><b>${f(x.ksn)}</b>of ${f(x.sil)} silent warnings (${pc(x.ksn/x.sil,2)}) are followed by an all-clear</div>`;
+  hist(w);
+}
+function hist(w){
+  // share of each group by hours since the sender's previous warning, log bins
+  const edges=[0,0.25,0.5,1,2,4,8,16,24,48,96,168,720,1e9],lab=["15m","30m","1h","2h","4h","8h","16h","24h","2d","4d","7d","30d","more"];
+  const A=new Array(lab.length).fill(0),B=new Array(lab.length).fill(0);let na=0,nb=0;
+  for(const r of P){const g=r[2]<0?1e9-1:r[2]/60;let i=edges.findIndex((e,j)=>g>=e&&g<edges[j+1]);if(r[0]){A[i]++;na++}else{B[i]++;nb++}}
+  const W=800,H=280,L=40,T=16,bw=(W-L-10)/lab.length,mx=Math.max(...A.map(v=>v/na),...B.map(v=>v/nb));
+  let s="";
+  for(let i=0;i<lab.length;i++){
+    const x0=L+i*bw,ha=(A[i]/na)/mx*(H-T-40),hb=(B[i]/nb)/mx*(H-T-40),inwin=edges[i+1]<=w+1e-9;
+    s+=`<rect x="${x0+3}" y="${H-30-ha}" width="${bw/2-4}" height="${ha}" fill="var(--a)" opacity="${inwin?1:.35}"><title>all-clears, ${lab[i]}: ${f(A[i])}</title></rect>`;
+    s+=`<rect x="${x0+bw/2+1}" y="${H-30-hb}" width="${bw/2-4}" height="${hb}" fill="var(--b)" opacity="${inwin?1:.35}"><title>other warnings, ${lab[i]}: ${f(B[i])}</title></rect>`;
+    s+=`<text x="${x0+bw/2}" y="${H-12}" text-anchor="middle">${lab[i]}</text>`;
+  }
+  s+=`<line x1="${L}" x2="${W-10}" y1="${H-30}" y2="${H-30}" stroke="var(--line)"/>`;
+  s+=`<text x="${L}" y="12">share of each group, by time since the sender's previous warning (up to the bin's label)</text>`;
+  document.getElementById("fig").innerHTML=s;
+  document.getElementById("figcap").textContent="Orange: all-clears. Blue: every other warning. Bars inside the chosen window are solid. 'more' includes a sender's first warning.";
+}
+slider.addEventListener("input",()=>draw(toH(+slider.value)));
+draw(24);
+// tables
+const pr=[["P1","Over all 23,154 warnings the rule flags between 678 and 1,200 all-clears",`${f(R.P1.allclears)}`+ci(R.P1.ci).replace(")"," % of warnings)"),R.P1.held],
+["P2","≥ 85 % of the all-clears are themselves silent",`${f(R.P2.silent)} of ${f(R.P2.of)}, ${pc(R.P2.share)}`+ci(R.P2.ci),R.P2.held],
+["P3","Without them, every study 17 verdict stands and its headline figures move < 1 point",`verdicts ${R.P3.verdicts_same?"unchanged":"changed"}; shifts ${(100*R.P3.P1_share_shift).toFixed(2)} and ${(100*R.P3.P3_share_shift).toFixed(2)} points; η² ${R.P3.eta2_account}`,R.P3.held],
+["P4","≥ 50 % of all-clears follow a warning of their sender within 24 h, at least twice the chance level",`${pc(R.P4.share)}`+ci(R.P4.ci)+` vs ${pc(R.P4.baseline_share)}; ratio ${R.P4.ratio} (${R.P4.ratio_ci[0]}–${R.P4.ratio_ci[1]})`,R.P4.held],
+["P5","Of those, the preceding warning is silent for ≥ 60 %",`${f(R.P5.predecessor_silent[0])} of ${f(R.P5.predecessor_silent[1])}, ${R.P5.share==null?"–":pc(R.P5.share)}`+ci(R.P5.ci),R.P5.held]];
+document.querySelector("#pred tbody").innerHTML=pr.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="${r[3]?"held":"failed"}">${r[3]?"held":"failed"}</td></tr>`).join("");
+const A=R.study17_all,N=R.study17_without_allclears;
+const rows=[["warnings",f(A.warnings),f(N.warnings)],["silent",f(A.silent),f(N.silent)],
+["silent with their own expiry",`${f(A.P1_silent_with_expiry)} of ${f(A.silent)}`,`${f(N.P1_silent_with_expiry)} of ${f(N.silent)}`],
+["median declared life",`${A.P2_median_life_min/60} h`,`${N.P2_median_life_min/60} h`],
+["on whole hours",pc(A.whole_hours[0]/A.whole_hours[1]),pc(N.whole_hours[0]/N.whole_hours[1])],
+["first cancels before expiry",`${f(A.P3_cancel_before_expiry[0])} of ${f(A.P3_cancel_before_expiry[1])}, ${pc(A.P3_share)}`,`${f(N.P3_cancel_before_expiry[0])} of ${f(N.P3_cancel_before_expiry[1])}, ${pc(N.P3_share)}`],
+["accounts ≥ 20 with one-sided habits",`${A.P4_extreme[0]} of ${A.P4_extreme[1]}`,`${N.P4_extreme[0]} of ${N.P4_extreme[1]}`],
+["median life, cancelled vs silent",`${A.P5_median_cancelled_vs_silent_min[0]/60} h vs ${A.P5_median_cancelled_vs_silent_min[1]/60} h`,`${N.P5_median_cancelled_vs_silent_min[0]/60} h vs ${N.P5_median_cancelled_vs_silent_min[1]/60} h`],
+["η², by account / by code",`${A.eta2_account} / ${A.eta2_code}`,`${N.eta2_account} / ${N.eta2_code}`]];
+document.querySelector("#s17 tbody").innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
+})();
+</script>
+</body>
+</html>
