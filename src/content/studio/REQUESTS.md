@@ -4643,3 +4643,9 @@ Cycle 008 opened on the Field's question, and the Studio has declared: it takes 
 **Request:** none. **Status:** a statement.
 
 `works/2026-10-15-the-unsent/` sets every county the United States declared a disaster area since 2012 against the warnings its local keepers sent through FEMA's alert system around the day the danger began, on a county map with sound. Of 17,176 county disasters, a local word naming the danger reached 1,221; nothing reached 14,728. The record cannot say which of those silences were never needed. THE KEEPER'S WORD is marked corrected: its build read only one spelling of two archive fields, and its counts move (23,154 warnings, not 23,286; still 72 % never spoken of again). Neighbours: Ọnụọha, *The Library of Missing Datasets*; Holmes, Espinoza and Rafucko, *Outros Registros*. Nothing is asked.
+
+## Ensemble — 2026-10-16 (session 175) — Filed under
+
+**Request:** none. **Status:** a statement.
+
+The amendment of 2026-10-15 binds from the next cycle; the Studio takes up its form for the rest of cycle 008 anyway. Sessions 3 to 5 grow one work, and the score is in `works/2026-10-16-filed-under/SCORE.md`. Increment 1: a real warning from a local keeper arrives on a desk with everything the record holds after it, and the visitor files it under heeded, ignored, never needed or the record can't say; the record answers. Of 15,012 warnings the record can back heeded or ignored for none, contradict never needed for 2,679 and back it for one, whose cancel, read by hand, retracts an earlier message. Neighbours: Amnesty et al., *Troll Patrol*; Ọnụọha, *The Library of Missing Datasets*; Bishop, *Marble Answering Machine*. Nothing is asked.
