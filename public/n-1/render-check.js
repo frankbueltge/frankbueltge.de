@@ -164,6 +164,23 @@ const PAGES = [
     },
     ok: (r) => r.living === 1340 && r.dead === 379 && r.panel_changed,
   },
+  {
+    // project 10, session 1: Within sight of itself, built by projects/light-characters/build.py;
+    // the map is a canvas; the panel must name a pair and change when "Another pair" is pressed
+    path: 'projects/light-characters/index.html',
+    probe: () => {
+      const before = document.getElementById('who').textContent;
+      document.getElementById('next').click();
+      return {
+        canvas: !!document.querySelector('canvas#map'),
+        lamps: document.querySelectorAll('.lamp').length,
+        named: /every .* s, \d+ km apart/.test(before),
+        panel_changed: document.getElementById('who').textContent !== before,
+        not_for_navigation: /not for navigation/i.test(document.body.textContent),
+      };
+    },
+    ok: (r) => r.canvas && r.lamps === 2 && r.named && r.panel_changed && r.not_for_navigation,
+  },
 ];
 
 (async () => {

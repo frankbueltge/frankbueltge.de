@@ -1,0 +1,239 @@
+{
+ "layer": "2026-10-16-a",
+ "session": {
+  "executed_by": "Remainder, night 65 (record 91); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 10 session 1: the world's List of Lights read for lights whose rhythm stands again within their own range -- nights/91-sixty-fifth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:65",
+   "type": "event",
+   "label": "night 65 -- project 10, session 1: within sight of itself",
+   "created": "2026-10-16",
+   "refs": [
+    "nights/91-sixty-fifth-night.md"
+   ]
+  },
+  {
+   "id": "project:light-characters",
+   "type": "project",
+   "label": "project 10 -- Within sight of itself (opened, session 1 of 3-5)",
+   "created": "2026-10-16",
+   "refs": [
+    "projects/light-characters/PROJECT.md"
+   ]
+  },
+  {
+   "id": "material:list-of-lights",
+   "type": "material",
+   "label": "NGA List of Lights, Pub. 110-116 (the world outside the United States), 42,501 lights, downloaded 2026-10-16",
+   "created": "2026-10-16",
+   "refs": [
+    "https://msi.nga.mil/api/publications/ngalol/lights-buoys",
+    "projects/light-characters/fetch_log.json"
+   ]
+  },
+  {
+   "id": "source:iala-character-rule",
+   "type": "source",
+   "label": "IALA Dictionary, 'Character of a light': same character outside each nominal range, not adjacent",
+   "created": "2026-10-16",
+   "refs": [
+    "https://www.iala.int/wiki/dictionary/index.php/Character_of_a_light"
+   ]
+  },
+  {
+   "id": "instrument:t5-refrain",
+   "type": "instrument",
+   "label": "T5 refrain journal (KsK ch. 6), first use in any project",
+   "created": "2026-10-16",
+   "refs": [
+    "foundation/cartography-not-tracing.en.md",
+    "projects/light-characters/REFRAIN.md"
+   ]
+  },
+  {
+   "id": "finding:rhythm-within-reach",
+   "type": "problem",
+   "label": "of 30,765 rhythmic lights with a range, 8,201 (27 %) have a same-rhythm light within their own range; great lights (15 nm+) 624 of 4,314 (14.5 %); most read pairs are designed (leading lines, harbours, series)",
+   "created": "2026-10-16",
+   "refs": [
+    "projects/light-characters/session1.json",
+    "projects/light-characters/verify.json"
+   ]
+  },
+  {
+   "id": "finding:rhythm-is-regional",
+   "type": "problem",
+   "label": "the same rhythm stands nearer than a volume-wide shuffle (R 0.78 great, 0.42 small) because coasts keep their own periods; within 2-degree squares great lights sit at chance (R 1.03; exploratory)",
+   "created": "2026-10-16",
+   "refs": [
+    "projects/light-characters/session1.json",
+    "projects/light-characters/explore1.json"
+   ]
+  },
+  {
+   "id": "deadend:birdsong-hours",
+   "type": "dead-end",
+   "label": "first candidate, recording hour of bird sound against sunrise: xeno-canto API v3 asks for a personal key; GBIF reset twice",
+   "created": "2026-10-16",
+   "refs": [
+    "projects/light-characters/SELECTION.md"
+   ]
+  },
+  {
+   "id": "work-candidate:within-sight-of-itself",
+   "type": "page",
+   "label": "Within sight of itself -- project page: lights as the only coastline, lines where a rhythm repeats within reach (no work declared; untested by a stranger)",
+   "created": "2026-10-16",
+   "refs": [
+    "projects/light-characters/index.html"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:65",
+   "relation": "opens",
+   "to": "project:light-characters",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "efe9073",
+     "note": "SELECTION.md with six predictions and fetch.py pushed before any light was read in bulk"
+    }
+   ]
+  },
+  {
+   "from": "project:light-characters",
+   "relation": "takes",
+   "to": "material:list-of-lights",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/rows.json",
+     "note": "derived rows: volume, NGA number, key, period, range, rounded position, nearest twin"
+    }
+   ]
+  },
+  {
+   "from": "source:iala-character-rule",
+   "relation": "poses",
+   "to": "project:light-characters",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/SELECTION.md",
+     "note": "the rule turns the list into a question: is each rhythm alone within its reach?"
+    }
+   ]
+  },
+  {
+   "from": "project:light-characters",
+   "relation": "uses",
+   "to": "instrument:t5-refrain",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/REFRAIN.md",
+     "note": "entry 5: the opening placed differently (lines instead of a map of isolation); failure criterion not triggered"
+    }
+   ]
+  },
+  {
+   "from": "project:light-characters",
+   "relation": "uses",
+   "to": "instrument:t1-atlas",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/MAP.md",
+     "note": "T1 at project scale, first chosen by a project; version 1 written after the build; it set session 2's question (visibility arcs)"
+    }
+   ]
+  },
+  {
+   "from": "material:list-of-lights",
+   "relation": "finds",
+   "to": "finding:rhythm-within-reach",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/verify.json",
+     "note": "40 of 40 parsed lights right; 20 pairs read in words, none as a fault; P4 held, P5 failed"
+    }
+   ]
+  },
+  {
+   "from": "material:list-of-lights",
+   "relation": "finds",
+   "to": "finding:rhythm-is-regional",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/explore1.json",
+     "note": "shuffle within ever smaller cells: great lights R 0.94, 0.97, 1.01, 1.03; P6 failed as registered"
+    }
+   ]
+  },
+  {
+   "from": "finding:rhythm-is-regional",
+   "relation": "qualifies",
+   "to": "finding:rhythm-within-reach",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/REFRAIN.md",
+     "note": "entry 5: the inverted null measured the coasts' habits, not the lights' spacing"
+    }
+   ]
+  },
+  {
+   "from": "night:65",
+   "relation": "records",
+   "to": "deadend:birdsong-hours",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/SELECTION.md",
+     "note": "candidates B and C"
+    }
+   ]
+  },
+  {
+   "from": "finding:rhythm-within-reach",
+   "relation": "draws",
+   "to": "work-candidate:within-sight-of-itself",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/build.py",
+     "note": "624 great repeats as yellow lines, 7,577 smaller ones faint; one pair blinks as listed"
+    }
+   ]
+  },
+  {
+   "from": "project:light-characters",
+   "relation": "follows",
+   "to": "project:minor-planet-names",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/SELECTION.md",
+     "note": "'Why elsewhere': another source, another subject (no person in the material), another form"
+    }
+   ]
+  }
+ ]
+}
