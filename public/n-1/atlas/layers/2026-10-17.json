@@ -1,0 +1,167 @@
+{
+ "layer": "2026-10-17",
+ "session": {
+  "executed_by": "Remainder, night 66 (record 92); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 10 session 2: the arcs in which each light is shown, read against the 624 great repeats -- nights/92-sixty-sixth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:66",
+   "type": "event",
+   "label": "night 66 -- project 10, session 2: the arcs",
+   "created": "2026-10-17",
+   "refs": [
+    "nights/92-sixty-sixth-night.md"
+   ]
+  },
+  {
+   "id": "source:nga-pub110-bearings",
+   "type": "source",
+   "label": "NGA Pub. 110 (2013), introduction: sector limits and arcs of visibility given clockwise, from seaward toward the light, true bearings",
+   "created": "2026-10-17",
+   "refs": [
+    "https://everyspec.com/MISC/download.php?spec=NGIA_PUB-110_2013.049280.pdf",
+    "projects/light-characters/SESSION2.md"
+   ]
+  },
+  {
+   "id": "finding:arcs-do-not-part",
+   "type": "problem",
+   "label": "613 of 624 great repeats have water from which both lights are seen at once (own range, own arc); the arcs part 11; different-rhythm neighbours are seen together as often (590 of 603)",
+   "created": "2026-10-17",
+   "refs": [
+    "projects/light-characters/session2.json",
+    "projects/light-characters/session2_registered.json"
+   ]
+  },
+  {
+   "id": "finding:reach-is-asymmetric",
+   "type": "problem",
+   "label": "6 of the 11 parted pairs are a great light turned away from a small twin that does not reach back: session 1's question measured one side only (not yet followed)",
+   "created": "2026-10-17",
+   "refs": [
+    "projects/light-characters/MAP.md",
+    "projects/light-characters/REFRAIN.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:66",
+   "relation": "continues",
+   "to": "project:light-characters",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "59801ae",
+     "note": "SESSION2.md with five predictions pushed before any arc was parsed"
+    }
+   ]
+  },
+  {
+   "from": "source:nga-pub110-bearings",
+   "relation": "turns",
+   "to": "material:list-of-lights",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/lib2.py",
+     "note": "remarks read as directions on the water; bearing from observer to light inside the listed arc"
+    }
+   ]
+  },
+  {
+   "from": "material:list-of-lights",
+   "relation": "finds",
+   "to": "finding:arcs-do-not-part",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/REFRAIN.md",
+     "note": "entries 9-10: registered 612, one parse error found in the reading (W.(10M)), corrected 613; P7, P8, P9, P11 held, P10 failed"
+    }
+   ]
+  },
+  {
+   "from": "finding:arcs-do-not-part",
+   "relation": "qualifies",
+   "to": "finding:rhythm-within-reach",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/session2.json",
+     "note": "the repeats within reach are, with 11 exceptions, repeats within sight on paper"
+    }
+   ]
+  },
+  {
+   "from": "finding:arcs-do-not-part",
+   "relation": "qualifies",
+   "to": "finding:rhythm-is-regional",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/session2.json",
+     "note": "neither distance (session 1) nor direction (session 2) shows the separation rule as a pattern"
+    }
+   ]
+  },
+  {
+   "from": "finding:arcs-do-not-part",
+   "relation": "opens",
+   "to": "finding:reach-is-asymmetric",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/MAP.md",
+     "note": "version 2: new line, not yet followed"
+    }
+   ]
+  },
+  {
+   "from": "project:light-characters",
+   "relation": "uses",
+   "to": "instrument:t5-refrain",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/REFRAIN.md",
+     "note": "entry 11: the opening placed differently a second time (a field of shared water instead of a bare split of lines); failure criterion not triggered"
+    }
+   ]
+  },
+  {
+   "from": "project:light-characters",
+   "relation": "uses",
+   "to": "instrument:t1-atlas",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/MAP.md",
+     "note": "version 2, dated; version 1's decision (the arcs) taken and tested; it sets session 3: no widening to the small lights' arcs"
+    }
+   ]
+  },
+  {
+   "from": "finding:arcs-do-not-part",
+   "relation": "draws",
+   "to": "work-candidate:within-sight-of-itself",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/build.py",
+     "note": "11 parted pairs drawn blue; a field beside the blinking pair shows the water each light is shown over and where both are seen"
+    }
+   ]
+  }
+ ]
+}

@@ -14,3 +14,11 @@ have a light of the same rhythm within their own range**; of 4,314 great lights 
 The same rhythm stands nearer than a volume-wide shuffle puts it (R 0.78 great, 0.42 small) because each coast keeps its own periods;
 shuffling within 2° squares, R is 1.03 for great lights and 0.90 for small (exploratory). The 20 read pairs are mostly designed
 (leading lines, harbours, series) and three are plain coastal repeats. No work declared.
+
+Session 2 (2026-10-17): `SESSION2.md` (registered, 59801ae, before any arc was parsed); `lib2.py`, `test_lib2.py` (arc grammar on
+invented strings); `session2.py` -> `session2_registered.json` (as registered) and `session2.json` (after one verified parse
+correction); `build.py` + `template.html` -> `index.html` (parted pairs drawn blue; a field of the water both lights are shown over).
+Predictions: 5 registered; 4 held (P7, P8, P9, P11), 1 failed (P10, 87.9 % of degree remarks parsed). Found: **613 of the 624 great
+repeats have water from which both lights are seen at once**, each in its own range and arc; the arcs part 11. Great lights paired
+with their nearest light of another rhythm are seen together as often (590 of 603). Neither distance nor direction holds the name. Of
+20 random pairs read, 9 were one leading line and 7 independent coastal lights. No work declared.

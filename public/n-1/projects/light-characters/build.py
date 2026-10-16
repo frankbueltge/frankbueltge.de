@@ -1,6 +1,9 @@
-"""Project 10, session 1: build rows.json (committed, derived) and index.html.
-Usage: python3 build.py SCRATCHDIR   (needs rows_full.json from session1.py and the seven volumes)"""
+"""Project 10: build rows.json (committed, derived) and index.html.
+Usage: python3 build.py SCRATCHDIR   (needs rows_full.json from session1.py, pairs2_full.json from session2.py and the seven volumes)
+Session 2 added the arcs: each great pair's shared field, and each great light's visible arc."""
 import json, re, sys
+import numpy as np
+from lib2 import arcs, BINS
 
 sc = sys.argv[1]
 rawl = []
@@ -9,6 +12,27 @@ for v in range(110, 117):
 rows = json.load(open(f"{sc}/rows_full.json"))
 assert len(rows) == len(rawl)
 res = json.load(open("session1.json"))
+res2 = json.load(open("session2.json"))
+p2 = {(p["A"], p["B"]): p for p in json.load(open(f"{sc}/pairs2_full.json"))}
+
+
+def intervals(mask):
+    """Visible arc as [[from, to], ...] in degrees (clockwise), [] meaning all round."""
+    if mask.all():
+        return []
+    out, i = [], 0
+    m = np.concatenate([mask, mask])
+    start = int(np.argmin(mask))  # begin at a dark bin so no run wraps
+    run = None
+    for k in range(start, start + BINS):
+        if m[k] and run is None:
+            run = k
+        if not m[k] and run is not None:
+            out.append([round(run * 360 / BINS % 360, 1), round(k * 360 / BINS % 360, 1)]); run = None
+    if run is not None:
+        out.append([round(run * 360 / BINS % 360, 1), round((start + BINS) * 360 / BINS % 360, 1)])
+    return out
+
 ex = json.load(open("explore1.json"))
 T = [i for i, x in enumerate(rows) if x["kind"] == "rhythmic" and x["lat"] is not None]
 pos_in_T = {ri: ti for ti, ri in enumerate(T)}
@@ -61,7 +85,11 @@ for ti, ri in enumerate(T):
     if x["rg"] is None or x["twin_km"] is None or x["twin_km"] > x["rg"] * NM:
         continue
     tj = x["twin_i"]
-    pairs.append([ti, tj, 1 if x["c"] == "major" else 0])
+    if x["c"] == "major":
+        q = p2[(ti, tj)]
+        pairs.append([ti, tj, 1, round(q["share"], 3) if q["share"] is not None else 0, 1 if q["shared"] == 0 else 0, q["rB_used"]])
+    else:
+        pairs.append([ti, tj, 0])
     if x["c"] == "major":
         for t in (ti, tj):
             if t not in info:
@@ -69,7 +97,8 @@ for ti, ri in enumerate(T):
                 seq, synth = phases(T[t])
                 info[t] = {"n": (r["name"] or "").replace("\n", " ").strip(" -")[:80], "f": rows[T[t]]["f"].replace("\n", " "),
                            "k": rows[T[t]]["k"], "p": rows[T[t]]["p"], "rg": rows[T[t]]["rg"], "c": colour(rows[T[t]]["k"]),
-                           "s": [[1 if on else 0, d] for on, d in seq], "y": synth}
+                           "s": [[1 if on else 0, d] for on, d in seq], "y": synth,
+                           "a": intervals(arcs(r["remarks"])[0]), "la": rows[T[t]]["lat"], "lo": rows[T[t]]["lon"]}
 major = res["classes"]["major"]; minor = res["classes"]["minor"]; allc = res["classes"]["all"]
 n_major_pairs = sum(1 for p in pairs if p[2])
 data = {"pts": pts, "pairs": pairs, "info": {str(k): v for k, v in info.items()}}
@@ -88,6 +117,10 @@ fill = {
     "PCT_MINOR": f'{100 * minor["share"]:.0f}',
     "R_MAJOR": f'{major["R"]:.2f}', "R_MINOR": f'{minor["R"]:.2f}',
     "R_MAJOR_2": f'{ex["by_grid"]["2"]["major"]["R"]:.2f}', "R_MINOR_2": f'{ex["by_grid"]["2"]["minor"]["R"]:.2f}',
+    "N_PAIRS2": f'{res2["pairs"]:,}', "N_RESTR": f'{res2["restricted_any"]:,}', "PCT_RESTR": f'{100 * res2["restricted_share"]:.0f}',
+    "N_KEEP": f'{res2["keep_shared"]:,}', "N_PARTED": f'{res2["parted"]:,}', "PCT_KEEP": f'{100 * res2["keep_share"]:.0f}',
+    "N_WITHC": f'{res2["with_neighbour"]:,}', "N_KEEPC": f'{res2["neighbour_keep"]:,}',
+    "PCT_KEEPC": f'{100 * res2["neighbour_keep_share"]:.0f}', "MED_SHARE": f'{100 * res2["median_shared_share"]:.0f}',
     "N_FIXED": f'{res["counts"]["kind_fixed"]:,}', "N_UNPARSED": f'{res["counts"]["kind_unparsed"]:,}',
 }
 for k, v in fill.items():

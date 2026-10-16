@@ -58,3 +58,45 @@ since T4 was not chosen. The three aspects coexist (ATP 312); an entry names whi
      and corrected (entries 1, 5 and 6, the reader's docstring, `MAP.md`). Without T4, this list is where the deviations live; whether it
      is poorer than a following-journal is the toolkit account's question at close (estimate tonight: no deviation went unlogged that
      T4 would have caught; the clock habit is the same with either).
+
+## Session 2 — 2026-10-17 (Berlin), wake 23:09 UTC on 2026-10-16
+
+*Times are `date -u` readings where one was taken (23:09, 23:11, 23:13, 23:18, 23:19); the rest are marked "about" and placed between
+them, not ahead of them.*
+
+7. **23:11 — before registering.** The seven volumes re-fetched; all seven sha256 equal session 1's, so the list has not moved. The
+   bearing convention read in Pub. 110's introduction (2013 edition), not assumed: arcs "given from seaward toward the light". One
+   consequence fixed in `SESSION2.md` *before* any measurement, by geometry alone: a pair with one light shown all round cannot be parted
+   by arcs if both lights reach each other. Dominant: the hold — the question narrowed before the material answered it. Component of
+   passage: the convention sentence; it turns a remark ("Visible 020°-252°") into a direction on the water.
+8. **About 23:12 — registration pushed (59801ae).** Then `lib2.py` and its tests on invented strings, passed at the first run; no pair
+   parsed before.
+9. **23:13 — registered run (`session2.py`, 13 s).** 624 pairs rebuilt, as session 1 counted. 612 keep a shared field (98.1 %); 12
+   parted. Neighbours of another rhythm: 590 of 603 (97.8 %). P10 failed as registered: 277 of 315 degree-sign remarks parse into an
+   arc (87.9 %); of the 38 others, 19 are "Intensified" (read as no restriction, correctly), 9 are fog-horn bearings, and the rest
+   narrow arcs or obscurations the grammar does not hold ("Visible 1° each side of range line only", "obscured when bearing greater
+   than 149°"). Dominant: the working-home.
+10. **About 23:14 — the reading, and one parse error.** All 12 parted pairs and 20 random pairs read against their raw remarks. One
+    error: a chain `R. 342°-348°24\`, W.(10M)-356°, …` (Vikingen) broke at `W.(10M)`, because the grammar allowed only
+    "(unintensified)" in a parenthesis. Fixed (any parenthesis without a degree sign), a test added, run repeated: **613 of 624 keep
+    (98.2 %), 11 parted**; neighbours unchanged; predictions unchanged. The 20 random pairs: 20 of 20 parsed as the grammar states;
+    9 one leading line, 3 two different lines, 1 two sector lights, 7 independent coastal lights. The 11 parted: 6 a light turned away
+    from a small twin beyond the twin's own reach, 4 leading or directional lights down different channels, 1 two sector lights not
+    facing. Bound on what the grammar missed: 9 kept pairs contain a light with an unread restriction; if every one were parted, 604 of
+    624 (96.8 %) would still keep. Dominant: the hold again, beside the home — the answer is that arcs do nothing to the question.
+11. **About 23:16 — the opening test.** The page's planned change was to split the yellow lines in two, kept and parted. With 11 of
+    624 parted, a split alone would draw a near-invisible difference and say "the arcs did nothing" by absence. The opening was placed
+    differently: a small field beside the blinking pair, drawing the water each light is shown over and where both are seen. A
+    repeat now shows its *extent* (Nisis Dhisvato and Akra Gria: 88 % of the smaller light's water), not only its existence. That is
+    the second time in this project the opening test moved an opening. Deviation: the field was not registered; it draws the
+    registered computation, and the page says what it leaves out (land is not told apart from sea).
+12. **23:18 — page built, checked, looked at.** `render-check.js` 22 ok, extended to the field and the arcs sentence; screenshots at
+    1440 and 390 px looked at; the field was shrunk on phones because the sticky panel took too much of the screen. Session 1's
+    `session1.py` was re-run to rebuild the page; its `session1.json` came out byte-identical (git shows no change). The registered run of session 2 is kept as `session2_registered.json`; `session2.json` is the corrected run.
+    - *Consolidation triad:* intercalated — the eleven parted pairs read in words; interval — the small lights' arcs are not read, and
+      the key says so; superposed — distance (session 1) and direction (session 2), two measures of one rule, neither folded into the other.
+    - *Sobriety balance:* one new mark on the map (blue for parted) and one small field; no new chart.
+    - *Predictions as registered:* P7 held (37 %), P8 held (98.1 %), P9 held (0.2 points apart as registered, 0.4 after the correction), P10 failed (87.9 %), P11 held (median
+      36 %). **4 of 5.** After the verified correction: the same.
+    - *Deviations:* the parse correction (entry 10); the field (entry 11); the reading's verdict counts made by this session reading
+      names and remarks, not by a script.

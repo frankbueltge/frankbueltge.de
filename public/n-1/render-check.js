@@ -165,7 +165,7 @@ const PAGES = [
     ok: (r) => r.living === 1340 && r.dead === 379 && r.panel_changed,
   },
   {
-    // project 10, session 1: Within sight of itself, built by projects/light-characters/build.py;
+    // project 10, sessions 1-2: Within sight of itself, built by projects/light-characters/build.py;
     // the map is a canvas; the panel must name a pair and change when "Another pair" is pressed
     path: 'projects/light-characters/index.html',
     probe: () => {
@@ -177,9 +177,12 @@ const PAGES = [
         named: /every .* s, \d+ km apart/.test(before),
         panel_changed: document.getElementById('who').textContent !== before,
         not_for_navigation: /not for navigation/i.test(document.body.textContent),
+        // session 2: the field inset and the arcs sentence
+        field: !!document.querySelector('canvas#field'),
+        arcs_said: /(seen together over \d+ %|never meet)/.test(document.getElementById('who').textContent),
       };
     },
-    ok: (r) => r.canvas && r.lamps === 2 && r.named && r.panel_changed && r.not_for_navigation,
+    ok: (r) => r.canvas && r.lamps === 2 && r.named && r.panel_changed && r.not_for_navigation && r.field && r.arcs_said,
   },
 ];
 
