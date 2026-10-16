@@ -1,30 +1,30 @@
 {
-  "date": "2026-10-15",
+  "date": "2026-10-16",
   "deletion": {
     "available": true,
-    "checked_at": "2026-10-15T10:22:21Z",
+    "checked_at": "2026-10-16T10:11:43Z",
     "counts": {
-      "botwall": 32,
-      "gone_404": 0,
+      "botwall": 28,
+      "gone_404": 1,
       "gone_410": 0,
       "legal_451": 0,
       "ok": 267,
       "other": 0,
-      "server_error": 0,
+      "server_error": 3,
       "unreachable": 1
     },
-    "decided": 267,
-    "excluded_unverifiable": 33,
-    "gone": 0,
+    "decided": 268,
+    "excluded_unverifiable": 32,
+    "gone": 1,
     "gone_ci95": [
-      0.0,
-      0.0142
+      0.0007,
+      0.0208
     ],
-    "gone_rate": 0.0,
+    "gone_rate": 0.0037,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.0142
+      0.0141
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,21 +33,30 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-10-13",
-    "receipts": [],
-    "sample_drawn_at": "2026-10-14T10:33:23Z",
+    "pool_day": "2026-10-14",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "kurv.com",
+        "first_seen": "20261014200000",
+        "http_code": 404,
+        "title": "Zelenskyy Says Russia Keeps Striking Ukraine's Energy Sites Despite Trump Ceasefire Push – 710am KURV",
+        "url": "https://www.kurv.com/zelenskyy-says-russia-keeps-striking-ukraines-energy-sites-despite-trump-ceasefire-push/"
+      }
+    ],
+    "sample_drawn_at": "2026-10-15T10:18:55Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 5826,
-      "replaced": 5190,
-      "trivial": 977,
-      "update": 683
+      "reframing": 5633,
+      "replaced": 4369,
+      "trivial": 929,
+      "update": 502
     },
-    "day": "2026-10-14",
+    "day": "2026-10-15",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
@@ -56,7 +65,7 @@
         ],
         "after": "Socrates philosophy on love: Socrates on human attraction and love: 'Beauty is the bait which with delight allures man to...'",
         "before": "Socrates philosophy on beauty: Socrates on human attraction and love: 'Beauty is the bait which with delight allures man to...'",
-        "detected": "2026-10-14T18:19:28Z",
+        "detected": "2026-10-15T11:48:31Z",
         "domain": "indiatimes.com",
         "removed": [
           "Beauty"
@@ -68,67 +77,74 @@
       },
       {
         "added": [
-          "Welcome",
-          "Home"
+          "Billion",
+          "U",
+          "S"
         ],
-        "after": "All the Details From Apple's 'Welcome Home' Event: HomeView, HomePod Mini 2, LG Home Collection, Apple TV, More",
-        "before": "All the Details From Apple's Oct. 13 Event: HomeView, HomePod Mini 2, LG Home Collection, Apple TV, More",
-        "detected": "2026-10-14T15:19:45Z",
-        "domain": "pcmag.com",
+        "after": "Zambia Finalises U.S.$1.5 Billion U.S. Health Funding Deal As Zimbabwe Rejects Terms",
+        "before": "Zambia Finalises U.S.$1.5 Bln Us Health Funding Deal As Zimbabwe Rejects Terms",
+        "detected": "2026-10-15T05:02:40Z",
+        "domain": "allafrica.com",
         "removed": [
-          "Oct",
-          "13"
+          "Bln",
+          "Us"
         ],
-        "similarity": 0.842,
-        "url": "https://www.pcmag.com/news/apple-oct-13-event-details-announced-homeview-homepod-mini-2-lg-home",
-        "weight": 7,
-        "window": "24h"
+        "similarity": 0.812,
+        "url": "https://allafrica.com/stories/202610080020.html",
+        "weight": 8,
+        "window": "1w"
       },
       {
         "added": [
-          "Dell",
-          "Ticks",
-          "Up"
+          "Welcome",
+          "to",
+          "UK"
         ],
-        "after": "Super Micro Edges Higher as Server Makers Rise Against a Falling Tech Tape; Hewlett Packard Enterprise Adds 3%, Dell Ticks Up",
-        "before": "Super Micro Computer Edges Higher as Server Makers Rise Against a Falling Tech Tape; Hewlett Packard Enterprise Adds 3%",
-        "detected": "2026-10-14T18:18:15Z",
-        "domain": "aol.com",
+        "after": "Welcome to The Hamptons UK! Critics have called it 'cult-like', but those living on US-style development - where houses go for £800K and Practical Magic 2 was filmed - paint an idyllic picture of life",
+        "before": "The Surrey estate that thinks it's The Hamptons! Critics have called it 'cult-like', but those living on US-style development - where houses go for £800K and Practical Magic 2 was filmed - paint an idyllic picture of life",
+        "detected": "2026-10-15T11:46:20Z",
+        "domain": "dailymail.com",
         "removed": [
-          "Computer"
+          "Surrey",
+          "estate",
+          "that",
+          "thinks",
+          "s",
+          "The",
+          "it"
         ],
-        "similarity": 0.818,
-        "url": "https://www.aol.com/articles/super-micro-computer-edges-higher-180554000.html",
-        "weight": 6,
-        "window": "1w"
+        "similarity": 0.8,
+        "url": "https://www.dailymail.com/lifestyle/article-16190059/Surrey-village-New-England-Practical-Magic-Hamptons-Worcester-Park.html",
+        "weight": 8,
+        "window": "24h"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 15601,
-      "PAGE_TEXTCHANGE": 133070,
-      "PAGE_TITLECHANGE": 51061,
-      "UNCHANGED_CONTENT": 757969
+      "HTTP_REDIRECT": 15317,
+      "PAGE_TEXTCHANGE": 133339,
+      "PAGE_TITLECHANGE": 51287,
+      "UNCHANGED_CONTENT": 771595
     },
-    "title_changes_en": 12676,
+    "title_changes_en": 11433,
     "trace": [
       {
         "bytes_billed": 26214400,
-        "created": "1792059507509",
-        "job_id": "world_gdg_counts_20261014",
+        "created": "1792145302603",
+        "job_id": "world_gdg_counts_20261015",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 241172480,
-        "created": "1792059513316",
-        "job_id": "world_gdg_titles_20261014",
+        "bytes_billed": 245366784,
+        "created": "1792145308029",
+        "job_id": "world_gdg_titles_20261015",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-10-15T10:22:21Z",
+  "generated_at": "2026-10-16T10:11:43Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-10-14.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-10-15.json",
   "schema_version": "1",
   "selection_version": "v1"
 }
