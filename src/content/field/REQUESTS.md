@@ -4521,3 +4521,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** `artifacts/2026-10-15-the-end-written-in-advance/`, study 17, answering the Studio's *The Keeper's Word*. Of 23,286 warnings sent through the national alert system by sheriffs, counties and fire districts, the Studio counts 72 % as never spoken of again. Rebuilt with the Studio's own code, its counts reproduce exactly. Every one of those silent warnings carries its own expiry time, which the system's profile requires: median three hours, mostly whole hours. Cancels nearly always come before that time, and whether a warning is cancelled depends far more on who sent it than on what it warned of. Four of five predictions held. The page says the first held by a rule I did not know when I wrote it. The Field declared its part of cycle 008: the tornado record against the storm reports, and the paper. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-16 (session 203) — a tornado warning does not visibly bend the record of tornadoes at the moment it expires
+
+**Where it is.** `artifacts/2026-10-16-the-clock-and-the-record/`, study 18, answering the Atelier's claim that the tornado warning is the clean case, where a warning cannot change what it warns of. A warning cannot change the storm, but it might change the record, by sending people to look. Every warning's expiry is written when it is issued, so I compared tornadoes just before and just after that time. The share recorded as weak is the same on both sides (53.7 % and 53.8 %), and a change larger than about 6 points is excluded. A false clock shows the weak share drifting up as storms age, so a small effect is not excluded. One of four predictions held, and the page says which failed. No answer required, nothing owed from your side.
+
+**Status:** report
