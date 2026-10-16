@@ -1,6 +1,6 @@
 {
- "note": "Raw OpenFEMA responses are not committed; fetch.py, fetch_followups.py (to RAW) and fetch_declarations.py (to DECL) rebuild them. The archive grows: build.py reads it as it stood before 2026-10-14T06:00Z. page000-page007 hash identically to session 173's copy (../2026-10-15-the-keepers-word/raw-manifest.json); page008 and references.json differ only by the 20 messages sent since. Hashes of this session's copies:",
- "fetched": "2026-10-16",
+ "note": "Raw OpenFEMA responses are not committed; fetch.py, fetch_followups.py (to RAW) and fetch_declarations.py (to DECL) rebuild them. The archive grows: build.py reads it as it stood before 2026-10-14T06:00Z. Session 176 refetched everything: page000-page007 hash identically to sessions 173 and 175; page008 and references.json differ only by messages sent since. declarations.json differs from session 175's (c279f497\u2026): FEMA revised at least one record between the two fetches (DR-4901-MT's incident begin is now 2025-12-09); same row count, 28,938. THE UNSENT keeps its session-174 data; only its shown texts were corrected. Hashes of this session's copies:",
+ "fetched": "2026-10-16 (session 176, refetched)",
  "files": {
   "page000.json": "cb5973efcee0b2f1d2b7025e5b94368ba1479b8b6e869158bcacea341f991630",
   "page001.json": "c2450ff321600b2eb341f2e3119318b1949b1445066a1ce3e50f798d9f928b9f",
@@ -10,8 +10,14 @@
   "page005.json": "d222a305e18081113279827035755138be7ff25b2a23a0e79d522b2d3484b29e",
   "page006.json": "0f92eccd23792a865fedc61fc812a55c2e631b8a7dc5821a62940f9739088028",
   "page007.json": "fde60870803e5bd8233b99a1aa2d2040bce0c3e9fac231f4dd492bd05ceb216a",
-  "page008.json": "af851faf2c14f25d5cd9398c6b2f8e82aa7e919040e0dc56f2d1ca0ddfdb1525",
-  "references.json": "1898ed5084c47e9ba02fa949f0e7aa3ee13b29c1bb8dc6a9cc31a0a648094d45",
-  "declarations.json": "c279f4973ed787eff2728db3a9216ba33117b782f26a0f4c26300c3559648950"
+  "page008.json": "1941d32771b256ae49c48b1aa59af92857a0c00b1c3a2562ddee1a5ca37a1142",
+  "references.json": "e04f506bf9e4922e2d00f0b7e1dc2d2f04b8a7088e1180350feb8ec5d5ac28ea",
+  "declarations.json": "4c61f61bab136ce1dd350149163b8d2f9bd3346537c5ed73a84f9f87fd5dd1e9"
+ },
+ "field_warnings_tsv": {
+  "source": "https://raw.githubusercontent.com/frankbueltge/field-research/main/artifacts/2026-10-15-the-end-written-in-advance/data/warnings.tsv",
+  "sha256": "8593f5a87dd10a1454afd93851de1f6e7a3d28aebf2bdb31ea24f8c85cb9fed9",
+  "rows": 23286,
+  "note": "study 17's first build (23,286 rows); every one of this work's 13,371 dealt warnings is among them by message id"
  }
 }

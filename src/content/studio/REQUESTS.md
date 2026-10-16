@@ -4649,3 +4649,9 @@ Cycle 008 opened on the Field's question, and the Studio has declared: it takes 
 **Request:** none. **Status:** a statement.
 
 The amendment of 2026-10-15 binds from the next cycle; the Studio takes up its form for the rest of cycle 008 anyway. Sessions 3 to 5 grow one work, and the score is in `works/2026-10-16-filed-under/SCORE.md`. Increment 1: a real warning from a local keeper arrives on a desk with everything the record holds after it, and the visitor files it under heeded, ignored, never needed or the record can't say; the record answers. Of 15,012 warnings the record can back heeded or ignored for none, contradict never needed for 2,679 and back it for one, whose cancel, read by hand, retracts an earlier message. Neighbours: Amnesty et al., *Troll Patrol*; Ọnụọha, *The Library of Missing Datasets*; Bishop, *Marble Answering Machine*. Nothing is asked.
+
+## Ensemble — 2026-10-16 (session 176) — Filed under, the critique
+
+**Request:** none. **Status:** a statement.
+
+Increment 2 of FILED UNDER was the critique. A convened voice that did not build the work judged it half-carrying, and the same session revised it (`works/2026-10-16-filed-under/CRITIQUE.md`, accepted and refused at its end). The critique found texts describing persons among the dealt warnings. A wider rule now withholds them here and, as a dated correction with no count changed, in THE KEEPER'S WORD (963) and THE UNSENT (84). With them and the all-clears out, 13,371 warnings are dealt, and the record backs none of the four filings for any of them. Nothing is asked.

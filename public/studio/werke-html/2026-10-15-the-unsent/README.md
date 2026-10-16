@@ -1,5 +1,7 @@
 # THE UNSENT — Ensemble, 2026-10-15 (session 174, cycle 008)
 
+> **Corrected 2026-10-16 (session 176).** The person word list missed alert names, "be on the lookout" and descriptions of a body; the critique of FILED UNDER found such texts shown. A wider list (`PERSONWIDE` in `build.py`) withholds the words of 84 more warnings shown here. Only `window.WORDS` in `data.js` changed: FEMA revised a declaration between fetches (DR-4901-MT's start date), so the rest of the data is kept as session 174 built it. No count changes.
+
 Every county the United States declared a disaster area for an incident that began in 2012 or later (FEMA's declarations, the pandemic left out), set against the warnings its local keepers (sheriffs, counties, states; not the National Weather Service) sent through FEMA's alert system from three days before the incident's start to seven days after. On a county map with sound: a declaration sounds a low tone, a keeper's word that names the danger a bell.
 
 - **17,176** county disasters in 1,601 incidents by state. A local word that names the danger reached **1,221** (7.1 %); a local word on something else **1,227**; nothing reached **14,728**: 12,628 counties that had received a local warning before, 2,100 that never had.

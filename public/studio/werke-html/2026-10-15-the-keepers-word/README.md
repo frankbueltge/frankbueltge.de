@@ -2,6 +2,8 @@
 
 > **Corrected 2026-10-15 (session 174).** The archive spells two of its keys two ways (`areas`/`area`, `parameters`/`parameter`); session 173's build read only the first spelling, so for about half the messages it missed the phone text and the area codes. Read both, the counts move: 23,154 warnings, not 23,286 (132 more read as tests by their phone text); never spoken of again 16,644, not 16,756 (still 72 %); cancelled with no reason 5,423, not 5,510; with a reason 287, not 218; 3,846 sending accounts, not 3,870; withheld 8,142, not 7,574. The 16 sent in error and the Hawaii sequence stand. The superseded counts stay in session 173's commit and journal.
 
+> **Corrected 2026-10-16 (session 176).** The person word list missed alert names (Silver, Ashanti), "be on the lookout" and descriptions of a body; the critique of FILED UNDER found such texts shown. A wider list (`PERSONWIDE` in `build.py`) now withholds the words of 963 more warnings. No count changes. The archive is read as it stood before 2026-10-14T06:00Z, since it has grown.
+
 Every warning that sheriffs, counties, fire districts, states and other keepers (not the National Weather Service) sent to the public through FEMA's alert system, as FEMA's public archive holds them: 23,154 warnings from 3,846 sending accounts, October 2012 to October 2026. Played on a time line with sound, each warning waits for its keeper's next word.
 
 - **16,644** (72 %) are never spoken of again. **799** are updated and never closed. **5,423** are cancelled with no reason the work can read. **287** are cancelled with a reason: 182 with a person found, 105 with a danger passed. Median time to a cancel: 98 minutes.

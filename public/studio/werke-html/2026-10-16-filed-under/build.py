@@ -21,10 +21,23 @@ The record's answer to a filing, fixed before anything was counted:
 - "the record can't say": AGREES, always.
 Warnings whose text names or describes a person are withheld (as in THE KEEPER'S WORD) and are not
 dealt; they are counted.
+
+Session 176, after the critique (CRITIQUE.md), three changes, fixed before the recount:
+- A WIDER PERSON RULE for what is dealt. THE KEEPER'S WORD's word list missed alert names (Silver,
+  Golden, Ashanti), "be on the lookout", and descriptions of a body (sex, age, height, clothing). Those
+  warnings are now withheld too. THE KEEPER'S WORD's own counts are not touched by this (23,154
+  warnings, 8,142 withheld by its rule); the wider rule withholds more here, and the count is printed.
+- ALL-CLEARS ARE NOT DEALT. A message sent as a new alert whose shown words begin with a cancel, or carry
+  an all-clear (THE KEEPER'S WORD's CLEAR list less "reopen"), is not a warning of a danger to come.
+  Counted, not dealt. The list is mechanical: a few warnings that only mention a lifting are lost too.
+- THE KEEPER'S CLOCK, from the Field (study 17, warnings.tsv, handoff ho-2026-10-15-field-3): each
+  warning's declared lifetime and the minute of its first cancel, joined by the archive's message id.
+  The lifetime is recomputed here from the message's own expiry and must agree with the Field's.
 """
 import json, glob, re, sys, collections, datetime as dt
 
 RAW, DD = sys.argv[1], sys.argv[2]
+FIELD = sys.argv[3] if len(sys.argv) > 3 else None    # the Field's warnings.tsv (study 17)
 rows = []
 for f in sorted(glob.glob(f"{RAW}/page*.json")):
     rows += json.load(open(f))
@@ -53,6 +66,14 @@ TESTWORDS = re.compile(r"\b(this is (only )?a test|test message|testing|a test o
 NOTTEST = re.compile(r"\bnot an? (test|drill|exercise)\b", re.I)
 PERSONWORDS = re.compile(r"\b(suspect|wanted|missing|endangered|abduct\w*|kidnap\w*|escaped|inmate|fugitive|"
                          r"homicide|shooting|shooter|murder\w*|named|description|DOB|years? old|yoa)\b", re.I)
+# session 176: the wider rule for what is dealt (see the docstring)
+PERSONWIDE = re.compile('\\b(silver alert|golden alert|ashanti|camo alert|amber alert|senior alert|codi alert|bolo|be on the look ?out|look ?out for|last seen|wearing|[wbh]/[mf]|males?|females?|man|woman|boy|girl|juvenile|teen(ager)?|person of interest|he|she|his|her|him|height|weight|lbs?|hair|y/?o|year-old|yrs? old|age \\d+|\\d ?\'\\s?\\d+\\"?|tattoo\\w*|armed|dementia|alzheimer\\w*|autis\\w*|lic|runaway|escapee\\w*|alerta|found safe|has been found|was found|located safe|looking for|locating|searching for|seen in|seen near|info on|information on)\\b', re.I)
+# the all-clears not dealt: THE KEEPER'S WORD's CLEAR list without "reopen" (a road's reopening time is not
+# an all-clear), read in the words the card shows
+ALLCLEAR = re.compile(r"\b(all clear|lifted|is over|has ended|resolved|no longer|restored|"
+                      r"contained|extinguished|return home|may return|safe to return|no threat|no danger|"
+                      r"no further threat|has passed|under control)\b", re.I)
+STARTSCANCEL = re.compile(r"^\W*(cancel\w*|all clear|update: all clear)\b", re.I)
 ERROR = re.compile(r"\b(in error|erroneous\w*|by mistake|mistaken\w*|false alarm|accidental\w*|inadvertent\w*|"
                    r"sent incorrectly|unintended|was not intended|(please )?disregard (the |this |that )?"
                    r"(previous|prior|earlier|last|above|message|alert|notification|siren))\b", re.I)
@@ -232,6 +253,13 @@ for r in rows:
     if c in PERSON or PERSONWORDS.search(txt + " " + cw):
         stats["withheld"] += 1
         continue
+    if PERSONWIDE.search(txt + " " + cw):
+        stats["withheld_wider_s176"] += 1
+        continue
+    shown = wea(r) or txt
+    if STARTSCANCEL.search(shown) or ALLCLEAR.search(shown):
+        stats["allclear_not_dealt"] += 1
+        continue
     cs = counties(r)
     # the disasters declared in its counties (a whole-state code reaches every county of the state)
     reach = set()
@@ -265,7 +293,13 @@ for r in rows:
             place.append(SN.get(f[:2], f[:2]) + " (whole state)")
         elif f in CN:
             place.append(f"{CN[f]}, {SN.get(f[:2], f[:2])}")
-    CARDS.append({"t": t0, "c": c, "a": agency(r), "w": (wea(r) or txt)[:300],
+    life = None
+    for i in r["info"] or []:
+        if i.get("expires"):
+            life = (dt.datetime.fromisoformat(i["expires"].replace("Z", "+00:00")) -
+                    dt.datetime.fromisoformat(r["sent"].replace("Z", "+00:00"))).total_seconds() / 60
+            break
+    CARDS.append({"id": r["id"], "own_life": life, "t": t0, "c": c, "a": agency(r), "w": (wea(r) or txt)[:300],
                   "l": (txt if len(txt) > len(wea(r) or txt) + 20 else "")[:900],
                   "g": cs[:60], "p": place[:6], "pn": len(place), "f": fate, "lag": lag,
                   "x": cw[:300] if cw else "", "e": 1 if own_error else 0, "nn": nn, "dl": dl[:4], "dn": len(dl)})
@@ -273,6 +307,28 @@ for r in rows:
 assert stats["warnings"] == 23154, stats["warnings"]   # THE KEEPER'S WORD, corrected
 assert stats["withheld"] == 8142, stats["withheld"]
 CARDS.sort(key=lambda x: x["t"])
+# the Field's clock, joined by message id; its lifetime must agree with the message's own expiry
+clock = {"joined": 0, "missing": 0, "life_agrees": 0, "life_differs": 0, "cancelled": 0}
+fld = {}
+if FIELD:
+    import csv
+    for row in csv.DictReader(open(FIELD), delimiter="\t"):
+        fld[row["id"]] = row
+for c in CARDS:
+    own = c.pop("own_life"); row = fld.get(c.pop("id"))
+    if not row:
+        clock["missing"] += 1
+        continue
+    clock["joined"] += 1
+    lt = float(row["lifetime_min"]) if row["lifetime_min"] else None
+    if lt is not None and own is not None and abs(lt - own) < 0.01:
+        clock["life_agrees"] += 1
+    else:
+        clock["life_differs"] += 1
+    if lt is not None:
+        c["lt"] = round(lt)
+    if row["first_cancel_min"]:
+        c["fc"] = round(float(row["first_cancel_min"])); clock["cancelled"] += 1
 summary = {
     "sources": ["FEMA OpenFEMA IpawsArchivedAlerts v1, senders other than the National Weather Service",
                 "FEMA OpenFEMA DisasterDeclarationsSummaries v2 (incident begin 2012-01-01 or later)"],
@@ -283,6 +339,9 @@ summary = {
     "never_needed": {k.split(":")[1]: v for k, v in stats.items() if k.startswith("never_needed:")},
     "heeded_backed": 0, "ignored_backed": 0,
     "fates_dealt": dict(collections.Counter(c["f"] for c in CARDS)),
+    "s176_withheld_by_wider_person_rule": stats["withheld_wider_s176"],
+    "s176_allclear_not_dealt": stats["allclear_not_dealt"],
+    "s176_field_clock": clock,
 }
 nn = summary["never_needed"]
 summary["record_can_back_at_most"] = nn.get("backed", 0) + nn.get("both", 0)

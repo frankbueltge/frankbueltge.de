@@ -8,6 +8,8 @@ rows = []
 for f in sorted(glob.glob(f"{RAW}/page*.json")):
     rows += json.load(open(f))
 refs = json.load(open(f"{RAW}/references.json"))
+# session 176: the archive grows; read it as it stood before 2026-10-14T06:00Z (as FILED UNDER does)
+rows = [r for r in rows if r["sent"][:19] < "2026-10-14T06:00:00"]
 assert len(rows) == len({r["id"] for r in rows}) == 82754, len(rows)
 
 TESTCODES = {"RWT", "RMT", "DMO", "NPT"}           # tests by their own event code
@@ -23,6 +25,10 @@ TESTWORDS = re.compile(r"\b(this is (only )?a test|test message|testing|a test o
 NOTTEST = re.compile(r"\bnot an? (test|drill|exercise)\b", re.I)
 PERSONWORDS = re.compile(r"\b(suspect|wanted|missing|endangered|abduct\w*|kidnap\w*|escaped|inmate|fugitive|"
                          r"homicide|shooting|shooter|murder\w*|named|description|DOB|years? old|yoa)\b", re.I)
+# Correction of 2026-10-16 (session 176): the word list above missed alert names (Silver, Ashanti), 'be on
+# the lookout' and descriptions of a body (sex, age, height, clothing). Texts that match the wider rule
+# below are withheld from the page too. Counts are not changed by it. See ../2026-10-16-filed-under/CRITIQUE.md.
+PERSONWIDE = re.compile('\\b(silver alert|golden alert|ashanti|camo alert|amber alert|senior alert|codi alert|bolo|be on the look ?out|look ?out for|last seen|wearing|[wbh]/[mf]|males?|females?|man|woman|boy|girl|juvenile|teen(ager)?|person of interest|he|she|his|her|him|height|weight|lbs?|hair|y/?o|year-old|yrs? old|age \\d+|\\d ?\'\\s?\\d+\\"?|tattoo\\w*|armed|dementia|alzheimer\\w*|autis\\w*|lic|runaway|escapee\\w*|alerta|found safe|has been found|was found|located safe|looking for|locating|searching for|seen in|seen near|info on|information on)\\b', re.I)
 ERROR = re.compile(r"\b(in error|erroneous\w*|by mistake|mistaken\w*|false alarm|accidental\w*|inadvertent\w*|"
                    r"sent incorrectly|unintended|was not intended|(please )?disregard (the |this |that )?"
                    r"(previous|prior|earlier|last|above|message|alert|notification|siren))\b", re.I)
@@ -178,10 +184,12 @@ for r in rows:
     else:
         fate, lag, cw = "silence", None, ""
     withhold = c in PERSON or bool(PERSONWORDS.search(txt + " " + cw))
+    wide = not withhold and bool(PERSONWIDE.search(txt + " " + cw))   # session 176: text withheld, counts unchanged
+    stats["withheld_text_s176"] += wide
     W.append({"t": t0, "c": c, "f": fate, "l": lag, "s": state(r), "a": agency(r),
               "e": 1 if own_error else 0, "n": len(fu),
-              "w": None if withhold else (wea(r) or txt)[:300],
-              "x": None if (withhold or not cw) else cw[:300]})
+              "w": None if (withhold or wide) else (wea(r) or txt)[:300],
+              "x": None if (withhold or wide or not cw) else cw[:300]})
     stats["warnings"] += 1
     KEEP.add(r["sender"])
     stats["fate:" + fate] += 1

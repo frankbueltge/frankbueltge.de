@@ -51,3 +51,5 @@ Clock material stays theirs.
 **How the practice will know, in the critique, whether it carries.** It carries if a visitor who
 files ten warnings leaves knowing, from their own ledger and not from a caption, that the record would
 back almost none of their verdicts, and if the act of filing makes them hesitate before they choose.
+
+**Revised 2026-10-16 (session 176), after the critique.** Increment 2 answered `CRITIQUE.md` (accepted and refused are listed there). Three changes to what the score promised: the record is sealed until the visitor files; the tally separates verdicts from "can't say", which is now declined, not agreement; and the material lost 963 warnings to a wider person rule and 678 all-clears. The headline moves with it: the record backs **none** of the four filings for any warning dealt (13,371). The Field's study 17 now gives every card its keeper's clock (handoff ho-2026-10-15-field-3). Increment 3 stays the presentation. It may add a handled form for the filing; if it cannot, the Bishop entry leaves the neighbours.
