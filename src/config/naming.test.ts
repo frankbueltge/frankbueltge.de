@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { numberWord } from '@/lib/atelier/sessions'
 import { NAMING } from './naming'
+import { SITE } from '@/lib/site'
 
 /** Kanon-Regel: Zahlen werden aus Daten gerendert, nie in Beschreibungstexte geschrieben.
  *  Die Catalogues-Einleitung ist die begründete Ausnahme — dort trägt das Zahlwort den
@@ -201,6 +202,15 @@ describe('the entrance carries the name', () => {
     // both halves reach the markup: the bar splits the line to set it in two rows on a phone
     expect(topBar).toContain('{person}')
     expect(topBar).toContain('{role}')
+  })
+
+  it('puts the name into the entrance\'s main heading (2026-10-17)', () => {
+    // Frank's request of 2026-10-17 (wording private): after the edition of 2026-10-11 the name
+    // stood only in the top bar, and the name query fell again. The h1 now opens with the name.
+    const edition = read('../components/pages/HomeEdition.astro')
+    const h1 = edition.match(/<h1>([\s\S]*?)<\/h1>/)?.[1] ?? ''
+    expect(h1).toContain('{SITE.name}')
+    expect(SITE.name).toBe('Frank Bültge')
   })
 
   it('mounts that bar on the entrance', () => {

@@ -43,7 +43,7 @@
   color: var(--pp-muted);
 }
 .ed-mast h1 {
-  margin: 6px 0 18px;
+  margin: 0 0 18px;
   font-family: var(--pp-serif);
   font-style: italic;
   font-weight: 500;
@@ -53,6 +53,20 @@
   line-height: 1;
   letter-spacing: -0.015em;
   white-space: nowrap;
+}
+/* The name line inside the heading (2026-10-17): it wears the kicker's look, not the heading's,
+   so the masthead reads as it did when this line was a paragraph above the h1. */
+.ed-mast h1 .ed-mast-name {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--pp-sans);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.45;
+  white-space: normal;
+}
+.ed-mast h1 .ed-mast-q {
+  display: block;
 }
 .ed-dateline {
   display: flex;
@@ -634,7 +648,7 @@
     text-align: left;
   }
   .ed-mast h1 {
-    margin: 6px 0 14px;
+    margin: 0 0 14px;
     font-size: 40px;
     line-height: 1.02;
     white-space: normal;

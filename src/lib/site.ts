@@ -4,6 +4,8 @@ export const SITE = {
   alternateName: 'Frank Bueltge',
   url: 'https://frankbueltge.de',
   role: { de: 'Data Engineering & Analytics', en: 'Data Engineering & Analytics' },
+  /** Where Frank works from; visible on /about and in the Person data (name-query disambiguation). */
+  city: 'Karlsruhe',
   email: 'hello@frankbueltge.de',
   /** Open-source repository of the lab's measurement instruments. */
   sourceCode: 'https://github.com/frankbueltge/lab-pipelines',

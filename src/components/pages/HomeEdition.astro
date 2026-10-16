@@ -31,7 +31,7 @@
 // 2026-08-12 now lives — naming.test.ts follows it there.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { localeHref } from '@/lib/locale-href'
-import type { Locale } from '@/lib/site'
+import { SITE, type Locale } from '@/lib/site'
 import { NAMING } from '@/config/naming'
 import { EDITION } from '@/config/edition-wording'
 import pulseData from '@/data/pulse/pulse.json'
@@ -223,8 +223,14 @@ const forScript = {
   <div class="paper-sheet ed-wrap">
     {/* ── 1 · the masthead: the standing question, and the date this edition stands at ────── */}
     <header class="ed-mast">
-      <p class="ed-mast-kicker">{NAMING.focusKicker}</p>
-      <h1>{NAMING.title}</h1>
+      {/* 2026-10-17 (Frank's request, wording private): the name opens the main heading. The
+          name query fell when the name left the entrance's headings in July, and again after the
+          edition of 2026-10-11 left it to the top bar alone. The first line keeps the kicker's
+          look, so the page reads as before; naming.test.ts holds the name in this heading. */}
+      <h1>
+        <span class="ed-mast-kicker ed-mast-name">{SITE.name} · {NAMING.focusKicker}</span>
+        <span class="ed-mast-q">{NAMING.title}</span>
+      </h1>
       <div class="ed-dateline">
         <time datetime={editionDay}>{longDate(editionDay)}</time>
         {/* Rendered without a time and filled by the script: a clock written at build time
