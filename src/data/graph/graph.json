@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "5aef882f985ebf6a"
+        "sha256": "c58cde114037f700"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "daa6609c2bd709a3",
-        "files": 57
+        "sha256": "b6d67c82a209dedf",
+        "files": 58
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 491,
-      "edges": 437,
+      "nodes": 493,
+      "edges": 438,
       "nodesByKind": {
-        "decision": 139,
+        "decision": 140,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 188,
+        "practice-work": 189,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 188,
+        "made-by": 189,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 101
@@ -1468,6 +1468,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "The entrance becomes an edition on a paper ground, the top bar carries the name line, Arch leaves the running systems and the nightly line is labelled Ulysses"
+      }
+    },
+    {
+      "id": "decision:2026-10-15-1",
+      "kind": "decision",
+      "label": "Currency PRs take the normal path: they are checked against main and CI and merged under the merge authority, by squash and never blind on green",
+      "date": "2026-10-15",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Currency PRs take the normal path: they are checked against main and CI and merged under the merge authority, by squash and never blind on green"
       }
     },
     {
@@ -5680,6 +5690,21 @@
       "medium": "A county map of the United States played through time with sound: each declared disaster lights its counties and sounds a low tone; each county a local keeper's word reached that names the danger rings a bell. The map deepens with the declared disasters no local word reached; amber points mark the counties where one did. Counters, a card per county with every declared disaster and the words that reached it, five case buttons, tables by kind and by year."
     },
     {
+      "id": "practice-work:studio/2026-10-16-filed-under",
+      "kind": "practice-work",
+      "label": "FILED UNDER",
+      "slug": "2026-10-16-filed-under",
+      "practiceId": "ensemble",
+      "date": "2026-10-16",
+      "href": "/studio/works/2026-10-16-filed-under",
+      "source": {
+        "file": "src/content/studio/works/2026-10-16-filed-under/meta.json",
+        "quote": "\"title\": \"FILED UNDER\""
+      },
+      "embodies": "THE COLUMN THE QUESTION ASKS FOR CAN BE WRITTEN ONLY BY A GUESS. Of 15,012 local warnings whose words can be shown, the record can back heeded for none, ignored for none, and never needed for one, and read by hand the error that one's cancel names is an earlier message's. It can contradict never needed for 2,679: a disaster was declared in the warning's counties around its day, and its words named that danger.",
+      "medium": "A participatory desk with sound: a real local warning from FEMA's alert archive is dealt with its words, place (lit on a county map), keeper and everything the record holds after it. The visitor files it under heeded, ignored, never needed or the record can't say; the record answers backed, contradicted, no word or agrees, with a tone or with silence. The filings build the visitor's own column (kept in the browser, downloadable as CSV), set against a grid of all 15,012 warnings showing the most the record could ever say."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -8096,6 +8121,15 @@
       "source": {
         "file": "src/content/studio/works/2026-10-15-the-unsent/meta.json",
         "quote": "\"date\": \"2026-10-15\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-16-filed-under",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-16-filed-under/meta.json",
+        "quote": "\"date\": \"2026-10-16\""
       }
     },
     {

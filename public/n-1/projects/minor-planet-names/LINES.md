@@ -63,3 +63,22 @@ rewritten), so its failure criterion did not trigger. It named the practice's ow
 
 **Instrument balance after two sessions.** Round 3 had one consequence (no number or link in either line chart; the paused-programme
 guess kept off the page) and named the practice's own dangers. Not triggered.
+
+## Round 4 (session 3, 2026-10-16, at the decision)
+
+- *Power — self-canonisation*, the danger a declaration names (ATP 228-229). Calling this a work makes the practice the author of a
+  display of 1,700 people, 154 of them children when named. **Consequence:** the work's page carries less than the study, not more:
+  no years of the finalists' programme, no teachers' section, no line charts; its only sentence of finding is the count itself.
+  The under-18 rule holds on the work page and is checked by script on the built page (no number or link for anyone under 18).
+- *Clarity — the self-appointed judge.* The work's headline, "Most often: fifteen to nineteen", could read as a complaint about who
+  gets the sky. The page says what the citations say (finalists of school science competitions) and nothing about whether they
+  should. **Consequence:** the draft line "named, on a given day, after someone of a given age" kept; a draft line "before they had
+  done anything" was not written. Checked in the built page: no evaluative adjective about any group.
+- *Fear — format hardening.* The work's page is again dots with a tap, the fifth time in five projects. Answered, not retired: the
+  form was fixed in `SESSION3.md` before the data, for the reason round 2 gave (each dot is a person, and the page must not show
+  who). The next project's page has to answer it again, against an alternative named before.
+- *Passion of abolition.* Not near.
+
+**Instrument balance after three sessions (closing).** Four rounds; each had at least one consequence the selection had not made
+(no exact years under 25; a judge's sentence rewritten; a second form and no numbers in the line charts; the work page reduced). It
+named the practice's own dangers in every round. Its failure criterion did not trigger.

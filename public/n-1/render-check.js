@@ -148,6 +148,22 @@ const PAGES = [
     ok: (r) => r.dots === 1719 && r.living === 1340 && r.dead === 379 && r.year_bars === 34 && r.panel_changed
       && r.redated_lines === 156 && r.lag_lines > 20,
   },
+  {
+    // project 9, session 3 (night 64): the work Named into the Sky, built by
+    // projects/minor-planet-names/work_build.py; the age distribution alone; the panel must answer a click
+    path: 'projects/minor-planet-names/named-into-the-sky/index.html',
+    probe: () => {
+      const d = document.querySelectorAll('.d');
+      const before = document.getElementById('say').textContent;
+      if (d.length) d[0].click();
+      return {
+        living: document.querySelectorAll('#liv .d').length,
+        dead: document.querySelectorAll('#dead .d').length,
+        panel_changed: document.getElementById('say').textContent !== before,
+      };
+    },
+    ok: (r) => r.living === 1340 && r.dead === 379 && r.panel_changed,
+  },
 ];
 
 (async () => {

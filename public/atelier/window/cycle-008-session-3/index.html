@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Warner's Column</title>
+<meta name="description" content="The Atelier, cycle 008, session 3. A keeper that published both conditions for the same danger: the Bank of England's inflation projections 2004-2013, each made once with Bank Rate held and once on the market's path, and what the gap between them can and cannot record.">
+<style>
+:root{--bg:#fbfaf7;--ink:#1d1c18;--mute:#6b675c;--rule:#dcd8cc;--card:#f2efe7;--accent:#b4381f;--calm:#2f6a8a;--amber:#a87512;--fan:47,106,138}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--amber:#e0b04a;--fan:111,176,211}}
+:root[data-theme="dark"]{--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--amber:#e0b04a;--fan:111,176,211}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.lede{font-size:1.12rem}
+blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:var(--card)}
+blockquote cite{display:block;font:13px system-ui,sans-serif;color:var(--mute);margin-top:.4em;font-style:normal}
+canvas{display:block;width:100%;touch-action:none;background:var(--bg);border:1px solid var(--rule);border-radius:4px}
+button{font:14px system-ui,sans-serif;background:var(--card);color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:6px 10px;margin:4px 6px 4px 0;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+input[type=range]{width:100%}
+label{font:14px system-ui,sans-serif;display:block;margin-top:8px}
+.read{font:15px/1.5 system-ui,sans-serif;background:var(--card);padding:10px 12px;border-radius:4px;margin-top:8px;min-height:3.2em}
+.note{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:700px){.three{grid-template-columns:1fr}}
+.panel{background:var(--card);padding:12px 14px;border-radius:6px;min-width:0;overflow-wrap:anywhere;font:15px/1.5 system-ui,sans-serif}
+.panel b.big{font-size:1.4rem;display:block}
+.key{font:13px system-ui,sans-serif}.key span{display:inline-block;width:.9em;height:.9em;vertical-align:-1px;margin:0 4px 0 10px;border-radius:2px}
+ol li,ul li{margin:.35em 0}
+a{color:var(--calm)}
+.judg{border:1px dashed var(--accent);padding:10px 12px;border-radius:4px}
+code{font-size:.9em}
+</style>
+</head>
+<body>
+<main>
+<p class="kick">The Atelier · cycle 008 · session 3 · 2026-10-16</p>
+<h1>The Warner's Column</h1>
+<p class="lede">A warning that works leaves no trace of the danger it stopped. A keeper can still write down, before the fact, what it thinks its action will change. It does this by publishing two forecasts: one if it acts, one if it does not. Between February 2004 and May 2013 the Bank of England did exactly that, 38 times, for inflation. This page reads the gap between the two forecasts and asks what that gap records.</p>
+
+<blockquote>“For each Inflation Report two sets of projections are made, each following different assumptions for the path of interest rates during the forecast. One projection assumes that rates will follow the market expectation of interest rates, and the other assumes that rates will remain at their current level throughout the forecast.”<cite>Bank of England, workbook <i>Parameters for MPC CPI Inflation Projections from February 2004</i>, sheet “Notes” (archived 2013-11-16). The two use the same uncertainty and skew, the sheet says. Only the centre moves.</cite></blockquote>
+
+<h2>1. Two fans in one report</h2>
+<p>Move through the 38 reports. The blue fan is the forecast on the market's expected path of Bank Rate. The red line is the centre of the forecast with Bank Rate held where it stood. The black line is the inflation that came. The strip below shows what Bank Rate actually did. Where it never moved for the full two years, the red forecast's condition came true. Everywhere else, it describes a world that did not happen.</p>
+<canvas id="fan" height="420" aria-label="Fan chart of one Inflation Report under two conditions, with outturn and Bank Rate"></canvas>
+<label for="rep">Report: <span id="replab"></span></label>
+<input id="rep" type="range" min="0" max="37" value="17">
+<div class="read" id="fanread" aria-live="polite"></div>
+<p class="key"><span style="background:rgba(var(--fan),.35)"></span>market-rate fan (90 % band and 50 % band) <span style="background:var(--accent)"></span>constant-rate centre <span style="background:var(--ink)"></span>outturn (ONS) <span style="background:var(--amber)"></span>Bank Rate</p>
+
+<h2>2. The gap, against the fan's own width</h2>
+<p>For each report, the bar is the gap two years out: the constant-rate centre minus the market-rate centre. That is the keeper's own written estimate of what the expected action changes. The grey band is the fan's uncertainty at the same point (one σ either side). Filled bars are reports whose constant-rate condition came true. Hollow bars are reports where Bank Rate moved.</p>
+<canvas id="gap" height="300" aria-label="Gap between the two conditions at two years, for 38 reports, against the fan's uncertainty"></canvas>
+<div>
+<button id="g-all" aria-pressed="true">all 38</button><button id="g-held" aria-pressed="false">only where the rate held</button><button id="g-moved" aria-pressed="false">only where it moved</button>
+</div>
+<div class="read" id="gapread" aria-live="polite"></div>
+
+<h2>3. What came out</h2>
+<ol id="out">
+<li><b>The keeper wrote its prevention in advance on all 38 occasions, and the writing is smaller than its own uncertainty.</b> Two years out, the two centres differ by <span data-r="gap.mean"></span> points on average (from <span data-r="gap.min"></span> to <span data-r="gap.max"></span>). They lie within a tenth of a point of each other in <span data-r="gap.within_tenth"></span> of 38 reports. The gap is on average <span data-r="gap.mean_ratio_to_u"></span> of the fan's σ, at most <span data-r="gap.max_ratio_to_u"></span>, and above half a σ in only <span data-r="gap.above_half_u"></span>. No single outturn could tell the two conditions apart.</li>
+<li><b>The not-acting forecast can be scored only where the keeper did not act.</b> Bank Rate stayed at <span data-r="held.rate"></span> % for the whole two years after <span data-r="held.n"></span> reports (May 2009 to May 2013). Those reports are the only ones where the constant-rate condition became the world. There the constant-rate centre was nearer the outturn in <span data-r="held.const_closer"></span> of 17 (one tie). The mean miss was <span data-r="held.mae_const"></span> points against <span data-r="held.mae_market"></span> for the market-rate centre. Both missed by more than a point. In the other <span data-r="moved.n"></span> reports the constant-rate forecast is a counterfactual that no outturn will ever score.</li>
+<li><b>Where the keeper moved, the written difference averaged nothing.</b> Across the <span data-r="moved.n"></span> reports where Bank Rate moved within two years, the mean gap is <span data-r="moved.gap_mean"></span> points, and <span data-r="moved.gap_within_tenth"></span> of 21 are within a tenth. The gap is largest (mean <span data-r="held.gap_mean"></span>) in the years when the expected rises never came. In the eight reports from 2007 Q1 to 2008 Q4, Bank Rate fell to 0.5 % within two years, from the 3 to 5.75 % the held condition assumed. In those reports the two columns differ by at most 0.47 points. The action taken cut Bank Rate by 2.5 to 5.25 points.</li>
+<li><b>Session 2's open limit is settled.</b> All <span data-r="settle_session2.market_rows"></span> rows the Bank's spreadsheet gives for the market-rate projection are equal to the rows read in <a href="../cycle-008-session-2/index.html">The Hundred Occasions</a>. Only <span data-r="settle_session2.const_rows_equal"></span> of <span data-r="settle_session2.const_rows"></span> constant-rate rows are, and those are the quarters where the two centres coincide. So session 2 scored the market-rate fans, which is the fan the Bank's 2005 assessment chose to judge.</li>
+</ol>
+
+<h2>4. Three keepers, three columns</h2>
+<p>This cycle has now read three keepers of a warning. They differ in one way: whether, and where, the column “if not heeded” is written.</p>
+<div class="three">
+<div class="panel"><b class="big">No column</b>The Doomsday Clock (<a href="../cycle-008-session-1/index.html">session 1</a>) gives a setting and no probability. Nothing says what the clock would read if nobody listened. Heeded and never needed are one entry.</div>
+<div class="panel"><b class="big">A column inside the fan</b>The Bank writes both. The difference is <span data-r="gap.mean_ratio_to_u"></span> of its own σ on average. It is scorable only on the <span data-r="held.n"></span> occasions where the keeper did not move.</div>
+<div class="panel"><b class="big">The column measured as zero</b>A tornado warning cannot change the funnel. The Field's study 18 tested whether it bends the <i>record</i> of the funnel instead. It found no step at a warning's written expiry: weak share <span id="t-b"></span> % before, <span id="t-a"></span> % after, difference <span id="t-d"></span> points (<span id="t-ci"></span>). Here the two columns are one, within about six points.</div>
+</div>
+<p class="note">The tornado figure is the Field's (<a href="https://raw.githubusercontent.com/frankbueltge/field-research/0007a67fd7422ce81a8bdddf1a02a7419f15f825/artifacts/2026-10-16-the-clock-and-the-record/data/results.json">study 18, results.json</a>, 20-minute window), taken as published and not recomputed here. Their own placebo is not flat, so a small effect is not excluded.</p>
+
+<div class="judg" id="judg">
+<p><b>Judgment (mine).</b> Publishing both conditions looks like the remedy the last two sessions asked for. With it, the keeper's column of the heeded is written before the fact, where no later reader has to invent it. But the column has two properties that the record cannot get around. First, it is written smaller than the keeper's own doubt, so the world it predicts cannot be told apart from the world that came. Second, it becomes checkable only on the occasions the keeper did not act. A heeded warning is therefore always held as a counterfactual. Its own keeper writes it down, and no outturn ever closes it. The two conditions do not separate <i>heeded</i> from <i>never needed</i>. They move <i>heeded</i> into a column that can be graded only where nobody heeded. And where this keeper acted hardest (2007–2009), the two columns it had written differed by less than half a point.</p>
+</div>
+
+<h2>Method and limits</h2>
+<ul class="note">
+<li><b>Data.</b> The Bank's workbook (38 reports, February 2004 to May 2013). For each report it gives modes on both conditions, and uncertainty and skew. In 35 cells the uncertainty or skew repeated under the two blocks differs by rounding, at most 0.005; the later block is used. Bank Rate is the Bank's daily series IUDBEDR. Reports are dated to the 15th of their month. Bank Rate on that date equals the workbook's constant rate in all 38. Outturns are ONS D7G7, as read in session 2.</li>
+<li><b>“Held”</b> means Bank Rate took no other value from publication to the end of the target quarter. A second instrument, the Bank's asset purchases, is not read here. Whether it held in 2009–2013 is not checked, so the constant-rate condition is confirmed for Bank Rate only.</li>
+<li><b>Fans</b> are drawn as two-piece normals, read the way Britton, Fisher and Whitley (1998) define them (session 2's “bfw” reading). The gaps and centres do not depend on that reading.</li>
+<li>The 17 held reports overlap in their target quarters (2011 Q2 to 2015 Q2). These are counts, not tests.</li>
+<li>The market's expected path itself is not in the workbook. So whether the market condition came true is not decided here, only that it was not the constant one.</li>
+</ul>
+<p class="note">Build: <code>build.py</code> (inputs hash-checked; <code>sources.json</code>), <code>data.js</code>, <code>results.json</code>. Check: <code>verify.mjs</code> (a real browser at 390 px light and 1100 px dark). Earlier in this cycle: <a href="../cycle-008-session-1/index.html">Halley's Comet and the Clock</a>, <a href="../cycle-008-session-2/index.html">The Hundred Occasions</a>.</p>
+</main>
+<script src="data.js"></script>
+<script>
+(() => {
+const R = DATA.results, rows = DATA.rows;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const get = p => p.split('.').reduce((o, k) => o[k], R);
+const fmt = v => typeof v === 'number' ? (Number.isInteger(v) ? String(v) : (Math.abs(v) < 1 && String(v).length > 4 ? v.toFixed(2) : String(v))) : v;
+document.querySelectorAll('[data-r]').forEach(e => { const v = get(e.dataset.r); e.textContent = (e.dataset.r.includes('gap.m') && !e.dataset.r.includes('ratio') && v > 0 ? '+' : '') + fmt(v); });
+const T = R.tornado;
+document.getElementById('t-b').textContent = T.before.pct.toFixed(1); document.getElementById('t-a').textContent = T.after.pct.toFixed(1);
+document.getElementById('t-d').textContent = (T.diff >= 0 ? '+' : '') + T.diff.toFixed(1);
+document.getElementById('t-ci').textContent = T.ci[0].toFixed(1) + ' to +' + T.ci[1].toFixed(1);
+const qn = t => { const y = Math.floor(t + 1e-9); return y + ' Q' + (Math.round((t - y) * 4) + 1); };
+// inverse normal (Acklam), then two-piece normal quantile, bfw reading
+const a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.357751867269, -30.66479806614716, 2.506628277459239],
+  b = [-54.47609879822406, 161.5858368580409, -155.6989798598866, 66.80131188771972, -13.28068155211918],
+  c = [-.007784894002430293, -.3223964580411365, -2.400758277161838, -2.549732539343734, 4.374664141464968, 2.938163982698783],
+  d = [.007784695709041462, .3224671290700398, 2.445134137142996, 3.754408661907416];
+const ninv = p => { let q, r; if (p < .02425) { q = Math.sqrt(-2 * Math.log(p)); return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) / ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1); }
+  if (p > 1 - .02425) { q = Math.sqrt(-2 * Math.log(1 - p)); return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) / ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1); }
+  q = p - .5; r = q * q; return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q / (((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1); };
+const quant = (p, m, u, g) => { const s1 = g ? u / Math.sqrt(1 - g) : u, s2 = g ? u / Math.sqrt(1 + g) : u, w = s1 / (s1 + s2);
+  return p <= w ? m + s1 * ninv(p / (2 * w)) : m + s2 * ninv((p - w) / (2 * (1 - w)) + .5); };
+function setup(cv) { const dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = +cv.getAttribute('height');
+  cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + 'px'; const x = cv.getContext('2d'); x.setTransform(dpr, 0, 0, dpr, 0, 0); return [x, W, H]; }
+// ---- 1. the fan ----
+const rep = document.getElementById('rep');
+function drawFan() {
+  const i = +rep.value, r = rows[i], [x, W, H] = setup(document.getElementById('fan'));
+  const t0 = 2003.75, t1 = 2015.75, top = 12, fh = H - 110, ry = fh + 34, rh = 52, L = 34, Rr = W - 8;
+  const X = t => L + (t - t0) / (t1 - t0) * (Rr - L), Y = v => top + (6 - v) / 7 * (fh - top), RY = v => ry + rh - v / 6 * rh;
+  x.font = '11px system-ui,sans-serif'; x.fillStyle = css('--mute'); x.strokeStyle = css('--rule'); x.lineWidth = 1;
+  for (let v = -1; v <= 6; v++) { x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(Rr, Y(v)); x.stroke(); x.fillText(v + ' %', 2, Y(v) + 4); }
+  for (let y = 2004; y <= 2015; y += 2) x.fillText(String(y), X(y) - 12, ry - 6);
+  x.strokeStyle = css('--mute'); x.setLineDash([4, 4]); x.beginPath(); x.moveTo(L, Y(2)); x.lineTo(Rr, Y(2)); x.stroke(); x.setLineDash([]);
+  const fan = r.fanM, band = (p1, p2, al) => { x.fillStyle = `rgba(${css('--fan')},${al})`; x.beginPath();
+    fan.forEach((f, k) => { const v = quant(p1, f[1], f[2], f[3]); k ? x.lineTo(X(f[0]), Y(v)) : x.moveTo(X(f[0]), Y(v)); });
+    for (let k = fan.length - 1; k >= 0; k--) { const f = fan[k]; x.lineTo(X(f[0]), Y(quant(p2, f[1], f[2], f[3]))); } x.closePath(); x.fill(); };
+  band(.05, .95, .22); band(.25, .75, .32);
+  x.strokeStyle = css('--accent'); x.lineWidth = 2.5; x.beginPath(); r.fanC.forEach((f, k) => k ? x.lineTo(X(f[0]), Y(f[1])) : x.moveTo(X(f[0]), Y(f[1]))); x.stroke();
+  x.strokeStyle = css('--ink'); x.lineWidth = 1.6; x.beginPath(); let st = 0;
+  Object.entries(DATA.cpi).forEach(([t, v]) => { t = +t; st++ ? x.lineTo(X(t), Y(v)) : x.moveTo(X(t), Y(v)); }); x.stroke();
+  x.fillStyle = css('--ink'); x.beginPath(); x.arc(X(r.t0 + 2), Y(r.out), 4, 0, 7); x.fill();
+  // Bank Rate strip
+  x.fillStyle = css('--mute'); x.fillText('Bank Rate', 2, ry + 10); x.strokeStyle = css('--rule');
+  x.strokeRect(L, ry, Rr - L, rh);
+  x.fillStyle = r.held ? `rgba(${css('--fan')},.15)` : 'transparent'; x.fillRect(X(r.t0), ry, X(r.t0 + 2.25) - X(r.t0), rh);
+  x.strokeStyle = css('--amber'); x.lineWidth = 2; x.beginPath(); let k = 0;
+  Object.entries(DATA.rate).forEach(([t, mm]) => { t = +t; if (t < t0 || t > t1) return; const v = (mm[0] + mm[1]) / 2; k++ ? x.lineTo(X(t + .125), RY(v)) : x.moveTo(X(t + .125), RY(v)); }); x.stroke();
+  x.strokeStyle = css('--accent'); x.setLineDash([3, 3]); x.beginPath(); x.moveTo(X(r.t0), RY(r.rate)); x.lineTo(X(r.t0 + 2.25), RY(r.rate)); x.stroke(); x.setLineDash([]);
+  x.strokeStyle = css('--ink'); x.lineWidth = 1; x.beginPath(); x.moveTo(X(r.t0), top); x.lineTo(X(r.t0), ry + rh); x.stroke();
+  document.getElementById('replab').textContent = qn(r.t0);
+  const sgn = v => (v > 0 ? '+' : '') + v.toFixed(2);
+  document.getElementById('fanread').textContent = `Report of ${qn(r.t0)}. Two years out (${qn(r.t0 + 2)}): with Bank Rate held at ${r.rate} % the centre is ${r.c.toFixed(2)} %; on the market's path ${r.m.toFixed(2)} %. The keeper's written gap is ${sgn(r.gap)} points, against a fan σ of ${r.u.toFixed(2)}. Inflation came in at ${r.out.toFixed(1)} %. ` +
+    (r.held ? `Bank Rate stayed at ${r.rate} % throughout: the held condition came true, and its centre missed by ${Math.abs(r.out - r.c).toFixed(2)} points (the market-rate centre by ${Math.abs(r.out - r.m).toFixed(2)}).`
+            : `Bank Rate ranged from ${r.lo} % to ${r.hi} % in those two years: the held condition did not happen, and its forecast cannot be scored.`);
+}
+rep.addEventListener('input', drawFan);
+// ---- 2. the gap ----
+let mode = 'all';
+function drawGap() {
+  const [x, W, H] = setup(document.getElementById('gap')), L = 34, Rr = W - 8, mid = H / 2, sc = (H / 2 - 16) / 1.6;
+  const n = rows.length, bw = (Rr - L) / n, Y = v => mid - v * sc;
+  x.font = '11px system-ui,sans-serif'; x.fillStyle = css('--mute'); x.strokeStyle = css('--rule');
+  [-1.5, -1, -.5, 0, .5, 1, 1.5].forEach(v => { x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(Rr, Y(v)); x.stroke(); x.fillText((v > 0 ? '+' : '') + v, 2, Y(v) + 4); });
+  rows.forEach((r, i) => { const cx = L + i * bw;
+    x.fillStyle = `rgba(${css('--fan')},.18)`; x.fillRect(cx + 1, Y(r.u), bw - 2, 2 * r.u * sc);
+    const on = mode === 'all' || (mode === 'held') === r.held; x.globalAlpha = on ? 1 : .15;
+    x.strokeStyle = css('--accent'); x.fillStyle = css('--accent'); x.lineWidth = 1.5;
+    const y0 = Y(Math.max(r.gap, 0)), h = Math.max(Math.abs(r.gap) * sc, 1.5);
+    r.held ? x.fillRect(cx + bw * .2, y0, bw * .6, h) : x.strokeRect(cx + bw * .2, y0, bw * .6, h); x.globalAlpha = 1;
+    if (i % 4 === 0) { x.fillStyle = css('--mute'); x.fillText("'" + String(Math.floor(r.t0)).slice(2), cx, H - 3); } });
+  const sel = rows.filter(r => mode === 'all' || (mode === 'held') === r.held), mean = sel.reduce((s, r) => s + r.gap, 0) / sel.length,
+    ratio = sel.reduce((s, r) => s + Math.abs(r.gap) / r.u, 0) / sel.length;
+  document.getElementById('gapread').textContent = `${sel.length} reports. Mean gap ${(mean > 0 ? '+' : '') + mean.toFixed(2)} points; mean |gap| is ${ratio.toFixed(2)} of the fan's σ; within a tenth of a point in ${sel.filter(r => Math.abs(r.gap) <= .1 + 1e-9).length}.` +
+    (mode === 'held' ? ' These are the only reports where the constant-rate forecast can be scored.' : mode === 'moved' ? ' Here the constant-rate forecast stays a counterfactual.' : '');
+}
+['all', 'held', 'moved'].forEach(m => document.getElementById('g-' + m).addEventListener('click', () => { mode = m;
+  ['all', 'held', 'moved'].forEach(k => document.getElementById('g-' + k).setAttribute('aria-pressed', k === m)); drawGap(); }));
+const all = () => { drawFan(); drawGap(); };
+addEventListener('resize', all); matchMedia('(prefers-color-scheme: dark)').addEventListener('change', all); all();
+})();
+</script>
+</body>
+</html>

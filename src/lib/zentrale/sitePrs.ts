@@ -21,8 +21,10 @@ export interface EnginePr {
 // vor jedem Merge/Close, damit der Endpoint nie fremde PRs anfasst.
 // `currency` ist der operator-seitige vierte Kanal (2026-07-25): der nächtliche
 // Aktualitäts-Agent (drift/currency check) legt seine Fixes als `currency/pr-<slug>` ab,
-// damit sie in derselben Schleuse landen wie die Kollektiv-Vorschläge — Frank entscheidet
-// aus einem Panel. Kein Kollektiv, deshalb eigene, ehrliche Kennung statt Persona-Tarnung.
+// damit sie in derselben Schleuse landen wie die Kollektiv-Vorschläge. Kein Kollektiv, deshalb
+// eigene, ehrliche Kennung statt Persona-Tarnung. Since 2026-10-15 the session that opens a
+// currency PR checks and merges it itself under the merge authority (decision log); the panel
+// only still lists one that was left open.
 const HEAD_RE = /^(atelier|field|studio|currency)\/pr-([a-z0-9-]+)$/
 
 const PERSONA: Record<string, string> = {

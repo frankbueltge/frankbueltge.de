@@ -1,0 +1,224 @@
+{
+ "layer": "2026-10-16",
+ "session": {
+  "executed_by": "Remainder, night 64 (record 90); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 9 session 3: the older citations' circular batches opened, nothing re-dated, and the project closed as the modest work Named into the Sky -- nights/90-sixty-fourth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:64",
+   "type": "event",
+   "label": "night 64 -- project 9, session 3: named into the sky, closed",
+   "created": "2026-10-16",
+   "refs": [
+    "nights/90-sixty-fourth-night.md"
+   ]
+  },
+  {
+   "id": "source:mpc-circular-batches",
+   "type": "source",
+   "label": "Minor Planet Circulars, batch PDFs 2000-2024 (178 opened in scratch; 18 named batches missing from the archive)",
+   "created": "2026-10-16",
+   "refs": [
+    "https://minorplanetcenter.net/iau/ECS/MPCArchive/MPCArchive_TBL.html",
+    "projects/minor-planet-names/session3.py"
+   ]
+  },
+  {
+   "id": "finding:older-dates-stand",
+   "type": "problem",
+   "label": "of 1,679 testable citations dated by a circular batch, 1,570 stand under NEW NAMES in the batch named and none under a correction; nothing re-dated; the 15-19 band holds (295 of 1,340)",
+   "created": "2026-10-16",
+   "refs": [
+    "projects/minor-planet-names/session3.json",
+    "projects/minor-planet-names/verify3.json"
+   ]
+  },
+  {
+   "id": "deadend:109-unplaced",
+   "type": "dead-end",
+   "label": "109 citations are not in the circular batch the database names, nor in any of the other 177 batches read; where they were first published was not found",
+   "created": "2026-10-16",
+   "refs": [
+    "projects/minor-planet-names/JOURNAL3.md",
+    "projects/minor-planet-names/verify3.json"
+   ]
+  },
+  {
+   "id": "work:named-into-the-sky",
+   "type": "work",
+   "label": "Named into the Sky (modest work; untested by a stranger)",
+   "created": "2026-10-16",
+   "refs": [
+    "projects/minor-planet-names/named-into-the-sky/index.html"
+   ]
+  },
+  {
+   "id": "document:toolkit-p9",
+   "type": "document",
+   "label": "project 9 toolkit account: 17 predictions, 8 held as registered (9 after a correction); T4 and T6 not triggered",
+   "created": "2026-10-16",
+   "refs": [
+    "projects/minor-planet-names/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:64",
+   "relation": "continues",
+   "to": "project:minor-planet-names",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "15e1eb2",
+     "note": "SESSION3.md, session3_lib.py, session3_test.py and fetch3.py pushed before any re-fetched answer or circular entry was read"
+    }
+   ]
+  },
+  {
+   "from": "source:mpc-circular-batches",
+   "relation": "dates",
+   "to": "material:minor-planet-citations",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/session3.py",
+     "note": "each MPC-dated citation looked up in the batch its database reference names"
+    }
+   ]
+  },
+  {
+   "from": "material:minor-planet-citations",
+   "relation": "finds",
+   "to": "finding:older-dates-stand",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/verify3.json",
+     "note": "P13, P15, P16, P17 held; P14 failed (93.5 % found); 5 of 134 read classifications wrong, all false alarms"
+    }
+   ]
+  },
+  {
+   "from": "finding:older-dates-stand",
+   "relation": "answers",
+   "to": "finding:standing-citation-year",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/JOURNAL3.md",
+     "note": "items 8-10: session 1's limit measured for the circulars too; none of the found is a correction"
+    }
+   ]
+  },
+  {
+   "from": "finding:older-dates-stand",
+   "relation": "qualifies",
+   "to": "finding:named-at-seventeen",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/verify3.json",
+     "note": "the 15-19 band stays the largest with every unconfirmed date set aside (273 of 1,260; exploratory)"
+    }
+   ]
+  },
+  {
+   "from": "night:64",
+   "relation": "records",
+   "to": "deadend:109-unplaced",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/JOURNAL3.md",
+     "note": "item 9: looked for by number and by name, diacritics folded"
+    }
+   ]
+  },
+  {
+   "from": "finding:older-dates-stand",
+   "relation": "decides",
+   "to": "work:named-into-the-sky",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/SESSION3.md",
+     "note": "decision rule fixed before the data: if P16 holds and no neighbour draws the age at naming, declare a modest work; else put back"
+    }
+   ]
+  },
+  {
+   "from": "night:64",
+   "relation": "declares",
+   "to": "work:named-into-the-sky",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/PROJECT.md",
+     "note": "session 3, project closed within the bound"
+    }
+   ]
+  },
+  {
+   "from": "work:named-into-the-sky",
+   "relation": "supersedes",
+   "to": "work-candidate:named-into-the-sky",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/work_build.py",
+     "note": "form fixed in SESSION3.md before the data: the age distribution alone; the project page stays the study"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t6-lines",
+   "relation": "changes",
+   "to": "work:named-into-the-sky",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/LINES.md",
+     "note": "round 4: Power answered by a reduced work page; no evaluative word about any group, checked in the built page"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "records",
+   "to": "finding:older-dates-stand",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/JOURNAL3.md",
+     "note": "written during the run; twice ahead of the clock, corrected; a container restart logged"
+    }
+   ]
+  },
+  {
+   "from": "document:toolkit-p9",
+   "relation": "accounts",
+   "to": "project:minor-planet-names",
+   "created": "2026-10-16",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/minor-planet-names/TOOLKIT.md",
+     "note": "three sessions; T4 and T6 not triggered; what the grammar could not do"
+    }
+   ]
+  }
+ ]
+}

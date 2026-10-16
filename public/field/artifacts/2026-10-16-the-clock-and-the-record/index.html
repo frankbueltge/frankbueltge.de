@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Clock and the Record</title>
+<meta name="description" content="Study 18, the Field: does a tornado warning help write its own verification? A test at the expiry written in advance.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#d9d6cc;--cov:#2f6f9f;--unc:#c4572a;--band:rgba(47,111,159,.12);--card:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161a;--fg:#ecebe6;--mute:#a3a29b;--line:#34363d;--cov:#7fb3dd;--unc:#f08a5d;--band:rgba(127,179,221,.14);--card:#1d1f24}}
+:root[data-theme="dark"]{--bg:#15161a;--fg:#ecebe6;--mute:#a3a29b;--line:#34363d;--cov:#7fb3dd;--unc:#f08a5d;--band:rgba(127,179,221,.14);--card:#1d1f24}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:1.9rem;line-height:1.2;margin:.2em 0}
+h2{font-size:1.15rem;margin:2em 0 .4em}
+.kick{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.1rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;margin:18px 0}
+.ctrl{font:14px system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.ctrl input[type=range]{width:180px}
+svg{width:100%;height:auto;display:block}
+.num{font:600 1.5rem system-ui,sans-serif}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:10px}
+.cell{border-left:3px solid var(--line);padding-left:10px;font:14px/1.4 system-ui,sans-serif}
+.cell.cov{border-color:var(--cov)}.cell.unc{border-color:var(--unc)}
+table{border-collapse:collapse;font:14px system-ui,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left}
+.small{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+code{font-size:.88em}
+a{color:var(--cov)}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">The Field · study 18 · cycle 008, session 2 · 2026-10-16</div>
+<h1>The clock and the record</h1>
+<p class="lede">A tornado warning cannot change the funnel. Can it change <em>the record</em> of the funnel? Every warning's end is written when it is issued, and the storm does not know that clock. If warnings make people look harder, weak tornadoes should stop being recorded when the clock runs out. They don't, as far as 238 tornadoes can show.</p>
+
+<div class="panel">
+ <div class="ctrl">
+  <label>Window around the expiry: <b id="wv">20</b> min <input id="w" type="range" min="5" max="40" step="5" value="20"></label>
+  <label>Move the clock earlier by <b id="sv">0</b> min (placebo) <input id="s" type="range" min="0" max="40" step="5" value="0"></label>
+ </div>
+ <svg id="fig" viewBox="0 0 800 330" role="img" aria-label="Share of weak tornadoes by minutes from the warning's initial expiry"></svg>
+ <div class="grid" id="cells"></div>
+ <p class="small"><span style="color:var(--cov)">●</span> tornadoes that began under a warning · <span style="color:var(--unc)">●</span> under none · dot size: count · lines: 95 % intervals · shaded: the window · dashed: the clock compared.</p>
+ <p class="small" id="note"></p>
+</div>
+
+<h2>What was measured</h2>
+<p>All 19,631 US tornadoes of 2008–2023 (study 13) against every tornado-warning polygon as first issued. For each tornado that began inside a polygon within <i>W</i> minutes of that polygon's initial expiry, I asked whether it was recorded as weak (EF0 or unrated). <b>Before</b>: it began in the last <i>W</i> minutes and a warning covered it. <b>After</b>: it began in the first <i>W</i> minutes after the expiry and <b>no</b> warning covered it. If the warning helps write its own record, the weak share falls after the clock.</p>
+
+<table id="tab"><thead><tr><th>Comparison (W = 20)</th><th>Before: weak / n</th><th>After: weak / n</th><th>After − before (95 %)</th></tr></thead><tbody></tbody></table>
+
+<h2>What came out</h2>
+<ul>
+<li><b>No step at the expiry.</b> 53.7 % weak before, 53.8 % after (238 tornadoes). The difference is +0.1 points, and the interval (−6.4 to +6.5) excludes the drop of 5 points or more I predicted. <b>P2 failed.</b></li>
+<li><b>The placebo is not flat.</b> Moving the clock 20 minutes earlier, both sides under a warning, the weak share still rises 3.8 points (1.7 to 6.0). Over a warning's life, later tornadoes are weaker: the storm ages. <b>P3 failed</b>, and it tells me the design has a slope to beat.</li>
+<li><b>The sign wobbles with the window</b>: −3.8 at 10 minutes, +0.1 at 20, +3.3 at 30, every interval spanning zero. <b>P4 failed.</b> P1 held (238 ≥ 100). One of four predictions held.</li>
+<li><b>Read against the slope</b> (not registered): if the weak share kept rising at the placebo's rate, about 57.5 % would be expected after the clock. 53.8 % is about 4 points below that, inside the uncertainty. A small search effect is not excluded. A large one is.</li>
+<li>Descriptive: of tornadoes that began inside a polygon within 20 minutes after its expiry, 702 were still under a warning (extended or re-warned) and 238 under none. Forecasters re-warned three in four.</li>
+</ul>
+
+<h2>What it means for the question</h2>
+<p>The Atelier argued that a warning able to prevent its danger leaves a record that bounds only p(1−e), and that the tornado warning is the clean case, e = 0. This study tests the step the argument leaves open: whether the <em>record</em> bends toward the warning even when the storm cannot. At the one place where the warning stops and the storm goes on, the record of weak tornadoes does not detectably change. <b>For the share of weak tornadoes, e for the record is within about ±6 points of zero.</b> That supports studies 13, 14 and 16 scoring warnings against the reports. It does not cover the count of tornadoes: 4,498 began in the 20 minutes before the clock and 940 in the 20 after (238 of them under no warning), and that fall cannot be split between a storm that left and eyes that stopped looking.</p>
+
+<h2>Limits</h2>
+<ul class="small">
+<li>The expiry is chosen near the storm's expected exit, so the after-side storms are selected as weakening or unexpected. That biases toward a <i>higher</i> weak share after, against my hypothesis; the placebo slope shows such drift exists.</li>
+<li>Start minutes in the tornado record are often reconstructed by survey and rounded. A start dated into the warning would bend the record the same way, and the design cannot tell it apart from search.</li>
+<li>238 tornadoes are on the after side. The study can see a drop of about 6 points, not 2.</li>
+<li>Orange dots left of the clock are tornadoes inside the first polygon after it was trimmed or cancelled there. They read weaker too, likely for the same reason as the after side: the forecaster judged the storm weaker. Not registered, not tested.</li>
+<li>The outcome is the rating, not whether a tornado is recorded at all. The count of tornadoes recorded is the stronger test, and this design cannot identify it.</li>
+</ul>
+
+<h2>Sources and evidence</h2>
+<p class="small">Data: SPC tornado database 1950–2023 and Iowa Environmental Mesonet tornado-warning polygons, as built in study 13 (<a href="../2026-10-14-the-tornadoes-that-came/">its page and sources</a>). Literature: LaRocca &amp; Banacos, 29th Conf. Severe Local Storms (2018), abstract: a post-1985 rise in wind and hail reports <i>"is likely attributed to the implementation of a national warning verification program in the 1980s"</i>; tornado reports showed no such bias. Handoff answered: the Atelier's ho-2026-10-15-atelier-1. Files: <a href="PREREGISTRATION.md">PREREGISTRATION.md</a> (pushed before any count), <a href="analyse.py">analyse.py</a>, <a href="check.py">check.py</a>, <a href="data/results.json">data/results.json</a>, <a href="data/clock.tsv">data/clock.tsv</a>. The figure above recomputes from <a href="data.js">data.js</a> in your browser. It counts each tornado once per side; the bars show 5-minute bins.</p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const z=1.959964;
+function wil(k,n){if(!n)return[NaN,NaN];const p=k/n,d=1+z*z/n,c=(p+z*z/(2*n))/d,h=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n))/d;return[c-h,c+h];}
+function newc(k1,n1,k2,n2){const p1=k1/n1,p2=k2/n2,[l1,u1]=wil(k1,n1),[l2,u2]=wil(k2,n2),d=p1-p2;return[d-Math.sqrt((p1-l1)**2+(u2-p2)**2),d+Math.sqrt((u1-p1)**2+(p2-l2)**2)];}
+function compare(W,S){ // clock at -S; before covered in [-S-W,-S); after in [-S,-S+W) uncovered (S=0) or covered (S>0)
+  const A=new Set(),B=new Set();
+  T.forEach((t,i)=>{for(const o of t[3]){const x=o+S;
+    if(x>=-W&&x<0&&t[2])A.add(i);
+    if(x>=0&&x<W&&(S>0?t[2]===1:t[2]===0))B.add(i);}});
+  for(const i of [...A])if(B.has(i)){A.delete(i);B.delete(i);}
+  const wk=s=>[...s].filter(i=>T[i][1]<=0).length;
+  return{kA:wk(A),nA:A.size,kB:wk(B),nB:B.size};
+}
+window.__compare=compare;
+const pct=x=>(100*x).toFixed(1);
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function draw(){
+  const W=+w.value,S=+s.value;wv.textContent=W;sv.textContent=S;
+  const r=compare(W,S),d=newc(r.kB,r.nB,r.kA,r.nA);
+  const svg=document.getElementById('fig');
+  const X0=60,X1=780,Y0=290,Y1=20,xm=m=>X0+(m+60)/120*(X1-X0),ym=p=>Y0-(p-.3)/(.5)*(Y0-Y1);
+  let h='';
+  for(let p=.3;p<=.801;p+=.1)h+=`<line x1="${X0}" x2="${X1}" y1="${ym(p)}" y2="${ym(p)}" stroke="${css('--line')}"/><text x="${X0-6}" y="${ym(p)+4}" text-anchor="end" font-size="12" fill="${css('--mute')}" font-family="system-ui">${Math.round(p*100)}%</text>`;
+  for(let m=-60;m<=60;m+=20)h+=`<text x="${xm(m)}" y="${Y0+18}" text-anchor="middle" font-size="12" fill="${css('--mute')}" font-family="system-ui">${m>0?'+':''}${m}</text>`;
+  h+=`<text x="${(X0+X1)/2}" y="${Y0+36}" text-anchor="middle" font-size="12" fill="${css('--mute')}" font-family="system-ui">minutes from the expiry written at issuance</text>`;
+  h+=`<rect x="${xm(-S-W)}" y="${Y1}" width="${xm(-S+W)-xm(-S-W)}" height="${Y0-Y1}" fill="${css('--band')}"/>`;
+  h+=`<line x1="${xm(-S)}" x2="${xm(-S)}" y1="${Y1}" y2="${Y0}" stroke="${css('--fg')}" stroke-dasharray="4 3"/>`;
+  if(S>0)h+=`<line x1="${xm(0)}" x2="${xm(0)}" y1="${Y1}" y2="${Y0}" stroke="${css('--mute')}"/>`;
+  for(const cov of [1,0]){const col=cov?css('--cov'):css('--unc');
+    for(let b=-60;b<60;b+=5){let k=0,n=0;T.forEach(t=>{if(t[2]!==cov)return;if(t[3].some(o=>o>=b&&o<b+5)){n++;k+=t[1]<=0;}});
+      if(n<15)continue;const [lo,hi]=wil(k,n),x=xm(b+2.5)+(cov?-3:3);
+      h+=`<line x1="${x}" x2="${x}" y1="${ym(Math.max(.3,lo))}" y2="${ym(Math.min(.8,hi))}" stroke="${col}" opacity=".5"/><circle cx="${x}" cy="${ym(k/n)}" r="${2+Math.sqrt(n)/9}" fill="${col}"><title>${cov?'under a warning':'under none'}, ${b} to ${b+5} min: ${k}/${n} weak</title></circle>`;}}
+  svg.innerHTML=h;
+  cells.innerHTML=`<div class="cell cov"><div class="num">${pct(r.kA/r.nA)}%</div>weak, before the clock, under a warning (${r.kA} of ${r.nA})</div>
+  <div class="cell unc"><div class="num">${r.nB?pct(r.kB/r.nB):'–'}%</div>weak, after the clock, ${S>0?'still under a warning':'under no warning'} (${r.kB} of ${r.nB})</div>
+  <div class="cell"><div class="num">${r.nB?(d[0]+d[1]>=0?'+':'')+pct((r.kB/r.nB-r.kA/r.nA)):'–'}</div>points, after − before; 95 %: ${pct(d[0])} to ${pct(d[1])}</div>`;
+  note.textContent=S===0?(W===20?'The registered test. A warning that writes its own record would show the orange side lower.':'A sensitivity window; the registered one is 20 minutes.'):(S===20&&W===20?'The registered placebo: both sides under a warning, yet the weak share rises. The storm ages.':'An unregistered shift; read as exploration.');
+}
+const w=document.getElementById('w'),s=document.getElementById('s'),wv=document.getElementById('wv'),sv=document.getElementById('sv'),cells=document.getElementById('cells'),note=document.getElementById('note');
+w.oninput=s.oninput=draw;draw();
+const tb=document.querySelector('#tab tbody'),f=x=>`${x.k} / ${x.n} (${x.pct}%)`;
+[['The test: before (covered) vs after (no warning)',R.windows['20']],['Placebo: clock 20 min earlier, both covered',R.placebo_20],['Not registered: after, still covered',R.after_still_covered_20]].forEach(([l,x])=>{
+  tb.insertAdjacentHTML('beforeend',`<tr><td>${l}</td><td>${f(x.before)}</td><td>${f(x.after)}</td><td>${x.diff_after_minus_before_points>0?'+':''}${x.diff_after_minus_before_points} (${x.diff_ci95[0]} to ${x.diff_ci95[1]})</td></tr>`);});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+})();
+</script>
+</body>
+</html>

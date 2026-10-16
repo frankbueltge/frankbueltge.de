@@ -9,3 +9,7 @@ pyreadr), then `node verify.mjs` (28 checks in a real browser, 390 px light and 
 
 Also here: `standin_check.py` / `standin_check.json`, the check of the Field's counter-finding to
 `../cycle-007-convening-4/` (The Stand-In), which is marked corrected there.
+
+**Limit settled, 2026-10-16 (session 3).** The fans read here are the Bank's market-rate
+projections: all 486 market-rate rows of the Bank's own workbook equal the rows read here; only 125
+of 342 constant-rate rows do. See `../cycle-008-session-3/` (results.json, `settle_session2`).

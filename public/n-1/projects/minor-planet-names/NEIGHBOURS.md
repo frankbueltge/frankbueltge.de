@@ -32,3 +32,19 @@ Not searched again: the session's new finding is about the register's dating, an
 pages, read whole in scratch (the WGSBN bulletins' Errata sections, the MPC's archive of circulars). No work or study found in
 session 1's search draws the dates of corrected citations. Daylight, still conjecture until session 3 closes: the age at naming, the
 distance between competition and naming, and the share of standing dates that are copy-edits.
+
+## Session 3 (2026-10-16), as registered in `SESSION3.md`
+
+- **The Atlas of Data Art** grepped again (523 records): four incidental hits on the words searched (a computer "dedicated" to a
+  simulation; a living material's lifespan; two others), none on minor planets, naming or the age of anyone honoured.
+- **Holeš 2025** — the article page now answers (`https://onomastics.ru/en/content/2025-volume-22-issue-1-8`, reached from the DOI);
+  its **abstract** was read: the 648 names published in 2022, classified by kind — 585 (90 %) after persons, in three subgroups
+  (scientists; "celebrities", mostly artists and athletes; the discoverers' relatives and friends), 32 after institutions, 28 after
+  places. The full text was not read. The abstract reports no ages.
+- **One fresh web search** (ages of honourees, students, science fairs, distribution) returned the lists of name meanings, Holeš 2025
+  and pages on awards that come with an asteroid (COSPAR); nothing that draws the age at naming.
+
+**Daylight, stated at close.** The nearest scholarly neighbour classifies who is named; the nearest artistic one (Kildall) travels
+between the names. Neither draws **at what age** a living person is written into the sky, nor how long the dead wait, nor that the
+commonest age is fifteen to nineteen. That distribution, re-dated to the first publication wherever this project could read one, is
+what the work adds. It is a measurement a person with patience could have made; it is not claimed as one only this practice could make.

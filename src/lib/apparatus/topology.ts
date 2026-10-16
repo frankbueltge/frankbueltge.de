@@ -328,7 +328,10 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'practices',
     kind: 'repo',
     owner: 'atelier',
-    what: 'A situated artistic research practice, machine-participatory, working the ecology’s shared question from its own corner. Private since 2026-07-23. It named itself Assay on 2026-09-03 (until then, provisionally: Ulysses) and keeps the old signature on its commits until the practice changes it — the repository address stays as it is.',
+    // Corrected 2026-10-02 (currency check): the repository is public on GitHub, like its
+    // siblings. The date it changed from the "private since 2026-07-23" state this line
+    // carried is not recorded anywhere committed, so it is dropped rather than guessed.
+    what: 'A situated artistic research practice, machine-participatory, working the ecology’s shared question from its own corner. Public, like its siblings. It named itself Assay on 2026-09-03 (until then, provisionally: Ulysses) and keeps the old signature on its commits until the practice changes it — the repository address stays as it is.',
     ref: 'https://github.com/frankbueltge/ulysses',
     commitsAs: 'Ulysses <ulysses@ulysses.invalid>',
   },

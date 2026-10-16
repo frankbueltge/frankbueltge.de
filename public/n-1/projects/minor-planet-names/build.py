@@ -11,6 +11,9 @@ rows = json.load(open("rows.json"))
 s1 = json.load(open("session1.json"))
 v = json.load(open("verify.json"))
 v2 = json.load(open("verify2.json"))
+_v3 = json.load(open("verify3.json"))
+v3 = {"batches": 178, "testable": sum(_v3["kinds_verified"].values()), "new": _v3["kinds_verified"]["new"],
+      "nf": _v3["kinds_verified"]["not found"], "mpc": 1733}
 r2 = {r["n"]: r for r in json.load(open("rows2.json"))}
 # session 2: ages and gaps at the naming year (re-dated where the standing citation is an erratum); citations whose naming
 # year is unknown (re-issued for a discovery credit or a trailing space) are set aside
@@ -131,7 +134,7 @@ table{{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}}th,td
 .sl .tk{{font:10px system-ui,sans-serif;fill:var(--mut);text-anchor:middle}}.sl .ln{{stroke-opacity:.45;stroke-linecap:round}}
 .sl .ln.e{{stroke:var(--d)}}.sl .ln.u{{stroke:var(--o);stroke-dasharray:3 3;stroke-opacity:.8}}.sl .ln.s{{stroke:var(--s);stroke-opacity:.6}}.sl .ln.t{{stroke:var(--t);stroke-opacity:.6}}
 </style></head><body><main>
-<p class="sm mut">Remainder &middot; project 9, sessions 1-2 &middot; a study, not a work &middot; 2026-10-15</p>
+<p class="sm mut">Remainder &middot; project 9, sessions 1-3 &middot; the study behind the work <a href="named-into-the-sky/">Named into the Sky</a> &middot; 2026-10-16</p>
 <h1>Named into the sky</h1>
 <p>When a minor planet (an asteroid) is given a name, the International Astronomical Union publishes a short citation saying who or
 what it is named after. Most names honour a person, and the citation often gives the year that person was born. A body that will
@@ -174,8 +177,10 @@ now stands for it: a median of {v2["erratum_years_moved_median"]} years later, a
 {v2["other_redated"]} (dashed) were re-issued for a corrected discovery credit, or because seven names had been published with a
 trailing space.</p>
 <div class="fig">{svg_err}</div>
-<p class="sm mut">Counted only where the bulletins can be read (citations dated 2021-2026). Older citations carry the date of a circular,
-and the circulars' own errata were not read: how many of them are corrections is not known. Re-dating moves {v2["moved_band"]} of
+<p class="sm mut">Counted only where the bulletins can be read (citations dated 2021-2026). Older citations carry the date of a batch of the Minor Planet
+Circulars. Session 3 opened every batch the sample names ({v3["batches"]} of them): {v3["new"]} of the {v3["testable"]} citations stand there under
+"New names of minor planets", none under a correction, none pointing to an earlier page; {v3["nf"]} are not in the batch the database names
+at all, and where they were first published was not found. Re-dating moves {v2["moved_band"]} of
 {v2["living_with_age"]} living people into another five-year band of age; the dots above are placed by the year of first
 publication.</p>
 
@@ -207,14 +212,20 @@ first published, dated by the circulars' archive), 20 of the new names read (20 
 (<a href="SESSION2.md">SESSION2.md</a>); 2 held: the finalists' wait grew, and those named since 2020 were adults. 4 failed: errata
 were a quarter, not under a twentieth; re-dating moved 3.5 %, not under 2 %, of ages; the median wait is 0, not 2 years; the
 commonest age at the competition is 18, not 17. <a href="JOURNAL2.md">JOURNAL2.md</a>.</td></tr>
-<tr><th>Limits</th><td>Corrections before 2021 are not found, so some ages are still too high. Twelve living people whose first
+<tr><th>Session 3</th><td>The {v3["mpc"]} citations dated by a batch of the circulars: each batch downloaded and the entry looked up
+(<a href="SESSION3.md">SESSION3.md</a>, registered before). 5 predictions; 4 held (none of the found stand outside the new names; none
+points to an earlier page; 15-19 stays the largest band; no age moves), 1 failed (93.5 % found, not 95 %). Read: the 5 flagged as
+something else were all first namings (5 wrong, corrected); 20 random first namings, 20 right; all 109 missing ones looked for by
+number and name. <a href="JOURNAL3.md">JOURNAL3.md</a>.</td></tr>
+<tr><th>Limits</th><td>Before 2021, no citation in the sample is a correction; {v3["nf"]} could not be found in the batch the database names, so their dates
+are the database's. With all of them set aside the largest band is still 15-19. Twelve living people whose first
 publication is unknown are set aside. Citations without a year (most places, things and many people) are not drawn. Not tested by
 a stranger.</td></tr>
 </table></div>
 <p class="sm mut">Data: Solar System Dynamics (downloaded 2026 October 15), Small-Body Database API, https://ssd.jpl.nasa.gov;
 list of names: IAU Minor Planet Center. The citations are the IAU's and are not reproduced here. Code and counts:
 <a href="build.py">build.py</a>, <a href="rows.json">rows.json</a>, <a href="verify.json">verify.json</a>,
-<a href="rows2.json">rows2.json</a>, <a href="verify2.json">verify2.json</a>.
+<a href="rows2.json">rows2.json</a>, <a href="verify2.json">verify2.json</a>, <a href="rows3.json">rows3.json</a>, <a href="verify3.json">verify3.json</a>.
 Lines and dangers of this page: <a href="LINES.md">LINES.md</a>.</p>
 </main>
 <div id="say" aria-live="polite">Tap a dot.</div>

@@ -13,10 +13,11 @@ gleich mit: die früheste Spalte mit Wert = Erst-Meldung, die jüngste = aktuell
 
 Benötigt pandas + openpyxl (XLSX-Quelle). Output: src/data/revision/latest.json. Git ist das Archiv.
 """
+import io
 import json
 import sys
-import tempfile
 import urllib.request
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -29,12 +30,32 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "src" / "data" / "revision"
 
 
-def fetch_xlsx() -> Path:
-    tmp = Path(tempfile.gettempdir()) / "rtdsm_employ.xlsx"
+def fetch_xlsx() -> bytes:
     req = urllib.request.Request(URL, headers={"User-Agent": "frankbueltge.de The Correction"})
-    with urllib.request.urlopen(req, timeout=90) as r, open(tmp, "wb") as f:
-        f.write(r.read())
-    return tmp
+    with urllib.request.urlopen(req, timeout=90) as r:
+        return r.read()
+
+
+def without_core_properties(xlsx: bytes) -> io.BytesIO:
+    """The workbook minus docProps/core.xml (author, created, modified).
+
+    openpyxl validates the document properties before it reads a single cell, and rejects a
+    `dcterms:modified` that carries a date without a time ("TypeError: expected <class
+    'datetime.datetime'>"). The Philadelphia Fed shipped exactly such a file in August 2026;
+    every Monday from 2026-08-03 to 2026-08-24 failed on it while the numbers inside were fine.
+    Nothing here reads the properties, so they are dropped rather than parsed.
+    """
+    out = io.BytesIO()
+    with zipfile.ZipFile(io.BytesIO(xlsx)) as src, zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as dst:
+        for item in src.infolist():
+            if item.filename != "docProps/core.xml":
+                dst.writestr(item, src.read(item.filename))
+    out.seek(0)
+    return out
+
+
+def read_vintages(xlsx: bytes) -> pd.DataFrame:
+    return pd.read_excel(without_core_properties(xlsx), index_col=0, engine="openpyxl")
 
 
 def period_label(p: str) -> str:
@@ -43,7 +64,7 @@ def period_label(p: str) -> str:
 
 
 def main() -> int:
-    df = pd.read_excel(fetch_xlsx(), index_col=0)
+    df = read_vintages(fetch_xlsx())
     rows = []
     for obs in df.index:
         s = df.loc[obs].dropna()

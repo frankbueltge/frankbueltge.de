@@ -1,0 +1,437 @@
+{
+ "reproduction": {
+  "messages": [
+   82754,
+   82754
+  ],
+  "warnings": [
+   23286,
+   23154
+  ],
+  "silence": [
+   16756,
+   16644
+  ],
+  "update": [
+   801,
+   799
+  ],
+  "end-mute": [
+   5510,
+   5423
+  ],
+  "end-safe": [
+   159,
+   182
+  ],
+  "end-clear": [
+   59,
+   105
+  ],
+  "end-error": [
+   1,
+   1
+  ],
+  "followups_linked": [
+   8060,
+   8060
+  ]
+ },
+ "reproduces": false,
+ "P1": {
+  "silent": 16644,
+  "with_expiry_after_sent": 16644,
+  "share": 1.0,
+  "ci": [
+   0.9998,
+   1.0
+  ],
+  "no_expiry": 0,
+  "expiry_not_after_sent": 0,
+  "held": true
+ },
+ "P2": {
+  "n": 23154,
+  "median_min": 180.0,
+  "ci_min": [
+   180.0,
+   180.0
+  ],
+  "held": true,
+  "quartiles_min": [
+   60.0,
+   180.0,
+   480.0
+  ]
+ },
+ "P3": {
+  "cancelled_with_expiry": 5711,
+  "cancel_before_expiry": 5676,
+  "share": 0.9939,
+  "ci": [
+   0.9915,
+   0.9956
+  ],
+  "before_latest_declared_expiry": 5707,
+  "cancelled_without_expiry": 0,
+  "held": true,
+  "minutes_after_expiry_median": 112.91666666790843,
+  "after_expiry": 35,
+  "after_expiry_codes": {
+   "CAE": 6,
+   "LAE": 12,
+   "EVI": 5,
+   "LEW": 5,
+   "SPW": 2,
+   "BLU": 1,
+   "FRW": 4
+  },
+  "cancel_minutes_median": 97.7166666649282,
+  "cancel_share_of_lifetime_median": 0.273379629633079
+ },
+ "P4": {
+  "accounts_all": 3846,
+  "accounts_ge20": 181,
+  "extreme": 98,
+  "share": 0.5414,
+  "ci": [
+   0.4687,
+   0.6124
+  ],
+  "never_cancel": 52,
+  "held": false,
+  "warnings_in_ge20_accounts": 13447,
+  "hist10": [
+   97,
+   29,
+   18,
+   18,
+   7,
+   6,
+   2,
+   1,
+   2,
+   1
+  ],
+  "within_CEM": {
+   "accounts_ge20": 22,
+   "extreme": 14
+  },
+  "within_CAE": {
+   "accounts_ge20": 18,
+   "extreme": 11
+  }
+ },
+ "P5": {
+  "cancelled_median": [
+   360.0,
+   360.0,
+   360.0
+  ],
+  "silent_median": [
+   120.0,
+   120.0,
+   120.0
+  ],
+  "held": true
+ },
+ "exploratory": {
+  "eta2_account": {
+   "groups": 3846,
+   "eta2": 0.4976
+  },
+  "eta2_code": {
+   "groups": 17,
+   "eta2": 0.0846
+  },
+  "eta2_account_shuffled_max_of_50": 0.1707
+ },
+ "per_code": {
+  "AVW": {
+   "n": 16,
+   "cancelled": 0,
+   "silent": 14,
+   "median_L_min": 1440.0,
+   "silent_with_expiry": 14
+  },
+  "BLU": {
+   "n": 112,
+   "cancelled": 19,
+   "silent": 89,
+   "median_L_min": 120.0,
+   "silent_with_expiry": 89
+  },
+  "CAE": {
+   "n": 3265,
+   "cancelled": 1479,
+   "silent": 1749,
+   "median_L_min": 1380.0,
+   "silent_with_expiry": 1749
+  },
+  "CDW": {
+   "n": 294,
+   "cancelled": 37,
+   "silent": 237,
+   "median_L_min": 117.82499999925494,
+   "silent_with_expiry": 237
+  },
+  "CEM": {
+   "n": 3134,
+   "cancelled": 255,
+   "silent": 2742,
+   "median_L_min": 118.5,
+   "silent_with_expiry": 2742
+  },
+  "EQW": {
+   "n": 171,
+   "cancelled": 2,
+   "silent": 169,
+   "median_L_min": 5.0,
+   "silent_with_expiry": 169
+  },
+  "EVI": {
+   "n": 2016,
+   "cancelled": 213,
+   "silent": 1701,
+   "median_L_min": 180.0,
+   "silent_with_expiry": 1701
+  },
+  "FRW": {
+   "n": 1969,
+   "cancelled": 200,
+   "silent": 1697,
+   "median_L_min": 180.0,
+   "silent_with_expiry": 1697
+  },
+  "HMW": {
+   "n": 160,
+   "cancelled": 33,
+   "silent": 106,
+   "median_L_min": 120.0,
+   "silent_with_expiry": 106
+  },
+  "LAE": {
+   "n": 8170,
+   "cancelled": 2392,
+   "silent": 5581,
+   "median_L_min": 240.0,
+   "silent_with_expiry": 5581
+  },
+  "LEW": {
+   "n": 2480,
+   "cancelled": 749,
+   "silent": 1582,
+   "median_L_min": 120.0,
+   "silent_with_expiry": 1582
+  },
+  "MEP": {
+   "n": 378,
+   "cancelled": 158,
+   "silent": 217,
+   "median_L_min": 127.5,
+   "silent_with_expiry": 217
+  },
+  "SPW": {
+   "n": 635,
+   "cancelled": 127,
+   "silent": 465,
+   "median_L_min": 120.0,
+   "silent_with_expiry": 465
+  },
+  "SVR": {
+   "n": 1,
+   "cancelled": 0,
+   "silent": 1,
+   "median_L_min": 60.0,
+   "silent_with_expiry": 1
+  },
+  "TOE": {
+   "n": 351,
+   "cancelled": 47,
+   "silent": 292,
+   "median_L_min": 120.0,
+   "silent_with_expiry": 292
+  },
+  "TOR": {
+   "n": 1,
+   "cancelled": 0,
+   "silent": 1,
+   "median_L_min": 48.86666666716337,
+   "silent_with_expiry": 1
+  },
+  "VOW": {
+   "n": 1,
+   "cancelled": 0,
+   "silent": 1,
+   "median_L_min": 720.0,
+   "silent_with_expiry": 1
+  }
+ },
+ "per_year": {
+  "2012": {
+   "n": 10,
+   "cancelled": 2,
+   "silent_with_expiry": 6,
+   "silent": 6
+  },
+  "2013": {
+   "n": 124,
+   "cancelled": 83,
+   "silent_with_expiry": 36,
+   "silent": 36
+  },
+  "2014": {
+   "n": 251,
+   "cancelled": 86,
+   "silent_with_expiry": 162,
+   "silent": 162
+  },
+  "2015": {
+   "n": 326,
+   "cancelled": 99,
+   "silent_with_expiry": 227,
+   "silent": 227
+  },
+  "2016": {
+   "n": 438,
+   "cancelled": 136,
+   "silent_with_expiry": 300,
+   "silent": 300
+  },
+  "2017": {
+   "n": 532,
+   "cancelled": 164,
+   "silent_with_expiry": 364,
+   "silent": 364
+  },
+  "2018": {
+   "n": 729,
+   "cancelled": 179,
+   "silent_with_expiry": 539,
+   "silent": 539
+  },
+  "2019": {
+   "n": 857,
+   "cancelled": 179,
+   "silent_with_expiry": 657,
+   "silent": 657
+  },
+  "2020": {
+   "n": 2082,
+   "cancelled": 211,
+   "silent_with_expiry": 1818,
+   "silent": 1818
+  },
+  "2021": {
+   "n": 1956,
+   "cancelled": 370,
+   "silent_with_expiry": 1496,
+   "silent": 1496
+  },
+  "2022": {
+   "n": 1905,
+   "cancelled": 434,
+   "silent_with_expiry": 1401,
+   "silent": 1401
+  },
+  "2023": {
+   "n": 2264,
+   "cancelled": 585,
+   "silent_with_expiry": 1573,
+   "silent": 1573
+  },
+  "2024": {
+   "n": 3506,
+   "cancelled": 878,
+   "silent_with_expiry": 2485,
+   "silent": 2485
+  },
+  "2025": {
+   "n": 3969,
+   "cancelled": 1096,
+   "silent_with_expiry": 2723,
+   "silent": 2723
+  },
+  "2026": {
+   "n": 4205,
+   "cancelled": 1209,
+   "silent_with_expiry": 2857,
+   "silent": 2857
+  }
+ },
+ "lifetime_bands": {
+  "<30m": 1073,
+  "30m-1h": 1036,
+  "1-2h": 5427,
+  "2-6h": 7607,
+  "6-24h": 5936,
+  "1-7d": 2075,
+  ">=7d": 0
+ },
+ "expires_coverage": {
+  "messages": 82754,
+  "with_info": 78958,
+  "with_info_and_expires": 78958
+ },
+ "lifetime_menu": {
+  "distinct": 1209,
+  "top12": [
+   [
+    60.0,
+    4973
+   ],
+   [
+    120.0,
+    2911
+   ],
+   [
+    240.0,
+    2210
+   ],
+   [
+    1440.0,
+    2036
+   ],
+   [
+    360.0,
+    1732
+   ],
+   [
+    180.0,
+    1494
+   ],
+   [
+    480.0,
+    1243
+   ],
+   [
+    1380.0,
+    982
+   ],
+   [
+    30.0,
+    560
+   ],
+   [
+    720.0,
+    551
+   ],
+   [
+    300.0,
+    515
+   ],
+   [
+    15.0,
+    440
+   ]
+  ],
+  "whole_hours": 19297,
+  "quarter_hours": 20626,
+  "n": 23154
+ },
+ "fetch": {
+  "count": 82773,
+  "fetched_rows": 82773,
+  "sha256_of_signed_xml": "fb6a18f73389e40c69ec50fbbf13dd4968a1fe3c8f9909d27c5e7cb37741534f"
+ }
+}
