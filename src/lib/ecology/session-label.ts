@@ -31,6 +31,16 @@ export interface SessionCycleLabel {
 }
 
 const CONVENING_AFTER = /\bconvening\s+after\s+cycle\s+0*(\d+)\b/i
+/** A heading's own label for its session: "cycle 007, session 1", "cycle 004, round 1", "cycle
+ *  005, first session", "first working session of cycle 001". */
+const SESSION_OF_CYCLE = new RegExp(
+  [
+    String.raw`\bcycle\s+0*(\d+)\s*,\s*(?:working\s+)?(?:session|round)\b`,
+    String.raw`\bcycle\s+0*(\d+)\s*,\s*(?:first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)\s+(?:working\s+)?session\b`,
+    String.raw`\bsession\s+of\s+cycle\s+0*(\d+)\b`,
+  ].join('|'),
+  'i',
+)
 const CYCLE_IN_HEADING = /\bcycle\s+0*(\d+)\b/i
 const CONVENING_WORD = /\bconvening\b/i
 
@@ -55,35 +65,47 @@ function readPhase(tail: string): string | null {
   return PHASE.exec(clause)?.[1]?.toLowerCase() ?? null
 }
 
-function fromRead(text: string): { cycle: number; convening: boolean } | null {
+/** The read at a note's open: the cycle, and the phase where the read names one. */
+function fromRead(text: string): { cycle: number; phase: string | null } | null {
   const short = READ_SHORT.exec(text)
   const long = READ.exec(text)
   // whichever read stands first in the note is the one taken at its open
-  if (short && (!long || short.index <= long.index)) {
-    return { cycle: Number(short[1]), convening: short[2]!.toLowerCase() === 'convening' }
-  }
+  if (short && (!long || short.index <= long.index)) return { cycle: Number(short[1]), phase: short[2]!.toLowerCase() }
   if (!long) return null
-  const phase = readPhase(text.slice(long.index + long[0].length))
-  return { cycle: Number(long[1]), convening: phase === 'convening' }
+  return { cycle: Number(long[1]), phase: readPhase(text.slice(long.index + long[0].length)) }
 }
 
 /**
  * The cycle a session's note says it belongs to, or null where the note says nothing.
  *
  * In this order, because the practice's own name for the session outranks the state of a file
- * it read: the heading's "convening after cycle N"; the heading's "cycle N" (the Field's s141 is
- * headed "first working session of cycle 001" while the file it read still said cycle 0); a
- * heading that says only "convening" takes its number from the read; then the read of
- * `cycle.json`; then a "Cycle N" in the note's opening lines.
+ * it read, and the state of the file outranks a cycle a heading only mentions:
+ *
+ *   1. the heading's "convening after cycle N";
+ *   2. the heading's label for the session — "cycle 007, session 1", "first working session of
+ *      cycle 001" (the Field's s141, opened while the file it read still said cycle 0);
+ *   3. a heading that says "convening", with the number from the read — unless the read names
+ *      another phase;
+ *   4. the read of `cycle.json` at the session's open;
+ *   5. any "cycle N" the heading carries ("cycle 002 opens", "the paper of cycle 007") — a
+ *      heading may name a cycle it is about rather than the one it ran in, so this comes after
+ *      the read;
+ *   6. a "Cycle N" in the note's opening lines.
  */
 export function sessionCycleLabel(heading: string, text: string): SessionCycleLabel | null {
   const after = CONVENING_AFTER.exec(heading)
   if (after) return { cycle: Number(after[1]), convening: true, from: 'heading' }
+  const own = SESSION_OF_CYCLE.exec(heading)
+  if (own) return { cycle: Number(own[1] ?? own[2] ?? own[3]), convening: false, from: 'heading' }
+  const read = fromRead(text)
+  // a heading that says "convening" is a convening session unless the read names another phase:
+  // a heading may also mention the convening a working session followed
+  if (CONVENING_WORD.test(heading) && (read?.phase ?? 'convening') === 'convening') {
+    return { cycle: read?.cycle ?? null, convening: true, from: 'heading' }
+  }
+  if (read) return { cycle: read.cycle, convening: read.phase === 'convening', from: 'cycle.json' }
   const named = CYCLE_IN_HEADING.exec(heading)
   if (named) return { cycle: Number(named[1]), convening: false, from: 'heading' }
-  const read = fromRead(text)
-  if (CONVENING_WORD.test(heading)) return { cycle: read?.cycle ?? null, convening: true, from: 'heading' }
-  if (read) return { ...read, from: 'cycle.json' }
   const body = BODY.exec(text.slice(0, OPENING))
   return body ? { cycle: Number(body[1]), convening: false, from: 'body' } : null
 }

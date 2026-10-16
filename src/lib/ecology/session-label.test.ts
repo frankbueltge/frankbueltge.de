@@ -59,6 +59,16 @@ describe('the cycle a note says its session belongs to', () => {
     expect(sessionCycleLabel('Session 141 — 2026-08-30 (third of the date, first working session of cycle 001)', read)).toMatchObject({ cycle: 1, from: 'heading' })
   })
 
+  it('lets the read outrank a cycle or a convening the heading only mentions', () => {
+    const working = 'Read: `cycle.json` (cycle 9, working), both sibling bulletins'
+    expect(sessionCycleLabel('Session 210 — 2026-10-20 — the paper of cycle 008, read again', working)).toEqual({ cycle: 9, convening: false, from: 'cycle.json' })
+    expect(sessionCycleLabel('Session 205 — 2026-10-18 — study 20, after the convening', working)).toEqual({ cycle: 9, convening: false, from: 'cycle.json' })
+    // a read that names no phase leaves the heading's word standing
+    expect(sessionCycleLabel('Session 162 — Who holds the pen (convening, session 1)', '`cycle.json` (cycle 6), both bulletins')).toMatchObject({ cycle: 6, convening: true })
+    // and with no read at all, the heading's mention is all there is
+    expect(sessionCycleLabel('Session 150 — cycle 002 opens, and we built the thing instead of measuring it', '')).toEqual({ cycle: 2, convening: false, from: 'heading' })
+  })
+
   it('takes a sibling’s cycle for none of its own: the number must follow the file’s name', () => {
     expect(sessionCycleLabel('a heading', '`cycle.json`, both sibling bulletins (cycle 005 still), the relay.')).toBeNull()
   })
