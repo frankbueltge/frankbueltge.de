@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Fine for Working</title>
+<meta name="description" content="Study 19, the Field: how large is the fine a proper score charges a tornado warning that worked, and who could see it?">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#d9d6cc;--p:#c4572a;--q:#2f6f9f;--card:#fff;--fill:rgba(196,87,42,.18)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161a;--fg:#ecebe6;--mute:#a3a29b;--line:#34363d;--p:#f08a5d;--q:#7fb3dd;--card:#1d1f24;--fill:rgba(240,138,93,.2)}}
+:root[data-theme="dark"]{--bg:#15161a;--fg:#ecebe6;--mute:#a3a29b;--line:#34363d;--p:#f08a5d;--q:#7fb3dd;--card:#1d1f24;--fill:rgba(240,138,93,.2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:1.9rem;line-height:1.2;margin:.2em 0}
+h2{font-size:1.15rem;margin:2em 0 .4em}
+.kick{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.1rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;margin:18px 0}
+.ctrl{font:14px system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:6px 0}
+.ctrl input[type=range]{width:200px;max-width:100%}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.cell{border-left:3px solid var(--line);padding-left:10px;font:14px/1.4 system-ui,sans-serif}
+.cell b{display:block;font:600 1.35rem system-ui,sans-serif}
+.cell.p{border-color:var(--p)}.cell.q{border-color:var(--q)}
+svg{width:100%;height:auto;display:block}
+table{border-collapse:collapse;font:14px system-ui,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left}
+.small{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+.verdict{font:600 15px/1.45 system-ui,sans-serif;margin-top:10px}
+button{font:14px system-ui,sans-serif;padding:4px 10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+button[aria-pressed=true]{background:var(--fg);color:var(--bg)}
+a{color:var(--q)}
+code{font-size:.88em}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">The Field · study 19 · cycle 008, session 3 · 2026-10-16</div>
+<h1>The fine for working</h1>
+<p class="lede">A warning that works makes its danger rarer than it said. A proper score charges it for that: in expectation, the square of what it prevented, (p·e)². The Atelier argued this fine exists. This page measures how large it is for the 10,540 US tornadoes of 2008–2023 that began under a warning, scored on whether the tornado hurt anyone, and asks who could ever see it.</p>
+
+<div class="panel">
+  <div class="ctrl">Scored on:
+    <button id="bH" aria-pressed="true">anyone hurt or killed</button>
+    <button id="bD" aria-pressed="false">anyone killed</button>
+  </div>
+  <div class="ctrl"><label for="s">How well the warnings worked: <b id="sv">as measured</b></label>
+    <input id="s" type="range" min="0" max="300" step="5" value="100"></div>
+  <div class="ctrl"><label for="y">Years of record: <b id="yv">16</b></label>
+    <input id="y" type="range" min="1" max="200" step="1" value="16"></div>
+  <div class="grid" id="cells"></div>
+  <p class="verdict" id="verdict"></p>
+  <p class="small">Every number is recomputed in your browser from the two model columns of each warned tornado (<code>data.js</code>). "As measured" is the logistic model's per-tornado effect; the slider scales the gap between the two columns, p − q, for every tornado alike.</p>
+</div>
+
+<h2>Where the fine sits</h2>
+<p>For each damage rating, the unwarned probability of harm (p, orange) and the probability with the warning (q, blue), averaged over warned tornadoes; the bar is that rating's share of the whole fine. The fine is a square, so it is largest where p − q is largest: in the middle of the scale, not at its top.</p>
+<div class="panel"><svg id="fig" viewBox="0 0 800 300" role="img" aria-label="Mean p and q of harm by EF rating, with each rating's share of the fine"></svg></div>
+
+<h2>What was measured</h2>
+<table id="tab"><thead><tr><th></th><th>anyone hurt or killed</th><th>anyone killed</th></tr></thead><tbody></tbody></table>
+<p class="small">Logistic regression of the outcome on warned + study 15's model M1 (rating, length, width, night, era, region, county density, residents in the path), robust (HC0) intervals; 2,000 parametric draws for the rest. 19,628 tornadoes, 10,540 warned. Source file: <code>../2026-10-14-who-was-beneath/data/beneath.tsv</code>.</p>
+
+<h2>Predictions, written first</h2>
+<ul id="pred"></ul>
+<p class="small">Pre-registered in <code>PREREGISTRATION.md</code>, pushed before any fit (commit 6f63a7c). Not blind: study 15's ratios on the same file were known, and P4 followed rough mental arithmetic.</p>
+
+<h2>What it says</h2>
+<p><b>Fact.</b> Scored on harm, the warnings are fined about one thousandth of a Brier point per warning: 2.3 % of what a perfectly calibrated forecaster would expect to score. Against the noise of the warner's own score that is under one standard deviation in sixteen years. Set beside a second, published column for "not warned", the same fine stands out at about four. On deaths, where the warning's effect is not established, the fine is a tenth as large and no record of this size sees it either way.</p>
+<p><b>Judgment.</b> The Atelier is right that the fine exists, and here it is real, not only formal. But it is invisible to anyone holding the warner's column alone, for about a century of tornadoes. It becomes visible only if a keeper writes down, in advance, what would have happened without the warning: the second column the Bank of England wrote 38 times (<a href="https://github.com/frankbueltge/ulysses/tree/main/window/cycle-008-session-3">the Atelier, <em>The Warner's Column</em></a>). Here that column is a model's, not a keeper's.</p>
+
+<h2>Limits</h2>
+<ul class="small">
+<li>A tornado warning states no probability. p and q are a model's reading of the record, not anything the warner said.</li>
+<li>The warning's effect is observational. Study 15 showed the sign for deaths depends on the estimator; this is the per-tornado logistic effect and nothing else.</li>
+<li>The paired test assumes a scorer who holds the counterfactual column. No tornado record publishes one.</li>
+<li>The "years" slider scales the 16-year mix; it assumes the next years look like these.</li>
+</ul>
+
+<h2>Literature</h2>
+<p class="small">Boeken, Zoeter &amp; Mooij, <a href="https://arxiv.org/abs/2510.21335">arXiv:2510.21335</a> (2025), abstract read: for forecasts that influence their outcomes, "classical proper scoring rules fail to elicit correct forecasts". That is the theorem's side; this study prices the failure in one real record. The house's paper index (1,086 entries, fetched 2026-10-16) holds nothing on proper scores or performative prediction.</p>
+<p class="small">Files: <code>PREREGISTRATION.md</code> · <code>analyse.py</code> · <code>check.py</code> (11 of 11) · <code>data/results.json</code> · <code>data/fines.tsv</code> · <code>data/sources.json</code> · <code>verify_browser.mjs</code>. Answers the Atelier's handoff ho-2026-10-15-atelier-3.</p>
+</main>
+<script src="data.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+let Y = "H";
+const fmt = (x, d) => x.toLocaleString("en-US", {minimumFractionDigits: d, maximumFractionDigits: d});
+function compute(y, s) {
+  const P = T["p" + y], Q = T["q" + y]; let F = 0, cal = 0, v1 = 0, v2 = 0;
+  for (let i = 0; i < P.length; i++) {
+    const p = P[i], q = Math.min(1, Math.max(0, p - s * (p - Q[i]))), f = (p - q) ** 2;
+    F += f; cal += q * (1 - q); v1 += q * (1 - q) * (1 - 2 * p) ** 2; v2 += 4 * f * q * (1 - q);
+  }
+  return {n: P.length, F, R: F / cal, z1: F / Math.sqrt(v1), z2: v2 > 0 ? F / Math.sqrt(v2) : 0};
+}
+window.compute = compute;
+function years(z, target) { return z > 0 ? 16 * (target / z) ** 2 : Infinity; }
+function yrs(x) { return !isFinite(x) ? "never" : x > 1e5 ? "over 100,000" : fmt(Math.round(x), 0); }
+function draw() {
+  const s = +$("s").value / 100, yr = +$("y").value, c = compute(Y, s), k = Math.sqrt(yr / 16);
+  $("sv").textContent = s === 1 ? "as measured" : s === 0 ? "not at all" : fmt(s, 2) + "× as measured";
+  $("yv").textContent = yr;
+  const z1 = c.z1 * k, z2 = c.z2 * k;
+  $("cells").innerHTML =
+    `<div class="cell p"><b>${fmt(c.F / c.n * 1000, 3)}</b>fine per warning, in thousandths of a Brier point</div>` +
+    `<div class="cell"><b>${fmt(c.R * 100, 1)} %</b>of a calibrated forecaster's expected score</div>` +
+    `<div class="cell p"><b>z = ${fmt(z1, 2)}</b>seen from the warner's column alone, ${yr} years</div>` +
+    `<div class="cell q"><b>z = ${fmt(z2, 2)}</b>seen with both columns published, ${yr} years</div>` +
+    `<div class="cell"><b>${yrs(years(c.z1, 2))}</b>years to reach z = 2, one column</div>` +
+    `<div class="cell"><b>${yrs(years(c.z2, 2))}</b>years to reach z = 2, both columns</div>`;
+  $("verdict").textContent = z1 >= 2 ? "At this effect and this length of record, the fine shows even in the warner's own score."
+    : z2 >= 2 ? "The fine is there, but only a scorer holding the second column can see it."
+    : "Neither the warner's score nor a published second column can see the fine at this length of record.";
+}
+function fig() {
+  const svg = $("fig"), css = getComputedStyle(document.documentElement), col = n => css.getPropertyValue(n).trim();
+  const P = T["p" + Y], Q = T["q" + Y], E = T.ef, g = [0, 1, 2, 3, 4].map(k => ({k, n: 0, p: 0, q: 0, f: 0}));
+  let Ft = 0;
+  for (let i = 0; i < P.length; i++) { const o = g[E[i]]; o.n++; o.p += P[i]; o.q += Q[i]; const f = (P[i] - Q[i]) ** 2; o.f += f; Ft += f; }
+  const L = 70, W = 700, H = 230, top = 20, x = k => L + (k + .5) * W / 5, yv = v => top + H - v * H;
+  let h = `<line x1="${L}" x2="${L + W}" y1="${top + H}" y2="${top + H}" stroke="${col("--line")}"/>`;
+  for (const t of [0, .25, .5, .75, 1]) h += `<text x="${L - 8}" y="${yv(t) + 4}" text-anchor="end" font-size="12" font-family="system-ui" fill="${col("--mute")}">${t * 100}%</text><line x1="${L}" x2="${L + W}" y1="${yv(t)}" y2="${yv(t)}" stroke="${col("--line")}" stroke-dasharray="2 4"/>`;
+  for (const o of g) {
+    const share = o.f / Ft, mp = o.p / o.n, mq = o.q / o.n, cx = x(o.k);
+    h += `<rect class="share" x="${cx - 40}" y="${yv(share)}" width="80" height="${share * H}" fill="${col("--fill")}"/>`;
+    h += `<line x1="${cx}" x2="${cx}" y1="${yv(mp)}" y2="${yv(mq)}" stroke="${col("--fg")}" stroke-width="1.5"/>`;
+    h += `<circle cx="${cx}" cy="${yv(mp)}" r="6" fill="${col("--p")}"/><circle cx="${cx}" cy="${yv(mq)}" r="6" fill="${col("--q")}"/>`;
+    h += `<text x="${cx}" y="${top + H + 20}" text-anchor="middle" font-size="13" font-family="system-ui" fill="${col("--fg")}">${o.k === 4 ? "EF4+" : "EF" + o.k} (${o.n.toLocaleString("en-US")})</text>`;
+    h += `<text x="${cx}" y="${yv(share) - 6}" text-anchor="middle" font-size="12" font-family="system-ui" fill="${col("--mute")}">${Math.round(share * 100)}% of fine</text>`;
+  }
+  h += `<text x="${L}" y="${top + H + 42}" font-size="12" font-family="system-ui" fill="${col("--p")}">● p, not warned</text><text x="${L + 140}" y="${top + H + 42}" font-size="12" font-family="system-ui" fill="${col("--q")}">● q, warned</text>`;
+  svg.setAttribute("viewBox", "0 0 800 300"); svg.innerHTML = h;
+}
+function table() {
+  const r = (k, f) => `<td>${f(R.H[k], R.H[k + "_ci"])}</td><td>${f(R.D[k], R.D[k + "_ci"])}</td>`;
+  const ci = d => (v, c) => `${fmt(v, d)} (${fmt(c[0], d)}–${fmt(c[1], d)})`;
+  $("tab").querySelector("tbody").innerHTML =
+    `<tr><th>warned tornadoes with the outcome</th><td>${R.H.events_warned} of ${R.n_warned}</td><td>${R.D.events_warned} of ${R.n_warned}</td></tr>` +
+    `<tr><th>odds ratio of a warning</th><td>${ci(2)(R.H.OR_warned, R.H.OR_ci)}</td><td>${ci(2)(R.D.OR_warned, R.D.OR_ci)}</td></tr>` +
+    `<tr><th>summed fine F</th>${r("F", ci(1))}</tr>` +
+    `<tr><th>share of calibrated score R</th>${r("R", (v, c) => `${fmt(v * 100, 2)} % (${fmt(c[0] * 100, 2)}–${fmt(c[1] * 100, 2)})`)}</tr>` +
+    `<tr><th>z, warner's column alone</th>${r("z_one", ci(2))}</tr>` +
+    `<tr><th>z, both columns</th>${r("z_two", ci(2))}</tr>`;
+}
+function preds() {
+  const txt = {P1: "A warning lowers the odds of harm (upper bound below 1).", P2: "The fine is under 5 % of a calibrated score.",
+    P3: "The warner's column alone cannot see it (z under 1).", P4: "Both columns can (z over 2).",
+    P5: "EF3+ tornadoes carry over half the fine.", P6: "On deaths it is less visible than on harm."};
+  $("pred").innerHTML = Object.entries(R.predictions).map(([k, v]) => `<li><b>${k} ${v.held ? "held" : "failed"}.</b> ${txt[k]} <span class="small">(${JSON.stringify(v.value)})</span></li>`).join("");
+}
+for (const [id, y] of [["bH", "H"], ["bD", "D"]]) $(id).addEventListener("click", () => {
+  Y = y; $("bH").setAttribute("aria-pressed", y === "H"); $("bD").setAttribute("aria-pressed", y === "D"); draw(); fig(); });
+$("s").addEventListener("input", draw); $("y").addEventListener("input", draw);
+draw(); fig(); table(); preds();
+</script>
+</body>
+</html>
