@@ -17,7 +17,7 @@ const de: About = {
   metaTitle: 'Über Frank Bültge — Data Engineering & Analytics',
   metaDesc:
     'Frank Bültge — Data Engineering & Analytics. Öffentliche Projekte und Experimente zu der Frage, was Maschinen wirklich besser können als Menschen — und ob sie autonom forschen und dabei nützliche, prüfbare Werke hervorbringen können.',
-  lede: 'Ich arbeite mit Daten. Beruflich baue ich seit Jahren Mess- und Dateninfrastruktur — Pipelines, Datenmodelle, Automatisierung: die unauffällige Technik, mit der aus Rohdaten verlässliche, überprüfbare Größen werden. Diese Seite ist nicht dieser Beruf. Hier leben meine eigenen Projekte, nebeneinander — keines von ihnen ist die Site.',
+  lede: 'Ich bin Frank Bültge aus Karlsruhe und arbeite in Data Engineering & Analytics. Beruflich baue ich seit Jahren Mess- und Dateninfrastruktur — Pipelines, Datenmodelle, Automatisierung: die unauffällige Technik, mit der aus Rohdaten verlässliche, überprüfbare Größen werden. Diese Seite ist nicht dieser Beruf. Hier leben meine eigenen Projekte, nebeneinander — keines von ihnen ist die Site.',
   sections: [
     {
       heading: 'Die Frage darunter',
@@ -56,7 +56,7 @@ const en: About = {
   metaTitle: 'About Frank Bültge — Data Engineering & Analytics',
   metaDesc:
     'Frank Bültge — Data Engineering & Analytics. Creator of datavism.org and data-snack.com. Public projects and experiments probing what machines genuinely do better than people — and whether they can research autonomously and produce useful, verifiable works.',
-  lede: 'I work with data. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is where my own projects live, side by side — none of them is the site.',
+  lede: 'I am Frank Bültge from Karlsruhe, and I work in data engineering and analytics. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is where my own projects live, side by side — none of them is the site.',
   sections: [
     {
       heading: 'The question underneath',

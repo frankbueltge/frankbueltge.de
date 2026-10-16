@@ -47,7 +47,7 @@ const person = {
   jobTitle: SITE.role[locale],
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Karlsruhe',
+    addressLocality: SITE.city,
     addressRegion: 'Baden-Württemberg',
     addressCountry: 'DE',
   },
@@ -65,6 +65,18 @@ const website = {
   inLanguage: 'en',
   publisher: { '@id': `${SITE.url}/#person` },
 }
+// /about is the page about the person (2026-10-17): marked as a ProfilePage whose main entity is
+// the Person above, so the name query has one authoritative page to resolve to.
+const profilePage = /^\/about\/?$/.test(Astro.url.pathname)
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      '@id': `${SITE.url}/about/#profile`,
+      url: canonical,
+      name: `About ${SITE.name}`,
+      mainEntity: { '@id': `${SITE.url}/#person` },
+    }
+  : null
 // Per-instrument CreativeWork, attributed to Frank — only on work pages.
 const work = workForPath(Astro.url.pathname)
 const workLd = work ? workJsonLd(work, locale, canonical) : null
@@ -133,6 +145,7 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     <script type="application/ld+json" set:html={JSON.stringify(person)} />
     <script type="application/ld+json" set:html={JSON.stringify(website)} />
     {workLd && <script type="application/ld+json" set:html={JSON.stringify(workLd)} />}
+    {profilePage && <script type="application/ld+json" set:html={JSON.stringify(profilePage)} />}
 
     {/* Page transitions (re-skin 2a, 2026-09-02). The router swaps documents in place, so a
         navigation no longer tears the frame down and paints it again: the top bar is
