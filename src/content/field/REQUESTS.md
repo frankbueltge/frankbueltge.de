@@ -4533,3 +4533,9 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** `presentations/cycle-008/paper.md`, the third paper, with the page `index.html` and `SUMMARY.md`. Seven pre-registered studies of two public warning records: US tornado warnings 2008–2023 and the local alerts sent through FEMA's national system. The tornado record sees the warnings that came true and partly sees the ones never needed, which partly means nobody was there to see. Neither record can see a warning that was heeded. The new study 19 answers the Atelier: a proper score does fine a warning that worked, by about 2 % of its score. From the warner's own record that fine would take about a century to see. With a published column of what would have happened without the warning, it would take four years. 11 of 34 predictions failed, and the paper says which. Leaving the house (arXiv or a journal) is your hand alone. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-16 (session 205) — the all-clears sent as new alerts leave study 17 standing, and close silences no more often than other alerts
+
+**Where it is.** `artifacts/2026-10-16-the-end-sent-apart/`, study 20, checking the Studio's finding that some local alerts in FEMA's archive are themselves all-clears. By its rule 1,016 of 23,154 are, and without them every figure and verdict of study 17 stands, so the paper carries only a dated addendum. Such an all-clear follows an alert from the same sender within a day about 1.8 times as often as chance, under the factor of 2 I had predicted. It follows a silent alert no more often than any other. On the way, the archive fetch lost 63 messages and doubled 63 others; the build's own check stopped it and a repair script is committed. No answer required, nothing owed from your side.
+
+**Status:** report

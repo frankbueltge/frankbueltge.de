@@ -1,0 +1,282 @@
+{
+ "fetch": {
+  "count": 82813,
+  "fetched_rows": 82813,
+  "sha256_of_signed_xml": "828203dd3dd113d1a9443dcaaa74db396ddcc619a8cd2c022c133b2628456538",
+  "sent_after_cutoff_dropped": 59,
+  "fill": {
+   "rows_before": 82813,
+   "unique_before": 82750,
+   "id_passes": [
+    82813,
+    82813
+   ],
+   "passes_agree": true,
+   "missing_refetched": 63,
+   "rows_after": 82813,
+   "in_cache_not_in_listing": 0
+  }
+ },
+ "reproduces_study17_corrected": {
+  "silent_with_expiry": [
+   16644,
+   16644
+  ],
+  "cancel_before_expiry": [
+   [
+    5676,
+    5711
+   ],
+   [
+    5676,
+    5711
+   ]
+  ],
+  "eta2_account": [
+   0.4976,
+   0.4976
+  ],
+  "eta2_code": [
+   0.0846,
+   0.0846
+  ],
+  "extreme": [
+   [
+    98,
+    181
+   ],
+   [
+    98,
+    181
+   ]
+  ]
+ },
+ "reproduces": true,
+ "study17_all": {
+  "warnings": 23154,
+  "silent": 16644,
+  "P1_silent_with_expiry": 16644,
+  "P1_held": true,
+  "P2_median_life_min": 180.0,
+  "P2_held": true,
+  "whole_hours": [
+   19297,
+   23154
+  ],
+  "P3_cancel_before_expiry": [
+   5676,
+   5711
+  ],
+  "P3_share": 0.9939,
+  "P3_ci": [
+   0.9915,
+   0.9956
+  ],
+  "P3_held": true,
+  "P4_extreme": [
+   98,
+   181
+  ],
+  "P4_share": 0.5414,
+  "P4_held": false,
+  "P5_median_cancelled_vs_silent_min": [
+   360.0,
+   120.0
+  ],
+  "P5_held": true,
+  "eta2_account": 0.4976,
+  "eta2_code": 0.0846,
+  "eta2_account_shuffled_max_of_50": 0.1715,
+  "accounts": 3846
+ },
+ "study17_without_allclears": {
+  "warnings": 22138,
+  "silent": 15707,
+  "P1_silent_with_expiry": 15707,
+  "P1_held": true,
+  "P2_median_life_min": 180.0,
+  "P2_held": true,
+  "whole_hours": [
+   18569,
+   22138
+  ],
+  "P3_cancel_before_expiry": [
+   5611,
+   5645
+  ],
+  "P3_share": 0.994,
+  "P3_ci": [
+   0.9916,
+   0.9957
+  ],
+  "P3_held": true,
+  "P4_extreme": [
+   88,
+   166
+  ],
+  "P4_share": 0.5301,
+  "P4_held": false,
+  "P5_median_cancelled_vs_silent_min": [
+   360.0,
+   120.0
+  ],
+  "P5_held": true,
+  "eta2_account": 0.5051,
+  "eta2_code": 0.0871,
+  "eta2_account_shuffled_max_of_50": 0.179,
+  "accounts": 3777
+ },
+ "P1": {
+  "allclears": 1016,
+  "of": 23154,
+  "share": 0.0439,
+  "ci": [
+   0.0413,
+   0.0466
+  ],
+  "starts_with_cancel": 216,
+  "in_studio_dealt_pool": 678,
+  "studio_dealt_pool": 14049,
+  "held": true
+ },
+ "P2": {
+  "silent": 937,
+  "of": 1016,
+  "share": 0.9222,
+  "ci": [
+   0.9041,
+   0.9372
+  ],
+  "fates": {
+   "silence": 937,
+   "end-clear": 17,
+   "end-mute": 48,
+   "update": 13,
+   "end-error": 1
+  },
+  "held": true
+ },
+ "P3": {
+  "verdicts_same": true,
+  "P1_share_shift": 0.0,
+  "P3_share_shift": 0.0001,
+  "eta2_account": 0.5051,
+  "held": true
+ },
+ "P4": {
+  "allclears_with_predecessor": [
+   680,
+   1016
+  ],
+  "share": 0.6693,
+  "ci": [
+   0.6398,
+   0.6975
+  ],
+  "baseline_with_predecessor": [
+   8249,
+   22138
+  ],
+  "baseline_share": 0.3726,
+  "baseline_ci": [
+   0.3663,
+   0.379
+  ],
+  "ratio": 1.796,
+  "ratio_ci": [
+   1.529,
+   2.07
+  ],
+  "boot_n": 2000,
+  "held": false
+ },
+ "P5": {
+  "predecessor_silent": [
+   453,
+   680
+  ],
+  "share": 0.6662,
+  "ci": [
+   0.6299,
+   0.7006
+  ],
+  "predecessor_fates": {
+   "end-mute": 195,
+   "silence": 453,
+   "update": 23,
+   "end-clear": 7,
+   "end-safe": 2
+  },
+  "baseline_silent_share_of_all_warnings": 0.7095,
+  "held": true
+ },
+ "exploratory": {
+  "pair_gap_min_quartiles": [
+   45.71249999944121,
+   102.62499999813735,
+   226.86250000167638
+  ],
+  "pair_same_code": 546,
+  "pair_shared_hazard_word": 314,
+  "pair_allclear_has_hazard_word": 405,
+  "silent_followed_by_allclear_24h": [
+   645,
+   15707
+  ],
+  "silent_share": 0.0411,
+  "silent_ci": [
+   0.0381,
+   0.0443
+  ],
+  "nonsilent_followed_by_allclear_24h": [
+   260,
+   6431
+  ],
+  "nonsilent_share": 0.0404,
+  "allclear_accounts": 492,
+  "allclear_top5_account_share": 0.1772,
+  "allclear_codes": {
+   "LAE": 366,
+   "LEW": 166,
+   "CEM": 137,
+   "FRW": 96,
+   "SPW": 86,
+   "CAE": 48,
+   "TOE": 39,
+   "EVI": 35,
+   "HMW": 19,
+   "CDW": 14,
+   "BLU": 5,
+   "MEP": 5
+  },
+  "allclear_years": {
+   "2014": 3,
+   "2015": 11,
+   "2016": 14,
+   "2017": 12,
+   "2018": 19,
+   "2019": 29,
+   "2020": 57,
+   "2021": 79,
+   "2022": 88,
+   "2023": 114,
+   "2024": 168,
+   "2025": 199,
+   "2026": 223
+  },
+  "pred_codes": {
+   "LAE": 153,
+   "LEW": 145,
+   "SPW": 82,
+   "FRW": 70,
+   "EVI": 67,
+   "CEM": 49,
+   "CAE": 45,
+   "TOE": 26,
+   "HMW": 21,
+   "CDW": 12,
+   "BLU": 5,
+   "MEP": 5
+  }
+ }
+}

@@ -50,7 +50,13 @@ code{font-size:.88em}
 </div>
 
 <h2>What was found</h2>
-<div id="found"></div>
+<div id="found">
+<p><b>1. The all-clears are real and few.</b> By the Studio's rule, unchanged, <b>1,016</b> of the 23,154 local warnings (4.4 %, 4.1–4.7) are messages sent as a fresh alert whose shown words begin with a cancel or carry an all-clear. Inside the Studio's own dealt pool the same code finds <b>678</b> of 14,049, the Studio's count exactly. 92.2 % of them are silent themselves: nothing follows an end. They are rising: 3 in 2014, 223 in 2026 so far.</p>
+<p><b>2. Study 17 holds without them.</b> Taken out, 15,707 silent warnings remain and all 15,707 carry their own expiry; 99.4 % of first cancels still come before it; who sends an alert still explains its cancelling far better than what it warns of (η² 0.51 against 0.09). Every verdict is the same. Study 17 and the paper's study-5 lines need no correction.</p>
+<p><b>3. An all-clear does follow a warning, but not twice as often as chance.</b> Two in three all-clears (66.9 %, 64.0–69.8) come within 24 hours of a warning from the same sender, against 37.3 % for any other warning. The ratio is <b>1.80</b> (1.53–2.07): our bar of 2 was not met (P4 failed). Four in five such pairs share the event code.</p>
+<p><b>4. It does not close the silent ones in particular.</b> The preceding warning is silent for 66.6 %, which passed our bar of 60 %, but 71.0 % of all warnings are silent: the bar sat below the base rate, so that pass says nothing (a bad test of ours, named here). Read the other way, <b>645</b> of 15,707 silent warnings (4.1 %) are followed by an all-clear from their sender within a day, and so are 4.0 % of the warnings that were not silent. The end sent apart exists, and it is no more likely to follow a silence than any other fate.</p>
+<p><b>Reading (judgment).</b> At most about one silence in twenty-five has a word of ending filed apart from it, and the record does not say that word ends that warning: the pair is made by us, from sender and time. The archive's silence stays what study 17 found: an end written in advance, not an end reported afterwards.</p>
+</div>
 
 <h2>The predictions, registered before any count</h2>
 <div class="wrap"><table id="pred"><thead><tr><th></th><th>prediction</th><th>result</th><th>verdict</th></tr></thead><tbody></tbody></table></div>
@@ -60,7 +66,11 @@ code{font-size:.88em}
 <div class="wrap"><table id="s17"><thead><tr><th></th><th>all 23,154 (study 17, corrected)</th><th>without the all-clears</th></tr></thead><tbody></tbody></table></div>
 
 <h2>Method and limits</h2>
-<div id="method"></div>
+<div id="method">
+<p class="small"><b>Method.</b> The warnings and their fates are study 17's corrected build, rebuilt from today's fetch cut back to the 82,754 messages study 17 read; its figures reproduce exactly (check 1). An all-clear is the Studio's rule (<code>STARTSCANCEL</code> or <code>ALLCLEAR</code> on the shown words), applied to every warning, not only to those the Studio deals. A predecessor is the nearest earlier warning, not itself an all-clear, from the same sending account within 24 hours; the chance level applies the same test to every other warning. The ratio's interval resamples accounts (2,000 draws). <code>check.py</code> recounts everything from <code>data/warnings.tsv</code> by a second route, and proves a tamper is caught.</p>
+<p class="small"><b>Limits.</b> The pairing is by sender and time; no message names the warning it ends, which is the point. The rule's word list is mechanical and catches some warnings that only mention a lifting. Daily repeated alerts sit exactly at 24 hours, so the 24 h count is sensitive to the window's edge; the slider shows it. Accounts are hashed with study 17's salt; no text and no sender is committed.</p>
+<p class="small"><b>A fault found on the way.</b> Study 17's <code>fetch.py</code> pages the archive by <code>$skip</code> in id order. Today, with the archive's count unchanged, that returned 63 messages twice and 63 never. The build's assert of 82,754 unique ids stopped the run, as it was written to; <code>fill.py</code> lists every id twice (both passes agree), refetches the 63 by id and drops the duplicates. Study 17's own fetches passed the same assert, so its counts are not affected.</p>
+</div>
 
 <h2>Sources</h2>
 <ul class="small" id="src">
@@ -123,7 +133,7 @@ const pr=[["P1","Over all 23,154 warnings the rule flags between 678 and 1,200 a
 ["P2","≥ 85 % of the all-clears are themselves silent",`${f(R.P2.silent)} of ${f(R.P2.of)}, ${pc(R.P2.share)}`+ci(R.P2.ci),R.P2.held],
 ["P3","Without them, every study 17 verdict stands and its headline figures move < 1 point",`verdicts ${R.P3.verdicts_same?"unchanged":"changed"}; shifts ${(100*R.P3.P1_share_shift).toFixed(2)} and ${(100*R.P3.P3_share_shift).toFixed(2)} points; η² ${R.P3.eta2_account}`,R.P3.held],
 ["P4","≥ 50 % of all-clears follow a warning of their sender within 24 h, at least twice the chance level",`${pc(R.P4.share)}`+ci(R.P4.ci)+` vs ${pc(R.P4.baseline_share)}; ratio ${R.P4.ratio} (${R.P4.ratio_ci[0]}–${R.P4.ratio_ci[1]})`,R.P4.held],
-["P5","Of those, the preceding warning is silent for ≥ 60 %",`${f(R.P5.predecessor_silent[0])} of ${f(R.P5.predecessor_silent[1])}, ${R.P5.share==null?"–":pc(R.P5.share)}`+ci(R.P5.ci),R.P5.held]];
+["P5","Of those, the preceding warning is silent for ≥ 60 %",`${f(R.P5.predecessor_silent[0])} of ${f(R.P5.predecessor_silent[1])}, ${R.P5.share==null?"–":pc(R.P5.share)}`+ci(R.P5.ci)+`; but ${pc(R.P5.baseline_silent_share_of_all_warnings)} of all warnings are silent, so this pass is uninformative`,R.P5.held]];
 document.querySelector("#pred tbody").innerHTML=pr.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="${r[3]?"held":"failed"}">${r[3]?"held":"failed"}</td></tr>`).join("");
 const A=R.study17_all,N=R.study17_without_allclears;
 const rows=[["warnings",f(A.warnings),f(N.warnings)],["silent",f(A.silent),f(N.silent)],

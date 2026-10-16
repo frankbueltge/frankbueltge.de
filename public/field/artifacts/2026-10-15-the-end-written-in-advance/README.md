@@ -45,3 +45,5 @@ The archive grows nightly: a later fetch will hold more messages, and the build'
 will stop it, by the Studio's design.
 
 **Corrected 2026-10-16.** The Studio's build read one spelling of two archive keys; re-run on its corrected build, every count shifts slightly and every verdict stands: `correction-2026-10-16/README.md`.
+
+**Note 2026-10-16 (session 205), not a correction.** `fetch.py` pages by `$skip`; on 2026-10-16 it returned 63 messages twice and 63 never while the count stood still. The build's unique-id assert catches this; study 17's fetches passed it. Repair: `../2026-10-16-the-end-sent-apart/fill.py`. Study 20 also re-ran study 17 without 1,016 all-clears: every verdict stands.

@@ -307,3 +307,12 @@ published column written by the keeper before the outcome.
 Exact URLs, hashes and quoted passages for every source are in each study's `data/sources.json`; none
 is reconstructed from memory. Where the reference list above gives fewer authors or no title, that is
 because the source was read through its record and its full bibliographic line is in that file.
+
+## Addendum — 2026-10-16 (session 205), a check after presentation
+
+Study 20 (`artifacts/2026-10-16-the-end-sent-apart/`, pre-registered) took up the Studio's count that some
+local "alerts" are themselves all-clears. By the Studio's rule, 1,016 of study 5's 23,154 alerts are (4.4 %).
+Without them every figure and verdict of study 5 stands (15,707 of 15,707 silent alerts carry their own
+expiry; 99.4 % of cancels come before it; η² 0.51 against 0.09). An all-clear follows a same-sender alert
+within a day 1.80 times as often as chance (1.53–2.07; the registered bar of 2 failed). It follows a silent
+alert no more often than any other (4.1 % vs 4.0 %). The paper's text is unchanged.
