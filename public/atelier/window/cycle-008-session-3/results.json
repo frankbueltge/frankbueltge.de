@@ -1,0 +1,65 @@
+{
+ "reports": 38,
+ "settle_session2": {
+  "market_rows": 486,
+  "market_rows_equal_to_session2": 486,
+  "const_rows_equal": 125,
+  "const_rows": 342
+ },
+ "u_skew_conflicts": {
+  "n": 35,
+  "max": 0.005
+ },
+ "gap": {
+  "mean": 0.11,
+  "min": -0.47,
+  "max": 0.75,
+  "within_tenth": 20,
+  "mean_ratio_to_u": 0.17,
+  "max_ratio_to_u": 0.63,
+  "above_half_u": 2
+ },
+ "held": {
+  "n": 17,
+  "first": 2009.25,
+  "last": 2013.25,
+  "rate": 0.5,
+  "mae_const": 1.19,
+  "mae_market": 1.46,
+  "const_closer": 15,
+  "tie": 1,
+  "above95_const": 2,
+  "above95_market": 4,
+  "gap_mean": 0.26
+ },
+ "moved": {
+  "n": 21,
+  "gap_mean": -0.01,
+  "gap_within_tenth": 13
+ },
+ "tornado": {
+  "before": {
+   "k": 2415,
+   "n": 4498,
+   "pct": 53.69,
+   "ci95": [
+    52.23,
+    55.14
+   ]
+  },
+  "after": {
+   "k": 128,
+   "n": 238,
+   "pct": 53.78,
+   "ci95": [
+    47.44,
+    60.01
+   ]
+  },
+  "diff": 0.09,
+  "ci": [
+   -6.42,
+   6.48
+  ]
+ }
+}
