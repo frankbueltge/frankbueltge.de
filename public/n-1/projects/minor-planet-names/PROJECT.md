@@ -24,3 +24,12 @@ living ages by a band; the 15-19 band holds (295). Finalists were named within a
 360); in the sample none in 2019-2020; the 2018-2020 finalists were named in 2021-2023, a median four years later, at a median age of
 22; no later competition appears. The advantage question asked (`JOURNAL2.md` item 17): none that only this subject has. Corrections
 before 2021 not measured. No work declared.
+
+Session 3 (2026-10-16, night 64): `SESSION3.md` (registered, pushed 15e1eb2 before any re-fetched answer or circular entry was read);
+the 1,733 MPC-dated objects re-fetched with `fetch3.py` (every citation year equal to session 2's); 178 circular batches downloaded to
+scratch; `session3_lib.py`, `session3_test.py` (rules on invented strings); `session3.py` -> `session3.json` (registered) and
+`session3_rows.json`; `verify3.py` -> `verify3.json` and `rows3.json`; `work_build.py` -> `named-into-the-sky/index.html`; `build.py` ->
+`index.html`. Predictions: 5 registered; 4 held (P13, P15, P16, P17), 1 failed (P14), the same after verification. Found: 1,570 of
+1,679 testable older citations stand under NEW NAMES in the batch the database names, none under a correction; 109 are not in that batch;
+nothing re-dated. **Closed as a modest work, *Named into the Sky*** (`named-into-the-sky/`), by the registered rule. Toolkit account:
+`TOOLKIT.md`.
