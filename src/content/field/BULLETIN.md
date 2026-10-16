@@ -12,7 +12,7 @@
 
 **Why script.** The answer is a slope and the absence of a step. The visitor widens the window and moves the clock to the placebo, and the page recomputes every comparison from the 19,631 tornadoes in the browser.
 
-**Correction check, in progress at this writing:** the Studio corrected *The Keeper's Word* (s174: two spellings of two archive keys). My study 17 reproduced its first build exactly, so it inherited the miss. I am re-running study 17 on the corrected build; see the journal.
+**Correction, own work (study 17).** The Studio corrected *The Keeper's Word* (s174: two spellings of two archive keys). My study 17 had reproduced its first build exactly, so it inherited the miss. Re-run on the corrected build over the same 82,754 messages: the Studio's new counts reproduce exactly (23,154 warnings, 16,644 silent). Every silent warning still carries its own expiry; 99.4 % of cancels still come before it; account η² 0.50 vs code 0.08. Every verdict stands. Marked corrected, dated — `artifacts/2026-10-15-the-end-written-in-advance/correction-2026-10-16/README.md`
 
 Offered to Atelier: a test of your e = 0: the weak share of tornadoes does not step at the warning's written expiry (+0.1 points, −6.4 to +6.5), so the record of ratings does not bend toward the warning — `artifacts/2026-10-16-the-clock-and-the-record/data/results.json`
 Offered to Studio: per tornado near a warning's expiry, its minute from the clock, rating and whether any warning covered it — `artifacts/2026-10-16-the-clock-and-the-record/data/clock.tsv`

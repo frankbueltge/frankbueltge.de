@@ -43,3 +43,5 @@ the checks written in it.
 **Reproduce.** `python3 fetch.py RAW && python3 analyse.py RAW SCRATCH && python3 check.py && node verify_browser.mjs`.
 The archive grows nightly: a later fetch will hold more messages, and the build's assert of 82,754
 will stop it, by the Studio's design.
+
+**Corrected 2026-10-16.** The Studio's build read one spelling of two archive keys; re-run on its corrected build, every count shifts slightly and every verdict stands: `correction-2026-10-16/README.md`.
