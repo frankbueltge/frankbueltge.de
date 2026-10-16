@@ -1,0 +1,14 @@
+{
+ "own": [
+  "window/cycle-008-session-1/results.json (the Doomsday Clock's 33 settings; Merton 1936, pp. 903-904)",
+  "window/cycle-008-session-2/results.json (the Bank of England's 40 CPI fans, ONS D7G7)",
+  "window/cycle-008-session-3/results.json (the Bank's 38 paired projections, Bank Rate IUDBEDR)"
+ ],
+ "siblings_quoted_not_recomputed": [
+  {"what": "Field study 14, the warnings never needed", "repo": "frankbueltge/field-research", "commit": "665d7295636042039f65d17d94cc795e37e5d741", "path": "artifacts/2026-10-14-the-warnings-never-needed/data/results.json", "sha256": "2d5a3de4b7c5a543f270b8f88cb01d22acf9f730aa4a4adcc11f915cc3b65f22"},
+  {"what": "Field study 17, corrected 2026-10-16 (handoff ho-2026-10-15-field-4)", "repo": "frankbueltge/field-research", "commit": "665d7295636042039f65d17d94cc795e37e5d741", "path": "artifacts/2026-10-15-the-end-written-in-advance/correction-2026-10-16/results.json", "sha256": "59c8ed807eb401581f029dc740e776146590f020c40174bd4d53662b25c8965f"},
+  {"what": "Field study 18, the clock and the record", "repo": "frankbueltge/field-research", "commit": "665d7295636042039f65d17d94cc795e37e5d741", "path": "artifacts/2026-10-16-the-clock-and-the-record/data/results.json", "sha256": "15a28c4a7dcb76f9041eb110128b7a02a806a4541918c51799f4c07550521636"},
+  {"what": "Studio, Filed Under, increment 1 (handoff ho-2026-10-16-studio-1)", "repo": "frankbueltge/studio", "commit": "0a27b6b9bac4e04cdcc2d57030dfbedb54ae5da6", "path": "works/2026-10-16-filed-under/summary.json", "sha256": "409e816567b9fafb67d1377d6ddbda6089ee1df401df2ba8dd53b50f812ce834"}
+ ],
+ "rebuild": "python3 -I build.py <field14.json> <field17c.json> <field18.json> <studio_summary.json>; then node verify.mjs (38 checks, 390 px light and 1100 px dark)"
+}

@@ -1,0 +1,27 @@
+# The Heeded Column
+
+**The Atelier · cycle 008 (*What does the world record of a danger before it arrives, and who keeps the warnings: the ones heeded, the ones ignored and the ones never needed?*), presented 2026-10-16 · five minutes.** One of the cycle's three works in dialogue, from artistic research and philosophy.
+
+`index.html` beside this file is the work, a page with script. It shows 400 warnings in a world you set with four sliders: how many dangers would come, how many warnings are acted on, how much acting prevents, and how much an outside keeper records. The same 400 dots are then filed five times: once by their true fate, and once by the rules of each of four real keepers' records. Click a dot and you can follow one warning through all five. Evidence: `build.py` (checks the hashes of the sibling files it quotes), `data.js`, `sources.json`, `verify.mjs` (38 of 38 in a real browser, 390 px light and 1100 px dark). The three sessions before it: `window/cycle-008-session-{1,2,3}/`.
+
+## The question
+A warning's fate is an outcome joined to a counterfactual. Which of the three columns can a record of the one world that happened actually hold?
+
+## What the cycle found
+1. **The Doomsday Clock** (s1, Merton 1936): 33 settings, 1947–2026, and no probability. Heeded and never needed are one entry. Its 79 quiet years bound only the product of danger and failure (at most 3.72 % a year).
+2. **The Bank of England** (s2, s3): 38 forecasts were each written twice, with Bank Rate held and on the market's path. The keeper's own written prevention is 0.17 of its fan's σ on average. The "not acting" forecast can be scored only on the 17 occasions it did not act.
+3. **The tornado warning** (the Field's studies 14 and 18): 69.6 % of 43,819 warnings were never needed. That count is a reading of the danger only because a warning cannot move the funnel. It does not move the record of ratings either (+0.09 points, −6.42 to +6.48).
+4. **The local alert** (the Studio's *Filed Under*, the Field's study 17): of 15,012 warnings, the record backs heeded 0 times and ignored 0 times. It contradicts never needed 2,679 times. Every silent warning carries an end written before its danger was known.
+5. **This work.** In the instrument, at every setting, the heeded warnings are filed under another column in all four ledgers. The four real keepers show four ways of failing to write "heeded": merged, written by the warner, empty by physics, left to whoever files it.
+
+## What it holds (judgment)
+The world writes "ignored", provided someone records who acted. It writes "never needed" only where nobody acted or where acting changes nothing. It never writes "heeded": the two halves of that column lie in two worlds, and acting removes the one that would show it. The column a warning exists for is the one only its author can fill.
+
+## Limits
+The instrument is a model (one danger per warning, one effect for all), and its filing rules are my reading of each record. The sibling numbers are quoted at pinned commits, not recomputed. Study 18's placebo is not flat (+3.83), so a small effect of warnings on the tornado record is not excluded. Refutation condition: a record that confirms a warning as heeded through a keeper other than the warner, without the warner's own counterfactual. A record that withheld a warning from a random part of its audience would be the first place to look.
+
+## The other two works
+- **The Field** (science), `field-research`: its paper on studies 13–18, announced for `presentations/cycle-008/paper.md`. Its studies 14, 17 and 18 are section 3 of this page.
+- **The Studio** (art), `studio`: *Filed Under* (`works/2026-10-16-filed-under/`, in progress). There the visitor files real local warnings and the record answers, mostly with silence. Here four keepers' rules file a model world, which shows what that silence is made of.
+
+For the programme: Of a warning's three fates the world writes only "ignored", "never needed" only where nobody acted or acting changes nothing, and "heeded" only the warner, as its own counterfactual; a next question can ask who could audit it.

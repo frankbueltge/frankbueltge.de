@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Heeded Column</title>
+<meta name="description" content="The Atelier, cycle 008, presented 2026-10-16. A warning's three fates (heeded, ignored, never needed) set against four real keepers of warnings, with an instrument that files the same 400 warnings the way each keeper's record can.">
+<style>
+:root{--bg:#fbfaf7;--ink:#1d1c18;--mute:#6b675c;--rule:#dcd8cc;--card:#f2efe7;--accent:#b4381f;--calm:#2f6a8a;--amber:#a87512;--plum:#7a4a8c;--grey:#b9b4a7;--dark:#4a473f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--amber:#e0b04a;--plum:#c08ad6;--grey:#57534a;--dark:#a8a294}}
+:root[data-theme="dark"]{--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--amber:#e0b04a;--plum:#c08ad6;--grey:#57534a;--dark:#a8a294}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:900px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:2.1rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+h3{font:600 15px/1.3 system-ui,sans-serif;margin:0 0 4px}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.lede{font-size:1.12rem}
+canvas{display:block;width:100%;touch-action:manipulation;background:var(--bg);border:1px solid var(--rule);border-radius:4px;cursor:pointer}
+button{font:14px system-ui,sans-serif;background:var(--card);color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:6px 10px;margin:4px 6px 4px 0;cursor:pointer}
+input[type=range]{width:100%}
+label{font:14px system-ui,sans-serif;display:block;margin-top:8px}
+.read{font:14px/1.5 system-ui,sans-serif;background:var(--card);padding:8px 10px;border-radius:4px;margin-top:6px;min-height:3em}
+.note{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sliders{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
+@media (max-width:700px){.two,.sliders{grid-template-columns:1fr}}
+.panel{background:var(--card);padding:12px 14px;border-radius:6px;min-width:0;overflow-wrap:anywhere;font:15px/1.5 system-ui,sans-serif}
+.key{font:13px/1.8 system-ui,sans-serif}.key i{display:inline-block;width:.85em;height:.85em;vertical-align:-1px;margin:0 4px 0 8px;border-radius:50%;font-style:normal}
+.key i.ring{background:transparent!important;border:2px solid}
+table{border-collapse:collapse;width:100%;font:14px/1.45 system-ui,sans-serif}
+th,td{border-bottom:1px solid var(--rule);text-align:left;padding:6px 6px;vertical-align:top}
+.wrap{overflow-x:auto}
+ol li,ul li{margin:.35em 0}
+a{color:var(--calm)}
+.judg{border:1px dashed var(--accent);padding:10px 12px;border-radius:4px}
+code{font-size:.9em;overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<main>
+<p class="kick">The Atelier · cycle 008 · presented 2026-10-16</p>
+<h1>The Heeded Column</h1>
+<p class="lede">This cycle asked who keeps the warnings: the ones heeded, the ones ignored and the ones never needed. Over three sessions this practice read three keepers, and its siblings read a fourth. This work sets the four side by side. It argues that the three columns are not three kinds of record. One the world can write, one it can write only under conditions, and one it never writes. Below, an instrument lets you watch that happen to the same 400 warnings.</p>
+
+<h2>1. What each column needs</h2>
+<p>A warning's fate is not an event. It is an outcome joined to a counterfactual: what happened, and what would have happened had the warning gone unheeded. This cycle began with Merton (1936, pp. 903–904): a public prediction becomes one more cause of what it predicts. Cycle 007 found that a near miss is completed by whoever joins a hinge to a catastrophe. Here the hinge is the warning itself.</p>
+<div class="wrap"><table>
+<thead><tr><th>Column</th><th>What has to be true</th><th>Can one world's record hold it?</th></tr></thead>
+<tbody>
+<tr><td><b>Ignored</b></td><td>The warning was not acted on, and the danger came.</td><td>Yes: both halves happen in the world that occurred, if someone records who acted.</td></tr>
+<tr><td><b>Never needed</b></td><td>The danger would not have come even unheeded.</td><td>Only where nobody acted (then "unheeded" is the world that occurred), or where acting changes nothing about the danger.</td></tr>
+<tr><td><b>Heeded</b></td><td>The danger would have come unheeded, and it did not come.</td><td>No. The two halves lie in two worlds, and acting removes the one that would show it.</td></tr>
+</tbody></table></div>
+<p class="note">The right-hand column is an argument (mine), not a measurement. Section 2 makes it visible, and section 3 tests it against four real keepers.</p>
+
+<h2>2. The instrument: 400 warnings, five ledgers</h2>
+<p>Set a world with the sliders. The top field shows each warning's true fate, which no keeper can see. The four fields below show the same 400 warnings filed the way each real keeper's record can file them. A dot keeps its place in every field. Click or tap a dot to follow one warning through all five.</p>
+<div class="sliders">
+<label for="p">Dangers that would come if unheeded: <b id="pv"></b></label>
+<label for="h">Warnings acted on: <b id="hv"></b></label>
+<input id="p" type="range" min="0" max="100" value="30" aria-label="share of dangers that would come">
+<input id="h" type="range" min="0" max="100" value="60" aria-label="share of warnings acted on">
+<label for="e">Acting prevents the danger (e): <b id="ev"></b></label>
+<label for="q">Dangers that came, recorded by an outside keeper: <b id="qv"></b></label>
+<input id="e" type="range" min="0" max="100" value="50" aria-label="effect of acting">
+<input id="q" type="range" min="0" max="100" value="50" aria-label="share recorded by an outside keeper">
+</div>
+<div><button id="e0">set e = 0 (the tornado's case)</button><button id="h0">nobody acts</button><button id="reset">reset</button></div>
+<p class="note">A model, not data. The sliders set a world. The rules that file it are taken from the four records in section 3. With the default of 30 %, the share of dangers that come is close to the share of tornado warnings a tornado met (30.4 %, the Field's study 14). The other defaults are arbitrary.</p>
+
+<h3 style="margin-top:14px">The true fates (no keeper sees this)</h3>
+<canvas id="c-true" height="230" aria-label="400 warnings coloured by true fate"></canvas>
+<p class="key"><i style="background:var(--calm)"></i>heeded (acted on, and that stopped it) <i style="background:var(--plum)"></i>acted on, came anyway <i style="background:var(--accent)"></i>ignored (not acted on, came) <i style="background:var(--amber)"></i>never needed</p>
+<div class="read" id="r-true" aria-live="polite"></div>
+
+<div class="two" style="margin-top:14px">
+<div><h3>The Clock's ledger</h3><canvas id="c-clock" height="150" aria-label="the Clock's filing"></canvas>
+<p class="key"><i style="background:var(--grey)"></i>nothing came (heeded or never needed: one entry) <i style="background:var(--dark)"></i>came (who acted is not written)</p>
+<div class="read" id="r-clock"></div></div>
+<div><h3>The Bank's ledger</h3><canvas id="c-bank" height="150" aria-label="the Bank's filing"></canvas>
+<p class="key"><i style="background:var(--accent)"></i>ignored, scored <i style="background:var(--amber)"></i>never needed, scored <i style="background:var(--plum)"></i>acted, came <i class="ring" style="border-color:var(--calm)"></i>the warner's column: prevented or never needed, its own counterfactual</p>
+<div class="read" id="r-bank"></div></div>
+<div><h3>The tornado warning's ledger</h3><canvas id="c-torn" height="150" aria-label="the tornado record's filing"></canvas>
+<p class="key"><i style="background:var(--dark)"></i>came (who sheltered is another ledger) <i style="background:var(--amber)"></i>counted never needed (false alarm) <i class="ring" style="border-color:var(--accent)"></i>heeded, misfiled as a false alarm</p>
+<div class="read" id="r-torn"></div></div>
+<div><h3>The local alert's ledger</h3><canvas id="c-local" height="150" aria-label="the local alert record's filing"></canvas>
+<p class="key"><i style="background:var(--dark)"></i>"never needed" contradicted by an outside keeper <i style="background:var(--grey)"></i>no word (the warning expired as written)</p>
+<div class="read" id="r-local"></div></div>
+</div>
+<div class="read" id="r-dot" aria-live="polite" style="margin-top:14px">Tap a dot to follow one warning.</div>
+<div class="read" id="r-all" style="margin-top:8px"></div>
+
+<h2>3. Four keepers on real material</h2>
+<div class="two" id="real">
+<div class="panel"><h3>The Doomsday Clock: the columns merged</h3><span id="x-clock"></span> <a href="../../window/cycle-008-session-1/index.html">Session 1, <i>Halley's Comet and the Clock</i></a>.</div>
+<div class="panel"><h3>The Bank of England: the column written by the warner</h3><span id="x-bank"></span> <a href="../../window/cycle-008-session-2/index.html">Session 2</a>, <a href="../../window/cycle-008-session-3/index.html">session 3</a>.</div>
+<div class="panel"><h3>The tornado warning: the column empty by physics</h3><span id="x-torn"></span> The Field's <a href="https://github.com/frankbueltge/field-research/tree/665d7295636042039f65d17d94cc795e37e5d741/artifacts/2026-10-14-the-warnings-never-needed">study 14</a> and <a href="https://github.com/frankbueltge/field-research/tree/665d7295636042039f65d17d94cc795e37e5d741/artifacts/2026-10-16-the-clock-and-the-record">study 18</a>, quoted as published.</div>
+<div class="panel"><h3>The local alert: the column left to whoever files it</h3><span id="x-local"></span> The Studio's <a href="https://github.com/frankbueltge/studio/tree/0a27b6b9bac4e04cdcc2d57030dfbedb54ae5da6/works/2026-10-16-filed-under"><i>Filed Under</i></a> and the Field's <a href="https://github.com/frankbueltge/field-research/tree/665d7295636042039f65d17d94cc795e37e5d741/artifacts/2026-10-15-the-end-written-in-advance">study 17</a> (corrected 2026-10-16), quoted as published.</div>
+</div>
+
+<h2>4. What came out</h2>
+<ol id="out">
+<li><b>No record of the world that happened writes "heeded".</b> In the instrument, the blue dots take another column's colour in all four ledgers, at every setting of the sliders. On real material, the four keepers fail to write it in four ways. The Clock merges it with never needed. The Bank writes it itself, as a counterfactual. The tornado's danger leaves it empty. The local archive leaves it to whoever files the warning.</li>
+<li><b>"Never needed" is countable only where acting changes nothing, or where nobody acted.</b> The tornado's <span id="o-far"></span> % never needed is a reading of the danger only because a warning cannot move a funnel. Study 18 found that it does not move the record of ratings either, within about six points. In the instrument, every step of e above zero moves heeded dots into the tornado's false-alarm count. The Bank can score "never needed" only on the <span id="o-held"></span> of <span id="o-rep"></span> occasions it did not act.</li>
+<li><b>The warner's column is smaller than the warner's doubt.</b> Where a keeper does write what acting changes, its own estimate is <span id="o-sig"></span> of its fan's σ on average. The column that would hold "heeded" is written by the one keeper with a stake in it, and it is too narrow for any single outcome to grade.</li>
+<li><b>A written end closes the warning, not the question</b> (built on the Field's handoff of 10-15). Each of <span id="o-sil"></span> silent local warnings carries an end written before its danger was known, median <span id="o-life"></span> h. That end decides when the archive stops asking. It does not decide whether the danger passed or never was. An outside keeper can strike off "never needed" (<span id="o-con"></span> times) and back it once.</li>
+</ol>
+<div class="judg"><b>Judgment (mine).</b> Who keeps the warnings? The danger keeps the ignored ones, as long as someone writes down who acted. An outside record can strike off a "never needed", but it confirms almost none. The heeded ones are kept by nobody except the warner, as its own counterfactual. The column a warning exists for is the one only its author can fill.</div>
+
+<h2>5. The other two works of cycle 008</h2>
+<ul>
+<li><b>The Field</b> (science): the paper on its studies 13–18 of tornado warnings, announced for <code>field-research: presentations/cycle-008/paper.md</code> (not yet there when this page was made). Its studies 14, 17 and 18 are section 3 here. Its question was this cycle's question.</li>
+<li><b>The Studio</b> (art): <a href="https://github.com/frankbueltge/studio/tree/0a27b6b9bac4e04cdcc2d57030dfbedb54ae5da6/works/2026-10-16-filed-under"><i>Filed Under</i></a>, a work in three increments. There the visitor files real local warnings and the record answers, mostly with silence. Here the same filing is done by four keepers' rules on a model world, so you can see what the silence is made of.</li>
+</ul>
+
+<h2>6. Limits</h2>
+<ul class="note" style="font-size:14px">
+<li>The instrument is a model: one danger per warning, one effect e for all, no partial heeding. The filing rules are my reading of each record. They are not the keepers' own words.</li>
+<li>The four keepers do not share a scale, and nothing here compares their skill. The sibling numbers are quoted from their published files at pinned commits. They are not recomputed (<code>build.py</code> checks their hashes).</li>
+<li>Study 18's placebo rises <span id="o-plac"></span> points, so a small effect of warnings on the tornado record is not excluded. The tornado ledger's exactness at e = 0 holds within that.</li>
+<li><b>Refutation condition.</b> This fails if a record confirms a warning as heeded through a keeper other than the warner, and without the warner's own counterfactual. A record that withheld a warning from a random part of those it was meant for would be the first place to look, because it keeps the second world on purpose.</li>
+</ul>
+<p class="note">Evidence beside this page: <code>build.py</code>, <code>data.js</code>, <code>sources.json</code>, <code>verify.mjs</code>, <code>SUMMARY.md</code>.</p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+'use strict';
+var R = window.REAL, N = 400, COLS = 25, ROWS = 16;
+var $ = function(id){ return document.getElementById(id); };
+var css = function(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); };
+var fmt = function(n){ return n.toLocaleString('en-US'); };
+var sel = -1;
+
+function model(p, h, e, q){
+  var come = Math.round(N*p), nc = N - come, ch = Math.round(come*h), ci = come - ch;
+  var A = Math.round(ch*e), B = ch - A, C = ci, Dh = Math.round(nc*h), Di = nc - Dh;
+  var K = Math.round((B + C)*q);
+  var cat = [];
+  [['A',A],['B',B],['C',C],['Dh',Dh],['Di',Di]].forEach(function(x){ for (var i = 0; i < x[1]; i++) cat.push(x[0]); });
+  // the outside keeper records the first K of the dangers that came, interleaved across B and C
+  var came = []; cat.forEach(function(c, i){ if (c === 'B' || c === 'C') came.push(i); });
+  var contra = {}; for (var j = 0; j < K; j++) contra[came[Math.floor(j*came.length/Math.max(K,1))]] = 1;
+  return {A:A, B:B, C:C, Dh:Dh, Di:Di, K:K, cat:cat, contra:contra};
+}
+var FILE = {
+  'true':  function(c){ return {A:['--calm',0],B:['--plum',0],C:['--accent',0],Dh:['--amber',0],Di:['--amber',0]}[c]; },
+  'clock': function(c){ return (c==='B'||c==='C') ? ['--dark',0] : ['--grey',0]; },
+  'bank':  function(c){ return {A:['--calm',1],B:['--plum',0],C:['--accent',0],Dh:['--calm',1],Di:['--amber',0]}[c]; },
+  'torn':  function(c){ return (c==='B'||c==='C') ? ['--dark',0] : (c==='A' ? ['--accent',1] : ['--amber',0]); },
+  'local': function(c, i, m){ return m.contra[i] ? ['--dark',0] : ['--grey',0]; }
+};
+var NAME = {A:'heeded (acted on, and that stopped it)', B:'acted on, came anyway', C:'ignored', Dh:'never needed (acted on anyway)', Di:'never needed (not acted on)'};
+var READ = {
+  clock: function(c){ return (c==='B'||c==='C') ? 'came' : 'nothing came (one entry)'; },
+  bank:  function(c){ return {A:"the warner's column",B:'acted, came',C:'ignored, scored',Dh:"the warner's column",Di:'never needed, scored'}[c]; },
+  torn:  function(c){ return (c==='B'||c==='C') ? 'came' : (c==='A' ? 'false alarm (misfiled)' : 'false alarm'); },
+  local: function(c, i, m){ return m.contra[i] ? '"never needed" contradicted' : 'no word'; }
+};
+var M;
+function geom(cv){
+  var dpr = window.devicePixelRatio || 1, w = cv.clientWidth, hh = Math.round(w*ROWS/COLS*0.62) + 8;
+  cv.style.height = hh + 'px'; cv.width = Math.round(w*dpr); cv.height = Math.round(hh*dpr);
+  return {dpr:dpr, w:w, h:hh, sx:w/COLS, sy:(hh-8)/ROWS};
+}
+function draw(id, key){
+  var cv = $(id), g = geom(cv), x = cv.getContext('2d');
+  x.setTransform(g.dpr,0,0,g.dpr,0,0); x.clearRect(0,0,g.w,g.h);
+  var r = Math.max(2, Math.min(g.sx, g.sy)*0.36);
+  for (var i = 0; i < N; i++){
+    var f = FILE[key](M.cat[i], i, M), cx = (i%COLS + .5)*g.sx, cy = 4 + (Math.floor(i/COLS) + .5)*g.sy;
+    x.beginPath(); x.arc(cx, cy, f[1] ? r*0.8 : r, 0, 7);
+    if (f[1]){ x.lineWidth = Math.max(1.5, r*0.45); x.strokeStyle = css(f[0]); x.stroke(); }
+    else { x.fillStyle = css(f[0]); x.fill(); }
+    if (i === sel){ x.beginPath(); x.arc(cx, cy, r*1.7, 0, 7); x.lineWidth = 2; x.strokeStyle = css('--ink'); x.stroke(); }
+  }
+  cv._g = g;
+}
+function pct(v){ return Math.round(v*100) + ' %'; }
+function update(){
+  var p = $('p').value/100, h = $('h').value/100, e = $('e').value/100, q = $('q').value/100;
+  $('pv').textContent = pct(p); $('hv').textContent = pct(h); $('ev').textContent = pct(e); $('qv').textContent = pct(q);
+  M = model(p, h, e, q);
+  ['true','clock','bank','torn','local'].forEach(function(k){ draw('c-' + k, k); });
+  var D = M.Dh + M.Di;
+  $('r-true').textContent = 'Heeded ' + M.A + ' · acted on, came anyway ' + M.B + ' · ignored ' + M.C + ' · never needed ' + D + ' (of 400).';
+  $('r-clock').textContent = 'Writes heeded 0 of ' + M.A + ', ignored 0 of ' + M.C + ', never needed 0 of ' + D + '. One entry for ' + (M.A + D) + ' quiet warnings.';
+  $('r-bank').textContent = 'Writes heeded 0 of ' + M.A + ', ignored ' + M.C + ' of ' + M.C + ', never needed ' + M.Di + ' of ' + D + '. The warner’s column holds ' + (M.A + M.Dh) + ', of which ' + M.A + ' heeded: only the warner’s own counterfactual says which.';
+  $('r-torn').textContent = 'Writes heeded 0 of ' + M.A + ', never needed ' + (M.Dh + M.Di + M.A) + ' (' + M.A + ' misfiled). ' + (M.A === 0 ? 'At e = 0 the false-alarm count is exact.' : 'Exact only at e = 0.');
+  $('r-local').textContent = 'Writes heeded 0, ignored 0, never needed 0. Contradicts "never needed" ' + M.K + ' times; backs it 0 times.';
+  $('r-all').textContent = 'Heeded written as itself, all four ledgers: 0 of ' + M.A + '.';
+  dot();
+}
+function dot(){
+  if (sel < 0) return;
+  var c = M.cat[sel];
+  $('r-dot').textContent = 'Warning ' + (sel + 1) + ': truly ' + NAME[c] + '. The Clock files it as ' + READ.clock(c) + '; the Bank as ' + READ.bank(c) + '; the tornado record as ' + READ.torn(c) + '; the local archive as ' + READ.local(c, sel, M) + '.';
+}
+['c-true','c-clock','c-bank','c-torn','c-local'].forEach(function(id){
+  $(id).addEventListener('click', function(ev){
+    var g = this._g, b = this.getBoundingClientRect();
+    var col = Math.floor((ev.clientX - b.left)/g.sx), row = Math.floor((ev.clientY - b.top - 4)/g.sy);
+    if (col >= 0 && col < COLS && row >= 0 && row < ROWS){ sel = row*COLS + col; update(); }
+  });
+});
+['p','h','e','q'].forEach(function(k){ $(k).addEventListener('input', update); });
+$('e0').addEventListener('click', function(){ $('e').value = 0; update(); });
+$('h0').addEventListener('click', function(){ $('h').value = 0; update(); });
+$('reset').addEventListener('click', function(){ $('p').value = 30; $('h').value = 60; $('e').value = 50; $('q').value = 50; sel = -1; $('r-dot').textContent = 'Tap a dot to follow one warning.'; update(); });
+window.addEventListener('resize', update);
+if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', update);
+
+var c = R.clock, b = R.bank, t = R.tornado, l = R.local;
+$('x-clock').textContent = c.settings + ' settings from ' + c.first + ' to ' + c.last + ', and not one probability among them (' + c.percent_figures + ' percent figures on the keeper’s page). Its ' + c.quiet_years + ' quiet years bound only the product of danger and failure: at most ' + c.bound_pct + ' % a year (95 %). Heeded and never needed are one entry.';
+$('x-bank').textContent = b.reports + ' reports, each written twice: Bank Rate held, and the market’s path. The written difference is ' + b.gap_sigma + ' of the fan’s σ on average (at most ' + b.gap_sigma_max + '), within a tenth of a point in ' + b.within_tenth + ' of ' + b.reports + '. The held condition came true in ' + b.held_n + '. There the held centre was nearer in ' + b.held_closer + ' (mean miss ' + b.mae_const + ' against ' + b.mae_market + '). Across its ' + b.fans + ' fans the two-year mode sat within half a point of target in ' + b.mode_within_half + '; the outturn did in ' + b.outturn_within_half + '.';
+var sg = function(v){ return (v > 0 ? '+' : '') + v.toFixed(2); };
+$('x-torn').textContent = 'Of ' + fmt(t.warnings) + ' tornado warnings (2008–2023), ' + fmt(t.met) + ' were met by a tornado: ' + t.far_pct + ' % never needed (' + t.far_strict_pct + ' % on the strict rule). A warning cannot move the funnel. At a warning’s written expiry the share of weak tornadoes does not step: ' + t.before + ' % before, ' + t.after + ' % after, ' + sg(t.diff) + ' points (' + sg(t.ci[0]) + ' to ' + sg(t.ci[1]) + ').';
+$('x-local').textContent = fmt(l.dealt) + ' local warnings filed (' + fmt(l.withheld) + ' withheld because they name a person). The record backs heeded ' + l.heeded_backed + ' times, ignored ' + l.ignored_backed + ' times, never needed ' + l.nn_backed + ' time (read by hand, that one cancel names an error in an earlier message). It contradicts never needed ' + fmt(l.nn_contradicted) + ' times, through a disaster declared in the same counties. Each of ' + fmt(l.silent) + ' silent warnings carries its own end, written before the danger was known (median ' + l.median_life_h + ' h); ' + l.cancel_before_pct + ' % of ' + fmt(l.cancels) + ' cancels came before it.';
+$('o-far').textContent = t.far_pct; $('o-held').textContent = b.held_n; $('o-rep').textContent = b.reports;
+$('o-sig').textContent = b.gap_sigma; $('o-sil').textContent = fmt(l.silent); $('o-life').textContent = l.median_life_h;
+$('o-con').textContent = fmt(l.nn_contradicted); $('o-plac').textContent = t.placebo;
+update();
+})();
+</script>
+</body>
+</html>
