@@ -1,19 +1,61 @@
 import { existsSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { buildBoard, cleanMomentTitle, newestMoment, repoSeries } from './board'
+import { boardSources, buildBoard, cleanMomentTitle, lastRelation, newestMoment, repoSeries, type BoardSources } from './board'
 import { NAMING } from '@/config/naming'
+import type { MadeThing } from '@/lib/ecology/record'
+import { loadRelay, type Relation } from '@/lib/ecology/relay'
 import { newestN1Page } from '@/lib/n1/works'
 import type { PulseSnapshot } from '@/lib/pulse/render'
-import type { LatestWork } from '@/lib/engines/latest'
 import pulseData from '@/data/pulse/pulse.json'
 
 const snapshot = pulseData as unknown as PulseSnapshot
 
-const WORKS: LatestWork[] = [
-  { ns: 'field', kind: 'astro', slug: 'b', title: 'A field instrument', date: '2026-08-05', href: '/field/werke/b', state: 'published' },
-  { ns: 'atelier', kind: 'html', slug: 'a', title: 'An atelier work', date: '2026-08-01', href: '/atelier/werke-html/a/', state: 'published' },
-  { ns: 'studio', kind: 'html', slug: 'c', title: 'A withdrawn premiere', date: '2026-07-30', href: '/studio/werke-html/c/', state: 'withdrawn' },
-]
+/** A made thing as the ecology's record lists it — only what the board reads is set. */
+const thing = (t: Partial<MadeThing> & Pick<MadeThing, 'house' | 'title' | 'date' | 'href'>): MadeThing => ({
+  kind: 'artifact',
+  paperHref: null,
+  sortDay: t.date ?? '',
+  cycle: 8,
+  withdrawn: false,
+  blurb: null,
+  auditKey: null,
+  withdrawnNote: null,
+  withdrawnOn: null,
+  session: null,
+  countCycle: 8,
+  seq: null,
+  ...t,
+})
+
+const relation = (r: Partial<Relation> & Pick<Relation, 'id' | 'date' | 'kind' | 'what'>): Relation => ({
+  giver: 'field',
+  taker: 'studio',
+  thread: null,
+  giverRef: null,
+  takerRef: null,
+  corrects: null,
+  ...r,
+})
+
+// The ecology's record, fixed: what the board must read since 2026-10-17. The nightly line's work
+// is the newest of all and carries the Atelier's namespace by descent — it must not stand on the
+// Atelier's row. The Field's artifact is newer than any v2 work it ever made.
+const SOURCES: BoardSources = {
+  things: [
+    thing({ house: 'nightly-line', kind: 'work', title: 'A night of the line', date: '2026-10-17', href: '/error-as-method/a-night/', cycle: null, countCycle: null }),
+    thing({ house: 'field', title: 'The Fine for Working', date: '2026-10-16', href: '/field/artifacts/2026-10-16-the-fine-for-working/' }),
+    thing({ house: 'field', title: 'The Clock and the Record', date: '2026-10-16', href: '/field/artifacts/2026-10-16-the-clock-and-the-record/', seq: null }),
+    thing({ house: 'atelier', title: 'The Warner’s Column — the Atelier', date: '2026-10-16', href: '/atelier/window/cycle-008-session-3/', seq: 8003 }),
+    thing({ house: 'atelier', title: 'The Hundred Occasions', date: '2026-10-15', href: '/atelier/window/cycle-008-session-2/', seq: 8002 }),
+    thing({ house: 'studio', kind: 'work', title: 'FILED UNDER', date: '2026-10-16', href: '/studio/werke-html/2026-10-16-filed-under/' }),
+    thing({ house: 'atelier', kind: 'presentation', title: 'The Heeded Column', date: '2026-10-16', href: '/atelier/presentations/cycle-008/' }),
+  ],
+  relations: [
+    relation({ id: 'rel-2026-10-15-field-1', date: '2026-10-15', kind: 'built_on', what: 'Built on the Studio’s keepers.' }),
+    relation({ id: 'rel-2026-10-16-studio-1', date: '2026-10-16', kind: 'noted', what: 'Declined the Field’s tornado table.' }),
+    relation({ id: 'rel-2026-10-16-studio-2', date: '2026-10-16', kind: 'answered', what: 'Answered the Field’s clock with its own count.' }),
+  ],
+}
 
 describe('repoSeries', () => {
   it('buckets a repo’s own bins for a 96px line', () => {
@@ -50,7 +92,7 @@ describe('repoSeries', () => {
 })
 
 describe('the board says what the rooms say', () => {
-  const board = buildBoard(snapshot, WORKS)
+  const board = buildBoard(snapshot, SOURCES)
   const rows = board.flatMap((g) => g.rows)
 
   it('has one row per configured system, in two groups', () => {
@@ -73,16 +115,18 @@ describe('the board says what the rooms say', () => {
     }
   })
 
-  it('shows each practice’s newest landed work, with its own date', () => {
-    expect(rows.find((r) => r.id === 'ulysses')!.last).toMatchObject({ title: 'An atelier work', meta: '2026-08-01' })
-    expect(rows.find((r) => r.id === 'meridian')!.last).toMatchObject({ title: 'A field instrument', meta: '2026-08-05' })
-    expect(rows.find((r) => r.id === 'ensemble')!.last).toMatchObject({ title: 'A withdrawn premiere', meta: '2026-07-30' })
+  it('shows each practice’s newest piece from the ecology’s record, with its own date', () => {
+    // the Atelier's newest window, never the nightly line's newer work, and without its own name
+    // after the title
+    expect(rows.find((r) => r.id === 'ulysses')!.last).toEqual({ title: 'The Warner’s Column', meta: '2026-10-16', href: '/atelier/window/cycle-008-session-3/' })
+    expect(rows.find((r) => r.id === 'meridian')!.last).toMatchObject({ meta: '2026-10-16' })
+    expect(rows.find((r) => r.id === 'ensemble')!.last).toMatchObject({ title: 'FILED UNDER', meta: '2026-10-16' })
   })
 
-  it('states a count where the crossings register carries no date, instead of inventing one', () => {
+  it('gives the Middle the relay’s newest relation in its own words, and the relay’s count', () => {
     const middle = rows.find((r) => r.id === 'conductor')!
-    expect(middle.last).not.toBeNull()
-    expect(middle.last!.meta).toMatch(/^\d+ crossings on the record$/)
+    // on the newest day the answer stands before the note
+    expect(middle.last).toEqual({ title: 'Answered the Field’s clock with its own count.', meta: '3 crossings on the record', href: '/encounters' })
   })
 
   it('gives the four ecology stations their voice and the three beside it none', () => {
@@ -142,6 +186,47 @@ describe('the board says what the rooms say', () => {
     }
   })
 })
+
+describe('the Middle’s row', () => {
+  it('never shows a relation a later one corrects', () => {
+    const last = lastRelation([
+      relation({ id: 'rel-a', date: '2026-10-16', kind: 'built_on', what: 'Built on a count that was wrong.' }),
+      relation({ id: 'rel-b', date: '2026-10-16', kind: 'noted', what: 'Corrected: the count was right.', corrects: 'rel-a' }),
+    ])
+    expect(last!.title).toBe('Corrected: the count was right.')
+    expect(last!.meta).toBe('2 crossings on the record')
+  })
+
+  it('stays silent, rather than inventing a crossing, while the relay holds none', () => {
+    expect(lastRelation([])).toBeNull()
+  })
+})
+
+describe('the board on the committed record', () => {
+  // Shape only, never a title or a number of today: the record grows every night.
+  const rows = buildBoard(snapshot).flatMap((g) => g.rows)
+
+  it('counts the Middle’s crossings from the relay — the number /encounters prints', () => {
+    const relay = loadRelay()
+    const count = relay.status === 'ok' ? relay.relay.relations.length : 0
+    const middle = rows.find((r) => r.id === 'conductor')!
+    if (count === 0) expect(middle.last).toBeNull()
+    else expect(middle.last!.meta).toBe(`${count} crossings on the record`)
+  })
+
+  it('never puts the nightly line’s work on a practice’s row', () => {
+    for (const id of ['ulysses', 'meridian', 'ensemble']) {
+      const href = rows.find((r) => r.id === id)!.last?.href ?? ''
+      expect(href, id).not.toMatch(/^\/error-as-method\//)
+    }
+  })
+
+  it('reads the same record the practice pages read', () => {
+    const { things } = boardSources()
+    const atelier = rows.find((r) => r.id === 'ulysses')!.last
+    if (atelier) expect(things.some((t) => t.house === 'atelier' && t.href === atelier.href)).toBe(true)
+  })
+}, 60_000)
 
 /* The signal log's own tests moved with it to house-feed.test.ts on 2026-09-03. */
 

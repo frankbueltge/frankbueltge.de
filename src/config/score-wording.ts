@@ -404,7 +404,13 @@ export const SCORE_WORDING = {
     },
     crossings: {
       title: 'Crossings, night by night',
-      sub: (since: string) => `since the relay began on ${shortDate(since)} · stacked by kind`,
+      /** the record reaches back further than the relay: its nights before the day it began were
+       *  measured back that day (2026-10-17 — until then this read "since the relay began on" the
+       *  record's first night) */
+      sub: (since: string, began: string) =>
+        since < began
+          ? `the relay’s record from ${shortDate(since)}, measured back when it began on ${shortDate(began)} · stacked by kind`
+          : `since the relay began on ${shortDate(since)} · stacked by kind`,
       meta: (crossings: number, nights: number) => `${plural(crossings, 'crossing', 'crossings')} on ${plural(nights, 'night', 'nights')}`,
       /** a night's readout: the day as its heading, the three counts as its line */
       readoutDay: (date: string) => shortDate(date),
@@ -435,7 +441,14 @@ export const SCORE_WORDING = {
     },
     threads: {
       title: 'Threads',
-      sub: 'the longest-running',
+      /** "running" only while the relay still names threads: since 2026-10-08 it records every
+       *  relation without one, and the list stood under this heading as if its threads ran on */
+      sub: (lastThread: string | null, lastRelation: string | null) =>
+        lastThread && lastRelation && lastThread < lastRelation
+          ? `the longest · the relay has named no thread since ${shortDate(lastThread)}`
+          : 'the longest-running',
+      /** a thread's span, first night to last */
+      span: (first: string, last: string) => (first === last ? shortDate(first) : `${shortDate(first)} – ${shortDate(last)}`),
       none: 'The relay names no thread yet.',
     },
     rooms: { title: 'Rooms', sub: 'the records around the Middle' },

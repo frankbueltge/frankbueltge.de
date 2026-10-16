@@ -59,8 +59,11 @@ const slabs = [...perDayLine.values()].map((slab) => ({
 }))
 
 /** How each ending reads, in the record's own words — shared by the glance, the native <title>
- *  and the table, so no surface invents a fourth wording. */
-const END_WORDS = { kill: 'stopped', study: 'archived as study', publish: 'published', running: 'running' } as const
+ *  and the table, so no surface invents a fourth wording. A line left open has no ending: the
+ *  practice moved onto cycle sessions while it was open, and its record has not moved since
+ *  (figures.ts, openLineEnd; until 2026-10-17 such a line read as running). */
+const END_WORDS = { kill: 'stopped', study: 'archived as study', publish: 'published', running: 'running', 'left-open': 'left open' } as const
+const openWords = (line: (typeof map.lines)[number]) => (line.atGate ? 'left open at the gate' : END_WORDS['left-open'])
 
 /** Lines are laid out on staggered depths so overlapping runs stay tellable apart. */
 const lines = map.lines.map((line, i) => ({
@@ -69,12 +72,14 @@ const lines = map.lines.map((line, i) => ({
   words:
     line.end === 'running'
       ? `${line.title} — running since ${line.from}`
-      : `${line.title} — ${END_WORDS[line.end]}, ${line.from} to ${line.to}`,
+      : line.end === 'left-open'
+        ? `${line.title} — ${openWords(line)}, ${line.from} to ${line.to}, no move since`
+        : `${line.title} — ${END_WORDS[line.end]}, ${line.from} to ${line.to}`,
 }))
 
 const tableRows = [...lines]
   .sort((a, b) => (a.from < b.from ? 1 : -1))
-  .map((line) => ({ line: line.title, from: line.from, to: line.to, ended: END_WORDS[line.end] }))
+  .map((line) => ({ line: line.title, from: line.from, to: line.to, ended: line.end === 'left-open' ? openWords(line) : END_WORDS[line.end] }))
 ---
 
 <div class="eco-linemap" data-linemap>
@@ -113,6 +118,8 @@ const tableRows = [...lines]
         {line.end === 'running' && (
           <path class="eco-fig-end-running" d={`M${x(line.to)} ${line.depth} l 12 0 m -4 -3 l 4 3 l -4 3`} />
         )}
+        {/* left open: the run stops at its last move under a bar — no arrow, no verdict */}
+        {line.end === 'left-open' && <path class="eco-fig-end-open" d={`M${x(line.to)} ${line.depth - 5} v10`} />}
       </a>
     ))}
   </svg>

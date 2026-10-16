@@ -54,8 +54,8 @@ const ARTIFACTS: ArtifactEntry[] = [
 ]
 
 const SESSIONS: SessionNote[] = [
-  { practice: 'field', date: '2026-08-30', title: 'Session 139 — 2026-08-30', href: '/field/journal/cs-139/', anchor: 'cs-139', source: 'src/content/field/journal/2026-08-30.md' },
-  { practice: 'studio', date: '2026-09-01', title: 'Session 118 — 2026-09-01', href: '/studio/journal/cs-118/', anchor: 'cs-118', source: 'src/content/studio/journal/2026-09-01-session-118.md' },
+  { practice: 'field', date: '2026-08-30', title: 'Session 139 — 2026-08-30', href: '/field/journal/cs-139/', anchor: 'cs-139', source: 'src/content/field/journal/2026-08-30.md', label: null, number: null, names: [] },
+  { practice: 'studio', date: '2026-09-01', title: 'Session 118 — 2026-09-01', href: '/studio/journal/cs-118/', anchor: 'cs-118', source: 'src/content/studio/journal/2026-09-01-session-118.md', label: null, number: null, names: [] },
 ]
 
 const LETTERS: LetterEntry[] = [
@@ -163,6 +163,9 @@ describe('buildCycleModel', () => {
       href: `/studio/journal/${s}/`,
       anchor: s,
       source: 'src/content/studio/journal/2026-08-31.md',
+      label: null,
+      number: null,
+      names: [],
     }))
     const model = buildCycleModel({ ...INPUT, sessions: sameDay, artifacts: [], letters: [], encounters: [] })
     const nths = model.marks.filter((m) => m.lane === 'studio').map((m) => m.nth)
@@ -231,6 +234,9 @@ describe('placeMarks — the semantic zoom', () => {
       href: `/field/journal/${s}/`,
       anchor: s,
       source: 'src/content/field/journal/2026-09-01.md',
+      label: null,
+      number: null,
+      names: [],
     }))
     const m = buildCycleModel({ ...INPUT, sessions: endDay, artifacts: ARTIFACTS })
     const group = placeMarks(m, IDENTITY_VIEW).filter(

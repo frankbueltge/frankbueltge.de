@@ -254,7 +254,8 @@ export function registerEntries(works: readonly LatestWork[], names = houseNames
       houseName: forked ? names['nightly-line'] : names[w.ns],
       title: w.title,
       fact: null,
-      kind: forked ? K['nightly-line'] : K[w.ns],
+      // a long work in progress is the Studio's, but not yet a premiere (2026-10-17)
+      kind: forked ? K['nightly-line'] : w.state === 'in-progress' ? K['in-progress'] : K[w.ns],
       href: w.href,
       withdrawn: w.state === 'withdrawn',
       // The fork keeps the Atelier's colour: it IS the Atelier by descent, and giving it one of

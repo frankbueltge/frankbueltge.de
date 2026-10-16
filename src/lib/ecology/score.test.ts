@@ -130,6 +130,52 @@ describe('the score', () => {
     expect(score.slurs.every((s) => s.cycle === 2)).toBe(true)
   })
 
+  // 2026-10-17: the record hands the score what each session left and the cycle its note names.
+  // A day of two sessions where the second made the piece, and a Studio night of two increments
+  // of one long work, which leaves one folder between them.
+  const tied: ScoreInput = {
+    ...input,
+    sessions: [
+      { practice: 'field', date: '2026-09-03', title: 'Session 2', href: '/field/journal/cs-2/', cycle: 1, pieces: [] },
+      { practice: 'field', date: '2026-09-03', title: 'Session 3', href: '/field/journal/cs-3/', cycle: 2, pieces: ['An artifact'] },
+      { practice: 'studio', date: '2026-09-07', title: 'Session 9', href: '/studio/journal/cs-9/', cycle: 2, pieces: ['A LONG WORK'] },
+      { practice: 'studio', date: '2026-09-07', title: 'Session 10', href: '/studio/journal/cs-10/', cycle: 2, pieces: ['A LONG WORK'] },
+      { practice: 'atelier', date: '2026-09-08', title: 'a convening session', href: '/atelier/journal/c/', cycle: null, pieces: [] },
+    ],
+    pieces: [],
+  }
+  const drawn = buildScore(tied)
+
+  it('fills the note of the session the record ties a piece to, not the day’s first', () => {
+    const day = drawn.notes.filter((n) => n.practice === 'field' && n.date === '2026-09-03')
+    expect(day.map((n) => [n.title, n.filled])).toEqual([
+      ['Session 2', false],
+      ['Session 3', true],
+    ])
+  })
+
+  it('fills every session that advanced a long work, though only one folder stands', () => {
+    expect(drawn.notes.filter((n) => n.practice === 'studio').map((n) => n.filled)).toEqual([true, true])
+  })
+
+  it('gives a note the cycle its own label names, and a convening session none', () => {
+    const day = drawn.notes.filter((n) => n.practice === 'field' && n.date === '2026-09-03')
+    expect(day.map((n) => n.cycle)).toEqual([1, 2])
+    expect(drawn.notes.find((n) => n.practice === 'atelier')!.cycle).toBeNull()
+  })
+
+  it('counts the pieces no session claims on their day, filling only the unclaimed sessions', () => {
+    const mixed = buildScore({
+      ...input,
+      sessions: [
+        { practice: 'field', date: '2026-09-03', title: 'Session 2', href: '/field/journal/cs-2/', pieces: ['A tied artifact'] },
+        { practice: 'field', date: '2026-09-03', title: 'Session 3', href: '/field/journal/cs-3/' },
+      ],
+      pieces: [{ practice: 'field', date: '2026-09-03', title: 'An untied artifact' }],
+    })
+    expect(mixed.notes.map((n) => n.filled)).toEqual([true, true])
+  })
+
   it('draws a slur from the giver’s stave to the taker’s', () => {
     const slur = score.slurs.find((s) => s.id === 'a')!
     // field (top 78) gave, studio (top 246) took: the curve runs from y 90 down to y 258
@@ -208,6 +254,24 @@ describe('a practice’s part', () => {
     expect(own).toHaveLength(3)
     expect(own.find((n) => n.filled)!.piece).toBe('An artifact')
     expect(own.filter((n) => !n.filled).every((n) => n.piece === null)).toBe(true)
+  })
+
+  it('names on each own note the piece its own session left', () => {
+    const own = buildPart(
+      {
+        ...input,
+        sessions: [
+          { practice: 'field', date: '2026-09-03', title: 'Session 2', href: '/field/journal/cs-2/', pieces: [] },
+          { practice: 'field', date: '2026-09-03', title: 'Session 3', href: '/field/journal/cs-3/', pieces: ['An artifact'] },
+        ],
+        pieces: [],
+      },
+      'field',
+    ).notes.filter((n) => n.own)
+    expect(own.map((n) => [n.title, n.piece])).toEqual([
+      ['Session 2', null],
+      ['Session 3', 'An artifact'],
+    ])
   })
 
   it('draws the siblings’ sessions as hollow ghosts', () => {

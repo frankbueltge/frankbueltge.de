@@ -833,12 +833,16 @@ export const NAMING = {
       /** the entrance shows the newest rows only; the longer log stands on /now, paged */
       link: { label: 'the longer log →', href: '/now#latest' },
       /** each source's own noun for what it makes or records — never one word flattened across
-       *  the house. The first ten are the houses' nouns for their works (2026-09-03); the rest
-       *  name the kinds of live update the log carries since 2026-10-05. */
+       *  the house. The first eleven are the houses' nouns for their works (2026-09-03; the
+       *  Studio's work in progress joined on 2026-10-17); the rest name the kinds of live update
+       *  the log carries since 2026-10-05. */
       kindLabels: {
         atelier: 'work',
         field: 'instrument',
         studio: 'premiere',
+        /** the Studio's long work before the session that ships it (amendment of 2026-10-15):
+         *  its folder stands from the first increment, and it is not a premiere until it ships */
+        'in-progress': 'work in progress',
         'nightly-line': 'night',
         artifact: 'artifact',
         arch: 'candidate',

@@ -61,12 +61,13 @@ export const FIGURES = {
       link: (n: number) => `all ${n} →`,
       caption: (lines: number, works: number) =>
         `▮ WORK-LINE WORK · ▯ NIGHTLY-LINE WORK · SLAB HEIGHT = WORKS THAT DAY<br>` +
-        `✕ STOPPED · ▢ ARCHIVED AS STUDY · ● PUBLISHED · ⤳ RUNNING — the strands hanging below the axis are the work-line’s records<br>` +
+        `✕ STOPPED · ▢ ARCHIVED AS STUDY · ● PUBLISHED · ⤳ RUNNING · │ LEFT OPEN — the strands hanging below the axis are the work-line’s records<br>` +
         `${works} works from the register — both strands: the nightly line’s first era, the work-line, and everything the nightly line has made since its 2026-08-10 revival. ` +
         `${lines} work-lines from their own SCORE/TRACE records in src/content/atelier/projects/. ` +
         `A stopped line wears the practice’s own ink, not a warning colour: under this constitution closing costs what continuing costs. ` +
         `Hover or tab to a line for its span; open it for its whole record — score, decision, every move of its trace. n-1 keeps its record on its own surface. ` +
-        `No new work-line has opened since 2026-08-30, when Protocol v7 moved the practice onto cycle sessions — its running cycle is the record above, not this sheet.`,
+        `No new work-line has opened since 2026-08-30, when Protocol v7 moved the practice onto cycle sessions — its running cycle is the record above, not this sheet. ` +
+        `A line still open that day whose record has not moved since is drawn left open: it did not end, and it is not being worked.`,
     },
     lede: {
       kicker: (date: string) => `NEWEST ON THE RECORD · ${date}`,

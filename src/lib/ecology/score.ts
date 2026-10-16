@@ -18,7 +18,10 @@
 //     that day's end. A build never reads the clock.
 //   · A day belongs to the cycle that OPENED on it. A cycle's `closed` is the day the next one
 //     opened, so the half-open interval [opened, closed) gives every day exactly one cycle and
-//     the day between two cycles to the later one — the same rule for notes, slurs and counts.
+//     the day between two cycles to the later one — the rule for slurs, and for a session whose
+//     note names no cycle. A session whose note does name one belongs to that cycle, and a
+//     session of a convening to none (2026-10-17: the days of a cycle also hold the convening
+//     after it, and the calendar counted those sessions as the cycle's).
 
 import type { RelayKind } from '@/lib/ecology/relay'
 import type { PracticeId } from '@/lib/ecology/v3'
@@ -54,6 +57,12 @@ export interface ScoreSession {
   date: string
   title: string
   href: string
+  /** The cycle the session's own note names — null for a session of a convening. Left out, the
+   *  note takes the cycle its day falls in. (record.ts, sessionCycle; 2026-10-17) */
+  cycle?: number | null
+  /** What the record ties to this session: the pieces it left, and the long work it advanced.
+   *  Left out, the session is filled only by the day's count of untied pieces (piecesPerDay). */
+  pieces?: readonly string[]
 }
 
 /** A dated work or artifact — what fills a notehead. Presentations are not pieces: they have a
@@ -228,10 +237,43 @@ function stacked(sessions: readonly ScoreSession[], practice: PracticeId, since:
     })
 }
 
-/** How many pieces each practice landed on each day: `practice|date` → count. */
-function piecesPerDay(pieces: readonly ScorePiece[]): Map<string, number> {
-  const out = new Map<string, number>()
-  for (const p of pieces) out.set(`${p.practice}|${p.date}`, (out.get(`${p.practice}|${p.date}`) ?? 0) + 1)
+/** The pieces each practice landed on each day, in input order: `practice|date` → titles. */
+function piecesPerDay(pieces: readonly ScorePiece[]): Map<string, string[]> {
+  const out = new Map<string, string[]>()
+  for (const p of pieces) out.set(`${p.practice}|${p.date}`, [...(out.get(`${p.practice}|${p.date}`) ?? []), p.title])
+  return out
+}
+
+/**
+ * The piece each session of the ruler left, or null — by session, in the order `stacked` walks
+ * them. A session the record ties a piece to carries it (ScoreSession.pieces); the pieces no
+ * session claims are counted on their day as they always were, filling that day's unclaimed
+ * sessions in order. Until 2026-10-17 the count was all there was: it drew a Studio night that
+ * advanced the long work without leaving a new folder as a night without a work, and on a day of
+ * several sessions it gave the first notes the day's pieces, whichever session made them.
+ */
+function piecesOfSessions(
+  sessions: readonly ScoreSession[],
+  pieces: readonly ScorePiece[],
+  practice: PracticeId,
+  since: string,
+  until: string,
+): Map<ScoreSession, string | null> {
+  const untied = piecesPerDay(pieces.filter((p) => p.practice === practice))
+  const used = new Map<string, number>()
+  const out = new Map<ScoreSession, string | null>()
+  for (const { session } of stacked(sessions, practice, since, until)) {
+    const own = session.pieces?.[0]
+    if (own !== undefined) {
+      out.set(session, own)
+      continue
+    }
+    const key = `${practice}|${session.date}`
+    const k = used.get(key) ?? 0
+    const piece = untied.get(key)?.[k] ?? null
+    if (piece !== null) used.set(key, k + 1)
+    out.set(session, piece)
+  }
   return out
 }
 
@@ -239,10 +281,10 @@ export function buildScore(input: ScoreInput): ScoreModel {
   const axis = dayAxis(input.since, input.until, SCORE.left, SCORE.plot)
   const cycles = [...input.cycles].sort((a, b) => a.n - b.n)
   const cycleNo = (date: string) => cycleOn(date, cycles, input.until)?.n ?? null
-  const landed = piecesPerDay(input.pieces)
 
   const notes: ScoreNote[] = []
   for (const practice of ORDER) {
+    const left = piecesOfSessions(input.sessions, input.pieces, practice, input.since, input.until)
     for (const { session, index } of stacked(input.sessions, practice, input.since, input.until)) {
       notes.push({
         practice,
@@ -250,8 +292,10 @@ export function buildScore(input: ScoreInput): ScoreModel {
         x: r1(axis.x(session.date)),
         // on the stave's lowest space, each further session of the day a little higher
         y: r1(SCORE.tops[practice] + 21 - index * 4.5),
-        filled: index < (landed.get(`${practice}|${session.date}`) ?? 0),
-        cycle: cycleNo(session.date),
+        filled: left.get(session) != null,
+        // the cycle the note's own label names, where the record hands one in (a session of a
+        // convening belongs to none); the cycle its day falls in otherwise
+        cycle: session.cycle !== undefined ? session.cycle : cycleNo(session.date),
         title: session.title,
         href: session.href,
       })
@@ -419,21 +463,20 @@ export function buildPart(input: ScoreInput, me: PracticeId): PartModel {
   top[me] = PART.tops[1]
   top[below] = PART.tops[2]
 
-  const mine = input.pieces.filter((p) => p.practice === me)
-  const landed = piecesPerDay(mine)
+  const left = piecesOfSessions(input.sessions, input.pieces, me, input.since, input.until)
   const notes: PartNote[] = []
   for (const { session, index } of stacked(input.sessions, me, input.since, input.until)) {
-    const filled = index < (landed.get(`${me}|${session.date}`) ?? 0)
+    const piece = left.get(session) ?? null
     notes.push({
       practice: me,
       own: true,
       date: session.date,
       x: r1(axis.x(session.date)),
       y: r1(top[me] + 36 - index * 7),
-      filled,
+      filled: piece !== null,
       title: session.title,
       href: session.href,
-      piece: mine.filter((p) => p.date === session.date)[index]?.title ?? null,
+      piece,
     })
   }
   for (const sibling of [above, below]) {

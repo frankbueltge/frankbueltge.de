@@ -32,6 +32,11 @@ export const RELAY_CONTRACT = 'middle-relay/1'
 export const RELAY_PATH = 'src/data/middle/relay.json'
 /** The order in force since 2026-08-30 — research ecology v3, the shared question. */
 export const V3_SINCE = '2026-08-30'
+/** The day the relay began: its first version was a measurement made on 2026-10-05 back to the
+ *  first night of its record, and the nightly routine has written it since (research-ecology,
+ *  relay/README.md, "The seed of 2026-10-05"). The file carries no field for it; /encounters
+ *  said until 2026-10-17 that the relay began on the first night of its record. */
+export const RELAY_BEGAN = '2026-10-05'
 
 export type RelayKind = 'built_on' | 'answered' | 'noted'
 /** In order of weight: the order the figure stacks them and the table lists them. */
