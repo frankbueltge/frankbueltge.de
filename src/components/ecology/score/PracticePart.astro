@@ -80,7 +80,10 @@ const newest = newestPiece(record.things, id)
 const shot = (name: string) => (newest && newest.href.endsWith('/') && existsSync(`public${newest.href}${name}`) ? `${newest.href}${name}` : null)
 const still = { wide: shot('shot-1100.png'), narrow: shot('shot-390.png') }
 const newestTitle = newest ? withoutHouseSuffix(newest.title, me.name) : null
-const sessionOfNewest = newest?.date ? sessions.filter((s) => s.date === newest.date).at(-1) : null
+// The session that made it, where the record ties the two (record.ts, tieSessions); the day's
+// last session only where it does not — until 2026-10-17 always the day's last, by file name,
+// which put one session's note under another's window.
+const sessionOfNewest = newest?.session ?? (newest?.date ? sessions.filter((s) => s.date === newest.date).at(-1) : null)
 const newestNote = newest?.blurb ?? (sessionOfNewest ? sessionLabel(sessionOfNewest.title).line : null)
 
 // ── the handoffs, to this practice and by it ──────────────────────────────────────────────

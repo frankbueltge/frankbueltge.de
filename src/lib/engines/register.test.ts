@@ -11,6 +11,7 @@ import {
   buildRegister,
   forkedNightlyWorks,
   isListedArtifact,
+  markInProgress,
   registerCount,
   summarise,
   summariseRegister,
@@ -314,8 +315,33 @@ describe('the register on /ecology, against the committed record', () => {
     expect(card).toMatch(/'\/ecology#register':\s*registerCount\(\)/)
     const record = readFileSync(`${ROOT}src/lib/ecology/record.ts`, 'utf8')
     expect(record).toMatch(/const register = buildRegister\(\)/)
-    expect(record).toMatch(/things: madeThings\(register, presentations,/)
+    // (since 2026-10-17 the list is handed through tieSessions, which adds and removes no line)
+    expect(record).toMatch(/madeThings\(register, presentations,/)
     // the works alone are not the register any more — the record must not import them separately
     expect(record).not.toMatch(/import \{[^}]*\ballWorks\b[^}]*\} from '@\/lib\/engines\/register'/)
+  })
+})
+
+describe('the Studio’s long work in the register (2026-10-17)', () => {
+  const STUDIO = 'src/content/studio/works'
+  const works: LatestWork[] = [
+    work({ ns: 'studio', slug: '2026-10-16-filed-under', date: '2026-10-16', state: 'premiered', dir: STUDIO }),
+    work({ ns: 'studio', slug: '2026-10-15-the-unsent', date: '2026-10-15', state: 'premiered', dir: STUDIO }),
+    work({ ns: 'studio', slug: '2026-10-14-struck-off', date: '2026-10-14', state: 'withdrawn', dir: STUDIO }),
+    work({ ns: 'atelier', slug: '2026-10-16-filed-under', date: '2026-10-16', state: 'published', dir: NIGHTLY_FORK_DIR }),
+  ]
+
+  it('marks a long work that has not shipped as in progress — never a premiere', () => {
+    const marked = markInProgress(works, new Set(['2026-10-16-filed-under', '2026-10-14-struck-off']))
+    expect(marked.map((w) => w.state)).toEqual(['in-progress', 'premiered', 'withdrawn', 'published'])
+  })
+
+  it('leaves every work as it stood once the long work ships', () => {
+    expect(markInProgress(works, new Set())).toEqual(works)
+  })
+
+  it('marks only works of the Studio’s own directory, whatever another source calls its slug', () => {
+    const marked = markInProgress(works, new Set(['2026-10-16-filed-under']))
+    expect(marked.filter((w) => w.state === 'in-progress').map((w) => w.dir)).toEqual([STUDIO])
   })
 })

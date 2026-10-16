@@ -17,7 +17,7 @@ import type { Locale } from '@/lib/site'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { SCORE_WORDING as W, SHORT, shortDate } from '@/config/score-wording'
 import { loadEcologyRecord } from '@/lib/ecology/record'
-import { KINDS, threads, type HandoffStatus } from '@/lib/ecology/relay'
+import { KINDS, RELAY_BEGAN, threads, type HandoffStatus } from '@/lib/ecology/relay'
 import { buildCrossings, CROSSINGS, ORDER, relationMatrix } from '@/lib/ecology/score'
 import { DOORS } from '@/lib/ecology/pyramid/station'
 import type { PracticeId } from '@/lib/ecology/v3'
@@ -52,13 +52,18 @@ const hoBar = STATUSES.map((s) => {
 })
 const open = record.handoffs.filter((h) => h.status === 'open').sort((a, b) => b.offeredOn.localeCompare(a.offeredOn))
 
-// the threads the relay names, longest first — a thread's length is its relations
+// the threads the relay names, longest first — a thread's length is its relations, and each
+// carries its span, so a thread that stopped reads as stopped (2026-10-17)
 const THREADS = 8
-const longest = threads([...relations])
-  .map((t) => ({ name: t.id.replace(/-/g, ' '), count: t.relations.length }))
+const named = threads([...relations])
+const longest = named
+  .map((t) => ({ name: t.id.replace(/-/g, ' '), count: t.relations.length, span: M.threads.span(t.first, t.last) }))
   .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
   .slice(0, THREADS)
 const longestCount = longest[0]?.count ?? 1
+// threads() puts the most recently active first; the relations stand oldest first
+const lastThread = named[0]?.last ?? null
+const lastRelation = relations.at(-1)?.date ?? null
 
 const kindLine: Record<string, { width: string; dash?: string }> = {
   built_on: { width: '1.6' },
@@ -136,7 +141,7 @@ const kindLine: Record<string, { width: string; dash?: string }> = {
           <div class="sc-head">
             <div class="sc-head-title">
               <h2>{M.crossings.title}</h2>
-              <span class="sc-head-sub">{M.crossings.sub(crossings.axis.since)}</span>
+              <span class="sc-head-sub">{M.crossings.sub(crossings.axis.since, RELAY_BEGAN)}</span>
             </div>
             <span class="sc-small sc-head-aside">{M.crossings.meta(relations.length, crossings.nights)}</span>
           </div>
@@ -254,13 +259,13 @@ const kindLine: Record<string, { width: string; dash?: string }> = {
             <div class="sc-head sc-head--ink">
               <div class="sc-head-title">
                 <h2>{M.threads.title}</h2>
-                <span class="sc-head-sub">{M.threads.sub}</span>
+                <span class="sc-head-sub">{M.threads.sub(lastThread, lastRelation)}</span>
               </div>
             </div>
             {longest.length > 0 ? (
               longest.map((t) => (
                 <p class="sc-thread">
-                  <span>{t.name}</span>
+                  <span>{t.name} <span class="sc-small">{t.span}</span></span>
                   <svg viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="0" width={Math.round((t.count / longestCount) * 100)} height="6" /></svg>
                   <span>{t.count}</span>
                 </p>

@@ -23,7 +23,7 @@ import type { Locale } from '@/lib/site'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { SCORE_WORDING as W, SHORT, cycleNo } from '@/config/score-wording'
 import { rankedScores, resultFate } from '@/lib/ecology/convening'
-import { inScoreCycle, loadEcologyRecord, piecesIn, piecesSince, scoreInput } from '@/lib/ecology/record'
+import { loadEcologyRecord, piecesIn, piecesSince, scoreInput, sessionsIn } from '@/lib/ecology/record'
 import { buildScore, cycleOn, ORDER } from '@/lib/ecology/score'
 import { loadClosingReports, PRACTICE_REPO, type PracticeId } from '@/lib/ecology/v3'
 import '@fontsource-variable/literata/opsz-italic.css'
@@ -67,7 +67,9 @@ const details = record.cycles.map((c) => {
     findings: row.findings,
     presentations: record.things.filter((t) => t.kind === 'presentation' && t.cycle === c.n),
     stats: [
-      ...ORDER.map((p) => ({ voice: p as PracticeId | null, k: name(p), v: record.sessions.filter((s) => s.practice === p && inScoreCycle(s.date, c, record.until)).length, sub: W.detail.sessions })),
+      // a cycle's sessions are the ones its practices label with it — the convening after it is
+      // in its days, but its sessions are not the cycle's (2026-10-17)
+      ...ORDER.map((p) => ({ voice: p as PracticeId | null, k: name(p), v: sessionsIn(record, p, c.n).length, sub: W.detail.sessions })),
       ...ORDER.map((p) => ({ voice: p as PracticeId | null, k: name(p), v: piecesIn(record.things, p, c.n).length, sub: W.detail.pieces })),
       ...(['built_on', 'answered', 'noted'] as const).map((k) => ({ voice: null, k: W.middle, v: relations.filter((r) => r.kind === k).length, sub: W.kind[k] })),
     ],
@@ -84,7 +86,7 @@ const tally = conv?.result && shown && conv.afterCycle === shown.n ? rankedScore
 const examples = shown
   ? [
       W.how.example.question(shown.n, shown.question),
-      W.how.example.sessions(shown.n, ORDER.map((p) => ({ name: SHORT[p], sessions: record.sessions.filter((s) => s.practice === p && inScoreCycle(s.date, shown, record.until)).length }))),
+      W.how.example.sessions(shown.n, ORDER.map((p) => ({ name: SHORT[p], sessions: sessionsIn(record, p, shown.n).length }))),
       W.how.example.crossings(shown.n, shownRelations.length),
       shownPresented ? W.how.example.presented(shown.n, shownPresented) : null,
       tally.length > 0 ? W.how.example.tally(tally.map((t) => ({ name: SHORT[t.practice], score: t.score })), shown.n + 1) : null,

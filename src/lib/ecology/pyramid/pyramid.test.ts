@@ -14,7 +14,8 @@ import { describe, expect, it } from 'vitest'
 import { daysUntil, readingDate, STATIONS, PRACTICE_STATIONS, MAP_NODES } from './model'
 import { firstClause, recordLine, newestCrossing, runningInquiry } from './landings'
 import { seamsFrom, worksPerWeek, weekOffset, buildTimeline, timelineGeometry } from './timeline'
-import { classifyVerdict, buildGauntlet, buildCrossings, LANES } from './figures'
+import { classifyVerdict, buildGauntlet, buildCrossings, buildLineMap, LANES, LINES_UNTIL, openLineEnd } from './figures'
+import type { Dossier } from '@/lib/atelier/dossier'
 import { readConstitution, splitDoorLine, buildStationSheet, windowDoor } from './station'
 import { readN1Facts } from '@/lib/ecology/n1-line'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
@@ -220,6 +221,41 @@ describe('the figures', () => {
       { encounter_id: 'enc-1', title: 't', participants: [{ id: 'data-snack-plenum' }, { id: 'ulysses' }] },
     ])
     expect(crossings[0].lanes).toEqual(['ulysses', 'plenum'])
+  })
+
+  // The line map, 2026-10-17: an open line read as running whatever its record said, and two lines
+  // whose records last moved in August stood on /atelier with the arrow of a line being worked.
+  const dossier = (d: Partial<Dossier> & Pick<Dossier, 'id' | 'stand' | 'created' | 'lastMove'>) =>
+    ({ title: d.id, ...d }) as Dossier
+
+  it('reads an open line as running only while its record moves under the current order', () => {
+    expect(LINES_UNTIL).toBe('2026-08-30')
+    expect(openLineEnd('2026-08-12')).toBe('left-open')
+    expect(openLineEnd('2026-08-30')).toBe('running')
+    expect(openLineEnd('2026-09-02')).toBe('running')
+  })
+
+  it('draws an ending only where the record earned one, and leaves an old open line open', () => {
+    const map = buildLineMap(
+      [
+        dossier({ id: 'put-back', stand: 'RUNNING', created: '2026-07-24', lastMove: '2026-08-12' }),
+        dossier({ id: 'candidate', stand: 'PUBLICATION_CANDIDATE', created: '2026-08-19', lastMove: '2026-08-19' }),
+        dossier({ id: 'moving', stand: 'RUNNING', created: '2026-08-20', lastMove: '2026-09-01' }),
+        dossier({ id: 'published', stand: 'PUBLISH', created: '2026-07-23', lastMove: '2026-08-12' }),
+        dossier({ id: 'study', stand: 'ARCHIVE_AS_STUDY', created: '2026-08-13', lastMove: '2026-08-13' }),
+        dossier({ id: 'stopped', stand: 'KILL', created: '2026-07-18', lastMove: '2026-07-18' }),
+      ],
+      [],
+    )
+    const end = Object.fromEntries(map.lines.map((l) => [l.id, [l.end, l.atGate]]))
+    expect(end).toEqual({
+      'put-back': ['left-open', false],
+      candidate: ['left-open', true],
+      moving: ['running', false],
+      published: ['publish', false],
+      study: ['study', false],
+      stopped: ['kill', false],
+    })
   })
 })
 

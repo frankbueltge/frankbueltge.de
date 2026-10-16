@@ -415,6 +415,20 @@ describe('the wording', () => {
   })
 })
 
+describe('a long work in progress', () => {
+  it('stands in the log as the Studio’s work in progress, not as a premiere, until it ships', () => {
+    const K = NAMING.opsRoom.signal.kindLabels
+    const [growing, premiered] = registerEntries([
+      { ns: 'studio', kind: 'html', slug: 'f', title: 'FILED UNDER', date: '2026-10-16', href: '/f', state: 'in-progress', session: 176 },
+      { ns: 'studio', kind: 'html', slug: 'u', title: 'THE UNSENT', date: '2026-10-15', href: '/u', state: 'premiered', session: 174 },
+    ])
+    expect(growing!.kind).toBe(K['in-progress'])
+    expect(growing!.kind).not.toBe(K.studio)
+    expect(growing!.house).toBe('studio')
+    expect(premiered!.kind).toBe(K.studio)
+  })
+})
+
 describe('the register on /ecology keeps its own, narrower claim', () => {
   it('does not fold Arch, n-1 or the lab into the three practices’ catalogue', () => {
     // registerEntries is the ONLY part of the feed the works register shares; it must speak for

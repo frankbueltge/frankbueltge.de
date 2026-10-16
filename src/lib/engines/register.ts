@@ -22,6 +22,7 @@
 // count works; the page that claims to list everything the practices brought forth reads both.
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { loadArtifacts, loadPresentations, type ArtifactEntry } from '@/lib/ecology/v3'
+import { inProgress, loadLongWorks } from '@/lib/studio/long-work'
 import { collectWorks, type EngineKind, type EngineNs, type EngineWorkMeta, type LatestWork, type WorkSource } from './latest'
 
 /** The forked nightly line's mirror — named once, because three things must agree about it:
@@ -62,11 +63,24 @@ export const WORK_SOURCES: (WorkSource & { dir: string })[] = [
   },
 ]
 
+/** The Studio's own works directory — the one source whose works can be long works. */
+const STUDIO_WORKS_DIR = 'src/content/studio/works'
+
 /** Every work, newest first — withdrawn ones included and marked, never dropped.
  *  Links point at the works themselves ('stage'), which for an html work is its standalone
  *  full-viewport route and not the practice's front page. */
 export function allWorks(): LatestWork[] {
-  return collectWorks(WORK_SOURCES, { hrefMode: 'stage' })
+  return markInProgress(collectWorks(WORK_SOURCES, { hrefMode: 'stage' }), inProgress(loadLongWorks()))
+}
+
+/** The Studio's long works that have not shipped, marked as such (2026-10-17): a long work's folder
+ *  stands from the night of its first increment, and until the session that ships it, it is a work
+ *  in progress, never a premiere (the amendment of 2026-10-15, src/lib/studio/long-work.ts). Pure:
+ *  the slugs still in progress are handed in. A withdrawal stays a withdrawal. */
+export function markInProgress(works: readonly LatestWork[], open: ReadonlySet<string>): LatestWork[] {
+  return works.map((w) =>
+    w.dir === STUDIO_WORKS_DIR && w.state !== 'withdrawn' && open.has(w.slug) ? { ...w, state: 'in-progress' as const } : w,
+  )
 }
 
 /** The works the forked nightly line has made since 2026-07-18 — the register's own rows,

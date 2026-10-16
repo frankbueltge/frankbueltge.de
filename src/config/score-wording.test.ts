@@ -101,6 +101,21 @@ describe('the sentences take their numbers as arguments', () => {
     expect(W.practice.part.legend.filled('work')).toBe('● a night that left a work')
   })
 
+  it('dates the relay’s record from its first night and says when the relay itself began', () => {
+    // until 2026-10-17: "since the relay began on 7 Sept" — the relay began on 5 Oct and measured
+    // its record back to the first night
+    expect(W.middlePage.crossings.sub('2026-09-07', '2026-10-05')).toBe('the relay’s record from 7 Sept, measured back when it began on 5 Oct · stacked by kind')
+    expect(W.middlePage.crossings.sub('2026-10-05', '2026-10-05')).toBe('since the relay began on 5 Oct · stacked by kind')
+  })
+
+  it('calls threads running only while the relay still names them', () => {
+    expect(W.middlePage.threads.sub('2026-10-07', '2026-10-16')).toBe('the longest · the relay has named no thread since 7 Oct')
+    expect(W.middlePage.threads.sub('2026-10-16', '2026-10-16')).toBe('the longest-running')
+    expect(W.middlePage.threads.sub(null, null)).toBe('the longest-running')
+    expect(W.middlePage.threads.span('2026-09-15', '2026-10-07')).toBe('15 Sept – 7 Oct')
+    expect(W.middlePage.threads.span('2026-10-03', '2026-10-03')).toBe('3 Oct')
+  })
+
   it('states a station’s cadence from its own counts', () => {
     expect(W.practice.status.cadenceValue({ sessions: 51, nights: 36, of: 42 })).toBe('51 sessions on 36 of 42 nights since v3')
     expect(W.practice.status.timesValue(74, 23)).toBe('74 times (built on 23)')

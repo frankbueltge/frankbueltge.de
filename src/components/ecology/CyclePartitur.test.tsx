@@ -36,7 +36,7 @@ const artifacts: ArtifactEntry[] = [
   { practice: 'atelier', slug: 'cycle-001', date: '2026-08-31', cycle: 1, href: '/atelier/window/cycle-001/', title: 'What the Record Remembers', fromWorksRegister: false },
 ]
 const sessions: SessionNote[] = [
-  { practice: 'studio', date: '2026-08-30', title: 'Session 114 — 2026-08-30', href: '/studio/journal/cs-114/', anchor: 'cs-114', source: 'src/content/studio/journal/2026-08-30-session-114.md' },
+  { practice: 'studio', date: '2026-08-30', title: 'Session 114 — 2026-08-30', href: '/studio/journal/cs-114/', anchor: 'cs-114', source: 'src/content/studio/journal/2026-08-30-session-114.md', label: null, number: null, names: [] },
 ]
 const letters: LetterEntry[] = [
   { id: '2026-09-a-letter', practice: 'plenum', date: '2026-08-31', title: 'A packet lying open', receiver: 'a named receiver', status: 'prepared', href: '/post/', source: 'src/data/post/ledger.json' },

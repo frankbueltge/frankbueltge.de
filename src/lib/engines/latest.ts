@@ -11,10 +11,12 @@ export type EngineNs = 'field' | 'atelier' | 'studio'
  *  file under public/<ns>/werke-html/<slug>/ — see hrefFor() for which of the two a caller gets. */
 export type EngineKind = 'astro' | 'html'
 /** What the practice's own record says has happened to a work. Only 'withdrawn' is read off the
- *  work's own meta.json (the /^WITHDRAWN/ marker the Studio writes into `medium`); the other two
- *  are the practices' own words for a work that stands: the Studio premieres, the Atelier and the
- *  Field publish. Nothing here is a verdict of this module's own making. */
-export type WorkState = 'published' | 'premiered' | 'withdrawn'
+ *  work's own meta.json (the /^WITHDRAWN/ marker the Studio writes into `medium`); 'published' and
+ *  'premiered' are the practices' own words for a work that stands: the Studio premieres, the
+ *  Atelier and the Field publish. 'in-progress' is the Studio's long work before the session that
+ *  ships it (amendment of 2026-10-15) — set by the works register from the Studio's chronicle
+ *  (src/lib/studio/long-work.ts), never here. Nothing is a verdict of this module's own making. */
+export type WorkState = 'published' | 'premiered' | 'in-progress' | 'withdrawn'
 export interface EngineWorkMeta {
   title?: string
   date?: string

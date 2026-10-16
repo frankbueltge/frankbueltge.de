@@ -17,6 +17,7 @@ import path from 'node:path'
 
 import { buildSessionEntries } from '@/lib/atelier/sessions'
 import { buildDayIndex } from '@/lib/engines/journal'
+import { namedPieces, sessionCycleLabel, sessionNumber, type SessionCycleLabel } from './session-label'
 
 export type PracticeId = 'atelier' | 'field' | 'studio'
 export const PRACTICES: PracticeId[] = ['field', 'atelier', 'studio']
@@ -636,6 +637,37 @@ export interface SessionNote {
   anchor: string
   /** the committed file the note was read from */
   source: string
+  /** the cycle the note says the session belongs to, or the convening after one — its own label,
+   *  never the calendar's; null where the note names none (src/lib/ecology/session-label.ts) */
+  label: SessionCycleLabel | null
+  /** the number the practice gives the session in its heading — its place within a day */
+  number: number | null
+  /** the pieces the note names, by their path in the practice's repository (`window/…`,
+   *  `artifacts/…`, `works/…`) — what ties a piece to the session that made it */
+  names: string[]
+}
+
+/** A session's place within its day. The Field and the Studio number their sessions straight
+ *  through, so the number alone orders a day; the Atelier counts within a cycle, and again
+ *  within a convening, so its day stands by cycle, then convening, then that count. A note
+ *  that carries none of these stands after those that do, in the order of its anchor. */
+function dayKey(n: SessionNote): number[] {
+  const none = Number.MAX_SAFE_INTEGER
+  if (n.practice !== 'atelier') return [n.number ?? none]
+  return [n.label?.cycle ?? none, n.label?.convening ? 1 : 0, n.number ?? none]
+}
+
+function byDayKey(a: SessionNote, b: SessionNote): number {
+  const ka = dayKey(a)
+  const kb = dayKey(b)
+  for (let i = 0; i < ka.length; i++) if (ka[i] !== kb[i]) return ka[i]! - kb[i]!
+  return 0
+}
+
+/** Two sessions of one practice in the order they happened: by day, then by the practice's own
+ *  order within the day, then by anchor — the order loadSessionNotes returns them in. */
+export function compareSessions(a: SessionNote, b: SessionNote): number {
+  return a.date.localeCompare(b.date) || byDayKey(a, b) || a.anchor.localeCompare(b.anchor)
 }
 
 /**
@@ -671,6 +703,15 @@ export function loadSessionNotes(
   }))
   const notes: SessionNote[] = []
 
+  // What the note says about itself: its label, its number, the pieces it names. Read from the
+  // heading and the text the route renders — the same chunk, so a day file of several sessions
+  // gives each session its own.
+  const own = (heading: string, text: string) => ({
+    label: sessionCycleLabel(heading, text),
+    number: sessionNumber(heading),
+    names: namedPieces(text),
+  })
+
   if (practice === 'atelier') {
     for (const e of buildSessionEntries(entries)) {
       notes.push({
@@ -680,6 +721,7 @@ export function loadSessionNotes(
         href: `/atelier/journal/${e.slug}/`,
         anchor: e.slug,
         source: `src/content/atelier/${e.id}`,
+        ...own(e.heading, e.text),
       })
     }
   } else {
@@ -696,13 +738,16 @@ export function loadSessionNotes(
         href: `/${practice}/journal/${s.anchor}/`,
         anchor: s.anchor,
         source: `src/content/${practice}/${day.id}`,
+        ...own(s.heading, s.text),
       })
     }
   }
 
-  return notes
-    .filter((n) => n.date >= since)
-    .sort((a, b) => a.date.localeCompare(b.date) || a.anchor.localeCompare(b.anchor))
+  // Within a day, the practice's own order (dayKey) — until 2026-10-17 the anchor's, which for
+  // the Atelier is the alphabet of its file names: "The Heeded Column" (session 4) stood before
+  // "The Warner's Column" (session 3), and every reading that takes a day's last session, or
+  // pairs a day's sessions with its pieces, took the wrong one.
+  return notes.filter((n) => n.date >= since).sort(compareSessions)
 }
 
 /** One prepared delivery of the post office's outgoing ledger. `practice` is the ledger's own

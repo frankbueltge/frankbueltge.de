@@ -26,6 +26,7 @@
 import type { Dossier } from '@/lib/atelier/dossier'
 import type { LatestWork } from '@/lib/engines/latest'
 import { lineOfWork, type WorkBearingLineId } from '@/lib/ecology/lines'
+import { V3_SINCE } from '@/lib/ecology/relay'
 import type { ChronicleEntry } from './landings'
 
 // ───────────────────────────────────────────────────────────────────────────────────────────────
@@ -130,7 +131,7 @@ export function buildGauntlet(sessions: number, shipped: number, standing: numbe
 // The Atelier — the line map
 // ───────────────────────────────────────────────────────────────────────────────────────────────
 
-export type LineEnd = 'kill' | 'study' | 'publish' | 'running'
+export type LineEnd = 'kill' | 'study' | 'publish' | 'running' | 'left-open'
 
 export interface LineMapLine {
   id: string
@@ -139,6 +140,9 @@ export interface LineMapLine {
   from: string
   to: string
   end: LineEnd
+  /** a line with a disposition proposed and no decision on it — "at the gate" in the practice's
+   *  own vocabulary (atelier-wording, passage.harbours) */
+  atGate: boolean
 }
 
 export interface LineMap {
@@ -152,12 +156,26 @@ export interface LineMap {
   lines: LineMapLine[]
 }
 
+/** The endings a line's record can earn. A stand outside this list has not ended. */
 const END_OF: Record<string, LineEnd> = {
   KILL: 'kill',
   ARCHIVE_AS_STUDY: 'study',
   PUBLISH: 'publish',
-  PUBLICATION_CANDIDATE: 'running',
-  RUNNING: 'running',
+}
+
+/**
+ * The day the practice stopped working in lines: Protocol v7 (research ecology v3, 2026-08-30)
+ * moved it onto cycle sessions, and no line has opened since. A line still open then is running
+ * only if its record has moved since; otherwise it was left open. Until 2026-10-17 every open
+ * line read as running, and two whose records last moved in August stood on the Atelier's page
+ * with the arrow of a line still being worked.
+ */
+export const LINES_UNTIL = V3_SINCE
+
+/** How an open line reads: running while its record moves under the current order, left open
+ *  once it no longer does. Never a verdict — the record holds none. */
+export function openLineEnd(lastMove: string, since: string = LINES_UNTIL): LineEnd {
+  return lastMove >= since ? 'running' : 'left-open'
 }
 
 /**
@@ -174,13 +192,17 @@ export function buildLineMap(dossiers: readonly Dossier[], works: readonly Lates
     .map((w) => ({ date: w.date, title: w.title, line: lineOfWork(w)! }))
   const lines = dossiers
     .filter((d) => d.created)
-    .map((d) => ({
-      id: d.id,
-      title: d.title,
-      from: d.created,
-      to: d.lastMove || d.created,
-      end: END_OF[d.stand] ?? 'running',
-    }))
+    .map((d) => {
+      const to = d.lastMove || d.created
+      return {
+        id: d.id,
+        title: d.title,
+        from: d.created,
+        to,
+        end: END_OF[d.stand] ?? openLineEnd(to),
+        atGate: d.stand === 'PUBLICATION_CANDIDATE',
+      }
+    })
   const dates = [...atelierWorks.map((w) => w.date), ...lines.flatMap((l) => [l.from, l.to])].sort()
   return {
     from: dates[0] ?? '',

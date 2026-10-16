@@ -5,28 +5,50 @@
 // ecology stations come from NAMING.doors — the same strings the doors on /ecology render, so a
 // reworded practice moves the board with it and the entrance can never describe a house
 // differently from the house's own door. The two rows beside the ecology read the same way from
-// NAMING.overview.items. The last landed output is read from the works' own committed metadata,
-// the crossings register, or the practice's own exported moments. The sparkline is that
-// repository's own commit bins out of the committed pulse snapshot.
+// NAMING.overview.items. The last landed output is read from the ecology's own record — each
+// practice's newest piece as its own page leads with it, the Middle's newest relation from the
+// relay — or from the house's own record beside the ecology (moments, pages, nights). The
+// sparkline is that repository's own commit bins out of the committed pulse snapshot.
+//
+// Until 2026-10-17 the ecology's rows read the sources of the order before v3: the works
+// register's meta.json files (the Field's newest of those dates from 2026-08-05, while it lands
+// an artifact a session) with the nightly line's fork counted as the Atelier's, and the Middle's
+// crossings register of six, which stopped with that order while the relay records hundreds.
 //
 // The one thing this module DOES decide is what happens when a source is silent: the row still
 // appears, and says so. A board that hides a station because its record is empty is a board that
 // tells you everything is fine.
 
 import { NAMING } from '@/config/naming'
+import { SCORE_WORDING } from '@/config/score-wording'
 import type { PulseSnapshot } from '@/lib/pulse/render'
-import type { EngineNs, LatestWork } from '@/lib/engines/latest'
-import { allWorks } from '@/lib/engines/register'
+import { loadEcologyRecord, newestPiece, type MadeThing } from '@/lib/ecology/record'
+import { KINDS, supersededIds, type Relation } from '@/lib/ecology/relay'
+import type { PracticeId } from '@/lib/ecology/v3'
 import { nightlyLine } from '@/lib/engines/nightly-line'
 import { WERKE } from '@/data/werke'
-import encounters from '@/data/begegnungen/register.json'
 import attentionMoments from '@/data/attention/moments.json'
 import { lastN1Night, N1_RECORD_HREF, newestN1Page } from '@/lib/n1/works'
+import { withoutHouseSuffix } from '@/lib/ops/edition'
 
-/** Which door id drives which practice namespace — the only mapping the board needs, and the
- *  reason it is written down: the ids are the practices' resident names, the namespaces are the
- *  directories their works live in, and neither can be derived from the other. */
-const DOOR_NS: Record<string, EngineNs> = { ulysses: 'atelier', meridian: 'field', ensemble: 'studio' }
+/** Which door id drives which practice — the only mapping the board needs, and the reason it is
+ *  written down: the ids are the practices' resident names, the practices are the record's own
+ *  keys, and neither can be derived from the other. */
+const DOOR_PRACTICE: Record<string, PracticeId> = { ulysses: 'atelier', meridian: 'field', ensemble: 'studio' }
+
+/** What the ecology's rows read: the record /ecology and the practice pages draw from. */
+export interface BoardSources {
+  /** everything the three practices made, with the session that made it (src/lib/ecology/record.ts) */
+  things: readonly MadeThing[]
+  /** the Middle's relay */
+  relations: readonly Relation[]
+}
+
+/** The committed record, read the way the ecology's own pages read it. */
+export function boardSources(): BoardSources {
+  const record = loadEcologyRecord(SCORE_WORDING.presentationTitle)
+  return { things: record.things, relations: record.relations }
+}
 
 export interface BoardLast {
   title: string
@@ -87,28 +109,35 @@ export function repoSeries(snapshot: PulseSnapshot, repo: string, buckets = 28):
   return out
 }
 
-/** The newest work of a practice, from the works' own committed metadata. */
-function lastWorkOf(works: readonly LatestWork[], ns: EngineNs): BoardLast | null {
-  const work = works.find((w) => w.ns === ns)
-  return work ? { title: work.title, meta: work.date, href: work.href } : null
-}
-
-interface EncounterEntry {
-  encounter_id?: string
-  title?: string
-}
-
-/** The Middle keeps crossings, and the crossings register carries no dates — so the row states
- *  the count instead of borrowing a date from somewhere else. */
-function lastCrossing(): BoardLast | null {
-  const list = (encounters as unknown as EncounterEntry[]).filter((e) => e.title)
-  if (list.length === 0) return null
-  const newest = [...list].sort((a, b) => (a.encounter_id ?? '').localeCompare(b.encounter_id ?? '')).at(-1)!
+/**
+ * A practice's newest piece — the one its own page leads with (record.ts, newestPiece): its works
+ * and the artifacts its sessions leave, never the nightly line's, which stands beside the ecology
+ * under its own name. The title without the practice's own name after it, the day its record
+ * names, or — for a window no journal note dates — its cycle, never an invented day.
+ */
+function lastPieceOf(things: readonly MadeThing[], practice: PracticeId, houseName: string): BoardLast | null {
+  const piece = newestPiece(things, practice)
+  if (!piece) return null
   return {
-    title: newest.title!,
-    meta: `${list.length} crossings on the record`,
-    href: '/encounters',
+    title: withoutHouseSuffix(piece.title, houseName),
+    meta: piece.date ?? SCORE_WORDING.cycleLabel(piece.cycle!),
+    href: piece.href,
   }
+}
+
+/**
+ * The Middle's newest relation, in the relay's own words, and the count the relay holds — the
+ * same count /encounters prints. On the newest day a relation that carries something (built on,
+ * then answered) stands before a note, and one a later relation corrects is never the one shown.
+ */
+export function lastRelation(relations: readonly Relation[]): BoardLast | null {
+  if (relations.length === 0) return null
+  const superseded = supersededIds([...relations])
+  const standing = relations.filter((r) => !superseded.has(r.id))
+  const newest = [...(standing.length > 0 ? standing : relations)].sort(
+    (a, b) => b.date.localeCompare(a.date) || KINDS.indexOf(a.kind) - KINDS.indexOf(b.kind) || a.id.localeCompare(b.id),
+  )[0]!
+  return { title: newest.what, meta: `${relations.length} crossings on the record`, href: '/encounters' }
 }
 
 interface AttentionMoment {
@@ -189,11 +218,11 @@ function lastNightly(): BoardLast | null {
    module keeps to the board. */
 
 /**
- * The board, group by group. `works` is injectable so the derivation can be tested against a
- * fixture instead of against whatever the practices shipped last night; left out, it reads the
- * real register.
+ * The board, group by group. The ecology's record is injectable so the derivation can be tested
+ * against a fixture instead of against whatever the practices shipped last night; left out, it
+ * reads the committed record.
  */
-export function buildBoard(snapshot: PulseSnapshot, works: readonly LatestWork[] = allWorks()): BoardGroup[] {
+export function buildBoard(snapshot: PulseSnapshot, sources: BoardSources = boardSources()): BoardGroup[] {
   const doors = new Map(NAMING.doors.items.map((d) => [d.id, d]))
   const cards = new Map(NAMING.overview.items.map((c) => [c.id, c]))
   const werke = new Map(WERKE.map((w) => [w.id, w]))
@@ -205,7 +234,7 @@ export function buildBoard(snapshot: PulseSnapshot, works: readonly LatestWork[]
 
       if ('door' in spec) {
         const door = doors.get(spec.door)!
-        const ns = DOOR_NS[spec.door]
+        const practice = DOOR_PRACTICE[spec.door]
         return {
           id: spec.door,
           name: door.name,
@@ -217,7 +246,7 @@ export function buildBoard(snapshot: PulseSnapshot, works: readonly LatestWork[]
           status: spec.status,
           voice: spec.door,
           spark,
-          last: ns ? lastWorkOf(works, ns) : lastCrossing(),
+          last: practice ? lastPieceOf(sources.things, practice, door.name) : lastRelation(sources.relations),
         }
       }
 

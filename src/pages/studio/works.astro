@@ -3,10 +3,15 @@
 // verification lives inside each artifact (sources linked, method stated, nothing
 // published as fact unverified) — the honest empty state stays honest (a premiere is an
 // event, not a ritual). Interactive works run in the same isolated sandbox the old page used.
+//
+// Since 2026-10-17 a long work (the amendment of 2026-10-15) stands here from its first
+// increment, as the amendment asks — a visitor following the cycle sees it grow — but it is not
+// counted as premiered until the session that ships it (src/lib/studio/long-work.ts).
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/studio/surface/Frame.astro'
 import { sortWorks } from '@/lib/atelier/sort'
 import { loadChronicle, entriesForWork } from '@/lib/studio/chronicle'
+import { inProgress, loadLongWorks } from '@/lib/studio/long-work'
 import { STUDIO_NARRATIVE } from '@/config/studio-wording'
 import { teaserFor } from '@/lib/engines/teaser'
 import { receivedSlugs } from '@/lib/reception/register'
@@ -35,8 +40,14 @@ const withBadges = works.map((w) => {
   return { ...w, badge: latest ? { label: `S${latest.collective_session} · ${latest.move}`, anchor: latest.anchor } : undefined }
 })
 
-const kicker = ['Studio · works', 'studio (Ensemble)', `${works.length} premiered`]
-const statusHtml = `<b>${works.length} work${works.length === 1 ? '' : 's'} premiered</b> · verification lives inside each artifact, the playbill records it`
+// premiered: every work but a long work that has not shipped; that one is in progress
+const growing = inProgress(loadLongWorks())
+const premiered = works.filter((w) => !growing.has(w.slug)).length
+const inProgressCount = works.length - premiered
+const growingNote = inProgressCount > 0 ? ` · ${inProgressCount} in progress` : ''
+
+const kicker = ['Studio · works', 'studio (Ensemble)', `${premiered} premiered${growingNote}`]
+const statusHtml = `<b>${premiered} work${premiered === 1 ? '' : 's'} premiered</b>${growingNote} · verification lives inside each artifact, the playbill records it`
 ---
 
 <Page
@@ -47,7 +58,7 @@ const statusHtml = `<b>${works.length} work${works.length === 1 ? '' : 's'} prem
     <p class="st-room-intro">{STUDIO_NARRATIVE.rooms.works}</p>
     <RespondCta variant="line" ns="studio" class="st-room-intro" />
 
-    {works.length === 0 && (
+    {premiered === 0 && (
       <p class="st-room-intro">
         No premiered works yet. The first production is still in the workshop —
         a premiere is an event, not a ritual. The <a href="/studio/history" class="underline">playbill</a> is the record.
@@ -67,6 +78,7 @@ const statusHtml = `<b>${works.length} work${works.length === 1 ? '' : 's'} prem
           <h3>
             {meta.title ?? slug}
             {meta.date && <span class="st-work-date">{meta.date}</span>}
+            {growing.has(slug) && <span class="st-work-date">in progress</span>}
           </h3>
           {/* Etappe 2: the record moved off the playbill into its own room — one page per session. */}
           {badge && <a class="st-work-badge" href={`/studio/journal/${badge.anchor}/`}>{badge.label} — on the record →</a>}
