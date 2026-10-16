@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Turns</title>
+<style>
+  :root {
+    --paper: #f2eee5;
+    --ink: #2b2a27;
+    --muted: #7d776c;
+  }
+  html, body { margin: 0; height: 100%; background: var(--paper); }
+  body {
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    color: var(--ink);
+  }
+  .sheet { position: relative; width: 1100px; height: 800px; flex: none; }
+  canvas { position: absolute; inset: 0; width: 1100px; height: 800px; }
+  .label { position: absolute; left: 56px; width: 230px; }
+  h1 { font-weight: normal; font-size: 30px; line-height: 1.15; margin: 0 0 14px; letter-spacing: 0.01em; }
+  .label p { font-size: 13.5px; line-height: 1.55; margin: 0 0 10px; color: var(--muted); }
+  .top { top: 62px; }
+  .bottom { bottom: 56px; }
+  .key { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .ramp { width: 120px; height: 6px; border-radius: 3px;
+          background: linear-gradient(90deg, #3e5266, #6b6a6a, #a2482a); }
+  @media (max-width: 1100px) {
+    body { align-items: flex-start; justify-content: flex-start; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <canvas id="c" width="1100" height="800" aria-label="A spiral of sixty-one turns, one per day, wound from an hourly record of carbon dioxide in air"></canvas>
+  <div class="label top">
+    <h1>Sixty-One Turns</h1>
+    <p>An hourly record of carbon dioxide in the air at one station, 1,464 hours long, wound so that each turn is one day.</p>
+    <p>The first hour is at the centre and the last at the rim. The further a mark lies outside its turn, the more carbon dioxide was in the air.</p>
+  </div>
+  <div class="label bottom">
+    <p>Every mark is one dark pixel from the plot I was given. Its angle is its time of day, so the hours that rose highest gather on one side of the disc, day after day.</p>
+    <div class="key"><span>less</span><span class="ramp"></span><span>more</span></div>
+  </div>
+</div>
+<script>
+(function () {
+  // Dark pixels of the source plot (300 x 90): xxx yy d s, d = darkness 1..9, s = sub-pixel position 0..9
+  var RAW = "__DATA__";
+
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+  cv.width = W * dpr; cv.height = H * dpr;
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+  g.fillStyle = '#f2eee5'; g.fillRect(0, 0, W, H);
+
+  // Geometry found in the plot: data spans x = 2..297, one day = 4.83 px,
+  // and the daily high sits at phase 0.92 of x / P.
+  var P = 4.83, X0 = 1.5, PEAK = 0.92;
+  var CX = 660, CY = 402;
+  var R0 = 34, S = 5.0;     // inner radius, spacing per turn
+  var YB = 71, K = 0.95;    // daily floor in the plot, radial px per plot px
+
+  function ang(x) { return 2 * Math.PI * (x / P - PEAK) - Math.PI / 2; }
+  function base(x) { return R0 + S * (x - X0) / P; }
+
+  function colour(y, a) {
+    var t = Math.max(0, Math.min(1, (YB + 3 - y) / 32));
+    var c0 = [62, 82, 102], c1 = [107, 106, 106], c2 = [162, 72, 42], r, gg, b;
+    if (t < 0.5) { var u = t / 0.5; r = c0[0] + (c1[0] - c0[0]) * u; gg = c0[1] + (c1[1] - c0[1]) * u; b = c0[2] + (c1[2] - c0[2]) * u; }
+    else { var v = (t - 0.5) / 0.5; r = c1[0] + (c2[0] - c1[0]) * v; gg = c1[1] + (c2[1] - c1[1]) * v; b = c1[2] + (c2[2] - c1[2]) * v; }
+    return 'rgba(' + (r | 0) + ',' + (gg | 0) + ',' + (b | 0) + ',' + a.toFixed(3) + ')';
+  }
+
+  // faint track of each day's floor
+  g.beginPath();
+  for (var x = X0; x <= 297.5; x += 0.05) {
+    var rr = base(x), aa = ang(x);
+    var px = CX + rr * Math.cos(aa), py = CY + rr * Math.sin(aa);
+    if (x === X0) g.moveTo(px, py); else g.lineTo(px, py);
+  }
+  g.strokeStyle = 'rgba(120,110,95,0.22)'; g.lineWidth = 0.6; g.stroke();
+
+  // the record
+  var pts = [];
+  for (var i = 0; i + 7 <= RAW.length; i += 7) {
+    var x = +RAW.substr(i, 3), sub = +RAW.charAt(i + 6);
+    pts.push([x + (sub / 9 - 0.5), +RAW.substr(i + 3, 2), +RAW.charAt(i + 5)]);
+  }
+  // low values first, so the high excursions sit on top
+  pts.sort(function (p, q) { return q[1] - p[1]; });
+  g.lineCap = 'round';
+  pts.forEach(function (p) {
+    var x = p[0], y = p[1], d = p[2];
+    if (x < 1.5 || x > 297.5) return;
+    // a short dash laid along the turn
+    var off = K * (YB - y), rr = base(x) + off, aa = ang(x);
+    var qx = CX + rr * Math.cos(aa), qy = CY + rr * Math.sin(aa);
+    var tx = -Math.sin(aa), ty = Math.cos(aa), h = 2.6;
+    g.beginPath(); g.moveTo(qx - tx * h, qy - ty * h); g.lineTo(qx + tx * h, qy + ty * h);
+    g.strokeStyle = colour(y, 0.30 + 0.07 * d);
+    g.lineWidth = 0.8 + 0.16 * d;
+    g.stroke();
+  });
+
+  // start and end marks
+  function mark(x, label, dx, dy, align) {
+    var rr = base(x), aa = ang(x);
+    var mx = CX + rr * Math.cos(aa), my = CY + rr * Math.sin(aa);
+    g.fillStyle = '#2b2a27';
+    g.beginPath(); g.arc(mx, my, 2.2, 0, 2 * Math.PI); g.fill();
+    g.font = 'italic 12px Georgia, serif'; g.fillStyle = '#7d776c'; g.textAlign = align;
+    g.fillText(label, mx + dx, my + dy);
+  }
+  mark(X0, 'first hour', 6, 16, 'left');
+  mark(297.5, 'last hour', 8, 4, 'left');
+})();
+</script>
+</body>
+</html>

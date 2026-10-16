@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Solar Time, Moon Lines</title>
+<style>
+  html,body{margin:0;background:#f2eee5;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#1c2330;}
+  svg{display:block}
+</style>
+</head>
+<body>
+<svg id="w" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+// 1464 hourly values recovered from record.jpg: source pixel row x10 (smaller = higher value).
+const S=__DATA__;
+const NS="http://www.w3.org/2000/svg", svg=document.getElementById("w");
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+const PAPER="#f2eee5", INK="#1c2330", MOON="#6f86a6";
+el("rect",{x:0,y:0,width:1100,height:800,fill:PAPER});
+
+const DAYS=61, CW=17, X0=(1100-48*CW)/2, Y0=92, RH=10.2;
+const BASE=82, K=0.78;                       // bar height = (BASE - sourceRow) * K
+const val=h=>Math.max(0,(BASE-S[h]/10)*K);
+
+// moon lines: where crests of a 12.42 h lunar tide would fall, drifting ~50 min later each day
+const clip=el("clipPath",{id:"c"},el("defs",{}));
+el("rect",{x:X0,y:Y0-60,width:48*CW,height:DAYS*RH+60},clip);
+const gm=el("g",{"clip-path":"url(#c)"});
+const M2=12.4206;
+for(let k=-8;k<10;k++){
+  // crest at hour t=k*M2 + phase; in row r, local hour = t - 24r ; draw as line through all rows
+  const t0=k*M2+5;
+  // continuous line: local hour at row r = t0 + r*(Math.round(24/M2*... )) -> simpler: per row increment 24 - 2*M2 hours earlier
+  const drift=2*M2-24;                       // +0.84 h per day
+  el("line",{x1:X0+t0*CW,y1:Y0,x2:X0+(t0+drift*DAYS)*CW,y2:Y0+DAYS*RH,stroke:MOON,"stroke-width":1.3,"stroke-opacity":.9},gm);
+}
+
+// actogram, double-plotted: row r shows hours 24r .. 24r+47, each hour a tile shaded by its value
+const g=el("g",{});
+const LO=77, HI=46;                          // source rows mapped to palest / darkest
+function shade(y){
+  let f=(LO-y)/(LO-HI); f=Math.max(0,Math.min(1,f)); f=Math.pow(f,1.15);
+  const a=[236,229,214], b=[24,31,44];
+  return `rgb(${a.map((c,i)=>Math.round(c+(b[i]-c)*f)).join(",")})`;
+}
+for(let r=0;r<DAYS;r++){
+  for(let i=0;i<48;i++){
+    const h=24*r+i; if(h>=S.length)break;
+    const y=S[h]/10;
+    el("rect",{x:X0+i*CW,y:Y0+r*RH,width:CW-1,height:RH-1,fill:shade(y)},g);
+  }
+}
+// hours above the darkest shade: a fine red stroke rising out of the tile, length = how far beyond
+for(let r=0;r<DAYS;r++){
+  for(let i=0;i<48;i++){
+    const h=24*r+i; if(h>=S.length)break;
+    const y=S[h]/10; if(y>=37)continue;
+    const cx=X0+i*CW+(CW-1)/2, top=Y0+r*RH+1, len=4+(37-y)*0.9;
+    el("line",{x1:cx,y1:top,x2:cx,y2:top-len,stroke:"#a2452c","stroke-width":1.4,"stroke-linecap":"round"});
+    el("circle",{cx,cy:top-len,r:1.8,fill:"#a2452c"});
+  }
+}
+// faint baseline per row on top of nothing: day separators at left
+for(let r=0;r<DAYS;r+=7){
+  el("text",{x:X0-14,y:Y0+(r+1)*RH-1,"text-anchor":"end","font-size":10,fill:"#8a8576","font-style":"italic"}).textContent=(r+1);
+}
+el("text",{x:X0-14,y:Y0+DAYS*RH-1,"text-anchor":"end","font-size":10,fill:"#8a8576","font-style":"italic"}).textContent=DAYS;
+// hour ticks
+[0,12,24,36,48].forEach(i=>{el("text",{x:X0+i*CW,y:Y0-18,"text-anchor":"middle","font-size":10,fill:"#8a8576","font-style":"italic"}).textContent=i===0?"hour 0":i;});
+for(let i=0;i<=48;i+=6){
+  el("line",{x1:X0+i*CW,y1:Y0-14,x2:X0+i*CW,y2:Y0-8,stroke:"#8a8576","stroke-width":i%24?0.6:1.2});
+}
+el("line",{x1:X0+24*CW,y1:Y0-8,x2:X0+24*CW,y2:Y0+DAYS*RH+8,stroke:"#8a8576","stroke-width":0.6,"stroke-dasharray":"1 3"});
+
+svg.appendChild(gm);
+// title and caption
+el("text",{x:X0,y:42,"font-size":21,fill:INK,"letter-spacing":"0.5"}).textContent="Solar Time, Moon Lines";
+const cap=[
+ "1,464 hours of a harbour record, cut every 24 hours and stacked: each row is one day and the next, so nothing is lost at the fold.",
+ "Blue lines run where a lunar tide's high waters would fall, fifty minutes later each day. The record does not follow them; it stands upright, keeping the sun's hour."
+];
+cap.forEach((t,i)=>{el("text",{x:X0,y:Y0+DAYS*RH+40+i*18,"font-size":12.5,fill:"#4a4f58","font-style":"italic"}).textContent=t;});
+</script>
+</body>
+</html>

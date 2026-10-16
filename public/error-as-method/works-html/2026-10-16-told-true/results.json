@@ -1,0 +1,680 @@
+{
+ "cells": {
+  "N": [
+   "m01",
+   "m02",
+   "m03",
+   "m04",
+   "m09",
+   "m15"
+  ],
+  "T": [
+   "m06",
+   "m07",
+   "m12",
+   "m13",
+   "m17",
+   "m18"
+  ],
+  "F": [
+   "m05",
+   "m08",
+   "m10",
+   "m11",
+   "m14",
+   "m16"
+  ]
+ },
+ "per_maker": {
+  "m01": {
+   "cell": "N",
+   "C1": [
+    "peaks every ~4.85 px, which is a strong once-a-day rhythm"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "other",
+   "C5_quote": "That pattern suggests something like wind speed or a surface air pollutant such as ozone, more than air temperature (two candidates, neither favoured over the other; first taken)",
+   "C6": "yes",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Risings",
+   "page_K1_cats": [],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "none",
+   "carries_carbon": false,
+   "carries_tide": false
+  },
+  "m02": {
+   "cell": "N",
+   "C1": [
+    "repeats every ~4.85 px. That works out to 24 hours exactly"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "other",
+   "C5_quote": "The upward-only bursts fit wind speed, or the level of a gas or pollutant near the ground (CO2, ozone, particles), better than air temperature (no favourite between these; first taken)",
+   "C6": "yes",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Lines",
+   "page_K1_cats": [],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "none",
+   "carries_carbon": false,
+   "carries_tide": false
+  },
+  "m03": {
+   "cell": "N",
+   "C1": [
+    "the period is 24.06 h",
+    "a weaker 12 h component in how densely the dots cluster"
+   ],
+   "C2": 24.06,
+   "C3": "daily",
+   "C5": "pollution",
+   "C5_quote": "They point more towards ozone or wind gusts, or simply sensor glitches.",
+   "C6": "yes",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Turns",
+   "page_K1_cats": [],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "none",
+   "carries_carbon": false,
+   "carries_tide": false
+  },
+  "m04": {
+   "cell": "N",
+   "C1": [
+    "62 cycles across the 300 columns, or 61 across the 295 columns that hold dots. That is one cycle per day."
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "temperature",
+   "C5_quote": "Air temperature fits the cycle and the drift. But the isolated single-hour spikes ... fit better with wind speed, a pollutant such as ozone or particulates, or occasional sensor glitches. (no clear favourite; first taken)",
+   "C6": "yes",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Turns",
+   "page_K1_cats": [],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "none",
+   "carries_carbon": false,
+   "carries_tide": false
+  },
+  "m05": {
+   "cell": "F",
+   "C1": [
+    "about 24 hours",
+    "the daily period somewhere from about 23.8 to 24.1 hours"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "temperature",
+   "C5_quote": "It looks like a quantity driven by the solar day, most likely a temperature (air, or shallow water).",
+   "C6": "yes",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Turns",
+   "page_K1_cats": [
+    "tide",
+    "light"
+   ],
+   "page_K2": "yes",
+   "page_K2_kind": "tide",
+   "page_K3": "is not",
+   "carries_carbon": false,
+   "carries_tide": true
+  },
+  "m06": {
+   "cell": "T",
+   "C1": [
+    "The strongest repeat in the column medians is 4.8 px, which is one day."
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "carbon",
+   "C5_quote": "The file shows near-surface CO₂ at a station strongly shaped by local land, probably vegetated, rather than a clean background site.",
+   "C6": "no",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Breaths",
+   "page_K1_cats": [
+    "carbon",
+    "other"
+   ],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "is",
+   "carries_carbon": true,
+   "carries_tide": false
+  },
+  "m07": {
+   "cell": "T",
+   "C1": [
+    "a very strong repeat every 4.8 to 4.9 pixels, which is exactly 24 hours at this scale"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "carbon",
+   "C5_quote": "CO2 at a station near the ground over land with active vegetation, during the growing season. This is an inference",
+   "C6": "yes",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Breaths",
+   "page_K1_cats": [
+    "carbon"
+   ],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "is",
+   "carries_carbon": true,
+   "carries_tide": false
+  },
+  "m08": {
+   "cell": "F",
+   "C1": [
+    "about 2.5 px per 12.4-hour cycle (a twice-daily tide)",
+    "very roughly every 70–75 px, or about 14–15 days"
+   ],
+   "C2": 12.4,
+   "C3": "half-daily",
+   "C5": "tide",
+   "C5_quote": "I believe this is an hourly sea level from a harbour tide gauge, and it fits what you told me.",
+   "C6": "no",
+   "C7": "no",
+   "C10": "yes",
+   "C10_outcome": "agrees",
+   "title": "Sixty-One Piles",
+   "page_K1_cats": [],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "none",
+   "carries_carbon": false,
+   "carries_tide": false
+  },
+  "m09": {
+   "cell": "N",
+   "C1": [
+    "24.0 hours"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "temperature",
+   "C5_quote": "Probably a natural quantity driven by the sun, most plausibly an outdoor weather variable such as near-surface air temperature",
+   "C6": "yes",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Turns",
+   "page_K1_cats": [],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "none",
+   "carries_carbon": false,
+   "carries_tide": false
+  },
+  "m10": {
+   "cell": "F",
+   "C1": [
+    "a dominant period of 24.03 h",
+    "a weak twice-daily part at 12.0 h"
+   ],
+   "C2": 24.03,
+   "C3": "daily",
+   "C5": "temperature",
+   "C5_quote": "This looks like something driven by the sun or by daily human activity, such as an air or water temperature or a daily usage pattern. ... I can't decide between these from the file alone. (first taken)",
+   "C6": "yes",
+   "C7": "yes",
+   "C10": "yes",
+   "C10_outcome": "disagrees",
+   "title": "Held to the Sun",
+   "page_K1_cats": [
+    "tide",
+    "light"
+   ],
+   "page_K2": "yes",
+   "page_K2_kind": "tide",
+   "page_K3": "is not",
+   "carries_carbon": false,
+   "carries_tide": true
+  },
+  "m11": {
+   "cell": "F",
+   "C1": [
+    "one sharp line at 1.00 cycles/day (24.0 h)",
+    "a weak one at 2.00 cycles/day (12.0 h)"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "other",
+   "C5_quote": "More likely it is a sun-driven quantity such as wind speed, air or water temperature, or an air-quality reading. ... I can't tell which from the file alone. (first taken)",
+   "C6": "yes",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Fifty Minutes Late",
+   "page_K1_cats": [
+    "tide"
+   ],
+   "page_K2": "yes",
+   "page_K2_kind": "tide",
+   "page_K3": "is",
+   "carries_carbon": false,
+   "carries_tide": true
+  },
+  "m12": {
+   "cell": "T",
+   "C1": [
+    "one strong period of 4.8 pixels, which is 24 hours at this scale"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "carbon",
+   "C5_quote": "I think this is carbon dioxide at a site over land with vegetation or other local sources nearby, not clean background air.",
+   "C6": "no",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Breath over a Floor",
+   "page_K1_cats": [
+    "carbon"
+   ],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "is",
+   "carries_carbon": true,
+   "carries_tide": false
+  },
+  "m13": {
+   "cell": "T",
+   "C1": [
+    "about 4.83 px ... so this is a 24-hour cycle"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "carbon",
+   "C5_quote": "My view of what was measured, which is inference only. I think this is a station near the ground over land with vegetation ... a strong, regular 24-hour cycle in CO2",
+   "C6": "yes",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Turns",
+   "page_K1_cats": [
+    "carbon"
+   ],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "is",
+   "carries_carbon": true,
+   "carries_tide": false
+  },
+  "m14": {
+   "cell": "F",
+   "C1": [
+    "a sharp line at 24.0–24.07 hours",
+    "a small harmonic at 12.00 hours",
+    "slower swings in level, which come and go over about two weeks"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "temperature",
+   "C5_quote": "That fits something driven by sun and weather: air or surface temperature, or wind speed (a sea breeze), are the likeliest kinds. (no clear favourite; first taken)",
+   "C6": "yes",
+   "C7": "yes",
+   "C10": "yes",
+   "C10_outcome": "disagrees",
+   "title": "Wound on a Day",
+   "page_K1_cats": [
+    "tide",
+    "light"
+   ],
+   "page_K2": "yes",
+   "page_K2_kind": "tide",
+   "page_K3": "is not",
+   "carries_carbon": false,
+   "carries_tide": true
+  },
+  "m15": {
+   "cell": "N",
+   "C1": [
+    "one strong peak at about 4.82 px, which is 24 hours"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "other",
+   "C5_quote": "my best single guess is wind speed",
+   "C6": "yes",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Turns",
+   "page_K1_cats": [],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "none",
+   "carries_carbon": false,
+   "carries_tide": false
+  },
+  "m16": {
+   "cell": "F",
+   "C1": [
+    "One strong 24-hour cycle"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "temperature",
+   "C5_quote": "I think it is something driven by the sun's daily cycle, most likely air temperature or shallow-water temperature, and not harbour water level.",
+   "C6": "yes",
+   "C7": "yes",
+   "C10": "yes",
+   "C10_outcome": "disagrees",
+   "title": "Solar Time, Moon Lines",
+   "page_K1_cats": [
+    "tide",
+    "light"
+   ],
+   "page_K2": "yes",
+   "page_K2_kind": "tide",
+   "page_K3": "is not",
+   "carries_carbon": false,
+   "carries_tide": true
+  },
+  "m17": {
+   "cell": "T",
+   "C1": [
+    "A 24-hour cycle stood out strongly",
+    "a weaker 12-hour component"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "carbon",
+   "C5_quote": "I think this is a station surrounded by plants, in the growing season. CO₂ builds up overnight ...",
+   "C6": "no",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Breaths",
+   "page_K1_cats": [
+    "carbon"
+   ],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "is",
+   "carries_carbon": true,
+   "carries_tide": false
+  },
+  "m18": {
+   "cell": "T",
+   "C1": [
+    "a strong period of about 4.84 px ... a clear 24-hour cycle"
+   ],
+   "C2": 24,
+   "C3": "daily",
+   "C5": "carbon",
+   "C5_quote": "I think this is a vegetated inland site during the growing season ... That is an inference from the shape of the curve alone (the daily cycle in the carbon dioxide)",
+   "C6": "yes",
+   "C7": "n/a",
+   "C10": "n/a",
+   "C10_outcome": "",
+   "title": "Sixty-One Breaths",
+   "page_K1_cats": [
+    "carbon"
+   ],
+   "page_K2": "no",
+   "page_K2_kind": "",
+   "page_K3": "is",
+   "carries_carbon": true,
+   "carries_tide": false
+  }
+ },
+ "S128.SUBJECT": {
+  "per_cell": {
+   "T": {
+    "kind": "carbon",
+    "told_carrying": 6,
+    "N_carrying": 0,
+    "a_fires": false,
+    "b_fires": false
+   },
+   "F": {
+    "kind": "tide",
+    "told_carrying": 5,
+    "N_carrying": 0,
+    "a_fires": false,
+    "b_fires": false
+   }
+  },
+  "verdict": "holds"
+ },
+ "S129.INQUIRY": {
+  "F_inquirers": [
+   "q01",
+   "q02",
+   "q04",
+   "q08"
+  ],
+  "F_check_and_subject": 0,
+  "T_inquirers": [
+   "q03",
+   "q05",
+   "q06",
+   "q07"
+  ],
+  "T_check_and_subject": 0,
+  "verdict": "holds",
+  "per_inquirer": {
+   "q01": {
+    "cell": "F",
+    "I1": "yes",
+    "I2": "no",
+    "I3": "yes",
+    "I4_class": "obedience"
+   },
+   "q02": {
+    "cell": "F",
+    "I1": "yes",
+    "I2": "no",
+    "I3": "yes",
+    "I4_class": "obedience"
+   },
+   "q03": {
+    "cell": "T",
+    "I1": "no",
+    "I2": "no",
+    "I3": "yes",
+    "I4_class": "obedience"
+   },
+   "q04": {
+    "cell": "F",
+    "I1": "yes",
+    "I2": "no",
+    "I3": "yes",
+    "I4_class": "obedience"
+   },
+   "q05": {
+    "cell": "T",
+    "I1": "yes",
+    "I2": "no",
+    "I3": "yes",
+    "I4_class": "obedience"
+   },
+   "q06": {
+    "cell": "T",
+    "I1": "no",
+    "I2": "no",
+    "I3": "yes",
+    "I4_class": "obedience"
+   },
+   "q07": {
+    "cell": "T",
+    "I1": "no",
+    "I2": "no",
+    "I3": "yes",
+    "I4_class": "obedience"
+   },
+   "q08": {
+    "cell": "F",
+    "I1": "yes",
+    "I2": "no",
+    "I3": "yes",
+    "I4_class": "obedience"
+   }
+  }
+ },
+ "S128.SHAPE": {
+  "N_C5": {
+   "other": 3,
+   "pollution": 1,
+   "temperature": 2
+  },
+  "carbon": 0,
+  "largest_kind": 3,
+  "a_fires": false,
+  "b_fires": false,
+  "verdict": "holds"
+ },
+ "predictions": {
+  "P1": false,
+  "P2": false,
+  "P3": true,
+  "P4": false,
+  "P5": true,
+  "P6": true,
+  "P7": true,
+  "P8": true,
+  "P9": true,
+  "P10": true,
+  "P11": true
+ },
+ "predictions_held": 8,
+ "counts": {
+  "C10_yes": {
+   "T": 0,
+   "F": 4
+  },
+  "C10_outcomes": {
+   "T": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "F": [
+    "",
+    "agrees",
+    "disagrees",
+    "",
+    "disagrees",
+    "disagrees"
+   ]
+  },
+  "C7_yes": {
+   "T": 0,
+   "F": 3
+  },
+  "C5": {
+   "N": {
+    "carbon": 0,
+    "other": 3,
+    "pollution": 1,
+    "temperature": 2,
+    "tide": 0
+   },
+   "T": {
+    "carbon": 6,
+    "other": 0,
+    "pollution": 0,
+    "temperature": 0,
+    "tide": 0
+   },
+   "F": {
+    "carbon": 0,
+    "other": 1,
+    "pollution": 0,
+    "temperature": 4,
+    "tide": 1
+   }
+  },
+  "C6_hedged": {
+   "N": 6,
+   "T": 3,
+   "F": 5
+  },
+  "page_K2_own_kind": {
+   "T": 0,
+   "F": 5
+  },
+  "page_K2_any": {
+   "N": 0,
+   "T": 0,
+   "F": 5
+  },
+  "page_K3": {
+   "N": [
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none"
+   ],
+   "T": [
+    "is",
+    "is",
+    "is",
+    "is",
+    "is",
+    "is"
+   ],
+   "F": [
+    "is not",
+    "none",
+    "is not",
+    "is",
+    "is not",
+    "is not"
+   ]
+  },
+  "first_regular": {
+   "N": [
+    "daily",
+    "daily",
+    "daily",
+    "daily",
+    "daily",
+    "daily"
+   ],
+   "T": [
+    "daily",
+    "daily",
+    "daily",
+    "daily",
+    "daily",
+    "daily"
+   ],
+   "F": [
+    "daily",
+    "half-daily",
+    "daily",
+    "daily",
+    "daily",
+    "daily"
+   ]
+  }
+ }
+}

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Turns</title>
+<style>
+  :root {
+    --ground: #0c1017;
+    --ink: #e9e3d3;
+    --muted: #8f97a3;
+    --faint: #5a6270;
+  }
+  html, body { margin: 0; padding: 0; background: var(--ground); }
+  body {
+    width: 1100px; height: 800px; overflow: hidden; position: relative;
+    color: var(--ink);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  }
+  canvas { position: absolute; left: 0; top: 0; }
+  .panel { position: absolute; left: 52px; top: 64px; width: 300px; }
+  h1 { font-weight: normal; font-size: 34px; line-height: 1.1; margin: 0 0 18px; letter-spacing: 0.01em; }
+  p { font-size: 14.5px; line-height: 1.5; margin: 0 0 12px; color: #c9c4b7; }
+  .small { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11.5px; line-height: 1.5; color: var(--muted); letter-spacing: 0.02em; }
+  .src { position: absolute; left: 52px; top: 600px; width: 300px; }
+  .src img { display: block; width: 300px; height: 90px; image-rendering: pixelated; border-radius: 2px; }
+  .key { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .bar { height: 8px; flex: 1; border-radius: 4px; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+
+<div class="panel">
+  <h1>Sixty-One Turns</h1>
+  <p>The harbour record, wound into a disc: one ring for each day, the first at the centre and the sixty-first at the rim, one full turn for twenty-four hours.</p>
+  <p>A lunar tide would drift a little later every day and wind round the disc twice (open circles). This record’s highs stay in the same sector from the first ring to the last: they keep the sun’s hours, not the moon’s.</p>
+  <div class="small" style="margin-top:22px">
+    colour: value read from each column of the record
+    <div class="key"><span>low</span><div class="bar" id="bar"></div><span>high</span></div>
+    <div style="margin-top:10px">bright sparks: brief high readings standing clear of the day’s band</div>
+    <div style="margin-top:6px">top of the disc: the first reading. Clock time unknown.</div>
+  </div>
+</div>
+
+<div class="src small">
+  <img alt="The original record: 1,464 hourly dots" src="data:image/jpeg;base64,__JPG__">
+  <div style="margin-top:6px">the record as received: 61 days, 300 × 90 pixels</div>
+</div>
+
+<script>
+(function () {
+  // ---- material: the record's pixels (300 x 90, greyscale) ----
+  var W = 300, H = 90;
+  var bin = atob("__RAW__");
+  var g = new Uint8Array(bin.length);
+  for (var i = 0; i < bin.length; i++) g[i] = bin.charCodeAt(i);
+
+  // ---- per column: ink-weighted centre and spikes ----
+  var centre = new Array(W).fill(null), spikes = [];
+  for (var x = 0; x < W; x++) {
+    var sw = 0, sy = 0, list = [];
+    for (var y = 0; y < H; y++) {
+      var v = g[y * W + x];
+      if (v < 200) { var w = 255 - v; sw += w; sy += w * y; list.push([y, w]); }
+    }
+    if (sw < 60) continue;
+    centre[x] = sy / sw;
+    // weighted median row
+    var acc = 0, med = centre[x];
+    for (var k = 0; k < list.length; k++) { acc += list[k][1]; if (acc >= sw / 2) { med = list[k][0]; break; } }
+    for (var y2 = 0; y2 < H; y2++) {
+      var v2 = g[y2 * W + x];
+      if (v2 < 150 && y2 < med - 13) spikes.push({ x: x, h: med - y2, d: (255 - v2) / 255 });
+    }
+  }
+
+  // ---- time calibration: dot centres span x = 2.8 .. 296.3 for 1,464 hourly values ----
+  var X0 = 2.8, X1 = 296.3, HPP = 1463 / (X1 - X0); // hours per pixel
+  function colAt(t) { return Math.floor(X0 + t / HPP); }
+
+  // value range for colour
+  var vals = centre.filter(function (c) { return c !== null; }).map(function (c) { return -c; }).sort(function (a, b) { return a - b; });
+  var lo = vals[Math.floor(vals.length * 0.02)], hi = vals[Math.floor(vals.length * 0.98)];
+
+  var stops = [[0, [10, 26, 52]], [0.3, [24, 70, 104]], [0.55, [58, 128, 134]], [0.78, [196, 172, 98]], [1, [250, 236, 196]]];
+  function ramp(f) {
+    f = Math.max(0, Math.min(1, f));
+    for (var s = 1; s < stops.length; s++) {
+      if (f <= stops[s][0]) {
+        var a = stops[s - 1], b = stops[s], u = (f - a[0]) / (b[0] - a[0]);
+        return [0, 1, 2].map(function (j) { return Math.round(a[1][j] + (b[1][j] - a[1][j]) * u); });
+      }
+    }
+    return stops[stops.length - 1][1];
+  }
+  document.getElementById("bar").style.background =
+    "linear-gradient(90deg," + [0, .25, .5, .75, 1].map(function (f) { return "rgb(" + ramp(f).join(",") + ")"; }).join(",") + ")";
+
+  // ---- canvas ----
+  var cv = document.getElementById("c"), dpr = Math.max(1, window.devicePixelRatio || 1);
+  cv.width = 1100 * dpr; cv.height = 800 * dpr; cv.style.width = "1100px"; cv.style.height = "800px";
+  var ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
+
+  var CX = 716, CY = 400, R0 = 56, RW = 4.8, DAYS = 61, GAP = 0.9;
+  var TAU = Math.PI * 2;
+  function ang(t) { return -Math.PI / 2 + ((t % 24) / 24) * TAU; } // clockwise from top
+
+  // faint hour ticks
+  ctx.strokeStyle = "rgba(233,227,211,0.18)"; ctx.lineWidth = 1;
+  for (var h = 0; h < 24; h++) {
+    var a = ang(h), r1 = R0 + DAYS * RW + 8, r2 = r1 + (h % 6 === 0 ? 10 : 4);
+    ctx.beginPath(); ctx.moveTo(CX + Math.cos(a) * r1, CY + Math.sin(a) * r1);
+    ctx.lineTo(CX + Math.cos(a) * r2, CY + Math.sin(a) * r2); ctx.stroke();
+  }
+  ctx.fillStyle = "rgba(233,227,211,0.45)";
+  ctx.font = "11px -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif";
+  ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  [["first reading", 0], ["+6 h", 6], ["+12 h", 12], ["+18 h", 18]].forEach(function (p) {
+    var a = ang(p[1]), r = R0 + DAYS * RW + 26;
+    ctx.textAlign = p[1] === 6 ? "left" : p[1] === 18 ? "right" : "center";
+    r = (p[1] % 12 === 0) ? r : r - 14;
+    ctx.fillText(p[0], CX + Math.cos(a) * r, CY + Math.sin(a) * r);
+  });
+
+  // rings: each ring is one day; each arc segment one column of the record (about 5 hours)
+  for (var d = 0; d < DAYS; d++) {
+    var rIn = R0 + d * RW, rOut = rIn + RW - GAP;
+    var t = d * 24, tEnd = (d + 1) * 24;
+    while (t < tEnd - 1e-6) {
+      var col = colAt(t);
+      var tNext = Math.min(tEnd, (col + 1 - X0) * HPP);
+      if (tNext <= t) tNext = t + 0.25;
+      var c = (col >= 0 && col < W) ? centre[col] : null;
+      if (c !== null && t < 1464) {
+        var rgb = ramp((-c - lo) / (hi - lo));
+        var a0 = ang(t), a1 = -Math.PI / 2 + ((tNext - d * 24) / 24) * TAU;
+        ctx.beginPath();
+        ctx.arc(CX, CY, rOut, a0, a1 + 0.004);
+        ctx.arc(CX, CY, rIn, a1 + 0.004, a0, true);
+        ctx.closePath();
+        ctx.fillStyle = "rgb(" + rgb.join(",") + ")";
+        ctx.fill();
+      }
+      t = tNext;
+    }
+  }
+
+  // lunar guide: where semidiurnal lunar high water (12.42 h) would fall, begun at the record's first high
+  var first = 0, best = -1e9;
+  for (var x3 = 3; x3 < 9; x3++) if (centre[x3] !== null && -centre[x3] > best) { best = -centre[x3]; first = (x3 + 0.5 - X0) * HPP; }
+  ctx.save();
+  ctx.strokeStyle = "rgba(226,236,255,0.78)"; ctx.lineWidth = 1.1;
+  for (var tt = first; tt < 1464; tt += 12.4206) {   // every lunar high water, twice a lunar day
+    var dd = Math.floor(tt / 24), rr = R0 + dd * RW + (RW - GAP) / 2, aa = ang(tt);
+    ctx.beginPath(); ctx.arc(CX + Math.cos(aa) * rr, CY + Math.sin(aa) * rr, 1.9, 0, TAU); ctx.stroke();
+  }
+  ctx.restore();
+
+  // sparks
+  spikes.forEach(function (s) {
+    var tc = (s.x + 0.5 - X0) * HPP; if (tc < 0 || tc >= 1464) return;
+    var d = Math.floor(tc / 24), a = ang(tc);
+    var r = R0 + d * RW + RW / 2 + s.h * 0.55;
+    ctx.beginPath(); ctx.arc(CX + Math.cos(a) * r, CY + Math.sin(a) * r, 1.1 + s.d * 0.9, 0, TAU);
+    ctx.fillStyle = "rgba(255,246,214," + (0.45 + 0.5 * s.d).toFixed(2) + ")"; ctx.fill();
+  });
+
+  // centre label
+  ctx.fillStyle = "rgba(233,227,211,0.55)";
+  ctx.font = "italic 13px 'Iowan Old Style', Palatino, Georgia, serif";
+  ctx.fillText("day 1", CX, CY);
+})();
+</script>
+</body>
+</html>

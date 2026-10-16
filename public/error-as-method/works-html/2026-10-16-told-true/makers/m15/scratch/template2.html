@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Sixty-One Turns</title>
+<meta name="viewport" content="width=1100">
+<style>
+html,body{margin:0;height:100%;background:#ece6db;}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+canvas{display:block;}
+</style></head><body>
+<canvas id="c" width="1100" height="800" role="img" aria-label="A dark disc with sixty-one spiral grooves. One turn of the groove is one day of an hourly record; the groove brightens where the measured value is high, so the daily peaks line up into a pale wedge, and short bright strokes mark the rare hours that jumped far above their day."></canvas>
+<script>
+const D=__DATA__;
+const V=D.v,OUT=D.out,N=V.length;
+const W=1100,H=800,CX=550,CY=400;
+const cv=document.getElementById('c'),dpr=Math.max(1,Math.min(3,window.devicePixelRatio||1));
+cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+
+// paper
+g.fillStyle='#ece6db';g.fillRect(0,0,W,H);
+
+const RDISC=__RDISC__,ROUT=__ROUT__,RIN=__RIN__,RLAB=__RLAB__;
+const S=(ROUT-RIN)/(N/24),A=__A__;
+const sorted=V.slice().sort((a,b)=>a-b),q=f=>sorted[Math.floor(f*(N-1))];
+const LO=q(0.03),HI=q(0.985),MID=q(0.5);
+function val(t){const i=Math.max(0,Math.min(N-1,Math.floor(t))),j=Math.min(N-1,i+1),f=t-i;return V[i]*(1-f)+V[j]*f;}
+function pos(t,extra){const th=2*Math.PI*t/24-Math.PI/2,r=ROUT-S*t/24+A*(val(t)-MID)+(extra||0);return [CX+r*Math.cos(th),CY+r*Math.sin(th)];}
+
+// disc with soft shadow
+g.save();g.shadowColor='rgba(40,30,20,0.28)';g.shadowBlur=24;g.shadowOffsetY=6;
+g.fillStyle='#141312';g.beginPath();g.arc(CX,CY,RDISC,0,2*Math.PI);g.fill();g.restore();
+// rim and run-out
+g.strokeStyle='rgba(255,250,240,0.07)';g.lineWidth=1;
+g.beginPath();g.arc(CX,CY,RDISC-3,0,2*Math.PI);g.stroke();
+for(let r=RLAB+6;r<RIN-6;r+=3.2){g.strokeStyle='rgba(255,250,240,0.035)';g.beginPath();g.arc(CX,CY,r,0,2*Math.PI);g.stroke();}
+
+// the groove: one turn per day, outside in, brightness = value
+const STEP=0.125;
+g.lineCap='round';
+for(let t=0;t<N-1;t+=STEP){
+  const v=val(t+STEP/2),k=Math.max(0,Math.min(1,(v-LO)/(HI-LO)));
+  const e=Math.pow(k,1.35);
+  const [x1,y1]=pos(t),[x2,y2]=pos(t+STEP);
+  const c0=[46,44,42],c1=[246,236,214];
+  g.strokeStyle=`rgb(${c0.map((c,i)=>Math.round(c+(c1[i]-c)*e)).join(',')})`;
+  g.lineWidth=0.9+0.9*e;
+  g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();
+}
+// where the record begins: a small notch on the rim at twelve o'clock
+g.fillStyle='#8a7a66';g.beginPath();g.moveTo(CX,CY-RDISC-4);g.lineTo(CX-4,CY-RDISC-11);g.lineTo(CX+4,CY-RDISC-11);g.closePath();g.fill();
+
+// hours that leapt above their day: needle marks
+for(const o of OUT){
+  const t=o[0],ex=o[2];
+  const L=ex*__L__;
+  const [x1,y1]=pos(t,1),[x2,y2]=pos(t,L);
+  const gr=g.createLinearGradient(x1,y1,x2,y2);
+  gr.addColorStop(0,'rgba(255,246,226,0.95)');gr.addColorStop(1,'rgba(255,246,226,0.4)');
+  g.strokeStyle=gr;g.lineWidth=1.25;
+  g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();
+}
+
+// label
+g.fillStyle='#d9cdb8';g.beginPath();g.arc(CX,CY,RLAB,0,2*Math.PI);g.fill();
+g.strokeStyle='rgba(60,45,30,0.25)';g.lineWidth=0.8;g.beginPath();g.arc(CX,CY,RLAB-8,0,2*Math.PI);g.stroke();
+g.fillStyle='#ece6db';g.beginPath();g.arc(CX,CY,4.5,0,2*Math.PI);g.fill();
+g.fillStyle='#3b2e22';g.textAlign='center';
+g.font='500 15px Georgia, "Times New Roman", serif';
+g.fillText('SIXTY-ONE TURNS',CX,CY-38);
+g.font='italic 12px Georgia, "Times New Roman", serif';
+g.fillText('one turn, one day',CX,CY+34);
+g.fillText('1,464 hours, outside in',CX,CY+50);
+</script></body></html>

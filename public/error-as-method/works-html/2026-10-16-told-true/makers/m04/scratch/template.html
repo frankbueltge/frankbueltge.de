@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Turns</title>
+<style>
+  :root { --paper:#f3efe6; --ink:#1d1b18; --line:#8a3b22; --faint:#9a958a; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script>
+// The material: every dark pixel of the 300 x 90 source picture, column by column.
+// Each entry is yy (row, 0 = top) followed by one digit of ink weight (1-9).
+const RAW = "__DATA__";
+
+const W = 300, H = 90;
+const cols = RAW.split('|').map(s => {
+  const a = [];
+  for (let i = 0; i < s.length; i += 3) a.push([+s.slice(i, i + 2), +s[i + 2] / 9]);
+  return a;
+});
+
+// The 1,464 hourly values occupy columns 2..297 of the picture.
+const X0 = 2, X1 = 297, N = 1464;
+const hourAt = x => (x - X0) * (N - 1) / (X1 - X0);
+
+// Column value: ink-weighted mean height (0 = bottom of picture).
+const colVal = cols.map(c => {
+  let s = 0, w = 0;
+  for (const [y, k] of c) { s += (H - y) * k; w += k; }
+  return w ? s / w : null;
+});
+for (let x = 0; x < W; x++) if (colVal[x] === null) {
+  let l = x - 1; while (l >= 0 && colVal[l] === null) l--;
+  let r = x + 1; while (r < W && colVal[r] === null) r++;
+  colVal[x] = l < 0 ? colVal[r] : r >= W ? colVal[l] : (colVal[l] + colVal[r]) / 2;
+}
+
+// Hourly reconstruction: linear between column centres.
+const v = new Float64Array(N);
+for (let i = 0; i < N; i++) {
+  const x = X0 + i * (X1 - X0) / (N - 1);
+  const a = Math.floor(x), f = x - a;
+  v[i] = colVal[a] * (1 - f) + colVal[Math.min(W - 1, a + 1)] * f;
+}
+// Running 24-hour mean (the day's level).
+const dm = new Float64Array(N);
+for (let i = 0; i < N; i++) {
+  let s = 0, n = 0;
+  for (let j = i - 12; j < i + 12; j++) { const k = Math.max(0, Math.min(N - 1, j)); s += v[k]; n++; }
+  dm[i] = s / n;
+}
+// Growth: the radius accumulates the record, so a day with high values lays down a wide ring.
+const cum = new Float64Array(N + 1);
+for (let i = 0; i < N; i++) cum[i + 1] = cum[i] + v[i];
+
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+const dpr = Math.max(1, window.devicePixelRatio || 1);
+cv.width = 1100 * dpr; cv.height = 800 * dpr; cv.style.width = '1100px'; cv.style.height = '800px';
+g.scale(dpr, dpr);
+
+const CX = 590, CY = 400, R0 = 26, RMAX = 372, FIT = 386;
+const C = (RMAX - R0) / cum[N];
+const K = 0.0075;                     // how far the within-day swing departs from the ring, as a share of its radius
+const interp = (arr, t) => {
+  const a = Math.max(0, Math.min(arr.length - 1, Math.floor(t)));
+  const b = Math.min(arr.length - 1, a + 1), f = Math.max(0, Math.min(1, t - a));
+  return arr[a] * (1 - f) + arr[b] * f;
+};
+const base0 = t => R0 + C * interp(cum, t + 0.5);
+// scale the whole figure so that the farthest dot still lies inside the frame
+let far = 0;
+for (let x = 0; x < W; x++) {
+  const t = Math.max(0, Math.min(N - 1, hourAt(x)));
+  for (const [y] of cols[x]) far = Math.max(far, base0(t) * (1 + K * ((H - y) - interp(dm, t))));
+}
+const SC = FIT / far;
+const base = t => SC * base0(t);
+const ang = t => -Math.PI / 2 + 2 * Math.PI * t / 24;
+
+const css = getComputedStyle(document.documentElement);
+const PAPER = css.getPropertyValue('--paper').trim(), INK = css.getPropertyValue('--ink').trim();
+const LINE = css.getPropertyValue('--line').trim(), FAINT = css.getPropertyValue('--faint').trim();
+
+g.fillStyle = PAPER; g.fillRect(0, 0, 1100, 800);
+
+// 1. the bare spiral: where each day would sit with no daily swing at all
+g.strokeStyle = FAINT; g.globalAlpha = 0.35; g.lineWidth = 0.5;
+g.beginPath();
+for (let s = 0; s <= N * 4; s++) {
+  const t = s / 4, r = base(t), a = ang(t);
+  const px = CX + r * Math.cos(a), py = CY + r * Math.sin(a);
+  s ? g.lineTo(px, py) : g.moveTo(px, py);
+}
+g.stroke();
+
+// 2. the hourly line, swinging off the ring by its distance from the day's level
+g.globalAlpha = 0.75; g.strokeStyle = LINE; g.lineWidth = 0.8; g.lineJoin = 'round';
+g.beginPath();
+for (let s = 0; s <= (N - 1) * 4; s++) {
+  const t = s / 4, r = base(t) * (1 + K * (interp(v, t) - interp(dm, t))), a = ang(t);
+  const px = CX + r * Math.cos(a), py = CY + r * Math.sin(a);
+  s ? g.lineTo(px, py) : g.moveTo(px, py);
+}
+g.stroke();
+
+// 3. the dots themselves, each pixel of the source set at its own hour and height
+g.fillStyle = INK;
+for (let x = 0; x < W; x++) {
+  const t = Math.max(0, Math.min(N - 1, hourAt(x)));
+  for (const [y, k] of cols[x]) {
+    const r = base(t) * (1 + K * ((H - y) - interp(dm, t))), a = ang(t);
+    g.globalAlpha = 0.2 + 0.75 * k;
+    g.beginPath();
+    g.arc(CX + r * Math.cos(a), CY + r * Math.sin(a), 0.45 + 0.85 * k, 0, 2 * Math.PI);
+    g.fill();
+  }
+}
+
+// colophon
+g.globalAlpha = 1; g.fillStyle = INK;
+g.font = '15px Georgia, "Times New Roman", serif';
+g.fillText('Sixty-One Turns', 40, 742);
+g.fillStyle = FAINT; g.font = 'italic 12px Georgia, "Times New Roman", serif';
+g.fillText('1,464 hours wound one day to a turn, first day at the centre', 40, 762);
+</script>
+</body>
+</html>

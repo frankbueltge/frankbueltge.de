@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Fifty Minutes Late</title>
+<style>
+  :root { --paper:#f2eee5; --ink:#1c2230; }
+  html,body { margin:0; padding:0; background:var(--paper); }
+  body { width:1100px; height:800px; overflow:hidden; }
+  canvas { display:block; width:1100px; height:800px; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="Sixty-one days of an hourly record folded into rows of 48 hours"></canvas>
+<script>
+(function(){
+  // The record itself, carried inside the page: record.jpg, 300 x 90 px.
+  var SRC = "data:image/jpeg;base64,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";
+
+  // Reading of the image: 1,464 hourly values drawn from dot centre x=3.0 to x=295.3.
+  var X0 = 3.0, X1 = 295.3, N = 1464;
+  var HPP = (N - 1) / (X1 - X0);          // hours per image column (~5.0)
+  var DAYS = 61;
+
+  var W = 1100, H = 800;
+  var cv = document.getElementById('c');
+  var dpr = Math.max(1, window.devicePixelRatio || 1);
+  cv.width = W * dpr; cv.height = H * dpr;
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var PAPER = '#f2eee5', INK = [28, 34, 48], RUST = '#b4512b', GREY = '#8a8478';
+
+  // Layout
+  var PX0 = 92, PX1 = 1052;               // 48 hours across
+  var PW = PX1 - PX0, HOUR = PW / 48;
+  var BASE0 = 176, BASE1 = 742;           // baseline of day 1 ... day 61
+  var PITCH = (BASE1 - BASE0) / (DAYS - 1);
+  var S = 0.40;                           // vertical scale: image px -> page px
+  var YFLOOR = 88;                        // image row taken as the baseline
+
+  g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+  function text(s, x, y, font, color, align){
+    g.font = font; g.fillStyle = color; g.textAlign = align || 'left'; g.fillText(s, x, y);
+  }
+
+  var img = new Image();
+  img.onload = function(){
+    var oc = document.createElement('canvas'); oc.width = 300; oc.height = 90;
+    var og = oc.getContext('2d'); og.fillStyle = '#fff'; og.fillRect(0,0,300,90); og.drawImage(img, 0, 0);
+    var px = og.getImageData(0, 0, 300, 90).data;
+    // ink[x][y] in 0..1
+    var ink = [];
+    for (var x = 0; x < 300; x++){
+      var col = new Float32Array(90);
+      for (var y = 0; y < 90; y++){
+        var i = (y * 300 + x) * 4;
+        var L = 0.299*px[i] + 0.587*px[i+1] + 0.114*px[i+2];
+        col[y] = Math.max(0, Math.min(1, (255 - L - 14) / 190));
+      }
+      ink.push(col);
+    }
+    function inkAt(t, y){                 // t in hours from the first reading
+      if (t < -0.5 || t > N - 0.5) return 0;
+      var fx = X0 + t / HPP, a = Math.floor(fx), f = fx - a;
+      var u = (a >= 0 && a < 300) ? ink[a][y] : 0, v = (a+1 >= 0 && a+1 < 300) ? ink[a+1][y] : 0;
+      return u * (1 - f) + v * f;
+    }
+
+    // faint hour grid
+    g.lineWidth = 1;
+    for (var h = 0; h <= 48; h += 6){
+      var xx = Math.round(PX0 + h * HOUR) + 0.5;
+      g.strokeStyle = (h % 24 === 0) ? 'rgba(28,34,48,0.16)' : 'rgba(28,34,48,0.06)';
+      g.beginPath(); g.moveTo(xx, BASE0 - 40); g.lineTo(xx, BASE1 + 8); g.stroke();
+    }
+
+    // one number per image column: the ink-weighted height of its dots
+    // (each column holds about five hourly readings)
+    var lev = new Float32Array(300), has = new Uint8Array(300);
+    for (var x2 = 0; x2 < 300; x2++){
+      var sw = 0, sy = 0;
+      for (var y2 = 0; y2 < 90; y2++){ sw += ink[x2][y2]; sy += ink[x2][y2] * y2; }
+      if (sw > 0.8){ lev[x2] = YFLOOR - sy / sw; has[x2] = 1; }
+    }
+    // take away each moment's own day-long mean, so what is left is the shape of the day
+    var raw = Float32Array.from(lev), HALF = 12 / HPP;   // +-12 h in columns
+    for (var x3 = 0; x3 < 300; x3++){
+      if (!has[x3]) continue;
+      var sum = 0, wsum = 0;
+      for (var x4 = Math.floor(x3 - HALF - 1); x4 <= Math.ceil(x3 + HALF + 1); x4++){
+        if (x4 < 0 || x4 >= 300 || !has[x4]) continue;
+        var w = Math.max(0, Math.min(1, HALF + 0.5 - Math.abs(x4 - x3)));
+        sum += w * raw[x4]; wsum += w;
+      }
+      lev[x3] = raw[x3] - sum / wsum;
+    }
+    var vals = []; for (var q = 0; q < 300; q++) if (has[q]) vals.push(lev[q]);
+    vals.sort(function(a,b){return a-b;});
+    var LO = vals[Math.floor(vals.length*0.04)], HI = vals[Math.floor(vals.length*0.97)];
+    function levAt(t){
+      if (t < -0.5 || t > N - 0.5) return null;
+      var fx = X0 + t / HPP, a = Math.floor(fx), f = fx - a;
+      if (!has[a]) return has[a+1] ? lev[a+1] : null;
+      if (!has[a+1]) return lev[a];
+      return lev[a] * (1 - f) + lev[a+1] * f;
+    }
+    // paper -> ink, eased so the middle of the range stays readable
+    var P = [242,238,229], D = [20,26,40];
+    function tone(v){
+      var u = Math.max(0, Math.min(1, (v - LO) / (HI - LO)));
+      u = Math.pow(u, 1.15);
+      return 'rgb(' + Math.round(P[0]+(D[0]-P[0])*u) + ',' + Math.round(P[1]+(D[1]-P[1])*u) + ',' + Math.round(P[2]+(D[2]-P[2])*u) + ')';
+    }
+    var R = 4, CELL = HOUR / R, ROWH = PITCH - 1.6;
+    for (var k = 0; k < DAYS; k++){
+      var top = BASE0 + k * PITCH - ROWH;
+      for (var s = 0; s < 48 * R; s++){
+        var v = levAt(24 * k + (s + 0.5) / R);
+        if (v === null) continue;
+        g.fillStyle = tone(v);
+        g.fillRect(PX0 + s * CELL, top, CELL + 0.6, ROWH);
+      }
+    }
+
+    // where a lunar high water would walk: 24 h 50.5 min between crests,
+    // started at the crest of the record's first ten days (hour 7.2)
+    var H0 = 7.2, LAG = 24 * (1/0.9661368 - 1);   // 0.84 h a day later
+    g.strokeStyle = RUST; g.lineWidth = 1.3; g.globalAlpha = 0.85; g.lineCap = 'round';
+    for (var off = -48; off <= 48; off += 24){
+      g.beginPath(); var pen = false;
+      for (var k2 = 0; k2 < DAYS; k2++){
+        var hh = H0 + off + LAG * k2;
+        var yb = BASE0 + k2 * PITCH - PITCH/2;
+        if (hh < 0 || hh > 48){ pen = false; continue; }
+        var xh = PX0 + hh * HOUR;
+        if (!pen){ g.moveTo(xh, yb); pen = true; } else g.lineTo(xh, yb);
+      }
+      g.stroke();
+    }
+    g.globalAlpha = 1;
+
+    // labels
+    var SANS = '11px "Helvetica Neue", Helvetica, Arial, sans-serif';
+    for (var h2 = 0; h2 <= 48; h2 += 6){
+      text(String(h2 % 24 === 0 && h2 > 0 ? (h2 === 24 ? '24' : '48') : h2), PX0 + h2 * HOUR, BASE1 + 22, SANS, GREY, 'center');
+    }
+    text('hours from the start of each day of the record', PX0 + PW/2, BASE1 + 40, SANS, GREY, 'center');
+    [1, 10, 20, 30, 40, 50, 61].forEach(function(dn){
+      text('day ' + dn, PX0 - 14, BASE0 + (dn - 1) * PITCH - 1, SANS, GREY, 'right');
+    });
+
+    text('Fifty Minutes Late', 92, 60, 'italic 34px Georgia, "Times New Roman", serif', '#1c2230');
+    text('Sixty-one days of an hourly harbour record, cut into days and laid one under the next (each row shows its day, then the following one).',
+         93, 92, '13px Georgia, "Times New Roman", serif', '#3b3f48');
+    text('Darker means higher than the surrounding day. High water driven by the moon would arrive fifty minutes later each day, along the red line.',
+         93, 111, '13px Georgia, "Times New Roman", serif', '#3b3f48');
+    g.fillStyle = RUST; g.fillRect(PX1 - 160, 104, 18, 1.6);
+    text('lunar day, 24 h 50 min', PX1 - 136, 108, SANS, RUST);
+  };
+  img.src = SRC;
+})();
+</script>
+</body>
+</html>

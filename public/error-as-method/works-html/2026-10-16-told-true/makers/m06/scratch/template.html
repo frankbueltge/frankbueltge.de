@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Breaths</title>
+<style>
+  :root { --paper:#f3f0e8; --ink:#25222b; --soft:#7b7770; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden;
+         font-family: Georgia, "Times New Roman", serif; color:var(--ink); }
+  .frame { position:relative; width:1100px; height:800px; flex:none; }
+  canvas { position:absolute; left:0; top:0; }
+  .text { position:absolute; left:830px; top:96px; width:230px; }
+  h1 { font-weight:normal; font-size:30px; line-height:1.15; margin:0 0 22px; letter-spacing:.01em; }
+  p { font-size:13.5px; line-height:1.6; margin:0 0 14px; color:#4a4650; }
+  .key { position:absolute; left:830px; top:610px; width:230px; font-size:12px; color:var(--soft); }
+  .bar { height:10px; margin:6px 0 4px; border-radius:1px; }
+  .ends { display:flex; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <canvas id="c" width="1100" height="800"></canvas>
+  <div class="text">
+    <h1>Sixty-One Breaths</h1>
+    <p>Carbon dioxide in the air at one station, hour by hour for sixty-one days, wound into a spiral. The first hour is at the centre, straight up. Each turn clockwise is one day, so the same hour of every day lies along the same spoke.</p>
+    <p>Once a day the level climbs and falls back. Wound so that every turn is one day, that rhythm lines up: the disc darkens on one side and pales on the other, from the first day to the last. The rings across it are slower weather, whole days when the air ran richer or thinner. Black points mark the hours when the level jumped far above its neighbours.</p>
+    <p>The record carries no clock, so the spiral starts at its own first hour, not at midnight.</p>
+  </div>
+  <div class="key">
+    less carbon dioxide &rarr; more
+    <div class="bar" id="bar"></div>
+    <div class="ends"><span>day 1 at the centre</span><span>day 61 at the rim</span></div>
+  </div>
+</div>
+<script>
+const DATA = __DATA__;
+const q = DATA.q, spikes = DATA.spikes, N = q.length;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const dpr = Math.max(1, window.devicePixelRatio || 1);
+cv.width = 1100*dpr; cv.height = 800*dpr; cv.style.width='1100px'; cv.style.height='800px';
+ctx.scale(dpr,dpr);
+
+// palette: pale air drawn down -> dense air
+const stops = [[0,[236,236,224]],[0.25,[196,208,190]],[0.5,[128,152,146]],[0.75,[70,82,104]],[1,[33,27,45]]];
+function col(t){ t=Math.max(0,Math.min(1,t));
+  for(let i=1;i<stops.length;i++){ if(t<=stops[i][0]){ const a=stops[i-1],b=stops[i],f=(t-a[0])/(b[0]-a[0]);
+    return `rgb(${a[1].map((v,k)=>Math.round(v+(b[1][k]-v)*f)).join(',')})`; } } }
+document.getElementById('bar').style.background =
+  `linear-gradient(90deg, ${[0,.25,.5,.75,1].map(col).join(',')})`;
+
+const cx=405, cy=400, r0=40, R=352, turns=N/24;
+const pitch=(R-r0)/turns;               // radial distance between days
+const rad = h => r0 + pitch*h/24;       // centre-line radius at hour h
+const ang = h => -Math.PI/2 + 2*Math.PI*(h/24);
+function val(h){ const i=Math.floor(h), f=h-i; const a=q[Math.max(0,Math.min(N-1,i))], b=q[Math.max(0,Math.min(N-1,i+1))]; return (a+(b-a)*f)/255; }
+
+// faint guide: 24 spokes
+ctx.strokeStyle='rgba(60,55,65,0.07)'; ctx.lineWidth=1;
+for(let k=0;k<24;k++){ const a=ang(k); ctx.beginPath(); ctx.moveTo(cx+(r0-14)*Math.cos(a),cy+(r0-14)*Math.sin(a)); ctx.lineTo(cx+(R+16)*Math.cos(a),cy+(R+16)*Math.sin(a)); ctx.stroke(); }
+
+// the band: hour by hour, in small steps, each step a filled quad between two spiral offsets
+const SUB=8, half=pitch*0.5;
+for(let s=0;s<N*SUB;s++){
+  const h0=s/SUB, h1=(s+1)/SUB+0.02;
+  const a0=ang(h0), a1=ang(h1), ri0=rad(h0)-half, ro0=rad(h0)+half, ri1=rad(h1)-half, ro1=rad(h1)+half;
+  ctx.fillStyle=col(val(h0+0.5/SUB));
+  ctx.beginPath();
+  ctx.moveTo(cx+ri0*Math.cos(a0),cy+ri0*Math.sin(a0));
+  ctx.lineTo(cx+ro0*Math.cos(a0),cy+ro0*Math.sin(a0));
+  ctx.lineTo(cx+ro1*Math.cos(a1),cy+ro1*Math.sin(a1));
+  ctx.lineTo(cx+ri1*Math.cos(a1),cy+ri1*Math.sin(a1));
+  ctx.closePath(); ctx.fill();
+}
+
+// the jumps: dots sized by how far above the ordinary range they reach
+for(const [h,v] of spikes){
+  const a=ang(h), r=rad(h), s=1.3+Math.max(0,v-0.8)*1.6;
+  ctx.fillStyle='#120e18';
+  ctx.beginPath(); ctx.arc(cx+r*Math.cos(a), cy+r*Math.sin(a), Math.min(s,4.2), 0, 2*Math.PI); ctx.fill();
+}
+
+// start and end marks
+ctx.fillStyle='#7b7770'; ctx.font='italic 12px Georgia, serif'; ctx.textAlign='center';
+ctx.fillText("first hour", cx, cy-r0+16);
+const ae=ang(N), re=rad(N);
+ctx.strokeStyle='#7b7770'; ctx.lineWidth=1;
+ctx.beginPath(); ctx.moveTo(cx+(re+half+3)*Math.cos(ae),cy+(re+half+3)*Math.sin(ae)); ctx.lineTo(cx+(re+half+12)*Math.cos(ae),cy+(re+half+12)*Math.sin(ae)); ctx.stroke();
+ctx.textAlign='left'; ctx.fillText('hour 1,464', cx+(re+half+16)*Math.cos(ae)+2, cy+(re+half+16)*Math.sin(ae)+4);
+</script>
+</body>
+</html>

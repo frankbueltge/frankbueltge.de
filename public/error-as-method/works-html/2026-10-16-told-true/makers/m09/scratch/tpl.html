@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Sixty-One Turns</title>
+<meta name="viewport" content="width=1100">
+<style>
+html,body{margin:0;background:#efe9de;}
+body{width:1100px;height:800px;overflow:hidden;position:relative;font-family:Georgia,'Times New Roman',serif;color:#2a2622}
+canvas{display:block}
+.cap{position:absolute;left:62px;bottom:24px;font-size:13px;letter-spacing:.04em;color:#7a7166}
+.cap b{font-weight:normal;color:#2a2622;font-size:15px;letter-spacing:.1em;margin-right:16px}
+</style></head><body>
+<canvas id="c"></canvas>
+<div class="cap"><b>Sixty-One Turns</b>one hourly record cut every twenty-four hours, each day laid beside the next</div>
+<script>
+/*DATA*/
+const cv=document.getElementById('c'),g=cv.getContext('2d');
+const S=window.devicePixelRatio||1;cv.width=1100*S;cv.height=800*S;cv.style.width='1100px';cv.style.height='800px';g.scale(S,S);
+const L=62,R=1038,TOP=82,BOT=736,DAYS=61,N=1464;
+const HX=(R-L)/48, RH=(BOT-TOP)/DAYS;
+// unpack dots: t (hour), v (height in source pixels), b (ink strength)
+const T=[],V=[],B=[];
+for(let i=0;i<D.length;i+=3){T.push(Math.max(0,Math.min(N-1,D[i])));V.push(D[i+1]);B.push(D[i+2]);}
+// hourly estimate: ink-weighted local mean, window matched to the source's ~5 h per pixel column
+const SIG=2.2, est=new Float32Array(N);
+for(let h=0;h<N;h++){let sw=0,sv=0;
+  for(let j=0;j<T.length;j++){const dt=T[j]-h; if(dt>-9&&dt<9){const w=Math.exp(-dt*dt/(2*SIG*SIG))*B[j];sw+=w;sv+=w*V[j];}}
+  est[h]=sw?sv/sw:NaN;}
+for(let h=0;h<N;h++) if(isNaN(est[h])) est[h]=est[h-1]||est[h+1];
+const sorted=Array.from(est).sort((a,b)=>a-b), LO=sorted[Math.floor(N*0.30)], HI=sorted[Math.floor(N*0.995)];
+const FULL=RH*1.7;
+const hgt=v=>Math.max(0.7,(v-LO)/(HI-LO)*FULL);
+// faint scaffolding
+g.strokeStyle='rgba(70,58,44,0.07)';g.lineWidth=0.6;
+for(let d=0;d<=DAYS;d++){const y=TOP+d*RH+0.5;g.beginPath();g.moveTo(L,y);g.lineTo(R,y);g.stroke();}
+g.fillStyle='rgba(70,58,44,0.45)';
+for(let h=0;h<=48;h+=6) g.fillRect(L+h*HX-0.5,TOP-RH*2-12,1,h%24?4:9);
+g.fillStyle='rgba(70,58,44,0.18)';g.fillRect(L+24*HX-0.5,TOP-RH*2-12,1,BOT-TOP+RH*2+18);
+// bars: every hour drawn in its own day's row (left) and again at the right end of the row above
+function bar(h,row,off,alpha){
+  const x=L+(off+h%24)*HX, base=TOP+(row+1)*RH, hh=hgt(est[h]);
+  g.fillStyle='rgba(26,28,40,'+alpha+')';
+  g.fillRect(x+1.6,base-hh,HX-3.2,hh);
+}
+for(let row=0;row<DAYS;row++){
+  for(let k=0;k<24;k++){
+    bar(row*24+k,row,0,0.8);
+    if(row+1<DAYS) bar((row+1)*24+k,row,24,0.8);
+  }
+}
+// rare excursions: individual marks standing far above their hour's estimate
+g.strokeStyle='#a5432a';g.fillStyle='#a5432a';g.lineWidth=1.1;
+for(let j=0;j<T.length;j++){
+  const h=Math.round(T[j]); if(V[j]-est[h]<24) continue;
+  const row=Math.floor(h/24);
+  for(const [r,off] of [[row,0],[row-1,24]]){ if(r<0||r>=DAYS) continue;
+    const x=L+(off+(T[j]-row*24))*HX, base=TOP+(r+1)*RH, y=base-(V[j]-LO)/(HI-LO)*FULL;
+    const y0=base-hgt(est[h]);
+    g.beginPath();g.moveTo(x,y0);g.lineTo(x,y);g.stroke();
+    g.beginPath();g.arc(x,y,1.9,0,7);g.fill();
+  }
+}
+</script></body></html>

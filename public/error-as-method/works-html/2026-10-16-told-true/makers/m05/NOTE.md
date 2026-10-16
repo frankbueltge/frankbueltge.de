@@ -1,0 +1,3 @@
+# Sixty-One Turns
+
+The work winds the 61-day record into a disc, one ring per day from the centre out, so a full turn is 24 hours. Colour is the level read from each column of the source picture, and pale sparks mark the brief high readings that stand clear of the day's band. I chose the dial because it shows the one thing the strip hides: what clock the record keeps. A lunar tide's high water comes about 50 minutes later each day, so on this dial it would wind round the disc twice. Open circles mark that path, starting from the record's first high. The record's own highs stay in the same pale sector from the first ring to the last. Laid against the moon's path, the picture shows a daily rhythm that keeps the sun's hours, not the moon's.

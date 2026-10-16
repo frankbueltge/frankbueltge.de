@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Sixty-One Turns</title>
+<meta name="viewport" content="width=1100">
+<style>
+html,body{margin:0;height:100%;background:#f3efe6;}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+canvas{display:block;}
+</style></head><body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script>
+const RAW="__DATA__";
+const pts=RAW.split(';').map(s=>{const a=s.split(',').map(Number);return {x:a[0],y:a[1],m:a[2]};});
+const X0=2.5,X1=296.0,N=1464,pxh=(X1-X0)/(N-1);
+const cv=document.getElementById('c'),dpr=Math.max(1,window.devicePixelRatio||1);
+cv.width=1100*dpr;cv.height=800*dpr;cv.style.width='1100px';cv.style.height='800px';
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+g.fillStyle='#f3efe6';g.fillRect(0,0,1100,800);
+const CX=__CX__,CY=400,R0=__R0__,S=__S__,A=__A__,YMID=60;
+function pos(t,v){const turn=t/24,th=2*Math.PI*turn-Math.PI/2,r=R0+S*turn+A*v;return [CX+r*Math.cos(th),CY+r*Math.sin(th),r,th];}
+// faint thread: the spiral at the median level
+g.strokeStyle='rgba(60,50,40,0.18)';g.lineWidth=0.6;g.beginPath();
+for(let t=0;t<=1464;t+=0.25){const [x,y]=pos(t,0);t?g.lineTo(x,y):g.moveTo(x,y);}g.stroke();
+for(const p of pts){
+  const t=(p.x-X0)/pxh,v=YMID-p.y;
+  const [x,y]=pos(t,v);
+  const rad=0.55+Math.sqrt(p.m)*0.17;
+  const k=Math.max(0,Math.min(1,(v+16)/40));
+  g.fillStyle=`rgba(${Math.round(120-100*k)},${Math.round(110-90*k)},${Math.round(100-80*k)},${0.45+0.5*k})`;
+  g.beginPath();g.arc(x,y,rad,0,7);g.fill();
+}
+</script></body></html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sixty-One Turns</title>
+<style>
+:root{--paper:#f3efe6;--ink:#1c1a17;--faint:#d9d2c3;--note:#8a8274}
+html,body{margin:0;height:100%;background:var(--paper)}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden}
+canvas{display:block}
+.cap{position:fixed;left:28px;bottom:24px;font:11px/1.5 Georgia,"Times New Roman",serif;color:var(--note);max-width:260px;letter-spacing:.01em}
+.cap b{display:block;font-weight:normal;font-size:14px;color:var(--ink);margin-bottom:3px;letter-spacing:.02em}
+</style></head><body>
+<canvas id="c" aria-label="An hourly record of 61 days wound into a spiral, one turn per day, each hour a dot pushed outward by its value."></canvas>
+<div class="cap"><b>Sixty-One Turns</b>1,464 hours, wound from the centre outward, one turn to a day. Each hour is held for its hour; the weight of the line is the size of the value.</div>
+<script>
+const V="%%DATA%%".split(",").map(n=>n/1000);
+const W=1100,H=800,cv=document.getElementById("c"),dpr=Math.max(1,window.devicePixelRatio||1);
+cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+"px";cv.style.height=H+"px";
+const g=cv.getContext("2d");g.scale(dpr,dpr);
+const css=k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+g.fillStyle=css("--paper");g.fillRect(0,0,W,H);
+const N=V.length,cx=W/2,cy=H/2,R0=%%R0%%,S=%%S%%,A=%%A%%;
+const mean=V.reduce((a,b)=>a+b,0)/N;
+const pos=(t,v)=>{const th=-Math.PI/2+2*Math.PI*t/24,r=R0+S*t/24+A*(v-mean);return[cx+r*Math.cos(th),cy+r*Math.sin(th)]};
+const ang=t=>-Math.PI/2+2*Math.PI*t/24, rad=t=>R0+S*t/24;
+// the bare coil: one turn per day
+g.strokeStyle=css("--faint");g.lineWidth=0.5;g.beginPath();
+for(let t=0;t<=N-1;t+=0.2){const x=cx+rad(t)*Math.cos(ang(t)),y=cy+rad(t)*Math.sin(ang(t));t?g.lineTo(x,y):g.moveTo(x,y)}g.stroke();
+// each hour an arc held for its hour; its weight is the value
+g.strokeStyle=css("--ink");g.lineCap="butt";
+for(let i=0;i<N;i++){g.lineWidth=0.35+%%DOT%%*V[i];g.beginPath();
+ g.arc(cx,cy,rad(i),ang(i-0.5),ang(i+0.5)+0.002);g.stroke()}
+g.globalAlpha=1;
+</script></body></html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Lines</title>
+<style>
+  :root { --paper:#f3efe6; --ink:#1d2430; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+// Material: for each of the 296 inked pixel columns of the original 300x90 picture
+// (x = 2..297), the ink-weighted centre, the topmost and the lowest inked row.
+// Each column holds about five consecutive hourly dots; one day is 296/61 = 4.85 columns.
+const COLS = __DATA__;
+// first hourly dot centred at x~3.2, last at ~296.8: one hour = 0.2007 px, one day = 4.816 px
+const C0 = 2, A0 = 3.1, HOUR = (296.8-3.2)/1463, P = 24*HOUR, YREF = 62;
+
+const W = 1100, H = 800;
+const cv = document.getElementById('c');
+const dpr = Math.max(1, window.devicePixelRatio || 1);
+cv.width = W*dpr; cv.height = H*dpr; cv.style.width = W+'px'; cv.style.height = H+'px';
+const g = cv.getContext('2d'); g.scale(dpr, dpr);
+
+const PAPER = '#f3efe6', INK = '29,36,48', RED = '178,58,38';
+g.fillStyle = PAPER; g.fillRect(0,0,W,H);
+
+const L = 150, R = 1010, TOP = 112, ROW = 10.4, S = 1.15;
+const span = R - L;
+
+// Catmull-Rom through points [[x,y],...], evaluated densely
+function curve(pts){
+  const o=[];
+  for(let i=0;i<pts.length-1;i++){
+    const p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(pts.length-1,i+2)];
+    for(let k=0;k<12;k++){
+      const t=k/12,t2=t*t,t3=t2*t;
+      const f=(a,b,c,d)=>0.5*((2*b)+(-a+c)*t+(2*a-5*b+4*c-d)*t2+(-a+3*b-3*c+d)*t3);
+      o.push([f(p0[0],p1[0],p2[0],p3[0]), f(p0[1],p1[1],p2[1],p3[1])]);
+    }
+  }
+  o.push(pts[pts.length-1]);
+  return o;
+}
+
+// faint hour guides: the record's own clock, counted from its first value
+g.strokeStyle = 'rgba('+INK+',0.07)'; g.lineWidth = 1;
+for(let h=0;h<=24;h+=6){
+  const x = L + span*h/24 + 0.5;
+  g.beginPath(); g.moveTo(x, TOP-22); g.lineTo(x, TOP + 60*ROW + 30); g.stroke();
+}
+
+for(let d=0; d<61; d++){
+  const a = A0 + d*P, b = a + P;
+  const base = TOP + d*ROW;
+  const pts = [];
+  for(let i=0;i<COLS.length;i++){
+    const xc = C0 + i + 0.5;
+    if (xc < a - 2.2 || xc > b + 2.2) continue;
+    const [c,t,bt] = COLS[i];
+    const X = L + span*(xc - a)/P;
+    pts.push({X, c: base + (c-YREF)*S, t: base + (t-0.5-YREF)*S, b: base + (bt+0.5-YREF)*S, raw:[c,t,bt]});
+  }
+  const ct = curve(pts.map(p=>[p.X,p.c]));
+  const tp = curve(pts.map(p=>[p.X,p.t]));
+  const bt = curve(pts.map(p=>[p.X,p.b]));
+
+  g.save();
+  g.beginPath(); g.rect(L, 0, span, H); g.clip();
+
+  // the spread of the hours inside each column, as a pale wash
+  g.beginPath();
+  tp.forEach(([x,y],k)=> k?g.lineTo(x,y):g.moveTo(x,y));
+  for(let k=bt.length-1;k>=0;k--) g.lineTo(bt[k][0],bt[k][1]);
+  g.closePath();
+  g.fillStyle = 'rgba('+INK+',0.06)'; g.fill();
+
+  // the day's line
+  g.beginPath();
+  ct.forEach(([x,y],k)=> k?g.lineTo(x,y):g.moveTo(x,y));
+  g.strokeStyle = 'rgba('+INK+',0.82)'; g.lineWidth = 1.05; g.lineJoin='round'; g.stroke();
+
+  // the columns actually present in the picture: the only true samples
+  for(const p of pts){
+    g.beginPath(); g.arc(p.X, p.c, 1.25, 0, Math.PI*2);
+    g.fillStyle = 'rgba('+INK+',0.9)'; g.fill();
+    // a brief rise far above the rest of its column: drawn as a red stroke
+    if (p.raw[1] < p.raw[0] - 15){
+      g.beginPath(); g.moveTo(p.X, p.c); g.lineTo(p.X, p.t);
+      g.strokeStyle = 'rgba('+RED+',0.85)'; g.lineWidth = 1.1; g.stroke();
+      g.beginPath(); g.arc(p.X, p.t, 1.6, 0, Math.PI*2);
+      g.fillStyle = 'rgba('+RED+',0.95)'; g.fill();
+    }
+  }
+  g.restore();
+
+  // day numbers, sparsely
+  if (d===0 || (d+1)%10===0){
+    g.fillStyle = 'rgba('+INK+',0.5)';
+    g.font = '10px Georgia, "Times New Roman", serif';
+    g.textAlign = 'right'; g.textBaseline = 'middle';
+    g.fillText(String(d+1), L-16, base);
+  }
+}
+
+// text
+g.fillStyle = 'rgba('+INK+',0.88)';
+g.font = 'italic 22px Georgia, "Times New Roman", serif';
+g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+g.fillText('Sixty-One Lines', L, 42);
+g.font = '11px Georgia, "Times New Roman", serif';
+g.fillStyle = 'rgba('+INK+',0.55)';
+g.fillText('one record, cut every twenty-four hours and laid down like a drum chart; higher is more', L, 60);
+g.textAlign = 'center';
+const lab = ['hour 0','6','12','18','24'];
+for(let h=0;h<=24;h+=6){ g.fillText(lab[h/6], L + span*h/24, TOP-30); }
+g.textAlign = 'right';
+g.fillText('day', L-16, TOP-30);
+g.textAlign = 'left';
+g.fillText('dots: the 4–5 positions per day the source picture can resolve — the line between them is drawn, not measured', L, TOP + 60*ROW + 44);
+g.fillStyle = 'rgba('+RED+',0.85)';
+g.fillText('red: an hour or two that leapt far above its neighbours', L, TOP + 60*ROW + 60);
+</script>
+</body>
+</html>

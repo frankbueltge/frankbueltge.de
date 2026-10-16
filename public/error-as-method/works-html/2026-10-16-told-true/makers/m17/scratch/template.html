@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Breaths</title>
+<style>
+  html,body{margin:0;height:100%;background:#f3efe6;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;
+       font-family:Georgia,"Times New Roman",serif;color:#2a2622;}
+  .frame{position:relative;width:1100px;height:800px;flex:none;}
+  canvas{position:absolute;left:0;top:0;width:1100px;height:800px;}
+  .text{position:absolute;left:830px;top:96px;width:230px;}
+  h1{font-weight:normal;font-size:30px;line-height:1.1;margin:0 0 18px;letter-spacing:.01em;}
+  p{font-size:13.5px;line-height:1.55;margin:0 0 12px;color:#4a443d;}
+  .key{position:absolute;left:830px;bottom:84px;width:230px;font-size:12px;line-height:1.6;color:#6b645b;}
+  .key div{display:flex;align-items:center;gap:10px;}
+  .key svg{flex:none;}
+</style>
+</head>
+<body>
+<div class="frame">
+  <canvas id="c" width="1100" height="800"></canvas>
+  <div class="text">
+    <h1>Sixty-One<br>Breaths</h1>
+    <p>The air at one place, measured every hour for sixty-one days, wound into a coil: one turn for each day, the first day at the centre.</p>
+    <p>Every dot is one hour. The further a dot stands out from its turn, the more carbon dioxide was in the air.</p>
+    <p>Each day the coil swells on one side and lies flat on the other: the air fills in the still hours and is drawn down again in the open part of the day.</p>
+  </div>
+  <div class="key">
+    <div><svg width="28" height="10"><circle cx="14" cy="5" r="1.6" fill="#1d1a17"/></svg>one hour</div>
+    <div><svg width="28" height="10"><line x1="2" y1="5" x2="26" y2="5" stroke="#b9ad9b" stroke-width="1"/></svg>the turn of a day, at its lowest reading</div>
+    <div><svg width="28" height="10"><line x1="4" y1="5" x2="24" y2="5" stroke="#1d1a17" stroke-width="1"/><path d="M20 2 L24 5 L20 8" fill="none" stroke="#1d1a17"/></svg>outward: more</div>
+  </div>
+</div>
+<script>
+const COLS = __DATA__;
+(function(){
+  const cv=document.getElementById('c');
+  const dpr=Math.max(1,window.devicePixelRatio||1);
+  cv.width=1100*dpr; cv.height=800*dpr;
+  const g=cv.getContext('2d'); g.scale(dpr,dpr);
+  const CX=420, CY=404;
+  const R0=40, STEP=4.6, A=1.0;   // px per day, px per image-pixel of value
+  const N=COLS.length;             // columns of the source picture
+  const HOURS=1463, PEAK=8;        // hour (from start) of the swelling, set at the top
+  const FLOOR=84;                  // lowest point on the record
+  const hourOf=i=>(i+0.5)/N*HOURS;
+  const ang=t=>2*Math.PI*(t-PEAK)/24-Math.PI/2;
+  const rad=(t,y)=>R0+STEP*t/24+A*(FLOOR-y);
+
+  // the turns themselves
+  g.lineWidth=0.6; g.strokeStyle='rgba(160,140,112,0.5)';
+  g.beginPath();
+  for(let t=0;t<=HOURS;t+=0.25){
+    const a=ang(t), r=rad(t,FLOOR);
+    const x=CX+r*Math.cos(a), y=CY+r*Math.sin(a);
+    t===0?g.moveTo(x,y):g.lineTo(x,y);
+  }
+  g.stroke();
+
+  // order the hours inside each ~5-hour column so they follow the drift between neighbours
+  const med=ys=>{const a=[...ys].sort((p,q)=>p-q);return a.length?a[a.length>>1]:FLOOR;};
+  const pts=[];
+  COLS.forEach((ys,i)=>{
+    const n=ys.length; if(!n) return;
+    const prev=med(COLS[Math.max(0,i-1)]), next=med(COLS[Math.min(N-1,i+1)]);
+    const s=[...ys].sort((p,q)=>p-q);           // smallest y = highest value first
+    if(next<prev) s.reverse();                  // rising: end on the highest
+    s.forEach((y,k)=>pts.push([hourOf(i)+((k+0.5)/n-0.5)*HOURS/N,y]));
+  });
+  const xy=([t,y])=>{const a=ang(t),r=rad(t,y);return [CX+r*Math.cos(a),CY+r*Math.sin(a)];};
+
+  // the thread through all hours
+  g.lineWidth=0.6; g.strokeStyle='rgba(40,34,28,0.26)'; g.lineJoin='round';
+  g.beginPath(); pts.forEach((p,k)=>{const [x,y]=xy(p); k?g.lineTo(x,y):g.moveTo(x,y);}); g.stroke();
+
+  // the hours
+  pts.forEach(p=>{
+    const [x,y]=xy(p); const lift=Math.min(1,(FLOOR-p[1])/45);
+    g.fillStyle='rgba(29,26,23,'+(0.45+0.5*lift).toFixed(3)+')';
+    g.beginPath(); g.arc(x,y,1.05+0.6*lift,0,2*Math.PI); g.fill();
+  });
+
+  // first and last hour
+  g.fillStyle='#8a2f1f';
+  [[0,COLS[0]],[N-1,COLS[N-1]]].forEach(([i,ys])=>{
+    const t=hourOf(i), a=ang(t), r=rad(t,FLOOR);
+    g.beginPath(); g.arc(CX+r*Math.cos(a),CY+r*Math.sin(a),2.6,0,2*Math.PI); g.fill();
+  });
+  g.font='italic 12px Georgia, serif'; g.fillStyle='#8a2f1f';
+  {const t=hourOf(N-1), a=ang(t), r=rad(t,FLOOR)+14;
+   g.textAlign='center'; g.fillText('day 61',CX+r*Math.cos(a)+2,CY+r*Math.sin(a)+30);}
+  {const t=hourOf(0), a=ang(t), r=rad(t,FLOOR);
+   g.textAlign='left'; g.fillText('day 1',CX+r*Math.cos(a)+8,CY+r*Math.sin(a)+16);}
+})();
+</script>
+</body>
+</html>

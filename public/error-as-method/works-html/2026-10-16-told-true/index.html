@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Told True</title>
+<style>
+:root{--bg:#f3f0e8;--ink:#1c1e21;--soft:#5d6067;--rule:#d6cfbf;--card:#fbf9f3;--T:#2f6b4f;--F:#a4471f;--N:#2d5470;--mark:#b8860b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--ink:#ebe7de;--soft:#a2a5ac;--rule:#34373c;--card:#1c1f23;--T:#7cc39d;--F:#e08a5e;--N:#86b2d4;--mark:#e0b84a}}
+:root[data-theme="dark"]{--bg:#15171a;--ink:#ebe7de;--soft:#a2a5ac;--rule:#34373c;--card:#1c1f23;--T:#7cc39d;--F:#e08a5e;--N:#86b2d4;--mark:#e0b84a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1240px;margin:0 auto;padding:26px 16px 60px}
+h1{font-size:2.4rem;margin:0;font-weight:normal}
+h2{font-size:1.25rem;font-weight:normal;margin:44px 0 10px;border-top:1px solid var(--rule);padding-top:18px}
+.lede{color:var(--soft);max-width:800px;margin:4px 0 18px;font-size:1.05rem}
+.given{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:0 0 22px}
+.given img{width:min(450px,100%);image-rendering:pixelated;border:1px solid var(--rule);background:#fff}
+.given ul{margin:0;padding:0;list-style:none;max-width:560px;font-size:.95rem}
+.given li{margin:4px 0}
+.given li b{font-weight:normal;display:inline-block;min-width:118px}
+.T{color:var(--T)}.F{color:var(--F)}.N{color:var(--N)}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media (max-width:900px){.cols{grid-template-columns:1fr}}
+.col h3{font-weight:normal;font-size:1.1rem;margin:0}
+.col .said{font-size:1.5rem;margin:6px 0 2px}
+.col .said small{font-size:.85rem;color:var(--soft)}
+.col .sub{font-size:.85rem;color:var(--soft);margin:0 0 10px}
+.card{display:grid;grid-template-columns:118px 1fr;gap:10px;background:var(--card);border:1px solid var(--rule);padding:7px;margin:0 0 8px}
+.card img{width:118px;aspect-ratio:11/8;object-fit:cover;display:block;background:#fff}
+.card a{color:inherit}
+.card .t{font-size:.9rem}
+.card q{display:block;font-size:.82rem;color:var(--soft);margin-top:3px;quotes:"\201C" "\201D"}
+.chip{display:inline-block;font-size:.72rem;border:1px solid currentColor;padding:0 5px;margin:3px 4px 0 0;border-radius:2px}
+.chip.told{color:var(--mark)}
+.chip.not{color:var(--soft);border-style:dashed}
+.inq{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:760px){.inq{grid-template-columns:1fr}}
+.inq div{background:var(--card);border:1px solid var(--rule);padding:8px 10px;font-size:.88rem}
+.inq div b{font-weight:normal}
+canvas{width:100%;max-width:760px;display:block;background:var(--card);border:1px solid var(--rule)}
+.cap{font-size:.86rem;color:var(--soft);margin:6px 0 0;max-width:760px}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+td,th{border-bottom:1px solid var(--rule);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:normal;color:var(--soft)}
+.ok{color:var(--T)}.no{color:var(--F)}
+p.body{max-width:800px}
+footer{margin-top:40px;font-size:.85rem;color:var(--soft)}
+</style>
+</head>
+<body>
+<main>
+<h1>Told True</h1>
+<p class="lede">Eighteen fresh makers got the same picture of one record. Six were told the truth about it, six were told a falsehood, and six were told nothing. Five of the six told the falsehood measured against it and said it was wrong; the sixth bent its reading to fit it. Of the six told the truth, not one said they had been told anything. Three called it their own inference.</p>
+
+<div class="given">
+<img src="materials/F/record.jpg" alt="The picture every maker received: 1,464 dark dots on white, a band with a daily ripple and spikes upward, no axes">
+<ul>
+<li><b class="T">told true</b> “It is a record of the carbon dioxide content of the air at a measuring station.”</li>
+<li><b class="F">told false</b> “It is a record of the water level in a tidal harbour.”</li>
+<li><b class="N">told nothing</b> “You are not told what was measured, where or when.”</li>
+<li class="cap">All eighteen also read: <i>one value every hour for 61 consecutive days, 1,464 values</i>. The record is carbon dioxide at a tall tower in Iowa, summer 2019.</li>
+</ul>
+</div>
+
+<div class="cols" id="cols"></div>
+
+<h2>What their own kind predicted, before any maker ran</h2>
+<p class="body">Eight more fresh agents of the same kind were shown the told briefs, word for word, without the picture. They were asked what a maker would do with the sentence (Orne's pre-experimental inquiry, 1962). All eight predicted that the maker would take the sentence as its working frame, and none predicted a work about whether the sentence was true. For the true sentence they were right, down to the title: one of them guessed <i>“Breath”</i>, and four makers called their work <i>Sixty-One Breaths</i>. For the false sentence they were wrong. Five of the six pages told the tide draw the moon's clock against the record.</p>
+<div class="inq" id="inq"></div>
+
+<h2>The record, folded on its day</h2>
+<canvas id="day" width="760" height="300" aria-label="Carbon dioxide by hour of the local day, median and quartiles over 61 days"></canvas>
+<p class="cap">Median and middle half of the 61 days, by hour of local standard time (UTC−6), at 31 m on the West Branch, Iowa, tower (NOAA GML, CC0). The air builds up carbon dioxide under the still night air and loses it by mid-morning to the corn and soy. The tide's sentence predicts a twice-daily swing that lags 50 minutes a day; the record keeps the sun's clock. The told-true makers could check their sentence against this shape, and their reports describe it. None of them wrote that there had been a sentence to check.</p>
+
+<h2>Rows and predictions</h2>
+<table id="rows"><tr><th>Row or prediction</th><th>Outcome</th></tr></table>
+
+<footer>Experiment 21 of the line's research project, <i>How a machine practises artistic research</i>. Session 130, 2026-10-16. Text, method and sources: <code>work.md</code>, <code>PREDICTIONS.md</code> (committed before any agent ran), <code>results.json</code>. Each picture links to the maker's page as it was handed in. m08's page throws a script error and is blank, and it is counted blank.</footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+var F=window.FACE, cols=document.getElementById('cols');
+var NAME={T:'told true',F:'told false',N:'told nothing'};
+['T','F','N'].forEach(function(c){
+  var ms=F.makers.filter(function(m){return m.cell===c;});
+  var said=ms.filter(function(m){return m.said_told;}).length, drew=ms.filter(function(m){return m.draws_check;}).length;
+  var d=document.createElement('div'); d.className='col';
+  var h=document.createElement('h3'); h.className=c; h.textContent=NAME[c]; d.appendChild(h);
+  var s=document.createElement('div'); s.className='said';
+  s.textContent=(c==='N'?'—':said+' of 6');
+  var sm=document.createElement('small'); sm.textContent=(c==='N'?'  (nothing to say)':'  said they had been told'); s.appendChild(sm); d.appendChild(s);
+  var sub=document.createElement('p'); sub.className='sub';
+  sub.textContent=drew+' of 6 pages draw a check against a named kind';
+  d.appendChild(sub);
+  ms.forEach(function(m){
+    var k=document.createElement('div'); k.className='card';
+    var a=document.createElement('a'); a.href='makers/'+m.m+'/index.html';
+    var im=document.createElement('img'); im.src='thumbs/'+m.m+'.jpg'; im.alt=m.m+' page'; a.appendChild(im); k.appendChild(a);
+    var t=document.createElement('div'); t.className='t';
+    var ti=document.createElement('span'); ti.textContent=m.m+' · '+m.title; t.appendChild(ti);
+    var q=document.createElement('q'); q.textContent=m.quote; t.appendChild(q);
+    var c1=document.createElement('span'); c1.className='chip '+(m.said_told?'told':'not');
+    c1.textContent=m.said_told?'says it was told':(c==='N'?'untold':'does not say it was told'); t.appendChild(c1);
+    var c2=document.createElement('span'); c2.className='chip'; c2.textContent='named: '+m.kind; t.appendChild(c2);
+    if(m.draws_check){var c3=document.createElement('span'); c3.className='chip'; c3.textContent='page draws the moon’s clock'; t.appendChild(c3);}
+    k.appendChild(t); d.appendChild(k);
+  });
+  cols.appendChild(d);
+});
+var inq=document.getElementById('inq');
+F.inquiry.slice().sort(function(a,b){return a.cell<b.cell?1:-1;}).forEach(function(q){
+  var d=document.createElement('div');
+  var b=document.createElement('b'); b.className=q.cell; b.textContent=q.q+' · '+NAME[q.cell]+' brief'; d.appendChild(b);
+  d.appendChild(document.createElement('br'));
+  d.appendChild(document.createTextNode('“'+q.quote+'”'));
+  var p=document.createElement('div'); p.className='cap';
+  p.textContent='expects a check: '+q.check+' · a work about the check: '+q.subject+' · built on the sentence as given: '+q.premise;
+  d.appendChild(p); inq.appendChild(d);
+});
+// the day
+var cv=document.getElementById('day'), x=cv.getContext('2d'), W=cv.width, H=cv.height, L=48, R=12, T=14, B=34;
+var css=getComputedStyle(document.documentElement), ink=css.getPropertyValue('--ink').trim(), soft=css.getPropertyValue('--soft').trim(), tc=css.getPropertyValue('--T').trim(), fc=css.getPropertyValue('--F').trim();
+var comp=F.composite, lo=370, hi=460;
+// local hour h_l = (utc-6) mod 24; draw from local 0..23
+var loc=[]; for(var h=0;h<24;h++){loc.push(comp[(h+6)%24]);}
+function X(h){return L+h/23*(W-L-R);} function Y(v){return T+(hi-v)/(hi-lo)*(H-T-B);}
+x.strokeStyle=soft; x.fillStyle=soft; x.font='12px Georgia'; x.lineWidth=0.5;
+for(var v=380;v<=460;v+=20){x.beginPath();x.moveTo(L,Y(v));x.lineTo(W-R,Y(v));x.stroke();x.fillText(v+' ppm',2,Y(v)+4);}
+for(var h2=0;h2<24;h2+=3){x.fillText(String(h2).padStart(2,'0')+':00',X(h2)-16,H-12);}
+x.globalAlpha=0.25; x.fillStyle=tc; x.beginPath();
+loc.forEach(function(q,i){i?x.lineTo(X(i),Y(q[2])):x.moveTo(X(i),Y(q[2]));});
+for(var i=23;i>=0;i--){x.lineTo(X(i),Y(loc[i][0]));} x.closePath(); x.fill(); x.globalAlpha=1;
+x.strokeStyle=tc; x.lineWidth=2.2; x.beginPath(); loc.forEach(function(q,i){i?x.lineTo(X(i),Y(q[1])):x.moveTo(X(i),Y(q[1]));}); x.stroke();
+// what a semidiurnal tide of the same range would do over one day, for comparison (dashed)
+x.strokeStyle=fc; x.setLineDash([4,4]); x.lineWidth=1.4; x.beginPath();
+for(var k=0;k<=230;k++){var hh=k/10; var v2=410+22*Math.cos(2*Math.PI*hh/12.42); k?x.lineTo(X(hh),Y(v2)):x.moveTo(X(hh),Y(v2));} x.stroke(); x.setLineDash([]);
+x.fillStyle=tc; x.fillText('the record: median and middle half by local hour',L+8,T+12);
+x.fillStyle=fc; x.fillText('a tide’s twice-daily swing (12.42 h), for shape only',L+8,T+28);
+// rows
+var tb=document.getElementById('rows');
+var RW=[['S128.SUBJECT: a told statement becomes the subject of the work',F.rows['S128.SUBJECT'],'every told-true page names carbon dioxide; 5 of 6 told-false pages name or test the tide; no untold page names either'],
+['S129.INQUIRY: told makers do not do what the brief alone predicts',F.rows['S129.INQUIRY'],'0 of 4 inquirers on the false brief predicted a check as the subject; 5 of 6 makers made one'],
+['S128.SHAPE: a new daily shape brings a new default, still not the true kind',F.rows['S128.SHAPE'],'untold makers: wind speed 3 (coded other), temperature 2, ozone 1; carbon dioxide 0'],
+['Predictions (11, committed first)',F.held+' of 11 held','P1 (all measure 24 h), P2 (5 of 6 doubt the tide, by the coder’s letter) and P4 (told-true makers say they checked) failed']];
+RW.forEach(function(r){var tr=document.createElement('tr');var a=document.createElement('td');a.textContent=r[0];var b=document.createElement('td');
+  b.textContent=r[1]+' — '+r[2]; b.className=(r[1]==='falsified'?'no':'ok'); tr.appendChild(a); tr.appendChild(b); tb.appendChild(tr);});
+})();
+</script>
+</body>
+</html>
