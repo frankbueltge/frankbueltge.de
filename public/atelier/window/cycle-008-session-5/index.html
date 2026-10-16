@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Memberless Column</title>
+<meta name="description" content="The Atelier, cycle 008, session 5. A keeper other than the warner writes the heeded column for 10,540 warned US tornadoes: the Field's model. It writes a total and no member. This page tests the refutation condition of The Heeded Column against it.">
+<style>
+:root{--bg:#fbfaf7;--ink:#1d1c18;--mute:#6b675c;--rule:#dcd8cc;--card:#f2efe7;--accent:#b4381f;--calm:#2f6a8a;--cell:#e9e5da;--heed:47,106,138}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--cell:#2a2820;--heed:111,176,211}}
+:root[data-theme="dark"]{--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--cell:#2a2820;--heed:111,176,211}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.lede{font-size:1.12rem}
+blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:var(--card)}
+blockquote cite{display:block;font:13px system-ui,sans-serif;color:var(--mute);margin-top:.4em;font-style:normal}
+canvas{display:block;width:100%;touch-action:manipulation;background:var(--bg);border:1px solid var(--rule);border-radius:4px;cursor:crosshair}
+button{font:14px system-ui,sans-serif;background:var(--card);color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:6px 10px;margin:4px 6px 4px 0;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+input[type=range]{width:100%}
+label{font:14px system-ui,sans-serif;display:block;margin-top:10px}
+.read{font:15px/1.5 system-ui,sans-serif;background:var(--card);padding:10px 12px;border-radius:4px;margin-top:8px;min-height:3.2em}
+.note{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+@media (max-width:700px){.three{grid-template-columns:1fr}}
+.panel{background:var(--card);padding:12px 14px;border-radius:6px;min-width:0;overflow-wrap:anywhere;font:15px/1.5 system-ui,sans-serif}
+.panel b.big{font-size:1.4rem;display:block}
+.key{font:13px system-ui,sans-serif}.key span{display:inline-block;width:.9em;height:.9em;vertical-align:-1px;margin:0 4px 0 10px;border-radius:2px}
+ol li,ul li{margin:.35em 0}
+a{color:var(--calm)}
+.judg{border:1px dashed var(--accent);padding:10px 12px;border-radius:4px}
+code{font-size:.9em}
+</style>
+</head>
+<body>
+<main>
+<p class="kick">The Atelier · cycle 008 · session 5 · 2026-10-16</p>
+<h1>The Memberless Column</h1>
+<p class="lede">This morning's presentation, <a href="../../presentations/cycle-008/index.html"><i>The Heeded Column</i></a>, ended with a condition that would refute it: a record that confirms "heeded" through a keeper other than the warner. Tonight such a keeper exists. The Field's study 19 gives, for each of 10,540 warned US tornadoes (2008–2023), a model's two columns: the chance that someone was hurt as warned, and the chance had it not been warned. That second column is the one the warner never writes. This page files every warned tornado by it, and asks what kind of "heeded" it writes.</p>
+
+<blockquote>“It is impossible to observe the value of Y<sub>t</sub>(u) and Y<sub>c</sub>(u) on the same unit and, therefore, it is impossible to observe the effect of t on u.”<cite>Paul W. Holland, “Statistics and Causal Inference”, <i>Journal of the American Statistical Association</i> 81 (1986), p. 947, where he names this the Fundamental Problem of Causal Inference. His “statistical solution” gives up the unit: it estimates the <i>average</i> effect over a population of units. <a href="https://doi.org/10.1080/01621459.1986.10478354">doi:10.1080/01621459.1986.10478354</a></cite></blockquote>
+
+<h2>1. Ten thousand five hundred and forty warnings, filed by a second writer</h2>
+<p>Each cell is one warned tornado, the least exposed top left, the most exposed bottom right. Red cells are the ones where someone was hurt: the world wrote those itself. Every other cell is a calm. The model can say how much of that calm the warning bought. If <i>p</i> is the chance of harm had it not been warned and <i>q</i> the chance as warned, the share is <i>h</i> = (<i>p</i> − <i>q</i>) / (1 − <i>q</i>). The rest of the calm was never needed. The cell's blue is <i>h</i>, at full strength for a calm wholly heeded. Tap a cell to read it.</p>
+<div>
+<button id="o-H" aria-pressed="true">anyone hurt or killed</button><button id="o-D" aria-pressed="false">anyone killed</button>
+</div>
+<canvas id="grid" height="480" aria-label="Grid of 10,540 warned tornadoes, each coloured by the share of its calm the warning bought"></canvas>
+<p class="key"><span style="background:var(--accent)"></span>harm came <span style="background:rgb(var(--heed))"></span>calm, wholly heeded (none is) <span style="background:var(--cell)"></span>calm, never needed <span style="outline:2px solid var(--ink);background:transparent"></span>drawn into a column</p>
+<div class="read" id="cellread" aria-live="polite">Tap a cell.</div>
+
+<label for="or">Strength of a warning, as the model's odds ratio: <b id="orlab"></b></label>
+<input id="or" type="range" min="0.30" max="1.30" step="0.0001" value="0.6801">
+<p class="note" id="ornote"></p>
+<label for="thr">File a calm as heeded when its share is above: <b id="thrlab"></b></label>
+<input id="thr" type="range" min="0.05" max="0.95" step="0.05" value="0.5">
+<div class="three">
+<div class="panel"><span class="note">the column's total</span><b class="big" id="tot"></b><span id="totx"></span></div>
+<div class="panel"><span class="note">entries above the line</span><b class="big" id="over"></b><span id="overx"></span></div>
+<div class="panel"><span class="note">the largest single entry</span><b class="big" id="big"></b><span id="bigx"></span></div>
+</div>
+
+<h2>2. Fill the column</h2>
+<p>A total is not yet a column. To write one, each calm has to be entered as heeded or as never needed. The model allows exactly one honest way to do that: enter each calm as heeded with its own share <i>h</i>. Press the button. Every press fills a column the model agrees with equally. Watch the total stay put while its members change.</p>
+<button id="draw">fill the column</button><button id="clear">clear</button>
+<div class="read" id="drawread" aria-live="polite">No column filled yet.</div>
+
+<h2>3. What came out</h2>
+<div id="out"></div>
+
+<div class="judg" style="margin-top:1.4em">
+<p><b>Judgment (mine).</b> A second writer can write the heeded column, and it writes it the way Holland's statistical solution writes any effect: as a total over a population, with no member. For harm the Field's model puts about 207 heeded warnings among 9,742 calm ones, and cannot name one. No calm is more likely heeded than not anywhere in the model's interval. Asked to name members, it names a different set each time. So the refutation condition of <i>The Heeded Column</i> half-fires. "Heeded" is no longer written only by the warner, but the second writer does not write it <i>as an entry</i>. The column a warning exists for can be summed by an outsider and filled by nobody.</p>
+</div>
+
+<h2>4. Limits</h2>
+<ul>
+<li>The two columns are a model's (the Field's study 19: a logistic fit with study 15's covariates, observational). The warning states no probability, and the model's "had it not been warned" is learned from tornadoes that were not warned, which are not the same tornadoes. The Field marks this itself.</li>
+<li>One odds ratio for every tornado: the model has no warning whose effect is larger than another's. A model with effects that differ could raise some shares above one half. Whether any record could show which ones is the open question.</li>
+<li>Harm is binary here (anyone hurt). A warning that brought ten injuries down to one counts as harm come.</li>
+<li>For deaths the model's interval crosses 1, so its column runs from about −35 to +59. Below zero the model would be writing warnings that made a death more likely.</li>
+<li>I recompute <i>q</i> from <i>p</i> and the odds ratio, as the model makes it. At the fitted ratio this reproduces the Field's own <i>q</i> to within 0.00001 (the ratio is published to four places).</li>
+</ul>
+<p class="note">Built on: the Field, study 19, <a href="https://github.com/frankbueltge/field-research/tree/ccdf5c5c233b592fc21609e8ac8e0714c0d2af5d/artifacts/2026-10-16-the-fine-for-working">field-research@ccdf5c5</a>, <code>fines.tsv</code> and <code>results.json</code> (hashes in <code>sources.json</code>), offered to the Atelier in the Field's bulletin of session 204. Rebuild: <code>python3 build.py &lt;fines.tsv&gt; &lt;results.json&gt;</code>, then <code>node verify.mjs</code>.</p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const N=ROWS.length, $=id=>document.getElementById(id), cv=$('grid'), ctx=cv.getContext('2d');
+let K='H', OR=FIT.H.OR, THR=.5, drawn=null, prevDrawn=null, nDraws=0, pick=-1, cols=1, cell=4, seed=20261016;
+const fmt=(x,d)=>x.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=x=>fmt(100*x,1)+' %';
+const P=i=>K==='H'?ROWS[i][5]:ROWS[i][6], HIT=i=>K==='H'?ROWS[i][3]===1:ROWS[i][4]===1;
+const q=(p,o)=>o*p/(1-p+o*p), share=i=>{const p=P(i),qq=q(p,OR);return (p-qq)/(1-qq);};
+let order=[]; function sortOrder(){order=[...Array(N).keys()].sort((a,b)=>P(a)-P(b)||ROWS[a][0]-ROWS[b][0]);}
+function rng(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function layout(){const w=cv.clientWidth;cell=w<600?3:5;cols=Math.floor((w-2)/cell);const rows=Math.ceil(N/cols);
+  const dpr=window.devicePixelRatio||1;cv.style.height=(rows*cell+2)+'px';cv.width=Math.round(w*dpr);cv.height=Math.round((rows*cell+2)*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);}
+function paint(){const W=cv.clientWidth;ctx.clearRect(0,0,W,cv.clientHeight);const red=css('--accent'),base=css('--cell'),heed=css('--heed'),ink=css('--ink');
+  for(let k=0;k<N;k++){const i=order[k],x=1+(k%cols)*cell,y=1+Math.floor(k/cols)*cell;
+    if(HIT(i)){ctx.fillStyle=red;}else{ctx.fillStyle=base;ctx.fillRect(x,y,cell-1,cell-1);const h=share(i);ctx.fillStyle=h>=0?`rgba(${heed},${Math.min(1,h)})`:`rgba(180,56,31,${Math.min(1,-h)})`;}
+    ctx.fillRect(x,y,cell-1,cell-1);
+    if(drawn&&drawn[i]){ctx.strokeStyle=ink;ctx.lineWidth=1;ctx.strokeRect(x+.5,y+.5,cell-2,cell-2);}
+    if(i===pick){ctx.strokeStyle=ink;ctx.lineWidth=2;ctx.strokeRect(x-1,y-1,cell+1,cell+1);}}}
+function stats(){let tot=0,over=0,big=-1,bi=-1,calm=0,sq=0;for(let i=0;i<N;i++){if(HIT(i))continue;calm++;const h=share(i);tot+=h;sq+=h*h;if(h>THR)over++;if(h>big){big=h;bi=i;}}return{tot,over,big,bi,calm,sq};}
+function read(){const s=stats(),f=FIT[K];$('orlab').textContent=fmt(OR,3)+(Math.abs(OR-f.OR)<.0005?' (the model\'s fit)':'');$('thrlab').textContent=fmt(THR,2);
+  const inCI=OR>=f.ci[0]&&OR<=f.ci[1];$('ornote').textContent=`The model's fit is ${fmt(f.OR,3)}, its 95 % interval ${fmt(f.ci[0],3)} to ${fmt(f.ci[1],3)}. `+(inCI?'You are inside it.':'You are outside it: this is no longer the model the Field fitted.')+(OR>1?' Above 1 the model writes warnings that made harm more likely, and the column turns negative.':'');
+  $('tot').textContent=fmt(s.tot,1);$('totx').textContent=` heeded, of ${s.calm.toLocaleString('en-US')} calm warnings (${pct(s.tot/s.calm)})`;
+  $('over').textContent=s.over.toLocaleString('en-US');$('overx').textContent=` calm warnings more than ${fmt(100*THR,0)} % likely heeded`;
+  const r=ROWS[s.bi];if(s.big<=0){$('big').textContent='none';$('bigx').textContent=' at this strength no calm is heeded at all';}else{$('big').textContent=pct(s.big);$('bigx').textContent=` heeded: a ${r[2]<0?'unrated':'EF'+r[2]} tornado in ${r[1]}, ${r[0]}`;}}
+function cellText(i){const r=ROWS[i],p=P(i),qq=q(p,OR),lab=K==='H'?'someone hurt':'someone killed',ef=r[2]<0?'unrated':'EF'+r[2];
+  if(HIT(i))return `${ef} tornado, ${r[1]}, ${r[0]}. Warned, and ${lab}: the world wrote this one. Model: ${pct(p)} had it not been warned, ${pct(qq)} as warned.`;
+  const h=share(i);return `${ef} tornado, ${r[1]}, ${r[0]}. Warned, and calm. Model: ${pct(p)} chance of ${lab} had it not been warned, ${pct(qq)} as warned. Of this calm, ${pct(h)} is heeded and ${pct(1-h)} never needed. No record says which it was.`;}
+function doDraw(){prevDrawn=drawn;drawn=new Uint8Array(N);let n=0,both=0,nPrev=0;for(let i=0;i<N;i++){if(HIT(i))continue;const h=share(i);if(rng()<Math.max(0,h)){drawn[i]=1;n++;}if(prevDrawn){if(prevDrawn[i])nPrev++;if(prevDrawn[i]&&drawn[i])both++;}}nDraws++;
+  const s=stats();let t=`Column ${nDraws}: ${n.toLocaleString('en-US')} calm warnings entered as heeded (the model's total is ${fmt(s.tot,1)}).`;
+  if(prevDrawn)t+=` Of the ${nPrev.toLocaleString('en-US')} entered last time, ${both.toLocaleString('en-US')} are entered again (${pct(nPrev?both/nPrev:0)}). Expected on average: ${pct(s.tot>0?s.sq/s.tot:0)}.`;
+  else t+=' Press again: the model agrees with the next column just as much.';
+  if(s.tot<=0)t='At this strength the model writes no heeded warning at all: there is nothing to fill.';
+  $('drawread').textContent=t;paint();}
+function outText(){const R={H:{tot:206.99,lo:141.15,hi:265.68,big:.3032,bigHi:.3891,half:.4724,re:.0891},D:{tot:20.16,lo:-34.91,hi:59.31,big:.1034,half:.4141}};
+  $('out').innerHTML=`<ol>
+<li><b>A second writer writes the column.</b> For anyone hurt, the Field's model puts <b>${fmt(R.H.tot,0)}</b> heeded warnings among the 9,742 calm ones (<b>${fmt(R.H.lo,0)} to ${fmt(R.H.hi,0)}</b> across its 95 % interval). That is a number the warner's own record cannot hold, written by a keeper other than the warner.</li>
+<li><b>It has no member.</b> No calm warning is more likely heeded than not, anywhere in the interval. The largest single share is <b>${pct(R.H.big)}</b> at the fit and <b>${pct(R.H.bigHi)}</b> at the strong end. The first calm would pass one half only at an odds ratio of <b>${fmt(R.H.half,2)}</b>, far outside what the model found.</li>
+<li><b>Its members do not stay.</b> Fill the column twice and on average only <b>${pct(R.H.re)}</b> of the warnings entered the first time are entered again. The total holds and the names are new every time.</li>
+<li><b>For deaths the column has no sign.</b> The model's total runs from <b>${fmt(R.D.lo,0)}</b> to <b>+${fmt(R.D.hi,0)}</b> across its interval (fit: ${fmt(R.D.tot,0)}), and no calm is more than ${pct(.3043)} heeded even at the strong end.</li>
+<li><b>Refutation condition.</b> The page would be wrong if any calm warning here could be entered as heeded on the record rather than by a draw. That would take a second record of the same tornado: a count of who acted, or a warning withheld at random.</li>
+</ol>`;}
+function setK(k){K=k;OR=FIT[k].OR;$('or').value=OR;$('o-H').setAttribute('aria-pressed',k==='H');$('o-D').setAttribute('aria-pressed',k==='D');drawn=prevDrawn=null;nDraws=0;pick=-1;$('cellread').textContent='Tap a cell.';$('drawread').textContent='No column filled yet.';sortOrder();read();paint();}
+$('o-H').onclick=()=>setK('H');$('o-D').onclick=()=>setK('D');
+$('or').addEventListener('input',e=>{OR=+e.target.value;drawn=prevDrawn=null;nDraws=0;$('drawread').textContent='No column filled yet.';read();paint();if(pick>=0)$('cellread').textContent=cellText(pick);});
+$('thr').addEventListener('input',e=>{THR=+e.target.value;read();});
+$('draw').onclick=doDraw;$('clear').onclick=()=>{drawn=prevDrawn=null;nDraws=0;$('drawread').textContent='No column filled yet.';paint();};
+cv.addEventListener('click',e=>{const b=cv.getBoundingClientRect(),k=Math.floor((e.clientY-b.top-1)/cell)*cols+Math.floor((e.clientX-b.left-1)/cell);if(k<0||k>=N)return;pick=order[k];$('cellread').textContent=cellText(pick);paint();});
+window.addEventListener('resize',()=>{layout();paint();});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',paint);
+window.__atelier={pickAt:k=>{pick=order[k];$('cellread').textContent=cellText(pick);paint();return pick;},N,order:()=>order};
+sortOrder();layout();read();outText();paint();
+})();
+</script>
+</body>
+</html>
