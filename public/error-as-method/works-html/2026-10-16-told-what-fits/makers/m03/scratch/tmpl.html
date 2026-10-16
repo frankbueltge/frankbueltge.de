@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drawing In</title>
+<style>
+  html,body{margin:0;height:100%;background:#f3eee4;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  svg{display:block;width:1100px;height:800px;max-width:100vw;max-height:100vh;}
+  text{font-family:Georgia,"Times New Roman",serif;fill:#3a2a1c;}
+</style>
+</head>
+<body>
+<svg id="w" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg" aria-label="Sixty-one daily loops of a tree trunk's measured radius drawn around a centre; every loop dents inward in the same sector."></svg>
+<script>
+// 1,464 hourly values read back from record.jpg (pixel units, larger = higher in the source plot).
+const V = __DATA__;
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById("w");
+function el(n, a, p){ const e=document.createElementNS(NS,n); for(const k in a) e.setAttribute(k,a[k]); (p||svg).appendChild(e); return e; }
+
+el("rect",{x:0,y:0,width:1100,height:800,fill:"#f3eee4"});
+
+const cx=395, cy=400, R0=62, G=3.35, vmin=Math.min(...V);
+const rad = v => R0 + G*(v - vmin) + 14;
+const pt = (i,v) => { const a = 2*Math.PI*i/24; const r = rad(v); return [cx + r*Math.sin(a), cy - r*Math.cos(a)]; };
+
+// the rest of the trunk (not to scale)
+const g0 = el("g",{});
+el("circle",{cx,cy,r:R0,fill:"#e8dfcf"},g0);
+for(let k=1;k<9;k++) el("circle",{cx,cy,r:R0*k/9,fill:"none",stroke:"#d9ccb6","stroke-width":0.6},g0);
+el("circle",{cx,cy,r:2.2,fill:"#cdbda2"},g0);
+
+// light smoothing of the read-back values (3-hour kernel)
+const S = V.map((v,i)=>{ const a=V[Math.max(i-1,0)], b=V[Math.min(i+1,V.length-1)]; return 0.25*a+0.5*v+0.25*b; });
+
+function lerp(a,b,t){return a+(b-a)*t;}
+function col(t){ // early: pale ochre -> late: dark umber
+  const c0=[196,170,128], c1=[46,28,16];
+  return `rgb(${[0,1,2].map(k=>Math.round(lerp(c0[k],c1[k],Math.pow(t,0.9)))).join(",")})`;
+}
+const days = V.length/24;
+const gl = el("g",{fill:"none","stroke-linejoin":"round","stroke-linecap":"round"});
+for(let d=0; d<days; d++){
+  const i0=d*24, i1=Math.min(i0+24, V.length-1);
+  // Catmull-Rom through the hourly points, drawn as cubic Beziers
+  const P=[]; for(let i=Math.max(i0-1,0);i<=Math.min(i1+1,V.length-1);i++) P.push(pt(i,S[i]));
+  const off = i0>0 ? 1 : 0, n = i1-i0;
+  let s="M"+P[off][0].toFixed(2)+" "+P[off][1].toFixed(2);
+  for(let k=off;k<off+n;k++){
+    const p0=P[Math.max(k-1,0)], p1=P[k], p2=P[k+1], p3=P[Math.min(k+2,P.length-1)];
+    const c1=[p1[0]+(p2[0]-p0[0])/6, p1[1]+(p2[1]-p0[1])/6], c2=[p2[0]-(p3[0]-p1[0])/6, p2[1]-(p3[1]-p1[1])/6];
+    s+="C"+[c1,c2,p2].map(q=>q[0].toFixed(2)+" "+q[1].toFixed(2)).join(" ");
+  }
+  el("path",{d:s,stroke:col(d/(days-1)),"stroke-width":1.15,"stroke-opacity":0.62},gl);
+}
+// the hours themselves, as fine grains
+const gd = el("g",{});
+for(let i=0;i<V.length;i++){ const [x,y]=pt(i,S[i]); el("circle",{cx:x.toFixed(2),cy:y.toFixed(2),r:0.7,fill:col(Math.floor(i/24)/(days-1)),"fill-opacity":0.55},gd); }
+
+// start mark
+const [sx,sy]=[cx, cy - rad(Math.max(...V)) - 14];
+el("line",{x1:cx,y1:sy-2,x2:cx,y2:sy-12,stroke:"#3a2a1c","stroke-width":1});
+
+// right column
+const tx=790;
+el("text",{x:tx,y:150,"font-size":30,"letter-spacing":0.5},null).textContent="Drawing In";
+const lines=[
+ "One point on the bark of a tree,",
+ "measured every hour for 61 days.",
+ "",
+ "Each turn around the centre is one day.",
+ "Distance from the centre is the trunk’s",
+ "radius at that hour, magnified many times;",
+ "the pale disc stands for the rest of the",
+ "wood and is not to scale.",
+ "",
+ "The record begins at the mark at the top",
+ "and runs clockwise, pale to dark.",
+ "Every day the loop is pulled inward in",
+ "the same sector, and every night it",
+ "swells back out. The few loops that stay",
+ "round and wide are most likely wet days."
+];
+lines.forEach((t,k)=>{ el("text",{x:tx,y:196+k*20,"font-size":13,"font-style":k<2?"italic":"normal"}).textContent=t; });
+
+// the record as received, small, as a key
+const kx=tx, ky=560, kw=232, kh=70;
+el("text",{x:kx,y:ky-12,"font-size":11.5,"fill-opacity":0.75}).textContent="the same 1,464 hours, laid out straight";
+const vmax=Math.max(...V);
+const gk=el("g",{});
+for(let i=0;i<V.length;i++){
+  const x=kx + kw*i/(V.length-1), y=ky + kh*(1-(V[i]-vmin)/(vmax-vmin));
+  el("circle",{cx:x.toFixed(2),cy:y.toFixed(2),r:0.6,fill:col(Math.floor(i/24)/(days-1)),"fill-opacity":0.8},gk);
+}
+el("line",{x1:kx,y1:ky+kh+10,x2:kx+kw,y2:ky+kh+10,stroke:"#3a2a1c","stroke-width":0.6,"stroke-opacity":0.5});
+for(let d=0; d<=61; d+=10){ const x=kx+kw*(d*24)/(V.length-1); el("line",{x1:x,y1:ky+kh+7,x2:x,y2:ky+kh+13,stroke:"#3a2a1c","stroke-width":0.6,"stroke-opacity":0.5}); }
+el("text",{x:kx,y:ky+kh+30,"font-size":11,"fill-opacity":0.7}).textContent="ticks every ten days";
+</script>
+</body>
+</html>

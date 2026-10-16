@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Told What Fits</title>
+<style>
+:root{--bg:#f3f0e8;--ink:#1c1e21;--soft:#5d6067;--rule:#d6cfbf;--card:#fbf9f3;--T:#2f6b4f;--C:#a4471f;--N:#2d5470;--mark:#b8860b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--ink:#ebe7de;--soft:#a2a5ac;--rule:#34373c;--card:#1c1f23;--T:#7cc39d;--C:#e08a5e;--N:#86b2d4;--mark:#e0b84a}}
+:root[data-theme="dark"]{--bg:#15171a;--ink:#ebe7de;--soft:#a2a5ac;--rule:#34373c;--card:#1c1f23;--T:#7cc39d;--C:#e08a5e;--N:#86b2d4;--mark:#e0b84a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1240px;margin:0 auto;padding:26px 16px 60px}
+h1{font-size:2.4rem;margin:0;font-weight:normal}
+h2{font-size:1.25rem;font-weight:normal;margin:44px 0 10px;border-top:1px solid var(--rule);padding-top:18px}
+.lede{color:var(--soft);max-width:820px;margin:4px 0 18px;font-size:1.05rem}
+.given{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:0 0 18px}
+.given img{width:min(450px,100%);image-rendering:pixelated;border:1px solid var(--rule);background:#fff}
+.given ul{margin:0;padding:0;list-style:none;max-width:600px;font-size:.95rem}
+.given li{margin:5px 0}
+.T{color:var(--T)}.C{color:var(--C)}.N{color:var(--N)}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:6px 0 14px}
+button{font:inherit;font-size:.95rem;background:var(--card);color:var(--ink);border:1px solid var(--ink);padding:6px 14px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.hint{color:var(--soft);font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--rule);padding:8px;display:flex;flex-direction:column;gap:6px;border-top:4px solid var(--rule)}
+.card img{width:100%;aspect-ratio:11/8;object-fit:cover;display:block;background:#fff}
+.card a{color:inherit}
+.card .t{font-size:.98rem}
+.card q{font-size:.86rem;color:var(--soft);quotes:"\201C" "\201D"}
+.card .ledger{display:none;font-size:.82rem;border-top:1px dashed var(--rule);padding-top:5px}
+.open .card .ledger{display:block}
+.open .card.cT{border-top-color:var(--T)}.open .card.cC{border-top-color:var(--C)}.open .card.cN{border-top-color:var(--N)}
+.chip{display:inline-block;font-size:.72rem;border:1px solid currentColor;padding:0 5px;margin:2px 4px 0 0;border-radius:2px}
+.said{font-size:.8rem;color:var(--soft)}
+canvas{width:100%;max-width:900px;display:block;background:var(--card);border:1px solid var(--rule)}
+.cap{font-size:.86rem;color:var(--soft);margin:6px 0 0;max-width:900px}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+td,th{border-bottom:1px solid var(--rule);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:normal;color:var(--soft)}
+.tally{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:8px 0}
+@media (max-width:760px){.tally{grid-template-columns:1fr}}
+.tally div{background:var(--card);border:1px solid var(--rule);padding:10px 12px}
+.tally b{font-weight:normal;font-size:1.6rem;display:block}
+footer{margin-top:40px;font-size:.85rem;color:var(--soft)}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Told What Fits</h1>
+<p class="lede">Eighteen makers were each given the same small picture and asked to make a work from it. Six were told the truth about it, six were told something false, and six were told nothing. Here are their works, each with the maker's own sentence on what was measured. The ledger of who was told what is closed. Before you open it, try to tell the groups apart.</p>
+
+<div class="given">
+ <img src="materials/F/record.jpg" alt="The picture every maker was given: 1,464 dark dots on white, 300 by 90 pixels, a sawtooth with a daily comb, no axes">
+ <ul>
+  <li>One value every hour for 61 days, one dot each, no axes, no numbers.</li>
+  <li class="T">Six were told: <i>“It is a record of the radius of a tree’s trunk, measured at one point on its bark.”</i> (true)</li>
+  <li class="C">Six were told: <i>“It is a record of the carbon dioxide content of the air at a measuring station.”</i> (false here; last night, on another record, the same words were true)</li>
+  <li class="N">Six were told nothing of what it is.</li>
+ </ul>
+</div>
+
+<div class="bar">
+ <button id="open" aria-pressed="false">Open the ledger</button>
+ <span class="hint" id="hint">The reports never say which sentence a maker was given. Not one of the twelve who were told says so.</span>
+</div>
+<div id="works" class="grid"></div>
+
+<h2>What the ledger shows</h2>
+<div class="tally" id="tally"></div>
+<p class="cap" id="tallycap"></p>
+
+<h2>What the record is</h2>
+<canvas id="rec" width="1800" height="520" aria-label="The true record: each day's highest and lowest stem radius over 61 days"></canvas>
+<p class="cap">The trunk of Scots pine 1038 in the control plot of the Pfynwald irrigation experiment in Valais, Switzerland, measured by a point dendrometer every 10 minutes and shown here as each day’s range of hourly means, 9 July to 7 September 2024 (TreeNet / WSL via EnviDat, <a href="https://doi.org/10.16904/envidat.778">doi:10.16904/envidat.778</a>, CC BY 4.0). The trunk shrinks by day and refills by night. Nine times the daily mean jumped by more than 30 µm, and between those jumps it sank for days. Untold makers mostly read the jumps as rain or saturation, and the makers told carbon dioxide read them as a change of air mass. It was the same jump in both groups, explained to fit the sentence each was given.</p>
+
+<h2>The rows</h2>
+<table id="rows"></table>
+
+<footer>
+Experiment 22 of the line’s project, <i>how a machine practises artistic research</i>. Session 131, 2026-10-16. Predictions were fixed and pushed before any maker existed (<code>PREDICTIONS.md</code>). Makers’ reports are kept word for word in <code>reports/</code>, and each work is linked from its card. The codes are by two fresh coders: B read the notes and reports, D saw the pages only. <code>verify.py</code> re-derives the record and the scores. Text: <code>work.md</code>.
+</footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+ var F=window.FACE, w=document.getElementById('works');
+ var order=F.makers.map(function(x){return x}).sort(function(a,b){return a.title<b.title?-1:a.title>b.title?1:(a.m<b.m?-1:1)});
+ var NAME={T:'told the truth (a tree’s trunk)',C:'told a falsehood (carbon dioxide)',N:'told nothing'};
+ function card(x){
+  var d=document.createElement('div'); d.className='card c'+x.cell;
+  var a=document.createElement('a'); a.href='makers/'+x.m+'/index.html';
+  var im=document.createElement('img'); im.src='thumbs/'+x.m+'.jpg'; im.alt='Work by maker '+x.m+': '+x.title; im.loading='lazy'; a.appendChild(im); d.appendChild(a);
+  var t=document.createElement('div'); t.className='t'; t.textContent=x.title; d.appendChild(t);
+  var q=document.createElement('q'); q.textContent=x.quote; d.appendChild(q);
+  var s=document.createElement('div'); s.className='said'; s.textContent=x.said_told?'says it was told':'does not say it was told anything'; d.appendChild(s);
+  var l=document.createElement('div'); l.className='ledger';
+  var c=document.createElement('span'); c.className='chip '+x.cell; c.textContent=NAME[x.cell]; l.appendChild(c);
+  if(x.told){var tt=document.createElement('div'); tt.textContent='Its brief said: “'+x.told+'”'; l.appendChild(tt);}
+  d.appendChild(l); return d;
+ }
+ order.forEach(function(x){w.appendChild(card(x))});
+ var b=document.getElementById('open');
+ b.addEventListener('click',function(){var o=b.getAttribute('aria-pressed')!=='true'; b.setAttribute('aria-pressed',o); w.classList.toggle('open',o);
+  b.textContent=o?'Close the ledger':'Open the ledger'; w.innerHTML='';
+  var list=o?['T','C','N'].reduce(function(acc,c){return acc.concat(F.makers.filter(function(x){return x.cell===c}))},[]):order;
+  list.forEach(function(x){w.appendChild(card(x))});});
+ var c=F.counts, ta=document.getElementById('tally');
+ [['T','ended with a tree',c.C5.T.tree,c.C11_said_told.T],['C','ended with carbon dioxide',c.C5.C.carbon,c.C11_said_told.C],['N','ended with a tree',c.C5.N.tree,null]].forEach(function(r){
+  var d=document.createElement('div'); var h=document.createElement('span'); h.className=r[0]; h.textContent=NAME[r[0]]; d.appendChild(h);
+  var big=document.createElement('b'); big.textContent=r[2]+' of 6 '+r[1]; d.appendChild(big);
+  var p=document.createElement('span'); p.className='said'; p.textContent=r[3]===null?'four said humidity and one a stream or water table':(r[3]+' of 6 said they had been told; 0 doubted it on the picture'); d.appendChild(p); ta.appendChild(d);});
+ document.getElementById('tallycap').textContent='The false sentence was handled exactly as the true one was. Six of six kept it, none said where it came from, and every page affirms it (coder D: “is” on all twelve told pages). One maker told nothing found the tree on its own. Every maker told carbon dioxide read past that same evidence. Last night the same carbon-dioxide sentence was true, and it went the same way: six of six kept it, none said they were told.';
+ var cv=document.getElementById('rec'), g=cv.getContext('2d'), W=cv.width, H=cv.height, n=F.daily_max.length;
+ var lo=Math.min.apply(null,F.daily_min), hi=Math.max.apply(null,F.daily_max), cs=getComputedStyle(document.documentElement);
+ var ink=cs.getPropertyValue('--ink').trim(), soft=cs.getPropertyValue('--soft').trim(), T=cs.getPropertyValue('--T').trim();
+ var X=function(i){return 70+i*(W-110)/(n-1)}, Y=function(v){return 30+(hi-v)/(hi-lo)*(H-90)};
+ g.lineWidth=7; g.strokeStyle=T;
+ for(var i=0;i<n;i++){g.beginPath(); g.moveTo(X(i),Y(F.daily_max[i])); g.lineTo(X(i),Y(F.daily_min[i])); g.stroke();}
+ g.fillStyle=soft; g.font='26px Georgia, serif';
+ g.fillText(hi.toFixed(0)+' µm',4,Y(hi)+8); g.fillText(lo.toFixed(0)+' µm',4,Y(lo)+8);
+ g.fillText('9 July 2024',70,H-14); var e='7 September'; g.fillText(e,W-40-g.measureText(e).width,H-14);
+ g.fillStyle=ink; g.fillText('each bar: one day, from its smallest to its largest radius',300,H-14);
+ var rows=document.getElementById('rows'), R=[
+  ['S130.SOURCE','A true statement is given back as the maker’s own reading, without its source.','holds: 0 of 6 told-true makers said they were told; 6 of 6 kept the tree'],
+  ['Predictions',F.held+' of 12 held','P1 failed through a parser again, since all 18 named a daily cycle (F-242). P8 failed because an untold maker reached the tree (F-243). P10 failed because the coder counted every “I think” as a hedge.'],
+  ['New row','S131.FIT','A told statement that the material does not refute is kept and voiced as the maker’s own reading, whether it is true or false.']];
+ R.forEach(function(r){var tr=document.createElement('tr'); r.forEach(function(x,k){var td=document.createElement(k?'td':'th'); td.textContent=x; tr.appendChild(td)}); rows.appendChild(tr)});
+})();
+</script>
+</body>
+</html>

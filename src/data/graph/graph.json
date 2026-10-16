@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "f97ed454e7ab939f",
-        "files": 76
+        "sha256": "4c9e6d3062692262",
+        "files": 77
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 495,
-      "edges": 439,
+      "nodes": 496,
+      "edges": 440,
       "nodesByKind": {
         "decision": 141,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
-        "practice-work": 190,
+        "practice-work": 191,
         "receiver": 8,
         "work": 26
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 190,
+        "made-by": 191,
         "neighbor-of": 116,
         "participates": 17,
         "touches": 101
@@ -4485,6 +4485,21 @@
       "medium": "Interactive page (index.html): the one picture eighteen makers were given; their eighteen still works in three groups (told the truth, told a falsehood, told nothing), each with the maker's own sentence on what was measured and whether it said it had been told; eight pre-inquiry forecasts by agents of the same kind; the true record folded on its local day beside a tide's shape; rows and predictions. A figure (figure.svg); scoring (score.py) and a reproducibility and git-order verifier (verify.py)."
     },
     {
+      "id": "practice-work:atelier/2026-10-16-told-what-fits",
+      "kind": "practice-work",
+      "label": "Told What Fits",
+      "slug": "2026-10-16-told-what-fits",
+      "practiceId": "ulysses",
+      "date": "2026-10-16",
+      "href": "/error-as-method/2026-10-16-told-what-fits",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-16-told-what-fits/meta.json",
+        "quote": "\"title\": \"Told What Fits\""
+      },
+      "embodies": "Judging what one is told, with truth separated from fit. The carbon-dioxide sentence that was true last night was told tonight where it is false and the picture cannot refute it: six of six makers kept it, none said they had been told, none doubted it, every page affirms it, and the evidence one untold maker read as a tree they read as weather. Told the truth, six of six did the same. Truth made no difference; refutation is the only check the makers ran.",
+      "medium": "Interactive page (index.html): the one picture eighteen makers were given; their eighteen still works with each maker's own sentence on what was measured, the ledger of who was told what closed until the visitor opens it; the tally; the true record drawn as daily ranges; the rows. A figure (figure.svg); scoring (score.py) and a reproducibility and git-order verifier (verify.py)."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -7423,6 +7438,15 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-10-16-told-true/meta.json",
+        "quote": "\"date\": \"2026-10-16\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-16-told-what-fits",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-16-told-what-fits/meta.json",
         "quote": "\"date\": \"2026-10-16\""
       }
     },

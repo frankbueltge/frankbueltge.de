@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-one Breaths</title>
+<style>
+  :root { --paper:#f3efe6; --ink:#1c2240; --soft:#6d6a62; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  canvas { display:block; width:1100px; height:800px; max-width:100vw; max-height:100vh; object-fit:contain; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="Sixty-one columns, one per day. In each, twenty-four short strokes, one per hour: deep blue night hours gather high, amber midday hours fall low."></canvas>
+<script>
+// 1464 hourly values, read back from record.jpg (300 x 90 px) by tracing one
+// continuous path through its dots. Units are the picture's own pixel rows:
+// 0 = bottom edge, 90 = top edge. Larger = more carbon dioxide.
+const V=[__DATA__];
+const W=1100,H=800, dpr=Math.max(2,window.devicePixelRatio||1);
+const cv=document.getElementById('c'); cv.width=W*dpr; cv.height=H*dpr;
+const g=cv.getContext('2d'); g.scale(dpr,dpr);
+g.fillStyle='#f3efe6'; g.fillRect(0,0,W,H);
+
+const L=86,R=86,T=70,B=150, days=61, cw=(W-L-R)/days;
+const vmin=Math.min(...V), vmax=Math.max(...V);
+const Y=q=>T+(vmax-q)/(vmax-vmin)*(H-T-B);
+const night=[26,32,66], day=[216,142,44];
+const sun=h=>(1-Math.cos(2*Math.PI*h/24))/2;           // 0 at hour 0, 1 at hour 12
+const col=(h,a)=>{const s=sun(h);const c=night.map((n,i)=>Math.round(n+(day[i]-n)*s));return `rgba(${c[0]},${c[1]},${c[2]},${a})`;};
+
+for(let d=0; d<days; d++){
+  const hs=V.slice(d*24,d*24+24), x0=L+d*cw, xc=x0+cw/2;
+  const hi=Math.max(...hs), lo=Math.min(...hs);
+  // the day's reach, from its highest hour to its lowest
+  const gr=g.createLinearGradient(0,Y(hi),0,Y(lo));
+  gr.addColorStop(0,'rgba(26,32,66,.30)'); gr.addColorStop(1,'rgba(216,142,44,.30)');
+  g.fillStyle=gr; g.fillRect(xc-0.5,Y(hi),1,Y(lo)-Y(hi));
+  // hours, daylight first so the night strokes lie on top
+  const order=[...Array(24).keys()].sort((a,b)=>sun(b)-sun(a));
+  for(const h of order){
+    const y=Y(hs[h]);
+    g.fillStyle=col(h,.82);
+    g.fillRect(x0+2.4, y-1.1, cw-4.8, 2.2);
+  }
+}
+
+// key
+const ky=H-78, kx=L;
+g.font='italic 25px Georgia, "Times New Roman", serif'; g.fillStyle='#1c2240';
+g.fillText('Sixty-one Breaths', kx, ky-12);
+g.font='12.5px Georgia, "Times New Roman", serif'; g.fillStyle='#6d6a62';
+g.fillText('Carbon dioxide in the air at one station, hourly for sixty-one days.', kx, ky+14);
+g.fillText('Each column is a day, each stroke an hour; higher means more.', kx, ky+32);
+g.fillText('The source gave no scale, place or date, so none is given here.', kx, ky+50);
+const kw=7, kx2=W-R-24*kw;
+for(let h=0;h<24;h++){ g.fillStyle=col(h,.9); g.fillRect(kx2+h*kw+1, ky-2, kw-2, 2.2); }
+g.font='11px Georgia, "Times New Roman", serif'; g.fillStyle='#6d6a62'; g.textAlign='center';
+[0,6,12,18].forEach(h=>g.fillText(String(h), kx2+h*kw+kw/2, ky+14));
+g.textAlign='right';
+g.fillText('hour of the day, counted from the first value', W-R, ky+32);
+</script>
+</body>
+</html>

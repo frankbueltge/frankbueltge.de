@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Sixty-One Rings</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--bg:#f3eee6;--ink:#3b2a1d;--muted:#8a7a68}
+html,body{margin:0;height:100%;background:var(--bg)}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden}
+.wrap{position:relative;width:1100px;height:800px}
+canvas{display:block;width:1100px;height:800px}
+.cap{position:absolute;left:56px;bottom:52px;font:13px/1.55 Georgia,'Times New Roman',serif;color:var(--muted);max-width:230px}
+.cap b{display:block;font-weight:normal;font-size:20px;color:var(--ink);margin-bottom:6px;letter-spacing:.02em}
+</style></head><body>
+<div class="wrap"><canvas id="c" width="1100" height="800"></canvas>
+<div class="cap"><b>Sixty-One Rings</b>One ring for each day of the record, the first at the pith, the last at the bark. A ring is as wide as the trunk breathed that day, from its smallest to its largest; its grain is dark where the hours lingered.</div></div>
+<script>
+const D=__DATA__;
+const cv=document.getElementById('c'),ctx=cv.getContext('2d');
+const dpr=Math.min(2,window.devicePixelRatio||1);
+cv.width=1100*dpr;cv.height=800*dpr;ctx.scale(dpr,dpr);
+const W=1100*dpr,Hh=800*dpr;
+const N=D.stats.length,cx=640,cy=400,pith=9,R=372,minW=1.2;
+const amp=D.stats.map(s=>s[1]-s[0]);
+const sumA=amp.reduce((a,b)=>a+b,0);
+const k=(R-pith-minW*N)/sumA;
+const edges=[pith];for(let i=0;i<N;i++)edges.push(edges[i]+minW+k*amp[i]);
+// normalise each day's profile
+// smooth each day's vertical ink profile (removes the dot-by-dot texture of the source picture), then normalise
+const G=[];for(let j=-7;j<=7;j++)G.push(Math.exp(-j*j/(2*2.6*2.6)));
+const prof=D.prof.map(p=>{const q=p.map((_,i)=>{let s=0,w=0;G.forEach((g,j)=>{const v=p[i+j-7];if(v!==undefined){s+=g*v;w+=g}});return s/w});
+  const m=Math.max(...q);return q.map(v=>v/m)});
+// level of each day: midpoint height (0 = lowest in record, 1 = highest)
+const mids=D.stats.map(s=>(s[0]+s[1])/2),lo=Math.max(...mids),hi=Math.min(...mids);
+const lev=mids.map(m=>(lo-m)/(lo-hi));
+function sample(r){ // returns [darkness, level] or null
+  if(r>edges[N])return null;
+  if(r<pith)return [0.9,0.5];
+  let d=0;while(edges[d+1]<r)d++;
+  const f=(r-edges[d])/(edges[d+1]-edges[d]);
+  const [top,bot]=D.stats[d];
+  const y=bot-f*(bot-top); // inner edge = day's smallest, outer edge = day's largest
+  const p=prof[d],i=Math.floor(y),t=y-i;
+  const v=(p[i]||0)*(1-t)+(p[i+1]||0)*t;
+  // a hairline at each ring's outer boundary, like a late-wood edge
+  const edgeDist=edges[d+1]-r;
+  const line=Math.max(0,1-edgeDist/0.8)*0.45;
+  return [Math.min(1,Math.pow(v,1.7)*0.8+line),lev[d]];
+}
+const img=ctx.createImageData(W,Hh),px=img.data;
+const bg=[243,238,230];
+const lightWet=[214,178,134],lightDry=[240,228,204],dark=[74,44,24];
+const ss=[[-.25,-.25],[.25,-.25],[-.25,.25],[.25,.25]];
+for(let Y=0;Y<Hh;Y++)for(let X=0;X<W;X++){
+  let c=[0,0,0];
+  for(const [ox,oy] of ss){
+    const x=(X+0.5)/dpr+ox/dpr-cx,y=(Y+0.5)/dpr+oy/dpr-cy;
+    const r=Math.hypot(x,y);let col;
+    if(r>R+7)col=bg;
+    else if(r>edges[N]){ // bark: a thin dark band
+      const b=(r-edges[N])/7;col=r>R+6?bg:[70+b*30,48+b*20,34+b*14];
+    }else{
+      const [v,l]=sample(r);
+      const base=[0,1,2].map(j=>lightDry[j]+(lightWet[j]-lightDry[j])*l);
+      col=base.map((b,j)=>b+(dark[j]-b)*v);
+    }
+    c[0]+=col[0];c[1]+=col[1];c[2]+=col[2];
+  }
+  const o=(Y*W+X)*4;px[o]=c[0]/4;px[o+1]=c[1]/4;px[o+2]=c[2]/4;px[o+3]=255;
+}
+ctx.putImageData(img,0,0);
+// the point on the bark where the band sat
+ctx.fillStyle='#b23a1e';ctx.beginPath();ctx.arc(cx,cy-R-3.5,3.2,0,7);ctx.fill();
+</script></body></html>
