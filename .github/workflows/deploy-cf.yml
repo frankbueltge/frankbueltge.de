@@ -68,7 +68,6 @@ on:
       - Requests watchdog # saat-sync committet register.json mit GITHUB_TOKEN → kein on:push
       - Atlas-Scout nightly # commits src/data/atlas/werke.json with GITHUB_TOKEN → no on:push
       - Puls nightly refresh # commits src/data/pulse/pulse.json with GITHUB_TOKEN → no on:push
-      - Attention integrate # mirrors public/attention/ with GITHUB_TOKEN → no on:push
       - Knowledge graph nightly # commits src/data/graph/graph.json with GITHUB_TOKEN → no on:push
       # The trending ledger (Common Ground, 2026-09-02) commits src/data/trending with the built-in
       # token every morning — the same reason as every entry above: without this line the day's
@@ -89,9 +88,14 @@ concurrency:
   # deploy before skipping itself. Observed 2026-08-15: "Atelier integrate" failed,
   # its workflow_run cancelled the push deploy of a just-merged PR (#650), and
   # shipped nothing. Runs destined to skip therefore get a group of their own and
-  # can cancel nothing; real deploys still supersede one another.
+  # can cancel nothing.
+  # 2026-10-17: a running deploy is no longer cancelled. With cancel-in-progress the
+  # nightly integrates cancelled every deploy in flight: 183 of about 400 runs between
+  # 2026-10-10 and 2026-10-15, and eleven in a row after one merge on 2026-10-16. Now a
+  # running deploy finishes, at most one waits behind it, and a newer run replaces the
+  # waiting one, so the newest main still ships, one build after another.
   group: ${{ (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success') && 'cf-deploy' || format('cf-deploy-noop-{0}', github.run_id) }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
