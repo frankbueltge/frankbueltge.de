@@ -116,10 +116,11 @@ export default defineConfig({
     mdx(),
     // The publication rule (Frank's decision of 2026-10-17, wording private): the practices'
     // finished works and cycle presentations are published, their working material stays in their
-    // own repositories. The integrate workflows keep copying whole mirrors into public/ (the build
-    // reads them), so the rule runs after the build and deletes from dist/ every mirrored file it
-    // does not publish (src/lib/engines/publication.mjs). It prints one summary line and never
-    // fails the build.
+    // own repositories. The integrates copy a practice's repository into public/ and trim the copy
+    // to the same rule plus what the build reads (scripts/engines/trim-mirror.mjs), so the rule
+    // runs again after the build and deletes from dist/ every mirrored file it does not publish
+    // (src/lib/engines/publication.mjs) — the files the build reads but nobody may open. It prints
+    // one summary line and never fails the build.
     publicationPrune(),
   ],
   // Engine README/INDEX docs (synced from the engines' own repos) carry repo-relative links;

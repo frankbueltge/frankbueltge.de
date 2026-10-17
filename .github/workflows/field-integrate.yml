@@ -102,8 +102,8 @@ jobs:
 
       # The mirror keeps what the site publishes and what the build reads, and nothing else of the
       # practice's (2026-10-17). The copy above brought in everything the practice's repository holds
-      # under public/field/; since the publication rule of the same day the site serves only its
-      # finished works and cycle presentations, so the rest — the session artifacts and the data and scripts beside a work — stopped being read by any
+      # for the site's public directory; since the publication rule of the same day the site serves
+      # only its finished works and cycle presentations, so the rest — the session artifacts and the data and scripts beside a work — stopped being read by any
       # page, count or score and went on piling up here at several hundred files a day. The rule is
       # src/lib/engines/publication.mjs, the same one the build applies to dist/; BUILD_READS there
       # names what stays although nobody can open it, and which loader reads it. A fault in this step
