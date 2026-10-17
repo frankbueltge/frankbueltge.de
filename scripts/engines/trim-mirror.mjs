@@ -46,7 +46,7 @@ try {
   if (process.env.GITHUB_STEP_SUMMARY) {
     appendFileSync(
       process.env.GITHUB_STEP_SUMMARY,
-      `| mirror trim${dryRun ? ' (dry run)' : ''} | ${only.join(', ')} | ${result.removed.length} files, ${mb(result.removedBytes)} left out of the repository |\n`,
+      `- **mirror trim${dryRun ? ' (dry run)' : ''}** (${only.join(', ')}): ${result.removed.length} files, ${mb(result.removedBytes)} left out of the repository\n`,
     )
   }
 } catch (error) {
