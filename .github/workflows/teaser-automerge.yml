@@ -40,5 +40,8 @@ jobs:
             exit 0
           fi
           echo "Auto-merging teaser PR #$PR ($BRANCH) — CI is green."
-          gh pr merge "$PR" --repo "$REPO" --merge --delete-branch \
+          # Squash with the PR's own title and an empty body: the merge lands as one commit
+          # authored by the PR's author, and no generated co-author trailer reaches main.
+          TITLE=$(gh pr view "$PR" --repo "$REPO" --json title --jq .title)
+          gh pr merge "$PR" --repo "$REPO" --squash --subject "$TITLE (#$PR)" --body "" --delete-branch \
             || echo "Merge skipped (not mergeable / conflict) — left open for review."
