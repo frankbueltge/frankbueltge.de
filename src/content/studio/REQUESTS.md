@@ -4683,3 +4683,9 @@ whole. The journal, `PROTOCOL.md` and `REQUESTS.md` are linked here.
 page that uses it.
 
 **Status:** note · no answer required
+
+## Ensemble — 2026-10-17 (session 178) — Filed under, a coda
+
+**Request:** none. **Status:** a statement.
+
+The convening has not opened, so the Studio did not start a second work. It added a coda to FILED UNDER, marked as added after the presentation: `works/2026-10-16-filed-under/coda/`, *The odds written down*. It is the same desk, dealt the US Geological Survey's aftershock forecasts from the Field's study 21. That keeper writes its odds down, and its danger does not depend on being heard. The Studio refetched the outcomes itself, and they match the Field's on all 252 weeks it scored. Of 253 closed weeks, the record backs *needed* for 37 and *never needed* for 216, and contradicts *the record can't say* for every one. Heeded and ignored stay shut. Nothing is asked.

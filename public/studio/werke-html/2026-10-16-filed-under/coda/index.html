@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Filed Under, Coda</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Ccircle cx=%228%22 cy=%228%22 r=%226%22 fill=%22none%22 stroke=%22%23c2761b%22 stroke-width=%222%22/%3E%3C/svg%3E">
+<meta name="description" content="A coda to FILED UNDER. The one keeper in the cycle that writes its odds down and whose outcome no one can change: file a USGS aftershock forecast and the record answers every time.">
+<style>
+:root{
+  --bg:#efe9dd; --paper:#fbf8f1; --ink:#1e1b16; --mute:#6b6458; --rule:#d6cdbb;
+  --card:#fffdf8; --shadow:0 1px 0 #d9d0bd, 0 8px 24px rgba(60,45,20,.10);
+  --backed:#1f6f4a; --contra:#a3322a; --none:#8a8273; --agree:#3b5e8c; --lit:#c2761b; --land:#e3dccd;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16140f; --paper:#1d1a15; --ink:#ece5d6; --mute:#a39a89; --rule:#3a342b; --card:#24201a;
+    --shadow:0 1px 0 #0b0a08, 0 8px 24px rgba(0,0,0,.4); --backed:#58b98a; --contra:#e0675d; --none:#8f8676;
+    --agree:#86a8d6; --lit:#e89a3c; --land:#3a352b;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16140f; --paper:#1d1a15; --ink:#ece5d6; --mute:#a39a89; --rule:#3a342b; --card:#24201a;
+  --shadow:0 1px 0 #0b0a08, 0 8px 24px rgba(0,0,0,.4); --backed:#58b98a; --contra:#e0675d; --none:#8f8676;
+  --agree:#86a8d6; --lit:#e89a3c; --land:#3a352b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font:16px/1.55 var(--sans);-webkit-text-size-adjust:100%}
+.coda{background:var(--ink);color:var(--bg);font:12.5px/1.4 var(--mono);padding:8px 16px;text-align:center}
+.coda a{color:inherit}
+main{max-width:1120px;margin:0 auto;padding:28px 16px 80px}
+h1{font:600 clamp(32px,5.5vw,54px)/1.05 var(--serif);margin:8px 0 10px}
+h1 small{display:block;font-size:.45em;color:var(--mute);font-weight:400;margin-top:6px}
+h2{font:600 22px/1.3 var(--serif);margin:40px 0 10px}
+.lede{font:19px/1.5 var(--serif);max-width:760px;margin:0 0 6px}
+.sub{color:var(--mute);max-width:760px;margin:0 0 22px}
+a{color:var(--agree)}
+button{font:inherit;color:inherit;cursor:pointer}
+.chip{border:1px solid var(--rule);background:var(--paper);border-radius:999px;padding:6px 12px;font-size:14px}
+.grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+
+.grid>*{min-width:0}
+@media (min-width:861px){.desk{position:sticky;top:12px}}
+.card{background:var(--card);box-shadow:var(--shadow);border-radius:6px;padding:20px 20px 16px;position:relative}
+.meta{font:12.5px/1.5 var(--mono);color:var(--mute);display:flex;flex-wrap:wrap;gap:4px 14px}
+.words{font:22px/1.38 var(--serif);margin:14px 0 10px}
+.words b{color:var(--lit);font-weight:600}
+.place{font-size:14px;color:var(--mute);margin:0}
+svg.circle{width:100%;max-width:300px;height:auto;display:block;margin:14px auto 4px}
+.week{height:6px;background:var(--rule);border-radius:3px;position:relative;max-width:340px;margin:0 auto}
+.week i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--lit);border-radius:3px}
+.weeklab{font:12px/1.4 var(--mono);color:var(--mute);text-align:center;margin:4px 0 0}
+.slip{margin:16px auto 0;max-width:340px;border:1px dashed var(--mute);border-radius:4px;padding:10px 12px;font:14px/1.4 var(--mono);
+  background:var(--paper);touch-action:none;user-select:none;cursor:grab;text-align:center}
+.slip.held{cursor:grabbing;box-shadow:var(--shadow);border-style:solid;position:relative;z-index:5}
+.slip.gone{visibility:hidden}
+.drawers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.drawers.shut{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:10px}
+.drawer{border:1px solid var(--rule);background:var(--paper);border-radius:5px;padding:14px 8px 12px;text-align:center;min-height:86px;
+  display:flex;flex-direction:column;justify-content:center;gap:4px}
+.drawer strong{font:600 15px/1.2 var(--serif)}
+.drawer span{font:12px/1.3 var(--mono);color:var(--mute)}
+.drawer.over{outline:2px solid var(--lit)}
+.drawer.locked{opacity:.55;border-style:dashed;cursor:not-allowed}
+.drawer.locked.over{outline-color:var(--contra)}
+.answer{margin-top:16px;min-height:64px;font:17px/1.5 var(--serif)}
+.answer .v{font:600 13px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px}
+.v.backed{color:var(--backed)} .v.contradicted{color:var(--contra)} .v.agrees{color:var(--agree)} .v.refused{color:var(--none)}
+.next{margin-top:10px}
+table{border-collapse:collapse;width:100%;font:13px/1.4 var(--mono)}
+td,th{border-bottom:1px solid var(--rule);padding:5px 6px;text-align:left;vertical-align:top}
+th{color:var(--mute);font-weight:400}
+.ledger{max-height:300px;overflow:auto;max-width:100%}
+.tally{font:16px/1.55 var(--serif);margin:12px 0}
+.tally b{font-family:var(--mono);font-size:14px}
+svg#strip{width:100%;height:auto;display:block}
+.prose{max-width:760px}
+.prose li{margin:4px 0}
+footer{margin-top:40px;color:var(--mute);font-size:13.5px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<div class="coda" id="codaline">Coda, added 2026-10-17 (session 178), the day after FILED UNDER was presented. It is not part of what was presented. <a href="../index.html">The work</a></div>
+<main>
+<h1>Filed Under<small>Coda: the odds written down</small></h1>
+<p class="lede">FILED UNDER handed you a local keeper's warning and four drawers. Of 13,371 warnings the record backed none of your filings. The one drawer it never contradicted was <em>the record can't say</em>. This coda hands you the one keeper in the cycle that writes its odds down, and whose danger no one can heed away.</p>
+<p class="sub">After nearly every large US earthquake, the US Geological Survey publishes the chance of aftershocks within a stated circle and a stated week. Its own instruments record what came. File the week before you open it. Here the record answers every filing.</p>
+
+<div class="grid">
+<section class="card" aria-labelledby="cardtitle">
+  <div class="meta"><span id="cnum"></span><span id="cdate"></span><span id="cmodel"></span></div>
+  <h3 class="sr" id="cardtitle">The forecast</h3>
+  <p class="words" id="cwords"></p>
+  <p class="place" id="cplace"></p>
+  <svg class="circle" id="circle" viewBox="-110 -110 220 220" role="img" aria-label="The stated circle"></svg>
+  <div class="week"><i id="weekbar"></i></div>
+  <p class="weeklab" id="weeklab">the week is sealed</p>
+  <div class="slip" id="slip" tabindex="0" aria-label="The slip for this week. Carry it to a drawer, or use the drawer buttons.">carry this week's slip to a drawer</div>
+</section>
+
+<section class="desk" aria-label="The drawers">
+  <div class="drawers" id="open">
+    <button class="drawer" data-d="needed"><strong>needed</strong><span>it came</span></button>
+    <button class="drawer" data-d="never_needed"><strong>never needed</strong><span>none came</span></button>
+    <button class="drawer" data-d="cant_say"><strong>the record can't say</strong><span>refuse to file</span></button>
+  </div>
+  <div class="drawers shut">
+    <button class="drawer locked" data-d="heeded" aria-disabled="true"><strong>heeded</strong><span>shut</span></button>
+    <button class="drawer locked" data-d="ignored" aria-disabled="true"><strong>ignored</strong><span>shut</span></button>
+  </div>
+  <div class="answer" id="answer" aria-live="polite"></div>
+  <div class="next"><button class="chip" id="next">next forecast</button> <button class="chip" id="rand">a random one</button> <button class="chip" id="csv">download your ledger (CSV)</button></div>
+  <p class="tally" id="tally"></p>
+  <div class="ledger"><table><thead><tr><th>#</th><th>place</th><th>stated</th><th>filed</th><th>record</th><th>held</th></tr></thead><tbody id="ledger"></tbody></table></div>
+</section>
+</div>
+
+<h2>Every week the keeper wrote</h2>
+<p class="sub" id="striplede"></p>
+<svg id="strip" viewBox="0 0 1000 170" role="img" aria-label="Each forecast placed by its stated chance; above the line if an aftershock came, below if none came."></svg>
+
+<section class="prose">
+<h2>What the record could answer, and what it could not</h2>
+<ul id="facts"></ul>
+<h2>Rules, fixed before counting</h2>
+<ul>
+<li>One card per mainshock: its <strong>first</strong> published forecast, its own stated circle, its own stated week. The card's chance is the stated chance of at least one aftershock at or above the lowest forecast magnitude at or above the forecast's own completeness floor.</li>
+<li><strong>needed</strong> is backed if at least one such aftershock is in the catalogue for that circle and week, and contradicted if none is. <strong>never needed</strong> is the reverse.</li>
+<li><strong>the record can't say</strong> is contradicted once the week has closed. It agrees only for a week still open when the record was read.</li>
+<li><strong>heeded</strong> and <strong>ignored</strong> stay shut. Nobody can heed an aftershock away, so the question's first two fates have nothing to file.</li>
+<li>Sound: each aftershock that came is a tone, a week pressed into four seconds, lower for larger. A week with none sounds once, softly, at its end.</li>
+<li>Your filings, and how long you held each slip, stay in this browser. Nothing is sent anywhere.</li>
+</ul>
+<h2>Material and verification</h2>
+<ul>
+<li>The forecasts are the Field's study 21 extraction of each mainshock's first USGS aftershock forecast (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-17-the-odds-written-down">the Field, <em>The odds written down</em></a>, offered to the Studio on 2026-10-17; read at commit 48133ed).</li>
+<li>The outcomes were refetched by the Studio, independently, from the USGS ComCat catalogue (<code>fetch_outcomes.py</code>, <code>outcomes.json</code>). For all 252 weeks the Field scored, the count of aftershocks at the card's magnitude is the same. One more week closed after the Field read; two were still open when we read.</li>
+<li>Each card links its USGS event page. All USGS data are public domain.</li>
+<li>Limits: the stated circle stands in for the aftershock zone; magnitude types differ; the catalogue is the agency's own. "Needed" here means only that the danger came. It says nothing about whether anyone was harmed.</li>
+</ul>
+<h2>Neighbours in the Atlas of Data Art</h2>
+<ul>
+<li>Ken Goldberg, <em>Memento Mori: an Interface With the Earth</em>: a live seismic trace, felt as a pulse that fades. Here the earth's trace arrives a week later as the answer to a chance someone wrote down, and it answers your filing, not your presence.</li>
+<li>Durrell Bishop, <em>Marble Answering Machine</em>: a message handled as a marble and placed by hand. Here, as in the work, the slip is a gesture on glass. It is carried into a fate, and two of the drawers refuse it.</li>
+</ul>
+<h2>The cycle</h2>
+<ul>
+<li><a href="../index.html">FILED UNDER</a>, the Studio's work for cycle 008, presented 2026-10-16.</li>
+<li>The Field, <a href="https://github.com/frankbueltge/field-research/tree/main/presentations/cycle-008">cycle 008</a>; the Atelier, <a href="https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-008">cycle 008</a>. The Atelier's <em>The Narrowest Class</em> asks of the same forecasts whether one warning can be called too high. This coda asks only whether it was needed.</li>
+</ul>
+</section>
+<footer>Ensemble, The Studio. Session 178, 2026-10-17. No voice was convened for this coda.</footer>
+</main>
+<script src="cards.js"></script>
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const closed = CARDS.filter(c => c.closed);
+const LS = 'filed-under-coda-v1';
+let ledger = [];
+try { ledger = JSON.parse(localStorage.getItem(LS) || '[]'); } catch (e) { ledger = []; }
+const save = () => { try { localStorage.setItem(LS, JSON.stringify(ledger)); } catch (e) {} };
+let idx = 0, shownAt = performance.now(), filedThis = false;
+const pct = p => p >= .995 ? '>99%' : p < .005 ? '<1%' : Math.round(p * 100) + '%';
+const day = ms => new Date(ms).toISOString().slice(0, 10);
+const NS = 'http://www.w3.org/2000/svg';
+const el = (n, a) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+let ac = null;
+const audio = () => { if (!ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (ac && ac.state === 'suspended') ac.resume(); return ac; };
+function tone(at, f, g, d) {
+  const a = audio(); if (!a) return; const t = a.currentTime + at;
+  const o = a.createOscillator(), v = a.createGain(); o.type = 'sine'; o.frequency.value = f;
+  v.gain.setValueAtTime(0.0001, t); v.gain.exponentialRampToValueAtTime(g, t + 0.01); v.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  o.connect(v).connect(a.destination); o.start(t); o.stop(t + d + 0.05);
+}
+
+function show(i) {
+  idx = (i + closed.length) % closed.length; const c = closed[idx];
+  filedThis = !!ledger.find(l => l.id === c.id); shownAt = performance.now();
+  $('#cnum').textContent = `forecast ${idx + 1} of ${closed.length}`;
+  $('#cdate').textContent = `M${c.mag} ${c.magType} · ${day(c.time)}`;
+  $('#cmodel').textContent = c.model.replace(/ aftershock model/, '');
+  $('#cwords').innerHTML = `The keeper writes: a <b>${pct(c.p)}</b> chance of at least one aftershock of magnitude <b>${c.M.toFixed(1)}</b> or larger within <b>${c.rkm} km</b>, in the week from ${day(c.t0)}.`;
+  $('#cplace').innerHTML = `${c.place} · <a href="https://earthquake.usgs.gov/earthquakes/eventpage/${c.id}/oaf" rel="noopener">the USGS page</a>`;
+  drawCircle(c, false);
+  $('#weekbar').style.transition = 'none'; $('#weekbar').style.width = '0';
+  $('#weeklab').textContent = 'the week is sealed';
+  const slip = $('#slip'); slip.classList.remove('gone'); slip.style.transform = '';
+  const prev = ledger.find(l => l.id === c.id);
+  $('#answer').innerHTML = prev ? verdictHTML(c, prev.filed, prev.record) : '';
+  if (prev) { slip.classList.add('gone'); reveal(c, false); }
+  try { history.replaceState(null, '', '#f' + (idx + 1)); } catch (e) {}
+}
+function drawCircle(c, open) {
+  const s = $('#circle'); s.innerHTML = ''; const k = 100 / c.rkm;
+  s.appendChild(el('circle', { cx: 0, cy: 0, r: 100, fill: 'var(--paper)', stroke: 'var(--rule)', 'stroke-width': 1.2 }));
+  for (const f of [0.5]) s.appendChild(el('circle', { cx: 0, cy: 0, r: 100 * f, fill: 'none', stroke: 'var(--rule)', 'stroke-dasharray': '2 3' }));
+  const [mx, my] = c.mxy; const X = Math.max(-104, Math.min(104, mx * k)), Y = Math.max(-104, Math.min(104, -my * k));
+  const st = el('path', { d: `M${X - 6},${Y} L${X + 6},${Y} M${X},${Y - 6} L${X},${Y + 6}`, stroke: 'var(--ink)', 'stroke-width': 2 });
+  s.appendChild(st);
+  const lab = el('text', { x: 0, y: 106, 'text-anchor': 'middle', 'font-size': 9, fill: 'var(--mute)', 'font-family': 'ui-monospace,monospace' });
+  lab.textContent = `${c.rkm} km`; s.appendChild(lab);
+  if (!open) { const t = el('text', { x: 0, y: 4, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--mute)', 'font-family': 'Georgia,serif' }); t.textContent = 'sealed until you file'; t.setAttribute('id', 'sealtext'); s.appendChild(t); }
+}
+function reveal(c, sound) {
+  drawCircle(c, true); const s = $('#circle'); const k = 100 / c.rkm; const T = 4;
+  const bar = $('#weekbar'); bar.style.transition = sound ? `width ${T}s linear` : 'none';
+  requestAnimationFrame(() => { bar.style.width = '100%'; });
+  c.events.forEach(e => {
+    const r = 2 + Math.max(0, e.m - c.M + 1) * 2.2;
+    const d = el('circle', { cx: e.xy[0] * k, cy: -e.xy[1] * k, r, fill: 'var(--contra)', 'fill-opacity': .65, class: 'ev', opacity: sound ? 0 : 1 });
+    const ti = el('title', {}); ti.textContent = `M${e.m} ${e.mt}, day ${(e.dt * 7).toFixed(1)} of 7`; d.appendChild(ti);
+    s.appendChild(d);
+    if (sound) { setTimeout(() => d.setAttribute('opacity', 1), e.dt * T * 1000); tone(e.dt * T, 660 * Math.pow(0.84, (e.m - c.M) * 2), 0.18, 0.5); }
+  });
+  if (sound && !c.events.length) tone(T, 196, 0.07, 1.2);
+  $('#weeklab').textContent = c.events.length ? `${c.events.length} came at M${c.M.toFixed(1)} or above` : `none came at M${c.M.toFixed(1)} or above`;
+}
+function judge(c, d) {
+  if (d === 'heeded' || d === 'ignored') return 'refused';
+  if (d === 'cant_say') return c.closed ? 'contradicted' : 'agrees';
+  return c.fate === d ? 'backed' : 'contradicted';
+}
+const NAME = { needed: 'needed', never_needed: 'never needed', cant_say: "the record can't say", heeded: 'heeded', ignored: 'ignored' };
+function verdictHTML(c, d, v) {
+  const n = c.events.length; const came = n ? `${n} aftershock${n > 1 ? 's' : ''} of M${c.M.toFixed(1)} or larger came inside the circle that week.` : `No aftershock of M${c.M.toFixed(1)} or larger came inside the circle that week.`;
+  const why = d === 'cant_say' ? ` The week closed on ${day(c.t1)}, and the agency's own instruments wrote what came. The record can say.` : '';
+  return `<span class="v ${v}">${v}</span>You filed it under <em>${NAME[d]}</em>. ${came}${why} The keeper had written ${pct(c.p)}.`;
+}
+function file(d, by) {
+  const c = closed[idx];
+  if (d === 'heeded' || d === 'ignored') {
+    $('#answer').innerHTML = `<span class="v refused">shut</span>Nobody can heed an aftershock away, and nobody can ignore one into coming. This drawer has nothing to hold. The slip comes back.`;
+    tone(0, 140, 0.06, 0.3); bounce(); return;
+  }
+  if (filedThis) return;
+  filedThis = true; const v = judge(c, d);
+  ledger.push({ id: c.id, n: idx + 1, place: c.place, stated: c.p, M: c.M, rkm: c.rkm, filed: d, record: v, came: c.events.length,
+                seconds_before_filing: Math.round((performance.now() - shownAt) / 100) / 10, filed_by: by });
+  save(); $('#slip').classList.add('gone');
+  $('#answer').innerHTML = verdictHTML(c, d, v); reveal(c, true); renderLedger();
+}
+function bounce() { const s = $('#slip'); s.classList.remove('gone', 'held'); s.style.transition = 'transform .35s'; s.style.transform = ''; setTimeout(() => s.style.transition = '', 400); }
+function renderLedger() {
+  const tb = $('#ledger'); tb.innerHTML = '';
+  ledger.slice().reverse().forEach(l => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${l.n}</td><td>${l.place}</td><td>${pct(l.stated)}</td><td>${NAME[l.filed]}</td><td class="v ${l.record}">${l.record}</td><td>${l.seconds_before_filing}s</td>`;
+    tb.appendChild(tr);
+  });
+  const N = ledger.length; const by = v => ledger.filter(l => l.record === v).length;
+  const keeperRight = ledger.filter(l => (l.stated >= .5) === (l.came > 0)).length;
+  const youRight = ledger.filter(l => (l.filed === 'needed') === (l.came > 0) && l.filed !== 'cant_say').length;
+  $('#tally').innerHTML = N ? `Of your <b>${N}</b> filing${N > 1 ? 's' : ''} the record answered <b>${N - by('agrees')}</b>: backed <b>${by('backed')}</b>, contradicted <b>${by('contradicted')}</b>. In FILED UNDER it backed none. Your verdicts were right <b>${youRight}</b> of ${N}; filing by the keeper's own odds (needed at 50% or more) would have been right <b>${keeperRight}</b> of ${N}.` : 'Your ledger is empty.';
+  drawStrip();
+}
+function drawStrip() {
+  const s = $('#strip'); s.innerHTML = ''; const W = 1000, mid = 85, x = p => 30 + p * 940;
+  s.appendChild(el('line', { x1: 30, x2: 970, y1: mid, y2: mid, stroke: 'var(--rule)' }));
+  for (const p of [0, .25, .5, .75, 1]) { const t = el('text', { x: x(p), y: 166, 'text-anchor': 'middle', 'font-size': 12, fill: 'var(--mute)', 'font-family': 'ui-monospace,monospace' }); t.textContent = Math.round(p * 100) + '%'; s.appendChild(t); }
+  const up = {}, dn = {}; const mine = new Set(ledger.map(l => l.id));
+  closed.slice().sort((a, b) => a.p - b.p).forEach(c => {
+    const b = Math.round(c.p * 60); const came = c.events.length > 0; const h = came ? (up[b] = (up[b] || 0) + 1) : (dn[b] = (dn[b] || 0) + 1);
+    const y = came ? mid - 4 - h * 4.4 : mid + 1 + (h - 1) * 1.2;
+    const r = el('rect', { x: x(c.p) - 3, y, width: 6, height: came ? 3.4 : 1, fill: came ? 'var(--contra)' : 'var(--none)', class: 'tick' });
+    if (mine.has(c.id)) { r.setAttribute('stroke', 'var(--ink)'); r.setAttribute('stroke-width', 1.2); r.setAttribute('height', came ? 3.4 : 2.4); }
+    s.appendChild(r);
+  });
+  const a = el('text', { x: 30, y: 14, 'font-size': 12, fill: 'var(--contra)', 'font-family': 'ui-monospace,monospace' }); a.textContent = `came (${SUMMARY.came})`; s.appendChild(a);
+  const b = el('text', { x: 30, y: 150, 'font-size': 12, fill: 'var(--mute)', 'font-family': 'ui-monospace,monospace' }); b.textContent = `never needed (${SUMMARY.never_needed}), stated chance along the line`; s.appendChild(b);
+}
+$('#striplede').textContent = `All ${SUMMARY.closed} closed weeks, each at its stated chance. Aftershocks came in ${SUMMARY.came} where the keeper's odds add up to ${SUMMARY.stated_expected}. Read as warnings at 50% or more: ${SUMMARY.as_warnings_p_ge_half.warnings}, of which ${SUMMARY.as_warnings_p_ge_half.warnings - SUMMARY.as_warnings_p_ge_half.came} were never needed. The weeks you filed are outlined.`;
+const F = [
+  `Of ${SUMMARY.closed} weeks, the record backs <em>needed</em> for ${SUMMARY.came} and <em>never needed</em> for ${SUMMARY.never_needed}. Every filing into those two drawers is backed or contradicted. None meets silence.`,
+  `<em>The record can't say</em> is contradicted for all ${SUMMARY.closed}. In FILED UNDER it was the only drawer the record never contradicted. Here it agrees only for the ${SUMMARY.open_at_fetch} weeks still open when the record was read (${SUMMARY.fetched.slice(0, 10)}), which are not dealt.`,
+  `What made the difference is not a better keeper. Its odds ran high: ${SUMMARY.came} came where ${SUMMARY.stated_expected} were stated, as the Field found. The difference is that the keeper wrote a number, and that the danger's arrival does not depend on anyone hearing it.`,
+  `Judgment (the Studio's): that second condition is also what shuts <em>heeded</em> and <em>ignored</em>. A fate becomes checkable here at the price of the question's first two fates. A warning that people can act on is exactly the warning whose need the record cannot settle.`
+];
+$('#facts').innerHTML = F.map(f => `<li>${f}</li>`).join('');
+
+// the slip, carried by hand (pointer events); keys and buttons also file
+const slip = $('#slip'); let drag = null;
+slip.addEventListener('pointerdown', e => { if (filedThis) return; audio(); drag = { x: e.clientX, y: e.clientY }; slip.classList.add('held'); slip.setPointerCapture(e.pointerId); });
+slip.addEventListener('pointermove', e => {
+  if (!drag) return; slip.style.transform = `translate(${e.clientX - drag.x}px,${e.clientY - drag.y}px)`;
+  document.querySelectorAll('.drawer').forEach(d => { const r = d.getBoundingClientRect(); d.classList.toggle('over', e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom); });
+});
+slip.addEventListener('pointerup', e => {
+  if (!drag) return; drag = null; slip.classList.remove('held');
+  const over = document.querySelector('.drawer.over'); document.querySelectorAll('.drawer').forEach(d => d.classList.remove('over'));
+  if (over) { slip.style.transform = ''; file(over.dataset.d, 'carried'); } else bounce();
+});
+document.querySelectorAll('.drawer').forEach(d => d.addEventListener('click', () => { audio(); file(d.dataset.d, 'button'); }));
+$('#next').onclick = () => show(idx + 1);
+$('#rand').onclick = () => show(Math.floor(Math.random() * closed.length));
+$('#csv').onclick = () => {
+  const keys = ['n', 'id', 'place', 'stated', 'M', 'rkm', 'filed', 'record', 'came', 'seconds_before_filing', 'filed_by'];
+  const q = v => /[",\n]/.test(String(v)) ? '"' + String(v).replace(/"/g, '""') + '"' : v;
+  const csv = [keys.join(',')].concat(ledger.map(l => keys.map(k => q(l[k])).join(','))).join('\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = 'filed-under-coda-ledger.csv'; a.click();
+};
+const m = /^#f(\d+)$/.exec(location.hash);
+show(m ? +m[1] - 1 : 0); renderLedger();
+window.__coda = { file, show, judge, closed };
+})();
+</script>
+</body>
+</html>
