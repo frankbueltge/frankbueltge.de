@@ -9,13 +9,17 @@
 // them machine-made practice pages), the name query for the owner had fallen far, and Cloudflare
 // Pages' free plan stops deploying at 20,000 files.
 //
-// WHERE IT IS APPLIED. The integrate workflows still copy whole practice repositories into
-// public/ and src/content/, and the repository keeps those mirrors: the build reads them for the
-// registers, the counts and the score. The rule therefore runs at BUILD time. This module decides,
-// for each file the build copied from public/ into dist/, whether it is published; the prune
-// integration (./publication-prune.mjs, registered in astro.config.mjs) deletes the rest from
-// dist/ after the build. A page the site renders itself is never decided here: a page leaves the
-// site by deleting its route, and its old address gets a 301 in public/_redirects.
+// WHERE IT IS APPLIED. Twice. At BUILD time, the prune integration (./publication-prune.mjs,
+// registered in astro.config.mjs) deletes from dist/ every mirrored file this module does not
+// publish. At MIRROR time, the integrate workflows copy a practice's repository into public/ and
+// scripts/engines/trim-mirror.mjs then removes from that copy what the rule does not publish AND
+// no loader reads (BUILD_READS, below), so working material stops piling up in this repository.
+// The first rule is the decision of the day; the second is its consequence, added the same
+// evening (the integrates had been adding about three hundred unpublished files a day). The
+// build still reads the registers, the counts and the score from the mirrors, which is why a
+// file the build reads stays even though nobody can open it on the site. A page the site renders
+// itself is never decided here: a page leaves the site by deleting its route, and its old
+// address gets a 301 in public/_redirects.
 //
 // Plain JS with JSDoc types, so astro.config.mjs, the integration and the tests read one rule.
 // Pure: no file system, no clock. Whatever depends on the mirror's contents (which n-1 pages are
@@ -144,6 +148,63 @@ export const FACE_WORKING_FOLDERS = /** @type {const} */ (['briefs', 'reports', 
 
 /** The files that can carry a reference to working material that a work still uses. */
 export const REFERRER_EXTENSIONS = /** @type {const} */ (['.html', '.js', '.mjs'])
+
+/**
+ * What the build reads from a mirror although the site does not publish it, as globs over the same
+ * dist-relative paths (`**` any depth, `*` one segment). The mirrors keep these beside what is
+ * published; every other file of a mirror is working material, and the mirror step does not keep it.
+ *
+ * Each entry names its reader, found by tracing every file the build, the tests, the type check and
+ * the graph derivation open (2026-10-17), and by reading the loaders for what the current data does
+ * not exercise. The tracing counted a read only where a loader takes the file's content or existence
+ * into a page, a count or a score. Guards that scan the whole tree (source-links.ts, atp-quotations.ts)
+ * read whatever is there and have no say: a guard that sees fewer files finds no more.
+ *
+ * Nothing here widens what is published. The build-time prune uses the publication rule alone.
+ *
+ * @type {readonly string[]}
+ */
+export const BUILD_READS = [
+  // The ecology's register (src/lib/ecology/v3.ts): a session artifact or a window is listed by the
+  // title in the head of its page, and by nothing else in its folder.
+  '*/artifacts/*/index.html',
+  '*/artifacts/*/*/index.html',
+  '*/window/*/index.html',
+  // The long work (src/lib/studio/long-work.ts): a Studio work is a long work when its score stands
+  // beside it.
+  'studio/werke-html/*/SCORE.md',
+  // n-1 (src/lib/n1/shelf.ts and works.ts, src/lib/ecology/n1-line.ts, the station and the gallery):
+  // the record's nights (the gallery draws their thumbnails), the dowry and the window file, every
+  // page the shelf walks and the FORM.md or WORK.md that dates a work.
+  'n-1/DOWRY.md',
+  'n-1/window.json',
+  'n-1/nights/**',
+  'n-1/projects/*.html',
+  'n-1/projects/**/*.html',
+  'n-1/works/**/FORM.md',
+  'n-1/works/**/WORK.md',
+  'n-1/projects/**/FORM.md',
+  'n-1/projects/**/WORK.md',
+  // Arch (src/lib/arch/facts.ts, the station, the gallery): its facts. The practice is retired and its
+  // mirror no longer grows, so nothing trims it today; the entries are here so that the day somebody
+  // does, its facts stay.
+  'arch/BALANCE.md',
+  'arch/DOWRY.md',
+  'arch/PREREGISTRATION.md',
+  'arch/record/**',
+  'arch/registers/**',
+  'arch/reading/**',
+  'arch/ledger/**',
+  'arch/works/*/README.md',
+]
+
+/**
+ * Whether the build reads a mirrored file although the site does not publish it.
+ * @param {string} path dist-relative, posix separators
+ */
+export function isReadByBuild(path) {
+  return BUILD_READS.some((glob) => matchGlob(glob, path))
+}
 
 /** @param {string} path */
 const extOf = (path) => {

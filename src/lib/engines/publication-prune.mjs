@@ -10,6 +10,12 @@
 // It must never take the build down: the integrate workflows of every practice run this build as
 // their gate, so a fault here would stop the whole house's deploy. A missing directory is simply
 // skipped; any other fault is logged as an error and the build continues with dist/ as built.
+//
+// The same function trims the mirrors themselves (scripts/engines/trim-mirror.mjs): pointed at
+// public/ instead of dist/, with `keep` naming what the build reads, it deletes from the copy an
+// integrate has just made whatever the rule does not publish and nothing reads. One decision made
+// twice is one decision: the trim cannot keep less than the build would publish, because it asks
+// the same question of the same files.
 
 import { existsSync, readdirSync, readFileSync, rmSync, statSync } from 'node:fs'
 import { join } from 'node:path'
@@ -121,6 +127,7 @@ function n1Published(dist, readWorks, warnings) {
  * @typedef {object} PruneResult
  * @property {Record<string, { kept: number, removed: number }>} practices mirrored files per practice
  * @property {string[]} removed dist-relative paths deleted
+ * @property {number} removedBytes the size of those files, read before they were deleted
  * @property {string[]} shadowed addresses of published files that a redirect rule would send away
  * @property {string[]} warnings
  */
@@ -128,15 +135,21 @@ function n1Published(dist, readWorks, warnings) {
 /**
  * Applies the publication rule to a built dist/ directory. With `dryRun` it decides and reports
  * without deleting anything.
- * @param {{ dist: string, publicDir: string, root: string, readWorks?: (root: string) => ReadonlySet<string>, dryRun?: boolean }} options
+ *
+ * Three options serve the mirror trim, which points `dist` at public/ itself:
+ *  - `only` limits the pass to the named practices (an integrate trims its own mirror);
+ *  - `keep` names files that stay although the rule does not publish them (what the build reads);
+ *  - `redirects: false` skips the redirect shadow report, which is a question about dist/.
+ * @param {{ dist: string, publicDir: string, root: string, readWorks?: (root: string) => ReadonlySet<string>, dryRun?: boolean, only?: readonly string[], keep?: (path: string) => boolean, redirects?: boolean }} options
  * @returns {PruneResult}
  */
-export function prunePublication({ dist, publicDir, root, readWorks = n1WorkPages, dryRun = false }) {
+export function prunePublication({ dist, publicDir, root, readWorks = n1WorkPages, dryRun = false, only, keep, redirects: checkRedirects = true }) {
   /** @type {string[]} */
   const warnings = []
   /** @type {string[]} */
   const files = []
-  for (const practice of Object.keys(MIRRORS)) {
+  const practicesInScope = Object.keys(MIRRORS).filter((practice) => !only || only.includes(practice))
+  for (const practice of practicesInScope) {
     const abs = join(dist, practice)
     if (existsSync(abs) && statSync(abs).isDirectory()) walkFiles(abs, practice, files)
   }
@@ -187,12 +200,13 @@ export function prunePublication({ dist, publicDir, root, readWorks = n1WorkPage
     return folder !== null && folderText(folder).includes(basenameOf(path))
   }
 
-  const ctx = { isMirrored, inProgress, isReferenced, n1Pages: n1Published(dist, readWorks, warnings) }
+  const ctx = { isMirrored, inProgress, isReferenced, n1Pages: only && !only.includes('n-1') ? new Set() : n1Published(dist, readWorks, warnings) }
 
   /** @type {Record<string, { kept: number, removed: number }>} */
   const practices = {}
   /** @type {string[]} */
   const removed = []
+  let removedBytes = 0
   /** @type {string[]} */
   const remaining = []
   for (const path of files) {
@@ -202,16 +216,17 @@ export function prunePublication({ dist, publicDir, root, readWorks = n1WorkPage
       continue
     }
     const tally = (practices[decision.practice ?? 'house'] ??= { kept: 0, removed: 0 })
-    if (decision.published) {
+    if (decision.published || keep?.(path)) {
       tally.kept++
       remaining.push(path)
     } else {
+      removedBytes += statSync(join(dist, path)).size
       if (!dryRun) rmSync(join(dist, path), { force: true })
       tally.removed++
       removed.push(path)
     }
   }
-  for (const practice of dryRun ? [] : Object.keys(MIRRORS)) {
+  for (const practice of dryRun ? [] : practicesInScope) {
     const abs = join(dist, practice)
     if (existsSync(abs) && statSync(abs).isDirectory()) removeEmptyDirs(abs)
   }
@@ -221,7 +236,7 @@ export function prunePublication({ dist, publicDir, root, readWorks = n1WorkPage
   /** @type {string[]} */
   const shadowed = []
   const redirects = join(dist, '_redirects')
-  if (isFile(redirects)) {
+  if (checkRedirects && isFile(redirects)) {
     const rules = parseRedirects(readFileSync(redirects, 'utf8'))
     for (const path of remaining) {
       for (const address of servedAt(path)) {
@@ -235,7 +250,7 @@ export function prunePublication({ dist, publicDir, root, readWorks = n1WorkPage
       `publication: ${shadowed.length} address(es) of published files are caught by a redirect rule and would leave the site — ${shadowed.slice(0, 5).join('; ')}${shadowed.length > 5 ? '; …' : ''}`,
     )
   }
-  return { practices, removed, shadowed, warnings }
+  return { practices, removed, removedBytes, shadowed, warnings }
 }
 
 /**

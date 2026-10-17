@@ -11,17 +11,19 @@
 // test — a practice can make that true any night, and a red suite would stop every practice's
 // deploy — the build reports it instead (publication-prune.mjs, the shadow warning).
 
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { afterAll, describe, expect, it } from 'vitest'
 import {
+  BUILD_READS,
   MIRRORS,
   REPOSITORY_DOORS,
   classify,
   compilePattern,
   isInProgress,
   isPublished,
+  isReadByBuild,
   isWorkingMaterial,
   loadedAssets,
   matchRedirect,
@@ -554,5 +556,240 @@ describe('the rule’s own shape', () => {
       }
       expect(mirror.repo, practice).not.toBeNull()
     }
+  })
+})
+
+// ── the mirror trim ───────────────────────────────────────────────────────────────────────────
+//
+// The integrates used to copy a practice's whole repository into public/ and commit it, and the
+// build pruned dist/ afterwards: the site published little, and the repository grew by several
+// hundred files a day that no page, count or score read (2026-10-17). The trim applies the same
+// decision to the copy before it is committed, and keeps beside it what the build reads.
+
+/** The inputs the brief of 2026-10-17 names as the ones that must keep arriving, and the readers
+ *  found by tracing every file the build and the tests open. Journals, the BULLETIN, PROTOCOL and
+ *  REQUESTS mirrors, the Studio's chronicle and the attention export live under src/ and never
+ *  pass through the trim at all; what is listed here is what lives in public/. */
+const KEEPS_ARRIVING = [
+  // presentations: the summary every cycle's card reads, and the Field's paper
+  'atelier/presentations/cycle-008/SUMMARY.md',
+  'field/presentations/cycle-008/SUMMARY.md',
+  'studio/presentations/cycle-008/SUMMARY.md',
+  'field/presentations/cycle-006/paper.md',
+  // the register's titles: an artifact's and a window session's page
+  'field/artifacts/2026-10-16-the-clock-and-the-record/index.html',
+  'field/artifacts/cycle-003/2026-09-08-a-name/index.html',
+  'atelier/window/cycle-008-session-5/index.html',
+  // the long work
+  'studio/werke-html/2026-10-16-filed-under/SCORE.md',
+  // n-1: the dowry, the window file, the nights the gallery draws, the pages the shelf walks
+  'n-1/DOWRY.md',
+  'n-1/window.json',
+  'n-1/nights/67-forty-first-night.md',
+  'n-1/projects/unicode-admission/asking.html',
+  'n-1/projects/met-date-intervals/dialects/WORK.md',
+  'n-1/works/two-nights-deep/FORM.md',
+  'n-1/atlas/layers/2026-10-16.json',
+  // Arch: the facts the room is built from
+  'arch/BALANCE.md',
+  'arch/DOWRY.md',
+  'arch/record/r1.md',
+  'arch/registers/i7-virtuality-register.md',
+  'arch/reading/00-method.md',
+  'arch/works/arrival/README.md',
+  // the retired archive, whole
+  'attention/future/gdacs-eq-1.html',
+]
+
+describe('what the build reads stays in the mirror', () => {
+  it.each(KEEPS_ARRIVING)('%s', (path) => {
+    expect(isPublished(path) || isReadByBuild(path), path).toBe(true)
+  })
+
+  it('is working material nobody opens, nor reads, that goes', () => {
+    for (const path of [
+      'field/artifacts/2026-10-16-x/data/series.tsv',
+      'field/artifacts/2026-10-16-x/analyse.py',
+      'field/artifacts/2026-10-16-x/README.md',
+      'atelier/window/cycle-008-session-5/data.json',
+      'atelier/window/cycle-008-session-5/model.js',
+      'studio/werke-html/2026-10-16-filed-under/build.py',
+      'error-as-method/works-html/2026-10-16-x/reports/r1.md',
+      'error-as-method/works-html/2026-10-16-x/makers/m01/scratch/a.txt',
+      'n-1/REGISTER.md',
+      'n-1/REQUESTS.md',
+      'n-1/material/m/x.json',
+      'n-1/reading/00-protocol.md',
+      'n-1/projects/minor-planet-names/names.json',
+      'n-1/projects/will-write/notes.md',
+    ]) {
+      expect(isPublished(path) || isReadByBuild(path), path).toBe(false)
+    }
+  })
+
+  it('names no entry that the publication rule itself would already publish, so the list stays the exception', () => {
+    // A glob that only repeats the rule hides which files are an exception to it.
+    for (const glob of BUILD_READS) {
+      // a glob that opens with `*/` stands for any practice's folder
+      const samples = (glob.startsWith('*/') ? ['atelier', 'field', 'studio'].map((p) => `${p}/${glob.slice(2)}`) : [glob]).map((g) =>
+        g.replace(/\*\*/g, 'x/y').replace(/\*/g, 'x'),
+      )
+      for (const sample of samples) expect(isPublished(sample), `${glob} (${sample}) is published anyway`).toBe(false)
+    }
+  })
+})
+
+describe('the mirror trim, on a public/ in miniature', () => {
+  const base = mkdtempSync(join(tmpdir(), 'trim-'))
+  afterAll(() => rmSync(base, { recursive: true, force: true }))
+  const put = (root: string, path: string, text = 'x') => {
+    mkdirSync(dirname(join(root, path)), { recursive: true })
+    writeFileSync(join(root, path), text)
+  }
+  const FILES: Record<string, string> = {
+    'field/artifacts/a1/index.html': '<title>an artifact</title>',
+    'field/artifacts/a1/data/series.tsv': 'a\tb',
+    'field/artifacts/a1/analyse.py': 'print()',
+    'field/artifacts/cycle-003/a2/index.html': '<title>a nested one</title>',
+    'field/artifacts/cycle-003/a2/figure.png': 'png',
+    'field/presentations/cycle-001/index.html': '<p>presentation</p>',
+    'field/presentations/cycle-001/SUMMARY.md': 'a summary',
+    'field/presentations/cycle-001/paper.md': 'the paper',
+    'atelier/window/index.html': '<p>closing report</p>',
+    'atelier/window/cycle-001-session-1/index.html': '<title>a session</title>',
+    'atelier/window/cycle-001-session-1/model.js': 'x',
+    'atelier/window/cycle-001-session-1/data.json': '{}',
+    'studio/werke-html/s1/index.html': '<p>a work</p>',
+    'studio/werke-html/s1/build.py': 'print()',
+    'studio/werke-html/s2/index.html': '<p>the long work</p>',
+    'studio/werke-html/s2/SCORE.md': 'the score',
+    'studio/werke-html/s2/build.py': 'print()',
+    'error-as-method/works-html/f1/index.html': "<script>fetch('reports/summary.json')</script>",
+    'error-as-method/works-html/f1/reports/summary.json': '{}',
+    'error-as-method/works-html/f1/reports/r1.md': 'a report',
+    'error-as-method/works-html/f1/briefs/b1.md': 'a brief',
+    'error-as-method/2026-10-16-x/figure.svg': '<svg/>',
+    'n-1/index.html': '<script src="surface/surface.js"></script>',
+    'n-1/surface/surface.js': "fetch('atlas/layers/index.json')",
+    'n-1/atlas/layers/index.json': '[]',
+    'n-1/DOWRY.md': 'dowry',
+    'n-1/window.json': '{}',
+    'n-1/REGISTER.md': 'the register',
+    'n-1/nights/01-first-night.md': '# Night 1',
+    'n-1/projects/p1/index.html': "<script>fetch('data.json')</script>",
+    'n-1/projects/p1/data.json': '{}',
+    'n-1/projects/p2/index.html': '<p>a study</p>',
+    'n-1/projects/p2/data.json': '{}',
+    'n-1/projects/p2/WORK.md': 'dated',
+    'n-1/material/m/x.json': '{}',
+    'attention/index.html': '<p>archive</p>',
+  }
+  const stage = (name: string) => {
+    const root = join(base, name)
+    for (const [path, text] of Object.entries(FILES)) put(join(root, 'public'), path, text)
+    put(root, 'src/content/studio/works/s2/meta.json', JSON.stringify({ status: 'in progress: increment 1 of 3' }))
+    return { root, pub: join(root, 'public') }
+  }
+  const listing = (dir: string, prefix = ''): string[] =>
+    readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+      e.isDirectory() ? listing(join(dir, e.name), `${prefix}${e.name}/`) : [`${prefix}${e.name}`],
+    )
+  const trim = (root: string, pub: string, only?: string[], dryRun = false) =>
+    prunePublication({
+      dist: pub,
+      publicDir: pub,
+      root,
+      readWorks: () => new Set(['n-1/projects/p1/index.html']),
+      only,
+      keep: isReadByBuild,
+      redirects: false,
+      dryRun,
+    })
+
+  const { root, pub } = stage('all')
+  const before = listing(pub)
+  const result = trim(root, pub)
+  const after = listing(pub)
+  const gone = new Set(result.removed)
+
+  it('removes working material nothing reads, and nothing else', () => {
+    expect([...gone].sort()).toEqual([
+      'error-as-method/works-html/f1/briefs/b1.md',
+      'error-as-method/works-html/f1/reports/r1.md',
+      'field/artifacts/a1/analyse.py',
+      'field/artifacts/a1/data/series.tsv',
+      'field/artifacts/cycle-003/a2/figure.png',
+      'atelier/window/cycle-001-session-1/data.json',
+      'atelier/window/cycle-001-session-1/model.js',
+      'n-1/REGISTER.md',
+      'n-1/material/m/x.json',
+      'n-1/projects/p2/data.json',
+      'studio/werke-html/s1/build.py',
+    ].sort())
+    expect(result.removedBytes).toBeGreaterThan(0)
+    expect(after.length).toBe(before.length - gone.size)
+  })
+
+  it('keeps what is published, what a published page names and what the build reads', () => {
+    for (const path of [
+      'field/presentations/cycle-001/SUMMARY.md',
+      'field/presentations/cycle-001/paper.md',
+      'field/artifacts/a1/index.html',
+      'field/artifacts/cycle-003/a2/index.html',
+      'atelier/window/index.html',
+      'atelier/window/cycle-001-session-1/index.html',
+      'studio/werke-html/s2/SCORE.md',
+      'studio/werke-html/s2/build.py', // the long work is in progress: it stays exactly as mirrored
+      'error-as-method/works-html/f1/reports/summary.json', // the face fetches it
+      'n-1/DOWRY.md',
+      'n-1/window.json',
+      'n-1/nights/01-first-night.md',
+      'n-1/projects/p1/data.json', // a work the practice declared loads it
+      'n-1/projects/p2/WORK.md',
+      'attention/index.html',
+    ]) {
+      expect(existsSync(join(pub, path)), path).toBe(true)
+    }
+  })
+
+  it('leaves no empty directory behind', () => {
+    for (const dir of ['field/artifacts/a1/data', 'error-as-method/works-html/f1/briefs', 'n-1/material']) {
+      expect(existsSync(join(pub, dir)), dir).toBe(false)
+    }
+  })
+
+  it('is idempotent: a second pass over a trimmed mirror removes nothing', () => {
+    expect(trim(root, pub).removed).toEqual([])
+  })
+
+  it('touches only the practice it is given', () => {
+    const one = stage('one')
+    const r = trim(one.root, one.pub, ['field'])
+    expect(r.removed.every((p) => p.startsWith('field/'))).toBe(true)
+    expect(existsSync(join(one.pub, 'n-1/REGISTER.md'))).toBe(true)
+    expect(existsSync(join(one.pub, 'field/artifacts/a1/analyse.py'))).toBe(false)
+  })
+
+  it('decides without deleting on a dry run', () => {
+    const dry = stage('dry')
+    const r = trim(dry.root, dry.pub, undefined, true)
+    expect(r.removed.length).toBe(gone.size)
+    expect(listing(dry.pub).length).toBe(before.length)
+  })
+
+  it('never changes what the build publishes: the prune of a trimmed mirror leaves the same dist', () => {
+    // The whole point of the trim being the prune's own decision. Build a dist from the untrimmed
+    // copy and one from the trimmed copy, prune both the way the build does, and compare them.
+    const distOf = (name: string, source: string, rootDir: string) => {
+      const dist = join(base, name)
+      cpSync(source, dist, { recursive: true })
+      put(dist, 'index.html', '<p>a page</p>')
+      prunePublication({ dist, publicDir: source, root: rootDir, readWorks: () => new Set(['n-1/projects/p1/index.html']) })
+      return listing(dist).sort()
+    }
+    const untrimmed = stage('untrimmed')
+    const trimmedRoot = stage('trimmed')
+    trim(trimmedRoot.root, trimmedRoot.pub)
+    expect(distOf('dist-from-trimmed', trimmedRoot.pub, trimmedRoot.root)).toEqual(distOf('dist-from-untrimmed', untrimmed.pub, untrimmed.root))
   })
 })

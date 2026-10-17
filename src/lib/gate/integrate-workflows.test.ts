@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
+import { MIRRORS } from '@/lib/engines/publication.mjs'
 
 /** The integrate workflows mirror a practice repository into the site and push the result to
  *  `main`. Two defects in that push mechanism turned the gate red on 2026-08-29 (run
@@ -55,5 +56,46 @@ describe('integrate workflows: pushing to main', () => {
         'git rebase --abort',
       )
     }
+  })
+})
+
+/** Since 2026-10-17 the site publishes only a practice's finished works and cycle presentations,
+ *  and an integrate trims the copy it has just made to the same rule before anything is validated
+ *  or committed (scripts/engines/trim-mirror.mjs). The integrates had gone on committing the rest
+ *  at about three hundred files a day that no page, count or score read. A mirror that grows and
+ *  is not trimmed is that again, so the workflow is held to the step: present, for the right
+ *  practice, after the copy and before the gate and the commit it must precede. */
+describe('integrate workflows: trimming the mirror', () => {
+  /** workflow → the practice key (a key of MIRRORS) it trims */
+  const TRIMS: Record<string, string> = {
+    'atelier-integrate.yml': 'atelier',
+    'field-integrate.yml': 'field',
+    'studio-integrate.yml': 'studio',
+    'nightly-integrate.yml': 'error-as-method',
+    'n1-integrate.yml': 'n-1',
+  }
+  /** mirrors that no longer grow: Arch is retired and its cron is off, the attention archive is finished */
+  const NOT_GROWING = ['arch', 'attention']
+
+  it('trims every mirror that still grows, and names only mirrors the rule knows', () => {
+    const grows = Object.keys(MIRRORS).filter((p) => !NOT_GROWING.includes(p))
+    expect(Object.values(TRIMS).sort()).toEqual(grows.sort())
+  })
+
+  it.each(Object.entries(TRIMS))('%s trims %s before it validates or commits', (file, practice) => {
+    const text = readFileSync(`${WORKFLOWS}/${file}`, 'utf8')
+    const step = text.indexOf(`scripts/engines/trim-mirror.mjs ${practice}`)
+    expect(step, `${file} never trims ${practice}`).toBeGreaterThan(-1)
+    // the gate (check, test, build) and the commit both come after the trim; n-1 has no gate and
+    // commits inside the same function
+    const after = text.indexOf('npm run build', step) > -1 ? text.indexOf('npm run build', step) : text.indexOf('git add public/n-1', step)
+    expect(after, `${file}: nothing follows the trim that validates or commits`).toBeGreaterThan(step)
+    expect(text.lastIndexOf('npm run build', step), `${file}: the build runs before the trim`).toBeLessThan(step)
+  })
+
+  it('keeps going when the trim itself fails: the script logs a warning and exits 0', () => {
+    const script = readFileSync(fileURLToPath(new URL('../../../scripts/engines/trim-mirror.mjs', import.meta.url)), 'utf8')
+    expect(script).toContain('::warning::the mirror was not trimmed')
+    expect(script).not.toMatch(/process\.exit\(1\)/)
   })
 })
