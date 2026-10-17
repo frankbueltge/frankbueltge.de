@@ -19,13 +19,27 @@
 //      auf, wird das nur als Warnung auf stdout gemeldet — das Nachtragen in Engine-Repos
 //      bleibt der Intake-Function vorbehalten (functions/api/saat.js), dieses Skript schreibt
 //      nie in die Engine-Repos.
-//   3. Register nur schreiben, wenn sich inhaltlich etwas geändert hat (Idempotenz: ein
+//   3. Die Antwort der Ökologie (2026-10-17): ein Seed, den cycle.json unter `taken_seeds` führt,
+//      wurde von der Ökologie aufgenommen — ein Zyklus lief auf ihm. Diese Antwort steht in keiner
+//      REQUESTS.md, also leitet der Sync sie aus cycle.json und dessen Git-Historie ab
+//      (applyEcologyTakings in saat.ts); geschrieben wird sie von Hand nie.
+//   4. Register nur schreiben, wenn sich inhaltlich etwas geändert hat (Idempotenz: ein
 //      zweiter Lauf ohne neue Antworten ist ein no-op, byte-identisches JSON).
 
+import { execFileSync } from 'node:child_process'
 import { readFileSync, writeFileSync } from 'node:fs'
-import { parsePublicSeedResponses, applyResponse, SAAT_ENGINE_REPOS, type SaatRegister } from '../../src/lib/saat/saat'
+import {
+  parsePublicSeedResponses,
+  applyResponse,
+  applyEcologyTakings,
+  ecologyTakings,
+  SAAT_ENGINE_REPOS,
+  type CycleSnapshot,
+  type SaatRegister,
+} from '../../src/lib/saat/saat'
 
 const REGISTER_PATH = 'src/data/saat/register.json'
+const CYCLE_PATH = 'src/data/ecology/cycle.json'
 const GITHUB_OWNER = 'frankbueltge'
 const FETCH_TIMEOUT_MS = 30_000
 
@@ -68,6 +82,39 @@ function readRegister(): SaatRegister {
   return JSON.parse(readFileSync(REGISTER_PATH, 'utf8')) as SaatRegister
 }
 
+const git = (...args: string[]): string => execFileSync('git', args, { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 })
+
+/** The seeds cycle.json lists as taken, from the working tree. */
+function readTakenSeeds(): string[] {
+  const raw = JSON.parse(readFileSync(CYCLE_PATH, 'utf8')) as { taken_seeds?: unknown }
+  return Array.isArray(raw.taken_seeds) ? raw.taken_seeds.filter((id): id is string => typeof id === 'string') : []
+}
+
+/** Every state cycle.json has had, one per commit that touched it — what the ecology's answer is
+ *  read from, because `taken_seeds` holds ids only and the cycle a seed opened stands in the
+ *  history. Null when the history cannot be trusted: a shallow clone would show a later cycle as the
+ *  first to carry a seed, and a wrong date in the register is worse than a late one. The workflow
+ *  checks out with fetch-depth 0, so null only happens on a local run. */
+function cycleHistory(): CycleSnapshot[] | null {
+  try {
+    if (git('rev-parse', '--is-shallow-repository').trim() !== 'false') return null
+    const shas = git('log', '--reverse', '--format=%H', '--', CYCLE_PATH).split('\n').filter(Boolean)
+    const out: CycleSnapshot[] = []
+    for (const sha of shas) {
+      try {
+        const s = JSON.parse(git('show', `${sha}:${CYCLE_PATH}`)) as { cycle?: unknown; opened?: unknown; seed_id?: unknown }
+        if (typeof s.cycle !== 'number' || typeof s.opened !== 'string') continue
+        out.push({ cycle: s.cycle, opened: s.opened, seed_id: typeof s.seed_id === 'string' ? s.seed_id : null })
+      } catch {
+        // a commit that held no readable cycle.json (a deletion, a merge state) says nothing
+      }
+    }
+    return out
+  } catch {
+    return null
+  }
+}
+
 async function main(): Promise<number> {
   const before = readRegister()
   const beforeJson = JSON.stringify(before)
@@ -107,6 +154,33 @@ async function main(): Promise<number> {
         }
         return seed
       }),
+    }
+  }
+
+  // 3) The ecology's answer: a seed in cycle.json's taken_seeds had a cycle run on it. Derived from
+  // cycle.json and its history, never written by hand; skipped (and said so) when the history is not
+  // complete, so a local run on a shallow clone cannot put a wrong cycle into the register.
+  const history = cycleHistory()
+  if (history === null) {
+    console.warn('WARNING: the history of cycle.json is not complete (shallow clone?) — the ecology’s answers are left as they are')
+  } else {
+    // A cycle.json that cannot be read (a hand edit in flight) must not take the practices' own
+    // answers down with it: the ecology's step is skipped and said so, the rest of the sync runs.
+    let taken: string[] = []
+    try {
+      taken = readTakenSeeds()
+    } catch (e) {
+      console.warn(`WARNING: ${CYCLE_PATH} could not be read (${e instanceof Error ? e.message : String(e)}) — the ecology’s answers are left as they are`)
+    }
+    const takings = ecologyTakings(taken, history)
+    for (const id of taken) {
+      if (!takings.some((t) => t.id === id)) console.warn(`WARNING: ${id} is listed in taken_seeds, but no cycle in the history of cycle.json carried it`)
+    }
+    const beforeTakings = register
+    register = applyEcologyTakings(register, takings)
+    for (const seed of register.seeds) {
+      const was = beforeTakings.seeds.find((s) => s.id === seed.id)
+      if (seed !== was) console.log(`ecology: ${seed.id} → ${seed.status} (${seed.response?.note ?? ''})`)
     }
   }
 

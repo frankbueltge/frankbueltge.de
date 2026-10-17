@@ -35,6 +35,7 @@ import {
   AUTHOR_MARK_MAX_LEN,
   SAAT_DAILY_CAP,
   SAAT_OPEN_CAP,
+  stillOpenPractices,
   type SaatRegister,
   type SaatKind,
   type SaatAddressee,
@@ -79,6 +80,8 @@ const practiceShort: Record<string, string> = {
   'field-research': 'Field',
   studio: 'Studio',
   ulysses: 'Atelier',
+  // the ecology's own answer (saat.ts, SAAT_ECOLOGY): derived by the sync from cycle.json, not a repository
+  ecology: 'Ecology',
 }
 
 const gateReasonLabel: Record<GateReason, string> = {
@@ -380,8 +383,9 @@ const seedMark = 'rounded-sm border border-line px-2 py-0.5 font-mono text-mono-
                 : seed.response
                   ? [seed.response]
                   : []
-              const beantwortet = new Set(antworten.map((a) => a.practice))
-              const offen = seed.forwarded_to.filter((p) => !beantwortet.has(p))
+              // stillOpenPractices (saat.ts) is the rule both render paths share: a seed the ecology
+              // took was answered by all three practices at once, so none of them is "still silent".
+              const offen = stillOpenPractices(seed)
               if (antworten.length === 0 && offen.length === 0) return null
               return (
                 <div class="mt-3 border-t border-line/60 pt-3">
@@ -460,7 +464,7 @@ const seedMark = 'rounded-sm border border-line px-2 py-0.5 font-mono text-mono-
   // clientseitige Status-Abfrage per Claim-Token. Läuft nur mit dem, was der Server (functions/
   // api/saat.js) tatsächlich zurückgibt; ohne JS bleibt der Standby stehen (progressive
   // enhancement, wie das Cockpit-Ventil).
-  import { hashToken } from '@/lib/saat/saat'
+  import { hashToken, stillOpenPractices } from '@/lib/saat/saat'
 
   // Prefill the addressee from ?to=<collective> — contextual links from the practice pages
   // (/field → field-research, /studio → studio, /atelier → ulysses). Runtime-only, hence client-side.
@@ -720,8 +724,7 @@ const seedMark = 'rounded-sm border border-line px-2 py-0.5 font-mono text-mono-
               // liest (Claim-Token-Abfrage) und keinen Astro-Build kennt. Wer den einen
               // ändert, muss den anderen mitziehen.
               const antworten = s.responses?.length ? s.responses : s.response ? [s.response] : []
-              const beantwortet = new Set(antworten.map((a) => a.practice))
-              const offen = (s.forwarded_to ?? []).filter((p) => !beantwortet.has(p))
+              const offen = stillOpenPractices({ forwarded_to: s.forwarded_to ?? [], response: s.response, responses: s.responses })
               const marke = (inhalt: string, gestrichelt: boolean) =>
                 `<li class="rounded-sm border ${gestrichelt ? 'border-dashed border-line text-fg-faint' : 'border-line text-fg-muted'} px-2 py-0.5 font-mono text-mono-sm">${inhalt}</li>`
               const marken = antworten.length || offen.length

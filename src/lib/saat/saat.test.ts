@@ -14,10 +14,16 @@ import {
   recordGateBlock,
   addSeed,
   applyResponse,
+  applyEcologyTakings,
+  ecologyNote,
+  ecologyTakings,
+  stillOpenPractices,
   targetsFor,
   publicSeedBlock,
   parsePublicSeedResponses,
+  SAAT_ECOLOGY,
   SAAT_MAX_LEN,
+  type CycleSnapshot,
   type Seed,
   type SaatRegister,
 } from './saat'
@@ -436,5 +442,128 @@ describe('parsePublicSeedResponses — mehrzeilige Antworten', () => {
   it('entfernt führende Zitatzeichen aus Folgezeilen', () => {
     const zitiert = md.replace('judgement of the work', '> judgement of the work')
     expect(parsePublicSeedResponses(zitiert)[0].note).not.toContain('>')
+  })
+})
+
+// ── The ecology as a respondent (2026-10-17) ────────────────────────────────────────────────────
+// Two seeds had cycles run on them and still stood as "offered · no reply yet", counted against the
+// open cap. The answer is derived from cycle.json's history; these hold the derivation.
+
+/** cycle.json as the repository's history has it for the two seeds the ecology took. */
+const HISTORY: CycleSnapshot[] = [
+  { cycle: 2, opened: '2026-09-03', seed_id: null },
+  { cycle: 3, opened: '2026-09-07', seed_id: 'seed-aa5f' },
+  { cycle: 3, opened: '2026-09-07', seed_id: 'seed-aa5f' }, // the same cycle, committed twice
+  { cycle: 4, opened: '2026-10-03', seed_id: 'seed-3080' },
+  { cycle: 5, opened: '2026-10-06', seed_id: null },
+  { cycle: 6, opened: '2026-10-07', seed_id: 'seed-3080' }, // read again
+  { cycle: 8, opened: '2026-10-15', seed_id: null },
+]
+
+describe('ecologyTakings', () => {
+  it('names the cycles that carried each taken seed, and the day the first opened', () => {
+    expect(ecologyTakings(['seed-aa5f', 'seed-3080'], HISTORY)).toEqual([
+      { id: 'seed-aa5f', cycles: [3], opened: '2026-09-07' },
+      { id: 'seed-3080', cycles: [4, 6], opened: '2026-10-03' },
+    ])
+  })
+
+  it('does not depend on the order of the history', () => {
+    expect(ecologyTakings(['seed-3080'], [...HISTORY].reverse())).toEqual([
+      { id: 'seed-3080', cycles: [4, 6], opened: '2026-10-03' },
+    ])
+  })
+
+  it('leaves out a seed no cycle carried — no cycle, no honest date', () => {
+    expect(ecologyTakings(['seed-unknown'], HISTORY)).toEqual([])
+    expect(ecologyTakings(['seed-aa5f'], [])).toEqual([])
+  })
+
+  it('counts a seed listed twice once', () => {
+    expect(ecologyTakings(['seed-aa5f', 'seed-aa5f'], HISTORY)).toHaveLength(1)
+  })
+})
+
+describe('ecologyNote', () => {
+  it('says one cycle in the singular, with its day', () => {
+    expect(ecologyNote({ id: 'x', cycles: [3], opened: '2026-09-07' })).toBe(
+      'Taken by the ecology: the question of cycle 003 carried this seed (opened 2026-09-07).',
+    )
+  })
+
+  it('lists several cycles, and names the day the first opened', () => {
+    expect(ecologyNote({ id: 'x', cycles: [4, 6], opened: '2026-10-03' })).toBe(
+      'Taken by the ecology: the questions of cycles 004 and 006 carried this seed (the first opened 2026-10-03).',
+    )
+    expect(ecologyNote({ id: 'x', cycles: [4, 6, 9], opened: '2026-10-03' })).toContain('cycles 004, 006 and 009')
+  })
+})
+
+describe('applyEcologyTakings', () => {
+  const offered = (id: string, over: Partial<Seed> = {}) =>
+    seedFixture({ id, status: 'offered', forwarded_to: ['field-research', 'studio', 'ulysses'], ...over })
+  const register = (...seeds: Seed[]): SaatRegister => ({ ...emptyRegister(), seeds })
+
+  it('turns an offered seed into a taken one, answered by the ecology', () => {
+    const next = applyEcologyTakings(register(offered('seed-aa5f')), ecologyTakings(['seed-aa5f'], HISTORY))
+    const seed = next.seeds[0]
+    expect(seed.status).toBe('taken')
+    expect(seed.response).toMatchObject({ practice: SAAT_ECOLOGY, decision: 'taken', date: '2026-09-07' })
+    expect(seed.responses).toHaveLength(1)
+  })
+
+  it('takes the seed out of the open count, which is what the intake cap reads', () => {
+    const before = register(offered('seed-aa5f'), offered('seed-3080'), offered('seed-other'))
+    expect(openCount(before)).toBe(3)
+    const after = applyEcologyTakings(before, ecologyTakings(['seed-aa5f', 'seed-3080'], HISTORY))
+    expect(openCount(after)).toBe(1)
+  })
+
+  it('is idempotent: a second run over the same history returns the very same register', () => {
+    const takings = ecologyTakings(['seed-aa5f', 'seed-3080'], HISTORY)
+    const once = applyEcologyTakings(register(offered('seed-aa5f'), offered('seed-3080')), takings)
+    expect(applyEcologyTakings(once, takings)).toBe(once)
+  })
+
+  it('brings the note up to date when a later cycle carries the seed again', () => {
+    const takings = ecologyTakings(['seed-3080'], HISTORY.slice(0, 4))
+    const once = applyEcologyTakings(register(offered('seed-3080')), takings)
+    expect(once.seeds[0].response?.note).toContain('cycle 004 carried')
+    const later = applyEcologyTakings(once, ecologyTakings(['seed-3080'], HISTORY))
+    expect(later.seeds[0].responses).toHaveLength(1)
+    expect(later.seeds[0].response?.note).toContain('cycles 004 and 006')
+  })
+
+  it('leaves the practices’ own answers where they are, beside the ecology’s', () => {
+    const answered = offered('seed-aa5f', {
+      status: 'declined',
+      response: { practice: 'studio', decision: 'declined', note: 'no', date: '2026-09-08' },
+      responses: [{ practice: 'studio', decision: 'declined', note: 'no', date: '2026-09-08' }],
+    })
+    const seed = applyEcologyTakings(register(answered), ecologyTakings(['seed-aa5f'], HISTORY)).seeds[0]
+    expect(seed.status).toBe('taken')
+    expect(seed.responses?.map((r) => `${r.practice}:${r.decision}`)).toEqual(['ecology:taken', 'studio:declined'])
+  })
+
+  it('skips a seed the register does not hold, and touches no other seed', () => {
+    const base = register(offered('seed-other'))
+    expect(applyEcologyTakings(base, ecologyTakings(['seed-aa5f'], HISTORY))).toBe(base)
+  })
+})
+
+describe('stillOpenPractices', () => {
+  const asked = ['field-research', 'studio', 'ulysses']
+  const answer = (practice: string, decision: 'taken' | 'adapted' | 'declined') => ({ practice, decision, note: '', date: '2026-07-30' })
+
+  it('lists the practices that were asked and have not answered', () => {
+    expect(stillOpenPractices(seedFixture({ forwarded_to: asked }))).toEqual(asked)
+    expect(stillOpenPractices(seedFixture({ forwarded_to: asked, responses: [answer('studio', 'declined')] }))).toEqual([
+      'field-research',
+      'ulysses',
+    ])
+  })
+
+  it('lists no practice once the ecology has taken the seed: it was answered by all three', () => {
+    expect(stillOpenPractices(seedFixture({ forwarded_to: asked, responses: [answer(SAAT_ECOLOGY, 'taken')] }))).toEqual([])
   })
 })

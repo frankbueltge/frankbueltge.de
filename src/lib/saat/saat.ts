@@ -247,6 +247,107 @@ export function applyResponse(register: SaatRegister, seedId: string, response: 
   return { ...register, seeds }
 }
 
+// ── The ecology as a respondent ─────────────────────────────────────────────────────────────────
+//
+// A seed released to all three practices can be answered in two ways. Each practice may answer it
+// on its own, in its REQUESTS.md (parsePublicSeedResponses, below). Or the ecology may take it as
+// its question: the cycle clock (src/lib/ecology/cycle-turn.ts) opens a cycle on a released seed
+// and lists it in cycle.json's `taken_seeds`, and from then on all three practices work it. That
+// second answer reaches no REQUESTS.md, so the register kept showing the seed as "offered · no
+// reply yet" for each practice, and counting it against the open cap, long after cycles had been
+// run on it (found 2026-10-17: seed …-aa5f carried cycle 003 from 2026-09-07, seed …-3080 cycle 004
+// from 2026-10-03). The sync derives the answer from cycle.json and its history; nobody writes it.
+//
+// Pure like the rest of this file: scripts/saat/sync.ts reads cycle.json and its git history and
+// hands the snapshots in.
+
+/** The name the ecology's own answer carries in `responses[].practice`. Not a repository: the
+ *  three practices answer a seed one by one, the ecology answers it by running a cycle on it. */
+export const SAAT_ECOLOGY = 'ecology'
+
+/** cycle.json as one commit of it held the state, reduced to what the derivation reads. */
+export interface CycleSnapshot {
+  cycle: number
+  /** YYYY-MM-DD — the day that cycle opened */
+  opened: string
+  /** the seed the cycle is run on (`source: "seed"`) or read through (`source: "continuing"`) */
+  seed_id: string | null
+}
+
+/** A seed the ecology took, and what it did with it. */
+export interface EcologyTaking {
+  id: string
+  /** the cycles whose cycle.json carried the seed, ascending */
+  cycles: number[]
+  /** YYYY-MM-DD — the day the first of them opened */
+  opened: string
+}
+
+/**
+ * The seeds the ecology took, each with the cycles that carried it. `taken` is cycle.json's
+ * `taken_seeds`; `history` is every state of that file, in any order. A seed listed as taken that no
+ * cycle in the history carried is left out: without a cycle there is no honest date to give it, and
+ * the caller reports it rather than the register guessing.
+ */
+export function ecologyTakings(taken: readonly string[], history: readonly CycleSnapshot[]): EcologyTaking[] {
+  const out: EcologyTaking[] = []
+  for (const id of new Set(taken)) {
+    const carrying = history
+      .filter((s) => s.seed_id === id)
+      .sort((a, b) => a.cycle - b.cycle || a.opened.localeCompare(b.opened))
+    if (carrying.length === 0) continue
+    out.push({ id, cycles: [...new Set(carrying.map((s) => s.cycle))], opened: carrying[0].opened })
+  }
+  return out
+}
+
+const cycleNo = (n: number) => String(n).padStart(3, '0')
+
+/** The ecology's answer in words — every part of it read from cycle.json, none of it typed. */
+export function ecologyNote(taking: EcologyTaking): string {
+  const nos = taking.cycles.map(cycleNo)
+  if (nos.length === 1) {
+    return `Taken by the ecology: the question of cycle ${nos[0]} carried this seed (opened ${taking.opened}).`
+  }
+  const list = `${nos.slice(0, -1).join(', ')} and ${nos[nos.length - 1]}`
+  return `Taken by the ecology: the questions of cycles ${list} carried this seed (the first opened ${taking.opened}).`
+}
+
+/**
+ * Sets the ecology's answer on every seed it took: decision `taken`, so the seed stops counting as
+ * open. The answer is only ever produced here, so a second run over the same history changes
+ * nothing, and a seed that a later cycle carries again gets its note brought up to date. A seed the
+ * register does not hold is skipped.
+ */
+export function applyEcologyTakings(register: SaatRegister, takings: readonly EcologyTaking[]): SaatRegister {
+  let next = register
+  for (const taking of takings) {
+    const seed = next.seeds.find((s) => s.id === taking.id)
+    if (!seed) continue
+    const response: SaatResponse = { practice: SAAT_ECOLOGY, decision: 'taken', note: ecologyNote(taking), date: taking.opened }
+    const have = (seed.responses ?? (seed.response ? [seed.response] : [])).find((r) => r.practice === SAAT_ECOLOGY)
+    if (have && have.decision === response.decision && have.note === response.note && have.date === response.date) continue
+    next = applyResponse(next, taking.id, response)
+  }
+  return next
+}
+
+/**
+ * The practices that were asked and have not answered. A seed the ecology took was answered by the
+ * ecology as a whole, which all three practices worked, so no practice is still silent on it: the
+ * register's "no reply yet" marks would say the opposite of the ecology's answer beside them.
+ */
+export function stillOpenPractices(seed: {
+  forwarded_to: readonly string[]
+  response?: { practice: string; decision: string } | null
+  responses?: readonly { practice: string; decision: string }[]
+}): string[] {
+  const answers = seed.responses?.length ? seed.responses : seed.response ? [seed.response] : []
+  if (answers.some((a) => a.practice === SAAT_ECOLOGY && a.decision === 'taken')) return []
+  const answered = new Set(answers.map((a) => a.practice))
+  return seed.forwarded_to.filter((p) => !answered.has(p))
+}
+
 /** 'open' geht an alle drei Engine-Repos, jede andere Adresse nur an sich selbst (Spec §5). */
 export function targetsFor(addressedTo: SaatAddressee): string[] {
   return addressedTo === 'open' ? [...SAAT_ENGINE_REPOS] : [addressedTo]
