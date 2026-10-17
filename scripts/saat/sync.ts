@@ -164,7 +164,14 @@ async function main(): Promise<number> {
   if (history === null) {
     console.warn('WARNING: the history of cycle.json is not complete (shallow clone?) — the ecology’s answers are left as they are')
   } else {
-    const taken = readTakenSeeds()
+    // A cycle.json that cannot be read (a hand edit in flight) must not take the practices' own
+    // answers down with it: the ecology's step is skipped and said so, the rest of the sync runs.
+    let taken: string[] = []
+    try {
+      taken = readTakenSeeds()
+    } catch (e) {
+      console.warn(`WARNING: ${CYCLE_PATH} could not be read (${e instanceof Error ? e.message : String(e)}) — the ecology’s answers are left as they are`)
+    }
     const takings = ecologyTakings(taken, history)
     for (const id of taken) {
       if (!takings.some((t) => t.id === id)) console.warn(`WARNING: ${id} is listed in taken_seeds, but no cycle in the history of cycle.json carried it`)
