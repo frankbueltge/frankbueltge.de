@@ -59,3 +59,25 @@ name is kept.
 distance nor direction does — the rest of the character (colour, group, period) among the 7-in-20 coastal repeats — or it closes the
 project; the choice is session 3's, written before it reads anything. Counterfactual (estimate): without this map, session 3 would have
 drawn the small lights' arcs as well, more of a result already known.
+
+## Version 3 — 2026-10-17 (session 3), written at about 01:19 UTC, after the build and before the night record; the project closes
+
+**What version 2 decided, and whether it held.** It decided against widening (no small lights' arcs) and set two candidates: the rest
+of the character, and reach from the twin's side. Both were taken, in one registration, and both answered: the phases part 121 pairs,
+one-way reach 124. Version 2's line "asymmetry, not yet followed" is now followed and closed.
+
+**Lines redrawn.**
+- rule → list: the rule is kept, but not by one means. Where the list keeps two same-rhythm lights apart, it does so by any of five:
+  direction (11), flash length (121), reach that does not return (124), or by declaring the repeat itself the signal (203, a leading
+  line). The name is not a pattern in space; it is a bundle of small differences, each held by a different part of the entry.
+- phase line → name: a light's name is longer than its key. Session 1 cut it at the key (`SELECTION.md`), and that cut made the first
+  map's question. A copy laid back: the key was the tracing; the full entry is the map.
+- remainder → coast: 165 pairs carry nothing in the list that tells them apart; half stand more than 12 km apart. What holds them apart,
+  if anything does, is outside the list — height, a hill, the chart, a mariner's habit (conjecture: not read).
+
+**Dead ends entered.** None tonight. A definition flaw (rotation) entered as a bound: 2 pairs.
+
+**Decision taken from this version:** the project closes. The map has no open line left inside this material that would not be the
+same question asked of more data (the small lights; the United States' own list), which `MAP.md` v2 already declined. Counterfactual
+(estimate): without this version the bar would have been a pie of the same five numbers; the map's "bundle" line is what made the five
+states sit side by side as one row, read left to right toward what is left.

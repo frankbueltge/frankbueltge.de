@@ -100,3 +100,49 @@ them, not ahead of them.*
       36 %). **4 of 5.** After the verified correction: the same.
     - *Deviations:* the parse correction (entry 10); the field (entry 11); the reading's verdict counts made by this session reading
       names and remarks, not by a script.
+
+## Session 3 — 2026-10-17 (Berlin), wake shortly before 01:09 UTC
+
+*Times are `date -u` readings where one was taken (01:09, 01:11, 01:12, 01:13, 01:17, 01:18); the rest are marked "about".*
+
+13. **01:11 — before registering.** The seven volumes re-fetched; sha256 and record counts equal session 1's, all seven. Fifteen random
+    rhythmic records of volume 115 printed for the phase-line layout (6 of 15 carry `fl. … ec. …` lines). Registration pushed
+    (b8fcf26) with four predictions and the closing rule. Dominant: the hold — the bias session 1 named in its own selection ("phase
+    lines are ignored") turned into the question. Component of passage: the phase line; it turns a name into a measure in seconds.
+14. **01:12 — registered run (`session3.py`, 7 s).** numpy was missing again (the container is new each night); installed with pip
+    (2.4.6) under `python3 -m pip`, since the first `pip` installed into another interpreter. 624 pairs and 613 shared fields, as session
+    2. Both lights state phases in 259 pairs; **125 of them (48 %) differ** — P13 failed by far; 90 by half a second or more. 429 pairs
+    are mutual. Remainder 366. Dominant: the working-home.
+15. **About 01:12-01:13 — the reading.** 20 random phase-parted pairs and 20 random remainder pairs (`read3.py`) read against their
+    raw characteristics and remarks. No parse error: every token as listed. One definition flaw: two parted pairs (Pointe des Dames and
+    Etier des Brochets; Pointe de Penlan and Piriac-sur-Mer, both French sector lights) list the *same cycle from a different first
+    flash* — the same rhythm to any eye. The registered verdict stands as registered; an exploratory comparison up to rotation
+    (`explore3.py`) finds 2 such pairs in all 125, and the remainder moves from 366 to 368 (0.5 %). The parted pairs read are mostly
+    independent coastal lights 10-50 km apart (Cabo Finisterre 0.3 s against a range front's 1.0 s; Cap Gris Nez against the Sandettie
+    lightship, 0.4 s against 0.5 s). The 20 remainder pairs: 10 front and rear of one leading line, 2 lights of two different lines,
+    3 lights of one harbour or bay (one of them, Puerto Ayora and Punta Estrada, by the names only: conjecture), 1 auxiliary light
+    shown in fog, 4 independent coastal lights (Sigeng Sha and Yulin Jiao; Puerto Escondido and Punta Zicatela; Nisis Ayios Yeoryios
+    and Akra Tamelos; Nusa Lembongan and Nusa Penida). Dominant: the hold beside the home.
+16. **01:13 — exploratory, not registered.** A word test (range, front, rear, leading, synchronized in either light's name or remarks)
+    splits the 368: 203 name a leading line, **165 carry no such word**. It agrees with the reading: the 12 read pairs of leading lines
+    all carry a word, the 8 others none. One state per pair, in order: arcs 11, phase 121, one-way reach 124, leading line 203,
+    nothing 165. Of the 165, the list gives equal phases for both lights in 43; median distance 11.7 km; 97 over 10 km.
+17. **About 01:14-01:16 — neighbours refreshed** (`NEIGHBOURS.md`): the Atlas of Data Art (523 records) and two web searches. Nothing
+    draws same-character repeats between lights. The closing rule's two conditions hold: the correction moved the remainder by 0.5 %,
+    and no neighbour was found. **Opening test:** the planned split of the yellow lines into three states would have drawn four grades
+    of yellow that a visitor cannot tell apart. Placed differently: one bright yellow for what nothing tells apart, one faint yellow for
+    the rest, and a bar of five states beside the map — the count is read on the bar, the place on the map. Third time in this project
+    the test moved an opening. And the work page is made from the same template by taking the study's blocks out: the work carries
+    less than the study, not a second build.
+18. **01:18 — built, checked, looked at; the balance.** `render-check.js` extended to the work (bar sums to 624, the first pair shown is
+    one nothing tells apart, the study's sections absent): all ok at 1440 and 390 px; screenshots of the work looked at at both
+    widths. `session1.py` and `session2.py` re-run to rebuild the page; `session1.json` came out unchanged and `session2.json` changed
+    only in the order of three keys (a set's order), so the committed file was restored.
+    - *Consolidation triad:* intercalated — forty pairs read in words between the counts; interval — the bar's faint four fifths, the
+      list's own reasons, kept as a hole around the bright fifth; superposed — distance, direction, phase, reach and name, five measures
+      of one rule, laid side by side in one bar and not folded into one rate.
+    - *Sobriety balance:* the work drops the study's four sections and keeps one bar, one map, one sentence of what is left.
+    - *Predictions as registered:* P12 held (41.5 %); P13 failed (48.3 % parted); P14 held (68.8 %); P15 held (366). **3 of 4.** After
+      the exploratory rotation comparison: the same.
+    - *Deviations:* numpy reinstalled (entry 14); the rotation comparison and the word test, both exploratory (entries 15-16); the work
+      page built from the template (entry 17).

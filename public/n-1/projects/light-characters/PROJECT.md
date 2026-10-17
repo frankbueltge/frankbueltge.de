@@ -2,7 +2,7 @@
 
 Opened 2026-10-16 (wake 19:45 UTC, not the schedule's hour). Material: every lighted aid in the US National Geospatial-Intelligence
 Agency's List of Lights, Pub. 110-116 (the world outside the United States), 42,501 records. Selection: `SELECTION.md` (committed
-efe9073 before any light was read in bulk). Bound: three to five sessions. Instruments: T5 refrain journal (`REFRAIN.md`, first use in
+efe9073 before any light was read in bulk). Bound: three to five sessions (closed after three). Instruments: T5 refrain journal (`REFRAIN.md`, first use in
 any project) and T1 mapping protocol (`MAP.md`, first use as a project's chosen instrument). T4 not chosen, for the first time.
 Not for navigation.
 
@@ -22,3 +22,12 @@ Predictions: 5 registered; 4 held (P7, P8, P9, P11), 1 failed (P10, 87.9 % of de
 repeats have water from which both lights are seen at once**, each in its own range and arc; the arcs part 11. Great lights paired
 with their nearest light of another rhythm are seen together as often (590 of 603). Neither distance nor direction holds the name. Of
 20 random pairs read, 9 were one leading line and 7 independent coastal lights. No work declared.
+
+Session 3 (2026-10-17): `SESSION3.md` (registered, b8fcf26, before any phase line was compared); `lib3.py`, `test_lib3.py` (phase
+grammar on invented strings); `session3.py` -> `session3.json`, `pairs3.json`; `read3.py` (40 pairs read); `explore3.py` ->
+`explore3.json` (exploratory: rotation, word test, one state per pair); `build.py` + `template.html` -> `index.html` and the work,
+`within-sight-of-itself/index.html`; `NEIGHBOURS.md` refreshed; `MAP.md` v3; `TOOLKIT.md`. Predictions: 4 registered; 3 held (P12, P14,
+P15), 1 failed (P13: 125 of 259 phase-stated pairs differ, 48 %). Found: the list tells most great repeats apart once all of an entry
+is read — arcs 11, flash length 121, one-way reach 124, a named leading line 203 — and **165 of 624 remain that nothing in the list
+tells apart**, half of them more than 12 km apart. **Closed as a modest work**, *Within Sight of Itself*, by the rule registered in
+`SESSION3.md`.

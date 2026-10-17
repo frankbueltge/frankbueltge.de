@@ -165,7 +165,7 @@ const PAGES = [
     ok: (r) => r.living === 1340 && r.dead === 379 && r.panel_changed,
   },
   {
-    // project 10, sessions 1-2: Within sight of itself, built by projects/light-characters/build.py;
+    // project 10, sessions 1-3: Within sight of itself (the study), built by projects/light-characters/build.py;
     // the map is a canvas; the panel must name a pair and change when "Another pair" is pressed
     path: 'projects/light-characters/index.html',
     probe: () => {
@@ -183,6 +183,23 @@ const PAGES = [
       };
     },
     ok: (r) => r.canvas && r.lamps === 2 && r.named && r.panel_changed && r.not_for_navigation && r.field && r.arcs_said,
+  },
+  {
+    // project 10, session 3: the work, Within Sight of Itself, built from the same template without the study's blocks;
+    // the bar of five states must sum to 624 and the first pair shown must be one nothing tells apart
+    path: 'projects/light-characters/within-sight-of-itself/index.html',
+    probe: () => {
+      const who = document.getElementById('who').textContent;
+      const cells = [...document.querySelectorAll('.bar div')].map((d) => +d.style.flexGrow || +d.style.flex.split(' ')[0]);
+      return {
+        canvas: !!document.querySelector('canvas#map'),
+        bar_sum: cells.reduce((a, b) => a + b, 0),
+        first_is_remainder: /Nothing the list says tells them apart/.test(who),
+        study_hidden: !/What the list says/.test(document.body.textContent),
+        not_for_navigation: /not for navigation/i.test(document.body.textContent),
+      };
+    },
+    ok: (r) => r.canvas && r.bar_sum === 624 && r.first_is_remainder && r.study_hidden && r.not_for_navigation,
   },
 ];
 

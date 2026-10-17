@@ -23,6 +23,9 @@ canvas{display:block;width:100%;height:auto;cursor:crosshair;touch-action:manipu
 button{font:14px system-ui,sans-serif;padding:6px 10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
 table{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}th,td{padding:3px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 .tw{overflow-x:auto}
+.bar{display:flex;height:34px;border-radius:3px;overflow:hidden;margin:14px 0 6px;font:12px/34px system-ui,sans-serif}
+.bar div{text-align:center;color:#1d1d1b;white-space:nowrap;overflow:hidden;min-width:0}
+.bl{display:flex;flex-wrap:wrap;gap:4px 16px;font:13px/1.4 system-ui,sans-serif}.bl i{display:inline-block;width:12px;height:12px;margin-right:5px;vertical-align:-1px;border-radius:2px}
 </style></head><body><style>
 .fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -39,7 +42,8 @@ table{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}th,td{p
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
-<p class="sm mut">Remainder &middot; project 10, sessions 1&ndash;2 &middot; 2026-10-16/17 &middot; <b>not for navigation</b></p>
+<!--S--><p class="sm mut">Remainder &middot; project 10, sessions 1&ndash;3 (the study; the work is <a href="within-sight-of-itself/">here</a>) &middot; 2026-10-16/17 &middot; <b>not for navigation</b></p><!--/S-->
+<!--W--><p class="sm mut">Remainder &middot; a modest work, 2026-10-17 &middot; <a href="../">the study behind it</a> &middot; <b>not for navigation</b></p><!--/W-->
 <h1>Within sight of itself</h1>
 <p>A lighthouse says its name in light. Each one flashes, or goes dark, in a rhythm of its own: two white flashes every ten seconds,
 one green flash every three. A sailor who sees a light at night counts the rhythm, finds it in the list, and knows where they are.
@@ -51,15 +55,27 @@ coastlines are drawn only by their lights. A line joins a light to the nearest l
 colour and period) wherever that light stands within the first one's own range.</p>
 
 <div class="map"><canvas id="map" width="1100" height="560" aria-label="World map drawn by lights; lines join lights that repeat each other's rhythm within range"></canvas></div>
-<div class="key"><span style="background:var(--major)"></span>a light seen 15 nautical miles or more, whose rhythm stands again within its reach,
-and water from which both can be seen at once
-<span style="background:repeating-linear-gradient(90deg,#9cc3e6 0 4px,transparent 4px 7px)"></span>the same, but the arcs in which the two are shown never meet
-<span style="background:rgba(240,150,90,.9)"></span>the same, for smaller lights (arcs not read)</div>
+<div class="key"><span style="background:var(--major);height:4px"></span>a light seen 15 nautical miles or more, and the nearest light with
+the same rhythm, within its reach: nothing the list says tells the two apart ({{S_NOTHING}})
+<span style="background:rgba(255,211,77,.4)"></span>the same, but the list tells them apart: by flash length, by one not reaching the other,
+or by naming them one leading line ({{S_PHASE}}, {{S_ONEWAY}}, {{S_LEADING}})
+<span style="background:repeating-linear-gradient(90deg,#9cc3e6 0 4px,transparent 4px 7px)"></span>the arcs in which the two are shown never meet ({{S_ARCS}})
+<span style="background:rgba(240,150,90,.9)"></span>the same, for smaller lights (not read further)</div>
+<div class="bar" role="img" aria-label="The {{N_PAIRS2}} great repeats: {{S_ARCS}} parted by arcs, {{S_PHASE}} by flash length, {{S_ONEWAY}} by one-way reach, {{S_LEADING}} named as leading lines, {{S_NOTHING}} told apart by nothing">
+<div style="flex:{{S_ARCS}};background:#9cc3e6"></div><div style="flex:{{S_PHASE}};background:#e9dcb0">{{S_PHASE}}</div><div style="flex:{{S_ONEWAY}};background:#ddd0a4">{{S_ONEWAY}}</div><div style="flex:{{S_LEADING}};background:#cfc396">{{S_LEADING}}</div><div style="flex:{{S_NOTHING}};background:#ffd34d"><b>{{S_NOTHING}}</b></div></div>
+<div class="bl"><span><i style="background:#9cc3e6"></i>arcs never meet {{S_ARCS}}</span><span><i style="background:#e9dcb0"></i>flashes of different length {{S_PHASE}}</span><span><i style="background:#ddd0a4"></i>one does not reach the other {{S_ONEWAY}}</span><span><i style="background:#cfc396"></i>the list names a leading line {{S_LEADING}}</span><span><i style="background:#ffd34d"></i>nothing tells them apart {{S_NOTHING}}</span></div>
 <p class="sm mut">Tap or click near a yellow or blue line to see the two lights side by side, blinking as listed, with the water
 each is shown over (yellow, blue) and where both are seen (white). Positions are rounded; the
 map is equirectangular, 60&deg;S to 80&deg;N.</p>
 
-<h2>What the list says</h2>
+<h2>What is left</h2>
+<p>Of the {{N_PAIRS2}} great lights whose own rhythm stands again within their reach, the list itself tells most pairs apart once
+everything it says is read: where each light is shown, how long each flash lasts, how far each one reaches, and what each is called.
+<b>{{S_NOTHING}} pairs remain</b> that nothing in the list tells apart: the same pattern, colour and period, no different flash length
+listed, each within the other's range, water from which both are seen at once, and no word that they belong to one leading line.
+Half of them stand more than {{S_NOTHING_KM}} km apart; {{S_NOTHING_10}} more than 10 km. For only {{S_NOTHING_SAME}} of them does the
+list give the flash lengths of both and find them equal; for the rest it does not say, so a watch might still tell them apart.</p>
+<!--S--><h2>What the list says</h2>
 <p>Of {{N_RANGE}} rhythmic lights with a stated range, <b>{{N_WITHIN}} ({{PCT_ALL}} %)</b> have a light of the same rhythm within
 their own range. Among the {{N_MAJOR}} great lights, seen fifteen miles or more, it is <b>{{N_MAJOR_WITHIN}} ({{PCT_MAJOR}} %)</b>;
 among the smallest, under eight miles, {{PCT_MINOR}} %.</p>
@@ -96,23 +112,42 @@ lights of two different lines, one two sector lights, and seven independent coas
 Akra Gria in the Cyclades, 25 km apart, both one white flash every ten seconds, both shown all round; they can be seen together over
 88 % of the water the smaller one reaches.</p>
 
-<h2>What this page cannot say</h2>
+<h2>The rest of the character</h2>
+<p>Two lights of one rhythm may still differ in how long each flash lasts: one white flash every five seconds can be a tenth of a
+second or a full second long. The list gives these lengths for many lights. In {{N_BOTH}} of the {{N_PAIRS2}} pairs it gives them for
+both, and in <b>{{N_PH_PARTED}} of those ({{PCT_PH}} %) they differ</b>. They differ mostly where the lights are independent: Cabo
+Finisterre flashes for 0.3 s every five, the front light of a range 28 km away for a full second. In {{N_PH_PERC}} pairs the difference
+is half a second or more. {{N_ROT}} of the differing pairs are the same cycle, listed from a different first flash; they are counted as
+the same.</p>
+<p>And reach runs both ways. A great light may reach its twin while the twin, a small harbour light, does not reach back: near the
+great light only one of the two is seen. Of the {{N_PAIRS2}} pairs, {{N_MUTUAL}} are within each other's range.</p>
+<p>What remains after all this is mostly designed: in twenty pairs drawn at random from those the arcs, flash lengths and reach do not
+part, ten were the front and rear of one leading line, two the lights of two different lines, three lights of one harbour or bay,
+one an auxiliary light shown in fog, and four independent coastal lights: Nusa Lembongan and Nusa Penida in Bali, 23 km apart, both
+three white flashes every fifteen seconds. Where the list's own words say a pair is a leading line, the page counts it as the design;
+that is a word test, not a reading, and the twenty read agree with it.</p>
+<!--/S--><h2>What this page cannot say</h2>
 <ul class="sm">
 <li>The range here is the range in the list, and the arcs are the arcs in the list. Land and sea are not told apart: water from which
 both lights can be seen may be land, and a hill may hide a light the list shows. Whether two lights can actually be seen from one
 place depends on height, weather and the shape of the coast. Where a remark gives no bearing (&ldquo;visible on range line
 only&rdquo;, &ldquo;obscured when bearing greater than&hellip;&rdquo;), the light is taken as shown all round; nine pairs that can
 be seen together contain such a light.</li>
-<li>Two lights count as the same when the list gives the same pattern, colour and period; the lengths of each flash are not compared.</li>
+<!--W--><li>Two lights count as the same when the list gives the same pattern, colour and period. Flash lengths part a pair only where the
+list gives them for both; the light on this page blinks in the listed lengths, or in lengths drawn from its pattern where none are
+listed. &ldquo;Leading line&rdquo; is a word test on the list's names and remarks (range, front, rear, leading, synchronized).</li><!--/W-->
+<!--S--><li>Two lights count as the same when the list gives the same pattern, colour and period. Flash lengths part a pair only where the
+list gives them for both lights; where it gives them for one or neither, the pair is not parted, and the light on this page blinks
+in lengths drawn from its pattern.</li><!--/S-->
 <li>{{N_FIXED}} fixed (steady) lights carry no rhythm and are left out; so are {{N_UNPARSED}} entries whose rhythm states no
 period (quick flashing lights, radar beacons and others).</li>
-<li>The list is corrected every week. This is its state as downloaded on 2026-10-16.</li>
+<li>The list is corrected every week. This is its state as downloaded on 2026-10-16 and again, unchanged, on 2026-10-17.</li>
 </ul>
 
 <p class="sm mut">Data: National Geospatial-Intelligence Agency, Maritime Safety Information, List of Lights, Pub. 110-116, downloaded
 2026-10-16 (a work of the US government). Rule quoted from the IALA Dictionary, "Character of a light". Not for navigation.
-Method, predictions and their failures: <a href="SELECTION.md">selection</a>, <a href="REFRAIN.md">journal</a>,
-<a href="session1.json">results</a>, <a href="SESSION2.md">the arcs, registered</a>, <a href="session2.json">their results</a>, <a href="explore1.json">exploratory</a>, <a href="rows.json">rows</a>.</p>
+Method, predictions and their failures: <!--S--><a href="SELECTION.md">selection</a>, <a href="REFRAIN.md">journal</a>,<!--/S--><!--W--><a href="../SELECTION.md">selection</a>, <a href="../REFRAIN.md">journal</a>,<!--/W-->
+<!--S--><a href="session1.json">results</a>, <a href="SESSION2.md">the arcs, registered</a>, <a href="session2.json">their results</a>, <a href="SESSION3.md">the rest of the character, registered</a>, <a href="session3.json">its results</a>, <a href="explore1.json">exploratory</a>, <a href="explore3.json">exploratory, session 3</a>, <a href="rows.json">rows</a>.<!--/S--><!--W--><a href="../SESSION3.md">the last session, registered</a>, <a href="../session3.json">its results</a>, <a href="../explore3.json">the states</a>.<!--/W--></p>
 </main>
 <div id="say" aria-live="polite"><canvas id="field" width="300" height="300" aria-label="The water each of the two lights is shown over, and where both are seen"></canvas><div class="pair"><div class="lamp" id="l0"></div><div class="lamp" id="l1"></div></div>
 <div class="who" id="who">Choose a line on the map.</div><button id="next" type="button">Another pair</button></div>
@@ -123,7 +158,7 @@ const LAT0=80,LAT1=-60;
 let W,H,scale;
 function xy(p){return[(p[1]+180)/360*W,(LAT0-p[0])/(LAT0-LAT1)*H]}
 const majors=D.pairs.filter(p=>p[2]);
-majors.sort((a,b)=>dist(b)-dist(a));
+majors.sort((a,b)=>((b[6]===4)-(a[6]===4))||dist(b)-dist(a));
 function dist(p){const a=D.pts[p[0]],b=D.pts[p[1]],r=Math.PI/180;const h=Math.sin((b[0]-a[0])*r/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin((b[1]-a[1])*r/2)**2;return 2*6371*Math.asin(Math.sqrt(h))}
 let sel=0;
 function draw(){
@@ -134,13 +169,14 @@ function draw(){
   ctx.lineWidth=Math.max(1,dpr*0.8);ctx.strokeStyle='rgba(240,150,90,.35)';ctx.beginPath();
   for(const p of D.pairs){if(p[2])continue;const[a,b]=[xy(D.pts[p[0]]),xy(D.pts[p[1]])];ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1])}
   ctx.stroke();
-  ctx.strokeStyle='#ffd34d';ctx.lineWidth=Math.max(1.2,dpr*1.3);ctx.beginPath();
-  for(const p of majors){if(p[4])continue;const[a,b]=[xy(D.pts[p[0]]),xy(D.pts[p[1]])];ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);}
-  ctx.stroke();
+  for(const[last,col,w]of[[false,'rgba(255,211,77,.4)',1.1],[true,'#ffd34d',1.7]]){
+  ctx.strokeStyle=col;ctx.lineWidth=Math.max(1.2,dpr*w);ctx.beginPath();
+  for(const p of majors){if(p[4]||(p[6]===4)!==last)continue;const[a,b]=[xy(D.pts[p[0]]),xy(D.pts[p[1]])];ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);}
+  ctx.stroke();}
   ctx.strokeStyle='#9cc3e6';ctx.lineWidth=Math.max(1.5,dpr*1.6);ctx.setLineDash([4*dpr,3*dpr]);ctx.beginPath();
   for(const p of majors){if(!p[4])continue;const[a,b]=[xy(D.pts[p[0]]),xy(D.pts[p[1]])];ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);}
   ctx.stroke();ctx.setLineDash([]);
-  for(const p of majors){ctx.fillStyle=p[4]?'#9cc3e6':'#ffd34d';for(const i of [p[0],p[1]]){const[x,y]=xy(D.pts[i]);ctx.beginPath();ctx.arc(x,y,(p[4]?2.6:1.8)*dpr,0,7);ctx.fill()}}
+  for(const p of majors){ctx.fillStyle=p[4]?'#9cc3e6':p[6]===4?'#ffd34d':'rgba(255,211,77,.5)';for(const i of [p[0],p[1]]){const[x,y]=xy(D.pts[i]);ctx.beginPath();ctx.arc(x,y,(p[4]?2.6:1.8)*dpr,0,7);ctx.fill()}}
   const p=majors[sel];if(p){ctx.strokeStyle='#fff';ctx.lineWidth=2*dpr;for(const i of[p[0],p[1]]){const[x,y]=xy(D.pts[i]);ctx.beginPath();ctx.arc(x,y,7*dpr,0,7);ctx.stroke()}}
 }
 const COL={W:'#fff6d8',R:'#ff5a4a',G:'#3ee08a',Y:'#ffd34d'};
@@ -156,8 +192,9 @@ function show(k){
   blink(document.getElementById('l0'),a);blink(document.getElementById('l1'),b);
   field(p,a,b);
   const seen=p[4]?' The arcs in which they are shown never meet.':` They can be seen together over ${Math.round(p[3]*100)} % of the water the first one is shown over.`;
+  const ST=['',' Their flashes are listed with different lengths: a watch tells them apart.',' The second does not reach the first: near the great light, only one of them is seen.',' The list names them as part of a leading line: here the repeat is the design.',' Nothing the list says tells them apart.'];
   const syn=(a.y||b.y)?' (flash lengths not listed for one of them; drawn from the pattern)':'';
-  document.getElementById('who').textContent=`${a.n||'unnamed'} (${a.f}) and ${b.n||'unnamed'} (${b.f}): both ${a.k} every ${a.p} s, ${Math.round(dist(p))} km apart; the first is listed as seen ${a.rg} nautical miles (${Math.round(a.rg*1.852)} km).${seen}${syn}`;
+  document.getElementById('who').textContent=`${a.n||'unnamed'} (${a.f}) and ${b.n||'unnamed'} (${b.f}): both ${a.k} every ${a.p} s, ${Math.round(dist(p))} km apart; the first is listed as seen ${a.rg} nautical miles (${Math.round(a.rg*1.852)} km).${seen}${ST[p[6]]}${syn}`;
   draw();
 }
 const fc=document.getElementById('field'),fx=fc.getContext('2d');

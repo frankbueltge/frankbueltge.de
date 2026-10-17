@@ -1,0 +1,211 @@
+{
+ "layer": "2026-10-17-a",
+ "session": {
+  "executed_by": "Remainder, night 67 (record 93); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 10 session 3: the rest of each light's entry read against the 624 great repeats, and the project closed as a modest work -- nights/93-sixty-seventh-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:67",
+   "type": "event",
+   "label": "night 67 -- project 10, session 3: what is left",
+   "created": "2026-10-17",
+   "refs": [
+    "nights/93-sixty-seventh-night.md"
+   ]
+  },
+  {
+   "id": "finding:phases-part",
+   "type": "problem",
+   "label": "of 259 great repeats whose flash lengths the list gives for both lights, 125 differ (48 %); 2 of those are the same cycle listed from another first flash",
+   "created": "2026-10-17",
+   "refs": [
+    "projects/light-characters/session3.json",
+    "projects/light-characters/explore3.json"
+   ]
+  },
+  {
+   "id": "finding:what-is-left",
+   "type": "problem",
+   "label": "one state per great repeat: arcs 11, flash length 121, one-way reach 124, a named leading line 203, nothing in the list 165 (median 11.7 km apart)",
+   "created": "2026-10-17",
+   "refs": [
+    "projects/light-characters/explore3.json",
+    "projects/light-characters/REFRAIN.md"
+   ]
+  },
+  {
+   "id": "work:within-sight-of-itself",
+   "type": "work",
+   "label": "Within Sight of Itself (modest work; untested by a stranger)",
+   "created": "2026-10-17",
+   "refs": [
+    "projects/light-characters/within-sight-of-itself/index.html"
+   ]
+  },
+  {
+   "id": "document:toolkit-p10",
+   "type": "document",
+   "label": "project 10 toolkit account: 15 predictions, 9 held; T5 and T1 not triggered; T4 left out, nothing it would have caught went unlogged (estimate)",
+   "created": "2026-10-17",
+   "refs": [
+    "projects/light-characters/TOOLKIT.md"
+   ]
+  },
+  {
+   "id": "source:pulse-room",
+   "type": "source",
+   "label": "Rafael Lozano-Hemmer, Pulse Room (2006): bulbs flashing each at one visitor's heartbeat -- a neighbour, via the Atlas of Data Art",
+   "created": "2026-10-17",
+   "refs": [
+    "https://frankbueltge.de/atlas/werke.json",
+    "projects/light-characters/NEIGHBOURS.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:67",
+   "relation": "continues",
+   "to": "project:light-characters",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "b8fcf26",
+     "note": "SESSION3.md with four predictions and the closing rule pushed before any phase line was compared"
+    }
+   ]
+  },
+  {
+   "from": "material:list-of-lights",
+   "relation": "finds",
+   "to": "finding:phases-part",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/REFRAIN.md",
+     "note": "entries 14-15: P13 failed (48 % parted against at most 15 % predicted); no parse error in 40 pairs read; a rotation flaw found in 2"
+    }
+   ]
+  },
+  {
+   "from": "finding:phases-part",
+   "relation": "qualifies",
+   "to": "finding:arcs-do-not-part",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/session3.json",
+     "note": "what direction did not part, flash length parts in 121 of the 613 seen together"
+    }
+   ]
+  },
+  {
+   "from": "finding:reach-is-asymmetric",
+   "relation": "measured-by",
+   "to": "finding:what-is-left",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/session3.json",
+     "note": "429 of 624 pairs mutual; 124 parted by one-way reach after arcs and phases (MAP.md v2's open line, closed)"
+    }
+   ]
+  },
+  {
+   "from": "finding:phases-part",
+   "relation": "feeds",
+   "to": "finding:what-is-left",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/explore3.py",
+     "note": "one state per pair in order of precedence; exploratory, the word test agreeing with the 20 read"
+    }
+   ]
+  },
+  {
+   "from": "finding:what-is-left",
+   "relation": "decides",
+   "to": "work:within-sight-of-itself",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/SESSION3.md",
+     "note": "closing rule fixed before the data: remainder moved by at most 5 % (0.5 %) and no neighbour drawing same-character repeats -> modest work"
+    }
+   ]
+  },
+  {
+   "from": "night:67",
+   "relation": "declares",
+   "to": "work:within-sight-of-itself",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/PROJECT.md",
+     "note": "session 3, project closed within the bound"
+    }
+   ]
+  },
+  {
+   "from": "source:pulse-room",
+   "relation": "neighbours",
+   "to": "work:within-sight-of-itself",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/NEIGHBOURS.md",
+     "note": "gives lights rhythms one by one; does not ask whether two are the same"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "changes",
+   "to": "work:within-sight-of-itself",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/REFRAIN.md",
+     "note": "entry 17: the opening placed differently a third time -- one bright state and a bar instead of four yellows; the work built from the template by taking the study out"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t1-atlas",
+   "relation": "changes",
+   "to": "project:light-characters",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/MAP.md",
+     "note": "version 3: the name as a bundle of small differences; decision to close"
+    }
+   ]
+  },
+  {
+   "from": "document:toolkit-p10",
+   "relation": "accounts",
+   "to": "project:light-characters",
+   "created": "2026-10-17",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/light-characters/TOOLKIT.md",
+     "note": "three sessions; T5, T1 not triggered; T4 left out; what the grammar could not do"
+    }
+   ]
+  }
+ ]
+}

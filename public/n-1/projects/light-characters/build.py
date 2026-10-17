@@ -1,6 +1,8 @@
 """Project 10: build rows.json (committed, derived) and index.html.
 Usage: python3 build.py SCRATCHDIR   (needs rows_full.json from session1.py, pairs2_full.json from session2.py and the seven volumes)
-Session 2 added the arcs: each great pair's shared field, and each great light's visible arc."""
+Session 2 added the arcs: each great pair's shared field, and each great light's visible arc.
+Session 3 added each great pair's last state (explore3.py's partition; needs pairs3_full.json from session3.py) and writes the work
+page, within-sight-of-itself/index.html, from the same template with the study's blocks (<!--S--> ... <!--/S-->) taken out."""
 import json, re, sys
 import numpy as np
 from lib2 import arcs, BINS
@@ -14,6 +16,9 @@ assert len(rows) == len(rawl)
 res = json.load(open("session1.json"))
 res2 = json.load(open("session2.json"))
 p2 = {(p["A"], p["B"]): p for p in json.load(open(f"{sc}/pairs2_full.json"))}
+res3 = json.load(open("session3.json")); ex3 = json.load(open("explore3.json"))
+from explore3 import state
+p3 = {(p["A"], p["B"]): state(p) for p in json.load(open(f"{sc}/pairs3_full.json"))}
 
 
 def intervals(mask):
@@ -87,7 +92,8 @@ for ti, ri in enumerate(T):
     tj = x["twin_i"]
     if x["c"] == "major":
         q = p2[(ti, tj)]
-        pairs.append([ti, tj, 1, round(q["share"], 3) if q["share"] is not None else 0, 1 if q["shared"] == 0 else 0, q["rB_used"]])
+        pairs.append([ti, tj, 1, round(q["share"], 3) if q["share"] is not None else 0, 1 if q["shared"] == 0 else 0, q["rB_used"],
+                      p3[(ti, tj)]])
     else:
         pairs.append([ti, tj, 0])
     if x["c"] == "major":
@@ -123,9 +129,22 @@ fill = {
     "PCT_KEEPC": f'{100 * res2["neighbour_keep_share"]:.0f}', "MED_SHARE": f'{100 * res2["median_shared_share"]:.0f}',
     "N_FIXED": f'{res["counts"]["kind_fixed"]:,}', "N_UNPARSED": f'{res["counts"]["kind_unparsed"]:,}',
 }
+P = ex3["partition"]
+fill.update({"N_BOTH": f'{res3["both_stated"]:,}', "N_PH_PARTED": f'{res3["phase_parted"]:,}',
+             "PCT_PH": f'{100 * res3["parted_share_of_both"]:.0f}', "N_PH_PERC": f'{res3["phase_parted_perceptible"]:,}',
+             "N_MUTUAL": f'{res3["mutual"]:,}', "N_ROT": f'{ex3["parted_rotation_only"]}',
+             "S_ARCS": str(P["arcs"]), "S_PHASE": str(P["phase"]), "S_ONEWAY": str(P["oneway"]), "S_LEADING": str(P["leading"]),
+             "S_NOTHING": str(P["nothing"]), "S_NOTHING_SAME": str(ex3["remainder_rot_no_words_same_phase"]),
+             "S_NOTHING_KM": f'{ex3["remainder_rot_no_words_median_km"]:.0f}', "S_NOTHING_10": str(ex3["remainder_rot_no_words_over_10km"])})
 for k, v in fill.items():
     html = html.replace("{{" + k + "}}", v)
 assert "{{" not in html
-open("index.html", "w").write(html)
+study = html.replace("<!--S-->", "").replace("<!--/S-->", "").replace("<!--W-->", "<!--").replace("<!--/W-->", "-->")
+open("index.html", "w").write(study)
+work = re.sub(r"<!--S-->.*?<!--/S-->", "", html, flags=re.S).replace("<!--W-->", "").replace("<!--/W-->", "")
+assert "<!--S-->" not in work
+import os
+os.makedirs("within-sight-of-itself", exist_ok=True)
+open("within-sight-of-itself/index.html", "w").write(work)
 print(len(pts), "points", len(pairs), "pairs", n_major_pairs, "major", len(info), "with phases",
       sum(1 for v in info.values() if v["y"]), "synthesised", len(html) // 1024, "KB")
