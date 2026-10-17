@@ -24,6 +24,26 @@ jobs:
         run: |
           set -euo pipefail
           DATE=$(date -u +%F)
+
+          # How far a branch is ahead of main — "gone" when the remote has no such branch, and
+          # "unknown" when GitHub could not be asked. The exit status decides, never the text:
+          # `gh api` writes the BODY of an error to stdout, so a deleted branch (compare answers 404)
+          # came back as the JSON `{"message":"Not Found",…}` beside a non-zero exit, and
+          # `$(gh api … || echo gone)` held that JSON followed by "gone" — equal to neither "gone"
+          # nor "0". The cleanup below therefore never closed an issue for a deleted branch: #666,
+          # #717, #999 and #1018 stood open for up to two months after their branches were gone.
+          # `ls-remote --exit-code` answers 2 for "no such ref" and anything else for "could not
+          # ask", and only the first may close an issue.
+          ahead_of_main () {
+            local repo="$1" br="$2" rc=0 enc ahead
+            GIT_TERMINAL_PROMPT=0 git ls-remote --exit-code --heads "https://github.com/frankbueltge/$repo" "refs/heads/$br" >/dev/null 2>&1 || rc=$?
+            if [ "$rc" = 2 ]; then echo gone; return 0; fi
+            if [ "$rc" != 0 ]; then echo unknown; return 0; fi
+            enc=$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$br")
+            ahead=$(gh api "repos/frankbueltge/$repo/compare/main...$enc" --jq '.ahead_by' 2>/dev/null) || { echo unknown; return 0; }
+            case "$ahead" in ''|*[!0-9]*) echo unknown ;; *) echo "$ahead" ;; esac
+          }
+
           # arch, n-1, error-as-method and the plenum added 2026-09-18, to the same list the
           # morning digest was extended to on 2026-09-11 — that pass moved the "keine Session
           # gelandet" side and left this one on the three practices of 2026-07-16. The two
@@ -34,16 +54,19 @@ jobs:
           # to main — and nothing called, because n-1 was not read here. Bound together under
           # test in src/lib/gate/landing-watchdog.test.ts so the lists cannot drift apart again.
           # `night/` is error-as-method's session branch; n-1 and the plenum push `claude/*`.
-          for REPO in ulysses field-research studio arch n-1 error-as-method data-snack-plenum research-ecology; do
+          # data-snack-plenum left the list on 2026-10-17: the Plenum is dormant (its last mirror was
+          # 2026-08-26 and its only commits since are the integrate's own failure feedback), and a
+          # dormant practice strands nothing. Put it back the day it works again.
+          for REPO in ulysses field-research studio arch n-1 error-as-method research-ecology; do
             BRANCHES=$(git ls-remote "https://github.com/frankbueltge/$REPO" \
               | grep -E 'refs/heads/(research/session-|ulysses/|claude/|night/)' \
               | sed 's|.*refs/heads/||') || true
             for BR in $BRANCHES; do
-              AHEAD=$(gh api "repos/frankbueltge/$REPO/compare/main...$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$BR")" --jq '.ahead_by' 2>/dev/null || echo 0)
-              [ "$AHEAD" -gt 0 ] || continue
+              AHEAD=$(ahead_of_main "$REPO" "$BR")
+              case "$AHEAD" in ''|gone|unknown|0) continue ;; esac
               # nur frische Stranden melden (jüngster Commit < 36h) — alte, bewusst stehende
               # Branches (z. B. dokumentierte Duplikate) sollen nicht täglich alarmieren
-              LAST=$(gh api "repos/frankbueltge/$REPO/commits/$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$BR")" --jq '.commit.committer.date' 2>/dev/null || echo '')
+              LAST=$(gh api "repos/frankbueltge/$REPO/commits/$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$BR")" --jq '.commit.committer.date' 2>/dev/null) || LAST=''
               [ -n "$LAST" ] || continue
               AGE_H=$(( ( $(date -u +%s) - $(date -u -d "$LAST" +%s) ) / 3600 ))
               [ "$AGE_H" -lt 36 ] || continue
@@ -66,11 +89,15 @@ jobs:
               REPO=$(echo "$TITLE" | awk '{print $3}')
               BR=$(echo "$TITLE" | awk '{print $4}')
               { [ -n "$REPO" ] && [ -n "$BR" ]; } || continue
-              ENC=$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$BR")
-              AHEAD=$(gh api "repos/frankbueltge/$REPO/compare/main...$ENC" --jq '.ahead_by' 2>/dev/null || echo gone)
-              if [ "$AHEAD" = "gone" ] || [ "$AHEAD" = "0" ]; then
-                gh issue close "$NUM" --repo frankbueltge/frankbueltge.de \
-                  --comment "Der Branch \`$BR\` in \`$REPO\` ist gelandet oder gelöscht — automatisch geschlossen vom Landing-Watchdog." || true
-              fi
+              AHEAD=$(ahead_of_main "$REPO" "$BR")
+              # "unknown" (GitHub could not be asked) leaves the issue open: closing on a failed
+              # lookup would be the same mistake the other way round.
+              case "$AHEAD" in
+                gone) WHY="ist gelöscht" ;;
+                0) WHY="ist gelandet (0 Commits vor main)" ;;
+                *) continue ;;
+              esac
+              gh issue close "$NUM" --repo frankbueltge/frankbueltge.de \
+                --comment "Der Branch \`$BR\` in \`$REPO\` $WHY — automatisch geschlossen vom Landing-Watchdog." || true
             done
           echo "watchdog done"

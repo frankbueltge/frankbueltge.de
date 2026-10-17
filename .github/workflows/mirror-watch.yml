@@ -8,7 +8,16 @@ name: Mirror watch
 # Since 2026-10-07 the practices are watched by practice-watch.yml — once a minute while the house
 # is active, against the head each mirror records — because GitHub granted this hourly schedule
 # three or four times a day, and a day of five sessions per practice outran it. What stays here
-# are the two houses that watch does not cover: the plenum and the ecology's own repository.
+# is the one house that watch does not cover: the ecology's own repository.
+#
+# The plenum was watched here too until 2026-10-17, and is not any more. The check looks for the
+# last "plenum: integrate" commit among the newest fifty commits of main; the last one was made
+# on 2026-08-26 and is long out of that window, so it read "never mirrored" and started
+# plenum-integrate.yml on every run — 95 dispatches between 2026-09-27 and 2026-10-17, each one a
+# full check, test and build for a practice that has landed nothing. Every red one also pushed a
+# "feedback: build … red" commit into the plenum's repository, which moved its head and gave the
+# next run its reason. The Plenum is dormant: nothing is left to keep fresh, and plenum-integrate.yml
+# keeps its own daily cron as the net.
 
 on:
   schedule:
@@ -40,5 +49,4 @@ jobs:
               gh workflow run "$workflow" -R "${{ github.repository }}"
             fi
           }
-          check data-snack-plenum  plenum-integrate.yml   "plenum: integrate"
           check research-ecology   ecology-integrate.yml  "ecology: "

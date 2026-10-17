@@ -13,23 +13,23 @@
 # Pull-based: the practice repo needs no write access and no secret here; this workflow
 # copies bytes and never authors content. Cheap when there is nothing to do: the first
 # step compares the practice's HEAD with the sha this mirror last carried
-# (.github/state/arch-mirror-head) and exits in seconds when they match. Every ten
-# minutes because this mirror is the works' only public address during the practice's
-# pre-registered window, and a surface that is the only one may not lag an hour behind
-# the record it serves. That cadence was asked for, not granted: from 2026-10-05 to
-# 2026-10-07 GitHub ran this schedule three to five times a day, with gaps of up to seven
-# and a half hours. Since 2026-10-07 the practice watch (practice-watch.yml) asks the
-# practice's head once a minute while the house is active and dispatches this workflow
-# when it differs from the state file; the cron stays as the net under it. The commit is
-# made with the built-in GITHUB_TOKEN, which never fires `on: push` — deploy-cf.yml
-# carries this workflow in its `workflow_run` list, and must keep doing so. public/arch
-# is not a declared knowledge-graph source, so no graph rebuild runs here (see
+# (.github/state/arch-mirror-head) and exits in seconds when they match.
+#
+# No schedule since 2026-10-17. Until then this ran every ten minutes, because the mirror was
+# the works' only public address during the practice's pre-registered window and a surface that
+# is the only one may not lag an hour behind the record it serves — a cadence that was asked
+# for, not granted (from 2026-10-05 to 2026-10-07 GitHub ran it three to five times a day). The
+# practice has since been retired: its verdict of 2026-09-21 stands, it left the running systems
+# on 2026-10-11, and its head last moved on 2026-10-05. Nothing is left to keep fresh. What
+# starts this workflow now is the practice watch (practice-watch.yml), which dispatches it when
+# the practice's head moves past the state file, and a person, by workflow_dispatch. The commit
+# is made with the built-in GITHUB_TOKEN, which never fires `on: push` — deploy-cf.yml carries
+# this workflow in its `workflow_run` list, and must keep doing so. public/arch is not a
+# declared knowledge-graph source, so no graph rebuild runs here (see
 # .claude/rules/knowledge-graph.md).
 name: Arch integrate
 
 on:
-  schedule:
-    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 permissions:

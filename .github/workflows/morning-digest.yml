@@ -12,7 +12,20 @@ name: Morning digest
 on:
   schedule:
     - cron: '30 6 * * *'   # 08:30 Berlin — nach Nightlies (05:35–06:35) und Watchdogs (07:45/08:15)
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      # A test window (2026-10-17). The digest reads "the last 24 hours", and until it can be run
+      # over a day that has already happened, the only way to see whether it reports the red runs
+      # of that day was to wait for the next one. Both inputs are for that: the window may start
+      # earlier or later, and a dry run prints the digest instead of opening, closing or pushing.
+      since:
+        description: 'Window start, ISO UTC (e.g. 2026-10-16T06:30:00Z) — default: 24 hours ago'
+        required: false
+        default: ''
+      dry_run:
+        description: 'Print the digest to the job summary; open, close and push nothing'
+        type: boolean
+        default: false
 
 permissions:
   issues: write
@@ -37,10 +50,12 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          INPUT_SINCE: ${{ inputs.since }}
+          DRY_RUN: ${{ inputs.dry_run }}
         run: |
           set -euo pipefail
           DATE=$(date -u +%F)
-          SINCE=$(date -u -d '24 hours ago' +%FT%TZ)
+          SINCE=${INPUT_SINCE:-$(date -u -d '24 hours ago' +%FT%TZ)}
           BODY="## Die Nacht in einem Blick — $DATE"$'\n\n'
 
           # 1) Engine-Sessions der letzten 24h (Commits auf main, ohne Merge-/Bot-Rauschen)
@@ -57,8 +72,19 @@ jobs:
           # `Night [0-9]` is n-1's own session marker ("Night 25: …"), written with the digit so
           # prose like "Two Nights Deep" is not counted as a landing; `^scribe: ` is the Middle
           # Scribe's, anchored so that "describe" cannot match it.
-          MARKER='session|Session|Research day|Plenum|Auto-land research|Project work|Night [0-9]|^scribe: '
-          for REPO in field-research ulysses studio data-snack-plenum arch n-1 error-as-method research-ecology; do
+          # `^relay: [0-9]` is the Middle's own daily commit in research-ecology ("relay: 2026-10-17 —
+          # 22 relations, 6 open handoffs", every morning around 07:15 UTC). Added 2026-10-17: the list
+          # read only the Scribe's commits there, so a day on which the relay landed and the Scribe did
+          # not was printed as "keine Session gelandet". The digit keeps a maintenance commit such as
+          # "relay: README — …" out of the count.
+          MARKER='session|Session|Research day|Plenum|Auto-land research|Project work|Night [0-9]|^scribe: |^relay: [0-9]'
+          # arch and data-snack-plenum left this list on 2026-10-17. Arch is retired (its room stays as
+          # a record; its head last moved on 2026-10-05) and the Plenum has been dormant since its last
+          # mirror on 2026-08-26, its only commits being the integrate's own failure feedback. A line
+          # "keine Session gelandet" every morning for a practice that owes none is noise, and it
+          # teaches the reader to skip the section. The landing watchdog still reads arch; put both
+          # back here the day either of them works again.
+          for REPO in field-research ulysses studio n-1 error-as-method research-ecology; do
             LINES=$(gh api "repos/frankbueltge/$REPO/commits?since=$SINCE&per_page=15" \
               --jq "[.[] | select(.commit.message | test(\"$MARKER\")) | \"- **$REPO**: \" + (.commit.message | split(\"\n\")[0] | .[0:140])] | join(\"\n\")" 2>/dev/null || echo "")
             # The read above sees `main` and nothing else. A session whose environment cannot push
@@ -104,11 +130,32 @@ jobs:
           fi
 
           # 2) Rote Läufe der letzten 24h in diesem Repo
-          BODY+=$'\n'"### Rote Läufe (24h)"$'\n'
-          RED=$(gh run list --repo frankbueltge/frankbueltge.de --limit 50 \
-            --json conclusion,workflowName,createdAt \
-            --jq "[.[] | select(.conclusion == \"failure\" and .createdAt > \"$SINCE\") | \"- \(.workflowName) (\(.createdAt[11:16]) UTC)\"] | unique | join(\"\n\")")
-          [ -n "$RED" ] && BODY+="$RED"$'\n' || BODY+="- keine 🎉"$'\n'
+          # Asked by creation date, one conclusion at a time, so GitHub does the filtering. Until
+          # 2026-10-17 this read `gh run list --limit 50` and cut the list afterwards. This repository
+          # starts several hundred runs a day (deploys, mirrors, watches), so fifty runs reach back one
+          # to seven hours, not twenty-four: from 2026-10-02 to 2026-10-15 the section reported 2 of
+          # the 35 red runs there were, and printed "keine 🎉" on days that had them.
+          if [ -n "${INPUT_SINCE:-}" ]; then BODY+=$'\n'"### Rote Läufe (seit $SINCE)"$'\n'
+          else BODY+=$'\n'"### Rote Läufe (24h)"$'\n'; fi
+          RUNS='[]'
+          RUNS_OK=1
+          for CONCLUSION in failure timed_out startup_failure; do
+            if PART=$(gh run list --repo frankbueltge/frankbueltge.de --status "$CONCLUSION" \
+                --created ">=$SINCE" --limit 300 --json name,workflowName,createdAt); then
+              RUNS=$(jq -c --argjson more "$PART" '. + $more' <<<"$RUNS")
+            else
+              RUNS_OK=0
+            fi
+          done
+          # One line per workflow: how often, and between which UTC minutes.
+          RED=$(jq -r 'group_by(.workflowName // .name // "(unnamed)")[]
+            | (map(.createdAt) | sort) as $t
+            | "- \(.[0].workflowName // .[0].name // "(unnamed)")"
+              + (if length > 1 then " ×\(length) (\($t[0][11:16])–\($t[-1][11:16]) UTC)" else " (\($t[0][11:16]) UTC)" end)' <<<"$RUNS")
+          if [ -n "$RED" ]; then BODY+="$RED"$'\n'
+          elif [ "$RUNS_OK" = 1 ]; then BODY+="- keine 🎉"$'\n'; fi
+          # Say it rather than print "keine": a query that failed is not a day without red runs.
+          if [ "$RUNS_OK" = 0 ]; then BODY+="- ⚠ Die Lauf-Liste war nicht (vollständig) lesbar — \`gh run list\` ist gescheitert."$'\n'; fi
 
           # 3) Offene Requests an Frank — mit der Selbstauskunft der Absender (Vier-Zeilen-
           # Kopf, Steuerzentrale v2 P1): tl;dr + braucht statt roher Überschrift, wo der
@@ -136,6 +183,13 @@ jobs:
           # || true: unter set -e darf "keine kopflosen Anfragen" den Digest nicht abbrechen.
           { [ "${HEADLESS:-0}" -gt 0 ] && BODY+="*($HEADLESS Anfrage(n) ohne Vier-Zeilen-Kopf — Konvention seit 2026-08-01 in Kraft.)*"$'\n'; } || true
           BODY+=$'\n'"*Antworten: einfach als Kommentar auf dem jeweiligen Issue — die Praxis liest ihn in ihrer nächsten Session. Issue schließen = gelesen/erledigt.*"$'\n'
+
+          # A dry run stops here: the digest is shown, and nothing is opened, closed or pushed.
+          if [ "${DRY_RUN:-false}" = "true" ]; then
+            { echo "### Dry run — nothing was opened, closed or pushed (window start: $SINCE)"; echo; printf '%s\n' "$BODY"; } >> "$GITHUB_STEP_SUMMARY"
+            printf '%s\n' "$BODY"
+            exit 0
+          fi
 
           # Vortages-Digests schließen, neues eröffnen
           gh issue list --repo frankbueltge/frankbueltge.de --state open \
