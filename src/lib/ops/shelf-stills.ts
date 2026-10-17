@@ -42,7 +42,7 @@ export function shelfKey(work: ShelfWork): string {
     case 'experiment':
       return `lab-${work.id}`
     case 'n-1-work':
-      return `n-1-${slugOf(work.title)}`
+      return `n-1-${slugOf(work.href)}`
     case 'attention-experiment':
       return `attention-${work.id}`
   }
@@ -58,13 +58,14 @@ export interface N1MarginWork {
   line?: string
 }
 
-/** The work n-1 lists under a title, or null where its margin lists none by that name. */
-export function n1MarginWork(title: string, root: string = process.cwd()): N1MarginWork | null {
+/** The work n-1 lists at an address, or null where its margin lists none there. */
+export function n1MarginWork(href: string, root: string = process.cwd()): N1MarginWork | null {
   const file = join(root, 'public', 'n-1', 'surface', 'margin.json')
   if (!existsSync(file)) return null
   const margin = JSON.parse(readFileSync(file, 'utf8')) as { works?: unknown }
   const works = Array.isArray(margin.works) ? (margin.works as N1MarginWork[]) : []
-  return works.find((w) => w && w.title === title && typeof w.href === 'string') ?? null
+  const bare = (h: string) => h.replace(/^\.?\//, '').replace(/\/$/, '')
+  return works.find((w) => w && typeof w.href === 'string' && typeof w.title === 'string' && bare(w.href) === bare(href)) ?? null
 }
 
 /**
@@ -80,7 +81,7 @@ export function makerStill(work: ShelfWork, root: string = process.cwd()): strin
     case 'presentation':
       return present(`public/${work.practice}/presentations/cycle-${pad(work.cycle)}/shot-1100.png`)
     case 'n-1-work': {
-      const still = n1MarginWork(work.title, root)?.still
+      const still = n1MarginWork(work.href, root)?.still
       return still ? present(posix.join('public/n-1', still)) : null
     }
     default:

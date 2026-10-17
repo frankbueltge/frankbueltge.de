@@ -19,11 +19,10 @@ import { DOSSIER } from '@/config/dossier-wording'
 import { inWords } from '@/config/edition-wording'
 import { NAMING } from '@/config/naming'
 import exportFile from '@/data/attention/export.json'
-import momentsFile from '@/data/attention/moments.json'
 import { buildProgramme, CONVENING_DAYS, conveningView, loadRelayExtras, VETO_DAYS } from '@/lib/ecology/convening'
 import { loadCycle, loadPresentations } from '@/lib/ecology/v3'
 import { PUBLICATION_RULE_SINCE, REPOS } from '@/lib/engines/publication.mjs'
-import { readShelf } from '@/lib/ops/selected-works'
+import { readShelf, retirementDay } from '@/lib/ops/selected-works'
 import { dayMonthYear } from '@/lib/ops/since'
 import { SITE } from '@/lib/site'
 import '@fontsource-variable/literata/opsz-italic.css'
@@ -109,10 +108,9 @@ interface Project {
   site_route: string | null
   status: string
 }
-const retiredOn = (id: string) =>
-  (momentsFile.moments as { project: string; mode: string; occurred_at: string }[]).find((m) => m.project === id && m.mode === 'retirement')?.occurred_at.slice(0, 10) ?? null
 const projects = (exportFile.projects as Project[]).map((p) => {
-  const retired = p.status === 'retired' ? retiredOn(p.id) : null
+  // the same day the shelf's card states: the retirement moment, or the archive's own front page
+  const retired = p.status === 'retired' ? retirementDay(p.id, p.site_route ?? '/no-stage') : null
   return {
     title: p.title,
     status: retired ? D.attention.retiredOn(dayMonthYear(retired)) : (D.attention.status[p.status] ?? p.status),

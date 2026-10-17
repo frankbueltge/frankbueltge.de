@@ -11,13 +11,21 @@ import { SELECTED_WORKS, type ShelfPick } from '@/config/selected-works'
 import { WERKE } from '@/data/werke'
 import { loadFieldPapers } from '@/lib/ecology/v3'
 import { pieceHref } from '@/lib/engines/publication-links'
-import { readPick, readShelf } from './selected-works'
+import { readPick, readShelfReport, retirementDay } from './selected-works'
 import { makerStill, SHELF_STILL_DIR, shelfCrop, shelfKey } from './shelf-stills'
 import { dayMonthYear } from './since'
 
 const picks: readonly ShelfPick[] = SELECTED_WORKS.picks
-const cards = readShelf()
+const { cards, missing } = readShelfReport()
 const byKey = new Map(cards.map((c) => [c.key, c]))
+
+// WHERE THE SHELF IS HELD STRICTLY. Locally and in the pull request's CI, every pick must read: that
+// is where a person changes the shelf, and a typo should be loud. The integrate and deploy runs
+// execute this suite too, and there a pick that stopped reading was broken by a practice's own
+// mirror, not by the shelf's editor; the page already leaves the pick out and logs it, so those
+// runs ask only that the shelf still stands, and never turn a practice's delivery red over it.
+const STRICT = !process.env.GITHUB_WORKFLOW || process.env.GITHUB_WORKFLOW === 'CI'
+const SHELF_FLOOR = 5
 const read = (rel: string) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8')
 
 /** A page the build makes: a mirrored page, a route of this site, or a Field paper's page. */
@@ -33,10 +41,15 @@ function pageExists(href: string): boolean {
 
 describe('the selected works', () => {
   it('stand five to eight on the shelf, each piece once', () => {
-    expect(picks.length).toBeGreaterThanOrEqual(5)
+    expect(picks.length).toBeGreaterThanOrEqual(SHELF_FLOOR)
     expect(picks.length).toBeLessThanOrEqual(8)
     const keys = picks.map((p) => shelfKey(p.work))
     expect(new Set(keys).size).toBe(keys.length)
+  })
+
+  it(STRICT ? 'all read from their records' : 'still stand, whatever a mirror did tonight', () => {
+    if (STRICT) expect(missing, missing.map((m) => m.why).join('\n')).toEqual([])
+    else expect(cards.length).toBeGreaterThanOrEqual(SHELF_FLOOR)
   })
 
   it.each(cards.map((c) => [c.key, c] as const))('%s reads title, maker, date and sentence from its record', (_key, card) => {
@@ -103,7 +116,8 @@ describe('what the shelf types', () => {
 describe('the stills', () => {
   it.each(picks.map((p) => [shelfKey(p.work), p] as const))('%s shows its maker’s own still, cut to the frame, or none', (key, pick) => {
     const source = makerStill(pick.work)
-    const card = byKey.get(key)!
+    const card = byKey.get(key)
+    if (!card) return // left off tonight; the strict run above names it
     if (!source) {
       expect(card.still, `${key} shows a picture its maker never committed`).toBeNull()
       return
@@ -115,7 +129,8 @@ describe('the stills', () => {
   })
 
   it('keeps no crop that no pick uses', () => {
-    const wanted = new Set(picks.filter((p) => makerStill(p.work)).map((p) => shelfCrop(p.work).file))
+    // a crop named after a pick is never stray, even on a night its source left the mirror
+    const wanted = new Set(picks.map((p) => shelfCrop(p.work).file))
     const present = existsSync(SHELF_STILL_DIR) ? readdirSync(SHELF_STILL_DIR).map((f) => `${SHELF_STILL_DIR}/${f}`) : []
     expect(present.filter((f) => !wanted.has(f)), 'a stray crop — run npm run shelf:stills').toEqual([])
   })
@@ -127,7 +142,7 @@ describe('a pick its record cannot answer', () => {
       /no-such-work.*cannot be read/,
     )
     expect(() => readPick({ work: { kind: 'experiment', id: 'no-such-experiment' }, reason: 'none' })).toThrow(/no entry "no-such-experiment"/)
-    expect(() => readPick({ work: { kind: 'n-1-work', title: 'No Such Work' }, sentence: 'A work that is not there.', reason: 'none' })).toThrow(/lists no work/)
+    expect(() => readPick({ work: { kind: 'n-1-work', href: 'projects/no-such-work/' }, sentence: 'A work that is not there.', reason: 'none' })).toThrow(/lists no work/)
     expect(() => readPick({ work: { kind: 'presentation', practice: 'atelier', cycle: 999 }, sentence: 'A cycle that never ran.', reason: 'none' })).toThrow(
       /no presentation of cycle 999/,
     )
@@ -135,6 +150,25 @@ describe('a pick its record cannot answer', () => {
 
   it('asks a sentence of every pick that is not a lab experiment', () => {
     expect(() => readPick({ work: { kind: 'attention-experiment', id: 'foreknown' }, reason: 'none' })).toThrow(/says no sentence/)
+  })
+
+  it('is left off the shelf, never taking the page down', () => {
+    const good = picks[0]
+    const bad: ShelfPick = { work: { kind: 'studio-work', slug: '2026-01-01-no-such-work' }, sentence: 'A work that is not there.', reason: 'none' }
+    const report = readShelfReport(process.cwd(), [good, bad])
+    expect(report.cards.map((c) => c.key)).toEqual([shelfKey(good.work)])
+    expect(report.missing.map((m) => m.key)).toEqual([shelfKey(bad.work)])
+  })
+})
+
+describe('a retirement’s day', () => {
+  it('is read from the retirement moment, or from the archive’s own front page once the moment has scrolled out', () => {
+    // the moments file keeps the newest hundred; an id with no moment of its own falls through to
+    // the frozen stage, which states the day itself
+    const fromMoment = retirementDay('foreknown', '/attention')
+    expect(fromMoment).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    expect(retirementDay('an-id-without-moments', '/attention')).toBe(fromMoment)
+    expect(retirementDay('an-id-without-moments', '/no-such-stage')).toBeNull()
   })
 })
 

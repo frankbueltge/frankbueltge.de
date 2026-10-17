@@ -10,9 +10,10 @@
 //   · the address, passed through the publication rule, so a card never points at a redirect;
 //   · the still — the maker's own picture, cut to the frame (src/lib/ops/shelf-stills.ts).
 //
-// A record that cannot answer is a fault, not a blank: a pick that names a work its record does
-// not hold throws, and the test reports which pick it was. The shelf is chosen by hand, so a pick
-// that stops resolving is someone's to fix, never something to drop quietly.
+// A record that cannot answer is a fault, not a blank: readPick throws, naming the pick and why.
+// The shelf itself (readShelf) leaves such a pick out and says so in the build log, so one
+// practice changing its mirror can never take the entrance down; the test holds every pick
+// strictly where a person changes the shelf (src/lib/ops/selected-works.test.ts).
 
 import { existsSync, readFileSync } from 'node:fs'
 import { join, posix } from 'node:path'
@@ -160,9 +161,9 @@ function experiment(id: string, work: ShelfWork): FromRecord {
   }
 }
 
-function n1Work(title: string, root: string, work: ShelfWork): FromRecord {
-  const entry = n1MarginWork(title, root)
-  if (!entry) return fail(work, `n-1's margin.json lists no work called "${title}"`)
+function n1Work(href: string, root: string, work: ShelfWork): FromRecord {
+  const entry = n1MarginWork(href, root)
+  if (!entry) return fail(work, `n-1's margin.json lists no work at "${href}"`)
   // margin.json addresses its works from n-1's own front page
   const path = posix.normalize(entry.href.endsWith('/') ? `${entry.href}index.html` : entry.href)
   const page = readN1Shelf(join(root, 'public', 'n-1')).find((p) => p.path === path)
@@ -174,7 +175,7 @@ function n1Work(title: string, root: string, work: ShelfWork): FromRecord {
     kind: W.kinds.work,
     when: W.when.made(dayMonthYear(page.date)),
     day: page.date,
-    href: `/n-1/${entry.href}`,
+    href: `/n-1/${entry.href.replace(/^\.?\//, '')}`,
   }
 }
 
@@ -191,16 +192,39 @@ interface Moment {
   occurred_at: string
 }
 
-function attentionExperiment(id: string, work: ShelfWork): FromRecord {
+/**
+ * The day an experiment of Machine Attention was retired. Its moments say it first; but the
+ * moments file holds the newest hundred, so a retirement can scroll out of it once other projects
+ * have a stage, and then the archive's own front page — frozen since the day it stopped — says it
+ * in its description. Null where neither does: the card then names the retirement without a day.
+ */
+export function retirementDay(id: string, route: string, root: string = process.cwd()): string | null {
+  const moment = (momentsFile.moments as Moment[]).find((m) => m.project === id && m.mode === 'retirement')
+  if (moment) return moment.occurred_at.slice(0, 10)
+  const face = join(root, 'public', route.replace(/^\//, ''), 'index.html')
+  if (!existsSync(face)) return null
+  return /\bretired\s+(?:on\s+)?(\d{4}-\d{2}-\d{2})/i.exec(readFileSync(face, 'utf8'))?.[1] ?? null
+}
+
+function attentionExperiment(id: string, root: string, work: ShelfWork): FromRecord {
   const project = (exportFile.projects as ExportProject[]).find((p) => p.id === id)
   if (!project) return fail(work, `Machine Attention's export lists no project "${id}"`)
   if (!project.site_route) return fail(work, `${project.title} has no stage on this site`)
   const maker = cardTitle('attention', NAMING.opsRoom.signal.houseFallback.attention)
   const since = dayMonthYear(project.since)
   if (project.status === 'retired') {
-    const retired = (momentsFile.moments as Moment[]).find((m) => m.project === id && m.mode === 'retirement')
-    if (!retired) return fail(work, 'its export says retired, and no moment records the retirement')
-    const day = retired.occurred_at.slice(0, 10)
+    const day = retirementDay(id, project.site_route, root)
+    if (!day) {
+      return {
+        title: project.title,
+        maker,
+        voice: null,
+        kind: W.kinds.archive,
+        when: W.when.retired(since),
+        day: project.since,
+        href: `${project.site_route}/`,
+      }
+    }
     // a span within one year names the year once: "8 August – 4 October 2026"
     const from = project.since.slice(0, 4) === day.slice(0, 4) ? since.replace(/\s\d{4}$/, '') : since
     return {
@@ -237,8 +261,8 @@ export function readPick(pick: ShelfPick, root: string = process.cwd(), shelf: r
           : work.kind === 'experiment'
             ? experiment(work.id, work)
             : work.kind === 'n-1-work'
-              ? n1Work(work.title, root, work)
-              : attentionExperiment(work.id, work)
+              ? n1Work(work.href, root, work)
+              : attentionExperiment(work.id, root, work)
   const sentence = pick.sentence ?? record.line ?? fail(work, 'it says no sentence, and its record carries no line to use')
   const source = makerStill(work, root)
   const crop = shelfCrop(work)
@@ -257,8 +281,28 @@ export function readPick(pick: ShelfPick, root: string = process.cwd(), shelf: r
   }
 }
 
-/** The shelf, in the order the config gives. */
-export function readShelf(root: string = process.cwd(), picks: readonly ShelfPick[] = W.picks): ShelfCard[] {
+/** The shelf as its records answer it: every card that reads, and every pick that does not, with why. */
+export function readShelfReport(
+  root: string = process.cwd(),
+  picks: readonly ShelfPick[] = W.picks,
+): { cards: ShelfCard[]; missing: { key: string; why: string }[] } {
   const shelf = loadPresentations(root)
-  return picks.map((pick) => readPick(pick, root, shelf))
+  const cards: ShelfCard[] = []
+  const missing: { key: string; why: string }[] = []
+  for (const pick of picks) {
+    try {
+      cards.push(readPick(pick, root, shelf))
+    } catch (e) {
+      missing.push({ key: shelfKey(pick.work), why: (e as Error).message })
+    }
+  }
+  return { cards, missing }
+}
+
+/** The shelf, in the order the config gives. A pick its record no longer answers is left out, and
+ *  the build log says which: the entrance stands on whatever still reads. */
+export function readShelf(root: string = process.cwd(), picks: readonly ShelfPick[] = W.picks): ShelfCard[] {
+  const { cards, missing } = readShelfReport(root, picks)
+  for (const m of missing) console.warn(`[selected-works] left off the shelf: ${m.why}`)
+  return cards
 }

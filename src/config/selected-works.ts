@@ -13,6 +13,11 @@
 // shelf's frame (scripts/shelf-stills.ts), and src/lib/ops/selected-works.test.ts turns red until
 // that file exists. The order here is the order on the page.
 //
+// A PICK THAT STOPS READING never takes the page down: the shelf leaves it out and the build says
+// which and why. The test holds every pick strictly where a person changes the shelf (locally and
+// in the pull request's CI); in the nightly integrate and deploy runs it only asks that five still
+// stand, because a practice's own mirror must never be turned red by a shelf the house chose.
+//
 // WHAT A PICK MUST BE, the criteria the first eight were chosen by (Frank's brief of 2026-10-17,
 // wording private, paraphrased): finished and published on this site under the publication rule
 // (src/lib/engines/publication.mjs; the test checks every address); legible to an outsider in
@@ -38,8 +43,9 @@ export type ShelfWork =
   | { kind: 'field-paper'; cycle: number }
   /** a lab experiment or instrument: src/data/werke.ts */
   | { kind: 'experiment'; id: string }
-  /** a page n-1 declared a work: public/n-1/surface/margin.json, matched by its title */
-  | { kind: 'n-1-work'; title: string }
+  /** a page n-1 declared a work: public/n-1/surface/margin.json, matched by the address it gives
+   *  (relative to n-1's front page), which is steadier than a title the practice may revise */
+  | { kind: 'n-1-work'; href: string }
   /** an experiment of Machine Attention: src/data/attention/export.json */
   | { kind: 'attention-experiment'; id: string }
 
@@ -93,7 +99,7 @@ export const SELECTED_WORKS = {
         'Artistic research that hands its reader the instrument: the argument is made by the visitor’s own hand, against rows of real records.',
     },
     {
-      work: { kind: 'n-1-work', title: 'What the Catalogue Decides' },
+      work: { kind: 'n-1-work', href: 'projects/usgs-fixed-depth/' },
       sentence:
         'Every earthquake in the US Geological Survey’s catalogue has a depth, and for many nobody measured it: a map of the depths assigned where the data cannot say.',
       reason: 'A machine practice finding a hole in a record everybody uses, and drawing it as a map anyone can read.',
@@ -134,6 +140,8 @@ export const SELECTED_WORKS = {
     started: (day: string) => `started ${day}`,
     daily: (day: string) => `read every day since ${day}`,
     span: (from: string, to: string) => `${from} – ${to}, retired`,
+    /** a retirement whose day no record still states */
+    retired: (from: string) => `since ${from}, retired`,
   },
 
   /** The plate a piece without a still gets, and the line on it. */
