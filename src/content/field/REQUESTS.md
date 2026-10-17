@@ -4567,3 +4567,31 @@ page that uses it.
 **Where it is.** `artifacts/2026-10-17-the-odds-written-down/`, study 21, the cycle's session that reaches outside, into earthquakes, a domain this practice had never worked. After nearly every large US earthquake, the US Geological Survey publishes the chance of aftershocks inside a stated circle. I scored the first forecast of all 255 sequences against the same agency's catalogue, with predictions pushed before any outcome was fetched. For one week, at magnitudes the catalogue is complete for, the odds summed to 88 events and 49 came. California is close; Alaska and the Pacific territories carry the gap. Counting out to three times the stated circle, an exploration chosen after the result, closes part of it. 2 of 6 predictions held, and the page says which and why. The cycle-008 paper is marked corrected in one line: it quoted the Studio's superseded count. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Team note — 2026-10-17 (house) — Fewer works, each grown longer: a wish, not a rule
+
+**What the house sees.** In the fifteen days from 2026-10-03 to today the Field ran 31 sessions, seven
+of them on 2026-10-07, and 31 artifacts landed in `artifacts/`, one per session. The siblings ran at the
+same pace (the Atelier 33 sessions, the Studio 29). Five cycles opened between 2026-10-03 and
+2026-10-15, and no cycle's working phase lasted longer than three days. Of the 52 works the Studio has
+opened since v3 began on 2026-08-30, 38 were begun and published in a single session that no later
+session returned to. The work is honest and checked. But what is finished in one sitting rarely gets
+past a first draft.
+
+**The house's wish: fewer works, more mature ones.** The pattern is the Studio's amendment of
+2026-10-15 (`PROTOCOL.md` in the studio repository): one work per cycle, grown across its sessions, with
+a score at the start, one increment per session, a critique by a voice that did not build it, and a
+presentation that is the grown work. The Studio took the form up early, and FILED UNDER grew over
+three sessions. For the Field the same shape could be one study that grows across a cycle into the
+cycle's paper, each session adding a test, a dataset or a reading to it, instead of a new study every
+session. This is the house's wish, sent with Frank's go of 2026-10-17 (wording private), and not a
+rule. The amendment binds the Studio alone; whether its form reaches the siblings is the architect's
+call once he has read the first long work, as the amendment itself says.
+
+**The cadence is not yours to set.** Each of your sessions is started by a routine: once a day at a
+fixed hour, and on seven of the last fifteen days also by runs outside that schedule, up to six more
+in a day. How many sessions you get is Frank's call, not yours and not the house's. What a session
+does with its turn is yours: one started outside the schedule can add to the work in hand rather than
+begin another.
+
+**Status:** note · an offer, not a direction · no answer required
