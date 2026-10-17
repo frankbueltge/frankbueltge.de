@@ -6,6 +6,14 @@ years; he confirmed that as the goal (wording private). Basis of this document: 
 of all three practice repos, the contact zone, the site, and MRR; first-hand verification of
 the load-bearing works; festival facts checked against primary sources on 2026-08-01).
 
+**Partly superseded, 2026-10-17.** The positioning (§1, "artistic research, under proof") and
+the thesis stand, and §5.6 is built: `/dossier`, public since 2026-10-17. Three passages no longer
+hold and are marked where they stand: the body clause at the end of §2 (the Studio makes only
+digital works, since 2026-08-08), and the DARC and ZKM rows of §4 with their box in §6 (both
+deadlines passed with nothing submitted). The rest of the document is the record of 2026-08-01; the v2 mechanisms it
+names (gates, review roles, evidence tiers) were retired with research ecology v3 on 2026-08-30
+(`docs/design/2026-08-30-research-ecology-v3.md`).
+
 **Status.** Direction decided by Frank (wording private): the line is cleared, end to end.
 Site-wording changes stay behind the wording gate (`src/config/naming.ts`, wording-kanon);
 changes to practice constitutions travel as **seeds/offers** under each constitution, never
@@ -100,6 +108,15 @@ generalized: every major work gets a spatial realization plus a performance reco
 photographs, room data) as part of its delivery duty. Git stays the archive; the record of
 embodiment joins it.
 
+> **Superseded (marked 2026-10-17).** This clause stopped holding on 2026-08-08, when the
+> Studio's remit narrowed to only digital works, only what a machine does better than a human
+> (`docs/decision-log.md`, 2026-08-08): spatial, printed and fabricated work left the remit, and
+> the physical-realisation channel and the fabrication ceiling went dormant, not deleted.
+> Research ecology v3 kept the line (the Studio's door line in `src/config/naming.ts`), and no v3
+> constitution carries a delivery duty for a spatial realization or a performance record.
+> Screen- or network-borne performative formats were never excluded. The observation about juries
+> and video stays true; it is a question for a submission, not a duty of a work.
+
 ## 3. What does not change
 
 Sovereignty and local protocols; the ban on a permanent content umbrella; kill discipline;
@@ -112,8 +129,8 @@ voice rule. These are the identity — and the unique selling point.
 
 | Deadline | Venue | What | Notes |
 |---|---|---|---|
-| **2026-08-28** | transmediale — DARC Research Workshop 2027 ("Interstices: Research (in) the gaps") | ~400-word application (bio 100 / project 100 / abstract 200) | Essay (1,000 w) by 10.11.; workshop Aarhus 24–26.11.2026; **presentation at transmediale 2027 (28–31.1., "RFC 40", 40th anniversary, exhibition at AdK)**. Open to researchers/artists, no geo binding, no PhD required. Thematic fit is near-verbatim: RFC 40 asks "how a network speaks about what fails". |
-| **2026-09-06** | ZKM — Open Call "Case Studies at the intersection of Arte Útil and Technology" | ~330-word case study (description 150 / goals 80 / outcomes 100) | Leads into the Arte Útil archive + presentation at UN_CTRL festival at ZKM. "Projects can be submitted by anyone." Direct ZKM contact point (mira.hirtz@zkm.de). |
+| ~~**2026-08-28**~~ *(passed unsent; marked 2026-10-17)* | transmediale — DARC Research Workshop 2027 ("Interstices: Research (in) the gaps") | ~400-word application (bio 100 / project 100 / abstract 200) | Essay (1,000 w) by 10.11.; workshop Aarhus 24–26.11.2026; **presentation at transmediale 2027 (28–31.1., "RFC 40", 40th anniversary, exhibition at AdK)**. Open to researchers/artists, no geo binding, no PhD required. Thematic fit is near-verbatim: RFC 40 asks "how a network speaks about what fails". |
+| ~~**2026-09-06**~~ *(passed unsent; marked 2026-10-17)* | ZKM — Open Call "Case Studies at the intersection of Arte Útil and Technology" | ~330-word case study (description 150 / goals 80 / outcomes 100) | Leads into the Arte Útil archive + presentation at UN_CTRL festival at ZKM. "Projects can be submitted by anyone." Direct ZKM contact point (mira.hirtz@zkm.de). |
 | **Jan–Mar 2027** | **Prix Ars Electronica, category "Artificial Life & Intelligence"** | Realized work + ~3-min video documentation (jury decides primarily on the video); work created/substantially updated within the last two years | Category for 2027 is **published**, not inferred ("Submissions in this category will not be accepted again until 2027"). Golden Nica €10,000. Same submission covers the **S+T+ARTS Prize** (€20,000) via checkbox — its old category labels (Artistic Exploration / Innovative Collaboration) are defunct; 2026 went to two solo artists. |
 | ongoing | ZKM Hertzlab (residencies, Giga-Hertz), Vienna Digital Cultures (Samman curates; invited only) | relationship building | VDC named a whole 2025 festival "Model Collapse" — the discourse window is open. |
 
@@ -142,7 +159,8 @@ geographically bound: CH / KR / Berlin-based).
    mounting and the dossier's figures.
 6. **A curator-facing dossier page on the site** — the 10-minute pitch (currently an
    external reader needs 30–45 minutes): what this is, the thesis, the works, the
-   authorship structure, the receipts.
+   authorship structure, the receipts. *Built: drafted 2026-08-01, rewritten to the state of
+   2026-10-17 and made public that day at `/dossier`, linked from the footer.*
 
 ## 6. Follow-ups
 
@@ -169,4 +187,7 @@ geographically bound: CH / KR / Berlin-based).
       awaiting his sign-off, numbers are his to change.
 - [ ] End-of-August world-contact review (per 2026-07-31 adjustment §2.4) doubles as this
       line's first checkpoint.
-- [ ] DARC application sent by 2026-08-28; ZKM case study sent by 2026-09-06.
+- [ ] ~~DARC application sent by 2026-08-28; ZKM case study sent by 2026-09-06.~~
+      **Expired, 2026-10-17:** both deadlines passed with nothing submitted (the drafts stay in
+      `docs/festival/`, marked as drafts). Under the poste-restante rule of 2026-08-01 an external
+      call can only be submitted; unsent, it lapses, dated, which is what this line records.

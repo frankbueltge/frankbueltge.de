@@ -1,0 +1,58 @@
+---
+// The selected-works shelf (2026-10-17): the list of cards, without a heading of its own, because
+// the two pages that show it head it in their own voice — the edition as one of its sections
+// (HomeEdition.astro), the dossier as its shelf of record with each pick's reason (/dossier).
+//
+// What stands here is src/config/selected-works.ts, read through src/lib/ops/selected-works.ts:
+// nothing on a card is typed in this file. A card is one link, as the edition's briefs are; on the
+// dossier the reason follows it, outside the link, so the link's name stays the work's own.
+//
+// A card without a still gets a plate that says so, never a picture made for it (the rule of the
+// score's newest-piece card, src/components/ecology/score/PracticePart.astro). The plate is hidden
+// from assistive technology: a missing picture is nothing to announce, and its kind word stands in
+// the card's meta line as well.
+import { SELECTED_WORKS } from '@/config/selected-works'
+import type { ShelfCard } from '@/lib/ops/selected-works'
+import { STILL_FRAME } from '@/lib/ops/shelf-stills'
+
+interface Props {
+  cards: ShelfCard[]
+  /** 'edition': the entrance's band; 'dossier': rows with the reason beside each card */
+  variant?: 'edition' | 'dossier'
+  /** an internal address as the page links it (the edition's locale helper), external ones as they are */
+  link?: (href: string) => string
+}
+
+const { cards, variant = 'edition', link = (href: string) => href } = Astro.props
+const W = SELECTED_WORKS
+const to = (href: string) => (href.startsWith('/') ? link(href) : href)
+---
+
+<ul class={`ed-shelf ed-shelf--${variant}`}>
+  {cards.map((card) => (
+    <li class={['ed-shelf-card', card.voice ? `pp-voice-${card.voice}` : 'ed-shelf-card--house'].join(' ')} id={variant === 'dossier' ? `pick-${card.key}` : undefined}>
+      <a class="ed-shelf-link" href={to(card.href)}>
+        <span class={['ed-shelf-frame', card.still ? '' : 'ed-shelf-frame--plate'].filter(Boolean).join(' ')}>
+          {card.still ? (
+            <img src={card.still.src} alt={card.still.alt} width={STILL_FRAME.width} height={STILL_FRAME.height} loading="lazy" decoding="async" />
+          ) : (
+            <span class="ed-shelf-plate" aria-hidden="true">
+              <span class="ed-shelf-plate-kind">{card.kind}</span>
+              <span class="ed-shelf-plate-note">{W.plate(card.kind)}</span>
+            </span>
+          )}
+        </span>
+        <span class="ed-shelf-maker">{card.maker}</span>
+        <span class="ed-shelf-title">{card.title}</span>
+        <span class="ed-shelf-line">{card.sentence}</span>
+        <span class="ed-shelf-meta">{card.kind} · {card.when}</span>
+      </a>
+      {variant === 'dossier' && (
+        <p class="ed-shelf-reason">
+          <span class="ed-shelf-reason-label">{W.reasonLabel}</span>
+          {card.reason}
+        </p>
+      )}
+    </li>
+  ))}
+</ul>

@@ -233,6 +233,158 @@
   outline-offset: 2px;
 }
 
+/* ——— 3a · the selected works (2026-10-17) ———————————————————————————————————————————————————
+ * The shelf of src/config/selected-works.ts (SelectedWorks.astro). On the desk a grid of four, two
+ * rows for the eight picks; below 1100 px one row a finger or a trackpad slides, so the band costs
+ * the height of one card wherever the page is narrow. The /dossier variant sets the same cards as
+ * rows with their reasons. A frame holds the maker's own still, cropped to 16 : 10 by
+ * scripts/shelf-stills.ts, or a plate that says there is none. */
+.ed-shelf {
+  margin-top: 14px;
+}
+.ed-shelf--edition {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 26px 24px;
+}
+.ed-shelf-card {
+  min-width: 0;
+}
+/* a house that is not one of the ecology's practices wears ink, as it does under "Overnight" */
+.ed-shelf-card--house {
+  --pp-voice: var(--pp-ink);
+  --pp-voice-ink: var(--pp-ink);
+}
+.ed-shelf-link {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  height: 100%;
+}
+.ed-shelf-frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  margin-bottom: 7px;
+  overflow: hidden;
+  border: 1px solid var(--pp-rule);
+  background: var(--pp-ground-2);
+}
+.ed-shelf-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ed-shelf-link:hover .ed-shelf-frame,
+.ed-shelf-link:focus-visible .ed-shelf-frame {
+  border-color: var(--pp-ink);
+}
+/* the plate: the maker's voice along its top edge, what the piece is, and the line that says why
+   no picture stands here */
+.ed-shelf-frame--plate {
+  border-top: 3px solid var(--pp-voice);
+}
+.ed-shelf-plate {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px;
+}
+.ed-shelf-plate-kind {
+  color: var(--pp-ink-2);
+  font-family: var(--pp-serif);
+  font-size: 30px;
+  font-style: italic;
+  line-height: 1.05;
+}
+.ed-shelf-plate-note {
+  max-width: 30ch;
+  color: var(--pp-muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+.ed-shelf-maker {
+  color: var(--pp-voice-ink);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ed-shelf-title {
+  font-family: var(--pp-serif);
+  font-size: 20px;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.ed-shelf-line {
+  color: var(--pp-ink-2);
+  font-size: 13.5px;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+.ed-shelf-meta {
+  margin-top: auto;
+  padding-top: 3px;
+  color: var(--pp-muted);
+  font-size: 12.5px;
+}
+/* the lead follows the shelf under a single rule: the shelf is the house's, the lead today's */
+.ed-shelf-section + .ed-front {
+  margin-top: 30px;
+  border-top: 1px solid var(--pp-ink);
+}
+
+/* the dossier's rows: the frame on the left, the card's words and its reason beside it */
+.ed-shelf--dossier .ed-shelf-card {
+  padding: 18px 0;
+  border-top: 1px solid var(--pp-rule);
+}
+.ed-shelf--dossier .ed-shelf-card:last-child {
+  border-bottom: 1px solid var(--pp-rule);
+}
+.ed-shelf--dossier .ed-shelf-link {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  grid-auto-rows: min-content;
+  column-gap: 24px;
+  row-gap: 5px;
+}
+.ed-shelf--dossier .ed-shelf-frame {
+  grid-row: 1 / span 4;
+  margin-bottom: 0;
+}
+.ed-shelf--dossier .ed-shelf-title {
+  font-size: 22px;
+}
+.ed-shelf--dossier .ed-shelf-line {
+  font-size: 14.5px;
+}
+.ed-shelf--dossier .ed-shelf-meta {
+  margin-top: 0;
+}
+.ed-shelf-reason {
+  margin: 10px 0 0 264px;
+  color: var(--pp-ink-2);
+  font-family: var(--pp-serif);
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.5;
+}
+.ed-shelf-reason-label {
+  margin-right: 8px;
+  color: var(--pp-muted);
+  font-family: var(--pp-sans);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 /* ——— 4 · the lead and the timetable —————————————————————————————————————————————————————— */
 .ed-front {
   display: grid;
@@ -586,6 +738,24 @@
 
 /* ——— between the desk and the phone: the desk's type, the paired columns stacked ————————— */
 @media (max-width: 1099.98px) {
+  /* The shelf becomes one row that slides, bleeding to the window's edges so a card can travel
+     to the edge and the next one shows that there is more. The row scrolls, never the page. */
+  .ed-shelf--edition {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(250px, 40%);
+    gap: 20px;
+    margin-inline: calc(-1 * var(--ed-gutter));
+    padding: 2px var(--ed-gutter) 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--ed-gutter);
+    scrollbar-width: thin;
+  }
+  .ed-shelf--edition .ed-shelf-card {
+    scroll-snap-align: start;
+  }
   .ed-front {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -712,6 +882,36 @@
     min-height: 40px;
     padding: 0 12px;
     letter-spacing: 0;
+  }
+
+  .ed-shelf {
+    margin-top: 10px;
+  }
+  .ed-shelf--edition {
+    grid-auto-columns: 78%;
+    gap: 16px;
+  }
+  .ed-shelf-title {
+    font-size: 19px;
+  }
+  .ed-shelf-plate-kind {
+    font-size: 26px;
+  }
+  .ed-shelf-section + .ed-front {
+    margin-top: 22px;
+  }
+  .ed-shelf--dossier .ed-shelf-link {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ed-shelf--dossier .ed-shelf-frame {
+    grid-row: auto;
+    margin-bottom: 7px;
+  }
+  .ed-shelf--dossier .ed-shelf-title {
+    font-size: 20px;
+  }
+  .ed-shelf-reason {
+    margin-left: 0;
   }
 
   .ed-front {

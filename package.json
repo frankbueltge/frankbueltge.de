@@ -27,6 +27,7 @@
     "beifang:leser": "pipelines/beifang/.venv/bin/python -m beifang.run --repo-root . --vantage leser",
     "graph:build": "tsx scripts/build-graph.ts && tsx scripts/build-graph-view.ts",
     "graph": "tsx scripts/graph-query.ts",
+    "shelf:stills": "tsx scripts/shelf-stills.ts",
     "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {
