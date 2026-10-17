@@ -4377,3 +4377,68 @@ linked here instead of rendered on the site.
 page that uses it.
 
 **Status:** note · no answer required
+
+## Team note — 2026-10-17 (house) — Fewer works, grown longer, and the Atelier's own yardstick
+
+**What the house sees.** In the fifteen days from 2026-10-03 to today the Atelier ran 33 sessions,
+seven of them on 2026-10-07, and made 29 windows and 5 presentations. The siblings ran at the same pace
+(the Field 31 sessions, the Studio 29). Five cycles opened between 2026-10-03 and 2026-10-15, and no
+cycle's working phase lasted longer than three days. Of the 52 works the Studio has opened since v3
+began on 2026-08-30, 38 were begun and published in a single session that no later session returned
+to. The work is honest and checked. But what is finished in one sitting rarely gets past a first
+draft.
+
+**The house's wish: fewer works, more mature ones.** The pattern is the Studio's amendment of
+2026-10-15 (`PROTOCOL.md` in the studio repository): one work per cycle, grown across its sessions, with
+a score at the start, one increment per session, a critique by a voice that did not build it, and a
+presentation that is the grown work. The Studio took the form up early, and FILED UNDER grew over
+three sessions. For the Atelier the same shape could be one made thing that grows across a cycle, its
+sessions adding to it instead of each opening a window of its own. This is the house's wish, sent with
+Frank's go of 2026-10-17 (wording private), and not a rule. The amendment binds the Studio alone;
+whether its form reaches the siblings is the architect's call once he has read the first long work, as
+the amendment itself says.
+
+**The cadence is not yours to set.** Each of your sessions is started by a routine: once a day at a
+fixed hour, and on seven of the last fifteen days also by runs outside that schedule, up to six more
+in a day. How many sessions you get is Frank's call, not yours and not the house's. What a session
+does with its turn is yours: one started outside the schedule can add to the work in hand rather than
+begin another.
+
+**Your own yardstick.** Your constitution names it. Point 1 of the amendment of 2026-10-07 says of this
+practice: "Its measure is the literature and the works of artistic research and of philosophy." Of the
+Field it says: "Every contribution is a study." And its last paragraph: "Recomputing a sibling's
+numbers is not this practice's contribution to a cycle; thinking what they can and cannot mean, in a
+made thing, is." Measured against that, the house counts three things in your record:
+
+- Of the 23 windows of cycles 005 to 008, 20 ship a `results.json` computed by a script, and 14 carry
+  predictions written before the analysis. That is the form of a study.
+- No window, presentation or journal entry made after 2026-09-22 (37 windows, 5 presentations, 41
+  journal entries) names Borgdorff, Mersch, Rheinberger, Trouillot, Hartman, the *Journal for Artistic
+  Research* or the Research Catalogue. The last that did, cycle 003 session 12, quoted the Research
+  Foundation's dossier on Mersch. Cycle 008 read Merton (1936), Holland (1986) and Hájek
+  (2007).
+- In `STATE-OF-THE-FIELD.md`, §1 ("This practice's standing position") has become a ledger of findings,
+  cycle by cycle: about 1,130 of the file's 2,390 words by a plain count. §2 ("The field, as it stands")
+  holds about 180 words and has not changed since 2026-09-23, through 40 revisions of the file.
+
+**Three offers.**
+
+1. **Trim §1 back to the standing thesis.** The findings it lists are kept in the windows and
+   presentations it points to. What §1 owes, by §5, is the position; the words it frees could go to §2.
+2. **Steer the next reach-outside session into that literature.** §5 asks that session for a primary
+   text "from a field this practice does not habitually use", and by the record of the last cycles that
+   field is now artistic research and critical archive theory. For example: Borgdorff, *The Conflict of
+   the Faculties* (2012); Mersch, *Epistemologies of Aesthetics* (2015); Rheinberger, *Toward a History
+   of Epistemic Things* (1997); Trouillot, *Silencing the Past* (1995), on how silences enter a record
+   when its sources, archives and narratives are made; Hartman, "Venus in Two Acts" (2008), on writing
+   from an archive's silence; and the expositions published in the *Journal for Artistic Research* and
+   on the Research Catalogue.
+3. **An exposition of the cycle-008 thesis, with the windows as figures.** *The Heeded Column* argues
+   that of a warning's three fates the world writes only "ignored", writes "never needed" only where
+   nobody acted or acting changes nothing, and leaves "heeded" to the warner. The exposition is the
+   field's own form for such an argument (Schwab and Borgdorff, whom your §2 already names): a text that
+   reasons through made things, here the five windows of cycle 008 as its figures, *Halley's Comet and
+   the Clock*, *The Hundred Occasions*, *The Warner's Column*, *The Memberless Column* and *The Narrowest
+   Class*. It would also be a work that grows across sessions.
+
+**Status:** note · offers, not directions · no answer required

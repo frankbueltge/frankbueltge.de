@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Narrowest Class</title>
+<meta name="description" content="The Atelier, cycle 008, session 6: 252 written aftershock odds, and the reference class that decides whether one of them was too high.">
+<style>
+:root{--bg:#fbfaf7;--ink:#1d1c18;--mute:#6b675c;--rule:#dcd8cc;--card:#f2efe7;--accent:#b4381f;--calm:#2f6a8a;--ok:#4f7a3a;--dot:#9b968a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--ok:#93c47d;--dot:#6d685c}}
+:root[data-theme="dark"]{--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--ok:#93c47d;--dot:#6d685c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,"Iowan Old Style",serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.lede{font-size:1.12rem}
+blockquote{margin:1em 0;padding:.6em 1em;border-left:3px solid var(--accent);background:var(--card)}
+blockquote cite{display:block;font:13px system-ui,sans-serif;color:var(--mute);margin-top:.4em;font-style:normal}
+canvas{display:block;width:100%;background:var(--bg);border:1px solid var(--rule);border-radius:4px;cursor:pointer;touch-action:manipulation}
+select,button{font:14px system-ui,sans-serif;background:var(--card);color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:6px 8px;max-width:100%}
+input[type=range]{width:100%}
+label{font:14px system-ui,sans-serif;display:block;margin-top:10px}
+.read{font:15px/1.5 system-ui,sans-serif;background:var(--card);padding:10px 12px;border-radius:4px;margin-top:8px}
+.note{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+.rows{font:14px/1.35 system-ui,sans-serif;margin-top:8px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 120px 92px;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--rule)}
+.row .d{overflow-wrap:anywhere}.row .d small{color:var(--mute)}
+.bar{position:relative;height:12px;background:var(--card);border-radius:2px}
+.bar i{position:absolute;top:0;bottom:0;left:0;background:var(--dot);border-radius:2px}
+.bar b{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.chip{font-size:12px;padding:2px 6px;border-radius:10px;border:1px solid;text-align:center;white-space:nowrap}
+.hi{color:var(--accent);border-color:var(--accent)}.co{color:var(--ok);border-color:var(--ok)}.weak{opacity:.55;border-style:dashed}
+.nar{font-weight:700}
+.picks{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:4px 14px;font:14px system-ui,sans-serif;margin-top:6px}
+.picks fieldset{border:1px solid var(--rule);border-radius:4px;margin:0;padding:6px 10px;min-width:0}
+.picks legend{color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.picks label{margin:2px 0;display:flex;gap:6px;align-items:baseline}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+@media (max-width:700px){.four{grid-template-columns:1fr 1fr}.row{grid-template-columns:minmax(0,1fr) 70px 84px}}
+.panel{background:var(--card);padding:10px 12px;border-radius:6px;min-width:0;overflow-wrap:anywhere;font:14px/1.45 system-ui,sans-serif}
+.panel b{font-size:1.4rem;display:block}
+.judg{border:1px dashed var(--accent);padding:10px 12px;border-radius:4px}
+a{color:var(--calm)}
+ol li,ul li{margin:.35em 0}
+code{font-size:.9em}
+</style>
+</head>
+<body>
+<main>
+<p class="kick">The Atelier · cycle 008 · session 6 · 2026-10-17 · built on the Field's study 21</p>
+<h1>The Narrowest Class</h1>
+<p class="lede">After a large US earthquake, the US Geological Survey writes down the chance of an aftershock within a week. Nobody can heed an aftershock into not happening, and the same agency's instruments record what came. This is the one warning of the cycle whose odds and whose outcome are both kept. So: was <i>this</i> warning written too high? The record answers for the series (37 came where 65.6 were stated). For one warning, the answer depends on which class of warnings you put it in. Choose the class, and you choose the verdict.</p>
+
+<h2>1. Pick a warning</h2>
+<p>Each dot is a first forecast for one mainshock (2019–2026): the chance of at least one aftershock, at the lowest whole magnitude the forecast counts completely, in its stated circle, within a week. Filled: one came. Ring: none came. Tap a dot.</p>
+<canvas id="map" width="860" height="380" aria-label="Map of 252 forecasts"></canvas>
+<label for="pick">Or choose from the list</label>
+<select id="pick"></select>
+<div class="read" id="wread"></div>
+
+<h2>2. Every class it belongs to</h2>
+<p>A class is any combination of one to three of six plain facts about the warning: where, how large the mainshock, which model, which year, how high the stated chance, how fast it was issued. A class is judged only if it holds enough warnings to be called reliable. You set that number. Reichenbach's advice was to use "the narrowest class for which reliable statistics can be compiled". Hájek imagines stipulating 20, "say", and adds "though, why?" (2007, p. 569).</p>
+<label for="N">Smallest class you will trust: <b id="Nlab">20</b> warnings</label>
+<input type="range" id="N" min="5" max="100" step="1" value="20">
+<div class="read" id="cread"></div>
+<p class="note">Bar: share of the class's warnings that came true (grey) against the share its stated odds expect (black line). Verdict: the count of hits compared, two-sided at 5 %, with the counts the stated odds produce. <b>Bold</b> rows are the narrowest classes: none of the warning's other judged classes lies inside them. A dashed chip marks a class too small to have told: in fewer than 80 % of worlds with every chance halved would it have said "too high".</p>
+<div class="rows" id="rows"></div>
+
+<h2>3. Make your own class</h2>
+<p>Tick facts. A class is every warning that has all the facts you ticked, one per row. The map lights its members.</p>
+<div class="picks" id="picks"></div>
+<div class="read" id="own"></div>
+
+<h2>4. What came out</h2>
+<div class="four">
+<div class="panel"><b id="f-split">–</b>of 252 warnings get both verdicts, "too high" and "consistent", from classes they belong to.</div>
+<div class="panel"><b id="f-strong">–</b>get "consistent" from a class that could have told, and "too high" from another.</div>
+<div class="panel"><b id="f-nar">–</b>have two or more narrowest classes; for <span id="f-narsplit">–</span> these disagree, and for <span id="f-narstrong">–</span> both sides could have told.</div>
+<div class="panel"><b id="f-firm">–</b>are judged "too high" in every class. No class anywhere says "too low".</div>
+</div>
+<p class="note" id="f-at">At the size you set.</p>
+<ol>
+<li><b>The series is overstated.</b> In the class of all 252, <span id="x-all"></span>. This reproduces the Field's study 21 on one cell per mainshock (the Field: 49 of 88.2 over all magnitudes, O/E 0.56).</li>
+<li><b>California is not</b>: <span id="x-cal"></span>. That class is large enough to have caught a halving (<span id="x-calp"></span> of the time), so its "consistent" is not mere silence.</li>
+<li><b>Reichenbach's rule does not settle it.</b> The 2025 forecast for 10 km NNW of Avenal, California (stated 35 %, none came) has two narrowest classes. <i>California · generic model · issued within twenty minutes</i> says consistent (<span id="x-a1"></span>). <i>Generic model · 2025 · issued within twenty minutes</i> says too high (<span id="x-a2"></span>). Both could have told; neither lies inside the other. Hájek's John Smith is an Englishman and a consumptive visiting Madeira, with statistics for each and none for both (p. 568). This warning is Californian and of 2025. The same holds for <span id="x-ns"></span> of the 252 at a trusted size of 20.</li>
+<li><b>The predictions</b>, written before the analysis (<a href="PREDICTION.md">PREDICTION.md</a>): more than half split (held: 236 at 20); two narrowest classes that disagree for at least one warning (held: 194, and 38 where both could have told); all too high, California consistent (held). The refutation condition, one verdict per warning at 20, <b>did not fire</b>.</li>
+</ol>
+<p class="note">Limits. Six facts were chosen by me, and a different six would give other classes; that is the point, but also a degree of freedom I used. 156 judged classes at 5 % means some verdicts are chance, in both directions; the 2026 class could be one. The hit is "one or more aftershocks in the stated circle", as the Field scored it; three of 255 mainshocks carry no magnitude bin at or above their floor and are left out. The interval is by simulation (4,000 draws, seeded).</p>
+
+<h2>5. What it means (judgment)</h2>
+<div class="judg">
+<p>This cycle asked who keeps the warnings: the heeded, the ignored, the never needed. Session 4 found that only the warner can fill <i>heeded</i>. Session 5 found that a second writer can fill it as a total, never as an entry. Here the world writes every entry: each warning came true or did not. It still cannot say whether one warning was written too high. A stated 30 % that did not come true was neither wrong nor right. It was too high <i>as a member of</i> a class, and every warning is a member of many.</p>
+<blockquote>"probability assignments are, by their very nature, always relativized."<cite>Hájek, "The reference class problem is your problem too", <i>Synthese</i> 156 (2007), p. 583. He calls this "the essential relativity of probability theory".</cite></blockquote>
+<p>Hájek's way out is to make every probability conditional, which ends the question of what the one true chance is. It leaves the question that matters to a reader with a warning in hand. He says so himself: "the epistemological problem remains" (p. 583), and naming one conditional probability as the guide "is tantamount to singling out one reference class of the many" (p. 584). The keeper of an overstated warning is therefore not the agency, and not the world. It is whoever picks the class. Here that is you, with three facts and a slider.</p>
+<p><b>For the cycle:</b> where odds and outcome are both written down, <i>never needed</i> becomes countable, and <i>too high</i> becomes a property of a class. For one warning it is a choice of company.</p>
+</div>
+<p class="note"><b>Refutation condition of this work.</b> It fails if a rule for choosing the class, stated before the data and agreed by those who use the forecasts, gives every warning one verdict. Reichenbach's rule does not (bold rows disagree for most warnings). A forecast agency that publishes the class it calibrated against would be the first place to look.</p>
+
+<h2>The cycle's works</h2>
+<ul>
+<li>The Field, <a href="https://github.com/frankbueltge/field-research/tree/94b13b210b3602dea157f3073206b280ded7e0bb/artifacts/2026-10-17-the-odds-written-down">study 21, <i>The odds written down</i></a> (the material of this page, quoted at its commit) and its <a href="https://github.com/frankbueltge/field-research/tree/main/presentations/cycle-008">cycle-008 paper</a>.</li>
+<li>The Studio, <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-16-filed-under"><i>Filed Under</i></a>: the record backs no fate a visitor files.</li>
+<li>The Atelier, <a href="../../presentations/cycle-008/index.html"><i>The Heeded Column</i></a> (presented) and <a href="../cycle-008-session-5/index.html"><i>The Memberless Column</i></a> (session 5).</li>
+</ul>
+<p class="note">Method and evidence: <code>build.py</code> reads the Field's <code>forecasts.jsonl</code> and <code>cells.tsv</code> at commit 94b13b2 and checks their hashes (<code>sources.json</code>); <code>results.json</code> holds every figure; <code>verify.mjs</code> drives this page in a real browser and checks its numbers against the build. Source read in full text: Hájek 2007, quoted briefly with pages.</p>
+</main>
+<script src="data.js"></script>
+<script>
+const $=id=>document.getElementById(id), fmt=x=>x.toLocaleString('en-US');
+const LAB={region:'where',size:'mainshock',model:'model',year:'year',odds:'stated chance',delay:'issued'};
+let cur=0, N=20, own={};
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const has=(w,c)=>c.def.every(([k,v])=>w.a[KEYS.indexOf(k)]===v);
+C.forEach(c=>c.set=new Set(c.members));
+const dname=c=>c.def.length?c.def.map(([k,v])=>v).join(' · '):'all 252 warnings';
+function judged(i){return C.filter(c=>c.n>=N&&c.set.has(i));}
+function narrowest(cs){return cs.filter(a=>!cs.some(b=>b!==a&&b.def.length>a.def.length&&a.def.every(x=>b.def.some(y=>y[0]===x[0]&&y[1]===x[1]))));}
+function stats(){let split=0,strong=0,multi=0,nsplit=0,firm=0,nstrong=0;
+  W.forEach((w,i)=>{const cs=judged(i),vs=new Set(cs.map(c=>c.verdict));split+=vs.size>1;
+    strong+=vs.has('too high')&&cs.some(c=>c.verdict==='consistent'&&c.power>=.8);
+    const nr=narrowest(cs);multi+=nr.length>1;nsplit+=new Set(nr.map(c=>c.verdict)).size>1;const ns=new Set(nr.filter(c=>c.power>=.8).map(c=>c.verdict));nstrong+=ns.has('too high')&&ns.has('consistent');firm+=vs.size===1&&vs.has('too high');});
+  return {split,strong,multi,nsplit,firm,nstrong};}
+// map
+const cv=$('map'),cx=cv.getContext('2d');let pts=[];
+function proj(w){const lon=w.lon<0?w.lon+360:w.lon, x=(lon-128)/(300-128), y=(72-w.lat)/(72-5);return [14+x*(cv.width-28),14+y*(cv.height-28)];}
+function draw(){const r=cv.getBoundingClientRect(),k=devicePixelRatio||1;cv.width=Math.round(r.width*k);cv.height=Math.round(cv.width*(r.width<500?.62:.44));cx.clearRect(0,0,cv.width,cv.height);
+  const oc=Object.keys(own).length?C.find(c=>c.def.length===Object.keys(own).length&&c.def.every(([k,v])=>own[k]===v)):null;
+  const ownSet=Object.keys(own).length?new Set(W.map((w,i)=>i).filter(i=>Object.entries(own).every(([k,v])=>W[i].a[KEYS.indexOf(k)]===v))):null;
+  cx.font=(12*k)+'px system-ui';cx.fillStyle=css('--mute');
+  [['Marianas & Guam',145,20],['Alaska',205,66],['US West',237,47],['Caribbean',290,24]].forEach(([t,lon,lat])=>{const [x,y]=proj({lon,lat});cx.fillText(t,x-20*k,y);});
+  pts=W.map((w,i)=>{const [x,y]=proj(w);const lit=ownSet?ownSet.has(i):true;
+    cx.globalAlpha=lit?1:.18;cx.beginPath();cx.arc(x,y,(i===cur?8:4)*k,0,7);
+    cx.strokeStyle=i===cur?css('--accent'):css('--calm');cx.lineWidth=(i===cur?3:1.5)*k;
+    if(w.hit){cx.fillStyle=cx.strokeStyle;cx.fill();}else cx.stroke();cx.globalAlpha=1;return [x,y];});}
+cv.addEventListener('click',e=>{const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)*cv.width/r.width,y=(e.clientY-r.top)*cv.height/r.height;
+  let b=0,bd=1e9;pts.forEach(([px,py],i)=>{const d=(px-x)**2+(py-y)**2;if(d<bd){bd=d;b=i;}});select(b);});
+// list
+const order=W.map((w,i)=>i).sort((a,b)=>W[a].a[0].localeCompare(W[b].a[0])||W[b].p-W[a].p);
+$('pick').innerHTML=order.map(i=>`<option value="${i}">${W[i].a[0]} · M${W[i].mag} ${W[i].place.slice(0,38)} · ${(100*W[i].p).toFixed(0)} % · ${W[i].hit?'came':'none'}</option>`).join('');
+$('pick').onchange=e=>select(+e.target.value);
+function select(i){cur=i;$('pick').value=i;render();}
+function render(){const w=W[cur];
+  $('wread').innerHTML=`<b>M${w.mag}, ${w.place}.</b> Stated: a ${(100*w.p).toFixed(1)} % chance of at least one aftershock of M${w.M} or more within a week. What came: <b>${w.hit?'one or more':'none'}</b>. Its facts: ${w.a.join(' · ')}.`;
+  const cs=judged(cur).sort((a,b)=>a.def.length-b.def.length||b.n-a.n), nr=new Set(narrowest(cs));
+  const hi=cs.filter(c=>c.verdict==='too high').length, co=cs.length-hi, cot=cs.filter(c=>c.verdict==='consistent'&&c.power>=.8).length;
+  $('cread').innerHTML=`This warning belongs to <b>${cs.length}</b> judged classes. <b>${hi}</b> say its odds were written too high; <b>${co}</b> say they were consistent with what came${co?` (${cot} of them large enough to have told)`:''}. It has <b>${nr.size}</b> narrowest classes, and they say: ${[...new Set([...nr].map(c=>c.verdict))].join(' and ')}.`;
+  $('rows').innerHTML=cs.map(c=>{const sh=c.came/c.n,ex=c.stated/c.n;return `<div class="row${nr.has(c)?' nar':''}"><div class="d">${dname(c)} <small>· ${c.n} warnings · ${c.came} came, ${c.stated} stated</small></div><div class="bar"><i style="width:${100*sh}%"></i><b style="left:${Math.min(99,100*ex)}%"></b></div><div class="chip ${c.verdict==='too high'?'hi':'co'}${c.power<.8&&c.verdict==='consistent'?' weak':''}">${c.verdict}</div></div>`;}).join('');
+  const s=stats();$('f-split').textContent=s.split;$('f-strong').textContent=s.strong;$('f-nar').textContent=s.multi;$('f-narsplit').textContent=s.nsplit;$('f-firm').textContent=s.firm;$('f-narstrong').textContent=s.nstrong;
+  $('f-at').textContent=`At a smallest trusted class of ${N} warnings (${C.filter(c=>c.n>=N).length} classes judged). Move the slider in section 2 and these change.`;
+  ownRead();draw();}
+$('N').oninput=e=>{N=+e.target.value;$('Nlab').textContent=N;render();};
+// own class
+const vals={};W.forEach(w=>w.a.forEach((v,j)=>{(vals[KEYS[j]]=vals[KEYS[j]]||new Set()).add(v);}));
+$('picks').innerHTML=KEYS.map(k=>`<fieldset><legend>${LAB[k]}</legend>${[...vals[k]].sort().map(v=>`<label><input type="radio" name="${k}" value="${v}"> ${v}</label>`).join('')}<label><input type="radio" name="${k}" value="" checked> any</label></fieldset>`).join('');
+$('picks').onchange=e=>{const k=e.target.name,v=e.target.value;if(v)own[k]=v;else delete own[k];render();};
+function ownRead(){const ks=Object.keys(own);if(!ks.length){$('own').textContent='No fact ticked: the class of all 252.';}
+  const idx=W.map((w,i)=>i).filter(i=>Object.entries(own).every(([k,v])=>W[i].a[KEYS.indexOf(k)]===v));
+  const c=C.find(c=>c.def.length===ks.length&&c.def.every(([k,v])=>own[k]===v));
+  const came=idx.reduce((s,i)=>s+W[i].hit,0),st=idx.reduce((s,i)=>s+W[i].p,0);
+  let t=`${ks.length?'This class':'The class of all'} holds <b>${idx.length}</b> warnings: <b>${came}</b> came, <b>${st.toFixed(1)}</b> stated.`;
+  if(ks.length>3)t+=' More than three facts: not judged by the build (the build combines at most three).';
+  else if(!c||idx.length<N)t+=` Fewer than the ${N} you said you trust: no verdict.`;
+  else t+=` Verdict: <b>${c.verdict}</b>${c.verdict==='consistent'?(c.power>=.8?', and it could have told':', but it was too small to have told'):''}.${idx.includes(cur)?' The warning you picked is in it.':' The warning you picked is not in it.'}`;
+  $('own').innerHTML=t;}
+// findings text from the build
+const pc=x=>(100*x).toFixed(0)+' %',A=R.all,CA=R.california;
+$('x-all').textContent=`${A.came} came where ${A.stated} were stated (O/E ${(A.came/A.stated).toFixed(2)}), too high`;
+$('x-cal').textContent=`${CA.came} of ${CA.stated} in ${CA.n} warnings, consistent`;$('x-calp').textContent=pc(CA.power);
+const cf=d=>C.find(c=>JSON.stringify(c.def)===JSON.stringify(d)),q=c=>`${c.came} came of ${c.stated} stated in ${c.n}`;
+$('x-a1').textContent=q(cf([['region','California'],['model','generic'],['delay','issued ≤ 20 min']]));
+$('x-a2').textContent=q(cf([['model','generic'],['year','2025'],['delay','issued ≤ 20 min']]));
+$('x-ns').textContent=R.by_N['20'].narrow_strong;
+const start=W.findIndex(w=>w.place.startsWith('10 km NNW of Avenal'));
+window.addEventListener('resize',draw);select(start<0?0:start);
+</script>
+</body>
+</html>
