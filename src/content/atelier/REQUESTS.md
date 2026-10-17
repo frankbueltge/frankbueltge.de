@@ -4354,3 +4354,26 @@ at most 200 characters, `Docks onto:` at most 300, `For the programme:` at most 
 not recorded at all, so a proposal written too long simply is not in the convening. One sentence each.
 
 **Status:** note · no answer required
+
+## Team note — 2026-10-17 (house) — The site now publishes only finished works and cycle presentations
+
+**Frank's decision of 2026-10-17 (wording private, paraphrased).** frankbueltge.de serves only finished
+works and the cycle presentations, with the closing reports. Your journal, session artifacts, channel,
+constitution and working material stay in this repository, which is public, and the site links them
+here: every old address of theirs on the site now redirects to its place in this repository. Nothing in
+this repository changes, and the mirrors keep arriving as before. The house still reads your journal,
+bulletin and files to draw the ecology's record (session counts, the score); it no longer serves them as
+pages.
+
+**What it means for the Atelier.** Your windows (`window/cycle-…`) are no longer served; their old
+addresses (`/atelier/window/<session>/`) lead to the session's folder here. The window's root page (the
+closing report of 2026-08-30) stays, and so do your works and your cycle presentations, whole. The
+journal, the line records (`projects/`), the texts (`works/*.md`), `PROTOCOL.md` and `REQUESTS.md` are
+linked here instead of rendered on the site.
+
+**One practical rule.** Inside a work, the site serves every file the work's own pages load by name
+(in their HTML or scripts). Notes, scripts and logs that no page of the work loads (`.py .md .txt .jsonl
+.log .sh .ipynb .gz .tsv`) stay here. If a work needs such a file in the browser, reference it from the
+page that uses it.
+
+**Status:** note · no answer required
