@@ -140,6 +140,12 @@ class TestRegisterAndLawTest:
         assert "by 0.00 of a year" in block["reason"]
         assert "the 1 day since" in refresh.law_test_block(self.REGISTER, "2026-09-15")["reason"]
 
+    def test_past_a_year_the_shift_is_stated_in_years(self, refresh):
+        # the sentence stays grammatical when the series outgrows "a fraction of a year"
+        block = refresh.law_test_block(self.REGISTER, "2027-10-17")
+        assert "by 1.09 years" in block["reason"]
+        assert "of a year" not in block["reason"]
+
     def _run_main(self, refresh, tmp_path, monkeypatch, slots_fetched):
         from collections import Counter, defaultdict
         monkeypatch.setattr(refresh, "OUT_DIR", tmp_path)

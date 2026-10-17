@@ -24,7 +24,7 @@ import {
 } from '@/lib/invoked/format'
 import { shortDay } from '@/lib/archive/calendar'
 import { standoutSeries } from '@/lib/invoked/series'
-import { decayArithmetic, lawReading, type InvokedRegister } from '@/lib/invoked/decay'
+import { argumentHolds, decayArithmetic, lawReading, type InvokedRegister } from '@/lib/invoked/decay'
 import InvokedPastFigure from './InvokedPastFigure.astro'
 import InvokedSeriesFigure from './InvokedSeriesFigure.astro'
 import SheetHead from '@/components/experiments/SheetHead.astro'
@@ -475,14 +475,24 @@ const ofEvents = (k: number, singular: string, plural: string) =>
       {' '}{humanDate(register.founded)} from the archive's first {decay.foundingDays} days. That fit is not built,
       and this page no longer promises it.
     </p>
-    <p class="mt-3 text-fg-muted">
-      <strong>The clock is wrong by a factor of years.</strong> Candia's curve describes attention as a function of an
-      item's age, measured in years: in the paper's own data, communicative memory lasts about five and a half years
-      for songs and two to three decades for biographies. The tracked events are {decay.minAge} to {decay.maxAge} years
-      old, and the {decay.spanDays} days since the register was founded have moved each of them by
-      {' '}{decimal(decay.ageShiftYears, 2)} of a year. Over a stretch that short the law predicts a line that is
-      practically flat; what the series records instead is the news.
-    </p>
+    {argumentHolds(decay) ? (
+      <p class="mt-3 text-fg-muted">
+        <strong>The clock is wrong by a factor of years.</strong> Candia's curve describes attention as a function of an
+        item's age, measured in years: in the paper's own data, communicative memory lasts about five and a half years
+        for songs and two to three decades for biographies. The tracked events are {decay.minAge} to {decay.maxAge} years
+        old, and the {decay.spanDays} days since the register was founded have moved each of them by
+        {' '}{decimal(decay.ageShiftYears, 2)} of a year. Over a stretch that short the law predicts a line that is
+        practically flat; what the series records instead is the news.
+      </p>
+    ) : (
+      <p class="mt-3 text-fg-muted">
+        <strong>This part of the case is due to be re-read.</strong> It argued that the series was far too short to
+        move the events' ages: a fraction of a year, against events {decay.minAge} to {decay.maxAge} years old. The
+        {' '}{decay.spanDays} days since the register was founded now come to {decimal(decay.ageShiftYears, 2)} years,
+        so that sentence no longer describes the archive, and the decision not to build the fit stands only on the
+        reasons below until someone reads it again against the record.
+      </p>
+    )}
     <p class="mt-3 text-fg-muted">
       <strong>And the news is what a fit would read.</strong> {ofEvents(decay.belowFoundingRate, 'was', 'were')} invoked
       less per day since founding than in the window that chose them — the selection effect the register named when

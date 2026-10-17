@@ -66,6 +66,18 @@ export interface DecayArithmetic {
 
 const DAYS_PER_YEAR = 365.25
 
+/** The page's case against the fit — the series has moved the events' ages by a fraction of a year,
+ *  against ages of decades — is written for a series shorter than this. Past it the page says the
+ *  case is due to be re-read instead of repeating it. Deliberately not a failing test: deploy-cf.yml
+ *  and every practice integrate run the suite, so a test that broke when the archive grew would
+ *  freeze the site on a fixed night, the failure the tiles guard caused on 2026-08-15. */
+export const REREAD_AFTER_YEARS = 1
+
+/** True while the series is short enough for the page's argument to describe it. */
+export function argumentHolds(a: Pick<DecayArithmetic, 'ageShiftYears'>): boolean {
+  return a.ageShiftYears < REREAD_AFTER_YEARS
+}
+
 export function decayArithmetic(register: InvokedRegister, files: Record<string, unknown>): DecayArithmetic {
   const calendar = dailyCalendar<InvokedData>(files, 'invoked')
   const measured = calendar.filter((d) => d.record && d.record.stats.slots_fetched > 0)

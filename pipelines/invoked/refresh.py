@@ -602,7 +602,8 @@ def law_test_block(register: dict | None, day: str) -> dict:
         clock = (f"the {len(ages)} tracked events are {min(ages)} to {max(ages)} years old and Candia's "
                  f"curve is a function of an item's age in years, while the {span} "
                  f"{'day' if span == 1 else 'days'} since the register was founded have moved each of "
-                 f"them by {span / 365.25:.2f} of a year, so a fit to this series would read the news "
+                 f"them by {span / 365.25:.2f} {'of a year' if span < 365.25 else 'years'}, so a fit to this "
+                 "series would read the news "
                  "cycle, anniversaries and the register's own selection effect as decay")
     else:
         clock = ("Candia's curve is a function of an item's age in years, and a daily archive moves an "

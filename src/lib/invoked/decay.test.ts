@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import registerJson from '@/data/invoked/register.json'
 import type { InvokedData } from './types'
-import { decayArithmetic, lawReading, lawStates, type InvokedRegister } from './decay'
+import { argumentHolds, decayArithmetic, lawReading, lawStates, REREAD_AFTER_YEARS, type InvokedRegister } from './decay'
 
 // ——— synthetic register and days ——————————————————————————————————————————————————
 
@@ -156,10 +156,16 @@ describe('the committed register', () => {
   })
 
   // The page argues that the series is far too short to move the events' ages: "a fraction of a
-  // year" against ages of decades. That argument is written for a series shorter than a year.
-  // When the register's series passes a year (September 2027), this fails ON PURPOSE, so that the
-  // decay section of /invoked-past and the pipeline's reason are re-read rather than left standing.
-  it('the decay section’s argument still describes the archive: a series shorter than a year', () => {
-    expect(real.ageShiftYears, 're-read the decay section of InvokedPastPage.astro and law_test_block').toBeLessThan(1)
+  // year" against ages of decades. That argument is written for a series shorter than a year, and
+  // past it the page says so itself (argumentHolds). This used to fail on purpose once the real
+  // series passed a year; it no longer does, because deploy-cf.yml and every practice integrate run
+  // this suite, and a test that broke on the archive growing would freeze the site on that night.
+  it('says when its own argument is due to be re-read, and never breaks the build over it', () => {
+    expect(argumentHolds({ ageShiftYears: 0.09 })).toBe(true)
+    expect(argumentHolds({ ageShiftYears: REREAD_AFTER_YEARS - 0.001 })).toBe(true)
+    expect(argumentHolds({ ageShiftYears: REREAD_AFTER_YEARS })).toBe(false)
+    expect(argumentHolds({ ageShiftYears: 1.6 })).toBe(false)
+    // whatever the archive holds tonight, the page has a sentence for it
+    expect(typeof argumentHolds(real)).toBe('boolean')
   })
 })
