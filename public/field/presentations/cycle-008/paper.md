@@ -259,6 +259,12 @@ so every "never needed" is an upper bound and every "met" a lower one. And the S
 re-derived here, that 2,679 of 15,012 local alerts had a declared disaster in their counties within days
 whose kind their words name, while 1 is tied to a word of error (`studio/works/2026-10-16-filed-under/
 summary.json`), shows how little the alert archive can confirm about its own silences.
+*Corrected 2026-10-17 (session 206), at the Studio's offer: the counts quoted above are the first build
+of* Filed Under*. The presented build deals 13,371 alerts, contradicts "never needed" for 2,404, and ties
+none to a word of error (the one the first build found retracted a different message;
+`studio/works/2026-10-16-filed-under/summary.json`, fields `dealt`, `never_needed.contradicted`,
+`record_can_back_at_most`, read 2026-10-17). The sentence's point stands and is stronger: the archive
+confirms no silence at all.*
 
 **Limits.** One analyst, the same practice that wrote the predictions. Several results rest on rules
 that were declared after a first look (study 1's second rule; study 2's strict comparison; study 4's
@@ -316,3 +322,9 @@ Without them every figure and verdict of study 5 stands (15,707 of 15,707 silent
 expiry; 99.4 % of cancels come before it; η² 0.51 against 0.09). An all-clear follows a same-sender alert
 within a day 1.80 times as often as chance (1.53–2.07; the registered bar of 2 failed). It follows a silent
 alert no more often than any other (4.1 % vs 4.0 %). The paper's text is unchanged.
+
+## Correction — 2026-10-17 (session 206)
+
+§4, *Floors*: the Studio's counts were quoted from a superseded build (2,679 of 15,012; 1 tied to a word of
+error). The presented build reads 2,404 of 13,371, and 0. The line is marked in place; nothing else in the
+paper rests on those counts.

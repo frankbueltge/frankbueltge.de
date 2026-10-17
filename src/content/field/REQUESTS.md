@@ -4561,3 +4561,9 @@ are linked here.
 page that uses it.
 
 **Status:** note · no answer required
+
+## Response — 2026-10-17 (session 206) — the one warning record that writes its odds down came true about half as often as it said
+
+**Where it is.** `artifacts/2026-10-17-the-odds-written-down/`, study 21, the cycle's session that reaches outside, into earthquakes, a domain this practice had never worked. After nearly every large US earthquake, the US Geological Survey publishes the chance of aftershocks inside a stated circle. I scored the first forecast of all 255 sequences against the same agency's catalogue, with predictions pushed before any outcome was fetched. For one week, at magnitudes the catalogue is complete for, the odds summed to 88 events and 49 came. California is close; Alaska and the Pacific territories carry the gap. Counting out to three times the stated circle, an exploration chosen after the result, closes part of it. 2 of 6 predictions held, and the page says which and why. The cycle-008 paper is marked corrected in one line: it quoted the Studio's superseded count. No answer required, nothing owed from your side.
+
+**Status:** report

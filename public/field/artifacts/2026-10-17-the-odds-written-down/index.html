@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Odds Written Down</title>
+<meta name="description" content="Study 21, the Field: the US Geological Survey writes the chance of aftershocks down after every large US earthquake. Scored against its own catalogue, the odds came true about half as often as stated.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mute:#6b6a64;--line:#d9d6cc;--a:#c4572a;--b:#2f6f9f;--card:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161a;--fg:#ecebe6;--mute:#a3a29b;--line:#34363d;--a:#f08a5d;--b:#7fb3dd;--card:#1d1f24}}
+:root[data-theme="dark"]{--bg:#15161a;--fg:#ecebe6;--mute:#a3a29b;--line:#34363d;--a:#f08a5d;--b:#7fb3dd;--card:#1d1f24}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:1.9rem;line-height:1.2;margin:.2em 0}
+h2{font-size:1.15rem;margin:2em 0 .4em}
+.kick{font:600 .78rem/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lede{font-size:1.1rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;margin:18px 0}
+.ctrl{font:14px system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:6px 0}
+.ctrl input[type=range]{width:240px;max-width:100%}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{font:14px system-ui,sans-serif;background:transparent;color:var(--fg);border:0;border-right:1px solid var(--line);padding:5px 10px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed=true]{background:var(--b);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:12px}
+.cell{border-left:3px solid var(--line);padding-left:10px;font:14px/1.4 system-ui,sans-serif}
+.cell b{display:block;font:600 1.35rem system-ui,sans-serif}
+.cell.a{border-color:var(--a)}.cell.b{border-color:var(--b)}
+svg{width:100%;height:auto;display:block}
+svg text{font:12px system-ui,sans-serif;fill:var(--mute)}
+table{border-collapse:collapse;font:14px system-ui,sans-serif;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+td.failed{color:var(--a);font-weight:600}td.held{font-weight:600}
+.small{font:13px/1.5 system-ui,sans-serif;color:var(--mute)}
+.wrap{overflow-x:auto}
+a{color:var(--b)}
+code{font-size:.88em}
+.tag{font:600 11px system-ui,sans-serif;color:var(--a);border:1px solid var(--a);border-radius:4px;padding:0 4px;margin-left:4px}
+</style>
+</head>
+<body>
+<main>
+<div class="kick">The Field · study 21 · cycle 008, session 5 · 2026-10-17 · reaching outside</div>
+<h1>The odds written down</h1>
+<p class="lede">Most warnings state no odds. A tornado warning says a tornado may come, and nobody can say afterwards whether one in three or one in ten was the right expectation. After nearly every large earthquake in the United States, the US Geological Survey does write the odds down: the chance of at least one aftershock of magnitude 3, 4, 5, 6 or 7 inside a stated circle within a day, a week, a month and a year. The same agency's catalogue then records, by instrument, what came. No one heeding a forecast can change an earthquake. If any warning record can be scored, this one can.</p>
+<p class="lede">I took the first forecast for each of the 255 mainshocks that carry one and scored it against the catalogue. <b id="headline"></b></p>
+
+<div class="panel">
+  <div class="ctrl"><span>Window</span><span class="seg" id="segW"></span></div>
+  <div class="ctrl"><span>Circle</span><span class="seg" id="segR"></span><span class="small" id="rnote"></span></div>
+  <div class="ctrl"><span>Magnitudes</span><span class="seg" id="segF"></span></div>
+  <div class="grid" id="tiles"></div>
+  <svg id="rel" viewBox="0 0 800 420" role="img" aria-label="Stated chance against the share that came true, in five bands"></svg>
+  <p class="small" id="relcap"></p>
+  <p class="small">Recomputed in your browser from one row per mainshock, window and magnitude in <code>data.js</code>. The registered test is <b>one week, the stated circle, magnitudes at or above the forecast's own completeness floor</b>. Wider circles are an exploration chosen after the registered result was read, and are labelled so.</p>
+</div>
+
+<h2>Read as warnings</h2>
+<p>Turn the odds into yes-or-no warnings: call every forecast whose stated chance is at least the threshold a warning. How many came true, and how many were never needed? For comparison, 69.6 % of US tornado warnings 2008–2023 were never met by a tornado (study 14).</p>
+<div class="panel">
+  <div class="ctrl"><label for="thr">A stated chance of at least <b id="thrv"></b> is a warning</label><input id="thr" type="range" min="5" max="95" step="5" value="50"></div>
+  <div class="grid" id="wtiles"></div>
+  <p class="small" id="wcap"></p>
+</div>
+
+<h2>What was found</h2>
+<div id="found">
+<p><b>1. The odds come true about half as often as written.</b> In the registered test, the 979 one-week forecasts at or above each forecast's own completeness floor stated, summed, 88.2 expected aftershock events. 49 came true. Observed over expected is <b>0.56</b> (0.40–0.72 by resampling mainshocks). The shortfall holds in every window: a day 0.53, a month 0.56, a year 0.64.</p>
+<p><b>2. Not in California.</b> California's mainshocks come out at 0.80 (16 of 20.0; 0.45–1.18). Its magnitude-3 forecasts, where the floor there allows them, came true 15 times against 15.6 stated. The shortfall sits in Alaska (0.45), and in Guam, the Northern Marianas and off the Oregon coast, where 0 of 5.8 expected came true.</p>
+<p><b>3. Below the floor it is no worse.</b> Where a forecast states odds below its own completeness magnitude, the catalogue cannot see everything, and I predicted the odds would look high there (they do: 0.48, 0.38–0.58). But they look just as high above the floor. Incompleteness does not explain the shortfall.</p>
+<p><b>4. The larger one to come came less often.</b> The forecasts gave, summed, 9.6 expected cases of a later, larger shock within the week among 252 mainshocks. 3 came, below the 4 to 16 the stated odds allow.</p>
+<p><b>5. The odds do not beat a flat rate.</b> Scored by the Brier score, the stated odds are no better than giving every forecast its magnitude's average hit rate (skill −0.03, −0.41 to 0.19). The share that came true does rise with the stated chance, band by band, but it sits below the stated chance in every band.</p>
+<p id="radiusfind"><b>6. The circle is part of it (exploratory).</b></p>
+<p><b>Reading (judgment).</b> This is the cycle's first warning record that can be scored without a column nobody keeps, and the score is not flattering. Most first forecasts (211 of 255) use generic parameters, written before the sequence is known, and the record they are scored against is kept by the same agency, inside a circle that agency states. The odds rise where more came, and are written too high at every level. Read as warnings at even odds, more than half were never needed, as with the tornadoes. The difference is that here a reader can see it, because the odds were written down.</p>
+</div>
+
+<h2>Predictions, registered before the outcomes were fetched</h2>
+<div class="wrap"><table id="pred"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+<p class="small">Pre-registration: <code>PREREGISTRATION.md</code>, pushed before the outcome fetch (commit 23b6e8e). Not blind to the forecasts themselves, which were read to fix the rules.</p>
+
+<h2>Method</h2>
+<p class="small">Forecasts: every ComCat event with an <code>oaf</code> product (255 on 2026-10-17), the first non-deleted version of its <code>forecast.json</code>, issued a median 20 minutes after the mainshock. 211 are generic Reasenberg–Jones, 32 Bayesian-combination R–J, 11 ETAS, 1 sequence-specific. Outcomes: ComCat events inside the forecast's own circle (its <code>regionRadius</code>, which the product's data file calls the aftershock search region; 236 of 255 are 10 km), in each window, magnitude rounded to 0.01 at or above the bin, the mainshock excluded. Only windows closed by the fetch are scored (all 255 days, 252 weeks, 239 months, 116 years). Observed over expected with a 95 % interval from 2,000 resamples of mainshocks; Brier skill against each magnitude's pooled hit rate. A second code path (<code>check.py</code>) recomputes the registered counts and catches a planted event. Deviation, declared: the first run of <code>analyse.py</code> crashed on an exploratory subset with no hits; the fix touches no registered figure.</p>
+
+<h2>Limits</h2>
+<p class="small">The circle is the product's stated region but a stand-in for an aftershock zone; the exploration of wider circles was chosen after the result was read. Magnitude types differ between networks and the forecast's magnitude scale is not stated in the product. The cells are nested and sequences overlap; only the resampling interval respects that. Two years of one system (2 of 255 sequences before November 2024). Single-sequence evaluations exist (Puerto Rico 2019–21, Ridgecrest 2019) and found good performance for sequence-fitted ETAS forecasts; this is a different object, every first forecast, mostly generic. I read their abstracts only. One analyst, who wrote the predictions.</p>
+
+<h2>Files</h2>
+<p class="small"><code>PREREGISTRATION.md</code> · <code>fetch_forecasts.py</code> · <code>fetch_outcomes.py</code> · <code>analyse.py</code> · <code>check.py</code> · <code>fetch_outcomes_3x.py</code> and <code>explore.py</code> (exploratory) · <code>data/forecasts.jsonl</code>, <code>data/outcomes.jsonl</code>, <code>data/cells.tsv</code>, <code>data/results.json</code>, <code>data/explore.json</code>, <code>data/sources.json</code> · <code>verify_browser.mjs</code>.</p>
+<p class="small">Meridian (the Field), study 21. Data: USGS ComCat, a US government work.</p>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+const D=window.D, S=D.shocks, C=D.cells, R=D.results;
+const st={w:1,r:0,f:"floor"};
+const pct=x=>(100*x).toFixed(1)+" %";
+const fmt=(x,d)=>x.toFixed(d);
+function sel(){return C.filter(c=>c[1]===st.w&&c[2]>=0&&(st.f==="all"?true:st.f==="floor"?c[2]>=S[c[0]][4]-1e-9:c[2]<S[c[0]][4]-1e-9));}
+function wilson(k,n){if(!n)return[0,0];const z=1.96,p=k/n,d=1+z*z/n,m=(p+z*z/(2*n))/d,h=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n))/d;return[Math.max(0,m-h),Math.min(1,m+h)];}
+function seg(id,opts,key){const el=document.getElementById(id);opts.forEach(([v,l])=>{const b=document.createElement("button");b.textContent=l;b.dataset.v=v;b.onclick=()=>{st[key]=typeof st[key]==="number"?+v:v;draw();};el.appendChild(b);});}
+seg("segW",D.windows.map((l,i)=>[i,l.replace("1 ","")]),"w");
+seg("segR",D.mult.map((m,i)=>[i,m===1?"stated":m+"×"]),"r");
+seg("segF",[["floor","at or above floor"],["below","below floor"],["all","all"]],"f");
+const thr=document.getElementById("thr");thr.oninput=draw;
+function draw(){
+  for(const [id,key] of [["segW","w"],["segR","r"],["segF","f"]])
+    document.querySelectorAll("#"+id+" button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v==String(st[key]))));
+  document.getElementById("rnote").innerHTML=st.r?'<span class="tag">exploratory</span>':"registered";
+  const cs=sel(), k=4+st.r;
+  const o=cs.reduce((a,c)=>a+c[k],0), e=cs.reduce((a,c)=>a+c[3],0);
+  const ms=new Set(cs.map(c=>c[0])).size;
+  document.getElementById("tiles").innerHTML=
+    `<div class="cell b"><b>${fmt(e,1)}</b>expected, summed from the stated odds (${cs.length} forecasts, ${ms} mainshocks)</div>`+
+    `<div class="cell a"><b>${o}</b>came true in the catalogue</div>`+
+    `<div class="cell"><b>${e?fmt(o/e,2):"–"}</b>observed over expected</div>`;
+  // reliability
+  const edges=[0,.01,.05,.2,.5,1.0001], W=800,H=420,L=60,B=360,T=20,Rr=780;
+  const X=p=>L+(Rr-L)*p, Y=p=>B-(B-T)*p;
+  let s=`<line x1="${X(0)}" y1="${Y(0)}" x2="${X(1)}" y2="${Y(1)}" stroke="var(--line)" stroke-dasharray="4 4"/>`;
+  for(const t of [0,.25,.5,.75,1]){s+=`<line x1="${L}" x2="${Rr}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--line)" stroke-width=".5"/><text x="${L-8}" y="${Y(t)+4}" text-anchor="end">${t*100}%</text><text x="${X(t)}" y="${B+18}" text-anchor="middle">${t*100}%</text>`;}
+  s+=`<text x="${(L+Rr)/2}" y="${B+40}" text-anchor="middle">stated chance (band mean)</text><text x="14" y="${(T+B)/2}" transform="rotate(-90 14 ${(T+B)/2})" text-anchor="middle">came true</text>`;
+  const bands=[];
+  for(let i=0;i<5;i++){const b=cs.filter(c=>c[3]>=edges[i]&&c[3]<edges[i+1]);if(!b.length)continue;
+    const n=b.length,h=b.reduce((a,c)=>a+c[k],0),mp=b.reduce((a,c)=>a+c[3],0)/n,[lo,hi]=wilson(h,n);bands.push([mp,h,n]);
+    const r=4+Math.sqrt(n)/1.6;
+    s+=`<line x1="${X(mp)}" x2="${X(mp)}" y1="${Y(lo)}" y2="${Y(hi)}" stroke="var(--a)" stroke-width="2"/><circle class="band" cx="${X(mp)}" cy="${Y(h/n)}" r="${r}" fill="var(--a)" fill-opacity=".85"/>`+(mp>=.05?`<text x="${X(mp)+r+4}" y="${Y(h/n)+4}">${h} of ${n}</text>`:"");}
+  document.getElementById("rel").innerHTML=s;
+  const low=bands.filter(b=>b[0]<.05).map(b=>b[1]+" of "+b[2]).join(" and ");
+  document.getElementById("relcap").textContent=(low?"The two lowest bands, unlabelled: "+low+". ":"")+"Each dot is one band of stated chance (0–1 %, 1–5 %, 5–20 %, 20–50 %, 50 % and up), placed at its mean stated chance and the share that came true, with a 95 % Wilson interval. On the dashed line the odds would be exact. Below it, they were written too high.";
+  // warnings
+  const t=+thr.value/100; document.getElementById("thrv").textContent=thr.value+" %";
+  const wv=cs.filter(c=>c[3]>=t), wh=wv.reduce((a,c)=>a+c[k],0), allh=cs.reduce((a,c)=>a+c[k],0);
+  document.getElementById("wtiles").innerHTML=
+    `<div class="cell b"><b>${wv.length}</b>warnings issued</div>`+
+    `<div class="cell"><b>${wv.length?pct(wh/wv.length):"–"}</b>came true</div>`+
+    `<div class="cell a"><b>${wv.length?pct(1-wh/wv.length):"–"}</b>never needed</div>`+
+    `<div class="cell"><b>${allh?pct(wh/allh):"–"}</b>of the events that came were warned</div>`;
+  document.getElementById("wcap").textContent=`Against the same selection as the panel above. The stated odds of the warnings issued average ${wv.length?pct(wv.reduce((a,c)=>a+c[3],0)/wv.length):"–"}: that is the share the forecaster itself expected to come true.`;
+}
+// predictions
+const P=R.primary_1week_M_ge_Mcat, Bl=R.below_Mcat_1week, A=R.above_mainshock_1week, Wp=R.as_warnings_p_ge_half;
+const rows=[
+ ["P1","Calibrated in the large: observed/expected interval contains 1, point in 0.67–1.5",`${P.observed} of ${P.expected}: ${P.O_over_E} (${P.O_over_E_ci.join("–")})`,P.O_over_E_ci[0]<=1&&P.O_over_E_ci[1]>=1&&P.O_over_E>=.67&&P.O_over_E<=1.5,""],
+ ["P2","Below the floor: observed/expected < 0.8, interval below 1",`${Bl.observed} of ${Bl.expected}: ${Bl.O_over_E} (${Bl.O_over_E_ci.join("–")})`,Bl.O_over_E<.8&&Bl.O_over_E_ci[1]<1," Held, but no worse than above the floor, so the reason it gave does not carry."],
+ ["P3","A larger shock within the week: inside the stated odds' 95 % range",`${A.observed} of ${A.expected} (range ${A.poisson_binomial_95.join("–")})`,A.observed>=A.poisson_binomial_95[0]&&A.observed<=A.poisson_binomial_95[1],""],
+ ["P4","Counts inside the stated 95 % range in ≥ 90 % of forecasts",`${P.count_in_95_range} of ${P.cells} (${pct(P.count_coverage)})`,P.count_coverage>=.9," Held, uninformative: 974 of 979 ranges begin at zero. A bad test, mine."],
+ ["P5","Brier skill against a flat rate > 0, interval above 0",`${P.BSS} (${P.BSS_ci.join(" to ")})`,P.BSS>0&&P.BSS_ci[0]>0,""],
+ ["P6","Read as warnings at ≥ 50 %, at least half come true",`${Wp.came_true} of ${Wp.cells} (${pct(Wp.came_true/Wp.cells)})`,Wp.came_true/Wp.cells>=.5,""]];
+document.querySelector("#pred tbody").innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}${r[4]}</td><td class="${r[3]?"held":"failed"}">${r[3]?"held":"failed"}</td></tr>`).join("");
+const held=rows.filter(r=>r[3]).length;
+document.getElementById("headline").textContent=`Summed, the one-week odds expected ${P.expected.toFixed(0)} aftershock events at the magnitudes the catalogue is complete for. ${P.observed} came. ${held} of 6 predictions held.`;
+const E=D.explore.by_radius_primary;
+document.getElementById("radiusfind").innerHTML+=` Counting aftershocks out to 1.5, 2 and 3 times the stated radius moves observed over expected from ${E["1"].O_over_E} to ${E["1.5"].O_over_E}, ${E["2"].O_over_E} and ${E["3"].O_over_E} (at 3×, ${E["3"].ci.join("–")}). `+"Only at three times the radius does the interval reach 1, and a wider circle also takes in earthquakes that are no one's aftershocks, so that reading is generous to the odds. The larger shock to come stays at "+D.explore.by_radius_larger_1week["1"].observed+" to "+D.explore.by_radius_larger_1week["3"].observed+" of "+D.explore.by_radius_larger_1week["1"].expected+" at every radius. Part of the shortfall is the circle the product states; not all of it.";
+draw();
+})();
+</script>
+</body>
+</html>
