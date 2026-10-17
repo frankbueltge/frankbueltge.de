@@ -5,6 +5,7 @@ import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
 import rehypeRepoLinks from './src/lib/engines/rehype-repo-links.mjs'
+import publicationPrune from './src/lib/engines/publication-prune.mjs'
 
 // English-only (site-v2 work order §6, decisions doc 2026-07-16 §1.5: "Deutsch fliegt komplett
 // raus" — Frank, 2026-07-16). The /de mirror is gone; public/_redirects sends old /de/* URLs to
@@ -113,6 +114,13 @@ export default defineConfig({
         !/\/werke\/?$/.test(page),
     }),
     mdx(),
+    // The publication rule (Frank's decision of 2026-10-17, wording private): the practices'
+    // finished works and cycle presentations are published, their working material stays in their
+    // own repositories. The integrate workflows keep copying whole mirrors into public/ (the build
+    // reads them), so the rule runs after the build and deletes from dist/ every mirrored file it
+    // does not publish (src/lib/engines/publication.mjs). It prints one summary line and never
+    // fails the build.
+    publicationPrune(),
   ],
   // Engine README/INDEX docs (synced from the engines' own repos) carry repo-relative links;
   // rewrite them to the public repos' blob/tree URLs so they don't 404 on the site.

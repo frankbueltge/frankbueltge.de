@@ -6,8 +6,10 @@
 // lines that produced them hang below it and end in the mark their record earned.
 //
 // Interactive since 2026-08-16 (Frank: the map was a still). The interaction is links, not
-// scripting: every line is an SVG <a> to its whole record at /atelier/lines/<id>, so it works
-// with JavaScript off, takes keyboard focus natively, and appears in the page's link list. The
+// scripting: every line is an SVG <a> to its whole record, so it works with JavaScript off, takes
+// keyboard focus natively, and appears in the page's link list. The record was a page of this
+// site (/atelier/lines/<id>) until the publication rule of 2026-10-17 retired it; it is the line's
+// own directory in the practice's repository now (projects/<id>), where its old address 301s. The
 // readout glance on hover/focus and the table under the drawing follow the house's dataviz
 // rules (nothing reachable only by hovering; the table is the no-JS floor for the data itself).
 //
@@ -17,6 +19,7 @@
 // this repo (.claude/rules/dataviz-figures.md) precisely because a warning red here would be the
 // site editorialising over the practice.
 import type { LineMap } from '@/lib/ecology/pyramid/figures'
+import { repoUrl } from '@/lib/engines/publication.mjs'
 import Readout from '@/components/dataviz/Readout.astro'
 import TableFallback from '@/components/dataviz/TableFallback.astro'
 
@@ -103,7 +106,7 @@ const tableRows = [...lines]
     ))}
 
     {lines.map((line) => (
-      <a class="eco-fig-line" href={`/atelier/lines/${line.id}`} data-glance={`${line.words} — open the whole record`} aria-label={`${line.words}. Open the line's whole record.`}>
+      <a class="eco-fig-line" href={repoUrl('atelier', `projects/${line.id}`)} data-glance={`${line.words} — open the whole record in the practice’s repository`} aria-label={`${line.words}. Open the line's whole record in the practice's repository.`}>
         <title>{line.words}</title>
         <line class="eco-fig-line-run" x1={x(line.from)} y1={BOX.base + 4} x2={x(line.to)} y2={line.depth} />
         {/* the invisible touch target along the run — the drawn line is one unit thin */}
@@ -136,7 +139,7 @@ const tableRows = [...lines]
     { key: 'ended', label: 'ended', nowrap: true },
   ]}
   rows={tableRows}
-  provenance="Read from each line's own SCORE/TRACE record in src/content/atelier/projects/ at build time. Each drawn line links its whole record at /atelier/lines/⟨id⟩."
+  provenance="Read from each line's own SCORE/TRACE record in src/content/atelier/projects/ at build time. Each drawn line links its whole record in the practice's repository, projects/⟨id⟩."
 />
 
 <script>

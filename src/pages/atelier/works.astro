@@ -18,6 +18,9 @@ import RegisterSheet from '@/components/ecology/RegisterSheet.astro'
 import type { RegisterRow } from '@/components/ecology/RegisterSheet.astro'
 import RespondCta from '@/components/post/RespondCta.astro'
 import { allWorks } from '@/lib/engines/register'
+// the texts & catalogue had a register of its own here until the publication rule of 2026-10-17;
+// its documents are read in the practice's repository now (src/lib/engines/publication.mjs)
+import { repoUrl } from '@/lib/engines/publication.mjs'
 import { countByLine, lineOfWork, lineShortLabel } from '@/lib/ecology/lines'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 
@@ -45,15 +48,18 @@ const rows: RegisterRow[] = works.map((w) => ({
 }))
 
 // The texts & catalogue lived on this page until 2026-08-15; a fragment never reaches the
-// server, so their old anchors are caught client-side and bounced to the pages they live on now.
+// server, so their old anchors are caught client-side and bounced to where they live now — since
+// the publication rule of 2026-10-17 the files in the practice's repository (their pages of
+// 2026-08-15 to 2026-10-17 301 there too).
 const textSlugs = Object.keys(
   import.meta.glob('/src/content/atelier/works/*.md'),
 ).map((p) => p.replace('/src/content/atelier/works/', '').replace(/\.md$/, ''))
+const textBounce = { base: repoUrl('atelier', 'works', 'blob'), slugs: textSlugs }
 ---
 
 <Page
   title="Atelier — works | Frank Bültge"
-  description="The Atelier's works register — one row per work, newest first, filterable by line; each work one click behind its row, the texts & catalogue in their own register."
+  description="The Atelier's works register — one row per work, newest first, filterable by line; each work one click behind its row, the texts & catalogue in the practice's own repository."
 >
   <RegisterSheet
     id="atelier"
@@ -62,7 +68,7 @@ const textSlugs = Object.keys(
     span={`${works.length} works · ${counts.nightly} of the nightly line — its first era and everything since its 2026-08-10 revival · ${counts['work-line']} of the work-line · one row per work, the work itself behind it`}
     rows={rows}
     source="src/content/atelier/works/*/meta.json · src/components/atelier/werke/*/meta.json · src/data/nightly/works/*/meta.json"
-    more={{ label: 'the texts & catalogue — its own register →', href: '/atelier/texts' }}
+    more={{ label: 'the texts & catalogue ↗ in the repository', href: repoUrl('atelier', 'works') }}
   >
     <p class="eco-doc-note">{ATELIER_NARRATIVE.rooms.worksPhase}</p>
     <p class="eco-doc-note">
@@ -75,17 +81,19 @@ const textSlugs = Object.keys(
   </RegisterSheet>
 </Page>
 
-<script type="application/json" id="atelier-text-slugs" set:html={JSON.stringify(textSlugs)} />
+<script type="application/json" id="atelier-text-slugs" set:html={JSON.stringify(textBounce)} />
 <script>
   // Legacy deep links: the genealogy, the positions and the error registers rendered on this
-  // page until 2026-08-15 and were linked as /atelier/works#<slug>. Each is a page of its own
-  // now. Best-effort by design (it needs JS); without it the fragment is simply inert and the
-  // register is there — the correct failure mode for a page whose job is to show holdings.
+  // page until 2026-08-15 and were linked as /atelier/works#<slug>. Each is a file in the
+  // practice's repository now (2026-10-17). Best-effort by design (it needs JS); without it the
+  // fragment is simply inert and the register is there — the correct failure mode for a page
+  // whose job is to show holdings. Only a slug the mirror holds is followed, never a guessed one.
   const el = document.getElementById('atelier-text-slugs')
-  const texts = new Set<string>(el ? JSON.parse(el.textContent ?? '[]') : [])
+  const data = (el ? JSON.parse(el.textContent ?? '{}') : {}) as { base?: string; slugs?: string[] }
+  const texts = new Set<string>(data.slugs ?? [])
   const bounce = () => {
     const target = decodeURIComponent(location.hash.slice(1))
-    if (texts.has(target)) location.replace(`/atelier/texts/${target}/`)
+    if (data.base && texts.has(target)) location.replace(`${data.base}/${target}.md`)
   }
   bounce()
   addEventListener('hashchange', bounce)

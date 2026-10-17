@@ -1,26 +1,27 @@
 ---
-// The nightly line's rooms (2026-08-11). Until now the line had one page and a link to its
+// The nightly line's rooms (2026-08-11). Until then the line had one page and a link to its
 // repository, while the material that makes it legible as research — a genealogy that grew for
 // thirty sessions, two position papers with a documented turn between them, a typed error
 // register of thirty-eight entries — rendered as an accordion of raw markdown at the foot of
-// the Atelier's works room, where nobody reads it.
+// the Atelier's works room, where nobody read it.
 //
-// Each room below is derived from that same committed material; none of it is retyped. The
-// texts themselves stay mirrored verbatim where they already are — these rooms are a way in,
-// not a replacement, and every one of them says which file it was read from.
+// 2026-10-17, the publication rule (src/lib/engines/publication.mjs): the site publishes the
+// practices' finished works and cycle presentations, and the four rooms that read the line's
+// apparatus (the genealogy, the position, the error register, the reading) were retired with it.
+// Their texts are read in the line's own repository, where their addresses now lead (301), so the
+// menu keeps the line's page and one door into the repository that says it leaves the site.
+import { LINE_REPO } from '@/lib/engines/nightly-line'
+
 interface Props {
   /** the room the visitor is in, so it is marked rather than linked */
-  active?: 'line' | 'genealogy' | 'position' | 'register' | 'reading'
+  active?: 'line'
 }
 
 const { active } = Astro.props
 
 const ROOMS = [
   { id: 'line', href: '/error-as-method', label: 'the line' },
-  { id: 'genealogy', href: '/error-as-method/genealogy', label: 'the genealogy' },
-  { id: 'position', href: '/error-as-method/position', label: 'the position' },
-  { id: 'register', href: '/error-as-method/register', label: 'the error register' },
-  { id: 'reading', href: '/error-as-method/reading', label: 'the reading' },
+  { id: 'repository', href: LINE_REPO, label: 'the genealogy, the position, the error register and the reading ↗ in the repository' },
 ] as const
 ---
 

@@ -26,30 +26,33 @@ const faceCount = faces.size
 // The line's own instruments, for the room cards below. Until 2026-08-11 this page ended at a
 // link to the repository, which meant the genealogy, the position papers and a thirty-eight-entry
 // error register were reachable only by leaving the site — while rendering, unread, as raw
-// markdown at the foot of the Atelier's works room.
+// markdown at the foot of the Atelier's works room. From 2026-08-11 each had a room here; on
+// 2026-10-17 the publication rule (src/lib/engines/publication.mjs) retired those rooms with
+// everything else that is not a finished work or a presentation. The cards stay, still counted
+// from the committed texts, and each opens the line's repository, where the texts are read now.
 const reg = errorRegister()
 const { reached, barriers } = reading()
 const rooms = [
   {
-    href: '/error-as-method/genealogy',
+    href: LINE_REPO,
     label: 'The genealogy',
     line: 'A century of the error moving out of the system and into the observer — four stations that grew three tracks as the line read further.',
     data: `${stations().length} stations · ${addenda().length} dated extensions`,
   },
   {
-    href: '/error-as-method/position',
+    href: LINE_REPO,
     label: 'The position',
     line: 'The one night the line changed its own claim under pressure it applied to itself — and the position the fork inherits.',
     data: `session ${OUTWARD_TURN.session} · ${OUTWARD_TURN.date}`,
   },
   {
-    href: '/error-as-method/register',
+    href: LINE_REPO,
     label: 'The error register',
     line: 'The founding instrument: every error named, typed, traced to a corrective thread, and left checkable by a reader.',
     data: `${reg.opened.length} entries · ${reg.active.ids.length} still open`,
   },
   {
-    href: '/error-as-method/reading',
+    href: LINE_REPO,
     label: 'The reading',
     line: 'The bibliography with its access barriers left in — what the line reached, and the primaries it could not.',
     data: `${reached.length} sources · ${barriers.length} barriers`,
@@ -99,7 +102,7 @@ const monthName = (key: string): string =>
           rooms.map((room) => (
             <li class="bg-bg">
               <a href={room.href} class="group flex h-full flex-col gap-2 p-5 transition-colors hover:bg-line/20">
-                <span class="font-medium transition-colors group-hover:text-accent-soft">{room.label} →</span>
+                <span class="font-medium transition-colors group-hover:text-accent-soft">{room.label} ↗ in the repository</span>
                 <span class="text-sm leading-relaxed text-fg-muted">{room.line}</span>
                 <span class="mt-auto pt-2 font-mono text-[11px] tabular-nums text-fg-faint">{room.data}</span>
               </a>

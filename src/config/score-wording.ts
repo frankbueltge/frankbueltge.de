@@ -341,9 +341,14 @@ export const SCORE_WORDING = {
       head: (p: { one: string; date: string | null; cycle: number | null }) =>
         [`Latest ${p.one}`, p.date && longDate(p.date), p.cycle && `cycle ${cycleNo(p.cycle)}`].filter(Boolean).join(' · '),
       open: (one: string) => `open the ${one} →`,
+      /** a piece the site does not serve since the publication rule of 2026-10-17 — a session's
+       *  window or artifact — is opened in the practice's repository, and the link says so */
+      openInRepository: (one: string) => `open the ${one} ↗ in the repository`,
       still: (title: string) => `A still of ${title}, as the practice took it.`,
       /** a piece whose record carries no picture: the absence is drawn */
       noStill: (one: string) => `no still on the record — the ${one} is a page of its own, one click away`,
+      /** the same plate for a piece read in the practice's repository (2026-10-17) */
+      noStillInRepository: (one: string) => `the ${one} is read in the practice’s own repository, one click away`,
       none: (one: string) => `No ${one} under v3 yet.`,
     },
 
@@ -367,7 +372,8 @@ export const SCORE_WORDING = {
     journal: {
       title: 'Journal',
       sub: 'the newest sessions, first lines',
-      all: 'the whole journal →',
+      /** since 2026-10-17 the journal is read in the practice's repository, not on this site */
+      all: 'the whole journal ↗ in the repository',
       none: 'No session under v3 yet.',
     },
 

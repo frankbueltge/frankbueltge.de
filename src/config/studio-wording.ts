@@ -11,6 +11,7 @@
 // ADR 0010: die Bühne teilt keine visuelle Grammatik mit Partitur, Blatt oder Protokoll.
 import { numberWord } from '@/lib/atelier/sessions'
 import type { RailItem, OrientationItem } from '@/lib/practice-shell'
+import { REPOSITORY_DOORS } from '@/lib/engines/publication.mjs'
 
 export const STUDIO_GRAMMAR = {
   approval: 'approved' as const,
@@ -22,13 +23,16 @@ export const STUDIO_GRAMMAR = {
   marquee: 'LIVE STATUS TRAVELS · OBLIGATION ACTIVE',
   gasseLabel: 'DIE GASSE · OFFSTAGE — VISIBLE, UNLIT',
   /** v3 pyramid, 2026-08-12: the playbill and apparatus rooms were folded into the station sheet
-   *  (their routes 301 there), so the rail is the stage plus the registers under it. */
+   *  (their routes 301 there), so the rail is the stage plus the registers under it.
+   *  2026-10-17, the publication rule (src/lib/engines/publication.mjs): the journal, the
+   *  constitution and the team channel are read in the ensemble's own repository, and their
+   *  labels say so. */
   rail: [
     { label: 'the station', href: '/studio', hint: 'the sheet — status, the floor, what is in the light' },
     { label: 'works', href: '/studio/works', hint: 'premiered works — existing URLs stay' },
-    { label: 'journal', href: '/studio/journal', hint: 'the unedited record — one page per session' },
-    { label: 'constitution', href: '/studio/protocol', hint: 'the protocol, as mirrored' },
-    { label: 'team channel', href: '/studio/requests', hint: 'REQUESTS — the one steering channel' },
+    { label: 'journal ↗ in the repository', href: REPOSITORY_DOORS.studio.journal, hint: 'the unedited record, in the ensemble’s own repository' },
+    { label: 'constitution ↗ in the repository', href: REPOSITORY_DOORS.studio.protocol, hint: 'the protocol, in the ensemble’s own repository' },
+    { label: 'team channel ↗ in the repository', href: REPOSITORY_DOORS.studio.requests, hint: 'REQUESTS — the one steering channel' },
   ] as RailItem[],
   door: { label: '→ the middle', href: '/encounters', hint: 'enc-2026-001 — the correction this house sent upstream' },
   backToStage: '← back to the stage',

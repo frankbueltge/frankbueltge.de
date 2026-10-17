@@ -8,8 +8,14 @@
 //     dropped, the page would still build and simply stop telling a visitor what runs NOW;
 //   · every practice index renders the shared template — a page rebuilt "just for one practice"
 //     is the drift the one-template decision exists to end;
-//   · the template renders the DOORS registry — that list is what keeps the archived record
-//     reachable (mounted.test.ts holds /atelier/archive/cockpit through it).
+//   · the template renders the DOORS registry — that list is what keeps the record reachable
+//     (until 2026-10-17 mounted.test.ts held the archived cockpit through it; the publication
+//     rule of that day retired the page, and the doors to the journal, the constitution and the
+//     team channel now open the practice's repository).
+//
+// A fourth since 2026-10-17: the template links the newest piece, the shelf and the journal rows
+// where they are read under the publication rule (src/lib/engines/publication-links.ts), never
+// at an address that only reaches them through a 301.
 //
 // The template was PracticeStation.astro from 2026-09-01 and is PracticePart.astro since the
 // design handoff of 2026-10-11; the three promises moved with it unchanged.
@@ -35,6 +41,15 @@ describe('the practice template', () => {
   it('renders the doors registry, which keeps the archived record reachable', () => {
     expect(station).toContain('DOORS')
     expect(station).toContain('windowDoor')
+  })
+
+  it('links pieces and journal sessions where the publication rule says they are read', () => {
+    expect(station).toContain('pieceHref(newest.href)')
+    expect(station).toContain('url(pieceHref(w.href))')
+    expect(station).toContain('href={sessionHref(j)}')
+    expect(station).toContain('REPOSITORY_DOORS[id].journal')
+    // no link built on a retired journal route
+    expect(station).not.toMatch(/`\/\$\{id\}\/journal/)
   })
 
   it('keeps the earlier station in the repo, unlinked, rather than deleting it', () => {

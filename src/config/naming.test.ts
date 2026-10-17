@@ -115,23 +115,28 @@ describe('the Plenum as a guest voice', () => {
     expect(NAMING.maschinenraum.guestLabel.endsWith('→')).toBe(true)
   })
 
+  // Until 2026-10-17 the card's resident line led to the Plenum's room on this site (/plenum). The
+  // publication rule of that day retired the room — the Plenum is dormant, and its minutes are read
+  // in the collective's own repository — so the line leads there, and says where it leads.
   it('is reached from its own house’s card, and only from that one', () => {
     const withResident = NAMING.travel.items.filter((it) => it.resident)
     expect(withResident.map((it) => it.name)).toEqual(['data-snack.com'])
     const resident = withResident[0]!.resident!
-    expect(resident.href).toBe(GUEST_ROOM)
-    expect(resident.label).toBe(GUEST_ROOM)
+    expect(resident.href).toBe('https://github.com/frankbueltge/data-snack-plenum')
+    expect(resident.label).toBe('github.com/frankbueltge/data-snack-plenum')
     expect(resident.lead).toContain('Plenum')
     expect(resident.lead.endsWith('→')).toBe(true)
     expect(resident.lead).not.toMatch(/\d/)
   })
 
-  it('promises minutes on this site, never the work — the snacks are cooked in their own house', () => {
+  it('promises minutes, never the work — and no longer on this site', () => {
     // The works register states the same boundary from its side ("keeps its texts elsewhere — it
     // is not counted here"). A travel line offering the collective's WORK here would contradict a
     // sentence that already stands on /works, and only one of the two would ever get corrected.
-    const lead = NAMING.travel.items.find((it) => it.resident)!.resident!.lead
-    expect(lead).toMatch(/minutes/)
+    const card = NAMING.travel.items.find((it) => it.resident)!
+    expect(card.resident!.lead).toMatch(/minutes/)
+    expect(card.resident!.lead).toMatch(/its own repository/)
+    for (const line of [card.resident!.lead, card.short]) expect(line).not.toMatch(/on this site|minutes here/)
     expect(NAMING.worksRegister.provenanceTail).toContain('Plenum')
   })
 })

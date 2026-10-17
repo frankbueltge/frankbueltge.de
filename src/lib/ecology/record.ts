@@ -29,6 +29,7 @@ import {
   type SessionNote,
 } from '@/lib/ecology/v3'
 import { buildRegister, type Register, type RegisterHouse } from '@/lib/engines/register'
+import { sessionHref } from '@/lib/engines/publication-links'
 import { loadChronicle } from '@/lib/studio/chronicle'
 import { hasScore, longWorks, type ChronicleMove, type LongWork } from '@/lib/studio/long-work'
 
@@ -424,13 +425,17 @@ export function scoreInput(record: EcologyRecord): ScoreInput {
     // A note's heading carries its own day ("Session 192 — 2026-10-10 — the tally stands"); on
     // the score the day is the bar the note stands in, so the readout says the rest. Each note
     // carries the cycle its own label names and what the record ties to it (2026-10-17).
+    // Its link is the session's own file in the practice's repository: the site no longer renders
+    // journal pages (the publication rule of 2026-10-17). The record keeps `s.href`, the address the
+    // journal route used, as the session's key — a day file holds several sessions, so the file
+    // could not be one.
     sessions: record.sessions.map((s) => {
       const { label, line } = sessionLabel(s.title)
       return {
         practice: s.practice,
         date: s.date,
         title: [label, line].filter(Boolean).join(' — ') || s.title,
-        href: s.href,
+        href: sessionHref(s),
         cycle: sessionCycle(s, record.cycles, record.until),
         pieces: record.sessionPieces.get(s.href) ?? [],
       }

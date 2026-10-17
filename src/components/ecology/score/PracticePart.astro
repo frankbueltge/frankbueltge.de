@@ -28,6 +28,8 @@ import { loadEcologyRecord, newestPiece, piecesSince, scoreInput, sessionLabel }
 import { buildPart } from '@/lib/ecology/score'
 import { loadCycle, loadBulletin, PRACTICE_REPO, type PracticeId } from '@/lib/ecology/v3'
 import { DOORS, windowDoor } from '@/lib/ecology/pyramid/station'
+import { REPOSITORY_DOORS } from '@/lib/engines/publication.mjs'
+import { pieceHref, sessionHref } from '@/lib/engines/publication-links'
 import { withoutHouseSuffix } from '@/lib/ops/edition'
 import '@fontsource-variable/literata/opsz-italic.css'
 import '@/styles/paper.css'
@@ -77,7 +79,12 @@ const status = [
 // (shot-1100.png, and shot-390.png for a phone). A piece without one gets a plate that says so
 // — never a picture this site made up for it.
 const newest = newestPiece(record.things, id)
-const shot = (name: string) => (newest && newest.href.endsWith('/') && existsSync(`public${newest.href}${name}`) ? `${newest.href}${name}` : null)
+// Where it is read since the publication rule of 2026-10-17: a work or a presentation on this site,
+// a session's window or artifact at its place in the practice's repository (publication-links.ts).
+// A piece the site does not serve has no still here either — its picture went with it.
+const newestHref = newest ? pieceHref(newest.href) : null
+const newestOnSite = newest !== null && newestHref === newest.href
+const shot = (name: string) => (newest && newestOnSite && newest.href.endsWith('/') && existsSync(`public${newest.href}${name}`) ? `${newest.href}${name}` : null)
 const still = { wide: shot('shot-1100.png'), narrow: shot('shot-390.png') }
 const newestTitle = newest ? withoutHouseSuffix(newest.title, me.name) : null
 // The session that made it, where the record ties the two (record.ts, tieSessions); the day's
@@ -176,19 +183,19 @@ const hasFigure = Astro.slots.has('figure')
           {newest && newestTitle ? (
             <>
               <p class="sc-label">{T.latest.head({ one: noun.one, date: newest.date, cycle: newest.cycle })}</p>
-              <a class="sc-still" href={url(newest.href)}>
+              <a class="sc-still" href={url(newestHref ?? newest.href)}>
                 {still.wide ? (
                   <picture>
                     {still.narrow && <source media="(max-width: 759.98px)" srcset={still.narrow} />}
                     <img src={still.wide} alt={T.latest.still(newestTitle)} loading="lazy" decoding="async" />
                   </picture>
                 ) : (
-                  <span class="sc-still-note">{T.latest.noStill(noun.one)}</span>
+                  <span class="sc-still-note">{newestOnSite ? T.latest.noStill(noun.one) : T.latest.noStillInRepository(noun.one)}</span>
                 )}
               </a>
               <p class="sc-latest-title">
-                <a href={url(newest.href)}>{newestTitle}</a>
-                <a href={url(newest.href)}>{T.latest.open(noun.one)}</a>
+                <a href={url(newestHref ?? newest.href)}>{newestTitle}</a>
+                <a href={url(newestHref ?? newest.href)}>{newestOnSite ? T.latest.open(noun.one) : T.latest.openInRepository(noun.one)}</a>
               </p>
               {newestNote && <p class="sc-latest-session">{newestNote}</p>}
             </>
@@ -252,7 +259,7 @@ const hasFigure = Astro.slots.has('figure')
           <div class="sc-list">
             {journal.length > 0 ? (
               journal.map((j) => (
-                <a class="sc-journal-row" href={url(j.href)}>
+                <a class="sc-journal-row" href={sessionHref(j)}>
                   <span>{shortDate(j.date)}</span>
                   <span>{j.label ?? '—'}</span>
                   <span>{j.line || j.title}</span>
@@ -262,7 +269,7 @@ const hasFigure = Astro.slots.has('figure')
               <p class="sc-note-line">{T.journal.none}</p>
             )}
           </div>
-          <a class="sc-more sc-link" href={url(`/${id}/journal`)}>{T.journal.all}</a>
+          <a class="sc-more sc-link" href={REPOSITORY_DOORS[id].journal}>{T.journal.all}</a>
         </div>
       </section>
 
@@ -280,7 +287,7 @@ const hasFigure = Astro.slots.has('figure')
               <p class="sc-shelf-label"><span>{group.label}</span><span>{group.sub}</span></p>
               <div class="sc-works">
                 {group.works.map((w) => (
-                  <a class={`sc-work${w.kind === 'presentation' ? ' is-presentation' : ''}`} href={url(w.href)}>
+                  <a class={`sc-work${w.kind === 'presentation' ? ' is-presentation' : ''}`} href={url(pieceHref(w.href))}>
                     {withoutHouseSuffix(w.title, me.name)}{w.date && <> <small>{shortDate(w.date)}</small></>}
                   </a>
                 ))}

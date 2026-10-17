@@ -57,10 +57,11 @@ export interface TravelItem {
   href: string
   description: string
   /**
-   * The quiet second line a house gets when a collective of ITS OWN keeps a record on THIS site
-   * (2026-08-02). Exactly one house has one today — data-snack.com, whose resident collective (the
-   * Plenum) sits and mirrors its minutes here. The line is a link out of the card and into
-   * that record; the card itself keeps pointing at the house.
+   * The quiet second line a house gets when a collective of ITS OWN keeps a record beside this
+   * site (2026-08-02). Exactly one house has one today — data-snack.com, whose resident collective
+   * (the Plenum) sits and keeps minutes. The line is a link out of the card and into that record;
+   * the card itself keeps pointing at the house. Since 2026-10-17 the record is read in the
+   * collective's own repository, not on this site (the publication rule).
    */
   resident?: { lead: string; label: string; href: string }
   /** The house in one short line, for the index at the foot of the entrance (2026-10-11): a
@@ -417,16 +418,18 @@ export const NAMING = {
         name: 'data-snack.com',
         href: 'https://data-snack.com',
         description: 'A character-driven data magazine (a cyber-diner with a cast of its own). A main project in its own right.',
-        short: 'A character-driven data magazine; its Plenum keeps minutes here.',
-        /* The cast of that magazine sits as the Plenum, and mirrors its minutes into this
-         * repo — so the house that a visitor is being sent to is also the house whose paperwork
-         * they can read here without leaving. The line says minutes, not work: the snacks are
-         * cooked and published over there (src/config/plenum-wording.ts, house boundary), and
-         * /works states the same boundary from the register's side. */
+        short: 'A character-driven data magazine; its Plenum keeps its minutes in its own repository.',
+        /* The cast of that magazine sits as the Plenum. Until 2026-10-17 its minutes were mirrored
+         * into this repo and rendered at /plenum; with the publication rule of that day (the site
+         * publishes the practices' finished works and presentations, src/lib/engines/publication.mjs)
+         * and the Plenum dormant, they are read in the collective's own repository, and the line
+         * leads there. It still says minutes, not work: the snacks are cooked and published over
+         * there (src/config/plenum-wording.ts, house boundary), and /works states the same boundary
+         * from the register's side. */
         resident: {
-          lead: 'Its resident collective, the Plenum, keeps the minutes of its sittings on this site →',
-          label: '/plenum',
-          href: '/plenum',
+          lead: 'Its resident collective, the Plenum, keeps the minutes of its sittings in its own repository →',
+          label: 'github.com/frankbueltge/data-snack-plenum',
+          href: 'https://github.com/frankbueltge/data-snack-plenum',
         },
       },
     ] as TravelItem[],

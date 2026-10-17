@@ -404,7 +404,9 @@ export const NODES: readonly ApparatusNode[] = [
       // the practices): the window is the practice's own surface and the house's only act is
       // the mirror. Stated here because the apparatus map must not describe a gate as total
       // while a verbatim path runs through it.
-      { label: 'the window', what: 'window/ in the practice’s repository is mirrored byte for byte to /atelier/window/ — the practice’s own surface, authored and updated by it, never edited by the house', ref: '.github/workflows/atelier-integrate.yml' },
+      // Reworded 2026-10-17 with the publication rule (src/lib/engines/publication.mjs): the window
+      // is still mirrored whole, but the site serves only its front page.
+      { label: 'the window', what: 'window/ in the practice’s repository is mirrored byte for byte into this repository; since 2026-10-17 the site serves only its front page at /atelier/window/ (the practice’s closing report), and the session folders are read in the practice’s repository — authored and updated by the practice, never edited by the house', ref: '.github/workflows/atelier-integrate.yml' },
     ],
   },
   {
@@ -417,7 +419,7 @@ export const NODES: readonly ApparatusNode[] = [
     ref: '.github/workflows/field-integrate.yml',
     commitsAs: 'Field-Integrate <field-integrate@frankbueltge.de>',
     members: [
-      { label: 'the window', what: 'window/ in the practice’s repository is mirrored byte for byte to /field/window/ — the practice’s own surface, authored and updated by it, never edited by the house', ref: '.github/workflows/field-integrate.yml' },
+      { label: 'the window', what: 'window/ in the practice’s repository, where it keeps one, is mirrored byte for byte into this repository; since 2026-10-17 the site does not serve it, nor the session artifacts — only the practice’s works, papers, presentations and closing report', ref: '.github/workflows/field-integrate.yml' },
     ],
   },
   {
@@ -430,7 +432,7 @@ export const NODES: readonly ApparatusNode[] = [
     ref: '.github/workflows/studio-integrate.yml',
     commitsAs: 'Studio-Integrate <studio-integrate@frankbueltge.de>',
     members: [
-      { label: 'the window', what: 'window/ in the practice’s repository is mirrored byte for byte to /studio/window/ — the practice’s own surface, authored and updated by it, never edited by the house', ref: '.github/workflows/studio-integrate.yml' },
+      { label: 'the window', what: 'window/ in the practice’s repository, where it keeps one, is mirrored byte for byte into this repository; since 2026-10-17 the site does not serve it — only the practice’s works, presentations and closing report', ref: '.github/workflows/studio-integrate.yml' },
     ],
   },
   {
@@ -516,7 +518,7 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'archive',
     kind: 'store',
     owner: 'shared',
-    what: 'Each practice’s own record, copied verbatim and never edited here: journals, works, protocols, open requests.',
+    what: 'Each practice’s own record, copied verbatim and never edited here: journals, works, protocols, open requests. The build reads all of it; since 2026-10-17 the site publishes only the finished works and the cycle presentations, and links the rest in each practice’s repository (src/lib/engines/publication.mjs).',
     members: [
       { label: 'src/content/atelier', what: 'journal, projects, works, foundation' },
       { label: 'src/content/field', what: 'journal, works, protocol, site API' },

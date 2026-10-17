@@ -15,6 +15,7 @@
 
 import { existsSync } from 'node:fs'
 import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { REPOS, REPOSITORY_DOORS, isPublished } from '@/lib/engines/publication.mjs'
 import { allWorks } from '@/lib/engines/register'
 import type { LatestWork } from '@/lib/engines/latest'
 import { stationById, type Station, type StationId } from './model'
@@ -141,14 +142,19 @@ export interface StationSheet {
 /** The registers each practice keeps, as Level-2 doors. Titles are the practices' own words for
  *  their rooms; the hrefs are the routes those registers already live at.
  *
+ *  Since the publication rule of 2026-10-17 (src/lib/engines/publication.mjs) the site no longer
+ *  renders a practice's journal, constitution or team channel: those doors open the practice's own
+ *  repository, say so in their titles, and point where the 301s of the retired pages point
+ *  (REPOSITORY_DOORS), so a door and an old bookmark cannot lead to two different places.
+ *
  *  Exported so a test can ask whether an archived surface is still reachable — see
  *  src/lib/ecology/mounted.test.ts. Nothing else reads it from outside. */
 export const DOORS: Record<StationId, Door[]> = {
   atelier: [
     { title: 'works', sub: 'the register — every work, newest first', href: '/atelier/works' },
-    { title: 'journal', sub: 'every session, unedited', href: '/atelier/journal' },
-    { title: 'constitution', sub: 'the protocol, as mirrored', href: '/atelier/protocol' },
-    { title: 'team channel', sub: 'REQUESTS — the one steering channel', href: '/atelier/requests' },
+    { title: 'journal ↗ in the repository', sub: 'every session, unedited', href: REPOSITORY_DOORS.atelier.journal },
+    { title: 'constitution ↗ in the repository', sub: 'the protocol, in the practice’s own repository', href: REPOSITORY_DOORS.atelier.protocol },
+    { title: 'team channel ↗ in the repository', sub: 'REQUESTS — the one steering channel', href: REPOSITORY_DOORS.atelier.requests },
     // The one door here that is not a register: it leads to this practice's OTHER line, which
     // keeps its own room because it keeps its own record and its own constitution. Until now the
     // sheet's only trace of it was a link to whichever work it made last night — a visitor could
@@ -164,18 +170,16 @@ export const DOORS: Record<StationId, Door[]> = {
     // is the route's name; the status rows above render whatever title the practice currently
     // declares in its window contract.
     { title: 'n-1 — the third line', sub: 'founded 2026-08-15 on this practice’s own paper, the practice named itself Remainder on 2026-08-21 — its own record, its own surface', href: '/n-1' },
-    // The rhizome and the closure index, as the first nightly phase left them. Archived and, until
-    // 2026-08-13, unlinked: the pyramid rewrite removed the way in, and the only references left
-    // anywhere in the build were a 301 from its old route and the sitemap. A retired instrument may
-    // be retired; it may not be unfindable, or the record it holds is a claim nobody can check.
-    // The sheet says frozen, and the date says which phase — it is not offered as current.
-    { title: 'the cockpit (archived)', sub: 'the first nightly phase’s instrument — rhizome and closure, frozen 2026-07-18', href: '/atelier/archive/cockpit' },
+    // The archived cockpit (the first nightly phase's rhizome and closure index) stood here from
+    // 2026-08-13 until 2026-10-17. It was a retired interface rendered against the live archive, not
+    // a work, and its page went with the publication rule; its address 301s to this page. The
+    // record it read stays in the practice's repository.
   ],
   field: [
     { title: 'instruments', sub: 'the register — each with its record', href: '/field/instruments' },
-    { title: 'journal', sub: 'every session, unedited', href: '/field/journal' },
-    { title: 'constitution', sub: 'the protocol, as mirrored', href: '/field/protocol' },
-    { title: 'team channel', sub: 'REQUESTS — the one steering channel', href: '/field/requests' },
+    { title: 'journal ↗ in the repository', sub: 'every session, unedited', href: REPOSITORY_DOORS.field.journal },
+    { title: 'constitution ↗ in the repository', sub: 'the protocol, in the practice’s own repository', href: REPOSITORY_DOORS.field.protocol },
+    { title: 'team channel ↗ in the repository', sub: 'REQUESTS — the one steering channel', href: REPOSITORY_DOORS.field.requests },
     // The survey stood on this practice's old entrance and was orphaned when the station sheet
     // replaced it — nothing else on the site links it. It belongs here: a primary-source survey
     // of automated research is this practice's subject, from the outside.
@@ -183,13 +187,14 @@ export const DOORS: Record<StationId, Door[]> = {
   ],
   studio: [
     { title: 'premieres', sub: 'the register — what reached the stage', href: '/studio/works' },
-    { title: 'journal', sub: 'every session, unedited', href: '/studio/journal' },
-    { title: 'constitution', sub: 'the protocol, as mirrored', href: '/studio/protocol' },
-    { title: 'team channel', sub: 'REQUESTS — the one steering channel', href: '/studio/requests' },
+    { title: 'journal ↗ in the repository', sub: 'every session, unedited', href: REPOSITORY_DOORS.studio.journal },
+    { title: 'constitution ↗ in the repository', sub: 'the protocol, in the practice’s own repository', href: REPOSITORY_DOORS.studio.protocol },
+    { title: 'team channel ↗ in the repository', sub: 'REQUESTS — the one steering channel', href: REPOSITORY_DOORS.studio.requests },
   ],
   middle: [
     { title: 'crossings', sub: 'every recorded encounter, in full', href: '/encounters/register' },
-    { title: 'the plenum', sub: 'the guest voice, with a lane and no door', href: '/plenum' },
+    // The Plenum is dormant, and since 2026-10-17 its minutes are read in its own repository.
+    { title: 'the plenum ↗ in the repository', sub: 'the guest voice, dormant — its minutes stay in its own repository', href: REPOS.plenum },
     { title: 'reception', sub: 'what came back from outside the house', href: '/reception' },
     { title: 'seeds', sub: 'what visitors offered the practices', href: '/seed' },
   ],
@@ -205,13 +210,19 @@ export const DOORS: Record<StationId, Door[]> = {
  * the site promising a surface the practice has not built. The check is against the committed
  * mirror at build time, so the door appears with the integrate commit that brings the window
  * and leaves with the one that removes it. The Middle is not a practice and gets none.
+ *
+ * Since the publication rule of 2026-10-17 the site serves only what the rule publishes: of the
+ * windows, the Atelier's front page (its closing report of 2026-08-30); the session folders under it
+ * stay in the practice's repository. So the door also asks the rule — a window the build prunes
+ * would be a door onto a 404.
  */
 export function windowDoor(id: StationId, exists: (path: string) => boolean = existsSync): Door | null {
   if (id === 'middle') return null
+  if (!isPublished(`${id}/window/index.html`)) return null
   if (!exists(`public/${id}/window/index.html`)) return null
   return {
     title: 'the practice’s own window',
-    sub: 'authored and updated by the practice itself, mirrored verbatim — no human in the path',
+    sub: 'its front page, authored by the practice and mirrored verbatim — the session folders stay in its repository',
     href: `/${id}/window/`,
   }
 }
