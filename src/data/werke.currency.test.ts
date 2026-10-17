@@ -17,6 +17,7 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync, readdirSync } from 'node:fs'
 import { WERKE } from './werke'
 import { AGENTS } from '@/lib/society/agents'
+import { sawtooth } from '@/lib/sawtooth/series'
 
 const read = (path: string) => JSON.parse(readFileSync(path, 'utf8'))
 const newest = (dir: string) => {
@@ -166,6 +167,53 @@ describe('balance — the country floor', () => {
         prose('balance'),
         `method.min_pool is ${floor}, so only ${day.countries.length} countries entered the newest day; the register may not say "for each country"`,
       ).not.toMatch(/for each country/i)
+    }
+  })
+})
+
+describe('sawtooth — the earth-rotation snapshot', () => {
+  // One committed series, src/data/sawtooth/rotation.json, refreshed by scripts/sawtooth/fetch.ts.
+  // The figures a refresh moves — the size of the counterfactual, the length of the record, the
+  // count of short days — are rendered on /sawtooth and never typed into the entry; what the
+  // entry does type is held to the snapshot here.
+  const s = sawtooth()
+
+  it('types no figure a refresh moves: no offset in seconds, no length of record in years', () => {
+    expect(
+      prose('sawtooth'),
+      `the uncorrected clock stands ${s.drift.toFixed(2)} s away on ${s.last}; the page renders that, the register states a floor`,
+    ).not.toMatch(/\b(?:\d+(?:\.\d+)?|twenty|thirty|forty|fifty)(?:-\w+)?\s+seconds?\s+away/i)
+    expect(
+      prose('sawtooth'),
+      `the record runs from ${s.first} to ${s.last}; the register may name its start, never its length`,
+    ).not.toMatch(/\b(?:\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|[a-z]+teen|[a-z]+ty(?:-[a-z]+)?)\s+years\b/i)
+  })
+
+  it('keeps every figure it does type true to the snapshot', () => {
+    const text = prose('sawtooth')
+    if (/twenty-seven/i.test(text)) {
+      expect(s.leaps.length, 'the register counts twenty-seven leap seconds').toBe(27)
+    }
+    if (/half a minute/i.test(text)) {
+      expect(s.drift, 'the register says the uncorrected clock falls more than half a minute away').toBeGreaterThan(30)
+    }
+    if (/since 1962/i.test(text)) expect(s.first.slice(0, 4)).toBe('1962')
+  })
+
+  it('says this decade runs short, and holds most short days, only while the snapshot does', () => {
+    const text = prose('sawtooth')
+    const last = s.decades.at(-1)!
+    if (/mean day runs SHORT/i.test(text)) {
+      expect(last.ms, `the ${last.decade}s mean day runs ${last.ms.toFixed(3)} ms long`).toBeLessThan(0)
+      for (const d of s.decades.slice(0, -1)) {
+        expect(d.ms, `the ${d.decade}s already ran short, so the register may not call this decade the first`).toBeGreaterThan(0)
+      }
+    }
+    if (/most of the short days/i.test(text)) {
+      expect(
+        s.shortDaysSince2020 * 2,
+        `${s.shortDaysSince2020} of the ${s.shortDays} short days on file fall since 2020`,
+      ).toBeGreaterThan(s.shortDays)
     }
   })
 })

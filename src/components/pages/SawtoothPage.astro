@@ -8,7 +8,7 @@
 // header claimed otherwise would be the first thing the audit contradicted.
 //
 // Every figure and every number below is derived at build time by src/lib/sawtooth/* from one
-// committed file: the IERS EOP 14 C04 series, one row per day since 1962, snapshotted into
+// committed file: the IERS EOP 20 C04 series, one row per day since 1962, snapshotted into
 // src/data/sawtooth/rotation.json by scripts/sawtooth/fetch.ts. Nothing is fetched at view time
 // and no digit is typed into a sentence — where a sentence needs a number it takes it as a value.
 //
@@ -17,7 +17,7 @@
 // leap second, and Agnew's 2024 measurement that melting ice has postponed the first negative one.
 import type { Locale } from '@/lib/site'
 import { sawtooth } from '@/lib/sawtooth/series'
-import { decades, teeth, together, TOLERANCE, WIDE } from '@/lib/sawtooth/figure'
+import { decades, teeth, together, WIDE } from '@/lib/sawtooth/figure'
 import SheetHead from '@/components/experiments/SheetHead.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
 import '@/styles/experiment-sheet.css'
@@ -34,6 +34,7 @@ const bars = decades(s, barsBox)
 
 const ms = (n: number) => `${n >= 0 ? '+' : '−'}${Math.abs(n).toFixed(3)}`
 const secs = (n: number) => n.toFixed(2)
+const signedSecs = (n: number) => `${n >= 0 ? '+' : '−'}${Math.abs(n).toFixed(2)}`
 const firstDecade = s.decades[0]
 const lastDecade = s.decades.at(-1)!
 const span = `${s.first.slice(0, 4)}–${s.last.slice(0, 4)}`
@@ -102,13 +103,15 @@ const span = `${s.first.slice(0, 4)}–${s.last.slice(0, 4)}`
       stand more than nine tenths of a second apart, and for {span} they never have. Read it to the
       right-hand end. The last tooth was cut on
       <b class="text-fg">{s.lastLeap}</b>, <b class="tabular-nums text-fg">{s.yearsSinceLeap}</b> years
-      ago, and since then the line drifts the <i>other</i> way — up, away from the edge it used to
-      fall toward. There has been nothing to correct.
+      ago. The slide that followed it stopped short of the edge, at
+      <b class="tabular-nums text-fg">{signedSecs(s.lowSinceLeap.s)} s</b> on
+      <b class="text-fg">{s.lowSinceLeap.date}</b>, and the line turned back <i>up</i>: the Earth
+      had sped up. There has been nothing to correct.
     </p>
 
     <figure class="saw-plate">
       <svg viewBox={`0 0 ${WIDE.width} ${WIDE.height}`} role="img" class="saw-svg"
-        aria-label={`The published difference between Earth time and atomic time across ${span}: ${s.leaps.length} slides of about a second, each ended by a one-second snap back, and a final stretch after ${s.lastLeap} that drifts the opposite way.`}>
+        aria-label={`The published difference between Earth time and atomic time across ${span}: ${s.leaps.length} slides of about a second, each ended by a one-second snap back, and after ${s.lastLeap} a last slide that stops short of the edge on ${s.lowSinceLeap.date} and turns back up.`}>
         <g class="saw-grid">
           {two.ticks.map((t) => <line x1={t.x} y1={WIDE.padTop} x2={t.x} y2={WIDE.height - WIDE.padBottom} />)}
           <line class="saw-zero" x1={WIDE.padX} y1={two.zeroY} x2={WIDE.width - WIDE.padX} y2={two.zeroY} />
@@ -177,7 +180,8 @@ const span = `${s.first.slice(0, 4)}–${s.last.slice(0, 4)}`
         The clock is being held back by the ice giving way. And in
         <b class="text-fg">2022</b> the General Conference on Weights and Measures resolved to stop
         inserting leap seconds altogether by 2035, and to let the two definitions simply drift
-        apart — the gap to be capped at some larger figure, to be settled this year
+        apart — the gap to be capped at some larger figure, proposed for agreement at the
+        Conference's meeting of 2026
         (<a class="sheet-link" rel="noopener" href="https://www.bipm.org/en/cgpm-2022/resolution-4">CGPM Resolution 4, 2022</a>).
       </p>
       <p class="text-fg">
@@ -206,7 +210,7 @@ const span = `${s.first.slice(0, 4)}–${s.last.slice(0, 4)}`
   </section>
 
   <SheetFoot links={[
-    { href: s.sources.eop, label: 'IERS EOP 14 C04, the series itself', external: true },
+    { href: s.sources.eop, label: 'IERS EOP 20 C04, the series itself', external: true },
     { href: 'https://www.iers.org/IERS/EN/Publications/Bulletins/bulletins.html', label: 'IERS bulletins', external: true },
     { href: '/experiments', label: 'the lab' },
   ]}>

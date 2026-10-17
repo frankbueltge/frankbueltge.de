@@ -8,13 +8,14 @@
 // the civil clock back into step with the sky.
 //
 // Every number this module produces comes from src/data/sawtooth/rotation.json — the IERS EOP
-// 14 C04 series, one row per day since 1962, committed. Nothing is typed, nothing is fetched,
+// 20 C04 series, one row per day since 1962, committed. Nothing is typed, nothing is fetched,
 // and the arithmetic below is the whole method: sums, means and extremes over one array.
 //
 // The shape the file holds, and what makes the picture: UT1-UTC is a SAWTOOTH. It slides down as
 // the Earth falls behind, then a leap second snaps it back up by exactly one second. Twenty-seven
 // teeth. And then, after 2017, the teeth stop — not because the mechanism was switched off but
-// because the Earth sped up and the slide reversed. The blade started cutting the other way.
+// because the Earth sped up: the slide that followed the last tooth stopped short of the edge
+// and turned back. The blade started cutting the other way.
 
 import data from '@/data/sawtooth/rotation.json'
 
@@ -70,6 +71,13 @@ export interface Sawtooth {
   lastLeap: string
   /** whole years between the last leap second and the end of the series */
   yearsSinceLeap: number
+  /** the lowest UT1-UTC published after the last leap second took effect, in seconds — where
+   *  the slide that followed the last tooth stopped, if it has stopped */
+  lowSinceLeap: { date: string; s: number }
+  /** how far the line has climbed back from that low at its highest point since, in seconds;
+   *  zero while the slide is still going. The page says the line turned back up, and this is
+   *  the figure that sentence answers to (series.test.ts) */
+  reboundSinceLow: number
   longest: Extreme
   shortest: Extreme
   /** days that ran shorter than 86,400 seconds */
@@ -136,6 +144,17 @@ export function sawtooth(source: Raw = raw): Sawtooth {
       (365.2425 * 86_400_000),
   )
 
+  // The slide after the last tooth: its lowest point, and how far the line has climbed since.
+  // The series has no gaps, so the day the last leap took effect sits at its offset from `first`.
+  const leapIndex = Math.min(
+    observed.length - 1,
+    Math.max(0, Math.round((Date.parse(`${lastLeap}T00:00:00Z`) - Date.parse(`${source.first}T00:00:00Z`)) / 86_400_000)),
+  )
+  let low = leapIndex
+  for (let i = leapIndex; i < observed.length; i++) if (observed[i] < observed[low]) low = i
+  let high = observed[low]
+  for (let i = low + 1; i < observed.length; i++) if (observed[i] > high) high = observed[i]
+
   return {
     first: source.first,
     last: source.last,
@@ -145,6 +164,8 @@ export function sawtooth(source: Raw = raw): Sawtooth {
     leaps,
     lastLeap,
     yearsSinceLeap,
+    lowSinceLeap: { date: dayAt(low, source.first), s: observed[low] },
+    reboundSinceLow: high - observed[low],
     longest,
     shortest,
     shortDays,

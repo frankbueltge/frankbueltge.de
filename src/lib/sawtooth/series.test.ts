@@ -49,16 +49,59 @@ describe('the reversal, which is the subject', () => {
     expect(s.shortDaysSince2020 / s.shortDays).toBeGreaterThan(0.5)
   })
 
-  it('ends on a decade whose mean day runs SHORT — the sign change', () => {
+  it('ends on a decade whose mean day runs SHORT — the sign change, for the first time', () => {
+    // The page and the register both say it in words: the last decade is the first of the record
+    // whose average day runs short. A refresh can take that away (a run of long days pulls the
+    // decade's mean back over the line), and then those sentences have to be rewritten, not kept.
     const last = s.decades.at(-1)!
-    const first = s.decades[0]
-    expect(first.ms).toBeGreaterThan(0)
-    expect(last.ms).toBeLessThan(0)
+    for (const d of s.decades.slice(0, -1)) {
+      expect(d.ms, `the ${d.decade}s already ran short, so the last decade is not the first`).toBeGreaterThan(0)
+    }
+    expect(last.ms, `the ${last.decade}s no longer run short on average — rewrite the prose`).toBeLessThan(0)
   })
 
   it('has inserted nothing for years, because there is nothing left to insert', () => {
     expect(s.yearsSinceLeap).toBeGreaterThanOrEqual(5)
     expect(s.lastLeap).toBe(s.leaps.at(-1)!.date)
+  })
+
+  it('stops the slide after the last tooth short of the edge, and turns it back up', () => {
+    // Plate two says this in words. If a refresh lets the line fall past that low again, the low
+    // moves to the right-hand end, the rebound goes to zero, and this fails: the sentence has to
+    // be rewritten rather than left standing over a record that no longer says it.
+    expect(s.lowSinceLeap.date > s.lastLeap).toBe(true)
+    expect(s.lowSinceLeap.s).toBeGreaterThan(-0.9)
+    // a turn, not the seasonal wobble, which moves UT1-UTC by a few hundredths of a second
+    expect(s.reboundSinceLow).toBeGreaterThan(0.1)
+  })
+})
+
+describe('the slide after the last tooth, on a record small enough to read', () => {
+  // ut1_utc in tenths of a millisecond: 0.5 s after the snap, down to −0.3 s, back up to +0.1 s
+  const tiny = {
+    first: '2017-01-01',
+    last: '2017-01-06',
+    days: 6,
+    fetched: '2017-01-07',
+    lod: [0, 0, 0, 0, 0, 0],
+    ut1_utc: [5000, 2000, -1000, -3000, -2000, 1000],
+    leaps: [
+      { date: '1972-01-01', tai_utc: 10 },
+      { date: '2017-01-01', tai_utc: 11 },
+    ],
+    sources: { eop: 'https://example.org/eop', leap: 'https://example.org/leap' },
+  }
+
+  it('finds the lowest point after the leap and the climb back from it', () => {
+    const t = sawtooth(tiny)
+    expect(t.lowSinceLeap).toEqual({ date: '2017-01-04', s: -0.3 })
+    expect(t.reboundSinceLow).toBeCloseTo(0.4, 10)
+  })
+
+  it('reports no climb at all while the slide is still going', () => {
+    const t = sawtooth({ ...tiny, ut1_utc: [5000, 2000, -1000, -3000, -4000, -5000] })
+    expect(t.lowSinceLeap.date).toBe(t.last)
+    expect(t.reboundSinceLow).toBe(0)
   })
 })
 

@@ -7,14 +7,14 @@
 //
 //   THE FIRST holds both lines on ONE scale. The counterfactual — the running total of every
 //   day's excess length, which is where the civil clock would stand if nobody had intervened —
-//   slides away to some thirty-five seconds. The line that was actually run stays pinned at the
+//   slides away by more than half a minute. The line that was actually run stays pinned at the
 //   top, flat. That flatness is not the Earth behaving; it is twenty-seven interventions. Putting
 //   them on one axis is the whole point: a reader sees the size of the correction as the size of
 //   the gap, without a number being read out.
 //
 //   THE SECOND holds the observed line ALONE, on its own scale, where the teeth become visible:
 //   a slide down, a snap back of exactly one second, twenty-seven times — and then, after the
-//   last one, a line that drifts the other way and never needs cutting again.
+//   last one, a slide that stops short of the edge and turns back, and has needed no cut since.
 
 import type { Sawtooth } from './series'
 
@@ -35,8 +35,8 @@ export interface Tick {
 
 /** The rule UTC is held to: the two clocks may never stand more than this far apart. The teeth
  *  plate is scaled to THIS rather than to the data, so a reader sees the margin the rule leaves
- *  instead of a line that fills its box — the claim "for sixty-four years it never touched the
- *  edge" is then checkable by eye rather than only in the prose. */
+ *  instead of a line that fills its box — the claim that in the whole record it never touched
+ *  the edge is then checkable by eye rather than only in the prose. */
 export const TOLERANCE = 0.9
 
 export interface AxisLabel {
