@@ -1,4 +1,8 @@
-@import 'tailwindcss';
+/* Tailwind scans src/ only. A bare import scans the whole project, and the mirrored practice files
+   in public/ (several hundred MB) use none of this site's classes: they took most of every build
+   (116 s → 19 s when measured, 2026-10-17) and put dead utilities into the stylesheet, picked up
+   from tokens like "p-90" in their data. */
+@import 'tailwindcss' source('..');
 @plugin "@tailwindcss/typography";
 
 /* Dark mode for the shadcn primitives switches on the attribute this site already stamps —

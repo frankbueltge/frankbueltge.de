@@ -3,10 +3,25 @@
 // session) would break the mono skin without anyone noticing: a second palette pasted in as
 // literal values, and a `.dark {}` block that switches on a class this site never sets.
 import { readFileSync } from 'node:fs'
+import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
-const css = readFileSync(fileURLToPath(new URL('../../styles/global.css', import.meta.url)), 'utf8')
+const cssFile = fileURLToPath(new URL('../../styles/global.css', import.meta.url))
+const css = readFileSync(cssFile, 'utf8')
+
+// The scan base. A bare `@import 'tailwindcss'` reads the whole project, public/ included, and the
+// mirrored practice files there made the build spend about 100 of its 116 seconds on them
+// (2026-10-17: 116 s → 19 s with the HTML byte-identical). Nothing fails when the restriction goes
+// missing, the build is only slow again, so a test holds it.
+describe('the Tailwind source', () => {
+  it('is limited to src/, so the mirrored practice files in public/ are never scanned', () => {
+    const match = /^@import\s+['"]tailwindcss['"]\s+source\(['"]([^'"]+)['"]\)\s*;/m.exec(css)
+    expect(match, "global.css must import 'tailwindcss' with a source(...) base").not.toBeNull()
+    const base = path.resolve(path.dirname(cssFile), match?.[1] ?? '')
+    expect(base).toBe(fileURLToPath(new URL('../../', import.meta.url)).replace(/\/$/, ''))
+  })
+})
 
 function block(css: string, opener: string): string {
   const start = css.indexOf(opener)
