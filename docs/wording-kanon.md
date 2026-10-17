@@ -475,6 +475,18 @@ Quelle: `docs/design_handoff_homepage_ecology/README.md` (Franks Handoff, 2026-1
   `paper-voices` (`src/lib/dataviz/palette.ts`) — das Violett des Ateliers ist gegenüber dem
   Handoff um ΔE 4,6 verschoben, weil der Handoff-Wert die Normalsicht-Schwelle riss.
 
+### Addendum 2026-10-17: the selected works, and the dossier for curators & press
+
+- **The entrance carries a shelf of selected works** between the since bar and the lead
+  ("Selected works", five to eight finished pieces across the house). The picks and their one-line
+  reasons are chosen by hand in `src/config/selected-works.ts`; title, maker, date, address and
+  still are read from each piece's record, and no digit is typed (`selected-works.test.ts`). A card
+  shows the maker's own still or a plate that says there is none — never a picture made for it.
+- **`/dossier` is public** (Frank's decision of 2026-10-17, wording private): indexable, and linked
+  from both footers as "For curators & press". It states the house as of its writing day and reads
+  everything current from the records; its wording lives in `src/config/dossier-wording.ts`, with
+  the same no-digit guard (`dossier-wording.test.ts`).
+
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 
 | Phrase | Status |
@@ -502,6 +514,9 @@ unter selbst verfassten Essays (AuthorshipNote/AuthorByline). **Nirgends sonst**
 „practice by Frank Bültge"-, „Machinery composed and steered by Frank Bültge"-,
 „Frank Bültge decides"-Prosa auf Unterseiten; dort sprechen Rollen: „the responsible
 human", „the architect & conductor", „the human decides".
+
+*Addendum 2026-10-17:* the press bio on `/dossier` is a place like `/about`: the name stands there
+once in prose, in the third person, and the rest of the page speaks in roles.
 
 ## Prinzipien
 

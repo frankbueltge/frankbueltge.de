@@ -1,125 +1,306 @@
 ---
-// /dossier — the curator-facing entry, commissioned by the festival line
-// (docs/superpowers/specs/2026-08-01-festival-line.md §5.6). An external reader currently
-// needs the hub, the apparatus and two practice doors to understand the grammar; this page
-// is the ten-minute version. Approved hub wordings are imported from naming.ts (derive,
-// don't retype); the page's own new sentences live in dossier-wording.ts under
-// approval: 'draft' — while draft, the page is noindex, shows the draft chip, and is NOT
-// linked from the navigation (the nav entry comes with the wording sign-off).
+// /dossier — for curators and press (rewritten and made public on 2026-10-17).
+//
+// The ten-minute version of the house the festival line asked for (docs/superpowers/specs/
+// 2026-08-01-festival-line.md §5.6): what runs, who sets which question, what Machine Attention
+// retired and admitted, what the site publishes, the selected works with their reasons, the
+// neighbours, who answers for it, and how to reach him. Public and indexable since 2026-10-17, and
+// linked from both footers as "for curators & press" (Frank's decision of 2026-10-17, wording
+// private); the draft of 2026-08-01 is in this file's history.
+//
+// It stands on the paper ground the entrance stands on, because a curator who arrives from the
+// front page should not change houses on the way. Every current fact is read here at build time —
+// the cycle, the convening, every question and who set it, Machine Attention's projects, the
+// practices' names and repositories — and the page is rebuilt with every deploy. What the record
+// cannot say, src/config/dossier-wording.ts says, dated.
 import Page from '@/layouts/Page.astro'
-import { NAMING, DRAFT_LABEL } from '@/config/naming'
+import SelectedWorks from '@/components/ops/SelectedWorks.astro'
 import { DOSSIER } from '@/config/dossier-wording'
+import { inWords } from '@/config/edition-wording'
+import { NAMING } from '@/config/naming'
+import exportFile from '@/data/attention/export.json'
+import { buildProgramme, CONVENING_DAYS, conveningView, loadRelayExtras, VETO_DAYS } from '@/lib/ecology/convening'
+import { loadCycle, loadPresentations } from '@/lib/ecology/v3'
+import { PUBLICATION_RULE_SINCE, REPOS } from '@/lib/engines/publication.mjs'
+import { readShelf, retirementDay } from '@/lib/ops/selected-works'
+import { dayMonthYear } from '@/lib/ops/since'
+import { SITE } from '@/lib/site'
+import '@fontsource-variable/literata/opsz-italic.css'
+import '@/styles/paper.css'
+import '@/styles/edition.css'
+import '@/styles/dossier.css'
 
-const draft = DOSSIER.approval === 'draft'
-const s = DOSSIER.sections
+const D = DOSSIER
+const pad = (n: number) => String(n).padStart(3, '0')
+const times = (n: number) => (n === 1 ? 'once' : n === 2 ? 'twice' : `${inWords(n)} times`)
+
+// ── the research ecology, as it stands ────────────────────────────────────────────────────────
+const cycle = loadCycle()
+const extras = loadRelayExtras()
+const programme = buildProgramme(extras.programme, cycle, loadPresentations()).rows
+const convening = conveningView(cycle, extras)
+const continuing = cycle.continuing?.question ?? null
+
+const doors = NAMING.doors.items
+const practices = doors.map((d) => ({ name: d.name, persona: 'persona' in d ? (d.persona as string) : null, href: d.href, line: D.ecology.practices[d.id] }))
+const personas = doors.flatMap((d) => ('persona' in d && d.persona ? [`${d.persona} (${d.name.replace(/^The\b/, 'the')})`] : [])).join(', ')
+
+// "3-5" in cycle.json, in words
+const [fewest, most] = cycle.sessionsPerPractice.split(/[-–]/).map((n) => Number(n.trim()))
+const sessions = most ? `${inWords(fewest)} to ${inWords(most)}` : inWords(fewest)
+const steps = D.ecology.steps({ sessions, vetoDays: inWords(VETO_DAYS), conveningDays: inWords(CONVENING_DAYS) })
+const now = D.ecology.now({
+  cycle: pad(cycle.cycle),
+  next: pad(cycle.cycle + 1),
+  question: cycle.source === 'defaults' ? null : cycle.question,
+  phase: cycle.phase,
+  opened: dayMonthYear(cycle.opened),
+  conveningOpened: convening ? dayMonthYear(convening.opened) : null,
+  fallbackOn: convening ? dayMonthYear(convening.fallbackOn) : null,
+  opensOn: convening?.opensOn ? dayMonthYear(convening.opensOn) : null,
+  proposedQuestion: convening?.stands && convening.result ? convening.result.question : null,
+  continuing,
+})
+
+// ── who set each question: the relay's programme, worded ──────────────────────────────────────
+const isReadThrough = (q: string | null) => !!q && !!continuing && q !== continuing && q.startsWith(continuing)
+const setBy = (source: string | null, question: string | null) =>
+  source === 'continuing' && isReadThrough(question)
+    ? D.questions.setBy.readThrough
+    : source && source in D.questions.setBy
+      ? D.questions.setBy[source as keyof typeof D.questions.setBy]
+      : '—'
+const rows = programme.map((r) => ({
+  cycle: pad(r.cycle),
+  opened: r.opened ? dayMonthYear(r.opened) : '—',
+  question: r.question ?? D.questions.defaultTheme,
+  setBy: setBy(r.source, r.question),
+  convening: r.source === 'convening',
+}))
+// the cycle an open convening is choosing
+if (convening && !programme.some((r) => r.cycle === convening.next)) {
+  rows.push({
+    cycle: pad(convening.next),
+    opened: convening.opensOn ? dayMonthYear(convening.opensOn) : '—',
+    question: convening.stands && convening.result ? convening.result.question : D.questions.proposing,
+    setBy: D.questions.setBy.convening,
+    convening: true,
+  })
+}
+const seedRow = programme.find((r) => r.source === 'seed' && r.question === continuing)
+const honest = D.questions.lead({
+  total: inWords(programme.length),
+  chosen: inWords(programme.filter((r) => r.source === 'convening').length),
+  continuing: continuing ?? '—',
+  seedOn: seedRow?.opened ? dayMonthYear(seedRow.opened) : null,
+  continuingSince: cycle.continuing ? dayMonthYear(cycle.continuing.since) : '—',
+  readThrough: (() => {
+    const n = programme.filter((r) => isReadThrough(r.question)).length
+    return n > 0 ? times(n) : null
+  })(),
+})
+
+// ── Machine Attention, from its own export ────────────────────────────────────────────────────
+interface Project {
+  id: string
+  title: string
+  since: string
+  site_route: string | null
+  status: string
+}
+const projects = (exportFile.projects as Project[]).map((p) => {
+  // the same day the shelf's card states: the retirement moment, or the archive's own front page
+  const retired = p.status === 'retired' ? retirementDay(p.id, p.site_route ?? '/no-stage') : null
+  return {
+    title: p.title,
+    status: retired ? D.attention.retiredOn(dayMonthYear(retired)) : (D.attention.status[p.status] ?? p.status),
+    since: D.attention.since(dayMonthYear(p.since)),
+    href: p.site_route,
+    linkLabel: p.status === 'retired' ? D.attention.archiveLink : D.attention.stageLink,
+  }
+})
+const known = new Set(projects.map((p) => p.title))
+const admitted = D.attention.admitted.filter((a) => !known.has(a.name))
+
+// ── where the record lives ────────────────────────────────────────────────────────────────────
+const practiceRepos = [
+  { label: `${doors.find((d) => d.id === 'meridian')?.name ?? 'The Field'} — field-research`, href: REPOS.field },
+  { label: `${doors.find((d) => d.id === 'ulysses')?.name ?? 'The Atelier'} — ulysses`, href: REPOS.atelier },
+  { label: `${doors.find((d) => d.id === 'ensemble')?.name ?? 'The Studio'} — studio`, href: REPOS.studio },
+  { label: 'n-1', href: REPOS['n-1'] },
+  { label: 'Ulysses, the nightly line — error-as-method', href: REPOS['error-as-method'] },
+]
+
+// ── the selected works, with their reasons ────────────────────────────────────────────────────
+const shelf = readShelf()
 ---
-<Page
-  title={DOSSIER.metaTitle}
-  description={DOSSIER.metaDescription}
-  noindex={draft}
->
-  <main id="main" class="flex-1">
-  <section class="mx-auto w-full max-w-3xl px-6 pb-4 pt-14">
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
-      {DOSSIER.kicker}
-      {draft && <span class="ds-chip ml-3">{DRAFT_LABEL}</span>}
-    </p>
-    <h1 class="mt-4 text-2xl text-fg">{NAMING.title}</h1>
-    <p class="mt-4 max-w-2xl text-sm text-fg-muted">{NAMING.sub}</p>
-    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{DOSSIER.lede}</p>
-    <p class="mt-5 max-w-2xl border-l-2 border-line pl-4 text-sm text-fg">
-      {DOSSIER.thesis}
-    </p>
-    <p class="mt-3 font-mono text-xs text-fg-faint">{NAMING.conductorLine}</p>
-  </section>
 
-  <section class="mx-auto w-full max-w-3xl px-6 py-8" aria-labelledby="ds-practices">
-    <h2 id="ds-practices" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-      {s.practices.heading}
-    </h2>
-    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{s.practices.lead}</p>
-    <ul class="mt-5 space-y-4">
-      {NAMING.doors.items.map((d) => (
-        <li class="border-t border-line/60 pt-4">
-          <p class="text-sm text-fg">
-            <a href={d.href} class="underline hover:text-fg">{d.name}</a>
-          </p>
-          <p class="mt-1 max-w-2xl text-sm text-fg-muted">{d.description}</p>
-        </li>
-      ))}
-    </ul>
-  </section>
+<Page title={D.metaTitle} description={D.metaDescription} surface="paper">
+  <main id="main" class="paper ds">
+    <div class="paper-sheet ds-wrap">
+      <header class="ds-mast">
+        <p class="ds-kicker">{D.kicker}</p>
+        <h1>{D.title}</h1>
+        <p class="ds-lede">{D.lede}</p>
+        <p class="ds-dateline">{D.dateline(dayMonthYear(D.asOf))}</p>
+        <nav class="ds-toc" aria-label="On this page">
+          {D.toc.map((t) => <a href={t.href}>{t.label}</a>)}
+        </nav>
+      </header>
 
-  <section class="mx-auto w-full max-w-3xl px-6 py-8" aria-labelledby="ds-proof">
-    <h2 id="ds-proof" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-      {s.proof.heading}
-    </h2>
-    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{s.proof.lead}</p>
-    <ul class="mt-5 grid gap-4 sm:grid-cols-2">
-      {s.proof.items.map((it) => (
-        <li class="border border-line/60 p-4">
-          <p class="font-mono text-xs uppercase tracking-[0.14em] text-fg-muted">{it.label}</p>
-          <p class="mt-2 text-sm text-fg-muted">{it.text}</p>
-        </li>
-      ))}
-    </ul>
-    <p class="mt-4 font-mono text-xs text-fg-faint">
-      the receipts:{' '}
-      {DOSSIER.repos.map((r, i) => (
-        <>
-          {i > 0 && ' · '}
-          <a href={r.href} target="_blank" rel="noreferrer" class="underline hover:text-fg">{r.label} ↗</a>
-        </>
-      ))}
-    </p>
-    <p class="mt-2 font-mono text-xs text-fg-faint">{NAMING.footer.licenseLine}</p>
-  </section>
+      {/* ── the statement: at most 250 words (dossier-wording.test.ts) ─────────────────────── */}
+      <section id="statement" class="ds-section ds-statement" aria-labelledby="ds-statement-h">
+        <h2 id="ds-statement-h">{D.statement.heading}</h2>
+        <div class="ds-statement-body">
+          {D.statement.paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+      </section>
 
-  <section class="mx-auto w-full max-w-3xl px-6 py-8" aria-labelledby="ds-records">
-    <h2 id="ds-records" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-      {s.records.heading}
-    </h2>
-    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{s.records.lead}</p>
-    <ul class="mt-5 space-y-4">
-      {s.records.items.map((w) => (
-        <li class="border-t border-line/60 pt-4">
-          <p class="text-sm text-fg">
-            <a href={w.href} class="underline hover:text-fg">{w.title}</a>
-          </p>
-          <p class="mt-1 max-w-2xl text-sm text-fg-muted">{w.note}</p>
-        </li>
-      ))}
-    </ul>
-  </section>
+      {/* ── the research ecology ────────────────────────────────────────────────────────────── */}
+      <section id="ecology" class="ds-section" aria-labelledby="ds-ecology-h">
+        <h2 id="ds-ecology-h">{D.ecology.heading}</h2>
+        <p class="ds-prose">{D.ecology.lead(dayMonthYear(D.ecology.since))}</p>
+        <dl class="ds-practices">
+          {practices.map((p) => (
+            <div>
+              <dt>
+                <a href={p.href}>{p.name}</a>
+                {p.persona && <span class="ds-persona"> · {p.persona}</span>}
+              </dt>
+              <dd>{p.line}</dd>
+            </div>
+          ))}
+        </dl>
+        <h3>{D.ecology.cycleHeading}</h3>
+        <ol class="ds-steps">
+          {steps.map((s) => <li>{s}</li>)}
+        </ol>
+        <p class="ds-now"><span class="ds-now-label">{D.ecology.nowLabel}</span> {now}</p>
+        <p class="ds-more"><a class="ds-link" href={D.ecology.link.href}>{D.ecology.link.label} →</a></p>
+      </section>
 
-  <section class="mx-auto w-full max-w-3xl px-6 py-8" aria-labelledby="ds-authorship">
-    <h2 id="ds-authorship" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-      {s.authorship.heading}
-    </h2>
-    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{s.authorship.lead}</p>
-  </section>
+      {/* ── who sets the question: the relay's programme, every cycle so far ─────────────────── */}
+      <section id="questions" class="ds-section" aria-labelledby="ds-questions-h">
+        <h2 id="ds-questions-h">{D.questions.heading}</h2>
+        <p class="ds-prose">{honest}</p>
+        <table class="ds-table ds-table--questions">
+          <thead>
+            <tr>
+              <th scope="col">{D.questions.columns.cycle}</th>
+              <th scope="col">{D.questions.columns.opened}</th>
+              <th scope="col">{D.questions.columns.question}</th>
+              <th scope="col">{D.questions.columns.setBy}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr class={r.convening ? 'is-practices' : undefined}>
+                <th scope="row" data-label={D.questions.columns.cycle}>{r.cycle}</th>
+                <td data-label={D.questions.columns.opened}>{r.opened}</td>
+                <td data-label={D.questions.columns.question} class="ds-q">{r.question}</td>
+                <td data-label={D.questions.columns.setBy}>{r.setBy}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
 
-  <section class="mx-auto w-full max-w-3xl px-6 pb-20 pt-8" aria-labelledby="ds-contact">
-    <h2 id="ds-contact" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-      {s.contact.heading}
-    </h2>
-    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{s.contact.lead}</p>
-    <p class="mt-4 font-mono text-xs">
-      {s.contact.items.map((it, i) => (
-        <>
-          {i > 0 && ' · '}
-          <a href={it.href} class="underline hover:text-fg">{it.label} →</a>
-        </>
-      ))}
-    </p>
-  </section>
+      {/* ── Machine Attention ───────────────────────────────────────────────────────────────── */}
+      <section id="attention" class="ds-section" aria-labelledby="ds-attention-h">
+        <h2 id="ds-attention-h">{NAMING.overview.items.find((c) => c.id === 'attention')?.title ?? D.attention.heading}</h2>
+        <p class="ds-prose">{D.attention.lead}</p>
+        <ul class="ds-projects">
+          {projects.map((p) => (
+            <li>
+              <span class="ds-project-name">{p.title}</span>
+              <span class="ds-project-status">{p.since} · {p.status}</span>
+              {p.href && <a class="ds-link" href={`${p.href}/`}>{p.linkLabel} →</a>}
+            </li>
+          ))}
+        </ul>
+        {admitted.length > 0 && (
+          <>
+            <h3>{D.attention.admittedHeading(dayMonthYear(D.attention.admittedOn))}</h3>
+            <ul class="ds-projects ds-projects--admitted">
+              {admitted.map((a) => (
+                <li>
+                  <span class="ds-project-name">{a.name}</span>
+                  <span class="ds-project-line">{a.line}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        <p class="ds-more"><a class="ds-link" href={D.attention.link.href}>{D.attention.link.label} →</a></p>
+      </section>
+
+      {/* ── what the site shows: the publication rule of 2026-10-17 ─────────────────────────── */}
+      <section id="publication" class="ds-section" aria-labelledby="ds-publication-h">
+        <h2 id="ds-publication-h">{D.publication.heading}</h2>
+        <p class="ds-prose">{D.publication.lead(dayMonthYear(PUBLICATION_RULE_SINCE))}</p>
+        <ul class="ds-repos">
+          {[...practiceRepos, ...D.repos].map((r) => (
+            <li><a href={r.href} target="_blank" rel="noreferrer">{r.label} ↗</a></li>
+          ))}
+        </ul>
+      </section>
+
+      {/* ── the selected works, the entrance's shelf with each pick's reason ────────────────── */}
+      <section id="works" class="ds-section ds-section--wide" aria-labelledby="ds-works-h">
+        <h2 id="ds-works-h">{D.works.heading}</h2>
+        <p class="ds-prose">{D.works.lead}</p>
+        <SelectedWorks cards={shelf} variant="dossier" />
+      </section>
+
+      {/* ── the neighbours ──────────────────────────────────────────────────────────────────── */}
+      <section id="neighbours" class="ds-section ds-section--wide" aria-labelledby="ds-neighbours-h">
+        <h2 id="ds-neighbours-h">{D.neighbours.heading}</h2>
+        <p class="ds-prose">{D.neighbours.lead(dayMonthYear(D.neighbours.auditOn))}</p>
+        <table class="ds-table ds-table--neighbours">
+          <thead>
+            <tr>
+              <th scope="col">{D.neighbours.columns.name}</th>
+              <th scope="col">{D.neighbours.columns.what}</th>
+              <th scope="col">{D.neighbours.columns.differs}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {D.neighbours.rows.map((n) => (
+              <tr>
+                <th scope="row" data-label={D.neighbours.columns.name}>
+                  <a href={n.href} target="_blank" rel="noreferrer">{n.name} ↗</a>
+                  <span class="ds-when">{n.when}</span>
+                </th>
+                <td data-label={D.neighbours.columns.what}>{n.what}</td>
+                <td data-label={D.neighbours.columns.differs}>{n.differs}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      {/* ── who answers for it ──────────────────────────────────────────────────────────────── */}
+      <section id="accountability" class="ds-section" aria-labelledby="ds-accountability-h">
+        <h2 id="ds-accountability-h">{D.accountability.heading}</h2>
+        {D.accountability.paragraphs({ personas }).map((p) => <p class="ds-prose">{p}</p>)}
+        <p class="ds-conductor">{NAMING.conductorLine}</p>
+      </section>
+
+      {/* ── contact, and the short bio ──────────────────────────────────────────────────────── */}
+      <section id="contact" class="ds-section ds-contact" aria-labelledby="ds-contact-h">
+        <h2 id="ds-contact-h">{D.contact.heading}</h2>
+        <div class="ds-bio">
+          {D.contact.bio.map((p) => <p class="ds-prose">{p}</p>)}
+        </div>
+        <p class="ds-prose">{D.contact.lead}</p>
+        <ul class="ds-channels">
+          <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+          <li><a href="/contact">{D.contact.channels.form} →</a></li>
+          <li><a href={SITE.social.linkedin} target="_blank" rel="noreferrer">{D.contact.channels.linkedin} ↗</a></li>
+          <li><a href={SITE.social.github} target="_blank" rel="noreferrer">{D.contact.channels.github} ↗</a></li>
+        </ul>
+        <p class="ds-licence">{NAMING.footer.licenseLine}</p>
+      </section>
+    </div>
   </main>
 </Page>
-
-<style>
-  .ds-chip {
-    border: 1px solid var(--color-line); padding: 0.1rem 0.5rem; border-radius: 999px;
-    font: 10px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--color-fg-muted);
-  }
-</style>

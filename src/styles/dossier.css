@@ -1,0 +1,417 @@
+/* src/styles/dossier.css — the dossier for curators and press (2026-10-17)
+ *
+ * The page stands on the paper ground the entrance stands on (src/styles/paper.css), set as a
+ * document rather than a front page: one column for prose, wider for the shelf and the two tables,
+ * the edition's type and rules (src/styles/edition.css carries the shelf's cards). Every colour is
+ * a paper token, so this sheet carries no hex of its own, and nothing here is written as a style
+ * attribute anywhere in the markup (this site's CSP drops those; drift-check rule 3).
+ *
+ * Two widths: the desk, and the phone below 760 px, where each table row becomes a block whose
+ * cells name their column (the `data-label` the page writes on every cell).
+ */
+
+.ds {
+  padding-bottom: 40px;
+}
+.ds-wrap {
+  max-width: 1120px;
+  padding-inline: var(--pp-gutter);
+}
+.ds-link {
+  text-decoration: underline !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 2px;
+}
+
+/* ——— the masthead —————————————————————————————————————————————————————————————————————————— */
+.ds-mast {
+  padding-top: 34px;
+  max-width: 860px;
+}
+.ds-kicker {
+  color: var(--pp-accent-ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ds-mast h1 {
+  margin-top: 12px;
+  font-family: var(--pp-serif);
+  font-size: 58px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.ds-lede {
+  margin-top: 18px;
+  max-width: 68ch;
+  color: var(--pp-ink-2);
+  font-family: var(--pp-serif);
+  font-size: 20px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+.ds-dateline {
+  margin-top: 22px;
+  padding: 8px 0;
+  border-top: 3px double var(--pp-ink);
+  border-bottom: 1px solid var(--pp-ink);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+.ds-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 0;
+  margin-top: 12px;
+  font-size: 13px;
+}
+.ds-toc a {
+  padding-block: 4px;
+}
+/* the separator follows a link rather than leading the next, so a wrapped line never opens on it */
+.ds-toc a:not(:last-child)::after {
+  content: '·';
+  margin: 0 8px;
+  color: var(--pp-muted);
+}
+
+/* ——— the sections ————————————————————————————————————————————————————————————————————————— */
+.ds-section {
+  max-width: 860px;
+  margin-top: 46px;
+  padding-top: 14px;
+  border-top: 1px solid var(--pp-ink);
+}
+.ds-section--wide {
+  max-width: none;
+}
+.ds-section h2 {
+  margin-bottom: 14px;
+  font-family: var(--pp-serif);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.ds-section h3 {
+  margin: 26px 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ds-prose {
+  max-width: 68ch;
+  color: var(--pp-ink-2);
+  font-family: var(--pp-serif);
+  font-size: 17px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.ds-prose + .ds-prose {
+  margin-top: 12px;
+}
+.ds-more {
+  margin-top: 14px;
+  font-size: 13.5px;
+}
+
+/* the statement: the one passage set larger, as the page's own voice */
+.ds-statement {
+  border-top-width: 3px;
+  border-top-style: double;
+}
+.ds-statement-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 64ch;
+  font-family: var(--pp-serif);
+  font-size: 19.5px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* the three practices and the Middle */
+.ds-practices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 28px;
+  margin: 20px 0 0;
+}
+.ds-practices > div {
+  padding-top: 10px;
+  border-top: 1px solid var(--pp-rule);
+}
+.ds-practices dt {
+  font-family: var(--pp-serif);
+  font-size: 19px;
+}
+.ds-persona {
+  color: var(--pp-muted);
+  font-family: var(--pp-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ds-practices dd {
+  margin: 4px 0 0;
+  color: var(--pp-ink-2);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* how a cycle runs: numbered by the list, the numerals in the serif */
+.ds-steps {
+  counter-reset: ds-step;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 72ch;
+}
+.ds-steps li {
+  position: relative;
+  padding-left: 34px;
+  color: var(--pp-ink-2);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.ds-steps li::before {
+  counter-increment: ds-step;
+  content: counter(ds-step);
+  position: absolute;
+  left: 0;
+  top: -1px;
+  color: var(--pp-ink);
+  font-family: var(--pp-serif);
+  font-size: 19px;
+  font-style: italic;
+}
+.ds-now {
+  max-width: 72ch;
+  margin-top: 18px;
+  padding: 10px 14px;
+  background: var(--pp-ground-2);
+  font-family: var(--pp-serif);
+  font-size: 16px;
+  line-height: 1.55;
+}
+.ds-now-label {
+  margin-right: 6px;
+  color: var(--pp-accent-ink);
+  font-family: var(--pp-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ——— the two tables ——————————————————————————————————————————————————————————————————————— */
+.ds-table {
+  width: 100%;
+  margin-top: 18px;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.ds-table thead th {
+  padding: 0 14px 6px 0;
+  border-bottom: 1px solid var(--pp-ink);
+  color: var(--pp-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-align: left;
+  text-transform: uppercase;
+}
+.ds-table tbody th,
+.ds-table td {
+  padding: 10px 14px 10px 0;
+  border-bottom: 1px solid var(--pp-rule-light);
+  font-weight: 400;
+  text-align: left;
+  vertical-align: top;
+}
+.ds-table--questions tbody th {
+  width: 64px;
+  font-family: var(--pp-serif);
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.ds-table--questions td:nth-child(2) {
+  width: 150px;
+  color: var(--pp-muted);
+  white-space: nowrap;
+}
+.ds-table--questions td:last-child {
+  width: 240px;
+  color: var(--pp-ink-2);
+}
+.ds-q {
+  font-family: var(--pp-serif);
+  font-size: 15.5px;
+}
+/* a cycle the practices chose themselves: marked by a rule, not by a status colour */
+.ds-table--questions tr.is-practices th {
+  box-shadow: inset 3px 0 0 var(--pp-ink);
+  padding-left: 10px;
+}
+.ds-table--neighbours tbody th {
+  width: 200px;
+  font-family: var(--pp-serif);
+  font-size: 16px;
+}
+.ds-table--neighbours td {
+  color: var(--pp-ink-2);
+}
+.ds-when {
+  display: block;
+  margin-top: 3px;
+  color: var(--pp-muted);
+  font-family: var(--pp-sans);
+  font-size: 12px;
+}
+
+/* ——— Machine Attention, the repositories, the contact ———————————————————————————————————— */
+.ds-projects {
+  display: flex;
+  flex-direction: column;
+  margin-top: 14px;
+  border-top: 1px solid var(--pp-rule);
+}
+.ds-projects li {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr) auto;
+  gap: 4px 18px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--pp-rule-light);
+}
+.ds-projects--admitted li {
+  grid-template-columns: 240px minmax(0, 1fr);
+}
+.ds-project-name {
+  font-family: var(--pp-serif);
+  font-size: 17px;
+}
+.ds-project-status,
+.ds-project-line {
+  color: var(--pp-ink-2);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.ds-projects .ds-link {
+  font-size: 13px;
+  white-space: nowrap;
+}
+.ds-repos,
+.ds-channels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin-top: 14px;
+  font-size: 14px;
+}
+.ds-repos a,
+.ds-channels a {
+  display: inline-block;
+  padding-block: 4px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.ds-conductor,
+.ds-licence {
+  margin-top: 16px;
+  color: var(--pp-muted);
+  font-size: 12.5px;
+}
+.ds-bio {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--pp-ink);
+}
+
+/* ——— the phone ————————————————————————————————————————————————————————————————————————————— */
+@media (max-width: 759.98px) {
+  .ds-mast {
+    padding-top: 22px;
+  }
+  .ds-mast h1 {
+    font-size: 38px;
+  }
+  .ds-lede {
+    font-size: 17px;
+  }
+  .ds-section {
+    margin-top: 34px;
+    padding-top: 12px;
+  }
+  .ds-section h2 {
+    font-size: 24px;
+  }
+  .ds-statement-body {
+    font-size: 17.5px;
+  }
+  .ds-prose {
+    font-size: 16px;
+  }
+  .ds-practices {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ds-projects li,
+  .ds-projects--admitted li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* a table row becomes a block; each cell names its column */
+  .ds-table thead {
+    display: none;
+  }
+  .ds-table,
+  .ds-table tbody,
+  .ds-table tr,
+  .ds-table tbody th,
+  .ds-table td {
+    display: block;
+    width: auto !important;
+  }
+  .ds-table tr {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--pp-rule);
+  }
+  .ds-table tbody th,
+  .ds-table td {
+    padding: 2px 0;
+    border-bottom: 0;
+    white-space: normal !important;
+  }
+  .ds-table td::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--pp-muted);
+    font-family: var(--pp-sans);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .ds-table--questions tr.is-practices th {
+    padding-left: 10px;
+  }
+  /* the cycle and the day it opened share a line: "008 · 15 October 2026" */
+  .ds-table--questions tbody th,
+  .ds-table--questions td:nth-child(2) {
+    display: inline-block;
+  }
+  .ds-table--questions td:nth-child(2)::before {
+    content: '·';
+    display: inline;
+    margin: 0 8px 0 6px;
+    font-size: inherit;
+    letter-spacing: 0;
+  }
+}

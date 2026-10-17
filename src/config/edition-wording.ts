@@ -130,7 +130,7 @@ export const EDITION = {
                 : p.age <= 0 && p.pieces === p.practices
                   ? 'Overnight each opened its first session on it and committed one piece.'
                   : p.pieces === p.practices
-                    ? 'Each works it in its own discipline, one session a night; the newest piece of each is below.'
+                    ? 'Each works it in its own discipline; the newest piece of each is below.'
                     : `${p.pieces === 1 ? 'One' : inWords(p.pieces).replace(/^./, (c) => c.toUpperCase())} of the ${all} ${p.pieces === 1 ? 'has' : 'have'} landed a piece on it so far.`
       return `${origin} ${state}`
     },

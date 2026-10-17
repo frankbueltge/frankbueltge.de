@@ -4,8 +4,9 @@
 // The frame's footer (Footer.astro) is a black island under both themes. A page that stands on
 // the paper ground ends on paper instead: one hairline, the licence line on the left and the
 // house's standing links on the right. Nothing is dropped from the frame's footer but the logo
-// — Offer a seed, Digest, Contact, Impressum, Datenschutz and GitHub are the same six
-// addresses, so the legal pages stay one click from every page whichever footer it wears.
+// — Offer a seed, Digest, Contact, For curators & press (since 2026-10-17), Impressum,
+// Datenschutz and GitHub are the same seven addresses, so the legal pages and the dossier stay
+// one click from every page whichever footer it wears.
 import '@/styles/paper.css'
 import { SITE } from '@/lib/site'
 import { NAMING } from '@/config/naming'
@@ -22,6 +23,7 @@ const year = 2026
         <a href="/seed">Offer a seed</a>
         <a href="/post#digest">Digest</a>
         <a href="/contact">Contact</a>
+        <a href="/dossier">For curators &amp; press</a>
         <a href="/impressum">Impressum</a>
         <a href="/datenschutz">Datenschutz</a>
         <a href={SITE.social.github} target="_blank" rel="noreferrer">GitHub</a>

@@ -94,6 +94,12 @@ export function longDay(isoDay: string): string {
 /** "Saturday, 10 October 2026" — a dateline */
 export const longDate = (isoDay: string): string => `${longDay(isoDay)} ${isoDay.slice(0, 4)}`
 
+/** "10 October 2026" — the day a piece was made, where a weekday would say nothing */
+export function dayMonthYear(isoDay: string): string {
+  const d = new Date(startOf(isoDay))
+  return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${isoDay.slice(0, 4)}`
+}
+
 /** "Sat 10" — a column head */
 export function shortDay(isoDay: string): string {
   const d = new Date(startOf(isoDay))

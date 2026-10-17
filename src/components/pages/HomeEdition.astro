@@ -7,8 +7,9 @@
 // What the ops room asked a visitor to do was read instruments. This page says the same things
 // in the order a front page would: the standing question as its title, the commit pulse under
 // it, one line about what is new since yesterday (or since the reader's own last visit, if they
-// ask for that), the research ecology's running cycle as the lead beside a timetable of who
-// worked when, then the other houses, the live readings, the arrivals, and an index.
+// ask for that), a shelf of selected works (since 2026-10-17), the research ecology's running
+// cycle as the lead beside a timetable of who worked when, then the other houses, the live
+// readings, the arrivals, and an index.
 //
 // The three properties the ops room was built to keep are kept, and the page's tests hold them
 // (src/lib/ops/front-door.test.ts, src/config/edition-wording.test.ts):
@@ -58,6 +59,9 @@ import {
 import { arrivedAfter, counted, DAY_MS, dayOf, dayReaches, fill, longDate, longDay, shortDay, startOf } from '@/lib/ops/since'
 import { loadCycle } from '@/lib/ecology/v3'
 import { getLatestProtokoll } from '@/lib/protokoll/data'
+import { SELECTED_WORKS } from '@/config/selected-works'
+import { readShelf } from '@/lib/ops/selected-works'
+import SelectedWorks from '@/components/ops/SelectedWorks.astro'
 import '@fontsource-variable/literata/opsz-italic.css'
 import '@/styles/paper.css'
 import '@/styles/edition.css'
@@ -77,6 +81,9 @@ const stackSvg = buildStackSvg(pulse, { dot: { rx: 2, ry: 2.4 } })
 const feed = buildHouseFeed()
 const cycle = loadCycle()
 const tiles = readTiles({ protokoll: await getLatestProtokoll() })
+// The selected works (2026-10-17): chosen by hand in src/config/selected-works.ts, every field a
+// card shows read from the piece's own record.
+const shelf = readShelf()
 
 // ── the edition: its instant, its day, and the default reference point a day before ─────────
 const editionMs = editionInstant(feed, pulse.as_of)
@@ -278,6 +285,19 @@ const forScript = {
         </div>
       </div>
     </div>
+
+    {/* ── 3a · the selected works (2026-10-17) ────────────────────────────────────────────── */}
+    {/* Everything above and below says what is running; this band says what has been made, for
+        a reader who has never been here. It stands before the lead because a first-time reader
+        decides on the first screen whether to stay, and a returning reader pays one band's
+        height for it. The dossier shows the same shelf with each pick's reason. */}
+    <section class="ed-section ed-section--double ed-shelf-section" aria-labelledby="ed-shelf-title">
+      <div class="ed-sechead">
+        <h2 id="ed-shelf-title">{SELECTED_WORKS.title}</h2>
+        <span>{SELECTED_WORKS.sub}</span>
+      </div>
+      <SelectedWorks cards={shelf} link={url} />
+    </section>
 
     {/* ── 4 · the lead, and the timetable ─────────────────────────────────────────────────── */}
     <section class="ed-front">

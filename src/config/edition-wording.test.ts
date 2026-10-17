@@ -90,6 +90,16 @@ describe('the lead follows the cycle’s own state', () => {
     expect(L.standfirst({ ...base, age: 2 })).toContain('the newest piece of each is below')
   })
 
+  it('claims no session cadence in any state it can be in', () => {
+    // The digit law cannot see a number spelled as a word: "one session a night" stood here until
+    // 2026-10-17 while the practices ran up to seven sessions a day (the same guard as the score's,
+    // score-wording.test.ts). A cadence is a fact about the record, so it is derived or left out.
+    const CADENCE = /\b(sessions?|bulletins?)\b.{0,40}\b(a|per|each|every|the next) (night|day|morning)\b/i
+    for (const phase of ['working', 'presenting', 'closing', 'convening'] as const)
+      for (const age of [0, 1, 4])
+        for (const pieces of [0, 1, 3]) expect(L.standfirst({ ...base, phase, age, pieces })).not.toMatch(CADENCE)
+  })
+
   it('names where the question came from, for every source the cycle clock knows', () => {
     expect(L.standfirst({ ...base, source: 'seed' })).toContain('came in as a seed')
     expect(L.standfirst({ ...base, source: 'continuing' })).toContain('continuing question')
