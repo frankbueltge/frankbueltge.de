@@ -154,6 +154,7 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'USGS', what: 'earthquakes, magnitude 4.5+, past day', ref: 'pipelines/protokoll/src/protokoll/adapters/quakes.py' },
       { label: 'NASA GISTEMP', what: 'global temperature anomalies for the hero', ref: 'scripts/fetch-climate.ts' },
       { label: 'Space-track / CelesTrak', what: 'orbital elements for the overflight study', ref: 'scripts/fetch-ueberflug.ts' },
+      { label: 'IERS EOP 20 C04 · IANA', what: 'the daily earth-rotation record since 1962 and the leap-second table, for Sawtooth', ref: 'scripts/sawtooth/fetch.ts' },
     ],
   },
   {
@@ -263,6 +264,7 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'Redaction nightly', what: 'what was quietly removed from public pages', ref: '.github/workflows/redaction.yml', workflowName: 'Redaction nightly', cron: ['30 5 * * *'] },
       { label: 'Beifang weekly', what: 'what a consent wall takes before you consent', ref: '.github/workflows/beifang.yml', workflowName: 'Beifang weekly', cron: ['17 2 * * 1'] },
       { label: 'Spielraum watch', what: 'monthly watch on hyperscaler efficiency claims; writes a watch file, never the register', ref: '.github/workflows/spielraum-watch.yml', workflowName: 'Spielraum watch', cron: ['17 6 3 * *'] },
+      { label: 'Sawtooth weekly', what: 'the earth-rotation record behind Sawtooth: held to the page’s sentences before it commits, and committed only when the record moved', ref: '.github/workflows/sawtooth.yml', workflowName: 'Sawtooth weekly', cron: ['20 7 * * 3'] },
     ],
   },
   {
@@ -499,6 +501,7 @@ export const NODES: readonly ApparatusNode[] = [
       { label: 'src/data/pattern', what: 'patterns in the protocol itself — retired 2026-10-17, the archive kept in its history' },
       { label: 'src/data/tell', what: 'the tell' },
       { label: 'src/data/revision', what: 'the correction' },
+      { label: 'src/data/sawtooth', what: 'the earth-rotation record behind Sawtooth, one snapshot rewritten as the IERS publishes' },
       { label: 'src/data/spielraum', what: 'headroom — watch file only; the register is ingested by hand' },
       { label: 'src/data/pulse', what: 'the ecology’s own commit pulse' },
       { label: 'src/content/beifang', what: 'bycatch' },
@@ -640,6 +643,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'src-conflict', to: 'in-gegenmessung', kind: 'https', mechanism: 'GDELT 15-minute raw-file downloads', checked: 'declared', ref: 'pipelines/consensus/refresh.py' },
   { from: 'src-economy', to: 'in-gegenmessung', kind: 'https', mechanism: 'World Bank and Philadelphia Fed series', checked: 'declared', ref: 'pipelines/revision/refresh.py' },
   { from: 'src-scholarly', to: 'in-gegenmessung', kind: 'https', mechanism: 'Wayback snapshots and publisher pages read pre-consent', checked: 'declared', ref: 'pipelines/redaction' },
+  { from: 'src-earth', to: 'in-gegenmessung', kind: 'https', mechanism: 'the IERS earth-rotation series and the IANA leap-second table, fetched once a week for Sawtooth', checked: 'declared', ref: 'scripts/sawtooth/fetch.ts' },
   { from: 'src-scholarly', to: 'in-scouts', kind: 'https', mechanism: 'OpenAlex, arXiv, ArtBase, dataphys, S+T+ARTS', checked: 'declared', ref: 'pipelines/atlas-scout' },
   { from: 'src-web', to: 'in-trending', kind: 'https', mechanism: 'HTTPS in the source modules, one quoted-phrase search per watched term, then one GraphQL query for the audience of the day before', checked: 'declared', ref: 'pipelines/trending' },
 

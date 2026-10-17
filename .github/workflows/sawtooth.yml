@@ -1,0 +1,95 @@
+name: Sawtooth weekly
+
+# The earth-rotation record behind /sawtooth (src/data/sawtooth/rotation.json). Until 2026-10-17
+# it was refreshed by hand only, so it fell behind the record between refreshes. The IERS EOP 20
+# C04 file at the Paris Observatory gains a row every day and runs about thirty days behind the
+# calendar; a weekly fetch keeps the page within a week of the newest published day.
+#
+# Apart from a push that fails five times over, three things turn the run red, and only the third
+# can follow a commit:
+#   · the fetch refuses to write: a day missing or repeated, a format change, a source that does
+#     not answer, a record that ends earlier than the committed one. scripts/sawtooth/fetch.ts
+#     says which;
+#   · the new snapshot would turn a Sawtooth guard red, meaning a sentence on the page or in the
+#     register is no longer true of the record. Nothing is committed: on main the same red test
+#     would stop every deploy of the house, because deploy-cf.yml and each practice integrate run
+#     `npm test`. The page keeps the last snapshot its sentences hold for, and the failing guard
+#     names the sentence to rewrite;
+#   · the record has stopped moving: its newest day is more than sixty days old, twice the lag the
+#     producer publishes with.
+
+on:
+  schedule:
+    - cron: '20 7 * * 3' # Wednesdays 07:20 UTC, after the morning's nightly runs
+  workflow_dispatch: {} # can be run by hand
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sawtooth
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history, so git pull --rebase works in the commit step
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Fetch the record
+        run: |
+          if ! npm run --silent sawtooth:refresh > "$RUNNER_TEMP/fetch.log" 2>&1; then
+            cat "$RUNNER_TEMP/fetch.log"
+            REASON=$(grep -m1 -oE 'Error: .*' "$RUNNER_TEMP/fetch.log" || echo 'see the log above')
+            echo "::error::The fetch refused to write (${REASON#Error: }). /sawtooth keeps its last snapshot."
+            exit 1
+          fi
+          cat "$RUNNER_TEMP/fetch.log"
+          { echo "### Sawtooth"; echo; sed 's/^/- /' "$RUNNER_TEMP/fetch.log"; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Hold the page to the new snapshot
+        # Every test that imports the snapshot, found through the import graph rather than listed,
+        # so a guard added later is held here too.
+        run: |
+          if ! npx vitest related src/data/sawtooth/rotation.json --run; then
+            echo "::error::The new snapshot turns a guard red (named above). Nothing is committed, and /sawtooth keeps its last snapshot until the sentence that guard holds is rewritten."
+            exit 1
+          fi
+      - name: Commit
+        run: |
+          git config user.name "Gegenmessung"
+          git config user.email "gegenmessung@frankbueltge.de"
+          git add src/data/sawtooth
+          if git diff --cached --quiet; then
+            echo "No changes: the record has not moved since the last snapshot."
+            exit 0
+          fi
+          LAST=$(node -p "require('./src/data/sawtooth/rotation.json').last")
+          git commit -m "sawtooth: weekly refresh, IERS record to $LAST"
+          # Against push races (parallel cron and repository commits): rebase and retry.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Pushed."; exit 0
+            fi
+            echo "Push attempt $i failed, retrying …"; sleep 5
+          done
+          echo "::error::Push failed after 5 attempts"; exit 1
+      - name: Is the record still moving
+        # About thirty days behind the calendar is how the producer publishes; sixty means it has
+        # stopped or moved the series. EOP 14 C04, which this work read first, ends at 2026-01-05.
+        # After the commit, so a late record that did move still lands.
+        run: |
+          LAST=$(node -p "require('./src/data/sawtooth/rotation.json').last")
+          AGE=$(( ( $(date -u +%s) - $(date -u -d "$LAST" +%s) ) / 86400 ))
+          echo "- the record's newest day is $LAST, $AGE days before this run" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$AGE" -gt 60 ]; then
+            echo "::error::The IERS record ends at $LAST, $AGE days ago; it normally runs about thirty days behind. The producer may have stopped or moved the series."
+            exit 1
+          fi
+          echo "The record's newest day is $LAST, $AGE days ago."

@@ -20,9 +20,10 @@
 // tenths of a millisecond. That is finer than the published uncertainty and it makes the file
 // a third of the size a float dump would be, with no rounding a reader could notice.
 //
-// Run: npx tsx scripts/sawtooth/fetch.ts
+// Run: npm run sawtooth:refresh (or npx tsx scripts/sawtooth/fetch.ts). Since 2026-10-17 it also
+// runs every week in .github/workflows/sawtooth.yml, which commits the file when it changed.
 
-import { writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 
 const EOP = 'https://hpiers.obspm.fr/iers/eop/eopc04/eopc04.1962-now'
 const LEAP = 'https://data.iana.org/time-zones/data/leap-seconds.list'
@@ -80,14 +81,13 @@ for (const line of leapText.split('\n')) {
 }
 if (leaps.length === 0) throw new Error('leap table parsed to nothing — format changed; nothing written')
 
-writeFileSync(
-  OUT,
+const snapshot = (fetched: string): string =>
   JSON.stringify(
     {
       _comment:
         'Snapshot of the IERS EOP 20 C04 series and the leap-second table, committed so the finding stays recomputable. lod: microseconds a day ran longer than 86,400 s. ut1_utc: tenths of a millisecond the turning Earth stands from atomic time. Both are one value per day from `first`, with no gaps. Rebuilt by scripts/sawtooth/fetch.ts.',
       sources: { eop: EOP, leap: LEAP },
-      fetched: new Date().toISOString().slice(0, 10),
+      fetched,
       first,
       last,
       days: lod.length,
@@ -97,6 +97,40 @@ writeFileSync(
     },
     null,
     0,
-  ) + '\n',
-)
-console.log(`${OUT}: ${lod.length} days ${first} → ${last} · ${leaps.length} table rows`)
+  ) + '\n'
+
+// The new record is held against the committed snapshot before anything is written, because the
+// weekly run commits whatever this leaves behind and nobody reads it as it happens.
+let before = ''
+let previous: { fetched?: string; first?: string; last?: string; lod?: number[]; ut1_utc?: number[] } | null = null
+try {
+  before = readFileSync(OUT, 'utf8')
+  previous = JSON.parse(before)
+} catch {
+  // no snapshot yet, or one that does not parse: write a fresh one
+}
+
+// A record that ends earlier than the committed one has lost days. A file cut short while the
+// producer rewrote it would pass every check above and quietly move the page back in time.
+if (previous?.first === first && previous.last && last < previous.last) {
+  throw new Error(`EOP now ends at ${last}, before the committed ${previous.last} — the record would go backwards; nothing written`)
+}
+
+// `fetched` alone would change the file on every run. A run that found no new day and no revised
+// value leaves it as it was, so the workflow commits, and the house deploys, only when the record
+// moved.
+if (previous?.fetched && before === snapshot(previous.fetched)) {
+  console.log(`${OUT}: unchanged since the snapshot of ${previous.fetched} · ${lod.length} days ${first} → ${last}`)
+} else {
+  let moved = ''
+  if (previous?.first === first && Array.isArray(previous.lod) && Array.isArray(previous.ut1_utc)) {
+    let revised = 0
+    for (let i = 0; i < Math.min(previous.lod.length, lod.length); i++) {
+      if (previous.lod[i] !== lod[i] || previous.ut1_utc[i] !== ut1[i]) revised += 1
+    }
+    const added = lod.length - previous.lod.length
+    moved = ` · ${added} new day${added === 1 ? '' : 's'} since the snapshot of ${previous.fetched}, ${revised} earlier day${revised === 1 ? '' : 's'} revised`
+  }
+  writeFileSync(OUT, snapshot(new Date().toISOString().slice(0, 10)))
+  console.log(`${OUT}: ${lod.length} days ${first} → ${last} · ${leaps.length} table rows${moved}`)
+}
