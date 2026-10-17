@@ -666,9 +666,9 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'in-meridian', to: 'st-instruments', kind: 'commit', mechanism: 'committed by hand; CI re-derives and fails on any difference', checked: 'derived', ref: '.github/workflows/ci.yml' },
 
   // gates → archive
-  { from: 'gate-atelier', to: 'st-mirrors', kind: 'commit', mechanism: 'full reset, then rsync; check, test and build must pass before anything commits', checked: 'derived', ref: '.github/workflows/atelier-integrate.yml' },
-  { from: 'gate-field', to: 'st-mirrors', kind: 'commit', mechanism: 'full reset, then rsync; drafts, memory and the workboard are excluded', checked: 'derived', ref: '.github/workflows/field-integrate.yml' },
-  { from: 'gate-studio', to: 'st-mirrors', kind: 'commit', mechanism: 'full reset, then rsync; projects stay in the studio until they premiere', checked: 'derived', ref: '.github/workflows/studio-integrate.yml' },
+  { from: 'gate-atelier', to: 'st-mirrors', kind: 'commit', mechanism: 'full reset, then rsync, trimmed to what the site publishes or the build reads; check, test and build must pass before anything commits', checked: 'derived', ref: '.github/workflows/atelier-integrate.yml' },
+  { from: 'gate-field', to: 'st-mirrors', kind: 'commit', mechanism: 'full reset, then rsync, trimmed to what the site publishes or the build reads; drafts, memory and the workboard are excluded', checked: 'derived', ref: '.github/workflows/field-integrate.yml' },
+  { from: 'gate-studio', to: 'st-mirrors', kind: 'commit', mechanism: 'full reset, then rsync, trimmed to what the site publishes or the build reads; projects stay in the studio until they premiere', checked: 'derived', ref: '.github/workflows/studio-integrate.yml' },
   { from: 'gate-plenum', to: 'st-mirrors', kind: 'commit', mechanism: 'full reset, then rsync; drafts, memory and the queue are excluded', checked: 'derived', ref: '.github/workflows/plenum-integrate.yml' },
   { from: 'gate-ecology', to: 'st-encounters', kind: 'commit', mechanism: 'a regenerated projection commits itself; new meaning opens a pull request instead', checked: 'derived', ref: '.github/workflows/ecology-integrate.yml' },
 

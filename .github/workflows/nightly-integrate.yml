@@ -84,6 +84,18 @@ jobs:
             }
           '
 
+      # The mirror keeps what the site publishes and what the build reads, and nothing else of the
+      # line's (2026-10-17). mirror.mjs brings every work's face over whole, and since the publication
+      # rule of the same day the site serves a face without its briefs, reports and coders' runs, the
+      # notes and logs beside it and the makers' scratch files: about three hundred such files a day
+      # were landing here that no page, count or score reads. The rule is
+      # src/lib/engines/publication.mjs, the same one the build applies to dist/ — a file a face
+      # names itself stays, and so does every face of a work still in progress. A fault in this step
+      # leaves the mirror as copied (the next run trims it) rather than turning the gate red for a
+      # defect that is the house's.
+      - name: Trim the mirror to what the site publishes or the build reads
+        run: npx tsx scripts/engines/trim-mirror.mjs error-as-method
+
       # The graph is derived from what this mirror just wrote (a work's meta.json, the
       # attention export, the encounters register). Deriving it HERE, before validation, is what
       # makes the honesty test guard the mirrored content instead of tripping over it: on

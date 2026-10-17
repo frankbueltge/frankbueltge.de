@@ -123,6 +123,18 @@ jobs:
           mkdir -p .github/state
           git -C /tmp/atelier rev-parse HEAD > .github/state/atelier-mirror-head
 
+      # The mirror keeps what the site publishes and what the build reads, and nothing else of the
+      # practice's (2026-10-17). The copy above brought in everything the practice's repository holds
+      # for the site's public directory; since the publication rule of the same day the site serves
+      # only its finished works and cycle presentations, so the rest — the window's session folders and the notes beside a work — stopped being read by any
+      # page, count or score and went on piling up here at several hundred files a day. The rule is
+      # src/lib/engines/publication.mjs, the same one the build applies to dist/; BUILD_READS there
+      # names what stays although nobody can open it, and which loader reads it. A fault in this step
+      # leaves the mirror as copied (the next run trims it) rather than turning the gate red for a
+      # defect that is the house's.
+      - name: Trim the mirror to what the site publishes or the build reads
+        run: npx tsx scripts/engines/trim-mirror.mjs atelier
+
       # The graph is derived from what this mirror just wrote (a work's meta.json, the
       # attention export, the encounters register). Deriving it HERE, before validation, is what
       # makes the honesty test guard the mirrored content instead of tripping over it: on

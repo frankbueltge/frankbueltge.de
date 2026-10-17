@@ -23,6 +23,12 @@
 // is linked, not copied: a site that carries 8 000 lines of harvested references would be
 // claiming to be the archive, and git is the archive.
 //
+// What a face brings beside its page is copied whole here, and the workflow trims it afterwards
+// (scripts/engines/trim-mirror.mjs, since 2026-10-17): the briefs, reports, notes, logs and the
+// makers' scratch files that the publication rule does not publish and no page names stay out of
+// the repository. This script decides nothing about that; the one rule is in
+// src/lib/engines/publication.mjs, and a face that names a file itself keeps it.
+//
 // Both target trees are reset before writing, so a work withdrawn upstream disappears here
 // instead of lingering as an orphan. The faces live inside public/error-as-method, so the same
 // reset clears them: a page withdrawn upstream, or a file dropped from beside it, is gone here

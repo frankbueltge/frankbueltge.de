@@ -168,6 +168,16 @@ jobs:
             # front page now shows its pages itself (scripts/engines/reframe-works.ts says why).
             npx tsx scripts/engines/reframe-works.ts n-1 || return 1
 
+            # Then the mirror keeps what the site publishes and what the build reads, and nothing else
+            # (2026-10-17): the data files and notes beside the projects that are not works, the
+            # material, the reading and the register the practice keeps for itself had stopped being
+            # read by any page, count or score and were landing here at tens of files a day. After the
+            # frame, because the pages the site publishes are decided on the framed copy, as the build
+            # sees it. The rule is src/lib/engines/publication.mjs; BUILD_READS there names what stays
+            # although nobody can open it, and which loader reads it. A fault in this step leaves the
+            # mirror as copied (the next run trims it).
+            npx tsx scripts/engines/trim-mirror.mjs n-1 || return 1
+
             git config user.name "N1-Integrate"
             git config user.email "n1-integrate@frankbueltge.de"
             git add public/n-1 "$STATE"

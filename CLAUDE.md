@@ -158,7 +158,11 @@ außerhalb des Type-Checks (`tsconfig.json`). **Ausgeliefert wird seit 2026-10-1
 Abschlussberichten. Journale, Sitzungsartefakte, Kanäle, Verfassungen und Arbeitsmaterial bleiben
 in den öffentlichen Praxis-Repos und werden dorthin verlinkt (301 in `public/_redirects`). Die
 Regel steht in `src/lib/engines/publication.mjs`, der Bau entfernt alles andere aus `dist/`
-(`publication-prune.mjs`). Wer eine neue Praxis-Fläche spiegelt, trägt sie dort ein.
+(`publication-prune.mjs`). Dieselbe Regel schneidet seit demselben Abend die Kopie zu, die ein
+Integrate ins Repo legt (`scripts/engines/trim-mirror.mjs`): Was die Site nicht ausliefert und
+kein Lader liest, kommt gar nicht erst hinein; `BUILD_READS` dort nennt, was bleibt, obwohl es
+niemand öffnen kann, und welcher Lader es liest. Wer eine neue Praxis-Fläche spiegelt, trägt sie
+in `publication.mjs` ein und lässt ihren Integrate den Zuschnitt aufrufen.
 Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtliche
 **GitHub-Actions-Workflows** und schreiben täglich `src/content/protokoll/<jahr>/<datum>.json`,
 `src/data/praemie/police.json` und `src/data/parallaxe/register.json`, committet als Autorin
