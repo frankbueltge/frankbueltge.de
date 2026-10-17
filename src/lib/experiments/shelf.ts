@@ -50,6 +50,11 @@ export interface ShelfCard {
 
 export const BESIDE_GROUP = 'beside'
 
+/** Retired works (2026-10-17): their own group rather than their line's, because a line heading
+ *  over an instrument that stopped would claim the line still runs it. src/data/werke.ts,
+ *  WERKE_RETIRED, is where the set comes from. */
+export const RETIRED_GROUP = 'retired'
+
 /** Found objects: things the lab did not make, keeps anyway, and has checked. Its own group
  *  rather than a line, because a line states a research question and this answers none — and
  *  rather than a quiet link in the page head, which is where it lived on 2026-09-19 and where

@@ -1,4 +1,10 @@
 ---
+// Retired on 2026-10-17 (src/data/werke.ts, `retired`). Three sentences changed with it, because
+// the check that decided the retirement showed them false, not merely old: the zone a gap is
+// filed under is named at the midpoint of its two ends, never where the transponder went off;
+// the protected-area count was never a cross-reference, the source leaves that field empty; and
+// the archive repeats an event id now and then (issue #731), a duplicate the API itself sends, so
+// the list below shows each event once. The committed files keep their duplicates.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
@@ -7,6 +13,7 @@ import { darkLabel, coord, flagClause, regionLabel, vesselKind, dateLabel } from
 import data from '@/data/ghost-fleet/latest.json'
 import SheetHead from '@/components/experiments/SheetHead.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import RetiredNotice from '@/components/experiments/RetiredNotice.astro'
 import '@/styles/experiment-sheet.css'
 
 interface Props { locale: Locale }
@@ -15,10 +22,10 @@ const de = locale === 'de'
 const d = data as unknown as GhostFleetData
 const pending = d.events.length === 0
 const pick: GfEvent | null = d.pick ? d.events.find((e) => e.id === d.pick) ?? null : null
-const rest = d.events.filter((e) => e.id !== d.pick)
+// one row per event id, the first the file holds — a correction of the reading, never the record
+const rest = d.events.filter((e, i, all) => e.id !== d.pick && all.findIndex((x) => x.id === e.id) === i)
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/ghost-fleet')
 const darkDays = Math.round(d.index.dark_hours_examined / 24)
-const protectedCount = d.index.in_no_take + d.index.in_mpa
 ---
 
 <main id="main" class="flex-1">
@@ -28,6 +35,8 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
     <p class="mt-1 font-mono text-xs text-fg-faint">{dateLabel(d.date, locale)}</p>
   </SheetHead>
 
+  <RetiredNotice id="ghost-fleet" />
+
   {pending ? (
     <p class="mb-12 text-fg-muted">{t(locale, 'gf.empty')}</p>
   ) : (
@@ -35,13 +44,13 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
       {pick && (
         <section class="mb-12 border-l-2 border-accent/60 pl-5">
           <p class="kicker">
-            {de ? 'Der Fall des Tages' : 'The case of the day'}
+            {de ? 'Der letzte Fall' : 'The last case'}
           </p>
           <p class="mt-2 text-lg font-semibold">{pick.vessel.name} <span class="font-mono text-sm text-fg-faint">({pick.vessel.flag})</span></p>
           <p class="mt-3 leading-snug text-fg-muted">
             {de
-              ? `Ein ${vesselKind(pick.vessel.type, locale)}${flagClause(pick.vessel.flag, locale)} schaltete seinen Transponder ${darkLabel(pick.duration_hours, locale)} lang ab — verschwunden bei ${coord(pick.off)}, wieder aufgetaucht bei ${coord(pick.on)}, in ${regionLabel(pick.regions, locale)}.`
-              : `A ${vesselKind(pick.vessel.type, locale)}${flagClause(pick.vessel.flag, locale)} switched off its transponder for ${darkLabel(pick.duration_hours, locale)} — vanished at ${coord(pick.off)}, resurfaced at ${coord(pick.on)}, in ${regionLabel(pick.regions, locale)}.`}
+              ? `Ein ${vesselKind(pick.vessel.type, locale)}${flagClause(pick.vessel.flag, locale)} schaltete seinen Transponder ${darkLabel(pick.duration_hours, locale)} lang ab — verschwunden bei ${coord(pick.off)}, wieder aufgetaucht bei ${coord(pick.on)}. Die Zone nennt die Quelle für den Mittelpunkt zwischen beiden: ${regionLabel(pick.regions, locale)}.`
+              : `A ${vesselKind(pick.vessel.type, locale)}${flagClause(pick.vessel.flag, locale)} switched off its transponder for ${darkLabel(pick.duration_hours, locale)} — vanished at ${coord(pick.off)}, resurfaced at ${coord(pick.on)}. The source names the zone at the midpoint between the two: ${regionLabel(pick.regions, locale)}.`}
           </p>
           <p class="mt-3 font-mono text-xs">
             <a class="underline transition-colors hover:text-fg" href={pick.gfw_url} target="_blank" rel="noopener">{de ? 'bei Global Fishing Watch ↗' : 'on Global Fishing Watch ↗'}</a>
@@ -54,24 +63,21 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
           <p class="text-[clamp(36px,7vw,64px)] font-bold tabular-nums">{d.index.in_eez}</p>
           <p class="max-w-sm text-sm leading-snug text-fg-muted">
             {de
-              ? `Transponder-Abschaltungen fielen zuletzt in eine nationale Wirtschaftszone (EEZ) — von ${d.window.examined} geprüften (${d.index.total.toLocaleString('de-DE')} im Zeitfenster).`
-              : `transponder shutdowns fell inside a national EEZ lately — of ${d.window.examined} examined (${d.index.total.toLocaleString('en-GB')} in the window).`}
+              ? `Abschaltungen hatten ihren Mittelpunkt im letzten Fenster in einer Wirtschaftszone (EEZ) — von ${d.window.examined} geprüften (${d.index.total.toLocaleString('de-DE')} im Zeitfenster).`
+              : `gaps had their midpoint inside an exclusive economic zone in the last window — of ${d.window.examined} examined (${d.index.total.toLocaleString('en-GB')} in the window).`}
           </p>
         </div>
         <p class="mt-3 text-sm leading-relaxed">
           {de
             ? `Zusammen rund ${darkDays.toLocaleString('de-DE')} Transponder-Tage Funkstille.`
             : `Together about ${darkDays.toLocaleString('en-GB')} transponder-days of darkness.`}
-          {protectedCount > 0 && (
-            <span> {de ? `Davon ${protectedCount} in einem Meeresschutzgebiet.` : `${protectedCount} of them inside a marine protected area.`}</span>
-          )}
         </p>
       </section>
 
       {rest.length > 0 && (
         <section class="mb-12 border-t border-line pt-6">
           <p class="kicker">
-            {de ? 'Weitere Verschwundene' : 'Others gone dark'}
+            {de ? 'Weitere Verschwundene in jener Nacht' : 'Others gone dark that night'}
           </p>
           <ul class="mt-3 space-y-1.5">
             {rest.slice(0, 10).map((e) => (
@@ -107,8 +113,8 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
     </ul>
     <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
       {de
-        ? 'Die „Absichts"-Einschätzung ist die von GFW, nicht diese Seite — jeder Fall verlinkt dorthin. GFW veröffentlicht selbst Hotspot-Karten, The Outlaw Ocean geht mit einzelnen Schiffen tiefer, Skylight/Windward/C4ADS liefern kontinuierliche Erkennung im Einsatzmaßstab. Der Zähler oben (Schiffe in Meeresschutzgebieten) ist ein erster eigener Abgleich mit einer zweiten, unabhängigen Geodatenquelle — Sanktionslisten und Flaggenstaats-Register als weitere Abgleiche sind der offene, noch nicht gebaute Schritt, der aus einer Nacherzählung einen eigenen Fund macht.'
-        : "The \"intentional\" judgment is GFW's, not this page's — every case links out to it. GFW itself publishes hotspot maps, The Outlaw Ocean goes deeper on individual vessels, Skylight/Windward/C4ADS deliver continuous detection at operational scale. The counter above (ships inside marine protected areas) is a first independent cross-reference against a second geodata source — sanctions lists and flag-state records are the further, not-yet-built joins that would turn re-narration into a finding of its own."}
+        ? 'Die „Absichts"-Einschätzung ist die von GFW, nicht diese Seite — jeder Fall verlinkt dorthin. GFW veröffentlicht selbst Hotspot-Karten, The Outlaw Ocean geht mit einzelnen Schiffen tiefer, Skylight/Windward/C4ADS liefern kontinuierliche Erkennung im Einsatzmaßstab. Der Schutzgebiets-Zähler, den diese Seite als ersten eigenen Abgleich ausgab, war keiner: Die Quelle lässt das Feld für diese Ereignisse leer, er zählte nichts. Ein eigener Abgleich mit Schutzgebietsgrenzen, Sanktionslisten oder Flaggenstaats-Registern hätte aus der Nacherzählung einen Fund gemacht; gebaut wurde keiner.'
+        : "The \"intentional\" judgment is GFW's, not this page's — every case links out to it. GFW itself publishes hotspot maps, The Outlaw Ocean goes deeper on individual vessels, Skylight/Windward/C4ADS deliver continuous detection at operational scale. The protected-area counter this page once called its first independent cross-reference was none: the source leaves that field empty for these events, so it counted nothing. A join of its own against protected-area boundaries, sanctions lists or flag-state records would have turned re-narration into a finding; none was built."}
     </p>
   </section>
 

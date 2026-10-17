@@ -1,0 +1,32 @@
+---
+// The notice a retired work's page and method sheet carry before any figure does (Frank's
+// decision of 2026-10-17, wording private: the page says RETIRED, with the date and the reason).
+// The reason is read verbatim from the register, and the archive sentence is counted from the
+// repository at build time, so nothing here can drift from what the shelf says. Monochrome on
+// purpose, like DataAge's overdue notice: a retirement is a fact about the instrument, not a
+// verdict, so it gets weight and a rule, not warning red.
+import { WERKE } from '@/data/werke'
+import { RETIRED_NOTICE, archiveHref, archiveLine } from '@/lib/experiments/retired'
+
+interface Props {
+  /** the werke.ts id of the retired work */
+  id: string
+  /** false on a method sheet, where nothing follows that is a reading */
+  lastReading?: boolean
+}
+
+const { id, lastReading = true } = Astro.props
+const werk = WERKE.find((w) => w.id === id)
+if (!werk?.retired) throw new Error(`RetiredNotice: "${id}" is not a retired werk in src/data/werke.ts`)
+const { on, reason, archive } = werk.retired
+---
+
+<section role="note" class="retired-notice mb-12 max-w-2xl border-l-2 border-fg pl-5">
+  <p class="kicker text-fg">{RETIRED_NOTICE.kicker(on)}</p>
+  <p class="mt-3 leading-relaxed">{reason}</p>
+  <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+    {archiveLine(archive)}
+    <a href={archiveHref(archive)} class="ml-1 font-mono text-xs underline decoration-line underline-offset-2 hover:text-fg" rel="noopener">{RETIRED_NOTICE.open}</a>
+  </p>
+  {lastReading && <p class="mt-3 font-mono text-xs text-fg-faint">{RETIRED_NOTICE.rest}</p>}
+</section>

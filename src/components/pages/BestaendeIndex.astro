@@ -34,10 +34,16 @@
 //   · the sections, their kickers and their blurbs, read from the register as before.
 // What the practices beside the lab get is NOT a decorative stand-in but the shape of their own
 // record: one tick per dated entry their mirror holds.
+//
+// 2026-10-17 — A RETIRED SECTION (Frank's decision, wording private: three instruments that
+// measured nothing are retired with a date, their archives kept). It follows the four lines and
+// is derived from the register like them (WERKE_RETIRED): each card keeps its miniature of the
+// last reading, carries the day it was stopped as a badge and the register's reason as its note,
+// and is never marked live.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
-import { WERKE_BY_LINE, werkTitle } from '@/data/werke'
-import { BESIDE_GROUP, FOUND_GROUP, KIND_LABEL, kindOf, shelfFacets, type ShelfCard, type ShelfKind } from '@/lib/experiments/shelf'
+import { WERKE_BY_LINE, WERKE_RETIRED, werkTitle } from '@/data/werke'
+import { BESIDE_GROUP, FOUND_GROUP, KIND_LABEL, RETIRED_GROUP, kindOf, shelfFacets, type ShelfCard, type ShelfKind } from '@/lib/experiments/shelf'
 import { RECORDING } from '@/data/playbook/recording'
 import { datedEntries, recordThumbnail, THUMBNAILS, THUMB_BOX } from '@/lib/experiments/thumbnails'
 import { GALLERY } from '@/config/gallery-wording'
@@ -134,6 +140,35 @@ const sections: GallerySection[] = [
       }
     }),
   })),
+  // A section with no card drops out, like an empty line does.
+  ...(WERKE_RETIRED.length === 0
+    ? []
+    : [
+        {
+          id: RETIRED_GROUP,
+          label: GALLERY.retired.label,
+          blurb: GALLERY.retired.blurb,
+          cards: WERKE_RETIRED.map((werk): GalleryCard => {
+            const kind = kindOf(werk)
+            return {
+              id: werk.id,
+              group: RETIRED_GROUP,
+              kind,
+              kindLabel: kind === 'experiment' ? null : KIND_LABEL[kind],
+              live: false,
+              title: werkTitle(werk, locale),
+              subtitle: werk.subtitle[locale],
+              description: werk.description[locale],
+              href: url(werk.href),
+              methodHref: werk.methodHref ? url(werk.methodHref) : null,
+              stamp: werk.since,
+              retired: werk.retired!.on,
+              meta: werk.retired!.reason,
+              thumb: THUMBNAILS.get(werk.id) ?? null,
+            }
+          }),
+        },
+      ]),
   {
     id: BESIDE_GROUP,
     label: 'BESIDE THE LAB',
@@ -240,6 +275,7 @@ const wording = {
   empty: GALLERY.filter.empty,
   live: GALLERY.stamp.live,
   opened: GALLERY.stamp.opened,
+  retired: GALLERY.stamp.retired,
   open: GALLERY.link.open,
   method: GALLERY.link.method,
   from: GALLERY.thumb.from,

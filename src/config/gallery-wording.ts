@@ -36,6 +36,8 @@ export const GALLERY = {
     live: 'live data',
     /** screen-reader prefix before the date stamp */
     opened: 'opened ',
+    /** the badge of a retired work, before the day it was retired */
+    retired: 'retired',
   },
 
   /** the links out of a card */
@@ -52,6 +54,14 @@ export const GALLERY = {
     label: 'FOUND',
     blurb:
       'Things the lab did not make, keeps anyway, and has checked before serving. No research question, no method sheet, no claim of a finding — the only duty a found object carries here is that someone went through it against its sources first, and said where it slips.',
+  },
+
+  /** The retired group's own head (2026-10-17). States the rule, never the three works of that
+      day by name or number: the next retirement joins this section without a word changing. */
+  retired: {
+    label: 'RETIRED',
+    blurb:
+      'Instruments the lab stopped, each with the day and the reason. Their pages stay up as the record they left and their nightly archives stay in the repository; none of them measures anything any more.',
   },
 
   /** the miniature itself */
@@ -79,7 +89,7 @@ export const GALLERY = {
     tell: 'the index of the marker words across the years of the corpus',
     redaction: 'one tick per watched page, marked where the page changed, hollow where the change could not be verified',
     'round-number': 'the leading-digit distribution against the expectation it is measured against',
-    pattern: 'the day’s strongest pair, both series over the days on file',
+    pattern: 'the last night’s strongest pair, both series over the days on file',
     praemie: 'the premium index over the years the record covers',
     parallaxe: 'what each tracked topic leaves out, one bar per topic',
     ueberflug: 'the counted fleet over every observation on file',
@@ -87,7 +97,7 @@ export const GALLERY = {
     'invoked-past': 'how often each year of the past is invoked by the day’s press',
     balance: 'the countries whose own tone and the world’s tone are furthest apart',
     correction: 'each month’s revision, the distance between the first figure and the final one',
-    'ghost-fleet': 'hours gone dark per vessel in the window',
+    'ghost-fleet': 'hours gone dark per vessel in the last window',
   } as Record<string, string>,
 
   /**

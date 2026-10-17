@@ -4,6 +4,7 @@ import type { Locale } from '@/lib/site'
 import type { PatternData } from '@/lib/pattern/types'
 import data from '@/data/pattern/latest.json'
 import MethodSheet from '@/components/experiments/MethodSheet.astro'
+import RetiredNotice from '@/components/experiments/RetiredNotice.astro'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -23,8 +24,8 @@ const txt = {
     : `${d.source.name}. No new fetch — it uses only the already-committed daily values of the Protocol (NOAA, USGS, ECB, GDELT, etc.).`,
   s2: de ? '2. Kadenz' : '2. Cadence',
   s2body: de
-    ? `Bei jedem Build neu, mit dem wachsenden Archiv. Derzeit nur ${d.days} gemeinsame Tage — bewusst kurz: je weniger Punkte, desto leichter das Scheinmuster.`
-    : `Recomputed on every build, with the growing archive. Currently only ${d.days} common days — deliberately short: the fewer the points, the easier the false pattern.`,
+    ? `Nächtlich mit dem wachsenden Archiv neu gerechnet, bis zur Stilllegung am 2026-10-17. Die letzte Rechnung umfasste ${d.days} gemeinsame Tage — bewusst kurz: je weniger Punkte, desto leichter das Scheinmuster.`
+    : `Recomputed every night with the growing archive, until it was retired on 2026-10-17. The last run covered ${d.days} common days — deliberately short: the fewer the points, the easier the false pattern.`,
   s3: de ? '3. Verarbeitung' : '3. Processing',
   s3body: de
     ? `Pearson-Korrelation über alle ${d.pairs} Paare variierender Metriken; die stärkste ist der „Fund". Ein Permutationstest (jede Reihe ${d.permutations.toLocaleString('de-DE')}-mal mischen, max|r| neu suchen) liefert die False-Discovery-Rate. Deterministischer Seed aus dem Datum. numpy, kein LLM.`
@@ -49,13 +50,21 @@ const txt = {
     : 'No fetch (reuses the existing archive), one permutation run in numpy, no LLM. The site is static.',
   s6: de ? '6. Änderungsprotokoll' : '6. Change log',
   s6items: de
-    ? ['v1 (2026-06) — Erstfassung: stärkste Tages-Korrelation + Permutationstest + Geständnis.']
-    : ['v1 (2026-06) — first edition: strongest daily correlation + permutation test + confession.'],
+    ? [
+        'v1 (2026-06) — Erstfassung: stärkste Tages-Korrelation + Permutationstest + Geständnis.',
+        'Stillgelegt (2026-10-17) — der Permutationstest konnte auf gleichgerichteten Reihen nicht anschlagen und meldete in jeder Nacht eine Falschentdeckungsrate von null; der nächtliche Schritt ist entfernt, das Archiv bleibt in der Git-Historie.',
+      ]
+    : [
+        'v1 (2026-06) — first edition: strongest daily correlation + permutation test + confession.',
+        'Retired (2026-10-17) — the permutation test could not fire on series that each move one way and reported a false-discovery rate of zero every night; the nightly step is removed, the archive stays in the git history.',
+      ],
   toWork: de ? 'Zum Experiment' : 'To the experiment',
 }
 ---
 
 <MethodSheet title={txt.h1} workHref={workUrl} workLabel={txt.toWork}>
+
+  <RetiredNotice id="pattern" lastReading={false} />
 
   <section class="sheet-reveal mb-10">
     <h2 class="kicker mb-2">{txt.revealHead}</h2>

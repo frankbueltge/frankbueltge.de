@@ -5,7 +5,7 @@ export interface Werk {
   /** meist sprachneutral (ein String); zweisprachig nur, wo der Name je Sprache abweicht (Beifang/Bycatch). */
   title: string | Record<Locale, string>
   subtitle: Record<Locale, string>
-  status: 'live' | 'in-arbeit' | 'geplant'
+  status: 'live' | 'in-arbeit' | 'geplant' | 'retired'
   href: string
   description: Record<Locale, string>
   /** Start/Launch des Experiments (ISO-Datum). Sortierschlüssel: newest first. */
@@ -27,6 +27,27 @@ export interface Werk {
    *  thing instead, tested like the others were: it says on its own surface, in its own words,
    *  that it is live and that nothing here is archived. One duty replaces four. */
   unarchived?: boolean
+  /** A work that was stopped, with the day and the reason.
+   *
+   *  Frank's decision of 2026-10-17 (wording private, paraphrased): instruments that measure
+   *  nothing are retired the way Machine Attention retired The Foreknown and Dark Ocean on
+   *  2026-10-04 — the nightly run stops, the archive stays where it is, the reason is committed,
+   *  and the work's own page says RETIRED. For the three retired that day this lifts the rule of
+   *  2026-08-09 (rework, never archive); it lifts it for nothing else.
+   *
+   *  `status` is 'retired' exactly when this is set, and a retired work is never `live`
+   *  (werke.test.ts holds both). Its page carries src/components/experiments/RetiredNotice.astro,
+   *  which reads `reason` verbatim, so the shelf, the page and the method sheet cannot give three
+   *  different reasons. */
+  retired?: {
+    /** the day the nightly run stopped (ISO date) */
+    on: string
+    /** why, in the work's own voice: what the record showed, never a verdict on anyone */
+    reason: string
+    /** where the record stays — a directory of dated nightly files, or a single snapshot the
+     *  pipeline rewrote every night, whose nights live in its git history */
+    archive: { path: string; kind: 'dated' | 'history' }
+  }
   /** Research line this experiment belongs to (Frank, 2026-08-22) — the shelf's categories.
    *  Mandatory for everything /experiments renders, absent for the practice doors and the
    *  other houses' entries; werke.test.ts holds both halves of that rule. */
@@ -396,16 +417,27 @@ export const WERKE: Werk[] = [
       de: 'Ein Test, der angeblich gefälschte Zahlen erkennt — und wie oft er sich irrt',
       en: 'A test that claims to spot faked numbers — and how often it is wrong',
     },
-    status: 'live',
+    status: 'retired',
     since: '2026-06-25',
-    live: true,
     href: '/round-number',
     description: {
       // "just as suspicious" quantified 2026-08-22 (currency audit): the same-n false-positive
       // rates in src/data/round-number/latest.json run 0.38–0.51, not 1.0 — and the effect is a
       // small-n effect (the n=6000 controls sit at 0.0), which is the actual finding.
-      de: 'From the “Counter-Measurement” line. Digit-forensics (Benford) is sold as a tool against faked numbers — and is the favourite instrument of vote-fraud myths. The piece puts the method itself on trial: each day it shows that the same test which calls a real official series “suspicious” calls provably-clean data of the same size suspicious about half the time.',
-      en: 'From the “Counter-Measurement” line. Digit-forensics (Benford) is sold as a tool against faked numbers — and is the favourite instrument of vote-fraud myths. The piece puts the method itself on trial: each day it shows that the same test which calls a real official series “suspicious” calls provably-clean data of the same size suspicious about half the time.',
+      // Past tense since the retirement of 2026-10-17; the reason lives in `retired` below.
+      de: 'From the “Counter-Measurement” line. Digit-forensics (Benford) is sold as a tool against faked numbers — and is the favourite instrument of vote-fraud myths. The piece put the method itself on trial: each night it showed that the same test which calls a real official series “suspicious” calls provably-clean data of the same size suspicious about half the time. Retired on 2026-10-17.',
+      en: 'From the “Counter-Measurement” line. Digit-forensics (Benford) is sold as a tool against faked numbers — and is the favourite instrument of vote-fraud myths. The piece put the method itself on trial: each night it showed that the same test which calls a real official series “suspicious” calls provably-clean data of the same size suspicious about half the time. Retired on 2026-10-17.',
+    },
+    // Measured on the day of the decision: src/data/round-number/ holds 115 nightly files
+    // (2026-06-25 to 2026-10-17), and the `series` block of 114 of them is byte-identical — every
+    // file from 2026-06-26 on. The first differs only in the last floating-point digit of Benford's
+    // expected shares (computed on another machine); its datasets were committed on 2026-06-25 and
+    // never touched again. Only `pick` rotated, through the same five series, 23 nights each.
+    retired: {
+      on: '2026-10-17',
+      reason:
+        'It ran the same trial every night. Its series are committed once and never refreshed, so from its second night on every nightly file carries the identical result for the same three World Bank indicators and two synthetic controls; only the series in the dock rotated. A trial that cannot come out differently is not a measurement, and what it restated, that a fixed Benford threshold flags small clean samples, has been in the literature it cites for fifteen years.',
+      archive: { path: 'src/data/round-number', kind: 'dated' },
     },
   },
   {
@@ -413,12 +445,11 @@ export const WERKE: Werk[] = [
     line: 'counter-measurement',
     title: 'Patterns',
     subtitle: {
-      de: 'Eine Maschine, die jeden Tag ein Muster findet — und nicht weiß, ob es etwas bedeutet',
-      en: 'A machine that finds a pattern every day — and cannot tell if it means anything',
+      de: 'Eine Maschine, die jeden Tag ein Muster fand — und nicht wusste, ob es etwas bedeutet',
+      en: 'A machine that found a pattern every day — and could not tell if it meant anything',
     },
-    status: 'live',
+    status: 'retired',
     since: '2026-06-22',
-    live: true,
     href: '/pattern',
     description: {
       // Corrected 2026-08-22 (currency audit), and this one was not a stale digit: the entry
@@ -426,11 +457,21 @@ export const WERKE: Werk[] = [
       // src/data/pattern/latest.json has returned false_discovery_rate 0.0 in all 62 committed
       // snapshots — the test clears the pair, and PatternPage.astro accordingly renders the
       // opposite branch ("it might be real"). The register was asserting an outcome the
-      // instrument has never produced. It now states the procedure and leaves the verdict to the
-      // day's own data; whether a test that never fires still carries the work's thesis is a
-      // question for the architect, not something the shelf should answer for him.
-      de: 'Capstone of the “Counter-Measurement” line. Each day the machine mines its own Protocol archive for correlations, surfaces the strongest and puts it through a permutation test — the scepticism this line applies to everyone else, turned on its own output. With enough series, a strong pair is always there; what it means is the question the instrument cannot settle, and says so.',
-      en: 'Capstone of the “Counter-Measurement” line. Each day the machine mines its own Protocol archive for correlations, surfaces the strongest and puts it through a permutation test — the scepticism this line applies to everyone else, turned on its own output. With enough series, a strong pair is always there; what it means is the question the instrument cannot settle, and says so.',
+      // instrument has never produced. Whether a test that never fires still carries the work's
+      // thesis was left to the architect (issue #724) and was answered on 2026-10-17: it does
+      // not, and the piece was retired. Past tense since; the reason lives in `retired` below.
+      de: 'Capstone of the “Counter-Measurement” line. Each night the machine mined its own Protocol archive for correlations, surfaced the strongest and put it through a permutation test — the scepticism this line applies to everyone else, turned on its own output. With enough series, a strong pair is always there; telling what it means was the job the test was given. Retired on 2026-10-17.',
+      en: 'Capstone of the “Counter-Measurement” line. Each night the machine mined its own Protocol archive for correlations, surfaced the strongest and put it through a permutation test — the scepticism this line applies to everyone else, turned on its own output. With enough series, a strong pair is always there; telling what it means was the job the test was given. Retired on 2026-10-17.',
+    },
+    // Measured on the day of the decision, replaying the git history of the one snapshot it kept
+    // (src/data/pattern/latest.json, 120 commits): 118 distinct nights, 2026-06-22 to 2026-10-17,
+    // false_discovery_rate 0.0 in all 118; 86 of the 118 headline pairs include the Protocol's
+    // world-population series (pipelines/protokoll/.../population.py: NET_PER_DAY = 191_000).
+    retired: {
+      on: '2026-10-17',
+      reason:
+        'Its test could not fail. Shuffling the days breaks a correlation between noisy series, but not between two series that each only move one way, so the permutation test reported a false-discovery rate of zero on every night it ran. Most nights the strongest pair included the Protocol’s world population, which is an estimate extrapolated by a fixed number of people a day: a straight line, and every trending series correlates with a straight line. The piece meant to show that a machine cannot tell signal from noise ran a test that never once said noise.',
+      archive: { path: 'src/data/pattern/latest.json', kind: 'history' },
     },
   },
   {
@@ -613,9 +654,8 @@ export const WERKE: Werk[] = [
       de: 'Schiffe, die ihren Transponder bewusst abschalten, um zu verschwinden',
       en: 'Ships that switch off their transponder on purpose to vanish',
     },
-    status: 'live',
+    status: 'retired',
     since: '2026-06-26',
-    live: true,
     href: '/ghost-fleet',
     description: {
       // Two overstatements corrected 2026-08-22 (currency audit): the daily pick is not always a
@@ -623,10 +663,29 @@ export const WERKE: Werk[] = [
       // among them, and with flag "—" nothing can be called foreign; and regions.eez_name is an
       // exclusive economic zone, which is not national or territorial waters. The method sheet
       // had this right ("national EEZs") while the register and the page did not.
-      de: 'From the “Counter-Measurement” line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each day a machine counts the deliberate radio silence and surfaces the most striking case — a vessel, sometimes only an unflagged gear tag, that went dark for weeks inside another state’s exclusive economic zone. No claim of illegality, only the counted invisibility.',
-      en: 'From the “Counter-Measurement” line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each day a machine counts the deliberate radio silence and surfaces the most striking case — a vessel, sometimes only an unflagged gear tag, that went dark for weeks inside another state’s exclusive economic zone. No claim of illegality, only the counted invisibility.',
+      // A third on 2026-10-17, with the retirement: "went dark inside another state's EEZ" was
+      // never what the record said. The source names the zone at the gap's midpoint, not where
+      // the transponder went off, and the last pick sailed under the flag of the zone it was in.
+      de: 'From the “Counter-Measurement” line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each night a machine counted the radio silence Global Fishing Watch flags as deliberate and surfaced the longest case, ranked to put protected waters first — a vessel, sometimes only an unflagged gear tag, dark for weeks. No claim of illegality, only the counted invisibility. Retired on 2026-10-17.',
+      en: 'From the “Counter-Measurement” line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each night a machine counted the radio silence Global Fishing Watch flags as deliberate and surfaced the longest case, ranked to put protected waters first — a vessel, sometimes only an unflagged gear tag, dark for weeks. No claim of illegality, only the counted invisibility. Retired on 2026-10-17.',
     },
     tier: 'studie',
+    // Checked before deciding, because a parser bug would have been a fix and not a retirement: a
+    // temporary workflow on 2026-10-17 asked the GFW Events API the pipeline's own question and
+    // printed the shape of what came back. Of 1,500 gap events, every `regions` object carried
+    // the keys and `highSeas`, `mpa`, `mpaNoTake`, `mpaNoTakePartial` and `eez12Nm` were empty
+    // lists in all 1,500 — including the 1,064 events with no EEZ, which by definition lie on the
+    // high seas. The parser read the right keys; the source leaves them empty. The event's
+    // `position`, where the regions are evaluated, is the great-circle midpoint of
+    // gap.offPosition and gap.onPosition (checked on four events to three decimals). And the
+    // duplicate ids of issue #731 come from the API itself: seven ids repeated, each inside a
+    // single page.
+    retired: {
+      on: '2026-10-17',
+      reason:
+        'The source never said where the vessels hid. Checked against a live response on the day of the decision, Global Fishing Watch sends empty lists for the high seas and for every protected-area field on these events, so the counters for both stood at zero on every night: an absence, not a finding, and the protected waters the ranking put first were never there to rank. The one region the source does name, the exclusive economic zone, is named at the midpoint of the line between where a transponder went off and where it came back on, a point the vessel need not have passed. Without the protected-area join, the instrument retold Global Fishing Watch’s own record.',
+      archive: { path: 'src/data/ghost-fleet', kind: 'dated' },
+    },
   },
 ]
 /** Chronologie-Komparator: newest first nach `since`. Gleichstand → 0, sodass die stabile
@@ -713,11 +772,29 @@ export interface ExperimentGroup {
  *  DERIVED from WERKE_HOLDINGS, never listed by hand: recency order (2026-08-14) therefore
  *  survives inside every group, a new werk appears the moment it names a line, and the ranking
  *  cannot go stale. A line with no entries drops out rather than printing a heading over
- *  nothing — an empty category claims a line the lab is not running. */
+ *  nothing — an empty category claims a line the lab is not running.
+ *
+ *  A retired werk (2026-10-17) keeps its line — it was that line's work, and the graph and the
+ *  audit still file it there — but it is not grouped under it: a heading over an instrument that
+ *  stopped would claim the line is still running it. It stands on the shelf of its own below. */
 export const WERKE_BY_LINE: readonly ExperimentGroup[] = EXPERIMENT_LINES.map((line) => ({
   line,
-  werke: WERKE_HOLDINGS.filter((w) => w.line === line.id),
+  werke: WERKE_HOLDINGS.filter((w) => w.line === line.id && !w.retired),
 })).filter((g) => g.werke.length > 0)
+
+/** The retired works on /experiments, newest first like every other group — derived from the
+ *  same list, so a werk moves here the moment it carries `retired` and nowhere else changes. */
+export const WERKE_RETIRED: readonly Werk[] = WERKE_HOLDINGS.filter((w) => w.retired)
+
+/** `status` and `retired` say the same thing twice, so they must agree, and a retired work has
+ *  no daily data to mark as live. Checked at import, like the shelf rules above, so a half-done
+ *  retirement fails the build rather than the reader. */
+for (const w of WERKE) {
+  if ((w.status === 'retired') !== Boolean(w.retired)) {
+    throw new Error(`werk "${w.id}": status '${w.status}' and the retired record disagree`)
+  }
+  if (w.retired && w.live) throw new Error(`werk "${w.id}" is retired and still marked live`)
+}
 
 /** Every entry the shelf renders belongs to a line — otherwise it would silently vanish from a
  *  page that now shows nothing but groups. The mirror rule (an excluded werk carries no line)

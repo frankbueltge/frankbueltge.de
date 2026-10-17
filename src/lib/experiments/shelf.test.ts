@@ -1,13 +1,15 @@
 import { describe, it, expect } from 'vitest'
-import { EXPERIMENT_LINES, WERKE_BY_LINE, WERKE_HOLDINGS } from '@/data/werke'
-import { BESIDE_GROUP, FOUND_GROUP, kindOf, shelfFacets, type ShelfCard } from './shelf'
+import { EXPERIMENT_LINES, WERKE_BY_LINE, WERKE_HOLDINGS, WERKE_RETIRED } from '@/data/werke'
+import { BESIDE_GROUP, FOUND_GROUP, RETIRED_GROUP, kindOf, shelfFacets, type ShelfCard } from './shelf'
 
-/** The cards the page builds: every shelf entry, the practices beside the lab, and the one
- *  found object the lab keeps without having made it. */
+/** The cards the page builds: every shelf entry, the retired works on their own shelf (since
+ *  2026-10-17), the practices beside the lab, and the one found object the lab keeps without
+ *  having made it. */
 const cards: ShelfCard[] = [
   ...WERKE_BY_LINE.flatMap((g) =>
     g.werke.map((w) => ({ id: w.id, group: g.line.id, kind: kindOf(w), live: Boolean(w.live) })),
   ),
+  ...WERKE_RETIRED.map((w) => ({ id: w.id, group: RETIRED_GROUP, kind: kindOf(w), live: false })),
   { id: 'nightly-line', group: BESIDE_GROUP, kind: 'practice' as const, live: false },
   { id: 'n-1', group: BESIDE_GROUP, kind: 'practice' as const, live: false },
   { id: 'arch', group: BESIDE_GROUP, kind: 'practice' as const, live: false },
@@ -16,10 +18,11 @@ const cards: ShelfCard[] = [
 
 const labels = new Map<string, string>([
   ...EXPERIMENT_LINES.map((l) => [l.id, l.label] as [string, string]),
+  [RETIRED_GROUP, 'RETIRED'],
   [BESIDE_GROUP, 'BESIDE THE LAB'],
   [FOUND_GROUP, 'FOUND'],
 ])
-const order = [...EXPERIMENT_LINES.map((l) => l.id), BESIDE_GROUP, FOUND_GROUP]
+const order = [...EXPERIMENT_LINES.map((l) => l.id), RETIRED_GROUP, BESIDE_GROUP, FOUND_GROUP]
 
 describe('kindOf — the register’s tier in the shelf’s vocabulary', () => {
   it('reads an absent tier as an experiment (werke.ts default)', () => {
@@ -54,9 +57,9 @@ describe('shelfFacets', () => {
   it('lists the lines in the page’s own order, then what is not a line', () => {
     const groups = facets.find((f) => f.group === 'group')!
     expect(groups.options.map((o) => o.value)).toEqual(order)
-    // The research lines come first and the two groups that state no research question come
-    // after them, in the page's order: the practices beside the lab, then the found objects.
-    expect(groups.options.slice(-2).map((o) => o.value)).toEqual([BESIDE_GROUP, FOUND_GROUP])
+    // The research lines come first and the groups that state no research question come after
+    // them, in the page's order: the retired works, the practices beside the lab, the found objects.
+    expect(groups.options.slice(-3).map((o) => o.value)).toEqual([RETIRED_GROUP, BESIDE_GROUP, FOUND_GROUP])
   })
 
   it('never offers an option that would empty the page', () => {

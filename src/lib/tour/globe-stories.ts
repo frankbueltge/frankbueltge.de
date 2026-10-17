@@ -228,7 +228,7 @@ const fleetScenes: Scene[] = [
       {
         text: '"on_high_seas": 0',
         source: FLEET_FILE,
-        locator: 'index — and how many out where nobody’s rules reach',
+        locator: 'index — the high-seas count, which the source never fills: zero on every night the archive holds',
       },
       {
         text: '"name": "Global Fishing Watch — Events API (AIS gaps)"',
@@ -284,7 +284,7 @@ const fleetScenes: Scene[] = [
       {
         text: '"eez_name": "Costa Rican EEZ"',
         source: FLEET_FILE,
-        locator: 'events[0].regions — whose waters those are',
+        locator: 'events[0].regions — the zone the source names at the midpoint of the gap, not at this point',
       },
     ],
     focus: {

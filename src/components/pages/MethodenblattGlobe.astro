@@ -55,6 +55,16 @@ const limits = [
 
 const changelog = [
   {
+    date: '2026-10-17',
+    what:
+      'Ghost Fleet was retired, its archive kept (src/data/werke.ts). Its layer still draws every night that ' +
+      'archive holds and, on a day after the last, says the instrument was retired instead of leaving a silent ' +
+      'gap. Two sentences of the fleet story were corrected with it, because the check behind the retirement ' +
+      'showed them false: the high-seas count is zero on every night because the source never fills that field, ' +
+      'and the zone a gap is filed under is named at the midpoint of its two ends, not where the transponder ' +
+      'went off.',
+  },
+  {
     date: '2026-09-03',
     what:
       'The third evening of G3, and its close: the countries EM-DAT and UCDP admitted late into their own past ' +
@@ -125,8 +135,8 @@ const changelog = [
     <h2 class="mb-2 font-semibold">2. Cadence</h2>
     <p class="leading-relaxed text-fg-muted">
       Nothing on this page runs on its own. Each layer inherits the cadence of the pipeline that writes its files —
-      nightly for the fleet, the vessels and the planet's readings — and this globe is rebuilt when those files land
-      in the repository. The time axis is the union of the days the layers themselves hold: today
+      nightly for the fleet and the planet's readings, and nightly for the vessels until Ghost Fleet was retired on
+      2026-10-17 — and this globe is rebuilt when those files land in the repository. The time axis is the union of the days the layers themselves hold: today
       {count(model.days.length)} days, from {model.days[0]} to {model.newest}, read from the archive's own filenames
       and never from a clock. A day nobody wrote is not on the axis; a day one layer holds and another does not is on
       the axis once, and the layer that has nothing for it says so.

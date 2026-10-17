@@ -182,6 +182,22 @@ describe('each house is named and counted by its own record', () => {
     expect(labEntries(LAB).map((e) => e.title)).toEqual(['A lab experiment', 'A lab instrument'])
   })
 
+  it('gives a retired work a second row, on the day it was stopped', () => {
+    const retired: Werk = {
+      ...LAB[0],
+      id: 'r',
+      title: 'A retired instrument',
+      status: 'retired',
+      retired: { on: '2026-10-17', reason: 'It measured nothing.', archive: { path: 'src/data/r', kind: 'dated' } },
+    }
+    const rows = labEntries([retired])
+    expect(rows.map((e) => [e.date, e.kind])).toEqual([
+      ['2026-08-10', 'experiment'],
+      ['2026-10-17', 'retirement'],
+    ])
+    expect(rows[1].fact).toMatch(/retired/)
+  })
+
   it('dates Arch by the day its current iteration was built, from the work’s own README', () => {
     expect(archEntries(ARCH)).toEqual([expect.objectContaining({ title: 'Arrival', date: '2026-09-03' })])
   })

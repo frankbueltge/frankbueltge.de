@@ -9,13 +9,13 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
 import { GALLERY } from '@/config/gallery-wording'
-import { WERKE_BY_LINE, werkTitle } from '@/data/werke'
-import { KIND_LABEL, kindOf, shelfFacets, type ShelfCard, type ShelfKind } from '@/lib/experiments/shelf'
+import { WERKE_BY_LINE, WERKE_RETIRED, werkTitle } from '@/data/werke'
+import { KIND_LABEL, RETIRED_GROUP, kindOf, shelfFacets, type ShelfCard, type ShelfKind } from '@/lib/experiments/shelf'
 import { THUMBNAILS, THUMB_BOX } from '@/lib/experiments/thumbnails'
 
 import ExperimentGallery, { type GalleryCard, type GallerySection } from './ExperimentGallery'
 
-const sections: GallerySection[] = WERKE_BY_LINE.map((group) => ({
+const lineSections: GallerySection[] = WERKE_BY_LINE.map((group) => ({
   id: group.line.id,
   label: group.line.label,
   blurb: group.line.blurb.en,
@@ -37,6 +37,33 @@ const sections: GallerySection[] = WERKE_BY_LINE.map((group) => ({
   ),
 }))
 
+// The retired shelf, built the way BestaendeIndex.astro builds it (2026-10-17).
+const retiredSection: GallerySection = {
+  id: RETIRED_GROUP,
+  label: GALLERY.retired.label,
+  blurb: GALLERY.retired.blurb,
+  cards: WERKE_RETIRED.map(
+    (werk): GalleryCard => ({
+      id: werk.id,
+      group: RETIRED_GROUP,
+      kind: kindOf(werk),
+      kindLabel: kindOf(werk) === 'experiment' ? null : KIND_LABEL[kindOf(werk)],
+      live: false,
+      title: werkTitle(werk, 'en'),
+      subtitle: werk.subtitle.en,
+      description: werk.description.en,
+      href: werk.href,
+      methodHref: werk.methodHref,
+      stamp: werk.since,
+      retired: werk.retired!.on,
+      meta: werk.retired!.reason,
+      thumb: THUMBNAILS.get(werk.id) ?? null,
+    }),
+  ),
+}
+
+const sections: GallerySection[] = [...lineSections, ...(retiredSection.cards.length > 0 ? [retiredSection] : [])]
+
 const cards: ShelfCard[] = sections.flatMap((s) =>
   s.cards.map((c) => ({ id: c.id, group: c.group, kind: c.kind as ShelfKind, live: c.live })),
 )
@@ -54,6 +81,7 @@ const wording = {
   empty: GALLERY.filter.empty,
   live: GALLERY.stamp.live,
   opened: GALLERY.stamp.opened,
+  retired: GALLERY.stamp.retired,
   open: GALLERY.link.open,
   method: GALLERY.link.method,
   from: GALLERY.thumb.from,
@@ -121,6 +149,14 @@ describe('the gallery renders whole on the server', () => {
     expect(html).toContain('aria-pressed="true"')
     // the reset button is rendered but hidden until something is filtered
     expect(html).toMatch(/hidden[^>]*>reset<\/button>|>reset<\/button>/)
+  })
+
+  it('marks every retired work with the day it was stopped and its reason, and never as live', () => {
+    for (const card of retiredSection.cards) {
+      expect(html, `${card.id} carries no retired badge`).toContain(`${GALLERY.stamp.retired} ${card.retired}`)
+      expect(html, `${card.id} does not state its reason`).toContain(card.meta!)
+      expect(card.live).toBe(false)
+    }
   })
 
   it('names each miniature after the experiment and what the drawing shows', () => {

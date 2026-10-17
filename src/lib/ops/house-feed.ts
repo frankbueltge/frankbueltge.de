@@ -181,23 +181,30 @@ export const werkTitle = (w: Werk): string => (typeof w.title === 'string' ? w.t
 
 /** The entries the lab contributes: everything /experiments renders, which is exactly the set
  *  carrying a research line (werke.test.ts holds that rule from the other side). The practice
- *  doors and the other houses' cards live in the same array and are NOT the lab's. */
+ *  doors and the other houses' cards live in the same array and are NOT the lab's.
+ *
+ *  A retired work (2026-10-17) gives a second row, on the day it was stopped: a retirement is a
+ *  dated event of the lab's own, and the log is where the house shows what happened on a day. */
 export function labEntries(werke: readonly Werk[], names = houseNames()): FeedEntry[] {
-  return werke
-    .filter((w) => w.line && w.since)
-    .map((w) => ({
-      date: w.since,
-      time: null,
-      source: 'shelf' as const,
-      house: 'lab' as const,
-      houseName: names.lab,
-      title: werkTitle(w),
-      fact: null,
-      kind: labKind(w.tier),
-      href: w.href,
-      withdrawn: false,
-      voice: null,
-    }))
+  const S = NAMING.opsRoom.signal
+  const shelf = werke.filter((w) => w.line && w.since)
+  const row = (w: Werk, date: string, fact: string | null, kind: string): FeedEntry => ({
+    date,
+    time: null,
+    source: 'shelf' as const,
+    house: 'lab' as const,
+    houseName: names.lab,
+    title: werkTitle(w),
+    fact,
+    kind,
+    href: w.href,
+    withdrawn: false,
+    voice: null,
+  })
+  return [
+    ...shelf.map((w) => row(w, w.since, null, labKind(w.tier))),
+    ...shelf.filter((w) => w.retired).map((w) => row(w, w.retired!.on, S.facts.retired, S.kindLabels.retirement)),
+  ]
 }
 
 /** Arch's shelf. A candidate whose README states no build date is known but not datable, and is
