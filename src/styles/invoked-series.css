@@ -1,0 +1,82 @@
+/* The Invoked Past — the series figure: the standout year of every archived day.
+   PALETTE: invoked-memory
+   One identity colour, and it is the page's own: the ember that marks the day's standout in the
+   histogram above marks every day's standout here — one hue, one meaning, on one page, on the
+   same two surfaces the set was validated against (src/lib/dataviz/palette.ts). It is declared
+   again here rather than borrowed from invoked-figure.css so this figure renders on a night the
+   histogram does not (a failed fetch draws no histogram, and the series still stands); the
+   hexes are invoked-memory's standout slot, unchanged, and src/lib/invoked/series.test.ts holds
+   this file to the record. Everything else wears the site's ink tokens: the band over the years
+   the source never emits, the edges no standout can occupy, the guides of recurring years, the
+   lane of quiet days. No warning red anywhere — a year that leaves the ramp is a finding, not an
+   alarm. Site default is dark; light mode opts in via data-theme. Marks wear classes: the site's
+   CSP discards style="" attributes. */
+
+:root {
+  --invs-standout: #e2691f;
+}
+:root[data-skin][data-theme='light'] {
+  --invs-standout: #b8410e;
+}
+
+.invs-svg {
+  min-width: 600px;
+}
+
+/* the day's standout: the only identity colour on the drawing */
+.invs-dot { fill: var(--invs-standout); stroke: var(--color-bg); stroke-width: 1; transition: stroke 120ms ease; }
+.invs-dot:hover { stroke: var(--color-fg); }
+/* the anniversary arithmetic matched: a ring, so the fact survives greyscale and dichromacy */
+.invs-ring { fill: none; stroke: var(--invs-standout); stroke-width: 1.2; }
+/* a measured day on which no year stood out: hollow, on its own lane */
+.invs-quiet { fill: var(--color-bg); stroke: var(--color-fg-muted); stroke-width: 1.2; }
+
+/* a year that stood out on more than one day: a dashed guide from its first day, and its name */
+.invs-guide { stroke: var(--color-fg-faint); stroke-width: 1; opacity: 0.5; stroke-dasharray: 2 3; }
+.invs-leader { stroke: var(--color-fg-faint); stroke-width: 1; opacity: 0.6; }
+
+/* furniture and absences: recessive ink */
+.invs-grid { stroke: var(--color-fg-faint); stroke-width: 1; opacity: 0.14; }
+.invs-axis { stroke: var(--color-fg-muted); stroke-width: 1; opacity: 0.5; }
+.invs-edge { fill: var(--color-fg-faint); opacity: 0.1; }
+.invs-hatch-line { stroke: var(--color-fg-faint); stroke-width: 1; opacity: 0.28; }
+
+/* text wears text tokens, never the series colour */
+.invs-tick,
+.invs-lane,
+.invs-band-label { fill: var(--color-fg-faint); font-size: 10px; }
+.invs-label { fill: var(--color-fg-muted); font-size: 10px; }
+
+/* legend keys */
+.invs-key { display: inline-block; overflow: visible; }
+
+/* the table under the figure: the shared primitive ships structure only (ADR 0010) */
+.invs-tables .dv-table-fallback { margin-top: 0.75rem; }
+.invs-tables .dv-table-fallback > summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+.invs-tables .dv-table-fallback > summary:hover { color: var(--color-fg); }
+.invs-tables .dv-table { margin-top: 0.75rem; font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.invs-tables .dv-table th {
+  padding: 0.35rem 0.9rem 0.35rem 0;
+  border-bottom: 1px solid var(--color-line);
+  font-weight: 500;
+  color: var(--color-fg-muted);
+  white-space: nowrap;
+}
+.invs-tables .dv-table td {
+  padding: 0.3rem 0.9rem 0.3rem 0;
+  border-bottom: 1px solid var(--color-line);
+  font-family: var(--font-mono);
+}
+.invs-tables .dv-table tr > :last-child { padding-right: 0; }
+.invs-tables .dv-prov { margin-top: 0.5rem; font-family: var(--font-mono); font-size: 11px; color: var(--color-fg-faint); }
+
+@media (prefers-reduced-motion: reduce) {
+  .invs-dot { transition: none; }
+}

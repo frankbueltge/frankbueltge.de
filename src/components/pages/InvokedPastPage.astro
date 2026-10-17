@@ -3,8 +3,11 @@
  *  Reads every dated reference in ~24 h of the world's press and publishes the histogram of
  *  invoked years. The published finding is the STANDOUT year, never the maximum: the maximum
  *  is the source's own 2014 ceiling and is labelled as the artefact it is.
- *  Data: src/data/invoked/latest.json, committed nightly; git is the archive. */
+ *  Data: src/data/invoked/latest.json for the day, every committed day file
+ *  (src/data/invoked/YYYY-MM-DD.json) for the series, and register.json for the tracked events;
+ *  git is the archive. */
 import data from '@/data/invoked/latest.json'
+import registerJson from '@/data/invoked/register.json'
 import type { InvokedData } from '@/lib/invoked/types'
 import {
   ageBucketLabel,
@@ -19,7 +22,11 @@ import {
   windowLabel,
   yearsBetween,
 } from '@/lib/invoked/format'
+import { shortDay } from '@/lib/archive/calendar'
+import { standoutSeries } from '@/lib/invoked/series'
+import { decayArithmetic, lawReading, type InvokedRegister } from '@/lib/invoked/decay'
 import InvokedPastFigure from './InvokedPastFigure.astro'
+import InvokedSeriesFigure from './InvokedSeriesFigure.astro'
 import SheetHead from '@/components/experiments/SheetHead.astro'
 import DataAge from '@/components/experiments/DataAge.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
@@ -43,9 +50,36 @@ const topYears = d.top_years.slice(0, 12)
 // v1.1 carry a headline without one — never because the page may skip the receipts.
 const why = h?.why ?? null
 const anniversary = why?.anniversary ?? null
-const lawTest = d.law_test
+
+// The series: every committed day file, read once at build time. A calendar day without a file
+// and a day whose fetch failed are gaps in it, never bridged (src/lib/invoked/series.ts).
+const archive = import.meta.glob('/src/data/invoked/2*.json', { eager: true, import: 'default' })
+const series = standoutSeries(archive)
+const todayYearDays = h ? series.days.filter((x) => x.standout?.year === h.year).length : 0
+const recurringList = series.recurring
+  .slice(0, 4)
+  .map((r, i) => (i === 0 ? `${r.year} (${r.days} days)` : `${r.year} (${r.days})`))
+  .join(', ')
+const onceOnly = series.distinctYears - series.recurring.length
+
+// The decay test that is not built, and the arithmetic that says why (src/lib/invoked/decay.ts).
+const register = registerJson as InvokedRegister
+const decay = decayArithmetic(register, archive)
+const law = lawReading(d.law_test)
+const eventCount = register.events.length
+// "Every one of the 20 events was", "None of the 20 events was", "14 of the 20 events were"
+const ofEvents = (k: number, singular: string, plural: string) =>
+  k === eventCount
+    ? `Every one of the ${eventCount} events ${singular}`
+    : k === 0
+      ? `None of the ${eventCount} events ${singular}`
+      : `${k} of the ${eventCount} events ${k === 1 ? singular : plural}`
 ---
 
+{/* The main landmark the skip link points at (#main), as on the other experiment pages. It also
+    puts the article in block flow: as a direct child of the body's flex column, `mx-auto` sized
+    the article to its widest figure, and on a phone the whole page scrolled sideways. */}
+<main id="main" class="flex-1">
 <article class="mx-auto max-w-3xl px-4 py-14">
   <SheetHead title="Invoked Past">
     <p class="mt-2 max-w-xl text-fg-muted">
@@ -85,6 +119,13 @@ const lawTest = d.law_test
       {h.invoked_by.length > 0 && (
         <p class="mt-2 font-mono text-xs text-fg-faint">
           Invoked by {invokedByLabel(h.invoked_by, 6)} · {decimal(h.per_1000_articles, 1)} mentions per 1,000 articles
+        </p>
+      )}
+      {series.measured > 1 && (
+        <p class="mt-2 font-mono text-xs text-fg-faint">
+          Across the archive, {h.year} has been the standout on {todayYearDays} of {series.measured} measured days —
+          {' '}<a href="#series" class="underline decoration-line underline-offset-2 hover:text-fg">the series</a> says
+          what one day cannot.
         </p>
       )}
       <p class="mt-3 text-sm text-fg-muted">
@@ -278,6 +319,38 @@ const lawTest = d.law_test
     </section>
   )}
 
+  {series.measured > 0 && (
+    <section id="series" class="mb-12">
+      <h2 class="kicker">
+        The standout, day by day — {series.days.length} days of the archive
+      </h2>
+      <p class="mt-3 text-fg-muted">
+        A single day names the year that breaks the ramp; only the archive can say whether that year breaks it again.
+        Since {humanDate(series.first ?? d.date)}, {series.withStandout} of {series.measured} measured days had a
+        standout{series.quiet > 0 ? ` and ${series.quiet} were quiet` : ''}{series.failed + series.missing > 0
+          ? `, and ${series.failed + series.missing} calendar days carry no measurement at all`
+          : ''}. Between them they named {series.distinctYears} different years, {onceOnly} of them exactly
+        once{series.recurring.length > 0 ? `; ${series.recurring.length} stood out on more than one day, led by ${recurringList}` : ''}.
+        {series.longestRun && (
+          <>
+            {' '}The longest run is {series.longestRun.year}: {series.longestRun.days} consecutive days, from
+            {' '}{shortDay(series.longestRun.from)} to {shortDay(series.longestRun.to)}.
+          </>
+        )}
+        {series.anniversaries > 0 && (
+          <>
+            {' '}On {`${series.anniversaries} ${series.anniversaries === 1 ? 'day' : 'days'}`} the standout's most-named
+            exact date fell on the record's own calendar day — an anniversary by the instrument's arithmetic, and ringed
+            in the figure.
+          </>
+        )}
+      </p>
+      <div class="mt-4">
+        <InvokedSeriesFigure series={series} />
+      </div>
+    </section>
+  )}
+
   {!failed && d.most_invoked && (
     <section class="mb-12 border-l-2 border-line pl-5">
       <h2 class="kicker">
@@ -293,13 +366,15 @@ const lawTest = d.law_test
         ramp toward the newest available year is the law rather than the news.
         {maxAtCeiling ? (
           <>
-            {' '}The maximum sits on that wall tonight, which is the usual outcome — it is published here as an
-            artefact of the source rather than as a finding about the past.
+            {' '}The maximum sits on that wall tonight — as it did on {series.maximumAtCeiling} of the
+            {' '}{series.measured} measured days in the archive — and it is published here as an artefact of the source
+            rather than as a finding about the past.
           </>
         ) : (
           <>
             {' '}Tonight the maximum does <strong>not</strong> sit on that wall: {d.most_invoked.year} outranks
-            the ceiling year {ceiling}, which the ramp alone does not account for. The wall is unchanged and
+            the ceiling year {ceiling}, which the ramp alone does not account for (across the archive the maximum sat
+            on the wall on {series.maximumAtCeiling} of {series.measured} measured days). The wall is unchanged and
             still drawn as the empty band it is; what changed is that a year below it drew more invocation than
             the newest year the source will emit. Whether that is a story about {d.most_invoked.year} or about a
             thin day at the ceiling is not settled by this count, and the page does not settle it.
@@ -390,67 +465,116 @@ const lawTest = d.law_test
 
   <section class="mb-12">
     <h2 class="kicker">
-      The decay law: still pending, and saying so
+      The decay law: not built — and why this archive cannot build it
     </h2>
     <p class="mt-3 text-fg-muted">
-      The test hypothesis of this instrument is the biexponential decay of collective memory —
+      The test hypothesis of this instrument was the biexponential decay of collective memory —
       <a href="https://www.nature.com/articles/s41562-018-0474-5" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Candia et&nbsp;al. 2019</a>:
-      attention to an event falls in two phases, a fast communicative one and a slow cultural one. Testing it
-      needs a time series of tracked events, and this archive does not have one yet.
+      attention to an item falls in two phases, a fast communicative one and a slow cultural one. The plan was to
+      fit that curve to the daily mentions of the tracked events, a register of {eventCount} exact dates founded on
+      {' '}{humanDate(register.founded)} from the archive's first {decay.foundingDays} days. That fit is not built,
+      and this page no longer promises it.
+    </p>
+    <p class="mt-3 text-fg-muted">
+      <strong>The clock is wrong by a factor of years.</strong> Candia's curve describes attention as a function of an
+      item's age, measured in years: in the paper's own data, communicative memory lasts about five and a half years
+      for songs and two to three decades for biographies. The tracked events are {decay.minAge} to {decay.maxAge} years
+      old, and the {decay.spanDays} days since the register was founded have moved each of them by
+      {' '}{decimal(decay.ageShiftYears, 2)} of a year. Over a stretch that short the law predicts a line that is
+      practically flat; what the series records instead is the news.
+    </p>
+    <p class="mt-3 text-fg-muted">
+      <strong>And the news is what a fit would read.</strong> {ofEvents(decay.belowFoundingRate, 'was', 'were')} invoked
+      less per day since founding than in the window that chose them — the selection effect the register named when
+      it was founded, now measured. {ofEvents(decay.mostlySilent, 'went', 'went')} unmentioned on most of the
+      {' '}{decay.observedDays} days since.
+      {decay.burst && (
+        <>
+          {' '}The busiest day any of them had was a burst: {count(decay.burst.mentions)} mentions of
+          {' '}{humanDate(decay.burst.event)} on {humanDate(decay.burst.date)}, a date unmentioned on
+          {' '}{decay.burst.silentDays} of those {decay.burst.observedDays} days.
+        </>
+      )}
+      {' '}A curve fitted to this would turn anniversaries, news cycles and that selection effect into decay
+      parameters: a number, not a test.
+    </p>
+    <p class="mt-3 text-fg-muted">
+      <strong>One day's age profile cannot stand in.</strong> Fitting the decay to a single day's histogram of ages
+      was rejected when the instrument was designed, and it stays rejected: that curve mixes how many datable events
+      each year produced, and how large they were, with how fast they fade — several unknowns in one line.
+      {decay.ceiling !== null && decay.youngestInvocableAge !== null && (
+        <>
+          {' '}And the source emits no year after {decay.ceiling}, so no age under {decay.youngestInvocableAge} years
+          reaches this instrument: the young ages, where the fast phase of Candia's curve lives, are exactly the ones
+          missing.
+        </>
+      )}
+    </p>
+    <p class="mt-3 text-sm text-fg-muted">
+      So the record says <code class="text-xs">not_built</code>, and says why, every night. The register is still
+      counted — the table below — because the counts are the honest record of what happened to these dates. What
+      they are not is a decay curve.
     </p>
     <div class="mt-4 border-l-2 border-line pl-5">
-      <p class="kicker">Status</p>
-      <p class="mt-2 font-mono text-sm">{lawTest.status}</p>
-      {lawTest.hypothesis && <p class="mt-2 text-sm text-fg-muted">Hypothesis: {lawTest.hypothesis}.</p>}
-      <p class="mt-2 text-sm text-fg-muted">Why not yet: {lawTest.reason}.</p>
-      {lawTest.register_days_needed !== undefined && (
-        <p class="mt-2 font-mono text-xs text-fg-faint">
-          Archived days: {count(lawTest.register_days_have ?? 0)} of {count(lawTest.register_days_needed)} ·
-          first possible fit: {lawTest.first_possible ?? 'not datable until the register exists'}
-        </p>
+      <p class="kicker">What tonight's record says</p>
+      {law.kind === 'not_built' && (
+        <>
+          <p class="mt-2 font-mono text-sm">not_built{law.since ? ` · since ${law.since}` : ''}</p>
+          <p class="mt-2 text-sm text-fg-muted">In the pipeline's own words: {law.reason}.</p>
+        </>
       )}
-      {lawTest.valid_days_so_far !== undefined && (
-        <p class="mt-2 font-mono text-xs text-fg-faint">
-          Valid observation days since founding: {count(lawTest.valid_days_so_far)} ·
-          first possible fit: {lawTest.first_possible ?? '—'}
-        </p>
+      {law.kind === 'withdrawn' && (
+        <>
+          <p class="mt-2 font-mono text-sm">pending</p>
+          <p class="mt-2 text-sm text-fg-muted">
+            This record was written before the promise was withdrawn, and it still reads
+            {' '}<code class="text-xs">pending</code>{law.firstPossible ? `, with a first possible fit on ${law.firstPossible}. That date is not a plan` : '. That state is not a plan'}:
+            {' '}no fit followed it, none is planned, and records from the next run on carry
+            {' '}<code class="text-xs">not_built</code> with their own reason.
+          </p>
+        </>
+      )}
+      {law.kind === 'other' && (
+        <>
+          <p class="mt-2 font-mono text-sm">{law.status}</p>
+          <p class="mt-2 text-sm text-fg-muted">{law.reason}.</p>
+        </>
       )}
     </div>
-    {d.tracked_events === null ? (
-      <p class="mt-4 text-sm text-fg-muted">
-        The tracked-event register — the {d.method.register_size} exact dates whose decay this instrument will
-        follow — is deliberately <strong>not founded</strong> yet. Founding it today would freeze whatever this
-        one day happens to commemorate as the world's canon; the first run of this instrument fell on 15 August,
-        and a single-day rule would have written one country's anniversaries into the register forever. It is
-        founded instead from the first {d.method.register_min_days} archived days, and it will carry the
-        selection effect it cannot escape: those events are chosen <em>because</em> they were the founding
-        window's most-invoked dates, so that window is excluded from any fit and the series starts the day after.
+    <div class="mt-4 overflow-x-auto">
+      <p class="font-mono text-[11px] text-fg-faint">
+        The register, counted: founded {register.founded} from {register.founding_window[0]} – {register.founding_window[1]};
+        observed since on {decay.observedDays} measured days, the founding day excluded by its own selection effect.
       </p>
-    ) : (
-      <div class="mt-4 overflow-x-auto">
-        <p class="font-mono text-[11px] text-fg-faint">
-          Register founded {d.tracked_events.founded}{d.tracked_events.founding_day_excluded ? ' — founding day excluded from any fit by its own selection effect' : ''}
-        </p>
-        <table class="mt-2 w-full border-collapse text-sm tabular-nums">
-          <thead>
-            <tr class="border-b border-line text-left kicker">
-              <th class="py-2 pr-3 font-medium">Event date</th>
-              <th class="py-2 pr-3 text-right font-medium">age</th>
-              <th class="py-2 text-right font-medium">mentions today</th>
+      <table class="mt-2 w-full border-collapse text-sm tabular-nums">
+        <thead>
+          <tr class="border-b border-line text-left kicker">
+            <th class="py-2 pr-3 font-medium">Event date</th>
+            <th class="py-2 pr-3 text-right font-medium">age</th>
+            <th class="py-2 pr-3 text-right font-medium" title="mentions per day across the founding window that selected it">per day, founding</th>
+            <th class="py-2 pr-3 text-right font-medium" title="mentions per day across the measured days since founding">per day, since</th>
+            <th class="py-2 pr-3 text-right font-medium" title="days since founding on which it was not mentioned at all">days unmentioned</th>
+            <th class="py-2 text-right font-medium">busiest day since</th>
+          </tr>
+        </thead>
+        <tbody>
+          {decay.events.map((e) => (
+            <tr class="border-b border-line/50">
+              <td class="py-1.5 pr-3">{humanDate(e.date)}</td>
+              <td class="whitespace-nowrap py-1.5 pr-3 text-right font-mono text-xs">{count(e.age)} y</td>
+              <td class="py-1.5 pr-3 text-right font-mono text-xs">{decimal(e.foundingPerDay, 1)}</td>
+              <td class="py-1.5 pr-3 text-right font-mono text-xs">{e.sincePerDay === null ? '—' : decimal(e.sincePerDay, 1)}</td>
+              <td class="py-1.5 pr-3 text-right font-mono text-xs">{e.silentDays} of {e.observedDays}</td>
+              <td class="py-1.5 text-right font-mono text-xs">{e.busiest ? `${e.busiest.date} (${count(e.busiest.mentions)})` : '—'}</td>
             </tr>
-          </thead>
-          <tbody>
-            {d.tracked_events.events.map((e) => (
-              <tr class="border-b border-line/50">
-                <td class="py-1.5 pr-3">{humanDate(e.date)}</td>
-                <td class="py-1.5 pr-3 text-right font-mono text-xs">{count(e.age_years)} y</td>
-                <td class="py-1.5 text-right font-mono text-xs">{count(e.mentions)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    )}
+          ))}
+        </tbody>
+      </table>
+      <p class="mt-2 font-mono text-[11px] text-fg-faint">
+        Read from <code>src/data/invoked/register.json</code> and the day files since founding: a rate is mentions divided
+        by days, nothing smoothed, and a day whose record does not carry an event is not counted as a zero for it.
+      </p>
+    </div>
   </section>
 
   <section class="mb-12">
@@ -467,8 +591,8 @@ const lawTest = d.law_test
         bar, and any busy year is a container of several. Year-resolution mentions are what this field
         supplies in quantity, so the instrument reports invoked <em>years</em>, publishes what the articles
         invoking the standout year were about — and still leaves the naming of the event to whoever reads
-        it. The register will hold dates, not names, and only once an archive rather than a single day has
-        chosen them.
+        it. The register of tracked events holds dates, not names, chosen on {register.founded} by the
+        archive's first {decay.foundingDays} days rather than by a single day.
       </li>
       <li>
         <strong>Lift is a statement about today, not a verdict on the year.</strong> A theme appears because
@@ -488,9 +612,10 @@ const lawTest = d.law_test
       <li>
         <strong>The {ceiling} wall is the source's, and it is not papered over.</strong> No year later
         than {ceiling} is emitted at all, so the youngest age bucket is structurally empty and the ramp runs
-        toward the ceiling year. That ramp usually carries the raw maximum to the wall as well — {maxAtCeiling
-          ? 'as it does tonight'
-          : `tonight it does not, and ${d.most_invoked?.year} leads instead`}. Which of the two holds is read
+        toward the ceiling year. That ramp carried the raw maximum to the wall on {series.maximumAtCeiling} of the
+        {' '}{series.measured} measured days in the archive — {maxAtCeiling
+          ? 'tonight included'
+          : `not tonight, when ${d.most_invoked?.year} leads instead`}. Which of the two holds is read
         off the file each night and said plainly, never assumed; the missing stretch is drawn into the figure
         rather than cropped out of it.
       </li>
@@ -520,8 +645,9 @@ const lawTest = d.law_test
       </li>
       <li>
         <a href="https://www.nature.com/articles/s41562-018-0474-5" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Candia et&nbsp;al. 2019, “The universal decay of collective memory and attention”</a>
-        — Nature Human Behaviour. The decay law itself, on papers, patents, songs and films. A static paper, and
-        this instrument's test hypothesis rather than its competitor.
+        — Nature Human Behaviour. The decay law itself, on papers, patents, songs and films. A static paper, and the
+        test hypothesis this instrument set out to run forward rather than its competitor — the decay section above
+        says why its daily archive cannot.
       </li>
       <li>
         <a href="https://www.science.org/doi/10.1126/science.1199644" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Michel et&nbsp;al. 2011, culturomics</a>
@@ -557,3 +683,4 @@ const lawTest = d.law_test
     </p>
   </SheetFoot>
 </article>
+</main>

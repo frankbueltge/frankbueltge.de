@@ -1,13 +1,21 @@
 ---
 /** Method sheet for Invoked Past (Werkgruppe §3.5 duty). Plain English, static. */
 import data from '@/data/invoked/latest.json'
+import registerJson from '@/data/invoked/register.json'
 import type { InvokedData } from '@/lib/invoked/types'
-import { count, percent, standoutWindow } from '@/lib/invoked/format'
+import { count, decimal, percent, standoutWindow } from '@/lib/invoked/format'
+import { standoutSeries } from '@/lib/invoked/series'
+import { decayArithmetic, lawStates, type InvokedRegister } from '@/lib/invoked/decay'
 import MethodSheet from '@/components/experiments/MethodSheet.astro'
 
 const d = data as unknown as InvokedData
 const neighbourhood = standoutWindow(d.method.standout)
 const ceiling = d.stats.max_year_observed
+const archive = import.meta.glob('/src/data/invoked/2*.json', { eager: true, import: 'default' })
+const series = standoutSeries(archive)
+const register = registerJson as InvokedRegister
+const decay = decayArithmetic(register, archive)
+const states = lawStates(archive)
 const rules: [string, string][] = [
   ['a — year window', d.method.rules.a_year_window],
   ['b — self-reference', d.method.rules.b_self_reference],
@@ -170,23 +178,44 @@ const resolutions = Object.entries(d.method.resolution_codes)
       {d.method.inherited_ceiling}
     </p>
     <p class="mt-3 text-sm text-fg-muted">
-      Practically: the most-invoked year is structurally the ceiling year, the youngest age bucket is
-      structurally empty, and both say so wherever they appear. The figure draws the missing stretch as an
-      empty hatched band, because a gap that is not drawn reads as a press that stopped remembering.
+      Practically: the youngest age bucket is structurally empty, and the ramp toward the wall carried the most-invoked
+      year to the ceiling year on {series.maximumAtCeiling} of the {series.measured} measured days in the archive — read
+      off each day file rather than assumed. Both say so wherever they appear. The figures draw the
+      missing stretch as an empty hatched band, because a gap that is not drawn reads as a press that stopped
+      remembering.
     </p>
   </section>
 
   <section class="mb-10">
-    <h2 class="kicker">The register, and why it waits</h2>
+    <h2 class="kicker">The register, and the decay test that is not built</h2>
     <p class="mt-3 text-sm text-fg-muted">
-      The decay law (Candia et&nbsp;al. 2019) is the test hypothesis, and testing it needs a series of tracked
-      events. The register of {d.method.register_size} events is founded from the first
-      {' '}{d.method.register_min_days} archived days — never from a single day, because this instrument's first
-      run fell on 15 August and a one-day rule would have frozen one country's anniversaries into it as though
-      they were the world's canon. The founding window is then excluded from any fit by its own selection
-      effect (those dates were chosen <em>because</em> they led that window), and the series starts the day
-      after founding. Until then <code class="text-xs">law_test</code> ships as <code class="text-xs">pending</code>,
-      naming what it still lacks — a number produced from one day would be theatre.
+      The register of {d.method.register_size} tracked events was founded on {register.founded} from the first
+      {' '}{d.method.register_min_days} archived days ({register.founding_window[0]} to {register.founding_window[1]}) —
+      never from a single day, because this instrument's first run fell on 15 August and a one-day rule would have
+      frozen one country's anniversaries into it as though they were the world's canon. It is frozen, never
+      re-ranked, and every day file since counts its events' mentions.
+    </p>
+    <p class="mt-3 text-sm text-fg-muted">
+      The decay law (Candia et&nbsp;al. 2019) was the test hypothesis: its biexponential curve was to be fitted to
+      those daily counts. <strong>That test is not built</strong> (declared 2026-10-17), because this archive cannot
+      carry it. The curve is a function of an item's age in years; the tracked events are {decay.minAge} to
+      {' '}{decay.maxAge} years old, and the {decay.spanDays} days since founding have moved each of them by
+      {' '}{decimal(decay.ageShiftYears, 2)} of a year. What the counts record over such a stretch is the news — the
+      selection effect of a register chosen at its peak, silent days, anniversary tails and bursts — and a fit would
+      read all of it as decay. Fitting the curve to one day's age profile instead was rejected at design time and stays
+      rejected: that histogram mixes how many datable events each year produced with how fast they fade, and the
+      {' '}{ceiling} wall removes every age under {decay.youngestInvocableAge ?? '—'} years, where the curve's fast phase lives.
+    </p>
+    <p class="mt-3 text-sm text-fg-muted">
+      In the record: {states.lastPending
+        ? `day files up to ${states.lastPending} carry `
+        : 'no day file carries '}<code class="text-xs">law_test.status: pending</code>{states.lastPending ? ' with a first-possible date' : ''}
+      {' '}— a promise that is withdrawn, and named as withdrawn on the instrument page rather than repeated.
+      {states.firstNotBuilt
+        ? ` Day files from ${states.firstNotBuilt} on carry `
+        : ' The next day file the pipeline writes carries '}<code class="text-xs">not_built</code>, the date of that
+      decision, and a reason the pipeline writes for the day it describes, with that day's arithmetic. No date for a
+      fit is promised.
     </p>
   </section>
 
@@ -194,7 +223,7 @@ const resolutions = Object.entries(d.method.resolution_codes)
     <h2 class="kicker">Known limits, disclosed</h2>
     <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-fg-muted">
       <li>The date extraction is GDELT's, and every error mode of it is inherited; the four rules trim, they do not repair.</li>
-      <li>An invoked year is not an invoked event: 1989 carries Tiananmen and the Wall in one bar. Since v1.1 the file shows what the invoking articles were about; it still does not name the event, and the register that will track dates over time waits for an archive.</li>
+      <li>An invoked year is not an invoked event: 1989 carries Tiananmen and the Wall in one bar. Since v1.1 the file shows what the invoking articles were about; it still does not name the event, and the register that tracks exact dates over time counts them as counts, not as a decay curve.</li>
       <li>The theme, person and organisation extraction is GDELT's own, published unedited: the person list regularly holds phrases that are not people and the organisation list things that are not organisations. Filtering them would be this instrument's opinion, so the looseness is disclosed instead of tidied.</li>
       <li>Lift's denominator is the day's articles that carry any theme at all — not every article scanned — so it compares like with like; it is a statement about this day's press, and says nothing about how the year is invoked in general.</li>
       <li>Evidence is published for the standout year only. Every year's evidence is buffered during the pass and all but one is discarded, so the file stays a day file rather than a corpus.</li>
@@ -202,7 +231,7 @@ const resolutions = Object.entries(d.method.resolution_codes)
       <li>English-monitored stream only: anniversaries observed mainly in other languages are underrepresented. Translation stream = named v2.</li>
       <li>Source country is the country of the newsroom, from GDELT's domain lookup ({percent(d.stats.articles_country_mapped / Math.max(1, d.stats.articles_scanned))} of today's articles mapped) — never the country a past belongs to.</li>
       <li>Per-1,000 rates are per article scanned, not per article carrying a date ({percent(d.stats.articles_with_dates_share)} of articles carry one), so the denominator stays the same on every day and comparisons across days survive.</li>
-      <li>No baseline yet: day-against-normal scores need an archive, and this one starts accumulating with the file this page is built from.</li>
+      <li>No baseline yet: the archive has accumulated since {series.first ?? d.date}, and the instrument page now reads all of it for the series of standout years, as recorded — but no day-against-normal score is computed from it.</li>
     </ul>
   </section>
 

@@ -1,0 +1,81 @@
+/* Balance — the series figure: small multiples of the daily tone gap across the archive.
+
+   No identity colour here, by rule rather than by thrift. The page's dumbbell gives the two
+   POOLS their identities (balance-poles: its own press, the world's press); this figure draws
+   neither pool, it draws the GAP between them, and the balance-poles record says plainly that
+   direction carries no colour — a dark self-image is not a status. So direction is geometry
+   (above or below a dashed zero line, counted as ▲/▼), significance is fill (filled where the
+   day's interval excludes zero, hollow where it does not), absence is a tick on a rail below
+   the band, and a day without a measurement is a hatched column. Every value below is one of
+   the frame's ink tokens, so both themes and every skin flow through unchanged, and there is
+   no PALETTE marker because there is no palette. Marks wear classes: the site's CSP discards
+   style="" attributes. */
+
+.bals-svg {
+  min-width: 600px;
+}
+
+/* the band furniture: recessive, so the marks carry the drawing */
+.bals-grid { stroke: var(--color-fg-faint); stroke-width: 1; opacity: 0.14; }
+.bals-zero { stroke: var(--color-fg-muted); stroke-width: 1; opacity: 0.6; stroke-dasharray: 3 3; }
+.bals-axis { stroke: var(--color-fg-muted); stroke-width: 1; opacity: 0.5; }
+.bals-hatch-line { stroke: var(--color-fg-faint); stroke-width: 1; opacity: 0.3; }
+
+/* the day's interval, and the day's gap on it */
+.bals-ci { fill: none; stroke: var(--color-fg-muted); stroke-width: 1.4; opacity: 0.55; transition: opacity 120ms ease; }
+.bals-dot { stroke-width: 1.2; }
+.bals-sig { fill: var(--color-fg); stroke: var(--color-fg); }
+.bals-ns { fill: var(--color-bg); stroke: var(--color-fg-muted); }
+
+/* absent that day: below the article floor in one of the two pools */
+.bals-absent { stroke: var(--color-fg-muted); stroke-width: 1.4; }
+
+/* text wears text tokens */
+.bals-name { fill: var(--color-fg-muted); font-size: 12px; transition: fill 120ms ease; }
+.bals-sub,
+.bals-count,
+.bals-tick,
+.bals-head { fill: var(--color-fg-faint); font-size: 10px; }
+
+/* a row sharpens under the pointer or the keyboard; nothing moves */
+.bals-row { outline: none; }
+.bals-row:hover .bals-name,
+.bals-row:focus-visible .bals-name { fill: var(--color-fg); }
+.bals-row:hover .bals-ci,
+.bals-row:focus-visible .bals-ci { opacity: 0.9; }
+.bals-row:focus-visible .bals-name { text-decoration: underline; }
+
+/* legend keys: the same marks, at legend size */
+.bals-key { display: inline-block; overflow: visible; }
+
+/* the tables under the figure: the shared primitive ships structure only (ADR 0010) */
+.bals-tables .dv-table-fallback { margin-top: 0.75rem; }
+.bals-tables .dv-table-fallback > summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+.bals-tables .dv-table-fallback > summary:hover { color: var(--color-fg); }
+.bals-tables .dv-table { margin-top: 0.75rem; font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.bals-tables .dv-table th {
+  padding: 0.35rem 0.9rem 0.35rem 0;
+  border-bottom: 1px solid var(--color-line);
+  font-weight: 500;
+  color: var(--color-fg-muted);
+  white-space: nowrap;
+}
+.bals-tables .dv-table td {
+  padding: 0.3rem 0.9rem 0.3rem 0;
+  border-bottom: 1px solid var(--color-line);
+  font-family: var(--font-mono);
+}
+.bals-tables .dv-table tr > :last-child { padding-right: 0; }
+.bals-tables .dv-prov { margin-top: 0.5rem; font-family: var(--font-mono); font-size: 11px; color: var(--color-fg-faint); }
+
+@media (prefers-reduced-motion: reduce) {
+  .bals-ci,
+  .bals-name { transition: none; }
+}

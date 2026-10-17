@@ -39,15 +39,20 @@ not available from this field and is NOT substituted from anywhere else: a
 title-level extraction would be a different population, and blending populations
 is how instruments start lying.
 
-WHAT v1 DOES NOT CLAIM. Candia's biexponential decay law is this instrument's test
-hypothesis, and testing it needs a time series this archive does not have on its
-first day. `law_test` therefore ships as `pending`, saying what it still lacks.
-The tracked-event register is likewise NOT founded on day one: this instrument's
-first run fell on 15 August, and a single-day rule would have frozen India's
-independence dates into the register as though they were the world's canon. It is
-founded from the first REGISTER_MIN_DAYS of archive instead, and carries the
-selection effect it cannot escape — the events were chosen *because* they were the
-founding window's most-invoked dates, so that window is excluded from any fit.
+WHAT THIS INSTRUMENT DOES NOT CLAIM. Candia's biexponential decay law was this
+instrument's test hypothesis, to be fitted to the tracked events' daily mentions once
+the register existed. Until 2026-10-17 `law_test` shipped as `pending` with a
+first-possible date. That promise is withdrawn: the test is NOT BUILT, and every record
+since says so and why (see law_test_block). In short, Candia's curve is a function of an
+item's age in years, the tracked events are decades old, and a daily series moves each
+of them by one day per day — a fit would read the news cycle, anniversaries and the
+register's own selection effect as decay.
+The tracked-event register is NOT founded on day one: this instrument's first run fell
+on 15 August, and a single-day rule would have frozen India's independence dates into
+the register as though they were the world's canon. It is founded from the first
+REGISTER_MIN_DAYS of archive instead, and carries the selection effect it cannot escape
+— the events were chosen *because* they were the founding window's most-invoked dates.
+It is still counted every night, as counts.
 
 WHY, WITH RECEIPTS — AND STILL NO NAMING (v1.1). v1 computed the standout year
 carefully and then said nothing about why it stood out, on the grounds that the
@@ -104,6 +109,8 @@ WHY_HEADLINES = 5
 STANDOUT_WINDOW = 5       # +/- years of neighbours forming a year's local baseline
 STANDOUT_FLOOR = 30       # a year needs this many mentions before it can be the standout
 STANDOUT_MIN_RATIO = 2.0  # ... and must at least double its neighbourhood, or it is just a big year
+LAW_HYPOTHESIS = "Candia et al. 2019, biexponential decay of collective attention"
+LAW_NOT_BUILT_SINCE = "2026-10-17"  # the day the `pending` promise was withdrawn (see law_test_block)
 
 # Rule (d): years the spike's false-positive review found to be systematically wrong.
 # The 2026-08-14 review inspected eight random samples and found all eight genuine, so
@@ -565,34 +572,50 @@ def themes_by_lift(in_year: Counter, overall: Counter, n_year: int, n_day: int) 
 
 
 def law_test_block(register: dict | None, day: str) -> dict:
-    """Candia's biexponential is the test hypothesis, and it needs a series. Saying so is
-    the finding on day one; producing a number from a single day would be theatre."""
-    if register is None:
-        # Exactly the days `maybe_found_register` counted: the committed archive, which at
-        # this point does not include the day this run is about to write. Counting that day
-        # too made the record contradict its own rule on the thirtieth run — it read "needs
-        # 30 ... holds 30" while still pending, because founding had seen only 29.
-        have = len(archive_days())
-        return {
-            "status": "pending",
-            "hypothesis": "Candia et al. 2019, biexponential decay of collective attention",
-            "reason": (f"the tracked-event register is not founded yet: it needs {REGISTER_MIN_DAYS} "
-                       f"archived days so that no single day's anniversaries can define it, and the "
-                       f"archive holds {have}"),
-            "register_days_needed": REGISTER_MIN_DAYS,
-            "register_days_have": have,
-            "first_possible": None,
-        }
-    start = datetime.strptime(register["founded"], "%Y-%m-%d") + timedelta(days=1)
-    have = (datetime.strptime(day, "%Y-%m-%d") - start).days + 1
+    """The decay test is NOT BUILT — and every record says why, with that day's arithmetic.
+
+    The design (spec of 2026-08-14) was to fit Candia et al.'s biexponential decay of
+    collective attention to each tracked event's daily mentions once the register existed,
+    and until 2026-10-17 this block shipped `pending` with a first-possible date. That date
+    passed with nothing that could honestly have been fitted, because the clock is wrong:
+    Candia's curve describes attention as a function of an item's AGE, measured in years
+    (communicative memory lasts years to decades in the paper's own data), the tracked events
+    are decades old, and a daily archive moves each of them by one day per day. Over weeks or
+    months the law predicts a practically flat line; what the series records instead is the
+    news — anniversary tails, bursts, silent days, and the register's own selection effect
+    (every event was chosen at its peak). A fit would turn those into decay parameters: a
+    number, not a test.
+
+    Fitting the curve to one day's age profile instead stays rejected, as it was when the
+    instrument was designed: that histogram mixes how many datable events each year produced,
+    and how large they were, with how fast they fade — and the extractor's inherited ceiling
+    removes the young ages where the curve's fast, communicative phase lives.
+
+    No date is promised. The register is still counted every night, as counts. A failed fetch
+    writes the same block: whether the test can be built does not depend on tonight's download.
+    """
+    this_year = int(day[:4])
+    if register:
+        ages = [this_year - int(e["date"][:4]) for e in register["events"]]
+        span = max(0, (datetime.strptime(day, "%Y-%m-%d")
+                       - datetime.strptime(register["founded"], "%Y-%m-%d")).days)
+        clock = (f"the {len(ages)} tracked events are {min(ages)} to {max(ages)} years old and Candia's "
+                 f"curve is a function of an item's age in years, while the {span} "
+                 f"{'day' if span == 1 else 'days'} since the register was founded have moved each of "
+                 f"them by {span / 365.25:.2f} of a year, so a fit to this series would read the news "
+                 "cycle, anniversaries and the register's own selection effect as decay")
+    else:
+        clock = ("Candia's curve is a function of an item's age in years, and a daily archive moves an "
+                 "event's age by one day per day, so a fit to weeks or months of daily mentions would "
+                 "read the news cycle and anniversaries as decay")
     return {
-        "status": "pending",
-        "hypothesis": "Candia et al. 2019, biexponential decay of collective attention",
-        "reason": ("a decay curve needs a time series; this archive has "
-                   f"{max(0, have)} valid observation day(s) since the register was founded "
-                   "(founding day excluded by its own selection effect)"),
-        "first_possible": (start + timedelta(days=29)).strftime("%Y-%m-%d"),
-        "valid_days_so_far": max(0, have),
+        "status": "not_built",
+        "since": LAW_NOT_BUILT_SINCE,
+        "hypothesis": LAW_HYPOTHESIS,
+        "reason": (clock + "; fitting one day's age profile instead stays rejected, because it mixes how "
+                   "many datable events each year produced with how fast they fade, and the extractor's "
+                   "inherited ceiling (no year >= 2015) removes the young ages where the curve's fast "
+                   "phase lives"),
     }
 
 
@@ -655,7 +678,7 @@ def main() -> int:
             "generated_at": now.isoformat(timespec="seconds"), "date": day,
             "method": method_block(), "headline": None, "most_invoked": None, "years": [],
             "top_years": [], "age_profile": [], "exact_dates_top": [], "tracked_events": None,
-            "law_test": {"status": "pending", "reason": "source unreachable"},
+            "law_test": law_test_block(load_register(), day),
             "stats": stats, "source": source_block(now),
             "note": "Source unreachable — finding omitted (a gap is a gap, never bridged).",
         }

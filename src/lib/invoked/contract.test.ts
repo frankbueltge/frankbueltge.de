@@ -36,7 +36,8 @@ describe('invoked latest.json contract', () => {
       expect(d.exact_dates_top).toHaveLength(0)
       expect(d.tracked_events).toBeNull()
       expect(d.note).toBeTruthy()
-      expect(d.law_test.status).toBe('pending')
+      // records before 2026-10-17 wrote `pending` here; since then the same `not_built` as any day
+      expect(['pending', 'not_built']).toContain(d.law_test.status)
     } else {
       expect(d.stats.articles_scanned).toBeGreaterThan(0)
       expect(d.years.length).toBeGreaterThan(0)
@@ -205,6 +206,13 @@ describe('invoked latest.json contract', () => {
   it('the law test is a state with a reason, never a placeholder', () => {
     expect(d.law_test.status).toBeTruthy()
     expect(d.law_test.reason.length).toBeGreaterThan(10)
+    if (d.law_test.status === 'not_built') {
+      // the state since 2026-10-17: it names the hypothesis it does not test, and promises no date
+      expect(d.law_test.hypothesis).toMatch(/Candia/)
+      expect(d.law_test.since).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+      expect(d.law_test.first_possible).toBeUndefined()
+      return
+    }
     if (d.tracked_events === null && !failed) {
       // Not founded yet: the record must say what it is waiting for, and the wait must be real.
       expect(d.law_test.register_days_needed).toBe(d.method.register_min_days)

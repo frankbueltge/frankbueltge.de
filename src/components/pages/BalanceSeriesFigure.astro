@@ -1,0 +1,169 @@
+---
+/** Balance — the series figure: the daily tone gap, across every committed day file, of the
+ *  countries the article floor admits most often. Small multiples on ONE shared tone scale: a
+ *  row per country, a slot per calendar day, and per day the gap (its own press minus the world's
+ *  press) on the bootstrap 95% interval that day's file recorded — filled where the interval
+ *  excludes zero, hollow where it does not. A tick on the rail under a row is a day the country
+ *  fell below the floor: absent, never zero. A hatched column is a day without a measurement:
+ *  a gap, never bridged. Geometry and every number from src/lib/balance/series.ts (unit-tested
+ *  against the archive itself); ink tokens only (balance-series.css says why). Interaction: a
+ *  native <title> on every row and every mark, hover/focus sharpening; the tables below the
+ *  figure carry every value it draws. */
+import '../../styles/balance-series.css'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { shortDay } from '@/lib/archive/calendar'
+import { fixed, signed } from '@/lib/balance/format'
+import { buildSeriesFigure, seriesTable, type BalanceSeries, type CountrySeries } from '@/lib/balance/series'
+
+interface Props {
+  series: BalanceSeries
+  rows: CountrySeries[]
+}
+const { series, rows } = Astro.props
+const m = buildSeriesFigure(series, rows)
+const table = seriesTable(series, rows)
+
+const tickLabel = (v: number) => (v > 0 ? `+${v}` : v < 0 ? `−${Math.abs(v)}` : '0')
+const files = series.days.length - series.missing
+const rowTitle = (c: CountrySeries) => {
+  const run = c.longestRun
+  const runText = run
+    ? ` Longest unbroken run: ${run.days} day${run.days === 1 ? '' : 's'}, ${run.direction === 'own' ? 'its own press' : 'the world’s press'} brighter (${shortDay(run.from)} – ${shortDay(run.to)}).`
+    : ''
+  return (
+    `${c.name}: listed on ${c.listed} of ${series.measured} measured days. ` +
+    `Its own press wrote significantly brighter on ${c.ownBrighter}, the world’s press on ${c.worldBrighter}; ` +
+    `not significant on ${c.notSignificant}; below the floor on ${c.absent}. ` +
+    `Median gap ${c.medianGap === null ? '—' : signed(c.medianGap)}.${runText}`
+  )
+}
+const markTitle = (k: { date: string; gap: number; lo: number; hi: number; significant: boolean }) =>
+  `${shortDay(k.date)}: ${signed(k.gap)} [${fixed(k.lo)} … ${fixed(k.hi)}]${k.significant ? '' : ' — not significant'}`
+---
+
+{!m.empty && (
+  <figure class="mb-4">
+    <div class="mb-2 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-[11px] text-fg-muted">
+      <span class="inline-flex items-center gap-1.5">
+        <svg class="bals-key" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+          <line class="bals-ci" x1="6" y1="1" x2="6" y2="11" />
+          <circle class="bals-dot bals-sig" cx="6" cy="6" r="3" />
+        </svg>
+        significant: the day’s 95% interval excludes zero
+      </span>
+      <span class="inline-flex items-center gap-1.5">
+        <svg class="bals-key" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+          <line class="bals-ci" x1="6" y1="1" x2="6" y2="11" />
+          <circle class="bals-dot bals-ns" cx="6" cy="6" r="3" />
+        </svg>
+        not significant
+      </span>
+      <span class="inline-flex items-center gap-1.5">
+        <svg class="bals-key" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+          <line class="bals-absent" x1="6" y1="3" x2="6" y2="9" />
+        </svg>
+        below the floor that day: absent, not zero
+      </span>
+      {m.columns.length > 0 && (
+        <span class="inline-flex items-center gap-1.5">
+          <svg class="bals-key" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+            <rect x="0" y="0" width="12" height="12" fill="url(#bals-hatch)" />
+          </svg>
+          no measurement that day
+        </span>
+      )}
+      <span class="text-fg-faint">▲ / ▼ significant days above / below zero</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <svg
+        class="bals-svg"
+        viewBox={`0 0 ${m.width} ${m.height}`}
+        width="100%"
+        role="img"
+        aria-label={`Small multiples: the daily tone gap between each country’s own press and the world’s press, with the 95% interval each day’s file recorded, for the ${m.rows.length} countries listed most often, ${series.first} to ${series.last}, on one shared scale. Above the dashed zero line its own press wrote brighter; below it, the world’s press.`}
+      >
+        <defs>
+          <pattern id="bals-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line class="bals-hatch-line" x1="0" y1="0" x2="0" y2="6" />
+          </pattern>
+        </defs>
+
+        <text class="bals-head" x={m.plotLeft} y={m.plotTop - 14}>
+          tone gap: its own press minus the world’s press — above zero, its own press writes brighter
+        </text>
+        <text class="bals-head" x={m.plotRight + 8} y={m.plotTop - 14}>sig. days</text>
+
+        {m.columns.map((c) => (
+          <rect x={c.x} y={m.plotTop} width={c.width} height={m.plotBottom - m.plotTop} fill="url(#bals-hatch)">
+            <title>
+              {`${c.date}: ${c.kind === 'failed' ? 'source unreachable — finding omitted' : 'no committed file'}. A gap, never bridged.`}
+            </title>
+          </rect>
+        ))}
+
+        {m.rows.map((r, idx) => (
+          <g class="bals-row" tabindex="0">
+            <title>{rowTitle(r.series)}</title>
+            <text class="bals-name" x="0" y={r.nameY}>{r.series.name}</text>
+            <text class="bals-sub" x="0" y={r.subY}>
+              {`median ${r.series.medianGap === null ? '—' : signed(r.series.medianGap)}`}
+            </text>
+            {r.grid.map((g) => (
+              <line class="bals-grid" x1={m.plotLeft} y1={g.y} x2={m.plotRight} y2={g.y} />
+            ))}
+            <line class="bals-zero" x1={m.plotLeft} y1={r.zeroY} x2={m.plotRight} y2={r.zeroY} />
+            {idx === 0 && (
+              <>
+                {r.grid.map((g) => (
+                  <text class="bals-tick" x={m.plotLeft - 4} y={g.y + 3} text-anchor="end">{tickLabel(g.value)}</text>
+                ))}
+                <text class="bals-tick" x={m.plotLeft - 4} y={r.zeroY + 3} text-anchor="end">0</text>
+              </>
+            )}
+            <path class="bals-ci" d={r.ciPath} />
+            {r.marks.map((k) => (
+              <circle class:list={['bals-dot', k.significant ? 'bals-sig' : 'bals-ns']} cx={k.x} cy={k.y} r={m.dotR}>
+                <title>{markTitle(k)}</title>
+              </circle>
+            ))}
+            {r.absences.map((a) => (
+              <line class="bals-absent" x1={a.x} y1={r.railY - 2.5} x2={a.x} y2={r.railY + 2.5}>
+                <title>{`${shortDay(a.date)}: below the article floor in one of the two pools — absent, not zero`}</title>
+              </line>
+            ))}
+            <text class="bals-count" x={m.plotRight + 8} y={r.upY}>{`▲ ${r.series.ownBrighter}`}</text>
+            <text class="bals-count" x={m.plotRight + 8} y={r.downY}>{`▼ ${r.series.worldBrighter}`}</text>
+          </g>
+        ))}
+
+        <line class="bals-axis" x1={m.plotLeft} y1={m.plotBottom} x2={m.plotRight} y2={m.plotBottom} />
+        {m.ticks.map((t) => (
+          <>
+            <line class="bals-axis" x1={t.x} y1={m.plotBottom} x2={t.x} y2={m.plotBottom + 4} />
+            <text class="bals-tick" x={t.x} y={m.axisY + 2} text-anchor="middle">{t.label}</text>
+          </>
+        ))}
+      </svg>
+    </div>
+
+    <figcaption class="mt-2 font-mono text-[11px] text-fg-faint">
+      Read from {files} committed day files, <code>src/data/balance/{series.first}.json</code> to
+      <code>{series.last}.json</code>: every gap, interval and significance call is the file’s own, and nothing is
+      re-estimated, smoothed or carried across a missing day. Rows: the {m.rows.length} countries listed on the most
+      days, ties to the deeper smaller pool — chosen on the measurement, never on the result — drawn from the highest
+      median gap down, on one shared scale. Method:
+      <a href="/werke/balance" class="underline decoration-line underline-offset-2 hover:text-fg">/werke/balance</a>.
+    </figcaption>
+
+    <div class="bals-tables">
+      <TableFallback
+        summary="The figure as a table — every day, every drawn country"
+        caption={`Daily tone gap, its own press minus the world’s press, with the 95% bootstrap interval, ${series.first} to ${series.last}`}
+        columns={table.columns}
+        rows={table.rows}
+        provenance="n.s. = the interval crosses zero · below floor = fewer articles than the floor in one of the two pools that day"
+      />
+    </div>
+  </figure>
+)}
