@@ -1,19 +1,33 @@
-# Cloudflare-Pages-Redirects (Spiegel von vercel.json — greifen nach dem Umzug auf CF Pages).
-# Vercel ignoriert diese Datei; sie schadet dem aktuellen Vercel-Deploy nicht.
-# Reihenfolge zählt: Cloudflare matcht von oben nach unten, erste Regel gewinnt — spezifische
-# Pfade stehen deshalb IMMER vor den allgemeineren Wildcard-Regeln, die sie sonst zuerst
-# einfangen und nur über einen Zusatz-Hop ans endgültige Ziel brächten.
+# Cloudflare Pages redirects. (Vercel, the earlier host, ignores this file.)
+#
+# HOW CLOUDFLARE READS THIS FILE — checked on 2026-10-17 against workers-sdk's redirect parser and
+# the Pages asset server; parseRedirects() in src/lib/engines/publication.mjs reads it the same way
+# and src/lib/engines/publication.test.ts holds the file to these three rules:
+#
+#   1. Only a rule ABOVE the first splat (*) or placeholder (:name) counts as static (2,000
+#      allowed). Every rule after the first pattern counts against the 100 dynamic rules, exact or
+#      not, and once those are spent the rest of the file is skipped. Until 2026-10-17 this file's
+#      second line was a splat, so 64 of its 65 rules were already dynamic. Hence two parts: every
+#      exact path in PART 1, every pattern in PART 2.
+#   2. At request time every exact rule is looked up before any pattern; the patterns are tried in
+#      order and the first match wins — a specific pattern stands above a general one.
+#   3. A redirect fires before Pages looks for a file. A rule that matches a published file takes
+#      that file off the site.
+#
+# Both slash forms are listed for an exact path where both were ever served: Pages matches the
+# path exactly, so `/lab` does not catch `/lab/`.
+
+# ═══ PART 1 — exact paths ══════════════════════════════════════════════════════════════════════
+
 /en / 301
-/en/* /:splat 301
 /police /policy 301
 /werke /experiments 301
 
-# /holdings -> /experiments (Frank, 2026-08-09): Route und Seitentitel hießen verschieden —
-# die Seite trug seit je „Experiments", die Adresse „holdings". Ein Wort weniger, das erklärt
-# werden muss. Die Sammelseite hieß vorher /lab (Zeile unten), das ist ihre zweite und letzte
-# Umbenennung; beide alten Adressen bleiben als 301 erreichbar, es stirbt kein Link.
+# /holdings -> /experiments (Frank's call, 2026-08-09): the route and the page title had different
+# names — the page has always said "Experiments", the address said "holdings". The collection page
+# was /lab before (below); this is its second and last rename, and both old addresses keep working
+# as 301s, so no link dies. The pattern for its subpages is in PART 2.
 /holdings /experiments 301
-/holdings/* /experiments/:splat 301
 
 # The ecology's /work card was an interstitial between the menu and the project's real page
 # (Frank, 2026-08-09, late) — the menu links /ecology directly now, the card page is gone.
@@ -22,34 +36,29 @@
 /work/research-ecology /ecology 301
 /work/research-ecology/ /ecology 301
 
-# Analytics-Engineering-Post entfernt (2026-07-02, Frank) — beruflicher Inhalt, passt nicht ins Lab.
+# The analytics-engineering post was removed (2026-07-02, Frank's call) — professional content that
+# does not belong in the lab.
 /lab/bigquery-dbt /experiments 301
 
-# Half-Life zurückgezogen (2026-06) — zu kalt; die Daten wandern ins Protokoll.
+# Half-Life was withdrawn (2026-06) — too cold; its data moved into the Protocol. Patterns in PART 2.
 /halbwertszeit /experiments 301
-/halbwertszeit/* /experiments 301
 /werke/halbwertszeit /experiments 301
-/werke/halbwertszeit/* /experiments 301
 
-# site-v2 (2026-07-16, decisions doc §1.4): "/lab" war die alte Sammelseite der Experimente —
-# keine zwei Sammelseiten neben /experiments. Die alte Index-Seite ist entfernt (Live-Befund
-# 16.07. abends: /lab/ mit Slash lieferte weiter die alte Verfassungssprache aus, weil CF
-# exakte Pfade matcht und die generierte Seite gewann) — beide Slash-Varianten redirecten.
-# /lab/ueberflug-studie bleibt eine echte, eigenständige Seite und /lab/[slug] bleibt als
-# Route bestehen (aktuell 0 generierte Seiten — die Content-Collection "lab" ist leer).
-# Siehe docs/redirect-matrix-site-v2.md.
+# site-v2 (2026-07-16, decisions doc §1.4): /lab was the old collection page of the experiments —
+# there are not two collection pages beside /experiments. The old index page is removed (found live
+# on the evening of 07-16: /lab/ with a slash still served the old constitution's language, because
+# Pages matches exact paths and the generated page won), so both slash forms redirect.
+# /lab/ueberflug-studie stays a real page of its own, and /lab/[slug] stays as a route (no
+# generated pages at present — the "lab" content collection is empty).
+# See docs/redirect-matrix-site-v2.md.
 /lab /experiments 301
 /lab/ /experiments 301
 
 # English routes (2026-07-16; Frank's objection, wording private: German terms had no place
 # in the URLs) — the English-only decision covers paths too: /encounters and /experiments are
-# canonical, the ecology era's German paths 301 to them. (Impressum/Datenschutz stay German —
-# legal texts; /protokoll, /praemie etc. are work archive paths and stay until the
-# practice-surfaces package migrates them in order.)
+# canonical, the ecology era's German paths 301 to them. Patterns for the subpages in PART 2.
 /begegnungen /encounters 301
-/begegnungen/* /encounters/:splat 301
 /bestaende /experiments 301
-/bestaende/* /experiments 301
 
 # English work slugs (Frank's decision of 2026-07-20, wording private: no German slugs) — the
 # German slugs earlier left standing as "work archive paths" now move, in order, to English
@@ -64,34 +73,26 @@
 /spielraum /headroom 301
 /werke/spielraum /werke/headroom 301
 /protokoll /protocol 301
-/protokoll/* /protocol/:splat 301
 /werke/protokoll /werke/protocol 301
 
-# Praxis-Oberflächen (2026-07-16, practice-surfaces): das Cockpit ist ein datiertes Artefakt
-# (ADR 0008) — die alte URL führt in einem Hop zum Archivpfad. /praktiken war die Sammelseite
-# der Praktiken; die vier Türen wohnen jetzt auf dem Hub. Siehe docs/redirect-matrix-site-v2.md
-# (Nachtrag practice-surfaces).
-/atelier/cockpit /atelier/archive/cockpit 301
+# Practice surfaces (2026-07-16): the cockpit became a dated artefact (ADR 0008) and /praktiken was
+# the collection page of the practices; the doors live on the hub now. See
+# docs/redirect-matrix-site-v2.md (practice-surfaces addendum). The archived cockpit page itself was
+# removed on 2026-10-17 with the publication rule (below), so its old address now lands where the
+# archive did: the Atelier's page.
+/atelier/cockpit /atelier 301
 /praktiken / 301
 /praktiken/ / 301
 
-# Interim-Akte (2026-07-16; Ziel aktualisiert 17.07.): die Record-Links zeigen auf die
-# middle-web-Routen (/akte/*), die App ist aber noch nicht deployt. Bis dahin führt /akte/*
-# zum echten, öffentlichen Register — seit enc-2026-002+ aufs fixtures-Wurzelverzeichnis
-# (vorher hart auf die enc-001-Akte, was jede andere Akte fehlleitete). 302 (temporär),
-# weil das Ziel nach dem App-Deploy wieder die eigene Route wird.
-/akte/* https://github.com/frankbueltge/research-ecology/tree/main/fixtures 302
-
-# site-v2 (2026-07-16, decisions doc §1.5): Deutsch fällt komplett weg (Frank, 00:55) — jede
-# /de/*-Route bekommt ihr EN-Pendant. Die Sonderfälle stehen vor der allgemeinen Regel,
-# damit sie in einem Hop ans tatsächliche Ziel führen statt über /lab bzw. / einen zweiten
-# Redirect zu brauchen (Slash-Varianten explizit — CF matcht exakt, s. o.).
+# site-v2 (2026-07-16, decisions doc §1.5): German is dropped entirely (Frank's decision that night)
+# — every /de/* route gets its English counterpart. The special cases stand here so they reach
+# their real target in one hop instead of a second redirect through /lab or /; the general /de/*
+# pattern is in PART 2.
 /de/lab /experiments 301
 /de/lab/ /experiments 301
 /de/praktiken / 301
 /de/praktiken/ / 301
 /de / 301
-/de/* /:splat 301
 /encounters/enc-2026-001/ /encounters/ 301
 
 # ── research ecology v3, the four-level pyramid (2026-08-12) ──────────────────────────────────
@@ -141,7 +142,6 @@
 # (Frank's call, wording private): the house window was retired, not moved, and
 # the practice decides what stands there. /n-1/map/ was the window's era, when
 # the house held the root and the practice's surface lived one level down.
-/n-1/map/* /n-1/:splat 301
 /n-1/map /n-1 301
 
 # The works register moved onto /ecology itself on 2026-09-03 (Frank): the ecology's catalogue
@@ -150,3 +150,1255 @@
 # NOT to be confused with /work (singular), the conductor's projects index, which is untouched.
 /works /ecology#register 301
 /works/ /ecology#register 301
+
+# ── the publication rule (2026-10-17) ────────────────────────────────────────────────────────
+# Frank's decision of 2026-10-17 (wording private, paraphrased): the site publishes the practices'
+# finished works and cycle presentations, nothing else of theirs; working material and per-session
+# records stay in each practice's own public repository and are linked there. The rule is
+# src/lib/engines/publication.mjs; the routes below were deleted with it, and every address they
+# served now leads to its place in the practice's repository. PART 2 holds the patterns for what
+# the build no longer copies (windows, artifacts, n-1's and Arch's records).
+
+# the registers and documents the three practices keep in their repositories
+/atelier/journal https://github.com/frankbueltge/ulysses/tree/main/journal 301
+/atelier/journal/ https://github.com/frankbueltge/ulysses/tree/main/journal 301
+/atelier/protocol https://github.com/frankbueltge/ulysses/blob/main/PROTOCOL.md 301
+/atelier/protocol/ https://github.com/frankbueltge/ulysses/blob/main/PROTOCOL.md 301
+/atelier/requests https://github.com/frankbueltge/ulysses/blob/main/REQUESTS.md 301
+/atelier/requests/ https://github.com/frankbueltge/ulysses/blob/main/REQUESTS.md 301
+/atelier/requests/archive https://github.com/frankbueltge/ulysses/blob/main/REQUESTS-ARCHIVE.md 301
+/atelier/requests/archive/ https://github.com/frankbueltge/ulysses/blob/main/REQUESTS-ARCHIVE.md 301
+/atelier/texts https://github.com/frankbueltge/ulysses/tree/main/works 301
+/atelier/texts/ https://github.com/frankbueltge/ulysses/tree/main/works 301
+/field/journal https://github.com/frankbueltge/field-research/tree/main/journal 301
+/field/journal/ https://github.com/frankbueltge/field-research/tree/main/journal 301
+/field/protocol https://github.com/frankbueltge/field-research/blob/main/PROTOCOL.md 301
+/field/protocol/ https://github.com/frankbueltge/field-research/blob/main/PROTOCOL.md 301
+/field/requests https://github.com/frankbueltge/field-research/blob/main/REQUESTS.md 301
+/field/requests/ https://github.com/frankbueltge/field-research/blob/main/REQUESTS.md 301
+/field/requests/archive https://github.com/frankbueltge/field-research/blob/main/REQUESTS-ARCHIVE.md 301
+/field/requests/archive/ https://github.com/frankbueltge/field-research/blob/main/REQUESTS-ARCHIVE.md 301
+/studio/journal https://github.com/frankbueltge/studio/tree/main/journal 301
+/studio/journal/ https://github.com/frankbueltge/studio/tree/main/journal 301
+/studio/protocol https://github.com/frankbueltge/studio/blob/main/PROTOCOL.md 301
+/studio/protocol/ https://github.com/frankbueltge/studio/blob/main/PROTOCOL.md 301
+/studio/requests https://github.com/frankbueltge/studio/blob/main/REQUESTS.md 301
+/studio/requests/ https://github.com/frankbueltge/studio/blob/main/REQUESTS.md 301
+/studio/requests/archive https://github.com/frankbueltge/studio/blob/main/REQUESTS-ARCHIVE.md 301
+/studio/requests/archive/ https://github.com/frankbueltge/studio/blob/main/REQUESTS-ARCHIVE.md 301
+
+# the retired cockpit interface: its page went with the rule, the Atelier's page is its archive's door
+/atelier/archive/cockpit /atelier 301
+/atelier/archive/cockpit/ /atelier 301
+
+# the nightly line's four rooms read its apparatus, which lives in its own repository
+/error-as-method/genealogy https://github.com/frankbueltge/error-as-method 301
+/error-as-method/genealogy/ https://github.com/frankbueltge/error-as-method 301
+/error-as-method/position https://github.com/frankbueltge/error-as-method 301
+/error-as-method/position/ https://github.com/frankbueltge/error-as-method 301
+/error-as-method/register https://github.com/frankbueltge/error-as-method 301
+/error-as-method/register/ https://github.com/frankbueltge/error-as-method 301
+/error-as-method/reading https://github.com/frankbueltge/error-as-method 301
+/error-as-method/reading/ https://github.com/frankbueltge/error-as-method 301
+
+# the Plenum (data-snack's resident collective) is dormant; its minutes stay in its repository
+/plenum https://github.com/frankbueltge/data-snack-plenum 301
+/plenum/ https://github.com/frankbueltge/data-snack-plenum 301
+/plenum/record https://github.com/frankbueltge/data-snack-plenum 301
+/plenum/record/ https://github.com/frankbueltge/data-snack-plenum 301
+/plenum/protocol https://github.com/frankbueltge/data-snack-plenum 301
+/plenum/protocol/ https://github.com/frankbueltge/data-snack-plenum 301
+/plenum/requests https://github.com/frankbueltge/data-snack-plenum 301
+/plenum/requests/ https://github.com/frankbueltge/data-snack-plenum 301
+/plenum/requests/archive https://github.com/frankbueltge/data-snack-plenum 301
+/plenum/requests/archive/ https://github.com/frankbueltge/data-snack-plenum 301
+
+# Arch's rendered record and the Field's session artifacts: the directories themselves
+/arch/read https://github.com/frankbueltge/arch 301
+/arch/read/ https://github.com/frankbueltge/arch 301
+/field/artifacts https://github.com/frankbueltge/field-research/tree/main/artifacts 301
+
+# One page per journal session, derived on 2026-10-17 from the functions those routes used
+# (buildSessionEntries for the Atelier, buildDayIndex for the Field and the Studio, read through
+# loadSessionNotes in src/lib/ecology/v3.ts) over the last mirror the routes rendered, and checked
+# against the build of that morning: every page it had, and no other, plus the one Field session
+# that landed later the same day. Each lands on the file its session stands in — for the Field and
+# the Studio the day file that holds it. Only the slashed form: every link this site printed
+# carried the slash; the patterns in PART 2 catch the rest at the journal's directory.
+/atelier/journal/note-a-cap-with-no-unit/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-19-a-cap-with-no-unit.md 301
+/atelier/journal/note-a-day-of-my-own-record-was-on-a-branch-and-not-in-it/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-09-a-day-of-my-own-record-was-on-a-branch-and-not-in-it.md 301
+/atelier/journal/note-a-fifth-of-the-laws-addresses-open-for-a-person-and-close-for-me/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-14-a-fifth-of-the-laws-addresses-open-for-a-person-and-close-for-me.md 301
+/atelier/journal/note-a-number-with-no-single-value/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-01-a-number-with-no-single-value.md 301
+/atelier/journal/note-a-quarter-of-the-sections-print-no-citation-and-the-notes-standing-in-hedge/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-17-a-quarter-of-the-sections-print-no-citation-and-the-notes-standing-in-hedge.md 301
+/atelier/journal/note-a-record-only-survivors-keep/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-08-a-record-only-survivors-keep.md 301
+/atelier/journal/note-a-rule-before-the-looking/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-08-a-rule-before-the-looking.md 301
+/atelier/journal/note-a-rule-of-mine-fired-and-i-walked-past-it/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-01-a-rule-of-mine-fired-and-i-walked-past-it.md 301
+/atelier/journal/note-a-test-said-i-had-changed-a-word/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-04-a-test-said-i-had-changed-a-word.md 301
+/atelier/journal/note-a-tick-after-the-presentation-nothing-owed/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-03-a-tick-after-the-presentation-nothing-owed.md 301
+/atelier/journal/note-asked-for-a-threshold-the-week-i-finished-measuring-thresholds/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-01-asked-for-a-threshold-the-week-i-finished-measuring-thresholds.md 301
+/atelier/journal/note-blind-search/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-01-blind-search.md 301
+/atelier/journal/note-closing-report-session-1/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-30-closing-report-session-1.md 301
+/atelier/journal/note-closing-report-session-2/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-30-closing-report-session-2.md 301
+/atelier/journal/note-columns/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-05-columns.md 301
+/atelier/journal/note-conventions/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-03-conventions.md 301
+/atelier/journal/note-dials/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-06-dials.md 301
+/atelier/journal/note-eight-hundred-sixty-six-accidents-and-the-one-word-that-was-never-printed/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-12-eight-hundred-sixty-six-accidents-and-the-one-word-that-was-never-printed.md 301
+/atelier/journal/note-encounter-accepted-signature-in-the-world/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-25-encounter-accepted-signature-in-the-world.md 301
+/atelier/journal/note-encounter-clause-amendment/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-25-encounter-clause-amendment.md 301
+/atelier/journal/note-everything-must-already-be-there/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-23-everything-must-already-be-there.md 301
+/atelier/journal/note-filled-by-the-quarry/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-29-filled-by-the-quarry.md 301
+/atelier/journal/note-first-v4-tick/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-18-first-v4-tick.md 301
+/atelier/journal/note-five-slopes-one-climb/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-27-five-slopes-one-climb.md 301
+/atelier/journal/note-four-times-the-law-misspells-the-way-to-its-own-reading-room/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-19-four-times-the-law-misspells-the-way-to-its-own-reading-room.md 301
+/atelier/journal/note-halleys-comet-and-the-clock/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-15-halleys-comet-and-the-clock.md 301
+/atelier/journal/note-hammond-review/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-22-hammond-review.md 301
+/atelier/journal/note-held-out/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-06-held-out.md 301
+/atelier/journal/note-how-near/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-09-how-near.md 301
+/atelier/journal/note-i-decided-to-ship-a-tool-that-nobody-could-start/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-07-i-decided-to-ship-a-tool-that-nobody-could-start.md 301
+/atelier/journal/note-i-delivered-a-letter-that-goes-nowhere-and-audited-myself-in-the-next-file/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-07-i-delivered-a-letter-that-goes-nowhere-and-audited-myself-in-the-next-file.md 301
+/atelier/journal/note-i-published-a-work-and-the-thing-that-had-blocked-it-was-a-sentence-i-wrote-myself/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-14-i-published-a-work-and-the-thing-that-had-blocked-it-was-a-sentence-i-wrote-myself.md 301
+/atelier/journal/note-i-told-the-house-nothing-was-mine-and-then-my-own-record-went-red/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-13-i-told-the-house-nothing-was-mine-and-then-my-own-record-went-red.md 301
+/atelier/journal/note-i-was-about-to-argue-a-threshold-i-had-not-measured/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-06-i-was-about-to-argue-a-threshold-i-had-not-measured.md 301
+/atelier/journal/note-mach-ancestor-initiation/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-19-mach-ancestor-initiation.md 301
+/atelier/journal/note-my-instrument-invents-a-threshold-more-often-than-it-misses-one/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-11-my-instrument-invents-a-threshold-more-often-than-it-misses-one.md 301
+/atelier/journal/note-near-to-what/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-11-near-to-what.md 301
+/atelier/journal/note-negative-parallax-an-illustrative-example/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-30-negative-parallax-an-illustrative-example.md 301
+/atelier/journal/note-negative-parallax-candidate/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-25-negative-parallax-candidate.md 301
+/atelier/journal/note-negative-parallax-caption-strip/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-24-negative-parallax-caption-strip.md 301
+/atelier/journal/note-negative-parallax-expose/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-24-negative-parallax-expose.md 301
+/atelier/journal/note-negative-parallax-figure/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-24-negative-parallax-figure.md 301
+/atelier/journal/note-negative-parallax-initiation/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-23-negative-parallax-initiation.md 301
+/atelier/journal/note-negative-parallax-operative-ruler/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-24-negative-parallax-operative-ruler.md 301
+/atelier/journal/note-negative-parallax-postulate-in-the-instrument/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-25-negative-parallax-postulate-in-the-instrument.md 301
+/atelier/journal/note-negative-parallax-the-border-drawn-twice/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-30-negative-parallax-the-border-drawn-twice.md 301
+/atelier/journal/note-negative-parallax-the-debt-a-control-leaves/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-28-negative-parallax-the-debt-a-control-leaves.md 301
+/atelier/journal/note-negative-parallax-the-mark-that-is-not-propagated/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-27-negative-parallax-the-mark-that-is-not-propagated.md 301
+/atelier/journal/note-negative-parallax-the-rulers-own-unit/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-26-negative-parallax-the-rulers-own-unit.md 301
+/atelier/journal/note-negative-parallax-the-switch-and-the-setting/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-30-negative-parallax-the-switch-and-the-setting.md 301
+/atelier/journal/note-negative-parallax-two-boundaries-one-unit/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-26-negative-parallax-two-boundaries-one-unit.md 301
+/atelier/journal/note-negative-parallax-work-line-declaration/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-24-negative-parallax-work-line-declaration.md 301
+/atelier/journal/note-neighbour-null/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-03-neighbour-null.md 301
+/atelier/journal/note-nobodys-minute/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-13-nobodys-minute.md 301
+/atelier/journal/note-null-island-expose/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-19-null-island-expose.md 301
+/atelier/journal/note-null-island-initiation/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-19-null-island-initiation.md 301
+/atelier/journal/note-null-island-judge/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-20-null-island-judge.md 301
+/atelier/journal/note-one-keeper-asked-once/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-03-one-keeper-asked-once.md 301
+/atelier/journal/note-one-million-stars-change-category/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-31-one-million-stars-change-category.md 301
+/atelier/journal/note-one-support-in-sixty/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-01-one-support-in-sixty.md 301
+/atelier/journal/note-propp/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-04-propp.md 301
+/atelier/journal/note-protocol-v5-adoption/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-24-protocol-v5-adoption.md 301
+/atelier/journal/note-publish-the-range/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-07-publish-the-range.md 301
+/atelier/journal/note-put-back-on-the-map-initiation/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-24-put-back-on-the-map-initiation.md 301
+/atelier/journal/note-retraction-signature-expose/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-20-retraction-signature-expose.md 301
+/atelier/journal/note-retraction-signature-initiation/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-20-retraction-signature-initiation.md 301
+/atelier/journal/note-second-v4-tick/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-18-second-v4-tick.md 301
+/atelier/journal/note-seven-of-nine-papers-cite-the-document-and-none-of-them-where-the-number-is/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-08-seven-of-nine-papers-cite-the-document-and-none-of-them-where-the-number-is.md 301
+/atelier/journal/note-seven-of-seven-and-the-only-instrument-that-worked-was-the-one-about-the-corpus/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-12-seven-of-seven-and-the-only-instrument-that-worked-was-the-one-about-the-corpus.md 301
+/atelier/journal/note-seven-pages-one-weather/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-03-seven-pages-one-weather.md 301
+/atelier/journal/note-signature-in-the-world-first-move/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-25-signature-in-the-world-first-move.md 301
+/atelier/journal/note-signature-in-the-world-return-move/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-25-signature-in-the-world-return-move.md 301
+/atelier/journal/note-sixteen-eighty-four-hundred-two-thousand/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-24-sixteen-eighty-four-hundred-two-thousand.md 301
+/atelier/journal/note-ten-sites-in-two-hundred-and-eighty-six-run-the-other-way/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-12-ten-sites-in-two-hundred-and-eighty-six-run-the-other-way.md 301
+/atelier/journal/note-the-address-i-wrote-to-is-a-group-its-own-institution-calls-former/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-08-the-address-i-wrote-to-is-a-group-its-own-institution-calls-former.md 301
+/atelier/journal/note-the-archive-kept-the-front-doors-and-let-the-documents-go/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-16-the-archive-kept-the-front-doors-and-let-the-documents-go.md 301
+/atelier/journal/note-the-audit-cleared-me-and-the-second-case-did-not/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-05-the-audit-cleared-me-and-the-second-case-did-not.md 301
+/atelier/journal/note-the-bar-was-half-of-how-often-i-write/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-06-the-bar-was-half-of-how-often-i-write.md 301
+/atelier/journal/note-the-check-passed-and-the-picture-was-wrong/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-22-the-check-passed-and-the-picture-was-wrong.md 301
+/atelier/journal/note-the-check-repaired-on-the-move-it-kept-deferring/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-02-the-check-repaired-on-the-move-it-kept-deferring.md 301
+/atelier/journal/note-the-chroniclers-column/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-11-the-chroniclers-column.md 301
+/atelier/journal/note-the-class-my-instrument-called-empty-had-a-threshold-in-it/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-08-the-class-my-instrument-called-empty-had-a-threshold-in-it.md 301
+/atelier/journal/note-the-class-my-whole-reading-rests-on-is-mostly-papers-that-never-used-it/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-10-the-class-my-whole-reading-rests-on-is-mostly-papers-that-never-used-it.md 301
+/atelier/journal/note-the-control-i-called-a-test-of-one-thing-changed-three/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-10-the-control-i-called-a-test-of-one-thing-changed-three.md 301
+/atelier/journal/note-the-control-said-no/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-12-the-control-said-no.md 301
+/atelier/journal/note-the-correction-was-there-in-ten-languages-and-not-in-mine/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-29-the-correction-was-there-in-ten-languages-and-not-in-mine.md 301
+/atelier/journal/note-the-criterion-that-was-the-question-wearing-a-network/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-03-the-criterion-that-was-the-question-wearing-a-network.md 301
+/atelier/journal/note-the-doorkeepers-list/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-01-the-doorkeepers-list.md 301
+/atelier/journal/note-the-empty-cell/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-08-the-empty-cell.md 301
+/atelier/journal/note-the-endpoint/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-09-the-endpoint.md 301
+/atelier/journal/note-the-error-bar-that-pointed-the-other-way/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-04-the-error-bar-that-pointed-the-other-way.md 301
+/atelier/journal/note-the-exercise/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-14-the-exercise.md 301
+/atelier/journal/note-the-file-that-exists-to-tell-machines-the-rules-is-withheld-from-machines/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-15-the-file-that-exists-to-tell-machines-the-rules-is-withheld-from-machines.md 301
+/atelier/journal/note-the-floor-caught-me-on-the-way-in/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-11-the-floor-caught-me-on-the-way-in.md 301
+/atelier/journal/note-the-four-characters-my-second-work-is-about-decide-none-of-the-six/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-12-the-four-characters-my-second-work-is-about-decide-none-of-the-six.md 301
+/atelier/journal/note-the-frame-moved/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-15-the-frame-moved.md 301
+/atelier/journal/note-the-gap-my-own-correction-named-and-the-eighth-that-was-left/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-03-the-gap-my-own-correction-named-and-the-eighth-that-was-left.md 301
+/atelier/journal/note-the-half-that-goes-in-and-the-half-that-stays-here/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-02-the-half-that-goes-in-and-the-half-that-stays-here.md 301
+/atelier/journal/note-the-hand-that-adds-nothing/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-22-the-hand-that-adds-nothing.md 301
+/atelier/journal/note-the-heeded-column/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-16-the-heeded-column.md 301
+/atelier/journal/note-the-hinge/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-10-the-hinge.md 301
+/atelier/journal/note-the-hour-it-was-written/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-28-the-hour-it-was-written.md 301
+/atelier/journal/note-the-hundred-occasions/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-15-the-hundred-occasions.md 301
+/atelier/journal/note-the-index-is-what-goes-missing/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-31-the-index-is-what-goes-missing.md 301
+/atelier/journal/note-the-instrument-could-not-tell-a-number-from-a-name/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-02-the-instrument-could-not-tell-a-number-from-a-name.md 301
+/atelier/journal/note-the-instrument-could-see-the-answer-while-it-was-choosing/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-01-the-instrument-could-see-the-answer-while-it-was-choosing.md 301
+/atelier/journal/note-the-instrument-i-built-to-read-a-number-could-not-see-its-half/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-07-the-instrument-i-built-to-read-a-number-could-not-see-its-half.md 301
+/atelier/journal/note-the-journal-kept-the-power-to-un-name-what-it-had-stopped-naming/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-21-the-journal-kept-the-power-to-un-name-what-it-had-stopped-naming.md 301
+/atelier/journal/note-the-last-record/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-04-the-last-record.md 301
+/atelier/journal/note-the-law-deleted-row-30-of-an-annex-it-never-printed/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-23-the-law-deleted-row-30-of-an-annex-it-never-printed.md 301
+/atelier/journal/note-the-least-the-words-allow/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-14-the-least-the-words-allow.md 301
+/atelier/journal/note-the-letters-arrived-after-the-tick-that-said-there-were-none/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-16-the-letters-arrived-after-the-tick-that-said-there-were-none.md 301
+/atelier/journal/note-the-licence-line/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-07-the-licence-line.md 301
+/atelier/journal/note-the-list-that-keeps-no-refusals/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-07-the-list-that-keeps-no-refusals.md 301
+/atelier/journal/note-the-median-edition-american-workplace-law-points-at-is-from-1968/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-13-the-median-edition-american-workplace-law-points-at-is-from-1968.md 301
+/atelier/journal/note-the-memberless-column/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-16-the-memberless-column.md 301
+/atelier/journal/note-the-night-nobody-looked/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-18-the-night-nobody-looked.md 301
+/atelier/journal/note-the-number-that-travels-without-its-sentence/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-31-the-number-that-travels-without-its-sentence.md 301
+/atelier/journal/note-the-number-was-cited-to-a-paper-that-never-said-it/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-05-the-number-was-cited-to-a-paper-that-never-said-it.md 301
+/atelier/journal/note-the-offer-checked-before-it-is-accepted/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-31-the-offer-checked-before-it-is-accepted.md 301
+/atelier/journal/note-the-one-free-door-the-law-opens-onto-someone-elses-standard-is-a-404/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-13-the-one-free-door-the-law-opens-onto-someone-elses-standard-is-a-404.md 301
+/atelier/journal/note-the-one-number-that-showed-its-work-and-the-field-kept-only-its-name/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-08-the-one-number-that-showed-its-work-and-the-field-kept-only-its-name.md 301
+/atelier/journal/note-the-other-books/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-14-the-other-books.md 301
+/atelier/journal/note-the-other-half/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-12-the-other-half.md 301
+/atelier/journal/note-the-percent-and-the-fifteen/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-07-the-percent-and-the-fifteen.md 301
+/atelier/journal/note-the-question-was-in-the-record-and-no-reader-outside-could-reach-it/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-20-the-question-was-in-the-record-and-no-reader-outside-could-reach-it.md 301
+/atelier/journal/note-the-readers-found-my-argument-where-i-had-buried-it/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-21-the-readers-found-my-argument-where-i-had-buried-it.md 301
+/atelier/journal/note-the-register-hands-over-the-file-only-to-a-reader-that-does-not-say-what-it-wants/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-30-the-register-hands-over-the-file-only-to-a-reader-that-does-not-say-what-it-wants.md 301
+/atelier/journal/note-the-register-says-two-of-my-three-frames-cannot-be-rebuilt/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-06-the-register-says-two-of-my-three-frames-cannot-be-rebuilt.md 301
+/atelier/journal/note-the-repair-is-right-about-papers-and-wrong-about-sites/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-09-the-repair-is-right-about-papers-and-wrong-about-sites.md 301
+/atelier/journal/note-the-repair-moved-forty-seven-papers-and-i-had-checked-ten/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-09-the-repair-moved-forty-seven-papers-and-i-had-checked-ten.md 301
+/atelier/journal/note-the-repair-term/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-16-the-repair-term.md 301
+/atelier/journal/note-the-repair-worked-and-it-broke-the-work-i-had-just-named/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-10-the-repair-worked-and-it-broke-the-work-i-had-just-named.md 301
+/atelier/journal/note-the-repaired-sieve-lands-two-papers-from-what-i-read-by-hand/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-11-the-repaired-sieve-lands-two-papers-from-what-i-read-by-hand.md 301
+/atelier/journal/note-the-rule-i-wrote-in-advance-refused-the-answer-i-wanted/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-06-the-rule-i-wrote-in-advance-refused-the-answer-i-wanted.md 301
+/atelier/journal/note-the-second-record/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-11-the-second-record.md 301
+/atelier/journal/note-the-second-tick-and-the-check-i-could-not-re-run/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-22-the-second-tick-and-the-check-i-could-not-re-run.md 301
+/atelier/journal/note-the-second-tick-of-a-day-that-was-already-finished/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-16-the-second-tick-of-a-day-that-was-already-finished.md 301
+/atelier/journal/note-the-sentence-i-liked-best-was-true-of-one-field/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-09-the-sentence-i-liked-best-was-true-of-one-field.md 301
+/atelier/journal/note-the-siblings-moved-a-session-each-and-owe-this-corner-nothing/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-03-the-siblings-moved-a-session-each-and-owe-this-corner-nothing.md 301
+/atelier/journal/note-the-signature-that-measures-possession/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-26-the-signature-that-measures-possession.md 301
+/atelier/journal/note-the-slope-moves-with-the-floor/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-26-the-slope-moves-with-the-floor.md 301
+/atelier/journal/note-the-stand-in/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-14-the-stand-in.md 301
+/atelier/journal/note-the-studios-new-flag-was-already-answered/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-03-the-studios-new-flag-was-already-answered.md 301
+/atelier/journal/note-the-summary-did-not-carry-what-the-page-already-cited/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-03-the-summary-did-not-carry-what-the-page-already-cited.md 301
+/atelier/journal/note-the-toolkit-answered-with-a-count/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-02-the-toolkit-answered-with-a-count.md 301
+/atelier/journal/note-the-two-articles-that-amend-an-act-about-closing-someone-elses-accounts/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-24-the-two-articles-that-amend-an-act-about-closing-someone-elses-accounts.md 301
+/atelier/journal/note-the-unit/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-14-the-unit.md 301
+/atelier/journal/note-the-verdict-that-comes-and-goes/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-07-the-verdict-that-comes-and-goes.md 301
+/atelier/journal/note-the-warners-column/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-16-the-warners-column.md 301
+/atelier/journal/note-the-weekends-own-hearing/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-02-the-weekends-own-hearing.md 301
+/atelier/journal/note-the-width-is-the-reading/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-13-the-width-is-the-reading.md 301
+/atelier/journal/note-the-word-in-the-slots-title-was-the-one-i-had-not-tested/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-05-the-word-in-the-slots-title-was-the-one-i-had-not-tested.md 301
+/atelier/journal/note-the-wrong-number-was-not-broken-it-was-somewhere-else/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-25-the-wrong-number-was-not-broken-it-was-somewhere-else.md 301
+/atelier/journal/note-the-zero-i-published-was-my-own-request-header/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-28-the-zero-i-published-was-my-own-request-header.md 301
+/atelier/journal/note-third-v4-tick/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-18-third-v4-tick.md 301
+/atelier/journal/note-thirteen-papers-stated-the-number-my-instrument-said-they-did-not/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-10-thirteen-papers-stated-the-number-my-instrument-said-they-did-not.md 301
+/atelier/journal/note-thirty-two-words-one-slot-and-below-works-as-well-as-above/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-12-thirty-two-words-one-slot-and-below-works-as-well-as-above.md 301
+/atelier/journal/note-this-mornings-alarm-was-four-times-louder-than-the-thing-it-warned-about/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-11-this-mornings-alarm-was-four-times-louder-than-the-thing-it-warned-about.md 301
+/atelier/journal/note-three-defects-one-of-them-not-the-defect-named/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-04-three-defects-one-of-them-not-the-defect-named.md 301
+/atelier/journal/note-three-passes-hunted-quotation-marks-and-the-quotation-had-none/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-15-three-passes-hunted-quotation-marks-and-the-quotation-had-none.md 301
+/atelier/journal/note-three-readers-one-reference/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-08-three-readers-one-reference.md 301
+/atelier/journal/note-three-records/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-01-three-records.md 301
+/atelier/journal/note-twice-in-eighteen/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-25-twice-in-eighteen.md 301
+/atelier/journal/note-two-in-five-amendments-touch-the-page-and-leave-the-year-where-it-was/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-18-two-in-five-amendments-touch-the-page-and-leave-the-year-where-it-was.md 301
+/atelier/journal/note-two-minutes-of-whose-reading/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-09-20-two-minutes-of-whose-reading.md 301
+/atelier/journal/note-two-numbers-in-my-record-are-eighteen-and-neither-has-moved-since-tuesday/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-06-two-numbers-in-my-record-are-eighteen-and-neither-has-moved-since-tuesday.md 301
+/atelier/journal/note-two-papers-apart-in-the-count-six-in-the-reading/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-12-two-papers-apart-in-the-count-six-in-the-reading.md 301
+/atelier/journal/note-unmoved-ground-expose/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-23-unmoved-ground-expose.md 301
+/atelier/journal/note-unmoved-ground-initiation/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-22-unmoved-ground-initiation.md 301
+/atelier/journal/note-unmoved-ground-judge/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-23-unmoved-ground-judge.md 301
+/atelier/journal/note-unmoved-ground-preemption/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-23-unmoved-ground-preemption.md 301
+/atelier/journal/note-unmoved-ground-time-dependence/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-23-unmoved-ground-time-dependence.md 301
+/atelier/journal/note-untested-second-expose-2/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-21-untested-second-expose-2.md 301
+/atelier/journal/note-untested-second-expose/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-21-untested-second-expose.md 301
+/atelier/journal/note-untested-second-initiation/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-21-untested-second-initiation.md 301
+/atelier/journal/note-untested-second-judge/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-21-untested-second-judge.md 301
+/atelier/journal/note-vegetative-em-expose/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-20-vegetative-em-expose.md 301
+/atelier/journal/note-vegetative-em-initiation/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-20-vegetative-em-initiation.md 301
+/atelier/journal/note-vegetative-em-judge/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-21-vegetative-em-judge.md 301
+/atelier/journal/note-what-one-call-is-worth/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-07-what-one-call-is-worth.md 301
+/atelier/journal/note-what-the-next-read-must-be/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-07-what-the-next-read-must-be.md 301
+/atelier/journal/note-what-the-record-cannot-say/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-05-what-the-record-cannot-say.md 301
+/atelier/journal/note-what-the-record-remembers/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-08-31-what-the-record-remembers.md 301
+/atelier/journal/note-who-is-left-to-write-it/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-08-who-is-left-to-write-it.md 301
+/atelier/journal/note-who-still-answers/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-03-who-still-answers.md 301
+/atelier/journal/note-whose-frames/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-10-07-whose-frames.md 301
+/atelier/journal/s1/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-06-28.md 301
+/atelier/journal/s10/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-06-30-sitzung-10.md 301
+/atelier/journal/s11/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-06-30-sitzung-11.md 301
+/atelier/journal/s12/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-01.md 301
+/atelier/journal/s13/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-02.md 301
+/atelier/journal/s14/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-03.md 301
+/atelier/journal/s15/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-03-sitzung-15.md 301
+/atelier/journal/s16/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-04.md 301
+/atelier/journal/s17/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-05.md 301
+/atelier/journal/s18/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-06.md 301
+/atelier/journal/s19/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-07.md 301
+/atelier/journal/s2/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-06-28-sitzung-2.md 301
+/atelier/journal/s20/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-09.md 301
+/atelier/journal/s21/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-10.md 301
+/atelier/journal/s22/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-11.md 301
+/atelier/journal/s23/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-12.md 301
+/atelier/journal/s24/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-13.md 301
+/atelier/journal/s25/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-13-sitzung-25.md 301
+/atelier/journal/s26/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-14.md 301
+/atelier/journal/s27/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-14-session-27.md 301
+/atelier/journal/s28/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-14-session-28.md 301
+/atelier/journal/s29/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-15.md 301
+/atelier/journal/s3/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-06-29.md 301
+/atelier/journal/s30/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-16.md 301
+/atelier/journal/s31/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-16-session-31.md 301
+/atelier/journal/s32/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-16-session-32.md 301
+/atelier/journal/s33/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-16-session-33.md 301
+/atelier/journal/s34/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-17.md 301
+/atelier/journal/s35/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-17-session-35.md 301
+/atelier/journal/s36/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-17-session-36.md 301
+/atelier/journal/s37/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-17-session-37.md 301
+/atelier/journal/s38/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-17-session-38.md 301
+/atelier/journal/s39/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-17-session-39.md 301
+/atelier/journal/s4/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-06-29-sitzung-4.md 301
+/atelier/journal/s40/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-18.md 301
+/atelier/journal/s41/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-18-session-41.md 301
+/atelier/journal/s42/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-18-session-42.md 301
+/atelier/journal/s43/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-07-18-session-43.md 301
+/atelier/journal/s5/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-06-29-sitzung-5.md 301
+/atelier/journal/s6/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-06-29-sitzung-6.md 301
+/atelier/journal/s7/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-06-30.md 301
+/atelier/journal/s8/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-06-30-sitzung-8.md 301
+/atelier/journal/s9/ https://github.com/frankbueltge/ulysses/blob/main/journal/2026-06-30-sitzung-9.md 301
+/field/journal/cs-1/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-01.md 301
+/field/journal/cs-10/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-05.md 301
+/field/journal/cs-100/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-08.md 301
+/field/journal/cs-101/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-08.md 301
+/field/journal/cs-102/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-08.md 301
+/field/journal/cs-103/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-08.md 301
+/field/journal/cs-104/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-09.md 301
+/field/journal/cs-105/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-09.md 301
+/field/journal/cs-106/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-10.md 301
+/field/journal/cs-107/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-10.md 301
+/field/journal/cs-108/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-10.md 301
+/field/journal/cs-109/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-11.md 301
+/field/journal/cs-11/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-05.md 301
+/field/journal/cs-110/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-11.md 301
+/field/journal/cs-111/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-11.md 301
+/field/journal/cs-112/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-12.md 301
+/field/journal/cs-113/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-12.md 301
+/field/journal/cs-114/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-12.md 301
+/field/journal/cs-115/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-13.md 301
+/field/journal/cs-116/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-13.md 301
+/field/journal/cs-117/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-13.md 301
+/field/journal/cs-118/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-14.md 301
+/field/journal/cs-119/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-14.md 301
+/field/journal/cs-12/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-06.md 301
+/field/journal/cs-120/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-15.md 301
+/field/journal/cs-121/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-15.md 301
+/field/journal/cs-122/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-16.md 301
+/field/journal/cs-123/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-16.md 301
+/field/journal/cs-124/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-16.md 301
+/field/journal/cs-125/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-17.md 301
+/field/journal/cs-126/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-18.md 301
+/field/journal/cs-127/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-19.md 301
+/field/journal/cs-128/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-20.md 301
+/field/journal/cs-129/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-21.md 301
+/field/journal/cs-13/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-06.md 301
+/field/journal/cs-130/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-21.md 301
+/field/journal/cs-131/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-22.md 301
+/field/journal/cs-132/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-22.md 301
+/field/journal/cs-133/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-23.md 301
+/field/journal/cs-134/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-24.md 301
+/field/journal/cs-135/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-25.md 301
+/field/journal/cs-136/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-26.md 301
+/field/journal/cs-137/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-28.md 301
+/field/journal/cs-138/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-29.md 301
+/field/journal/cs-139/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-30.md 301
+/field/journal/cs-14/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-07.md 301
+/field/journal/cs-140/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-30.md 301
+/field/journal/cs-141/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-30.md 301
+/field/journal/cs-142/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-31.md 301
+/field/journal/cs-143/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-01.md 301
+/field/journal/cs-144/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-01.md 301
+/field/journal/cs-145/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-01.md 301
+/field/journal/cs-146/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-03.md 301
+/field/journal/cs-147/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-03.md 301
+/field/journal/cs-148/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-03.md 301
+/field/journal/cs-149/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-03.md 301
+/field/journal/cs-15/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-09.md 301
+/field/journal/cs-150/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-03.md 301
+/field/journal/cs-151/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-04.md 301
+/field/journal/cs-152/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-05.md 301
+/field/journal/cs-153/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-06.md 301
+/field/journal/cs-154/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-07.md 301
+/field/journal/cs-155/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-08.md 301
+/field/journal/cs-156/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-09.md 301
+/field/journal/cs-157/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-11.md 301
+/field/journal/cs-158/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-12.md 301
+/field/journal/cs-159/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-13.md 301
+/field/journal/cs-16/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-09.md 301
+/field/journal/cs-160/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-14.md 301
+/field/journal/cs-161/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-15.md 301
+/field/journal/cs-162/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-16.md 301
+/field/journal/cs-163/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-18.md 301
+/field/journal/cs-164/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-19.md 301
+/field/journal/cs-165/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-20.md 301
+/field/journal/cs-166/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-21.md 301
+/field/journal/cs-167/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-22.md 301
+/field/journal/cs-168/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-23.md 301
+/field/journal/cs-169/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-24.md 301
+/field/journal/cs-17/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-09.md 301
+/field/journal/cs-170/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-25.md 301
+/field/journal/cs-171/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-26.md 301
+/field/journal/cs-172/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-27.md 301
+/field/journal/cs-173/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-28.md 301
+/field/journal/cs-174/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-09-29.md 301
+/field/journal/cs-175/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-02.md 301
+/field/journal/cs-176/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-03.md 301
+/field/journal/cs-177/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-03-s177.md 301
+/field/journal/cs-178/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-04-s178.md 301
+/field/journal/cs-179/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-05-s179.md 301
+/field/journal/cs-18/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-10.md 301
+/field/journal/cs-180/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-06-s180.md 301
+/field/journal/cs-181/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-07-s181.md 301
+/field/journal/cs-182/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-07-s182.md 301
+/field/journal/cs-183/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-07-s183.md 301
+/field/journal/cs-184/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-07-s184.md 301
+/field/journal/cs-185/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-07-s185.md 301
+/field/journal/cs-186/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-07-s186.md 301
+/field/journal/cs-187/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-07-s187.md 301
+/field/journal/cs-188/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-08-s188.md 301
+/field/journal/cs-189/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-08-s189.md 301
+/field/journal/cs-19/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-10.md 301
+/field/journal/cs-190/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-08-s190.md 301
+/field/journal/cs-191/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-09-s191.md 301
+/field/journal/cs-192/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-10-s192.md 301
+/field/journal/cs-193/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-11-s193.md 301
+/field/journal/cs-194/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-11-s194.md 301
+/field/journal/cs-195/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-12-s195.md 301
+/field/journal/cs-196/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-13-s196.md 301
+/field/journal/cs-197/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-14-s197.md 301
+/field/journal/cs-198/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-14-s198.md 301
+/field/journal/cs-199/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-14-s199.md 301
+/field/journal/cs-2/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-02.md 301
+/field/journal/cs-20/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-10.md 301
+/field/journal/cs-200/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-14-s200.md 301
+/field/journal/cs-201/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-15-s201.md 301
+/field/journal/cs-202/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-15-s202.md 301
+/field/journal/cs-203/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-16-s203.md 301
+/field/journal/cs-204/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-16-s204.md 301
+/field/journal/cs-205/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-10-16-s205.md 301
+/field/journal/cs-21/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-10.md 301
+/field/journal/cs-22/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-10.md 301
+/field/journal/cs-23/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-10.md 301
+/field/journal/cs-24-2026-07-11/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-11.md 301
+/field/journal/cs-24/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-10.md 301
+/field/journal/cs-25/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-11.md 301
+/field/journal/cs-26/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-11.md 301
+/field/journal/cs-27/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-11.md 301
+/field/journal/cs-28/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-11.md 301
+/field/journal/cs-29/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-11.md 301
+/field/journal/cs-3/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-02.md 301
+/field/journal/cs-30/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-11.md 301
+/field/journal/cs-31/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-12.md 301
+/field/journal/cs-32/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-12.md 301
+/field/journal/cs-33/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-12.md 301
+/field/journal/cs-34/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-13.md 301
+/field/journal/cs-35/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-13.md 301
+/field/journal/cs-36/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-13.md 301
+/field/journal/cs-37/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-14.md 301
+/field/journal/cs-38/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-15.md 301
+/field/journal/cs-39/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-16.md 301
+/field/journal/cs-4/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-02.md 301
+/field/journal/cs-40/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-16.md 301
+/field/journal/cs-41/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-16.md 301
+/field/journal/cs-42/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-17.md 301
+/field/journal/cs-43/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-17.md 301
+/field/journal/cs-44/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-18.md 301
+/field/journal/cs-45/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-19.md 301
+/field/journal/cs-46/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-20.md 301
+/field/journal/cs-47/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-20.md 301
+/field/journal/cs-48/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-20.md 301
+/field/journal/cs-49/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-21.md 301
+/field/journal/cs-5/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-02.md 301
+/field/journal/cs-50/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-21.md 301
+/field/journal/cs-51/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-21.md 301
+/field/journal/cs-52/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-21.md 301
+/field/journal/cs-53/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-22.md 301
+/field/journal/cs-54/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-22.md 301
+/field/journal/cs-55/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-23.md 301
+/field/journal/cs-56/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-23.md 301
+/field/journal/cs-57/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-23.md 301
+/field/journal/cs-58/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-23.md 301
+/field/journal/cs-59/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-24.md 301
+/field/journal/cs-6/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-03.md 301
+/field/journal/cs-60/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-24.md 301
+/field/journal/cs-61/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-25.md 301
+/field/journal/cs-63/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-25.md 301
+/field/journal/cs-64/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-25.md 301
+/field/journal/cs-65/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-25.md 301
+/field/journal/cs-66/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-26.md 301
+/field/journal/cs-67/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-26.md 301
+/field/journal/cs-68/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-26.md 301
+/field/journal/cs-69/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-27.md 301
+/field/journal/cs-7/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-03.md 301
+/field/journal/cs-70/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-28.md 301
+/field/journal/cs-71/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-30.md 301
+/field/journal/cs-72/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-30.md 301
+/field/journal/cs-73/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-30.md 301
+/field/journal/cs-74/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-31.md 301
+/field/journal/cs-75/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-31.md 301
+/field/journal/cs-76/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-31.md 301
+/field/journal/cs-77/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-31.md 301
+/field/journal/cs-78/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-01.md 301
+/field/journal/cs-79/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-01.md 301
+/field/journal/cs-8/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-03.md 301
+/field/journal/cs-80/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-02.md 301
+/field/journal/cs-81/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-02.md 301
+/field/journal/cs-82/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-02.md 301
+/field/journal/cs-83/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-03.md 301
+/field/journal/cs-84/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-02.md 301
+/field/journal/cs-85/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-03.md 301
+/field/journal/cs-86/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-03.md 301
+/field/journal/cs-87/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-04.md 301
+/field/journal/cs-88/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-04.md 301
+/field/journal/cs-89/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-04.md 301
+/field/journal/cs-9/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-05.md 301
+/field/journal/cs-90/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-05.md 301
+/field/journal/cs-91/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-05.md 301
+/field/journal/cs-92/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-05.md 301
+/field/journal/cs-93/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-06.md 301
+/field/journal/cs-94/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-06.md 301
+/field/journal/cs-95/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-06.md 301
+/field/journal/cs-96/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-06.md 301
+/field/journal/cs-97/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-06.md 301
+/field/journal/cs-98/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-07.md 301
+/field/journal/cs-99/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-08-07.md 301
+/field/journal/pre-2026-07-01-1/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-01.md 301
+/field/journal/pre-2026-07-01-2/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-01.md 301
+/field/journal/pre-2026-07-01-3/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-01.md 301
+/field/journal/pre-2026-07-01-4/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-01.md 301
+/field/journal/pre-2026-07-01-5/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-01.md 301
+/field/journal/pre-2026-07-01-6/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-01.md 301
+/field/journal/pre-2026-07-01-7/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-01.md 301
+/field/journal/pre-2026-07-01-8/ https://github.com/frankbueltge/field-research/blob/main/journal/2026-07-01.md 301
+/studio/journal/cs-1/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-12.md 301
+/studio/journal/cs-10/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-13.md 301
+/studio/journal/cs-100/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-16-session-100.md 301
+/studio/journal/cs-101/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-17-session-101.md 301
+/studio/journal/cs-102/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-18-session-102.md 301
+/studio/journal/cs-103/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-19-session-103.md 301
+/studio/journal/cs-104/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-20-session-104.md 301
+/studio/journal/cs-105/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-21-session-105.md 301
+/studio/journal/cs-106/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-21-session-106.md 301
+/studio/journal/cs-107/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-22-session-107.md 301
+/studio/journal/cs-108/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-23-session-108.md 301
+/studio/journal/cs-109/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-24-session-109.md 301
+/studio/journal/cs-11/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-13.md 301
+/studio/journal/cs-110/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-25-session-110.md 301
+/studio/journal/cs-111/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-26-session-111.md 301
+/studio/journal/cs-112/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-28-session-112.md 301
+/studio/journal/cs-113/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-29-session-113.md 301
+/studio/journal/cs-114/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-30-session-114.md 301
+/studio/journal/cs-115/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-30-session-115.md 301
+/studio/journal/cs-116/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-30-session-116.md 301
+/studio/journal/cs-117/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-31-session-117.md 301
+/studio/journal/cs-118/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-01-session-118.md 301
+/studio/journal/cs-119/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-01-session-119.md 301
+/studio/journal/cs-12/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-13.md 301
+/studio/journal/cs-120/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-01-session-120.md 301
+/studio/journal/cs-121/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-02-session-121.md 301
+/studio/journal/cs-122/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-03-session-122.md 301
+/studio/journal/cs-123/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-03-session-123.md 301
+/studio/journal/cs-124/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-03-session-124.md 301
+/studio/journal/cs-125/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-03-session-125.md 301
+/studio/journal/cs-126/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-03-session-126.md 301
+/studio/journal/cs-127/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-04-session-127.md 301
+/studio/journal/cs-128/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-05-session-128.md 301
+/studio/journal/cs-129/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-06-session-129.md 301
+/studio/journal/cs-13/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-15.md 301
+/studio/journal/cs-130/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-07-session-130.md 301
+/studio/journal/cs-131/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-08-session-131.md 301
+/studio/journal/cs-132/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-09-session-132.md 301
+/studio/journal/cs-133/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-11-session-133.md 301
+/studio/journal/cs-134/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-12-session-134.md 301
+/studio/journal/cs-135/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-13-session-135.md 301
+/studio/journal/cs-136/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-14-session-136.md 301
+/studio/journal/cs-137/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-15-session-137.md 301
+/studio/journal/cs-138/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-18-session-138.md 301
+/studio/journal/cs-139/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-19-session-139.md 301
+/studio/journal/cs-14/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-15-session-14.md 301
+/studio/journal/cs-140/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-20-session-140.md 301
+/studio/journal/cs-141/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-22-session-141.md 301
+/studio/journal/cs-142/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-23-session-142.md 301
+/studio/journal/cs-143/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-24-session-143.md 301
+/studio/journal/cs-144/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-25-session-144.md 301
+/studio/journal/cs-145/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-26-session-145.md 301
+/studio/journal/cs-146/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-27-session-146.md 301
+/studio/journal/cs-147/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-28-session-147.md 301
+/studio/journal/cs-148/ https://github.com/frankbueltge/studio/blob/main/journal/2026-09-29-session-148.md 301
+/studio/journal/cs-149/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-02-session-149.md 301
+/studio/journal/cs-15/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-16.md 301
+/studio/journal/cs-150/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-03-session-150.md 301
+/studio/journal/cs-151/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-03-session-151.md 301
+/studio/journal/cs-152/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-04-session-152.md 301
+/studio/journal/cs-153/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-05-session-153.md 301
+/studio/journal/cs-154/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-06-session-154.md 301
+/studio/journal/cs-155/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-07-session-155.md 301
+/studio/journal/cs-156/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-07-session-156.md 301
+/studio/journal/cs-157/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-07-session-157.md 301
+/studio/journal/cs-158/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-07-session-158.md 301
+/studio/journal/cs-159/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-07-session-159.md 301
+/studio/journal/cs-16/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-16-session-16.md 301
+/studio/journal/cs-160/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-08-session-160.md 301
+/studio/journal/cs-161/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-08-session-161.md 301
+/studio/journal/cs-162/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-08-session-162.md 301
+/studio/journal/cs-163/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-09-session-163.md 301
+/studio/journal/cs-164/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-10-session-164.md 301
+/studio/journal/cs-165/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-11-session-165.md 301
+/studio/journal/cs-166/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-11-session-166.md 301
+/studio/journal/cs-167/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-12-session-167.md 301
+/studio/journal/cs-168/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-13-session-168.md 301
+/studio/journal/cs-169/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-14-session-169.md 301
+/studio/journal/cs-17/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-16-session-17.md 301
+/studio/journal/cs-170/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-14-session-170.md 301
+/studio/journal/cs-171/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-14-session-171.md 301
+/studio/journal/cs-172/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-14-session-172.md 301
+/studio/journal/cs-173/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-15-session-173.md 301
+/studio/journal/cs-174/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-15-session-174.md 301
+/studio/journal/cs-175/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-16-session-175.md 301
+/studio/journal/cs-176/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-16-session-176.md 301
+/studio/journal/cs-177/ https://github.com/frankbueltge/studio/blob/main/journal/2026-10-16-session-177.md 301
+/studio/journal/cs-18/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-17.md 301
+/studio/journal/cs-19/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-17-session-19.md 301
+/studio/journal/cs-2/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-12.md 301
+/studio/journal/cs-20/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-18.md 301
+/studio/journal/cs-21/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-18-session-21.md 301
+/studio/journal/cs-22/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-19.md 301
+/studio/journal/cs-23/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-20.md 301
+/studio/journal/cs-24/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-20-session-24.md 301
+/studio/journal/cs-25/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-21.md 301
+/studio/journal/cs-26/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-21-session-26.md 301
+/studio/journal/cs-27/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-21-session-27.md 301
+/studio/journal/cs-28/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-21-session-28.md 301
+/studio/journal/cs-29/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-21-session-29.md 301
+/studio/journal/cs-3/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-12.md 301
+/studio/journal/cs-30/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-22.md 301
+/studio/journal/cs-31/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-23.md 301
+/studio/journal/cs-32/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-23-session-32.md 301
+/studio/journal/cs-33/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-23-session-33.md 301
+/studio/journal/cs-34/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-23-session-34.md 301
+/studio/journal/cs-35/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-23-session-35.md 301
+/studio/journal/cs-36/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-23-session-36.md 301
+/studio/journal/cs-37/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-24.md 301
+/studio/journal/cs-38/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-24-session-38.md 301
+/studio/journal/cs-39/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-25.md 301
+/studio/journal/cs-4/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-12.md 301
+/studio/journal/cs-40/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-25-session-40.md 301
+/studio/journal/cs-41/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-25-session-41.md 301
+/studio/journal/cs-42/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-25-session-42.md 301
+/studio/journal/cs-43/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-25-session-43.md 301
+/studio/journal/cs-44/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-25-session-44.md 301
+/studio/journal/cs-45/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-26.md 301
+/studio/journal/cs-46/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-27.md 301
+/studio/journal/cs-47/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-27-session-47.md 301
+/studio/journal/cs-48/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-30.md 301
+/studio/journal/cs-49/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-30-session-49.md 301
+/studio/journal/cs-5/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-12.md 301
+/studio/journal/cs-50/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-30-session-50.md 301
+/studio/journal/cs-51/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-31-session-51.md 301
+/studio/journal/cs-52/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-31-session-52.md 301
+/studio/journal/cs-53/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-31-session-53.md 301
+/studio/journal/cs-54/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-31-session-54.md 301
+/studio/journal/cs-55/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-31-session-55.md 301
+/studio/journal/cs-56/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-01.md 301
+/studio/journal/cs-57/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-02.md 301
+/studio/journal/cs-58/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-02-session-58.md 301
+/studio/journal/cs-59/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-02-session-59.md 301
+/studio/journal/cs-6/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-12.md 301
+/studio/journal/cs-60/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-02-session-60.md 301
+/studio/journal/cs-61/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-02-session-61.md 301
+/studio/journal/cs-62/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-03-session-62.md 301
+/studio/journal/cs-63/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-03-session-63.md 301
+/studio/journal/cs-64/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-04-session-64.md 301
+/studio/journal/cs-65/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-04-session-65.md 301
+/studio/journal/cs-66/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-04-session-66.md 301
+/studio/journal/cs-67/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-05-session-67.md 301
+/studio/journal/cs-68/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-05-session-68.md 301
+/studio/journal/cs-69/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-05-session-69.md 301
+/studio/journal/cs-7/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-12.md 301
+/studio/journal/cs-70/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-06-session-70.md 301
+/studio/journal/cs-71/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-06-session-71.md 301
+/studio/journal/cs-72/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-06-session-72.md 301
+/studio/journal/cs-73/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-06-session-73.md 301
+/studio/journal/cs-74/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-07-session-74.md 301
+/studio/journal/cs-75/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-07-session-75.md 301
+/studio/journal/cs-76/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-08-session-76.md 301
+/studio/journal/cs-77/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-08-session-77.md 301
+/studio/journal/cs-78/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-08-session-78.md 301
+/studio/journal/cs-79/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-09-session-79.md 301
+/studio/journal/cs-8/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-12.md 301
+/studio/journal/cs-80/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-09-session-80.md 301
+/studio/journal/cs-81/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-09-session-81.md 301
+/studio/journal/cs-82/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-10-session-82.md 301
+/studio/journal/cs-83/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-10-session-83.md 301
+/studio/journal/cs-84/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-10-session-84.md 301
+/studio/journal/cs-85/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-11-session-85.md 301
+/studio/journal/cs-86/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-11-session-86.md 301
+/studio/journal/cs-87/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-11-session-87.md 301
+/studio/journal/cs-88/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-12-session-88.md 301
+/studio/journal/cs-89/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-12-session-89.md 301
+/studio/journal/cs-9/ https://github.com/frankbueltge/studio/blob/main/journal/2026-07-12.md 301
+/studio/journal/cs-90/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-13-session-90.md 301
+/studio/journal/cs-91/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-13-session-91.md 301
+/studio/journal/cs-92/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-13-session-92.md 301
+/studio/journal/cs-93/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-14-session-93.md 301
+/studio/journal/cs-94/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-14-session-94.md 301
+/studio/journal/cs-95/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-15-session-95.md 301
+/studio/journal/cs-96/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-15-session-96.md 301
+/studio/journal/cs-97/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-15-session-97.md 301
+/studio/journal/cs-98/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-16-session-98.md 301
+/studio/journal/cs-99/ https://github.com/frankbueltge/studio/blob/main/journal/2026-08-16-session-99.md 301
+
+# The Atelier's texts & catalogue, one page per document of its works/ directory (same derivation).
+/atelier/texts/fehlerkataster-001/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-001.md 301
+/atelier/texts/fehlerkataster-002/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-002.md 301
+/atelier/texts/fehlerkataster-003/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-003.md 301
+/atelier/texts/fehlerkataster-004/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-004.md 301
+/atelier/texts/fehlerkataster-005/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-005.md 301
+/atelier/texts/fehlerkataster-006/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-006.md 301
+/atelier/texts/fehlerkataster-007/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-007.md 301
+/atelier/texts/fehlerkataster-008/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-008.md 301
+/atelier/texts/fehlerkataster-009/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-009.md 301
+/atelier/texts/fehlerkataster-010/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-010.md 301
+/atelier/texts/fehlerkataster-011/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-011.md 301
+/atelier/texts/fehlerkataster-012/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-012.md 301
+/atelier/texts/fehlerkataster-013/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-013.md 301
+/atelier/texts/fehlerkataster-014/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-014.md 301
+/atelier/texts/fehlerkataster-015/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-015.md 301
+/atelier/texts/fehlerkataster-016/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-016.md 301
+/atelier/texts/fehlerkataster-017/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-017.md 301
+/atelier/texts/fehlerkataster-018/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-018.md 301
+/atelier/texts/fehlerkataster-019/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-019.md 301
+/atelier/texts/fehlerkataster-020/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-020.md 301
+/atelier/texts/fehlerkataster-021/ https://github.com/frankbueltge/ulysses/blob/main/works/fehlerkataster-021.md 301
+/atelier/texts/genealogie/ https://github.com/frankbueltge/ulysses/blob/main/works/genealogie.md 301
+/atelier/texts/parry-problem/ https://github.com/frankbueltge/ulysses/blob/main/works/parry-problem.md 301
+/atelier/texts/position-2026-07-01/ https://github.com/frankbueltge/ulysses/blob/main/works/position-2026-07-01.md 301
+/atelier/texts/position-2026-07-14/ https://github.com/frankbueltge/ulysses/blob/main/works/position-2026-07-14.md 301
+
+# n-1's and Arch's files the build no longer copies, one by one where their directory still holds
+# a published file (a work, or a file a work loads); whole directories are patterns in PART 2.
+# Generated from the prune of 2026-10-17. A file the practice adds later is caught by its
+# directory's pattern where it has one, and otherwise is not on the site.
+/n-1/.nojekyll https://github.com/frankbueltge/n-1/blob/main/.nojekyll 301
+/n-1/.sources-allow https://github.com/frankbueltge/n-1/blob/main/.sources-allow 301
+/n-1/DOWRY.md https://github.com/frankbueltge/n-1/blob/main/DOWRY.md 301
+/n-1/LICENSE.md https://github.com/frankbueltge/n-1/blob/main/LICENSE.md 301
+/n-1/NAMING.md https://github.com/frankbueltge/n-1/blob/main/NAMING.md 301
+/n-1/README.md https://github.com/frankbueltge/n-1/blob/main/README.md 301
+/n-1/REGISTER.md https://github.com/frankbueltge/n-1/blob/main/REGISTER.md 301
+/n-1/REQUESTS.md https://github.com/frankbueltge/n-1/blob/main/REQUESTS.md 301
+/n-1/render-check.js https://github.com/frankbueltge/n-1/blob/main/render-check.js 301
+/n-1/window.json https://github.com/frankbueltge/n-1/blob/main/window.json 301
+/n-1/.github/workflows/auto-land.yml https://github.com/frankbueltge/n-1/blob/main/.github/workflows/auto-land.yml 301
+/n-1/.github/workflows/no-committed-sources.yml https://github.com/frankbueltge/n-1/blob/main/.github/workflows/no-committed-sources.yml 301
+/n-1/atlas/SCHEMA.md https://github.com/frankbueltge/n-1/blob/main/atlas/SCHEMA.md 301
+/n-1/atlas/consult.py https://github.com/frankbueltge/n-1/blob/main/atlas/consult.py 301
+/n-1/atlas/validate.py https://github.com/frankbueltge/n-1/blob/main/atlas/validate.py 301
+/n-1/foundation/cartography-not-tracing.en.md https://github.com/frankbueltge/n-1/blob/main/foundation/cartography-not-tracing.en.md 301
+/n-1/foundation/kartographie-statt-kopie.de.md https://github.com/frankbueltge/n-1/blob/main/foundation/kartographie-statt-kopie.de.md 301
+/n-1/material/ct-logs/2026-08-15-prospect/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-15-prospect/README.md 301
+/n-1/material/ct-logs/2026-08-15-prospect/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-15-prospect/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-15-prospect/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-15-prospect/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-15-prospect/parent-zone-extract.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-15-prospect/parent-zone-extract.json 301
+/n-1/material/ct-logs/2026-08-16-fourth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-fourth-asking/README.md 301
+/n-1/material/ct-logs/2026-08-16-fourth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-fourth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-16-fourth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-fourth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-16-fourth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-fourth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-16-fourth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-fourth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-16-recheck/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-recheck/README.md 301
+/n-1/material/ct-logs/2026-08-16-recheck/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-recheck/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-16-recheck/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-recheck/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-16-recheck/zone-control-extract.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-recheck/zone-control-extract.json 301
+/n-1/material/ct-logs/2026-08-16-third-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-third-asking/README.md 301
+/n-1/material/ct-logs/2026-08-16-third-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-third-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-16-third-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-third-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-16-third-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-third-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-16-third-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-16-third-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-17-fifth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-17-fifth-asking/README.md 301
+/n-1/material/ct-logs/2026-08-17-fifth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-17-fifth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-17-fifth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-17-fifth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-17-fifth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-17-fifth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-17-fifth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-17-fifth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-19-sixth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-19-sixth-asking/README.md 301
+/n-1/material/ct-logs/2026-08-19-sixth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-19-sixth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-19-sixth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-19-sixth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-19-sixth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-19-sixth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-19-sixth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-19-sixth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-20-seventh-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-20-seventh-asking/README.md 301
+/n-1/material/ct-logs/2026-08-20-seventh-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-20-seventh-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-20-seventh-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-20-seventh-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-21-eighth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-21-eighth-asking/README.md 301
+/n-1/material/ct-logs/2026-08-21-eighth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-21-eighth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-21-eighth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-21-eighth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-21-eighth-asking/crtsh-attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-21-eighth-asking/crtsh-attempts.log 301
+/n-1/material/ct-logs/2026-08-22-ninth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-22-ninth-asking/README.md 301
+/n-1/material/ct-logs/2026-08-22-ninth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-22-ninth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-22-ninth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-22-ninth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-22-ninth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-22-ninth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-22-ninth-asking/crtsh-attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-22-ninth-asking/crtsh-attempts.log 301
+/n-1/material/ct-logs/2026-08-23-tenth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-23-tenth-asking/README.md 301
+/n-1/material/ct-logs/2026-08-23-tenth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-23-tenth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-23-tenth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-23-tenth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-23-tenth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-23-tenth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-23-tenth-asking/crtsh-attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-23-tenth-asking/crtsh-attempts.log 301
+/n-1/material/ct-logs/2026-08-24-eleventh-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-24-eleventh-asking/README.md 301
+/n-1/material/ct-logs/2026-08-24-eleventh-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-24-eleventh-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-24-eleventh-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-24-eleventh-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-24-eleventh-asking/crtsh-attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-24-eleventh-asking/crtsh-attempts.log 301
+/n-1/material/ct-logs/2026-08-25-twelfth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-25-twelfth-asking/README.md 301
+/n-1/material/ct-logs/2026-08-25-twelfth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-25-twelfth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-25-twelfth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-25-twelfth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-25-twelfth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-25-twelfth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-25-twelfth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-25-twelfth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-25-twelfth-asking/crtsh-attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-25-twelfth-asking/crtsh-attempts.log 301
+/n-1/material/ct-logs/2026-08-28-thirteenth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-28-thirteenth-asking/README.md 301
+/n-1/material/ct-logs/2026-08-28-thirteenth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-28-thirteenth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-28-thirteenth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-28-thirteenth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-28-thirteenth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-28-thirteenth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-28-thirteenth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-28-thirteenth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-28-thirteenth-asking/crtsh-attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-28-thirteenth-asking/crtsh-attempts.log 301
+/n-1/material/ct-logs/2026-08-29-fourteenth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-29-fourteenth-asking/README.md 301
+/n-1/material/ct-logs/2026-08-29-fourteenth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-29-fourteenth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-08-29-fourteenth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-29-fourteenth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-29-fourteenth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-29-fourteenth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-29-fourteenth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-29-fourteenth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-30-fifteenth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-30-fifteenth-asking/README.md 301
+/n-1/material/ct-logs/2026-08-30-fifteenth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-30-fifteenth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-08-30-fifteenth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-30-fifteenth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-30-fifteenth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-30-fifteenth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-30-fifteenth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-30-fifteenth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-31-sixteenth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-31-sixteenth-asking/README.md 301
+/n-1/material/ct-logs/2026-08-31-sixteenth-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-31-sixteenth-asking/ask.sh 301
+/n-1/material/ct-logs/2026-08-31-sixteenth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-31-sixteenth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-08-31-sixteenth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-31-sixteenth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-08-31-sixteenth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-31-sixteenth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-08-31-sixteenth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-08-31-sixteenth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-01-seventeenth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-01-seventeenth-asking/README.md 301
+/n-1/material/ct-logs/2026-09-01-seventeenth-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-01-seventeenth-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-01-seventeenth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-01-seventeenth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-01-seventeenth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-01-seventeenth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-01-seventeenth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-01-seventeenth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-01-seventeenth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-01-seventeenth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-01-seventeenth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-01-seventeenth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-02-eighteenth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-02-eighteenth-asking/README.md 301
+/n-1/material/ct-logs/2026-09-02-eighteenth-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-02-eighteenth-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-02-eighteenth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-02-eighteenth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-02-eighteenth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-02-eighteenth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-02-eighteenth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-02-eighteenth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-02-eighteenth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-02-eighteenth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-02-eighteenth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-02-eighteenth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-03-nineteenth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-nineteenth-asking/README.md 301
+/n-1/material/ct-logs/2026-09-03-nineteenth-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-nineteenth-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-03-nineteenth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-nineteenth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-03-nineteenth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-nineteenth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-03-nineteenth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-nineteenth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-03-nineteenth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-nineteenth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-03-nineteenth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-nineteenth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-03-twentieth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-twentieth-asking/README.md 301
+/n-1/material/ct-logs/2026-09-03-twentieth-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-twentieth-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-03-twentieth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-twentieth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-03-twentieth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-twentieth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-03-twentieth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-twentieth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-03-twentieth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-twentieth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-03-twentieth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-03-twentieth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-05-twenty-first-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-05-twenty-first-asking/README.md 301
+/n-1/material/ct-logs/2026-09-05-twenty-first-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-05-twenty-first-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-05-twenty-first-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-05-twenty-first-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-05-twenty-first-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-05-twenty-first-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-05-twenty-first-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-05-twenty-first-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-05-twenty-first-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-05-twenty-first-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-05-twenty-first-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-05-twenty-first-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-06-twenty-second-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-06-twenty-second-asking/README.md 301
+/n-1/material/ct-logs/2026-09-06-twenty-second-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-06-twenty-second-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-06-twenty-second-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-06-twenty-second-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-06-twenty-second-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-06-twenty-second-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-06-twenty-second-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-06-twenty-second-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-06-twenty-second-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-06-twenty-second-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-06-twenty-second-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-06-twenty-second-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-08-twenty-third-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-08-twenty-third-asking/README.md 301
+/n-1/material/ct-logs/2026-09-08-twenty-third-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-08-twenty-third-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-08-twenty-third-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-08-twenty-third-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-08-twenty-third-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-08-twenty-third-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-08-twenty-third-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-08-twenty-third-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-08-twenty-third-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-08-twenty-third-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-08-twenty-third-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-08-twenty-third-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-09-twenty-fourth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-09-twenty-fourth-asking/README.md 301
+/n-1/material/ct-logs/2026-09-09-twenty-fourth-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-09-twenty-fourth-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-09-twenty-fourth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-09-twenty-fourth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-09-twenty-fourth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-09-twenty-fourth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-09-twenty-fourth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-09-twenty-fourth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-09-twenty-fourth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-09-twenty-fourth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-09-twenty-fourth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-09-twenty-fourth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-11-twenty-fifth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-11-twenty-fifth-asking/README.md 301
+/n-1/material/ct-logs/2026-09-11-twenty-fifth-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-11-twenty-fifth-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-11-twenty-fifth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-11-twenty-fifth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-11-twenty-fifth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-11-twenty-fifth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-11-twenty-fifth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-11-twenty-fifth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-11-twenty-fifth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-11-twenty-fifth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-11-twenty-fifth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-11-twenty-fifth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-12-twenty-sixth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-12-twenty-sixth-asking/README.md 301
+/n-1/material/ct-logs/2026-09-12-twenty-sixth-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-12-twenty-sixth-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-12-twenty-sixth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-12-twenty-sixth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-12-twenty-sixth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-12-twenty-sixth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-12-twenty-sixth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-12-twenty-sixth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-12-twenty-sixth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-12-twenty-sixth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-12-twenty-sixth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-12-twenty-sixth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-16-neighbours-recheck/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-16-neighbours-recheck/README.md 301
+/n-1/material/ct-logs/2026-09-19-twenty-seventh-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-19-twenty-seventh-asking/README.md 301
+/n-1/material/ct-logs/2026-09-19-twenty-seventh-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-19-twenty-seventh-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-19-twenty-seventh-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-19-twenty-seventh-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-19-twenty-seventh-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-19-twenty-seventh-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-19-twenty-seventh-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-19-twenty-seventh-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-19-twenty-seventh-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-19-twenty-seventh-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-19-twenty-seventh-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-19-twenty-seventh-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-20-twenty-eighth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-20-twenty-eighth-asking/README.md 301
+/n-1/material/ct-logs/2026-09-20-twenty-eighth-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-20-twenty-eighth-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-20-twenty-eighth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-20-twenty-eighth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-20-twenty-eighth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-20-twenty-eighth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-20-twenty-eighth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-20-twenty-eighth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-20-twenty-eighth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-20-twenty-eighth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-20-twenty-eighth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-20-twenty-eighth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-22-twenty-ninth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-22-twenty-ninth-asking/README.md 301
+/n-1/material/ct-logs/2026-09-22-twenty-ninth-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-22-twenty-ninth-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-22-twenty-ninth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-22-twenty-ninth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-22-twenty-ninth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-22-twenty-ninth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-22-twenty-ninth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-22-twenty-ninth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-22-twenty-ninth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-22-twenty-ninth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-22-twenty-ninth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-22-twenty-ninth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-22-twenty-ninth-asking/crtsh-zone-attempt1-502.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-22-twenty-ninth-asking/crtsh-zone-attempt1-502.json 301
+/n-1/material/ct-logs/2026-09-23-thirtieth-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-23-thirtieth-asking/README.md 301
+/n-1/material/ct-logs/2026-09-23-thirtieth-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-23-thirtieth-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-23-thirtieth-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-23-thirtieth-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-23-thirtieth-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-23-thirtieth-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-23-thirtieth-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-23-thirtieth-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-23-thirtieth-asking/crt-sh.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-23-thirtieth-asking/crt-sh.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-23-thirtieth-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-23-thirtieth-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-24-closing-asking/README.md https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-24-closing-asking/README.md 301
+/n-1/material/ct-logs/2026-09-24-closing-asking/ask.sh https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-24-closing-asking/ask.sh 301
+/n-1/material/ct-logs/2026-09-24-closing-asking/attempts.log https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-24-closing-asking/attempts.log 301
+/n-1/material/ct-logs/2026-09-24-closing-asking/certspotter.frankbueltge.de.full.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-24-closing-asking/certspotter.frankbueltge.de.full.json 301
+/n-1/material/ct-logs/2026-09-24-closing-asking/certspotter.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-24-closing-asking/certspotter.n-1.frankbueltge.de.json 301
+/n-1/material/ct-logs/2026-09-24-closing-asking/crt-sh.n-1.frankbueltge.de.json https://github.com/frankbueltge/n-1/blob/main/material/ct-logs/2026-09-24-closing-asking/crt-sh.n-1.frankbueltge.de.json 301
+/n-1/material/earth-rotation/2026-09-25-prospect/README.md https://github.com/frankbueltge/n-1/blob/main/material/earth-rotation/2026-09-25-prospect/README.md 301
+/n-1/material/earth-rotation/2026-09-25-prospect/derive.py https://github.com/frankbueltge/n-1/blob/main/material/earth-rotation/2026-09-25-prospect/derive.py 301
+/n-1/material/earth-rotation/2026-09-25-prospect/derived.txt https://github.com/frankbueltge/n-1/blob/main/material/earth-rotation/2026-09-25-prospect/derived.txt 301
+/n-1/material/earth-rotation/2026-09-25-prospect/fetch.log https://github.com/frankbueltge/n-1/blob/main/material/earth-rotation/2026-09-25-prospect/fetch.log 301
+/n-1/material/earth-rotation/2026-09-25-session-2/README.md https://github.com/frankbueltge/n-1/blob/main/material/earth-rotation/2026-09-25-session-2/README.md 301
+/n-1/material/earth-rotation/2026-09-25-session-2/bulletin-a-ut1.csv https://github.com/frankbueltge/n-1/blob/main/material/earth-rotation/2026-09-25-session-2/bulletin-a-ut1.csv 301
+/n-1/material/earth-rotation/2026-09-25-session-2/derive.py https://github.com/frankbueltge/n-1/blob/main/material/earth-rotation/2026-09-25-session-2/derive.py 301
+/n-1/material/earth-rotation/2026-09-25-session-2/derived.txt https://github.com/frankbueltge/n-1/blob/main/material/earth-rotation/2026-09-25-session-2/derived.txt 301
+/n-1/material/earth-rotation/2026-09-25-session-2/fetch.log https://github.com/frankbueltge/n-1/blob/main/material/earth-rotation/2026-09-25-session-2/fetch.log 301
+/n-1/material/elbe-low-water/2026-09-29-prospect/README.md https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-09-29-prospect/README.md 301
+/n-1/material/elbe-low-water/2026-09-29-prospect/derive.py https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-09-29-prospect/derive.py 301
+/n-1/material/elbe-low-water/2026-09-29-prospect/derived.txt https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-09-29-prospect/derived.txt 301
+/n-1/material/elbe-low-water/2026-09-29-prospect/elbe-stations.json https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-09-29-prospect/elbe-stations.json 301
+/n-1/material/elbe-low-water/2026-09-29-prospect/fetch.log https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-09-29-prospect/fetch.log 301
+/n-1/material/elbe-low-water/2026-09-29-prospect/stones-excerpt.txt https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-09-29-prospect/stones-excerpt.txt 301
+/n-1/material/elbe-low-water/2026-09-29-prospect/w-DRESDEN-P31D.json https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-09-29-prospect/w-DRESDEN-P31D.json 301
+/n-1/material/elbe-low-water/2026-09-29-prospect/w-SCHÖNA-P31D.json https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-09-29-prospect/w-SCHÖNA-P31D.json 301
+/n-1/material/elbe-low-water/2026-10-02-session2/fetch.log https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-10-02-session2/fetch.log 301
+/n-1/material/elbe-low-water/2026-10-02-session2/w-DRESDEN-P31D.json https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-10-02-session2/w-DRESDEN-P31D.json 301
+/n-1/material/elbe-low-water/2026-10-02-session2/w-SCHÖNEBECK-P31D.json https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-10-02-session2/w-SCHÖNEBECK-P31D.json 301
+/n-1/material/elbe-low-water/2026-10-03-session3/fetch.log https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-10-03-session3/fetch.log 301
+/n-1/material/elbe-low-water/2026-10-03-session3/w-DRESDEN-P31D.json https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-10-03-session3/w-DRESDEN-P31D.json 301
+/n-1/material/elbe-low-water/2026-10-04-session4/fetch.log https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-10-04-session4/fetch.log 301
+/n-1/material/elbe-low-water/2026-10-04-session4/w-DRESDEN-P31D.json https://github.com/frankbueltge/n-1/blob/main/material/elbe-low-water/2026-10-04-session4/w-DRESDEN-P31D.json 301
+/n-1/material/met-open-access/2026-10-05-prospect/figures.json https://github.com/frankbueltge/n-1/blob/main/material/met-open-access/2026-10-05-prospect/figures.json 301
+/n-1/material/met-open-access/2026-10-05-prospect/prospect.py https://github.com/frankbueltge/n-1/blob/main/material/met-open-access/2026-10-05-prospect/prospect.py 301
+/n-1/projects/earth-rotation/ASSEMBLAGE.md https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/ASSEMBLAGE.md 301
+/n-1/projects/earth-rotation/JOURNAL.md https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/JOURNAL.md 301
+/n-1/projects/earth-rotation/NEIGHBOURS.md https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/NEIGHBOURS.md 301
+/n-1/projects/earth-rotation/PROJECT.md https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/PROJECT.md 301
+/n-1/projects/earth-rotation/SELECTION.md https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/SELECTION.md 301
+/n-1/projects/earth-rotation/TOOLKIT.md https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/TOOLKIT.md 301
+/n-1/projects/earth-rotation/session-4/sound_audit.py https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/session-4/sound_audit.py 301
+/n-1/projects/earth-rotation/session-4/sound_audit.txt https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/session-4/sound_audit.txt 301
+/n-1/projects/earth-rotation/study-1/build.py https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/study-1/build.py 301
+/n-1/projects/earth-rotation/study-1/figures.txt https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/study-1/figures.txt 301
+/n-1/projects/earth-rotation/study-1/ https://github.com/frankbueltge/n-1/tree/main/projects/earth-rotation/study-1 301
+/n-1/projects/earth-rotation/study-1 https://github.com/frankbueltge/n-1/tree/main/projects/earth-rotation/study-1 301
+/n-1/projects/earth-rotation/study-1/index.html https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/study-1/index.html 301
+/n-1/projects/earth-rotation/study-1/template https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/study-1/template.html 301
+/n-1/projects/earth-rotation/study-1/template.html https://github.com/frankbueltge/n-1/blob/main/projects/earth-rotation/study-1/template.html 301
+/n-1/projects/elbe-low-water/AUDIT.md https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/AUDIT.md 301
+/n-1/projects/elbe-low-water/JOURNAL.md https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/JOURNAL.md 301
+/n-1/projects/elbe-low-water/NEIGHBOURS.md https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/NEIGHBOURS.md 301
+/n-1/projects/elbe-low-water/PROJECT.md https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/PROJECT.md 301
+/n-1/projects/elbe-low-water/SELECTION.md https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/SELECTION.md 301
+/n-1/projects/elbe-low-water/study-1/build.py https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/study-1/build.py 301
+/n-1/projects/elbe-low-water/study-1/figures.txt https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/study-1/figures.txt 301
+/n-1/projects/elbe-low-water/study-1/ https://github.com/frankbueltge/n-1/tree/main/projects/elbe-low-water/study-1 301
+/n-1/projects/elbe-low-water/study-1 https://github.com/frankbueltge/n-1/tree/main/projects/elbe-low-water/study-1 301
+/n-1/projects/elbe-low-water/study-1/index.html https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/study-1/index.html 301
+/n-1/projects/elbe-low-water/study-1/template https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/study-1/template.html 301
+/n-1/projects/elbe-low-water/study-1/template.html https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/study-1/template.html 301
+/n-1/projects/elbe-low-water/the-cut/build.py https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/the-cut/build.py 301
+/n-1/projects/elbe-low-water/the-cut/figures.txt https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/the-cut/figures.txt 301
+/n-1/projects/elbe-low-water/the-cut/template https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/the-cut/template.html 301
+/n-1/projects/elbe-low-water/the-cut/template.html https://github.com/frankbueltge/n-1/blob/main/projects/elbe-low-water/the-cut/template.html 301
+/n-1/projects/exoplanet-discord https://github.com/frankbueltge/n-1/tree/main/projects/exoplanet-discord 301
+/n-1/projects/light-characters https://github.com/frankbueltge/n-1/tree/main/projects/light-characters 301
+/n-1/projects/met-date-intervals/AUDIT.md https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/AUDIT.md 301
+/n-1/projects/met-date-intervals/JOURNAL.md https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/JOURNAL.md 301
+/n-1/projects/met-date-intervals/NEIGHBOURS.md https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/NEIGHBOURS.md 301
+/n-1/projects/met-date-intervals/PROJECT.md https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/PROJECT.md 301
+/n-1/projects/met-date-intervals/SELECTION.md https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/SELECTION.md 301
+/n-1/projects/met-date-intervals/decades/decades.json https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/decades/decades.json 301
+/n-1/projects/met-date-intervals/decades/lots.json https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/decades/lots.json 301
+/n-1/projects/met-date-intervals/decades/lots.py https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/decades/lots.py 301
+/n-1/projects/met-date-intervals/decades/study.py https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/decades/study.py 301
+/n-1/projects/met-date-intervals/decades/years.json https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/decades/years.json 301
+/n-1/projects/met-date-intervals/decades/years.py https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/decades/years.py 301
+/n-1/projects/met-date-intervals/dialects/WORK.md https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/dialects/WORK.md 301
+/n-1/projects/met-date-intervals/dialects/build.py https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/dialects/build.py 301
+/n-1/projects/met-date-intervals/dialects/dialects.json https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/dialects/dialects.json 301
+/n-1/projects/met-date-intervals/dialects/study.py https://github.com/frankbueltge/n-1/blob/main/projects/met-date-intervals/dialects/study.py 301
+/n-1/projects/minor-planet-names/JOURNAL.md https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/JOURNAL.md 301
+/n-1/projects/minor-planet-names/JOURNAL2.md https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/JOURNAL2.md 301
+/n-1/projects/minor-planet-names/JOURNAL3.md https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/JOURNAL3.md 301
+/n-1/projects/minor-planet-names/LINES.md https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/LINES.md 301
+/n-1/projects/minor-planet-names/NEIGHBOURS.md https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/NEIGHBOURS.md 301
+/n-1/projects/minor-planet-names/PROJECT.md https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/PROJECT.md 301
+/n-1/projects/minor-planet-names/SELECTION.md https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/SELECTION.md 301
+/n-1/projects/minor-planet-names/SESSION2.md https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/SESSION2.md 301
+/n-1/projects/minor-planet-names/SESSION3.md https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/SESSION3.md 301
+/n-1/projects/minor-planet-names/TOOLKIT.md https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/TOOLKIT.md 301
+/n-1/projects/minor-planet-names/build.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/build.py 301
+/n-1/projects/minor-planet-names/fetch.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/fetch.py 301
+/n-1/projects/minor-planet-names/fetch3.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/fetch3.py 301
+/n-1/projects/minor-planet-names/ https://github.com/frankbueltge/n-1/tree/main/projects/minor-planet-names 301
+/n-1/projects/minor-planet-names https://github.com/frankbueltge/n-1/tree/main/projects/minor-planet-names 301
+/n-1/projects/minor-planet-names/index.html https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/index.html 301
+/n-1/projects/minor-planet-names/read_sample.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/read_sample.py 301
+/n-1/projects/minor-planet-names/reading_sample.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/reading_sample.json 301
+/n-1/projects/minor-planet-names/rows.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/rows.json 301
+/n-1/projects/minor-planet-names/rows2.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/rows2.json 301
+/n-1/projects/minor-planet-names/rows3.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/rows3.json 301
+/n-1/projects/minor-planet-names/sample.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/sample.json 301
+/n-1/projects/minor-planet-names/sample.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/sample.py 301
+/n-1/projects/minor-planet-names/session1.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session1.json 301
+/n-1/projects/minor-planet-names/session1.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session1.py 301
+/n-1/projects/minor-planet-names/session1_rows.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session1_rows.json 301
+/n-1/projects/minor-planet-names/session1_test.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session1_test.py 301
+/n-1/projects/minor-planet-names/session2.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session2.json 301
+/n-1/projects/minor-planet-names/session2.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session2.py 301
+/n-1/projects/minor-planet-names/session2_lib.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session2_lib.py 301
+/n-1/projects/minor-planet-names/session2_rows.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session2_rows.json 301
+/n-1/projects/minor-planet-names/session2_test.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session2_test.py 301
+/n-1/projects/minor-planet-names/session3.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session3.json 301
+/n-1/projects/minor-planet-names/session3.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session3.py 301
+/n-1/projects/minor-planet-names/session3_lib.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session3_lib.py 301
+/n-1/projects/minor-planet-names/session3_rows.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session3_rows.json 301
+/n-1/projects/minor-planet-names/session3_test.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/session3_test.py 301
+/n-1/projects/minor-planet-names/tables2.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/tables2.json 301
+/n-1/projects/minor-planet-names/tables2.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/tables2.py 301
+/n-1/projects/minor-planet-names/verify.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/verify.json 301
+/n-1/projects/minor-planet-names/verify.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/verify.py 301
+/n-1/projects/minor-planet-names/verify2.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/verify2.json 301
+/n-1/projects/minor-planet-names/verify2.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/verify2.py 301
+/n-1/projects/minor-planet-names/verify3.json https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/verify3.json 301
+/n-1/projects/minor-planet-names/verify3.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/verify3.py 301
+/n-1/projects/minor-planet-names/work_build.py https://github.com/frankbueltge/n-1/blob/main/projects/minor-planet-names/work_build.py 301
+/n-1/projects/transcribers-notes/AUDIT.md https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/AUDIT.md 301
+/n-1/projects/transcribers-notes/JOURNAL.md https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/JOURNAL.md 301
+/n-1/projects/transcribers-notes/JOURNAL2.md https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/JOURNAL2.md 301
+/n-1/projects/transcribers-notes/JOURNAL3.md https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/JOURNAL3.md 301
+/n-1/projects/transcribers-notes/NEIGHBOURS.md https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/NEIGHBOURS.md 301
+/n-1/projects/transcribers-notes/PROJECT.md https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/PROJECT.md 301
+/n-1/projects/transcribers-notes/SELECTION.md https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/SELECTION.md 301
+/n-1/projects/transcribers-notes/SESSION2.md https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/SESSION2.md 301
+/n-1/projects/transcribers-notes/SESSION3.md https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/SESSION3.md 301
+/n-1/projects/transcribers-notes/TOOLKIT.md https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/TOOLKIT.md 301
+/n-1/projects/transcribers-notes/build.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/build.py 301
+/n-1/projects/transcribers-notes/build_work.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/build_work.py 301
+/n-1/projects/transcribers-notes/explore1.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/explore1.json 301
+/n-1/projects/transcribers-notes/explore1.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/explore1.py 301
+/n-1/projects/transcribers-notes/explore2.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/explore2.json 301
+/n-1/projects/transcribers-notes/explore2.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/explore2.py 301
+/n-1/projects/transcribers-notes/fetch.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/fetch.py 301
+/n-1/projects/transcribers-notes/fetch2.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/fetch2.py 301
+/n-1/projects/transcribers-notes/fetch3.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/fetch3.py 301
+/n-1/projects/transcribers-notes/ https://github.com/frankbueltge/n-1/tree/main/projects/transcribers-notes 301
+/n-1/projects/transcribers-notes https://github.com/frankbueltge/n-1/tree/main/projects/transcribers-notes 301
+/n-1/projects/transcribers-notes/index.html https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/index.html 301
+/n-1/projects/transcribers-notes/marks3.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/marks3.json 301
+/n-1/projects/transcribers-notes/pairs.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/pairs.json 301
+/n-1/projects/transcribers-notes/pairs2_raw.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/pairs2_raw.json 301
+/n-1/projects/transcribers-notes/pairs2_verified.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/pairs2_verified.json 301
+/n-1/projects/transcribers-notes/pairs_verified.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/pairs_verified.json 301
+/n-1/projects/transcribers-notes/sample.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/sample.json 301
+/n-1/projects/transcribers-notes/session1.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/session1.json 301
+/n-1/projects/transcribers-notes/session1.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/session1.py 301
+/n-1/projects/transcribers-notes/session1_rest.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/session1_rest.json 301
+/n-1/projects/transcribers-notes/session1_verified.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/session1_verified.json 301
+/n-1/projects/transcribers-notes/session2.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/session2.json 301
+/n-1/projects/transcribers-notes/session2.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/session2.py 301
+/n-1/projects/transcribers-notes/session3.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/session3.json 301
+/n-1/projects/transcribers-notes/session3.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/session3.py 301
+/n-1/projects/transcribers-notes/session3_verified.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/session3_verified.json 301
+/n-1/projects/transcribers-notes/sources.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/sources.json 301
+/n-1/projects/transcribers-notes/sources2.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/sources2.json 301
+/n-1/projects/transcribers-notes/sources3.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/sources3.json 301
+/n-1/projects/transcribers-notes/verify.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/verify.json 301
+/n-1/projects/transcribers-notes/verify2.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/verify2.json 301
+/n-1/projects/transcribers-notes/verify2_build.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/verify2_build.py 301
+/n-1/projects/transcribers-notes/verify3.json https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/verify3.json 301
+/n-1/projects/transcribers-notes/verify_build.py https://github.com/frankbueltge/n-1/blob/main/projects/transcribers-notes/verify_build.py 301
+/n-1/projects/unicode-admission/ASSEMBLAGE.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/ASSEMBLAGE.md 301
+/n-1/projects/unicode-admission/ASSEMBLAGE2.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/ASSEMBLAGE2.md 301
+/n-1/projects/unicode-admission/ASSEMBLAGE3.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/ASSEMBLAGE3.md 301
+/n-1/projects/unicode-admission/ASSEMBLAGE4.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/ASSEMBLAGE4.md 301
+/n-1/projects/unicode-admission/JOURNAL.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/JOURNAL.md 301
+/n-1/projects/unicode-admission/JOURNAL2.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/JOURNAL2.md 301
+/n-1/projects/unicode-admission/JOURNAL3.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/JOURNAL3.md 301
+/n-1/projects/unicode-admission/JOURNAL4.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/JOURNAL4.md 301
+/n-1/projects/unicode-admission/NEIGHBOURS.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/NEIGHBOURS.md 301
+/n-1/projects/unicode-admission/PROJECT.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/PROJECT.md 301
+/n-1/projects/unicode-admission/SELECTION.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/SELECTION.md 301
+/n-1/projects/unicode-admission/SESSION2.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/SESSION2.md 301
+/n-1/projects/unicode-admission/SESSION3.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/SESSION3.md 301
+/n-1/projects/unicode-admission/SESSION4.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/SESSION4.md 301
+/n-1/projects/unicode-admission/TOOLKIT.md https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/TOOLKIT.md 301
+/n-1/projects/unicode-admission/asking https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/asking.html 301
+/n-1/projects/unicode-admission/asking.html https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/asking.html 301
+/n-1/projects/unicode-admission/build.py https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/build.py 301
+/n-1/projects/unicode-admission/build2.py https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/build2.py 301
+/n-1/projects/unicode-admission/build3.py https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/build3.py 301
+/n-1/projects/unicode-admission/build4.py https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/build4.py 301
+/n-1/projects/unicode-admission/fetch.py https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/fetch.py 301
+/n-1/projects/unicode-admission/hit_kinds.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/hit_kinds.json 301
+/n-1/projects/unicode-admission/ https://github.com/frankbueltge/n-1/tree/main/projects/unicode-admission 301
+/n-1/projects/unicode-admission https://github.com/frankbueltge/n-1/tree/main/projects/unicode-admission 301
+/n-1/projects/unicode-admission/index.html https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/index.html 301
+/n-1/projects/unicode-admission/languages https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/languages.html 301
+/n-1/projects/unicode-admission/languages.html https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/languages.html 301
+/n-1/projects/unicode-admission/session1.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/session1.json 301
+/n-1/projects/unicode-admission/session1.py https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/session1.py 301
+/n-1/projects/unicode-admission/session2.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/session2.json 301
+/n-1/projects/unicode-admission/session2.py https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/session2.py 301
+/n-1/projects/unicode-admission/session2_specimens.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/session2_specimens.json 301
+/n-1/projects/unicode-admission/session3.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/session3.json 301
+/n-1/projects/unicode-admission/session3.py https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/session3.py 301
+/n-1/projects/unicode-admission/session3_verified.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/session3_verified.json 301
+/n-1/projects/unicode-admission/session4.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/session4.json 301
+/n-1/projects/unicode-admission/session4.py https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/session4.py 301
+/n-1/projects/unicode-admission/session4_raw.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/session4_raw.json 301
+/n-1/projects/unicode-admission/sources.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/sources.json 301
+/n-1/projects/unicode-admission/sources2.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/sources2.json 301
+/n-1/projects/unicode-admission/sources3.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/sources3.json 301
+/n-1/projects/unicode-admission/sources4.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/sources4.json 301
+/n-1/projects/unicode-admission/verify_exclude.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/verify_exclude.json 301
+/n-1/projects/unicode-admission/verify_exclude4.json https://github.com/frankbueltge/n-1/blob/main/projects/unicode-admission/verify_exclude4.json 301
+/n-1/projects/usgs-fixed-depth/AUDIT.md https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/AUDIT.md 301
+/n-1/projects/usgs-fixed-depth/JOURNAL.md https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/JOURNAL.md 301
+/n-1/projects/usgs-fixed-depth/NEIGHBOURS.md https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/NEIGHBOURS.md 301
+/n-1/projects/usgs-fixed-depth/PROJECT.md https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/PROJECT.md 301
+/n-1/projects/usgs-fixed-depth/SELECTION.md https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/SELECTION.md 301
+/n-1/projects/usgs-fixed-depth/SESSION2.md https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/SESSION2.md 301
+/n-1/projects/usgs-fixed-depth/SESSION3.md https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/SESSION3.md 301
+/n-1/projects/usgs-fixed-depth/build.py https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/build.py 301
+/n-1/projects/usgs-fixed-depth/cells.json https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/cells.json 301
+/n-1/projects/usgs-fixed-depth/headline.json https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/headline.json 301
+/n-1/projects/usgs-fixed-depth/prospect.json https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/prospect.json 301
+/n-1/projects/usgs-fixed-depth/prospect.py https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/prospect.py 301
+/n-1/projects/usgs-fixed-depth/session2.json https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/session2.json 301
+/n-1/projects/usgs-fixed-depth/session2.py https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/session2.py 301
+/n-1/projects/usgs-fixed-depth/session3.json https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/session3.json 301
+/n-1/projects/usgs-fixed-depth/session3.py https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/session3.py 301
+/n-1/projects/usgs-fixed-depth/session3b.json https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/session3b.json 301
+/n-1/projects/usgs-fixed-depth/session3b.py https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/session3b.py 301
+/n-1/projects/usgs-fixed-depth/still.png https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/still.png 301
+/n-1/projects/usgs-fixed-depth/study.py https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/study.py 301
+/n-1/projects/usgs-fixed-depth/template https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/template.html 301
+/n-1/projects/usgs-fixed-depth/template.html https://github.com/frankbueltge/n-1/blob/main/projects/usgs-fixed-depth/template.html 301
+/n-1/projects/will-write https://github.com/frankbueltge/n-1/tree/main/projects/will-write 301
+/n-1/works/the-days-end-to-end/WORK.md https://github.com/frankbueltge/n-1/blob/main/works/the-days-end-to-end/WORK.md 301
+/arch/.gitignore https://github.com/frankbueltge/arch/blob/main/.gitignore 301
+/arch/.sources-allow https://github.com/frankbueltge/arch/blob/main/.sources-allow 301
+/arch/BALANCE.md https://github.com/frankbueltge/arch/blob/main/BALANCE.md 301
+/arch/CHANNEL.md https://github.com/frankbueltge/arch/blob/main/CHANNEL.md 301
+/arch/DOWRY.md https://github.com/frankbueltge/arch/blob/main/DOWRY.md 301
+/arch/LICENSE.md https://github.com/frankbueltge/arch/blob/main/LICENSE.md 301
+/arch/PREREGISTRATION.md https://github.com/frankbueltge/arch/blob/main/PREREGISTRATION.md 301
+/arch/README.md https://github.com/frankbueltge/arch/blob/main/README.md 301
+/arch/queries.md https://github.com/frankbueltge/arch/blob/main/queries.md 301
+/arch/apparatus/README.md https://github.com/frankbueltge/arch/blob/main/apparatus/README.md 301
+/arch/apparatus/phase-0-prompt.md https://github.com/frankbueltge/arch/blob/main/apparatus/phase-0-prompt.md 301
+/arch/apparatus/phase-1-prompt.md https://github.com/frankbueltge/arch/blob/main/apparatus/phase-1-prompt.md 301
+/arch/apparatus/self-figures.py https://github.com/frankbueltge/arch/blob/main/apparatus/self-figures.py 301
+/arch/material/NOTICE.md https://github.com/frankbueltge/arch/blob/main/material/NOTICE.md 301
+/arch/material/SOURCES.md https://github.com/frankbueltge/arch/blob/main/material/SOURCES.md 301
+/arch/material/operative-model.md https://github.com/frankbueltge/arch/blob/main/material/operative-model.md 301
+/arch/reading/00-method.md https://github.com/frankbueltge/arch/blob/main/reading/00-method.md 301
+/arch/reading/01-meot-introduction.md https://github.com/frankbueltge/arch/blob/main/reading/01-meot-introduction.md 301
+/arch/reading/02-meot-part-i-ch1-concretization.md https://github.com/frankbueltge/arch/blob/main/reading/02-meot-part-i-ch1-concretization.md 301
+/arch/reading/03-meot-part-i-ch2-individualization.md https://github.com/frankbueltge/arch/blob/main/reading/03-meot-part-i-ch2-individualization.md 301
+/arch/reading/04-meot-part-ii-ch1-minority-majority.md https://github.com/frankbueltge/arch/blob/main/reading/04-meot-part-ii-ch1-minority-majority.md 301
+/arch/reading/05-meot-part-ii-ch2-information.md https://github.com/frankbueltge/arch/blob/main/reading/05-meot-part-ii-ch2-information.md 301
+/arch/reading/06-meot-part-iii-ch1-genesis-of-technicity.md https://github.com/frankbueltge/arch/blob/main/reading/06-meot-part-iii-ch1-genesis-of-technicity.md 301
+/arch/reading/07-meot-part-iii-ch2-aesthetics-theory-praxis.md https://github.com/frankbueltge/arch/blob/main/reading/07-meot-part-iii-ch2-aesthetics-theory-praxis.md 301
+/arch/reading/08-meot-part-iii-ch3-technical-and-philosophical-thought.md https://github.com/frankbueltge/arch/blob/main/reading/08-meot-part-iii-ch3-technical-and-philosophical-thought.md 301
+/arch/reading/09-meot-conclusion.md https://github.com/frankbueltge/arch/blob/main/reading/09-meot-conclusion.md 301
+/arch/reading/10-ilfi-consultation-417-419.md https://github.com/frankbueltge/arch/blob/main/reading/10-ilfi-consultation-417-419.md 301
+/arch/reading/README.md https://github.com/frankbueltge/arch/blob/main/reading/README.md 301
+/arch/registers/README.md https://github.com/frankbueltge/arch/blob/main/registers/README.md 301
+/arch/registers/i7-virtuality-register.md https://github.com/frankbueltge/arch/blob/main/registers/i7-virtuality-register.md 301
+/arch/registers/i7b-passio-register.md https://github.com/frankbueltge/arch/blob/main/registers/i7b-passio-register.md 301
+/arch/works/README.md https://github.com/frankbueltge/arch/blob/main/works/README.md 301
+/arch/works/arrival/README.md https://github.com/frankbueltge/arch/blob/main/works/arrival/README.md 301
+/arch/works/arrival/guards.md https://github.com/frankbueltge/arch/blob/main/works/arrival/guards.md 301
+/arch/works/arrival/population/2026-09-12-ids.txt https://github.com/frankbueltge/arch/blob/main/works/arrival/population/2026-09-12-ids.txt 301
+/arch/works/arrival/population/2026-09-19-ids.txt https://github.com/frankbueltge/arch/blob/main/works/arrival/population/2026-09-19-ids.txt 301
+/arch/works/arrival/population/README.md https://github.com/frankbueltge/arch/blob/main/works/arrival/population/README.md 301
+/arch/works/arrival/population/intensity.py https://github.com/frankbueltge/arch/blob/main/works/arrival/population/intensity.py 301
+/arch/works/arrival/population/jolts.py https://github.com/frankbueltge/arch/blob/main/works/arrival/population/jolts.py 301
+/arch/works/arrival/population/ordering.py https://github.com/frankbueltge/arch/blob/main/works/arrival/population/ordering.py 301
+/arch/works/arrival/population/probe.py https://github.com/frankbueltge/arch/blob/main/works/arrival/population/probe.py 301
+/arch/works/arrival/population/revisions.py https://github.com/frankbueltge/arch/blob/main/works/arrival/population/revisions.py 301
+
+# ═══ PART 2 — patterns (100 allowed; first match wins, so specific before general) ═════════════
+
+# (see the exact rules of the same names in PART 1)
+/en/* /:splat 301
+/holdings/* /experiments/:splat 301
+/halbwertszeit/* /experiments 301
+/werke/halbwertszeit/* /experiments 301
+/begegnungen/* /encounters/:splat 301
+/bestaende/* /experiments 301
+/protokoll/* /protocol/:splat 301
+
+# The interim record (2026-07-16; target updated 07-17): the record links point at the
+# middle-web routes (/akte/*), but that app is not deployed yet. Until it is, /akte/* leads to the
+# real, public register — since enc-2026-002 at the fixtures root (before that hard-wired to the
+# enc-001 record, which misdirected every other record). 302 (temporary), because after the app's
+# deploy the target becomes its own route again.
+/akte/* https://github.com/frankbueltge/research-ecology/tree/main/fixtures 302
+
+/de/* /:splat 301
+/n-1/map/* /n-1/:splat 301
+
+# ── the publication rule (2026-10-17), see PART 1 ─────────────────────────────────────────────
+# a journal session the site never had a page for, or an address without its slash
+/atelier/journal/* https://github.com/frankbueltge/ulysses/tree/main/journal 301
+/field/journal/* https://github.com/frankbueltge/field-research/tree/main/journal 301
+/studio/journal/* https://github.com/frankbueltge/studio/tree/main/journal 301
+/atelier/texts/* https://github.com/frankbueltge/ulysses/tree/main/works 301
+# a work-line's record lives in the practice's projects/ directory under the same id
+/atelier/lines/* https://github.com/frankbueltge/ulysses/tree/main/projects/:splat 301
+# Arch's record rendered one markdown file per page: the same path, as the file
+/arch/read/*/ https://github.com/frankbueltge/arch/blob/main/:splat.md 301
+/arch/read/* https://github.com/frankbueltge/arch/blob/main/:splat.md 301
+# the Atelier's window: its front page (the closing report of 2026-08-30) stays published, so no
+# pattern here may match /atelier/window/ or a file directly in it — `:dir/*` needs a second slash
+/atelier/window/:dir/* https://github.com/frankbueltge/ulysses/tree/main/window/:dir 301
+/atelier/window/cycle-:rest https://github.com/frankbueltge/ulysses/tree/main/window/cycle-:rest 301
+# the Field's session artifacts
+/field/artifacts/* https://github.com/frankbueltge/field-research/tree/main/artifacts/:splat 301
+# n-1's and Arch's directories that the build no longer copies at all
+/n-1/material/atp/* https://github.com/frankbueltge/n-1/blob/main/material/atp/:splat 301
+/n-1/material/night-sky/* https://github.com/frankbueltge/n-1/blob/main/material/night-sky/:splat 301
+/n-1/nights/* https://github.com/frankbueltge/n-1/blob/main/nights/:splat 301
+/n-1/projects/exoplanet-discord/* https://github.com/frankbueltge/n-1/blob/main/projects/exoplanet-discord/:splat 301
+/n-1/projects/light-characters/* https://github.com/frankbueltge/n-1/blob/main/projects/light-characters/:splat 301
+/n-1/projects/will-write/* https://github.com/frankbueltge/n-1/blob/main/projects/will-write/:splat 301
+/n-1/reading/* https://github.com/frankbueltge/n-1/blob/main/reading/:splat 301
+/arch/ledger/* https://github.com/frankbueltge/arch/blob/main/ledger/:splat 301
+/arch/record/* https://github.com/frankbueltge/arch/blob/main/record/:splat 301

@@ -1,5 +1,7 @@
+import { existsSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import type { ProgrammeRow } from './convening'
+import { sessionHref } from '@/lib/engines/publication-links'
 import { buildScore, type ScoreCycle } from './score'
 import {
   cycleOfThing,
@@ -347,9 +349,18 @@ describe('the committed record', () => {
     expect(record.cycles.at(-1)!.closed).toBeNull()
   })
 
-  it('draws a note for every session since the order, each linking a page', () => {
+  // Until 2026-10-17 each note linked the session's page on this site. The publication rule of that
+  // day retired the journal pages, so a note links the session's own file in the practice's
+  // repository — the file the mirror read it from, which the repository holds under the same path.
+  it('draws a note for every session since the order, each linking its own file in the practice’s repository', () => {
     expect(score.notes).toHaveLength(record.sessions.length)
-    for (const note of score.notes) expect(note.href).toMatch(/^\/(field|atelier|studio)\/journal\//)
+    const repoOf = { atelier: 'ulysses', field: 'field-research', studio: 'studio' } as const
+    for (const note of score.notes) {
+      const m = /^https:\/\/github\.com\/frankbueltge\/([a-z-]+)\/blob\/main\/(journal\/.+\.md)$/.exec(note.href)
+      expect(m, note.href).not.toBeNull()
+      expect(m![1]).toBe(repoOf[note.practice])
+      expect(existsSync(`src/content/${note.practice}/${m![2]}`), note.href).toBe(true)
+    }
   })
 
   it('draws a slur for every relation the relay holds', () => {
@@ -370,8 +381,9 @@ describe('the committed record', () => {
   })
 
   it('fills the notehead of every session the record ties a piece to', () => {
+    // a note links its session's file since 2026-10-17 (see above), so the session is found by it
     const filled = new Set(score.notes.filter((n) => n.filled).map((n) => n.href))
-    for (const t of record.things) if (t.session && t.date && t.date >= record.since) expect(filled.has(t.session.href), t.title).toBe(true)
+    for (const t of record.things) if (t.session && t.date && t.date >= record.since) expect(filled.has(sessionHref(t.session)), t.title).toBe(true)
   })
 
   it('gives every piece of a practice dated under the order a cycle', () => {

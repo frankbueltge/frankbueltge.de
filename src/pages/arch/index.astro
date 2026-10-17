@@ -5,7 +5,9 @@
 //
 //   · The site does not explain the practice. What stands here is what the practice commits,
 //     mirrored whole to public/arch/ (arch-integrate.yml) and read by src/lib/arch/facts.ts —
-//     the works as the practice built them, the record as the practice wrote it.
+//     the works as the practice built them, the record as the practice wrote it. Since the
+//     publication rule of 2026-10-17 (src/lib/engines/publication.mjs) the build serves only the
+//     works from that mirror; the record is listed here and opens in the practice's repository.
 //   · The works are shown BARE. The practice's adopted model tests reception with "a stranger
 //     who has read nothing" meeting the work with no paratext, so the mirror's reframe step skips
 //     works/ and this page links to the files themselves: no wall text, no strip, no caption.
@@ -48,12 +50,15 @@ const instances = facts.works.flatMap((work) =>
   work.instances.map((i) => ({ ...i, work: work.id, workTitle: work.title })),
 )
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
-const readHref = (path: string) => `/arch/read/${path.replace(/\.md$/, '')}`
+// Since the publication rule of 2026-10-17 (src/lib/engines/publication.mjs) the site serves Arch's
+// works and links its record: every markdown file of the record opens in the practice's repository
+// (until then each had a rendered page at /arch/read/<path>, which now 301s to the same file).
+const readHref = (path: string) => `${REPO}/blob/main/${path}`
 
-// Every markdown file of the mirror gets a page; this room used to link a hand-picked few, and
+// Every markdown file of the record is listed; this room used to link a hand-picked few, and
 // on 2026-08-30 fourteen of them — including the eight newest ledger sessions — were reachable
-// only through the sitemap. The remainder is therefore DERIVED from the same function that makes
-// the routes, so the index and the route set cannot drift apart again.
+// only through the sitemap. The remainder is therefore DERIVED from the same function that made
+// the rendered pages (archReadPaths), so the list and the record cannot drift apart again.
 const namedPaths = new Set<string>([
   'PREREGISTRATION.md', 'DOWRY.md', 'CHANNEL.md',
   'record/2026-08-22-decision-operative-model.md', 'material/operative-model.md',
@@ -94,7 +99,7 @@ const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one :
     {balance && (
       <p class="mb-8 border-l-2 border-line pl-4 text-sm leading-relaxed text-fg-muted">
         <span class="text-fg">This room is an archive.</span> The trial it was built for ended with the balance of {balance.written};
-        the practice is no longer listed among the systems running on this site. Everything it committed stays here, as it was committed.
+        the practice is no longer listed among the systems running on this site. Its works stay here; everything else it committed stays in its repository, as it was committed.
       </p>
     )}
 
@@ -219,7 +224,7 @@ const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one :
       </p>
     </section>
 
-    {/* THE RECORD — the practice's own files, rendered, with the raw bytes one click away */}
+    {/* THE RECORD — the practice's own files, each opening in its repository (since 2026-10-17) */}
     <section class="mb-10" aria-labelledby="arch-record">
       <h2 id="arch-record" class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">The record</h2>
       <ul class="mb-5 flex flex-wrap gap-x-4 gap-y-1 text-[12px]">
@@ -241,8 +246,9 @@ const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one :
         <>
           <h3 class="mb-2 mt-6 text-[11px] uppercase tracking-[0.14em] text-fg-faint">The rest of the mirror</h3>
           <p class="mb-3 text-[11px] leading-relaxed text-fg-faint">
-            Everything else the practice has committed and this room renders — listed from the same
-            source the pages are built from, so nothing can sit here unreachable.
+            Everything else the practice has committed, each file opening in its repository — listed
+            from the mirror itself, so nothing on the record goes unlisted. (Until 2026-10-17 this
+            room rendered every file as a page; the site now serves Arch's works and links its record.)
           </p>
           {shelves.map((shelf) => (
             <div class="mb-4">

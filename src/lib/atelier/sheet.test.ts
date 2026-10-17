@@ -22,12 +22,15 @@ describe('approved atelier grammar (static formulas, test-protected)', () => {
     // sheet (docs/design_handoff_research_ecology/README.md). What remains is the way back up
     // and the four Level-2 registers — and every retired label's route 301s to the sheet, so
     // this shortening cost no address.
+    // 2026-10-17, the publication rule: the journal, the constitution and the team channel are no
+    // longer pages of this site but documents in the practice's repository, and their labels say
+    // that they leave it (src/lib/engines/publication.mjs, REPOSITORY_DOORS).
     expect(ATELIER_GRAMMAR.rail.map((r) => r.label)).toEqual([
       'the station',
       'works',
-      'journal',
-      'constitution',
-      'team channel',
+      'journal ↗ in the repository',
+      'constitution ↗ in the repository',
+      'team channel ↗ in the repository',
     ])
     expect(ATELIER_GRAMMAR.rail[0].href).toBe('/atelier')
     expect(ATELIER_GRAMMAR.backToSheet).toBe('← the atelier')

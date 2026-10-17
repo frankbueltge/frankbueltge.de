@@ -39,6 +39,7 @@ import type { PulseSnapshot } from '@/lib/pulse/render'
 import { RETIRED_REPOS, withoutRepos } from '@/lib/pulse/without'
 import { buildStackSvg, stackWeekRange } from '@/lib/ops/stack'
 import { buildBoard } from '@/lib/ops/board'
+import { pieceHref } from '@/lib/engines/publication-links'
 import { houseNames, type HouseId } from '@/lib/ops/house-feed'
 import { buildHouseFeed } from '@/lib/ops/live-feed'
 import { readTiles } from '@/lib/ops/tiles'
@@ -151,7 +152,8 @@ const briefs = PRACTICES.map((practice) => {
   return {
     practice,
     house: names[practice],
-    piece: piece && { title: withoutHouseSuffix(piece.title, names[practice]), kind: piece.kind, when: when(piece.date), href: piece.href },
+    // where the piece is read since the publication rule of 2026-10-17 (publication-links.ts)
+    piece: piece && { title: withoutHouseSuffix(piece.title, names[practice]), kind: piece.kind, when: when(piece.date), href: pieceHref(piece.href) },
   }
 })
 const landed = briefs.filter((b) => b.piece).length

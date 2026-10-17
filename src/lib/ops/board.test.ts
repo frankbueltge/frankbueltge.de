@@ -1,6 +1,8 @@
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { boardSources, buildBoard, cleanMomentTitle, lastRelation, newestMoment, repoSeries, type BoardSources } from './board'
+import { matchRedirect, parseRedirects } from '@/lib/engines/publication.mjs'
+import { pieceHref } from '@/lib/engines/publication-links'
 import { NAMING } from '@/config/naming'
 import type { MadeThing } from '@/lib/ecology/record'
 import { loadRelay, type Relation } from '@/lib/ecology/relay'
@@ -117,8 +119,9 @@ describe('the board says what the rooms say', () => {
 
   it('shows each practice’s newest piece from the ecology’s record, with its own date', () => {
     // the Atelier's newest window, never the nightly line's newer work, and without its own name
-    // after the title
-    expect(rows.find((r) => r.id === 'ulysses')!.last).toEqual({ title: 'The Warner’s Column', meta: '2026-10-16', href: '/atelier/window/cycle-008-session-3/' })
+    // after the title — linked where it is read since the publication rule of 2026-10-17 (a
+    // session's window: in the practice's repository; see the committed-record block below)
+    expect(rows.find((r) => r.id === 'ulysses')!.last).toEqual({ title: 'The Warner’s Column', meta: '2026-10-16', href: pieceHref('/atelier/window/cycle-008-session-3/') })
     expect(rows.find((r) => r.id === 'meridian')!.last).toMatchObject({ meta: '2026-10-16' })
     expect(rows.find((r) => r.id === 'ensemble')!.last).toMatchObject({ title: 'FILED UNDER', meta: '2026-10-16' })
   })
@@ -152,12 +155,19 @@ describe('the board says what the rooms say', () => {
     // derivation the shelf on the practice's front door is built from, not against a typed
     // title — the practice builds a new page most nights.
     const newest = newestN1Page()!
-    expect(n1.last).toEqual({ title: newest.title, meta: newest.date, href: newest.href })
+    // Since the publication rule of 2026-10-17 the site serves n-1's works, not its studies: a
+    // study is linked at its place in n-1's repository, never through a 301.
+    expect(n1.last).toEqual({ title: newest.title, meta: newest.date, href: pieceHref(newest.href) })
     expect(n1.last!.meta).toMatch(/^\d{4}-\d{2}-\d{2}$/)
     // never the Atelier's: the line descends from that practice and shares none of its record
     const href = n1.last!.href ?? ''
-    expect(href).toMatch(/^\/n-1\/(works|projects)\//)
-    expect(existsSync(`public${href}${href.endsWith('/') ? 'index.html' : ''}`)).toBe(true)
+    if (href.startsWith('/')) {
+      expect(href).toMatch(/^\/n-1\/(works|projects)\//)
+      expect(existsSync(`public${href}${href.endsWith('/') ? 'index.html' : ''}`)).toBe(true)
+    } else {
+      expect(href).toMatch(/^https:\/\/github\.com\/frankbueltge\/n-1\/tree\/main\/(works|projects)\//)
+      expect(existsSync(`public${newest.href}${newest.href.endsWith('/') ? 'index.html' : ''}`)).toBe(true)
+    }
   })
 
   it('lists no row for Arch, whose trial has ended — its room is its archive', () => {
@@ -224,7 +234,20 @@ describe('the board on the committed record', () => {
   it('reads the same record the practice pages read', () => {
     const { things } = boardSources()
     const atelier = rows.find((r) => r.id === 'ulysses')!.last
-    if (atelier) expect(things.some((t) => t.house === 'atelier' && t.href === atelier.href)).toBe(true)
+    if (atelier) expect(things.some((t) => t.house === 'atelier' && pieceHref(t.href) === atelier.href)).toBe(true)
+  })
+
+  // The publication rule of 2026-10-17 took the practices' session windows and artifacts off the
+  // site, and a practice's newest piece is often one of them. A board link that only reaches its
+  // piece through a 301 says one thing and does another, so no newest-piece link may be an address
+  // public/_redirects sends away — the piece is linked in its repository instead.
+  it('never leaves a newest-piece link on a redirect', () => {
+    const rules = parseRedirects(readFileSync('public/_redirects', 'utf8'))
+    for (const row of rows) {
+      const href = row.last?.href
+      if (!href || !href.startsWith('/')) continue
+      expect(matchRedirect(rules, href.split('#')[0]!), `${row.id}: ${href}`).toBeNull()
+    }
   })
 }, 60_000)
 

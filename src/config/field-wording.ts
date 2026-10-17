@@ -12,6 +12,7 @@
 // ADR 0010: das Feld teilt keine visuelle Grammatik mit Partitur, Blatt oder Bühne.
 
 import type { RailItem, OrientationItem } from '@/lib/practice-shell'
+import { REPOSITORY_DOORS } from '@/lib/engines/publication.mjs'
 
 export const FIELD_GRAMMAR = {
   approval: 'approved' as const,
@@ -21,13 +22,16 @@ export const FIELD_GRAMMAR = {
   dataEdgeLines: ['the pen has not lifted —', 'the tape runs on'] as const,
   /** Die Kopfleiste (Plate rail — the only standing navigation, field-aesthetik §4). */
   /** v3 pyramid, 2026-08-12: the register and apparatus rooms were folded into the station sheet
-   *  (their routes 301 there), so the rail is the sheet plus the registers under it. */
+   *  (their routes 301 there), so the rail is the sheet plus the registers under it.
+   *  2026-10-17, the publication rule (src/lib/engines/publication.mjs): the journal, the
+   *  constitution and the team channel are read in the practice's own repository, and their
+   *  labels say so. */
   rail: [
     { label: 'the station', href: '/field', hint: 'the cycle’s question, the bulletin, the last sessions' },
     { label: 'instruments', href: '/field/instruments', hint: 'all instruments — existing URLs stay' },
-    { label: 'journal', href: '/field/journal', hint: 'day files, grouped — the unedited record' },
-    { label: 'constitution', href: '/field/protocol', hint: 'the protocol, as mirrored' },
-    { label: 'team channel', href: '/field/requests', hint: 'REQUESTS — the one steering channel' },
+    { label: 'journal ↗ in the repository', href: REPOSITORY_DOORS.field.journal, hint: 'day files — the unedited record, in the collective’s own repository' },
+    { label: 'constitution ↗ in the repository', href: REPOSITORY_DOORS.field.protocol, hint: 'the protocol, in the collective’s own repository' },
+    { label: 'team channel ↗ in the repository', href: REPOSITORY_DOORS.field.requests, hint: 'REQUESTS — the one steering channel' },
   ] as RailItem[],
   door: { label: '→ the middle', href: '/encounters', hint: 'enc-2026-001 — the correction’s two readings' },
   backToPlate: '← back to the instrument',

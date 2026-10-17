@@ -29,6 +29,7 @@ import { nightlyLine } from '@/lib/engines/nightly-line'
 import { WERKE } from '@/data/werke'
 import attentionMoments from '@/data/attention/moments.json'
 import { lastN1Night, N1_RECORD_HREF, newestN1Page } from '@/lib/n1/works'
+import { pieceHref } from '@/lib/engines/publication-links'
 import { withoutHouseSuffix } from '@/lib/ops/edition'
 
 /** Which door id drives which practice — the only mapping the board needs, and the reason it is
@@ -113,7 +114,10 @@ export function repoSeries(snapshot: PulseSnapshot, repo: string, buckets = 28):
  * A practice's newest piece — the one its own page leads with (record.ts, newestPiece): its works
  * and the artifacts its sessions leave, never the nightly line's, which stands beside the ecology
  * under its own name. The title without the practice's own name after it, the day its record
- * names, or — for a window no journal note dates — its cycle, never an invented day.
+ * names, or — for a window no journal note dates — its cycle, never an invented day. The link is
+ * where the piece is read since the publication rule of 2026-10-17: its own address for a work or a
+ * presentation, its place in the practice's repository for a session's window or artifact, which
+ * the site no longer serves (src/lib/engines/publication-links.ts).
  */
 function lastPieceOf(things: readonly MadeThing[], practice: PracticeId, houseName: string): BoardLast | null {
   const piece = newestPiece(things, practice)
@@ -121,7 +125,7 @@ function lastPieceOf(things: readonly MadeThing[], practice: PracticeId, houseNa
   return {
     title: withoutHouseSuffix(piece.title, houseName),
     meta: piece.date ?? SCORE_WORDING.cycleLabel(piece.cycle!),
-    href: piece.href,
+    href: pieceHref(piece.href),
   }
 }
 
@@ -200,7 +204,8 @@ function lastMoment(): BoardLast | null {
  *  the row read before. */
 function lastN1(): BoardLast | null {
   const page = newestN1Page()
-  if (page) return { title: page.title, meta: page.date, href: page.href }
+  // a study the site no longer serves (2026-10-17) is linked in n-1's repository, a work stays here
+  if (page) return { title: page.title, meta: page.date, href: pieceHref(page.href) }
   const night = lastN1Night()
   return night ? { title: night.title, meta: night.date, href: N1_RECORD_HREF } : null
 }

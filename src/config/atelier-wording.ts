@@ -14,6 +14,7 @@
 // (Field) oder Bühne (Studio) — auch dieses Wörterbuch ist bewusst ein eigenes.
 
 import type { RailItem, OrientationItem } from '@/lib/practice-shell'
+import { REPOSITORY_DOORS } from '@/lib/engines/publication.mjs'
 
 export const ATELIER_GRAMMAR = {
   approval: 'approved' as const, // Design-Session 2026-07-15, Chip „wording approved“
@@ -30,12 +31,15 @@ export const ATELIER_GRAMMAR = {
   /** v3 pyramid, 2026-08-12: the rail is the way back up and the way down to the registers, and
    *  nothing else. The five standalone rooms it used to list (sheet, sheets, material, foundation,
    *  projects) were folded into the station sheet and its registers; their routes 301 there. */
+  /** 2026-10-17, the publication rule (src/lib/engines/publication.mjs): the journal, the
+   *  constitution and the team channel are read in the practice's own repository, and their
+   *  labels say so. */
   rail: [
     { label: 'the station', href: '/atelier', hint: 'the sheet — status, the running line, the map' },
     { label: 'works', href: '/atelier/works', hint: 'works & catalogue — existing URLs stay' },
-    { label: 'journal', href: '/atelier/journal', hint: 'the journal as session register, S1…' },
-    { label: 'constitution', href: '/atelier/protocol', hint: 'the protocol, as mirrored' },
-    { label: 'team channel', href: '/atelier/requests', hint: 'REQUESTS — the one steering channel' },
+    { label: 'journal ↗ in the repository', href: REPOSITORY_DOORS.atelier.journal, hint: 'the journal, in the practice’s own repository' },
+    { label: 'constitution ↗ in the repository', href: REPOSITORY_DOORS.atelier.protocol, hint: 'the protocol, in the practice’s own repository' },
+    { label: 'team channel ↗ in the repository', href: REPOSITORY_DOORS.atelier.requests, hint: 'REQUESTS — the one steering channel' },
   ] as RailItem[],
   door: { label: '→ the middle', href: '/encounters', hint: 'encounters; the doorway at the sheet’s edge' },
   /** Rückweg-Konvention jeder Unterseite (atelier-aesthetik §5; Stufe-0-Revision

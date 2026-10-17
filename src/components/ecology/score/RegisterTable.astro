@@ -26,6 +26,7 @@
 // stretched over the row by the stylesheet, and the notes stand above that stretch.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { localeHref } from '@/lib/locale-href'
+import { pieceHref } from '@/lib/engines/publication-links'
 import type { Locale } from '@/lib/site'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
 import { SCORE_WORDING as W, SHORT, shortDateYear } from '@/config/score-wording'
@@ -44,7 +45,12 @@ interface Props {
 const { things, cycles } = Astro.props
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-const url = (href: string) => (href.startsWith('http') ? href : localeHref(href, (path) => getRelativeLocaleUrl(locale, path)))
+// A session's window or artifact is read in the practice's repository since the publication rule of
+// 2026-10-17; pieceHref says where each row's piece lives now, so no row leads through a 301.
+const url = (href: string) => {
+  const live = pieceHref(href)
+  return live.startsWith('http') ? live : localeHref(live, (path) => getRelativeLocaleUrl(locale, path))
+}
 const R = W.register
 const houseName = (t: MadeThing) => (isPractice(t.house) ? ECOLOGY_V3.practices[t.house].name : R.nightly)
 const hasNightly = things.some((t) => !isPractice(t.house))

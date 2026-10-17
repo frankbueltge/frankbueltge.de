@@ -27,12 +27,15 @@ describe('approved studio grammar (static formulas, test-protected)', () => {
   it('keeps the stage rail exactly as designed (v3 pyramid 2026-08-12: the station, then its registers)', () => {
     // The playbill and apparatus rooms were folded into the station sheet by the v3 rebuild
     // (docs/design_handoff_research_ecology/README.md); both routes 301 to it.
+    // 2026-10-17, the publication rule: the journal, the constitution and the team channel are no
+    // longer pages of this site but documents in the ensemble's repository, and their labels say
+    // that they leave it (src/lib/engines/publication.mjs, REPOSITORY_DOORS).
     expect(STUDIO_GRAMMAR.rail.map((r) => r.label)).toEqual([
       'the station',
       'works',
-      'journal',
-      'constitution',
-      'team channel',
+      'journal ↗ in the repository',
+      'constitution ↗ in the repository',
+      'team channel ↗ in the repository',
     ])
     expect(STUDIO_GRAMMAR.door.label).toBe('→ the middle')
   })

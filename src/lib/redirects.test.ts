@@ -148,10 +148,14 @@ describe('German ecology routes are covered and point at the English canonicals'
 describe('practice-surfaces routes are covered', () => {
   const rules = parseRedirects(raw)
 
-  it('/atelier/cockpit 301s to the archive path in one hop', () => {
+  // Until 2026-10-17 this rule led to the archived cockpit at /atelier/archive/cockpit. That page
+  // was retired with the publication rule (src/lib/engines/publication.mjs) and its own address now
+  // leads to /atelier, so the old address goes there directly — one hop, not two.
+  it('/atelier/cockpit 301s to the Atelier’s page in one hop', () => {
     const rule = rules.find((r) => r.from === '/atelier/cockpit')
-    expect(rule?.to).toBe('/atelier/archive/cockpit')
+    expect(rule?.to).toBe('/atelier')
     expect(rule?.code).toBe('301')
+    expect(rules.find((r) => r.from === '/atelier/archive/cockpit')?.to).toBe('/atelier')
   })
 
   it('/praktiken 301s to the hub', () => {

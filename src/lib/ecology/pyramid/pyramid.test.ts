@@ -361,10 +361,19 @@ describe('the station sheet', () => {
   // verbatim. The door must exist exactly when the mirror carries an entry page — a door onto
   // nothing promises a surface the practice has not built, and a missing door hides one it has.
   it('opens the window door only where the mirror carries an entry page', () => {
-    const has = (path: string) => path === 'public/field/window/index.html'
-    expect(windowDoor('field', has)).toMatchObject({ href: '/field/window/' })
-    expect(windowDoor('atelier', has)).toBeNull()
+    const has = (path: string) => path === 'public/atelier/window/index.html'
+    expect(windowDoor('atelier', has)).toMatchObject({ href: '/atelier/window/' })
+    expect(windowDoor('atelier', () => false)).toBeNull()
     expect(windowDoor('studio', () => false)).toBeNull()
+  })
+
+  // 2026-10-17, the publication rule (src/lib/engines/publication.mjs): the site serves a window's
+  // front page only where the rule publishes it — the Atelier's, its closing report. A Field or
+  // Studio window would still be mirrored, but the build prunes it, so a door to it would be a door
+  // onto a 404. Until that day this test opened the Field's door from the mirror alone.
+  it('opens no window door the publication rule would prune, whatever the mirror carries', () => {
+    expect(windowDoor('field', () => true)).toBeNull()
+    expect(windowDoor('studio', () => true)).toBeNull()
   })
 
   it('gives the Middle no window — it is not a practice', () => {

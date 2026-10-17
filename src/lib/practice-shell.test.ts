@@ -29,8 +29,15 @@ describe('practice rails conform to the shared RailItem shape', () => {
         }
       })
 
-      it('every href is a site-relative path', () => {
-        for (const item of rail) expect(item.href.startsWith('/')).toBe(true)
+      // Until 2026-10-17 every rail item was a page of this site. Since the publication rule
+      // (src/lib/engines/publication.mjs) three of them open the practice's own repository, and an
+      // item that leaves the site says so in its label.
+      it('every href is a site-relative path, or the practice repository an item says it opens', () => {
+        for (const item of rail) {
+          if (item.href.startsWith('/')) continue
+          expect(item.href).toMatch(/^https:\/\/github\.com\/frankbueltge\//)
+          expect(item.label).toContain('↗ in the repository')
+        }
       })
     })
   }

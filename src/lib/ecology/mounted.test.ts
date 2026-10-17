@@ -42,7 +42,12 @@ const source = pages.map((p) => readFileSync(p, 'utf8')).join('\n')
 describe('the instruments are on a page', () => {
   // component → what disappears with it, in the words the failure would need to be understood
   const INSTRUMENTS: [string, string][] = [
-    ['RefrainScore', 'the running work-line’s score — the three voices and every move it made'],
+    // RefrainScore LEFT THIS LIST ON 2026-10-17, named here so its absence is a decision and not a
+    // slip: it drew one work-line's score on /atelier/lines/<id>, a page retired with the
+    // publication rule (src/lib/engines/publication.mjs) — the line's record is read in the
+    // practice's repository (projects/<id>), and the work-line itself was retired with v3. The
+    // component stays in the repository unmounted, as the surfaces before it did. The map of every
+    // line, just below, still stands on /atelier.
     ['LineMap', 'the map of every work-line on one time axis, and how each one ended'],
     // back on /studio since 2026-09-01 — it had rendered on no page since the station sheets of
     // 2026-08-12, and its own guard then held the whole studio mirror shut over a figure nobody saw
@@ -79,14 +84,17 @@ describe('the instruments are on a page', () => {
 })
 
 describe('the archived record stays findable', () => {
-  it('links the retired cockpit from a station sheet', () => {
-    // ADR 0008 archives surfaces rather than deleting them, which is only honest while the
-    // archive can be reached. Between 2026-08-12 and 2026-08-13 the only references to this page
-    // in the whole build were a 301 from its old route and the sitemap — the rhizome and the
-    // closure index of the first nightly phase were on the site and reachable by nobody.
+  // Until 2026-10-17 this held a station door on the archived cockpit: ADR 0008 archives surfaces
+  // rather than deleting them, which is only honest while the archive can be reached (between
+  // 2026-08-12 and 2026-08-13 the only references to the page were a 301 and the sitemap). The
+  // publication rule of 2026-10-17 retired the page itself — a retired interface rendered against
+  // the live archive is not a finished work — so what must hold now is the other half: no door
+  // leads to an address that is no longer a page, and the old addresses land on the Atelier's page.
+  it('leads no station door to the retired cockpit, and lands its addresses on the Atelier', () => {
     const hrefs = Object.values(DOORS).flat().map((d) => d.href)
-    expect(hrefs, 'nothing links /atelier/archive/cockpit — the first nightly phase’s instrument is unreachable again').toContain(
-      '/atelier/archive/cockpit',
-    )
+    expect(hrefs).not.toContain('/atelier/archive/cockpit')
+    const redirects = readFileSync('public/_redirects', 'utf8')
+    expect(redirects).toMatch(/^\/atelier\/archive\/cockpit \/atelier 301$/m)
+    expect(redirects).toMatch(/^\/atelier\/cockpit \/atelier 301$/m)
   })
 })
