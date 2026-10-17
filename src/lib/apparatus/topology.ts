@@ -588,10 +588,10 @@ export const NODES: readonly ApparatusNode[] = [
     members: [
       // Since 2026-10-07 (five sessions per practice landed in one day, and the hourly mirror watch
       // ran three or four times a day): the practices are watched once a minute against the head
-      // each mirror records, while the house is active; the mirror watch keeps the two houses the
-      // practice watch does not cover.
+      // each mirror records, while the house is active; the mirror watch keeps the one house the
+      // practice watch does not cover (the ecology; the dormant plenum was dropped on 2026-10-17).
       { label: 'Practice watch', what: 'once a minute while the house is active: has a practice moved past the head its mirror carries? Then start its gate', ref: '.github/workflows/practice-watch.yml', workflowName: 'Practice watch', cron: ['50 22 * * *', '7 */2 * * *'] },
-      { label: 'Mirror watch', what: 'hourly, as GitHub grants it: has the plenum or the ecology moved since its mirror last did?', ref: '.github/workflows/mirror-watch.yml', workflowName: 'Mirror watch', cron: ['40 * * * *'] },
+      { label: 'Mirror watch', what: 'hourly, as GitHub grants it: has the ecology moved since its mirror last did?', ref: '.github/workflows/mirror-watch.yml', workflowName: 'Mirror watch', cron: ['40 * * * *'] },
       { label: 'Drift watch', what: 'nightly: mirror and figure freshness, with network checks on', ref: '.github/workflows/drift-watch.yml', workflowName: 'Drift watch', cron: ['45 4 * * *'] },
       { label: 'Landing watchdog', what: 'nightly: sessions that ran but never landed', ref: '.github/workflows/landing-watchdog.yml', workflowName: 'Landing watchdog', cron: ['45 5 * * *'] },
       { label: 'Requests watchdog', what: 'twice daily: a new section in a practice’s REQUESTS.md becomes an issue', ref: '.github/workflows/requests-watchdog.yml', workflowName: 'Requests watchdog', cron: ['15 6 * * *', '15 21 * * *'] },
