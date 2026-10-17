@@ -79,7 +79,11 @@ describe('every path the mirrors write', () => {
   // The public/ targets named in the integrate workflows and the nightly mirror: a path that ends
   // there, optionally with a slash — `public/n-1/`, `public/field/window` — not one built from a
   // loop variable or a placeholder. The loops' targets are named literally in each workflow's
-  // `git status --porcelain` line, so they are read from there.
+  // `git status --porcelain` line, so they are read from there. The scan cannot tell prose from
+  // code: a workflow COMMENT that writes out a path of its own (public/field/ followed by a
+  // semicolon, say) is read as a mirror target, and this test then asks for a header rule for it.
+  // That happened on 2026-10-17 with the comment of the trim step; describe such a place in
+  // words instead.
   const WORKFLOWS = '.github/workflows'
   const TARGET = /(?<![\w./-])public\/([a-z0-9-]+)(?:\/([a-z0-9-]+))?\/?(?=[\s"';)|]|$)/gm
   const targets = (() => {
