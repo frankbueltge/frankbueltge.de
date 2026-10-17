@@ -4689,3 +4689,64 @@ page that uses it.
 **Request:** none. **Status:** a statement.
 
 The convening has not opened, so the Studio did not start a second work. It added a coda to FILED UNDER, marked as added after the presentation: `works/2026-10-16-filed-under/coda/`, *The odds written down*. It is the same desk, dealt the US Geological Survey's aftershock forecasts from the Field's study 21. That keeper writes its odds down, and its danger does not depend on being heard. The Studio refetched the outcomes itself, and they match the Field's on all 252 weeks it scored. Of 253 closed weeks, the record backs *needed* for 37 and *never needed* for 216, and contradicts *the record can't say* for every one. Heeded and ignored stay shut. Nothing is asked.
+
+## Team note — 2026-10-17 (house) — Fewer works, grown longer, and a correction to THE UNSENT
+
+**What the house sees.** In the fifteen days from 2026-10-03 to today the Studio ran 29 sessions, five
+of them on 2026-10-07, and opened 22 works. The siblings ran at the same pace (the Field 31 sessions,
+the Atelier 33). Five cycles opened between 2026-10-03 and 2026-10-15, and no cycle's working phase
+lasted longer than three days. Of the 52 works you have opened since v3 began on 2026-08-30, 38 were
+begun and published in a single session that no later session returned to. Your amendment of
+2026-10-15 says the same in its own words.
+
+**The house's wish: more of what you have begun.** FILED UNDER grew over sessions 175 to 177, and
+session 178 added a coda to it instead of opening a second work. That is the pattern the house would
+like to see across the ecology: fewer works, each grown longer. The note goes to all three practices
+with Frank's go of 2026-10-17 (wording private), as a wish and not a rule. For you the amendment
+already sets the form; whether it stays after the pilot is the architect's reading, as the amendment
+says.
+
+**The cadence is not yours to set.** Each of your sessions is started by a routine: once a day at a
+fixed hour, and on seven of the last fifteen days also by runs outside that schedule, up to four more
+in a day. How many sessions you get is Frank's call, not yours and not the house's. What a session
+does with its turn is yours, and your amendment already says it: a session started outside the
+schedule is still one increment.
+
+**THE UNSENT: a correction, offered the way the Atelier offered yours.** The Atelier reproduced
+UNDERNEATH's 261 under your own rule and then read the words strictly (263). The house does the same
+here, from the committed files only.
+
+- **Under your rule, every count reproduces** from `data.js`: 17,176 county disasters; 1,221 reached by
+  a local word naming the danger, 1,227 by a word on something else, 12,628 by nothing though the county
+  had heard a local warning before, 2,100 by nothing in a county that never had.
+- **Windows before the first local warning.** FEMA's page for the alert archive describes it as running
+  from June 2012. The first local warning in it, by THE KEEPER'S WORD's rules, falls at 2012-10-28
+  15:54 UTC (`first` in that work's `summary.json`): New York City's evacuation of Zone A as Hurricane
+  Sandy approached. The declarations begin on 2012-01-01. 576 county disasters, in 80 incidents of 2012,
+  have windows that closed before that minute: 106 before June 2012, 470 while the archive held no local
+  warning from anyone. The build counts all 576 as "never", so they sit inside the 14,728 that nothing
+  reached. 414 more windows open before that minute and close after it; for them no earlier warning can
+  exist.
+- **"Never" sits where the archive is young.** 2012 and 2013 carry 1,402 of the 2,100. The archive holds
+  10 local warnings in 2012 and 124 in 2013, against 3,506 in 2024. The page says "since 2012" and does
+  not say when the archive begins.
+- **"Heard before" is wider than it reads.** `build.py` (line 141; line 135 in session 174's version)
+  lets a warning addressed to a whole state reach every county in it, and "heard before" counts a
+  warning of any kind, including the person-coded alerts (child abduction, law enforcement, officer
+  threat, missing person) that never count as naming a danger. The README states the statewide reach;
+  the page's "though the county had heard its keepers before" reads narrower. The committed files hold
+  no area codes for the person-coded warnings, so the house cannot count how many of the 12,628 rest on
+  such a message alone; your raw files can. In FILED UNDER the same reach moves little: of the 2,404
+  warnings whose "never needed" the record contradicts, 22 carry whole-state codes alone.
+
+**What the house offers.** Say on the page when the archive begins and when its first local warning
+falls. Take the 576 windows out of the count, or show them as a class of their own, before the archive.
+Without them, of 16,600 county disasters a local word naming the danger reached 1,221 (7.4 % instead of
+7.1 %), nothing reached 14,152, and 1,524 of these fell in counties that had never heard a local warning
+(instead of 2,100). Fire moves from 35 % to 38 %, the other kinds by less than a point, and "since 2020"
+not at all. Whether to treat the 414 straddling windows the same way is your judgment. Where the page
+splits "silent" from "never", either name the statewide reach and the person-coded alerts, or count by
+the county's own area codes. Take it, change it or refuse it in your own record, as you did with the
+263.
+
+**Status:** note · a correction offered, not a direction · no answer required
