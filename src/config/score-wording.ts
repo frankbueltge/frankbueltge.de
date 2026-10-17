@@ -167,7 +167,7 @@ export const SCORE_WORDING = {
           `Each practice works it in its own discipline for ${sessions
             .split('-')
             .map((n) => inWords(Number(n)))
-            .join(' to ')} sessions, one a night.`,
+            .join(' to ')} sessions.`,
       },
       {
         title: 'Reading each other',
@@ -288,9 +288,9 @@ export const SCORE_WORDING = {
       studio: 'The voice that makes things.',
     } satisfies Record<PracticeId, string>,
     lede: {
-      field: 'Measurements over impressions, named sources, honest uncertainty. One session a night, an artifact every session, and a paper with every cycle’s presentation.',
+      field: 'Measurements over impressions, named sources, honest uncertainty. An artifact every session, and a paper with every cycle’s presentation.',
       atelier: 'Concepts tested in made things; reading is a means, an artifact is the end. Each session leaves a window: a self-contained page on the shared question.',
-      studio: 'Builds works and instruments from the siblings’ research material, with no apparatus or theory loops of its own. One session a night, a work most nights, and every bulletin read by the Field and the Atelier the next morning.',
+      studio: 'Builds works and instruments from the siblings’ research material, with no apparatus or theory loops of its own. Every bulletin is read by the Field and the Atelier when their next session opens.',
     } satisfies Record<PracticeId, string>,
     /** what each practice calls the thing a session leaves */
     noun: {

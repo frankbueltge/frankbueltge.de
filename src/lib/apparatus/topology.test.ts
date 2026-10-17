@@ -14,6 +14,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
+import pulse from '@/data/pulse/pulse.json'
 import { DOMAIN_IDS, EDGES, NODES, domainOf, nodeById, repoRefs, workflowClaims } from './topology'
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url))
@@ -238,5 +239,28 @@ describe('the map says how far it can vouch for each edge', () => {
       expect(e.severed!.length, `${e.from} → ${e.to} is drawn severed without saying why`).toBeGreaterThan(40)
       expect(e.ref, `${e.from} → ${e.to} is drawn severed without naming the record`).toBeTruthy()
     }
+  })
+})
+
+// The Puls node used to say "five repositories, binned into eight weeks" and "clones four
+// siblings" in typed words while the snapshot listed nine repositories over thirteen weeks (found
+// 2026-10-17). The page now states the snapshot's own counts; this holds it to them, and holds the
+// snapshot to the workflow that makes it, so the number cannot be right on the page and wrong in
+// the repository.
+describe('the Puls node counts what the pulse snapshot counts', () => {
+  it('states the snapshot’s repositories and weeks, not a typed number', () => {
+    const node = nodeById('in-pulse')
+    expect(node?.what).toContain(`${pulse.repos.length} repositories`)
+    expect(node?.what).toContain(`${pulse.weeks.length} weeks`)
+    const edge = EDGES.find((e) => e.from === 'in-pulse' && e.to === 'st-instruments')
+    expect(edge?.mechanism).toContain(`${pulse.repos.length} repositories`)
+    expect(node?.members?.[0]?.what).toContain(`${pulse.repos.length - 1} sibling`)
+  })
+
+  it('names the repositories the nightly refresh clones, plus this one', () => {
+    const wf = readFileSync(fileURLToPath(new URL('../../../.github/workflows/pulse-refresh.yml', import.meta.url)), 'utf8')
+    const cloned = wf.match(/for r in ([^;]+); do/)?.[1]?.trim().split(/\s+/) ?? []
+    expect(cloned.length).toBeGreaterThan(3)
+    expect([...cloned, 'frankbueltge.de'].sort()).toEqual([...pulse.repos].sort())
   })
 })
