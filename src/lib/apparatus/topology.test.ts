@@ -244,9 +244,10 @@ describe('the map says how far it can vouch for each edge', () => {
 
 // The Puls node used to say "five repositories, binned into eight weeks" and "clones four
 // siblings" in typed words while the snapshot listed nine repositories over thirteen weeks (found
-// 2026-10-17). The page now states the snapshot's own counts; this holds it to them, and holds the
-// snapshot to the workflow that makes it, so the number cannot be right on the page and wrong in
-// the repository.
+// 2026-10-17). The page now states the snapshot's own counts, and this holds it to them. The
+// snapshot's list comes from scripts/fetch-pulse.ts and the clones from the nightly workflow, two
+// files one author edits together, so those are tied here rather than the nightly-written snapshot,
+// which lags a change by up to a day and would turn a correct commit red.
 describe('the Puls node counts what the pulse snapshot counts', () => {
   it('states the snapshot’s repositories and weeks, not a typed number', () => {
     const node = nodeById('in-pulse')
@@ -257,10 +258,15 @@ describe('the Puls node counts what the pulse snapshot counts', () => {
     expect(node?.members?.[0]?.what).toContain(`${pulse.repos.length - 1} sibling`)
   })
 
-  it('names the repositories the nightly refresh clones, plus this one', () => {
-    const wf = readFileSync(fileURLToPath(new URL('../../../.github/workflows/pulse-refresh.yml', import.meta.url)), 'utf8')
+  it('clones the repositories the snapshot script counts, bar this one', () => {
+    const root = fileURLToPath(new URL('../../../', import.meta.url))
+    const wf = readFileSync(`${root}.github/workflows/pulse-refresh.yml`, 'utf8')
     const cloned = wf.match(/for r in ([^;]+); do/)?.[1]?.trim().split(/\s+/) ?? []
+    const script = readFileSync(`${root}scripts/fetch-pulse.ts`, 'utf8')
+    const list = script.match(/const REPOS = \[([\s\S]*?)\n\]/)?.[1] ?? ''
+    const counted = [...list.matchAll(/^\s*'([^']+)',?\s*$/gm)].map((m) => m[1])
     expect(cloned.length).toBeGreaterThan(3)
-    expect([...cloned, 'frankbueltge.de'].sort()).toEqual([...pulse.repos].sort())
+    expect(counted).toContain('frankbueltge.de')
+    expect([...cloned].sort()).toEqual(counted.filter((r) => r !== 'frankbueltge.de').sort())
   })
 })
