@@ -27,6 +27,8 @@ import type { Topology } from 'topojson-specification'
 
 import { GALLERY } from '@/config/gallery-wording'
 import { count, decimal, READOUTS, type ReadoutId } from './readouts'
+import { sawtooth as sawtoothSeries, type Sawtooth } from '@/lib/sawtooth/series'
+import { thin, TOLERANCE } from '@/lib/sawtooth/figure'
 import { bars as vizBars, linePath, type VizBox } from '@/lib/ops/viz'
 import { bars as benfordBars } from '@/lib/round-number/histogram'
 import { yearAreaPath, yearLinePath } from '@/lib/praemie/chart'
@@ -408,6 +410,34 @@ function societyMarks(): ThumbMark[] {
   return marks
 }
 
+/** Sawtooth — the published gap between Earth time and atomic time, thinned by the page's own
+ *  rule (the largest absolute value per bucket, never the mean, so a one-day snap of a whole
+ *  second survives the shrinking) and drawn as bars either side of zero. Scaled to the rule UTC
+ *  is held to rather than to the data, as the page's second plate is, so a slide below zero is
+ *  drawn below the line instead of being clipped to the floor. Bars rather than a line: at this
+ *  width a line of teeth reads as noise, while a bar row keeps each slide legible. The marked bar
+ *  is the deepest slide of the record. */
+function sawtoothMarks(s: Sawtooth): ThumbMark[] {
+  const values = thin(s.observed, 56)
+  if (values.length === 0) return []
+  const zero = r1(H / 2)
+  const half = H / 2 - P
+  const slot = (W - 2 * P) / values.length
+  const w = Math.max(1.2, r1(slot * 0.62))
+  const deepest = values.reduce((best, v, i) => (v < values[best]! ? i : best), 0)
+  const marks: ThumbMark[] = [{ t: 'rule', x1: P, y1: zero, x2: W - P, y2: zero }]
+  for (const [i, v] of values.entries()) {
+    const h = Math.max(1, r1((Math.min(Math.abs(v), TOLERANCE) / TOLERANCE) * half))
+    const x = r1(P + i * slot)
+    const bar =
+      v < 0
+        ? { t: 'bar' as const, x, y: zero, w, h }
+        : { t: 'bar' as const, x, y: r1(zero - h), w, h }
+    marks.push(i === deepest ? { ...bar, on: true } : bar)
+  }
+  return marks
+}
+
 // ── the two records that live in a directory, not in one file ─────────────────────────────
 // Read from disk rather than glob-imported: these are build-time-only reads of eighty-odd and
 // sixty-odd files, and an eager glob would carry every byte of them into the module graph for
@@ -690,6 +720,15 @@ function buildThumbnails(): Thumbnail[] {
       source: 'src/data/ghost-fleet/latest.json',
     })
   }
+
+  const saw = sawtoothSeries()
+  out.push({
+    id: 'sawtooth',
+    marks: sawtoothMarks(saw),
+    draws: D.sawtooth!,
+    readout: R.sawtooth(count(saw.leaps.length), count(saw.yearsSinceLeap)),
+    source: 'src/data/sawtooth/rotation.json',
+  })
 
   return out
 }

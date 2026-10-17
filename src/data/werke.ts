@@ -132,6 +132,41 @@ export const WERKE: Werk[] = [
     tier: 'experiment',
   },
   {
+    // Built 2026-09-04, free — the Atlas as inspiration, not as a quarry. On that day every
+    // lab-renderable Atlas entry sat in the power fields 1 to 7, while fields 8 to 13 (perception,
+    // time, error, body, language, senses) held hundreds of catalogued works and not one this
+    // house had ever built beside; this was the first work in that half. Neighbour search before
+    // a line was written: the Atlas entries that carry time or clock vocabulary are none of them
+    // about timekeeping.
+    id: 'sawtooth',
+    line: 'memory',
+    title: 'Sawtooth',
+    subtitle: {
+      de: 'The second came from the turning Earth, then from caesium. They have been drifting apart ever since.',
+      en: 'The second came from the turning Earth, then from caesium. They have been drifting apart ever since.',
+    },
+    status: 'live',
+    since: '2026-09-04',
+    href: '/sawtooth',
+    description: {
+      // No figure a refresh of the snapshot moves (the currency doctrine): the size of the
+      // counterfactual, the length of the record and the count of short days are rendered on the
+      // page from src/data/sawtooth/rotation.json. What stays typed is either fixed history or
+      // held to the snapshot by src/data/werke.currency.test.ts. The closing either-or (the saw cuts
+      // backwards once, or the line walks off its chart) left this entry on 2026-10-17: the refreshed
+      // record shows the days running long again since late 2025, which leaves a third way, an
+      // ordinary tooth before 2035. The page states that from the data (series.ts, slowingAgain);
+      // static prose here could not follow it either way.
+      de: "A second used to be a slice of the day; in 1967 it was redefined on caesium, and the two definitions stopped agreeing. The Earth runs long, so a leap second has been shoved into the civil clock twenty-seven times to hold them within nine tenths of a second of each other. This draws all of it from the daily earth-rotation record since 1962, committed: both lines on one scale, where the clock the world keeps stays flat while the uncorrected one falls more than half a minute away — the flatness is not the Earth behaving, it is the interventions, each marked. Then the same line alone, where the corrections become teeth, and where the teeth stop. Since about 2020 the Earth has turned fast enough that this decade's mean day runs SHORT, the first in the record to do so, and most of the short days ever measured fall in it. The next correction may therefore have to delete a second rather than add one, which no clock has ever done — postponed to around 2029 by meltwater slowing the planet back down, and made moot in 2035 when the leap second is retired outright.",
+      en: "A second used to be a slice of the day; in 1967 it was redefined on caesium, and the two definitions stopped agreeing. The Earth runs long, so a leap second has been shoved into the civil clock twenty-seven times to hold them within nine tenths of a second of each other. This draws all of it from the daily earth-rotation record since 1962, committed: both lines on one scale, where the clock the world keeps stays flat while the uncorrected one falls more than half a minute away — the flatness is not the Earth behaving, it is the interventions, each marked. Then the same line alone, where the corrections become teeth, and where the teeth stop. Since about 2020 the Earth has turned fast enough that this decade's mean day runs SHORT, the first in the record to do so, and most of the short days ever measured fall in it. The next correction may therefore have to delete a second rather than add one, which no clock has ever done — postponed to around 2029 by meltwater slowing the planet back down, and made moot in 2035 when the leap second is retired outright.",
+    },
+    // A committed snapshot refreshed by scripts/sawtooth/fetch.ts, not a nightly feed, so it
+    // carries no live stamp; and its method — source, fetch, geometry, limits — stands on the page
+    // itself rather than on a separate sheet.
+    methodHref: null,
+    tier: 'experiment',
+  },
+  {
     id: 'globe',
     line: 'counter-measurement',
     title: 'Living Globe',

@@ -1,0 +1,11 @@
+---
+import Page from '@/layouts/Page.astro'
+import SawtoothPage from '@/components/pages/SawtoothPage.astro'
+const locale = 'en' as const
+---
+<Page
+  title="Sawtooth | Frank Bültge"
+  description="The second was a slice of the Earth's day, then it was caesium. Twenty-seven leap seconds have held the two together since 1972 — and the Earth has started turning fast enough that the next correction may have to delete a second instead."
+>
+  <SawtoothPage {locale} />
+</Page>
