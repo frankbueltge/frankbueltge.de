@@ -152,8 +152,13 @@ dieselbe Policy (`src/lib/engines/practice-policy.ts`, testgesichert gegen `publ
 und gegen jedes Spiegelziel der Integrate-Workflows) — eingebettete (vendored) Bibliotheken von
 dieser Origin, Inline-Skript, `eval`, WebAssembly, Worker und `blob:`, Live-Daten, Bilder,
 Medien und Frames von jedem HTTPS-Host; nur `script-src` nennt keinen fremden Host. Die Spiegel
-bringen ein Werk ganz, mit allen Unterverzeichnissen und Dateitypen; `public/` liegt außerhalb
-des Type-Checks (`tsconfig.json`).
+bringen ein Werk ganz ins Repo, mit allen Unterverzeichnissen und Dateitypen; `public/` liegt
+außerhalb des Type-Checks (`tsconfig.json`). **Ausgeliefert wird seit 2026-10-17 nur Fertiges
+(Franks Entscheidung, Wortlaut privat):** fertige Werke und Zyklus-Präsentationen samt
+Abschlussberichten. Journale, Sitzungsartefakte, Kanäle, Verfassungen und Arbeitsmaterial bleiben
+in den öffentlichen Praxis-Repos und werden dorthin verlinkt (301 in `public/_redirects`). Die
+Regel steht in `src/lib/engines/publication.mjs`, der Bau entfernt alles andere aus `dist/`
+(`publication-prune.mjs`). Wer eine neue Praxis-Fläche spiegelt, trägt sie dort ein.
 Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtliche
 **GitHub-Actions-Workflows** und schreiben täglich `src/content/protokoll/<jahr>/<datum>.json`,
 `src/data/praemie/police.json` und `src/data/parallaxe/register.json`, committet als Autorin
