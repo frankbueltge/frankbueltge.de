@@ -7,7 +7,6 @@ import { fileURLToPath } from 'node:url'
 import { existsSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { FRAME_MARKER, foldShelf, frameStandaloneWork, practiceFor, SHELF_OPEN, type FrameShelfEntry } from './work-frame'
-import { teaserFor } from './teaser'
 import { NAMING } from '@/config/naming'
 
 const ROOT = fileURLToPath(new URL('../../..', import.meta.url))
@@ -253,15 +252,20 @@ describe('every mirrored standalone work carries the frame', () => {
   // internal links: a visitor arriving from a shared link met the work with no practice, no
   // wall text and no exit. The integrate rewrites these mirrors, so the guard has to run
   // against what is actually on disk, not against the function alone.
+  //
+  // The WALL TEXT is not held here since 2026-10-17. Until then this guard also required the
+  // mirror to carry the teaser on record, and a teaser that landed after its work's mirror
+  // could therefore never land: the teaser writer's pull request changes teasers.json alone, this
+  // guard failed it, the writer dropped the work, and the next integrate framed it without a wall
+  // text again (no Studio work from 2026-10-13 on got one). The build now frames the served copy
+  // with the teasers on record (./frame-dist.ts), and frame-dist.test.ts holds that instead.
   for (const { ns, slug } of works) {
-    it(`${ns}/${slug} — framed, with a way back and its wall text if one is on record`, () => {
+    it(`${ns}/${slug} — framed, with a way back`, () => {
       const html = readFileSync(`${ROOT}public/${ns}/werke-html/${slug}/index.html`, 'utf8')
       expect(html, 'not framed').toContain(FRAME_MARKER)
       const practice = practiceFor(ns)
       if (practice) expect(html).toContain(`href="${practice.href}"`)
       expect(html).toContain('href="/ecology"')
-      const wall = teaserFor(ns, slug)
-      if (wall) expect(html, 'wall text on record but not in the mirror').toContain(wall.slice(0, 60))
     })
   }
 })

@@ -85,7 +85,10 @@ function importWorkDir(dir: string, slug: string, ns: string, siteDir: string, r
       if (work.kind === 'astro' && SHIELD_EXT.test(from)) writeFileSync(dest, shieldEngineTypes(from, readFileSync(join(dir, from), 'utf8')))
       // A standalone work is served straight from public/ and never passes through Astro, so
       // the wall text and the way back have to be written INTO the mirror — see work-frame.ts.
-      // Source stays untouched; the mirror is rewritten from it on every integrate.
+      // Source stays untouched; the mirror is rewritten from it on every integrate. Since
+      // 2026-10-17 the build frames the served copy again with the teasers on record that day
+      // (engines/frame-dist.ts): a teaser that lands after this copy reaches the page with the
+      // next deploy rather than the next integrate.
       else if (work.kind === 'html' && from === 'index.html')
         writeFileSync(dest, frameStandaloneWork(readFileSync(join(dir, from), 'utf8'), ns, teaserFor(ns, slug)))
       else copyFileSync(join(dir, from), dest)
