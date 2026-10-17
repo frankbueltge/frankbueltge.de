@@ -2,6 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import MethodSheet from '@/components/experiments/MethodSheet.astro'
+import RetiredNotice from '@/components/experiments/RetiredNotice.astro'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -20,8 +21,8 @@ const txt = {
     : 'Global Fishing Watch, Events API (AIS „gap"/disabling events), Bearer token, non-commercial with attribution. GFW returns only high-confidence, intentional-classified disabling: ≥ 12 h, ≥ 50 nm offshore, good satellite coverage. Every case links the GFW vessel.',
   s2: de ? '2. Kadenz' : '2. Cadence',
   s2body: de
-    ? 'Täglich. Fenster: Abschaltungen, die in den letzten 7 Tagen endeten (vollständige Verschwinde-und-Rückkehr-Geschichten). Kanonisches Artefakt: versionierte JSON in src/data/ghost-fleet/ — Git ist das Archiv.'
-    : 'Daily. Window: disabling events that ended in the last 7 days (complete vanish-and-return stories). Canonical artefact: versioned JSON in src/data/ghost-fleet/ — git is the archive.',
+    ? 'Täglich, bis zur Stilllegung am 2026-10-17. Fenster: Abschaltungen, die in den letzten 7 Tagen endeten (vollständige Verschwinde-und-Rückkehr-Geschichten). Kanonisches Artefakt: versionierte JSON in src/data/ghost-fleet/ — Git ist das Archiv.'
+    : 'Daily, until it was retired on 2026-10-17. Window: disabling events that ended in the last 7 days (complete vanish-and-return stories). Canonical artefact: versioned JSON in src/data/ghost-fleet/ — git is the archive.',
   s3: de ? '3. Verarbeitung' : '3. Processing',
   s3body: de
     ? 'GFW-Events abrufen (paginiert, gekappt) → normalisieren → filtern (Ende im Fenster, plausible Dauer) → Index (wie viele, wie viele in nationalen EEZ / auf hoher See / in Schutzgebieten, Summe Dunkel-Stunden) → Fall des Tages nach Region-Brisanz, dann Dauer. Index zählt alle geprüften Abschaltungen, nicht Schiffe; der Fall und die Liste zeigen benannte AIS-Kennungen — Schiffe wie Fischereigerät-Kennungen.'
@@ -34,16 +35,16 @@ const txt = {
   s4items: de
     ? [
         '„Absichtlich" ist ML-geschätzt, nicht bewiesen; Abschalten kann legitime Gründe haben (z. B. Piraterie-Zonen). Kein Illegalitäts-Vorwurf gegen Schiff oder Staat.',
-        'Nur offshore (≥ 50 sm) und gut beobachtet: küstennahe Abschaltungen fehlen — deshalb erscheinen Meeresschutzgebiete (meist küstennah) fast nie; gemessen wird das offene Meer.',
+        'Nur offshore (≥ 50 sm) und gut beobachtet: küstennahe Abschaltungen fehlen; gemessen wird das offene Meer. Meeresschutzgebiete und hohe See erscheinen nie — nicht, weil dort niemand abschaltet, sondern weil die Quelle diese Felder für Abschalt-Ereignisse leer lässt (geprüft an einer echten Antwort am 2026-10-17).',
         'Nur AIS: Schiffe, die nie senden („dark by default"), erscheinen gar nicht.',
-        'Region-Zuordnung ist die der Verschwinde-Position; eine EEZ ist eine ausschließliche Wirtschaftszone, keine Hoheitsgewässer. GFWs EEZ-Kennziffern sind Marine-Regions-MRGIDs und werden seit 2026-06-26 über eine committete Nachschlagetabelle zu Namen aufgelöst; eine Kennziffer ohne Tabelleneintrag bliebe namenlos.',
+        'Die Region-Zuordnung ist nicht die der Verschwinde-Position, wie diese Zeile bis 2026-10-17 behauptete, sondern die des Mittelpunkts auf dem Großkreis zwischen Verschwinde- und Wiederauftauch-Position — ein Punkt, den das Schiff nicht passiert haben muss. Eine EEZ ist eine ausschließliche Wirtschaftszone, keine Hoheitsgewässer. GFWs EEZ-Kennziffern sind Marine-Regions-MRGIDs und werden seit 2026-06-26 über eine committete Nachschlagetabelle zu Namen aufgelöst; eine Kennziffer ohne Tabelleneintrag bliebe namenlos.',
         'Cluster spiegeln auch die Satellitenabdeckung, nicht nur das Verhalten.',
       ]
     : [
         '„Intentional" is ML-estimated, not proof; disabling can have legitimate reasons (e.g. piracy zones). No claim of illegality against vessel or state.',
-        'Only offshore (≥ 50 nm) and well-observed: nearshore disabling is missing — so marine protected areas (mostly coastal) almost never appear; what is measured is the open sea.',
+        'Only offshore (≥ 50 nm) and well-observed: nearshore disabling is missing; what is measured is the open sea. Marine protected areas and the high seas never appear — not because nobody goes dark there, but because the source leaves those fields empty for gap events (checked against a live response on 2026-10-17).',
         'AIS only: vessels that never transmit („dark by default") do not appear at all.',
-        'Region attribution is that of the vanishing position; an EEZ is an exclusive economic zone, not territorial waters. GFW\'s EEZ ids are Marine Regions MRGIDs and have been resolved to names since 2026-06-26 via a committed lookup; an id absent from that lookup would stay unnamed.',
+        'Region attribution is not that of the vanishing position, as this line said until 2026-10-17, but that of the great-circle midpoint between where the transponder went off and where it came back on — a point the vessel need not have passed. An EEZ is an exclusive economic zone, not territorial waters. GFW\'s EEZ ids are Marine Regions MRGIDs and have been resolved to names since 2026-06-26 via a committed lookup; an id absent from that lookup would stay unnamed.',
         'Clusters reflect satellite coverage too, not only behaviour.',
       ],
   s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
@@ -55,16 +56,20 @@ const txt = {
     ? [
         'v1 (2026-06) — Erstfassung: GFW-gap-Events, Fenster 7 Tage, Index + Fall des Tages, EEZ/Hohe-See-Fokus, Schutzgebiet als Sonderfall-Marker.',
         'v1.1 (2026-06-26) — EEZ-Kennziffern werden über eine committete Marine-Regions-Tabelle zu Namen aufgelöst; die Grenze „nur Kennziffern" ist damit erledigt.',
+        'Stillgelegt (2026-10-17) — die Quelle füllt hohe See und Schutzgebiete für Abschalt-Ereignisse nie, die Zone gilt dem Mittelpunkt der Lücke; der nächtliche Workflow ist entfernt, das Archiv bleibt.',
       ]
     : [
         'v1 (2026-06) — first edition: GFW gap events, 7-day window, index + case of the day, EEZ/high-seas focus, protected area as a special-case marker.',
         'v1.1 (2026-06-26) — EEZ ids resolved to names via a committed Marine Regions lookup; the „numeric ids only" limit is retired.',
+        'Retired (2026-10-17) — the source never fills the high-seas and protected-area fields for gap events, and the zone it names belongs to the gap\'s midpoint; the nightly workflow is removed, the archive stays.',
       ],
   toWork: de ? 'Zum Experiment' : 'To the experiment',
 }
 ---
 
 <MethodSheet title={txt.h1} workHref={workUrl} workLabel={txt.toWork}>
+
+  <RetiredNotice id="ghost-fleet" lastReading={false} />
 
   <section class="sheet-reveal mb-10">
     <h2 class="kicker mb-2">{txt.revealHead}</h2>

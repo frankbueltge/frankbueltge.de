@@ -10,6 +10,11 @@
 // Every day the pipeline has ever written is a frame, from its own filename. Events without both
 // coordinates are dropped from the drawing and counted in the frame's note, so a day whose records
 // are thin says it rather than looking thin.
+//
+// Ghost Fleet was retired on 2026-10-17 (src/data/werke.ts, `retired`), its archive kept. The layer
+// still draws every night that archive holds; a day after its last night draws nothing and says
+// the instrument was retired, so the end of the record never passes for an outage.
+import { WERKE } from '@/data/werke'
 import { regionLabel } from '@/lib/ghost-fleet/format'
 import type { GhostFleetData } from '@/lib/ghost-fleet/types'
 import { archiveDays, dayPath, readDay, readJson } from './archive'
@@ -18,17 +23,23 @@ import { EMPTY_FRAME, type GlobeLayer, type LayerFrame, type LayerRecord } from 
 const DIR = 'src/data/ghost-fleet'
 const DAYS = archiveDays(DIR)
 const NEWEST = DAYS[DAYS.length - 1]
+const RETIRED_ON = WERKE.find((w) => w.id === 'ghost-fleet')?.retired?.on ?? null
 
 const READOUT = {
   mark: '{vessel}, {hours} hours dark in {waters}',
   place: 'the point where the transponder fell silent, and the point where it spoke again',
   caution: 'the arc is the shortest path between the two points, never the path the vessel took',
   dropped: 'On this day the record holds {dropped} gap or gaps without both coordinates; they are counted, not drawn.',
+  retired: 'Ghost Fleet was retired on {on}. Its archive ends on its last night, {last}, and nothing is drawn after it.',
 }
 
 function frameOf(day: string): LayerFrame {
   const data = readDay<GhostFleetData>(DIR, day, DAYS)
-  if (!data) return EMPTY_FRAME(day)
+  if (!data) {
+    return RETIRED_ON && day > NEWEST
+      ? EMPTY_FRAME(day, READOUT.retired.replace('{on}', RETIRED_ON).replace('{last}', NEWEST))
+      : EMPTY_FRAME(day)
+  }
 
   const file = dayPath(DIR, day)
   const records: LayerRecord[] = []

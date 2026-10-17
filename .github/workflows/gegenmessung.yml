@@ -1,13 +1,16 @@
 name: Gegenmessung nightly
 
-# Ersetzt den GCP-Cloud-Run-Cron: läuft die vier Gegenmessungs-Pipelines auf GitHubs
-# kostenlosen Runnern und committet die Daten zurück (→ Host-Rebuild). Kostenlos, ohne
-# Anbieter-Sperren, host-unabhängig. Consensus + Pattern täglich; Tell + Correction montags.
+# Replaced the GCP Cloud Run cron: runs the counter-measurement pipelines on GitHub's free
+# runners and commits the data back (-> host rebuild). Free, no vendor lock-in, host-independent.
+# Consensus, Balance and Invoked Past daily; Tell and Correction on Mondays. Pattern ran daily
+# here until it was retired on 2026-10-17 (the register says why, under `retired`): its permutation test
+# could not fail on the series it was given. Its pipeline stays in pipelines/pattern as the method
+# that wrote the archive, and nothing schedules it.
 
 on:
   schedule:
-    - cron: '0 6 * * *' # täglich 06:00 UTC (nach den übrigen Pipelines)
-  workflow_dispatch: {} # manuell auslösbar
+    - cron: '0 6 * * *' # daily 06:00 UTC (after the other pipelines)
+  workflow_dispatch: {} # can be run by hand
 
 permissions:
   contents: write
@@ -22,13 +25,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # volle History → git pull --rebase im Commit-Schritt funktioniert
+          fetch-depth: 0 # full history, so git pull --rebase works in the commit step
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Abhängigkeiten (Correction/Pattern)
-        run: pip install --no-cache-dir "pandas>=2,<3" openpyxl numpy
-      - name: Pipelines laufen
+      - name: Dependencies (Correction)
+        # numpy was listed for Pattern until 2026-10-17; pandas still brings it along.
+        run: pip install --no-cache-dir "pandas>=2,<3" openpyxl
+      - name: Run the pipelines
         # One failing instrument must not stop the others, so this step stays green and only
         # records what failed. Until 2026-10-10 a failure became a `::warning::` inside a
         # collapsed group and the run stayed green: The Correction missed four Mondays in a row
@@ -58,30 +62,29 @@ jobs:
           run consensus
           run balance
           run invoked
-          run pattern
           if [ "$DOW" = "1" ]; then
             run tell
             run revision
           fi
-      - name: Committen
+      - name: Commit
         run: |
           git config user.name "Gegenmessung"
           git config user.email "gegenmessung@frankbueltge.de"
-          git add src/data/consensus src/data/balance src/data/invoked src/data/pattern src/data/tell src/data/revision 2>/dev/null || true
+          git add src/data/consensus src/data/balance src/data/invoked src/data/tell src/data/revision 2>/dev/null || true
           if git diff --cached --quiet; then
-            echo "Keine Änderungen."
+            echo "No changes."
             exit 0
           fi
           git commit -m "gegenmessung: nightly refresh ($(date -u +%F))"
-          # Gegen Push-Races (parallele Cron-/Repo-Commits): rebasen + mehrfach versuchen.
+          # Against push races (parallel cron and repository commits): rebase and retry.
           for i in 1 2 3 4 5; do
             if git pull --rebase --autostash origin main && git push origin HEAD:main; then
-              echo "Gepusht."; exit 0
+              echo "Pushed."; exit 0
             fi
-            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+            echo "Push attempt $i failed, retrying …"; sleep 5
           done
-          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1
-      - name: Fehlgeschlagene Pipelines melden
+          echo "::error::Push failed after 5 attempts"; exit 1
+      - name: Report failed pipelines
         # After the commit, so the instruments that did run still land; the red run is what
         # reaches a person. The pages say the same thing on their own (DataAge, issue #723).
         if: always()

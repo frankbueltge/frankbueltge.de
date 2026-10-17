@@ -13,6 +13,7 @@ import {
   WERKE_CHRONO,
   WERKE_EXPERIMENTE,
   WERKE_HOLDINGS,
+  WERKE_RETIRED,
   WERKE_STUDIEN,
   byRecency,
   werkTitle,
@@ -122,17 +123,28 @@ describe('research lines — the shelf’s categories (Frank, 2026-08-22)', () =
   })
 
   it('groups every shelf entry exactly once — nothing lost between register and page', () => {
-    const grouped = WERKE_BY_LINE.flatMap((g) => g.werke.map((w) => w.id))
+    // Since 2026-10-17 a retired werk stands on the retired shelf instead of under its line, so
+    // the lines and that shelf together hold the register, each entry in exactly one of them.
+    const grouped = [...WERKE_BY_LINE.flatMap((g) => g.werke.map((w) => w.id)), ...WERKE_RETIRED.map((w) => w.id)]
     expect(new Set(grouped).size).toBe(grouped.length)
     expect([...grouped].sort()).toEqual([...WERKE_HOLDINGS.map((w) => w.id)].sort())
+  })
+
+  it('groups no retired werk under its line — a heading would claim the line still runs it', () => {
+    for (const group of WERKE_BY_LINE) {
+      for (const w of group.werke) expect(w.retired, `${w.id} is retired but grouped under ${group.line.id}`).toBeUndefined()
+    }
   })
 
   it('keeps recency order inside every group (Frank’s 2026-08-14 rule survives the grouping)', () => {
     for (const group of WERKE_BY_LINE) {
       expect(group.werke.map((w) => w.id)).toEqual(
-        WERKE_CHRONO.filter((w) => w.line === group.line.id).map((w) => w.id),
+        WERKE_CHRONO.filter((w) => w.line === group.line.id && !w.retired).map((w) => w.id),
       )
     }
+    expect(WERKE_RETIRED.map((w) => w.id)).toEqual(
+      WERKE_CHRONO.filter((w) => w.retired && !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
+    )
   })
 
   it('prints no heading over an empty line', () => {
@@ -213,6 +225,62 @@ describe('a live work says that it is live', () => {
         source!.includes('UNARCHIVED_NOTICE'),
         `${werk.id} is unarchived and its page never says so — see src/lib/experiments/unarchived.ts`,
       ).toBe(true)
+    }
+  })
+})
+
+// ── the duty of a retired work ────────────────────────────────────────────────────────────────
+// Frank's decision of 2026-10-17 (wording private, paraphrased): instruments that measure nothing
+// are retired with a date, the reason committed and the archive kept, and the page says RETIRED.
+// The same arrangement as the live notice above: a stopped instrument's page and a running one's
+// look identical unless the page itself says which it is.
+describe('a retired work says that it is retired', () => {
+  /** The page file and the page components it imports, one level deep — the routes here are thin
+   *  wrappers around a component in src/components/pages, which is where a notice actually sits. */
+  const sourcesFor = (href: string): string[] => {
+    const slug = href.replace(/^\/+|\/+$/g, '')
+    for (const candidate of [`../pages/${slug}/index.astro`, `../pages/${slug}.astro`]) {
+      const path = fileURLToPath(new URL(candidate, import.meta.url))
+      if (!existsSync(path)) continue
+      const page = readFileSync(path, 'utf8')
+      const components = [...page.matchAll(/from '@\/components\/pages\/([A-Za-z]+)\.astro'/g)].map((m) =>
+        readFileSync(fileURLToPath(new URL(`../components/pages/${m[1]}.astro`, import.meta.url)), 'utf8'),
+      )
+      return [page, ...components]
+    }
+    return []
+  }
+
+  it('has retired works to hold to it', () => {
+    expect(WERKE.filter((w) => w.retired).length).toBeGreaterThan(0)
+  })
+
+  it('is retired in both fields or in neither, and never marked live', () => {
+    for (const w of WERKE) {
+      expect(w.status === 'retired', `${w.id}: status and the retired record disagree`).toBe(Boolean(w.retired))
+      if (w.retired) expect(w.live, `${w.id} is retired and still marked live`).toBeFalsy()
+    }
+  })
+
+  it('dates its retirement no earlier than its start, and gives a reason a reader can weigh', () => {
+    for (const w of WERKE.filter((x) => x.retired)) {
+      expect(w.retired!.on, w.id).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+      expect(w.retired!.on >= w.since, `${w.id} retired before it started`).toBe(true)
+      expect(w.retired!.reason.length, `${w.id}: a reason, not a label`).toBeGreaterThan(120)
+    }
+  })
+
+  it('mounts the notice on its own page and on its method sheet', () => {
+    for (const w of WERKE.filter((x) => x.retired)) {
+      const page = sourcesFor(w.href)
+      expect(page.length, `${w.id} is retired but has no page at ${w.href}`).toBeGreaterThan(0)
+      expect(page.some((src) => src.includes(`<RetiredNotice id="${w.id}"`)), `${w.id}'s page never says it is retired`).toBe(true)
+      // The shelf entries of these instruments carry no methodHref, while their pages link the
+      // sheet at /werke/<id> — so the sheet is looked up there too, and held to the same duty.
+      const sheet = sourcesFor(w.methodHref ?? `/werke/${w.id}`)
+      if (sheet.length > 0) {
+        expect(sheet.some((src) => src.includes(`<RetiredNotice id="${w.id}"`)), `${w.id}'s method sheet never says it is retired`).toBe(true)
+      }
     }
   })
 })

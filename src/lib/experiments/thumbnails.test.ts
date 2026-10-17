@@ -10,7 +10,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
 import { GALLERY } from '@/config/gallery-wording'
-import { WERKE, WERKE_BY_LINE } from '@/data/werke'
+import { WERKE, WERKE_BY_LINE, WERKE_RETIRED } from '@/data/werke'
 import consensusLatest from '@/data/consensus/latest.json'
 import ghostFleetLatest from '@/data/ghost-fleet/latest.json'
 import invokedLatest from '@/data/invoked/latest.json'
@@ -45,7 +45,9 @@ const inBox = (m: ThumbMark): boolean => {
 }
 
 describe('every experiment on the shelf has a miniature of its own', () => {
-  const shelf = WERKE_BY_LINE.flatMap((group) => group.werke)
+  // The retired works stand on their own shelf since 2026-10-17 and keep the miniature of their
+  // last reading, so they are cards here too.
+  const shelf = [...WERKE_BY_LINE.flatMap((group) => group.werke), ...WERKE_RETIRED]
 
   it.each(shelf.map((w) => [w.id, w.href] as const))(
     '%s carries a thumbnail built from a committed file',

@@ -17,24 +17,23 @@
 //
 // The mini-viz of each tile is drawn from a real series of that same snapshot, not from a
 // decorative shape: see the `series` each reader returns and src/lib/ops/viz.ts for the marks.
+//
+// A retired instrument has no tile (2026-10-17: Round Numbers, Patterns and Ghost Fleet). Its
+// snapshot still answers, frozen on its last night, and a tile reads that as today's reading —
+// so the readers went with the nightly runs, not merely behind a flag that could be forgotten.
 
 import { NAMING } from '@/config/naming'
 import type { ProtokollDay } from '@/lib/protokoll/types'
 // The pieces' OWN formatters, deliberately: a reading on the entrance that rounded differently
-// from the reading on the piece would be two numbers for one measurement. Whatever /pattern and
-// /redaction call a value, this page calls it too.
-import { rStr } from '@/lib/pattern/format'
+// from the reading on the piece would be two numbers for one measurement. Whatever /redaction
+// calls a value, this page calls it too.
 import { tokensLabel } from '@/lib/redaction/format'
-import { verdictLabel } from '@/lib/round-number/format'
 
 import attentionExport from '@/data/attention/export.json'
 import consensusLatest from '@/data/consensus/latest.json'
 import parallaxeRegister from '@/data/parallaxe/register.json'
 import police from '@/data/praemie/police.json'
 import redactionLatest from '@/data/redaction/latest.json'
-import ghostFleetLatest from '@/data/ghost-fleet/latest.json'
-import roundNumberLatest from '@/data/round-number/latest.json'
-import patternLatest from '@/data/pattern/latest.json'
 import satellites from '@/data/ueberflug/satellites.json'
 import atlasWorks from '@/data/atlas/werke.json'
 import { getLatestTrending } from '@/lib/trending/data'
@@ -267,128 +266,6 @@ function redaction(): OpsTile | null {
   }
 }
 
-interface GhostFleetShape {
-  events?: { duration_hours?: number; vessel?: { name?: string; flag?: string } }[]
-}
-
-/** Days once a silence runs past two of them: "1197 hours" is a number a reader has to divide
- *  before it means anything, and the piece's own case-of-the-day speaks in days too. */
-const darkSpan = (hours: number): { value: number; unit: 'hours' | 'days' } =>
-  hours >= 48 ? { value: Math.round(hours / 24), unit: 'days' } : { value: Math.round(hours), unit: 'hours' }
-
-function ghostFleet(): OpsTile | null {
-  const events = (ghostFleetLatest as unknown as GhostFleetShape).events ?? []
-  if (events.length === 0) return null
-  const durations = events.map((e) => e.duration_hours ?? 0)
-  const longest = Math.max(...durations)
-  return {
-    id: 'ghostFleet',
-    name: COPY.ghostFleet.name,
-    big: `${events.length} dark`,
-    sub: COPY.ghostFleet.sub(darkSpan(longest)),
-    stamp: COPY.ghostFleet.stamp,
-    href: '/ghost-fleet',
-    viz: {
-      kind: 'bars',
-      values: durations,
-      marked: [durations.indexOf(longest)],
-      labels: events.map((e) =>
-        COPY.ghostFleet.readout({
-          vessel: e.vessel?.name ?? 'unnamed vessel',
-          flag: e.vessel?.flag ?? null,
-          ...darkSpan(e.duration_hours ?? 0),
-        }),
-      ),
-    },
-  }
-}
-
-interface RoundNumberShape {
-  series?: {
-    id: string
-    benford?: { verdict?: string; observed?: number[]; expected?: number[] }
-    control?: { false_positive_rate?: number }
-  }[]
-}
-
-/** The two verdicts the piece's own vocabulary counts as "the test cried foul" — the other four
- *  (close, acceptable, uniform, heaped) are not accusations. Taken from the verdict the pipeline
- *  writes, never re-derived here from the chi² value: this page reads the trial, it does not
- *  re-run it. */
-const SUSPICIOUS = new Set(['nonconformity', 'marginal'])
-
-function roundNumbers(): OpsTile | null {
-  // The control series (ids prefixed with "_") are the piece's own provably-clean and tampered
-  // references; the trial is about the REAL official series, so those are what the tile counts.
-  const all = (roundNumberLatest as unknown as RoundNumberShape).series ?? []
-  const real = all.filter((s) => !s.id.startsWith('_'))
-  if (real.length === 0) return null
-  const flagged = real.filter((s) => SUSPICIOUS.has(s.benford?.verdict ?? ''))
-  const tampered = all.find((s) => s.id === '_control_tampered')?.benford?.verdict
-  return {
-    id: 'roundNumbers',
-    name: COPY.roundNumbers.name,
-    big: `${flagged.length} / ${real.length} flagged`,
-    sub: COPY.roundNumbers.sub({ tampered: tampered ? verdictLabel(tampered, 'en') : null }),
-    stamp: COPY.roundNumbers.stamp,
-    href: '/round-number',
-    // The leading-digit distribution of the day's defendant, with the digits that came in ABOVE
-    // Benford's expectation lit: that excess is the whole basis of the accusation, so it is what
-    // the mark shows — not an arbitrary first bar.
-    viz: (() => {
-      const observed = real[0].benford?.observed ?? []
-      const expected = real[0].benford?.expected ?? []
-      // the record holds shares (0.3067); the readout speaks in the percent the piece prints
-      const pct = (v: number) => (v * 100).toFixed(1)
-      return {
-        kind: 'bars' as const,
-        values: observed,
-        marked: observed.map((v, i) => (v > (expected[i] ?? v) ? i : -1)).filter((i) => i >= 0),
-        labels: observed.map((v, i) =>
-          COPY.roundNumbers.readout({ digit: i + 1, observed: pct(v), expected: pct(expected[i] ?? 0) }),
-        ),
-      }
-    })(),
-  }
-}
-
-interface PatternShape {
-  headline?: { r?: number }
-  pairs?: number
-  false_discovery_rate?: number
-  null_distribution?: { counts?: number[]; range?: number[] }
-}
-
-function patterns(): OpsTile | null {
-  const d = patternLatest as unknown as PatternShape
-  const r = d.headline?.r
-  if (r === undefined) return null
-  const survives = (d.false_discovery_rate ?? 1) < 0.1
-  return {
-    id: 'patterns',
-    name: COPY.patterns.name,
-    big: `r = ${rStr(r, 'en')}`,
-    sub: COPY.patterns.sub({ pairs: d.pairs ?? 0, survives }),
-    stamp: COPY.patterns.stamp,
-    href: '/pattern',
-    // The null distribution the permutation test built — the picture of what chance alone does.
-    // Each bar's readout names the r-interval it counts, cut from the distribution's own range;
-    // a snapshot without a range falls back to the full [−1, 1] a correlation can span.
-    viz: (() => {
-      const counts = d.null_distribution?.counts ?? []
-      const range = d.null_distribution?.range
-      const [lo, hi] = Array.isArray(range) && range.length === 2 ? range : [-1, 1]
-      const edge = (i: number) => (lo + ((hi - lo) * i) / Math.max(1, counts.length)).toFixed(2)
-      return {
-        kind: 'bars' as const,
-        values: counts,
-        marked: [],
-        labels: counts.map((n, i) => COPY.patterns.readout({ from: edge(i), to: edge(i + 1), count: n })),
-      }
-    })(),
-  }
-}
-
 interface SatelliteShape {
   satellites?: { gcat?: { owner?: string } }[]
 }
@@ -493,9 +370,6 @@ export function readTiles(input: { protokoll?: ProtokollDay } = {}): OpsTile[] {
     iceberg(),
     policy(),
     redaction(),
-    ghostFleet(),
-    roundNumbers(),
-    patterns(),
     watchtower(),
     atlas(),
   ].filter((t): t is OpsTile => t !== null)

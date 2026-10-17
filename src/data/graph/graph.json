@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "8d5d2259eebdb96a"
+        "sha256": "25dcd46150a3278f"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "5b1bab46db766cbb"
+        "sha256": "4bd576e5f940aa45"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 497,
-      "edges": 440,
+      "nodes": 498,
+      "edges": 443,
       "nodesByKind": {
-        "decision": 142,
+        "decision": 143,
         "encounter": 6,
         "neighbor": 115,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 191,
         "neighbor-of": 116,
         "participates": 17,
-        "touches": 101
+        "touches": 104
       }
     }
   },
@@ -1483,6 +1483,16 @@
     {
       "id": "decision:2026-10-17-1",
       "kind": "decision",
+      "label": "Round Numbers, Patterns and Ghost Fleet are retired with a date, their archives kept, and their pages say RETIRED",
+      "date": "2026-10-17",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Round Numbers, Patterns and Ghost Fleet are retired with a date, their archives kept, and their pages say RETIRED"
+      }
+    },
+    {
+      "id": "decision:2026-10-17-2",
+      "kind": "decision",
       "label": "The site publishes only finished works and cycle presentations; journals, session artifacts, channels, constitutions and working material stay in the practices' public repositories and are linked",
       "date": "2026-10-17",
       "source": {
@@ -1491,7 +1501,7 @@
       }
     },
     {
-      "id": "decision:2026-10-17-2",
+      "id": "decision:2026-10-17-3",
       "kind": "decision",
       "label": "The name stands in the entrance's main heading again, and /about is marked as the profile page",
       "date": "2026-10-17",
@@ -10553,6 +10563,33 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/pages/{ecology,field,atelier,studio,encounters}/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-17-1",
+      "to": "work:ghost-fleet",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": ".github/workflows/{round-number,ghost-fleet}.yml"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-17-1",
+      "to": "work:pattern",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/pattern"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-17-1",
+      "to": "work:round-number",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": ".github/workflows/{round-number,ghost-fleet}.yml"
       }
     }
   ]

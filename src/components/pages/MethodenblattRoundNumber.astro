@@ -2,6 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import MethodSheet from '@/components/experiments/MethodSheet.astro'
+import RetiredNotice from '@/components/experiments/RetiredNotice.astro'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -20,8 +21,8 @@ const txt = {
     : 'Real series: World Bank Open Data (World Development Indicators, CC BY-4.0) — quantities spanning several orders of magnitude, so Benford is applicable at all. Plus clearly-labelled synthetic controls (one clean Benford series, one rounded/tampered). All datasets are committed — git is the archive.',
   s2: de ? '2. Kadenz' : '2. Cadence',
   s2body: de
-    ? 'Täglich. Die Maschine stellt deterministisch nach Datum rotierend je eine Reihe „vor Gericht" — jede kommt dran, kein Herauspicken der dramatischsten. Kanonisches Artefakt: versionierte JSON in src/data/round-number/.'
-    : 'Daily. The machine puts one series “on trial” each day, rotating deterministically by date — every one gets its turn, no cherry-picking the most dramatic. Canonical artefact: versioned JSON in src/data/round-number/.',
+    ? 'Täglich, bis zur Stilllegung am 2026-10-17. Die Maschine stellte deterministisch nach Datum rotierend je eine Reihe „vor Gericht" — jede kam dran, kein Herauspicken der dramatischsten. Kanonisches Artefakt: versionierte JSON in src/data/round-number/.'
+    : 'Daily, until it was retired on 2026-10-17. The machine put one series “on trial” each day, rotating deterministically by date — every one got its turn, no cherry-picking the most dramatic. Canonical artefact: versioned JSON in src/data/round-number/.',
   s3: de ? '3. Verarbeitung' : '3. Processing',
   s3body: de
     ? 'Benford 1. Ziffer: erwartete Anteile log10(1+1/d); Kennzahlen MAD (mit Nigrini-Schwellen) und χ². Letzte Ziffer: χ²-Test auf Gleichverteilung. Der Kern: für die Reihe (Größe n) läuft dieselbe Prüfung auf 500 seedgesteuerten, nachweislich sauberen Benford-Stichproben gleicher Größe → die Falsch-Positiv-Rate. Seed und Verfahren offengelegt, Lauf reproduzierbar.'
@@ -52,13 +53,21 @@ const txt = {
     : 'Pure statistics over committed data, no network at run time, no API key, no LLM. The site is static.',
   s6: de ? '6. Änderungsprotokoll' : '6. Change log',
   s6items: de
-    ? ['v1 (2026-06) — Erstfassung: Benford-MAD/χ² + Last-Digit + seedgesteuerter Falsch-Positiv-Bootstrap, tägliche Rotation.']
-    : ['v1 (2026-06) — first edition: Benford MAD/χ² + last-digit + seeded false-positive bootstrap, daily rotation.'],
+    ? [
+        'v1 (2026-06) — Erstfassung: Benford-MAD/χ² + Last-Digit + seedgesteuerter Falsch-Positiv-Bootstrap, tägliche Rotation.',
+        'Stillgelegt (2026-10-17) — die committeten Reihen änderten sich nie, jede Nacht wiederholte dieselbe Verhandlung; der nächtliche Workflow ist entfernt, das Archiv bleibt.',
+      ]
+    : [
+        'v1 (2026-06) — first edition: Benford MAD/χ² + last-digit + seeded false-positive bootstrap, daily rotation.',
+        'Retired (2026-10-17) — the committed series never changed, so every night repeated the same trial; the nightly workflow is removed, the archive stays.',
+      ],
   toWork: de ? 'Zum Experiment' : 'To the experiment',
 }
 ---
 
 <MethodSheet title={txt.h1} workHref={workUrl} workLabel={txt.toWork}>
+
+  <RetiredNotice id="round-number" lastReading={false} />
 
   <section class="sheet-reveal mb-10">
     <h2 class="kicker mb-2">{txt.revealHead}</h2>

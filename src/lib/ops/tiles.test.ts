@@ -6,9 +6,6 @@ import type { ProtokollDay } from '@/lib/protokoll/types'
 import consensusLatest from '@/data/consensus/latest.json'
 import police from '@/data/praemie/police.json'
 import redactionLatest from '@/data/redaction/latest.json'
-import ghostFleetLatest from '@/data/ghost-fleet/latest.json'
-import roundNumberLatest from '@/data/round-number/latest.json'
-import patternLatest from '@/data/pattern/latest.json'
 import atlasWorks from '@/data/atlas/werke.json'
 import { getLatestTrending } from '@/lib/trending/data'
 
@@ -36,15 +33,6 @@ const ANSWERS_TODAY: Record<string, () => boolean> = {
     const d = redactionLatest as unknown as { pick?: string | null; redactions?: { id: string }[] }
     return Boolean(d.pick) && (d.redactions ?? []).some((r) => r.id === d.pick)
   },
-  ghostFleet: () => ((ghostFleetLatest as unknown as { events?: unknown[] }).events ?? []).length > 0,
-  // The control series (ids prefixed with "_") are references, not defendants; the tile counts
-  // the real official series, so those are what decides whether the piece can speak.
-  roundNumbers: () =>
-    ((roundNumberLatest as unknown as { series?: { id: string }[] }).series ?? []).some(
-      (s) => !s.id.startsWith('_'),
-    ),
-  patterns: () =>
-    (patternLatest as unknown as { headline?: { r?: number } }).headline?.r !== undefined,
   atlas: () => (atlasWorks as unknown as unknown[]).length > 0,
   // Common Ground (2026-10-04): the newest committed trending day with any topic in it.
   commonGround: () => (getLatestTrending()?.summary.topics_total ?? 0) > 0,

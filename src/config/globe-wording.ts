@@ -191,8 +191,10 @@ export const GLOBE = {
           kicker: 'THE NIGHT AS IT WAS WRITTEN',
           heading: 'One night, and how much it looked at',
           lead:
-            'Before any vessel is named, the night’s own file says how much it examined and where the silences fell: ' +
-            'inside somebody’s exclusive economic zone, or out on the high seas where nobody’s rules reach.',
+            'Before any vessel is named, the night’s own file says how much it examined and how many of those silences ' +
+            'the source filed inside somebody’s exclusive economic zone. It carries a count for the high seas too, and ' +
+            'that count is zero on every night the archive holds: the source never fills the field for a gap, so the ' +
+            'zero is an absence, not a finding.',
         },
         pick: {
           kicker: 'THE LONGEST SILENCE',
@@ -206,7 +208,8 @@ export const GLOBE = {
           heading: 'The point the transponder fell silent',
           lead:
             'The first of the two coordinates a gap carries. It is not where the vessel was going and not where it ' +
-            'was: it is the last place it was visible, and the waters it was in when it stopped being so.',
+            'was: it is the last place it was visible. The zone the record names beside it is not this point’s — the ' +
+            'source names the zone at the midpoint between the two ends.',
         },
         on: {
           kicker: 'WHERE THE RECORD RESUMES',

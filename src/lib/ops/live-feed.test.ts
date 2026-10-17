@@ -60,8 +60,17 @@ describe('the stream reads the whole house', () => {
   })
 
   it('lists every lab experiment and instrument /experiments renders, on its shelf day', () => {
+    // one row on the day each work opened, and since 2026-10-17 a second on the day a retired one
+    // was stopped
     const shelf = real.filter((e) => e.source === 'shelf')
-    expect(shelf).toHaveLength(WERKE.filter((w) => w.line).length)
+    expect(shelf).toHaveLength(WERKE.filter((w) => w.line).length + WERKE.filter((w) => w.line && w.retired).length)
+  })
+
+  it('dates each retirement on the day the register says it was stopped', () => {
+    for (const w of WERKE.filter((x) => x.line && x.retired)) {
+      const row = real.find((e) => e.source === 'shelf' && e.href === w.href && e.date === w.retired!.on)
+      expect(row, `${w.id} has no retirement row on ${w.retired!.on}`).toBeDefined()
+    }
   })
 
   it('carries the practices’ cycle artifacts, so the Atelier’s newest row is not a work of July', () => {

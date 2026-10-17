@@ -77,6 +77,8 @@ export interface GalleryCard {
   stamp?: string
   /** a longer mono note, shown when the card is open */
   meta?: string
+  /** the day a retired work was stopped (src/data/werke.ts `retired.on`); drawn as a badge */
+  retired?: string
   /** the miniature of this card's own instrument, or null where there is no record to draw */
   thumb: Thumbnail | null
 }
@@ -95,6 +97,8 @@ export interface GalleryWording {
   empty: string
   live: string
   opened: string
+  /** the badge word before a retired work's date */
+  retired: string
   open: string
   method: string
   /** "read from " — the provenance line above a readout's reading */
@@ -393,6 +397,11 @@ export default function ExperimentGallery({
                         <Badge variant="outline" className={cn(STAMP, 'whitespace-nowrap')}>
                           <span className="dot-live inline-block h-[5px] w-[5px] rounded-full" aria-hidden="true" />
                           {wording.live}
+                        </Badge>
+                      )}
+                      {card.retired && (
+                        <Badge variant="outline" className={cn(STAMP, 'whitespace-nowrap tabular-nums')}>
+                          {wording.retired} {card.retired}
                         </Badge>
                       )}
                       {card.kindLabel && (

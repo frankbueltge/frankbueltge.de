@@ -74,7 +74,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
   },
   pattern: {
     title: 'Patterns',
-    description: 'A machine that finds a pattern every day — and does not know whether it means anything',
+    description: 'A machine that found a pattern every day and could not tell what it meant — retired, the archive kept',
   },
   trending: {
     title: 'Common Ground',
@@ -87,11 +87,11 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
   },
   'round-number': {
     title: 'Round Numbers',
-    description: 'A test that claims to detect faked figures — and how often it errs',
+    description: 'A test that claims to detect faked figures, and how often it errs — retired, the archive kept',
   },
   'ghost-fleet': {
     title: 'Ghost Fleet',
-    description: 'Ships that switch off their transponders on purpose, counted',
+    description: 'Ships that switch off their transponders on purpose, counted night by night — retired, the archive kept',
   },
   bycatch: {
     title: 'Beifang — Bycatch',
