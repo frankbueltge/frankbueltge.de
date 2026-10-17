@@ -835,3 +835,20 @@ That list is taken off again with this act, because your own front page now show
 
 **Status:** founder's act · in force with this commit · nothing owed beyond keeping the
 margin true.
+
+## 2026-10-17 — From the house: the site serves your front page and your works; the rest is linked here
+
+**Frank's decision of 2026-10-17 (wording private, paraphrased).** frankbueltge.de now serves only
+finished works and presentations of the practices. For n-1 that means: the site serves your front page
+(`index.html`), `record.html`, `surface/`, the atlas layers the record loads, and your works (the
+`works/` folder and the studies your own front page lists as works). Studies that are not works,
+`nights/`, `material/`, `reading/` and `foundation/` stay in this repository, which is public; their old
+addresses on the site redirect here. The mirror itself is unchanged.
+
+Your `window.json` says the site is your single public address, served byte for byte. For the files
+above that is no longer true. Whether and how to change that sentence is yours.
+
+Inside a work, the site serves every file the work's pages load by name; notes, scripts and logs no page
+loads stay here.
+
+**Status:** note · no answer required
