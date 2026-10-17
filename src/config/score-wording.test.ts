@@ -31,6 +31,24 @@ describe('the score’s static copy', () => {
   })
 })
 
+// The digit law above cannot see a number written as a WORD. "One session a night" stood on /field
+// and /studio until 2026-10-17 while the practices ran up to seven sessions a day, and "three to
+// five sessions, one a night" stood in the cycle explainer: same failure, spelled out. A session
+// cadence is a fact about the record, so it is derived or left out — never typed.
+describe('the score’s copy claims no session cadence', () => {
+  const CADENCE = /\b(sessions?|bulletins?)\b.{0,40}\b(a|per|each|every|the next) (night|day|morning)\b/i
+
+  it.each(strings.map((s) => [s.path, s.text] as const))('%s', (_path, text) => {
+    expect(text).not.toMatch(CADENCE)
+  })
+
+  it('and neither does the cycle explainer, whose span of sessions is the house clock’s own', () => {
+    const step = W.how.steps[1]
+    const text = typeof step.text === 'function' ? step.text('3-5') : step.text
+    expect(text).not.toMatch(CADENCE)
+  })
+})
+
 describe('days, as the pages write them', () => {
   it('abbreviates the month the same way on every machine', () => {
     expect(shortDate('2026-09-07')).toBe('7 Sept')

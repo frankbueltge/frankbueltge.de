@@ -22,7 +22,16 @@
 //
 // Appearance lives nowhere in this file (ADR 0010) — no colour, no coordinate, no size.
 
+import pulse from '@/data/pulse/pulse.json'
 import type { VoiceId } from '@/lib/partitur'
+
+/** What the pulse snapshot says it counts, read from the snapshot itself. The Puls node used to
+ *  say "five repositories, binned into eight weeks" and "clones four siblings" in typed words,
+ *  while the snapshot lists nine repositories over thirteen weeks and the workflow clones eight
+ *  siblings (found 2026-10-17). The number a workflow adds to the snapshot is the number this
+ *  page states. */
+const PULSE_REPOS = pulse.repos.length
+const PULSE_WEEKS = pulse.weeks.length
 
 /** Who a node belongs to. The four voices carry identity colour from the `ecology-voices`
  *  palette set; `shared` takes that set's declared neutral — the same greyness The Middle
@@ -287,10 +296,10 @@ export const NODES: readonly ApparatusNode[] = [
     layer: 'instruments',
     kind: 'pipeline',
     owner: 'shared',
-    what: 'The ecology measuring itself: every commit of five repositories, binned into eight weeks.',
+    what: `The ecology measuring itself: every commit of ${PULSE_REPOS} repositories, binned into ${PULSE_WEEKS} weeks.`,
     commitsAs: 'Puls <puls@frankbueltge.de>',
     members: [
-      { label: 'Puls nightly refresh', what: 'clones four siblings and reads this repo’s own history', ref: '.github/workflows/pulse-refresh.yml', workflowName: 'Puls nightly refresh', cron: ['25 6 * * *'] },
+      { label: 'Puls nightly refresh', what: `clones the ${PULSE_REPOS - 1} sibling repositories and reads this repo’s own history`, ref: '.github/workflows/pulse-refresh.yml', workflowName: 'Puls nightly refresh', cron: ['25 6 * * *'] },
     ],
   },
   {
@@ -652,7 +661,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'in-gegenmessung', to: 'st-instruments', kind: 'commit', mechanism: 'each instrument commits its own dated findings', checked: 'derived', ref: '.github/workflows/gegenmessung.yml' },
   { from: 'in-trending', to: 'st-instruments', kind: 'commit', mechanism: 'commits one day file and one terms file every morning, plus the audience file of the day before, never rewriting any of them', checked: 'derived', ref: '.github/workflows/trending.yml' },
   { from: 'in-scouts', to: 'st-catalogues', kind: 'commit', mechanism: 'commits the atlas nightly, capped at thirty new entries a run', checked: 'derived', ref: '.github/workflows/atlas-scout.yml' },
-  { from: 'in-pulse', to: 'st-instruments', kind: 'commit', mechanism: 'commits the commit pulse of five repositories', checked: 'derived', ref: '.github/workflows/pulse-refresh.yml' },
+  { from: 'in-pulse', to: 'st-instruments', kind: 'commit', mechanism: `commits the commit pulse of ${PULSE_REPOS} repositories`, checked: 'derived', ref: '.github/workflows/pulse-refresh.yml' },
   { from: 'in-saat', to: 'st-inlets', kind: 'commit', mechanism: 'commits each practice’s public answer to an offered seed', checked: 'derived', ref: '.github/workflows/requests-watchdog.yml' },
   { from: 'in-meridian', to: 'st-instruments', kind: 'commit', mechanism: 'committed by hand; CI re-derives and fails on any difference', checked: 'derived', ref: '.github/workflows/ci.yml' },
 
