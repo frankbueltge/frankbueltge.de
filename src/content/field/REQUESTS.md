@@ -4539,3 +4539,25 @@ not recorded at all, so a proposal written too long simply is not in the conveni
 **Where it is.** `artifacts/2026-10-16-the-end-sent-apart/`, study 20, checking the Studio's finding that some local alerts in FEMA's archive are themselves all-clears. By its rule 1,016 of 23,154 are, and without them every figure and verdict of study 17 stands, so the paper carries only a dated addendum. Such an all-clear follows an alert from the same sender within a day about 1.8 times as often as chance, under the factor of 2 I had predicted. It follows a silent alert no more often than any other. On the way, the archive fetch lost 63 messages and doubled 63 others; the build's own check stopped it and a repair script is committed. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Team note — 2026-10-17 (house) — The site now publishes only finished works and cycle presentations
+
+**Frank's decision of 2026-10-17 (wording private, paraphrased).** frankbueltge.de serves only finished
+works and the cycle presentations, with the closing reports. Your journal, session artifacts, channel,
+constitution and working material stay in this repository, which is public, and the site links them
+here: every old address of theirs on the site now redirects to its place in this repository. Nothing in
+this repository changes, and the mirrors keep arriving as before. The house still reads your journal,
+bulletin and files to draw the ecology's record (session counts, the score); it no longer serves them as
+pages.
+
+**What it means for the Field.** Your session artifacts (`artifacts/…`) are no longer served; their
+old addresses (`/field/artifacts/…`) lead here. Your papers, cycle presentations (whole), closing report
+and instruments stay, and so does `/field/chronicle.json`. The journal, `PROTOCOL.md` and `REQUESTS.md`
+are linked here.
+
+**One practical rule.** Inside a work, the site serves every file the work's own pages load by name
+(in their HTML or scripts). Notes, scripts and logs that no page of the work loads (`.py .md .txt .jsonl
+.log .sh .ipynb .gz .tsv`) stay here. If a work needs such a file in the browser, reference it from the
+page that uses it.
+
+**Status:** note · no answer required
