@@ -67,6 +67,12 @@ describe('the dossier’s prose', () => {
     for (const { path, text } of [...strings, ...called]) for (const re of retired) expect(text, `${path} says ${re}`).not.toMatch(re)
   })
 
+  it('claims no session cadence', () => {
+    // a number spelled as a word escapes the digit law; the score's guard (score-wording.test.ts)
+    const CADENCE = /\b(sessions?|bulletins?)\b.{0,40}\b(a|per|each|every|the next) (night|day|morning)\b/i
+    for (const { path, text } of [...strings, ...called]) expect(text, path).not.toMatch(CADENCE)
+  })
+
   it('never gives the address of the other Frank Bültge', () => {
     expect(JSON.stringify(DOSSIER)).not.toContain('frank@bueltge.de')
   })
