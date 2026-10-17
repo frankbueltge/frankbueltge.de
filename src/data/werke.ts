@@ -632,8 +632,8 @@ export const WERKE: Werk[] = [
       // of raw mentions without a resolvable year (the file publishes both numbers); and the
       // extractor's own ceiling (GDELT emits no year ≥ 2015) was nowhere in the entry although it
       // bounds the whole histogram.
-      de: 'Each day a machine reads the year-resolved dated references in a full day of GDELT-monitored news — a hundred thousand articles, give or take — and publishes the histogram of invoked years, 1800 to the extractor’s own 2014 ceiling, with the year that breaks the smooth decay of memory and whose press is doing the invoking. GDELT built the field in 2015 for anniversary analysis and never built the instrument.',
-      en: 'Each day a machine reads the year-resolved dated references in a full day of GDELT-monitored news — a hundred thousand articles, give or take — and publishes the histogram of invoked years, 1800 to the extractor’s own 2014 ceiling, with the year that breaks the smooth decay of memory and whose press is doing the invoking. GDELT built the field in 2015 for anniversary analysis and never built the instrument.',
+      de: 'Each day a machine reads the year-resolved dated references in a full day of GDELT-monitored news — a hundred thousand articles, give or take — and publishes the histogram of invoked years, 1800 to the extractor’s own 2014 ceiling, with the year that breaks the smooth decay of memory and whose press is doing the invoking — and keeps every day’s standout, so the archive shows which years break it again and again. GDELT built the field in 2015 for anniversary analysis and never built the instrument.',
+      en: 'Each day a machine reads the year-resolved dated references in a full day of GDELT-monitored news — a hundred thousand articles, give or take — and publishes the histogram of invoked years, 1800 to the extractor’s own 2014 ceiling, with the year that breaks the smooth decay of memory and whose press is doing the invoking — and keeps every day’s standout, so the archive shows which years break it again and again. GDELT built the field in 2015 for anniversary analysis and never built the instrument.',
     },
     methodHref: '/werke/invoked-past',
     tier: 'experiment',
@@ -654,8 +654,8 @@ export const WERKE: Werk[] = [
       // "For each country" was never true (currency audit, 2026-08-22): a country enters the day
       // only when both its own-press and world-press pools clear method.min_pool = 25 articles,
       // which 40 to 61 of them do. The gate is now in the sentence, where it belongs.
-      de: 'From the “Counter-Measurement” line. Daily, for every country whose press clears that day’s article floor: how its own press writes about it — against how the world’s press writes about it. Tone and emotion rates per pool, a bootstrap confidence interval on the gap, an immutable daily archive. It measures portrayal, never population mood.',
-      en: 'From the “Counter-Measurement” line. Daily, for every country whose press clears that day’s article floor: how its own press writes about it — against how the world’s press writes about it. Tone and emotion rates per pool, a bootstrap confidence interval on the gap, an immutable daily archive. It measures portrayal, never population mood.',
+      de: 'From the “Counter-Measurement” line. Daily, for every country whose press clears that day’s article floor: how its own press writes about it — against how the world’s press writes about it. Tone and emotion rates per pool, a bootstrap confidence interval on the gap, and an immutable daily archive drawn as each country’s series, so a gap that holds for weeks reads apart from a single day’s swing. It measures portrayal, never population mood.',
+      en: 'From the “Counter-Measurement” line. Daily, for every country whose press clears that day’s article floor: how its own press writes about it — against how the world’s press writes about it. Tone and emotion rates per pool, a bootstrap confidence interval on the gap, and an immutable daily archive drawn as each country’s series, so a gap that holds for weeks reads apart from a single day’s swing. It measures portrayal, never population mood.',
     },
     methodHref: '/werke/balance',
     tier: 'experiment',

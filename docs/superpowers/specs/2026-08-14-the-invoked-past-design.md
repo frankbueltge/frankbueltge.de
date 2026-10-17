@@ -182,3 +182,17 @@ clause that was ever load-bearing.
 **Archive note.** The launch day's file was regenerated the same day to carry the evidence
 block; the finding is unchanged (1947), and `method.version` records `v1.1`. Every later
 day is written once, as the rule requires.
+
+## Addendum 3 (2026-10-17): the law test is not built
+
+§3's law test (fit Candia's biexponential to each tracked event's curve) and the spike
+addendum's "decay testing is unaffected for pre-2015 events" are superseded. The register was
+founded on 2026-09-14 as designed; the fit cannot be built from it. Candia's curve is a function
+of an item's age in years, the twenty tracked events are 12 to 145 years old, and a daily series
+moves each of them by one day per day: 33 days since founding are 0.09 of a year. What those days
+record is the news — every one of the twenty events was invoked less per day than in the window
+that selected it, fourteen were unmentioned on most days, the busiest day was a one-day burst.
+A fit would report that as decay. The cross-sectional alternative stays rejected (a day's age
+profile mixes event production with fading, and the 2015 wall hides the young ages). Records
+from the next run on carry `law_test.status: not_built` with the reason; the page and the method
+sheet say so, and compute these numbers from the archive instead of quoting this paragraph.

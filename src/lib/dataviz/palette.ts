@@ -646,7 +646,12 @@ export const PALETTES: readonly PaletteSet[] = [
       'blue unchanged, on the same two surfaces — cross-page hue reuse is legal; one hue may ' +
       'never mean two things on ONE page. Redundant encoding throughout: the standout is the ' +
       'only bar with a direct label and a plumb line to it, the baseline rule is dashed and ' +
-      'spans a named year range, and every number in the figure repeats in the tables below it.',
+      'spans a named year range, and every number in the figure repeats in the tables below it. ' +
+      'Second figure, 2026-10-17: the series of standout years across the committed archive ' +
+      '(src/styles/invoked-series.css) wears the ember alone, with the same meaning — every dot is a ' +
+      'day’s standout — on the same page and the same two surfaces, so it inherits this record rather ' +
+      'than adding a hue; its recurrence guides, ceiling band, edge bands and quiet lane wear ink ' +
+      'tokens, and the anniversary match is carried by a ring (shape), not by a second colour.',
     slots: [
       { name: 'the standout — the year that most exceeds its neighbourhood', light: '#b8410e', dark: '#e2691f' },
       { name: 'the neighbourhood baseline — the median of the ±5 years around it', light: '#2a6fd0', dark: '#4f8cdd' },
@@ -684,7 +689,7 @@ export const PALETTES: readonly PaletteSet[] = [
       },
     ],
     warns: [],
-    usedBy: ['src/styles/invoked-figure.css'],
+    usedBy: ['src/styles/invoked-figure.css', 'src/styles/invoked-series.css'],
   },
   {
     id: 'globe-voices',

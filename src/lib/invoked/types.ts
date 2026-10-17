@@ -117,13 +117,20 @@ export interface InvokedTrackedEvents {
   events: { date: string; mentions: number; age_years: number }[]
 }
 
-/** The decay law is the test hypothesis, and the record says what the test still lacks.
+/** The decay law was the test hypothesis, and the record states where the test stands.
  *  A real state, never a placeholder: `reason` is written by the pipeline for the day it
- *  describes, and the failed-fetch branch carries only status + reason. */
+ *  describes. Two states exist in the archive:
+ *    · `pending` (records up to 2026-10-17) — with a first-possible date that promised a fit;
+ *      the promise is withdrawn, and the page says so instead of repeating it;
+ *    · `not_built` (since 2026-10-17, `since`) — the test cannot be built from this archive, and
+ *      `reason` carries that day's arithmetic. A failed fetch writes the same state: whether the
+ *      test can be built does not depend on whether tonight's download worked. */
 export interface InvokedLawTest {
   status: string
   reason: string
   hypothesis?: string
+  /** the date the state was declared (not_built) */
+  since?: string
   register_days_needed?: number
   register_days_have?: number
   first_possible?: string | null

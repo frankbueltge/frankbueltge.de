@@ -77,16 +77,20 @@ class TestStandout:
 
 
 class TestRegisterAndLawTest:
+    """The register is founded from the archive and counted every night; the decay test that
+    was meant to run on it is NOT BUILT (2026-10-17), and the record says so instead of
+    promising a date."""
+
+    REGISTER = {
+        "founded": "2026-09-14",
+        "selection_effect": "x",
+        "events": [{"date": "2001-09-11", "founding_mentions": 6711},
+                   {"date": "1881-02-02", "founding_mentions": 357}],
+    }
+
     def test_register_is_not_founded_before_the_archive_is_deep_enough(self, refresh, tmp_path, monkeypatch):
         monkeypatch.setattr(refresh, "OUT_DIR", tmp_path)
         assert refresh.maybe_found_register("2026-08-15") is None
-
-    def test_law_test_stays_pending_and_names_what_it_still_lacks(self, refresh, tmp_path, monkeypatch):
-        monkeypatch.setattr(refresh, "OUT_DIR", tmp_path)
-        block = refresh.law_test_block(None, "2026-08-15")
-        assert block["status"] == "pending"
-        assert block["register_days_needed"] == refresh.REGISTER_MIN_DAYS
-        assert "Candia" in block["hypothesis"]
 
     @staticmethod
     def _archive(refresh, tmp_path, n_days):
@@ -98,37 +102,77 @@ class TestRegisterAndLawTest:
                 {"date": day, "exact_dates_top": [{"date": "1947-08-15", "mentions": 3}]}),
                 encoding="utf-8")
 
-    def test_the_pending_day_count_is_the_one_founding_actually_counts(
-            self, refresh, tmp_path, monkeypatch):
-        """The record may never claim a depth that would already have founded the register.
-
-        These two read the archive under different conventions once: law_test_block counted
-        the day the run was about to write, maybe_found_register could not (that file does
-        not exist yet). On the run where the archive held REGISTER_MIN_DAYS - 1 days the
-        record therefore published "needs 30 ... holds 30" while still pending.
-        """
-        monkeypatch.setattr(refresh, "OUT_DIR", tmp_path)
-        self._archive(refresh, tmp_path, refresh.REGISTER_MIN_DAYS - 1)
-        block = refresh.law_test_block(None, "2026-09-13")
-        assert refresh.maybe_found_register("2026-09-13") is None
-        assert block["register_days_have"] == refresh.REGISTER_MIN_DAYS - 1
-        assert block["register_days_have"] < block["register_days_needed"]
-        assert f"holds {refresh.REGISTER_MIN_DAYS - 1}" in block["reason"]
-
     def test_the_register_founds_on_the_run_after_the_archive_is_deep_enough(
             self, refresh, tmp_path, monkeypatch):
         monkeypatch.setattr(refresh, "OUT_DIR", tmp_path)
+        self._archive(refresh, tmp_path, refresh.REGISTER_MIN_DAYS - 1)
+        assert refresh.maybe_found_register("2026-09-13") is None
         self._archive(refresh, tmp_path, refresh.REGISTER_MIN_DAYS)
         register = refresh.maybe_found_register("2026-09-14")
         assert register is not None
         assert register["founded"] == "2026-09-14"
         assert register["founding_window"] == ["2026-08-15", "2026-09-13"]
 
-    def test_a_founded_register_excludes_its_own_founding_window(self, refresh):
-        register = {"founded": "2026-09-14", "events": [], "selection_effect": "x"}
-        block = refresh.law_test_block(register, "2026-09-14")
-        assert block["status"] == "pending"
-        assert block["valid_days_so_far"] == 0  # founding day is not an observation
+    def test_the_law_test_is_not_built_and_never_promises_a_date(self, refresh):
+        for register in (None, self.REGISTER):
+            block = refresh.law_test_block(register, "2026-10-17")
+            assert block["status"] == "not_built"
+            assert block["since"] == refresh.LAW_NOT_BUILT_SINCE == "2026-10-17"
+            assert "Candia" in block["hypothesis"]
+            # the withdrawn promise must not come back under any name
+            for stale in ("first_possible", "valid_days_so_far", "register_days_needed", "register_days_have"):
+                assert stale not in block
+            assert "pending" not in block["reason"]
+
+    def test_the_reason_carries_the_day_s_arithmetic(self, refresh):
+        block = refresh.law_test_block(self.REGISTER, "2026-10-17")
+        # ages by the pipeline's own rule (record year minus event year), span in calendar days
+        assert "2 tracked events are 25 to 145 years old" in block["reason"]
+        assert "the 33 days since the register was founded" in block["reason"]
+        assert "by 0.09 of a year" in block["reason"]
+        # and the rejected alternative, with its two reasons
+        assert "one day's age profile" in block["reason"]
+        assert "2015" in block["reason"]
+
+    def test_on_its_founding_day_the_register_has_moved_nobody(self, refresh):
+        block = refresh.law_test_block(self.REGISTER, "2026-09-14")
+        assert "the 0 days since the register was founded" in block["reason"]
+        assert "by 0.00 of a year" in block["reason"]
+        assert "the 1 day since" in refresh.law_test_block(self.REGISTER, "2026-09-15")["reason"]
+
+    def test_past_a_year_the_shift_is_stated_in_years(self, refresh):
+        # the sentence stays grammatical when the series outgrows "a fraction of a year"
+        block = refresh.law_test_block(self.REGISTER, "2027-10-17")
+        assert "by 1.09 years" in block["reason"]
+        assert "of a year" not in block["reason"]
+
+    def _run_main(self, refresh, tmp_path, monkeypatch, slots_fetched):
+        from collections import Counter, defaultdict
+        monkeypatch.setattr(refresh, "OUT_DIR", tmp_path)
+        monkeypatch.setattr(refresh, "load_lookup", lambda: ({}, {}))
+        # shaped like harvest()'s own aggregates (defaultdicts included)
+        agg = {"years": Counter({1947: 40, 1950: 5}), "year_by_country": defaultdict(Counter),
+               "exact_dates": Counter(), "resolutions": Counter(), "evidence": {},
+               "themes_overall": Counter(), "articles_with_themes": 0}
+        stats = {"mentions_raw": 45, "articles_scanned": 100 if slots_fetched else 0,
+                 "articles_with_dates": 10, "articles_with_dates_share": 0.1,
+                 "articles_country_mapped": 0, "mentions_kept": 45, "mentions_removed": {},
+                 "resolutions": {}, "max_year_observed": 1950, "slots_expected": 96,
+                 "slots_fetched": slots_fetched, "slots_missing": [], "window": "w"}
+        monkeypatch.setattr(refresh, "harvest", lambda lookup: (agg, stats))
+        assert refresh.main() == 0
+        return json.loads((tmp_path / "latest.json").read_text(encoding="utf-8"))
+
+    def test_a_failed_fetch_writes_the_same_state_not_the_old_promise(self, refresh, tmp_path, monkeypatch):
+        record = self._run_main(refresh, tmp_path, monkeypatch, slots_fetched=0)
+        assert record["note"]
+        assert record["law_test"]["status"] == "not_built"
+        assert "first_possible" not in record["law_test"]
+
+    def test_a_measured_day_writes_not_built_as_well(self, refresh, tmp_path, monkeypatch):
+        record = self._run_main(refresh, tmp_path, monkeypatch, slots_fetched=96)
+        assert "note" not in record
+        assert record["law_test"]["status"] == "not_built"
 
 
 class TestDisclosure:

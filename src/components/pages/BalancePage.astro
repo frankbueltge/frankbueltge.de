@@ -1,11 +1,23 @@
 ---
 /** Balance — the emotional trade balance of the world's press.
  *  Measures portrayal (self-image vs. foreign image per country), never population mood.
- *  Data: src/data/balance/latest.json, committed nightly; git is the archive. */
+ *  Data: src/data/balance/latest.json for the day, and every committed day file
+ *  (src/data/balance/YYYY-MM-DD.json) for the series; git is the archive. */
 import data from '@/data/balance/latest.json'
 import type { BalanceData } from '@/lib/balance/types'
-import { ciLabel, directionSentence, fixed, signed, windowLabel } from '@/lib/balance/format'
+import { ciLabel, directionSentence, signed, windowLabel } from '@/lib/balance/format'
+import { shortDay } from '@/lib/archive/calendar'
+import {
+  balanceSeries,
+  figureRows,
+  headlineTally,
+  persistenceExtremes,
+  persistenceTable,
+  type Run,
+} from '@/lib/balance/series'
 import BalanceFigure from './BalanceFigure.astro'
+import BalanceSeriesFigure from './BalanceSeriesFigure.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
 import SheetHead from '@/components/experiments/SheetHead.astro'
 import DataAge from '@/components/experiments/DataAge.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
@@ -17,6 +29,29 @@ const failed = d.stats.slots_fetched === 0
 const rows = d.countries
 const sigCount = rows.filter((r) => r.dims.tone?.significant).length
 const dateLabel = d.date
+
+// The series: every committed day file, read once at build time. A calendar day without a file
+// and a day whose fetch failed are gaps in it, never bridged (src/lib/balance/series.ts).
+const series = balanceSeries(import.meta.glob('/src/data/balance/2*.json', { eager: true, import: 'default' }))
+const seriesRows = figureRows(series)
+const extremes = persistenceExtremes(seriesRows)
+const headlines = headlineTally(series)
+const ledger = persistenceTable(series)
+const todayHeadlineDays = h ? (headlines.tally.find((t) => t.fips === h.fips)?.days ?? 0) : 0
+const unmeasuredDays = series.failed + series.missing
+const topHeadlines = headlines.tally.slice(0, 3)
+const runOf = (run: Run | null, direction: Run['direction']) =>
+  run && run.direction === direction && run.days > 1
+    ? `, ${run.days} of them in an unbroken run from ${shortDay(run.from)} to ${shortDay(run.to)}`
+    : ''
+const worldExtreme = extremes.world && extremes.world.fips !== extremes.own?.fips ? extremes.world : null
+const headlineList = topHeadlines.map((t) => `${t.name} on ${t.days} day${t.days === 1 ? '' : 's'}`)
+const headlineSentence =
+  headlineList.length <= 1
+    ? headlineList.join('')
+    : `${headlineList.slice(0, -1).join(', ')} and ${headlineList[headlineList.length - 1]}`
+const headlinersDrawn = headlines.tally.filter((t) => seriesRows.some((r) => r.fips === t.fips)).length
+const pool = (n: number | null) => (n === null ? '—' : n.toLocaleString('en-US', { maximumFractionDigits: 1 }))
 ---
 
 <main id="main" class="flex-1">
@@ -46,6 +81,13 @@ const dateLabel = d.date
         gap {signed(h.gap)} {ciLabel(h.gap_ci95)} — from {h.n_self.toLocaleString('en-US')} articles by its
         press about itself and {h.n_foreign.toLocaleString('en-US')} articles by everyone else.
       </p>
+      {series.measured > 1 && (
+        <p class="mt-2 font-mono text-xs text-fg-faint">
+          Across the archive, {h.name} has carried this headline on {todayHeadlineDays} of {series.measured} measured
+          days — <a href="#series" class="underline decoration-line underline-offset-2 hover:text-fg">the series</a> says
+          what one day cannot.
+        </p>
+      )}
     </section>
   ) : (
     <section class="mb-12 border-l-2 border-line pl-5">
@@ -107,6 +149,66 @@ const dateLabel = d.date
     </section>
   )}
 
+  {series.measured > 0 && seriesRows.length > 0 && (
+    <section id="series" class="mb-12">
+      <h2 class="kicker">
+        The series — {series.days.length} days, the {seriesRows.length} countries the floor admits most often
+      </h2>
+      <p class="mt-3 text-fg-muted">
+        One day's ledger cannot tell a habit from an accident; the archive can. The instrument has committed its
+        ledger {unmeasuredDays === 0 ? 'every night ' : ''}since {series.first}, and this figure reads all of it:
+        {' '}{series.days.length} calendar days{unmeasuredDays === 0
+          ? ', each with a measured file'
+          : `, ${unmeasuredDays} of them without a measurement and drawn as gaps`}. It draws the {seriesRows.length}
+        countries that cleared the article floor on the most days — ties go to the deeper smaller pool, so the rows
+        are chosen by how well a country is measured, never by what its gap turned out to be — and for every day the
+        gap between its own press and the world's press, on the interval that day's file recorded.
+      </p>
+      <div class="mt-4">
+        <BalanceSeriesFigure series={series} rows={seriesRows} />
+      </div>
+      {(extremes.own || worldExtreme) && (
+        <p class="mt-4 text-fg-muted">
+          {extremes.own && (
+            <>
+              For {extremes.own.name}, its own press wrote significantly brighter than the world's press did on
+              {' '}{extremes.own.ownBrighter} of the {extremes.own.listed} days it was
+              listed{runOf(extremes.own.longestRun, 'own')}.
+            </>
+          )}
+          {worldExtreme && (
+            <>
+              {' '}At the other end, the world's press wrote significantly brighter about {worldExtreme.name} than its
+              own press did on {worldExtreme.worldBrighter} of {worldExtreme.listed}{runOf(worldExtreme.longestRun, 'world')}.
+            </>
+          )}
+          {' '}A 95% interval is built to exclude zero by chance on about one day in twenty, so a handful of
+          significant days in either direction is what no gap at all looks like; dozens in one direction are not
+          sampling noise.
+        </p>
+      )}
+      {headlines.days > 0 && (
+        <p class="mt-3 text-fg-muted">
+          The day's headline — its widest significant gap — tells a different story over the same days. It went to
+          {' '}{headlineSentence}: {headlines.tally.length} countries over {headlines.days} headline days in
+          all{headlinersDrawn === 0 ? ', and not one of them among the rows above' : ''}. On headline days the self
+          pool held a median of {pool(headlines.medianSelfPool)} articles, against {pool(headlines.medianListedSelfPool)}
+          {' '}across every listed country-day and a floor of {series.minPool}. Whether such a country is steady or
+          merely loud is what the ledger below answers.
+        </p>
+      )}
+      <div class="bals-tables">
+        <TableFallback
+          summary={`The persistence ledger — every country listed on at least ${ledger.floor} of the ${series.measured} measured days`}
+          caption="Per country across the archive: days listed, days with a significant gap in each direction, days not significant, the median gap, the median smaller pool, and the days it carried the headline"
+          columns={ledger.columns}
+          rows={ledger.rows}
+          provenance="In the figure's selection order: most days listed first, then the deeper smaller pool. Counts are days; the median gap is tone, its own press minus the world's press."
+        />
+      </div>
+    </section>
+  )}
+
   <section class="mb-12">
     <p class="kicker">What this measures — and what it does not</p>
     <ul class="mt-3 space-y-2 text-sm text-fg-muted">
@@ -143,9 +245,9 @@ const dateLabel = d.date
       </li>
       <li>
         <strong>Absolute values, not anomalies.</strong> News tone drifts more negative over the
-        years (Rozado et&nbsp;al. 2022); day-vs-baseline scores need a baseline, and this archive
-        starts accumulating it today. Until then the ledger shows levels with confidence
-        intervals, nothing else.
+        years (Rozado et&nbsp;al. 2022); day-vs-baseline scores need a baseline. The archive has been
+        gathering the material for one since {series.first ?? d.date}, but no baseline score is computed
+        from it yet, so the ledger and the series show levels with confidence intervals, nothing else.
       </li>
       <li>
         <strong>Document-level scores.</strong> An article mentioning two countries contributes its

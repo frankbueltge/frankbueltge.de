@@ -1,0 +1,179 @@
+---
+/** Invoked Past — the series figure: the standout year of every committed day file, on the
+ *  same year axis the press's memory has in the histogram above (1800 at the bottom, the
+ *  record's own year at the top), one slot per calendar day. A year that stood out on more than
+ *  one day gets a dashed guide from its first day and its name at the right, so recurrence and
+ *  runs read at a glance; a ring marks the days whose anniversary arithmetic matched. The band
+ *  at the top is the stretch the source never emits, the faint bands are the edges no standout
+ *  can occupy, a hatched column is a day without a measurement, and a measured day without a
+ *  standout sits hollow on its own lane. Geometry and every number from
+ *  src/lib/invoked/series.ts (unit-tested against the archive itself); the one colour is the
+ *  page's standout ember (invoked-memory). Interaction: a native <title> on every mark; the
+ *  table below the figure carries every value it draws. */
+import '../../styles/invoked-series.css'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { shortDay } from '@/lib/archive/calendar'
+import { count, decimal } from '@/lib/invoked/format'
+import { buildStandoutFigure, standoutTable, type StandoutMark, type StandoutSeries } from '@/lib/invoked/series'
+
+interface Props {
+  series: StandoutSeries
+}
+const { series } = Astro.props
+const m = buildStandoutFigure(series)
+const table = standoutTable(series)
+const files = series.days.length - series.missing
+const ceiling = m.ceilingBands[0]
+
+const markTitle = (k: StandoutMark) =>
+  `${shortDay(k.date)}: ${k.standout.year} stood out — ${count(k.standout.mentions)} mentions, ` +
+  `${decimal(k.standout.times, 1)}× the median of its neighbourhood, surprise ${decimal(k.standout.surprise, 1)}` +
+  (k.standout.anniversary ? '; its most-named exact date fell on this calendar day' : '')
+---
+
+{!m.empty && (
+  <figure class="mb-4">
+    <div class="mb-2 flex flex-wrap items-center gap-x-5 gap-y-1 font-mono text-[11px] text-fg-muted">
+      <span class="inline-flex items-center gap-1.5">
+        <svg class="invs-key" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+          <circle class="invs-dot" cx="6" cy="6" r="3.4" />
+        </svg>
+        the day’s standout year
+      </span>
+      {series.anniversaries > 0 && (
+        <span class="inline-flex items-center gap-1.5">
+          <svg class="invs-key" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true">
+            <circle class="invs-ring" cx="7" cy="7" r="6" />
+            <circle class="invs-dot" cx="7" cy="7" r="3.2" />
+          </svg>
+          its most-named date fell on the record’s own day
+        </span>
+      )}
+      {m.guides.length > 0 && (
+        <span class="inline-flex items-center gap-1.5">
+          <svg class="invs-key" viewBox="0 0 16 12" width="16" height="12" aria-hidden="true">
+            <line class="invs-guide" x1="0" y1="6" x2="16" y2="6" />
+          </svg>
+          a year that stood out on more than one day
+        </span>
+      )}
+      {m.quiet.length > 0 && (
+        <span class="inline-flex items-center gap-1.5">
+          <svg class="invs-key" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+            <circle class="invs-quiet" cx="6" cy="6" r="3" />
+          </svg>
+          a quiet day: no year stood out
+        </span>
+      )}
+      {m.columns.length > 0 && (
+        <span class="inline-flex items-center gap-1.5">
+          <svg class="invs-key" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+            <rect x="0" y="0" width="12" height="12" fill="url(#invs-hatch)" />
+          </svg>
+          no measurement that day
+        </span>
+      )}
+    </div>
+
+    <div class="overflow-x-auto">
+      <svg
+        class="invs-svg"
+        viewBox={`0 0 ${m.width} ${m.height}`}
+        width="100%"
+        role="img"
+        aria-label={`Dot chart: the standout year of each archived day, ${series.first} to ${series.last}, on a year axis from ${m.domainStart} to ${m.domainEnd}. ${series.distinctYears} different years stood out; the ${m.guides.length} that did so on more than one day are joined by dashed guides and named at the right. The band at the top is the stretch the source never emits.`}
+      >
+        <defs>
+          <pattern id="invs-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line class="invs-hatch-line" x1="0" y1="0" x2="0" y2="6" />
+          </pattern>
+        </defs>
+
+        {m.yTicks.map((t) => (
+          <>
+            <line class="invs-grid" x1={m.plotLeft} y1={t.y} x2={m.plotRight} y2={t.y} />
+            <text class="invs-tick" x={m.plotLeft - 6} y={t.y + 3.5} text-anchor="end">{t.year}</text>
+          </>
+        ))}
+
+        {m.ceilingBands.map((b) => (
+          <rect x={b.x} y={b.y} width={b.width} height={b.height} fill="url(#invs-hatch)">
+            <title>{`${b.from}–${b.to}: the source emits no year in this range — the instrument's ceiling, not the world's memory`}</title>
+          </rect>
+        ))}
+        {ceiling && ceiling.height >= 10 && (
+          <text class="invs-band-label" x={ceiling.x + 6} y={ceiling.y + ceiling.height / 2 + 3.5}>
+            {`no year ≥ ${ceiling.from} emitted — the source’s ceiling`}
+          </text>
+        )}
+        {m.edgeBands.map((b) => (
+          <rect class="invs-edge" x={b.x} y={b.y} width={b.width} height={b.height}>
+            <title>{`${b.from}–${b.to}: within ±${series.window} years of the day's observed range — no standout can sit here by the method's own rule`}</title>
+          </rect>
+        ))}
+
+        {m.columns.map((c) => (
+          <rect x={c.x} y={m.plotTop} width={c.width} height={m.plotBottom - m.plotTop} fill="url(#invs-hatch)">
+            <title>{`${c.date}: ${c.kind === 'failed' ? 'source unreachable — finding omitted' : 'no committed file'}. A gap, never bridged.`}</title>
+          </rect>
+        ))}
+
+        {m.guides.map((g) => (
+          <line class="invs-guide" x1={g.x1} y1={g.y} x2={g.x2} y2={g.y} />
+        ))}
+
+        {m.marks.map((k) => (
+          <>
+            {k.standout.anniversary && <circle class="invs-ring" cx={k.x} cy={k.y} r={m.dotR + 2.6} />}
+            <circle class="invs-dot" cx={k.x} cy={k.y} r={m.dotR}>
+              <title>{markTitle(k)}</title>
+            </circle>
+          </>
+        ))}
+
+        {m.quiet.length > 0 && (
+          <text class="invs-lane" x={m.plotLeft - 6} y={m.quietY + 3.5} text-anchor="end">none</text>
+        )}
+        {m.quiet.map((q) => (
+          <circle class="invs-quiet" cx={q.x} cy={m.quietY} r={m.dotR}>
+            <title>{`${shortDay(q.date)}: no year stood out above threshold — a quiet day is a finding`}</title>
+          </circle>
+        ))}
+
+        {m.labels.map((l) => (
+          <>
+            <line class="invs-leader" x1={m.plotRight} y1={l.targetY} x2={m.plotRight + 14} y2={l.y - 3.5} />
+            <text class="invs-label" x={m.plotRight + 18} y={l.y}>{l.text}</text>
+          </>
+        ))}
+
+        <line class="invs-axis" x1={m.plotLeft} y1={m.plotBottom} x2={m.plotRight} y2={m.plotBottom} />
+        {m.ticks.map((t) => (
+          <>
+            <line class="invs-axis" x1={t.x} y1={m.plotBottom} x2={t.x} y2={m.plotBottom + 4} />
+            <text class="invs-tick" x={t.x} y={m.axisY} text-anchor="middle">{t.label}</text>
+          </>
+        ))}
+      </svg>
+    </div>
+
+    <figcaption class="mt-2 font-mono text-[11px] text-fg-faint">
+      Read from {files} committed day files, <code>src/data/invoked/{series.first}.json</code> to
+      <code>{series.last}.json</code>: each dot is the standout that day's file published — no year is re-scored
+      here, and nothing is carried across a missing day. The faint bands are the years no standout can occupy (within
+      ±{series.window} of the day's observed range, by the method's own rule); the hatched band is the stretch the
+      source never emits. Method:
+      <a href="/werke/invoked-past" class="underline decoration-line underline-offset-2 hover:text-fg">/werke/invoked-past</a>.
+    </figcaption>
+
+    <div class="invs-tables">
+      <TableFallback
+        summary="The figure as a table — every archived day"
+        caption={`The standout year of every archived day, ${series.first} to ${series.last}, with its mentions, its ratio to its neighbourhood, its surprise, the anniversary arithmetic and the day's raw maximum`}
+        columns={table.columns}
+        rows={table.rows}
+        provenance="The raw maximum is the count, not the finding: it sits on the source's ceiling year whenever the ramp toward the wall carries it there."
+      />
+    </div>
+  </figure>
+)}
