@@ -1,0 +1,153 @@
+{
+  "date": "2026-10-17",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-17T09:43:38Z",
+    "counts": {
+      "botwall": 31,
+      "gone_404": 1,
+      "gone_410": 1,
+      "legal_451": 0,
+      "ok": 263,
+      "other": 1,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 266,
+    "excluded_unverifiable": 34,
+    "gone": 2,
+    "gone_ci95": [
+      0.0021,
+      0.027
+    ],
+    "gone_rate": 0.0075,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0142
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-15",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "ewtnnews.com",
+        "first_seen": "20261015000000",
+        "http_code": 404,
+        "title": "Pope Leo XIV sends message after surgery to Vatican conference, asks for prayers",
+        "url": "https://www.ewtnnews.com/vatican/pope-leo-xiv-sends-message-after-surgery-to-vatican-conference-asks-for-prayers"
+      },
+      {
+        "class": "gone_410",
+        "domain": "breakingnews.ie",
+        "first_seen": "20261015000000",
+        "http_code": 410,
+        "title": "Waterford family's deaths in fire 'due to a €20k drug debt'",
+        "url": "https://www.breakingnews.ie/news/waterford-fire-deaths-were-due-to-a-e20k-drug-debt-1953775.html"
+      }
+    ],
+    "sample_drawn_at": "2026-10-16T10:08:42Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 5544,
+      "replaced": 4757,
+      "trivial": 863,
+      "update": 545
+    },
+    "day": "2026-10-16",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "ECI",
+          "Gandhi",
+          "Gandhi"
+        ],
+        "after": "25 FIRs filed since October 2 over anti-ECI protests in Delhi; Rahul Gandhi, Priyanka Gandhi named",
+        "before": "25 FIRs filed since October 2 over anti-EC protests in Delhi; Rahul, Priyanka named",
+        "detected": "2026-10-16T09:34:12Z",
+        "domain": "hindustantimes.com",
+        "removed": [
+          "EC"
+        ],
+        "similarity": 0.824,
+        "url": "https://www.hindustantimes.com/india-news/delhi-jantar-mantar-protests-india-bloc-connaught-place-rahul-gandhi-congress-firs-police-101791532304060.html",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "UPDATED",
+          "FINAL"
+        ],
+        "after": "UPDATED FINAL: A-B-C STAKES ACTION AS WE COUNT THE DAYS UNTIL BREEDERS' CUP – Horse Race Insider",
+        "before": "A-B-C STAKES ACTION AS WE COUNT THE DAYS UNTIL BREEDERS' CUP WORLD CHAMPIONSHIPS – Horse Race Insider",
+        "detected": "2026-10-16T03:17:30Z",
+        "domain": "horseraceinsider.com",
+        "removed": [
+          "WORLD",
+          "CHAMPIONSHIPS"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.horseraceinsider.com/marking-the-time/",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Bandh",
+          "Punjab",
+          "Bandh"
+        ],
+        "after": "Punjab Bandh: Punjab Bandh Today October 15: Timing, reason, are banks open? Check bus and train updates",
+        "before": "Punjab Band Today October 15: Timing, reason, are banks open? Check bus and train updates",
+        "detected": "2026-10-16T03:46:53Z",
+        "domain": "indiatimes.com",
+        "removed": [
+          "Band"
+        ],
+        "similarity": 0.875,
+        "url": "https://economictimes.indiatimes.com/news/new-updates/punjab-band-today-october-15-timing-reason-are-banks-open-check-bus-and-train-updates/articleshow/134956309.cms",
+        "weight": 8,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 15068,
+      "PAGE_TEXTCHANGE": 128650,
+      "PAGE_TITLECHANGE": 49248,
+      "UNCHANGED_CONTENT": 752787
+    },
+    "title_changes_en": 11709,
+    "trace": [
+      {
+        "bytes_billed": 26214400,
+        "created": "1792229989130",
+        "job_id": "world_gdg_counts_20261016",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 238026752,
+        "created": "1792229994902",
+        "job_id": "world_gdg_titles_20261016",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-17T09:43:38Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-16.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}
