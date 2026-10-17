@@ -49,6 +49,10 @@ on:
       # retired on 2026-10-17 and their workflows removed (the register says why, under `retired`).
       - Redaction nightly
       - Gegenmessung nightly
+      # The weekly earth-rotation refresh behind /sawtooth (added 2026-10-17) commits
+      # src/data/sawtooth with the built-in token: without this line a fresher record would wait
+      # for an unrelated push.
+      - Sawtooth weekly
       - ueberflug-refresh
       - Atelier integrate
       # The forked nightly line's mirror, same reason as every entry above it: it commits with
