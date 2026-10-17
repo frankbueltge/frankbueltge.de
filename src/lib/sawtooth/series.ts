@@ -78,6 +78,12 @@ export interface Sawtooth {
    *  zero while the slide is still going. The page says the line turned back up, and this is
    *  the figure that sentence answers to (series.test.ts) */
   reboundSinceLow: number
+  /** the highest UT1-UTC after that low, and its day — where the climb back topped out */
+  peakSinceLow: { date: string; s: number }
+  /** how far the line has fallen from that peak by the last day, in seconds; zero while it is
+   *  still at its highest. A fall means the days are running long again: the Earth slowing, which
+   *  is the one way out of the page's closing either-or (see slowingAgain below) */
+  fallSincePeak: number
   longest: Extreme
   shortest: Extreme
   /** days that ran shorter than 86,400 seconds */
@@ -152,8 +158,9 @@ export function sawtooth(source: Raw = raw): Sawtooth {
   )
   let low = leapIndex
   for (let i = leapIndex; i < observed.length; i++) if (observed[i] < observed[low]) low = i
-  let high = observed[low]
-  for (let i = low + 1; i < observed.length; i++) if (observed[i] > high) high = observed[i]
+  let peak = low
+  for (let i = low + 1; i < observed.length; i++) if (observed[i] > observed[peak]) peak = i
+  const high = observed[peak]
 
   return {
     first: source.first,
@@ -166,6 +173,8 @@ export function sawtooth(source: Raw = raw): Sawtooth {
     yearsSinceLeap,
     lowSinceLeap: { date: dayAt(low, source.first), s: observed[low] },
     reboundSinceLow: high - observed[low],
+    peakSinceLow: { date: dayAt(peak, source.first), s: high },
+    fallSincePeak: high - observed.at(-1)!,
     longest,
     shortest,
     shortDays,
@@ -176,4 +185,16 @@ export function sawtooth(source: Raw = raw): Sawtooth {
     cumulative,
     observed,
   }
+}
+
+/** How far the line must have fallen from its peak before the page says the Earth is slowing
+ *  again: well past the seasonal wobble, which moves UT1-UTC by a few hundredths of a second. */
+export const SLOWING_FLOOR_S = 0.05
+
+/** True while the record shows the days running long again since the climb back topped out —
+ *  the case in which the next tooth need not cut backwards, because an ordinary one could come
+ *  first. Read by the page's second plate and its closing paragraph, so neither sentence can
+ *  outlive the record that makes it true (series.test.ts). */
+export function slowingAgain(s: Pick<Sawtooth, 'fallSincePeak'>): boolean {
+  return s.fallSincePeak >= SLOWING_FLOOR_S
 }

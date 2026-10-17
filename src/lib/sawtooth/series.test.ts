@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { dayAt, sawtooth } from './series'
+import { dayAt, sawtooth, slowingAgain } from './series'
 
 const s = sawtooth()
 
@@ -96,6 +96,23 @@ describe('the slide after the last tooth, on a record small enough to read', () 
     const t = sawtooth(tiny)
     expect(t.lowSinceLeap).toEqual({ date: '2017-01-04', s: -0.3 })
     expect(t.reboundSinceLow).toBeCloseTo(0.4, 10)
+    // still climbing on the last day: the peak is the last day, nothing has fallen
+    expect(t.peakSinceLow).toEqual({ date: '2017-01-06', s: 0.1 })
+    expect(t.fallSincePeak).toBe(0)
+    expect(slowingAgain(t)).toBe(false)
+  })
+
+  it('finds where the climb topped out and how far the line has fallen since', () => {
+    const t = sawtooth({ ...tiny, ut1_utc: [5000, -3000, -1000, 1000, 500, 0] })
+    expect(t.peakSinceLow).toEqual({ date: '2017-01-04', s: 0.1 })
+    expect(t.fallSincePeak).toBeCloseTo(0.1, 10)
+    expect(slowingAgain(t)).toBe(true)
+  })
+
+  it('does not call the seasonal wobble a slowing', () => {
+    const t = sawtooth({ ...tiny, ut1_utc: [5000, -3000, -1000, 1000, 900, 800] })
+    expect(t.fallSincePeak).toBeCloseTo(0.02, 10)
+    expect(slowingAgain(t)).toBe(false)
   })
 
   it('reports no climb at all while the slide is still going', () => {

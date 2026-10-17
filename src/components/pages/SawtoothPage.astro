@@ -16,7 +16,7 @@
 // are the only things here a reader cannot recompute: the CGPM's decision of 2022 to retire the
 // leap second, and Agnew's 2024 measurement that melting ice has postponed the first negative one.
 import type { Locale } from '@/lib/site'
-import { sawtooth } from '@/lib/sawtooth/series'
+import { sawtooth, slowingAgain } from '@/lib/sawtooth/series'
 import { decades, teeth, together, WIDE } from '@/lib/sawtooth/figure'
 import SheetHead from '@/components/experiments/SheetHead.astro'
 import SheetFoot from '@/components/experiments/SheetFoot.astro'
@@ -38,6 +38,10 @@ const signedSecs = (n: number) => `${n >= 0 ? '+' : '−'}${Math.abs(n).toFixed(
 const firstDecade = s.decades[0]
 const lastDecade = s.decades.at(-1)!
 const span = `${s.first.slice(0, 4)}–${s.last.slice(0, 4)}`
+// Refreshed 2026-10-17: the climb back after 2020 topped out and the line has been falling since,
+// the days running long again. Both sentences that depend on it read the record (slowingAgain), so
+// they appear while it is true and leave when it is not.
+const slowing = slowingAgain(s)
 ---
 
 <main id="main" class="sheet mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:py-14">
@@ -107,11 +111,19 @@ const span = `${s.first.slice(0, 4)}–${s.last.slice(0, 4)}`
       <b class="tabular-nums text-fg">{signedSecs(s.lowSinceLeap.s)} s</b> on
       <b class="text-fg">{s.lowSinceLeap.date}</b>, and the line turned back <i>up</i>: the Earth
       had sped up. There has been nothing to correct.
+      {slowing && (
+        <>
+          The climb topped out at <b class="tabular-nums text-fg">{signedSecs(s.peakSinceLow.s)} s</b> on
+          <b class="text-fg">{s.peakSinceLow.date}</b>, and the line has been falling since, to
+          <b class="tabular-nums text-fg">{signedSecs(s.standing)} s</b> on <b class="text-fg">{s.last}</b>:
+          the days are running long again.
+        </>
+      )}
     </p>
 
     <figure class="saw-plate">
       <svg viewBox={`0 0 ${WIDE.width} ${WIDE.height}`} role="img" class="saw-svg"
-        aria-label={`The published difference between Earth time and atomic time across ${span}: ${s.leaps.length} slides of about a second, each ended by a one-second snap back, and after ${s.lastLeap} a last slide that stops short of the edge on ${s.lowSinceLeap.date} and turns back up.`}>
+        aria-label={`The published difference between Earth time and atomic time across ${span}: ${s.leaps.length} slides of about a second, each ended by a one-second snap back, and after ${s.lastLeap} a last slide that stops short of the edge on ${s.lowSinceLeap.date} and turns back up${slowing ? `, then from ${s.peakSinceLow.date} falls again` : ''}.`}>
         <g class="saw-grid">
           {two.ticks.map((t) => <line x1={t.x} y1={WIDE.padTop} x2={t.x} y2={WIDE.height - WIDE.padBottom} />)}
           <line class="saw-zero" x1={WIDE.padX} y1={two.zeroY} x2={WIDE.width - WIDE.padX} y2={two.zeroY} />
@@ -188,6 +200,13 @@ const span = `${s.first.slice(0, 4)}–${s.last.slice(0, 4)}`
         So the saw in the second plate is finished either way. Either its next tooth cuts backwards
         for the first time, or there are no more teeth and the line above simply walks off the
         chart it has been pinned to for {span}.
+        {slowing && (
+          <>
+            The one way out of that either-or is the way the record has gone since
+            {' '}<span class="whitespace-nowrap">{s.peakSinceLow.date}</span>: an Earth slowing again
+            would, if it kept on, need one more ordinary tooth before the teeth stop.
+          </>
+        )}
       </p>
     </div>
   </section>
