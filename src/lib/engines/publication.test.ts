@@ -485,6 +485,7 @@ const KEPT = [
   'n-1/projects/unicode-admission/before-anyone-asked/index.html',
   'n-1/projects/transcribers-notes/silently/index.html',
   'n-1/projects/minor-planet-names/named-into-the-sky/index.html',
+  'n-1/projects/light-characters/within-sight-of-itself/index.html',
   'n-1/material/ct-logs/2026-09-24-closing-asking/crt-sh.frankbueltge.de.full.json',
   'attention/index.html',
   'attention/ledger.html',
