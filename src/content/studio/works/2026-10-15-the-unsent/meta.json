@@ -10,11 +10,12 @@
  "question": "What does the world record of a danger before it arrives, and who keeps the warnings: the ones heeded, the ones ignored and the ones never needed?",
  "artifact": "index.html",
  "medium": "A county map of the United States played through time with sound: each declared disaster lights its counties and sounds a low tone; each county a local keeper's word reached that names the danger rings a bell. The map deepens with the declared disasters no local word reached; amber points mark the counties where one did. Counters, a card per county with every declared disaster and the words that reached it, five case buttons, tables by kind and by year.",
- "embodies": "THE RECORD KEEPS WHERE A DANGER CAME AND WHAT WAS SAID THERE, AND THE DISTANCE BETWEEN THEM IS THE UNSENT WARNING. Of 17,176 county disasters the United States declared for incidents begun 2012-2026, a local keeper's word naming the danger reached 1,221 through FEMA's alert system around the incident's start; nothing reached 14,728. No record says which of those silences were never needed.",
+ "embodies": "THE RECORD KEEPS WHERE A DANGER CAME AND WHAT WAS SAID THERE, AND THE DISTANCE BETWEEN THEM IS THE UNSENT WARNING. Of 16,600 county disasters the United States declared for incidents begun 2012-2026 whose window opens after the alert archive's first local warning, a local keeper's word naming the danger reached 1,221 through FEMA's alert system around the incident's start; nothing reached 14,152. No record says which of those silences were never needed.",
+ "corrected": "2026-10-18 (session 179), on the house's note of 2026-10-17: 576 county disasters whose window closed before the archive's first local warning (2012-10-28 15:54 UTC) are set apart as 'before the archive' and no longer counted as 'never'; 'heard before' now counts only an earlier warning about a danger to the county's own area code (session 174 counted any earlier warning, statewide and person-coded included). Of 16,600 counted, a word naming the danger reached 1,221 (7.4 %), nothing 14,152; of these, the county had been sent a local warning about a danger before in 3,458 (was 12,628 of 14,728), only person alerts by its own code in 6,353, only whole-state messages in 2,817, nothing in 1,524. Declarations refetched 2026-10-18 (two incident dates revised upstream, no count changed by it); IPAWS pages 0-7 byte-identical to session 173.",
  "form": "An interactive map with sound, cards and tables.",
  "form_argument": "The finding is a gap between two records that never meet: one written after the danger (the declaration), one written before it (the warning). Only a map on a clock can lay them over each other, and only sound can make the visitor wait, at every declaration, for a bell that mostly does not ring.",
  "the_rule_the_work_kept": "Declarations: OpenFEMA Disaster Declarations Summaries v2, incident begin 2012 or later, Biological left out, one record per incident and county (EM and DR merged). Warnings: IPAWS alerts from senders other than the National Weather Service, minus tests and administrative messages (the rules of THE KEEPER'S WORD, both key spellings read). A warning reaches a county by its own or its state's SAME code, in the window from 3 days before the incident's begin date to 7 days after. It names the danger when its words match the incident type's fixed word list; person-coded warnings never count. Fixed before counting.",
- "headline": {
+ "headline_superseded_2026-10-18": {
   "declaration_rows": 28938,
   "county_areas": 17176,
   "incidents": 1601,
@@ -30,6 +31,32 @@
   "hurricane_share": "395/4208",
   "severe_storm_share": "84/5315"
  },
+ "headline": {
+  "declaration_rows": 28938,
+  "county_areas_counted": 16600,
+  "before_the_archive": 576,
+  "incidents": 1601,
+  "outcomes": {
+   "never": 10694,
+   "spoke": 1221,
+   "before": 576,
+   "silent": 3458,
+   "other": 1227,
+   "state_or_tribal_area": 191
+  },
+  "unreached_by_earlier_address": {
+   "own code, person only": 6353,
+   "nothing": 1524,
+   "own code": 3458,
+   "whole state only": 2817
+  },
+  "straddling_first_warning": 414,
+  "warnings": 23154,
+  "fire_share": "377/1002",
+  "hurricane_share": "395/4085",
+  "severe_storm_share": "84/4942",
+  "first_local_warning": "2012-10-28T15:54Z"
+ },
  "cases": {
   "sonoma_2017": "4 declarations, no local warning in the window",
   "butte_2018": "2 declarations, no local warning in the window",
@@ -38,8 +65,8 @@
   "los_angeles_2025": "91 local warnings naming a fire"
  },
  "sources": [
-  "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries (OpenFEMA; public domain; fetched 2026-10-15)",
-  "https://www.fema.gov/api/open/v1/IpawsArchivedAlerts (OpenFEMA; public domain; fetched 2026-10-15)"
+  "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries (OpenFEMA; public domain; fetched 2026-10-15, refetched 2026-10-18)",
+  "https://www.fema.gov/api/open/v1/IpawsArchivedAlerts (OpenFEMA; public domain; fetched 2026-10-15, refetched 2026-10-18)"
  ],
  "siblings": {
   "field": "Not built on. The Field's study 16 asks whether a tornado warning over empty land is more often written never needed; this work holds the other side of the weather service's record, the local keepers, and finds the declared disasters their archive is silent on.",

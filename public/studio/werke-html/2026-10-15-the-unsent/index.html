@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Unsent</title>
-<meta name="description" content="Every county the United States declared a disaster area since 2012, set against the warnings its local keepers sent through the national alert system around the day the danger began. A declaration sounds a low tone, a keeper's word a bell. Of 17,176 declared county disasters, a local word that names the danger reached 1,221.">
+<meta name="description" content="Every county the United States declared a disaster area since late 2012, when the archive's first local warning falls,, set against the warnings its local keepers sent through the national alert system around the day the danger began. A declaration sounds a low tone, a keeper's word a bell. Of 16,600 declared county disasters, a local word that names the danger reached 1,221.">
 <style>
 :root{--bg:#f2efe7;--ink:#1c1b19;--mute:#6a655c;--line:#d5cfc2;--card:#fffdf7;--stage:#0b0d11;--acc:#a8471a;--spoke:#ffc46b;--other:#9aa3b5;--silent:#5d7aa6;--never:#a0607a}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111216;--ink:#ebe7dd;--mute:#9b968c;--line:#2b2d34;--card:#191b21;--stage:#06070a;--acc:#ff9a5c}}
@@ -70,13 +70,14 @@ code{font-size:.9em}
 .fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
-</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__wall">Every county the United States declared a disaster area since 2012 sounds a low tone on a map, and a bell rings where a local keeper's alert named the danger around its start. Of 17,176 county disasters, a local word reached 1,221; no record says which of the silences were never needed.</p><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
 <main>
 <h1>The Unsent</h1>
-<p class="sub">Every county the United States declared a disaster area since 2012, and whether a local keeper's warning reached it through the national alert system when the danger began. A declaration sounds a low tone. A keeper's word sounds a bell.</p>
+<p class="sub">Every county the United States declared a disaster area since 2012 (counted from late October 2012, when the alert archive's first local warning falls), and whether a local keeper's warning reached it through the national alert system when the danger began. A declaration sounds a low tone. A keeper's word sounds a bell.</p>
 
 <p>When a fire, a flood or a hurricane is bad enough, the federal government declares the counties it struck disaster areas. That declaration is a record, written afterwards, that a danger came. Sheriffs, counties and states can warn the people in its way through FEMA's alert system, which sends a message to every phone and radio in the area and keeps it, signed and timed to the second. The declaration names where the danger came. The archive keeps what was said there. This work sets the two beside each other. Where a warning should have been and none is, the archive keeps nothing, and the map shows that gap.</p>
 
+<p class="note"><b>Corrected 2026-10-18 (session 179).</b> 576 county disasters whose window closed before the alert archive held any local word are now set apart and not counted, and “heard before” counts only warnings about a danger sent to the county's own area code. A local word naming the danger still reached 1,221 of 16,600 (7.4 %, was 7.1 % of 17,176); nothing reached 14,152. The split under that changed most: the county had been sent a local warning about a danger before in only 3,458 of them, where the work said 12,628. <a href="#corr">What changed and why</a>.</p>
 <div id="stage"><canvas id="cv" aria-label="Map of US counties; declared disaster areas light up as time plays"></canvas>
 <div id="hud"><b id="date">—</b><div class="now" id="now"></div></div>
 <div id="legend"></div>
@@ -103,6 +104,7 @@ code{font-size:.9em}
 <ul>
 <li><b>The declarations.</b> FEMA's public list of every disaster declaration (<a href="https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2">OpenFEMA, Disaster Declarations Summaries v2</a>), each incident that began on or after 1 January 2012: <span id="n-rows"></span> rows. Left out: the pandemic (<span id="n-bio"></span> rows, a different kind of danger). A county declared twice for the same incident (an emergency and then a major disaster) counts once: <span id="n-areas"></span> county disasters, in <span id="n-inc"></span> incidents by state. <span id="n-000"></span> areas declared for a whole state or a tribal nation have no county and are not placed.</li>
 <li><b>The words.</b> FEMA's public archive of the alert system (<a href="https://www.fema.gov/openfema-data-page/ipaws-archived-alerts-v1">OpenFEMA, IPAWS Archived Alerts v1</a>): every alert from a sender other than the National Weather Service, minus tests (by code and by their own words) and administrative messages, as in <a href="../2026-10-15-the-keepers-word/">The Keeper's Word</a>: <span id="n-warn"></span> warnings. A warning reaches a county when its area codes name the county or its whole state.</li>
+<li id="corr"><b>When the archive begins. Corrected 2026-10-18 (session 179)</b>, on the house's note of 2026-10-17. FEMA describes the archive as running from June 2012, and the first local warning in it falls on <span id="n-first"></span> (New York City's evacuation order as Hurricane Sandy approached). The declarations begin on 1 January 2012. Until today the work counted every window that closed before that minute as a county that had “never” heard a local warning, though no local word could exist there at all. Those <span id="n-before"></span> windows now stand apart, as “before the archive”, and are not in any count above; <span id="n-straddle"></span> more open before that minute and close after it, and stay counted. And “heard before” now means what the page says: a local warning addressed earlier to the county by its own area code and not about a person, where session 174 counted any earlier warning, one sent to the whole state or a person-coded alert included. By session 174's rules the counts were <span id="n-old"></span>. What “heard before” rested on: of the <span id="n-unr"></span> counted county disasters that nothing reached, the county had been sent a local warning about a danger by its own code before in <span id="n-own"></span>; only alerts about a person (abductions, missing people, police) by its own code in <span id="n-pers"></span>; only messages to its whole state in <span id="n-state"></span>; nothing at all in <span id="n-none"></span>.</li>
 <li><b>The window, fixed before counting:</b> from three days before the incident's declared start to seven days after it. <b>Named the danger:</b> the warning's words match a fixed word list for the incident's kind (fire, flood, storm and so on, in <code>build.py</code>), read mechanically; the card shows the words so you can judge. Warnings coded for people (abductions, police, missing persons) never count as naming it, and their words are withheld here, as are any that describe a person. <b>Corrected 2026-10-16 (session 176):</b> the word list for texts that describe a person missed alert names (Silver, Ashanti), "be on the lookout" and descriptions of a body; a wider list now withholds the words of 84 more warnings shown here. No count changes.</li>
 <li><b>What this cannot say.</b> The alert system is one channel. Counties also warn by opt-in phone lists, sirens, social media, radio and knocking on doors, and none of that is in this archive. The weather service's own warnings are left out on purpose: they are not a local keeper's word. And a declaration does not say a warning was needed: many declare damage from storms that the weather service warned of, or that no warning could have changed. The record cannot tell a warning never needed from a warning never sent. That is the question's blank, and the map is its shape.</li>
 </ul>
@@ -126,8 +128,8 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', 
 const fmt = n => n.toLocaleString('en-US');
 const day = d => new Date(d * 864e5).toISOString().slice(0, 10);
 const minute = m => new Date(m * 6e4).toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
-const STN = {spoke: 'a local word named the danger', other: 'a local word, on something else', silent: 'nothing reached it', never: 'nothing reached it; it had never received a local warning'};
-const COL = {spoke: '#ffc46b', other: '#9aa3b5', silent: '#5d7aa6', never: '#a0607a'};
+const STN = {spoke: 'a local word named the danger', other: 'a local word, on something else', silent: 'nothing reached it', never: 'nothing reached it; no local warning about a danger had been addressed to it before', before: 'before the archive held any local word: not counted'};
+const COL = {spoke: '#ffc46b', other: '#9aa3b5', silent: '#5d7aa6', never: '#a0607a', before: '#8a857b'};
 const D0 = INC[0].b - 30, D1 = Math.floor(Date.parse(S.fetched) / 864e5);
 const st = {t: D1, playing: false, sound: false, ready: false, view: 'silence', counts: null, applied: -1, sel: null};
 
@@ -164,6 +166,7 @@ function apply(upto) {
   if (upto < st.applied) reset();
   for (let i = st.applied + 1; i <= upto; i++) {
     for (const a of INC[i].a) {
+      if (a[1] === 'before') continue;   // corrected 2026-10-18: windows closed before the archive's first local word
       let c = C.get(a[0]); if (!c) C.set(a[0], c = {n: 0, spoke: 0, other: 0, silent: 0, never: 0, last: 0, ls: ''});
       c.n++; c[a[1]]++; c.last = INC[i].b; c.ls = a[1];
     }
@@ -172,9 +175,9 @@ function apply(upto) {
 }
 function idxAt(t) { let lo = -1, hi = INC.length - 1; while (lo < hi) { const m = (lo + hi + 1) >> 1; if (INC[m].b <= t) lo = m; else hi = m - 1; } return lo; }
 function tally(t) {
-  const k = {spoke: 0, other: 0, silent: 0, never: 0, all: 0};
+  const k = {spoke: 0, other: 0, silent: 0, never: 0, all: 0, before: 0};
   const i1 = idxAt(t);
-  for (let i = 0; i <= i1; i++) for (const a of INC[i].a) { k[a[1]]++; k.all++; }
+  for (let i = 0; i <= i1; i++) for (const a of INC[i].a) { k[a[1]]++; if (a[1] !== 'before') k.all++; }
   return k;
 }
 
@@ -253,8 +256,8 @@ function frame(ts) {
   else requestAnimationFrame(frame);
 }
 function showNow(inc) {
-  const k = {spoke: 0, other: 0, silent: 0, never: 0}; for (const a of inc.a) k[a[1]]++;
-  $('now').textContent = `${inc.d} · ${inc.n} (${inc.y}, ${inc.s}) · ${inc.a.length} ${inc.a.length === 1 ? 'county' : 'counties'}: a word named it in ${k.spoke}` + (k.other ? `, a word on something else in ${k.other}` : '') + `, nothing in ${k.silent + k.never}`;
+  const k = {spoke: 0, other: 0, silent: 0, never: 0, before: 0}; for (const a of inc.a) k[a[1]]++;
+  $('now').textContent = `${inc.d} · ${inc.n} (${inc.y}, ${inc.s}) · ${inc.a.length} ${inc.a.length === 1 ? 'county' : 'counties'}: ` + (k.before === inc.a.length ? 'before the archive held any local word' : `a word named it in ${k.spoke}` + (k.other ? `, a word on something else in ${k.other}` : '') + `, nothing in ${k.silent + k.never}` + (k.before ? `, before the archive in ${k.before}` : ''));
 }
 function set(t, quiet = true) {
   st.t = t; apply(idxAt(t));
@@ -269,9 +272,9 @@ function counts() {
     [k.all, 'county disasters declared so far'],
     [k.spoke, 'a local word named the danger' + pc(k.spoke)],
     [k.other, 'a local word on something else' + pc(k.other)],
-    [k.silent, 'nothing, though the county had heard its keepers before' + pc(k.silent)],
-    [k.never, 'nothing, and the county had never received a local warning' + pc(k.never)],
-  ].map(([n, t]) => `<div><div class="n">${fmt(n)}</div><div class="k">${t}</div></div>`).join('');
+    [k.silent, 'nothing, though local warnings about a danger had been addressed to the county before' + pc(k.silent)],
+    [k.never, 'nothing, and no local warning about a danger had been addressed to the county before' + pc(k.never)],
+  ].concat(k.before ? [[k.before, 'closed before the archive held any local word: not counted']] : []).map(([n, t]) => `<div><div class="n">${fmt(n)}</div><div class="k">${t}</div></div>`).join('');
 }
 
 // ---------- card ----------
@@ -281,8 +284,8 @@ function card(id) {
   for (const inc of INC) for (const a of inc.a) if (a[0] === id && inc.b <= st.t) rows.push([inc, a]);
   const nm = names.get(id) || '', sn = SNAME[id.slice(0, 2)] || '';
   if (!rows.length) { $('card').innerHTML = `<div class="meta">FIPS ${id}</div><h3>${esc(nm)}${sn ? ', ' + esc(sn) : ''}</h3><p>No disaster declared here between 2012 and ${day(Math.floor(st.t))}.</p>`; return; }
-  const k = {spoke: 0, other: 0, silent: 0, never: 0}; rows.forEach(r => k[r[1][1]]++);
-  $('card').innerHTML = `<div class="meta">FIPS ${id} · declared ${rows.length} ${rows.length === 1 ? 'time' : 'times'} · a word named the danger ${k.spoke} · nothing ${k.silent + k.never}</div><h3>${esc(nm)}${sn ? ', ' + esc(sn) : ''}</h3><ol>` +
+  const k = {spoke: 0, other: 0, silent: 0, never: 0, before: 0}; rows.forEach(r => k[r[1][1]]++);
+  $('card').innerHTML = `<div class="meta">FIPS ${id} · declared ${rows.length} ${rows.length === 1 ? 'time' : 'times'} · a word named the danger ${k.spoke} · nothing ${k.silent + k.never}${k.before ? ` · before the archive ${k.before}` : ''}</div><h3>${esc(nm)}${sn ? ', ' + esc(sn) : ''}</h3><ol>` +
     rows.slice().reverse().map(([inc, a]) => {
       const ws = a[2].map(j => WORDS[j]).map(w => `<span class="w">${minute(w[0])} · ${esc(w[1])} · ${w[2] ? '“' + esc(w[2]) + '”' : '<span class="withheld">words withheld: they concern a person</span>'}</span>`).join('');
       return `<li><span class="st" style="color:${COL[a[1]]}">${STN[a[1]]}${a[3] > 3 ? ` · ${a[3]} warnings, first three shown` : ''}</span><br>${day(inc.b)} · ${esc(inc.d)} · ${esc(inc.n)} <small>(${esc(inc.y)})</small>${ws}</li>`;
@@ -341,7 +344,7 @@ $('slider').oninput = e => { pause(); set(D0 + (D1 - D0) * e.target.value / 1000
 $('view').onchange = e => { st.view = e.target.value; legend(); draw(); };
 function legend() {
   const sw = c => `<i class="sw" style="background:${c}"></i>`;
-  const flash = `<span>outlines, the last 45 days: ${sw(COL.spoke)}a word named it ${sw(COL.other)}a word on something else ${sw(COL.silent)}nothing ${sw(COL.never)}nothing, ever before</span>`;
+  const flash = `<span>outlines, the last 45 days: ${sw(COL.spoke)}a word named it ${sw(COL.other)}a word on something else ${sw(COL.silent)}nothing ${sw(COL.never)}nothing, and no danger word before</span>`;
   $('legend').innerHTML = (st.view === 'share'
     ? `<span>${sw('#24324a')}no declared disaster here had a local word &nbsp;${sw('#ffc46b')}every one had</span>`
     : `<span>${sw('#2c3a52')}${sw('#6f88b3')}${sw('#9db8e0')}declared disasters with no local word: 1, 6, 12 or more</span><span>${sw('#ffc46b')}point: a word named the danger</span>`) + '<br>' + flash;
@@ -355,9 +358,13 @@ window.addEventListener('resize', size);
   $('n-areas').textContent = fmt(S.county_areas); $('n-inc').textContent = fmt(S.incidents);
   $('n-000').textContent = fmt(S.outcomes.state_or_tribal_area); $('n-warn').textContent = fmt(S.alerts.warnings);
   table('bytype', S.by_type, 'kind'); table('byyear', S.by_year, 'year');
+  $('n-first').textContent = S.first_local_warning.replace('T', ' ').replace('Z', ' UTC');
+  $('n-before').textContent = fmt(S.outcomes.before); $('n-straddle').textContent = fmt(Object.values(S.straddling_first_warning).reduce((a, b) => a + b, 0));
+  { const u = S.unreached_by_earlier_address; $('n-unr').textContent = fmt(S.outcomes.silent + S.outcomes.never); $('n-own').textContent = fmt(u['own code']); $('n-pers').textContent = fmt(u['own code, person only']); $('n-state').textContent = fmt(u['whole state only']); $('n-none').textContent = fmt(u.nothing); }
+  { const o = S.rule_s174.outcomes; $('n-old').textContent = `${fmt(S.rule_s174.county_areas)} county disasters: a word named the danger in ${fmt(o.spoke)}, nothing in ${fmt(o.silent + o.never)}, of them ${fmt(o.never)} in counties that had never heard a local warning`; }
   await loadMap();
   let off = 0; const offIds = new Set();
-  for (const inc of INC) for (const a of inc.a) if (!paths.has(a[0])) { off++; offIds.add(a[0].slice(0, 2)); }
+  for (const inc of INC) for (const a of inc.a) if (a[1] !== 'before' && !paths.has(a[0])) { off++; offIds.add(a[0].slice(0, 2)); }
   st.offmap = off;
   $('offmap').textContent = `${fmt(off)} of the ${fmt(S.county_areas)} county disasters lie off this map (the territories, Connecticut's new planning regions and a few others; state codes ${[...offIds].sort().join(', ')}); they are in every count and table.`;
   st.ready = true; size(); set(D1);

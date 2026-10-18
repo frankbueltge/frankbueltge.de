@@ -14,7 +14,7 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   t(w + ' no errors on load', errs.length === 0);
   t(w + ' no horizontal overflow', await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
   const k = await p.evaluate(() => window.__UN.state.counts);
-  t(`${w} end: declared ${k.all}`, k.all === S.county_areas - 0 && k.all === S.outcomes.spoke + S.outcomes.other + S.outcomes.silent + S.outcomes.never);
+  t(`${w} end: declared ${k.all}`, k.all === S.county_areas && k.before === S.outcomes.before && k.all === S.outcomes.spoke + S.outcomes.other + S.outcomes.silent + S.outcomes.never);
   t(`${w} end: word named it ${k.spoke}`, k.spoke === S.outcomes.spoke);
   t(`${w} end: nothing ${k.silent + k.never}`, k.silent === S.outcomes.silent && k.never === S.outcomes.never);
   const cases = await p.evaluate(() => {
@@ -29,8 +29,8 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
     out.kerr = k && [k[0].b, k[1][1], k[1][2].map(j => window.WORDS[j][0])];
     return out;
   });
-  t(`${w} Sonoma 2017: 4 declarations, all silent`, cases.sonoma.length === 4 && cases.sonoma.every(s => s === 'silent'));
-  t(`${w} Butte 2018: 2 declarations, all silent`, cases.butte.length === 2 && cases.butte.every(s => s === 'silent'));
+  t(`${w} Sonoma 2017: 4 declarations, nothing reached it (${cases.sonoma})`, cases.sonoma.length === 4 && cases.sonoma.every(s => s === 'silent' || s === 'never'));
+  t(`${w} Butte 2018: 2 declarations, nothing reached it (${cases.butte})`, cases.butte.length === 2 && cases.butte.every(s => s === 'silent' || s === 'never'));
   t(`${w} Maui 2023: 4 declarations, a word named it`, cases.maui.length === 4 && cases.maui.every(s => s === 'spoke'));
   t(`${w} LA 2025: 4 declarations, 91 words`, cases.la.length === 4 && cases.la.every(x => x[0] === 'spoke' && x[1] === 91));
   t(`${w} Kerr 2025: begins 2 July, first local word 6 July`, cases.kerr && new Date(cases.kerr[0] * 864e5).toISOString().startsWith('2025-07-02') && new Date(cases.kerr[2][0] * 6e4).toISOString().startsWith('2025-07-06'));
@@ -39,6 +39,8 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   t(`${w} Kerr card names the weather service times`, card.includes('06:14 UTC') && card.includes('09:03 UTC') && /Kerr/.test(card));
   await p.click('text=Butte, November 2018');
   t(`${w} Butte card says nothing reached it`, /nothing reached it/i.test(await p.locator('#card').innerText()));
+  const corr = await p.locator('#corr').innerText();
+  t(`${w} correction note filled from the data`, corr.includes('2012-10-28 15:54 UTC') && corr.includes('576') && corr.includes('414') && corr.includes('3,458') && corr.includes('6,353') && corr.includes('17,176'));
   const rows = await p.locator('#bytype tr').count();
   t(`${w} kinds table ${rows - 1} rows`, rows - 1 === Object.keys(S.by_type).length);
   // a county click
@@ -56,6 +58,9 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   t(`${w} ends on the fetch day`, await p.evaluate(() => document.getElementById('date').textContent) === S.fetched);
   await p.locator('#stage').scrollIntoViewIfNeeded();
   await p.screenshot({ path: join(here, `shot-${w}.png`), fullPage: false });
+  const sn = await p.evaluate(() => { const I = window.INC; const x = I.find(i => i.a.some(a => a[1] === 'before')); window.__UN.set(x.b + 1); return document.getElementById('counts').innerText; });
+  t(`${w} in 2012 the uncounted windows show apart`, /not counted/.test(sn));
+  await p.evaluate(() => window.__UN.set(window.__UN.D1));
   await p.close();
 }
 await b.close();

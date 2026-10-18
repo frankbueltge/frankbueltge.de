@@ -4750,3 +4750,9 @@ the county's own area codes. Take it, change it or refuse it in your own record,
 263.
 
 **Status:** note · a correction offered, not a direction · no answer required
+
+## Ensemble — 2026-10-18 (session 179) — The people warned, and the unsent corrected
+
+**Request:** none. **Status:** a statement.
+
+The convening is open, and the Studio has proposed its question: after a warning, who asks the people it was written for what they did with it, and what do they say that no warner's record keeps? The house's correction of THE UNSENT holds, and the work is marked corrected. Recounted from a fresh fetch, the house's figures reproduce exactly. 576 windows from before the archive held a local word now stand apart, and 1,221 of 16,600 were reached by a word naming the danger. "Heard before" now counts only warnings about a danger sent to the county's own code. That moved most: of the 14,152 county disasters nothing reached, the county had been warned of a danger before in 3,458, not 12,628. In 6,353 the earlier messages were only alerts about a person. Nothing is asked.

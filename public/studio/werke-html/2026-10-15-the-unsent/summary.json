@@ -3,7 +3,31 @@
   "FEMA OpenFEMA DisasterDeclarationsSummaries v2 (incident begin 2012-01-01 or later)",
   "FEMA OpenFEMA IpawsArchivedAlerts v1, senders other than the National Weather Service"
  ],
- "fetched": "2026-10-15",
+ "fetched": "2026-10-18",
+ "first_local_warning": "2012-10-28T15:54Z",
+ "rule_s174": {
+  "county_areas": 17176,
+  "outcomes": {
+   "silent": 12628,
+   "spoke": 1221,
+   "never": 2100,
+   "other": 1227
+  }
+ },
+ "straddling_first_warning": {
+  "never": 385,
+  "other": 24,
+  "spoke": 5
+ },
+ "before_by_year": {
+  "2012": 576
+ },
+ "unreached_by_earlier_address": {
+  "own code, person only": 6353,
+  "nothing": 1524,
+  "own code": 3458,
+  "whole state only": 2817
+ },
  "declaration_rows": 28938,
  "skipped": {
   "biological": 7857,
@@ -11,11 +35,12 @@
  },
  "areas": 17367,
  "incidents": 1601,
- "county_areas": 17176,
+ "county_areas": 16600,
  "outcomes": {
-  "silent": 12628,
+  "never": 10694,
   "spoke": 1221,
-  "never": 2100,
+  "before": 576,
+  "silent": 3458,
   "other": 1227,
   "state_or_tribal_area": 191
  },
@@ -27,81 +52,86 @@
  },
  "by_type": {
   "Severe Storm": {
-   "never": 910,
+   "never": 3894,
    "other": 212,
-   "silent": 4109,
-   "spoke": 84
+   "spoke": 84,
+   "silent": 752
   },
   "Hurricane": {
-   "never": 627,
+   "never": 2364,
    "other": 367,
    "spoke": 395,
-   "silent": 2819
+   "silent": 959
   },
   "Flood": {
-   "never": 241,
    "other": 302,
-   "silent": 2137,
-   "spoke": 137
+   "never": 1950,
+   "spoke": 137,
+   "silent": 412
   },
   "Winter Storm": {
-   "silent": 1060,
+   "silent": 486,
+   "never": 574,
    "spoke": 31,
    "other": 73
   },
   "Fire": {
-   "never": 98,
-   "silent": 534,
+   "never": 413,
    "other": 57,
-   "spoke": 377
+   "spoke": 377,
+   "silent": 155
   },
   "Severe Ice Storm": {
-   "never": 29,
+   "never": 546,
    "other": 145,
-   "silent": 570,
-   "spoke": 119
+   "spoke": 119,
+   "silent": 53
   },
   "Tropical Storm": {
-   "silent": 687,
+   "silent": 471,
+   "never": 238,
    "other": 9,
-   "spoke": 55,
-   "never": 22
+   "spoke": 55
   },
   "Snowstorm": {
-   "never": 54,
-   "silent": 236,
+   "never": 260,
+   "silent": 30,
    "spoke": 1
   },
   "Tornado": {
-   "silent": 205,
+   "never": 168,
+   "silent": 37,
    "other": 51,
    "spoke": 5
   },
   "Coastal Storm": {
-   "silent": 168,
+   "never": 97,
    "other": 2,
+   "silent": 71,
    "spoke": 6
   },
   "Earthquake": {
-   "never": 80,
-   "silent": 6,
+   "never": 84,
    "other": 1,
+   "silent": 2,
    "spoke": 1
   },
   "Straight-Line Winds": {
-   "silent": 40,
+   "never": 24,
    "spoke": 2,
+   "silent": 16,
    "other": 1
   },
   "Mud/Landslide": {
-   "silent": 32,
-   "never": 1
+   "never": 31,
+   "silent": 2
   },
   "Typhoon": {
    "never": 27
   },
   "Other": {
-   "silent": 17,
+   "never": 9,
+   "silent": 8,
    "other": 2
   },
   "Chemical": {
@@ -109,8 +139,9 @@
    "spoke": 1
   },
   "Dam/Levee Break": {
-   "silent": 7,
-   "spoke": 1
+   "never": 3,
+   "spoke": 1,
+   "silent": 4
   },
   "Tropical Depression": {
    "spoke": 2,
@@ -125,94 +156,98 @@
    "spoke": 1
   },
   "Toxic Substances": {
-   "silent": 1
+   "never": 1
   }
  },
  "by_year": {
   "2012": {
-   "never": 969,
+   "never": 393,
    "other": 24,
    "spoke": 5
   },
   "2013": {
-   "never": 433,
+   "never": 619,
    "other": 90,
-   "silent": 187,
-   "spoke": 4
+   "spoke": 4,
+   "silent": 1
   },
   "2014": {
-   "silent": 370,
-   "never": 120,
+   "never": 482,
+   "silent": 8,
    "other": 6,
    "spoke": 91
   },
   "2015": {
-   "silent": 1001,
-   "never": 176,
+   "silent": 45,
+   "never": 1132,
    "spoke": 31,
    "other": 38
   },
   "2016": {
-   "silent": 569,
+   "never": 559,
+   "silent": 32,
    "other": 97,
-   "never": 22,
    "spoke": 22
   },
   "2017": {
-   "silent": 1036,
+   "never": 1005,
+   "silent": 156,
    "spoke": 30,
-   "other": 71,
-   "never": 125
+   "other": 71
   },
   "2018": {
-   "never": 36,
-   "silent": 871,
+   "never": 808,
+   "silent": 99,
    "spoke": 75,
    "other": 33
   },
   "2019": {
-   "silent": 1232,
-   "never": 187,
+   "never": 1245,
+   "silent": 174,
    "spoke": 59,
    "other": 9
   },
   "2020": {
-   "silent": 1122,
-   "never": 3,
+   "silent": 323,
+   "never": 802,
    "other": 212,
    "spoke": 262
   },
   "2021": {
    "other": 147,
-   "silent": 1181,
+   "silent": 335,
+   "never": 846,
    "spoke": 55
   },
   "2022": {
-   "silent": 621,
+   "silent": 294,
    "other": 71,
+   "never": 327,
    "spoke": 59
   },
   "2023": {
-   "silent": 815,
+   "silent": 367,
    "spoke": 67,
    "other": 58,
-   "never": 12
+   "never": 460
   },
   "2024": {
-   "silent": 1363,
+   "silent": 748,
+   "never": 615,
    "spoke": 239,
    "other": 220
   },
   "2025": {
    "spoke": 100,
-   "silent": 873,
+   "never": 648,
+   "silent": 225,
    "other": 55
   },
   "2026": {
-   "silent": 1387,
+   "silent": 651,
+   "never": 753,
    "spoke": 122,
-   "other": 96,
-   "never": 17
+   "other": 96
   }
  }
 }
