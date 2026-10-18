@@ -1,11 +1,23 @@
 ---
-// /reception — the works' reception: critiques and visitor responses, committed = published.
-// Visitor texts arrive through the letterbox (/post) and appear here only after review and
-// with the writer's explicit permission to publish; every entry names its author mark, and
-// machine-written critiques say so in their provenance line. Anchors per work so index
-// cards can deep-link.
+// /reception — the public record of how the works are received (2026-10-17; docs/design/
+// 2026-10-17-the-reception.md). Every work the site publishes can be rated from 1 to 5, with a note:
+// the architect's notes stand first, then the best-received works and the newest visitors' notes.
+// Built from the committed snapshot (src/data/reception/latest.json, written every night by
+// .github/workflows/reception-snapshot.yml), so the page holds without its store; where the browser
+// runs scripts, the live record (/api/reception/record) replaces the snapshot's lists. The single
+// entry the page carried before the ratings, a critique of 2026-07-31, keeps its place below, dated.
 import Page from '@/layouts/Page.astro'
 import { loadReception, type ReceptionEntry } from '@/lib/reception/register'
+import latestJson from '@/data/reception/latest.json'
+import { toSnapshot, type Snapshot } from '@/lib/reception/snapshot'
+import { architectNotes, rankWorks, scoreText, visitorNotes, workLabel, PRIOR_WEIGHT } from '@/lib/reception/record'
+import { OWNER_LABEL } from '@/lib/reception/handlers'
+
+const snapshot: Snapshot = toSnapshot({ ok: true, ...latestJson })
+const ranked = rankWorks(snapshot.works)
+const architect = architectNotes(snapshot)
+const visitors = visitorNotes(snapshot)
+const asOf = snapshot.newest?.slice(0, 10) ?? null
 
 const entries = loadReception()
 const byWork = new Map<string, { title: string; ns: string; slug: string; items: ReceptionEntry[] }>()
@@ -15,43 +27,226 @@ for (const e of entries) {
   byWork.get(key)!.items.push(e)
 }
 for (const g of byWork.values()) g.items.sort((a, b) => a.date.localeCompare(b.date))
+
+const day = (iso: string) => iso.slice(0, 10)
+const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
 ---
 
 <Page
   title="Reception — Frank Bültge"
-  description="The works' reception: critiques and visitor responses to the research ecology's works — committed, attributed, and open for contradiction."
+  description="How the works are received: every published work can be rated from 1 to 5, with a note. The architect's notes, the best-received works and the newest notes, public and committed every night."
 >
   <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 pb-24 pt-16">
     <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">what the works are met with</p>
     <h1 class="mt-3 text-3xl font-bold tracking-tight">Reception</h1>
     <p class="mt-4 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
-      Critiques and responses to the ecology's works — each entry attributed, dated, and
-      committed like everything else here. Machine-written critiques say so.
-      Want to add yours? Post it through the <a class="underline hover:text-fg" href="/post">letterbox</a>,
-      name the work in the <em>regarding</em> line, and say explicitly that it may be published —
-      letters are mail by default; published entries appear here after review, under your mark.
+      The lab’s experiments and the practices’ works, presentations and archives can each be rated from
+      1 to 5, with a note if you like: the form stands below each of them. (Arch’s works are the one
+      exception: the practice shows them bare, by its own design.) The architect’s notes go
+      live as he writes them. A visitor’s note goes live after two automatic checks, a bot check and a
+      named text check, and no person approves it. Every night the record is committed to the site’s
+      repository, and each practice receives what was said about its own works in its feedback folder,
+      where it reads it at the start of every session: the architect’s notes with weight, the visitors’
+      notes as material, never as instructions.
     </p>
+    <p class="mt-3 text-xs text-fg-faint" data-rcp-state>
+      {asOf ? `As of the snapshot of ${asOf}.` : 'No rating has been committed yet.'} What is stored, for how long and why: the
+      form’s own note, and the <a class={link} href="/datenschutz">privacy notice</a>.
+    </p>
+    <p class="mt-3 hidden rounded-sm border border-line bg-bg/40 p-3 text-sm text-fg" data-rcp-owner></p>
 
-    {[...byWork.values()].map((g) => (
-      <section id={`${g.ns}-${g.slug}`} class="mt-14 border-t border-line/60 pt-10" aria-label={`Reception: ${g.title}`}>
-        <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
-          <b class="text-fg">{g.title}</b> · {g.ns}
-          {g.ns === 'studio' && <a class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg" href={`/studio/werke-html/${g.slug}/`}>→ enter the work</a>}
-        </p>
-        {g.items.map((e) => (
-          <article class="mt-6 rounded-[10px] border border-line bg-panel p-5 sm:p-6">
-            <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">
-              {e.role} · {e.author_mark} · <span class="tabular-nums">{e.date}</span>
-            </p>
-            <div class="mt-3 space-y-3">
-              {e.paragraphs.map((p) => (
-                <p class="text-sm leading-relaxed text-fg">{p}</p>
-              ))}
-            </div>
-            <p class="mt-4 font-mono text-[10px] leading-relaxed text-fg-faint">{e.provenance}</p>
-          </article>
-        ))}
-      </section>
-    ))}
+    <section class="mt-12 border-t border-line/60 pt-8" aria-labelledby="rcp-architect">
+      <h2 id="rcp-architect" class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">The architect’s notes</h2>
+      <ol class="mt-4 space-y-4" data-rcp-list="architect">
+        {architect.length ? architect.map((n) => {
+          const w = workLabel(snapshot, n.work)
+          return (
+            <li class="rounded-[10px] border border-line bg-panel p-4">
+              <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-muted">
+                {OWNER_LABEL} · <span class="tabular-nums">{day(n.at)}</span> · <span aria-label={`${n.score} of 5`}>{scoreText(n.score)}</span>
+              </p>
+              <p class="mt-1 text-sm">{w.href ? <a class={link} href={w.href}>{w.title}</a> : w.title}</p>
+              <p class="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-fg">{n.text}</p>
+            </li>
+          )
+        }) : <li class="text-sm text-fg-muted">None yet.</li>}
+      </ol>
+    </section>
+
+    <section class="mt-12 border-t border-line/60 pt-8" aria-labelledby="rcp-top">
+      <h2 id="rcp-top" class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">Best received</h2>
+      <p class="mt-2 text-xs text-fg-faint">Ranked by the average pulled toward 3 by {PRIOR_WEIGHT} phantom ratings, so a single rating cannot top the list; the plain average is shown.</p>
+      <ol class="mt-4 divide-y divide-line/60 rounded-[10px] border border-line bg-panel" data-rcp-list="top">
+        {ranked.length ? ranked.map((w) => (
+          <li class="flex flex-wrap items-baseline justify-between gap-2 px-4 py-3">
+            <span class="text-sm">{w.href ? <a class={link} href={w.href}>{w.title ?? w.id}</a> : (w.title ?? w.id)}</span>
+            <span class="font-mono text-xs tabular-nums text-fg-muted">{w.average?.toFixed(2)} · {w.count} {w.count === 1 ? 'rating' : 'ratings'}</span>
+          </li>
+        )) : <li class="px-4 py-3 text-sm text-fg-muted">No rating yet.</li>}
+      </ol>
+    </section>
+
+    <section class="mt-12 border-t border-line/60 pt-8" aria-labelledby="rcp-newest">
+      <h2 id="rcp-newest" class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">Newest notes from visitors</h2>
+      <ol class="mt-4 space-y-4" data-rcp-list="visitors">
+        {visitors.length ? visitors.map((n) => {
+          const w = workLabel(snapshot, n.work)
+          return (
+            <li class="rounded-[10px] border border-line bg-panel p-4">
+              <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-muted">
+                {n.by} · <span class="tabular-nums">{day(n.at)}</span> · <span aria-label={`${n.score} of 5`}>{scoreText(n.score)}</span>
+              </p>
+              <p class="mt-1 text-sm">{w.href ? <a class={link} href={w.href}>{w.title}</a> : w.title}</p>
+              <p class="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-fg">{n.text}</p>
+            </li>
+          )
+        }) : <li class="text-sm text-fg-muted">None yet.</li>}
+      </ol>
+      {snapshot.hidden.length > 0 && (
+        <p class="mt-3 text-xs text-fg-faint" data-rcp-hidden-count>{snapshot.hidden.length} {snapshot.hidden.length === 1 ? 'note is' : 'notes are'} hidden after three reports, until the architect has read {snapshot.hidden.length === 1 ? 'it' : 'them'}.</p>
+      )}
+    </section>
+
+    <section class="mt-12 hidden border-t border-line/60 pt-8" aria-labelledby="rcp-moderate" data-rcp-moderate>
+      <h2 id="rcp-moderate" class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">Hidden after reports — for the architect</h2>
+      <ol class="mt-4 space-y-4" data-rcp-list="hidden"></ol>
+    </section>
+
+    <section class="mt-16 border-t border-line/60 pt-8" aria-labelledby="rcp-before">
+      <h2 id="rcp-before" class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">Before the ratings</h2>
+      <p class="mt-2 max-w-[70ch] text-xs leading-relaxed text-fg-faint">
+        Until 2026-10-17 this page held critiques and visitors’ responses that came through the letterbox and
+        were published after review. One was published; it stays here as it was.
+      </p>
+      {[...byWork.values()].map((g) => (
+        <section id={`${g.ns}-${g.slug}`} class="mt-8" aria-label={`Reception: ${g.title}`}>
+          <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+            <b class="text-fg">{g.title}</b> · {g.ns}
+            {g.ns === 'studio' && <a class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg" href={`/studio/werke-html/${g.slug}/`}>→ enter the work</a>}
+          </p>
+          {g.items.map((e) => (
+            <article class="mt-6 rounded-[10px] border border-line bg-panel p-5 sm:p-6">
+              <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">
+                {e.role} · {e.author_mark} · <span class="tabular-nums">{e.date}</span>
+              </p>
+              <div class="mt-3 space-y-3">
+                {e.paragraphs.map((p) => (
+                  <p class="text-sm leading-relaxed text-fg">{p}</p>
+                ))}
+              </div>
+              <p class="mt-4 font-mono text-[10px] leading-relaxed text-fg-faint">{e.provenance}</p>
+            </article>
+          ))}
+        </section>
+      ))}
+    </section>
   </main>
 </Page>
+
+<script>
+  import { toSnapshot, type Snapshot, type SnapshotNote } from '@/lib/reception/snapshot'
+  import { architectNotes, rankWorks, scoreText, visitorNotes, workLabel } from '@/lib/reception/record'
+
+  const linkClass = 'underline decoration-line underline-offset-4 hover:decoration-fg'
+  const el = (tag: string, cls = '', text?: string) => {
+    const n = document.createElement(tag)
+    if (cls) n.className = cls
+    if (text !== undefined) n.textContent = text
+    return n
+  }
+  const workLine = (snap: Snapshot, id: string) => {
+    const w = workLabel(snap, id)
+    const p = el('p', 'mt-1 text-sm')
+    if (w.href) {
+      const a = el('a', linkClass, w.title) as HTMLAnchorElement
+      a.href = w.href
+      p.append(a)
+    } else p.textContent = w.title
+    return p
+  }
+  const noteCard = (snap: Snapshot, n: SnapshotNote) => {
+    const li = el('li', 'rounded-[10px] border border-line bg-panel p-4')
+    li.append(el('p', 'font-mono text-[11px] uppercase tracking-[0.12em] text-fg-muted', `${n.by} · ${n.at.slice(0, 10)} · ${scoreText(n.score)}`))
+    li.append(workLine(snap, n.work))
+    li.append(el('p', 'mt-2 whitespace-pre-wrap text-sm leading-relaxed text-fg', n.text))
+    return li
+  }
+  const fill = (name: string, items: HTMLElement[], empty: string) => {
+    const list = document.querySelector(`[data-rcp-list="${name}"]`)
+    if (!list) return
+    list.replaceChildren(...(items.length ? items : [el('li', 'text-sm text-fg-muted', empty)]))
+  }
+
+  async function live(): Promise<void> {
+    const state = document.querySelector('[data-rcp-state]')
+    if (!state || state.hasAttribute('data-rcp-live')) return
+    state.setAttribute('data-rcp-live', '')
+    const ownerBox = document.querySelector<HTMLElement>('[data-rcp-owner]')
+    const flag = new URLSearchParams(location.search).get('owner')
+    if (ownerBox && flag === 'signed-in') {
+      ownerBox.textContent = 'This device now posts as Frank Bültge (architect). The cookie lasts a year; signing out is one click on the form.'
+      ownerBox.classList.remove('hidden')
+    } else if (ownerBox && flag === 'signed-out') {
+      ownerBox.textContent = 'This device is signed out: it posts as a visitor again.'
+      ownerBox.classList.remove('hidden')
+    }
+    try {
+      const res = await fetch('/api/reception/record', { headers: { accept: 'application/json' } })
+      const snap = toSnapshot(await res.json())
+      fill('architect', architectNotes(snap).map((n) => noteCard(snap, n)), 'None yet.')
+      fill(
+        'top',
+        rankWorks(snap.works).map((w) => {
+          const li = el('li', 'flex flex-wrap items-baseline justify-between gap-2 px-4 py-3')
+          const title = el('span', 'text-sm')
+          if (w.href) {
+            const a = el('a', linkClass, w.title ?? w.id) as HTMLAnchorElement
+            a.href = w.href
+            title.append(a)
+          } else title.textContent = w.title ?? w.id
+          li.append(title, el('span', 'font-mono text-xs tabular-nums text-fg-muted', `${w.average?.toFixed(2)} · ${w.count} ${w.count === 1 ? 'rating' : 'ratings'}`))
+          return li
+        }),
+        'No rating yet.',
+      )
+      fill('visitors', visitorNotes(snap).map((n) => noteCard(snap, n)), 'None yet.')
+      state.textContent = 'Live: the record as it stands now. The committed snapshots are in the site’s repository, src/data/reception/.'
+    } catch {
+      // the snapshot's lists stand
+    }
+    try {
+      const owner = await (await fetch('/api/reception/owner', { headers: { accept: 'application/json' } })).json()
+      if (owner?.owner !== true) return
+      const box = document.querySelector<HTMLElement>('[data-rcp-moderate]')
+      const hidden = await (await fetch('/api/reception/moderate', { headers: { accept: 'application/json' } })).json()
+      if (!box || !hidden?.ok) return
+      box.classList.remove('hidden')
+      const items = (hidden.hidden as (SnapshotNote & { hidden_at: string; reports: number })[]).map((n) => {
+        const li = el('li', 'rounded-[10px] border border-line bg-panel p-4')
+        li.append(el('p', 'font-mono text-[11px] uppercase tracking-[0.12em] text-fg-muted', `${n.by} · ${n.at.slice(0, 10)} · hidden ${n.hidden_at.slice(0, 10)} after ${n.reports} reports · ${n.work}`))
+        li.append(el('p', 'mt-2 whitespace-pre-wrap text-sm leading-relaxed text-fg', n.text))
+        const row = el('p', 'mt-3 flex gap-3 text-xs')
+        for (const action of ['restore', 'remove'] as const) {
+          const b = el('button', 'rounded-sm border border-line px-2 py-1', action === 'restore' ? 'Restore it' : 'Remove it') as HTMLButtonElement
+          b.type = 'button'
+          b.addEventListener('click', async () => {
+            if (action === 'remove' && !confirm('Remove this note for good? The snapshot already committed keeps what it kept.')) return
+            b.disabled = true
+            const r = await fetch('/api/reception/moderate', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: n.id, action }) })
+            const d = await r.json().catch(() => null)
+            row.textContent = d?.ok ? (action === 'restore' ? 'Restored.' : 'Removed.') : 'That did not work.'
+          })
+          row.append(b)
+        }
+        li.append(row)
+        return li
+      })
+      fill('hidden', items, 'No note is hidden.')
+    } catch {
+      // the architect's tools stay hidden
+    }
+  }
+
+  document.addEventListener('astro:page-load', () => void live())
+  void live()
+</script>
