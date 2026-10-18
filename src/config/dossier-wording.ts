@@ -162,6 +162,11 @@ export const DOSSIER = {
   works: {
     heading: 'Selected works',
     lead: 'Chosen by hand, and changed by hand: finished and published here, legible to an outsider in under a minute, alive or honestly dated, and, where the lab’s own audit gave one, carrying a verdict on what makes it unlike its neighbours. The registers behind each practice hold everything else.',
+    /** the Field's papers, all of them, under the shelf (2026-10-18) */
+    papers: {
+      label: 'The Field’s papers: every cycle’s paper, in preprint form',
+      href: '/field/papers/',
+    },
   },
 
   neighbours: {

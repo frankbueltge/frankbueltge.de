@@ -70,7 +70,38 @@ export function renderPaper(source: string, dir: string): RenderedPaper {
     return headingOpen(tokens, idx, opts, env, self)
   }
 
+  return { title: paperTitle(source), html: md.render(source) }
+}
+
+/** The paper's own first H1, without markdown emphasis marks; null when it has none. */
+function paperTitle(source: string): string | null {
   const h1 = /^#\s+(.+?)\s*#*\s*$/m.exec(source)
-  const title = h1 ? h1[1]!.replace(/[*_`]/g, '').trim() || null : null
-  return { title, html: md.render(source) }
+  return h1 ? h1[1]!.replace(/[*_`]/g, '').trim() || null : null
+}
+
+/** What a paper says about itself, for its index and for the citation tags a scholar's index
+ *  reads (2026-10-18). Every value is read from the paper's own text; none is guessed. */
+export interface PaperMeta {
+  title: string | null
+  /** the day of its preprint line ("Preprint, cycle 008, 2026-10-16."), else the first day its
+   *  opening names; null where it names none */
+  date: string | null
+  /** the first paragraph under its `## Abstract`, as plain text; null where it has no abstract */
+  abstract: string | null
+}
+
+export function paperMeta(source: string): PaperMeta {
+  const preprint = /\bPreprint\b[^\n]*?\b(\d{4}-\d{2}-\d{2})\b/i.exec(source)
+  const opening = /\b(\d{4}-\d{2}-\d{2})\b/.exec(source.slice(0, 800))
+  const section = /^##\s+Abstract\s*$([\s\S]*?)(?=^#{1,6}\s|(?![\s\S]))/im.exec(source)
+  const paragraph = section?.[1]?.split(/\n\s*\n/).map((p) => p.trim()).find(Boolean) ?? null
+  const abstract = paragraph
+    ? paragraph
+        .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+        .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+        .replace(/[*_`]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim() || null
+    : null
+  return { title: paperTitle(source), date: preprint?.[1] ?? opening?.[1] ?? null, abstract }
 }

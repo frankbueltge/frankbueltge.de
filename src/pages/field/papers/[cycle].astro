@@ -7,32 +7,43 @@
 // presentation it belongs to. One page per paper that exists — before the first one lands,
 // getStaticPaths returns nothing and the site is unchanged. The /ecology presentation card links
 // here (src/lib/ecology/v3.ts, loadPresentations → paperHref).
+//
+// Since 2026-10-18 each paper is findable as a paper: it stands on the index of all of them
+// (/field/papers/), its head carries the citation tags Google Scholar reads, and its link preview is
+// its own card (src/lib/ecology/papers.ts).
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import Page from '@/layouts/Page.astro'
 import { ECOLOGY_V3 } from '@/config/ecology-v3-wording'
+import { SHARE } from '@/config/share-wording'
 import { renderPaper } from '@/lib/ecology/paper'
-import { loadFieldPapers, PAPER_FILE, type FieldPaper } from '@/lib/ecology/v3'
+import { citationTags, loadPaperEntries, type PaperEntry } from '@/lib/ecology/papers'
+import { PAPER_FILE } from '@/lib/ecology/v3'
 
 export function getStaticPaths() {
-  return loadFieldPapers().map((paper) => ({ params: { cycle: paper.dir }, props: { paper } }))
+  return loadPaperEntries().map((paper) => ({ params: { cycle: paper.dir }, props: { paper } }))
 }
 
-const { paper } = Astro.props as { paper: FieldPaper }
+const { paper } = Astro.props as { paper: PaperEntry }
 const W = ECOLOGY_V3.paper
 const source = readFileSync(join(process.cwd(), paper.file), 'utf8')
 const { title, html } = renderPaper(source, paper.dir)
-const presentation = `/field/presentations/${paper.dir}/`
+const presentation = paper.presentationHref
 const repoFile = `https://github.com/frankbueltge/field-research/blob/main/presentations/${paper.dir}/${PAPER_FILE}`
 ---
 
 <Page
   title={`${W.seoTitle(paper.cycle, title ?? ECOLOGY_V3.presentations.entryLabel(paper.cycle, 'The Field'))} | Frank Bültge`}
   description={W.seoDescription(paper.cycle)}
+  ogImage={paper.ogImage}
 >
+  <Fragment slot="head">
+    {citationTags(paper).map((tag) => <meta name={tag.name} content={tag.content} />)}
+  </Fragment>
   <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-4 py-14">
     <p class="mb-6 font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">
       {W.kicker(paper.cycle)} ·
+      <a href="/field/papers/" class="underline underline-offset-2">{SHARE.papers.all}</a> ·
       <a href={presentation} class="underline underline-offset-2">{W.presentation}</a> ·
       <a href={`${presentation}${PAPER_FILE}`} class="underline underline-offset-2">{W.raw}</a> ·
       <a href={repoFile} class="underline underline-offset-2">{W.repository}</a>

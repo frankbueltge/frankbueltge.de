@@ -250,6 +250,7 @@ const shelf = readShelf()
         <h2 id="ds-works-h">{D.works.heading}</h2>
         <p class="ds-prose">{D.works.lead}</p>
         <SelectedWorks cards={shelf} variant="dossier" />
+        <p class="ds-more"><a class="ds-link" href={D.works.papers.href}>{D.works.papers.label} →</a></p>
       </section>
 
       {/* ── the neighbours ──────────────────────────────────────────────────────────────────── */}

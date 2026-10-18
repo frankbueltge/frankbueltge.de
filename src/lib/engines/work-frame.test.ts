@@ -224,6 +224,17 @@ describe('the frame survives the shapes real works actually ship', () => {
     expect(out).toContain('<h1>fragment</h1>')
   })
 
+  // Until 2026-10-18 a page with neither a <body> nor a </head> got its frame before everything
+  // else, and two Studio works that open with a doctype were served in quirks mode for it.
+  it('keeps a doctype first, and frames such a page where its body begins', () => {
+    const page = '<!doctype html>\n<html lang="en">\n<meta charset="utf-8">\n<title>t</title>\n<style>a{}</style>\n<main><h1>w</h1></main>\n</html>'
+    const out = frameStandaloneWork(page, 'studio', 'l')
+    expect(out.startsWith('<!doctype html>')).toBe(true)
+    expect(out.indexOf(`<header class="${FRAME_MARKER}"`)).toBeGreaterThan(out.indexOf('<style>a{}</style>'))
+    expect(out.indexOf(`<header class="${FRAME_MARKER}"`)).toBeLessThan(out.indexOf('<main>'))
+    expect(frameStandaloneWork(out, 'studio', 'l')).toBe(out)
+  })
+
   it('uses no external request and no script — the standalone CSP forbids both', () => {
     const out = frameStandaloneWork('<html><body></body></html>', 'atelier', 'l')
     // only the work's own content may bring scripts; the frame brings none

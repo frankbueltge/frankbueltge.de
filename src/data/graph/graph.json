@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "1dd32ff6c45713fd"
+        "sha256": "ffac952451db029a"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 518,
-      "edges": 461,
+      "nodes": 519,
+      "edges": 462,
       "nodesByKind": {
-        "decision": 148,
+        "decision": 149,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 196,
         "neighbor-of": 125,
         "participates": 17,
-        "touches": 108
+        "touches": 109
       }
     }
   },
@@ -1543,6 +1543,16 @@
     {
       "id": "decision:2026-10-18-1",
       "kind": "decision",
+      "label": "The practices' published works and presentations carry link previews and a way back, and the Field's papers have an index",
+      "date": "2026-10-18",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The practices' published works and presentations carry link previews and a way back, and the Field's papers have an index"
+      }
+    },
+    {
+      "id": "decision:2026-10-18-2",
+      "kind": "decision",
       "label": "Machine Attention's entrance says what runs now, and the Observatory's register is published again",
       "date": "2026-10-18",
       "source": {
@@ -1551,7 +1561,7 @@
       }
     },
     {
-      "id": "decision:2026-10-18-2",
+      "id": "decision:2026-10-18-3",
       "kind": "decision",
       "label": "/error-as-method shows the nightly line as it works now: one research project, its experiments as the line's works, and everything before 2026-10-04 dated as the earlier phase",
       "date": "2026-10-18",
@@ -11001,6 +11011,15 @@
     {
       "kind": "touches",
       "from": "decision:2026-10-18-1",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/field/papers/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-18-2",
       "to": "work:attention",
       "source": {
         "file": "docs/decision-log.md",
@@ -11009,7 +11028,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-10-18-1",
+      "from": "decision:2026-10-18-2",
       "to": "work:globe",
       "source": {
         "file": "docs/decision-log.md",
@@ -11018,7 +11037,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-10-18-1",
+      "from": "decision:2026-10-18-2",
       "to": "work:observatory",
       "source": {
         "file": "docs/decision-log.md",

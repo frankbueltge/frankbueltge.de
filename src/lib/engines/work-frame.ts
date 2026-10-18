@@ -27,6 +27,7 @@
 // and inline CSS with no external request of any kind, and no JavaScript — it must work in a
 // document whose own scripts have failed, whatever the work below it loads.
 import { NAMING } from '@/config/naming'
+import { bodyStartAt } from './html-places'
 
 /** Marker so framing is idempotent: re-running over an already-framed mirror yields the same
  *  result rather than a second strip. The integrate wipes and re-copies, but the reframe script
@@ -308,16 +309,13 @@ export function frameStandaloneWork(
     `${bar}` +
     `</footer>`
 
-  // Insert after the opening <body> when there is one; a work that ships a fragment or an
-  // unusual head still gets its frame rather than silently going without.
-  const bodyOpen = /<body\b[^>]*>/i.exec(html)
-  const withHead = bodyOpen
-    ? html.slice(0, bodyOpen.index + bodyOpen[0].length) +
-      head +
-      html.slice(bodyOpen.index + bodyOpen[0].length)
-    : html.includes('</head>')
-      ? html.replace('</head>', `</head>${head}`)
-      : head + html
+  // Insert where the body begins: after the opening <body> when there is one, else after </head>,
+  // else after the page's own head matter (./html-places.ts). A work that ships a fragment or an
+  // unusual head still gets its frame rather than silently going without. Until 2026-10-18 a page
+  // with neither tag got the frame before everything else, which on a page that opens with
+  // `<!doctype html>` pushed the doctype off the first line and the work into quirks mode.
+  const at = bodyStartAt(html)
+  const withHead = html.slice(0, at) + head + html.slice(at)
 
   const bodyClose = withHead.lastIndexOf('</body>')
   return bodyClose >= 0

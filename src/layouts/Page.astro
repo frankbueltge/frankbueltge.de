@@ -13,11 +13,14 @@ interface Props {
   canonicalPath?: string
   /** see Base.astro — the ground this page stands on, where it is not the mono skin */
   surface?: 'paper'
+  /** see Base.astro — a page's own preview image; extra head matter goes into the `head` slot */
+  ogImage?: string
 }
-const { title, description, noindex, canonicalPath, surface } = Astro.props
+const { title, description, noindex, canonicalPath, surface, ogImage } = Astro.props
 ---
 
-<Base title={title} description={description} noindex={noindex} canonicalPath={canonicalPath} surface={surface}>
+<Base title={title} description={description} noindex={noindex} canonicalPath={canonicalPath} surface={surface} ogImage={ogImage}>
+  <slot name="head" slot="head" />
   <TopBar />
   <slot />
   {/* Die Byline entscheidet selbst pfadbasiert, ob die Seite eine Quelle hat (16.07.) —
