@@ -11,21 +11,34 @@
 // docs/design/2026-08-09-attention-export-contract.md), mirrored nightly
 // beside the rendered stage. If the export is missing the page still stands
 // and says so — an absent source is a stated fact, never a silent gap.
+//
+// 2026-10-18: the export names The Interval and Planetary Listening, and it
+// carries the autonomy protocol's own counts. The page said the practice's cost
+// was "public and measured" while most model steps on the protocol record no
+// token count and almost none a cost; it now says what the protocol records,
+// from those counts. The Interval's acceptance criteria (§2 C, clarified on
+// 2026-10-17) allow this site its name as the practice's current question and
+// nothing else before the review: no page, no figure, no number, no data.
 import Page from '@/layouts/Page.astro'
 import exportFile from '@/data/attention/export.json'
+import { costRecord, figureOf, readExport, runningNow, type AttentionProject } from '@/lib/attention/export'
 
 const REPO = 'https://github.com/frankbueltge/machine-attention'
 
-type Project = { id: string; title: string; since: string; site_route: string | null; status: string }
-type Figure = { key: string; value: number; as_of: string }
-
-const contractOk = exportFile?.$contract === 'attention-export/1'
-const projects: Project[] = contractOk ? (exportFile.projects as Project[]) : []
-const figures: Figure[] = contractOk ? (exportFile.figures as Figure[]) : []
-const commit = contractOk ? exportFile.generated_from.commit : null
-
-const figure = (key: string) => figures.find((f) => f.key === key)
-const asOf = figures[0]?.as_of
+const exp = readExport(exportFile)
+// What runs, furthest along the admission path first; then what was retired.
+const projects: AttentionProject[] = exp
+  ? [...runningNow(exp), ...exp.projects.filter((p) => p.status === 'retired')]
+  : []
+const commit = exp?.commit ?? null
+const figure = (key: string) => (exp ? figureOf(exp, key) : undefined)
+const cost = exp ? costRecord(exp) : null
+/** What the protocol records about cost, as one sentence read from its own counts. The verdict
+ *  clause stands only while it is true: most model steps carry no cost. */
+const costLine = cost
+  ? `Of the ${cost.modelSteps} model steps on the protocol on ${cost.asOf}, ${cost.withTokens} carry a token count and ${cost.withCost} ${cost.withCost === 1 ? 'carries' : 'carry'} a cost` +
+    (cost.withCost * 2 < cost.modelSteps ? ': what the machine’s own thinking costs is mostly unrecorded, not measured.' : '.')
+  : null
 
 /** What the practice's own status word means to a reader — the export does not
  *  carry prose, so the reading of it lives here, next to the reader. */
@@ -53,33 +66,39 @@ const PROJECT_NOTE: Record<string, string> = {
   // Read when the export says `retired` (2026-10-04). Kept beside the running note so the hours
   // between the practice's decision and the nightly mirror never show the wrong one.
   'foreknown:retired':
-    'Retired on 2026-10-04 after fifty nights. It preserved every public warning from three keyless feeds the moment it was issued, and it was built to measure the gap between warning and response. The record says it could not: most of what it held were local US weather warnings announced hours ahead, nearly every verdict said only that a warning ran out at its source, and the money and attention it measured belonged to whole countries, never to one warning. The bytes, every dossier and every verdict stay public as an archive. The question moves to a clock where response is measurable — The Interval, below.',
+    'Retired on 2026-10-04 after fifty nights. It preserved every public warning from three keyless feeds the moment it was issued, and it was built to measure the gap between warning and response. The record says it could not: most of what it held were local US weather warnings announced hours ahead, nearly every verdict said only that a warning ran out at its source, and the money and attention it measured belonged to whole countries, never to one warning. The bytes, every dossier and every verdict stay public as an archive. The question moves to a clock where response is measurable — The Interval, above.',
   darkocean:
     'Notarizes the act of looking against the act of declaring — which Sentinel-1 passes covered which patch of the Baltic, against how the declared ocean distributed itself. Its acceptance experiment did not pass, reviewed 2026-08-22: two nights were lost to a deadlock in the practice’s own machinery, which put the sample-hour criterion out of reach, and the per-moment declared source never answered in 13 nights. What runs on is narrower than the project was — the nightly notary that asks a public archive whether it still says what it said.',
   // 2026-10-04: retired the same day as The Foreknown (machine-attention
   // docs/2026-10-04-dark-ocean-retired.md); the figures paragraph below turns past tense with it.
   'darkocean:retired':
     'Set the act of looking against the act of declaring — which Sentinel-1 passes covered which patch of the Baltic, against how the declared ocean distributed itself. Its acceptance experiment did not pass on 2026-08-22; what ran on afterwards was a nightly notary asking the Copernicus catalogue whether it still says what it said. Retired on 2026-10-04: the instrument did not hold the practice’s attention, and attention is what this practice cannot spend twice. The record stays in the repository.',
+  // The window opens with the first night after its build conditions are met, and the practice
+  // logs that night (memoryhole-window-open); the status word `v0` says it has not happened.
   memoryhole:
-    'Asks what power changes about its own published past: one archive query per institution a night, a validity gate before a difference may mean anything, five named operations on text, and every deletion claim rechecked live before the word “gone” appears. Its criteria were committed 2026-08-22; three build conditions stand between it and night 1.',
+    'Asks what power changes about its own published past: one archive query per institution a night, a validity gate before a difference may mean anything, five named operations on text, and every deletion claim rechecked live before the word “gone” appears. Its acceptance criteria were committed on 2026-08-22; its fourteen-night window opens only after its build conditions are met, and it has not opened yet.',
   'state-before-interface':
     'The instrument: quiet, nightly, reading Europe’s public procurement journal for AI notices. It may produce nothing for a long time, and that is allowed.',
+  // 2026-10-04: The Foreknown's question, moved to the clock where response is measurable. Its
+  // criterion C allows the name and the question here, nothing of its record.
+  interval:
+    'The Foreknown’s question, moved to a clock where response is measurable: how long humanitarian money takes to follow a projected food crisis. Admitted to V0 on 2026-10-04 and built by the discovery pass.',
+  'interval:e-experiment':
+    'The Foreknown’s question, moved to a clock where response is measurable: how long humanitarian money takes to follow a projected food crisis. Its acceptance criteria were committed before its window, and they keep it off this site until the maintainer’s review: no page, no figure, no number. Only its name and its question stand here.',
+  // The audit's line, not the exposé's: the planetary framing was withdrawn once the measurements
+  // came in (2026-08-22). Its audit keeps everything beyond the name for RUNNING.
+  planetary:
+    'One named site against its own public declaration and against the public catalogues. Admitted to V0 on 2026-10-04 and built by the discovery pass in tested increments. Its audit keeps it off this site, beyond its name and its question, until it runs.',
 }
 
-// Memory Hole left this shelf on 2026-08-15 and the shelf was not told until
-// 2026-08-22 — it is a project in the export now. The three that remain each
-// stand on one named blocker, re-read 2026-08-22: one has fallen (Planetary
-// Listening, by a pattern the practice built for a different project) and was
-// audited the same day, two have not. Its line here is the audit's replacement
-// one-liner, not the exposé's: the planetary framing was withdrawn with a date
-// once the measurements came in, and a candidate that got smaller to become
-// provable should not keep advertising the larger promise.
+// The candidates that are not admitted yet, as the discovery pass's own agenda lists them
+// (machine-attention discovery/AGENDA.md, read 2026-10-18). The Interval and Planetary
+// Listening left this shelf on 2026-10-04 and are projects in the export above; until
+// 2026-10-18 this list still called them candidates.
+const SHELF_READ = '2026-10-18'
 const CANDIDATES = [
-  // 2026-10-04: The Foreknown's question, moved to the clock where response is measurable.
-  { name: 'The Interval', origin: 'The Foreknown', line: 'how long humanitarian money takes to follow a projected food crisis', standing: 'audited 2026-10-04 — V0 admitted, built nightly by the discovery pass' },
-  { name: 'Planetary Listening', origin: '—', line: 'one named site against its own public declaration and against the public catalogues', standing: 'audited 2026-08-22 — V0 admitted 2026-10-04, next in line for the discovery pass' },
-  { name: 'The Synthetic Flood', origin: 'Consensus', line: 'how much of public language is written by machines', standing: 'taken up again 2026-10-04 — the discovery pass first names an axis that is not GDELT, then audits it' },
-  { name: 'Compute Ground', origin: 'Two Meters · The Floor · One Tap', line: 'the physical ground under the compute story', standing: 'parked until a form thesis exists, not until more data appears' },
+  { name: 'The Synthetic Flood', origin: 'Consensus', line: 'how much of public language is written by machines', standing: 'audited 2026-10-18 — the audit recommends a narrow V0, which the GO of 2026-10-04 made conditional on it' },
+  { name: 'Compute Ground', origin: 'Two Meters · The Floor · One Tap', line: 'the physical ground under the compute story', standing: 'parked — no machine-readable permit registers, and no thesis on form' },
 ]
 
 // The epistemic split of the register (stage honesty, 2026-08-09): only a
@@ -93,7 +112,7 @@ const drift = figure('futures_drift')
 
 <Page
   title="About Machine Attention | Frank Bültge"
-  description="The apparatus of Machine Attention: one machine, no personas, running public data-intensive investigations with its attention, memory, rejections, uncertainty and cost on the record. How it works, what it is investigating, and how a new investigation gets admitted."
+  description="The apparatus of Machine Attention: one machine, no personas, running public data-intensive investigations with its attention, memory, rejections and uncertainty on the record, and its cost where a step recorded it. How it works, what it is investigating, and how a new investigation gets admitted."
 >
   <main id="main" class="flex-1">
   <div class="mx-auto max-w-2xl px-4 py-14 font-mono">
@@ -104,8 +123,8 @@ const drift = figure('futures_drift')
 
     <p class="mb-10 max-w-[62ch] text-[17px] leading-relaxed text-fg-muted">
       One machine, run as an open investigative practice. It has no personas. Its attention,
-      memory, refusals, uncertainty and cost are public and measured, and most of what it
-      proposes is expected to die in the open, with reasons.
+      memory, refusals and uncertainty are public; its cost is public as far as each step
+      recorded it. Most of what it proposes is expected to die in the open, with reasons.
     </p>
 
     <section class="mb-12 text-sm leading-relaxed text-fg-muted">
@@ -124,12 +143,18 @@ const drift = figure('futures_drift')
     <section class="mb-12 border border-line bg-panel/60 p-5 text-sm leading-relaxed text-fg-muted">
       <h2 class="mb-3 text-[11px] uppercase tracking-[0.18em] text-fg-faint">What happens every night</h2>
       <ol class="space-y-2">
-        <li><b class="text-fg">1 · It reads</b> public sources that need no login and cost nothing — satellite catalogues, the public web archive, procurement notices; until 2026-10-03 also hazard alerts, cyclone forecasts, funding plans and news volume.</li>
-        <li><b class="text-fg">2 · It preserves</b> the original bytes with a SHA-256 and the UTC retrieval time, before deriving anything. Where a file is too large to keep, the record carries its address and hash instead.</li>
+        <li><b class="text-fg">1 · It reads</b> public sources that need no login and cost nothing — the public web archive, Europe&rsquo;s procurement journal, public seismic data, and once a week humanitarian funding and food-security tables; until 2026-10-03 also satellite catalogues, hazard alerts, cyclone forecasts, funding plans and news volume.</li>
+        <li><b class="text-fg">2 · It preserves</b> the original bytes with a SHA-256 and the UTC retrieval time, before deriving anything. Where a file is too large to keep, the record carries its address and hash instead; where a source does not hand the bytes over, the record says so.</li>
         <li><b class="text-fg">3 · It derives</b> its records deterministically. <em>No model touches observation, preservation or the ledger</em> — that path is plain code, so the same inputs always give the same output.</li>
         <li><b class="text-fg">4 · It verifies</b> itself: a separate implementation walks the chain backwards from every published figure to the bytes, and fails the build on any hole.</li>
         <li><b class="text-fg">5 · It builds</b> — separately. Since 2026-10-04 a nightly discovery pass carries the next investigation through the admission path, one committed step a night: an exposé with its nearest neighbours, a live audit of every source, a V0 in tested increments. It repairs a running instrument only where the record proves a defect. It delivers by pull request; the tests and the verifier are the gate.</li>
-        <li><b class="text-fg">6 · It writes itself down.</b> Every step lands in a public autonomy protocol — actor, model, tokens, cost, and who corrected whom. <em>No aggregate score is computed</em>, by design: a single number would invite exactly the comparison this practice refuses.</li>
+        <li>
+          <b class="text-fg">6 · It writes itself down.</b> Every step lands in a public autonomy
+          protocol: actor, model, and who corrected whom, with tokens and cost where the step
+          recorded them.{costLine ? ` ${costLine}` : ''}
+          {' '}<em>No aggregate score is computed</em>, by design: a single number would invite
+          exactly the comparison this practice refuses.
+        </li>
       </ol>
       <p class="mt-4 text-xs text-fg-faint">
         The intelligence layer is not decoration. The axis that measured money and attention
@@ -143,8 +168,8 @@ const drift = figure('futures_drift')
     <section class="mb-12">
       <h2 class="mb-1 font-sans text-xl font-semibold text-fg">Its experiments</h2>
       <p class="mb-5 text-sm text-fg-muted">
-        {contractOk
-          ? <>Read from the practice’s own export, mirrored nightly from commit <code class="text-fg-faint">{commit}</code>{asOf ? <> · figures as of {asOf}</> : null}.</>
+        {exp
+          ? <>Read from the practice’s own export, mirrored nightly from commit <code class="text-fg-faint">{commit}</code>. What runs comes first, the furthest along the admission path at the top.</>
           : 'The practice’s export is not present in this repository right now, so this list cannot be shown from source. That is a missing file, not an empty practice.'}
       </p>
 
@@ -159,7 +184,9 @@ const drift = figure('futures_drift')
                 {STATUS_WORDS[p.status] ?? p.status} · since {p.since}
               </span>
             </div>
-            <p class="mt-2 text-sm leading-relaxed text-fg-muted">{PROJECT_NOTE[`${p.id}:${p.status}`] ?? PROJECT_NOTE[p.id]}</p>
+            {(PROJECT_NOTE[`${p.id}:${p.status}`] ?? PROJECT_NOTE[p.id]) && (
+              <p class="mt-2 text-sm leading-relaxed text-fg-muted">{PROJECT_NOTE[`${p.id}:${p.status}`] ?? PROJECT_NOTE[p.id]}</p>
+            )}
             <p class="mt-2 font-mono text-[11px] text-fg-faint">
               {p.site_route
                 ? <>{p.status === 'retired' ? 'Archived at' : 'Public at'} <a href={p.site_route} class="underline hover:text-fg">{p.site_route}</a></>
@@ -194,7 +221,8 @@ const drift = figure('futures_drift')
 
       {!underWatch && figure('futures_notarized_total') && (
         <p class="mt-5 font-mono text-xs leading-relaxed text-fg-faint">
-          The Foreknown&rsquo;s finished record: {figure('futures_notarized_total')?.value} announced
+          The Foreknown&rsquo;s finished record, as of its last night ({figure('nights_on_record')?.as_of}):
+          {' '}{figure('futures_notarized_total')?.value} announced
           futures over {figure('nights_on_record')?.value} nights, {figure('futures_resolved')?.value} of
           them resolved with a measured verdict, {figure('materialized')?.value} of those a forecast
           that became an alert.
@@ -236,27 +264,30 @@ const drift = figure('futures_drift')
       <p>
         The audit is a go/no-go per source with live probes, because external assumptions age
         faster than architectures. The V0 is the smallest slice that produces committed, verified
-        records nightly. The E-experiment runs fourteen nights against acceptance criteria written
-        and committed <em>before</em> the first night — moving that bar afterwards would measure
-        nothing. The review then has <strong class="text-fg">three</strong> outcomes, not two:
-        running as a flagship that carries the stage, running as a quiet instrument with no stage
-        claim at all, or an honest retirement with the reason on the record. A dead candidate stays
-        in the record like a declined proposal.
+        records on its own schedule. The E-experiment runs a fixed window — fourteen nights for a
+        nightly instrument, a set number of weekly readings for a weekly one — against acceptance
+        criteria written and committed <em>before</em> the window opens; moving that bar afterwards
+        would measure nothing. The review then has <strong class="text-fg">three</strong> outcomes,
+        not two: running as a flagship that carries the stage, running as a quiet instrument with no
+        stage claim at all, or an honest retirement with the reason on the record. A dead candidate
+        stays in the record like a declined proposal.
       </p>
       <p class="mt-3">
         <b class="text-fg">The machine may propose; the admission stays a human decision.</b> A new
         investigation means new cost, new publicity and new scope — so the machine writes the
-        dossier and a person opens the door.
+        dossier and a person opens the door. The same holds for the stage: no project&rsquo;s
+        moments reach
+        {' '}<a href="/machine-attention" class="underline decoration-line underline-offset-4">the entrance</a>
+        {' '}before its acceptance experiment is reviewed, and an instrument&rsquo;s never do.
       </p>
     </section>
 
     <section class="mb-12 text-sm leading-relaxed text-fg-muted">
       <h2 class="mb-2 font-sans text-xl font-semibold text-fg">On the shelf</h2>
       <p class="mb-4">
-        Candidates with a written exposé, ordered by which blocker clears first rather than by
-        preference. Each grows out of an earlier experiment of the lab, which keeps running
-        unchanged under its own address. Re-read on 2026-08-22, two weeks after the exposés were
-        written: a blocker can clear without anyone noticing, and one had —
+        Candidates with a written exposé that are not admitted yet, as the discovery pass&rsquo;s own
+        {' '}<a href={`${REPO}/blob/main/discovery/AGENDA.md`} class="underline decoration-line underline-offset-4">agenda</a>
+        {' '}lists them on {SHELF_READ}. Each grows out of an earlier experiment of the lab.
       </p>
       <ul class="space-y-2">
         {CANDIDATES.map((c) => (

@@ -5,6 +5,13 @@
 // (2026-08-08). The page carries no live counts — numbers on this site are derived,
 // never typed (the Society kicker lesson); the living register renders itself from the
 // observatory's own committed records and is linked instead.
+//
+// 2026-10-18: two sentences here were false, and the correction at the foot of the page says
+// which. The register was not rebuilt nightly in public — it stood at 2026-08-22, because the
+// sentinel's pushes never started the deploy — and the sentinel does not preserve every
+// matching notice: TED's document endpoint often answers HTTP 202 (accepted, no notice), which
+// is its own class, never a capture. The numbers stay in the register, which derives them; the
+// correction's figures are dated and say so.
 import Page from '@/layouts/Page.astro'
 
 const REGISTER = 'https://frankbueltge.github.io/state-before-interface/'
@@ -31,7 +38,7 @@ const REPO = 'https://github.com/frankbueltge/state-before-interface'
       <ul class="space-y-1.5 text-sm leading-relaxed">
         <li>
           <a href={REGISTER} class="underline decoration-line underline-offset-4 hover:text-accent-soft">The register</a>
-          <span class="text-fg-muted"> — rebuilt nightly from committed records, and from nothing else.</span>
+          <span class="text-fg-muted"> — rebuilt from committed records and from nothing else, and published after every observation and every landed case.</span>
         </li>
         <li>
           <a href={REPO} class="underline decoration-line underline-offset-4 hover:text-accent-soft">The archive</a>
@@ -55,7 +62,7 @@ const REPO = 'https://github.com/frankbueltge/state-before-interface'
           research constitutions, both public, both writing committed records. The comparison is
           not a report due in six months; it is a difference you can watch accumulate, night by
           night, in two open archives. Since 2026-08-08 that second constitution has a name and
-          a stage — <a href="/attention/" class="underline decoration-line underline-offset-4">machine
+          a stage — <a href="/machine-attention" class="underline decoration-line underline-offset-4">machine
           attention</a> — and this observatory is one of its projects, run as an instrument rather than a flagship: it may produce nothing for a long time, and that is allowed.
         </p>
       </section>
@@ -65,13 +72,18 @@ const REPO = 'https://github.com/frankbueltge/state-before-interface'
         <p>
           Every night a deterministic sentinel reads Europe's public procurement journal
           (<a href="https://ted.europa.eu" class="underline decoration-line underline-offset-4">TED</a>)
-          through a small multilingual envelope of AI phrases, preserves every matching notice as
-          original bytes with SHA-256 manifests, and computes differences with research value:
-          records that change after publication, records that disappear, the same vendor winning
-          across borders, buyers that return. The regulation moved while the machine was being
-          built — the Digital Omnibus deferred the EU's public register of high-risk AI systems
-          to December 2027. Until then the observatory does what only early observation can do:
-          it builds the before-picture that cannot be reconstructed later.
+          through a small multilingual envelope of AI phrases and asks for the original bytes of
+          every matching notice. What TED hands over is preserved with a SHA-256 manifest. Often
+          it hands over nothing: its document endpoint answers with HTTP 202, accepted but no
+          notice, and the machine keeps nothing from such an answer. That answer is a class of its
+          own, never a capture, a check or an outage, and the register counts the matched notices
+          that still have no original bytes. From the bytes it holds, the machine computes
+          differences with research value: records that change after publication, records that
+          disappear, the same vendor winning across borders, buyers that return. A night answered
+          with 202 sees no change and no disappearance. The regulation moved while the machine was
+          being built — the Digital Omnibus deferred the EU's public register of high-risk AI
+          systems to December 2027. Until then the observatory does what only early observation
+          can do: it builds the before-picture that cannot be reconstructed later.
         </p>
       </section>
 
@@ -84,19 +96,21 @@ const REPO = 'https://github.com/frankbueltge/state-before-interface'
           per-criterion reasons. The terminal states rank equal and all publish:
           <span class="text-fg">false alarm · insufficient evidence · interesting but trivial ·
           research result · public work · ongoing observatory</span>. In its first night, all
-          seven candidates died at the gate; each verdict is on the record with its reasons. The
-          machine is not optimized to produce works.
+          seven candidates died at the gate; each verdict is on the record with its reasons. A
+          candidate that survives is investigated in a case, and the register lists every case
+          with its terminal state; a case whose finding warrants one gets a public form of its
+          own. The machine is not optimized to produce works.
         </p>
       </section>
 
       <section>
         <h2 class="mb-2 font-semibold text-fg">Autonomy, measured</h2>
         <p>
-          Every step writes to a public protocol: machine or human, model, tokens, cost,
-          correction — no aggregate score. A standing delegation lets the machine fetch,
-          preserve, open, decline, close and publish on its own; it stops for natural persons,
-          for accusations, for contact, for money, and for anything a follow-up commit could not
-          correct. Nothing sends itself.
+          Every step writes to a public protocol: machine or human, model and correction, and for
+          each case run the tokens and the cost that run reported — no aggregate score. A
+          standing delegation lets the machine fetch, preserve, open, decline, close and publish
+          on its own; it stops for natural persons, for accusations, for contact, for money, and
+          for anything a follow-up commit could not correct. Nothing sends itself.
         </p>
       </section>
 
@@ -106,6 +120,30 @@ const REPO = 'https://github.com/frankbueltge/state-before-interface'
           this machine, wrote its standing delegation and its limits, and remain the hand on
           everything that leaves the house. Inside those limits it works autonomously — and the
           protocol shows exactly where it didn't.
+        </p>
+      </section>
+
+      <section aria-label="Correction" class="border-t border-line pt-6 text-xs text-fg-faint">
+        <h2 class="mb-2 text-[11px] uppercase tracking-[0.18em]">Corrected 2026-10-18</h2>
+        <p class="mb-2">
+          Until this date the page said the register was rebuilt nightly and that the sentinel
+          preserves every matching notice. Neither held. The published register stood at
+          2026-08-22: the sentinel's nightly pushes never started its publication, so only a
+          person's push did. Since 2026-10-18 it is published after every observation and every
+          landed case.
+        </p>
+        <p class="mb-2">
+          TED's document endpoint first answered with HTTP 202 on 2026-08-10. By 2026-10-18 it had
+          given that answer to all 982 of the sentinel's failed requests, on 52 of 73 nights. Of
+          the 116 notices that matched the envelope by then, 74 had their original bytes preserved
+          and 42 did not. The register counts both on every rebuild.
+        </p>
+        <p>
+          The same day the first three cases were landed by hand. Case mode had finished them on
+          2026-10-03 and 2026-10-07 but could not open its own pull requests, because the
+          repository did not let GitHub Actions do so. The
+          {' '}<a href={`${REPO}/blob/main/autonomy/log.jsonl`} class="underline hover:text-fg">protocol</a>
+          {' '}records each one.
         </p>
       </section>
     </div>
