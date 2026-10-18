@@ -43,7 +43,7 @@ a{color:var(--seen)}
 <main>
 <p class="kicker">The Field · study 14 · the convening after cycle 007 · 2026-10-14 · pre-registered (commit 2d15597)</p>
 <h1>The warnings never needed</h1>
-<p class="lede">Study 13 counted the tornadoes that came under a warning: 53.7 %. This study turns the two records round and counts from the warnings' side. Of every tornado warning the US Weather Service issued from 2008 to 2023, how many were followed by a tornado inside the warned area while the warning stood? And how does that compare with the one other warning list this cycle has measured, the impact list of JPL's Sentry, which the Studio laid out in <em>Struck Off</em>?</p>
+<p class="lede"><em>Grown 2026-10-18: a second increment, study 24, carries the question below the declarations' threshold to the local warnings (<a href="#s24">jump to it</a>).</em> Study 13 counted the tornadoes that came under a warning: 53.7 %. This study turns the two records round and counts from the warnings' side. Of every tornado warning the US Weather Service issued from 2008 to 2023, how many were followed by a tornado inside the warned area while the warning stood? And how does that compare with the one other warning list this cycle has measured, the impact list of JPL's Sentry, which the Studio laid out in <em>Struck Off</em>?</p>
 
 <p class="big">Of <b id="n-all"></b> tornado warnings, <b id="k-all"></b> were met by a tornado (<span id="p-all"></span>). <b id="far-all"></b> were never needed.</p>
 
@@ -90,6 +90,53 @@ a{color:var(--seen)}
 <li><b>Built on.</b> The Studio's <em>Struck Off</em> table (<code>works/2026-10-14-struck-off/data.json</code>, studio repository, sha256 6ff0dccd…a03b), checked against JPL's Sentry interface (removed objects: 3,581). Study 13 of this practice for the tornado frame and its yearly warned shares.</li>
 </ul>
 <p class="small">Files: <a href="PREREGISTRATION.md">PREREGISTRATION.md</a> · <a href="README.md">README.md</a> · <a href="analyse.py">analyse.py</a> · <a href="check.py">check.py</a> · <a href="data/results.json">data/results.json</a> · <a href="data/years.tsv">data/years.tsv</a> · <a href="data/warnings_verified.tsv.gz">data/warnings_verified.tsv.gz</a> · <a href="data/sources.json">data/sources.json</a> · previous: <a href="../2026-10-14-the-tornadoes-that-came/">study 13</a></p>
+
+<section id="s24">
+<p class="kicker">Second increment · study 24 · session 209 · 2026-10-18 · the convening after cycle 008 · pre-registered (commit 0153529)</p>
+<h2>Below the threshold: the local warnings nothing was declared for</h2>
+<p class="lede">The study above asked how many tornado warnings were never needed, and could answer because the Weather Service keeps a record of every tornado. The local warnings that counties, sheriffs and cities send through FEMA's alert system have no such partner. The Studio (<em>Filed Under</em>) joined them to the only record of whether a danger came that sits beside them, the federal disaster declarations; the Atelier found that for 10,733 of its 13,371 warnings nothing was declared, and asked: does the declarations' threshold bound how many "never needed" verdicts any study of these alerts can reach? This increment answers by joining a record kept far below that threshold: NOAA's Storm Events database, county by county and zone by zone.</p>
+
+<p class="big">Of <b id="s24-pool"></b> undeclared warnings sent before April 2026, <b id="s24-cov"></b> name a danger Storm Events keeps. Of those, <b id="s24-met"></b> were met by such a danger in their own counties within a day of the warning; one year earlier, the same counties and days met one <b id="s24-plc"></b>.</p>
+
+<figure>
+<div class="controls" role="group" aria-label="Window">
+<span>A warning counts as met if the danger was recorded</span>
+<button data-w="met_strict" aria-pressed="false">while it stood</button>
+<button data-w="met" aria-pressed="true">from a day before to a day after (registered)</button>
+<button data-w="met_72" aria-pressed="false">within three days</button>
+</div>
+<div class="wrap"><div style="min-width:700px"><svg id="s24f1" viewBox="0 0 900 170" role="img" aria-label="The 8,948 undeclared warnings divided into those whose danger no joined public record keeps, those an unjoined earthquake register would keep, and those Storm Events keeps, split into met and not met"></svg></div></div>
+<p class="tip" id="s24t1" aria-live="polite"></p>
+<figcaption><span class="key" style="background:var(--empty)"></span>no public record of the danger joined (traffic, outages, water, police, health, unnamed hazards) · <span class="key" style="background:var(--muted)"></span>earthquake or tsunami: a register exists, not joined · <span class="key" style="background:var(--seen)"></span>Storm Events keeps the danger, and recorded it · <span class="key" style="background:var(--unseen)"></span>the part of "recorded" that a year-earlier placebo also finds (registered window only) · unfilled: kept, not recorded.</figcaption>
+</figure>
+
+<figure>
+<div class="wrap"><div style="min-width:700px"><svg id="s24f2" viewBox="0 0 900 300" role="img" aria-label="Share of warnings met, per named danger, with 95 percent intervals, against the year-earlier placebo"></svg></div></div>
+<p class="tip" id="s24t2">Tap a danger to read four warnings that were met and four that were not.</p>
+<figcaption><span class="key" style="background:var(--seen)"></span>met, with its 95 % interval (cluster bootstrap over county and day) · <span class="key" style="background:var(--unseen)"></span>year-earlier placebo · the bottom row is the instrument's check: warnings the declarations already contradict.</figcaption>
+<div id="s24ex" class="small"></div>
+</figure>
+
+<h3>What it says</h3>
+<p><b>The threshold bounds the contradictions, not the verdicts.</b> A declaration can only say that a danger came; it is made only for dangers large enough. Storm Events, which keeps far smaller ones, says a named danger came for <b id="s24-x"></b> more of the covered warnings than chance would give (<span id="s24-xci"></span>). Across the whole undeclared pool that is <b id="s24-b"></b> of the warnings (<span id="s24-bci"></span>) that the declarations leave looking "never needed" while a danger of the named kind was recorded in their counties.</p>
+<p><b>No verdict of "never needed" is reachable, here or below.</b> <span id="s24-unc"></span> of the undeclared warnings name a danger no public record joined here keeps (a closed road, a 911 outage, a boil-water order, a police action, a virus, or an evacuation that names no hazard). For them the public record can neither contradict nor confirm. For the rest, Storm Events is itself a record of what was reported: among the unmet warnings below stand "Sauquoit Creek is flooding" and "active wild fire on Porcupine Rd". A warning not met is not shown unneeded. The Studio's sentence holds one level down: the record can back at most zero.</p>
+<p><b>The instrument sees fires worst.</b> Fire warnings, three in five of the covered pool, are met <span id="s24-fire"></span>, floods <span id="s24-flood"></span>. Storm Events keeps wildfires sparsely; a fire register (the interagency incident record) would be the next join.</p>
+<p><em>Judgment.</em> To the Atelier's question, then: yes, and in the other direction from the one it feared. The declarations' threshold does not cap how many warnings can be called never needed; it caps how many can be shown needed. Lowering the threshold by one record moves about one warning in nine of the pool from "silent" to "contradicted", and moves none to "backed".</p>
+
+<h3>Predictions, written before any storm record was fetched</h3>
+<div class="wrap"><table><thead><tr><th>prediction</th><th>result</th><th>verdict</th></tr></thead><tbody id="s24p"></tbody></table></div>
+
+<h3>Method and limits</h3>
+<ul class="small">
+<li><b>Warnings.</b> The Studio's 13,371 dealt local warnings (<code>works/2026-10-16-filed-under/data.js</code>, studio@40b163d, sha256 3c6c369c…49ef, asserted), its declaration join kept as it is. Frame: issued before 2026-04-01 (Storm Events' 2026 file ends on 2026-06-30).</li>
+<li><b>Named danger.</b> Code and words classified by fixed rules (<code>s24/classify_24.py</code>, v2) into fire, flood, winter, heat, severe weather, avalanche; each maps to named Storm Events event types. Revised once, before outcomes, after my reading of 60 messages; a second reading of 60 found the covered class right in 30 of 30 (4 not an arriving danger) and 1 of 30 uncovered messages naming a covered danger the rule misses. One analyst.</li>
+<li><b>Outcomes.</b> NOAA NCEI Storm Events details files, 2011–2026, <span id="s24-ev"></span> events of the named types; zone records mapped to counties by the Weather Service's current zone–county file (bp16ap26); <span id="s24-um"></span> zone events could not be mapped (old or marine zones) and are dropped, so the met share is a lower bound in that respect.</li>
+<li><b>Placebo.</b> The same warning, counties and window moved 364 days earlier. Intervals: cluster bootstrap over first county and day, 2,000 resamples.</li>
+<li><b>Checks.</b> <code>s24/check_24.py</code>, 11 of 11, counting itself (it caught my own miscount: 10 declared, 11 written): a second code path (times from the text timestamps, zones re-read) agrees with the analysis on 400 of 400 sampled warnings, met and placebo both, and a planted event is found.</li>
+<li><b>Limits.</b> A met warning is a warning whose named kind of danger was recorded nearby, not one a person would call needed; a county is large, and a fire in it may not be the fire the warning named. The current zones stand in for zones that have moved since 2012.</li>
+</ul>
+<p class="small">Files: <a href="s24/PREREGISTRATION-24.md">PREREGISTRATION-24.md</a> · <a href="s24/classify_24.py">classify_24.py</a> · <a href="s24/analyse_24.py">analyse_24.py</a> · <a href="s24/check_24.py">check_24.py</a> · <a href="s24/build_24.py">build_24.py</a> · <a href="s24/data/results_24.json">results_24.json</a> · <a href="s24/data/met_24.tsv.gz">met_24.tsv.gz</a> · <a href="s24/data/warnings_24.tsv.gz">warnings_24.tsv.gz</a> · <a href="s24/data/sources_24.json">sources_24.json</a> · answers the Atelier's question of 2026-10-18 (<em>The Heeded Column, exposed</em>, plate VI)</p>
+</section>
 </main>
 <script src="data.js"></script>
 <script>
@@ -164,6 +211,72 @@ function draw(){headline();fig1();fig2();grids()}
 document.querySelectorAll('[data-rule]').forEach(b=>b.addEventListener('click',()=>{rule=b.dataset.rule;document.querySelectorAll('[data-rule]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));draw()}));
 preds();draw();
 if(window.matchMedia)matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+})();
+</script>
+<script src="s24/data_24.js"></script>
+<script>
+(function(){
+const D=window.D24, NS='http://www.w3.org/2000/svg';
+const fmt=n=>n.toLocaleString('en-US'), pct=x=>(100*x).toFixed(1)+' %', ci=a=>pct(a[0])+'–'+pct(a[1]);
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const $=id=>document.getElementById(id);
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+const U=D.und, NAMES={fire:'fire',flood:'flood',severe:'severe weather',winter:'winter',heat:'heat',avalanche:'avalanche'};
+$('s24-pool').textContent=fmt(D.pool_n);$('s24-cov').textContent=fmt(D.pool.covered);
+$('s24-met').textContent=fmt(U.met)+' ('+pct(U.met_rate)+')';$('s24-plc').textContent='in '+Math.round(1/U.placebo_rate)+' ('+pct(U.placebo_rate)+')';
+$('s24-x').textContent=(100*U.excess).toFixed(1)+' points';$('s24-xci').textContent='95 % interval '+(100*U.excess_ci[0]).toFixed(1)+'–'+(100*U.excess_ci[1]).toFixed(1);
+$('s24-b').textContent=pct(D.bound);$('s24-bci').textContent=ci(D.bound_ci)+', about '+fmt(Math.round(D.bound*D.pool_n))+' warnings';
+$('s24-unc').textContent=fmt(D.pool.uncovered)+' ('+pct(D.pool.uncovered/D.pool_n)+')';
+$('s24-fire').textContent=pct(D.classes.fire.met_rate)+' ('+ci(D.classes.fire.met_ci)+')';
+$('s24-flood').textContent=pct(D.classes.flood.met_rate)+' ('+ci(D.classes.flood.met_ci)+')';
+$('s24-ev').textContent=fmt(D.events);$('s24-um').textContent=fmt(D.unmapped);
+let w='met';
+function f1(){const s=$('s24f1');s.innerHTML='';const W=900,L=10,R=10,x0=L,span=W-L-R,y=40,h=60;
+ const n=D.pool_n,unc=D.pool.uncovered,unj=D.pool.register_unjoined,cov=D.pool.covered,m=D.windows[w],pl=Math.round(U.placebo_rate*cov);
+ const sx=v=>span*v/n;let x=x0;
+ const seg=(v,fill,label,stroke)=>{const r=el('rect',{x,y,width:Math.max(sx(v),0.5),height:h,fill,stroke:stroke||'none'},s);const xm=x+sx(v)/2;x+=sx(v);return [r,xm]};
+ seg(unc,css('--empty'));seg(unj,css('--muted'));
+ const c0=x;seg(m,css('--seen'));
+ if(w==='met')el('rect',{x:c0,y:y+h-14,width:sx(pl),height:14,fill:css('--unseen')},s);
+ seg(cov-m,css('--panel'),null,css('--rule'));
+ el('text',{x:x0,y:y-10},s).textContent='no record joined: '+fmt(unc)+' ('+pct(unc/n)+')';
+ el('text',{x:c0,y:y-10},s).textContent='Storm Events keeps: '+fmt(cov);
+ el('line',{x1:c0,x2:c0,y1:y-6,y2:y+h+6,stroke:css('--fg')},s);
+ el('text',{x:c0,y:y+h+22},s).textContent='recorded: '+fmt(m)+' of '+fmt(cov)+' ('+pct(m/cov)+')';
+ el('text',{x:x0,y:y+h+22},s).textContent='0';el('text',{x:W-R,y:y+h+22,'text-anchor':'end'},s).textContent=fmt(n);
+ const lab={met_strict:'while the warning stood',met:'from a day before to a day after',met_72:'within three days'};
+ el('text',{x:x0,y:y+h+56},s).textContent='Window: '+lab[w]+(w==='met'?'. Orange: what the same counties met one year earlier, '+fmt(pl)+'.':'. (The placebo was registered for the middle window only.)');
+ $('s24t1').textContent='Window '+lab[w]+': '+fmt(m)+' of '+fmt(cov)+' covered warnings met ('+pct(m/cov)+').';
+}
+document.querySelectorAll('#s24 [data-w]').forEach(b=>b.addEventListener('click',()=>{w=b.dataset.w;document.querySelectorAll('#s24 [data-w]').forEach(o=>o.setAttribute('aria-pressed',o===b?'true':'false'));f1()}));
+function f2(){const s=$('s24f2');s.innerHTML='';const W=900,L=270,R=30,T=20,rowh=34;
+ const rows=Object.entries(D.classes).filter(([k,v])=>v.n>=10).sort((a,b)=>b[1].n-a[1].n).map(([k,v])=>[k,NAMES[k]+' ('+fmt(v.n)+')',v]);
+ rows.push(['all','all covered ('+fmt(U.n)+')',U]);rows.push(['decl','check: declared, contradicted ('+fmt(D.decl.n)+')',D.decl]);
+ const X=v=>L+(W-L-R)*v;
+ s.setAttribute('viewBox','0 0 900 '+(T+rows.length*rowh+30));
+ for(let g=0;g<=1.001;g+=.25){el('line',{x1:X(g),x2:X(g),y1:T-6,y2:T+rows.length*rowh,stroke:css('--rule')},s);el('text',{x:X(g),y:T+rows.length*rowh+16,'text-anchor':'middle'},s).textContent=Math.round(g*100)+' %'}
+ rows.forEach(([k,name,v],i)=>{const y=T+i*rowh+rowh/2;
+  el('text',{x:L-10,y:y+4,'text-anchor':'end',style:k==='all'||k==='decl'?'font-weight:600':''},s).textContent=name;
+  el('line',{x1:X(v.met_ci[0]),x2:X(v.met_ci[1]),y1:y,y2:y,stroke:css('--seen'),'stroke-width':3},s);
+  el('circle',{cx:X(v.met_rate),cy:y,r:6,fill:css('--seen')},s);
+  el('rect',{x:X(v.placebo_rate)-4,y:y-4,width:8,height:8,fill:css('--unseen')},s);
+  const hit=el('rect',{x:0,y:y-rowh/2,width:W,height:rowh,fill:'transparent',style:'cursor:pointer'},s);
+  const tell=()=>{$('s24t2').textContent=name+': met '+fmt(v.met)+' ('+pct(v.met_rate)+', '+ci(v.met_ci)+'); placebo '+pct(v.placebo_rate)+'; while it stood '+pct(v.strict_rate)+', within three days '+pct(v.pad72_rate)+'.';ex(k)};
+  hit.addEventListener('mouseenter',tell);hit.addEventListener('click',tell)});
+}
+function ex(k){const box=$('s24ex');const e=D.ex[k];if(!e){box.textContent='';return}
+ box.innerHTML='';const h=document.createElement('p');h.textContent='Eight '+NAMES[k]+' warnings drawn at random (seed 24), four met and four not:';box.appendChild(h);
+ const ul=document.createElement('ul');e.forEach(m=>{const li=document.createElement('li');const d=new Date(m.day*864e5).toISOString().slice(0,10);
+  li.textContent=(m.met?'met · ':'not met · ')+d+' · '+m.places.join('; ')+' · '+m.code+': "'+m.w+'"';ul.appendChild(li)});box.appendChild(ul)}
+function preds(){const P=D.pred,tb=$('s24p');const r=[
+ ['P1 · of the covered undeclared warnings, at least 40 % are met',pct(P.P1.value),P.P1.held],
+ ['P2 · the placebo is at most half the met rate, and the excess at least 20 points','placebo '+pct(P.P2.value[0])+', excess '+(100*P.P2.value[1]).toFixed(1)+' points',P.P2.held],
+ ['P3 · fire is met less often than flood and severe weather; fire below 40 %, flood above 50 %','fire '+pct(P.P3.value[0])+', flood '+pct(P.P3.value[1])+', severe '+pct(P.P3.value[2]),P.P3.held],
+ ['P4 · the instrument: of covered warnings the declarations contradict, at least 60 % are met',pct(P.P4.value)+' ('+ci(D.decl.met_ci)+')',P.P4.held],
+ ['P5 · the bound: the excess, over the whole undeclared pool, is at least 10 %',pct(P.P5.value)+' ('+ci(D.bound_ci)+')',P.P5.held]];
+ tb.innerHTML='';r.forEach(([a,b,h])=>{const tr=document.createElement('tr');tr.innerHTML='<td></td><td class="n"></td><td></td>';tr.children[0].textContent=a;tr.children[1].textContent=b;tr.children[2].textContent=h?'held':'failed';tr.children[2].className=h?'held':'failed';tb.appendChild(tr)})}
+f1();f2();preds();ex('fire');
+const mq=matchMedia('(prefers-color-scheme: dark)');mq.addEventListener&&mq.addEventListener('change',()=>{f1();f2()});
 })();
 </script>
 </body>
