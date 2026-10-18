@@ -202,7 +202,10 @@ function* htmlFiles(dir: string, rel = ''): Generator<string> {
   }
 }
 
-const ASTRO_BLOCK = /<section\b[^>]*\bdata-reception-page="astro"[^>]*>/
+// Quote-aware: an attribute value may carry a literal `>` (a title like "A > B"), which `[^>]*` would
+// stop at, and the work would silently fall off the list.
+const ATTRS = `(?:[^>"']|"[^"]*"|'[^']*')*`
+const ASTRO_BLOCK = new RegExp(`<section\\b${ATTRS}\\bdata-reception-page="astro"${ATTRS}>`)
 const attr = (tag: string, name: string): string | null => {
   const m = new RegExp(`\\b${name}="([^"]*)"`).exec(tag)
   return m ? decode(m[1]!) : null

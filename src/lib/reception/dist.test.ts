@@ -71,7 +71,7 @@ describe('the built site', () => {
     'error-as-method/works-html/bar/index.html': page('Bar face'),
     'error-as-method/bar/index.html': page('Bar text', '<section class="rcp-host" data-reception-work="error-as-method:bar" data-reception-title="Bar" data-reception-kind="work" data-reception-page="astro"></section>'),
     'error-as-method/stage-only/index.html': page('Stage'),
-    'consensus/index.html': page('Consensus', '<section data-reception-work="lab:consensus" data-reception-title="Consensus &amp; co" data-reception-kind="experiment" data-reception-page="astro"></section>'),
+    'consensus/index.html': page('Consensus', '<section data-reception-work="lab:consensus" data-reception-title="Consensus &amp; co > more" data-reception-kind="experiment" data-reception-page="astro"></section>'),
     'about/index.html': page('About'),
     'arch/works/arrival/index.html': page('Arrival'),
   })
@@ -89,7 +89,7 @@ describe('the built site', () => {
   })
 
   it('reads the works Astro rendered back from their blocks', () => {
-    expect(astroWorks(dist).map((w) => `${w.id} ${w.title} ${w.href}`).sort()).toEqual(['error-as-method:bar Bar /error-as-method/bar/', 'lab:consensus Consensus & co /consensus/'])
+    expect(astroWorks(dist).map((w) => `${w.id} ${w.title} ${w.href}`).sort()).toEqual(['error-as-method:bar Bar /error-as-method/bar/', 'lab:consensus Consensus & co > more /consensus/'])
   })
 
   it('bands every bare work and lists every ratable work once, the rendered page first', () => {
