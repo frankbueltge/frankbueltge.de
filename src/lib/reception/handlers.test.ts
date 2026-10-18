@@ -243,6 +243,12 @@ describe.skipIf(!hasSqlite)('the reception endpoints', () => {
       expect(await view(env)).toMatchObject({ count: 0 })
       const asVisitor = await read(await rate(env, { work: 'lab:consensus', score: 3, text: 'A test as a visitor.', consent: true, as_visitor: true, turnstileToken: undefined }, { cookie }))
       expect(asVisitor.body).toMatchObject({ ok: true, entry: { owner: false, by: 'a visitor' } })
+      // the dry runs left no trace in the day's counts; the stored test counts until it is removed
+      const counts = async () => (await read(await handleRecord(get('/api/reception/record?fresh=1'), env, deps))).body.counts['2026-10-18']
+      expect(await counts()).toEqual({ entries: 1, gate: 1 })
+      await handleModerate(post('/api/reception/moderate', { id: asVisitor.body.entry.id, action: 'remove' }, { cookie }), env, deps)
+      expect(await counts()).toEqual({ gate: 1 })
+      expect(await view(env)).toMatchObject({ count: 0, notes: [] })
     })
 
     it('is a visitor again with a forged or expired cookie', async () => {
