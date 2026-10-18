@@ -9,7 +9,7 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { FACES, MAX_ASSET_BYTES, mirror } from './mirror.mjs'
+import { FACES, MAX_ASSET_BYTES, OPENING, mirror } from './mirror.mjs'
 
 let root = ''
 let src = ''
@@ -196,5 +196,25 @@ describe('a multi-file work arrives whole', () => {
     expect(report.oversized).toEqual([{ slug: '2026-10-04-verdict', file: 'seen/film.mp4', bytes: MAX_ASSET_BYTES + 1 }])
     expect(listing(face('seen'))).toEqual(['0.png'])
     expect(report.faces).toEqual(['2026-10-04-verdict'])
+  })
+})
+
+describe('the line’s own opening for its room', () => {
+  const opening = () => join(dest, 'src/data/nightly', OPENING)
+
+  it('is taken whole when the line writes one, and reported', () => {
+    writeFileSync(join(src, OPENING), 'I am the nightly line.\n')
+    const report = mirror(src, dest)
+    expect(report.opening).toBe(OPENING)
+    expect(readFileSync(opening(), 'utf8')).toBe('I am the nightly line.\n')
+  })
+
+  it('leaves with the line’s file, and is not invented when there is none', () => {
+    writeFileSync(join(src, OPENING), 'I am the nightly line.\n')
+    mirror(src, dest)
+    rmSync(join(src, OPENING))
+    const report = mirror(src, dest)
+    expect(report.opening).toBeNull()
+    expect(existsSync(opening())).toBe(false)
   })
 })

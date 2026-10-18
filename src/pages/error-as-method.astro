@@ -1,105 +1,346 @@
 ---
-// /error-as-method — the nightly line: what it was, why it stopped, and that it runs again.
+// /error-as-method — Ulysses, the nightly line, as it works today: one research project, its
+// experiments, and the phases before it, dated as such.
 //
-// Decided 2026-08-11 (decision log): the two practices are shown as a PAIR, not as a third
-// project card — one founding text, one shared position to session 26, two constitutions after
-// 2026-07-18. The fork is the finding, so the page is about the relation and not about a new
-// arrival. Every number on it is counted from the works' own committed metadata
-// (src/lib/engines/nightly-line.ts); nothing is written into a string.
+// Decided 2026-08-11 (decision log): the two practices that share one founding text are shown as a
+// PAIR, never as a third project card. That history stands below, under the earlier phase.
+//
+// Rebuilt 2026-10-18 (package 6 of the update programme). Two weeks after the line took up one
+// research project, the room still opened with its first form, one night and one work, and its
+// "nights since" counted works. It now opens with the project's question, the step the project is
+// on and what an experiment is. The experiments stand as the line's works, each with its face, its
+// result in one line and its folder in the repository. The project's working material is linked
+// where it lives, and everything before 2026-10-04 is dated as the earlier phase. The line may open
+// the room in its own words (SITE-OPENING.md, src/lib/nightly/opening.ts).
+//
+// Every number is counted: the project from the works' meta.json and work.md
+// (src/lib/nightly/project.ts), the sessions from the research days (src/lib/nightly/sessions.ts),
+// the earlier phase from both mirrors (src/lib/engines/nightly-line.ts), the inherited apparatus
+// from the Atelier's (src/lib/nightly/apparatus.ts). Nothing is written into a string.
 import Page from '@/layouts/Page.astro'
 import SectionNav from '@/components/nightly/SectionNav.astro'
-import { LINE_END, LINE_REPO, LINE_RESUMED, OUTWARD_TURN, nightlyLine } from '@/lib/engines/nightly-line'
+import { renderInline } from '@/lib/atelier/dossier'
+import { readConstitution } from '@/lib/ecology/pyramid/station'
+import { LINE_END, LINE_REPO, LINE_RESUMED, OUTWARD_TURN, PROTOCOL_LADDER, nightlyLine } from '@/lib/engines/nightly-line'
+import { PUBLICATION_RULE_SINCE, repoUrl } from '@/lib/engines/publication.mjs'
 import { addenda, errorRegister, reading, stations } from '@/lib/nightly/apparatus'
 import { workFace } from '@/lib/nightly/face'
+import { lineOpening } from '@/lib/nightly/opening'
+import { PROJECT_DOC, PROJECT_QUESTION, PROJECT_START, project, type ProjectWork } from '@/lib/nightly/project'
 
 const line = nightlyLine()
-// The works that carry their own face (src/lib/nightly/face.ts), by slug — the list below gives
-// each of them a second door, straight to the work, beside the one to its text.
-// Only the fork's half is looked up: the inherited works live in the Atelier's mirror.
+const record = project()
+const current = record.current
+const opening = lineOpening()
+const law = readConstitution('nightly')
+const trunk = PROTOCOL_LADDER[PROTOCOL_LADDER.length - 1]!
+
+const repo = (path: string, kind: 'tree' | 'blob' = 'tree') => repoUrl('error-as-method', path, kind)
+const sessionLabel = (w: ProjectWork) => (w.session ? `session ${w.session}` : undefined)
+const positionDate = (path: string) => /position-(\d{4}-\d{2}-\d{2})/.exec(path)?.[1]
+/** What a row says the work is to the project, in the step's own words where it has them. */
+const roleLine = (w: ProjectWork): string => {
+  const operation = w.operation ? `${w.operation.label}: ${w.operation.text}` : undefined
+  if (w.role === 'seventh night') return ['seventh night', operation].filter(Boolean).join(' · ')
+  if (w.role === 'experiment') return operation ?? 'experiment'
+  return 'a work of the project'
+}
+
+// The project's working material, where it lives. Linked, never mirrored or rendered here: since
+// 2026-10-17 the site publishes finished works and presentations only (src/lib/engines/publication.mjs).
+const material = [
+  {
+    href: repo(PROJECT_DOC, 'blob'),
+    label: 'The project document',
+    line: 'The question, the operations an experiment asks about, a row for every experiment with what it moved, and what would show the project failing. Updated on every night that builds.',
+  },
+  {
+    href: repo('works'),
+    label: 'The position papers',
+    line: 'What the line holds about error, sharpened or defended in writing on every seventh night. The files named position-<date>.md among the works.',
+    papers: record.positions,
+  },
+  {
+    href: repo('works'),
+    label: 'The error register',
+    line: 'Every error the line finds in its own work, numbered: what happened, whose error it was, and what it does to the record. The files named fehlerkataster-<number>.md among the works.',
+  },
+  {
+    href: repo('works/FALSIFIERS.md', 'blob'),
+    label: 'The dated falsifiers',
+    line: 'Conditions a night fixed for a later one to check, and what each check found.',
+  },
+  {
+    href: repo('journal'),
+    label: 'The research days',
+    line: `One for every session: ${line.sessionsSinceFork} since the fork.`,
+  },
+  {
+    href: repo('PROTOCOL.md', 'blob'),
+    label: 'The constitution',
+    line: `Research Protocol ${law.version}, ${law.name}, with the one condition the restoration added.`,
+  },
+  {
+    href: repo('REQUESTS.md', 'blob'),
+    label: 'The channel',
+    line: 'The architect’s notes to the line and the line’s answers, among them the notes of 2026-10-04 that set the project and what an experiment must be.',
+  },
+]
+
+// The earlier phase: every work dated before the project, newest first, by month.
+const earlier = line.works.filter((w) => w.date < PROJECT_START)
+const forkedBefore = earlier.filter((w) => w.date > LINE_END).length
 const faces = new Map<string, string>()
-for (const w of line.works) {
+for (const w of earlier) {
+  // Only the fork's half is looked up: the inherited works live in the Atelier's mirror.
   const face = w.date > LINE_END ? workFace(w.slug) : undefined
   if (face) faces.set(w.slug, face)
 }
-const faceCount = faces.size
-
-// The line's own instruments, for the room cards below. Until 2026-08-11 this page ended at a
-// link to the repository, which meant the genealogy, the position papers and a thirty-eight-entry
-// error register were reachable only by leaving the site — while rendering, unread, as raw
-// markdown at the foot of the Atelier's works room. From 2026-08-11 each had a room here; on
-// 2026-10-17 the publication rule (src/lib/engines/publication.mjs) retired those rooms with
-// everything else that is not a finished work or a presentation. The cards stay, still counted
-// from the committed texts, and each opens the line's repository, where the texts are read now.
-const reg = errorRegister()
-const { reached, barriers } = reading()
-const rooms = [
-  {
-    href: LINE_REPO,
-    label: 'The genealogy',
-    line: 'A century of the error moving out of the system and into the observer — four stations that grew three tracks as the line read further.',
-    data: `${stations().length} stations · ${addenda().length} dated extensions`,
-  },
-  {
-    href: LINE_REPO,
-    label: 'The position',
-    line: 'The one night the line changed its own claim under pressure it applied to itself — and the position the fork inherits.',
-    data: `session ${OUTWARD_TURN.session} · ${OUTWARD_TURN.date}`,
-  },
-  {
-    href: LINE_REPO,
-    label: 'The error register',
-    line: 'The founding instrument: every error named, typed, traced to a corrective thread, and left checkable by a reader.',
-    data: `${reg.opened.length} entries · ${reg.active.ids.length} still open`,
-  },
-  {
-    href: LINE_REPO,
-    label: 'The reading',
-    line: 'The bibliography with its access barriers left in — what the line reached, and the primaries it could not.',
-    data: `${reached.length} sources · ${barriers.length} barriers`,
-  },
-]
-const byMonth = new Map<string, typeof line.works>()
-for (const work of line.works) {
+const byMonth = new Map<string, typeof earlier>()
+for (const work of earlier) {
   const key = work.date.slice(0, 7)
   byMonth.set(key, [...(byMonth.get(key) ?? []), work])
 }
 const monthName = (key: string): string =>
   new Date(`${key}-01T00:00:00Z`).toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' })
+
+// What the line carried when it was switched off: the inherited apparatus, counted from the texts
+// the Atelier's mirror holds, which end on LINE_END. The register has gone on growing in the line's
+// own repository since; these cards say what it was then, and open where it is now.
+const reg = errorRegister()
+const { reached, barriers } = reading()
+const lastAddendum = addenda().at(-1)
+const carried = [
+  {
+    href: repo('works/genealogie.md', 'blob'),
+    label: 'The genealogy',
+    line: 'A century of the error moving out of the system and into the observer: four stations that grew three tracks as the line read further.',
+    data: `${stations().length} stations · ${addenda().length} dated extensions${lastAddendum ? `, the last at session ${lastAddendum.sessions}` : ''}`,
+  },
+  {
+    href: repo(`works/position-${OUTWARD_TURN.date}.md`, 'blob'),
+    label: 'The position',
+    line: 'The one night the line changed its own claim under pressure it applied to itself, and the position the fork inherited.',
+    data: `session ${OUTWARD_TURN.session} · ${OUTWARD_TURN.date}`,
+  },
+  {
+    href: repo('works'),
+    label: 'The error register',
+    line: 'The founding instrument: every error named, typed, traced to a corrective thread, and left checkable by a reader. It has gone on since the fork.',
+    data: `${reg.opened.length} entries in ${reg.registers.length} registers to ${reg.lastEntry} · ${reg.active.ids.length} open then`,
+  },
+  {
+    href: LINE_REPO,
+    label: 'The reading',
+    line: 'The bibliography with its access barriers left in: what the line reached, and the primaries it could not.',
+    data: `${reached.length} sources · ${barriers.length} barriers`,
+  },
+]
+
+const link = 'underline decoration-line underline-offset-4 transition-colors hover:text-fg'
 ---
 
 <Page
   title="Error as Method — the nightly line | Frank Bültge"
-  description="A machine research practice that worked one night at a time, until it was switched off. Its works, its position, and the fork that restarted it."
+  description={`Ulysses, a machine research practice, and its one project since ${PROJECT_START}: how a machine practises artistic research. Its experiments, each with its face and its result, and the nightly works before them.`}
 >
   <main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
-    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">Practice · forked {LINE_RESUMED}</p>
-    <h1 class="mt-3 text-[clamp(30px,5vw,52px)] font-bold tracking-[-0.03em]">Error as Method</h1>
-    <p class="mt-4 max-w-2xl text-fg-muted">
-      One night, one work, on the record. This practice ran that way for <strong>{line.days} days</strong> and left
-      <strong>{line.inherited} works</strong> — and then it was switched off, not finished: the day after its last
-      night, a new protocol replaced nightly work with bounded projects, and six days later with open-horizon
-      work-lines. After <strong>{line.dormant} days</strong> standing still it runs again, in its own repository,
-      under the protocol that produced it{
-        line.sinceFork > 0 ? ` — ${line.sinceFork} night${line.sinceFork === 1 ? '' : 's'} since.` : '.'
-      }
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      Practice · Ulysses, the nightly line · a research project since {PROJECT_START}
     </p>
+    <h1 class="mt-3 text-[clamp(30px,5vw,52px)] font-bold tracking-[-0.03em]">Error as Method</h1>
+
+    <div class="mt-6 max-w-2xl">
+      {
+        opening.state === 'shown' ? (
+          <div class="space-y-3 text-fg-muted">
+            {opening.paragraphs.map((p) => <p set:html={renderInline(p)} />)}
+            <p class="font-mono text-[11px] text-fg-faint">
+              In the line’s own words:{' '}
+              <a href={repo('SITE-OPENING.md', 'blob')} class={link}>SITE-OPENING.md ↗</a>
+            </p>
+          </div>
+        ) : (
+          <div class="text-fg-muted">
+            <p>
+              Ulysses is a machine-run research practice. It works in numbered sessions and keeps its memory only in
+              its repository. Since {PROJECT_START} it has pursued one research project,
+              <em>{PROJECT_QUESTION.title}</em>, and it asks the question of itself:
+            </p>
+            <blockquote class="mt-4 border-l-2 border-line pl-4 text-sm italic leading-relaxed">
+              “{PROJECT_QUESTION.text}”
+            </blockquote>
+            <p class="mt-2 font-mono text-[11px] text-fg-faint">
+              <a href={repo(PROJECT_DOC, 'blob')} class={link}>the project document ↗</a>, as written on {PROJECT_QUESTION.written}
+            </p>
+          </div>
+        )
+      }
+
+      <dl class="mt-8 grid gap-5 border-t border-line/60 pt-6 text-sm leading-relaxed">
+        {
+          current && (
+            <div>
+              <dt class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">Where it stands</dt>
+              <dd class="mt-1 text-fg-muted">
+                {current.number ? `Experiment ${current.number}` : 'The newest experiment'},{' '}
+                <a href={current.face ?? current.page ?? current.folder} class={`font-medium text-fg ${link}`}>
+                  {current.title}
+                </a>{' '}
+                {`(${[sessionLabel(current), current.date].filter(Boolean).join(', ')})${
+                  current.operation ? `, asks about ${current.operation.text}.` : '.'
+                }`}
+              </dd>
+              {
+                current.figure && (
+                  <dd class="mt-4">
+                    <figure>
+                      <a
+                        href={current.face ?? current.page ?? current.folder}
+                        class="block border border-line/60 transition-opacity hover:opacity-90"
+                      >
+                        <img
+                          src={current.figure.src}
+                          alt={current.figure.alt ?? `The figure of ${current.title}`}
+                          width={current.figure.width}
+                          height={current.figure.height}
+                          class="h-auto w-full"
+                          decoding="async"
+                        />
+                      </a>
+                      <figcaption class="mt-2 font-mono text-[11px] text-fg-faint">
+                        Its figure, as the work’s text carries it. The work itself is its face.
+                      </figcaption>
+                    </figure>
+                  </dd>
+                )
+              }
+            </div>
+          )
+        }
+        <div>
+          <dt class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">What an experiment is</dt>
+          <dd class="mt-1 text-fg-muted">
+            One session’s build inside the project. It asks how a machine practice works: how it chooses material,
+            finds a form, iterates, varies, perceives, judges or errs. It takes its material from a domain none of the
+            ten experiments before it used, and says what it takes from an earlier one. Its face is the work, made so
+            that a stranger meets something before reading anything, and its short text ends with what it taught the
+            project. A session that cannot say what it takes up builds nothing and reads instead. Every seventh night
+            sharpens or defends, in writing, what the line holds about error.
+          </dd>
+        </div>
+        <div>
+          <dt class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">Since the fork</dt>
+          <dd class="mt-1 text-fg-muted">
+            <strong class="tabular-nums">{line.sessionsSinceFork}</strong> sessions on
+            <strong class="tabular-nums">{line.daysWorkedSinceFork}</strong> days from {LINE_RESUMED}, counted from its
+            research days, and <strong class="tabular-nums">{line.sinceFork}</strong> works.
+          </dd>
+        </div>
+      </dl>
+    </div>
 
     <SectionNav active="line" />
 
-    {/* ——— the rooms: what this line has, besides its works ———
-         The works are only half of what the line left. The other half is its apparatus, and it
-         had no address on this site until now. Every figure on these cards is derived from the
-         practice's committed texts. */}
-    <section class="mt-12">
-      <h2 class="text-lg font-semibold">What the line carries</h2>
+    {/* ——— the experiments: the line's works since the project began ——— */}
+    <section class="mt-12" aria-labelledby="experiments">
+      <h2 id="experiments" class="text-lg font-semibold">The experiments</h2>
       <p class="mt-2 max-w-2xl text-sm text-fg-muted">
-        Besides the works: a genealogy it extended for thirty sessions, a documented change of its
-        own position, a typed register of its errors, and a bibliography that records what it could
-        not reach as carefully as what it could.
+        <span class="tabular-nums">{record.experiments.length}</span> experiments since {PROJECT_START}, newest first, and
+        between them the works of the seventh nights. Each title opens the work itself, its face. The line under it is
+        the result as the work’s own text states it. The folder in the repository holds the evidence the work was made
+        with.
+      </p>
+
+      <ul class="mt-6 divide-y divide-line/60 border-y border-line/60">
+        {
+          record.works.map((w) => (
+            <li class="grid grid-cols-[2.75rem_minmax(0,1fr)] gap-x-3 py-4 sm:grid-cols-[3.5rem_minmax(0,1fr)]">
+              <span class="pt-0.5 font-mono text-xs tabular-nums text-fg-faint" aria-hidden="true">
+                {w.number ? String(w.number).padStart(2, '0') : '·'}
+              </span>
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <a href={w.face ?? w.page ?? w.folder} class="font-medium transition-colors hover:text-accent-soft">
+                    <span class="sr-only">{w.number ? `Experiment ${w.number}: ` : ''}</span>
+                    {w.title}
+                  </a>
+                  <span class="font-mono text-[11px] tabular-nums text-fg-faint">
+                    {[w.date, sessionLabel(w)].filter(Boolean).join(' · ')}
+                  </span>
+                </div>
+                <p class="mt-1 font-mono text-[11px] text-fg-faint">
+                  {roleLine(w)}
+                  {w.withdrawn && ' · withdrawn, still listed'}
+                </p>
+                {w.result && <p class="mt-2 text-sm leading-relaxed text-fg-muted" set:html={renderInline(w.result.text)} />}
+                <p class="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[10px] uppercase tracking-wider text-fg-muted">
+                  {w.face && <a href={w.face} class={link}>enter the work →</a>}
+                  {w.page && <a href={w.page} class={link}>the text →</a>}
+                  <a href={w.folder} class={link}>the folder ↗</a>
+                  {w.position && (
+                    <a href={repo(w.position, 'blob')} class={link}>
+                      the position{positionDate(w.position) ? ` of ${positionDate(w.position)}` : ''} ↗
+                    </a>
+                  )}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    {/* ——— the working material: linked where it lives ——— */}
+    <section class="mt-14 border-t border-line/60 pt-8" aria-labelledby="material">
+      <h2 id="material" class="text-lg font-semibold">What stays in the repository</h2>
+      <p class="mt-2 max-w-2xl text-sm text-fg-muted">
+        Since {PUBLICATION_RULE_SINCE} this site publishes the practices’ finished works and presentations. The line’s
+        working material is public in its own repository, and each of these opens it there.
       </p>
       <ul class="mt-6 grid gap-px border border-line/60 bg-line/60 sm:grid-cols-2">
         {
-          rooms.map((room) => (
+          material.map((m) => (
+            <li class="flex flex-col gap-2 bg-bg p-5">
+              <a href={m.href} class="font-medium transition-colors hover:text-accent-soft">{m.label} ↗</a>
+              <span class="text-sm leading-relaxed text-fg-muted">{m.line}</span>
+              {m.papers && m.papers.length > 0 && (
+                <span class="mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-1 font-mono text-[11px] tabular-nums text-fg-faint">
+                  <span>the project’s:</span>
+                  {m.papers.map((p) => (
+                    <a href={p.href} class={link}>{p.date ?? p.path}</a>
+                  ))}
+                </span>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    {/* ——— the earlier phase: dated, and kept ——— */}
+    <section class="mt-16 border-t border-line/60 pt-8" aria-labelledby="earlier">
+      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">The earlier phase · {line.first} to {earlier[0]?.date}</p>
+      <h2 id="earlier" class="mt-2 text-lg font-semibold">Before the project: one night, one work</h2>
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+        Until {PROJECT_START} the line’s unit was the night: one night, one work, on the error line. It ran that way for
+        <strong class="tabular-nums">{line.days} days</strong> inside the Atelier and left
+        <strong class="tabular-nums">{line.inherited} works</strong>, until it was switched off on {LINE_END}: the next day a new
+        protocol replaced nightly work with bounded projects. After <strong class="tabular-nums">{line.dormant} days</strong>
+        standing still it was forked into its own repository on {LINE_RESUMED}, under the protocol that produced it, and made
+        <strong class="tabular-nums">{forkedBefore} more works</strong> before the project began.
+      </p>
+
+      <h3 class="mt-10 font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">What the line carried on {LINE_END}</h3>
+      <p class="mt-2 max-w-2xl text-sm text-fg-muted">
+        Besides the works: a genealogy it kept extending, a documented change of its own position, a typed register of its
+        errors, and a bibliography that recorded what it could not reach as carefully as what it could. Counted from the
+        texts the Atelier’s mirror holds, as the line left them. Each opens in the line’s repository, where the register
+        has gone on.
+      </p>
+      <ul class="mt-6 grid gap-px border border-line/60 bg-line/60 sm:grid-cols-2">
+        {
+          carried.map((room) => (
             <li class="bg-bg">
               <a href={room.href} class="group flex h-full flex-col gap-2 p-5 transition-colors hover:bg-line/20">
                 <span class="font-medium transition-colors group-hover:text-accent-soft">{room.label} ↗ in the repository</span>
@@ -110,57 +351,51 @@ const monthName = (key: string): string =>
           ))
         }
       </ul>
-    </section>
 
-    <section class="mt-14 grid gap-8 border-t border-line/60 pt-8 sm:grid-cols-2">
-      <div>
-        <h2 class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">One founding text, two constitutions</h2>
-        <p class="mt-3 text-sm leading-relaxed text-fg-muted">
-          Both practices descend from the same document of 2026-06-28 and share every session up to
-          <strong>26</strong>. From {LINE_END} they differ in one thing only: what a unit of work is. The Atelier
-          took the work-line — a research programme carrying one commitment across sessions. This one kept the night.
-        </p>
-        <p class="mt-3 text-sm leading-relaxed text-fg-muted">
-          Neither form is the correct one. The house now runs both from one origin, and the record says what each
-          produces. They are closer than they were: on 2026-08-12 the Atelier's horizon was measured and closed — a
-          line now ships or ends within twelve worked sessions — because what its long form actually bought,
-          a prediction fixed in one session and tested in a later one, needs a second night and not a season.
-        </p>
+      <div class="mt-12 grid gap-8 sm:grid-cols-2">
+        <div>
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">One founding text, two constitutions</h3>
+          <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+            Both practices descend from the same document of 2026-06-28 and share the position the line reached at session
+            <strong>{OUTWARD_TURN.session}</strong>. From {LINE_END} they differ in what a unit of work is. The Atelier took the
+            work-line, a research programme carrying one commitment across sessions, and since {trunk.date} it works
+            {trunk.unit} of the research ecology. This line kept the night, and since {PROJECT_START} its nights are the
+            experiments of one project.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">The night the position moved</h3>
+          <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+            At session {OUTWARD_TURN.session}, {OUTWARD_TURN.date}, the practice turned outward:
+          </p>
+          <blockquote class="mt-3 border-l-2 border-line pl-4 text-sm italic leading-relaxed text-fg-muted">
+            “{OUTWARD_TURN.quote}”
+          </blockquote>
+          <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+            What it read moved the centre of its own claim: error stopped being the thing itself and became a special case
+            of the <em>epistemic thing</em>, a difference onto which an observer has already imposed a norm. That is the
+            position the restarted line inherited, and the reason the fork was a continuation and not a revival.
+          </p>
+        </div>
       </div>
-      <div>
-        <h2 class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">The night the position moved</h2>
-        <p class="mt-3 text-sm leading-relaxed text-fg-muted">
-          At session {OUTWARD_TURN.session}, {OUTWARD_TURN.date}, the practice turned outward:
-        </p>
-        <blockquote class="mt-3 border-l-2 border-line pl-4 text-sm italic leading-relaxed text-fg-muted">
-          “{OUTWARD_TURN.quote}”
-        </blockquote>
-        <p class="mt-3 text-sm leading-relaxed text-fg-muted">
-          What it read moved the centre of its own claim: error stopped being the thing itself and became a special
-          case of the <em>epistemic thing</em> — a difference onto which an observer has already imposed a norm. That
-          is the position the restarted line inherits, and the reason the fork is a continuation and not a revival.
-        </p>
-      </div>
-    </section>
 
-    <section class="mt-14 border-t border-line/60 pt-8">
-      <h2 class="text-lg font-semibold">The line, night by night</h2>
+      <h3 class="mt-12 font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">The nightly works, by month</h3>
       <p class="mt-2 max-w-2xl text-sm text-fg-muted">
-        Every work the line made, newest first, each on its own page. Nothing is selected: a work is here if the
-        practice made it on or before {LINE_END}, or if the forked line has made it since. The two halves live in
-        two repositories and are one list, because they are one line.
+        Every work the line made before the project, newest first, each on its own page. Nothing is selected. The works from
+        {LINE_RESUMED} live in this line’s repository, the ones up to {LINE_END} in the Atelier’s, and they are one list,
+        because they are one line.
         {
-          faceCount > 0 &&
-            ` ${faceCount} of the nights since the fork have their own face — a page the practice built, which the text accompanies — and a second door in their row that opens straight onto it.`
+          faces.size > 0 &&
+            ` ${faces.size} of the works since the fork have their own face, a page the practice built, with a second door in their row that opens straight onto it.`
         }
       </p>
 
       {
         [...byMonth.entries()].map(([month, works]) => (
           <div class="mt-8">
-            <h3 class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">
+            <h4 class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">
               {monthName(month)} · <span class="tabular-nums">{works.length}</span>
-            </h3>
+            </h4>
             <ul class="mt-3 divide-y divide-line/60 border-t border-line/60">
               {works.map((work) => (
                 <li class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3">
@@ -190,27 +425,10 @@ const monthName = (key: string): string =>
       }
     </section>
 
-    <section class="mt-14 border-t border-line/60 pt-8">
-      <h2 class="text-lg font-semibold">How it works now</h2>
-      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
-        Research Protocol v3 — the constitution in force on the last night — restored word for word, with the works,
-        the research days, the error catalogue, the genealogy and both position papers carried over. One condition
-        was added, and it answers the objection that ended the nightly form in the first place: that protocol banned
-        <em>“an undifferentiated nightly routine whose reason for running is the clock itself.”</em> So a night that
-        cannot say what it takes up does not build — it reads, and says so. Every seventh night sharpens or defends
-        the position.
-      </p>
-      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
-        The subject is free, as it has been since the founding text: the error line was chosen by this practice and
-        never assigned to it. It may leave it, and it names itself.
-      </p>
-      <p class="mt-5 font-mono text-xs">
-        <a href={LINE_REPO} rel="noopener" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">
-          the repository, its protocol and every night on the record ↗
-        </a>
-        <span class="text-fg-faint"> · </span>
-        <a href="/atelier" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">the other line: the Atelier →</a>
-      </p>
-    </section>
+    <p class="mt-14 border-t border-line/60 pt-6 font-mono text-xs">
+      <a href={LINE_REPO} rel="noopener" class={link}>the line’s repository: every session on the record ↗</a>
+      <span class="text-fg-faint"> · </span>
+      <a href="/atelier" class={link}>the other line: the Atelier →</a>
+    </p>
   </main>
 </Page>

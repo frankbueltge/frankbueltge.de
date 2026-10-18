@@ -14,6 +14,9 @@
 //                             lands at public/error-as-method/<slug>/ the same way)
 //   journal/<date>.md       → src/data/nightly/journal/<date>.md
 //   PROTOCOL.md             → src/data/nightly/PROTOCOL.md
+//   SITE-OPENING.md         → src/data/nightly/SITE-OPENING.md  (the line's own opening for its
+//                             room, when it writes one; offered 2026-10-18, read by
+//                             src/lib/nightly/opening.ts)
 //
 // The figure lands beside the work's own route rather than in the content directory, because
 // the practice writes `![…](figure.svg)` relative to its work — and a page served at
@@ -60,6 +63,8 @@ const META = 'meta.json'
 const TEXT = 'work.md'
 const STAGE = 'index.html'
 const FIGURE = 'figure.svg'
+/** The line's own opening for its room, at the root of its repository. */
+export const OPENING = 'SITE-OPENING.md'
 /** Where a text work's own face is served, under public/error-as-method/. */
 export const FACES = 'works-html'
 /** Big enough that carrying it would make this site claim to be the archive. The repository
@@ -216,7 +221,18 @@ export function mirror(src, dest) {
     protocol = 'PROTOCOL.md'
   }
 
-  return { works, faces, inherited, journal, skipped, oversized, protocol }
+  // The line's own opening for its room (offered on 2026-10-18 in its REQUESTS.md): copied whole
+  // when it is there, and removed here when the line removes it, like everything else this script
+  // resets. Whether the room shows it is the reader's decision (src/lib/nightly/opening.ts).
+  const openingDest = join(dest, 'src/data/nightly', OPENING)
+  rmSync(openingDest, { force: true })
+  let opening = null
+  if (existsSync(join(src, OPENING))) {
+    cpSync(join(src, OPENING), openingDest)
+    opening = OPENING
+  }
+
+  return { works, faces, inherited, journal, skipped, oversized, protocol, opening }
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

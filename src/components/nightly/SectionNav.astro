@@ -10,6 +10,10 @@
 // apparatus (the genealogy, the position, the error register, the reading) were retired with it.
 // Their texts are read in the line's own repository, where their addresses now lead (301), so the
 // menu keeps the line's page and one door into the repository that says it leaves the site.
+//
+// 2026-10-18: the door names what the line keeps there now. The four rooms were the earlier phase;
+// since 2026-10-04 the working material is the research project's (its document, the position
+// papers, the register and the research days).
 import { LINE_REPO } from '@/lib/engines/nightly-line'
 
 interface Props {
@@ -21,7 +25,7 @@ const { active } = Astro.props
 
 const ROOMS = [
   { id: 'line', href: '/error-as-method', label: 'the line' },
-  { id: 'repository', href: LINE_REPO, label: 'the genealogy, the position, the error register and the reading ↗ in the repository' },
+  { id: 'repository', href: LINE_REPO, label: 'the project document, the papers, the register and the research days ↗ in the repository' },
 ] as const
 ---
 
