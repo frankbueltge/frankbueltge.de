@@ -5,6 +5,7 @@ const here = path.dirname(fileURLToPath(import.meta.url)); let bad = 0;
 const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) bad++; };
 const N = JSON.parse(fs.readFileSync(path.join(here, 'null.json')));
 const Q = JSON.parse(fs.readFileSync(path.join(here, 'plate6.json')));
+const V = JSON.parse(fs.readFileSync(path.join(here, 'plate7.json')));
 const br = await chromium.launch({ executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
 for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   const pg = await br.newPage({ viewport: { width: wd, height: 900 }, colorScheme: scheme }); const errs = [];
@@ -33,6 +34,22 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await pg.click('#t-rand'); ok(await pg.evaluate(() => window.__p6.traced) >= 0, `${wd}px: any warning can be traced`);
   ok((await t('p-fill')) === Q.probe.incidents_filled.toLocaleString('en-US'), `${wd}px: probe counts filled from plate6.json`);
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate VI`);
+  // plate VII (increment 3)
+  const p7 = () => pg.evaluate(() => window.__p7); const near = (a, b) => Math.abs(a - b) < 0.03;
+  ok(await pg.$$eval('#p7grid button', b => b.length) === 250, `${wd}px: plate VII draws 250 sequences`);
+  for (const [btn, k] of [['#r-first', 'first'], ['#r-later', 'later'], ['#r-harsh', 'harshest'], ['#r-kind', 'kindest']]) {
+    await pg.click(btn); const j = await p7(), v = V.readers[k];
+    ok(j.o === v.observed && near(j.r, v.ratio) && j.v === v.verdict && j.sighted === v.sighted, `${wd}px: the ${k} reader recomputes in the browser to ${v.observed}/${v.stated}, ${v.verdict}`);
+  }
+  await pg.click('#r-first'); await pg.click('#r-hide'); await pg.click('#p7grid button[data-i="0"]');
+  let j = await p7(); ok(j.hidden && !j.sighted && (await t('p7read')).includes('hidden') && await pg.$$eval('#p7grid button.h', b => b.length) === 0, `${wd}px: a click made blind stays declared, and no outcome shows`);
+  await pg.click('#r-hide'); await pg.click('#p7grid button[data-i="1"]');
+  j = await p7(); ok(j.sighted && (await t('p7read')).includes('after seeing'), `${wd}px: a click made sighted is marked as chosen after the outcome`);
+  ok((await t('p7card')).includes('versions'), `${wd}px: a tapped sequence shows its versions`);
+  await pg.click('#r-coin'); j = await p7(); ok(!j.sighted && j.later > 60 && j.later < 190, `${wd}px: a blind coin reads about half the sequences a day later (${j.later})`);
+  ok((await pg.innerText('#p7tab')).includes('too low') && (await t('v-med')) === String(V.versions.median), `${wd}px: plate VII table and counts filled from plate7.json`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate VII`);
+  await pg.$eval('#p7grid', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p7-${wd}.png`) });
   ok(errs.length === 0, `${wd}px: no script errors ${errs.join(' | ')}`);
   await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-${wd}.png`), fullPage: false });
 }

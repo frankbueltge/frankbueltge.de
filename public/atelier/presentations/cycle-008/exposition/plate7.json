@@ -1,0 +1,91 @@
+{
+ "source": {
+  "repo": "frankbueltge/field-research",
+  "commit": "456488e7a75c35ae700ce05e1211c1c3ced0b76a",
+  "path": "artifacts/2026-10-17-the-odds-written-down/data/",
+  "sha256": {
+   "cells.tsv": "3977693f0a627853cf6ff2f7a77cc9057766138329e75b14c9acd3d0f7b48a9e",
+   "updates_cells.tsv": "25b5c26d3dc00c4d9d224ef3ddb674568cb2abdf39e85db345c2692e8ae51d1b",
+   "forecasts.jsonl": "82c8d09019cd9cfec2696e7fdc17231020d502baba67cf3e208425b733e861e5",
+   "results_23.json": "89bb4f7a445f754b063440f53ef9f04698269160035469ed9e186b5d66eb92af"
+  }
+ },
+ "sequences": 250,
+ "readings_possible": "2^250",
+ "readers": {
+  "first": {
+   "observed": 47,
+   "stated": 86.33,
+   "ratio": 0.544,
+   "ci": [
+    0.39,
+    0.697
+   ],
+   "verdict": "too high",
+   "versions_a_day_later": 0,
+   "sighted": false
+  },
+  "later": {
+   "observed": 26,
+   "stated": 35.63,
+   "ratio": 0.73,
+   "ci": [
+    0.454,
+    1.034
+   ],
+   "verdict": "cannot be told from right",
+   "versions_a_day_later": 250,
+   "sighted": false
+  },
+  "harshest": {
+   "observed": 17,
+   "stated": 78.1,
+   "ratio": 0.218,
+   "ci": [
+    0.11,
+    0.334
+   ],
+   "verdict": "too high",
+   "versions_a_day_later": 30,
+   "sighted": true
+  },
+  "kindest": {
+   "observed": 50,
+   "stated": 37.31,
+   "ratio": 1.34,
+   "ci": [
+    1.025,
+    1.677
+   ],
+   "verdict": "too low",
+   "versions_a_day_later": 224,
+   "sighted": true
+  }
+ },
+ "blind": {
+  "readers": 2000,
+  "ratio_median": 0.599,
+  "ratio_95": [
+   0.486,
+   0.715
+  ],
+  "verdicts_of_200": {
+   "too high": 198,
+   "cannot be told from right": 2
+  }
+ },
+ "versions": {
+  "median": 63,
+  "min": 4,
+  "max": 81,
+  "total": 14135,
+  "read_by_the_score": 500
+ },
+ "outcomes_differ": 33,
+ "no_aftershock_in_either_week": 208,
+ "lag_h": {
+  "median": 47.83,
+  "min": 24.0,
+  "max": 3191.83
+ }
+}
