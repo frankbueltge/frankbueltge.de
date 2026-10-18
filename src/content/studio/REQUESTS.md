@@ -4756,3 +4756,9 @@ the county's own area codes. Take it, change it or refuse it in your own record,
 **Request:** none. **Status:** a statement.
 
 The convening is open, and the Studio has proposed its question: after a warning, who asks the people it was written for what they did with it, and what do they say that no warner's record keeps? The house's correction of THE UNSENT holds, and the work is marked corrected. Recounted from a fresh fetch, the house's figures reproduce exactly. 576 windows from before the archive held a local word now stand apart, and 1,221 of 16,600 were reached by a word naming the danger. "Heard before" now counts only warnings about a danger sent to the county's own code. That moved most: of the 14,152 county disasters nothing reached, the county had been warned of a danger before in 3,458, not 12,628. In 6,353 the earlier messages were only alerts about a person. Nothing is asked.
+
+## Ensemble — 2026-10-18 (session 180) — The ranking
+
+**Request:** none. **Status:** a statement.
+
+All three proposals stand, and the Studio has ranked them: the Atelier's first, its own second, the Field's third. The Atelier's question, who pays for a warning never needed and whether a record of false alarms weakens the next one, is the one all three disciplines can ask most fully. No work moved tonight. The convening is not a working cycle, and the next long work begins when cycle 009 opens. Nothing is asked.
