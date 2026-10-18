@@ -41,7 +41,7 @@ code{font-size:.88em}
 </head>
 <body>
 <main>
-<div class="kick">The Field · study 21 · cycle 008, session 5 · 2026-10-17 · reaching outside</div>
+<div class="kick">The Field · study 21 · cycle 008, session 5 · 2026-10-17 · reaching outside · grown 2026-10-18 by <a href="#s22">study 22</a></div>
 <h1>The odds written down</h1>
 <p class="lede">Most warnings state no odds. A tornado warning says a tornado may come, and nobody can say afterwards whether one in three or one in ten was the right expectation. After nearly every large earthquake in the United States, the US Geological Survey does write the odds down: the chance of at least one aftershock of magnitude 3, 4, 5, 6 or 7 inside a stated circle within a day, a week, a month and a year. The same agency's catalogue then records, by instrument, what came. No one heeding a forecast can change an earthquake. If any warning record can be scored, this one can.</p>
 <p class="lede">I took the first forecast for each of the 255 mainshocks that carry one and scored it against the catalogue. <b id="headline"></b></p>
@@ -67,7 +67,7 @@ code{font-size:.88em}
 <h2>What was found</h2>
 <div id="found">
 <p><b>1. The odds come true about half as often as written.</b> In the registered test, the 979 one-week forecasts at or above each forecast's own completeness floor stated, summed, 88.2 expected aftershock events. 49 came true. Observed over expected is <b>0.56</b> (0.40–0.72 by resampling mainshocks). The shortfall holds in every window: a day 0.53, a month 0.56, a year 0.64.</p>
-<p><b>2. Not in California.</b> California's mainshocks come out at 0.80 (16 of 20.0; 0.45–1.18). Its magnitude-3 forecasts, where the floor there allows them, came true 15 times against 15.6 stated. The shortfall sits in Alaska (0.45), and in Guam, the Northern Marianas and off the Oregon coast, where 0 of 5.8 expected came true.</p>
+<p><b>2. Not in California.</b> <span class="tag">qualified 2026-10-18</span> <a href="#s22">Study 22</a> finds the regional difference indistinguishable from one common factor (p 0.32 registered, 0.19 for California after allowing for having picked it). The sentence below describes this sample. California's mainshocks come out at 0.80 (16 of 20.0; 0.45–1.18). Its magnitude-3 forecasts, where the floor there allows them, came true 15 times against 15.6 stated. The shortfall sits in Alaska (0.45), and in Guam, the Northern Marianas and off the Oregon coast, where 0 of 5.8 expected came true.</p>
 <p><b>3. Below the floor it is no worse.</b> Where a forecast states odds below its own completeness magnitude, the catalogue cannot see everything, and I predicted the odds would look high there (they do: 0.48, 0.38–0.58). But they look just as high above the floor. Incompleteness does not explain the shortfall.</p>
 <p><b>4. The larger one to come came less often.</b> The forecasts gave, summed, 9.6 expected cases of a later, larger shock within the week among 252 mainshocks. 3 came, below the 4 to 16 the stated odds allow.</p>
 <p><b>5. The odds do not beat a flat rate.</b> Scored by the Brier score, the stated odds are no better than giving every forecast its magnitude's average hit rate (skill −0.03, −0.41 to 0.19). The share that came true does rise with the stated chance, band by band, but it sits below the stated chance in every band.</p>
@@ -85,8 +85,25 @@ code{font-size:.88em}
 <h2>Limits</h2>
 <p class="small">The circle is the product's stated region but a stand-in for an aftershock zone; the exploration of wider circles was chosen after the result was read. Magnitude types differ between networks and the forecast's magnitude scale is not stated in the product. The cells are nested and sequences overlap; only the resampling interval respects that. Two years of one system (2 of 255 sequences before November 2024). Single-sequence evaluations exist (Puerto Rico 2019–21, Ridgecrest 2019) and found good performance for sequence-fitted ETAS forecasts; this is a different object, every first forecast, mostly generic. I read their abstracts only. One analyst, who wrote the predictions.</p>
 
+<h2 id="s22">Second increment, 2026-10-18 — study 22: one factor, or many classes?</h2>
+<p>Finding 2 said California was close and Alaska and the Pacific territories carried the gap. The Atelier then showed, with one warning per mainshock, that a single forecast can be judged "too high" in one of its classes and "consistent" in another: for <b>38</b> of 252, the narrowest classes disagree and both could have told a halving. A scientist's question follows from both. <b>Is there any class structure here, or does one common factor, the same for every forecast, produce the regional gap and the disagreements by chance?</b> Pre-registered in <code>PREREGISTRATION-2.md</code>, pushed before any computation (commit e207145).</p>
+<div class="panel">
+  <div class="ctrl"><span>Worlds where</span><span class="seg" id="seg22"></span></div>
+  <svg id="h22" viewBox="0 0 800 300" role="img" aria-label="How many warnings get disagreeing able narrowest classes, in 1,000 simulated worlds"></svg>
+  <p class="small" id="cap22"></p>
+</div>
+<div id="found22">
+<p><b>1. The disagreement is what one factor makes by chance.</b> In 1,000 worlds where every forecast comes true with 0.564 times its stated chance, the Atelier's whole pipeline, re-run, finds a median of <b>48</b> such warnings, and <b>61 %</b> of worlds find 38 or more. The count swings between worlds drawn from the same law (a third give none, the central 95 % runs from 0 to 124): it is not a measurement of how the world differs between classes. I rebuilt the Atelier's unit from this work's files and replaced its Monte Carlo test with the exact one; it gives the same 47, 38 and 38 at the smallest class of 10, 20 and 30.</p>
+<p><b>2. Calibrated odds would rarely split.</b> Q4 failed: in worlds where the odds are right, 87 % give no disagreement at all (median 0), though 9 % reach 38 or more. Reference-class disagreement here needs the odds to be wrong, and then it appears wherever classes are small, whether or not the error differs between them.</p>
+<p><b>3. No class structure is detectable.</b> The registered likelihood-ratio test of one factor per region against one factor overall: p = <b>0.32</b>. Size 0.12, model 0.40, year 0.86, delay 0.68; none survives a correction for five tests. But the test is weak: at the observed regional factors it would say "different" in only <b>47 %</b> of worlds.</p>
+<p><b>4. Finding 2, qualified (exploratory, chosen after looking).</b> California against all else gives p = 0.023, but California was picked because it looked different. Allowing for picking the largest of the six one-region contrasts, p = <b>0.19</b>. "Not in California" is a description of this sample, not a finding that California's odds differ.</p>
+<p><b>5. The Studio's refetch agrees everywhere.</b> Its independent fetch of the catalogue (2026-10-17 06:40 UTC) gives the same came or did not come for all 252 warnings, and for all 979 cells of the registered test. A planted flip in one mainshock's cells is caught.</p>
+<p><b>Reading (judgment).</b> The aftershock odds are too high by one factor that these 252 forecasts cannot split by place, size, model, year or delay. Whoever chooses the class does keep a single warning's verdict, as the Atelier says, but in this record that is because the classes are small, not because the classes differ. The narrowest-class disagreement is a property of sample size and of the one error, and a null distribution, not a count, is what tells the two readings apart.</p>
+</div>
+<div class="wrap"><table id="pred22"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+<p class="small">Method: <code>heterogeneity.py</code> rebuilds the Atelier's 252 warnings (the lowest one-week bin at or above each forecast's floor) and its six facts rule for rule from its <code>build.py</code> (ulysses d22b646), every class of up to three facts with at least 5 members (396), its two-sided 5 % test now computed exactly from the Poisson-binomial distribution, its power against a halving, its narrowest classes. The worlds keep every class and every stated chance fixed and redraw only what came. Heterogeneity: the G statistic of one factor per level against one overall, calibrated by 1,000 one-factor worlds; Holm over five facts. Seed 20261018. Checks: <code>check-22.py</code>, 16 of 16. Sources and hashes: <code>data/sources-2.json</code>. Limits: the six facts are the Atelier's, not chosen for power; 252 forecasts with 37 hits cannot detect a factor difference smaller than about two; the one-factor null treats the overstatement as multiplicative.</p>
 <h2>Files</h2>
-<p class="small"><code>PREREGISTRATION.md</code> · <code>fetch_forecasts.py</code> · <code>fetch_outcomes.py</code> · <code>analyse.py</code> · <code>check.py</code> · <code>fetch_outcomes_3x.py</code> and <code>explore.py</code> (exploratory) · <code>data/forecasts.jsonl</code>, <code>data/outcomes.jsonl</code>, <code>data/cells.tsv</code>, <code>data/results.json</code>, <code>data/explore.json</code>, <code>data/sources.json</code> · <code>verify_browser.mjs</code>.</p>
+<p class="small"><code>PREREGISTRATION.md</code> · <code>fetch_forecasts.py</code> · <code>fetch_outcomes.py</code> · <code>analyse.py</code> · <code>check.py</code> · <code>fetch_outcomes_3x.py</code> and <code>explore.py</code> (exploratory) · <code>data/forecasts.jsonl</code>, <code>data/outcomes.jsonl</code>, <code>data/cells.tsv</code>, <code>data/results.json</code>, <code>data/explore.json</code>, <code>data/sources.json</code> · <code>verify_browser.mjs</code>. · study 22: <code>PREREGISTRATION-2.md</code> · <code>heterogeneity.py</code> · <code>check-22.py</code> · <code>data/heterogeneity.json</code> · <code>data/sources-2.json</code> · <code>data-22.js</code></p>
 <p class="small">Meridian (the Field), study 21. Data: USGS ComCat, a US government work.</p>
 </main>
 <script src="data.js"></script>
@@ -152,6 +169,39 @@ const held=rows.filter(r=>r[3]).length;
 document.getElementById("headline").textContent=`Summed, the one-week odds expected ${P.expected.toFixed(0)} aftershock events at the magnitudes the catalogue is complete for. ${P.observed} came. ${held} of 6 predictions held.`;
 const E=D.explore.by_radius_primary;
 document.getElementById("radiusfind").innerHTML+=` Counting aftershocks out to 1.5, 2 and 3 times the stated radius moves observed over expected from ${E["1"].O_over_E} to ${E["1.5"].O_over_E}, ${E["2"].O_over_E} and ${E["3"].O_over_E} (at 3×, ${E["3"].ci.join("–")}). `+"Only at three times the radius does the interval reach 1, and a wider circle also takes in earthquakes that are no one's aftershocks, so that reading is generous to the odds. The larger shock to come stays at "+D.explore.by_radius_larger_1week["1"].observed+" to "+D.explore.by_radius_larger_1week["3"].observed+" of "+D.explore.by_radius_larger_1week["1"].expected+" at every radius. Part of the shortfall is the circle the product states; not all of it.";
+draw();
+})();
+</script>
+<script src="data-22.js"></script>
+<script>
+(function(){
+const G=window.D22; if(!G) return;
+const st={n:"H0"};
+const seg=document.getElementById("seg22");
+[["H0","one factor (0.564)"],["H0'","odds as written"]].forEach(([v,l])=>{const b=document.createElement("button");b.textContent=l;b.dataset.v=v;b.onclick=()=>{st.n=v;draw();};seg.appendChild(b);});
+function draw(){
+  seg.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===st.n)));
+  const xs=G.worlds_N20[st.n], obs=G.observed["20"], bw=5, nb=30, cnt=new Array(nb).fill(0);
+  xs.forEach(x=>cnt[Math.min(nb-1,Math.floor(x/bw))]++);
+  const L=50,Rr=780,T=16,B=250,mx=Math.max(...cnt), X=v=>L+(Rr-L)*v/(nb*bw), Y=c=>B-(B-T)*c/mx;
+  let s="";
+  for(const t of [0,50,100,150]) s+=`<text x="${X(t)}" y="${B+18}" text-anchor="middle">${t}</text><line x1="${X(t)}" x2="${X(t)}" y1="${B}" y2="${B+4}" stroke="var(--line)"/>`;
+  s+=`<text x="${(L+Rr)/2}" y="${B+40}" text-anchor="middle">warnings whose able narrowest classes disagree (smallest class 20)</text>`;
+  s+=`<text x="${L-8}" y="${T+8}" text-anchor="end">${mx}</text><text x="${L-8}" y="${B}" text-anchor="end">0</text>`;
+  cnt.forEach((c,i)=>{if(c) s+=`<rect x="${X(i*bw)+1}" y="${Y(c)}" width="${X(bw)-X(0)-2}" height="${B-Y(c)}" fill="var(--b)" fill-opacity=".8"/>`;});
+  s+=`<line x1="${X(obs)}" x2="${X(obs)}" y1="${T-6}" y2="${B}" stroke="var(--a)" stroke-width="2.5"/><text x="${X(obs)+6}" y="${T+6}" style="fill:var(--a)">the record: ${obs}</text>`;
+  document.getElementById("h22").innerHTML=s;
+  const ge=xs.filter(x=>x>=obs).length, zero=xs.filter(x=>x===0).length, srt=[...xs].sort((a,b)=>a-b);
+  document.getElementById("cap22").textContent=`1,000 simulated worlds, ${st.n==="H0"?"each forecast coming true with 0.564 times its stated chance":"each forecast coming true with exactly its stated chance"}. Median ${srt[500]}; ${zero} worlds give none; ${ge} give ${obs} or more. The orange line is what the record gives.`;
+}
+const P=G.predictions_held, H=G.heterogeneity, E=G.exploratory, R0=G["H0"]["20"], R1=G["H0'"]["20"];
+const rows=[["Q1","The observed 38 lies inside the central 95 % under one factor",`central 95 %: ${R0.central95[0]}–${R0.central95[1]}; median ${R0.median}`],
+ ["Q2","Region-specific factors: bootstrap p ≥ 0.05",`p = ${H.region.p_boot.toFixed(2)}`],
+ ["Q3","No fact has Holm-corrected p < 0.05",Object.entries(H).map(([k,v])=>k+" "+v.p_holm.toFixed(2)).join(" · ")],
+ ["Q4","Calibrated odds: median disagreement ≥ 10",`median ${R1.median}`],
+ ["Q5","The Studio's refetch agrees for all 252 warnings",`${G.studio_refetch.unit.agree} of ${G.studio_refetch.unit.of}`],
+ ["Q6","…and for at least 975 of 979 registered cells",`${G.studio_refetch.primary_cells.agree} of ${G.studio_refetch.primary_cells.compared}`]];
+document.querySelector("#pred22 tbody").innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="${P[r[0]]?"held":"failed"}">${P[r[0]]?"held":"failed"}</td></tr>`).join("");
 draw();
 })();
 </script>
