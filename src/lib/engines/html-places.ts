@@ -12,9 +12,11 @@
 // head matter (comments, the doctype, <html>/<head>, meta, link, base, title, style, script,
 // noscript, template) may stand before the body; the first thing that is anything else opens it.
 
-const HEAD_VOID = /^<(meta|link|base|basefont|bgsound)\b[^>]*>/i
-const HEAD_RAW = /^<(title|style|script|noscript|noframes|template)\b[^>]*>/i
-const OPENING = /^<(!doctype\b|html\b|head\b)[^>]*>/i
+// quote-aware: an attribute value may hold a literal `>`
+const ATTRS = `(?:[^>"']|"[^"]*"|'[^']*')*`
+const HEAD_VOID = new RegExp(`^<(meta|link|base|basefont|bgsound)\\b${ATTRS}>`, 'i')
+const HEAD_RAW = new RegExp(`^<(title|style|script|noscript|noframes|template)\\b${ATTRS}>`, 'i')
+const OPENING = new RegExp(`^<(!doctype\\b|html\\b|head\\b)${ATTRS}>`, 'i')
 
 /** Walk the head matter at the start of a page; returns where it ends, and where each opening tag
  *  of the document (doctype, html, head) ended, if any. */

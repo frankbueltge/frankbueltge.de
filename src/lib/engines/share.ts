@@ -87,6 +87,9 @@ export function withoutHouseBlocks(html: string): string {
     .replace(/<section class="fbde-[a-z-]+"[\s\S]*?<\/section>/g, '')
 }
 
+/** A start tag's attributes, quote-aware: a value may hold a literal `>`. */
+const ATTRS = `(?:[^>"']|"[^"]*"|'[^']*')*`
+
 /** The attributes of one start tag, names lowercased. */
 function attributes(tag: string): Record<string, string> {
   const out: Record<string, string> = {}
@@ -117,7 +120,7 @@ export interface OwnMeta {
 export function ownMeta(html: string): OwnMeta {
   const head = headOf(stripShare(html))
   const own: OwnMeta = { og: new Set(), twitter: new Set(), values: new Map(), description: null, canonical: null, ogImage: null }
-  for (const m of head.matchAll(/<meta\b[^>]*>/gi)) {
+  for (const m of head.matchAll(new RegExp(`<meta\\b${ATTRS}>`, 'gi'))) {
     const a = attributes(m[0])
     const key = (a.property ?? a.name ?? '').toLowerCase()
     const content = (a.content ?? '').trim()
@@ -129,7 +132,7 @@ export function ownMeta(html: string): OwnMeta {
     } else if (key.startsWith('twitter:')) own.twitter.add(key)
     else if (key === 'description' && own.description === null) own.description = content
   }
-  for (const m of head.matchAll(/<link\b[^>]*>/gi)) {
+  for (const m of head.matchAll(new RegExp(`<link\\b${ATTRS}>`, 'gi'))) {
     const a = attributes(m[0])
     if ((a.rel ?? '').toLowerCase().split(/\s+/).includes('canonical') && a.href) own.canonical = a.href
   }

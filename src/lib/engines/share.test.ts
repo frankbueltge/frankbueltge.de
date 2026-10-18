@@ -229,3 +229,17 @@ describe('the places in a page', () => {
     expect(headInsertAt('<title>t</title><p>x</p>')).toBe(0)
   })
 })
+
+describe('a page’s own tags, read quote-aware', () => {
+  it('keeps a value that holds a literal >', () => {
+    const own = ownMeta('<head><meta name="description" content="A > B, measured"><title>t</title></head>')
+    expect(own.description).toBe('A > B, measured')
+  })
+})
+
+describe('head matter with a > in a value', () => {
+  it('is still head matter', () => {
+    const page = '<meta name="description" content="A > B"><title>t</title><main>x</main>'
+    expect(bodyStartAt(page)).toBe(page.indexOf('<main>'))
+  })
+})

@@ -68,9 +68,11 @@ interface Renderer {
   fonts: CK
 }
 
-let renderer: Promise<Renderer> | null = null
+/** One renderer per repository root: the fonts are read from it. */
+const renderers = new Map<string, Promise<Renderer>>()
 
 async function getRenderer(root: string): Promise<Renderer> {
+  let renderer = renderers.get(root)
   renderer ??= (async () => {
     const require = createRequire(join(root, 'package.json'))
     const wasm = require.resolve('canvaskit-wasm/bin/full/canvaskit.wasm')
@@ -82,10 +84,11 @@ async function getRenderer(root: string): Promise<Renderer> {
     }
     return { ck, fonts }
   })()
+  renderers.set(root, renderer)
   try {
     return await renderer
   } catch (e) {
-    renderer = null
+    renderers.delete(root)
     throw e
   }
 }
