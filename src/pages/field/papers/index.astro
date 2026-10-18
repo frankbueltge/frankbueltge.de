@@ -1,0 +1,64 @@
+---
+// /field/papers/ — every paper the Field has written, newest first (2026-10-18).
+//
+// The Field presents each cycle's work as a paper since cycle 006 (decision of 2026-10-07), and each
+// paper has its own page (./[cycle].astro). Until this day nothing gathered them: this address was a
+// 404, and neither the Field's page nor the dossier pointed at the papers as papers. The entries are
+// read from the mirror at build time (src/lib/ecology/papers.ts): each paper's own title, the day
+// its preprint line gives, and the opening of its own abstract. The page adds nothing else.
+import Page from '@/layouts/Page.astro'
+import { SHARE } from '@/config/share-wording'
+import { loadPaperEntries } from '@/lib/ecology/papers'
+import { sentences } from '@/lib/engines/share'
+import { REPOS } from '@/lib/engines/publication.mjs'
+import { dayMonthYear } from '@/lib/ops/since'
+
+const P = SHARE.papers
+const papers = loadPaperEntries()
+const pad = (n: number) => String(n).padStart(3, '0')
+const first = papers.at(-1)
+const since = first ? pad(first.cycle) : null
+// the index's own card exists whether or not a paper does (src/pages/og/papers/[cycle].png.ts)
+const ogImage = '/og/papers/index.png'
+---
+
+<Page title={P.seoTitle} description={since ? P.seoDescription(since) : P.none} ogImage={ogImage}>
+  <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-4 py-14">
+    <p class="mb-6 font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+      <a href="/field" class="underline underline-offset-2">{P.kicker}</a>
+    </p>
+    <h1 class="mb-4 text-3xl font-semibold tracking-tight text-fg">{P.title}</h1>
+    <p class="mb-10 text-[15.5px] leading-relaxed text-fg-muted">{since ? P.lead(since) : P.none}</p>
+
+    {papers.length > 0 && (
+      <ol class="border-b border-line">
+        {papers.map((paper) => (
+          <li class="border-t border-line py-7">
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+              {P.cycle(pad(paper.cycle))}
+              {paper.date && <> · <time datetime={paper.date}>{dayMonthYear(paper.date)}</time></>}
+            </p>
+            <h2 class="mt-2 text-xl font-semibold leading-snug text-fg">
+              <a href={paper.href} class="underline-offset-4 hover:underline focus-visible:underline">{paper.title}</a>
+            </h2>
+            {paper.abstract && (
+              <p class="mt-3 text-[15px] leading-relaxed text-fg-muted">
+                <span class="text-fg-faint">{P.abstract}</span> {sentences(paper.abstract, 340)}
+              </p>
+            )}
+            <p class="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">
+              <a href={paper.href} class="underline underline-offset-2">{P.read}</a> ·
+              <a href={paper.presentationHref} class="underline underline-offset-2">{P.presentation}</a> ·
+              <a href={paper.rawHref} class="underline underline-offset-2">{P.raw}</a>
+              {paper.pdfHref && <> · <a href={paper.pdfHref} class="underline underline-offset-2">{P.pdf}</a></>}
+            </p>
+          </li>
+        ))}
+      </ol>
+    )}
+
+    <p class="mt-10 font-mono text-[11px] leading-relaxed text-fg-faint">
+      <a href={`${REPOS.field}/tree/main/presentations`} class="underline underline-offset-2">{P.repository} ↗</a>
+    </p>
+  </main>
+</Page>

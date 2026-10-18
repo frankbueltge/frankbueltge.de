@@ -3,7 +3,8 @@
 import { describe, expect, it } from 'vitest'
 import fs from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { renderPaper, resolvePaperHref } from './paper'
+import { paperMeta, renderPaper, resolvePaperHref } from './paper'
+import { citationTags, type PaperEntry } from './papers'
 
 const PAPER = `# Where *end-to-end* research breaks
 
@@ -90,8 +91,15 @@ describe('the page', () => {
   const page = fs.readFileSync(fileURLToPath(new URL('../../pages/field/papers/[cycle].astro', import.meta.url)), 'utf8')
 
   it('builds one page per mirrored paper and renders it through this module', () => {
-    expect(page).toContain('loadFieldPapers()')
+    // loadPaperEntries (./papers.ts) is loadFieldPapers with each paper's own metadata beside it
+    expect(page).toContain('loadPaperEntries()')
     expect(page).toContain('renderPaper(')
+  })
+
+  it('carries the citation tags a scholar’s index reads, and its own preview card', () => {
+    expect(page).toContain('citationTags(paper)')
+    expect(page).toContain('ogImage={paper.ogImage}')
+    expect(page).toContain('href="/field/papers/"')
   })
 
   it('is linked from /ecology, beside the presentation it belongs to', () => {
@@ -100,5 +108,78 @@ describe('the page', () => {
     const page = fs.readFileSync(fileURLToPath(new URL('../../components/ecology/score/EcologyScore.astro', import.meta.url)), 'utf8')
     expect(page).toContain('p.paperHref && <a')
     expect(page).toContain('W.detail.paper')
+  })
+})
+
+describe('what a paper says about itself (2026-10-18)', () => {
+  const SOURCE = `# What a warning record can say: *seven* studies
+
+**The Field (Meridian), research ecology at frankbueltge.de.** Preprint, cycle 008, 2026-10-16.
+Not peer reviewed. Data: \`artifacts/2026-10-14-the-tornadoes-that-came/\` (this repository).
+
+## Abstract
+
+A warning is a record written before its danger arrives, so it can be held against
+what came. See [the method](#method).
+
+Second paragraph of the abstract.
+
+## Method
+
+Text.
+`
+
+  it('reads its title, the day of its preprint line, and the first paragraph of its abstract', () => {
+    expect(paperMeta(SOURCE)).toEqual({
+      title: 'What a warning record can say: seven studies',
+      date: '2026-10-16',
+      abstract: 'A warning is a record written before its danger arrives, so it can be held against what came. See the method.',
+    })
+  })
+
+  it('guesses nothing it does not say', () => {
+    expect(paperMeta('no heading, no date, no abstract')).toEqual({ title: null, date: null, abstract: null })
+    expect(paperMeta('# T\n\nWritten 2026-10-08, revised.\n').date).toBe('2026-10-08')
+  })
+
+  it('is cited with the Highwire tags Google Scholar names, under the practice’s own name', () => {
+    const entry: PaperEntry = {
+      cycle: 8,
+      dir: 'cycle-008',
+      file: 'public/field/presentations/cycle-008/paper.md',
+      href: '/field/papers/cycle-008/',
+      title: 'What a warning record can say',
+      date: '2026-10-16',
+      abstract: null,
+      presentationHref: '/field/presentations/cycle-008/',
+      rawHref: '/field/presentations/cycle-008/paper.md',
+      pdfHref: null,
+      ogImage: '/og/papers/cycle-008.png',
+    }
+    const tags = Object.fromEntries(citationTags(entry).map((t) => [t.name, t.content]))
+    expect(tags).toMatchObject({
+      citation_title: 'What a warning record can say',
+      citation_author: 'Meridian',
+      citation_publication_date: '2026/10/16',
+    })
+    expect(tags.citation_pdf_url).toBeUndefined()
+    const withPdf = Object.fromEntries(citationTags({ ...entry, pdfHref: '/field/presentations/cycle-008/paper.pdf' }).map((t) => [t.name, t.content]))
+    expect(withPdf.citation_pdf_url).toBe('https://frankbueltge.de/field/presentations/cycle-008/paper.pdf')
+  })
+})
+
+describe('the index of the papers', () => {
+  const index = fs.readFileSync(fileURLToPath(new URL('../../pages/field/papers/index.astro', import.meta.url)), 'utf8')
+
+  it('exists, and lists every paper from the mirror', () => {
+    expect(index).toContain('loadPaperEntries()')
+    expect(index).toContain('papers.map(')
+  })
+
+  it('is a door on the Field’s page and a link under the dossier’s shelf', async () => {
+    const { DOORS } = await import('./pyramid/station')
+    expect(DOORS.field.map((d) => d.href)).toContain('/field/papers')
+    const { DOSSIER } = await import('@/config/dossier-wording')
+    expect(DOSSIER.works.papers.href).toBe('/field/papers/')
   })
 })

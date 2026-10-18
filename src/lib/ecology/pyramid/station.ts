@@ -177,6 +177,9 @@ export const DOORS: Record<StationId, Door[]> = {
   ],
   field: [
     { title: 'instruments', sub: 'the register — each with its record', href: '/field/instruments' },
+    // Since 2026-10-18: the papers the Field presents each cycle's work in, gathered on one page.
+    // Until then /field/papers/ was a 404 and a paper could only be found through its presentation.
+    { title: 'papers', sub: 'every cycle’s paper, in preprint form', href: '/field/papers' },
     { title: 'journal ↗ in the repository', sub: 'every session, unedited', href: REPOSITORY_DOORS.field.journal },
     { title: 'constitution ↗ in the repository', sub: 'the protocol, in the practice’s own repository', href: REPOSITORY_DOORS.field.protocol },
     { title: 'team channel ↗ in the repository', sub: 'REQUESTS — the one steering channel', href: REPOSITORY_DOORS.field.requests },

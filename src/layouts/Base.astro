@@ -26,15 +26,20 @@ interface Props {
    *  printed-page ground of the entrance and the research ecology — src/styles/paper.css keys
    *  every one of its tokens off the attribute this stamps on <html>. */
   surface?: 'paper'
+  /** A page's own preview image (a site path, 1200×630), where the per-section card of
+   *  src/pages/og/[...route].ts would say less than the page does: the Field's papers carry their
+   *  own (src/pages/og/papers/, 2026-10-18). Extra head matter (citation tags) goes into the
+   *  `head` slot. */
+  ogImage?: string
 }
-const { title, description, noindex, analytics = true, canonicalPath, surface } = Astro.props
+const { title, description, noindex, analytics = true, canonicalPath, surface, ogImage: ownOgImage } = Astro.props
 const locale = (Astro.currentLocale ?? 'en') as Locale
 
 // canonical URL via Astro's config-aware locale URL (single locale, en, unprefixed — site-v2
 // work order §6: German dropped site-wide, decisions doc 2026-07-16 §1.5).
 const canonical = getAbsoluteLocaleUrl(locale, canonicalPath ?? Astro.url.pathname)
 // Pro Seite generiertes OG-Bild (1200×630, build-time via src/pages/og/).
-const ogImage = `${SITE.url}/og/${ogSlug(Astro.url.pathname)}.png`
+const ogImage = ownOgImage ? new URL(ownOgImage, SITE.url).href : `${SITE.url}/og/${ogSlug(Astro.url.pathname)}.png`
 
 const person = {
   '@context': 'https://schema.org',
@@ -146,6 +151,7 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     <script type="application/ld+json" set:html={JSON.stringify(website)} />
     {workLd && <script type="application/ld+json" set:html={JSON.stringify(workLd)} />}
     {profilePage && <script type="application/ld+json" set:html={JSON.stringify(profilePage)} />}
+    <slot name="head" />
 
     {/* Page transitions (re-skin 2a, 2026-09-02). The router swaps documents in place, so a
         navigation no longer tears the frame down and paints it again: the top bar is
