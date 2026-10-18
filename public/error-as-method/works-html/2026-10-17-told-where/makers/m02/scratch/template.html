@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sun Print</title>
+<style>
+  :root { --wall: #d9d4ca; }
+  html, body { margin: 0; height: 100%; background: var(--wall); }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  canvas { display: block; width: min(100vw, calc(100vh * 1.375)); height: auto; }
+</style>
+</head>
+<body>
+<canvas id="c" width="2200" height="1600" aria-label="A cyanotype-like print: sixty-one rows of blue, one per day, deepest around noon, narrowing as the days shorten."></canvas>
+<script>
+// 1464 hourly values, read back from record.jpg (height above the zero line, in pixels of the 90px original; max 78).
+const V = __DATA__;
+const N = V.length;            // 1464
+const NOON = 17;               // hour index (mod 24) at which the light is centred
+const START = NOON - 12;       // first hour of row 0
+const ROWS = 61, COLS = 24;
+
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+const S = 2;                   // draw at 2x for crispness; layout in 1100x800 units
+ctx.scale(S, S);
+
+// --- deterministic noise -------------------------------------------------
+function hash(x, y) {
+  let h = (x * 374761393 + y * 668265263) | 0;
+  h = (h ^ (h >>> 13)) * 1274126177 | 0;
+  return ((h ^ (h >>> 16)) >>> 0) / 4294967295;
+}
+function vnoise(x, y) {
+  const xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+  const s = t => t * t * (3 - 2 * t);
+  const a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
+  const u = s(xf), v = s(yf);
+  return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+}
+function fbm(x, y) { return 0.5 * vnoise(x, y) + 0.3 * vnoise(x * 2.1, y * 2.1) + 0.2 * vnoise(x * 4.3, y * 4.3); }
+
+// --- smoothed series (the source cannot resolve single hours; soften by one hour) --
+const SM = new Float32Array(N);
+for (let i = 0; i < N; i++) {
+  const a = V[Math.max(0, i - 1)], b = V[i], c = V[Math.min(N - 1, i + 1)];
+  SM[i] = 0.25 * a + 0.5 * b + 0.25 * c;
+}
+const VMAX = 78;
+function valAt(t) {                         // t: continuous hour index
+  if (t < 0 || t > N - 1) return null;
+  const i = Math.floor(t), f = t - i;
+  const a = SM[i], b = SM[Math.min(N - 1, i + 1)];
+  return a + (b - a) * f;
+}
+
+// --- layout (in 1100 x 800 units) ----------------------------------------
+const W = 1100, H = 800;
+const sheet = { x: 150, y: 34, w: 800, h: 732 };
+const cellW = 26, rowH = 9.4;
+const print = { x: sheet.x + 74, y: sheet.y + 74, w: COLS * cellW, h: ROWS * rowH };
+const strip = { x: print.x + print.w + 22, y: print.y, w: 16, h: print.h };
+
+// wall
+ctx.fillStyle = '#d9d4ca'; ctx.fillRect(0, 0, W, H);
+// sheet shadow + paper
+ctx.fillStyle = 'rgba(60,50,35,0.18)'; ctx.fillRect(sheet.x + 4, sheet.y + 6, sheet.w, sheet.h);
+ctx.fillStyle = '#f4f0e6'; ctx.fillRect(sheet.x, sheet.y, sheet.w, sheet.h);
+
+// --- per-pixel exposure ---------------------------------------------------
+const PAPER = [244, 240, 230];
+const COAT  = [232, 236, 232];               // washed, unexposed coating
+const DEEP  = [16, 38, 92];                  // Prussian blue
+const MID   = [44, 92, 150];
+function blue(e) {                           // e in 0..1 exposure density
+  if (e < 0.5) { const t = e / 0.5; return [COAT[0] + (MID[0] - COAT[0]) * t, COAT[1] + (MID[1] - COAT[1]) * t, COAT[2] + (MID[2] - COAT[2]) * t]; }
+  const t = (e - 0.5) / 0.5; return [MID[0] + (DEEP[0] - MID[0]) * t, MID[1] + (DEEP[1] - MID[1]) * t, MID[2] + (DEEP[2] - MID[2]) * t];
+}
+function density(v) { return Math.pow(Math.max(0, v) / VMAX, 1.25); }
+
+// coated region: print + strip with a brushed, ragged margin
+const coatPad = 16;
+const cx0 = print.x - coatPad, cx1 = strip.x + strip.w + coatPad;
+const cy0 = print.y - coatPad, cy1 = print.y + print.h + coatPad;
+
+const P0x = Math.floor((cx0 - 14) * S), P0y = Math.floor((cy0 - 14) * S);
+const PW = Math.ceil((cx1 - cx0 + 28) * S), PH = Math.ceil((cy1 - cy0 + 28) * S);
+const img = ctx.getImageData(P0x, P0y, PW, PH);
+const D = img.data;
+
+// daily totals for the strip
+const dayTot = new Float32Array(ROWS);
+for (let r = 0; r < ROWS; r++) { let s = 0; for (let h = 0; h < 24; h++) { const i = START + r * 24 + h; if (i < N) s += V[i]; } dayTot[r] = s; }
+let maxTot = 0; for (const t of dayTot) maxTot = Math.max(maxTot, t);
+
+for (let py = 0; py < PH; py++) {
+  for (let px = 0; px < PW; px++) {
+    const X = (P0x + px) / S, Y = (P0y + py) / S;
+    // ragged coating mask: distance inside the coated rect, perturbed by noise
+    const dIn = Math.min(X - cx0, cx1 - X, Y - cy0, cy1 - Y);
+    const rag = (fbm(X * 0.09, Y * 0.09) - 0.5) * 18 + (vnoise(X * 0.6, Y * 0.05) - 0.5) * 6;
+    let m = (dIn + rag + 4) / 5; m = Math.max(0, Math.min(1, m));
+    if (m <= 0) continue;
+    let e = 0;
+    if (X >= print.x && X < print.x + print.w && Y >= print.y && Y < print.y + print.h) {
+      const ry = (Y - print.y) / rowH;
+      const r = Math.floor(ry), fy = ry - r;
+      const t = START + r * 24 + (X - print.x) / cellW - 0.5;
+      let v = valAt(t);
+      // soft seam between days: blend toward neighbouring row near its edge
+      if (v !== null) {
+        let w = 0, vn = null;
+        if (fy < 0.18 && r > 0) { vn = valAt(t - 24); w = (0.18 - fy) / 0.36; }
+        else if (fy > 0.82 && r < ROWS - 1) { vn = valAt(t + 24); w = (fy - 0.82) / 0.36; }
+        if (vn !== null) v = v * (1 - w) + vn * w;
+        e = density(v);
+      }
+    } else if (X >= strip.x && X < strip.x + strip.w && Y >= strip.y && Y < strip.y + strip.h) {
+      const r = Math.min(ROWS - 1, Math.floor((Y - strip.y) / rowH));
+      e = Math.pow(dayTot[r] / maxTot, 1.6);
+    }
+    // texture: brush streaks along x and paper grain
+    const grain = (hash(px, py) - 0.5) * 0.06 + (vnoise(X * 0.02, Y * 0.7) - 0.5) * 0.08;
+    e = Math.max(0, Math.min(1, e * (0.94 + (fbm(X * 0.05, Y * 0.05) - 0.5) * 0.18) + grain * (0.3 + e)));
+    const c = blue(e);
+    const k = (py * PW + px) * 4;
+    D[k]     = D[k]     * (1 - m) + c[0] * m;
+    D[k + 1] = D[k + 1] * (1 - m) + c[1] * m;
+    D[k + 2] = D[k + 2] * (1 - m) + c[2] * m;
+  }
+}
+ctx.putImageData(img, P0x, P0y);
+
+// --- pencil marks ---------------------------------------------------------
+ctx.fillStyle = 'rgba(70,66,60,0.75)';
+ctx.strokeStyle = 'rgba(70,66,60,0.55)';
+ctx.lineWidth = 0.6;
+ctx.font = 'italic 11px Georgia, "Times New Roman", serif';
+ctx.textBaseline = 'middle';
+ctx.textAlign = 'right';
+for (const r of [0, 10, 20, 30, 40, 50, 60]) {
+  const y = print.y + (r + 0.5) * rowH;
+  ctx.beginPath(); ctx.moveTo(print.x - 26, y); ctx.lineTo(print.x - 20, y); ctx.stroke();
+  ctx.fillText(String(r + 1), print.x - 30, y + 0.5);
+}
+// noon mark
+const nx = print.x + 12.5 * cellW;
+ctx.beginPath(); ctx.moveTo(nx, print.y - 28); ctx.lineTo(nx, print.y - 22); ctx.stroke();
+ctx.beginPath(); ctx.moveTo(nx, print.y + print.h + 22); ctx.lineTo(nx, print.y + print.h + 28); ctx.stroke();
+ctx.textAlign = 'center';
+ctx.fillText('noon', nx, print.y - 36);
+ctx.fillText('midnight', print.x, print.y - 36);
+ctx.fillText('midnight', print.x + print.w, print.y - 36);
+ctx.beginPath(); ctx.moveTo(print.x, print.y - 28); ctx.lineTo(print.x, print.y - 22); ctx.stroke();
+ctx.beginPath(); ctx.moveTo(print.x + print.w, print.y - 28); ctx.lineTo(print.x + print.w, print.y - 22); ctx.stroke();
+ctx.save();
+ctx.translate(strip.x + strip.w / 2, print.y + print.h + 36);
+ctx.fillText('the day’s sum', 0, 0);
+ctx.restore();
+
+// caption
+ctx.textAlign = 'left';
+ctx.fillStyle = 'rgba(55,52,48,0.9)';
+ctx.font = 'italic 15px Georgia, "Times New Roman", serif';
+ctx.fillText('Sun Print', print.x, sheet.y + sheet.h - 40);
+ctx.font = '11px Georgia, "Times New Roman", serif';
+ctx.fillStyle = 'rgba(70,66,60,0.85)';
+ctx.fillText('Sixty-one days of sunlight on a level surface, one row per day, one hour per column. Deeper blue, more light.',
+             print.x, sheet.y + sheet.h - 20);
+</script>
+</body>
+</html>

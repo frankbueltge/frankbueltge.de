@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Printed by Their Own Light</title>
+<style>
+  :root { --wall: #e9e4d8; }
+  html, body { margin: 0; height: 100%; background: var(--wall); }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  canvas { display: block; width: min(100vw, 137.5vh); height: auto; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" role="img"
+  aria-label="A cyanotype-like sheet of sixty-one thin blue bands separated by white gaps. Each band is one day of sunlight; its blue climbs as high as that day's light reached and is deepest at the base where most hours overlap. Toward the right the bands grow narrower and lower."></canvas>
+<script>
+// Material: recovered from record.jpg. One entry per day, left to right.
+// v = that day's daylight values (relative to the plot's full height, 0..1),
+//     read from the dot positions; n = width of that day's night cluster, in source pixels
+//     (out of 4.82 px per day).
+const DAYS = [{"v":[0.415,0.316,0.254,0.21,0.165,0.088,0.057,0.055,0.031],"n":2.59},{"v":[0.916,0.737,0.613,0.516,0.359,0.31,0.162,0.13,0.057],"n":2.86},{"v":[0.45,0.357,0.3,0.263,0.234,0.2,0.147,0.097,0.055],"n":2.43},{"v":[0.685,0.624,0.55,0.514,0.438,0.315,0.24,0.148,0.097,0.031],"n":2.63},{"v":[0.629,0.522,0.465,0.308,0.244,0.129,0.084,0.077,0.057],"n":2.54},{"v":[0.902,0.672,0.606,0.571,0.527,0.486,0.442,0.329,0.289,0.248,0.119,0.097,0.026],"n":2.44},{"v":[0.879,0.72,0.661,0.624,0.563,0.405,0.349,0.278,0.206,0.141,0.095,0.074],"n":2.55},{"v":[0.47,0.448,0.322,0.258,0.194,0.168,0.138,0.057,0.032,0.029],"n":2.49},{"v":[0.679,0.444,0.343,0.32,0.284,0.196,0.166,0.096,0.061],"n":2.57},{"v":[0.925,0.905,0.842,0.736,0.623,0.511,0.463,0.426,0.216,0.167,0.147,0.06,0.026],"n":2.5},{"v":[0.884,0.832,0.757,0.722,0.626,0.582,0.476,0.42,0.292,0.24,0.126,0.096,0.026],"n":2.64},{"v":[0.883,0.845,0.745,0.598,0.552,0.494,0.457,0.367,0.275,0.254,0.075,0.054],"n":2.67},{"v":[0.858,0.805,0.706,0.687,0.614,0.578,0.428,0.4,0.314,0.293,0.213,0.127,0.037],"n":2.67},{"v":[0.79,0.666,0.629,0.581,0.544,0.362,0.356,0.194,0.165,0.093,0.072],"n":2.69},{"v":[0.73,0.678,0.595,0.541,0.492,0.443,0.415,0.266,0.172,0.086,0.084],"n":2.59},{"v":[0.901,0.858,0.837,0.749,0.724,0.631,0.576,0.407,0.275,0.224,0.104,0.086],"n":2.59},{"v":[0.802,0.756,0.694,0.647,0.559,0.534,0.417,0.324,0.29,0.242,0.217,0.119,0.077],"n":2.57},{"v":[0.807,0.777,0.717,0.63,0.61,0.474,0.462,0.428,0.327,0.247,0.204,0.097,0.081],"n":2.64},{"v":[0.821,0.718,0.665,0.625,0.486,0.38,0.341,0.207,0.198,0.081,0.064],"n":2.65},{"v":[0.833,0.726,0.675,0.564,0.524,0.488,0.376,0.308,0.217,0.136,0.083,0.042],"n":2.82},{"v":[0.857,0.814,0.712,0.679,0.538,0.395,0.242,0.145,0.108,0.068,0.052],"n":2.78},{"v":[0.725,0.601,0.556,0.506,0.388,0.274,0.262,0.189,0.131,0.069,0.058],"n":2.65},{"v":[0.875,0.801,0.766,0.706,0.562,0.536,0.389,0.363,0.208,0.178,0.066,0.066],"n":2.65},{"v":[0.664,0.524,0.403,0.335,0.224,0.178,0.135,0.06],"n":2.9},{"v":[0.983,0.77,0.514,0.47,0.43,0.376,0.34,0.334,0.285,0.223,0.137,0.069],"n":3.17},{"v":[0.51,0.375,0.346,0.252,0.205,0.156,0.109,0.107,0.047,0.045],"n":2.82},{"v":[0.772,0.749,0.682,0.631,0.538,0.405,0.271,0.212,0.139,0.073,0.04],"n":2.67},{"v":[0.797,0.65,0.62,0.59,0.486,0.438,0.324,0.311,0.232,0.139,0.074],"n":2.83},{"v":[0.882,0.81,0.688,0.531,0.405,0.363,0.184,0.178,0.057,0.055],"n":2.69},{"v":[0.837,0.785,0.702,0.611,0.526,0.495,0.406,0.364,0.224,0.07,0.067],"n":2.79},{"v":[0.831,0.783,0.668,0.536,0.518,0.36,0.307,0.159,0.154,0.069,0.039],"n":2.76},{"v":[0.813,0.772,0.707,0.688,0.553,0.489,0.378,0.259,0.186,0.126,0.031,0.028],"n":2.96},{"v":[0.847,0.644,0.587,0.532,0.402,0.36,0.315,0.243,0.194,0.045,0.042],"n":2.61},{"v":[0.772,0.723,0.645,0.571,0.496,0.368,0.203,0.179,0.142,0.106,0.049],"n":2.79},{"v":[0.84,0.77,0.667,0.631,0.55,0.518,0.382,0.305,0.2,0.141,0.054,0.026],"n":2.64},{"v":[0.82,0.771,0.682,0.666,0.535,0.517,0.367,0.343,0.192,0.173,0.047,0.029],"n":2.78},{"v":[0.774,0.75,0.655,0.562,0.531,0.331,0.316,0.194,0.158,0.033,0.032],"n":2.77},{"v":[0.774,0.749,0.691,0.655,0.624,0.449,0.412,0.346,0.198,0.152,0.044],"n":2.75},{"v":[0.744,0.669,0.581,0.529,0.37,0.348,0.189,0.17,0.044,0.034],"n":2.9},{"v":[0.859,0.802,0.766,0.674,0.614,0.581,0.518,0.381,0.342,0.164,0.164,0.039,0.033],"n":2.72},{"v":[0.831,0.776,0.671,0.539,0.37,0.343,0.188,0.164,0.035,0.033],"n":2.83},{"v":[0.822,0.767,0.665,0.53,0.513,0.362,0.34,0.181,0.159,0.038,0.027],"n":2.78},{"v":[0.827,0.774,0.665,0.517,0.346,0.341,0.171,0.158,0.032,0.026],"n":2.71},{"v":[0.803,0.749,0.656,0.496,0.33,0.317,0.158,0.151,0.027],"n":2.68},{"v":[0.706,0.67,0.535,0.498,0.452,0.364,0.315,0.235,0.093,0.09],"n":2.65},{"v":[0.766,0.733,0.585,0.436,0.343,0.32,0.273,0.215,0.139,0.109],"n":2.8},{"v":[0.67,0.481,0.423,0.367,0.336,0.296,0.248,0.211,0.162,0.135],"n":2.87},{"v":[0.777,0.728,0.619,0.475,0.467,0.302,0.277,0.162,0.063],"n":2.93},{"v":[0.772,0.712,0.648,0.59,0.464,0.343,0.292,0.261,0.124,0.123],"n":2.81},{"v":[0.491,0.364,0.292,0.229,0.172,0.065,0.058],"n":2.72},{"v":[0.72,0.663,0.566,0.539,0.429,0.406,0.241,0.2,0.12,0.058],"n":2.92},{"v":[0.767,0.672,0.543,0.519,0.497,0.404,0.262,0.248,0.111,0.065],"n":2.95},{"v":[0.596,0.541,0.47,0.303,0.231,0.197,0.142,0.121,0.043],"n":3.15},{"v":[0.78,0.724,0.617,0.474,0.296,0.287,0.122,0.12],"n":3.05},{"v":[0.725,0.657,0.602,0.526,0.45,0.399,0.277,0.241,0.116,0.089],"n":2.98},{"v":[0.685,0.629,0.52,0.404,0.376,0.275,0.229,0.176,0.087,0.063],"n":2.83},{"v":[0.713,0.658,0.558,0.416,0.399,0.249,0.229,0.095,0.081],"n":3.0},{"v":[0.649,0.541,0.483,0.464,0.368,0.366,0.243,0.198,0.098,0.089],"n":3.27},{"v":[0.645,0.505,0.441,0.356,0.278,0.195,0.114,0.1,0.093],"n":3.14},{"v":[0.713,0.566,0.52,0.47,0.328,0.241,0.154,0.067,0.059],"n":3.22},{"v":[0.746,0.707,0.646,0.43,0.352,0.259,0.231,0.178,0.032],"n":3.11}];
+
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+const W = 1100, H = 800;
+
+// seeded hash noise
+function hash(x, y, s) {
+  let h = (x * 374761393 + y * 668265263 + s * 2147483647) | 0;
+  h = Math.imul(h ^ (h >>> 13), 1274126177);
+  h ^= h >>> 16;
+  return (h >>> 0) / 4294967295;
+}
+function smooth(t) { return t * t * (3 - 2 * t); }
+function vnoise(x, y, s) {
+  const xi = Math.floor(x), yi = Math.floor(y);
+  const xf = smooth(x - xi), yf = smooth(y - yi);
+  const a = hash(xi, yi, s), b = hash(xi + 1, yi, s), c = hash(xi, yi + 1, s), d = hash(xi + 1, yi + 1, s);
+  return a + (b - a) * xf + (c - a) * yf + (a - b - c + d) * xf * yf;
+}
+function fbm(x, y, s) {
+  let v = 0, amp = 0.5, f = 1;
+  for (let o = 0; o < 4; o++) { v += amp * vnoise(x * f, y * f, s + o * 17); amp *= 0.5; f *= 2.03; }
+  return v / 0.9375;
+}
+
+// sheet geometry
+const L = 70, R = 1030, BASE = 660, TOP = 92;   // v=0 at BASE, v=1 at TOP
+const SLOT = (R - L) / DAYS.length;
+const PX_PER_DAY = 4.82;
+
+// day bands: night occupies the first part of each slot, daylight the rest
+const bands = DAYS.map((d, i) => {
+  const nightFrac = Math.min(0.8, d.n / PX_PER_DAY);
+  const x0 = L + i * SLOT + SLOT * nightFrac;
+  const x1 = L + (i + 1) * SLOT;
+  return { x0, x1, v: d.v };
+});
+
+// exposure: at level v, how many of the day's hours were at least that bright
+function hoursAbove(vals, v) {
+  let n = 0;
+  for (const h of vals) n += 1 / (1 + Math.exp(-(h - v) / 0.006));
+  return n;
+}
+
+const paper = [245, 241, 230];
+const stops = [
+  [0.00, paper],
+  [0.18, [206, 222, 230]],
+  [0.42, [112, 158, 198]],
+  [0.70, [36, 88, 152]],
+  [0.88, [16, 56, 118]],
+  [1.00, [10, 36, 88]],
+];
+function blue(d) {
+  for (let k = 1; k < stops.length; k++) {
+    if (d <= stops[k][0]) {
+      const [t0, c0] = stops[k - 1], [t1, c1] = stops[k];
+      const t = (d - t0) / (t1 - t0);
+      return [c0[0] + (c1[0] - c0[0]) * t, c0[1] + (c1[1] - c0[1]) * t, c0[2] + (c1[2] - c0[2]) * t];
+    }
+  }
+  return stops[stops.length - 1][1];
+}
+
+// precompute density per band per row
+const rows = BASE - TOP + 40;
+const dens = bands.map(b => {
+  const arr = new Float32Array(H);
+  for (let y = 0; y < H; y++) {
+    const v = (BASE - y) / (BASE - TOP);
+    if (v < -0.002 || y < TOP - 30) { arr[y] = 0; continue; }
+    const n = hoursAbove(b.v, Math.max(v, 0));
+    arr[y] = 1 - Math.exp(-0.2 * n);
+  }
+  // soften vertically, like light spreading under the glass
+  const out = new Float32Array(H);
+  const r = 3;
+  for (let y = 0; y < H; y++) {
+    let s = 0, w = 0;
+    for (let k = -r; k <= r; k++) {
+      const yy = y + k; if (yy < 0 || yy >= H) continue;
+      const g = Math.exp(-(k * k) / 6); s += arr[yy] * g; w += g;
+    }
+    out[y] = s / w;
+  }
+  return out;
+});
+
+const img = ctx.createImageData(W, H);
+const px = img.data;
+
+// coated area (sensitiser brushed on, slightly irregular edges)
+const CL = 44, CR = 1056, CT = 60, CB = 690;
+function coated(x, y) {
+  const e1 = (fbm(y * 0.035, 3.1, 11) - 0.5) * 34 + (fbm(y * 0.6, 0.5, 5) - 0.5) * 22;
+  const e2 = (fbm(y * 0.035, 9.7, 12) - 0.5) * 34 + (fbm(y * 0.6, 4.5, 6) - 0.5) * 22;
+  const e3 = (fbm(x * 0.02, 1.3, 13) - 0.5) * 22 + (fbm(x * 0.3, 2.2, 7) - 0.5) * 10;
+  const e4 = (fbm(x * 0.02, 7.7, 14) - 0.5) * 22 + (fbm(x * 0.3, 8.2, 8) - 0.5) * 10;
+  return x > CL + e1 && x < CR + e2 && y > CT + e3 && y < CB + e4;
+}
+
+for (let y = 0; y < H; y++) {
+  // horizontal brush streaks
+  const streak = (fbm(0.4, y * 0.09, 21) - 0.5);
+  for (let x = 0; x < W; x++) {
+    const i = (y * W + x) * 4;
+    const grain = (hash(x, y, 1) - 0.5) * 7;
+    const fiber = (fbm(x * 0.08, y * 0.08, 2) - 0.5) * 8;
+    let r = paper[0] + grain + fiber, g = paper[1] + grain + fiber, b = paper[2] + grain * 0.8 + fiber;
+
+    if (coated(x, y)) {
+      // faint residual stain of the washed-out coating
+      const st = 0.10 + 0.08 * fbm(x * 0.01, y * 0.012, 31) + streak * 0.10;
+      r += (214 - r) * st; g += (226 - g) * st; b += (222 - b) * st;
+
+      // which band, if any
+      const k = Math.floor((x - L) / SLOT);
+      if (k >= 0 && k < bands.length) {
+        const bd = bands[k];
+        const wob = (fbm(y * 0.05, k * 3.3, 41) - 0.5) * 2.2;
+        const a0 = bd.x0 + wob, a1 = bd.x1 + wob * 0.7;
+        let cover = Math.min(1, Math.max(0, (x + 1.5 - a0) / 2.5)) * Math.min(1, Math.max(0, (a1 + 0.5 - x) / 2.5));
+        if (cover > 0) {
+          let d = dens[k][y];
+          // uneven coating and exposure mottle
+          d *= 0.9 + 0.16 * fbm(x * 0.06, y * 0.03, 51) + streak * 0.18;
+          d = Math.max(0, Math.min(1, d));
+          const c = blue(d);
+          const m = cover * Math.min(1, d * 6);
+          const cg = (hash(x, y, 7) - 0.5) * 10 * d;
+          r = r * (1 - m) + (c[0] + cg) * m;
+          g = g * (1 - m) + (c[1] + cg) * m;
+          b = b * (1 - m) + (c[2] + cg) * m;
+        }
+      }
+    }
+    // gentle vignette on the sheet
+    const dx = (x - W / 2) / W, dy = (y - H / 2) / H;
+    const vg = 1 - 0.06 * (dx * dx + dy * dy) * 4;
+    px[i] = r * vg; px[i + 1] = g * vg; px[i + 2] = b * vg; px[i + 3] = 255;
+  }
+}
+ctx.putImageData(img, 0, 0);
+
+// pencil caption, as on the margin of a print
+ctx.fillStyle = 'rgba(88, 84, 76, 0.85)';
+ctx.font = 'italic 15px Georgia, "Times New Roman", serif';
+ctx.textBaseline = 'alphabetic';
+ctx.fillText('Printed by Their Own Light', 70, 742);
+ctx.font = '12px Georgia, "Times New Roman", serif';
+ctx.fillStyle = 'rgba(88, 84, 76, 0.7)';
+ctx.textAlign = 'right';
+ctx.fillText('sixty-one days, left to right · each blue band is one day, raised as high as its light reached', 1030, 734);
+ctx.fillText('and deepened by every hour that got there · the white between the bands is night', 1030, 751);
+</script>
+</body>
+</html>

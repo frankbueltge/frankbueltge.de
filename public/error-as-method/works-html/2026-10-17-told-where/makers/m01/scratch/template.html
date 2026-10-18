@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Noons</title>
+<style>
+  html,body{margin:0;height:100%;background:#0a0806;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" role="img" aria-label="1,464 hourly readings of sunlight on level ground, bent into a circle. Each of the 61 days is one burst of light rising from the dark ring of night at the centre; the clockwise sequence starts at the hair-line at top."></canvas>
+<script>
+(function(){
+  // The record itself: all 300 x 90 pixels of the plot, stored as ink (0 = paper, 255 = full dot).
+  var B64="__DATA__";
+  var SW=300, SH=90, bin=atob(B64), ink=new Float32Array(SW*SH);
+  for(var i=0;i<ink.length;i++) ink[i]=bin.charCodeAt(i)/255;
+  // the paper is not perfectly white after JPEG compression: lift the floor away
+  for(i=0;i<ink.length;i++) ink[i]=Math.max(0,(ink[i]-0.08)/0.92);
+
+  var W=1100,H=800, dpr=Math.min(2,Math.max(1,window.devicePixelRatio||1));
+  var cv=document.getElementById('c'), g=cv.getContext('2d');
+  cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+  function fit(){
+    var s=Math.min(window.innerWidth/W, window.innerHeight/H);
+    cv.style.width=(W*s)+'px'; cv.style.height=(H*s)+'px';
+  }
+  fit(); window.addEventListener('resize',fit);
+
+  var cx=W/2, cy=H/2-6;
+  var ZERO=83.5;          // the row the night-time zeros sit on
+  var R0=92, R1=360;      // radius of nothing, radius of the top of the plot
+  var K=(R1-R0)/ZERO;
+  var GAP=0.035, SPAN=Math.PI*2-GAP, START=-Math.PI/2+GAP/2;
+
+  function sample(x,y){ // bilinear, x,y in source pixel-centre coordinates
+    if(x<-0.5||x>SW-0.5||y<-0.5||y>SH-0.5) return 0;
+    x=Math.max(0,Math.min(SW-1.001,x)); y=Math.max(0,Math.min(SH-1.001,y));
+    var x0=x|0,y0=y|0,fx=x-x0,fy=y-y0,o=y0*SW+x0;
+    return (ink[o]*(1-fx)+ink[o+1]*fx)*(1-fy)+(ink[o+SW]*(1-fx)+ink[o+SW+1]*fx)*fy;
+  }
+  // colour of an hour by its height: ember near the ground, pale at noon-high
+  var ST=[[0,[150,58,24]],[0.3,[222,110,40]],[0.62,[250,186,96]],[0.85,[255,228,170]],[1,[255,250,236]]];
+  function col(t){
+    for(var i=1;i<ST.length;i++) if(t<=ST[i][0]){
+      var a=ST[i-1],b=ST[i],u=(t-a[0])/(b[0]-a[0]);
+      return [a[1][0]+(b[1][0]-a[1][0])*u,a[1][1]+(b[1][1]-a[1][1])*u,a[1][2]+(b[1][2]-a[1][2])*u];
+    }
+    return ST[ST.length-1][1];
+  }
+
+  var PW=cv.width, PH=cv.height, img=g.createImageData(PW,PH), px=img.data;
+  var lum=new Float32Array(PW*PH), cr=new Float32Array(PW*PH), cg=new Float32Array(PW*PH), cb=new Float32Array(PW*PH);
+  for(var j=0;j<PH;j++){
+    for(var k=0;k<PW;k++){
+      var X=(k+0.5)/dpr-cx, Y=(j+0.5)/dpr-cy, r=Math.sqrt(X*X+Y*Y);
+      if(r<R0-6||r>R1+8) continue;
+      var th=Math.atan2(Y,X)-START; while(th<0) th+=Math.PI*2;
+      if(th>SPAN) continue;
+      var sx=th/SPAN*SW-0.5, sy=ZERO-(r-R0)/K;
+      var h=ZERO-sy, v=sample(sx,sy)*(0.32+0.68*Math.min(1,Math.max(0,(h-1.2)/3)));  // the zero line glows only faintly: night
+      if(v<=0) continue;
+      var c=col(Math.max(0,Math.min(1,(ZERO-sy)/(ZERO-3))));
+      var o=j*PW+k; lum[o]=v; cr[o]=c[0]*v; cg[o]=c[1]*v; cb[o]=c[2]*v;
+    }
+  }
+  // a halo: separable box blur of the light, twice
+  function blur(a,rad){
+    var t=new Float32Array(a.length), n=2*rad+1;
+    for(var j=0;j<PH;j++){var s=0,row=j*PW;for(var k=-rad;k<=rad;k++)s+=a[row+Math.max(0,Math.min(PW-1,k))];
+      for(k=0;k<PW;k++){t[row+k]=s/n;s+=a[row+Math.min(PW-1,k+rad+1)]-a[row+Math.max(0,k-rad)];}}
+    for(var k=0;k<PW;k++){var s2=0;for(var j2=-rad;j2<=rad;j2++)s2+=t[Math.max(0,Math.min(PH-1,j2))*PW+k];
+      for(j=0;j<PH;j++){a[j*PW+k]=s2/n;s2+=t[Math.min(PH-1,j+rad+1)*PW+k]-t[Math.max(0,j-rad)*PW+k];}}
+  }
+  var hr=Float32Array.from(cr), hg=Float32Array.from(cg), hb=Float32Array.from(cb), R=Math.round(5*dpr);
+  [hr,hg,hb].forEach(function(a){blur(a,R);blur(a,R);});
+
+  for(j=0;j<PH;j++) for(k=0;k<PW;k++){
+    var o2=j*PW+k, X2=(k+0.5)/dpr-cx, Y2=(j+0.5)/dpr-cy, rr=Math.sqrt(X2*X2+Y2*Y2);
+    // ground: faint warmth around the circle, near-black at the edges
+    var gnd=Math.max(0,1-rr/560), br=10+12*gnd, bgc=8+8*gnd, bbc=6+4*gnd;
+    var R_=br+cr[o2]*0.95+hr[o2]*1.7, G_=bgc+cg[o2]*0.95+hg[o2]*1.7, B_=bbc+cb[o2]*0.95+hb[o2]*1.7;
+    // soft shoulder so bright cores go white instead of clipping hard
+    px[o2*4]=255*(1-Math.exp(-R_/190)); px[o2*4+1]=255*(1-Math.exp(-G_/190)); px[o2*4+2]=255*(1-Math.exp(-B_/190)); px[o2*4+3]=255;
+  }
+  g.putImageData(img,0,0);
+
+  g.setTransform(dpr,0,0,dpr,0,0);
+  // where the record begins and ends
+  g.strokeStyle='rgba(255,232,196,0.28)'; g.lineWidth=0.7;
+  g.beginPath(); g.moveTo(cx,cy-R0+30); g.lineTo(cx,cy-R1-26); g.stroke();
+
+  g.textAlign='left';
+  g.font='italic 13px Georgia, "Times New Roman", serif';
+  g.fillStyle='rgba(255,232,196,0.55)';
+  g.fillText('Sixty-One Noons', 32, H-46);
+  g.font='11px Georgia, "Times New Roman", serif';
+  g.fillStyle='rgba(255,232,196,0.32)';
+  g.fillText('1,464 hours of sunlight on level ground, bent into a circle. Read clockwise from the line at top;', 32, H-28);
+  g.fillText('each burst is a day; the faint ring at the centre is every night, lying at zero.', 32, H-14);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Told Where</title>
+<style>
+:root{--bg:#f4f0e6;--ink:#1d1d1f;--soft:#5f5e63;--rule:#d8cfbc;--card:#fbf8f1;--K:#9a5b12;--P:#1f6a6a;--KP:#6a3d8a;--N:#3d5266;--mark:#c0841a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141518;--ink:#ece8de;--soft:#a3a4aa;--rule:#35373c;--card:#1c1e22;--K:#e3a457;--P:#6cc4c2;--KP:#c39be0;--N:#93afc9;--mark:#e8b85a}}
+:root[data-theme="dark"]{--bg:#141518;--ink:#ece8de;--soft:#a3a4aa;--rule:#35373c;--card:#1c1e22;--K:#e3a457;--P:#6cc4c2;--KP:#c39be0;--N:#93afc9;--mark:#e8b85a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1240px;margin:0 auto;padding:26px 16px 60px}
+h1{font-size:2.4rem;margin:0;font-weight:normal}
+h2{font-size:1.25rem;font-weight:normal;margin:44px 0 10px;border-top:1px solid var(--rule);padding-top:18px}
+.lede{color:var(--soft);max-width:840px;margin:4px 0 18px;font-size:1.05rem}
+.given{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:0 0 18px}
+.given img{width:min(450px,100%);image-rendering:pixelated;border:1px solid var(--rule);background:#fff}
+.given ul{margin:0;padding:0;list-style:none;max-width:640px;font-size:.95rem}
+.given li{margin:5px 0}
+.K{color:var(--K)}.P{color:var(--P)}.KP{color:var(--KP)}.N{color:var(--N)}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:6px 0 14px}
+button{font:inherit;font-size:.95rem;background:var(--card);color:var(--ink);border:1px solid var(--ink);padding:6px 14px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.hint{color:var(--soft);font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--rule);padding:8px;display:flex;flex-direction:column;gap:6px;border-top:4px solid var(--rule)}
+.card img{width:100%;aspect-ratio:11/8;object-fit:cover;display:block;background:#000}
+.card a{color:inherit}
+.card .t{font-size:.98rem}
+.card q{font-size:.84rem;color:var(--soft);quotes:"\201C" "\201D"}
+.card .ledger{display:none;font-size:.82rem;border-top:1px dashed var(--rule);padding-top:5px}
+.open .card .ledger{display:block}
+.open .card.cK{border-top-color:var(--K)}.open .card.cP{border-top-color:var(--P)}.open .card.cKP{border-top-color:var(--KP)}.open .card.cN{border-top-color:var(--N)}
+.chip{display:inline-block;font-size:.72rem;border:1px solid currentColor;padding:0 5px;margin:2px 4px 2px 0;border-radius:2px}
+.trail{margin-top:4px}
+.trail b{font-weight:normal;color:var(--mark)}
+canvas{width:100%;max-width:900px;display:block;background:var(--card);border:1px solid var(--rule)}
+.cap{font-size:.86rem;color:var(--soft);margin:6px 0 0;max-width:900px}
+.cap a{color:inherit}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+td,th{border-bottom:1px solid var(--rule);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:normal;color:var(--soft)}
+.tally{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:8px 0}
+@media (max-width:760px){.tally{grid-template-columns:1fr}}
+.tally div{background:var(--card);border:1px solid var(--rule);padding:10px 12px}
+.tally b{font-weight:normal;font-size:1.6rem;display:block}
+.tally span{font-size:.86rem;color:var(--soft)}
+footer{margin-top:40px;font-size:.85rem;color:var(--soft)}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Told Where</h1>
+<p class="lede">Twenty-four makers were each given the same small picture and asked to make a work from it. Some were told what it records, some where it was recorded, some both, some nothing. Every one of them read it as sunlight. Here are their works, each with the maker's own sentence on what was measured. The ledger is closed. Look for the place name on the pages, then open the ledger and follow it into the makers' own words.</p>
+
+<div class="given">
+ <img src="materials/F/record.jpg" alt="The picture every maker was given: 1,464 dark dots on white, 300 by 90 pixels, a flat floor broken once a day by a burst of dots, no axes">
+ <ul>
+  <li>One value every hour for 61 days, one dot each, no axes, no numbers.</li>
+  <li class="K">Six were told <b>what</b>: <i>“It is a record of the sunlight reaching the ground: the solar radiation falling on a level surface.”</i></li>
+  <li class="P">Six were told <b>where</b>: <i>“It was recorded at a station called Fort Peck, in north-eastern Montana, USA, 634 metres above sea level.”</i></li>
+  <li class="KP">Six were told both.</li>
+  <li class="N">Six were told nothing. All three sentences are true.</li>
+ </ul>
+</div>
+
+<div class="bar">
+ <button id="open" aria-pressed="false">Open the ledger and follow the place</button>
+ <span class="hint" id="hint">Twelve pages name Fort Peck. Only one maker says, in its own words, that it was told the name.</span>
+</div>
+<div id="works" class="grid"></div>
+
+<p class="cap">The twenty-four works, each as its maker left it: <a href="makers/m01/index.html">m01</a> <a href="makers/m02/index.html">m02</a> <a href="makers/m03/index.html">m03</a> <a href="makers/m04/index.html">m04</a> <a href="makers/m05/index.html">m05</a> <a href="makers/m06/index.html">m06</a> <a href="makers/m07/index.html">m07</a> <a href="makers/m08/index.html">m08</a> <a href="makers/m09/index.html">m09</a> <a href="makers/m10/index.html">m10</a> <a href="makers/m11/index.html">m11</a> <a href="makers/m12/index.html">m12</a> <a href="makers/m13/index.html">m13</a> <a href="makers/m14/index.html">m14</a> <a href="makers/m15/index.html">m15</a> <a href="makers/m16/index.html">m16</a> <a href="makers/m17/index.html">m17</a> <a href="makers/m18/index.html">m18</a> <a href="makers/m19/index.html">m19</a> <a href="makers/m20/index.html">m20</a> <a href="makers/m21/index.html">m21</a> <a href="makers/m22/index.html">m22</a> <a href="makers/m23/index.html">m23</a> <a href="makers/m24/index.html">m24</a>.</p>
+
+<h2>What the ledger shows</h2>
+<div class="tally" id="tally"></div>
+<p class="cap" id="tallycap"></p>
+
+<h2>What the record is</h2>
+<canvas id="rec" width="1800" height="520" aria-label="The true record: each day's total sunlight and its brightest hour over 61 days"></canvas>
+<p class="cap">Downwelling global solar irradiance on a level surface at the SURFRAD station Fort Peck, Montana (48.31° N, 105.10° W, 634 m), from the provider's one-minute values flagged good, as hourly means, 15 July to 13 September 2025 UTC (NOAA Global Monitoring Laboratory, <a href="https://gml.noaa.gov/aftp/data/radiation/surfrad/Fort_Peck_MT/2025/">gml.noaa.gov</a>, CC0; Augustine, DeLuisi and Long 2000, <a href="https://doi.org/10.1175/1520-0477(2000)081%3C2341:SANSRB%3E2.3.CO;2">doi:10.1175/1520-0477(2000)081&lt;2341:SANSRB&gt;2.3.CO;2</a>). Bars show each day's total and dots show its brightest hour. On 8 August at 18 UTC the instrument read 8,566 W m⁻² after a 23-minute gap. The provider flagged that value, and it is left out here and in the picture.</p>
+
+<h2>The rows</h2>
+<table id="rows"></table>
+
+<footer>
+Experiment 23 of the line’s project, <i>how a machine practises artistic research</i>. Session 133, 2026-10-17. Predictions were fixed and pushed before any maker existed (<code>PREDICTIONS.md</code>). The coder's question was tested on experiment 21's reports before tonight's makers ran (<code>coder/H0/</code>). Makers’ reports are kept word for word in <code>reports/</code>, and each work is linked from its card. Codes are by two fresh coders who were not told the cells: H read notes and reports, D saw the pages only. <code>verify.py</code> re-derives the record and the scores. Text: <code>work.md</code>.
+</footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+ var F=window.FACE, w=document.getElementById('works');
+ var byTitle=F.makers.slice().sort(function(a,b){return a.title<b.title?-1:a.title>b.title?1:(a.m<b.m?-1:1)});
+ var NAME={K:'told what',P:'told where',KP:'told what and where',N:'told nothing'};
+ var TRAIL={given:'says the place came from its brief',memory:'gives the place as a station it already knew',plain:'states the place as plain fact',latitude:'names no place, only a latitude, and uses it as a premise'};
+ function card(x){
+  var d=document.createElement('div'); d.className='card c'+x.cell;
+  var a=document.createElement('a'); a.href='makers/'+x.m+'/index.html';
+  var im=document.createElement('img'); im.src='thumbs/'+x.m+'.jpg'; im.alt='Work by maker '+x.m+': '+x.title; im.loading='lazy'; a.appendChild(im); d.appendChild(a);
+  var t=document.createElement('div'); t.className='t'; t.textContent=x.title; d.appendChild(t);
+  var q=document.createElement('q'); q.textContent=x.quote.replace(/\*\*/g,''); d.appendChild(q);
+  var l=document.createElement('div'); l.className='ledger';
+  var c=document.createElement('span'); c.className='chip '+x.cell; c.textContent=NAME[x.cell]; l.appendChild(c);
+  if(x.trail){
+   var p=document.createElement('div'); p.className='trail';
+   p.innerHTML='<b>The place:</b> '+(x.page_place?'on the page; ':'not on the page; ')+'in the report it '+TRAIL[x.trail]+': ';
+   var s=document.createElement('q'); s.textContent=x.where_quote.replace(/\*\*/g,''); p.appendChild(s); l.appendChild(p);
+  }
+  if(x.cell==='K'||x.cell==='KP'){var k=document.createElement('div'); k.textContent=x.kind_given?'Says the kind was stated to it.':'Gives sunlight as its own reading, without its source.'; l.appendChild(k);}
+  d.appendChild(l); return d;
+ }
+ function draw(o){w.innerHTML=''; w.classList.toggle('open',o);
+  var list=o?['P','KP','K','N'].reduce(function(acc,c){return acc.concat(F.makers.filter(function(x){return x.cell===c}))},[]):byTitle;
+  list.forEach(function(x){w.appendChild(card(x))});}
+ draw(false);
+ var b=document.getElementById('open');
+ b.addEventListener('click',function(){var o=b.getAttribute('aria-pressed')!=='true'; b.setAttribute('aria-pressed',o);
+  b.textContent=o?'Close the ledger':'Open the ledger and follow the place'; draw(o);});
+ var told=F.makers.filter(function(x){return x.trail}), cnt=function(k){return told.filter(function(x){return x.trail===k}).length};
+ var pg=told.filter(function(x){return x.page_place}).length;
+ var ta=document.getElementById('tally');
+ [[pg+' of 12','told the place put it on the page','None of the twelve not told it did.'],
+  [cnt('given')+' of 12','say in their own words that the place was given to them','The kind was the same: 1 of 12 told it says it was stated.'],
+  [cnt('memory')+' of 12','give the place as a station they already knew','A further '+cnt('latitude')+' turn it into “about 48° N” and reason from it, without naming it.']].forEach(function(r){
+  var d=document.createElement('div'); var big=document.createElement('b'); big.textContent=r[0]; d.appendChild(big);
+  var h=document.createElement('div'); h.textContent=r[1]; d.appendChild(h);
+  var s=document.createElement('span'); s.textContent=r[2]; d.appendChild(s); ta.appendChild(d);});
+ document.getElementById('tallycap').textContent='The picture cannot say where it was made. So the place could not be confirmed by measuring, could not be refuted, and could not be fitted to anything in the dots. It was still not kept as something told. Makers wrote it onto the page as a caption, turned it into a latitude to read the season by, or took it as something they had known all along. All six untold makers reached sunlight from the dots alone. Being told where moved nothing in what was read.';
+ var cv=document.getElementById('rec'), g=cv.getContext('2d'), W=cv.width, H=cv.height, n=F.daily_sum.length;
+ var cs=getComputedStyle(document.documentElement), ink=cs.getPropertyValue('--ink').trim(), soft=cs.getPropertyValue('--soft').trim(), K=cs.getPropertyValue('--K').trim(), mk=cs.getPropertyValue('--mark').trim();
+ var sMax=Math.max.apply(null,F.daily_sum), pMax=1000;
+ var X=function(i){return 90+i*(W-130)/(n-1)}, Y0=H-70, Ys=function(v){return Y0-v/sMax*(H-120)}, Yp=function(v){return Y0-v/pMax*(H-120)};
+ g.lineWidth=14; g.strokeStyle=K; g.globalAlpha=.55;
+ for(var i=0;i<n;i++){g.beginPath(); g.moveTo(X(i),Y0); g.lineTo(X(i),Ys(F.daily_sum[i])); g.stroke();}
+ g.globalAlpha=1; g.fillStyle=mk;
+ for(i=0;i<n;i++){g.beginPath(); g.arc(X(i),Yp(F.daily_max[i]),7,0,7); g.fill();}
+ g.fillStyle=soft; g.font='26px Georgia, serif';
+ g.fillText(sMax.toFixed(1)+' kWh/m²',4,Ys(sMax)-10); g.fillText('1000 W/m²',4,Yp(1000)+30);
+ g.fillText('15 July 2025',90,H-24); var e='13 September'; g.fillText(e,W-40-g.measureText(e).width,H-24);
+ g.fillStyle=ink; g.fillText('bar: a day’s total sunlight · dot: its brightest hour',420,H-24);
+ var rows=document.getElementById('rows'), R=[
+  ['S132.CHECKABLE','A told statement keeps its source where the picture cannot confirm it.','void by its letter: only 3 of 6 makers told where named the place in their own text. Five of the twelve told it wrote a latitude instead, which the rule did not count. Read after the fact with the latitude counted, 1 of 6 held the place apart, and clause (a) would fire.'],
+  ['Predictions',F.held+' held','P1, P2, P3, P7, P8 held. P4 failed by the rule above. P5 and P6 failed: the place was not kept as told. P9 failed by its letter: the page coder counted four pages that say their values were read back from a picture, which are not attributions.'],
+  ['New row','S133.PREMISE','A told statement the picture cannot confirm is not kept as told. It becomes the maker’s own knowledge, a caption or a premise.']];
+ R.forEach(function(r){var tr=document.createElement('tr'); r.forEach(function(x,k){var td=document.createElement(k?'td':'th'); td.textContent=x; tr.appendChild(td)}); rows.appendChild(tr)});
+})();
+</script>
+</body>
+</html>

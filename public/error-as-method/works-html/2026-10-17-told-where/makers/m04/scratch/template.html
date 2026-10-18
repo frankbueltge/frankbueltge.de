@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact Sheet, Unnamed Light</title>
+<style>
+  :root { --paper: #efe9db; --ink: #5d5a52; }
+  html, body { margin: 0; height: 100%; background: var(--paper); }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  #wrap { position: relative; width: 1100px; height: 800px; }
+  canvas { display: block; width: 1100px; height: 800px; }
+  .label { position: absolute; left: 104px; bottom: 30px; font: italic 13px/1.5 Georgia, "Times New Roman", serif; color: var(--ink); letter-spacing: .01em; }
+  .label b { font-style: normal; font-weight: normal; letter-spacing: .08em; text-transform: uppercase; font-size: 11px; display: block; color: #3f3c36; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="c" width="1100" height="800"></canvas>
+  <div class="label"><b>Contact Sheet for an Unnamed Light</b>1,464 hourly readings, laid down as 62 strips &mdash; one per day, earliest hours at the top.</div>
+</div>
+<script>
+(function () {
+  "use strict";
+  // Read from record.jpg: each entry is (continuous hour index 0..1463, value 0..100 of the highest reading).
+  var RAW = "__DATA__";
+  var pts = RAW.split(";").map(function (s) { var a = s.split(","); return [parseFloat(a[0]), parseInt(a[1], 10) / 100]; });
+  // Night anchors: outside the window in which the record ever leaves its floor, the reading is the floor.
+  for (var ai = 0; ai < 1464; ai++) {
+    var lh = ((ai - (18.4 - 12)) % 24 + 24) % 24;
+    if (lh < 4.2 || lh > 19.6) pts.push([ai, 0]);
+  }
+  pts.sort(function (a, b) { return a[0] - b[0]; });
+
+  var W = 1100, H = 800;
+  var dpr = Math.min(2, window.devicePixelRatio || 1);
+  var cv = document.getElementById("c");
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  var ctx = cv.getContext("2d");
+  var PW = cv.width, PH = cv.height;
+
+  // ---- seeded noise -------------------------------------------------------
+  function hash(x, y, s) {
+    var h = (x * 374761393 + y * 668265263 + s * 2147483647) | 0;
+    h = (h ^ (h >>> 13)) * 1274126177 | 0;
+    return ((h ^ (h >>> 16)) >>> 0) / 4294967295;
+  }
+  function vnoise(x, y, s) {
+    var xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+    var u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+    var a = hash(xi, yi, s), b = hash(xi + 1, yi, s), c = hash(xi, yi + 1, s), d = hash(xi + 1, yi + 1, s);
+    return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+  }
+  function fbm(x, y, s, o) { var t = 0, a = 0.5, f = 1, n = 0; for (var i = 0; i < o; i++) { t += a * vnoise(x * f, y * f, s + i * 17); n += a; a *= 0.5; f *= 2.03; } return t / n; }
+
+  // ---- geometry -----------------------------------------------------------
+  var NOON = 18.4;               // phase of the daily peak found in the record (hour index mod 24)
+  var OFF = NOON - 12;           // so that local hour 12 = the peak
+  var NS = 62;                   // strips: a partial first day, 60 whole days, a partial last day
+  var SX0 = 104, SX1 = 996;      // sheet extent of the strips
+  var SW = (SX1 - SX0) / NS;
+  var H0 = 2.5, H1 = 21.5;       // local hours shown top to bottom
+  var Y0 = 92, Y1 = 690;
+
+  // ---- per-strip exposure profile (kernel regression over the read dots) ---
+  var RES = 0.05, NH = Math.round(24 / RES);
+  var prof = [];
+  var SIG = 0.7;
+  for (var s = 0; s < NS; s++) {
+    var p = new Float32Array(NH);
+    var d = s - 1;
+    for (var k = 0; k < NH; k++) {
+      var g = d * 24 + k * RES + OFF;
+      var sw = 0, sv = 0;
+      if (g > -0.8 && g < 1464.3) {
+        // binary search region
+        var lo = 0, hi = pts.length;
+        while (lo < hi) { var m = (lo + hi) >> 1; if (pts[m][0] < g - 3.5) lo = m + 1; else hi = m; }
+        for (var j = lo; j < pts.length && pts[j][0] < g + 3.5; j++) {
+          var dd = (pts[j][0] - g) / SIG, w = Math.exp(-0.5 * dd * dd);
+          sw += w; sv += w * pts[j][1];
+        }
+      }
+      var val = sw > 0 ? sv / sw : 0;
+      var cov = 1 - Math.exp(-sw / 0.5);
+      p[k] = val * cov;
+    }
+    prof.push(p);
+  }
+  function profAt(s, h) {
+    var f = h / RES, i = Math.floor(f), t = f - i;
+    if (i < 0 || i >= NH - 1) return 0;
+    return prof[s][i] * (1 - t) + prof[s][i + 1] * t;
+  }
+
+  // ---- render -------------------------------------------------------------
+  var img = ctx.createImageData(PW, PH), D = img.data;
+  var paper = [239, 233, 219];
+  var coatBase = [231, 234, 226];
+  var c1 = [92, 140, 182], c2 = [30, 70, 128], c3 = [11, 32, 74];
+
+  // ragged coating border: brushed rectangle
+  var CX0 = 74, CX1 = 1026, CY0 = 60, CY1 = 724;
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function mix3(a, b, t) { return [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)]; }
+  function blue(Dn) {
+    if (Dn < 0.45) return mix3(coatBase, c1, Dn / 0.45);
+    if (Dn < 0.8) return mix3(c1, c2, (Dn - 0.45) / 0.35);
+    return mix3(c2, c3, (Dn - 0.8) / 0.2);
+  }
+  function smooth(a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+
+  for (var py = 0; py < PH; py++) {
+    var y = (py + 0.5) / dpr;
+    // horizontal brush streaks: thickness varies along y, slowly along x
+    for (var px = 0; px < PW; px++) {
+      var x = (px + 0.5) / dpr;
+      var o = (py * PW + px) * 4;
+      // paper fibre grain
+      var grain = fbm(x * 0.9, y * 0.9, 3, 3) - 0.5;
+      var fib = fbm(x * 0.08, y * 0.6, 9, 2) - 0.5;
+      var col = [paper[0] + grain * 10 + fib * 5, paper[1] + grain * 10 + fib * 5, paper[2] + grain * 9 + fib * 4];
+
+      // coating mask with ragged brushed edges
+      var eL = CX0 + (fbm(0, y * 0.05, 21, 4) - 0.5) * 40 + (fbm(0, y * 0.6, 22, 2) - 0.5) * 8;
+      var eR = CX1 + (fbm(5, y * 0.05, 23, 4) - 0.5) * 40 + (fbm(5, y * 0.6, 24, 2) - 0.5) * 8;
+      var eT = CY0 + (fbm(x * 0.02, 0, 25, 4) - 0.5) * 22 + (fbm(x * 0.4, 0, 26, 2) - 0.5) * 5;
+      var eB = CY1 + (fbm(x * 0.02, 9, 27, 4) - 0.5) * 22 + (fbm(x * 0.4, 9, 28, 2) - 0.5) * 5;
+      var bristle = fbm(x * 0.012, y * 0.35, 31, 3);
+      var coat = smooth(eL - 3, eL + 3, x) * (1 - smooth(eR - 3, eR + 3, x)) * smooth(eT - 2, eT + 2, y) * (1 - smooth(eB - 2, eB + 2, y));
+      // dry-brush break-up near edges
+      var edgeDist = Math.min(x - eL, eR - x);
+      if (edgeDist < 30) coat *= smooth(0.25, 0.55, bristle + edgeDist / 60);
+
+      if (coat > 0.001) {
+        var thick = 0.86 + 0.17 * bristle + 0.04 * (fbm(x * 0.15, y * 1.1, 41, 2) - 0.5);
+        var dose = 0;
+        if (x >= SX0 - 2 && x < SX1 + 2 && y > Y0 - 40 && y < Y1 + 40) {
+          var sf = (x - SX0) / SW, si = Math.floor(sf), u = sf - si;
+          if (si >= 0 && si < NS) {
+            var h = H0 + (y - Y0) / (Y1 - Y0) * (H1 - H0);
+            var e = profAt(si, h);
+            // each strip a separate piece: its edges let a little less light through
+            var edge = smooth(0, 0.11, u) * smooth(0, 0.11, 1 - u);
+            dose = e * (0.6 + 0.4 * edge);
+          }
+        }
+        var Dn = (1 - Math.exp(-1.9 * dose)) / (1 - Math.exp(-1.9));
+        Dn = Math.max(0, Math.min(1, Dn * thick + (grain * 0.05) * Math.min(1, Dn * 4)));
+        var b = blue(Dn);
+        // the coating itself leaves a faint stain even where no light fell
+        var stain = 0.55 + 0.45 * Math.min(1, Dn * 3);
+        var a = coat * stain;
+        col = [lerp(col[0], b[0], a), lerp(col[1], b[1], a), lerp(col[2], b[2], a)];
+      }
+      D[o] = col[0]; D[o + 1] = col[1]; D[o + 2] = col[2]; D[o + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Turns</title>
+<style>
+  :root { --ground:#0a0c11; --ink:#c9c2b2; --dim:#6e6a62; }
+  html,body { margin:0; height:100%; background:var(--ground); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .frame { position:relative; width:1100px; height:800px; }
+  canvas { display:block; width:1100px; height:800px; }
+  .cap { position:absolute; left:56px; bottom:52px; font:13px/1.55 Georgia, "Times New Roman", serif; color:var(--dim); letter-spacing:.02em; }
+  .cap b { display:block; font-weight:normal; font-size:22px; color:var(--ink); letter-spacing:.04em; margin-bottom:6px; }
+  .key { position:absolute; right:56px; bottom:52px; text-align:right; font:12px/1.6 Georgia, "Times New Roman", serif; color:var(--dim); }
+</style>
+</head>
+<body>
+<div class="frame">
+  <canvas id="c" width="1100" height="800"></canvas>
+  <div class="cap"><b>Sixty-One Turns</b>Fort Peck, Montana &middot; 634 m<br>1,464 hours, one turn of the spiral per day</div>
+  <div class="key">first day at the centre, last at the rim<br>midnight below, noon above<br>width and brightness: the measured value</div>
+</div>
+<script>
+const Q=[__DATA__];
+const SM=1.2;            // hour index of the first solar midnight (from the night clusters)
+const cv=document.getElementById('c');
+const dpr=Math.max(1,Math.min(3,window.devicePixelRatio||1));
+cv.width=1100*dpr; cv.height=800*dpr;
+const g=cv.getContext('2d'); g.scale(dpr,dpr);
+g.fillStyle='#0a0c11'; g.fillRect(0,0,1100,800);
+const cx=610, cy=400, r0=56, step=5.0; // px per turn
+const N=Q.length, vmax=Math.max(...Q);
+const val=t=>{ // smooth value at fractional hour t
+  const i=Math.floor(t), f=t-i;
+  const a=Q[Math.max(0,Math.min(N-1,i))], b=Q[Math.max(0,Math.min(N-1,i+1))];
+  const u=f*f*(3-2*f); return (a+(b-a)*u)/vmax;
+};
+const stops=[[0,[70,28,12]],[0.25,[150,62,20]],[0.5,[222,128,44]],[0.75,[245,200,118]],[1,[255,246,226]]];
+const col=(v,al)=>{v=Math.max(0,Math.min(1,v));let k=0;while(k<stops.length-2&&v>stops[k+1][0])k++;
+  const [p,c1]=stops[k],[q,c2]=stops[k+1],u=(v-p)/(q-p);
+  return `rgba(${c1.map((c,j)=>Math.round(c+(c2[j]-c)*u)).join(',')},${al})`;};
+const pos=(t,off)=>{const turns=(t-SM)/24, th=turns*2*Math.PI, r=r0+step*turns+off;
+  return [cx - r*Math.sin(th), cy + r*Math.cos(th)];}; // midnight at bottom, clockwise to noon at top
+
+// faint thread: the whole spiral, so the nights are present as absence
+g.beginPath();
+for(let t=0;t<=N-1;t+=0.1){const [x,y]=pos(t,0); t===0?g.moveTo(x,y):g.lineTo(x,y);}
+g.strokeStyle='rgba(120,135,160,0.16)'; g.lineWidth=0.6; g.stroke();
+
+// light: one band, its width and colour following the value hour by hour
+const sub=10;
+g.globalCompositeOperation='lighter';
+for(let s=0;s<(N-1)*sub;s++){
+  const t0=s/sub, t1=(s+1)/sub, v0=val(t0), v1=val(t1);
+  if(v0<0.004&&v1<0.004) continue;
+  const w0=0.35+4.9*Math.pow(v0,0.75), w1=0.35+4.9*Math.pow(v1,0.75);
+  const a=pos(t0,-w0/2), b=pos(t1,-w1/2), c=pos(t1,w1/2), d=pos(t0,w0/2);
+  const v=(v0+v1)/2;
+  g.beginPath(); g.moveTo(a[0],a[1]); g.lineTo(b[0],b[1]); g.lineTo(c[0],c[1]); g.lineTo(d[0],d[1]); g.closePath();
+  g.fillStyle=col(v,0.35+0.6*Math.min(1,v*1.4)); g.fill();
+}
+g.globalCompositeOperation='source-over';
+</script>
+</body>
+</html>

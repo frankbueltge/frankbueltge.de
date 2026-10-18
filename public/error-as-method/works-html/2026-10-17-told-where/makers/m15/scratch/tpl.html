@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Printed by Their Own Light</title>
+<style>
+  :root { --wall: #e9e4d8; }
+  html, body { margin: 0; height: 100%; background: var(--wall); }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  canvas { display: block; width: min(100vw, 137.5vh); height: auto; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" role="img"
+  aria-label="A cyanotype-like sheet of sixty-one thin blue bands separated by white gaps. Each band is one day of sunlight; its blue climbs as high as that day's light reached and is deepest at the base where most hours overlap. Toward the right the bands grow narrower and lower."></canvas>
+<script>
+// Material: recovered from record.jpg. One entry per day, left to right.
+// v = that day's daylight values (relative to the plot's full height, 0..1),
+//     read from the dot positions; n = width of that day's night cluster, in source pixels
+//     (out of 4.82 px per day).
+const DAYS = __DATA__;
+
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+const W = 1100, H = 800;
+
+// seeded hash noise
+function hash(x, y, s) {
+  let h = (x * 374761393 + y * 668265263 + s * 2147483647) | 0;
+  h = Math.imul(h ^ (h >>> 13), 1274126177);
+  h ^= h >>> 16;
+  return (h >>> 0) / 4294967295;
+}
+function smooth(t) { return t * t * (3 - 2 * t); }
+function vnoise(x, y, s) {
+  const xi = Math.floor(x), yi = Math.floor(y);
+  const xf = smooth(x - xi), yf = smooth(y - yi);
+  const a = hash(xi, yi, s), b = hash(xi + 1, yi, s), c = hash(xi, yi + 1, s), d = hash(xi + 1, yi + 1, s);
+  return a + (b - a) * xf + (c - a) * yf + (a - b - c + d) * xf * yf;
+}
+function fbm(x, y, s) {
+  let v = 0, amp = 0.5, f = 1;
+  for (let o = 0; o < 4; o++) { v += amp * vnoise(x * f, y * f, s + o * 17); amp *= 0.5; f *= 2.03; }
+  return v / 0.9375;
+}
+
+// sheet geometry
+const L = 70, R = 1030, BASE = 660, TOP = 92;   // v=0 at BASE, v=1 at TOP
+const SLOT = (R - L) / DAYS.length;
+const PX_PER_DAY = 4.82;
+
+// day bands: night occupies the first part of each slot, daylight the rest
+const bands = DAYS.map((d, i) => {
+  const nightFrac = Math.min(0.8, d.n / PX_PER_DAY);
+  const x0 = L + i * SLOT + SLOT * nightFrac;
+  const x1 = L + (i + 1) * SLOT;
+  return { x0, x1, v: d.v };
+});
+
+// exposure: at level v, how many of the day's hours were at least that bright
+function hoursAbove(vals, v) {
+  let n = 0;
+  for (const h of vals) n += 1 / (1 + Math.exp(-(h - v) / 0.006));
+  return n;
+}
+
+const paper = [245, 241, 230];
+const stops = [
+  [0.00, paper],
+  [0.18, [206, 222, 230]],
+  [0.42, [112, 158, 198]],
+  [0.70, [36, 88, 152]],
+  [0.88, [16, 56, 118]],
+  [1.00, [10, 36, 88]],
+];
+function blue(d) {
+  for (let k = 1; k < stops.length; k++) {
+    if (d <= stops[k][0]) {
+      const [t0, c0] = stops[k - 1], [t1, c1] = stops[k];
+      const t = (d - t0) / (t1 - t0);
+      return [c0[0] + (c1[0] - c0[0]) * t, c0[1] + (c1[1] - c0[1]) * t, c0[2] + (c1[2] - c0[2]) * t];
+    }
+  }
+  return stops[stops.length - 1][1];
+}
+
+// precompute density per band per row
+const rows = BASE - TOP + 40;
+const dens = bands.map(b => {
+  const arr = new Float32Array(H);
+  for (let y = 0; y < H; y++) {
+    const v = (BASE - y) / (BASE - TOP);
+    if (v < -0.002 || y < TOP - 30) { arr[y] = 0; continue; }
+    const n = hoursAbove(b.v, Math.max(v, 0));
+    arr[y] = 1 - Math.exp(-0.2 * n);
+  }
+  // soften vertically, like light spreading under the glass
+  const out = new Float32Array(H);
+  const r = 3;
+  for (let y = 0; y < H; y++) {
+    let s = 0, w = 0;
+    for (let k = -r; k <= r; k++) {
+      const yy = y + k; if (yy < 0 || yy >= H) continue;
+      const g = Math.exp(-(k * k) / 6); s += arr[yy] * g; w += g;
+    }
+    out[y] = s / w;
+  }
+  return out;
+});
+
+const img = ctx.createImageData(W, H);
+const px = img.data;
+
+// coated area (sensitiser brushed on, slightly irregular edges)
+const CL = 44, CR = 1056, CT = 60, CB = 690;
+function coated(x, y) {
+  const e1 = (fbm(y * 0.035, 3.1, 11) - 0.5) * 34 + (fbm(y * 0.6, 0.5, 5) - 0.5) * 22;
+  const e2 = (fbm(y * 0.035, 9.7, 12) - 0.5) * 34 + (fbm(y * 0.6, 4.5, 6) - 0.5) * 22;
+  const e3 = (fbm(x * 0.02, 1.3, 13) - 0.5) * 22 + (fbm(x * 0.3, 2.2, 7) - 0.5) * 10;
+  const e4 = (fbm(x * 0.02, 7.7, 14) - 0.5) * 22 + (fbm(x * 0.3, 8.2, 8) - 0.5) * 10;
+  return x > CL + e1 && x < CR + e2 && y > CT + e3 && y < CB + e4;
+}
+
+for (let y = 0; y < H; y++) {
+  // horizontal brush streaks
+  const streak = (fbm(0.4, y * 0.09, 21) - 0.5);
+  for (let x = 0; x < W; x++) {
+    const i = (y * W + x) * 4;
+    const grain = (hash(x, y, 1) - 0.5) * 7;
+    const fiber = (fbm(x * 0.08, y * 0.08, 2) - 0.5) * 8;
+    let r = paper[0] + grain + fiber, g = paper[1] + grain + fiber, b = paper[2] + grain * 0.8 + fiber;
+
+    if (coated(x, y)) {
+      // faint residual stain of the washed-out coating
+      const st = 0.10 + 0.08 * fbm(x * 0.01, y * 0.012, 31) + streak * 0.10;
+      r += (214 - r) * st; g += (226 - g) * st; b += (222 - b) * st;
+
+      // which band, if any
+      const k = Math.floor((x - L) / SLOT);
+      if (k >= 0 && k < bands.length) {
+        const bd = bands[k];
+        const wob = (fbm(y * 0.05, k * 3.3, 41) - 0.5) * 2.2;
+        const a0 = bd.x0 + wob, a1 = bd.x1 + wob * 0.7;
+        let cover = Math.min(1, Math.max(0, (x + 1.5 - a0) / 2.5)) * Math.min(1, Math.max(0, (a1 + 0.5 - x) / 2.5));
+        if (cover > 0) {
+          let d = dens[k][y];
+          // uneven coating and exposure mottle
+          d *= 0.9 + 0.16 * fbm(x * 0.06, y * 0.03, 51) + streak * 0.18;
+          d = Math.max(0, Math.min(1, d));
+          const c = blue(d);
+          const m = cover * Math.min(1, d * 6);
+          const cg = (hash(x, y, 7) - 0.5) * 10 * d;
+          r = r * (1 - m) + (c[0] + cg) * m;
+          g = g * (1 - m) + (c[1] + cg) * m;
+          b = b * (1 - m) + (c[2] + cg) * m;
+        }
+      }
+    }
+    // gentle vignette on the sheet
+    const dx = (x - W / 2) / W, dy = (y - H / 2) / H;
+    const vg = 1 - 0.06 * (dx * dx + dy * dy) * 4;
+    px[i] = r * vg; px[i + 1] = g * vg; px[i + 2] = b * vg; px[i + 3] = 255;
+  }
+}
+ctx.putImageData(img, 0, 0);
+
+// pencil caption, as on the margin of a print
+ctx.fillStyle = 'rgba(88, 84, 76, 0.85)';
+ctx.font = 'italic 15px Georgia, "Times New Roman", serif';
+ctx.textBaseline = 'alphabetic';
+ctx.fillText('Printed by Their Own Light', 70, 742);
+ctx.font = '12px Georgia, "Times New Roman", serif';
+ctx.fillStyle = 'rgba(88, 84, 76, 0.7)';
+ctx.textAlign = 'right';
+ctx.fillText('sixty-one days, left to right · each blue band is one day, raised as high as its light reached', 1030, 734);
+ctx.fillText('and deepened by every hour that got there · the white between the bands is night', 1030, 751);
+</script>
+</body>
+</html>

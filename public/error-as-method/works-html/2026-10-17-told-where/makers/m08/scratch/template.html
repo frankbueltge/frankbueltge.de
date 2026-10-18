@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Days of Light</title>
+<style>
+  :root { --bg: #05060a; }
+  html, body { margin: 0; height: 100%; background: var(--bg); }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  canvas { display: block; width: min(100vw, calc(100vh * 1100 / 800)); height: auto; aspect-ratio: 1100 / 800; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="Sixty-one vertical strands of warm light rising from a horizon, one per day, with thin blue lines hanging below between them for the nights."></canvas>
+<script>
+// Material: read from record.jpg (Fort Peck, 61 days x 24 hourly values).
+// prof[d][l]: ink found at plot height l (0 = top, 81 = just above the floor) within the
+//   24-hour window centred on day d's daylight. top[d]: highest dark pixel of that day.
+// night[n]: ink lying on the floor line in the 24-hour window centred on the night after day n.
+const DATA = __DATA__;
+
+const cv = document.getElementById('c');
+const S = 2; // draw at 2x for crispness
+cv.width = 1100 * S; cv.height = 800 * S;
+const g = cv.getContext('2d');
+g.scale(S, S);
+
+const W = 1100, H = 800, HOR = 590, X0 = 82, X1 = 1018, LV = 82, TOPSPAN = 500;
+const N = DATA.prof.length, step = (X1 - X0) / (N - 1);
+const yOf = l => HOR - (LV - l) / LV * TOPSPAN;
+
+// sky and ground
+let sky = g.createLinearGradient(0, 0, 0, HOR);
+sky.addColorStop(0, '#04050b'); sky.addColorStop(0.7, '#0a0c18'); sky.addColorStop(1, '#181a2a');
+g.fillStyle = sky; g.fillRect(0, 0, W, HOR);
+let gr = g.createLinearGradient(0, HOR, 0, H);
+gr.addColorStop(0, '#07080f'); gr.addColorStop(1, '#020206');
+g.fillStyle = gr; g.fillRect(0, HOR, W, H - HOR);
+
+// colour for a height: deep amber near the horizon, pale gold up high
+function col(l, a) {
+  const t = 1 - l / LV;           // 0 at horizon, 1 at top
+  const r = 255, gg = Math.round(120 + 115 * Math.pow(t, 0.8)), b = Math.round(40 + 170 * Math.pow(t, 1.6));
+  return `rgba(${r},${gg},${b},${a})`;
+}
+
+// light layer, built off-screen so it can glow
+const L = document.createElement('canvas'); L.width = W * S; L.height = H * S;
+const lg = L.getContext('2d'); lg.scale(S, S);
+let maxv = 0; DATA.prof.forEach(r => r.forEach(v => { if (v > maxv) maxv = v; }));
+const lh = TOPSPAN / LV;
+DATA.prof.forEach((raw, d) => {
+  const cx = X0 + d * step;
+  // soften the JPEG grain a little: 1-2-1 along the height
+  const row = raw.map((v, l) => (2 * v + (raw[l - 1] || 0) + (raw[l + 1] || 0)) / 4);
+  row.forEach((v, l) => {
+    if (v <= 0) return;
+    const a = Math.min(1, Math.pow(v / maxv, 0.6));
+    const w = 2.2 + 5.5 * a;
+    lg.fillStyle = col(l, a);
+    lg.fillRect(cx - w / 2, yOf(l) - lh / 2, w, lh + 0.6);
+  });
+});
+
+g.save();
+g.globalCompositeOperation = 'lighter';
+g.filter = 'blur(18px)'; g.globalAlpha = 0.8; g.drawImage(L, 0, 0, W, H);
+g.filter = 'blur(5px)';  g.globalAlpha = 0.8; g.drawImage(L, 0, 0, W, H);
+g.filter = 'none';       g.globalAlpha = 0.85; g.drawImage(L, 0, 0, W, H);
+g.restore();
+
+// the highest moment of each day
+DATA.top.forEach((t, d) => {
+  if (t >= LV) return;
+  const cx = X0 + d * step, cy = yOf(t);
+  const rg = g.createRadialGradient(cx, cy, 0, cx, cy, 9);
+  rg.addColorStop(0, 'rgba(255,250,235,0.95)'); rg.addColorStop(0.25, 'rgba(255,236,190,0.45)'); rg.addColorStop(1, 'rgba(255,220,160,0)');
+  g.fillStyle = rg; g.beginPath(); g.arc(cx, cy, 9, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#fffaf0'; g.beginPath(); g.arc(cx, cy, 1.5, 0, Math.PI * 2); g.fill();
+});
+
+// horizon: the floor every night returns to
+let hz = g.createLinearGradient(X0 - 40, 0, X1 + 40, 0);
+hz.addColorStop(0, 'rgba(255,200,140,0)'); hz.addColorStop(0.08, 'rgba(255,200,140,0.35)');
+hz.addColorStop(0.92, 'rgba(255,200,140,0.35)'); hz.addColorStop(1, 'rgba(255,200,140,0)');
+g.fillStyle = hz; g.fillRect(X0 - 40, HOR, X1 - X0 + 80, 1);
+
+// nights, hanging between the days
+DATA.night.forEach((v, n) => {
+  const cx = X0 + (n + 0.5) * step, len = v * 22;
+  const ng = g.createLinearGradient(0, HOR + 3, 0, HOR + 3 + len);
+  ng.addColorStop(0, 'rgba(120,145,230,0.75)'); ng.addColorStop(1, 'rgba(60,80,170,0)');
+  g.fillStyle = ng; g.fillRect(cx - 0.9, HOR + 3, 1.8, len);
+});
+
+// a quiet line of text
+g.fillStyle = 'rgba(200,190,175,0.55)';
+g.font = '500 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif';
+g.textBaseline = 'alphabetic';
+const cap = 'FORT PECK, MONTANA  ·  634 M  ·  1,464 HOURS';
+if ('letterSpacing' in g) g.letterSpacing = '3px';
+g.fillText(cap, X0, H - 34);
+g.textAlign = 'right';
+g.fillText('SIXTY-ONE DAYS  ·  SIXTY NIGHTS', X1, H - 34);
+</script>
+</body>
+</html>

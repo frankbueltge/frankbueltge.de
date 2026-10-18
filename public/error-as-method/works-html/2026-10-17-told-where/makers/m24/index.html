@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-one Suns</title>
+<style>
+:root{--bg:#04050a;--ink:#8d8474;--ink2:#5d574d}
+html,body{margin:0;height:100%;background:var(--bg)}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden}
+.frame{position:relative;width:1100px;height:800px;max-width:100vw;max-height:100vh;aspect-ratio:11/8}
+canvas{display:block;width:100%;height:100%}
+.cap{position:absolute;left:56px;bottom:40px;right:56px;display:flex;justify-content:space-between;align-items:flex-end;
+ font:12px/1.55 Georgia,"Times New Roman",serif;color:var(--ink);letter-spacing:.02em}
+.cap h1{margin:0 0 4px;font-weight:normal;font-size:19px;letter-spacing:.06em;color:#c9b99a}
+.cap p{margin:0;max-width:560px}
+.cap .r{text-align:right;color:var(--ink2);font-size:11px;letter-spacing:.08em}
+</style></head><body>
+<div class="frame">
+<canvas id="c" width="1100" height="800" aria-label="Sixty-one nested arcs of light over a dark horizon, one for each day of the record; their brightness is the measured sunlight, broken where clouds passed."></canvas>
+<div class="cap">
+ <div><h1>Sixty-one Suns</h1>
+ <p>Fort Peck, Montana, 634&nbsp;m. One arc for each day of the record, drawn along the sun&rsquo;s path across a southern sky. The light along each arc is the measured sunlight on level ground, hour by hour, so the dark breaks are where clouds came over.</p></div>
+ <div class="r">1,464 hours<br>61 days<br>first day highest</div>
+</div>
+</div>
+<script>
+(function(){
+var S="030303030328150000000000000000032006322623262625244209170600000000000000000000000006621636757431319236521330000300000000000000001038152026263636343730452523060001000000000000010024100344525269655669326352150300000000000000080106135347242525313331066308473000000001000000100133532567929158696149451229000300000000000000000014102835635767897365412121210008000000000000000618170332484517171426200503000100000000000000001020354528296945203243333217060003000000000000060043171791857494516385221547000300000000000000002400104259738389897684486303301300000000000000080025375689595085608975284606000000000000000004000043322262876969878172584129001301000000000000011600365709648055635820673607000000000000080000170042745942500860605569600145090027000000000000000900584123738791637684284102100000000000000000002208294281657081763353121256020025000000000000003320104678826164487261622543080000000000000000062038220063836773737282200849340100000000000000043814130073578468538422744931080000000000000000001100150640837287826986542407390000000000000000000603130351281956613973276007000007000000000000003921077157898288808877543718070000000000000000000000140240345318344167412314000600000000000007000023342943779952474834483800000013000000000000010020051106032525355138391611000000000500000000000414542741417577696455220700390000000000000000001400013267466543806349230860330000000000000000000018055589376980548271411806000000000000000000000050370762857971848053414123710700000000000004000016523178688479845336671607000000000000000000000300135650267782787256690338000019000000000000000004193641655986542432250619010400000000000000000014022166731119657850583700051800000000000000000030031467857878525584643839200600000000000000031800003552678269678378541937000500000000000000030033577316547976797532665320030000000000000000000100153545637078757878426636200400000000000000001703533568757254545954741800371904000000000000000003165235776868878165586204163800000000000000001603006735537884846879375519380400000000000000000300673416528377678378540036180004000000000000000034031652677883837835685217170300000000000000000300321565507681817666513316000200000000000000000010034650327150376854505402002409000000000000003214024477607459225735281101000000000000000000000003251624306734432248300137001400000000000000000002482816737963784763730130060000000000000000000012290247627277607835596512260200000000000000000625015037363730503023171706010000000000000000002000011241665468677257432406000000000000000000000025411101505568772668524100060000000000000000000000231504203155476030604800120000000000000000000001486330127973736379472900000000120000000000000000001161452871746653410900240000000000000000000000065152183869635454234100280900000000000000000010002543675772712355416508000000000000000000000000371024665455554749373709002000000000000000000010362865524450363619101012090000000000000000000000003306155372574824335241070000000000000000000400007165762623", NOON=23.355, NZA=15.7311, NZB=-0.04343;
+var v=[];for(var i=0;i<S.length;i+=2)v.push(parseInt(S.substr(i,2),10)/99);
+var W=1100,H=800,cv=document.getElementById('c'),dpr=Math.min(3,window.devicePixelRatio||1);
+cv.width=W*dpr;cv.height=H*dpr;var g=cv.getContext('2d');g.scale(dpr,dpr);
+var HZ=640, CX=W/2, KAZ=4.05, KALT=8.4, PHI=48*Math.PI/180, R=Math.PI/180;
+// sky
+var sky=g.createLinearGradient(0,0,0,HZ);
+sky.addColorStop(0,'#05060d');sky.addColorStop(.62,'#0a0c1a');sky.addColorStop(1,'#1b1626');
+g.fillStyle=sky;g.fillRect(0,0,W,HZ);
+var gr=g.createLinearGradient(0,HZ,0,H);gr.addColorStop(0,'#0b0a0c');gr.addColorStop(1,'#030304');
+g.fillStyle=gr;g.fillRect(0,HZ,W,H-HZ);
+// days: solar time of each value
+var days={};
+for(var i=0;i<v.length;i++){var t=i-NOON+12,d=Math.floor(t/24);(days[d]=days[d]||[]).push([t-24*d,v[i]]);}
+function decl(d){ // from the record's own shortening days: nonzero hours -> day length -> declination
+ var L=Math.min(15.9,NZA+NZB*d), H0=L/2*15*R; return Math.atan(-Math.cos(H0)/Math.tan(PHI));}
+function pos(t,dl){var h=(t-12)*15*R;
+ var sa=Math.sin(PHI)*Math.sin(dl)+Math.cos(PHI)*Math.cos(dl)*Math.cos(h);var alt=Math.asin(sa);
+ var az=Math.atan2(Math.sin(h),Math.cos(h)*Math.sin(PHI)-Math.tan(dl)*Math.cos(PHI));
+ return [CX+az/R*KAZ, HZ-alt/R*KALT, alt];}
+function col(a){ // light: ember -> amber -> pale gold
+ var r,gg,b; if(a<.5){var u=a/.5;r=150+105*u;gg=40+100*u;b=25+15*u;}else{var u=(a-.5)/.5;r=255;gg=140+100*u;b=40+150*u;}
+ return [r|0,gg|0,b|0];}
+var keys=Object.keys(days).map(Number).sort(function(a,b){return a-b});
+// faint thread of each day's path (where the sun would have been)
+g.globalCompositeOperation='lighter';
+keys.forEach(function(d){var dl=decl(d),pts=days[d],t0=pts[0][0],t1=pts[pts.length-1][0];
+ g.beginPath();var first=true;for(var t=t0;t<=t1;t+=.05){var p=pos(t,dl);if(p[2]<0){first=true;continue}
+ if(first){g.moveTo(p[0],p[1]);first=false}else g.lineTo(p[0],p[1]);}
+ g.strokeStyle='rgba(120,130,170,0.07)';g.lineWidth=.8;g.stroke();});
+// light along each path
+function val(pts,t){for(var k=0;k<pts.length-1;k++){if(t>=pts[k][0]&&t<=pts[k+1][0]){var u=(t-pts[k][0])/(pts[k+1][0]-pts[k][0]);return pts[k][1]*(1-u)+pts[k+1][1]*u;}}return 0;}
+// each day is drawn opaque on its own layer (so its own segments never stack), then the layers are added as light
+function layer(){var c=document.createElement('canvas');c.width=W*dpr;c.height=H*dpr;var x=c.getContext('2d');x.scale(dpr,dpr);return [c,x];}
+var DL=layer(),ACC=layer(),dc=DL[1],ac=ACC[1];ac.globalCompositeOperation='lighter';
+dc.lineCap='butt';dc.lineJoin='round';
+keys.forEach(function(d){var dl=decl(d),pts=days[d],t0=pts[0][0],t1=pts[pts.length-1][0],prev=null;
+ dc.setTransform(1,0,0,1,0,0);dc.clearRect(0,0,W*dpr,H*dpr);dc.setTransform(dpr,0,0,dpr,0,0);
+ // the sun's x always increases through the day, so a horizontal gradient carries the hour-by-hour light along the whole arc in one stroke
+ var path=[];for(var t=t0;t<=t1+1e-9;t+=.05){var p=pos(t,dl);if(p[2]>=0)path.push([p[0],p[1],val(pts,t)]);}
+ if(path.length>1){var xa=path[0][0],xb=path[path.length-1][0],gd=dc.createLinearGradient(xa,0,xb,0);
+  for(var j=0;j<path.length;j+=2){var m=path[j][2],c=col(m),k=Math.pow(m,1.7);
+   gd.addColorStop(Math.min(1,Math.max(0,(path[j][0]-xa)/(xb-xa))),'rgb('+(c[0]*k|0)+','+(c[1]*k|0)+','+(c[2]*k|0)+')');}
+  dc.beginPath();dc.moveTo(path[0][0],path[0][1]);for(var j=1;j<path.length;j++)dc.lineTo(path[j][0],path[j][1]);
+  dc.strokeStyle=gd;dc.lineWidth=1.15;dc.stroke();}
+ ac.setTransform(1,0,0,1,0,0);ac.drawImage(DL[0],0,0);
+});
+g.save();g.setTransform(1,0,0,1,0,0);g.globalCompositeOperation='lighter';
+try{g.filter='blur('+(9*dpr)+'px)';g.globalAlpha=.7;g.drawImage(ACC[0],0,0);
+ g.filter='blur('+(2.2*dpr)+"px)";g.globalAlpha=.5;g.drawImage(ACC[0],0,0);}catch(e){}
+g.filter='none';g.globalAlpha=.92;g.drawImage(ACC[0],0,0);g.restore();
+g.globalCompositeOperation='source-over';
+// horizon
+g.fillStyle='rgba(150,130,110,0.35)';g.fillRect(0,HZ,W,1);
+})();
+</script></body></html>

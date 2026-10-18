@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aperture</title>
+<style>
+  :root { --ground:#06070b; --ink:#b9ad97; --faint:#5d5649; }
+  html,body { margin:0; height:100%; background:var(--ground); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .frame { position:relative; width:1100px; height:800px; }
+  canvas { display:block; width:1100px; height:800px; }
+  .t { position:absolute; font-family: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; color:var(--ink); }
+  .title { left:56px; top:52px; font-size:15px; letter-spacing:.32em; text-transform:uppercase; }
+  .sub { left:56px; top:78px; font-size:13px; color:var(--faint); letter-spacing:.06em; font-style:italic; }
+  .key { left:56px; bottom:52px; width:220px; font-size:12.5px; line-height:1.6; color:var(--faint); }
+  .key b { font-weight:normal; color:var(--ink); }
+  .r { right:56px; bottom:52px; width:200px; text-align:right; font-size:12.5px; line-height:1.6; color:var(--faint); }
+</style>
+</head>
+<body>
+<div class="frame">
+  <canvas id="c" width="1100" height="800"></canvas>
+  <div class="t title">Aperture</div>
+  <div class="t sub">Fort Peck, Montana &middot; 634 m</div>
+  <div class="t key"><b>61 days</b>, one ring each: the first is outermost, the last innermost.<br>
+  Noon at the top, midnight at the foot; each hour of the day is a direction.<br>
+  Where the record held a value above nothing, it glows. The rest is dark.</div>
+  <div class="t r">Dim rings are dull days.<br>The opening tightens inward.</div>
+</div>
+<script>
+(function(){
+  var D = /*DATA*/[];
+  var cv = document.getElementById('c');
+  var dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = 1100*dpr; cv.height = 800*dpr;
+  var g = cv.getContext('2d');
+  g.scale(dpr,dpr);
+  var CX = 550, CY = 412, RO = 368, RI = 92, N = 61;
+  var step = (RO-RI)/(N-1);
+  function rad(k){ return RO - k*step; }
+  function ang(h){ return -Math.PI/2 + h/24*2*Math.PI; }
+
+  g.fillStyle = '#06070b'; g.fillRect(0,0,1100,800);
+
+  // the structure of the dial: very faint, so night has a shape
+  g.lineWidth = 1;
+  for (var k=0;k<N;k++){
+    g.strokeStyle = (k%10===0 || k===N-1) ? 'rgba(150,140,120,0.10)' : 'rgba(150,140,120,0.035)';
+    g.beginPath(); g.arc(CX,CY,rad(k),0,2*Math.PI); g.stroke();
+  }
+  for (var h=0;h<24;h++){
+    var a = ang(h), long = (h%6===0);
+    g.strokeStyle = long ? 'rgba(170,160,140,0.28)' : 'rgba(170,160,140,0.13)';
+    g.beginPath();
+    g.moveTo(CX+Math.cos(a)*(RO+8), CY+Math.sin(a)*(RO+8));
+    g.lineTo(CX+Math.cos(a)*(RO+(long?20:14)), CY+Math.sin(a)*(RO+(long?20:14)));
+    g.stroke();
+  }
+  // midnight hairline to the centre
+  g.strokeStyle='rgba(170,160,140,0.07)';
+  g.beginPath(); g.moveTo(CX,CY+RI-6); g.lineTo(CX,CY+RO+6); g.stroke();
+
+  // light: every non-zero value of the record, set at its day and hour
+  var L = document.createElement('canvas');
+  L.width = 1100*dpr; L.height = 800*dpr;
+  var l = L.getContext('2d');
+  l.scale(dpr,dpr);
+  l.globalCompositeOperation = 'lighter';
+  function col(v,a){
+    // ember -> amber -> pale straw
+    var s = [[120,30,12],[214,104,34],[246,186,96],[255,240,206]];
+    var t = Math.max(0,Math.min(1,v))*3, i = Math.min(2,Math.floor(t)), f = t-i;
+    var c = [0,1,2].map(function(j){ return Math.round(s[i][j]+(s[i+1][j]-s[i][j])*f); });
+    return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')';
+  }
+  l.lineCap = 'butt';
+  for (var i=0;i<D.length;i+=3){
+    var k=D[i], hr=D[i+1], v=D[i+2];
+    var r = rad(k);
+    // each hourly value is an arc one hour long on its day's ring,
+    // softened at the ends by two wider, fainter passes
+    var passes = [[0.45,1.00,step*0.8],[0.62,0.35,step*1.15],[0.85,0.12,step*1.5]];
+    for (var p=0;p<passes.length;p++){
+      var half = passes[p][0], al = (0.025 + 0.42*Math.pow(v,1.7))*passes[p][1];
+      l.strokeStyle = col(v, al);
+      l.lineWidth = passes[p][2];
+      l.beginPath();
+      l.arc(CX,CY,r,ang(hr-half),ang(hr+half));
+      l.stroke();
+    }
+  }
+  // a wide faint halo, then the sharp layer
+  g.save();
+  g.globalCompositeOperation = 'lighter';
+  try { g.filter = 'blur(10px)'; } catch(e){}
+  g.globalAlpha = 0.5;
+  g.drawImage(L,0,0,1100,800);
+  try { g.filter = 'none'; } catch(e){}
+  g.globalAlpha = 1;
+  g.drawImage(L,0,0,1100,800);
+  g.restore();
+
+  // small marks: first and last day
+  g.fillStyle = 'rgba(185,173,151,0.55)';
+  g.font = 'italic 11px Georgia, serif';
+  g.textAlign = 'left';
+  g.fillText('first day', CX + 12, CY + RO + 4);
+  g.fillText('last day', CX + 10, CY + RI + 4);
+  g.textAlign = 'center';
+  g.fillStyle = 'rgba(185,173,151,0.6)';
+  g.fillText('noon', CX, CY - RO - 28);
+})();
+</script>
+</body>
+</html>

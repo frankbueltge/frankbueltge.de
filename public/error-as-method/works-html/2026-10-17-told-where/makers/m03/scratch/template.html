@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sun Wheel, Fort Peck</title>
+<style>
+  :root { --bg:#0d0b0a; --ink:#d9cbb3; --dim:#7d7264; }
+  html,body { margin:0; height:100%; background:var(--bg); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden;
+         font-family: Georgia, "Times New Roman", serif; color:var(--ink); }
+  .stage { position:relative; width:1100px; height:800px; flex:none; }
+  canvas { position:absolute; inset:0; width:1100px; height:800px; }
+  .t { position:absolute; left:40px; bottom:40px; width:200px; }
+  .t h1 { font-weight:normal; font-size:24px; line-height:1.15; margin:0 0 12px; letter-spacing:.01em; }
+  .t p { font-size:12px; line-height:1.55; margin:0; color:var(--dim); }
+  .k { position:absolute; right:40px; bottom:40px; width:250px; font-size:12px; line-height:1.55; color:var(--dim); text-align:right; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <canvas id="c" width="1100" height="800"></canvas>
+  <div class="t">
+    <h1>Sun Wheel,<br>Fort Peck</h1>
+    <p>Sunlight on level ground, every hour for sixty-one days, at 634&nbsp;m on the plains of north-eastern Montana.</p>
+  </div>
+  <div class="k">Clockwise from the top: the days in order.<br>The inner ring is zero: the nights.<br>Distance outward: how much light.</div>
+</div>
+<script>
+const DATA = /*DATA*/null;
+(function(){
+  const cv=document.getElementById('c'), dpr=Math.max(1,window.devicePixelRatio||1);
+  cv.width=1100*dpr; cv.height=800*dpr;
+  const g=cv.getContext('2d'); g.scale(dpr,dpr);
+  const CX=550, CY=400, R0=150, K=2.48;          // zero ring radius, px per source row
+  const Z=83.5, TOPY=5;                          // zero line and record maximum in the source
+  const X0=2.5, X1=297.5, GAP=22*Math.PI/180;    // source time extent; opening at the top
+  const SPAN=2*Math.PI-GAP, A0=-Math.PI/2+GAP/2;
+  const ang=x=>A0+(x-X0)/(X1-X0)*SPAN;
+  const rad=y=>R0+(Z-y)*K;
+  // ground
+  const bg=g.createRadialGradient(CX,CY,0,CX,CY,520);
+  bg.addColorStop(0,'#17120e'); bg.addColorStop(1,'#0d0b0a');
+  g.fillStyle=bg; g.fillRect(0,0,1100,800);
+  // faint circle at the record's highest value
+  g.strokeStyle='rgba(217,203,179,0.07)'; g.lineWidth=1;
+  g.beginPath(); g.arc(CX,CY,rad(TOPY),A0,A0+SPAN); g.stroke();
+  // day ticks at each local noon (midway between night centres: period 4.822 px)
+  const P=4.822, N0=3.83;
+  g.strokeStyle='rgba(217,203,179,0.22)';
+  for(let k=0;k<62;k++){ const x=N0+P*(k+0.5); if(x<X0||x>X1) continue;
+    const a=ang(x), r1=rad(TOPY)+10, r2=r1+(k%7===0?9:4);
+    g.beginPath(); g.moveTo(CX+Math.cos(a)*r1,CY+Math.sin(a)*r1); g.lineTo(CX+Math.cos(a)*r2,CY+Math.sin(a)*r2); g.stroke(); }
+  // spokes at each night's centre, dividing the wheel into its days
+  g.strokeStyle='rgba(217,203,179,0.06)'; g.lineWidth=1;
+  for(let k=0;k<63;k++){ const x=N0+P*k; if(x<X0||x>X1) continue; const a=ang(x);
+    g.beginPath(); g.moveTo(CX+Math.cos(a)*(R0+6),CY+Math.sin(a)*(R0+6)); g.lineTo(CX+Math.cos(a)*(rad(TOPY)+4),CY+Math.sin(a)*(rad(TOPY)+4)); g.stroke(); }
+  // the night ring: the record's run of zeros, drawn where it is dark
+  const z=DATA.z;
+  for(let s=X0*10;s<=X1*10;s++){
+    const x=s/10, i=Math.floor(x-0.5), f=x-0.5-i;
+    const v=(z[i]||0)*(1-f)+(z[i+1]||0)*f; if(v<0.05) continue;
+    const q=Math.max(0,Math.min(1,(v-0.3)/0.6)), a=q*q*(3-2*q); if(a<0.02) continue;
+    g.strokeStyle=`rgba(96,112,158,${(0.95*a).toFixed(3)})`; g.lineWidth=7;
+    g.beginPath(); g.arc(CX,CY,R0,ang(x),ang(x+0.1)+0.002); g.stroke();
+  }
+  // the dots of light
+  function col(v){ // v: 0 at zero .. 1 at the maximum
+    const stops=[[0,[150,52,30]],[0.35,[214,110,40]],[0.65,[244,182,82]],[0.9,[255,236,190]],[1,[255,252,240]]];
+    for(let j=1;j<stops.length;j++) if(v<=stops[j][0]){ const [a,ca]=stops[j-1],[b,cb]=stops[j], t=(v-a)/(b-a);
+      return ca.map((c,k)=>Math.round(c+(cb[k]-c)*t)); }
+    return stops[stops.length-1][1];
+  }
+  const B=DATA.b.slice().sort((p,q)=>p[1]>q[1]?-1:1);
+  g.globalCompositeOperation='lighter';
+  for(const [x,y,w,d] of B){
+    const a=ang(x), r=rad(y), px=CX+Math.cos(a)*r, py=CY+Math.sin(a)*r;
+    if(y>85){ // below zero: the instrument's slight night-time negatives
+      g.fillStyle=`rgba(120,150,210,${Math.min(0.9,0.2+d).toFixed(3)})`;
+      g.beginPath(); g.arc(px,py,1.3,0,7); g.fill(); continue; }
+    const v=Math.max(0,Math.min(1,(Z-y)/(Z-TOPY)));
+    const [cr,cg,cb]=col(v), al=Math.min(1,0.15+d*1.1), sz=0.9+0.95*Math.sqrt(w);
+    const halo=g.createRadialGradient(px,py,0,px,py,sz*4.2);
+    halo.addColorStop(0,`rgba(${cr},${cg},${cb},${(al*0.22).toFixed(3)})`);
+    halo.addColorStop(1,`rgba(${cr},${cg},${cb},0)`);
+    g.fillStyle=halo; g.beginPath(); g.arc(px,py,sz*4.2,0,7); g.fill();
+    g.fillStyle=`rgba(${cr},${cg},${cb},${(al*0.85).toFixed(3)})`;
+    g.beginPath(); g.arc(px,py,sz,0,7); g.fill();
+  }
+  g.globalCompositeOperation='source-over';
+  // the opening: where the record begins and ends
+  g.strokeStyle='rgba(217,203,179,0.35)'; g.lineWidth=1;
+  for(const x of [X0,X1]){ const a=ang(x);
+    g.beginPath(); g.moveTo(CX+Math.cos(a)*(R0-14),CY+Math.sin(a)*(R0-14)); g.lineTo(CX+Math.cos(a)*(R0-26),CY+Math.sin(a)*(R0-26)); g.stroke(); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sixty-One Turns</title>
+<meta name="viewport" content="width=1100">
+<style>
+  html,body{margin:0;padding:0;background:#0a0b10;}
+  body{width:1100px;height:800px;overflow:hidden;position:relative;font-family:Georgia,"Times New Roman",serif;color:#8f8a7e;}
+  canvas{display:block;position:absolute;left:0;top:0;}
+  .t{position:absolute;left:40px;top:38px;font-size:22px;letter-spacing:.04em;color:#d9cfb8;}
+  .s{position:absolute;left:40px;top:72px;width:230px;font-size:13px;line-height:1.55;color:#7d786d;}
+  .f{position:absolute;left:40px;bottom:36px;width:230px;font-size:12px;line-height:1.55;color:#5f5b53;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<div class="t">Sixty-One Turns</div>
+<div class="s">One measured quantity, hourly, for sixty-one days, wound into a spiral: one turn for each day, the first day innermost. Brightness is the value. Where the record rests on its floor, the line goes dark.</div>
+<div class="f">Each day&rsquo;s floor is turned to the bottom, so its high hours rise to the top. Small marks: first and last hour. Toward the outer turns the high hours dim and the dark wedge opens slightly.</div>
+<script>
+const MEAN=[0, 0, 0.176, 0.071, 0.006, 0.087, 0.252, 0.173, 0.011, 0.012, 0.263, 0.57, 0.374, 0.007, 0.018, 0.21, 0.352, 0.171, 0.009, 0.023, 0.389, 0.593, 0.197, 0.005, 0.089, 0.316, 0.306, 0.18, 0.005, 0.16, 0.658, 0.502, 0.055, 0.007, 0.135, 0.549, 0.488, 0.036, 0.008, 0.116, 0.276, 0.076, 0.01, 0.057, 0.305, 0.374, 0.131, 0.01, 0.069, 0.54, 0.706, 0.136, 0.007, 0.139, 0.682, 0.718, 0.07, 0.009, 0.162, 0.647, 0.574, 0.067, 0.004, 0.206, 0.761, 0.446, 0.035, 0.013, 0.203, 0.596, 0.308, 0.019, 0.043, 0.458, 0.577, 0.166, 0.008, 0.111, 0.626, 0.755, 0.102, 0.006, 0.093, 0.619, 0.44, 0.058, 0.009, 0.178, 0.689, 0.425, 0.073, 0.014, 0.251, 0.693, 0.387, 0.014, 0.029, 0.414, 0.651, 0.199, 0.01, 0.039, 0.478, 0.72, 0.116, 0.003, 0.03, 0.268, 0.479, 0.098, 0.012, 0.149, 0.784, 0.58, 0.053, 0.004, 0.054, 0.39, 0.26, 0.021, 0.039, 0.252, 0.57, 0.225, 0.008, 0.018, 0.117, 0.347, 0.13, 0.008, 0.061, 0.385, 0.671, 0.091, 0.004, 0.058, 0.547, 0.54, 0.096, 0.013, 0.15, 0.71, 0.484, 0.056, 0.003, 0.212, 0.747, 0.42, 0.023, 0.032, 0.346, 0.742, 0.203, 0.005, 0.062, 0.387, 0.712, 0.166, 0.003, 0.085, 0.503, 0.356, 0.036, 0.004, 0.064, 0.418, 0.491, 0.105, 0.003, 0.203, 0.734, 0.481, 0.046, 0.006, 0.285, 0.74, 0.244, 0.019, 0.028, 0.367, 0.684, 0.157, 0.017, 0.058, 0.516, 0.678, 0.133, 0.008, 0.124, 0.587, 0.555, 0.121, 0.003, 0.176, 0.674, 0.502, 0.045, 0.006, 0.196, 0.73, 0.403, 0.027, 0.044, 0.297, 0.718, 0.241, 0.011, 0.032, 0.497, 0.691, 0.178, 0.003, 0.03, 0.524, 0.655, 0.09, 0.002, 0.074, 0.512, 0.438, 0.035, 0.004, 0.131, 0.632, 0.252, 0.034, 0.003, 0.148, 0.43, 0.178, 0.008, 0.013, 0.364, 0.698, 0.237, 0.005, 0.026, 0.383, 0.59, 0.13, 0.005, 0.091, 0.34, 0.246, 0.05, 0.006, 0.072, 0.538, 0.406, 0.024, 0.004, 0.132, 0.533, 0.313, 0.01, 0.003, 0.104, 0.446, 0.271, 0.019, 0.017, 0.376, 0.652, 0.175, 0.004, 0.035, 0.468, 0.613, 0.057, 0.004, 0.043, 0.417, 0.384, 0.059, 0.004, 0.151, 0.592, 0.309, 0.03, 0.003, 0.174, 0.474, 0.253, 0.008, 0.017, 0.217, 0.377, 0.093, 0.003, 0.02, 0.216, 0.501, 0.106, 0.003, 0.02, 0.372, 0.345, 0.283, 0, 0];
+const MAX=[0, 0, 0, 0.288, 0.006, 0.263, 0.263, 0.417, 0.006, 0.058, 0.353, 0.763, 0.532, 0.019, 0.006, 0.378, 0.455, 0.301, 0.006, 0.019, 0.532, 0.699, 0.519, 0.006, 0.532, 0.532, 0.481, 0.481, 0.006, 0.34, 0.929, 0.699, 0.122, 0.006, 0.353, 0.737, 0.737, 0.006, 0.006, 0.327, 0.481, 0.263, 0.019, 0.199, 0.455, 0.455, 0.327, 0.006, 0.173, 0.853, 0.917, 0.224, 0.006, 0.25, 0.904, 0.904, 0.135, 0.006, 0.263, 0.904, 0.904, 0.058, 0.006, 0.314, 0.878, 0.596, 0.019, 0.019, 0.365, 0.647, 0.673, 0.006, 0.173, 0.75, 0.699, 0.455, 0.006, 0.417, 0.737, 0.917, 0.276, 0.006, 0.083, 0.814, 0.814, 0.25, 0.006, 0.468, 0.827, 0.622, 0.006, 0.006, 0.673, 0.84, 0.84, 0.006, 0.135, 0.737, 0.853, 0.494, 0.006, 0.109, 0.878, 0.878, 0.25, 0.006, 0.058, 0.571, 0.622, 0.263, 0.006, 0.571, 0.904, 0.788, 0.071, 0.006, 0.019, 0.673, 0.673, 0.058, 0.071, 0.353, 0.481, 0.481, 0.006, 0.058, 0.263, 0.519, 0.391, 0.006, 0.135, 0.545, 0.788, 0.071, 0.006, 0.019, 0.673, 0.814, 0.083, 0.006, 0.365, 0.84, 0.545, 0.058, 0.006, 0.506, 0.853, 0.712, 0.006, 0.006, 0.532, 0.853, 0.545, 0.006, 0.006, 0.776, 0.84, 0.391, 0.006, 0.365, 0.865, 0.865, 0.058, 0.006, 0.212, 0.66, 0.788, 0.186, 0.006, 0.314, 0.865, 0.853, 0.058, 0.006, 0.673, 0.84, 0.545, 0.006, 0.006, 0.571, 0.801, 0.532, 0.006, 0.019, 0.712, 0.801, 0.199, 0.006, 0.173, 0.763, 0.763, 0.378, 0.006, 0.353, 0.686, 0.635, 0.006, 0.006, 0.353, 0.853, 0.686, 0.006, 0.006, 0.673, 0.84, 0.545, 0.006, 0.16, 0.84, 0.84, 0.353, 0.006, 0.032, 0.814, 0.827, 0.34, 0.006, 0.096, 0.724, 0.686, 0.019, 0.006, 0.442, 0.776, 0.353, 0.019, 0.006, 0.301, 0.686, 0.301, 0.006, 0.006, 0.737, 0.801, 0.481, 0.006, 0.019, 0.481, 0.788, 0.263, 0.006, 0.058, 0.506, 0.301, 0.071, 0.006, 0.199, 0.686, 0.686, 0.058, 0.006, 0.109, 0.686, 0.686, 0.006, 0.006, 0.237, 0.609, 0.609, 0.006, 0.006, 0.801, 0.801, 0.288, 0.006, 0.006, 0.75, 0.75, 0.096, 0.006, 0.071, 0.699, 0.545, 0.006, 0.006, 0.25, 0.737, 0.66, 0.006, 0.006, 0.545, 0.66, 0.558, 0.006, 0.006, 0.66, 0.66, 0.122, 0.006, 0.058, 0.532, 0.571, 0.25, 0.006, 0.006, 0.763, 0.442, 0, 0, 0];
+// geometry of the source picture (measured from it)
+const X0=2.6, PX_PER_DAY=4.8227, NIGHT_X=3.818, N=1464;
+const PX_PER_H=PX_PER_DAY/24;
+const T_NIGHT=(NIGHT_X-X0)/PX_PER_H;           // hour index of the floor's centre on day 1
+function colAt(arr,x){const i=Math.floor(x),f=x-i;const a=arr[Math.max(0,Math.min(arr.length-1,i))],b=arr[Math.max(0,Math.min(arr.length-1,i+1))];return a+(b-a)*f;}
+function light(t){const x=X0+t*PX_PER_H;const v=Math.min(1,(0.7*colAt(MEAN,x)+0.3*colAt(MAX,x))/0.62);return Math.pow(v,1.7);}
+const c=document.getElementById('c');let g=c.getContext('2d');
+const CX=665,CY=400,R0=46,R1=362;
+function pos(t){const a=Math.PI/2+2*Math.PI*(t-T_NIGHT)/24;const r=R0+(R1-R0)*t/(N-1);return [CX+r*Math.cos(a),CY+r*Math.sin(a)];}
+function col(v,alpha){
+  // ember -> amber -> pale light
+  const s=[[0,[30,30,40]],[0.06,[80,36,28]],[0.25,[170,72,34]],[0.55,[236,160,70]],[1,[255,248,228]]];
+  let k=0;while(k<s.length-2&&v>s[k+1][0])k++;
+  const [a0,c0]=s[k],[a1,c1]=s[k+1];const f=Math.max(0,Math.min(1,(v-a0)/(a1-a0)));
+  return `rgba(${(c0[0]+(c1[0]-c0[0])*f)|0},${(c0[1]+(c1[1]-c0[1])*f)|0},${(c0[2]+(c1[2]-c0[2])*f)|0},${alpha})`;
+}
+function pass(width,alphaFn,minV){
+  const dt=0.04;g.lineCap='round';g.lineWidth=width;
+  let [px,py]=pos(0);
+  for(let t=dt;t<=N-1+1e-9;t+=dt){
+    const [x,y]=pos(t);const v=light(t-dt/2);
+    if(v>=minV){g.strokeStyle=col(v,alphaFn(v));g.beginPath();g.moveTo(px,py);g.lineTo(x,y);g.stroke();}
+    px=x;py=y;
+  }
+}
+// faint path for the whole record
+g.lineCap='butt';g.lineWidth=1.1;g.strokeStyle='rgba(70,78,104,0.55)';g.beginPath();
+for(let t=0;t<=N-1;t+=0.1){const [x,y]=pos(t);t?g.lineTo(x,y):g.moveTo(x,y);}g.stroke();
+// body, drawn once off-screen, then laid down blurred (glow) and sharp
+const off=document.createElement('canvas');off.width=1100;off.height=800;const g0=g;
+g=off.getContext('2d');pass(2.9,v=>Math.min(1,0.05+v*1.6),0.012);g=g0;
+g.save();g.globalCompositeOperation='lighter';g.filter='blur(7px)';g.globalAlpha=0.55;g.drawImage(off,0,0);g.restore();
+g.drawImage(off,0,0);
+// start and end marks
+g.fillStyle='#d9cfb8';for(const t of [0,N-1]){const [x,y]=pos(t);g.beginPath();g.arc(x,y,2.2,0,7);g.fill();}
+</script>
+</body>
+</html>

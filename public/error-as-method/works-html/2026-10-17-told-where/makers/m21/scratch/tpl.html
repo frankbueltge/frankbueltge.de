@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Days of Light</title>
+<style>
+  html,body{margin:0;height:100%;background:#06080f;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  canvas{display:block;width:1100px;height:800px;max-width:100vw;max-height:100vh;object-fit:contain;}
+</style>
+</head>
+<body>
+<canvas id="c" width="2200" height="1600" aria-label="A field of 1,464 points, one per hour, in 62 rows. Warm lights gather in a central band in each row: the daylight hours. The band narrows slowly from top to bottom as the nights grow longer."></canvas>
+<script>
+// Material: dots read from record.jpg (300 x 90). Each entry: [hour since start of record, value 0..1 of plotted height, dot strength].
+// Night hours sit on the plot's floor and are not listed: every hour not lit is zero.
+const LIT = __DATA__;
+const N = 1464;            // hours in the record
+const MID = 6.63;          // hour of the first solar midnight, from the centres of the 61 floor runs
+const PXH = 4.8225/24;     // source pixels per hour (61 days span 294 px)
+
+// each dot stands for (about) one hour; its sub-pixel centroid gives the hour to within about one hour,
+// so spread it over its neighbouring hours with a narrow bell
+const SD = 0.9;
+const est = new Float64Array(N);
+for (const [h, v, w] of LIT) {
+  const ks = [];
+  let sum = 0;
+  for (let H = Math.round(h) - 3; H <= Math.round(h) + 3; H++) { const k = Math.exp(-((H - h) ** 2) / (2 * SD * SD)); ks.push([H, k]); sum += k; }
+  for (const [H, k] of ks) if (H >= 0 && H < N) est[H] += v * w * k / sum;
+}
+// scale to the 98th percentile of lit hours so a few merged dots do not set the ceiling
+const srt = Array.from(est).filter(e => e > 0).sort((a, b) => a - b);
+const mx = srt[Math.floor(srt.length * 0.98)];
+
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+g.scale(2, 2);
+const W = 1100, Hh = 800;
+g.fillStyle = '#06080f'; g.fillRect(0, 0, W, Hh);
+
+const L = 240, R = 1010, T = 118, B = 730;
+const ROWS = 62, rowH = (B - T) / (ROWS - 1), colW = (R - L) / 23;
+function pos(H) {
+  const t = H - MID, r = Math.floor(t / 24) + 1, p = ((t % 24) + 24) % 24; // p: hours after solar midnight
+  return [L + (p - 0.5) * colW + colW/2, T + r * rowH];
+}
+
+// soft glow beneath
+g.globalCompositeOperation = 'lighter';
+for (let H = 0; H < N; H++) {
+  const e = Math.min(1, est[H] / mx); if (e < 0.03) continue;
+  const [x, y] = pos(H);
+  const rad = 8 + 26 * e;
+  const gr = g.createRadialGradient(x, y, 0, x, y, rad);
+  gr.addColorStop(0, `rgba(255,170,70,${0.10 * e + 0.015})`);
+  gr.addColorStop(1, 'rgba(255,120,40,0)');
+  g.fillStyle = gr; g.beginPath(); g.arc(x, y, rad, 0, 7); g.fill();
+}
+g.globalCompositeOperation = 'source-over';
+
+// the 1,464 hours
+function mix(a, b, t){ return a.map((v,i)=>Math.round(v + (b[i]-v)*t)); }
+for (let H = 0; H < N; H++) {
+  const e = Math.min(1, est[H] / mx);
+  const [x, y] = pos(H);
+  if (e < 0.03) {
+    g.fillStyle = '#34405f';
+    g.beginPath(); g.arc(x, y, 1.15, 0, 7); g.fill();
+  } else {
+    const s = Math.pow(e, 0.75);
+    const c = s < .5 ? mix([150,62,30],[246,160,64], s/.5) : mix([246,160,64],[255,246,222], (s-.5)/.5);
+    g.fillStyle = `rgb(${c})`;
+    g.beginPath(); g.arc(x, y, 1.3 + 3.9 * s, 0, 7); g.fill();
+  }
+}
+
+// each day's sum, as a thin bar in the right margin
+const tot = new Float64Array(ROWS);
+for (let H = 0; H < N; H++) tot[Math.floor((H - MID) / 24) + 1] += est[H];
+const tmx = Math.max(...tot);
+for (let r = 0; r < ROWS; r++) {
+  const y = T + r * rowH, w = 46 * tot[r] / tmx;
+  g.fillStyle = '#1a2133'; g.fillRect(1046, y - 1.5, 46, 3);
+  g.fillStyle = '#d98a3d'; g.fillRect(1046, y - 1.5, w, 3);
+}
+
+// words
+g.fillStyle = '#c9cfdd';
+g.font = '500 22px Georgia, "Times New Roman", serif';
+g.fillText('Sixty-One Days of Light', 40, 56);
+g.fillStyle = '#6f7891';
+g.font = '12px Georgia, "Times New Roman", serif';
+g.fillText('Fort Peck, Montana · 634 m', 40, 74);
+g.font = '11px ui-monospace, Menlo, Consolas, monospace';
+g.textAlign = 'center';
+g.fillText('midnight', L, T - 18);
+g.fillText('noon', (L + R) / 2, T - 18);
+g.fillText('midnight', R, T - 18);
+g.textAlign = 'right';
+g.fillText('first day', L - 26, T + 4);
+g.fillText('last day', L - 26, B + 4);
+g.textAlign = 'right'; g.fillText('each day\u2019s sum', 1092, T - 40);
+g.textAlign = 'left';
+g.fillStyle = '#596179';
+const foot = [
+  'One point for each of the 1,464 hourly values; one row for each day, read downward; the bars at the right are each row\u2019s sum.',
+  'Rows are cut at the middle of each night, so the dark hours of every night are split between the two ends of a row.',
+  'Brightness is each hour’s value as read back from a 300-pixel picture, where one pixel held about five hours.'
+];
+foot.forEach((s, i) => g.fillText(s, 40, B + 28 + i * 15));
+</script>
+</body>
+</html>

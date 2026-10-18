@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Days of Light</title>
+<style>
+  :root { --bg:#0a0a0d; --ink:#d9d2c3; --dim:#7d7668; --faint:#3a3730; }
+  html,body { margin:0; background:var(--bg); color:var(--ink); }
+  body { width:1100px; height:800px; overflow:hidden; position:relative;
+         font-family: Georgia, "Times New Roman", serif; }
+  canvas { position:absolute; left:0; top:0; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script>
+// Estimated hourly values (0-100, 100 = the brightest hour in the record) read back
+// from a 300x90 dot plot of 1,464 hourly readings at Fort Peck, Montana.
+const Q=[28,3,15,0,0,0,0,0,0,0,0,0,4,6,6,21,26,32,24,42,42,17,33,25,9,5,0,0,0,0,0,0,0,0,0,0,6,17,17,36,63,75,75,93,93,31,53,37,37,13,3,0,0,0,0,0,0,0,0,0,10,15,15,20,27,27,37,35,35,46,30,37,25,23,5,0,0,0,0,0,0,0,0,0,3,10,25,45,52,68,65,56,70,63,32,15,52,0,3,0,0,0,0,0,0,0,0,0,7,7,13,53,53,6,33,47,25,64,31,9,51,48,0,0,0,0,0,0,0,0,0,0,10,34,25,54,68,62,91,45,58,93,70,50,29,12,12,0,0,0,0,0,0,0,0,0,10,10,14,28,36,10,64,90,57,74,67,41,21,8,8,0,0,0,0,0,0,0,0,0,3,18,6,6,33,33,46,48,17,14,27,19,4,0,0,0,0,0,0,0,0,0,0,0,10,20,28,35,35,46,69,44,29,20,33,33,6,6,17,0,0,0,0,0,0,0,0,0,6,17,17,17,92,43,75,96,93,86,64,52,47,22,3,0,0,0,0,0,0,0,0,0,10,10,24,43,74,84,90,59,77,85,64,48,30,30,13,0,0,0,0,0,0,0,0,0,0,26,0,37,57,57,90,50,87,61,76,47,47,28,6,0,0,0,0,0,0,0,0,0,4,22,32,44,63,63,87,70,72,82,59,41,41,30,13,0,0,0,0,0,0,0,0,0,9,9,17,17,37,58,55,64,80,80,68,59,36,20,7,0,0,0,0,0,0,0,0,0,8,8,17,42,75,75,69,60,55,50,45,61,0,27,9,0,0,0,0,0,0,0,0,0,9,23,41,59,59,92,85,88,73,64,76,42,42,28,11,0,0,0,0,0,0,0,0,0,8,22,30,42,8,82,71,66,54,77,33,57,25,12,0,0,0,0,0,0,0,0,0,0,10,21,33,33,47,82,64,73,62,79,49,49,44,25,8,0,0,0,0,0,0,0,0,0,7,7,21,39,68,64,84,73,50,35,73,20,20,8,8,0,0,0,0,0,0,0,0,0,4,14,38,57,69,74,54,85,50,22,31,74,53,0,8,0,0,0,0,0,0,0,0,0,5,11,15,15,40,72,69,83,87,55,25,7,40,0,0,0,0,0,0,0,0,0,0,0,4,6,13,28,19,52,61,57,40,74,27,61,7,39,0,0,0,0,0,0,0,0,0,0,7,0,40,21,57,72,82,82,89,79,55,55,37,18,7,0,0,0,0,0,0,0,0,0,0,0,0,18,18,14,34,53,68,41,23,34,14,6,6,0,0,0,0,0,0,0,0,0,7,29,23,23,35,53,44,78,100,48,48,14,38,34,0,0,0,0,0,0,0,0,0,0,5,5,4,4,11,21,26,52,35,35,38,16,5,11,11,0,0,0,0,0,0,0,0,0,0,14,28,4,79,41,64,77,55,69,74,22,7,40,0,0,0,0,0,0,0,0,0,0,0,14,14,32,32,68,45,81,65,60,63,50,33,23,8,0,0,0,0,0,0,0,0,0,5,19,19,37,55,90,70,81,83,72,41,54,18,18,6,0,0,0,0,0,0,0,0,0,0,7,37,50,62,80,85,72,54,41,85,7,7,7,23,0,0,0,0,0,0,0,0,0,4,16,31,52,0,68,85,80,80,54,37,68,16,16,7,0,0,0,0,0,0,0,0,0,3,13,27,72,50,71,56,83,81,78,38,70,4,19,0,0,0,0,0,0,0,0,0,0,4,20,37,37,41,87,32,66,60,54,25,20,5,5,0,0,0,0,0,0,0,0,0,0,3,14,0,20,20,11,11,74,65,79,58,51,37,19,5,0,0,0,0,0,0,0,0,0,0,3,14,31,68,53,79,86,64,86,78,56,39,21,5,0,0,0,0,0,0,0,0,0,3,18,35,35,53,53,84,69,79,79,68,54,37,20,5,0,0,0,0,0,0,0,0,0,0,16,34,34,74,57,75,81,78,54,67,32,20,22,4,0,0,0,0,0,0,0,0,0,0,0,16,35,46,79,70,76,63,67,67,42,36,20,0,0,0,0,0,0,0,0,0,0,0,36,4,17,54,68,35,76,73,59,56,54,38,19,4,0,0,0,0,0,0,0,0,0,0,17,35,53,69,88,82,78,63,69,65,59,17,39,4,0,0,0,0,0,0,0,0,0,0,4,17,35,54,68,68,85,79,80,69,55,38,19,4,0,0,0,0,0,0,0,0,0,0,16,52,35,68,78,84,54,37,84,79,69,0,18,4,0,0,0,0,0,0,0,0,0,0,3,16,16,35,53,68,79,84,79,69,53,35,17,4,0,0,0,0,0,0,0,0,0,0,3,15,32,82,66,51,87,77,33,16,3,52,0,0,0,0,0,0,0,0,0,0,0,0,10,10,32,46,51,72,72,68,55,52,37,24,9,9,0,0,0,0,0,0,0,0,0,0,14,14,45,33,60,75,78,78,35,22,59,28,11,0,0,0,0,0,0,0,0,0,0,0,3,17,25,31,34,43,49,68,37,14,44,30,22,0,0,0,0,0,0,0,0,0,0,0,16,28,48,63,74,79,31,79,74,7,63,48,0,0,0,0,0,0,0,0,0,0,0,0,13,13,29,47,47,79,61,72,66,66,35,27,12,0,0,0,0,0,0,0,0,0,0,0,0,6,25,37,50,30,30,30,50,37,23,17,6,0,0,0,0,0,0,0,0,0,0,0,12,12,20,41,55,55,68,73,73,58,44,25,6,0,0,0,0,0,0,0,0,0,0,0,0,11,11,41,25,55,51,78,68,53,41,27,6,0,0,0,0,0,0,0,0,0,0,0,0,4,14,20,24,24,55,31,60,48,0,31,24,0,0,0,0,0,0,0,0,0,0,0,0,12,30,48,63,79,74,12,74,63,47,29,0,0,0,0,0,0,0,0,0,0,0,0,12,28,28,46,62,74,67,54,71,41,41,25,9,0,0,0,0,0,0,0,0,0,0,0,6,6,18,51,38,38,54,64,70,41,28,23,9,0,0,0,0,0,0,0,0,0,0,0,10,10,25,43,57,57,73,67,67,55,8,41,23,0,0,0,0,0,0,0,0,0,0,0,0,10,25,37,67,55,55,48,48,48,55,37,20,0,0,0,0,0,0,0,0,0,0,0,10,28,52,0,36,51,45,66,29,20,11,36,9,0,0,0,0,0,0,0,0,0,0,0,6,16,33,53,73,48,58,33,41,25,53,0,7,0,0,0,0,0,0,0,0,0,0,0,0,4,26,66,72,76,36,44,23,28,18];
+const W=1100,H=800,cv=document.getElementById('c');
+const dpr=Math.max(1,window.devicePixelRatio||1);
+cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+g.fillStyle='#0a0a0d';g.fillRect(0,0,W,H);
+
+// colour of light: night indigo -> dusk violet -> ember -> amber -> straw -> white
+const stops=[[0,[17,18,30]],[.08,[40,24,58]],[.25,[118,38,52]],[.45,[196,84,40]],
+             [.65,[236,150,58]],[.85,[248,214,128]],[1,[255,250,232]]];
+function col(v){v=Math.max(0,Math.min(1,v));
+  for(let i=1;i<stops.length;i++){if(v<=stops[i][0]){const a=stops[i-1],b=stops[i],t=(v-a[0])/(b[0]-a[0]);
+    return [0,1,2].map(k=>Math.round(a[1][k]+(b[1][k]-a[1][k])*t));}}return stops[stops.length-1][1];}
+
+// rows are days from (inferred) local midnight to midnight; the record begins at 17:00 and ends at 16:00
+const OFF=7, ROWS=62;
+const L=150, R=950, T=96, RH=9, GAP=1, BW=R-L;
+const val=(row,h)=>{const i=(row-1)*24+h+OFF;return (i<0||i>=Q.length)?null:Q[i]/100;};
+const img=g.createImageData(BW*dpr|0,1);
+for(let r=0;r<ROWS;r++){
+  const y=T+r*(RH+GAP);
+  for(let px=0;px<BW;px++){
+    const hf=px/BW*24-0.5, h0=Math.floor(hf), t=hf-h0, s=(1-Math.cos(Math.PI*t))/2;
+    const a=val(r,Math.max(0,h0)), b=val(r,Math.min(23,h0+1));
+    let v;
+    if(a===null&&b===null) continue;
+    if(a===null) { if(t<0.5) continue; v=b; }
+    else if(b===null) { if(t>0.5) continue; v=a; }
+    else v=a+(b-a)*s;
+    const c=col(v);
+    g.fillStyle='rgb('+c[0]+','+c[1]+','+c[2]+')';
+    g.fillRect(L+px,y,1.02,RH);
+  }
+  // daily total, a quiet rule to the right
+  let sum=0,n=0;for(let h=0;h<24;h++){const v=val(r,h);if(v!==null){sum+=v;n++;}}
+  if(n===24){g.fillStyle='#5b5447';g.fillRect(R+18,y+RH/2-0.75,sum*14,1.5);}
+  else {g.fillStyle='#3a3730';g.fillRect(R+18,y+RH/2-0.5,sum*14,1);}
+}
+// hour ticks
+g.fillStyle='#7d7668';g.font='11px Georgia, serif';g.textAlign='center';
+const yb=T+ROWS*(RH+GAP)+14;
+[['midnight',0],['6',6],['noon',12],['18',18],['midnight',24]].forEach(([s,h])=>{
+  const x=L+h/24*BW; g.fillRect(x-0.5,yb-10,1,5); g.fillText(s,x,yb+6);});
+// left margin: first and last day
+g.textAlign='right';g.fillStyle='#7d7668';
+g.fillText('first reading',L-14,T+RH-1);
+g.fillText('last reading',L-14,T+(ROWS-1)*(RH+GAP)+RH-1);
+g.save();g.translate(L-60,T+ROWS*(RH+GAP)/2);g.rotate(-Math.PI/2);g.textAlign='center';
+g.fillStyle='#4f4a40';g.fillText('one row per day  \u2193',0,0);g.restore();
+g.textAlign='left';g.fillStyle='#4f4a40';g.fillText('light per day',R+18,T-10);
+
+// title
+g.textAlign='left';g.fillStyle='#d9d2c3';g.font='italic 26px Georgia, serif';
+g.fillText('Sixty-One Days of Light',L,52);
+g.fillStyle='#7d7668';g.font='12px Georgia, serif';
+g.fillText('Sunlight on level ground at Fort Peck, Montana, 634 m above sea level. One band per hour, one row per day.',L,72);
+// key
+const kx=L, ky=H-44, kw=220;
+for(let i=0;i<kw;i++){const c=col(i/(kw-1));g.fillStyle='rgb('+c+')';g.fillRect(kx+i,ky,1.02,6);}
+g.fillStyle='#7d7668';g.font='11px Georgia, serif';g.textAlign='left';
+g.fillText('none',kx,ky+20);g.textAlign='right';g.fillText('the brightest hour of the record',kx+kw,ky+20);
+g.textAlign='right';g.fillStyle='#4f4a40';
+g.fillText('Values are read back from a small dot plot and are approximate; rows are aligned on the night gaps, read as local midnight.',R,ky+20);
+</script>
+</body>
+</html>

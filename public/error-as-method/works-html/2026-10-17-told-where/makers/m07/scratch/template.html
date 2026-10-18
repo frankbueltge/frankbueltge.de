@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where the Light Reached</title>
+<style>
+  html,body{margin:0;height:100%;background:#06070d;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .frame{position:relative;width:1100px;height:800px;flex:none;}
+  canvas{display:block;width:1100px;height:800px;}
+  .cap{position:absolute;left:70px;bottom:34px;font:italic 15px/1.4 Georgia,"Times New Roman",serif;color:#8d8a80;letter-spacing:.02em;}
+  .cap b{display:block;font-style:normal;font-weight:normal;font-size:19px;color:#d8cfb8;letter-spacing:.04em;margin-bottom:2px;}
+</style>
+</head>
+<body>
+<div class="frame">
+<canvas id="c" width="1100" height="800"></canvas>
+<div class="cap"><b>Where the Light Reached</b>sixty-one days, one slit each &mdash; above the line, how high the hours climbed; below it, how long they lay at nothing</div>
+</div>
+<script>
+const DATA=/*DATA*/null;
+const W=1100,H=800,dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+const cv=document.getElementById('c');cv.width=W*dpr;cv.height=H*dpr;
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+
+const N=61, X0=70, X1=1030, pitch=(X1-X0)/N, sw=7;
+const HZ=470;            // the zero line
+const TOP=70;            // highest value in the record
+const ROWZ=83.5;         // image row of the zero level
+const rowToY=r=>HZ-(ROWZ-r)/(ROWZ-2)*(HZ-TOP);
+
+// background: night
+const bg=g.createLinearGradient(0,0,0,H);
+bg.addColorStop(0,'#0a0c18');bg.addColorStop(.58,'#0c1022');bg.addColorStop(1,'#05060b');
+g.fillStyle=bg;g.fillRect(0,0,W,H);
+
+// light layer, drawn off-screen then composited twice (glow + sharp)
+const L=document.createElement('canvas');L.width=W*dpr;L.height=H*dpr;
+const l=L.getContext('2d');l.scale(dpr,dpr);
+let mx=0;DATA.p.forEach(p=>p.forEach((v,i)=>{if(i<81&&v>mx)mx=v;}));
+
+function lightColor(t){ // t 0..1 -> ember to white-gold
+  const a=[[0,[120,40,10]],[.35,[214,110,30]],[.7,[250,196,110]],[1,[255,246,222]]];
+  for(let i=1;i<a.length;i++){if(t<=a[i][0]){const[t0,c0]=a[i-1],[t1,c1]=a[i];const u=(t-t0)/(t1-t0);
+    return c0.map((c,k)=>Math.round(c+(c1[k]-c)*u));}}
+  return a[a.length-1][1];
+}
+for(let d=0;d<N;d++){
+  const p=DATA.p[d], cx=X0+pitch*(d+.5), x=cx-sw/2;
+  for(let y=TOP-6;y<HZ;y++){
+    const r=ROWZ-(HZ-y)/(HZ-TOP)*(ROWZ-2);      // fractional image row
+    const r0=Math.floor(r),u=r-r0;
+    if(r0<0||r0+1>80)continue;
+    let v=p[r0]*(1-u)+p[r0+1]*u;
+    v=Math.min(1,Math.pow(v/mx,.8));
+    if(v<.025)continue;
+    const c=lightColor(v);
+    l.fillStyle=`rgba(${c[0]},${c[1]},${c[2]},${Math.min(1,v*1.05)})`;
+    l.fillRect(x,y,sw,1);
+  }
+  // the day's highest reach: a fine bright cap
+  let top=-1;for(let i=0;i<80;i++){if(p[i]>.45){top=i;break;}}
+  if(top>=0){const y=rowToY(top);l.fillStyle='rgba(255,250,235,.8)';l.fillRect(x+1,y-1,sw-2,1);}
+}
+g.save();g.globalCompositeOperation='lighter';
+g.filter='blur(14px)';g.globalAlpha=.7;g.drawImage(L,0,0,W,H);
+g.filter='blur(2.5px)';g.globalAlpha=.5;g.drawImage(L,0,0,W,H);
+g.filter='none';g.globalAlpha=1;g.drawImage(L,0,0,W,H);
+g.restore();
+
+// the line of zero
+g.fillStyle='rgba(216,207,184,.55)';g.fillRect(X0-14,HZ,X1-X0+28,1);
+
+// below: the hours at zero, as cold columns hanging from the line
+for(let d=0;d<N;d++){
+  const cx=X0+pitch*(d+.5), x=cx-sw/2, len=DATA.f[d]*34;
+  const gr=g.createLinearGradient(0,HZ+3,0,HZ+3+len);
+  gr.addColorStop(0,'rgba(64,86,160,.55)');gr.addColorStop(.85,'rgba(34,48,104,.32)');gr.addColorStop(1,'rgba(40,58,120,0)');
+  g.fillStyle=gr;g.fillRect(x,HZ+3,sw,len);
+  g.fillStyle='rgba(150,170,230,.35)';g.fillRect(x,HZ+3+len*.86,sw,1);
+}
+</script>
+</body>
+</html>

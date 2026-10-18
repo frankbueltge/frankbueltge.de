@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Turns</title>
+<style>
+  html,body{margin:0;height:100%;background:#0b0c10;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;
+       font-family:Georgia,"Times New Roman",serif;color:#b9b2a3;}
+  .frame{position:relative;width:1100px;height:800px;flex:none;}
+  canvas{position:absolute;left:0;top:0;width:1100px;height:800px;}
+  .text{position:absolute;left:828px;top:0;width:236px;height:800px;
+        display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:64px;box-sizing:border-box;}
+  h1{font-weight:normal;font-size:27px;letter-spacing:.02em;color:#efe6d2;margin:0 0 18px;line-height:1.15;}
+  p{font-size:13px;line-height:1.6;margin:0 0 12px;}
+  .small{font-size:11.5px;color:#7d786d;line-height:1.55;}
+  .key{display:flex;align-items:center;gap:8px;margin:6px 0 16px;font-size:11.5px;color:#7d786d;}
+  .ramp{width:120px;height:6px;border-radius:3px;}
+</style>
+</head>
+<body>
+<div class="frame">
+  <canvas id="c" width="1100" height="800"></canvas>
+  <div class="text">
+    <h1>Sixty-One Turns</h1>
+    <p>Sunlight falling on a level surface at Fort Peck, north-eastern Montana, 634&nbsp;m above the sea: one value an hour, 1,464 hours, wound as a single line, one turn a day, beginning at the centre.</p>
+    <p class="small">The disc is laid out like a map seen from above, north at the top. Each hour sits where the sun stands at that hour, so the light gathers at the bottom, under the southern noon, and night is the dark wedge at the top. Read outward, the wedge widens.</p>
+    <div class="key"><span>none</span><span class="ramp" id="ramp"></span><span>most</span></div>
+    <p class="small">The values were read back from a small dotted plot and are approximate, hour by hour.</p>
+  </div>
+</div>
+<script>
+const RAW="__DATA__";
+const V=RAW.split(',').map(s=>+s/2);
+const N=V.length;
+const W=1100,H=800,CX=420,CY=400;
+const R0=34,R1=376;
+const PITCH=(R1-R0)/(N/24);        // radial step per day
+const NOON=19.3;                   // hour-of-record where light is centred
+const VMAX=Math.max(...V);
+
+function val(t){ if(t<0||t>N-1) return 0; const i=Math.floor(t),f=t-i;
+  return V[i]*(1-f)+(i+1<N?V[i+1]:0)*f; }
+
+// light ramp: dark ember -> amber -> pale
+const STOPS=[[0,[30,31,40]],[0.12,[70,30,22]],[0.35,[160,62,22]],[0.6,[232,140,48]],[0.82,[250,206,120]],[1,[255,246,222]]];
+function ramp(n){ n=Math.max(0,Math.min(1,n));
+  for(let k=1;k<STOPS.length;k++){ if(n<=STOPS[k][0]){const [a,ca]=STOPS[k-1],[b,cb]=STOPS[k],f=(n-a)/(b-a);
+    return [ca[0]+(cb[0]-ca[0])*f,ca[1]+(cb[1]-ca[1])*f,ca[2]+(cb[2]-ca[2])*f];}}
+  return STOPS[STOPS.length-1][1]; }
+
+const cv=document.getElementById('c'),ctx=cv.getContext('2d');
+const img=ctx.createImageData(W,H),d=img.data;
+const light=document.createElement('canvas');light.width=W;light.height=H;
+const lctx=light.getContext('2d'),limg=lctx.createImageData(W,H),ld=limg.data;
+const BG=[11,12,16];
+for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+  const k=(y*W+x)*4, dx=x+0.5-CX, dy=y+0.5-CY, r=Math.hypot(dx,dy);
+  let c=BG.slice(), lum=0;
+  // faint disc
+  if(r<R1+14){ const e=Math.min(1,(R1+14-r)/2); c=[BG[0]+5*e,BG[1]+5*e,BG[2]+7*e]; }
+  if(r>R0-PITCH && r<R1+PITCH){
+    const phi=Math.atan2(dy,dx);
+    let u=((phi-Math.PI/2)/(2*Math.PI))%1; if(u<0)u+=1;
+    const tb=NOON+24*u;                         // candidate time modulo one turn
+    const kk=Math.round((r-R0)/PITCH - tb/24);  // which turn
+    let best=1e9,bt=-1;
+    for(let j=kk-1;j<=kk+1;j++){const t=tb+24*j; if(t<0||t>N-1)continue;
+      const rr=R0+PITCH*t/24, dd=Math.abs(r-rr); if(dd<best){best=dd;bt=t;}}
+    if(bt>=0){
+      const hw=PITCH*0.40; const m=Math.max(0,Math.min(1,(hw-best)+0.5));
+      if(m>0){ const n=val(bt)/VMAX; const g=Math.pow(n,0.85); const col=ramp(g);
+        for(let q=0;q<3;q++) c[q]=c[q]*(1-m)+col[q]*m;
+        lum=m*g;
+        ld[k]=col[0];ld[k+1]=col[1];ld[k+2]=col[2];ld[k+3]=255*lum*lum; }
+    }
+  }
+  d[k]=c[0];d[k+1]=c[1];d[k+2]=c[2];d[k+3]=255;
+}
+ctx.putImageData(img,0,0);
+lctx.putImageData(limg,0,0);
+// soft bloom: the light spreads a little beyond its line
+ctx.save();ctx.globalCompositeOperation='lighter';
+ctx.filter='blur(9px)';ctx.globalAlpha=0.32;ctx.drawImage(light,0,0);
+ctx.filter='blur(2.5px)';ctx.globalAlpha=0.22;ctx.drawImage(light,0,0);
+ctx.restore();
+// quiet compass marks
+ctx.fillStyle='rgba(185,178,163,0.45)';ctx.font='11px Georgia, serif';ctx.textAlign='center';
+ctx.fillText('N',CX,CY-R1-26);ctx.fillText('S',CX,CY+R1+36);
+ctx.textBaseline='middle';ctx.fillText('E',CX+R1+30,CY);ctx.fillText('W',CX-R1-30,CY);
+// key ramp
+const rp=document.getElementById('ramp');
+rp.style.background='linear-gradient(90deg,'+STOPS.map(s=>'rgb('+s[1].map(Math.round).join(',')+') '+(s[0]*100)+'%').join(',')+')';
+</script>
+</body>
+</html>
