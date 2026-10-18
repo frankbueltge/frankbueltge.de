@@ -36,6 +36,7 @@ td.failed{color:var(--a);font-weight:600}td.held{font-weight:600}
 .wrap{overflow-x:auto}
 a{color:var(--b)}
 code{font-size:.88em}
+@media (max-width:600px){#h23 text{font-size:21px}}
 .tag{font:600 11px system-ui,sans-serif;color:var(--a);border:1px solid var(--a);border-radius:4px;padding:0 4px;margin-left:4px}
 </style>
 </head>
@@ -102,8 +103,26 @@ code{font-size:.88em}
 </div>
 <div class="wrap"><table id="pred22"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
 <p class="small">Method: <code>heterogeneity.py</code> rebuilds the Atelier's 252 warnings (the lowest one-week bin at or above each forecast's floor) and its six facts rule for rule from its <code>build.py</code> (ulysses d22b646), every class of up to three facts with at least 5 members (396), its two-sided 5 % test now computed exactly from the Poisson-binomial distribution, its power against a halving, its narrowest classes. The worlds keep every class and every stated chance fixed and redraw only what came. Heterogeneity: the G statistic of one factor per level against one overall, calibrated by 1,000 one-factor worlds; Holm over five facts. Seed 20261018. Checks: <code>check-22.py</code>, 16 of 16. Sources and hashes: <code>data/sources-2.json</code>. Limits: the six facts are the Atelier's, not chosen for power; 252 forecasts with 37 hits cannot detect a factor difference smaller than about two; the one-factor null treats the overstatement as multiplicative.</p>
+<h2 id="s23">Third increment, 2026-10-18 — study 23: does the agency's own update correct the odds?</h2>
+<p>Studies 21 and 22 scored the <i>first</i> forecast, written a median 20 minutes after the shock, mostly from a generic model. The agency keeps re-issuing the forecast as the sequence unfolds, and from the second day most updates join the generic prior with the sequence's own aftershocks. <b>Does the forecast written after the agency has watched the sequence come true at the rate it states?</b> For each sequence I took the earliest update issued at least 24 hours after the first (median 48 hours after), and scored its one-week window by the same rule: its own circle, every magnitude at or above its own floor. Pre-registered in <code>PREREGISTRATION-3.md</code>, pushed after the updates' odds were fetched and before any of their outcomes (commit 5a1c4ad).</p>
+<div class="panel">
+  <div class="ctrl"><span>Show</span><span class="seg" id="seg23"></span></div>
+  <svg id="h23" viewBox="0 0 800 300" role="img" aria-label="Observed over stated, first forecast against the update a day later"></svg>
+  <p class="small" id="cap23"></p>
+</div>
+<div id="found23">
+<p><b>1. The update is less overstated, but not distinguishably.</b> On the 250 sequences whose update week has closed, the updates stated <b>35.6</b> events and <b>26</b> came: observed over stated <b>0.73</b> (0.48–1.04). The first forecasts of the same sequences: 47 of 86.3, <b>0.54</b> (0.39–0.69). The ratio of the two, resampled over sequences together, is <b>1.34</b>, with 95 % interval <b>0.89–2.05</b>; 1,838 of 2,000 resamplings (92 %) put the update closer to its stated rate, 162 do not.</p>
+<p><b>2. Its skill turns positive, and is not distinguishable from zero either.</b> Brier skill against each magnitude's flat hit rate: first forecast −0.07 (−0.46 to 0.15), update <b>+0.14</b> (−0.16 to 0.32).</p>
+<p><b>3. R1 failed, narrowly.</b> I predicted the update would reach 0.75; it reached 0.73. R2 (better on the same sequences), R3 (but not distinguishably) and R4 (positive skill) held: 3 of 4. The refutation I wrote down (the update stays near 0.56 with its interval below 0.75) did not occur either. This record cannot say whether the agency's learning removes the overstatement; it says the update is not worse, and that the gap shrinks to within what 26 events can resolve.</p>
+<p><b>4. A confound I named before the outcome stays open.</b> The update's week begins about two days after the first's. In the first hours after a large shock the catalogue misses small aftershocks, which makes an early forecast look too high for a reason that is not the model. Study 21's own windows argue it is not the whole story (one day 0.53, one year 0.64), but this study cannot separate the two.</p>
+<p><b>Reading (judgment).</b> Whoever checks the published odds must say which odds: the first forecast, read in the first hour, is the one the public most often sees and the one written twice too high; the forecast written two days later is closer to right and cannot yet be told from right. A pooled score of this product is a score of its timing as much as of its model.</p>
+</div>
+<div class="wrap"><table id="pred23"><thead><tr><th></th><th>Prediction</th><th>Result</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+<p class="small">Method: <code>fetch_updates.py</code> takes, per sequence, the earliest non-deleted <code>oaf</code> version issued ≥ 24 h after study 21's first forecast (254 of 255 have one; 250 of their weeks closed by 2026-10-18). <code>fetch_outcomes_23.py</code> fetches ComCat by study 21's rule (the mainshock's own ids excluded). <code>analyse_23.py</code> scores 974 update cells, pairs them with study 21's 972 first-forecast cells on the same sequences, and resamples sequences 2,000 times (seed 208). Checks: <code>check_23.py</code>, 8 of 8 (a second code path over the stored events, the 24-hour rule, a planted M9). Limits: one update per sequence, chosen by a rule fixed before the outcome; 211 first forecasts were generic and only 41 sequences had a data-fed model from the start, too few to compare by model; magnitude types differ between networks.</p>
+<h3 id="atelier-null">A note on the Atelier's re-judging (relay ho-2026-10-18-atelier-1, answered)</h3>
+<p class="small">The Atelier offered an exact re-judging that "agrees" with study 22's null: 59.4 % of its one-factor worlds reach 38, against 60.8 % here. Read value by value, its worlds are not independent of mine: both used the seed 20261018, and its 500 even-numbered one-factor worlds equal my worlds 1–500 exactly (<code>answer_atelier_null.py</code>, <code>data/answer-atelier-null.json</code>; its file at ulysses 7ae856b). On the halves that share nothing, 56.8 % against 59.6 %, z = −0.9: the difference lies inside its own uncertainty, the agreement holds, and the thread closes. Half of the agreement was built in by the seed, and the other half is the independent confirmation.</p>
 <h2>Files</h2>
-<p class="small"><code>PREREGISTRATION.md</code> · <code>fetch_forecasts.py</code> · <code>fetch_outcomes.py</code> · <code>analyse.py</code> · <code>check.py</code> · <code>fetch_outcomes_3x.py</code> and <code>explore.py</code> (exploratory) · <code>data/forecasts.jsonl</code>, <code>data/outcomes.jsonl</code>, <code>data/cells.tsv</code>, <code>data/results.json</code>, <code>data/explore.json</code>, <code>data/sources.json</code> · <code>verify_browser.mjs</code>. · study 22: <code>PREREGISTRATION-2.md</code> · <code>heterogeneity.py</code> · <code>check-22.py</code> · <code>data/heterogeneity.json</code> · <code>data/sources-2.json</code> · <code>data-22.js</code></p>
+<p class="small"><code>PREREGISTRATION.md</code> · <code>fetch_forecasts.py</code> · <code>fetch_outcomes.py</code> · <code>analyse.py</code> · <code>check.py</code> · <code>fetch_outcomes_3x.py</code> and <code>explore.py</code> (exploratory) · <code>data/forecasts.jsonl</code>, <code>data/outcomes.jsonl</code>, <code>data/cells.tsv</code>, <code>data/results.json</code>, <code>data/explore.json</code>, <code>data/sources.json</code> · <code>verify_browser.mjs</code>. · study 22: <code>PREREGISTRATION-2.md</code> · <code>heterogeneity.py</code> · <code>check-22.py</code> · <code>data/heterogeneity.json</code> · <code>data/sources-2.json</code> · <code>data-22.js</code> · study 23: <code>PREREGISTRATION-3.md</code> · <code>fetch_updates.py</code> · <code>fetch_outcomes_23.py</code> · <code>analyse_23.py</code> · <code>check_23.py</code> · <code>data/updates.jsonl</code>, <code>data/outcomes_23.jsonl</code>, <code>data/updates_cells.tsv</code>, <code>data/results_23.json</code> · <code>answer_atelier_null.py</code>, <code>data/answer-atelier-null.json</code> · <code>data-23.js</code> · <code>verify_23.mjs</code></p>
 <p class="small">Meridian (the Field), study 21. Data: USGS ComCat, a US government work.</p>
 </main>
 <script src="data.js"></script>
@@ -202,6 +221,47 @@ const rows=[["Q1","The observed 38 lies inside the central 95 % under one factor
  ["Q5","The Studio's refetch agrees for all 252 warnings",`${G.studio_refetch.unit.agree} of ${G.studio_refetch.unit.of}`],
  ["Q6","…and for at least 975 of 979 registered cells",`${G.studio_refetch.primary_cells.agree} of ${G.studio_refetch.primary_cells.compared}`]];
 document.querySelector("#pred22 tbody").innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="${P[r[0]]?"held":"failed"}">${P[r[0]]?"held":"failed"}</td></tr>`).join("");
+draw();
+})();
+</script>
+<script src="data-23.js"></script>
+<script>
+(function(){
+const G=window.D23; if(!G) return;
+const st={v:"oe"}; const seg=document.getElementById("seg23");
+[["oe","the two forecasts"],["rs","2,000 resamplings of their ratio"]].forEach(([v,l])=>{const b=document.createElement("button");b.textContent=l;b.dataset.v=v;b.onclick=()=>{st.v=v;draw();};seg.appendChild(b);});
+const f=x=>x.toFixed(2);
+function draw(){
+  seg.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===st.v)));
+  const L=60,R=780,T=20,B=240; let s="";
+  if(st.v==="oe"){
+    const X=v=>L+(R-L)*v/1.4;
+    for(const t of [0,.25,.5,.75,1,1.25]) s+=`<text x="${X(t)}" y="${B+18}" text-anchor="middle">${t}</text><line x1="${X(t)}" x2="${X(t)}" y1="${T}" y2="${B}" stroke="var(--line)"/>`;
+    s+=`<line x1="${X(1)}" x2="${X(1)}" y1="${T}" y2="${B}" stroke="var(--fg)" stroke-dasharray="4 3"/><text x="${X(1)+5}" y="${T+10}">came as stated</text>`;
+    s+=`<text x="${(L+R)/2}" y="${B+40}" text-anchor="middle">observed ÷ stated, one week (95 % interval)</text>`;
+    [["first forecast (≈20 min)",G.first_same_sequences,"var(--a)",90],["update (≈2 days)",G.update,"var(--b)",170]].forEach(([lab,d,c,y])=>{
+      s+=`<line x1="${X(d.O_over_E_ci[0])}" x2="${X(d.O_over_E_ci[1])}" y1="${y}" y2="${y}" stroke="${c}" stroke-width="4"/><circle cx="${X(d.O_over_E)}" cy="${y}" r="8" fill="${c}"/>`;
+      s+=`<text x="${X(d.O_over_E_ci[0])}" y="${y-16}" style="fill:${c}">${lab}: ${d.observed} came of ${d.expected.toFixed(1)} stated, ${f(d.O_over_E)}</text>`;});
+    document.getElementById("cap23").textContent=`The same ${G.first_same_sequences.sequences} sequences, scored twice: the first published odds and the update issued at least a day later. Each line is a 95 % interval from resampling whole sequences.`;
+  } else {
+    const xs=G.paired_ratio.resamples, lo=0.4, hi=2.8, nb=48, bw=(hi-lo)/nb, cnt=new Array(nb).fill(0);
+    xs.forEach(x=>cnt[Math.max(0,Math.min(nb-1,Math.floor((x-lo)/bw)))]++);
+    const mx=Math.max(...cnt), X=v=>L+(R-L)*(v-lo)/(hi-lo), Y=c=>B-(B-T)*c/mx;
+    for(const t of [0.5,1,1.5,2,2.5]) s+=`<text x="${X(t)}" y="${B+18}" text-anchor="middle">${t}</text><line x1="${X(t)}" x2="${X(t)}" y1="${B}" y2="${B+4}" stroke="var(--line)"/>`;
+    s+=`<text x="${(L+R)/2}" y="${B+40}" text-anchor="middle">update's ratio ÷ first forecast's, per resampling</text>`;
+    cnt.forEach((c,i)=>{if(c) s+=`<rect x="${X(lo+i*bw)+1}" y="${Y(c)}" width="${X(bw)-X(0)-2}" height="${B-Y(c)}" fill="${lo+(i+1)*bw<=1?"var(--a)":"var(--b)"}" fill-opacity=".8"/>`;});
+    s+=`<line x1="${X(1)}" x2="${X(1)}" y1="${T-8}" y2="${B}" stroke="var(--fg)" stroke-width="2" stroke-dasharray="4 3"/><text x="${X(1)-6}" y="${T}" text-anchor="end">no change</text>`;
+    const below=xs.filter(x=>x<=1).length;
+    document.getElementById("cap23").textContent=`2,000 resamplings of the 250 sequences. Point estimate ${f(G.paired_ratio.point)}, 95 % interval ${f(G.paired_ratio.ci[0])}–${(Math.round(G.paired_ratio.ci[1]*100+1e-6)/100).toFixed(2)}; ${below} of 2,000 resamplings (orange) put the update no closer than the first forecast.`;
+  }
+  document.getElementById("h23").innerHTML=s;
+}
+const P=G.predictions_held, U=G.update, PR=G.paired_ratio;
+const rows=[["R1","The update's observed ÷ stated is at least 0.75",f(U.O_over_E)],
+ ["R2","Paired ratio, update ÷ first, above 1",f(PR.point)],
+ ["R3","…but its 95 % interval includes 1",`${f(PR.ci[0])}–${(Math.round(PR.ci[1]*100+1e-6)/100).toFixed(2)}`],
+ ["R4","The update's Brier skill above 0",`${f(U.BSS)} (${f(U.BSS_ci[0])} to ${f(U.BSS_ci[1])})`]];
+document.querySelector("#pred23 tbody").innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="${P[r[0]]?"held":"failed"}">${P[r[0]]?"held":"failed"}</td></tr>`).join("");
 draw();
 })();
 </script>
