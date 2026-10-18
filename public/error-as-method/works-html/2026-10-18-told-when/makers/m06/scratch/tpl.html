@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Afternoon Withdraws</title>
+<style>
+  :root { --ground:#0c0e13; --ink:#d9d4c7; --dim:#6f7380; }
+  html,body { margin:0; height:100%; background:var(--ground); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  canvas { display:block; width:1100px; height:800px; max-width:100vw; max-height:100vh; object-fit:contain; }
+</style>
+</head>
+<body>
+<canvas id="c" width="2200" height="1600" aria-label="A 24-hour dial of eighteen rings. Sixty-one days of hourly values, each day a hairline inside the rings; the bright afternoon bulge recedes inward as the season goes on."></canvas>
+<script>
+// The material: one row per discrete level read from record.jpg (row 0 = highest value),
+// one character per pixel column (300). '1' = a dot sat at that level in that column,
+// after removing the 3-pixel width of the plotted dots. Dots span x = 3 .. 296 for hours 0 .. 1463.
+const CORE = __CORE__;
+// One value per hour, in steps (0 = lowest step, 17 = highest), read from the same file:
+// the centre of the ink in each column, interpolated to the hour; the daily swing around its
+// 24-hour running mean is scaled by 2 to undo the blur of the ~15-hour-wide plotted dots.
+const HV = __HV__;
+const N = 1464, X0 = 3, X1 = 296, L = CORE.length;
+
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+g.scale(2,2);
+const W = 1100, H = 800;
+g.fillStyle = '#0c0e13'; g.fillRect(0,0,W,H);
+
+const cx = 420, cy = 400, r0 = 22, step = 18.6;
+const ang = h => Math.PI/2 + (h/24)*Math.PI*2;   // midnight at the bottom, noon at the top, clockwise
+const rad = v => r0 + v*step;                     // higher value -> further out
+const xOf = i => X0 + i*(X1-X0)/(N-1);
+const valAt = h => { const k=Math.max(0,Math.min(N-2,Math.floor(h))), f=h-k; return HV[k]*(1-f)+HV[k+1]*f; };
+
+function dayColor(d, a){
+  const t = d/60;
+  const h = 32 + t*178, s = 90 - t*42, li = 58 + t*14;   // high-summer amber -> pale September blue
+  return `hsla(${h},${s}%,${li}%,${a})`;
+}
+
+// eighteen rungs: the only values the instrument could report
+for (let v=0; v<L; v++){
+  g.beginPath(); g.arc(cx,cy,rad(v),0,Math.PI*2);
+  g.strokeStyle='rgba(217,212,199,0.075)'; g.lineWidth=0.7; g.stroke();
+}
+// hour spokes
+for (let h=0;h<24;h++){
+  const a=ang(h), rA=rad(-0.6), rB=rad(17)+(h%6===0?12:5);
+  g.beginPath(); g.moveTo(cx+Math.cos(a)*rA, cy+Math.sin(a)*rA); g.lineTo(cx+Math.cos(a)*rB, cy+Math.sin(a)*rB);
+  g.strokeStyle = h%6===0 ? 'rgba(217,212,199,0.16)' : 'rgba(217,212,199,0.05)'; g.lineWidth=0.6; g.stroke();
+}
+
+// beads: where a dot of the record actually sat on a rung, at its hour of day
+for (let l=0;l<L;l++){
+  for (let x=0;x<300;x++){
+    if (CORE[l][x]!=='1') continue;
+    const i=(x-X0)/(X1-X0)*(N-1); if (i<0||i>N-1) continue;
+    const a=ang(i), r=rad(L-1-l);
+    g.beginPath(); g.arc(cx+Math.cos(a)*r, cy+Math.sin(a)*r, 1.5, 0, Math.PI*2);
+    g.fillStyle=dayColor(Math.floor(i/24),0.55); g.fill();
+  }
+}
+
+// the thread: all 1,464 hours in one line, one turn per day
+g.lineCap='round'; g.lineJoin='round';
+g.shadowColor='rgba(255,200,120,0.25)'; g.shadowBlur=4;
+for (let i=0;i<N-1;i++){
+  const d=Math.floor(i/24);
+  const p=(k)=>{ const v=valAt(k), a=ang(k), r=rad(v); return [cx+Math.cos(a)*r, cy+Math.sin(a)*r]; };
+  g.beginPath();
+  const sub=4; let q=p(i); g.moveTo(q[0],q[1]);
+  for (let s=1;s<=sub;s++){ q=p(i+s/sub); g.lineTo(q[0],q[1]); }
+  g.strokeStyle=dayColor(d,0.58); g.lineWidth=1.05; g.stroke();
+}
+g.shadowBlur=0;
+
+// small words
+g.fillStyle='rgba(217,212,199,0.42)'; g.font='11px Georgia, "Times New Roman", serif'; g.textAlign='center';
+const rr = rad(17)+20;
+g.fillText('noon', cx, cy-rr+4);
+g.fillText('midnight', cx, cy+rr+4);
+g.textAlign='right'; g.fillText('6', cx-rr+4, cy+4);
+g.textAlign='left';  g.fillText('18', cx+rr-6, cy+4);
+
+const tx = 826;
+g.textAlign='left';
+g.fillStyle='#d9d4c7'; g.font='italic 27px Georgia, "Times New Roman", serif';
+g.fillText('The Afternoon', tx, 292); g.fillText('Withdraws', tx, 325);
+g.fillStyle='rgba(217,212,199,0.55)'; g.font='12.5px Georgia, "Times New Roman", serif';
+const lines = ['15 July \u2013 13 September 2025','one reading an hour, 1,464 in all,','each on one of eighteen steps.','','The thread runs once round the','dial each day: higher readings','further out, the hour of day','around the circle. The beads are','the steps as they were read.'];
+lines.forEach((t,k)=>g.fillText(t, tx, 366+k*19));
+const ky = 366+lines.length*19+6;
+for (let d=0; d<61; d++){ g.fillStyle=dayColor(d,0.95); g.fillRect(tx+d*3, ky, 3, 5); }
+g.fillStyle='rgba(217,212,199,0.42)'; g.font='11px Georgia, serif';
+g.fillText('July', tx, ky+21); g.textAlign='right'; g.fillText('September', tx+183, ky+21);
+</script>
+</body>
+</html>

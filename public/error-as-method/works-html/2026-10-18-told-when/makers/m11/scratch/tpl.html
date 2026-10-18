@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Turns</title>
+<style>
+  html,body{margin:0;height:100%;background:#121316;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="A spiral of 61 turns, one per day from 15 July to 13 September 2025, coloured hour by hour from ember orange to cold blue."></canvas>
+<script>
+// 1,464 hourly values read back from the source plot: 18 discrete steps, 0 = lowest, h (17) = highest.
+var S="__SERIES__";
+var W=1100,H=800,c=document.getElementById('c'),dpr=Math.max(1,window.devicePixelRatio||1);
+c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px';
+var g=c.getContext('2d');g.scale(dpr,dpr);
+g.fillStyle='#121316';g.fillRect(0,0,W,H);
+var v=[];for(var i=0;i<S.length;i++)v.push(parseInt(S[i],18));
+var stops=[[0,[38,58,92]],[0.3,[70,104,140]],[0.5,[150,150,140]],[0.68,[214,160,92]],[0.85,[226,110,52]],[1,[246,72,40]]];
+function col(L,a){var t=L/17,k=0;while(k<stops.length-2&&t>stops[k+1][0])k++;
+  var A=stops[k],B=stops[k+1],u=(t-A[0])/(B[0]-A[0]),r=[0,1,2].map(function(j){return Math.round(A[1][j]+(B[1][j]-A[1][j])*u)});
+  return 'rgba('+r[0]+','+r[1]+','+r[2]+','+(a==null?1:a)+')';}
+var cx=420,cy=400,r0=52,dr=4.6,N=v.length;
+function pos(t){var a=2*Math.PI*(t/24)-Math.PI/2,r=r0+dr*t/24;return [cx+r*Math.cos(a),cy+r*Math.sin(a),r,a];}
+// faint glow pass, then the line itself
+g.lineCap='butt';
+for(var pass=0;pass<2;pass++){
+  for(var i=0;i<N;i++){
+    g.beginPath();
+    for(var s=0;s<=6;s++){var p=pos(i+s/6);if(s)g.lineTo(p[0],p[1]);else g.moveTo(p[0],p[1]);}
+    if(pass==0){if(v[i]<11)continue;g.strokeStyle=col(v[i],0.10);g.lineWidth=dr*2.6;}
+    else{g.strokeStyle=col(v[i]);g.lineWidth=dr*0.78;}
+    g.stroke();
+  }
+}
+// clock marks: midnight top, noon bottom
+g.fillStyle='rgba(220,215,200,0.55)';g.font='11px Georgia, serif';g.textAlign='center';g.textBaseline='middle';
+var R=r0+dr*62+18;
+[['midnight',0],['6 h',6],['noon',12],['18 h',18]].forEach(function(m){var a=2*Math.PI*m[1]/24-Math.PI/2;
+  g.strokeStyle='rgba(220,215,200,0.35)';g.lineWidth=1;g.beginPath();
+  g.moveTo(cx+(R-12)*Math.cos(a),cy+(R-12)*Math.sin(a));g.lineTo(cx+(R-5)*Math.cos(a),cy+(R-5)*Math.sin(a));g.stroke();
+  g.fillText(m[0],cx+(R+10)*Math.cos(a),cy+(R+8)*Math.sin(a));});
+// right column
+var x=850;g.textAlign='left';g.textBaseline='alphabetic';
+g.fillStyle='#ece6d8';g.font='30px Georgia, serif';g.fillText('Sixty-One Turns',x,300);
+g.fillStyle='rgba(236,230,216,0.6)';g.font='italic 14px Georgia, serif';
+g.fillText('15 July – 13 September 2025',x,328);
+g.font='13px Georgia, serif';g.fillStyle='rgba(236,230,216,0.72)';
+['One turn of the spiral is one day,','read outward from the centre.','Each of its 24 segments is one hour;','midnight stands at the top.','','1,464 hours of one measured value,','in eighteen even steps.'].forEach(function(l,k){g.fillText(l,x,372+k*20);});
+// key
+var ky=540;for(var L=0;L<18;L++){g.fillStyle=col(L);g.fillRect(x+L*11,ky,10,10);}
+g.font='italic 11px Georgia, serif';g.fillStyle='rgba(236,230,216,0.55)';
+g.fillText('lowest',x,ky+26);g.textAlign='right';g.fillText('highest',x+197,ky+26);
+</script>
+</body>
+</html>

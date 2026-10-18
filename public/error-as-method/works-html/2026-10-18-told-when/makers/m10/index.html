@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eighteen Rings</title>
+<style>
+  html,body{margin:0;height:100%;background:#efeadf;}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+// 1,464 hourly values, 15 July - 13 September 2025, read back from the 300 x 90 px record.
+// Each character is one hour: the step (0 = lowest, h = 17 = highest) the quantity stood on.
+const S="ccccccbbbbbbddddefeeeeeddddccbcccccdeeeeefhgffeeeedccccccddeddffgffeeedddddcbccbcccdedddddddddcccccbbbbbbbbbcccdedddddcccbbabbbbcbbbefedeefeeeedddcccbbbbbbbedefeegfedeeeccccbcdccdccefgfffffffeedccccbcdceeeefffffeeeeedddccccbccddeeeeffeeedddcccccccbbcceefedeeeeeeddcccbcbbbbcbbddddefedeeccbbbbbabbbbcbbdefeeeeeeddcbccccbccccdceeefeeeeeddddccccbcccccdeffffffffeeddcddddbcddeefgffgfffffeeeeedcdddddddefdddddddcccccccbbbbbbbefdcbbbbbbbbbbaaaaaaaaaabbbcbbbbbbbaaaa988988888abccccccbbaaaaa999989999a999999999988888888888889a9999a9998888876777786799abcbbabbbb99888788889abbcdbbbbbbbbbaa9989999999aaabcbbbbba9999989878888aabbaaaaaa998788887898888babbbbba99998888877898aabbbbcbbbaaaa9989999a99bbcdbbbbbbbbaaaaa9aaaaaabcdbbbbbbbbaaaa999a999bcbbbbed9a999999999998999abadddedddccbbbbaaaaaba9aaadcdfedddddcbbabbbbcbbbbdefddedddddcbbbabbbbbbbbdedddccdddddbbbbabbbbcbbedeeeeeedddccccbbcbbbbcb9999999888888888887888898aaabaaa999999987887888899ababaaa999998788889888abbbbbbbaaa99988988889888abaaaaaa98888888876777778898888888877766666666667887777765666644434444566788776666544444444444455555555544444444333432555667877765555444444454688788888866654444345444466678666666654444434446566667666666665555555555567666666665544434444544667666666665555545444456667888888887766665666666777898888888777666666666666676666666555443333333345443444444211111000001123454444333332221111211134333554333222222011111143456555554333222122224366676665555444333343233656666666545333332221223347656765554";
+const V=[...S].map(ch=>parseInt(ch,18));
+const N=V.length, DAYS=61, LEVELS=18;
+
+const W=1100,H=800;
+const cv=document.getElementById('c'), g=cv.getContext('2d');
+
+function inkFor(d){ // date colour: iron-gall brown in July to blue-black in September
+  const t=d/(DAYS-1);
+  const a=[150,78,34], m=[92,70,88], b=[30,52,104];
+  const p=t<.5?[a,m,t*2]:[m,b,(t-.5)*2];
+  return p[0].map((x,i)=>Math.round(x+(p[1][i]-x)*p[2]));
+}
+
+function draw(){
+  const s=Math.min(innerWidth/W,innerHeight/H), dpr=window.devicePixelRatio||1;
+  cv.style.width=W*s+'px'; cv.style.height=H*s+'px';
+  cv.width=Math.round(W*s*dpr); cv.height=Math.round(H*s*dpr);
+  g.setTransform(s*dpr,0,0,s*dpr,0,0);
+  g.fillStyle='#efeadf'; g.fillRect(0,0,W,H);
+
+  const cx=425, cy=400, R0=54, R1=352, bw=(R1-R0)/LEVELS;
+  // ring for level k, lane for day d: July on the outer edge of each ring, September on the inner
+  const rad=(k,d)=>R0+k*bw+bw*(0.92-0.84*d/(DAYS-1));
+  const ang=h=>-Math.PI/2+h*2*Math.PI/24;
+
+  // faint ruling: ring boundaries and the 24 hour spokes
+  g.lineWidth=0.5; g.strokeStyle='rgba(60,50,40,0.13)';
+  for(let k=0;k<=LEVELS;k++){g.beginPath();g.arc(cx,cy,R0+k*bw,0,2*Math.PI);g.stroke();}
+  for(let h=0;h<24;h++){
+    const a=ang(h);g.beginPath();
+    g.moveTo(cx+Math.cos(a)*(R0-6),cy+Math.sin(a)*(R0-6));
+    g.lineTo(cx+Math.cos(a)*(R1+(h%6?4:10)),cy+Math.sin(a)*(R1+(h%6?4:10)));
+    g.strokeStyle=h%6?'rgba(60,50,40,0.10)':'rgba(60,50,40,0.28)';g.stroke();
+  }
+
+  // the record: one turn per day, held on a ring for each hour, stepping between rings at the hour
+  g.lineCap='round';
+  for(let i=0;i<N;i++){
+    const d=Math.floor(i/24), h=i%24, k=V[i];
+    const [r,gg,b]=inkFor(d);
+    const r1=rad(k,d), a0=ang(h), a1=ang(h+1);
+    g.strokeStyle='rgba('+r+','+gg+','+b+',0.48)'; g.lineWidth=1.5;
+    g.beginPath(); g.arc(cx,cy,r1,a0,a1); g.stroke();
+    if(i+1<N){
+      const d2=Math.floor((i+1)/24), r2=rad(V[i+1],d2);
+      if(Math.abs(r2-r1)>0.01){
+        g.strokeStyle='rgba('+r+','+gg+','+b+',0.28)'; g.lineWidth=0.7;
+        g.beginPath(); g.moveTo(cx+Math.cos(a1)*r1,cy+Math.sin(a1)*r1);
+        g.lineTo(cx+Math.cos(a1)*r2,cy+Math.sin(a1)*r2); g.stroke();
+      }
+    }
+  }
+  // first and last hour
+  const mark=(i,fill)=>{const d=Math.floor(i/24),a=ang(i%24+.5),r=rad(V[i],d);
+    g.beginPath();g.arc(cx+Math.cos(a)*r,cy+Math.sin(a)*r,3.2,0,2*Math.PI);
+    g.fillStyle=fill;g.fill();g.lineWidth=1;g.strokeStyle='#efeadf';g.stroke();};
+  const c0=inkFor(0),c1=inkFor(DAYS-1);
+  mark(0,'rgb('+c0+')'); mark(N-1,'rgb('+c1+')');
+
+  // text
+  const ink='#3a332b', soft='#7b7064';
+  const L=870;
+  g.textBaseline='alphabetic';
+  g.fillStyle=ink; g.font='italic 400 34px Georgia, \"Iowan Old Style\", \"Palatino Linotype\", serif';
+  g.fillText('Eighteen Rings',L,96);
+  g.fillStyle=soft; g.font='13px Georgia, \"Palatino Linotype\", serif';
+  g.fillText('15 July – 13 September 2025',L,124);
+  g.fillText('1,464 hours, one value each',L,143);
+
+  const para=[
+    'The line turns once a day,',
+    'beginning at the top and',
+    'running clockwise, one',
+    'twenty-fourth of a turn',
+    'for each hour.',
+    '',
+    'The quantity only ever stood',
+    'on eighteen values. Each is',
+    'a ring: the highest outside,',
+    'the lowest at the centre.',
+    'The line holds a ring for the',
+    'hour and steps between',
+    'rings on the hour.',
+    '',
+    'Inside each ring, July lies',
+    'along the outer edge and',
+    'September along the inner.'
+  ];
+  g.fillStyle=ink; g.font='13.5px Georgia, \"Palatino Linotype\", serif';
+  para.forEach((t,j)=>g.fillText(t,L,196+j*19.5));
+
+  // date ink key
+  const ky=546;
+  for(let d=0;d<DAYS;d++){g.fillStyle='rgb('+inkFor(d)+')';g.fillRect(L+d*2.6,ky,2.7,7);}
+  g.fillStyle=soft; g.font='11.5px Georgia, serif';
+  g.fillText('15 Jul',L,ky+23); g.textAlign='right'; g.fillText('13 Sep',L+DAYS*2.6,ky+23); g.textAlign='left';
+
+  g.fillStyle=soft; g.font='italic 11.5px Georgia, serif';
+  ['Read back from a 300 × 90 pixel',
+   'picture: the rings are as drawn,',
+   'the order of hours within each',
+   'five-hour pixel is reconstructed.'].forEach((t,j)=>g.fillText(t,L,640+j*16));
+
+  // hour marks at the quarter spokes
+  g.fillStyle=soft; g.font='11px Georgia, serif'; g.textAlign='center'; g.textBaseline='middle';
+  [['0',0],['6',6],['12',12],['18',18]].forEach(([t,h])=>{const a=ang(h);
+    g.fillText(t,cx+Math.cos(a)*(R1+24),cy+Math.sin(a)*(R1+24));});
+  g.textAlign='left'; g.textBaseline='alphabetic';
+}
+draw(); addEventListener('resize',draw);
+</script>
+</body>
+</html>

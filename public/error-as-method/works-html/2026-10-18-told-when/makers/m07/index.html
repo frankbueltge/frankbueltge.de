@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Lines</title>
+<style>
+html,body{margin:0;height:100%;background:#f3efe6}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden}
+svg{width:100vw;height:100vh;display:block}
+text{font-family:Georgia,"Times New Roman",serif;fill:#3a352d}
+</style></head><body>
+<svg id="w" viewBox="0 0 1100 800" preserveAspectRatio="xMidYMid meet" role="img"
+ aria-label="Sixty-one lines of dots, one line per day, one dot per hour, set at eighteen tab stops; the body of dots drifts left in three steps as the lines go down."></svg>
+<script>
+// 61 days x 18 levels (lowest level first): hours spent at each level, read from the source picture.
+var D="000000000006734400;000000000004444323;000000000000465531;000000000003685110;000000000007863000;000000000045434400;000000000005444430;000000000003545430;000000000002556510;000000000004565400;000000000005655300;000000000005664300;000000000045434400;000000000005645400;000000000004654500;000000000002454540;000000000001676400;000000000017842200;000000000197610000;000000004574400000;000000006B51100000;000000019860000000;000000344344200000;000000044334330000;000000004574400000;000000035664000000;000000045555000000;000000044454300000;000000003554430000;000000000586320000;000000000753243000;000000002533443000;000000000254444100;000000000035554200;000000000056553000;000000000055455000;000000015506610000;000000047454000000;000000045564000000;000000045465000000;000000017673000000;000000487500000000;000012885000000000;000355443000000000;0001CA100000000000;002345343000000000;000065445000000000;000454344000000000;000445650000000000;000139650000000000;000356550000000000;000044565000000000;000004575300000000;000134A51000000000;223773000000000000;445542000000000000;055545000000000000;234444300000000000;023444430000000000;003655500000000000;023245440000000000".split(";");
+var NS="http://www.w3.org/2000/svg", s=document.getElementById("w");
+function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);(p||s).appendChild(e);return e;}
+var X0=92, CW=53.5, Y0=104, RH=10.9, P=4.0, R=1.55;
+// tab stops
+for(var k=0;k<18;k++){var x=X0+k*CW;el("line",{x1:x,x2:x,y1:Y0-14,y2:Y0+60*RH+12,stroke:"#d9d1c2","stroke-width":0.6});}
+var t=el("text",{x:X0-36,y:54,"font-size":22,"letter-spacing":"0.5"});t.textContent="Sixty-One Lines";
+var c=el("text",{x:X0-36,y:74,"font-size":11.5,"font-style":"italic",fill:"#7a7264"});
+c.textContent="one line for each day \u00b7 one dot for each hour \u00b7 each dot set at the stop of its value, lower to the left";
+var g=el("g",{fill:"#24211c"});
+for(var d=0;d<61;d++){
+  var y=Y0+d*RH, r=D[d];
+  if(d===0||(d+1)%10===0||d===60){var n=el("text",{x:X0-30,y:y+3.6,"font-size":9.5,"text-anchor":"end",fill:"#9a917f"});n.textContent=d+1;}
+  for(var k=0;k<18;k++){
+    var h=parseInt(r[k],16); if(!h)continue;
+    var cx=X0+k*CW, w=(h-1)*P;
+    for(var i=0;i<h;i++) el("circle",{cx:(cx-w/2+i*P).toFixed(2),cy:y.toFixed(2),r:R},g);
+  }
+}
+</script></body></html>

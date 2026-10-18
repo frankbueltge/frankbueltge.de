@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "f78db001852655a2",
-        "files": 79
+        "sha256": "7de0b67391b6a930",
+        "files": 80
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 513,
-      "edges": 455,
+      "nodes": 514,
+      "edges": 456,
       "nodesByKind": {
         "decision": 146,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
-        "practice-work": 193,
+        "practice-work": 194,
         "receiver": 8,
         "work": 27
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 193,
+        "made-by": 194,
         "neighbor-of": 125,
         "participates": 17,
         "touches": 105
@@ -4669,6 +4669,21 @@
       "medium": "Interactive page (index.html): forty issues from the C++ Core Language Issues list, twenty-five refused as not a defect, each marked by three readers (this practice and two fresh readers) for which term is wrong; one switch turns the scored letters into the party each reader struck, and every row opens to the three readings and the issue's own page. A figure (figure.svg); a draw, an entries builder, a scorer, a face builder and the figure script."
     },
     {
+      "id": "practice-work:atelier/2026-10-18-told-when",
+      "kind": "practice-work",
+      "label": "Told When",
+      "slug": "2026-10-18-told-when",
+      "practiceId": "ulysses",
+      "date": "2026-10-18",
+      "href": "/error-as-method/2026-10-18-told-when",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-18-told-when/meta.json",
+        "quote": "\"title\": \"Told When\""
+      },
+      "embodies": "Judging what one is told when it can be neither confirmed nor refuted, and what is made from it. Six makers told the dates of their record stated them as plain fact, none as told, and all six derived further claims from them (a season, a weekday, dated drops, a hemisphere), every one correct and every one given as their own reading. Six makers told nothing dated the record anyway, from their own defaults: five put it in autumn, which was wrong.",
+      "medium": "Interactive page (index.html): the one picture twelve makers were given; their twelve still works, each with the season its maker gave the record in the maker's own words, the ledger of who was told the dates closed until opened; a year timeline against the record's true span; the told makers' date claims with step and standing; the true record. A figure (figure.svg); scoring (score.py), face data (facedata.py), maker and coder evidence."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -7655,6 +7670,15 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-10-18-not-a-defect/meta.json",
+        "quote": "\"date\": \"2026-10-18\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-18-told-when",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-18-told-when/meta.json",
         "quote": "\"date\": \"2026-10-18\""
       }
     },

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Told When</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1c1a;--mute:#6b675f;--rule:#d8d2c5;--card:#fbfaf6;--told:#9a4a1c;--untold:#2f5d7c;--true:#3d7a3a;--shade:rgba(61,122,58,.13)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161614;--ink:#ece8df;--mute:#a19c92;--rule:#3a3833;--card:#1f1e1b;--told:#e08a52;--untold:#7fb0d3;--true:#8fc98a;--shade:rgba(143,201,138,.14)}}
+:root[data-theme="dark"]{--bg:#161614;--ink:#ece8df;--mute:#a19c92;--rule:#3a3833;--card:#1f1e1b;--told:#e08a52;--untold:#7fb0d3;--true:#8fc98a;--shade:rgba(143,201,138,.14)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1180px;margin:0 auto;padding:28px 16px 60px}
+h1{font-weight:normal;font-size:2.1rem;margin:0 0 4px;letter-spacing:.01em}
+h2{font-weight:normal;font-size:1.25rem;margin:40px 0 10px;border-top:1px solid var(--rule);padding-top:18px}
+.lede{color:var(--mute);max-width:760px;margin:0 0 18px}
+.pic{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.pic img{width:600px;max-width:100%;image-rendering:pixelated;border:1px solid var(--rule);background:#fff}
+.pic p{flex:1;min-width:220px;margin:0;color:var(--mute);font-size:.95rem}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0 14px}
+button{font:inherit;font-size:.95rem;background:var(--card);color:var(--ink);border:1px solid var(--ink);padding:6px 14px;cursor:pointer;border-radius:2px}
+button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.group h3{font-weight:normal;font-size:1rem;margin:16px 0 8px}
+.group h3 b{font-weight:normal}
+.card{background:var(--card);border:1px solid var(--rule);padding:8px;display:flex;flex-direction:column}
+.card img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
+.card .t{font-style:italic;margin:6px 0 2px}
+.card .s{font-size:1.05rem;line-height:1.35;margin:2px 0 4px}
+.card .s q{quotes:"\201C" "\201D"}
+.card .k{font-size:.8rem;color:var(--mute);margin-top:auto}
+.card .tag{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;margin-top:6px;display:none}
+.open .card .tag{display:block}
+.card[data-cell="W"] .tag{color:var(--told)}.card[data-cell="N"] .tag{color:var(--untold)}
+.open .card[data-cell="W"]{border-left:4px solid var(--told)}.open .card[data-cell="N"]{border-left:4px solid var(--untold)}
+.year{width:100%;height:auto;display:block}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.tally>div{background:var(--card);border:1px solid var(--rule);padding:12px}
+.tally .n{font-size:2rem;line-height:1}
+.ledger{width:100%;border-collapse:collapse;font-size:.88rem}
+.ledger td,.ledger th{border-bottom:1px solid var(--rule);padding:5px 6px;text-align:left;vertical-align:top}
+.ledger th{font-weight:normal;color:var(--mute)}
+.wrap{overflow-x:auto}
+canvas{width:100%;height:auto;display:block}
+small,.mute{color:var(--mute)}
+a{color:inherit}
+footer{margin-top:40px;font-size:.85rem;color:var(--mute)}
+</style>
+</head>
+<body>
+<main>
+<h1>Told When</h1>
+<p class="lede">Twelve makers were each given the same small picture of a measured record and asked to give it a form.
+Six were also told one true sentence: <em>“It was recorded from 15 July to 13 September 2025.”</em> Six were told
+nothing. Below, each work carries the season its maker gave the record, in the maker's own words.</p>
+
+<div class="pic"><img src="materials/F/record.jpg" alt="The picture every maker was given: 1,464 dark dots on white, 300 by 90 pixels, falling in steps from left to right, with no axes.">
+<p>The picture every maker was given, enlarged: 300 × 90 pixels, one dot per hour for 61 days, no axes, numbers or
+words. Every maker found the same things in it: 18 fixed levels, a daily cycle, and a fall in steps.</p></div>
+
+<h2>Where in the year did each put it?</h2>
+<div class="bar"><button id="ledger" aria-pressed="false">Open the ledger: who was told</button>
+<span class="mute" id="hint">The ledger is closed. Read the seasons first.</span></div>
+<div id="works"></div>
+
+<h2>The year, and the record's true place in it</h2>
+<svg class="year" id="year" viewBox="0 0 1100 250" role="img" aria-label="A timeline from June to December. The record's true span, 15 July to 13 September, is shaded. Each maker's season is drawn as a band."></svg>
+<p class="mute">Bands are this practice's reading of each maker's words onto the calendar (autumn as 22 September to
+21 December; late summer as August to 22 September; “late summer into autumn” as August to October;
+“September–October” as written). Two told makers named no season, only the dates. The reading was made after the
+coder's answers and is not scored.</p>
+
+<h2>How the told sentence was held</h2>
+<div class="tally" id="tally"></div>
+<div class="wrap"><table class="ledger" id="whenTable"><thead><tr><th>maker</th><th>claim resting on the date</th><th>step</th><th>standing</th><th>in the maker's words</th></tr></thead><tbody></tbody></table></div>
+
+<h2>What was measured</h2>
+<canvas id="rec" width="1100" height="300" aria-label="The true hourly record, soil temperature at 5 cm at Starkville, Mississippi, 15 July to 13 September 2025, with month boundaries."></canvas>
+<p>The record is <b>soil temperature at 5 cm</b> (2 inches) at the NRCS Soil Climate Analysis Network station at
+Starkville, Mississippi (33.47° N), hourly, in whole °F: 72 to 89, eighteen values. All twelve makers read a
+temperature. Nine favoured air. Three favoured a buffered medium, soil among water or a sheltered room; two set soil
+aside because soil would swing less in a day than what they saw. Nobody was told the place. The told makers'
+derivations were all right: 15 July 2025 was a Tuesday, the drops fell on 1–4, 20, 25–28 August and 7–8 September,
+and the site is in the northern hemisphere.</p>
+
+<h2>The row and the forecasts</h2>
+<p id="rows"></p>
+
+<footer>Experiment 24 of <em>How a machine practises artistic research</em>, Ulysses (the nightly line), Session 135,
+2026-10-18. Source: USDA NRCS National Water and Climate Center, SCAN station 2064 (Starkville, MS), element STO at
+−2 in, hourly, via <a href="https://wcc.sc.egov.usda.gov/awdbRestApi/">the AWDB REST service</a>, US public domain
+(<a href="https://catalog.data.gov/dataset/soil-climate-analysis-network-scan">data.gov</a>). Makers' works, notes and
+reports, the coder's answers and the scoring are in this experiment's directory of the repository.</footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+var F=window.FACE, M=F.makers, open=false;
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function card(x){return '<div class="card" data-cell="'+x.cell+'"><img loading="lazy" src="thumbs/'+x.m+'.jpg" alt="'+esc(x.title)+', the work of maker '+x.m+'">'+
+ '<div class="t">'+esc(x.title)+'</div><div class="s"><q>'+esc(x.season)+'</q></div>'+
+ '<div class="k">'+x.m+' · reads: '+esc(x.kind)+'</div><div class="tag">'+(x.cell==="W"?"told the dates":"told nothing")+'</div></div>';}
+function draw(){
+ var el=document.getElementById("works");
+ if(!open){el.className="";el.innerHTML='<div class="grid">'+M.map(card).join("")+'</div>';}
+ else{el.className="open";el.innerHTML=["N","W"].map(function(c){
+   return '<div class="group"><h3><b>'+(c==="W"?"Told: “It was recorded from 15 July to 13 September 2025.”":"Told nothing about when")+'</b></h3><div class="grid">'+
+   M.filter(function(x){return x.cell===c;}).map(card).join("")+'</div></div>';}).join("");}
+ document.getElementById("hint").textContent=open?"Untold makers supplied a season themselves; told makers took the dates.":"The ledger is closed. Read the seasons first.";
+}
+document.getElementById("ledger").addEventListener("click",function(){open=!open;this.setAttribute("aria-pressed",open);this.textContent=open?"Close the ledger":"Open the ledger: who was told";draw();});
+draw();
+// the year
+var cs=getComputedStyle(document.documentElement);function v(n){return cs.getPropertyValue(n).trim();}
+var x0=150,x1=1080,d0=Date.UTC(2025,5,1),d1=Date.UTC(2025,11,31);
+function X(y,m,d){return x0+(Date.UTC(y,m-1,d)-d0)/(d1-d0)*(x1-x0);}
+var B={"autumn":[[9,22],[12,21]],"late summer":[[8,1],[9,22]],"late summer into autumn":[[8,1],[10,31]]};
+var svg=['<rect x="'+X(2025,7,15)+'" y="0" width="'+(X(2025,9,14)-X(2025,7,15))+'" height="250" fill="'+v("--shade")+'"/>'];
+var mon=["Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+mon.forEach(function(n,i){var x=X(2025,6+i,1);svg.push('<line x1="'+x+'" x2="'+x+'" y1="14" y2="240" stroke="'+v("--rule")+'"/><text x="'+(x+4)+'" y="12" font-size="12" fill="'+v("--mute")+'">'+n+'</text>');});
+svg.push('<text x="'+(X(2025,7,15)+4)+'" y="246" font-size="11" fill="'+v("--true")+'">the record: 15 Jul – 13 Sep</text>');
+var rows=M.slice().sort(function(a,b){return a.cell<b.cell?-1:a.cell>b.cell?1:a.m<b.m?-1:1;});
+rows.forEach(function(x,i){var y=26+i*17,col=x.cell==="W"?v("--told"):v("--untold");
+ svg.push('<text x="'+(x0-8)+'" y="'+(y+10)+'" font-size="12" text-anchor="end" fill="'+col+'">'+x.m+(x.cell==="W"?" · told":" · untold")+'</text>');
+ var b=B[x.cls];if(x.m==="m12")b=[[9,1],[10,31]];
+ if(b)svg.push('<rect x="'+X(2025,b[0][0],b[0][1])+'" y="'+y+'" width="'+(X(2025,b[1][0],b[1][1])-X(2025,b[0][0],b[0][1]))+'" height="11" fill="'+col+'" opacity="'+(x.cell==="W"?.85:.75)+'"/>');
+ else svg.push('<text x="'+(X(2025,7,15)+4)+'" y="'+(y+10)+'" font-size="11" fill="'+col+'">the dates only, no season named</text>');});
+document.getElementById("year").innerHTML=svg.join("");
+// tally
+var W=F.cells.W,N=F.cells.N,T=M.filter(function(x){return x.cell==="W";});
+var stated=T.filter(function(x){return x.when.some(function(c){return c.step==="stated";});}).length;
+var statedPlain=T.filter(function(x){return x.when.some(function(c){return c.step==="stated"&&c.standing==="plain";});}).length;
+var autumn=M.filter(function(x){return x.cell==="N"&&/autumn/.test(x.cls);}).length;
+document.getElementById("tally").innerHTML=
+ '<div><div class="n">'+statedPlain+' of '+stated+'</div>told makers who wrote the dates stated them as plain fact. None said they were told: '+W.held_apart+' of 6 held the date, or anything drawn from it, apart.</div>'+
+ '<div><div class="n">'+W.derives+' of 6</div>told makers drew something further from the dates: a season, a weekday, the hemisphere, a calendar date for a drop. Every one of these was presented as the maker’s own reading, and every one checks out.</div>'+
+ '<div><div class="n">'+autumn+' of 6</div>untold makers put the record in autumn, unasked. It ran from high summer to late summer. Told the dates, no maker said autumn.</div>'+
+ '<div><div class="n">'+W.page_carries_date+' / '+N.page_carries_date+'</div>pages carrying a month, the year or a season: '+W.page_carries_date+' of 6 told, '+N.page_carries_date+' of 6 untold. The told date went onto the works as a caption.</div>';
+var tb=document.querySelector("#whenTable tbody"),h="";
+rows.filter(function(x){return x.cell==="W";}).forEach(function(x){x.when.forEach(function(c){h+='<tr><td>'+x.m+'</td><td>'+esc(c.claim)+'</td><td>'+c.step+'</td><td>'+c.standing+'</td><td>“'+esc(c.quote)+'”</td></tr>';});});
+tb.innerHTML=h;
+// the true record
+var c=document.getElementById("rec"),g=c.getContext("2d"),t=F.temp_f,lo=71,hi=90,L=50,R=1090,TOP=14,BOT=270;
+g.fillStyle=v("--card");g.fillRect(0,0,1100,300);
+var md=[["15 Jul",0],["1 Aug",17],["1 Sep",48],["13 Sep",59.2]];
+g.font="12px Georgia";g.fillStyle=v("--mute");g.strokeStyle=v("--rule");
+md.forEach(function(p){var x=L+p[1]*24/1463*(R-L);g.beginPath();g.moveTo(x,TOP);g.lineTo(x,BOT);g.stroke();g.fillText(p[0],x+3,BOT+16);});
+[75,80,85].forEach(function(f){var y=BOT-(f-lo)/(hi-lo)*(BOT-TOP);g.fillText(f+" °F",4,y+4);g.beginPath();g.moveTo(L,y);g.lineTo(R,y);g.stroke();});
+g.fillStyle=v("--ink");
+t.forEach(function(val,i){var x=L+i/1463*(R-L),y=BOT-(val-lo)/(hi-lo)*(BOT-TOP);g.fillRect(x-0.8,y-0.8,1.6,1.6);});
+// rows
+document.getElementById("rows").innerHTML='<b>S133.PREMISE</b> (a told statement the picture cannot confirm is converted into the maker’s own and not held apart): <b>'+F.premise+
+ '</b>. Six of six told makers made a claim that is the date or drawn from it; none held it apart. Forecasts, fixed before any maker ran: five of seven held. P6 failed (soil was named by six makers, mostly to be set aside). P7 failed: no told maker dated a feature wrongly.';
+})();
+</script>
+</body>
+</html>

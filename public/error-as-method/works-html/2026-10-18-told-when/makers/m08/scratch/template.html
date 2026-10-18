@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eighteen Picks</title>
+<style>
+  :root { --wall:#26231f; --ink:#9c9384; }
+  html,body{margin:0;height:100%;background:var(--wall);}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  canvas{display:block;width:1100px;height:800px;max-width:100vw;max-height:100vh;object-fit:contain;}
+</style>
+</head>
+<body>
+<canvas id="c" width="2200" height="1600" aria-label="A woven cloth: a band of coloured weft floats steps down from upper left to lower right across eighteen rows, cooling from madder red to indigo."></canvas>
+<script>
+const R = __DATA__;              // 18 levels (top = highest value) x 300 columns, 0 = no dot, 1-9 = density
+const L = R.length, N = R[0].length;
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+g.scale(2,2);
+const W = 1100, H = 800;
+
+// deterministic noise
+let seed = 1464;
+const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+
+// wall
+g.fillStyle = '#26231f'; g.fillRect(0,0,W,H);
+const vg = g.createRadialGradient(W/2,H/2,100,W/2,H/2,700);
+vg.addColorStop(0,'rgba(255,240,215,0.06)'); vg.addColorStop(1,'rgba(0,0,0,0.35)');
+g.fillStyle = vg; g.fillRect(0,0,W,H);
+
+// cloth geometry
+const X0 = 86, CW = 928, cw = CW / N;   // warp spacing ~3.09px
+const Y0 = 118, ph = 30, CH = L * ph;   // one pick band per level
+const Y1 = Y0 + CH;
+
+// shadow of the hanging cloth
+g.save(); g.shadowColor='rgba(0,0,0,0.55)'; g.shadowBlur=28; g.shadowOffsetY=10;
+g.fillStyle='#ddd3c0'; g.fillRect(X0, Y0-10, CW, CH+20); g.restore();
+
+// hanging rod
+g.fillStyle='#4a3a2a'; g.fillRect(X0-40, Y0-34, CW+80, 9);
+g.fillStyle='rgba(255,230,190,0.18)'; g.fillRect(X0-40, Y0-34, CW+80, 2);
+
+// ground: plain weave linen
+for (let i = 0; i < N; i++) {
+  const x = X0 + i*cw;
+  for (let y = Y0-10; y < Y1+10; y += 3) {
+    const up = ((i + Math.floor((y-Y0)/3)) & 1) === 0;
+    const v = 214 + Math.floor(rnd()*12) - (up?0:10);
+    g.fillStyle = `rgb(${v+6},${v-2},${v-18})`;
+    g.fillRect(x, y, cw+0.3, 3);
+  }
+  // warp thread edge shading
+  g.fillStyle='rgba(90,70,40,0.08)'; g.fillRect(x+cw-0.6, Y0-10, 0.6, CH+20);
+}
+
+// colour per level: madder -> rust -> ochre -> olive -> slate -> indigo
+const stops = [[0,[122,28,26]],[4,[176,72,38]],[7,[184,128,52]],[10,[112,116,72]],[13,[66,92,108]],[17,[30,42,86]]];
+function col(k){
+  for (let s=0;s<stops.length-1;s++){
+    const [a,ca]=stops[s],[b,cb]=stops[s+1];
+    if(k<=b){const t=(k-a)/(b-a);return ca.map((v,j)=>Math.round(v+(cb[j]-v)*t));}
+  }
+  return stops[stops.length-1][1];
+}
+
+// pattern weft: supplementary floats over the ground wherever the record touched a level
+const strands = 5, sh = ph/strands;
+for (let k = 0; k < L; k++) {
+  const c = col(k), yb = Y0 + k*ph;
+  for (let s = 0; s < strands; s++) {
+    const ys = yb + s*sh + 0.6, hh = sh - 1.2;
+    let i = 0;
+    while (i < N) {
+      if (R[k][i] === '0') { i++; continue; }
+      let j = i; while (j < N && R[k][j] !== '0') j++;
+      // a float from column i to j
+      for (let q = i; q < j; q++) {
+        const d = +R[k][q];
+        // weaker marks: the float thins and the ground shows through (stitched every other strand)
+        if (d < 4 && ((s + q) & 1)) continue;
+        const a = 0.55 + d*0.05;
+        const jit = (rnd()-0.5)*14;
+        g.fillStyle = `rgba(${c[0]+jit|0},${c[1]+jit|0},${c[2]+jit|0},${a})`;
+        g.fillRect(X0 + q*cw, ys, cw+0.35, hh);
+      }
+      // sheen and shadow along the float
+      const xa = X0 + i*cw, xb = X0 + j*cw;
+      g.fillStyle='rgba(255,236,205,0.16)'; g.fillRect(xa+0.8, ys+0.4, xb-xa-1.6, 1.1);
+      g.fillStyle='rgba(20,10,0,0.22)';    g.fillRect(xa+0.8, ys+hh-1, xb-xa-1.6, 1);
+      // tie-down where the float turns under
+      g.fillStyle='rgba(40,25,10,0.35)'; g.fillRect(xa, ys, 0.8, hh); g.fillRect(xb-0.8, ys, 0.8, hh);
+      i = j;
+    }
+  }
+}
+
+// selvedges
+g.fillStyle='rgba(120,95,60,0.35)'; g.fillRect(X0, Y0-10, 3, CH+20); g.fillRect(X0+CW-3, Y0-10, 3, CH+20);
+// hems top and bottom
+g.fillStyle='rgba(80,60,35,0.18)'; g.fillRect(X0, Y0-10, CW, 4); g.fillRect(X0, Y1+6, CW, 4);
+
+// fringe: the warp ends, one tassel per day (61)
+const days = 61, dw = CW/days;
+for (let d = 0; d < days; d++) {
+  const xc = X0 + (d+0.5)*dw;
+  for (let t = 0; t < 7; t++) {
+    const x = xc + (t-3)*0.9, len = 34 + rnd()*8;
+    g.strokeStyle = `rgba(${218+rnd()*14|0},${206+rnd()*10|0},${184|0},0.85)`;
+    g.lineWidth = 0.8;
+    g.beginPath(); g.moveTo(xc+(t-3)*1.6, Y1+10);
+    g.quadraticCurveTo(x, Y1+10+len*0.5, x+(rnd()-0.5)*3, Y1+10+len); g.stroke();
+  }
+  g.fillStyle='rgba(150,125,90,0.6)'; g.fillRect(xc-6, Y1+13, 12, 2);
+}
+
+// label
+g.fillStyle = '#8f8678';
+g.font = '11px Georgia, "Times New Roman", serif';
+g.textBaseline = 'alphabetic';
+g.fillText('Eighteen Picks', X0, H-38);
+g.fillStyle = '#7d7466';
+g.fillText('15 July – 13 September 2025  ·  one row of weft for each step the record could take  ·  one tassel for each day', X0, H-22);
+</script>
+</body>
+</html>

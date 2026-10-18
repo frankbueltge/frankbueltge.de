@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Turns</title>
+<style>
+  :root { --ground:#121417; --ink:#d9d4c7; --muted:#7d7a72; --faint:#3a3c40; }
+  html,body { margin:0; height:100%; background:var(--ground); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden;
+         font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif; color:var(--ink); }
+  #stage { position:relative; width:1100px; height:800px; }
+  canvas { position:absolute; left:0; top:0; width:1100px; height:800px; }
+  .text { position:absolute; left:820px; top:96px; width:240px; }
+  h1 { font-weight:normal; font-size:30px; letter-spacing:0.01em; margin:0 0 22px; line-height:1.1; }
+  p { font-size:13.5px; line-height:1.6; margin:0 0 14px; color:#aaa597; }
+  .key { position:absolute; left:820px; top:560px; width:240px; font-size:11.5px; color:var(--muted);
+         font-family: "Helvetica Neue", Arial, sans-serif; letter-spacing:0.04em; }
+  .swatches { display:flex; height:14px; margin:8px 0 6px; }
+  .swatches span { flex:1; }
+  .ends { display:flex; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="c" width="1100" height="800"></canvas>
+  <div class="text">
+    <h1>Sixty-One Turns</h1>
+    <p>A record of one quantity, taken every hour for sixty-one days, wound into a coil: one turn per day, the first day at the centre and the last at the rim.</p>
+    <p>Each hour of the day keeps its own bearing. Because the afternoons run higher than the nights, the warmth never sits square in the coil: it sags toward the afternoon side, ring after ring, while the season cools outward through one hard drop, a brief recovery, and a last long descent.</p>
+    <p>The record moved in whole steps, eighteen of them, so the coil uses eighteen colours and nothing in between.</p>
+  </div>
+  <div class="key">
+    <div>THE EIGHTEEN STEPS</div>
+    <div class="swatches" id="sw"></div>
+    <div class="ends"><span>lowest</span><span>highest</span></div>
+  </div>
+</div>
+<script>
+// Hourly levels 0 (lowest) .. 17 (highest), recovered from the dot picture; a = 0.
+const D = "mmmlmmmlonppppppoooonmmmmlmmmmnmloprrqrrqppponnnnmmmmmmmnnpoppqppponnnmmmmmmmlmmooonnnnnnnmmmmmmlllllllllmnnnonnnnmmmmmllkkkklnkmlpppopppppponmmmlmmmmmmlonqppqpppponmmmmmmlmlmnmooppqpppppponmmmmmlmmnmoopoooopoooonnmmmmmmlmlnpopppppponnmmmmmmmlmmmmlmnpoooooooonmmmmmmmlmlmmmnoppppponnmmllllkkkkkkmlonpppppooonlmmmmmmlmmmmlmnooopopoonnnmmmmmlmmmmlonpppppppoooonnnnmlmnmomppppqqppppoooonmmmmmmmnnopooooonnnmmmmmmlmmmmlmopmmmnmmmlllllkkkkkkkkkkkkklmmmmmmlkkkkjjjjijiijlkkkkmkmklkkkkkjjjjjjjiiijjjjkjjjjjjjiiiiiiiiiiiiijjjkkkkkkjkiiihhghhgijhhlklmkkkkkkkljiihhhhhhiljkmnmmmmnlljkkkkkkkijikjkkkkkkmlkkkkkkjjjiiihiijkkkklkkklkkkjiihhhhhhhjihkklkkkkkkkljjhiiiiijihhkkklkkmklkkkkkkkjjjiijkjljmmnmmmnmllkkkkkkkjjkkknlkmkkkkklkkkkkkkjkkjkkkmlkknkonkjjjjjjjjjjijjjkjklnmommnmmmmmlkkkjkkkmknloopooooonmmmmlmmmmkmkmlonpoooonnlmmmmmmlkkkkkklmmnmommmmmnmmlllkkkklmnkooooooooonnnmmmmlmmmmmmlmmmjjjjjiiiiiiiiiiihhijikkkkkklkkkkjjjiihiiiihhjhkkkkklkkkkjjjjihhhhhhjiikkkklklkkkkjjjjiiiiiiiijkkkklkkkkkjkiiiihhghghhhhhijjjjiiiihhhhhghhhhhhghhhhihhhhhggeffffedfdfehhhhgihghhfffffeeeeeeeeeeffffffffffeeeeeeddddcdfffehgihhghhhfffeffffffefgihhhhhhihhgfeeeeedddddefihghhhhhhifgfeeeddddddedfgghhhhhhhggfffffffffffghhhhhhgggfffffefffdfegdfhhhhhhhhggfffffeffeffffegihhhhihhhhhigggffffffghhhhijhhhhhihhhhhgggggggggggghhhggfffffeedddddddddedddfeeddccccbaaaaaabaadecefeeeedddccccccbccccbdffffefffedccccbccccaccbdefggfffffedccccccbcccdcegfhhhhfgfffeddddcddddfeggggggggffffedccccccbcdeffhgffghfffee";
+const v = Array.from(D, ch => ch.charCodeAt(0) - 97);
+
+// Eighteen discrete colours: cold slate-blue through grey-green to ochre and ember.
+const stops = [
+  [0.00, [ 18,  26,  56]],
+  [0.20, [ 30,  68, 112]],
+  [0.40, [ 52, 122, 136]],
+  [0.56, [130, 160, 118]],
+  [0.72, [206, 160,  76]],
+  [0.86, [240, 138,  62]],
+  [1.00, [255, 228, 176]]
+];
+function col(t){
+  for (let i=1;i<stops.length;i++){
+    if (t <= stops[i][0]){
+      const [t0,a]=stops[i-1], [t1,b]=stops[i], f=(t-t0)/(t1-t0);
+      return 'rgb('+a.map((x,j)=>Math.round(x+(b[j]-x)*f)).join(',')+')';
+    }
+  }
+  return 'rgb('+stops[stops.length-1][1].join(',')+')';
+}
+const pal = Array.from({length:18}, (_,i)=>col(i/17));
+const sw = document.getElementById('sw');
+pal.forEach(c=>{ const s=document.createElement('span'); s.style.background=c; sw.appendChild(s); });
+
+const cv = document.getElementById('c');
+const dpr = Math.max(1, window.devicePixelRatio || 1);
+cv.width = 1100*dpr; cv.height = 800*dpr;
+const g = cv.getContext('2d');
+g.scale(dpr,dpr);
+
+const cx = 400, cy = 400, r0 = 46, pitch = 4.95;   // pitch: radial distance per day
+const N = v.length;
+const R = t => r0 + pitch * t / 24;
+const A = t => -Math.PI/2 + 2*Math.PI * t / 24;     // first hour of each day at the top, clockwise
+
+// faint hour bearings
+g.strokeStyle = '#2a2c30'; g.lineWidth = 1;
+for (let h=0; h<24; h++){
+  const a = A(h);
+  g.beginPath();
+  g.moveTo(cx + (r0-14)*Math.cos(a), cy + (r0-14)*Math.sin(a));
+  g.lineTo(cx + (R(N)+10)*Math.cos(a), cy + (R(N)+10)*Math.sin(a));
+  g.stroke();
+}
+
+// the coil: each hour a short arc of the spiral, centred on its own bearing
+g.lineCap = 'butt';
+g.lineWidth = pitch * 0.82;
+for (let i=0; i<N; i++){
+  const t0 = i - 0.5, t1 = i + 0.5;
+  g.strokeStyle = pal[v[i]];
+  g.beginPath();
+  for (let k=0; k<=8; k++){
+    const t = Math.max(0, t0 + (t1-t0)*k/8), r = R(t), a = A(t);
+    const x = cx + r*Math.cos(a), y = cy + r*Math.sin(a);
+    k ? g.lineTo(x,y) : g.moveTo(x,y);
+  }
+  g.stroke();
+}
+
+// small marks: where it begins, where it ends, the bearing labels
+g.fillStyle = '#7d7a72';
+g.font = '11px "Helvetica Neue", Arial, sans-serif';
+g.textAlign = 'center';
+const lab = (h, txt, off) => {
+  const a = A(h), r = R(N) + off;
+  g.fillText(txt, cx + r*Math.cos(a), cy + r*Math.sin(a) + 4);
+};
+lab(0,  'hour 0, the first of each day', 22);
+lab(6,  '6', 18);
+lab(12, '12', 22);
+lab(18, '18', 18);
+g.fillStyle = '#d9d4c7';
+g.beginPath(); g.arc(cx + R(0)*Math.cos(A(0)), cy + R(0)*Math.sin(A(0)) , 2.2, 0, 2*Math.PI); g.fill();
+g.fillStyle = '#7d7a72'; g.textAlign = 'left';
+g.fillText('day 1', cx + 8, cy - r0 + 4);
+const endA = A(N-0.5), endR = R(N-0.5);
+g.textAlign = 'right';
+g.fillText('day 61', cx + endR*Math.cos(endA) - 8, cy + endR*Math.sin(endA) - 8);
+</script>
+</body>
+</html>
