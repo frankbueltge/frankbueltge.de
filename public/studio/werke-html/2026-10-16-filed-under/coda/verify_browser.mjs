@@ -1,4 +1,4 @@
-// node verify_browser.mjs — FILED UNDER, coda (session 178), in a real browser at 390 px (light) and 1100 px (dark)
+// node verify_browser.mjs — FILED UNDER, coda (sessions 178 and 181), in a real browser at 390 px (light) and 1100 px (dark)
 import { createRequire } from 'module';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
@@ -15,7 +15,7 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await p.waitForSelector('#strip rect.tick');
   t(w + ' no errors on load', errs.length === 0);
   t(w + ' no horizontal overflow', await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
-  t(w + ' the coda line says it is a coda, after the presentation', /Coda, added 2026-10-17/.test(await p.textContent('#codaline')));
+  t(w + ' the coda line says it is a coda, after the presentation', /Coda, added 2026-10-17.*session 181/.test(await p.textContent('#codaline')));
   const k = await p.evaluate(() => ({ n: __coda.closed.length, came: __coda.closed.filter(c => c.events.length).length,
     e: Math.round(__coda.closed.reduce((a, c) => a + c.p, 0) * 10) / 10, ticks: document.querySelectorAll('#strip rect.tick').length,
     fate: __coda.closed.every(c => (c.fate === 'needed') === (c.events.length > 0)) }));
@@ -47,6 +47,31 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   // judge over every closed card and every drawer: no closed filing meets silence
   t(w + ' rules: every closed filing answered', await p.evaluate(() => __coda.closed.every(c => ['needed', 'never_needed', 'cant_say'].every(d => ['backed', 'contradicted'].includes(__coda.judge(c, d))))));
   t(w + ' every card links its USGS page', (await p.locator('#cplace a[href^="https://earthquake.usgs.gov/earthquakes/eventpage/"]').count()) === 1);
+  // written twice (session 181)
+  const W2 = S.written_twice;
+  const tw = await p.evaluate(() => ({ lines: document.querySelectorAll('#twice line.pair').length,
+    red: document.querySelectorAll('#twice line.pair[stroke="var(--contra)"]').length,
+    pairs: __coda.closed.filter(c => c.u && c.u.closed),
+    }));
+  const pc = tw.pairs; const st = Math.round(pc.reduce((a, c) => a + c.u.p, 0) * 10) / 10;
+  t(`${w} written twice: ${tw.lines} lines, ${tw.red} came, ${st} stated (summary ${W2.pairs}, ${W2.update_came}, ${W2.update_stated})`,
+    tw.lines === W2.pairs && tw.red === W2.update_came && st === W2.update_stated && pc.every(c => (c.u.fate === 'needed') === (c.u.events.length > 0)));
+  t(w + ' second-writing rules match the summary', pc.filter(c => c.fate !== c.u.fate).length === W2.fate_changed && pc.filter(c => c.u.p < c.p).length === W2.lowered);
+  const ia = await p.evaluate(() => { const had = new Set(JSON.parse(localStorage.getItem('filed-under-coda-v1')).map(l => l.id)); return __coda.closed.findIndex(c => c.u && c.u.closed && c.u.events.length > 0 && !had.has(c.id)); });
+  await p.evaluate(j => __coda.show(j), ia);
+  t(w + ' the second writing is offered only after the first is filed', !(await p.isVisible('#againbtn')));
+  await p.click('.drawer[data-d="needed"]');
+  t(w + ' after filing, the keeper writes again', /wrote again/.test(await p.textContent('#againbtn')));
+  await p.click('#againbtn');
+  t(w + ' second card is marked, sealed, and says its earlier chance', (await p.evaluate(() => __coda.mode())) === 'again' && /written again/.test(await p.textContent('#ctag')) && /It had written/.test(await p.textContent('#cwords')) && (await p.locator('#sealtext').count()) === 1);
+  await p.click('.drawer[data-d="never_needed"]');
+  t(w + ' second writing judged on its own week: never needed contradicted', /contradicted/.test(await p.textContent('#answer .v')));
+  const L2 = await p.evaluate(() => JSON.parse(localStorage.getItem('filed-under-coda-v1')));
+  t(w + ' ledger keeps both writings of one sequence apart', L2.length === 5 && L2.filter(l => l.id === L2[4].id).length === 2 && L2[4].writing === 'second' && L2[3].writing === 'first');
+  await p.click('#againbtn');
+  t(w + ' back to the first writing, still filed', (await p.evaluate(() => __coda.mode())) === 'first' && (await p.textContent('#answer .v')) === L2[3].record);
+  t(w + ' written-twice facts drawn', (await p.locator('#twicefacts li').count()) === 4 && (await p.textContent('#twicefacts')).includes(String(W2.warn_dropped)));
+  t(w + ' no horizontal overflow after use', await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
   t(w + ' no errors after use', errs.length === 0);
   await p.screenshot({ path: join(here, `shot-${w}.png`), fullPage: false });
   await ctx.close();

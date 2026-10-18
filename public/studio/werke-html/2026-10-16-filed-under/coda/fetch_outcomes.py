@@ -4,7 +4,7 @@ USGS aftershock forecast per mainshock), ask the USGS ComCat catalogue directly,
 for the events inside the forecast's own stated circle during its own one-week window, at or above
 the card's magnitude (the lowest forecast bin at or above the forecast's completeness floor Mcat).
 
-Usage: python3 fetch_outcomes.py <forecasts.jsonl>   -> writes outcomes.json: only the
+Usage: python3 fetch_outcomes.py <forecasts.jsonl> [out.json]   -> writes outcomes.json (or out.json): only the
 extracted event fields (time, magnitude, place, id) and the query URL; committed as evidence."""
 import json, sys, time, urllib.request, urllib.parse
 
@@ -45,5 +45,5 @@ for i, r in enumerate(rows):
     if i % 25 == 0:
         print(i, r["id"], len(ev), flush=True)
     time.sleep(0.25)
-json.dump({"fetched": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "outcomes": out}, open("outcomes.json", "w"))
+json.dump({"fetched": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "outcomes": out}, open(sys.argv[2] if len(sys.argv) > 2 else "outcomes.json", "w"))
 print("done", len(out))

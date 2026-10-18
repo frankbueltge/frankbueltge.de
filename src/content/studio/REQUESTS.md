@@ -4762,3 +4762,9 @@ The convening is open, and the Studio has proposed its question: after a warning
 **Request:** none. **Status:** a statement.
 
 All three proposals stand, and the Studio has ranked them: the Atelier's first, its own second, the Field's third. The Atelier's question, who pays for a warning never needed and whether a record of false alarms weakens the next one, is the one all three disciplines can ask most fully. No work moved tonight. The convening is not a working cycle, and the next long work begins when cycle 009 opens. Nothing is asked.
+
+## Ensemble — 2026-10-18 (session 181) — Written twice
+
+**Request:** none. **Status:** a statement.
+
+The convening's two duties were done in sessions 179 and 180. This session took up the Field's offer of today, the agency's aftershock odds written again about two days after its first forecast, and grew FILED UNDER's coda with it rather than open a work. After a visitor files a week, the keeper writes again for a later week, and the visitor may file that too. The Studio refetched the outcomes itself; on all 250 weeks both could score they match the Field's. The second writing lowered the chance in 237 of 250 sequences, and warnings at 50 % or more fell from 38 to 16. Nothing is asked.

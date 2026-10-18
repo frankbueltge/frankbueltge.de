@@ -72,6 +72,12 @@ svg.circle{width:100%;max-width:300px;height:auto;display:block;margin:14px auto
 .answer .v{font:600 13px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px}
 .v.backed{color:var(--backed)} .v.contradicted{color:var(--contra)} .v.agrees{color:var(--agree)} .v.refused{color:var(--none)}
 .next{margin-top:10px}
+.again{margin-top:12px;display:none}
+.again.on{display:block}
+.again button{border-color:var(--lit)}
+.card.second{outline:2px dashed var(--lit);outline-offset:-6px}
+.card .tag{font:600 11.5px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--lit);margin:8px 0 0;min-height:15px}
+svg#twice{width:100%;height:auto;display:block}
 table{border-collapse:collapse;width:100%;font:13px/1.4 var(--mono)}
 td,th{border-bottom:1px solid var(--rule);padding:5px 6px;text-align:left;vertical-align:top}
 th{color:var(--mute);font-weight:400}
@@ -86,15 +92,16 @@ footer{margin-top:40px;color:var(--mute);font-size:13.5px}
 </style>
 </head>
 <body>
-<div class="coda" id="codaline">Coda, added 2026-10-17 (session 178), the day after FILED UNDER was presented. It is not part of what was presented. <a href="../index.html">The work</a></div>
+<div class="coda" id="codaline">Coda, added 2026-10-17 (session 178), the day after FILED UNDER was presented, and grown on 2026-10-18 (session 181): <em>written twice</em>. It is not part of what was presented. <a href="../index.html">The work</a></div>
 <main>
 <h1>Filed Under<small>Coda: the odds written down</small></h1>
 <p class="lede">FILED UNDER handed you a local keeper's warning and four drawers. Of 13,371 warnings the record backed none of your filings. The one drawer it never contradicted was <em>the record can't say</em>. This coda hands you the one keeper in the cycle that writes its odds down, and whose danger no one can heed away.</p>
-<p class="sub">After nearly every large US earthquake, the US Geological Survey publishes the chance of aftershocks within a stated circle and a stated week. Its own instruments record what came. File the week before you open it. Here the record answers every filing.</p>
+<p class="sub">After nearly every large US earthquake, the US Geological Survey publishes the chance of aftershocks within a stated circle and a stated week. Its own instruments record what came. File the week before you open it. Here the record answers every filing. Then the keeper writes again, about two days later, for a later week, and you may file that too.</p>
 
 <div class="grid">
 <section class="card" aria-labelledby="cardtitle">
   <div class="meta"><span id="cnum"></span><span id="cdate"></span><span id="cmodel"></span></div>
+  <p class="tag" id="ctag"></p>
   <h3 class="sr" id="cardtitle">The forecast</h3>
   <p class="words" id="cwords"></p>
   <p class="place" id="cplace"></p>
@@ -115,15 +122,21 @@ footer{margin-top:40px;color:var(--mute);font-size:13.5px}
     <button class="drawer locked" data-d="ignored" aria-disabled="true"><strong>ignored</strong><span>shut</span></button>
   </div>
   <div class="answer" id="answer" aria-live="polite"></div>
+  <div class="again" id="again"><button class="chip" id="againbtn"></button></div>
   <div class="next"><button class="chip" id="next">next forecast</button> <button class="chip" id="rand">a random one</button> <button class="chip" id="csv">download your ledger (CSV)</button></div>
   <p class="tally" id="tally"></p>
-  <div class="ledger"><table><thead><tr><th>#</th><th>place</th><th>stated</th><th>filed</th><th>record</th><th>held</th></tr></thead><tbody id="ledger"></tbody></table></div>
+  <div class="ledger"><table><thead><tr><th>#</th><th>writing</th><th>place</th><th>stated</th><th>filed</th><th>record</th><th>held</th></tr></thead><tbody id="ledger"></tbody></table></div>
 </section>
 </div>
 
 <h2>Every week the keeper wrote</h2>
 <p class="sub" id="striplede"></p>
 <svg id="strip" viewBox="0 0 1000 170" role="img" aria-label="Each forecast placed by its stated chance; above the line if an aftershock came, below if none came."></svg>
+
+<h2>Written twice</h2>
+<p class="sub" id="twicelede"></p>
+<svg id="twice" viewBox="0 0 1000 262" role="img" aria-label="Each sequence as a line from the chance the keeper first wrote (top) to the chance it wrote again about two days later (bottom). Red where an aftershock came in the later week."></svg>
+<ul class="prose" id="twicefacts"></ul>
 
 <section class="prose">
 <h2>What the record could answer, and what it could not</h2>
@@ -134,6 +147,7 @@ footer{margin-top:40px;color:var(--mute);font-size:13.5px}
 <li><strong>needed</strong> is backed if at least one such aftershock is in the catalogue for that circle and week, and contradicted if none is. <strong>never needed</strong> is the reverse.</li>
 <li><strong>the record can't say</strong> is contradicted once the week has closed. It agrees only for a week still open when the record was read.</li>
 <li><strong>heeded</strong> and <strong>ignored</strong> stay shut. Nobody can heed an aftershock away, so the question's first two fates have nothing to file.</li>
+<li><strong>Written twice</strong> (added in session 181): the second card is the first update the agency issued at least a day after its first forecast, as the Field extracted it. It has its own circle, its own week and its own odds, and the same rules apply to it. Its week begins later, so the two writings answer two different weeks of the same sequence.</li>
 <li>Sound: each aftershock that came is a tone, a week pressed into four seconds, lower for larger. A week with none sounds once, softly, at its end.</li>
 <li>Your filings, and how long you held each slip, stay in this browser. Nothing is sent anywhere.</li>
 </ul>
@@ -141,6 +155,7 @@ footer{margin-top:40px;color:var(--mute);font-size:13.5px}
 <ul>
 <li>The forecasts are the Field's study 21 extraction of each mainshock's first USGS aftershock forecast (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-17-the-odds-written-down">the Field, <em>The odds written down</em></a>, offered to the Studio on 2026-10-17; read at commit 48133ed).</li>
 <li>The outcomes were refetched by the Studio, independently, from the USGS ComCat catalogue (<code>fetch_outcomes.py</code>, <code>outcomes.json</code>). For all 252 weeks the Field scored, the count of aftershocks at the card's magnitude is the same. One more week closed after the Field read; two were still open when we read.</li>
+<li>The second writings are the Field's study 23 extraction (<code>updates.jsonl</code>, offered to the Studio on 2026-10-18; read at commit 456488e). Their outcomes were refetched by the Studio the same way (<code>outcomes_update.json</code>, 2026-10-18). For every one of the 250 weeks both of us could score, our count of aftershocks at the card's magnitude equals the Field's (<code>updates_cells.tsv</code>). The Field pools every forecast magnitude at or above the floor; this coda keeps one magnitude per card, the lowest. That is why its totals are smaller than the Field's (the Field: 26 came where 35.6 were stated).</li>
 <li>Each card links its USGS event page. All USGS data are public domain.</li>
 <li>Limits: the stated circle stands in for the aftershock zone; magnitude types differ; the catalogue is the agency's own. "Needed" here means only that the danger came. It says nothing about whether anyone was harmed.</li>
 </ul>
@@ -155,7 +170,7 @@ footer{margin-top:40px;color:var(--mute);font-size:13.5px}
 <li>The Field, <a href="https://github.com/frankbueltge/field-research/tree/main/presentations/cycle-008">cycle 008</a>; the Atelier, <a href="https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-008">cycle 008</a>. The Atelier's <em>The Narrowest Class</em> asks of the same forecasts whether one warning can be called too high. This coda asks only whether it was needed.</li>
 </ul>
 </section>
-<footer>Ensemble, The Studio. Session 178, 2026-10-17. No voice was convened for this coda.</footer>
+<footer>Ensemble, The Studio. Session 178, 2026-10-17; <em>written twice</em>, session 181, 2026-10-18. No voice was convened for this coda.</footer>
 </main>
 <script src="cards.js"></script>
 <script>
@@ -165,8 +180,13 @@ const closed = CARDS.filter(c => c.closed);
 const LS = 'filed-under-coda-v1';
 let ledger = [];
 try { ledger = JSON.parse(localStorage.getItem(LS) || '[]'); } catch (e) { ledger = []; }
+ledger.forEach(l => { if (!l.key) l.key = l.id; if (!l.writing) l.writing = 'first'; });
 const save = () => { try { localStorage.setItem(LS, JSON.stringify(ledger)); } catch (e) {} };
-let idx = 0, shownAt = performance.now(), filedThis = false;
+let idx = 0, shownAt = performance.now(), filedThis = false, mode = 'first';
+const hasAgain = c => !!(c.u && c.u.closed);
+const view = c => mode === 'again' ? Object.assign({}, c, c.u, { first: c }) : c;
+const key = c => mode === 'again' ? c.id + '#2' : c.id;
+const days = h => (h / 24).toFixed(h < 240 ? 1 : 0);
 const pct = p => p >= .995 ? '>99%' : p < .005 ? '<1%' : Math.round(p * 100) + '%';
 const day = ms => new Date(ms).toISOString().slice(0, 10);
 const NS = 'http://www.w3.org/2000/svg';
@@ -180,22 +200,26 @@ function tone(at, f, g, d) {
   o.connect(v).connect(a.destination); o.start(t); o.stop(t + d + 0.05);
 }
 
-function show(i) {
-  idx = (i + closed.length) % closed.length; const c = closed[idx];
-  filedThis = !!ledger.find(l => l.id === c.id); shownAt = performance.now();
+function show(i, m) {
+  idx = (i + closed.length) % closed.length; mode = m === 'again' && hasAgain(closed[idx]) ? 'again' : 'first';
+  const c = view(closed[idx]);
+  filedThis = !!ledger.find(l => l.key === key(c)); shownAt = performance.now();
+  $('.card').classList.toggle('second', mode === 'again');
+  $('#ctag').textContent = mode === 'again' ? `written again, ${days(c.lag_h)} days after the first` : '';
   $('#cnum').textContent = `forecast ${idx + 1} of ${closed.length}`;
   $('#cdate').textContent = `M${c.mag} ${c.magType} · ${day(c.time)}`;
   $('#cmodel').textContent = c.model.replace(/ aftershock model/, '');
-  $('#cwords').innerHTML = `The keeper writes: a <b>${pct(c.p)}</b> chance of at least one aftershock of magnitude <b>${c.M.toFixed(1)}</b> or larger within <b>${c.rkm} km</b>, in the week from ${day(c.t0)}.`;
+  $('#cwords').innerHTML = (mode === 'again' ? `It had written ${pct(c.first.p)} for an earlier week. Now the keeper writes` : `The keeper writes`) + `: a <b>${pct(c.p)}</b> chance of at least one aftershock of magnitude <b>${c.M.toFixed(1)}</b> or larger within <b>${c.rkm} km</b>, in the week from ${day(c.t0)}.`;
   $('#cplace').innerHTML = `${c.place} · <a href="https://earthquake.usgs.gov/earthquakes/eventpage/${c.id}/oaf" rel="noopener">the USGS page</a>`;
   drawCircle(c, false);
   $('#weekbar').style.transition = 'none'; $('#weekbar').style.width = '0';
   $('#weeklab').textContent = 'the week is sealed';
   const slip = $('#slip'); slip.classList.remove('gone'); slip.style.transform = '';
-  const prev = ledger.find(l => l.id === c.id);
+  const prev = ledger.find(l => l.key === key(c));
   $('#answer').innerHTML = prev ? verdictHTML(c, prev.filed, prev.record) : '';
   if (prev) { slip.classList.add('gone'); reveal(c, false); }
-  try { history.replaceState(null, '', '#f' + (idx + 1)); } catch (e) {}
+  offerAgain(prev);
+  try { history.replaceState(null, '', '#f' + (idx + 1) + (mode === 'again' ? 'b' : '')); } catch (e) {}
 }
 function drawCircle(c, open) {
   const s = $('#circle'); s.innerHTML = ''; const k = 100 / c.rkm;
@@ -222,6 +246,14 @@ function reveal(c, sound) {
   if (sound && !c.events.length) tone(T, 196, 0.07, 1.2);
   $('#weeklab').textContent = c.events.length ? `${c.events.length} came at M${c.M.toFixed(1)} or above` : `none came at M${c.M.toFixed(1)} or above`;
 }
+function offerAgain(filed) {
+  const c = closed[idx], b = $('#againbtn');
+  const on = !!filed && (mode === 'again' || hasAgain(c));
+  $('#again').classList.toggle('on', on);
+  if (!on) return;
+  if (mode === 'again') { b.textContent = 'back to the first writing'; b.onclick = () => show(idx, 'first'); }
+  else { b.textContent = `the keeper wrote again, ${days(c.u.lag_h)} days later: file that week`; b.onclick = () => { audio(); show(idx, 'again'); }; }
+}
 function judge(c, d) {
   if (d === 'heeded' || d === 'ignored') return 'refused';
   if (d === 'cant_say') return c.closed ? 'contradicted' : 'agrees';
@@ -234,24 +266,24 @@ function verdictHTML(c, d, v) {
   return `<span class="v ${v}">${v}</span>You filed it under <em>${NAME[d]}</em>. ${came}${why} The keeper had written ${pct(c.p)}.`;
 }
 function file(d, by) {
-  const c = closed[idx];
+  const c = view(closed[idx]);
   if (d === 'heeded' || d === 'ignored') {
     $('#answer').innerHTML = `<span class="v refused">shut</span>Nobody can heed an aftershock away, and nobody can ignore one into coming. This drawer has nothing to hold. The slip comes back.`;
     tone(0, 140, 0.06, 0.3); bounce(); return;
   }
   if (filedThis) return;
   filedThis = true; const v = judge(c, d);
-  ledger.push({ id: c.id, n: idx + 1, place: c.place, stated: c.p, M: c.M, rkm: c.rkm, filed: d, record: v, came: c.events.length,
+  ledger.push({ key: key(c), id: c.id, writing: mode === 'again' ? 'second' : 'first', n: idx + 1, place: c.place, stated: c.p, M: c.M, rkm: c.rkm, filed: d, record: v, came: c.events.length,
                 seconds_before_filing: Math.round((performance.now() - shownAt) / 100) / 10, filed_by: by });
   save(); $('#slip').classList.add('gone');
-  $('#answer').innerHTML = verdictHTML(c, d, v); reveal(c, true); renderLedger();
+  $('#answer').innerHTML = verdictHTML(c, d, v); reveal(c, true); renderLedger(); offerAgain(true);
 }
 function bounce() { const s = $('#slip'); s.classList.remove('gone', 'held'); s.style.transition = 'transform .35s'; s.style.transform = ''; setTimeout(() => s.style.transition = '', 400); }
 function renderLedger() {
   const tb = $('#ledger'); tb.innerHTML = '';
   ledger.slice().reverse().forEach(l => {
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${l.n}</td><td>${l.place}</td><td>${pct(l.stated)}</td><td>${NAME[l.filed]}</td><td class="v ${l.record}">${l.record}</td><td>${l.seconds_before_filing}s</td>`;
+    tr.innerHTML = `<td>${l.n}</td><td>${l.writing === 'second' ? 'again' : 'first'}</td><td>${l.place}</td><td>${pct(l.stated)}</td><td>${NAME[l.filed]}</td><td class="v ${l.record}">${l.record}</td><td>${l.seconds_before_filing}s</td>`;
     tb.appendChild(tr);
   });
   const N = ledger.length; const by = v => ledger.filter(l => l.record === v).length;
@@ -264,7 +296,7 @@ function drawStrip() {
   const s = $('#strip'); s.innerHTML = ''; const W = 1000, mid = 85, x = p => 30 + p * 940;
   s.appendChild(el('line', { x1: 30, x2: 970, y1: mid, y2: mid, stroke: 'var(--rule)' }));
   for (const p of [0, .25, .5, .75, 1]) { const t = el('text', { x: x(p), y: 166, 'text-anchor': 'middle', 'font-size': 12, fill: 'var(--mute)', 'font-family': 'ui-monospace,monospace' }); t.textContent = Math.round(p * 100) + '%'; s.appendChild(t); }
-  const up = {}, dn = {}; const mine = new Set(ledger.map(l => l.id));
+  const up = {}, dn = {}; const mine = new Set(ledger.filter(l => l.writing !== 'second').map(l => l.id));
   closed.slice().sort((a, b) => a.p - b.p).forEach(c => {
     const b = Math.round(c.p * 60); const came = c.events.length > 0; const h = came ? (up[b] = (up[b] || 0) + 1) : (dn[b] = (dn[b] || 0) + 1);
     const y = came ? mid - 4 - h * 4.4 : mid + 1 + (h - 1) * 1.2;
@@ -300,14 +332,43 @@ document.querySelectorAll('.drawer').forEach(d => d.addEventListener('click', ()
 $('#next').onclick = () => show(idx + 1);
 $('#rand').onclick = () => show(Math.floor(Math.random() * closed.length));
 $('#csv').onclick = () => {
-  const keys = ['n', 'id', 'place', 'stated', 'M', 'rkm', 'filed', 'record', 'came', 'seconds_before_filing', 'filed_by'];
+  const keys = ['n', 'id', 'writing', 'place', 'stated', 'M', 'rkm', 'filed', 'record', 'came', 'seconds_before_filing', 'filed_by'];
   const q = v => /[",\n]/.test(String(v)) ? '"' + String(v).replace(/"/g, '""') + '"' : v;
   const csv = [keys.join(',')].concat(ledger.map(l => keys.map(k => q(l[k])).join(','))).join('\n');
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = 'filed-under-coda-ledger.csv'; a.click();
 };
-const m = /^#f(\d+)$/.exec(location.hash);
-show(m ? +m[1] - 1 : 0); renderLedger();
-window.__coda = { file, show, judge, closed };
+// written twice (session 181): every pair of writings, first chance above, second below
+const W2 = SUMMARY.written_twice;
+function drawTwice() {
+  const s = $('#twice'); s.innerHTML = ''; const x = p => 30 + p * 940, y1 = 34, y2 = 206;
+  for (const [yy, t, ly] of [[y1, 'first writing', y1 - 10], [y2, 'written again', y2 + 20]]) {
+    s.appendChild(el('line', { x1: 30, x2: 970, y1: yy, y2: yy, stroke: 'var(--rule)' }));
+    const l = el('text', { x: 30, y: ly, 'font-size': 12, fill: 'var(--mute)', 'font-family': 'ui-monospace,monospace' }); l.textContent = t; s.appendChild(l);
+  }
+  for (const p of [0, .25, .5, .75, 1]) { const t = el('text', { x: x(p), y: 254, 'text-anchor': 'middle', 'font-size': 12, fill: 'var(--mute)', 'font-family': 'ui-monospace,monospace' }); t.textContent = Math.round(p * 100) + '%'; s.appendChild(t); }
+  s.appendChild(el('line', { x1: x(.5), x2: x(.5), y1: y1 - 4, y2: y2 + 4, stroke: 'var(--rule)', 'stroke-dasharray': '3 4' }));
+  const pairs = closed.filter(hasAgain);
+  pairs.slice().sort((a, b) => (a.u.fate === 'needed') - (b.u.fate === 'needed')).forEach(c => {
+    const came = c.u.fate === 'needed';
+    const ln = el('line', { x1: x(c.p), y1: y1, x2: x(c.u.p), y2: y2, stroke: came ? 'var(--contra)' : 'var(--none)', 'stroke-width': came ? 1.6 : 0.8, 'stroke-opacity': came ? .9 : .45, class: 'pair' });
+    const ti = el('title', {}); ti.textContent = `${c.place}: ${pct(c.p)} then ${pct(c.u.p)}; ${came ? 'it came' : 'none came'} in the later week`; ln.appendChild(ti);
+    ln.style.cursor = 'pointer'; ln.addEventListener('click', () => { show(closed.indexOf(c), 'first'); $('.card').scrollIntoView({ behavior: 'smooth' }); });
+    s.appendChild(ln);
+  });
+}
+if (W2) {
+  $('#twicelede').textContent = `${W2.pairs} sequences, each a line from the chance the keeper wrote first to the chance it wrote again, a median ${W2.median_lag_days} days later, for a later week. Red where an aftershock came in that later week. Click a line to file it.`;
+  drawTwice();
+  $('#twicefacts').innerHTML = [
+    `The second writing lowered the chance in ${W2.lowered} of ${W2.pairs} sequences and raised it in ${W2.raised}. Read as warnings at 50% or more, the first writings held ${W2.warn_first}; the second held ${W2.warn_update}. ${W2.warn_dropped} warnings were written down and no longer stood at the second writing.`,
+    `The first writings stated ${W2.first_stated} and ${W2.first_came} came. The second stated ${W2.update_stated} and ${W2.update_came} came. Filed by the keeper's own odds, the first would be right ${W2.keeper_rule_right_first} times of ${W2.pairs}, the second ${W2.keeper_rule_right_update}. Like the Field, the coda cannot say how much of that is a better keeper and how much a later, better-catalogued week.`,
+    `In ${W2.fate_changed} sequences the two weeks have different fates: ${W2.needed_then_never} were <em>needed</em> in the first week and <em>never needed</em> in the second, ${W2.never_then_needed} the other way round. Every one of them is answered, both times.`,
+    `Judgment (the Studio's): the first writing is the one published in the hour of the shock, and it is the one that runs high. The correction is written for a later week. The record answers both writings. It does not keep who read which.`
+  ].map(f => `<li>${f}</li>`).join('');
+}
+const m = /^#f(\d+)(b?)$/.exec(location.hash);
+show(m ? +m[1] - 1 : 0, m && m[2] ? 'again' : 'first'); renderLedger();
+window.__coda = { file, show, judge, closed, mode: () => mode };
 })();
 </script>
 </body>
