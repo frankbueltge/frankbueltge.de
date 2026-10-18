@@ -37,7 +37,7 @@ table{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}th,td{p
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
-<p class="sm mut">Remainder &middot; project 11, sessions 1 and 2 (a study, not yet a work) &middot; 2026-10-18</p>
+{{HEADLINE}}
 <h1>After the drogue</h1>
 <p>A drifter is a float put into the sea to be carried by it. Below it, on a tether, hangs a drogue, a sea anchor of nylon cloth:
 "The drogue is centered at a depth of 15 meters", and it is "designed to move with the near-surface ocean currents", so the float goes
@@ -57,10 +57,11 @@ from how the float moved. This page asks how much of the record of following the
 {{N_KNOWN}} whose drogue record can be read.</p>
 
 <div class="tabs" role="group" aria-label="What the map shows">
-<button id="b-end" aria-pressed="true">where each one ended</button><button id="b-start" aria-pressed="false">where each one was put in</button><button id="b-re" aria-pressed="false">re-dated in 2012-13</button></div>
+<button id="b-end" aria-pressed="true">where each one ended</button><button id="b-start" aria-pressed="false">where each one was put in</button><button id="b-re" aria-pressed="false">re-dated in 2012-13</button><button id="b-u" aria-pressed="false">dated by hand, now unreadable</button></div>
 <div class="map"><canvas id="map" width="1100" height="560" aria-label="World map drawn only by drifters' end points, blue if the drogue was still on, amber if it had come off"></canvas></div>
 <div class="bl" style="margin-top:8px"><span><i style="background:var(--fol)"></i>still following when it stopped ({{N_KEPT}})</span>
 <span><i style="background:var(--car)"></i>carried: drogue off before the end ({{N_CARRIED}}), brighter the longer</span>
+<span id="lg-u" hidden><i style="background:#fff;outline:1px solid var(--mut)"></i>where the {{U_N}} ended that a person dated as drogueless from the first day and the directory now calls unreadable</span>
 <span id="lg-re" hidden><i style="background:#fff;outline:1px solid var(--mut)"></i>re-dated earlier in 2012-13 ({{RE_N}}), larger the more days re-stated</span></div>
 <p class="sm mut">Tap or click a point to see that drifter. No coastline is drawn; the continents are where no drifter is. Equirectangular,
 80&deg;S to 85&deg;N; positions rounded to 0.1&deg;.</p>
@@ -82,15 +83,30 @@ the re-worked window changes, and its edge is the study's end, 19 November 2010)
 <canvas id="shift" width="1100" height="330" style="cursor:default" aria-label="One thin column per re-dated drifter, sorted, its height the days of following re-stated as carried; below the line, the {{LATER_N}} moved later"></canvas>
 <p class="sm mut">One column per drifter whose drogue loss moved earlier, tallest first; its height is the days re-stated (lines at one to six years).
 Below the line, the {{LATER_N}} whose loss moved later. {{HELD_N}} more held their date within a day.</p>
-<p>The person did not always agree with the method: for {{AM_N}} drifters ({{AM_PCT}} %) the hand-made date is more than 30 days from the
+<!--study--><p>The person did not always agree with the method: for {{AM_N}} drifters ({{AM_PCT}} %) the hand-made date is more than 30 days from the
 automatic one, and in {{AM_E}} of those it is earlier still. One drifter's drogue, in the eighteen versions of the file:</p>
 <div class="tw"><table><tr><th>version</th>{{V_HEAD}}</tr><tr><th>drogue off</th>{{V_ROW}}</tr></table></div>
 <p class="sm mut">Drifter {{V_ID}}. "not yet" = not reassessed; "unclear" = reassessed, loss unclear; "unknown from start" = drogue status
-uncertain from the beginning (the README's own codes). What made each version change is not in the files.</p>
+uncertain from the beginning (the README's own codes). What made each version change is not in the files.</p><!--/study-->
 <p>Of the {{BIG_N}} drifters re-dated by more than three years, {{BIG_PCT}} % ended between 20&deg; and 40&deg; of latitude, and
 {{BIG_S}} had been put in south of 35&deg;S: they were counted as following for years while they went north into the
 subtropics (exploratory; what moved them is not read here). The directory read today carries the hand-made date for {{AG_PCT}} % of the re-worked drifters
 ({{AG}} of {{AG_N}}).</p>
+
+<h2>Dated by hand, unreadable in the directory</h2>
+<p>For {{AG_N_MINUS}} of the re-worked drifters, today's directory does not carry the person's date. What it carries instead is almost
+always the same thing: for <b>{{U_N}}</b> of them ({{U_PCT}} %), <code>1979/01/01</code>, the directory's way of saying the programme
+"was unable to interpret the drogue status". Every one of these {{U_N}} is a drifter the person had dated to its first day: the drogue,
+in their reading, was gone when the float was put in, or before. The person said <i>it never followed</i>; the directory says <i>it cannot
+tell</i>. For {{OTH_N}} more the directory carries a date that is none of the three in the file, and for {{AUT_N}} the method's date.</p>
+<div class="bar" role="img" aria-label="Of {{AG_N_MINUS}} re-worked drifters whose directory row differs from the person's date: {{U_N}} unreadable, {{OTH_N}} another date, {{AUT_N}} the method's date">
+<div style="flex:{{U_N}};background:#fff;outline:1px solid var(--line)"><b>unreadable: {{U_N}}</b></div><div style="flex:{{OTH_N}};background:var(--car)">{{OTH_N}}</div><div style="flex:{{AUT_N_FLEX}};background:var(--fol)"></div></div>
+<p>Of the {{F_N}} re-worked drifters the person dated to their first day, the directory today writes {{F_U}} as unreadable, {{F_NEV}} as
+drogueless from the start, {{F_LOST}} as having lost it on the way and {{F_KEPT}} as having kept it. Because they are unreadable, the {{U_N}}
+are on none of the map's first three views and in none of its counts. Read with the person's date they would add
+<b>{{U_DAYS_K}} thousand carried days</b>, and the carried share of the record would read {{U_SHARE}} % instead of {{CARR_PCT}} %
+(exploratory). Why the directory writes them so is not in the files; that it is a convention for "no drogued time found" is
+conjecture. Their ends are the fourth view of the map.</p>
 
 <h2>Where the carried ones end</h2>
 <p>The longest-carried drifters went on for seven or eight years after their drogues came off. All ten were last heard far out in an ocean (three of them are still reporting), near 30&deg; north or south: where the great subtropical gyres turn, and where, as
@@ -107,8 +123,8 @@ Pazos, 2012, seen in a search summary, not read) argues that many of these ran a
 is picked up twice as often as one being carried ({{PK}} % against {{PL}} %); one being carried runs aground more often ({{AL}} % against
 {{AK}} %).</p>
 
-<h2>What was predicted, before the files were read</h2>
-<div class="tw"><table><tr><th></th><th>prediction (SELECTION.md, SESSION2.md)</th><th>found</th><th></th></tr>{{PRED_ROWS}}</table></div>
+<!--study--><h2>What was predicted, before the files were read</h2>
+<div class="tw"><table><tr><th></th><th>prediction (SELECTION.md, SESSION2.md, SESSION3.md)</th><th>found</th><th></th></tr>{{PRED_ROWS}}</table></div><!--/study-->
 
 <h2>What this is, and is not</h2>
 <p class="sm">Data: NOAA Atlantic Oceanographic and Meteorological Laboratory, Global Drifter Program, the four drifter directory files
@@ -118,18 +134,20 @@ own estimates and are revised. A lost drogue is wear, not fault, and an undrogue
 oceanographers; "carried" here names what the float was doing, not a judgment of the data. Of {{N_UNK}} drifters the drogue record
 cannot be read. Read against the raw rows: 40 random drifters and the 10 longest carried (no error found). The re-dating: AOML's drogue-detection files,
 the version of 2013-06-30 and its seventeen predecessors, fetched {{FETCHED2}}; 30 random rows and the 10 largest shifts read against the
-raw lines (15 rows without an automatic date were dropped by the registered rule and restored; the predictions did not change). Files:
+raw lines (15 rows without an automatic date were dropped by the registered rule and restored; the predictions did not change). The 1,022 whose directory row differs: 20 random and the 5 largest differences read against the raw lines (no error). Files:
 <a href="https://github.com/frankbueltge/n-1/tree/main/projects/drifters">projects/drifters</a>.</p>
 </main>
 <div id="say"><div id="who">Tap a point on the map.</div><button id="next">Another drifter</button></div>
 <script>
 const D={{DATA}};
 const C=document.getElementById('map'),X=C.getContext('2d'),W=C.width,H=C.height,LA0=-80,LA1=85;
-let mode='end';const RE=r=>r[11]||0;
+let mode='end';const U=D.u;const RE=r=>r[11]||0;
 const px=(lo)=>((lo>180?lo-360:lo)+180)/360*W, py=(la)=>(LA1-la)/(LA1-LA0)*H;
 const ST={k:'Still following when it stopped',l:'Carried: drogue off on the way',n:'Carried from the start: drogue off when put in',a:'Still reporting, drogue on'};
 const DEATH={0:'still reporting',1:'ran aground',2:'was picked up',3:'quit transmitting',4:'unreliable at the end',5:'bad battery',6:'set inactive'};
 function draw(){X.fillStyle='#0f1a24';X.fillRect(0,0,W,H);
+ if(mode==='u'){for(const r of D.r){X.fillStyle='rgba(143,211,255,.10)';X.fillRect(px(r[4])-1,py(r[3])-1,2,2);}
+  X.fillStyle='rgba(255,255,255,.85)';for(const u of U)X.fillRect(px(u[1])-1.5,py(u[0])-1.5,3,3);return;}
  if(mode==='re'){for(const r of D.r){if(RE(r)>0)continue;X.fillStyle='rgba(143,211,255,.10)';X.fillRect(px(r[4])-1,py(r[3])-1,2,2);}
   for(const r of D.r){if(RE(r)<=0)continue;const z=1+Math.min(4,RE(r)/400);X.fillStyle='rgba(255,255,255,.75)';X.fillRect(px(r[4])-z/2,py(r[3])-z/2,z,z);}return;}
  for(const r of D.r){const car=r[6]>0;const la=mode==='end'?r[3]:r[1],lo=mode==='end'?r[4]:r[2];
@@ -141,9 +159,11 @@ function say(i){const r=D.r[i];const st=r[7];
  draw();X.strokeStyle='#fff';X.lineWidth=1.5;X.beginPath();X.arc(px(r[2]),py(r[1]),5,0,7);X.stroke();X.beginPath();X.arc(px(r[4]),py(r[3]),7,0,7);X.stroke();
  if(Math.abs(px(r[4])-px(r[2]))<W/2){X.setLineDash([3,4]);X.beginPath();X.moveTo(px(r[2]),py(r[1]));X.lineTo(px(r[4]),py(r[3]));X.stroke();X.setLineDash([]);}}
 C.addEventListener('click',e=>{const b=C.getBoundingClientRect(),x=(e.clientX-b.left)*W/b.width,y=(e.clientY-b.top)*H/b.height;let bi=-1,bd=1e9;
- D.r.forEach((r,i)=>{const la=mode!=='start'?r[3]:r[1],lo=mode!=='start'?r[4]:r[2];if(mode==='re'&&RE(r)<=0)return;const d=(px(lo)-x)**2+(py(la)-y)**2;if(d<bd){bd=d;bi=i}});if(bi>=0)say(bi)});
-let k=0;document.getElementById('next').onclick=()=>{k=(k+7919)%D.r.length;say(D.order[k%D.order.length])};
-for(const m of ['end','start','re'])document.getElementById('b-'+m).onclick=()=>{mode=m;for(const n of ['end','start','re'])document.getElementById('b-'+n).setAttribute('aria-pressed',n===m);document.getElementById('lg-re').hidden=m!=='re';draw()};
+ if(mode==='u'){let ui=-1;U.forEach((u,i)=>{const d=(px(u[1])-x)**2+(py(u[0])-y)**2;if(d<bd){bd=d;ui=i}});if(ui>=0)sayU(ui);return;}
+ D.r.forEach((r,i)=>{const la=mode!=='start'?r[3]:r[1],lo=mode!=='start'?r[4]:r[2];if(mode==='re'&&RE(r)<=0)return;if(mode==='u')return;const d=(px(lo)-x)**2+(py(la)-y)**2;if(d<bd){bd=d;bi=i}});if(bi>=0)say(bi)});
+function sayU(ui){const u=U[ui];document.getElementById('who').innerHTML=`Put in ${u[2]}, last heard ${u[3]} (year/month). A person dated its drogue as gone from the first day; the directory today says its drogue record cannot be read.`;draw();X.strokeStyle='#fff';X.lineWidth=1.5;X.beginPath();X.arc(px(u[1]),py(u[0]),7,0,7);X.stroke();}
+let k=0;document.getElementById('next').onclick=()=>{k=(k+7919)%D.r.length;if(mode==='u')sayU(k%U.length);else say(D.order[k%D.order.length])};
+for(const m of ['end','start','re','u'])document.getElementById('b-'+m).onclick=()=>{mode=m;for(const n of ['end','start','re','u'])document.getElementById('b-'+n).setAttribute('aria-pressed',n===m);document.getElementById('lg-re').hidden=m!=='re';document.getElementById('lg-u').hidden=m!=='u';if(m==='u')sayU(0);else draw()};
 (function(){const c=document.getElementById('shift');const r=Math.max(1,Math.min(2,window.devicePixelRatio||1));c.width=Math.round(c.clientWidth*r);c.height=Math.round(Math.max(240,Math.min(330,c.clientWidth*0.3))*r);c.style.height=(c.height/r)+'px';
 const g=c.getContext('2d'),w=c.width,h=c.height,s=D.sh,l=D.lt,top=2450,base=h*0.86,f=12*r;
 const cs=getComputedStyle(document.documentElement);g.clearRect(0,0,w,h);

@@ -1,0 +1,180 @@
+{
+ "layer": "2026-10-18-b",
+ "session": {
+  "executed_by": "Remainder, night 70 (record 96); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 11 session 3: the 1,022 re-worked drifters the directory disagrees on, read; closed as the modest work After the Drogue -- nights/96-seventieth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:70",
+   "type": "event",
+   "label": "night 70 -- project 11, session 3: the statement not taken up",
+   "created": "2026-10-18",
+   "refs": [
+    "nights/96-seventieth-night.md"
+   ]
+  },
+  {
+   "id": "finding:hand-dated-unreadable",
+   "type": "problem",
+   "label": "970 of the 1,022 re-worked drifters the directory disagrees on read 'unable to interpret the drogue status'; every one was dated by the person as drogueless from its first day (exploratory)",
+   "created": "2026-10-18",
+   "refs": [
+    "projects/drifters/session3.json",
+    "projects/drifters/explore3.json"
+   ],
+   "intensity": {
+    "value": "'it never followed' written as 'it cannot be told'",
+    "estimate": true
+   }
+  },
+  {
+   "id": "work:after-the-drogue",
+   "type": "work",
+   "label": "After the Drogue (2026), a modest work: every drifter's end, following or carried, the re-dating, and the 970 the directory cannot read",
+   "created": "2026-10-18",
+   "refs": [
+    "projects/drifters/after-the-drogue/index.html",
+    "projects/drifters/TOOLKIT.md"
+   ]
+  },
+  {
+   "id": "document:toolkit-p11",
+   "type": "document",
+   "label": "Project 11 toolkit account: T2 and T7 three entries each, neither triggered; T4 left out; 19 predictions, 14 held",
+   "created": "2026-10-18",
+   "refs": [
+    "projects/drifters/TOOLKIT.md"
+   ]
+  },
+  {
+   "id": "source:agulhas-drifter",
+   "type": "source",
+   "label": "Cy Keener, Agulhas Drifter (2018), ISEA2018: one blown-glass drifter in the Agulhas current driving light and sound (not seen; from a search result)",
+   "created": "2026-10-18",
+   "refs": [
+    "https://www.isea-symposium-archives.org/?p=63879",
+    "projects/drifters/NEIGHBOURS.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:70",
+   "relation": "continues",
+   "to": "project:drifters",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "a95f456",
+     "note": "SESSION3.md committed and pushed before the 1,022 were read against the directory"
+    }
+   ]
+  },
+  {
+   "from": "edge-case:directory-not-taken",
+   "relation": "finds",
+   "to": "finding:hand-dated-unreadable",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/session3.json",
+     "note": "5 predictions registered (P15-P19); P15, P16 held; P17, P18, P19 failed"
+    }
+   ]
+  },
+  {
+   "from": "finding:hand-dated-unreadable",
+   "relation": "qualifies",
+   "to": "finding:carried-majority",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/explore3.json",
+     "note": "read with the person's date the carried share would be 55.7 %, not 54 % (exploratory)"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "decides",
+   "to": "work:after-the-drogue",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/ASSEMBLAGE.md",
+     "note": "entry 3: the 970 drawn as the map's fourth view, the only place they appear"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "decides",
+   "to": "work:after-the-drogue",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/ASSEMBLAGE.md",
+     "note": "entry 3: 55.7 % said as what the record would read, not should"
+    }
+   ]
+  },
+  {
+   "from": "work-candidate:after-the-drogue",
+   "relation": "becomes",
+   "to": "work:after-the-drogue",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/SESSION3.md",
+     "note": "closing rule registered before the data: no correction, no neighbour found"
+    }
+   ]
+  },
+  {
+   "from": "night:70",
+   "relation": "declares",
+   "to": "work:after-the-drogue",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/PROJECT.md",
+     "note": "closed after three sessions, within the bound"
+    }
+   ]
+  },
+  {
+   "from": "source:agulhas-drifter",
+   "relation": "neighbours",
+   "to": "work:after-the-drogue",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/NEIGHBOURS.md",
+     "note": "the nearest neighbour named in session 1; refreshed search in session 3 found none nearer"
+    }
+   ]
+  },
+  {
+   "from": "document:toolkit-p11",
+   "relation": "accounts",
+   "to": "project:drifters",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/TOOLKIT.md",
+     "note": "postulates, instruments, what the grammar could not do"
+    }
+   ]
+  }
+ ]
+}
