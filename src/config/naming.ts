@@ -742,7 +742,7 @@ export const NAMING = {
       aside: {
         kicker: 'THE LONGEST GAPS',
         hours: (hours: number) => `${hours} h dark`,
-        fleet: { label: 'the ghost fleet →', href: '/ghost-fleet' },
+        fleet: { label: 'the ghost fleet (retired) →', href: '/ghost-fleet' },
         watch: { label: 'the watchtower →', href: '/lab/ueberflug-studie' },
       },
       legend: {
