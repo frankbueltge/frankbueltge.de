@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "c8f9aa7d2b8f36a5"
+        "sha256": "1e48c7164896b22e"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "345b20a6a2f2c58a"
+        "sha256": "1dd32ff6c45713fd"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 517,
-      "edges": 458,
+      "nodes": 518,
+      "edges": 461,
       "nodesByKind": {
-        "decision": 147,
+        "decision": 148,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 196,
         "neighbor-of": 125,
         "participates": 17,
-        "touches": 105
+        "touches": 108
       }
     }
   },
@@ -1542,6 +1542,16 @@
     },
     {
       "id": "decision:2026-10-18-1",
+      "kind": "decision",
+      "label": "Machine Attention's entrance says what runs now, and the Observatory's register is published again",
+      "date": "2026-10-18",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Machine Attention's entrance says what runs now, and the Observatory's register is published again"
+      }
+    },
+    {
+      "id": "decision:2026-10-18-2",
       "kind": "decision",
       "label": "/error-as-method shows the nightly line as it works now: one research project, its experiments as the line's works, and everything before 2026-10-04 dated as the earlier phase",
       "date": "2026-10-18",
@@ -10986,6 +10996,33 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": ".github/workflows/{round-number,ghost-fleet}.yml"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-18-1",
+      "to": "work:attention",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/machine-attention/{index,about}.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-18-1",
+      "to": "work:globe",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/globe/layers/attention-warnings.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-18-1",
+      "to": "work:observatory",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/observatory/index.astro"
       }
     }
   ]

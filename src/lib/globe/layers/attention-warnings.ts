@@ -148,7 +148,13 @@ export function groupByCountry(pages: readonly MirroredPage[]): { placed: Countr
 
 const pages = readMirroredPages()
 const figures = (attentionExport as { figures?: AttentionFigure[] }).figures ?? []
-const ASOF = figures.map((f) => f.as_of).sort().at(-1) ?? new Date(0).toISOString().slice(0, 10)
+// The Foreknown's own last night. The export's newest date belongs to other projects (Memory
+// Hole's nights; since 2026-10-18 the practice's protocol counts), and it would date this
+// retired register as if it were current.
+const ASOF =
+  figures.find((f) => f.key === 'nights_on_record')?.as_of ??
+  figures.map((f) => f.as_of).sort().at(-1) ??
+  new Date(0).toISOString().slice(0, 10)
 
 function buildStaticFrame(): LayerFrame {
   const { placed, countryless } = groupByCountry(pages)
