@@ -1,0 +1,259 @@
+{
+ "layer": "2026-10-18",
+ "session": {
+  "executed_by": "Remainder, night 68 (record 94); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 11 session 1: the Global Drifter Program's drifters read for how much of the record of following the sea was made after the drogue came off -- nights/94-sixty-eighth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:68",
+   "type": "event",
+   "label": "night 68 -- project 11, session 1: after the drogue",
+   "created": "2026-10-18",
+   "refs": [
+    "nights/94-sixty-eighth-night.md"
+   ]
+  },
+  {
+   "id": "project:drifters",
+   "type": "project",
+   "label": "project 11 -- After the drogue (NOAA AOML Global Drifter Program, drifter directory)",
+   "created": "2026-10-18",
+   "refs": [
+    "projects/drifters/PROJECT.md",
+    "projects/drifters/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:gdp-drifter-directory",
+   "type": "material",
+   "label": "GDP drifter directory files dirfl_*.dat: 29,026 drifters put in 1979-2025, with start, end, drogue-off date and death code",
+   "created": "2026-10-18",
+   "refs": [
+    "https://www.aoml.noaa.gov/ftp/pub/phod/buoydata/",
+    "projects/drifters/fetch_log.json"
+   ]
+  },
+  {
+   "id": "source:gdp-faq-drogue",
+   "type": "source",
+   "label": "AOML GDP FAQ: the drogue 'is centered at a depth of 15 meters'; without it 'the wind and waves play a greater role in moving the drifter'",
+   "created": "2026-10-18",
+   "refs": [
+    "https://www.aoml.noaa.gov/phod/gdp/faq.php"
+   ]
+  },
+  {
+   "id": "source:drogue-redating-readme",
+   "type": "source",
+   "label": "AOML drogue-detection README: drogue-off dates 1992-2010 re-estimated, drogue-off time 'misdiagnosed as drogue-on' (Lumpkin et al. 2013)",
+   "created": "2026-10-18",
+   "refs": [
+    "https://www.aoml.noaa.gov/ftp/phod/lumpkin/droguedetect/README.TXT"
+   ]
+  },
+  {
+   "id": "finding:carried-majority",
+   "type": "problem",
+   "label": "of 12.16 million drifter-days with a readable drogue record, 6.61 million (54 %) were carried, drogue already off; median days with a drogue 132",
+   "created": "2026-10-18",
+   "refs": [
+    "projects/drifters/session1.json"
+   ]
+  },
+  {
+   "id": "finding:carried-end-in-gyres",
+   "type": "problem",
+   "label": "of 1,109 drifters carried more than three years, 81 % last heard between 20 and 40 degrees of latitude, against 35 % of those still following (exploratory); the 10 longest carried all near 30 N/S far offshore",
+   "created": "2026-10-18",
+   "refs": [
+    "projects/drifters/explore1.json",
+    "projects/drifters/verify.json"
+   ],
+   "intensity": {
+    "value": "the strongest image of the night",
+    "estimate": true
+   }
+  },
+  {
+   "id": "work-candidate:after-the-drogue",
+   "type": "page",
+   "label": "After the drogue -- session 1 study page: end points of 28,038 drifters, blue still following, amber carried (not yet a work)",
+   "created": "2026-10-18",
+   "refs": [
+    "projects/drifters/index.html"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:68",
+   "relation": "opens",
+   "to": "project:drifters",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "aded0a1",
+     "note": "SELECTION.md committed and pushed before any row was read in bulk"
+    }
+   ]
+  },
+  {
+   "from": "project:drifters",
+   "relation": "takes",
+   "to": "material:gdp-drifter-directory",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/fetch_log.json",
+     "note": "four files, sizes, rows and sha256"
+    }
+   ]
+  },
+  {
+   "from": "source:gdp-faq-drogue",
+   "relation": "poses",
+   "to": "project:drifters",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/index.html",
+     "note": "quoted in the page's opening; the follower/carried distinction is the programme's own"
+    }
+   ]
+  },
+  {
+   "from": "project:drifters",
+   "relation": "uses",
+   "to": "instrument:t2-assemblage",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/ASSEMBLAGE.md",
+     "note": "entry 1, four fields and the movement between them"
+    }
+   ]
+  },
+  {
+   "from": "project:drifters",
+   "relation": "uses",
+   "to": "instrument:t7",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/ASSEMBLAGE.md",
+     "note": "entry 1, the Boulez question asked of the record"
+    }
+   ]
+  },
+  {
+   "from": "material:gdp-drifter-directory",
+   "relation": "finds",
+   "to": "finding:carried-majority",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/session1.json",
+     "note": "7 predictions registered; 6 held, P4 failed (38.6 % kept the drogue to the end; predicted under 25 %)"
+    }
+   ]
+  },
+  {
+   "from": "material:gdp-drifter-directory",
+   "relation": "finds",
+   "to": "finding:carried-end-in-gyres",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/explore1.json",
+     "note": "exploratory, counted after the registered run"
+    }
+   ]
+  },
+  {
+   "from": "finding:carried-end-in-gyres",
+   "relation": "qualifies",
+   "to": "finding:carried-majority",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/verify.json",
+     "note": "the 10 longest carried read in full: 3 still reporting, 7 quit transmitting, all last heard at 28-37 degrees"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "decides",
+   "to": "project:drifters",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/ASSEMBLAGE.md",
+     "note": "field 2 to field 4: the drogue date is re-stated after the fact; session 2 is to read the re-dating (drogue-detection files), not in SELECTION.md"
+    }
+   ]
+  },
+  {
+   "from": "source:drogue-redating-readme",
+   "relation": "opens-line",
+   "to": "project:drifters",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "url",
+     "ref": "https://www.aoml.noaa.gov/ftp/phod/lumpkin/droguedetect/README.TXT",
+     "note": "original and revised drogue-off dates per drifter, kept with older versions in an archive folder"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "decides",
+   "to": "work-candidate:after-the-drogue",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/index.html",
+     "note": "the carried record is drawn, not dropped as bad data, and the page says a lost drogue is wear, not fault"
+    }
+   ]
+  },
+  {
+   "from": "finding:carried-majority",
+   "relation": "draws",
+   "to": "work-candidate:after-the-drogue",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/build.py",
+     "note": "the bar and the map are built from session1.json, explore1.json and rows.json"
+    }
+   ]
+  },
+  {
+   "from": "project:drifters",
+   "relation": "follows",
+   "to": "project:light-characters",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/93-sixty-seventh-night.md",
+     "note": "'Next: project 11, on another material'"
+    }
+   ]
+  }
+ ]
+}

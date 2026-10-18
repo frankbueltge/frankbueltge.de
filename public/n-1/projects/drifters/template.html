@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>After the Drogue</title><link rel="icon" href="data:,">
+<meta name="description" content="Every surface drifter of NOAA's Global Drifter Program, and how much of its record was made after it had stopped following the water.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6b6a64;--line:#d9d6cc;--panel:#f1efe8;--sea:#0f1a24;--a:#3b5f86;--fol:#8fd3ff;--car:#ffb347}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6}}
+:root[data-theme="dark"]{--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif}
+main{max-width:1100px;margin:0 auto;padding:28px 16px 120px}h1{font-size:2rem;margin:.2em 0}h2{font-size:1.2rem;margin-top:2.2em}
+.mut{color:var(--mut)}.sm{font:13px/1.45 system-ui,sans-serif}a{color:var(--a)}
+.map{position:relative;background:var(--sea);border-radius:4px;overflow:hidden}
+canvas{display:block;width:100%;height:auto;cursor:crosshair;touch-action:manipulation}
+.bar{display:flex;height:34px;border-radius:3px;overflow:hidden;margin:14px 0 6px;font:13px/34px system-ui,sans-serif}
+.bar div{text-align:center;color:#1d1d1b;white-space:nowrap;overflow:hidden;min-width:0}
+.bl{display:flex;flex-wrap:wrap;gap:4px 16px;font:13px/1.4 system-ui,sans-serif}.bl i{display:inline-block;width:12px;height:12px;margin-right:5px;vertical-align:-1px;border-radius:2px}
+.tabs{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}
+button{font:14px system-ui,sans-serif;padding:6px 10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+#say{position:sticky;bottom:0;background:var(--panel);border-top:1px solid var(--line);padding:12px 16px;font:15px/1.45 system-ui,sans-serif;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+#who{flex:1 1 280px;min-width:0}
+table{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}th,td{padding:3px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tw{overflow-x:auto}
+</style></head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<p class="sm mut">Remainder &middot; project 11, session 1 (a study, not yet a work) &middot; 2026-10-18</p>
+<h1>After the drogue</h1>
+<p>A drifter is a float put into the sea to be carried by it. Below it, on a tether, hangs a drogue, a sea anchor of nylon cloth:
+"The drogue is centered at a depth of 15 meters", and it is "designed to move with the near-surface ocean currents", so the float goes
+where the water goes. Each drifter reports its position by satellite for months or years; the programme that puts them out, NOAA's
+Global Drifter Program, has kept them in the water since 1979.</p>
+<p>Drogues come off. The float goes on reporting, but "if the drogue is lost at sea, the wind and waves play a greater role in moving
+the drifter", "much as a ping pong ball or beach ball is pushed across the surface of a pool" (the programme's own
+<a href="https://www.aoml.noaa.gov/phod/gdp/faq.php">answers to frequent questions</a>). It is no longer following the water; it is
+being carried. The programme writes down, for each drifter, the day its drogue came off, and has re-estimated many of those days later,
+from how the float moved. This page asks how much of the record of following the sea was made after the following had stopped.</p>
+
+<div class="bar" role="img" aria-label="{{DROG_M}} million drifter-days following the water, {{CARR_M}} million carried">
+<div style="flex:{{DROG}};background:var(--fol)">{{DROG_PCT}} %</div>
+<div style="flex:{{CARR}};background:var(--car)"><b>{{CARR_PCT}} %</b></div></div>
+<div class="bl"><span><i style="background:var(--fol)"></i>days following the water: {{DROG_M}} million</span><span><i style="background:var(--car)"></i><b>days carried, drogue off: {{CARR_M}} million</b></span></div>
+<p class="sm mut">All {{N}} drifters in the programme's directory files, put in the water from {{Y0}} to {{Y1}}; days counted for the
+{{N_KNOWN}} whose drogue record can be read.</p>
+
+<div class="tabs" role="group" aria-label="What the map shows">
+<button id="b-end" aria-pressed="true">where each one ended</button><button id="b-start" aria-pressed="false">where each one was put in</button></div>
+<div class="map"><canvas id="map" width="1100" height="560" aria-label="World map drawn only by drifters' end points, blue if the drogue was still on, amber if it had come off"></canvas></div>
+<div class="bl" style="margin-top:8px"><span><i style="background:var(--fol)"></i>still following when it stopped ({{N_KEPT}})</span>
+<span><i style="background:var(--car)"></i>carried: drogue off before the end ({{N_CARRIED}}), brighter the longer</span></div>
+<p class="sm mut">Tap or click a point to see that drifter. No coastline is drawn; the continents are where no drifter is. Equirectangular,
+80&deg;S to 85&deg;N; positions rounded to 0.1&deg;.</p>
+
+<h2>Where the carried ones end</h2>
+<p>The longest-carried drifters went on for seven or eight years after their drogues came off. All ten were last heard far out in an ocean (three of them are still reporting), near 30&deg; north or south: where the great subtropical gyres turn, and where, as
+oceanographers report, floating things gather (that last is not checked here: conjecture). Of the {{N_C3}} drifters
+carried for more than three years, <b>{{C3_PCT}} %</b> ended between 20&deg; and 40&deg; of latitude; of those that ended still
+following, {{K_PCT}} %; of all the places drifters were put in, {{S_PCT}} %. <span class="mut">(Counted after the registered run, not
+predicted: exploratory. A band of latitude is a crude stand-in for a gyre.)</span></p>
+
+<h2>How the following ends</h2>
+<div class="tw"><table><tr><th>last state</th><th>drifters</th><th>quit transmitting</th><th>ran aground</th><th>picked up</th></tr>
+{{DEATH_ROWS}}</table></div>
+<p class="sm mut">"Quit transmitting" is what the programme writes when it does not know; a published study (Lumpkin, Maximenko and
+Pazos, 2012, seen in a search summary, not read) argues that many of these ran aground or were picked up. A drifter still following
+is picked up twice as often as one being carried ({{PK}} % against {{PL}} %); one being carried runs aground more often ({{AL}} % against
+{{AK}} %).</p>
+
+<h2>What was predicted, before the files were read</h2>
+<div class="tw"><table><tr><th></th><th>prediction (SELECTION.md)</th><th>found</th><th></th></tr>{{PRED_ROWS}}</table></div>
+
+<h2>What this is, and is not</h2>
+<p class="sm">Data: NOAA Atlantic Oceanographic and Meteorological Laboratory, Global Drifter Program, the four drifter directory files
+(<code>dirfl_*.dat</code>), fetched {{FETCHED}}. Counted from the directory only: start, end, drogue-off date and death code per
+drifter; no path is drawn, so the map shows where drifters began and stopped, not where they went. Drogue dates are the programme's
+own estimates and are revised. A lost drogue is wear, not fault, and an undrogued drifter's record is still used (with care) by
+oceanographers; "carried" here names what the float was doing, not a judgment of the data. Of {{N_UNK}} drifters the drogue record
+cannot be read. Read against the raw rows: 40 random drifters and the 10 longest carried (no error found). Files:
+<a href="https://github.com/frankbueltge/n-1/tree/main/projects/drifters">projects/drifters</a>.</p>
+</main>
+<div id="say"><div id="who">Tap a point on the map.</div><button id="next">Another drifter</button></div>
+<script>
+const D={{DATA}};
+const C=document.getElementById('map'),X=C.getContext('2d'),W=C.width,H=C.height,LA0=-80,LA1=85;
+let mode='end';
+const px=(lo)=>((lo>180?lo-360:lo)+180)/360*W, py=(la)=>(LA1-la)/(LA1-LA0)*H;
+const ST={k:'Still following when it stopped',l:'Carried: drogue off on the way',n:'Carried from the start: drogue off when put in',a:'Still reporting, drogue on'};
+const DEATH={0:'still reporting',1:'ran aground',2:'was picked up',3:'quit transmitting',4:'unreliable at the end',5:'bad battery',6:'set inactive'};
+function draw(){X.fillStyle='#0f1a24';X.fillRect(0,0,W,H);
+ for(const r of D.r){const car=r[6]>0;const la=mode==='end'?r[3]:r[1],lo=mode==='end'?r[4]:r[2];
+  if(car){const y=Math.min(1,r[6]/1500);X.fillStyle=`rgba(255,179,71,${(.18+.7*y).toFixed(2)})`;}else X.fillStyle='rgba(143,211,255,.30)';
+  X.fillRect(px(lo)-1,py(la)-1,2,2);}}
+function say(i){const r=D.r[i];const st=r[7];
+ document.getElementById('who').innerHTML=`${ST[st]||st}. Put in ${r[8]}, last heard ${r[9]} (year/month). `+
+ `${Math.round(r[5])} days following the water, ${Math.round(r[6])} days carried. It ${DEATH[r[10]]}.`;
+ draw();X.strokeStyle='#fff';X.lineWidth=1.5;X.beginPath();X.arc(px(r[2]),py(r[1]),5,0,7);X.stroke();X.beginPath();X.arc(px(r[4]),py(r[3]),7,0,7);X.stroke();
+ if(Math.abs(px(r[4])-px(r[2]))<W/2){X.setLineDash([3,4]);X.beginPath();X.moveTo(px(r[2]),py(r[1]));X.lineTo(px(r[4]),py(r[3]));X.stroke();X.setLineDash([]);}}
+C.addEventListener('click',e=>{const b=C.getBoundingClientRect(),x=(e.clientX-b.left)*W/b.width,y=(e.clientY-b.top)*H/b.height;let bi=-1,bd=1e9;
+ D.r.forEach((r,i)=>{const la=mode==='end'?r[3]:r[1],lo=mode==='end'?r[4]:r[2];const d=(px(lo)-x)**2+(py(la)-y)**2;if(d<bd){bd=d;bi=i}});if(bi>=0)say(bi)});
+let k=0;document.getElementById('next').onclick=()=>{k=(k+7919)%D.r.length;say(D.order[k%D.order.length])};
+for(const m of ['end','start'])document.getElementById('b-'+m).onclick=()=>{mode=m;for(const n of ['end','start'])document.getElementById('b-'+n).setAttribute('aria-pressed',n===m);draw()};
+draw();say(D.order[0]);
+</script>
+<p class="sm mut" style="max-width:1100px;margin:0 auto;padding:0 16px 16px">For a chosen drifter, the small ring is where it was put in and the large ring where it stopped; the dashed line joins them and is not its path (omitted where it would cross the map's edge).</p>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>
