@@ -37,7 +37,7 @@ table{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}th,td{p
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
-<p class="sm mut">Remainder &middot; project 11, session 1 (a study, not yet a work) &middot; 2026-10-18</p>
+<p class="sm mut">Remainder &middot; project 11, sessions 1 and 2 (a study, not yet a work) &middot; 2026-10-18</p>
 <h1>After the drogue</h1>
 <p>A drifter is a float put into the sea to be carried by it. Below it, on a tether, hangs a drogue, a sea anchor of nylon cloth:
 "The drogue is centered at a depth of 15 meters", and it is "designed to move with the near-surface ocean currents", so the float goes
@@ -57,12 +57,40 @@ from how the float moved. This page asks how much of the record of following the
 {{N_KNOWN}} whose drogue record can be read.</p>
 
 <div class="tabs" role="group" aria-label="What the map shows">
-<button id="b-end" aria-pressed="true">where each one ended</button><button id="b-start" aria-pressed="false">where each one was put in</button></div>
+<button id="b-end" aria-pressed="true">where each one ended</button><button id="b-start" aria-pressed="false">where each one was put in</button><button id="b-re" aria-pressed="false">re-dated in 2012-13</button></div>
 <div class="map"><canvas id="map" width="1100" height="560" aria-label="World map drawn only by drifters' end points, blue if the drogue was still on, amber if it had come off"></canvas></div>
 <div class="bl" style="margin-top:8px"><span><i style="background:var(--fol)"></i>still following when it stopped ({{N_KEPT}})</span>
-<span><i style="background:var(--car)"></i>carried: drogue off before the end ({{N_CARRIED}}), brighter the longer</span></div>
+<span><i style="background:var(--car)"></i>carried: drogue off before the end ({{N_CARRIED}}), brighter the longer</span>
+<span id="lg-re" hidden><i style="background:#fff;outline:1px solid var(--mut)"></i>re-dated earlier in 2012-13 ({{RE_N}}), larger the more days re-stated</span></div>
 <p class="sm mut">Tap or click a point to see that drifter. No coastline is drawn; the continents are where no drifter is. Equirectangular,
 80&deg;S to 85&deg;N; positions rounded to 0.1&deg;.</p>
+
+<h2>Re-dated: following, re-stated as carried</h2>
+<p>The day a drogue came off is not seen; it is worked out afterwards, from how the float behaved: whether it rode under, whether it
+slid downwind, how its signal came and went (the programme's own list). Between February 2012 and
+June 2013 the programme re-worked it for {{RE_FILE}} drifters of 1992 to 2010, first by a method and then by a person, drifter by drifter,
+and published each version (<a href="https://www.aoml.noaa.gov/ftp/phod/lumpkin/droguedetect/">droguedetect</a>, after Lumpkin and
+others, 2013). For <b>{{RE_N}}</b> of them the loss moved earlier. <b>{{FC_M}} million drifter-days</b> that the record had counted as
+following the water were re-stated as carried, against {{CF_K}} thousand moved the other way. Half of the re-dated drifters had been
+carried for more than {{MED}} days while counted as following; the longest, for six years. The programme kept every version
+public, which is the only reason this can be counted: the re-dating is a correction made in the open, not a fault found here.</p>
+<div class="bar" role="img" aria-label="Before the re-dating about {{OLD_PCT}} percent of drifter-days carried; after it {{CARR_PCT}} percent">
+<div style="flex:{{OLD_F}};background:var(--fol)">{{OLD_FPCT}} %</div><div style="flex:{{OLD_C}};background:var(--car)">first written: {{OLD_PCT}} %</div></div>
+<div class="bar"><div style="flex:{{DROG}};background:var(--fol)">{{DROG_PCT}} %</div><div style="flex:{{CARR}};background:var(--car)"><b>re-written: {{CARR_PCT}} %</b></div></div>
+<p class="sm mut">Share of all drifter-days carried (amber), as the directory would read with the dates of before the re-working (top; approximate: only
+the re-worked window changes, and its edge is the study's end, 19 November 2010) and as it reads now (bottom). Exploratory, not predicted.</p>
+<canvas id="shift" width="1100" height="330" style="cursor:default" aria-label="One thin column per re-dated drifter, sorted, its height the days of following re-stated as carried; below the line, the {{LATER_N}} moved later"></canvas>
+<p class="sm mut">One column per drifter whose drogue loss moved earlier, tallest first; its height is the days re-stated (lines at one to six years).
+Below the line, the {{LATER_N}} whose loss moved later. {{HELD_N}} more held their date within a day.</p>
+<p>The person did not always agree with the method: for {{AM_N}} drifters ({{AM_PCT}} %) the hand-made date is more than 30 days from the
+automatic one, and in {{AM_E}} of those it is earlier still. One drifter's drogue, in the eighteen versions of the file:</p>
+<div class="tw"><table><tr><th>version</th>{{V_HEAD}}</tr><tr><th>drogue off</th>{{V_ROW}}</tr></table></div>
+<p class="sm mut">Drifter {{V_ID}}. "not yet" = not reassessed; "unclear" = reassessed, loss unclear; "unknown from start" = drogue status
+uncertain from the beginning (the README's own codes). What made each version change is not in the files.</p>
+<p>Of the {{BIG_N}} drifters re-dated by more than three years, {{BIG_PCT}} % ended between 20&deg; and 40&deg; of latitude, and
+{{BIG_S}} had been put in south of 35&deg;S: they were counted as following for years while they went north into the
+subtropics (exploratory; what moved them is not read here). The directory read today carries the hand-made date for {{AG_PCT}} % of the re-worked drifters
+({{AG}} of {{AG_N}}).</p>
 
 <h2>Where the carried ones end</h2>
 <p>The longest-carried drifters went on for seven or eight years after their drogues came off. All ten were last heard far out in an ocean (three of them are still reporting), near 30&deg; north or south: where the great subtropical gyres turn, and where, as
@@ -80,7 +108,7 @@ is picked up twice as often as one being carried ({{PK}} % against {{PL}} %); on
 {{AK}} %).</p>
 
 <h2>What was predicted, before the files were read</h2>
-<div class="tw"><table><tr><th></th><th>prediction (SELECTION.md)</th><th>found</th><th></th></tr>{{PRED_ROWS}}</table></div>
+<div class="tw"><table><tr><th></th><th>prediction (SELECTION.md, SESSION2.md)</th><th>found</th><th></th></tr>{{PRED_ROWS}}</table></div>
 
 <h2>What this is, and is not</h2>
 <p class="sm">Data: NOAA Atlantic Oceanographic and Meteorological Laboratory, Global Drifter Program, the four drifter directory files
@@ -88,30 +116,42 @@ is picked up twice as often as one being carried ({{PK}} % against {{PL}} %); on
 drifter; no path is drawn, so the map shows where drifters began and stopped, not where they went. Drogue dates are the programme's
 own estimates and are revised. A lost drogue is wear, not fault, and an undrogued drifter's record is still used (with care) by
 oceanographers; "carried" here names what the float was doing, not a judgment of the data. Of {{N_UNK}} drifters the drogue record
-cannot be read. Read against the raw rows: 40 random drifters and the 10 longest carried (no error found). Files:
+cannot be read. Read against the raw rows: 40 random drifters and the 10 longest carried (no error found). The re-dating: AOML's drogue-detection files,
+the version of 2013-06-30 and its seventeen predecessors, fetched {{FETCHED2}}; 30 random rows and the 10 largest shifts read against the
+raw lines (15 rows without an automatic date were dropped by the registered rule and restored; the predictions did not change). Files:
 <a href="https://github.com/frankbueltge/n-1/tree/main/projects/drifters">projects/drifters</a>.</p>
 </main>
 <div id="say"><div id="who">Tap a point on the map.</div><button id="next">Another drifter</button></div>
 <script>
 const D={{DATA}};
 const C=document.getElementById('map'),X=C.getContext('2d'),W=C.width,H=C.height,LA0=-80,LA1=85;
-let mode='end';
+let mode='end';const RE=r=>r[11]||0;
 const px=(lo)=>((lo>180?lo-360:lo)+180)/360*W, py=(la)=>(LA1-la)/(LA1-LA0)*H;
 const ST={k:'Still following when it stopped',l:'Carried: drogue off on the way',n:'Carried from the start: drogue off when put in',a:'Still reporting, drogue on'};
 const DEATH={0:'still reporting',1:'ran aground',2:'was picked up',3:'quit transmitting',4:'unreliable at the end',5:'bad battery',6:'set inactive'};
 function draw(){X.fillStyle='#0f1a24';X.fillRect(0,0,W,H);
+ if(mode==='re'){for(const r of D.r){if(RE(r)>0)continue;X.fillStyle='rgba(143,211,255,.10)';X.fillRect(px(r[4])-1,py(r[3])-1,2,2);}
+  for(const r of D.r){if(RE(r)<=0)continue;const z=1+Math.min(4,RE(r)/400);X.fillStyle='rgba(255,255,255,.75)';X.fillRect(px(r[4])-z/2,py(r[3])-z/2,z,z);}return;}
  for(const r of D.r){const car=r[6]>0;const la=mode==='end'?r[3]:r[1],lo=mode==='end'?r[4]:r[2];
   if(car){const y=Math.min(1,r[6]/1500);X.fillStyle=`rgba(255,179,71,${(.18+.7*y).toFixed(2)})`;}else X.fillStyle='rgba(143,211,255,.30)';
   X.fillRect(px(lo)-1,py(la)-1,2,2);}}
 function say(i){const r=D.r[i];const st=r[7];
  document.getElementById('who').innerHTML=`${ST[st]||st}. Put in ${r[8]}, last heard ${r[9]} (year/month). `+
- `${Math.round(r[5])} days following the water, ${Math.round(r[6])} days carried. It ${DEATH[r[10]]}.`;
+ `${Math.round(r[5])} days following the water, ${Math.round(r[6])} days carried. It ${DEATH[r[10]]}.`+(RE(r)>0?` Until 2012 the record counted ${Math.round(RE(r))} of its carried days as following.`:'');
  draw();X.strokeStyle='#fff';X.lineWidth=1.5;X.beginPath();X.arc(px(r[2]),py(r[1]),5,0,7);X.stroke();X.beginPath();X.arc(px(r[4]),py(r[3]),7,0,7);X.stroke();
  if(Math.abs(px(r[4])-px(r[2]))<W/2){X.setLineDash([3,4]);X.beginPath();X.moveTo(px(r[2]),py(r[1]));X.lineTo(px(r[4]),py(r[3]));X.stroke();X.setLineDash([]);}}
 C.addEventListener('click',e=>{const b=C.getBoundingClientRect(),x=(e.clientX-b.left)*W/b.width,y=(e.clientY-b.top)*H/b.height;let bi=-1,bd=1e9;
- D.r.forEach((r,i)=>{const la=mode==='end'?r[3]:r[1],lo=mode==='end'?r[4]:r[2];const d=(px(lo)-x)**2+(py(la)-y)**2;if(d<bd){bd=d;bi=i}});if(bi>=0)say(bi)});
+ D.r.forEach((r,i)=>{const la=mode!=='start'?r[3]:r[1],lo=mode!=='start'?r[4]:r[2];if(mode==='re'&&RE(r)<=0)return;const d=(px(lo)-x)**2+(py(la)-y)**2;if(d<bd){bd=d;bi=i}});if(bi>=0)say(bi)});
 let k=0;document.getElementById('next').onclick=()=>{k=(k+7919)%D.r.length;say(D.order[k%D.order.length])};
-for(const m of ['end','start'])document.getElementById('b-'+m).onclick=()=>{mode=m;for(const n of ['end','start'])document.getElementById('b-'+n).setAttribute('aria-pressed',n===m);draw()};
+for(const m of ['end','start','re'])document.getElementById('b-'+m).onclick=()=>{mode=m;for(const n of ['end','start','re'])document.getElementById('b-'+n).setAttribute('aria-pressed',n===m);document.getElementById('lg-re').hidden=m!=='re';draw()};
+(function(){const c=document.getElementById('shift');const r=Math.max(1,Math.min(2,window.devicePixelRatio||1));c.width=Math.round(c.clientWidth*r);c.height=Math.round(Math.max(240,Math.min(330,c.clientWidth*0.3))*r);c.style.height=(c.height/r)+'px';
+const g=c.getContext('2d'),w=c.width,h=c.height,s=D.sh,l=D.lt,top=2450,base=h*0.86,f=12*r;
+const cs=getComputedStyle(document.documentElement);g.clearRect(0,0,w,h);
+g.fillStyle='#ffb347';const n=s.length;for(let i=0;i<n;i++){const x=i/n*w;g.fillRect(x,base-s[i]/top*base,Math.max(1,w/n),s[i]/top*base);}
+g.fillStyle='#8fd3ff';for(let i=0;i<l.length;i++){const x=i/n*w;g.fillRect(x,base,Math.max(1,w/n),Math.min(h-base,l[i]/top*base));}
+g.strokeStyle=cs.getPropertyValue('--line');g.fillStyle=cs.getPropertyValue('--mut');g.font=f+'px system-ui,sans-serif';g.textAlign='right';
+for(let y=1;y<=6;y++){const yy=base-y*365.25/top*base;g.beginPath();g.moveTo(0,yy);g.lineTo(w,yy);g.stroke();g.fillText(y+(y>1?' years':' year'),w-4,yy-4);}
+g.strokeStyle=cs.getPropertyValue('--fg');g.beginPath();g.moveTo(0,base);g.lineTo(w,base);g.stroke();})();
 draw();say(D.order[0]);
 </script>
 <p class="sm mut" style="max-width:1100px;margin:0 auto;padding:0 16px 16px">For a chosen drifter, the small ring is where it was put in and the large ring where it stopped; the dashed line joins them and is not its path (omitted where it would cross the map's edge).</p>

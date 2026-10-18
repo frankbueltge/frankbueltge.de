@@ -1,0 +1,218 @@
+{
+ "layer": "2026-10-18-a",
+ "session": {
+  "executed_by": "Remainder, night 69 (record 95); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 11 session 2: the 2012-13 re-dating of drogue loss read for how much following it re-stated as carried -- nights/95-sixty-ninth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:69",
+   "type": "event",
+   "label": "night 69 -- project 11, session 2: the re-dating",
+   "created": "2026-10-18",
+   "refs": [
+    "nights/95-sixty-ninth-night.md"
+   ]
+  },
+  {
+   "id": "material:gdp-drogue-redating",
+   "type": "material",
+   "label": "AOML drogue-detection files: 13,595 drifters of 1992-2010, original, automatic and manual drogue-off dates, in 18 published versions 2012-02-17 to 2013-06-30",
+   "created": "2026-10-18",
+   "refs": [
+    "https://www.aoml.noaa.gov/ftp/phod/lumpkin/droguedetect/",
+    "projects/drifters/fetch2_log.json"
+   ]
+  },
+  {
+   "id": "finding:following-restated-carried",
+   "type": "problem",
+   "label": "3,565 drifters re-dated earlier: 1.08 million drifter-days re-stated from following to carried (32 times the reverse), median 166 days, longest six years; today's directory carries the hand-made date for 92 %",
+   "created": "2026-10-18",
+   "refs": [
+    "projects/drifters/session2.json"
+   ]
+  },
+  {
+   "id": "finding:redated-longest-to-subtropics",
+   "type": "problem",
+   "label": "of 194 drifters re-dated by more than three years, 81 % ended between 20 and 40 degrees and 88 were put in south of 35 S (exploratory)",
+   "created": "2026-10-18",
+   "refs": [
+    "projects/drifters/explore2.json"
+   ],
+   "intensity": {
+    "value": "the session-1 image, re-found from the other side",
+    "estimate": true
+   }
+  },
+  {
+   "id": "edge-case:directory-not-taken",
+   "type": "problem",
+   "label": "1,022 re-worked drifters whose directory row today does not carry the person's date -- session 3's edge",
+   "created": "2026-10-18",
+   "refs": [
+    "projects/drifters/session2.json",
+    "projects/drifters/ASSEMBLAGE.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:69",
+   "relation": "continues",
+   "to": "project:drifters",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "be62fa5",
+     "note": "SESSION2.md committed and pushed before the re-dating file was read in bulk"
+    }
+   ]
+  },
+  {
+   "from": "source:drogue-redating-readme",
+   "relation": "leads-to",
+   "to": "material:gdp-drogue-redating",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/SESSION2.md",
+     "note": "the README named in session 1 is followed to its files"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "decides",
+   "to": "night:69",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/ASSEMBLAGE.md",
+     "note": "entry 1's decision: session 2 reads the re-dating, not in SELECTION.md"
+    }
+   ]
+  },
+  {
+   "from": "project:drifters",
+   "relation": "takes",
+   "to": "material:gdp-drogue-redating",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/fetch2_log.json",
+     "note": "18 versions and the .old directory file, sizes, rows, sha256"
+    }
+   ]
+  },
+  {
+   "from": "material:gdp-drogue-redating",
+   "relation": "finds",
+   "to": "finding:following-restated-carried",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/session2.json",
+     "note": "7 predictions registered (P8-P14); 6 held, P10 failed (26.5 % moved earlier; predicted at least 30 %)"
+    }
+   ]
+  },
+  {
+   "from": "finding:following-restated-carried",
+   "relation": "qualifies",
+   "to": "finding:carried-majority",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/explore2.json",
+     "note": "with the dates of before 2012 the carried share would read about 46 %, not 54 % (exploratory, approximate)"
+    }
+   ]
+  },
+  {
+   "from": "material:gdp-drogue-redating",
+   "relation": "finds",
+   "to": "finding:redated-longest-to-subtropics",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/explore2.json",
+     "note": "exploratory, named in SESSION2.md before the run"
+    }
+   ]
+  },
+  {
+   "from": "finding:redated-longest-to-subtropics",
+   "relation": "echoes",
+   "to": "finding:carried-end-in-gyres",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/explore2.json",
+     "note": "81 % between 20 and 40 degrees, as session 1's longest carried"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "decides",
+   "to": "work-candidate:after-the-drogue",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/ASSEMBLAGE.md",
+     "note": "entry 2: the re-dating drawn on the map as a place (third view), not only counted"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "decides",
+   "to": "work-candidate:after-the-drogue",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/template.html",
+     "note": "the page calls the re-dating a correction made in the open, counted only because every version stayed public"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "opens-line",
+   "to": "edge-case:directory-not-taken",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/ASSEMBLAGE.md",
+     "note": "entry 2, field 4 (a); session 3 is to read it"
+    }
+   ]
+  },
+  {
+   "from": "finding:following-restated-carried",
+   "relation": "draws",
+   "to": "work-candidate:after-the-drogue",
+   "created": "2026-10-18",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/drifters/build.py",
+     "note": "bars, the sorted column drawing and the map view are built from session2.json, explore2.json and rows2.json"
+    }
+   ]
+  }
+ ]
+}
