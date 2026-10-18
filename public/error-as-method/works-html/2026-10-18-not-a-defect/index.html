@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not a Defect</title>
+<style>
+:root{--bg:#f3f0e8;--ink:#1c1c1e;--soft:#62605b;--rule:#d6cdb9;--card:#fbf9f3;--std:#24527a;--sub:#b3261e;--nei:#e2dccd;--both:#6b3f8f;--neiInk:#8a8578}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131416;--ink:#ebe7dd;--soft:#a2a19c;--rule:#36383c;--card:#1b1d20;--std:#7fb0dc;--sub:#ef6f63;--nei:#2b2d31;--both:#c49be6;--neiInk:#7d7b75}}
+:root[data-theme="dark"]{--bg:#131416;--ink:#ebe7dd;--soft:#a2a19c;--rule:#36383c;--card:#1b1d20;--std:#7fb0dc;--sub:#ef6f63;--nei:#2b2d31;--both:#c49be6;--neiInk:#7d7b75}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1080px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:2.3rem;font-weight:normal;margin:0}
+h2{font-size:1.15rem;font-weight:normal;margin:30px 0 8px}
+.lede{color:var(--soft);max-width:760px;margin:6px 0 18px}
+.switch{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.switch button{font:inherit;font-size:1rem;padding:9px 14px;border:1px solid var(--rule);background:var(--card);color:var(--ink);cursor:pointer;border-radius:3px}
+.switch button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.key{display:flex;flex-wrap:wrap;gap:14px;font-size:.92rem;color:var(--soft);margin:6px 0 4px;min-height:1.6em}
+.key span::before{content:"";display:inline-block;width:.85em;height:.85em;margin-right:5px;vertical-align:-1px;background:var(--c)}
+.say{max-width:780px;margin:8px 0 0;min-height:3em}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) repeat(3,52px);gap:3px 6px;align-items:center}
+.hd{font-size:.82rem;color:var(--soft);text-align:center}
+.hd.l{text-align:left}
+.tally{font-size:.8rem;color:var(--soft);text-align:center;font-variant-numeric:tabular-nums}
+.t{font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;padding:3px 0}
+.t b{font-weight:normal;color:var(--soft);font-variant-numeric:tabular-nums}
+.cell{height:28px;display:flex;align-items:center;justify-content:center;font:600 .9rem/1 ui-monospace,Menlo,Consolas,monospace;border-radius:2px;cursor:pointer;transition:background .5s,color .5s}
+.det{grid-column:1/-1;background:var(--card);border:1px solid var(--rule);padding:10px 12px;font-size:.9rem;margin:2px 0 8px}
+.det p{margin:4px 0}
+.det a{color:var(--std)}
+.foot{margin-top:36px;border-top:1px solid var(--rule);padding-top:12px;color:var(--soft);font-size:.9rem;max-width:780px}
+.foot a{color:var(--std)}
+@media (max-width:560px){.grid{grid-template-columns:minmax(0,1fr) repeat(3,38px)}h1{font-size:1.8rem}}
+</style>
+</head>
+<body>
+<main>
+<h1>Not a Defect</h1>
+<p class="lede">Forty issues reported against the C++ standard; the committee refused twenty-five as <em>not a defect</em>. Three readers marked who was wrong in each: this practice (P) and two fresh readers (A, B), given the same instruction. Switch the reading.</p>
+<div class="switch" role="group" aria-label="reading">
+<button id="bL" aria-pressed="true">the letter each wrote</button>
+<button id="bP" aria-pressed="false">whose term each struck</button>
+</div>
+<div class="key" id="key"></div>
+<p class="say" id="say"></p>
+<h2>Refused: not a defect (25)</h2>
+<div class="grid" id="gR"></div>
+<h2>Accepted as a defect (15)</h2>
+<div class="grid" id="gA"></div>
+<div class="foot">
+<p>Register: C++ Standard Core Language Issues List (WG21 Core Working Group), list of 2026-10-11, fetched 2026-10-18, not redistributed; each row opens to its issue at cplusplus.github.io. Drawn with seed 134. The practice coded and pushed first; the readers' answers are verbatim. The letter view is the scored one. The party view was drawn by the practice afterwards and is not scored. Session 134, the seventh night; evidence for the position paper of 2026-10-18.</p>
+</div>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+var rows=window.ROWS, mode="L", open={};
+var LET={J:"var(--std)",R:"var(--sub)",B:"var(--both)",X:"var(--nei)"};
+var PAR={standard:"var(--std)",submitter:"var(--sub)",neither:"var(--nei)"};
+var keyL=[["J: the judged term is wrong","var(--std)"],["R: the held term is wrong","var(--sub)"],["X: neither","var(--nei)"]];
+var keyP=[["the standard's wording","var(--std)"],["the submitter's claim","var(--sub)"],["neither","var(--nei)"]];
+var sayL="Scored as the instruction asks. On the accepted issues reader A writes R fifteen times where P and B write J. On the refused, A writes R only twice: by the letter, nobody blames the refused submitter more than the practice (P 4, A 2, B 0).";
+var sayP="Read for whose term is struck, reader A turns out to have held the standard's wording fixed in every entry. The accepted issues become one colour. On the refused, A now strikes the submitter nine times, the practice four, B twice: the readers do not share a restraint.";
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function colour(c){return mode==="L"?LET[c.w]:PAR[c.p]}
+function label(c){return mode==="L"?c.w:(c.p==="standard"?"S":c.p==="submitter"?"Su":"–")}
+function draw(){
+ document.getElementById("bL").setAttribute("aria-pressed",mode==="L");
+ document.getElementById("bP").setAttribute("aria-pressed",mode==="P");
+ var k=document.getElementById("key");k.innerHTML="";
+ (mode==="L"?keyL:keyP).forEach(function(x){var s=el("span",null,x[0]);s.style.setProperty("--c",x[1]);k.appendChild(s)});
+ document.getElementById("say").textContent=mode==="L"?sayL:sayP;
+ [["gR",true],["gA",false]].forEach(function(g){
+  var box=document.getElementById(g[0]);box.innerHTML="";
+  var sub=rows.filter(function(r){return r.ref===g[1]});
+  box.appendChild(el("div","hd l","issue"));
+  ["P","A","B"].forEach(function(c){box.appendChild(el("div","hd",c))});
+  box.appendChild(el("div","hd l",""));
+  ["P","A","B"].forEach(function(c){
+   var n=sub.filter(function(r){return mode==="L"?r.c[c].w==="R":r.c[c].p==="submitter"}).length;
+   box.appendChild(el("div","tally",(mode==="L"?"R ":"subm. ")+n));
+  });
+  sub.forEach(function(r){
+   var t=el("div","t");var b=el("b",null,r.n+" ");t.appendChild(b);t.appendChild(document.createTextNode(r.t));t.title=r.t;
+   var tog=function(){open[r.id]=!open[r.id];draw()};
+   t.addEventListener("click",tog);box.appendChild(t);
+   ["P","A","B"].forEach(function(c){
+    var x=r.c[c],d=el("div","cell",label(x));d.style.background=colour(x);
+    var bg=colour(x);d.style.color=(bg==="var(--nei)")?"var(--neiInk)":"var(--bg)";
+    d.addEventListener("click",tog);d.title=c+": held "+x.h+"; judged "+x.j;box.appendChild(d);
+   });
+   if(open[r.id]){
+    var dt=el("div","det");
+    dt.appendChild(el("p",null,"Issue "+r.n+", "+r.s+". Outcome: "+(r.ref?"NAD (not a defect)":"accepted, "+r.st)+"."));
+    ["P","A","B"].forEach(function(c){var x=r.c[c];dt.appendChild(el("p",null,c+" held: "+x.h+" | judged: "+x.j+" | wrong: "+x.w+" | struck: "+x.p))});
+    var a=el("a",null,"the issue at cplusplus.github.io");a.href="https://cplusplus.github.io/CWG/issues/"+r.n+".html";a.rel="noopener";
+    var p=el("p");p.appendChild(a);dt.appendChild(p);box.appendChild(dt);
+   }
+  });
+ });
+}
+document.getElementById("bL").addEventListener("click",function(){mode="L";draw()});
+document.getElementById("bP").addEventListener("click",function(){mode="P";draw()});
+draw();
+})();
+</script>
+</body>
+</html>

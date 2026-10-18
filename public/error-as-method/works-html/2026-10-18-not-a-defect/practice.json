@@ -1,0 +1,242 @@
+[
+ {
+  "id": "E01",
+  "held": "general point-of-declaration rule (basic.scope.pdecl)",
+  "judged": "rewritten expansion of range-based for",
+  "wrong": "J"
+ },
+ {
+  "id": "E02",
+  "held": "the rest of the standard's use of 'member function template'",
+  "judged": "the phrase in basic.def.odr and temp.mem.func",
+  "wrong": "J"
+ },
+ {
+  "id": "E03",
+  "held": "the need for the standard to say definitively whether initializer_list is an aggregate",
+  "judged": "the standard's silence on it",
+  "wrong": "X"
+ },
+ {
+  "id": "E04",
+  "held": "reasonableness; parity with the built-in structured-binding case",
+  "judged": "the rule that bindings are reference variables",
+  "wrong": "J"
+ },
+ {
+  "id": "E05",
+  "held": "existing practice (gcc) of noreturn on function types",
+  "judged": "noreturn applying only to declarations",
+  "wrong": "X"
+ },
+ {
+  "id": "E06",
+  "held": "the submitter's expectation that a private using-declaration hides the base member",
+  "judged": "the access rules of class.access.base",
+  "wrong": "J"
+ },
+ {
+  "id": "E07",
+  "held": "the intent of P2169 that placeholders never need mangling",
+  "judged": "the wording of name-independent declarations",
+  "wrong": "J"
+ },
+ {
+  "id": "E08",
+  "held": "the existing prohibition on default arguments and inline",
+  "judged": "the list of forbidden specifiers in temp.friend",
+  "wrong": "J"
+ },
+ {
+  "id": "E09",
+  "held": "some programmers' preference (a blog post)",
+  "judged": "the forward-progress assumption allowing removal of empty loops",
+  "wrong": "X"
+ },
+ {
+  "id": "E10",
+  "held": "the later use of # in forming a header-name (lex.pptoken)",
+  "judged": "the requirement that remaining tokens be in token form",
+  "wrong": "J"
+ },
+ {
+  "id": "E11",
+  "held": "the definition of a structural type",
+  "judged": "the unspecified access of closure data members",
+  "wrong": "J"
+ },
+ {
+  "id": "E12",
+  "held": "the intent that only simple up-casts escape the polymorphism requirement",
+  "judged": "the organisation of expr.dynamic.cast paragraphs 4-6",
+  "wrong": "J"
+ },
+ {
+  "id": "E13",
+  "held": "current implementations, which mostly do not enforce linkage compatibility",
+  "judged": "undefined behaviour for calls through a type of different language linkage",
+  "wrong": "X"
+ },
+ {
+  "id": "E14",
+  "held": "default arguments as a SFINAE mechanism",
+  "judged": "the inheriting-constructor mechanism",
+  "wrong": "J"
+ },
+ {
+  "id": "E15",
+  "held": "no reason for the requirement on deleted functions",
+  "judged": "the complete-type requirement for parameters",
+  "wrong": "J"
+ },
+ {
+  "id": "E16",
+  "held": "the need to know whether constexpr vararg functions are allowed",
+  "judged": "the core-constant-expression rules silent on va_arg",
+  "wrong": "J"
+ },
+ {
+  "id": "E17",
+  "held": "the submitter's model that partial ordering uses the specialized types, and compiler divergence",
+  "judged": "the partial-ordering rules",
+  "wrong": "R"
+ },
+ {
+  "id": "E18",
+  "held": "reasonable semantics of {} for a union",
+  "judged": "the aggregate-initialization rule for unions",
+  "wrong": "J"
+ },
+ {
+  "id": "E19",
+  "held": "that dependent names occur in non-defining declarations",
+  "judged": "temp.dep.res wording assuming a template definition",
+  "wrong": "J"
+ },
+ {
+  "id": "E20",
+  "held": "that named-module imports do not make macros available",
+  "judged": "the module-import wording lacking a note",
+  "wrong": "J"
+ },
+ {
+  "id": "E21",
+  "held": "a preferred, de-bulleted structure",
+  "judged": "the bullet structure of the ranking paragraph",
+  "wrong": "X"
+ },
+ {
+  "id": "E22",
+  "held": "the view that defining the member at namespace scope is unnecessary",
+  "judged": "the requirement to define an odr-used const static member",
+  "wrong": "X"
+ },
+ {
+  "id": "E23",
+  "held": "the expectation that parenthesized braced-init-list semantics be clear",
+  "judged": "the current wording",
+  "wrong": "X"
+ },
+ {
+  "id": "E24",
+  "held": "minimising the difference between explicit and implicit deletion",
+  "judged": "the rule ignoring only defaulted deleted move constructors",
+  "wrong": "X"
+ },
+ {
+  "id": "E25",
+  "held": "the need to instantiate to find associated namespaces",
+  "judged": "the standard on points of instantiation",
+  "wrong": "X"
+ },
+ {
+  "id": "E26",
+  "held": "the view that odr-use of this should distinguish constant expressions or be removed",
+  "judged": "basic.def.odr's specification of odr-use of this",
+  "wrong": "X"
+ },
+ {
+  "id": "E27",
+  "held": "the library's description of DefaultConstructible (LWG 2170)",
+  "judged": "the core change making T{} aggregate initialization",
+  "wrong": "R"
+ },
+ {
+  "id": "E28",
+  "held": "the prohibitions on decltype-qualified declarators and class names",
+  "judged": "dcl.enum lacking the prohibition",
+  "wrong": "J"
+ },
+ {
+  "id": "E29",
+  "held": "basic.life's rule that trivial-destructor objects persist",
+  "judged": "class.dtor and class.cdtor implying any destructor ends lifetime",
+  "wrong": "J"
+ },
+ {
+  "id": "E30",
+  "held": "the expectation that (T())*x be read helpfully, as a multiplication",
+  "judged": "the disambiguation and current implementations",
+  "wrong": "X"
+ },
+ {
+  "id": "E31",
+  "held": "the submitter's analysis that the reference is bound at definition time",
+  "judged": "the transformation to (*this). from issue 515",
+  "wrong": "R"
+ },
+ {
+  "id": "E32",
+  "held": "a plausible token-skipping implementation",
+  "judged": "the specification of non-templated constexpr if",
+  "wrong": "X"
+ },
+ {
+  "id": "E33",
+  "held": "implementations aliasing identical functions",
+  "judged": "the equality rule for function pointers",
+  "wrong": "X"
+ },
+ {
+  "id": "E34",
+  "held": "that auto with complex declarators should be allowed",
+  "judged": "the restriction on auto in array declarators",
+  "wrong": "X"
+ },
+ {
+  "id": "E35",
+  "held": "having all linkage material in one place",
+  "judged": "the placement of dcl.stc paragraph 7",
+  "wrong": "X"
+ },
+ {
+  "id": "E36",
+  "held": "the wish for template aliases at function scope",
+  "judged": "the contexts allowed for template aliases",
+  "wrong": "X"
+ },
+ {
+  "id": "E37",
+  "held": "the analogy with automatic variables and the claim that the static's value becomes indeterminate",
+  "judged": "stmt.dcl allowing a jump past a static's initialization",
+  "wrong": "R"
+ },
+ {
+  "id": "E38",
+  "held": "the presumed intent for member templates",
+  "judged": "the wording of temp.param paragraph 9",
+  "wrong": "X"
+ },
+ {
+  "id": "E39",
+  "held": "the need to know when std::unexpected is called",
+  "judged": "the exception-specification wording",
+  "wrong": "X"
+ },
+ {
+  "id": "E40",
+  "held": "that the selected constructor not throwing should suffice",
+  "judged": "the conditions for a deleted defaulted move constructor",
+  "wrong": "X"
+ }
+]
