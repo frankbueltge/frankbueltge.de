@@ -53,18 +53,18 @@
       },
       {
         "file": "src/data/attention/export.json",
-        "sha256": "d11e935511cda6ae"
+        "sha256": "25cef4548c665108"
       }
     ],
     "counts": {
-      "nodes": 515,
-      "edges": 456,
+      "nodes": 517,
+      "edges": 458,
       "nodesByKind": {
         "decision": 147,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
-        "practice-work": 194,
+        "practice-work": 196,
         "receiver": 8,
         "work": 27
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 194,
+        "made-by": 196,
         "neighbor-of": 125,
         "participates": 17,
         "touches": 105
@@ -2958,6 +2958,26 @@
           "key": "futures_notarized_nws",
           "value": 622,
           "asOf": "2026-10-03"
+        },
+        {
+          "key": "protocol_steps",
+          "value": 351,
+          "asOf": "2026-10-18"
+        },
+        {
+          "key": "protocol_model_steps",
+          "value": 57,
+          "asOf": "2026-10-18"
+        },
+        {
+          "key": "protocol_model_steps_with_tokens",
+          "value": 10,
+          "asOf": "2026-10-18"
+        },
+        {
+          "key": "protocol_model_steps_with_cost",
+          "value": 1,
+          "asOf": "2026-10-18"
         }
       ]
     },
@@ -5044,6 +5064,19 @@
       }
     },
     {
+      "id": "practice-work:machine-attention/interval",
+      "kind": "practice-work",
+      "label": "The Interval",
+      "slug": "interval",
+      "practiceId": "machine-attention",
+      "date": "2026-10-04",
+      "href": "",
+      "source": {
+        "file": "src/data/attention/export.json",
+        "quote": "\"id\": \"interval\""
+      }
+    },
+    {
       "id": "practice-work:machine-attention/memoryhole",
       "kind": "practice-work",
       "label": "Memory Hole",
@@ -5054,6 +5087,19 @@
       "source": {
         "file": "src/data/attention/export.json",
         "quote": "\"id\": \"memoryhole\""
+      }
+    },
+    {
+      "id": "practice-work:machine-attention/planetary",
+      "kind": "practice-work",
+      "label": "Planetary Listening",
+      "slug": "planetary",
+      "practiceId": "machine-attention",
+      "date": "2026-10-04",
+      "href": "",
+      "source": {
+        "file": "src/data/attention/export.json",
+        "quote": "\"id\": \"planetary\""
       }
     },
     {
@@ -7902,12 +7948,32 @@
     },
     {
       "kind": "made-by",
+      "from": "practice-work:machine-attention/interval",
+      "to": "practice:machine-attention",
+      "state": "e-experiment",
+      "source": {
+        "file": "src/data/attention/export.json",
+        "quote": "\"id\": \"interval\""
+      }
+    },
+    {
+      "kind": "made-by",
       "from": "practice-work:machine-attention/memoryhole",
       "to": "practice:machine-attention",
       "state": "v0",
       "source": {
         "file": "src/data/attention/export.json",
         "quote": "\"id\": \"memoryhole\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:machine-attention/planetary",
+      "to": "practice:machine-attention",
+      "state": "v0",
+      "source": {
+        "file": "src/data/attention/export.json",
+        "quote": "\"id\": \"planetary\""
       }
     },
     {
