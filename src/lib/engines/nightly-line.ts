@@ -13,6 +13,7 @@
 // fork into src/data/nightly. Both come from the works register, so the page can never claim a
 // count the archive does not have.
 
+import { journalFiles, ledgerOf } from '@/lib/nightly/sessions'
 import { allWorks, forkedNightlyWorks } from './register'
 import type { EngineWorkMeta, LatestWork } from './latest'
 
@@ -114,6 +115,12 @@ export interface NightlyLine {
   inherited: number
   /** the works the fork has made since, held by this line's own mirror */
   sinceFork: number
+  /** the sessions the line has worked since the fork, as its research days claim them
+   *  (src/lib/nightly/sessions.ts). Until 2026-10-18 the page said "nights since" and counted
+   *  `sinceFork`, the works: a session that reads builds nothing, and one day can hold several. */
+  sessionsSinceFork: number
+  /** the calendar days those sessions fell on */
+  daysWorkedSinceFork: number
   first?: string
   last?: string
   /** calendar days of the FIRST run, first night to the night it was switched off, inclusive.
@@ -144,12 +151,15 @@ export function nightlyLine(): NightlyLine {
     from && to ? Math.round((Date.parse(to) - Date.parse(from)) / 86_400_000) : 0
   const days = first ? span(first, LINE_END) + 1 : 0
   const dormant = span(LINE_END, LINE_RESUMED)
+  const sessions = ledgerOf(journalFiles(), LINE_END)
 
   return {
     works,
     count: works.length,
     inherited: inherited.length,
     sinceFork: sinceFork.length,
+    sessionsSinceFork: sessions.sessions,
+    daysWorkedSinceFork: sessions.days,
     first,
     last,
     days,
