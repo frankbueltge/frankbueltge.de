@@ -51,7 +51,10 @@ export default defineConfig({
         // so a new source is a line of code and not a config change.
         "connect-src 'self' https: wss:",
         // Turnstile rendert seine Challenge in einem Iframe von derselben Domain.
-        "frame-src https://challenges.cloudflare.com",
+        // 'self' since 2026-10-17: the reception opens its rating form (/reception/rate, the one
+        // reception page that loads Turnstile) in a same-origin frame below each work, so a work page
+        // needs no script host of its own (docs/design/2026-10-17-the-reception.md).
+        "frame-src 'self' https://challenges.cloudflare.com",
         "object-src 'none'",
         "base-uri 'self'",
       ],
@@ -111,6 +114,8 @@ export default defineConfig({
       filter: (page) =>
         !/\/protocol\/\d{4}-\d{2}-\d{2}(\/|$)/.test(page) &&
         !/\/steuerzentrale(\/|$)/.test(page) &&
+        // the reception's form opens inside a work's page; on its own it is a form, not a page to find
+        !/\/reception\/rate(\/|$)/.test(page) &&
         !/\/werke\/?$/.test(page),
     }),
     mdx(),
