@@ -210,7 +210,7 @@ export async function publicRecord(db: D1Like): Promise<{ totals: TotalsRow[]; n
       .prepare('SELECT id, work, score, text, name, owner, created_at FROM reception_entries WHERE text IS NOT NULL AND hidden_at IS NULL ORDER BY created_at DESC, id')
       .all<NoteRow>(),
     db.prepare('SELECT id, work, created_at, hidden_at, reports FROM reception_entries WHERE hidden_at IS NOT NULL ORDER BY hidden_at DESC, id').all<HiddenRow>(),
-    db.prepare('SELECT day, key, n FROM reception_counts ORDER BY day, key').all<{ day: string; key: string; n: number }>(),
+    db.prepare('SELECT day, key, n FROM reception_counts WHERE n > 0 ORDER BY day, key').all<{ day: string; key: string; n: number }>(),
   ])
   return { totals: totals.results ?? [], notes: notes.results ?? [], hidden: hidden.results ?? [], counts: counts.results ?? [] }
 }
@@ -231,10 +231,11 @@ interface EntryState {
   text: string | null
   reports: number
   hidden_at: string | null
+  created_at: string
 }
 
 const entryState = (db: D1Like, id: string): Promise<EntryState | null> =>
-  db.prepare('SELECT id, work, score, owner, text, reports, hidden_at FROM reception_entries WHERE id = ?').bind(id).first<EntryState>()
+  db.prepare('SELECT id, work, score, owner, text, reports, hidden_at, created_at FROM reception_entries WHERE id = ?').bind(id).first<EntryState>()
 
 /**
  * One report of a visitor's visible note by one day hash. A second report by the same hash on the same
@@ -281,7 +282,12 @@ export async function moderateEntry(db: D1Like, id: string, action: 'restore' | 
     ])
     return 'done'
   }
-  const statements = [db.prepare('DELETE FROM reception_entries WHERE id = ?').bind(id)]
+  // A removed entry no longer stands anywhere: not in its work's totals, and not in the count of the
+  // day it was stored on (the counts are what stands, not what was once typed).
+  const statements = [
+    db.prepare('DELETE FROM reception_entries WHERE id = ?').bind(id),
+    db.prepare("UPDATE reception_counts SET n = MAX(n - 1, 0) WHERE day = ? AND key = 'entries'").bind(e.created_at.slice(0, 10)),
+  ]
   if (e.hidden_at === null) statements.push(db.prepare(`UPDATE reception_totals SET ${c} = MAX(${c} - 1, 0) WHERE work = ?`).bind(e.work))
   await db.batch(statements)
   return 'done'

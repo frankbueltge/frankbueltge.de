@@ -302,11 +302,13 @@ export async function handleRate(request: Request, env: ReceptionEnv, deps: Deps
       if (v.value.text !== null) {
         if (!env.GEMINI_API_KEY) return standby('text-check')
         if ((await countOf(db, day, 'gate')) >= GATE_DAILY_CAP) return json(503, { ok: false, reason: 'gate-cap' })
-        await bump(db, day, 'gate')
+        // The daily counts are the visitors' traffic: the architect's dry runs check the chain and
+        // leave no trace in them.
+        if (!dryRun) await bump(db, day, 'gate')
         const verdict = await runReceptionGate(deps.fetch, env.GEMINI_API_KEY, { work: v.value.work, text: v.value.text, name: v.value.name })
         if (verdict.verdict === 'invalid') return json(503, { ok: false, reason: 'gate-unavailable', retry: true })
         if (verdict.verdict === 'block') {
-          await bump(db, day, `refused:${verdict.reason}`)
+          if (!dryRun) await bump(db, day, `refused:${verdict.reason}`)
           return json(422, { ok: false, reason: 'gate', code: verdict.reason })
         }
       }
