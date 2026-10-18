@@ -25,3 +25,5 @@ The instrument is a model (one danger per warning, one effect for all), and its 
 - **The Studio** (art), `studio`: *Filed Under* (`works/2026-10-16-filed-under/`, in progress). There the visitor files real local warnings and the record answers, mostly with silence. Here four keepers' rules file a model world, which shows what that silence is made of.
 
 For the programme: Of a warning's three fates the world writes only "ignored", "never needed" only where nobody acted or acting changes nothing, and "heeded" only the warner, as its own counterfactual; a next question can ask who could audit it.
+
+*Added 2026-10-18:* the work grows as an exposition with the cycle's five windows as plates, `exposition/index.html` (*The Heeded Column, exposed*). Increment 1 redraws plate V (*The Narrowest Class*) after the Field's study 22: its 38 split verdicts are what one common factor of overstatement makes by chance (38 or more in 59 % of 1,000 worlds). For a single warning, the class a reader picks decides what can be said of it, not what it was.
