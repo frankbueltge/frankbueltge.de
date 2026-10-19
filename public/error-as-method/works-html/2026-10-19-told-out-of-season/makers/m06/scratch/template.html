@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=1100">
+<title>Once Around</title>
+<style>
+html,body{margin:0;background:#f3efe6;}
+body{width:1100px;height:800px;overflow:hidden;}
+canvas{display:block}
+</style></head>
+<body><canvas id="c" width="1100" height="800" aria-label="Sixty-one days of hourly values laid once around a circle: a ring of daily spikes that falls still in its last eighteen days."></canvas>
+<script>
+const P=[__PTS__];            // source pixels: x (0-299), y (0-89), ink 1-9
+const R=[__RNG__];            // daily swing, in source pixels, for each of the 61 days
+const c=document.getElementById('c'),g=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=1100*dpr;c.height=800*dpr;c.style.width='1100px';c.style.height='800px';g.scale(dpr,dpr);
+const CX=550,CY=400,GAP=0.10,R0=136,K=2.55;
+const ang=x=>-Math.PI/2+GAP/2+(x/300)*(2*Math.PI-GAP);
+const rad=y=>R0+(90-y)*K;
+let s=7;const rnd=()=>(s=(s*16807)%2147483647)/2147483647;
+
+g.fillStyle='#f3efe6';g.fillRect(0,0,1100,800);
+
+// faint day ticks on the outside: 61 days, month starts a little longer
+g.strokeStyle='rgba(60,48,36,0.28)';g.lineWidth=0.7;
+for(let d=0;d<=61;d++){
+  const a=ang(d*300/61), m=(d===17||d===47);
+  const r1=362,r2=m?376:368;
+  g.beginPath();g.moveTo(CX+r1*Math.cos(a),CY+r1*Math.sin(a));g.lineTo(CX+r2*Math.cos(a),CY+r2*Math.sin(a));g.stroke();
+}
+
+// the record itself: every inked pixel, scattered inside its own cell of time and value
+for(let i=0;i<P.length;i+=3){
+  const x=P[i],y=P[i+1],w=P[i+2];
+  const n=1+Math.round(w/2.2);
+  for(let k=0;k<n;k++){
+    const a=ang(x+rnd()),r=rad(y+rnd());
+    g.fillStyle=`rgba(28,22,18,${0.10+w*0.06})`;
+    g.beginPath();g.arc(CX+r*Math.cos(a),CY+r*Math.sin(a),0.85,0,7);g.fill();
+  }
+}
+
+// inner tally: each day's swing as one short stroke toward the centre
+for(let d=0;d<61;d++){
+  const a=ang((d+0.5)*300/61), L=R[d]*1.05;
+  g.strokeStyle=d>=43?'rgba(150,62,38,0.85)':'rgba(28,22,18,0.42)';
+  g.lineWidth=1.25;g.lineCap='round';
+  g.beginPath();g.moveTo(CX+112*Math.cos(a),CY+112*Math.sin(a));
+  g.lineTo(CX+(112-L)*Math.cos(a),CY+(112-L)*Math.sin(a));g.stroke();
+}
+
+// the seam where the record begins and ends
+g.font='italic 12px Georgia, "Times New Roman", serif';g.fillStyle='rgba(60,48,36,0.75)';
+g.textAlign='left';g.fillText('15 October 2025',CX+12,CY-372);
+g.textAlign='right';g.fillText('14 December 2025',CX-12,CY-372);
+g.textAlign='left';g.font='italic 15px Georgia, "Times New Roman", serif';g.fillStyle='rgba(40,32,26,0.85)';
+g.fillText('Once Around',40,748);
+g.font='12px Georgia, "Times New Roman", serif';g.fillStyle='rgba(60,48,36,0.7)';
+g.fillText('1,464 hours, one value each, laid clockwise in a single turn.',40,768);
+g.fillText('Outward is more. Inside, each day’s swing; the last eighteen in red.',40,784);
+</script></body></html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Each Night, Less</title>
+<style>
+  :root { --bg:#0c0e16; --ink:#c9c2b4; --faint:#4a4d5c; }
+  html,body { margin:0; height:100%; background:var(--bg); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  svg { width:100vw; height:100vh; max-width:1100px; max-height:800px; display:block; }
+  text { font-family: Georgia, "Times New Roman", serif; fill:var(--ink); }
+</style>
+</head>
+<body>
+<svg id="w" viewBox="0 0 1100 800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="Sixty-one vertical bars, one per day from 15 January to 16 March 2025, each spanning that day's highest to lowest value. For six weeks each day is refilled and drawn down; from 28 February the bars shrink to small sparks near the floor.">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd38a"/>
+      <stop offset="0.18" stop-color="#f29a4a"/>
+      <stop offset="0.6" stop-color="#a8432c" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#4b1f2a" stop-opacity="0.35"/>
+    </linearGradient>
+    <filter id="glow" x="-200%" y="-20%" width="500%" height="140%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+  </defs>
+  <rect width="1100" height="800" fill="#0c0e16"/>
+  <g id="glowL" filter="url(#glow)" opacity="0.55"></g>
+  <g id="floor"></g>
+  <g id="bars"></g>
+  <g id="dots"></g>
+  <g id="lab"></g>
+</svg>
+<script>
+const DAYS = __DATA__;
+const NS = "http://www.w3.org/2000/svg";
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+const L = 80, R = 1020, TOP = 90, BOT = 640;      // drawing field
+const YMIN = 4, YMAX = 86;                         // source pixel rows (top = highest value)
+const sy = y => TOP + (y - YMIN) / (YMAX - YMIN) * (BOT - TOP);
+const pitch = (R - L) / 61, bw = 9;
+const $ = id => document.getElementById(id);
+const FLOOR = sy(YMAX);
+
+// ground line
+el("line", {x1: L - 10, x2: R + 10, y1: FLOOR + 6, y2: FLOOR + 6, stroke: "#2a2d3a", "stroke-width": 1}, $("floor"));
+
+DAYS.forEach((d, i) => {
+  const cx = L + pitch * (i + 0.5), x = cx - bw / 2;
+  const top = sy(d.lo), bot = sy(d.hi);
+  // what stayed: hairline from the day's lowest point to the floor
+  el("line", {x1: cx, x2: cx, y1: bot + 2, y2: FLOOR + 6, stroke: "#2f3242", "stroke-width": 1}, $("floor"));
+  // the day's span, refilled at top and drawn down
+  const h = Math.max(2, bot - top);
+  el("rect", {x, y: top, width: bw, height: h, rx: 1.5, fill: "url(#g)"}, $("bars"));
+  el("rect", {x: x - 1, y: top, width: bw + 2, height: Math.min(h, 60), fill: "#f6a35a"}, $("glowL"));
+  // the measured hours, as they lie within the day
+  d.p.forEach(([f, y]) => {
+    el("circle", {cx: (x + 0.5 + f * (bw - 1)).toFixed(2), cy: sy(y).toFixed(2), r: 1.0, fill: "#fff4dc", opacity: 0.7}, $("dots"));
+  });
+});
+
+// sparse calendar
+const lab = $("lab");
+const mark = (i, s) => {
+  const cx = L + pitch * (i + 0.5);
+  el("line", {x1: cx, x2: cx, y1: FLOOR + 12, y2: FLOOR + 20, stroke: "#6b6a72", "stroke-width": 1}, lab);
+  const t = el("text", {x: cx, y: FLOOR + 38, "text-anchor": "middle", "font-size": 12, "letter-spacing": "0.08em", fill: "#8a8790"}, lab);
+  t.textContent = s;
+};
+mark(0, "15 January"); mark(17, "1 February"); mark(45, "1 March"); mark(60, "16 March");
+
+const title = el("text", {x: L, y: 728, "font-size": 22, "letter-spacing": "0.02em"}, lab);
+title.textContent = "Each Night, Less";
+const sub = el("text", {x: L, y: 752, "font-size": 12.5, fill: "#8a8790", "letter-spacing": "0.04em"}, lab);
+sub.textContent = "one bar per day, from its highest hour to its lowest · 1,464 hourly readings, 15 January – 16 March 2025";
+</script>
+</body>
+</html>

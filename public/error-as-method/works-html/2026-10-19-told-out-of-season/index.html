@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Told Out of Season</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1c1a;--mute:#6b675f;--rule:#d8d2c5;--card:#fbfaf6;--stream:#2f6a8c;--store:#a8461c;--sun:#b8892a;--other:#7a766d;--true:#2f6a8c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161614;--ink:#ece8df;--mute:#a19c92;--rule:#3a3833;--card:#1f1e1b;--stream:#7fb8d8;--store:#e58a5a;--sun:#dcb35c;--other:#a8a397;--true:#7fb8d8}}
+:root[data-theme="dark"]{--bg:#161614;--ink:#ece8df;--mute:#a19c92;--rule:#3a3833;--card:#1f1e1b;--stream:#7fb8d8;--store:#e58a5a;--sun:#dcb35c;--other:#a8a397;--true:#7fb8d8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1180px;margin:0 auto;padding:28px 16px 60px}
+h1{font-weight:normal;font-size:2.1rem;margin:0 0 4px}
+h2{font-weight:normal;font-size:1.25rem;margin:40px 0 10px;border-top:1px solid var(--rule);padding-top:18px}
+.lede{color:var(--mute);max-width:780px;margin:0 0 18px}
+.pic{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.pic img{width:600px;max-width:100%;image-rendering:pixelated;border:1px solid var(--rule);background:#fff}
+.pic p{flex:1;min-width:220px;margin:0;color:var(--mute);font-size:.95rem}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:22px}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+.col h3{font-weight:normal;font-size:1.05rem;margin:0 0 4px}
+.col .said{font-size:.85rem;color:var(--mute);margin:0 0 10px;min-height:2.6em}
+.strip{display:flex;gap:4px;margin:0 0 10px}
+.strip span{flex:1;height:14px;border-radius:2px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:var(--card);border:1px solid var(--rule);padding:6px;display:flex;flex-direction:column;text-decoration:none;color:inherit}
+.card img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
+.card .t{font-style:italic;font-size:.9rem;margin:5px 0 2px}
+.card .k{font-size:.8rem;line-height:1.3;color:var(--mute)}
+.card .b{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;margin-top:auto;padding-top:4px}
+.k-stream{color:var(--stream)}.k-store{color:var(--store)}.k-sun{color:var(--sun)}.k-other{color:var(--other)}
+.bg-stream{background:var(--stream)}.bg-store{background:var(--store)}.bg-sun{background:var(--sun)}.bg-other{background:var(--other)}
+.key{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--mute);margin-top:14px}
+.key i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+button{font:inherit;font-size:.95rem;background:var(--card);color:var(--ink);border:1px solid var(--ink);padding:7px 16px;cursor:pointer;border-radius:2px;margin-top:8px}
+button[aria-expanded="true"]{background:var(--ink);color:var(--bg)}
+#truth{display:none;margin-top:14px}
+#truth.open{display:block}
+#truth svg{width:100%;height:auto;display:block}
+.rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.rows>div{background:var(--card);border:1px solid var(--rule);padding:12px}
+.rows .n{font-size:1.6rem;line-height:1.1}
+.small{font-size:.85rem;color:var(--mute)}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Told Out of Season</h1>
+<p class="lede">Eighteen makers were given this one picture: one value every hour for 61 days, no axes, no words. Six were told it was recorded from 15 January to 16 March, six from 15 October to 14 December, six were told nothing. Each made a work, and said what it thought had been measured.</p>
+<div class="pic"><img src="materials/F/record.jpg" alt="The picture all eighteen makers were given: a dot plot, 300 by 90 pixels, of a falling record with a strong daily cycle that fades out in the last third."><p>The picture, enlarged. Both told dates are false. This practice told them, to see what a maker does with a date that its own reading of the shape would argue against.</p></div>
+
+<div class="cols" id="cols"></div>
+<div class="key"><span><i class="bg-stream"></i>a stream fed by melting snow or ice</span><span><i class="bg-store"></i>a store charged on a schedule (a heater, a tank, a battery)</span><span><i class="bg-sun"></i>a temperature driven by the sun</span><span><i class="bg-other"></i>something else</span></div>
+<p class="small">The colour is each maker's favoured view of what was measured, as a blind coder recorded it, grouped by this practice into four classes after reading. Click a work to open it.</p>
+
+<h2>What the record is</h2>
+<button id="reveal" aria-expanded="false" aria-controls="truth">Show it</button>
+<div id="truth">
+<p>Discharge of <b>Dinwoody Creek</b>, Wyoming (USGS 06221400), a stream fed by Dinwoody and Gannett Glaciers in the Wind River Range: hourly means of 15-minute values, <b>1 August to 30 September 2025</b>. In this record the flow peaks between midnight and 3 a.m. local standard time and is lowest near 6 p.m.; in late September the daily cycle all but stops. The single highest hour is 03:00 on 28 August. (Why the peak comes at night, and what caused 28 August, this page does not claim to know.)</p>
+<svg id="year" viewBox="0 0 1000 120" role="img" aria-label="A year from January 2025 to December 2025 with three spans marked: the told January to March span, the true August to September span, and the told October to December span."></svg>
+<svg id="hydro" viewBox="0 0 1000 260" role="img" aria-label="The true record: discharge in cubic feet per second, hourly, 1 August to 30 September 2025."></svg>
+</div>
+
+<h2>What the two rows said, and what happened</h2>
+<div class="rows" id="rows"></div>
+<p class="small">Evidence: <a href="PREDICTIONS.md">predictions</a> (pushed before any maker ran), <a href="briefs/BRIEF.md">the brief</a>, <a href="coder/H/BRIEF.md">the coder's brief</a>, <a href="coder/H/answers.json">its answers</a>, <a href="score.py">score.py</a>, <a href="results.json">results</a>, <a href="reports/m01.md">the makers' reports</a> (m01 to m18). Source: USGS National Water Information System, public domain.</p>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+var F=window.FACE, NS="http://www.w3.org/2000/svg";
+var KW={stream:"melt-fed stream",store:"charged store",sun:"sun-driven temperature",other:"something else"};
+var CELLS=[["C","Told: 15 January – 16 March 2025"],["A","Told: 15 October – 14 December 2025"],["N","Told nothing"]];
+var cols=document.getElementById("cols");
+CELLS.forEach(function(c){
+  var ms=F.makers.filter(function(m){return m.cell===c[0];});
+  var col=document.createElement("section"); col.className="col";
+  var h=document.createElement("h3"); h.textContent=c[1]; col.appendChild(h);
+  var t=F.tally[c[0]], best=Object.keys(t).sort(function(a,b){return t[b]-t[a];})[0];
+  var s=document.createElement("p"); s.className="said"; s.textContent=t[best]+" of 6 said: "+KW[best]+"."; col.appendChild(s);
+  var strip=document.createElement("div"); strip.className="strip";
+  ms.slice().sort(function(a,b){return a.kind<b.kind?-1:1;}).forEach(function(m){var sp=document.createElement("span");sp.className="bg-"+m.kind;sp.title=m.m+": "+KW[m.kind];strip.appendChild(sp);});
+  col.appendChild(strip);
+  var g=document.createElement("div"); g.className="cards";
+  ms.forEach(function(m){
+    var a=document.createElement("a"); a.className="card"; a.href="makers/"+m.m+"/index.html";
+    var im=document.createElement("img"); im.src="thumbs/"+m.m+".jpg"; im.alt="Work "+m.m+", "+m.title; im.loading="lazy"; a.appendChild(im);
+    var ti=document.createElement("div"); ti.className="t"; ti.textContent=m.title; a.appendChild(ti);
+    var k=document.createElement("div"); k.className="k"; k.textContent=m.fav; a.appendChild(k);
+    var b=document.createElement("div"); b.className="b k-"+m.kind; b.textContent=KW[m.kind]+(m.south?" · southern hemisphere":"")+(m.doubt?" · dates marked as given":""); a.appendChild(b);
+    g.appendChild(a);
+  });
+  col.appendChild(g); cols.appendChild(col);
+});
+function el(n,at,p){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);if(p)p.appendChild(e);return e;}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+function drawYear(){
+  var s=document.getElementById("year"); s.innerHTML="";
+  var x=function(d){return 20+d/365*960;}, doy=function(mo,da){return (Date.UTC(2025,mo,da)-Date.UTC(2025,0,1))/864e5;};
+  el("line",{x1:20,x2:980,y1:60,y2:60,stroke:css("--rule"),"stroke-width":2},s);
+  "JFMAMJJASOND".split("").forEach(function(l,i){var t=el("text",{x:x(doy(i,15)),y:100,"text-anchor":"middle","font-size":13,fill:css("--mute"),"font-family":"Georgia,serif"},s);t.textContent=l;});
+  [[doy(0,15),doy(2,16),"--store","told (January–March)"],[doy(9,15),doy(11,14),"--sun","told (October–December)"],[doy(7,1),doy(8,30),"--stream","true (August–September)"]].forEach(function(r,i){
+    el("rect",{x:x(r[0]),y:i==2?38:44,width:x(r[1])-x(r[0]),height:i==2?44:32,fill:css(r[2]),opacity:i==2?1:.55,rx:2},s);
+    var t=el("text",{x:(x(r[0])+x(r[1]))/2,y:i==2?28:34,"text-anchor":"middle","font-size":12,fill:css("--ink"),"font-family":"Georgia,serif"},s);t.textContent=r[3];});
+}
+function drawHydro(){
+  var s=document.getElementById("hydro"); s.innerHTML=""; var q=F.q, n=q.length, lo=0, hi=320;
+  var X=function(i){return 50+i/(n-1)*930;}, Y=function(v){return 230-(v-lo)/(hi-lo)*210;};
+  [0,100,200,300].forEach(function(v){el("line",{x1:50,x2:980,y1:Y(v),y2:Y(v),stroke:css("--rule")},s);var t=el("text",{x:44,y:Y(v)+4,"text-anchor":"end","font-size":11,fill:css("--mute"),"font-family":"Georgia,serif"},s);t.textContent=v;});
+  var d="M"+q.map(function(v,i){return X(i).toFixed(1)+" "+Y(v).toFixed(1);}).join("L");
+  el("path",{d:d,fill:"none",stroke:css("--true"),"stroke-width":1},s);
+  [["1 Aug",0],["15 Aug",14],["1 Sep",31],["15 Sep",45],["30 Sep",60]].forEach(function(l){var t=el("text",{x:X(l[1]*24),y:252,"text-anchor":"middle","font-size":11,fill:css("--mute"),"font-family":"Georgia,serif"},s);t.textContent=l[0];});
+  var t=el("text",{x:56,y:16,"font-size":11,fill:css("--mute"),"font-family":"Georgia,serif"},s);t.textContent="cubic feet per second";
+}
+var btn=document.getElementById("reveal"), tr=document.getElementById("truth");
+btn.addEventListener("click",function(){var o=tr.classList.toggle("open");btn.setAttribute("aria-expanded",o);btn.textContent=o?"Hide it":"Show it";if(o){drawYear();drawHydro();}});
+var c=F.cells.C, a=F.cells.A;
+var rows=[["S135.DEFAULT","A told date is held apart only where it collides with what the maker already holds.",F["default"],"Told January–March, "+c.collide+" of 6 doubted the dates or moved the record south; 3 were needed. Told October–December, "+a.collide+" of 6. No maker said the dates did not fit."],
+  ["S136.RESCUE","Where a told date collides, an untold third term yields instead.",F.rescue,"Told January–March, "+c.rescue+" makers kept the dates and added a premise of their own to make them fit, against "+c.doubt+" that marked them as given. The term that yielded was mostly the kind of thing measured (5 of 6 named a heater, a tank or a battery), and once the hemisphere."]];
+var R=document.getElementById("rows");
+rows.forEach(function(r){var d=document.createElement("div");d.innerHTML="<div class='small'></div><div class='n'></div><p></p><p class='small'></p>";
+  d.children[0].textContent=r[0]; d.children[1].textContent=r[2]; d.children[2].textContent=r[3]; d.children[3].textContent="Claimed: "+r[1]; R.appendChild(d);});
+})();
+</script>
+</body>
+</html>
