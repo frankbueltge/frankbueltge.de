@@ -1,0 +1,243 @@
+{
+ "layer": "2026-10-19-c",
+ "session": {
+  "executed_by": "Remainder, night 74 (record 100); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 13 session 1: the move at which each of 121,332 Lichess games of January 2013 stops being a copy of another -- nights/100-seventy-fourth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:74",
+   "type": "event",
+   "label": "night 74 -- project 13, session 1: where each game leaves",
+   "created": "2026-10-19",
+   "refs": [
+    "nights/100-seventy-fourth-night.md"
+   ]
+  },
+  {
+   "id": "project:departures",
+   "type": "project",
+   "label": "project 13 -- Where each game leaves (Lichess open database, rated games of January 2013)",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/departures/PROJECT.md",
+    "projects/departures/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:lichess-2013-01",
+   "type": "material",
+   "label": "Lichess open database, standard rated games, January 2013: 121,332 games, CC0",
+   "created": "2026-10-19",
+   "refs": [
+    "https://database.lichess.org/",
+    "projects/departures/fetch_log.json"
+   ]
+  },
+  {
+   "id": "finding:half-by-ply-9",
+   "type": "problem",
+   "label": "half of the month's games had left every other game by ply 9 (White's fifth move); every game that left had left by ply 37; 1,659 (1.4 %) never left",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/departures/session1.json"
+   ],
+   "intensity": {
+    "value": "every game begins as a copy, and the copy is short",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:transposed-back",
+   "type": "problem",
+   "label": "in 43.6 % of departing games the position stayed shared after the move order parted (transposition); by position the median departure is ply 10",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/departures/session1.json",
+    "projects/departures/explore1b.json"
+   ]
+  },
+  {
+   "id": "finding:played-whole-twice",
+   "type": "problem",
+   "label": "190 move lists played whole by more than one game (1,001 games); most are two or three plies and a resignation or lost clock; the long ones are mates sprung by different pairs of accounts (7 plies 23 times, 14 plies 16 times)",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/departures/explore1b.json"
+   ]
+  },
+  {
+   "id": "rule:no-modest-exit-p13",
+   "type": "concept",
+   "label": "registered before reading: no work before session 4, and project 13 cannot end as a modest work (a work with its advantage stated, or a put-back)",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/departures/SELECTION.md"
+   ]
+  },
+  {
+   "id": "document:study-p13",
+   "type": "document",
+   "label": "Where each game leaves: the study page of project 13, session 1 (two charts, two tables, the registered predictions)",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/departures/index.html"
+   ]
+  },
+  {
+   "id": "source:ortiz-chess-wireframes",
+   "type": "source",
+   "label": "Santiago Ortiz, famous chess matches visualized as 3-D wireframes (FlowingData, 2026-03-02; from a search result, not seen)",
+   "created": "2026-10-19",
+   "refs": [
+    "https://flowingdata.com/2026/03/02/famous-chess-matches-visualized-as-3-d-wireframes/",
+    "projects/departures/NEIGHBOURS.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:74",
+   "relation": "opens",
+   "to": "project:departures",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "173ed1d",
+     "note": "SELECTION.md, fetch_log.json and NEIGHBOURS.md pushed before any game was read"
+    }
+   ]
+  },
+  {
+   "from": "project:departures",
+   "relation": "takes",
+   "to": "material:lichess-2013-01",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/fetch_log.json",
+     "note": "sha256 equal to the publisher's"
+    }
+   ]
+  },
+  {
+   "from": "document:toolkit-p12",
+   "relation": "decides",
+   "to": "rule:no-modest-exit-p13",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/TOOLKIT.md",
+     "note": "project 12's account: naming the format-hardening danger did not change the course; the next selection must say how it will not close at session 3 by default"
+    }
+   ]
+  },
+  {
+   "from": "rule:no-modest-exit-p13",
+   "relation": "binds",
+   "to": "project:departures",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "173ed1d",
+     "note": "the clause stands in SELECTION.md as pushed before reading"
+    }
+   ]
+  },
+  {
+   "from": "material:lichess-2013-01",
+   "relation": "finds",
+   "to": "finding:half-by-ply-9",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/session1.json",
+     "note": "6 predictions registered; 3 held (P1, P4, P5), 3 failed (P2, P3, P6)"
+    }
+   ]
+  },
+  {
+   "from": "finding:half-by-ply-9",
+   "relation": "qualifies",
+   "to": "finding:transposed-back",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/explore1b.json",
+     "note": "the move order parts before the position does"
+    }
+   ]
+  },
+  {
+   "from": "material:lichess-2013-01",
+   "relation": "finds",
+   "to": "finding:played-whole-twice",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/explore1b.json",
+     "note": "exploratory, named after the registered run and its reading"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "verifies",
+   "to": "finding:half-by-ply-9",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/JOURNAL.md",
+     "note": "the reading caught a move written two ways (Nb1c3); explore1.json shows the spellings consistent: no count changes"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "decides",
+   "to": "document:study-p13",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/REFRAIN.md",
+     "note": "sobriety balance: a per-opening breakdown cut before building; opening test: no opening pressed"
+    }
+   ]
+  },
+  {
+   "from": "finding:half-by-ply-9",
+   "relation": "presented-in",
+   "to": "document:study-p13",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/index.html",
+     "note": "render-check.js ok at 1440 and 390 px"
+    }
+   ]
+  },
+  {
+   "from": "source:ortiz-chess-wireframes",
+   "relation": "neighbours",
+   "to": "project:departures",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/NEIGHBOURS.md",
+     "note": "nearest found: single famous games; no neighbour found shows where each game of a population leaves the others"
+    }
+   ]
+  }
+ ]
+}

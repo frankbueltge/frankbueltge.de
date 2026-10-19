@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Where Each Game Leaves</title><link rel="icon" href="data:,">
+<meta name="description" content="A month of chess games laid over one another: the move at which each game stops being a copy of some other game.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6b6a64;--line:#d9d6cc;--panel:#f1efe8;--a:#3b5f86;--c2:#e0a030}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6}}
+:root[data-theme="dark"]{--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 80px}h1{font-size:2rem;margin:.2em 0}h2{font-size:1.2rem;margin-top:2.2em}
+.mut{color:var(--mut)}.sm{font:13px/1.45 system-ui,sans-serif}a{color:var(--a)}.big{font-size:1.25rem}
+svg.ch{width:100%;height:auto;display:block;font:11px system-ui,sans-serif;fill:var(--mut)}
+table{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}th,td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tw{overflow-x:auto}td.mv{font:12px/1.5 ui-monospace,Menlo,monospace;min-width:260px}
+.box{background:var(--panel);padding:12px 16px;border-radius:4px;font:14px/1.5 system-ui,sans-serif}
+</style></head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<p class="sm mut">Project 13, session 1 · a study, no work declared · 19 October 2026</p>
+<h1>Where each game leaves</h1>
+<p>In January 2013, {{N}} rated games of chess were played on <a href="https://lichess.org/">Lichess</a>, a free, non-profit chess
+server that publishes every game it hosts (<a href="https://database.lichess.org/">database.lichess.org</a>, CC0). Every game starts
+from the same position, and for its first moves almost every game is a copy of others. This page lays the whole month over itself and
+asks, for each game: <b>at which move does it stop being anyone else's game?</b> From that move on, nobody else played it that month.</p>
+<p class="big"><b>Half of the games had left all the others by the ninth half-move</b> (White's fifth move). Every game that left at
+all had left by the 37th. {{NEVER}} games ({{NEVERPCT}} %) never left: they were the whole beginning of another game, or equal to one.</p>
+
+<h2>How fast the month comes apart</h2>
+<p>Each bar: of the games at least that long, the share that still matches some other game move for move. A ply is one half-move
+(White's or Black's). After ply 10, {{AT10}} games still shared every move with someone; after ply 20, {{AT20}}; after ply 30, {{AT30}}.</p>
+{{CHART1}}
+
+<h2>The move at which each game becomes its own</h2>
+<p>How many games become their own at each ply. The middle of the month is ply {{MED}}. Games between higher-rated players stay together a little longer:
+the middle is ply {{B1}} for games whose two players average under 1400 on Lichess's rating, {{B2}} between 1400 and 1799, and {{B3}} at
+1800 and above.</p>
+{{CHART2}}
+
+<h2>The longest shared beginnings</h2>
+<p>The longest runs of moves any two games of the month played alike, before parting. The opening's name is Lichess's. Some are two
+accounts playing the same game against each other again; most are different pairs of accounts arriving, move by move, at the same long line.</p>
+<div class="tw"><table><tr><th>plies</th><th>opening (Lichess)</th><th>played by</th><th>the shared moves</th></tr>{{LROWS}}</table></div>
+
+<h2>Games played twice, whole</h2>
+<p>{{IDG}} move lists were played, from first move to last, by more than one game: {{IDN}} games in all. Most are two or three moves and
+a resignation or a lost clock. The longer ones are traps that end in mate, sprung again and again, each time by a different pair of accounts:</p>
+<div class="tw"><table><tr><th>games</th><th>plies</th><th>different pairs of accounts</th><th>opening (Lichess)</th><th>the whole game</th></tr>{{TROWS}}</table></div>
+
+<h2>Leaving the moves is not leaving the board</h2>
+<p>A game can leave all the others' move orders and still reach a position another game reached by a different order of moves (a
+transposition). In {{LATER}} % of the games that left, the position stayed shared for longer than the moves did. Counted by position,
+the middle of the month leaves at ply {{PMED}}, not {{MED}}.</p>
+
+<h2>What was registered, and what failed</h2>
+<p class="sm">Six predictions were committed before any game was read (<a href="SELECTION.md">SELECTION.md</a>). {{HELD}} of 6 held.</p>
+<div class="tw"><table><tr><th>prediction</th><th>found</th><th></th></tr>{{PR}}</table></div>
+
+<h2>How this was made</h2>
+<div class="box">
+<p>The file: <code>lichess_db_standard_rated_2013-01.pgn.zst</code>, checked against Lichess's published checksum
+(<a href="fetch_log.json">fetch_log.json</a>). Moves are compared as written; {{ODD}} moves in the file are written with more
+disambiguation than usual (for example "Rd1d2"), and comparing them as board moves instead changes no number on this page
+(<a href="explore1.json">explore1.json</a>). Positions are compared by piece placement, side to move, castling rights and a capturable
+en-passant square, hashed to 64 bits (chance of a false match: about one in 250,000, an estimate).</p>
+<p><b>The players.</b> No account name, game link, date or time appears here or in the committed files. A sequence of moves is shown
+only when two or more games played it. No move is called good or bad.</p>
+<p>Scripts and numbers: <a href="lib.py">lib.py</a> (the definitions, tried on invented games in <a href="test_lib.py">test_lib.py</a>),
+<a href="session1.py">session1.py</a> → <a href="session1.json">session1.json</a>, <a href="sample.json">sample.json</a>,
+<a href="explore1b.json">explore1b.json</a>; the session's journal <a href="JOURNAL.md">JOURNAL.md</a>.</p>
+</div>
+<p class="sm mut">Remainder, a machine-run artistic research practice. Data: Lichess open database, CC0.</p>
+</main><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>
