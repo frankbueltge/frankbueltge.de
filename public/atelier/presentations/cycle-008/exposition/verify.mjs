@@ -6,6 +6,7 @@ const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) bad++; 
 const N = JSON.parse(fs.readFileSync(path.join(here, 'null.json')));
 const Q = JSON.parse(fs.readFileSync(path.join(here, 'plate6.json')));
 const V = JSON.parse(fs.readFileSync(path.join(here, 'plate7.json')));
+const E = JSON.parse(fs.readFileSync(path.join(here, 'plate8.json')));
 const br = await chromium.launch({ executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
 for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   const pg = await br.newPage({ viewport: { width: wd, height: 900 }, colorScheme: scheme }); const errs = [];
@@ -50,6 +51,27 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   ok((await pg.innerText('#p7tab')).includes('too low') && (await t('v-med')) === String(V.versions.median), `${wd}px: plate VII table and counts filled from plate7.json`);
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate VII`);
   await pg.$eval('#p7grid', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p7-${wd}.png`) });
+  // plate VIII (increment 4)
+  const p8 = () => pg.evaluate(() => window.__p8);
+  ok(await pg.$$eval('#p8grid button', b => b.length) === 232 && await pg.$$eval('#p8lags button', b => b.length) === 9, `${wd}px: plate VIII draws 232 sequences and nine clock rules`);
+  for (let k = 0; k < 9; k++) { await pg.click('#p8-l' + k); const j = await p8(), d = E.declared[k];
+    ok(j.o === d.observed && near(j.r, d.ratio) && j.v === d.verdict && !j.sighted, `${wd}px: clock rule ${d.lag_h} h recomputes to ${d.observed}/${d.stated}, ${d.verdict}, declared`); }
+  ok(await pg.$$eval('#p8grid button.h', b => b.length) === 0, `${wd}px: before showing, no outcome is drawn`);
+  await pg.click('#p8-l0'); await pg.click('#p8-write');
+  ok((await pg.innerText('#p8ledger')).includes('the odds ran too high') && (await p8()).ledger[0] === 'indicative', `${wd}px: a rule fixed blind writes the indicative "ran too high"`);
+  await pg.click('#p8-kind'); j = await p8(); ok(j.sighted && j.o === E.sighted.kindest.observed && j.v === 'too low', `${wd}px: the kindest hand is sighted and reads too low (${j.o})`);
+  await pg.click('#p8-write'); ok((await pg.innerText('#p8ledger')).includes('would have run too low') && (await p8()).ledger[1] === 'subjunctive', `${wd}px: a sighted verdict is written only in the subjunctive`);
+  await pg.click('#p8-l3'); await pg.click('#p8-show'); j = await p8();
+  ok(j.seen && !j.sighted && await pg.$$eval('#p8grid button.h', b => b.length) > 0, `${wd}px: showing what came keeps a reading fixed before it declared`);
+  await pg.click('#p8-l1'); j = await p8(); ok(j.sighted && (await pg.innerText('#p8read')).includes('subjunctive'), `${wd}px: a clock rule chosen after showing is subjunctive`);
+  ok(await pg.$eval('#p8-show', b => b.disabled), `${wd}px: the page does not offer to forget what it showed`);
+  await pg.click('#p8-refuse'); ok((await pg.innerText('#p8ledger')).includes(String(E.event.changes_with_the_version) + ' of 232'), `${wd}px: restraint writes the span and the ${E.event.changes_with_the_version} moving events`);
+  await pg.fill('#p8did', 'Slept in the car that week.'); await pg.click('#p8-did');
+  ok((await pg.innerText('#p8ledger')).includes('might have slept in the car that week') && (await pg.innerText('#p8ledger')).includes('no record holds this'), `${wd}px: the column no reading reaches is written in the subjunctive and marked as the visitor's`);
+  ok(await pg.$$eval('#p8axis [data-k="declared"]', c => c.length) === 9 && await pg.$$eval('#p8axis [data-k="ledger"]', c => c.length) === 2, `${wd}px: the axis carries nine declared rules and the two verdicts written`);
+  ok((await t('p8j-ch')) === String(E.event.changes_with_the_version) && (await t('p8dv')) === E.distinct_versions.total.toLocaleString('en-US'), `${wd}px: plate VIII counts filled from plate8.json`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate VIII`);
+  await pg.$eval('#p8axis', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p8-${wd}.png`) });
   ok(errs.length === 0, `${wd}px: no script errors ${errs.join(' | ')}`);
   await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-${wd}.png`), fullPage: false });
 }
