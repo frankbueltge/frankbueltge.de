@@ -36,7 +36,7 @@ table{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}th,td{p
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
-<p class="sm mut">Project 12, session 1 · a study, not yet a work · 19 October 2026</p>
+<p class="sm mut">Project 12, sessions 1–2 · a study, not yet a work · 19 October 2026</p>
 <h1>Depending on who's counting</h1>
 <p><a href="https://www.naturalearthdata.com/">Natural Earth</a> is a free world map, in the public domain, that many other maps are
 built on. Its map of countries comes in one default edition, which "shows de facto boundaries by default according to who controls the
@@ -65,6 +65,29 @@ the edition leaves in no country at all.</p>
 <div class="eb" id="eb"></div>
 <p class="sm mut">The edition for {{TOP}} redraws most ({{TOP_KM}} km²); the ISO edition, next, leaves most of what it redraws in no country; the edition for {{LOW}} redraws
 least ({{LOW_KM}} km²).</p>
+
+<h2>Named by no one</h2>
+<p>A map can also decline to name. An edition can leave land in <b>no unit</b> at all, a hole; it can draw a polygon there and leave its
+name and code <b>blank</b>; or it can draw and name a unit and give it the type the publisher calls "Indeterminate". The largest such land
+is Antarctica: {{ATA}} km², typed "Indeterminate" in all 34 editions. Leave it aside and <b>{{NL}} km²</b> remain that at least one
+edition draws in one of these three ways, in {{NLP}} pieces (the map shows those of 1 km² or more).</p>
+<p>Two editions write the hole otherwise. The editions for Palestine's and Russia's points of view hold {{UN_PSE}} and {{UN_RUS}} units with no
+name and no code: {{UN_KM}} km² together. Each keeps only its own edition's code, and those codes are the ones Natural Earth gives, in its
+file of disputed and breakaway areas, to places most of the other editions leave empty. In the Russian edition, two of them lie on land
+all 33 other editions draw as Ukraine, and one on land all 33 draw as Azerbaijan. This page does not supply the names those units were
+not given; tap a piece to see what each edition calls the land.</p>
+<p><b>Bir Tawil</b> and <b>Scarborough Reef</b> (under 1 km², too small for the map below) are the only land on which all 34 editions name no country: each draws it in no unit, or in a unit of its own typed "Indeterminate". Where most editions name no one, the few
+that do are mostly the editions of the country they name: the Southern Patagonian Ice Field is Argentina's only in Argentina's edition,
+and the Spratly pieces are China's, Taiwan's or Vietnam's only in the editions for each (a reading of the pieces, not a tested rule).</p>
+<div class="map"><canvas id="nmap" width="1100" height="520" aria-label="World map of the land some edition draws with no country's name; tap a piece to see what each edition calls it"></canvas></div>
+<div class="bl"><span><i style="background:var(--c2)"></i>one or two editions name no one here</span><span><i style="background:var(--c3)"></i>3 to 30</span><span><i style="background:var(--c4)"></i>31 to 34</span></div>
+<p class="sm mut">One piece is unexplained: {{GEO}} km² of the default's Georgia lie in no unit in the editions for the United Kingdom and the United
+States, where Natural Earth lists no dispute. Probably a slip of the drawing (a guess; the files do not say).</p>
+<div class="tw"><table><tr><th></th><th>prediction, written before this reading</th><th>result</th></tr>
+{{PRED2_ROWS}}
+</table></div>
+<p class="sm mut">{{HELD2}} of 7 held. Prediction 8 held only because Antarctica is typed "Indeterminate"; that was not foreseen. Earlier the
+record said the two editions' blank units had "no attributes at all": each keeps one code, so that was too strong.</p>
 
 <h2>What this page does not do</h2>
 <p>It draws no border and judges no claim. Every piece is named by what each edition calls it, and no edition is called right. The
@@ -120,4 +143,22 @@ sel.addEventListener('change',()=>{cur=sel.value;pick=-1;const n=D.pieces.filter
 const eb=document.getElementById('eb'),mx=D.edlist[1][1]*1.25;
 D.edlist.forEach(([k,m,l])=>{const a=document.createElement('div');a.textContent=ED[k]+(m>mx?' — '+(m/1e6).toFixed(1)+' million km², off this scale':' — '+Math.round(m/1e3).toLocaleString('en')+'k');const b=document.createElement('div');b.className='b';b.style.width=Math.min(100,100*m/mx)+'%';b.title=m.toLocaleString('en')+' km²';const s=document.createElement('span');s.style.width=(100*l/Math.max(m,1))+'%';b.appendChild(s);eb.append(a,b)});
 draw();matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+
+const nc=document.getElementById('nmap'),nx=nc.getContext('2d');
+function npath(polys){nx.beginPath();for(const p of polys)for(const r of p){r.forEach(([x,y],i)=>i?nx.lineTo(X(x),Y(y)):nx.moveTo(X(x),Y(y)));nx.closePath()}}
+D.nl.forEach(p=>p.bb=bbox(p.g));let npick=-1;
+function ndraw(){nx.fillStyle=css('--sea');nx.fillRect(0,0,W,H);nx.fillStyle=css('--land');for(const l of D.land){npath(l);nx.fill('evenodd')}
+ D.nl.forEach((p,i)=>{nx.fillStyle=p.k<=2?css('--c2'):(p.k<=30?css('--c3'):css('--c4'));npath(p.g);nx.fill('evenodd');const[a,b,c,d]=p.bb;const w=X(c)-X(a),h=Y(b)-Y(d);
+  if(w<4&&h<4){nx.beginPath();nx.arc((X(a)+X(c))/2,(Y(b)+Y(d))/2,3,0,7);nx.fill()}
+  if(i===npick){nx.strokeStyle=css('--fg');nx.lineWidth=2;npath(p.g);nx.stroke();if(w<6&&h<6){nx.beginPath();nx.arc((X(a)+X(c))/2,(Y(b)+Y(d))/2,6,0,7);nx.stroke()}}})}
+function nsay(i){const p=D.nl[i];const g={};for(const[e,o]of Object.entries(p.s))(g[o]=g[o]||[]).push(e);
+ let h='<b>'+p.a.toLocaleString('en')+' km²</b>, '+p.k+' of 34 editions name no country here<br>';
+ for(const[o,es]of Object.entries(g).sort((a,b)=>b[1].length-a[1].length)){const lab=o==='(no unit)'?'in no unit':(o==='(unnamed unit)'?'in a unit with no name':(o.endsWith(' [indeterminate]')?o.replace(' [indeterminate]','')+', typed “Indeterminate”':o));
+  h+='<b>'+lab+'</b> in '+es.length+' edition'+(es.length>1?'s':'')+': <span class="mut">'+es.map(e=>e==='default'?'the default':ED[e]).join(', ')+'</span><br>'}
+ if(p.c)h+='<span class="mut">The blank unit keeps the code '+p.c.join(', ')+', which Natural Earth’s disputed-areas file gives to “'+p.cn.join('”, “')+'” (the publisher’s name).</span>';
+ document.getElementById('say').innerHTML=h}
+nc.addEventListener('click',ev=>{const r=nc.getBoundingClientRect(),mx=(ev.clientX-r.left)*W/r.width,my=(ev.clientY-r.top)*H/r.height;
+ let best=-1,bd=1e9;D.nl.forEach((p,i)=>{const[a,b,c,d]=p.bb;const dx=Math.max(X(a)-mx,0,mx-X(c)),dy=Math.max(Y(d)-my,0,my-Y(b));const dd=Math.hypot(dx,dy)+(X(c)-X(a))*(Y(b)-Y(d))*1e-4;if(dd<bd){bd=dd;best=i}});
+ if(bd<14){npick=best;nsay(best);ndraw()}});
+ndraw();matchMedia('(prefers-color-scheme: dark)').addEventListener('change',ndraw);
 </script><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>
