@@ -7,6 +7,7 @@ const N = JSON.parse(fs.readFileSync(path.join(here, 'null.json')));
 const Q = JSON.parse(fs.readFileSync(path.join(here, 'plate6.json')));
 const V = JSON.parse(fs.readFileSync(path.join(here, 'plate7.json')));
 const E = JSON.parse(fs.readFileSync(path.join(here, 'plate8.json')));
+const X = JSON.parse(fs.readFileSync(path.join(here, 'plate9.json')));
 const br = await chromium.launch({ executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
 for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   const pg = await br.newPage({ viewport: { width: wd, height: 900 }, colorScheme: scheme }); const errs = [];
@@ -72,6 +73,25 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   ok((await t('p8j-ch')) === String(E.event.changes_with_the_version) && (await t('p8dv')) === E.distinct_versions.total.toLocaleString('en-US'), `${wd}px: plate VIII counts filled from plate8.json`);
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate VIII`);
   await pg.$eval('#p8axis', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p8-${wd}.png`) });
+  // plate IX (increment 5)
+  const p9 = () => pg.evaluate(() => window.__p9);
+  ok(await pg.evaluate(() => P9R.length) === X.pool && X.pool === 8948, `${wd}px: plate IX carries the 8,948 undeclared warnings in the frame`);
+  ok(await pg.evaluate(() => P9R.every(r => r[0] >= 0 && r[0] < P6R.length && P6R[r[0]][7] === 1)), `${wd}px: every plate IX warning is one of plate VI's silences at moment 1`);
+  for (const k of ['A', 'B', 'C', 'D']) { await pg.click('#p9-' + k); const j = await p9(), r = X.readings[k];
+    ok(j.n === r.never_needed && j.c === r.contradicted && j.u === r.unknown && j.b === 0, `${wd}px: reading ${k} recomputes in the browser to ${r.never_needed} never needed, ${r.contradicted} contradicted, ${r.unknown} unknown, 0 backed`); }
+  await pg.click('#p9-C'); await pg.click('#p9-k0'); let q = await p9();
+  ok(q.name === 'yours' && q.n === X.readings.C.never_needed - (X.by_class.fire.n - X.by_class.fire.met), `${wd}px: opening Storm Events over fire takes the unmet fire warnings out of the column (${q.n})`);
+  await pg.click('#p9-storm'); q = await p9(); ok(q.c === 0 && q.n === 0 && q.u === X.pool, `${wd}px: with neither register closed nor consulted, nothing is written`);
+  await pg.click('#p9-decl'); q = await p9(); ok(q.n === X.pool, `${wd}px: closing the declarations alone fills the column with all ${X.pool}`);
+  await pg.click('#p9-cfire'); ok((await t('p9card')).includes('Lyons Valley') && (await t('p9card')).includes('Never needed'), `${wd}px: under a closure the fire evacuation is filed as never needed`);
+  await pg.click('#p9-D'); await pg.click('#p9-cfire'); ok((await t('p9card')).includes('Unknown'), `${wd}px: in the open world the same warning is unknown`);
+  await pg.click('#p9-cout'); ok((await t('p9card')).includes('911 outage') && (await t('p9card')).includes('no lower register'), `${wd}px: a 911 outage has no lower register`);
+  ok((await t('p9read')).includes('Backed by a row that says the danger did not come: 0'), `${wd}px: the reading states that nothing is backed`);
+  ok((await t('p9-pool')) === '8,948' && (await t('p9-met')) === '1,216' && (await t('p9-share')) === '10.8 %' && await pg.$$eval('#p9tab tr', r => r.length) === 7, `${wd}px: plate IX counts and table filled from plate9.json`);
+  const px9 = await pg.$eval('#p9grid', e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; });
+  ok(px9 > 10000, `${wd}px: the grid of warnings is drawn`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate IX`);
+  await pg.click('#p9-B'); await pg.$eval('#p9read', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p9-${wd}.png`) });
   ok(errs.length === 0, `${wd}px: no script errors ${errs.join(' | ')}`);
   await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-${wd}.png`), fullPage: false });
 }
