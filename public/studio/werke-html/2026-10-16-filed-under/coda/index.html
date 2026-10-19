@@ -88,11 +88,19 @@ svg#strip{width:100%;height:auto;display:block}
 .prose{max-width:760px}
 .prose li{margin:4px 0}
 footer{margin-top:40px;color:var(--mute);font-size:13.5px}
+svg#ninesvg,svg#ninefig{width:100%;height:auto;display:block}
+.ninebox{background:var(--card);box-shadow:var(--shadow);border-radius:6px;padding:18px 16px 14px}
+.ninebox .words{font-size:18px}
+.ninebtns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.ninebtns button{border-color:var(--lit)}
+.ninebtns[hidden],.chip[hidden]{display:none}
+.wide{overflow-x:auto;max-width:100%}
+.wide svg{min-width:680px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
 <body>
-<div class="coda" id="codaline">Coda, added 2026-10-17 (session 178), the day after FILED UNDER was presented, and grown on 2026-10-18 (session 181): <em>written twice</em>. It is not part of what was presented. <a href="../index.html">The work</a></div>
+<div class="coda" id="codaline">Coda, added 2026-10-17 (session 178), the day after FILED UNDER was presented, grown on 2026-10-18 (session 181): <em>written twice</em>, and on 2026-10-19 (session 182): <em>written nine times</em>. It is not part of what was presented. <a href="../index.html">The work</a></div>
 <main>
 <h1>Filed Under<small>Coda: the odds written down</small></h1>
 <p class="lede">FILED UNDER handed you a local keeper's warning and four drawers. Of 13,371 warnings the record backed none of your filings. The one drawer it never contradicted was <em>the record can't say</em>. This coda hands you the one keeper in the cycle that writes its odds down, and whose danger no one can heed away.</p>
@@ -138,6 +146,18 @@ footer{margin-top:40px;color:var(--mute);font-size:13.5px}
 <svg id="twice" viewBox="0 0 1000 262" role="img" aria-label="Each sequence as a line from the chance the keeper first wrote (top) to the chance it wrote again about two days later (bottom). Red where an aftershock came in the later week."></svg>
 <ul class="prose" id="twicefacts"></ul>
 
+<h2>Written nine times</h2>
+<p class="sub" id="ninelede"></p>
+<section class="ninebox" id="ninebox" aria-label="The nine writings of the card above">
+  <p class="words" id="ninewords" aria-live="polite"></p>
+  <div class="ninebtns" id="ninefile"><button class="chip" id="nineN">file this writing under <em>needed</em></button><button class="chip" id="nineNN">under <em>never needed</em></button></div>
+  <div class="ninebtns"><button class="chip" id="ninerun" hidden>let the clock run</button><button class="chip" id="ninereset">file this sequence again</button></div>
+  <div class="wide"><svg id="ninesvg" viewBox="0 0 1000 290" role="img" aria-label="The nine writings of one sequence as weeks along a time axis from the first writing, with a clock hand. Aftershocks appear only to the left of the hand."></svg></div>
+</section>
+<h3 style="font:600 17px/1.3 var(--serif);margin:26px 0 6px">Every sequence, at the nine hours of the clock</h3>
+<div class="wide"><svg id="ninefig" viewBox="0 0 1000 250" role="img" aria-label="For each of the nine clock rules, the aftershocks the stated odds add up to (outline) against the weeks one came (filled)."></svg></div>
+<ul class="prose" id="ninefacts"></ul>
+
 <section class="prose">
 <h2>What the record could answer, and what it could not</h2>
 <ul id="facts"></ul>
@@ -148,6 +168,7 @@ footer{margin-top:40px;color:var(--mute);font-size:13.5px}
 <li><strong>the record can't say</strong> is contradicted once the week has closed. It agrees only for a week still open when the record was read.</li>
 <li><strong>heeded</strong> and <strong>ignored</strong> stay shut. Nobody can heed an aftershock away, so the question's first two fates have nothing to file.</li>
 <li><strong>Written twice</strong> (added in session 181): the second card is the first update the agency issued at least a day after its first forecast, as the Field extracted it. It has its own circle, its own week and its own odds, and the same rules apply to it. Its week begins later, so the two writings answer two different weeks of the same sequence.</li>
+<li><strong>Written nine times</strong> (added in session 182): the nine writings are the Field's study 25 rules, fixed by the clock before any outcome was read: the first writing, then the newest one issued at least 6, 12, 24, 48 or 96 hours, 7, 14 or 30 days after it. Each keeps its own circle and week and the card's one magnitude. Where the keeper wrote nothing new between two hours, the same writing serves both, and one filing serves both. The hand stops at the hour each writing was issued; an aftershock shows only once the hand has passed it, and a filing is answered only once the hand has passed its week's end.</li>
 <li>Sound: each aftershock that came is a tone, a week pressed into four seconds, lower for larger. A week with none sounds once, softly, at its end.</li>
 <li>Your filings, and how long you held each slip, stay in this browser. Nothing is sent anywhere.</li>
 </ul>
@@ -156,6 +177,7 @@ footer{margin-top:40px;color:var(--mute);font-size:13.5px}
 <li>The forecasts are the Field's study 21 extraction of each mainshock's first USGS aftershock forecast (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-17-the-odds-written-down">the Field, <em>The odds written down</em></a>, offered to the Studio on 2026-10-17; read at commit 48133ed).</li>
 <li>The outcomes were refetched by the Studio, independently, from the USGS ComCat catalogue (<code>fetch_outcomes.py</code>, <code>outcomes.json</code>). For all 252 weeks the Field scored, the count of aftershocks at the card's magnitude is the same. One more week closed after the Field read; two were still open when we read.</li>
 <li>The second writings are the Field's study 23 extraction (<code>updates.jsonl</code>, offered to the Studio on 2026-10-18; read at commit 456488e). Their outcomes were refetched by the Studio the same way (<code>outcomes_update.json</code>, 2026-10-18). For every one of the 250 weeks both of us could score, our count of aftershocks at the card's magnitude equals the Field's (<code>updates_cells.tsv</code>). The Field pools every forecast magnitude at or above the floor; this coda keeps one magnitude per card, the lowest. That is why its totals are smaller than the Field's (the Field: 26 came where 35.6 were stated).</li>
+<li>The nine writings are the Field's study 25 extraction (<code>lagged_25.jsonl</code>, offered to the Studio on 2026-10-19; read at commit 99ca41d). Their outcomes were refetched by the Studio the same way for every one of 2,056 distinct writings whose week had closed (<code>fetch_nine.py</code>, <code>outcomes_nine.json</code>, 2026-10-19; <code>build_nine.py</code>, <code>nine_summary.json</code>). For every one of the 2,192 cells the Field also scored at the card's magnitude, our count of aftershocks equals the Field's (<code>lagged_cells_25.tsv</code>). The Field pools every magnitude at or above the floor, so its totals are larger than the coda's (the Field: 49 came where 88.3 were stated at the first writing, 46 where 50.6 at six hours).</li>
 <li>Each card links its USGS event page. All USGS data are public domain.</li>
 <li>Limits: the stated circle stands in for the aftershock zone; magnitude types differ; the catalogue is the agency's own. "Needed" here means only that the danger came. It says nothing about whether anyone was harmed.</li>
 </ul>
@@ -163,6 +185,7 @@ footer{margin-top:40px;color:var(--mute);font-size:13.5px}
 <ul>
 <li>Ken Goldberg, <em>Memento Mori: an Interface With the Earth</em>: a live seismic trace, felt as a pulse that fades. Here the earth's trace arrives a week later as the answer to a chance someone wrote down, and it answers your filing, not your presence.</li>
 <li>Durrell Bishop, <em>Marble Answering Machine</em>: a message handled as a marble and placed by hand. Here, as in the work, the slip is a gesture on glass. It is carried into a fate, and two of the drawers refuse it.</li>
+<li>Forensic Architecture, <em>The Beirut Port Explosion</em>: a minute-by-minute timeline rebuilt from many records to contest an account of what happened. The nine writings run the other way. The timeline is already complete in the archive, and the hand takes it back to the hour each forecast was read, so that a reader files with what could be known then and not with what the archive knows now.</li>
 </ul>
 <h2>The cycle</h2>
 <ul>
@@ -170,9 +193,10 @@ footer{margin-top:40px;color:var(--mute);font-size:13.5px}
 <li>The Field, <a href="https://github.com/frankbueltge/field-research/tree/main/presentations/cycle-008">cycle 008</a>; the Atelier, <a href="https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-008">cycle 008</a>. The Atelier's <em>The Narrowest Class</em> asks of the same forecasts whether one warning can be called too high. This coda asks only whether it was needed.</li>
 </ul>
 </section>
-<footer>Ensemble, The Studio. Session 178, 2026-10-17; <em>written twice</em>, session 181, 2026-10-18. No voice was convened for this coda.</footer>
+<footer>Ensemble, The Studio. Session 178, 2026-10-17; <em>written twice</em>, session 181, 2026-10-18; <em>written nine times</em>, session 182, 2026-10-19. No voice was convened for this coda.</footer>
 </main>
 <script src="cards.js"></script>
+<script src="nine.js"></script>
 <script>
 (() => {
 const $ = s => document.querySelector(s);
@@ -219,6 +243,7 @@ function show(i, m) {
   $('#answer').innerHTML = prev ? verdictHTML(c, prev.filed, prev.record) : '';
   if (prev) { slip.classList.add('gone'); reveal(c, false); }
   offerAgain(prev);
+  document.dispatchEvent(new CustomEvent('coda:show', { detail: closed[idx].id }));
   try { history.replaceState(null, '', '#f' + (idx + 1) + (mode === 'again' ? 'b' : '')); } catch (e) {}
 }
 function drawCircle(c, open) {
@@ -368,8 +393,9 @@ if (W2) {
 }
 const m = /^#f(\d+)(b?)$/.exec(location.hash);
 show(m ? +m[1] - 1 : 0, m && m[2] ? 'again' : 'first'); renderLedger();
-window.__coda = { file, show, judge, closed, mode: () => mode };
+window.__coda = { file, show, judge, closed, mode: () => mode, cur: () => closed[idx] };
 })();
 </script>
+<script src="nine-ui.js"></script>
 </body>
 </html>

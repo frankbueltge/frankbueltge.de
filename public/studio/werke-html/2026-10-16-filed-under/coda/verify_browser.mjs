@@ -1,10 +1,11 @@
-// node verify_browser.mjs — FILED UNDER, coda (sessions 178 and 181), in a real browser at 390 px (light) and 1100 px (dark)
+// node verify_browser.mjs — FILED UNDER, coda (sessions 178, 181 and 182), in a real browser at 390 px (light) and 1100 px (dark)
 import { createRequire } from 'module';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
 import { dirname, join } from 'path'; import fs from 'fs'; import { fileURLToPath } from 'url';
 const here = dirname(fileURLToPath(import.meta.url));
 const S = JSON.parse(fs.readFileSync(join(here, 'summary.json')));
+const N9 = JSON.parse(fs.readFileSync(join(here, 'nine_summary.json')));
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--autoplay-policy=no-user-gesture-required', '--allow-file-access-from-files'] });
 let pass = 0, fail = 0; const t = (n, ok) => { ok ? pass++ : fail++; console.log(ok ? 'ok  ' : 'FAIL', n) };
 for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
@@ -71,6 +72,29 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await p.click('#againbtn');
   t(w + ' back to the first writing, still filed', (await p.evaluate(() => __coda.mode())) === 'first' && (await p.textContent('#answer .v')) === L2[3].record);
   t(w + ' written-twice facts drawn', (await p.locator('#twicefacts li').count()) === 4 && (await p.textContent('#twicefacts')).includes(String(W2.warn_dropped)));
+  // written nine times (session 182): the clock hand
+  const n9 = await p.evaluate(() => {
+    const ids = Object.keys(NINE); const P = [0, 6, 12, 24, 48, 96, 168, 336, 720].map(L => { const ws = ids.flatMap(i => NINE[i].filter(v => v.L === L)); return { weeks: ws.length, came: ws.filter(v => v.ev.length).length, stated: Math.round(ws.reduce((a, v) => a + v.p, 0) * 10) / 10 }; });
+    return { P, fateok: ids.every(i => NINE[i].every(v => (v.fate === 'needed') === (v.ev.length > 0))) };
+  });
+  t(`${w} nine: per-rule weeks, came and stated recount from the data (first ${n9.P[0].came} of ${n9.P[0].stated})`, n9.fateok && n9.P.every((q, i) => q.weeks === N9.per_lag[i].weeks && q.came === N9.per_lag[i].came && q.stated === N9.per_lag[i].stated));
+  t(w + ' nine: figure has 18 bars and the facts are drawn', (await p.locator('#ninefig rect').count()) === 18 && (await p.locator('#ninefacts li').count()) === 6 && (await p.textContent('#ninefacts')).includes(String(N9.archive_already_shown)));
+  const mx = await p.evaluate(() => { const ids = Object.keys(NINE).filter(i => new Set(NINE[i].map(v => v.fate)).size > 1 && NINE[i].length === 9 && new Set(NINE[i].map(v => v.issued)).size === 9); return __coda.closed.findIndex(c => c.id === ids[0]); });
+  await p.evaluate(j => { localStorage.removeItem('filed-under-coda-nine-v1'); __coda.show(j); }, mx);
+  const z = await p.evaluate(() => __nine.state());
+  const W9 = await p.evaluate(id => NINE[id], z.id);
+  t(w + ' nine follows the card above, at writing 1, hand at its issue', z.id === (await p.evaluate(() => __coda.cur().id)) && z.step === 0 && z.hand === W9[0].issued && /Writing 1 of 9/.test(await p.textContent('#ninewords')));
+  const before = W9.flatMap(v => v.ev).filter(e => e.t < W9[0].issued).length;
+  t(w + ` nine: only aftershocks before the hand are drawn (${before})`, (await p.locator('#ninesvg circle[fill="var(--contra)"]').count()) === before);
+  for (let i = 0; i < 9; i++) await p.click(i % 2 ? '#nineNN' : '#nineN');
+  const z2 = await p.evaluate(() => __nine.state());
+  t(w + ' nine: after nine filings the weeks are still sealed and the clock waits', z2.step === 9 && await p.isVisible('#ninerun') && (await p.textContent('#ninesvg')).includes('…'));
+  await p.click('#ninerun');
+  const ok = W9.filter((v, i) => z2.filed[i] === v.fate).length;
+  t(w + ` nine: the clock runs, the record answers ${ok} of 9 as backed`, new RegExp(`backs <b>${ok}</b> of your nine`).test(await p.innerHTML('#ninewords')) && /which writing you read decides/.test(await p.textContent('#ninewords')));
+  t(w + ' nine: every event now drawn', (await p.locator('#ninesvg circle[fill="var(--contra)"]').count()) === W9.reduce((a, v) => a + v.ev.length, 0));
+  t(w + ' nine: filings kept in this browser', (await p.evaluate(id => JSON.parse(localStorage.getItem('filed-under-coda-nine-v1'))[id].filed.length, z.id)) === 9);
+  await p.locator('#ninebox').scrollIntoViewIfNeeded(); await p.screenshot({ path: join(here, `shot-nine-${w}.png`) });
   t(w + ' no horizontal overflow after use', await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
   t(w + ' no errors after use', errs.length === 0);
   await p.screenshot({ path: join(here, `shot-${w}.png`), fullPage: false });

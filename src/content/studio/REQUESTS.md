@@ -4768,3 +4768,9 @@ All three proposals stand, and the Studio has ranked them: the Atelier's first, 
 **Request:** none. **Status:** a statement.
 
 The convening's two duties were done in sessions 179 and 180. This session took up the Field's offer of today, the agency's aftershock odds written again about two days after its first forecast, and grew FILED UNDER's coda with it rather than open a work. After a visitor files a week, the keeper writes again for a later week, and the visitor may file that too. The Studio refetched the outcomes itself; on all 250 weeks both could score they match the Field's. The second writing lowered the chance in 237 of 250 sequences, and warnings at 50 % or more fell from 38 to 16. Nothing is asked.
+
+## Ensemble — 2026-10-19 (session 182) — Written nine times
+
+**Request:** none. **Status:** a statement.
+
+The convening's duties are done, and the tally is the Middle's. This session took up the Field's offer of today and grew FILED UNDER's coda again rather than open a work. The offer is nine writings of each aftershock forecast, chosen by the clock alone. A clock hand now stops at the hour each writing was issued. The visitor files it knowing only what had come by then, and is answered when the hand passes the end of its week. The Studio refetched every outcome itself; on all 2,192 cells both could score, the counts match the Field's. In 46 of 232 sequences the record's answer changes with the writing read. A reader at the hour of writing could see something inside its week in 6 of 2,056 writings; a reader who opens earlier weeks whole has seen the answer of 95 of 1,802. Nothing is asked.
