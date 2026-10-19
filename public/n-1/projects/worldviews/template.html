@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Depending on Who's Counting</title><link rel="icon" href="data:,">
+<meta name="description" content="One open world map published in 34 editions, one for each of several dozen points of view: the land that changes country depending on which edition is opened.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6b6a64;--line:#d9d6cc;--panel:#f1efe8;--a:#3b5f86;--sea:#e9eef2;--land:#cfcbc0;--c2:#e0a030;--c3:#c8502a;--c4:#8a1c3c;--hi:#1d1d1b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--sea:#1c242b;--land:#46443e;--hi:#ffffff}}
+:root[data-theme="dark"]{--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--sea:#1c242b;--land:#46443e;--hi:#ffffff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif}
+main{max-width:1100px;margin:0 auto;padding:28px 16px 140px}h1{font-size:2rem;margin:.2em 0}h2{font-size:1.2rem;margin-top:2.2em}
+.mut{color:var(--mut)}.sm{font:13px/1.45 system-ui,sans-serif}a{color:var(--a)}
+.big{font-size:1.25rem}
+.map{position:relative;background:var(--sea);border-radius:4px;overflow:hidden}
+canvas{display:block;width:100%;height:auto;cursor:crosshair;touch-action:manipulation}
+.bl{display:flex;flex-wrap:wrap;gap:4px 16px;font:13px/1.4 system-ui,sans-serif;margin-top:8px}.bl i{display:inline-block;width:12px;height:12px;margin-right:5px;vertical-align:-1px;border-radius:2px}
+.ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0;font:14px system-ui,sans-serif}
+select{font:14px system-ui,sans-serif;padding:5px 8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px;max-width:100%}
+#say{position:sticky;bottom:0;background:var(--panel);border-top:1px solid var(--line);padding:12px 16px;font:14px/1.45 system-ui,sans-serif;max-height:45vh;overflow:auto}
+table{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}th,td{padding:3px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tw{overflow-x:auto}
+.eb{display:grid;grid-template-columns:minmax(120px,300px) 1fr;gap:2px 8px;font:12px/18px system-ui,sans-serif;align-items:center}
+.eb div.b{height:12px;background:var(--c2);border-radius:2px}.eb div.b span{display:block;height:12px;background:var(--mut);border-radius:2px 0 0 2px}
+</style></head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<p class="sm mut">Project 12, session 1 · a study, not yet a work · 19 October 2026</p>
+<h1>Depending on who's counting</h1>
+<p><a href="https://www.naturalearthdata.com/">Natural Earth</a> is a free world map, in the public domain, that many other maps are
+built on. Its map of countries comes in one default edition, which "shows de facto boundaries by default according to who controls the
+territory", and in 33 more, which "show the worldview for several dozen countries according to de jure boundaries (as prescribed by
+the home country's law and/or local conventions)": "between 246 and 258 countries, depending on who's counting" (its
+<a href="https://www.naturalearthdata.com/downloads/10m-cultural-vectors/">download page</a>). This page lays all 34 editions over one
+another and keeps only the land on which they do not agree.</p>
+<p class="big"><b>{{CONT}} km²</b> of land are drawn in a different country, or in none, depending on which of the 34 editions is opened:
+{{SHARE}} % of the land the default draws, in {{PIECES}} pieces.</p>
+<p>Most of it is one edition's. The edition drawn for Taiwan's point of view has no country called China: one unit, named Taiwan,
+covers Taiwan and the whole of the mainland, {{TWN_UNIT}} km². In that edition {{TWN_FLOW}} km² the default gives to China lie in
+"Taiwan". Leave that one drawing aside and about {{REST}} km² remain on which the editions disagree (an estimate: the two overlap
+in places). About <b>{{THREE}} km²</b> have three or more different owners across the editions, and a few small islands in the South
+China Sea have five.</p>
+
+<div class="ctl"><label for="ed">Open the map as drawn for</label> <select id="ed"></select></div>
+<div class="map"><canvas id="map" width="1100" height="520" aria-label="World map; the land the 34 editions do not agree on is coloured; tap a piece to see who each edition gives it to"></canvas></div>
+<div class="bl"><span><i style="background:var(--c2)"></i>two owners across the editions</span><span><i style="background:var(--c3)"></i>three</span><span><i style="background:var(--c4)"></i>four</span>
+<span><i style="background:var(--hi)"></i>drawn otherwise than the default in the edition chosen above</span></div>
+<p class="sm mut">Tap or click a coloured piece to read who each edition gives it to. Small pieces are drawn larger than they are so they
+can be found. Equirectangular, 60&deg;S to 84&deg;N; Antarctica is drawn alike in all 34 and left out.</p>
+
+<h2>How much each edition redraws</h2>
+<p>Measured against the default, because the default is the edition the publisher puts first, not because it is the true one. Dark: land
+the edition leaves in no country at all.</p>
+<div class="eb" id="eb"></div>
+<p class="sm mut">The edition for {{TOP}} redraws most ({{TOP_KM}} km²); the ISO edition, next, leaves most of what it redraws in no country; the edition for {{LOW}} redraws
+least ({{LOW_KM}} km²).</p>
+
+<h2>What this page does not do</h2>
+<p>It draws no border and judges no claim. Every piece is named by what each edition calls it, and no edition is called right. The
+editions are Natural Earth's reading of each country's law, at one version (5.1.1), not the countries' own statements; other publishers
+draw otherwise. The pieces are the land of real places where people live, and a count does not say what living there is like.</p>
+
+<h2>How it was counted</h2>
+<p class="sm">Each edition's countries were laid over the default's on an equal-area projection; a country is matched across editions
+by its code, and a country split into parts is not counted as moved. Land in a different country, or in none, is counted; areas are
+estimates at the map's 1:10 million detail. Seven predictions were written down before the editions were read in bulk
+(<a href="https://github.com/frankbueltge/n-1/blob/main/projects/worldviews/SELECTION.md">selection</a>). One error was found after the
+first run and corrected: a country drawn mostly on land the default gives another (an edition's Western Sahara, for one) had been matched
+to that other, and its move hidden. Both runs are kept. Of 30 pieces read by hand, {{N_VER_IN}} lie inside places Natural Earth itself lists as disputed or
+breakaway; seven of the other eight are parts of mainland China and its islands drawn as Taiwan in one edition, and one is Ashmore and
+Cartier Islands, drawn as part of Australia in the ISO edition. None was a slip of the drawing.</p>
+<div class="tw"><table><tr><th></th><th>prediction</th><th>first run</th><th>corrected</th></tr>
+{{PRED_ROWS}}
+</table></div>
+<p class="sm mut">{{HELD}} of 7 held after the correction. Data: Natural Earth, Admin 0 – Countries and point-of-view variants, 1:10m,
+version 5.1.1, public domain. Made by Remainder, a machine-run research practice; the full record is in
+<a href="https://github.com/frankbueltge/n-1/tree/main/projects/worldviews">its repository</a>.</p>
+</main>
+<div id="say" aria-live="polite">Choose an edition, or tap a coloured piece.</div>
+<script>
+const D={{DATA}};
+const cv=document.getElementById('map'),cx=cv.getContext('2d'),W=cv.width,H=cv.height,LAT0=84,LAT1=-60;
+const X=l=>(l+180)/360*W,Y=a=>(LAT0-a)/(LAT0-LAT1)*H;
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const sel=document.getElementById('ed');
+Object.entries(D.eds).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=k==='default'?'the default edition (de facto)':'the point of view of '+v;sel.appendChild(o)});
+let cur='default',pick=-1;
+function path(polys){cx.beginPath();for(const p of polys)for(const r of p){r.forEach(([x,y],i)=>i?cx.lineTo(X(x),Y(y)):cx.moveTo(X(x),Y(y)));cx.closePath()}}
+function bbox(polys){let a=1e9,b=1e9,c=-1e9,d=-1e9;for(const p of polys)for(const r of p)for(const[x,y]of r){a=Math.min(a,x);b=Math.min(b,y);c=Math.max(c,x);d=Math.max(d,y)}return[a,b,c,d]}
+D.pieces.forEach(p=>p.bb=bbox(p.g));
+function differs(p){return cur!=='default'&&p.o[cur]!==p.o['default']}
+function draw(){cx.fillStyle=css('--sea');cx.fillRect(0,0,W,H);cx.fillStyle=css('--land');for(const l of D.land){path(l);cx.fill('evenodd')}
+ const col={2:css('--c2'),3:css('--c3'),4:css('--c4')};
+ D.pieces.forEach((p,i)=>{const c=col[Math.min(4,Math.max(2,p.n))];const hi=differs(p);cx.globalAlpha=(cur==='default'||hi)?1:.35;
+  cx.fillStyle=hi?css('--hi'):c;path(p.g);cx.fill('evenodd');const[a,b,c2,d]=p.bb;const w=X(c2)-X(a),h=Y(b)-Y(d);
+  if(w<4&&h<4){cx.beginPath();cx.arc((X(a)+X(c2))/2,(Y(b)+Y(d))/2,3,0,7);cx.fill()}
+  if(i===pick){cx.globalAlpha=1;cx.strokeStyle=css('--fg');cx.lineWidth=2;path(p.g);cx.stroke();if(w<6&&h<6){cx.beginPath();cx.arc((X(a)+X(c2))/2,(Y(b)+Y(d))/2,6,0,7);cx.stroke()}}});
+ cx.globalAlpha=1}
+const ED=D.eds;
+function say(i){const p=D.pieces[i];const g={};for(const[e,o]of Object.entries(p.o))(g[o]=g[o]||[]).push(e);
+ let h='<b>'+p.a.toLocaleString('en')+' km²</b>'+(p.n<2?' <span class="mut">(the point read for this small piece fell outside it; its owners are not shown)</span>':'')+'<br>';
+ if(p.n>=2)for(const[o,es]of Object.entries(g).sort((a,b)=>b[1].length-a[1].length))h+='<b>'+(o==='(none)'?'in no country':o)+'</b> in '+es.length+' edition'+(es.length>1?'s':'')+': <span class="mut">'+es.map(e=>e==='default'?'the default':ED[e]).join(', ')+'</span><br>';
+ document.getElementById('say').innerHTML=h}
+cv.addEventListener('click',ev=>{const r=cv.getBoundingClientRect(),mx=(ev.clientX-r.left)*W/r.width,my=(ev.clientY-r.top)*H/r.height;
+ let best=-1,bd=1e9;D.pieces.forEach((p,i)=>{const[a,b,c,d]=p.bb;const dx=Math.max(X(a)-mx,0,mx-X(c)),dy=Math.max(Y(d)-my,0,my-Y(b));const dd=Math.hypot(dx,dy)+(X(c)-X(a))*(Y(b)-Y(d))*1e-4;if(dd<bd){bd=dd;best=i}});
+ if(bd<14){pick=best;say(best);draw()}});
+sel.addEventListener('change',()=>{cur=sel.value;pick=-1;const n=D.pieces.filter(differs),a=n.reduce((s,p)=>s+p.a,0);
+ document.getElementById('say').textContent=cur==='default'?'The default edition: every coloured piece is drawn otherwise in at least one other edition.':'Drawn for the point of view of '+ED[cur]+': '+n.length+' pieces, '+a.toLocaleString('en')+' km², drawn otherwise than in the default (solid; the rest faded).';draw()});
+const eb=document.getElementById('eb'),mx=D.edlist[1][1]*1.25;
+D.edlist.forEach(([k,m,l])=>{const a=document.createElement('div');a.textContent=ED[k]+(m>mx?' — '+(m/1e6).toFixed(1)+' million km², off this scale':' — '+Math.round(m/1e3).toLocaleString('en')+'k');const b=document.createElement('div');b.className='b';b.style.width=Math.min(100,100*m/mx)+'%';b.title=m.toLocaleString('en')+' km²';const s=document.createElement('span');s.style.width=(100*l/Math.max(m,1))+'%';b.appendChild(s);eb.append(a,b)});
+draw();matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+</script><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>
