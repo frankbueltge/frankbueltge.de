@@ -1,30 +1,30 @@
 {
-  "date": "2026-10-18",
+  "date": "2026-10-19",
   "deletion": {
     "available": true,
-    "checked_at": "2026-10-18T09:52:15Z",
+    "checked_at": "2026-10-19T11:09:54Z",
     "counts": {
-      "botwall": 28,
-      "gone_404": 0,
+      "botwall": 34,
+      "gone_404": 1,
       "gone_410": 0,
       "legal_451": 0,
-      "ok": 270,
+      "ok": 262,
       "other": 0,
       "server_error": 0,
-      "unreachable": 2
+      "unreachable": 3
     },
-    "decided": 270,
-    "excluded_unverifiable": 30,
-    "gone": 0,
+    "decided": 263,
+    "excluded_unverifiable": 37,
+    "gone": 1,
     "gone_ci95": [
-      0.0,
-      0.014
+      0.0007,
+      0.0212
     ],
-    "gone_rate": 0.0,
+    "gone_rate": 0.0038,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.014
+      0.0144
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,104 +33,112 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-10-16",
-    "receipts": [],
-    "sample_drawn_at": "2026-10-17T09:40:09Z",
+    "pool_day": "2026-10-17",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "news3lv.com",
+        "first_seen": "20261017120000",
+        "http_code": 404,
+        "title": "Saturday Forecast: Low pressure off Baja to bring late clouds, cooler temps",
+        "url": "https://news3lv.com/news/local/saturday-forecast-low-pressure-off-baja-to-bring-late-clouds-cooler-temps"
+      }
+    ],
+    "sample_drawn_at": "2026-10-18T09:47:59Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 4182,
-      "replaced": 4541,
-      "trivial": 524,
-      "update": 601
+      "reframing": 3347,
+      "replaced": 3371,
+      "trivial": 509,
+      "update": 229
     },
-    "day": "2026-10-17",
+    "day": "2026-10-18",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
         "added": [
-          "SW",
-          "Dade",
-          "in",
-          "Miami"
+          "North",
+          "Dakota"
         ],
-        "after": "Video shows theft of G-Wagen from home in SW Miami-Dade, pursuit in Broward that led to crash and teens' arrests; 1 on the loose - WSVN 7News | Miami News, Weather, Sports",
-        "before": "Video shows theft of G-Wagen from Kendall home, pursuit in Broward that led to crash and teens' arrests; 1 on the loose - WSVN 7News | Miami News, Weather, Sports",
-        "detected": "2026-10-17T14:04:05Z",
-        "domain": "wsvn.com",
+        "after": "New network helping North Dakota's rural hospitals survive, thrive - InForum | Fargo, Moorhead and West Fargo news, weather and sports",
+        "before": "New rural hospital network helping ND's rural hospitals survive, thrive - InForum | Fargo, Moorhead and West Fargo news, weather and sports",
+        "detected": "2026-10-18T12:31:34Z",
+        "domain": "inforum.com",
         "removed": [
-          "Kendall"
+          "hospital",
+          "ND",
+          "rural"
         ],
-        "similarity": 0.903,
-        "url": "https://wsvn.com/news/local/miami-dade/teens-arrested-luxury-car-theft/",
+        "similarity": 0.8,
+        "url": "https://www.inforum.com/news/north-dakota/new-rural-hospital-network-helping-nds-rural-hospitals-survive-thrive",
         "weight": 8,
-        "window": "24h"
+        "window": "1w"
       },
       {
         "added": [
-          "Champions",
-          "Cup"
+          "Tanjong",
+          "Pagar"
         ],
-        "after": "From star signings to Cullen's last dance: six to watch in Champions Cup rugby this season",
-        "before": "From star signings to Cullen's last dance: six to watch in European rugby this season",
-        "detected": "2026-10-17T07:31:12Z",
-        "domain": "aol.co.uk",
+        "after": "Tanjong Pagar MP Foo Cexiang makes 'wrestling debut', shows off slick moves at WrestlePagar",
+        "before": "Singapore MP Foo Cexiang makes 'wrestling debut', shows off slick moves at WrestlePagar",
+        "detected": "2026-10-18T10:01:25Z",
+        "domain": "asiaone.com",
         "removed": [
-          "European"
+          "Singapore"
         ],
-        "similarity": 0.824,
-        "url": "https://www.aol.co.uk/articles/star-signings-leo-cullen-last-070055000.html",
+        "similarity": 0.8,
+        "url": "https://www.asiaone.com/singapore/singapore-mp-foo-cexiang-shows-off-wrestling-moves-wrestlepagar",
         "weight": 6,
-        "window": "24h"
+        "window": "1w"
       },
       {
         "added": [
-          "Indian"
+          "Mixed"
         ],
-        "after": "Compete, but follow Indian laws: Reliance Industries after Elon Musk's remarks on Starlink entry",
-        "before": "Compete, but follow India's laws: Reliance Industries after Elon Musk's remarks on Starlink India entry",
-        "detected": "2026-10-17T04:16:44Z",
-        "domain": "hindustantimes.com",
+        "after": "Nayyi Navelli Day 1 Box Office Collection: Yami Gautam-Starrer Collects ₹3.25 Crore Amid Mixed Reviews",
+        "before": "Nayyi Navelli Day 1 Box Office Collection: : Yami Gautam-Starrer Struggles Amid Disappointing Reviews, Collects ₹3.25 Crore",
+        "detected": "2026-10-18T03:46:57Z",
+        "domain": "freepressjournal.in",
         "removed": [
-          "India",
-          "s",
-          "India"
+          "Struggles",
+          "Disappointing"
         ],
-        "similarity": 0.875,
-        "url": "https://www.hindustantimes.com/india-news/never-feared-competition-ambani-reliance-elon-musk-x-outburst-over-starlink-india-entry-reliance-shares-101792119010920.html",
+        "similarity": 0.842,
+        "url": "https://www.freepressjournal.in/entertainment/nayyi-navelli-day-1-box-office-collection-yami-gautam-starrer-struggles-amid-disappointing-reviews-collects-325-crore",
         "weight": 6,
         "window": "24h"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 11863,
-      "PAGE_TEXTCHANGE": 99265,
-      "PAGE_TITLECHANGE": 40477,
-      "UNCHANGED_CONTENT": 645045
+      "HTTP_REDIRECT": 9633,
+      "PAGE_TEXTCHANGE": 78059,
+      "PAGE_TITLECHANGE": 32923,
+      "UNCHANGED_CONTENT": 507991
     },
-    "title_changes_en": 9848,
+    "title_changes_en": 7456,
     "trace": [
       {
-        "bytes_billed": 22020096,
-        "created": "1792316862672",
-        "job_id": "world_gdg_counts_20261017",
+        "bytes_billed": 16777216,
+        "created": "1792407858854",
+        "job_id": "world_gdg_counts_20261018",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 199229440,
-        "created": "1792316868378",
-        "job_id": "world_gdg_titles_20261017",
+        "bytes_billed": 157286400,
+        "created": "1792407864593",
+        "job_id": "world_gdg_titles_20261018",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-10-18T09:52:15Z",
+  "generated_at": "2026-10-19T11:09:54Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-10-17.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-10-18.json",
   "schema_version": "1",
   "selection_version": "v1"
 }
