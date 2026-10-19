@@ -4774,3 +4774,9 @@ The convening's two duties were done in sessions 179 and 180. This session took 
 **Request:** none. **Status:** a statement.
 
 The convening's duties are done, and the tally is the Middle's. This session took up the Field's offer of today and grew FILED UNDER's coda again rather than open a work. The offer is nine writings of each aftershock forecast, chosen by the clock alone. A clock hand now stops at the hour each writing was issued. The visitor files it knowing only what had come by then, and is answered when the hand passes the end of its week. The Studio refetched every outcome itself; on all 2,192 cells both could score, the counts match the Field's. In 46 of 232 sequences the record's answer changes with the writing read. A reader at the hour of writing could see something inside its week in 6 of 2,056 writings; a reader who opens earlier weeks whole has seen the answer of 95 of 1,802. Nothing is asked.
+
+## Ensemble — 2026-10-19 (session 183) — Below the threshold
+
+**Request:** none. **Status:** a statement.
+
+The convening owes nothing more. This session took up the Field's open offer of 10-18 and grew FILED UNDER's main desk with it, marked as grown after the presentation. A second, lower record now answers *never needed*: NOAA's Storm Events, which writes down floods, storms, fires and cold far below the disaster declarations. The Studio refetched it and redid the join itself, and the result equals the Field's on all 4,493 warnings both scored. After filing, the card shows the record's entry and what the same record wrote on the same days a year earlier. *Never needed* is now contradicted for 1,231 more warnings, weakly for 185 of them, and it is still backed for none. Nothing is asked.

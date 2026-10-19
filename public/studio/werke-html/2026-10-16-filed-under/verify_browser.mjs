@@ -3,12 +3,14 @@
 // answer cancelled, verdicts apart from abstentions, four bands, the keeper's clock, the wider person rule).
 // Session 177: increment 3, the presentation (no in-progress line; the slip carried by hand into a drawer;
 // the time each warning was held; the cycle's works linked).
+// Session 183: below the threshold (NOAA Storm Events answers never needed from below; the year-earlier line).
 import { createRequire } from 'module';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
 import { dirname, join } from 'path'; import fs from 'fs'; import { fileURLToPath } from 'url';
 const here = dirname(fileURLToPath(import.meta.url));
 const S = JSON.parse(fs.readFileSync(join(here, 'summary.json')));
+const BS = JSON.parse(fs.readFileSync(join(here, 'below_summary.json')));
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--autoplay-policy=no-user-gesture-required', '--allow-file-access-from-files'] });
 let pass = 0, fail = 0; const t = (n, ok) => { ok ? pass++ : fail++; console.log(ok ? 'ok  ' : 'FAIL', n) };
 const PERSON = /\b(silver alert|ashanti|bolo|be on the look ?out|last seen|[wbh]\/[mf]|males?|females?|y\/?o|year-old|locating)\b/i;
@@ -34,7 +36,7 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
     let bad = 0;
     CARDS.forEach(c => {
       const exp = { heeded: 'none', ignored: 'none', cant: 'agrees',
-        never: c.nn === 'backed' ? 'backed' : c.nn === 'contradicted' ? 'contradicted' : 'none' };
+        never: c.nn === 'backed' ? 'backed' : c.nn === 'contradicted' ? 'contradicted' : BELOW[c._i].s === 'met' ? 'contradicted' : 'none' };
       for (const f of Object.keys(exp)) if (window.__fu.answerFor(c, f)[0] !== exp[f]) bad++;
       if (c.nn === 'contradicted' && !c.dl.some(d => d[2] === 1)) bad++;
     });
@@ -86,7 +88,7 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await p.click('.drawer[data-f="never"]', { force: true }).catch(() => {});
   t(`${w} a filed card cannot be filed twice`, (await p.evaluate(() => window.__fu.ledger.length)) === 5);
   // a card the word list leaves silent though a disaster was declared
-  const si = await p.evaluate(() => CARDS.findIndex(c => c.nn === 'none' && c.dn));
+  const si = await p.evaluate(() => CARDS.findIndex((c, i) => c.nn === 'none' && c.dn && BELOW[i].s !== 'met'));
   await p.evaluate(i => window.__fu.show(i), si); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(2700);
   t(`${w} a declared disaster missed by the word list is said so`, /word list does not find/.test(await p.locator('#answer').innerText()));
   await p.click('#more'); await p.waitForFunction(() => document.getElementById('long').textContent.length > 10 && document.getElementById('long').textContent !== '…', null, { timeout: 15000 });
@@ -99,6 +101,29 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
     csv.split('\n')[0].includes('seconds_before_filing') && csv.includes('"carried"'));
   t(`${w} four bands are drawn`, await p.evaluate(() => { const c = document.getElementById('strip'); const g = c.getContext('2d');
     return c.height > 400 && [0.2, 0.45, 0.7, 0.95].every(y => g.getImageData(4, Math.floor(c.height * y), 1, 1).data[3] > 0 || g.getImageData(10, Math.floor(c.height * y) - 6, 1, 1).data[3] > 0); }));
+  // below the threshold (session 183)
+  const bk = await p.evaluate(() => { const n = {bw: 0, y0: 0, e: 0}; CARDS.forEach((c, i) => { const b = BELOW[i];
+    if (b.s === 'met' && !b.e) n.e++; if (b.n0 && !b.e0) n.e++;
+    if (c.nn !== 'contradicted' && b.s === 'met') { n.bw++; if (b.n0) n.y0++; } }); return {...n, len: BELOW.length}; });
+  t(`${w} below: ${bk.bw} contradicted from below, ${bk.y0} of them also a year earlier, = build`, bk.len === 13371 && bk.e === 0 &&
+    bk.bw === BS.counts['newly_contradicted|undeclared'] + BS.counts['newly_contradicted|declared'] && bk.y0 === BS.counts['newly_contradicted_and_year_earlier|undeclared'] + (BS.counts['newly_contradicted_and_year_earlier|declared'] || 0));
+  t(`${w} below: the build agrees with the Field's met_24 on every warning`, BS.check_against_field_met_24.same === 4493 && !BS.check_against_field_met_24.different);
+  t(`${w} below: the grown note is on the page, and the rule counts are filled`, /below the threshold/i.test(await p.locator('#grown').innerText()) && (await p.locator('#t_bw').innerText()) === bk.bw.toLocaleString('en-US'));
+  await p.click('.chip[data-mode="below"]'); await p.waitForTimeout(200);
+  const bi = await p.evaluate(() => +location.hash.slice(2) - 1);
+  t(`${w} the lower-record deck deals a card the lower record contradicts`, await p.evaluate(i => BELOW[i].s === 'met' && CARDS[i].nn !== 'contradicted', bi));
+  t(`${w} sealed, the lower record's entry is not shown`, !(await p.locator('#card').innerText()).includes('Storm Events wrote down'));
+  await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(1500);
+  card = await p.locator('#card').innerText();
+  t(`${w} filed never needed: contradicted from below, with the entry and the year-earlier line`, /contradicted from below/i.test(await p.locator('#answer').innerText()) &&
+    card.includes('Storm Events wrote down') && /A year earlier, in the same counties/.test(card) && (await p.locator('#after a[href*="ncei.noaa.gov/stormevents/eventdetails.jsp?id="]').count()) === 1);
+  const ks = await p.evaluate(() => CARDS.findIndex((c, i) => c.nn === 'none' && !c.dn && BELOW[i].s === 'silent'));
+  await p.evaluate(i => window.__fu.show(i), ks); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(2700);
+  t(`${w} where the lower record kept watch and wrote nothing: no word, a kept silence`, /silence where a record was kept/.test(await p.locator('#answer').innerText()) && /wrote none down/.test(await p.locator('#card').innerText()));
+  const uk = await p.evaluate(() => CARDS.findIndex((c, i) => c.nn === 'none' && !c.dn && BELOW[i].s === 'unkept'));
+  await p.evaluate(i => window.__fu.show(i), uk); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(2700);
+  t(`${w} where no record keeps the danger: no word, and nothing could`, /nothing could/.test(await p.locator('#answer').innerText()));
+  await p.click('#clear');
   await p.click('.chip[data-mode="decl"]');
   t(`${w} the declared deck deals a card with a declaration`, await p.evaluate(() => CARDS[+location.hash.slice(2) - 1].dn > 0));
   await p.click('#clear'); await p.evaluate(i => window.__fu.show(i), 0);

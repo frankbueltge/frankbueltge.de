@@ -10,7 +10,7 @@
 :root{
   --bg:#efe9dd; --paper:#fbf8f1; --ink:#1e1b16; --mute:#6b6458; --rule:#d6cdbb;
   --card:#fffdf8; --shadow:0 1px 0 #d9d0bd, 0 8px 24px rgba(60,45,20,.10);
-  --backed:#1f6f4a; --contra:#a3322a; --none:#8a8273; --agree:#3b5e8c; --lit:#c2761b; --land:#e3dccd; --edge:#f5f0e6;
+  --backed:#1f6f4a; --contra:#a3322a; --none:#8a8273; --agree:#3b5e8c; --lit:#c2761b; --land:#e3dccd; --edge:#f5f0e6; --below:#d99a8f; --kept:#a49a88;
   --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -19,13 +19,13 @@
   :root:not([data-theme="light"]){
     --bg:#16140f; --paper:#1d1a15; --ink:#ece5d6; --mute:#a39a89; --rule:#3a342b; --card:#24201a;
     --shadow:0 1px 0 #0b0a08, 0 8px 24px rgba(0,0,0,.4); --backed:#58b98a; --contra:#e0675d; --none:#8f8676;
-    --agree:#86a8d6; --lit:#e89a3c; --land:#3a352b; --edge:#1d1a15;
+    --agree:#86a8d6; --lit:#e89a3c; --land:#3a352b; --edge:#1d1a15; --below:#8a4a43; --kept:#6e665a;
   }
 }
 :root[data-theme="dark"]{
   --bg:#16140f; --paper:#1d1a15; --ink:#ece5d6; --mute:#a39a89; --rule:#3a342b; --card:#24201a;
   --shadow:0 1px 0 #0b0a08, 0 8px 24px rgba(0,0,0,.4); --backed:#58b98a; --contra:#e0675d; --none:#8f8676;
-  --agree:#86a8d6; --lit:#e89a3c; --land:#3a352b; --edge:#1d1a15;
+  --agree:#86a8d6; --lit:#e89a3c; --land:#3a352b; --edge:#1d1a15; --below:#8a4a43; --kept:#6e665a;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink)}
@@ -61,6 +61,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .after li{margin:0 0 8px;padding-left:18px;position:relative;font-size:15px}
 .after li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--mute)}
 .after li.decl::before{background:var(--lit)}
+.after li.below::before{background:var(--below)}
+.after li.below.met::before{background:var(--contra)}
+.after li.ago{color:var(--mute);font-size:14px}
+.after li.ago::before{background:transparent;border:1px dashed var(--mute)}
+.grown{font:12.5px/1.45 var(--mono);color:var(--mute);max-width:760px;margin:0 0 18px;border-left:3px solid var(--below);padding-left:10px}
 .after li.nobody::before{background:transparent;border:1px solid var(--mute)}
 .after q{font-family:var(--serif);color:var(--mute)}
 .drawers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:16px}
@@ -115,7 +120,7 @@ aside .k{font:12px/1.4 var(--mono);color:var(--mute)}
 .strip{width:100%;display:block;margin:10px 0 6px}
 .legend{display:flex;flex-wrap:wrap;gap:4px 14px;font:12px var(--mono);color:var(--mute)}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
-.legend .lc{background:var(--contra)} .legend .lb{background:var(--backed)} .legend .ln{background:var(--rule)} .legend .ly{border:2px solid var(--ink);background:transparent}
+.legend .lc{background:var(--contra)} .legend .lb{background:var(--backed)} .legend .ln{background:var(--rule)} .legend .lbw{background:var(--below)} .legend .lk{background:var(--kept)} .legend .ly{border:2px solid var(--ink);background:transparent}
 .band{font:12px/1.3 var(--mono);color:var(--mute);margin:12px 0 0;display:flex;justify-content:space-between;gap:8px}
 .band b{color:var(--ink)}
 details.rules summary{cursor:pointer;font:600 24px/1.2 var(--serif);margin:32px 0 8px}
@@ -150,12 +155,14 @@ a{color:var(--agree)}
   <h1>Filed Under</h1>
   <p class="lede">A warning a local keeper sent the public arrives on your desk, with everything the record holds after it. File it: <em>heeded</em>, <em>ignored</em>, <em>never needed</em>, or <em>the record can't say</em>. Then the record answers.</p>
   <p class="sub">The warnings are real: every warning that sheriffs, counties, fire districts and states sent through FEMA's alert system from 2012 to 2026 whose words can be shown and that warn of a danger still to come (13,371). The record is FEMA's alert archive and the country's disaster declarations. Nobody kept the column you are writing.</p>
+  <p class="grown" id="grown">Grown after the presentation, 2026-10-19 (session 183): <b>below the threshold</b>. A second, lower record now answers <em>never needed</em>: NOAA's Storm Events, which writes down floods, storms, fires and cold far below what the country declares a disaster. Where it wrote the danger down, the card shows its entry, and what it wrote on the same days a year earlier. <a href="#below">How</a>.</p>
 
   <div class="deal" role="group" aria-label="Which warnings to deal">
     <span>Deal from</span>
     <button class="chip" data-mode="all" aria-pressed="true">all 13,371</button>
     <button class="chip" data-mode="decl" aria-pressed="false">near a declared disaster</button>
     <button class="chip" data-mode="cancel" aria-pressed="false">cancelled by its keeper</button>
+    <button class="chip" data-mode="below" aria-pressed="false">a lower record spoke</button>
     <button class="chip sound" id="sound" aria-pressed="true" title="Sound">sound on</button>
     <button class="chip theme" id="theme" title="Light or dark">theme</button>
   </div>
@@ -209,6 +216,8 @@ a{color:var(--agree)}
         <div class="legend">
           <span><i class="lb"></i>backed</span>
           <span><i class="lc"></i>contradicted</span>
+          <span><i class="lbw"></i>contradicted from below</span>
+          <span><i class="lk"></i>kept, and silent</span>
           <span><i class="ln"></i>no word</span>
           <span><i class="ly"></i>yours</span>
         </div>
@@ -222,6 +231,7 @@ a{color:var(--agree)}
     <ul>
       <li><b>Heeded, ignored.</b> Neither archive holds a word on who received a warning or what anyone did. The answer is always <em>no word</em>. Of 13,371, the record can back none.</li>
       <li><b>Never needed.</b> <em>Contradicted</em> when the country declared a disaster in one of the warning's counties whose incident began from seven days before the warning to three days after it, and the warning's own words name that kind of danger: <span id="t_c"></span> warnings. <em>Backed</em> only where the record ties a word of error to the warning itself, through its keeper's cancel: <span id="t_b"></span> warnings. (In the first build, one: read by hand, its cancel retracted an earlier message, and its words described a person, so under the wider rule of session 176 it is no longer dealt.)</li>
+      <li id="below"><b>Never needed, from below</b> (added 2026-10-19, session 183). The declarations are a high threshold. NOAA's <a href="https://www.ncei.noaa.gov/stormevents/">Storm Events</a> database keeps dangers far below it, by county and forecast zone. A warning is <em>contradicted from below</em> when no declaration contradicts it and Storm Events wrote down a danger of the kind its words name in one of its counties, from a day before it was sent to a day after the life its keeper gave it: <span id="t_bw"></span> more warnings. For <span id="t_y0"></span> of them the same record wrote such a danger down on the same days a year earlier, too: there it is weak evidence, and the card says so. Where Storm Events keeps the danger and wrote none down (<span id="t_ks"></span>), the record is silent where it kept watch; it still cannot say the danger was never coming, so the answer stays <em>no word</em>. For <span id="t_uk"></span> warnings no lower public record joined here keeps the danger at all (roads, water, 911 lines, police matters, unnamed evacuations, earthquakes), and for <span id="t_uw"></span> sent since April 2026 Storm Events is not yet written. Lowering the threshold contradicts more; it backs none.</li>
       <li><b>The record can't say.</b> Always <em>agrees</em>.</li>
     </ul>
     <p>So the column the question asks for cannot be written from the record. A visitor can write it, one warning at a time, and the record can contradict one kind of guess. It cannot confirm any.</p>
@@ -232,10 +242,13 @@ a{color:var(--agree)}
     <p>The warnings, the tests left out, the text withheld because it names or describes a person (8,142 warnings, not dealt), and each warning's fate are the rules of <a href="../2026-10-15-the-keepers-word/">The Keeper's Word</a> (session 173, corrected in 174), reproduced here exactly (23,154 warnings). The declarations, their window and the word lists that decide whether a warning names a danger are the rules of <a href="../2026-10-15-the-unsent/">The Unsent</a> (session 174), read the other way round. After the critique of session 176 (<a href="CRITIQUE.md">CRITIQUE.md</a>), two more rules, fixed before the recount: a wider word list for texts that describe a person (alert names, "be on the lookout", sex, age, height, clothing) withholds 963 more, and 678 messages whose shown words are a cancel or an all-clear are not dealt, because they warn of nothing still to come. The keeper's clock on each card (the life the keeper wrote into the warning, and the minute of its first cancel) is the Field's, from its study 17 (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-15-the-end-written-in-advance">the end written in advance</a>, <code>warnings.tsv</code>), joined by message id: all 13,371 joined, and each lifetime agrees with the message's own expiry to the minute. The word lists read text mechanically; the card shows the words so you can judge them. County names come from the Census boundaries in the vendored map.</p>
     <p class="note">Limits. The alert system is one channel among many: sirens, phone lists and door-to-door warnings are not in it. A warning a keeper should have sent and did not send is not in the archive at all (that is <a href="../2026-10-15-the-unsent/">The Unsent</a>). Your filings stay in this browser and are not sent anywhere.</p>
 
+    <p><b>Below the threshold</b> (2026-10-19, session 183). NOAA NCEI, <a href="https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/">Storm Events Database</a>, the details files for 2011 to 2026, and the NWS zone-county correlation file <code>bp16ap26</code> (public domain; hashes in <code>below_summary.json</code>'s sources, raw files not committed). The rules are the Field's, from its study 24 (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-14-the-warnings-never-needed">the warnings never needed</a>), which joined this work's warnings to Storm Events and offered the result to the Studio on 2026-10-18. Its classifier, which reads which kinds of danger a warning's words name, was run here unchanged on this work's own data. The join was done again by the Studio from its own fetch of Storm Events (<code>build_below.py</code>): on all 4,493 warnings both could score, whether a danger was written down within a day and whether one was a year earlier agree with the Field's <code>met_24.tsv.gz</code>, 4,493 the same and none different. The card's entry is the event whose start lies nearest the warning; its words are NOAA's, cut at 240 characters. Storm Events is read only before April 2026, as the Field read it, because its latest months are still being filled in. A danger written down in a county is not proof that it reached the people the warning named, and a zone is mapped to every county it touches.</p>
+
     <h2>Neighbours in the Atlas of Data Art</h2>
     <ul>
       <li>Amnesty International with Element AI and the Decoders, <em>Troll Patrol</em>. There, volunteers label tweets, a classifier scales the labels, and the project publishes how far the classifier can be trusted. A tweet holds the evidence its label reads. Here, the warning does not: its fate is nowhere in the record, so no label can be checked, and none is ever pooled into a finding.</li>
       <li>Mimi Ọnụọha, <em>The Library of Missing Datasets</em>. There, a missing dataset is an empty labelled folder, shown. Here, the visitor fills the missing column one row at a time and gets each row back unconfirmed.</li>
+      <li>Catherine D'Ignazio, Silvana Fumega and Helena Suárez Val, <em>Data Against Feminicide</em> (added with the lower record, 2026-10-19). There, groups keep the count a state refuses to keep, below its official record, so that the deaths can be counted at all. Here the lower record is the state's own, kept for decades by NOAA, and it is not built to answer anyone; set under a warning, it can contradict a visitor's <em>never needed</em> and still back nothing. The card also shows what the same record wrote on the same days a year before, so that a contradiction from below shows how much it weighs.</li>
       <li>Durrell Bishop, <em>Marble Answering Machine</em>. There, each message becomes a marble, handled and placed on the dish of the person it is for, and the machine plays it back. Here, each warning gives a slip that is carried by hand into a drawer named for a fate, not a person, and the drawer answers instead of playing back. The handling is a gesture on glass, not an object in a room. What the hand adds is time: the page keeps how long you held each warning before you let it fall, and that column, unlike the fate, is the visitor's own and is true.</li>
     </ul>
     <h2>The cycle's works</h2>
@@ -251,9 +264,11 @@ a{color:var(--agree)}
 <script src="vendor/d3.min.js"></script>
 <script src="vendor/topojson-client.min.js"></script>
 <script src="data.js"></script>
+<script src="below.js"></script>
 <script>
 (() => {
-const C = window.CARDS, D = window.DECL, S = window.SUMMARY;
+const C = window.CARDS, D = window.DECL, S = window.SUMMARY, B = window.BELOW;
+C.forEach((c, i) => { c._i = i; });
 const NAMES = Object.assign({TOR:"Tornado warning", SVR:"Severe thunderstorm", VOW:"Volcano warning"}, window.NAMES);
 const $ = id => document.getElementById(id);
 const fmtN = n => n.toLocaleString("en-US");
@@ -276,6 +291,7 @@ const DECKS = {
   all: C.map((_, i) => i),
   decl: C.map((c, i) => c.dn ? i : -1).filter(i => i >= 0),
   cancel: C.map((c, i) => c.f.startsWith("end") ? i : -1).filter(i => i >= 0),
+  below: C.map((c, i) => B[i].s === "met" && c.nn !== "contradicted" ? i : -1).filter(i => i >= 0),
 };
 let mode = "all";
 document.querySelectorAll(".chip[data-mode]").forEach(b => {
@@ -408,6 +424,7 @@ function show(i){
   });
   if (c.dn > c.dl.length) li("decl", `and ${c.dn - c.dl.length} more declared disasters around that day.`);
   if (!c.dn) li("", "No disaster was declared in its counties around that day.");
+  belowLines(c, B[i]).forEach(([cls, html]) => li(cls, html));
   li("nobody", "No record says who received it, or what anyone did.");
   document.querySelectorAll(".drawer").forEach(b => { b.disabled = filed; b.classList.toggle("chosen", !!prior && b.dataset.f === prior.f); });
   const a = $("answer");
@@ -428,15 +445,42 @@ $("more").onclick = () => {
     .catch(() => { el.textContent = "The whole message could not be loaded."; });
 };
 
+// below the threshold (session 183): NOAA's Storm Events, a record kept far below the declarations
+const KINDS = {fire: "wildfire and smoke", flood: "floods", winter: "winter storms and cold", heat: "heat", severe: "storms and high wind", avalanche: "avalanches"};
+const kinds = cl => cl.split(",").map(k => KINDS[k] || k).join(", ");
+const NCEI = id => "https://www.ncei.noaa.gov/stormevents/eventdetails.jsp?id=" + id;
+function belowLines(c, b){
+  const out = [];
+  if (b.s === "met") {
+    const e = b.e, d = e.b - c.t, rel = d === 0 ? "the minute it was sent" : `${dur(Math.abs(d))} ${d < 0 ? "before" : "after"} it was sent`;
+    out.push(["below met", `Below the declarations, NOAA's Storm Events wrote down <b>${esc(e.type.toLowerCase())}</b> in ${esc(e.where)}${e.zone ? " (a forecast zone)" : ""}, beginning ${fmtT(e.b)}, ${rel}.${e.x ? ` <q>${esc(e.x)}</q>` : ""} <a href="${NCEI(e.id)}" target="_blank" rel="noopener">Its entry</a>${b.n > 1 ? `, and ${b.n - 1} more of that kind around it.` : "."}`]);
+  } else if (b.s === "silent") {
+    out.push(["below", `Below the declarations, NOAA's Storm Events keeps ${esc(kinds(b.cl))} by county. It wrote none down in its counties from a day before this warning to a day after it ended.`]);
+  } else if (b.s === "unwritten") {
+    out.push(["below", `NOAA's Storm Events keeps ${esc(kinds(b.cl))}, but for this month it is not yet written in full, and it is not read here.`]);
+  } else if (b.s === "unjoined") {
+    out.push(["below", "Its words name an earthquake or a tsunami. That register is not joined here."]);
+  } else {
+    out.push(["below", "No lower public record joined here keeps the kind of danger its words name."]);
+  }
+  if (b.s === "met" || b.s === "silent")
+    out.push(["ago", b.n0 ? `A year earlier, in the same counties on the same days, it wrote down ${esc(b.e0.type.toLowerCase())} too (${fmtT(b.e0.b).slice(0, 10)}).` : "A year earlier, in the same counties on the same days, it wrote down nothing of that kind."]);
+  return out;
+}
+
 // the record's answer
 function answerFor(c, f){
   if (f === "cant") return ["agrees", "The record agrees. It holds no column for what became of a warning."];
   if (f === "heeded") return ["none", "No word. Neither archive says who received this warning or what they did, so nothing in the record can back <em>heeded</em>, and nothing can refute it."];
   if (f === "ignored") return ["none", "No word. Neither archive says who received this warning or what they did, so nothing in the record can back <em>ignored</em>, and nothing can refute it."];
   if (c.nn === "backed") return ["backed", "Backed, as far as the record goes: its keeper's cancel carries words of error. The record ties a word of error to this warning alone."];
-  if (c.nn === "none" && c.dn) return ["none", "No word, by the fixed rules: a disaster was declared in its counties around that day, but the word list does not find that kind of danger in its words. Read them: you may judge the record's silence wrong."];
   if (c.nn === "contradicted") return ["contradicted", "Contradicted. The country declared a disaster in its counties around that day, and the warning's own words name that kind of danger. A danger came. Whether this word helped, the record does not say."];
-  return ["none", "No word. Nothing in the record says the danger came, and nothing says it was never coming."];
+  const b = B[c._i] || {};
+  if (b.s === "met") return ["contradicted", "Contradicted from below. " + (c.dn ? "The declaration around that day was for another kind of danger, " : "No declaration speaks to it, ") + "but NOAA's Storm Events, a record kept far below the declarations, wrote down that kind of danger in its counties within a day of it. " + (b.n0 ? "Weakly: a year earlier, on the same days, it wrote one down there too. Such a danger is often there." : "A year earlier, on the same days, it wrote none down there.") + " Whether this word helped, the record does not say.", "below"];
+  if (c.nn === "none" && c.dn) return ["none", "No word, by the fixed rules: a disaster was declared in its counties around that day, but the word list does not find that kind of danger in its words. Read them: you may judge the record's silence wrong."];
+  if (b.s === "silent") return ["none", "No word. No declaration, and the lower record, which keeps watch for that kind of danger, wrote none down in its counties within a day. That is a silence where a record was kept. It still does not say the danger was never coming.", "kept"];
+  if (b.s === "unwritten") return ["none", "No word yet. No declaration, and the lower record is not yet written for its month."];
+  return ["none", "No word. No record joined here keeps the kind of danger its words name. Nothing says the danger came, and nothing could."];
 }
 function file(f, how){
   if (cur == null || filed) return;
@@ -547,25 +591,32 @@ function drawStrip(){
   g.font = "12px " + css("--mono"); g.textBaseline = "alphabetic";
   BANDS.forEach(([f, label], b) => {
     const y0 = b * (bh + gap) + gap;
-    const ans = C.map(c => answerFor(c, f)[0]);
+    const full = C.map(c => answerFor(c, f)), ans = full.map(r => r[0]);
     const k = {backed: 0, contradicted: 0};
     ans.forEach(a => { if (a in k) k[a]++; });
     g.fillStyle = css("--ink"); g.fillText(label, 0, y0 - 8);
-    g.fillStyle = css("--mute"); const right = f === "cant" ? "agrees with all: no verdict" : `backed ${fmtN(k.backed)} · contradicted ${fmtN(k.contradicted)}`;
+    g.fillStyle = css("--mute"); let right = f === "cant" ? "agrees with all: no verdict" : `backed ${fmtN(k.backed)} · contradicted ${fmtN(k.contradicted)}`;
+    if (f === "never") { const bw = full.filter(r => r[2] === "below").length; right = `backed 0 · contradicted ${fmtN(k.contradicted - bw)} + ${fmtN(bw)} from below`;
+      if (g.measureText(label + right).width + 16 > w) right = `contradicted ${fmtN(k.contradicted - bw)} + ${fmtN(bw)} below`;
+      if (g.measureText(label + right).width + 16 > w) right = `${fmtN(k.contradicted - bw)} + ${fmtN(bw)} below`; }
     g.fillText(right, w - g.measureText(right).width, y0 - 8);
-    ans.forEach((a, i) => { g.fillStyle = col[a]; g.fillRect((i % cols) * cell, y0 + Math.floor(i / cols) * cell, cell - 0.4, cell - 0.4); });
+    ans.forEach((a, i) => { g.fillStyle = full[i][2] ? css("--" + full[i][2]) : col[a]; g.fillRect((i % cols) * cell, y0 + Math.floor(i / cols) * cell, cell - 0.4, cell - 0.4); });
     g.strokeStyle = css("--ink"); g.lineWidth = 1.5;
     ledger.filter(r => r.f === f).forEach(r => g.strokeRect((r.i % cols) * cell - 2.5, y0 + Math.floor(r.i / cols) * cell - 2.5, cell + 5, cell + 5));
   });
 }
 const nn = S.never_needed;
 $("t_c").textContent = fmtN(nn.contradicted); $("t_b").textContent = fmtN(nn.backed || 0);
+{ const n = {bw: 0, y0: 0, ks: 0, uk: 0, uw: 0};
+  C.forEach((c, i) => { if (c.nn !== "none") return; const s = B[i].s;
+    if (s === "met") { n.bw++; if (B[i].n0) n.y0++; } else if (c.dn) return; else if (s === "silent") n.ks++; else if (s === "unwritten") n.uw++; else n.uk++; });
+  $("t_bw").textContent = fmtN(n.bw); $("t_y0").textContent = fmtN(n.y0); $("t_ks").textContent = fmtN(n.ks); $("t_uk").textContent = fmtN(n.uk); $("t_uw").textContent = fmtN(n.uw); }
 window.addEventListener("resize", () => drawStrip());
 
 paintLedger(); drawStrip();
 const m = location.hash.match(/^#w(\d+)$/);
 if (m && +m[1] >= 1 && +m[1] <= C.length) show(+m[1] - 1); else deal();
-window.__fu = {file, show, answerFor, ledger, clockLine};
+window.__fu = {file, show, answerFor, ledger, clockLine, belowLines};
 })();
 </script>
 <footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
