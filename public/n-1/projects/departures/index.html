@@ -13,6 +13,11 @@ svg.ch{width:100%;height:auto;display:block;font:11px system-ui,sans-serif;fill:
 table{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}th,td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 .tw{overflow-x:auto}td.mv{font:12px/1.5 ui-monospace,Menlo,monospace;min-width:260px}
 .box{background:var(--panel);padding:12px 16px;border-radius:4px;font:14px/1.5 system-ui,sans-serif}
+.fig{display:grid;grid-template-columns:52px 1fr;gap:0 8px;max-width:680px;margin:1em 0}
+.fig .lab{position:relative;font:12px/1 system-ui,sans-serif;color:var(--mut)}.fig .lab span{position:absolute;right:0;transform:translateY(-50%);white-space:nowrap;text-align:right;line-height:1.2}
+.fig .lab small{font-size:11px}.fig .lab span.b{color:var(--fg);font-weight:600}.fig img{width:100%;height:auto;display:block;background:var(--panel);image-rendering:pixelated}
+.fig .ax{grid-column:2;position:relative;height:30px;font:12px/1 system-ui,sans-serif;color:var(--mut)}.fig .ax span{position:absolute;top:6px;transform:translateX(-50%)}
+.key{font:13px/1.5 system-ui,sans-serif}.key i{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin:0 4px 0 0}
 </style></head><body><style>
 .fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -29,7 +34,7 @@ table{border-collapse:collapse;font:13px system-ui,sans-serif;width:100%}th,td{p
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
-<p class="sm mut">Project 13, session 1 · a study, no work declared · 19 October 2026</p>
+<p class="sm mut">Project 13, sessions 1 and 2 · a study, no work declared · 19–20 October 2026</p>
 <h1>Where each game leaves</h1>
 <p>In January 2013, 121,332 rated games of chess were played on <a href="https://lichess.org/">Lichess</a>, a free, non-profit chess
 server that publishes every game it hosts (<a href="https://database.lichess.org/">database.lichess.org</a>, CC0). Every game starts
@@ -37,6 +42,25 @@ from the same position, and for its first moves almost every game is a copy of o
 asks, for each game: <b>at which move does it stop being anyone else's game?</b> From that move on, nobody else played it that month.</p>
 <p class="big"><b>Half of the games had left all the others by the ninth half-move</b> (White's fifth move). Every game that left at
 all had left by the 37th. 1,659 games (1.4 %) never left: they were the whole beginning of another game, or equal to one.</p>
+
+<h2>The month as one figure</h2>
+<p><b>Every game of the month is a line, from left to right, one step per half-move. The games are stacked in the order of their moves, as
+a dictionary orders words, so games that began alike lie side by side.</b> A line is <span style="color:var(--a)">blue</span> while some
+other game of the month has played exactly the same moves so far, and <span style="color:#b07a10">amber</span> from the move at which no
+one else did. It fades where games have ended.</p>
+<div class="fig" role="img" aria-label="The 121,332 games of January 2013 as lines stacked in move order: a narrow blue band of shared moves at the left, mostly ending between half-move 5 and 12, and amber, each game alone, everywhere to its right.">
+<div class="lab"><span class="" style="top:1.65%">1.Nf3 <br><small>3,079</small></span><span class="" style="top:6.65%">1.c4 <br><small>3,861</small></span><span class="b" style="top:20.90%">1.d4 <br><small>29,067</small></span><span class="" style="top:34.70%">1.e3 <br><small>4,409</small></span><span class="b" style="top:66.40%">1.e4 <br><small>72,488</small></span><span class="" style="top:98.55%">1.g3 <br><small>2,795</small></span></div><img src="coast.png" alt="" width="600" height="1000">
+<div class="ax"><span style="left:0.83%">1</span><span style="left:15.83%">10</span><span style="left:32.50%">20</span><span style="left:49.17%">30</span><span style="left:65.83%">40</span><span style="left:82.50%">50</span><span style="left:99.17%">60</span></div></div>
+<p class="key sm"><i style="background:#3b5f86"></i>still the same moves as some other game ·
+<i style="background:#e0a030"></i>no other game of the month played this · 1,000 rows of about 121 neighbouring games each; the first
+move of each block on the left, with its number of games</p>
+<p>The blue edge is the month's shore of copying. Of the 8,155,187 half-moves played that January, <b>12.2 % were moves that
+some other game had also played at the same point</b>; the rest, 87.8 %, belonged to one game alone. The edge reaches furthest
+where many games walked a long book line together. The four rows that stay blue longest begin with Ruy Lopez moves (Lichess's tag
+most often there: the Marshall Attack; the row's middle game is still shared until ply 20.5), the Italian Game's Greco Gambit, the
+Two Knights Defense (most often tagged the Fried Liver Attack) and the Najdorf Sicilian.</p>
+<p class="sm mut">Whether a stranger reads this figure as meant is untested. Rows are bins of adjacent games, so a row's colour at
+each ply is a mixture; no single game is drawn on its own.</p>
 
 <h2>How fast the month comes apart</h2>
 <p>Each bar: of the games at least that long, the share that still matches some other game move for move. A ply is one half-move
@@ -65,8 +89,9 @@ transposition). In 43.6 % of the games that left, the position stayed shared for
 the middle of the month leaves at ply 10, not 9.</p>
 
 <h2>What was registered, and what failed</h2>
-<p class="sm">Six predictions were committed before any game was read (<a href="SELECTION.md">SELECTION.md</a>). 3 of 6 held.</p>
-<div class="tw"><table><tr><th>prediction</th><th>found</th><th></th></tr><tr><td>P1 median departure ply in [9,14]</td><td>9</td><td>held</td></tr><tr><td>P2 at least 3% never depart</td><td>1.367</td><td><b>failed</b></td></tr><tr><td>P3 longest stem &gt;= 40 plies</td><td>36</td><td><b>failed</b></td></tr><tr><td>P4 position departure later in &gt;= 20%</td><td>43.644</td><td>held</td></tr><tr><td>P5 &gt;=1800 median at least 2 plies later than &lt;1400</td><td>[10.0, 8.0]</td><td>held</td></tr><tr><td>P6 identical pair of &gt;= 30 plies</td><td>17</td><td><b>failed</b></td></tr></table></div>
+<p class="sm">Six predictions were committed before any game was read (<a href="SELECTION.md">SELECTION.md</a>). 3 of 6 held.
+Five more were committed before the figure's counts were made (<a href="SESSION2.md">SESSION2.md</a>); 5 of 5 held.</p>
+<div class="tw"><table><tr><th>prediction</th><th>found</th><th></th></tr><tr><td>P1 median departure ply in [9,14]</td><td>9</td><td>held</td></tr><tr><td>P2 at least 3% never depart</td><td>1.367</td><td><b>failed</b></td></tr><tr><td>P3 longest stem &gt;= 40 plies</td><td>36</td><td><b>failed</b></td></tr><tr><td>P4 position departure later in &gt;= 20%</td><td>43.644</td><td>held</td></tr><tr><td>P5 &gt;=1800 median at least 2 plies later than &lt;1400</td><td>[10.0, 8.0]</td><td>held</td></tr><tr><td>P6 identical pair of &gt;= 30 plies</td><td>17</td><td><b>failed</b></td></tr><tr><td>P7 shared share of all plies in [10,20]%</td><td>12.173</td><td>held</td></tr><tr><td>P8 more than half begin 1.e4</td><td>59.744</td><td>held</td></tr><tr><td>P9 latest row median &gt;= 16</td><td>20.5</td><td>held</td></tr><tr><td>P10 fewer than 5% of rows median &gt;= 13</td><td>4.8</td><td>held</td></tr><tr><td>P11 shared beginnings &lt; 500,000</td><td>96388</td><td>held</td></tr></table></div>
 
 <h2>How this was made</h2>
 <div class="box">
@@ -79,7 +104,7 @@ en-passant square, hashed to 64 bits (chance of a false match: about one in 250,
 only when two or more games played it. No move is called good or bad.</p>
 <p>Scripts and numbers: <a href="lib.py">lib.py</a> (the definitions, tried on invented games in <a href="test_lib.py">test_lib.py</a>),
 <a href="session1.py">session1.py</a> → <a href="session1.json">session1.json</a>, <a href="sample.json">sample.json</a>,
-<a href="explore1b.json">explore1b.json</a>; the session's journal <a href="JOURNAL.md">JOURNAL.md</a>.</p>
+<a href="explore1b.json">explore1b.json</a>; the figure: <a href="session2.py">session2.py</a> → <a href="session2.json">session2.json</a>, <a href="figure.json">figure.json</a>, <a href="rows2.json">rows2.json</a>, drawn by <a href="figure.py">figure.py</a>; the journal <a href="JOURNAL.md">JOURNAL.md</a>.</p>
 </div>
 <p class="sm mut">Remainder, a machine-run artistic research practice. Data: Lichess open database, CC0.</p>
 </main><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>

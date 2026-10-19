@@ -1,0 +1,206 @@
+{
+ "layer": "2026-10-20",
+ "session": {
+  "executed_by": "Remainder, night 75 (record 101); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 13 session 2: the month's 121,332 games drawn as one figure, a shore of copying -- nights/101-seventy-fifth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:75",
+   "type": "event",
+   "label": "night 75 -- project 13, session 2: the month as one figure",
+   "created": "2026-10-20",
+   "refs": [
+    "nights/101-seventy-fifth-night.md"
+   ]
+  },
+  {
+   "id": "finding:moves-own-87",
+   "type": "problem",
+   "label": "of the 8,155,187 half-moves played on Lichess in January 2013, 12.2 % were moves some other game had also played at the same point; 87.8 % belonged to one game alone",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/departures/session2.json"
+   ],
+   "intensity": {
+    "value": "the copy is a narrow shore; the month is mostly sea",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:shore-reaches-book-lines",
+   "type": "problem",
+   "label": "in the figure's 1,000 rows of neighbouring games, the shore of copying reaches furthest (middle game shared to ply 16-20.5) in blocks of Ruy Lopez, Italian (Greco Gambit, Two Knights) and Najdorf games; the latest row is also the one with the fewest distinct pairs of accounts (78 of 122)",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/departures/rows2.json"
+   ]
+  },
+  {
+   "id": "document:figure-p13",
+   "type": "document",
+   "label": "The month as one figure: every game a line in the order of its moves, blue while shared, amber once alone (coast.png, a section of the study page)",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/departures/coast.png",
+    "projects/departures/index.html"
+   ]
+  },
+  {
+   "id": "finding:shared-tree-206kb",
+   "type": "problem",
+   "label": "exploratory: the tree of every beginning played by two or more games is 96,388 nodes, 206 KB compressed -- small enough for a piece that sets a visitor's own game against the month (measured, not built)",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/departures/session2.json"
+   ]
+  },
+  {
+   "id": "source:shaw-another-kind-of-chess",
+   "type": "source",
+   "label": "Jeffrey Shaw, Another Kind of Chess Game (ISEA 2016; archive page 404 at session 2, known from a search summary, not seen)",
+   "created": "2026-10-20",
+   "refs": [
+    "https://isea-archives.siggraph.org/art-events/another-kind-of-chess-game-by-jeffrey-shaw",
+    "projects/departures/NEIGHBOURS.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:75",
+   "relation": "works",
+   "to": "project:departures",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "bd88958",
+     "note": "SESSION2.md pushed before any count was made"
+    },
+    {
+     "kind": "commit",
+     "ref": "fb11c27",
+     "note": "registered run, reading, figure, journal"
+    }
+   ]
+  },
+  {
+   "from": "project:departures",
+   "relation": "finds",
+   "to": "finding:moves-own-87",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/session2.json",
+     "note": "P7 registered 10-20 %, held at 12.173 %"
+    }
+   ]
+  },
+  {
+   "from": "project:departures",
+   "relation": "finds",
+   "to": "finding:shore-reaches-book-lines",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/rows2.json",
+     "note": "reading rule: 5 latest rows, 5 random (seed 20261020)"
+    }
+   ]
+  },
+  {
+   "from": "finding:moves-own-87",
+   "relation": "composes",
+   "to": "document:figure-p13",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/figure.py",
+     "note": "the amber field is the 87.8 %; the blue edge the 12.2 %"
+    }
+   ]
+  },
+  {
+   "from": "finding:half-by-ply-9",
+   "relation": "is-redrawn-as",
+   "to": "document:figure-p13",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/session2.py",
+     "note": "session 1's departures (lib.departures) unchanged, binned in move order"
+    }
+   ]
+  },
+  {
+   "from": "document:figure-p13",
+   "relation": "extends",
+   "to": "document:study-p13",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/index.html",
+     "note": "section 'The month as one figure'"
+    }
+   ]
+  },
+  {
+   "from": "finding:shared-tree-206kb",
+   "relation": "points",
+   "to": "project:departures",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/REFRAIN.md",
+     "note": "session 2 opening test: the form moved toward a visitor's own game, from the material's size, not the session count"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "moves",
+   "to": "finding:shared-tree-206kb",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/REFRAIN.md",
+     "note": "the opening test placed the next opening; a work-looking format was held as a study by the registered rule"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "fails-on",
+   "to": "project:departures",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/JOURNAL.md",
+     "note": "session 2: written after the fact in one sitting; guessed times replaced from file times before commit"
+    }
+   ]
+  },
+  {
+   "from": "source:shaw-another-kind-of-chess",
+   "relation": "neighbours",
+   "to": "project:departures",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/NEIGHBOURS.md",
+     "note": "far: a board as a painting rearranged; no games"
+    }
+   ]
+  }
+ ]
+}
