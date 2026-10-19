@@ -8,6 +8,7 @@ const Q = JSON.parse(fs.readFileSync(path.join(here, 'plate6.json')));
 const V = JSON.parse(fs.readFileSync(path.join(here, 'plate7.json')));
 const E = JSON.parse(fs.readFileSync(path.join(here, 'plate8.json')));
 const X = JSON.parse(fs.readFileSync(path.join(here, 'plate9.json')));
+const C = JSON.parse(fs.readFileSync(path.join(here, 'plate10.json')));
 const br = await chromium.launch({ executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
 for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   const pg = await br.newPage({ viewport: { width: wd, height: 900 }, colorScheme: scheme }); const errs = [];
@@ -92,6 +93,26 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   ok(px9 > 10000, `${wd}px: the grid of warnings is drawn`);
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate IX`);
   await pg.click('#p9-B'); await pg.$eval('#p9read', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p9-${wd}.png`) });
+  // plate X (increment 6)
+  const p10 = () => pg.evaluate(() => window.__p10); const near3 = (a, b) => Math.abs(a - b) < 0.0015;
+  ok(await pg.$$eval('#p10grid button', b => b.length) === 232 && await pg.$$eval('#p10grid button.q', b => b.length) === C.quiet && C.quiet === 182, `${wd}px: plate X draws 232 sequences, 182 of them quiet`);
+  for (let k = 0; k < 9; k++) { await pg.click('#p10-l' + k);
+    await pg.click('#p10-copy'); let j = await p10(); const ct = C.copy_texts[k];
+    ok(j.o === ct.copy_text.observed && near3(j.r, ct.copy_text.ratio) && j.subs === 0 && j.blind, `${wd}px: copy-text ${ct.lag_h} h recomputes to ${ct.copy_text.ratio}, no variant`);
+    for (const [h, key] of [['w', 'words'], ['e', 'weeks'], ['b', 'both']]) { await pg.click('#p10-h' + h);
+      for (const [r, name] of [['harsh', 'harshest'], ['kind', 'kindest']]) { await pg.click('#p10-' + r); j = await p10(); const v = ct.hands[key][name];
+        ok(j.o === v.observed && near3(j.r, v.ratio) && j.subs === v.substituted && !j.blind, `${wd}px: from ${ct.lag_h} h, the ${name} hand on the ${key} reaches ${v.ratio} with ${v.substituted} variants`); }
+      await pg.click('#p10-right'); j = await p10(); const f = ct.hands[key].fewest_to_right;
+      ok(f === null ? j.none === true : (j.subs === f && j.r >= 1 - 1e-9), `${wd}px: from ${ct.lag_h} h, the fewest variants on the ${key} to reach right: ${f}`); } }
+  await pg.click('#p10-l0'); await pg.click('#p10-hw');
+  for (const [r, name] of [['least', 'stated_least'], ['most', 'stated_most']]) { await pg.click('#p10-' + r); const j = await p10(), v = C.blind_on_the_words[name];
+    ok(j.o === v.observed && near3(j.r, v.ratio) && j.blind && (await t('p10read')).includes('indicative'), `${wd}px: the blind rule ${name} reads ${v.ratio}, in the indicative`); }
+  await pg.click('#p10-kind'); ok((await t('p10read')).includes('subjunctive') && (await t('p10read')).includes('only what was promised'), `${wd}px: a sighted reading of the words is subjunctive, and says only the promise differs`);
+  await pg.click('#p10grid button.v'); ok((await t('p10card')).includes('Variant admitted') && (await t('p10card')).includes('Quiet'), `${wd}px: a tapped quiet square shows its collation and the admitted variant`);
+  ok((await t('p10f-wr')) === String(C.first_hour.words_fewest_to_right) && (await t('p10b-m')) === C.blind_on_the_words.stated_most.ratio.toFixed(2), `${wd}px: plate X counts filled from plate10.json`);
+  ok(await pg.$$eval('#p10axis [data-k^="reach-"]', r => r.length) === 3, `${wd}px: plate X draws three reaches`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate X`);
+  await pg.$eval('#p10axis', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p10-${wd}.png`) });
   ok(errs.length === 0, `${wd}px: no script errors ${errs.join(' | ')}`);
   await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-${wd}.png`), fullPage: false });
 }
