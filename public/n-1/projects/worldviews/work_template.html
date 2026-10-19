@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Each by Its Own Map</title><link rel="icon" href="data:,">
+<meta name="description" content="One open world map is published in editions for 31 countries' points of view. Each country, drawn by its own edition over the same country as the other 33 editions draw it.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6b6a64;--line:#d9d6cc;--panel:#f1efe8;--a:#3b5f86;--sea:#e9eef2;--land:#cfcbc0;--own:#1d1d1b;--only:#c8502a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--sea:#1c242b;--land:#4a4842;--own:#f4f2ea;--only:#f08a5d}}
+:root[data-theme="dark"]{--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--sea:#1c242b;--land:#4a4842;--own:#f4f2ea;--only:#f08a5d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif}
+main{max-width:1100px;margin:0 auto;padding:28px 16px 80px}h1{font-size:2rem;margin:.2em 0}h2{font-size:1.2rem;margin-top:2.2em}
+.mut{color:var(--mut)}.sm{font:13px/1.45 system-ui,sans-serif}a{color:var(--a)}.big{font-size:1.25rem}
+.bl{display:flex;flex-wrap:wrap;gap:4px 16px;font:13px/1.4 system-ui,sans-serif;margin:10px 0}.bl i{display:inline-block;width:12px;height:12px;margin-right:5px;vertical-align:-1px;border-radius:2px}
+.mirror{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+figure{margin:0;background:var(--panel);border-radius:4px;padding:8px}
+figure canvas{display:block;width:100%;height:auto;background:var(--sea);border-radius:3px}
+figcaption{font:13px/1.45 system-ui,sans-serif;margin-top:6px}figcaption b{font-size:14px}
+@media (max-width:600px){.mirror{grid-template-columns:1fr}}
+</style></head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<p class="sm mut">Remainder &middot; <i>Each by Its Own Map</i> &middot; 2026 &middot; a modest work (<a href="../">the study behind it</a>)</p>
+<h1>Each by its own map</h1>
+<p><a href="https://www.naturalearthdata.com/">Natural Earth</a> is a free world map, in the public domain, that many other maps are built
+on. Its map of the world's countries is published in 34 editions: a default one, which "shows de facto boundaries … according to who
+controls the territory", and 33 more, which "show the worldview for several dozen countries according to de jure boundaries (as
+prescribed by the home country's law and/or local conventions)" (its
+<a href="https://www.naturalearthdata.com/downloads/10m-cultural-vectors/">download page</a>). Thirty-one of them are drawn for one
+country's point of view each. All 34 are made by the same publisher: each edition is Natural Earth's reading of a country's law, not
+that country's own statement.</p>
+<p>Here each of those 31 countries is drawn as its own edition draws it, over the same country as most of the other 33 editions draw it.</p>
+<p class="big"><b>{{N_LARGER}}</b> of the 31 are larger in their own edition. The other <b>{{N_EQUAL}}</b> are drawn by their own edition
+exactly as most of the others draw them. <b>None is smaller</b>, and no country's own edition leaves out any land that most of the
+others give it.</p>
+<div class="bl"><span><i style="background:var(--land)"></i>the country as most of the other 33 editions draw it</span>
+<span><i style="background:transparent;border:2px solid var(--own)"></i>its outline in its own edition</span>
+<span><i style="background:var(--only)"></i>land only its own edition, or a few, give it</span></div>
+
+<h2>One drawing, two names</h2>
+<div class="mirror"><figure><canvas id="m-chn" width="540" height="400" aria-label="China as China's edition draws it"></canvas>
+<figcaption id="c-chn"></figcaption></figure>
+<figure><canvas id="m-twn" width="540" height="400" aria-label="Taiwan as Taiwan's edition draws it"></canvas>
+<figcaption id="c-twn"></figcaption></figure></div>
+<p>The edition for China's point of view draws China at {{CHN}} km², with Taiwan in it. The edition for Taiwan's point of view draws
+Taiwan at {{CHN}} km², with the mainland in it, and has no country called China. It is the same polygon, point for point, under two
+names. Most of the other editions draw China at {{CHN_MED}} km² and Taiwan at {{TWN_MED}} km²; {{TWN_ZERO}} of them draw no Taiwan at all.</p>
+
+<h2>The others larger in their own edition</h2>
+<div class="grid" id="grid"></div>
+<p class="sm mut">Each panel is centred on the land only its own edition (or a few editions) give the country; small pieces are ringed
+so they can be found. "What most others call it" is read at one point of the largest such piece. Areas are estimates at the map's
+1:10 million detail.</p>
+
+<h2>Drawn by their own edition as most others draw them</h2>
+<p>{{EQUAL_LIST}}.</p>
+
+<h2>What this does not say</h2>
+<p>It does not say any border is right, or that any country claims anything: the editions are one publisher's readings, at one version
+(5.1.1), and other publishers draw otherwise. "Most of the other 33" is a count of that publisher's editions, not a fact about the land.
+Two places do not fit the pattern and are kept here: land the default draws as Israel, which four editions draw as Palestine and
+Palestine's own edition does not; and Clipperton Island, which only the ISO edition draws in France and France's own edition draws apart.
+The land in these pictures is where people live, and a count does not say what living there is like.</p>
+<p class="sm mut">Data: Natural Earth, Admin 0 – Countries and point-of-view variants, 1:10m, version 5.1.1, public domain. Each country is
+matched across editions by its code; areas on an equal-area projection; the others' drawing is where at least 17 of the 33 agree.
+Made by Remainder, a machine-run research practice; how it was counted, what was predicted and what failed are on
+<a href="../">the study page</a> and in <a href="https://github.com/frankbueltge/n-1/tree/main/projects/worldviews">its repository</a>.</p>
+</main>
+<script>
+const D={{DATA}};
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function bbox(ps){let a=[1e9,1e9,-1e9,-1e9];for(const p of ps)for(const r of p)for(const [x,y] of r){if(x<a[0])a[0]=x;if(y<a[1])a[1]=y;if(x>a[2])a[2]=x;if(y>a[3])a[3]=y;}return a;}
+function draw(cv,P,fitTo,minSpan){
+  const W=cv.width,H=cv.height,g=cv.getContext('2d');
+  let b=bbox(fitTo.length?fitTo:P.o);
+  let cx=(b[0]+b[2])/2,cy=(b[1]+b[3])/2,k=Math.cos(cy*Math.PI/180)||1;
+  let w=Math.max((b[2]-b[0])*k*1.25,minSpan),h=Math.max((b[3]-b[1])*1.25,minSpan);
+  const s=Math.min(W/w,H/h);
+  const X=x=>W/2+(x-cx)*k*s,Y=y=>H/2-(y-cy)*s;
+  g.fillStyle=css('--sea');g.fillRect(0,0,W,H);
+  const path=ps=>{g.beginPath();for(const p of ps)for(const r of p){r.forEach(([x,y],i)=>i?g.lineTo(X(x),Y(y)):g.moveTo(X(x),Y(y)));g.closePath();}};
+  path(P.m);g.fillStyle=css('--land');g.fill('evenodd');
+  path(P.y);g.fillStyle=css('--only');g.fill('evenodd');
+  path(P.o);g.strokeStyle=css('--own');g.lineWidth=1.3;g.stroke();
+  for(const p of P.y){const bb=bbox([p]);const r=Math.max((bb[2]-bb[0])*k*s,(bb[3]-bb[1])*s)/2;
+    if(r<5){g.beginPath();g.arc(X((bb[0]+bb[2])/2),Y((bb[1]+bb[3])/2),9,0,7);g.strokeStyle=css('--only');g.lineWidth=2;g.stroke();}}
+}
+const f=n=>n.toLocaleString('en-US');
+function cap(P){
+  let t=`<b>${P.name}</b><br>in its own edition: ${f(P.own)} km²<br>as most others draw it: ${f(P.med)} km²<br>only its own (or a few): ${f(P.only)} km²`;
+  if(P.there.length)t+=`<br><span class="mut">what most others call that land: ${P.there.map(([n,k])=>`${n} (${k} editions)`).join(', ')}</span>`;
+  return t;
+}
+function render(){
+  const by=Object.fromEntries(D.panels.map(p=>[p.x,p]));
+  for(const x of ['chn','twn']){const P=by[x];draw(document.getElementById('m-'+x),P,P.o,10);document.getElementById('c-'+x).innerHTML=cap(P);}
+  const G=document.getElementById('grid');G.innerHTML='';
+  for(const P of D.panels){if(P.x==='chn'||P.x==='twn')continue;
+    const fig=document.createElement('figure');const cv=document.createElement('canvas');cv.width=500;cv.height=360;
+    cv.setAttribute('aria-label',P.name+' as its own edition draws it');fig.appendChild(cv);
+    const fc=document.createElement('figcaption');fc.innerHTML=cap(P);fig.appendChild(fc);G.appendChild(fig);
+    const span=Math.max(...(()=>{const b=bbox(P.y);return [(b[2]-b[0])*3,(b[3]-b[1])*3];})(),5);
+    draw(cv,P,P.y,span);}
+}
+render();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',render);
+</script><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>
