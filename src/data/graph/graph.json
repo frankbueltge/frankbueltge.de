@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "ffac952451db029a"
+        "sha256": "ad16dea8c003a491"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 525,
-      "edges": 468,
+      "nodes": 526,
+      "edges": 470,
       "nodesByKind": {
-        "decision": 149,
+        "decision": 150,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 202,
         "neighbor-of": 125,
         "participates": 17,
-        "touches": 109
+        "touches": 111
       }
     }
   },
@@ -1568,6 +1568,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "/error-as-method shows the nightly line as it works now: one research project, its experiments as the line's works, and everything before 2026-10-04 dated as the earlier phase"
+      }
+    },
+    {
+      "id": "decision:2026-10-20-1",
+      "kind": "decision",
+      "label": "A cycle in its working phase is published in progress",
+      "date": "2026-10-20",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "A cycle in its working phase is published in progress"
       }
     },
     {
@@ -11186,6 +11196,24 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/pages/observatory/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-20-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "public/{atelier,field}/artifacts/cycle-009/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-20-1",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "public/{atelier,field}/artifacts/cycle-009/"
       }
     }
   ]

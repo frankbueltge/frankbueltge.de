@@ -122,6 +122,51 @@ export const MIRRORS = {
   arch: { repo: 'arch', keep: ['arch/works/**'] },
 }
 
+/**
+ * THE OPEN CYCLE (Frank's decision of 2026-10-20, wording private, paraphrased): a long work in
+ * the making is shown as in progress, not held back until its presentation. Since cycle 009 all
+ * three practices grow one piece across a cycle's sessions — the Studio under its amendment of
+ * 2026-10-15, the Atelier and the Field on the house's wish of 2026-10-17 — and the Atelier and
+ * the Field grow it under `artifacts/cycle-NNN/`, which the rule above does not publish. So while
+ * a cycle is in its working phase, its artifact folder is published whole; once the cycle is
+ * presented, the presentation is the work and the folder falls back to the rule. The Studio's
+ * long work stands in `werke-html/` and is published there already.
+ */
+export const OPEN_CYCLE_PRACTICES = /** @type {const} */ (['atelier', 'field', 'studio'])
+
+/**
+ * The cycle whose artifacts are in progress, from src/data/ecology/cycle.json: its number while it
+ * is in its working phase, null otherwise (a convening, or a state that cannot be read).
+ * @param {unknown} state the parsed cycle.json
+ * @returns {number | null}
+ */
+export function openCycleOf(state) {
+  if (!state || typeof state !== 'object') return null
+  const { cycle, phase } = /** @type {Record<string, unknown>} */ (state)
+  return phase === 'working' && typeof cycle === 'number' && Number.isInteger(cycle) && cycle > 0 ? cycle : null
+}
+
+/**
+ * The open cycle's artifact folders, dist-relative: `field/artifacts/cycle-009`.
+ * @param {number | null | undefined} openCycle
+ */
+export function openCycleFolders(openCycle) {
+  if (!openCycle) return []
+  const dir = `cycle-${String(openCycle).padStart(3, '0')}`
+  return OPEN_CYCLE_PRACTICES.map((practice) => `${practice}/artifacts/${dir}`)
+}
+
+/**
+ * The rewrites that keep the open cycle's folders on the site where a redirect rule of
+ * public/_redirects would send them to the practice's repository (the Field's
+ * `/field/artifacts/*`). A 200 to the same address serves the file; Cloudflare Pages applies one
+ * rule per request, so it does not loop. Inserted by the build before the rule they pre-empt.
+ * @param {number | null | undefined} openCycle
+ */
+export function openCycleRewrites(openCycle) {
+  return openCycleFolders(openCycle).map((folder) => `/${folder}/* /${folder}/:splat 200`)
+}
+
 /** The folders that hold one work each. Inside them the working-material rule applies. */
 export const WORK_ROOTS = /** @type {const} */ ([
   'studio/werke-html',
@@ -299,6 +344,8 @@ export function isReferrer(path) {
  *   those pages and the front page load
  * @property {ReadonlySet<string>} [inProgress] work folders whose meta.json says the work is in
  *   progress: they stay exactly as mirrored (the Studio's long work grows in public)
+ * @property {number | null} [openCycle] the cycle in its working phase (openCycleOf): its artifact
+ *   folders are published whole, as work in progress (2026-10-20)
  * @property {(path: string) => boolean} [isReferenced] whether a referrer in the same work folder
  *   names this file's basename (string search)
  */
@@ -321,6 +368,9 @@ export function classify(path, ctx = {}) {
   if (!practice) return { practice, published: true, reason: 'house' }
   if (ctx.isMirrored && !ctx.isMirrored(path)) return { practice, published: true, reason: 'page' }
   if (practice === 'n-1' && ctx.n1Pages?.has(path)) return { practice, published: true, reason: 'n-1 work' }
+  if (ctx.openCycle && openCycleFolders(ctx.openCycle).some((folder) => path.startsWith(`${folder}/`))) {
+    return { practice, published: true, reason: 'in progress' }
+  }
   if (!MIRRORS[practice].keep.some((glob) => matchGlob(glob, path))) {
     return { practice, published: false, reason: 'not a work' }
   }

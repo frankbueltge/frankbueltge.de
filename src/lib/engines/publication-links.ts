@@ -12,6 +12,7 @@
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { n1WorkPages } from '@/lib/n1/published'
+import { readOpenCycle } from './publication-prune.mjs'
 import { publishedHref, repoUrl } from './publication.mjs'
 
 /**
@@ -35,5 +36,5 @@ export function pieceHref(href: string, root: string = process.cwd()): string {
   const n1Pages = href.startsWith('/n-1/')
     ? (n1Works.get(root) ?? n1Works.set(root, n1WorkPages(join(root, 'public', 'n-1'))).get(root))
     : undefined
-  return publishedHref(href, { isMirrored: (path) => existsSync(join(root, 'public', path)), n1Pages })
+  return publishedHref(href, { isMirrored: (path) => existsSync(join(root, 'public', path)), n1Pages, openCycle: readOpenCycle(root) })
 }

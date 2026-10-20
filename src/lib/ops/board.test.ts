@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { boardSources, buildBoard, cleanMomentTitle, lastRelation, newestMoment, repoSeries, type BoardSources } from './board'
 import { matchRedirect, parseRedirects } from '@/lib/engines/publication.mjs'
+import { readOpenCycle, withOpenCycleRewrites } from '@/lib/engines/publication-prune.mjs'
 import { pieceHref } from '@/lib/engines/publication-links'
 import { NAMING } from '@/config/naming'
 import type { MadeThing } from '@/lib/ecology/record'
@@ -242,11 +243,13 @@ describe('the board on the committed record', () => {
   // piece through a 301 says one thing and does another, so no newest-piece link may be an address
   // public/_redirects sends away — the piece is linked in its repository instead.
   it('never leaves a newest-piece link on a redirect', () => {
-    const rules = parseRedirects(readFileSync('public/_redirects', 'utf8'))
+    // as the build writes it: with the open cycle's rewrites, which keep its pieces on the site
+    const rules = parseRedirects(withOpenCycleRewrites(readFileSync('public/_redirects', 'utf8'), readOpenCycle(process.cwd())))
     for (const row of rows) {
       const href = row.last?.href
       if (!href || !href.startsWith('/')) continue
-      expect(matchRedirect(rules, href.split('#')[0]!), `${row.id}: ${href}`).toBeNull()
+      const hit = matchRedirect(rules, href.split('#')[0]!)
+      expect(hit && hit.rule.status !== 200 ? hit.location : null, `${row.id}: ${href}`).toBeNull()
     }
   })
 }, 60_000)
