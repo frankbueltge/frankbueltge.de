@@ -1,0 +1,64 @@
+// Studies 31-32 page check: headless, 390 px light and 1100 px dark. Usage: NODE_PATH=<dir with playwright> node verify.mjs
+import { createRequire } from "module"; import path from "path"; import url from "url"; import fs from "fs";
+const require = createRequire(import.meta.url);
+const pw = require("playwright");
+const here = path.dirname(url.fileURLToPath(import.meta.url));
+const R = JSON.parse(fs.readFileSync(path.join(here, "data/results31.json"), "utf8"));
+const s32 = fs.readFileSync(path.join(here, "data-32.js"), "utf8"), R2 = JSON.parse(s32.slice(s32.indexOf("{"), s32.lastIndexOf("}") + 1));
+let pass = 0, fail = 0; const ok = (n, c) => { c ? pass++ : fail++; console.log((c ? "PASS " : "FAIL ") + n); };
+const b = await pw.chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {});
+for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
+  const p = await b.newPage({ viewport: { width: w, height: 900 }, colorScheme: scheme });
+  const errs = []; p.on("pageerror", e => errs.push(String(e))); p.on("console", m => m.type() === "error" && errs.push(m.text()));
+  await p.goto("file://" + path.join(here, "index.html"));
+  ok(`${w}: no script errors`, errs.length === 0);
+  ok(`${w}: no horizontal overflow`, await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+  ok(`${w}: across view: 5 rows`, await p.locator("#forest circle.pt").count() === 5);
+  ok(`${w}: injuries: one filled dot (office, year before)`, await p.locator("#forest circle.pt.above").count() === 1);
+  await p.locator("#forest g.row").nth(0).dispatchEvent("click");
+  ok(`${w}: tap gives the replication's numbers`, (await p.textContent("#det")).includes(`${R.fits.past_inj.irr.toFixed(2)} per standard deviation (95 % interval ${R.fits.past_inj.lo.toFixed(2)}–${R.fits.past_inj.hi.toFixed(2)})`));
+  await p.click("#seg-y button[data-v=fat]");
+  ok(`${w}: deaths: past and future filled, the unconverged state fit dashed`, await p.locator("#forest circle.pt.above").count() === 2 && await p.locator("#forest circle.pt.nc").count() === 1);
+  await p.locator("#forest g.row").nth(2).dispatchEvent("click");
+  ok(`${w}: state deaths fit flagged as not converged`, (await p.textContent("#det")).includes("did not converge"));
+  await p.click("#seg-v button[data-v=within]");
+  ok(`${w}: within view: 2 rows`, await p.locator("#forest circle.pt").count() === 2);
+  await p.click("#seg-y button[data-v=inj]");
+  await p.locator("#forest g.row").nth(0).dispatchEvent("click");
+  ok(`${w}: within injuries: 1.01 and 22 offices left out`, (await p.textContent("#det")).includes("1.01 per standard deviation") && (await p.textContent("#det")).includes("22 offices"));
+  await p.click("#seg-y button[data-v=fat]");
+  await p.locator("#forest g.row").nth(0).dispatchEvent("click");
+  ok(`${w}: within deaths shows the corrected interval and says so`, (await p.textContent("#det")).includes("1.15 per standard deviation (95 % interval 0.95–1.40)") && (await p.textContent("#det")).includes("corrected 2026-10-20"));
+  await p.click("#seg-y button[data-v=inj]");
+  ok(`${w}: the old interval is struck, not deleted`, (await p.locator("del").count()) === 2 && (await p.textContent("body")).includes("0.43–3.05"));
+  ok(`${w}: scatter: one dot per office-year`, await p.locator("#oy circle.dot").count() === R2.officeyears.length);
+  await p.locator("#oy circle.dot").nth(0).dispatchEvent("click");
+  const oy0 = R2.officeyears[0];
+  ok(`${w}: tapped office-year reports its counts`, (await p.textContent("#oydet")).startsWith(`${oy0[0]}, ${oy0[1]}: ${oy0[2]} warnings`));
+  ok(`${w}: paired forest: 4 office + 5 final dots`, await p.locator("#pair circle.pt.office").count() === 4 && await p.locator("#pair circle.pt.final").count() === 5);
+  await p.locator("#pair g.row").nth(0).dispatchEvent("click");
+  const fp = R2.fits.final_past_inj.z_ffp;
+  ok(`${w}: paired row gives both records`, (await p.textContent("#pairdet")).includes(`Final database: ${fp.irr.toFixed(2)} (${fp.lo.toFixed(2)}–${fp.hi.toFixed(2)})`) && (await p.textContent("#pairdet")).includes(`office's verdict: ${R.fits.past_inj.irr.toFixed(2)}`));
+  await p.click("#seg-y2 button[data-v=fat]");
+  await p.locator("#pair g.row").nth(2).dispatchEvent("click");
+  ok(`${w}: paired within deaths carries the correction`, (await p.textContent("#pairdet")).includes("0.95–1.40") && (await p.textContent("#pairdet")).includes("corrected"));
+  ok(`${w}: seven predictions of study 32, five held`, (await p.locator("#pred32 tbody tr").count()) === 7 && (await p.locator("#pred32 td.held").count()) === 5);
+  for (const id of ["#oy", "#pair"]) {
+    const bx = await p.locator(id).boundingBox();
+    const ex = await p.evaluate(s => { const r = [...document.querySelectorAll(s + " text")].map(t => t.getBoundingClientRect()); return [Math.min(...r.map(x => x.left)), Math.max(...r.map(x => x.right))]; }, id);
+    ok(`${w}: ${id} and its labels fit the viewport and the figure`, bx && bx.x >= 0 && bx.x + bx.width <= w + 1 && ex[0] >= bx.x - 1 && ex[1] <= bx.x + bx.width + 1);
+  }
+  ok(`${w}: tercile table 3 rows`, await p.locator("#terc tbody tr").count() === 3);
+  ok(`${w}: six predictions, six held`, (await p.locator("#pred tbody tr").count()) === 6 && (await p.locator("#pred td.held").count()) === 6);
+  const bb = await p.locator("#forest").boundingBox();
+  const ext = await p.evaluate(() => { const r = [...document.querySelectorAll("#forest text")].map(t => t.getBoundingClientRect()); return [Math.min(...r.map(x => x.left)), Math.max(...r.map(x => x.right))]; });
+  ok(`${w}: figure and its labels fit the viewport`, bb && bb.x >= 0 && bb.x + bb.width <= w + 1 && ext[0] >= 0 && ext[1] <= w + 1);
+  await p.click("#seg-v button[data-v=across]");
+  await p.locator("#forest").scrollIntoViewIfNeeded();
+  await p.locator("#pair").scrollIntoViewIfNeeded();
+  await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s32_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#oy").boundingBox()).y - 40), width: w, height: 1000 } });
+  await p.locator("#forest").scrollIntoViewIfNeeded();
+  await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s31_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#forest").boundingBox()).y - 80), width: w, height: 520 } });
+  await p.close();
+}
+await b.close(); console.log(`${pass} of ${pass + fail} passed`); process.exit(fail ? 1 : 0);

@@ -338,8 +338,8 @@ export const SCORE_WORDING = {
     },
 
     latest: {
-      head: (p: { one: string; date: string | null; cycle: number | null }) =>
-        [`Latest ${p.one}`, p.date && longDate(p.date), p.cycle && `cycle ${cycleNo(p.cycle)}`].filter(Boolean).join(' · '),
+      head: (p: { one: string; date: string | null; cycle: number | null; inProgress?: boolean }) =>
+        [`Latest ${p.one}`, p.inProgress && 'in progress', p.date && longDate(p.date), p.cycle && `cycle ${cycleNo(p.cycle)}`].filter(Boolean).join(' · '),
       open: (one: string) => `open the ${one} →`,
       /** a piece the site does not serve since the publication rule of 2026-10-17 — a session's
        *  window or artifact — is opened in the practice's repository, and the link says so */

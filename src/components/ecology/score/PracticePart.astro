@@ -87,6 +87,9 @@ const newestOnSite = newest !== null && newestHref === newest.href
 const shot = (name: string) => (newest && newestOnSite && newest.href.endsWith('/') && existsSync(`public${newest.href}${name}`) ? `${newest.href}${name}` : null)
 const still = { wide: shot('shot-1100.png'), narrow: shot('shot-390.png') }
 const newestTitle = newest ? withoutHouseSuffix(newest.title, me.name) : null
+// A piece of the cycle still in its working phase is still being made: since cycle 009 each
+// practice grows one piece across the cycle, and the site shows it as in progress (2026-10-20).
+const newestInProgress = newest !== null && newest.kind !== 'presentation' && cycle.phase === 'working' && newest.cycle === cycle.cycle
 // The session that made it, where the record ties the two (record.ts, tieSessions); the day's
 // last session only where it does not — until 2026-10-17 always the day's last, by file name,
 // which put one session's note under another's window.
@@ -182,7 +185,7 @@ const hasFigure = Astro.slots.has('figure')
         <div class="sc-latest">
           {newest && newestTitle ? (
             <>
-              <p class="sc-label">{T.latest.head({ one: noun.one, date: newest.date, cycle: newest.cycle })}</p>
+              <p class="sc-label">{T.latest.head({ one: noun.one, date: newest.date, cycle: newest.cycle, inProgress: newestInProgress })}</p>
               <a class="sc-still" href={url(newestHref ?? newest.href)}>
                 {still.wide ? (
                   <picture>

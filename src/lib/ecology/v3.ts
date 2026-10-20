@@ -486,6 +486,31 @@ export function loadArtifacts(root: string = process.cwd()): ArtifactEntry[] {
         })
       }
     }
+
+    // werke-html/<slug>/SCORE.md without a meta.json — a long work in progress (2026-10-20). The
+    // Studio's amendment of 2026-10-15 grows one work across a cycle; its folder lands with the
+    // score in the first session, and its meta.json, which the works register reads, comes with
+    // the presentation. Until then the work is listed from its own page, so the site shows it in
+    // progress rather than not at all. A work with a meta.json is the register's (above).
+    const stage = path.join(root, 'public', practice, 'werke-html')
+    if (isDir(stage)) {
+      for (const dir of fs.readdirSync(stage)) {
+        const face = path.join(stage, dir, 'index.html')
+        if (!fs.existsSync(path.join(stage, dir, 'SCORE.md')) || !fs.existsSync(face)) continue
+        if (fs.existsSync(path.join(works, dir, 'meta.json')) || fs.existsSync(path.join(stage, dir, 'meta.json'))) continue
+        const m = DATED_SLUG.exec(dir)
+        const title = pageTitle(face)
+        found.push({
+          practice,
+          slug: m ? m[2]! : dir,
+          date: m ? m[1]! : null,
+          href: `/${practice}/werke-html/${dir}/`,
+          cycle: null,
+          fromWorksRegister: false,
+          ...(title ? { title } : {}),
+        })
+      }
+    }
   }
   // newest first; undated entries last; then by practice, then by slug — a total order, so the
   // listing never depends on the filesystem's own
