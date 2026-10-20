@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>One Minute of Coast</title>
+<style>
+  html, body { margin: 0; background: #05070c; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/lights.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800;
+  const cv = document.getElementById('c');
+  const dpr = 2;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  const COL = {
+    white: '#fff1cf', red: '#ff4b3c', green: '#3cf08c', yellow: '#ffd23c',
+    blue: '#5aa8ff', orange: '#ff9a3c', violet: '#c07cff'
+  };
+
+  // ---- read each light's (colour, on/off sequence) ----
+  function parseSeq(s) {
+    // "0.2+(3.6)+0.2+(11)" or "0.1+(2.2),0.1+(8)" -> [[on,dur],...]
+    const out = [];
+    s.split(/[+,]/).forEach(tok => {
+      tok = tok.trim(); if (!tok) return;
+      const dark = tok.indexOf('(') >= 0;
+      const v = parseFloat(tok.replace(/[()]/g, ''));
+      if (isFinite(v) && v > 0) out.push([!dark, v]);
+    });
+    return out.length ? out : null;
+  }
+  function groupCount(gs) {
+    if (!gs) return [1];
+    return String(gs).replace(/[()]/g, '').split('+').map(x => parseInt(x, 10) || 1);
+  }
+  // reconstruct a rhythm from the character when no explicit sequence is given
+  function derive(ch, gs, per) {
+    ch = (ch || '').replace(/\s/g, '');
+    const P = parseFloat(per);
+    if (ch === 'F' || ch === '') return [[true, 60]];
+    if (ch.indexOf('Q') >= 0) {             // quick: 60 per minute
+      const n = gs ? groupCount(gs).reduce((a, b) => a + b, 0) : 0;
+      if (!n || !isFinite(P)) return [[true, 0.3], [false, 0.7]];
+      const seq = [];
+      for (let i = 0; i < n; i++) { seq.push([true, 0.3]); seq.push([false, 0.7]); }
+      seq[seq.length - 1][1] += Math.max(0, P - n);
+      return seq;
+    }
+    if (!isFinite(P)) return null;
+    if (ch.indexOf('Iso') >= 0) return [[true, P / 2], [false, P / 2]];
+    const groups = groupCount(gs);
+    const n = groups.reduce((a, b) => a + b, 0);
+    if (ch.indexOf('Oc') >= 0) {           // light longer than dark
+      const ecl = Math.min(1, P / (3 * n));
+      const seq = [];
+      const unit = P / n;
+      for (let i = 0; i < n; i++) { seq.push([true, unit - ecl]); seq.push([false, ecl]); }
+      return seq;
+    }
+    // flashing (Fl, LFl, Al.Fl): flashes of ~0.5 s (2 s for long flash)
+    const fl = ch.indexOf('LFl') >= 0 ? 2 : Math.min(0.5, P / (6 * n));
+    const gap = Math.min(1.5, P / (3 * n));
+    const seq = [];
+    groups.forEach((k, gi) => {
+      for (let i = 0; i < k; i++) { seq.push([true, fl]); seq.push([false, gap]); }
+      if (gi < groups.length - 1) seq[seq.length - 1][1] += gap;
+    });
+    const used = seq.reduce((a, s) => a + s[1], 0);
+    seq[seq.length - 1][1] += Math.max(0, P - used);
+    return seq;
+  }
+
+  function lightsOf(t) {
+    // returns [{colour, seq, given}] distinct by colour+sequence
+    const res = [], seen = {};
+    const prefixes = ['seamark:light:'];
+    for (let i = 1; i <= 12; i++) prefixes.push('seamark:light:' + i + ':');
+    prefixes.forEach(p => {
+      const ch = t[p + 'character'];
+      if (!ch && !t[p + 'sequence']) return;
+      let seq = t[p + 'sequence'] ? parseSeq(t[p + 'sequence']) : null;
+      const given = !!seq;
+      if (!seq) seq = derive(ch, t[p + 'group'], t[p + 'period']);
+      if (!seq) return;
+      const colours = (t[p + 'colour'] || 'white').split(';');
+      colours.forEach(c => {
+        c = c.trim();
+        const key = c + '|' + JSON.stringify(seq);
+        if (seen[key]) return; seen[key] = 1;
+        res.push({ colour: COL[c] || COL.white, cname: c, seq, given, ch });
+      });
+    });
+    // order stripes white, red, green, other
+    const ord = { white: 0, yellow: 1, red: 2, green: 3 };
+    res.sort((a, b) => (ord[a.cname] ?? 4) - (ord[b.cname] ?? 4));
+    return res;
+  }
+
+  const els = (window.OSM_LIGHTS && window.OSM_LIGHTS.elements) || [];
+  const rows = [];
+  els.forEach(e => {
+    const L = lightsOf(e.tags || {});
+    if (!L.length) return;
+    rows.push({ lat: e.lat, lon: e.lon, name: e.tags['seamark:name'] || e.tags.name || '', L });
+  });
+  rows.sort((a, b) => b.lat - a.lat);
+
+  // ---- layout ----
+  const X0 = 96, X1 = 985, T = 60;            // one minute
+  const Y0 = 58, Y1 = 742;
+  const rh = (Y1 - Y0) / rows.length;
+  const sx = t => X0 + (t / T) * (X1 - X0);
+
+  g.fillStyle = '#05070c'; g.fillRect(0, 0, W, H);
+
+  // faint second ticks
+  for (let s = 0; s <= T; s++) {
+    g.fillStyle = s % 10 === 0 ? 'rgba(160,175,210,0.16)' : 'rgba(160,175,210,0.05)';
+    g.fillRect(Math.round(sx(s)), Y0 - 6, 1, Y1 - Y0 + 12);
+  }
+
+  // glow pass then core pass
+  function drawRow(r, i, pass) {
+    const y = Y0 + i * rh;
+    const n = r.L.length;
+    const sub = rh / n;
+    r.L.forEach((l, k) => {
+      const yy = y + k * sub;
+      const cyc = l.seq.reduce((a, s) => a + s[1], 0);
+      if (!(cyc > 0)) return;
+      let t = 0;
+      while (t < T) {
+        for (const [on, d] of l.seq) {
+          if (t >= T) break;
+          if (on) {
+            const a = sx(t), b = sx(Math.min(T, t + d));
+            const w = Math.max(1.2, b - a);
+            if (pass === 0) {
+              g.fillStyle = l.colour;
+              g.globalAlpha = 0.07; g.fillRect(a - 4, yy - 3, w + 8, sub + 6);
+              g.globalAlpha = 0.12; g.fillRect(a - 2, yy - 1.5, w + 4, sub + 3);
+            } else {
+              g.globalAlpha = l.given ? 1 : 0.62;
+              g.fillStyle = l.colour;
+              g.fillRect(a, yy + 0.25, w, Math.max(0.6, sub - 1.1));
+            }
+          }
+          t += d;
+        }
+      }
+    });
+  }
+  g.globalCompositeOperation = 'lighter';
+  rows.forEach((r, i) => drawRow(r, i, 0));
+  g.globalCompositeOperation = 'source-over';
+  rows.forEach((r, i) => drawRow(r, i, 1));
+  g.globalAlpha = 1;
+
+  // ---- latitude scale on the left ----
+  g.font = '10px Helvetica, Arial, sans-serif';
+  g.textBaseline = 'middle';
+  let lastLat = null, lastLabY = -99;
+  rows.forEach((r, i) => {
+    const deg = Math.floor(r.lat);
+    if (lastLat !== null && deg !== lastLat) {
+      const y = Y0 + i * rh;
+      g.fillStyle = 'rgba(160,175,210,0.25)';
+      g.fillRect(X0 - 16, Math.round(y), 10, 1);
+      g.fillStyle = 'rgba(190,200,225,0.55)';
+      g.textAlign = 'right';
+      if (y - lastLabY > 13) { g.fillText(lastLat + '°N', X0 - 22, y); lastLabY = y; }
+    }
+    lastLat = deg;
+  });
+
+  // a few named lights, set at the right margin
+  const pick = ['Esha Ness', 'Sule Skerry', 'Cape Wrath', 'Rattray Head', 'Ardnamurchan',
+                'Fanad Head', 'Bardsey', 'Tuskar', 'Fastnet Rock', 'Bishop Rock', 'Wolf Rock',
+                'Eddystone', 'Casquets', 'Dungeness Lighthouse', 'Flamborough Head', 'Longships'];
+  g.textAlign = 'left';
+  g.font = '9px Helvetica, Arial, sans-serif';
+  let lastY = -99;
+  rows.forEach((r, i) => {
+    if (pick.indexOf(r.name) < 0) return;
+    const y = Y0 + (i + 0.5) * rh;
+    if (y - lastY < 11) return;
+    lastY = y;
+    g.fillStyle = 'rgba(200,210,235,0.5)';
+    g.fillRect(X1 + 3, y, 4, 1);
+    g.fillText(r.name.replace(' Lighthouse', '').replace(' Rock', ''), X1 + 9, y);
+  });
+
+  // the Forth bridges: a run of fixed lights near 3.39 W, 56.0 N
+  const fb = rows.map((r, i) => [r, i]).filter(([r]) => !r.name && r.lat > 55.99 && r.lat < 56.01 && r.lon < -3.3 && r.lon > -3.4);
+  if (fb.length > 4) {
+    const ya = Y0 + fb[0][1] * rh, yb = Y0 + (fb[fb.length - 1][1] + 1) * rh;
+    g.fillStyle = 'rgba(200,210,235,0.5)';
+    g.fillRect(X1 + 5, ya, 1, yb - ya);
+    g.fillText('Forth bridges,', X1 + 11, (ya + yb) / 2 - 6);
+    g.fillText(fb.length + ' fixed lights', X1 + 11, (ya + yb) / 2 + 6);
+  }
+
+  // time scale
+  g.font = '10px Helvetica, Arial, sans-serif';
+  g.textAlign = 'center'; g.textBaseline = 'top';
+  g.fillStyle = 'rgba(190,200,225,0.55)';
+  for (let s = 0; s <= T; s += 10) g.fillText(s + ' s', sx(s), Y1 + 10);
+
+  // title
+  g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  g.fillStyle = 'rgba(235,238,245,0.92)';
+  g.font = '300 19px Helvetica, Arial, sans-serif';
+  g.fillText('One Minute of Coast', X0, 36);
+  g.font = '11px Helvetica, Arial, sans-serif';
+  g.fillStyle = 'rgba(190,200,225,0.6)';
+  g.fillText(rows.length + ' major lights of Britain, Ireland and the Channel, north at the top, each lit from the same instant for sixty seconds', X0 + 196, 35);
+  g.fillText('Bright marks follow the charted on/off sequence; dimmer marks are rebuilt from character and period. Stacked stripes are a light’s sector colours.  Data: OpenStreetMap / OpenSeaMap, ODbL', X0, H - 16);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Twenty-Five Suns</title>
+<style>
+html,body{margin:0;background:#0d0b09;}
+canvas{display:block;}
+</style>
+<script src="data/sunspots.js"></script>
+</head><body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script>
+const W = 1100, H = 800;
+const cv = document.getElementById('c');
+const dpr = window.devicePixelRatio || 1;
+cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+const g = cv.getContext('2d'); g.scale(dpr, dpr);
+
+// --- data ---
+const rows = SN_CSV.trim().split('\n').map(l => {
+  const f = l.split(';');
+  return { t: +f[2], y: +f[0], m: +f[1], sn: +f[3], def: f[6].trim() === '1' };
+}).filter(r => r.sn >= 0);
+
+// 13-month smoothed (SILSO tapered mean: half weight at ends)
+const sm = rows.map((r, i) => {
+  if (i < 6 || i > rows.length - 7) return null;
+  let s = 0;
+  for (let k = -6; k <= 6; k++) s += rows[i + k].sn * (Math.abs(k) === 6 ? 0.5 : 1);
+  return s / 12;
+});
+
+// approximate cycle minima, refined to the lowest smoothed value within ±18 months
+const approx = [1755.2,1766.5,1775.5,1784.7,1798.3,1810.6,1823.3,1833.9,1843.5,1855.9,1867.2,
+  1878.9,1890.2,1902.1,1913.6,1923.6,1933.8,1944.2,1954.3,1964.9,1976.5,1986.8,1996.4,2008.9,2019.9];
+const minIdx = approx.map(a => {
+  let best = -1, bv = 1e9;
+  rows.forEach((r, i) => {
+    if (sm[i] != null && Math.abs(r.t - a) <= 1.5 && sm[i] < bv) { bv = sm[i]; best = i; }
+  });
+  return best;
+});
+
+// --- layout ---
+const L = 132, R = 1050, TOP = 168, BOT = 742;
+const YEARS = 14.5;                       // horizontal span of one row, in years from minimum
+const xs = (dt) => L + dt / YEARS * (R - L);
+const n = minIdx.length;
+const rowH = (BOT - TOP) / (n - 1);
+const ks = 0.16;                          // px per unit of sunspot number
+
+g.fillStyle = '#0d0b09'; g.fillRect(0, 0, W, H);
+
+// faint year-from-minimum guides
+g.strokeStyle = 'rgba(232,210,170,0.07)'; g.lineWidth = 1;
+for (let yv = 0; yv <= 14; yv += 1) {
+  const x = Math.round(xs(yv)) + 0.5;
+  g.beginPath(); g.moveTo(x, TOP - 60); g.lineTo(x, BOT + 8); g.stroke();
+}
+
+function colourFor(v) {
+  // ember ramp: deep red → orange → pale gold → near-white
+  const stops = [[0,[70,22,12]],[60,[168,52,20]],[130,[226,112,38]],[210,[246,186,92]],[300,[255,236,196]]];
+  for (let i = 1; i < stops.length; i++) {
+    if (v <= stops[i][0] || i === stops.length - 1) {
+      const [a, ca] = stops[i - 1], [b, cb] = stops[i];
+      const u = Math.max(0, Math.min(1, (v - a) / (b - a)));
+      return `rgb(${ca.map((c, j) => Math.round(c + (cb[j] - c) * u)).join(',')})`;
+    }
+  }
+}
+
+g.font = '11px Georgia, serif';
+for (let c = 0; c < n; c++) {
+  const i0 = minIdx[c];
+  const i1 = c < n - 1 ? minIdx[c + 1] : rows.length - 1;
+  const base = TOP + c * rowH;
+  const t0 = rows[i0].t;
+
+  // occluding silhouette, so each later cycle stands in front of the earlier ones
+  g.beginPath(); g.moveTo(xs(0), base);
+  for (let i = i0; i <= i1; i++) g.lineTo(xs(rows[i].t - t0), base - rows[i].sn * ks);
+  g.lineTo(xs(rows[i1].t - t0), base); g.closePath();
+  g.fillStyle = '#0d0b09'; g.fill();
+
+  // one stroke per month
+  const bw = (R - L) / (YEARS * 12);
+  for (let i = i0; i <= i1; i++) {
+    const x = xs(rows[i].t - t0);
+    const h = rows[i].sn * ks;
+    g.fillStyle = colourFor(rows[i].sn);
+    g.globalAlpha = rows[i].def ? 0.95 : 0.55;
+    g.fillRect(x - bw * 0.36, base - h, bw * 0.72, h);
+  }
+  g.globalAlpha = 1;
+
+  // smoothed contour
+  g.beginPath(); let on = false;
+  for (let i = i0; i <= i1; i++) {
+    if (sm[i] == null) continue;
+    const x = xs(rows[i].t - t0), y = base - sm[i] * ks;
+    on ? g.lineTo(x, y) : (g.moveTo(x, y), on = true);
+  }
+  g.strokeStyle = 'rgba(255,244,222,0.85)'; g.lineWidth = 1.1; g.stroke();
+
+  // baseline
+  g.strokeStyle = 'rgba(232,210,170,0.22)'; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(xs(0), base + 0.5); g.lineTo(xs(rows[i1].t - t0), base + 0.5); g.stroke();
+
+  // labels
+  g.textAlign = 'right'; g.fillStyle = 'rgba(232,210,170,0.85)';
+  g.font = 'italic 12px Georgia, serif';
+  g.fillText(String(c + 1), L - 70, base + 1);
+  g.font = '11px Georgia, serif'; g.fillStyle = 'rgba(232,210,170,0.55)';
+  const endLabel = c < n - 1 ? String(rows[i1].y) : 'now';
+  g.fillText(rows[i0].y + '–' + endLabel, L - 8, base + 1);
+
+  // the open end of the present cycle
+  if (c === n - 1) {
+    const x = xs(rows[i1].t - t0) + 6;
+    g.textAlign = 'left'; g.fillStyle = 'rgba(232,210,170,0.6)';
+    g.font = 'italic 11px Georgia, serif';
+    g.fillText('September 2026 — still going', x, base - 2);
+  }
+}
+
+// axis
+g.textAlign = 'center'; g.fillStyle = 'rgba(232,210,170,0.5)'; g.font = '10px Georgia, serif';
+for (let yv = 0; yv <= 14; yv += 2) g.fillText(yv === 0 ? 'minimum' : yv + ' yr', xs(yv), BOT + 22);
+
+// title
+g.textAlign = 'left';
+g.fillStyle = '#f2e4c8'; g.font = '30px Georgia, serif';
+g.fillText('Twenty-Five Suns', 40, 52);
+g.fillStyle = 'rgba(232,210,170,0.62)'; g.font = 'italic 13px Georgia, serif';
+g.fillText('Every month of counted sunspots since 1755, each solar cycle laid on its own line and started from its own minimum.', 40, 76);
+g.font = '11px Georgia, serif'; g.fillStyle = 'rgba(232,210,170,0.42)';
+g.textAlign = 'right';
+g.fillText('one stroke = one month · height and heat = monthly mean sunspot number · pale line = 13-month mean', R, 52);
+g.fillText('Source: WDC-SILSO, Royal Observatory of Belgium, Brussels · CC BY-NC 4.0', R, H - 18);
+g.textAlign = 'left';
+g.fillText('cycle', L - 92, TOP - 26);
+</script>
+</body></html>

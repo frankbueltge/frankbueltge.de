@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Wait at Old Faithful</title>
+<style>
+  html,body{margin:0;background:#0d0f12;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#cfd3d6;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/intervals.js"></script>
+<script>
+(function(){
+  const W=1100,H=800;
+  const cv=document.getElementById('c'),g=cv.getContext('2d');
+  g.fillStyle='#0d0f12';g.fillRect(0,0,W,H);
+
+  // plot frame
+  const L=92,R=1040,T=150,B=700;
+  const PW=R-L,PH=B-T;
+  const t0=Date.UTC(1970,0,1)/60000, t1=Date.UTC(2027,0,1)/60000;
+  const m0=30,m1=140;
+  const X=t=>L+(t-t0)/(t1-t0)*PW;
+  const Y=m=>B-(m-m0)/(m1-m0)*PH;
+
+  // accumulation: three channels (after short eruption, after long, unknown)
+  const N=PW*PH;
+  const acc=[new Float32Array(N),new Float32Array(N),new Float32Array(N)];
+  let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
+
+  const lines=window.INTERVALS.split('\n');
+  for(let i=1;i<lines.length;i++){
+    const s=lines[i];if(!s)continue;
+    const p=s.split(',');
+    const t=+p[0],iv=+p[1],d=+p[2];
+    const x=Math.floor(X(t+(rnd()-0.5)*1440*3)-L);
+    const y=Math.floor(Y(iv+(rnd()-0.5))-T);
+    if(x<0||x>=PW||y<0||y>=PH)continue;
+    const ch=d===0?2:(d<=150?0:1);
+    acc[ch][y*PW+x]+=1;
+  }
+
+  // soften: small box blur for a vapour-like grain
+  function blur(a){
+    const o=new Float32Array(N);
+    for(let y=0;y<PH;y++)for(let x=0;x<PW;x++){
+      let s=0,w=0;
+      for(let dy=-1;dy<=1;dy++){const yy=y+dy;if(yy<0||yy>=PH)continue;
+        for(let dx=-1;dx<=1;dx++){const xx=x+dx;if(xx<0||xx>=PW)continue;
+          const k=(dx===0&&dy===0)?4:((dx===0||dy===0)?2:1);s+=a[yy*PW+xx]*k;w+=k;}}
+      o[y*PW+x]=s/w*16/9;
+    }
+    return o;
+  }
+  const A=acc.map(blur);
+
+  const col=[[120,190,235],[240,170,95],[225,225,220]];
+  const img=g.getImageData(L,T,PW,PH);const D=img.data;
+  for(let i=0;i<N;i++){
+    let r=13,gg=15,b=18;
+    for(let c=0;c<3;c++){
+      const v=A[c][i];if(v<=0)continue;
+      const k=1-Math.exp(-v*0.55);
+      r+=col[c][0]*k;gg+=col[c][1]*k;b+=col[c][2]*k;
+    }
+    D[i*4]=Math.min(255,r);D[i*4+1]=Math.min(255,gg);D[i*4+2]=Math.min(255,b);D[i*4+3]=255;
+  }
+  g.putImageData(img,L,T);
+
+  // axes
+  g.font='13px Georgia, serif';g.fillStyle='#8b9196';g.strokeStyle='rgba(200,205,210,0.18)';g.lineWidth=1;
+  g.textAlign='right';g.textBaseline='middle';
+  for(const m of [45,60,75,90,105,120]){
+    const y=Math.round(Y(m))+0.5;
+    g.beginPath();g.moveTo(L-8,y);g.lineTo(L-2,y);g.stroke();
+    g.fillText(m+' min',L-12,y);
+  }
+  g.textAlign='center';g.textBaseline='top';
+  for(let yr=1970;yr<=2026;yr+=5){
+    const x=Math.round(X(Date.UTC(yr,0,1)/60000))+0.5;
+    g.beginPath();g.moveTo(x,B+2);g.lineTo(x,B+8);g.stroke();
+    g.fillText(yr,x,B+12);
+  }
+
+  // the unrecorded years
+  const gx0=X(Date.UTC(1980,0,1)/60000),gx1=X(Date.UTC(1992,0,1)/60000);
+  g.fillStyle='#5d6368';g.font='italic 13px Georgia, serif';g.textAlign='center';g.textBaseline='middle';
+  g.fillText('no exactly',(gx0+gx1)/2,Y(85)-9);
+  g.fillText('timed pairs',(gx0+gx1)/2,Y(85)+9);
+  const hx=(X(Date.UTC(1999,6,1)/60000)+X(Date.UTC(2007,0,1)/60000))/2;
+  g.fillText('no exactly',hx,Y(85)-9);
+  g.fillText('timed pairs',hx,Y(85)+9);
+  // Borah Peak earthquake, 28 Oct 1983
+  const bx=Math.round(X(Date.UTC(1983,9,28)/60000))+0.5;
+  g.strokeStyle='rgba(200,205,210,0.35)';g.setLineDash([2,4]);
+  g.beginPath();g.moveTo(bx,T+40);g.lineTo(bx,Y(100));g.stroke();
+  g.beginPath();g.moveTo(bx,Y(70));g.lineTo(bx,B);g.stroke();g.setLineDash([]);
+  g.fillStyle='#8b9196';g.font='12px Georgia, serif';g.textAlign='center';g.textBaseline='bottom';
+  g.fillText('Borah Peak earthquake, Oct 1983',bx,T+34);
+
+  // title & text
+  g.textAlign='left';g.textBaseline='alphabetic';
+  g.fillStyle='#e6e8ea';g.font='30px Georgia, serif';
+  g.fillText('The Wait at Old Faithful',L,72);
+  g.fillStyle='#9aa0a5';g.font='15px Georgia, serif';
+  g.fillText('Every gap between two exactly timed, consecutive eruptions, 1970–2026. Each point is one wait; height is how long it lasted.',L,102);
+  g.fillText('Colour is the eruption that came before it.',L,124);
+
+  // legend
+  const lg=[[0,'after a short eruption (≤ 2½ min)'],[1,'after a long eruption'],[2,'duration not recorded']];
+  let lx=L;g.font='13px Georgia, serif';g.textBaseline='middle';
+  for(const [c,txt] of lg){
+    g.fillStyle='rgb('+col[c].join(',')+')';
+    g.beginPath();g.arc(lx+5,752,4.5,0,7);g.fill();
+    g.fillStyle='#9aa0a5';g.fillText(txt,lx+16,752);
+    lx+=g.measureText(txt).width+48;
+  }
+  g.textAlign='right';g.fillStyle='#6b7176';
+  g.fillText('Data: GeyserTimes eruption archive (Open Source Database License). '+(lines.length-2).toLocaleString('en-US')+' intervals.',R,752);
+})();
+</script>
+</body>
+</html>

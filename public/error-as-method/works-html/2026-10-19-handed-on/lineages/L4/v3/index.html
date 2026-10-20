@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Purse, Divided</title>
+<style>
+  html,body{margin:0;padding:0;background:#f3eee3;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#1d1b18;}
+  svg{display:block}
+</style>
+</head>
+<body>
+<svg id="v" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script>
+(function(){
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("v");
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+  function txt(s,a,p){var e=el("text",a,p);e.textContent=s;return e;}
+
+  var D=window.PRIZES, F=D.fields, I={};F.forEach(function(f,i){I[f]=i;});
+  var rows=D.rows;
+  var cats=["Physics","Chemistry","Physiology or Medicine","Literature","Peace","Economic Sciences"];
+  var BG="#f3eee3", INK="#1d1b18", WOMAN="#c8321e", ORG="#2f6f8f", MAN="#8a8174", FAINT="#ddd5c4", MUTED="#7a7166";
+
+  // the purse of each year (the largest award paid that year), and the laureates of each year
+  var purse={}, byYear={};
+  rows.forEach(function(r){
+    var y=r[I.year];
+    purse[y]=Math.max(purse[y]||0,r[I.amount_sek_today]);
+    (byYear[y]=byYear[y]||[]).push(r);
+  });
+  var years=Object.keys(purse).map(Number).sort(function(a,b){return a-b;});
+  var total=0; years.forEach(function(y){total+=purse[y];});
+
+  // field: x is money laid end to end, y is prizes (one slot per prize)
+  var L=70, R=1030, T=170, B=700, SLOT=(B-T)/6;
+  var kx=(R-L)/total;              // px per krona of width
+  var x0={}, acc=0;
+  years.forEach(function(y){x0[y]=L+acc*kx; acc+=purse[y];});
+  function W(y){return purse[y]*kx;}
+
+  // header
+  txt("The Purse, Divided",{x:L,y:50,"font-size":30,"letter-spacing":"0.5",fill:INK});
+  txt("Every Nobel laureate 1901–2026 is one piece, and its area is the money he, she or it took home. Each year is a column as wide as that",
+      {x:L,y:76,"font-size":13,fill:MUTED,"font-style":"italic"});
+  txt("year’s purse in today’s kronor, so time itself is measured in money; a piece’s height is the laureate’s share of one prize.",
+      {x:L,y:94,"font-size":13,fill:MUTED,"font-style":"italic"});
+  var lx=L, ly=124;
+  [["a man",MAN],["a woman",WOMAN],["an organisation",ORG]].forEach(function(d){
+    el("rect",{x:lx,y:ly-9,width:10,height:10,fill:d[1]});
+    txt(d[0],{x:lx+15,y:ly,"font-size":12,fill:INK});
+    lx+=15+d[0].length*6.4+22;
+  });
+  txt("whole prizes at the foot of each column, then halves, thirds and quarters above",{x:lx+6,y:ly,"font-size":12,fill:MUTED});
+
+  // prize-count grid on the left
+  for(var k=1;k<=6;k++){
+    var yy=B-k*SLOT;
+    el("line",{x1:L-5,x2:L,y1:yy,y2:yy,stroke:"#b9af9c","stroke-width":0.7});
+    txt(k+(k===1?" prize":" prizes"),{x:L-8,y:yy+4,"text-anchor":"end","font-size":10.5,fill:MUTED});
+  }
+
+  // the pieces
+  var shares={};
+  years.forEach(function(y){
+    var list=byYear[y].slice().sort(function(a,b){
+      if(a[I.share]!==b[I.share])return b[I.share]-a[I.share];
+      var ca=cats.indexOf(a[I.category]), cb=cats.indexOf(b[I.category]);
+      if(ca!==cb)return ca-cb;
+      return a[I.name]<b[I.name]?-1:1;
+    });
+    var x=x0[y], w=W(y), top=B;
+    list.forEach(function(r){
+      var h=r[I.share]*SLOT*r[I.amount_sek_today]/purse[y];
+      shares[r[I.share]]=(shares[r[I.share]]||0)+1;
+      var c=r[I.kind]==="woman"?WOMAN:r[I.kind]==="organisation"?ORG:MAN;
+      el("rect",{x:x.toFixed(2),y:(top-h).toFixed(2),width:Math.max(w-0.6,0.6).toFixed(2),height:Math.max(h-0.9,0.6).toFixed(2),fill:c});
+      top-=h;
+    });
+  });
+
+  // year axis: each tick where that year's money begins
+  var ay=B+14;
+  el("line",{x1:L,x2:R,y1:B+3,y2:B+3,stroke:"#b9af9c","stroke-width":0.7});
+  for(var yr=1910;yr<=2020;yr+=10){
+    var y=yr; while(!purse[y])y++;
+    var x=x0[y];
+    el("line",{x1:x,x2:x,y1:B+3,y2:B+8,stroke:"#b9af9c"});
+    txt(String(yr),{x:x,y:ay+8,"text-anchor":"middle","font-size":11,fill:MUTED});
+  }
+  txt("1901",{x:L,y:ay+8,"text-anchor":"start","font-size":11,fill:MUTED});
+  txt("2026",{x:R,y:ay+8,"text-anchor":"end","font-size":11,fill:MUTED});
+
+  // decades as brackets of money: width tells what each decade paid out per prize
+  function span(a,b){var s=0;years.forEach(function(y){if(y>=a&&y<=b)s+=purse[y];});return s;}
+  function bracket(a,b,label,dy){
+    var ya=a; while(!purse[ya])ya++; var yb=b; while(!purse[yb])yb--;
+    var xa=x0[ya], xb=x0[yb]+W(yb), yy=B+38+dy;
+    el("path",{d:"M"+xa+" "+(yy-4)+"V"+yy+"H"+xb+"V"+(yy-4),fill:"none",stroke:INK,"stroke-width":0.7});
+    txt(label,{x:(xa+xb)/2,y:yy+14,"text-anchor":"middle","font-size":11.5,"font-style":"italic",fill:INK});
+  }
+  bracket(1940,1949,"the 1940s: "+Math.round(span(1940,1949)/1e6)+" M kr wide",0);
+  bracket(2000,2009,"the 2000s: "+Math.round(span(2000,2009)/1e6)+" M kr wide",0);
+
+  // scale bar
+  var sb=10e6*kx, sx=R-sb, sy=148;
+  el("path",{d:"M"+sx+" "+(sy-4)+"V"+sy+"H"+R+"V"+(sy-4),fill:"none",stroke:INK,"stroke-width":0.8});
+  txt("width of 10 M kr",{x:sx-6,y:sy,"text-anchor":"end","font-size":11,fill:MUTED});
+
+  // notes inside the field
+  var x19=x0[1919];
+  var c19=x19+W(1919)/2;
+  el("path",{d:"M"+c19+" "+(B+30)+"V"+(B+38)+"H"+(c19-30),fill:"none",stroke:INK,"stroke-width":0.7});
+  txt("1919, the leanest: "+(purse[1919]/1e6).toFixed(1)+" M kr",{x:c19-34,y:B+52,"text-anchor":"end","font-size":11.5,"font-style":"italic",fill:INK});
+  var x01=x0[2001];
+  txt("2001, the richest: "+(purse[2001]/1e6).toFixed(1)+" M kr",{x:x01+W(2001),y:B-6*SLOT-12,"text-anchor":"end","font-size":11.5,"font-style":"italic",fill:MUTED});
+  txt("1969: Economics adds a sixth prize",{x:x0[1969]-6,y:B-5*SLOT-12,"text-anchor":"end","font-size":11.5,"font-style":"italic",fill:MUTED});
+
+  txt(shares[1]+" whole prizes, "+shares[0.5]+" halves, "+shares[0.3333]+" thirds, "+shares[0.25]+" quarters. Years with no prize take no width. Source: Nobel Prize API, laureates (CC0).",
+      {x:L,y:790,"font-size":11,fill:MUTED,"font-style":"italic"});
+})();
+</script>
+</body>
+</html>

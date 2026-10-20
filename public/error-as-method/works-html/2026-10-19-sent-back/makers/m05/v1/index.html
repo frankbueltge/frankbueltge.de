@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The Length of Their Years</title>
+<style>
+  html,body{margin:0;padding:0;background:#07080c;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#cfc8b8;}
+  canvas{position:absolute;left:0;top:0;}
+  .t{position:absolute;left:800px;width:270px;}
+  h1{font-weight:normal;font-size:30px;line-height:1.1;margin:0;letter-spacing:.3px;color:#ece4d2;}
+  p{font-size:12.5px;line-height:1.55;margin:0 0 10px 0;color:#9d978a;}
+  .k{font-size:12px;line-height:1.9;color:#b8b1a2;}
+  .k span{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:0;}
+  .s{font-size:10.5px;color:#5f5b53;line-height:1.4;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<div class="t" style="top:58px">
+  <h1>The Length of<br>Their Years</h1>
+</div>
+<div class="t" style="top:150px">
+  <p>Every confirmed planet beyond the Sun, set on a dial of discovery. Going clockwise from the top: the year it was found, 1992 to 2026. Outward from the centre: how long its year lasts, from two hours to a million days.</p>
+  <p>The faint rings are the years of Mercury, Earth, Jupiter and Neptune. Very few of the found worlds sit where ours do; each way of looking reaches its own band of distance, and the dial is drawn by the instruments as much as by the sky.</p>
+  <p>The dust outside the rim is planets whose year is not known.</p>
+  <div class="k" id="key"></div>
+  <p class="s" id="src" style="margin-top:14px"></p>
+</div>
+<script src="data.js"></script>
+<script>
+(function(){
+  var D = window.PLANETS, F = D.fields, rows = D.rows;
+  var iN=F.indexOf('name'), iY=F.indexOf('year'), iM=F.indexOf('method'),
+      iP=F.indexOf('period_days'), iR=F.indexOf('radius_earth');
+  var cv=document.getElementById('c'), g=cv.getContext('2d');
+  var CX=395, CY=400, R0=30, R1=312, RU0=322, RU1=346;
+  var L0=Math.log10(0.08), L1=6;
+  var Y0=1992, Y1=2027, A0=-Math.PI/2+0.06, SPAN=Math.PI*2-0.30;
+
+  var col = {
+    'Transit':'#e9b65c',
+    'Radial Velocity':'#6fa8d6',
+    'Microlensing':'#c86f9c',
+    'Imaging':'#e9e4d8',
+    'Transit Timing Variations':'#9cc98a',
+    'Other':'#8fd0c6'
+  };
+  function cOf(m){return col[m]||col.Other;}
+
+  function hash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0)/4294967296;}
+  function hash2(s){return hash(s+'~');}
+  function rad(p){var l=Math.log10(p);if(l>L1)l=L1;if(l<L0)l=L0;return R0+(l-L0)/(L1-L0)*(R1-R0);}
+  function ang(y,f){return A0+((y-Y0)+f)/(Y1-Y0)*SPAN;}
+
+  // background glow
+  var bg=g.createRadialGradient(CX,CY,0,CX,CY,420);
+  bg.addColorStop(0,'#141522');bg.addColorStop(1,'#07080c');
+  g.fillStyle=bg;g.fillRect(0,0,1100,800);
+
+  // year spokes and labels
+  g.font='10px Georgia';g.textAlign='center';g.textBaseline='middle';
+  for(var y=Y0;y<=Y1;y++){
+    var a=ang(y,0);
+    g.strokeStyle=(y%5===0)?'rgba(200,190,170,0.10)':'rgba(200,190,170,0.04)';
+    g.lineWidth=1;g.beginPath();
+    g.moveTo(CX+Math.cos(a)*R0,CY+Math.sin(a)*R0);
+    g.lineTo(CX+Math.cos(a)*R1,CY+Math.sin(a)*R1);g.stroke();
+    if(y<Y1 && (y%5===0||y===1992||y===2026||y===2014||y===2016)){
+      var am=ang(y,0.5);
+      g.fillStyle=(y===2014||y===2016)?'#b8ae98':'#6e695f';
+      g.fillText(String(y),CX+Math.cos(am)*(RU1+18),CY+Math.sin(am)*(RU1+18));
+    }
+  }
+  // rim
+  g.strokeStyle='rgba(220,210,190,0.18)';g.lineWidth=1;
+  g.beginPath();g.arc(CX,CY,R1+4,A0,A0+SPAN);g.stroke();
+  g.beginPath();g.arc(CX,CY,R0-4,A0,A0+SPAN);g.stroke();
+
+  // period rings: decades
+  g.setLineDash([1,4]);
+  [0.1,1,10,100,1000,1e4,1e5,1e6].forEach(function(p){
+    g.strokeStyle='rgba(200,190,170,0.08)';
+    g.beginPath();g.arc(CX,CY,rad(p),A0,A0+SPAN);g.stroke();
+  });
+  g.setLineDash([]);
+  // label decades in the gap
+  var ag=A0-0.15;
+  g.font='9px Georgia';g.fillStyle='#575349';g.textAlign='left';
+  [['1 day',1],['10',10],['100',100],['1,000',1000],['10,000 days',1e4]].forEach(function(d){
+    var r=rad(d[1]);g.save();g.translate(CX+Math.cos(A0-0.03)*r,CY+Math.sin(A0-0.03)*r);
+    g.rotate(A0+Math.PI/2);g.fillText(d[0],-0,0);g.restore();
+  });
+
+  // solar system rings
+  var sol=[['Mercury',87.97],['Earth',365.25],['Jupiter',4332.6],['Neptune',60190]];
+  sol.forEach(function(s){
+    g.strokeStyle='rgba(150,200,230,0.22)';g.lineWidth=0.8;
+    g.beginPath();g.arc(CX,CY,rad(s[1]),0,Math.PI*2);g.stroke();
+  });
+
+  // planets
+  var counts={};
+  // draw larger first so small ones sit above
+  var list=rows.map(function(r){return r;}).sort(function(a,b){return (b[iR]||1)-(a[iR]||1);});
+  g.globalCompositeOperation='lighter';
+  list.forEach(function(r){
+    var m=r[iM]; var key=col[m]?m:'Other'; counts[key]=(counts[key]||0)+1;
+    var h=hash(r[iN]), h2=hash2(r[iN]);
+    var a=ang(r[iY],0.04+h*0.92), rr;
+    if(r[iP]==null){ rr=RU0+h2*(RU1-RU0); }
+    else { rr=rad(r[iP])+(h2-0.5)*1.2; }
+    var re=r[iR]||2;
+    var s=0.55+Math.log10(1+re)*1.05;
+    var x=CX+Math.cos(a)*rr, y=CY+Math.sin(a)*rr;
+    g.fillStyle=cOf(m);
+    g.globalAlpha=(r[iP]==null)?0.6:(m==="Transit"?0.42:0.7);
+    g.beginPath();g.arc(x,y,s,0,Math.PI*2);g.fill();
+  });
+  g.globalAlpha=1;g.globalCompositeOperation='source-over';
+
+  // solar labels, on top
+  g.font='italic 10px Georgia';g.textAlign='left';
+  sol.forEach(function(s,i){
+    var a=A0-0.11, r=rad(s[1]);
+    var x=CX+Math.cos(a)*r, y=CY+Math.sin(a)*r;
+    g.fillStyle='#8fb7cf';
+    g.save();g.translate(x,y);g.rotate(a+Math.PI/2);
+    g.textAlign='right';g.fillText(s[0],-4,0);g.restore();
+  });
+
+  // centre
+  g.fillStyle='#e8dcc0';g.globalAlpha=0.9;
+  g.beginPath();g.arc(CX,CY,3,0,Math.PI*2);g.fill();g.globalAlpha=1;
+
+  // key
+  var names=['Transit','Radial Velocity','Microlensing','Imaging','Transit Timing Variations','Other'];
+  var lbl={'Other':'other methods'};
+  document.getElementById('key').innerHTML=names.map(function(n){
+    return '<div><span style="background:'+col[n]+'"></span>'+(lbl[n]||n.toLowerCase())+' &nbsp;<span style="width:auto;height:auto;background:none;color:#6b665c;margin:0">'+(counts[n]||0).toLocaleString('en')+'</span></div>';
+  }).join('');
+  document.getElementById('src').textContent=rows.length.toLocaleString('en')+' planets. Dot size follows planet radius. '+D.source+'.';
+})();
+</script>
+</body>
+</html>

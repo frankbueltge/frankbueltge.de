@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Every Day the Sun Was Counted</title>
+<style>
+  html, body { margin: 0; background: #0c0b0a; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/sunspots.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800;
+  const cv = document.getElementById('c');
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+  g.fillStyle = '#0c0b0a'; g.fillRect(0, 0, W, H);
+
+  const v = window.SUNSPOTS.v;
+  const t0 = Date.UTC(1818, 0, 1);
+  const Y0 = 1818, Y1 = 2026, NY = Y1 - Y0 + 1;
+
+  // plot field: one row per year, one column per day of the year
+  const L = 96, R = 1062, T = 62, B = 756;
+  const cw = (R - L) / 366, rh = (B - T) / NY;
+
+  // ember ramp: soot -> oxblood -> orange -> straw -> near white
+  const stops = [
+    [0.00, [34, 26, 24]],
+    [0.18, [92, 24, 18]],
+    [0.40, [178, 56, 18]],
+    [0.62, [232, 128, 34]],
+    [0.82, [248, 206, 110]],
+    [1.00, [255, 250, 232]]
+  ];
+  function ramp(t) {
+    t = Math.max(0, Math.min(1, t));
+    for (let i = 1; i < stops.length; i++) {
+      if (t <= stops[i][0]) {
+        const a = stops[i - 1], b = stops[i];
+        const k = (t - a[0]) / (b[0] - a[0]);
+        return [0, 1, 2].map(j => Math.round(a[1][j] + (b[1][j] - a[1][j]) * k));
+      }
+    }
+    return stops[stops.length - 1][1];
+  }
+  const MAX = 400;
+
+  const yearly = new Array(NY).fill(0).map(() => ({ s: 0, n: 0, zero: 0, miss: 0 }));
+
+  for (let i = 0; i < v.length; i++) {
+    const d = new Date(t0 + i * 86400000);
+    const y = d.getUTCFullYear();
+    const doy = Math.floor((Date.UTC(y, d.getUTCMonth(), d.getUTCDate()) - Date.UTC(y, 0, 1)) / 86400000);
+    const row = y - Y0;
+    const x = L + doy * cw, yy = T + row * rh;
+    const s = v[i];
+    const ys = yearly[row];
+    if (s < 0) { ys.miss++; continue; }            // no one looked: leave the dark
+    ys.s += s; ys.n++;
+    if (s === 0) {                                  // looked, and found the face clean
+      ys.zero++;
+      g.fillStyle = '#2a3a44';
+      g.fillRect(x, yy + rh * 0.3, cw, rh * 0.4);
+      continue;
+    }
+    const c = ramp(Math.pow(s / MAX, 0.72));
+    g.fillStyle = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
+    g.fillRect(x, yy, cw + 0.35, rh + 0.35);
+  }
+
+  // ---- type ----
+  const serif = '"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif';
+  const mono = 'ui-monospace,"SF Mono",Menlo,Consolas,monospace';
+
+  g.fillStyle = '#efe6d8';
+  g.font = 'italic 22px ' + serif;
+  g.textBaseline = 'alphabetic';
+  g.fillText('Every day the sun was counted', L, 34);
+  g.fillStyle = '#8c8174';
+  g.font = '11px ' + mono;
+  const sub = 'International sunspot number, daily, 1 Jan 1818 – 30 Sep 2026  ·  one row per year, one column per day';
+  g.fillText(sub, L, 50);
+
+  // year labels at decades, left
+  g.textAlign = 'right';
+  g.textBaseline = 'middle';
+  for (let y = 1820; y <= Y1; y += 10) {
+    const yy = T + (y - Y0 + 0.5) * rh;
+    g.fillStyle = y % 50 === 0 ? '#cbbfae' : '#6c6358';
+    g.font = (y % 50 === 0 ? '11px ' : '10px ') + mono;
+    g.fillText(String(y), L - 12, yy);
+    g.fillStyle = '#3a342e';
+    g.fillRect(L - 8, yy, 4, 0.8);
+  }
+
+  // month ticks along the bottom
+  g.textAlign = 'center';
+  g.textBaseline = 'top';
+  const months = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+  const mStart = [0,31,59,90,120,151,181,212,243,273,304,334];
+  g.font = '10px ' + mono;
+  for (let m = 0; m < 12; m++) {
+    const x = L + mStart[m] * cw;
+    g.fillStyle = '#3a342e'; g.fillRect(x, B + 3, 0.8, 4);
+    g.fillStyle = '#6c6358';
+    g.fillText(months[m], x + 15 * cw, B + 7);
+  }
+
+  // right margin: a hairline mark for each year's spotless-day share
+  for (let r = 0; r < NY; r++) {
+    const ys = yearly[r];
+    if (!ys.n) continue;
+    const share = ys.zero / ys.n;
+    if (share <= 0) continue;
+    g.fillStyle = '#4f6a78';
+    g.fillRect(R + 4, T + r * rh + rh * 0.25, share * 22, rh * 0.5);
+  }
+
+  // single annotation: the brightest day on record
+  let mi = 0; for (let i = 0; i < v.length; i++) if (v[i] > v[mi]) mi = i;
+  const md = new Date(t0 + mi * 86400000);
+  const my = md.getUTCFullYear();
+  const mdoy = Math.floor((md - Date.UTC(my, 0, 1)) / 86400000);
+  const ax = L + (mdoy + 0.5) * cw, ay = T + (my - Y0 + 0.5) * rh;
+  g.strokeStyle = '#efe6d8'; g.lineWidth = 0.8;
+  g.beginPath(); g.arc(ax, ay, 5, 0, Math.PI * 2); g.stroke();
+  g.beginPath(); g.moveTo(ax + 5, ay - 3); g.lineTo(ax + 40, ay - 22); g.stroke();
+  g.textAlign = 'left'; g.textBaseline = 'middle';
+  g.fillStyle = '#efe6d8'; g.font = '10px ' + mono;
+  g.fillText(v[mi] + ' spots · 26 Aug ' + my, ax + 44, ay - 22);
+
+  // legend, top right
+  const lx = 812, ly = 22;
+  g.textBaseline = 'middle'; g.textAlign = 'left'; g.font = '10px ' + mono;
+  for (let k = 0; k <= 60; k++) {
+    const c = ramp(k / 60);
+    g.fillStyle = 'rgb(' + c + ')';
+    g.fillRect(lx + k * 2, ly, 2.2, 8);
+  }
+  g.fillStyle = '#8c8174';
+  g.fillText('1', lx - 10, ly + 4);
+  g.fillText(String(MAX) + '+', lx + 126, ly + 4);
+  g.fillStyle = '#2a3a44'; g.fillRect(lx, ly + 20, 10, 3);
+  g.fillStyle = '#8c8174'; g.fillText('spotless', lx + 16, ly + 21.5);
+  g.strokeStyle = '#3a342e'; g.strokeRect(lx + 82.5, ly + 17.5, 10, 8);
+  g.fillText('unobserved', lx + 98, ly + 21.5);
+
+  g.save();
+  g.translate(R + 4, T - 4);
+  g.fillStyle = '#4f6a78'; g.textAlign = 'left'; g.textBaseline = 'bottom';
+  g.fillText('clean', 0, 0);
+  g.restore();
+
+  g.textAlign = 'right'; g.textBaseline = 'top';
+  g.fillStyle = '#4d463e';
+  g.fillText('data: SILSO, Royal Observatory of Belgium, Brussels · CC BY-NC 4.0', R + 26, B + 24);
+})();
+</script>
+</body>
+</html>

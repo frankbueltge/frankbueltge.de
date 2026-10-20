@@ -1,0 +1,71 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Faithful, 2025</title>
+<style>html,body{margin:0;background:#f2ede3}canvas{display:block}</style>
+</head><body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+const c=document.getElementById('c'),g=c.getContext('2d');
+const W=1100,H=800;
+g.fillStyle='#f2ede3';g.fillRect(0,0,W,H);
+const rows=window.OF.trim().split('\n').map(l=>{const p=l.split(',');return{t:+p[0],d:+p[1],m:+p[2],k:p[3]}});
+const X0=96,X1=1064,Y0=92,RH=1.74;
+const x=m=>X0+(X1-X0)*m/1440, y=d=>Y0+(d-1)*RH;
+const SHORT='#b5452a', LONG='#2f5a73';
+// hour grid
+g.font='10px Georgia, serif';g.textAlign='center';
+for(let h=0;h<=24;h++){
+  const xx=x(h*60);
+  g.strokeStyle=h%6?'rgba(60,50,40,0.07)':'rgba(60,50,40,0.18)';g.lineWidth=1;
+  g.beginPath();g.moveTo(xx+.5,Y0-6);g.lineTo(xx+.5,y(366));g.stroke();
+  if(h%3==0){g.fillStyle='#6b6052';g.fillText(h==0||h==24?'midnight':h==12?'noon':(h%12)+(h<12?' am':' pm'),xx,Y0-12);}
+}
+// month labels
+const mon=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const start=[1,32,60,91,121,152,182,213,244,274,305,335,366];
+g.textAlign='right';g.font='italic 12px Georgia, serif';
+for(let i=0;i<12;i++){
+  g.fillStyle='#6b6052';g.fillText(mon[i],X0-14,y(start[i])+12);
+  g.strokeStyle='rgba(60,50,40,0.25)';g.beginPath();g.moveTo(X0-10,Math.round(y(start[i]))+.5);g.lineTo(X0-4,Math.round(y(start[i]))+.5);g.stroke();
+}
+// intervals as threads
+const hist={};let nS=0,nL=0;
+for(let i=0;i<rows.length-1;i++){
+  const a=rows[i],b=rows[i+1];const iv=(b.t-a.t)/60;
+  if(iv<40||iv>150) continue;
+  const bin=Math.floor(iv/2)*2;hist[bin]=(hist[bin]||0)+1;
+  const col=iv<83?SHORT:LONG; iv<83?nS++:nL++;
+  const yy=y(a.d)+0.15;
+  let m1=a.m,m2=a.m+iv;
+  g.fillStyle=col;g.globalAlpha=0.82;
+  if(m2<=1440){g.fillRect(x(m1)+1,yy,x(m2)-x(m1)-1.6,RH-0.35);}
+  else{g.fillRect(x(m1)+1,yy,x(1440)-x(m1),RH-0.35);g.fillRect(x(0),y(b.d)+0.15,x(m2-1440)-x(0)-1.6,RH-0.35);}
+}
+g.globalAlpha=1;
+// eruptions as small dark marks
+g.fillStyle='#1e1a16';
+for(const r of rows){g.fillRect(x(r.m)-0.4,y(r.d)-0.2,1.1,RH+0.2);}
+// title
+g.textAlign='left';g.fillStyle='#1e1a16';
+g.font='26px Georgia, serif';g.fillText('Faithful',X0,44);
+g.font='italic 13px Georgia, serif';g.fillStyle='#4a4136';
+g.fillText('Every reported eruption of Old Faithful, Yellowstone, in 2025 — one row per day, midnight to midnight, local time',X0+104,44);
+// histogram at bottom right
+const HX=X1-300,HY=H-18,HW=300,HH=34;
+let mx=0;for(const k in hist)mx=Math.max(mx,hist[k]);
+for(let b=40;b<150;b+=2){const v=hist[b]||0;g.fillStyle=b<83?SHORT:LONG;
+  const bx=HX+(b-40)/110*HW;g.fillRect(bx,HY-v/mx*HH,HW/55-0.8,v/mx*HH);}
+g.fillStyle='#6b6052';g.font='10px Georgia, serif';g.textAlign='center';
+for(const t of [60,90,120]){g.fillText(t+' min',HX+(t-40)/110*HW,HY+12);}
+// key text
+g.textAlign='left';g.font='12px Georgia, serif';g.fillStyle='#4a4136';
+const ky=H-36;
+g.fillText('Each black tick is an eruption; the thread after it runs to the next one.',X0,ky);
+g.fillStyle=SHORT;g.fillRect(X0,ky+9,22,6);g.fillStyle='#4a4136';
+g.fillText('a wait of under 83 min ('+nS+')',X0+28,ky+16);
+g.fillStyle=LONG;g.fillRect(X0+210,ky+9,22,6);g.fillStyle='#4a4136';
+g.fillText('a wait of 83 min or more ('+nL+')',X0+238,ky+16);
+g.fillStyle='#8a7f70';g.font='italic 11px Georgia, serif';
+g.fillText('The nights are nearly empty because in the dark almost nobody sees it go.',X0,ky+34);
+g.textAlign='right';g.fillText('Contains information from GeyserTimes, made available under the Open Database License (ODbL).',X1,64);
+</script></body></html>

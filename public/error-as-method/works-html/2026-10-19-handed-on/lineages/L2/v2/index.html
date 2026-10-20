@@ -1,0 +1,96 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>The Long Wait</title>
+<style>
+html,body{margin:0;background:#f3efe6;}
+body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#222;}
+canvas{display:block}
+</style></head>
+<body><canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+const D=window.PRIZES, R=D.rows;
+const cv=document.getElementById('c'), dpr=window.devicePixelRatio||1;
+cv.width=1100*dpr;cv.height=800*dpr;cv.style.width='1100px';cv.style.height='800px';
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+g.fillStyle='#f3efe6';g.fillRect(0,0,1100,800);
+const rows=R.filter(r=>r[4]!=null).slice().sort((a,b)=>a[0]-b[0]||a[1].localeCompare(b[1])||a[4]-b[4]);
+// x: years before the prize. The prize edge is vertical.
+const PX=985, K=8.4, AMAX=104, LCLIP=PX-AMAX*K, T=118, B=738;
+const xa=age=>PX-age*K;
+const byYear={};rows.forEach(r=>{(byYear[r[0]]=byYear[r[0]]||[]).push(r)});
+const Y0=1901,Y1=2026;
+const yc=yr=>T+(yr-Y0)/(Y1-Y0+1)*(B-T);
+const yy=(yr,i,n)=>yc(yr+(n>1?i/n:0));
+const MEN='#3a3a3a',WOM='#d2401e',ORG='#2a5f9e',INK='#3b342a',MUTE='#8a8170';
+// age grid (vertical)
+g.font='11px Georgia';g.textAlign='center';
+for(let a=0;a<=100;a+=10){g.strokeStyle='rgba(0,0,0,'+(a%20?0.035:0.07)+')';g.lineWidth=1;g.beginPath();g.moveTo(xa(a)+.5,T-6);g.lineTo(xa(a)+.5,B+4);g.stroke();
+ if(a%20==0&&a>0){g.fillStyle=MUTE;g.fillText(a,xa(a),B+19);}}
+g.fillStyle=MUTE;g.fillText('prize',PX,B+19);
+g.font='italic 11px Georgia';g.fillText('age at the prize  (years from birth to prize)',xa(50),B+34);
+// birth-year diagonals: born b -> age = Y - b
+g.setLineDash([2,4]);g.lineWidth=1;
+for(let b=1820;b<=1990;b+=20){
+ // segment where age in [0,AMAX] and Y in [Y0,Y1+1]
+ const ya=Math.max(Y0,b), yb=Math.min(Y1+1,b+AMAX);if(ya>=yb)continue;
+ g.strokeStyle='rgba(120,100,70,0.45)';g.beginPath();g.moveTo(xa(ya-b),yc(ya));g.lineTo(xa(yb-b),yc(yb));g.stroke();
+ // label at the low end
+ const lx=xa(yb-b), ly=yc(yb);
+ g.save();g.fillStyle='#8a7a60';g.font='italic 11px Georgia';g.textAlign=yb==Y1+1?'center':'right';
+ if(yb==Y1+1)g.fillText('born '+b,lx,B+50);else g.fillText('born '+b,lx-4,ly+4);g.restore();
+}
+g.setLineDash([]);
+// threads
+function line(r,i,n,col,w,a){const y=yy(r[0],i,n);const age=r[0]-r[4];const x0=Math.max(xa(age),LCLIP);
+ g.globalAlpha=a;g.strokeStyle=col;g.lineWidth=w;g.beginPath();g.moveTo(x0,y);g.lineTo(PX,y);g.stroke();g.globalAlpha=1;
+ if(age>AMAX){g.fillStyle=col;g.beginPath();g.moveTo(x0-6,y);g.lineTo(x0,y-2.5);g.lineTo(x0,y+2.5);g.fill();}
+ return [x0,y];}
+const each=(f)=>{for(const yr in byYear){const a=byYear[yr];a.forEach((r,i)=>f(r,i,a.length))}};
+each((r,i,n)=>{if(r[3]=='man')line(r,i,n,MEN,0.7,0.32)});
+g.setLineDash([1,2]);each((r,i,n)=>{if(r[3]=='organisation')line(r,i,n,ORG,1,0.85)});g.setLineDash([]);
+each((r,i,n)=>{if(r[3]=='woman')line(r,i,n,WOM,1.3,0.95)});
+// prize edge
+g.fillStyle='#111';g.fillRect(PX,T,1.6,B-T);
+// running median age (people), 11-year window
+const people=rows.filter(r=>r[3]!='organisation');
+const med=[];
+for(let Y=Y0;Y<=Y1;Y++){const s=people.filter(r=>Math.abs(r[0]-Y)<=5).map(r=>r[0]-r[4]).sort((a,b)=>a-b);
+ if(s.length<8)continue;const m=s.length%2?s[(s.length-1)/2]:(s[s.length/2-1]+s[s.length/2])/2;med.push([Y,m]);}
+const medPath=()=>{g.beginPath();med.forEach(([Y,m],k)=>{const p=[xa(m),yc(Y+0.5)];k?g.lineTo(...p):g.moveTo(...p)});};
+g.lineJoin='round';g.strokeStyle='rgba(243,239,230,0.9)';g.lineWidth=5;medPath();g.stroke();
+g.strokeStyle='#1d1a15';g.lineWidth=1.8;medPath();g.stroke();
+// values on the median line
+function medAt(Y){let best=med[0];med.forEach(p=>{if(Math.abs(p[0]-Y)<Math.abs(best[0]-Y))best=p});return best;}
+g.font='bold 12px Georgia';g.textAlign='right';
+const lab=(Y,txt)=>{const [y0,m]=medAt(Y);const px=xa(m)-8,py=yc(y0+0.5)+4;
+ g.strokeStyle='rgba(243,239,230,0.95)';g.lineWidth=4;g.strokeText(txt,px,py);g.fillStyle='#1d1a15';g.fillText(txt,px,py);};
+lab(1906,'median '+medAt(1906)[1]);
+lab(1960,medAt(1960)[1]+'');
+lab(2020,'median '+medAt(2020)[1]);
+// award year labels right of the edge
+g.textAlign='left';g.font='11px Georgia';g.fillStyle=MUTE;
+for(const yr of [1901,1925,1950,1975,2000,2026])g.fillText(yr,PX+8,yc(yr)+4);
+g.font='italic 11px Georgia';g.fillText('no prizes,',PX+8,yc(1941)+2);g.fillText('1940–42',PX+8,yc(1941)+15);
+// annotations
+function find(name){let o;each((r,i,n)=>{if(!o&&r[2].includes(name)){const age=r[0]-r[4];o={r,y:yy(r[0],i,n),x:Math.max(xa(age),LCLIP),age}}});return o;}
+function note(name,txt,dx,dy){const f=find(name);if(!f)return;
+ g.strokeStyle='#6b6152';g.lineWidth=0.7;g.beginPath();g.moveTo(f.x,f.y);g.lineTo(f.x+dx,f.y+dy);g.stroke();
+ g.font='italic 12px Georgia';g.textAlign=dx<0?'right':'left';
+ txt.split('\n').forEach((t,k)=>{const tx=f.x+dx+(dx<0?-3:3),ty=f.y+dy+4+k*14;g.strokeStyle='rgba(243,239,230,0.92)';g.lineWidth=4;g.strokeText(t,tx,ty);g.fillStyle=INK;g.fillText(t,tx,ty)});}
+note('Marie Curie','Marie Curie, 1903, aged 36',-30,-14);
+note('Bertha von Suttner','Bertha von Suttner, 1905, aged 62',-40,12);
+note('Malala','Malala Yousafzai, 2014, aged 17',-60,-34);
+note('Goodenough','John B. Goodenough,\n2019, aged 97',-24,-44);
+note('Friends Service Council','Friends Service Council, 1947:\nthe Quakers, founded 1647, 300 years before',20,-46);
+note('International Committee of the Red Cross','Red Cross, 1917, founded 54 years before',-30,-30);
+// title
+g.textAlign='left';g.fillStyle='#1d1a15';g.font='bold 30px Georgia';g.fillText('The Long Wait',LCLIP,48);
+g.font='14px Georgia';g.fillStyle='#4a4337';
+g.fillText('Every Nobel laureate, 1901–2026, as a thread hung from the prize and reaching back to the year of birth (or founding).',LCLIP,72);
+g.fillText('Read down: the edge of the prize stays put, the edge of birth recedes. The black line is the median age.',LCLIP,90);
+// legend (top-left, inside the sparse corner)
+const lx=LCLIP,ly=140;g.font='12px Georgia';
+[[MEN,'men',[]],[WOM,'women',[]],[ORG,'organisations',[1,2]]].forEach(([c,t,d],k)=>{g.setLineDash(d);g.strokeStyle=c;g.lineWidth=2;g.beginPath();g.moveTo(lx,ly+k*18);g.lineTo(lx+30,ly+k*18);g.stroke();g.setLineDash([]);
+ g.strokeStyle='rgba(243,239,230,0.92)';g.lineWidth=4;const s=t+' ('+R.filter(r=>r[3]==(t=='men'?'man':t=='women'?'woman':'organisation')).length+')';g.strokeText(s,lx+38,ly+4+k*18);g.fillStyle=INK;g.fillText(s,lx+38,ly+4+k*18)});
+g.font='10px Georgia';g.fillStyle='#9a917f';g.textAlign='right';g.fillText('Source: '+D.source,1060,792);
+</script></body></html>

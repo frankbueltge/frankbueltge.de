@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Long Exposure</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #04060a; }
+  body { width: 1100px; height: 800px; overflow: hidden; position: relative;
+         font-family: Georgia, "Times New Roman", serif; color: #b9b2a2; }
+  canvas { position: absolute; left: 0; top: 0; }
+  .t { position: absolute; left: 34px; top: 30px; }
+  .t h1 { margin: 0; font-weight: normal; font-size: 22px; letter-spacing: 0.04em; color: #e7dcc4; }
+  .t p { margin: 6px 0 0; font-size: 12.5px; line-height: 1.5; width: 310px; color: #8f8a7e; font-style: italic; }
+  .src { position: absolute; right: 30px; bottom: 22px; font-size: 10.5px; color: #5d5a54; text-align: right; line-height: 1.5; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<div class="t">
+  <h1>Long Exposure</h1>
+  <p id="cap"></p>
+</div>
+<div class="src" id="src"></div>
+<script src="data/lights.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800;
+  const L = window.LIGHTS;
+  const lat0 = 54 * Math.PI / 180;
+  const kx = Math.cos(lat0);
+  // extent of the data
+  let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+  for (const l of L) {
+    const x = l.lon * kx, y = l.lat;
+    if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+  }
+  const pad = 30;
+  const s = Math.min((W - 2 * pad) / (x1 - x0), (H - 2 * pad) / (y1 - y0)); // px per degree of latitude
+  const ox = (W - (x1 - x0) * s) / 2 + 40, oy = (H - (y1 - y0) * s) / 2;
+  const px = (lon) => ox + (lon * kx - x0) * s;
+  const py = (lat) => oy + (y1 - lat) * s;
+  const pxPerNm = s / 60; // one nautical mile is one minute of latitude
+
+  const COL = {
+    W: [1.00, 0.84, 0.58], R: [1.00, 0.16, 0.10], G: [0.12, 1.00, 0.50],
+    Y: [1.00, 0.78, 0.10], Bu: [0.30, 0.50, 1.00], Vi: [0.65, 0.30, 1.00], Or: [1.0, 0.5, 0.1]
+  };
+  const acc = new Float32Array(W * H * 3);
+
+  function deposit(cx, cy, R, energy, rgb) {
+    // halo: light reaching out to the nominal range, falling to nothing at its edge
+    const area = Math.PI * R * R / 6; // integral of (1-r/R)^2 over the disc
+    const a = energy / area;
+    const xa = Math.max(0, Math.floor(cx - R)), xb = Math.min(W - 1, Math.ceil(cx + R));
+    const ya = Math.max(0, Math.floor(cy - R)), yb = Math.min(H - 1, Math.ceil(cy + R));
+    for (let y = ya; y <= yb; y++) {
+      for (let x = xa; x <= xb; x++) {
+        const dx = x + 0.5 - cx, dy = y + 0.5 - cy;
+        const r = Math.sqrt(dx * dx + dy * dy) / R;
+        if (r >= 1) continue;
+        const f = a * (1 - r) * (1 - r);
+        const i = (y * W + x) * 3;
+        acc[i] += f * rgb[0]; acc[i + 1] += f * rgb[1]; acc[i + 2] += f * rgb[2];
+      }
+    }
+  }
+  function core(cx, cy, energy, rgb) {
+    const sg = 0.9, R = 3;
+    const norm = energy / (2 * Math.PI * sg * sg);
+    for (let y = Math.floor(cy - R); y <= Math.ceil(cy + R); y++) {
+      if (y < 0 || y >= H) continue;
+      for (let x = Math.floor(cx - R); x <= Math.ceil(cx + R); x++) {
+        if (x < 0 || x >= W) continue;
+        const dx = x + 0.5 - cx, dy = y + 0.5 - cy;
+        const f = norm * Math.exp(-(dx * dx + dy * dy) / (2 * sg * sg));
+        const i = (y * W + x) * 3;
+        acc[i] += f * rgb[0]; acc[i + 1] += f * rgb[1]; acc[i + 2] += f * rgb[2];
+      }
+    }
+  }
+
+  let nLights = 0, litSeconds = 0, periodSeconds = 0;
+  for (const l of L) {
+    const cx = px(l.lon), cy = py(l.lat);
+    const n = l.c.length;
+    nLights += 1;
+    for (const [c, rng] of l.c) {
+      const rgb = COL[c] || COL.W;
+      const nm = rng == null ? 1 : Math.max(1, rng);
+      const R = nm * pxPerNm;
+      // radiant energy over time: lit fraction, times the number of lamps, shared among sector colours,
+      // and a lamp that carries further is a brighter lamp (range grows roughly with sqrt of intensity... kept gentle)
+      const e = l.d * l.k / n;
+      deposit(cx, cy, R, e * nm * 1.2, rgb);
+      core(cx, cy, e * 1.1, rgb);
+    }
+  }
+
+  // tone map
+  const ctx = document.getElementById('c').getContext('2d');
+  const img = ctx.createImageData(W, H);
+  const exposure = 1.3;
+  for (let p = 0, q = 0; p < W * H; p++, q += 4) {
+    const i = p * 3;
+    for (let k = 0; k < 3; k++) {
+      const v = 1 - Math.exp(-acc[i + k] * exposure);
+      img.data[q + k] = Math.round(255 * Math.pow(v, 1 / 2.2));
+    }
+    img.data[q + 3] = 255;
+  }
+  // night sea
+  for (let q = 0; q < img.data.length; q += 4) {
+    img.data[q] = Math.max(img.data[q], 4);
+    img.data[q + 1] = Math.max(img.data[q + 1], 6);
+    img.data[q + 2] = Math.max(img.data[q + 2], 10);
+  }
+  ctx.putImageData(img, 0, 0);
+
+  // graticule ticks, very faint
+  ctx.fillStyle = 'rgba(160,150,130,0.35)';
+  ctx.font = '10px Georgia, serif';
+  for (let lat = 48; lat <= 62; lat += 2) {
+    const y = py(lat); if (y < 10 || y > H - 10) continue;
+    ctx.fillRect(W - 18, y, 8, 1);
+    ctx.fillText(lat + '°N', W - 52, y + 3.5);
+  }
+
+  // scale bar: 20 nautical miles
+  const sb = 20 * pxPerNm, sx = 36, sy = H - 34;
+  ctx.fillStyle = 'rgba(200,190,170,0.6)';
+  ctx.fillRect(sx, sy, sb, 1);
+  ctx.fillRect(sx, sy - 3, 1, 7); ctx.fillRect(sx + sb, sy - 3, 1, 7);
+  ctx.fillStyle = 'rgba(160,150,130,0.7)';
+  ctx.fillText('20 nautical miles — the reach of a great light', sx, sy - 8);
+
+  document.getElementById('cap').textContent =
+    nLights.toLocaleString('en') + ' lights of the British Isles, the Channel and the North Sea, ' +
+    'as one night-long exposure would hold them. Each glows out to its charted range, but only as ' +
+    'brightly as the share of its period it is actually lit: the steady red and green of harbour ' +
+    'mouths burn in, while the great lighthouses, flashing a tenth of a second in fifteen, leave a faint haze.';
+  document.getElementById('src').innerHTML =
+    'NGA List of Lights, Pub. 114 &middot; fetched 20 October 2026';
+})();
+</script>
+</body>
+</html>

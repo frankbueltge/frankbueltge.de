@@ -1,0 +1,81 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>One Sky of Orbits</title>
+<style>
+html,body{margin:0;background:#07080c;color:#cfc9bb;font-family:Georgia,"Times New Roman",serif}
+#w{position:relative;width:1100px;height:800px;overflow:hidden}
+canvas{position:absolute;left:0;top:0}
+#t{position:absolute;left:806px;top:64px;width:260px}
+h1{font-weight:normal;font-size:30px;line-height:1.1;margin:0 0 18px;color:#efe8d8;letter-spacing:.01em}
+p{font-size:13px;line-height:1.55;margin:0 0 12px;color:#a69f90}
+.k{font-size:12px;line-height:1.9;color:#a69f90;margin-top:18px}
+.k i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:0}
+.s{font-size:11px;color:#625d53;position:absolute;left:806px;bottom:36px;width:260px;line-height:1.5}
+</style></head><body><div id="w"><canvas id="c" width="1100" height="800"></canvas>
+<div id="t"><h1>One Sky<br>of Orbits</h1>
+<p>Every confirmed exoplanet, moved to a single star at the centre. Its distance from the centre is its year: the length of its orbit, from hours to millennia.</p>
+<p>Going clockwise from the top, the planets stand in order of discovery, each given an equal slice of the circle. The wide fans are the years a telescope reported in bulk.</p>
+<p>The dashed ring is Earth's year. Almost everything found so far lies inside it.</p>
+<div class="k" id="k"></div></div>
+<div class="s" id="s"></div></div>
+<script src="data.js"></script>
+<script>
+const D=window.PLANETS, F=D.fields, ix=n=>F.indexOf(n);
+const iY=ix('year'),iM=ix('method'),iP=ix('period_days'),iR=ix('radius_earth'),iN=ix('name');
+const rows=D.rows.map((r,i)=>({r,i})).sort((a,b)=>a.r[iY]-b.r[iY]||a.i-b.i).map(o=>o.r);
+const N=rows.length, cx=400, cy=400, R0=10, R1=330, RU=352;
+const lmin=Math.log10(0.08), lmax=Math.log10(3e6);
+const rad=p=>R0+(R1-R0)*(Math.min(Math.max(Math.log10(p),lmin),lmax)-lmin)/(lmax-lmin);
+const ang=k=>-Math.PI/2+2*Math.PI*(k+.5)/N;
+const COL={'Transit':'#7fb7d9','Radial Velocity':'#e7a95c','Microlensing':'#b88fd8','Imaging':'#ef6f5e'};
+const OTHER='#9fc98a';
+const col=m=>COL[m]||OTHER;
+const c=document.getElementById('c').getContext('2d');
+c.fillStyle='#07080c';c.fillRect(0,0,1100,800);
+// faint full orbits
+c.lineWidth=.6;
+for(const r of rows){ if(r[iP]==null)continue; c.strokeStyle='rgba(205,210,215,0.018)'; c.beginPath(); c.arc(cx,cy,rad(r[iP]),0,2*Math.PI); c.stroke(); }
+// period guide rings
+c.font='10px Georgia';c.textAlign='left';
+[[1/24*6,'6 hours'],[1,'1 day'],[10,'10 days'],[100,'100 days'],[365.25,'Earth'],[3652.5,'10 years'],[36525,'100 years'],[365250,'1,000 years']].forEach(([p,l])=>{
+  const rr=rad(p); c.setLineDash(l==='Earth'?[3,4]:[1,5]);
+  c.strokeStyle=l==='Earth'?'rgba(240,230,205,.55)':'rgba(240,230,205,.13)'; c.lineWidth=l==='Earth'?.9:.6;
+  c.beginPath();c.arc(cx,cy,rr,0,2*Math.PI);c.stroke();
+});
+c.setLineDash([]);
+// unknown-period band
+c.strokeStyle='rgba(240,230,205,.08)';c.beginPath();c.arc(cx,cy,RU,0,2*Math.PI);c.stroke();
+// year ticks
+let k0=0; const yearStart={};
+rows.forEach((r,k)=>{ if(!(r[iY] in yearStart)) yearStart[r[iY]]=k; });
+c.textAlign='center';c.font='10px Georgia';
+Object.keys(yearStart).forEach(y=>{
+  const a=ang(yearStart[y]-.5); const big=['1992','2005','2010','2014','2016','2021','2025'].includes(y);
+  c.strokeStyle='rgba(240,230,205,'+(big?.45:.18)+')';c.lineWidth=.7;
+  c.beginPath();c.moveTo(cx+Math.cos(a)*(RU+8),cy+Math.sin(a)*(RU+8));c.lineTo(cx+Math.cos(a)*(RU+(big?20:13)),cy+Math.sin(a)*(RU+(big?20:13)));c.stroke();
+  if(big){c.fillStyle='rgba(240,230,205,.6)';c.fillText(y,cx+Math.cos(a)*(RU+31),cy+Math.sin(a)*(RU+31)+3);}
+});
+// planets
+rows.forEach((r,k)=>{
+  const a=ang(k), p=r[iP], unk=p==null;
+  const d=unk?RU+((k*7919)%9-4)*0.7:rad(p);
+  const re=r[iR]; const s=re?Math.max(.55,Math.min(3.2,Math.sqrt(re)*0.62)):.8;
+  c.fillStyle=col(r[iM]); c.globalAlpha=unk?.45:.78;
+  c.beginPath();c.arc(cx+Math.cos(a)*d,cy+Math.sin(a)*d,s,0,2*Math.PI);c.fill();
+});
+c.globalAlpha=1;
+c.font='10px Georgia';
+[[1,'1 day'],[365.25,'Earth’s year'],[36525,'100 years']].forEach(([p,l])=>{
+  const rr=rad(p), e=l[0]==='E'; c.textAlign='left';
+  c.lineWidth=3;c.strokeStyle='rgba(7,8,12,.85)';c.strokeText(l,cx-rr+3,cy-3);
+  c.fillStyle=e?'rgba(245,236,212,.95)':'rgba(240,230,205,.6)';c.fillText(l,cx-rr+3,cy-3);
+});
+// centre star
+const g=c.createRadialGradient(cx,cy,0,cx,cy,9);g.addColorStop(0,'#fff6dc');g.addColorStop(1,'rgba(255,240,200,0)');
+c.fillStyle=g;c.beginPath();c.arc(cx,cy,9,0,2*Math.PI);c.fill();
+// key
+const cnt={};rows.forEach(r=>{const m=COL[r[iM]]?r[iM]:'other';cnt[m]=(cnt[m]||0)+1});
+const kk=[['Transit','Transit — shadow crossing the star'],['Radial Velocity','Radial velocity — the star’s wobble'],['Microlensing','Microlensing — bent light'],['Imaging','Imaging — seen directly'],['other','Seven other methods']];
+document.getElementById('k').innerHTML=kk.map(([m,l])=>`<div><i style="background:${COL[m]||OTHER}"></i>${l} <span style="color:#625d53">${cnt[m].toLocaleString('en')}</span></div>`).join('')+
+ `<div style="margin-top:8px"><span style="color:#625d53">Dot size: planet radius. Outer ring: ${rows.filter(r=>r[iP]==null).length} planets whose period is unknown.</span></div>`;
+document.getElementById('s').textContent=N.toLocaleString('en')+' planets, 1992–'+rows[N-1][iY]+'. '+D.source.replace(', fetched',' · fetched')+'.';
+</script></body></html>

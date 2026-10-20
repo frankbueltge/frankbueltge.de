@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Purse, Divided</title>
+<style>
+  html,body{margin:0;padding:0;background:#f3eee3;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#1d1b18;}
+  svg{display:block}
+</style>
+</head>
+<body>
+<svg id="v" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script>
+(function(){
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("v");
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+  function txt(s,a,p){var e=el("text",a,p);e.textContent=s;return e;}
+
+  var D=window.PRIZES, F=D.fields, I={};F.forEach(function(f,i){I[f]=i;});
+  var rows=D.rows;
+  var cats=["Physics","Chemistry","Physiology or Medicine","Literature","Peace","Economic Sciences"];
+  var Y0=1901,Y1=2026;
+  var INK="#1d1b18", WOMAN="#c8321e", ORG="#2f6f8f", MAN="#2a2723", FAINT="#ddd5c4", MUTED="#7a7166";
+
+  // field
+  var L=92, R=948, colW=(R-L)/(Y1-Y0+1), dashW=colW-1.6;
+  var T=150, B=742;
+  var vMin=6.2e5, vMax=1.75e7;
+  var lmin=Math.log(vMin), lmax=Math.log(vMax);
+  function Y(v){return B-(Math.log(v)-lmin)/(lmax-lmin)*(B-T);}
+  function X(y){return L+(y-Y0)*colW;}
+
+  // header
+  txt("The Purse, Divided",{x:L,y:50,"font-size":30,"letter-spacing":"0.5",fill:INK});
+  txt("Every Nobel laureate 1901–2026 is one dash, set at the money he, she or it took home: the prize in today’s kronor times the laureate’s share.",
+      {x:L,y:76,"font-size":13,fill:MUTED,"font-style":"italic"});
+  txt("Because every category pays the same purse, the dashes fall into four echoes of one curve: the whole prize, a half, a third, a quarter.",
+      {x:L,y:94,"font-size":13,fill:MUTED,"font-style":"italic"});
+  var lx=L, ly=120;
+  [["a man",MAN],["a woman",WOMAN],["an organisation",ORG]].forEach(function(d){
+    el("rect",{x:lx,y:ly-5,width:12,height:3,fill:d[1]});
+    txt(d[0],{x:lx+17,y:ly,"font-size":12,fill:INK});
+    lx+=17+d[0].length*6.4+22;
+  });
+  txt("a thicker pile = more laureates on that cut in that year",{x:lx+6,y:ly,"font-size":12,fill:MUTED});
+
+  // grid (log kronor)
+  [1e6,2e6,5e6,1e7].forEach(function(v){
+    var yy=Y(v);
+    el("line",{x1:L-6,x2:R,y1:yy,y2:yy,stroke:FAINT,"stroke-width":0.7});
+    txt((v/1e6)+" M kr",{x:L-10,y:yy+4,"text-anchor":"end","font-size":11,fill:MUTED});
+  });
+  [1.5e6,3e6,4e6,7e6,1.5e7].forEach(function(v){
+    var yy=Y(v);
+    el("line",{x1:L-3,x2:L,y1:yy,y2:yy,stroke:"#b9af9c","stroke-width":0.7});
+  });
+
+  // group by year and share
+  var purse={}, g={};
+  rows.forEach(function(r){
+    var y=r[I.year];
+    purse[y]=Math.max(purse[y]||0,r[I.amount_sek_today]);
+    var k=y+"|"+r[I.share];(g[k]=g[k]||[]).push(r);
+  });
+
+  // years with no prize at all
+  for(var y=Y0;y<=Y1;y++){ if(!purse[y]) el("rect",{x:X(y)+colW/2-0.7,y:B+3,width:1.4,height:1.4,fill:"#b9af9c"}); }
+
+  // trace each echo: the purse times one share, year by year, as a faint line
+  [1,0.5,0.3333,0.25].forEach(function(sh){
+    var d="", pen=false;
+    for(var y=Y0;y<=Y1;y++){
+      if(!purse[y]){pen=false;continue;}
+      var yy=Y(purse[y]*sh).toFixed(1);
+      d+=(pen?"L":"M")+X(y).toFixed(1)+" "+yy+"L"+(X(y)+colW).toFixed(1)+" "+yy;
+      pen=true;
+    }
+    el("path",{d:d,fill:"none",stroke:"#cfc5b1","stroke-width":1});
+  });
+
+  var STEP=3, DH=2.2;
+  var counts={};
+  Object.keys(g).forEach(function(k){
+    var list=g[k], y=+k.split("|")[0], sh=+k.split("|")[1];
+    list=list.slice().sort(function(a,b){
+      var ka=a[I.kind]==="man"?1:0, kb=b[I.kind]==="man"?1:0;
+      if(ka!==kb)return ka-kb;
+      return cats.indexOf(a[I.category])-cats.indexOf(b[I.category]);
+    });
+    var n=list.length, cy=Y(list[0][I.amount_sek_today]*sh);
+    counts[sh]=(counts[sh]||0)+n;
+    var y0=cy-(n*STEP-(STEP-DH))/2;
+    list.forEach(function(r,j){
+      var c=r[I.kind]==="woman"?WOMAN:r[I.kind]==="organisation"?ORG:MAN;
+      el("rect",{x:X(y)+0.8,y:y0+j*STEP,width:dashW,height:DH,fill:c});
+    });
+  });
+
+  // band labels at the right end
+  var last=Y1; while(!purse[last])last--;
+  [[1,"the whole prize"],[0.5,"a half"],[0.3333,"a third"],[0.25,"a quarter"]].forEach(function(d){
+    var yy=Y(purse[last]*d[0]);
+    txt(d[1],{x:R+12,y:yy+4,"font-size":14,fill:INK});
+    txt(counts[d[0]]+" laureates",{x:R+12,y:yy+18,"font-size":10.5,fill:MUTED});
+  });
+
+  // annotations on the purse curve
+  function note(yr,v,s,dy,anchor){
+    var x=X(yr)+colW/2, yy=Y(v);
+    el("line",{x1:x,x2:x,y1:yy+(dy<0?-6:6),y2:yy+dy+(dy<0?6:-12),stroke:MUTED,"stroke-width":0.6});
+    s.forEach(function(line,i){txt(line,{x:x,y:yy+dy+i*14+(dy<0?-(s.length-1)*14:0),"text-anchor":anchor||"middle","font-size":11.5,"font-style":"italic",fill:MUTED});});
+  }
+  note(1901,purse[1901],["1901: 10.9 M kr for a whole prize"],-22,"start");
+  note(1919,purse[1919],["1919: the purse is worth 3.0 M kr, under a third of 1901;","it climbs back only around 1990"],-170,"start");
+
+  // year axis
+  var ay=B+16;
+  for(var yr=1910;yr<=2020;yr+=10){
+    var x=X(yr)+colW/2;
+    el("line",{x1:x,x2:x,y1:ay-5,y2:ay-1,stroke:"#b9af9c"});
+    txt(String(yr),{x:x,y:ay+11,"text-anchor":"middle","font-size":11,fill:MUTED});
+  }
+  txt("1901",{x:X(1901),y:ay+11,"text-anchor":"start","font-size":11,fill:MUTED});
+
+  txt("A dot under the axis means no prize at all that year. Women and organisations are drawn first in each pile. Source: Nobel Prize API, laureates (CC0).",
+      {x:L,y:790,"font-size":11,fill:MUTED,"font-style":"italic"});
+})();
+</script>
+</body>
+</html>

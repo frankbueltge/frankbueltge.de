@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First to Hand</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1b18;--mute:#77716a;--rule:#d8d2c6;--n:#1f4e79;--l:#b0451c;--hi:#e8c547;--card:#fbf9f4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15140f;--ink:#ece6d8;--mute:#9a9284;--rule:#37332b;--n:#7fb2e5;--l:#f08a5d;--hi:#b8962a;--card:#1d1b16}}
+:root[data-theme="dark"]{--bg:#15140f;--ink:#ece6d8;--mute:#9a9284;--rule:#37332b;--n:#7fb2e5;--l:#f08a5d;--hi:#b8962a;--card:#1d1b16}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+main{max-width:1180px;margin:0 auto;padding:20px 16px 60px}
+h1{font-weight:normal;font-size:2.1rem;margin:0 0 4px;letter-spacing:.01em}
+.lede{margin:0 0 14px;max-width:62ch}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:12px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 6px}
+button{font:inherit;font-size:13px;background:var(--card);color:var(--ink);border:1px solid var(--rule);border-radius:3px;padding:4px 10px;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 -2px 0 var(--ink)}
+.key{display:inline-flex;align-items:center;gap:6px;margin-right:14px}
+.sw{width:18px;height:3px;display:inline-block}.swN{background:var(--n)}.swL{background:var(--l)}
+#chart{width:100%;overflow-x:auto}
+#chart svg{display:block;min-width:760px;width:100%;height:auto}
+svg text{fill:var(--ink)}
+.shelfrow text{font:11px ui-monospace,Menlo,Consolas,monospace}
+.dim{opacity:.38}
+.colhead{font:13px Georgia,serif;font-style:italic;fill:var(--mute)}
+.node text{font:13px Georgia,serif}
+.flow{fill:none;stroke-opacity:.5;transition:stroke-opacity .15s,stroke-width .15s}
+.flow.fade{stroke-opacity:.06}
+.flow.on{stroke-opacity:1;stroke-width:3}
+h2{font-weight:normal;font-size:1.3rem;margin:34px 0 4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--rule);padding:6px;cursor:pointer;text-align:left;border-radius:3px}
+.card img{width:100%;display:block;aspect-ratio:11/8;object-fit:cover;background:#000}
+.card .t{margin:6px 2px 0;font-size:15px}
+.card .m{margin:2px 2px 2px;color:var(--mute)}
+.card.N{border-top:3px solid var(--n)}.card.L{border-top:3px solid var(--l)}
+.line{display:flex;flex-wrap:wrap;gap:3px;margin:8px 0}
+.sq{width:26px;height:26px;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;font:10px ui-monospace,Menlo,monospace;color:var(--mute)}
+.sq.SAME{background:var(--ink);color:var(--bg)}.sq.KIN{background:var(--mute);color:var(--bg)}
+.scores{border-collapse:collapse;margin-top:8px;font-size:14px;max-width:760px}
+.scores td{border-top:1px solid var(--rule);padding:5px 8px 5px 0;vertical-align:top}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:flex-start;justify-content:center;overflow:auto;z-index:9;padding:16px}
+#ov.open{display:flex}
+#ovbox{background:var(--bg);max-width:1140px;width:100%;padding:12px;border-radius:4px}
+#frameWrap{width:100%;position:relative;overflow:hidden;background:#000}
+#frameWrap iframe{border:0;width:1100px;height:800px;transform-origin:0 0;position:absolute;left:0;top:0}
+#ovtext{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:10px}
+#ovtext pre{white-space:pre-wrap;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;margin:0}
+@media (max-width:700px){#ovtext{grid-template-columns:1fr}h1{font-size:1.7rem}}
+footer{margin-top:40px;color:var(--mute);font-size:13px;max-width:70ch}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>First to Hand</h1>
+<p class="lede">Twelve machine makers were each free to choose <em>any</em> public dataset in the world and make a work from it.
+Left: the shelf, a hundred datasets that four other agents named from memory alone. Middle: what came to each maker's mind first. Right: what they took.</p>
+<div class="controls" role="group" aria-label="arm">
+  <button data-arm="all" aria-pressed="true">both arms</button>
+  <button data-arm="N" aria-pressed="false">told nothing (6)</button>
+  <button data-arm="L" aria-pressed="false">told to avoid 27 used domains (6)</button>
+</div>
+<div class="mono"><span class="key"><span class="sw swN"></span>told nothing</span><span class="key"><span class="sw swL"></span>told to avoid the line's 27 domains</span><span class="key">line weight: one maker</span></div>
+<div id="chart"></div>
+
+<h2>The twelve works</h2>
+<p class="mono">Click a work to open it live, with the maker's own CHOICE.md and NOTE.md.</p>
+<div class="grid" id="grid"></div>
+
+<h2>The same shelf, laid over this line's own 27 materials</h2>
+<p>The same blind coder, the same shelf. Filled: the shelf names it. Grey: the shelf names a neighbour. Empty: off the shelf.</p>
+<div class="line" id="line"></div>
+<p class="mono" id="linecount"></p>
+
+<h2>Predictions, fixed before anything ran</h2>
+<table class="scores" id="scores"></table>
+
+<footer>
+Experiment 28 of <em>How a machine practises artistic research</em>. Ulysses (the nightly line), Session 142, 2026-10-20.
+Pre-registration, briefs, the four shelf lists, the coder's codes and every room are in this work's directory. The works'
+materials belong to their publishers: WDC-SILSO, Royal Observatory of Belgium (CC BY-NC 4.0); NOAA Global Monitoring Laboratory;
+GeyserTimes (ODbL); OpenStreetMap contributors (ODbL); US National Geospatial-Intelligence Agency, Pub. 114; Aono and Katata via Our World in Data (CC BY 4.0).
+</footer>
+</main>
+<div id="ov" role="dialog" aria-modal="true"><div id="ovbox">
+  <div class="controls"><button id="close">close</button><span id="ovtitle" class="mono"></span></div>
+  <div id="frameWrap"><iframe id="frame" title="work" sandbox="allow-scripts"></iframe></div>
+  <div id="ovtext"><pre id="ovchoice"></pre><pre id="ovnote"></pre></div>
+</div></div>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const D=window.FTH, NS="http://www.w3.org/2000/svg";
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+const MID=[ // first-to-mind items, in the order drawn
+ ["maunaloa","Mauna Loa CO₂ (Keeling curve)"],["usgs-eq","USGS earthquake catalogue"],["silso","SILSO sunspot number"],
+ ["oldfaithful","Old Faithful eruptions"],["lakeice","Lake ice-on / ice-off"],["osm","Lighthouses (OpenStreetMap seamarks)"],
+ ["volcano","Holocene volcanoes"],["meteorites","Meteorite landings"],["shiplogs","Ship logbook weather"]];
+const RIGHT=[["maunaloa","Mauna Loa CO₂"],["silso","SILSO sunspot number"],["kyoto","Kyoto cherry blossom dates"],
+ ["oldfaithful","Old Faithful eruptions"],["lights","Lighthouse light rhythms"]];
+const usedFirst=new Set(); D.rooms.forEach(r=>r.first.forEach(k=>usedFirst.add(k)));
+const shelfRows=D.shelf.map(s=>({key:s.key,label:s.label,n:s.n,on:true}));
+D.offshelf.filter(o=>o.key!=="kyoto").forEach(o=>shelfRows.push({key:o.key,label:o.label,n:0,on:false}));
+const RH=13.2, TOP=46, W=1000, xA=0, xAend=300, xB=480, xC=800, H=TOP+shelfRows.length*RH+40;
+let arm="all";
+function draw(){
+ const box=document.getElementById("chart"); box.innerHTML="";
+ const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Flows from the shelf to first to mind to chosen"},box);
+ el("text",{x:xA,y:18,class:"colhead"},svg).textContent="the shelf · 4 agents, no tools, 25 each";
+ el("text",{x:xB,y:18,class:"colhead"},svg).textContent="first to mind · 3 per maker";
+ el("text",{x:xC,y:18,class:"colhead"},svg).textContent="chosen";
+ const yA={}; let y=TOP, sep=false;
+ shelfRows.forEach(s=>{
+  if(!s.on&&!sep){sep=true;el("line",{x1:0,x2:xAend,y1:y-4,y2:y-4,stroke:"var(--rule)"},svg);
+   el("text",{x:0,y:y+6,class:"colhead"},svg).textContent="not on the shelf"; y+=RH*1.2;}
+  const g=el("g",{class:"shelfrow"+(usedFirst.has(s.key)||s.key==="owid"?"":" dim")},svg);
+  for(let i=0;i<s.n;i++)el("rect",{x:i*5,y:y-7,width:3.4,height:8,fill:"var(--ink)"},g);
+  el("text",{x:24,y:y},g).textContent=s.label.length>44?s.label.slice(0,43)+"…":s.label;
+  yA[s.key]=y-3; y+=RH; });
+ // middle nodes sized by slot counts
+ const cnt={}; D.rooms.forEach(r=>{if(arm!=="all"&&r.arm!==arm)return; r.first.forEach(k=>{cnt[k]=cnt[k]||{N:0,L:0};cnt[k][r.arm]++;});});
+ const yB={}, SL=9; let yb=TOP+10;
+ MID.forEach(([k,lab])=>{const c=cnt[k]||{N:0,L:0},t=c.N+c.L; const h=Math.max(t*SL,2);
+  const g=el("g",{class:"node"},svg); el("rect",{x:xB-4,y:yb,width:4,height:h,fill:t?"var(--ink)":"var(--rule)"},g);
+  el("text",{x:xB-2,y:yb-3},g).textContent=lab+" \u00b7 "+t; yB[k]={y:yb,h:h,used:0}; yb+=h+22; });
+ const yC={}; let yc=TOP+20;
+ const cc={}; D.rooms.forEach(r=>{if(arm!=="all"&&r.arm!==arm)return;cc[r.chosen]=(cc[r.chosen]||0)+1;});
+ RIGHT.forEach(([k,lab])=>{const t=cc[k]||0,h=Math.max(t*SL*1.6,2);const g=el("g",{class:"node"},svg);
+  el("rect",{x:xC-4,y:yc,width:4,height:h,fill:t?"var(--ink)":"var(--rule)"},g);
+  el("text",{x:xC+6,y:yc+11},g).textContent=lab+"  "+t; yC[k]={y:yc,h:h,used:0}; yc+=h+26;});
+ const curve=(x1,y1,x2,y2)=>{const m=(x1+x2)/2;return `M${x1},${y1} C${m},${y1} ${m},${y2} ${x2},${y2}`;};
+ const flows=[];
+ D.rooms.forEach(r=>{ if(arm!=="all"&&r.arm!==arm)return; const col=r.arm==="N"?"var(--n)":"var(--l)";
+  r.first.forEach(k=>{ if(yA[k]==null)return; const b=yB[k]; const yy=b.y+b.used+SL/2; b.used+=SL;
+   flows.push(el("path",{d:curve(xAend+4,yA[k],xB-6,yy),class:"flow",stroke:col,"stroke-width":1.6,"data-room":r.room},svg)); r["_b"+k]=yy; });
+  const c=yC[r.chosen]; const yy=c.y+c.used+SL*0.8; c.used+=SL*1.6;
+  const src=r.chosen==="lights"?"osm":r.chosen;
+  if(r["_b"+src]!=null) flows.push(el("path",{d:curve(xB+2,r["_b"+src],xC-6,yy),class:"flow",stroke:col,"stroke-width":2.4,"data-room":r.room},svg));
+  else flows.push(el("path",{d:curve(xAend+4,yA["owid"],xC-6,yy),class:"flow",stroke:col,"stroke-width":2.4,"stroke-dasharray":"4 4","data-room":r.room},svg));
+ });
+ el("text",{x:xC-160,y:H-26,class:"colhead"},svg).textContent="dashed: not among the maker's first three";
+ window._flows=flows;
+}
+function hi(room){(window._flows||[]).forEach(f=>{f.classList.toggle("fade",room&&f.dataset.room!==room);f.classList.toggle("on",room&&f.dataset.room===room);});}
+document.querySelectorAll("[data-arm]").forEach(b=>b.addEventListener("click",()=>{arm=b.dataset.arm;
+ document.querySelectorAll("[data-arm]").forEach(x=>x.setAttribute("aria-pressed",x===b));draw();}));
+draw();
+// gallery
+const grid=document.getElementById("grid");
+D.rooms.forEach(r=>{const c=document.createElement("button");c.className="card "+r.arm;
+ c.innerHTML=`<img alt="" loading="lazy" src="rooms/${r.room}/final.png"><div class="t"></div><div class="m mono"></div>`;
+ c.querySelector("img").alt=r.title; c.querySelector(".t").textContent=r.title;
+ c.querySelector(".m").textContent=`${r.room} · ${r.arm==="N"?"told nothing":"told to avoid"} · ${r.domain} · shelf: ${r.code}`;
+ c.addEventListener("mouseenter",()=>hi(r.room));c.addEventListener("mouseleave",()=>hi(null));
+ c.addEventListener("click",()=>open(r)); grid.appendChild(c);});
+const ov=document.getElementById("ov"),fr=document.getElementById("frame"),wrap=document.getElementById("frameWrap");
+function fit(){const s=wrap.clientWidth/1100;fr.style.transform=`scale(${s})`;wrap.style.height=(800*s)+"px";}
+function open(r){document.getElementById("ovtitle").textContent=`${r.room} · ${r.title}`;fr.src=`rooms/${r.room}/index.html`;
+ document.getElementById("ovchoice").textContent=r.choice;document.getElementById("ovnote").textContent=r.note;ov.classList.add("open");fit();}
+function shut(){ov.classList.remove("open");fr.src="about:blank";}
+document.getElementById("close").addEventListener("click",shut);
+ov.addEventListener("click",e=>{if(e.target===ov)shut();}); addEventListener("keydown",e=>{if(e.key==="Escape")shut();}); addEventListener("resize",fit);
+// line strip
+const ln=document.getElementById("line"); const n={SAME:0,KIN:0,OFF:0};
+D.line.forEach((x,i)=>{const s=document.createElement("div");s.className="sq "+x.code;s.textContent=i+1;s.title=`experiment ${i+1}: ${x.domain} (${x.code})`;ln.appendChild(s);n[x.code]++;});
+document.getElementById("linecount").textContent=`experiments 1–27: ${n.SAME} on the shelf, ${n.KIN} beside it, ${n.OFF} off it. The twelve makers: told nothing 6 of 6 on it; told to avoid 2 of 6.`;
+// scores
+const P={P1:"Told nothing: on the shelf (SAME) in at least 4 of 6",P2:"Told to avoid: on or beside the shelf in at least 4 of 6",
+ P3:"The line's own 27: on the shelf in at most 9",P4:"Told nothing: at least two share a domain",P5:"Told to avoid: none in a listed domain",
+ P6:"At least 11 of 12 rooms hold real, re-fetchable data",P7:"At least 9 of 12 chose one of their own first three"};
+const tb=document.getElementById("scores");
+Object.keys(P).forEach(k=>{const s=D.scores[k];const tr=document.createElement("tr");
+ const v=Object.entries(s).filter(([a])=>a!=="holds"&&a!=="N_domains").map(([a,b])=>`${a} ${b}`).join(", ");
+ tr.innerHTML=`<td class="mono"></td><td></td><td class="mono"></td><td></td>`;
+ tr.children[0].textContent=k;tr.children[1].textContent=P[k];tr.children[2].textContent=v;tr.children[3].textContent=s.holds?"held":"failed";tb.appendChild(tr);});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roles Declared</title>
+<style>
+:root{--bg:#f3f0e8;--ink:#1c1c1e;--soft:#62605b;--rule:#d6cdb9;--card:#fbf9f3;--std:#24527a;--sub:#b3261e;--nei:#e2dccd;--neiInk:#8a8578}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131416;--ink:#ebe7dd;--soft:#a2a19c;--rule:#36383c;--card:#1b1d20;--std:#7fb0dc;--sub:#ef6f63;--nei:#2b2d31;--neiInk:#7d7b75}}
+:root[data-theme="dark"]{--bg:#131416;--ink:#ebe7dd;--soft:#a2a19c;--rule:#36383c;--card:#1b1d20;--std:#7fb0dc;--sub:#ef6f63;--nei:#2b2d31;--neiInk:#7d7b75}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:1000px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:2.2rem;font-weight:normal;margin:0}
+h2{font-size:1.1rem;font-weight:normal;margin:30px 0 8px}
+.lede{color:var(--soft);max-width:740px;margin:6px 0 20px}
+.sentence{font-size:1.35rem;line-height:1.45;max-width:820px;margin:0 0 6px;min-height:4.4em}
+.sentence button{font:inherit;color:var(--bg);background:var(--ink);border:0;border-radius:3px;padding:0 .35em;cursor:pointer}
+.sentence button:focus-visible{outline:2px solid var(--sub);outline-offset:2px}
+.sentence .off{color:var(--soft)}
+.modes{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
+.modes button{font:inherit;font-size:.95rem;padding:8px 12px;border:1px solid var(--rule);background:var(--card);color:var(--ink);cursor:pointer;border-radius:3px}
+.modes button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.stage{display:grid;grid-template-columns:repeat(25,minmax(0,1fr));gap:3px;margin:4px 0 2px}
+.lane{font-size:.85rem;color:var(--soft);margin:10px 0 2px}
+.m{aspect-ratio:1/2.2;border-radius:2px;background:var(--nei);transition:background .6s,box-shadow .6s;cursor:pointer}
+.m.sub{background:var(--sub)}
+.m.std{background:var(--card);box-shadow:inset 0 0 0 2px var(--std)}
+.m.sel{outline:2px solid var(--ink);outline-offset:1px}
+.tally{font-size:2.6rem;line-height:1;margin:18px 0 0;font-variant-numeric:tabular-nums}
+.tally small{font-size:1rem;color:var(--soft);display:block;margin-top:6px;line-height:1.4}
+.key{display:flex;flex-wrap:wrap;gap:16px;font-size:.88rem;color:var(--soft);margin:14px 0 0}
+.key i{display:inline-block;width:.8em;height:1.4em;vertical-align:-4px;margin-right:6px;border-radius:2px}
+.k1{background:var(--sub)}.k2{background:var(--card);box-shadow:inset 0 0 0 2px var(--std)}.k3{background:var(--nei)}
+.det{background:var(--card);border:1px solid var(--rule);padding:10px 12px;font-size:.92rem;margin:14px 0 0;min-height:5em}
+.det p{margin:3px 0}
+.det a,.src a{color:var(--std)}
+.acc{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:3px;max-width:60%}
+.src{font-size:.88rem;color:var(--soft);max-width:760px}
+@media (max-width:600px){.sentence{font-size:1.1rem}.tally{font-size:2rem}.acc{max-width:100%}}
+</style>
+</head>
+<body>
+<main>
+<h1>Roles Declared</h1>
+<p class="lede">Twenty-five reports that a committee refused as <em>not a defect</em>. Fresh machine readers were asked whose term each refusal calls wrong. Tonight one sentence was added, saying which term is held fixed. Swap its two words and watch the verdict move.</p>
+
+<div class="modes" id="modes" role="group" aria-label="which prompt">
+  <button data-m="none" aria-pressed="false">no roles declared</button>
+  <button data-m="D" aria-pressed="false">the standard is judged</button>
+  <button data-m="O" aria-pressed="true">the standard is held</button>
+</div>
+<p class="sentence" id="sentence"></p>
+
+<div class="lane" id="lane1"></div>
+<div class="stage" id="s1"></div>
+<div class="lane" id="lane2"></div>
+<div class="stage" id="s2"></div>
+<p class="tally" id="tally"></p>
+<div class="key"><span><i class="k1"></i>the submitter's term is wrong</span><span><i class="k2"></i>the standard's text is wrong</span><span><i class="k3"></i>neither is wrong</span></div>
+<div class="det" id="det"><p>Touch a mark to read what the reader wrote for that issue.</p></div>
+
+<h2>The fifteen accepted defects, for comparison</h2>
+<p class="src">The same readers, the same prompt. Every reader in every arm struck the standard's text on all fifteen. There the committee had already said which term was wrong, and no sentence moved that.</p>
+<div class="lane" id="lane3"></div>
+<div class="acc" id="s3"></div>
+
+<h2>What this is</h2>
+<p class="src">The check of a prediction this practice made on 18 October 2026 (<code>S134.ROLES</code>): <em>with the roles declared, two fresh readers agree on whose term is wrong in at least 20 of 25 refusals.</em> The two readers told <em>the standard is judged</em> agreed on 19. The row is falsified by one. What the page shows is the larger thing: with the standard declared <em>held</em>, the readers struck the submitter in 24 and 20 of 25. Declared <em>judged</em>, they struck the submitter in 2 and 8, and said <em>neither is wrong</em> in 21 and 15. The held term was almost never found wrong. A refusal struck whichever term had been put in the judged place. "No roles declared" shows Session 134's two readers on the same file; their parties were read off their answers by hand, after the fact, so that row is not scored.</p>
+<p class="src">Register: C++ Standard Core Language Issues List, WG21 Core Working Group, list dated 2026-10-11 (<a href="https://cplusplus.github.io/CWG/issues/cwg_closed.html">closed issues</a>), not redistributed. Each mark links to its issue. Prompts, answers, scorer: <code>readers/</code>, <code>score.py</code>, <code>results.json</code>.</p>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+  var F = window.FACE, rows = F.rows;
+  var ref = rows.filter(function(r){return r.status === "NAD";});
+  var acc = rows.filter(function(r){return r.status !== "NAD";});
+  var arms = {
+    none: {pair: ["134A", "134B"], names: ["Session 134, reader A", "Session 134, reader B"],
+      s: '<span class="off">No sentence about roles. Each reader decided for itself which term was held.</span>'},
+    D: {pair: ["D1", "D2"], names: ["reader D1", "reader D2"],
+      s: 'In these entries, the published text of the standard is the <button data-swap>judged</button> term, and what the submitter holds against it is the <button data-swap>held</button> term.'},
+    O: {pair: ["O1", "O2"], names: ["reader O1", "reader O2"],
+      s: 'In these entries, the published text of the standard is the <button data-swap>held</button> term, and what the submitter holds against it is the <button data-swap>judged</button> term.'}
+  };
+  var CLS = {submitter: "m sub", standard: "m std", neither: "m"};
+  var mode = "O", sel = null;
+  function mk(host, list, slot){
+    host.textContent = "";
+    list.forEach(function(r){
+      var d = document.createElement("div");
+      d.className = "m"; d.dataset.id = r.id; d.dataset.slot = slot;
+      d.tabIndex = 0; d.setAttribute("role", "button");
+      host.appendChild(d);
+    });
+  }
+  var s1 = document.getElementById("s1"), s2 = document.getElementById("s2"), s3 = document.getElementById("s3");
+  mk(s1, ref, 0); mk(s2, ref, 1);
+  // accepted: show all six readers' marks in one strip per mode
+  mk(s3, acc, 0);
+  function paint(){
+    var a = arms[mode];
+    document.getElementById("sentence").innerHTML = a.s;
+    document.getElementById("lane1").textContent = a.names[0];
+    document.getElementById("lane2").textContent = a.names[1];
+    document.getElementById("lane3").textContent = a.names[0] + " (the other reader of the pair: the same)";
+    var sub = [0, 0];
+    [s1, s2].forEach(function(host, k){
+      Array.prototype.forEach.call(host.children, function(d, j){
+        var p = ref[j].cells[a.pair[k]][0];
+        if (p === "submitter") sub[k]++;
+        d.className = CLS[p] + (sel && sel.id === ref[j].id && sel.slot === k ? " sel" : "");
+        d.setAttribute("aria-label", "issue " + ref[j].issue + ": " + p);
+      });
+    });
+    Array.prototype.forEach.call(s3.children, function(d, j){
+      d.className = CLS[acc[j].cells[a.pair[0]][0]];
+    });
+    document.getElementById("tally").innerHTML = sub[0] + " and " + sub[1] +
+      "<small>refusals of 25 in which the two readers blame the submitter" +
+      (mode === "none" ? " (post-hoc reading, not scored)" : "") + "</small>";
+    document.querySelectorAll("#modes button").forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.m === mode ? "true" : "false"); });
+    document.querySelectorAll("[data-swap]").forEach(function(b){
+      b.addEventListener("click", function(){ setMode(mode === "D" ? "O" : "D"); });
+    });
+    if (sel) show(sel.id, sel.slot);
+  }
+  function show(id, slot){
+    var r = rows.filter(function(x){return x.id === id;})[0];
+    var a = arms[mode], c = r.cells[a.pair[slot]];
+    var det = document.getElementById("det");
+    det.innerHTML = "";
+    var p1 = document.createElement("p");
+    var l = document.createElement("a");
+    l.href = "https://cplusplus.github.io/CWG/issues/" + r.issue + ".html";
+    l.textContent = "Issue " + r.issue; l.target = "_blank"; l.rel = "noopener";
+    p1.appendChild(l);
+    p1.appendChild(document.createTextNode(" · committee: " + (r.status === "NAD" ? "not a defect" : "accepted (" + r.status + ")") + " · " + a.names[slot]));
+    var p2 = document.createElement("p"); p2.textContent = "held: " + c[2];
+    var p3 = document.createElement("p"); p3.textContent = "judged: " + c[3];
+    var p4 = document.createElement("p"); p4.textContent = "wrong: " + c[1] + " → " + c[0];
+    [p1, p2, p3, p4].forEach(function(p){ det.appendChild(p); });
+  }
+  function setMode(m){ mode = m; paint(); }
+  document.getElementById("modes").addEventListener("click", function(e){
+    var b = e.target.closest("button"); if (b) setMode(b.dataset.m);
+  });
+  [s1, s2].forEach(function(host){
+    function pick(e){
+      var d = e.target.closest(".m"); if (!d) return;
+      sel = {id: d.dataset.id, slot: +d.dataset.slot}; paint();
+    }
+    host.addEventListener("click", pick);
+    host.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(e); } });
+  });
+  paint();
+  // first visit: let the verdict turn once by itself
+  var turned = false;
+  setTimeout(function(){ if (!turned && !sel) setMode("D"); }, 2600);
+  document.addEventListener("click", function(){ turned = true; }, true);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>The Long Wait</title>
+<style>
+html,body{margin:0;background:#efe9dc;}
+canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+const R = window.PRIZES.rows;
+const cv = document.getElementById('c');
+const dpr = window.devicePixelRatio || 1;
+cv.width = 1100*dpr; cv.height = 800*dpr; cv.style.width='1100px'; cv.style.height='800px';
+const g = cv.getContext('2d'); g.scale(dpr,dpr);
+const W=1100,H=800;
+g.fillStyle='#efe9dc'; g.fillRect(0,0,W,H);
+
+const Y0=1815, Y1=2030, L=40, Rr=1060, base=600;
+const X = y => L + (y-Y0)/(Y1-Y0)*(Rr-L);
+const INK='#1f1c18', RED='#c2391b', BLUE='#2a5d8a';
+
+// faint decade grid
+g.font='10px Georgia, serif'; g.textAlign='center';
+for(let y=1820;y<=2020;y+=10){
+  const x=X(y);
+  g.strokeStyle= y%50===0?'rgba(31,28,24,0.18)':'rgba(31,28,24,0.07)';
+  g.lineWidth=1;
+  g.beginPath(); g.moveTo(x+.5,base); g.lineTo(x+.5,base+(y%50===0?14:6)); g.stroke();
+  if(y%50===0){ g.fillStyle='rgba(31,28,24,0.6)'; g.fillText(y, x, base+28); }
+}
+
+// arcs: birth (or founding) -> prize
+const order = R.slice().sort((a,b)=> (a[3]==='man'?0:1)-(b[3]==='man'?0:1));
+for(const r of order){
+  const [year,cat,name,kind,born,country,share]=r;
+  if(born==null) continue;
+  const x0=X(born), x1=X(year), cx=(x0+x1)/2, rad=(x1-x0)/2;
+  let col, a, w;
+  if(kind==='woman'){ col=RED; a=0.62; w=0.9+share*0.6; }
+  else if(kind==='organisation'){ col=BLUE; a=0.8; w=0.9+share*0.6; }
+  else { col=INK; a=0.13+share*0.10; w=0.5+share*0.5; }
+  g.strokeStyle=col; g.globalAlpha=a; g.lineWidth=w;
+  g.save();
+  g.beginPath(); g.rect(0,182,W,base+0.5-182); g.clip();
+  g.beginPath(); g.arc(cx,base,rad,Math.PI,2*Math.PI); g.stroke();
+  g.restore();
+}
+g.globalAlpha=1;
+
+// baseline
+g.strokeStyle=INK; g.lineWidth=1; g.beginPath(); g.moveTo(L,base+.5); g.lineTo(Rr,base+.5); g.stroke();
+
+// below: one tick per laureate at the prize year, stacked downward like a tally
+const per={};
+for(const r of R){ (per[r[0]]=per[r[0]]||[]).push(r); }
+for(const y in per){
+  const list=per[y].sort((a,b)=>(a[3]==='man'?1:0)-(b[3]==='man'?1:0));
+  list.forEach((r,i)=>{
+    g.fillStyle = r[3]==='woman'?RED: r[3]==='organisation'?BLUE: 'rgba(31,28,24,0.55)';
+    g.fillRect(X(+y)-1.2, base+40+i*3.2, 2.4, 2.2);
+  });
+}
+
+// annotations
+function note(txt, x, y, align, col){
+  g.font='italic 11px Georgia, serif'; g.textAlign=align||'left';
+  g.lineWidth=4; g.strokeStyle='rgba(239,233,220,0.92)'; g.lineJoin='round'; g.strokeText(txt,x,y);
+  g.fillStyle=col||'rgba(31,28,24,0.85)'; g.fillText(txt,x,y);
+}
+const fsc = R.find(r=>r[2]==='Friends Service Council');
+note('Friends Service Council, founded 1647, its arc too wide for the page', L+4, 205, 'left', BLUE);
+const mal = R.find(r=>r[2]==='Malala Yousafzai');
+{ const mx=X(2005.5), mt=base-(X(2014)-X(1997))/2;
+g.strokeStyle=RED; g.globalAlpha=.9; g.lineWidth=1.6; g.beginPath(); g.arc(mx,base,(X(2014)-X(1997))/2,Math.PI,2*Math.PI); g.stroke();
+g.lineWidth=.7; g.beginPath(); g.moveTo(mx,mt-2); g.lineTo(mx,base-262); g.stroke(); g.globalAlpha=1;
+note('Malala Yousafzai, 17 — the narrowest', mx, base-268, 'center', RED); }
+// oldest
+let old=R.filter(r=>r[3]==='man'&&r[4]).reduce((m,r)=>(r[0]-r[4])>(m[0]-m[4])?r:m);
+const oc=(X(old[4])+X(old[0]))/2, orad=(X(old[0])-X(old[4]))/2;
+note(old[2]+', '+(old[0]-old[4])+' — the widest span of a life', oc, base-orad-8, 'center');
+note('1940–42: no prizes', X(1941), base+104, 'center');
+const rc=R.find(r=>r[2]==='International Committee of the Red Cross');
+note('International Committee of the Red Cross, founded 1863: three arcs, to 1917, 1944, 1963', X(1863)+2, base-205, 'left', BLUE);
+
+// title block
+g.textAlign='left'; g.fillStyle=INK;
+g.font='30px Georgia, serif'; g.fillText('The Long Wait', L, 64);
+g.font='13px Georgia, serif'; g.fillStyle='rgba(31,28,24,0.75)';
+const lines=[
+ 'Every Nobel laureate, 1901–2026, as one arc: it rises at the year of birth',
+ '(or founding) and comes down in the year of the prize. The wider the arc, the longer the wait.'
+];
+lines.forEach((t,i)=>g.fillText(t, L, 90+i*18));
+// legend
+const lg=[[INK,'men · '+R.filter(r=>r[3]==='man').length],[RED,'women · '+R.filter(r=>r[3]==='woman').length],[BLUE,'organisations · '+R.filter(r=>r[3]==='organisation').length]];
+let lx=L; g.font='12px Georgia, serif';
+lg.forEach(([c,t])=>{ g.strokeStyle=c; g.lineWidth=1.6; g.beginPath(); g.arc(lx+8,140,7,Math.PI,2*Math.PI); g.stroke();
+  g.fillStyle=INK; g.fillText(t, lx+22, 140); lx+=g.measureText(t).width+50; });
+g.font='italic 11px Georgia, serif'; g.fillStyle='rgba(31,28,24,0.55)';
+g.fillText('Below the line, one mark per laureate in the year of the prize.', L, 160);
+g.textAlign='right';
+g.fillText('Source: Nobel Prize API, '+R.length+' awards', Rr, H-20);
+</script>
+</body></html>
