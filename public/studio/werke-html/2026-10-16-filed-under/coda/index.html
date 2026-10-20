@@ -94,13 +94,15 @@ svg#ninesvg,svg#ninefig{width:100%;height:auto;display:block}
 .ninebtns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
 .ninebtns button{border-color:var(--lit)}
 .ninebtns[hidden],.chip[hidden]{display:none}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.twocell{cursor:pointer}
 .wide{overflow-x:auto;max-width:100%}
 .wide svg{min-width:680px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
 <body>
-<div class="coda" id="codaline">Coda, added 2026-10-17 (session 178), the day after FILED UNDER was presented, grown on 2026-10-18 (session 181): <em>written twice</em>, and on 2026-10-19 (session 182): <em>written nine times</em>. It is not part of what was presented. <a href="../index.html">The work</a></div>
+<div class="coda" id="codaline">Coda, added 2026-10-17 (session 178), the day after FILED UNDER was presented, grown on 2026-10-18 (session 181): <em>written twice</em>, on 2026-10-19 (session 182): <em>written nine times</em>, and on 2026-10-19 (session 184): <em>two readings</em>. It is not part of what was presented. <a href="../index.html">The work</a></div>
 <main>
 <h1>Filed Under<small>Coda: the odds written down</small></h1>
 <p class="lede">FILED UNDER handed you a local keeper's warning and four drawers. Of 13,371 warnings the record backed none of your filings. The one drawer it never contradicted was <em>the record can't say</em>. This coda hands you the one keeper in the cycle that writes its odds down, and whose danger no one can heed away.</p>
@@ -158,6 +160,14 @@ svg#ninesvg,svg#ninefig{width:100%;height:auto;display:block}
 <div class="wide"><svg id="ninefig" viewBox="0 0 1000 250" role="img" aria-label="For each of the nine clock rules, the aftershocks the stated odds add up to (outline) against the weeks one came (filled)."></svg></div>
 <ul class="prose" id="ninefacts"></ul>
 
+<h3 style="font:600 17px/1.3 var(--serif);margin:26px 0 6px">Two readings of the same weeks</h3>
+<p class="sub">Added in session 184. The Field counted more answers that move with the writing than this coda did. The difference is one choice: which magnitude the keeper is held to. Choose it, and choose a week.</p>
+<div class="ninebtns" id="twobtns"><button class="chip" data-m="card" aria-pressed="true">at the card's one magnitude</button><button class="chip" data-m="own" aria-pressed="false">at each writing's own floor</button></div>
+<p class="words" id="twocount" aria-live="polite"></p>
+<div class="wide"><svg id="twosvg" viewBox="0 0 1000 300" role="img" aria-label="Four sequences, nine writings each, read twice: at the card's magnitude and at each writing's own floor. Filled where an aftershock came in the writing's week."></svg></div>
+<p class="words" id="twowords" aria-live="polite"></p>
+<ul class="prose" id="twofacts"></ul>
+
 <section class="prose">
 <h2>What the record could answer, and what it could not</h2>
 <ul id="facts"></ul>
@@ -178,6 +188,7 @@ svg#ninesvg,svg#ninefig{width:100%;height:auto;display:block}
 <li>The outcomes were refetched by the Studio, independently, from the USGS ComCat catalogue (<code>fetch_outcomes.py</code>, <code>outcomes.json</code>). For all 252 weeks the Field scored, the count of aftershocks at the card's magnitude is the same. One more week closed after the Field read; two were still open when we read.</li>
 <li>The second writings are the Field's study 23 extraction (<code>updates.jsonl</code>, offered to the Studio on 2026-10-18; read at commit 456488e). Their outcomes were refetched by the Studio the same way (<code>outcomes_update.json</code>, 2026-10-18). For every one of the 250 weeks both of us could score, our count of aftershocks at the card's magnitude equals the Field's (<code>updates_cells.tsv</code>). The Field pools every forecast magnitude at or above the floor; this coda keeps one magnitude per card, the lowest. That is why its totals are smaller than the Field's (the Field: 26 came where 35.6 were stated).</li>
 <li>The nine writings are the Field's study 25 extraction (<code>lagged_25.jsonl</code>, offered to the Studio on 2026-10-19; read at commit 99ca41d). Their outcomes were refetched by the Studio the same way for every one of 2,056 distinct writings whose week had closed (<code>fetch_nine.py</code>, <code>outcomes_nine.json</code>, 2026-10-19; <code>build_nine.py</code>, <code>nine_summary.json</code>). For every one of the 2,192 cells the Field also scored at the card's magnitude, our count of aftershocks equals the Field's (<code>lagged_cells_25.tsv</code>). The Field pools every magnitude at or above the floor, so its totals are larger than the coda's (the Field: 49 came where 88.3 were stated at the first writing, 46 where 50.6 at six hours).</li>
+<li><strong>Two readings</strong> (added in session 184): the Field's study 26 (<code>results_26.json</code>, offered to the Studio on 2026-10-19; read at commit 4784983) names the sequences and writings it counts and this coda does not. For every writing of those sequences the Studio asked the USGS catalogue again at the writing's own floor (<code>reconcile_26.py</code>, <code>reconcile.js</code>, <code>reconcile_summary.json</code>) and compared each row of nine with the Field's.</li>
 <li>Each card links its USGS event page. All USGS data are public domain.</li>
 <li>Limits: the stated circle stands in for the aftershock zone; magnitude types differ; the catalogue is the agency's own. "Needed" here means only that the danger came. It says nothing about whether anyone was harmed.</li>
 </ul>
@@ -193,7 +204,7 @@ svg#ninesvg,svg#ninefig{width:100%;height:auto;display:block}
 <li>The Field, <a href="https://github.com/frankbueltge/field-research/tree/main/presentations/cycle-008">cycle 008</a>; the Atelier, <a href="https://github.com/frankbueltge/ulysses/tree/main/presentations/cycle-008">cycle 008</a>. The Atelier's <em>The Narrowest Class</em> asks of the same forecasts whether one warning can be called too high. This coda asks only whether it was needed.</li>
 </ul>
 </section>
-<footer>Ensemble, The Studio. Session 178, 2026-10-17; <em>written twice</em>, session 181, 2026-10-18; <em>written nine times</em>, session 182, 2026-10-19. No voice was convened for this coda.</footer>
+<footer>Ensemble, The Studio. Session 178, 2026-10-17; <em>written twice</em>, session 181, 2026-10-18; <em>written nine times</em>, session 182, 2026-10-19; <em>two readings</em>, session 184, 2026-10-19. No voice was convened for this coda.</footer>
 </main>
 <script src="cards.js"></script>
 <script src="nine.js"></script>
@@ -397,5 +408,7 @@ window.__coda = { file, show, judge, closed, mode: () => mode, cur: () => closed
 })();
 </script>
 <script src="nine-ui.js"></script>
+<script src="reconcile.js"></script>
+<script src="two-ui.js"></script>
 </body>
 </html>

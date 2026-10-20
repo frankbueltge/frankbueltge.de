@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Take Cover, Again</title>
+<meta name="description" content="A real US county's tornado warnings since 2008, one by one. Take cover and pay in seconds of dark for each minute the warning stood, or stay. The record answers after.">
+<style>
+:root{--bg:#f4f1ea;--ink:#1c1a17;--mute:#6b655b;--line:#d8d1c3;--card:#fffdf8;--met:#b3261e;--empty:#6b655b;--accent:#1d4e89;--dark:#050505}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141311;--ink:#ece6da;--mute:#9a9284;--line:#36322c;--card:#1d1b18;--met:#ef6b5e;--empty:#9a9284;--accent:#8fb4e6}}
+:root[data-theme="dark"]{--bg:#141311;--ink:#ece6da;--mute:#9a9284;--line:#36322c;--card:#1d1b18;--met:#ef6b5e;--empty:#9a9284;--accent:#8fb4e6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Iowan Old Style",serif}
+main{max-width:760px;margin:0 auto;padding:0 16px 64px}
+#wip{font:13px/1.4 system-ui,sans-serif;background:var(--ink);color:var(--bg);padding:6px 16px;text-align:center}
+h1{font:700 clamp(30px,8vw,52px)/1.05 system-ui,sans-serif;letter-spacing:.02em;margin:28px 0 8px}
+.lede{color:var(--mute);margin:0 0 20px}
+.ui{font-family:system-ui,sans-serif}
+#place{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px}
+#place b{font-size:18px}
+button{font:600 15px system-ui,sans-serif;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:10px 16px;border-radius:2px;cursor:pointer}
+button.primary{background:var(--ink);color:var(--bg)}
+button:disabled{opacity:.35;cursor:default}
+input{font:15px system-ui,sans-serif;padding:9px 10px;border:1px solid var(--line);background:var(--card);color:var(--ink);min-width:0;flex:1 1 180px}
+#card{background:var(--card);border:1px solid var(--line);padding:22px 18px;min-height:230px}
+#card .k{font:13px system-ui,sans-serif;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
+#card .when{font:700 clamp(22px,5.5vw,30px)/1.2 system-ui,sans-serif;margin:6px 0}
+#card .len{margin:0 0 16px}
+#acts{display:flex;gap:10px;flex-wrap:wrap}
+#acts button{flex:1 1 140px;padding:16px}
+#answer{margin-top:16px;font-size:18px}
+#answer.met{color:var(--met)}
+#answer .toll{display:block;color:var(--ink);font-size:16px;margin-top:8px}
+#answer .toll.later{color:var(--accent)}
+#unw{font:15px/1.45 system-ui,sans-serif;color:var(--met);margin:0 0 14px}
+#answer .gap{display:block;color:var(--mute);font-size:15px;margin-top:6px}
+#dark{position:fixed;inset:0;background:var(--dark);color:#77736b;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9;font-family:system-ui,sans-serif;text-align:center;padding:16px}
+#dark .n{font:200 clamp(64px,22vw,140px)/1 system-ui,sans-serif;color:#3d3a35}
+#dark .bar{width:min(420px,80vw);height:2px;background:#1c1b19;margin:22px 0}
+#dark .bar i{display:block;height:100%;background:#4a4640;width:0}
+#dark button{border-color:#3d3a35;color:#77736b;margin-top:18px}
+#tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:22px 0}
+#tally div{background:var(--bg);padding:12px}
+#tally b{display:block;font:700 24px system-ui,sans-serif}
+#tally span{font:13px/1.3 system-ui,sans-serif;color:var(--mute)}
+#drift{font:14px system-ui,sans-serif;width:100%;border-collapse:collapse;margin:8px 0 18px}
+#drift td,#drift th{border-bottom:1px solid var(--line);padding:5px 4px;text-align:right}
+#drift td:first-child,#drift th:first-child{text-align:left}
+#ledger{font:13px/1.35 system-ui,sans-serif;width:100%;border-collapse:collapse}
+#ledger td,#ledger th{border-bottom:1px solid var(--line);padding:5px 4px;text-align:left;vertical-align:top}
+#ledger .met{color:var(--met)}
+.strip{display:flex;gap:2px;flex-wrap:wrap;margin:10px 0}
+.strip i{width:8px;height:18px;background:var(--line)}
+.strip i.e{background:var(--empty);opacity:.55}
+.strip i.m{background:var(--met)}
+.strip i.now{outline:2px solid var(--accent);outline-offset:1px}
+h2{font:700 20px system-ui,sans-serif;margin:34px 0 8px}
+.small{font-size:14px;color:var(--mute)}
+a{color:var(--accent)}
+.fable{border-left:3px solid var(--met);padding:4px 0 4px 12px;margin:18px 0}
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<div id="wip">In progress · increment 2 of 5 · 2026-10-20 · the work grows over cycle 009</div>
+<main>
+<h1>TAKE COVER, AGAIN</h1>
+<p class="lede">You live in a real US county. Its tornado warnings since 2008 come to you one by one, in the order its people got them. For each, choose before you know: take cover, and sit in the dark one second for every minute the warning stood. Or stay. Then the record answers, and then the record written later, with its dead.</p>
+
+<div id="place" class="ui">
+  <span>Your county: <b id="cname">…</b></span>
+  <button id="deal">Deal another county</button>
+  <input id="pick" list="counties" placeholder="or type a county, e.g. Cleveland OK" aria-label="Choose a county">
+  <datalist id="counties"></datalist>
+</div>
+
+<div class="strip" id="strip" aria-label="Every warning of this county: grey not yet, dark grey empty, red a tornado met it"></div>
+
+<section id="card" aria-live="polite">
+  <div class="k" id="cnum">Warning</div>
+  <div class="when" id="cwhen">…</div>
+  <p class="len" id="clen"></p>
+  <p id="unw" hidden></p>
+  <div id="acts" class="ui">
+    <button class="primary" id="cover">Take cover</button>
+    <button id="stay">Stay</button>
+  </div>
+  <div id="answer"></div>
+  <div class="ui" style="margin-top:14px"><button id="next" hidden>Next warning</button></div>
+</section>
+
+<div id="dark" role="dialog" aria-label="In the dark">
+  <div>Taking cover. The warning stands.</div>
+  <div class="n" id="dn">0</div>
+  <div class="bar"><i id="dbar"></i></div>
+  <div id="dsub">one second for each minute it was issued for</div>
+  <button id="out">Come out now</button>
+</div>
+
+<div id="tally"></div>
+
+<h2>Your belief, warning by warning</h2>
+<p class="small">How often you took cover, by how many empty warnings this county had just had in a row. The question of the cycle, asked of you.</p>
+<table id="drift"></table>
+
+<div class="fable" id="fable"></div>
+
+<h2>Your ledger</h2>
+<p class="small ui"><button id="csv">Download ledger (CSV)</button> <button id="reset">Start this county again</button></p>
+<table id="ledger"><thead><tr><th>#</th><th>Issued (local)</th><th>Stood</th><th>You</th><th>The record</th><th>The final database</th></tr></thead><tbody></tbody></table>
+
+<h2>The toll, and the record written later</h2>
+<p class="small" id="tollfacts"></p>
+<p class="small">How the toll is joined: the Storm Prediction Center's final tornado database (<a href="https://www.spc.noaa.gov/wcm/">SPC WCM data</a>, 2008 to its last day; a US government work) gives each tornado a start, an end point, a strength on the Enhanced Fujita scale, a path length and width, and its injured and dead. A tornado stands under a warning when the straight line from its start to its end touches the warning's polygon and it began no more than 15 minutes before the warning was issued and before it expired. The line is the database's simplest statement of a path that really bends. The toll is the whole track's, not one county's. The counties a tornado touched are the database's own, at most four and only in its first state; some of the longest tracks list none, and they are missing from their counties' gaps here though they count in every total. Counted at 0 and 30 minutes instead of 15, the figures move as <code>toll.json</code> shows.</p>
+<h2>What the record is</h2>
+<p class="small">Every tornado warning the US National Weather Service issued from 2008 to today, with each forecast office's own verification against its storm reports, as the Iowa Environmental Mesonet serves it (<a href="https://mesonet.agron.iastate.edu/cow/">IEM Cow</a>; the warnings are public-domain products). A warning is <em>met</em> when a tornado was reported inside its polygon while it stood, and <em>empty</em> when none was. That is the record's answer, not the sky's: a tornado nobody reported leaves a warning empty. The minutes are the minutes the warning was issued for; some were cancelled sooner. A county's warnings are all those whose polygon touched it, so a warning met in one corner of a county counts as met for all of it. Hours are shown in the state's main time zone. Nothing you do here leaves your browser.</p>
+<p class="small" id="facts"></p>
+<p class="small">Neighbours in the <a href="https://frankbueltge.de/atlas">Atlas of Data Art</a>: Latai Taumoepeau, <em>Repatriate</em> (2015), where the artist's body endures the water's rise as a proxy for data; here the duration is a real warning's, and the visitor decides each time whether to endure it. Mariela Yeregui, <em>Estados de Alerta</em> (2021), whose creatures raise alarms at visitors; here the alarms are real and past, and the work watches what the visitor does with the tenth after nine. Andrea Polli, <em>Atmospherics/Weather Works</em> (2004), storms made audible; here the storm is never seen or heard, only the warning and the wait. In this house: UNDER WARNING (2026-10-14) drew the people beneath the same polygons; the Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-009/the-wolfs-ledger">The Wolf's Ledger</a> reads the fable this work's count comes from.</p>
+<p class="small">Ensemble · the Studio · cycle 009 · method and scripts beside this page (<code>fetch.py</code>, <code>build_data.py</code>, <code>SCORE.md</code>).</p>
+</main>
+<script src="data.js"></script>
+<script src="summary.js"></script>
+<script src="toll.js"></script>
+<script src="tollsum.js"></script>
+<script>
+(() => {
+const D = window.TCA, S = window.TCA_SUMMARY, X = window.TCA_TOLL, XS = window.TCA_TOLLSUM;
+const NONE = new Set(X.none);
+const T0 = Date.parse(D.t0);
+const qs = new URLSearchParams(location.search);
+const SPEED = Math.max(1, +qs.get('speed') || 1); // test hook: the verifier runs the dark faster
+const TZ = {AL:'America/Chicago',AK:'America/Anchorage',AZ:'America/Phoenix',AR:'America/Chicago',CA:'America/Los_Angeles',CO:'America/Denver',CT:'America/New_York',DE:'America/New_York',DC:'America/New_York',FL:'America/New_York',GA:'America/New_York',HI:'Pacific/Honolulu',ID:'America/Boise',IL:'America/Chicago',IN:'America/Indiana/Indianapolis',IA:'America/Chicago',KS:'America/Chicago',KY:'America/New_York',LA:'America/Chicago',ME:'America/New_York',MD:'America/New_York',MA:'America/New_York',MI:'America/Detroit',MN:'America/Chicago',MS:'America/Chicago',MO:'America/Chicago',MT:'America/Denver',NE:'America/Chicago',NV:'America/Los_Angeles',NH:'America/New_York',NJ:'America/New_York',NM:'America/Denver',NY:'America/New_York',NC:'America/New_York',ND:'America/Chicago',OH:'America/New_York',OK:'America/Chicago',OR:'America/Los_Angeles',PA:'America/New_York',PR:'America/Puerto_Rico',RI:'America/New_York',SC:'America/New_York',SD:'America/Chicago',TN:'America/Chicago',TX:'America/Chicago',UT:'America/Denver',VT:'America/New_York',VA:'America/New_York',WA:'America/Los_Angeles',WV:'America/New_York',WI:'America/Chicago',WY:'America/Denver',GU:'Pacific/Guam'};
+const $ = id => document.getElementById(id);
+const fmtN = n => n.toLocaleString('en-US');
+const st = name => name.split(' ').pop();
+function local(min, state, withZone) {
+  const tz = TZ[state] || 'UTC';
+  try {
+    return new Intl.DateTimeFormat('en-US', {timeZone: tz, weekday:'short', year:'numeric', month:'short', day:'numeric', hour:'numeric', minute:'2-digit', timeZoneName: withZone ? 'short' : undefined}).format(new Date(T0 + min * 60000));
+  } catch (e) { return new Date(T0 + min * 60000).toISOString().slice(0, 16).replace('T', ' ') + ' UTC'; }
+}
+function gapText(m) {
+  if (m < 60) return m + ' minutes later';
+  if (m < 2880) return Math.round(m / 60) + ' hours later';
+  if (m < 2 * 525600 / 12) return Math.round(m / 1440) + ' days later';
+  if (m < 2 * 525600) return Math.round(m / 43800) + ' months later';
+  return (m / 525600).toFixed(1) + ' years later';
+}
+const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
+function torText(k, w) {
+  const t = X.T[k], lead = w === undefined ? null : t[0] - D.issue[w];
+  const kind = t[1] < 0 ? 'a tornado of unrated strength' : 'an EF' + t[1];
+  const when = lead === null ? '' : lead >= 0 ? `, which began ${plural(lead, 'minute', 'minutes')} after the warning was issued` : `, which had begun ${plural(-lead, 'minute', 'minutes')} before it`;
+  const size = t[2] > 0 ? `, ${t[2]} miles long and ${t[3]} yards wide` : '';
+  const hurt = t[5] ? `${plural(t[5], 'person', 'people')} killed` + (t[4] ? `, ${t[4]} injured` : '') : t[4] ? `${plural(t[4], 'person', 'people')} injured, no one killed` : 'no one hurt';
+  return kind + when + size + '; ' + hurt;
+}
+const inDb = w => D.issue[w] + D.dur[w] <= X.end;
+// tornadoes this county's own record lists that stood under no warning at all, between two minutes
+function unwarned(from, to) { return (X.byc[cIdx.get(C[0])] || []).filter(k => NONE.has(k) && X.T[k][0] > from && X.T[k][0] <= to); }
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+};
+const byUgc = new Map(D.counties.map(c => [c[0], c]));
+const cIdx = new Map(D.counties.map((c, i) => [c[0], i]));
+const byName = new Map(D.counties.map(c => [c[1].toLowerCase(), c]));
+$('counties').innerHTML = D.counties.map(c => `<option value="${c[1]}">`).join('');
+const pool = D.counties.filter(c => c[2].length >= 20);
+
+let C = null, acts = [], pos = 0, darkTimer = null;
+function choose(c) {
+  C = c; acts = store.get('tca:' + c[0]) || []; pos = acts.length;
+  store.set('tca:last', c[0]);
+  $('cname').textContent = c[1] + ' · ' + c[2].length + ' warnings';
+  $('pick').value = '';
+  render();
+}
+function deal() { choose(pool[Math.floor(Math.random() * pool.length)]); }
+// the run of empty warnings directly before position i in this county
+function runBefore(i) { let r = 0; for (let j = i - 1; j >= 0 && !D.met[C[2][j]]; j--) r++; return r; }
+
+function render() {
+  const s = C[2], n = s.length, state = st(C[1]);
+  $('strip').innerHTML = s.map((w, i) => `<i class="${i < pos ? (D.met[w] ? 'm' : 'e') : ''}${i === pos ? ' now' : ''}" title="${i + 1}"></i>`).join('');
+  $('answer').textContent = ''; $('answer').className = ''; $('unw').hidden = true;
+  $('next').hidden = true;
+  if (pos >= n) {
+    $('cnum').textContent = 'No more warnings';
+    $('cwhen').textContent = 'This county has had no tornado warning since.';
+    $('clen').textContent = 'Deal another county, or start this one again.';
+    $('cover').disabled = $('stay').disabled = true;
+  } else {
+    const w = s[pos];
+    $('cnum').textContent = `Warning ${pos + 1} of ${n} · ${C[1]}`;
+    $('cwhen').textContent = local(D.issue[w], state, true);
+    const r = runBefore(pos);
+    $('clen').textContent = `Issued for ${D.dur[w]} minutes by the ${D.wfos[D.wfo[w]]} office.` + (pos ? ` ${r === 0 ? 'The last warning here was met by a tornado.' : r === 1 ? 'The last warning here was empty.' : `The last ${r} warnings here were empty.`}` : ' The first here since 2008.');
+    $('cover').disabled = $('stay').disabled = false;
+    showUnwarned(pos ? D.issue[s[pos - 1]] : -1e9, D.issue[w], pos ? 'Since the last warning here' : 'Before this first warning, since 2008');
+  }
+  if (pos >= n) showUnwarned(n ? D.issue[s[n - 1]] : -1e9, X.end, 'Since its last warning');
+  tally();
+}
+function showUnwarned(from, to, lead) {
+  const u = unwarned(from, to);
+  if (!u.length) return;
+  const st0 = st(C[1]);
+  $('unw').hidden = false;
+  $('unw').innerHTML = `${lead}, ${u.length === 1 ? 'a tornado' : u.length + ' tornadoes'} touched this county under no warning at all: ` + u.slice(0, 4).map(k => `${local(X.T[k][0], st0).split(', ').slice(1, 3).join(', ')}, ${torText(k)}`).join('. ') + (u.length > 4 ? `. And ${u.length - 4} more.` : '.') + ' No one could take cover for it.';
+}
+function finalText(w) {
+  if (!inDb(w)) return {cls: 'toll', t: `The final database ends with ${X.last.slice(0, 4)}; this warning is not yet in it.`};
+  const ks = X.wt[w] || [];
+  if (D.met[w]) return ks.length ? {cls: 'toll', t: 'The final database: ' + ks.map(k => torText(k, w)).join('. And ') + '.'} : {cls: 'toll later', t: 'The final database, written later, places no tornado track inside it.'};
+  return ks.length ? {cls: 'toll later', t: 'But the final database, written later, places a tornado inside it: ' + ks.map(k => torText(k, w)).join('. And ') + '.'} : null;
+}
+function answer(w, a) {
+  const met = D.met[w], state = st(C[1]);
+  let t;
+  if (met) {
+    const r = D.reports[D.rep[w]];
+    t = `A tornado was reported inside it: ${r[1]}, ${r[2]}, at ${local(r[0], state).split(', ').pop()}.` + (a.act === 'stay' ? ' You stayed.' : a.paid < D.dur[w] ? ' You had come out early.' : '');
+  } else {
+    t = 'No tornado was reported inside it.' + (a.act === 'cover' ? ` You sat ${a.paid} seconds in the dark for it.` : '');
+  }
+  $('answer').className = met ? 'met' : '';
+  const s = C[2], nxt = pos + 1 < s.length ? s[pos + 1] : null;
+  const f = finalText(w);
+  $('answer').innerHTML = t + (f ? `<span class="${f.cls}">${f.t}</span>` : '') + (nxt !== null ? `<span class="gap">The next warning came ${gapText(D.issue[nxt] - D.issue[w])}.</span>` : '');
+  $('next').hidden = false; $('cover').disabled = $('stay').disabled = true;
+  $('next').focus();
+}
+function record(act, paid) {
+  const w = C[2][pos];
+  const a = {i: pos, act, paid, run: runBefore(pos), met: D.met[w]};
+  acts[pos] = a; store.set('tca:' + C[0], acts);
+  tally();
+  answer(w, a);
+}
+let actx = null;
+function tone() {
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const t = actx.currentTime, o = actx.createOscillator(), g = actx.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(392, t); o.frequency.setValueAtTime(311, t + .35);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.12, t + .03); g.gain.linearRampToValueAtTime(0, t + .8);
+    o.connect(g).connect(actx.destination); o.start(t); o.stop(t + .85);
+  } catch (e) {}
+}
+$('cover').onclick = () => {
+  const w = C[2][pos], total = D.dur[w];
+  const t0 = performance.now();
+  $('dark').style.display = 'flex'; $('out').focus();
+  const step = () => {
+    const sec = Math.min(total, Math.floor((performance.now() - t0) / 1000 * SPEED));
+    $('dn').textContent = total - sec; $('dbar').style.width = (100 * sec / total) + '%';
+    if (sec >= total) return end(total);
+    darkTimer = requestAnimationFrame(step);
+  };
+  const end = paid => { cancelAnimationFrame(darkTimer); $('dark').style.display = 'none'; $('out').onclick = null; record('cover', paid); };
+  $('out').onclick = () => end(Math.min(total, Math.floor((performance.now() - t0) / 1000 * SPEED)));
+  step();
+};
+$('stay').onclick = () => record('stay', 0);
+$('next').onclick = () => { pos++; render(); if (pos < C[2].length) tone(); };
+$('deal').onclick = deal;
+$('pick').onchange = () => { const c = byName.get($('pick').value.trim().toLowerCase()); if (c) choose(c); };
+$('reset').onclick = () => { store.del('tca:' + C[0]); acts = []; pos = 0; render(); };
+$('csv').onclick = () => {
+  const rows = [['county', 'ugc', 'n', 'issued_utc', 'minutes', 'empty_run_before', 'you', 'seconds_in_dark', 'record', 'final_database']];
+  acts.forEach(a => { const w = C[2][a.i]; rows.push([C[1], C[0], a.i + 1, new Date(T0 + D.issue[w] * 60000).toISOString(), D.dur[w], a.run, a.act, a.paid, a.met ? 'met' : 'empty', ledgerFinal(w)]); });
+  const b = new Blob([rows.map(r => r.map(x => /[",]/.test(x) ? `"${String(x).replace(/"/g, '""')}"` : x).join(',')).join('\n')], {type: 'text/csv'});
+  const l = document.createElement('a'); l.href = URL.createObjectURL(b); l.download = 'take-cover-again-' + C[0] + '.csv'; l.click();
+};
+
+function ledgerFinal(w) {
+  if (!inDb(w)) return 'not yet';
+  const ks = X.wt[w] || [];
+  if (!ks.length) return D.met[w] ? 'no track inside' : '—';
+  return ks.map(k => (X.T[k][1] < 0 ? 'EF?' : 'EF' + X.T[k][1]) + (X.T[k][5] ? ', ' + X.T[k][5] + ' killed' : '')).join('; ');
+}
+function tally() {
+  const done = acts.filter(Boolean);
+  const cover = done.filter(a => a.act === 'cover');
+  const paidEmpty = cover.filter(a => !a.met).reduce((s, a) => s + a.paid, 0);
+  const paidAll = cover.reduce((s, a) => s + a.paid, 0);
+  const stayedMet = done.filter(a => a.act === 'stay' && a.met).length;
+  const metSeen = done.filter(a => a.met).length;
+  const deadStayed = done.filter(a => a.act === 'stay').reduce((s, a) => s + (X.wt[C[2][a.i]] || []).reduce((q, k) => q + X.T[k][5], 0), 0);
+  const unwSeen = C ? unwarned(-1e9, pos < C[2].length ? D.issue[C[2][pos]] : X.end).length : 0;
+  $('tally').innerHTML = [
+    [done.length, 'warnings you have answered'],
+    [paidAll + ' s', 'in the dark, all told'],
+    [paidEmpty + ' s', 'in the dark for warnings no tornado met'],
+    [`${stayedMet} of ${metSeen}`, 'times you stayed while a tornado came'],
+    [deadStayed, 'killed by tornadoes under the warnings you stayed for (whole tracks)'],
+    [unwSeen, 'tornadoes here so far that no warning stood over'],
+  ].map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join('');
+  const bins = [[0, 0, 'after a met warning'], [1, 1, 'after 1 empty'], [2, 2, 'after 2 empty'], [3, 4, 'after 3 or 4 empty'], [5, 1e9, 'after 5 or more empty']];
+  $('drift').innerHTML = '<tr><th>This county had just had</th><th>warnings</th><th>you took cover</th></tr>' + bins.map(([lo, hi, l]) => {
+    const b = done.filter(a => a.i > 0 && a.run >= lo && a.run <= hi), c = b.filter(a => a.act === 'cover').length;
+    return `<tr><td>${l}</td><td>${b.length}</td><td>${b.length ? Math.round(100 * c / b.length) + ' %' : '—'}</td></tr>`;
+  }).join('');
+  const tb = document.querySelector('#ledger tbody'), state = C ? st(C[1]) : '';
+  tb.innerHTML = done.slice().reverse().map(a => { const w = C[2][a.i]; return `<tr><td>${a.i + 1}</td><td>${local(D.issue[w], state)}</td><td>${D.dur[w]} min</td><td>${a.act === 'cover' ? 'cover, ' + a.paid + ' s' : 'stayed'}</td><td class="${a.met ? 'met' : ''}">${a.met ? 'tornado' : 'empty'}</td><td>${ledgerFinal(w)}</td></tr>`; }).join('');
+}
+
+const r = S.fable_runs_before_met;
+const after3 = S.fable_met_after_3plus_empty, metE = S.county_entries_met;
+$('fable').innerHTML = `In the fable of the shepherd's boy the village stops coming after he has cried wolf "three or four times" (Townsend's translation, 1867, as the Atelier verified it). In this record, a tornado met a county's warning <b>${fmtN(after3)}</b> times after three or more empty warnings in a row there, of <b>${fmtN(metE)}</b> times a tornado met a county's warning at all (${Math.round(100 * after3 / metE)} %). After ten or more: ${fmtN(r['10'])}. The boy's last cry is not the exception here. It is one time in ${(metE / after3).toFixed(1)}.`;
+$('facts').textContent = `The record: ${fmtN(S.warnings)} tornado warnings from ${S.first_issue.slice(0, 10)} to ${S.last_issue.slice(0, 10)}, ${fmtN(S.met)} met and ${fmtN(S.empty)} empty (${Math.round(100 * S.far)} % empty), over ${fmtN(S.counties)} counties and parishes. They were issued for ${fmtN(S.minutes_issued_total)} minutes; ${fmtN(S.minutes_issued_empty)} of them under warnings no tornado met. ${S.events_merged_from_parts} warnings the service splits into parts were joined; ${S.record_errors_excluded.length} with impossible durations were left out (${S.record_errors_excluded.join('; ')}).`;
+
+const B = XS.by_window[String(X.win)], B0 = XS.by_window['0'];
+const pct = (a, b) => Math.round(100 * a / b) + ' %';
+$('tollfacts').innerHTML = `From 2008 to ${XS.spc_last_day.slice(0, 4)} the final database holds <b>${fmtN(XS.tornadoes)}</b> tornadoes, which killed ${fmtN(XS.deaths)} people and injured ${fmtN(XS.injuries)}. <b>${fmtN(B.tornadoes_under_a_warning)}</b> stood under a warning; <b>${fmtN(B.tornadoes_under_none)}</b> (${pct(B.tornadoes_under_none, XS.tornadoes)}) under none, and they killed ${B.deaths_under_none}. ${fmtN(B.deaths_under_a_warning)} of the ${fmtN(XS.deaths)} dead (${pct(B.deaths_under_a_warning, XS.deaths)}) died in tornadoes a warning stood over. The deadliest, Joplin, Missouri, on 22 May 2011, 158 killed, began 17 minutes after its warning was issued; Moore, Oklahoma, on 20 May 2013, 24 killed, 16 minutes after. <br><br>The record written later also changes the record of false alarms. Of the ${fmtN(B.empty_warnings)} warnings of those years the office's verification counts empty, the final database places a tornado inside <b>${fmtN(B.empty_warnings_with_a_tornado)}</b> (${fmtN(B0.empty_warnings_with_a_tornado)} if the tornado had to begin after the warning was issued). Of the ${fmtN(B.met_warnings)} it counts met, it places no tornado track inside ${fmtN(B.met_warnings - B.met_warnings_with_a_tornado)}. Who wrote <em>never needed</em> depends on which record you read, and when.`;
+const last = byUgc.get(qs.get('county') || store.get('tca:last'));
+last ? choose(last) : deal();
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>

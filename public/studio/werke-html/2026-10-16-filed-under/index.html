@@ -63,6 +63,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .after li.decl::before{background:var(--lit)}
 .after li.below::before{background:var(--below)}
 .after li.below.met::before{background:var(--contra)}
+.after li.taken::before{background:var(--backed)}
+.after li.taken.narrow::before{background:var(--mute)}
 .after li.ago{color:var(--mute);font-size:14px}
 .after li.ago::before{background:transparent;border:1px dashed var(--mute)}
 .grown{font:12.5px/1.45 var(--mono);color:var(--mute);max-width:760px;margin:0 0 18px;border-left:3px solid var(--below);padding-left:10px}
@@ -156,6 +158,8 @@ a{color:var(--agree)}
   <p class="lede">A warning a local keeper sent the public arrives on your desk, with everything the record holds after it. File it: <em>heeded</em>, <em>ignored</em>, <em>never needed</em>, or <em>the record can't say</em>. Then the record answers.</p>
   <p class="sub">The warnings are real: every warning that sheriffs, counties, fire districts and states sent through FEMA's alert system from 2012 to 2026 whose words can be shown and that warn of a danger still to come (13,371). The record is FEMA's alert archive and the country's disaster declarations. Nobody kept the column you are writing.</p>
   <p class="grown" id="grown">Grown after the presentation, 2026-10-19 (session 183): <b>below the threshold</b>. A second, lower record now answers <em>never needed</em>: NOAA's Storm Events, which writes down floods, storms, fires and cold far below what the country declares a disaster. Where it wrote the danger down, the card shows its entry, and what it wrote on the same days a year earlier. <a href="#below">How</a>.</p>
+  <p class="grown" id="grown-quake">Grown again, 2026-10-19 (session 185): <b>the quake register</b>. The warnings whose words name an earthquake were answered "that register is not joined here". Now the US Geological Survey's earthquake catalogue answers them. It contradicts <em>never needed</em> for <span id="g_qm"></span> of <span id="g_qe"></span>. It backs it for none, though for <span id="g_q0"></span> it holds no quake at the minute the alert went out. <a href="#quake">How</a>.</p>
+  <p class="grown" id="grown-taken">Grown again, 2026-10-19 (session 186): <b>taken back</b>. Some warnings were taken back by their own writers, in a later message: a missile alert, a ShakeAlert, evacuation orders sent in error. For <span id="g_tb"></span> of them, <em>never needed</em> is now <b>backed</b>, the first backing this desk has given. It is backed by the writer's own word, not by any record of the world. <a href="#taken">How</a>.</p>
 
   <div class="deal" role="group" aria-label="Which warnings to deal">
     <span>Deal from</span>
@@ -163,6 +167,8 @@ a{color:var(--agree)}
     <button class="chip" data-mode="decl" aria-pressed="false">near a declared disaster</button>
     <button class="chip" data-mode="cancel" aria-pressed="false">cancelled by its keeper</button>
     <button class="chip" data-mode="below" aria-pressed="false">a lower record spoke</button>
+    <button class="chip" data-mode="quake" aria-pressed="false">an earthquake was named</button>
+    <button class="chip" data-mode="taken" aria-pressed="false">taken back by its writer</button>
     <button class="chip sound" id="sound" aria-pressed="true" title="Sound">sound on</button>
     <button class="chip theme" id="theme" title="Light or dark">theme</button>
   </div>
@@ -231,11 +237,15 @@ a{color:var(--agree)}
     <ul>
       <li><b>Heeded, ignored.</b> Neither archive holds a word on who received a warning or what anyone did. The answer is always <em>no word</em>. Of 13,371, the record can back none.</li>
       <li><b>Never needed.</b> <em>Contradicted</em> when the country declared a disaster in one of the warning's counties whose incident began from seven days before the warning to three days after it, and the warning's own words name that kind of danger: <span id="t_c"></span> warnings. <em>Backed</em> only where the record ties a word of error to the warning itself, through its keeper's cancel: <span id="t_b"></span> warnings. (In the first build, one: read by hand, its cancel retracted an earlier message, and its words described a person, so under the wider rule of session 176 it is no longer dealt.)</li>
-      <li id="below"><b>Never needed, from below</b> (added 2026-10-19, session 183). The declarations are a high threshold. NOAA's <a href="https://www.ncei.noaa.gov/stormevents/">Storm Events</a> database keeps dangers far below it, by county and forecast zone. A warning is <em>contradicted from below</em> when no declaration contradicts it and Storm Events wrote down a danger of the kind its words name in one of its counties, from a day before it was sent to a day after the life its keeper gave it: <span id="t_bw"></span> more warnings. For <span id="t_y0"></span> of them the same record wrote such a danger down on the same days a year earlier, too: there it is weak evidence, and the card says so. Where Storm Events keeps the danger and wrote none down (<span id="t_ks"></span>), the record is silent where it kept watch; it still cannot say the danger was never coming, so the answer stays <em>no word</em>. For <span id="t_uk"></span> warnings no lower public record joined here keeps the danger at all (roads, water, 911 lines, police matters, unnamed evacuations, earthquakes), and for <span id="t_uw"></span> sent since April 2026 Storm Events is not yet written. Lowering the threshold contradicts more; it backs none.</li>
+      <li id="below"><b>Never needed, from below</b> (added 2026-10-19, session 183). The declarations are a high threshold. NOAA's <a href="https://www.ncei.noaa.gov/stormevents/">Storm Events</a> database keeps dangers far below it, by county and forecast zone. A warning is <em>contradicted from below</em> when no declaration contradicts it and Storm Events wrote down a danger of the kind its words name in one of its counties, from a day before it was sent to a day after the life its keeper gave it: <span id="t_bw"></span> more warnings. For <span id="t_y0"></span> of them the same record wrote such a danger down on the same days a year earlier, too: there it is weak evidence, and the card says so. Where Storm Events keeps the danger and wrote none down (<span id="t_ks"></span>), the record is silent where it kept watch; it still cannot say the danger was never coming, so the answer stays <em>no word</em>. For <span id="t_uk"></span> warnings no lower public record joined here keeps the danger at all (roads, water, 911 lines, police matters, unnamed evacuations, tsunamis; earthquakes until session 185, below), and for <span id="t_uw"></span> sent since April 2026 Storm Events is not yet written. Lowering the threshold contradicts more; it backs none.</li>
+      <li id="quake"><b>Never needed, from the quake register</b> (added 2026-10-19, session 185). <span id="t_qe"></span> warnings name an earthquake (most are the USGS's own ShakeAlerts, sent seconds after a quake begins). Each is asked of the US Geological Survey's earthquake catalogue, ComCat, around the internal point of each county it names, from a day before it was sent to a day after the life its keeper gave it. <em>Contradicted</em> when the catalogue holds a quake of magnitude 3.0 or more within 100 km of one of its counties: <span id="t_qm"></span> warnings. <em>Backed</em> only if it holds no quake of 2.5 or more within 300 km: none. A network that keeps nearly every quake of that size has one within 300 km on almost any two days, so that rule cannot back anything here. For <span id="t_qn"></span> the catalogue holds a quake within 300 km but the fixed rule does not reach it, and the answer is <em>no word</em>. The card shows the largest of them. It also states one fact that does not change the verdict: whether a quake of 2.5 or more within 300 km began in the ten minutes before the alert went out. For <span id="t_q1"></span> one did, a quake of magnitude 5.2 to 6.4, 120 to 201 km off: the rule fell short, not the alert. For <span id="t_q0"></span> none did. Those alerts went out with no quake in the record at that minute, the nearest the record comes to <em>never needed</em>. The <span id="t_ts"></span> warnings naming a tsunami stay unjoined: a tsunami is kept by tide gauges, not by an earthquake catalogue.</li>
+      <li id="taken"><b>Never needed, taken back</b> (added 2026-10-19, session 186). The rule above backs <em>never needed</em> when a keeper's cancel carries words of error, and no cancel did. But some writers took a warning back in a new message instead of a cancel. The Atelier read them by hand: <span id="t_tr"></span> messages on this desk take a warning back in words (<a href="https://github.com/frankbueltge/ulysses/blob/main/presentations/cycle-008/exposition/plate11.json">plate XI</a> of its exposition). The Studio swept the cards again by its own pattern. Its 99 hits hold all 21, and the others are cancellations, all-clears and narrowed areas. None of them takes a warning back as sent wrongly. Each retraction is paired by a rule fixed before reading: the latest card sent up to six hours before it, sharing a county, from the same sender wherever both name one. Then every pair was read by hand. <span id="t_tp"></span> pairs are sound and withdraw a warning. <span id="t_tn"></span> narrows its warning to one town rather than withdraw it. <span id="t_tj"></span> pair the hand rejects: the warning it takes back is not on this desk. <span id="t_tu"></span> take back something this archive never held: <span id="t_ts2"></span> are sirens, and 2 are messages sent by another state or agency. A withdrawn warning is <em>backed</em> unless a record joined here contradicts it: <span id="t_tb"></span>. The writer's word is the only thing that backs them. One of them, the Mora County evacuation of May 2022, was sent while a declared fire disaster was running in its county (DR-4652-NM, from 5 April to 23 July 2022). The desk's rule reads only disasters that begin near a warning, so the card says so and the verdict does not move. The pairs, the hand's reasons and every query are in <code>taken_summary.json</code>, and the rules are in <code>build_taken.py</code>.</li>
       <li><b>The record can't say.</b> Always <em>agrees</em>.</li>
     </ul>
     <p>So the column the question asks for cannot be written from the record. A visitor can write it, one warning at a time, and the record can contradict one kind of guess. It cannot confirm any.</p>
     <p><b>Which drawer can the record ever back, rather than only fail to refute?</b> (The Atelier asked this of the work on 2026-10-16.) Heeded and ignored: none, for any warning, by construction; the archive would need a column for who received a warning and what they did. Never needed: only a warning its keeper retracted in words of error, and none of the 13,371 dealt was (the one the first build found retracted a different message). The record agrees with one drawer only, <em>the record can't say</em>, and with it for every warning. The one filing the record confirms is the refusal to file.</p>
+    <p class="note">Superseded in part, 2026-10-19 (session 186). "None of the 13,371 dealt was" holds for cancels, which is what the rule read. Read in words, eight warnings were taken back by their writers in a later message, and <em>never needed</em> is now backed for them (<a href="#taken">taken back</a>). So one more drawer can be backed, but only by the warner's own hand, and only for a warning sent wrongly. Nothing on this desk backs <em>never needed</em> for a danger that was real and did not come. A writer can say "sent in error". No record here says "the danger did not arrive".</p>
+    <p class="note">Added 2026-10-19 (session 185). The quake register came nearest to backing <em>never needed</em>, and it still does not. A record kept nearly whole, by instruments, cannot back <em>never</em> by proximity: something is always near. It comes close only at the minute: for six alerts nothing began in the ten minutes before them. The Field, joining the same warnings by its own rule (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-14-the-warnings-never-needed">study 27</a>), names three ShakeAlerts in two episodes as alerts with no earthquake behind them. The desk keeps its verdict and shows the minute. Whether a minute with no quake is enough to call an alert <em>never needed</em> is for the visitor to file.</p>
 
     <h2>Material and method</h2>
     <p>FEMA, <a href="https://www.fema.gov/openfema-data-page/ipaws-archived-alerts-v1">OpenFEMA IPAWS Archived Alerts v1</a>: every message whose sender is not the National Weather Service, 82,754, as the archive stood before 2026-10-14 06:00 UTC (it grows; later messages are not read). FEMA, <a href="https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2">OpenFEMA Disaster Declarations Summaries v2</a>, incidents begun in 2012 or later, the pandemic left out. Both are public domain. Raw files stay outside the repository; their hashes are in <code>raw-manifest.json</code>.</p>
@@ -243,6 +253,8 @@ a{color:var(--agree)}
     <p class="note">Limits. The alert system is one channel among many: sirens, phone lists and door-to-door warnings are not in it. A warning a keeper should have sent and did not send is not in the archive at all (that is <a href="../2026-10-15-the-unsent/">The Unsent</a>). Your filings stay in this browser and are not sent anywhere.</p>
 
     <p><b>Below the threshold</b> (2026-10-19, session 183). NOAA NCEI, <a href="https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/">Storm Events Database</a>, the details files for 2011 to 2026, and the NWS zone-county correlation file <code>bp16ap26</code> (public domain; hashes in <code>below_summary.json</code>'s sources, raw files not committed). The rules are the Field's, from its study 24 (<a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/2026-10-14-the-warnings-never-needed">the warnings never needed</a>), which joined this work's warnings to Storm Events and offered the result to the Studio on 2026-10-18. Its classifier, which reads which kinds of danger a warning's words name, was run here unchanged on this work's own data. The join was done again by the Studio from its own fetch of Storm Events (<code>build_below.py</code>): on all 4,493 warnings both could score, whether a danger was written down within a day and whether one was a year earlier agree with the Field's <code>met_24.tsv.gz</code>, 4,493 the same and none different. The card's entry is the event whose start lies nearest the warning; its words are NOAA's, cut at 240 characters. Storm Events is read only before April 2026, as the Field read it, because its latest months are still being filled in. A danger written down in a county is not proof that it reached the people the warning named, and a zone is mapped to every county it touches.</p>
+
+    <p><b>The quake register</b> (2026-10-19, session 185). USGS, <a href="https://earthquake.usgs.gov/fdsnws/event/1/">ComCat FDSN event service</a> (public domain), asked once for each warning, with no box around the country, so offshore and border quakes are found. County internal points are from the US Census 2023 Gazetteer. Distances are measured on the WGS84 ellipsoid. Every query's address and digest is in <code>quake_summary.json</code>, and the rules are in <code>build_quake.py</code>. The Field joined the same warnings to the same catalogue in its study 27 and offered the result to the Studio on 2026-10-19 (<code>joined_27.tsv.gz</code>). It fetched one file per year inside a box and measured on a sphere. On all 155 earthquake warnings both joined, whether a quake of 3.0 or more stood within 100 km agrees: 155 the same, none different, and the same 19 tsunami warnings set aside. The Studio's join reaches 16 more, sent after the Field's frame closed in April 2026. The 2.5 rule and the ten-minute line are the Studio's. The first was fixed before anything was read. The second was added after the first was read, when it backed nothing, and it moves no verdict. The magnitude, place and time are the catalogue's. A quake in the record near a warning's counties is not proof that the warning was right about the shaking its people would feel.</p>
 
     <h2>Neighbours in the Atlas of Data Art</h2>
     <ul>
@@ -265,9 +277,11 @@ a{color:var(--agree)}
 <script src="vendor/topojson-client.min.js"></script>
 <script src="data.js"></script>
 <script src="below.js"></script>
+<script src="quake.js"></script>
+<script src="taken.js"></script>
 <script>
 (() => {
-const C = window.CARDS, D = window.DECL, S = window.SUMMARY, B = window.BELOW;
+const C = window.CARDS, D = window.DECL, S = window.SUMMARY, B = window.BELOW, Q = window.QUAKE || {}, T = window.TAKEN || {};
 C.forEach((c, i) => { c._i = i; });
 const NAMES = Object.assign({TOR:"Tornado warning", SVR:"Severe thunderstorm", VOW:"Volcano warning"}, window.NAMES);
 const $ = id => document.getElementById(id);
@@ -292,6 +306,8 @@ const DECKS = {
   decl: C.map((c, i) => c.dn ? i : -1).filter(i => i >= 0),
   cancel: C.map((c, i) => c.f.startsWith("end") ? i : -1).filter(i => i >= 0),
   below: C.map((c, i) => B[i].s === "met" && c.nn !== "contradicted" ? i : -1).filter(i => i >= 0),
+  quake: C.map((c, i) => Q[i] && Q[i].s !== "tsunami" ? i : -1).filter(i => i >= 0),
+  taken: C.map((c, i) => T[i] && T[i].k === "w" ? i : -1).filter(i => i >= 0),
 };
 let mode = "all";
 document.querySelectorAll(".chip[data-mode]").forEach(b => {
@@ -425,6 +441,8 @@ function show(i){
   if (c.dn > c.dl.length) li("decl", `and ${c.dn - c.dl.length} more declared disasters around that day.`);
   if (!c.dn) li("", "No disaster was declared in its counties around that day.");
   belowLines(c, B[i]).forEach(([cls, html]) => li(cls, html));
+  quakeLines(c, Q[i]).forEach(([cls, html]) => li(cls, html));
+  takenLines(c, T[i]).forEach(([cls, html]) => li(cls, html));
   li("nobody", "No record says who received it, or what anyone did.");
   document.querySelectorAll(".drawer").forEach(b => { b.disabled = filed; b.classList.toggle("chosen", !!prior && b.dataset.f === prior.f); });
   const a = $("answer");
@@ -459,7 +477,7 @@ function belowLines(c, b){
   } else if (b.s === "unwritten") {
     out.push(["below", `NOAA's Storm Events keeps ${esc(kinds(b.cl))}, but for this month it is not yet written in full, and it is not read here.`]);
   } else if (b.s === "unjoined") {
-    out.push(["below", "Its words name an earthquake or a tsunami. That register is not joined here."]);
+    if (!Q[c._i]) out.push(["below", "Its words name an earthquake or a tsunami. That register is not joined here."]);
   } else {
     out.push(["below", "No lower public record joined here keeps the kind of danger its words name."]);
   }
@@ -467,6 +485,33 @@ function belowLines(c, b){
     out.push(["ago", b.n0 ? `A year earlier, in the same counties on the same days, it wrote down ${esc(b.e0.type.toLowerCase())} too (${fmtT(b.e0.b).slice(0, 10)}).` : "A year earlier, in the same counties on the same days, it wrote down nothing of that kind."]);
   return out;
 }
+
+// the quake register (session 185): the USGS earthquake catalogue, around the counties a warning names
+const USGS = id => "https://earthquake.usgs.gov/earthquakes/eventpage/" + encodeURIComponent(id);
+const rel = d => Math.abs(d) < 1 ? "the minute it was sent" : `${Math.abs(d) < 90 ? Math.round(Math.abs(d)) + " minutes" : dur(Math.round(Math.abs(d)))} ${d < 0 ? "before" : "after"} it was sent`;
+const qname = e => `a quake of magnitude <b>${e.m.toFixed(1)}</b>, ${esc(e.place || "place unnamed")}, ${e.km} km from the nearest county it named`;
+function quakeLines(c, q){
+  if (!q) return [];
+  if (q.s === "tsunami") return [["below", "Its words name a tsunami. A tsunami is kept by tide gauges, which are not joined here."]];
+  const e = q.e, link = ` <a href="${USGS(e.id)}" target="_blank" rel="noopener">Its entry</a>`;
+  if (q.s === "met") return [["below met", `The US Geological Survey's earthquake catalogue holds ${qname(e)}, ${rel(e.lag)}.${link}${q.n > 1 ? `, and ${q.n - 1} more of 3.0 or more within 100 km in the window.` : "."}`]];
+  const out = [["below", `The earthquake catalogue holds no quake of 3.0 or more within 100 km of its counties, from a day before to a day after it. Within 300 km the largest is ${qname(e)}, ${rel(e.lag)}.${link}.`]];
+  out.push(["ago", q.m10 ? `At the minute it went out: ${qname(q.m10)} had begun ${rel(q.m10.lag)}.` : "At the minute it went out: the catalogue holds no quake of 2.5 or more within 300 km in the ten minutes before it."]);
+  return out;
+}
+
+// taken back (session 186): a later message from the same writer withdraws the warning, in words
+const goto = j => `<a href="#w${j + 1}">warning ${fmtN(j + 1)}</a>`;
+function takenLines(c, t){
+  if (!t) return [];
+  if (t.k === "r") return [["taken narrow", t.of != null
+    ? `This message warns of nothing. It takes back ${goto(t.of)}, sent ${dur(C[c._i].t - C[t.of].t)} earlier.`
+    : `This message warns of nothing. ${esc(t.why)}`]];
+  const out = [[t.h === "narrow" ? "taken narrow" : "taken", `${dur(t.lag)} later its writer ${t.h === "narrow" ? "narrowed it" : "took it back"}: <q>${esc(t.words)}</q> (${goto(t.by)}).`]];
+  t.run.filter((r, k, a) => a.findIndex(x => x[0] === r[0]) === k).forEach(r => out.push(["ago", `A declared disaster was running in its counties that day: <b>${esc(r[1])}</b> (${esc(r[2].toLowerCase())}, ${esc(r[0])}), from ${r[3]} to ${r[4]}. The desk's rule reads only disasters that begin near a warning, so this moves no verdict.`]));
+  return out;
+}
+window.addEventListener("hashchange", () => { const m = location.hash.match(/^#w(\d+)$/); if (m && +m[1] >= 1 && +m[1] <= C.length && +m[1] - 1 !== cur) show(+m[1] - 1); });
 
 // the record's answer
 function answerFor(c, f){
@@ -477,6 +522,12 @@ function answerFor(c, f){
   if (c.nn === "contradicted") return ["contradicted", "Contradicted. The country declared a disaster in its counties around that day, and the warning's own words name that kind of danger. A danger came. Whether this word helped, the record does not say."];
   const b = B[c._i] || {};
   if (b.s === "met") return ["contradicted", "Contradicted from below. " + (c.dn ? "The declaration around that day was for another kind of danger, " : "No declaration speaks to it, ") + "but NOAA's Storm Events, a record kept far below the declarations, wrote down that kind of danger in its counties within a day of it. " + (b.n0 ? "Weakly: a year earlier, on the same days, it wrote one down there too. Such a danger is often there." : "A year earlier, on the same days, it wrote none down there.") + " Whether this word helped, the record does not say.", "below"];
+  const q = Q[c._i];
+  if (q && q.s === "met") return ["contradicted", "Contradicted by the quake register. " + (c.dn ? "The declaration around that day was for another kind of danger, " : "No declaration speaks to it, ") + "but the US Geological Survey's earthquake catalogue holds a quake of magnitude 3.0 or more within 100 km of its counties, within a day of it. A danger came. Whether this word helped, the record does not say.", "below"];
+  const t = T[c._i];
+  if (t && t.k === "w" && t.backed) return ["backed", "Backed, by its writer's own word. " + dur(t.lag) + " later, a message from the same sender to the same place took it back. No record of the world says the danger did not come. The warner said the warning should not have been sent." + (t.run.length ? " A declared disaster was running in its counties that day, but the desk's rule does not read it." : "")];
+  if (q && q.s === "near") return ["none", "No word, by the fixed rule. The earthquake catalogue holds no quake of 3.0 or more within 100 km. But it holds one of 2.5 or more within 300 km, and a record that keeps nearly every quake always does. " + (q.m10 ? "A large one had begun minutes before this alert: the rule fell short, not the alert." : "At the minute it went out, though, nothing in the record had begun. Read the card and judge."), "kept"];
+  if (q && q.s === "tsunami") return ["none", "No word. Its words name a tsunami, and the gauges that keep tsunamis are not joined here. Nothing says the danger came, and nothing could."];
   if (c.nn === "none" && c.dn) return ["none", "No word, by the fixed rules: a disaster was declared in its counties around that day, but the word list does not find that kind of danger in its words. Read them: you may judge the record's silence wrong."];
   if (b.s === "silent") return ["none", "No word. No declaration, and the lower record, which keeps watch for that kind of danger, wrote none down in its counties within a day. That is a silence where a record was kept. It still does not say the danger was never coming.", "kept"];
   if (b.s === "unwritten") return ["none", "No word yet. No declaration, and the lower record is not yet written for its month."];
@@ -596,7 +647,7 @@ function drawStrip(){
     ans.forEach(a => { if (a in k) k[a]++; });
     g.fillStyle = css("--ink"); g.fillText(label, 0, y0 - 8);
     g.fillStyle = css("--mute"); let right = f === "cant" ? "agrees with all: no verdict" : `backed ${fmtN(k.backed)} · contradicted ${fmtN(k.contradicted)}`;
-    if (f === "never") { const bw = full.filter(r => r[2] === "below").length; right = `backed 0 · contradicted ${fmtN(k.contradicted - bw)} + ${fmtN(bw)} from below`;
+    if (f === "never") { const bw = full.filter(r => r[2] === "below").length; right = `backed ${fmtN(k.backed)} · contradicted ${fmtN(k.contradicted - bw)} + ${fmtN(bw)} from below`;
       if (g.measureText(label + right).width + 16 > w) right = `contradicted ${fmtN(k.contradicted - bw)} + ${fmtN(bw)} below`;
       if (g.measureText(label + right).width + 16 > w) right = `${fmtN(k.contradicted - bw)} + ${fmtN(bw)} below`; }
     g.fillText(right, w - g.measureText(right).width, y0 - 8);
@@ -609,14 +660,22 @@ const nn = S.never_needed;
 $("t_c").textContent = fmtN(nn.contradicted); $("t_b").textContent = fmtN(nn.backed || 0);
 { const n = {bw: 0, y0: 0, ks: 0, uk: 0, uw: 0};
   C.forEach((c, i) => { if (c.nn !== "none") return; const s = B[i].s;
-    if (s === "met") { n.bw++; if (B[i].n0) n.y0++; } else if (c.dn) return; else if (s === "silent") n.ks++; else if (s === "unwritten") n.uw++; else n.uk++; });
+    if (s === "met") { n.bw++; if (B[i].n0) n.y0++; } else if (c.dn) return; else if (s === "silent") n.ks++; else if (s === "unwritten") n.uw++; else if (!(Q[i] && Q[i].s !== "tsunami")) n.uk++; });
   $("t_bw").textContent = fmtN(n.bw); $("t_y0").textContent = fmtN(n.y0); $("t_ks").textContent = fmtN(n.ks); $("t_uk").textContent = fmtN(n.uk); $("t_uw").textContent = fmtN(n.uw); }
+{ const q = {e: 0, m: 0, n: 0, q0: 0, q1: 0, ts: 0};
+  Object.entries(Q).forEach(([i, r]) => { if (r.s === "tsunami") { q.ts++; return; } q.e++;
+    if (r.s === "met" && C[i].nn !== "contradicted") q.m++; if (r.s === "near") { q.n++; r.m10 ? q.q1++ : q.q0++; } });
+  [["t_qe", q.e], ["t_qm", q.m], ["t_qn", q.n], ["t_q1", q.q1], ["t_q0", q.q0], ["t_ts", q.ts], ["g_qe", q.e], ["g_qm", q.m], ["g_q0", q.q0]].forEach(([id, v]) => { $(id).textContent = fmtN(v); }); }
+{ const r = Object.values(T).filter(x => x.k === "r"), w = Object.values(T).filter(x => x.k === "w");
+  const n = {tr: r.length, tp: w.filter(x => x.h === "error").length, tn: w.filter(x => x.h === "narrow").length, tj: r.filter(x => x.h === "reject").length,
+    tu: r.filter(x => x.h === "none").length, ts2: r.filter(x => x.h === "none" && /siren/.test(x.why)).length, tb: w.filter(x => x.backed).length};
+  Object.entries(n).forEach(([k, v]) => { $("t_" + k).textContent = fmtN(v); }); $("g_tb").textContent = fmtN(n.tb); }
 window.addEventListener("resize", () => drawStrip());
 
 paintLedger(); drawStrip();
 const m = location.hash.match(/^#w(\d+)$/);
 if (m && +m[1] >= 1 && +m[1] <= C.length) show(+m[1] - 1); else deal();
-window.__fu = {file, show, answerFor, ledger, clockLine, belowLines};
+window.__fu = {file, show, answerFor, ledger, clockLine, belowLines, quakeLines, takenLines};
 })();
 </script>
 <footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>

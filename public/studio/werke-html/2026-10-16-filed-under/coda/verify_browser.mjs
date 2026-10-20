@@ -1,4 +1,4 @@
-// node verify_browser.mjs — FILED UNDER, coda (sessions 178, 181 and 182), in a real browser at 390 px (light) and 1100 px (dark)
+// node verify_browser.mjs — FILED UNDER, coda (sessions 178, 181, 182 and 184), in a real browser at 390 px (light) and 1100 px (dark)
 import { createRequire } from 'module';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
@@ -6,6 +6,7 @@ import { dirname, join } from 'path'; import fs from 'fs'; import { fileURLToPat
 const here = dirname(fileURLToPath(import.meta.url));
 const S = JSON.parse(fs.readFileSync(join(here, 'summary.json')));
 const N9 = JSON.parse(fs.readFileSync(join(here, 'nine_summary.json')));
+const RC = JSON.parse(fs.readFileSync(join(here, 'reconcile_summary.json')));
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--autoplay-policy=no-user-gesture-required', '--allow-file-access-from-files'] });
 let pass = 0, fail = 0; const t = (n, ok) => { ok ? pass++ : fail++; console.log(ok ? 'ok  ' : 'FAIL', n) };
 for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
@@ -94,6 +95,20 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   t(w + ` nine: the clock runs, the record answers ${ok} of 9 as backed`, new RegExp(`backs <b>${ok}</b> of your nine`).test(await p.innerHTML('#ninewords')) && /which writing you read decides/.test(await p.textContent('#ninewords')));
   t(w + ' nine: every event now drawn', (await p.locator('#ninesvg circle[fill="var(--contra)"]').count()) === W9.reduce((a, v) => a + v.ev.length, 0));
   t(w + ' nine: filings kept in this browser', (await p.evaluate(id => JSON.parse(localStorage.getItem('filed-under-coda-nine-v1'))[id].filed.length, z.id)) === 9);
+  // two readings (session 184)
+  const r2 = await p.evaluate(() => { const ids = Object.keys(TWO_READINGS), full = Object.keys(NINE).filter(i => NINE[i].length === 9);
+    const moved = full.filter(i => new Set(NINE[i].map(v => v.fate)).size > 1).length;
+    const own = moved + ids.filter(i => new Set(TWO_READINGS[i].writings.map(w => w.own.length > 0)).size > 1).length;
+    return { ids: ids.length, moved, own, cells: document.querySelectorAll('#twosvg rect.twocell').length }; });
+  t(`${w} two: ${r2.moved} moved at the card magnitude, ${r2.own} at own floors (summary ${RC.moved.ours}, ${RC.moved.field})`, r2.moved === N9.fate_moves_with_writing && r2.moved === RC.moved.ours && r2.own === RC.moved.field && r2.cells === r2.ids * 18);
+  t(w + ' two: the card reading is shown first', /in 46 of 232/.test(await p.textContent('#twocount')) && /\b6\b of 2056/.test(await p.textContent('#twocount')));
+  await p.click('#twobtns button[data-m="own"]');
+  t(w + ' two: the own-floor reading counts the Field\'s', new RegExp(`in ${RC.moved.field} of 232`).test(await p.textContent('#twocount')) && new RegExp(`\\b${RC.living.field}\\b of 2056`).test(await p.textContent('#twocount')) && (await p.getAttribute('#twobtns button[data-m="own"]', 'aria-pressed')) === 'true');
+  const lv = RC.own_floor_living[0] || '';
+  await p.evaluate(lv => { const [i, t] = lv.split('@'); __two.pick(i, TWO_READINGS[i].writings.findIndex(w => w.issued === +t)); }, lv);
+  t(w + ` two: the writing seen before issue tells it (${lv})`, /before it was written/.test(await p.evaluate(() => __two.words())));
+  t(w + ' two: facts drawn', (await p.locator('#twofacts li').count()) === 5 && (await p.textContent('#twofacts')).includes(`${RC.own_floor_rows_equal_field} of ${RC.own_floor_rows}`));
+  await p.locator('#twosvg').scrollIntoViewIfNeeded(); await p.screenshot({ path: join(here, `shot-two-${w}.png`) });
   await p.locator('#ninebox').scrollIntoViewIfNeeded(); await p.screenshot({ path: join(here, `shot-nine-${w}.png`) });
   t(w + ' no horizontal overflow after use', await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
   t(w + ' no errors after use', errs.length === 0);

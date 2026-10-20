@@ -1,0 +1,720 @@
+{
+ "built": "2026-10-19 (session 185)",
+ "sources": {
+  "comcat": "https://earthquake.usgs.gov/fdsnws/event/1/ (USGS, public domain), one query per warning; urls and sha256 per warning in queries",
+  "gazetteer": "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2023_Gazetteer/2023_Gaz_counties_national.zip (zip sha256 919df59ba90759cce85468c0337e898e4b39c08eaffce86ddd88fa41f1f7f0c8)",
+  "field_joined_27": {
+   "repo": "frankbueltge/field-research",
+   "path": "artifacts/2026-10-14-the-warnings-never-needed/s27/data/joined_27.tsv.gz",
+   "sha256": "d3d4658fbba1724fa92d7ab3787b88223ea39c09b8f5e545d4488f8ed29dec59"
+  },
+  "fetched": "2026-10-19"
+ },
+ "pool": 190,
+ "counts": {
+  "met": 149,
+  "met|EQW": 145,
+  "met|declared": 5,
+  "met|local": 4,
+  "met|undeclared": 144,
+  "near": 22,
+  "near|EQW": 22,
+  "near|minute_quake": 16,
+  "near|minute_quiet": 6,
+  "near|undeclared": 22,
+  "tsunami": 19
+ },
+ "check_against_field_joined_27": {
+  "met_same": 155,
+  "studio_only_after_field_frame": 16,
+  "tsunami_both": 19,
+  "differing": []
+ },
+ "backed_never_needed": [],
+ "queries": {
+  "1578": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-01-24T03%3A03%3A00&endtime=2020-01-26T03%3A08%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=38.36&minlongitude=-120.68&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "34d7efe15fba3ffe79163bb900119d9f1d532d57bb59d53e311cdd65ce59d1b3"
+  },
+  "1579": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-01-24T03%3A03%3A00&endtime=2020-01-26T03%3A08%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=38.36&minlongitude=-120.68&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "34d7efe15fba3ffe79163bb900119d9f1d532d57bb59d53e311cdd65ce59d1b3"
+  },
+  "1620": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-03-17T14%3A59%3A00&endtime=2020-03-19T15%3A59%3A00&minmagnitude=2.5&minlatitude=37.37&maxlatitude=44.37&minlongitude=-115.47&maxlongitude=-106.47&orderby=time-asc",
+   "sha256": "4db3add32e2ad2f35b869eb98453b0b5f6639d1979781b7cb80a5e7e9addf16e"
+  },
+  "1621": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-03-17T15%3A19%3A00&endtime=2020-03-19T17%3A19%3A00&minmagnitude=2.5&minlatitude=36.97&maxlatitude=43.97&minlongitude=-117.62&maxlongitude=-108.62&orderby=time-asc",
+   "sha256": "b6f93f0398238374da9705b1d06e2c43e33b77178cdeda3d875f5deeb5ad512a"
+  },
+  "1622": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-03-17T15%3A20%3A00&endtime=2020-03-19T19%3A20%3A00&minmagnitude=2.5&minlatitude=37.17&maxlatitude=44.17&minlongitude=-116.42&maxlongitude=-107.42&orderby=time-asc",
+   "sha256": "78822a955e06cc417980d3b7ea4c3c7b083549551ef4fc904475841babc2cd7e"
+  },
+  "1629": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-03-17T22%3A08%3A00&endtime=2020-03-19T22%3A13%3A00&minmagnitude=2.5&minlatitude=37.21&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-119.43&orderby=time-asc",
+   "sha256": "c28793cad7c147d2a16c71f3dfbedb32ae3ca86a587c59ec20711730e980e962"
+  },
+  "1668": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-03-25T17%3A04%3A00&endtime=2020-03-27T18%3A04%3A00&minmagnitude=2.5&minlatitude=28.27&maxlatitude=35.27&minlongitude=-110.74&maxlongitude=-101.74&orderby=time-asc",
+   "sha256": "6b6f1390d0d24b9395416e1f3459d5ce0d03916734e20e48fbbd2690e0ebfca1"
+  },
+  "1734": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-04-03T01%3A53%3A00&endtime=2020-04-05T01%3A58%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=45.25&minlongitude=-128.48&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "99207413622e9f0b53a7136768d5231303e0addc258dc43a7db55fa1bec30c7a"
+  },
+  "1776": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-04-10T14%3A36%3A00&endtime=2020-04-12T14%3A41%3A00&minmagnitude=2.5&minlatitude=35.02&maxlatitude=42.02&minlongitude=-122.92&maxlongitude=-113.92&orderby=time-asc",
+   "sha256": "752580c6e32c45f4cc925b295c57c6cc1c25b34bfa2bac2f568de7ab6602114f"
+  },
+  "1777": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-04-10T14%3A37%3A00&endtime=2020-04-12T14%3A42%3A00&minmagnitude=2.5&minlatitude=35.02&maxlatitude=42.02&minlongitude=-122.92&maxlongitude=-113.92&orderby=time-asc",
+   "sha256": "d634e8645aeef7a85b9e3ea69d9342509f2a0ef2304f2d1ed9d5ce2d6acfcca3"
+  },
+  "1778": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-04-10T14%3A37%3A00&endtime=2020-04-12T14%3A42%3A00&minmagnitude=2.5&minlatitude=35.02&maxlatitude=42.02&minlongitude=-122.92&maxlongitude=-113.92&orderby=time-asc",
+   "sha256": "d634e8645aeef7a85b9e3ea69d9342509f2a0ef2304f2d1ed9d5ce2d6acfcca3"
+  },
+  "1893": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-05-20T21%3A09%3A00&endtime=2020-05-22T21%3A14%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=40.06&minlongitude=-123.28&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "b2e64f8a2c16c72beae68ae6a44bd29df32a261d0311f78aa873945fe723be1f"
+  },
+  "1894": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-05-20T22%3A04%3A00&endtime=2020-05-22T22%3A09%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=40.06&minlongitude=-123.28&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "37e41f105d3f2ae419d1de35ca0d0f05d7c0bd1e106d3a9629a4b7ebab1b9d35"
+  },
+  "2119": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A40%3A00&endtime=2020-06-25T17%3A45%3A00&minmagnitude=2.5&minlatitude=32.73&maxlatitude=40.06&minlongitude=-123.28&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "5d653f42a88d61d495fad15e680ff79a44b7deaaf61eaaba4bca716f9884766f"
+  },
+  "2120": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A41%3A00&endtime=2020-06-25T17%3A46%3A00&minmagnitude=2.5&minlatitude=32.73&maxlatitude=40.06&minlongitude=-123.28&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "5414f84945e1f09a232fe2caa13cad122cec98afbcb19b8dcf91d26488a63e7b"
+  },
+  "2121": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A41%3A00&endtime=2020-06-25T17%3A46%3A00&minmagnitude=2.5&minlatitude=32.73&maxlatitude=40.06&minlongitude=-123.28&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "5414f84945e1f09a232fe2caa13cad122cec98afbcb19b8dcf91d26488a63e7b"
+  },
+  "2122": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A41%3A00&endtime=2020-06-25T17%3A46%3A00&minmagnitude=2.5&minlatitude=32.73&maxlatitude=40.26&minlongitude=-124.16&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "48253259214aac67a9fac9580500048354d09d5a901d5d170e77df9307be6354"
+  },
+  "2123": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A42%3A00&endtime=2020-06-25T17%3A47%3A00&minmagnitude=2.5&minlatitude=33.06&maxlatitude=40.06&minlongitude=-121.90&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "ab352858f34b7c77577891b5991f290d0e61ed2600c42ee3beb38db779cf7113"
+  },
+  "2124": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A42%3A00&endtime=2020-06-25T17%3A47%3A00&minmagnitude=2.5&minlatitude=32.73&maxlatitude=40.06&minlongitude=-123.28&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "4e5030ac396a2224224aeec7d5c9f8ef5faf819cd72bde932a2743478e81c2c8"
+  },
+  "2125": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A42%3A00&endtime=2020-06-25T17%3A47%3A00&minmagnitude=2.5&minlatitude=33.06&maxlatitude=40.06&minlongitude=-121.90&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "ab352858f34b7c77577891b5991f290d0e61ed2600c42ee3beb38db779cf7113"
+  },
+  "2126": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A42%3A00&endtime=2020-06-25T17%3A47%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=40.26&minlongitude=-124.16&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "142982e1373c30242ee674bd60d266f9a0301142a3b5428f300bce8527ee6e25"
+  },
+  "2127": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A43%3A00&endtime=2020-06-25T17%3A48%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=40.06&minlongitude=-123.28&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "9b0b2447d9b9ab96cca85567a0b32f32c88c8f9449240ecf0e1625f961e8f718"
+  },
+  "2128": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A43%3A00&endtime=2020-06-25T17%3A48%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=41.28&minlongitude=-123.23&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "9e5b9020a57e7ea4e6e37324329899500b22298adcb2dc8a9827ae799b6d65f1"
+  },
+  "2129": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A43%3A00&endtime=2020-06-25T17%3A48%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=40.06&minlongitude=-123.23&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "d4c1069b536fe174d94a09bd6a5c809f9697e6067fe0ffc12e45839c86f93638"
+  },
+  "2130": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A43%3A00&endtime=2020-06-25T17%3A48%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=40.26&minlongitude=-124.16&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "8ddcc0a9a72a6b44f43881fb3aad556f97deea0371497ad60f97f08016910c8c"
+  },
+  "2131": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A44%3A00&endtime=2020-06-25T17%3A49%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=40.26&minlongitude=-124.16&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "b017edb99b8fb4b98263ad5a73b95f5ebaf830d8f7805f42113c3185f91cd8a9"
+  },
+  "2132": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A44%3A00&endtime=2020-06-25T17%3A49%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=38.85&minlongitude=-123.23&maxlongitude=-114.23&orderby=time-asc",
+   "sha256": "26a6a403dadf5281e23f89b6973dd64a01263078931b40467a37727cda7251a7"
+  },
+  "2133": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A45%3A00&endtime=2020-06-25T17%3A50%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=40.26&minlongitude=-124.32&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "38599ee9d30bbb07e8430ead7297f730bdabfa8346546b49425b0e8e99859de7"
+  },
+  "2134": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A45%3A00&endtime=2020-06-25T17%3A50%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=40.26&minlongitude=-124.16&maxlongitude=-114.23&orderby=time-asc",
+   "sha256": "d3fdf754c90e8425ebdfbc0a96ff7292085a25c49da1b6298ff8635eacc81ffe"
+  },
+  "2135": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A45%3A00&endtime=2020-06-25T17%3A50%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=41.42&minlongitude=-123.38&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "425bf50e0df68e38ed522dcc253519c7c1055810ec50b12785d6a4f76bed4195"
+  },
+  "2136": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A45%3A00&endtime=2020-06-25T17%3A50%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=41.28&minlongitude=-124.32&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "59bf8b8e33f6f140f8628da1163cf25872ebc1070bd934e94e7912ed7a0fc6be"
+  },
+  "2137": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A45%3A00&endtime=2020-06-25T17%3A50%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=40.26&minlongitude=-124.16&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "3b5c47e31ddb176cb8067f9a7a9151566a1d3d7d83e24396443258f30f2473bc"
+  },
+  "2138": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A46%3A00&endtime=2020-06-25T17%3A51%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=41.47&minlongitude=-124.32&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "8c0c78d4f67d207cfc46dda81758c0a2dc84b99471d849790b62f546aae1bb78"
+  },
+  "2139": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A46%3A00&endtime=2020-06-25T17%3A51%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=41.42&minlongitude=-124.32&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "6acb8ca080f621f145eeff661b429563bf9cf1536343f11638b244928a4de913"
+  },
+  "2140": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A46%3A00&endtime=2020-06-25T17%3A51%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=41.47&minlongitude=-123.38&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "05ecb6eb168bc5686bf1bac86b0477ef89d75ff43c03d74203d9f3ed67ce891f"
+  },
+  "2141": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A47%3A00&endtime=2020-06-25T17%3A52%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=41.47&minlongitude=-124.32&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "d615e90068d252ee6fec30d9f02580dd331bf82f54b09264560a636d50ce676e"
+  },
+  "2142": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A47%3A00&endtime=2020-06-25T17%3A52%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=41.42&minlongitude=-124.25&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "ab2b09a1150a3c33187135913511cc1ad03e1da1b2b95c0e3150ff0a82962390"
+  },
+  "2143": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A47%3A00&endtime=2020-06-25T17%3A52%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=40.71&minlongitude=-124.32&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "d648198ca06e08004efd344e468c129ec3e6dfc0b85f907096d929b75b772aad"
+  },
+  "2144": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A48%3A00&endtime=2020-06-25T17%3A53%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=42.02&minlongitude=-124.25&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "be34511909e192eafb2931ce3a4f98b6ad2e6d91cec3907785ca381ba82df88b"
+  },
+  "2145": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A48%3A00&endtime=2020-06-25T17%3A53%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=41.07&minlongitude=-124.41&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "aef339e4d501d6fed57aec646c058c3978eb714171baa0dbbf89327d183abe9a"
+  },
+  "2146": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A48%3A00&endtime=2020-06-25T17%3A53%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=40.71&minlongitude=-124.32&maxlongitude=-114.23&orderby=time-asc",
+   "sha256": "bd386d9be735afd5fae16a1f59924e9ba92b5cbe558a57b7338cd414dbbadc98"
+  },
+  "2147": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A48%3A00&endtime=2020-06-25T17%3A53%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=40.26&minlongitude=-124.16&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "16dde7acf9656490994fc52f99d60bcccdf50ab19d3012dd614f9ccdc0a5e1e0"
+  },
+  "2148": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A48%3A00&endtime=2020-06-25T17%3A53%3A00&minmagnitude=2.5&minlatitude=30.70&maxlatitude=41.42&minlongitude=-124.41&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "a05c70863da6ddd81e54e07d91ce8cae4d5ba03785750a76ba515361e10c7ec0"
+  },
+  "2149": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-23T17%3A48%3A00&endtime=2020-06-25T17%3A53%3A00&minmagnitude=2.5&minlatitude=31.85&maxlatitude=41.07&minlongitude=-124.95&maxlongitude=-114.23&orderby=time-asc",
+   "sha256": "02d2af57a15cdf32253d232a5eafe71937c33bd7d02bcde3cf543a1e5a0fbb01"
+  },
+  "2316": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-08-09T15%3A56%3A00&endtime=2020-08-11T16%3A01%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=37.23&minlongitude=-120.50&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "7b73a6f2b00b03bae69460038e17821d0ce9620cff18509045d41c2dad23254e"
+  },
+  "2780": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-09-30T00%3A31%3A00&endtime=2020-10-02T00%3A36%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=36.54&minlongitude=-119.86&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "2b39233eb588d770c2c623d451c6779c0cd912757c589ebfd07cd9149546b700"
+  },
+  "2781": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-09-30T00%3A31%3A00&endtime=2020-10-02T00%3A36%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=36.54&minlongitude=-119.86&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "2b39233eb588d770c2c623d451c6779c0cd912757c589ebfd07cd9149546b700"
+  },
+  "2782": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-09-30T00%3A31%3A00&endtime=2020-10-02T00%3A36%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=36.54&minlongitude=-119.86&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "2b39233eb588d770c2c623d451c6779c0cd912757c589ebfd07cd9149546b700"
+  },
+  "3296": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-06-04T17%3A56%3A00&endtime=2021-06-06T18%3A01%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=37.23&minlongitude=-121.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "68128526ea64c69dacde11d76e533284558d6d141178d3ed936af31da5ada362"
+  },
+  "3297": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-06-04T17%3A56%3A00&endtime=2021-06-06T18%3A01%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=36.54&minlongitude=-119.86&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "d9f9514dceb3272f1719e98853a0ac2a3af2e0123bbbe009a967c62fe35c5ff2"
+  },
+  "3921": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-10-24T23%3A42%3A00&endtime=2021-10-26T23%3A47%3A00&minmagnitude=2.5&minlatitude=31.89&maxlatitude=39.74&minlongitude=-125.82&maxlongitude=-115.95&orderby=time-asc",
+   "sha256": "5c0073f4b78c6bb712ff84a0ffbae630e456da0cbcac30e5b2628962da628825"
+  },
+  "3922": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-10-25T01%3A41%3A00&endtime=2021-10-27T01%3A46%3A00&minmagnitude=2.5&minlatitude=31.89&maxlatitude=39.74&minlongitude=-125.82&maxlongitude=-115.95&orderby=time-asc",
+   "sha256": "23e2b6a796f05cc3efd0d8cc9c39ca50a76b07e252f467be0cccf4e8aca34d0a"
+  },
+  "3992": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-12-19T20%3A10%3A00&endtime=2021-12-21T20%3A15%3A00&minmagnitude=2.5&minlatitude=37.21&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-119.43&orderby=time-asc",
+   "sha256": "0ce428c5a966a65edbd91317099e8254cb47dff3862a46afd9f723a23a9f1575"
+  },
+  "3993": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-12-19T20%3A10%3A00&endtime=2021-12-21T20%3A15%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-118.61&orderby=time-asc",
+   "sha256": "c0d76d28bdc0c7a52406f0e7680b6de1852565f38bcfa97f8618b5f679fe8e82"
+  },
+  "3994": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-12-19T20%3A10%3A00&endtime=2021-12-21T20%3A15%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-118.94&orderby=time-asc",
+   "sha256": "c2467d18d122027c1de5a2f269562f1e403fd78c5b7177e25dc31feb8cdc5dbd"
+  },
+  "3995": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-12-19T20%3A10%3A00&endtime=2021-12-21T20%3A15%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-118.61&orderby=time-asc",
+   "sha256": "c0d76d28bdc0c7a52406f0e7680b6de1852565f38bcfa97f8618b5f679fe8e82"
+  },
+  "3996": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-12-19T20%3A10%3A00&endtime=2021-12-21T20%3A15%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.15&minlongitude=-127.94&maxlongitude=-118.61&orderby=time-asc",
+   "sha256": "95ed63939c2559e0094d5856c5888dbdb7925b09de389faf6850b3ba59237c78"
+  },
+  "4030": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-01-05T00%3A28%3A00&endtime=2022-01-07T00%3A33%3A00&minmagnitude=2.5&minlatitude=33.06&maxlatitude=41.42&minlongitude=-123.38&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "43246a7005371c59d03fb840c30de062c21d3f41052d1e8f077301ef9e439b06"
+  },
+  "4031": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-01-05T00%3A28%3A00&endtime=2022-01-07T00%3A33%3A00&minmagnitude=2.5&minlatitude=33.06&maxlatitude=41.42&minlongitude=-123.38&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "43246a7005371c59d03fb840c30de062c21d3f41052d1e8f077301ef9e439b06"
+  },
+  "4769": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-09-13T01%3A39%3A00&endtime=2022-09-15T01%3A44%3A00&minmagnitude=2.5&minlatitude=34.55&maxlatitude=42.93&minlongitude=-127.94&maxlongitude=-117.83&orderby=time-asc",
+   "sha256": "798c0cd837ac11246b8ae1a75439c669475a08ae390f80d613f5314c2802ded8"
+  },
+  "4787": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-09-23T19%3A27%3A00&endtime=2022-09-25T19%3A32%3A00&minmagnitude=2.5&minlatitude=37.21&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-119.43&orderby=time-asc",
+   "sha256": "ea33085f3a8259efad52fa15a9ab945e751ef51ef64f1bd9c4d658924960788f"
+  },
+  "4855": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-10-24T18%3A42%3A00&endtime=2022-10-26T18%3A47%3A00&minmagnitude=2.5&minlatitude=32.74&maxlatitude=41.43&minlongitude=-126.87&maxlongitude=-116.50&orderby=time-asc",
+   "sha256": "1df44c1ecdbd3f07c834f6794d3c7479336a809036efbdef4f15bef0d3d60457"
+  },
+  "4856": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-10-24T18%3A42%3A00&endtime=2022-10-26T18%3A47%3A00&minmagnitude=2.5&minlatitude=32.74&maxlatitude=41.43&minlongitude=-126.51&maxlongitude=-116.50&orderby=time-asc",
+   "sha256": "6d75c329d6a2bc55a798fc1a563325ee49348da1e299f0634e10704fc9eb0d4f"
+  },
+  "4963": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-19T10%3A34%3A00&endtime=2022-12-21T10%3A39%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=45.25&minlongitude=-128.48&maxlongitude=-118.03&orderby=time-asc",
+   "sha256": "0f8f80777ee1776d5930b02e93a4a60830eafae3aeca760ea366b4ad3dc12ce6"
+  },
+  "4964": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-19T10%3A34%3A00&endtime=2022-12-21T10%3A39%3A00&minmagnitude=2.5&minlatitude=35.03&maxlatitude=45.97&minlongitude=-128.71&maxlongitude=-117.54&orderby=time-asc",
+   "sha256": "b566bc23679ffb307e5ca16ff97a3d46c6bd0d4e4a4b4fd9526f6accfd675dcd"
+  },
+  "4965": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-19T10%3A34%3A00&endtime=2022-12-21T10%3A39%3A00&minmagnitude=2.5&minlatitude=35.61&maxlatitude=45.97&minlongitude=-128.71&maxlongitude=-117.54&orderby=time-asc",
+   "sha256": "950853cd275a736677cecf896d598e8e388b04fae91897bdc4370dd5fe9e49ef"
+  },
+  "4966": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-19T10%3A34%3A00&endtime=2022-12-21T10%3A39%3A00&minmagnitude=2.5&minlatitude=35.03&maxlatitude=46.69&minlongitude=-128.71&maxlongitude=-117.54&orderby=time-asc",
+   "sha256": "bf15f632b8cd1d8f956161e1fe37b82970a901529e5e44d385e0106a220d5dd6"
+  },
+  "4967": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-19T10%3A34%3A00&endtime=2022-12-21T10%3A39%3A00&minmagnitude=2.5&minlatitude=35.03&maxlatitude=45.91&minlongitude=-127.94&maxlongitude=-117.10&orderby=time-asc",
+   "sha256": "a6b1e7d8e33b916f034bf000ebfdcf4e26757017def573adbd5fc71a6b604851"
+  },
+  "5029": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-31T18%3A35%3A00&endtime=2023-01-02T18%3A40%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-118.61&orderby=time-asc",
+   "sha256": "22a1f8fc1a232e08e93f6d179e5b9ffcae85cccec7be30d88afc55ebc6fcd0be"
+  },
+  "5030": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-31T18%3A35%3A00&endtime=2023-01-02T18%3A40%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-118.61&orderby=time-asc",
+   "sha256": "22a1f8fc1a232e08e93f6d179e5b9ffcae85cccec7be30d88afc55ebc6fcd0be"
+  },
+  "5031": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-31T18%3A35%3A00&endtime=2023-01-02T18%3A40%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-118.61&orderby=time-asc",
+   "sha256": "22a1f8fc1a232e08e93f6d179e5b9ffcae85cccec7be30d88afc55ebc6fcd0be"
+  },
+  "5032": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-31T18%3A35%3A00&endtime=2023-01-02T18%3A40%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.26&minlongitude=-127.94&maxlongitude=-117.54&orderby=time-asc",
+   "sha256": "baba3795fb21d73593c154765a46412340e8b9d242a6845c45e6dfdede9acd79"
+  },
+  "5320": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-04-11T05%3A39%3A00&endtime=2023-04-13T05%3A44%3A00&minmagnitude=2.5&minlatitude=35.03&maxlatitude=42.93&minlongitude=-127.94&maxlongitude=-118.25&orderby=time-asc",
+   "sha256": "2ac075dfd7c9fc3910a4772944e736e5c7b99f2da994147d4779fa4e4e58a605"
+  },
+  "5383": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-05-10T23%3A19%3A00&endtime=2023-05-12T23%3A24%3A00&minmagnitude=2.5&minlatitude=35.54&maxlatitude=44.26&minlongitude=-126.90&maxlongitude=-115.16&orderby=time-asc",
+   "sha256": "2bf0cb41ee24413c3bf9728caf72df5e386b1924d05b4a724a111fc88865a957"
+  },
+  "5384": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-05-10T23%3A19%3A00&endtime=2023-05-12T23%3A24%3A00&minmagnitude=2.5&minlatitude=37.22&maxlatitude=44.26&minlongitude=-126.54&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "e3b2f7e659b879538f490f4348b1b67b4d965aa1d61c7906167ed86ce764b3cb"
+  },
+  "5385": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-05-11T10%3A18%3A00&endtime=2023-05-13T10%3A23%3A00&minmagnitude=2.5&minlatitude=35.77&maxlatitude=44.26&minlongitude=-126.73&maxlongitude=-116.02&orderby=time-asc",
+   "sha256": "cb0ed2db6efed5db8dd2b42734d94816805cc52f25eda18cbae090cb6c03b43a"
+  },
+  "5404": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-05-20T18%3A44%3A00&endtime=2023-05-22T18%3A49%3A00&minmagnitude=2.5&minlatitude=37.21&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-119.43&orderby=time-asc",
+   "sha256": "da4f7c71696f7c004f702fa9de43addda5ee67694b77c5ce16a0fd830f227144"
+  },
+  "5812": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-08-19T21%3A41%3A00&endtime=2023-08-21T21%3A46%3A00&minmagnitude=2.5&minlatitude=30.70&maxlatitude=38.89&minlongitude=-124.95&maxlongitude=-113.76&orderby=time-asc",
+   "sha256": "2edbba8898cd3a316648d24f27c31e65c6c22c3b183c2dd0c80a8ecc2981c58c"
+  },
+  "5813": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-08-19T21%3A41%3A00&endtime=2023-08-21T21%3A46%3A00&minmagnitude=2.5&minlatitude=31.04&maxlatitude=38.04&minlongitude=-124.54&maxlongitude=-115.54&orderby=time-asc",
+   "sha256": "2275cf2e9a488d47e6debbc41f93f03d831432ed6c837192bee5acb3b4e481b8"
+  },
+  "5941": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-09-07T17%3A24%3A00&endtime=2023-09-09T17%3A29%3A00&minmagnitude=2.5&minlatitude=37.22&maxlatitude=45.09&minlongitude=-127.03&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "7d408a3c77fec106b9e1ef0f49ec985674ee3e1e4d9b098a965ead300db9a389"
+  },
+  "5942": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-09-07T17%3A24%3A00&endtime=2023-09-09T17%3A29%3A00&minmagnitude=2.5&minlatitude=37.22&maxlatitude=45.09&minlongitude=-127.03&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "7d408a3c77fec106b9e1ef0f49ec985674ee3e1e4d9b098a965ead300db9a389"
+  },
+  "5943": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-09-07T17%3A24%3A00&endtime=2023-09-09T17%3A29%3A00&minmagnitude=2.5&minlatitude=36.63&maxlatitude=45.09&minlongitude=-127.03&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "3f490cf185e16fe49e85a397f53df176cdee37c9f66b77850001b4bb1cdf6ded"
+  },
+  "6023": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-09-29T15%3A26%3A00&endtime=2023-10-01T15%3A31%3A00&minmagnitude=2.5&minlatitude=37.21&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-119.43&orderby=time-asc",
+   "sha256": "ed33d8635beae9b299e41e9853a75c0023859a8c7e3e24f96390947bd6566c17"
+  },
+  "6055": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-10-17T16%3A29%3A00&endtime=2023-10-19T16%3A34%3A00&minmagnitude=2.5&minlatitude=33.51&maxlatitude=42.80&minlongitude=-127.53&maxlongitude=-115.46&orderby=time-asc",
+   "sha256": "38ad5321e6f6376efb32d34b6d4299238fa37d8588ce5031ac3f56a2201ae1d0"
+  },
+  "6187": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-11-30T07%3A43%3A00&endtime=2023-12-02T07%3A48%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=36.54&minlongitude=-121.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "f1578a57d2df3212e5b93c013cbf3f3fd4a31e11682a82d0b7148c625eea6cb9"
+  },
+  "6188": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-11-30T07%3A43%3A00&endtime=2023-12-02T07%3A48%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=36.54&minlongitude=-121.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "f1578a57d2df3212e5b93c013cbf3f3fd4a31e11682a82d0b7148c625eea6cb9"
+  },
+  "6420": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-02-11T08%3A36%3A00&endtime=2024-02-13T08%3A41%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=37.23&minlongitude=-121.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "cfdbe4f9eb8bb3023c7921001a8ab8a7411303b3f2e0a4c8fb916088dcb5e06f"
+  },
+  "6421": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-02-11T08%3A42%3A00&endtime=2024-02-13T08%3A47%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=36.54&minlongitude=-119.86&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "b136a185e87ecba6c9d2e81e2ff109dcbfacd03be7826f175e17e22c548219d0"
+  },
+  "6422": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-02-11T08%3A42%3A00&endtime=2024-02-13T08%3A47%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=36.54&minlongitude=-121.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "761dc294fe1c748e9b090498c815e3f4978f35a4f484a337f746f1d01f54414a"
+  },
+  "6423": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-02-11T08%3A42%3A00&endtime=2024-02-13T08%3A47%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=37.23&minlongitude=-121.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "8dde143742a0755b57c42fc1a4232cff2909f8f7537cf71565de7ec2523840e6"
+  },
+  "6424": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-02-11T08%3A43%3A00&endtime=2024-02-13T08%3A48%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=37.23&minlongitude=-121.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "09e8c9eb08d5a4089c86b38c1ecfcd41ea954b0156cd8657eeded9d98ab94d03"
+  },
+  "6546": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-04-04T14%3A49%3A00&endtime=2024-04-06T22%3A49%3A00&minmagnitude=2.5&minlatitude=37.36&maxlatitude=44.36&minlongitude=-79.05&maxlongitude=-70.05&orderby=time-asc",
+   "sha256": "98539555a87a45227df1f27d596525daeb6a73dfc7d445d400baa0db152ede39"
+  },
+  "6547": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-04-04T15%3A01%3A00&endtime=2024-04-06T17%3A01%3A00&minmagnitude=2.5&minlatitude=37.06&maxlatitude=44.35&minlongitude=-78.64&maxlongitude=-69.34&orderby=time-asc",
+   "sha256": "8e3c8083079c11b65ff0a950b9efcea6d1f9bcfe5d4a8a6b5180ffb85e115fa4"
+  },
+  "6548": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-04-04T15%3A46%3A00&endtime=2024-04-06T17%3A46%3A00&minmagnitude=2.5&minlatitude=37.06&maxlatitude=44.35&minlongitude=-78.64&maxlongitude=-69.34&orderby=time-asc",
+   "sha256": "e4f187da2756f1450ab4dc57d4880393c8ae6ea97c5e87f85855df5de09ce3b9"
+  },
+  "6549": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-04-04T16%3A04%3A00&endtime=2024-04-06T22%3A04%3A00&minmagnitude=2.5&minlatitude=37.23&maxlatitude=47.07&minlongitude=-80.80&maxlongitude=-68.19&orderby=time-asc",
+   "sha256": "5276f9f6baab0a5facc97122c939e6a1e064499884905c6493d52193a0c855e1"
+  },
+  "6687": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-05-11T18%3A22%3A00&endtime=2024-05-13T18%3A27%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=36.54&minlongitude=-119.86&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "b932fc428a98d0ceb98ee8785f02b4cff2cb471a536e138f325126e3584ee3d2"
+  },
+  "6688": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-05-11T18%3A22%3A00&endtime=2024-05-13T18%3A27%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=36.54&minlongitude=-119.86&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "b932fc428a98d0ceb98ee8785f02b4cff2cb471a536e138f325126e3584ee3d2"
+  },
+  "6689": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-05-11T19%3A04%3A00&endtime=2024-05-13T19%3A09%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=36.54&minlongitude=-119.86&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "29e8a08e9abf5508d150160c3b8da556f482fbb6dd8464fe604b9e8a49c6e25d"
+  },
+  "6801": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-06-04T11%3A58%3A00&endtime=2024-06-06T12%3A03%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=36.54&minlongitude=-119.86&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "de199cabc41cdf4db4bf062c29641b8dae26ee026430b77b86fa36ffc922e6ba"
+  },
+  "6802": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-06-04T11%3A58%3A00&endtime=2024-06-06T12%3A03%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=36.54&minlongitude=-119.86&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "de199cabc41cdf4db4bf062c29641b8dae26ee026430b77b86fa36ffc922e6ba"
+  },
+  "7347": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-07-28T20%3A01%3A00&endtime=2024-07-30T20%3A06%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=38.36&minlongitude=-120.68&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "213517cd9cda372ac12c10befb93e77cb256de802bd5a2e21a6e26f618873aeb"
+  },
+  "7348": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-07-28T20%3A01%3A00&endtime=2024-07-30T20%3A06%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=38.36&minlongitude=-120.68&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "213517cd9cda372ac12c10befb93e77cb256de802bd5a2e21a6e26f618873aeb"
+  },
+  "7349": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-07-28T20%3A01%3A00&endtime=2024-07-30T20%3A06%3A00&minmagnitude=2.5&minlatitude=31.36&maxlatitude=38.36&minlongitude=-120.68&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "213517cd9cda372ac12c10befb93e77cb256de802bd5a2e21a6e26f618873aeb"
+  },
+  "7432": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-08-06T04%3A10%3A00&endtime=2024-08-08T04%3A15%3A00&minmagnitude=2.5&minlatitude=30.70&maxlatitude=39.73&minlongitude=-124.95&maxlongitude=-113.76&orderby=time-asc",
+   "sha256": "f0cdc522a072a209edefed9e4eaac3066b6398a561789680b5276e8c28c9e07c"
+  },
+  "7433": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-08-06T04%3A10%3A00&endtime=2024-08-08T04%3A15%3A00&minmagnitude=2.5&minlatitude=32.73&maxlatitude=39.73&minlongitude=-123.28&maxlongitude=-114.28&orderby=time-asc",
+   "sha256": "73e6d55b5380d3e2005565531627a2d0209b196b331468174e268f83e4d1f101"
+  },
+  "7434": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-08-06T04%3A10%3A00&endtime=2024-08-08T04%3A15%3A00&minmagnitude=2.5&minlatitude=30.70&maxlatitude=38.85&minlongitude=-123.23&maxlongitude=-113.76&orderby=time-asc",
+   "sha256": "6c8b75caeb152fa0f2cc4d8caf4f0cf6e443ec9a1c1176b0172eb2599fa91690"
+  },
+  "7435": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-08-06T04%3A10%3A00&endtime=2024-08-08T04%3A15%3A00&minmagnitude=2.5&minlatitude=30.70&maxlatitude=39.73&minlongitude=-123.63&maxlongitude=-113.76&orderby=time-asc",
+   "sha256": "b192cf245ec3a386200286e264dc6cb100a17d082a1f5a7f7021ae3d277d3b8e"
+  },
+  "7696": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-09-11T14%3A28%3A00&endtime=2024-09-13T14%3A33%3A00&minmagnitude=2.5&minlatitude=30.70&maxlatitude=37.86&minlongitude=-123.63&maxlongitude=-113.76&orderby=time-asc",
+   "sha256": "5010db4ba3e41082b77de36396ba0bc1f33680182256bcb694d6b513da7cb11c"
+  },
+  "7697": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-09-11T14%3A28%3A00&endtime=2024-09-13T14%3A33%3A00&minmagnitude=2.5&minlatitude=30.70&maxlatitude=37.86&minlongitude=-123.63&maxlongitude=-113.76&orderby=time-asc",
+   "sha256": "5010db4ba3e41082b77de36396ba0bc1f33680182256bcb694d6b513da7cb11c"
+  },
+  "7698": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-09-11T14%3A28%3A00&endtime=2024-09-13T14%3A33%3A00&minmagnitude=2.5&minlatitude=30.70&maxlatitude=37.86&minlongitude=-123.63&maxlongitude=-113.76&orderby=time-asc",
+   "sha256": "5010db4ba3e41082b77de36396ba0bc1f33680182256bcb694d6b513da7cb11c"
+  },
+  "8345": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-118.94&orderby=time-asc",
+   "sha256": "3d1e11aaaccc8af6914be33168729ecea132ae98dd85000b43403479f0d59da9"
+  },
+  "8346": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-118.94&orderby=time-asc",
+   "sha256": "3d1e11aaaccc8af6914be33168729ecea132ae98dd85000b43403479f0d59da9"
+  },
+  "8347": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-118.61&orderby=time-asc",
+   "sha256": "2c3dba5f21522693968ea411ca76cfa7679c1131547b39a8bfaab43b3355d921"
+  },
+  "8348": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=44.26&minlongitude=-128.43&maxlongitude=-117.54&orderby=time-asc",
+   "sha256": "f4930f178e52d74f7aa9758e8ee55a37eb35a9d2d34ea8776a0a6930afaa2479"
+  },
+  "8349": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.93&maxlatitude=42.93&minlongitude=-127.94&maxlongitude=-118.94&orderby=time-asc",
+   "sha256": "ee8ed3aaad8a878e725097dd732f2d69fb05b074f83f2e89cb59d8b41deb5d79"
+  },
+  "8350": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.61&maxlatitude=45.25&minlongitude=-128.48&maxlongitude=-117.54&orderby=time-asc",
+   "sha256": "eb67ac908b19c053f33ff1d5a8788ff719c7b99431369dfe4cfdd5d61fc2d5e3"
+  },
+  "8351": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.61&maxlatitude=45.97&minlongitude=-128.71&maxlongitude=-117.54&orderby=time-asc",
+   "sha256": "432afd3a15ef3c2f3fe9a3ead582a507d12fc11317e9ca531b060d0c215a9ac6"
+  },
+  "8352": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.61&maxlatitude=45.97&minlongitude=-128.71&maxlongitude=-117.54&orderby=time-asc",
+   "sha256": "432afd3a15ef3c2f3fe9a3ead582a507d12fc11317e9ca531b060d0c215a9ac6"
+  },
+  "8353": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.03&maxlatitude=45.97&minlongitude=-128.71&maxlongitude=-117.54&orderby=time-asc",
+   "sha256": "cdd4bcd2b0b30f48c99d35c591d1d351a3e8d6967038bba187061c064edff8dd"
+  },
+  "8354": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.03&maxlatitude=45.97&minlongitude=-128.71&maxlongitude=-117.10&orderby=time-asc",
+   "sha256": "f12bd3ae16b1cb0e6ad37caf39e24993bad44d0aa9d6bb08ce0aed83830f514d"
+  },
+  "8355": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.01&maxlatitude=45.97&minlongitude=-128.71&maxlongitude=-117.10&orderby=time-asc",
+   "sha256": "836dcb1342ea8e029f7765b12c1a2f7b866909985d3bc790fcf4e5ea87532a0e"
+  },
+  "8356": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=35.03&maxlatitude=45.97&minlongitude=-128.71&maxlongitude=-117.10&orderby=time-asc",
+   "sha256": "f12bd3ae16b1cb0e6ad37caf39e24993bad44d0aa9d6bb08ce0aed83830f514d"
+  },
+  "8357": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=34.55&maxlatitude=46.69&minlongitude=-128.71&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "1bf04b87b713d7efbfbbe5e432bfd4c19c8c9245a0506e93f75e5ad574da12c2"
+  },
+  "8358": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=34.55&maxlatitude=46.69&minlongitude=-128.71&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "1bf04b87b713d7efbfbbe5e432bfd4c19c8c9245a0506e93f75e5ad574da12c2"
+  },
+  "8359": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=34.55&maxlatitude=46.69&minlongitude=-128.71&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "1bf04b87b713d7efbfbbe5e432bfd4c19c8c9245a0506e93f75e5ad574da12c2"
+  },
+  "8360": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=34.55&maxlatitude=46.69&minlongitude=-128.71&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "1bf04b87b713d7efbfbbe5e432bfd4c19c8c9245a0506e93f75e5ad574da12c2"
+  },
+  "8361": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=34.55&maxlatitude=46.79&minlongitude=-128.71&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "a2f4665b9d8317fdd5498386927cbb7f81ceef20024b0a3ecb19eab8d3e8a196"
+  },
+  "8362": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&minmagnitude=2.5&minlatitude=34.55&maxlatitude=46.79&minlongitude=-128.71&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "a2f4665b9d8317fdd5498386927cbb7f81ceef20024b0a3ecb19eab8d3e8a196"
+  },
+  "8363": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A45%3A00&endtime=2024-12-06T18%3A50%3A00&minmagnitude=2.5&minlatitude=34.55&maxlatitude=46.79&minlongitude=-128.07&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "c0ab6642f9017e433ed605165d02058d46aaad693d7306dbe73845e54c7d6e2e"
+  },
+  "8364": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A45%3A00&endtime=2024-12-06T18%3A50%3A00&minmagnitude=2.5&minlatitude=34.55&maxlatitude=46.79&minlongitude=-128.07&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "c0ab6642f9017e433ed605165d02058d46aaad693d7306dbe73845e54c7d6e2e"
+  },
+  "8365": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T18%3A45%3A00&endtime=2024-12-06T18%3A50%3A00&minmagnitude=2.5&minlatitude=34.95&maxlatitude=46.69&minlongitude=-128.71&maxlongitude=-116.02&orderby=time-asc",
+   "sha256": "ff50846488209fa84f4f51e537fc02c2353a4d5d59fc82148743e2f482fd5074"
+  },
+  "8375": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-08T23%3A08%3A00&endtime=2024-12-10T23%3A13%3A00&minmagnitude=2.5&minlatitude=34.42&maxlatitude=43.08&minlongitude=-125.27&maxlongitude=-114.38&orderby=time-asc",
+   "sha256": "dae83d8a57412a2d6a5aa3b3d922a041a5b14a4bc06fa099406aaee0ed0a2d31"
+  },
+  "8376": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-08T23%3A08%3A00&endtime=2024-12-10T23%3A13%3A00&minmagnitude=2.5&minlatitude=34.42&maxlatitude=43.08&minlongitude=-125.22&maxlongitude=-114.38&orderby=time-asc",
+   "sha256": "af101a31c4d846c934f88443629891f355cbb4e28d4530e14de21f9c1962b85c"
+  },
+  "8377": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-08T23%3A08%3A00&endtime=2024-12-10T23%3A13%3A00&minmagnitude=2.5&minlatitude=34.42&maxlatitude=44.22&minlongitude=-125.32&maxlongitude=-114.38&orderby=time-asc",
+   "sha256": "5db3ff8cb0a4c434cc316ce47ca974474da4557af47fa1093cd0d0ddb8c37493"
+  },
+  "8378": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-08T23%3A09%3A00&endtime=2024-12-10T23%3A14%3A00&minmagnitude=2.5&minlatitude=34.42&maxlatitude=44.22&minlongitude=-125.32&maxlongitude=-114.38&orderby=time-asc",
+   "sha256": "e54f324327fa66427019dedcd49c65809ec1391964f7f126cc61a303aa5c8966"
+  },
+  "9118": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=36.52&minlongitude=-121.28&maxlongitude=-112.28&orderby=time-asc",
+   "sha256": "c8d088e19cb69a461bbc65095c078d94d181bb8ade4acb22c1eefc88a3618f4e"
+  },
+  "9119": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=37.23&minlongitude=-121.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "26649071a64f79c1f35b1de0d78de0b2e95b0315fc4b392ec3c32b64569a6e40"
+  },
+  "9120": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=37.23&minlongitude=-121.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "26649071a64f79c1f35b1de0d78de0b2e95b0315fc4b392ec3c32b64569a6e40"
+  },
+  "9121": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=38.36&minlongitude=-122.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "89723b3a1fd0a38d785009d5fd692e091857c8f4cfa394ca5c2cc90cbe65cf6b"
+  },
+  "9122": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=38.36&minlongitude=-120.68&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "ac698fce7d6cca69ae3d7081a605cbabb19381929934f2a23322d0942a462cfd"
+  },
+  "9123": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=38.36&minlongitude=-122.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "28f0d3c66671ab47e3204b2788925632fd5859951f408bd0e893479fe2ed0b3a"
+  },
+  "9124": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=38.36&minlongitude=-122.76&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "eb3a496f3bee9d7bc1c9c8686f4a382e2bca594312a8900cfab6f90b7ac4e5b7"
+  },
+  "9125": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=38.36&minlongitude=-120.68&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "ac698fce7d6cca69ae3d7081a605cbabb19381929934f2a23322d0942a462cfd"
+  },
+  "9126": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=38.36&minlongitude=-122.76&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "eb3a496f3bee9d7bc1c9c8686f4a382e2bca594312a8900cfab6f90b7ac4e5b7"
+  },
+  "9127": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=38.36&minlongitude=-122.76&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "eb3a496f3bee9d7bc1c9c8686f4a382e2bca594312a8900cfab6f90b7ac4e5b7"
+  },
+  "9128": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=38.36&minlongitude=-122.76&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "eb3a496f3bee9d7bc1c9c8686f4a382e2bca594312a8900cfab6f90b7ac4e5b7"
+  },
+  "9129": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=38.36&minlongitude=-122.76&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "eb3a496f3bee9d7bc1c9c8686f4a382e2bca594312a8900cfab6f90b7ac4e5b7"
+  },
+  "9130": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=30.23&maxlatitude=38.85&minlongitude=-123.63&maxlongitude=-111.50&orderby=time-asc",
+   "sha256": "6641a0575f091b6bd40e255c35f0e3fc70cdf9d4204941f31ac7b15920ce28df"
+  },
+  "9131": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=30.23&maxlatitude=38.85&minlongitude=-123.63&maxlongitude=-111.50&orderby=time-asc",
+   "sha256": "6641a0575f091b6bd40e255c35f0e3fc70cdf9d4204941f31ac7b15920ce28df"
+  },
+  "9132": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=30.23&maxlatitude=38.85&minlongitude=-123.63&maxlongitude=-111.50&orderby=time-asc",
+   "sha256": "6641a0575f091b6bd40e255c35f0e3fc70cdf9d4204941f31ac7b15920ce28df"
+  },
+  "9133": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=30.23&maxlatitude=38.85&minlongitude=-123.63&maxlongitude=-111.50&orderby=time-asc",
+   "sha256": "6641a0575f091b6bd40e255c35f0e3fc70cdf9d4204941f31ac7b15920ce28df"
+  },
+  "9134": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-04-13T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&minmagnitude=2.5&minlatitude=30.70&maxlatitude=38.85&minlongitude=-123.23&maxlongitude=-111.68&orderby=time-asc",
+   "sha256": "4e2c9a6516c463fdb5eb7d26ec5876a43177396ba6b09a8c358370189477680e"
+  },
+  "9539": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-06-28T02%3A38%3A00&endtime=2025-06-30T02%3A43%3A00&minmagnitude=2.5&minlatitude=33.06&maxlatitude=41.42&minlongitude=-123.38&maxlongitude=-112.90&orderby=time-asc",
+   "sha256": "8103f7bced95418674c7d56c1daec7f53b7062b913831bec68c4648cb5315f52"
+  },
+  "10607": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-12-03T16%3A07%3A00&endtime=2025-12-05T16%3A12%3A00&minmagnitude=2.5&minlatitude=34.42&maxlatitude=44.22&minlongitude=-125.32&maxlongitude=-114.38&orderby=time-asc",
+   "sha256": "8e3d6dc35a0fb7a78e325d7481cdbe65d406493a9b9f04c92b78851841e0dd75"
+  },
+  "10608": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-12-03T16%3A07%3A00&endtime=2025-12-05T16%3A12%3A00&minmagnitude=2.5&minlatitude=34.42&maxlatitude=44.22&minlongitude=-126.10&maxlongitude=-114.38&orderby=time-asc",
+   "sha256": "2b91378e3fd8df342bb0b3e0b4930b4f2c942ce372295c45a13b8ba3a619e63c"
+  },
+  "10743": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-12-28T00%3A41%3A00&endtime=2025-12-30T00%3A46%3A00&minmagnitude=2.5&minlatitude=36.49&maxlatitude=44.22&minlongitude=-125.32&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "5c0d7b2db11582dadde521049cecc5419955d451d8844cf893e72cdf15008e0d"
+  },
+  "10744": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-12-28T00%3A41%3A00&endtime=2025-12-30T00%3A46%3A00&minmagnitude=2.5&minlatitude=37.22&maxlatitude=44.22&minlongitude=-125.12&maxlongitude=-116.12&orderby=time-asc",
+   "sha256": "a6f57fc4025d953b1d05cc2e2c8e4ac3f0e0d3661626d0a35463b7984559bcf2"
+  },
+  "10766": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-12-30T05%3A49%3A00&endtime=2026-01-01T05%3A54%3A00&minmagnitude=2.5&minlatitude=35.80&maxlatitude=45.09&minlongitude=-127.03&maxlongitude=-116.02&orderby=time-asc",
+   "sha256": "efc0317577437204c83ad345cd386565fac95d01672fbafbb386f3800adec2a9"
+  },
+  "10805": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-01-14T09%3A54%3A00&endtime=2026-01-16T09%3A59%3A00&minmagnitude=2.5&minlatitude=29.54&maxlatitude=36.54&minlongitude=-119.86&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "d6f76710aaf93db5dbaa354da99f1d45036cb222c06c83ad3a705ee497f6bc60"
+  },
+  "10827": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-01-19T01%3A56%3A00&endtime=2026-01-21T02%3A01%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=38.36&minlongitude=-121.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "c03ef931b96abaccf27bf3ea44a0f57e8ee345e8a9de4674c19f85e08cc06f7a"
+  },
+  "11228": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-04-01T08%3A41%3A00&endtime=2026-04-03T08%3A46%3A00&minmagnitude=2.5&minlatitude=32.74&maxlatitude=41.15&minlongitude=-126.87&maxlongitude=-116.82&orderby=time-asc",
+   "sha256": "c9e2fe8b985ab53f2573b4c65c1e890cc39c62bbcd2b55a8918b7d020ec2fced"
+  },
+  "11229": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-04-01T08%3A41%3A00&endtime=2026-04-03T08%3A46%3A00&minmagnitude=2.5&minlatitude=33.72&maxlatitude=41.15&minlongitude=-126.87&maxlongitude=-117.19&orderby=time-asc",
+   "sha256": "393aa7f8949557623ffaf8c01f9c871b65a923db715a704912b8de49e8bfee7e"
+  },
+  "11230": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-04-01T08%3A41%3A00&endtime=2026-04-03T08%3A46%3A00&minmagnitude=2.5&minlatitude=32.74&maxlatitude=40.51&minlongitude=-126.51&maxlongitude=-116.82&orderby=time-asc",
+   "sha256": "6929f72e3a925a6d6ac17c5c6accbc67149ef11ea95f17e6ca2d102ab85f50ed"
+  },
+  "11525": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-05-09T03%3A39%3A00&endtime=2026-05-11T03%3A44%3A00&minmagnitude=2.5&minlatitude=29.52&maxlatitude=36.54&minlongitude=-121.28&maxlongitude=-110.86&orderby=time-asc",
+   "sha256": "236f17641685c18800234874fed8ae3a2e098726ee2fb5c9ebc791c4514a16eb"
+  },
+  "11963": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-06-23T15%3A10%3A00&endtime=2026-06-25T15%3A15%3A00&minmagnitude=2.5&minlatitude=35.01&maxlatitude=44.26&minlongitude=-128.43&maxlongitude=-117.10&orderby=time-asc",
+   "sha256": "649b7ed2f71ffc2158d08605ddae03f0795993b0a53e6995d974c2eab80b36d4"
+  },
+  "11964": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-06-23T15%3A10%3A00&endtime=2026-06-25T15%3A15%3A00&minmagnitude=2.5&minlatitude=36.63&maxlatitude=43.63&minlongitude=-126.73&maxlongitude=-117.73&orderby=time-asc",
+   "sha256": "87980d6ca83c105cf345e82d61b771569c16f92ca674c468f7f735fac28cb1dd"
+  },
+  "11965": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-06-23T15%3A10%3A00&endtime=2026-06-25T15%3A15%3A00&minmagnitude=2.5&minlatitude=35.01&maxlatitude=42.61&minlongitude=-127.25&maxlongitude=-117.83&orderby=time-asc",
+   "sha256": "3da1fa528eed3328e76cba6f7c99f3a633d383ead964fb0f0a650870fd2e308f"
+  },
+  "11966": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-06-23T15%3A10%3A00&endtime=2026-06-25T15%3A15%3A00&minmagnitude=2.5&minlatitude=34.55&maxlatitude=44.26&minlongitude=-128.43&maxlongitude=-116.22&orderby=time-asc",
+   "sha256": "c0a1c79d243d9eb815ee14c820bcea3971a28a7da97fe751e1d423e22b6289f9"
+  },
+  "11967": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-06-23T15%3A10%3A00&endtime=2026-06-25T15%3A15%3A00&minmagnitude=2.5&minlatitude=34.77&maxlatitude=44.21&minlongitude=-128.43&maxlongitude=-116.27&orderby=time-asc",
+   "sha256": "f2d68331062f27e4e3d00ad66b20b8f109e157fe465bba12e2c92b94d0a00cd7"
+  },
+  "11968": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-06-23T15%3A10%3A00&endtime=2026-06-25T15%3A15%3A00&minmagnitude=2.5&minlatitude=34.42&maxlatitude=44.26&minlongitude=-127.61&maxlongitude=-116.27&orderby=time-asc",
+   "sha256": "ec5aeaaa0d7be27341acbcebd64b9d85b06a184c6922bf498197178b88257cac"
+  },
+  "13200": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-09-21T20%3A05%3A00&endtime=2026-09-24T00%3A05%3A00&minmagnitude=2.5&minlatitude=30.70&maxlatitude=37.70&minlongitude=-122.76&maxlongitude=-113.76&orderby=time-asc",
+   "sha256": "48b302f6fc9013eb3806c4b4e382016c4710884d592b6541ed525e5447637c01"
+  }
+ }
+}
