@@ -1,0 +1,93 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>One Wave</title>
+<style>
+html,body{margin:0;background:#efebe2}
+canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/46026h2024.js"></script>
+<script>
+// Wrong reading: every record (WVHT, DPD) is taken to be ONE wave, of that height and that period,
+// and each wave is taken to follow the one before it with nothing in between.
+const lines = window.RAW.split('\n');
+const waves = [];
+for (const L of lines) {
+  if (!L || L[0] === '#') continue;
+  const f = L.trim().split(/\s+/);
+  const H = +f[8], T = +f[9];
+  if (H >= 99 || T >= 99) continue;
+  waves.push({H, T, mo: f[1], dy: f[2], hh: f[3], mm: f[4]});
+}
+const total = waves.reduce((s, w) => s + w.T, 0);
+
+const c = document.getElementById('c'), g = c.getContext('2d');
+const dpr = window.devicePixelRatio || 1;
+c.width = 1100 * dpr; c.height = 800 * dpr; c.style.width = '1100px'; c.style.height = '800px';
+g.scale(dpr, dpr);
+const INK = '#1b2733', FAINT = '#8d8a82';
+
+const ROWS = 44, X0 = 96, X1 = 1004, Y0 = 112, Y1 = 768;
+const pitch = (Y1 - Y0) / (ROWS - 1);
+const secPerRow = total / ROWS;
+const pxPerSec = (X1 - X0) / secPerRow;
+const pxPerM = 5.2;
+
+function clock(s) {
+  s = Math.round(s);
+  const h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60, ss = s % 60;
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(ss).padStart(2, '0');
+}
+
+// draw the single wave train, wrapped like lines of text
+g.strokeStyle = INK; g.lineWidth = 0.55; g.lineJoin = 'round';
+let t = 0, row = -1;
+const rowStart = [];
+for (let i = 0; i < waves.length; i++) {
+  const w = waves[i];
+  const r = Math.min(ROWS - 1, Math.floor(t / secPerRow));
+  if (r !== row) {
+    if (row >= 0) g.stroke();
+    row = r; rowStart[r] = {t, w};
+    g.beginPath();
+    g.moveTo(X0 + (t - r * secPerRow) * pxPerSec, Y0 + r * pitch);
+  }
+  const yb = Y0 + r * pitch, a = w.H / 2 * pxPerM;
+  const N = 10;
+  for (let k = 1; k <= N; k++) {
+    const tt = t + w.T * k / N;
+    const x = X0 + (tt - r * secPerRow) * pxPerSec;
+    g.lineTo(x, yb - a * Math.sin(2 * Math.PI * k / N));
+  }
+  t += w.T;
+}
+g.stroke();
+
+// margins: the imagined clock on the left, the real calendar whispering on the right
+g.font = '9px "Courier New", monospace'; g.textBaseline = 'middle';
+for (let r = 0; r < ROWS; r++) {
+  const y = Y0 + r * pitch, s = rowStart[r];
+  g.fillStyle = INK; g.textAlign = 'right';
+  g.fillText(clock(r * secPerRow), X0 - 12, y);
+  if (s) {
+    g.fillStyle = FAINT; g.textAlign = 'left';
+    g.fillText('2024-' + s.w.mo + '-' + s.w.dy, X1 + 12, y);
+  }
+}
+
+// title block
+g.fillStyle = INK; g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+g.font = 'italic 26px Georgia, "Times New Roman", serif';
+g.fillText('One Wave', X0, 52);
+g.font = '11px "Courier New", monospace';
+g.fillStyle = INK;
+g.fillText('buoy 46026, 18 nm west of San Francisco, 2024: ' + waves.length.toLocaleString('en-US') +
+  ' records, each taken as one wave of height WVHT and period DPD, end to end.', X0, 74);
+g.fillStyle = FAINT;
+g.fillText('the whole sea of the year arrives in ' + clock(total) + '.', X0, 90);
+g.textAlign = 'right';
+g.fillText('elapsed', X0 - 12, 90);
+g.textAlign = 'left';
+g.fillText('taken from', X1 + 12, 90);
+</script>
+</body></html>

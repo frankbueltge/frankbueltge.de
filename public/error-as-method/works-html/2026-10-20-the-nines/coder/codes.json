@@ -1,0 +1,24 @@
+{"items": {
+  "I1": {"code": "OFF", "shelf": [], "own": "NO", "why": "Reading the wave description as the moored buoy's own travel (direction plus phase speed as heading and speed) is a physical-model error that no shelf line names or closely resembles."},
+  "I2": {"code": "KIN", "shelf": ["S1-18", "S2-15", "S3-12", "S4-06"], "own": "NO", "why": "Taking a sample statistic (significant height, peak period) as one individual wave is a close relative of the ecological fallacy, which reads an aggregate as an individual."},
+  "I3": {"code": "SAME", "shelf": ["S1-11", "S2-12", "S3-11", "S4-09", "S4-10"], "own": "YES", "why": "It takes the 99/999/9999 fill values at face value as measurements, exactly the sentinel-as-real reading on the shelf."},
+  "I4": {"code": "OFF", "shelf": [], "own": "NO", "why": "Treating waves as a current that carries the buoy at crest speed is a physics misreading that no shelf line names or comes close to."},
+  "I5": {"code": "KIN", "shelf": ["S4-01", "S3-04"], "own": "NO", "why": "Reading a vertical statistical wave height as a horizontal distance travelled keeps the numbers but changes what they measure, a relative of the unit and axis swaps on the shelf."},
+  "I6": {"code": "SAME", "shelf": ["S1-11", "S2-12", "S3-11", "S4-09", "S4-10"], "own": "YES", "why": "It reads the wind and pressure missing-value codes (99.0, 999, 9999.0) as real measurements of an eleven-month storm."}
+ },
+ "notes": {
+  "N01": {"named": "YES", "quote": "Where the buoy recorded nothing, as in the late-February to early-March outage, the line stops."},
+  "N02": {"named": "NO", "quote": ""},
+  "N03": {"named": "YES", "quote": "I read the file's fill values as data. NDBC writes 99, 999 or 9999 (with its decimals) in a column when there is no measurement."},
+  "N04": {"named": "YES", "quote": "Where the file holds its 99.00 placeholders the sea is simply left out"},
+  "N05": {"named": "NO", "quote": ""},
+  "N06": {"named": "YES", "quote": "the wind and pressure columns turn to 99.0 and 9999.0 and never return ... the lines the file never wrote left black"},
+  "N07": {"named": "NO", "quote": ""},
+  "N08": {"named": "YES", "quote": "After that the file holds only the placeholder nines for wind and pressure"},
+  "N09": {"named": "NO", "quote": ""},
+  "N10": {"named": "YES", "quote": "The gap in February is where the buoy stopped reporting."},
+  "N11": {"named": "YES", "quote": "I read the file's missing-value codes as measurements."},
+  "N12": {"named": "YES", "quote": "The file holds no wind or pressure after that."}
+ },
+ "shelf_missing": ["S1-10", "S1-11", "S2-12", "S3-11", "S4-09", "S4-10"]
+}

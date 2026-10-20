@@ -1,0 +1,118 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>After 22:50</title>
+<style>
+html,body{margin:0;background:#0c1013;}
+canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/46026h2024.js"></script>
+<script>
+const W=1100,H=800,c=document.getElementById('c'),g=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px';g.scale(dpr,dpr);
+g.fillStyle='#0c1013';g.fillRect(0,0,W,H);
+
+const rows=[];
+for(const line of RAW.split('\n')){
+  if(!line||line[0]==='#')continue;
+  const f=line.trim().split(/\s+/).map(Number);
+  rows.push({mo:f[1],dy:f[2],hh:f[3],mn:f[4],wdir:f[5],wspd:f[6],gst:f[7],wvht:f[8],pres:f[12],wtmp:f[14]});
+}
+const t0=Date.UTC(2024,0,1);
+const doy=r=>Math.floor((Date.UTC(2024,r.mo-1,r.dy)-t0)/864e5);
+const slot=r=>r.hh*6+Math.floor(r.mn/10);
+
+const X0=46,X1=1054,Y0=140,Y1=618;
+const cw=(X1-X0)/366,ch=(Y1-Y0)/144;
+
+// water temperature: the one thread that runs all year
+const tmin=9.3,tmax=16.8;
+function tcol(t){
+  const u=Math.max(0,Math.min(1,(t-tmin)/(tmax-tmin)));
+  // cold slate -> pale sand
+  const a=[34,58,74],b=[96,112,116],d=[188,170,138];
+  const m=u<.5?[a,b,u*2]:[b,d,(u-.5)*2];
+  const k=m[2];return `rgb(${m[0].map((v,i)=>Math.round(v+(m[1][i]-v)*k)).join(',')})`;
+}
+const off=document.createElement('canvas');off.width=366;off.height=144;
+const og=off.getContext('2d');
+for(const r of rows){
+  if(r.wtmp>=999)continue;
+  og.fillStyle=tcol(r.wtmp);og.fillRect(doy(r),slot(r),1,1);
+}
+g.imageSmoothingEnabled=false;
+g.drawImage(off,X0,Y0,X1-X0,Y1-Y0);
+
+// wind: drawn while it was being recorded
+let last=null;
+g.lineCap='round';
+for(const r of rows){
+  if(r.wspd>=99||r.wdir>=999)continue;
+  last=r;
+  const cx=X0+(doy(r)+.5)*cw,cy=Y0+(slot(r)+.5)*ch;
+  const L=1.2+r.wspd*1.05;
+  const a=(r.wdir+180)*Math.PI/180; // direction the air moves toward
+  const dx=Math.sin(a)*L/2,dy=-Math.cos(a)*L/2;
+  g.strokeStyle=`rgba(236,240,238,${0.10+Math.min(r.wspd,18)/18*0.42})`;
+  g.lineWidth=0.55;
+  g.beginPath();g.moveTo(cx-dx,cy-dy);g.lineTo(cx+dx,cy+dy);g.stroke();
+}
+
+// the last recorded wind
+const lx=X0+(doy(last)+.5)*cw,ly=Y0+(slot(last)+.5)*ch;
+g.strokeStyle='#e8583a';g.lineWidth=1.6;
+{const a=(last.wdir+180)*Math.PI/180,L=1.2+last.wspd*1.05,dx=Math.sin(a)*L/2,dy=-Math.cos(a)*L/2;
+ g.beginPath();g.moveTo(lx-dx,ly-dy);g.lineTo(lx+dx,ly+dy);g.stroke();}
+g.beginPath();g.arc(lx,ly,7,0,Math.PI*2);g.lineWidth=0.8;g.stroke();
+
+// waves: half-hourly significant height, hanging below the field
+const WB=676;
+for(const r of rows){
+  if(r.wvht>=99)continue;
+  const x=X0+(doy(r)+(slot(r)+.5)/144)*cw;
+  g.strokeStyle='rgba(200,210,208,0.07)';g.lineWidth=0.6;
+  g.beginPath();g.moveTo(x,WB);g.lineTo(x,WB+r.wvht*13);g.stroke();
+}
+
+// type
+g.fillStyle='#d9dcd6';g.font='500 22px Georgia, "Times New Roman", serif';g.textBaseline='alphabetic';
+g.fillText('After 22:50',X0,62);
+g.font='italic 13px Georgia, serif';g.fillStyle='#8f9895';
+g.fillText('Buoy 46026, eighteen nautical miles west of San Francisco, every ten minutes of 2024',X0,84);
+
+g.font='11.5px Georgia, serif';g.fillStyle='#8f9895';
+const notes=[
+ 'Each column is a day, midnight at the top. Colour is the sea surface, '+tmin+'° to '+tmax+'°C.',
+ 'Strokes are the wind, pointing where it blew, longer when it blew harder.',
+];
+g.textAlign='right';
+notes.forEach((s,i)=>g.fillText(s,X1,62+i*17));
+g.textAlign='left';
+
+// months
+const mons=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+g.font='10.5px Georgia, serif';g.fillStyle='#6d7673';
+for(let m=0;m<12;m++){
+  const d=Math.floor((Date.UTC(2024,m,1)-t0)/864e5),x=X0+d*cw;
+  g.fillRect(x,Y0-12,0.6,6);g.fillText(mons[m],x+3,Y0-6);
+}
+// hours
+g.textAlign='right';
+[0,6,12,18,24].forEach(h=>{g.fillText(String(h).padStart(2,'0')+':00',X0-6,Y0+h*6*ch+3.5);});
+g.textAlign='left';
+
+// annotation at the last stroke
+g.strokeStyle='rgba(232,88,58,.7)';g.lineWidth=0.7;
+const ax=lx+14,ay=Y1+20;
+g.beginPath();g.moveTo(lx+2,ly+7);g.lineTo(lx+2,ay-9);g.lineTo(ax-3,ay-9);g.stroke();
+g.fillStyle='#e8a08c';g.font='italic 12.5px Georgia, serif';
+g.fillText('4 February, 22:50 UTC. Wind '+last.wspd+' m/s from '+last.wdir+'°, gusting '+last.gst+'; barometer '+last.pres+' hPa. After this, for the rest of the year, the file writes 99.0 and 9999.0.',ax,ay);
+
+// waves label
+g.fillStyle='#6d7673';g.font='10.5px Georgia, serif';
+g.fillText('below: wave height, every half hour (highest '+Math.max(...rows.filter(r=>r.wvht<99).map(r=>r.wvht)).toFixed(2)+' m, 23–24 December)',X0,H-14);
+g.textAlign='right';
+const n=rows.length,nw=rows.filter(r=>r.wspd<99).length;
+g.fillText(n.toLocaleString('en-US')+' lines; wind in '+nw.toLocaleString('en-US')+' of them. Black is no line at all.',X1,H-14);
+</script>
+</body></html>

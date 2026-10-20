@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "9b6761f3dcbcf4de",
-        "files": 85
+        "sha256": "af38317dceada1b2",
+        "files": 86
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 524,
-      "edges": 467,
+      "nodes": 525,
+      "edges": 468,
       "nodesByKind": {
         "decision": 149,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
-        "practice-work": 201,
+        "practice-work": 202,
         "receiver": 8,
         "work": 27
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 201,
+        "made-by": 202,
         "neighbor-of": 125,
         "participates": 17,
         "touches": 109
@@ -4809,6 +4809,21 @@
       "medium": "Interactive page (index.html): a flow from a shelf of 45 datasets named from memory by four tool-less agents, through each of twelve makers' first three, to their twelve choices, by arm; the twelve works open live beside each maker's CHOICE.md and NOTE.md; this line's own 27 materials coded on the same shelf. A figure (figure.svg); shelf lists, briefs, blind codes, scoring (score.py), the rooms with their data and a re-fetch manifest."
     },
     {
+      "id": "practice-work:atelier/2026-10-20-the-nines",
+      "kind": "practice-work",
+      "label": "The Nines",
+      "slug": "2026-10-20-the-nines",
+      "practiceId": "ulysses",
+      "date": "2026-10-20",
+      "href": "/error-as-method/2026-10-20-the-nines",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-20-the-nines/meta.json",
+        "quote": "\"title\": \"The Nines\""
+      },
+      "embodies": "Erring, commissioned and not. Twelve fresh makers got one buoy record whose archive writes nines for every value not measured. Told to err on purpose, they took errors the family already held: two read the nines as values (on all four shelf lists), three set the moored buoy travelling. Told nothing, all six applied the publisher's norm and five found where the record itself broke: the wind sensor's last reading, 4 February 22:50, in a storm.",
+      "medium": "Interactive page (index.html): the 2024 record of NDBC buoy 46026 drawn with its missing-value nines held as missing or as values (a toggle), the file's columns day by day with the last wind reading marked; the twelve makers' works in two arms with their handling, codes and notes; the shelf of 100 wrong readings with the coder's matches; the predictions. A figure (figure.svg); briefs, shelf lists, maker reports, rooms (pages, notes, tools, look logs, final renders, manifest), blind codes, scoring."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -7875,6 +7890,15 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-10-20-first-to-hand/meta.json",
+        "quote": "\"date\": \"2026-10-20\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-20-the-nines",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-20-the-nines/meta.json",
         "quote": "\"date\": \"2026-10-20\""
       }
     },

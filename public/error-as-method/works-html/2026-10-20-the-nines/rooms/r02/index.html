@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ninety-Nine</title>
+<style>
+  html, body { margin: 0; background: #ebe7dd; }
+  body { width: 1100px; height: 800px; overflow: hidden; position: relative;
+         font-family: Georgia, "Times New Roman", serif; color: #232a33; }
+  canvas { position: absolute; left: 0; top: 0; }
+  .cap { position: absolute; left: 46px; bottom: 22px; font-size: 13px; letter-spacing: .02em; }
+  .cap i { color: #6b6a64; font-style: italic; }
+  .r { position: absolute; right: 46px; bottom: 22px; font-size: 12px; color: #6b6a64;
+       font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<div class="cap">Ninety-Nine &nbsp;<i>wind at buoy 46026, eighteen miles west of San Francisco, every hour of 2024, taken at its word</i></div>
+<div class="r">one stroke = one hour &middot; length = speed &middot; angle = where it blew</div>
+<script src="data/46026h2024.js"></script>
+<script>
+const W = 1100, H = 800;
+const L = 46, T = 34, COLS = 72, CW = 14, RH = 5.5;   // 72 hours (three days) per row
+const PX_PER_MS = 1.25;
+
+const cv = document.getElementById('c');
+const g = cv.getContext('2d');
+
+function dayOfYear(m, d) {
+  const cum = [0,31,60,91,121,152,182,213,244,274,305,335]; // 2024, leap year
+  return cum[m - 1] + d - 1;
+}
+
+((txt) => {
+  // hourly sums, every value taken literally, 999 and 99.0 included
+  const hrs = new Map();
+  for (const line of txt.split('\n')) {
+    if (!line || line[0] === '#') continue;
+    const f = line.trim().split(/\s+/);
+    const h = dayOfYear(+f[1], +f[2]) * 24 + (+f[3]);
+    const dir = +f[5], spd = +f[6];
+    let a = hrs.get(h);
+    if (!a) { a = { x: 0, y: 0, s: 0, n: 0 }; hrs.set(h, a); }
+    const rad = dir * Math.PI / 180;
+    a.x += Math.sin(rad); a.y += Math.cos(rad); a.s += spd; a.n++;
+  }
+
+  // month marks in the margin
+  g.font = '11px Georgia, serif';
+  g.fillStyle = '#7a776e';
+  g.textAlign = 'right';
+  const names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  names.forEach((nm, i) => {
+    const row = Math.floor(dayOfYear(i + 1, 1) * 24 / (COLS));
+    g.fillText(nm, L - 10, T + row * RH + 4);
+  });
+
+  g.lineCap = 'round';
+  const keys = [...hrs.keys()].sort((a, b) => a - b);
+  for (const h of keys) {
+    const a = hrs.get(h);
+    const row = Math.floor(h / COLS), col = h % COLS;
+    const x0 = L + col * CW + CW / 2, y0 = T + row * RH + RH / 2;
+    const from = Math.atan2(a.x, a.y);           // compass bearing the wind came from
+    const to = from + Math.PI;                    // where it went
+    const spd = a.s / a.n;
+    const len = spd * PX_PER_MS;
+    const dx = Math.sin(to) * len, dy = -Math.cos(to) * len;
+    const storm = spd > 50;
+    g.strokeStyle = storm ? 'rgba(28,34,44,0.13)' : 'rgba(28,34,44,0.85)';
+    g.lineWidth = storm ? 0.8 : 1.15;
+    g.beginPath();
+    g.moveTo(x0, y0);
+    g.lineTo(x0 + dx, y0 + dy);
+    g.stroke();
+  }
+
+  // the last hour the instrument and the sea agreed
+  const last = dayOfYear(2, 4) * 24 + 22;
+  const lr = Math.floor(last / COLS), lc = last % COLS;
+  g.fillStyle = '#a3321f';
+  g.beginPath();
+  g.arc(L + lc * CW + CW / 2, T + lr * RH + RH / 2, 2.6, 0, Math.PI * 2);
+  g.fill();
+  g.beginPath();
+  g.arc(1054 - 4, 744, 2.6, 0, Math.PI * 2);
+  g.fill();
+  g.textAlign = 'right';
+  g.font = 'italic 12px Georgia, serif';
+  g.fillText('4 February, 22:50 — 17.8 m/s from the south-southeast, 989 hPa, the last number the anemometer meant', 1054 - 14, 748);
+})(window.BUOY_TXT);
+</script>
+</body>
+</html>
