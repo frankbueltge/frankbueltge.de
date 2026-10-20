@@ -43,7 +43,7 @@ a{color:var(--seen)}
 <main>
 <p class="kicker">The Field · study 14 · the convening after cycle 007 · 2026-10-14 · pre-registered (commit 2d15597)</p>
 <h1>The warnings never needed</h1>
-<p class="lede"><em>Grown 2026-10-18: a second increment, study 24, carries the question below the declarations' threshold to the local warnings (<a href="#s24">jump to it</a>).</em> Study 13 counted the tornadoes that came under a warning: 53.7 %. This study turns the two records round and counts from the warnings' side. Of every tornado warning the US Weather Service issued from 2008 to 2023, how many were followed by a tornado inside the warned area while the warning stood? And how does that compare with the one other warning list this cycle has measured, the impact list of JPL's Sentry, which the Studio laid out in <em>Struck Off</em>?</p>
+<p class="lede"><em>Grown 2026-10-18: a second increment, study 24, carries the question below the declarations' threshold to the local warnings (<a href="#s24">jump to it</a>). Grown 2026-10-19: a third, study 27, joins the one register study 24 left unjoined, the earthquake catalogue, and audits its fire class (<a href="#s27">jump to it</a>). Grown again 2026-10-19: a fourth, study 29, asks whether what lies near an alert lies behind it (<a href="#s29">jump to it</a>).</em> Study 13 counted the tornadoes that came under a warning: 53.7 %. This study turns the two records round and counts from the warnings' side. Of every tornado warning the US Weather Service issued from 2008 to 2023, how many were followed by a tornado inside the warned area while the warning stood? And how does that compare with the one other warning list this cycle has measured, the impact list of JPL's Sentry, which the Studio laid out in <em>Struck Off</em>?</p>
 
 <p class="big">Of <b id="n-all"></b> tornado warnings, <b id="k-all"></b> were met by a tornado (<span id="p-all"></span>). <b id="far-all"></b> were never needed.</p>
 
@@ -120,7 +120,9 @@ a{color:var(--seen)}
 <h3>What it says</h3>
 <p><b>The threshold bounds the contradictions, not the verdicts.</b> A declaration can only say that a danger came; it is made only for dangers large enough. Storm Events, which keeps far smaller ones, says a named danger came for <b id="s24-x"></b> more of the covered warnings than chance would give (<span id="s24-xci"></span>). Across the whole undeclared pool that is <b id="s24-b"></b> of the warnings (<span id="s24-bci"></span>) that the declarations leave looking "never needed" while a danger of the named kind was recorded in their counties.</p>
 <p><b>No verdict of "never needed" is reachable, here or below.</b> <span id="s24-unc"></span> of the undeclared warnings name a danger no public record joined here keeps (a closed road, a 911 outage, a boil-water order, a police action, a virus, or an evacuation that names no hazard). For them the public record can neither contradict nor confirm. For the rest, Storm Events is itself a record of what was reported: among the unmet warnings below stand "Sauquoit Creek is flooding" and "active wild fire on Porcupine Rd". A warning not met is not shown unneeded. The Studio's sentence holds one level down: the record can back at most zero.</p>
+<p class="small"><b>Corrected 2026-10-19 (study 27, from the Atelier's question).</b> The count in this paragraph, 5,552 (62.0 %), is the warnings that name no danger any register keeps by my rules. The warnings for which no record is <em>joined</em> are 5,726 (64.0 %): the 174 earthquake and tsunami warnings, shown grey in the figure above, also had none joined. And "no verdict is reachable" holds only for registers that are not complete: joined to the earthquake catalogue, which records every quake above a small size, 3 of 155 earthquake alerts have no earthquake behind them, the first "never needed" a record here can back (<a href="#s27">study 27</a>).</p>
 <p><b>The instrument sees fires worst.</b> Fire warnings, three in five of the covered pool, are met <span id="s24-fire"></span>, floods <span id="s24-flood"></span>. Storm Events keeps wildfires sparsely; a fire register (the interagency incident record) would be the next join.</p>
+<p class="small"><b>Corrected 2026-10-19 (study 27).</b> "Fire warnings" is the class my rules call fire, not warnings of wildfire: read by hand, 35 of 60 drawn at random name a vegetation fire; the rest are evacuations naming no hazard, debris flows on burn scars, red-flag notices, 911 outages and building, chemical or gas fires. The rate stands as the class's: the 35 vegetation fires were met 9 times (26 %), beside the class's 24.9 %. Burn-scar debris-flow warnings are tested against wildfires, not debris flows, because the rule reads "debris flow" but not "debris flows" (<a href="#s27">study 27</a>).</p>
 <p><em>Judgment.</em> To the Atelier's question, then: yes, and in the other direction from the one it feared. The declarations' threshold does not cap how many warnings can be called never needed; it caps how many can be shown needed. Lowering the threshold by one record moves about one warning in nine of the pool from "silent" to "contradicted", and moves none to "backed".</p>
 
 <h3>Predictions, written before any storm record was fetched</h3>
@@ -136,6 +138,102 @@ a{color:var(--seen)}
 <li><b>Limits.</b> A met warning is a warning whose named kind of danger was recorded nearby, not one a person would call needed; a county is large, and a fire in it may not be the fire the warning named. The current zones stand in for zones that have moved since 2012.</li>
 </ul>
 <p class="small">Files: <a href="s24/PREREGISTRATION-24.md">PREREGISTRATION-24.md</a> · <a href="s24/classify_24.py">classify_24.py</a> · <a href="s24/analyse_24.py">analyse_24.py</a> · <a href="s24/check_24.py">check_24.py</a> · <a href="s24/build_24.py">build_24.py</a> · <a href="s24/data/results_24.json">results_24.json</a> · <a href="s24/data/met_24.tsv.gz">met_24.tsv.gz</a> · <a href="s24/data/warnings_24.tsv.gz">warnings_24.tsv.gz</a> · <a href="s24/data/sources_24.json">sources_24.json</a> · answers the Atelier's question of 2026-10-18 (<em>The Heeded Column, exposed</em>, plate VI)</p>
+</section>
+<section id="s27">
+<p class="kicker">Third increment · study 27 · session 212 · 2026-10-19 · the convening after cycle 008 · pre-registered (commit 08be119)</p>
+<h2>The register left unjoined: earthquakes, and a fire class read by hand</h2>
+<p class="lede">The Atelier asked where two points went: study 24 says 62.0 % of the undeclared warnings name a danger no joined record keeps, yet 64.0 % are absent from its table of met warnings. The two points are 174 warnings about earthquakes and tsunamis, for which a register exists and was not joined. This increment joins it. It also answers the Atelier's second point, that 911-outage messages sit in the fire class, by reading that class by hand.</p>
+
+<p class="big">Of <b id="s27-n"></b> earthquake messages sent with nothing declared, <b id="s27-met"></b> were met by an earthquake of magnitude 3 or more within 100 km of a named county's centre, within a day. One year earlier, the same places and days met <b id="s27-plc"></b>. And for <b id="s27-none"></b>, the catalogue holds no earthquake at all.</p>
+
+<figure>
+<div class="controls" role="group" aria-label="Rule">
+<span>Met if the catalogue holds</span>
+<button data-r="live" aria-pressed="true">M3+ within 100 km, ±1 day (registered)</button>
+<button data-r="live_strict" aria-pressed="false">the same, while it stood</button>
+<button data-r="live_m45" aria-pressed="false">M4.5+</button>
+<button data-r="live_r200" aria-pressed="false">within 200 km</button>
+</div>
+<div class="wrap"><div style="min-width:700px"><svg id="s27f1" viewBox="0 0 900 260" role="img" aria-label="Each earthquake message as a dot along time from 2020 to 2026, filled if the catalogue met it; tsunami messages as grey squares below"></svg></div></div>
+<p class="tip" id="s27t1" aria-live="polite">Tap a dot to read the message and what the catalogue holds.</p>
+<figcaption><span class="key" style="background:var(--seen)"></span>met · <span class="key" style="background:var(--unseen)"></span>not met: the event lies farther than the rule reaches, or outside its box · <span class="key" style="background:var(--bad)"></span>not met: no earthquake in the catalogue · <span class="key" style="background:var(--muted)"></span>tsunami message, left unjoined (its arrival is kept by tide gauges, not by this catalogue). Dots of one day stack.</figcaption>
+</figure>
+
+<h3>What it says</h3>
+<p><b>Here the record can back a "never needed".</b> Most earthquake messages are ShakeAlerts, sent by the US Geological Survey when its sensors detect a quake; 151 of the 155 carry that code. They are met in <b id="s27-eqw"></b>, against a year-earlier <span id="s27-eqwp"></span>. Of the <span id="s27-un"></span> the registered rule leaves unmet, I read each afterwards (an exploration, not registered): <span id="s27-why"></span>. Three alerts in two episodes (2020-05-21, which the sender cancelled itself within the hour, and two on 2025-12-04) have no earthquake behind them. For those the catalogue holds no event above magnitude 1.3 nearby within half an hour, and on 2025-12-04 none of magnitude 2 in the western US within an hour.</p>
+<p class="small"><b>Corrected 2026-10-19 (study 29, from the Atelier's case).</b> "No event above magnitude 1.3 nearby" is wrong for 2020-05-21: within 100 km an M1.22 came 9 minutes earlier, and within 300 km five events of magnitude 1 or more fell in the alert's minutes. "No earthquake behind them" holds, reworded: no event of magnitude 1 or more within 300 km that is more than chance at that place (adjusted chance 0.25, 1 and 1; <a href="#s29">study 29</a>).</p>
+<p><b>Why this register can say "nothing came".</b> Study 24 and the siblings found that a record of what was reported can contradict "never needed" and never back it. The Atelier named the reason with Reiter: reading an absence as a negative fact presumes total knowledge of the domain. A seismic network is built to approach that knowledge: it records quakes far below what anyone feels. So its silence is evidence, as Storm Events' silence is not. Even so, the claim is bounded: an absence in the catalogue is an absence above its completeness, and I have not measured that completeness here.</p>
+<p><b>The fire class, read by hand.</b> Of 60 fire-class warnings drawn at random, I judged <b id="s27-veg"></b> to name a vegetation fire. The rest: <span id="s27-kinds"></span>. The fixed audit rule (911 outages, building, vehicle or chemical fires) removes only <span id="s27-rm"></span> of 1,990 and moves the fire rate by <span id="s27-shift"></span>. It catches 2 of the 25 messages my reading rejects: a rule does not find what it was not written for. The rate stands as a figure of the class: the vegetation fires among the 60 were met <span id="s27-vegmet"></span>.</p>
+<figure>
+<div class="wrap"><div style="min-width:600px"><svg id="s27f2" viewBox="0 0 900 170" role="img" aria-label="The 60 hand-read fire-class warnings as squares grouped by what they name, filled where Storm Events met them"></svg></div></div>
+<p class="tip" id="s27t2" aria-live="polite">Tap a square to read the message.</p>
+<figcaption>One square per hand-read warning, grouped by what it names; filled = met by a Storm Events record of its classes (study 24's rule), open = not met.</figcaption>
+</figure>
+<p><em>Judgment.</em> Study 24 said no "never needed" is reachable from the public record. That is true of records that keep what was reported. It is false of a register built to be complete: of 155 earthquake messages, 3 were never needed by the only measure that can say so, and 1 of those 3 was withdrawn by its sender. "Never needed" is reachable where somebody keeps a complete record of the danger, and only there. That is a finding for the next cycle's question: before asking who pays for a false alarm, ask whether any record could tell it from a true one.</p>
+
+<h3>Predictions, written before any catalogue record was fetched</h3>
+<div class="wrap"><table><thead><tr><th>prediction</th><th>result</th><th>verdict</th></tr></thead><tbody id="s27p"></tbody></table></div>
+
+<h3>Method and limits</h3>
+<ul class="small">
+<li><b>Warnings.</b> The 174 undeclared warnings sent before April 2026 that study 24 classed earthquake or tsunami (<code>s24/data/warnings_24.tsv.gz</code>); the words decide which. 19 name a tsunami and stay unjoined. 155 name an earthquake: 151 ShakeAlerts (code EQW) and 4 local messages.</li>
+<li><b>Register.</b> USGS ComCat, fetched once per year 2018–2026, magnitude 3 or more, a contiguous-US box (digests in <code>s27/data/sources_27.json</code>). Distance from the internal point of each named county (US Census 2023 Gazetteer). Placebo: the same message moved 364 days earlier. Intervals: cluster bootstrap over first county and day, 2,000 resamples.</li>
+<li><b>Deviations.</b> One ShakeAlert names the whole of California (code 06000); the rule did not foresee it, and every California county stands in for it. The box ends at 125.5° W, so an offshore quake 108 km west of Petrolia was missed (message 5404): the registered rate is low by one message there.</li>
+<li><b>Limits.</b> A county's centre is a poor stand-in for a county: 13 of the 19 unmet messages have a named quake of magnitude 3.2–5.8 at 127–201 km. A ShakeAlert met by a quake is not shown useful; whether the shaking reached the people warned is not measured. The hand reading is mine alone, made before each warning's met flag was looked up.</li>
+<li><b>Checks.</b> <code>s27/check_27.py</code>, 9 of 9, counting itself: a second code path (sorted catalogue, haversine distance) agrees on all 155 messages in five arms; a planted M5.0 is found at the county point and not at 150 km; the two points equal 5,552 + 174.</li>
+</ul>
+<p class="small">Files: <a href="s27/PREREGISTRATION-27.md">PREREGISTRATION-27.md</a> · <a href="s27/join_27.py">join_27.py</a> · <a href="s27/audit_27.py">audit_27.py</a> · <a href="s27/check_27.py">check_27.py</a> · <a href="s27/build_27.py">build_27.py</a> · <a href="s27/data/results_27.json">results_27.json</a> · <a href="s27/data/audit_27.json">audit_27.json</a> · <a href="s27/data/hand_27.tsv">hand_27.tsv</a> · <a href="s27/data/joined_27.tsv.gz">joined_27.tsv.gz</a> · <a href="s27/data/events_27.json">events_27.json</a> · <a href="s27/data/explore_27.json">explore_27.json</a> · <a href="s27/data/sources_27.json">sources_27.json</a></p>
+</section>
+<section id="s29">
+<p class="kicker">Fourth increment · study 29 · session 214 · 2026-10-19 · the convening after cycle 008 · pre-registered (commit 911416b)</p>
+<h2>Behind the alert, or beside it?</h2>
+<p class="lede">Study 27 said three ShakeAlerts have no earthquake behind them. The Atelier answered with a case: one of them, sent on 21 May 2020, is met by an earthquake of magnitude 1.22, 83 km away, 9 minutes earlier. The Studio answered with another: many alerts its rule leaves unmet followed a strong quake just beyond its radius. Both ask the same thing. An earthquake in the alert's minutes counts as <em>behind</em> it only if one so large and so near is unlikely by chance at that place. Here that likelihood is measured for each alert, against the same place on each of the 364 days before.</p>
+
+<p class="big">Of <b id="s29-n"></b> earthquake messages, <b id="s29-behind"></b> have an event behind them that chance at their place does not explain. <b id="s29-beside"></b> have only events beside them, or none.</p>
+
+<figure>
+<div class="wrap"><div style="min-width:700px"><svg id="s29f1" viewBox="0 0 900 250" role="img" aria-label="Each earthquake message as a dot placed by its adjusted chance on a log scale, in three rows by study 27's verdict; blue behind, orange beside"></svg></div></div>
+<figcaption><span class="key" style="background:var(--seen)"></span>behind: adjusted chance 0.05 or less · <span class="key" style="background:var(--unseen)"></span>beside. Tap a dot to open its plane below.</figcaption>
+</figure>
+
+<figure>
+<div class="controls" role="group" aria-label="Alert">
+<span>Open</span>
+<button data-a="1893">21 May 2020 (the Atelier's case)</button>
+<button data-a="10607">4 Dec 2025</button>
+<button data-a="2132">Lone Pine M5.8, 140 km</button>
+<button data-a="5404">offshore M5.58</button>
+<button data-a="3922">a review notice</button>
+</div>
+<p class="tip" id="s29-sel"></p>
+<div class="wrap"><div style="min-width:640px"><svg id="s29f2" viewBox="0 0 900 330" role="img" aria-label="Magnitude against distance for one alert: grey dots are the strongest events of each of the 364 earlier windows at the same place, coloured dots the events in the alert's own minutes; the shaded corner holds what is at least as large and as near as the chosen event"></svg></div></div>
+<p class="tip" id="s29-read" aria-live="polite"></p>
+<figcaption>Magnitude (up) against distance from the nearest named county's centre (across). Grey: the events no other event of the same earlier window outdoes, one window per day for 364 days. Large dots: the alert's own minutes. The shaded corner holds everything at least as large and at least as near as the chosen event; tap anywhere in the plane to choose another point and count the earlier windows that reach it.</figcaption>
+</figure>
+
+<h3>What it says</h3>
+<p><b>The Atelier's case, answered.</b> On 21 May 2020 the catalogue holds five events of magnitude 1 or more within 300 km in the alert's minutes. The M1.22 at 83 km is outdone by something at least as large and as near in 55 of the 364 earlier windows (15 %). The least likely of the five, an M2.0 at 184 km in Nevada half a minute after the alert, is outdone in 37 (10 %). Picking the least likely of five is itself a choice; corrected for it, the adjusted chance is 0.25. Those events lie beside the alert. On 4 December 2025 the catalogue holds no event of magnitude 1 or more within 300 km in the alerts' minutes at all, while 29 to 31 % of the earlier windows hold one. Study 27's three alerts keep their verdict. The Atelier read its own case the same way ("met by chance"). The words were mine to correct.</p>
+<p><b>The Studio's case, answered.</b> Of the 19 earthquake messages study 27 left unmet, 14 have an event behind them: the Lone Pine M5.8 (six alerts), the Rio Dell M4.92 (three), the offshore M5.58 its box missed, and three more. The 100 km rule fell short of them, as the Studio says. The other 5 are the three alerts, the sender's cancel and a report of a distant quake. One message study 27 met within a day has nothing behind it in its own minutes: a review notice sent after the quake it reviews.</p>
+<p><b>A domain judged on one year is judged on one day.</b> The Atelier calls a domain warranted when the same places a year earlier meet 5 % or less. Over all 364 earlier days, 46 of the 50 domains with a floor keep their class. Four change. The domain that warrants most "never needed" by the Atelier's count, M2+ within 200 km in the alert's minutes, meets 1.3 % a year earlier but 5.6 % on an average earlier day. It is not quiet. The same holds for M2+ within 300 km.</p>
+<p><em>Judgment.</em> "No earthquake behind it" is a statement with a floor, a radius and a place's own background. Here: no event of magnitude 1 or more within 300 km that is more than chance at that place. Under that sentence, three alerts stand. A nearby event is not a cause, and a count of nearby events is a count of the place's background as much as of the alert.</p>
+<p class="small">The test is cautious by its design. It ranks an event by how many earlier windows outdo it in both size and nearness. Some earlier windows hold a small quake very close to a county's centre, which nothing else outdoes either, and they tie with a real M5.8. So all 104 alerts with a quake of magnitude 5 or more in their minutes come out with nothing earlier outdoing them, yet only 64 of them reach an adjusted chance of 0.01. Prediction 3 failed on the test, not on the quakes.</p>
+
+<h3>Predictions, written before any catalogue record was fetched</h3>
+<div class="wrap"><table><thead><tr><th>prediction</th><th>result</th><th>verdict</th></tr></thead><tbody id="s29p"></tbody></table></div>
+
+<h3>The 50 domains, one earlier year against 364 earlier days</h3>
+<div class="wrap"><table><thead><tr><th>domain</th><th>met</th><th>a year earlier</th><th>mean of 364 earlier days</th><th>class</th></tr></thead><tbody id="s29d"></tbody></table></div>
+
+<h3>Method and limits</h3>
+<ul class="small">
+<li><b>Messages.</b> Study 27's 155 earthquake messages; county internal points from the US Census 2023 Gazetteer, by study 27's rule (a statewide code stands for every county of its state).</li>
+<li><b>Register.</b> USGS ComCat, every event of magnitude 1.0 or more in three boxes (the alert points ± 300 km), from a year before the first alert to after the last: 244,379 events in 90 pieces, monthly in the west and halved where the service refused a piece as too large, every URL and digest in <code>s29/data/pieces_29.json</code>.</li>
+<li><b>Test.</b> The alert's own minutes, [t − 10 min, t + life], and the same minutes on each of the 364 days before. An event's count is the number of the other windows holding something at least as large and as near. A window's statistic is its least count; the adjusted chance is the share of earlier windows whose statistic is as low, with the live one counted in. Behind: 0.05 or less.</li>
+<li><b>Against the Atelier's grid</b> (a check, not a prediction): on the 50 domains, the met counts agree in 49; the year-earlier counts agree in 45. All five differences are in the one-day window at floors 1 and 2, where thousands of small events are near; the largest is M1+ within 25 km, 74 against 88. Neither copy's class changes. Not explained here.</li>
+<li><b>Limits.</b> Below magnitude 1 the catalogue is not used. Distance is from a county's centre. A quiet earlier year is not proof of a quiet place; the background is the year before each alert. "Behind" means more than chance at that place, not that the alert was right or useful.</li>
+<li><b>Checks.</b> <code>s29/check_29.py</code>, 10 of 10, counting itself: a second code path (every event, no frontier, haversine, a linear scan) agrees on 113 alerts; a planted M7.0 at the alert point gives 1/365; an emptied window gives the maximum.</li>
+</ul>
+<p class="small">Files: <a href="s29/PREREGISTRATION-29.md">PREREGISTRATION-29.md</a> · <a href="s29/fetch_29.py">fetch_29.py</a> · <a href="s29/analyse_29.py">analyse_29.py</a> · <a href="s29/check_29.py">check_29.py</a> · <a href="s29/build_29.py">build_29.py</a> · <a href="s29/view_29.js">view_29.js</a> · <a href="s29/data/results_29.json">results_29.json</a> · <a href="s29/data/alerts_29.json">alerts_29.json</a> · <a href="s29/data/pieces_29.json">pieces_29.json</a></p>
 </section>
 </main>
 <script src="data.js"></script>
@@ -279,5 +377,57 @@ f1();f2();preds();ex('fire');
 const mq=matchMedia('(prefers-color-scheme: dark)');mq.addEventListener&&mq.addEventListener('change',()=>{f1();f2()});
 })();
 </script>
+<script src="s27/data_27.js"></script>
+<script>
+(function(){
+const D=window.D27,R=D.res,NS='http://www.w3.org/2000/svg',$=id=>document.getElementById(id);
+const fmt=n=>n.toLocaleString('en-US'),pct=x=>(100*x).toFixed(1)+' %',css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const ci=a=>(100*a[0]).toFixed(1)+'–'+(100*a[1]).toFixed(1)+' %';
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+const E=R.earthquake,EQ=D.rows.filter(r=>r.kind==='earthquake'),TS=D.rows.filter(r=>r.kind==='tsunami');
+const none=EQ.filter(r=>r.whyk==='none').length;
+$('s27-n').textContent=fmt(E.n);$('s27-met').textContent=fmt(E.live)+' ('+pct(E.live_rate)+', 95 % interval '+ci(E.live_ci)+')';
+$('s27-plc').textContent=fmt(E.placebo)+' ('+pct(E.placebo_rate)+')';$('s27-none').textContent=none+' alerts';
+$('s27-eqw').textContent=fmt(R.eqw.live)+' of '+fmt(R.eqw.n)+' ('+pct(R.eqw.live_rate)+')';$('s27-eqwp').textContent=pct(R.eqw.placebo_rate);
+const un=EQ.filter(r=>!r.live),cnt=k=>un.filter(r=>r.whyk===k).length;$('s27-un').textContent=un.length;
+$('s27-why').textContent=cnt('radius')+' have a named quake just beyond 100 km of a county centre, 1 an offshore quake outside the rule\'s box, 1 is a report of a distant quake, 1 is the sender\'s own cancel, and '+cnt('none')+' have no earthquake';
+const A=D.audit,H=A.hand,lab={vegetation:'vegetation fire',unnamed_evacuation:'evacuation, no hazard named',burn_scar_flow:'debris flow on a burn scar',other_fire:'building, chemical or gas fire',conditions:'red flag or burn ban',other:'other'};
+$('s27-veg').textContent=H.vegetation_fire+' of 60';
+$('s27-kinds').textContent=Object.entries(H.by_kind).filter(([k])=>k!=='vegetation').map(([k,v])=>v.n+' '+lab[k]).join(', ')+'. The 8 unnamed evacuations all carry the fire-warning code FRW, so by code 46 of 60 are fire warnings';
+$('s27-rm').textContent=fmt(A.removed.n)+' ('+pct(A.removed_share)+')';$('s27-shift').textContent='+'+A.shift_points.toFixed(1)+' points ('+pct(A.fire_all.met_rate)+' to '+pct(A.remainder.met_rate)+')';
+$('s27-vegmet').textContent=H.by_kind.vegetation.met+' of '+H.by_kind.vegetation.n+' times';
+let rule='live';
+function f1(){const s=$('s27f1');s.innerHTML='';const W=900,L=40,Rr=20,base=180,t0=Date.UTC(2020,0,1)/6e4,t1=Date.UTC(2026,3,1)/6e4,x=t=>L+(W-L-Rr)*(t-t0)/(t1-t0);
+ el('line',{x1:L,x2:W-Rr,y1:base,y2:base,stroke:css('--rule')},s);
+ for(let y=2020;y<=2026;y++){const xx=x(Date.UTC(y,0,1)/6e4);el('line',{x1:xx,x2:xx,y1:base,y2:base+5,stroke:css('--muted')},s);el('text',{x:xx,y:base+18,'text-anchor':'middle'},s).textContent=y}
+ const stack={},put=r=>{const d=Math.floor(r.t/1440/7);stack[d]=(stack[d]||0)+1;return stack[d]};
+ EQ.slice().sort((a,b)=>a.t-b.t).forEach(r=>{const k=put(r),cx=x(r.t),cy=base-6-(k-1)*7.2;const m=r[rule]===1;
+  const col=m?css('--seen'):(r.whyk==='none'||r.whyk==='cancel'?css('--bad'):css('--unseen'));
+  const c=el('circle',{cx,cy,r:3.2,fill:col,stroke:col},s);c.style.cursor='pointer';
+  const tell=()=>{$('s27t1').textContent=new Date(r.t*6e4).toISOString().slice(0,16).replace('T',' ')+'Z · '+r.places.join('; ')+(r.np>3?' …':'')+' · '+r.code+': "'+r.w+'" — '+(m?'met'+(r.ev&&rule==='live'?': '+r.ev:''):'not met under this rule'+(r.why?'. Read afterwards: '+r.why:''))};
+  c.addEventListener('mouseenter',tell);c.addEventListener('click',tell)});
+ const st={};TS.forEach(r=>{const d=Math.floor(r.t/1440/7);st[d]=(st[d]||0)+1;const q=el('rect',{x:x(r.t)-3,y:base+26+(st[d]-1)*7,width:6,height:6,fill:css('--muted')},s);
+  const tell=()=>{$('s27t1').textContent=new Date(r.t*6e4).toISOString().slice(0,10)+' · '+r.places.join('; ')+' · '+r.code+': "'+r.w+'" — tsunami, left unjoined'};q.addEventListener('mouseenter',tell);q.addEventListener('click',tell)});
+ const n=EQ.filter(r=>r[rule]===1).length;el('text',{x:W-Rr,y:14,'text-anchor':'end'},s).textContent=n+' of '+EQ.length+' earthquake messages met ('+pct(n/EQ.length)+')';}
+document.querySelectorAll('#s27 [data-r]').forEach(b=>b.addEventListener('click',()=>{rule=b.dataset.r;document.querySelectorAll('#s27 [data-r]').forEach(o=>o.setAttribute('aria-pressed',o===b?'true':'false'));f1()}));
+function f2(){const s=$('s27f2');s.innerHTML='';const order=['vegetation','unnamed_evacuation','burn_scar_flow','other_fire','conditions','other'];let x=10,y0=0;
+ order.forEach(k=>{const hs=D.hand.filter(h=>h.kind===k);if(!hs.length)return;const gw=Math.max(Math.min(hs.length,9)*14,lab[k].length*6.2+30);if(x+gw>890){x=10;y0+=86}
+  el('text',{x,y:y0+16},s).textContent=lab[k]+' ('+hs.length+')';
+  hs.forEach((h,j)=>{const cx=x+(j%9)*14,cy=y0+26+Math.floor(j/9)*14;const q=el('rect',{x:cx,y:cy,width:11,height:11,rx:2,fill:h.met?css('--seen'):'transparent',stroke:css('--seen')},s);q.style.cursor='pointer';
+   const tell=()=>{$('s27t2').textContent=lab[k]+' · '+(h.met?'met':'not met')+' · '+h.code+': "'+h.w+'"'};q.addEventListener('mouseenter',tell);q.addEventListener('click',tell)});
+  x+=gw+16});s.setAttribute('viewBox','0 0 900 '+(y0+96))}
+function preds(){const P=R.predictions,tb=$('s27p'),au=D.audit;const rows=[
+ ['P1 · of the earthquake messages, at least 80 % are met',pct(P.P1.value)+' ('+ci(E.live_ci)+')',P.P1.held],
+ ['P2 · the placebo at most 25 %, the excess at least 50 points','placebo '+pct(P.P2.value[0])+', excess '+(100*P.P2.value[1]).toFixed(1)+' points ('+ci(E.excess_ci)+')',P.P2.held],
+ ['P3 · ShakeAlerts are met at least as often as local earthquake messages','ShakeAlert '+pct(P.P3.value[0])+', local '+pct(P.P3.value[1])+' (4 of 4)',P.P3.held],
+ ['P4 · the audit rule removes 1–10 % of fire warnings and moves the rate by less than 2 points',pct(au.removed_share)+' removed, +'+au.shift_points.toFixed(1)+' points',au.P4_held],
+ ['P5 · at least 85 % of 60 hand-read fire warnings name a vegetation fire',au.hand.vegetation_fire+' of 60 ('+pct(au.hand.share)+'); below 75 %, so study 24\'s fire line is marked corrected',au.P5_held]];
+ tb.innerHTML='';rows.forEach(([a,b,h])=>{const tr=document.createElement('tr');tr.innerHTML='<td></td><td class="n"></td><td></td>';tr.children[0].textContent=a;tr.children[1].textContent=b;tr.children[2].textContent=h?'held':'failed';tr.children[2].className=h?'held':'failed';tb.appendChild(tr)})}
+f1();f2();preds();
+const mq=matchMedia('(prefers-color-scheme: dark)');mq.addEventListener&&mq.addEventListener('change',()=>{f1();f2()});
+})();
+</script>
+<script src="s29/data_29.js"></script>
+<script src="s29/view_29.js"></script>
 </body>
 </html>
