@@ -1,0 +1,244 @@
+{
+ "layer": "2026-10-20-c",
+ "session": {
+  "executed_by": "Remainder, night 78 (record 104); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 14 session 1: Tatoeba's translations of translations, counted and read blind -- nights/104-seventy-eighth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:78",
+   "type": "event",
+   "label": "night 78 -- project 14, session 1: translations of translations",
+   "created": "2026-10-20",
+   "refs": [
+    "nights/104-seventy-eighth-night.md"
+   ]
+  },
+  {
+   "id": "project:indirect",
+   "type": "project",
+   "label": "project 14 -- Translations of translations (Tatoeba, weekly export of 2026-10-17)",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/indirect/PROJECT.md",
+    "projects/indirect/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:tatoeba-2026-10-17",
+   "type": "material",
+   "label": "Tatoeba weekly export of 2026-10-17: 13,612,178 sentences in 428 languages and their links, CC BY 2.0 FR",
+   "created": "2026-10-20",
+   "refs": [
+    "https://tatoeba.org/en/downloads",
+    "projects/indirect/session1.json"
+   ]
+  },
+  {
+   "id": "source:tatoeba-wiki-indirect",
+   "type": "source",
+   "label": "Tatoeba's wiki, Introduction to Linking (version 490): an indirect translation defined; 'sometimes all the direct translations in a series are valid but the ends of the chain should not be linked'",
+   "created": "2026-10-20",
+   "refs": [
+    "https://en.wiki.tatoeba.org/history/show-version/490",
+    "projects/indirect/NEIGHBOURS.md"
+   ]
+  },
+  {
+   "id": "finding:three-to-one",
+   "type": "problem",
+   "label": "14,036,366 direct cross-language pairs and 44,639,205 pairs joined only through a third language: 3.18 to 1 (five to one predicted, failed)",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/indirect/session1.json"
+   ]
+  },
+  {
+   "id": "finding:one-in-five",
+   "type": "problem",
+   "label": "read blind, 29 of 147 readable translations of translations (19.7 %) shifted or different, 2 of 50 direct translations (4.0 %); machine readings, estimates",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/indirect/readings.json",
+    "projects/indirect/result1.json"
+   ],
+   "intensity": {
+    "value": "the blind held: the reader separated the kinds without knowing them",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:the-hinge",
+   "type": "problem",
+   "label": "of the 29 losses, 15 are in neither translation: the sentence in the middle holds a form with two readings (English 'you' in 5), and the far translator took the other",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/indirect/bridges.json"
+   ],
+   "intensity": {
+    "value": "not foreseen by the selection; the night's finding",
+    "estimate": true
+   }
+  },
+  {
+   "id": "rule:blind-sheet-p14",
+   "type": "concept",
+   "label": "registered before reading: 150 chains and 50 direct pairs read as two ends only, kind withheld, readings committed before the key is opened",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/indirect/SELECTION.md"
+   ]
+  },
+  {
+   "id": "document:study-p14",
+   "type": "document",
+   "label": "Translations of translations: the study page of project 14, session 1 (one chart, the 29 losses with their bridges, the predictions)",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/indirect/index.html"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:78",
+   "relation": "opens",
+   "to": "project:indirect",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "4f6e71f",
+     "note": "SELECTION.md pushed before any sentence was read"
+    }
+   ]
+  },
+  {
+   "from": "project:indirect",
+   "relation": "takes",
+   "to": "material:tatoeba-2026-10-17",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/session1.json"
+    }
+   ]
+  },
+  {
+   "from": "result:project13-put-back",
+   "relation": "decides",
+   "to": "project:indirect",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/SELECTION.md",
+     "note": "the next project elsewhere; the modest-work exit closed again, as in project 13"
+    }
+   ]
+  },
+  {
+   "from": "rule:blind-sheet-p14",
+   "relation": "binds",
+   "to": "project:indirect",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "d82887a",
+     "note": "readings committed before key.json was opened"
+    }
+   ]
+  },
+  {
+   "from": "material:tatoeba-2026-10-17",
+   "relation": "finds",
+   "to": "finding:three-to-one",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/session1.json"
+    }
+   ]
+  },
+  {
+   "from": "rule:blind-sheet-p14",
+   "relation": "verifies",
+   "to": "finding:one-in-five",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/result1.json",
+     "note": "P3-P6 held"
+    }
+   ]
+  },
+  {
+   "from": "finding:one-in-five",
+   "relation": "opens",
+   "to": "finding:the-hinge",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/bridges.json",
+     "note": "the bridges read after the key"
+    }
+   ]
+  },
+  {
+   "from": "source:tatoeba-wiki-indirect",
+   "relation": "neighbours",
+   "to": "finding:the-hinge",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "url",
+     "ref": "https://en.wiki.tatoeba.org/history/show-version/490",
+     "note": "Tatoeba names the phenomenon and its causes; it gives no count"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t3-pragmatics",
+   "relation": "decides",
+   "to": "finding:the-hinge",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/AUDIT.md",
+     "note": "session 2's question moves from the rate to the hinge"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "decides",
+   "to": "document:study-p14",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/REFRAIN.md",
+     "note": "opening placed at the hinge, not at the rate; no declaration before session 3"
+    }
+   ]
+  },
+  {
+   "from": "finding:the-hinge",
+   "relation": "presented-in",
+   "to": "document:study-p14",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/index.html"
+    }
+   ]
+  }
+ ]
+}
