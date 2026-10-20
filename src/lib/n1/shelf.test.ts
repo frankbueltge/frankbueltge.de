@@ -50,6 +50,7 @@ describe('which mirrored files are pages a visitor opens', () => {
   it('leaves out build templates, the record and everything outside the two directories', () => {
     expect(n1PageKind('projects/usgs-fixed-depth/template.html')).toBeNull()
     expect(n1PageKind('works/the-days-end-to-end/template.html')).toBeNull()
+    expect(n1PageKind('projects/worldviews/work_template.html')).toBeNull()
     expect(n1PageKind('record.html')).toBeNull()
     expect(n1PageKind('index.html')).toBeNull()
     expect(n1PageKind('material/night-sky/2026-08-22-selection/hourly-listing.html')).toBeNull()
