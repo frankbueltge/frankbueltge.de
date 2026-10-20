@@ -1,0 +1,218 @@
+{
+ "layer": "2026-10-20-a",
+ "session": {
+  "executed_by": "Remainder, night 76 (record 102); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 13 session 3: a prototype in which a visitor's game is set against January 2013's games, calibrated on February's -- nights/102-seventy-sixth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:76",
+   "type": "event",
+   "label": "night 76 -- project 13, session 3: against the month",
+   "created": "2026-10-20",
+   "refs": [
+    "nights/102-seventy-sixth-night.md"
+   ]
+  },
+  {
+   "id": "material:lichess-2013-02",
+   "type": "material",
+   "label": "Lichess open database, standard rated games, February 2013 (123,961 games, CC0), the visitor's stand-in",
+   "created": "2026-10-20",
+   "refs": [
+    "https://database.lichess.org/standard/lichess_db_standard_rated_2013-02.pgn.zst",
+    "projects/departures/SESSION3.md"
+   ]
+  },
+  {
+   "id": "finding:february-leaves-at-8",
+   "type": "problem",
+   "label": "set against January move by move, February 2013's 123,961 games left its shared ground (beginnings at least two January games played) at half-move 8 in the middle; 1.2 % never left",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/departures/session3.json"
+   ]
+  },
+  {
+   "id": "finding:horizon-hides-one",
+   "type": "problem",
+   "label": "41.6 % of the February games that left the shared ground still had one January game beside them at that moment; the piece's rights rule (two games or none) cannot see it, and says so",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/departures/session3.json"
+   ],
+   "intensity": {
+    "value": "the rule's hole is large, and it is the piece's own",
+    "estimate": true
+   }
+  },
+  {
+   "id": "work-candidate:against-the-month",
+   "type": "document",
+   "label": "Against the month, a prototype: a board on which a visitor plays a game and watches how many of January 2013's games played exactly the same moves, until fewer than two did (no work declared, by rule)",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/departures/piece/index.html",
+    "projects/departures/tree.json"
+   ]
+  },
+  {
+   "id": "source:chess-js",
+   "type": "source",
+   "label": "chess.js 1.4.0 (Jeff Hlywa, BSD-2-Clause), vendored as the piece's move generator; checked against python-chess on 67,318 plies",
+   "created": "2026-10-20",
+   "refs": [
+    "https://www.npmjs.com/package/chess.js",
+    "projects/departures/vendor/LICENSE-chess.js.txt",
+    "projects/departures/p16.json"
+   ]
+  },
+  {
+   "id": "source:lichess-opening-explorer",
+   "type": "source",
+   "label": "Lichess's Opening Explorer: counts, at each position, the games of the database that reached it, for a player choosing a move (known from a search result, not seen)",
+   "created": "2026-10-20",
+   "refs": [
+    "https://lichess.org/@/lichess/blog/opening-explorer/Vs0xMTAA",
+    "projects/departures/NEIGHBOURS.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:76",
+   "relation": "works",
+   "to": "project:departures",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "2471d25",
+     "note": "SESSION3.md pushed before February was read"
+    },
+    {
+     "kind": "commit",
+     "ref": "ec3559f",
+     "note": "registered run, reading, prototype, journal"
+    }
+   ]
+  },
+  {
+   "from": "material:lichess-2013-02",
+   "relation": "stands-in-for",
+   "to": "work-candidate:against-the-month",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/SESSION3.md",
+     "note": "a game from outside the month as the visitor's stand-in, registered before reading"
+    }
+   ]
+  },
+  {
+   "from": "project:departures",
+   "relation": "finds",
+   "to": "finding:february-leaves-at-8",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/session3.json",
+     "note": "P12 registered 7-10, held at 8; P13 0.5-3 %, held at 1.246 %"
+    }
+   ]
+  },
+  {
+   "from": "project:departures",
+   "relation": "finds",
+   "to": "finding:horizon-hides-one",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/session3.json",
+     "note": "P14 registered 20-50 %, held at 41.605 %"
+    }
+   ]
+  },
+  {
+   "from": "finding:shared-tree-206kb",
+   "relation": "becomes",
+   "to": "work-candidate:against-the-month",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/tree.json",
+     "note": "session 2's measured tree, rebuilt on board SAN: the same 96,388 nodes"
+    }
+   ]
+  },
+  {
+   "from": "source:chess-js",
+   "relation": "carries",
+   "to": "work-candidate:against-the-month",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/p16.json",
+     "note": "P16: 67,318 of 67,318 plies written alike"
+    }
+   ]
+  },
+  {
+   "from": "finding:horizon-hides-one",
+   "relation": "is-said-by",
+   "to": "work-candidate:against-the-month",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/piece/index.html",
+     "note": "'at most one game of the month played these moves'; the box gives 41.6 %"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "prevents",
+   "to": "work-candidate:against-the-month",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/REFRAIN.md",
+     "note": "session 3: the opening test held a working prototype from declaration by the registered rule; moved the open question from form to advantage"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "fails-on",
+   "to": "project:departures",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/JOURNAL.md",
+     "note": "session 3: two entry times written ahead of the clock and pushed (2471d25), corrected in the next entry"
+    }
+   ]
+  },
+  {
+   "from": "source:lichess-opening-explorer",
+   "relation": "neighbours",
+   "to": "work-candidate:against-the-month",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/NEIGHBOURS.md",
+     "note": "session 3: near in form (play moves, see counts); differs in cut: a closed month, sequences, the moment below two"
+    }
+   ]
+  }
+ ]
+}
