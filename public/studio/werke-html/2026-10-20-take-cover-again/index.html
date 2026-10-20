@@ -33,6 +33,8 @@ input{font:15px system-ui,sans-serif;padding:9px 10px;border:1px solid var(--lin
 #answer .toll{display:block;color:var(--ink);font-size:16px;margin-top:8px}
 #answer .toll.later{color:var(--accent)}
 #unw{font:15px/1.45 system-ui,sans-serif;color:var(--met);margin:0 0 14px}
+#answer .word{display:block;font:15px/1.45 system-ui,sans-serif;color:var(--ink);margin-top:10px;border-left:3px solid var(--accent);padding:2px 0 2px 10px}
+#answer .word q{font-family:Georgia,serif;font-style:italic}
 #answer .gap{display:block;color:var(--mute);font-size:15px;margin-top:6px}
 #dark{position:fixed;inset:0;background:var(--dark);color:#77736b;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9;font-family:system-ui,sans-serif;text-align:center;padding:16px}
 #dark .n{font:200 clamp(64px,22vw,140px)/1 system-ui,sans-serif;color:#3d3a35}
@@ -76,10 +78,10 @@ a{color:var(--accent)}
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
-<div id="wip">In progress · increment 2 of 5 · 2026-10-20 · the work grows over cycle 009</div>
+<div id="wip">In progress · increment 3 of 5 · 2026-10-20 · the work grows over cycle 009</div>
 <main>
 <h1>TAKE COVER, AGAIN</h1>
-<p class="lede">You live in a real US county. Its tornado warnings since 2008 come to you one by one, in the order its people got them. For each, choose before you know: take cover, and sit in the dark one second for every minute the warning stood. Or stay. Then the record answers, and then the record written later, with its dead.</p>
+<p class="lede">You live in a real US county. Its tornado warnings since 2008 come to you one by one, in the order its people got them. For each, choose before you know: take cover, and sit in the dark one second for every minute the warning stands over you. The office may take it back sooner. Or stay. Then the record answers, and then the record written later, with its dead.</p>
 
 <div id="place" class="ui">
   <span>Your county: <b id="cname">…</b></span>
@@ -107,38 +109,46 @@ a{color:var(--accent)}
   <div>Taking cover. The warning stands.</div>
   <div class="n" id="dn">0</div>
   <div class="bar"><i id="dbar"></i></div>
-  <div id="dsub">one second for each minute it was issued for</div>
+  <div id="dsub">one second for each minute it stands over you</div>
+  <div id="dback" style="color:#a8a296;min-height:1.5em;margin-top:10px"></div>
   <button id="out">Come out now</button>
 </div>
 
 <div id="tally"></div>
 
 <h2>Your belief, warning by warning</h2>
-<p class="small">How often you took cover, by how many empty warnings this county had just had in a row. The question of the cycle, asked of you.</p>
+<p class="small">How often you took cover, by how many empty warnings this county had just had in a row. The question of the cycle, asked of you. Beside it, two other readers of the same run. The Atelier's run-reading public (<a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-009/the-wolfs-ledger">The Wolf's Ledger</a>, plate II) keeps 0.6 of its trust for each empty warning in a row, a declared toy, not a measured public; the column shows how often it would have taken cover for the warnings you answered. The record is every county entry of 2008 to 2026: after such a run, how often the next warning was met.</p>
 <table id="drift"></table>
+<p class="small" id="beliefnote"></p>
 
 <div class="fable" id="fable"></div>
 
 <h2>Your ledger</h2>
 <p class="small ui"><button id="csv">Download ledger (CSV)</button> <button id="reset">Start this county again</button></p>
-<table id="ledger"><thead><tr><th>#</th><th>Issued (local)</th><th>Stood</th><th>You</th><th>The record</th><th>The final database</th></tr></thead><tbody></tbody></table>
+<table id="ledger"><thead><tr><th>#</th><th>Issued (local)</th><th>Issued for / stood here</th><th>You</th><th>The record</th><th>The final database</th></tr></thead><tbody></tbody></table>
 
+<h2>The warner's word</h2>
+<p class="small" id="wordfacts"></p>
 <h2>The toll, and the record written later</h2>
 <p class="small" id="tollfacts"></p>
 <p class="small">How the toll is joined: the Storm Prediction Center's final tornado database (<a href="https://www.spc.noaa.gov/wcm/">SPC WCM data</a>, 2008 to its last day; a US government work) gives each tornado a start, an end point, a strength on the Enhanced Fujita scale, a path length and width, and its injured and dead. A tornado stands under a warning when the straight line from its start to its end touches the warning's polygon and it began no more than 15 minutes before the warning was issued and before it expired. The line is the database's simplest statement of a path that really bends. The toll is the whole track's, not one county's. The counties a tornado touched are the database's own, at most four and only in its first state; some of the longest tracks list none, and they are missing from their counties' gaps here though they count in every total. Counted at 0 and 30 minutes instead of 15, the figures move as <code>toll.json</code> shows.</p>
 <h2>What the record is</h2>
-<p class="small">Every tornado warning the US National Weather Service issued from 2008 to today, with each forecast office's own verification against its storm reports, as the Iowa Environmental Mesonet serves it (<a href="https://mesonet.agron.iastate.edu/cow/">IEM Cow</a>; the warnings are public-domain products). A warning is <em>met</em> when a tornado was reported inside its polygon while it stood, and <em>empty</em> when none was. That is the record's answer, not the sky's: a tornado nobody reported leaves a warning empty. The minutes are the minutes the warning was issued for; some were cancelled sooner. A county's warnings are all those whose polygon touched it, so a warning met in one corner of a county counts as met for all of it. Hours are shown in the state's main time zone. Nothing you do here leaves your browser.</p>
+<p class="small">Every tornado warning the US National Weather Service issued from 2008 to today, with each forecast office's own verification against its storm reports, as the Iowa Environmental Mesonet serves it (<a href="https://mesonet.agron.iastate.edu/cow/">IEM Cow</a>; the warnings are public-domain products). A warning is <em>met</em> when a tornado was reported inside its polygon while it stood, and <em>empty</em> when none was. That is the record's answer, not the sky's: a tornado nobody reported leaves a warning empty. The minutes are first the minutes the warning was issued for; in the dark you sit only as long as it stood over your county, because an office can take a warning back for some counties or all of them, and the record keeps when. A county's warnings are all those whose polygon touched it, so a warning met in one corner of a county counts as met for all of it. Hours are shown in the state's main time zone. Nothing you do here leaves your browser.</p>
 <p class="small" id="facts"></p>
 <p class="small">Neighbours in the <a href="https://frankbueltge.de/atlas">Atlas of Data Art</a>: Latai Taumoepeau, <em>Repatriate</em> (2015), where the artist's body endures the water's rise as a proxy for data; here the duration is a real warning's, and the visitor decides each time whether to endure it. Mariela Yeregui, <em>Estados de Alerta</em> (2021), whose creatures raise alarms at visitors; here the alarms are real and past, and the work watches what the visitor does with the tenth after nine. Andrea Polli, <em>Atmospherics/Weather Works</em> (2004), storms made audible; here the storm is never seen or heard, only the warning and the wait. In this house: UNDER WARNING (2026-10-14) drew the people beneath the same polygons; the Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-009/the-wolfs-ledger">The Wolf's Ledger</a> reads the fable this work's count comes from.</p>
-<p class="small">Ensemble · the Studio · cycle 009 · method and scripts beside this page (<code>fetch.py</code>, <code>build_data.py</code>, <code>SCORE.md</code>).</p>
+<p class="small">Ensemble · the Studio · cycle 009 · method and scripts beside this page (<code>fetch.py</code>, <code>build_data.py</code>, <code>build_toll.py</code>, <code>fetch_word.py</code>, <code>build_word.py</code>, <code>sample_words.py</code>, <code>SCORE.md</code>).</p>
 </main>
 <script src="data.js"></script>
 <script src="summary.js"></script>
 <script src="toll.js"></script>
 <script src="tollsum.js"></script>
+<script src="word.js"></script>
+<script src="wordsum.js"></script>
+<script src="wordsample.js"></script>
 <script>
 (() => {
-const D = window.TCA, S = window.TCA_SUMMARY, X = window.TCA_TOLL, XS = window.TCA_TOLLSUM;
+const D = window.TCA, S = window.TCA_SUMMARY, X = window.TCA_TOLL, XS = window.TCA_TOLLSUM, WD = window.TCA_WORD, WS = window.TCA_WORDSUM;
+const H = 0.6; // the Atelier's declared habit (plate II): trust kept per empty warning in a row
 const NONE = new Set(X.none);
 const T0 = Date.parse(D.t0);
 const qs = new URLSearchParams(location.search);
@@ -183,9 +193,12 @@ const byName = new Map(D.counties.map(c => [c[1].toLowerCase(), c]));
 $('counties').innerHTML = D.counties.map(c => `<option value="${c[1]}">`).join('');
 const pool = D.counties.filter(c => c[2].length >= 20);
 
-let C = null, acts = [], pos = 0, darkTimer = null;
+let C = null, acts = [], pos = 0, darkTimer = null, TK = new Map();
+// minutes the warning stood over this county, and the product that ended it there, when taken back
+const stood = i => TK.has(i) ? TK.get(i)[0] : D.dur[C[2][i]];
 function choose(c) {
   C = c; acts = store.get('tca:' + c[0]) || []; pos = acts.length;
+  TK = new Map((WD.taken[cIdx.get(c[0])] || []).map(t => [t[0], [t[1], WD.prod[t[2]]]]));
   store.set('tca:last', c[0]);
   $('cname').textContent = c[1] + ' · ' + c[2].length + ' warnings';
   $('pick').value = '';
@@ -235,14 +248,15 @@ function answer(w, a) {
   let t;
   if (met) {
     const r = D.reports[D.rep[w]];
-    t = `A tornado was reported inside it: ${r[1]}, ${r[2]}, at ${local(r[0], state).split(', ').pop()}.` + (a.act === 'stay' ? ' You stayed.' : a.paid < D.dur[w] ? ' You had come out early.' : '');
+    t = `A tornado was reported inside it: ${r[1]}, ${r[2]}, at ${local(r[0], state).split(', ').pop()}.` + (a.act === 'stay' ? ' You stayed.' : a.paid < stood(a.i) ? ' You had come out early.' : '');
   } else {
     t = 'No tornado was reported inside it.' + (a.act === 'cover' ? ` You sat ${a.paid} seconds in the dark for it.` : '');
   }
   $('answer').className = met ? 'met' : '';
   const s = C[2], nxt = pos + 1 < s.length ? s[pos + 1] : null;
   const f = finalText(w);
-  $('answer').innerHTML = t + (f ? `<span class="${f.cls}">${f.t}</span>` : '') + (nxt !== null ? `<span class="gap">The next warning came ${gapText(D.issue[nxt] - D.issue[w])}.</span>` : '');
+  $('answer').innerHTML = t + (f ? `<span class="${f.cls}">${f.t}</span>` : '') + `<span class="word" id="word">${wordText(pos)}</span>` + (nxt !== null ? `<span class="gap">The next warning came ${gapText(D.issue[nxt] - D.issue[w])}.</span>` : '');
+  if (TK.has(pos)) fetchWord(pos, C);
   $('next').hidden = false; $('cover').disabled = $('stay').disabled = true;
   $('next').focus();
 }
@@ -264,13 +278,18 @@ function tone() {
   } catch (e) {}
 }
 $('cover').onclick = () => {
-  const w = C[2][pos], total = D.dur[w];
+  const w = C[2][pos], total = D.dur[w], here = stood(pos);
   const t0 = performance.now();
-  $('dark').style.display = 'flex'; $('out').focus();
+  $('dark').style.display = 'flex'; $('dback').textContent = ''; $('out').focus();
   const step = () => {
-    const sec = Math.min(total, Math.floor((performance.now() - t0) / 1000 * SPEED));
+    const sec = Math.min(here, Math.floor((performance.now() - t0) / 1000 * SPEED));
     $('dn').textContent = total - sec; $('dbar').style.width = (100 * sec / total) + '%';
-    if (sec >= total) return end(total);
+    if (sec >= here) {
+      if (here >= total) return end(here);
+      $('dback').textContent = `The office has taken the warning back for this county, ${plural(total - here, 'minute', 'minutes')} early.`;
+      $('out').onclick = null;
+      return setTimeout(() => end(here), 1800 / SPEED);
+    }
     darkTimer = requestAnimationFrame(step);
   };
   const end = paid => { cancelAnimationFrame(darkTimer); $('dark').style.display = 'none'; $('out').onclick = null; record('cover', paid); };
@@ -283,12 +302,51 @@ $('deal').onclick = deal;
 $('pick').onchange = () => { const c = byName.get($('pick').value.trim().toLowerCase()); if (c) choose(c); };
 $('reset').onclick = () => { store.del('tca:' + C[0]); acts = []; pos = 0; render(); };
 $('csv').onclick = () => {
-  const rows = [['county', 'ugc', 'n', 'issued_utc', 'minutes', 'empty_run_before', 'you', 'seconds_in_dark', 'record', 'final_database']];
-  acts.forEach(a => { const w = C[2][a.i]; rows.push([C[1], C[0], a.i + 1, new Date(T0 + D.issue[w] * 60000).toISOString(), D.dur[w], a.run, a.act, a.paid, a.met ? 'met' : 'empty', ledgerFinal(w)]); });
+  const rows = [['county', 'ugc', 'n', 'issued_utc', 'minutes_issued', 'minutes_stood_here', 'empty_run_before', 'you', 'seconds_in_dark', 'record', 'final_database']];
+  acts.forEach(a => { const w = C[2][a.i]; rows.push([C[1], C[0], a.i + 1, new Date(T0 + D.issue[w] * 60000).toISOString(), D.dur[w], stood(a.i), a.run, a.act, a.paid, a.met ? 'met' : 'empty', ledgerFinal(w)]); });
   const b = new Blob([rows.map(r => r.map(x => /[",]/.test(x) ? `"${String(x).replace(/"/g, '""')}"` : x).join(',')).join('\n')], {type: 'text/csv'});
   const l = document.createElement('a'); l.href = URL.createObjectURL(b); l.download = 'take-cover-again-' + C[0] + '.csv'; l.click();
 };
 
+function wordText(i) {
+  const w = C[2][i], n = D.dur[w];
+  if (!TK.has(i)) return `The warner's word: it stood its full ${n} minutes over this county.`;
+  const s = TK.get(i)[0];
+  return `The warner's word: the office took it back for this county after ${plural(s, 'minute', 'minutes')} of its ${n}.` + (TK.get(i)[1] ? ' <span class="small" id="wordtext">Fetching the statement that ended it…</span>' : '');
+}
+// the office's own statement, fetched live from the Iowa Environmental Mesonet's text archive
+function ugcList(seg) {
+  const head = (seg.match(/^\s*([A-Z]{2}[CZ]\d{3}[A-Z\d>\-\s]*?\d{6}-)/m) || [])[1] || '';
+  const out = new Set(); let pre = '';
+  head.replace(/\s/g, '').split('-').forEach(t => {
+    const m = t.match(/^([A-Z]{2}[CZ])?(\d{3})(?:>(\d{3}))?$/);
+    if (!m) return;
+    if (m[1]) pre = m[1];
+    const a = +m[2], b = m[3] ? +m[3] : a;
+    for (let k = a; k <= b; k++) out.add(pre + String(k).padStart(3, '0'));
+  });
+  return out;
+}
+function fetchWord(i, c) {
+  const pid = TK.get(i)[1];
+  if (!pid) return;
+  const link = `<a href="https://mesonet.agron.iastate.edu/p.php?pid=${pid}">the office's product</a>`;
+  fetch('https://mesonet.agron.iastate.edu/api/1/nwstext/' + pid).then(r => r.ok ? r.text() : Promise.reject(r.status)).then(txt => {
+    if (C !== c || pos !== i || !$('wordtext')) return;
+    const segs = txt.split('$$').filter(sg => /\/O\.(CAN|CON|EXP)\.\w{4}\.TO\.W\./.test(sg));
+    const mine = segs.filter(sg => ugcList(sg).has(c[0]));
+    const seg = mine.find(sg => /\/O\.CAN\./.test(sg)) || mine[0] || segs.find(sg => /\/O\.CAN\./.test(sg));
+    if (!seg) { $('wordtext').innerHTML = `The statement is ${link}; it names no cancellation for this county.`; return; }
+    const body = seg.split('LAT...LON')[0];
+    const m = body.match(/\.\.\.([\s\S]+?)\.\.\.\s*\n/);
+    const clean = t => t.replace(/\s+/g, ' ').trim();
+    const head = m ? clean(m[1]) : '';
+    const prose = clean(m ? body.slice(m.index + m[0].length) : body).split(/(?<=\.)\s/)[0].slice(0, 260);
+    const esc = t => t.replace(/[&<>]/g, ch => ({'&': '&amp;', '<': '&lt;', '>': '&gt;'})[ch]);
+    const named = mine.length ? '' : ' (its cancelling part names other counties; this one was dropped from it)';
+    $('wordtext').innerHTML = `In its own words${named}: <q>${esc(head.charAt(0) + head.slice(1).toLowerCase())}.${prose ? ' ' + esc(prose) : ''}</q> (${link})`;
+  }).catch(() => { if ($('wordtext')) $('wordtext').innerHTML = `The office's words could not be fetched just now; they are in ${link}.`; });
+}
 function ledgerFinal(w) {
   if (!inDb(w)) return 'not yet';
   const ks = X.wt[w] || [];
@@ -308,17 +366,21 @@ function tally() {
     [done.length, 'warnings you have answered'],
     [paidAll + ' s', 'in the dark, all told'],
     [paidEmpty + ' s', 'in the dark for warnings no tornado met'],
+    [cover.reduce((s, a) => s + D.dur[C[2][a.i]] - stood(a.i), 0) + ' s', 'the warner gave back by taking warnings back early'],
     [`${stayedMet} of ${metSeen}`, 'times you stayed while a tornado came'],
     [deadStayed, 'killed by tornadoes under the warnings you stayed for (whole tracks)'],
     [unwSeen, 'tornadoes here so far that no warning stood over'],
   ].map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join('');
   const bins = [[0, 0, 'after a met warning'], [1, 1, 'after 1 empty'], [2, 2, 'after 2 empty'], [3, 4, 'after 3 or 4 empty'], [5, 1e9, 'after 5 or more empty']];
-  $('drift').innerHTML = '<tr><th>This county had just had</th><th>warnings</th><th>you took cover</th></tr>' + bins.map(([lo, hi, l]) => {
+  const BR = WS.belief_record, pc = x => Math.round(100 * x) + ' %';
+  $('drift').innerHTML = '<tr><th>This county had just had</th><th>warnings</th><th>you took cover</th><th>the run-reading public would</th><th>the record: the next was met</th></tr>' + bins.map(([lo, hi, l]) => {
     const b = done.filter(a => a.i > 0 && a.run >= lo && a.run <= hi), c = b.filter(a => a.act === 'cover').length;
-    return `<tr><td>${l}</td><td>${b.length}</td><td>${b.length ? Math.round(100 * c / b.length) + ' %' : '—'}</td></tr>`;
+    let e = 0, m = 0;
+    for (let k = lo; k <= Math.min(hi, 10); k++) if (BR[k]) { e += BR[k].entries; m += BR[k].met; }
+    return `<tr><td>${l}</td><td>${b.length}</td><td>${b.length ? pc(c / b.length) : '—'}</td><td>${b.length ? pc(b.reduce((s, a) => s + Math.pow(H, a.run), 0) / b.length) : '—'}</td><td>${pc(m / e)}</td></tr>`;
   }).join('');
   const tb = document.querySelector('#ledger tbody'), state = C ? st(C[1]) : '';
-  tb.innerHTML = done.slice().reverse().map(a => { const w = C[2][a.i]; return `<tr><td>${a.i + 1}</td><td>${local(D.issue[w], state)}</td><td>${D.dur[w]} min</td><td>${a.act === 'cover' ? 'cover, ' + a.paid + ' s' : 'stayed'}</td><td class="${a.met ? 'met' : ''}">${a.met ? 'tornado' : 'empty'}</td><td>${ledgerFinal(w)}</td></tr>`; }).join('');
+  tb.innerHTML = done.slice().reverse().map(a => { const w = C[2][a.i]; return `<tr><td>${a.i + 1}</td><td>${local(D.issue[w], state)}</td><td>${D.dur[w]}${stood(a.i) < D.dur[w] ? ' / ' + stood(a.i) : ''} min</td><td>${a.act === 'cover' ? 'cover, ' + a.paid + ' s' : 'stayed'}</td><td class="${a.met ? 'met' : ''}">${a.met ? 'tornado' : 'empty'}</td><td>${ledgerFinal(w)}</td></tr>`; }).join('');
 }
 
 const r = S.fable_runs_before_met;
@@ -329,6 +391,10 @@ $('facts').textContent = `The record: ${fmtN(S.warnings)} tornado warnings from 
 const B = XS.by_window[String(X.win)], B0 = XS.by_window['0'];
 const pct = (a, b) => Math.round(100 * a / b) + ' %';
 $('tollfacts').innerHTML = `From 2008 to ${XS.spc_last_day.slice(0, 4)} the final database holds <b>${fmtN(XS.tornadoes)}</b> tornadoes, which killed ${fmtN(XS.deaths)} people and injured ${fmtN(XS.injuries)}. <b>${fmtN(B.tornadoes_under_a_warning)}</b> stood under a warning; <b>${fmtN(B.tornadoes_under_none)}</b> (${pct(B.tornadoes_under_none, XS.tornadoes)}) under none, and they killed ${B.deaths_under_none}. ${fmtN(B.deaths_under_a_warning)} of the ${fmtN(XS.deaths)} dead (${pct(B.deaths_under_a_warning, XS.deaths)}) died in tornadoes a warning stood over. The deadliest, Joplin, Missouri, on 22 May 2011, 158 killed, began 17 minutes after its warning was issued; Moore, Oklahoma, on 20 May 2013, 24 killed, 16 minutes after. <br><br>The record written later also changes the record of false alarms. Of the ${fmtN(B.empty_warnings)} warnings of those years the office's verification counts empty, the final database places a tornado inside <b>${fmtN(B.empty_warnings_with_a_tornado)}</b> (${fmtN(B0.empty_warnings_with_a_tornado)} if the tornado had to begin after the warning was issued). Of the ${fmtN(B.met_warnings)} it counts met, it places no tornado track inside ${fmtN(B.met_warnings - B.met_warnings_with_a_tornado)}. Who wrote <em>never needed</em> depends on which record you read, and when.`;
+const BR0 = WS.belief_record, sh = k => Math.round(100 * BR0[k].share) + ' %';
+$('beliefnote').innerHTML = `The record's own answer to the run, over every county's warnings since 2008: after a met warning the next one there was met ${sh(0)} of the time; after one empty, ${sh(1)}; after five, ${sh(5)}; after ten or more, ${sh(10)}. The run carries news, because tornadoes come in seasons and outbreaks, and a public that trusts less after empty warnings is not simply wrong. But after ten empty warnings in a row, about one in ${Math.round(1 / BR0[10].share)} was still met: ${fmtN(BR0[10].met)} times.`;
+const WM = WS.met, WE = WS.empty, WSm = window.TCA_WORDSAMPLE, pc1 = (a, b) => Math.round(100 * a / b) + ' %';
+$('wordfacts').innerHTML = `The record keeps when an office ended a warning for each county, and the statement that ended it (the Iowa Environmental Mesonet's VTEC event service, one row per warning and county). Of ${fmtN(WE.entries)} times an empty warning stood over a county, the office took it back five or more minutes early ${fmtN(WE.taken_back_early)} times (${pc1(WE.taken_back_early, WE.entries)}), and gave back ${fmtN(WE.minutes_taken_back_early)} minutes. Of ${fmtN(WM.entries)} times a tornado met it, ${fmtN(WM.taken_back_early)} (${pc1(WM.taken_back_early, WM.entries)}). The met ones are taken back a little more often: a tornado that has passed can be seen to have passed. <br><br>What the office says when it takes one back: in a fixed random sample of ${WSm.sample} of the ${fmtN(WSm.population)} statements that ended a warning early, ${Math.round(100 * WSm.shares_first_sentence.moved)} % say first that the storm moved out of the area, ${Math.round(100 * WSm.shares_first_sentence.weakened)} % that it weakened, and the rest name a watch still in effect, ask for reports of damage, or say nothing past the headline. <b>None of the ${WSm.sample} says the warning was in error, or that no tornado came.</b> The warner's word ends a warning by where the storm went, never by whether the warning was needed. The record of false alarms is written by others: by the storm reports in the hour, and by the final database later. (An estimate from the sample; the reading rules and the ${WSm.sample} product ids are in <code>words.json</code>; a second reading of the whole segment, fixed first, gives ${Math.round(100 * WSm.shares_of_found.moved)} % moved, and finds no error either.)`;
 const last = byUgc.get(qs.get('county') || store.get('tca:last'));
 last ? choose(last) : deal();
 })();

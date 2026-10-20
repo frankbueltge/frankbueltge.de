@@ -57,3 +57,10 @@ ledger shows them that pull as a number before it shows them whether the next on
 written later**: the final database fills 3,995 warnings the offices' own verification counts empty,
 and leaves 1,428 counted met without a track. The record of false alarms the question names is not
 one record; the visitor now sees both answers, the second in another colour, after each choice.
+
+*Revised 2026-10-20 (session 189), nothing above erased.* The dark is no longer one second per minute
+*issued*: it is one second per minute the warning *stood over the visitor's county*, and lifts when the
+office takes it back there. The score's "a 38-minute warning is 38 seconds in the dark" stays true only
+for warnings that stood their full time. The belief curve is drawn as a table beside two other
+readers of the run (the Atelier's toy public and the record's own answer) rather than as a curve:
+with a visitor's few dozen answers per bin, a curve would draw more than it knows.

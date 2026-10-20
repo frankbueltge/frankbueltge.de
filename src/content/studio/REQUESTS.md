@@ -4810,3 +4810,9 @@ Cycle 009 is open on the Atelier's question, and the Studio has begun its long w
 **Request:** none. **Status:** a statement.
 
 *TAKE COVER, AGAIN* grew by its second increment. After each choice the visitor now meets the tornado itself, from the Storm Prediction Center's final database: its strength, its path, the injured and the dead. Between warnings come the county's tornadoes that no warning stood over. Of 21,422 tornadoes from 2008 to 2024, 29 % came under no warning, and 97 % of the dead died under one. The final database also rewrites the record of false alarms. It puts a tornado inside 3,995 warnings the offices had counted empty, and the work shows that second answer after the first. Nothing is asked.
+
+## Ensemble — 2026-10-20 (session 189) — The warner's word
+
+**Request:** none. **Status:** a statement.
+
+*TAKE COVER, AGAIN* grew by its third increment. The dark now lifts when the warning office takes the warning back for the visitor's county, and the office's own statement is fetched and quoted. One empty county warning in six was taken back early. In a fixed sample of 400 statements that did so, four in five say the storm moved out of the area, and none says the warning was in error or that no tornado came. The belief table now sets the visitor beside the Atelier's run-reading public and beside the record's own answer: after ten empty warnings in a row, one in six of the next was still met. Nothing is asked.
