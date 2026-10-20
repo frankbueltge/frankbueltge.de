@@ -1,30 +1,30 @@
 {
-  "date": "2026-10-19",
+  "date": "2026-10-20",
   "deletion": {
     "available": true,
-    "checked_at": "2026-10-19T11:09:54Z",
+    "checked_at": "2026-10-20T10:21:56Z",
     "counts": {
-      "botwall": 34,
-      "gone_404": 1,
+      "botwall": 32,
+      "gone_404": 4,
       "gone_410": 0,
       "legal_451": 0,
-      "ok": 262,
+      "ok": 260,
       "other": 0,
-      "server_error": 0,
-      "unreachable": 3
+      "server_error": 2,
+      "unreachable": 2
     },
-    "decided": 263,
-    "excluded_unverifiable": 37,
-    "gone": 1,
+    "decided": 264,
+    "excluded_unverifiable": 36,
+    "gone": 4,
     "gone_ci95": [
-      0.0007,
-      0.0212
+      0.0059,
+      0.0383
     ],
-    "gone_rate": 0.0038,
+    "gone_rate": 0.0152,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.0144
+      0.0143
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,112 +33,137 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-10-17",
+    "pool_day": "2026-10-18",
     "receipts": [
       {
         "class": "gone_404",
-        "domain": "news3lv.com",
-        "first_seen": "20261017120000",
+        "domain": "webindia123.com",
+        "first_seen": "20261018120000",
         "http_code": 404,
-        "title": "Saturday Forecast: Low pressure off Baja to bring late clouds, cooler temps",
-        "url": "https://news3lv.com/news/local/saturday-forecast-low-pressure-off-baja-to-bring-late-clouds-cooler-temps"
+        "title": "Will neither be intimidated nor back down: CJP's Abhijeet Dipke vows to continue legal battle",
+        "url": "https://news.webindia123.com/news/Articles/India/20261018/4512424.html"
+      },
+      {
+        "class": "gone_404",
+        "domain": "webindia123.com",
+        "first_seen": "20261018120000",
+        "http_code": 404,
+        "title": "Taiwan detects 2 PLA aircraft, 5 PLAN vessels operating near territory",
+        "url": "https://news.webindia123.com/news/Articles/World/20261018/4512290.html"
+      },
+      {
+        "class": "gone_404",
+        "domain": "1047thecave.com",
+        "first_seen": "20261018200000",
+        "http_code": 404,
+        "title": "How to watch Chiefs-Chargers Week 6: live stream, start time and more",
+        "url": "https://www.1047thecave.com/how-to-watch-chiefs-chargers-week-6-live-stream-start-time-and-more/"
+      },
+      {
+        "class": "gone_404",
+        "domain": "klif.com",
+        "first_seen": "20261018020000",
+        "http_code": 404,
+        "title": "How Much Water? Paxton Demands Answers From 156 Texas Data Center Projects",
+        "url": "https://www.klif.com/2026/10/17/how-much-water-paxton-demands-answers-from-156-texas-data-center-projects/"
       }
     ],
-    "sample_drawn_at": "2026-10-18T09:47:59Z",
+    "sample_drawn_at": "2026-10-19T11:04:38Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 3347,
-      "replaced": 3371,
-      "trivial": 509,
-      "update": 229
+      "reframing": 4591,
+      "replaced": 4153,
+      "trivial": 618,
+      "update": 313
     },
-    "day": "2026-10-18",
+    "day": "2026-10-19",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
         "added": [
-          "North",
-          "Dakota"
+          "Kim",
+          "Kardashian"
         ],
-        "after": "New network helping North Dakota's rural hospitals survive, thrive - InForum | Fargo, Moorhead and West Fargo news, weather and sports",
-        "before": "New rural hospital network helping ND's rural hospitals survive, thrive - InForum | Fargo, Moorhead and West Fargo news, weather and sports",
-        "detected": "2026-10-18T12:31:34Z",
-        "domain": "inforum.com",
+        "after": "Taylor Swift is a vision in strapless blue gown as she leads best dressed stars with Kim Kardashian, Kate Hudson and Jessica Biel at 2026 Academy Museum Gala",
+        "before": "Taylor Swift is a vision in strapless blue gown as she leads best dressed stars with Kate Hudson, Jessica Biel and Sarah Pidgeon at 2026 Academy Museum Gala",
+        "detected": "2026-10-19T02:47:11Z",
+        "domain": "dailymail.com",
         "removed": [
-          "hospital",
-          "ND",
-          "rural"
+          "Sarah",
+          "Pidgeon"
         ],
-        "similarity": 0.8,
-        "url": "https://www.inforum.com/news/north-dakota/new-rural-hospital-network-helping-nds-rural-hospitals-survive-thrive",
+        "similarity": 0.867,
+        "url": "https://www.dailymail.com/tvshowbiz/article-16217877/academy-museum-gala-2026-best-dressed.html",
+        "weight": 8,
+        "window": "24h"
+      },
+      {
+        "added": [
+          "Juanita",
+          "Sanchez"
+        ],
+        "after": "Inexperience an issue for Tigers in 28-6 loss to Juanita Sanchez | EastBayRI.com - News, Opinion, Things to Do in the East Bay",
+        "before": "Inexperience an issue for Tigers in 28-6 loss to Janita Sancez | EastBayRI.com - News, Opinion, Things to Do in the East Bay",
+        "detected": "2026-10-19T18:32:01Z",
+        "domain": "eastbayri.com",
+        "removed": [
+          "Janita",
+          "Sancez"
+        ],
+        "similarity": 0.826,
+        "url": "http://www.eastbayri.com/stories/inexperience-an-issue-for-tigers-in-28-6-loss-to-janita-sancez,143259",
         "weight": 8,
         "window": "1w"
       },
       {
         "added": [
-          "Tanjong",
-          "Pagar"
+          "ECGâ",
+          "GHÂ"
         ],
-        "after": "Tanjong Pagar MP Foo Cexiang makes 'wrestling debut', shows off slick moves at WrestlePagar",
-        "before": "Singapore MP Foo Cexiang makes 'wrestling debut', shows off slick moves at WrestlePagar",
-        "detected": "2026-10-18T10:01:25Z",
-        "domain": "asiaone.com",
+        "after": "Afenyo-Markin Drops Bombshell on ECGâ€™s GHÂ¢12.16bn Forex Gains, Reveals What Ghanaians Need to Know – Ghanamma.com",
+        "before": "Afenyo-Markin Drops Bombshell on ECG's GH¢12.16bn Forex Gains, Reveals What Ghanaians Need to Know – Ghanamma.com",
+        "detected": "2026-10-19T18:46:38Z",
+        "domain": "ghanamma.com",
         "removed": [
-          "Singapore"
+          "ECG",
+          "GH"
         ],
-        "similarity": 0.8,
-        "url": "https://www.asiaone.com/singapore/singapore-mp-foo-cexiang-shows-off-wrestling-moves-wrestlepagar",
-        "weight": 6,
+        "similarity": 0.818,
+        "url": "https://www.ghanamma.com/2026/10/12/afenyo-markin-drops-bombshell-on-ecgs-gh%C2%A212-16bn-forex-gains-reveals-what-ghanaians-need-to-know/",
+        "weight": 8,
         "window": "1w"
-      },
-      {
-        "added": [
-          "Mixed"
-        ],
-        "after": "Nayyi Navelli Day 1 Box Office Collection: Yami Gautam-Starrer Collects ₹3.25 Crore Amid Mixed Reviews",
-        "before": "Nayyi Navelli Day 1 Box Office Collection: : Yami Gautam-Starrer Struggles Amid Disappointing Reviews, Collects ₹3.25 Crore",
-        "detected": "2026-10-18T03:46:57Z",
-        "domain": "freepressjournal.in",
-        "removed": [
-          "Struggles",
-          "Disappointing"
-        ],
-        "similarity": 0.842,
-        "url": "https://www.freepressjournal.in/entertainment/nayyi-navelli-day-1-box-office-collection-yami-gautam-starrer-struggles-amid-disappointing-reviews-collects-325-crore",
-        "weight": 6,
-        "window": "24h"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 9633,
-      "PAGE_TEXTCHANGE": 78059,
-      "PAGE_TITLECHANGE": 32923,
-      "UNCHANGED_CONTENT": 507991
+      "HTTP_REDIRECT": 17091,
+      "PAGE_TEXTCHANGE": 99330,
+      "PAGE_TITLECHANGE": 39224,
+      "UNCHANGED_CONTENT": 581107
     },
-    "title_changes_en": 7456,
+    "title_changes_en": 9675,
     "trace": [
       {
-        "bytes_billed": 16777216,
-        "created": "1792407858854",
-        "job_id": "world_gdg_counts_20261018",
+        "bytes_billed": 19922944,
+        "created": "1792491431570",
+        "job_id": "world_gdg_counts_20261019",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 157286400,
-        "created": "1792407864593",
-        "job_id": "world_gdg_titles_20261018",
+        "bytes_billed": 184549376,
+        "created": "1792491442763",
+        "job_id": "world_gdg_titles_20261019",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-10-19T11:09:54Z",
+  "generated_at": "2026-10-20T10:21:56Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-10-18.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-10-19.json",
   "schema_version": "1",
   "selection_version": "v1"
 }
