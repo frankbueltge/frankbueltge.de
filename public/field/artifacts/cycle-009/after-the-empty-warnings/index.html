@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>After the empty warnings</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#5e5d58;--rule:#d9d6cc;--accent:#2f6db5;--hot:#c2571b;--band:rgba(194,87,27,.13);--ok:#2c7a3f;--bad:#b3261e;--panel:#ffffff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--accent:#6fa3e6;--hot:#ee8a4f;--band:rgba(238,138,79,.16);--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#ecebe6;--muted:#a3a198;--rule:#3a3935;--accent:#6fa3e6;--hot:#ee8a4f;--band:rgba(238,138,79,.16);--ok:#6cc483;--bad:#f2867e;--panel:#1e1e1c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:940px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+.kicker,.small,figcaption,table,.controls,.big,.tip{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.kicker{color:var(--muted);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.small{font-size:.85rem;color:var(--muted)}
+.lede{font-size:1.15rem}
+figure{margin:1.2em 0;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:12px}
+svg{width:100%;height:auto;display:block}
+svg text{font:12px system-ui,sans-serif;fill:var(--muted)}
+svg text.lab{fill:var(--fg);font-size:13px}
+svg .band{fill:var(--band)}
+svg .grid{stroke:var(--rule)} svg .one{stroke:var(--fg);stroke-dasharray:3 3}
+svg .w{stroke:var(--fg);stroke-width:2}
+svg .pt{fill:var(--panel);stroke:var(--fg);stroke-width:2} svg .pt.above{fill:var(--hot);stroke:var(--hot)} svg .pt.nc{stroke-dasharray:2 2}
+svg .hit{fill:transparent;cursor:pointer} svg .row:focus{outline:none} svg .row:focus .hit,svg .row:hover .hit{fill:var(--band)}
+.controls{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:14px;margin-bottom:8px}
+.controls button{font:inherit;padding:4px 10px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);border-radius:4px;cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.big{font-size:1.05rem;margin:.4em 0}
+.tip{font-size:13px;min-height:2.8em;color:var(--muted)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.88rem;width:100%}
+th,td{padding:5px 8px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.held{color:var(--ok);font-weight:600}.failed{color:var(--bad);font-weight:600}
+a{color:var(--accent)}
+code{font-size:.9em}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">The Field · study 31 · cycle 009, increment 1 · 2026-10-20 · pre-registered (commit 983df95)</p>
+<h1>After the empty warnings</h1>
+<p class="lede">In 2009 two economists found that tornadoes hurt more people where the local tornado warnings had recently been false alarms more often: the cry-wolf effect, read off casualties. This study re-runs their design on the polygon-warning era, 2009–2023, and adds two tests their design could not hold: the false alarms of the year <em>after</em> the tornado, which nobody under it had seen, and the same office compared with itself over time. The old finding comes back at full size. Then it turns out to belong to places, not to anyone's memory of a record.</p>
+
+<p class="big">Across offices, one standard deviation more empty warnings in the year before goes with <b>18 %</b> more injured and <b>27 %</b> more dead, inside the 1986–2004 range. But the empty warnings of the year <em>after</em> go with <b>27 %</b> more dead too, and within an office, as its record rises and falls, the injuries do not move (<b>1.01</b>).</p>
+
+<h2>1 · Five records of empty warnings, one tornado at a time</h2>
+<p>For each of 17,596 tornadoes, five measures of how often warnings had been empty: the office's false-alarm ratio in the 12 months before the tornado's month (the 2009 paper's measure), the same for the 12 months after, the state's, and two at the county where the tornado began: how many empty warnings it had received in the year before (leaving out the last day, so the tornado's own storm is not counted), and how many in a row directly before. Each is a separate negative-binomial regression of the tornado's injured or dead, with the controls of study 15: warned or not, EF rating, track length and width, night, era, region, county density and residents in the path. Ratios are per standard deviation of the measure; above 1 means more harm where warnings had been emptier.</p>
+<figure>
+<div class="controls">
+<span id="seg-y"><button data-v="inj" aria-pressed="true">injured</button> <button data-v="fat" aria-pressed="false">dead</button></span>
+<span id="seg-v"><button data-v="across" aria-pressed="true">across offices</button> <button data-v="within" aria-pressed="false">within an office</button></span>
+</div>
+<svg id="forest" viewBox="0 0 900 300" role="img" aria-label="Incidence-rate ratios of injuries or deaths per standard deviation of five records of empty warnings, with 95 percent intervals"></svg>
+<p class="tip" id="det" aria-live="polite"></p>
+<figcaption class="small">Dots: incidence-rate ratio per 1 SD; bars: 95 % interval, robust (HC0) errors; filled dots have intervals above 1; a dashed dot is a fit that did not converge and is not read. Shaded: the range Simmons &amp; Sutter (2009) report for 1986–2004 over six definitions of a local, recent FAR (fatalities 12–29 %, injuries 13–32 %). <b>Within an office</b> adds a fixed effect for each of the offices, so only an office's change over time is compared; offices with no injured (22) or no dead (60) tornado are left out of that fit, a declared deviation. Axis on a log scale, clipped at 0.6 and 1.8; the within-office deaths interval runs 0.43–3.05.</figcaption>
+</figure>
+
+<h2>2 · What the record of empty warnings marks</h2>
+<p>Split the tornadoes into thirds by their office's false-alarm ratio in the year before. Harm per tornado more than doubles from the lowest third to the highest. The share of strong tornadoes (EF2 and above) does not change; the share in the South does.</p>
+<figure>
+<div class="wrap"><table id="terc"><thead><tr><th>third</th><th class="n">office FAR, year before</th><th class="n">tornadoes</th><th class="n">dead per 100</th><th class="n">injured per 100</th><th class="n">EF2+</th><th class="n">South</th><th class="n">night</th></tr></thead><tbody></tbody></table></div>
+<figcaption class="small">Raw tabulation, no controls, the form the 2009 paper also shows. 279 tornadoes whose office issued no warning in the year before are not in any third.</figcaption>
+</figure>
+
+<h2>3 · Predictions, fixed before the join</h2>
+<div class="wrap"><table id="pred"><thead><tr><th></th><th>prediction</th><th>verdict</th></tr></thead><tbody></tbody></table></div>
+<p class="small"><b>Six of six held, and two of them say less than they look.</b> P3 holds by its letter: the year-after ratio for injuries (1.08) lies inside the year-before interval (1.06–1.32). But that interval is wide, and fitted together the year before keeps 1.17 for injuries while the year after falls to 1.03. For injuries the record before is the better reader; for deaths the two are equal (1.21 and 1.21). P4's first fit, as registered, did not converge; the declared refit, without the offices that had no injured, converged to the same ratio (1.01, 0.91–1.12). Its interval lies wholly below the 2009 range's floor of 1.13.</p>
+
+<h2>4 · What this says, and what it cannot</h2>
+<p><b>Measured.</b> The 2009 association replicates in size in the storm-based era. Its deaths half is matched by a record nobody had yet seen. Its injuries half disappears when an office is compared only with itself. At the county where the tornado began, neither the count of empty warnings in the year before (injured 0.94, 0.84–1.04) nor the run of empty warnings just before (1.00, 0.91–1.10) goes with more harm.</p>
+<p><b>Judgment (not measurement).</b> The record of false alarms is high where tornadoes hurt more for reasons the record shares with the place. In this sample the South holds 69 % of the deaths and its offices' warnings were emptier than the Midwest's (0.75 against 0.71 on average); the regressions control for four census regions, so what remains is place below that scale, which a four-region control cannot hold and an office fixed effect can. Read across places, the record charges the cost of its empty warnings to the next warning's believers. Read within a place, over time, it cannot find them. This does not show that nobody discounts a warner. It shows that casualties, the only belief-measure the record keeps, cannot tell a discounted warning from a dangerous place, and that the 2009 design could not either.</p>
+<p><b>Limits.</b> Casualties are a far proxy for belief. A county is not where people heard a warning. The office of a county is its most frequent issuer. Within-office deaths are undecided (1.15, 0.43–3.05): too few deaths per office. The state measure for deaths did not converge and is not read. The warning record is the office's own verification, in which an unreported tornado leaves a warning empty.</p>
+
+<h2>5 · Method, sources, reproduce</h2>
+<p class="small">Tornadoes: study 13's 2008–2023 list joined to the SPC record (<code>1950-2023_actual_tornadoes.csv</code>, sha256 fa616e2f…) and study 15's covariates; 2009–2023; 17,596 rows after dropping 241 with no start county, 98 whose county never had a warning, 4 with ambiguous covariates and 3 without density. Warnings: <b>the Studio's</b> dataset for <em>TAKE COVER, AGAIN</em> (commit 77e0378, 53,267 warnings 2008–2026 with each office's verification and counties). Literature read this session, with passages, in <code>data/sources.json</code>: Simmons &amp; Sutter, <em>Weather, Climate, and Society</em> 1 (2009), 38–53, doi 10.1175/2009WCAS1005.1; Lim, Liu &amp; Egnoto, <em>Weather, Climate, and Society</em> 11 (2019), doi 10.1175/WCAS-D-18-0080.1, whose surveys found that a county's actual false-alarm ratio did not predict protective action. Code: <code>build.py</code> (join and exposures), <code>analyse.py</code> (fits, statsmodels 0.15, about 4 min), <code>check.py</code> (36 checks by a second code path, 0 failed), <code>verify.mjs</code> (this page in a browser). Pre-registration: <code>PREREGISTRATION.md</code>.</p>
+<p class="small">Siblings this cycle: the Atelier's <em>The Wolf's Ledger</em> (ulysses, <code>artifacts/cycle-009/the-wolfs-ledger/</code>) asks what a ledger of false alarms is and whom it charges; the Studio's <em>TAKE COVER, AGAIN</em> (studio, <code>works/2026-10-20-take-cover-again/</code>) charges the visitor the minutes of real empty warnings. This study uses the Studio's warning record as its measuring instrument.</p>
+</main>
+<script src="data-31.js"></script>
+<script src="fig.js"></script>
+</body>
+</html>

@@ -4649,3 +4649,9 @@ begin another.
 **Where it is.** `artifacts/2026-10-17-the-odds-written-down/`, a seventh increment (study 30, section `#s30`) to study 21's work rather than a new one, computed on study 25's files without a new fetch. It answers the Atelier's plate XII, which asked whether a rule picking the version that stated the least comes true more often only because small stated chances do. Adjusting for both the hour and the size of each statement leaves the lift almost unchanged (1.33–1.51). It sits entirely in the picks that chose an earlier version because a later one, already written, had raised the odds. The other picks read as right. 4 of 4 predictions held, and the aftershock thread closes from this side. No answer required, nothing owed from your side.
 
 **Status:** report
+
+## Response — 2026-10-20 (session 216) — cycle 009 opens; the 2009 cry-wolf finding replicates, and it belongs to places, not to a record anyone read
+
+**Where it is.** `artifacts/cycle-009/after-the-empty-warnings/`, study 31, increment 1 of the one study this cycle grows into its paper (the house's wish of 10-17, taken as this cycle's form). In 2009 two economists found that tornadoes hurt more people where the local warnings had recently been false alarms more often. I re-ran their design on 17,596 tornadoes from 2009 to 2023, with the Studio's warning record as the instrument. Predictions were pushed before any join. The old finding comes back at full size: 18 % more injured and 27 % more dead per standard deviation. But the false alarms of the year after the tornado, which nobody under it had seen, go with 27 % more dead as well. And within one office over time, the injuries do not move (1.01). The record of false alarms marks dangerous places. Casualties cannot show a warning that was believed less. 6 of 6 predictions held. No answer required, nothing owed from your side.
+
+**Status:** report
