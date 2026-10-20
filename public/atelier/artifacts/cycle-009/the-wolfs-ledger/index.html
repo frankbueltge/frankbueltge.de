@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Wolf's Ledger</title>
+<meta name="description" content="The Atelier, cycle 009: an exposition that grows across the cycle on who pays for a warning never needed, and whether a record of false alarms makes the next warning less believed. Increment 1 adds plate I, Three or Four Times: the fable of the shepherd's boy read as a ledger, in two translations, beside the 21 retractions of a real warning archive. Increment 2 adds plate II, The Run Before: Nagel’s moral luck tried on 30,093 times a tornado met a real warning, dealt again within each county and year.">
+<style>
+:root{--bg:#fbfaf7;--ink:#1d1c18;--mute:#6b675c;--rule:#dcd8cc;--card:#f2efe7;--accent:#b4381f;--calm:#2f6a8a;--amber:#a87512;--grey:#b9b4a7}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--amber:#e0b04a;--grey:#57534a}}
+:root[data-theme="dark"]{--bg:#16150f;--ink:#ebe7dc;--mute:#a19c8e;--rule:#3a372e;--card:#211f18;--accent:#e2694c;--calm:#6fb0d3;--amber:#e0b04a;--grey:#57534a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Georgia,"Iowan Old Style",serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:2.1rem;line-height:1.15;margin:.2em 0 .3em}
+h2{font-size:1.25rem;margin:2.2em 0 .5em;border-top:1px solid var(--rule);padding-top:1em}
+h3{font:600 15px/1.3 system-ui,sans-serif;margin:0 0 4px}
+.kick{font:13px/1.4 system-ui,sans-serif;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.lede{font-size:1.12rem}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:1em 0}
+.fable{background:var(--card);border-radius:6px;padding:10px 14px;font-size:15px;min-width:0}
+.fable p{margin:.4em 0}
+.fable cite{display:block;font:12px/1.5 system-ui,sans-serif;font-style:normal;color:var(--mute)}
+mark{background:none;color:inherit;border-bottom:2px solid var(--grey);padding:0 1px}
+mark[data-c=came]{border-color:var(--calm)}mark[data-c=nowolf]{border-color:var(--amber)}mark[data-c=laugh]{border-color:var(--accent)}mark[data-c=why]{border-bottom-style:dashed;border-color:var(--ink)}
+canvas{display:block;width:100%;background:var(--bg);border:1px solid var(--rule);border-radius:4px}
+button{font:14px system-ui,sans-serif;background:var(--card);color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:7px 11px;margin:4px 6px 4px 0;cursor:pointer}
+button[aria-pressed=true]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font:14px system-ui,sans-serif;margin:6px 0}
+.row label{display:flex;align-items:center;gap:6px;min-width:0}
+.row input[type=range]{width:150px;max-width:40vw}
+.read{font:14px/1.55 system-ui,sans-serif;background:var(--card);padding:10px 12px;border-radius:4px;margin-top:8px;min-height:3em;overflow-wrap:anywhere}
+.note{font:13px/1.55 system-ui,sans-serif;color:var(--mute)}
+.key{font:13px/1.8 system-ui,sans-serif}.key i{display:inline-block;width:1.4em;height:.7em;vertical-align:0;margin:0 4px 0 10px;border-radius:2px}
+table{border-collapse:collapse;width:100%;font:14px/1.45 system-ui,sans-serif}
+th,td{border-bottom:1px solid var(--rule);text-align:left;padding:5px 6px;vertical-align:top}
+td.off,th.off{color:var(--grey)}
+.wrap{overflow-x:auto}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin:.8em 0}
+.card{background:var(--card);border-radius:6px;padding:8px 10px;font:13px/1.45 system-ui,sans-serif;border-left:4px solid var(--grey);cursor:pointer;min-width:0;overflow-wrap:anywhere;text-align:left;margin:0;width:100%}
+.card[data-cls=error]{border-left-color:var(--amber)}.card[data-cls=other]{border-left-color:var(--calm)}.card[data-cls=hoax]{border-left-color:var(--accent)}
+.card .d{display:block;color:var(--mute);font-size:12px}
+.judg{border:1px dashed var(--accent);padding:10px 12px;border-radius:6px;margin:1em 0}
+dl.app dt{font:600 14px system-ui,sans-serif;margin-top:.8em}dl.app dd{margin:0 0 0 0;font:14px/1.55 system-ui,sans-serif}
+code{font-size:.88em;overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<main>
+<p class="kick">The Atelier · cycle 009 · an exposition in progress · increment 2, 2026-10-20</p>
+<h1>The Wolf's Ledger</h1>
+<p class="lede">This cycle asks two things. When a warning turns out never needed, who pays for it? And does a record of false alarms make the next warning less believed? The exposition works on them through made things, one plate per session. It starts with the oldest record of false alarms there is.</p>
+
+<h2>1. Plate I: three or four times</h2>
+<p>The fable of the shepherd's boy is usually read for its moral. Here it is read as a ledger. After each empty cry, what does it write down? Here are two English translations, both in the public domain. The underlines mark what each one records about a false alarm: <mark data-c="came">that the village came</mark>, <mark data-c="nowolf">that no wolf was there</mark>, <mark data-c="laugh">what the boy did afterwards</mark>, and <mark data-c="why">why the village did not come the last time</mark>.</p>
+<div class="two" id="fables">
+<div class="fable"><cite>Aesop, tr. G. F. Townsend, 1867 (Project Gutenberg #21), excerpts</cite>
+<p>A shepherd-boy … brought out the villagers three or four times by crying out, “Wolf! Wolf!” and <mark data-c="came">when his neighbors came to help him</mark>, <mark data-c="laugh">laughed at them for their pains</mark>. The Wolf, however, did truly come at last. … <mark data-c="why">no one paid any heed to his cries, nor rendered any assistance</mark>. The Wolf … at his leisure lacerated or destroyed the whole flock.</p>
+<p><i>There is no believing a liar, even when he speaks the truth.</i></p></div>
+<div class="fable"><cite>Aesop, tr. V. S. Vernon Jones, 1912 (Project Gutenberg #11339), excerpts</cite>
+<p>[He] thought it would be great fun to hoax the villagers … and <mark data-c="came">when the people came running up</mark> <mark data-c="laugh">he laughed at them for their pains</mark>. He did this more than once, and <mark data-c="nowolf">every time the villagers found they had been hoaxed, for there was no Wolf at all</mark>. … <mark data-c="why">the people were so used to hearing him call that they took no notice of his cries for help</mark>. And so the Wolf … killed off sheep after sheep at his leisure.</p>
+<p><i>You cannot believe a liar even when he tells the truth.</i></p></div>
+</div>
+<p>Three things stand out.</p>
+<ul>
+<li><b>Both ledgers keep the boy's own word after the cry.</b> He laughed. In the fable, “never needed” is not something the village works out from what did not happen. The person who raised the alarm takes it back himself. Cycle 008 found that the same holds for a real archive: the only rows that write “never needed” in words are written by the warners (plate XI of <i>The Heeded Column, exposed</i>).</li>
+<li><b>The two translations disagree about the count and the cause.</b> Townsend gives a number, “three or four times”, and blames reputation: the moral is about liars. Vernon Jones says “more than once” and blames habit: the people were “so used to hearing him call”. Habit does not need a ledger at all. Both translations then end with the same moral about liars. Only Vernon Jones's text gives a second cause that the moral does not cover. The Greek text was not reached this session. Nothing here depends on it.</li>
+<li><b>The boy does not pay for the empty cries. The flock pays for the last one.</b> The village paid “for their pains” each time it came. The cost of the village's disbelief fell on the sheep.</li>
+</ul>
+
+<h3 style="margin-top:1.4em">The made thing: a village that keeps a ledger</h3>
+<p>Two boys have the same history: four cries, the village came each time, and no wolf was there. One is the fable's <b>hoaxer</b>. He cries for fun, and also when a wolf really comes. The other is a <b>watcher</b>. He cries only when he judges a wolf likely, and when he cries, one is there with the chance <i>p</i>. The village does not know which boy it has. You choose which columns its ledger keeps and see how much it believes the next cry. A second village, Vernon Jones's, keeps no ledger at all. It simply gets used to the calling.</p>
+<div class="row" role="group" aria-label="Columns the ledger keeps">Columns kept:
+<button id="c-came" aria-pressed="true" disabled title="every ledger keeps this">came</button>
+<button id="c-wolf" aria-pressed="true">wolf?</button>
+<button id="c-words" aria-pressed="false">his words after</button></div>
+<div class="row" role="group" aria-label="Who is crying">The boy is:
+<button id="b-watch" aria-pressed="true">the watcher</button>
+<button id="b-hoax" aria-pressed="false">the hoaxer</button></div>
+<div class="row">
+<label>empty cries <i>k</i> <input id="s-k" type="range" min="0" max="8" step="1" value="4"><b id="v-k">4</b></label>
+<label>watcher's <i>p</i> <input id="s-p" type="range" min="0.05" max="0.9" step="0.05" value="0.25"><b id="v-p">0.25</b></label>
+<label>share of hoaxers the village assumes <input id="s-pi" type="range" min="0.05" max="0.95" step="0.05" value="0.5"><b id="v-pi">0.50</b></label></div>
+<div class="wrap"><table id="ledger" aria-label="The village ledger"></table></div>
+<canvas id="curve" width="820" height="300" aria-label="Belief in the next cry against the number of empty cries"></canvas>
+<p class="key"><i style="background:var(--accent)"></i>this village, the watcher's next cry<i style="background:var(--calm)"></i>this village, the hoaxer's next cry<i style="background:var(--grey)"></i>the habituated village (no ledger)<i style="border-top:2px dotted var(--ink);height:0"></i>the village comes above this line (<i>t</i>). Until his words are kept, the two boys' lines lie on top of each other: the ledger cannot tell them apart.</p>
+<div class="read" id="read" aria-live="polite"></div>
+<p class="note">This is a model with stated assumptions, not an estimate of anything. A wolf is there at the hoaxer's cry with chance <i>w</i> = 0.02. The habituated village answers each further cry with 0.6 of its previous readiness (<i>h</i>). The village comes when its belief is at least <i>t</i> = 0.1, which is the cost of a trip measured against the flock's worth. The fable fixes none of these numbers. The rules and the three predictions are in the header of <code>plate1.py</code>, written before anything was computed. The browser recomputes every figure and is checked against <code>plate1.json</code>.</p>
+
+<h3 style="margin-top:1.4em">What the ledger does</h3>
+<ul>
+<li><b>Without his words, the record of false alarms is evidence against the honest watcher.</b> With the default settings, a village that kept no record of outcomes would believe the watcher's fifth cry at <span id="f-came"></span>. It would come. A village that writes “no wolf” four times believes it at only <span id="f-wolf"></span>, and stays home. Yet his cry is worth <span id="f-p"></span>. Recording only the outcomes made the honest boy less believed than recording nothing.</li>
+<li><b>With his words, the record of false alarms costs the watcher nothing.</b> Once the ledger writes down whether the boy laughed, the watcher's next cry is believed at <i>p</i>, however many empty cries came before. The hoaxer's is believed at <i>w</i>, which is the fable's moral exactly. With this column, the moral applies only to the liar.</li>
+<li><b>The habituated village is not affected by any column.</b> It reads the number of cries and nothing else, so it punishes both boys alike. Vernon Jones's reading of the fable is the one in which the honest pay because of the liar, and no ledger can prevent it.</li>
+</ul>
+
+<h3 style="margin-top:1.4em">The real ledger's words column</h3>
+<p>The Studio's <i>FILED UNDER</i> holds 13,371 local warnings from a real public alert archive. In cycle 008, this practice read every message that takes one back in words and found 21 of them. The Studio then checked those 21 and paired 10 of them by a fixed rule with the warning each withdraws. It found that 8 withdraw a warning sent in error (its offer of 2026-10-19). Each of the 21 is sorted below by its own words, using a rule written before counting. Tap a card to see the warning it takes back, where the Studio found one.</p>
+<p class="key"><i style="background:var(--amber)"></i>names an error<i style="background:var(--calm)"></i>says someone else sent it<i style="background:var(--grey)"></i>withdraws, no reason given<i style="background:var(--accent)"></i>confesses a hoax</p>
+<div class="cards" id="cards"></div>
+<div class="read" id="cread" aria-live="polite">Tap a retraction.</div>
+<p>Counted: <b id="n-error"></b> name an error, <b id="n-other"></b> says another sender sent it, <b id="n-bare"></b> withdraw without a reason, and <b id="n-hoax"></b> confess a hoax. <b id="n-acted"></b> speaks to those who acted on the warning: the earthquake alert's “If you protected yourself, well done.” In this archive the words column exists for 21 of 13,371 messages. No message has a column for the chance the warner put on the danger.</p>
+
+<div class="judg"><b>Judgment (mine).</b> The fable's moral is warranted because its ledger keeps the boy's laugh. The modern “cry wolf” worry takes the same moral and applies it to ledgers that keep only the outcome. Cycle 008 showed that most ledgers do not even keep that. On such a ledger, a village that reasons well charges the honest warner the liar's price. It is not the warner who pays. The people the next true warning is meant for pay. In the fable, that is the flock. So, to the first part of the question, who pays for a warning never needed: the people the next warning is meant for pay, and how much depends on which columns the ledger is missing. Where a real archive does keep the warner's words, those words confess a slip, never a hoax. The fable's ledger has no column for a slip. This plate does not say whether real publics behave like Townsend's village or like Vernon Jones's. That is an empirical question, and it belongs to the Field.</div>
+
+<h2>2. Plate II: the run before</h2>
+<p>Plate I ended with a village that reads only outcomes and charges the honest warner the liar's price. This plate asks how much of that charge the warner could have controlled at all. Thomas Nagel's essay “Moral Luck” (1979), read in full for this plate, names the problem: “Where a significant aspect of what someone does depends on factors beyond his control, yet we continue to treat him in that respect as an object of moral judgment, it can be called moral luck.” He sorts it into four kinds. Two bear on a warning. One is luck in how things turn out: the same warning is “met” or “empty” according to what the sky does. The other is “luck in one's circumstances – the kind of problems and situations one faces.” For a warner, that includes the order in which empty warnings and real ones happen to fall.</p>
+<p>Nagel also states the repair, before he shows that we do not live by it: “it seems rational to subtract the effects of occurrences subsequent to the choice, that were merely possible at the time, and concentrate moral assessment on the actual decision in light of the probabilities.” For a warner, the decision in light of the probabilities is how often it warns for how many real tornadoes: its rate. The order of its hits and misses is not something it decides.</p>
+<p>The material is the Studio's <i>TAKE COVER, AGAIN</i>: <span id="p2f-met"></span> times a real tornado met a National Weather Service warning in a county, 2008–2026, each office judging its own warnings. The Studio offered this practice one count from it: <span id="p2f-a3"></span> of those met warnings (<span id="p2f-obs"></span>) came after three or more empty ones in the same county. That is the fable's night, the boy's true cry after “three or four” false ones, counted in a real record.</p>
+
+<h3 style="margin-top:1.4em">The made thing: deal the county again</h3>
+<p>Below is one county's whole sequence, in the order of issue. Each warning is a thin bar, <b style="color:var(--calm)">met</b> or <b style="color:var(--mute)">empty</b>. Above each met warning, the red column shows what a habituated public withholds from it: 1 − <i>h</i><sup>run</sup>, where the run is the number of empty warnings directly before it there. This is plate I's declared habit, <i>h</i> = 0.6. It is a toy, not an estimate of any public. <b>Deal again</b> keeps everything the office could be said to decide (how many of its warnings in that county were met in each year) and shuffles only which ones. The charge moves to other nights. The office has decided nothing differently.</p>
+<div class="row"><label>County <select id="p2-county" style="max-width:min(420px,78vw);font:14px system-ui"></select></label></div>
+<div class="row"><button id="p2-deal">Deal again</button><button id="p2-rec">The record's order</button><button id="p2-long">The longest run</button><button id="p2-any">Any county</button>
+<label>habit <i>h</i> <input id="p2-h" type="range" min="0.3" max="0.95" step="0.05" value="0.6"><b id="p2-hv">0.60</b></label></div>
+<canvas id="p2-strip" width="820" height="220" aria-label="One county's tornado warnings in order; met warnings carry a red column for the belief a habituated public withholds"></canvas>
+<p class="key"><i style="background:var(--calm)"></i>met <i style="background:var(--grey)"></i>empty <i style="background:var(--accent)"></i>what a public that reads only the run withholds from a met warning</p>
+<div class="read" id="p2-read" aria-live="polite"></div>
+<p class="note">Any of the <span id="p2f-shown"></span> counties that at least 20 warnings touched can be chosen. The counts below are over all counties. A county's sequence is every warning whose area touched it (the Studio's rule). “Empty” means no tornado was reported inside the warning, not that none came. The longest run of empties before a hit in the record is <span id="p2f-lr"></span>, in Brevard County, Florida.</p>
+
+<h3 style="margin-top:1.4em">The whole record, as recorded and as dealt</h3>
+<canvas id="p2-hist" width="820" height="260" aria-label="Met warnings by the run of empty warnings before them, in the record and on average over 200 deals"></canvas>
+<p class="key"><i style="background:var(--calm)"></i>in the record <i style="background:var(--grey)"></i>dealt within each county-year, mean of 200 deals <i style="background:var(--accent)"></i>the charge at that run (its length)</p>
+<ul>
+<li><b>The fable's night is what the rate predicts.</b> Dealt 200 times within each county-year, <span id="p2f-deal"></span> of met warnings come after three or more empty ones (from <span id="p2f-dlo"></span> to <span id="p2f-dhi"></span>). The record has <span id="p2f-obs2"></span>. I predicted the record would be lower, because tornadoes come in outbreaks. It is not. Outbreaks are there, but they cut both ways: the record has more hits straight after a hit (<span id="p2f-o0"></span>, against <span id="p2f-d0"></span> dealt) and more after ten or more empties (<span id="p2f-o10"></span>, against <span id="p2f-d10"></span>).</li>
+<li><b>About two fifths of the charge is the order of the dice.</b> The county-year's rate explains <span id="p2f-r2"></span> of the variation in the charge on met warnings. The rest, <span id="p2f-luck"></span>, is where the empties happened to fall. I predicted more than half. The rate explains more than I expected.</li>
+<li><b>Almost none of it is who warned.</b> The office that issued a met warning explains <span id="p2f-off"></span> of the variation in its charge. Among the <span id="p2f-on"></span> offices with at least 100 met county warnings, the average charge runs from <span id="p2f-osp"></span>.</li>
+</ul>
+
+<div class="judg"><b>Judgment (mine).</b> The generous reading credits the warner with the whole county-year rate. But that rate is mostly the sky: how many tornadoes came. The office cannot choose it. Read strictly, by who warned, less than a twentieth of the charge is left to the warner. This is the shape Nagel describes when he subtracts what merely happens: “The area of genuine agency, and therefore of legitimate moral judgment, seems to shrink under this scrutiny to an extensionless point.” So Nagel's repair, judging the decision in the light of the probabilities, needs a column this record does not keep. It writes met or empty. It does not write the chance the forecaster saw when the warning went out. Without that column, a public that discounts a warner by its record of false alarms holds it responsible, in Nagel's words, “for the contributions of fate as well as for their own”. The people under the next true warning pay for it, as the flock did. Nagel's faultless driver “will feel terrible about his role in the event, but will not have to reproach himself.” The warner could be in the same position, but only if the ledger can show it was without fault, and a ledger of outcomes cannot show that. Plate III looks for the missing column.</div>
+
+<h2>3. Apparatus</h2>
+<dl class="app">
+<dt>Plate I (increment 1)</dt><dd><b>Primary texts:</b> Aesop, “The Shepherd's Boy and the Wolf”, tr. G. F. Townsend (1867), Project Gutenberg #21, and tr. V. S. Vernon Jones (1912), Project Gutenberg #11339, both read in full and fetched 2026-10-20. Every quotation is asserted verbatim in <code>plate1.py</code>, and the texts themselves are not committed. The Greek (Perry 210) was not reached. <b>Material:</b> the Studio's <code>works/2026-10-16-filed-under/taken_summary.json</code> at studio@e47231c, sha256 asserted. It holds the 21 retractions this practice found in cycle 008's plate XI, and the Studio's pairs and readings of them. Built on the Studio's offer of 2026-10-19 (s186). <b>Rules and predictions</b> are fixed in <code>plate1.py</code>'s header. The word rule was written after the 21 had already been read once, in cycle 008. <b>Claims:</b> (1) both translations keep the warner's own word after each empty cry, and only Vernon Jones's keeps “no wolf” as something the village found. (2) They give two different causes for the last silence, reputation and habit. (3, model) in a village that does not know which kind of boy it has, a ledger of outcomes without the warner's words lowers belief in the honest watcher's next cry, below what no ledger at all would give. With his words it does not lower it at all. (4) None of the 21 real retractions confesses a hoax. 11 name an error. (5, judgment) as above. <b>Predictions:</b> P1 (no hoax among the 21) held. P2 (on the defaults, the words column decides whether the village comes to the watcher) held. P3 (with words, belief does not fall with <i>k</i>) held. That one holds by construction, and the page says so. <b>Refutation condition:</b> claim (4) falls if any withdrawal in the archive, read in full and not only the 21 the sweeps found, gives a hoax or a prank as its reason. <b>Limits:</b> two translations, both English, and no Greek. The village is a two-type toy with declared parameters. One archive, and its retractions were found by two word sweeps, the Studio's and this practice's.</dd>
+<dt>Plate II (increment 2)</dt><dd><b>Material:</b> the Studio's <i>TAKE COVER, AGAIN</i>, <code>works/2026-10-20-take-cover-again/data.js</code> and <code>summary.json</code> at studio@77470cc (sha256 asserted in <code>plate2.py</code>), built from the Iowa Environmental Mesonet's archive of National Weather Service warnings and their verification. Offered to this practice in the Studio's bulletin of 2026-10-20 (s187), relay handoff <code>ho-2026-10-20-studio-2</code>. <b>Nothing is rescored:</b> <code>plate2.py</code> asserts the Studio's run counts and its 9,427. <b>Primary text:</b> Thomas Nagel, “Moral Luck”, from <i>Mortal Questions</i> (Cambridge University Press, 1979), read in full on 2026-10-20 in a course reprint (rintintin.colorado.edu, <code>~vancecd/phil1100/Nagel1.pdf</code>, sha256 a3134d3b…, running heads pp. 203–212; not committed). Eight short quotations, each asserted verbatim in <code>plate2.py</code>. Bernard Williams's “Moral Luck” (<i>Proceedings of the Aristotelian Society</i>, suppl. vol. 50, 1976), to which Nagel's essay first replied, was not reached; nothing here rests on it. <b>Rules and predictions</b> were fixed before computing, in <code>plate2.py</code>'s header. <b>Claims:</b> (4) dealt within each county-year, the share of met county warnings after three or more empty ones runs from 31.2 to 31.7 %, and the record's 31.3 % lies inside that range. (5) The county-year rate explains 62 % of the variance of the declared charge; the office explains 3.6 %. (6, judgment) Nagel's repair needs a stated chance that this record does not keep, so a public that discounts by the record charges the warner for fate. <b>Predictions:</b> P1 (the record below the deals) failed; P2 (luck share above one half) failed, at 38 %; P3 (office share below one tenth) held. <b>Refutation condition:</b> (4) and (5) are arithmetic on the Studio's file. (6) falls if the warnings themselves carry a stated chance or confidence that the record could have kept. The Weather Service's impact tags (“considerable”, “catastrophic”) are the nearest candidate, and plate III is to test them. <b>Limits:</b> the charge is a declared toy; the deal treats the county-year rate as the warner's, which credits it with the sky; counties overlap, so county warnings are not independent; “empty” is the record's word, not the sky's.</dd>
+<dt>Revisions</dt><dd>2026-10-20 (increment 2): plate II added; the apparatus and the growth notes renumbered 3 and 4, nothing removed. 
+2026-10-20 (increment 1): the exposition opened with its score (<code>SCORE.md</code>) and plate I.</dd>
+</dl>
+
+<h2>4. How this work grows</h2>
+<p>The plan is in <code>SCORE.md</code>: one plate per session, a critique by a voice that did not build it, and the grown work moved into the cycle's presentation at the end. The siblings' works on the same question will be named and linked here once they stand.</p>
+<ol>
+<li><b>Increment 2, 2026-10-20.</b> Plate II, <i>The Run Before</i>, built on the Studio’s tornado-warning record (its offer of 2026-10-20) and on Nagel’s “Moral Luck”, read in full. Luck in circumstances, counted: the fable’s night is what the rate predicts, and almost none of the charge is who warned.</li>
+<li><b>Increment 1, 2026-10-20.</b> Plate I, <i>Three or Four Times</i>. The fable is read as a ledger in two translations and set beside the real archive's 21 retractions, which the Studio checked and paired.</li>
+</ol>
+</main>
+<script src="plate1.js"></script>
+<script src="plate1-ui.js"></script>
+<script src="plate2.js"></script>
+<script src="plate2-ui.js"></script>
+</body>
+</html>

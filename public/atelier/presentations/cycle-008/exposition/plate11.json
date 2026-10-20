@@ -1,0 +1,1364 @@
+{
+ "source": {
+  "warnings": {
+   "repo": "frankbueltge/studio",
+   "commit": "40b163de16fb5e6b61b69243d7ca78faa5659b1b",
+   "path": "works/2026-10-16-filed-under/data.js",
+   "sha256": "3c6c369c5c57790b58b1ef8b3ec5be5718676b231c055fa363ae56e2107849ef"
+  },
+  "study_27": {
+   "repo": "frankbueltge/field-research",
+   "commit": "116006a3cd71f642a7e4fb75936f6815f086538a",
+   "path": "artifacts/2026-10-14-the-warnings-never-needed/s27/data/",
+   "sha256": {
+    "joined_27.tsv.gz": "d3d4658fbba1724fa92d7ab3787b88223ea39c09b8f5e545d4488f8ed29dec59",
+    "results_27.json": "2133f17064aacf2b8d37a841b76c2d8ff1e72876a2223da1575591c16d4c0ce0"
+   }
+  },
+  "gazetteer_txt_sha256": "b0aecde6748947236e931faeb6a619b89aea0346e54a454239aac76abcd2ef82",
+  "catalogue": "USGS ComCat, FDSN event service, fetched 2026-10-19; one record per query below",
+  "reading": "Reiter, On Closed World Data Bases, UBC TR 77-16 (1977), p. 6",
+  "handoff": "the Field's bulletin offer of 2026-10-19 (s212), not yet in the relay"
+ },
+ "pool": 155,
+ "clusters": 63,
+ "check_against_field": {
+  "live": {
+   "rule": [
+    3.0,
+    100,
+    "day"
+   ],
+   "disagree": []
+  },
+  "live_strict": {
+   "rule": [
+    3.0,
+    100,
+    "strict"
+   ],
+   "disagree": []
+  },
+  "live_m45": {
+   "rule": [
+    4.5,
+    100,
+    "day"
+   ],
+   "disagree": []
+  },
+  "live_r200": {
+   "rule": [
+    3.0,
+    200,
+    "day"
+   ],
+   "disagree": [
+    5404
+   ]
+  },
+  "placebo": {
+   "rule": [
+    3.0,
+    100,
+    "day",
+    "364 days earlier"
+   ],
+   "disagree": []
+  }
+ },
+ "mc": {
+  "untested": 5,
+  "min": 0.7,
+  "max": 1.7,
+  "median": 1.0
+ },
+ "grid": {
+  "any|25|strict": {
+   "met": 15,
+   "warranted": 0,
+   "unwarranted": 140,
+   "placebo": 0
+  },
+  "any|25|day": {
+   "met": 100,
+   "warranted": 0,
+   "unwarranted": 55,
+   "placebo": 79
+  },
+  "any|50|strict": {
+   "met": 95,
+   "warranted": 0,
+   "unwarranted": 60,
+   "placebo": 2
+  },
+  "any|50|day": {
+   "met": 144,
+   "warranted": 0,
+   "unwarranted": 11,
+   "placebo": 126
+  },
+  "any|100|strict": {
+   "met": 138,
+   "warranted": 0,
+   "unwarranted": 17,
+   "placebo": 44
+  },
+  "any|100|day": {
+   "met": 153,
+   "warranted": 0,
+   "unwarranted": 2,
+   "placebo": 147
+  },
+  "any|200|strict": {
+   "met": 151,
+   "warranted": 0,
+   "unwarranted": 4,
+   "placebo": 66
+  },
+  "any|200|day": {
+   "met": 155,
+   "warranted": 0,
+   "unwarranted": 0,
+   "placebo": 150
+  },
+  "any|300|strict": {
+   "met": 154,
+   "warranted": 0,
+   "unwarranted": 1,
+   "placebo": 75
+  },
+  "any|300|day": {
+   "met": 155,
+   "warranted": 0,
+   "unwarranted": 0,
+   "placebo": 150
+  },
+  "1.0|25|strict": {
+   "met": 15,
+   "warranted": 84,
+   "unwarranted": 56,
+   "placebo": 0
+  },
+  "1.0|25|day": {
+   "met": 95,
+   "warranted": 29,
+   "unwarranted": 31,
+   "placebo": 74
+  },
+  "1.0|50|strict": {
+   "met": 84,
+   "warranted": 46,
+   "unwarranted": 25,
+   "placebo": 1
+  },
+  "1.0|50|day": {
+   "met": 143,
+   "warranted": 7,
+   "unwarranted": 5,
+   "placebo": 123
+  },
+  "1.0|100|strict": {
+   "met": 138,
+   "warranted": 9,
+   "unwarranted": 8,
+   "placebo": 20
+  },
+  "1.0|100|day": {
+   "met": 153,
+   "warranted": 1,
+   "unwarranted": 1,
+   "placebo": 147
+  },
+  "1.0|200|strict": {
+   "met": 151,
+   "warranted": 0,
+   "unwarranted": 4,
+   "placebo": 31
+  },
+  "1.0|200|day": {
+   "met": 155,
+   "warranted": 0,
+   "unwarranted": 0,
+   "placebo": 150
+  },
+  "1.0|300|strict": {
+   "met": 151,
+   "warranted": 0,
+   "unwarranted": 4,
+   "placebo": 42
+  },
+  "1.0|300|day": {
+   "met": 155,
+   "warranted": 0,
+   "unwarranted": 0,
+   "placebo": 150
+  },
+  "2.0|25|strict": {
+   "met": 15,
+   "warranted": 136,
+   "unwarranted": 4,
+   "placebo": 0
+  },
+  "2.0|25|day": {
+   "met": 56,
+   "warranted": 95,
+   "unwarranted": 4,
+   "placebo": 22
+  },
+  "2.0|50|strict": {
+   "met": 81,
+   "warranted": 70,
+   "unwarranted": 4,
+   "placebo": 0
+  },
+  "2.0|50|day": {
+   "met": 121,
+   "warranted": 30,
+   "unwarranted": 4,
+   "placebo": 79
+  },
+  "2.0|100|strict": {
+   "met": 134,
+   "warranted": 20,
+   "unwarranted": 1,
+   "placebo": 0
+  },
+  "2.0|100|day": {
+   "met": 148,
+   "warranted": 6,
+   "unwarranted": 1,
+   "placebo": 109
+  },
+  "2.0|200|strict": {
+   "met": 151,
+   "warranted": 3,
+   "unwarranted": 1,
+   "placebo": 2
+  },
+  "2.0|200|day": {
+   "met": 154,
+   "warranted": 0,
+   "unwarranted": 1,
+   "placebo": 143
+  },
+  "2.0|300|strict": {
+   "met": 151,
+   "warranted": 3,
+   "unwarranted": 1,
+   "placebo": 3
+  },
+  "2.0|300|day": {
+   "met": 155,
+   "warranted": 0,
+   "unwarranted": 0,
+   "placebo": 149
+  },
+  "3.0|25|strict": {
+   "met": 14,
+   "warranted": 136,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "3.0|25|day": {
+   "met": 16,
+   "warranted": 134,
+   "unwarranted": 5,
+   "placebo": 2
+  },
+  "3.0|50|strict": {
+   "met": 81,
+   "warranted": 70,
+   "unwarranted": 4,
+   "placebo": 0
+  },
+  "3.0|50|day": {
+   "met": 87,
+   "warranted": 64,
+   "unwarranted": 4,
+   "placebo": 11
+  },
+  "3.0|100|strict": {
+   "met": 131,
+   "warranted": 21,
+   "unwarranted": 3,
+   "placebo": 0
+  },
+  "3.0|100|day": {
+   "met": 136,
+   "warranted": 18,
+   "unwarranted": 1,
+   "placebo": 28
+  },
+  "3.0|200|strict": {
+   "met": 147,
+   "warranted": 5,
+   "unwarranted": 3,
+   "placebo": 0
+  },
+  "3.0|200|day": {
+   "met": 152,
+   "warranted": 2,
+   "unwarranted": 1,
+   "placebo": 44
+  },
+  "3.0|300|strict": {
+   "met": 147,
+   "warranted": 5,
+   "unwarranted": 3,
+   "placebo": 0
+  },
+  "3.0|300|day": {
+   "met": 153,
+   "warranted": 2,
+   "unwarranted": 0,
+   "placebo": 83
+  },
+  "4.0|25|strict": {
+   "met": 14,
+   "warranted": 136,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.0|25|day": {
+   "met": 14,
+   "warranted": 136,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.0|50|strict": {
+   "met": 58,
+   "warranted": 92,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.0|50|day": {
+   "met": 84,
+   "warranted": 67,
+   "unwarranted": 4,
+   "placebo": 2
+  },
+  "4.0|100|strict": {
+   "met": 126,
+   "warranted": 24,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.0|100|day": {
+   "met": 133,
+   "warranted": 21,
+   "unwarranted": 1,
+   "placebo": 4
+  },
+  "4.0|200|strict": {
+   "met": 142,
+   "warranted": 8,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.0|200|day": {
+   "met": 151,
+   "warranted": 3,
+   "unwarranted": 1,
+   "placebo": 11
+  },
+  "4.0|300|strict": {
+   "met": 143,
+   "warranted": 7,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.0|300|day": {
+   "met": 153,
+   "warranted": 2,
+   "unwarranted": 0,
+   "placebo": 18
+  },
+  "4.5|25|strict": {
+   "met": 13,
+   "warranted": 137,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.5|25|day": {
+   "met": 13,
+   "warranted": 137,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.5|50|strict": {
+   "met": 39,
+   "warranted": 111,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.5|50|day": {
+   "met": 63,
+   "warranted": 88,
+   "unwarranted": 4,
+   "placebo": 2
+  },
+  "4.5|100|strict": {
+   "met": 106,
+   "warranted": 44,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.5|100|day": {
+   "met": 113,
+   "warranted": 41,
+   "unwarranted": 1,
+   "placebo": 4
+  },
+  "4.5|200|strict": {
+   "met": 128,
+   "warranted": 22,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.5|200|day": {
+   "met": 137,
+   "warranted": 17,
+   "unwarranted": 1,
+   "placebo": 8
+  },
+  "4.5|300|strict": {
+   "met": 139,
+   "warranted": 11,
+   "unwarranted": 5,
+   "placebo": 0
+  },
+  "4.5|300|day": {
+   "met": 149,
+   "warranted": 6,
+   "unwarranted": 0,
+   "placebo": 13
+  }
+ },
+ "robust": [],
+ "robust_strict": [
+  3922,
+  10607,
+  10608
+ ],
+ "quiet_domains": {
+  "n_domains": 29,
+  "of": 60,
+  "least": [
+   "2.0|200|strict",
+   {
+    "met": 151,
+    "warranted": 3,
+    "unwarranted": 1,
+    "placebo": 2
+   }
+  ],
+  "most": [
+   "4.5|25|strict",
+   {
+    "met": 13,
+    "warranted": 137,
+    "unwarranted": 5,
+    "placebo": 0
+   }
+  ],
+  "range_all": [
+   0,
+   137
+  ]
+ },
+ "retractions": {
+  "swept": 117,
+  "read": 117,
+  "retractions": 21,
+  "of_cards": 13371,
+  "rows": [
+   {
+    "i": 3,
+    "kind": "siren",
+    "code": "CEM",
+    "t": "2013-02-16T18:15:00",
+    "declared": false,
+    "words": "disregard emergency siren notification. no emergency at this time.",
+    "places": [
+     "Hays, Texas"
+    ]
+   },
+   {
+    "i": 64,
+    "kind": "siren",
+    "code": "CEM",
+    "t": "2014-06-27T23:05:00",
+    "declared": false,
+    "words": "An early warning system siren has sounded in error. There is no emergency",
+    "places": [
+     "San Luis Obispo, California"
+    ]
+   },
+   {
+    "i": 113,
+    "kind": "error",
+    "code": "CEM",
+    "t": "2014-12-09T18:04:00",
+    "declared": false,
+    "words": "DISREGARD THE PREVIOUS MESSAGE.",
+    "places": [
+     "Laurel, Kentucky"
+    ]
+   },
+   {
+    "i": 664,
+    "kind": "missile",
+    "code": "CEM",
+    "t": "2018-01-13T18:45:00",
+    "declared": false,
+    "words": "There is no missile threat or danger to the State of Hawaii. Repeat. False Alarm.",
+    "places": [
+     "Hawaii (whole state)"
+    ]
+   },
+   {
+    "i": 762,
+    "kind": "siren",
+    "code": "CEM",
+    "t": "2018-05-21T14:08:00",
+    "declared": false,
+    "words": "Accidental siren activation. No Emergency. Tune to local radio or tv for further info.",
+    "places": [
+     "Brunswick, North Carolina"
+    ]
+   },
+   {
+    "i": 850,
+    "kind": "error",
+    "code": "CEM",
+    "t": "2018-07-21T15:46:00",
+    "declared": false,
+    "words": "The Civil Emergency message, please disregard. There is no emergency.",
+    "places": [
+     "Blount, Tennessee"
+    ]
+   },
+   {
+    "i": 1894,
+    "kind": "shakealert",
+    "code": "EQW",
+    "t": "2020-05-21T22:04:00",
+    "declared": false,
+    "words": "USGS ShakeAlert message cancelled. Investigating. If you protected yourself, well done.",
+    "places": [
+     "Inyo, California",
+     "Kern, California",
+     "San Bernardino, California"
+    ]
+   },
+   {
+    "i": 2278,
+    "kind": "siren",
+    "code": "LAE",
+    "t": "2020-07-28T18:49:00",
+    "declared": false,
+    "words": "From King County: Tolt dam sirens are a false alarm. No evacuation needed.",
+    "places": [
+     "King, Washington"
+    ]
+   },
+   {
+    "i": 3131,
+    "kind": "siren",
+    "code": "LAE",
+    "t": "2021-04-03T18:27:00",
+    "declared": false,
+    "words": "Knox County's Outdoor Warning Sirens were accidentally activated. There is no emergency.",
+    "places": [
+     "Knox, Ohio"
+    ]
+   },
+   {
+    "i": 3568,
+    "kind": "error",
+    "code": "CEM",
+    "t": "2021-07-26T06:46:00",
+    "declared": false,
+    "words": "Per SBCoSheriff disregard Fire EVAC Warning. Message sent in error.",
+    "places": [
+     "San Bernardino, California"
+    ]
+   },
+   {
+    "i": 4269,
+    "kind": "place",
+    "code": "EVI",
+    "t": "2022-05-10T23:05:00",
+    "declared": false,
+    "words": "Mora County Please disregard previous alert, there are no new evacuations for Mora county",
+    "places": [
+     "Colfax, New Mexico",
+     "Mora, New Mexico",
+     "San Miguel, New Mexico"
+    ]
+   },
+   {
+    "i": 4461,
+    "kind": "siren",
+    "code": "LAE",
+    "t": "2022-07-12T16:32:00",
+    "declared": false,
+    "words": "Seabrook Nuclear Power Station that an inadvertent siren activation. There is no emergency",
+    "places": [
+     "Rockingham, New Hampshire"
+    ]
+   },
+   {
+    "i": 4462,
+    "kind": "siren",
+    "code": "LAE",
+    "t": "2022-07-12T16:48:00",
+    "declared": false,
+    "words": "Seabrook Nuclear Power Station had an inadvertent siren activation. There is NO emergency",
+    "places": [
+     "Rockingham, New Hampshire"
+    ]
+   },
+   {
+    "i": 4751,
+    "kind": "place",
+    "code": "FRW",
+    "t": "2022-09-10T22:37:00",
+    "declared": true,
+    "words": "Sky Valley Fire. Disregard evacuation alert sent 315PM on Bolt Creek Fire. Index Only.",
+    "places": [
+     "Snohomish, Washington"
+    ]
+   },
+   {
+    "i": 5121,
+    "kind": "siren",
+    "code": "CEM",
+    "t": "2023-01-19T15:56:00",
+    "declared": false,
+    "words": "An inadvertent siren was sounded for McGuire Nuclear Station. No action needed.",
+    "places": [
+     "Mecklenburg, North Carolina"
+    ]
+   },
+   {
+    "i": 6871,
+    "kind": "place",
+    "code": "TOE",
+    "t": "2024-06-18T19:05:00",
+    "declared": false,
+    "words": "DISREGARD ALERT THAT WAS RECEIVED. SENT BY ANOTHER STATE. MAINE'S 911 SYSTEM OPERATIONAL.",
+    "places": [
+     "Maine (whole state)"
+    ]
+   },
+   {
+    "i": 7037,
+    "kind": "siren",
+    "code": "CEM",
+    "t": "2024-07-08T12:32:00",
+    "declared": false,
+    "words": "Chatham County reports siren activation at Harris Plant. NO emergency at the Harris Plant.",
+    "places": [
+     "Chatham, North Carolina"
+    ]
+   },
+   {
+    "i": 7038,
+    "kind": "siren",
+    "code": "LAE",
+    "t": "2024-07-08T12:35:00",
+    "declared": false,
+    "words": "Wake County reports siren activation at Harris Plant. NO emergency at the Harris Plant.",
+    "places": [
+     "Wake, North Carolina"
+    ]
+   },
+   {
+    "i": 8534,
+    "kind": "place",
+    "code": "LAE",
+    "t": "2025-01-10T00:14:00",
+    "declared": true,
+    "words": "Long Beach: Disregard previous evacuation message. It was sent in error by another agency.",
+    "places": [
+     "Los Angeles, California"
+    ]
+   },
+   {
+    "i": 8535,
+    "kind": "place",
+    "code": "FRW",
+    "t": "2025-01-10T00:18:00",
+    "declared": true,
+    "words": "LACoOEM: Disregard last EVACUATION WARNING. It was for Kenneth Fire Only. AlertLA.org",
+    "places": [
+     "Los Angeles, California"
+    ]
+   },
+   {
+    "i": 12086,
+    "kind": "error",
+    "code": "FRW",
+    "t": "2026-07-04T19:44:00",
+    "declared": false,
+    "words": "Amador Sheriff: The last message about the Coyote Fire was sent in error.",
+    "places": [
+     "Amador, California"
+    ]
+   }
+  ]
+ },
+ "floors": [
+  "any",
+  1.0,
+  2.0,
+  3.0,
+  4.0,
+  4.5
+ ],
+ "radii": [
+  25,
+  50,
+  100,
+  200,
+  300
+ ],
+ "windows": [
+  "strict",
+  "day"
+ ],
+ "queries": {
+  "06000|18356|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-03-05T01%3A53%3A00&endtime=2020-04-05T01%3A58%3A00&latitude=37.8382&longitude=-120.7490&maxradiuskm=1023.1&orderby=time-asc",
+   "sha256": "656d412254e7dd6cfef0dab6cefab7ace873fbd4e27a20a77fddddebf875c24e",
+   "events": 8828
+  },
+  "06000|18356|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-04-05T01%3A53%3A00&endtime=2019-04-07T01%3A58%3A00&latitude=37.8382&longitude=-120.7490&maxradiuskm=1023.1&orderby=time-asc",
+   "sha256": "cdda44e353c0b7872ce3187127f5f08ba6d401c676a3e7aa46f6a239011a6a9f",
+   "events": 244
+  },
+  "06001|19290|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-09-25T18%3A42%3A00&endtime=2022-10-26T18%3A47%3A00&latitude=37.2331&longitude=-121.5613&maxradiuskm=412.6&orderby=time-asc",
+   "sha256": "ac88174864e42672f958dcbde3a52ea2cccf2f151e4ba3c9a4550327bf562b83",
+   "events": 2762
+  },
+  "06001|19290|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-10-25T18%3A42%3A00&endtime=2021-10-27T18%3A47%3A00&latitude=37.2331&longitude=-121.5613&maxradiuskm=412.6&orderby=time-asc",
+   "sha256": "1c434339cfd9e90926234f1a5c8094161f6f384ce2689ab7ace68c4bc75ddf05",
+   "events": 236
+  },
+  "06001|19648|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-09-18T16%3A29%3A00&endtime=2023-10-19T16%3A34%3A00&latitude=38.2603&longitude=-121.6152&maxradiuskm=446.8&orderby=time-asc",
+   "sha256": "cef6c32bad2e57de2a6bf5dba15f00f4b39958c10bf106d74a7913e24bae8b72",
+   "events": 2375
+  },
+  "06001|19648|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-10-18T16%3A29%3A00&endtime=2022-10-20T16%3A34%3A00&latitude=38.2603&longitude=-121.6152&maxradiuskm=446.8&orderby=time-asc",
+   "sha256": "acea2a85657b2228073523e853e4200f56b32083b6f381951d730ba18f2f7e17",
+   "events": 275
+  },
+  "06003|20066|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-11-09T23%3A08%3A00&endtime=2024-12-10T23%3A13%3A00&latitude=38.6307&longitude=-120.2105&maxradiuskm=441.1&orderby=time-asc",
+   "sha256": "eef5cd00947a38e6729fba9247df1bbf8706123dfef67f89d4539f61b7404af0",
+   "events": 2854
+  },
+  "06003|20066|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-12-10T23%3A08%3A00&endtime=2023-12-12T23%3A13%3A00&latitude=38.6307&longitude=-120.2105&maxradiuskm=441.1&orderby=time-asc",
+   "sha256": "e7ad60a159f36019d1da397d6e09def87d1214af281a8ac4a39585618470dd06",
+   "events": 176
+  },
+  "06003|20426|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-11-04T16%3A07%3A00&endtime=2025-12-05T16%3A12%3A00&latitude=38.9658&longitude=-120.3493&maxradiuskm=495.9&orderby=time-asc",
+   "sha256": "80f40c9ab83423e22dfa020350f8ff10c1baa24ae53b14160259d6fa7aca183d",
+   "events": 2651
+  },
+  "06003|20426|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T16%3A07%3A00&endtime=2024-12-06T16%3A12%3A00&latitude=38.9658&longitude=-120.3493&maxradiuskm=495.9&orderby=time-asc",
+   "sha256": "717003e7bf837aa29aa11ce1adab75bbcfcea23d3fd673f76c0fea67b235b24a",
+   "events": 479
+  },
+  "06005|20066|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-11-09T23%3A08%3A00&endtime=2024-12-10T23%3A14%3A00&latitude=39.0002&longitude=-120.4044&maxradiuskm=491.6&orderby=time-asc",
+   "sha256": "35ee36e00e4a35d065b288856b9d8906d043c9d1bbc266bf82655f73e6fdbd32",
+   "events": 3035
+  },
+  "06005|20066|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-12-10T23%3A08%3A00&endtime=2023-12-12T23%3A14%3A00&latitude=39.0002&longitude=-120.4044&maxradiuskm=491.6&orderby=time-asc",
+   "sha256": "5ca830669ce12d8d0826402a3922159e0f53704d660266a6f71cb3246c669a29",
+   "events": 178
+  },
+  "06005|20426|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-11-04T16%3A07%3A00&endtime=2025-12-05T16%3A12%3A00&latitude=39.0298&longitude=-120.6412&maxradiuskm=497.4&orderby=time-asc",
+   "sha256": "e7b540d7c8cc20953e6d6b686437e67dacc06b42686a506b708c41b391dd13d0",
+   "events": 2649
+  },
+  "06005|20426|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-04T16%3A07%3A00&endtime=2024-12-06T16%3A12%3A00&latitude=39.0298&longitude=-120.6412&maxradiuskm=497.4&orderby=time-asc",
+   "sha256": "b54d9e18f926f0ef435a7966cb6a98538b331fc671a3c3bf3ff239841dc29dcd",
+   "events": 480
+  },
+  "06007|19346|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-11-20T10%3A34%3A00&endtime=2022-12-21T10%3A39%3A00&latitude=39.8317&longitude=-122.4701&maxradiuskm=587.4&orderby=time-asc",
+   "sha256": "fafe88cd846711003ad281728ea072bf9bad3c7b745169e589456aac7e96b12c",
+   "events": 2409
+  },
+  "06007|19346|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-12-20T10%3A34%3A00&endtime=2021-12-22T10%3A39%3A00&latitude=39.8317&longitude=-122.4701&maxradiuskm=587.4&orderby=time-asc",
+   "sha256": "829b6eaf47a3675962340e5827f7983cbf4873606540441e624c457662749b89",
+   "events": 321
+  },
+  "06007|19488|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-04-11T23%3A19%3A00&endtime=2023-05-12T23%3A24%3A00&latitude=39.7703&longitude=-121.2840&maxradiuskm=474.2&orderby=time-asc",
+   "sha256": "559c3e68476334b0072be500d119a49303f3aecb702227ce82b3b06c4c6e6e20",
+   "events": 2306
+  },
+  "06007|19488|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-05-11T23%3A19%3A00&endtime=2022-05-13T23%3A24%3A00&latitude=39.7703&longitude=-121.2840&maxradiuskm=474.2&orderby=time-asc",
+   "sha256": "9ac7fc482916acac71c1ab8b871fe00199d6094d4154deeaeb2cf85c9056c941",
+   "events": 144
+  },
+  "06007|19489|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-04-12T10%3A18%3A00&endtime=2023-05-13T10%3A23%3A00&latitude=40.0152&longitude=-121.3130&maxradiuskm=403.4&orderby=time-asc",
+   "sha256": "197cc2f3453d47f96b0af0defb56b1fa7b27ab8bdf0e8a33c35f82e82daa365f",
+   "events": 2036
+  },
+  "06007|19489|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-05-12T10%3A18%3A00&endtime=2022-05-14T10%3A23%3A00&latitude=40.0152&longitude=-121.3130&maxradiuskm=403.4&orderby=time-asc",
+   "sha256": "2a77e606b108ac63bad20431f2b2e24b4325b068951bb9fc90fd54d545779a7e",
+   "events": 144
+  },
+  "06007|20062|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-11-05T18%3A44%3A00&endtime=2024-12-06T18%3A50%3A00&latitude=40.3702&longitude=-122.3209&maxradiuskm=645.9&orderby=time-asc",
+   "sha256": "eaa9bc426a830270084efb4a4d72bb6014f1fe3e6b01d027581cfbcd19a29194",
+   "events": 2318
+  },
+  "06007|20062|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-12-06T18%3A44%3A00&endtime=2023-12-08T18%3A50%3A00&latitude=40.3702&longitude=-122.3209&maxradiuskm=645.9&orderby=time-asc",
+   "sha256": "39915ada25675f8f1a1e41cc82b11dd7c5759db5f5b95d9f9c1a968036866d8e",
+   "events": 128
+  },
+  "06007|20453|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-12-01T05%3A49%3A00&endtime=2026-01-01T05%3A54%3A00&latitude=40.3683&longitude=-121.3188&maxradiuskm=469.7&orderby=time-asc",
+   "sha256": "b53599fb20c4077902644c20760feb46615bb95753f925c3d942ce5cd727c4ac",
+   "events": 2350
+  },
+  "06007|20453|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-31T05%3A49%3A00&endtime=2025-01-02T05%3A54%3A00&latitude=40.3683&longitude=-121.3188&maxradiuskm=469.7&orderby=time-asc",
+   "sha256": "ea8b77889e71efbc1c8ec6aa986d8979b96622ad88cc2209eb8d2bb62fd04635",
+   "events": 227
+  },
+  "06011|19346|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-11-20T10%3A34%3A00&endtime=2022-12-21T10%3A39%3A00&latitude=40.7642&longitude=-122.9136&maxradiuskm=586.4&orderby=time-asc",
+   "sha256": "db77150d3360161199424b3d4ed15be015f9b2754d170429366b9f463e8be6d3",
+   "events": 2320
+  },
+  "06011|19346|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-12-20T10%3A34%3A00&endtime=2021-12-22T10%3A39%3A00&latitude=40.7642&longitude=-122.9136&maxradiuskm=586.4&orderby=time-asc",
+   "sha256": "9dabc83c2acb4b0a0cbd99ca9b872ce8c3a3b55699e579dd17340a1a6ab2748c",
+   "events": 308
+  },
+  "06011|20062|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-11-05T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&latitude=40.4236&longitude=-122.9044&maxradiuskm=551.9&orderby=time-asc",
+   "sha256": "7377e5467c0bbd172f39562c7e858248e72b1487a929443e55292506640fc862",
+   "events": 2082
+  },
+  "06011|20062|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-12-06T18%3A44%3A00&endtime=2023-12-08T18%3A49%3A00&latitude=40.4236&longitude=-122.9044&maxradiuskm=551.9&orderby=time-asc",
+   "sha256": "7743b67177aa7012346012838409e8f0ba656b0a4d94d295ef7b6768a88c6ce0",
+   "events": 117
+  },
+  "06015|19346|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-11-20T10%3A34%3A00&endtime=2022-12-21T10%3A39%3A00&latitude=40.8250&longitude=-123.3996&maxradiuskm=454.9&orderby=time-asc",
+   "sha256": "ead905a8323f21fd7033951df87fcf053bd3405e2a8c9175a1abc76b04bcbfc6",
+   "events": 1836
+  },
+  "06015|19346|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-12-20T10%3A34%3A00&endtime=2021-12-22T10%3A39%3A00&latitude=40.8250&longitude=-123.3996&maxradiuskm=454.9&orderby=time-asc",
+   "sha256": "ded993b161665e97749f1bdc1465186a31931cc3f4dea7696d9acb9f5ead43b8",
+   "events": 265
+  },
+  "06019|18437|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-05-25T17%3A41%3A00&endtime=2020-06-25T17%3A53%3A00&latitude=36.3827&longitude=-118.6741&maxradiuskm=582.0&orderby=time-asc",
+   "sha256": "57ccdde1b7ddfe234c78ad58e24a31e3ea8104004f4ecfc760bc75ef00ad3956",
+   "events": 13548
+  },
+  "06019|18437|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-06-25T17%3A41%3A00&endtime=2019-06-27T17%3A53%3A00&latitude=36.3827&longitude=-118.6741&maxradiuskm=582.0&orderby=time-asc",
+   "sha256": "73a585594d80af63d3c57b4213751ee945654dbb0b57f4f469b62e73e5c259af",
+   "events": 289
+  },
+  "06023|18339|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-02-17T22%3A08%3A00&endtime=2020-03-19T22%3A13%3A00&latitude=40.7067&longitude=-123.9262&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "84a364cbc5d8d07d46a2228f26f6d1220cf18796e85d1918ea3c6b9a65954232",
+   "events": 1176
+  },
+  "06023|18339|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-03-19T22%3A08%3A00&endtime=2019-03-21T22%3A13%3A00&latitude=40.7067&longitude=-123.9262&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "d628f73a0ffe60eeda4b25b1f33b878b0ed08706d92203b426b45c0294a1cee1",
+   "events": 81
+  },
+  "06023|18981|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-11-20T20%3A10%3A00&endtime=2021-12-21T20%3A15%3A00&latitude=40.2688&longitude=-123.5847&maxradiuskm=393.8&orderby=time-asc",
+   "sha256": "80d3c348c328a24bdc3afe4403960d53825f1082fdefdc23478e1363cd3c2246",
+   "events": 1716
+  },
+  "06023|18981|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-12-20T20%3A10%3A00&endtime=2020-12-22T20%3A15%3A00&latitude=40.2688&longitude=-123.5847&maxradiuskm=393.8&orderby=time-asc",
+   "sha256": "0671ad2ff83ac1911aa1a865c4e45997ce300dd65829b18b9d8594428708f04f",
+   "events": 97
+  },
+  "06023|19259|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-08-25T19%3A27%3A00&endtime=2022-09-25T19%3A32%3A00&latitude=40.7067&longitude=-123.9262&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "13b6d5045137db975499485e37445ac377d616792b307af86138ecba8f291e91",
+   "events": 1108
+  },
+  "06023|19259|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-09-24T19%3A27%3A00&endtime=2021-09-26T19%3A32%3A00&latitude=40.7067&longitude=-123.9262&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "adcb05db7c33a5de1d6f11428a077820095fdf2fed49e4baebbdf9b07d123b4c",
+   "events": 70
+  },
+  "06023|19358|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-02T18%3A35%3A00&endtime=2023-01-02T18%3A40%3A00&latitude=40.2623&longitude=-123.4946&maxradiuskm=392.4&orderby=time-asc",
+   "sha256": "f5608e7309a66c917d60986ba54b563065bb9ece570eeb0f369638ba1c4be106",
+   "events": 2018
+  },
+  "06023|19358|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-01-01T18%3A35%3A00&endtime=2022-01-03T18%3A40%3A00&latitude=40.2623&longitude=-123.4946&maxradiuskm=392.4&orderby=time-asc",
+   "sha256": "ea764831594d713c2e7377fbdf3935b0fbe06f33109a4b46d3c72bb189426929",
+   "events": 116
+  },
+  "06023|19498|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-04-21T18%3A44%3A00&endtime=2023-05-22T18%3A49%3A00&latitude=40.7067&longitude=-123.9262&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "edf922096b8c3ab8a44426f3d1cfad27b6dcb09b761361d0c21217ac27712a61",
+   "events": 1499
+  },
+  "06023|19498|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-05-21T18%3A44%3A00&endtime=2022-05-23T18%3A49%3A00&latitude=40.7067&longitude=-123.9262&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "201e27cf670fc04d8890358379cdb587ebc26d04274c92f8f0c54531be2ba7ae",
+   "events": 74
+  },
+  "06023|19630|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-08-31T15%3A26%3A00&endtime=2023-10-01T15%3A31%3A00&latitude=40.7067&longitude=-123.9262&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "1ed14698034b0348329b1784e5b59a21c450c3539fc3d49b0ec8497b3e21ad6c",
+   "events": 1277
+  },
+  "06023|19630|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-09-30T15%3A26%3A00&endtime=2022-10-02T15%3A31%3A00&latitude=40.7067&longitude=-123.9262&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "1fd9e1f8b290063701312711446ea5246e922e8bc378e456e537d89cc8f5d1fa",
+   "events": 88
+  },
+  "06023|20062|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-11-05T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&latitude=40.2282&longitude=-123.3318&maxradiuskm=424.0&orderby=time-asc",
+   "sha256": "cccb6021e414515d70cce15fa15b47021ea1c9be062a4597cf324add95fc6e34",
+   "events": 1735
+  },
+  "06023|20062|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-12-06T18%3A44%3A00&endtime=2023-12-08T18%3A49%3A00&latitude=40.2282&longitude=-123.3318&maxradiuskm=424.0&orderby=time-asc",
+   "sha256": "7571f7ecf1a9e265b75864075b399650844054707d80c736ab7272d6b70e407e",
+   "events": 104
+  },
+  "06025|18484|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-07-11T15%3A56%3A00&endtime=2020-08-11T16%3A01%3A00&latitude=33.3853&longitude=-115.6788&maxradiuskm=348.7&orderby=time-asc",
+   "sha256": "ef5272658be006f38250b97f690e411a73c40ad3e01e0f0dab0dd810c48a175d",
+   "events": 2840
+  },
+  "06025|18484|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-08-11T15%3A56%3A00&endtime=2019-08-13T16%3A01%3A00&latitude=33.3853&longitude=-115.6788&maxradiuskm=348.7&orderby=time-asc",
+   "sha256": "f4e3773f44b2b0c9e7bf6dc890204cc6d7727859643bdb604b81909665f664c0",
+   "events": 579
+  },
+  "06025|18536|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-09-01T00%3A31%3A00&endtime=2020-10-02T00%3A36%3A00&latitude=33.0408&longitude=-115.3554&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "500b431c5764f8dfc1d6112d372ab7982c81e3a9268d6e50a5e96503679d0252",
+   "events": 2401
+  },
+  "06025|18536|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-10-02T00%3A31%3A00&endtime=2019-10-04T00%3A36%3A00&latitude=33.0408&longitude=-115.3554&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "eedfe35cda2e766618753ee8bb9e47c851e4f79dc4545e5368b35e01a58b62a6",
+   "events": 72
+  },
+  "06025|18783|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-05-06T17%3A56%3A00&endtime=2021-06-06T18%3A01%3A00&latitude=33.2088&longitude=-115.8723&maxradiuskm=386.7&orderby=time-asc",
+   "sha256": "00e924f68537b21735deb03f14ade1f9033f605eda880ddae7a1e78c12c932f4",
+   "events": 3165
+  },
+  "06025|18783|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-06-05T17%3A56%3A00&endtime=2020-06-07T18%3A01%3A00&latitude=33.2088&longitude=-115.8723&maxradiuskm=386.7&orderby=time-asc",
+   "sha256": "0344f0ce09f2d17d9b86293b0713342d8244c2583ae5809c900f369d9e179332",
+   "events": 226
+  },
+  "06025|19692|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-11-01T07%3A43%3A00&endtime=2023-12-02T07%3A48%3A00&latitude=33.0322&longitude=-116.0658&maxradiuskm=366.2&orderby=time-asc",
+   "sha256": "f9257d8a7fd8b7e863897db202ee5efa0173a546c6d2ccbc843eb803d1504aaa",
+   "events": 993
+  },
+  "06025|19692|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-01T07%3A43%3A00&endtime=2022-12-03T07%3A48%3A00&latitude=33.0322&longitude=-116.0658&maxradiuskm=366.2&orderby=time-asc",
+   "sha256": "f9af723bfa9997f7575c6c72fa41d937d829779b565f9506290da643bb2e8e9d",
+   "events": 83
+  },
+  "06025|19765|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-01-13T08%3A36%3A00&endtime=2024-02-13T08%3A48%3A00&latitude=33.2073&longitude=-115.9907&maxradiuskm=375.9&orderby=time-asc",
+   "sha256": "682649dcc3c7571d659952b96cec6cd24ac5a7fb219c404086f4e03d6da880f9",
+   "events": 1444
+  },
+  "06025|19765|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-02-12T08%3A36%3A00&endtime=2023-02-14T08%3A48%3A00&latitude=33.2073&longitude=-115.9907&maxradiuskm=375.9&orderby=time-asc",
+   "sha256": "522034692772e7f645b99756bbf755c2bc3b2c289c8336aa574e05fb42bac7e9",
+   "events": 65
+  },
+  "06025|19855|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-04-12T18%3A22%3A00&endtime=2024-05-13T19%3A09%3A00&latitude=33.0408&longitude=-115.3554&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "3f1abad7f6ddd6782d2adf7ef20f33d204e9fdf82f8540564624be32b0c431c9",
+   "events": 1093
+  },
+  "06025|19855|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-05-13T18%3A22%3A00&endtime=2023-05-15T19%3A09%3A00&latitude=33.0408&longitude=-115.3554&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "7c7d1d0c46e435379569fcdec7431beb1a2a121f1a781ce617fe02d9a8e07550",
+   "events": 51
+  },
+  "06025|19879|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-05-06T11%3A58%3A00&endtime=2024-06-06T12%3A03%3A00&latitude=33.0408&longitude=-115.3554&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "3892877bd9b283381a827efe81438b1e6800455d85f46847cf2137ebdd8154ae",
+   "events": 1461
+  },
+  "06025|19879|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-06-06T11%3A58%3A00&endtime=2023-06-08T12%3A03%3A00&latitude=33.0408&longitude=-115.3554&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "e890d870e1eb0ba0c51e0b225bb15a7108e99ffbf4d0a8ca2ba4c9e6ba2162dd",
+   "events": 41
+  },
+  "06025|20192|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-03-15T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&latitude=33.7936&longitude=-116.3301&maxradiuskm=483.6&orderby=time-asc",
+   "sha256": "a79577a48f28a1d8e1934c5499d508829d865fd4713dc0143d27c08385b48c03",
+   "events": 2134
+  },
+  "06025|20192|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-04-14T17%3A08%3A00&endtime=2024-04-16T17%3A13%3A00&latitude=33.7936&longitude=-116.3301&maxradiuskm=483.6&orderby=time-asc",
+   "sha256": "345e82f02520bd56f4d199ef0b1f89f7458d93cb740fa613c00c9964a5e16847",
+   "events": 110
+  },
+  "06025|20468|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-12-16T09%3A54%3A00&endtime=2026-01-16T09%3A59%3A00&latitude=33.0408&longitude=-115.3554&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "934dd08ac77e4a0a099f59f7a8ef53ac277f359617d287f7eee3e3a2623fbf38",
+   "events": 1002
+  },
+  "06025|20468|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-01-15T09%3A54%3A00&endtime=2025-01-17T09%3A59%3A00&latitude=33.0408&longitude=-115.3554&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "8d7d7ae8fbe76960332e6809a24a9d42952e92af236d75f50804185c32fea2d4",
+   "events": 71
+  },
+  "06025|20473|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-12-21T01%3A56%3A00&endtime=2026-01-21T02%3A01%3A00&latitude=33.6627&longitude=-116.0788&maxradiuskm=433.1&orderby=time-asc",
+   "sha256": "6fbd336b0153f41d3c8e7531c13753e264a42c87a914b9a56248b2b51837a373",
+   "events": 1750
+  },
+  "06025|20473|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-01-20T01%3A56%3A00&endtime=2025-01-22T02%3A01%3A00&latitude=33.6627&longitude=-116.0788&maxradiuskm=433.1&orderby=time-asc",
+   "sha256": "5313d17981e451fb8be317330327bffbfb25faad87b6b9d2e23eeb826fdbedc4",
+   "events": 89
+  },
+  "06027|18403|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-04-21T21%3A09%3A00&endtime=2020-05-22T22%3A09%3A00&latitude=35.7486&longitude=-117.7741&maxradiuskm=475.3&orderby=time-asc",
+   "sha256": "784314e86a444fb31988df5d614883e9e393538fef9d519c551ff3f69acf78a3",
+   "events": 7052
+  },
+  "06027|18403|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-05-22T21%3A09%3A00&endtime=2019-05-24T22%3A09%3A00&latitude=35.7486&longitude=-117.7741&maxradiuskm=475.3&orderby=time-asc",
+   "sha256": "ffd746d39892dc811c1ba4587b3a8ead8f6ce0be16d555e56de54b474cc8a3fe",
+   "events": 206
+  },
+  "06027|18437|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-05-25T17%3A40%3A00&endtime=2020-06-25T17%3A51%3A00&latitude=36.3444&longitude=-117.8282&maxradiuskm=522.5&orderby=time-asc",
+   "sha256": "4b756b9ec948ae77d194485e534b1d19a0551a6193c5cc7b292de0b2a680ea1b",
+   "events": 13477
+  },
+  "06027|18437|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-06-25T17%3A40%3A00&endtime=2019-06-27T17%3A51%3A00&latitude=36.3444&longitude=-117.8282&maxradiuskm=522.5&orderby=time-asc",
+   "sha256": "fed564307ba2f9b4dce2e265fc972143de9562310f31adda9434570015494546",
+   "events": 284
+  },
+  "06027|18998|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-12-07T00%3A28%3A00&endtime=2022-01-07T00%3A33%3A00&latitude=37.4190&longitude=-117.9706&maxradiuskm=407.7&orderby=time-asc",
+   "sha256": "3a2dea1ab5065eec63fe2878920ea4e319dc416a9ba50741873e23795a9fcb92",
+   "events": 1879
+  },
+  "06027|18998|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-01-06T00%3A28%3A00&endtime=2021-01-08T00%3A33%3A00&latitude=37.4190&longitude=-117.9706&maxradiuskm=407.7&orderby=time-asc",
+   "sha256": "ad4697f48aed33ae61df532315904c240d9406d947c6e48ad76183851b82bc31",
+   "events": 151
+  },
+  "06027|20268|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-05-30T02%3A38%3A00&endtime=2025-06-30T02%3A43%3A00&latitude=37.2390&longitude=-118.1397&maxradiuskm=399.7&orderby=time-asc",
+   "sha256": "0b9132713b7c97cc1136be88f5227fda7aa081d3aa4c6e51aeb5623e42ecc710",
+   "events": 1600
+  },
+  "06027|20268|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-06-29T02%3A38%3A00&endtime=2024-07-01T02%3A43%3A00&latitude=37.2390&longitude=-118.1397&maxradiuskm=399.7&orderby=time-asc",
+   "sha256": "9e456730bfc63924821e70ba75cd15b90e9ce9b632ec35985a34251ac3d01549",
+   "events": 107
+  },
+  "06029|18437|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-05-25T17%3A44%3A00&endtime=2020-06-25T17%3A49%3A00&latitude=35.3466&longitude=-118.7295&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "83b8bb900a3bf4b7c676d3246b179160ddbc27ab9759fe8c754b1e5bbc8f6c6a",
+   "events": 4500
+  },
+  "06029|18437|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-06-25T17%3A44%3A00&endtime=2019-06-27T17%3A49%3A00&latitude=35.3466&longitude=-118.7295&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "73bc02ea3755c9c5b2ecb4d7bfe1a1b0a05e2ede7aa207ade3b73eb2c2dd83d0",
+   "events": 162
+  },
+  "06029|19942|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-07-08T04%3A10%3A00&endtime=2024-08-08T04%3A15%3A00&latitude=35.0617&longitude=-119.0081&maxradiuskm=435.8&orderby=time-asc",
+   "sha256": "6d5ea883fe135ab28d3650d7e409c5fee52febb6aab48326fae1574afec909bc",
+   "events": 2549
+  },
+  "06029|19942|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-08-08T04%3A10%3A00&endtime=2023-08-10T04%3A15%3A00&latitude=35.0617&longitude=-119.0081&maxradiuskm=435.8&orderby=time-asc",
+   "sha256": "0e6370947101cb8616fc9cd7b56344a1634fe578924569ca49593f081c8abb42",
+   "events": 110
+  },
+  "06029|20192|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-03-15T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&latitude=34.5371&longitude=-117.6698&maxradiuskm=477.8&orderby=time-asc",
+   "sha256": "1eede4f968cfd8d9f30e9d2ca18bc3183578a502d0f8ff5c0ee8ce1599192620",
+   "events": 2335
+  },
+  "06029|20192|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-04-14T17%3A08%3A00&endtime=2024-04-16T17%3A13%3A00&latitude=34.5371&longitude=-117.6698&maxradiuskm=477.8&orderby=time-asc",
+   "sha256": "60b3a21c527d1fdf01e8f84edfecb4d53b2a6bea8c70e23bd1f908c23d482757",
+   "events": 126
+  },
+  "06033|19249|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-08-15T01%3A39%3A00&endtime=2022-09-15T01%3A44%3A00&latitude=38.7248&longitude=-122.8373&maxradiuskm=394.5&orderby=time-asc",
+   "sha256": "814c6f4bf9e3dbbb926028ae27abe6aecc9bed795cc2020e5e54a02943cba55c",
+   "events": 1888
+  },
+  "06033|19249|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-09-14T01%3A39%3A00&endtime=2021-09-16T01%3A44%3A00&latitude=38.7248&longitude=-122.8373&maxradiuskm=394.5&orderby=time-asc",
+   "sha256": "4c17efae3f77afed751f341a7ee4aca61276109b9191f19360348c9c34cd87d2",
+   "events": 145
+  },
+  "06033|19459|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-03-13T05%3A39%3A00&endtime=2023-04-13T05%3A44%3A00&latitude=39.0219&longitude=-123.0381&maxradiuskm=357.4&orderby=time-asc",
+   "sha256": "5576d36240e72606d125ed381107daa7b5193ae3d35c74f63fa9f9f44918b6fd",
+   "events": 2258
+  },
+  "06033|19459|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-04-12T05%3A39%3A00&endtime=2022-04-14T05%3A44%3A00&latitude=39.0219&longitude=-123.0381&maxradiuskm=357.4&orderby=time-asc",
+   "sha256": "d120aebd638c3b28773077cbadb804c1ab96b40ff5ed5d10d6ffa1ce0025b9ab",
+   "events": 107
+  },
+  "06035|19488|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-04-11T23%3A19%3A00&endtime=2023-05-12T23%3A24%3A00&latitude=40.7379&longitude=-121.3324&maxradiuskm=360.0&orderby=time-asc",
+   "sha256": "5d3a4a00e02fb35e0472654885862592300073a071f17bcdbe8877d7a60512bd",
+   "events": 1880
+  },
+  "06035|19488|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-05-11T23%3A19%3A00&endtime=2022-05-13T23%3A24%3A00&latitude=40.7379&longitude=-121.3324&maxradiuskm=360.0&orderby=time-asc",
+   "sha256": "24082dbb684026d7b07db744af23fa1d715c2dad87f075745d8b0cbc7cd21e67",
+   "events": 112
+  },
+  "06035|19608|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-08-09T17%3A24%3A00&endtime=2023-09-09T17%3A29%3A00&latitude=41.0843&longitude=-121.5370&maxradiuskm=421.6&orderby=time-asc",
+   "sha256": "6a37eb777a6668cd4d8640784f709824581312156818790427f83ecd92984142",
+   "events": 1615
+  },
+  "06035|19608|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-09-08T17%3A24%3A00&endtime=2022-09-10T17%3A29%3A00&latitude=41.0843&longitude=-121.5370&maxradiuskm=421.6&orderby=time-asc",
+   "sha256": "958770fc481913c2d01eca2590092cea4801edbdbd02fcda38410d56a754428b",
+   "events": 106
+  },
+  "06035|20451|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-11-29T00%3A41%3A00&endtime=2025-12-30T00%3A46%3A00&latitude=40.4743&longitude=-120.6889&maxradiuskm=354.8&orderby=time-asc",
+   "sha256": "5683496de11b11b3e660da842959f4119134efec8dda9ad32329fb87ce64a28f",
+   "events": 2036
+  },
+  "06035|20451|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-12-29T00%3A41%3A00&endtime=2024-12-31T00%3A46%3A00&latitude=40.4743&longitude=-120.6889&maxradiuskm=354.8&orderby=time-asc",
+   "sha256": "fa5212190ea830ffc654e3f1a95e54df59436d1fdf6ad081cb049c187dc41b08",
+   "events": 139
+  },
+  "06045|18981|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-11-20T20%3A10%3A00&endtime=2021-12-21T20%3A15%3A00&latitude=40.0401&longitude=-123.2788&maxradiuskm=369.0&orderby=time-asc",
+   "sha256": "ecec7797ba39362743633d51025056bcf29869623e2f39526e9a82b13e5635c5",
+   "events": 1811
+  },
+  "06045|18981|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-12-20T20%3A10%3A00&endtime=2020-12-22T20%3A15%3A00&latitude=40.0401&longitude=-123.2788&maxradiuskm=369.0&orderby=time-asc",
+   "sha256": "772ecef5c35fe4885919678f99f7189bf51c0e77b01d0c35b85502786e60576c",
+   "events": 97
+  },
+  "06045|19358|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-02T18%3A35%3A00&endtime=2023-01-02T18%3A40%3A00&latitude=40.2417&longitude=-122.7083&maxradiuskm=409.7&orderby=time-asc",
+   "sha256": "95fe33e546e59b00c8f9bc61cf36871f7688b217378794c9b465a98d0e0e5f35",
+   "events": 2115
+  },
+  "06045|19358|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-01-01T18%3A35%3A00&endtime=2022-01-03T18%3A40%3A00&latitude=40.2417&longitude=-122.7083&maxradiuskm=409.7&orderby=time-asc",
+   "sha256": "88540a3cf288dc0e54134e19a7144953c6083375fd570b42c7dcd70ce1c571e1",
+   "events": 122
+  },
+  "06045|20062|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-11-05T18%3A44%3A00&endtime=2024-12-06T18%3A49%3A00&latitude=39.4324&longitude=-123.4429&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "cd15ceb4669f5b70452dd452815ad25a541327d9c98623dc654c2fe9bdcdcb99",
+   "events": 1616
+  },
+  "06045|20062|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-12-06T18%3A44%3A00&endtime=2023-12-08T18%3A49%3A00&latitude=39.4324&longitude=-123.4429&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "37d5a6b8b185487fcc24e9ac0711ea24386c7d5022d4476bbd6c2d1e58578135",
+   "events": 93
+  },
+  "06053|18925|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-09-25T23%3A42%3A00&endtime=2021-10-26T23%3A47%3A00&latitude=35.8141&longitude=-120.8822&maxradiuskm=361.5&orderby=time-asc",
+   "sha256": "8f35d31567d4fd22c4b33261fe57fc3e9990c2c869390a2f35bbe496092fa9ce",
+   "events": 1754
+  },
+  "06053|18925|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-10-25T23%3A42%3A00&endtime=2020-10-27T23%3A47%3A00&latitude=35.8141&longitude=-120.8822&maxradiuskm=361.5&orderby=time-asc",
+   "sha256": "b99a2c175c48e998703adcb5fcbcb8b2a2bdddf9f3132e841ca3ecc805840c16",
+   "events": 91
+  },
+  "06053|18926|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-09-26T01%3A41%3A00&endtime=2021-10-27T01%3A46%3A00&latitude=35.8141&longitude=-120.8822&maxradiuskm=361.5&orderby=time-asc",
+   "sha256": "592d964dfdfa3031f25d40bd068e9858968c6b2dc04ace0479792f1c8c535f81",
+   "events": 1752
+  },
+  "06053|18926|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-10-26T01%3A41%3A00&endtime=2020-10-28T01%3A46%3A00&latitude=35.8141&longitude=-120.8822&maxradiuskm=361.5&orderby=time-asc",
+   "sha256": "1a0a8de83d6487ff675c02700be78ccac7e07e4e423524f19941a57923d83295",
+   "events": 89
+  },
+  "06063|20062|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-11-05T18%3A45%3A00&endtime=2024-12-06T18%3A50%3A00&latitude=40.7203&longitude=-122.1027&maxradiuskm=619.8&orderby=time-asc",
+   "sha256": "1a7fd3f7b15a7f5aa0fc727cfdcfd79ffd25e57a9f9ff1e1a98b52d44102d8ee",
+   "events": 2213
+  },
+  "06063|20062|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-12-06T18%3A45%3A00&endtime=2023-12-08T18%3A50%3A00&latitude=40.7203&longitude=-122.1027&maxradiuskm=619.8&orderby=time-asc",
+   "sha256": "84b3157016dc3b3b7d641f286ddf21e1a8244fc845d182309f47f8eec2b8501c",
+   "events": 136
+  },
+  "06071|18286|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-12-26T03%3A03%3A00&endtime=2020-01-26T03%3A08%3A00&latitude=34.8567&longitude=-116.1816&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "0b2eaabe17964dff0f6feb705cc9266f28f1b8d9598d5f9ec18647de7d7c3b19",
+   "events": 3557
+  },
+  "06071|18286|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-01-25T03%3A03%3A00&endtime=2019-01-27T03%3A08%3A00&latitude=34.8567&longitude=-116.1816&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "81ba75f529d3d29bb03e617b78c6aa8c99fdb31cea41864bdabe118a5589220e",
+   "events": 135
+  },
+  "06071|19933|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-06-29T20%3A01%3A00&endtime=2024-07-30T20%3A06%3A00&latitude=34.8567&longitude=-116.1816&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "5b12316427a435b70810065fa9eb7a0063ebd237cfa4c1c2cfe1a73422129b06",
+   "events": 1528
+  },
+  "06071|19933|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-07-30T20%3A01%3A00&endtime=2023-08-01T20%3A06%3A00&latitude=34.8567&longitude=-116.1816&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "0fc6264bae00672631ad4780422b65a6b8a9d0457b6a514fb326203a50808468",
+   "events": 79
+  },
+  "06073|20192|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-03-15T17%3A08%3A00&endtime=2025-04-15T17%3A13%3A00&latitude=33.0236&longitude=-116.7761&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "795e0d9c354343bf87abe23905f1a703259e37d756e8be6c95cf98dbc722ea1e",
+   "events": 1599
+  },
+  "06073|20192|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-04-14T17%3A08%3A00&endtime=2024-04-16T17%3A13%3A00&latitude=33.0236&longitude=-116.7761&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "fd9da49975cc98902abade294d9bc6616d32095d81db8c2eb2db8427cb563683",
+   "events": 52
+  },
+  "06083|19589|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-07-21T21%3A41%3A00&endtime=2023-08-21T21%3A46%3A00&latitude=34.5367&longitude=-120.0384&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "8fa9c4705e7a3af6e8778bd0c3b52d654e449c1f923e2b82d7577cdcf3c85d81",
+   "events": 915
+  },
+  "06083|19589|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-08-20T21%3A41%3A00&endtime=2022-08-22T21%3A46%3A00&latitude=34.5367&longitude=-120.0384&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "4618abc08e149c4d240c410ac0aa9c377d935a50ccd9ec5c64b4bba112fb07ac",
+   "events": 71
+  },
+  "06107|19942|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-07-08T04%3A10%3A00&endtime=2024-08-08T04%3A15%3A00&latitude=36.2288&longitude=-118.7811&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "ae4c54af3e39424b8541e1836501e47e5c7e25c21be1b374a01a671ac4ac488d",
+   "events": 1534
+  },
+  "06107|19942|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-08-08T04%3A10%3A00&endtime=2023-08-10T04%3A15%3A00&latitude=36.2288&longitude=-118.7811&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "1d46612dbff963a13261c3062ad24a3587b6c044cdb98eff11925915679a9fdb",
+   "events": 69
+  },
+  "32021|18363|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-03-12T14%3A36%3A00&endtime=2020-04-12T14%3A42%3A00&latitude=38.5166&longitude=-118.4163&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "e8a0297e1c51830698be2757a040f95916585071f5d35af165f4acf98d1ae7a9",
+   "events": 2490
+  },
+  "32021|18363|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-04-12T14%3A36%3A00&endtime=2019-04-14T14%3A42%3A00&latitude=38.5166&longitude=-118.4163&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "7f61313723ab29230f0971f36e041ad52f3e837710aeb38cc974abf372cdba9c",
+   "events": 91
+  },
+  "34027|19818|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-03-06T14%3A49%3A00&endtime=2024-04-06T22%3A49%3A00&latitude=40.8589&longitude=-74.5473&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "7caabe87a11ffcda17944294983a0bd06820923ca6512bfadfa202ac933cf2e5",
+   "events": 38
+  },
+  "34027|19818|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-04-06T14%3A49%3A00&endtime=2023-04-08T22%3A49%3A00&latitude=40.8589&longitude=-74.5473&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "5d2383a830339053cab5c5eefb3c72b5de8a8a18570ffde2cf6276ff0b683743",
+   "events": 0
+  },
+  "36001|19818|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-03-06T16%3A04%3A00&endtime=2024-04-06T22%3A04%3A00&latitude=42.2958&longitude=-74.4514&maxradiuskm=509.7&orderby=time-asc",
+   "sha256": "e01678eae55ca4236b36e88d736e3843f8bf485fea3954919ab81bcb36db3566",
+   "events": 44
+  },
+  "36001|19818|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-04-06T16%3A04%3A00&endtime=2023-04-08T22%3A04%3A00&latitude=42.2958&longitude=-74.4514&maxradiuskm=509.7&orderby=time-asc",
+   "sha256": "61658e3adc35acb420b6c7e15f4e2b0c00917f334ceda0a9b5128f128f44fcf4",
+   "events": 0
+  },
+  "36005|19818|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2024-03-06T15%3A01%3A00&endtime=2024-04-06T17%3A46%3A00&latitude=40.6953&longitude=-73.9510&maxradiuskm=321.8&orderby=time-asc",
+   "sha256": "854e4ff817cb59f704ea85ad5ea500cb3a2b3cacd0bfb3f3f8595dd6fe7c3184",
+   "events": 35
+  },
+  "36005|19818|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2023-04-06T15%3A01%3A00&endtime=2023-04-08T17%3A46%3A00&latitude=40.6953&longitude=-73.9510&maxradiuskm=321.8&orderby=time-asc",
+   "sha256": "03bc707573c03d73b033dd83d699fe5344073652bac13902ee340aa20d4e6fdb",
+   "events": 0
+  },
+  "48141|18347|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-02-25T17%3A04%3A00&endtime=2020-03-27T18%3A04%3A00&latitude=31.7665&longitude=-106.2415&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "1cb476e7a801b52bd697052d2bed8a4d97ff9d118a7aeb6950cfa8738c0d2466",
+   "events": 26
+  },
+  "48141|18347|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-03-27T17%3A04%3A00&endtime=2019-03-29T18%3A04%3A00&latitude=31.7665&longitude=-106.2415&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "7e384e702cec4fb4ca1722f85375b0b957b66730e2024c5e8e14ef27fb756090",
+   "events": 0
+  },
+  "49043|18339|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-02-17T14%3A59%3A00&endtime=2020-03-19T15%3A59%3A00&latitude=40.8721&longitude=-110.9685&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "decfcec32f33aa78e206fec51ed31a7e70935d923994444280e2a532251dd514",
+   "events": 934
+  },
+  "49043|18339|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-03-19T14%3A59%3A00&endtime=2019-03-21T15%3A59%3A00&latitude=40.8721&longitude=-110.9685&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "9e6e7028f89709db67c2e550c56f9a94eb5c8bb181f30a267e87758a2195b8f4",
+   "events": 38
+  },
+  "49045|18339|live": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-02-17T15%3A19%3A00&endtime=2020-03-19T17%3A19%3A00&latitude=40.4678&longitude=-113.1240&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "7cb36f44a2d646e22989eee07f28c9548d4ffb463a1f121d9625763726067082",
+   "events": 1023
+  },
+  "49045|18339|placebo": {
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-03-19T15%3A19%3A00&endtime=2019-03-21T17%3A19%3A00&latitude=40.4678&longitude=-113.1240&maxradiuskm=300.0&orderby=time-asc",
+   "sha256": "7923f1d7272053ab1f9efcf5eda32411385037ba95787ce9543d61eb166ca043",
+   "events": 33
+  }
+ }
+}
