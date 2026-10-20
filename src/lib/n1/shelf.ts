@@ -68,13 +68,13 @@ export interface N1Page {
 /**
  * What a mirrored path is on the shelf BY ITS FILING, or null when it is not a page a visitor
  * opens: a work is exactly `works/<name>/index.html`; any page under projects/ is a study until
- * the record declares it a work (buildShelf reads that). A `template.html` is the source a page
+ * the record declares it a work (buildShelf reads that). A `template.html` (or `work_template.html`) is the source a page
  * is built from, and everything outside the two directories — the record, a listing inside the
  * material — is the practice's working memory, not a page of its making.
  */
 export function n1PageKind(path: string): N1PageKind | null {
   if (/^works\/[^/]+\/index\.html$/.test(path)) return 'work'
-  if (/^projects\/.+\.html$/.test(path) && !/(^|\/)template\.html$/.test(path)) return 'study'
+  if (/^projects\/.+\.html$/.test(path) && !/(^|[/_-])template\.html$/.test(path)) return 'study'
   return null
 }
 
