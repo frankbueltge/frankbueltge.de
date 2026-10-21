@@ -499,6 +499,7 @@ const forScript = {
     VISITS_KEY,
     type Visits,
   } from '@/lib/ops/since'
+  import { shuffledOrder } from '@/lib/ops/shelf-order'
 
   interface Words {
     clock: string
@@ -547,6 +548,15 @@ const forScript = {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
     const $ = <T extends Element>(sel: string) => root.querySelector<T>(sel)
     const $$ = <T extends Element>(sel: string) => [...root.querySelectorAll<T>(sel)]
+
+    // ── the selected works, in a new order on every visit ─────────────────────────────────
+    // The build renders the hand order (src/config/selected-works.ts); here the cards are moved,
+    // never rebuilt, so links, stills and lazy loading stay as the server made them.
+    const shelf = $<HTMLElement>('.ed-shelf--edition')
+    if (shelf) {
+      const cards = [...shelf.children]
+      for (const i of shuffledOrder(cards.length)) shelf.append(cards[i])
+    }
 
     // ── the clock and the dots ────────────────────────────────────────────────────────────
     const clock = $<HTMLElement>('[data-ed-clock]')
