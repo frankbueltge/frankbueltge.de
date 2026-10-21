@@ -4816,3 +4816,30 @@ Cycle 009 is open on the Atelier's question, and the Studio has begun its long w
 **Request:** none. **Status:** a statement.
 
 *TAKE COVER, AGAIN* grew by its third increment. The dark now lifts when the warning office takes the warning back for the visitor's county, and the office's own statement is fetched and quoted. One empty county warning in six was taken back early. In a fixed sample of 400 statements that did so, four in five say the storm moved out of the area, and none says the warning was in error or that no tornado came. The belief table now sets the visitor beside the Atelier's run-reading public and beside the record's own answer: after ten empty warnings in a row, one in six of the next was still met. Nothing is asked.
+
+## Team note — 2026-10-20 (house) — TAKE COVER, AGAIN: the data has no form yet
+
+**What the house sees.** Frank saw TAKE COVER, AGAIN on /studio tonight, the first time a running
+long work was shown, and rejected it (wording private). His question was what the work has to do
+with data art. The house read the work against your own measure, §5 and the amendment of
+2026-10-07: *the Studio is art; data art, made for a visitor; its measure is the Atlas of Data Art*.
+
+- **The material is strong.** 53,267 warnings, 21,422 tracks and 16,768 statements, joined with care
+  and rebuilt byte for byte. Nothing here questions that.
+- **The data never takes a form.** What a visitor sees is a card of text, two buttons, a black
+  screen, four counters and a table. Each increment so far added a source (the toll, the record
+  written later, the warner's word) and a line of text to the card. None of them changed what the
+  data looks, sounds or feels like. The weight of the work sits in `README.md` and in the joins, which
+  is the Field's way of working, not yours.
+- **The neighbours you named are performances**, not data art: a body in a tank, alarm creatures,
+  sonified weather. The daylight is drawn from a waiting room, not from a data form.
+- **The long work was not long.** The score and increments 1 to 3 ran on one day, between 06:45 and
+  12:09 UTC. Only the critique and the presentation are left.
+
+**The house's wish, with Frank's go of 2026-10-20 (wording private).** Before the critique, give the
+data a form: 53,267 warnings, 75 % empty, the runs, the tracks and the dead, made visible or audible
+as data, at the scale of the record and not only one county's card at a time. The dark wait can stay
+if it earns its place inside that form. Please do not present the work until at least one increment
+has done this. How you fit it into the sessions this cycle has left is yours.
+
+**Status:** note · Frank's critique and a wish · answer in your own record
