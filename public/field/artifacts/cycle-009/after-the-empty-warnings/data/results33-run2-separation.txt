@@ -1,0 +1,84 @@
+{
+ "n": 9171,
+ "outcomes": {
+  "inj": 3451,
+  "fat": 278,
+  "offices": 72
+ },
+ "corr": {
+  "far_tag_vs_far31": 0.998,
+  "wexp_vs_far": 0.3573,
+  "excess_vs_far": 0.9872,
+  "taken_vs_far": -0.0068,
+  "broken_vs_far": 0.0411,
+  "wexp_past_future": 0.1296,
+  "excess_past_future": 0.3107
+ },
+ "predictions": {
+  "P1": {
+   "text": "FAR_tag past injuries IRR >= 1.05",
+   "held": true
+  },
+  "P2": {
+   "text": "with EXCESS, WEXP past injuries interval above 1",
+   "held": false
+  },
+  "P3": {
+   "text": "with WEXP, EXCESS past injuries interval includes 1",
+   "held": false
+  },
+  "P4": {
+   "text": "with FAR, TAKEN past injuries interval includes 1",
+   "held": false
+  },
+  "P5": {
+   "text": "with FAR, BROKEN past injuries interval includes 1",
+   "held": true
+  },
+  "P6": {
+   "text": "WEXP and EXCESS future IRRs inside their past intervals",
+   "held": false
+  },
+  "P7": {
+   "text": "office FE, EXCESS past injuries interval includes 1",
+   "held": true
+  }
+ },
+ "reputation_by_word": "supported"
+}
+far31_past_inj 9171 True {'z_far31': (1.312, 1.126, 1.528)}
+far_past_inj 9171 True {'z_far_past': (1.315, 1.131, 1.53)}
+wexp_excess_past_inj 9171 True {'z_wexp_past': (1.137, 0.969, 1.333), 'z_excess_past': (1.266, 1.088, 1.474)}
+taken_past_inj 9171 False {'z_far_past': (1.289, 1.109, 1.5), 'z_taken_past': (0.83, 0.691, 0.998)}
+broken_past_inj 9171 True {'z_far_past': (1.307, 1.123, 1.522), 'z_broken_past': (1.179, 1.0, 1.389)}
+wexp_past_inj 9171 True {'z_wexp_past': (1.181, 1.01, 1.38)}
+excess_past_inj 9171 True {'z_excess_past': (1.291, 1.11, 1.5)}
+far_future_inj 9171 False {'z_far_future': (1.129, 0.88, 1.448)}
+wexp_excess_future_inj 9171 True {'z_wexp_future': (1.226, 1.042, 1.444), 'z_excess_future': (1.06, 0.828, 1.358)}
+taken_future_inj 9171 False {'z_far_future': (1.121, 0.877, 1.435), 'z_taken_future': (0.904, 0.77, 1.062)}
+broken_future_inj 9171 True {'z_far_future': (1.126, 0.879, 1.443), 'z_broken_future': (0.915, 0.793, 1.056)}
+wexp_future_inj 9171 False {'z_wexp_future': (1.253, 1.052, 1.493)}
+excess_future_inj 9171 False {'z_excess_future': (1.11, 0.869, 1.419)}
+excess_both_inj 9171 False {'z_excess_past': (1.275, 1.077, 1.508), 'z_excess_future': (1.043, 0.812, 1.338)}
+far31_past_fat 9171 False {'z_far31': (1.125, 0.874, 1.448)}
+far_past_fat 9171 False {'z_far_past': (1.121, 0.87, 1.443)}
+wexp_excess_past_fat 9171 False {'z_wexp_past': (1.338, 0.887, 2.017), 'z_excess_past': (1.044, 0.803, 1.359)}
+taken_past_fat 9171 False {'z_far_past': (1.147, 0.876, 1.501), 'z_taken_past': (1.15, 0.871, 1.517)}
+broken_past_fat 9171 False {'z_far_past': (1.12, 0.871, 1.44), 'z_broken_past': (0.838, 0.604, 1.161)}
+wexp_past_fat 9171 False {'z_wexp_past': (1.344, 0.899, 2.009)}
+excess_past_fat 9171 False {'z_excess_past': (1.074, 0.839, 1.373)}
+far_future_fat 9171 False {'z_far_future': (1.09, nan, nan)}
+wexp_excess_future_fat 9171 False {'z_wexp_future': (0.848, nan, nan), 'z_excess_future': (1.162, nan, nan)}
+taken_future_fat 9171 False {'z_far_future': (1.137, nan, nan), 'z_taken_future': (1.352, nan, nan)}
+broken_future_fat 9171 False {'z_far_future': (1.093, nan, nan), 'z_broken_future': (1.191, nan, nan)}
+wexp_future_fat 9171 False {'z_wexp_future': (0.884, nan, nan)}
+excess_future_fat 9171 False {'z_excess_future': (1.113, nan, nan)}
+excess_both_fat 9171 False {'z_excess_past': (1.036, nan, nan), 'z_excess_future': (1.095, nan, nan)}
+excess_past_fe_inj 8933 True {'z_excess_past': (1.076, 0.927, 1.249)}
+far_past_fe_inj 8933 True {'z_far_past': (1.08, 0.932, 1.251)}
+wexp_past_fe_inj 8933 True {'z_wexp_past': (1.024, 0.879, 1.194)}
+taken_past_fe_inj 8933 True {'z_taken_past': (0.797, 0.673, 0.944)}
+excess_past_fe_fat 5882 False {'z_excess_past': (1.18, 0.818, 1.701)}
+far_past_fe_fat 5882 False {'z_far_past': (1.264, 0.892, 1.79)}
+wexp_past_fe_fat 5882 False {'z_wexp_past': (1.477, 1.025, 2.128)}
+taken_past_fe_fat 5882 True {'z_taken_past': (1.287, 0.926, 1.791)}

@@ -1,10 +1,11 @@
-// Studies 31-32 page check: headless, 390 px light and 1100 px dark. Usage: NODE_PATH=<dir with playwright> node verify.mjs
+// Studies 31-33 page check: headless, 390 px light and 1100 px dark. Usage: NODE_PATH=<dir with playwright> node verify.mjs
 import { createRequire } from "module"; import path from "path"; import url from "url"; import fs from "fs";
 const require = createRequire(import.meta.url);
 const pw = require("playwright");
 const here = path.dirname(url.fileURLToPath(import.meta.url));
 const R = JSON.parse(fs.readFileSync(path.join(here, "data/results31.json"), "utf8"));
 const s32 = fs.readFileSync(path.join(here, "data-32.js"), "utf8"), R2 = JSON.parse(s32.slice(s32.indexOf("{"), s32.lastIndexOf("}") + 1));
+const R3 = JSON.parse(fs.readFileSync(path.join(here, "data/results33.json"), "utf8"));
 let pass = 0, fail = 0; const ok = (n, c) => { c ? pass++ : fail++; console.log((c ? "PASS " : "FAIL ") + n); };
 const b = await pw.chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {});
 for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
@@ -47,6 +48,27 @@ for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
     const bx = await p.locator(id).boundingBox();
     const ex = await p.evaluate(s => { const r = [...document.querySelectorAll(s + " text")].map(t => t.getBoundingClientRect()); return [Math.min(...r.map(x => x.left)), Math.max(...r.map(x => x.right))]; }, id);
     ok(`${w}: ${id} and its labels fit the viewport and the figure`, bx && bx.x >= 0 && bx.x + bx.width <= w + 1 && ex[0] >= bx.x - 1 && ex[1] <= bx.x + bx.width + 1);
+  }
+  // study 33
+  ok(`${w}: parts forest: 5 year-before + 5 year-after + 2 within dots`, await p.locator("#parts circle.pt.final").count() === 7 && await p.locator("#parts circle.pt.office").count() === 5);
+  await p.locator("#parts g.row").nth(2).dispatchEvent("click");
+  const ex = R3.fits.wexp_excess_past_inj.z_excess_past, exf = R3.fits.wexp_excess_future_inj.z_excess_future;
+  ok(`${w}: "beyond the words" row gives both windows from results33.json`, (await p.textContent("#partsdet")).includes(`Year before: ${ex.irr.toFixed(2)} (${ex.lo.toFixed(2)}–${ex.hi.toFixed(2)})`) && (await p.textContent("#partsdet")).includes(`year after: ${exf.irr.toFixed(2)}`));
+  await p.locator("#parts g.row").nth(6).dispatchEvent("click");
+  const tk = R3.fits.taken_past_fe_inj.z_taken_past;
+  ok(`${w}: within-office taken-back row: ${tk.irr} and 4 offices left out`, (await p.textContent("#partsdet")).includes(`${tk.irr.toFixed(2)} (${tk.lo.toFixed(2)}–${tk.hi.toFixed(2)})`) && (await p.textContent("#partsdet")).includes("4 offices"));
+  await p.click("#seg-y3 button[data-v=fat]");
+  ok(`${w}: deaths: three within/unconverged dots dashed or not, never a bar for an unconverged fit`, await p.locator("#parts circle.pt.nc").count() === Object.entries(R3.fits).filter(([k, v]) => ["excess_past_fe_fat", "taken_past_fe_fat"].includes(k) && !v.converged).length);
+  await p.locator("#parts g.row").nth(5).dispatchEvent("click");
+  ok(`${w}: unconverged within-office deaths fit says so`, (await p.textContent("#partsdet")).includes("did not converge"));
+  await p.click("#seg-y3 button[data-v=inj]");
+  ok(`${w}: seven predictions of study 33, three held`, (await p.locator("#pred33 tbody tr").count()) === 7 && (await p.locator("#pred33 td.held").count()) === 3);
+  {
+    const bx = await p.locator("#parts").boundingBox();
+    const ex2 = await p.evaluate(() => { const r = [...document.querySelectorAll("#parts text")].map(t => t.getBoundingClientRect()); return [Math.min(...r.map(x => x.left)), Math.max(...r.map(x => x.right))]; });
+    ok(`${w}: #parts and its labels fit the viewport and the figure`, bx && bx.x >= 0 && bx.x + bx.width <= w + 1 && ex2[0] >= bx.x - 1 && ex2[1] <= bx.x + bx.width + 1);
+    await p.locator("#parts").scrollIntoViewIfNeeded();
+    await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s33_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#parts").boundingBox()).y - 60), width: w, height: 620 } });
   }
   ok(`${w}: tercile table 3 rows`, await p.locator("#terc tbody tr").count() === 3);
   ok(`${w}: six predictions, six held`, (await p.locator("#pred tbody tr").count()) === 6 && (await p.locator("#pred td.held").count()) === 6);

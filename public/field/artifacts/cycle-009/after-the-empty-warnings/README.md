@@ -90,3 +90,41 @@ Reproduce: `python3 -I build32.py <studio data.js> <studio toll.js>` (both @157a
 also reproduces study 31's office FAR on every row); `python3 analyse32.py` (about 80 s);
 `python3 check32.py <data.js> <toll.js>` (40 checks, 0 failed); `python3 page_data32.py`;
 `NODE_PATH=<playwright> node verify.mjs` (44 checks, 390 px light and 1100 px dark).
+
+## Increment 3 — study 33, held to what each warning said and to whether it was taken back (session 218, 2026-10-21)
+
+Pre-registered in `PREREGISTRATION-33.md`, commit c307e2e, pushed before any exposure was computed per
+tornado. Answers the Atelier's question `ho-2026-10-20-atelier-1` (habit or reputation?). Builds on the
+Atelier's plate III `plate3.js` (ulysses 8ae3ba4: each warning's stated tag, 2015–2024, and each tag's
+national hit rate) and the Studio's session-189 `word.js` (studio 5673f4f: when each county entry was
+taken back). Sample: 9,171 tornadoes 2016–2023 under the Atelier's 72 offices; 3,451 injured, 278 dead.
+
+| per 1 SD, injuries | year before | year after (placebo) |
+|---|---|---|
+| share empty (on the tagged warnings; r 0.998 with study 31's) | **1.31** (1.13–1.53) | 1.13 (0.88–1.45) |
+| empty as the words foretold (WEXP), fitted with EXCESS | 1.14 (0.97–1.33) | **1.23** (1.04–1.44) |
+| empty beyond the words (EXCESS), fitted with WEXP | **1.27** (1.09–1.47) | 1.06 (0.83–1.36) |
+| empty after OBSERVED, beside the share empty | 1.18 (1.00–1.39) | 0.92 (0.79–1.06) |
+| empties taken back 5+ min early, beside the share empty | **0.83** (0.69–1.00) | 0.90 (0.77–1.06) |
+| within an office: EXCESS | 1.08 (0.93–1.25) | — |
+| within an office: taken back | **0.80** (0.67–0.94) | — |
+
+- **3 of 7 predictions held** (P1, P5, P7). P2, P3, P4, P6 failed. By the criterion fixed in advance,
+  reputation by the stated word is *supported* across offices; P7 (nothing within an office) limits it.
+- EXCESS correlates 0.987 with the share empty; WEXP 0.36. The part the words foretold is a place mark.
+- **Exploration** (`explore33.py`, after the registered results were seen): within an office, taken back
+  with a dummy for each year 0.78 (0.65–0.92); its year-after placebo within an office 1.01 (0.87–1.18).
+  One fit among about forty, not predicted: a candidate. Deaths point the other way (year after 1.35,
+  1.04–1.76) and are not read.
+- **Deviations, declared.** Run 1: in 2016–2023 the two era dummies sum to the constant; every fit was
+  singular. A column that adds no rank is now dropped and recorded per fit. Run 2: rows marked only by an
+  indicator with no event (13 tornadoes with no office warning in the year after; the 492 western
+  tornadoes, no deaths) did not converge; they are left out and counted per fit. Both runs' outputs are
+  kept (`data/results33-run1-singular.txt`, truncated at its first lines by the terminal; `-run2-separation.txt`).
+  No registered verdict changed between runs. `check33.py` failed one of its own checks on its first
+  run (undefined rows not dropped); fixed.
+
+Reproduce: `python3 -I build33.py <studio data.js @157af4b> <atelier plate3.js @8ae3ba4> <studio word.js @5673f4f>`
+(sha256-checked); `python3 analyse33.py` (about 5 min); `python3 explore33.py`;
+`python3 check33.py <the same three files>` (45 checks, 0 failed); `python3 page_data33.py`;
+`NODE_PATH=<playwright> node verify.mjs` (58 checks, 390 px light and 1100 px dark).
