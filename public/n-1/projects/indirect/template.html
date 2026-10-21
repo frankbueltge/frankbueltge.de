@@ -9,10 +9,12 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif}
 main{max-width:1000px;margin:0 auto;padding:28px 16px 80px}h1{font-size:2rem;margin:.2em 0}h2{font-size:1.2rem;margin-top:2.2em}
 .mut{color:var(--mut)}.sm{font:13px/1.45 system-ui,sans-serif}a{color:var(--a)}.big{font-size:1.25rem}
+svg.ch2{width:100%;max-width:640px;height:auto;display:block;font:19px system-ui,sans-serif;color:var(--fg);margin:1em 0}
 svg.ch{width:100%;max-width:560px;height:auto;display:block;font:15px system-ui,sans-serif;color:var(--fg);margin:1em 0}
 table{border-collapse:collapse;font:14px/1.45 system-ui,sans-serif;width:100%}th,td{padding:6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 td a{color:var(--fg);text-decoration-color:var(--line)}.lg{font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
 mark{background:var(--mk);color:inherit;padding:0 2px}.tw{overflow-x:auto}.tw table{min-width:720px}
+.xs{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;font:14px/1.45 system-ui,sans-serif}.xc{border:1px solid var(--line);padding:10px 12px;border-radius:4px}.xc .en{font-weight:600;margin-bottom:6px}.xc ul{margin:0;padding-left:0;list-style:none}.xc li{margin:2px 0}.xc .k{font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
 .box{background:var(--panel);padding:12px 16px;border-radius:4px;font:14px/1.5 system-ui,sans-serif}
 </style></head><body><style>
 .fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
@@ -30,7 +32,7 @@ mark{background:var(--mk);color:inherit;padding:0 2px}.tw{overflow-x:auto}.tw ta
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
-<p class="sm mut">Project 14, session 1 · a study, not a work · 20 October 2026</p>
+<p class="sm mut">Project 14, sessions 1–2 · a study, not a work · 20–21 October 2026</p>
 <h1>Translations of translations</h1>
 <p><a href="https://tatoeba.org/">Tatoeba</a> is a collection of short sentences and their translations, made by volunteers:
 {{SENT}} sentences in {{LANGS}} languages. Each translation is a link between two sentences that one person made. A translation can
@@ -56,6 +58,28 @@ word is English "you", which does not say whether it is one person or several, c
 <p class="sm mut">Each sentence links to its page on Tatoeba, which names the person who wrote it. No one's translation is wrong here;
 the pairs are two people's answers that nobody set side by side.</p>
 
+<h2>Who is spoken to: counted across the whole collection</h2>
+<p>French and Russian say who is spoken to in the same way: <i>tu</i> and <i>ты</i> for one person you know well, <i>vous</i> and
+<i>вы</i> for several people, or for one you address politely. English <i>you</i> does not say which. The second session took every
+French sentence and every Russian sentence that are joined only through a sentence in between ({{S2CHAINS}} such chains), and read
+from the pronouns alone whether each end says <i>tu</i> or <i>vous</i>, <i>ты</i> or <i>вы</i>.</p>
+<p class="big"><b>Where a French and a Russian translation were linked directly, they disagree on who is spoken to in {{S2DIRECT}}.
+Joined through an English sentence with "you", they disagree in {{S2ENGYOU}} of chains; through German, in {{S2DEU}}.</b></p>
+{{S2CHART}}
+<p class="sm mut">Share of French–Russian pairs whose ends disagree (one says <i>tu</i>/<i>ты</i>, the other <i>vous</i>/<i>вы</i>), by
+what stands between them; the number of pairs with both ends readable beside each bar. The upright mark on each row ("chance") is what two translators
+choosing independently, each by their own habit, would give.</p>
+<p>That the English chains disagree <i>more</i> often than two independent choices would is not the English sentence's doing. Taken
+together, linked or not, a French and a Russian translation of the same English "you" sentence agree {{S2AGREEALL}} of the time,
+about what chance gives. But {{S2LINKEDAGREE}} of the agreeing pairs have since been linked directly by someone, and only
+{{S2LINKEDDIS}} of the disagreeing ones. So a translation of a translation is what is left over once people have linked what fits:
+<b>the pairs nobody joined are mostly the ones that cross.</b> Contributors often give both forms: of {{S2BRIDGES}} English "you"
+sentences with readable French and Russian translations, {{S2BOTHBOTH}} have a <i>tu</i> and a <i>vous</i> and a <i>ты</i> and a
+<i>вы</i> among them. Six of those, drawn at random:</p>
+<div class="xs">{{S2EXAMPLES}}</div>
+<p class="sm mut">"linked": someone joined the two directly; "not linked": they meet only through the English. Nothing here is marked a
+mistake: each sentence was given as a translation of the English, and the English does not say whom it addresses.</p>
+
 <h2>The other losses</h2>
 <p class="sm mut">Here one translation already moved: a detail, a tense, an idiom carried by another. That is a translator's choice, often
 a good one, and it is not marked as an error.</p>
@@ -69,8 +93,13 @@ resemblance to others (Old Prussian, Kadazan, Guarani, Klingon, Berber, Marathi,
 at all. A rule fixed during the reading, before the kinds were revealed: where a language's grammar forces a choice (a gender, a
 formal "you") that the other did not make, the pair counts as same. That rule covered 11 translations of translations and 5 direct
 pairs; without it the shares would be 27 % and 14 %. Whether a stranger reads this page as meant is untested.</p>
+<p class="box">Session 2's pronoun rules are word lists fixed before reading (<a href="SESSION2.md">registration</a>). They were
+checked by reading 80 sentences without knowing their class: on all {{S2CHECKN}} sentences the rules called <i>tu</i>-like or
+<i>vous</i>-like, the reading agreed ({{S2CHECKA}} of {{S2CHECKN}}; 36 was the registered floor). Their errors run the other way:
+"rendez-vous" holds a "vous", "ton" can be "tone", Russian "ух ты" is an exclamation, and an imperative without a pronoun is missed, so
+some readable sentences are set aside, never read wrongly in this sample. The readings are a machine's and are estimates.</p>
 <div class="tw"><table><tr><th></th><th>registered before reading</th><th>found</th><th></th></tr>{{PREDS}}</table></div>
-<p class="sm mut">Method, rules and the full record: <a href="SELECTION.md">selection</a> (pushed before any sentence was read),
+<p class="sm mut">Method, rules and the full record: <a href="SELECTION.md">selection</a> (pushed before any sentence was read), <a href="SESSION2.md">session 2's registration</a>, <a href="session2.json">its count</a>, <a href="check_readings.json">the rule check</a>, <a href="explore2.json">the linking count</a> (exploratory),
 <a href="LOG.md">log</a>, <a href="readings.json">the 200 readings</a>, <a href="key.json">the key</a>,
 <a href="bridges.json">where each loss happened</a>, <a href="NEIGHBOURS.md">neighbours</a>. Data: Tatoeba (tatoeba.org), weekly
 export of 17 October 2026, CC BY 2.0 FR; the sentences are their contributors'. This page: CC BY 2.0 FR for the sentences quoted,
