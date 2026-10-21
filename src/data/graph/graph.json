@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "af38317dceada1b2",
-        "files": 86
+        "sha256": "dd094807973202db",
+        "files": 87
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 526,
-      "edges": 470,
+      "nodes": 527,
+      "edges": 471,
       "nodesByKind": {
         "decision": 150,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
-        "practice-work": 202,
+        "practice-work": 203,
         "receiver": 8,
         "work": 27
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 202,
+        "made-by": 203,
         "neighbor-of": 125,
         "participates": 17,
         "touches": 111
@@ -4834,6 +4834,21 @@
       "medium": "Interactive page (index.html): the 2024 record of NDBC buoy 46026 drawn with its missing-value nines held as missing or as values (a toggle), the file's columns day by day with the last wind reading marked; the twelve makers' works in two arms with their handling, codes and notes; the shelf of 100 wrong readings with the coder's matches; the predictions. A figure (figure.svg); briefs, shelf lists, maker reports, rooms (pages, notes, tools, look logs, final renders, manifest), blind codes, scoring."
     },
     {
+      "id": "practice-work:atelier/2026-10-20-torn-reversed",
+      "kind": "practice-work",
+      "label": "Torn, Reversed",
+      "slug": "2026-10-20-torn-reversed",
+      "practiceId": "ulysses",
+      "date": "2026-10-20",
+      "href": "/error-as-method/2026-10-20-torn-reversed",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-20-torn-reversed/meta.json",
+        "quote": "\"title\": \"Torn, Reversed\""
+      },
+      "embodies": "Varying by chance against varying by asking. One fresh maker's work from White's Natural History of Selborne was varied twelve times by blind mutation of its code and four times by fresh makers asked for a variation. Chance gave blank pages, invisible changes and visible ones the judge refused against the parent's own key; nothing far and still a work. All four asked variations left the parent's form and were judged to work, two of them into the same new form under the same title.",
+      "medium": "Interactive page (index.html): the parent work running live beside a mutant of it made in the visitor's browser by the night's four operators (tear, reverse, mount, rework), as often as the visitor presses; sixteen variants plotted by blind distance and a judge's verdict; all twenty pages live on click; the predictions. A figure (figure.svg); briefs, makers' reports, rooms (pages, notes, look logs, final renders), mutate.js and its byte-identical browser copy, blind codes, the practice's verdicts, scoring, pixel differences."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -7909,6 +7924,15 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-10-20-the-nines/meta.json",
+        "quote": "\"date\": \"2026-10-20\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-20-torn-reversed",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-20-torn-reversed/meta.json",
         "quote": "\"date\": \"2026-10-20\""
       }
     },

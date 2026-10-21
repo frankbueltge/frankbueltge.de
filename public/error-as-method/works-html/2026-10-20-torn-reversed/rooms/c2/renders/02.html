@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Annus Historico-naturalis</title>
+<style>
+  html,body{margin:0;padding:0;background:#f1ead9;}
+  body{width:1100px;height:800px;overflow:hidden;}
+  svg{display:block;}
+</style>
+</head>
+<body>
+<svg id="s" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data/selborne.js"></script>
+<script>
+(function(){
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('s');
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+function txt(s,a,p){const e=el('text',a,p);e.textContent=s;return e;}
+
+const INK='#2b2418', PEN='#7a4a22', BAR='#2f4a4a', FAINT='#b9ab8c', PAPER='#f1ead9';
+el('rect',{x:0,y:0,width:1100,height:800,fill:PAPER});
+
+// ---------- parse the letters ----------
+const T=SELBORNE.replace(/\r/g,'');
+const bar=T.indexOf('LETTERS to DAINES BARRINGTON');
+const re=/\nLetter ([IVXLC]+)\n/g; const starts=[];let m;
+while((m=re.exec(T)))starts.push({i:m.index,num:m[1]});
+const MON={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+const D=/\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?,? (?:the )?(\d{1,2})(?:st|nd|rd|th)?,? (17\d\d)/;
+const CUM=[0,31,59,90,120,151,181,212,243,273,304,334];
+const letters=starts.map((s,k)=>{
+  const end=k+1<starts.length?starts[k+1].i:T.length;
+  const p=T.slice(s.i+1,end);
+  const head=p.slice(0,260).replace(/\s+/g,' '), tail=p.slice(-260).replace(/\s+/g,' ');
+  let d=head.match(D)||tail.match(D);
+  let body=p.replace(/^Letter [IVXLC]+\s+To [^\n]+\s+/,'')
+            .replace(/^Letter [IVXLC]+ T [^\n]+\s+/,'')
+            .replace(/^(Selborne|Ringmer|Fyfield)[^\n]*\n/,'')
+            .replace(/^[A-Z][a-z]+\.? \d{1,2},? 17\d\d\.?\s*/,'')
+            .replace(/^(Dear )?Sir,\s*/,'').replace(/\*/g,'').replace(/\s+/g,' ').trim();
+  const ds=body.slice(0,220).search(/\b(Dear )?Sir, /);
+  if(ds>=0)body=body.slice(ds).replace(/^(Dear )?Sir, /,'');
+  body=body.replace(/^Selborne\. /,'');
+  const L={num:s.num,to:s.i>bar?'B':'P',body};
+  if(d){const mo=MON[d[1]],day=+d[2],yr=+d[3];L.doy=CUM[mo]+day-1;L.yr=yr;L.mo=mo;L.day=day;}
+  return L;
+});
+function opening(b,max){
+  let s=b.split(/(?<=[.;:?!])\s/)[0];
+  if(s.length>max){s=s.slice(0,max);s=s.slice(0,s.lastIndexOf(' '))+' …';}
+  return s;
+}
+
+// ---------- geometry ----------
+const CX=668, CY=400;
+const Y0=1767, Y1=1788;
+const R0=52, R1=198;
+const rOf=(yr,doy)=>R0+(R1-R0)*((yr+doy/365)-Y0)/(Y1-Y0);
+const aOf=doy=>-Math.PI/2+2*Math.PI*doy/365;
+const P=(r,a)=>[CX+r*Math.cos(a),CY+r*Math.sin(a)];
+
+const g=el('g',{});
+// year rings
+for(let y=Y0;y<=Y1;y++){
+  const r=rOf(y,0);
+  el('circle',{cx:CX,cy:CY,r:r.toFixed(2),fill:'none',stroke:FAINT,'stroke-width':(y%5===0)?0.7:0.35,opacity:0.8},g);
+}
+// month spokes + names
+const MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+for(let mo=0;mo<12;mo++){
+  const a=aOf(CUM[mo]);
+  const [x1,y1]=P(R0-6,a),[x2,y2]=P(R1+4,a);
+  el('line',{x1,y1,x2,y2,stroke:FAINT,'stroke-width':0.5},g);
+}
+// years labels along the January spoke (just right of it)
+[1767,1770,1775,1780,1785].forEach(y=>{
+  const r=rOf(y,0);
+  txt(String(y),{x:CX+3,y:CY-r-2,'font-family':'Georgia,serif','font-size':6.5,fill:'#8c7c5c'},g);
+});
+
+// the spiral of time itself (faint) from 1767 to 1788
+let sp='';
+for(let t=0;t<=(Y1-Y0)*365;t+=2){const yr=Y0+Math.floor(t/365),doy=t%365;const [x,y]=P(rOf(yr,doy),aOf(doy));sp+=(t?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);}
+el('path',{d:sp,fill:'none',stroke:'#d8ccb0','stroke-width':0.6},g);
+
+// month names inside the hub-free band, just outside ring
+const dated=letters.filter(l=>l.doy!=null);
+const undated=letters.filter(l=>l.doy==null);
+
+// ---------- labels on the rim ----------
+const RL=213;           // where leaders end and words begin
+const sorted=dated.map(l=>({l,a:aOf(l.doy)})).sort((p,q)=>p.a-q.a);
+// relax angles so labels do not collide
+const minSep=9.6/RL;
+let A=sorted.map(o=>o.a);
+for(let it=0;it<400;it++){
+  for(let i=0;i<A.length;i++){
+    const j=(i+1)%A.length;
+    let d=A[j]-A[i]; if(j===0)d+=2*Math.PI;
+    if(d<minSep){const push=(minSep-d)/2*0.6;A[i]-=push;A[j]+=push;}
+  }
+  for(let i=0;i<A.length;i++)A[i]+= (sorted[i].a-A[i])*0.02;
+}
+sorted.forEach((o,i)=>o.la=A[i]);
+
+// dots, leaders, words
+sorted.forEach(o=>{
+  const l=o.l, col=l.to==='P'?PEN:BAR;
+  const r=rOf(l.yr,l.doy);
+  const [x,y]=P(r,o.a);
+  const [x2,y2]=P(R1+6,o.a);
+  const [x3,y3]=P(RL-3,o.la);
+  el('path',{d:`M${x.toFixed(1)} ${y.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}L${x3.toFixed(1)} ${y3.toFixed(1)}`,fill:'none',stroke:col,'stroke-width':0.35,opacity:0.55},g);
+  el('circle',{cx:x.toFixed(1),cy:y.toFixed(1),r:2.1,fill:col},g);
+
+  const deg=o.la*180/Math.PI;
+  const left=Math.cos(o.la)<0;
+  const [tx,ty]=P(RL,o.la);
+  const s=opening(l.body,36);
+  const t=el('text',{x:0,y:0,'font-family':'Georgia,"Times New Roman",serif','font-size':7.6,'font-style':'italic',fill:col,
+    'text-anchor':left?'end':'start','dominant-baseline':'middle',
+    transform:`translate(${tx.toFixed(1)} ${ty.toFixed(1)}) rotate(${(left?deg+180:deg).toFixed(2)})`},g);
+  const d=el('tspan',{'font-style':'normal','font-size':6.2,fill:col,opacity:0.75},t);
+  const ds=(MN[l.mo].slice(0,3))+' '+l.day+' '+l.yr;
+  if(left){t.textContent='';const s1=el('tspan',{},t);s1.textContent=s+'  ';const s2=el('tspan',{'font-style':'normal','font-size':6.2,opacity:0.75},t);s2.textContent=ds;}
+  else{d.textContent=ds+'  ';const s1=el('tspan',{},t);s1.textContent=s;}
+});
+
+// month names on an inner band just inside the hub ring
+for(let mo=0;mo<12;mo++){
+  const a=aOf(CUM[mo]+15);
+  const [x,y]=P(R1+14,a);
+  // tiny month mark on rim between labels is crowded; place month initials inside the hub instead
+}
+for(let mo=0;mo<12;mo++){
+  const a=aOf(CUM[mo]+15);
+  const [x,y]=P(R0-12,a);
+  txt(MN[mo].slice(0,3).toUpperCase(),{x:x.toFixed(1),y:y.toFixed(1),'font-family':'Georgia,serif','font-size':5.6,'letter-spacing':0.6,
+    fill:'#8c7c5c','text-anchor':'middle','dominant-baseline':'middle',
+    transform:`rotate(${(a*180/Math.PI+90).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})`},g);
+}
+
+// ---------- undated letters: held in the hub, without a day ----------
+const n=undated.length, GA=Math.PI*(3-Math.sqrt(5));
+undated.forEach((l,i)=>{
+  const r=4.6*Math.sqrt(i+0.6), a=i*GA;
+  const x=CX+r*Math.cos(a), y=CY+r*Math.sin(a);
+  el('circle',{cx:x.toFixed(1),cy:y.toFixed(1),r:1.9,fill:PAPER,stroke:l.to==='P'?PEN:BAR,'stroke-width':0.7},g);
+});
+
+// ---------- left column ----------
+const L0=46;
+txt('Annus',{x:L0,y:92,'font-family':'Georgia,serif','font-size':34,'font-style':'italic',fill:INK});
+txt('Historico-naturalis',{x:L0,y:128,'font-family':'Georgia,serif','font-size':24,'font-style':'italic',fill:INK});
+txt('the year Gilbert White did not write,',{x:L0,y:158,'font-family':'Georgia,serif','font-size':11,fill:'#5c5039'});
+txt('found in the dates of his letters',{x:L0,y:173,'font-family':'Georgia,serif','font-size':11,fill:'#5c5039'});
+
+const quote=['“When I first took the present work in','hand I proposed to have added an Annus','Historico-naturalis, or the Natural History','of the Twelve Months of the Year … but, as','Mr. Aikin of Warrington has lately published','somewhat of this sort … I shall here take a','respectful leave of you and natural history','together.”'];
+quote.forEach((q,i)=>txt(q,{x:L0,y:222+i*14,'font-family':'Georgia,serif','font-size':9.6,'font-style':'italic',fill:'#3d3424'}));
+txt('— last letter, Selborne, June 25, 1787',{x:L0,y:222+quote.length*14+6,'font-family':'Georgia,serif','font-size':8.6,fill:'#7d6f52'});
+
+const ky=410;
+el('circle',{cx:L0+4,cy:ky,r:2.6,fill:PEN});
+txt(`to Thomas Pennant · ${dated.filter(l=>l.to==='P').length} dated letters`,{x:L0+14,y:ky+3,'font-family':'Georgia,serif','font-size':9.5,fill:PEN});
+el('circle',{cx:L0+4,cy:ky+18,r:2.6,fill:BAR});
+txt(`to Daines Barrington · ${dated.filter(l=>l.to==='B').length} dated letters`,{x:L0+14,y:ky+21,'font-family':'Georgia,serif','font-size':9.5,fill:BAR});
+el('circle',{cx:L0+4,cy:ky+36,r:2.3,fill:PAPER,stroke:INK,'stroke-width':0.8});
+txt(`${n} letters with no date, kept at the centre`,{x:L0+14,y:ky+39,'font-family':'Georgia,serif','font-size':9.5,fill:'#3d3424'});
+
+const expl=['Each letter is set at the day of the year','it was written, the month going clockwise','from January at the top; its distance from','the centre is the year, 1767 within to 1787','without, so the correspondence winds out','along one spiral of time. At the edge, the','words with which each letter begins.'];
+expl.forEach((q,i)=>txt(q,{x:L0,y:500+i*13.5,'font-family':'Georgia,serif','font-size':9.2,fill:'#5c5039'}));
+
+txt('Gilbert White, The Natural History of Selborne, 1789',{x:L0,y:752,'font-family':'Georgia,serif','font-size':8,fill:'#8c7c5c'});
+})();
+</script>
+</body>
+</html>

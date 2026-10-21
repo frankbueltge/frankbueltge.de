@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Year Remembered</title>
+<style>
+  html,body{margin:0;padding:0;background:#f1e9d6;}
+  body{width:1100px;height:800px;overflow:hidden;}
+  svg{display:block;}
+  text{font-family:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;}
+</style>
+</head>
+<body>
+<svg id="s" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data/selborne.js"></script>
+<script>
+(function(){
+const W=1100,H=800;
+const PAPER="#f1e9d6",INK="#2b251d",SOFT="#6e624e",FAINT="#b9ab90",MID="#8d7f66";
+const COL=["#8c3a1c","#2e5a4c"]; // Pennant, Barrington
+const GREY="#9a8c72";
+const svg=document.getElementById('s');
+const NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e;}
+function txt(s,attrs,parent){const e=el('text',attrs,parent);e.textContent=s;return e;}
+
+/* ---------- read the book into letters ---------- */
+const L=SELBORNE.split('\n');
+const heads=[];let series=-1;
+L.forEach((l,i)=>{
+  if(/^LETTERS to THOMAS PENNANT/.test(l))series=0;
+  if(/^LETTERS to DAINES/.test(l))series=1;
+  const m=l.match(/^Letter ([IVXLC]+)\s*$/); if(m&&series>=0)heads.push({i,num:m[1],series});
+});
+const MON={jan:1,feb:2,mar:3,mark:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+const DATE_RE=/^(?:([A-Z][a-z]+)(?:, near [A-Z][a-z]+)?,\s*)?(?:([A-Z][a-z]+)\.?\s*(\d{1,2})?,?\s*)?(17\d\d)\.$/;
+const letters=heads.map((h,k)=>{
+  const end=k+1<heads.length?heads[k+1].i:L.length;
+  const body=L.slice(h.i+1,end);
+  let date=null;const skip=new Set();
+  for(let j=0;j<body.length;j++){
+    const joined=/^[A-Z][a-z]+,\s*$/.test(body[j]);
+    const ln=(body[j]+(joined?' '+(body[j+1]||''):'')).trim();
+    if(/^\*/.test(ln))continue;
+    const m=ln.match(DATE_RE);
+    if(m){skip.add(j);if(joined)skip.add(j+1);
+      if(!date){const mn=m[2]?m[2].toLowerCase():null;
+        date={place:m[1]||'Selborne',mon:mn?(MON[mn.slice(0,4)]||MON[mn.slice(0,3)]):null,day:m[3]?+m[3]:null,year:+m[4]};}}
+  }
+  const text=body.filter((l,j)=>!skip.has(j)&&!/^To (Thomas Pennant, Esquire|The Honourable Daines Barrington)\s*$/.test(l)).join(' ').replace(/\s+/g,' ');
+  const words=(text.match(/[A-Za-z][A-Za-z’'-]*/g)||[]).length;
+  return {series:h.series,num:h.num,date,text,words};
+});
+
+/* ---------- the calendar ---------- */
+const DIM=[31,28,31,30,31,30,31,31,30,31,30,31];
+const CUM=DIM.reduce((a,d,i)=>(a.push(a[i]+d),a),[0]);
+const X0=96,X1=1004;
+function doy(mon,day){return CUM[mon-1]+(day?day-0.5:DIM[mon-1]/2);}
+function X(d){return X0+(X1-X0)*d/365;}
+
+/* ---------- every month the letters name ---------- */
+const MRE=/\b(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Sept?|Oct|Nov|Dec|Aug|Michaelmas|Midsummer|Christmas|Lady-day|Candlemas|Lammas)\b\.?/g;
+const FEAST={michaelmas:[9,29],midsummer:[6,24],christmas:[12,25],'lady-day':[3,25],candlemas:[2,2],lammas:[8,1]};
+const M3={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+const mentions=[];
+letters.forEach((o,li)=>{
+  const t=o.text;let m;MRE.lastIndex=0;
+  while((m=MRE.exec(t))){
+    const w=m[1],lw=w.toLowerCase();
+    const after=t.slice(m.index+m[0].length,m.index+m[0].length+14),before=t.slice(Math.max(0,m.index-16),m.index);
+    if(w==='May'){ // the month, not the verb
+      if(!(/^\s*\d/.test(after)||/(in|of|early|end|month|beginning|middle|till|to|last|first|and|or|\d)\s+$/i.test(before)||/^[,.;]/.test(after)))continue;
+    }
+    let mon,day=null;
+    if(FEAST[lw]){[mon,day]=FEAST[lw];}
+    else{
+      mon=M3[lw.slice(0,3)];
+      let d=after.match(/^\s*(\d{1,2})(?:st|nd|rd|th|d)?\b/)||before.match(/\b(\d{1,2})(?:st|nd|rd|th|d)?,?\s+(?:of\s+)?$/);
+      if(d&&+d[1]>=1&&+d[1]<=DIM[mon-1])day=+d[1];
+    }
+    const s0=Math.max(0,m.index-150),s1=Math.min(t.length,m.index+150);
+    mentions.push({li,mon,day,ctx:t.slice(s0,s1).toLowerCase()});
+  }
+});
+
+/* ---------- what is spoken of beside each month ---------- */
+const THINGS=[
+['swallows','swallows?|house-swallows?|chimney-swallows?'],['martins','house-martins?|martins?|sand-martins?|bank-martins?'],['swifts','swifts'],['hirundines','hirundines|hirundo'],
+['cuckoo','cuckoos?'],['fern-owl','fern-owls?|goat-suckers?|caprimulgus'],['nightingale','nightingales?'],['ring-ousels','ring-ousels?'],['owls','owls?'],['rooks','rooks?'],
+['larks','larks?|woodlarks?|sky-larks?|alauda'],['black-cap','black-caps?'],['white-throat','white-throats?'],['wrens','willow-wrens?|wrens?'],['fly-catcher','fly-catchers?'],
+['doves','stock-doves?|ring-doves?|wood-pigeons?'],['wild-ducks','wild-ducks?|ducks?|teals?|widgeons?'],['curlews','curlews?|oedicnemus|stone-curlews?'],['snipes','snipes?|woodcocks?'],
+['hawks','hawks?|kites?|buzzards?'],['red-start','red-starts?'],['grasshopper-lark','grasshopper-larks?'],['redbreast','red-breasts?|redbreasts?'],['fieldfares','fieldfares?|redwings?'],
+['tortoise','tortoises?'],['bats','bats?|vespertilio'],['mice','mice|mouse'],['toads','toads?|frogs?'],['bees','bees?|wasps?|hornets?'],['gnats','gnats?'],['crickets','crickets?|mole-crickets?'],
+['deer','deer|stags?'],['fish','fish|fishes'],['vipers','vipers?|snakes?'],['beech','beech\\w*'],['hops','hops'],['wheat','wheat|corn|harvest'],
+['frost','frosts?|frosty|frozen|freez\\w*'],['snow','snows?|snowy'],['rain','rains?|rainy|showers?'],['heat','heat|hot|sultry'],['wind','winds?|gales?|storms?|stormy'],['thunder','thunder\\w*|lightning'],['fog','fogs?|foggy|mists?|misty|haze|hazy'],
+['migration','migrat\\w*|emigrat\\w*'],['torpid','torpid\\w*|hybernac\\w*|hibernat\\w*'],['nests','nests?|nidification|eggs?|broods?|incubation'],['song','songs?|sings?|singing|songsters?'],['flocks','flocks?|congregat\\w*'],
+].map(([n,re])=>[n,new RegExp('\\b(?:'+re+')\\b','g')]);
+const mWords=[];for(let m=1;m<=12;m++)mWords[m]={};
+mentions.forEach(o=>THINGS.forEach(([n,re])=>{if(o.ctx.match(re))mWords[o.mon][n]=(mWords[o.mon][n]||0)+1;}));
+const mdf={};for(let m=1;m<=12;m++)Object.keys(mWords[m]).forEach(n=>mdf[n]=(mdf[n]||0)+1);
+const monthList=[];
+for(let m=1;m<=12;m++){
+  monthList[m]=Object.entries(mWords[m]).map(([n,c])=>[n,c,c*Math.log(13/mdf[n])]).filter(e=>e[1]>=2).sort((a,b)=>b[2]-a[2]).slice(0,6);
+}
+
+/* ---------- layout ---------- */
+const YW=262,YN=548;            // the written axis, the named axis
+const maxW=Math.max(...letters.map(o=>o.words));
+function dotR(w){return 1.4+4.4*Math.sqrt(w/maxW);}
+
+// month bands
+const gBand=el('g',{});
+for(let m=0;m<12;m++){
+  if(m%2===0)el('rect',{x:X(CUM[m]),y:YW,width:X(CUM[m+1])-X(CUM[m]),height:YN-YW,fill:'#e9dfc8'},gBand);
+}
+const MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+// the written letters, stacked upward from the axis
+const dated=letters.filter(o=>o.date&&o.date.mon);
+const undated=letters.filter(o=>!(o.date&&o.date.mon));
+dated.forEach(o=>{o.x=X(doy(o.date.mon,o.date.day));o.r=dotR(o.words);});
+const placed=[];
+dated.slice().sort((a,b)=>a.x-b.x).forEach(o=>{
+  let y=YW-8-o.r;
+  for(let tries=0;tries<200;tries++){
+    const hit=placed.find(p=>Math.hypot(p.x-o.x,p.y-y)<p.r+o.r+1.1);
+    if(!hit)break; y-=1;
+  }
+  o.y=y;placed.push(o);
+});
+// undated letters: a column at the left, beyond January
+const UX=48;
+undated.forEach((o,i)=>{o.r=dotR(o.words);});
+{
+  let y=YW-8;
+  const ord=undated.slice().sort((a,b)=>a.series-b.series);
+  ord.forEach((o,i)=>{const col=i%3;o.x=UX-10+col*10;if(col===0&&i>0)y-=10;o.y=y-5;});
+}
+
+// the threads: each mention, from the day a letter was written to the day it names
+const gThread=el('g',{});
+const ends=[];
+mentions.forEach((mt,k)=>{
+  const o=letters[mt.li];
+  const isD=o.date&&o.date.mon;
+  let xn;
+  if(mt.day)xn=X(doy(mt.mon,mt.day));
+  else{ // month only: lands on the middle third of the month, spread so the ends can be seen
+    const h=((k*2654435761)>>>0)%1000/1000;
+    xn=X(CUM[mt.mon-1]+DIM[mt.mon-1]*(0.3+0.4*h));
+  }
+  const x0=isD?o.x:UX, y0=YW;
+  const c=isD?COL[o.series]:GREY;
+  const k1=(YN-YW)*0.55;
+  el('path',{d:`M${x0.toFixed(1)} ${y0}C${x0.toFixed(1)} ${(y0+k1).toFixed(1)} ${xn.toFixed(1)} ${(YN-k1).toFixed(1)} ${xn.toFixed(1)} ${YN}`,fill:'none',stroke:c,'stroke-opacity':isD?0.26:0.13,'stroke-width':isD?0.7:0.6},gThread);
+  ends.push({x:xn,c,day:!!mt.day,isD});
+});
+
+// axes
+el('line',{x1:X0,y1:YW,x2:X1,y2:YW,stroke:MID,'stroke-width':0.8});
+el('line',{x1:X0,y1:YN,x2:X1,y2:YN,stroke:MID,'stroke-width':0.8});
+for(let m=0;m<=12;m++){
+  const x=X(CUM[m]);
+  el('line',{x1:x,y1:YW-3,x2:x,y2:YW+3,stroke:MID,'stroke-width':0.7});
+  el('line',{x1:x,y1:YN-3,x2:x,y2:YN+3,stroke:MID,'stroke-width':0.7});
+}
+for(let m=0;m<12;m++){
+  const xc=X(CUM[m]+DIM[m]/2);
+  txt(MN[m].toUpperCase(),{x:xc,y:YW+14,'font-size':6.8,'letter-spacing':1.6,'text-anchor':'middle',fill:MID,stroke:PAPER,'stroke-width':2.4,'paint-order':'stroke'});
+  txt(MN[m].toUpperCase(),{x:xc,y:YN-7,'font-size':6.8,'letter-spacing':1.6,'text-anchor':'middle',fill:MID,stroke:PAPER,'stroke-width':2.4,'paint-order':'stroke'});
+}
+// axis captions
+txt('written',{x:X1+12,y:YW+3,'font-size':10,'font-style':'italic',fill:SOFT});
+txt('named',{x:X1+12,y:YN+3,'font-size':10,'font-style':'italic',fill:SOFT});
+
+// letter dots
+const gDot=el('g',{});
+dated.forEach(o=>{
+  const c=COL[o.series];
+  el('line',{x1:o.x,y1:o.y+o.r,x2:o.x,y2:YW,stroke:c,'stroke-opacity':0.0},gDot);
+  el('circle',{cx:o.x,cy:o.y,r:o.r,fill:c,'fill-opacity':0.9,stroke:PAPER,'stroke-width':0.6},gDot);
+});
+undated.forEach(o=>{
+  el('circle',{cx:o.x,cy:o.y,r:o.r,fill:'none',stroke:COL[o.series],'stroke-width':0.9},gDot);
+});
+txt('no day',{x:UX,y:YW+14,'font-size':7.6,'font-style':'italic','text-anchor':'middle',fill:SOFT});
+el('line',{x1:UX-16,y1:YW,x2:UX+16,y2:YW,stroke:MID,'stroke-width':0.8});
+
+// the ends on the named axis: a small comb
+const gEnd=el('g',{});
+const bins={};
+ends.forEach(e=>{
+  const b=Math.round(e.x/2.2);bins[b]=(bins[b]||0)+1;
+  const n=bins[b];
+  if(e.day)el('circle',{cx:e.x,cy:YN+2.4+n*2.6,r:1.15,fill:e.c,'fill-opacity':e.isD?0.95:0.55},gEnd);
+  else el('rect',{x:e.x-0.45,y:YN+1+n*2.6,width:0.9,height:2.6,fill:e.c,'fill-opacity':e.isD?0.75:0.4},gEnd);
+});
+
+// what each month is named beside
+const gW=el('g',{});
+const maxC=Math.max(...monthList.slice(1).flatMap(l=>l.map(e=>e[1])));
+const nPerMonth=[];for(let m=1;m<=12;m++)nPerMonth[m]=mentions.filter(t=>t.mon===m).length;
+for(let m=1;m<=12;m++){
+  const xc=X(CUM[m-1]+DIM[m-1]/2);
+  let y=YN+(m===0?0:0)+86;
+  monthList[m].forEach((e,i)=>{
+    const fs=8.2+5.2*Math.sqrt(e[1]/maxC);
+    txt(e[0],{x:xc,y,'font-size':fs.toFixed(2),'font-style':'italic','text-anchor':'middle',fill:INK,'fill-opacity':(0.95-i*0.09).toFixed(2)},gW);
+    y+=fs+3.4;
+  });
+}
+txt('spoken of beside the month',{x:X1+12,y:YN+90,'font-size':8.4,'font-style':'italic',fill:SOFT});
+
+/* ---------- title and key ---------- */
+txt('The Year Remembered',{x:36,y:52,'font-size':22,fill:INK,'font-style':'italic'});
+txt('the letters of Gilbert White’s Natural History of Selborne, folded into a single year:',{x:36,y:70,'font-size':9.6,fill:SOFT});
+txt('when each letter was written, and every month its pages name',{x:36,y:83,'font-size':9.6,fill:SOFT});
+
+const ky=760;
+[
+ 'Above the upper line, each dot is a letter on the day of the year it was dated, whatever the year; its size is its length. Letters without a day stand at the far left.',
+ 'Each thread runs from a letter to a month that letter names: straight down when White writes of the season he is in, aslant when he writes of another.',
+ 'Ticks on the lower line mark months named alone, dots a named day. Beneath each month, the creatures and weathers most named in the lines around it.'
+].forEach((k,i)=>txt(k,{x:36,y:ky+i*12,'font-size':8.4,fill:SOFT}));
+const sx=W-36;
+txt('to Thomas Pennant',{x:sx-14,y:52,'font-size':9,'text-anchor':'end',fill:COL[0],'font-style':'italic'});
+el('circle',{cx:sx-4,cy:49,r:3.6,fill:COL[0]});
+txt('to Daines Barrington',{x:sx-14,y:66,'font-size':9,'text-anchor':'end',fill:COL[1],'font-style':'italic'});
+el('circle',{cx:sx-4,cy:63,r:3.6,fill:COL[1]});
+txt(mentions.length+' months named in '+letters.length+' letters',{x:sx-14,y:80,'font-size':9,'text-anchor':'end',fill:SOFT,'font-style':'italic'});
+})();
+</script>
+</body>
+</html>

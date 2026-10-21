@@ -1,0 +1,165 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>The Selborne Year</title>
+<style>html,body{margin:0;background:#f2ece0}canvas{display:block;width:1100px;height:800px}</style>
+</head><body><canvas id="c"></canvas>
+<script src="data/selborne.js"></script>
+<script>
+function extract(T){
+const LEX={
+bird:'swallow swallows house-martin house-martins martin martins sand-martin sand-martins swift swifts cuckoo cuckoos nightingale nightingales blackcap redstart wryneck whitethroat willow-wren grasshopper-lark sedge-bird fern-owl goatsucker owl owls rook rooks crow crows raven ravens jackdaw jackdaws starling starlings thrush thrushes missel-thrush fieldfare fieldfares redwing redwings blackbird blackbirds ring-ouzel ring-ouzels wood-lark sky-lark titlark linnet linnets chaffinch chaffinches bunting sparrow sparrows wren wrens redbreast redbreasts hedge-sparrow stone-curlew curlew curlews snipe snipes woodcock woodcocks heron herons hawk hawks kite buzzard kestrel partridge partridges pheasant pheasants quail quails landrail nuthatch woodpecker creeper wagtail wagtails stonechat whinchat wheatear wheatears fly-catcher flycatcher bullfinch bullfinches goldfinch crossbill crossbills grosbeak hoopoe pigeon pigeons ring-dove ring-doves wood-pigeons turtle turtles duck ducks teal geese swan swans gull gulls hen-harrier oedicnemus dabchick moor-hen lark larks bird birds',
+beast:'tortoise bat bats hedgehog mole moles mouse mice field-mice harvest-mouse hare hares deer fox foxes viper vipers adder snake snakes lizard lizards frog frogs toad toads newt newts eft efts bear sheep cattle cow cows horse horses dog dogs cat hog hogs squirrel weasel otter badger fish',
+insect:'cricket crickets field-cricket field-crickets mole-cricket mole-crickets bee bees wasp wasps gnat gnats fly flies glow-worm glow-worms butterfly butterflies moth moths beetle beetles chafer chafers cockchafer ant ants ephemera gossamer spider spiders worm worms earth-worm earth-worms snail snails slug slugs insect insects caterpillar caterpillars oestrus',
+plant:'beech beeches oak oaks yew yews elm elms ash hazel wheat barley hops turnip turnips grass hay ivy fern truffle truffles cucumber cucumbers apple apples cherry hellebore violet violets primrose primroses blossom blossoms flower flowers leaf leaves corn harvest fruit seed seeds tree trees bud buds',
+weather:'frost frosts snow snows rain rains thunder fog fogs mist mists wind winds ice thaw heat drought hail honey-dew storm tempest dew sunshine'
+};
+const KIND={};for(const k in LEX)for(const w of LEX[k].split(' '))KIND[w]=k;
+const MN=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+const CUM=[0,31,59,90,120,151,181,212,243,273,304,334];
+const FEAST={'lady-day':84,'candlemas':33,'midsummer':175,'michaelmas':272,'christmas':359,'st. barnabas':161,'st. john':175,'st. lawrence':222,'st. swithin':196,'lammas':213};
+let t=T.replace(/\r/g,'').replace(/^[A-Za-z ,]*?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.? +\d{1,2}(?:st|nd|rd|th)?, +17\d\d\.\s*$/gm,'');
+const stop=t.indexOf('Letter I\n');
+t=t.slice(stop).replace(/\s+/g,' ');
+// protect abbreviations
+t=t.replace(/\b(Jan|Feb|Mar|Apr|Aug|Sept|Sep|Oct|Nov|Dec|St|Mr|Dr|viz|i\.e|p|vol|No|Esq)\./g,'$1․');
+const sents=t.split(/(?<=[.!?;:])\s+/);
+const Mre='(January|Jan․|February|Feb․|March|Mar․|April|Apr․|May|June|July|August|Aug․|September|Sept․|Sep․|October|Oct․|November|Nov․|December|Dec․)';
+const reDay1=new RegExp(Mre+' (?:the )?(\\d{1,2})(?:st|nd|rd|th)?\\b','g');
+const reDay2=new RegExp('\\b(\\d{1,2})(?:st|nd|rd|th)? (?:of )?'+Mre,'g');
+const reMon=new RegExp('\\b(?:(beginning|first week|middle|end|latter end|last week|close|latter part|first days?) of )?'+Mre+'\\b','g');
+const ORD={first:1,second:2,third:3,fourth:4,fifth:5,sixth:6,seventh:7,eighth:8,ninth:9,tenth:10,eleventh:11,twelfth:12,thirteenth:13,fourteenth:14,fifteenth:15,sixteenth:16,seventeenth:17,eighteenth:18,nineteenth:19,twentieth:20,'twenty-first':21,'twenty-second':22,'twenty-third':23,'twenty-fourth':24,'twenty-fifth':25,'twenty-sixth':26,'twenty-seventh':27,'twenty-eighth':28,'twenty-ninth':29,thirtieth:30,'thirty-first':31};
+const OW='(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|eleventh|twelfth|thirteenth|fourteenth|fifteenth|sixteenth|seventeenth|eighteenth|nineteenth|twentieth|twenty-first|twenty-second|twenty-third|twenty-fourth|twenty-fifth|twenty-sixth|twenty-seventh|twenty-eighth|twenty-ninth|thirtieth|thirty-first)';
+const reO1=new RegExp('\\b'+OW+' (?:of )?(?:last |this |next )?'+Mre,'gi');
+const reO2=new RegExp(Mre+' (?:the )?'+OW+'\\b','g');
+const out=[];
+sents.forEach((s,si)=>{
+  if(/^Letter [IVXL]+ To /.test(s)&&s.length<120) return;
+  let days=[];const used=[];
+  let m;
+  reDay1.lastIndex=0;while(m=reDay1.exec(s)){const mi=MN.indexOf(m[1].slice(0,3).toLowerCase());const d=+m[2];if(d>=1&&d<=31){days.push(CUM[mi]+d-1);used.push([m.index,m.index+m[0].length]);}}
+  reDay2.lastIndex=0;while(m=reDay2.exec(s)){const mi=MN.indexOf(m[2].slice(0,3).toLowerCase());const d=+m[1];if(d>=1&&d<=31){days.push(CUM[mi]+d-1);used.push([m.index,m.index+m[0].length]);}}
+  reO1.lastIndex=0;while(m=reO1.exec(s)){const mi=MN.indexOf(m[2].slice(0,3).toLowerCase());days.push(CUM[mi]+ORD[m[1].toLowerCase()]-1);used.push([m.index,m.index+m[0].length]);}
+  reO2.lastIndex=0;while(m=reO2.exec(s)){const mi=MN.indexOf(m[1].slice(0,3).toLowerCase());days.push(CUM[mi]+ORD[m[2].toLowerCase()]-1);used.push([m.index,m.index+m[0].length]);}
+  reMon.lastIndex=0;while(m=reMon.exec(s)){
+    if(used.some(u=>m.index<u[1]&&m.index+m[0].length>u[0]))continue;
+    const name=m[2];
+    if(name==='May'){const pre=s.slice(Math.max(0,m.index-12),m.index);const post=s.slice(m.index+3,m.index+12);
+      if(!(m[1]||/\b(in|of|till|until|about|before|after|during|from|to|through|by|all|last|next|this|that|early|middle|end|first|whole|and)\s$/.test(pre)||/^\s?\d/.test(post)))continue;
+      if(/^\s(be|have|not|also|perhaps|then|easily|well|probably|sometimes|possibly|suppose|see|observe|say|add|venture|now|it|he|we|you|I)\b/.test(post))continue;}
+    if(name==='March'&&/^\s(of|on|in|to)\s(the\s)?[a-z]/.test(s.slice(m.index+5,m.index+16))&&!m[1]){}
+    const mi=MN.indexOf(name.slice(0,3).toLowerCase());
+    const q=m[1]||'';let d=15;if(/beginning|first/.test(q))d=5;else if(/end|last|close|latter/.test(q))d=26;
+    days.push(CUM[mi]+d-1+(q?0:0.5));
+  }
+  for(const f in FEAST){const re=new RegExp('\\b'+f.replace('.', '․').replace(' ','\\s'),'i');if(re.test(s))days.push(FEAST[f]);}
+  if(!days.length)return;
+  // words
+  const words=[];const re=/[A-Za-z][A-Za-z-]*[A-Za-z]/g;let w;
+  while(w=re.exec(s)){const lw=w[0].toLowerCase();if(KIND[lw])words.push([lw,KIND[lw]]);}
+  // header lines: skip letter salutation-only sentences with no words
+  days=[...new Set(days.map(Math.round))];
+  for(const d of days)out.push({d,si,words,s});
+});
+return out;
+}
+
+
+function letters(T){
+  const t=T.replace(/\r/g,'');
+  const bi=t.indexOf('LETTERS to DAINES BARRINGTON');
+  const re=/^Letter [IVXL]+\s*$/gm;let m;const pos=[];
+  while(m=re.exec(t))pos.push(m.index);
+  const MN=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+  const CUM=[0,31,59,90,120,151,181,212,243,273,304,334];
+  const res=[];
+  pos.forEach((p,i)=>{
+    const end=i+1<pos.length?pos[i+1]:t.length;
+    const body=t.slice(p,end);
+    const head=body.slice(0,700);
+    const dm=head.match(/^[A-Za-z ,]*?\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.? +(\d{1,2})(?:st|nd|rd|th)?, +(17\d\d)\.\s*$/m);
+    const words=body.split(/\s+/).length;
+    res.push({to:p>bi?'B':'P',words,d:dm?CUM[MN.indexOf(dm[1].toLowerCase())]+(+dm[2])-1:null,y:dm?+dm[3]:null});
+  });
+  return res;
+}
+(function(){
+const W=1100,H=800,dpr=Math.max(1,window.devicePixelRatio||1);
+const cv=document.getElementById('c');cv.width=W*dpr;cv.height=H*dpr;
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+const PAPER='#f2ece0',INK='#2b2520',FAINT='rgba(43,37,32,0.28)';
+const COL={bird:'#2b2520',beast:'#7a4a2a',insect:'#a07a1c',plant:'#4d6b3a',weather:'#4f6a80'};
+g.fillStyle=PAPER;g.fillRect(0,0,W,H);
+const cx=550,cy=400,R0=150,R1=163;
+const ang=d=>(d+0.5)/365*Math.PI*2-Math.PI/2;
+const obs=extract(SELBORNE), lets=letters(SELBORNE);
+// calendar ring
+g.strokeStyle=INK;g.lineWidth=0.7;
+g.beginPath();g.arc(cx,cy,(R0+R1)/2,0,Math.PI*2);g.stroke();
+const CUM=[0,31,59,90,120,151,181,212,243,273,304,334,365];
+const MNAME=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+for(let i=0;i<12;i++){const a=ang(CUM[i]-0.5);
+  g.beginPath();g.moveTo(cx+Math.cos(a)*(R0-2),cy+Math.sin(a)*(R0-2));g.lineTo(cx+Math.cos(a)*(R1+2),cy+Math.sin(a)*(R1+2));g.stroke();
+}
+// letters: inward bars
+const maxW=Math.max(...lets.map(l=>l.words));
+lets.forEach(l=>{if(l.d==null)return;const a=ang(l.d);const len=8+70*Math.sqrt(l.words/maxW);
+  g.strokeStyle=l.to==='P'?'#8c3b2a':'#3c5a6e';g.lineWidth=1.3;
+  g.beginPath();g.moveTo(cx+Math.cos(a)*(R0-3),cy+Math.sin(a)*(R0-3));g.lineTo(cx+Math.cos(a)*(R0-3-len),cy+Math.sin(a)*(R0-3-len));g.stroke();});
+// observations
+const FS=9.4;g.font='italic '+FS+'px Georgia, "Times New Roman", serif';
+const placed=[];// {a0,a1,r0,r1}
+const items=obs.slice().sort((p,q)=>p.d-q.d||p.si-q.si);
+// faint ticks for dated sentences
+items.forEach(o=>{const a=ang(o.d);const n=o.s.split(' ').length;const len=4+Math.min(30,n*0.45);
+  g.strokeStyle=FAINT;g.lineWidth=0.6;g.beginPath();g.moveTo(cx+Math.cos(a)*(R1+3),cy+Math.sin(a)*(R1+3));g.lineTo(cx+Math.cos(a)*(R1+3+len),cy+Math.sin(a)*(R1+3+len));g.stroke();});
+// labels: merge identical words within a sentence, at most five
+const bound=a=>{const c=Math.cos(a),s=Math.sin(a);const bx=c>0?(W-14-cx)/c:c<0?(14-cx)/c:1e9;const by=s>0?(H-12-cy)/s:s<0?(12-cy)/s:1e9;return Math.min(bx,by);};
+const fits=(a,r,total,h)=>{if(r+total>bound(a))return false;return !placed.some(p=>{const da=Math.abs(((a-p.a+Math.PI*3)%(Math.PI*2))-Math.PI);return da*Math.min(r,p.r0)<FS*1.05 && r<p.r1+4 && r+total>p.r0-4;});};
+const DAY=Math.PI*2/365;
+const labs=[];
+items.forEach(o=>{
+  const seen=new Set();let ws=o.words.filter(w=>!seen.has(w[0])&&seen.add(w[0]));
+  if(ws.length>1)ws=ws.filter(w=>w[0]!=='bird'&&w[0]!=='birds');
+  ws=ws.slice(0,5);if(!ws.length)return;
+  const parts=ws.map(w=>({w:w[0],k:w[1],wd:g.measureText(w[0]).width}));
+  const sep=g.measureText(' \u00b7 ').width;
+  const total=parts.reduce((s,p)=>s+p.wd,0)+sep*(parts.length-1);
+  labs.push({o,parts,sep,total,a0:ang(o.d)});
+});
+labs.forEach(L=>{
+  let best=null;
+  for(let r=R1+34;r<560&&!best;r+=3){
+    for(let k=0;k<=14;k++){
+      for(const sg of k?[1,-1]:[1]){const a=L.a0+sg*k*DAY*0.9;
+        if(fits(a,r,L.total)){const cost=r+k*9;if(!best||cost<best.cost)best={a,r,cost};}
+      }
+    }
+  }
+  if(!best)return;
+  // refine: allow larger radius with smaller offset
+  L.a=best.a;L.r=best.r;placed.push({a:L.a,r0:L.r,r1:L.r+L.total});
+});
+labs.forEach(L=>{ if(L.r==null)return;
+  const a0=L.a0,a=L.a,r=L.r;
+  g.strokeStyle='rgba(43,37,32,0.42)';g.lineWidth=0.5;
+  const rm=R1+22;
+  g.beginPath();g.moveTo(cx+Math.cos(a0)*(R1+3),cy+Math.sin(a0)*(R1+3));g.lineTo(cx+Math.cos(a0)*rm,cy+Math.sin(a0)*rm);
+  g.lineTo(cx+Math.cos(a)*(rm+10),cy+Math.sin(a)*(rm+10));g.lineTo(cx+Math.cos(a)*(r-2),cy+Math.sin(a)*(r-2));g.stroke();
+  g.save();g.translate(cx,cy);
+  const flip=Math.cos(a)<0;
+  g.rotate(flip?a+Math.PI:a);g.textBaseline='middle';
+  let x=flip?-(r+L.total):r;
+  const seq=flip?L.parts.slice().reverse():L.parts;
+  seq.forEach((p,i)=>{g.fillStyle=COL[p.k];g.fillText(p.w,x,0);x+=p.wd;if(i<seq.length-1){g.fillStyle=FAINT;g.fillText(' \u00b7 ',x,0);x+=L.sep;}});
+  g.restore();
+});
+// month names
+g.fillStyle=INK;g.font='10px Georgia, serif";g.textAlign='center';g.textBaseline='middle';
+for(let i=0;i<12;i++){const a=ang((CUM[i]+CUM[i+1])/2);g.save();g.translate(cx+Math.cos(a)*(R0+R1)/2,cy+Math.sin(a)*(R0+R1)/2);
+  g.rotate(a+Math.PI/2+(Math.sin(a)>0?Math.PI:0));g.fillStyle=PAPER;g.fillRect(-12,-5,24,10);g.fillStyle=INK;g.fillText(MNAME[i],0,0.5);g.restore();}
+// center
+g.textAlign='center';g.fillStyle=INK;g.font='italic 13px Georgia, serif';g.fillText('Selborne',cx,cy-6);
+g.font='9px Georgia, serif';g.fillStyle='rgba(43,37,32,0.6)';g.fillText('one year, 1767–1787',cx,cy+10);
+console.log(JSON.stringify({lab:labs.length,placed:placed.length}));window.__stats={obs:obs.length,lab:placed.length,lets:lets.filter(l=>l.d!=null).length};
+})();
+
+</script></body></html>
