@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Under Other Names</title>
+<style>
+:root{--bg:#eef0ea;--ink:#16191a;--mute:#5f6763;--line:#c9cec6;--card:#fbfcf8;--wire:#9aa39d;--hot:#b2412a;--read:#1f5c7a;--ok:#2d6b4a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121514;--ink:#e6ebe6;--mute:#9aa49e;--line:#323a36;--card:#1a1e1c;--wire:#4d5852;--hot:#ef7b62;--read:#79b6d6;--ok:#7fc39c}}
+:root[data-theme="dark"]{--bg:#121514;--ink:#e6ebe6;--mute:#9aa49e;--line:#323a36;--card:#1a1e1c;--wire:#4d5852;--hot:#ef7b62;--read:#79b6d6;--ok:#7fc39c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+main{max-width:1240px;margin:0 auto;padding:20px 16px 64px}
+h1{font-weight:normal;font-size:30px;margin:0 0 2px}
+h2{font-weight:normal;font-size:21px;margin:44px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+.sub{color:var(--mute);margin:0 0 16px;max-width:64em}
+.stage{display:grid;grid-template-columns:300px 1fr 1fr;gap:14px;align-items:start}
+@media (max-width:980px){.stage{grid-template-columns:1fr 1fr}.wiring{grid-column:1/-1}}
+@media (max-width:640px){.stage{grid-template-columns:1fr}}
+.pane{background:var(--card);border:1px solid var(--line);padding:10px;min-width:0}
+.pane h3{font-weight:normal;font-size:14px;margin:0 0 6px;color:var(--mute)}
+.pane h3 b{color:var(--ink);font-weight:normal}
+.frame{position:relative;width:100%;aspect-ratio:1100/800;overflow:hidden;background:#fff;border:1px solid var(--line)}
+.frame iframe{position:absolute;left:0;top:0;width:1100px;height:800px;border:0;transform-origin:0 0}
+#wires{width:100%;display:block;user-select:none}
+#wires text{font:12.5px ui-monospace,Menlo,Consolas,monospace;fill:var(--ink);cursor:pointer}
+#wires text.r{fill:var(--mute);cursor:default}
+#wires text.read{fill:var(--read);font-weight:bold}
+#wires text.pick{fill:var(--hot)}
+#wires path{fill:none;stroke:var(--wire);stroke-width:1.2}
+#wires path.moved{stroke:var(--hot);stroke-width:2}
+.ops{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+button{font:inherit;font-size:14px;background:transparent;color:var(--ink);border:1px solid var(--line);padding:4px 10px;cursor:pointer}
+button:hover,button:focus-visible{border-color:var(--ink);outline:none}
+.did{font-size:14px;margin:6px 0 0;min-height:3em}
+.did code{font:13px ui-monospace,Menlo,Consolas,monospace}
+.err{color:var(--hot);font-size:13px;min-height:1.3em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.armh{font-size:15px;margin:18px 0 6px;color:var(--mute)}
+.cell{display:flex;flex-direction:column;justify-content:flex-start;background:var(--card);border:1px solid var(--line);padding:6px;cursor:pointer;font-size:13px;line-height:1.35;text-align:left;width:100%}
+.cell img{width:100%;display:block;aspect-ratio:1100/800;object-fit:cover;background:#fff}
+.cell .sw{font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--mute);margin-top:4px;word-break:break-word}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.b{font-size:11.5px;border:1px solid var(--line);padding:0 5px}
+.b.no{color:var(--hot);border-color:var(--hot)}.b.yes{color:var(--ok);border-color:var(--ok)}.b.info{background:var(--ink);color:var(--bg)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{border-bottom:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+th{font-weight:normal;color:var(--mute)}
+.held{color:var(--ok)}.failed{color:var(--hot)}
+.small{font-size:14px;color:var(--mute);max-width:64em}
+.theme{float:right;font-size:13px}
+.scroll{overflow-x:auto}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<button class="theme" id="theme" aria-label="switch light or dark">light / dark</button>
+<h1>Under Other Names</h1>
+<p class="sub">A fresh maker's work made from PubChem's periodic table (left), and the same page, its code untouched,
+reading a table in which whole columns have been swapped (right). The page still asks for the names it asked for; the
+wires show which column now answers. Press for a chance swap, or click two names to swap them yourself.</p>
+
+<div class="stage">
+  <section class="pane wiring">
+    <h3>what the page asks for → what answers</h3>
+    <svg id="wires" viewBox="0 0 320 420" role="img" aria-label="seventeen column names wired to the columns that answer to them"></svg>
+    <div class="ops">
+      <button data-arm="U" title="any two columns">blind</button>
+      <button data-arm="T" title="two columns of the same type">typed</button>
+      <button data-arm="S" title="typed, and one of them is read by the page">seeing</button>
+      <button id="reset">reset</button>
+    </div>
+    <p class="small">Names in <b style="color:var(--read)">blue</b> occur in the page's code.</p>
+  </section>
+  <section class="pane">
+    <h3>the parent · <b id="ptitle"></b></h3>
+    <div class="frame" id="f0"><iframe sandbox="allow-scripts" title="the parent page" id="i0"></iframe></div>
+  </section>
+  <section class="pane">
+    <h3>under other names · <b id="mtitle">as made</b></h3>
+    <div class="frame" id="f1"><iframe sandbox="allow-scripts" title="the parent page reading the rebound table" id="i1"></iframe></div>
+    <p class="did" id="did"></p>
+    <p class="err" id="err"></p>
+  </section>
+</div>
+
+<h2>The night's twenty-four</h2>
+<p class="small" id="nightsum"></p>
+<div id="night"></div>
+
+<h2>The four plain works</h2>
+<p class="small">The family a blind coder measured every mutant against. One of the four was drawn as the parent (seed 145).</p>
+<div class="grid" id="family"></div>
+
+<h2>Predictions, registered before anything ran</h2>
+<div class="scroll"><table id="preds"><thead><tr><th></th><th>prediction</th><th>count</th><th>outcome</th></tr></thead><tbody></tbody></table></div>
+
+<p class="small" style="margin-top:28px">Material: PubChem Periodic Table, National Center for Biotechnology Information,
+<a href="https://pubchem.ncbi.nlm.nih.gov/periodic-table/">pubchem.ncbi.nlm.nih.gov/periodic-table</a>, fetched 2026-10-21.
+Made by Ulysses, the nightly line, Session 145. The record: <code>work.md</code>, <code>PREDICTIONS.md</code>, <code>results.json</code>.</p>
+</main>
+<script src="rebind-core.js"></script>
+<script src="face-data.js"></script>
+<script>
+(function(){
+  const D = window.FACE, R = window.Rebind, F = {fields: D.fields, numeric: D.numeric};
+  const $ = id => document.getElementById(id);
+  // theme
+  $('theme').addEventListener('click', () => { const r = document.documentElement;
+    const dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    r.dataset.theme = dark ? 'light' : 'dark'; });
+  // frames scale to their box
+  function fit(){ for (const id of ['f0','f1']) { const f = $(id); f.firstElementChild.style.transform = 'scale(' + (f.clientWidth / 1100) + ')'; } }
+  addEventListener('resize', fit); fit();
+  // a page as srcdoc: its own folder as base, the table inlined where the page loads data/elements.js
+  function page(elements){
+    const data = '<script>const ELEMENTS = ' + JSON.stringify(elements).replace(/<\//g, '<\\/') + ';<\/script>';
+    let h = D.parent.html.replace(/<script[^>]*src=["']?data\/elements\.js["']?[^>]*><\/script>/, () => data);
+    const trap = '<script>window.addEventListener("error",e=>parent.postMessage({err:String(e.message)},"*"));<\/script>';
+    return h.replace(/<head[^>]*>/i, m => m + '<base href="' + D.parent.base + '">' + trap);
+  }
+  $('ptitle').textContent = D.parent.title + ' (plain maker ' + D.parent.room + ')';
+  $('i0').srcdoc = page(D.elements);
+  // binding: for each asked name, the column that answers
+  let bind = {}; const reset = () => { bind = {}; D.fields.forEach(f => bind[f] = f); };
+  reset();
+  function current(){ return D.elements.map(e => { const o = {}; for (const f of D.fields) o[f] = e[bind[f]]; return o; }); }
+  let picked = null;
+  function swap(a, b){ const t = bind[a]; bind[a] = bind[b]; bind[b] = t; }
+  function draw(){
+    const svg = $('wires'), n = D.fields.length, y = i => 16 + i * 23.6; let s = '';
+    D.fields.forEach((f, i) => {
+      const j = D.fields.indexOf(bind[f]), moved = j !== i;
+      s += '<path class="' + (moved ? 'moved' : '') + '" d="M164 ' + (y(i) - 4) + ' C200 ' + (y(i) - 4) + ' 200 ' + (y(j) - 4) + ' 228 ' + (y(j) - 4) + '"/>';
+      s += '<text x="160" y="' + y(i) + '" text-anchor="end" data-f="' + f + '" class="' + (D.read.includes(f) ? 'read' : '') + (picked === f ? ' pick' : '') + '">' + f + '</text>';
+      s += '<text x="232" y="' + y(i) + '" class="r">' + (D.numeric.includes(f) ? '#' : 'a') + ' ' + f.slice(0, 10) + '</text>';
+    });
+    svg.innerHTML = s;
+    const moved = D.fields.filter(f => bind[f] !== f);
+    $('did').innerHTML = moved.length ? moved.map(f => '<code>' + f + '</code> ← ' + bind[f]).join('<br>') : 'Every name answered by its own column.';
+  }
+  function show(label){ $('err').textContent = ''; $('mtitle').textContent = label; $('i1').srcdoc = page(current()); draw(); }
+  addEventListener('message', e => { if (e.data && e.data.err && e.source === $('i1').contentWindow) $('err').textContent = 'page error: ' + e.data.err; });
+  $('wires').addEventListener('click', e => { const f = e.target.dataset && e.target.dataset.f; if (!f) return;
+    if (!picked) { picked = f; draw(); return; } if (picked !== f) { swap(picked, f); picked = null; show('your swap'); } else { picked = null; draw(); } });
+  document.querySelectorAll('[data-arm]').forEach(b => b.addEventListener('click', () => {
+    const seed = (Math.random() * 2 ** 31) >>> 0, rand = R.mulberry32(seed), arm = b.dataset.arm;
+    const [p] = R.draw(rand, arm, F, D.read, 1); swap(p[0], p[1]);
+    show(b.textContent + ' chance, seed ' + seed); }));
+  $('reset').addEventListener('click', () => { reset(); picked = null; show('as made'); });
+  function loadNight(m){ reset(); for (const [a, b] of m.swaps) swap(a, b); show('night mutant ' + m.id); scrollTo({top: 0, behavior: 'smooth'}); }
+  // the night
+  const names = {U: 'U · blind: any two columns', T: 'T · typed: two columns of one type', S: 'S · seeing: typed, and one is read by the page'};
+  const badge = (t, c) => '<span class="b ' + (c || '') + '">' + t + '</span>';
+  let h = '';
+  for (const arm of ['U', 'T', 'S']) {
+    h += '<div class="armh">' + names[arm] + '</div><div class="grid">';
+    for (const m of D.night.filter(m => m.arm === arm)) {
+      h += '<button class="cell" data-id="' + m.id + '"><img loading="lazy" alt="render of mutant ' + m.id + '" src="rooms/mutants/' + m.id + '/final.png">' +
+        '<div class="sw">' + m.id + ': ' + m.swaps.map(s => s.join(' ⇄ ')).join(', ') + '</div><div class="badges">' +
+        (m.x ? (m.x.broken === 'yes' ? badge('broken', 'no') : badge('distance ' + m.x.distance)) : '') +
+        (m.w ? badge(m.w === 'yes' ? 'works' : 'does not work', m.w === 'yes' ? 'yes' : 'no') : '') +
+        (m.v ? badge(m.v === 'yes' ? 'agrees' : m.v === 'no' ? 'false' : 'cannot tell', m.v === 'no' ? 'no' : '') : '') +
+        (m.information ? badge('information', 'info') : '') + '</div></button>';
+    }
+    h += '</div>';
+  }
+  $('night').innerHTML = h; $('nightsum').innerHTML = D.summary || '';
+  $('night').addEventListener('click', e => { const c = e.target.closest('.cell'); if (c) loadNight(D.night.find(m => m.id === c.dataset.id)); });
+  $('family').innerHTML = D.family.map(f => '<div class="cell"><img loading="lazy" alt="' + f.title + '" src="rooms/' + f.room + '/final.png"><div class="sw">' + f.room + (f.room === D.parent.room ? ' · parent' : '') + '</div><div>' + f.title + '</div><div class="badges">' + (f.w ? badge(f.w === 'yes' ? 'works' : 'does not work', f.w === 'yes' ? 'yes' : 'no') : '') + (f.v ? badge(f.v === 'yes' ? 'agrees' : f.v === 'no' ? 'false' : 'cannot tell', f.v === 'no' ? 'no' : '') : '') + '</div></div>').join('');
+  $('preds').tBodies[0].innerHTML = (D.predictions || []).map(p => '<tr><td>' + p.id + '</td><td>' + p.text + '</td><td>' + p.count + '</td><td class="' + (p.held === true ? 'held' : p.held === false ? 'failed' : '') + '">' + (p.held === true ? 'held' : p.held === false ? 'failed' : 'untestable') + '</td></tr>').join('');
+  show('as made');
+  // the 30-second test: one chance swap of the seeing kind on arrival
+  setTimeout(() => document.querySelector('[data-arm="S"]').click(), 400);
+})();
+</script>
+</body>
+</html>

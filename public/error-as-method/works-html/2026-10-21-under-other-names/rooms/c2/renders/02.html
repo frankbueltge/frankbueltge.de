@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Liquid Interval</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #0b0d12; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data/elements.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800;
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  const cv = document.getElementById('c');
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  const BG = '#0b0d12';
+  g.fillStyle = BG; g.fillRect(0, 0, W, H);
+
+  // Temperature axis: logarithmic kelvin, bounds taken from the material itself.
+  const temps = [];
+  ELEMENTS.forEach(e => { if (e.MeltingPoint != null) temps.push(e.MeltingPoint); if (e.BoilingPoint != null) temps.push(e.BoilingPoint); });
+  const tMin = Math.min.apply(null, temps) * 0.8;
+  const tMax = Math.max.apply(null, temps) * 1.25;
+  const left = 56, right = W - 44, top = 70, bottom = H - 70;
+  const n = ELEMENTS.length;
+  const step = (right - left) / n;
+  const x = i => left + step * (i + 0.5);
+  const y = t => bottom - (Math.log(t) - Math.log(tMin)) / (Math.log(tMax) - Math.log(tMin)) * (bottom - top);
+
+  // Decade guides
+  g.font = '10px Georgia, serif';
+  g.textAlign = 'right'; g.textBaseline = 'middle';
+  for (let p = Math.ceil(Math.log10(tMin)); Math.pow(10, p) <= tMax; p++) {
+    const yy = y(Math.pow(10, p));
+    g.strokeStyle = 'rgba(255,255,255,0.06)'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(left, Math.round(yy) + 0.5); g.lineTo(right, Math.round(yy) + 0.5); g.stroke();
+    g.fillStyle = 'rgba(255,255,255,0.32)';
+    g.fillText(Math.pow(10, p) + ' K', left - 8, yy);
+  }
+
+  // The temperature of the room in which the picture is looked at.
+  const ROOM = 293.15;
+  const yr = y(ROOM);
+  g.strokeStyle = 'rgba(255,240,215,0.45)'; g.lineWidth = 1;
+  g.setLineDash([2, 3]);
+  g.beginPath(); g.moveTo(left, Math.round(yr) + 0.5); g.lineTo(right, Math.round(yr) + 0.5); g.stroke();
+  g.setLineDash([]);
+  g.fillStyle = 'rgba(255,240,215,0.6)'; g.textAlign = 'left';
+  g.font = 'italic 11px Georgia, serif';
+  g.fillText('this room', right + 4, yr - 7);
+  g.fillText('20 °C', right + 4, yr + 7);
+
+  const col = e => '#' + (e.CPKHexColor ? String(e.CPKHexColor).padStart(6, '0') : '8a8f9c');
+  const lw = Math.max(2, step * 0.42);
+
+  ELEMENTS.forEach((e, i) => {
+    const xx = x(i);
+    const m = e.MeltingPoint, b = e.BoilingPoint;
+    const c = col(e);
+
+    // faint stem from the floor: the solid that each one is before it melts
+    if (m != null) {
+      g.strokeStyle = 'rgba(255,255,255,0.05)'; g.lineWidth = 1;
+      g.beginPath(); g.moveTo(Math.round(xx) + 0.5, bottom); g.lineTo(Math.round(xx) + 0.5, y(m)); g.stroke();
+    }
+
+    if (m != null && b != null && b >= m) {
+      // liquid: from melting to boiling
+      const y1 = y(m), y2 = y(b);
+      g.save();
+      g.shadowColor = c; g.shadowBlur = 8;
+      g.strokeStyle = c; g.lineWidth = lw; g.lineCap = 'round';
+      g.beginPath(); g.moveTo(xx, y1); g.lineTo(xx, y2); g.stroke();
+      g.restore();
+      // vapour above boiling: a thin rising thread fading out
+      const gr = g.createLinearGradient(0, y2, 0, y2 - 60);
+      gr.addColorStop(0, hexA(c, 0.5)); gr.addColorStop(1, hexA(c, 0));
+      g.strokeStyle = gr; g.lineWidth = 1;
+      g.beginPath(); g.moveTo(xx, y2 - lw / 2); g.lineTo(xx, y2 - 60); g.stroke();
+    } else if (m != null && b != null) {
+      // boils before it melts: no liquid at all, only a gap between two points
+      g.strokeStyle = hexA(c, 0.8); g.lineWidth = 1;
+      g.beginPath(); g.arc(xx, y(b), lw / 2 + 0.5, 0, Math.PI * 2); g.stroke();
+      g.beginPath(); g.arc(xx, y(m), lw / 2 + 0.5, 0, Math.PI * 2); g.stroke();
+      g.setLineDash([1, 2]);
+      g.beginPath(); g.moveTo(xx, y(b) - lw / 2 - 1); g.lineTo(xx, y(m) + lw / 2 + 1); g.stroke();
+      g.setLineDash([]);
+    } else if (m != null) {
+      // melting known, boiling unknown: the liquid begins and is not seen to end
+      const y1 = y(m);
+      const gr = g.createLinearGradient(0, y1, 0, y1 - 150);
+      gr.addColorStop(0, hexA(c, 0.95)); gr.addColorStop(1, hexA(c, 0));
+      g.strokeStyle = gr; g.lineWidth = lw; g.lineCap = 'butt';
+      g.beginPath(); g.moveTo(xx, y1); g.lineTo(xx, y1 - 150); g.stroke();
+      g.fillStyle = c;
+      g.beginPath(); g.arc(xx, y1, lw / 2, 0, Math.PI * 2); g.fill();
+    }
+
+    // symbol
+    g.save();
+    g.translate(xx, bottom + 8);
+    g.rotate(-Math.PI / 2);
+    g.textAlign = 'right'; g.textBaseline = 'middle';
+    g.font = '9px Menlo, Consolas, monospace';
+    g.fillStyle = m == null ? 'rgba(255,255,255,0.22)' : 'rgba(255,255,255,0.6)';
+    g.fillText(e.Symbol, 0, 0.5);
+    g.restore();
+  });
+
+  // Title
+  g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  g.fillStyle = 'rgba(255,255,255,0.88)';
+  g.font = '22px Georgia, serif';
+  g.fillText('Liquid Interval', left, 40);
+  g.fillStyle = 'rgba(255,255,255,0.42)';
+  g.font = 'italic 12px Georgia, serif';
+  g.fillText('each element, by atomic number, between the temperature at which it melts and the one at which it boils', left + 170, 40);
+
+  function hexA(hex, a) {
+    const h = hex.replace('#', '');
+    const r = parseInt(h.slice(0, 2), 16), gg = parseInt(h.slice(2, 4), 16), b = parseInt(h.slice(4, 6), 16);
+    return 'rgba(' + r + ',' + gg + ',' + b + ',' + a + ')';
+  }
+})();
+</script>
+</body>
+</html>

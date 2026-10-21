@@ -1,0 +1,493 @@
+{
+ "parent": "c4",
+ "w_meaning": "A picture works if it shows the elements' real data readably and truthfully: values in the right places, marks you can see, elements you can identify, and no text that contradicts what is drawn.",
+ "predictions": {
+  "P1": {
+   "held": false,
+   "count": "broken: U 3 of 8, S 2 of 8"
+  },
+  "P2": {
+   "held": true,
+   "count": "distance 0: T 5 of 8, S 1 of 8"
+  },
+  "P3": {
+   "held": true,
+   "count": "not broken and distance >= 2: 0 of 24 []"
+  },
+  "P4": {
+   "held": false,
+   "count": "information: {'U': [], 'T': [], 'S': []}"
+  },
+  "P5": {
+   "held": true,
+   "count": "information S 0, T 0, U 0"
+  },
+  "P6": {
+   "held": null,
+   "count": "W accepts and distance >= 1: 0 []; V says no to 0"
+  },
+  "P7": {
+   "held": true,
+   "count": "accepted mutants whose W reason names a false value (word list in score.py): 0 []"
+  },
+  "P8": {
+   "held": true,
+   "count": "practice agrees with W on 18 of 24; disagrees on ['t3', 't8', 's1', 's2', 's3', 's5']"
+  }
+ },
+ "side_test": {
+  "S144.CHANCE_test_fires": false,
+  "far_and_accepted": [],
+  "note": "Side test only: tonight's operator acts on the table, not on code, so this is not the row's event."
+ },
+ "rows": {
+  "c1": {
+   "arm": "C",
+   "x_broken": null,
+   "x_nearest": null,
+   "x_distance": null,
+   "x_seen": null,
+   "w_works": "yes",
+   "w_why": "A stacked solid/liquid/vapour column for each element, with correct melting and boiling points, CPK colours, a room line and a clear treatment of the unmeasured elements.",
+   "v_agrees": "yes",
+   "v_why": "Checked the liquid ranges (H 14-20 K, He about 4 K, Hg 234-630 K, Br near room temperature, Ga and Cs melting just above it) and the H-to-Og ordering, with unmeasured superheavies faded; nothing disagrees.",
+   "practice": [
+    null,
+    null
+   ],
+   "information": null
+  },
+  "c2": {
+   "arm": "C",
+   "x_broken": null,
+   "x_nearest": null,
+   "x_distance": null,
+   "x_seen": null,
+   "w_works": "yes",
+   "w_why": "A clean, correctly scaled liquid-interval chart in atomic-number order with CPK colours, a labelled 20 °C room line and readable symbols.",
+   "v_agrees": "yes",
+   "v_why": "Checked H 14-20 K, He about 4 K, Hg 234-630 K, Br and Ga near 20 C, arsenic marked as subliming, and Kr/Rb values; nothing disagrees.",
+   "practice": [
+    null,
+    null
+   ],
+   "information": null
+  },
+  "c3": {
+   "arm": "C",
+   "x_broken": null,
+   "x_nearest": null,
+   "x_distance": null,
+   "x_seen": null,
+   "w_works": "yes",
+   "w_why": "Each element's melting-to-boiling interval sits at its correct kelvin values in its CPK colour, with a room line, labelled axis, legend and honest handling of sublimation and unmeasured elements.",
+   "v_agrees": "yes",
+   "v_why": "Checked that at 293 K only bromine and mercury are liquid, that arsenic is marked as boiling (subliming) before it melts, the H/He/Hg/Xe ranges, and that atomic numbers 10, 20 ... 110 sit under Ne, Ca ... Ds; nothing disagrees.",
+   "practice": [
+    null,
+    null
+   ],
+   "information": null
+  },
+  "c4": {
+   "arm": "C",
+   "x_broken": null,
+   "x_nearest": null,
+   "x_distance": null,
+   "x_seen": null,
+   "w_works": "yes",
+   "w_why": "A readable, correctly scaled liquid-interval chart in atomic-number order, with bromine and mercury called out at the room line and the unmeasured superheavies left as faint stubs.",
+   "v_agrees": "yes",
+   "v_why": "Checked the liquid ranges against known values: H 14-20 K, He below 4.2 K, Hg 234-630 K, Br 266-332 K, Ga and Cs melting just above room temperature, and the order runs H to Og; nothing disagrees.",
+   "practice": [
+    null,
+    null
+   ],
+   "information": null
+  },
+  "u1": {
+   "arm": "U",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 0,
+   "x_seen": "Looks the same as F4.",
+   "w_works": "yes",
+   "w_why": "Pixel-identical to W04: a correct, legible liquid-interval chart.",
+   "v_agrees": "yes",
+   "v_why": "Checked the liquid ranges against known values: H 14-20 K, He below 4.2 K, Hg 234-630 K, Br 266-332 K, Ga and Cs melting just above room temperature, and the order runs H to Og; nothing disagrees.",
+   "practice": [
+    "works",
+    "true"
+   ],
+   "information": false
+  },
+  "u2": {
+   "arm": "U",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 0,
+   "x_seen": "Looks the same as F4.",
+   "w_works": "yes",
+   "w_why": "Pixel-identical to W04: a correct, legible liquid-interval chart.",
+   "v_agrees": "yes",
+   "v_why": "Checked the liquid ranges against known values: H 14-20 K, He below 4.2 K, Hg 234-630 K, Br 266-332 K, Ga and Cs melting just above room temperature, and the order runs H to Og; nothing disagrees.",
+   "practice": [
+    "works",
+    "true"
+   ],
+   "information": false
+  },
+  "u3": {
+   "arm": "U",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4 with titles and labels, but the bars hang down from the top and small ticks sit low, so the data mapping is wrong.",
+   "w_works": "no",
+   "w_why": "The values are wrong: many elements get ticks below 1 K and bars hanging from the top, so the chart misstates the liquid ranges despite its correct title and axis.",
+   "v_agrees": "no",
+   "v_why": "Most elements, starting with hydrogen, are drawn with a melting mark below 1 K (H at about 0.8 K) and bars hanging from the top of the chart, when hydrogen actually melts at 14 K.",
+   "practice": [
+    "does not work",
+    "false"
+   ],
+   "information": false
+  },
+  "u4": {
+   "arm": "U",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 0,
+   "x_seen": "Looks the same as F4.",
+   "w_works": "yes",
+   "w_why": "Pixel-identical to W04: a correct, legible liquid-interval chart.",
+   "v_agrees": "yes",
+   "v_why": "Checked the liquid ranges against known values: H 14-20 K, He below 4.2 K, Hg 234-630 K, Br 266-332 K, Ga and Cs melting just above room temperature, and the order runs H to Og; nothing disagrees.",
+   "practice": [
+    "works",
+    "true"
+   ],
+   "information": false
+  },
+  "u5": {
+   "arm": "U",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4 with the colours lost: dark bars, plus a few grey bars for the actinides.",
+   "w_works": "no",
+   "w_why": "The bars are drawn in near-black on a dark ground, so the data is invisible except for a few greyed late actinides.",
+   "v_agrees": "yes",
+   "v_why": "Fr and Cf-Lr, whose values are estimated, are highlighted with fading tops over the same correct ranges as the reference chart; nothing disagrees.",
+   "practice": [
+    "does not work",
+    "true"
+   ],
+   "information": false
+  },
+  "u6": {
+   "arm": "U",
+   "x_broken": "yes",
+   "x_nearest": null,
+   "x_distance": 3,
+   "x_seen": "Entirely blank dark page.",
+   "w_works": "no",
+   "w_why": "The picture is completely blank.",
+   "v_agrees": "cannot tell",
+   "v_why": "The image is completely blank, so there is nothing to check.",
+   "practice": [
+    "does not work",
+    "false"
+   ],
+   "information": false
+  },
+  "u7": {
+   "arm": "U",
+   "x_broken": "yes",
+   "x_nearest": null,
+   "x_distance": 3,
+   "x_seen": "Entirely blank dark page.",
+   "w_works": "no",
+   "w_why": "The picture is completely blank.",
+   "v_agrees": "cannot tell",
+   "v_why": "The image is completely blank, so there is nothing to check.",
+   "practice": [
+    "does not work",
+    "false"
+   ],
+   "information": false
+  },
+  "u8": {
+   "arm": "U",
+   "x_broken": "yes",
+   "x_nearest": null,
+   "x_distance": 3,
+   "x_seen": "Entirely blank dark page.",
+   "w_works": "no",
+   "w_why": "The picture is completely blank.",
+   "v_agrees": "cannot tell",
+   "v_why": "The image is completely blank, so there is nothing to check.",
+   "practice": [
+    "does not work",
+    "false"
+   ],
+   "information": false
+  },
+  "t1": {
+   "arm": "T",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 0,
+   "x_seen": "Looks the same as F4.",
+   "w_works": "yes",
+   "w_why": "Pixel-identical to W04: a correct, legible liquid-interval chart.",
+   "v_agrees": "yes",
+   "v_why": "Checked the liquid ranges against known values: H 14-20 K, He below 4.2 K, Hg 234-630 K, Br 266-332 K, Ga and Cs melting just above room temperature, and the order runs H to Og; nothing disagrees.",
+   "practice": [
+    "works",
+    "true"
+   ],
+   "information": false
+  },
+  "t2": {
+   "arm": "T",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 0,
+   "x_seen": "Looks the same as F4.",
+   "w_works": "yes",
+   "w_why": "Pixel-identical to W04: a correct, legible liquid-interval chart.",
+   "v_agrees": "yes",
+   "v_why": "Checked the liquid ranges against known values: H 14-20 K, He below 4.2 K, Hg 234-630 K, Br 266-332 K, Ga and Cs melting just above room temperature, and the order runs H to Og; nothing disagrees.",
+   "practice": [
+    "works",
+    "true"
+   ],
+   "information": false
+  },
+  "t3": {
+   "arm": "T",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4 with the elements in another scrambled order.",
+   "w_works": "no",
+   "w_why": "The elements are shuffled into a non-atomic order while the footer says 'ordered by atomic number', so the chart misdescribes itself and loses the periodic shape.",
+   "v_agrees": "no",
+   "v_why": "The footer says the columns are ordered by atomic number, but the axis starts with He, Ne, Ar, Pm, so the elements are not in atomic-number order (the melting and boiling bars themselves look correct).",
+   "practice": [
+    "works",
+    "false"
+   ],
+   "information": false
+  },
+  "t4": {
+   "arm": "T",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 0,
+   "x_seen": "Looks the same as F4.",
+   "w_works": "yes",
+   "w_why": "Pixel-identical to W04: a correct, legible liquid-interval chart.",
+   "v_agrees": "yes",
+   "v_why": "Checked the liquid ranges against known values: H 14-20 K, He below 4.2 K, Hg 234-630 K, Br 266-332 K, Ga and Cs melting just above room temperature, and the order runs H to Og; nothing disagrees.",
+   "practice": [
+    "works",
+    "true"
+   ],
+   "information": false
+  },
+  "t5": {
+   "arm": "T",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4 with all bar colours gone; the bars are near-black against the background and only the text stays readable.",
+   "w_works": "no",
+   "w_why": "The bars are near-black on a dark ground, so only the labels and the room line can be seen and the data is effectively invisible.",
+   "v_agrees": "yes",
+   "v_why": "The bars are uncoloured, but their positions match the known ranges (H 14-20 K, Hg 234-630 K, Br near room temperature) in atomic-number order; nothing disagrees.",
+   "practice": [
+    "does not work",
+    "true"
+   ],
+   "information": false
+  },
+  "t6": {
+   "arm": "T",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 0,
+   "x_seen": "Looks the same as F4.",
+   "w_works": "yes",
+   "w_why": "Pixel-identical to W04: correct intervals, clear room line, and bromine and mercury properly called out.",
+   "v_agrees": "yes",
+   "v_why": "Checked the liquid ranges against known values: H 14-20 K, He below 4.2 K, Hg 234-630 K, Br 266-332 K, Ga and Cs melting just above room temperature, and the order runs H to Og; nothing disagrees.",
+   "practice": [
+    "works",
+    "true"
+   ],
+   "information": false
+  },
+  "t7": {
+   "arm": "T",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 0,
+   "x_seen": "Looks the same as F4.",
+   "w_works": "yes",
+   "w_why": "Pixel-identical to W04: a correct, legible liquid-interval chart.",
+   "v_agrees": "yes",
+   "v_why": "Checked the liquid ranges against known values: H 14-20 K, He below 4.2 K, Hg 234-630 K, Br 266-332 K, Ga and Cs melting just above room temperature, and the order runs H to Og; nothing disagrees.",
+   "practice": [
+    "works",
+    "true"
+   ],
+   "information": false
+  },
+  "t8": {
+   "arm": "T",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4 with the element symbols on the x axis replaced by state words (Gas/Solid/Liquid/Expected...).",
+   "w_works": "no",
+   "w_why": "The x-axis shows standard-state words ('Solid', 'Gas') where the element symbols belong, so the bars can't be identified, and the 'Expected to be a…' labels spill off the page.",
+   "v_agrees": "yes",
+   "v_why": "The column labels give each element's state at room temperature: H, He, N, O, F and the noble gases are gas, Br and Hg are liquid, the rest are solid, and the superheavies are 'expected'; all of this matches.",
+   "practice": [
+    "works",
+    "false"
+   ],
+   "information": false
+  },
+  "s1": {
+   "arm": "S",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4 with the elements rearranged in a different order (He first, Br and Cl last).",
+   "w_works": "no",
+   "w_why": "The elements are shuffled into a non-atomic order that contradicts the 'ordered by atomic number' footer.",
+   "v_agrees": "no",
+   "v_why": "The footer says the columns are ordered by atomic number, but the axis starts with He, Be, N, Ne, so the elements are not in atomic-number order (the melting and boiling bars themselves look correct).",
+   "practice": [
+    "works",
+    "false"
+   ],
+   "information": false
+  },
+  "s2": {
+   "arm": "S",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4's liquid-interval chart with the elements in a shuffled, non-atomic order.",
+   "w_works": "no",
+   "w_why": "The columns are in a scrambled order with no meaning while the footer claims atomic-number order, which destroys the periodic pattern and contradicts the caption.",
+   "v_agrees": "no",
+   "v_why": "The footer says the columns are ordered by atomic number, but the axis starts with Fm, Md, No, Lr, so the elements are not in atomic-number order (the melting and boiling bars themselves look correct).",
+   "practice": [
+    "works",
+    "false"
+   ],
+   "information": false
+  },
+  "s3": {
+   "arm": "S",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4 with the element order roughly reversed, running from Lr down to He.",
+   "w_works": "no",
+   "w_why": "The elements are re-sorted (Lr first, He last) while the footer still claims atomic-number order, which contradicts what is drawn.",
+   "v_agrees": "no",
+   "v_why": "The footer says the columns are ordered by atomic number, but the axis starts with Lr, Rf, Db, so the elements are not in atomic-number order (the melting and boiling bars themselves look correct).",
+   "practice": [
+    "works",
+    "false"
+   ],
+   "information": false
+  },
+  "s4": {
+   "arm": "S",
+   "x_broken": "yes",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4's axes and room line, but only a handful of faint columns at the far left and no title or labels.",
+   "w_works": "no",
+   "w_why": "Only about ten elements are drawn, as meaningless near-flat ticks, with no title or labels.",
+   "v_agrees": "cannot tell",
+   "v_why": "Only about ten unlabelled columns are shown, with small marks near 100 K and no element names, so there is too little to check.",
+   "practice": [
+    "does not work",
+    "false"
+   ],
+   "information": false
+  },
+  "s5": {
+   "arm": "S",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4's layout, but the bars rise from a climbing baseline, with crowded element-name labels and Solid/Gas state labels on the x axis.",
+   "w_works": "no",
+   "w_why": "The bars start at the atomic mass instead of the melting point, so they climb steadily across the table; the names overlap into an unreadable pile and the subtitle's '0 never measured' is false.",
+   "v_agrees": "no",
+   "v_why": "Hydrogen is drawn as liquid from about 1 K up to 20 K and lithium from about 7 K, and the subtitle claims 0 elements have never been held, but H melts at 14 K, Li at 454 K, and the superheavy elements have never been measured.",
+   "practice": [
+    "works",
+    "false"
+   ],
+   "information": false
+  },
+  "s6": {
+   "arm": "S",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 0,
+   "x_seen": "F4 with the bromine and mercury annotations both reading 'liquid'.",
+   "w_works": "yes",
+   "w_why": "The data and layout are the same as W04, and Br and Hg are highlighted on the axis, but the callouts only say 'liquid' where they should name the two elements, which is weaker.",
+   "v_agrees": "yes",
+   "v_why": "Same data as the reference chart (H 14-20 K, Hg 234-630 K, Br near room temperature), with the two highlighted elements labelled just 'liquid'; nothing disagrees.",
+   "practice": [
+    "works",
+    "false"
+   ],
+   "information": false
+  },
+  "s7": {
+   "arm": "S",
+   "x_broken": "no",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4's frame with no title or labels; fewer columns, with bars hanging from the top and tiny ticks well below 1 K.",
+   "w_works": "no",
+   "w_why": "There is no title or labels, and the values are wrong: ticks fall below 1 K and bars hang from the top of the chart instead of spanning melting to boiling.",
+   "v_agrees": "no",
+   "v_why": "Dozens of columns carry marks below 1 K and several liquid bars run from thousands of kelvin down to about 30-80 K, yet no element has a melting or boiling point below 1 K.",
+   "practice": [
+    "does not work",
+    "false"
+   ],
+   "information": false
+  },
+  "s8": {
+   "arm": "S",
+   "x_broken": "yes",
+   "x_nearest": "c4",
+   "x_distance": 1,
+   "x_seen": "F4's axes with near-invisible dark columns, a few blue lines and a dotted curve; no title or labels.",
+   "w_works": "no",
+   "w_why": "There is no title or axis labels, and near-black marks on a dark ground show a meaningless rising staircase instead of the liquid intervals.",
+   "v_agrees": "cannot tell",
+   "v_why": "This is an unlabelled dark chart showing only a rising row of marks and a few blue lines; apart from a helium-like bar there is nothing to identify which element is which.",
+   "practice": [
+    "does not work",
+    "false"
+   ],
+   "information": false
+  }
+ }
+}

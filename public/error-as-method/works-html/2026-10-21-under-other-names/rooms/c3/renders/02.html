@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The Liquid Interval</title>
+<style>
+  html,body{margin:0;padding:0;background:#0c0d11;}
+  body{width:1100px;height:800px;overflow:hidden;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/elements.js"></script>
+<script>
+(function(){
+  const W = 1100, H = 800;
+  const cv = document.getElementById('c');
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  const BG = '#0c0d11', INK = '#d9d4c7', DIM = 'rgba(217,212,199,0.35)', FAINT = 'rgba(217,212,199,0.12)';
+  const SERIF = 'Georgia, "Times New Roman", serif';
+  const MONO = '"Courier New", monospace';
+
+  g.fillStyle = BG; g.fillRect(0, 0, W, H);
+
+  // plot frame
+  const L = 70, R = 1060, T = 120, B = 700;
+  const lo = Math.log10(0.7), hi = Math.log10(8000);
+  const y = k => B - (Math.log10(k) - lo) / (hi - lo) * (B - T);
+
+  const els = ELEMENTS.slice().sort((a, b) => a.AtomicNumber - b.AtomicNumber);
+  const n = els.length;
+  const step = (R - L) / n;
+  const cx = i => L + step * (i + 0.5);
+
+  // decade grid
+  g.font = '11px ' + MONO;
+  g.textAlign = 'right'; g.textBaseline = 'middle';
+  for (let p = 0; p <= 3; p++) {
+    const k = Math.pow(10, p), yy = y(k);
+    g.strokeStyle = FAINT; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(L, Math.round(yy) + .5); g.lineTo(R, Math.round(yy) + .5); g.stroke();
+    g.fillStyle = DIM;
+    g.fillText(k.toLocaleString('en') + ' K', L - 10, yy);
+  }
+
+  // stems: solid below the melting point
+  els.forEach((e, i) => {
+    const x = Math.round(cx(i)) + .5;
+    const mp = e.MeltingPoint, bp = e.BoilingPoint;
+    g.lineWidth = 1;
+    if (mp == null && bp == null) {
+      // unknown: a dotted ghost column
+      g.strokeStyle = 'rgba(217,212,199,0.18)';
+      g.setLineDash([1, 4]);
+      g.beginPath(); g.moveTo(x, B); g.lineTo(x, T + 40); g.stroke();
+      g.setLineDash([]);
+      return;
+    }
+    g.strokeStyle = 'rgba(217,212,199,0.22)';
+    const top = (bp != null && bp < mp) ? y(bp) : y(mp);
+    g.beginPath(); g.moveTo(x, B); g.lineTo(x, top); g.stroke();
+  });
+
+  // liquid bands
+  const bw = Math.max(3, step * 0.62);
+  els.forEach((e, i) => {
+    const x = cx(i);
+    const mp = e.MeltingPoint, bp = e.BoilingPoint;
+    if (mp == null) return;
+    const col = '#' + (e.CPKHexColor || 'D9D4C7');
+    if (bp != null && bp < mp) {
+      // passes from solid straight to vapour: no liquid at ordinary pressure
+      const yy = y(bp);
+      g.strokeStyle = col; g.lineWidth = 1.2;
+      g.beginPath();
+      g.moveTo(x - bw, yy - bw * 0.5); g.lineTo(x + bw, yy + bw * 0.5);
+      g.moveTo(x - bw, yy + bw * 0.5); g.lineTo(x + bw, yy - bw * 0.5);
+      g.stroke();
+      return;
+    }
+    const y0 = y(mp);
+    if (bp == null) {
+      // boiling point unrecorded: the liquid fades upward without end
+      const y1 = y0 - 120;
+      const grad = g.createLinearGradient(0, y0, 0, y1);
+      grad.addColorStop(0, col); grad.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = grad;
+      g.globalAlpha = 0.9;
+      g.fillRect(x - bw / 2, y1, bw, y0 - y1);
+      g.globalAlpha = 1;
+      return;
+    }
+    const y1 = y(bp);
+    g.fillStyle = col;
+    g.fillRect(x - bw / 2, y1, bw, Math.max(1.5, y0 - y1));
+  });
+
+  // a room
+  const room = 293.15;
+  const yr = y(room);
+  g.strokeStyle = 'rgba(240,236,226,0.75)'; g.lineWidth = 0.8;
+  g.setLineDash([2, 3]);
+  g.beginPath(); g.moveTo(L - 4, yr); g.lineTo(R + 4, yr); g.stroke();
+  g.setLineDash([]);
+  g.font = 'italic 12px ' + SERIF;
+  g.fillStyle = INK; g.textAlign = 'left'; g.textBaseline = 'bottom';
+
+  // name those the room line actually passes through
+  const wet = els.map((e, i) => [e, i]).filter(([e]) =>
+    e.MeltingPoint != null && e.BoilingPoint != null &&
+    e.MeltingPoint <= room && e.BoilingPoint >= room);
+  g.font = 'italic 12px ' + SERIF;
+  g.textAlign = 'left'; g.textBaseline = 'middle';
+  wet.forEach(([e, i]) => {
+    const x = cx(i);
+    g.strokeStyle = 'rgba(240,236,226,0.6)'; g.lineWidth = 0.6;
+    g.beginPath(); g.arc(x, yr, bw * 1.2, 0, Math.PI * 2); g.stroke();
+  });
+  g.fillStyle = INK; g.textAlign = 'left'; g.textBaseline = 'top';
+  const names = wet.map(([e]) => e.Name.toLowerCase());
+  g.fillText('the room, 293 K — only ' + names.join(' and ') + ' are liquid here', L + 4, yr + 6);
+
+  // symbols along the foot, alternating in two rows
+  g.font = '10px ' + MONO;
+  g.textAlign = 'center'; g.textBaseline = 'top';
+  els.forEach((e, i) => {
+    const x = cx(i);
+    const row = i % 2;
+    const known = e.MeltingPoint != null;
+    g.fillStyle = known ? 'rgba(217,212,199,0.7)' : 'rgba(217,212,199,0.3)';
+    g.fillText(e.Symbol, x, B + 8 + row * 13);
+    g.strokeStyle = FAINT; g.lineWidth = 1;
+    if (row) { g.beginPath(); g.moveTo(Math.round(x) + .5, B + 2); g.lineTo(Math.round(x) + .5, B + 20); g.stroke(); }
+  });
+  // atomic-number marks
+  g.fillStyle = DIM; g.font = '9px ' + MONO;
+  els.forEach((e, i) => {
+    if (e.AtomicNumber === 1 || e.AtomicNumber % 10 === 0)
+      g.fillText(String(e.AtomicNumber), cx(i), B + 40);
+  });
+
+  // title
+  g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  g.fillStyle = INK;
+  g.font = '30px ' + SERIF;
+  g.fillText('The Liquid Interval', L, 62);
+  g.font = 'italic 14px ' + SERIF;
+  g.fillStyle = 'rgba(217,212,199,0.7)';
+  g.fillText('Each of the ' + n + ' elements is wet only between its melting and its boiling point. Kelvin, logarithmic.', L, 88);
+
+  // legend
+  const lx = L, ly = 762;
+  g.font = '11px ' + SERIF; g.textBaseline = 'middle';
+  let ox = lx;
+  function key(draw, label) {
+    draw(ox + 6, ly);
+    g.fillStyle = 'rgba(217,212,199,0.65)'; g.textAlign = 'left';
+    g.fillText(label, ox + 18, ly);
+    ox += 18 + g.measureText(label).width + 30;
+  }
+  key((x, yy) => { g.strokeStyle = 'rgba(217,212,199,0.4)'; g.lineWidth = 1; g.beginPath(); g.moveTo(x + .5, yy + 8); g.lineTo(x + .5, yy - 8); g.stroke(); }, 'solid');
+  key((x, yy) => { g.fillStyle = '#e0a040'; g.fillRect(x - 3, yy - 8, 6, 16); }, 'liquid, in the element’s CPK colour');
+  key((x, yy) => { const gr = g.createLinearGradient(0, yy + 8, 0, yy - 8); gr.addColorStop(0, '#e0a040'); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = gr; g.fillRect(x - 3, yy - 8, 6, 16); }, 'boiling point not recorded');
+  key((x, yy) => { g.strokeStyle = '#e0a040'; g.lineWidth = 1.2; g.beginPath(); g.moveTo(x - 5, yy - 3); g.lineTo(x + 5, yy + 3); g.moveTo(x - 5, yy + 3); g.lineTo(x + 5, yy - 3); g.stroke(); }, 'boils before it melts');
+  key((x, yy) => { g.strokeStyle = 'rgba(217,212,199,0.3)'; g.setLineDash([1, 3]); g.beginPath(); g.moveTo(x + .5, yy + 8); g.lineTo(x + .5, yy - 8); g.stroke(); g.setLineDash([]); }, 'never measured');
+  g.textAlign = 'right'; g.fillStyle = 'rgba(217,212,199,0.4)';
+  g.fillText('source: PubChem periodic table', R, ly);
+})();
+</script>
+</body>
+</html>
