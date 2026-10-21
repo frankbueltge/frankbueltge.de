@@ -1,6 +1,6 @@
 # Provenienz
 
-Erzeugt aus `research-ecology` Commit `11a95552f24c9ce653f8a3590db9c435fe18f922` durch `apps/export-site`
+Erzeugt aus `research-ecology` Commit `4dd2e8ea740c53f8e1d1502d79e00faf69637e1d` durch `apps/export-site`
 (`@research-ecology/export-site@0.1.0`, Projektions-Engine `@research-ecology/projections@0.1.0`).
 
 Datenstand: 2026-08-02T15:50:00Z (jüngstes aufgezeichnetes Ereignis der Begegnung
