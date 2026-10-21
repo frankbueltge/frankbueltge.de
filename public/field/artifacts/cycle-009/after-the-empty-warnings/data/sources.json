@@ -71,5 +71,63 @@
    "used": "The M1 control set's lineage."
   }
  ],
- "house_index": "frankbueltge.de/papers/index.json fetched 2026-10-20: 1,123 entries; none of Simmons & Sutter 2009, Lim et al. 2019 or Trainor et al. 2015 among them (searched: false alarm, cry wolf, tornado, warning)."
+ "house_index": "frankbueltge.de/papers/index.json fetched 2026-10-20: 1,123 entries; none of Simmons & Sutter 2009, Lim et al. 2019 or Trainor et al. 2015 among them (searched: false alarm, cry wolf, tornado, warning).",
+ "study34": {
+  "fetched": "2026-10-21",
+  "warnings": {
+   "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?year1=<Y>&month1=1&day1=1&hour1=0&minute1=0&year2=<Y+1>&month2=1&day2=1&hour2=0&minute2=0&limitps=yes&phenomena=TO&significance=W&limit0=yes",
+   "note": "Iowa Environmental Mesonet, one export per year 2016-2023; the CSV of each zip named by sha256 in build34.py. Not committed raw; per-warning people, area, minutes and tags are in data/warnings34.tsv."
+  },
+  "census": {
+   "url": "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/Gaz_counties_national.zip",
+   "file": "Gaz_counties_national.txt",
+   "sha256": "09800b5b16348449074db3905737c53e47c5448c3059ffc611b803c0d787e2eb",
+   "fields_used": [
+    "USPS",
+    "GEOID",
+    "POP10",
+    "ALAND"
+   ],
+   "note": "US Census Bureau 2010 gazetteer, public domain, as study 15. Not committed raw."
+  },
+  "atelier": {
+   "repo": "frankbueltge/ulysses",
+   "commit": "522c7c3cd5196a4b7bc257ef44066ec64f1b5ee0",
+   "path": "artifacts/cycle-009/the-wolfs-ledger/plate4.json",
+   "sha256": "220ff73b938b96eafff560dc362c1a21828e7526279cb32b87e7f876ad9a6c0a",
+   "used": "class sizes and chances (hour's ledger, later record); handoff ho-2026-10-21-atelier-1"
+  },
+  "prices": [
+   {
+    "cite": "US Department of Transportation, Departmental Guidance on Valuation of a Statistical Life in Economic Analysis, 2021 update",
+    "url": "https://www.transportation.gov/sites/dot.gov/files/2021-03/DOT%20VSL%20Guidance%20-%202021%20Update.pdf",
+    "read": "a direct request answered 403; passages through a full-text extraction tool (web research), not the whole document",
+    "passages": [
+     "Table 2: Relative Disutility Factors by Injury Severity Level (MAIS) MAIS Level Severity Fraction of VSL MAIS 1 Minor 0.003 MAIS 2 Moderate 0.047 MAIS 3 Serious 0.105 MAIS 4 Severe 0.266 MAIS 5 Critical 0.593 MAIS 6 Unsurvivable 1.000",
+     "approximately 40 percent higher and lower than the recommended 2012 base year VSL of $9.1 million",
+     "analysts may wish to calculate high and low alternative estimates of the values of fatalities and injuries prevented by using alternative VSLs that are 40 percent above or below the base value used in the analysis"
+    ],
+    "note": "The 2012 base value is used undeflated; later DOT updates (a figure of $13.2 million in 2023 dollars appears second-hand in a search summary) were not read and are not used. A higher VSL lowers B / L proportionally; the slider reaches 12.74."
+   },
+   {
+    "cite": "US Environmental Protection Agency, Mortality Risk Valuation",
+    "url": "https://www.epa.gov/environmental-economics/mortality-risk-valuation",
+    "read": "first-hand, 2026-10-21",
+    "passages": [
+     "EPA recommends that the central estimate of $7.4 million ($2006), updated to the year of the analysis, be used in all benefits analyses that seek to quantify mortality risk reduction benefits"
+    ]
+   }
+  ],
+  "closed_doors": [
+   {
+    "what": "Severe Weather and Society Survey microdata (WX17-WX25), Harvard Dataverse, CC0",
+    "url": "https://dataverse.harvard.edu/api/access/datafile/3674405",
+    "result": "download requires a guestbook (id 303) with name, deliverable e-mail, institution and position; this practice's address is not deliverable and none other may honestly be given. Variable names and unweighted summaries (DDI) are open; not used."
+   },
+   {
+    "what": "DOT Revised Departmental Guidance on Valuation of Travel Time (2016)",
+    "result": "403 directly; extraction returned a page-not-found. The value of an hour is therefore a reader's parameter and a break-even."
+   }
+  ]
+ }
 }

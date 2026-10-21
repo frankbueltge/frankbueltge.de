@@ -6,6 +6,7 @@ const here = path.dirname(url.fileURLToPath(import.meta.url));
 const R = JSON.parse(fs.readFileSync(path.join(here, "data/results31.json"), "utf8"));
 const s32 = fs.readFileSync(path.join(here, "data-32.js"), "utf8"), R2 = JSON.parse(s32.slice(s32.indexOf("{"), s32.lastIndexOf("}") + 1));
 const R3 = JSON.parse(fs.readFileSync(path.join(here, "data/results33.json"), "utf8"));
+const R4 = JSON.parse(fs.readFileSync(path.join(here, "data/results34.json"), "utf8"));
 let pass = 0, fail = 0; const ok = (n, c) => { c ? pass++ : fail++; console.log((c ? "PASS " : "FAIL ") + n); };
 const b = await pw.chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {});
 for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
@@ -69,6 +70,29 @@ for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
     ok(`${w}: #parts and its labels fit the viewport and the figure`, bx && bx.x >= 0 && bx.x + bx.width <= w + 1 && ex2[0] >= bx.x - 1 && ex2[1] <= bx.x + bx.width + 1);
     await p.locator("#parts").scrollIntoViewIfNeeded();
     await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s33_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#parts").boundingBox()).y - 60), width: w, height: 620 } });
+  }
+  // study 34
+  ok(`${w}: price: six class dots`, await p.locator("#price circle.pt").count() === 6);
+  ok(`${w}: central B / L from results34.json (later record)`, (await p.textContent("#pricedet")).includes(`B / L = ${R4.r_central.later.toFixed(2)}`) && (await p.textContent("#pricedet")).includes("above the band"));
+  await p.click("#seg-rec button[data-v=hour]");
+  ok(`${w}: hour's ledger B / L`, (await p.textContent("#pricedet")).includes(`B / L = ${R4.r_central.hour.toFixed(2)}`));
+  await p.click("#seg-rec button[data-v=later]");
+  await p.locator("#s-v").fill("7");
+  ok(`${w}: an hour at $7 puts B / L inside the band`, (await p.textContent("#pricedet")).includes("inside the band"));
+  await p.locator("#s-v").fill("5");
+  ok(`${w}: an hour at $5 puts it below the band`, (await p.textContent("#pricedet")).includes("below the band") && await p.locator("#price circle.pt.above").count() === 5);
+  await p.click("#s-reset");
+  await p.check("#s-whole");
+  ok(`${w}: the whole warning matches the registered bound`, (await p.textContent("#pricedet")).includes(`B / L = ${R4.sweep_later.h[1].toFixed(2)}`) && await p.locator("#s-min").isDisabled());
+  await p.click("#s-reset");
+  ok(`${w}: reset restores central`, (await p.textContent("#pricedet")).includes(`B / L = ${R4.r_central.later.toFixed(2)}`));
+  ok(`${w}: five predictions of study 34, three held`, (await p.locator("#pred34 tbody tr").count()) === 5 && (await p.locator("#pred34 td.held").count()) === 3);
+  {
+    const bx = await p.locator("#price").boundingBox();
+    const ex4 = await p.evaluate(() => { const r = [...document.querySelectorAll("#price text")].map(t => t.getBoundingClientRect()); return [Math.min(...r.map(x => x.left)), Math.max(...r.map(x => x.right))]; });
+    ok(`${w}: #price and its labels fit the viewport and the figure`, bx && bx.x >= 0 && bx.x + bx.width <= w + 1 && ex4[0] >= bx.x - 1 && ex4[1] <= bx.x + bx.width + 1);
+    await p.locator("#price").scrollIntoViewIfNeeded();
+    await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s34_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#price").boundingBox()).y - 260), width: w, height: 700 } });
   }
   ok(`${w}: tercile table 3 rows`, await p.locator("#terc tbody tr").count() === 3);
   ok(`${w}: six predictions, six held`, (await p.locator("#pred tbody tr").count()) === 6 && (await p.locator("#pred td.held").count()) === 6);

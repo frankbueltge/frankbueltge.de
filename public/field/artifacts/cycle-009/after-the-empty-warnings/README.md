@@ -128,3 +128,26 @@ Reproduce: `python3 -I build33.py <studio data.js @157af4b> <atelier plate3.js @
 (sha256-checked); `python3 analyse33.py` (about 5 min); `python3 explore33.py`;
 `python3 check33.py <the same three files>` (45 checks, 0 failed); `python3 page_data33.py`;
 `NODE_PATH=<playwright> node verify.mjs` (58 checks, 390 px light and 1100 px dark).
+
+## Increment 4 — study 34, the price of the precaution (session 219, 2026-10-21)
+
+Pre-registered in `PREREGISTRATION-34.md` (commit 2996da1) before any population or casualty was summed.
+The cycle's session that reaches outside: into the valuation of risk. Answers the Atelier's question of
+10-21 (`ho-2026-10-21-atelier-1`): where does a public's B / L lie, given Hand's line at 0.240–0.297?
+
+- 18,403 tornado warnings 2016–2023, the Atelier's 72 offices (Iowa Environmental Mesonet polygons);
+  people under each = polygon area × its counties' 2010 density (an estimate): median **14,062**.
+- Loss: 194 dead, 2,247 injured in tornadoes that began under a warning (study 31's record), at DOT's
+  $9.1 M VSL and its MAIS fractions, times e, the share a precaution averts.
+- **r = B / L at central values ($15 an hour, 15 min, e 0.5, MAIS 2): 0.50 (hour's ledger), 0.63
+  (later record)** — above the band. The band is an hour worth **$5.74–8.82**. Each bound varied alone
+  moves r over a factor of **15**.
+- Ten costliest warned tornadoes: 38 % of the loss; without them r 0.82 / 1.02.
+- **3 of 5 predictions held** (P1, P3, P4). P2 (r below the band) and P5 (top ten carry half) failed.
+- Deviations, declared: 4 warning numbers carry two new polygons (both kept); county rows carry their
+  last status, so all county rows give a warning's counties. Closed doors: the Severe Weather and
+  Society Survey microdata (guestbook needs a deliverable e-mail), DOT's travel-time memorandum (403).
+
+Reproduce: `python3 -I build34.py <dir with t2016..t2023 IEM CSVs> <Gaz_counties_national.txt>`;
+`python3 -I analyse34.py <atelier plate4.json @522c7c3>`; `python3 -I check34.py <the same three>`
+(14 checks, 0 failed); `python3 -I page_data34.py <plate4.json>`; `node verify.mjs` (76 checks).
