@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Fell</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #e9e4da; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data/dogs.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800;
+  const S = Math.max(2, window.devicePixelRatio || 1);
+  const cv = document.getElementById('c');
+  cv.width = W * S; cv.height = H * S;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d');
+  g.scale(S, S);
+
+  const PAPER = '#e9e4da', INK = '#2a2622', SOFT = '#7d756a';
+  g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+  // A vocabulary of coat words -> pigment. Ordered so the more specific word wins.
+  const V = [
+    ['unbestimmt', null],
+    ['tricolor', ['#1d1b1a', '#8a5530', '#f6f2ea']], ['dreifarbig', ['#1d1b1a', '#8a5530', '#f6f2ea']],
+    ['red-tri', ['#8e3f20', '#e8dcc6', '#1d1b1a']],
+    ['vierfarbig', ['#1d1b1a', '#8a5530', '#f6f2ea', '#8c8a86']], ['mehrfarbig', ['#1d1b1a', '#8a5530', '#f6f2ea']],
+    ['bicolor', ['#1d1b1a', '#b0773f']], ['harlekin', ['#f6f2ea', '#1d1b1a']], ['blenheim', ['#f6f2ea', '#9a4a22']],
+    ['red merle', ['#9a5a3e']], ['blue merle', ['#6f7883']], ['merle', ['#7d848c']],
+    ['steelblue', ['#56636f']], ['blue fawn', ['#8f8577']], ['blue-brindle', ['#4e5258']],
+    ['red-wheaten', ['#c78e55']], ['red-fawn', ['#c0804a']], ['red grizzle', ['#94603e']], ['grizzle', ['#7a7068']],
+    ['rotweizen', ['#c78e55']], ['weizen', ['#dcc592']], ['wheaton', ['#dcc592']],
+    ['rotbraun', ['#7c3519']], ['rotblond', ['#cf8a4c']], ['rehbraun', ['#9c6a3c']], ['goldbraun', ['#a8702e']],
+    ['dunkelbraun', ['#3f2617']], ['hellbraun', ['#a8764a']], ['hirschrot', ['#a45a2e']],
+    ['orangeschimmel', ['#d39a6c']], ['blauschimmel', ['#7f8a94']], ['marronschimmel', ['#7a5a4a']], ['schimmel', ['#8e7464']],
+    ['silbergrau', ['#a9a9a6']], ['silber', ['#bcbcb8']], ['steel', ['#56636f']],
+    ['schoko', ['#4a2b1b']], ['choco', ['#4a2b1b']], ['liver', ['#5a2c1f']], ['mahagoni', ['#5c2716']], ['marron', ['#5a3220']],
+    ['wildsau', ['#5f5446']], ['saufarb', ['#665848']], ['wildfarb', ['#7a6a52']],
+    ['gestromt', ['#5c412b']], ['brindle', ['#5c412b']], ['dapple', ['#8a7a6a']],
+    ['zobel', ['#8b5f34']], ['sable', ['#8b5f34']], ['fauve', ['#c49a64']], ['fawn', ['#c79c68']], ['falb', ['#c8a868']],
+    ['isabella', ['#c9b08e']], ['champaign', ['#e2d2a8']], ['sand', ['#cdb48a']], ['semmel', ['#d6ae6a']],
+    ['honig', ['#c99a4a']], ['caramel', ['#b2773a']], ['zimt', ['#9a5a2c']], ['apricot', ['#e2a877']],
+    ['blond', ['#dcc08a']], ['creme', ['#ede1c6']], ['beige', ['#d6c19c']], ['golden', ['#c8963e']], ['gold', ['#c8963e']],
+    ['gelb', ['#d8b45a']], ['orange', ['#c9692a']], ['ruby', ['#8a2e1e']], ['fox', ['#b4552a']],
+    ['loh', ['#b0773f']], ['tan', ['#b0773f']], ['pfeffer', ['#4e4c4a']], ['salz', ['#dad8d2']], ['lilac', ['#9d8a8d']],
+    ['blau', ['#5f6b77']], ['blue', ['#5f6b77']], ['grau', ['#8a8885']], ['grey', ['#8a8885']],
+    ['schwarz', ['#1d1b1a']], ['black', ['#1d1b1a']], ['weiss', ['#f6f2ea']], ['white', ['#f6f2ea']], ['bianco', ['#f6f2ea']],
+    ['braun', ['#6e4426']], ['brown', ['#6e4426']], ['rot', ['#a24a22']], ['red', ['#a24a22']], ['hell', ['#e2d6bf']]
+  ];
+  const FALLBACK = '#958c80';
+
+  function pigments(text) {
+    if (text == null) return null;
+    const t = String(text).toLowerCase().trim();
+    if (t === '' || t.indexOf('unbestimmt') >= 0) return null;
+    const out = [];
+    t.split('/').forEach(part => {
+      part = part.trim(); if (!part) return;
+      for (const [k, c] of V) {
+        if (k !== 'unbestimmt' && part.indexOf(k) >= 0) { c.forEach(x => out.push(x)); return; }
+      }
+      out.push(FALLBACK);
+    });
+    return out.length ? out.slice(0, 4) : null;
+  }
+  function lum(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return 0.2126 * (n >> 16 & 255) + 0.7152 * (n >> 8 & 255) + 0.0722 * (n & 255);
+  }
+
+  // Group by year of birth.
+  const byYear = new Map();
+  let minY = Infinity, maxY = -Infinity, unknown = 0;
+  for (const d of DOGS) {
+    const y = d.GebHundDatJahr; if (y == null) continue;
+    minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+    const p = pigments(d.HundefarbeText);
+    if (!p) unknown++;
+    const L = p ? p.reduce((s, c) => s + lum(c), 0) / p.length : 999;
+    if (!byYear.has(y)) byYear.set(y, []);
+    byYear.get(y).push({ p, L });
+  }
+  let maxN = 0;
+  byYear.forEach(a => { a.sort((u, v) => u.L - v.L); maxN = Math.max(maxN, a.length); });
+
+  // Geometry.
+  const nY = maxY - minY + 1;
+  const left = 56, right = 44, base = 712;
+  const slot = (W - left - right) / nY;
+  const PITCH = 4, CELL = 3.4;
+  const perRow = Math.floor((slot - 5) / PITCH);
+  const barW = perRow * PITCH;
+
+  for (let y = minY; y <= maxY; y++) {
+    const arr = byYear.get(y) || [];
+    const x0 = left + (y - minY) * slot + (slot - barW) / 2;
+    arr.forEach((dog, i) => {
+      const col = i % perRow, row = Math.floor(i / perRow);
+      const x = x0 + col * PITCH, yy = base - (row + 1) * PITCH;
+      if (!dog.p) {
+        g.strokeStyle = 'rgba(60,52,44,0.32)'; g.lineWidth = 0.5;
+        g.strokeRect(x + 0.45, yy + 0.45, CELL - 0.9, CELL - 0.9);
+        return;
+      }
+      const k = dog.p.length, h = CELL / k;
+      dog.p.forEach((c, j) => { g.fillStyle = c; g.fillRect(x, yy + j * h, CELL, h + (j < k - 1 ? 0.05 : 0)); });
+    });
+    // year label
+    g.fillStyle = (y % 5 === 0 || y === maxY) ? INK : SOFT;
+    g.font = (y % 5 === 0 ? '600 ' : '') + '10px Georgia, "Times New Roman", serif';
+    g.textAlign = 'center';
+    g.fillText((y % 5 === 0 || y === minY || y === maxY) ? String(y) : '’' + String(y).slice(-2), x0 + barW / 2, base + 16);
+    if (arr.length >= 100) {
+      g.fillStyle = SOFT; g.font = '9px Georgia, serif';
+      g.fillText(arr.length.toLocaleString('de-CH'), x0 + barW / 2, base - Math.ceil(arr.length / perRow) * PITCH - 6);
+    }
+  }
+  // From which year on has no coat been named at all?
+  let blindFrom = null;
+  for (let y = maxY; y >= minY; y--) {
+    const a = byYear.get(y) || [];
+    if (a.length && a.every(d => !d.p)) blindFrom = y; else break;
+  }
+  if (blindFrom != null) {
+    const xa = left + (blindFrom - minY) * slot + (slot - barW) / 2;
+    const n = DOGS.filter(d => d.GebHundDatJahr >= blindFrom).length;
+    g.textAlign = 'right'; g.fillStyle = '#4a433b';
+    g.font = 'italic 12px Georgia, serif';
+    const tx = W - right, ty = 210;
+    g.fillText('Born ' + blindFrom + (blindFrom < maxY ? '–' + maxY : '') + ': ' + n.toLocaleString('de-CH') + ' dogs,', tx, ty);
+    g.fillText('not one colour written down.', tx, ty + 16);
+    g.strokeStyle = SOFT; g.lineWidth = 0.6;
+    g.beginPath(); g.moveTo(tx - 60, ty + 24); g.lineTo(xa + barW / 2, 360); g.stroke();
+  }
+  g.strokeStyle = INK; g.lineWidth = 0.75;
+  g.beginPath(); g.moveTo(left - 6, base + 1.5); g.lineTo(W - right + 6, base + 1.5); g.stroke();
+
+  // Text.
+  g.textAlign = 'left'; g.fillStyle = INK;
+  g.font = 'italic 44px Georgia, "Times New Roman", serif';
+  g.fillText('Fell', left, 74);
+  g.font = '13px Georgia, "Times New Roman", serif';
+  g.fillStyle = '#4a433b';
+  const total = DOGS.length;
+  const lines = [
+    total.toLocaleString('de-CH') + ' dogs on the Zürich register, 30 September 2026,',
+    'one square each in the coat colour written down for it, stacked by year of birth,',
+    'darkest at the foot. Hollow squares: “unbestimmt” — ' + unknown.toLocaleString('de-CH') + ' coats no one named.'
+  ];
+  lines.forEach((s, i) => g.fillText(s, left, 104 + i * 18));
+
+  g.font = '10px Georgia, serif'; g.fillStyle = SOFT;
+  g.fillText('year of birth', left, base + 38);
+  g.textAlign = 'right';
+  g.fillText('Source: Open Data Zürich, Aktueller Hundebestand der Stadt Zürich', W - right, base + 38);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Fell</title>
+<style>
+html,body{margin:0;background:#ece7dd;}
+body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#3a342c}
+canvas{display:block}
+</style></head><body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/dogs.js"></script>
+<script>
+const cv=document.getElementById('c'), dpr=window.devicePixelRatio||1;
+cv.width=1100*dpr; cv.height=800*dpr; cv.style.width='1100px'; cv.style.height='800px';
+const g=cv.getContext('2d'); g.scale(dpr,dpr);
+g.fillStyle='#ece7dd'; g.fillRect(0,0,1100,800);
+
+// colour words -> pigments (longest/most specific first)
+const P=[
+ [/blue ?merle|blauschimmel/,'#7d8796'],[/red ?merle/,'#a8643f'],
+ [/schwarz|black|^loh$/,'#1d1b1a'],[/weiss|white|bianco/,'#faf8f2'],
+ [/dunkelbraun|marrone|mahagoni|liver|schoko|choco/,'#4a2b1c'],
+ [/rotbraun|rehbraun|hirschrot|foxred|fox/,'#8a3f1f'],
+ [/hellbraun|goldbraun|caramel|zimt/,'#a8703e'],
+ [/braun/,'#6b4127'],[/rot|red|ruby|orange/,'#b8562a'],
+ [/apricot/,'#e3a46b'],[/creme|champ|weizen|wheat|blond|sand|hell|isabella|semmel|honig/,'#ead6ae'],
+ [/beige|fawn|fauve|falb/,'#d4b88c'],[/gold|gelb/,'#d39b3c'],
+ [/silber|grau|grey|pfeffer|salz|steel/,'#9a9792'],[/blau|blue|lilac/,'#6f7783'],
+ [/sable|zobel|saufarb|wildfarb|wildsau|grizzle/,'#7b5a3a'],
+ [/tan/,'#b97a3c'],[/merle|harlekin|dapple|spotted|pied/,'#8d8f95'],
+];
+function pig(w){w=w.toLowerCase().trim();for(const[r,c]of P)if(r.test(w))return c;return null;}
+function parse(t){
+ if(!t) return null; const s=t.toLowerCase();
+ if(s.includes('unbestimmt')) return null;
+ if(/^(tricolor|dreifarbig|vierfarbig|mehrfarbig|bicolor|gemischt)$/.test(s.trim()))
+   return {cols:s.includes('bi')?['#1d1b1a','#faf8f2']:['#1d1b1a','#faf8f2','#b97a3c'],brindle:false};
+ const cols=[]; for(const p of s.split(/[\/,\-]| mit /)){const c=pig(p); if(c&&cols[cols.length-1]!==c)cols.push(c);}
+ if(/tri/.test(s)&&cols.length<3) cols.push('#faf8f2','#b97a3c');
+ if(!cols.length) return {cols:['#8a857c'],brindle:false};
+ return {cols:cols.slice(0,3),brindle:/gestromt|brindle|meliert|melliert|merle|schimmel/.test(s)};
+}
+function lum(h){const n=parseInt(h.slice(1),16);return (n>>16)*.3+((n>>8)&255)*.59+(n&255)*.11;}
+
+const dogs=DOGS.map(d=>{const p=parse(d.HundefarbeText);return {y:d.GebHundDatJahr||0,p,l:p?lum(p.cols[0]):999};});
+dogs.sort((a,b)=>a.y-b.y||a.l-b.l);
+
+const COLS=124, S=7.4, X0=(1100-COLS*S)/2, Y0=106;
+const rows=Math.ceil(dogs.length/COLS);
+let unk=0; const yearStart={};
+dogs.forEach((d,i)=>{
+ const cx=i%COLS, cy=Math.floor(i/COLS), x=X0+cx*S, y=Y0+cy*S, s=S-1.2;
+ if(!(d.y in yearStart)) yearStart[d.y]=i;
+ if(!d.p){unk++; g.strokeStyle='rgba(80,70,60,.28)'; g.lineWidth=.6; g.strokeRect(x+.3,y+.3,s-.6,s-.6); return;}
+ const c=d.p.cols;
+ g.save(); g.beginPath(); g.rect(x,y,s,s); g.clip();
+ if(c.length===1){g.fillStyle=c[0]; g.fillRect(x,y,s,s);}
+ else if(c.length===2){g.fillStyle=c[0];g.fillRect(x,y,s,s);g.fillStyle=c[1];g.beginPath();g.moveTo(x+s,y);g.lineTo(x+s,y+s);g.lineTo(x,y+s);g.fill();}
+ else {const b=s/3; c.forEach((k,j)=>{g.fillStyle=k; g.fillRect(x,y+j*b,s,b+.3);});}
+ if(d.p.brindle){g.strokeStyle='rgba(20,15,10,.55)';g.lineWidth=.7;for(let k=-s;k<s;k+=2.2){g.beginPath();g.moveTo(x+k,y+s);g.lineTo(x+k+s,y);g.stroke();}}
+ if(lum(c[0])>235&&c.length===1){g.strokeStyle='rgba(80,70,60,.18)';g.lineWidth=.5;g.strokeRect(x+.25,y+.25,s-.5,s-.5);}
+ g.restore();
+});
+
+// year marks in the left margin
+g.font='10px Georgia'; g.fillStyle='#7a6f60'; g.textAlign='right';
+let lastRow=-9;
+Object.keys(yearStart).map(Number).sort((a,b)=>a-b).forEach(yr=>{
+ const r=Math.floor(yearStart[yr]/COLS);
+ if(r-lastRow<2) return; lastRow=r;
+ g.fillText(yr,X0-8,Y0+r*S+S-1);
+ g.fillRect(X0-5,Y0+r*S+S/2-.5,3,1);
+});
+
+// title & legend line
+g.textAlign='left'; g.fillStyle='#2c2721';
+g.font='italic 30px Georgia'; g.fillText('Fell',X0,62);
+g.font='12px Georgia'; g.fillStyle='#5a5146';
+g.fillText(DOGS.length.toLocaleString('de-CH')+' Hunde der Stadt Zürich, je ein Feld in der Farbe, die ihr Halter angab — vom ältesten zum jüngsten, jeder Jahrgang von dunkel nach hell geordnet.',X0,86);
+const yc={};dogs.forEach(d=>{yc[d.y]=yc[d.y]||[0,0];yc[d.y][0]++;if(!d.p)yc[d.y][1]++;});
+let blankFrom=null;Object.keys(yc).map(Number).sort((a,b)=>b-a).forEach(y=>{if(yc[y][0]>50&&yc[y][1]/yc[y][0]>.9&&(blankFrom===null||blankFrom===y+1))blankFrom=y;});
+const by=Y0+rows*S+26;
+g.fillText('Die leeren Felder: '+unk.toLocaleString('de-CH')+' Hunde, deren Farbe als «unbestimmt» eingetragen ist'+(blankFrom?' — ab Jahrgang '+blankFrom+' fast alle.':'.'),X0,by);
+g.textAlign='right'; g.fillStyle='#8a7f70';
+g.fillText('Hundebestand, Stichtag 30.9.2026 · Open Data Zürich',X0+COLS*S,by);
+</script></body></html>
