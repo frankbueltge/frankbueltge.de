@@ -7,6 +7,7 @@ const P = JSON.parse(fs.readFileSync(path.join(here, 'plate1.json')));
 const P2 = JSON.parse(fs.readFileSync(path.join(here, 'plate2.json')));
 const P3J = JSON.parse(fs.readFileSync(path.join(here, 'plate3.json')));
 const P4J = JSON.parse(fs.readFileSync(path.join(here, 'plate4.json')));
+const P5J = JSON.parse(fs.readFileSync(path.join(here, 'plate5.json')));
 const br = await chromium.launch({ executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
 for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   const pg = await br.newPage({ viewport: { width: wd, height: 900 }, colorScheme: scheme }); const errs = [];
@@ -90,6 +91,21 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   ok((await t('p4f-pH')) === '92.8 %' && (await t('p4f-pL')) === '2.2 %' && (await t('p4f-share')) === '88.4 %' && (await t('p4f-ou')) === String(P4J.observed.unbacked), `${wd}px: plate IV figures filled from plate4.js agree with the apparatus`);
   { const n = await pg.$eval('#p4-line', e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 3000, `${wd}px: p4-line is drawn`); }
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate IV`);
+  // plate V
+  ok(await pg.evaluate(() => window.__p5check()), `${wd}px: the browser's three villages recompute plate5.json at the defaults over the ${P5J.calibrated_on_R} calibrated offices`);
+  ok(Object.values(P5J.predictions).filter(q => q.held).length === 5 && !P5J.predictions.Q5.held && P5J.predictions.Q2.held, `${wd}px: plate5.json records Q1-Q4 and Q6 held, Q5 failed`);
+  ok(P5J.williams_checked === true && !!P5J.case_facts_checked, `${wd}px: Williams's quotations and plate IV's case summaries were asserted by plate5.py`);
+  let v = await pg.evaluate(() => window.__p5);
+  ok(v.wfo === 'OUN' && v.n0 === 20 && v.rec === 'hour' && (await t('p5-read')).includes('calibrated'), `${wd}px: plate V opens on OUN at n0 = 20 by the hour`);
+  for (const n0 of [2, 200]) { await pg.$eval('#p5-n0', (e, x) => { e.value = x; e.dispatchEvent(new Event('input')); }, n0); v = await pg.evaluate(() => window.__p5);
+    ok(v.n0 === n0 && v.s.all >= 0.95 && v.s.hitW > 1 && v.s.runW < 1, `${wd}px: at n0 = ${n0} the learning village does not charge on average (${v.s.all.toFixed(3)}), recovers after hits, and still falls after runs`); }
+  await pg.click('#p5-later'); v = await pg.evaluate(() => window.__p5); ok(v.rec === 'later' && (await t('p5-read')).includes('more than its words'), `${wd}px: the later record switches the villages`);
+  await pg.click('#p5-hour'); await pg.selectOption('#p5-off', 'MAF'); v = await pg.evaluate(() => window.__p5); ok(v.wfo === 'MAF' && v.rows > 0, `${wd}px: another office can be chosen`);
+  ok((await t('p5f-run')) === '95.9 %' && (await t('p5f-rpH')) === '90.2 %' && (await t('p5f-rho')) === '0.90' && (await t('p5f-mL')) === 'none', `${wd}px: plate V figures filled from plate5.js agree with the apparatus`);
+  { const n = await pg.$eval('#p5-run', e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 3000, `${wd}px: p5-run is drawn`); }
+  ok(await pg.$$eval('del.sup', d => d.length) >= 10 && await pg.$$eval('ins.corr', d => d.length) >= 10, `${wd}px: the corrections at the critique are visible, struck and marked`);
+  ok((await t('brief')).includes('condition fires'), `${wd}px: the brief at the top states the finding`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate V`);
   await pg.screenshot({ path: path.join(here, `shot-${wd}.png`), fullPage: false });
   ok(errs.length === 0, `${wd}px: no script errors ${errs.join(' | ')}`);
   await pg.close();
