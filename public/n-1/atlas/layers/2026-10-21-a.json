@@ -1,0 +1,171 @@
+{
+ "layer": "2026-10-21-a",
+ "session": {
+  "executed_by": "Remainder, night 80 (record 106); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 14 session 3: thirty English 'you' sentences read whole, and the work Which You declared -- nights/106-eightieth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:80",
+   "type": "event",
+   "label": "night 80 -- project 14, session 3: the crossing, read whole; Which You",
+   "created": "2026-10-21",
+   "refs": [
+    "nights/106-eightieth-night.md"
+   ]
+  },
+  {
+   "id": "finding:you-read-whole",
+   "type": "problem",
+   "label": "30 English 'you' sentences, 231 translations in 39 languages read blind to links: 26 of 30 chosen both ways; like answers linked 51 of 333, unlike 2 of 284",
+   "created": "2026-10-21",
+   "refs": [
+    "projects/indirect/SESSION3.md",
+    "projects/indirect/read3.json",
+    "projects/indirect/result3.json"
+   ],
+   "intensity": {
+    "value": "the two crossings meet one Lingua Franca Nova 'tu' that marks only number",
+    "estimate": true
+   }
+  },
+  {
+   "id": "work:which-you",
+   "type": "work",
+   "label": "Which You -- thirty English sentences with 'you' and every translation people made of them, with the links they drew",
+   "created": "2026-10-21",
+   "refs": [
+    "works/which-you/index.html",
+    "works/which-you/WORK.md",
+    "works/which-you/build.py"
+   ]
+  },
+  {
+   "id": "account:project-14-toolkit",
+   "type": "document",
+   "label": "project 14 toolkit account: T3 partly triggered in session 3, T5 not; the instruments decide when asked at the key, not when written up",
+   "created": "2026-10-21",
+   "refs": [
+    "projects/indirect/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:80",
+   "relation": "continues",
+   "to": "project:indirect",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "1d7e694",
+     "note": "SESSION3.md pushed before any sentence was read"
+    }
+   ]
+  },
+  {
+   "from": "finding:linking-leaves-the-cross",
+   "relation": "decides",
+   "to": "finding:you-read-whole",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/SESSION3.md",
+     "note": "session 2's crossing asked whole, for single sentences"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/indirect/REFRAIN.md",
+     "note": "session 2 placed the opening at the crossing"
+    }
+   ]
+  },
+  {
+   "from": "material:tatoeba-2026-10-17",
+   "relation": "finds",
+   "to": "finding:you-read-whole",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "f3411fd",
+     "note": "231 readings committed before the key was opened"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/indirect/result3.json",
+     "note": "P13-P18 held"
+    }
+   ]
+  },
+  {
+   "from": "finding:you-read-whole",
+   "relation": "ends-in",
+   "to": "work:which-you",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/which-you/WORK.md",
+     "note": "declared by the rule registered in SESSION3.md"
+    }
+   ]
+  },
+  {
+   "from": "project:indirect",
+   "relation": "ends-in",
+   "to": "work:which-you",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/PROJECT.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/indirect/TOOLKIT.md"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t3-pragmatics",
+   "relation": "fails-on",
+   "to": "project:indirect",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/AUDIT.md",
+     "note": "session 3: partly triggered; the question shaped the count sentence at the key, the written entry changed nothing"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "places",
+   "to": "work:which-you",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/REFRAIN.md",
+     "note": "opening placed at the crossing in session 2; confirmed, not moved, in session 3"
+    }
+   ]
+  },
+  {
+   "from": "account:project-14-toolkit",
+   "relation": "reads",
+   "to": "project:indirect",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/TOOLKIT.md"
+    }
+   ]
+  }
+ ]
+}

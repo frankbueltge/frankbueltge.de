@@ -1013,6 +1013,10 @@
     [
      "The study: how often a translation of a translation still says what the first sentence said, and where it stops",
      "projects/indirect/"
+    ],
+    [
+     "The work, Which You: thirty English sentences with 'you' and every translation people made of them, with the links they drew",
+     "works/which-you/"
     ]
    ],
    "sources": [
@@ -1032,7 +1036,14 @@
     "projects/indirect/check_readings.json",
     "projects/indirect/result2.json",
     "projects/indirect/explore2.json",
-    "projects/indirect/examples2.json"
+    "projects/indirect/examples2.json",
+    "projects/indirect/SESSION3.md",
+    "projects/indirect/sheet3.json",
+    "projects/indirect/read3.json",
+    "projects/indirect/key3.json",
+    "projects/indirect/result3.json",
+    "projects/indirect/TOOLKIT.md",
+    "works/which-you/WORK.md"
    ],
    "sessions": [
     {
@@ -1044,12 +1055,24 @@
      "night": 79,
      "date": "2026-10-21",
      "predictions": "6 of 6 predictions held"
+    },
+    {
+     "night": 80,
+     "date": "2026-10-21",
+     "predictions": "6 of 6 predictions held"
     }
    ],
-   "note": "Tatoeba holds 14,036,366 direct translation pairs and 44,639,205 pairs joined only through a sentence in a third language. 200 pairs read blind by the session, the kind withheld until all were read: 29 of 147 readable translations of translations (19.7 %) no longer said quite the same thing, against 2 of 50 direct translations (4.0 %). Read with the sentence in between, 15 of the 29 lost nothing in either translation: the middle sentence held a form with two readings, most often English 'you', and the second translator took the other one. Every reading is a machine's and marked as an estimate. No work before session 3; the modest-work exit is closed. Session 2 counted one hinge across the whole collection: of French and Russian sentences joined only through a third, 437,996 chains. Read by pronoun rules checked against a blind reading (40 of 40 agreed), direct French-Russian translations disagree on who is addressed (tu/ты against vous/вы) in 0.2 %, chains through German in 3.9 %, chains through an English sentence with 'you' in 68.6 %. Exploratory: through English 'you' the two sides agree about as often as chance (52.9 %), and 59.3 % of the agreeing pairs had been linked directly against 0.14 % of the disagreeing, so what is left unlinked is mostly the crossing.",
-   "outcome": "open",
-   "outcomeLabel": "Open, session 2 of 3 to 5",
-   "fired": {}
+   "note": "Tatoeba holds 14,036,366 direct translation pairs and 44,639,205 pairs joined only through a sentence in a third language. 200 pairs read blind by the session, the kind withheld until all were read: 29 of 147 readable translations of translations (19.7 %) no longer said quite the same thing, against 2 of 50 direct translations (4.0 %). Read with the sentence in between, 15 of the 29 lost nothing in either translation: the middle sentence held a form with two readings, most often English 'you', and the second translator took the other one. Every reading is a machine's and marked as an estimate. No work before session 3; the modest-work exit is closed. Session 2 counted one hinge across the whole collection: of French and Russian sentences joined only through a third, 437,996 chains. Read by pronoun rules checked against a blind reading (40 of 40 agreed), direct French-Russian translations disagree on who is addressed (tu/ты against vous/вы) in 0.2 %, chains through German in 3.9 %, chains through an English sentence with 'you' in 68.6 %. Exploratory: through English 'you' the two sides agree about as often as chance (52.9 %), and 59.3 % of the agreeing pairs had been linked directly against 0.14 % of the disagreeing, so what is left unlinked is mostly the crossing. Session 3 read thirty English 'you' sentences whole: 231 translations in 39 languages, read in one pass without seeing the English or the links. In 26 of the 30 the translators chose both ways; of 333 pairs of translations that chose the same 'you', 51 had been linked to each other, of 284 that chose differently, 2. Declared a work by the rule registered before reading.",
+   "outcome": "work",
+   "outcomeLabel": "Which You",
+   "fired": {
+    "T3": "partly"
+   },
+   "couldNot": [
+    "It could not settle the advantage: nothing in the toolkit asks what one reader can do that a team cannot; registered as a test, it passed only in that small form.",
+    "It could not read Kanuri or Rohingya, and it had no category for a 'you' that splits number but not closeness.",
+    "Reception by a stranger untested."
+   ]
   }
  ],
  "acts": [
@@ -1197,6 +1220,14 @@
    "line": "Thirty-one countries, each drawn as the edition of a world map made for its point of view draws it, over the same country as the other 33 editions draw it: 15 larger, 16 the same, none smaller; China's China and Taiwan's Taiwan are one polygon.",
    "source": "projects/worldviews/TOOLKIT.md",
    "still": "surface/stills/each-by-its-own-map.png"
+  },
+  {
+   "title": "Which You",
+   "href": "works/which-you/",
+   "node": "work:which-you",
+   "project": 14,
+   "line": "Thirty English sentences with ‘you’, and every translation people made of them: who each one speaks to, and which ones people joined.",
+   "source": "works/which-you/WORK.md"
   }
  ]
 }
