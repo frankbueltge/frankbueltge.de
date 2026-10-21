@@ -6,6 +6,7 @@ const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) bad++; 
 const P = JSON.parse(fs.readFileSync(path.join(here, 'plate1.json')));
 const P2 = JSON.parse(fs.readFileSync(path.join(here, 'plate2.json')));
 const P3J = JSON.parse(fs.readFileSync(path.join(here, 'plate3.json')));
+const P4J = JSON.parse(fs.readFileSync(path.join(here, 'plate4.json')));
 const br = await chromium.launch({ executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
 for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   const pg = await br.newPage({ viewport: { width: wd, height: 900 }, colorScheme: scheme }); const errs = [];
@@ -70,6 +71,25 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   ok(H.R < H.O && H.R < H.RC && H.O < H.OC && H.OC < H.CAT, `${wd}px: P1's order holds in plate3.json`);
   { const n = await pg.$eval('#p3-strip', e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 1500, `${wd}px: p3-strip is drawn`); }
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate III`);
+  // plate IV
+  ok(await pg.evaluate(() => window.__p4check()), `${wd}px: the browser recomputes Hand's curve for both records and every office's books at the band's middle, as plate4.py did`);
+  let h = await pg.evaluate(() => window.__p4);
+  ok(h.inBand && h.rec === 'hour' && h.wfo === '',`${wd}px: plate IV opens in the band, by the hour, charging the warner ${h.charged} of ${h.all}`);
+  ok(h.charged === 17356 && h.all === 18698 && JSON.stringify(h.owedCols) === JSON.stringify(['O', 'RC', 'OC', 'CAT']), `${wd}px: in the band by the hour, only the observed and damage-tagged columns are owed`);
+  await pg.click('#p4-later'); h = await pg.evaluate(() => window.__p4);
+  ok(h.charged === 374 && h.all === P4J.empty_later && h.owedCols.includes('R') && (await t('p4-read')).includes('amber band'), `${wd}px: the same price by the later record charges ${h.charged} of ${h.all}`);
+  await pg.$eval('#p4-b', e => { e.value = 0.1; e.dispatchEvent(new Event('input')); }); h = await pg.evaluate(() => window.__p4);
+  ok(h.charged === 0 && h.owedCols.length === 6 && (await t('p4-read')).includes('charges nothing'), `${wd}px: below every word's chance, Hand charges the warner nothing`);
+  await pg.$eval('#p4-b', e => { e.value = 0.9; e.dispatchEvent(new Event('input')); }); h = await pg.evaluate(() => window.__p4);
+  ok(h.charged === h.all && h.owedCols.length === 0, `${wd}px: above every word's chance, every empty is over-warning`);
+  await pg.selectOption('#p4-off', 'MAF'); await pg.$eval('#p4-b', (e, v) => { e.value = v; e.dispatchEvent(new Event('input')); }, P4J.band_mid); await pg.click('#p4-hour'); h = await pg.evaluate(() => window.__p4);
+  ok(h.wfo === 'MAF' && h.charged === P4J.offices_mid.MAF.charged_hour && h.all === P4J.offices_mid.MAF.empty_hour, `${wd}px: MAF's book in the band, by the hour: ${h.charged} of ${h.all}`);
+  ok(await pg.$$eval('#p4-books tr', r => r.length) === 4 && (await t('p4-books')).includes('Brown'), `${wd}px: four books of who pays`);
+  const c0 = await t('p4-cards'); await pg.click('#p4-more'); ok(await pg.$$eval('#p4-cards .card', c => c.length) === 4 && (await t('p4-cards')) !== c0, `${wd}px: four of the Studio's statements, and four more`);
+  ok(P4J.predictions.R1.held && P4J.predictions.R2.held && P4J.predictions.R3.held && P4J.predictions.R4.held, `${wd}px: plate4.json records R1-R4 held`);
+  ok((await t('p4f-pH')) === '92.8 %' && (await t('p4f-pL')) === '2.2 %' && (await t('p4f-share')) === '88.4 %' && (await t('p4f-ou')) === String(P4J.observed.unbacked), `${wd}px: plate IV figures filled from plate4.js agree with the apparatus`);
+  { const n = await pg.$eval('#p4-line', e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 3000, `${wd}px: p4-line is drawn`); }
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate IV`);
   await pg.screenshot({ path: path.join(here, `shot-${wd}.png`), fullPage: false });
   ok(errs.length === 0, `${wd}px: no script errors ${errs.join(' | ')}`);
   await pg.close();

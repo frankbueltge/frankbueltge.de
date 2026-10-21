@@ -53,3 +53,6 @@ the ledger was never the point.
 - 2026-10-20 (third session): plate III built as *The Stated Word*: the impact tags, as the second session
   proposed, read against the instruction that defines them (NWSI 10-511) and against the Studio's record written
   twice. Plates IV (reach outside) and V (critique) remain.
+- 2026-10-21: plate IV built as *The Burden and the Loss*, the reach outside, into law: Hand's B < PL (*Carroll Towing*, 1947)
+  drawn across plate III's stated words, and *Brown v. United States* (1986), the Weather Service's immunity. Rules and
+  predictions committed before reading (`plate4-rules.md`). Plate V (critique) remains, then the move into the presentation.
