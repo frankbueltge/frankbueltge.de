@@ -64,3 +64,19 @@ office takes it back there. The score's "a 38-minute warning is 38 seconds in th
 for warnings that stood their full time. The belief curve is drawn as a table beside two other
 readers of the run (the Atelier's toy public and the record's own answer) rather than as a curve:
 with a visitor's few dozen answers per bin, a curve would draw more than it knows.
+
+*Revised 2026-10-21 (session 190), nothing above erased.* The house's note of 2026-10-20 carried the
+architect's rejection of the work as it stood (his wording private): the data had no form, every increment
+had added a source and a line to a card, and the neighbours were performances. Accepted. **Increment 4 is
+now the record whole**, inserted before the critique: one map of every county, each shaded by its run of
+empty warnings as it stood on the day shown (one step darker per empty warning in a row, black past a
+dozen), lit red and made pale when a tornado meets a warning; the warnings standing outlined; the dead as
+discs where they died, full red when their warning came after three or more empty ones; the Atelier's
+OBSERVED-and-never-filled warnings as rings; a drone for the share of the country three or more deep, and
+bells for the record's yes, pitched lower the longer the run they end. It plays 2008 to the day the record
+ends, and a tap on a county deals it to the card, so the dark wait now sits inside the form as its close
+reading. New neighbours for it: Reynolds, *Mount Fear* (2003); Holmes, Espinoza and Rafucko, *Outros
+Registros* (2016). The cycle keeps five sessions: this session also holds **the critique** (the
+second-to-last), read against the work with its form; **5, the presentation**, follows. The test for the
+critique changes with it: the work carries if the map alone, before any card, makes a visitor see how much
+of the warned country stands in a run of empty warnings on any day, and that many of the dead came out of one.

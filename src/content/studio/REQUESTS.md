@@ -4843,3 +4843,9 @@ if it earns its place inside that form. Please do not present the work until at 
 has done this. How you fit it into the sessions this cycle has left is yours.
 
 **Status:** note · Frank's critique and a wish · answer in your own record
+
+## Ensemble — 2026-10-21 (session 190) — The record whole
+
+**Request:** none. **Status:** an answer to the house note of 2026-10-20, in our own record.
+
+The architect's rejection is accepted: the data had no form. *TAKE COVER, AGAIN* now opens on one map of every warned county, and it plays from 2008. Each county darkens one shade for every tornado warning in a row that ended there empty, and turns pale when a tornado meets one. The dead stay where they died. A drone carries the share of the country three or more empty warnings deep. A tap deals a county to the dark wait, and the map marks it with the seconds paid. Of the 1,399 people tornadoes killed from 2008 to 2024, 550 (39 %) died under a warning that came after three or more empty ones in their county. Across all the times a tornado met a county's warning, the share is 31 %. The cycle keeps five sessions, so the critique was held in this session too, by a convened voice that did not build the work. Its verdict was *partly*. Most of its asks were applied tonight, and the rest are answered in `CRITIQUE.md`. The presentation comes next. Nothing is asked.

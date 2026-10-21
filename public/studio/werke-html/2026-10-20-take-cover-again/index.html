@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Take Cover, Again</title>
-<meta name="description" content="A real US county's tornado warnings since 2008, one by one. Take cover and pay in seconds of dark for each minute the warning stood, or stay. The record answers after.">
+<meta name="description" content="Every US county darkens with its run of empty tornado warnings since 2008, and the dead stay where they died. Then live through one county's warnings: take cover and pay in seconds of dark, or stay.">
 <style>
 :root{--bg:#f4f1ea;--ink:#1c1a17;--mute:#6b655b;--line:#d8d1c3;--card:#fffdf8;--met:#b3261e;--empty:#6b655b;--accent:#1d4e89;--dark:#050505}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141311;--ink:#ece6da;--mute:#9a9284;--line:#36322c;--card:#1d1b18;--met:#ef6b5e;--empty:#9a9284;--accent:#8fb4e6}}
@@ -60,6 +60,35 @@ h2{font:700 20px system-ui,sans-serif;margin:34px 0 8px}
 .small{font-size:14px;color:var(--mute)}
 a{color:var(--accent)}
 .fable{border-left:3px solid var(--met);padding:4px 0 4px 12px;margin:18px 0}
+#whole{margin:8px -16px 10px}
+#sheet{position:relative;background:#ece7db;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#map{display:block;width:100%;cursor:crosshair;touch-action:manipulation}
+#wdate{position:absolute;left:14px;bottom:8px;font:700 clamp(20px,5vw,34px)/1 system-ui,sans-serif;color:#1c1a17;pointer-events:none;font-variant-numeric:tabular-nums}
+#wctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px 0}
+#wctl select{font:14px system-ui,sans-serif;padding:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+#wctl label{font:14px system-ui,sans-serif;color:var(--mute);display:flex;gap:6px;align-items:center}
+#wctl input[type=checkbox]{flex:none;min-width:0;width:auto}
+#legend .blank{display:inline-block;width:10px;height:10px;vertical-align:middle;background:#f6f3ec;border:1px solid #d8d1c3}
+#scrub{width:100%;margin:10px 0 0;accent-color:var(--met)}
+#wscrub{padding:0 16px}
+#tip{font:13px/1.4 system-ui,sans-serif;color:var(--mute);padding:6px 16px 0;min-height:2.8em}
+#legend{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;font:12px system-ui,sans-serif;color:var(--mute);padding:4px 16px 0}
+#legend .ramp{display:inline-flex;vertical-align:middle;border:1px solid var(--line)}
+#legend .ramp i{width:12px;height:12px}
+#legend .dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;background:#b3261e;border:1px solid #fff}
+#legend .ring{display:inline-block;width:8px;height:8px;border-radius:50%;vertical-align:middle;border:1.5px solid #6a3d9a}
+#legend .dot.pale{background:#e8968c}
+#legend .blank{background:repeating-linear-gradient(135deg,#f7f5ef 0 3px,#cfc7b6 3px 4px)!important}
+#wbase{font:15px/1.45 system-ui,sans-serif;padding:8px 16px 0}
+#wbase b{color:#b3261e}
+.lhint{font:12px/1.3 system-ui,sans-serif;color:var(--mute);max-width:16em}
+#legend .sq{display:inline-block;width:10px;height:10px;vertical-align:middle;border:1.5px solid #1d4e89}
+#wcount{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:12px 16px 0}
+#wcount div{background:var(--bg);padding:10px 12px}
+#wcount b{display:block;font:700 22px system-ui,sans-serif;font-variant-numeric:tabular-nums}
+#wcount span{font:12px/1.3 system-ui,sans-serif;color:var(--mute)}
+#wholefacts{padding:0 16px}
+@media (min-width:1040px){#whole{margin:8px -120px 10px}}
 </style>
 </head>
 <body><style>
@@ -78,9 +107,28 @@ a{color:var(--accent)}
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
-<div id="wip">In progress · increment 3 of 5 · 2026-10-20 · the work grows over cycle 009</div>
+<div id="wip">In progress · increment 4 of 5 · 2026-10-21 · the work grows over cycle 009</div>
 <main>
 <h1>TAKE COVER, AGAIN</h1>
+<p class="lede">Each county darkens by one shade for every tornado warning in a row that ended there without a tornado, and goes pale when one comes.</p>
+
+<section id="whole" aria-label="The record, whole: every county's run of empty tornado warnings since 2008">
+  <div id="sheet"><canvas id="map" aria-label="Map of US counties shaded by their run of empty tornado warnings"></canvas><div id="wdate"></div></div>
+  <div id="tip"></div>
+  <div id="legend"><span><span class="ramp" id="ramp"></span> empty warnings in a row: 0 · 3 · 6 · 9 · 12+</span><span><span class="blank"></span> no tornado warning since 2008</span><span><span class="sq"></span> a warning standing</span><span><span class="dot"></span> the dead, under a warning after three or more empty</span><span><span class="dot pale"></span> the dead after fewer, or under no warning (small after a year)</span><span><span class="ring"></span> said OBSERVED, never filled (the Atelier)</span></div>
+  <div id="wctl" class="ui">
+    <button class="primary" id="play">Play the record from 2008</button>
+    <select id="speed" aria-label="Speed"><option value="10080">a week a second</option><option value="43200" selected>a month a second</option><option value="131400">a season a second</option></select>
+    <select id="mode" aria-label="What the shade shows"><option value="now">the run as it stood that day</option><option value="ever">the longest run each county ever sat through</option></select>
+    <button id="listen">Listen</button><span class="lhint">the drone is the country's doubt; each bell, a tornado meeting a warning, lower after a longer run</span>
+    <label><input type="checkbox" id="obs" checked> the Atelier's rings</label>
+  </div>
+  <div id="wscrub"><input type="range" id="scrub" min="0" step="1440" aria-label="Day of the record"></div>
+  <div id="wbase"></div>
+  <div id="wcount"></div>
+</section>
+
+<h2>One county</h2>
 <p class="lede">You live in a real US county. Its tornado warnings since 2008 come to you one by one, in the order its people got them. For each, choose before you know: take cover, and sit in the dark one second for every minute the warning stands over you. The office may take it back sooner. Or stay. Then the record answers, and then the record written later, with its dead.</p>
 
 <div id="place" class="ui">
@@ -115,6 +163,8 @@ a{color:var(--accent)}
 </div>
 
 <div id="tally"></div>
+<h2>The record whole, read</h2>
+<p class="small" id="wholefacts"></p>
 
 <h2>Your belief, warning by warning</h2>
 <p class="small">How often you took cover, by how many empty warnings this county had just had in a row. The question of the cycle, asked of you. Beside it, two other readers of the same run. The Atelier's run-reading public (<a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-009/the-wolfs-ledger">The Wolf's Ledger</a>, plate II) keeps 0.6 of its trust for each empty warning in a row, a declared toy, not a measured public; the column shows how often it would have taken cover for the warnings you answered. The record is every county entry of 2008 to 2026: after such a run, how often the next warning was met.</p>
@@ -135,10 +185,14 @@ a{color:var(--accent)}
 <h2>What the record is</h2>
 <p class="small">Every tornado warning the US National Weather Service issued from 2008 to today, with each forecast office's own verification against its storm reports, as the Iowa Environmental Mesonet serves it (<a href="https://mesonet.agron.iastate.edu/cow/">IEM Cow</a>; the warnings are public-domain products). A warning is <em>met</em> when a tornado was reported inside its polygon while it stood, and <em>empty</em> when none was. That is the record's answer, not the sky's: a tornado nobody reported leaves a warning empty. The minutes are first the minutes the warning was issued for; in the dark you sit only as long as it stood over your county, because an office can take a warning back for some counties or all of them, and the record keeps when. A county's warnings are all those whose polygon touched it, so a warning met in one corner of a county counts as met for all of it. Hours are shown in the state's main time zone. Nothing you do here leaves your browser.</p>
 <p class="small" id="facts"></p>
-<p class="small">Neighbours in the <a href="https://frankbueltge.de/atlas">Atlas of Data Art</a>: Latai Taumoepeau, <em>Repatriate</em> (2015), where the artist's body endures the water's rise as a proxy for data; here the duration is a real warning's, and the visitor decides each time whether to endure it. Mariela Yeregui, <em>Estados de Alerta</em> (2021), whose creatures raise alarms at visitors; here the alarms are real and past, and the work watches what the visitor does with the tenth after nine. Andrea Polli, <em>Atmospherics/Weather Works</em> (2004), storms made audible; here the storm is never seen or heard, only the warning and the wait. In this house: UNDER WARNING (2026-10-14) drew the people beneath the same polygons; the Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-009/the-wolfs-ledger">The Wolf's Ledger</a> reads the fable this work's count comes from.</p>
+<p class="small">Neighbours in the <a href="https://frankbueltge.de/atlas">Atlas of Data Art</a>: Latai Taumoepeau, <em>Repatriate</em> (2015), where the artist's body endures the water's rise as a proxy for data; here the duration is a real warning's, and the visitor decides each time whether to endure it. Mariela Yeregui, <em>Estados de Alerta</em> (2021), whose creatures raise alarms at visitors; here the alarms are real and past, and the work watches what the visitor does with the tenth after nine. Andrea Polli, <em>Atmospherics/Weather Works</em> (2004), storms made audible; here the storm is never seen or heard, only the warning and the wait. For the record whole (increment 4): Abigail Reynolds, <em>Mount Fear</em> (2003), a city's crime rates raised into a standing terrain; here the height is a darkness that is never standing still, each county's debt of doubt that the record itself pays off when a tornado comes. Tori Holmes, Nico Espinoza and Rafucko, <em>Outros Registros</em> (2016), eight years of killings in Rio sounded as region-mapped drones; here the drone carries no death at all, only the share of the country three or more empty warnings deep, and the bells are the record saying yes. In this house: UNDER WARNING (2026-10-14) drew the people beneath the same polygons; the Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-009/the-wolfs-ledger">The Wolf's Ledger</a> reads the fable this work's count comes from.</p>
 <p class="small">Ensemble · the Studio · cycle 009 · method and scripts beside this page (<code>fetch.py</code>, <code>build_data.py</code>, <code>build_toll.py</code>, <code>fetch_word.py</code>, <code>build_word.py</code>, <code>sample_words.py</code>, <code>SCORE.md</code>).</p>
 </main>
 <script src="data.js"></script>
+<script src="record.js"></script>
+<script src="vendor/d3.min.js"></script>
+<script src="vendor/topojson-client.min.js"></script>
+<script src="vendor/counties-10m.js"></script>
 <script src="summary.js"></script>
 <script src="toll.js"></script>
 <script src="tollsum.js"></script>
@@ -200,6 +254,7 @@ function choose(c) {
   C = c; acts = store.get('tca:' + c[0]) || []; pos = acts.length;
   TK = new Map((WD.taken[cIdx.get(c[0])] || []).map(t => [t[0], [t[1], WD.prod[t[2]]]]));
   store.set('tca:last', c[0]);
+  if (window.TCA_WHOLE) window.TCA_WHOLE.mark(c[0], paidSoFar());
   $('cname').textContent = c[1] + ' · ' + c[2].length + ' warnings';
   $('pick').value = '';
   render();
@@ -353,7 +408,9 @@ function ledgerFinal(w) {
   if (!ks.length) return D.met[w] ? 'no track inside' : '—';
   return ks.map(k => (X.T[k][1] < 0 ? 'EF?' : 'EF' + X.T[k][1]) + (X.T[k][5] ? ', ' + X.T[k][5] + ' killed' : '')).join('; ');
 }
+function paidSoFar() { return (acts || []).filter(a => a && a.act === 'cover').reduce((s, a) => s + a.paid, 0); }
 function tally() {
+  if (window.TCA_WHOLE && C) window.TCA_WHOLE.mark(C[0], paidSoFar());
   const done = acts.filter(Boolean);
   const cover = done.filter(a => a.act === 'cover');
   const paidEmpty = cover.filter(a => !a.met).reduce((s, a) => s + a.paid, 0);
@@ -395,9 +452,12 @@ const BR0 = WS.belief_record, sh = k => Math.round(100 * BR0[k].share) + ' %';
 $('beliefnote').innerHTML = `The record's own answer to the run, over every county's warnings since 2008: after a met warning the next one there was met ${sh(0)} of the time; after one empty, ${sh(1)}; after five, ${sh(5)}; after ten or more, ${sh(10)}. The run carries news, because tornadoes come in seasons and outbreaks, and a public that trusts less after empty warnings is not simply wrong. But after ten empty warnings in a row, about one in ${Math.round(1 / BR0[10].share)} was still met: ${fmtN(BR0[10].met)} times.`;
 const WM = WS.met, WE = WS.empty, WSm = window.TCA_WORDSAMPLE, pc1 = (a, b) => Math.round(100 * a / b) + ' %';
 $('wordfacts').innerHTML = `The record keeps when an office ended a warning for each county, and the statement that ended it (the Iowa Environmental Mesonet's VTEC event service, one row per warning and county). Of ${fmtN(WE.entries)} times an empty warning stood over a county, the office took it back five or more minutes early ${fmtN(WE.taken_back_early)} times (${pc1(WE.taken_back_early, WE.entries)}), and gave back ${fmtN(WE.minutes_taken_back_early)} minutes. Of ${fmtN(WM.entries)} times a tornado met it, ${fmtN(WM.taken_back_early)} (${pc1(WM.taken_back_early, WM.entries)}). The met ones are taken back a little more often: a tornado that has passed can be seen to have passed. <br><br>What the office says when it takes one back: in a fixed random sample of ${WSm.sample} of the ${fmtN(WSm.population)} statements that ended a warning early, ${Math.round(100 * WSm.shares_first_sentence.moved)} % say first that the storm moved out of the area, ${Math.round(100 * WSm.shares_first_sentence.weakened)} % that it weakened, and the rest name a watch still in effect, ask for reports of damage, or say nothing past the headline. <b>None of the ${WSm.sample} says the warning was in error, or that no tornado came.</b> The warner's word ends a warning by where the storm went, never by whether the warning was needed. The record of false alarms is written by others: by the storm reports in the hour, and by the final database later. (An estimate from the sample; the reading rules and the ${WSm.sample} product ids are in <code>words.json</code>; a second reading of the whole segment, fixed first, gives ${Math.round(100 * WSm.shares_of_found.moved)} % moved, and finds no error either.)`;
+window.TCA_current = () => C ? [C[0], paidSoFar()] : [null, 0];
+window.TCA_choose = ugc => { const c = byUgc.get(ugc); if (c) choose(c); };
 const last = byUgc.get(qs.get('county') || store.get('tca:last'));
 last ? choose(last) : deal();
 })();
 </script>
+<script src="whole.js"></script>
 <footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
 </html>

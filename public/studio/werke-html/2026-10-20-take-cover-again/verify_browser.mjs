@@ -2,6 +2,7 @@
 // Session 187: increment 1 (a county dealt, take cover / stay, the dark wait, the record's answer, the ledger).
 // Session 188: increment 2 (the final database's toll, the empty warnings it fills, the tornadoes under no warning).
 // Session 189: increment 3 (the warner's word: the dark ends where the office took the warning back; the belief columns).
+// Session 190: increment 4 (the record whole: every county's run on one map, the dead, the Atelier's OBSERVED rings).
 import { createRequire } from 'module';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
@@ -13,6 +14,8 @@ const X = JSON.parse(fs.readFileSync(join(here, 'toll.js'), 'utf8').replace(/^wi
 const XS = JSON.parse(fs.readFileSync(join(here, 'toll.json')));
 const WD = JSON.parse(fs.readFileSync(join(here, 'word.js'), 'utf8').replace(/^window\.TCA_WORD=/, '').replace(/;\s*$/, ''));
 const WS = JSON.parse(fs.readFileSync(join(here, 'word.json')));
+const R = JSON.parse(fs.readFileSync(join(here, 'record.js'), 'utf8').replace(/^window\.TCA_RECORD=/, '').replace(/;\s*$/, ''));
+const RS = JSON.parse(fs.readFileSync(join(here, 'record.json')));
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--autoplay-policy=no-user-gesture-required', '--allow-file-access-from-files'] });
 let pass = 0, fail = 0, live = ''; const t = (n, ok) => { ok ? pass++ : fail++; console.log(ok ? 'ok  ' : 'FAIL', n) };
 
@@ -54,23 +57,66 @@ t('word: taken back, met and empty (' + tb + ')', tb[1] === WS.met.taken_back &&
 t('word: taken back five or more minutes early (' + tbe + ')', tbe[1] === WS.met.taken_back_early && tbe[0] === WS.empty.taken_back_early);
 const br = {}; for (const c of D.counties) { let r = null; for (const w of c[2]) { if (r !== null) { const k = Math.min(r, 10); br[k] = br[k] || [0, 0]; br[k][0]++; br[k][1] += D.met[w]; } r = D.met[w] ? 0 : (r || 0) + 1; } }
 t('word: the record\'s belief column recomputed', Object.entries(br).every(([k, v]) => WS.belief_record[k].entries === v[0] && WS.belief_record[k].met === v[1]));
+// the record whole, recomputed by a second path: county runs in order of each warning's end, the dead from toll.js
+const endOf = w => D.issue[w] + D.dur[w];
+let fin3 = 0, fin10 = 0, lmax = 0, lOk = true, mN = 0, m3 = 0;
+D.counties.forEach((c, ci) => { let r = 0, mx = 0; for (const w of [...c[2]].sort((a, b) => endOf(a) - endOf(b) || a - b)) { if (D.met[w]) { mN++; if (r >= 3) m3++; } r = D.met[w] ? 0 : r + 1; mx = Math.max(mx, r); } if (r >= 3) fin3++; if (r >= 10) fin10++; lmax = Math.max(lmax, mx); if (R.longest[ci] !== mx) lOk = false; });
+t('whole: counties three and ten deep at the end (' + fin3 + ', ' + fin10 + ')', fin3 === RS.counties_in_a_run_of_3_or_more_at_the_end && fin10 === RS.counties_in_a_run_of_10_or_more_at_the_end);
+t('whole: every county\'s longest run (max ' + lmax + ')', lOk && lmax === RS.longest_run_anywhere);
+const deadT = X.T.filter(r => r[5] > 0);
+t('whole: the dead are the final database\'s, tornado by tornado', R.dead.length === deadT.length && R.dead.every((d, i) => d[0] === deadT[i][0] && d[1] === deadT[i][5]));
+const noneDead = X.T.reduce((a, r, k) => a + (NONE.has(k) ? r[5] : 0), 0);
+t('whole: the dead under no warning have no run (' + noneDead + ')', R.dead.filter(d => d[4] === -1).reduce((a, d) => a + d[1], 0) === noneDead && noneDead === RS.dead_by_run_before.none);
+// the run before a deadly tornado's warning, read again from the county sequence
+let rbOk = 0;
+for (const d of R.dead) { if (d[4] < 0) continue; const seq = D.counties[d[3]][2]; const k = X.T.findIndex(r => r[0] === d[0] && r[5] === d[1]); const ws = seq.filter(w => (X.wt[w] || []).includes(k)); if (!ws.length) continue; const i = seq.indexOf(ws[0]); let r = 0; for (let j = i - 1; j >= 0 && !D.met[seq[j]]; j--) r++; if (r === d[4]) rbOk++; else console.log('run mismatch', d); }
+t('whole: each placed death\'s run read again from its county (' + rbOk + ')', rbOk === R.dead.filter(d => d[4] >= 0).length);
+const dead3 = R.dead.filter(d => d[4] >= 3).reduce((a, d) => a + d[1], 0);
+t('whole: dead after three or more empty (' + dead3 + ')', dead3 === RS.dead_by_run_before['3-9'] + RS.dead_by_run_before['10+']);
+t('whole: the Atelier\'s rings are empty in both records', R.observed.every(w => !D.met[w] && !X.wt[w]) && R.observed.length === RS.atelier_observed_joined_unbacked_here);
 const fake = n => Array.from({ length: n }, (_, i) => ({ i, act: 'stay', paid: 0, run: 0, met: D.met[HOME[2][i]] }));
 for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   const ctx = await b.newContext({ viewport: { width: w, height: 900 }, colorScheme: scheme });
   const p = await ctx.newPage(); const errs = [];
   p.on('pageerror', e => errs.push(String(e))); p.on('console', x => x.type() === 'error' && !/Failed to load resource|CORS|mesonet/.test(x.text()) && errs.push(x.text()));
-  await p.goto('file://' + join(here, 'index.html') + '?speed=60&county=' + HOME[0]);
+  await p.goto('file://' + join(here, 'index.html') + '?at=999999999&speed=60&county=' + HOME[0]);
   await p.waitForSelector('#strip i');
   t(w + ' no errors on load', errs.length === 0);
   t(w + ' no horizontal overflow', await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
-  t(w + ' in progress, dated, at the top', /In progress · increment 3 of 5 · 2026-10-20/.test(await p.locator('#wip').textContent()));
+  t(w + ' in progress, dated, at the top', /In progress · increment 4 of 5 · 2026-10-21/.test(await p.locator('#wip').textContent()));
+  // the record whole
+  await p.waitForFunction(() => window.TCA_WHOLE && document.getElementById('wcount').textContent.length > 0);
+  const wc = await p.locator('#wcount').textContent();
+  t(w + ' whole: the map opens on the record\'s end, with its counts', wc.includes(S.warnings.toLocaleString('en-US')) && wc.includes(fin3.toLocaleString('en-US')) && wc.includes(dead3.toLocaleString('en-US')));
+  const pcS = (x, y) => Math.round(100 * x / y) + ' %';
+  t(w + ' whole: the baseline line at the end (' + pcS(m3, mN) + ' of met, ' + pcS(dead3, RS.dead) + ' of the dead)', (await p.locator('#wbase').textContent()).includes(pcS(m3, mN)) && (await p.locator('#wbase').textContent()).includes(pcS(dead3, RS.dead)));
+  t(w + ' whole: the county taken below is marked on the map', await p.evaluate(() => window.TCA_current()[0] === 'OKC027'));
+  t(w + ' whole: the page\'s runs at the end equal the second path', await p.evaluate(([a, b]) => { const r = window.TCA_WHOLE.run; let x = 0, y = 0; for (const v of r) { if (v >= 3) x++; if (v >= 10) y++; } return x === a && y === b; }, [fin3, fin10]));
+  const may = Math.round((Date.parse('2011-05-01T00:00Z') - Date.parse(D.t0)) / 60000);
+  await p.evaluate(m => window.TCA_WHOLE.seek(m), may);
+  const wc2 = await p.locator('#wcount').textContent();
+  const n11 = D.issue.filter((_, w) => endOf(w) <= may).length;
+  t(w + ' whole: seeking to 1 May 2011 counts the warnings ended by then (' + n11 + ')', wc2.includes(n11.toLocaleString('en-US')) && (await p.locator('#wdate').textContent()) === '2011-05-01');
+  await p.selectOption('#mode', 'ever');
+  t(w + ' whole: the longest-run view counts the counties ever three deep', (await p.locator('#wcount').textContent()).includes('ever sat three or more'));
+  await p.selectOption('#mode', 'now');
+  await p.click('#play'); await p.waitForTimeout(700); await p.click('#play');
+  t(w + ' whole: play advances the day', await p.evaluate(m => window.TCA_WHOLE.t > m, may));
+  // a tap on Cleveland County deals it to the card
+  await p.evaluate(() => { const r = document.getElementById('map').getBoundingClientRect(); window.scrollTo(0, window.scrollY + r.top - 10); });
+  const box = await p.locator('#map').boundingBox();
+  const vh = await p.evaluate(() => innerHeight);
+  const hit = await p.evaluate(([bx, by, bw, bh, ugc, vh0]) => { const hs = []; for (let y = by + 2; y < Math.min(by + bh, vh0); y += 2) for (let x = bx + 2; x < bx + bw; x += 2) { const c = window.TCA_WHOLE.at(x, y); if (c !== null && window.TCA.counties[c][0] === ugc) hs.push([Math.round(x), Math.round(y)]); } return hs.length ? hs[hs.length >> 1] : null; }, [box.x, box.y, box.width, box.height, 'OKC027', vh]);
+  if (hit) { await p.mouse.click(hit[0], hit[1]); await p.waitForTimeout(1200); }
+  t(w + ' whole: a tap on Cleveland County takes it to the card', !!hit && (await p.locator('#cname').textContent()).startsWith('Cleveland OK'));
+  await p.evaluate(m => window.TCA_WHOLE.seek(m), 1e9);
   t(w + ' Cleveland OK dealt with all its warnings', (await p.locator('#strip i').count()) === HOME[2].length &&
     (await p.locator('#cname').textContent()).includes(HOME[2].length + ' warnings'));
   const first = HOME[2][0];
   t(w + ' first warning shows its issued minutes', (await p.locator('#clen').textContent()).includes(`Issued for ${D.dur[first]} minutes`));
   // stay on the first
   await p.click('#stay');
-  const a1 = await p.locator('#answer').textContent();
+  const a1 = await p.locator('#answer').textContent(); if (!a1) console.log('a1 empty; card', await p.locator('#cnum').textContent(), await p.locator('#acts').isVisible());
   t(w + ' the record answers after staying', D.met[first] ? a1.includes('A tornado was reported') && a1.includes('You stayed') : a1.startsWith('No tornado was reported'));
   // cover on the second; speed 60 makes a minute pass in a second of the test
   await p.click('#next');
@@ -90,7 +136,7 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   t(w + ' drift table drawn', (await p.locator('#drift tr').count()) === 6);
   t(w + ' the fable line carries the record count', (await p.locator('#fable').textContent()).includes(S.fable_met_after_3plus_empty.toLocaleString('en-US')));
   // persistence: reload keeps the county and the position
-  await p.goto('file://' + join(here, 'index.html') + '?speed=60');
+  await p.goto('file://' + join(here, 'index.html') + '?at=999999999&speed=60');
   await p.waitForSelector('#strip i');
   t(w + ' reload resumes the county at warning 4', (await p.locator('#cnum').textContent()).startsWith('Warning 4 of'));
   await p.click('#reset');
@@ -99,7 +145,7 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   t(w + ' a dealt county has 20 or more warnings', parseInt((await p.locator('#cname').textContent()).split('·')[1]) >= 20);
   // the toll: jump to Moore's warning (the ledger stored as if answered up to it), stay, read the final database
   await p.evaluate(([k, v]) => localStorage.setItem(k, v), ['tca:' + HOME[0], JSON.stringify(fake(mPos))]);
-  await p.goto('file://' + join(here, 'index.html') + '?speed=60&county=' + HOME[0]);
+  await p.goto('file://' + join(here, 'index.html') + '?at=999999999&speed=60&county=' + HOME[0]);
   await p.waitForSelector('#strip i');
   await p.click('#stay');
   const am = await p.locator('#answer').textContent();
@@ -107,13 +153,13 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   t(w + ' Moore: the tally counts the dead under a warning stayed for', +(await p.locator('#tally div').nth(5).locator('b').textContent()) >= 24);
   t(w + ' ledger has the final database column', (await p.locator('#ledger tbody tr').first().textContent()).includes('EF5'));
   await p.evaluate(([k, v]) => localStorage.setItem(k, v), ['tca:' + HOME[0], JSON.stringify(fake(uPos))]);
-  await p.goto('file://' + join(here, 'index.html') + '?speed=60&county=' + HOME[0]);
+  await p.goto('file://' + join(here, 'index.html') + '?at=999999999&speed=60&county=' + HOME[0]);
   await p.waitForSelector('#strip i');
   t(w + ' a tornado under no warning is shown before the next warning', await p.locator('#unw').isVisible() && /under no warning at all/.test(await p.locator('#unw').textContent()));
   // the warner's word: a Cleveland County warning taken back early, covered for
   const kPos = WD.taken[ci].find(r => r[1] >= 3 && D.dur[HOME[2][r[0]]] - r[1] >= 5 && WD.prod[r[2]]);
   await p.evaluate(([k, v]) => localStorage.setItem(k, v), ['tca:' + HOME[0], JSON.stringify(fake(kPos[0]))]);
-  await p.goto('file://' + join(here, 'index.html') + '?speed=60&county=' + HOME[0]);
+  await p.goto('file://' + join(here, 'index.html') + '?at=999999999&speed=60&county=' + HOME[0]);
   await p.waitForSelector('#strip i');
   await p.click('#cover');
   await p.waitForFunction(() => document.getElementById('dback').textContent.length > 0, null, { timeout: 15000 });
