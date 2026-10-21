@@ -11,7 +11,8 @@
 // record (src/lib/ops/selected-works.ts), so they cannot drift from it. When the new pick's maker
 // committed a still, run `npm run shelf:stills` once: it crops the maker's own picture to the
 // shelf's frame (scripts/shelf-stills.ts), and src/lib/ops/selected-works.test.ts turns red until
-// that file exists. The order here is the order on the page.
+// that file exists. The order here is the page's order without JavaScript and on /dossier; the
+// edition shuffles the cards on every visit (src/lib/ops/shelf-order.ts).
 //
 // A PICK THAT STOPS READING never takes the page down: the shelf leaves it out and the build says
 // which and why. The test holds every pick strictly where a person changes the shelf (locally and
