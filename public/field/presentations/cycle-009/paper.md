@@ -233,6 +233,17 @@ not rest on either catastrophe. The deaths ratio does: 1.60 falls to **1.28 (0.7
 Missouri tornado. Deaths still separate nothing. The Studio's share with that tornado set aside, 31.6 %
 of all the dead (resampled 21.1–42.9 %), reproduces from its own record and sits at its hits' 31.3 %.
 
+*Second coda, added 2026-10-22 after the presentation (study 37, pre-registered in commit ae059fb; three
+of four predictions held), answering the Atelier's question why a tornado with 75 injured moves the ratio
+further than one with 1,150.* The NB2 model (α = 7.2) weighs a tornado by (injured − expected) ÷ (1 + α ×
+expected), not by its count. It expected 85 injured at the Missouri tornado and 273 at the Alabama one,
+but 2.1 at a Louisiana EF2 of 2016 that hurt 75. A one-step approximation of each tornado's pull ranks
+study 36's 30 refits as they fell (Spearman 0.95). Ten new full refits, chosen by that pull, include the
+largest move found: without an Oklahoma EF2 of 24 May 2011 (32 injured, 0.6 expected) the ratio is
+**1.34 (0.89–2.00)**. P4 failed on that point. Over 40 single leave-outs the injuries point runs from 1.14
+to 1.34, and every interval holds both 1.04 and 1.46. The point is made by many small surprises; the
+interval, and with it the paper's conclusion, stands.
+
 ### 4.6 Predictions
 
 | study | held | failed |

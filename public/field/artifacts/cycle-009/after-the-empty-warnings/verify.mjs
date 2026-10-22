@@ -1,4 +1,4 @@
-// Studies 31-36 page check: headless, 390 px light and 1100 px dark. Usage: NODE_PATH=<dir with playwright> node verify.mjs
+// Studies 31-37 page check: headless, 390 px light and 1100 px dark. Usage: NODE_PATH=<dir with playwright> node verify.mjs
 import { createRequire } from "module"; import path from "path"; import url from "url"; import fs from "fs";
 const require = createRequire(import.meta.url);
 const pw = require("playwright");
@@ -9,6 +9,7 @@ const R3 = JSON.parse(fs.readFileSync(path.join(here, "data/results33.json"), "u
 const R4 = JSON.parse(fs.readFileSync(path.join(here, "data/results34.json"), "utf8"));
 const R5 = JSON.parse(fs.readFileSync(path.join(here, "data/results35.json"), "utf8"));
 const R6 = JSON.parse(fs.readFileSync(path.join(here, "data/results36.json"), "utf8"));
+const R7 = JSON.parse(fs.readFileSync(path.join(here, "data/results37.json"), "utf8"));
 let pass = 0, fail = 0; const ok = (n, c) => { c ? pass++ : fail++; console.log((c ? "PASS " : "FAIL ") + n); };
 const b = await pw.chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {});
 for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
@@ -136,6 +137,27 @@ for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
     await p.click("#seg-v36 button[data-v=inj]");
     await p.locator("#loo").scrollIntoViewIfNeeded();
     await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s36_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#loo").boundingBox()).y - 260), width: w, height: 700 } });
+  }
+  // study 37 (second coda)
+  ok(`${w}: second coda: 40 leave-outs, 10 of them new`, await p.locator("#pull circle.dot37").count() === 40 && await p.locator("#pull circle.dot37.new").count() === 10);
+  ok(`${w}: second coda opens on Louisiana from results37.json`, (await p.textContent("#pulldet")).includes("LA, 2016-02-23, EF2") && (await p.textContent("#pulldet")).includes(`expected ${R7.named.louisiana.mu.toFixed(1)}`) && (await p.textContent("#pulldet")).includes("becomes 1.30"));
+  const iok = 30 + R7.refits.findIndex(x => x.om === 315890);
+  await p.locator("#pull circle.dot37").nth(iok).dispatchEvent("click");
+  const ok7 = R7.refits.find(x => x.om === 315890).refit;
+  ok(`${w}: tapping Oklahoma gives its full refit and interval`, (await p.textContent("#pulldet")).includes(`becomes ${ok7.irr.toFixed(2)}`) && (await p.textContent("#pulldet")).includes(`${ok7.lo.toFixed(2)}–${ok7.hi.toFixed(2)}`));
+  for (const v of ["surprise", "u", "inj"]) {
+    await p.click(`#seg-x37 button[data-v=${v}]`);
+    const bx = await p.locator("#pull").boundingBox();
+    const ex = await p.evaluate(() => { const r = [...document.querySelectorAll("#pull text")].map(t => t.getBoundingClientRect()); return [Math.min(...r.map(x => x.left)), Math.max(...r.map(x => x.right))]; });
+    ok(`${w}: #pull (${v}) and its labels fit the viewport and the figure`, bx && bx.x >= 0 && bx.x + bx.width <= w + 1 && ex[0] >= bx.x - 1 && ex[1] <= bx.x + bx.width + 1);
+  }
+  ok(`${w}: four predictions, three held (study 37)`, (await p.locator("#pred37 tbody tr").count()) === 4 && (await p.locator("#pred37 td.held").count()) === 3);
+  {
+    await p.click("#seg-x37 button[data-v=u]");
+    await p.locator("#pull circle.dot37").nth(R7.loo36.findIndex(x => x.om === 613559)).dispatchEvent("click");
+    await p.locator("#pull").scrollIntoViewIfNeeded();
+    await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s37_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#pull").boundingBox()).y - 300), width: w, height: 760 } });
+    await p.click("#seg-x37 button[data-v=inj]");
   }
   ok(`${w}: tercile table 3 rows`, await p.locator("#terc tbody tr").count() === 3);
   ok(`${w}: six predictions, six held`, (await p.locator("#pred tbody tr").count()) === 6 && (await p.locator("#pred td.held").count()) === 6);

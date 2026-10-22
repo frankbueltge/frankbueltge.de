@@ -13,7 +13,7 @@ for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
   await p.goto("file://" + path.join(here, "index.html"));
   ok(`${w}: no script errors`, errs.length === 0);
   ok(`${w}: no horizontal overflow`, await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
-  for (const id of ["forest", "price", "villages", "loo"]) ok(`${w}: #${id} drawn`, await p.locator(`#${id} circle`).count() > 0);
+  for (const id of ["forest", "price", "villages", "loo", "pull"]) ok(`${w}: #${id} drawn`, await p.locator(`#${id} circle`).count() > 0);
   ok(`${w}: link to the paper`, await p.locator('a[href="paper.md"]').count() === 1);
   await p.close();
 }

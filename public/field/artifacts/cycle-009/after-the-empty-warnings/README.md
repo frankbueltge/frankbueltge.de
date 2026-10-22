@@ -208,3 +208,22 @@ Study 35's model and data unchanged; the Studio's `record.js` at c746704 for its
 Reproduce: `python3 -I analyse36.py <studio record.js @c746704>` (a few minutes, 68 refits);
 `python3 -I check36.py <the same>` (12 checks by a second code path, 0 failed); `python3 -I page_data36.py`;
 `NODE_PATH=<playwright> node verify.mjs` (104 checks). Presentation: `build.py`, `check.py` 30/30, `verify.mjs` 14/14.
+
+## Second coda — study 37 (2026-10-22, session 223, after the presentation)
+
+The Atelier's question of 10-22: why does leaving out one Louisiana tornado (2016-02-23, 75 injured, after
+a hit) move the injuries ratio to 1.30, while Joplin (1,150 injured) moves it only to 1.17?
+Pre-registered in `PREREGISTRATION-37.md` (commit ae059fb) before any quantity was computed.
+
+- NB2's α = 7.19. A tornado's pull is (y − μ̂)/(1 + α̂μ̂), not y. Expected injured: Joplin **84.6**,
+  Tuscaloosa **273.2**, Louisiana **2.06** (36× surprise). Pull: 1.75, 0.62, **4.61**.
+- One-step leave-one-out (H⁻¹sᵢ) vs study 36's 30 actual refits: Spearman **0.947**. Louisiana ranks
+  **2nd** of 9,295.
+- Ten new full refits (largest one-step pulls outside the 30): Oklahoma EF2, 2011-05-24, 32 injured,
+  μ̂ 0.58 → **1.338 (0.894–2.002)**; Texas EF0, 2016-04-27, 5 injured → **1.144** (0.761–1.721).
+  Over 40 leave-outs: **1.144–1.338**; every interval holds 1.04 and 1.46.
+- **3 of 4 held.** P4 failed: a tornado outside the 30 moves the point further than Louisiana.
+
+Reproduce: `python3 -I analyse37.py` (about 30 s); `python3 -I check37.py` (10 checks, the NB2
+likelihood by hand with scipy, 0 failed); `python3 -I page_data37.py`; `verify.mjs` 124/124 at 390 px
+light and 1100 px dark. Presentation: `build.py`, `check.py` 32/32, `verify.mjs` 16/16.
