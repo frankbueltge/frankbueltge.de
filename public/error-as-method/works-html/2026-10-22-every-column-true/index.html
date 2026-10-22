@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every Column True</title>
+<style>
+:root{--bg:#efece4;--ink:#1d1b17;--mute:#68625a;--line:#d2ccc0;--card:#faf8f3;--hot:#a8432b;--ok:#2f6a46;--key:#285d78}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141311;--ink:#ebe5da;--mute:#a1998c;--line:#36312b;--card:#1c1a17;--hot:#ec8268;--ok:#83c59f;--key:#82b9d4}}
+:root[data-theme="dark"]{--bg:#141311;--ink:#ebe5da;--mute:#a1998c;--line:#36312b;--card:#1c1a17;--hot:#ec8268;--ok:#83c59f;--key:#82b9d4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+main{max-width:1240px;margin:0 auto;padding:20px 16px 64px}
+h1{font-weight:normal;font-size:30px;margin:0 0 2px}
+h2{font-weight:normal;font-size:21px;margin:44px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+.sub{color:var(--mute);margin:0 0 16px;max-width:64em}
+.sub b{color:var(--ink);font-weight:normal;font-style:italic}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.pair{grid-template-columns:1fr}}
+.pick{display:block;width:100%;padding:0;border:2px solid var(--line);background:#fff;cursor:pointer;position:relative}
+.pick:hover,.pick:focus-visible{border-color:var(--ink);outline:none}
+.pick img{display:block;width:100%;aspect-ratio:1100/800}
+.pick .tag{position:absolute;left:8px;bottom:8px;background:var(--card);color:var(--ink);font-size:14px;padding:2px 8px;border:1px solid var(--line);display:none}
+.done .pick .tag{display:block}
+.done .pick.truth{border-color:var(--ok)}.done .pick.lie{border-color:var(--hot)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.score{font-size:14px;color:var(--mute)}
+.verdict{background:var(--card);border:1px solid var(--line);padding:12px 14px;font-size:15px;margin-top:10px;min-height:4em}
+.verdict p{margin:0 0 7px}
+.seat{font-size:13px;color:var(--mute);display:block}
+button{font:inherit;font-size:14px;background:transparent;color:var(--ink);border:1px solid var(--line);padding:4px 10px;cursor:pointer}
+button:hover,button:focus-visible{border-color:var(--ink);outline:none}
+button.on{border-color:var(--key);color:var(--key)}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.stage{grid-template-columns:1fr}}
+.pane{background:var(--card);border:1px solid var(--line);padding:10px;min-width:0}
+.pane h3{font-weight:normal;font-size:14px;margin:0 0 6px;color:var(--mute)}
+.frame{position:relative;width:100%;aspect-ratio:1100/800;overflow:hidden;background:#fff;border:1px solid var(--line)}
+.frame iframe{position:absolute;left:0;top:0;width:1100px;height:800px;border:0;transform-origin:0 0}
+.wait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#6a645b;font-size:14px}
+.cols{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.mono,code{font:13px ui-monospace,Menlo,Consolas,monospace}
+.num{font-size:15px;margin:6px 0 0}
+.num b{font-weight:normal;color:var(--key)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.cell{background:var(--card);border:1px solid var(--line);padding:6px;font-size:13px;line-height:1.35}
+.cell img{width:100%;display:block;aspect-ratio:1100/800;background:#fff}
+.cell .c{font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--mute);margin-top:4px;word-break:break-word}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.b{font-size:11.5px;border:1px solid var(--line);padding:0 5px}
+.b.no{color:var(--hot);border-color:var(--hot)}.b.yes{color:var(--ok);border-color:var(--ok)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{border-bottom:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+th{font-weight:normal;color:var(--mute)}
+.held{color:var(--ok)}.failed{color:var(--hot)}
+.small{font-size:14px;color:var(--mute);max-width:64em}
+.theme{float:right;font-size:13px}
+.scroll{overflow-x:auto}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<button class="theme" id="theme" aria-label="switch light or dark">light / dark</button>
+<h1>Every Column True</h1>
+<p class="sub">Two pages drawn by the same code from Delaware's 874 highway bridges. Every value on both is real. On one of them a
+column of the table was <b>dealt out to the wrong bridges</b>: same values, same counts, wrong rows. <b>Which one is the register?</b> Click it.</p>
+
+<div id="game">
+  <div class="pair">
+    <button class="pick" id="pa"><span class="tag" id="ta"></span><img id="ia" alt="page A"></button>
+    <button class="pick" id="pb"><span class="tag" id="tb"></span><img id="ib" alt="page B"></button>
+  </div>
+  <div class="row"><button id="next">another pair</button><span class="score" id="score"></span></div>
+  <div class="verdict" id="gv"><p>Look first. Then choose.</p></div>
+</div>
+
+<h2>Deal a column yourself</h2>
+<p class="small">One maker's page, running live, left as made and right reading the same table with one column dealt out at random.
+The page's code is not touched. Every count, total and legend it computes from a single column comes out the same; only what
+holds <i>between</i> columns breaks. Below the pages, one relation the makers saw: how strongly a bridge's year of building goes
+with its lowest condition rating (Pearson's r, computed here from the table each page reads).</p>
+<div class="row" id="works"></div>
+<div class="cols" id="cols"></div>
+<div class="stage">
+  <section class="pane"><h3 id="lt">as made</h3><div class="frame" id="f0"><div class="wait">loading the inventory…</div><iframe sandbox="allow-scripts" title="the page as made" id="i0"></iframe></div><p class="num" id="n0"></p></section>
+  <section class="pane"><h3 id="rt">dealt</h3><div class="frame" id="f1"><div class="wait">choose a column</div><iframe sandbox="allow-scripts" title="the same page reading a dealt table" id="i1"></iframe></div><p class="num" id="n1"></p></section>
+</div>
+
+<h2>The night: twenty pages, six seats</h2>
+<p class="small" id="seatsnote"></p>
+<div id="night"></div>
+
+<h2>What was predicted</h2>
+<div class="scroll"><table id="preds"><thead><tr><th></th><th>prediction</th><th>outcome</th></tr></thead><tbody></tbody></table></div>
+<p class="small">Material: FHWA, National Bridge Inventory 2025, Delaware, public domain. Pre-registration, briefs, the makers' rooms, every
+seat's codes and the scoring are in this work's directory: <code>PREDICTIONS.md</code>, <code>coder/</code>, <code>rooms/</code>,
+<code>results.json</code>. The operator is <code>shuffle-core.js</code>, shared by the night and this page.</p>
+</main>
+<script src="shuffle-core.js"></script>
+<script src="face-data.js"></script>
+<script>
+(function(){
+  const D = window.FACE, S = window.Shuffle, $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  try { const t = localStorage.getItem('ect-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  $('theme').addEventListener('click', () => { const r = document.documentElement, dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    r.dataset.theme = dark ? 'light' : 'dark'; try { localStorage.setItem('ect-theme', r.dataset.theme); } catch (e) {} });
+  const yn = v => v === 'yes' ? 'works' : 'does not work';
+  // ---- the pairs
+  const order = D.mutants.map(m => m.id).sort(() => Math.random() - .5); let k = 0, n = 0, right = 0, answered = false, truthLeft = true;
+  function showPair(){
+    const m = D.byId[order[k % order.length]]; answered = false; truthLeft = Math.random() < .5;
+    $('game').classList.remove('done');
+    const t = 'rooms/' + m.work + '/final.png', l = 'mutants-pictures/' + m.id + '.png';
+    $('ia').src = truthLeft ? t : l; $('ib').src = truthLeft ? l : t;
+    $('pa').className = 'pick ' + (truthLeft ? 'truth' : 'lie'); $('pb').className = 'pick ' + (truthLeft ? 'lie' : 'truth');
+    $('ta').textContent = truthLeft ? 'the register' : 'dealt'; $('tb').textContent = truthLeft ? 'dealt' : 'the register';
+    $('gv').innerHTML = '<p>' + esc(D.titles[m.work]) + ', by maker ' + m.work + '. Look first. Then choose.</p>';
+  }
+  function answer(left){
+    if (answered) return; answered = true; n++; const ok = left === truthLeft; if (ok) right++;
+    const m = D.byId[order[k % order.length]]; $('game').classList.add('done');
+    $('gv').innerHTML = '<p>' + (ok ? 'Yes.' : 'No.') + ' Dealt out on the other page: <code>' + m.cols.map(esc).join(', ') + '</code>' +
+      (m.cols.length > 1 ? ' (every column this page reads, each on its own).' : '.') + '</p>' + seats(m) ;
+    $('score').textContent = 'You found the register ' + right + ' times in ' + n + '.';
+  }
+  function seats(m){
+    return '<p><span class="seat">W, a fresh judge without the table, asked whether the dealt page works</span>' + yn(m.W) + ': ' + esc(m.W_why) + '</p>' +
+      '<p><span class="seat">WT, a fresh judge with the table beside it</span>' + yn(m.WT) + ': ' + esc(m.WT_why) + '</p>' +
+      '<p><span class="seat">P, asked only whether the page\'s words are true of its own drawing</span>' + esc(m.P_words) + ': ' + esc(m.P_why) + '</p>' +
+      '<p><span class="seat">G, told some pages were dealt, without the table</span>' + esc(m.G) + ' (' + esc(m.G_sure) + '): ' + esc(m.G_why) + '</p>' +
+      '<p><span class="seat">the practice, the same question, blind</span>' + esc(m.H) + ': ' + esc(m.H_why) + '</p>' +
+      '<p><span class="seat">V, checking against the table</span>' + (m.V === 'no' ? 'false' : esc(m.V)) + ': ' + esc(m.V_why) + '</p>';
+  }
+  $('pa').addEventListener('click', () => answer(true)); $('pb').addEventListener('click', () => answer(false));
+  $('next').addEventListener('click', () => { k++; showPair(); }); showPair();
+  // ---- the live dealer
+  function fit(){ for (const id of ['f0','f1']) { const f = $(id); f.querySelector('iframe').style.transform = 'scale(' + (f.clientWidth / 1100) + ')'; } }
+  addEventListener('resize', fit); fit();
+  let B = null, work = 'c1';
+  function page(rows){
+    const data = '<script>const BRIDGES = ' + JSON.stringify(rows).replace(/<\//g, '<\\/') + ';<\/script>';
+    const h = D.html[work].replace(/<script[^>]*src=["']?data\/bridges\.js["']?[^>]*><\/script>/, () => data);
+    return h.replace(/<head[^>]*>/i, m => m + '<base href="rooms/' + work + '/">');
+  }
+  function r(rows){ const x = rows.map(o => o.YEAR_BUILT_027), y = rows.map(o => o.LOWEST_RATING), n = x.length;
+    const mx = x.reduce((a, b) => a + b) / n, my = y.reduce((a, b) => a + b) / n; let sxy = 0, sxx = 0, syy = 0;
+    for (let i = 0; i < n; i++) { sxy += (x[i] - mx) * (y[i] - my); sxx += (x[i] - mx) ** 2; syy += (y[i] - my) ** 2; }
+    return (sxy / Math.sqrt(sxx * syy)).toFixed(2); }
+  function cols(){
+    $('cols').innerHTML = D.read[work].map(c => '<button data-c="' + c + '">deal ' + c + '</button>').join('') + '<button data-c="*">deal all of them</button>';
+    $('cols').querySelectorAll('button').forEach(b => b.addEventListener('click', () => deal(b.dataset.c)));
+  }
+  function deal(c){
+    if (!B) return; const seed = (Math.random() * 2 ** 31) >>> 0, cs = c === '*' ? D.read[work] : [c];
+    const rows = S.apply(B, cs, S.mulberry32(seed)).rows;
+    $('f1').querySelector('.wait').textContent = ''; $('i1').srcdoc = page(rows);
+    $('rt').textContent = 'dealt: ' + (c === '*' ? 'every column it reads' : c) + ' · seed ' + seed;
+    $('n1').innerHTML = 'year built ~ lowest rating: r = <b>' + r(rows) + '</b>';
+  }
+  function load(w){
+    work = w; document.querySelectorAll('#works button').forEach(b => b.classList.toggle('on', b.dataset.w === w));
+    $('lt').textContent = 'as made: ' + D.titles[w] + ' (maker ' + w + ')'; $('rt').textContent = 'dealt'; $('n1').textContent = '';
+    $('i1').srcdoc = ''; $('f1').querySelector('.wait').textContent = 'choose a column'; cols();
+    $('f0').querySelector('.wait').textContent = 'loading the inventory…';
+    const sc = document.createElement('script'); sc.src = 'rooms/' + w + '/data/bridges.js';
+    sc.onload = () => { B = new Function('return BRIDGES')(); $('f0').querySelector('.wait').textContent = ''; $('i0').srcdoc = page(B);
+      $('n0').innerHTML = 'year built ~ lowest rating: r = <b>' + r(B) + '</b>'; };
+    document.body.appendChild(sc);
+  }
+  $('works').innerHTML = ['c1','c2','c3','c4'].map(w => '<button data-w="' + w + '">' + esc(D.titles[w]) + ' · ' + w + '</button>').join('');
+  $('works').querySelectorAll('button').forEach(b => b.addEventListener('click', () => load(b.dataset.w)));
+  load('c1');
+  // ---- the night
+  $('seatsnote').textContent = D.seatsnote;
+  const badge = (t, v) => '<span class="b ' + v + '">' + t + '</span>';
+  let h = '';
+  for (const w of ['c1','c2','c3','c4']) {
+    h += '<p class="small">' + esc(D.titles[w]) + ' · maker ' + w + '</p><div class="grid">';
+    for (const id of [w].concat(D.mutants.filter(m => m.work === w).map(m => m.id))) {
+      const m = D.byId[id], fam = id === w;
+      h += '<div class="cell"><img loading="lazy" alt="page ' + id + '" src="' + (fam ? 'rooms/' + w + '/final.png' : 'mutants-pictures/' + id + '.png') + '">' +
+        '<div class="c">' + (fam ? 'as made' : 'dealt: ' + esc(m.cols.length > 2 ? 'every column it reads' : m.cols.join(', '))) + '</div><div class="badges">' +
+        badge('W ' + m.W, m.W === 'yes' ? 'yes' : 'no') + badge('WT ' + m.WT, m.WT === 'yes' ? 'yes' : 'no') +
+        badge('words ' + m.P_words, m.P_words === 'yes' ? 'yes' : 'no') +
+        badge('G ' + m.G, (m.G === 'real') === fam ? 'yes' : 'no') + badge('practice ' + m.H, (m.H === 'real') === fam ? 'yes' : 'no') +
+        badge('V ' + m.V, m.V === 'yes' ? 'yes' : 'no') + '</div></div>';
+    }
+    h += '</div>';
+  }
+  $('night').innerHTML = h;
+  $('preds').querySelector('tbody').innerHTML = D.preds.map(p => '<tr><td>' + p.id + '</td><td>' + esc(p.text) + '</td><td class="' + (p.held ? 'held' : 'failed') + '">' +
+    (p.held ? 'held' : 'failed') + ' · ' + esc(p.detail) + '</td></tr>').join('');
+})();
+</script>
+</body>
+</html>
