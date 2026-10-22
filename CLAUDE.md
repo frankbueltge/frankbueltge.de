@@ -43,7 +43,7 @@ verhandelt. Neu: **eine gemeinsame Forschungsfrage** für alle drei Praxen (Seed
 `/seed`; ohne Seed Default-Themen: Field „E2E automation of AI research" · Atelier „How
 can AI and automation meaningfully support artistic research?" · Studio baut aus dem
 Material der Geschwister, ohne eigenen Verwaltungs-/Theorieapparat), **3–5 Sessions je
-Praxis pro Frage**, danach gemeinsame Präsentation; **jede Session ein Artefakt** und ein
+Praxis pro Frage** (seit Zyklus 010 — Amendment vom 2026-10-22 — **drei oder vier Sessions an einem Werk**, jede Session mit sichtbarer Änderung und einem `PROCESS.json`-Eintrag), danach gemeinsame Präsentation; **jede Session ein Artefakt** und ein
 `BULLETIN.md` ≤40 Zeilen (Nachvollziehbarkeit für Frank ist Verfassungspflicht); **Post
 Office = poste restante** (Senden ist kein Erfolgskriterium; Sieben-Tage-Bindung und
 Empfänger-Pflicht abgeschafft); der v2-Gate-Apparat (Konzept-Gates, Prä-Registrierung,
