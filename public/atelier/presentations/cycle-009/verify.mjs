@@ -147,6 +147,23 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await pg.$eval('#p4-b', e => { e.value = 0.268; e.dispatchEvent(new Event('input')); }); h = await pg.evaluate(() => window.__p4); ok(!h.usd, `${wd}px: dragging B / L leaves the priced mode`);
   { const n = await pg.$eval('#pr-c', e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 2000, `${wd}px: pr-c is drawn`); }
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with the coda`);
+  // coda IV (2026-10-22, fifth session): the number and the sentence, the Field's study 37
+  const SJ = JSON.parse(fs.readFileSync(path.join(here, 'survey.json')));
+  ok(SJ.rows.length === 15 && (await pg.$$('#sv-cards .card')).length === 15 && SJ.rows[0].om === 315890 && SJ.rows[0].class === 'silent', `${wd}px: coda IV shows the fifteen of greatest pull; the first, McLoud, has a silent narrative`);
+  ok(SJ.counts.states === 8 && SJ.counts.part === 1 && SJ.counts.mentions === 3 && SJ.counts.silent === 3 && (await t('svf-st')) === '8' && (await t('svf-sil')) === '3', `${wd}px: survey.json: 8 count, 1 in part, 3 mention, 3 silent; filled from survey.js`);
+  await pg.click('#sv-cards .card[data-i="1"]'); let sv = await pg.evaluate(() => window.__survey());
+  ok(sv.row === 613559 && sv.read.includes('approximately 75 injuries occurred at the RV park'), `${wd}px: the Louisiana tornado's card quotes its narrative: about 75 injured at an RV park`);
+  await pg.click('#sv-cards .card[data-i="0"]'); sv = await pg.evaluate(() => window.__survey());
+  ok(sv.row === 315890 && sv.read.includes('no sentence of its narrative speaks of anyone hurt'), `${wd}px: McLoud's card says its narrative speaks of no one hurt`);
+  ok((await pg.$eval('#sv-oun mark', e => e.textContent)) === ', and injuring the truck driver' && !(await t('sv-se')).includes('injur') && (await t('svf-ounj')) === '1' && (await t('svf-sej')) === '32', `${wd}px: the two accounts side by side, the clause the database lacks marked`);
+  ok(sv.n === 32 && sv.irr === 1.214 && sv.first === 'habit', `${wd}px: the count opens at the database's 32: the Field's 1.214, habit first`);
+  await pg.click('#sv-btns button[data-n="1"]'); sv = await pg.evaluate(() => window.__survey());
+  ok(sv.n === 1 && sv.irr === 1.334 && sv.first === 'learning' && sv.iread.includes('reversed') && sv.iread.includes('office'), `${wd}px: at the office's 1 injured the ratio is 1.334 and the order reverses`);
+  ok(SJ.sweep.every(x => x.all_inside) && SJ.habit_first_from === 27 && SJ.sweep.filter(x => x.first_of_two === 'habit').every(x => x.inj >= 27) && (await t('svf-flip')) === '27', `${wd}px: every count 0-32 holds all three villages; habit goes first only from 27 injured`);
+  ok(SJ.field.full.irr === 1.214 && SJ.field.without_315890.irr === 1.338 && SJ.mcloud.oun_day_injuries === 293 && SJ.mcloud.storm_events_day_injuries_ok === 342, `${wd}px: the refits reproduce the Field's fit and leave-out; the day's injured 293 by the office, 342 by the database`);
+  { const n = await pg.$eval('#sv-int', e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 1500, `${wd}px: coda IV's interval is drawn`); }
+  await pg.click('#sv-btns button[data-n="32"]');
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with coda IV`);
   // how it grew (2026-10-22, fourth session): PROCESS.json as columns, each state's shot on a click
   const GJ = JSON.parse(fs.readFileSync(path.join(here, 'PROCESS.json'))).states;
   ok(GJ.every((s, i) => s.n === i + 1 && fs.existsSync(path.join(here, s.shot))) && (await pg.$$('#grow button')).length === GJ.length, `${wd}px: one column per state of PROCESS.json (${GJ.length}), every shot on disk`);
