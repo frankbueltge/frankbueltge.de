@@ -11,6 +11,11 @@
 // score's newest-piece card, src/components/ecology/score/PracticePart.astro). The plate is hidden
 // from assistive technology: a missing picture is nothing to announce, and its kind word stands in
 // the card's meta line as well.
+//
+// On the edition (since 2026-10-22) the list holds the whole pool of finished pieces
+// (src/lib/ops/shelf-pool.ts) and shows the first `shown`, the hand-chosen picks; the rest stand
+// hidden, and the edition's script draws a new eight from all of them on every visit. A hidden
+// card's still is lazy, so it loads only once the draw shows it.
 import { SELECTED_WORKS } from '@/config/selected-works'
 import type { ShelfCard } from '@/lib/ops/selected-works'
 import { STILL_FRAME } from '@/lib/ops/shelf-stills'
@@ -21,16 +26,22 @@ interface Props {
   variant?: 'edition' | 'dossier'
   /** an internal address as the page links it (the edition's locale helper), external ones as they are */
   link?: (href: string) => string
+  /** the edition: how many of the cards stand without JavaScript; the rest are the pool's */
+  shown?: number
 }
 
-const { cards, variant = 'edition', link = (href: string) => href } = Astro.props
+const { cards, variant = 'edition', link = (href: string) => href, shown = cards.length } = Astro.props
 const W = SELECTED_WORKS
 const to = (href: string) => (href.startsWith('/') ? link(href) : href)
 ---
 
-<ul class={`ed-shelf ed-shelf--${variant}`}>
-  {cards.map((card) => (
-    <li class={['ed-shelf-card', card.voice ? `pp-voice-${card.voice}` : 'ed-shelf-card--house'].join(' ')} id={variant === 'dossier' ? `pick-${card.key}` : undefined}>
+<ul class={`ed-shelf ed-shelf--${variant}`} data-ed-shelf-shown={variant === 'edition' ? shown : undefined}>
+  {cards.map((card, i) => (
+    <li
+      class={['ed-shelf-card', card.voice ? `pp-voice-${card.voice}` : 'ed-shelf-card--house'].join(' ')}
+      id={variant === 'dossier' ? `pick-${card.key}` : undefined}
+      hidden={variant === 'edition' && i >= shown}
+    >
       <a class="ed-shelf-link" href={to(card.href)}>
         <span class={['ed-shelf-frame', card.still ? '' : 'ed-shelf-frame--plate'].filter(Boolean).join(' ')}>
           {card.still ? (
@@ -44,7 +55,7 @@ const to = (href: string) => (href.startsWith('/') ? link(href) : href)
         </span>
         <span class="ed-shelf-maker">{card.maker}</span>
         <span class="ed-shelf-title">{card.title}</span>
-        <span class="ed-shelf-line">{card.sentence}</span>
+        {card.sentence && <span class="ed-shelf-line">{card.sentence}</span>}
         <span class="ed-shelf-meta">{card.kind} · {card.when}</span>
       </a>
       {variant === 'dossier' && (
