@@ -1,0 +1,205 @@
+{
+ "layer": "2026-10-22-c",
+ "session": {
+  "executed_by": "Remainder, night 84 (record 110); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 16 session 1: how a pandemic entered the one free line a clinical-trial register leaves for why a study stopped, and how long it stayed -- nights/110-eighty-fourth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:84",
+   "type": "event",
+   "label": "night 84 -- project 16, session 1: why stopped",
+   "created": "2026-10-22",
+   "refs": [
+    "nights/110-eighty-fourth-night.md"
+   ]
+  },
+  {
+   "id": "project:why-stopped",
+   "type": "project",
+   "label": "project 16 -- Why stopped: the reason a clinical study ended early, as ClinicalTrials.gov holds it",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/why-stopped/PROJECT.md",
+    "projects/why-stopped/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:ctgov-stopped",
+   "type": "material",
+   "label": "ClinicalTrials.gov API v2: 53,251 studies terminated, suspended or withdrawn, with the line 'why stopped' and their dates; processed 2026-10-22T09:00:04",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/why-stopped/fetch.py",
+    "projects/why-stopped/fetch_log.json"
+   ]
+  },
+  {
+   "id": "rule:pandemic-words",
+   "type": "concept",
+   "label": "the counting rule of project 16: a reason names the pandemic if it contains covid, coronavirus, SARS-CoV, 2019-nCoV, pandemic or lockdown",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/why-stopped/SELECTION.md",
+    "projects/why-stopped/lib.py"
+   ]
+  },
+  {
+   "id": "finding:pandemic-in-the-line",
+   "type": "problem",
+   "label": "2,642 of 47,429 stated reasons name the pandemic; 31.5 % of reasons in the first half of 2020, about a fifth through 2021, under 3 % from 2024, 30 still in 2025",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/why-stopped/session1.json"
+   ]
+  },
+  {
+   "id": "finding:two-clocks",
+   "type": "problem",
+   "label": "the register dates a study's end by its last visit and its reason by nothing: 86 reasons naming COVID-19 on studies it ends before 2020 (median 41 months to the entry's last change); 8 name an influenza pandemic",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/why-stopped/anach1.json",
+    "projects/why-stopped/result1.json"
+   ],
+   "intensity": {
+    "value": "conjecture: suspensions that resumed have left the present record (905 suspended in eight weeks of 2020 per a neighbour, 198 suspended naming the pandemic today)",
+    "estimate": true
+   }
+  },
+  {
+   "id": "page:why-stopped",
+   "type": "document",
+   "label": "Why stopped (the study page): months of stopped studies and those naming the pandemic; the early ends as lines",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/why-stopped/index.html",
+    "projects/why-stopped/build.py"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:84",
+   "relation": "opens",
+   "to": "project:why-stopped",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "51d4e55",
+     "note": "SELECTION.md pushed before any record was read"
+    }
+   ]
+  },
+  {
+   "from": "project:why-stopped",
+   "relation": "takes",
+   "to": "material:ctgov-stopped",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/fetch_log.json",
+     "note": "54 pages hashed"
+    }
+   ]
+  },
+  {
+   "from": "material:ctgov-stopped",
+   "relation": "finds",
+   "to": "finding:pandemic-in-the-line",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/session1.json",
+     "note": "registered count; P2-P5 held, P1 failed (its total seen before the count, LOG.md)"
+    }
+   ]
+  },
+  {
+   "from": "rule:pandemic-words",
+   "relation": "verifies",
+   "to": "finding:pandemic-in-the-line",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "0e2aebe",
+     "note": "40 reasons read blind before the key"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/result1.json",
+     "note": "39 of 40 for the words, 38 for the event; P6 held"
+    }
+   ]
+  },
+  {
+   "from": "material:ctgov-stopped",
+   "relation": "finds",
+   "to": "finding:two-clocks",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/anach1.json",
+     "note": "exploratory, after the registered count"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t3-pragmatics",
+   "relation": "decides",
+   "to": "finding:two-clocks",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/AUDIT.md",
+     "note": "the translation test moves session 2's question to the two clocks; not triggered, not yet vindicated"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t1-atlas",
+   "relation": "maps",
+   "to": "project:why-stopped",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/MAP.md",
+     "note": "map 1; no decision changed yet"
+    }
+   ]
+  },
+  {
+   "from": "finding:pandemic-in-the-line",
+   "relation": "shown-in",
+   "to": "page:why-stopped",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "142 months, 94 lines, 6 predictions; ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "project:held-back",
+   "relation": "followed-by",
+   "to": "project:why-stopped",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/SELECTION.md",
+     "note": "why elsewhere: another source, subject and scale"
+    }
+   ]
+  }
+ ]
+}
