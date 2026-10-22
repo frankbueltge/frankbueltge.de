@@ -8,6 +8,7 @@ const P2 = JSON.parse(fs.readFileSync(path.join(here, 'plate2.json')));
 const P3J = JSON.parse(fs.readFileSync(path.join(here, 'plate3.json')));
 const P4J = JSON.parse(fs.readFileSync(path.join(here, 'plate4.json')));
 const P5J = JSON.parse(fs.readFileSync(path.join(here, 'plate5.json')));
+const CJ = JSON.parse(fs.readFileSync(path.join(here, 'coda.json')));
 const br = await chromium.launch({ executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
 for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   const pg = await br.newPage({ viewport: { width: wd, height: 900 }, colorScheme: scheme }); const errs = [];
@@ -106,6 +107,18 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   ok(await pg.$$eval('del.sup', d => d.length) >= 10 && await pg.$$eval('ins.corr', d => d.length) >= 10, `${wd}px: the corrections at the critique are visible, struck and marked`);
   ok((await t('brief')).includes('condition fires'), `${wd}px: the brief at the top states the finding`);
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate V`);
+  // coda (2026-10-22)
+  let cd = await pg.evaluate(() => window.__coda());
+  ok(cd.win === 15 && Math.abs(cd.cat - CJ.windows[0].later.CAT) < 1e-12 && cd.read.includes('least kept'), `${wd}px: the coda opens at the Studio's 15-minute clause, catastrophic least kept`);
+  await pg.click('#cd-btns button[data-i="2"]'); cd = await pg.evaluate(() => window.__coda());
+  ok(cd.win === 60 && cd.read.includes('83.3 %') && cd.read.includes('as the instruction does'), `${wd}px: at 60 minutes catastrophic is met 83.3 % and the words rank as the instruction says`);
+  ok(CJ.windows.every(w => w.p3_held) && CJ.windows.filter(w => w.later_rank_as_words).map(w => w.min).join() === '60,120,240', `${wd}px: coda.json: plate III's P3 holds at every window; the later rank follows the words from 60 minutes`);
+  ok((await t('cdf-cat15')) === '46.7 %' && (await t('cdf-p3lo')) === '3.83' && (await t('cdf-p3hi')) === '4.17', `${wd}px: coda figures filled from coda.js`);
+  ok(cd.iread.includes('learns') && cd.iread.includes('habit') && cd.iread.includes('stops listening'), `${wd}px: the record as it is holds all three villages`);
+  await pg.$eval('#cd-k', e => { e.value = 6; e.dispatchEvent(new Event('input')); }); cd = await pg.evaluate(() => window.__coda());
+  ok(cd.k === 6 && cd.iread.includes('learns') && !cd.iread.includes('habit') && cd.iread.includes('estimate'), `${wd}px: at six times the record habit leaves the interval, learning stays, marked as an estimate`);
+  for (const id of ['cd-win', 'cd-int']) { const n = await pg.$eval('#' + id, e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 2000, `${wd}px: ${id} is drawn`); }
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with the coda`);
   await pg.screenshot({ path: path.join(here, `shot-${wd}.png`), fullPage: false });
   ok(errs.length === 0, `${wd}px: no script errors ${errs.join(' | ')}`);
   await pg.close();
