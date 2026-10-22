@@ -136,6 +136,18 @@ describe('the working-material rule inside a published work', () => {
     expect(isWorkingMaterial('studio/werke-html/w/reports/x.json')).toBe(false)
   })
 
+  it('publishes a work’s process, its PROCESS.json and its screenshots, in every practice (2026-10-22)', () => {
+    for (const path of ['studio/werke-html/w/PROCESS.json', 'studio/werke-html/w/process/1.png']) {
+      expect(classify(path), path).toMatchObject({ published: true, reason: 'kept' })
+    }
+    for (const practice of ['atelier', 'field']) {
+      for (const file of ['PROCESS.json', 'process/1.png']) {
+        const path = `${practice}/artifacts/cycle-010/w/${file}`
+        expect(classify(path, { openCycle: 10 }), path).toMatchObject({ published: true, reason: 'in progress' })
+      }
+    }
+  })
+
   it('keeps a working file the work itself names, and a work still in progress whole', () => {
     const path = 'studio/werke-html/w/build.py'
     expect(classify(path)).toMatchObject({ published: false, reason: 'working material' })

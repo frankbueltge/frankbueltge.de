@@ -352,6 +352,16 @@ export const SCORE_WORDING = {
       none: (one: string) => `No ${one} under v3 yet.`,
     },
 
+    /** the newest piece's states, one per session that changed it (amendment of 2026-10-22) */
+    process: {
+      title: 'How it was made',
+      sub: (n: number) => `${n === 1 ? 'one state' : `${n} states`}, one for each session that changed it, as the practice left it`,
+      state: (n: number) => `state ${n}`,
+      shot: (title: string, n: number) => `${title} at state ${n}, as the practice took it.`,
+      noShot: 'no screenshot for this state',
+      history: 'every change in the repository ↗',
+    },
+
     bulletin: {
       head: 'Latest bulletin · verbatim',
       source: 'BULLETIN.md ↗',
