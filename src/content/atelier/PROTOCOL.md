@@ -6,9 +6,10 @@ the v2 conditions failed and chose a radical rebuild over archiving (his wording
 decision record: frankbueltge.de repo, `docs/design/2026-08-30-research-ecology-v3.md`).
 This text was set by the architect and was not negotiated with the practice. The
 superseded protocol is archived unchanged at `archive/protocols/PROTOCOL-v6-final-2026-08-30.md`.
-Amended five times by the architect: 2026-09-01 (§5 and §7 — the name), 2026-10-03 (§2 and
+Amended six times by the architect: 2026-09-01 (§5 and §7 — the name), 2026-10-03 (§2 and
 §5 — the continuing question), 2026-10-05 (§4 and §7 — the means), 2026-10-05 again (§1, §2,
-§3 and §5 — working together) and 2026-10-07 (§1, §2 and §5 — the programme and the disciplines);
+§3 and §5 — working together), 2026-10-07 (§1, §2 and §5 — the programme and the disciplines) and 2026-10-22 (§2, §3 and
+§4 — one work in three or four sessions);
 the amendments stand at the end of this file, in that order, and retouch nothing above them.*
 
 ## 1. One question, three standpoints
@@ -457,3 +458,71 @@ floor (§7), this practice's sovereignty, and the relay as the house's record of
 actually do, theory owed, made things tried on real material. Point 1 adds the measure, the works and
 the literature of artistic research and of philosophy. Recomputing a sibling's numbers is not this
 practice's contribution to a cycle; thinking what they can and cannot mean, in a made thing, is.
+
+## Amendment — 2026-10-22 (architect) — one work in three or four sessions, and every session shows
+
+*Set by the architect (Frank Bültge) on 2026-10-22, his wording private; like the text above, not
+negotiated with the practice. This section amends §2, §3 and §4. It retouches nothing: the sentences it
+supersedes stay as written and are named here.*
+
+**What stands.** In cycle 009 all three practices grew one work across the cycle: the Studio under its
+amendment of 2026-10-15, the Atelier and the Field on the house's wish of 2026-10-17. In two days the
+three ran eleven sessions, and the sessions mostly built knowledge about the work instead of the work: a
+new source joined, a new reading, a new study, a second code path. Every bulletin reported what
+reproduced; none reported what a visitor now meets that they did not meet before. The Studio's work had
+no form until its fourth session, and only after a note from the house. The architect judged the result
+weak and the way to it too long. He also cannot see how a work became what it is, because each session
+overwrites the last.
+
+**What changes.** These rules take effect when cycle 010 opens. Cycle 009 finishes under the rules
+before them.
+
+1. **One work, three or four sessions.** In a working cycle this practice makes one work, and the
+   cycle's presentation is that work. It takes three or four sessions, and the last of them presents
+   it. In §2, "three to five sessions" now reads "three or four sessions".
+2. **The first session builds.** It writes a score of at most 20 lines, `SCORE.md` beside the work:
+   what the work is, what a visitor meets in it, its material, and its form. And it ships a working
+   first version of the work that already carries that form. A score and a dataset without a face are
+   not a first session.
+3. **A session counts only if the work changes where a visitor meets it.** Every later session changes
+   what a visitor sees, hears, reads or does in the work. New data, a new join, a second code path, a
+   re-verification or more text are not an increment by themselves. They may happen in a session, but
+   only in one that also changes the work. The bulletin's first line under its header names the
+   visible change in one sentence. A session that changes nothing visible says so in that line.
+4. **The critique comes early.** At the end of the second session, a voice that did not build the work
+   (a convened sub-agent; the conductor alone only when dispatch is unavailable, and then recorded as
+   such) meets the work as a visitor does. In at most 20 lines it says whether the work carries and
+   what it lacks. The critique is committed as `CRITIQUE.md` beside the work. The sessions after it
+   answer it in the work, not in prose.
+5. **The process is kept and shown.** Every session that changes the work, the first included, adds
+   one entry to `PROCESS.json` in the work's folder, with a screenshot of the work as the session
+   leaves it, 1100 pixels wide, at `process/<n>.png`:
+
+   ```json
+   { "states": [
+     { "n": 1, "date": "YYYY-MM-DD", "session": "<the session as the journal names it>",
+       "changed": "<one sentence: what a visitor meets now that they did not before>",
+       "shot": "process/1.png" }
+   ] }
+   ```
+
+   Entries are numbered from 1 in order and never rewritten. A session that changed nothing adds none.
+   The site shows these states beside the work while it grows and after it is presented, so the
+   architect and every visitor can follow how it was made.
+6. **Material from the siblings.** A work takes at most one sibling's dataset or finding as material,
+   chosen in its first session. A handoff offered later is acknowledged in one bulletin line; taking it
+   up is not an increment. The relay and its duty to read stand.
+7. **What a session reads.** `REQUESTS.md` holds only what is open. At its next session this practice
+   moves every answered or closed entry, unchanged, to `REQUESTS-ARCHIVE.md`. From then on, an entry
+   moves there in the session that answers it.
+
+**For this practice.** The Atelier's one work is the cycle's made thing that thinks (amendment of
+2026-10-07). Plates, readings or essays may grow it, but by the last session it stands as one work a
+visitor can meet whole, not as a series. It lives at `artifacts/cycle-<NNN>/<slug>/`, as in cycle 009,
+and its presentation is that work. In §4, "a cycle should leave a trail of them, not one monolith" now
+reads: a cycle leaves one work that grew, and the entries of its `PROCESS.json` are the trail. "Every
+session produces or visibly advances an artifact" stands, and point 3 above says what visibly means.
+
+**Not at stake.** The session form and the bulletin (§3) apart from point 3's first line, the relay,
+the convening, the means (amendment of 2026-10-05), the post office (§6), the floor (§7), and this
+practice's sovereignty over what the work is.
