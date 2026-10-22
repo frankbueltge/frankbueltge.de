@@ -1,0 +1,9 @@
+# The Purse, Divided
+
+Each Nobel Prize from 1901 to 2026 is one column in its category's strip. The column's height is the award in today's kronor, and it is cut into stacked pieces, one for each laureate's share, so every piece is the money one person or organisation actually took home. Pieces are dark for men, red for women and blue for organisations. I chose this form because the data holds two quieter stories under the famous names, and stacking shows both together. The purse fell to about a third of its 1901 value by the 1920s and did not recover until the 1990s. Over the same years one prize turned more and more often into thin thirds. The red pieces stay rare until the most recent decades, and the gaps from the war years and the late start of Economics show as empty ground.
+
+## v2
+
+**(a)** The purse's worth and the laureate's share converge in one coordinate: the kronor one person took home, on a single log axis, where every laureate is one mark. **(b)** The obstacle of v1 was that the purse is the same in every category, so the six strips drew one silhouette six times; now that sameness is the means: the one purse curve repeats as four parallel echoes (whole, half, a third, a quarter), and those echoes are the share scale itself, with the thickness of each echo counting how many took that cut in that year. **(c)** Struck: the six category strips, their labels and counts, the stacked columns, and the legend that had to explain the gaps between pieces.
+
+I merge the six strips into one field, x the year, y the money one laureate took home (log), each laureate a short dash coloured man, woman or organisation, the dashes of one year and one share piled around their level. The fall and return of the purse is the shape of every band at once, and the slide from whole prizes to thirds shows as the top band thinning while the low band thickens. Category is given up on purpose: in this data it changes nothing about the money.

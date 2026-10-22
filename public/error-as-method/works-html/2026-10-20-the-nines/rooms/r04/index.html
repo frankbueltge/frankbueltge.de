@@ -1,0 +1,70 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>After the Wind</title>
+<style>
+html,body{margin:0;background:#0c1216;}
+canvas{display:block}
+</style></head>
+<body><canvas id="c" width="1100" height="800"></canvas>
+<script src="data/46026h2024.js"></script>
+<script>
+const W=1100,H=800,cv=document.getElementById('c'),g=cv.getContext('2d');
+const dpr=window.devicePixelRatio||1;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';g.scale(dpr,dpr);
+const SERIF='Georgia, "Times New Roman", serif';
+function load(url){return new Promise((res,rej)=>{fetch(url).then(r=>r.text()).then(res).catch(()=>{const x=new XMLHttpRequest();x.open('GET',url);x.onload=()=>res(x.responseText);x.onerror=rej;x.send();});});}
+function tcol(t,a){ // 9.5 cold blue -> 16.5 warm ochre
+  let u=Math.max(0,Math.min(1,(t-9.5)/7));
+  const st=[[0,[70,120,190]],[0.35,[120,190,205]],[0.6,[225,225,205]],[0.8,[235,190,120]],[1,[225,120,70]]];
+  for(let i=1;i<st.length;i++){if(u<=st[i][0]){const[a0,c0]=st[i-1],[a1,c1]=st[i];const f=(u-a0)/(a1-a0);
+    return `rgba(${c0.map((v,k)=>Math.round(v+(c1[k]-v)*f)).join(',')},${a})`;}}
+}
+(window.BUOY_TXT?Promise.resolve(window.BUOY_TXT):load('data/46026h2024.txt')).then(txt=>{
+  const rows=[];
+  for(const ln of txt.split('\n')){if(!ln||ln[0]==='#')continue;const f=ln.trim().split(/\s+/);if(f.length<18)continue;
+    rows.push({mo:+f[1],d:+f[2],h:+f[3],mi:+f[4],wspd:+f[6],gst:+f[7],wvht:+f[8],dpd:+f[9],mwd:+f[11],pres:+f[12],wtmp:+f[14]});}
+  const L=86,R=40,TOP=118,RH=52,PXD=(W-L-R)/31,K=3.3;
+  const xOf=r=>L+(r.d-1+(r.h+r.mi/60)/24)*PXD, cyOf=m=>TOP+(m-1)*RH+RH/2;
+  // title
+  g.fillStyle='#e9e4d8';g.font='italic 30px '+SERIF;g.textBaseline='alphabetic';g.fillText('After the Wind',L,58);
+  g.font='12px '+SERIF;g.fillStyle='#8f9aa0';
+  g.fillText('NDBC buoy 46026 · 18 nautical miles west of San Francisco · 2024',L,82);
+  g.fillText('each stroke: one wave record, drawn ± significant wave height · colour: sea temperature at the hull',L,99);
+  // month labels and day ticks
+  const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],DIM=[31,29,31,30,31,30,31,31,30,31,30,31];
+  for(let m=1;m<=12;m++){const cy=cyOf(m);g.fillStyle='#7d878c';g.font='italic 13px '+SERIF;g.textAlign='right';g.fillText(MN[m-1],L-16,cy+4);
+    g.fillStyle='rgba(200,210,215,0.13)';for(let d=0;d<=DIM[m-1];d++){g.fillRect(L+d*PXD-0.5,cy+RH/2-3,1,d%7==0?3:1.5);} }
+  g.textAlign='left';
+  // temperature thread (sensor alive) and wave strokes
+  for(const r of rows){if(r.wtmp<99){g.fillStyle=tcol(r.wtmp,0.55);g.fillRect(xOf(r),cyOf(r.mo)-0.5,PXD/144+0.4,1);}}
+  let lastT=13;
+  const tAt={};for(const r of rows){if(r.wtmp<99)lastT=r.wtmp;r.t=lastT;}
+  
+  for(const r of rows){if(r.wvht>=99)continue;const x=xOf(r),cy=cyOf(r.mo),h=r.wvht*K;
+    const a=0.28+0.5*Math.min(1,Math.max(0,(r.dpd-6)/12)); // long-period swell glows brighter
+    g.fillStyle=tcol(r.t,a);g.fillRect(x-0.5,cy-h,1.1,2*h);}
+  
+  // the wind, while it lasted: thin trace above January / February
+  g.strokeStyle='rgba(240,236,226,0.85)';g.lineWidth=0.8;let last=null,prev=null;
+  g.beginPath();
+  for(const r of rows){if(r.wspd>=99){prev=null;continue;}const x=xOf(r),y=cyOf(r.mo)-RH/2+2+ (20-r.wspd)*0+0; const yy=cyOf(r.mo)-4-r.wspd*1.05;
+    if(prev&&prev.mo===r.mo)g.lineTo(x,yy);else g.moveTo(x,yy);prev=r;last={r,x,y:yy};}
+  g.save();g.strokeStyle='rgba(12,18,22,0.8)';g.lineWidth=2.6;g.stroke();g.restore();g.stroke();
+  if(last){const{r,x,y}=last;g.fillStyle='#f4efe4';g.beginPath();g.arc(x,y,2.4,0,7);g.fill();
+    g.font='13px '+SERIF;g.fillText('†',x+5,y-3);
+    const tx=L+26.3*PXD,cy=cyOf(2);g.textAlign='left';
+    g.font='13px '+SERIF;g.fillStyle='#e9e4d8';g.fillText('†',tx,cy-12);
+    g.font='italic 11.5px '+SERIF;g.fillText('last wind it measured',tx+10,cy-12);
+    g.font='11px '+SERIF;g.fillStyle='#a8b0b3';
+    g.fillText(`4 Feb, 22:50 UTC · ${r.wspd} m/s`,tx+10,cy+2);
+    g.fillText(`gusting ${r.gst} · ${r.pres} hPa`,tx+10,cy+16);}
+  g.font='italic 11px '+SERIF;g.fillStyle='#8f9aa0';
+  g.fillText('nothing at all,',L+4,cyOf(3)-3);g.fillText('26 Feb – 5 Mar',L+4,cyOf(3)+11);
+  g.textAlign='left';g.font='11px '+SERIF;g.fillStyle='#6f7a7f';
+  g.fillText('The white trace over January and February is the wind (m/s). After the storm of 4 February the anemometer and barometer report nothing more; for the rest of the year only the sea is recorded.',L,H-22);
+  // scale key
+  const kx=W-R-170,ky=50;g.font='11px '+SERIF;g.fillStyle='#8f9aa0';g.textAlign='left';
+  for(let i=0;i<=30;i++){g.fillStyle=tcol(9.5+7*i/30,0.95);g.fillRect(kx+i*4,ky,4,6);}
+  g.fillStyle='#8f9aa0';g.fillText('9.5 °C',kx,ky+20);g.textAlign='right';g.fillText('16.5 °C',kx+124,ky+20);g.textAlign='left';
+  g.fillStyle=tcol(13,0.9);g.fillRect(kx+150,ky+3-6*K/2,1.5,6*K);g.fillStyle='#8f9aa0';g.fillText('6 m',kx+156,ky+8);
+  g.fillText('brighter = longer period',kx,ky+36);
+});
+</script></body></html>

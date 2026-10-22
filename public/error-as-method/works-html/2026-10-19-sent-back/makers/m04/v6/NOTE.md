@@ -1,0 +1,3 @@
+# Sediment
+
+The 6,451 confirmed exoplanets are laid down as strata, one per discovery year from 1992 at the top to 2026 at the bottom, each layer thickening with that year's haul. Across, each planet sits at the length of its own year; within a layer the planets are graded like sediment, small on top and large below; colour is the method that found it and brightness is nearness. I chose a geological section because the archive is a record of how it was deposited rather than a map of the sky, and the section reads that way: thin early layers of nearby radial-velocity giants, the dim Kepler floods of 2014 and 2016, a bright floor of giants under every year, and the empty long-period ground that no method has yet reached.

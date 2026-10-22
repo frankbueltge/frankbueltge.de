@@ -1,0 +1,74 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>After the Wind</title>
+<style>
+html,body{margin:0;background:#efebe2;}
+canvas{display:block}
+</style></head>
+<body><canvas id="c" width="1100" height="800"></canvas>
+<script src="data/46026h2024.js"></script>
+<script>
+const C=document.getElementById('c'),g=C.getContext('2d');
+const W=1100,H=800;
+const ink='#24221f',faint='#8f887c';
+const X0=80,X1=1040,DAYS=366,DW=(X1-X0)/DAYS;
+const GY0=192,SL=3.3,GY1=GY0+144*SL; // field
+const doy=(m,d)=>{const t=Date.UTC(2024,m-1,d);return Math.round((t-Date.UTC(2024,0,1))/864e5);};
+const stops=[[9.3,[22,36,62]],[11,[38,86,112]],[12.5,[92,140,146]],[13.6,[176,186,160]],[14.6,[222,200,148]],[15.6,[214,146,92]],[16.8,[168,74,46]]];
+function col(t){for(let i=1;i<stops.length;i++){if(t<=stops[i][0]){const [a,ca]=stops[i-1],[b,cb]=stops[i];const f=Math.max(0,(t-a)/(b-a));return `rgb(${ca.map((v,k)=>Math.round(v+(cb[k]-v)*f)).join(',')})`;}}return `rgb(${stops[stops.length-1][1]})`;}
+function txt(s,x,y,o={}){g.font=(o.w||'400')+' '+(o.s||11)+'px '+(o.f||'Georgia, serif');g.fillStyle=o.c||ink;g.textAlign=o.a||'left';g.fillText(s,x,y);}
+
+draw(window.RAW);
+function draw(raw){
+  const rows=raw.split('\n').filter(l=>l&&l[0]!='#').map(l=>l.trim().split(/\s+/).map(Number));
+  g.fillStyle='#efebe2';g.fillRect(0,0,W,H);
+  // field: water temperature, day x ten-minute slot
+  for(const r of rows){const [y,m,d,h,mi]=r;const wt=r[14];if(wt>=999)continue;
+    const x=X0+doy(m,d)*DW,yy=GY0+(h*6+mi/10)*SL;g.fillStyle=col(wt);g.fillRect(x-0.3,yy-0.3,DW+0.9,SL+0.9);}
+  // wave height per day: mean & max, below field
+  const wv={};for(const r of rows){if(r[8]>=99)continue;const k=doy(r[1],r[2]);(wv[k]=wv[k]||[]).push(r[8]);}
+  const WY=GY1+16,WS=11; // px per metre, hanging down
+  g.fillStyle='#3d4a55';
+  for(const k in wv){const a=wv[k],mx=Math.max(...a),mn=a.reduce((s,v)=>s+v,0)/a.length;const x=X0+k*DW;
+    g.globalAlpha=.28;g.fillRect(x,WY,DW-0.5,mx*WS);g.globalAlpha=1;g.fillRect(x,WY,DW-0.5,mn*WS);}
+  // wind: Jan 1 .. Feb 4 22:50, hourly mean & gust, above field
+  const BY=GY0-12,KS=3.1; // px per m/s
+  const wind=rows.filter(r=>r[6]<99);
+  g.beginPath();let first=true;
+  for(const r of wind){const x=X0+(doy(r[1],r[2])+(r[3]*60+r[4])/1440)*DW,y=BY-r[7]*KS;first?g.moveTo(x,y):g.lineTo(x,y);first=false;}
+  g.strokeStyle='rgba(36,34,31,.25)';g.lineWidth=.6;g.stroke();
+  g.beginPath();first=true;
+  for(const r of wind){const x=X0+(doy(r[1],r[2])+(r[3]*60+r[4])/1440)*DW,y=BY-r[6]*KS;first?g.moveTo(x,y):g.lineTo(x,y);first=false;}
+  g.strokeStyle=ink;g.lineWidth=.8;g.stroke();
+  const L=wind[wind.length-1];const lx=X0+(doy(L[1],L[2])+(L[3]*60+L[4])/1440)*DW,ly=BY-L[6]*KS;
+  g.fillStyle=ink;g.beginPath();g.arc(lx,ly,2.2,0,7);g.fill();
+  // the silence: dotted baseline where wind would be
+  g.strokeStyle='rgba(36,34,31,.35)';g.setLineDash([1,4]);g.lineWidth=1;g.beginPath();g.moveTo(lx+6,BY);g.lineTo(X1,BY);g.stroke();g.setLineDash([]);
+  g.beginPath();g.moveTo(X0,BY+.5);g.lineTo(lx,BY+.5);g.strokeStyle=ink;g.lineWidth=.6;g.stroke();
+  txt('4 Feb, 22:50 — wind 17.8 m/s, gusts 24.4, pressure 989.4 hPa.',lx+10,ly-4,{s:11,f:'Georgia, serif',a:'left'});
+  txt('Then 47 hours of silence. When the records return, wind and air pressure never do. The sea keeps being measured.',lx+10,ly+10,{s:11,c:faint});
+  // month ticks
+  const mn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for(let m=1;m<=12;m++){const x=X0+doy(m,1)*DW;g.fillStyle=faint;g.fillRect(x,GY1+4,.6,5);txt(mn[m-1],x+2,GY1+10,{s:9,c:faint,f:'Helvetica, Arial, sans-serif'});}
+  // hours
+  for(const h of [0,6,12,18,24]){const y=GY0+h*6*SL;txt(String(h).padStart(2,'0')+':00',X0-8,y+3,{s:9,c:faint,a:'right',f:'Helvetica, Arial, sans-serif'});g.fillStyle=faint;g.fillRect(X0-5,y,3,.6);}
+  // labels
+  txt('wind m/s',X0-8,BY-44,{s:9,c:faint,a:'right',f:'Helvetica, Arial, sans-serif'});
+  txt('waves m',X0-8,WY+12,{s:9,c:faint,a:'right',f:'Helvetica, Arial, sans-serif'});
+  for(const v of [2,4,6]){const y=WY+v*WS;g.fillStyle='rgba(36,34,31,.25)';g.fillRect(X0-5,y,3,.6);txt(v,X0-8,y+3,{s:8,c:faint,a:'right',f:'Helvetica, Arial, sans-serif'});}
+  for(const v of [10,20]){const y=BY-v*KS;g.fillStyle='rgba(36,34,31,.35)';g.fillRect(X0-5,y,3,.6);txt(v,X0-8,y+3,{s:8,c:faint,a:'right',f:'Helvetica, Arial, sans-serif'});}
+  // gap note
+  function vtxt(s,d0,d1){const x=X0+(doy(...d0)+doy(...d1)+1)/2*DW;g.save();g.translate(x+3,GY0+144*SL/2);g.rotate(-Math.PI/2);txt(s,0,0,{s:9,c:faint,a:'center',f:'Helvetica, Arial, sans-serif'});g.restore();}
+  vtxt('26 Feb – 4 Mar: no records at all',[2,26],[3,4]);
+  vtxt('6 – 23 Mar: sea temperature missing, waves still logged',[3,6],[3,23]);
+  // title
+  txt('After the Wind',X0,50,{s:26});
+  txt('Buoy 46026, 18 nautical miles west of San Francisco, 2024. Every ten-minute record of sea temperature as one cell: day across, hour down.',X0,72,{s:12,c:'#5b564d'});
+  txt('daily wave height — dark: mean, pale: highest',X0,H-14,{s:9,c:faint,f:'Helvetica, Arial, sans-serif'});
+  // legend
+  const lx0=X1-200,ly0=H-22;
+  for(let i=0;i<200;i++){g.fillStyle=col(9.3+7.5*i/200);g.fillRect(lx0+i,ly0,1.2,7);}
+  txt('9.3 °C',lx0,ly0+19,{s:9,c:faint,f:'Helvetica, Arial, sans-serif'});
+  txt('16.8 °C',lx0+200,ly0+19,{s:9,c:faint,a:'right',f:'Helvetica, Arial, sans-serif'});
+  txt('sea temperature',lx0-8,ly0+7,{s:9,c:faint,a:'right',f:'Helvetica, Arial, sans-serif'});
+}
+</script></body></html>

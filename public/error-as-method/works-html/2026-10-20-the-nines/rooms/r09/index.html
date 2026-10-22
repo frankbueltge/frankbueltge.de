@@ -1,0 +1,74 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Eighteen Miles Out</title>
+<style>
+html,body{margin:0;background:#0a141c;}
+canvas{display:block;}
+</style>
+<script src="data/buoy.js"></script>
+</head><body><canvas id="c" width="1100" height="800"></canvas>
+<script>
+const c=document.getElementById('c'),g=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;c.width=1100*dpr;c.height=800*dpr;c.style.width='1100px';c.style.height='800px';g.scale(dpr,dpr);
+const BG='#0a141c';
+g.fillStyle=BG;g.fillRect(0,0,1100,800);
+const X0=92,X1=1040,TOP=58,BOT=770,DAYS=366,SP=(BOT-TOP)/DAYS,AMP=3.4;
+const {H,T,W}=BUOY;
+// temperature colour: 9 C cold slate-blue -> 13 pale -> 17 warm
+const stops=[[9,[52,92,130]],[11,[86,150,170]],[13,[200,212,200]],[15,[236,190,130]],[17,[240,120,80]]];
+function col(t,a){if(t<0)return 'rgba(120,130,140,'+a+')';t/=10;let i=0;while(i<stops.length-2&&t>stops[i+1][0])i++;
+ const[a0,c0]=stops[i],[a1,c1]=stops[i+1];let k=Math.max(0,Math.min(1,(t-a0)/(a1-a0)));
+ return 'rgba('+c0.map((v,j)=>Math.round(v+(c1[j]-v)*k)).join(',')+','+a+')';}
+function tAt(i){for(let r=0;r<12;r++){if(i+r<T.length&&T[i+r]>=0)return T[i+r];if(i-r>=0&&T[i-r]>=0)return T[i-r];}return -1;}
+const xs=s=>X0+(X1-X0)*s/144;
+// each day: one row of drawn sea, top = 1 Jan. Amplitude = significant wave height,
+// drawn wavelength proportional to the dominant period. Where the file says 99.00, the sea is not drawn.
+const {D}=BUOY;
+function interp(A,i,maxgap){ // linear between nearest valid readings within maxgap slots
+ if(A[i]>=0)return A[i];let l=-1,r=-1;
+ for(let k=1;k<=maxgap;k++){if(l<0&&i-k>=0&&A[i-k]>=0)l=k;if(r<0&&i+k<A.length&&A[i+k]>=0)r=k;if(l>=0&&r>=0)break;}
+ if(l<0||r<0||l+r>maxgap)return -1;return (A[i-l]*r+A[i+r]*l)/(l+r);}
+const WL=2.1; // px per second of period
+for(let d=0;d<DAYS;d++){
+ const y0=TOP+(d+0.5)*SP+2;const base=d*144;
+ let phase=d*1.7, run=[];
+ const flush=()=>{if(run.length<2){run=[];return;}
+  g.beginPath();g.moveTo(run[0][0],y0+SP*1.6);for(const p of run)g.lineTo(p[0],p[1]);
+  g.lineTo(run[run.length-1][0],y0+SP*1.6);g.closePath();g.fillStyle=BG;g.fill();
+  g.lineWidth=0.7;
+  for(let k=1;k<run.length;k++){g.beginPath();g.moveTo(run[k-1][0],run[k-1][1]);g.lineTo(run[k][0],run[k][1]);
+   g.strokeStyle=col(run[k][2],0.85);g.stroke();}
+  run=[];};
+ const step=0.5;
+ for(let x=X0;x<=X1;x+=step){
+  const sf=(x-X0)/(X1-X0)*144, i=Math.min(base+Math.floor(sf),H.length-1);
+  const h=interp(H,i,8), per=interp(D,i,8);
+  if(h<0||per<0){flush();continue;}
+  phase+=2*Math.PI*step/(per/10*WL);
+  const y=y0-Math.sin(phase)*(h/100)*1.15;
+  run.push([x,y,tAt(i)]);
+ }
+ flush();
+}
+// margins
+g.font='11px "Helvetica Neue",Helvetica,Arial,sans-serif';g.textBaseline='middle';
+const mon=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const ml=[31,29,31,30,31,30,31,31,30,31,30,31];let dd=0;
+for(let m=0;m<12;m++){const y=TOP+dd*SP+SP;g.fillStyle='rgba(180,195,205,0.55)';g.textAlign='left';g.fillText(mon[m],28,y+4);
+ g.fillStyle='rgba(180,195,205,0.25)';g.fillRect(64,y,10,0.7);dd+=ml[m];}
+g.textAlign='center';g.fillStyle='rgba(180,195,205,0.45)';
+for(let h=0;h<=24;h+=6){const x=xs(h*6);g.fillText(String(h).padStart(2,'0')+':00',x,BOT+16);g.fillRect(x-0.35,BOT+4,0.7,5);}
+g.textAlign='left';g.fillStyle='rgba(215,225,230,0.85)';g.font='15px Georgia,"Times New Roman",serif';
+g.fillText('Eighteen Miles Out',X0,20);
+g.font='11px "Helvetica Neue",Helvetica,Arial,sans-serif';g.fillStyle='rgba(180,195,205,0.55)';
+g.fillText('buoy 46026, 18 nm west of San Francisco, 2024 · a row of sea per day · height: wave height · wavelength: dominant period · colour: water temperature',X0,38);
+// where the wind and the pressure became nines
+let last=-1;for(let i=0;i<W.length;i++)if(W[i]>=0)last=i;
+const ld=Math.floor(last/144),yl=TOP+(ld+0.5)*SP+2;
+g.fillStyle='rgba(180,195,205,0.6)';g.beginPath();g.moveTo(X1+6,yl);g.lineTo(X1+13,yl-3.5);g.lineTo(X1+13,yl+3.5);g.fill();
+g.textAlign='left';g.font='italic 10px Georgia,serif';g.fillStyle='rgba(180,195,205,0.55)';
+g.fillText('wind',X1+17,yl-6);g.fillText('ends',X1+17,yl+6);
+// legend
+const lx=X1-118,ly=27;for(let i=0;i<=120;i++){g.fillStyle=col(90+i*80/120,1);g.fillRect(lx+i*0.8,ly-3,1.2,6);}
+g.font='10px "Helvetica Neue",Helvetica,Arial,sans-serif';g.fillStyle='rgba(180,195,205,0.55)';
+g.textAlign='right';g.fillText('9°',lx-4,ly);g.textAlign='left';g.fillText('17°C',lx+100,ly);
+</script></body></html>

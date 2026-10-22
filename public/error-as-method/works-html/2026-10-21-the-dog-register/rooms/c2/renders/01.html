@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Fell, unbestimmt</title>
+<style>
+  html, body { margin: 0; background: #efebe3; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/dogs.js"></script>
+<script>
+// A lexicon of colour words (not data): how a registered word might look as fur.
+const LEX = {
+  weiss:'#f7f4ec', white:'#f7f4ec', bianco:'#f7f4ec',
+  schwarz:'#1c1a19', black:'#1c1a19',
+  braun:'#6b4429', marrone:'#6b4429', liver:'#5e3524', schoko:'#4a2c1d', choco:'#4a2c1d', chocolate:'#4a2c1d',
+  dunkelbraun:'#3f2618', hellbraun:'#a3714a', rehbraun:'#9a6a40', goldbraun:'#a77432', rotbraun:'#8a3f22',
+  mahagoni:'#6e2b1c', zimt:'#a0623a', caramel:'#b47a3e', tan:'#b07a45', loh:'#b07a45', lohfarbig:'#b07a45',
+  beige:'#d9c4a0', creme:'#ece0c4', champaigne:'#e6d6b4', sand:'#d2b98d', sandfarbig:'#d2b98d',
+  rot:'#a8492a', red:'#a8492a', ruby:'#8d2f22', hirschrot:'#9b4428', fox:'#b65a2c', foxred:'#b65a2c',
+  orange:'#cf7a35', apricot:'#e0a46c', gelb:'#dbb35a', semmelgelb:'#d9b071', golden:'#cf9c48', gold:'#cf9c48',
+  blond:'#dcbd83', blondfarben:'#dcbd83', rotblond:'#d39a5c', honigfarben:'#cf9a4a', weizen:'#dcc08a',
+  wheaten:'#dcc08a', wheaton:'#dcc08a', rotweizen:'#cf9867', fawn:'#c9a06c', fauve:'#c9a06c', falb:'#c6a777',
+  isabella:'#d1b48f', lilac:'#a99a9d',
+  grau:'#8d8b87', silber:'#b9bab8', silbergrau:'#a8a9a7', blau:'#6e7782', blue:'#6e7782', steelblue:'#5f6d7c',
+  pfeffer:'#5a5856', salz:'#d8d6d0', grizzle:'#7d7266',
+  sable:'#9a6c3c', zobel:'#9a6c3c', saufarben:'#7a6450', wildsaufarbig:'#7a6450', wildfarbig:'#857058',
+};
+const MULTI = {
+  tricolor:['#1c1a19','#b07a45','#f7f4ec'], tri:['#1c1a19','#b07a45','#f7f4ec'], dreifarbig:['#1c1a19','#b07a45','#f7f4ec'],
+  vierfarbig:['#1c1a19','#b07a45','#f7f4ec','#8d8b87'], mehrfarbig:['#1c1a19','#a8492a','#f7f4ec'],
+  bicolor:['#1c1a19','#b07a45'], blenheim:['#f7f4ec','#a8492a'], harlekin:['#f7f4ec','#1c1a19'],
+};
+const PATTERN = /gestromt|brindle|merle|schimmel|meliert|melliert|dapple|spotted|pied|gefleckt|wolkig|harlekin|grizzle/;
+
+function parseCoat(txt) {
+  const s = String(txt || '').toLowerCase().trim();
+  if (!s || s === 'unbestimmt') return null;
+  const cols = [];
+  let pattern = PATTERN.test(s) || s === 'brindle';
+  for (const raw of s.split(/[\/,]| und | mit /)) {
+    const t = raw.trim();
+    if (MULTI[t]) { cols.push(...MULTI[t]); continue; }
+    let found = false;
+    for (const w of t.split(/[\s\-]+/)) {
+      if (LEX[w]) { cols.push(LEX[w]); found = true; }
+      else if (MULTI[w]) { cols.push(...MULTI[w]); found = true; }
+    }
+    if (!found) {
+      if (/gestromt|brindle/.test(t)) cols.push('#5b3d27', '#1c1a19');
+      else if (/merle|dapple/.test(t)) cols.push('#6e7782', '#1c1a19');
+      else if (/schimmel/.test(t)) cols.push('#9a8f86');
+    }
+  }
+  if (!cols.length) return { cols: ['#9a9187'], pattern: false, odd: true };
+  return { cols: cols.slice(0, 4), pattern };
+}
+function lum(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  return 0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255);
+}
+
+// ---- assemble ----
+const dogs = DOGS.map(d => ({ d, coat: parseCoat(d.HundefarbeText) }));
+for (const x of dogs) x.L = x.coat ? x.coat.cols.reduce((a, c) => a + lum(c), 0) / x.coat.cols.length : 999;
+dogs.sort((a, b) => (a.d.GebHundDatJahr - b.d.GebHundDatJahr) || (a.L - b.L));
+
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+const W = 1100, H = 800;
+g.fillStyle = '#efebe3'; g.fillRect(0, 0, W, H);
+
+const CELL = 8, COLS = 128;
+const X0 = 54, Y0 = 92;
+const rows = Math.ceil(dogs.length / COLS);
+
+function drawCoat(x, y, s, coat) {
+  const c = coat.cols;
+  const inner = s - 1;
+  if (coat.pattern && c.length >= 1) {
+    // fine diagonal stripes for brindle / merle / roan words
+    const a = c[0], b = c[1] || '#1c1a19';
+    for (let i = 0; i < inner; i++) for (let j = 0; j < inner; j++) {
+      g.fillStyle = ((i + j) % 3 === 0) ? b : a;
+      g.fillRect(x + i, y + j, 1, 1);
+    }
+    return;
+  }
+  // multi-colour coats split into vertical bands, first colour widest
+  const n = c.length;
+  const weights = c.map((_, i) => n === 1 ? 1 : (i === 0 ? 2 : 1));
+  const tot = weights.reduce((a, b) => a + b, 0);
+  let off = 0;
+  for (let i = 0; i < n; i++) {
+    const w = i === n - 1 ? inner - off : Math.round(inner * weights[i] / tot);
+    g.fillStyle = c[i];
+    g.fillRect(x + off, y, w, inner);
+    off += w;
+  }
+}
+
+let prevYear = null;
+const yearStarts = [];
+dogs.forEach((x, i) => {
+  const col = i % COLS, row = Math.floor(i / COLS);
+  const px = X0 + col * CELL, py = Y0 + row * CELL;
+  if (x.d.GebHundDatJahr !== prevYear) { yearStarts.push({ year: x.d.GebHundDatJahr, i, col, row }); prevYear = x.d.GebHundDatJahr; }
+  if (x.coat) drawCoat(px, py, CELL, x.coat);
+  else {
+    // "unbestimmt": the register holds a dog here but no colour
+    g.strokeStyle = 'rgba(60,50,40,0.22)'; g.lineWidth = 1;
+    g.strokeRect(px + 0.5, py + 0.5, CELL - 2, CELL - 2);
+  }
+});
+
+// year seams: a thin line along the stepped boundary where a birth year begins
+g.strokeStyle = '#b8402a'; g.lineWidth = 1.2;
+g.font = '10px Georgia, serif'; g.fillStyle = '#5a4a3c'; g.textBaseline = 'middle';
+yearStarts.forEach((ys, k) => {
+  if (k > 0) {
+    const x = X0 + ys.col * CELL, y = Y0 + ys.row * CELL;
+    g.beginPath();
+    g.moveTo(X0, y + CELL); g.lineTo(x, y + CELL); g.lineTo(x, y);
+    g.lineTo(X0 + COLS * CELL, y);
+    g.stroke();
+  }
+  const next = yearStarts[k + 1];
+  const endRow = next ? next.row : rows - 1;
+  const midRow = (ys.row + endRow) / 2;
+  const span = endRow - ys.row;
+  if (span >= 1 || k === 0) {
+    g.textAlign = 'right';
+    g.fillText(String(ys.year), X0 - 8, Y0 + (midRow + 0.5) * CELL);
+  }
+});
+
+// title & small text
+g.fillStyle = '#2a221c'; g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+g.font = 'italic 30px Georgia, serif';
+g.fillText('Fell, unbestimmt', X0, 52);
+const und = dogs.filter(x => !x.coat).length;
+g.font = '12px Georgia, serif'; g.fillStyle = '#5a4a3c';
+g.fillText(dogs.length.toLocaleString('de-CH') + ' Hunde der Stadt Zürich, je ein Feld in der Farbe, die das Register für sein Fell nennt — nach Geburtsjahr, innerhalb des Jahres von dunkel nach hell.',
+  X0, 74);
+const yb = Y0 + rows * CELL + 30;
+g.fillText('Leer gerahmt: ' + und.toLocaleString('de-CH') + ' Hunde, deren Farbe als «unbestimmt» eingetragen ist.', X0, yb);
+g.fillStyle = '#8a7a6c';
+g.fillText('Hundebestand, Stichtag 30.9.2026 · Open Data Zürich', X0, yb + 18);
+</script>
+</body>
+</html>

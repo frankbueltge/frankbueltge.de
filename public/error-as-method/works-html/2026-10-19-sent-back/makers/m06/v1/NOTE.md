@@ -1,0 +1,3 @@
+# Every Line of Sight
+
+The 6,451 confirmed exoplanets are laid around a dial with the Sun at its centre: each planet is one spoke, placed in the order it was confirmed (clockwise from the top), and its distance from the centre is its distance from us on a log scale, coloured by detection method and sized by radius. Giving every planet the same slice of angle, rather than every year, lets the history of the search show itself. The early radial-velocity decades are a thin bundle of nearby blue. The Kepler releases of 2014 and 2016 fill a third of the circle with far-off transits. Sorting each year from nearest to farthest turns every year into a single sweep outward, so the dial reads like a record of how far we have learned to look.

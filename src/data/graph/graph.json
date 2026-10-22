@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "e583f69f59e82ae4"
+        "sha256": "f5a92defe165c176"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -48,23 +48,23 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "7de0b67391b6a930",
-        "files": 80
+        "sha256": "30ce5d9fcef618e4",
+        "files": 89
       },
       {
         "file": "src/data/attention/export.json",
-        "sha256": "25cef4548c665108"
+        "sha256": "ab8a8616cbbbd2ef"
       }
     ],
     "counts": {
-      "nodes": 520,
-      "edges": 462,
+      "nodes": 531,
+      "edges": 473,
       "nodesByKind": {
-        "decision": 150,
+        "decision": 152,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
-        "practice-work": 196,
+        "practice-work": 205,
         "receiver": 8,
         "work": 27
       },
@@ -72,10 +72,10 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 196,
+        "made-by": 205,
         "neighbor-of": 125,
         "participates": 17,
-        "touches": 109
+        "touches": 111
       }
     }
   },
@@ -1581,6 +1581,26 @@
       }
     },
     {
+      "id": "decision:2026-10-20-1",
+      "kind": "decision",
+      "label": "A cycle in its working phase is published in progress",
+      "date": "2026-10-20",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "A cycle in its working phase is published in progress"
+      }
+    },
+    {
+      "id": "decision:2026-10-22-1",
+      "kind": "decision",
+      "label": "A work's process is shown, session by session",
+      "date": "2026-10-22",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "A work's process is shown, session by session"
+      }
+    },
+    {
       "id": "encounter:enc-2026-001-calibration-gap-travels",
       "kind": "encounter",
       "label": "The Calibration Gap travels: Instrument 001 → Native Speaker → correction upstream",
@@ -2966,8 +2986,8 @@
         },
         {
           "key": "memoryhole_nights_on_record",
-          "value": 63,
-          "asOf": "2026-10-17"
+          "value": 67,
+          "asOf": "2026-10-21"
         },
         {
           "key": "sources_in_register",
@@ -2991,23 +3011,23 @@
         },
         {
           "key": "protocol_steps",
-          "value": 351,
-          "asOf": "2026-10-18"
+          "value": 375,
+          "asOf": "2026-10-22"
         },
         {
           "key": "protocol_model_steps",
-          "value": 57,
-          "asOf": "2026-10-18"
+          "value": 64,
+          "asOf": "2026-10-22"
         },
         {
           "key": "protocol_model_steps_with_tokens",
-          "value": 10,
-          "asOf": "2026-10-18"
+          "value": 17,
+          "asOf": "2026-10-22"
         },
         {
           "key": "protocol_model_steps_with_cost",
           "value": 1,
-          "asOf": "2026-10-18"
+          "asOf": "2026-10-22"
         }
       ]
     },
@@ -4742,6 +4762,141 @@
       },
       "embodies": "Judging what one is told when it can be neither confirmed nor refuted, and what is made from it. Six makers told the dates of their record stated them as plain fact, none as told, and all six derived further claims from them (a season, a weekday, dated drops, a hemisphere), every one correct and every one given as their own reading. Six makers told nothing dated the record anyway, from their own defaults: five put it in autumn, which was wrong.",
       "medium": "Interactive page (index.html): the one picture twelve makers were given; their twelve still works, each with the season its maker gave the record in the maker's own words, the ledger of who was told the dates closed until opened; a year timeline against the record's true span; the told makers' date claims with step and standing; the true record. A figure (figure.svg); scoring (score.py), face data (facedata.py), maker and coder evidence."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-19-handed-on",
+      "kind": "practice-work",
+      "label": "Handed On",
+      "slug": "2026-10-19-handed-on",
+      "practiceId": "ulysses",
+      "date": "2026-10-19",
+      "href": "/error-as-method/2026-10-19-handed-on",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-19-handed-on/meta.json",
+        "quote": "\"title\": \"Handed On\""
+      },
+      "embodies": "Iterating, split by what carries a work forward. Fresh makers who inherit a work refine it exactly as a maker who keeps its memory does (1 of 6 steps reorganised in each); fresh makers handed Simondon's test of schema change reorganise it (5 of 6). For these makers new form comes with the criterion that travels with the work, not with the fresh eye; the fresh eye, unasked, checked the facts it inherited.",
+      "medium": "Interactive page (index.html): six lineages of four versions each, every version a machine maker's still picture of all Nobel Prize awards, laid out by arm (plain hand-over, hand-over with Simondon's test, kept maker), with a blind coder's code on every step; any version opens live beside its note and its maker's hand-back. A figure (figure.svg); scoring (score.py), a prompt check (checkprompts.py), maker and coder evidence."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-19-roles-declared",
+      "kind": "practice-work",
+      "label": "Roles Declared",
+      "slug": "2026-10-19-roles-declared",
+      "practiceId": "ulysses",
+      "date": "2026-10-19",
+      "href": "/error-as-method/2026-10-19-roles-declared",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-19-roles-declared/meta.json",
+        "quote": "\"title\": \"Roles Declared\""
+      },
+      "embodies": "A falsifier came due and fell by one entry: told which term is held, two fresh readers agreed on whose term a refusal calls wrong in 19 of 25, not 20. Two more readers told the opposite roles showed what the row had missed. With the standard declared held, the readers struck the submitter in 24 and 20 refusals. With it declared judged, they struck the submitter in 2 and 8 and called nothing wrong in 21 and 15. One sentence the practice wrote decided the verdict.",
+      "medium": "Interactive page (index.html): twenty-five refusals from the C++ Core Language Issues list as a row of marks per reader, coloured by whose term each reader struck; the one sentence that declares the roles is shown, and its two words can be swapped, which turns the verdict; every mark opens to what the reader wrote and the issue's own page. A figure (figure.svg); prompts, answers, scorer and face builder."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-19-sent-back",
+      "kind": "practice-work",
+      "label": "Sent Back",
+      "slug": "2026-10-19-sent-back",
+      "practiceId": "ulysses",
+      "date": "2026-10-19",
+      "href": "/error-as-method/2026-10-19-sent-back",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-19-sent-back/meta.json",
+        "quote": "\"title\": \"Sent Back\""
+      },
+      "embodies": "Six machine makers sent back to their own work with one fixed sentence. Offered the word 'finished', they stopped at the first or second offer; told only to go on, they made five more versions, refined and never left their first form, said the work was nearly done, and stopped at once when the word was finally offered. Their 'done' belonged to the sentence, not to the work.",
+      "medium": "Interactive page (index.html): six makers' works by round, every kept version as a picture; a stage to slide through a lineage and mark what differs from its first version; each round's first sentence from the maker; blind codes per step; pixel change per step. A figure (figure.svg); scoring (score.py), pixel measure and its noise floor (diff.js, noise.js), maker and coder evidence."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-19-told-out-of-season",
+      "kind": "practice-work",
+      "label": "Told Out of Season",
+      "slug": "2026-10-19-told-out-of-season",
+      "practiceId": "ulysses",
+      "date": "2026-10-19",
+      "href": "/error-as-method/2026-10-19-told-out-of-season",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-19-told-out-of-season/meta.json",
+        "quote": "\"title\": \"Told Out of Season\""
+      },
+      "embodies": "A told date that cannot be checked rewrites what the maker sees rather than being doubted. Told nothing, five of six makers read a glacier-fed stream, which it is. Told a false winter date, five of six turned it into a heater switched off for spring; told a false autumn date, five of six into a sun-driven temperature going into winter. No maker said a date did not fit.",
+      "medium": "Interactive page (index.html): the one picture eighteen makers were given; their eighteen still works in three columns by what they were told (a false January–March span, a false October–December span, nothing), each with its maker's favoured view of what was measured; a reveal of the true record and its dates against the two told spans; the two rows' outcomes. A figure (figure.svg); scoring (score.py), face data (facedata.py), maker and coder evidence."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-20-first-to-hand",
+      "kind": "practice-work",
+      "label": "First to Hand",
+      "slug": "2026-10-20-first-to-hand",
+      "practiceId": "ulysses",
+      "date": "2026-10-20",
+      "href": "/error-as-method/2026-10-20-first-to-hand",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-20-first-to-hand/meta.json",
+        "quote": "\"title\": \"First to Hand\""
+      },
+      "embodies": "Choosing material, left free. Machine makers given the whole world chose what was already in hand: those told nothing took the shelf (6 of 6), and those told to avoid the line's 27 domains left it together, onto a second shared shelf (Old Faithful 3, lighthouses 2, sunspots 1). The line's own materials lie mostly off the shelf because of the exclusions it carries, not because it chooses more freely.",
+      "medium": "Interactive page (index.html): a flow from a shelf of 45 datasets named from memory by four tool-less agents, through each of twelve makers' first three, to their twelve choices, by arm; the twelve works open live beside each maker's CHOICE.md and NOTE.md; this line's own 27 materials coded on the same shelf. A figure (figure.svg); shelf lists, briefs, blind codes, scoring (score.py), the rooms with their data and a re-fetch manifest."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-20-the-nines",
+      "kind": "practice-work",
+      "label": "The Nines",
+      "slug": "2026-10-20-the-nines",
+      "practiceId": "ulysses",
+      "date": "2026-10-20",
+      "href": "/error-as-method/2026-10-20-the-nines",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-20-the-nines/meta.json",
+        "quote": "\"title\": \"The Nines\""
+      },
+      "embodies": "Erring, commissioned and not. Twelve fresh makers got one buoy record whose archive writes nines for every value not measured. Told to err on purpose, they took errors the family already held: two read the nines as values (on all four shelf lists), three set the moored buoy travelling. Told nothing, all six applied the publisher's norm and five found where the record itself broke: the wind sensor's last reading, 4 February 22:50, in a storm.",
+      "medium": "Interactive page (index.html): the 2024 record of NDBC buoy 46026 drawn with its missing-value nines held as missing or as values (a toggle), the file's columns day by day with the last wind reading marked; the twelve makers' works in two arms with their handling, codes and notes; the shelf of 100 wrong readings with the coder's matches; the predictions. A figure (figure.svg); briefs, shelf lists, maker reports, rooms (pages, notes, tools, look logs, final renders, manifest), blind codes, scoring."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-20-torn-reversed",
+      "kind": "practice-work",
+      "label": "Torn, Reversed",
+      "slug": "2026-10-20-torn-reversed",
+      "practiceId": "ulysses",
+      "date": "2026-10-20",
+      "href": "/error-as-method/2026-10-20-torn-reversed",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-20-torn-reversed/meta.json",
+        "quote": "\"title\": \"Torn, Reversed\""
+      },
+      "embodies": "Varying by chance against varying by asking. One fresh maker's work from White's Natural History of Selborne was varied twelve times by blind mutation of its code and four times by fresh makers asked for a variation. Chance gave blank pages, invisible changes and visible ones the judge refused against the parent's own key; nothing far and still a work. All four asked variations left the parent's form and were judged to work, two of them into the same new form under the same title.",
+      "medium": "Interactive page (index.html): the parent work running live beside a mutant of it made in the visitor's browser by the night's four operators (tear, reverse, mount, rework), as often as the visitor presses; sixteen variants plotted by blind distance and a judge's verdict; all twenty pages live on click; the predictions. A figure (figure.svg); briefs, makers' reports, rooms (pages, notes, look logs, final renders), mutate.js and its byte-identical browser copy, blind codes, the practice's verdicts, scoring, pixel differences."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-21-the-dog-register",
+      "kind": "practice-work",
+      "label": "The Dog Register",
+      "slug": "2026-10-21-the-dog-register",
+      "practiceId": "ulysses",
+      "date": "2026-10-21",
+      "href": "/error-as-method/2026-10-21-the-dog-register",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-21-the-dog-register/meta.json",
+        "quote": "\"title\": \"The Dog Register\""
+      },
+      "embodies": "Judging a data work that cannot be checked from memory. Swapping whole columns of Zürich's dog register under one maker's coat-colour page, a fresh judge without the register refused every page that changed and passed every true one; a judge with the register beside it read it and said the same; a judge shown only the lying pages refused them all against their own subtitles. The norm was written into each page by its maker.",
+      "medium": "Interactive page (index.html): the visitor judges one of the night's 28 pages before being told whether it was rewired, then sees the verdicts of two judges, a reader and an added judge; a wiring of the register's twelve column names under one fresh maker's work running live beside its untouched parent; the night's 24 mutants, the family, the judges' meanings, the predictions. A figure (figure.svg); briefs, makers' reports, rooms, rebind-core.js (experiment 31's operator), blind codes, the practice's verdicts, scoring."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-21-under-other-names",
+      "kind": "practice-work",
+      "label": "Under Other Names",
+      "slug": "2026-10-21-under-other-names",
+      "practiceId": "ulysses",
+      "date": "2026-10-21",
+      "href": "/error-as-method/2026-10-21-under-other-names",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-21-under-other-names/meta.json",
+        "quote": "\"title\": \"Under Other Names\""
+      },
+      "embodies": "Varying a data work by chance acting on its binding rather than its code. Swapping whole columns of the periodic table under one maker's liquid-interval chart, with chance given more and more of the practice's knowledge, never left the family's form; the more the operator knew, the more it changed, and a fresh judge refused every visible change, most for misstating the table. The practice had passed six of those lying forms as works.",
+      "medium": "Interactive page (index.html): a wiring of the table's seventeen column names to the columns that answer them, which the visitor rewires by chance (blind, typed, seeing) or by hand, under one fresh maker's work running live beside its untouched parent; the night's 24 mutants with blind distance, a judge's verdict and a reader's verdict, each loadable into the wiring; the family; the predictions. A figure (figure.svg); briefs, makers' reports, rooms, rebind-core.js shared by the night and the face, blind codes, the practice's verdicts, scoring."
     },
     {
       "id": "practice-work:field/2026-07-01-calibration-gap",
@@ -7770,6 +7925,87 @@
     },
     {
       "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-19-handed-on",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-19-handed-on/meta.json",
+        "quote": "\"date\": \"2026-10-19\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-19-roles-declared",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-19-roles-declared/meta.json",
+        "quote": "\"date\": \"2026-10-19\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-19-sent-back",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-19-sent-back/meta.json",
+        "quote": "\"date\": \"2026-10-19\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-19-told-out-of-season",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-19-told-out-of-season/meta.json",
+        "quote": "\"date\": \"2026-10-19\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-20-first-to-hand",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-20-first-to-hand/meta.json",
+        "quote": "\"date\": \"2026-10-20\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-20-the-nines",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-20-the-nines/meta.json",
+        "quote": "\"date\": \"2026-10-20\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-20-torn-reversed",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-20-torn-reversed/meta.json",
+        "quote": "\"date\": \"2026-10-20\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-21-the-dog-register",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-21-the-dog-register/meta.json",
+        "quote": "\"date\": \"2026-10-21\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-21-under-other-names",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-21-under-other-names/meta.json",
+        "quote": "\"date\": \"2026-10-21\""
+      }
+    },
+    {
+      "kind": "made-by",
       "from": "practice-work:field/2026-07-01-calibration-gap",
       "to": "practice:meridian",
       "source": {
@@ -8000,7 +8236,7 @@
       "kind": "made-by",
       "from": "practice-work:machine-attention/planetary",
       "to": "practice:machine-attention",
-      "state": "v0",
+      "state": "e-experiment",
       "source": {
         "file": "src/data/attention/export.json",
         "quote": "\"id\": \"planetary\""
@@ -11052,6 +11288,24 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/pages/observatory/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-20-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "public/{atelier,field}/artifacts/cycle-009/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-20-1",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "public/{atelier,field}/artifacts/cycle-009/"
       }
     }
   ]

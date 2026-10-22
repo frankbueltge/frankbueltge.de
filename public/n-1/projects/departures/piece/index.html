@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Against the Month</title><link rel="icon" href="data:,">
+<meta name="description" content="Play a game of chess and watch how many of the 121,332 games played on Lichess in January 2013 played exactly your moves, until none did.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6b6a64;--line:#d9d6cc;--panel:#f1efe8;--a:#3b5f86;--c2:#b07a10;--sqL:#e9e4d6;--sqD:#b9ae94;--sel:#e0a030;--tgt:rgba(59,95,134,.45)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--c2:#e0a030;--sqL:#5d5a50;--sqD:#3d3b34;--tgt:rgba(127,169,214,.5)}}
+:root[data-theme="dark"]{--bg:#151513;--fg:#ecebe6;--mut:#a3a197;--line:#3a3934;--panel:#22221f;--a:#7fa9d6;--c2:#e0a030;--sqL:#5d5a50;--sqD:#3d3b34;--tgt:rgba(127,169,214,.5)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Georgia,serif}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 80px}h1{font-size:2rem;margin:.2em 0}
+.sm{font:13px/1.45 system-ui,sans-serif}.mut{color:var(--mut)}a{color:var(--a)}
+.wrap{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:24px;align-items:start;margin-top:1em}
+@media (max-width:760px){.wrap{grid-template-columns:minmax(0,1fr)}}
+#board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);width:100%;max-width:440px;aspect-ratio:1;border:1px solid var(--line);user-select:none}
+#board button{all:unset;display:flex;align-items:center;justify-content:center;font-size:min(8.2vw,40px);line-height:1;cursor:pointer;position:relative;color:#111}
+#board button.l{background:var(--sqL)}#board button.d{background:var(--sqD)}
+#board button.sel{box-shadow:inset 0 0 0 3px var(--sel)}#board button.tgt::after{content:"";position:absolute;width:30%;height:30%;border-radius:50%;background:var(--tgt)}
+#board button:focus-visible{outline:3px solid var(--a);outline-offset:-3px}
+#board .w{color:#fff;text-shadow:0 0 1px #000,0 0 2px #000,0 1px 0 #000}#board .b{color:#111;text-shadow:0 0 1px #fff}
+.count{font:600 2.6rem/1.1 system-ui,sans-serif;font-variant-numeric:tabular-nums}.count.off{color:var(--c2)}
+.say{font-size:1.1rem;min-height:3.3em}
+.strip{display:flex;align-items:flex-end;gap:2px;height:90px;overflow:hidden;margin:12px 0 4px;border-bottom:1px solid var(--line)}
+.strip i{flex:1 1 0;max-width:10px;min-width:1px;background:var(--a)}.strip i.off{background:var(--c2);height:4px}
+.next{font:13px/1.6 system-ui,sans-serif}.next button{font:13px system-ui,sans-serif;margin:0 6px 6px 0;padding:3px 8px;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:3px;cursor:pointer}
+.ctl{margin-top:10px}.ctl button,#promo button{font:14px system-ui,sans-serif;padding:6px 12px;margin:0 8px 8px 0;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:3px;cursor:pointer}
+#moves{font:13px/1.6 ui-monospace,Menlo,monospace;word-break:break-word}
+#promo{display:none}#promo.on{display:block}
+.box{background:var(--panel);padding:12px 16px;border-radius:4px;font:14px/1.5 system-ui,sans-serif;margin-top:2em}
+</style></head><body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
+<p class="sm mut">Project 13, sessions 3 and 4 · a prototype, put back · 20 October 2026</p>
+<h1>Against the month</h1>
+<p>In January 2013, <b>121,332</b> rated games of chess were played on Lichess. Play a game here, both sides, any legal moves. Under
+the board you see <b>how many of those games played exactly your moves so far</b>, until none of them did.</p>
+<div class="wrap">
+<div><div id="board" role="grid" aria-label="Chess board; choose a piece, then a square"></div>
+<div id="promo" class="sm">Promote to: <button data-p="q">queen</button><button data-p="r">rook</button><button data-p="b">bishop</button><button data-p="n">knight</button></div>
+<div class="ctl"><button id="undo">Take back</button><button id="reset">Start again</button></div></div>
+<div><div class="count" id="count">121,332</div>
+<div class="say" id="say">games of the month start from this position. Your move.</div>
+<div class="strip" id="strip" aria-hidden="true"></div>
+<div class="sm mut" id="striplab">one bar per half-move, height by the number of games still with you (log scale)</div>
+<div class="next" id="next"></div>
+<p id="moves"></p></div>
+</div>
+<div class="box">
+<p><b>What the count is.</b> The piece holds every beginning that at least two of January's games shared (96,388 of them) and nothing
+else: no game is shown that only one person played, and no player is named. So when your moves leave that ground, it can say only
+that fewer than two games played them, not whether one is still with you. Set against the month, the games played on Lichess in
+<b>February 2013</b> left it at half-move 8 in the middle (123,961 games; 41.6 % of those that left still had one January game with them
+at that moment).</p>
+<p class="mut">A prototype of the project's third session, put back at the fourth: it does nothing a person with the month's file and
+an afternoon could not do, and Lichess's own Opening Explorer already counts its rated games, by position, over any span of months. It differs
+in its cut (move sequences, the move where fewer than two remain) and in never showing or naming a single game. Whether a stranger
+reads it as meant is untested.
+Data: <a href="https://database.lichess.org/">Lichess open database</a>, standard rated games, January and February 2013, CC0.
+Moves: <a href="../vendor/LICENSE-chess.js.txt">chess.js</a> 1.4.0 (BSD-2-Clause). The study: <a href="../index.html">Where each game leaves</a>.</p>
+</div>
+<noscript><p>This piece needs JavaScript to play.</p></noscript>
+</main>
+<script type="module">
+import { Chess } from '../vendor/chess.js';
+const GLYPH = { w: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' }, b: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' } };
+const fmt = (n) => n.toLocaleString('en-US');
+const data = await (await fetch('../tree.json')).json();
+const N = data.games;
+const game = new Chess();
+let path = [], sel = null, pending = null;
+const board = document.getElementById('board');
+const cells = {};
+for (let r = 8; r >= 1; r--) for (const f of 'abcdefgh') {
+  const sq = f + r, b = document.createElement('button');
+  b.className = ((f.charCodeAt(0) - 97 + r) % 2 ? 'l' : 'd');
+  b.dataset.sq = sq; b.setAttribute('aria-label', sq);
+  b.addEventListener('click', () => tap(sq));
+  board.appendChild(b); cells[sq] = b;
+}
+// walk the tree along the visitor's moves: [count after each ply], and the node reached (null once off the tree)
+function walk() {
+  let node = data.tree; const counts = [];
+  for (const san of path) {
+    if (!node || !(san in node)) { node = null; break; }
+    const v = node[san]; counts.push(Array.isArray(v) ? v[0] : v); node = Array.isArray(v) ? v[1] : {};
+  }
+  return { counts, node, off: counts.length < path.length };
+}
+function moveName(ply) { const m = Math.ceil(ply / 2); return (ply % 2 ? 'White' : 'Black') + "'s move " + m; }
+function draw() {
+  for (const sq in cells) {
+    const p = game.get(sq), c = cells[sq];
+    c.innerHTML = p ? '<span class="' + p.color + '">' + GLYPH[p.color][p.type] + '\uFE0E</span>' : '';
+    c.classList.toggle('sel', sq === sel);
+    c.classList.toggle('tgt', !!sel && game.moves({ square: sel, verbose: true }).some((m) => m.to === sq));
+  }
+  const { counts, node, off } = walk();
+  const k = path.length, cnt = document.getElementById('count'), say = document.getElementById('say');
+  cnt.classList.toggle('off', off);
+  if (k === 0) { cnt.textContent = fmt(N); say.textContent = 'games of the month start from this position. Your move.'; }
+  else if (!off) {
+    const c = counts[k - 1];
+    cnt.textContent = fmt(c);
+    say.textContent = (c === 1 ? 'game' : 'games') + ' of the month played exactly these ' + k + (k === 1 ? ' move.' : ' half-moves.');
+  } else {
+    const at = counts.length + 1, left = data.left_by_ply[Math.min(at, data.left_by_ply.length) - 1];
+    cnt.textContent = 'fewer than 2';
+    say.textContent = 'At ' + moveName(at) + ' (half-move ' + at + ') your game left the month. By the same half-move, ' +
+      (100 * left).toFixed(1) + ' % of January\'s own games had left every other game. From here the piece cannot follow you: at most one game of the month played these moves.';
+  }
+  if (game.isGameOver() && !off) say.textContent += ' The game is over.';
+  const strip = document.getElementById('strip'); strip.innerHTML = '';
+  const H = 86, lg = Math.log10(N);
+  [N, ...counts].forEach((c) => { const i = document.createElement('i'); i.style.height = Math.max(2, H * Math.log10(c) / lg) + 'px'; strip.appendChild(i); });
+  if (off) { const i = document.createElement('i'); i.className = 'off'; strip.appendChild(i); }
+  const next = document.getElementById('next'); next.innerHTML = '';
+  if (!off && node && Object.keys(node).length) {
+    next.append('Played next by the month: ');
+    Object.entries(node).slice(0, 5).forEach(([san, v]) => {
+      const b = document.createElement('button'); b.textContent = san + ' · ' + fmt(Array.isArray(v) ? v[0] : v);
+      b.addEventListener('click', () => { game.move(san); path.push(san); sel = null; draw(); });
+      next.appendChild(b);
+    });
+  }
+  document.getElementById('moves').textContent = path.map((s, i) => (i % 2 ? '' : (i / 2 + 1) + '. ') + s).join(' ');
+}
+function play(from, to, promotion) {
+  let m = null;
+  try { m = game.move({ from, to, promotion }); } catch (e) { m = null; }
+  if (m) path.push(m.san);
+  sel = null; draw();
+}
+function tap(sq) {
+  if (pending) return;
+  const p = game.get(sq);
+  if (sel) {
+    const ms = game.moves({ square: sel, verbose: true }).filter((m) => m.to === sq);
+    if (ms.length) {
+      if (ms.some((m) => m.promotion)) { pending = { from: sel, to: sq }; document.getElementById('promo').classList.add('on'); return; }
+      return play(sel, sq);
+    }
+  }
+  sel = p && p.color === game.turn() ? sq : null; draw();
+}
+document.querySelectorAll('#promo button').forEach((b) => b.addEventListener('click', () => {
+  const { from, to } = pending; pending = null; document.getElementById('promo').classList.remove('on'); play(from, to, b.dataset.p);
+}));
+document.getElementById('undo').addEventListener('click', () => { if (path.length) { game.undo(); path.pop(); } sel = null; pending = null; draw(); });
+document.getElementById('reset').addEventListener('click', () => { game.reset(); path = []; sel = null; pending = null; draw(); });
+window.__piece = { play: (san) => { game.move(san); path.push(san); sel = null; draw(); }, walk, tree: data };
+draw();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>

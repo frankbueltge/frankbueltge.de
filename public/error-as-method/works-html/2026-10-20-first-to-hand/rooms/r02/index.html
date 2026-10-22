@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Twenty-Five Suns</title>
+<style>html,body{margin:0;background:#0d0b09}canvas{display:block}</style></head>
+<body><script src="data/sn.js"></script><canvas id="c" width="1100" height="800"></canvas>
+<script>
+window.onload=()=>draw(window.SN_CSV);
+function draw(txt){
+  const rows=txt.trim().split('\n').map(l=>l.split(';').map(s=>s.trim()))
+    .map(a=>({t:+a[2],v:+a[3]})).filter(d=>d.v>=0);
+  // solar cycle minima (SILSO), cycle 1 begins 1755.2
+  const starts=[1749.0,1755.2,1766.5,1775.5,1784.7,1798.3,1810.6,1823.3,1833.9,1843.5,1855.0,1867.2,1878.9,1890.2,1902.1,1913.6,1923.6,1933.8,1944.2,1954.3,1964.9,1976.5,1986.8,1996.4,2008.9,2019.9,2100];
+  const c=document.getElementById('c'),g=c.getContext('2d');
+  const W=1100,H=800;
+  g.fillStyle='#0d0b09';g.fillRect(0,0,W,H);
+  const n=starts.length-1;          // 26 bands incl. partial cycle 0
+  const top=200,bot=H-52,left=96,right=W-60;
+  const step=(bot-top)/(n-1);
+  const yrs=14.2, sx=(right-left)/yrs, sy=0.34; // px per year, px per sunspot
+  for(let i=0;i<n;i++){
+    const s=starts[i],e=starts[i+1];
+    const base=top+i*step;
+    let pts=rows.filter(d=>d.t>=s&&d.t<e+0.05);
+    if(i===0){ // partial: align so its end meets cycle 1 start offset
+      }
+    const s0=i===0?e-11:s;
+    const X=t=>left+(t-s0)*sx, Y=v=>base-v*sy;
+    const peak=Math.max(...pts.map(d=>d.v));
+    // fill (occludes rows behind)
+    g.beginPath();g.moveTo(X(pts[0].t),base);
+    pts.forEach(d=>g.lineTo(X(d.t),Y(d.v)));
+    g.lineTo(X(pts[pts.length-1].t),base);g.closePath();
+    const gr=g.createLinearGradient(0,base-300*sy,0,base);
+    gr.addColorStop(0,'#f6c25b');gr.addColorStop(.45,'#c4521f');gr.addColorStop(1,'#2a120a');
+    g.fillStyle=gr;g.globalAlpha=.92;g.fill();g.globalAlpha=1;
+    g.strokeStyle='#ffe6b0';g.lineWidth=.8;g.lineJoin='round';g.stroke();
+    // baseline hairline
+    g.strokeStyle='rgba(255,220,170,.18)';g.lineWidth=.6;
+    g.beginPath();g.moveTo(left-6,base+.5);g.lineTo(right,base+.5);g.stroke();
+    // labels
+    g.fillStyle='rgba(255,226,180,.62)';g.font='11px Georgia, serif';g.textAlign='right';
+    g.fillText(i===0?'1749':String(Math.floor(s)),left-12,base+3);
+    g.textAlign='left';g.fillStyle='rgba(255,226,180,.38)';g.font='italic 10px Georgia, serif';
+    g.fillText(i===0?'—':i===n-1?'25 ·':String(i),right+8,base+3);
+  }
+  g.fillStyle='#f3dcb4';g.font='26px Georgia, serif';g.textAlign='left';
+  g.fillText('Twenty-Five Suns',left,46);
+  g.fillStyle='rgba(243,220,180,.55)';g.font='italic 13px Georgia, serif';
+  g.fillText('Monthly sunspot number, 1749 – 2026, each solar cycle laid on its own line from minimum to minimum',left,68);
+  g.textAlign='right';g.font='italic 11px Georgia, serif';g.fillStyle='rgba(243,220,180,.4)';
+  g.fillText('Data: WDC-SILSO, Royal Observatory of Belgium, Brussels',right,46);
+  g.textAlign='left';
+  g.textAlign='center';g.fillText('years after each solar minimum',(left+right)/2,H-8);g.textAlign='left';
+  for(let y=0;y<=14;y+=1){const x=left+y*sx;g.fillText(String(y),x-3,H-28);}
+}
+</script></body></html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Shape of Looking</title>
+<style>
+  html,body{margin:0;background:#07080c;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#cfd2da;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function(){
+  const cv=document.getElementById('c');
+  const dpr=window.devicePixelRatio||1;
+  cv.width=1100*dpr;cv.height=800*dpr;cv.style.width='1100px';cv.style.height='800px';
+  const g=cv.getContext('2d');g.scale(dpr,dpr);
+  const D=window.PLANETS, F=D.fields, rows=D.rows;
+  const I={}; F.forEach((f,i)=>I[f]=i);
+
+  // plot frame
+  const L=96,R=1010,T=156,B=716;
+  const pMin=-1,pMax=6;     // log10 days
+  const mMin=-2,mMax=4.4;   // log10 Earth masses
+  const X=p=>L+(Math.log10(p)-pMin)/(pMax-pMin)*(R-L);
+  const Y=m=>B-(Math.log10(m)-mMin)/(mMax-mMin)*(B-T);
+
+  const COL={
+    'Transit':'#7fb4ff',
+    'Radial Velocity':'#ffb35c',
+    'Microlensing':'#7be0a8',
+    'Imaging':'#ff6f8e'
+  };
+  const OTHER='#e9e4d6';
+  const col=m=>COL[m]||OTHER;
+
+  // background faint grid: years of light? keep it to decades of period
+  g.strokeStyle='rgba(255,255,255,0.05)';g.lineWidth=1;
+  g.font='11px Georgia,serif';g.fillStyle='rgba(207,210,218,0.45)';
+  const pTicks=[[0.1,'2 hours'],[1,'1 day'],[10,'10 days'],[100,'100 days'],[1000,'3 years'],[10000,'27 years'],[100000,'270 years'],[1000000,'2,700 years']];
+  g.textAlign='center';
+  pTicks.forEach(([p,lab])=>{const x=X(p);g.beginPath();g.moveTo(x,T);g.lineTo(x,B);g.stroke();g.fillText(lab,x,B+18);});
+  const mTicks=[[0.01,'1/100 Earth'],[0.1,'1/10'],[1,'1 Earth'],[10,'10'],[100,'100'],[1000,'1,000'],[10000,'10,000 Earths']];
+  g.textAlign='right';
+  mTicks.forEach(([m,lab])=>{const y=Y(m);g.beginPath();g.moveTo(L,y);g.lineTo(R,y);g.stroke();g.fillText(lab,L-8,y+4);});
+
+  g.fillStyle='rgba(207,210,218,0.6)';g.font='italic 12px Georgia,serif';
+  g.textAlign='center';g.fillText('how long one of its years lasts →',(L+R)/2,B+40);
+  g.save();g.translate(L-70,(T+B)/2);g.rotate(-Math.PI/2);g.fillText('how heavy it is →',0,0);g.restore();
+
+  // order: common methods first so rarer ones sit on top
+  const order=['Transit','Radial Velocity','Microlensing','Imaging'];
+  const rank=m=>{const k=order.indexOf(m);return k<0?5:k;};
+  const pts=rows.filter(r=>r[I.mass_earth]!=null).slice().sort((a,b)=>rank(a[I.method])-rank(b[I.method]));
+
+  let unknown=[], off=0;
+  g.globalCompositeOperation='lighter';
+  pts.forEach(r=>{
+    const m=r[I.mass_earth], p=r[I.period_days], rad=r[I.radius_earth];
+    const s=rad?Math.max(0.9,Math.min(3.2,0.75+Math.sqrt(rad)*0.55)):1.2;
+    const c=col(r[I.method]);
+    if(p==null){unknown.push(r);return;}
+    let x=X(Math.min(Math.max(p,0.1),1e6)); if(p>1e6) off++;
+    const y=Y(Math.min(Math.max(m,0.01),2.5e4));
+    g.globalAlpha=0.55;g.fillStyle=c;
+    g.beginPath();g.arc(x,y,s,0,7);g.fill();
+  });
+  // planets with no known period: a column at the far right, a margin of the unmeasured
+  const ux=1052;
+  unknown.forEach((r,i)=>{
+    const y=Y(Math.min(Math.max(r[I.mass_earth],0.01),2.5e4));
+    const jitter=((i*7919)%23-11)*0.9;
+    g.globalAlpha=0.6;g.fillStyle=col(r[I.method]);
+    g.beginPath();g.arc(ux+jitter,y,1.3,0,7);g.fill();
+  });
+  g.globalAlpha=1;g.globalCompositeOperation='source-over';
+  g.strokeStyle='rgba(255,255,255,0.08)';g.beginPath();g.moveTo(1028,T);g.lineTo(1028,B);g.stroke();
+  g.fillStyle='rgba(207,210,218,0.5)';g.font='italic 11px Georgia,serif';g.textAlign='center';
+  g.fillText('year',ux,B+18);g.fillText('unknown',ux,B+31);
+
+  function halo(t,x,y,c){g.save();g.lineJoin='round';g.strokeStyle='rgba(7,8,12,0.92)';g.lineWidth=4;g.strokeText(t,x,y);g.fillStyle=c;g.fillText(t,x,y);g.restore();}
+  // our own system, as hollow rings
+  const SOL=[['Mercury',87.97,0.055],['Venus',224.7,0.815],['Earth',365.25,1],['Mars',687,0.107],
+             ['Jupiter',4332.6,317.8],['Saturn',10759,95.2],['Uranus',30687,14.54],['Neptune',60190,17.15]];
+  g.font='12px Georgia,serif';
+  SOL.forEach(([n,p,m])=>{
+    const x=X(p),y=Y(m);
+    g.strokeStyle='#ffffff';g.lineWidth=1.3;
+    g.beginPath();g.arc(x,y,5,0,7);g.stroke();
+    const left=(n==='Venus'||n==='Uranus');
+    g.textAlign=left?'right':'left';
+    const dy=(n==='Saturn')?-8:4;
+    halo(n,left?x-9:x+9,y+dy,'#ffffff');
+  });
+
+  // quiet annotations
+  g.fillStyle='rgba(207,210,218,0.72)';g.font='italic 12.5px Georgia,serif';g.textAlign='left';
+  // the empty quarter around Earth
+  const ex=X(365.25), ey=Y(1);
+  g.strokeStyle='rgba(255,255,255,0.22)';g.setLineDash([2,4]);
+  g.beginPath();g.ellipse(X(900),Y(0.6),120,58,0,0,7);g.stroke();g.setLineDash([]);
+  const ac='rgba(207,210,218,0.8)';
+  halo('here we are, nearly alone:',X(900)-70,Y(0.6)+86,ac);
+  halo('small worlds on slow orbits barely',X(900)-70,Y(0.6)+102,ac);
+  halo('dim a star or tug it hard enough to show',X(900)-70,Y(0.6)+118,ac);
+
+  g.textAlign='left';
+  halo('hot giants that circle their stars in days:',X(0.12),Y(6000),ac);
+  halo('the first ones we could catch',X(0.12),Y(6000)+16,ac);
+
+  // title block
+  g.textAlign='left';g.fillStyle='#f1efe8';g.font='30px Georgia,serif';
+  g.fillText('The Shape of Looking',L,56);
+  g.fillStyle='rgba(207,210,218,0.75)';g.font='14px Georgia,serif';
+  const n=rows.length;
+  g.fillText(n.toLocaleString('en-US')+' confirmed planets beyond the Sun, placed by the length of their year and their weight. The crowd is less a map of what exists',L,80);
+  g.fillText('than of what each instrument can feel. The white rings are our own eight.',L,98);
+
+  // legend, top right
+  const counts={};rows.forEach(r=>{const k=COL[r[I.method]]?r[I.method]:'other';counts[k]=(counts[k]||0)+1;});
+  const leg=[['Transit','a shadow crossing the star'],['Radial Velocity','the star pulled back and forth'],['Microlensing','light bent by a passing mass'],['Imaging','seen directly'],['other','timing, astrometry, …']];
+  let ly=128;let lx=L+4;
+    leg.forEach(([k,d])=>{
+    g.fillStyle=k==='other'?OTHER:COL[k];g.beginPath();g.arc(lx,ly-4,4,0,7);g.fill();
+    g.fillStyle='#e6e3db';g.font='12.5px Georgia,serif';g.textAlign='left';
+    g.fillText(k+'  · '+(counts[k]||0).toLocaleString('en-US'),lx+12,ly);
+    g.fillStyle='rgba(207,210,218,0.6)';g.font='italic 11px Georgia,serif';
+    g.fillText(d,lx+12,ly+14);lx+=186;
+  });
+
+  g.fillStyle='rgba(207,210,218,0.4)';g.font='10.5px Georgia,serif';g.textAlign='right';
+  g.fillText('Source: '+D.source+'. Dot size follows planet radius. '+(n-pts.length)+' planets without a mass are left out'+(off?'; '+off+' with years longer than 2,700 sit on the right edge':'')+'.',1086,790);
+})();
+</script>
+</body>
+</html>

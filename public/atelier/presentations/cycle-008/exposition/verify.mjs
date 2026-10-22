@@ -6,6 +6,11 @@ const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) bad++; 
 const N = JSON.parse(fs.readFileSync(path.join(here, 'null.json')));
 const Q = JSON.parse(fs.readFileSync(path.join(here, 'plate6.json')));
 const V = JSON.parse(fs.readFileSync(path.join(here, 'plate7.json')));
+const E = JSON.parse(fs.readFileSync(path.join(here, 'plate8.json')));
+const X = JSON.parse(fs.readFileSync(path.join(here, 'plate9.json')));
+const C = JSON.parse(fs.readFileSync(path.join(here, 'plate10.json')));
+const K = JSON.parse(fs.readFileSync(path.join(here, 'plate11.json')));
+const Z = JSON.parse(fs.readFileSync(path.join(here, 'plate12.json')));
 const br = await chromium.launch({ executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
 for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   const pg = await br.newPage({ viewport: { width: wd, height: 900 }, colorScheme: scheme }); const errs = [];
@@ -50,6 +55,114 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   ok((await pg.innerText('#p7tab')).includes('too low') && (await t('v-med')) === String(V.versions.median), `${wd}px: plate VII table and counts filled from plate7.json`);
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate VII`);
   await pg.$eval('#p7grid', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p7-${wd}.png`) });
+  // plate VIII (increment 4)
+  const p8 = () => pg.evaluate(() => window.__p8);
+  ok(await pg.$$eval('#p8grid button', b => b.length) === 232 && await pg.$$eval('#p8lags button', b => b.length) === 9, `${wd}px: plate VIII draws 232 sequences and nine clock rules`);
+  for (let k = 0; k < 9; k++) { await pg.click('#p8-l' + k); const j = await p8(), d = E.declared[k];
+    ok(j.o === d.observed && near(j.r, d.ratio) && j.v === d.verdict && !j.sighted, `${wd}px: clock rule ${d.lag_h} h recomputes to ${d.observed}/${d.stated}, ${d.verdict}, declared`); }
+  ok(await pg.$$eval('#p8grid button.h', b => b.length) === 0, `${wd}px: before showing, no outcome is drawn`);
+  await pg.click('#p8-l0'); await pg.click('#p8-write');
+  ok((await pg.innerText('#p8ledger')).includes('the odds ran too high') && (await p8()).ledger[0] === 'indicative', `${wd}px: a rule fixed blind writes the indicative "ran too high"`);
+  await pg.click('#p8-kind'); j = await p8(); ok(j.sighted && j.o === E.sighted.kindest.observed && j.v === 'too low', `${wd}px: the kindest hand is sighted and reads too low (${j.o})`);
+  await pg.click('#p8-write'); ok((await pg.innerText('#p8ledger')).includes('would have run too low') && (await p8()).ledger[1] === 'subjunctive', `${wd}px: a sighted verdict is written only in the subjunctive`);
+  await pg.click('#p8-l3'); await pg.click('#p8-show'); j = await p8();
+  ok(j.seen && !j.sighted && await pg.$$eval('#p8grid button.h', b => b.length) > 0, `${wd}px: showing what came keeps a reading fixed before it declared`);
+  await pg.click('#p8-l1'); j = await p8(); ok(j.sighted && (await pg.innerText('#p8read')).includes('subjunctive'), `${wd}px: a clock rule chosen after showing is subjunctive`);
+  ok(await pg.$eval('#p8-show', b => b.disabled), `${wd}px: the page does not offer to forget what it showed`);
+  await pg.click('#p8-refuse'); ok((await pg.innerText('#p8ledger')).includes(String(E.event.changes_with_the_version) + ' of 232'), `${wd}px: restraint writes the span and the ${E.event.changes_with_the_version} moving events`);
+  await pg.fill('#p8did', 'Slept in the car that week.'); await pg.click('#p8-did');
+  ok((await pg.innerText('#p8ledger')).includes('might have slept in the car that week') && (await pg.innerText('#p8ledger')).includes('no record holds this'), `${wd}px: the column no reading reaches is written in the subjunctive and marked as the visitor's`);
+  ok(await pg.$$eval('#p8axis [data-k="declared"]', c => c.length) === 9 && await pg.$$eval('#p8axis [data-k="ledger"]', c => c.length) === 2, `${wd}px: the axis carries nine declared rules and the two verdicts written`);
+  ok((await t('p8j-ch')) === String(E.event.changes_with_the_version) && (await t('p8dv')) === E.distinct_versions.total.toLocaleString('en-US'), `${wd}px: plate VIII counts filled from plate8.json`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate VIII`);
+  await pg.$eval('#p8axis', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p8-${wd}.png`) });
+  // plate IX (increment 5)
+  const p9 = () => pg.evaluate(() => window.__p9);
+  ok(await pg.evaluate(() => P9R.length) === X.pool && X.pool === 8948, `${wd}px: plate IX carries the 8,948 undeclared warnings in the frame`);
+  ok(await pg.evaluate(() => P9R.every(r => r[0] >= 0 && r[0] < P6R.length && P6R[r[0]][7] === 1)), `${wd}px: every plate IX warning is one of plate VI's silences at moment 1`);
+  for (const k of ['A', 'B', 'C', 'D']) { await pg.click('#p9-' + k); const j = await p9(), r = X.readings[k];
+    ok(j.n === r.never_needed && j.c === r.contradicted && j.u === r.unknown && j.b === 0, `${wd}px: reading ${k} recomputes in the browser to ${r.never_needed} never needed, ${r.contradicted} contradicted, ${r.unknown} unknown, 0 backed`); }
+  await pg.click('#p9-C'); await pg.click('#p9-k0'); let q = await p9();
+  ok(q.name === 'yours' && q.n === X.readings.C.never_needed - (X.by_class.fire.n - X.by_class.fire.met), `${wd}px: opening Storm Events over fire takes the unmet fire warnings out of the column (${q.n})`);
+  await pg.click('#p9-storm'); q = await p9(); ok(q.c === 0 && q.n === 0 && q.u === X.pool, `${wd}px: with neither register closed nor consulted, nothing is written`);
+  await pg.click('#p9-decl'); q = await p9(); ok(q.n === X.pool, `${wd}px: closing the declarations alone fills the column with all ${X.pool}`);
+  await pg.click('#p9-cfire'); ok((await t('p9card')).includes('Lyons Valley') && (await t('p9card')).includes('Never needed'), `${wd}px: under a closure the fire evacuation is filed as never needed`);
+  await pg.click('#p9-D'); await pg.click('#p9-cfire'); ok((await t('p9card')).includes('Unknown'), `${wd}px: in the open world the same warning is unknown`);
+  await pg.click('#p9-cout'); ok((await t('p9card')).includes('911 outage') && (await t('p9card')).includes('no lower register'), `${wd}px: a 911 outage has no lower register`);
+  ok((await t('p9read')).includes('Backed by a row that says the danger did not come: 0'), `${wd}px: the reading states that nothing is backed`);
+  ok((await t('p9-pool')) === '8,948' && (await t('p9-met')) === '1,216' && (await t('p9-share')) === '10.8 %' && await pg.$$eval('#p9tab tr', r => r.length) === 7, `${wd}px: plate IX counts and table filled from plate9.json`);
+  const px9 = await pg.$eval('#p9grid', e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; });
+  ok(px9 > 10000, `${wd}px: the grid of warnings is drawn`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate IX`);
+  await pg.click('#p9-B'); await pg.$eval('#p9read', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p9-${wd}.png`) });
+  // plate X (increment 6)
+  const p10 = () => pg.evaluate(() => window.__p10); const near3 = (a, b) => Math.abs(a - b) < 0.0015;
+  ok(await pg.$$eval('#p10grid button', b => b.length) === 232 && await pg.$$eval('#p10grid button.q', b => b.length) === C.quiet && C.quiet === 182, `${wd}px: plate X draws 232 sequences, 182 of them quiet`);
+  for (let k = 0; k < 9; k++) { await pg.click('#p10-l' + k);
+    await pg.click('#p10-copy'); let j = await p10(); const ct = C.copy_texts[k];
+    ok(j.o === ct.copy_text.observed && near3(j.r, ct.copy_text.ratio) && j.subs === 0 && j.blind, `${wd}px: copy-text ${ct.lag_h} h recomputes to ${ct.copy_text.ratio}, no variant`);
+    for (const [h, key] of [['w', 'words'], ['e', 'weeks'], ['b', 'both']]) { await pg.click('#p10-h' + h);
+      for (const [r, name] of [['harsh', 'harshest'], ['kind', 'kindest']]) { await pg.click('#p10-' + r); j = await p10(); const v = ct.hands[key][name];
+        ok(j.o === v.observed && near3(j.r, v.ratio) && j.subs === v.substituted && !j.blind, `${wd}px: from ${ct.lag_h} h, the ${name} hand on the ${key} reaches ${v.ratio} with ${v.substituted} variants`); }
+      await pg.click('#p10-right'); j = await p10(); const f = ct.hands[key].fewest_to_right;
+      ok(f === null ? j.none === true : (j.subs === f && j.r >= 1 - 1e-9), `${wd}px: from ${ct.lag_h} h, the fewest variants on the ${key} to reach right: ${f}`); } }
+  await pg.click('#p10-l0'); await pg.click('#p10-hw');
+  for (const [r, name] of [['least', 'stated_least'], ['most', 'stated_most']]) { await pg.click('#p10-' + r); const j = await p10(), v = C.blind_on_the_words[name];
+    ok(j.o === v.observed && near3(j.r, v.ratio) && j.blind && (await t('p10read')).includes('indicative'), `${wd}px: the blind rule ${name} reads ${v.ratio}, in the indicative`); }
+  await pg.click('#p10-kind'); ok((await t('p10read')).includes('subjunctive') && (await t('p10read')).includes('only what was promised'), `${wd}px: a sighted reading of the words is subjunctive, and says only the promise differs`);
+  await pg.click('#p10grid button.v'); ok((await t('p10card')).includes('Variant admitted') && (await t('p10card')).includes('Quiet'), `${wd}px: a tapped quiet square shows its collation and the admitted variant`);
+  ok((await t('p10f-wr')) === String(C.first_hour.words_fewest_to_right) && (await t('p10b-m')) === C.blind_on_the_words.stated_most.ratio.toFixed(2), `${wd}px: plate X counts filled from plate10.json`);
+  ok(await pg.$$eval('#p10axis [data-k^="reach-"]', r => r.length) === 3, `${wd}px: plate X draws three reaches`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate X`);
+  await pg.$eval('#p10axis', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p10-${wd}.png`) });
+  // plate XI (increment 7)
+  const p11 = () => pg.evaluate(() => window.__p11);
+  ok(await pg.$$eval('#p11grid button', b => b.length) === 155 && K.pool === 155, `${wd}px: plate XI draws 155 earthquake messages`);
+  await pg.click('#p11-field'); let q11 = await p11();
+  ok(q11.key === '3.0|100|day' && q11.met === 136 && q11.pl === 28 && q11.met === K.grid['3.0|100|day'].met, `${wd}px: the Field's rule meets 136 and 28 a year earlier, as study 27 says`);
+  ok(K.check_against_field.live.disagree.length === 0 && K.check_against_field.placebo.disagree.length === 0 && K.check_against_field.live_r200.disagree.join() === '5404', `${wd}px: the second fetch reproduces the Field's rule, but for 5404 at 200 km`);
+  let cells = 0;
+  for (let a = 0; a < K.floors.length; a++) for (let r = 0; r < K.radii.length; r++) for (let w = 0; w < 2; w++) {
+    await pg.click('#p11fl-' + a); await pg.click('#p11ra-' + r); await pg.click('#p11wi-' + w); q11 = await p11();
+    const fl = K.floors[a] === 'any' ? 'any' : K.floors[a].toFixed(1), g = K.grid[fl + '|' + K.radii[r] + '|' + K.windows[w]];
+    const shown = await pg.$$eval('#p11grid button', b => ({ m: b.filter(x => x.classList.contains('m')).length, w: b.filter(x => x.classList.contains('w')).length, u: b.filter(x => x.classList.contains('u')).length, p: b.filter(x => x.classList.contains('p')).length }));
+    if (q11.met === g.met && q11.w === g.warranted && q11.u === g.unwarranted && q11.pl === g.placebo && shown.m === g.met && shown.w === g.warranted && shown.u === g.unwarranted && shown.p === g.placebo) cells++;
+    else console.log('  mismatch', fl, K.radii[r], K.windows[w], JSON.stringify(q11), JSON.stringify(g), JSON.stringify(shown)); }
+  ok(cells === 60, `${wd}px: all 60 declared domains recount per square in the browser to plate11.json (${cells})`);
+  await pg.click('#p11-quiet'); q11 = await p11(); ok(q11.w === K.quiet_domains.most[1].warranted && q11.w === 137, `${wd}px: the most closed quiet domain writes 137`);
+  await pg.click('#p11-wide'); q11 = await p11(); const KB = JSON.parse(fs.readFileSync(path.join(here, "plate11b.json"), 'utf8')); ok(q11.w === KB.least[1].warranted && q11.w === 5 && KB.agree_with_field === 40 && KB.of === 40, `${wd}px: the least closed quiet domain, corrected over 364 days, writes 5; all 40 re-decided domains agree with the Field`);
+  await pg.click('#p11-fine'); await pg.click('#p11grid button[aria-label^="message 1893,"]');
+  ok((await t('p11card')).includes('Drop, Cover') && (await t('p11card')).includes('met by an earthquake'), `${wd}px: at the finest warranted domain, the alert its sender withdrew is met`);
+  await pg.click('#p11mat button[data-f="5"][data-r="0"]'); q11 = await p11(); ok(q11.key === '4.5|25|strict', `${wd}px: a matrix cell declares its domain`);
+  ok(await pg.$$eval('#p11ret li', l => l.length) === 21 && K.retractions.retractions === 21 && (await pg.innerText('#p11ret')).includes('no missile threat'), `${wd}px: 21 retractions listed, the missile among them`);
+  ok((await t('p11f-lo')) === '5' && (await t('p11f-hi')) === '137' && (await t('p11f-swept')) === '117' && (await t('p11f-rob')) === '0', `${wd}px: plate XI counts filled from plate11.json`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate XI`);
+  await pg.$eval('#p11read', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p11-${wd}.png`) });
+  await pg.$eval('#p11mat', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p11m-${wd}.png`) });
+  // plate XII (increment 8)
+  const p12 = () => pg.evaluate(() => window.__p12); const n3 = (a, b) => Math.abs(a - b) < 0.0015;
+  ok(await pg.$$eval('#p12grid button', b => b.length) === 232, `${wd}px: plate XII draws 232 sequences`);
+  ok(Z.check_field_split.pick_is_not_6h_6h_week === 1.602 && Z.check_field_split.pick_is_6h_6h_week === 0.656, `${wd}px: the Field's split re-added: 1.602 and 0.656`);
+  let hcells = 0;
+  for (const r of ['least', 'most']) { await pg.click('#p12-' + r);
+    for (let k = 0; k < 9; k++) { await pg.click('#p12-H' + k); const j = await p12(), v = Z.deciding_at_H[r][k];
+      const shown = await pg.$$eval('#p12grid button.s', b => b.length);
+      if (j.o === v.observed && n3(j.r, v.ratio) && n3(j.adj, v.clock_adjusted) && j.hind === v.picks_with_hindsight && shown === v.picks_with_hindsight) hcells++;
+      else console.log('  mismatch', r, k, JSON.stringify(j), v.observed, v.ratio, v.clock_adjusted, v.picks_with_hindsight, shown); } }
+  ok(hcells === 18, `${wd}px: all 18 rules decided at an hour recount in the browser to plate12.json (${hcells})`);
+  await pg.click('#p12-least'); await pg.click('#p12-H8'); let z = await p12();
+  ok(n3(z.r, C.blind_on_the_words.stated_least.ratio) && (await t('p12read')).includes('Declared, but not blind'), `${wd}px: plate X's "stated least" at 30 days reads 1.27, declared but not blind`);
+  await pg.click('#p12-H0'); z = await p12(); ok(z.hind === 0 && n3(z.r, C.copy_texts[0].copy_text.ratio), `${wd}px: decided at the first hour, the rule is the first-hour clock`);
+  let dcells = 0;
+  for (let j = 0; j < 6; j++) { await pg.click('#p12-d' + j); const q = await p12(), v = Z.decidable[j];
+    if (q.o === v.observed && n3(q.r, v.ratio) && n3(q.adj, v.clock_adjusted) && q.hind === 0 && (await pg.$eval('#p12-H3', b => b.disabled))) dcells++; }
+  ok(dcells === 6 && (await t('p12read')).includes('decidable'), `${wd}px: six rules decided at the hour of writing recount, none with hindsight (${dcells})`);
+  await pg.click('#p12-least'); await pg.click('#p12-H3'); await pg.click('#p12grid button.s');
+  ok((await t('p12card')).includes('hours of hindsight') && await pg.$$eval('#p12card u', u => u.length) > 0, `${wd}px: a tapped hindsight square underlines the later words it read`);
+  ok((await t('p12f-hit')) === '28 %' && (await t('p12f-none')) === '2 %' && (await t('p12f-to720')) === '4' && Z.predictions.P1 && Z.predictions.P2 && !Z.predictions.P3, `${wd}px: plate XII counts and predictions filled from plate12.json`);
+  ok(await pg.$$eval('#p12axis [data-k]', r => r.length) === 3, `${wd}px: plate XII draws the clocks' band and both readings`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with plate XII`);
+  await pg.$eval('#p12axis', e => e.scrollIntoView()); await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-p12-${wd}.png`) });
   ok(errs.length === 0, `${wd}px: no script errors ${errs.join(' | ')}`);
   await pg.screenshot({ path: path.join(process.env.SHOTS || '/tmp', `expo-${wd}.png`), fullPage: false });
 }

@@ -1,0 +1,158 @@
+{
+ "fetched": "2026-10-20",
+ "tornado_record": {
+  "url": "https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv",
+  "sha256": "fa616e2f829c553acc7b60f5130a3ac498198e0b9d69e37a0e1289df71dc5fcc",
+  "note": "Re-fetched this session; identical to study 13's and study 15's file. US government work. Not committed raw."
+ },
+ "covariates": {
+  "path": "../../2026-10-14-who-was-beneath/data/beneath.tsv",
+  "note": "Study 15's M1 covariates (EF, track, night, region, 2010 county density, residents in path)."
+ },
+ "tornado_list": {
+  "path": "../../2026-10-14-the-tornadoes-that-came/data/tornadoes.tsv",
+  "note": "Study 13's 2008-2023 list with start time and warning flag."
+ },
+ "sibling_material": [
+  {
+   "from": "studio",
+   "handoff": "ho-2026-10-20-studio-1",
+   "work": "works/2026-10-20-take-cover-again/data.js",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/77e0378d94d73222df23995b530de63f332a7b0b/works/2026-10-20-take-cover-again/data.js",
+   "sha256": "f3f2e758c5a96906a1d9e5c2f5adf99ee36e8590c5b6f6753004062836ac9626",
+   "used": "Every warning's issue time, office, the office's own verification (met/empty, from the Iowa Environmental Mesonet's verification of the NWS record) and the counties its polygon touched: the source of every false-alarm measure in this study. Not committed here; named by commit and digest."
+  },
+  {
+   "from": "studio",
+   "handoff": "offered in the Studio's bulletin of 2026-10-20 (session 188); not yet in the relay of 07:17Z",
+   "work": "works/2026-10-20-take-cover-again/toll.js",
+   "url": "https://raw.githubusercontent.com/frankbueltge/studio/157af4b/works/2026-10-20-take-cover-again/toll.js",
+   "sha256": "cc9ba3f43261abcb605db39513bb1e2b8842487f4213ee2e827285c93fbbcd0b",
+   "used": "Study 32 (session 217): for each warning in data.js order, the SPC tornadoes (1950-2024_actual_tornadoes.csv, final database) whose straight track touches its polygon and began from 15 minutes before issue to expiry; its 'end' bounds the warnings that database can judge. data.js at the same commit has the same sha256 as at 77e0378. Not committed here; named by commit and digest."
+  }
+ ],
+ "literature": [
+  {
+   "cite": "Simmons, K. M., and D. Sutter, 2009: False Alarms, Tornado Warnings, and Tornado Casualties. Weather, Climate, and Society, 1, 38-53.",
+   "doi": "10.1175/2009WCAS1005.1",
+   "read": "the journal's article page https://journals.ametsoc.org/view/journals/wcas/1/1/2009wcas1005_1.xml, through a web-extraction tool (direct fetch answered 403); passages below as extracted, not the PDF",
+   "passages": [
+    "The geographies are 1) states, 2) NWS WFO County Warning Areas (CWAs), based on the CWAs of the WFOs of the modernized NWS, and 3) television markets as defined by the A. C. Nielsen Company.",
+    "If a tornado occurs in, say, May 2004, the 1-yr window would be all warnings in the relevant geographic area in the months of May 2003-April 2004 and the 2-yr window would be May 2002-April 2004. All tornadoes in the same geography in the same month have the same FAR.",
+    "a one-standard-deviation (1 std dev) increase in the FAR increases expected fatalities by between 12% and 29% and expected injuries by between 14% and 32%.",
+    "A higher FAR increases expected injuries by between 13% and 32%, very similar to the range for fatalities, with larger impacts for the WFO FARs than for the state FARs.",
+    "The variable no warnings, controlling for tornadoes that occur with an undefined local, recent FAR, fails to attain significance for injuries",
+    "We do not examine the link between false alarms and warning response directly, but since warning response affects casualties and our 19 yr of data include over 21 000 state tornado segments, we seek to detect an impact on response through casualties."
+   ],
+   "note": "The paper gives 14% in its abstract and 13% in its results for the lower injury bound; both are quoted. Its window as written (May 2003-April 2004 for a May 2004 tornado) is the 12 calendar months before the tornado's month; this study uses that window.",
+   "used": "The design replicated (office 1-yr FAR, per 1 SD, the 'no warnings' indicator), P1 and P2's bands."
+  },
+  {
+   "cite": "Lim, J. R., B. F. Liu, and M. Egnoto, 2019: Cry Wolf Effect? Evaluating the Impact of False Alarms on Public Responses to Tornado Alerts in the Southeastern United States. Weather, Climate, and Society, 11(3).",
+   "doi": "10.1175/WCAS-D-18-0080.1",
+   "read": "the journal's article page and PDF page https://journals.ametsoc.org/view/journals/wcas/11/3/wcas-d-18-0080_1.xml, passages as returned by a web-search extraction of those pages",
+   "passages": [
+    "We did not find a correlation between participants' perceived false alarm ratios and their actual county false alarm ratios, similar to prior research (Trainor et al. 2015).",
+    "Actual country false alarm ratios and the number of tornado warnings issued did not predict taking protective action.",
+    "alarm ratio by dividing the number of tornado warnings without observed tornadoes with the total number of tornado warnings by each county."
+   ],
+   "note": "'country' is the page's own spelling. Trainor et al. 2015 is cited through Lim et al., not read.",
+   "used": "The survey side: the county's actual FAR did not predict stated action; P5 and P6 expect the same in casualties."
+  },
+  {
+   "cite": "Brooks, H. E., and J. Correia Jr., 2018: Long-Term Performance Metrics for National Weather Service Tornado Warnings. Weather and Forecasting, 33, 1501-1511.",
+   "doi": "10.1175/WAF-D-18-0120.1",
+   "read": "in full in study 14 (passages in ../../2026-10-14-the-warnings-never-needed/data/sources.json); not re-read",
+   "used": "Context: FAR near 0.75 in 2008-11, a threshold change in 2012."
+  },
+  {
+   "cite": "Simmons, K. M., and D. Sutter, 2008: Tornado Warnings, Lead Times, and Tornado Casualties: An Empirical Investigation. Weather and Forecasting, 23.",
+   "read": "in study 15 (passages in ../../2026-10-14-who-was-beneath/data/sources.json); not re-read",
+   "used": "The M1 control set's lineage."
+  }
+ ],
+ "house_index": "frankbueltge.de/papers/index.json fetched 2026-10-20: 1,123 entries; none of Simmons & Sutter 2009, Lim et al. 2019 or Trainor et al. 2015 among them (searched: false alarm, cry wolf, tornado, warning).",
+ "study34": {
+  "fetched": "2026-10-21",
+  "warnings": {
+   "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/gis/watchwarn.py?year1=<Y>&month1=1&day1=1&hour1=0&minute1=0&year2=<Y+1>&month2=1&day2=1&hour2=0&minute2=0&limitps=yes&phenomena=TO&significance=W&limit0=yes",
+   "note": "Iowa Environmental Mesonet, one export per year 2016-2023; the CSV of each zip named by sha256 in build34.py. Not committed raw; per-warning people, area, minutes and tags are in data/warnings34.tsv."
+  },
+  "census": {
+   "url": "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/Gaz_counties_national.zip",
+   "file": "Gaz_counties_national.txt",
+   "sha256": "09800b5b16348449074db3905737c53e47c5448c3059ffc611b803c0d787e2eb",
+   "fields_used": [
+    "USPS",
+    "GEOID",
+    "POP10",
+    "ALAND"
+   ],
+   "note": "US Census Bureau 2010 gazetteer, public domain, as study 15. Not committed raw."
+  },
+  "atelier": {
+   "repo": "frankbueltge/ulysses",
+   "commit": "522c7c3cd5196a4b7bc257ef44066ec64f1b5ee0",
+   "path": "artifacts/cycle-009/the-wolfs-ledger/plate4.json",
+   "sha256": "220ff73b938b96eafff560dc362c1a21828e7526279cb32b87e7f876ad9a6c0a",
+   "used": "class sizes and chances (hour's ledger, later record); handoff ho-2026-10-21-atelier-1"
+  },
+  "prices": [
+   {
+    "cite": "US Department of Transportation, Departmental Guidance on Valuation of a Statistical Life in Economic Analysis, 2021 update",
+    "url": "https://www.transportation.gov/sites/dot.gov/files/2021-03/DOT%20VSL%20Guidance%20-%202021%20Update.pdf",
+    "read": "a direct request answered 403; passages through a full-text extraction tool (web research), not the whole document",
+    "passages": [
+     "Table 2: Relative Disutility Factors by Injury Severity Level (MAIS) MAIS Level Severity Fraction of VSL MAIS 1 Minor 0.003 MAIS 2 Moderate 0.047 MAIS 3 Serious 0.105 MAIS 4 Severe 0.266 MAIS 5 Critical 0.593 MAIS 6 Unsurvivable 1.000",
+     "approximately 40 percent higher and lower than the recommended 2012 base year VSL of $9.1 million",
+     "analysts may wish to calculate high and low alternative estimates of the values of fatalities and injuries prevented by using alternative VSLs that are 40 percent above or below the base value used in the analysis"
+    ],
+    "note": "The 2012 base value is used undeflated; later DOT updates (a figure of $13.2 million in 2023 dollars appears second-hand in a search summary) were not read and are not used. A higher VSL lowers B / L proportionally; the slider reaches 12.74."
+   },
+   {
+    "cite": "US Environmental Protection Agency, Mortality Risk Valuation",
+    "url": "https://www.epa.gov/environmental-economics/mortality-risk-valuation",
+    "read": "first-hand, 2026-10-21",
+    "passages": [
+     "EPA recommends that the central estimate of $7.4 million ($2006), updated to the year of the analysis, be used in all benefits analyses that seek to quantify mortality risk reduction benefits"
+    ]
+   }
+  ],
+  "closed_doors": [
+   {
+    "what": "Severe Weather and Society Survey microdata (WX17-WX25), Harvard Dataverse, CC0",
+    "url": "https://dataverse.harvard.edu/api/access/datafile/3674405",
+    "result": "download requires a guestbook (id 303) with name, deliverable e-mail, institution and position; this practice's address is not deliverable and none other may honestly be given. Variable names and unweighted summaries (DDI) are open; not used."
+   },
+   {
+    "what": "DOT Revised Departmental Guidance on Valuation of Travel Time (2016)",
+    "result": "403 directly; extraction returned a page-not-found. The value of an hour is therefore a reader's parameter and a break-even."
+   }
+  ]
+ },
+ "study35": {
+  "fetched": "2026-10-22",
+  "studio": {
+   "repo": "frankbueltge/studio",
+   "commit": "c74670438b88878ba74efa4c369feb0b97d85431",
+   "path": "works/2026-10-20-take-cover-again/record.js",
+   "sha256": "51297c2de9f80ccd7121acb9b2693b28233eb4fa9a59cedeb8c5c3c5f5d1bd32",
+   "handoff": "ho-2026-10-21-studio-1",
+   "used": "dead rows [om, deaths, year, county, run before]; the Studio's 31 % baseline is from its README (9,426 of 30,093 met county entries). Not committed here."
+  },
+  "studio_window": {
+   "repo": "frankbueltge/studio",
+   "commit": "c74670438b88878ba74efa4c369feb0b97d85431",
+   "path": "works/2026-10-20-take-cover-again/window.json",
+   "used": "the counts at 60 minutes (4,962 empty filled later, 1,093 met with no track) that qualify study 32's 3,995 and 1,428; offered in the Studio's bulletin of 10-21 (s191)."
+  },
+  "atelier": {
+   "repo": "frankbueltge/ulysses",
+   "commit": "b5972ada1e07ec364d648a4ca048ab140fd495d2",
+   "path": "presentations/cycle-009/plate5.json",
+   "sha256": "89e8953f3b1e745959abb0330343193af39d6768db6e3a718db205536390c261",
+   "used": "after_run_r_W 0.9589, after_hit_r_W 1.0217, after_run_r_H 0.2719 (n0 20, h 0.8, the hour's record); offered in the Atelier's bulletin of 10-21."
+  },
+  "literature": "none new; w from study 31's own warned ratio, with Simmons & Sutter 2008's passages (cycle 008) for context only."
+ }
+}

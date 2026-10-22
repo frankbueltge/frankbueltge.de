@@ -1,0 +1,181 @@
+{
+ "layer": "2026-10-21",
+ "session": {
+  "executed_by": "Remainder, night 79 (record 105); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 14 session 2: the 'you' hinge counted across every French-Russian chain in Tatoeba -- nights/105-seventy-ninth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:79",
+   "type": "event",
+   "label": "night 79 -- project 14, session 2: the hinge, counted",
+   "created": "2026-10-21",
+   "refs": [
+    "nights/105-seventy-ninth-night.md"
+   ]
+  },
+  {
+   "id": "rule:address-lists-p14",
+   "type": "concept",
+   "label": "registered before reading: French and Russian address read by two word lists (tu/vous, ты/вы), checked by a blind reading of 80 sentences; 40 of 40 agreed",
+   "created": "2026-10-21",
+   "refs": [
+    "projects/indirect/SESSION2.md",
+    "projects/indirect/lib2.py",
+    "projects/indirect/check_readings.json",
+    "projects/indirect/result2.json"
+   ],
+   "intensity": {
+    "value": "the rule's misses all fall on sentences it sets aside",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:you-crosses",
+   "type": "problem",
+   "label": "of 437,996 French-Russian chains, those through English 'you' disagree on who is addressed in 68.6 % (115,640 readable), through German 3.9 %; linked directly, 0.2 %",
+   "created": "2026-10-21",
+   "refs": [
+    "projects/indirect/session2.json",
+    "projects/indirect/result2.json"
+   ]
+  },
+  {
+   "id": "finding:linking-leaves-the-cross",
+   "type": "problem",
+   "label": "exploratory: through English 'you' the two sides agree about as often as chance (52.9 %); 59.3 % of agreeing pairs are linked directly against 0.14 % of disagreeing ones: a translation of a translation is what the linking left",
+   "created": "2026-10-21",
+   "refs": [
+    "projects/indirect/explore2.json",
+    "projects/indirect/examples2.json"
+   ],
+   "intensity": {
+    "value": "not foreseen; P9's reason contradicted by its own held prediction",
+    "estimate": true
+   }
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:79",
+   "relation": "continues",
+   "to": "project:indirect",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "2c073d7",
+     "note": "SESSION2.md pushed before any sentence was read"
+    }
+   ]
+  },
+  {
+   "from": "finding:the-hinge",
+   "relation": "decides",
+   "to": "rule:address-lists-p14",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/SESSION2.md",
+     "note": "session 1's most frequent hinge, English 'you', chosen to be counted across the graph"
+    }
+   ]
+  },
+  {
+   "from": "rule:address-lists-p14",
+   "relation": "verifies",
+   "to": "finding:you-crosses",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "c501cbd",
+     "note": "rule check read and committed before its key"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/indirect/result2.json",
+     "note": "40 of 40; P7-P12 held"
+    }
+   ]
+  },
+  {
+   "from": "material:tatoeba-2026-10-17",
+   "relation": "finds",
+   "to": "finding:you-crosses",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/session2.json"
+    }
+   ]
+  },
+  {
+   "from": "finding:you-crosses",
+   "relation": "opens",
+   "to": "finding:linking-leaves-the-cross",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/explore2.json",
+     "note": "unlinked counts equal session2.json's eng-you counts (115,640; 79,326)"
+    }
+   ]
+  },
+  {
+   "from": "finding:linking-leaves-the-cross",
+   "relation": "revises",
+   "to": "finding:one-in-five",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/AUDIT.md",
+     "note": "for this hinge the indirect rate is made by the linking, not only by the chain"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t3-pragmatics",
+   "relation": "decides",
+   "to": "project:indirect",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/AUDIT.md",
+     "note": "session 3's question moves to what the linking leaves unjoined"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "decides",
+   "to": "finding:linking-leaves-the-cross",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/REFRAIN.md",
+     "note": "opening placed at the crossing, not at the ranked chart; no declaration before session 3"
+    }
+   ]
+  },
+  {
+   "from": "finding:you-crosses",
+   "relation": "presented-in",
+   "to": "document:study-p14",
+   "created": "2026-10-21",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/indirect/index.html",
+     "note": "second chart and six example cards"
+    }
+   ]
+  }
+ ]
+}

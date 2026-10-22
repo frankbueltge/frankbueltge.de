@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Order of Reading</title>
+<style>
+  html,body{margin:0;padding:0;background:#f1e9d6;}
+  body{width:1100px;height:800px;overflow:hidden;}
+  svg{display:block;}
+  text{font-family:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;}
+</style>
+</head>
+<body>
+<svg id="s" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data/selborne.js"></script>
+<script>
+(function(){
+const W=1100,H=800,CX=550,CY=402;
+const PAPER="#f1e9d6",INK="#2b251d",FAINT="#b9ab90";
+const COL=["#8c3a1c","#2e5a4c"]; // Pennant, Barrington
+const svg=document.getElementById('s');
+const NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e;}
+function txt(s,attrs,parent){const e=el('text',attrs,parent);e.textContent=s;return e;}
+
+/* ---------- read the book into letters ---------- */
+const L=SELBORNE.split('\n');
+const heads=[];let series=-1;
+L.forEach((l,i)=>{
+  if(/^LETTERS to THOMAS PENNANT/.test(l))series=0;
+  if(/^LETTERS to DAINES/.test(l))series=1;
+  const m=l.match(/^Letter ([IVXLC]+)\s*$/); if(m&&series>=0)heads.push({i,num:m[1],series});
+});
+const MON={jan:1,feb:2,mar:3,mark:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+const letters=heads.map((h,k)=>{
+  const end=k+1<heads.length?heads[k+1].i:L.length;
+  const body=L.slice(h.i+1,end);
+  let date=null;
+  for(let j=0;j<body.length;j++){
+    const ln=(body[j]+(/^[A-Z][a-z]+,\s*$/.test(body[j])?' '+(body[j+1]||''):'')).trim();
+    if(/^\*/.test(ln))continue;
+    const m=ln.match(/^(?:([A-Z][a-z]+)(?:, near [A-Z][a-z]+)?,\s*)?(?:([A-Z][a-z]+)\.?\s*(\d{1,2})?,?\s*)?(17\d\d)\.$/);
+    if(m){const mn=m[2]?m[2].toLowerCase():null;
+      date={place:m[1]||'Selborne',mon:mn?(MON[mn.slice(0,4)]||MON[mn.slice(0,3)]):null,day:m[3]?+m[3]:null,year:+m[4]};break;}
+  }
+  const text=body.filter(l=>!/^To (Thomas Pennant, Esquire|The Honourable Daines Barrington)\s*$/.test(l)).join(' ');
+  const words=(text.match(/[A-Za-z][A-Za-z’'-]*/g)||[]).length;
+  return {series:h.series,num:h.num,date,text,words};
+});
+
+/* ---------- a word for each letter: the one it uses most that the others do not ---------- */
+const STOP=new Set(("which their there these those would could should about other being have been were with from this that they them then than when what where while into upon very much more most some such only also many little great same made make every after before often shall will your yours mine once ever even never well good last first years year time times days place found seen seem seems seemed perhaps without within though through think thought know known sort kind part parts thus away again whole another itself himself myself under over along among whether several things thing life manner since till until because called least therefore however indeed sometimes always rather people quite take taken given give come came went each both just like long down here side sure nothing something account letter letters says said tell told hope wish pray dear becomes divided stood surrounded contained inclusive distinct three regard upright respect consisted inches carried false facts fixed somewhat large twenty-second appeared next ditto owing hath fear epithet name sake showing kept consequently fourth miserable pairs best author particularly raising goes number annually eight circa vulgaris feeds pick severest climbed quiet corrupted operation sounds note full expressive propensity spectator circumscribed sagacity barrington pennant gilbert white month months february july january april august october december september march june recollection minor edition collections genera specimen perambulation solace inches twelfth flat walk voice narrowest northern holes salted sexual affection").split(/\s+/));
+const toks=letters.map(o=>{
+  const t=o.text.toLowerCase();
+  return (t.match(/[a-z][a-z’'-]+[a-z]/g)||[]).map(w=>w.replace(/[’']s$/,''));
+});
+const df={};toks.forEach(ws=>new Set(ws).forEach(w=>df[w]=(df[w]||0)+1));
+letters.forEach((o,k)=>{
+  const tf={};toks[k].forEach(w=>{if(w.length<4||STOP.has(w))return;tf[w]=(tf[w]||0)+1;});
+  const sc=Object.entries(tf).filter(e=>e[1]>=2||toks[k].length<450).map(([w,c])=>[w,c*Math.log(letters.length/df[w])]).sort((a,b)=>b[1]-a[1]);
+  o.kw=sc.length?sc[0][0]:'';
+});
+
+
+/* ---------- two orders: the book's, and the calendar's ---------- */
+const X0=40,X1=1060,GAPS=16;
+const nP=letters.filter(o=>o.series===0).length;
+const CW=(X1-X0-GAPS)/letters.length;
+letters.forEach((o,k)=>{o.x=X0+CW*(k+0.5)+(o.series===1?GAPS:0);});
+const Y0=1767,Y1=1788,TY=676;
+const DIM=[31,28,31,30,31,30,31,31,30,31,30,31];
+const CUM=DIM.reduce((a,d,i)=>(a.push(a[i]+d),a),[0]);
+function tx(t){return X0+(X1-X0)*(t-Y0)/(Y1-Y0);}
+const maxW=Math.max(...letters.map(o=>o.words));
+const BT=262;                       // top of the hanging bars
+function barH(w){return 4+112*w/maxW;}
+
+// year bands on the time line
+for(let y=Y0;y<Y1;y++){
+  if(y%2===0)el('rect',{x:tx(y),y:TY,width:tx(y+1)-tx(y),height:7,fill:'#e4d9c0'});
+  el('line',{x1:tx(y),y1:TY,x2:tx(y),y2:TY+7,stroke:FAINT,'stroke-width':0.6});
+  txt(String(y),{x:(tx(y)+tx(y+1))/2,y:TY+20,'font-size':7.6,'text-anchor':'middle',fill:'#7a6d57','letter-spacing':0.4});
+}
+el('line',{x1:X0,y1:TY,x2:X1,y2:TY,stroke:'#8d7f66','stroke-width':0.8});
+el('line',{x1:tx(Y1),y1:TY,x2:tx(Y1),y2:TY+7,stroke:FAINT,'stroke-width':0.6});
+
+const gTh=el('g',{}),gBar=el('g',{}),gWord=el('g',{}),gEnd=el('g',{});
+letters.forEach(o=>{
+  const c=COL[o.series],h=barH(o.words),yb=BT+h;
+  el('rect',{x:o.x-CW*0.32,y:BT,width:CW*0.64,height:h,fill:c,'fill-opacity':0.85},gBar);
+  // the word, read upward
+  const wy=BT-6;
+  const t=txt('',{x:o.x,y:wy,'font-size':9.4,'dominant-baseline':'middle',fill:c,transform:`rotate(-90 ${o.x.toFixed(2)} ${wy})`},gWord);
+  const n=document.createElementNS(NS,'tspan');n.textContent=o.num;n.setAttribute('font-size','5.4');n.setAttribute('fill-opacity','0.7');n.setAttribute('letter-spacing','0.3');
+  const w=document.createElementNS(NS,'tspan');w.textContent=' '+o.kw;w.setAttribute('font-style','italic');
+  t.appendChild(n);t.appendChild(w);
+  if(o.date&&o.date.mon){
+    const tt=o.date.year+(CUM[o.date.mon-1]+(o.date.day?o.date.day-0.5:DIM[o.date.mon-1]/2))/365;
+    const xe=tx(tt),my=(yb+TY)/2;
+    el('path',{d:`M${o.x} ${yb}C${o.x} ${my+40} ${xe} ${my-40} ${xe} ${TY-1}`,fill:'none',stroke:c,'stroke-opacity':0.5,'stroke-width':0.75},gTh);
+    const away=o.date.place!=='Selborne';
+    el('circle',{cx:xe,cy:TY,r:away?2.6:1.9,fill:away?PAPER:c,stroke:away?c:'none','stroke-width':1},gEnd);
+  }else if(o.date){
+    // a year but no month: the thread loosens and finds only the year
+    const xa=tx(o.date.year),xb=tx(o.date.year+1),xe=(xa+xb)/2,my=(yb+TY)/2;
+    el('path',{d:`M${o.x} ${yb}C${o.x} ${my+40} ${xe} ${my-40} ${xe} ${TY-9}`,fill:'none',stroke:c,'stroke-opacity':0.55,'stroke-width':0.75,'stroke-dasharray':'2 2'},gTh);
+    el('path',{d:`M${xa+2} ${TY-5}L${xa+2} ${TY-9}L${xb-2} ${TY-9}L${xb-2} ${TY-5}`,fill:'none',stroke:c,'stroke-opacity':0.7,'stroke-width':0.7},gEnd);
+  }else{
+    // no date at all: the thread falls a little way and stops
+    const L=34;
+    el('line',{x1:o.x,y1:yb,x2:o.x,y2:yb+L,stroke:c,'stroke-opacity':0.55,'stroke-width':0.75,'stroke-dasharray':'1 2'},gTh);
+    el('circle',{cx:o.x,cy:yb+L+2,r:1,fill:'none',stroke:c,'stroke-opacity':0.6,'stroke-width':0.6},gEnd);
+  }
+});
+
+/* ---------- headings over the two series ---------- */
+const xP0=letters[0].x-CW/2,xP1=letters[nP-1].x+CW/2,xB0=letters[nP].x-CW/2,xB1=letters[letters.length-1].x+CW/2;
+[[xP0,xP1,0,'LETTERS TO THOMAS PENNANT'],[xB0,xB1,1,'LETTERS TO DAINES BARRINGTON']].forEach(([a,b,s,lab])=>{
+  el('line',{x1:a,y1:138,x2:b,y2:138,stroke:COL[s],'stroke-width':0.7});
+  el('line',{x1:a,y1:138,x2:a,y2:143,stroke:COL[s],'stroke-width':0.7});
+  el('line',{x1:b,y1:138,x2:b,y2:143,stroke:COL[s],'stroke-width':0.7});
+  txt(lab,{x:a,y:131,'font-size':8.6,'letter-spacing':1.6,fill:COL[s]});
+});
+txt('as the book prints them',{x:X1,y:118,'font-size':8.6,'font-style':'italic','text-anchor':'end',fill:'#7a6d57'});
+txt('as the calendar wrote them',{x:X1,y:TY+38,'font-size':8.6,'font-style':'italic','text-anchor':'end',fill:'#7a6d57'});
+
+/* ---------- title and key ---------- */
+txt('The Order of Reading',{x:X0,y:56,'font-size':22,fill:INK,'font-style':'italic'});
+txt('the 110 letters of Gilbert White’s Natural History of Selborne, hung in the order the book prints them',{x:X0,y:76,'font-size':9.6,fill:'#6e624e'});
+txt('and let fall to the days on which he dated them',{x:X0,y:89,'font-size':9.6,fill:'#6e624e'});
+const ky=744;
+['Each column is a letter, in book order; its bar is the letter’s length, its word the one it uses most and the other letters least.',
+ 'A thread falls to the day the letter was dated. Dashed threads know only the year; the short dotted ones carry no date and find no day.',
+ 'Where Pennant’s threads cross Barrington’s, White was writing to both men in the same years; where two threads of one series cross, the book has printed a letter out of its date.'
+].forEach((k,i)=>txt(k,{x:X0,y:ky+i*12.5,'font-size':8.6,fill:'#6e624e'}));
+const sx=X1;
+txt('to Thomas Pennant',{x:sx-12,y:50,'font-size':9,'text-anchor':'end',fill:COL[0],'font-style':'italic'});
+el('rect',{x:sx-6,y:43,width:5,height:9,fill:COL[0]});
+txt('to Daines Barrington',{x:sx-12,y:64,'font-size':9,'text-anchor':'end',fill:COL[1],'font-style':'italic'});
+el('rect',{x:sx-6,y:57,width:5,height:9,fill:COL[1]});
+txt('dated away from Selborne',{x:sx-12,y:78,'font-size':9,'text-anchor':'end',fill:'#6e624e','font-style':'italic'});
+el('circle',{cx:sx-3.5,cy:75,r:2.6,fill:PAPER,stroke:'#6e624e','stroke-width':1});
+})();
+</script>
+</body>
+</html>

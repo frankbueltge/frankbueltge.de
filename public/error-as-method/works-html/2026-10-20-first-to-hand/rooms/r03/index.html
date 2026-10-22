@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Twenty-five Turns</title>
+<style>
+  html, body { margin: 0; background: #efe8da; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  svg { display: block; }
+</style>
+<script src="data/sunspots.js"></script>
+</head>
+<body>
+<svg id="s" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  var svg = document.getElementById('s');
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(e);
+    return e;
+  }
+  function text(str, attrs, parent) { var t = el('text', attrs, parent); t.textContent = str; return t; }
+
+  var PAPER = '#efe8da', INK = '#2a2219', FAINT = '#9c8f7c', SUN = '#c4471c', PROV = '#d98b2b';
+
+  // ---- parse SILSO monthly mean total sunspot number (V2.0)
+  var rows = window.SN_CSV.trim().split('\n').map(function (l) {
+    var f = l.split(';');
+    return { y: +f[0], m: +f[1], t: +f[2], v: +f[3], def: f[6].trim() === '1' };
+  });
+  var n = rows.length;
+
+  // ---- 13-month tapered running mean (the standard SILSO smoothing)
+  var sm = new Array(n).fill(null);
+  for (var i = 6; i < n - 6; i++) {
+    var s = 0.5 * rows[i - 6].v + 0.5 * rows[i + 6].v;
+    for (var j = -5; j <= 5; j++) s += rows[i + j].v;
+    sm[i] = s / 12;
+  }
+
+  // ---- find each cycle minimum: lowest smoothed value near the conventional date
+  var approx = [1755.2,1766.5,1775.5,1784.7,1798.3,1810.6,1823.3,1833.9,1843.5,1855.9,1867.2,
+                1878.9,1890.2,1902.1,1913.6,1923.6,1933.8,1944.2,1954.3,1964.9,1976.5,1986.8,
+                1996.4,2008.9,2019.9];
+  var minima = approx.map(function (a) {
+    var best = -1, bv = Infinity;
+    for (var i = 0; i < n; i++) {
+      if (sm[i] === null || Math.abs(rows[i].t - a) > 1.5) continue;
+      if (sm[i] < bv) { bv = sm[i]; best = i; }
+    }
+    return best;
+  });
+
+  // ---- layout
+  var X0 = 150, PXM = 5.35;           // months since minimum -> px
+  var TOP = 150, ROWH = 24;         // baseline spacing
+  var AMP = 0.215;                     // px per sunspot
+
+  // title block
+  text('Twenty-five Turns', { x: 1040, y: 52, 'text-anchor': 'end', fill: INK, 'font-family': 'Georgia, serif', 'font-size': 30, 'letter-spacing': '0.5' });
+  text('Every month of sunspots counted since 1749,', { x: 1040, y: 76, 'text-anchor': 'end', fill: FAINT, 'font-family': 'Georgia, serif', 'font-style': 'italic', 'font-size': 14 });
+  text('cut at each solar minimum and laid one cycle under the next.',
+       { x: 1040, y: 95, 'text-anchor': 'end', fill: FAINT, 'font-family': 'Georgia, serif', 'font-style': 'italic', 'font-size': 14 });
+
+  // faint year ticks across the top
+  var axisY = TOP + ROWH * 24 + 30;
+  for (var yr = 0; yr <= 14; yr++) {
+    var xx = X0 + yr * 12 * PXM;
+    el('line', { x1: xx, x2: xx, y1: TOP - 40, y2: TOP + ROWH * 24 + 16, stroke: '#ddd3c1', 'stroke-width': yr % 5 === 0 ? 1 : 0.6 });
+    if (yr % 1 === 0) text(yr === 0 ? 'minimum' : yr + (yr === 1 ? ' yr' : ''), {
+      x: xx, y: axisY - 12, fill: FAINT, 'font-family': 'Helvetica, Arial, sans-serif', 'font-size': 10,
+      'text-anchor': yr === 0 ? 'middle' : 'middle' });
+  }
+
+  var gAll = el('g', {});
+  for (var c = 0; c < minima.length; c++) {
+    var a = minima[c];
+    var b = c + 1 < minima.length ? minima[c + 1] : n - 1;
+    var last = c + 1 >= minima.length;
+    var base = TOP + c * ROWH;
+    var g = el('g', {}, gAll);
+
+    // occluding shape (smoothed envelope + spikes), so rows below hide rows above
+    var pts = [];
+    for (var i = a; i <= b; i++) pts.push([X0 + (i - a) * PXM, base - Math.max(rows[i].v, sm[i] || 0) * AMP - 1.5]);
+    var d = 'M' + X0 + ',' + (base + 3) + ' L' + pts.map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' L') +
+            ' L' + pts[pts.length - 1][0].toFixed(1) + ',' + (base + 3) + ' Z';
+    el('path', { d: d, fill: PAPER, stroke: 'none' }, g);
+    var rp = [];
+    for (var i = a; i <= b; i++) rp.push((X0 + (i - a) * PXM).toFixed(1) + ',' + (base - rows[i].v * AMP).toFixed(1));
+    el('path', { d: 'M' + X0 + ',' + base + ' L' + rp.join(' L') + ' L' + (X0 + (b - a) * PXM).toFixed(1) + ',' + base + ' Z',
+                 fill: SUN, 'fill-opacity': 0.16, stroke: 'none' }, g);
+
+    // monthly values as hairline stems
+    for (var i = a; i <= b; i++) {
+      var x = X0 + (i - a) * PXM;
+      el('line', { x1: x, x2: x, y1: base, y2: base - rows[i].v * AMP,
+                   stroke: rows[i].def ? SUN : PROV, 'stroke-width': 0.7, 'stroke-opacity': rows[i].def ? 0.35 : 0.9 }, g);
+    }
+    // raw monthly outline
+    el('path', { d: 'M' + rp.join(' L'), fill: 'none', stroke: SUN, 'stroke-width': 0.7, 'stroke-opacity': 0.85 }, g);
+    // smoothed curve
+    var sp = [];
+    for (var i = a; i <= b; i++) if (sm[i] !== null) sp.push((X0 + (i - a) * PXM).toFixed(1) + ',' + (base - sm[i] * AMP).toFixed(1));
+    el('path', { d: 'M' + sp.join(' L'), fill: 'none', stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, g);
+    // baseline
+    el('line', { x1: X0, x2: X0 + (b - a) * PXM, y1: base, y2: base, stroke: INK, 'stroke-width': 0.8 }, g);
+
+    // labels
+    var start = rows[a];
+    text(String(c + 1), { x: 60, y: base, fill: INK, 'font-family': 'Georgia, serif', 'font-size': 13 }, g);
+    text(String(start.y), { x: X0 - 12, y: base, fill: FAINT, 'font-family': 'Helvetica, Arial, sans-serif', 'font-size': 11, 'text-anchor': 'end' }, g);
+
+    var endX = X0 + (b - a) * PXM;
+    var len = (b - a) / 12;
+    if (!last) {
+      text(len.toFixed(1) + ' yr', { x: endX + 8, y: base + 3, fill: FAINT, 'font-family': 'Helvetica, Arial, sans-serif', 'font-size': 10 }, g);
+    } else {
+      el('circle', { cx: endX, cy: base - rows[b].v * AMP, r: 2.6, fill: INK }, g);
+      text('Sep ' + rows[b].y + ' — still turning', { x: endX + 10, y: base + 3, fill: INK,
+           'font-family': 'Georgia, serif', 'font-style': 'italic', 'font-size': 12 }, g);
+    }
+    // peak note for the largest monthly value of the cycle, only for the two highest
+    var pk = a; for (var i = a; i <= b; i++) if (rows[i].v > rows[pk].v) pk = i;
+    if (rows[pk].v > 355) {
+      text(rows[pk].v.toFixed(0) + ' in ' + ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][rows[pk].m - 1] + ' ' + rows[pk].y,
+           { x: X0 + (pk - a) * PXM + 6, y: base - rows[pk].v * AMP + 4, fill: INK,
+             'font-family': 'Helvetica, Arial, sans-serif', 'font-size': 10 }, g);
+    }
+  }
+
+  // column headers
+  text('cycle', { x: 60, y: TOP - 30, fill: FAINT, 'font-family': 'Helvetica, Arial, sans-serif', 'font-size': 10 });
+  text('began', { x: X0 - 12, y: TOP - 30, fill: FAINT, 'font-family': 'Helvetica, Arial, sans-serif', 'font-size': 10, 'text-anchor': 'end' });
+
+  // footer
+  var fy = 790;
+  text('Red: monthly mean total sunspot number (version 2.0). Dark line: 13-month smoothed mean. Brighter hairlines: provisional months. Height: 100 sunspots = 21.5 px.',
+       { x: 60, y: fy - 16, fill: FAINT, 'font-family': 'Helvetica, Arial, sans-serif', 'font-size': 10.5 });
+  text('Source: WDC-SILSO, Royal Observatory of Belgium, Brussels. CC BY-NC 4.0. Months before the 1755 minimum (the tail of “cycle 0”) are left out.',
+       { x: 60, y: fy, fill: FAINT, 'font-family': 'Helvetica, Arial, sans-serif', 'font-size': 10.5 });
+})();
+</script>
+</body>
+</html>

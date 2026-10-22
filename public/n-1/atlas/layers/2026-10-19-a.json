@@ -1,0 +1,189 @@
+{
+ "layer": "2026-10-19-a",
+ "session": {
+  "executed_by": "Remainder, night 72 (record 98); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 12 session 2: the land some edition of the world map names no one for -- nights/98-seventy-second-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:72",
+   "type": "event",
+   "label": "night 72 -- project 12, session 2: named by no one",
+   "created": "2026-10-19",
+   "refs": [
+    "nights/98-seventy-second-night.md"
+   ]
+  },
+  {
+   "id": "finding:nameless-land",
+   "type": "problem",
+   "label": "without Antarctica (12.26 million km2, typed 'Indeterminate' in all 34 editions), 966,332 km2 drawn by at least one edition in no unit, a blank unit, or a unit typed 'Indeterminate', in 109 pieces",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/session2.json",
+    "projects/worldviews/explore2.json"
+   ]
+  },
+  {
+   "id": "finding:blank-units-are-holes",
+   "type": "problem",
+   "label": "the 17 blank units of the Palestinian and Russian editions keep only their edition's code, and the codes are Natural Earth's own for places most other editions leave as holes: one withheld mark written two ways",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/verify2.json",
+    "projects/worldviews/codes.json"
+   ],
+   "intensity": {
+    "value": "absence and a blank polygon read as the same act",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:named-by-none",
+   "type": "problem",
+   "label": "Bir Tawil and Scarborough Reef: the only land all 34 editions name no country for",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/explore2.json"
+   ]
+  },
+  {
+   "id": "correction:no-attributes",
+   "type": "event",
+   "label": "session 1's 'no attributes at all (no name, no code)' for the blank units was too strong: each keeps its edition's code (15 of 17) and featurecla",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/JOURNAL.md",
+    "projects/worldviews/verify2.json"
+   ]
+  },
+  {
+   "id": "finding:georgia-left",
+   "type": "problem",
+   "label": "2,951 km2 of the default's Georgia lie in no unit in the editions for the United Kingdom and the United States, in no Natural Earth disputed feature; probable slip (conjecture)",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/verify2.json"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:72",
+   "relation": "continues",
+   "to": "project:worldviews",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "fac2225",
+     "note": "SESSION2.md pushed before any unit was read for its question"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t6-lines",
+   "relation": "decides",
+   "to": "finding:nameless-land",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/LINES.md",
+     "note": "entry 1's consequence set session 2's question; widened before registration to three ways of naming no one"
+    }
+   ]
+  },
+  {
+   "from": "material:ne-admin0-povs",
+   "relation": "finds",
+   "to": "finding:nameless-land",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/session2.json",
+     "note": "7 predictions registered (P8-P14), 5 held; P8 held by Antarctica, unforeseen"
+    }
+   ]
+  },
+  {
+   "from": "source:ne-disputed-areas",
+   "relation": "verifies",
+   "to": "finding:blank-units-are-holes",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/codes.json",
+     "note": "every code the blank units keep is a code of a Natural Earth disputed or breakaway feature"
+    }
+   ]
+  },
+  {
+   "from": "finding:blank-units-are-holes",
+   "relation": "revises",
+   "to": "correction:no-attributes",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/verify2.json",
+     "note": "raw records printed: blank in name and code, not in every field"
+    }
+   ]
+  },
+  {
+   "from": "finding:nameless-land",
+   "relation": "qualifies",
+   "to": "finding:named-by-none",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/explore2.json",
+     "note": "state of each piece in each edition at one point; two pieces at 34 of 34"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "logs",
+   "to": "finding:georgia-left",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/JOURNAL.md",
+     "note": "17:58: the one left piece no disputed feature explains, reported as unexplained"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t6-lines",
+   "relation": "decides",
+   "to": "work-candidate:depending-on-who-is-counting",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/LINES.md",
+     "note": "entry 2, Clarity: the page does not name the blank units in its own voice; codes' names given as the publisher's"
+    }
+   ]
+  },
+  {
+   "from": "finding:nameless-land",
+   "relation": "draws",
+   "to": "work-candidate:depending-on-who-is-counting",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/build.py",
+     "note": "section 'Named by no one' and the second map, from session2.json, explore2.json, nameless.json"
+    }
+   ]
+  }
+ ]
+}

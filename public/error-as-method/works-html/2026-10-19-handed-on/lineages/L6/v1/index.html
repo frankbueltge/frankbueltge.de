@@ -1,0 +1,141 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>The Long Wait</title>
+<style>
+html,body{margin:0;background:#14120f;}
+body{width:1100px;height:800px;overflow:hidden;}
+canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="2200" height="1600" style="width:1100px;height:800px"></canvas>
+<script src="data.js"></script>
+<script>
+const P = window.PRIZES, F = P.fields, ix = n => F.indexOf(n);
+const Y=ix('year'), K=ix('kind'), B=ix('born'), N=ix('name'), C=ix('category');
+const rows = P.rows.filter(r => r[B] != null).slice()
+  .sort((a,b) => a[Y]-b[Y] || (b[Y]-b[B]) - (a[Y]-a[B]));
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+g.scale(2,2);
+const W=1100,H=800, L=50, R=1070, T=74, BOT=748;
+const Y0=1815, Y1=2027;
+const x = yr => L + (yr-Y0)/(Y1-Y0)*(R-L);
+// vertical layout: one slot per laureate, small gap per calendar year
+const years = [...new Set(rows.map(r=>r[Y]))];
+const gapPerYear = 0.42, gapEmpty = 0.42;
+let units = rows.length + (years[years.length-1]-years[0]) * gapPerYear;
+const step = (BOT-T)/units;
+const ypos = []; let cur = T, prevYear = rows[0][Y];
+const yearTop = {};
+rows.forEach((r,i)=>{
+  if (r[Y]!==prevYear){ cur += (r[Y]-prevYear)*gapPerYear*step; prevYear=r[Y]; }
+  if (!(r[Y] in yearTop)) yearTop[r[Y]] = cur;
+  ypos.push(cur); cur += step;
+});
+
+g.fillStyle='#14120f'; g.fillRect(0,0,W,H);
+
+// faint decade grid
+g.font='10px Georgia, serif'; g.textAlign='center';
+for (let d=1820; d<=2020; d+=10){
+  g.strokeStyle = d%50===0 ? 'rgba(235,225,205,0.10)' : 'rgba(235,225,205,0.045)';
+  g.lineWidth=0.6; g.beginPath(); g.moveTo(x(d)+.5,T-6); g.lineTo(x(d)+.5,BOT+4); g.stroke();
+  if (d%20===0){ g.fillStyle='rgba(235,225,205,0.45)'; g.fillText(d, x(d), BOT+18); }
+}
+
+const col = {man:'rgba(214,196,160,0.30)', woman:'#ff5a36', organisation:'rgba(120,175,230,0.75)'};
+const th = Math.max(step*0.9, 0.5);
+// draw men first, then orgs, then women on top
+['man','organisation','woman'].forEach(kind=>{
+  rows.forEach((r,i)=>{
+    if (r[K]!==kind) return;
+    const y = ypos[i]+step/2;
+    const xb = x(Math.max(r[B], Y0)), xa = x(r[Y]+0.5);
+    g.fillStyle = col[kind];
+    g.fillRect(xb, y-th/2, xa-xb, kind==='woman'? Math.max(th,0.9): th);
+    // the birth end
+    if (kind==='woman'){ g.fillStyle='#ffb199'; g.fillRect(xb-0.6, y-th/2, 1.2, Math.max(th,0.9)); }
+    if (kind==='organisation' && r[B] < Y0){
+      g.fillStyle='rgba(120,175,230,0.9)'; g.font='9px Georgia, serif'; g.textAlign='left';
+      g.fillText('◂ founded '+r[B], x(Y0)-1, y+3.5 - 8);
+    }
+  });
+});
+// award moment: bright tick at right end
+rows.forEach((r,i)=>{
+  const y=ypos[i]+step/2, xa=x(r[Y]+0.5);
+  g.fillStyle = r[K]==='woman' ? '#ffd2c4' : 'rgba(255,236,190,0.75)';
+  g.fillRect(xa, y-th/2, 1.1, th);
+});
+
+// row-axis labels (award year) along the staircase
+g.textAlign='left'; g.font='italic 10px Georgia, serif';
+[1901,1925,1950,1975,2000].forEach(yr=>{
+  if (!(yr in yearTop)) return;
+  g.fillStyle='rgba(255,236,190,0.6)';
+  g.fillText('awarded '+yr, x(yr+0.5)+6, yearTop[yr]+7);
+});
+
+// annotations
+function note(r, text, dx, dy, align){
+  const i = rows.indexOf(r); const y = ypos[i]+step/2; const xb=x(Math.max(r[B],Y0));
+  g.strokeStyle='rgba(235,225,205,0.45)'; g.lineWidth=0.6;
+  g.beginPath(); g.moveTo(xb-2,y); g.lineTo(xb-2+dx, y+dy); g.stroke();
+  g.fillStyle='rgba(235,225,205,0.82)'; g.font='10.5px Georgia, serif'; g.textAlign=align||'right';
+  text.split('\n').forEach((t,k)=>g.fillText(t, xb-2+dx+(align==='left'?3:-3), y+dy+3+k*12.5));
+}
+const find = f => rows.find(f);
+const age = r => r[Y]-r[B];
+const curie = find(r=>r[N].includes('Marie Curie') && r[Y]===1903);
+const malala = rows.reduce((a,r)=> r[K]!=='organisation' && age(r)<age(a)?r:a, rows[rows.length-1]);
+const oldest = rows.reduce((a,r)=> r[K]!=='organisation' && age(r)>age(a)?r:a, rows[0]);
+const firstRow = rows[0];
+if (curie) note(curie, 'Marie Curie, 1903 — the first woman,\nborn 1867, aged 36', -18, 18);
+{const xb=x(malala[B]); note(malala, malala[N]+', '+malala[Y]+' — aged '+age(malala)+',\nthe shortest line', 600-xb, 38);}
+note(oldest, oldest[N]+', '+oldest[Y]+' — aged '+age(oldest)+',\nthe longest life before the prize', -26, -52);
+note(firstRow, firstRow[N]+', born '+firstRow[B]+',\nwaited '+age(firstRow)+' years for 1901', 14, -8, 'left');
+
+// war gaps
+g.fillStyle='rgba(235,225,205,0.5)'; g.font='italic 10px Georgia, serif'; g.textAlign='left';
+[[1940,1942,'no prizes 1940–42']].forEach(([a,b,t])=>{
+  g.fillText(t, x(1943.5)+8, yearTop[1943]+4);
+});
+
+// title block (upper right, in the empty triangle)
+const women = rows.filter(r=>r[K]==='woman').length;
+g.textAlign='left';
+g.fillStyle='#efe6d2'; g.font='34px Georgia, serif';
+g.fillText('The Long Wait', 800, 92);
+g.font='12.5px Georgia, serif'; g.fillStyle='rgba(239,230,210,0.78)';
+const lines=[
+  'Every Nobel laureate since 1901,',
+  'one thread each. A thread starts at the',
+  'year of birth (or founding) and ends at',
+  'the year of the prize: its length is the',
+  'life lived before the call from Stockholm.',
+  'Threads are stacked in order of award, so',
+  'the right edge is the calendar and the',
+  'left edge is the cradle.'
+];
+lines.forEach((t,k)=>g.fillText(t, 802, 116+k*16.5));
+const ly = 264;
+[['man', rows.filter(r=>r[K]==='man').length+' men'],
+ ['woman', women+' women'],
+ ['organisation', rows.filter(r=>r[K]==='organisation').length+' organisations']].forEach(([k,t],j)=>{
+  const lx = 802, yy = ly + j*17;
+  g.fillStyle = k==='man' ? 'rgba(214,196,160,0.75)' : col[k];
+  g.fillRect(lx, yy-4, 26, 2.2);
+  g.fillStyle='rgba(239,230,210,0.8)'; g.font='12px Georgia, serif';
+  g.fillText(t, lx+34, yy);
+});
+
+// median age by era, printed small at bottom left
+function med(a){a=a.slice().sort((p,q)=>p-q);return a[Math.floor(a.length/2)];}
+const people = rows.filter(r=>r[K]!=='organisation');
+const m1 = med(people.filter(r=>r[Y]<1950).map(age)), m2 = med(people.filter(r=>r[Y]>=1990).map(age));
+g.fillStyle='rgba(239,230,210,0.62)'; g.font='italic 12px Georgia, serif';
+g.fillText('Median age at the prize: '+m1+' before 1950, '+m2+' since 1990.', L+4, BOT-36);
+g.fillText('The band drifts right faster than the calendar: the wait is getting longer.', L+4, BOT-20);
+
+g.fillStyle='rgba(239,230,210,0.35)'; g.font='9px Georgia, serif'; g.textAlign='right';
+g.fillText('Data: '+P.source, R, H-10);
+</script>
+</body></html>

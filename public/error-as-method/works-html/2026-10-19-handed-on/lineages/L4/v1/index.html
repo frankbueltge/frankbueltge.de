@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Purse, Divided</title>
+<style>
+  html,body{margin:0;padding:0;background:#f3eee3;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#1d1b18;}
+  svg{display:block}
+</style>
+</head>
+<body>
+<svg id="v" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data.js"></script>
+<script>
+(function(){
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("v");
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+  function txt(s,a,p){var e=el("text",a,p);e.textContent=s;return e;}
+
+  var D=window.PRIZES, F=D.fields, I={};F.forEach(function(f,i){I[f]=i;});
+  var rows=D.rows;
+  var cats=["Physics","Chemistry","Physiology or Medicine","Literature","Peace","Economic Sciences"];
+  var label={"Physics":"Physics","Chemistry":"Chemistry","Physiology or Medicine":"Medicine","Literature":"Literature","Peace":"Peace","Economic Sciences":"Economics"};
+  var Y0=1901,Y1=2026;
+  var INK="#1d1b18", WOMAN="#c8321e", ORG="#2f6f8f", MAN="#2a2723", FAINT="#d9d1c0", MUTED="#7a7166";
+
+  // group
+  var g={};rows.forEach(function(r){var k=r[I.category]+"|"+r[I.year];(g[k]=g[k]||[]).push(r);});
+  var maxAmt=0;rows.forEach(function(r){if(r[I.amount_sek_today]>maxAmt)maxAmt=r[I.amount_sek_today];});
+
+  var L=128, R=1100-48, colW=(R-L)/(Y1-Y0+1), barW=colW-1.6;
+  var top=118, stripH=104, H=88; // H = height for maxAmt
+  var scale=H/maxAmt;
+
+  // header
+  txt("The Purse, Divided",{x:L,y:50,"font-size":30,"letter-spacing":"0.5",fill:INK});
+  txt("Every Nobel Prize 1901–2026. Each column is one prize; its height is the award in today’s kronor, cut into the piece each laureate took home.",
+      {x:L,y:76,"font-size":13,fill:MUTED,"font-style":"italic"});
+  // legend
+  var lx=L, ly=97;
+  [["a man",MAN],["a woman",WOMAN],["an organisation",ORG]].forEach(function(d){
+    el("rect",{x:lx,y:ly-9,width:9,height:9,fill:d[1]});
+    var t=txt(d[0],{x:lx+14,y:ly,"font-size":12,fill:INK});
+    lx+=14+d[0].length*6.4+22;
+  });
+  txt("gaps between pieces mark the split: whole, halves, thirds, quarters",{x:lx+6,y:ly,"font-size":12,fill:MUTED});
+
+  cats.forEach(function(cat,ci){
+    var base=top+ci*stripH+H;
+    var grp=el("g",{});
+    // reference lines at 5M and 10M
+    [5e6,10e6,15e6].forEach(function(v){
+      var yy=base-v*scale;
+      el("line",{x1:L-4,x2:R,y1:yy,y2:yy,stroke:FAINT,"stroke-width":0.6,"stroke-dasharray":v===10e6?"":"1 3"},grp);
+    });
+    el("line",{x1:L-4,x2:R,y1:base+0.5,y2:base+0.5,stroke:"#b9af9c","stroke-width":0.8},grp);
+
+    var women=0, total=0, orgs=0;
+    for(var y=Y0;y<=Y1;y++){
+      var list=g[cat+"|"+y], x=L+(y-Y0)*colW+0.8;
+      if(!list){
+        if(!(cat==="Economic Sciences"&&y<1969)) el("rect",{x:x+barW/2-0.6,y:base-2,width:1.2,height:1.2,fill:"#b9af9c"},grp);
+        continue;
+      }
+      // order: larger shares first at bottom; stable by name
+      list=list.slice().sort(function(a,b){return b[I.share]-a[I.share];});
+      var yy=base;
+      list.forEach(function(r,j){
+        total++; if(r[I.kind]==="woman")women++; if(r[I.kind]==="organisation")orgs++;
+        var h=r[I.share]*r[I.amount_sek_today]*scale;
+        var gap=j<list.length-1?2:0;
+        var c=r[I.kind]==="woman"?WOMAN:r[I.kind]==="organisation"?ORG:MAN;
+        el("rect",{x:x,y:yy-h+gap,width:barW,height:Math.max(0.5,h-gap),fill:c},grp);
+        yy-=h;
+      });
+    }
+    // labels
+    txt(label[cat],{x:L-14,y:base-H+28,"text-anchor":"end","font-size":16,fill:INK},grp);
+    txt(total+" laureates",{x:L-14,y:base-H+46,"text-anchor":"end","font-size":11,fill:MUTED},grp);
+    var wt=txt("",{x:L-14,y:base-H+61,"text-anchor":"end","font-size":11,fill:WOMAN},grp);
+    wt.textContent=women+(women===1?" woman":" women");
+    if(orgs){txt(orgs+" organisations",{x:L-14,y:base-H+75,"text-anchor":"end","font-size":11,fill:ORG},grp);}
+    if(cat==="Economic Sciences"){
+      txt("not yet awarded — first given 1969",{x:L+ (1935-Y0)*colW,y:base-30,"text-anchor":"middle","font-size":11,"font-style":"italic",fill:MUTED},grp);
+    }
+  });
+
+  // scale note on right of first strip
+  var b0=top+H;
+  txt("10 M kr",{x:R+5,y:b0-10e6*scale+3,"font-size":8.5,fill:MUTED});
+  txt("5 M kr",{x:R+5,y:b0-5e6*scale+3,"font-size":8.5,fill:MUTED});
+
+  // year axis
+  var ay=top+cats.length*stripH+6;
+  for(var y=1910;y<=2020;y+=10){
+    var x=L+(y-Y0)*colW+colW/2;
+    el("line",{x1:x,x2:x,y1:ay-4,y2:ay,stroke:"#b9af9c"});
+    txt(String(y),{x:x,y:ay+12,"text-anchor":"middle","font-size":11,fill:MUTED});
+  }
+  txt("1901",{x:L+colW/2,y:ay+12,"text-anchor":"start","font-size":11,fill:MUTED});
+
+  // footer note
+  txt("A dot means no prize that year. The purse shrank to a third of its 1901 worth by the 1920s and did not recover until the 1990s, while ever more often it was split three ways.",
+      {x:L,y:790,"font-size":11,fill:MUTED,"font-style":"italic"});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Combed Year</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #ece6da; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/46026h2024.js"></script>
+<script>
+(async function () {
+  const W = 1100, H = 800;
+  const cv = document.getElementById('c');
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const PAPER = '#ece6da', INK = '#22262b', FAINT = 'rgba(34,38,43,0.45)';
+  ctx.fillStyle = PAPER; ctx.fillRect(0, 0, W, H);
+
+  let text = window.BUOY_46026_2024;
+  if (!text) try {
+    text = await (await fetch('data/46026h2024.txt')).text();
+  } catch (e) {}
+  if (!text) {
+    ctx.fillStyle = INK; ctx.font = '14px Georgia, serif';
+    ctx.fillText('data/46026h2024.txt could not be read', 40, 60);
+    return;
+  }
+
+  // parse
+  const recs = [];
+  let lastT = NaN;
+  const t0 = Date.UTC(2024, 0, 1), t1 = Date.UTC(2025, 0, 1);
+  for (const line of text.split('\n')) {
+    if (!line || line[0] === '#') continue;
+    const f = line.trim().split(/\s+/);
+    if (f.length < 15) continue;
+    const t = Date.UTC(+f[0], +f[1] - 1, +f[2], +f[3], +f[4]);
+    const wtmp = +f[14];
+    if (wtmp < 99) lastT = wtmp;
+    const wvht = +f[8], dpd = +f[9], mwd = +f[11];
+    if (wvht >= 99 || dpd >= 99 || mwd >= 999) continue;
+    recs.push({ u: (t - t0) / (t1 - t0), h: wvht, p: dpd, d: mwd, w: wtmp < 99 ? wtmp : lastT });
+  }
+
+  // frame
+  const L = 92, R = 1060, TOP = 112, BOT = 712;
+  const pMin = 3.4, pMax = 27;
+  const yOf = p => BOT - (Math.log(p) - Math.log(pMin)) / (Math.log(pMax) - Math.log(pMin)) * (BOT - TOP);
+  const xOf = u => L + u * (R - L);
+  const SCALE = 6.2; // px per metre of significant wave height
+
+  // colour by water temperature: cold slate-blue -> warm rust
+  const cold = [28, 52, 82], mid = [40, 44, 48], warm = [176, 84, 44];
+  function col(w, a) {
+    let k = Math.max(0, Math.min(1, (w - 9.5) / (16.2 - 9.5)));
+    let c;
+    if (k < 0.5) { const s = k / 0.5; c = cold.map((v, i) => v + (mid[i] - v) * s); }
+    else { const s = (k - 0.5) / 0.5; c = mid.map((v, i) => v + (warm[i] - v) * s); }
+    return `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${a})`;
+  }
+
+  // month guides
+  ctx.lineWidth = 1;
+  const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  ctx.font = '10px Georgia, serif';
+  ctx.textAlign = 'left';
+  for (let m = 0; m <= 12; m++) {
+    const u = (Date.UTC(2024, m, 1) - t0) / (t1 - t0);
+    const x = Math.round(xOf(u)) + 0.5;
+    ctx.strokeStyle = 'rgba(34,38,43,0.10)';
+    ctx.beginPath(); ctx.moveTo(x, TOP - 8); ctx.lineTo(x, BOT + 8); ctx.stroke();
+    if (m < 12) {
+      const u2 = (Date.UTC(2024, m + 1, 1) - t0) / (t1 - t0);
+      ctx.fillStyle = FAINT;
+      ctx.textAlign = 'center';
+      ctx.fillText(months[m], (xOf(u) + xOf(u2)) / 2, BOT + 30);
+    }
+  }
+
+  // period scale
+  ctx.textAlign = 'right';
+  for (const p of [4, 5, 6, 8, 10, 12, 15, 20, 25]) {
+    const y = yOf(p);
+    ctx.fillStyle = FAINT;
+    ctx.fillText(p + ' s', L - 16, y + 3.5);
+    ctx.strokeStyle = 'rgba(34,38,43,0.25)';
+    ctx.beginPath(); ctx.moveTo(L - 10, y + 0.5); ctx.lineTo(L - 5, y + 0.5); ctx.stroke();
+  }
+
+  // strokes: each half-hour sea state, drawn from its moment in the year and its
+  // dominant period, pointing where the waves travel (north up), as long as they are tall
+  ctx.lineCap = 'round';
+  // draw small seas first so storms sit on top
+  recs.sort((a, b) => a.h - b.h);
+  for (const r of recs) {
+    const x = xOf(r.u), y = yOf(r.p);
+    const go = (r.d + 180) * Math.PI / 180; // direction of travel, compass
+    const len = r.h * SCALE;
+    const dx = Math.sin(go) * len, dy = -Math.cos(go) * len;
+    ctx.strokeStyle = col(r.w, 0.16 + Math.min(0.5, r.h * 0.07));
+    ctx.lineWidth = 0.55 + r.h * 0.12;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + dx, y + dy);
+    ctx.stroke();
+  }
+
+  // compass key, lower right of title area
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK;
+  ctx.font = 'italic 26px Georgia, serif';
+  ctx.fillText('Combed Year', L, 58);
+  ctx.font = '11.5px Georgia, serif';
+  ctx.fillStyle = FAINT;
+  ctx.fillText('Buoy 46026, 18 nautical miles west of San Francisco, 2024. ' + recs.length.toLocaleString('en-US') +
+    ' half-hourly sea states, each a stroke placed at its hour and its dominant period,', L, 82);
+  ctx.fillText('pointing the way the waves were travelling (north is up), as long as they were tall, tinted by the water it passed through, cold blue to warm rust.', L, 97);
+
+  // legend: length
+  const ly = BOT + 62;
+  ctx.fillStyle = FAINT; ctx.font = '10px Georgia, serif';
+  ctx.textAlign = 'left';
+  let lx = L;
+  for (const h of [1, 3, 6]) {
+    ctx.strokeStyle = col(12.5, 0.85);
+    ctx.lineWidth = 0.55 + h * 0.12;
+    ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(lx + h * SCALE, ly); ctx.stroke();
+    ctx.fillText(h + ' m', lx + h * SCALE + 6, ly + 3.5);
+    lx += h * SCALE + 44;
+  }
+  // legend: colour
+  lx += 64;
+  for (let i = 0; i <= 40; i++) {
+    const w = 9.5 + (16.2 - 9.5) * i / 40;
+    ctx.strokeStyle = col(w, 0.9); ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(lx + i * 2, ly); ctx.lineTo(lx + i * 2 + 2, ly); ctx.stroke();
+  }
+  ctx.fillText('10 °C', lx - 32, ly + 3.5);
+  ctx.fillText('16 °C water', lx + 88, ly + 3.5);
+  // legend: direction
+  const cx = R - 40, cy = ly - 4;
+  ctx.strokeStyle = FAINT; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(cx, cy + 12); ctx.lineTo(cx, cy - 12); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx - 3, cy - 8); ctx.lineTo(cx, cy - 12); ctx.lineTo(cx + 3, cy - 8); ctx.stroke();
+  ctx.textAlign = 'right';
+  ctx.fillText('N', cx - 8, cy - 4);
+  ctx.fillText('swell from the west runs right; from the south, stands up', cx - 22, cy + 8);
+})();
+</script>
+</body>
+</html>

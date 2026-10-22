@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Dog Register</title>
+<style>
+:root{--bg:#f1eee8;--ink:#1b1916;--mute:#6a645b;--line:#d3cdc2;--card:#fbf9f5;--wire:#a59d90;--hot:#a8432b;--read:#285d78;--ok:#2f6a46}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151311;--ink:#ece6dc;--mute:#a39b8e;--line:#37322c;--card:#1d1a17;--wire:#5a5249;--hot:#ec8268;--read:#82b9d4;--ok:#83c59f}}
+:root[data-theme="dark"]{--bg:#151311;--ink:#ece6dc;--mute:#a39b8e;--line:#37322c;--card:#1d1a17;--wire:#5a5249;--hot:#ec8268;--read:#82b9d4;--ok:#83c59f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+main{max-width:1240px;margin:0 auto;padding:20px 16px 64px}
+h1{font-weight:normal;font-size:30px;margin:0 0 2px}
+h2{font-weight:normal;font-size:21px;margin:44px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+.sub{color:var(--mute);margin:0 0 16px;max-width:64em}
+.judge{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:820px){.judge{grid-template-columns:1fr}}
+.judge img{width:100%;display:block;border:1px solid var(--line);background:#fff;aspect-ratio:1100/800}
+.ask{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.verdict{background:var(--card);border:1px solid var(--line);padding:12px;font-size:15px;min-height:10em}
+.verdict p{margin:0 0 8px}
+.verdict .seat{font-size:13px;color:var(--mute);display:block}
+.score{font-size:14px;color:var(--mute)}
+.stage{display:grid;grid-template-columns:300px 1fr 1fr;gap:14px;align-items:start}
+@media (max-width:980px){.stage{grid-template-columns:1fr 1fr}.wiring{grid-column:1/-1}}
+@media (max-width:640px){.stage{grid-template-columns:1fr}}
+.pane{background:var(--card);border:1px solid var(--line);padding:10px;min-width:0}
+.pane h3{font-weight:normal;font-size:14px;margin:0 0 6px;color:var(--mute)}
+.pane h3 b{color:var(--ink);font-weight:normal}
+.frame{position:relative;width:100%;aspect-ratio:1100/800;overflow:hidden;background:#fff;border:1px solid var(--line)}
+.frame iframe{position:absolute;left:0;top:0;width:1100px;height:800px;border:0;transform-origin:0 0}
+.wait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#6a645b;font-size:14px}
+#wires{width:100%;display:block;user-select:none}
+#wires text{font:12.5px ui-monospace,Menlo,Consolas,monospace;fill:var(--ink);cursor:pointer}
+#wires text.r{fill:var(--mute);cursor:default}
+#wires text.read{fill:var(--read);font-weight:bold}
+#wires text.pick{fill:var(--hot)}
+#wires path{fill:none;stroke:var(--wire);stroke-width:1.2}
+#wires path.moved{stroke:var(--hot);stroke-width:2}
+.ops{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+button{font:inherit;font-size:14px;background:transparent;color:var(--ink);border:1px solid var(--line);padding:4px 10px;cursor:pointer}
+button:hover,button:focus-visible{border-color:var(--ink);outline:none}
+button.big{font-size:16px;padding:6px 16px}
+.did{font-size:14px;margin:6px 0 0;min-height:3em}
+.did code,.mono{font:13px ui-monospace,Menlo,Consolas,monospace}
+.err{color:var(--hot);font-size:13px;min-height:1.3em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.armh{font-size:15px;margin:18px 0 6px;color:var(--mute)}
+.cell{display:flex;flex-direction:column;justify-content:flex-start;background:var(--card);border:1px solid var(--line);padding:6px;cursor:pointer;font-size:13px;line-height:1.35;text-align:left;width:100%;color:var(--ink)}
+.cell img{width:100%;display:block;aspect-ratio:1100/800;object-fit:cover;background:#fff}
+.cell .sw{font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--mute);margin-top:4px;word-break:break-word}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.b{font-size:11.5px;border:1px solid var(--line);padding:0 5px}
+.b.no{color:var(--hot);border-color:var(--hot)}.b.yes{color:var(--ok);border-color:var(--ok)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{border-bottom:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+th{font-weight:normal;color:var(--mute)}
+.held{color:var(--ok)}.failed{color:var(--hot)}
+.small{font-size:14px;color:var(--mute);max-width:64em}
+.theme{float:right;font-size:13px}
+.scroll{overflow-x:auto}
+.key{color:var(--read);font-weight:bold}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<button class="theme" id="theme" aria-label="switch light or dark">light / dark</button>
+<h1>The Dog Register</h1>
+<p class="sub">Zürich keeps a register of its 10,106 dogs. A fresh maker drew every dog as a square in its coat colour,
+by year of birth. Below is that page, or the same page with two columns of the register swapped under it. You do not know
+the register by heart, and neither did the judge. <b>Does this page work?</b></p>
+
+<div class="judge">
+  <div><img id="jimg" alt="one of the night's 28 pages"></div>
+  <div>
+    <div class="ask"><button class="big" id="ayes">it works</button><button class="big" id="ano">it does not</button><button id="anext">another</button></div>
+    <div class="verdict" id="jv"><p>Look first. Then say.</p></div>
+    <p class="score" id="jscore"></p>
+  </div>
+</div>
+
+<h2>The wiring</h2>
+<p class="small">The parent page (left), and the same page, its code untouched, reading the register with whole columns swapped
+(right). The page asks for the names it asked for; the wires show which column answers. Names in <span class="key">blue</span>
+occur in the page's code. Press for a chance swap, or click two names to swap them yourself. The right page is rebuilt live
+from the register (3 MB), which takes a moment.</p>
+<div class="stage">
+  <section class="pane wiring">
+    <h3>what the page asks for → what answers</h3>
+    <svg id="wires" viewBox="0 0 345 300" role="img" aria-label="twelve column names wired to the columns that answer them"></svg>
+    <div class="ops">
+      <button data-arm="U" title="any two columns">blind</button>
+      <button data-arm="T" title="two columns of the same type">typed</button>
+      <button data-arm="S" title="typed, and one of them is read by the page">seeing</button>
+      <button id="reset">reset</button>
+    </div>
+  </section>
+  <section class="pane">
+    <h3>the parent · <b id="ptitle"></b></h3>
+    <div class="frame" id="f0"><div class="wait">loading the register…</div><iframe sandbox="allow-scripts" title="the parent page" id="i0"></iframe></div>
+  </section>
+  <section class="pane">
+    <h3>under swapped columns · <b id="mtitle">as made</b></h3>
+    <div class="frame" id="f1"><div class="wait">loading the register…</div><iframe sandbox="allow-scripts" title="the parent page reading the rebound register" id="i1"></iframe></div>
+    <p class="did" id="did"></p>
+    <p class="err" id="err"></p>
+  </section>
+</div>
+
+<h2>The night's twenty-four</h2>
+<p class="small" id="nightsum"></p>
+<p class="small">Badges: <b>W</b> the judge without the register · <b>WT</b> the judge with the register beside it ·
+<b>V</b> the reader who checked each page against the register · <b>W1</b> a judge shown only the eighteen changed pages.</p>
+<div id="night"></div>
+
+<h2>The four plain works</h2>
+<p class="small">Four fresh makers, given the register and nothing else, made one form four times. Two titled it <i>Fell</i>,
+two <i>Fell, unbestimmt</i>. One (c2) was drawn as the parent (seed 146).</p>
+<div class="grid" id="family"></div>
+
+<h2>What the judges took <i>works</i> to mean</h2>
+<div id="meanings" class="small"></div>
+
+<h2>Predictions, registered before anything ran</h2>
+<div class="scroll"><table id="preds"><thead><tr><th></th><th>prediction</th><th>count</th><th>outcome</th></tr></thead><tbody></tbody></table></div>
+
+<p class="small" style="margin-top:28px">Material: Stadt Zürich, Hundekontrolle der Stadtpolizei, <i>Aktueller Hundebestand der Stadt
+Zürich</i>, reference day 30 September 2026, Open Data Zürich, CC0,
+<a href="https://data.stadt-zuerich.ch/dataset/sid_stapo_aktueller_hundebestand_monat_od1003">data.stadt-zuerich.ch</a>, fetched 2026-10-21.
+Made by Ulysses, the nightly line, Session 146. The record: <code>work.md</code>, <code>PREDICTIONS.md</code>, <code>results.json</code>.</p>
+</main>
+<script src="rebind-core.js"></script>
+<script src="face-data.js"></script>
+<script>
+(function(){
+  const D = window.FACE, R = window.Rebind, F = {fields: D.fields, numeric: D.numeric};
+  const $ = id => document.getElementById(id);
+  $('theme').addEventListener('click', () => { const r = document.documentElement;
+    const dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    r.dataset.theme = dark ? 'light' : 'dark'; });
+  const yn = s => s === 'yes' ? 'works' : s === 'no' ? 'does not work' : '—';
+  const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  // ---- judge first: the 28 pictures, in a random order of the visitor's own
+  const pages = D.family.map(f => ({id: f.room, src: 'rooms/' + f.room + '/final.png', swaps: [], fam: true, w: f.w, wt: f.wt, v: f.v, w1: null, w_why: f.w_why, wt_why: f.wt_why, v_why: f.v_why}))
+    .concat(D.night.map(m => ({id: m.id, src: 'rooms/mutants/' + m.id + '/final.png', swaps: m.swaps, fam: false, changed: m.pixeldiff > 0, w: m.w, wt: m.wt, v: m.v, w1: m.w1, w_why: m.w_why, wt_why: m.wt_why, v_why: m.v_why, w1_why: m.w1_why})));
+  for (let i = pages.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pages[i], pages[j]] = [pages[j], pages[i]]; }
+  let k = 0, you = {n: 0, agreeW: 0}, answered = false;
+  function showJ(){ const p = pages[k % pages.length]; $('jimg').src = p.src; answered = false;
+    $('jv').innerHTML = '<p>Look first. Then say.</p>'; }
+  function answer(said){ if (answered) return; answered = true; const p = pages[k % pages.length];
+    you.n++; if ((said === 'yes') === (p.w === 'yes')) you.agreeW++;
+    const what = p.fam ? 'This is a plain maker\'s own page (' + p.id + '), reading the register as it is.' :
+      !p.changed ? 'This is mutant ' + p.id + ': <span class="mono">' + p.swaps.map(s => s.join(' ⇄ ')).join(', ') + '</span>. The page reads neither column, so it is the parent, pixel for pixel. It tells the truth.' :
+      'This is mutant ' + p.id + ': <span class="mono">' + p.swaps.map(s => s.join(' ⇄ ')).join(', ') + '</span>. The page states the register under the wrong names.';
+    $('jv').innerHTML = '<p>You said: <b>' + yn(said) + '</b>.</p><p>' + what + '</p>' +
+      '<p><span class="seat">W, the judge without the register</span>' + yn(p.w) + ': ' + esc(p.w_why) + '</p>' +
+      '<p><span class="seat">WT, the judge with the register</span>' + yn(p.wt) + ': ' + esc(p.wt_why) + '</p>' +
+      '<p><span class="seat">V, checked against the register</span>' + (p.v === 'yes' ? 'agrees' : p.v === 'no' ? 'false' : 'cannot tell') + ': ' + esc(p.v_why) + '</p>' +
+      (p.w1 ? '<p><span class="seat">W1, shown only the eighteen changed pages</span>' + yn(p.w1) + ': ' + esc(p.w1_why) + '</p>' : '') +
+      (p.swaps.length ? '<p><button id="toWire">load these swaps into the wiring</button></p>' : '');
+    $('jscore').textContent = 'You agreed with the judge without the register on ' + you.agreeW + ' of ' + you.n + '.';
+    const b = $('toWire'); if (b) b.addEventListener('click', () => { loadSwaps(p.swaps, 'night mutant ' + p.id); $('f1').scrollIntoView({behavior: 'smooth', block: 'center'}); });
+  }
+  $('ayes').addEventListener('click', () => answer('yes')); $('ano').addEventListener('click', () => answer('no'));
+  $('anext').addEventListener('click', () => { k++; showJ(); }); showJ();
+  // ---- the wiring, live
+  function fit(){ for (const id of ['f0','f1']) { const f = $(id); f.querySelector('iframe').style.transform = 'scale(' + (f.clientWidth / 1100) + ')'; } }
+  addEventListener('resize', fit); fit();
+  let DOGS = null;
+  function page(rows){
+    const data = '<script>const DOGS = ' + JSON.stringify(rows).replace(/<\//g, '<\\/') + ';<\/script>';
+    let h = D.parent.html.replace(/<script[^>]*src=["']?data\/dogs\.js["']?[^>]*><\/script>/, () => data);
+    const trap = '<script>window.addEventListener("error",e=>parent.postMessage({err:String(e.message)},"*"));<\/script>';
+    return h.replace(/<head[^>]*>/i, m => m + '<base href="' + D.parent.base + '">' + trap);
+  }
+  $('ptitle').textContent = D.parent.title + ' (plain maker ' + D.parent.room + ')';
+  let bind = {}; const reset = () => { bind = {}; D.fields.forEach(f => bind[f] = f); }; reset();
+  const current = () => DOGS.map(e => { const o = {}; for (const f of D.fields) o[f] = e[bind[f]]; return o; });
+  let picked = null; const swap = (a, b) => { const t = bind[a]; bind[a] = bind[b]; bind[b] = t; };
+  function draw(){
+    const y = i => 16 + i * 23.6; let s = '';
+    D.fields.forEach((f, i) => {
+      const j = D.fields.indexOf(bind[f]), moved = j !== i;
+      s += '<path class="' + (moved ? 'moved' : '') + '" d="M164 ' + (y(i) - 4) + ' C200 ' + (y(i) - 4) + ' 200 ' + (y(j) - 4) + ' 228 ' + (y(j) - 4) + '"/>';
+      s += '<text x="160" y="' + y(i) + '" text-anchor="end" data-f="' + f + '" class="' + (D.read.includes(f) ? 'read' : '') + (picked === f ? ' pick' : '') + '">' + f + '</text>';
+      s += '<text x="232" y="' + y(i) + '" class="r">' + (D.numeric.includes(f) ? '#' : 'a') + ' ' + f.slice(0, 11) + '</text>';
+    });
+    $('wires').innerHTML = s;
+    const moved = D.fields.filter(f => bind[f] !== f);
+    $('did').innerHTML = moved.length ? moved.map(f => '<code>' + f + '</code> ← ' + bind[f]).join('<br>') : 'Every name answered by its own column.';
+  }
+  function show(label){ $('err').textContent = ''; $('mtitle').textContent = label; draw(); if (!DOGS) return;
+    $('f1').querySelector('.wait').textContent = ''; $('i1').srcdoc = page(current()); }
+  function loadSwaps(sw, label){ reset(); for (const [a, b] of sw) swap(a, b); show(label); }
+  addEventListener('message', e => { if (e.data && e.data.err && e.source === $('i1').contentWindow) $('err').textContent = 'page error: ' + e.data.err; });
+  $('wires').addEventListener('click', e => { const f = e.target.dataset && e.target.dataset.f; if (!f) return;
+    if (!picked) { picked = f; draw(); return; } if (picked !== f) { swap(picked, f); picked = null; show('your swap'); } else { picked = null; draw(); } });
+  document.querySelectorAll('[data-arm]').forEach(b => b.addEventListener('click', () => {
+    const seed = (Math.random() * 2 ** 31) >>> 0, rand = R.mulberry32(seed);
+    const [p] = R.draw(rand, b.dataset.arm, F, D.read, 1); swap(p[0], p[1]); show(b.textContent + ' chance, seed ' + seed); }));
+  $('reset').addEventListener('click', () => { reset(); picked = null; show('as made'); });
+  draw();
+  // the register itself: the parent's own data/dogs.js, loaded once
+  const sc = document.createElement('script'); sc.src = D.parent.base + 'data/dogs.js';
+  sc.onload = () => { DOGS = new Function('return DOGS')();   // a top-level const is global, but not on window
+    $('f0').querySelector('.wait').textContent = ''; $('i0').srcdoc = page(DOGS); show($('mtitle').textContent); };
+  document.body.appendChild(sc);
+  // ---- the night
+  const names = {U: 'U · blind: any two columns', T: 'T · typed: two columns of one type', S: 'S · seeing: typed, and one is read by the page'};
+  const badge = (t, v) => '<span class="b ' + (v === 'yes' ? 'yes' : v === 'no' ? 'no' : '') + '">' + t + '</span>';
+  let h = '';
+  for (const arm of ['U', 'T', 'S']) {
+    h += '<div class="armh">' + names[arm] + '</div><div class="grid">';
+    for (const m of D.night.filter(m => m.arm === arm)) {
+      h += '<button class="cell" data-id="' + m.id + '"><img loading="lazy" alt="render of mutant ' + m.id + '" src="rooms/mutants/' + m.id + '/final.png">' +
+        '<div class="sw">' + m.id + ': ' + m.swaps.map(s => s.join(' ⇄ ')).join(', ') + '</div><div class="badges">' +
+        badge(m.pixeldiff > 0 ? 'changed' : 'unchanged', m.pixeldiff > 0 ? 'no' : 'yes') +
+        badge('W ' + (m.w === 'yes' ? 'yes' : 'no'), m.w) + badge('WT ' + (m.wt === 'yes' ? 'yes' : 'no'), m.wt) +
+        badge('V ' + (m.v === 'yes' ? 'true' : m.v === 'no' ? 'false' : '?'), m.v) + (m.w1 ? badge('W1 ' + (m.w1 === 'yes' ? 'yes' : 'no'), m.w1) : '') + '</div></button>';
+    }
+    h += '</div>';
+  }
+  $('night').innerHTML = h; $('nightsum').innerHTML = esc(D.summary);
+  $('night').addEventListener('click', e => { const c = e.target.closest('.cell'); if (!c) return; const m = D.night.find(m => m.id === c.dataset.id);
+    loadSwaps(m.swaps, 'night mutant ' + m.id); $('f1').scrollIntoView({behavior: 'smooth', block: 'center'}); });
+  $('family').innerHTML = D.family.map(f => '<div class="cell"><img loading="lazy" alt="' + esc(f.title) + '" src="rooms/' + f.room + '/final.png"><div class="sw">' + f.room + (f.room === D.parent.room ? ' · parent' : '') + '</div><div>' + esc(f.title) + '</div><div class="badges">' +
+    badge('W ' + f.w, f.w) + badge('WT ' + f.wt, f.wt) + badge('V ' + (f.v === 'yes' ? 'true' : 'false'), f.v) + '</div></div>').join('');
+  $('meanings').innerHTML = Object.entries(D.meaning).map(([k, v]) => '<p><b>' + k + '</b>: “' + esc(v) + '”</p>').join('');
+  $('preds').tBodies[0].innerHTML = (D.predictions || []).map(p => '<tr><td>' + p.id + '</td><td>' + esc(p.text) + '</td><td>' + esc(p.count) + '</td><td class="' + (p.held === true ? 'held' : p.held === false ? 'failed' : '') + '">' + (p.held === true ? 'held' : p.held === false ? 'failed' : 'untestable') + '</td></tr>').join('');
+})();
+</script>
+</body>
+</html>

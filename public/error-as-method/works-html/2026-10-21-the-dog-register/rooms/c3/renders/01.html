@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Fell, unbestimmt</title>
+<style>
+  html,body{margin:0;padding:0;background:#e3dccd;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#2a2622;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/dogs.js"></script>
+<script>
+(function(){
+  const W = 1100, H = 800;
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  const cv = document.getElementById('c');
+  cv.width = W*dpr; cv.height = H*dpr; cv.style.width = W+'px'; cv.style.height = H+'px';
+  const g = cv.getContext('2d'); g.scale(dpr,dpr);
+  const PAPER = '#e3dccd';
+  g.fillStyle = PAPER; g.fillRect(0,0,W,H);
+
+  // a lexicon of coat words -> pigments (order matters: specific before general)
+  const LEX = [
+    [/unbestimmt/, null],
+    [/tri|dreifarb|vierfarb|mehrfarb/, ['#191817','#9a6a3e','#f6f3ec']],
+    [/bicolor/, ['#191817','#9a6a3e']],
+    [/merle|harlekin|dapple|schimmel|wolkig|meliert|melliert/, ['#7d838c','#2a2a2c']],
+    [/gestromt|brindle/, ['#5b4030','#2b1f18']],
+    [/schwarz|black/, ['#171615']],
+    [/dunkelbraun|schoko|choco|liver|marron|mahagoni/, ['#45291b']],
+    [/hellbraun|rehbraun|goldbraun|caramel|zimt|honig/, ['#a9733f']],
+    [/rotbraun|hirschrot|rotblond|rotweizen|red|rot|fox|ruby|blenheim/, ['#a5452a']],
+    [/braun/, ['#6b4328']],
+    [/apricot|orange/, ['#d68b52']],
+    [/gold|gelb/, ['#cf9f4b']],
+    [/tan|loh|fawn|fauve|falb/, ['#b78955']],
+    [/creme|champ|weiss|white|bianco|blesse/, null], // handled below
+    [/beige|sand|blond|weizen|wheat|isabella|hell/, ['#e2cb9c']],
+    [/grau|grey|silber|pfeffer|salz|grizzle/, ['#9b9a95']],
+    [/blue|blau|lilac/, ['#677180']],
+    [/sable|zobel|sau|wild/, ['#7a6249']],
+  ];
+  function pig(word){
+    const w = word.toLowerCase().trim();
+    if (/creme|champ/.test(w)) return ['#efe3c6'];
+    if (/weiss|white|bianco|blesse/.test(w) && !/schwarz|braun/.test(w)) return ['#faf8f3'];
+    for (const [re,c] of LEX){ if (re.test(w)) return c; }
+    return ['#a9a192'];
+  }
+  function coat(txt){
+    if (txt == null || /unbestimmt/i.test(txt)) return null;
+    let out = [];
+    txt.split('/').forEach(p => { const c = pig(p); if (c) out = out.concat(c); });
+    return out.length ? out : null;
+  }
+  function lum(hex){
+    const n = parseInt(hex.slice(1),16);
+    return 0.2126*((n>>16)&255)+0.7152*((n>>8)&255)+0.0722*(n&255);
+  }
+
+  // group by birth year
+  const years = {};
+  let ymin = Infinity, ymax = -Infinity;
+  DOGS.forEach(d => {
+    const y = d.GebHundDatJahr; if (y == null) return;
+    (years[y] = years[y] || []).push(d);
+    ymin = Math.min(ymin,y); ymax = Math.max(ymax,y);
+  });
+
+  const nY = ymax - ymin + 1;
+  const left = 46, right = 30;
+  const avail = W - left - right;
+  const slot = avail / nY;
+  const PER = 9;                   // dogs per row in each year's column
+  const cell = Math.floor((slot - 8) / PER);
+  const colW = cell*PER;
+  const base = 690;                // ground line
+
+  let maxN = 0;
+  for (let y=ymin;y<=ymax;y++) maxN = Math.max(maxN, (years[y]||[]).length);
+
+  for (let y=ymin;y<=ymax;y++){
+    const list = (years[y]||[]).map(d => {
+      const c = coat(d.HundefarbeText);
+      const l = c ? c.reduce((s,h)=>s+lum(h),0)/c.length : 999;
+      return {c, l};
+    });
+    // darkest coats at the ground, lightest above, the undetermined on top
+    list.sort((a,b)=>a.l-b.l);
+    const x0 = Math.round(left + (y-ymin)*slot + (slot-colW)/2);
+    list.forEach((o,i) => {
+      const r = Math.floor(i/PER), k = i%PER;
+      const x = x0 + k*cell, yy = base - (r+1)*cell;
+      if (!o.c){
+        g.fillStyle = '#b9b0a0';
+        g.fillRect(x+cell/2-0.6, yy+cell/2-0.6, 1.2, 1.2);
+        return;
+      }
+      const n = o.c.length, h = cell/n;
+      o.c.forEach((col,j)=>{ g.fillStyle = col; g.fillRect(x, yy + j*h, cell, h+0.02); });
+    });
+    // labels
+    const cx = x0 + colW/2;
+    g.fillStyle = '#5d554b';
+    g.font = '11px Georgia, serif'; g.textAlign = 'center';
+    const lbl = String(y);
+    g.save(); g.translate(cx, base+14);
+    g.fillText(lbl.slice(0,2), 0, 0); g.fillText(lbl.slice(2), 0, 13);
+    g.restore();
+    const n = list.length;
+    if (n){
+      const rows = Math.ceil(n/PER);
+      g.font = 'italic 10px Georgia, serif'; g.fillStyle = '#7a7166';
+      g.fillText(n, cx, base - rows*cell - 6);
+    }
+  }
+  // ground
+  g.strokeStyle = '#2a2622'; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(left-10, base+0.5); g.lineTo(W-right+4, base+0.5); g.stroke();
+
+  // title block
+  const und = DOGS.filter(d => coat(d.HundefarbeText) == null).length;
+  g.textAlign = 'left'; g.fillStyle = '#2a2622';
+  g.font = '34px Georgia, serif';
+  g.fillText('Fell, unbestimmt', left, 62);
+  g.font = '13px Georgia, serif'; g.fillStyle = '#4a433b';
+  const lines = [
+    DOGS.length.toLocaleString('de-CH') + ' Hunde der Stadt Zürich, je ein Feld, in der Farbe, die das Register für ihr Fell notiert,',
+    'gestapelt nach Geburtsjahr. Unten die dunkelsten, oben die hellsten. Wo das Register «unbestimmt» schreibt',
+    'bleibt das Feld leer, ein Punkt: ' + und.toLocaleString('de-CH') + ' Mal.'
+  ];
+  lines.forEach((t,i)=>g.fillText(t, left, 90 + i*18));
+  g.font = 'italic 10px Georgia, serif'; g.fillStyle = '#7a7166';
+  g.fillText('Hundebestand, Stichtag 30.9.2026 · Open Data Zürich', left, 778);
+  g.textAlign = 'right';
+  g.fillText('Geburtsjahr des Hundes', W-right, 778);
+})();
+</script>
+</body>
+</html>

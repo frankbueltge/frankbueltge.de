@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Which You</title>
+<style>
+  :root {
+    --bg: #f7f5f0; --ink: #171614; --muted: #6e6a62; --line: #d5d1c7; --card: #fffdf8;
+    --t: #3f55a8; --v: #8a4b2f; --link: #6e6a62; --cross: #c0392b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #131211; --ink: #e9e6e0; --muted: #98938a; --line: #3c3934; --card: #1c1a18;
+      --t: #9fb0ec; --v: #d08a63; --link: #a49f94; --cross: #ef7d6d; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 Georgia, "Times New Roman", serif; }
+  main { max-width: 56rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+  h1 { font-size: 1.45rem; font-weight: normal; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 .4rem; text-align: center; }
+  .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+  .lead { max-width: 40rem; margin: 0 auto 2rem; }
+  h2 { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-weight: normal;
+    margin: 3rem 0 1rem; border-top: 1px solid var(--line); padding-top: 1.1rem; }
+  a { color: inherit; text-decoration-color: var(--line); }
+  .nav { display: flex; justify-content: center; align-items: center; gap: 1rem; margin: 1rem 0; font-size: .95rem; }
+  .nav button { font: inherit; background: none; color: var(--ink); border: 1px solid var(--line); border-radius: 3px;
+    padding: .3rem .9rem; cursor: pointer; }
+  .nav button:hover { border-color: var(--ink); }
+  .count { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 5rem; text-align: center; }
+  .en { text-align: center; font-size: 1.5rem; line-height: 1.35; margin: 1.2rem auto 1.6rem; max-width: 36rem; }
+  .en a { text-decoration: none; }
+  .stage { position: relative; padding: 0 24px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 56px; }
+  .colhead { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 .6rem; }
+  .colhead.t { color: var(--t); } .colhead.v { color: var(--v); text-align: right; }
+  .col { display: flex; flex-direction: column; gap: 10px; }
+  .card { position: relative; z-index: 1; background: var(--card); border: 1px solid var(--line); border-radius: 4px;
+    padding: .45rem .6rem; font-size: .9rem; line-height: 1.4; }
+  .card.T { border-left: 3px solid var(--t); } .card.V { border-right: 3px solid var(--v); }
+  .card .lg { display: block; font: .72rem/1.3 ui-monospace, Menlo, Consolas, monospace; color: var(--muted); letter-spacing: .03em; }
+  .card a { text-decoration: none; }
+  .card a:hover { text-decoration: underline; }
+  .rest { margin-top: 1.4rem; }
+  .rest .colhead { text-align: center; color: var(--muted); }
+  .rest .row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .rest .card { max-width: 17rem; }
+  svg.lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 0; }
+  svg.lines path { fill: none; stroke: var(--link); stroke-width: 1.4; opacity: .8; }
+  svg.lines path.x { stroke: var(--cross); stroke-width: 2; opacity: 1; }
+  .legend { color: var(--muted); font-size: .85rem; text-align: center; margin: 1.2rem 0 0; }
+  .legend .sw { display: inline-block; width: 22px; height: 0; border-top: 1.6px solid var(--link); vertical-align: middle; margin: 0 .3rem 0 .8rem; }
+  .legend .sw.x { border-top: 2px solid var(--cross); }
+  .tally { font-size: 1.05rem; max-width: 40rem; margin: 0 auto; }
+  .aside { color: var(--muted); font-size: .9rem; max-width: 40rem; margin-left: auto; margin-right: auto; }
+  .nojs ul ul { font-size: .9rem; }
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .stage { padding: 0 14px; }
+    .cols { column-gap: 28px; }
+    .card { font-size: .8rem; padding: .35rem .45rem; }
+    .en { font-size: 1.25rem; }
+    .cols .colhead { min-height: 2.8em; }
+  }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<main>
+  <h1>Which You</h1>
+  <p class="sub">Thirty English sentences and every translation people made of them · Remainder, 2026</p>
+
+  <p class="lead">English says <i>you</i> to one person or to many, to a friend or to a stranger, with the same word.
+  Most of the languages below cannot: their translators had to choose. Here are thirty English sentences, drawn at random
+  from Tatoeba, a collection of sentences translated by volunteers, and around each one every translation people made of it.
+  On the left, <i>you</i> became one close person; on the right, a stranger, or more than one. A line is a link a person
+  made between two of the translations.</p>
+
+  <div id="piece" hidden>
+    <div class="nav"><button id="prev" aria-label="Previous sentence">←</button><span class="count" id="count"></span>
+      <button id="next" aria-label="Next sentence">→</button></div>
+    <p class="en" id="en"></p>
+    <div class="stage" id="stage">
+      <svg class="lines" id="lines" aria-hidden="true"></svg>
+      <div class="cols">
+        <div><p class="colhead t">you: one, close</p><div class="col" id="colT"></div></div>
+        <div><p class="colhead v">you: a stranger, or several</p><div class="col" id="colV"></div></div>
+      </div>
+      <div class="rest" id="rest"><p class="colhead">the translation does not say</p><div class="row" id="colU"></div></div>
+    </div>
+    <p class="legend"><span class="sw"></span>linked by a person <span class="sw x"></span>linked across the choice</p>
+  </div>
+
+  <noscript><div class="nojs"><p class="aside">Without JavaScript the lines cannot be drawn; the sentences and how each
+  translation was read stand below.</p><ol>{{NOJS}}</ol></div></noscript>
+
+  <h2>Across the thirty</h2>
+  <p class="tally">In {{SPLIT}} of the thirty sentences, the translators chose both ways. Of {{AGREE}} pairs of translations of
+  the same sentence that chose the same <i>you</i>, {{AGREE_L}} have been linked to each other by someone. Of {{DIS}} pairs that
+  chose differently, {{DIS_L}}, both at one sentence in Lingua Franca Nova, whose <i>tu</i> says only “one person”, not “close”.
+  Everything else that crosses the choice is joined only through the English.</p>
+  <p class="aside">No translation here is wrong. Each is a faithful answer to a question the English left open; two of them
+  disagree only because the English never asked.</p>
+
+  <h2>How it was made</h2>
+  <p class="aside">The thirty sentences were drawn by a fixed seed from the 76,757 English sentences in Tatoeba’s export of
+  17 October 2026 that hold <i>you</i> and have between five and twelve translations into languages other than Esperanto, whose
+  <i>vi</i> also does not choose. Who each of the {{N}} translations speaks to, in {{LANGS}} languages, was decided by one reader,
+  a machine, in one pass, without seeing the English sentence, which sentence a translation belonged to, or which had been
+  linked. Those readings are estimates; {{LOW}} were made with little confidence in the language. Where a form could also be
+  read as “he” or “she” (Italian <i>Lei</i>), it was read as the polite <i>you</i>; where a sentence shows politeness only by its
+  tone and not by a <i>you</i> (Japanese, Tagalog <i>po</i>), it was read as not saying. On French and Russian, where word lists
+  checked by hand decide, the reading agreed with them every time (52 of 52).</p>
+  <p class="aside"><b>What this does that a person with time would not.</b> One reader held thirty-nine languages at once and
+  decided, for every translation, whom it speaks to, before seeing which ones people had joined. A team of readers could divide
+  the sheet among them; the readings would then be many people’s, and the blindness would have to be arranged. That is the
+  whole of the claim, and it is a small one.</p>
+  <p class="aside">Sentences: Tatoeba (<a href="https://tatoeba.org">tatoeba.org</a>), CC BY 2.0 FR; each one links to its page,
+  which names its contributor. Nearest neighbours: Tatoeba itself, which shows a sentence’s translations of translations in grey
+  and says on its wiki that the ends of a chain of valid translations sometimes should not be linked; and the World Atlas of
+  Language Structures’ map of politeness distinctions in pronouns (<a href="https://wals.info/chapter/45">J. Helmbrecht,
+  chapter 45</a>), which counts the choice language by language. This work shows it sentence by sentence, with the links people
+  made. Record: <a href="https://github.com/frankbueltge/n-1/tree/main/projects/indirect">project 14</a>.</p>
+</main>
+<script>
+const G = /*DATA*/null;
+const LABEL = {T: "one, close", V: "a stranger, or several", both: "both at once", unmarked: "does not say", cannot: "not read"};
+let i = 0;
+const $ = id => document.getElementById(id);
+function card(t) {
+  const d = document.createElement("div");
+  d.className = "card " + t.r; d.dataset.id = t.id;
+  const lg = document.createElement("span"); lg.className = "lg";
+  lg.textContent = t.lang + (t.r === "both" || t.r === "cannot" ? " · " + LABEL[t.r] : "") + (t.low ? " ◦" : "");
+  if (t.low) lg.title = "read with little confidence";
+  const a = document.createElement("a"); a.href = "https://tatoeba.org/en/sentences/show/" + t.id; a.textContent = t.text;
+  a.dir = "auto"; d.append(lg, a); return d;
+}
+function show(k) {
+  i = (k + G.length) % G.length; const g = G[i];
+  $("count").textContent = (i + 1) + " / " + G.length;
+  $("en").innerHTML = ""; const a = document.createElement("a");
+  a.href = "https://tatoeba.org/en/sentences/show/" + g.eng; a.textContent = g.en; $("en").append(a);
+  for (const c of ["colT", "colV", "colU"]) $(c).innerHTML = "";
+  for (const t of g.t) $(t.r === "T" ? "colT" : t.r === "V" ? "colV" : "colU").append(card(t));
+  $("rest").hidden = !$("colU").children.length;
+  draw();
+}
+function draw() {
+  const g = G[i], svg = $("lines"), s = $("stage").getBoundingClientRect();
+  svg.innerHTML = "";
+  const cls = Object.fromEntries(g.t.map(t => [t.id, t.r]));
+  for (const [a, b] of g.links) {
+    const ea = $("stage").querySelector(`[data-id="${a}"]`), eb = $("stage").querySelector(`[data-id="${b}"]`);
+    if (!ea || !eb) continue;
+    const A = ea.getBoundingClientRect(), B = eb.getBoundingClientRect();
+    const ra = cls[a], rb = cls[b];
+    let d;
+    if (ra === rb && (ra === "T" || ra === "V")) {
+      const x = ra === "T" ? A.left - s.left : A.right - s.left, out = ra === "T" ? -1 : 1;
+      const y1 = A.top + A.height / 2 - s.top, y2 = B.top + B.height / 2 - s.top;
+      const bulge = Math.min(20, 8 + Math.abs(y2 - y1) / 12) * out;
+      d = `M${x},${y1} C${x + bulge},${y1} ${x + bulge},${y2} ${x},${y2}`;
+    } else {
+      let p, q;
+      if (A.right < B.left || B.right < A.left) {
+        const [L, R] = A.right < B.left ? [A, B] : [B, A];
+        p = [L.right, L.top + L.height / 2]; q = [R.left, R.top + R.height / 2];
+      } else {
+        const [U, D] = A.bottom < B.top ? [A, B] : [B, A];
+        p = [U.left + U.width / 2, U.bottom]; q = [D.left + D.width / 2, D.top];
+      }
+      p = [p[0] - s.left, p[1] - s.top]; q = [q[0] - s.left, q[1] - s.top];
+      d = `M${p[0]},${p[1]} L${q[0]},${q[1]}`;
+    }
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", d);
+    if ((ra === "T" && rb === "V") || (ra === "V" && rb === "T")) path.setAttribute("class", "x");
+    svg.append(path);
+  }
+}
+$("piece").hidden = false;
+$("prev").onclick = () => show(i - 1); $("next").onclick = () => show(i + 1);
+document.addEventListener("keydown", e => { if (e.key === "ArrowLeft") show(i - 1); if (e.key === "ArrowRight") show(i + 1); });
+addEventListener("resize", draw);
+const h = parseInt((location.hash.match(/s=(\d+)/) || [])[1]); show(h ? h - 1 : 0);
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body>
+</html>

@@ -1,0 +1,928 @@
+{
+ "source": {
+  "repo": "frankbueltge/field-research",
+  "commit": "40a970f",
+  "path": "artifacts/2026-10-17-the-odds-written-down/",
+  "sha256": {
+   "data/lagged_cells_25.tsv": "669da73e28c1cc2d0fdcfb0a94f3fdb6bd0257327093204041ad0253ebc0d49a",
+   "data/explore_28.json": "b94879afdc2a5bb663ce6929a05b03f548edb052fda07c8919514d9dd7e96cc0"
+  }
+ },
+ "sequences": 232,
+ "lags_h": [
+  0,
+  6,
+  12,
+  24,
+  48,
+  96,
+  168,
+  336,
+  720
+ ],
+ "check_field_split": {
+  "pick_is_not_6h_6h_week": 1.602,
+  "pick_is_6h_6h_week": 0.656,
+  "n": [
+   63,
+   169
+  ]
+ },
+ "the_writing": {
+  "pairs": [
+   "0-6",
+   "6-12",
+   "12-24",
+   "24-48",
+   "48-96",
+   "96-168"
+  ],
+  "after_a_hit": {
+   "pairs": 149,
+   "states_more": 41,
+   "share": 0.275
+  },
+  "after_none": {
+   "pairs": 1243,
+   "states_more": 29,
+   "share": 0.023
+  },
+  "difference": 0.252,
+  "ci": [
+   0.178,
+   0.323
+  ],
+  "by_pair": {
+   "0-6": {
+    "after_a_hit": [
+     36,
+     10
+    ],
+    "after_none": [
+     196,
+     6
+    ]
+   },
+   "6-12": {
+    "after_a_hit": [
+     33,
+     8
+    ],
+    "after_none": [
+     199,
+     5
+    ]
+   },
+   "12-24": {
+    "after_a_hit": [
+     28,
+     8
+    ],
+    "after_none": [
+     204,
+     5
+    ]
+   },
+   "24-48": {
+    "after_a_hit": [
+     20,
+     3
+    ],
+    "after_none": [
+     212,
+     5
+    ]
+   },
+   "48-96": {
+    "after_a_hit": [
+     17,
+     7
+    ],
+    "after_none": [
+     215,
+     2
+    ]
+   },
+   "96-168": {
+    "after_a_hit": [
+     15,
+     5
+    ],
+    "after_none": [
+     217,
+     6
+    ]
+   }
+  }
+ },
+ "clocks": [
+  {
+   "H": 0,
+   "observed": 47,
+   "stated": 82.52,
+   "ratio": 0.57,
+   "ci": [
+    0.409,
+    0.729
+   ],
+   "verdict": "too high",
+   "clock_adjusted": 1.0,
+   "adj_ci": [
+    0.719,
+    1.281
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "0": 232
+   }
+  },
+  {
+   "H": 6,
+   "observed": 44,
+   "stated": 47.25,
+   "ratio": 0.931,
+   "ci": [
+    0.681,
+    1.184
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.0,
+   "adj_ci": [
+    0.732,
+    1.272
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "6": 232
+   }
+  },
+  {
+   "H": 12,
+   "observed": 38,
+   "stated": 42.79,
+   "ratio": 0.888,
+   "ci": [
+    0.602,
+    1.191
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.0,
+   "adj_ci": [
+    0.678,
+    1.341
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "12": 232
+   }
+  },
+  {
+   "H": 24,
+   "observed": 26,
+   "stated": 34.44,
+   "ratio": 0.755,
+   "ci": [
+    0.474,
+    1.07
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.0,
+   "adj_ci": [
+    0.627,
+    1.417
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "24": 232
+   }
+  },
+  {
+   "H": 48,
+   "observed": 23,
+   "stated": 29.36,
+   "ratio": 0.783,
+   "ci": [
+    0.474,
+    1.143
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.0,
+   "adj_ci": [
+    0.606,
+    1.459
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "48": 232
+   }
+  },
+  {
+   "H": 96,
+   "observed": 19,
+   "stated": 24.52,
+   "ratio": 0.775,
+   "ci": [
+    0.457,
+    1.135
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.0,
+   "adj_ci": [
+    0.59,
+    1.465
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "96": 232
+   }
+  },
+  {
+   "H": 168,
+   "observed": 20,
+   "stated": 21.39,
+   "ratio": 0.935,
+   "ci": [
+    0.595,
+    1.301
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.0,
+   "adj_ci": [
+    0.636,
+    1.391
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "168": 232
+   }
+  },
+  {
+   "H": 336,
+   "observed": 15,
+   "stated": 15.58,
+   "ratio": 0.963,
+   "ci": [
+    0.531,
+    1.38
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.0,
+   "adj_ci": [
+    0.552,
+    1.433
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "336": 232
+   }
+  },
+  {
+   "H": 720,
+   "observed": 8,
+   "stated": 9.97,
+   "ratio": 0.803,
+   "ci": [
+    0.308,
+    1.375
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.0,
+   "adj_ci": [
+    0.383,
+    1.714
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "720": 232
+   }
+  }
+ ],
+ "deciding_at_H": {
+  "least": [
+   {
+    "H": 0,
+    "observed": 47,
+    "stated": 82.52,
+    "ratio": 0.57,
+    "ci": [
+     0.409,
+     0.729
+    ],
+    "verdict": "too high",
+    "clock_adjusted": 1.0,
+    "adj_ci": [
+     0.719,
+     1.281
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "0": 232
+    },
+    "hindsight_h_mean": 0.0,
+    "picks_with_hindsight": 0
+   },
+   {
+    "H": 6,
+    "observed": 44,
+    "stated": 42.69,
+    "ratio": 1.031,
+    "ci": [
+     0.756,
+     1.324
+    ],
+    "verdict": "cannot be told from right",
+    "clock_adjusted": 1.194,
+    "adj_ci": [
+     0.873,
+     1.553
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "6": 216,
+     "0": 16
+    },
+    "hindsight_h_mean": 0.4,
+    "picks_with_hindsight": 16
+   },
+   {
+    "H": 12,
+    "observed": 45,
+    "stated": 38.2,
+    "ratio": 1.178,
+    "ci": [
+     0.853,
+     1.526
+    ],
+    "verdict": "cannot be told from right",
+    "clock_adjusted": 1.387,
+    "adj_ci": [
+     1.001,
+     1.813
+    ],
+    "adj_verdict": "the choosing moved it",
+    "lags": {
+     "12": 173,
+     "0": 12,
+     "6": 47
+    },
+    "hindsight_h_mean": 1.8,
+    "picks_with_hindsight": 59
+   },
+   {
+    "H": 24,
+    "observed": 34,
+    "stated": 28.52,
+    "ratio": 1.192,
+    "ci": [
+     0.811,
+     1.635
+    ],
+    "verdict": "cannot be told from right",
+    "clock_adjusted": 1.571,
+    "adj_ci": [
+     1.068,
+     2.153
+    ],
+    "adj_verdict": "the choosing moved it",
+    "lags": {
+     "24": 173,
+     "6": 40,
+     "12": 11,
+     "0": 8
+    },
+    "hindsight_h_mean": 4.5,
+    "picks_with_hindsight": 59
+   },
+   {
+    "H": 48,
+    "observed": 30,
+    "stated": 24.71,
+    "ratio": 1.214,
+    "ci": [
+     0.81,
+     1.654
+    ],
+    "verdict": "cannot be told from right",
+    "clock_adjusted": 1.59,
+    "adj_ci": [
+     1.055,
+     2.167
+    ],
+    "adj_verdict": "the choosing moved it",
+    "lags": {
+     "48": 179,
+     "6": 31,
+     "12": 8,
+     "0": 7,
+     "24": 7
+    },
+    "hindsight_h_mean": 9.0,
+    "picks_with_hindsight": 53
+   },
+   {
+    "H": 96,
+    "observed": 24,
+    "stated": 20.87,
+    "ratio": 1.15,
+    "ci": [
+     0.719,
+     1.638
+    ],
+    "verdict": "cannot be told from right",
+    "clock_adjusted": 1.497,
+    "adj_ci": [
+     0.943,
+     2.132
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "96": 185,
+     "6": 22,
+     "12": 6,
+     "0": 5,
+     "48": 11,
+     "24": 3
+    },
+    "hindsight_h_mean": 16.0,
+    "picks_with_hindsight": 47
+   },
+   {
+    "H": 168,
+    "observed": 24,
+    "stated": 17.54,
+    "ratio": 1.369,
+    "ci": [
+     0.856,
+     1.992
+    ],
+    "verdict": "cannot be told from right",
+    "clock_adjusted": 1.574,
+    "adj_ci": [
+     0.984,
+     2.275
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "168": 192,
+     "96": 11,
+     "6": 15,
+     "12": 5,
+     "48": 4,
+     "0": 4,
+     "24": 1
+    },
+    "hindsight_h_mean": 22.8,
+    "picks_with_hindsight": 40
+   },
+   {
+    "H": 336,
+    "observed": 15,
+    "stated": 12.88,
+    "ratio": 1.164,
+    "ci": [
+     0.624,
+     1.794
+    ],
+    "verdict": "cannot be told from right",
+    "clock_adjusted": 1.268,
+    "adj_ci": [
+     0.695,
+     1.934
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "336": 205,
+     "6": 10,
+     "48": 2,
+     "168": 8,
+     "12": 2,
+     "0": 2,
+     "96": 3
+    },
+    "hindsight_h_mean": 19.6,
+    "picks_with_hindsight": 27
+   },
+   {
+    "H": 720,
+    "observed": 11,
+    "stated": 8.68,
+    "ratio": 1.267,
+    "ci": [
+     0.562,
+     2.113
+    ],
+    "verdict": "cannot be told from right",
+    "clock_adjusted": 1.536,
+    "adj_ci": [
+     0.685,
+     2.533
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "720": 206,
+     "6": 6,
+     "336": 13,
+     "12": 2,
+     "168": 3,
+     "96": 1,
+     "48": 1
+    },
+    "hindsight_h_mean": 18.8,
+    "picks_with_hindsight": 26
+   }
+  ],
+  "most": [
+   {
+    "H": 0,
+    "observed": 47,
+    "stated": 82.52,
+    "ratio": 0.57,
+    "ci": [
+     0.409,
+     0.729
+    ],
+    "verdict": "too high",
+    "clock_adjusted": 1.0,
+    "adj_ci": [
+     0.719,
+     1.281
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "0": 232
+    },
+    "hindsight_h_mean": 0.0,
+    "picks_with_hindsight": 0
+   },
+   {
+    "H": 6,
+    "observed": 47,
+    "stated": 87.09,
+    "ratio": 0.54,
+    "ci": [
+     0.384,
+     0.694
+    ],
+    "verdict": "too high",
+    "clock_adjusted": 0.868,
+    "adj_ci": [
+     0.626,
+     1.106
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "0": 216,
+     "6": 16
+    },
+    "hindsight_h_mean": 5.6,
+    "picks_with_hindsight": 216
+   },
+   {
+    "H": 12,
+    "observed": 45,
+    "stated": 87.63,
+    "ratio": 0.514,
+    "ci": [
+     0.369,
+     0.658
+    ],
+    "verdict": "too high",
+    "clock_adjusted": 0.823,
+    "adj_ci": [
+     0.589,
+     1.052
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "0": 215,
+     "6": 9,
+     "12": 8
+    },
+    "hindsight_h_mean": 11.4,
+    "picks_with_hindsight": 224
+   },
+   {
+    "H": 24,
+    "observed": 45,
+    "stated": 88.59,
+    "ratio": 0.508,
+    "ci": [
+     0.363,
+     0.649
+    ],
+    "verdict": "too high",
+    "clock_adjusted": 0.813,
+    "adj_ci": [
+     0.584,
+     1.034
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "0": 213,
+     "6": 9,
+     "12": 5,
+     "24": 5
+    },
+    "hindsight_h_mean": 23.0,
+    "picks_with_hindsight": 227
+   },
+   {
+    "H": 48,
+    "observed": 45,
+    "stated": 88.74,
+    "ratio": 0.507,
+    "ci": [
+     0.363,
+     0.647
+    ],
+    "verdict": "too high",
+    "clock_adjusted": 0.811,
+    "adj_ci": [
+     0.583,
+     1.034
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "0": 212,
+     "6": 9,
+     "12": 5,
+     "48": 1,
+     "24": 5
+    },
+    "hindsight_h_mean": 46.8,
+    "picks_with_hindsight": 231
+   },
+   {
+    "H": 96,
+    "observed": 44,
+    "stated": 88.82,
+    "ratio": 0.495,
+    "ci": [
+     0.353,
+     0.634
+    ],
+    "verdict": "too high",
+    "clock_adjusted": 0.792,
+    "adj_ci": [
+     0.57,
+     1.01
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "0": 211,
+     "6": 9,
+     "12": 5,
+     "48": 1,
+     "24": 4,
+     "96": 2
+    },
+    "hindsight_h_mean": 94.1,
+    "picks_with_hindsight": 230
+   },
+   {
+    "H": 168,
+    "observed": 43,
+    "stated": 88.83,
+    "ratio": 0.484,
+    "ci": [
+     0.341,
+     0.622
+    ],
+    "verdict": "too high",
+    "clock_adjusted": 0.773,
+    "adj_ci": [
+     0.549,
+     0.995
+    ],
+    "adj_verdict": "the choosing moved it",
+    "lags": {
+     "0": 211,
+     "6": 9,
+     "12": 5,
+     "48": 1,
+     "24": 4,
+     "168": 1,
+     "96": 1
+    },
+    "hindsight_h_mean": 165.8,
+    "picks_with_hindsight": 231
+   },
+   {
+    "H": 336,
+    "observed": 44,
+    "stated": 89.06,
+    "ratio": 0.494,
+    "ci": [
+     0.35,
+     0.634
+    ],
+    "verdict": "too high",
+    "clock_adjusted": 0.786,
+    "adj_ci": [
+     0.565,
+     1.004
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "0": 210,
+     "6": 9,
+     "12": 5,
+     "48": 1,
+     "24": 4,
+     "336": 1,
+     "168": 1,
+     "96": 1
+    },
+    "hindsight_h_mean": 167.3,
+    "picks_with_hindsight": 231
+   },
+   {
+    "H": 720,
+    "observed": 44,
+    "stated": 89.06,
+    "ratio": 0.494,
+    "ci": [
+     0.35,
+     0.634
+    ],
+    "verdict": "too high",
+    "clock_adjusted": 0.786,
+    "adj_ci": [
+     0.565,
+     1.004
+    ],
+    "adj_verdict": "reads what its clocks read",
+    "lags": {
+     "0": 210,
+     "6": 9,
+     "12": 5,
+     "48": 1,
+     "24": 4,
+     "336": 1,
+     "168": 1,
+     "96": 1
+    },
+    "hindsight_h_mean": 168.0,
+    "picks_with_hindsight": 232
+   }
+  ]
+ },
+ "decidable": [
+  {
+   "rule": "raise",
+   "c": 1,
+   "observed": 23,
+   "stated": 21.71,
+   "ratio": 1.059,
+   "ci": [
+    0.722,
+    1.405
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.202,
+   "adj_ci": [
+    0.814,
+    1.611
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "720": 210,
+    "6": 16,
+    "48": 1,
+    "24": 2,
+    "336": 1,
+    "12": 1,
+    "96": 1
+   }
+  },
+  {
+   "rule": "raise",
+   "c": 2,
+   "observed": 12,
+   "stated": 13.56,
+   "ratio": 0.885,
+   "ci": [
+    0.468,
+    1.352
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.043,
+   "adj_ci": [
+    0.553,
+    1.618
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "720": 227,
+    "6": 5
+   }
+  },
+  {
+   "rule": "raise",
+   "c": 4,
+   "observed": 9,
+   "stated": 10.11,
+   "ratio": 0.89,
+   "ci": [
+    0.394,
+    1.488
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.106,
+   "adj_ci": [
+    0.491,
+    1.847
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "720": 231,
+    "6": 1
+   }
+  },
+  {
+   "rule": "fall",
+   "c": 0.5,
+   "observed": 21,
+   "stated": 29.26,
+   "ratio": 0.718,
+   "ci": [
+    0.417,
+    1.069
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 0.821,
+   "adj_ci": [
+    0.477,
+    1.222
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "24": 20,
+    "6": 148,
+    "96": 5,
+    "720": 29,
+    "12": 10,
+    "48": 5,
+    "336": 11,
+    "168": 4
+   }
+  },
+  {
+   "rule": "fall",
+   "c": 0.1,
+   "observed": 10,
+   "stated": 12.52,
+   "ratio": 0.799,
+   "ci": [
+    0.305,
+    1.344
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 0.973,
+   "adj_ci": [
+    0.374,
+    1.636
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "48": 19,
+    "24": 2,
+    "336": 49,
+    "720": 74,
+    "96": 39,
+    "168": 42,
+    "6": 6,
+    "12": 1
+   }
+  },
+  {
+   "rule": "fall",
+   "c": 0.02,
+   "observed": 8,
+   "stated": 9.88,
+   "ratio": 0.81,
+   "ci": [
+    0.308,
+    1.395
+   ],
+   "verdict": "cannot be told from right",
+   "clock_adjusted": 1.007,
+   "adj_ci": [
+    0.384,
+    1.736
+   ],
+   "adj_verdict": "reads what its clocks read",
+   "lags": {
+    "336": 4,
+    "720": 224,
+    "168": 2,
+    "6": 2
+   }
+  }
+ ],
+ "predictions": {
+  "P1": true,
+  "P2": true,
+  "P3": false
+ }
+}

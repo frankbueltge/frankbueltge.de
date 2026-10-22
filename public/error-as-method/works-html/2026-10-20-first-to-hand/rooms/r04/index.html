@@ -1,0 +1,78 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Twenty-Six Breaths</title>
+<style>html,body{margin:0;background:#efe9dc;}canvas{display:block}</style>
+<script src="data/sunspots.js"></script>
+</head><body><canvas id="c" width="1100" height="800"></canvas>
+<script>
+const W=1100,H=800,c=document.getElementById('c'),dpr=window.devicePixelRatio||1;
+c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px';
+const g=c.getContext('2d');g.scale(dpr,dpr);
+const PAPER='#efe9dc',INK='#2a2622',SUN='#c8501e',FAINT='#8d857a';
+g.fillStyle=PAPER;g.fillRect(0,0,W,H);
+
+// months as decimal-year index
+const D=window.SUNSPOTS.map(r=>({t:r[0]+(r[1]-0.5)/12,y:r[0],m:r[1],v:r[2]}));
+// smoothed (13-month) minima of SILSO cycles 1..25 (official list)
+const MIN=[1755.2,1766.5,1775.5,1784.7,1798.3,1810.6,1823.3,1833.9,1843.5,1855.9,1867.2,1878.9,1890.2,1902.1,1913.6,1923.6,1933.8,1944.2,1954.3,1964.9,1976.5,1986.8,1996.4,2008.9,2019.9];
+const edges=[D[0].t-0.01,...MIN,D[D.length-1].t+1];
+const cycles=[];
+for(let i=0;i<edges.length-1;i++){
+  cycles.push({n:i,pts:D.filter(p=>p.t>=edges[i]&&p.t<edges[i+1])});
+}
+const L=78,R=40,TOP=176,BOT=40;
+const rowH=(H-TOP-BOT)/(cycles.length-1);
+const dx=(W-L-R)/170; // up to ~14 years per row
+const amp=v=>v*0.24;
+
+// ridges, bottom-first? Draw top-first so lower rows occlude the upper ones' tails.
+cycles.forEach((cy,i)=>{
+  const base=TOP+i*rowH;
+  const pts=cy.pts;
+  // the first partial cycle starts mid-way: align by real time from the (unknown) minimum ~1744.9
+  const off = i===0 ? Math.round((pts[0].t-1744.9)*12) : 0;
+  const X=k=>L+(k+off)*dx;
+  const cur=i===cycles.length-1;
+  g.beginPath();g.moveTo(X(0),base);
+  pts.forEach((p,k)=>g.lineTo(X(k),base-amp(p.v)));
+  g.lineTo(X(pts.length-1),base);g.closePath();
+  g.fillStyle=PAPER;g.fill();
+  // vertical hatching: one stroke per month
+  g.lineWidth=1;
+  pts.forEach((p,k)=>{
+    const x=Math.round(X(k))+0.5;
+    g.strokeStyle=cur?'rgba(200,80,30,0.55)':'rgba(42,38,34,0.20)';
+    g.beginPath();g.moveTo(x,base);g.lineTo(x,base-amp(p.v));g.stroke();
+  });
+  // outline
+  g.beginPath();
+  pts.forEach((p,k)=>{const x=X(k),y=base-amp(p.v);k?g.lineTo(x,y):g.moveTo(x,y);});
+  g.strokeStyle=cur?SUN:INK;g.lineWidth=cur?1.5:1.05;g.stroke();
+  // baseline
+  g.beginPath();g.moveTo(X(0),base+0.5);g.lineTo(X(pts.length-1),base+0.5);
+  g.strokeStyle=cur?SUN:'rgba(42,38,34,0.45)';g.lineWidth=0.8;g.stroke();
+  // label
+  g.font='10px Georgia, serif';g.textAlign='right';g.textBaseline='middle';
+  g.fillStyle=cur?SUN:FAINT;
+  const y0=pts[0].y;
+  g.fillText(i===0?'1749':String(Math.floor(edges[i])),L-30,base-1);
+  g.textAlign='left';
+  g.fillText(i===0?'·':String(i),L-22,base-1);
+  if(cur){
+    const p=pts[pts.length-1];const x=X(pts.length-1);
+    g.textAlign='left';g.font='italic 11px Georgia, serif';
+    g.fillText(`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][p.m-1]} ${p.y}, still counting`,x+8,base-4);
+  }
+});
+
+// title block
+g.fillStyle=INK;g.textAlign='left';g.textBaseline='alphabetic';
+g.font='26px Georgia, serif';g.fillText('Twenty-Six Breaths',L,48);
+g.font='italic 13px Georgia, serif';g.fillStyle=FAINT;
+g.fillText('Every month the Sun has been counted since January 1749, folded at each solar minimum.',L,70);
+g.fillText('One row per sunspot cycle; one hairline per month; height is the monthly mean sunspot number.',L,88);
+// axis
+g.font='10px Georgia, serif';g.fillStyle=FAINT;g.textAlign='center';
+for(let yr=0;yr<=14;yr+=2){const x=L+yr*12*dx;g.fillText(yr===0?'minimum':`+${yr} y`,x,H-BOT+26);
+  g.fillRect(x-0.25,H-BOT+10,0.5,5);}
+g.textAlign='right';g.fillText('Data: WDC-SILSO, Royal Observatory of Belgium, Brussels',W-R,48);
+</script></body></html>

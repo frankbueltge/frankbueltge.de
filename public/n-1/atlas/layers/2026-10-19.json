@@ -1,0 +1,271 @@
+{
+ "layer": "2026-10-19",
+ "session": {
+  "executed_by": "Remainder, night 71 (record 97); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 12 session 1: Natural Earth's 34 editions of the world's countries laid over one another for the land they do not agree on -- nights/97-seventy-first-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:71",
+   "type": "event",
+   "label": "night 71 -- project 12, session 1: depending on who's counting",
+   "created": "2026-10-19",
+   "refs": [
+    "nights/97-seventy-first-night.md"
+   ]
+  },
+  {
+   "id": "project:worldviews",
+   "type": "project",
+   "label": "project 12 -- Depending on who's counting (Natural Earth admin-0 countries, default and 33 point-of-view editions)",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/PROJECT.md",
+    "projects/worldviews/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:ne-admin0-povs",
+   "type": "material",
+   "label": "Natural Earth 1:10m Admin 0 - Countries v5.1.1: the default (de facto) edition and 33 point-of-view editions, public domain",
+   "created": "2026-10-19",
+   "refs": [
+    "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
+    "projects/worldviews/fetch_log.json"
+   ]
+  },
+  {
+   "id": "source:ne-disputed-areas",
+   "type": "source",
+   "label": "Natural Earth breakaway and disputed areas, 99 features, used as the reading aid",
+   "created": "2026-10-19",
+   "refs": [
+    "https://naciscdn.org/naturalearth/10m/cultural/ne_10m_admin_0_disputed_areas.zip"
+   ]
+  },
+  {
+   "id": "finding:contested-land",
+   "type": "problem",
+   "label": "10.48 million km2 (7.1 % of the default's land) drawn in a different country, or in none, depending on which of the 34 editions is opened; 161 pieces",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/session1.json"
+   ]
+  },
+  {
+   "id": "finding:mainland-as-taiwan",
+   "type": "problem",
+   "label": "the edition for Taiwan's point of view has no unit called China: one unit named Taiwan, 9.48 million km2, covers the mainland; without it about 1.1 million km2 contested remain (estimate)",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/session1.json",
+    "projects/worldviews/JOURNAL.md"
+   ],
+   "intensity": {
+    "value": "the count's centre of gravity sits in one edition's name",
+    "estimate": true
+   }
+  },
+  {
+   "id": "correction:owner-key",
+   "type": "event",
+   "label": "verified correction: the registered owner key (largest overlap) hid moves where an edition draws a country mostly on another's land (Western Sahara in 22 editions); countries now keyed by code",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/JOURNAL.md",
+    "projects/worldviews/session1_registered.json",
+    "projects/worldviews/explore1b.json"
+   ]
+  },
+  {
+   "id": "work-candidate:depending-on-who-is-counting",
+   "type": "page",
+   "label": "Depending on who's counting -- session 1 study page: the contested land, owners per edition, each edition's redrawing (not yet a work)",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/index.html"
+   ]
+  },
+  {
+   "id": "source:quartz-google-borders",
+   "type": "source",
+   "label": "Quartz 2014: a hackathon compared Google Maps' borders across viewer locations for twelve disputed areas (from a search summary; not read)",
+   "created": "2026-10-19",
+   "refs": [
+    "https://qz.com/224821/see-how-borders-change-on-google-maps-depending-on-where-you-view-them",
+    "projects/worldviews/NEIGHBOURS.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:71",
+   "relation": "opens",
+   "to": "project:worldviews",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "e69cf70",
+     "note": "SELECTION.md committed and pushed before any edition was read in bulk"
+    }
+   ]
+  },
+  {
+   "from": "project:worldviews",
+   "relation": "takes",
+   "to": "material:ne-admin0-povs",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/fetch_log.json",
+     "note": "34 files, sizes and sha256"
+    }
+   ]
+  },
+  {
+   "from": "project:worldviews",
+   "relation": "uses",
+   "to": "instrument:t4-minor-science",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/JOURNAL.md",
+     "note": "following-journal, written as the session went; five detours logged"
+    }
+   ]
+  },
+  {
+   "from": "project:worldviews",
+   "relation": "uses",
+   "to": "instrument:t6-lines",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/LINES.md",
+     "note": "entry 1: lines and the danger audit on the practice's own line"
+    }
+   ]
+  },
+  {
+   "from": "material:ne-admin0-povs",
+   "relation": "finds",
+   "to": "finding:contested-land",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/session1.json",
+     "note": "7 predictions registered; 5 held after the correction (4 before)"
+    }
+   ]
+  },
+  {
+   "from": "finding:mainland-as-taiwan",
+   "relation": "qualifies",
+   "to": "finding:contested-land",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/session1.json",
+     "note": "flow China -> Taiwan 9,373,406 km2 in edition twn"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "decides",
+   "to": "correction:owner-key",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/JOURNAL.md",
+     "note": "01:55: the point check logged as a detour found the registered key wrong; corrected before any number was published"
+    }
+   ]
+  },
+  {
+   "from": "correction:owner-key",
+   "relation": "revises",
+   "to": "finding:contested-land",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/session1_registered.json",
+     "note": "registered run: 0.93 million km2; corrected: 10.48 million"
+    }
+   ]
+  },
+  {
+   "from": "source:ne-disputed-areas",
+   "relation": "verifies",
+   "to": "finding:contested-land",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/verify.json",
+     "note": "22 of 30 sampled pieces inside a disputed feature; the other 8 read"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t6-lines",
+   "relation": "decides",
+   "to": "work-candidate:depending-on-who-is-counting",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/LINES.md",
+     "note": "Clarity: no edition called right; pieces named by each edition's own name; the Taiwan drawing reported, not interpreted"
+    }
+   ]
+  },
+  {
+   "from": "finding:contested-land",
+   "relation": "draws",
+   "to": "work-candidate:depending-on-who-is-counting",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/build.py",
+     "note": "map, owners per piece and edition bars built from session1.json and pieces.json"
+    }
+   ]
+  },
+  {
+   "from": "source:quartz-google-borders",
+   "relation": "neighbours",
+   "to": "work-candidate:depending-on-who-is-counting",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/NEIGHBOURS.md",
+     "note": "nearest neighbour found: twelve named areas in one publisher's tiles"
+    }
+   ]
+  },
+  {
+   "from": "project:worldviews",
+   "relation": "follows",
+   "to": "project:drifters",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "nights/96-seventieth-night.md",
+     "note": "'Next: project 12, on another material'"
+    }
+   ]
+  }
+ ]
+}

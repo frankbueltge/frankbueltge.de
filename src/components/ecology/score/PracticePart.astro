@@ -28,7 +28,8 @@ import { loadEcologyRecord, newestPiece, piecesSince, scoreInput, sessionLabel }
 import { buildPart } from '@/lib/ecology/score'
 import { loadCycle, loadBulletin, PRACTICE_REPO, type PracticeId } from '@/lib/ecology/v3'
 import { DOORS, windowDoor } from '@/lib/ecology/pyramid/station'
-import { REPOSITORY_DOORS } from '@/lib/engines/publication.mjs'
+import { REPOS, REPOSITORY_DOORS, repoPlaceOf } from '@/lib/engines/publication.mjs'
+import { loadProcess } from '@/lib/ecology/process'
 import { pieceHref, sessionHref } from '@/lib/engines/publication-links'
 import { withoutHouseSuffix } from '@/lib/ops/edition'
 import '@fontsource-variable/literata/opsz-italic.css'
@@ -87,6 +88,15 @@ const newestOnSite = newest !== null && newestHref === newest.href
 const shot = (name: string) => (newest && newestOnSite && newest.href.endsWith('/') && existsSync(`public${newest.href}${name}`) ? `${newest.href}${name}` : null)
 const still = { wide: shot('shot-1100.png'), narrow: shot('shot-390.png') }
 const newestTitle = newest ? withoutHouseSuffix(newest.title, me.name) : null
+// A piece of the cycle still in its working phase is still being made: since cycle 009 each
+// practice grows one piece across the cycle, and the site shows it as in progress (2026-10-20).
+const newestInProgress = newest !== null && newest.kind !== 'presentation' && cycle.phase === 'working' && newest.cycle === cycle.cycle
+// How it was made (amendment of 2026-10-22): each session that changed the piece leaves a state in
+// its PROCESS.json, with a screenshot, and the states stand under it in order. Only a piece the
+// site serves has them here; the full history stays one link away in the practice's repository.
+const states = newest && newestOnSite && newest.href.endsWith('/') ? loadProcess(newest.href) : []
+const newestPlace = newest ? repoPlaceOf(newest.href.replace(/^\/+|\/+$/g, '')) : null
+const historyHref = newestPlace?.path ? `${REPOS[newestPlace.practice]}/commits/main/${newestPlace.path}` : null
 // The session that made it, where the record ties the two (record.ts, tieSessions); the day's
 // last session only where it does not — until 2026-10-17 always the day's last, by file name,
 // which put one session's note under another's window.
@@ -182,7 +192,7 @@ const hasFigure = Astro.slots.has('figure')
         <div class="sc-latest">
           {newest && newestTitle ? (
             <>
-              <p class="sc-label">{T.latest.head({ one: noun.one, date: newest.date, cycle: newest.cycle })}</p>
+              <p class="sc-label">{T.latest.head({ one: noun.one, date: newest.date, cycle: newest.cycle, inProgress: newestInProgress })}</p>
               <a class="sc-still" href={url(newestHref ?? newest.href)}>
                 {still.wide ? (
                   <picture>
@@ -211,6 +221,34 @@ const hasFigure = Astro.slots.has('figure')
           <BulletinFold bulletin={bulletin} />
         </div>
       </section>
+
+      {/* ── how the newest piece was made ──────────────────────────────────────────────── */}
+      {newestTitle && states.length > 0 && (
+        <section class="sc-section sc-process" id="process">
+          <div class="sc-head sc-head--ink">
+            <div class="sc-head-title">
+              <h2>{T.process.title}</h2>
+              <span class="sc-head-sub">{T.process.sub(states.length)}</span>
+            </div>
+            {historyHref && <a class="sc-small sc-head-aside sc-link" href={historyHref}>{T.process.history}</a>}
+          </div>
+          <ol class="sc-process-strip" data-sc-scroll>
+            {states.map((s) => (
+              <li class="sc-process-state">
+                {s.shot ? (
+                  <a class="sc-still" href={s.shot}>
+                    <img src={s.shot} alt={T.process.shot(newestTitle, s.n)} loading="lazy" decoding="async" />
+                  </a>
+                ) : (
+                  <span class="sc-still"><span class="sc-still-note">{T.process.noShot}</span></span>
+                )}
+                <p class="sc-label">{[T.process.state(s.n), shortDate(s.date), s.session].join(' · ')}</p>
+                <p class="sc-process-changed">{s.changed}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       {/* ── handoffs, and the journal ───────────────────────────────────────────────────── */}
       <section class="sc-two sc-two--even">

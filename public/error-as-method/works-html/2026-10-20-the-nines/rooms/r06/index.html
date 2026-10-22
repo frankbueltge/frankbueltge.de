@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Air at 999 Degrees</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #07090d; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/46026h2024.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800;
+  const cv = document.getElementById('c');
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  // plot frame
+  const L = 70, R = 860, T = 70, B = 690;
+  const LO = -1, HI = 4.3;               // log10 range: 0.1 .. ~20000
+  const y = v => B - (Math.log10(Math.max(v, 0.1)) - LO) / (HI - LO) * (B - T);
+  const t0 = Date.UTC(2024, 0, 1), t1 = Date.UTC(2025, 0, 1);
+  const x = ms => L + (ms - t0) / (t1 - t0) * (R - L);
+
+  // every column taken at its word, with the unit its header gives it
+  const COLS = [
+    { i: 5,  name: 'wind direction',  unit: '°T',  col: [150, 170, 200] },
+    { i: 6,  name: 'wind speed',      unit: 'm/s', col: [120, 200, 230] },
+    { i: 7,  name: 'gust',            unit: 'm/s', col: [180, 230, 255] },
+    { i: 8,  name: 'wave height',     unit: 'm',   col: [90, 160, 255] },
+    { i: 9,  name: 'dominant period', unit: 's',   col: [140, 120, 255] },
+    { i: 10, name: 'average period',  unit: 's',   col: [190, 140, 255] },
+    { i: 11, name: 'wave direction',  unit: '°T',  col: [120, 140, 190] },
+    { i: 12, name: 'pressure',        unit: 'hPa', col: [235, 235, 220] },
+    { i: 13, name: 'air temperature', unit: '°C',  col: [255, 120, 40] },
+    { i: 14, name: 'sea temperature', unit: '°C',  col: [60, 220, 200] },
+    { i: 15, name: 'dew point',       unit: '°C',  col: [255, 70, 70] },
+    { i: 16, name: 'visibility',      unit: 'mi',  col: [255, 210, 120] },
+    { i: 17, name: 'tide',            unit: 'ft',  col: [110, 255, 160] }
+  ];
+
+  function frame() {
+    g.fillStyle = '#07090d'; g.fillRect(0, 0, W, H);
+    g.font = '10px ui-monospace, Menlo, Consolas, monospace';
+    g.textBaseline = 'middle';
+    for (let e = LO; e <= 4; e++) {
+      const v = Math.pow(10, e), yy = y(v);
+      g.strokeStyle = 'rgba(140,150,170,0.10)'; g.lineWidth = 1;
+      g.beginPath(); g.moveTo(L, yy + 0.5); g.lineTo(R, yy + 0.5); g.stroke();
+      g.fillStyle = 'rgba(160,170,190,0.45)'; g.textAlign = 'right';
+      g.fillText(v >= 1 ? String(v) : '0.1', L - 10, yy);
+    }
+    g.textAlign = 'center';
+    const M = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    for (let m = 0; m < 12; m++) {
+      const xx = x(Date.UTC(2024, m, 1));
+      g.fillStyle = 'rgba(140,150,170,0.25)'; g.fillRect(xx, B + 6, 1, 5);
+      g.fillStyle = 'rgba(160,170,190,0.45)';
+      g.fillText(M[m], (xx + x(Date.UTC(2024, m + 1, 1))) / 2, B + 20);
+    }
+  }
+
+  function draw(text) {
+    frame();
+    const lines = text.split('\n');
+    const img = g.getImageData(0, 0, W * dpr, H * dpr);
+    const d = img.data;
+    const acc = new Float32Array(W * H * 3);
+    const seen = COLS.map(() => new Map());
+    const heat = new Float32Array(W); // per-column count of air readings, as heat
+    for (const ln of lines) {
+      if (!ln || ln[0] === '#') continue;
+      const f = ln.trim().split(/\s+/);
+      if (f.length < 18) continue;
+      const ms = Date.UTC(+f[0], +f[1] - 1, +f[2], +f[3], +f[4]);
+      const px = Math.floor(x(ms));
+      for (let k = 0; k < COLS.length; k++) {
+        const c = COLS[k], v = parseFloat(f[c.i]);
+        if (isNaN(v)) continue;
+        const key = f[c.i];
+        seen[k].set(key, (seen[k].get(key) || 0) + 1);
+        if (c.i === 13 || c.i === 15) heat[px] += v / 999;
+        const py = Math.floor(y(v));
+        if (px < L || px >= R || py < T - 10 || py > B) continue;
+        const a = 0.06;
+        for (let dy = 0; dy < 2; dy++) {
+          const o = ((py + dy) * W + px) * 3;
+          acc[o] += c.col[0] * a; acc[o + 1] += c.col[1] * a; acc[o + 2] += c.col[2] * a;
+        }
+      }
+    }
+    // tone-map accumulated light onto the frame
+    for (let yy = 0; yy < H; yy++) for (let xx = 0; xx < W; xx++) {
+      const o = (yy * W + xx) * 3;
+      if (!acc[o] && !acc[o + 1] && !acc[o + 2]) continue;
+      for (let sy = 0; sy < dpr; sy++) for (let sx = 0; sx < dpr; sx++) {
+        const p = (((yy * dpr + sy) * W * dpr) + xx * dpr + sx) * 4;
+        for (let ch = 0; ch < 3; ch++) {
+          const lin = 1 - Math.exp(-acc[o + ch] / 180);
+          d[p + ch] = Math.min(255, d[p + ch] + lin * 255);
+        }
+      }
+    }
+    g.putImageData(img, 0, 0);
+
+    // the air radiates: a halo around the 999 degree line, as bright as its readings are many
+    const hy = y(999);
+    g.globalCompositeOperation = 'lighter';
+    for (let xx = L; xx < R; xx++) {
+      const k = Math.min(1, heat[xx] / 90);
+      if (!k) continue;
+      const gr = g.createLinearGradient(0, hy - 60, 0, hy + 60);
+      gr.addColorStop(0, 'rgba(255,90,20,0)');
+      gr.addColorStop(0.5, `rgba(255,110,30,${0.32 * k})`);
+      gr.addColorStop(1, 'rgba(255,90,20,0)');
+      g.fillStyle = gr; g.fillRect(xx, hy - 60, 1, 120);
+    }
+    g.globalCompositeOperation = 'source-over';
+
+    // label each column by the value it states most often, taken as fact
+    const labels = COLS.map((c, k) => {
+      let best = null, n = 0;
+      for (const [key, cnt] of seen[k]) if (cnt > n) { n = cnt; best = key; }
+      return { c, v: parseFloat(best), s: best, n };
+    }).filter(o => o.s !== null);
+    labels.sort((a, b) => b.v - a.v);
+    // spread labels vertically so they do not collide
+    let last = -1e9;
+    const placed = labels.map(o => {
+      let ly = y(o.v);
+      if (ly - last < 13) ly = last + 13;
+      last = ly;
+      return { ...o, ly };
+    });
+    g.textAlign = 'left'; g.textBaseline = 'middle';
+    for (const o of placed) {
+      const yy = y(o.v);
+      g.strokeStyle = `rgba(${o.c.col.join(',')},0.35)`; g.lineWidth = 1;
+      g.beginPath(); g.moveTo(R + 4, yy + 0.5); g.lineTo(R + 14, o.ly + 0.5); g.lineTo(R + 20, o.ly + 0.5); g.stroke();
+      g.fillStyle = `rgb(${o.c.col.join(',')})`;
+      g.font = '11px ui-monospace, Menlo, Consolas, monospace';
+      const num = (+o.s).toString();
+      g.fillText(num + ' ' + o.c.unit, R + 24, o.ly);
+      g.fillStyle = 'rgba(170,180,200,0.55)';
+      g.fillText(o.c.name, R + 24 + g.measureText(num + ' ' + o.c.unit + '  ').width, o.ly);
+    }
+
+    // title and caption
+    g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+    g.fillStyle = 'rgba(255,140,60,0.95)';
+    g.font = '600 22px Georgia, "Times New Roman", serif';
+    g.fillText('Air at 999 Degrees', L, 42);
+    g.fillStyle = 'rgba(170,180,200,0.6)';
+    g.font = 'italic 13px Georgia, "Times New Roman", serif';
+    g.fillText('Buoy 46026, eighteen nautical miles west of San Francisco, 2024. Every number in the record, believed.', L + 205, 42);
+    g.font = '10px ui-monospace, Menlo, Consolas, monospace';
+    g.fillStyle = 'rgba(160,170,190,0.45)';
+    g.fillText('49,309 readings at ten-minute intervals · all thirteen columns on one logarithmic scale · each reading a point of light', L, 740);
+    g.fillText('the steadiest lines in the year: air 999 °C, dew 999 °C, pressure 9999 hPa, sight 99 miles, a tide of 99 feet', L, 756);
+  }
+
+  const load = window.BUOY_46026_2024 ? Promise.resolve(window.BUOY_46026_2024)
+    : fetch('data/46026h2024.txt').then(r => r.text());
+  load.then(draw).catch((err) => {
+    frame();
+    g.fillStyle = '#888'; g.fillText('data/46026h2024.txt could not be read: ' + err, L, T);
+  });
+})();
+</script>
+</body>
+</html>

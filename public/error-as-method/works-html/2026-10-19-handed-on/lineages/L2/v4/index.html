@@ -1,0 +1,78 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>The Long Wait</title>
+<style>
+html,body{margin:0;background:#f3efe6;}
+body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#222;}
+canvas{display:block}
+</style></head>
+<body><canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+const D=window.PRIZES, R=D.rows;
+const cv=document.getElementById('c'), dpr=window.devicePixelRatio||1;
+cv.width=1100*dpr;cv.height=800*dpr;cv.style.width='1100px';cv.style.height='800px';
+const g=cv.getContext('2d');g.scale(dpr,dpr);g.lineJoin='round';
+const BG='#f3efe6',MEN='#9b9384',WOM='#d2401e',ORG='#2a5f9e',INK='#3b342a',MUTE='#8a8170',DARK='#1d1a15';
+g.fillStyle=BG;g.fillRect(0,0,1100,800);
+const rows=R.filter(r=>r[4]!=null);
+// x: years before the prize; the prize is one vertical edge
+const PX=960, K=8.2, AMAX=104, LCLIP=PX-AMAX*K, T=132, B=742, GAP=7;
+const xa=a=>PX-a*K;
+// decades, each sorted by age: oldest on top
+const dec={};rows.forEach(r=>{const d=Math.floor(r[0]/10)*10;(dec[d]=dec[d]||[]).push(r)});
+const keys=Object.keys(dec).map(Number).sort((a,b)=>a-b);
+keys.forEach(d=>dec[d].sort((a,b)=>(b[0]-b[4])-(a[0]-a[4])));
+const SH=rows.reduce((t,r)=>t+r[6],0), H=(B-T-GAP*(keys.length-1))/SH; // px per whole prize
+// age grid
+g.font='11px Georgia';g.textAlign='center';
+for(let a=0;a<=100;a+=10){g.strokeStyle='rgba(0,0,0,'+(a%20?0.04:0.08)+')';g.lineWidth=1;g.beginPath();g.moveTo(xa(a)+.5,T-6);g.lineTo(xa(a)+.5,B+4);g.stroke();
+ if(a%20==0&&a>0){g.fillStyle=MUTE;g.fillText(a,xa(a),B+19);}}
+g.fillStyle=MUTE;g.fillText('prize',PX,B+19);
+g.font='italic 11px Georgia';g.fillText('age at the prize  (years from birth, or founding, to prize)',xa(50),B+35);
+// lay out
+let y=T;const pos=new Map(),meds=[];
+keys.forEach(d=>{const a=dec[d],y0=y;let c=0;const tot=a.reduce((t,r)=>t+r[6],0);let mr=null;
+ a.forEach(r=>{const h=r[6]*H;pos.set(r,{y:y+h/2,top:y,h,d});if(!mr&&c+r[6]>=tot/2)mr=r;c+=r[6];y+=h;});
+ const mp=pos.get(mr);
+ meds.push({d,y0,y1:y,n:a.length,p:Math.round(tot),mr,my:mp.y,age:mr[0]-mr[4],w:a.filter(r=>r[3]=='woman').length});
+ y+=GAP;});
+function thread(r,col,minw,pad){const p=pos.get(r),age=r[0]-r[4],x0=Math.max(xa(age),LCLIP),h=Math.max(p.h-pad,minw);
+ g.fillStyle=col;g.fillRect(x0,p.y-h/2,PX-x0,h);
+ if(age>AMAX){g.fillStyle=col;g.beginPath();g.moveTo(x0-7,p.y);g.lineTo(x0,p.y-3);g.lineTo(x0,p.y+3);g.fill();}}
+rows.forEach(r=>{if(r[3]=='man')thread(r,MEN,0,-0.3)});
+rows.forEach(r=>{if(r[3]=='organisation')thread(r,ORG,1.1,0)});
+rows.forEach(r=>{if(r[3]=='woman')thread(r,WOM,1.1,0)});
+// prize edge
+g.fillStyle='#111';g.fillRect(PX,T-4,1.6,B-T+8);
+// the middle thread of each decade: the median, read off the fabric
+g.strokeStyle='rgba(29,26,21,0.55)';g.lineWidth=0.8;g.setLineDash([2,3]);g.beginPath();
+meds.forEach((m,k)=>{const p=[xa(m.age),m.my];k?g.lineTo(...p):g.moveTo(...p)});g.stroke();g.setLineDash([]);
+meds.forEach(m=>{const x=xa(m.age);
+ g.fillStyle=DARK;g.fillRect(x-1,m.my-0.6,PX-x+1,1.2);g.fillRect(x-1,m.my-4,2,8);
+ g.font='bold 12px Georgia';g.textAlign='right';g.strokeStyle='rgba(243,239,230,0.95)';g.lineWidth=4;
+ const t=String(m.age);g.strokeText(t,x-6,m.my+4);g.fillText(t,x-6,m.my+4);
+ // right: decade and count
+ g.textAlign='left';g.font='12px Georgia';g.fillStyle=INK;g.fillText(m.d+'s',PX+9,(m.y0+m.y1)/2+1);
+ g.font='10px Georgia';g.fillStyle=MUTE;g.fillText(m.p+' prizes, '+m.n+' laureates',PX+9,(m.y0+m.y1)/2+13);});
+// annotations
+function note(name,txt,dx,dy,align){const r=rows.find(r=>r[2].includes(name));if(!r)return;const p=pos.get(r),age=r[0]-r[4],x=Math.max(xa(age),LCLIP);
+ g.strokeStyle='#6b6152';g.lineWidth=0.7;g.beginPath();g.moveTo(x,p.y);g.lineTo(x+dx,p.y+dy);g.stroke();
+ g.font='italic 12px Georgia';const al=align||(dx<0?'right':'left');g.textAlign=al;
+ txt.split('\n').forEach((t,k)=>{const tx=x+dx+(al=='right'?-3:3),ty=p.y+dy+4+k*14;g.strokeStyle='rgba(243,239,230,0.92)';g.lineWidth=4;g.strokeText(t,tx,ty);g.fillStyle=INK;g.fillText(t,tx,ty)});}
+note('Malala','Malala Yousafzai, 2014, aged 17 (half a Peace Prize)',-300,0);
+note('Goodenough','John B. Goodenough, 2019, aged 97',-22,-22);
+note('Friends Service Council','Friends Service Council, 1947:\nthe Quakers, founded 1647',24,-30);
+g.textAlign='left';
+// title
+g.fillStyle=DARK;g.font='bold 30px Georgia';g.fillText('The Long Wait',LCLIP,48);
+g.font='14px Georgia';g.fillStyle='#4a4337';
+g.fillText('Every Nobel laureate, 1901–2026, as a thread hung from the prize and reaching back to the year of birth (or founding),',LCLIP,72);
+g.fillText('as thick as their share of the prize: each decade is as tall as the prizes it gave, and split prizes weave finer.',LCLIP,90);
+g.fillText('Within a decade the oldest are on top; the black thread at mid-height is the median: half the prizes went to older laureates.',LCLIP,108);
+// legend
+const lx=LCLIP,ly=146;g.font='12px Georgia';
+[[MEN,'men','man'],[WOM,'women','woman'],[ORG,'organisations','organisation']].forEach(([c,t,k],i)=>{g.strokeStyle=c;g.lineWidth=3;g.beginPath();g.moveTo(lx,ly+i*18);g.lineTo(lx+30,ly+i*18);g.stroke();
+ const s=t+' ('+R.filter(r=>r[3]==k).length+')';g.fillStyle=INK;g.fillText(s,lx+38,ly+4+i*18)});
+g.strokeStyle=DARK;g.lineWidth=1.4;g.beginPath();g.moveTo(lx,ly+54);g.lineTo(lx+30,ly+54);g.stroke();g.fillText('median of the decade',lx+38,ly+58);
+g.font='10px Georgia';g.fillStyle='#9a917f';g.textAlign='right';g.fillText('Source: '+D.source,1060,792);
+</script></body></html>

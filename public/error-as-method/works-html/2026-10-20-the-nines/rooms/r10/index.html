@@ -1,0 +1,105 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Passage of a Moored Buoy</title>
+<style>
+html,body{margin:0;background:#efebe2;}
+canvas{display:block}
+</style>
+<script src="data/46026h2024.js"></script>
+</head><body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script>
+const W=1100,H=800,cv=document.getElementById('c'),g=cv.getContext('2d');
+const R=6371.0088, rad=Math.PI/180;
+const HOME={lat:37.755,lon:-122.839};
+// parse the record
+const rows=[];
+for(const ln of RAW.split('\n')){
+  if(!ln||ln[0]==='#')continue;
+  const f=ln.trim().split(/\s+/);
+  const dpd=+f[9], mwd=+f[11], wvht=+f[8];
+  if(dpd>=99||mwd>=999)continue;
+  const t=Date.UTC(+f[0],+f[1]-1,+f[2],+f[3],+f[4]);
+  rows.push({t,dpd,mwd,wvht,mo:+f[1]-1});
+}
+// the wrong reading: the buoy rides every swell it reports, in the swell's direction, at the swell's speed
+let lat=HOME.lat*rad, lon=HOME.lon*rad, total=0;
+const pts=[{lat,lon,mo:0,h:rows[0].wvht}];
+for(let i=0;i<rows.length;i++){
+  const r=rows[i];
+  const next=i+1<rows.length?rows[i+1].t:Date.UTC(2025,0,1);
+  const dt=Math.min(next-r.t,3600e3)/1000;           // seconds on this swell
+  const c=9.81*r.dpd/(2*Math.PI)/1000;               // deep-water phase speed, km/s
+  const dist=c*dt; total+=dist;
+  const th=((r.mwd+180)%360)*rad, d=dist/R;          // waves come FROM mwd, so go toward mwd+180
+  const lat2=Math.asin(Math.sin(lat)*Math.cos(d)+Math.cos(lat)*Math.sin(d)*Math.cos(th));
+  let lon2=lon+Math.atan2(Math.sin(th)*Math.sin(d)*Math.cos(lat),Math.cos(d)-Math.sin(lat)*Math.sin(lat2));
+  lon2=((lon2+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI;
+  lat=lat2;lon=lon2;pts.push({lat,lon,mo:r.mo,h:r.wvht});
+}
+// map frame: azimuthal equidistant about the South Pole; the whole Earth is the disc, the North Pole its rim
+const CX=372,CY=420,RR=345;
+const proj=(la,lo)=>{const rr=(la/rad+90)/180*RR;const a=lo+Math.PI/2+2.93;return [CX+rr*Math.cos(a),CY-rr*Math.sin(a)];};
+g.fillStyle='#efebe2';g.fillRect(0,0,W,H);
+g.fillStyle='#e5dfd2';g.beginPath();g.arc(CX,CY,RR,0,7);g.fill();
+g.strokeStyle='rgba(60,55,45,0.14)';g.lineWidth=1;
+for(let b=-60;b<90;b+=30){g.beginPath();g.arc(CX,CY,(b+90)/180*RR,0,7);g.stroke();}
+for(let a=0;a<360;a+=30){const[x,y]=proj(89.999*rad,a*rad);g.beginPath();g.moveTo(CX,CY);g.lineTo(x,y);g.stroke();}
+g.strokeStyle='rgba(60,55,45,0.4)';g.beginPath();g.arc(CX,CY,RR,0,7);g.stroke();
+g.strokeStyle='rgba(60,55,45,0.3)';g.setLineDash([2,3]);g.beginPath();g.arc(CX,CY,RR/2,0,7);g.stroke();g.setLineDash([]);
+const pal=['#1d2b4a','#23395e','#2d4f72','#3d6a7f','#5b7f78','#8a8a62','#ad7b45','#b8643a','#9c4b3c','#6e3e4a','#43334f','#26294a'];
+g.lineCap='round';g.lineJoin='round';
+for(let i=1;i<pts.length;i++){
+  const a=pts[i-1],b=pts[i];
+  const[x1,y1]=proj(a.lat,a.lon),[x2,y2]=proj(b.lat,b.lon);
+  g.strokeStyle=pal[b.mo];g.globalAlpha=0.5;
+  g.lineWidth=0.5+Math.min(b.h,6)*0.3;
+  g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();
+}
+g.globalAlpha=1;
+const[hx,hy]=proj(HOME.lat*rad,HOME.lon*rad);
+g.fillStyle='#efebe2';g.beginPath();g.arc(hx,hy,6,0,7);g.fill();
+g.strokeStyle='#b0221c';g.lineWidth=2;g.beginPath();g.arc(hx,hy,6,0,7);g.stroke();
+g.fillStyle='#b0221c';g.beginPath();g.arc(hx,hy,2,0,7);g.fill();
+const e=pts[pts.length-1];const[ex,ey]=proj(e.lat,e.lon);
+const serif='"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif';
+g.fillStyle='#b0221c';g.font='italic 13px '+serif;g.textAlign='left';
+g.fillText('46026 · 37.76°N 122.84°W',hx+11,hy+4);
+g.fillStyle='rgba(60,55,45,0.65)';g.font='italic 11px '+serif;g.textAlign='center';
+g.fillText('equator',CX,CY+RR/2+14);g.fillText('South Pole',CX,CY+42);
+g.textAlign='left';
+// right column
+const TX=760;
+g.fillStyle='#1b1b1b';g.font='27px '+serif;g.fillText('Passage of a',TX,96);g.fillText('Moored Buoy',TX,128);
+g.font='italic 14px '+serif;g.fillStyle='#55504a';
+g.fillText('NDBC 46026, 18 nm west of San Francisco',TX,156);g.fillText('1 January – 31 December 2024',TX,175);
+const mn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+g.font='11px '+serif;
+for(let m=0;m<12;m++){const x=TX+(m%6)*50,y=630+Math.floor(m/6)*30;g.fillStyle=pal[m];g.fillRect(x,y,38,4);g.fillStyle='#55504a';g.fillText(mn[m],x,y+17);}
+g.fillText('the whole Earth, seen from the South Pole;',TX,712);g.fillText('the rim is the North Pole. Line weight is wave height.',TX,727);
+// text
+const km=Math.round(total);
+const moon=(total/384400).toFixed(2);
+const laps=(total/40075).toFixed(1);
+g.fillStyle='#1b1b1b';g.font='16px '+serif;
+const lines=[
+ 'In 2024 the buoy reported',
+ rows.length.toLocaleString('en-US')+' swells. Here it rides',
+ 'each one, the way that swell',
+ 'was going, at the speed a swell',
+ 'of that period travels, until',
+ 'the next is reported.',
+ '',
+ 'It covers '+km.toLocaleString('en-US')+' km — '+laps,
+ 'times round the Earth, '+moon+' times',
+ 'the distance to the Moon. The',
+ 'westerly swell keeps turning it',
+ 'south-east, so it winds down into',
+ 'the South Pole and circles there,',
+ 'let out only by southern swell.',
+ '',
+ 'It is chained the whole time',
+ 'to the red ring.'
+];
+lines.forEach((s,i)=>g.fillText(s,TX,232+i*22));
+</script>
+</body></html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Annus Historico-naturalis</title>
+<style>
+  html,body{margin:0;padding:0;background:#efe7d4;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/selborne.js"></script>
+<script>
+(function(){
+const W = 1100, H = 800;
+const cv = document.getElementById('c');
+const dpr = window.devicePixelRatio || 1;
+cv.width = W*dpr; cv.height = H*dpr; cv.style.width = W+'px'; cv.style.height = H+'px';
+const g = cv.getContext('2d'); g.scale(dpr,dpr);
+
+const PAPER='#efe7d4', INK='#2c2620', FAINT='#8a7f6c', RED='#9b2f1c';
+g.fillStyle=PAPER; g.fillRect(0,0,W,H);
+
+const NAMES=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const PAT=[/^Jan(uary|\.)/,/^Feb(ruary|\.)/,/^March/,/^April/,/^May/,/^June/,/^July/,/^(August|Aug\.)/,/^Sept(ember|\.)/,/^Oct(ober|\.)/,/^Nov(ember|\.)/,/^Dec(ember|\.)/];
+
+const text = SELBORNE.replace(/\s+/g,' ');
+const re = /\b(January|Jan\.|February|Feb\.|March|April|May|June|July|August|Aug\.|September|Sept\.|October|Oct\.|November|Nov\.|December|Dec\.)/g;
+const months = NAMES.map(()=>[]);
+let m;
+while((m = re.exec(text))){
+  const word=m[1], at=m.index, after=text.slice(at+word.length, at+word.length+40), before=text.slice(Math.max(0,at-40), at);
+  if(word==='May' && /^ (not|they|it|we|I|he|she|be|is|there)\b/.test(after)) continue;
+  if(word==='May' && /[.?!]\s*$/.test(before) && !/^ \d/.test(after)) continue;
+  // the date a letter was written is not something seen in that month
+  if(/^ ?\d{1,2}(st|th|d)?,? 17\d\d/.test(after) && /[A-Z][a-z]+,( near [A-Z][a-z]+,)? $/.test(before)) continue;
+  const mi = PAT.findIndex(p=>p.test(word));
+  // day of the month, where the text gives one
+  let day = null, d;
+  if((d = after.match(/^ (the )?(\d{1,2})(st|nd|rd|th|d)?\b/)) && +d[2]<=31) day=+d[2];
+  else if((d = before.match(/(\d{1,2})(st|nd|rd|th|d)? (day )?of $/))) day=+d[1];
+  else if(/(beginning|first week|first days?|early|commencement|opening) (in |of )(the month of )?$/i.test(before)) day=3;
+  else if(/(middle|midst) (of )?$/i.test(before)) day=15;
+  else if(/(end|last week|latter end|close|latter part|last days?)( in| of) $/i.test(before)) day=28;
+  // context: back to the clause start, forward to its end, a few words each way
+  let s = before.split(/[.;:!?()—]/).pop();
+  let ws = s.trim().split(' ').filter(Boolean); ws = ws.slice(-6);
+  let tail = text.slice(at+word.length, at+word.length+90).split(/[.;:!?()—]/)[0];
+  if(/^ ?\d/.test(tail) || /^\./.test(text.slice(at+word.length))){
+    // keep a date like "April 13" or "Aug. 17"
+  }
+  let wt = tail.trim().split(' ').filter(Boolean).slice(0,6);
+  let w2 = word;
+  if(word.endsWith('.') ){ // abbreviated month: the full stop belongs to the word
+    const t2 = text.slice(at+word.length, at+word.length+90).split(/[;:!?()—]|\. /)[0];
+    wt = t2.trim().split(' ').filter(Boolean).slice(0,6);
+  }
+  months[mi].push({pre:ws.join(' '), word:w2, post:wt.join(' ').replace(/[,]$/,''), day, pos:at});
+}
+// order each month as a calendar: by the day, where known; the undated keep their place in the book, mid-month
+months.forEach(a=>{
+  a.forEach(f=>f.key = f.day==null ? 15.5 + f.pos/1e7 : f.day + f.pos/1e8);
+  a.sort((x,y)=>x.key-y.key);
+});
+
+// layout
+const LEFT=132, RIGHT=W-34, TOP=118, BOTTOM=H-46, GAP=7;
+const SEP='  ·  ';
+function rowsFor(size){
+  g.font = size+'px Georgia, "Times New Roman", serif';
+  const width = RIGHT-LEFT;
+  const out = [];
+  for(const a of months){
+    const lines=[]; let line=[], x=0;
+    const tokens=[];
+    a.forEach((f,i)=>{
+      const parts=[];
+      if(f.pre) f.pre.split(' ').forEach(w=>parts.push({t:w,red:false}));
+      parts.push({t:f.word,red:true});
+      if(f.post) f.post.split(' ').forEach(w=>parts.push({t:w,red:false}));
+      parts.forEach((p,j)=>{ p.lead = (j===0 && i>0); tokens.push(p); });
+    });
+    const sp = g.measureText(' ').width, sepw = g.measureText(SEP).width;
+    for(const tk of tokens){
+      const tw = g.measureText(tk.t).width;
+      const gapw = line.length ? (tk.lead?sepw:sp) : 0;
+      if(x+gapw+tw > width && line.length){ lines.push(line); line=[]; x=0; }
+      const g2 = line.length ? (tk.lead?sepw:sp) : 0;
+      line.push({tk, x:x+g2, w:tw, sepBefore: tk.lead && line.length>0});
+      x += g2+tw;
+    }
+    if(line.length) lines.push(line);
+    out.push(lines);
+  }
+  return out;
+}
+let size=9.6, rows, lh;
+for(;;){
+  rows = rowsFor(size); lh = size*1.22;
+  const total = rows.reduce((s,r)=>s+Math.max(r.length,2)*lh,0) + GAP*11;
+  if(total <= BOTTOM-TOP || size<5) break;
+  size -= 0.1;
+}
+g.font = size+'px Georgia, "Times New Roman", serif';
+
+// heading
+g.fillStyle=INK; g.textBaseline='alphabetic';
+g.font='italic 30px Georgia, "Times New Roman", serif';
+g.fillText('Annus Historico-naturalis', LEFT, 56);
+g.font='13px Georgia, "Times New Roman", serif'; g.fillStyle=FAINT;
+g.fillText('or the Natural History of the Twelve Months of the Year, which Gilbert White proposed to add and did not;', LEFT, 80);
+g.fillText('gathered here from every place in The Natural History of Selborne (1789) where a month is named, and set in its month, by the day.', LEFT, 97);
+g.font='italic 13px Georgia, "Times New Roman", serif'; g.fillStyle=FAINT;
+g.textAlign='right'; g.fillText('Selborne, 1767 – 1787', RIGHT, 56); g.textAlign='left';
+
+let y = TOP;
+rows.forEach((lines,mi)=>{
+  const n = months[mi].length;
+  const hgt = Math.max(lines.length,2)*lh;
+  // rule
+  g.strokeStyle='rgba(44,38,32,0.25)'; g.lineWidth=0.6;
+  g.beginPath(); g.moveTo(34,y-2.5); g.lineTo(RIGHT,y-2.5); g.stroke();
+  // month in the margin
+  g.fillStyle=INK; g.font='italic 15px Georgia, "Times New Roman", serif';
+  g.fillText(NAMES[mi], 34, y+12);
+  g.fillStyle=FAINT; g.font='10px Georgia, "Times New Roman", serif';
+  g.fillText(n+(n===1?' mention':' mentions'), 34, y+25);
+  // the fragments
+  lines.forEach((line,li)=>{
+    const by = y + size + li*lh;
+    for(const c of line){
+      if(c.sepBefore){
+        g.fillStyle='rgba(155,47,28,0.55)'; g.font=size+'px Georgia, serif';
+        const sw = g.measureText(SEP).width;
+        g.fillText('·', LEFT + c.x - sw/2 - g.measureText('·').width/2, by);
+      }
+      if(c.tk.red){ g.fillStyle=RED; g.font='italic '+size+'px Georgia, "Times New Roman", serif'; }
+      else { g.fillStyle=INK; g.font=size+'px Georgia, "Times New Roman", serif'; }
+      g.fillText(c.tk.t, LEFT + c.x, by);
+    }
+  });
+  y += hgt + GAP;
+});
+
+// foot
+g.fillStyle=FAINT; g.font='italic 11px Georgia, "Times New Roman", serif';
+const total = months.reduce((s,a)=>s+a.length,0);
+g.fillText(total+' passages. Datelines of the letters are left out; a passage with no day stands at mid-month, in the order of the book.', LEFT, H-20);
+g.textAlign='right';
+g.fillText('“I shall here take a respectful leave of you and natural history together”', RIGHT, H-20);
+})();
+</script>
+</body>
+</html>

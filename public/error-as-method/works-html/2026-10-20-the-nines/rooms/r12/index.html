@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Swell Ledger</title>
+<style>
+  html,body{margin:0;background:#0c1216;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="data/46026h2024.js"></script>
+<script>
+(function(){
+  const W = 1100, H = 800;
+  const dpr = window.devicePixelRatio || 1;
+  const cv = document.getElementById('c');
+  cv.width = W*dpr; cv.height = H*dpr;
+  cv.style.width = W+'px'; cv.style.height = H+'px';
+  const g = cv.getContext('2d');
+  g.scale(dpr,dpr);
+
+  const BG = '#0c1216', INK = '#8a98a0', FAINT = '#3a474e';
+  g.fillStyle = BG; g.fillRect(0,0,W,H);
+
+  // ---- parse -------------------------------------------------------------
+  const lines = (window.STDMET||'').split('\n');
+  const DAYS = 366;
+  const wave = Array.from({length:DAYS}, () => []);   // [minute, WVHT, DPD]
+  const temp = Array.from({length:DAYS}, () => []);   // [minute, WTMP]
+  const t0 = Date.UTC(2024,0,1);
+  let lastWind = null;
+  for (const ln of lines){
+    if (!ln || ln[0]==='#') continue;
+    const f = ln.trim().split(/\s+/);
+    if (f.length < 15) continue;
+    const ms = Date.UTC(+f[0], +f[1]-1, +f[2], +f[3], +f[4]);
+    const d = Math.floor((ms - t0)/86400000);
+    if (d<0 || d>=DAYS) continue;
+    const m = (+f[3])*60 + (+f[4]);
+    const wvht = +f[8], dpd = +f[9], wtmp = +f[14], wspd = +f[6];
+    if (wvht < 99 && dpd < 99) wave[d].push([m, wvht, dpd]);
+    if (wtmp < 999) temp[d].push([m, wtmp]);
+    if (wspd < 99) lastWind = {d, m, wspd, gst:+f[7], pres:+f[12]};
+  }
+
+  // ---- geometry ----------------------------------------------------------
+  const X0 = 92, X1 = 1046;           // midnight .. midnight
+  const Y0 = 58, Y1 = 742;            // 1 Jan .. 31 Dec
+  const rowH = (Y1 - Y0) / (DAYS-1);
+  const pxPerMin = (X1 - X0) / 1440;
+  const AMP = 2.1;                    // px at 1 m of significant wave height (grows as h^1.4)
+  const LAMBDA = 2.6;                 // px of drawn wavelength per second of period
+  const GAP = 75;                     // minutes beyond which a silence is left silent
+
+  function sampleAt(arr, m, idx){
+    // linear interpolation between neighbouring readings; null across gaps
+    let lo = null, hi = null;
+    for (let i=0;i<arr.length;i++){
+      if (arr[i][0] <= m) lo = arr[i];
+      if (arr[i][0] >= m){ hi = arr[i]; break; }
+    }
+    if (lo && hi){
+      if (hi[0]-lo[0] > GAP) return null;
+      if (hi[0]===lo[0]) return lo[idx];
+      const t = (m-lo[0])/(hi[0]-lo[0]);
+      return lo[idx]*(1-t) + hi[idx]*t;
+    }
+    const one = lo || hi;
+    if (one && Math.abs(one[0]-m) <= GAP/2) return one[idx];
+    return null;
+  }
+  // neighbouring days help bridge midnight
+  function waveSeries(d){
+    const prev = d>0 ? wave[d-1].filter(s=>s[0]>1380).map(s=>[s[0]-1440,s[1],s[2]]) : [];
+    const next = d<DAYS-1 ? wave[d+1].filter(s=>s[0]<60).map(s=>[s[0]+1440,s[1],s[2]]) : [];
+    return prev.concat(wave[d], next);
+  }
+  function tempSeries(d){
+    const prev = d>0 ? temp[d-1].filter(s=>s[0]>1380).map(s=>[s[0]-1440,s[1]]) : [];
+    const next = d<DAYS-1 ? temp[d+1].filter(s=>s[0]<60).map(s=>[s[0]+1440,s[1]]) : [];
+    return prev.concat(temp[d], next);
+  }
+
+  // sea temperature -> colour (cold slate -> pale foam -> warm sand)
+  const stops = [
+    [ 9.0, [ 70,118,150]],
+    [11.0, [ 96,160,180]],
+    [12.8, [170,200,200]],
+    [14.5, [222,214,186]],
+    [16.8, [236,170,112]]
+  ];
+  function tcol(t, a){
+    if (t==null) return 'rgba(130,140,146,'+a+')';
+    if (t<=stops[0][0]) t = stops[0][0];
+    if (t>=stops[stops.length-1][0]) t = stops[stops.length-1][0];
+    for (let i=0;i<stops.length-1;i++){
+      const [ta,ca] = stops[i], [tb,cb] = stops[i+1];
+      if (t>=ta && t<=tb){
+        const u = (t-ta)/(tb-ta);
+        const c = ca.map((v,k)=>Math.round(v+(cb[k]-v)*u));
+        return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')';
+      }
+    }
+  }
+
+  // ---- the ledger: one thread per day, drawn top to bottom ---------------
+  const STEP = 0.35;  // px
+  let phase = 0;      // carried from day to day so the sea is one continuous line
+  for (let d=0; d<DAYS; d++){
+    const base = Y0 + d*rowH;
+    const ws = waveSeries(d), ts = tempSeries(d);
+    const runs = []; let run = null;
+    for (let x=X0; x<=X1; x+=STEP){
+      const m = (x - X0)/pxPerMin;
+      const h = sampleAt(ws, m, 1), p = sampleAt(ws, m, 2);
+      if (h==null || p==null){ if (run){ runs.push(run); run=null; } continue; }
+      phase += 2*Math.PI * STEP / (p*LAMBDA);
+      const A = AMP*Math.pow(h,1.4);
+      const y = base - A*(1 - Math.cos(phase))/2 - A*0.08;
+      const t = sampleAt(ts, m, 1);
+      if (!run) run = [];
+      run.push([x, y, t]);
+    }
+    if (run) runs.push(run);
+
+    for (const r of runs){
+      if (r.length < 2) continue;
+      // occlude what lies behind (the days above)
+      g.beginPath();
+      g.moveTo(r[0][0], base+0.6);
+      for (const q of r) g.lineTo(q[0], q[1]);
+      g.lineTo(r[r.length-1][0], base+0.6);
+      g.closePath();
+      g.fillStyle = BG; g.fill();
+      // stroke in short segments coloured by the water temperature
+      g.lineWidth = 0.75; g.lineJoin = 'round';
+      const SEG = 24;
+      for (let i=0;i<r.length-1;i+=SEG){
+        const end = Math.min(i+SEG, r.length-1);
+        g.beginPath();
+        g.moveTo(r[i][0], r[i][1]);
+        for (let k=i+1;k<=end;k++) g.lineTo(r[k][0], r[k][1]);
+        g.strokeStyle = tcol(r[Math.floor((i+end)/2)][2], 0.92);
+        g.stroke();
+      }
+    }
+  }
+
+  // ---- marginalia --------------------------------------------------------
+  g.font = '10px "Helvetica Neue", Helvetica, Arial, sans-serif';
+  g.textBaseline = 'middle';
+  const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const mdays = [31,29,31,30,31,30,31,31,30,31,30,31];
+  let acc = 0;
+  for (let i=0;i<12;i++){
+    const y = Y0 + acc*rowH;
+    g.fillStyle = FAINT; g.fillRect(X0-30, y, 14, 0.6);
+    g.fillStyle = INK; g.textAlign = 'right';
+    g.fillText(months[i], X0-36, y + 1);
+    acc += mdays[i];
+  }
+  g.textAlign = 'center';
+  for (let hr=0; hr<=24; hr+=6){
+    const x = X0 + hr*60*pxPerMin;
+    g.fillStyle = FAINT; g.fillRect(x-0.3, Y1+8, 0.6, 6);
+    g.fillStyle = INK;
+    g.fillText(String(hr).padStart(2,'0')+':00', x, Y1+24);
+  }
+  g.fillStyle = FAINT;
+  
+
+  // the moment the buoy stopped hearing the wind
+  if (lastWind){
+    const y = Y0 + lastWind.d*rowH;
+    const x = X0 + lastWind.m*pxPerMin;
+    g.strokeStyle = 'rgba(210,214,206,0.85)'; g.lineWidth = 0.7;
+    g.beginPath(); g.moveTo(x, y-16); g.lineTo(x, y-30); g.lineTo(X1+8, y-30); g.stroke();
+    g.beginPath(); g.arc(x, y-14, 1.6, 0, Math.PI*2); g.fillStyle='rgba(230,232,224,0.95)'; g.fill();
+    g.textAlign = 'right';
+    const msg = '4 Feb, 22:50 — last wind the buoy heard: ' + lastWind.wspd.toFixed(1) + ' m/s, gusts ' +
+               lastWind.gst.toFixed(1) + ', ' + lastWind.pres.toFixed(1) + ' hPa. After this it reports only the sea.';
+    const tw = g.measureText(msg).width;
+    g.fillStyle = BG; g.fillRect(X1+8-tw-8, y-46, tw+12, 15);
+    g.strokeStyle = 'rgba(210,214,206,0.85)'; g.beginPath(); g.moveTo(x, y-16); g.lineTo(x, y-30); g.lineTo(X1+8, y-30); g.stroke();
+    g.fillStyle = '#c9cfc9';
+    if (0) g.fillText('4 Feb, 22:50 — last wind the buoy heard: ' + lastWind.wspd.toFixed(1) + ' m/s, gusts ' +
+               lastWind.gst.toFixed(1) + ', ' + lastWind.pres.toFixed(1) + ' hPa. After this it reports only the sea.', X1+8, y-38);
+    g.fillText(msg, X1+4, y-38);
+  }
+
+  // title & key
+  g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  g.fillStyle = '#d6dad4';
+  g.font = '15px Georgia, "Times New Roman", serif';
+  g.fillText('Swell Ledger', X0-62, 30);
+  g.font = '10px "Helvetica Neue", Helvetica, Arial, sans-serif';
+  g.fillStyle = INK;
+  g.fillText('Buoy 46026, 18 nm west of San Francisco — 2024, one line per day, midnight to midnight UTC', X0+40, 30);
+
+  g.textAlign = 'right';
+  g.fillText('height of the line: significant wave height   ·   length of its undulation: dominant wave period   ·   colour: sea temperature', X1+8, H-16);
+  // temperature key
+  const kw = 120, kx = X1+8-kw-34, ky = 23;
+  for (let i=0;i<kw;i++){
+    const t = 9 + (i/kw)*(16.8-9);
+    g.fillStyle = tcol(t, 1); g.fillRect(kx+i, ky, 1, 4);
+  }
+  g.textAlign = 'left'; g.fillStyle = INK;
+  g.textBaseline='middle'; g.textAlign='right'; g.fillText('9 °C', kx-6, ky+2);
+  g.textAlign = 'right';
+  g.textAlign='left'; g.fillText('16.8 °C', kx+kw+6, ky+2);
+})();
+</script>
+</body>
+</html>

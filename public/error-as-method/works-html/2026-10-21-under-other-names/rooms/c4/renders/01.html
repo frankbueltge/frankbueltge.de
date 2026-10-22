@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Liquid Interval</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #0d0e10; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/elements.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800;
+  const cv = document.getElementById('c');
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  const BG = '#0d0e10', INK = '#d9d4c7', DIM = 'rgba(217,212,199,0.38)', FAINT = 'rgba(217,212,199,0.14)';
+  g.fillStyle = BG; g.fillRect(0, 0, W, H);
+
+  const els = ELEMENTS.slice().sort((a, b) => a.AtomicNumber - b.AtomicNumber);
+  const n = els.length;
+
+  // temperature domain from the data itself (log scale, kelvin)
+  const temps = [];
+  els.forEach(e => { if (e.MeltingPoint != null) temps.push(e.MeltingPoint); if (e.BoilingPoint != null) temps.push(e.BoilingPoint); });
+  const tMin = Math.min(...temps) * 0.7, tMax = Math.max(...temps) * 1.25;
+
+  const L = 74, R = 46, TOP = 112, BOT = 672;
+  const step = (W - L - R) / n;
+  const x = i => L + step * (i + 0.5);
+  const y = t => BOT - (Math.log(t) - Math.log(tMin)) / (Math.log(tMax) - Math.log(tMin)) * (BOT - TOP);
+
+  const hex = (h, a) => {
+    if (!h) return `rgba(150,150,150,${a})`;
+    const v = parseInt(h, 16);
+    return `rgba(${(v >> 16) & 255},${(v >> 8) & 255},${v & 255},${a})`;
+  };
+
+  // kelvin decades
+  g.font = '10px Georgia, "Times New Roman", serif';
+  g.textAlign = 'right'; g.textBaseline = 'middle';
+  for (let d = 1; d <= 10000; d *= 10) {
+    if (d < tMin || d > tMax) continue;
+    const yy = Math.round(y(d)) + 0.5;
+    g.strokeStyle = FAINT; g.lineWidth = 1; g.setLineDash([1, 4]);
+    g.beginPath(); g.moveTo(L - 6, yy); g.lineTo(W - R + 4, yy); g.stroke();
+    g.setLineDash([]);
+    g.fillStyle = DIM; g.fillText(d.toLocaleString('en') + ' K', L - 12, yy);
+  }
+
+  // the temperature of the room the image is looked at in
+  const room = 293;
+  const ry = Math.round(y(room)) + 0.5;
+  g.strokeStyle = 'rgba(217,212,199,0.55)'; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(L - 6, ry); g.lineTo(W - R + 4, ry); g.stroke();
+  g.fillStyle = INK; g.textAlign = 'right'; g.font = 'italic 10px Georgia, serif';
+  g.fillText('this room', L - 12, ry);
+
+  const barW = Math.max(2, step * 0.62);
+
+  els.forEach((e, i) => {
+    const cx = x(i);
+    const mp = e.MeltingPoint, bp = e.BoilingPoint;
+    const col = e.CPKHexColor;
+
+    if (mp == null && bp == null) {
+      // never held long enough to be melted: only an empty column
+      g.strokeStyle = 'rgba(217,212,199,0.16)'; g.lineWidth = 1; g.setLineDash([2, 3]);
+      g.beginPath(); g.moveTo(Math.round(cx) + 0.5, BOT); g.lineTo(Math.round(cx) + 0.5, TOP); g.stroke();
+      g.setLineDash([]);
+      return;
+    }
+
+    // solid: a hairline from the floor up to melting
+    g.strokeStyle = hex(col, 0.32); g.lineWidth = 1;
+    g.beginPath(); g.moveTo(Math.round(cx) + 0.5, BOT); g.lineTo(Math.round(cx) + 0.5, y(mp)); g.stroke();
+
+    if (bp != null) {
+      // liquid: the bar between melting and boiling
+      const y1 = y(bp), y0 = y(mp);
+      const glow = g.createLinearGradient(0, y1, 0, y0);
+      glow.addColorStop(0, hex(col, 1));
+      glow.addColorStop(1, hex(col, 0.78));
+      g.fillStyle = glow;
+      g.fillRect(cx - barW / 2, y1, barW, Math.max(1.5, y0 - y1));
+      // gas: scattered points above boiling
+      g.fillStyle = hex(col, 0.55);
+      let k = 0;
+      for (let yy = y1 - 6; yy > TOP; yy -= 5 + k * 1.15) {
+        g.fillRect(cx - 0.6, yy, 1.2, 1.2);
+        k++;
+      }
+    } else {
+      // boiling point unknown: liquid fades upward without end
+      const y0 = y(mp), y1 = Math.max(TOP, y0 - 150);
+      const fade = g.createLinearGradient(0, y0, 0, y1);
+      fade.addColorStop(0, hex(col, 0.85));
+      fade.addColorStop(1, hex(col, 0));
+      g.fillStyle = fade;
+      g.fillRect(cx - barW / 2, y1, barW, y0 - y1);
+    }
+  });
+
+  // symbols at the floor
+  g.save();
+  g.font = '9px "Helvetica Neue", Arial, sans-serif';
+  g.textBaseline = 'middle'; g.textAlign = 'right';
+  els.forEach((e, i) => {
+    const cx = x(i);
+    const crossesRoom = e.MeltingPoint != null && e.BoilingPoint != null && e.MeltingPoint <= room && e.BoilingPoint >= room;
+    g.save();
+    g.translate(cx, BOT + 8);
+    g.rotate(-Math.PI / 2);
+    g.fillStyle = crossesRoom ? INK : DIM;
+    g.fillText(e.Symbol, 0, 0.5);
+    g.restore();
+  });
+  g.restore();
+
+  // names of those liquid where the viewer is standing
+  g.font = 'italic 12px Georgia, serif'; g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  els.forEach((e, i) => {
+    if (e.MeltingPoint != null && e.BoilingPoint != null && e.MeltingPoint <= room && e.BoilingPoint >= room) {
+      const cx = x(i);
+      g.strokeStyle = 'rgba(217,212,199,0.5)'; g.lineWidth = 1;
+      const ty = y(e.BoilingPoint) - 28;
+      g.beginPath(); g.moveTo(cx + 0.5, y(e.BoilingPoint) - 4); g.lineTo(cx + 0.5, ty + 4); g.stroke();
+      g.fillStyle = INK; g.fillText(e.Name.toLowerCase(), cx + 4, ty + 4);
+    }
+  });
+
+  // title
+  g.fillStyle = INK; g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  g.font = '28px Georgia, "Times New Roman", serif';
+  g.fillText('The Liquid Interval', L, 58);
+  g.font = 'italic 13px Georgia, serif'; g.fillStyle = DIM;
+  const unknown = els.filter(e => e.MeltingPoint == null && e.BoilingPoint == null).length;
+  g.fillText(`${n} elements, each between melting and boiling. Below: solid. Above: gas. ${unknown} have never been held long enough to say.`, L, 82);
+
+  g.font = '10px Georgia, serif'; g.textAlign = 'right'; g.fillStyle = 'rgba(217,212,199,0.3)';
+  g.fillText('kelvin, logarithmic · ordered by atomic number · colour after CPK', W - R, H - 34);
+})();
+</script>
+</body>
+</html>

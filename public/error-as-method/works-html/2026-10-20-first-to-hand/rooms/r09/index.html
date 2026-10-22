@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Twelve Hundred Springs</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #f3eee4; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/kyoto.js"></script>
+<script>
+(function () {
+  const W = 1100, H = 800;
+  const cv = document.getElementById('c');
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  const PAPER = '#f3eee4', INK = '#3b302b', FAINT = 'rgba(59,48,43,0.13)';
+  g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+  const data = window.KYOTO || [];
+  const byYear = new Map(data.map(d => [d[0], d]));
+
+  // layout: one row per century, one column per year
+  const left = 78, right = 46, top = 96, bottom = 40;
+  const rows = 13;                         // 800s ... 2000s
+  const rowH = (H - top - bottom) / rows;
+  const colW = (W - left - right) / 100;
+  const D0 = 82, D1 = 126;                 // day-of-year range: top = earlier
+  const pad = 6;
+  const yOf = (row, day) => top + row * rowH + pad + (day - D0) / (D1 - D0) * (rowH - 2 * pad);
+  const xOf = (year) => left + (year % 100 + 0.5) * colW;
+
+  // colour: earlier bloom -> deeper pink
+  function col(day, a) {
+    const t = Math.max(0, Math.min(1, (day - 86) / (118 - 86)));   // 0 early .. 1 late
+    const c0 = [196, 30, 86], c1 = [238, 196, 205];
+    const c = c0.map((v, i) => Math.round(v + (c1[i] - v) * t));
+    return 'rgba(' + c.join(',') + ',' + a + ')';
+  }
+
+  function blossom(x, y, r, fill) {
+    g.fillStyle = fill;
+    for (let k = 0; k < 5; k++) {
+      const a = -Math.PI / 2 + k * 2 * Math.PI / 5;
+      g.beginPath();
+      g.ellipse(x + Math.cos(a) * r * 0.62, y + Math.sin(a) * r * 0.62, r * 0.55, r * 0.42, a, 0, 2 * Math.PI);
+      g.fill();
+    }
+  }
+
+  // title
+  g.fillStyle = INK;
+  g.font = '500 25px Georgia, "Times New Roman", serif';
+  g.textBaseline = 'alphabetic';
+  g.fillText('Twelve Hundred Springs', left, 46);
+  g.font = 'italic 13px Georgia, "Times New Roman", serif';
+  g.fillStyle = 'rgba(59,48,43,0.72)';
+  g.fillText('The day the cherry trees of Kyoto were in full bloom, as written down, 812–2026. One row per century, one column per year;', left, 68);
+  g.fillText('higher in a row is earlier in spring. Blank columns are years no one recorded. The thin line is the thirty-year average.', left, 84);
+
+  for (let row = 0; row < rows; row++) {
+    const c0 = 800 + row * 100;
+    const yTop = top + row * rowH;
+    // guide lines: 1 April (day 91), 15 April (105), 1 May (121)
+    [[91, '1 Apr'], [105, '15 Apr'], [121, '1 May']].forEach(([d, lab]) => {
+      const y = yOf(row, d);
+      g.strokeStyle = FAINT; g.lineWidth = 0.6;
+      g.setLineDash(d === 105 ? [] : [1.5, 3]);
+      g.beginPath(); g.moveTo(left, y); g.lineTo(W - right, y); g.stroke();
+      g.setLineDash([]);
+      if (row === 0) {
+        g.fillStyle = 'rgba(59,48,43,0.5)';
+        g.font = '9px Georgia, serif';
+        g.textAlign = 'left';
+        g.fillText(lab, W - right + 5, y + 3);
+      }
+    });
+    // century label
+    g.fillStyle = INK; g.textAlign = 'right';
+    g.font = '13px Georgia, serif';
+    g.fillText(String(c0), left - 14, yOf(row, 104) + 4);
+
+    // unrecorded years: a faint tick at the foot of the row
+    for (let i = 0; i < 100; i++) {
+      const yr = c0 + i;
+      if (yr < 812 || yr > 2026) continue;
+      const d = byYear.get(yr);
+      if (!d || d[1] == null) {
+        g.fillStyle = 'rgba(59,48,43,0.16)';
+        g.fillRect(xOf(yr) - 0.5, yTop + rowH - pad + 1, 1, 2.5);
+      }
+    }
+
+    // stems: from foot of row up to the blossom
+    for (let i = 0; i < 100; i++) {
+      const yr = c0 + i, d = byYear.get(yr);
+      if (!d || d[1] == null) continue;
+      const x = xOf(yr), y = yOf(row, d[1]);
+      g.strokeStyle = col(d[1], 0.28); g.lineWidth = 0.8;
+      g.beginPath(); g.moveTo(x, yTop + rowH - pad + 3); g.lineTo(x, y); g.stroke();
+    }
+
+    // thirty-year average
+    g.strokeStyle = 'rgba(59,48,43,0.55)'; g.lineWidth = 1;
+    g.beginPath();
+    let pen = false;
+    for (let i = 0; i < 100; i++) {
+      const yr = c0 + i, d = byYear.get(yr);
+      if (!d || d[2] == null) { pen = false; continue; }
+      const x = xOf(yr), y = yOf(row, d[2]);
+      if (pen) g.lineTo(x, y); else { g.moveTo(x, y); pen = true; }
+    }
+    g.stroke();
+
+    // blossoms
+    for (let i = 0; i < 100; i++) {
+      const yr = c0 + i, d = byYear.get(yr);
+      if (!d || d[1] == null) continue;
+      blossom(xOf(yr), yOf(row, d[1]), 4.2, col(d[1], 0.9));
+      g.fillStyle = 'rgba(255,240,200,0.9)';
+      g.beginPath(); g.arc(xOf(yr), yOf(row, d[1]), 0.8, 0, 2 * Math.PI); g.fill();
+    }
+  }
+
+  // decade marks along the bottom
+  g.fillStyle = 'rgba(59,48,43,0.55)'; g.font = '9px Georgia, serif'; g.textAlign = 'center';
+  for (let i = 0; i < 100; i += 10) g.fillText("'" + String(i).padStart(2, '0'), left + (i + 0.5) * colW, H - bottom + 14);
+
+  // mark the last spring
+  const last = byYear.get(2026);
+  if (last && last[1] != null) {
+    const x = xOf(2026), y = yOf(12, last[1]);
+    g.strokeStyle = 'rgba(59,48,43,0.6)'; g.lineWidth = 0.7;
+    g.beginPath(); g.moveTo(x + 6, y - 2); g.lineTo(x + 30, y - 12); g.stroke();
+    g.fillStyle = INK; g.textAlign = 'left'; g.font = 'italic 11px Georgia, serif';
+    g.fillText('2026 · 29 March', x + 33, y - 9);
+  }
+
+  g.textAlign = 'right'; g.fillStyle = 'rgba(59,48,43,0.5)'; g.font = '9px Georgia, serif';
+  g.fillText('Data: Aono & Kazui (2008), Aono & Saito (2010), Katata (2026), via Our World in Data · CC BY 4.0', W - right, H - 8);
+})();
+</script>
+</body>
+</html>

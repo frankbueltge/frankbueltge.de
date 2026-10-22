@@ -17,7 +17,7 @@
 // twice is one decision: the trim cannot keep less than the build would publish, because it asks
 // the same question of the same files.
 
-import { existsSync, readdirSync, readFileSync, rmSync, statSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { n1WorkPages } from '../n1/published.ts'
@@ -30,6 +30,9 @@ import {
   isReferrer,
   loadedAssets,
   matchRedirect,
+  openCycleFolders,
+  openCycleOf,
+  openCycleRewrites,
   parseRedirects,
   servedAt,
   workFolderOf,
@@ -42,6 +45,45 @@ const META_HOMES = /** @type {Record<string, string>} */ ({
   'field/werke-html': 'src/content/field/works',
   'error-as-method/works-html': 'src/data/nightly/works',
 })
+
+/** The ecology's cycle state; its working cycle's artifacts are published as in progress. */
+const CYCLE_STATE = 'src/data/ecology/cycle.json'
+
+/**
+ * The cycle in its working phase, read from the committed cycle state under `root`; null when the
+ * file is missing or unreadable (nothing is then published as in progress).
+ * @param {string} root
+ */
+export function readOpenCycle(root) {
+  try {
+    return openCycleOf(JSON.parse(readFileSync(join(root, CYCLE_STATE), 'utf8')))
+  } catch {
+    return null
+  }
+}
+
+/**
+ * The redirects text with the open cycle's rewrites inserted before the first rule that would send
+ * an address inside one of its folders away (the Field's `/field/artifacts/*`). Unchanged when no
+ * rule does. The build writes the result into dist/_redirects; a test that asks public/_redirects
+ * what the site does asks it through here.
+ * @param {string} text
+ * @param {number | null} openCycle
+ */
+export function withOpenCycleRewrites(text, openCycle) {
+  const folders = openCycleFolders(openCycle)
+  if (!folders.length) return text
+  const rules = parseRedirects(text)
+  let first = Infinity
+  for (const folder of folders) {
+    const hit = matchRedirect(rules, `/${folder}/a/`)
+    if (hit && hit.rule.status !== 200) first = Math.min(first, hit.rule.line)
+  }
+  if (first === Infinity) return text
+  const lines = text.split('\n')
+  lines.splice(first - 1, 0, '# the open cycle, in progress (2026-10-20; publication.mjs, openCycleRewrites) — inserted by the build', ...openCycleRewrites(openCycle))
+  return lines.join('\n')
+}
 
 /**
  * @param {string} abs
@@ -200,7 +242,8 @@ export function prunePublication({ dist, publicDir, root, readWorks = n1WorkPage
     return folder !== null && folderText(folder).includes(basenameOf(path))
   }
 
-  const ctx = { isMirrored, inProgress, isReferenced, n1Pages: only && !only.includes('n-1') ? new Set() : n1Published(dist, readWorks, warnings) }
+  const openCycle = readOpenCycle(root)
+  const ctx = { isMirrored, inProgress, openCycle, isReferenced, n1Pages: only && !only.includes('n-1') ? new Set() : n1Published(dist, readWorks, warnings) }
 
   /** @type {Record<string, { kept: number, removed: number }>} */
   const practices = {}
@@ -237,11 +280,15 @@ export function prunePublication({ dist, publicDir, root, readWorks = n1WorkPage
   const shadowed = []
   const redirects = join(dist, '_redirects')
   if (checkRedirects && isFile(redirects)) {
-    const rules = parseRedirects(readFileSync(redirects, 'utf8'))
+    let text = readFileSync(redirects, 'utf8')
+    const rewritten = withOpenCycleRewrites(text, openCycle)
+    if (rewritten !== text && !dryRun) writeFileSync(redirects, rewritten)
+    text = rewritten
+    const rules = parseRedirects(text)
     for (const path of remaining) {
       for (const address of servedAt(path)) {
         const hit = matchRedirect(rules, address)
-        if (hit) shadowed.push(`${address} → ${hit.location} (_redirects line ${hit.rule.line})`)
+        if (hit && hit.rule.status !== 200) shadowed.push(`${address} → ${hit.location} (_redirects line ${hit.rule.line})`)
       }
     }
   }

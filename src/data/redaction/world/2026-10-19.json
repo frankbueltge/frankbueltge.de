@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-19",
+  "deletion": {
+    "available": true,
+    "checked_at": "2026-10-19T11:09:54Z",
+    "counts": {
+      "botwall": 34,
+      "gone_404": 1,
+      "gone_410": 0,
+      "legal_451": 0,
+      "ok": 262,
+      "other": 0,
+      "server_error": 0,
+      "unreachable": 3
+    },
+    "decided": 263,
+    "excluded_unverifiable": 37,
+    "gone": 1,
+    "gone_ci95": [
+      0.0007,
+      0.0212
+    ],
+    "gone_rate": 0.0038,
+    "legal_451": 0,
+    "legal_451_ci95": [
+      0.0,
+      0.0144
+    ],
+    "legal_451_rate": 0.0,
+    "notes": [
+      "451 from a German vantage point may mean EU geo-blocking rather than takedown; it is reported apart and never folded into the gone rate.",
+      "451 receipts carry the title only as a SHA-256 — the day record does not re-publish what the law removed; the pre-committed sample manifest remains the receipt.",
+      "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
+      "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
+    ],
+    "pool_day": "2026-10-17",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "news3lv.com",
+        "first_seen": "20261017120000",
+        "http_code": 404,
+        "title": "Saturday Forecast: Low pressure off Baja to bring late clouds, cooler temps",
+        "url": "https://news3lv.com/news/local/saturday-forecast-low-pressure-off-baja-to-bring-late-clouds-cooler-temps"
+      }
+    ],
+    "sample_drawn_at": "2026-10-18T09:47:59Z",
+    "sample_size": 300
+  },
+  "filter_version": "v1",
+  "gdg": {
+    "available": true,
+    "classes": {
+      "reframing": 3347,
+      "replaced": 3371,
+      "trivial": 509,
+      "update": 229
+    },
+    "day": "2026-10-18",
+    "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
+    "register": [
+      {
+        "added": [
+          "North",
+          "Dakota"
+        ],
+        "after": "New network helping North Dakota's rural hospitals survive, thrive - InForum | Fargo, Moorhead and West Fargo news, weather and sports",
+        "before": "New rural hospital network helping ND's rural hospitals survive, thrive - InForum | Fargo, Moorhead and West Fargo news, weather and sports",
+        "detected": "2026-10-18T12:31:34Z",
+        "domain": "inforum.com",
+        "removed": [
+          "hospital",
+          "ND",
+          "rural"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.inforum.com/news/north-dakota/new-rural-hospital-network-helping-nds-rural-hospitals-survive-thrive",
+        "weight": 8,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Tanjong",
+          "Pagar"
+        ],
+        "after": "Tanjong Pagar MP Foo Cexiang makes 'wrestling debut', shows off slick moves at WrestlePagar",
+        "before": "Singapore MP Foo Cexiang makes 'wrestling debut', shows off slick moves at WrestlePagar",
+        "detected": "2026-10-18T10:01:25Z",
+        "domain": "asiaone.com",
+        "removed": [
+          "Singapore"
+        ],
+        "similarity": 0.8,
+        "url": "https://www.asiaone.com/singapore/singapore-mp-foo-cexiang-shows-off-wrestling-moves-wrestlepagar",
+        "weight": 6,
+        "window": "1w"
+      },
+      {
+        "added": [
+          "Mixed"
+        ],
+        "after": "Nayyi Navelli Day 1 Box Office Collection: Yami Gautam-Starrer Collects ₹3.25 Crore Amid Mixed Reviews",
+        "before": "Nayyi Navelli Day 1 Box Office Collection: : Yami Gautam-Starrer Struggles Amid Disappointing Reviews, Collects ₹3.25 Crore",
+        "detected": "2026-10-18T03:46:57Z",
+        "domain": "freepressjournal.in",
+        "removed": [
+          "Struggles",
+          "Disappointing"
+        ],
+        "similarity": 0.842,
+        "url": "https://www.freepressjournal.in/entertainment/nayyi-navelli-day-1-box-office-collection-yami-gautam-starrer-struggles-amid-disappointing-reviews-collects-325-crore",
+        "weight": 6,
+        "window": "24h"
+      }
+    ],
+    "status_counts": {
+      "HTTP_REDIRECT": 9633,
+      "PAGE_TEXTCHANGE": 78059,
+      "PAGE_TITLECHANGE": 32923,
+      "UNCHANGED_CONTENT": 507991
+    },
+    "title_changes_en": 7456,
+    "trace": [
+      {
+        "bytes_billed": 16777216,
+        "created": "1792407858854",
+        "job_id": "world_gdg_counts_20261018",
+        "project": "gen-lang-client-0843427097"
+      },
+      {
+        "bytes_billed": 157286400,
+        "created": "1792407864593",
+        "job_id": "world_gdg_titles_20261018",
+        "project": "gen-lang-client-0843427097"
+      }
+    ]
+  },
+  "generated_at": "2026-10-19T11:09:54Z",
+  "pipeline_version": "0.1.0",
+  "register_bound": 3,
+  "sample_committed": "src/data/redaction/world/samples/2026-10-18.json",
+  "schema_version": "1",
+  "selection_version": "v1"
+}

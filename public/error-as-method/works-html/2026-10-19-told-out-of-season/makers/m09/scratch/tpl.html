@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-one Strokes</title>
+<style>
+:root{--paper:#f3efe6}
+html,body{margin:0;height:100%;background:var(--paper)}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden}
+.wrap{width:1100px;height:800px;max-width:100vw;max-height:100vh;aspect-ratio:11/8}
+canvas{width:100%;height:100%;display:block}
+</style></head><body><div class="wrap"><canvas id="c" width="1100" height="800"></canvas></div>
+<script>
+// Material: the source plot (300 x 90 px, hourly values 15 Jan - 16 Mar 2025).
+// P: every dark pixel of the plot, as x,y,ink, re-placed into 61 day-cells.
+// S: per day, the high, middle and low of that day's marks, in source pixel rows (0 = top).
+const P=[__DOTS__];
+const S="__DAYS__".split(';').map(s=>s.split(',').map(Number));
+const W=1100,H=800,L=70,R=1030,cell=(R-L)/61,inner=cell*0.58;
+const T=130,B=650,Y0=4,Y1=86,Y=v=>T+(v-Y0)/(Y1-Y0)*(B-T);
+const c=document.getElementById('c'),r=Math.max(2,window.devicePixelRatio||1);
+c.width=W*r;c.height=H*r;const g=c.getContext('2d');g.scale(r,r);
+g.fillStyle='#f3efe6';g.fillRect(0,0,W,H);
+// the hourly marks, faint, as they were recorded
+for(let i=0;i<P.length;i+=3){
+  g.fillStyle='rgba(60,70,88,'+(0.10+0.22*P[i+2]).toFixed(3)+')';
+  g.beginPath();g.arc(P[i],P[i+1],1.3,0,6.2832);g.fill();
+}
+// one stroke per day: pressed hard at the day's high, lifted toward its low
+S.forEach(([hi,mid,lo],k)=>{
+  const cx=L+k*cell+inner/2, yt=Y(hi), yb=Y(lo), ym=Y(mid);
+  const span=Math.max(yb-yt,4), w=Math.min(9,2.2+span/34);
+  g.fillStyle='rgba(22,28,40,0.92)';
+  g.beginPath();
+  g.moveTo(cx-w/2,yt+w/2);
+  g.quadraticCurveTo(cx-w/2,yt-w*0.35,cx,yt-w*0.35);
+  g.quadraticCurveTo(cx+w/2,yt-w*0.35,cx+w/2,yt+w/2);
+  g.quadraticCurveTo(cx+w*0.22,ym,cx+0.35,yb);
+  g.lineTo(cx-0.35,yb);
+  g.quadraticCurveTo(cx-w*0.22,ym,cx-w/2,yt+w/2);
+  g.fill();
+});
+g.fillStyle='#8a8578';g.font='12px Georgia, "Times New Roman", serif';
+g.fillText('15 January',L,708);
+g.textAlign='right';g.fillText('16 March 2025',R,708);
+g.textAlign='left';g.font='italic 12px Georgia, "Times New Roman", serif';
+g.fillText('one faint mark for every hour, one stroke for every day',L,732);
+</script></body></html>

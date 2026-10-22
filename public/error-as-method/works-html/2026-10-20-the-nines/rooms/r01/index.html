@@ -1,0 +1,123 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Eighteen Nautical Miles</title>
+<style>
+html,body{margin:0;background:#ece6d8}
+canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/46026h2024.js"></script>
+<script>
+const W=1100,H=800,cv=document.getElementById('c');
+const dpr=window.devicePixelRatio||1;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+const g=cv.getContext('2d');g.scale(dpr,dpr);
+const INK='#1f2b33',SOFT='rgba(31,43,51,0.55)',FAINT='rgba(31,43,51,0.18)',RED='#a8432c';
+const SERIF='Georgia,"Times New Roman",serif',MONO='"Courier New",Courier,monospace';
+g.fillStyle='#ece6d8';g.fillRect(0,0,W,H);
+
+// --- read the record: every wave reading is a push ---
+const rows=window.RAW.split('\n').filter(l=>l&&l[0]!=='#');
+const NM=1852, TO_CITY=18*NM;          // "18NM West of San Francisco"
+let x=0,y=0,len=0,pts=[{x:0,y:0,h:0,m:1,d:1}];
+for(const l of rows){
+  const f=l.trim().split(/\s+/);
+  const h=+f[8], dir=+f[11];
+  if(h===99||dir===999) continue;
+  const a=(dir+180)*Math.PI/180;       // waves come FROM dir; they push toward dir+180
+  x+=h*Math.sin(a); y+=h*Math.cos(a); len+=h;   // y: north positive
+  pts.push({x,y,h,m:+f[1],d:+f[2],hr:+f[3],mn:+f[4],a});
+}
+const end=pts[pts.length-1];
+const short=Math.hypot(TO_CITY-end.x,end.y);
+
+// --- map ---
+const X0=110, X1=880, s=(X1-X0)/TO_CITY;   // px per metre
+let minY=0,maxY=0;for(const p of pts){minY=Math.min(minY,p.y);maxY=Math.max(maxY,p.y);}
+const midY=(minY+maxY)/2, Y0=420+midY*s;     // screen y of start
+const sx=v=>X0+v*s, sy=v=>Y0-v*s;
+
+// faint graticule, one line per nautical mile
+g.lineWidth=1;
+for(let i=0;i<=18;i++){
+  const px=sx(i*NM);g.strokeStyle=i%6===0?'rgba(31,43,51,0.13)':'rgba(31,43,51,0.06)';
+  g.beginPath();g.moveTo(px,150);g.lineTo(px,H-120);g.stroke();
+}
+for(let j=-8;j<=8;j++){
+  const py=sy(j*NM);if(py<150||py>H-120)continue;
+  g.strokeStyle='rgba(31,43,51,0.06)';g.beginPath();g.moveTo(X0-40,py);g.lineTo(X1+40,py);g.stroke();
+}
+// ruler
+g.strokeStyle=INK;g.lineWidth=1;g.beginPath();g.moveTo(sx(0),132);g.lineTo(sx(TO_CITY),132);g.stroke();
+g.font='11px '+MONO;g.fillStyle=SOFT;g.textAlign='center';
+for(let i=0;i<=18;i++){
+  const px=sx(i*NM),t=i%6===0?8:4;g.beginPath();g.moveTo(px,132-t);g.lineTo(px,132+t);g.stroke();
+  if(i%3===0)g.fillText(i+' NM',px,118);
+}
+// the straight way
+g.setLineDash([2,5]);g.strokeStyle=SOFT;g.beginPath();g.moveTo(sx(0),sy(0));g.lineTo(sx(TO_CITY),sy(0));g.stroke();g.setLineDash([]);
+
+// the wave hairs: each reading stands across the path, as tall as it was
+const K=7; // px per metre of wave height
+g.lineWidth=0.45;
+for(let i=1;i<pts.length;i++){
+  const p=pts[i],q=pts[i-1];
+  let dx=p.x-q.x,dy=p.y-q.y,n=Math.hypot(dx,dy)||1;
+  const nx=-dy/n,ny=dx/n, r=p.h*K/2;
+  const alpha=Math.min(0.32,0.04+p.h*0.03);
+  g.strokeStyle='rgba(31,43,51,'+alpha.toFixed(3)+')';
+  g.beginPath();g.moveTo(sx(p.x+nx*r/s),sy(p.y+ny*r/s));g.lineTo(sx(p.x-nx*r/s),sy(p.y-ny*r/s));g.stroke();
+}
+// the track itself
+g.strokeStyle=INK;g.lineWidth=1.1;g.beginPath();
+pts.forEach((p,i)=>i?g.lineTo(sx(p.x),sy(p.y)):g.moveTo(sx(p.x),sy(p.y)));g.stroke();
+
+// months along the way
+const MON=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+let seen={};g.font='italic 12px '+SERIF;g.fillStyle=INK;
+for(let i=1;i<pts.length;i++){
+  const p=pts[i];if(seen[p.m])continue;seen[p.m]=1;if(p.m===1)continue;
+  const px=sx(p.x),py=sy(p.y);
+  g.fillStyle=INK;g.beginPath();g.arc(px,py,2.2,0,7);g.fill();
+  const below=(p.m%2===0);
+  g.strokeStyle=SOFT;g.lineWidth=0.7;g.beginPath();g.moveTo(px,py+(below?6:-6));g.lineTo(px,py+(below?34:-34));g.stroke();
+  g.textAlign='center';g.fillText(MON[p.m]+' '+p.d,px,py+(below?48:-40));
+}
+// start
+g.fillStyle=INK;g.beginPath();g.arc(sx(0),sy(0),4.5,0,7);g.fill();
+g.textAlign='right';g.font='12px '+MONO;g.fillText('46026',sx(0)-12,sy(0)-4);
+g.font='italic 12px '+SERIF;g.fillText('1 January',sx(0)-12,sy(0)+12);
+// city
+g.strokeStyle=RED;g.lineWidth=1.4;g.beginPath();g.arc(sx(TO_CITY),sy(0),6,0,7);g.stroke();
+g.beginPath();g.arc(sx(TO_CITY),sy(0),1.6,0,7);g.fillStyle=RED;g.fill();
+g.textAlign='left';g.font='12px '+MONO;g.fillStyle=RED;g.fillText('SAN FRANCISCO',sx(TO_CITY)+14,sy(0)-4);
+g.font='italic 12px '+SERIF;g.fillText('18 NM east, by the station’s name',sx(TO_CITY)+14,sy(0)+12);
+// end
+const ex=sx(end.x),ey=sy(end.y);
+g.fillStyle=INK;g.beginPath();g.arc(ex,ey,4.5,0,7);g.fill();
+g.setLineDash([1,3]);g.strokeStyle=RED;g.lineWidth=1;g.beginPath();g.moveTo(ex,ey);g.lineTo(sx(TO_CITY),sy(0));g.stroke();g.setLineDash([]);
+g.textAlign='left';g.font='italic 12px '+SERIF;g.fillStyle=INK;
+g.fillText('31 December, 23:40',ex+12,ey+4);
+g.font='11px '+MONO;g.fillStyle=SOFT;
+g.fillText((short/1000).toFixed(1)+' km short',ex+12,ey+20);
+
+// title & legend
+g.textAlign='left';g.fillStyle=INK;g.font='26px '+SERIF;g.fillText('Eighteen Nautical Miles',X0-40,62);
+g.font='italic 14px '+SERIF;g.fillStyle=SOFT;
+g.fillText('Buoy 46026, 2024, carried by every wave it recorded',X0-40,86);
+
+g.font='12px '+SERIF;g.fillStyle=SOFT;
+const L=[
+ pts.length-1+' wave readings. Each one moves the buoy WVHT metres, away from MWD.',
+ 'Distance travelled over the year: '+(len/1000).toFixed(2)+' km  =  '+(len/NM).toFixed(2)+' nautical miles.',
+ 'Distance to the city at the start: 33.34 km  =  18 nautical miles.'
+];
+L.forEach((t,i)=>g.fillText(t,X0-40,H-78+i*19));
+// scale bar for hairs
+g.textAlign='right';g.fillStyle=SOFT;g.font='11px '+MONO;
+const bx=W-60;[1,3,6].forEach((m,i)=>{
+  const px=bx-140+i*55;g.strokeStyle=INK;g.lineWidth=0.8;g.beginPath();g.moveTo(px,H-50-m*K/2);g.lineTo(px,H-50+m*K/2);g.stroke();
+  g.textAlign='center';g.fillText(m+' m',px,H-50+6*K/2+14);
+});
+g.textAlign='right';g.font='italic 11px '+SERIF;g.fillText('wave height, drawn across the track',bx,H-90);
+</script>
+</body></html>

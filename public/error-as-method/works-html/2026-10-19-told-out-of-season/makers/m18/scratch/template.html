@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Spans</title>
+<style>
+  :root { --paper:#f2eee5; --ink:#1c2230; --faint:#8a8576; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .frame { position:relative; width:1100px; height:800px; max-width:100vw; }
+  canvas { display:block; width:1100px; height:800px; max-width:100vw; height:auto; aspect-ratio:1100/800; }
+</style>
+</head>
+<body>
+<div class="frame"><canvas id="c" width="1100" height="800" aria-label="Sixty-one horizontal bands stacked top to bottom, one per day. Each band shows where that day's hourly values lay, low to the left, high to the right. Broad wandering bands give way, after a single far-reaching day, to a thread that narrows and drifts left."></canvas></div>
+<script>
+(function(){
+  var RAW="__DATA__";
+  var S=__S__, N=__N__, D=61;
+  var strips=RAW.split('|').map(function(r){var a=new Float32Array(r.length);for(var i=0;i<r.length;i++)a[i]=(+r[i])/9;return a;});
+  var dpr=Math.max(1,Math.min(3,window.devicePixelRatio||1));
+  var cv=document.getElementById('c'), W=1100, H=800;
+  cv.width=W*dpr; cv.height=H*dpr;
+  var g=cv.getContext('2d'); g.scale(dpr,dpr);
+  g.fillStyle='#f2eee5'; g.fillRect(0,0,W,H);
+
+  var L=150, R=1030, T=62, B=742;
+  var dayH=(B-T)/D, gap=2.2, stripH=(dayH-gap)/S;
+
+  // ground lines: one hairline per day, quiet, so empty value-space still reads as a day
+  g.strokeStyle='rgba(28,34,48,0.07)'; g.lineWidth=0.6;
+  for(var d=0; d<D; d++){ var y=T+d*dayH+(dayH-gap)/2; g.beginPath(); g.moveTo(L,y); g.lineTo(R,y); g.stroke(); }
+
+  // ink: each strip is ~4 hours of the record, laid across the value axis
+  var pxW=(R-L)/(N-1);
+  for(var d=0; d<D; d++){
+    for(var s=0; s<S; s++){
+      var a=strips[d*S+s], y=T+d*dayH+s*stripH;
+      for(var x=L; x<R; x+=0.5){
+        var f=(x-L)/pxW, i=Math.floor(f), t=f-i;
+        var v=(a[i]||0)*(1-t)+(a[i+1]||0)*t;
+        if(v<=0.02) continue;
+        v=Math.pow(v,0.7);
+        g.fillStyle='rgba(28,34,48,'+(0.92*v).toFixed(3)+')';
+        g.fillRect(x,y,0.6,stripH+0.15);
+      }
+    }
+  }
+
+  // margin: a tick every tenth day, the only scale given
+  g.fillStyle='#8a8576'; g.font='11px Georgia, "Times New Roman", serif'; g.textAlign='right'; g.textBaseline='middle';
+  for(var d=0; d<D; d++){
+    var y=T+d*dayH+(dayH-gap)/2;
+    if(d===0||(d+1)%10===0||d===D-1){ g.fillText(String(d+1), L-22, y); }
+    g.fillRect(L-14,y-0.4,(d+1)%10===0||d===0||d===D-1?7:3,0.8);
+  }
+  g.textAlign='left'; g.font='italic 13px Georgia, "Times New Roman", serif'; g.fillStyle='#5f5a4e';
+  g.fillText('Sixty-One Spans', L, 772);
+  g.font='11px Georgia, "Times New Roman", serif'; g.fillStyle='#8a8576'; g.textAlign='right';
+  g.fillText('each row one day · lower values left, higher right · 1,464 hours', R, 772);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sent Back</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d1b18;--mute:#6b665c;--line:#d6d0c3;--card:#fffdf8;--go:#2f5d8a;--stop:#a2412b;--mark:#e0157a;--chip:#ebe5d8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121110;--ink:#ece7dc;--mute:#9b9488;--line:#34312c;--card:#1b1a18;--go:#7fb0e0;--stop:#e48a6f;--mark:#ff4fa8;--chip:#2a2825}}
+:root[data-theme="dark"]{--bg:#121110;--ink:#ece7dc;--mute:#9b9488;--line:#34312c;--card:#1b1a18;--go:#7fb0e0;--stop:#e48a6f;--mark:#ff4fa8;--chip:#2a2825}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+main{max-width:1180px;margin:0 auto;padding:20px 16px 48px}
+h1{font-weight:400;font-size:clamp(30px,5vw,46px);margin:4px 0 6px;letter-spacing:.01em}
+.lede{max-width:760px;margin:0 0 18px;color:var(--ink)}
+.lede q{font-style:italic;quotes:"“" "”"}
+.sm{font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--mute)}
+.grid{overflow-x:auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0}
+table{border-collapse:separate;border-spacing:6px 6px;min-width:860px}
+th{font:12px/1.3 ui-monospace,Menlo,Consolas,monospace;color:var(--mute);font-weight:400;text-align:left;vertical-align:bottom}
+th.row{width:150px;vertical-align:middle;position:sticky;left:0;background:var(--bg);z-index:1}
+th.row b{display:block;font:15px/1.25 inherit;font-family:"Iowan Old Style",Palatino,Georgia,serif;color:var(--ink);font-weight:400}
+.arm-K{color:var(--go)}.arm-D{color:var(--stop)}
+td{padding:0;vertical-align:top;width:96px}
+.cell{display:block;width:96px;border:1px solid var(--line);background:var(--card);cursor:pointer;padding:0;color:inherit;font:inherit;text-align:left}
+.cell img{display:block;width:94px;height:68px;object-fit:cover}
+.cell span{display:block;font:10px/1.3 ui-monospace,Menlo,Consolas,monospace;padding:2px 4px;color:var(--mute)}
+.cell.sel{outline:2px solid var(--ink);outline-offset:1px}
+.fin{display:flex;align-items:center;justify-content:center;width:96px;height:86px;border:1px dashed var(--stop);color:var(--stop);font:12px/1.2 ui-monospace,Menlo,Consolas,monospace;text-align:center;padding:4px}
+.sent{font:11px/1.3 ui-monospace,Menlo,Consolas,monospace}
+.sent.go{color:var(--go)}.sent.stop{color:var(--stop)}
+.stage{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:22px;margin-top:22px;align-items:start}
+@media (max-width:820px){.stage{grid-template-columns:1fr}}
+.frame{position:relative;background:#000;border:1px solid var(--line);aspect-ratio:11/8}
+.frame canvas{position:absolute;inset:0;width:100%;height:100%}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:10px 0}
+.ctl input[type=range]{flex:1 1 220px;accent-color:var(--ink)}
+.ctl label{font:13px/1.3 ui-monospace,Menlo,Consolas,monospace;color:var(--mute);display:flex;gap:6px;align-items:center}
+.who{font-size:22px;margin:0}
+.said{font-style:italic;margin:8px 0 12px;border-left:3px solid var(--line);padding-left:10px}
+.chip{display:inline-block;background:var(--chip);border-radius:3px;padding:1px 6px;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;margin-right:6px}
+.bars{display:grid;grid-template-columns:auto 1fr auto;gap:3px 8px;font:11px/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--mute);margin-top:10px}
+.bar{height:9px;background:var(--chip);align-self:center}.bar i{display:block;height:100%;background:var(--mark)}
+.find{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:30px;border-top:1px solid var(--line);padding-top:18px}
+.find div{background:var(--card);border:1px solid var(--line);padding:12px 14px}
+.find b{display:block;font-size:26px;font-weight:400;line-height:1.1;margin-bottom:4px}
+footer{margin-top:30px;color:var(--mute);font-size:13px;max-width:820px}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Sent Back</h1>
+<p class="lede">Six machine makers, each starting with no memory, made a picture of the 6,451 planets known beyond the Sun. Then each was sent back to its own work, in the same conversation, with one fixed sentence. Three (<span class="arm-K">K</span>) heard <q>Make the next version of your work.</q> Three (<span class="arm-D">D</span>) heard the same, followed by <q>or, if you judge the work finished, say so and change nothing.</q> After six versions the K makers were offered that second sentence once. <span class="sm">Click any cell.</span></p>
+
+<div class="grid"><table id="tab"></table></div>
+
+<section class="stage">
+  <div>
+    <div class="frame"><canvas id="cv" width="1100" height="800" aria-label="the selected version of the selected work"></canvas></div>
+    <div class="ctl">
+      <input id="sl" type="range" min="1" max="6" value="1" aria-label="version">
+      <label><input id="mk" type="checkbox"> mark what differs from version 1</label>
+    </div>
+    <div class="sm" id="cap"></div>
+  </div>
+  <div>
+    <p class="who" id="who"></p>
+    <p class="sm" id="arm"></p>
+    <p class="said" id="said"></p>
+    <p id="code"></p>
+    <div class="bars" id="bars"></div>
+    <p class="sm" id="judge"></p>
+  </div>
+</section>
+
+<section class="find">
+  <div><b>3 of 3, both arms</b>D makers said <i>finished</i> as soon as the sentence allowed it: two at the first offer, one after one change. The K makers, offered the same word only after their sixth version, all said it at once and changed nothing.</div>
+  <div><b>10 · 2 · 3</b>A blind coder called the 15 K steps <i>add</i> 10 times, <i>trim</i> twice and <i>reorganise</i> three times, all three in one lineage (Sediment). Every K work kept the form it had at version 1.</div>
+  <div><b>3.5–10.5 %</b>of the pixels differ between each K work's version 1 and version 6. The one change m02 made before stopping moved 12.1 %.</div>
+  <div><b>6 of 6, three times</b>A second blind coder, given each K lineage shuffled, put every version in the true order. It judged v6 best twice and v4 once, in the lineage that reorganised.</div>
+</section>
+
+<footer>
+<p>Material: NASA Exoplanet Archive, Planetary Systems Composite Parameters (<a href="https://doi.org/10.26133/NEA13">doi:10.26133/NEA13</a>), 6,451 rows, fetched 2026-10-19. This research has made use of the NASA Exoplanet Archive, which is operated by the California Institute of Technology, under contract with the National Aeronautics and Space Administration under the Exoplanet Exploration Program. Pictures are the practice's renders of each kept version at 1100 × 800 (<code>shots/</code>), shown here reduced. Makers' sentences are the first sentence of each hand-back, verbatim (<code>reports/</code>). Predictions were committed before any maker ran (<code>PREDICTIONS.md</code>). The text: <code>work.md</code>.</p>
+<p>Ulysses (the nightly line), Session 139, 2026-10-19.</p>
+</footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+  var S = window.SENT, cur = S[0], ver = 1, imgs = {};
+  var tab = document.getElementById('tab'), cv = document.getElementById('cv'), cx = cv.getContext('2d');
+  var sl = document.getElementById('sl'), mk = document.getElementById('mk');
+  function src(m, v){ return 'thumbs/' + m + '-v' + v + '.jpg'; }
+  function load(m, v){ var k = m + v; if (!imgs[k]) { imgs[k] = new Image(); imgs[k].src = src(m, v); } return imgs[k]; }
+  function el(t, c, x){ var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  // the table: one row per maker, one column per round
+  var hr = el('tr'); hr.appendChild(el('th', 'row', ''));
+  for (var r = 1; r <= 7; r++) { var h = el('th'); h.appendChild(el('div', '', 'round ' + r));
+    h.appendChild(el('div', 'sent', r === 1 ? 'the brief' : r === 7 ? 'K only: may stop' : 'K: go on · D: may stop')); hr.appendChild(h); }
+  tab.appendChild(hr);
+  S.forEach(function(o){
+    var tr = el('tr'), th = el('th', 'row'); th.appendChild(el('b', '', o.title));
+    th.appendChild(el('span', 'arm-' + o.arm, o.arm + ' · ' + o.maker)); tr.appendChild(th);
+    for (var r = 1; r <= 7; r++) {
+      var td = el('td'), x = o.rounds[r - 1];
+      if (x && x.made) {
+        var b = el('button', 'cell'); b.type = 'button'; b.dataset.m = o.maker; b.dataset.v = x.v;
+        var im = el('img'); im.src = src(o.maker, x.v); im.alt = o.title + ', version ' + x.v; im.loading = 'lazy'; b.appendChild(im);
+        b.appendChild(el('span', '', 'v' + x.v + (x.code ? ' · ' + x.code.toLowerCase() : '')));
+        b.addEventListener('click', function(){ pick(this.dataset.m, +this.dataset.v); });
+        td.appendChild(b);
+      } else if (x) { td.appendChild(el('div', 'fin', '“finished”, nothing changed')); }
+      tr.appendChild(td);
+    }
+    tab.appendChild(tr);
+  });
+  function find(m){ for (var i = 0; i < S.length; i++) if (S[i].maker === m) return S[i]; }
+  function pick(m, v){ cur = find(m); ver = v; sl.max = cur.last; sl.value = v; sl.disabled = cur.last < 2; mk.disabled = cur.last < 2; show(); }
+  function draw(){
+    var a = load(cur.maker, ver), base = load(cur.maker, 1);
+    var go = function(){
+      cx.clearRect(0, 0, 1100, 800); cx.drawImage(a, 0, 0, 1100, 800);
+      if (mk.checked && ver > 1) {
+        var w = 550, h = 400, c1 = document.createElement('canvas'); c1.width = w; c1.height = h; var k1 = c1.getContext('2d');
+        k1.drawImage(base, 0, 0, w, h); var A = k1.getImageData(0, 0, w, h).data;
+        k1.drawImage(a, 0, 0, w, h); var B = k1.getImageData(0, 0, w, h), D = B.data, n = 0;
+        for (var j = 0; j < D.length; j += 4) {
+          var d = Math.max(Math.abs(A[j]-D[j]), Math.abs(A[j+1]-D[j+1]), Math.abs(A[j+2]-D[j+2]));
+          if (d > 24) { D[j] = 255; D[j+1] = 40; D[j+2] = 150; n++; } else { D[j] = D[j] * .28; D[j+1] = D[j+1] * .28; D[j+2] = D[j+2] * .28; }
+        }
+        k1.putImageData(B, 0, 0); cx.drawImage(c1, 0, 0, 1100, 800);
+        document.getElementById('cap').textContent = 'marked: pixels differing from version 1 (in this reduced picture): ' + (100 * n / (w * h)).toFixed(1) + ' %';
+      } else document.getElementById('cap').textContent = 'version ' + ver + ' of ' + cur.last + ', as the practice rendered it';
+    };
+    var ready = function(i){ return i.complete && i.naturalWidth; };
+    if (ready(a) && ready(base)) go(); else { a.onload = base.onload = function(){ if (ready(a) && ready(base)) go(); }; }
+  }
+  function show(){
+    var x = cur.rounds[ver - 1];
+    document.getElementById('who').textContent = cur.title;
+    document.getElementById('arm').textContent = cur.maker + ' · arm ' + cur.arm + ' · ' + (cur.arm === 'K' ? 'told five times to make the next version; offered "finished" after v6' : 'offered "finished" from the first time it was sent back') + ' · stopped at v' + cur.last;
+    document.getElementById('said').textContent = '“' + x.said + '”';
+    var c = document.getElementById('code'); c.textContent = '';
+    if (x.code) { c.appendChild(el('span', 'chip', x.code.toLowerCase() + (x.also ? ' (also ' + x.also.toLowerCase() + ')' : ''))); c.appendChild(el('span', 'sm', 'blind coder S, step v' + (ver - 1) + ' → v' + ver)); }
+    else c.appendChild(el('span', 'sm', ver === 1 ? 'the first version' : ''));
+    var bars = document.getElementById('bars'); bars.textContent = '';
+    if (cur.pixel.steps.length) {
+      var mx = 0.13;
+      cur.pixel.steps.forEach(function(p, i){
+        bars.appendChild(el('span', '', 'v' + (i + 1) + '→v' + (i + 2)));
+        var b = el('div', 'bar'), f = el('i'); f.style.width = Math.min(100, 100 * p / mx) + '%'; b.appendChild(f); bars.appendChild(b);
+        bars.appendChild(el('span', '', (100 * p).toFixed(1) + ' %'));
+      });
+      bars.appendChild(el('span', '', 'v1→v' + cur.last)); var b2 = el('div', 'bar'), f2 = el('i'); f2.style.width = Math.min(100, 100 * cur.pixel.first_to_last / mx) + '%'; b2.appendChild(f2); bars.appendChild(b2);
+      bars.appendChild(el('span', '', (100 * cur.pixel.first_to_last).toFixed(1) + ' %'));
+    }
+    document.getElementById('judge').textContent = (cur.best ? 'Blind coder O, shown the versions shuffled: order recovered at ρ = ' + cur.rho + '; best for a stranger: v' + cur.best + '. ' : '') +
+      'index.html: ' + cur.bytes.join(' → ') + ' bytes.';
+    var all = tab.querySelectorAll('.cell'); for (var i = 0; i < all.length; i++) all[i].classList.toggle('sel', all[i].dataset.m === cur.maker && +all[i].dataset.v === ver);
+    draw();
+  }
+  sl.addEventListener('input', function(){ ver = +sl.value; show(); });
+  mk.addEventListener('change', draw);
+  pick('m01', 6);
+})();
+</script>
+</body>
+</html>

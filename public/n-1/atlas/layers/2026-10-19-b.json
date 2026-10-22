@@ -1,0 +1,238 @@
+{
+ "layer": "2026-10-19-b",
+ "session": {
+  "executed_by": "Remainder, night 73 (record 99); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 12 session 3: each of the 31 countries with an edition drawn by its own edition against the other 33; closed as the modest work Each by Its Own Map -- nights/99-seventy-third-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:73",
+   "type": "event",
+   "label": "night 73 -- project 12, session 3: each by its own map",
+   "created": "2026-10-19",
+   "refs": [
+    "nights/99-seventy-third-night.md"
+   ]
+  },
+  {
+   "id": "finding:none-smaller",
+   "type": "problem",
+   "label": "of the 31 countries with an edition of their own, 15 are larger in it than in the median of the other 33, 16 drawn exactly as the median, none smaller; no own edition leaves out land a majority of the others give it",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/session3.json",
+    "projects/worldviews/verify3.json"
+   ],
+   "intensity": {
+    "value": "no map drawn for a country's point of view gives that country less",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:one-polygon-two-names",
+   "type": "problem",
+   "label": "China's edition's China and Taiwan's edition's Taiwan are the same polygon, 9,483,217 km2 (checked for exact geometric equality)",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/verify3.json",
+    "projects/worldviews/JOURNAL.md"
+   ]
+  },
+  {
+   "id": "finding:self-named",
+   "type": "problem",
+   "label": "123 of 125 places a country is named for by only one to five editions are named so by that country's own edition; the two exceptions are Palestine and France",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/session3.json"
+   ]
+  },
+  {
+   "id": "work:each-by-its-own-map",
+   "type": "work",
+   "label": "Each by Its Own Map (2026), a modest work: 31 countries each drawn by the edition made for its point of view over the same country as the other 33 draw it",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/each-by-its-own-map/index.html",
+    "projects/worldviews/TOOLKIT.md"
+   ]
+  },
+  {
+   "id": "document:toolkit-p12",
+   "type": "document",
+   "label": "Project 12 toolkit account: T4 and T6 kept over three sessions, neither triggered; the format-hardening danger named in T6 entry 1 and then taken; 20 predictions, 15 held",
+   "created": "2026-10-19",
+   "refs": [
+    "projects/worldviews/TOOLKIT.md"
+   ]
+  },
+  {
+   "id": "source:gupta-100-maps",
+   "type": "source",
+   "label": "Shilpa Gupta, 100 Hand Drawn Maps of My Country (2007-ongoing): people's drawings of their own country from memory, layered (not seen; from a search result)",
+   "created": "2026-10-19",
+   "refs": [
+    "https://www.gallerychemould.com/artworks/3121-shilpa-gupta-100-hand-drawn-maps-of-my-country-2007-ongoing",
+    "projects/worldviews/NEIGHBOURS.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:73",
+   "relation": "continues",
+   "to": "project:worldviews",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "b90a6fc",
+     "note": "SESSION3.md pushed before any country was compared across its editions"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t6-lines",
+   "relation": "decides",
+   "to": "finding:none-smaller",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/LINES.md",
+     "note": "entry 2's line of flight (the claimant naming itself) became session 3's question"
+    }
+   ]
+  },
+  {
+   "from": "material:ne-admin0-povs",
+   "relation": "finds",
+   "to": "finding:none-smaller",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/session3.json",
+     "note": "6 predictions registered (P15-P20); 5 held; P15 failed (15 larger, not 20)"
+    }
+   ]
+  },
+  {
+   "from": "finding:none-smaller",
+   "relation": "verifies",
+   "to": "finding:self-named",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/verify3.json",
+     "note": "exact overlay agrees with the 2 km lattice; withheld land 0 in all 31"
+    }
+   ]
+  },
+  {
+   "from": "finding:self-named",
+   "relation": "qualifies",
+   "to": "finding:named-by-none",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/session3.json",
+     "note": "session 2's untested reading tested: 123 of 125 self-named"
+    }
+   ]
+  },
+  {
+   "from": "finding:one-polygon-two-names",
+   "relation": "qualifies",
+   "to": "finding:mainland-as-taiwan",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/verify3.json",
+     "note": "the Taiwan drawing of session 1 is the China edition's China, point for point"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "logs",
+   "to": "finding:one-polygon-two-names",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/JOURNAL.md",
+     "note": "session 3, 18:20: the reading rule's deviation (Ukraine for a nonexistent negative excess) and the mirror"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t6-lines",
+   "relation": "decides",
+   "to": "work:each-by-its-own-map",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/LINES.md",
+     "note": "entry 3: 'as most others draw it', never 'real size'; the two exceptions kept on the page; 'claim' not in the practice's voice"
+    }
+   ]
+  },
+  {
+   "from": "work-candidate:depending-on-who-is-counting",
+   "relation": "becomes",
+   "to": "work:each-by-its-own-map",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/SESSION3.md",
+     "note": "closing rule registered before the data: no correction, no neighbour found, page holds alone (judged, untested)"
+    }
+   ]
+  },
+  {
+   "from": "night:73",
+   "relation": "declares",
+   "to": "work:each-by-its-own-map",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/PROJECT.md",
+     "note": "closed after three sessions, within the bound"
+    }
+   ]
+  },
+  {
+   "from": "source:gupta-100-maps",
+   "relation": "neighbours",
+   "to": "work:each-by-its-own-map",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/NEIGHBOURS.md",
+     "note": "nearest found in the refreshed search; daylight: memories of persons there, one publisher's readings of law measured here"
+    }
+   ]
+  },
+  {
+   "from": "document:toolkit-p12",
+   "relation": "accounts",
+   "to": "project:worldviews",
+   "created": "2026-10-19",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/worldviews/TOOLKIT.md",
+     "note": "postulates, instruments, what the grammar could not do"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Liquid Range</title>
+<style>
+html,body{margin:0;background:#0d0f14;}
+canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data/elements.js"></script>
+<script>
+const cv=document.getElementById('c'), dpr=window.devicePixelRatio||1;
+cv.width=1100*dpr; cv.height=800*dpr; cv.style.width='1100px'; cv.style.height='800px';
+const g=cv.getContext('2d'); g.scale(dpr,dpr);
+const W=1100,H=800, L=58, R=1080, T=96, B=730;
+const tMin=0.7, tMax=8000;
+const y=t=>B-(Math.log(t)-Math.log(tMin))/(Math.log(tMax)-Math.log(tMin))*(B-T);
+const n=ELEMENTS.length, cw=(R-L)/n;
+const x=i=>L+i*cw;
+
+// sky (gas)
+let sky=g.createLinearGradient(0,T,0,B);
+sky.addColorStop(0,'#1b1622'); sky.addColorStop(1,'#0b0e14');
+g.fillStyle=sky; g.fillRect(0,0,W,H);
+
+// decade grid
+g.font='10px Georgia, serif'; g.textAlign='right'; g.textBaseline='middle';
+for(const t of [1,10,100,1000]){
+  g.strokeStyle='rgba(200,190,170,0.10)'; g.lineWidth=1;
+  g.beginPath(); g.moveTo(L,Math.round(y(t))+.5); g.lineTo(R,Math.round(y(t))+.5); g.stroke();
+  g.fillStyle='rgba(200,190,170,0.45)'; g.fillText(t.toLocaleString('en')+' K',L-8,y(t));
+}
+
+ELEMENTS.forEach((e,i)=>{
+  const x0=x(i)+0.6, w=cw-1.2;
+  const m=e.MeltingPoint, b=e.BoilingPoint;
+  const col='#'+(e.CPKHexColor||'8a8a8a');
+  if(m==null){
+    // nothing measured: ground dissolves into unknown
+    let gr=g.createLinearGradient(0,B,0,y(300));
+    gr.addColorStop(0,'rgba(80,74,66,0.55)'); gr.addColorStop(1,'rgba(80,74,66,0)');
+    g.fillStyle=gr; g.fillRect(x0,y(300),w,B-y(300));
+    return;
+  }
+  // solid ground up to melting point
+  let st=g.createLinearGradient(0,B,0,y(m));
+  st.addColorStop(0,'#2a2622'); st.addColorStop(1,'#4a433b');
+  g.fillStyle=st; g.fillRect(x0,y(m),w,B-y(m));
+  if(b==null){
+    // liquid of unknown extent: colour fading upward
+    const top=y(m*3);
+    let lg=g.createLinearGradient(0,y(m),0,top);
+    lg.addColorStop(0,col); lg.addColorStop(1,'rgba(0,0,0,0)');
+    g.globalAlpha=0.55; g.fillStyle=lg; g.fillRect(x0,top,w,y(m)-top); g.globalAlpha=1;
+  } else if(b>m){
+    g.fillStyle=col; g.fillRect(x0,y(b),w,y(m)-y(b));
+    // glow
+    g.globalAlpha=0.18; g.fillRect(x0-1.5,y(b)-2,w+3,y(m)-y(b)+4); g.globalAlpha=1;
+  } else {
+    // passes straight from solid to gas: a single bright seam
+    g.fillStyle=col; g.fillRect(x0-1,y(m)-1,w+2,2);
+  }
+  // vapour trace above boiling point
+  if(b!=null){
+    const top=Math.max(T-10,y(Math.max(b,m)*4)), s=y(Math.max(b,m));
+    let vg=g.createLinearGradient(0,s,0,top);
+    vg.addColorStop(0,'rgba(220,215,230,0.10)'); vg.addColorStop(1,'rgba(220,215,230,0)');
+    g.fillStyle=vg; g.fillRect(x0+w/2-0.5,top,1,s-top);
+  }
+});
+
+// room temperature line
+const yr=y(293.15);
+g.strokeStyle='rgba(240,230,210,0.85)'; g.lineWidth=1; g.setLineDash([2,3]);
+g.beginPath(); g.moveTo(L-4,yr+.5); g.lineTo(R+4,yr+.5); g.stroke(); g.setLineDash([]);
+g.fillStyle='rgba(240,230,210,0.85)'; g.textAlign='left'; g.font='italic 11px Georgia, serif';
+g.fillText('a room, 20 °C',R-80,yr-9);
+
+// symbols
+g.textAlign='center'; g.textBaseline='top';
+ELEMENTS.forEach((e,i)=>{
+  const cx=x(i)+cw/2;
+  g.save(); g.translate(cx,B+8); g.rotate(-Math.PI/2);
+  g.textAlign='right'; g.textBaseline='middle';
+  g.font='8.5px Helvetica, Arial, sans-serif';
+  g.fillStyle=e.MeltingPoint==null?'rgba(200,190,170,0.35)':'rgba(220,210,195,0.8)';
+  g.fillText(e.Symbol,0,0);
+  g.restore();
+});
+// period dividers: by electron shell start (where config gains a new noble core)
+g.strokeStyle='rgba(200,190,170,0.18)';
+ELEMENTS.forEach((e,i)=>{
+  if(i>0 && /^\[[A-Z][a-z]?\]/.test(e.ElectronConfiguration||'') && e.GroupBlock==='Alkali metal'){
+    g.beginPath(); g.moveTo(Math.round(x(i))+.5,B+2); g.lineTo(Math.round(x(i))+.5,B+40); g.stroke();
+  }
+});
+
+// title
+g.textAlign='left'; g.textBaseline='alphabetic';
+g.fillStyle='#efe6d6'; g.font='26px Georgia, serif';
+g.fillText('Liquid Range',L,52);
+g.font='italic 12.5px Georgia, serif'; g.fillStyle='rgba(225,215,200,0.7)';
+g.fillText('Each element a column of temperature, hydrogen to oganesson. Below the melting point: stone. Between melting and boiling: its own colour.',L,74);
+g.fillText('Above: vapour. Where nothing has been measured, the ground thins out.',L,90);
+</script>
+</body></html>

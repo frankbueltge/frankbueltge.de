@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sediment</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #0d0c0b; }
+  body { width: 1100px; height: 800px; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function () {
+  var W = 1100, H = 800;
+  var dpr = window.devicePixelRatio || 1;
+  var cv = document.getElementById('c');
+  cv.width = W * dpr; cv.height = H * dpr;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  var g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+
+  var F = window.PLANETS.fields, rows = window.PLANETS.rows;
+  var iY = F.indexOf('year'), iM = F.indexOf('method'), iP = F.indexOf('period_days'),
+      iR = F.indexOf('radius_earth'), iN = F.indexOf('name'), iD = F.indexOf('distance_pc');
+
+  // seeded random
+  var seed = 7;
+  function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+
+  var BG = '#0d0c0b', INK = '#d9d2c5', DIM = 'rgba(217,210,197,0.38)', FAINT = 'rgba(217,210,197,0.12)';
+  var COL = {
+    'Transit': '#e8c48a',
+    'Radial Velocity': '#7fb2e0',
+    'Microlensing': '#8fd19e',
+    'Imaging': '#f0766b'
+  };
+  var OTHER = '#c49be6';
+
+  // geometry
+  var L = 96, R = 1100 - 84, T = 104, B = 800 - 64;
+  var UNK_X0 = R + 22, UNK_X1 = 1100 - 26;
+  var PMIN = Math.log10(0.1), PMAX = Math.log10(1e6);
+  function px(p) { return L + (Math.log10(p) - PMIN) / (PMAX - PMIN) * (R - L); }
+
+  // years -> bands with height proportional to count
+  var years = {}, ylist = [];
+  rows.forEach(function (r) { (years[r[iY]] = years[r[iY]] || []).push(r); });
+  for (var y = 1992; y <= 2026; y++) ylist.push(y);
+  var MINH = 8, GAP = 1.2;
+  var total = rows.length, avail = (B - T) - GAP * (ylist.length - 1) - MINH * ylist.length;
+  var bands = [], cy = T;
+  ylist.forEach(function (y) {
+    var n = (years[y] || []).length;
+    var h = MINH + avail * n / total;
+    bands.push({ y: y, n: n, top: cy, h: h });
+    cy += h + GAP;
+  });
+
+  // background strata
+  bands.forEach(function (b, k) {
+    g.fillStyle = k % 2 ? 'rgba(255,248,235,0.025)' : 'rgba(255,248,235,0.012)';
+    g.fillRect(L, b.top, R - L, b.h);
+    g.fillRect(UNK_X0, b.top, UNK_X1 - UNK_X0, b.h);
+    g.fillStyle = 'rgba(217,210,197,0.07)';
+    g.fillRect(L, b.top + b.h + GAP / 2 - 0.5, R - L, 0.6);
+    g.fillRect(UNK_X0, b.top + b.h + GAP / 2 - 0.5, UNK_X1 - UNK_X0, 0.6);
+  });
+
+  // reference orbits of the solar system
+  var refs = [['Mercury', 87.97], ['Earth', 365.25], ['Jupiter', 4332.6], ['Neptune', 60190]];
+  g.font = '10px Georgia, serif';
+  refs.forEach(function (r) {
+    var x = Math.round(px(r[1])) + 0.5;
+    g.strokeStyle = FAINT; g.lineWidth = 1;
+    g.setLineDash([2, 3]);
+    g.beginPath(); g.moveTo(x, T - 2); g.lineTo(x, B + 4); g.stroke();
+    g.setLineDash([]);
+    g.fillStyle = DIM; g.textAlign = 'center';
+    g.fillText(r[0], x, T - 6);
+  });
+
+  // planets: within each band, larger planets settle lower
+  function radFrac(r) {
+    if (r == null) return rnd();
+    var f = (Math.log10(r) - Math.log10(0.4)) / (Math.log10(25) - Math.log10(0.4));
+    return Math.max(0, Math.min(1, f));
+  }
+  g.globalCompositeOperation = 'lighter';
+  bands.forEach(function (b) {
+    var list = (years[b.y] || []).map(function (r) {
+      return { r: r, k: r[iR] == null ? null : Math.log10(r[iR]) };
+    });
+    // graded bedding: rank by radius, the unknown-size ones shuffled in at random depth
+    var known = list.filter(function (o) { return o.k != null; }).sort(function (a, c) { return a.k - c.k; });
+    list.filter(function (o) { return o.k == null; }).forEach(function (o) {
+      known.splice(Math.floor(rnd() * (known.length + 1)), 0, o);
+    });
+    var nn = known.length;
+    known.forEach(function (o, idx) { o.q = nn > 1 ? idx / (nn - 1) : 0.5; });
+    known.map(function (o) { return o.r; }).forEach(function (r, idx) {
+      var q = known[idx].q;
+      var c = COL[r[iM]] || OTHER;
+      var yy = b.top + 1.5 + (b.h - 3) * Math.max(0, Math.min(1, 0.04 + 0.92 * q + (rnd() - 0.5) * 0.08));
+      var x;
+      if (r[iP] == null) {
+        x = UNK_X0 + 4 + rnd() * (UNK_X1 - UNK_X0 - 8);
+      } else {
+        var p = Math.max(0.1, Math.min(1e6, r[iP]));
+        x = px(p) + (rnd() - 0.5) * 1.2;
+      }
+      var rad = r[iR] == null ? 0.9 : 0.55 + Math.min(2.2, Math.sqrt(r[iR]) * 0.36);
+      g.fillStyle = c;
+      // nearer worlds shine brighter: alpha falls with log distance (10 pc -> 0.95, 2000 pc -> 0.22)
+      var d = r[iD];
+      var a = d == null ? 0.4 : 0.95 - 0.73 * Math.max(0, Math.min(1, (Math.log10(d) - 1) / (Math.log10(2000) - 1)));
+      g.globalAlpha = a;
+      g.beginPath(); g.arc(x, yy, rad, 0, 6.2832); g.fill();
+    });
+  });
+  g.globalAlpha = 1;
+  g.globalCompositeOperation = 'source-over';
+
+  // year labels
+  g.textAlign = 'right'; g.textBaseline = 'middle';
+  var lastY = -99;
+  bands.forEach(function (b) {
+    var big = b.n > 300, mid = b.top + b.h / 2;
+    if (mid - lastY < 9) return;
+    lastY = mid;
+    g.font = (big ? '13px' : '10px') + ' Georgia, serif';
+    g.fillStyle = big ? INK : DIM;
+    g.fillText(b.y, L - 34, b.top + b.h / 2);
+    if (b.n > 0) {
+      g.font = '9px Georgia, serif';
+      g.fillStyle = DIM;
+      g.fillText(b.n, L - 8, b.top + b.h / 2);
+    }
+  });
+
+  // period axis
+  g.textBaseline = 'top'; g.textAlign = 'center';
+  var ticks = [[0.1, '2.4 hours'], [1, '1 day'], [10, '10 days'], [100, '100 days'], [1000, '3 years'], [10000, '27 years'], [100000, '274 years'], [1000000, '2,700 years']];
+  ticks.forEach(function (t) {
+    var x = Math.round(px(t[0])) + 0.5;
+    g.strokeStyle = DIM; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(x, B + 4); g.lineTo(x, B + 9); g.stroke();
+    g.font = '10px Georgia, serif'; g.fillStyle = DIM;
+    g.fillText(t[1], x, B + 12);
+  });
+  g.font = 'italic 11px Georgia, serif'; g.fillStyle = INK;
+  g.fillText('one year of the planet  →  longer', (L + R) / 2, B + 34);
+  g.textAlign = 'center';
+  g.font = '10px Georgia, serif'; g.fillStyle = DIM;
+  g.fillText('year', (UNK_X0 + UNK_X1) / 2, B + 12);
+  g.fillText('unknown', (UNK_X0 + UNK_X1) / 2, B + 24);
+
+  // title block
+  g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  g.fillStyle = INK; g.font = '30px Georgia, serif';
+  g.fillText('Sediment', L - 60, 44);
+  g.font = 'italic 12px Georgia, serif'; g.fillStyle = DIM;
+  g.fillText(rows.length.toLocaleString('en-US') + ' confirmed worlds beyond the Sun, laid down year by year as they were found; each stratum thickens with its haul.',
+    L - 60, 64);
+  g.fillText('Across, the length of the planet’s year. Within a stratum, small planets lie on top and large ones below. Brighter means nearer.', L - 60, 79);
+
+  // legend
+  var leg = [['Transit', COL['Transit']], ['Radial velocity', COL['Radial Velocity']], ['Microlensing', COL['Microlensing']], ['Imaging', COL['Imaging']], ['other', OTHER]];
+  g.font = '11px Georgia, serif'; g.textBaseline = 'middle';
+  var lx = 1100 - 26, ly = 30;
+  for (var k = leg.length - 1; k >= 0; k--) {
+    var w = g.measureText(leg[k][0]).width;
+    g.textAlign = 'right'; g.fillStyle = DIM;
+    g.fillText(leg[k][0], lx, ly);
+    g.fillStyle = leg[k][1];
+    g.beginPath(); g.arc(lx - w - 8, ly, 3, 0, 6.2832); g.fill();
+    lx -= w + 26;
+  }
+
+  // annotations
+  function note(y, txt) {
+    var L0 = years[y], tr = L0.filter(function (r) { return r[iM] === 'Transit'; }).length;
+    txt = txt.replace('#', L0.length.toLocaleString('en-US')).replace('%', Math.round(100 * tr / L0.length) + '%');
+    var b = bands.filter(function (x) { return x.y === y; })[0];
+    g.font = 'italic 11px Georgia, serif'; g.fillStyle = INK; g.textAlign = 'left'; g.textBaseline = 'middle';
+    g.fillText(txt, px(20000), b.top + b.h / 2);
+  }
+  note(2014, '# in one stratum, % of them by transit');
+  note(2016, '# in one stratum, % of them by transit');
+  note(2021, '# in one stratum, % of them by transit');
+  g.font = 'italic 11px Georgia, serif'; g.fillStyle = DIM; g.textAlign = 'left';
+  var b92 = bands[0];
+  g.textBaseline = 'middle';
+  var nx = px(66.5), ny = b92.top + b92.h / 2;
+  g.strokeStyle = DIM; g.lineWidth = 0.7;
+  g.beginPath(); g.moveTo(nx + 4, ny); g.lineTo(px(1500) - 6, ny); g.stroke();
+  g.fillText('the first two, 1992: worlds around a dead star, PSR B1257+12', px(1500), ny);
+
+  // key for settling: small rises, large sinks
+  g.textAlign = 'left'; g.textBaseline = 'middle';
+  var kx = 30, ky = B + 36;
+  [[0.8, 'Earth-size'], [11, 'Jupiter-size']].forEach(function (s, i) {
+    var rr = 0.55 + Math.min(2.2, Math.sqrt(s[0]) * 0.32);
+    g.fillStyle = INK; g.beginPath(); g.arc(kx + 3, ky + i * 14, rr, 0, 6.2832); g.fill();
+    g.font = '10px Georgia, serif'; g.fillStyle = DIM;
+    g.fillText(s[1] + (i ? ' sinks' : ' floats'), kx + 10, ky + i * 14);
+  });
+  g.font = '10px Georgia, serif';
+  [[0.95, 'near (10 pc)'], [0.22, 'far (2,000 pc)']].forEach(function (s, i) {
+    g.globalAlpha = s[0]; g.fillStyle = INK;
+    g.beginPath(); g.arc(kx + 133, ky + i * 14, 1.8, 0, 6.2832); g.fill();
+    g.globalAlpha = 1; g.fillStyle = DIM; g.textAlign = 'left';
+    g.fillText(s[1], kx + 140, ky + i * 14);
+  });
+  g.font = '9px Georgia, serif'; g.fillStyle = 'rgba(217,210,197,0.3)'; g.textAlign = 'right'; g.textBaseline = 'alphabetic';
+  g.fillText('NASA Exoplanet Archive, confirmed planets, Oct 2026', 1100 - 26, 800 - 10);
+})();
+</script>
+</body>
+</html>

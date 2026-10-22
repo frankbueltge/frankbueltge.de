@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Torn, Reversed</title>
+<style>
+:root{--bg:#f6f3ec;--ink:#1d1b18;--mute:#6b665c;--line:#d7d1c4;--card:#fffdf8;--a:#2f6f62;--m:#a5432e;--hi:#c99a2e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171614;--ink:#ece7dc;--mute:#a19a8c;--line:#3a3731;--card:#201f1c;--a:#6bb5a4;--m:#e0826b;--hi:#e2b955}}
+:root[data-theme="dark"]{--bg:#171614;--ink:#ece7dc;--mute:#a19a8c;--line:#3a3731;--card:#201f1c;--a:#6bb5a4;--m:#e0826b;--hi:#e2b955}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+main{max-width:1180px;margin:0 auto;padding:20px 16px 60px}
+h1{font-weight:normal;font-size:30px;margin:0 0 2px;letter-spacing:.01em}
+h2{font-weight:normal;font-size:21px;margin:42px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+.sub{color:var(--mute);margin:0 0 18px;max-width:62em}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.stage{grid-template-columns:1fr}}
+.pane{background:var(--card);border:1px solid var(--line);padding:10px}
+.pane h3{font-weight:normal;font-size:15px;margin:0 0 6px;color:var(--mute)}
+.pane h3 b{color:var(--ink);font-weight:normal}
+.frame{position:relative;width:100%;aspect-ratio:1100/800;overflow:hidden;background:#f1ece0;border:1px solid var(--line)}
+.frame iframe{position:absolute;left:0;top:0;width:1100px;height:800px;border:0;transform-origin:0 0}
+.ops{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+button{font:inherit;font-size:14px;background:transparent;color:var(--ink);border:1px solid var(--line);padding:4px 10px;cursor:pointer}
+button:hover,button:focus-visible{border-color:var(--ink);outline:none}
+button.on{background:var(--ink);color:var(--bg)}
+.did{font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;color:var(--mute);white-space:pre-wrap;word-break:break-all;max-height:7.5em;overflow:auto;margin:4px 0 0}
+.verdict{font-size:14px;margin-top:6px;min-height:1.5em}
+.chart{width:100%;max-width:760px;display:block}
+.chart text{font:13px Georgia,serif;fill:var(--ink)}
+.chart .m{fill:var(--mute)}
+.legend{font-size:14px;color:var(--mute)}
+.sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin:0 4px 0 10px;vertical-align:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.cell{background:var(--card);border:1px solid var(--line);padding:6px;cursor:pointer;font-size:13px;line-height:1.35}
+.cell:hover,.cell:focus-visible{border-color:var(--ink);outline:none}
+.cell img{width:100%;display:block;aspect-ratio:1100/800;object-fit:cover;background:#f1ece0}
+.cell .k{display:flex;justify-content:space-between;gap:6px;margin-top:4px}
+.tag{font-size:12px;color:var(--mute)}
+.info{color:var(--hi)}
+.arm-A{border-left:3px solid var(--a)}.arm-M{border-left:3px solid var(--m)}.arm-C{border-left:3px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}
+th{font-weight:normal;color:var(--mute)}
+.held{color:var(--a)}.failed{color:var(--m)}
+a{color:inherit}
+.small{font-size:14px;color:var(--mute);max-width:62em}
+.theme{float:right;font-size:13px}
+</style>
+</head>
+<body>
+<main>
+<button class="theme" id="theme" aria-label="switch light or dark">light / dark</button>
+<h1>Torn, Reversed</h1>
+<p class="sub">Left: a work a fresh maker made from Gilbert White's <i>Natural History of Selborne</i> (1789). Right: the same page after its code was torn, reversed, remounted or reworked by chance, live in your browser. Press again. How often does chance give you something else that still works?</p>
+
+<div class="stage">
+  <section class="pane">
+    <h3>the parent · <b id="ptitle">The Turning Year</b> (plain maker c4)</h3>
+    <div class="frame"><iframe id="left" sandbox="allow-scripts" title="the parent page, live"></iframe></div>
+    <div class="verdict small">One of four works made from the text by fresh makers told only to give it a form. Drawn as the parent by seed 144.</div>
+  </section>
+  <section class="pane">
+    <h3 id="rtitle">chance · loading</h3>
+    <div class="frame"><iframe id="right" sandbox="allow-scripts" title="a variant, live"></iframe></div>
+    <div class="ops" role="group" aria-label="make a variant">
+      <button data-op="">any</button><button data-op="TEAR">tear</button><button data-op="REVERSE">reverse</button><button data-op="MOUNT">mount</button><button data-op="REWORK">rework</button>
+    </div>
+    <div class="did" id="did"></div>
+    <div class="verdict" id="rverdict"></div>
+  </section>
+</div>
+
+<h2>Sixteen variants, two judges</h2>
+<p class="small">Tonight the practice varied the parent two ways. <b style="color:var(--a)">Asked</b>: four fresh makers, each handed the parent and told <i>"Make a variation of this work."</i> <b style="color:var(--m)">Chance</b>: twelve blind mutations of its code, three per operator, seed 144, none repaired. A blind coder, arm masked, rated each variant's distance from the four plain works (0 the same, 3 nothing shared) or called it broken. A fresh judge, told nothing about variation, said whether each of all twenty works. A variant that is far (2 or more) and judged to work is what Simondon calls <i>information</i>: "the influx of variation with respect to a form".</p>
+<svg class="chart" id="chart" viewBox="0 0 760 300" role="img" aria-label="Variants by blind distance and judge's verdict"></svg>
+<div class="legend"><span class="sw" style="background:var(--a)"></span>asked (4)<span class="sw" style="background:var(--m)"></span>chance (12)<span class="sw" style="background:var(--hi)"></span>the corner of information</div>
+
+<h2>All twenty, live</h2>
+<p class="small">Click any picture to run its page live on the right. The four plain works are the family the coder measured against.</p>
+<div class="grid" id="grid"></div>
+
+<h2>Predictions, fixed before anything ran</h2>
+<table id="pred"><thead><tr><th></th><th>prediction</th><th>outcome</th><th>count</th></tr></thead><tbody></tbody></table>
+<p class="small" style="margin-top:18px">The judge took <i>works</i> to mean: <span id="meaning"></span><br>
+Text and sources: <a href="work.md">work.md</a> · pre-registration: <a href="PREDICTIONS.md">PREDICTIONS.md</a> · the operators: <a href="mutate.js">mutate.js</a>, run in this page as <a href="mutate-core.js">mutate-core.js</a> (reproduces the night's twelve byte for byte). Material: Project Gutenberg eBook #1408, public domain. Ulysses, the nightly line, Session 144, 2026-10-20.</p>
+</main>
+<script src="face-data.js"></script>
+<script src="mutate-core.js"></script>
+<script>
+(function(){
+  const PRED = {P1:"Asked makers stay: 3 of 4 nearest the parent at distance ≤ 1",P2:"Chance rarely departs: at most a third of unbroken mutants at distance ≥ 2",P3:"Chance breaks: at least 3 of 12 mutants broken",P4:"Judging keeps the family: plain ≥ 3/4, asked ≥ 3/4, chance ≤ 6/12 judged to work",P5:"Of far, unbroken mutants the judge accepts at most one",P6:"The practice's verdicts agree with the judge's on ≥ 13 of 16",P7:"Asked gives at least as much information as chance"};
+  const byId = Object.fromEntries(FACE.items.map(i => [i.id, i]));
+  const base = new URL('.', location.href).href;
+  const cache = {};
+  function getPage(p){ return cache[p] || (cache[p] = fetch(p).then(r => { if(!r.ok) throw new Error(r.status); return r.text(); })); }
+  function show(frame, html){ frame.srcdoc = html.replace(/<head([^>]*)>/i, '<head$1><base href="' + base + '">'); }
+  function fit(){ document.querySelectorAll('.frame').forEach(f => { const s = f.clientWidth / 1100; f.querySelector('iframe').style.transform = 'scale(' + s + ')'; }); }
+  addEventListener('resize', fit); fit();
+  const L = document.getElementById('left'), R = document.getElementById('right'), rt = document.getElementById('rtitle'), did = document.getElementById('did'), rv = document.getElementById('rverdict');
+  function describe(d){ return d.map(x => x.removed !== undefined ? 'torn out:  ' + x.removed.trim() : x.swapped ? 'remounted: ' + x.swapped[0] + '\n      with: ' + x.swapped[1] : x.factor ? 'reworked:  ' + x.from + ' × ' + x.factor + ' → ' + x.to + '   …' + x.context.replace(/\s+/g,' ') + '…' : 'reversed:  ' + x.from + ' → ' + x.to + '   …' + x.context.replace(/\s+/g,' ') + '…').join('\n'); }
+  let parentHtml = null;
+  getPage('rooms/' + FACE.parent + '/index.html').then(h => { parentHtml = h; show(L, h); chance(''); }).catch(e => { rt.textContent = 'the pages could not be loaded here (' + e.message + '); the pictures below stand for them'; });
+  function chance(op){
+    if(!parentHtml) return; const seed = (Math.random() * 1e9) | 0; const m = MutateCore.one(parentHtml, seed, op || null);
+    rt.innerHTML = 'chance · <b>' + m.op.toLowerCase() + ' × ' + m.n + '</b>, seed ' + seed;
+    did.textContent = describe(m.did) + (m.src === parentHtml ? '\n(nothing changed)' : '');
+    rv.textContent = 'Is it still a work? Is it anything else? Tonight\'s judge accepted 3 of 12 such pages, and all three looked unchanged.';
+    show(R, m.src);
+  }
+  document.querySelectorAll('.ops button').forEach(b => b.addEventListener('click', () => { document.querySelectorAll('.ops button').forEach(x => x.classList.remove('on')); b.classList.add('on'); chance(b.dataset.op); }));
+  function openItem(k){
+    const it = byId[k]; getPage(it.page).then(h => {
+      rt.innerHTML = (it.arm === 'A' ? 'asked · ' : it.arm === 'M' ? 'chance, tonight · ' : 'plain · ') + '<b>' + (it.title || it.id + ' ' + it.op.toLowerCase() + ' × ' + it.n) + '</b> (' + it.id + ')';
+      did.textContent = it.did ? describe(it.did) : '';
+      rv.textContent = verdictLine(it); show(R, it.id.startsWith('m') ? h : h);
+      document.getElementById('right').scrollIntoView({behavior:'smooth', block:'center'});
+    });
+  }
+  function verdictLine(it){ const parts = [];
+    if(it.arm !== 'C') parts.push(it.broken === 'yes' ? 'coder: broken' : 'coder: distance ' + it.distance + (it.nearest ? ' from ' + (byId[it.nearest].title || it.nearest) : ''));
+    parts.push('judge: ' + (it.works === 'yes' ? 'works' : 'does not work') + ' (' + it.why + ')');
+    if(it.practice) parts.push('the practice: ' + it.practice);
+    return parts.join(' · '); }
+  // chart: columns broken, 0, 1, 2, 3 ; rows works yes / no
+  const svg = document.getElementById('chart'); const NS = 'http://www.w3.org/2000/svg';
+  const el = (t, a, txt) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+  const cols = ['broken', 0, 1, 2, 3], X0 = 150, CW = 120, rows = [['yes', 70], ['no', 200]];
+  el('rect', {x: X0 + 3 * CW, y: 20, width: 2 * CW, height: 110, fill: 'var(--hi)', opacity: .16});
+  el('text', {x: X0 + 3 * CW + 8, y: 38, class: 'm'}, 'information');
+  cols.forEach((c, i) => { el('text', {x: X0 + i * CW + CW / 2, y: 290, 'text-anchor': 'middle', class: 'm'}, c === 'broken' ? 'broken' : 'distance ' + c);
+    el('line', {x1: X0 + i * CW, x2: X0 + i * CW, y1: 20, y2: 265, stroke: 'var(--line)'}); });
+  el('line', {x1: X0, x2: X0 + 5 * CW, y1: 135, y2: 135, stroke: 'var(--line)'});
+  rows.forEach(([w, y]) => el('text', {x: X0 - 12, y: y + 5, 'text-anchor': 'end'}, w === 'yes' ? 'judged to work' : 'judged not to'));
+  const slots = {};
+  FACE.items.filter(i => i.arm !== 'C').forEach(it => {
+    const ci = it.broken === 'yes' ? 0 : it.distance + 1, ry = it.works === 'yes' ? 70 : 200, key = ci + ':' + ry, n = slots[key] = (slots[key] || 0) + 1;
+    const cx = X0 + ci * CW + 22 + ((n - 1) % 4) * 25, cy = ry - 30 + Math.floor((n - 1) / 4) * 30;
+    const g = el('g', {tabindex: 0, role: 'button', 'aria-label': it.id, style: 'cursor:pointer'});
+    const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', cx); c.setAttribute('cy', cy + 15); c.setAttribute('r', 10); c.setAttribute('fill', it.arm === 'A' ? 'var(--a)' : 'var(--m)'); g.appendChild(c);
+    const t = document.createElementNS(NS, 'text'); t.setAttribute('x', cx); t.setAttribute('y', cy + 34); t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'm'); t.setAttribute('style', 'font-size:10px'); t.textContent = it.id; g.appendChild(t);
+    const ti = document.createElementNS(NS, 'title'); ti.textContent = (it.title || it.op) + ' · ' + verdictLine(it); g.appendChild(ti);
+    g.addEventListener('click', () => openItem(it.id)); g.addEventListener('keydown', e => { if (e.key === 'Enter') openItem(it.id); });
+  });
+  // grid
+  const grid = document.getElementById('grid'); const order = ['c1','c2','c3','c4','a1','a2','a3','a4'].concat(FACE.items.filter(i => i.arm === 'M').map(i => i.id));
+  order.forEach(k => { const it = byId[k]; const d = document.createElement('div'); d.className = 'cell arm-' + it.arm; d.tabIndex = 0;
+    const name = it.title || (it.op.toLowerCase() + ' × ' + it.n);
+    const tag = it.arm === 'C' ? 'plain' + (k === FACE.parent ? ' · the parent' : '') : (it.broken === 'yes' ? 'broken' : 'distance ' + it.distance);
+    d.innerHTML = '<img loading="lazy" alt="">' + '<div class="k"><span>' + k + ' · ' + name + '</span></div><div class="tag">' + tag + ' · judge: ' + (it.works === 'yes' ? 'works' : 'no') + (it.information ? ' · <span class="info">information</span>' : '') + (it.pixels != null ? ' · ' + it.pixels + ' % of pixels changed' : '') + '</div>';
+    d.querySelector('img').src = it.img; d.querySelector('img').alt = name + ', rendered';
+    d.addEventListener('click', () => openItem(k)); d.addEventListener('keydown', e => { if (e.key === 'Enter') openItem(k); }); grid.appendChild(d); });
+  const tb = document.querySelector('#pred tbody');
+  Object.entries(FACE.predictions).forEach(([k, v]) => { const tr = document.createElement('tr'); const o = v.held === true ? 'held' : v.held === false ? 'failed' : 'untestable';
+    tr.innerHTML = '<td>' + k + '</td><td>' + PRED[k] + '</td><td class="' + o + '">' + o + '</td><td>' + v.count + '</td>'; tb.appendChild(tr); });
+  document.getElementById('meaning').textContent = FACE.meaning;
+  const tbtn = document.getElementById('theme'); tbtn.addEventListener('click', () => { const r = document.documentElement; const dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; r.dataset.theme = dark ? 'light' : 'dark'; });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,344 @@
+{
+ "arms": {
+  "m01": "K",
+  "m02": "D",
+  "m03": "D",
+  "m04": "K",
+  "m05": "D",
+  "m06": "K"
+ },
+ "last_version": {
+  "m01": 6,
+  "m02": 2,
+  "m03": 1,
+  "m04": 6,
+  "m05": 1,
+  "m06": 6
+ },
+ "declines": [
+  {
+   "maker": "m03",
+   "round": 2,
+   "outcome": "declined",
+   "note": "index.html unchanged; not sent again"
+  },
+  {
+   "maker": "m05",
+   "round": 2,
+   "outcome": "declined",
+   "note": "index.html unchanged; not sent again"
+  },
+  {
+   "maker": "m02",
+   "round": 3,
+   "outcome": "declined",
+   "note": "index.html unchanged since v2; not sent again"
+  },
+  {
+   "maker": "m01",
+   "round": 7,
+   "outcome": "declined",
+   "note": "P8: index.html identical to v6"
+  },
+  {
+   "maker": "m04",
+   "round": 7,
+   "outcome": "declined",
+   "note": "P8: index.html identical to v6"
+  },
+  {
+   "maker": "m06",
+   "round": 7,
+   "outcome": "declined",
+   "note": "P8: index.html identical to v6"
+  }
+ ],
+ "order_best": {
+  "m04": {
+   "lineage": "L1",
+   "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "best": 4,
+   "rho": 1.0
+  },
+  "m06": {
+   "lineage": "L2",
+   "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "best": 6,
+   "rho": 1.0
+  },
+  "m01": {
+   "lineage": "L3",
+   "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "best": 6,
+   "rho": 1.0
+  }
+ },
+ "steps": {
+  "m01": {
+   "4": {
+    "T": "T01",
+    "code": "ADD",
+    "also": null
+   },
+   "1": {
+    "T": "T04",
+    "code": "ADD",
+    "also": "REORGANISE"
+   },
+   "3": {
+    "T": "T08",
+    "code": "ADD",
+    "also": null
+   },
+   "2": {
+    "T": "T10",
+    "code": "ADD",
+    "also": null
+   },
+   "5": {
+    "T": "T11",
+    "code": "ADD",
+    "also": null
+   }
+  },
+  "m04": {
+   "2": {
+    "T": "T02",
+    "code": "REORGANISE",
+    "also": null
+   },
+   "3": {
+    "T": "T03",
+    "code": "REORGANISE",
+    "also": "ADD"
+   },
+   "4": {
+    "T": "T12",
+    "code": "REORGANISE",
+    "also": "ADD"
+   },
+   "1": {
+    "T": "T13",
+    "code": "ADD",
+    "also": null
+   },
+   "5": {
+    "T": "T14",
+    "code": "TRIM",
+    "also": null
+   }
+  },
+  "m06": {
+   "5": {
+    "T": "T05",
+    "code": "ADD",
+    "also": "REORGANISE"
+   },
+   "2": {
+    "T": "T06",
+    "code": "ADD",
+    "also": null
+   },
+   "4": {
+    "T": "T07",
+    "code": "ADD",
+    "also": null
+   },
+   "1": {
+    "T": "T09",
+    "code": "ADD",
+    "also": null
+   },
+   "3": {
+    "T": "T16",
+    "code": "TRIM",
+    "also": null
+   }
+  },
+  "m02": {
+   "1": {
+    "T": "T15",
+    "code": "TRIM",
+    "also": "ADD"
+   }
+  }
+ },
+ "pixel_change": {
+  "m01": {
+   "steps": [
+    0.0853,
+    0.094,
+    0.0051,
+    0.0276,
+    0.0027
+   ],
+   "first_to_last": 0.1048
+  },
+  "m02": {
+   "steps": [
+    0.1209
+   ],
+   "first_to_last": 0.1209
+  },
+  "m03": {
+   "steps": [],
+   "first_to_last": null
+  },
+  "m04": {
+   "steps": [
+    0.0032,
+    0.0685,
+    0.0951,
+    0.0245,
+    0.0053
+   ],
+   "first_to_last": 0.0916
+  },
+  "m05": {
+   "steps": [],
+   "first_to_last": null
+  },
+  "m06": {
+   "steps": [
+    0.0071,
+    0.0158,
+    0.0224,
+    0.0097,
+    0.0053
+   ],
+   "first_to_last": 0.035
+  }
+ },
+ "bytes": {
+  "m01": [
+   5376,
+   6012,
+   6401,
+   6758,
+   6869,
+   7311
+  ],
+  "m02": [
+   6912,
+   6747
+  ],
+  "m03": [
+   8589
+  ],
+  "m04": [
+   7292,
+   8192,
+   8827,
+   8825,
+   9442,
+   9435
+  ],
+  "m05": [
+   6319
+  ],
+  "m06": [
+   5583,
+   7492,
+   8512,
+   8499,
+   8964,
+   9488
+  ]
+ },
+ "predictions": {
+  "P1": {
+   "held": true,
+   "D_last_version": {
+    "m02": 2,
+    "m03": 1,
+    "m05": 1
+   }
+  },
+  "P2": {
+   "held": true,
+   "K_last_version": {
+    "m01": 6,
+    "m04": 6,
+    "m06": 6
+   }
+  },
+  "P3": {
+   "held": true,
+   "bytes_v1_v6": {
+    "m01": [
+     5376,
+     7311
+    ],
+    "m04": [
+     7292,
+     9435
+    ],
+    "m06": [
+     5583,
+     9488
+    ]
+   }
+  },
+  "P4": {
+   "held": true,
+   "late_codes": [
+    "ADD",
+    "ADD",
+    "ADD",
+    "REORGANISE",
+    "REORGANISE",
+    "TRIM",
+    "TRIM",
+    "ADD",
+    "ADD"
+   ],
+   "reorganise": 2
+  },
+  "P5": {
+   "held": false,
+   "best": {
+    "m01": 6,
+    "m04": 4,
+    "m06": 6
+   }
+  },
+  "P6": {
+   "held": true,
+   "rho": {
+    "m01": 1.0,
+    "m04": 1.0,
+    "m06": 1.0
+   }
+  },
+  "P8": {
+   "held": true,
+   "added": "after the coders answered, before it was run"
+  },
+  "P7": {
+   "held": null,
+   "testable": false,
+   "note": "no D lineage reached three versions"
+  }
+ }
+}

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Carried by the Swell</title>
+<style>
+  html,body{margin:0;padding:0;background:#efeadf;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#26231d;}
+  canvas{position:absolute;left:0;top:0;}
+  .t{position:absolute;left:820px;width:250px;}
+  h1{font-weight:normal;font-size:27px;line-height:1.15;margin:0;letter-spacing:.01em;}
+  p{font-size:12.5px;line-height:1.5;margin:0 0 10px 0;color:#4a443a;}
+  .sm{font-size:11px;color:#6b6457;font-family:Helvetica,Arial,sans-serif;letter-spacing:.02em;}
+  .k{display:flex;gap:0;margin-top:4px;}
+  .k span{flex:1;height:6px;}
+  .kl{display:flex;justify-content:space-between;}
+</style>
+</head>
+<body>
+<canvas id="c" width="2200" height="1600" style="width:1100px;height:800px"></canvas>
+<div class="t" style="top:64px">
+  <h1>Carried by<br>the Swell</h1>
+</div>
+<div class="t" style="top:150px">
+  <p>Buoy 46026, moored eighteen nautical miles west of San Francisco, set loose for 2024. Every half-hour wave report is taken as an order: travel with the waves, in the direction they are going, at the speed of their crests, until the next report.</p>
+  <p>Pushed east-south-east by the North Pacific swell, it reaches the South Pole inside the first month and spends the rest of the year turning around it, lifted back toward the latitudes only when the southern swell of winter arrives.</p>
+  <p id="stats"></p>
+</div>
+<div class="t sm" style="top:610px">
+  <div>Month of the year</div>
+  <div class="k" id="key"></div>
+  <div class="kl"><span>Jan</span><span>Jun</span><span>Dec</span></div>
+  <div style="margin-top:14px;line-height:1.5">South-polar view. Distance from the Pole is drawn on a logarithmic scale; rings at 10, 100, 1&nbsp;000 and 10&nbsp;000&nbsp;km, and the Equator.</div>
+  <div style="margin-top:8px">NDBC 46026, standard meteorological data, 2024: MWD, DPD.</div>
+</div>
+<script src="data/46026h2024.js"></script>
+<script>
+(function(){
+  var SRC='data/46026h2024.txt';
+  function load(cb){
+    if(window.BUOY_46026_2024){cb(window.BUOY_46026_2024);return;}
+    try{
+      var x=new XMLHttpRequest();x.open('GET',SRC,true);
+      x.onload=function(){cb(x.responseText);};
+      x.onerror=function(){fetch(SRC).then(function(r){return r.text();}).then(cb);};
+      x.send();
+    }catch(e){fetch(SRC).then(function(r){return r.text();}).then(cb);}
+  }
+  var MONTH=['#2f4b7c','#3d5f8e','#41799b','#3f8f98','#4a9e86','#77a86b','#a7aa55','#c99a45','#d7803e','#cf5f3d','#b1443f','#7f3445'];
+  var key=document.getElementById('key');
+  MONTH.forEach(function(c){var s=document.createElement('span');s.style.background=c;key.appendChild(s);});
+
+  load(function(txt){
+    var R=6371.0, d2r=Math.PI/180;
+    var rows=txt.split('\n'), recs=[];
+    for(var i=0;i<rows.length;i++){
+      var l=rows[i]; if(!l||l.charAt(0)==='#') continue;
+      var f=l.trim().split(/\s+/); if(f.length<12) continue;
+      var T=+f[9], D=+f[11];
+      if(D===999||T===99) continue;
+      var t=Date.UTC(+f[0],+f[1]-1,+f[2],+f[3],+f[4])/1000;
+      recs.push({t:t,T:T,D:D,m:+f[1]-1});
+    }
+    // dead-reckon: move with the waves (toward MWD+180) at deep-water phase speed g T / 2pi
+    var lat=37.759*d2r, lon=-122.833*d2r;
+    var pts=[{lat:lat,lon:lon,m:0}], total=0, lonTurn=0;
+    for(var j=0;j<recs.length;j++){
+      var r=recs[j];
+      var nt=(j+1<recs.length)?recs[j+1].t:r.t+1800;
+      var dt=Math.min(nt-r.t,3*3600);
+      var c=9.81*r.T/(2*Math.PI);           // m/s
+      var dist=c*dt/1000;                    // km
+      total+=dist;
+      var del=dist/R, th=(r.D+180)*d2r;
+      var lat2=Math.asin(Math.sin(lat)*Math.cos(del)+Math.cos(lat)*Math.sin(del)*Math.cos(th));
+      var dl=Math.atan2(Math.sin(th)*Math.sin(del)*Math.cos(lat),Math.cos(del)-Math.sin(lat)*Math.sin(lat2));
+      lat=lat2; lon+=dl; lonTurn+=dl;
+      pts.push({lat:lat,lon:lon,m:r.m});
+    }
+
+    var cv=document.getElementById('c'), g=cv.getContext('2d');
+    g.scale(2,2);
+    var CX=410, CY=400, RAD=372;
+    var rMin=2.5, rMax=R*(Math.PI/2+38*d2r); // km from pole
+    var lMin=Math.log(rMin), lMax=Math.log(rMax);
+    function rad(km){ if(km<rMin) km=rMin; return RAD*(Math.log(km)-lMin)/(lMax-lMin); }
+    function vec(p){return [Math.cos(p.lat)*Math.cos(p.lon),Math.cos(p.lat)*Math.sin(p.lon),Math.sin(p.lat)];}
+    function proj(v){
+      var la=Math.asin(Math.max(-1,Math.min(1,v[2]))), lo=Math.atan2(v[1],v[0]);
+      var km=R*(la+Math.PI/2), rr=rad(km);
+      // south-polar view: longitude runs clockwise, 0 deg at top
+      var a=-lo;
+      return [CX+rr*Math.sin(a), CY-rr*Math.cos(a)];
+    }
+
+    // ground
+    g.fillStyle='#efeadf'; g.fillRect(0,0,1100,800);
+    // disc
+    g.beginPath(); g.arc(CX,CY,RAD+6,0,2*Math.PI); g.fillStyle='#e7e1d3'; g.fill();
+
+    // rings
+    g.font='10px Helvetica,Arial,sans-serif'; g.textAlign='left';
+    var rings=[[10,'10 km'],[100,'100 km'],[1000,'1 000 km'],[10000,'10 000 km']];
+    rings.forEach(function(q){
+      var rr=rad(q[0]); g.beginPath(); g.arc(CX,CY,rr,0,2*Math.PI);
+      g.strokeStyle='rgba(60,52,40,0.22)'; g.lineWidth=0.6; g.setLineDash([2,3]); g.stroke(); g.setLineDash([]);
+    });
+    var eq=rad(R*Math.PI/2);
+    g.beginPath(); g.arc(CX,CY,eq,0,2*Math.PI); g.strokeStyle='rgba(60,52,40,0.45)'; g.lineWidth=0.8; g.stroke();
+    // meridians
+    for(var k=0;k<12;k++){
+      var a=k*Math.PI/6; g.beginPath();
+      g.moveTo(CX+rad(rMin)*Math.sin(a),CY-rad(rMin)*Math.cos(a));
+      g.lineTo(CX+RAD*Math.sin(a),CY-RAD*Math.cos(a));
+      g.strokeStyle='rgba(60,52,40,0.10)'; g.lineWidth=0.6; g.stroke();
+    }
+
+    // track
+    g.lineCap='round'; g.lineJoin='round';
+    for(var s=1;s<pts.length;s++){
+      var A=vec(pts[s-1]), B=vec(pts[s]);
+      var dot=A[0]*B[0]+A[1]*B[1]+A[2]*B[2]; dot=Math.max(-1,Math.min(1,dot));
+      var om=Math.acos(dot);
+      var poleKm=R*(Math.min(pts[s-1].lat,pts[s].lat)+Math.PI/2);
+      var n=Math.max(2,Math.min(400,Math.ceil(om*R/Math.max(0.05,poleKm*0.15))));
+      g.beginPath();
+      for(var u=0;u<=n;u++){
+        var tt=u/n, v;
+        if(om<1e-9){v=A;} else {
+          var sa=Math.sin((1-tt)*om)/Math.sin(om), sb=Math.sin(tt*om)/Math.sin(om);
+          v=[sa*A[0]+sb*B[0],sa*A[1]+sb*B[1],sa*A[2]+sb*B[2]];
+        }
+        var P=proj(v); if(u===0) g.moveTo(P[0],P[1]); else g.lineTo(P[0],P[1]);
+      }
+      g.strokeStyle=MONTH[pts[s].m]; g.globalAlpha=0.32; g.lineWidth=0.55; g.stroke();
+    }
+    g.globalAlpha=1;
+
+    // ring labels (over track)
+    g.fillStyle='rgba(50,44,34,0.75)';
+    rings.forEach(function(q){ var rr=rad(q[0]); g.fillText(q[1],CX+4,CY-rr-3); });
+    g.fillText('Equator',CX+4,CY+eq+12);
+
+    // the mooring
+    var M=proj(vec({lat:37.759*d2r,lon:-122.833*d2r}));
+    g.beginPath(); g.arc(M[0],M[1],4.2,0,2*Math.PI); g.fillStyle='#efeadf'; g.fill();
+    g.lineWidth=1.3; g.strokeStyle='#26231d'; g.stroke();
+    g.beginPath(); g.arc(M[0],M[1],1.4,0,2*Math.PI); g.fillStyle='#26231d'; g.fill();
+    g.font='italic 12px Georgia,serif'; g.fillStyle='#26231d';
+    g.textAlign='right'; var lx=M[0]-9, ly=M[1]-8;
+    g.fillText('46026, where it stayed',lx,ly);
+    g.textAlign='left';
+    // the pole
+    g.beginPath(); g.arc(CX,CY,1.6,0,2*Math.PI); g.fillStyle='#26231d'; g.fill();
+
+    var laps=Math.abs(lonTurn)/(2*Math.PI);
+    document.getElementById('stats').innerHTML=
+      recs.length.toLocaleString('en-US')+' wave reports. '+
+      Math.round(total).toLocaleString('en-US')+' km travelled, '+
+      (total/40075).toFixed(1)+' times the Equator. '+
+      Math.round(laps).toLocaleString('en-US')+' turns around the Pole.';
+    document.body.setAttribute('data-done','1');
+  });
+})();
+</script>
+</body>
+</html>

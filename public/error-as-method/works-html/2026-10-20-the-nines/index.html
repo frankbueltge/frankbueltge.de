@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Nines</title>
+<style>
+:root{--bg:#f3efe6;--fg:#1d1c19;--mute:#6b665c;--line:#cfc8b8;--card:#fbf8f1;--sea:#2e5c73;--nine:#b5452b;--hi:#e9dcb4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e4da;--mute:#9a958a;--line:#3a3d42;--card:#1d2024;--sea:#7fb2c9;--nine:#e07a5c;--hi:#3d3a2a;}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e4da;--mute:#9a958a;--line:#3a3d42;--card:#1d2024;--sea:#7fb2c9;--nine:#e07a5c;--hi:#3d3a2a;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Georgia,"Iowan Old Style",serif}
+main{max-width:1180px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:2.4rem;margin:0 0 4px;font-weight:normal;letter-spacing:.01em}
+h2{font-weight:normal;font-size:1.35rem;margin:40px 0 6px;border-top:1px solid var(--line);padding-top:16px}
+p{max-width:760px}
+.lede{color:var(--mute);margin:0 0 18px}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.82rem}
+.toggle{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}
+.toggle button{font:inherit;font-size:.9rem;background:var(--card);color:var(--fg);border:1px solid var(--line);padding:6px 12px;cursor:pointer;border-radius:2px}
+.toggle button[aria-pressed="true"]{border-color:var(--fg);background:var(--hi)}
+canvas{display:block;width:100%;background:var(--card);border:1px solid var(--line)}
+.cap{color:var(--mute);font-size:.88rem;margin:6px 0 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);padding:8px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.card:hover,.card:focus{border-color:var(--fg);outline:none}
+.card img{width:100%;aspect-ratio:11/8;object-fit:cover;display:block;border:1px solid var(--line)}
+.card h3{font-size:1rem;font-weight:normal;margin:6px 0 4px}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-family:ui-monospace,Menlo,monospace;font-size:.7rem;border:1px solid var(--line);padding:1px 5px;color:var(--mute)}
+.tag.found{border-color:var(--nine);color:var(--nine)}
+.tag.drawn{background:var(--nine);color:var(--bg);border-color:var(--nine)}
+.shelf{columns:4 240px;column-gap:18px;font-size:.78rem;line-height:1.35}
+.shelf div{break-inside:avoid;padding:2px 4px;margin:0 0 2px;color:var(--mute)}
+.shelf div.m{color:var(--fg);background:var(--hi)}
+.shelf div.x{border-left:3px solid var(--nine)}
+.shelf b{font-family:ui-monospace,Menlo,monospace;font-weight:normal;font-size:.7rem}
+table{border-collapse:collapse;font-size:.9rem;width:100%;max-width:860px}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+.ok{color:var(--sea)}.no{color:var(--nine)}
+dialog{max-width:min(1140px,96vw);width:100%;background:var(--bg);color:var(--fg);border:1px solid var(--line);padding:14px}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog img{width:100%;display:block;border:1px solid var(--line)}
+dialog pre{white-space:pre-wrap;font:15px/1.5 Georgia,serif;max-width:820px}
+dialog button{font:inherit;float:right}
+.legend span{display:inline-block;width:10px;height:10px;margin:0 4px 0 12px;vertical-align:middle}
+</style>
+</head>
+<body>
+<main>
+<h1>The Nines</h1>
+<p class="lede">Buoy 46026, 18 nautical miles west of San Francisco, 2024. Its archive file writes <span class="mono">99.00</span>, <span class="mono">999</span> or <span class="mono">9999.0</span> wherever nothing was measured. Twelve fresh machine makers got the file. Six were told to read it wrongly on purpose.</p>
+
+<div class="toggle" role="group" aria-label="How to hold the nines">
+  <button id="bMiss" aria-pressed="true">hold the nines as missing</button>
+  <button id="bVal" aria-pressed="false">hold the nines as values (99 m waves)</button>
+</div>
+<canvas id="sea" height="300" aria-label="Wave height at buoy 46026 for every row of 2024"></canvas>
+<p class="cap" id="seaCap"></p>
+<canvas id="cols" height="230" aria-label="Which columns hold a measurement, day by day"></canvas>
+<p class="cap">Each row is a column of the file, each cell a day. The stronger the cell, the larger the share of that day's rows that hold a measurement. Faint cells hold only nines; the empty band is days with no rows at all. The red line is <b>4 February 22:50 UTC</b>: the last wind and pressure reading, 17.8 m/s gusting 24.4, at 989.4 hPa, the lowest pressure of the month. Then 47 hours without any row, then nines in the wind and pressure columns for the rest of the year.</p>
+
+<h2>Told nothing</h2>
+<p class="lede">Make a work from this file. All six left the nines out. All six said in their notes that values were missing, and five made the moment the wind stopped part of the form.</p>
+<div class="grid" id="gP"></div>
+
+<h2>Told to read it wrongly, on purpose</h2>
+<p class="lede">Two took the nines as values: the record's own error. Both readings stand word for word on the shelf below. Three let the moored buoy travel on its waves. The blind coder found no shelf line for two of them. One of the six found 22:50.</p>
+<div class="grid" id="gE"></div>
+
+<h2>The shelf</h2>
+<p class="lede">Before any maker ran, four fresh agents without tools each listed 25 wrong readings they would reach for. Highlighted lines are the ones the blind coder matched to a maker's reading. The red edge marks lines that read missing values as data. All four lists hold one.</p>
+<div class="shelf" id="shelf"></div>
+
+<h2>Predictions, fixed before anything ran</h2>
+<table id="pred"><thead><tr><th></th><th>claim</th><th>result</th></tr></thead><tbody></tbody></table>
+<p class="cap">Rules, briefs and predictions: <span class="mono">PREDICTIONS.md</span>, committed before the first agent. Codes: <span class="mono">coder/codes.json</span>. Handling is the practice's own reading of each page's code, quoted in <span class="mono">results.json</span>. The 22:50 count was not registered. Source: NDBC, <a href="https://www.ndbc.noaa.gov/data/historical/stdmet/46026h2024.txt.gz">46026h2024.txt.gz</a>; on the nines: <a href="https://www.ndbc.noaa.gov/faq/measdes.shtml">Measurement Descriptions and Units</a>.</p>
+</main>
+<dialog id="dlg"><button id="dclose">close</button><div id="dbody"></div></dialog>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const N=window.NINES, css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const YEAR=366*1440, CUT=(31+3)*1440+22*60+50;
+function fit(c){const r=c.getBoundingClientRect(),d=window.devicePixelRatio||1,h=+c.getAttribute('height');c.width=Math.round(r.width*d);c.height=Math.round(h*d);c.style.height=h+'px';const g=c.getContext('2d');g.setTransform(d,0,0,d,0,0);return [g,r.width,h];}
+let mode='miss';
+function drawSea(){
+  const [g,W,H]=fit(document.getElementById('sea'));const L=44,R=10,T=14,B=26,w=W-L-R,h=H-T-B;
+  g.clearRect(0,0,W,H);const top=mode==='miss'?7.5:100;const y=v=>T+h-(v/top)*h,x=m=>L+m/YEAR*w;
+  g.strokeStyle=css('--line');g.fillStyle=css('--mute');g.font='11px ui-monospace,Menlo,monospace';g.lineWidth=1;
+  const ticks=mode==='miss'?[0,2,4,6]:[0,25,50,75,99];
+  for(const t of ticks){g.beginPath();g.moveTo(L,y(t));g.lineTo(L+w,y(t));g.stroke();g.fillText(t+' m',4,y(t)+4);}
+  const mo=['J','F','M','A','M','J','J','A','S','O','N','D'],md=[31,29,31,30,31,30,31,31,30,31,30,31];let acc=0;
+  for(let i=0;i<12;i++){g.fillText(mo[i],x(acc*1440)+3,H-8);acc+=md[i];}
+  let nN=0,nR=0,mx=0;
+  for(let i=0;i<N.mins.length;i++){const v=N.wv[i]/100,isN=v>=99;
+    if(isN){nN++;if(mode==='miss')continue;g.fillStyle=css('--nine');g.fillRect(x(N.mins[i]),y(v),1,1.6);}
+    else{nR++;mx=Math.max(mx,v);g.fillStyle=css('--sea');g.fillRect(x(N.mins[i]),y(v),1,1.4);}}
+  g.strokeStyle=css('--nine');g.beginPath();g.moveTo(x(CUT),T);g.lineTo(x(CUT),T+h);g.stroke();
+  g.fillStyle=css('--fg');g.font='12px Georgia,serif';g.fillText('4 Feb 22:50, the wind stops',x(CUT)+5,mode==='miss'?T+12:T+40);
+  document.getElementById('seaCap').textContent=mode==='miss'
+   ?`Wave height, every row of the file. ${nR.toLocaleString('en')} rows hold a wave, the highest ${mx.toFixed(2)} m. ${nN.toLocaleString('en')} rows hold 99.00 and are left out, as the publisher's documentation says.`
+   :`The same rows with the nines read as numbers: ${nN.toLocaleString('en')} waves of 99 m. The whole measured sea is the hairline at the bottom.`;
+}
+function drawCols(){
+  const [g,W,H]=fit(document.getElementById('cols'));const L=50,R=10,T=6,B=6,w=W-L-R,rh=(H-T-B)/N.cols.length;
+  g.clearRect(0,0,W,H);g.font='10px ui-monospace,Menlo,monospace';
+  N.cols.forEach((c,i)=>{g.fillStyle=css('--mute');g.fillText(c,4,T+i*rh+rh*.7);
+    for(let d=0;d<366;d++){const n=N.rowsday[d];const f=n?N.day[i][d]/n:0;
+      g.fillStyle=n?css('--line'):css('--bg');g.fillRect(L+d/366*w,T+i*rh+1,w/366+.5,rh-2);
+      if(f>0){g.globalAlpha=.25+.75*f;g.fillStyle=css('--fg');g.fillRect(L+d/366*w,T+i*rh+1,w/366+.5,rh-2);g.globalAlpha=1;}}});
+  g.strokeStyle=css('--nine');g.lineWidth=2;const xc=L+CUT/YEAR*w;g.beginPath();g.moveTo(xc,0);g.lineTo(xc,H);g.stroke();
+}
+const title=r=>(N.notes[r].match(/^#\s*(.+)$/m)||[,r])[1];
+function card(r){const o=N.rooms[r],b=document.createElement('button');b.className='card';
+  const tags=[`<span class="tag">${r}</span>`];
+  tags.push(`<span class="tag${o.handling==='DRAWN'?' drawn':''}">nines ${o.handling.toLowerCase()}</span>`);
+  if(o.found_2250)tags.push('<span class="tag found">found 22:50</span>');
+  if(o.code)tags.push(`<span class="tag">shelf: ${o.code}${o.shelf.length?' '+o.shelf.join(' '):''}</span>`);
+  b.innerHTML=`<img src="rooms/${r}/final.png" alt="${title(r)}, the maker's work, rendered at 1100 by 800" loading="lazy"><h3>${title(r)}</h3><div class="tags">${tags.join('')}</div>`;
+  b.addEventListener('click',()=>{document.getElementById('dbody').innerHTML=`<img src="rooms/${r}/final.png" alt=""><pre></pre><p class="cap">${o.code?'Coder: '+N.why[r]:''}</p><p class="cap mono">${o.line.replace(/</g,'&lt;')}</p>`;
+    document.querySelector('#dbody pre').textContent=N.notes[r].replace(/\n?\((The page|The data|Technical note|`data)[\s\S]*?\)\s*$/,'');document.getElementById('dlg').showModal();});
+  return b;}
+Object.keys(N.rooms).forEach(r=>document.getElementById(N.rooms[r].arm==='P'?'gP':'gE').appendChild(card(r)));
+document.getElementById('dclose').addEventListener('click',()=>document.getElementById('dlg').close());
+const matched={};Object.entries(N.rooms).forEach(([r,o])=>(o.shelf||[]).forEach(s=>(matched[s]=matched[s]||[]).push(r)));
+const sh=document.getElementById('shelf');
+N.shelf.forEach(([id,t])=>{const d=document.createElement('div');if(matched[id])d.className='m';if(N.shelfMissing.includes(id))d.classList.add('x');
+  d.innerHTML=`<b>${id}${matched[id]?' · '+matched[id].join(' '):''}</b> `;d.appendChild(document.createTextNode(t));sh.appendChild(d);});
+const tb=document.querySelector('#pred tbody');
+Object.entries(N.pred).forEach(([k,p])=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${k}</td><td>${p.claim}</td><td class="${p.holds?'ok':'no'}">${p.value} · ${p.holds?'holds':'fails'}</td>`;tb.appendChild(tr);});
+function setMode(m){mode=m;document.getElementById('bMiss').setAttribute('aria-pressed',m==='miss');document.getElementById('bVal').setAttribute('aria-pressed',m==='val');drawSea();}
+document.getElementById('bMiss').addEventListener('click',()=>setMode('miss'));
+document.getElementById('bVal').addEventListener('click',()=>setMode('val'));
+function all(){drawSea();drawCols();}all();
+let to;window.addEventListener('resize',()=>{clearTimeout(to);to=setTimeout(all,150);});
+})();
+</script>
+</body>
+</html>

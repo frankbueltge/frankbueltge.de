@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-One Beats</title>
+<style>
+  :root { --paper:#efeae0; --ink:#1c1a17; --faint:#8a8378; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="Sixty-one days of an hourly record, cut into one-day strips and stacked down the page; a daily pulse sinks, lifts twice, and stops."></canvas>
+<script>
+const V=[__DATA__];
+const W=1100,H=800,dpr=Math.max(1,window.devicePixelRatio||1);
+const cv=document.getElementById('c');
+cv.width=W*dpr; cv.height=H*dpr; cv.style.width=W+'px'; cv.style.height=H+'px';
+const g=cv.getContext('2d'); g.scale(dpr,dpr);
+const PAPER='#efeae0', INK='#1c1a17', FAINT='#8a8378';
+g.fillStyle=PAPER; g.fillRect(0,0,W,H);
+
+// Each strip is 24 hours, starting at the hour of the record's daily low (hour 20),
+// so every line holds one beat: the sudden rise at the left, the long fall to the right.
+const OFF=20, N=V.length;
+const rows=[];
+rows.push({start:OFF-24});                 // partial first strip (record starts mid-strip)
+for(let s=OFF;s<N;s+=24) rows.push({start:s});
+const X0=190, X1=870, TOP=150, BOT=756;
+const step=(BOT-TOP)/(rows.length-1);
+const AMP=84, BASE=0.07;
+const xh=h=>X0+(X1-X0)*h/23;
+
+// draw from the top row down; each lower row occludes the one above it
+rows.forEach((r,k)=>{
+  const y0=TOP+k*step;
+  const pts=[];
+  for(let h=0;h<24;h++){
+    const i=r.start+h; if(i<0||i>=N) continue;
+    pts.push([xh(h), y0-AMP*Math.max(0,V[i]-BASE)]);
+  }
+  if(pts.length<2) return;
+  // occluding paper fill
+  g.beginPath(); g.moveTo(pts[0][0],y0+1);
+  pts.forEach(p=>g.lineTo(p[0],p[1]));
+  g.lineTo(pts[pts.length-1][0],y0+1); g.closePath();
+  g.fillStyle=PAPER; g.fill();
+  // a whisper of ink under the curve, heavier where the value is higher
+  const grd=g.createLinearGradient(0,y0-AMP*0.85,0,y0);
+  grd.addColorStop(0,'rgba(28,26,23,0.07)'); grd.addColorStop(1,'rgba(28,26,23,0.0)');
+  g.fillStyle=grd; g.fill();
+  // the line itself, smoothed through the hourly points
+  g.beginPath(); g.moveTo(pts[0][0],pts[0][1]);
+  for(let j=1;j<pts.length-1;j++){
+    const mx=(pts[j][0]+pts[j+1][0])/2, my=(pts[j][1]+pts[j+1][1])/2;
+    g.quadraticCurveTo(pts[j][0],pts[j][1],mx,my);
+  }
+  g.lineTo(pts[pts.length-1][0],pts[pts.length-1][1]);
+  g.strokeStyle=INK; g.lineWidth=1.15; g.lineJoin='round'; g.lineCap='round'; g.stroke();
+});
+
+// margin: dates for every seventh strip, quiet
+const MON=['Jan','Feb','Mar'];
+function dateOf(hour){ const d=new Date(Date.UTC(2025,0,15)); d.setUTCHours(hour); return d; }
+g.font='11px Georgia, "Times New Roman", serif'; g.fillStyle=FAINT; g.textAlign='right'; g.textBaseline='middle';
+rows.forEach((r,k)=>{
+  if(k===0||k%7!==1) return;
+  const d=dateOf(r.start+12);
+  g.fillText(d.getUTCDate()+' '+MON[d.getUTCMonth()], X0-22, TOP+k*step-2);
+});
+const last=dateOf(N-1);
+g.fillText(last.getUTCDate()+' '+MON[last.getUTCMonth()], X0-22, TOP+(rows.length-1)*step-2);
+
+// title block, right margin
+g.textAlign='left'; g.textBaseline='alphabetic';
+g.fillStyle=INK; g.font='italic 22px Georgia, "Times New Roman", serif';
+g.fillText('Sixty-One Beats', 912, 116);
+g.fillStyle=FAINT; g.font='12px Georgia, "Times New Roman", serif';
+['1,464 hourly values,','15 January to 16 March 2025,','cut into strips of one day','and laid down the page.','','Each line is one beat:','a sudden rise, a long fall.'].forEach((t,i)=>g.fillText(t,912,146+i*17));
+</script>
+</body>
+</html>

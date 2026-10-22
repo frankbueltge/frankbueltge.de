@@ -1,0 +1,408 @@
+{
+ "n": 17596,
+ "deaths": 856,
+ "injuries": 11878,
+ "tornadoes_with_deaths": 241,
+ "tornadoes_with_injuries": 1050,
+ "scales": {
+  "far_past": {
+   "mean": 0.7389,
+   "sd": 0.1453,
+   "undefined": 279
+  },
+  "far_future": {
+   "mean": 0.7394,
+   "sd": 0.1485,
+   "undefined": 236
+  },
+  "far_state_past": {
+   "mean": 0.7461,
+   "sd": 0.0963,
+   "undefined": 84
+  },
+  "empties_county": {
+   "mean": 0.8268,
+   "sd": 0.7629,
+   "undefined": 0
+  },
+  "run_county": {
+   "mean": 0.5917,
+   "sd": 0.6419,
+   "undefined": 0
+  }
+ },
+ "fits": {
+  "past_inj": {
+   "exposure": "z_far_past",
+   "y": "inj",
+   "n": 17596,
+   "converged": true,
+   "alpha": 8.607,
+   "irr": 1.181,
+   "lo": 1.06,
+   "hi": 1.315,
+   "p": 0.0024868899228822345,
+   "warned": {
+    "irr": 0.614,
+    "lo": 0.49,
+    "hi": 0.768,
+    "p": 1.978450349108829e-05
+   }
+  },
+  "future_inj": {
+   "exposure": "z_far_future",
+   "y": "inj",
+   "n": 17596,
+   "converged": true,
+   "alpha": 8.677,
+   "irr": 1.081,
+   "lo": 0.906,
+   "hi": 1.291,
+   "p": 0.3870347182648679,
+   "warned": {
+    "irr": 0.617,
+    "lo": 0.492,
+    "hi": 0.773,
+    "p": 2.6861559450159927e-05
+   }
+  },
+  "empties_inj": {
+   "exposure": "z_empties",
+   "y": "inj",
+   "n": 17596,
+   "converged": true,
+   "alpha": 8.681,
+   "irr": 0.937,
+   "lo": 0.842,
+   "hi": 1.043,
+   "p": 0.2322056911670849,
+   "warned": {
+    "irr": 0.613,
+    "lo": 0.488,
+    "hi": 0.769,
+    "p": 2.463556759418011e-05
+   }
+  },
+  "run_inj": {
+   "exposure": "z_run",
+   "y": "inj",
+   "n": 17596,
+   "converged": true,
+   "alpha": 8.697,
+   "irr": 0.999,
+   "lo": 0.907,
+   "hi": 1.1,
+   "p": 0.9796173598234134,
+   "warned": {
+    "irr": 0.61,
+    "lo": 0.486,
+    "hi": 0.765,
+    "p": 1.9128257472983615e-05
+   }
+  },
+  "state_inj": {
+   "exposure": "z_far_state",
+   "y": "inj",
+   "n": 17596,
+   "converged": true,
+   "alpha": 8.698,
+   "irr": 1.015,
+   "lo": 0.903,
+   "hi": 1.141,
+   "p": 0.8007612105353572,
+   "warned": {
+    "irr": 0.61,
+    "lo": 0.486,
+    "hi": 0.765,
+    "p": 1.9348816797075043e-05
+   }
+  },
+  "past_fat": {
+   "exposure": "z_far_past",
+   "y": "fat",
+   "n": 17596,
+   "converged": true,
+   "alpha": 4.745,
+   "irr": 1.268,
+   "lo": 1.063,
+   "hi": 1.513,
+   "p": 0.008332958096438432,
+   "warned": {
+    "irr": 0.894,
+    "lo": 0.609,
+    "hi": 1.311,
+    "p": 0.565194334980267
+   }
+  },
+  "future_fat": {
+   "exposure": "z_far_future",
+   "y": "fat",
+   "n": 17596,
+   "converged": true,
+   "alpha": 4.788,
+   "irr": 1.274,
+   "lo": 1.079,
+   "hi": 1.504,
+   "p": 0.00428801333690002,
+   "warned": {
+    "irr": 0.866,
+    "lo": 0.577,
+    "hi": 1.298,
+    "p": 0.48506437985061557
+   }
+  },
+  "empties_fat": {
+   "exposure": "z_empties",
+   "y": "fat",
+   "n": 17596,
+   "converged": true,
+   "alpha": 4.885,
+   "irr": 1.072,
+   "lo": 0.898,
+   "hi": 1.279,
+   "p": 0.4433681067230464,
+   "warned": {
+    "irr": 0.849,
+    "lo": 0.572,
+    "hi": 1.261,
+    "p": 0.4173556226005799
+   }
+  },
+  "run_fat": {
+   "exposure": "z_run",
+   "y": "fat",
+   "n": 17596,
+   "converged": true,
+   "alpha": 4.867,
+   "irr": 1.045,
+   "lo": 0.877,
+   "hi": 1.245,
+   "p": 0.6204757619467939,
+   "warned": {
+    "irr": 0.852,
+    "lo": 0.576,
+    "hi": 1.259,
+    "p": 0.4210534727402572
+   }
+  },
+  "state_fat": {
+   "exposure": "z_far_state",
+   "y": "fat",
+   "n": 17596,
+   "converged": false,
+   "alpha": 4.748,
+   "irr": 1.371,
+   "lo": 1.134,
+   "hi": 1.659,
+   "p": 0.0011291772810732965,
+   "warned": {
+    "irr": 0.894,
+    "lo": 0.607,
+    "hi": 1.315,
+    "p": 0.5684976336047267
+   }
+  },
+  "past_fe_all_inj": {
+   "exposure": "z_far_past",
+   "y": "inj",
+   "n": 17596,
+   "converged": false,
+   "alpha": 7.181,
+   "irr": 1.009,
+   "lo": 0.907,
+   "hi": 1.124,
+   "p": 0.8640065617457398,
+   "warned": {
+    "irr": 0.616,
+    "lo": 0.514,
+    "hi": 0.739,
+    "p": 1.581558568908305e-07
+   }
+  },
+  "past_fe_inj": {
+   "exposure": "z_far_past",
+   "y": "inj",
+   "n": 17307,
+   "converged": true,
+   "alpha": 7.181,
+   "irr": 1.009,
+   "lo": 0.907,
+   "hi": 1.124,
+   "p": 0.8640065617171976,
+   "warned": {
+    "irr": 0.616,
+    "lo": 0.514,
+    "hi": 0.739,
+    "p": 1.58155856891461e-07
+   },
+   "offices_dropped": 22
+  },
+  "future_fe_inj": {
+   "exposure": "z_far_future",
+   "y": "inj",
+   "n": 17307,
+   "converged": true,
+   "alpha": 7.172,
+   "irr": 0.947,
+   "lo": 0.838,
+   "hi": 1.069,
+   "p": 0.3773138344389775,
+   "warned": {
+    "irr": 0.618,
+    "lo": 0.516,
+    "hi": 0.741,
+    "p": 1.8162694589839785e-07
+   }
+  },
+  "past_fe_all_fat": {
+   "exposure": "z_far_past",
+   "y": "fat",
+   "n": 17596,
+   "converged": false,
+   "alpha": 3.068,
+   "irr": 1.15,
+   "lo": 0.947,
+   "hi": 1.397,
+   "p": 0.15758959477619616,
+   "warned": {
+    "irr": 0.882,
+    "lo": 0.618,
+    "hi": 1.259,
+    "p": 0.48880046419043066
+   }
+  },
+  "past_fe_fat": {
+   "exposure": "z_far_past",
+   "y": "fat",
+   "n": 13143,
+   "converged": true,
+   "alpha": 3.068,
+   "irr": 1.15,
+   "lo": 0.433,
+   "hi": 3.054,
+   "p": 0.7786812776085037,
+   "warned": {
+    "irr": 0.882,
+    "lo": 0.356,
+    "hi": 2.187,
+    "p": 0.7861403111189234
+   },
+   "offices_dropped": 60
+  },
+  "future_fe_fat": {
+   "exposure": "z_far_future",
+   "y": "fat",
+   "n": 13143,
+   "converged": true,
+   "alpha": 3.088,
+   "irr": 1.168,
+   "lo": 0.802,
+   "hi": 1.701,
+   "p": 0.4189545763923832,
+   "warned": {
+    "irr": 0.866,
+    "lo": 0.07,
+    "hi": 10.721,
+    "p": 0.9107951255129187
+   }
+  },
+  "both_inj": {
+   "n": 17596,
+   "converged": true,
+   "past": {
+    "irr": 1.168,
+    "lo": 1.039,
+    "hi": 1.313,
+    "p": 0.009370879220238878
+   },
+   "future": {
+    "irr": 1.033,
+    "lo": 0.862,
+    "hi": 1.237,
+    "p": 0.7263730279673483
+   }
+  },
+  "both_fat": {
+   "n": 17596,
+   "converged": true,
+   "past": {
+    "irr": 1.209,
+    "lo": 1.001,
+    "hi": 1.46,
+    "p": 0.04902941403415425
+   },
+   "future": {
+    "irr": 1.208,
+    "lo": 1.011,
+    "hi": 1.443,
+    "p": 0.037601674710004536
+   }
+  }
+ },
+ "by_tercile": {
+  "low": {
+   "n": 5812,
+   "far_range": [
+    0.0,
+    0.684
+   ],
+   "deaths_per_100": 2.99,
+   "injuries_per_100": 45.78,
+   "share_EF2plus": 0.102,
+   "share_south": 0.462,
+   "share_night": 0.233
+  },
+  "mid": {
+   "n": 5745,
+   "far_range": [
+    0.685,
+    0.804
+   ],
+   "deaths_per_100": 4.06,
+   "injuries_per_100": 56.76,
+   "share_EF2plus": 0.113,
+   "share_south": 0.537,
+   "share_night": 0.219
+  },
+  "high": {
+   "n": 5760,
+   "far_range": [
+    0.804,
+    1.0
+   ],
+   "deaths_per_100": 7.73,
+   "injuries_per_100": 101.74,
+   "share_EF2plus": 0.109,
+   "share_south": 0.577,
+   "share_night": 0.223
+  }
+ },
+ "corr_past_future": 0.319,
+ "predictions": {
+  "P1": {
+   "text": "FAR_past injuries IRR > 1, interval above 1",
+   "held": true
+  },
+  "P2": {
+   "text": "FAR_past deaths IRR in [1.00, 1.30]",
+   "held": true
+  },
+  "P3": {
+   "text": "FAR_future injuries IRR inside FAR_past's interval",
+   "held": true
+  },
+  "P4": {
+   "text": "office FE: FAR_past injuries interval includes 1",
+   "held": true
+  },
+  "P5": {
+   "text": "empties_county injuries interval includes 1",
+   "held": true
+  },
+  "P6": {
+   "text": "run_county injuries interval includes 1",
+   "held": true
+  }
+ },
+ "H2_refuted": false
+}

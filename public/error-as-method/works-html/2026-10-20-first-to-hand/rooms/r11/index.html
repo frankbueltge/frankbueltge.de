@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Waiting at Old Faithful</title>
+<style>
+  html,body{margin:0;background:#0d1114;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#cfc8bb;}
+  canvas{display:block}
+</style>
+<script src="data/intervals.js"></script>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script>
+(function(){
+  const W=1100,H=800, dpr=window.devicePixelRatio||1;
+  const cv=document.getElementById('c');
+  cv.width=W*dpr; cv.height=H*dpr; cv.style.width=W+'px'; cv.style.height=H+'px';
+  const g=cv.getContext('2d'); g.scale(dpr,dpr);
+  g.fillStyle='#0d1114'; g.fillRect(0,0,W,H);
+
+  // plot geometry
+  const L=96, R=1040, T=70, B=724;
+  const MIN=35, MAX=130;
+  const y0=1970, m0=0, y1=2026, m1=10;      // months 1970-01 .. 2026-10
+  const NM=(y1-y0)*12+(m1-m0);
+  const rowH=(B-T)/NM;
+  const PW=Math.round(R-L);
+
+  // decode data
+  const rows=new Array(NM); for(let i=0;i<NM;i++) rows[i]=[];
+  let t=0;
+  const parts=window.OF.split(';');
+  for(const p of parts){
+    const k=p.indexOf(',');
+    t+=+p.slice(0,k);
+    const iv=(+p.slice(k+1))/4;
+    const d=new Date(t*60000);
+    const mi=(d.getUTCFullYear()-y0)*12+d.getUTCMonth();
+    if(mi>=0&&mi<NM) rows[mi].push(iv);
+  }
+
+  // per-month density at pixel resolution, gaussian kernel
+  const sig=0.9; // minutes
+  const pxPerMin=PW/(MAX-MIN);
+  const kr=Math.ceil(3*sig*pxPerMin);
+  const kern=[]; for(let i=-kr;i<=kr;i++){const m=i/pxPerMin;kern.push(Math.exp(-m*m/(2*sig*sig)));}
+  const dens=[];
+  let gmax=0;
+  for(let r=0;r<NM;r++){
+    const a=rows[r]; if(a.length<25){dens.push(null);continue;}
+    const h=new Float32Array(PW);
+    for(const v of a){const x=Math.round((v-MIN)*pxPerMin); if(x>=0&&x<PW) h[x]++;}
+    const s=new Float32Array(PW);
+    for(let x=0;x<PW;x++){ if(!h[x]) continue; for(let j=-kr;j<=kr;j++){const xx=x+j; if(xx>=0&&xx<PW) s[xx]+=h[x]*kern[j+kr];} }
+    for(let x=0;x<PW;x++){ s[x]/=a.length; if(s[x]>gmax) gmax=s[x]; }
+    dens.push(s);
+  }
+
+  // light vertical blur across adjacent months for continuity
+
+  function col(v){ // v in 0..1 -> ground to steam
+    const u=Math.pow(v,0.62);
+    const r=13+u*(246-13), gg=17+u*(238-17), b=20+u*(224-20);
+    // faint warm cast in the mid range
+    const w=Math.sin(Math.PI*Math.min(1,u*1.1));
+    return [r+w*18, gg+w*4, b-w*22];
+  }
+  for(let r=0;r<NM;r++){
+    const cur=dens[r]; if(!cur) continue;
+    const yTop=B-(r+1)*rowH;
+    for(let x=0;x<PW;x++){
+      let v=cur[x], wsum=1;
+      if(dens[r-1]){v+=0.5*dens[r-1][x];wsum+=0.5;}
+      if(dens[r+1]){v+=0.5*dens[r+1][x];wsum+=0.5;}
+      v/=wsum;
+      const c=col(Math.min(1,v/(gmax*0.72)));
+      g.fillStyle=`rgb(${c[0]|0},${c[1]|0},${c[2]|0})`;
+      g.fillRect(L+x,yTop,1,rowH+0.6);
+    }
+  }
+
+  // empty-year band label
+  const firstGap=[];
+  {
+    let s=-1;
+    for(let r=0;r<=NM;r++){
+      const empty=r<NM&&!dens[r];
+      if(empty&&s<0) s=r;
+      if(!empty&&s>=0){ if(r-s>=24) firstGap.push([s,r]); s=-1; }
+    }
+  }
+  g.textBaseline='middle';
+  for(const [s,e] of firstGap){
+    const ya=B-e*rowH, yb=B-s*rowH;
+    g.strokeStyle='rgba(207,200,187,0.10)'; g.lineWidth=1;
+    for(let yy=ya+4; yy<yb; yy+=7){ g.beginPath(); g.moveTo(L,yy+.5); g.lineTo(R,yy+.5); g.stroke(); }
+    g.fillStyle='#0d1114'; g.fillRect(L+PW/2-210,(ya+yb)/2-12,420,24);
+    g.fillStyle='rgba(207,200,187,0.62)'; g.font='italic 14px Georgia,serif'; g.textAlign='center';
+    const ys=y0+Math.floor(s/12), ye=y0+Math.floor((e-1)/12);
+    g.fillText(`${ys}–${ye}: too few logged eruptions to draw`, L+PW/2, (ya+yb)/2);
+  }
+
+  // axes
+  g.fillStyle='rgba(207,200,187,0.75)'; g.font='13px Georgia,serif';
+  g.textAlign='right';
+  for(let y=y0;y<=2025;y+=5){
+    const yy=B-((y-y0)*12+6)*rowH;
+    g.fillText(String(y), L-14, yy);
+    g.fillStyle='rgba(207,200,187,0.35)'; g.fillRect(L-8,yy,4,1); g.fillStyle='rgba(207,200,187,0.75)';
+  }
+  g.textAlign='center'; g.textBaseline='top';
+  for(let m=40;m<=130;m+=10){
+    const x=L+(m-MIN)*pxPerMin;
+    g.fillStyle='rgba(207,200,187,0.35)'; g.fillRect(x,B+6,1,5);
+    g.fillStyle='rgba(207,200,187,0.75)'; g.fillText(m+(m===130?' min':''), x, B+15);
+  }
+  g.font='italic 13px Georgia,serif'; g.fillStyle='rgba(207,200,187,0.6)';
+  g.fillText('minutes from one eruption to the next', L+PW/2, B+34);
+
+  // title
+  g.textAlign='left'; g.textBaseline='alphabetic';
+  g.fillStyle='#ece5d8'; g.font='26px Georgia,serif';
+  g.fillText('The Waiting at Old Faithful', L, 44);
+  g.font='14px Georgia,serif'; g.fillStyle='rgba(207,200,187,0.7)';
+  let n=0; for(const a of rows) n+=a.length;
+  g.textAlign='right';
+  g.fillText(`${n.toLocaleString('en-US')} intervals, one row per month, ${y0}–${y1}`, R, 44);
+
+  g.textAlign='left'; g.font='12px Georgia,serif'; g.fillStyle='rgba(207,200,187,0.45)';
+  g.fillText('Each row is the spread of one month’s waits; brighter where more eruptions fell. Data: GeyserTimes archive (ODbL).', L, H-9);
+})();
+</script>
+</body>
+</html>

@@ -3,12 +3,18 @@
 // answer cancelled, verdicts apart from abstentions, four bands, the keeper's clock, the wider person rule).
 // Session 177: increment 3, the presentation (no in-progress line; the slip carried by hand into a drawer;
 // the time each warning was held; the cycle's works linked).
+// Session 183: below the threshold (NOAA Storm Events answers never needed from below; the year-earlier line).
+// Session 185: the quake register (the USGS catalogue answers the earthquake warnings; the minute line).
+// Session 186: taken back (a writer's later message withdraws a warning; never needed backed by that word).
 import { createRequire } from 'module';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
 import { dirname, join } from 'path'; import fs from 'fs'; import { fileURLToPath } from 'url';
 const here = dirname(fileURLToPath(import.meta.url));
 const S = JSON.parse(fs.readFileSync(join(here, 'summary.json')));
+const BS = JSON.parse(fs.readFileSync(join(here, 'below_summary.json')));
+const QS = JSON.parse(fs.readFileSync(join(here, 'quake_summary.json')));
+const TS = JSON.parse(fs.readFileSync(join(here, 'taken_summary.json')));
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--autoplay-policy=no-user-gesture-required', '--allow-file-access-from-files'] });
 let pass = 0, fail = 0; const t = (n, ok) => { ok ? pass++ : fail++; console.log(ok ? 'ok  ' : 'FAIL', n) };
 const PERSON = /\b(silver alert|ashanti|bolo|be on the look ?out|last seen|[wbh]\/[mf]|males?|females?|y\/?o|year-old|locating)\b/i;
@@ -34,7 +40,7 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
     let bad = 0;
     CARDS.forEach(c => {
       const exp = { heeded: 'none', ignored: 'none', cant: 'agrees',
-        never: c.nn === 'backed' ? 'backed' : c.nn === 'contradicted' ? 'contradicted' : 'none' };
+        never: c.nn === 'backed' ? 'backed' : c.nn === 'contradicted' ? 'contradicted' : BELOW[c._i].s === 'met' ? 'contradicted' : (QUAKE[c._i] || {}).s === 'met' ? 'contradicted' : (TAKEN[c._i] || {}).backed ? 'backed' : 'none' };
       for (const f of Object.keys(exp)) if (window.__fu.answerFor(c, f)[0] !== exp[f]) bad++;
       if (c.nn === 'contradicted' && !c.dl.some(d => d[2] === 1)) bad++;
     });
@@ -86,7 +92,7 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await p.click('.drawer[data-f="never"]', { force: true }).catch(() => {});
   t(`${w} a filed card cannot be filed twice`, (await p.evaluate(() => window.__fu.ledger.length)) === 5);
   // a card the word list leaves silent though a disaster was declared
-  const si = await p.evaluate(() => CARDS.findIndex(c => c.nn === 'none' && c.dn));
+  const si = await p.evaluate(() => CARDS.findIndex((c, i) => c.nn === 'none' && c.dn && BELOW[i].s !== 'met'));
   await p.evaluate(i => window.__fu.show(i), si); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(2700);
   t(`${w} a declared disaster missed by the word list is said so`, /word list does not find/.test(await p.locator('#answer').innerText()));
   await p.click('#more'); await p.waitForFunction(() => document.getElementById('long').textContent.length > 10 && document.getElementById('long').textContent !== '…', null, { timeout: 15000 });
@@ -99,6 +105,85 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
     csv.split('\n')[0].includes('seconds_before_filing') && csv.includes('"carried"'));
   t(`${w} four bands are drawn`, await p.evaluate(() => { const c = document.getElementById('strip'); const g = c.getContext('2d');
     return c.height > 400 && [0.2, 0.45, 0.7, 0.95].every(y => g.getImageData(4, Math.floor(c.height * y), 1, 1).data[3] > 0 || g.getImageData(10, Math.floor(c.height * y) - 6, 1, 1).data[3] > 0); }));
+  // below the threshold (session 183)
+  const bk = await p.evaluate(() => { const n = {bw: 0, y0: 0, e: 0}; CARDS.forEach((c, i) => { const b = BELOW[i];
+    if (b.s === 'met' && !b.e) n.e++; if (b.n0 && !b.e0) n.e++;
+    if (c.nn !== 'contradicted' && b.s === 'met') { n.bw++; if (b.n0) n.y0++; } }); return {...n, len: BELOW.length}; });
+  t(`${w} below: ${bk.bw} contradicted from below, ${bk.y0} of them also a year earlier, = build`, bk.len === 13371 && bk.e === 0 &&
+    bk.bw === BS.counts['newly_contradicted|undeclared'] + BS.counts['newly_contradicted|declared'] && bk.y0 === BS.counts['newly_contradicted_and_year_earlier|undeclared'] + (BS.counts['newly_contradicted_and_year_earlier|declared'] || 0));
+  t(`${w} below: the build agrees with the Field's met_24 on every warning`, BS.check_against_field_met_24.same === 4493 && !BS.check_against_field_met_24.different);
+  t(`${w} below: the grown note is on the page, and the rule counts are filled`, /below the threshold/i.test(await p.locator('#grown').innerText()) && (await p.locator('#t_bw').innerText()) === bk.bw.toLocaleString('en-US'));
+  await p.click('.chip[data-mode="below"]'); await p.waitForTimeout(200);
+  const bi = await p.evaluate(() => +location.hash.slice(2) - 1);
+  t(`${w} the lower-record deck deals a card the lower record contradicts`, await p.evaluate(i => BELOW[i].s === 'met' && CARDS[i].nn !== 'contradicted', bi));
+  t(`${w} sealed, the lower record's entry is not shown`, !(await p.locator('#card').innerText()).includes('Storm Events wrote down'));
+  await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(1500);
+  card = await p.locator('#card').innerText();
+  t(`${w} filed never needed: contradicted from below, with the entry and the year-earlier line`, /contradicted from below/i.test(await p.locator('#answer').innerText()) &&
+    card.includes('Storm Events wrote down') && /A year earlier, in the same counties/.test(card) && (await p.locator('#after a[href*="ncei.noaa.gov/stormevents/eventdetails.jsp?id="]').count()) === 1);
+  const ks = await p.evaluate(() => CARDS.findIndex((c, i) => c.nn === 'none' && !c.dn && BELOW[i].s === 'silent'));
+  await p.evaluate(i => window.__fu.show(i), ks); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(2700);
+  t(`${w} where the lower record kept watch and wrote nothing: no word, a kept silence`, /silence where a record was kept/.test(await p.locator('#answer').innerText()) && /wrote none down/.test(await p.locator('#card').innerText()));
+  const uk = await p.evaluate(() => CARDS.findIndex((c, i) => c.nn === 'none' && !c.dn && BELOW[i].s === 'unkept'));
+  await p.evaluate(i => window.__fu.show(i), uk); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(2700);
+  t(`${w} where no record keeps the danger: no word, and nothing could`, /nothing could/.test(await p.locator('#answer').innerText()));
+  // the quake register (session 185)
+  const qk = await p.evaluate(() => { const n = {e: 0, m: 0, near: 0, q0: 0, ts: 0, unj: 0, bad: 0};
+    BELOW.forEach((b, i) => { if (b.s === 'unjoined') { n.unj++; if (!QUAKE[i]) n.bad++; } });
+    Object.entries(QUAKE).forEach(([i, q]) => { if (BELOW[i].s !== 'unjoined') n.bad++; if (q.s === 'tsunami') { n.ts++; return; } n.e++;
+      if (q.s !== 'tsunami' && !q.e) n.bad++; if (q.s === 'met') n.m++; if (q.s === 'near') { n.near++; if (!q.m10) n.q0++; if (!('m10' in q)) n.bad++; } if (q.s === 'none') n.bad++; });
+    return n; });
+  t(`${w} quake: every unjoined warning joined or set aside, ${qk.m} met, ${qk.near} near, ${qk.ts} tsunami, = build`, qk.bad === 0 && qk.unj === QS.pool &&
+    qk.m === QS.counts.met && qk.near === QS.counts.near && qk.ts === QS.counts.tsunami && qk.q0 === QS.counts['near|minute_quiet'] && QS.backed_never_needed.length === 0);
+  t(`${w} quake: the build agrees with the Field's joined_27 on all 155, and the counts are on the page`, QS.check_against_field_joined_27.met_same === 155 &&
+    QS.check_against_field_joined_27.differing.length === 0 && /quake register/i.test(await p.locator('#grown-quake').innerText()) &&
+    (await p.locator('#t_qn').innerText()) === String(qk.near) && (await p.locator('#g_q0').innerText()) === String(qk.q0));
+  await p.click('#clear');
+  await p.click('.chip[data-mode="quake"]'); await p.waitForTimeout(200);
+  const qi = await p.evaluate(() => +location.hash.slice(2) - 1);
+  t(`${w} the quake deck deals an earthquake warning, sealed`, await p.evaluate(i => !!QUAKE[i] && QUAKE[i].s !== 'tsunami', qi) &&
+    !(await p.locator('#card').innerText()).includes('earthquake catalogue'));
+  const qm = await p.evaluate(() => CARDS.findIndex((c, i) => c.nn === 'none' && QUAKE[i] && QUAKE[i].s === 'met'));
+  await p.evaluate(i => window.__fu.show(i), qm); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(1500);
+  t(`${w} filed never needed on a met quake: contradicted by the quake register, with the USGS entry`, /quake register/.test(await p.locator('#answer').innerText()) &&
+    /earthquake catalogue holds a quake of magnitude/.test(await p.locator('#card').innerText()) && (await p.locator('#after a[href*="earthquake.usgs.gov/earthquakes/eventpage/"]').count()) === 1);
+  const q0 = await p.evaluate(() => CARDS.findIndex((c, i) => QUAKE[i] && QUAKE[i].s === 'near' && !QUAKE[i].m10));
+  await p.evaluate(i => window.__fu.show(i), q0); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(2700);
+  t(`${w} a near quake with a quiet minute: no word, and the minute shown`, /nothing in the record had begun/.test(await p.locator('#answer').innerText()) &&
+    /no quake of 2.5 or more within 300 km in the ten minutes/.test(await p.locator('#card').innerText()));
+  const q1 = await p.evaluate(() => CARDS.findIndex((c, i) => QUAKE[i] && QUAKE[i].s === 'near' && QUAKE[i].m10));
+  await p.evaluate(i => window.__fu.show(i), q1); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(2700);
+  t(`${w} a near quake that began minutes before: no word, the rule fell short`, /the rule fell short/.test(await p.locator('#answer').innerText()) && /had begun \d+ minutes before it was sent/.test(await p.locator('#card').innerText()));
+  const ts = await p.evaluate(() => CARDS.findIndex((c, i) => QUAKE[i] && QUAKE[i].s === 'tsunami'));
+  await p.evaluate(i => window.__fu.show(i), ts); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(2700);
+  t(`${w} a tsunami warning stays unjoined`, /tide gauges/.test(await p.locator('#card').innerText()) && !/That register is not joined here/.test(await p.locator('#card').innerText()));
+  if (w === 1100) { await p.evaluate(i => window.__fu.show(i), q0); await p.screenshot({ path: join(here, 'shot-quake-1100.png'), fullPage: false }); }
+  // taken back (session 186)
+  const tk = await p.evaluate(() => { const w = Object.entries(TAKEN).filter(([, x]) => x.k === 'w'), r = Object.values(TAKEN).filter(x => x.k === 'r');
+    return { w: w.length, r: r.length, b: w.filter(([, x]) => x.backed).length, nb: CARDS.filter(c => window.__fu.answerFor(c, 'never')[0] === 'backed').length,
+      deck: document.querySelector('.chip[data-mode="taken"]').textContent, g: document.getElementById('g_tb').textContent, tr: document.getElementById('t_tr').textContent,
+      ts: document.getElementById('t_ts2').textContent, tu: document.getElementById('t_tu').textContent }; });
+  t(`${w} taken: ${tk.r} retractions = the Atelier's 21, all words equal, own sweep holds them all`, tk.r === 21 && TS.words_agree === 21 && TS.own_sweep.contains_all_21 && tk.tr === '21');
+  t(`${w} taken: ${tk.b} backed by the writer = build, and the only backed answers on the desk`, tk.b === TS.backed && tk.b === 8 && tk.nb === 8 && tk.g === '8' && tk.deck.includes('(9)'));
+  t(`${w} taken: 11 unpaired, 9 of them sirens (the page's "2 others" holds)`, tk.tu === '11' && tk.ts === '9');
+  await p.click('.chip[data-mode="taken"]'); await p.waitForTimeout(200);
+  t(`${w} the taken deck deals a taken-back warning, sealed`, await p.evaluate(() => (TAKEN[+location.hash.slice(2) - 1] || {}).k === 'w') && !/took it back|narrowed it/.test(await p.locator('#card').innerText()));
+  await p.evaluate(() => window.__fu.show(663)); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(1500);
+  let hc = await p.locator('#card').innerText();
+  t(`${w} the Hawaii missile alert: backed by its writer's word, the retraction quoted`, /BALLISTIC MISSILE/.test(hc) && /Backed, by its writer's own word/.test(await p.locator('#answer').innerText()) &&
+    /took it back: .?There is no missile threat/.test(hc) && await p.locator('#vb').innerText() === '1');
+  await p.evaluate(() => window.__fu.show(4268)); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(1500);
+  t(`${w} Mora: backed, and the running fire declaration shown without moving the verdict`, /Backed/.test(await p.locator('#answer').innerText()) && /DR-4652-NM/.test(await p.locator('#card').innerText()));
+  await p.evaluate(() => window.__fu.show(4750)); await p.click('.drawer[data-f="never"]'); await p.waitForTimeout(1500);
+  t(`${w} Bolt Creek: narrowed, not withdrawn, and still contradicted`, /narrowed it/.test(await p.locator('#card').innerText()) && /Contradicted/.test(await p.locator('#answer').innerText()));
+  await p.evaluate(() => window.__fu.show(664)); await p.click('.drawer[data-f="cant"]'); await p.waitForTimeout(1500);
+  t(`${w} the retraction's own card says it warns of nothing and links its warning`, /This message warns of nothing/.test(await p.locator('#card').innerText()) && (await p.locator('#after a[href="#w664"]').count()) === 1);
+  await p.click('#after a[href="#w664"]'); await p.waitForTimeout(300);
+  t(`${w} the link carries the visitor to the warning taken back`, /BALLISTIC MISSILE/.test(await p.locator('#card').innerText()));
+  await p.evaluate(() => window.__fu.show(7037)); await p.click('.drawer[data-f="cant"]'); await p.waitForTimeout(1500);
+  t(`${w} a siren retraction says what the archive never held`, /siren/.test(await p.locator('#card').innerText()) && /does not hold/.test(await p.locator('#card').innerText()));
+  if (w === 1100) { await p.evaluate(() => window.__fu.show(663)); await p.screenshot({ path: join(here, 'shot-taken-1100.png'), fullPage: false }); }
+  await p.click('#clear');
   await p.click('.chip[data-mode="decl"]');
   t(`${w} the declared deck deals a card with a declaration`, await p.evaluate(() => CARDS[+location.hash.slice(2) - 1].dn > 0));
   await p.click('#clear'); await p.evaluate(i => window.__fu.show(i), 0);

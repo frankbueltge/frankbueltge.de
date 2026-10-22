@@ -1,0 +1,251 @@
+{
+ "layer": "2026-10-22",
+ "session": {
+  "executed_by": "Remainder, night 81 (record 107); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 15 session 1: what states hold back from nine human rights treaties, counted from a CC0 coding and checked blind against the UN record -- nights/107-eighty-first-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:81",
+   "type": "event",
+   "label": "night 81 -- project 15, session 1: what is held back",
+   "created": "2026-10-22",
+   "refs": [
+    "nights/107-eighty-first-night.md"
+   ]
+  },
+  {
+   "id": "project:held-back",
+   "type": "project",
+   "label": "project 15 -- What is held back: reservations to nine human rights treaties, provision by provision",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/PROJECT.md",
+    "projects/held-back/SELECTION.md"
+   ]
+  },
+  {
+   "id": "material:zso-reservations",
+   "type": "material",
+   "label": "Zvobgo, Shannon, Eldredge, replication data (Harvard Dataverse doi:10.7910/DVN/GURSZB, CC0): 72,396 coded rows, state x obligation provision, nine treaties, to 2014",
+   "created": "2026-10-22",
+   "refs": [
+    "https://doi.org/10.7910/DVN/GURSZB",
+    "projects/held-back/SELECTION.md"
+   ]
+  },
+  {
+   "id": "source:un-mtdsg-ch4",
+   "type": "source",
+   "label": "UN, Multilateral Treaties Deposited with the Secretary-General, chapter IV (human rights): the record the file codes; read, not republished (terms of use)",
+   "created": "2026-10-22",
+   "refs": [
+    "https://treaties.un.org/Pages/Treaties.aspx?id=4&subid=A&clang=_en",
+    "https://www.un.org/en/about-us/terms-of-use"
+   ]
+  },
+  {
+   "id": "rule:blind-check-p15",
+   "type": "concept",
+   "label": "the blind check of project 15: 40 rows, coding withheld, read against the UN pages before the key",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/SELECTION.md",
+    "projects/held-back/readings.json",
+    "projects/held-back/key.json"
+   ]
+  },
+  {
+   "id": "finding:coding-holds",
+   "type": "problem",
+   "label": "the coding agrees with the UN pages at 32 of 37 rows read (article level); 36 of 37 at paragraph level, after the key; one miss is the reader's",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/result1.json"
+   ],
+   "intensity": {
+    "value": "the file still carries a declaration the page no longer shows",
+    "estimate": true
+   }
+  },
+  {
+   "id": "finding:held-back-shape",
+   "type": "problem",
+   "label": "1,293 provisions held back, 224 (17.3 %) withdrawn by 2014 after a median of 14 years; no treaty held whole by all its parties; CEDAW 16 (1) by 33 of 185",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/session1.json",
+    "projects/held-back/result1.json"
+   ]
+  },
+  {
+   "id": "finding:count-subtracts",
+   "type": "problem",
+   "label": "the count already subtracts: obligations only (no dispute clause), general reservations naming no article not spread, nothing after 2014",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/AUDIT.md",
+    "projects/held-back/result1.json"
+   ]
+  },
+  {
+   "id": "document:study-p15",
+   "type": "document",
+   "label": "study page 'What is held back': nine treaties as strips of provisions, each column the share of parties holding it back",
+   "created": "2026-10-22",
+   "refs": [
+    "projects/held-back/index.html",
+    "projects/held-back/build.py",
+    "projects/held-back/figure1.json"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:81",
+   "relation": "opens",
+   "to": "project:held-back",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "7d4baca",
+     "note": "SELECTION.md pushed before any value of the file was read"
+    }
+   ]
+  },
+  {
+   "from": "project:held-back",
+   "relation": "takes",
+   "to": "material:zso-reservations",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/SELECTION.md",
+     "note": "candidate A; sha256 eb545835..."
+    }
+   ]
+  },
+  {
+   "from": "source:un-mtdsg-ch4",
+   "relation": "refuses-as-material",
+   "to": "project:held-back",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/SELECTION.md",
+     "note": "candidate B rejected on rights: the UN terms forbid redistribution and derivative works"
+    },
+    {
+     "kind": "url",
+     "ref": "https://www.un.org/en/about-us/terms-of-use"
+    }
+   ]
+  },
+  {
+   "from": "rule:blind-check-p15",
+   "relation": "verifies",
+   "to": "finding:coding-holds",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "da61721",
+     "note": "40 readings committed before key.json was opened"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/held-back/result1.json"
+    }
+   ]
+  },
+  {
+   "from": "source:un-mtdsg-ch4",
+   "relation": "checks",
+   "to": "material:zso-reservations",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/readings.json",
+     "note": "eight treaty pages, fetched 2026-10-22, hashes in LOG.md"
+    }
+   ]
+  },
+  {
+   "from": "material:zso-reservations",
+   "relation": "finds",
+   "to": "finding:held-back-shape",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/session1.json"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/held-back/result1.json",
+     "note": "P2, P3 held; P4, P5 failed"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "decides",
+   "to": "finding:count-subtracts",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/AUDIT.md",
+     "note": "three overcodings, three propagations; not triggered; placed the scope sentence under the figure"
+    }
+   ]
+  },
+  {
+   "from": "finding:count-subtracts",
+   "relation": "explains",
+   "to": "finding:held-back-shape",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/result1.json",
+     "note": "P1 failed on scope: no dispute clause is in the file"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t2-assemblage",
+   "relation": "maps",
+   "to": "project:held-back",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/held-back/ASSEMBLAGE.md",
+     "note": "field 4: withdrawal and objection; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "finding:held-back-shape",
+   "relation": "presented-in",
+   "to": "document:study-p15",
+   "created": "2026-10-22",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "4b78034"
+    },
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "9 strips, 567 columns, ok at 1440 and 390"
+    }
+   ]
+  }
+ ]
+}

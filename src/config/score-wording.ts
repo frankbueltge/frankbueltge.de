@@ -338,8 +338,8 @@ export const SCORE_WORDING = {
     },
 
     latest: {
-      head: (p: { one: string; date: string | null; cycle: number | null }) =>
-        [`Latest ${p.one}`, p.date && longDate(p.date), p.cycle && `cycle ${cycleNo(p.cycle)}`].filter(Boolean).join(' · '),
+      head: (p: { one: string; date: string | null; cycle: number | null; inProgress?: boolean }) =>
+        [`Latest ${p.one}`, p.inProgress && 'in progress', p.date && longDate(p.date), p.cycle && `cycle ${cycleNo(p.cycle)}`].filter(Boolean).join(' · '),
       open: (one: string) => `open the ${one} →`,
       /** a piece the site does not serve since the publication rule of 2026-10-17 — a session's
        *  window or artifact — is opened in the practice's repository, and the link says so */
@@ -350,6 +350,16 @@ export const SCORE_WORDING = {
       /** the same plate for a piece read in the practice's repository (2026-10-17) */
       noStillInRepository: (one: string) => `the ${one} is read in the practice’s own repository, one click away`,
       none: (one: string) => `No ${one} under v3 yet.`,
+    },
+
+    /** the newest piece's states, one per session that changed it (amendment of 2026-10-22) */
+    process: {
+      title: 'How it was made',
+      sub: (n: number) => `${n === 1 ? 'one state' : `${n} states`}, one for each session that changed it, as the practice left it`,
+      state: (n: number) => `state ${n}`,
+      shot: (title: string, n: number) => `${title} at state ${n}, as the practice took it.`,
+      noShot: 'no screenshot for this state',
+      history: 'every change in the repository ↗',
     },
 
     bulletin: {

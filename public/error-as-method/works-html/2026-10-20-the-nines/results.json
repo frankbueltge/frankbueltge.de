@@ -1,0 +1,180 @@
+{
+ "predictions": {
+  "P1": {
+   "claim": "E SAME >= 4 of 6",
+   "value": 2,
+   "holds": false
+  },
+  "P2": {
+   "claim": "E OWN YES <= 1 of 6",
+   "value": 2,
+   "holds": false
+  },
+  "P3": {
+   "claim": "E EXCLUDED or MARKED >= 4 of 6",
+   "value": 4,
+   "holds": true
+  },
+  "P4": {
+   "claim": "P EXCLUDED or MARKED >= 5 of 6",
+   "value": 6,
+   "holds": true
+  },
+  "P5": {
+   "claim": "P NAMED YES <= 2 of 6",
+   "value": 6,
+   "holds": false
+  },
+  "P6": {
+   "claim": "shelf_missing lines from <= 1 of 4 lists",
+   "value": 4,
+   "lists": [
+    "S1",
+    "S2",
+    "S3",
+    "S4"
+   ],
+   "holds": false
+  },
+  "P7": {
+   "claim": ">= 11 of 12 render without page errors",
+   "value": 12,
+   "holds": true
+  }
+ },
+ "rooms": {
+  "r01": {
+   "arm": "E",
+   "handling": "EXCLUDED",
+   "line": "if(h===99||dir===999) continue;",
+   "named": "NO",
+   "found_2250": false,
+   "code": "KIN",
+   "shelf": [
+    "S4-01",
+    "S3-04"
+   ],
+   "own": "NO"
+  },
+  "r02": {
+   "arm": "E",
+   "handling": "DRAWN",
+   "line": "// hourly sums, every value taken literally, 999 and 99.0 included",
+   "named": "YES",
+   "found_2250": true,
+   "code": "SAME",
+   "shelf": [
+    "S1-11",
+    "S2-12",
+    "S3-11",
+    "S4-09",
+    "S4-10"
+   ],
+   "own": "YES"
+  },
+  "r03": {
+   "arm": "P",
+   "handling": "MARKED",
+   "line": "if(r[8]>=99)continue; \u2026 vtxt('6 \u2013 23 Mar: sea temperature missing, waves still logged',\u2026)",
+   "named": "YES",
+   "found_2250": true
+  },
+  "r04": {
+   "arm": "P",
+   "handling": "MARKED",
+   "line": "if(r.wvht>=99)continue; (note: 'a faint thermometer thread where the wave sensor went quiet')",
+   "named": "YES",
+   "found_2250": true
+  },
+  "r05": {
+   "arm": "E",
+   "handling": "EXCLUDED",
+   "line": "if (H >= 99 || T >= 99) continue;",
+   "named": "NO",
+   "found_2250": false,
+   "code": "KIN",
+   "shelf": [
+    "S1-18",
+    "S2-15",
+    "S3-12",
+    "S4-06"
+   ],
+   "own": "NO"
+  },
+  "r06": {
+   "arm": "E",
+   "handling": "DRAWN",
+   "line": "if (isNaN(v)) continue;  (only non-numbers skipped; 99/999/9999 plotted and labelled)",
+   "named": "YES",
+   "found_2250": false,
+   "code": "SAME",
+   "shelf": [
+    "S1-11",
+    "S2-12",
+    "S3-11",
+    "S4-09",
+    "S4-10"
+   ],
+   "own": "YES"
+  },
+  "r07": {
+   "arm": "P",
+   "handling": "EXCLUDED",
+   "line": "if (wvht >= 99 || dpd >= 99 || mwd >= 999) continue;",
+   "named": "YES",
+   "found_2250": false
+  },
+  "r08": {
+   "arm": "E",
+   "handling": "EXCLUDED",
+   "line": "if(D===999||T===99) continue;",
+   "named": "NO",
+   "found_2250": false,
+   "code": "OFF",
+   "shelf": [],
+   "own": "NO"
+  },
+  "r09": {
+   "arm": "P",
+   "handling": "MARKED",
+   "line": "tools/build.js: if(f[8]!=='99.00')H[i]=\u2026 ; '-1 = the file said 99/999'; page: 'Where the file says 99.00, the sea is not drawn.'",
+   "named": "YES",
+   "found_2250": true
+  },
+  "r10": {
+   "arm": "E",
+   "handling": "EXCLUDED",
+   "line": "if(dpd>=99||mwd>=999)continue;",
+   "named": "NO",
+   "found_2250": false,
+   "code": "OFF",
+   "shelf": [],
+   "own": "NO"
+  },
+  "r11": {
+   "arm": "P",
+   "handling": "MARKED",
+   "line": "if(r.wvht>=99)continue; \u2026 'the lines the file never wrote left black'",
+   "named": "YES",
+   "found_2250": true
+  },
+  "r12": {
+   "arm": "P",
+   "handling": "MARKED",
+   "line": "if (wvht < 99 && dpd < 99) wave[d].push(\u2026); (note: 'Where the buoy recorded nothing \u2026 the line stops')",
+   "named": "YES",
+   "found_2250": true
+  }
+ },
+ "post_hoc": {
+  "found_2250": {
+   "P": 5,
+   "E": 1
+  },
+  "E_codes": {
+   "SAME": 2,
+   "KIN": 2,
+   "OFF": 2
+  }
+ }
+}

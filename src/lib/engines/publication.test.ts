@@ -28,6 +28,7 @@ import {
   loadedAssets,
   matchRedirect,
   n1MarginWorks,
+  openCycleOf,
   parseRedirects,
   publishedHref,
   redirectBudget,
@@ -35,7 +36,7 @@ import {
   servedAt,
   workFolderOf,
 } from './publication.mjs'
-import publicationPrune, { prunePublication, summaryLine } from './publication-prune.mjs'
+import publicationPrune, { prunePublication, summaryLine, withOpenCycleRewrites } from './publication-prune.mjs'
 import { sessionHref } from './publication-links'
 
 const GH = 'https://github.com/frankbueltge'
@@ -133,6 +134,18 @@ describe('the working-material rule inside a published work', () => {
     expect(isWorkingMaterial('error-as-method/works-html/w/makers/x.json')).toBe(false)
     // only in the faces: a Studio work may keep a folder of that name
     expect(isWorkingMaterial('studio/werke-html/w/reports/x.json')).toBe(false)
+  })
+
+  it('publishes a work’s process, its PROCESS.json and its screenshots, in every practice (2026-10-22)', () => {
+    for (const path of ['studio/werke-html/w/PROCESS.json', 'studio/werke-html/w/process/1.png']) {
+      expect(classify(path), path).toMatchObject({ published: true, reason: 'kept' })
+    }
+    for (const practice of ['atelier', 'field']) {
+      for (const file of ['PROCESS.json', 'process/1.png']) {
+        const path = `${practice}/artifacts/cycle-010/w/${file}`
+        expect(classify(path, { openCycle: 10 }), path).toMatchObject({ published: true, reason: 'in progress' })
+      }
+    }
   })
 
   it('keeps a working file the work itself names, and a work still in progress whole', () => {
@@ -791,5 +804,42 @@ describe('the mirror trim, on a public/ in miniature', () => {
     const trimmedRoot = stage('trimmed')
     trim(trimmedRoot.root, trimmedRoot.pub)
     expect(distOf('dist-from-trimmed', trimmedRoot.pub, trimmedRoot.root)).toEqual(distOf('dist-from-untrimmed', untrimmed.pub, untrimmed.root))
+  })
+})
+
+describe('the open cycle, published in progress (2026-10-20)', () => {
+  it('reads the cycle only while it is in its working phase', () => {
+    expect(openCycleOf({ cycle: 9, phase: 'working' })).toBe(9)
+    expect(openCycleOf({ cycle: 9, phase: 'convening' })).toBeNull()
+    expect(openCycleOf(null)).toBeNull()
+    expect(openCycleOf({ cycle: '9', phase: 'working' })).toBeNull()
+  })
+
+  it('publishes the open cycle’s artifact folders whole, and the closed ones not at all', () => {
+    const ctx = { openCycle: 9 }
+    expect(classify('atelier/artifacts/cycle-009/the-wolfs-ledger/plate3.json', ctx)).toMatchObject({ published: true, reason: 'in progress' })
+    expect(classify('field/artifacts/cycle-009/after-the-empty-warnings/data/results32.json', ctx).published).toBe(true)
+    expect(classify('field/artifacts/cycle-008/some-study/index.html', ctx).published).toBe(false)
+    expect(classify('field/artifacts/cycle-009/after-the-empty-warnings/index.html').published).toBe(false)
+  })
+
+  it('links an open-cycle piece on the site, and a closed one in the repository', () => {
+    const ctx = { openCycle: 9, isMirrored: () => true }
+    expect(publishedHref('/field/artifacts/cycle-009/after-the-empty-warnings/', ctx)).toBe('/field/artifacts/cycle-009/after-the-empty-warnings/')
+    expect(publishedHref('/field/artifacts/cycle-008/x/', ctx)).toMatch(/^https:\/\/github\.com\/frankbueltge\/field-research\//)
+  })
+
+  it('keeps the open cycle on the site past the Field’s artifact redirect, and nothing else', () => {
+    const text = readFileSync('public/_redirects', 'utf8')
+    const rules = parseRedirects(withOpenCycleRewrites(text, 9))
+    const open = matchRedirect(rules, '/field/artifacts/cycle-009/after-the-empty-warnings/')
+    expect(open?.rule.status).toBe(200)
+    expect(open?.location).toBe('/field/artifacts/cycle-009/after-the-empty-warnings/')
+    expect(matchRedirect(rules, '/field/artifacts/cycle-008/x/')?.location).toMatch(/^https:\/\/github\.com\//)
+    expect(withOpenCycleRewrites(text, null)).toBe(text)
+    // the inserted rules stay inside the dynamic budget
+    const budget = redirectBudget(rules)
+    expect(budget.dynamic).toBeLessThanOrEqual(budget.maxDynamic)
+    expect(budget.static).toBe(redirectBudget(parseRedirects(text)).static)
   })
 })

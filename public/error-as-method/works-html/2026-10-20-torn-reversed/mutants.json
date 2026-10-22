@@ -1,0 +1,219 @@
+{
+ "seed": 144,
+ "parent": "c4",
+ "mutants": [
+  {
+   "id": "m01",
+   "op": "TEAR",
+   "n": 1,
+   "did": [
+    {
+     "removed": "// month spokes"
+    }
+   ],
+   "identical": false
+  },
+  {
+   "id": "m02",
+   "op": "TEAR",
+   "n": 2,
+   "did": [
+    {
+     "removed": "});\n\n/* ---------- centre ---------- */"
+    }
+   ],
+   "identical": false
+  },
+  {
+   "id": "m03",
+   "op": "TEAR",
+   "n": 2,
+   "did": [
+    {
+     "removed": "const toks=letters.map(o=>{\n  const t=o.text.toLowerCase();"
+    }
+   ],
+   "identical": false
+  },
+  {
+   "id": "m04",
+   "op": "REVERSE",
+   "n": 1,
+   "did": [
+    {
+     "at": 1616,
+     "from": "*",
+     "to": "/",
+     "context": " ln=(body[j]+(/^[A-Z][a-z]+,\\s*$/.test(body[j])?' '+(body[j+"
+    }
+   ],
+   "identical": false
+  },
+  {
+   "id": "m05",
+   "op": "REVERSE",
+   "n": 3,
+   "did": [
+    {
+     "at": 5604,
+     "from": "+",
+     "to": "-",
+     "context": "\n    txt(String(y),{x:x-5,y:y1+2.6,'font-size':7.2,'text-anc"
+    },
+    {
+     "at": 7049,
+     "from": "-",
+     "to": "+",
+     "context": "\n    if(diff<GAP){const s=(GAP-diff)/2+1e-5;p.la-=s;q.la+=s;"
+    },
+    {
+     "at": 1645,
+     "from": "+",
+     "to": "-",
+     "context": "s*$/.test(body[j])?' '+(body[j+1]||''):'')).trim();\n    if(/"
+    }
+   ],
+   "identical": false
+  },
+  {
+   "id": "m06",
+   "op": "REVERSE",
+   "n": 2,
+   "did": [
+    {
+     "at": 4771,
+     "from": "-",
+     "to": "+",
+     "context": "\nfunction rad(t){return R0+(R1-R0)*(t-Y0)/(Y1-Y0);}         "
+    },
+    {
+     "at": 7057,
+     "from": "+",
+     "to": "-",
+     "context": "diff<GAP){const s=(GAP-diff)/2+1e-5;p.la-=s;q.la+=s;moved=tr"
+    }
+   ],
+   "identical": false
+  },
+  {
+   "id": "m07",
+   "op": "MOUNT",
+   "n": 1,
+   "did": [
+    {
+     "swapped": [
+      "});",
+      "let diff=q.la-p.la; if(i===ord.length-1)diff+=2*Math.PI;"
+     ]
+    }
+   ],
+   "identical": false
+  },
+  {
+   "id": "m08",
+   "op": "MOUNT",
+   "n": 1,
+   "did": [
+    {
+     "swapped": [
+      "/* ---------- read the book into letters ---------- */",
+      "const c=COL[series];const anchor=align;"
+     ]
+    }
+   ],
+   "identical": false
+  },
+  {
+   "id": "m09",
+   "op": "MOUNT",
+   "n": 3,
+   "did": [
+    {
+     "swapped": [
+      "}",
+      "column(undated.filter(o=>o.series===0),36,'start',0,['TO THOMAS PENNANT','letters without a day']);"
+     ]
+    },
+    {
+     "swapped": [
+      "}",
+      "}"
+     ]
+    },
+    {
+     "swapped": [
+      "let d='';",
+      "const tEl=txt('',{x:wx,y:wy,'font-size':9.4,'text-anchor':anchor,'dominant-baseline':'middle',fill:c,transform:`rotate(${rot.toFixed(2)} ${wx.toFixed(2)} ${wy.toFixed(2)})`},gWord);"
+     ]
+    }
+   ],
+   "identical": false
+  },
+  {
+   "id": "m10",
+   "op": "REWORK",
+   "n": 1,
+   "did": [
+    {
+     "at": 1795,
+     "from": "2",
+     "factor": 10,
+     "to": "20",
+     "context": ")?(?:([A-Z][a-z]+)\\.?\\s*(\\d{1,2})?,?\\s*)?(17\\d\\d)\\.$/);\n    "
+    }
+   ],
+   "identical": false
+  },
+  {
+   "id": "m11",
+   "op": "REWORK",
+   "n": 3,
+   "did": [
+    {
+     "at": 5229,
+     "from": "2",
+     "factor": 2,
+     "to": "4",
+     "context": "9;t+=1/720){\n  const a=(t-Y0)*2*Math.PI,[x,y]=pt(a,rad(t));d"
+    },
+    {
+     "at": 4362,
+     "from": "450",
+     "factor": 10,
+     "to": "4500",
+     "context": "er(e=>e[1]>=2||toks[k].length<450).map(([w,c])=>[w,c*Math.lo"
+    },
+    {
+     "at": 11233,
+     "from": "14",
+     "factor": 0.5,
+     "to": "7",
+     "context": "('to Daines Barrington',{x:sx-14,y:ky+14,'font-size':9,'text"
+    }
+   ],
+   "identical": false
+  },
+  {
+   "id": "m12",
+   "op": "REWORK",
+   "n": 2,
+   "did": [
+    {
+     "at": 10475,
+     "from": "36",
+     "factor": 0.5,
+     "to": "18",
+     "context": "etters of Gilbert White’s',{x:36,y:70,'font-size':9.6,fill:'"
+    },
+    {
+     "at": 4606,
+     "from": "31",
+     "factor": 0.1,
+     "to": "3",
+     "context": "28,31,30,31,30,31,31,30,31,30,31];\nconst CUM=DIM.reduce((a,d"
+    }
+   ],
+   "identical": false
+  }
+ ]
+}

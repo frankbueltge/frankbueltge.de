@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Year Within</title>
+<style>
+  html,body{margin:0;padding:0;background:#f1e9d6;}
+  body{width:1100px;height:800px;overflow:hidden;}
+  svg{display:block;}
+  text{font-family:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;}
+</style>
+</head>
+<body>
+<svg id="s" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data/selborne.js"></script>
+<script id="lex" type="text/plain">
+#bird
+swallow:swallow,swallows,house-swallow,house-swallows,chimney-swallow,chimney-swallows
+martin:martin,martins,house-martin,house-martins
+sand-martin:sand-martin,sand-martins,bank-martin,bank-martins
+swift:swift,swifts
+hirundines:hirundines,hirundo
+cuckoo:cuckoo,cuckoos
+nightingale:nightingale,nightingales
+owl:owl,owls
+rook:rook,rooks
+raven:raven,ravens
+crow:crow,crows
+wren:wren,wrens
+willow-wren:willow-wren,willow-wrens
+titmouse:titmouse,titmice
+ring-ousel:ring-ousel,ring-ousels
+redwing:redwing,redwings
+fieldfare:fieldfare,fieldfares
+thrush:thrush,thrushes
+blackbird:blackbird,blackbirds
+woodcock:woodcock,woodcocks
+snipe:snipe,snipes
+partridge:partridge,partridges
+stock-dove:stock-dove,stock-doves
+ring-dove:ring-dove,ring-doves,wood-pigeon,wood-pigeons
+turtle-dove:turtle-dove,turtle-doves
+fern-owl:fern-owl,fern-owls,goat-sucker,goat-suckers
+fly-catcher:fly-catcher,fly-catchers
+redstart:redstart,redstarts,red-start,red-starts
+black-cap:black-cap,black-caps
+white-throat:white-throat,white-throats
+grasshopper-lark:grasshopper-lark,grasshopper-larks
+woodlark:woodlark,woodlarks
+skylark:skylark,skylarks
+lark:lark,larks
+titlark:titlark,titlarks
+chaffinch:chaffinch,chaffinches
+wagtail:wagtail,wagtails
+red-breast:red-breast,red-breasts,robin
+curlew:curlew,curlews,stone-curlew,oedicnemus
+kite:kite,kites
+hawk:hawk,hawks
+heron:heron,herons
+wild-duck:wild-duck,wild-ducks,teal,teals
+linnet:linnet,linnets
+sparrow:sparrow,sparrows
+sedge-bird:sedge-bird,reed-sparrow,salicaria
+goldfinch:goldfinch,goldfinches
+#creature
+tortoise:tortoise,tortoises
+bat:bat,bats
+mouse:mouse,mice,harvest-mouse,shrew-mouse
+hedge-hog:hedge-hog,hedge-hogs
+deer:deer
+hare:hare,hares
+viper:viper,vipers,adder,adders
+snake:snake,snakes
+toad:toad,toads
+frog:frog,frogs
+newt:newt,newts,eft,efts
+fish:fish,fishes
+worm:worm,worms,earth-worms
+snail:snail,snails,slug,slugs
+dog:dog,dogs
+cat:cat,cats
+horse:horse,horses
+sheep:sheep
+cattle:cattle,cow,cows
+insect:insect,insects
+bee:bee,bees
+wasp:wasp,wasps
+gnat:gnat,gnats
+beetle:beetle,beetles,scarabs,scarabaeus
+cricket:cricket,crickets,field-cricket,field-crickets,mole-cricket,mole-crickets
+grasshopper:grasshopper,grasshoppers
+spider:spider,spiders
+gossamer:gossamer,webs,cobwebs
+flies:flies,fly
+butterfly:butterfly,butterflies,moth,moths
+ant:ant,ants
+glow-worm:glow-worm,glow-worms
+#plant
+beech:beech,beeches,beechen
+oak:oak,oaks
+hellebore:hellebore,helleborus
+evergreens:evergreens
+laurel:laurel,laurels,laurustines
+vine:vine,vines
+wheat:wheat
+barley:barley
+turnips:turnips
+hops:hops
+grass:grass,grasses
+fern:fern
+moss:moss
+ivy:ivy
+flowers:flowers,flower,blossom,blossoms
+leaves:leaves,leaf
+haws:haws
+hay:hay
+corn:corn
+#weather
+frost:frost,frosts,frozen,freezing
+snow:snow,snows
+rain:rain,rains,showers,shower
+thaw:thaw
+hail:hail
+fog:fog,fogs,mist,mists
+thunder:thunder,lightning
+wind:wind,winds
+storm:storm,storms,tempest
+ice:ice
+dew:dew,dews
+heat:heat,sultry
+sun:sun,sunshine
+moon:moon
+meteor:meteor
+thermometer:thermometer
+barometer:barometer
+#feast
+michaelmas:michaelmas
+midsummer:midsummer
+christmas:christmas
+#life
+nest:nest,nests,nidification
+eggs:eggs,egg
+young:young
+brood:brood,broods
+song:song,songs,sing,sings,sang
+torpid:torpid,torpidity,hybernaculum,hide,hiding
+migration:migration,migrate,migrations
+</script>
+<script>
+(function(){
+const W=1100,H=800,CX=560,CY=404;
+const PAPER="#f1e9d6",INK="#2b251d",FAINT="#b9ab90",SOFT="#7a6d57";
+const CAT={bird:"#8c3a1c",creature:"#2e5a4c",plant:"#6b6a22",weather:"#3f5873",feast:"#2b251d",life:"#2b251d"};
+const svg=document.getElementById('s');
+const NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e;}
+function txt(s,attrs,parent){const e=el('text',attrs,parent);e.textContent=s;return e;}
+
+/* ---------- the naturalist's vocabulary ---------- */
+const LEX={},KCAT={};let cat='';
+document.getElementById('lex').textContent.trim().split('\n').forEach(l=>{
+  if(l[0]==='#'){cat=l.slice(1);return;}
+  const [k,v]=l.split(':');KCAT[k]=cat;v.split(',').forEach(w=>LEX[w]=k);
+});
+
+/* ---------- read the letters, sentence by sentence ---------- */
+const T=SELBORNE.slice(SELBORNE.indexOf('LETTERS to THOMAS PENNANT'));
+const body=T.split('\n')
+  .filter(l=>!/^\s*(?:[A-Z][a-z]+(?:, near [A-Z][a-z]+)?,\s*)?(?:[A-Z][a-z]+\.?\s*\d{0,2},?\s*)?17\d\d\.\s*$/.test(l)) // the dateline of each letter is not a month he wrote about
+  .join(' ').replace(/\s+/g,' ');
+const sents=body.split(/(?<=[.!?;:])\s+(?=[A-Z"‘“(])/);
+const MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const AB={Jan:0,Feb:1,Mar:2,Apr:3,Jun:5,Jul:6,Aug:7,Sept:8,Sep:8,Oct:9,Nov:10,Dec:11};
+function months(s){
+  const out=new Set();
+  MN.forEach((m,i)=>{
+    const re=new RegExp('\\b'+m+'\\b','g');let r;
+    while((r=re.exec(s))){
+      if(m==='May'||m==='March'){ // the verb and the modal are not the month
+        const pre=s.slice(Math.max(0,r.index-14),r.index),post=s.slice(r.index+m.length,r.index+m.length+6);
+        if(!(/\b(in|of|the|early|late|until|till|to|from|before|after|last|this|by|middle|end|beginning|since|about|first|and|or|cold|dry|wet|mild)\s*$/i.test(pre)||/^\s*\d/.test(post)))continue;
+      }
+      out.add(i);
+    }
+  });
+  for(const k in AB)if(new RegExp('\\b'+k+'\\.\\s*\\d').test(s))out.add(AB[k]);
+  return [...out];
+}
+const mentions=Array(12).fill(0);const tf=MN.map(()=>({}));
+sents.forEach((s0,si)=>{
+  const ms=months(s0);if(!ms.length)return;
+  const s=s0+' '+(sents[si+1]||'');           // the sentence that names the month, and the one after
+  const ws=(s.toLowerCase().match(/[a-z][a-z'’-]+[a-z]/g)||[]).map(w=>LEX[w.replace(/['’]s$/,'')]).filter(Boolean);
+  ms.forEach(m=>{mentions[m]++;new Set(ws).forEach(w=>tf[m][w]=(tf[m][w]||0)+1);});
+});
+
+/* ---------- the wheel ---------- */
+const R0=70,R1=104,RW=118,RMAX=392;
+function pt(a,r){return [CX+r*Math.sin(a),CY-r*Math.cos(a)];}
+const SEC=2*Math.PI/12;
+// month boundaries
+for(let m=0;m<12;m++){
+  const a=m*SEC;const [x0,y0]=pt(a,R0-4),[x1,y1]=pt(a,RMAX);
+  el('line',{x1:x0,y1:y0,x2:x1,y2:y1,stroke:FAINT,'stroke-width':m===0?0.8:0.45,'stroke-dasharray':m===0?'':'1 2.5'});
+}
+el('circle',{cx:CX,cy:CY,r:R0,fill:'none',stroke:FAINT,'stroke-width':0.5});
+el('circle',{cx:CX,cy:CY,r:R1+5,fill:'none',stroke:FAINT,'stroke-width':0.5});
+
+// a tally: one stroke for every sentence that names the month
+mentions.forEach((n,m)=>{
+  const pad=0.05*SEC,span=SEC-2*pad;
+  const cols=Math.min(n,25),rows=Math.ceil(n/25);
+  for(let k=0;k<n;k++){
+    const c=k%25,r=Math.floor(k/25);
+    const a=m*SEC+pad+span*(c+0.5)/25;
+    const ra=R0+5+r*15,rb=ra+11;
+    const [x0,y0]=pt(a,ra),[x1,y1]=pt(a,rb);
+    el('line',{x1:x0,y1:y0,x2:x1,y2:y1,stroke:INK,'stroke-opacity':0.62,'stroke-width':0.8,'stroke-linecap':'round'});
+  }
+});
+
+// month names just outside the tally
+for(let m=0;m<12;m++){
+  const a=(m+0.5)*SEC;const [x,y]=pt(a,R1+12+0);
+  let rot=a*180/Math.PI;if(rot>90&&rot<270)rot+=180;
+  txt(MN[m].toUpperCase(),{x,y,'font-size':6.6,'letter-spacing':1.6,'text-anchor':'middle','dominant-baseline':'middle',fill:'#8d7f66',transform:`rotate(${rot.toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)})`});
+}
+
+// the words, set in rings within each month, most-named first
+const gW=el('g',{});
+function fs(c){return 6.6+2.5*Math.sqrt(c-1)*1.25;}
+for(let m=0;m<12;m++){
+  const items=Object.entries(tf[m]).sort((p,q)=>q[1]-p[1]||(KCAT[p[0]]<KCAT[q[0]]?-1:1));
+  const a0=m*SEC,a1=(m+1)*SEC,mid=(a0+a1)/2;
+  const bottom=Math.cos(mid)<-0.01;                 // set the lower months so they read left to right
+  let r=RW,i=0;
+  while(i<items.length&&r<RMAX){
+    // fill one ring
+    const row=[];const size=fs(items[i][1]);const padA=5/r;
+    let used=padA;
+    while(i<items.length){
+      const [w,c]=items[i];const f=fs(c);
+      const t=txt(w,{'font-size':f.toFixed(2),'font-style':KCAT[w]==='life'?'italic':'normal',fill:CAT[KCAT[w]],x:0,y:0},gW);
+      const len=t.getComputedTextLength()+f*0.7;
+      const da=len/(r);
+      if(used+da>SEC-padA&&row.length){t.remove();break;}
+      row.push({t,da,f});used+=da;i++;
+    }
+    // centre the ring's words in the sector
+    let a=mid-(used-padA)/2*(bottom?-1:1);
+    row.forEach(o=>{
+      const ac=a+(bottom?-1:1)*o.da/2;
+      const [x,y]=pt(ac,r);
+      let rot=ac*180/Math.PI;if(bottom)rot+=180;
+      o.t.setAttribute('x',x.toFixed(2));o.t.setAttribute('y',y.toFixed(2));
+      o.t.setAttribute('text-anchor','middle');o.t.setAttribute('dominant-baseline','middle');
+      o.t.setAttribute('transform',`rotate(${rot.toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)})`);
+      a+=(bottom?-1:1)*o.da;
+    });
+    r+=size*1.18+2;
+  }
+}
+
+/* ---------- centre ---------- */
+txt('SELBORNE',{x:CX,y:CY-3,'font-size':10,'letter-spacing':3,'text-anchor':'middle',fill:INK});
+txt('the year he wrote of',{x:CX,y:CY+11,'font-size':7.4,'font-style':'italic','text-anchor':'middle',fill:SOFT});
+
+/* ---------- title and key ---------- */
+txt('The Year Within',{x:36,y:52,'font-size':22,fill:INK,'font-style':'italic'});
+txt('every month named in the letters of Gilbert White’s',{x:36,y:70,'font-size':9.6,fill:'#6e624e'});
+txt('Natural History of Selborne, and what lived in it',{x:36,y:83,'font-size':9.6,fill:'#6e624e'});
+const ky=752;
+['The inner strokes are a tally: one for each sentence in the letters that names the month.',
+ 'Around them, the creatures, plants and weather named in that sentence or the next;',
+ 'the larger the word, the more often it comes with that month. The datelines are left out.'
+].forEach((k,i)=>txt(k,{x:36,y:ky+i*12,'font-size':8.6,fill:'#6e624e'}));
+const sx=W-36;
+[['birds','bird'],['other creatures','creature'],['plants and crops','plant'],['weather and instruments','weather'],['nests, eggs, song, departure','life']].forEach(([lab,c],i)=>{
+  txt(lab,{x:sx,y:ky-14+i*13,'font-size':9,'text-anchor':'end',fill:CAT[c],'font-style':c==='life'?'italic':'normal'});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Run-out Groove</title>
+<style>
+  :root { --paper: #e8e2d6; --ink: #2a2622; }
+  html, body { margin: 0; height: 100%; background: var(--paper); }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="A dark disc carrying one spiral groove of sixty-one turns, one per day, read from the rim inward; the groove swells with each hour's value."></canvas>
+<script>
+// 1,464 hourly values (x10), recovered from the dots of record.jpg: height above the bottom edge, in source pixels.
+const D = [__DATA__].map(v => v / 10);
+
+const W = 1100, H = 800;
+const cv = document.getElementById('c');
+const dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+cv.width = W * dpr; cv.height = H * dpr;
+cv.style.width = W + 'px'; cv.style.height = H + 'px';
+const g = cv.getContext('2d');
+g.scale(dpr, dpr);
+
+const cx = 550, cy = 400;
+const DISC = 384, R0 = 368, R1 = 100;   // groove runs from R0 (hour 0) to R1 (hour 1464)
+const N = D.length, PER = 24, SUB = 8;
+
+// paper
+g.fillStyle = '#e8e2d6'; g.fillRect(0, 0, W, H);
+
+// disc
+g.save();
+g.shadowColor = 'rgba(40,30,20,0.28)'; g.shadowBlur = 30; g.shadowOffsetY = 10;
+g.beginPath(); g.arc(cx, cy, DISC, 0, Math.PI * 2);
+g.fillStyle = '#141311'; g.fill();
+g.restore();
+
+// faint sheen across the vinyl
+if (g.createConicGradient) {
+  const cg = g.createConicGradient(-Math.PI / 2 + 0.6, cx, cy);
+  const st = [[0,0],[0.08,0.06],[0.16,0],[0.5,0],[0.58,0.05],[0.66,0],[1,0]];
+  st.forEach(([o,a]) => cg.addColorStop(o, `rgba(255,248,235,${a})`));
+  g.beginPath(); g.arc(cx, cy, DISC, 0, Math.PI * 2); g.fillStyle = cg; g.fill();
+}
+// lead-in edge ring
+g.beginPath(); g.arc(cx, cy, DISC - 2, 0, Math.PI * 2);
+g.strokeStyle = 'rgba(255,248,235,0.07)'; g.lineWidth = 1; g.stroke();
+
+// smooth value at fractional hour t (Catmull-Rom)
+function val(t) {
+  const i = Math.floor(t), f = t - i;
+  const p = k => D[Math.max(0, Math.min(N - 1, k))];
+  const a = p(i - 1), b = p(i), c = p(i + 1), d = p(i + 2);
+  return b + 0.5 * f * (c - a + f * (2 * a - 5 * b + 4 * c - d + f * (3 * (b - c) + d - a)));
+}
+const unit = v => Math.max(0, Math.min(1, (v - 4) / 80));
+const width = v => 0.3 + 5.4 * Math.pow(unit(v), 2.0);
+function shade(v) {                       // dim warm grey when low, ivory when high
+  const L = 0.2 + 0.8 * Math.pow(unit(v), 1.5);
+  return `rgb(${Math.round(40 + L * 206)},${Math.round(36 + L * 200)},${Math.round(32 + L * 180)})`;
+}
+function edge(t) {
+  const tt = Math.min(t, N - 1);
+  const ang = -Math.PI / 2 + (tt / PER) * Math.PI * 2;      // one turn per day, clockwise from the top
+  const r = R0 - (R0 - R1) * (tt / (N - 1));
+  const w = width(val(tt)), c = Math.cos(ang), s = Math.sin(ang);
+  return [cx + c * (r + w / 2), cy + s * (r + w / 2), cx + c * (r - w / 2), cy + s * (r - w / 2)];
+}
+
+// the groove: one continuous spiral, cut into short pieces so each can carry its own light
+g.lineJoin = 'round'; g.lineWidth = 0.35;
+let prev = edge(0);
+for (let k = 1; k <= (N - 1) * SUB; k++) {
+  const t = k / SUB, cur = edge(t), col = shade(val(t - 0.5 / SUB));
+  g.beginPath();
+  g.moveTo(prev[0], prev[1]); g.lineTo(cur[0], cur[1]);
+  g.lineTo(cur[2], cur[3]); g.lineTo(prev[2], prev[3]); g.closePath();
+  g.fillStyle = col; g.strokeStyle = col; g.fill(); g.stroke();
+  prev = cur;
+}
+
+// run-out: one plain hairline circle past the last hour
+g.beginPath(); g.arc(cx, cy, R1 - 11, 0, Math.PI * 2);
+g.strokeStyle = 'rgba(239,229,207,0.35)'; g.lineWidth = 0.6; g.stroke();
+
+// label
+g.beginPath(); g.arc(cx, cy, 74, 0, Math.PI * 2);
+g.fillStyle = '#e8e2d6'; g.fill();
+g.beginPath(); g.arc(cx, cy, 70, 0, Math.PI * 2);
+g.strokeStyle = 'rgba(42,38,34,0.25)'; g.lineWidth = 0.7; g.stroke();
+g.fillStyle = '#2a2622'; g.textAlign = 'center';
+g.font = 'italic 15px Georgia, "Times New Roman", serif';
+g.fillText('Run-out Groove', cx, cy - 26);
+g.font = '9.5px Georgia, "Times New Roman", serif';
+g.fillStyle = 'rgba(42,38,34,0.75)';
+g.fillText('61 TURNS  ·  1 464 HOURS', cx, cy + 34);
+g.fillText('ONE TURN PER DAY', cx, cy + 47);
+// spindle hole
+g.beginPath(); g.arc(cx, cy, 4.5, 0, Math.PI * 2);
+g.fillStyle = '#141311'; g.fill();
+</script>
+</body>
+</html>

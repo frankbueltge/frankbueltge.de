@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Long Lean</title>
+<style>
+  html,body{margin:0;background:#f3efe6;}
+  body{width:1100px;height:800px;overflow:hidden;font-family:Georgia,"Times New Roman",serif;color:#2a2622;}
+  canvas{display:block;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800"></canvas>
+<script src="data.js"></script>
+<script>
+(function(){
+  const P = window.PRIZES, F = P.fields, I = n => F.indexOf(n);
+  const iY=I("year"), iC=I("category"), iN=I("name"), iK=I("kind"), iB=I("born"), iS=I("share");
+  const rows = P.rows.filter(r => r[iB] != null);
+
+  const cv = document.getElementById("c");
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = 1100*dpr; cv.height = 800*dpr; cv.style.width="1100px"; cv.style.height="800px";
+  const g = cv.getContext("2d"); g.scale(dpr,dpr);
+
+  const PAPER="#f3efe6", INK="#2a2622", MEN="rgba(42,38,34,0.20)", WOMEN="#c8361d", ORG="#1f5f8b";
+  const X0=70, X1=1050, Y0=170, Y1=680, T0=1800, T1=2030;
+  const x = t => X0 + (t - T0) / (T1 - T0) * (X1 - X0);
+  const clipX = X0 - 6;
+
+  // axes
+  g.strokeStyle = INK; g.lineWidth = 1;
+  [Y0, Y1].forEach(y => { g.beginPath(); g.moveTo(X0, y); g.lineTo(X1, y); g.stroke(); });
+  g.font = "11px Georgia, serif"; g.fillStyle = "#6b645b"; g.textAlign = "center";
+  for (let t = 1800; t <= 2020; t += 20) {
+    const xx = x(t);
+    g.beginPath(); g.moveTo(xx, Y0); g.lineTo(xx, Y0-5); g.stroke();
+    g.fillText(t, xx, Y0 - 10);
+    g.beginPath(); g.moveTo(xx, Y1); g.lineTo(xx, Y1+5); g.stroke();
+    g.fillText(t, xx, Y1 + 18);
+  }
+  g.textAlign = "left"; g.font = "italic 13px Georgia, serif"; g.fillStyle = INK;
+  g.fillText("born (or founded)", X0, Y0 - 30);
+  g.fillText("awarded", X0, Y1 + 38);
+
+  function thread(r, color, alpha){
+    const b = r[iB], y = r[iY];
+    let xa = x(b), ya = Y0;
+    const xb = x(y);
+    if (xa < clipX) { // the 1647 outlier: cut where it crosses the margin
+      const f = (clipX - xa) / (xb - xa);
+      xa = clipX; ya = Y0 + f * (Y1 - Y0);
+    }
+    g.strokeStyle = color; g.globalAlpha = alpha;
+    g.lineWidth = 0.35 + 1.3 * r[iS];
+    g.beginPath(); g.moveTo(xa, ya); g.lineTo(xb, Y1); g.stroke();
+    g.globalAlpha = 1;
+  }
+
+  const men = rows.filter(r => r[iK] === "man");
+  const women = rows.filter(r => r[iK] === "woman");
+  const orgs = rows.filter(r => r[iK] !== "man" && r[iK] !== "woman");
+  men.forEach(r => thread(r, INK, 0.2));
+  orgs.forEach(r => thread(r, ORG, 0.7));
+  women.forEach(r => thread(r, WOMEN, 0.75));
+
+  // feet: little ticks on the award axis for women, to be counted
+  women.forEach(r => { g.fillStyle = WOMEN; g.fillRect(x(r[iY]) - 0.8, Y1 + 1, 1.6, 4); });
+
+  // annotations
+  function note(px, py, tx, ty, lines, color, align){
+    g.strokeStyle = color; g.fillStyle = color; g.lineWidth = 0.7;
+    g.beginPath(); g.moveTo(px, py); g.lineTo(tx, ty); g.stroke();
+    g.beginPath(); g.arc(px, py, 2, 0, 7); g.fill();
+    g.textAlign = align || "left"; g.font = "italic 12px Georgia, serif";
+    lines.forEach((s, i) => {
+      const w = g.measureText(s).width, lx = tx + (align === "right" ? -4 - w : 4);
+      g.fillStyle = "rgba(243,239,230,0.88)"; g.fillRect(lx - 3, ty - 7 + i * 14, w + 6, 14);
+      g.fillStyle = color; g.textAlign = "left"; g.fillText(s, lx, ty + 4 + i * 14);
+    });
+  }
+  const find = n => rows.find(r => r[iN].indexOf(n) >= 0);
+  const pt = (r, f) => { // point at fraction f along a thread
+    let xa = Math.max(x(r[iB]), clipX); return [xa + (x(r[iY]) - xa) * f, Y0 + (Y1 - Y0) * f];
+  };
+  const mal = find("Malala"), good = find("Goodenough"), fsc = find("Friends Service");
+  const curie = rows.filter(r => /Marie Curie/.test(r[iN]));
+  if (mal){ const p = pt(mal, 0.25); note(p[0], p[1], p[0] - 30, p[1] - 40, ["Malala Yousafzai, 17 — the steepest thread", "born 1997, Peace 2014"], WOMEN, "right"); }
+  if (good){ const p = pt(good, 0.7); note(p[0], p[1], p[0] - 40, p[1] + 70, ["John B. Goodenough, 97 — the longest wait", "born 1922, Chemistry 2019"], INK, "right"); }
+  if (fsc){ g.fillStyle = ORG; g.font = "italic 12px Georgia, serif"; g.textAlign = "left";
+    const yy = Y0 + ((clipX - x(1647)) / (x(1947) - x(1647))) * (Y1 - Y0);
+    g.fillText("← Friends Service Council, founded 1647", clipX + 4, yy - 22); g.fillText("    awarded 1947, 300 years on", clipX + 4, yy - 8); }
+  if (curie.length >= 2){ const p = pt(curie[1], 0.5); note(p[0], p[1], p[0] - 150, p[1] - 70, ["Marie Curie, twice:", "1903 at 36, 1911 at 44"], WOMEN, "right"); }
+
+  // title block
+  g.textAlign = "left"; g.fillStyle = INK;
+  g.font = "34px Georgia, serif"; g.fillText("The Long Lean", 70, 62);
+  g.font = "14px Georgia, serif"; g.fillStyle = "#4a443d";
+  g.fillText("Every Nobel Prize since 1901 as a thread from the year its laureate was born to the year it was given.", 70, 88);
+  g.fillText("Both rails share one calendar, so a thread’s lean is a life’s length: the further it leans, the longer the wait.", 70, 106);
+
+  // key
+  const kx = 760, ky = 40;
+  g.font = "12px Georgia, serif";
+  [[INK, 0.5, "men  " + men.length], [WOMEN, 1, "women  " + women.length], [ORG, 1, "organisations  " + orgs.length]].forEach((k, i) => {
+    g.strokeStyle = k[0]; g.globalAlpha = k[1]; g.lineWidth = 1.6;
+    g.beginPath(); g.moveTo(kx + i*110, ky); g.lineTo(kx + i*110 + 10, ky + 16); g.stroke(); g.globalAlpha = 1;
+    g.fillStyle = k[0]; g.fillText(k[2], kx + i*110 + 16, ky + 12);
+  });
+  g.fillStyle = "#6b645b"; g.font = "italic 11px Georgia, serif";
+  g.fillText("thread weight = the laureate’s share of the prize", kx, ky + 36);
+
+  // median-age readout under the axis
+  const med = a => { a = a.slice().sort((p, q) => p - q); return a[a.length >> 1]; };
+  const ppl = rows.filter(r => r[iK] === "man" || r[iK] === "woman");
+  const spans = [[1901, 1925], [1926, 1950], [1951, 1975], [1976, 2000], [2001, 2026]];
+  g.textAlign = "center";
+  spans.forEach(s => {
+    const a = ppl.filter(r => r[iY] >= s[0] && r[iY] <= s[1]).map(r => r[iY] - r[iB]);
+    const cx = x((s[0] + s[1]) / 2);
+    g.fillStyle = "#6b645b"; g.font = "11px Georgia, serif";
+    g.fillText(s[0] + "–" + String(s[1]).slice(2), cx, Y1 + 62);
+    g.fillStyle = INK; g.font = "20px Georgia, serif";
+    g.fillText(med(a), cx, Y1 + 86);
+  });
+  g.textAlign = "left"; g.fillStyle = "#6b645b"; g.font = "italic 11px Georgia, serif";
+  g.fillText("median age at award, people only", X0, Y1 + 86);
+  g.textAlign = "right"; g.fillText("Source: " + P.source.split(",")[0] + ", " + P.count + " awards", X1, 790);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixty-one Noons</title>
+<style>
+  :root { --paper:#f2eee5; --ink:#1c1a17; --faint:#8a8378; }
+  html,body { margin:0; height:100%; background:var(--paper); }
+  body { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1100" height="800" aria-label="Sixty-one days drawn as a spiral, one turn per day, noon at the top"></canvas>
+<script>
+// 1,464 hourly values (15 Oct 00:00 to 14 Dec 23:00, 2025), read back from the dot plot:
+// units are pixel heights in the 90-pixel-high source picture (bigger = higher).
+const V = [/*DATA*/];
+const W = 1100, H = 800;
+const cv = document.getElementById('c');
+const dpr = Math.max(1, window.devicePixelRatio || 1);
+cv.width = W * dpr; cv.height = H * dpr;
+cv.style.width = W + 'px'; cv.style.height = H + 'px';
+const g = cv.getContext('2d');
+g.scale(dpr, dpr);
+const css = getComputedStyle(document.documentElement);
+const PAPER = css.getPropertyValue('--paper').trim();
+const INK = css.getPropertyValue('--ink').trim();
+const FAINT = css.getPropertyValue('--faint').trim();
+g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+const cx = 600, cy = 400;
+const R0 = 44, GAP = 4.85;
+const N = V.length, DAYS = N / 24;
+const vmin = Math.min(...V), vmax = Math.max(...V);
+
+// Catmull-Rom sample of the hourly series at fractional hour t
+function val(t) {
+  const i = Math.floor(t), f = t - i;
+  const p = j => V[Math.min(N - 1, Math.max(0, j))];
+  const p0 = p(i - 1), p1 = p(i), p2 = p(i + 1), p3 = p(i + 2);
+  return 0.5 * ((2 * p1) + (-p0 + p2) * f + (2 * p0 - 5 * p1 + 4 * p2 - p3) * f * f + (-p0 + 3 * p1 - 3 * p2 + p3) * f * f * f);
+}
+// hour 0 at the bottom, 06 to the left, noon at the top, 18 to the right
+function xy(t, r) {
+  const th = (t % 24) / 24 * Math.PI * 2;
+  return [cx - r * Math.sin(th), cy + r * Math.cos(th)];
+}
+const rad = t => R0 + (t / 24) * GAP;
+// width of the inked spiral at hour t: hairline for the smallest value,
+// nearly the full gap between turns for the largest
+function wid(t) {
+  const u = Math.max(0, Math.min(1, (val(t) - vmin) / (vmax - vmin)));
+  return 0.35 + (GAP - 0.7) * u;
+}
+
+// faint hairline guide of the whole spiral
+g.beginPath();
+for (let t = 0; t <= N - 1; t += 0.25) { const [x, y] = xy(t, rad(t)); t ? g.lineTo(x, y) : g.moveTo(x, y); }
+g.strokeStyle = INK; g.globalAlpha = 0.18; g.lineWidth = 0.4; g.stroke(); g.globalAlpha = 1;
+
+// the inked band, drawn as one shape so no seam shows between days
+const STEP = 1 / 6;
+const outerP = [], innerP = [];
+for (let t = 0; t <= N - 1 + 1e-9; t += STEP) {
+  const tt = Math.min(t, N - 1), r = rad(tt), w = wid(tt) / 2;
+  outerP.push(xy(tt, r + w)); innerP.push(xy(tt, r - w));
+}
+g.beginPath();
+outerP.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y));
+for (let i = innerP.length - 1; i >= 0; i--) g.lineTo(innerP[i][0], innerP[i][1]);
+g.closePath();
+g.fillStyle = INK; g.fill();
+
+// sparse marginalia
+g.fillStyle = FAINT; g.strokeStyle = FAINT;
+g.font = 'italic 12px Georgia, "Times New Roman", serif';
+g.textAlign = 'center'; g.textBaseline = 'middle';
+const outer = R0 + DAYS * GAP + 30;
+[['noon', 12], ['six', 6], ['eighteen', 18], ['midnight', 0]].forEach(([s, h]) => {
+  const th = h / 24 * Math.PI * 2;
+  g.fillText(s, cx - outer * Math.sin(th), cy + outer * Math.cos(th));
+});
+g.textAlign = 'left';
+g.fillStyle = INK;
+g.font = '22px Georgia, "Times New Roman", serif';
+g.fillText('Sixty-one Noons', 48, 72);
+g.fillStyle = FAINT;
+g.font = '12.5px Georgia, "Times New Roman", serif';
+const lines = [
+  'One turn of the line is one day,',
+  'from the centre outward:',
+  '15 October 2025 to 14 December.',
+  'Noon is at the top. The line thickens',
+  'with each hour\'s value.',
+  '',
+  'For forty-three days every turn swells',
+  'from morning into afternoon. From',
+  '27 November the swelling stops.'
+];
+lines.forEach((s, i) => g.fillText(s, 48, 106 + i * 18));
+</script>
+</body>
+</html>

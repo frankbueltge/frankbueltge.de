@@ -1,30 +1,30 @@
 {
-  "date": "2026-10-18",
+  "date": "2026-10-22",
   "deletion": {
     "available": true,
-    "checked_at": "2026-10-18T09:52:15Z",
+    "checked_at": "2026-10-22T10:30:15Z",
     "counts": {
-      "botwall": 28,
-      "gone_404": 0,
+      "botwall": 5,
+      "gone_404": 1,
       "gone_410": 0,
       "legal_451": 0,
-      "ok": 270,
+      "ok": 292,
       "other": 0,
       "server_error": 0,
       "unreachable": 2
     },
-    "decided": 270,
-    "excluded_unverifiable": 30,
-    "gone": 0,
+    "decided": 293,
+    "excluded_unverifiable": 7,
+    "gone": 1,
     "gone_ci95": [
-      0.0,
-      0.014
+      0.0006,
+      0.0191
     ],
-    "gone_rate": 0.0,
+    "gone_rate": 0.0034,
     "legal_451": 0,
     "legal_451_ci95": [
       0.0,
-      0.014
+      0.0129
     ],
     "legal_451_rate": 0.0,
     "notes": [
@@ -33,104 +33,125 @@
       "403/429 bot-walls and network failures are unverifiable and excluded from the denominator, disclosed as counts.",
       "A 200 that shows different content (soft deletion) counts as ok — the gone rate is a floor."
     ],
-    "pool_day": "2026-10-16",
-    "receipts": [],
-    "sample_drawn_at": "2026-10-17T09:40:09Z",
+    "pool_day": "2026-10-20",
+    "receipts": [
+      {
+        "class": "gone_404",
+        "domain": "95sx.com",
+        "first_seen": "20261020100000",
+        "http_code": 404,
+        "title": "Harry Styles' Madison Square Garden Tour to Become Documentary Directed by John Wilson",
+        "url": "https://www.95sx.com/2026/10/20/harry-styles-madison-square-garden-tour-to-become-documentary-directed-by-john-wilson/"
+      }
+    ],
+    "sample_drawn_at": "2026-10-21T10:27:13Z",
     "sample_size": 300
   },
   "filter_version": "v1",
   "gdg": {
     "available": true,
     "classes": {
-      "reframing": 4182,
-      "replaced": 4541,
-      "trivial": 524,
-      "update": 601
+      "reframing": 5612,
+      "replaced": 5335,
+      "trivial": 829,
+      "update": 401
     },
-    "day": "2026-10-17",
+    "day": "2026-10-21",
     "notice": "Data: The GDELT Project — https://www.gdeltproject.org/",
     "register": [
       {
         "added": [
-          "SW",
-          "Dade",
-          "in",
-          "Miami"
+          "Northwest",
+          "Arkansas"
         ],
-        "after": "Video shows theft of G-Wagen from home in SW Miami-Dade, pursuit in Broward that led to crash and teens' arrests; 1 on the loose - WSVN 7News | Miami News, Weather, Sports",
-        "before": "Video shows theft of G-Wagen from Kendall home, pursuit in Broward that led to crash and teens' arrests; 1 on the loose - WSVN 7News | Miami News, Weather, Sports",
-        "detected": "2026-10-17T14:04:05Z",
-        "domain": "wsvn.com",
+        "after": "Voting early? Here's where and when you can do it in Northwest Arkansas | Northwest Arkansas Democrat-Gazette",
+        "before": "Voting early? Here's where and when you can do it in Benton and Washington counties | Northwest Arkansas Democrat-Gazette",
+        "detected": "2026-10-21T03:47:24Z",
+        "domain": "nwaonline.com",
         "removed": [
-          "Kendall"
+          "Benton",
+          "and",
+          "Washington",
+          "counties"
         ],
-        "similarity": 0.903,
-        "url": "https://wsvn.com/news/local/miami-dade/teens-arrested-luxury-car-theft/",
-        "weight": 8,
+        "similarity": 0.842,
+        "url": "https://www.nwaonline.com/news/2026/oct/19/voting-early-heres-where-and-when-you-can-do-it/",
+        "weight": 9,
         "window": "24h"
       },
       {
         "added": [
-          "Champions",
-          "Cup"
+          "cost",
+          "of",
+          "living"
         ],
-        "after": "From star signings to Cullen's last dance: six to watch in Champions Cup rugby this season",
-        "before": "From star signings to Cullen's last dance: six to watch in European rugby this season",
-        "detected": "2026-10-17T07:31:12Z",
-        "domain": "aol.co.uk",
+        "after": "cost of living: SSA COLA 2027: Social Security cost-of-living adjustment rises 3.6%, largest increase since 2023 - how much more will you get?",
+        "before": "2027 social security cola percentage: SSA COLA 2027: Social Security cost-of-living adjustment rises 3.6%, largest increase since 2023 - how much more will you get?",
+        "detected": "2026-10-21T15:05:12Z",
+        "domain": "indiatimes.com",
         "removed": [
-          "European"
+          "percentage",
+          "COLA",
+          "2027",
+          "Social",
+          "Security"
         ],
-        "similarity": 0.824,
-        "url": "https://www.aol.co.uk/articles/star-signings-leo-cullen-last-070055000.html",
-        "weight": 6,
-        "window": "24h"
+        "similarity": 0.957,
+        "url": "https://economictimes.indiatimes.com/world/money/ssa-cola-2027-social-security-cost-of-living-adjustment-rises-3-6-largest-increase-since-2023-how-much-more-will-you-get/articleshow/134944693.cms",
+        "weight": 10,
+        "window": "1w"
       },
       {
         "added": [
-          "Indian"
+          "Welcome",
+          "to",
+          "UK"
         ],
-        "after": "Compete, but follow Indian laws: Reliance Industries after Elon Musk's remarks on Starlink entry",
-        "before": "Compete, but follow India's laws: Reliance Industries after Elon Musk's remarks on Starlink India entry",
-        "detected": "2026-10-17T04:16:44Z",
-        "domain": "hindustantimes.com",
+        "after": "Welcome to The Hamptons UK! Critics have called it 'cult-like', but those living on US-style development - where houses go for £800K and Practical Magic 2 was filmed - paint an idyllic picture of life",
+        "before": "The Surrey estate that thinks it's The Hamptons! Critics have called it 'cult-like', but those living on US-style development - where houses go for £800K and Practical Magic 2 was filmed - paint an idyllic picture of life",
+        "detected": "2026-10-21T11:46:09Z",
+        "domain": "dailymail.com",
         "removed": [
-          "India",
+          "Surrey",
+          "estate",
+          "that",
+          "thinks",
           "s",
-          "India"
+          "The",
+          "it"
         ],
-        "similarity": 0.875,
-        "url": "https://www.hindustantimes.com/india-news/never-feared-competition-ambani-reliance-elon-musk-x-outburst-over-starlink-india-entry-reliance-shares-101792119010920.html",
-        "weight": 6,
-        "window": "24h"
+        "similarity": 0.8,
+        "url": "https://www.dailymail.com/lifestyle/article-16190059/Surrey-village-New-England-Practical-Magic-Hamptons-Worcester-Park.html",
+        "weight": 8,
+        "window": "1w"
       }
     ],
     "status_counts": {
-      "HTTP_REDIRECT": 11863,
-      "PAGE_TEXTCHANGE": 99265,
-      "PAGE_TITLECHANGE": 40477,
-      "UNCHANGED_CONTENT": 645045
+      "HTTP_REDIRECT": 17853,
+      "PAGE_TEXTCHANGE": 132448,
+      "PAGE_TITLECHANGE": 51060,
+      "UNCHANGED_CONTENT": 756198
     },
-    "title_changes_en": 9848,
+    "title_changes_en": 12177,
     "trace": [
       {
-        "bytes_billed": 22020096,
-        "created": "1792316862672",
-        "job_id": "world_gdg_counts_20261017",
+        "bytes_billed": 26214400,
+        "created": "1792664725002",
+        "job_id": "world_gdg_counts_20261021",
         "project": "gen-lang-client-0843427097"
       },
       {
-        "bytes_billed": 199229440,
-        "created": "1792316868378",
-        "job_id": "world_gdg_titles_20261017",
+        "bytes_billed": 241172480,
+        "created": "1792664729085",
+        "job_id": "world_gdg_titles_20261021",
         "project": "gen-lang-client-0843427097"
       }
     ]
   },
-  "generated_at": "2026-10-18T09:52:15Z",
+  "generated_at": "2026-10-22T10:30:15Z",
   "pipeline_version": "0.1.0",
   "register_bound": 3,
-  "sample_committed": "src/data/redaction/world/samples/2026-10-17.json",
+  "sample_committed": "src/data/redaction/world/samples/2026-10-21.json",
   "schema_version": "1",
   "selection_version": "v1"
 }

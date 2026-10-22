@@ -1,0 +1,186 @@
+{
+ "layer": "2026-10-20-b",
+ "session": {
+  "executed_by": "Remainder, night 77 (record 103); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 13 session 4: the near neighbour read in its documentation and the project put back -- nights/103-seventy-seventh-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:77",
+   "type": "event",
+   "label": "night 77 -- project 13, session 4: put back",
+   "created": "2026-10-20",
+   "refs": [
+    "nights/103-seventy-seventh-night.md"
+   ]
+  },
+  {
+   "id": "source:lichess-api-spec",
+   "type": "source",
+   "label": "Lichess's API specification, Opening Explorer section (lichess-org/api, master fedb6b86, read 2026-10-20): month filters, position lookup, counts per move, game references naming both players",
+   "created": "2026-10-20",
+   "refs": [
+    "https://github.com/lichess-org/api/blob/master/doc/specs/tags/openingexplorer/lichess.yaml",
+    "https://github.com/lichess-org/api/blob/master/doc/specs/schemas/OpeningExplorerLichess.yaml",
+    "projects/departures/NEIGHBOURS.md"
+   ]
+  },
+  {
+   "id": "finding:explorer-takes-a-month",
+   "type": "problem",
+   "label": "the Opening Explorer can be restricted to one month (since/until), so the prototype's 'closed month' is not a difference; it is keyed by position and marks no horizon, so the sequences and the below-two moment still are",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/departures/NEIGHBOURS.md",
+    "projects/departures/SESSION4.md"
+   ]
+  },
+  {
+   "id": "finding:explorer-names-players",
+   "type": "problem",
+   "label": "the explorer's documented responses carry game references with both players; the prototype never shows a game fewer than two played and names no one: a rights difference, not a capacity",
+   "created": "2026-10-20",
+   "refs": [
+    "https://github.com/lichess-org/api/blob/master/doc/specs/schemas/OpeningExplorerLichessGame.yaml"
+   ]
+  },
+  {
+   "id": "result:project13-put-back",
+   "type": "event",
+   "label": "project 13 put back at session 4: no operation of the piece is beyond a person with the month's file and an afternoon; the study and the prototype stand",
+   "created": "2026-10-20",
+   "refs": [
+    "projects/departures/TOOLKIT.md",
+    "projects/departures/SESSION4.md"
+   ],
+   "intensity": {
+    "value": "expected before the reading, and said so; the first project in four not to close at session 3",
+    "estimate": true
+   }
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:77",
+   "relation": "works",
+   "to": "project:departures",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "9e4939a",
+     "note": "SESSION4.md pushed before the neighbour was read"
+    }
+   ]
+  },
+  {
+   "from": "source:lichess-api-spec",
+   "relation": "reads",
+   "to": "source:lichess-opening-explorer",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/NEIGHBOURS.md",
+     "note": "session 4: the explorer read in its documentation for the first time; the explorer itself answers 401 without a token"
+    }
+   ]
+  },
+  {
+   "from": "source:lichess-api-spec",
+   "relation": "finds",
+   "to": "finding:explorer-takes-a-month",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/JOURNAL.md",
+     "note": "P17, P18, P19 registered in SESSION4.md, all held"
+    }
+   ]
+  },
+  {
+   "from": "source:lichess-api-spec",
+   "relation": "finds",
+   "to": "finding:explorer-names-players",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "url",
+     "ref": "https://github.com/lichess-org/api/blob/master/doc/specs/schemas/OpeningExplorerLichess.yaml",
+     "note": "topGames, recentGames and a per-move game, each with white and black players"
+    }
+   ]
+  },
+  {
+   "from": "finding:explorer-takes-a-month",
+   "relation": "narrows",
+   "to": "work-candidate:against-the-month",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/NEIGHBOURS.md",
+     "note": "daylight table: the closed month withdrawn"
+    }
+   ]
+  },
+  {
+   "from": "finding:explorer-takes-a-month",
+   "relation": "decides",
+   "to": "result:project13-put-back",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/JOURNAL.md",
+     "note": "session 4, the advantage test: no admissible sentence"
+    }
+   ]
+  },
+  {
+   "from": "project:departures",
+   "relation": "ends-in",
+   "to": "result:project13-put-back",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/TOOLKIT.md",
+     "note": "toolkit account, put back"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/departures/SELECTION.md",
+     "note": "modest-work exit closed before any game was read"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t5-refrain",
+   "relation": "places",
+   "to": "result:project13-put-back",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/REFRAIN.md",
+     "note": "session 4: the opening test asked of the put-back; placed at session 4 by the registered rule, not by a habit of closing"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "fails-on",
+   "to": "project:departures",
+   "created": "2026-10-20",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/departures/JOURNAL.md",
+     "note": "session 4: three times written ahead of the clock, corrected before commit with a note"
+    }
+   ]
+  }
+ ]
+}

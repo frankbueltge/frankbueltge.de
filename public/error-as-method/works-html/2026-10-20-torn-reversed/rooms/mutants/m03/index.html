@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Turning Year</title>
+<style>
+  html,body{margin:0;padding:0;background:#f1e9d6;}
+  body{width:1100px;height:800px;overflow:hidden;}
+  svg{display:block;}
+  text{font-family:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;}
+</style>
+</head>
+<body>
+<svg id="s" width="1100" height="800" viewBox="0 0 1100 800" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="data/selborne.js"></script>
+<script>
+(function(){
+const W=1100,H=800,CX=550,CY=402;
+const PAPER="#f1e9d6",INK="#2b251d",FAINT="#b9ab90";
+const COL=["#8c3a1c","#2e5a4c"]; // Pennant, Barrington
+const svg=document.getElementById('s');
+const NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e;}
+function txt(s,attrs,parent){const e=el('text',attrs,parent);e.textContent=s;return e;}
+
+/* ---------- read the book into letters ---------- */
+const L=SELBORNE.split('\n');
+const heads=[];let series=-1;
+L.forEach((l,i)=>{
+  if(/^LETTERS to THOMAS PENNANT/.test(l))series=0;
+  if(/^LETTERS to DAINES/.test(l))series=1;
+  const m=l.match(/^Letter ([IVXLC]+)\s*$/); if(m&&series>=0)heads.push({i,num:m[1],series});
+});
+const MON={jan:1,feb:2,mar:3,mark:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+const letters=heads.map((h,k)=>{
+  const end=k+1<heads.length?heads[k+1].i:L.length;
+  const body=L.slice(h.i+1,end);
+  let date=null;
+  for(let j=0;j<body.length;j++){
+    const ln=(body[j]+(/^[A-Z][a-z]+,\s*$/.test(body[j])?' '+(body[j+1]||''):'')).trim();
+    if(/^\*/.test(ln))continue;
+    const m=ln.match(/^(?:([A-Z][a-z]+)(?:, near [A-Z][a-z]+)?,\s*)?(?:([A-Z][a-z]+)\.?\s*(\d{1,2})?,?\s*)?(17\d\d)\.$/);
+    if(m){const mn=m[2]?m[2].toLowerCase():null;
+      date={place:m[1]||'Selborne',mon:mn?(MON[mn.slice(0,4)]||MON[mn.slice(0,3)]):null,day:m[3]?+m[3]:null,year:+m[4]};break;}
+  }
+  const text=body.filter(l=>!/^To (Thomas Pennant, Esquire|The Honourable Daines Barrington)\s*$/.test(l)).join(' ');
+  const words=(text.match(/[A-Za-z][A-Za-z’'-]*/g)||[]).length;
+  return {series:h.series,num:h.num,date,text,words};
+});
+
+/* ---------- a word for each letter: the one it uses most that the others do not ---------- */
+const STOP=new Set(("which their there these those would could should about other being have been were with from this that they them then than when what where while into upon very much more most some such only also many little great same made make every after before often shall will your yours mine once ever even never well good last first years year time times days place found seen seem seems seemed perhaps without within though through think thought know known sort kind part parts thus away again whole another itself himself myself under over along among whether several things thing life manner since till until because called least therefore however indeed sometimes always rather people quite take taken given give come came went each both just like long down here side sure nothing something account letter letters says said tell told hope wish pray dear becomes divided stood surrounded contained inclusive distinct three regard upright respect consisted inches carried false facts fixed somewhat large twenty-second appeared next ditto owing hath fear epithet name sake showing kept consequently fourth miserable pairs best author particularly raising goes number annually eight circa vulgaris feeds pick severest climbed quiet corrupted operation sounds note full expressive propensity spectator circumscribed sagacity barrington pennant gilbert white month months february july january april august october december september march june recollection minor edition collections genera specimen perambulation solace inches twelfth flat walk voice narrowest northern holes salted sexual affection").split(/\s+/));
+
+  return (t.match(/[a-z][a-z’'-]+[a-z]/g)||[]).map(w=>w.replace(/[’']s$/,''));
+});
+const df={};toks.forEach(ws=>new Set(ws).forEach(w=>df[w]=(df[w]||0)+1));
+letters.forEach((o,k)=>{
+  const tf={};toks[k].forEach(w=>{if(w.length<4||STOP.has(w))return;tf[w]=(tf[w]||0)+1;});
+  const sc=Object.entries(tf).filter(e=>e[1]>=2||toks[k].length<450).map(([w,c])=>[w,c*Math.log(letters.length/df[w])]).sort((a,b)=>b[1]-a[1]);
+  o.kw=sc.length?sc[0][0]:'';
+});
+
+/* ---------- the year as a spiral ---------- */
+const Y0=1767,Y1=1788,R0=74,R1=292;
+const DIM=[31,28,31,30,31,30,31,31,30,31,30,31];
+const CUM=DIM.reduce((a,d,i)=>(a.push(a[i]+d),a),[0]);
+function frac(mon,day){return (CUM[mon-1]+(day?day-0.5:DIM[mon-1]/2))/365;}
+function rad(t){return R0+(R1-R0)*(t-Y0)/(Y1-Y0);}            // t in fractional years
+function pt(a,r){return [CX+r*Math.sin(a),CY-r*Math.cos(a)];}  // a: 0 = top, clockwise
+
+// month spokes
+for(let m=0;m<12;m++){
+  const a=CUM[m]/365*2*Math.PI;
+  const [x0,y0]=pt(a,R0-6),[x1,y1]=pt(a,R1+4);
+  el('line',{x1:x0,y1:y0,x2:x1,y2:y1,stroke:FAINT,'stroke-width':m===0?0.8:0.45,'stroke-dasharray':m===0?'':'1 2.5'});
+}
+// spiral
+let d='';
+for(let t=Y0;t<=Y1+1e-9;t+=1/720){
+  const a=(t-Y0)*2*Math.PI,[x,y]=pt(a,rad(t));d+=(d?'L':'M')+x.toFixed(2)+' '+y.toFixed(2);
+}
+el('path',{d,fill:'none',stroke:'#a8987a','stroke-width':0.7});
+// year marks along the January spoke
+for(let y=Y0;y<=Y1;y++){
+  const [x,y1]=pt(0,rad(y));
+  el('line',{x1:x-2.5,y1:y1,x2:x+2.5,y2:y1,stroke:'#8d7f66','stroke-width':0.7});
+  if(y===Y0||y===Y1||y%5===0){
+    txt(String(y),{x:x-5,y:y1+2.6,'font-size':7.2,'text-anchor':'end',fill:'#7a6d57','letter-spacing':0.3});
+  }
+}
+// month names, between the spiral and the words
+const MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+for(let m=0;m<12;m++){
+  const a=(CUM[m]+DIM[m]/2)/365*2*Math.PI;
+  const r=R1+11;const [x,y]=pt(a,r);
+  let rot=a*180/Math.PI; if(rot>90&&rot<270)rot+=180;
+  txt(MN[m].toUpperCase(),{x,y,'font-size':6.6,'letter-spacing':1.6,'text-anchor':'middle','dominant-baseline':'middle',fill:'#8d7f66',transform:`rotate(${rot.toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)})`,stroke:PAPER,'stroke-width':2.4,'paint-order':'stroke'});
+}
+
+/* ---------- letters on the spiral ---------- */
+const maxW=Math.max(...letters.map(o=>o.words));
+function dotR(w){return 1.3+4.9*Math.sqrt(w/maxW);}
+const dated=letters.filter(o=>o.date&&o.date.mon);
+const undated=letters.filter(o=>!(o.date&&o.date.mon));
+dated.forEach(o=>{o.t=o.date.year+frac(o.date.mon,o.date.day);o.a=(o.t-Y0)*2*Math.PI;o.r=rad(o.t);});
+
+// spread the words around the rim so none collide
+const GAP=2.35*Math.PI/180;
+const ord=dated.slice().sort((p,q)=>(p.a%(2*Math.PI))-(q.a%(2*Math.PI)));
+ord.forEach(o=>o.la=o.a%(2*Math.PI));
+for(let it=0;it<600;it++){
+  let moved=false;
+  for(let i=0;i<ord.length;i++){
+    const p=ord[i],q=ord[(i+1)%ord.length];
+    let diff=q.la-p.la; if(i===ord.length-1)diff+=2*Math.PI;
+    if(diff<GAP){const s=(GAP-diff)/2+1e-5;p.la-=s;q.la+=s;moved=true;}
+  }
+  // a gentle pull back to the true date
+  ord.forEach(o=>{o.la+=(o.a%(2*Math.PI)-o.la)*0.02;});
+  if(!moved&&it>50)break;
+}
+const RL0=R1+22,RL1=R1+32;
+const gLead=el('g',{}),gDot=el('g',{}),gWord=el('g',{});
+dated.forEach(o=>{
+  const c=COL[o.series];
+  const [x0,y0]=pt(o.a,o.r+dotR(o.words)),[x1,y1]=pt(o.a,R1+2),[x2,y2]=pt(o.la,RL0),[x3,y3]=pt(o.la,RL1-3);
+  el('path',{d:`M${x0} ${y0}L${x1} ${y1}L${x2} ${y2}L${x3} ${y3}`,fill:'none',stroke:c,'stroke-opacity':0.32,'stroke-width':0.5},gLead);
+  const [x,y]=pt(o.a,o.r);
+  const away=o.date.place!=='Selborne';
+  el('circle',{cx:x,cy:y,r:dotR(o.words),fill:away?PAPER:c,'fill-opacity':away?1:0.88,stroke:away?c:PAPER,'stroke-width':away?1:0.6},gDot);
+  // the word
+  const [wx,wy]=pt(o.la,RL1);
+  let rot=o.la*180/Math.PI-90,anchor='start';
+  const deg=((o.la*180/Math.PI)%360+360)%360;
+  if(deg>180){rot+=180;anchor='end';}
+  const tEl=txt('',{x:wx,y:wy,'font-size':9.4,'text-anchor':anchor,'dominant-baseline':'middle',fill:c,transform:`rotate(${rot.toFixed(2)} ${wx.toFixed(2)} ${wy.toFixed(2)})`},gWord);
+  const n=document.createElementNS(NS,'tspan');n.textContent=o.num;n.setAttribute('font-size','5.6');n.setAttribute('fill-opacity','0.7');n.setAttribute('letter-spacing','0.4');
+  const w=document.createElementNS(NS,'tspan');w.textContent=o.kw;w.setAttribute('font-style','italic');
+  const sp=document.createElementNS(NS,'tspan');sp.textContent=' ';
+  if(anchor==='start'){tEl.appendChild(n);tEl.appendChild(sp);tEl.appendChild(w);}else{tEl.appendChild(w);tEl.appendChild(sp);tEl.appendChild(n);}
+});
+
+/* ---------- centre ---------- */
+txt('SELBORNE',{x:CX,y:CY-4,'font-size':11,'letter-spacing':3.2,'text-anchor':'middle',fill:INK});
+txt('1767 – 1787',{x:CX,y:CY+11,'font-size':7.4,'letter-spacing':1.2,'text-anchor':'middle',fill:'#7a6d57'});
+
+/* ---------- the letters that carry no date ---------- */
+function column(list,x,align,series,head){
+  const c=COL[series];const anchor=align;
+  let y=200;
+  txt(head[0],{x,y,'font-size':9.5,'letter-spacing':1.4,'text-anchor':anchor,fill:c});
+  txt(head[1],{x,y:y+12,'font-size':8.4,'font-style':'italic','text-anchor':anchor,fill:'#7a6d57'});
+  y+=34;
+  list.forEach(o=>{
+    const r=dotR(o.words);
+    const dx=align==='start'?x+5:x-5;
+    el('circle',{cx:dx,cy:y-2.8,r,fill:c,'fill-opacity':0.88,stroke:PAPER,'stroke-width':0.6});
+    const tx=align==='start'?x+15:x-15;
+    const t=txt('',{x:tx,y,'font-size':9.4,'text-anchor':anchor,fill:c});
+    const n=document.createElementNS(NS,'tspan');n.textContent=o.num;n.setAttribute('font-size','5.6');n.setAttribute('fill-opacity','0.7');n.setAttribute('letter-spacing','0.4');
+    const w=document.createElementNS(NS,'tspan');w.textContent=o.kw+(o.date?'  ·  '+o.date.year:'');w.setAttribute('font-style','italic');
+    const sp=document.createElementNS(NS,'tspan');sp.textContent=' ';
+    if(align==='start'){t.appendChild(n);t.appendChild(sp);t.appendChild(w);}else{t.appendChild(w);t.appendChild(sp);t.appendChild(n);}
+    y+=19.5;
+  });
+}
+column(undated.filter(o=>o.series===0),36,'start',0,['TO THOMAS PENNANT','letters without a day']);
+column(undated.filter(o=>o.series===1),W-36,'end',1,['TO DAINES BARRINGTON','letters without a day']);
+
+/* ---------- title and key ---------- */
+txt('The Turning Year',{x:36,y:52,'font-size':22,fill:INK,'font-style':'italic'});
+txt('the 110 letters of Gilbert White’s',{x:36,y:70,'font-size':9.6,fill:'#6e624e'});txt('Natural History of Selborne, set on the days he dated them',{x:36,y:83,'font-size':9.6,fill:'#6e624e'});
+const kx=36,ky=760;
+const keys=[
+  'One turn of the spiral is one year, January at the top; 1767 lies at the centre, 1787 at the rim.',
+  'Each dot is a letter, sized by its length; filled where written at Selborne, open where written away.',
+  'Each word is the one that letter uses most and the other letters least.'
+];
+keys.forEach((k,i)=>txt(k,{x:kx,y:ky+i*12,'font-size':8.6,fill:'#6e624e'}));
+const sx=W-36;
+txt('to Thomas Pennant',{x:sx-14,y:ky,'font-size':9,'text-anchor':'end',fill:COL[0],'font-style':'italic'});
+el('circle',{cx:sx-4,cy:ky-3,r:3.6,fill:COL[0]});
+txt('to Daines Barrington',{x:sx-14,y:ky+14,'font-size':9,'text-anchor':'end',fill:COL[1],'font-style':'italic'});
+el('circle',{cx:sx-4,cy:ky+11,r:3.6,fill:COL[1]});
+txt('written away from home',{x:sx-14,y:ky+28,'font-size':9,'text-anchor':'end',fill:'#6e624e','font-style':'italic'});
+el('circle',{cx:sx-4,cy:ky+25,r:3.2,fill:PAPER,stroke:'#6e624e','stroke-width':1});
+})();
+</script>
+</body>
+</html>

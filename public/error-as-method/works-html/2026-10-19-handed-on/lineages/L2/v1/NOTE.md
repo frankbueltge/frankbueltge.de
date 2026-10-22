@@ -1,0 +1,3 @@
+# The Long Wait
+
+Every laureate becomes one horizontal thread running from the year of birth (or founding) to the year of the prize, stacked in award order from 1901 at the top to 2026 at the bottom. The prize years make a hard staircase down the right edge, while the births fray loosely to the left, so each thread's length is that person's age at the prize. Read down the page and the fabric gets wider: the wait is visibly growing, from an average of 55 years in the early decades to 67 now. I chose lifelines over a chart of ages because they keep both dates, show the Second World War as a gap in the weave, and let the few red threads of women and the dotted blue ones of organisations (one of them reaching back to 1647) show where they sit.
