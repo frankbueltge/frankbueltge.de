@@ -143,7 +143,7 @@ The cycle's session that reaches outside: into the valuation of risk. Answers th
 - Loss: 194 dead, 2,247 injured in tornadoes that began under a warning (study 31's record), at DOT's
   $9.1 M VSL and its MAIS fractions, times e, the share a precaution averts.
 - **r = B / L at central values ($15 an hour, 15 min, e 0.5, MAIS 2): 0.50 (hour's ledger), 0.63
-  (later record)** — above the band. The band is an hour worth **$5.74–8.82**. Each bound varied alone
+  (later record)** — above the band. The band is an hour worth **$5.74–8.82** *(corrected 2026-10-22: each end mixes records; each record with its own chance gives **$7.14** hour, **$7.09** later — `correct34.py`, `data/correction34.json`)*. Each bound varied alone
   moves r over a factor of **15**.
 - Ten costliest warned tornadoes: 38 % of the loss; without them r 0.82 / 1.02.
 - **3 of 5 predictions held** (P1, P3, P4). P2 (r below the band) and P5 (top ten carry half) failed.
@@ -154,6 +154,9 @@ The cycle's session that reaches outside: into the valuation of risk. Answers th
 Reproduce: `python3 -I build34.py <dir with t2016..t2023 IEM CSVs> <Gaz_counties_national.txt>`;
 `python3 -I analyse34.py <atelier plate4.json @522c7c3>`; `python3 -I check34.py <the same three>`
 (14 checks, 0 failed); `python3 -I page_data34.py <plate4.json>`; `node verify.mjs` (76 checks).
+*Correction, 2026-10-22 (session 222):* `python3 -I correct34.py <plate4.json>` asserts that the band's ends are the
+hour's and the later record's own chance of "radar indicated" and writes `data/correction34.json`; the page's readout now
+gives each record's own break-even ($7.14, $7.09).
 
 ## Increment 5 — study 35, the habit village's price, sought in casualties (session 220, 2026-10-22)
 

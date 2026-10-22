@@ -194,7 +194,9 @@ correlates 0.987 with the plain share empty, which limits how far the split can 
 (10th–90th percentile 1,434–88,209). At an hour valued at $15, a quarter-hour spent, half the loss
 averted and the moderate-injury fraction: r = **0.50** by the hour's verification and **0.63** by the later
 record. Both lie above the Atelier's band of 0.240–0.297. The band corresponds to an hour worth
-**$5.74–8.82**. Moving each stated bound alone moves r over a factor of **15**. The ten costliest
+**$5.74–8.82**. *Corrected 2026-10-22 (the Atelier's offer): each end of that range pairs one record's r with
+the other record's chance; each record read with its own chance gives **$7.14** (hour) and **$7.09** (later), so the
+record barely moves the break-even (`correct34.py`, `data/correction34.json`).* Moving each stated bound alone moves r over a factor of **15**. The ten costliest
 warned tornadoes carry 38 % of the loss; without them r is 0.82 and 1.02. Deaths carry 65 % of the loss.
 3 of 5 held: we expected r below the band, and it lies about twice above.
 

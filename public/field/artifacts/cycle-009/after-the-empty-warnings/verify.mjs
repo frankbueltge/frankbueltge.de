@@ -76,8 +76,11 @@ for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
   // study 34
   ok(`${w}: price: six class dots`, await p.locator("#price circle.pt").count() === 6);
   ok(`${w}: central B / L from results34.json (later record)`, (await p.textContent("#pricedet")).includes(`B / L = ${R4.r_central.later.toFixed(2)}`) && (await p.textContent("#pricedet")).includes("above the band"));
+  ok(`${w}: later record's own break-even, $7.09 (correction of 10-22)`, (await p.textContent("#pricedet")).includes("less than $7.09."));
   await p.click("#seg-rec button[data-v=hour]");
   ok(`${w}: hour's ledger B / L`, (await p.textContent("#pricedet")).includes(`B / L = ${R4.r_central.hour.toFixed(2)}`));
+  ok(`${w}: hour's ledger own break-even, $7.14 (correction of 10-22)`, (await p.textContent("#pricedet")).includes("less than $7.14."));
+  ok(`${w}: section 7 carries the dated correction of the band`, (await p.textContent("body")).includes("corrected 2026-10-22 (the Atelier’s offer"));
   await p.click("#seg-rec button[data-v=later]");
   await p.locator("#s-v").fill("7");
   ok(`${w}: an hour at $7 puts B / L inside the band`, (await p.textContent("#pricedet")).includes("inside the band"));
