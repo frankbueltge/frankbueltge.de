@@ -118,6 +118,19 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   ok(cd.iread.includes('learns') && cd.iread.includes('habit') && cd.iread.includes('stops listening'), `${wd}px: the record as it is holds all three villages`);
   await pg.$eval('#cd-k', e => { e.value = 6; e.dispatchEvent(new Event('input')); }); cd = await pg.evaluate(() => window.__coda());
   ok(cd.k === 6 && cd.iread.includes('learns') && !cd.iread.includes('habit') && cd.iread.includes('estimate'), `${wd}px: at six times the record habit leaves the interval, learning stays, marked as an estimate`);
+  // coda III (2026-10-22, third session): set one tornado aside, the Field's study 36
+  const AJ = JSON.parse(fs.readFileSync(path.join(here, 'aside.json')));
+  await pg.$eval('#cd-k', e => { e.value = 1; e.dispatchEvent(new Event('input')); });
+  cd = await pg.evaluate(() => window.__coda());
+  ok(cd.aside === 'all' && cd.first === 'habit' && cd.xh === '5.1' && cd.xl === '7.2' && (await t('cdf-pt')) === '1.21', `${wd}px: coda III opens on the record as it is: habit leaves first, at 5.1 times, learning at 7.2, as coda I said`);
+  await pg.click('#cd-aside button[data-k="without_joplin"]'); cd = await pg.evaluate(() => window.__coda());
+  ok(cd.aside === 'without_joplin' && cd.xh === '3.7' && cd.xl === '12.0' && cd.iread.includes('learns') && cd.iread.includes('habit') && cd.iread.includes('stops listening'), `${wd}px: Joplin set aside: the interval still holds all three; habit 3.7, learning 12.0`);
+  await pg.selectOption('#cd-loo', '613559'); cd = await pg.evaluate(() => window.__coda());
+  ok(cd.aside === 613559 && cd.first === 'learning' && cd.aread.includes('reversed') && cd.xl === '3.4' && (await t('cdf-pt')) === '1.30', `${wd}px: the Louisiana tornado of 2016-02-23 set aside: point 1.30, learning leaves first at 3.4 times, the order reversed`);
+  ok(AJ.loo.length === 30 && AJ.loo.every(o => o.all_inside) && AJ.loo_learning_first.join() === '613559' && (await t('cdf-loo')) === '1.17–1.30' && (await t('cdf-cross')) === '1.23', `${wd}px: aside.json: 30 fits, all hold the villages, one reverses the order; figures filled from aside.js`);
+  await pg.$eval('#cd-k', e => { e.value = 4; e.dispatchEvent(new Event('input')); }); cd = await pg.evaluate(() => window.__coda());
+  ok(cd.iread.includes('habit') && !cd.iread.includes('learns'), `${wd}px: with that tornado aside, at four times the record learning has left and habit stays`);
+  await pg.click('#cd-aside button[data-k="all"]'); await pg.$eval('#cd-k', e => { e.value = 1; e.dispatchEvent(new Event('input')); });
   for (const id of ['cd-win', 'cd-int']) { const n = await pg.$eval('#' + id, e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 2000, `${wd}px: ${id} is drawn`); }
   // coda II (2026-10-22): the Field's prices in plate IV and in its own figure
   ok(await pg.evaluate(() => window.__pricecheck()), `${wd}px: coda II recomputes the Field's chance of a meeting and the charged empties at $7.25 and $15, as price.py did`);
