@@ -11,8 +11,9 @@
 // record (src/lib/ops/selected-works.ts), so they cannot drift from it. When the new pick's maker
 // committed a still, run `npm run shelf:stills` once: it crops the maker's own picture to the
 // shelf's frame (scripts/shelf-stills.ts), and src/lib/ops/selected-works.test.ts turns red until
-// that file exists. The order here is the page's order without JavaScript and on /dossier; the
-// edition shuffles the cards on every visit (src/lib/ops/shelf-order.ts).
+// that file exists. The order here is the page's order without JavaScript and on /dossier. With
+// JavaScript the edition draws eight at random on every visit from every finished piece the site
+// publishes, these picks among them (src/lib/ops/shelf-pool.ts, since 2026-10-22).
 //
 // A PICK THAT STOPS READING never takes the page down: the shelf leaves it out and the build says
 // which and why. The test holds every pick strictly where a person changes the shelf (locally and
@@ -65,7 +66,7 @@ export interface ShelfPick {
 
 export const SELECTED_WORKS = {
   title: 'Selected works',
-  sub: 'finished pieces from across the house, chosen by hand',
+  sub: 'finished pieces from across the house, drawn anew on every visit',
   /** what /dossier sets before each pick's reason */
   reasonLabel: 'why it is here',
 

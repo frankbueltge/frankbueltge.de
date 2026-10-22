@@ -1,10 +1,11 @@
-// src/lib/ops/shelf-order.ts — the order the entrance's shelf stands in on one visit (2026-10-21).
+// src/lib/ops/shelf-order.ts — which cards the entrance's shelf shows on one visit (2026-10-21).
 //
-// The edition shuffles its selected works on every visit, so a returning reader meets a different
-// first card each time and no pick owns the top-left corner (Frank's request of 2026-10-21,
-// wording private). The page is rendered in the hand order of src/config/selected-works.ts, which
-// is what a reader without JavaScript sees and what /dossier keeps as the shelf of record; the
-// edition's script (HomeEdition.astro) reorders the cards with the permutation this returns.
+// The edition draws its eight cards at random on every visit from every finished piece the site
+// publishes (src/lib/ops/shelf-pool.ts; Frank's request of 2026-10-21, made precise on 2026-10-22,
+// wording private). The page is rendered with the hand-chosen picks of src/config/selected-works.ts
+// showing, which is what a reader without JavaScript sees and what /dossier keeps as the shelf of
+// record; the edition's script (HomeEdition.astro) shows the first eight of the permutation this
+// returns, in its order.
 
 /** A uniformly random order of `n` positions (Fisher–Yates). `random` returns a number in [0, 1). */
 export function shuffledOrder(n: number, random: () => number = Math.random): number[] {

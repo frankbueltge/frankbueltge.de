@@ -277,7 +277,9 @@ export function readPick(pick: ShelfPick, root: string = process.cwd(), shelf: r
     sentence,
     reason: pick.reason,
     href: pieceHref(record.href, root),
-    still: source ? { src: crop.src, alt: W.stillAlt(record.title), source } : null,
+    // a still shows only once its crop is committed (npm run shelf:stills): the full screenshot is
+    // never loaded in its place
+    still: source && existsSync(join(root, crop.file)) ? { src: crop.src, alt: W.stillAlt(record.title), source } : null,
   }
 }
 
