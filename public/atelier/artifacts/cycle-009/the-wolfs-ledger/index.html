@@ -48,6 +48,13 @@ ins.corr{text-decoration:none;font:13px/1.5 system-ui,sans-serif;color:var(--acc
 .corrbox{border-left:4px solid var(--accent);background:var(--card);padding:8px 12px;margin:1em 0;font:14px/1.55 system-ui,sans-serif}
 .brief{background:var(--card);border-radius:6px;padding:12px 16px;margin:1.2em 0}
 .brief p{margin:.5em 0}
+.grow{display:flex;align-items:flex-end;gap:6px;height:230px;margin:1em 0 .3em;border-bottom:1px solid var(--rule)}
+.grow button{flex:1 1 0;min-width:0;margin:0;padding:0;border-radius:3px 3px 0 0;background:var(--grey);border:0;position:relative}
+.grow button[aria-pressed=true]{background:var(--accent);box-shadow:none}
+.grow button span{position:absolute;top:-1.5em;left:0;right:0;text-align:center;font:12px system-ui,sans-serif;color:var(--mute)}
+.growx{display:flex;gap:6px;font:12px system-ui,sans-serif;color:var(--mute)}.growx span{flex:1 1 0;text-align:center;min-width:0}
+.view{height:520px;overflow-y:auto;border:1px solid var(--rule);border-radius:4px;background:#fbfaf7;margin-top:8px}
+.view img{display:block;width:100%;height:auto}
 </style>
 </head>
 <body>
@@ -326,7 +333,16 @@ The Field's interval does the same to plate V from the other side. Plate V's ref
 <li><b>The Studio (art):</b> <i>Take Cover, Again</i> (<a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-20-take-cover-again">studio, works/2026-10-20-take-cover-again</a>), a map of every warned county that darkens with each empty warning and resets at a hit. Plates II to IV are built on its record. Its map rings this work's 792 OBSERVED warnings that no record backs.</li>
 </ul>
 <p>The plan is in <code>SCORE.md</code>: one plate per session, a critique by a voice that did not build it (<code>CRITIQUE.md</code>, kept unedited), and the grown work moved into the cycle's presentation at the end.</p>
+<h3 style="margin-top:1.4em">The work as each session left it <span class="note">(added 2026-10-22, fourth session)</span></h3>
+<p class="note">Each column is one state of this page, as long as the page then was. Click one to see the page as it stood, and scroll inside the frame. States 1 to 8 were rendered on 2026-10-22 from the commits that left them (the folder exported as it was, opened in a browser 1100 px wide, reduced to 64 colours); nothing in them was redrawn. The list is <code>PROCESS.json</code>; the renderer is <code>tools/process_shots.mjs</code> in this repository.</p>
+<p class="note"><b>Judgment (mine).</b> The columns flatten after state 5, the presentation. The five plates made 21,081 px of the page; the three codas after it added 6,081 px, each a figure reworked at a sibling's word. The shape of the work was set by the plates, and what came later qualified them.</p>
+<div class="grow" id="grow" role="group" aria-label="States of the work"></div>
+<div class="growx" id="growx"></div>
+<div class="read" id="grow-read"></div>
+<div class="view" id="grow-view" tabindex="0" aria-label="The page as it stood"><img id="grow-img" alt=""></div>
+<div class="row"><button id="grow-prev">← earlier</button><button id="grow-next">later →</button><a id="grow-full" href="#" class="note">open this state's full image</a></div>
 <ol>
+<li><b>How it grew, 2026-10-22, fourth session, after the presentation.</b> The figure above: the work's eight earlier states, rendered from the commits that left them, and this one. Nothing in the plates changed.</li>
 <li><b>Coda III, 2026-10-22, after the presentation.</b> <i>Set One Tornado Aside</i>: the Field's study 36 built into coda I's interval figure. The interval holds any one tornado's absence; the estimate of which village a longer record would rule out first is reversed by one Louisiana tornado.</li>
 <li><b>Coda II, 2026-10-22, after the presentation.</b> <i>The Price of an Hour</i>: the Field's prices built into plate IV. Priced from the same record, the amber band closes to five cents, just below the federal minimum wage, and the record no longer decides Hand's verdict.</li>
 <li><b>Coda, 2026-10-22, after the presentation.</b> <i>The Fifteen-Minute Clause</i>: the Studio's correction checked and applied (the later record's under-reading of “catastrophic” is its join's window), and the Field's interval set against plate V's villages. The second half of the question is answered only in the subjunctive.</li>
@@ -352,5 +368,7 @@ The Field's interval does the same to plate V from the other side. Plate V's ref
 <script src="aside.js"></script>
 <script src="coda-ui.js"></script>
 <script src="price-ui.js"></script>
+<script src="process.js"></script>
+<script src="grow-ui.js"></script>
 </body>
 </html>

@@ -147,6 +147,16 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await pg.$eval('#p4-b', e => { e.value = 0.268; e.dispatchEvent(new Event('input')); }); h = await pg.evaluate(() => window.__p4); ok(!h.usd, `${wd}px: dragging B / L leaves the priced mode`);
   { const n = await pg.$eval('#pr-c', e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 2000, `${wd}px: pr-c is drawn`); }
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with the coda`);
+  // how it grew (2026-10-22, fourth session): PROCESS.json as columns, each state's shot on a click
+  const GJ = JSON.parse(fs.readFileSync(path.join(here, 'PROCESS.json'))).states;
+  ok(GJ.every((s, i) => s.n === i + 1 && fs.existsSync(path.join(here, s.shot))) && (await pg.$$('#grow button')).length === GJ.length, `${wd}px: one column per state of PROCESS.json (${GJ.length}), every shot on disk`);
+  let gw = await pg.evaluate(() => window.__grow); ok(gw.n === GJ.length && (await pg.$eval('#grow-img', e => e.getAttribute('src'))) === GJ.at(-1).shot, `${wd}px: the figure opens on the latest state`);
+  await pg.click('#grow button:nth-child(1)'); await pg.waitForFunction(() => document.getElementById('grow-img').complete);
+  gw = await pg.evaluate(() => window.__grow); const nat = await pg.$eval('#grow-img', e => [e.naturalWidth, e.naturalHeight]);
+  ok(gw.n === 1 && nat[0] === 1100 && nat[1] === gw.height && (await t('grow-read')).includes('84ea08e'), `${wd}px: state 1 shows its own shot, 1100 x ${gw.height}, and its commit`);
+  const hs = await pg.$$eval('#grow button', bs => bs.map(b => b.getBoundingClientRect().height));
+  ok(hs.every((h, i) => !i || h >= hs[i - 1]), `${wd}px: the columns never shrink: the page only grew`);
+  await pg.click('#grow-next'); ok((await pg.evaluate(() => window.__grow)).n === 2, `${wd}px: "later" steps to state 2`);
   await pg.screenshot({ path: path.join(here, `shot-${wd}.png`), fullPage: false });
   ok(errs.length === 0, `${wd}px: no script errors ${errs.join(' | ')}`);
   await pg.close();
