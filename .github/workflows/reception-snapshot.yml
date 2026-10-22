@@ -1,0 +1,96 @@
+# .github/workflows/reception-snapshot.yml — the reception's nightly snapshot (2026-10-17).
+#
+# The reception (docs/design/2026-10-17-the-reception.md) keeps its ratings and notes in Cloudflare D1.
+# Every night this workflow reads the public record (GET /api/reception/record: only what the site
+# already shows, so no Cloudflare token is needed), commits it as dated JSON under src/data/reception/
+# when it changed (duty 2 of .claude/rules/runtime-and-works.md), and writes reception.md into each
+# practice's feedback folder, again only where the bytes differ. The three ecology practices are
+# written with the tokens and into the folders their integrate workflows use for refusal letters; the
+# nightly line and n-1 share RECEPTION_BOT_TOKEN, and are skipped with a notice while it is not set.
+# A record in standby writes nothing anywhere.
+name: Reception snapshot
+
+on:
+  schedule:
+    - cron: '20 2 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: reception-snapshot
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+
+      - name: Read the public record and write the snapshot and the practices' files
+        run: npx tsx scripts/reception/snapshot.ts --out /tmp/reception
+
+      - name: Commit the snapshot (only when the record changed)
+        run: |
+          if [ -n "$(git status --porcelain src/data/reception)" ]; then
+            git config user.name "Reception-Snapshot"
+            git config user.email "reception-snapshot@frankbueltge.de"
+            git add src/data/reception
+            git commit -m "reception: snapshot of $(date -u +%F)"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase --autostash origin main && git push && break
+              git rebase --abort 2>/dev/null || true
+              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts" >&2; exit 1; }
+              sleep $((attempt * 5))
+            done
+          else
+            echo "snapshot unchanged"
+          fi
+
+      - name: Write reception.md into each practice's feedback folder (only when it changed)
+        env:
+          ATELIER_BOT_TOKEN: ${{ secrets.ATELIER_BOT_TOKEN }}
+          FIELD_BOT_TOKEN: ${{ secrets.FIELD_BOT_TOKEN }}
+          STUDIO_BOT_TOKEN: ${{ secrets.STUDIO_BOT_TOKEN }}
+          RECEPTION_BOT_TOKEN: ${{ secrets.RECEPTION_BOT_TOKEN }}
+        run: |
+          OUT=/tmp/reception
+          if [ -f "$OUT/STANDBY" ]; then echo "the record is in standby: nothing is delivered"; exit 0; fi
+          while IFS=$'\t' read -r practice repo path secret; do
+            [ -n "$practice" ] || continue
+            token="${!secret:-}"
+            if [ -z "$token" ]; then
+              echo "::notice::$practice: no $secret is set, so $repo/$path was not written"
+              continue
+            fi
+            dir="/tmp/rcp-$practice"
+            rm -rf "$dir"
+            if ! git clone -q --depth 1 "https://x-access-token:${token}@github.com/${repo}" "$dir"; then
+              echo "::warning::$practice: the repository could not be cloned with $secret"
+              continue
+            fi
+            if [ -f "$dir/$path" ] && cmp -s "$OUT/$practice.md" "$dir/$path"; then
+              echo "$practice: unchanged"
+              continue
+            fi
+            mkdir -p "$dir/$(dirname "$path")"
+            cp "$OUT/$practice.md" "$dir/$path"
+            (
+              cd "$dir"
+              git config user.name "Reception-Snapshot"
+              git config user.email "reception-snapshot@frankbueltge.de"
+              git add "$path"
+              git commit -q -m "feedback: reception of $(date -u +%F)"
+              for attempt in 1 2 3; do
+                git push -q && exit 0
+                git pull -q --rebase || { git rebase --abort 2>/dev/null; exit 1; }
+              done
+              exit 1
+            ) && echo "$practice: delivered to $repo/$path" || echo "::warning::$practice: the push to $repo failed"
+          done < "$OUT/deliveries.tsv"

@@ -6,7 +6,7 @@
   "description": "Frank Bültge — Data Engineering & Analytics. Static Astro site, English-only, Git as the archive.",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && tsx scripts/engines/frame-dist.ts",
+    "build": "astro build && tsx scripts/engines/frame-dist.ts && tsx scripts/reception/dist.ts",
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
