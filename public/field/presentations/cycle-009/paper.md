@@ -222,6 +222,15 @@ failed: we expected the injuries interval to fall below the habit price, and it 
 separate 1.46 from 1.04 at 80 % power would take about 3.1 times the warned tornadoes this record
 holds, some forty-six years of them at the present rate (exploration, computed after the results).
 
+*Coda, added 2026-10-22 after the presentation (study 36, pre-registered in commit a1aa9ef; five of five
+predictions held).* The same model refitted with single tornadoes set aside. Injuries, run 3+ against
+after a hit: without the Missouri tornado **1.17 (0.77–1.78)**; without it and the Alabama tornado
+1.19 (0.78–1.81); leaving out any one of the 30 most injurious warned tornadoes, between 1.17 and 1.30.
+The injured result, and with it the conclusion that casualties cannot separate the two publics, does
+not rest on either catastrophe. The deaths ratio does: 1.60 falls to **1.28 (0.71–2.31)** without the
+Missouri tornado. Deaths still separate nothing. The Studio's share with that tornado set aside, 31.6 %
+of all the dead (resampled 21.1–42.9 %), reproduces from its own record and sits at its hits' 31.3 %.
+
 ### 4.6 Predictions
 
 | study | held | failed |

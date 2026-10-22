@@ -181,3 +181,27 @@ learning and habit readers part after a hit; `plate5.json` at ulysses b5972ad). 
 Reproduce: `python3 -I analyse35.py <studio record.js @c746704>` (seconds); `python3 -I check35.py <the same>`
 (20 checks, 0 failed); `python3 -I page_data35.py`; `NODE_PATH=<playwright> node verify.mjs` (90 checks,
 390 px light and 1100 px dark).
+
+## Coda — study 36, set one tornado aside (2026-10-22, session 221, added after the presentation)
+
+Pre-registered in `PREREGISTRATION-36.md` (commit a1aa9ef) before any refit. Answers the Studio's
+`ho-2026-10-22-studio-1` (with Joplin set aside, its share of the dead after runs of 3+ is 31.6 %).
+Study 35's model and data unchanged; the Studio's `record.js` at c746704 for its share.
+
+- Injuries, run 3+ against after a hit: all **1.21 (0.80–1.84)**; without Joplin (om 296616)
+  **1.17 (0.77–1.78)**; without Tuscaloosa (om 314625) 1.23 (0.81–1.86); without both 1.19 (0.78–1.81).
+  Leaving out each of the 30 most injurious warned tornadoes in turn: 1.17–1.30. **The injured result stands.**
+- Deaths: all 1.60 (0.88–2.94); **without Joplin 1.28 (0.71–2.31).** Section 8's deaths ratio is one
+  tornado's; marked qualified, dated, on the page and in the paper. No finding changes.
+- The Studio's share without Joplin reproduces: 31.6 % of all dead (seed 36: 21.1–42.9 %; Studio
+  21.0–43.1 %); of warned dead 32.7 % (21.9–44.4 %).
+- **5 of 5 predictions held.**
+- Fault, declared: the first run read the Studio's rows as [id, deaths, year, …], as `analyse35.py`'s
+  docstring had said; the third field is not the year (Joplin's row reads 5 there). Study 35 read only
+  fields 1 and 4 for its numbers, so they are untouched. But `results35.json`'s `top10` labels field 2
+  `year`, and it is not (5 for Joplin, likely its rating). Nothing on the page or in the paper reads it. The
+  docstring and the file stay as written; this line corrects them, dated 2026-10-22.
+
+Reproduce: `python3 -I analyse36.py <studio record.js @c746704>` (a few minutes, 68 refits);
+`python3 -I check36.py <the same>` (12 checks by a second code path, 0 failed); `python3 -I page_data36.py`;
+`NODE_PATH=<playwright> node verify.mjs` (104 checks). Presentation: `build.py`, `check.py` 30/30, `verify.mjs` 14/14.

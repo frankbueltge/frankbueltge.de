@@ -1,4 +1,4 @@
-// Studies 31-35 page check: headless, 390 px light and 1100 px dark. Usage: NODE_PATH=<dir with playwright> node verify.mjs
+// Studies 31-36 page check: headless, 390 px light and 1100 px dark. Usage: NODE_PATH=<dir with playwright> node verify.mjs
 import { createRequire } from "module"; import path from "path"; import url from "url"; import fs from "fs";
 const require = createRequire(import.meta.url);
 const pw = require("playwright");
@@ -8,6 +8,7 @@ const s32 = fs.readFileSync(path.join(here, "data-32.js"), "utf8"), R2 = JSON.pa
 const R3 = JSON.parse(fs.readFileSync(path.join(here, "data/results33.json"), "utf8"));
 const R4 = JSON.parse(fs.readFileSync(path.join(here, "data/results34.json"), "utf8"));
 const R5 = JSON.parse(fs.readFileSync(path.join(here, "data/results35.json"), "utf8"));
+const R6 = JSON.parse(fs.readFileSync(path.join(here, "data/results36.json"), "utf8"));
 let pass = 0, fail = 0; const ok = (n, c) => { c ? pass++ : fail++; console.log((c ? "PASS " : "FAIL ") + n); };
 const b = await pw.chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {});
 for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
@@ -113,6 +114,25 @@ for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
     await p.click("#seg-v35 button[data-v=inj]");
     await p.locator("#villages").scrollIntoViewIfNeeded();
     await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s35_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#villages").boundingBox()).y - 200), width: w, height: 620 } });
+  }
+  // study 36 (coda)
+  ok(`${w}: coda: four sets and thirty leave-outs`, await p.locator("#loo g.set circle.pt").count() === 4 && await p.locator("#loo circle.dot").count() === 30);
+  const j6 = R6.sets.without_joplin.inj;
+  ok(`${w}: coda: Joplin set aside from results36.json`, (await p.textContent("#loodet")).includes(`With Joplin set aside: ${j6.irr.toFixed(2)} (${j6.lo.toFixed(2)}–${j6.hi.toFixed(2)})`));
+  const ij = R6.loo.findIndex(x => x.om === 296616);
+  await p.locator("#loo circle.dot").nth(ij).dispatchEvent("click");
+  ok(`${w}: coda: tapping Joplin's dot names it and its ratio`, (await p.textContent("#loodet")).includes("MO, 2011-05-22") && (await p.textContent("#loodet")).includes(`becomes ${R6.loo[ij].inj_run3.irr.toFixed(2)}`));
+  await p.click("#seg-v36 button[data-v=fat]");
+  ok(`${w}: coda: deaths without Joplin`, (await p.textContent("#loodet")).includes(`becomes ${R6.sets.without_joplin.fat.irr.toFixed(2)}`));
+  ok(`${w}: five predictions, five held (study 36)`, (await p.locator("#pred36 tbody tr").count()) === 5 && (await p.locator("#pred36 td.held").count()) === 5);
+  ok(`${w}: section 8's deaths ratio carries its dated qualification`, (await p.textContent("#s35 ~ p.small")).includes("qualified 2026-10-22"));
+  {
+    const bx = await p.locator("#loo").boundingBox();
+    const ex = await p.evaluate(() => { const r = [...document.querySelectorAll("#loo text")].map(t => t.getBoundingClientRect()); return [Math.min(...r.map(x => x.left)), Math.max(...r.map(x => x.right))]; });
+    ok(`${w}: #loo and its labels fit the viewport and the figure`, bx && bx.x >= 0 && bx.x + bx.width <= w + 1 && ex[0] >= bx.x - 1 && ex[1] <= bx.x + bx.width + 1);
+    await p.click("#seg-v36 button[data-v=inj]");
+    await p.locator("#loo").scrollIntoViewIfNeeded();
+    await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s36_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#loo").boundingBox()).y - 260), width: w, height: 700 } });
   }
   ok(`${w}: tercile table 3 rows`, await p.locator("#terc tbody tr").count() === 3);
   ok(`${w}: six predictions, six held`, (await p.locator("#pred tbody tr").count()) === 6 && (await p.locator("#pred td.held").count()) === 6);

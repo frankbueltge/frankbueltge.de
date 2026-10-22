@@ -1,4 +1,4 @@
-"""The paper's numbers, checked against the five studies' results files; the page's copies against the
+"""The paper's numbers, checked against the five studies' results files and the coda's (study 36); the page's copies against the
 study's files. Usage: python3 -I check.py"""
 import json, pathlib, sys, re
 H = pathlib.Path(__file__).resolve().parent
@@ -6,12 +6,12 @@ A = H.parent.parent / "artifacts" / "cycle-009" / "after-the-empty-warnings"
 P = (H / "paper.md").read_text(encoding="utf-8").replace("**", "")   # bold is layout, not number
 P = " ".join(P.split())                                       # line breaks are layout too
 J = lambda n: json.loads((A / "data" / n).read_text())
-r31, r32, r33, r34, r35 = (J(f"results{n}.json") for n in (31, 32, 33, 34, 35))
+r31, r32, r33, r34, r35, r36 = (J(f"results{n}.json") for n in (31, 32, 33, 34, 35, 36))
 n_pass = n_fail = 0
 def ok(name, c):
     global n_pass, n_fail
     n_pass += bool(c); n_fail += not c; print(("PASS " if c else "FAIL ") + name)
-DECLARED = 27
+DECLARED = 30
 f2 = lambda x: f"{x:.2f}"
 import itertools
 def r2(x):                       # results carry 3 decimals; a trailing 5 may round either way at 2
@@ -53,6 +53,10 @@ s = r35["studio"]
 ok("35: the Studio's share and interval", has(f"{s['dead_run3']} ({100 * s['share_deaths_run3']:.1f} %)") and has(f"{round(100 * s['boot95'][0])}–{round(100 * s['boot95'][1])} %"))
 ok("35: table counts", all(has(f"| {r35['by_cat'][c]['n']:,} |") for c in ("hit", "run12", "run3", "none")))
 ok("35: five of six", sum(v["held"] for v in r35["predictions"].values()) == 5)
+S6 = r36["sets"]
+ok("36 (coda): injuries without Joplin and without both", has(ci(S6["without_joplin"]["inj"])) and has(ci(S6["without_both"]["inj"])))
+ok("36 (coda): deaths without Joplin, and the leave-one-out range", has(ci(S6["without_joplin"]["fat"])) and has("between {} and {}".format(*(f"{v:.2f}" for v in (min(x["inj_run3"]["irr"] for x in r36["loo"]), max(x["inj_run3"]["irr"] for x in r36["loo"]))))))
+ok("36 (coda): the Studio's share and five of five", has(f"{100 * r36['studio']['share_all_dead']:.1f} %") and has("{:.1f}–{:.1f} %".format(*(100 * v for v in r36["studio"]["boot95_all"]))) and all(v["held"] for v in r36["predictions"].values()) and has("five of five"))
 
 tot_h = 6 + 5 + 3 + 3 + 5
 ok("tally 22 of 31", tot_h == 22 and has("22 of our 31 predictions held") and has("| all | 22 | 9 |"))
@@ -60,7 +64,7 @@ ok("tally 22 of 31", tot_h == 22 and has("22 of our 31 predictions held") and ha
 page = (H / "index.html").read_text(encoding="utf-8"); src = (A / "index.html").read_text(encoding="utf-8")
 ok("page: identical to the study's but for the paper link", page == src.replace('href="../../../presentations/cycle-009/paper.md"', 'href="paper.md"') and 'href="paper.md"' in page)
 scripts = re.findall(r'<script src="([^"]+)"', page)
-ok("page: every script it loads is a byte copy", all((H / x).read_bytes() == (A / x).read_bytes() for x in scripts) and len(scripts) == 10)
+ok("page: every script it loads is a byte copy", all((H / x).read_bytes() == (A / x).read_bytes() for x in scripts) and len(scripts) == 12)
 
 print(f"{n_pass} passed, {n_fail} failed, {n_pass + n_fail} run, {DECLARED} declared")
 ok("self-count: declared equals run", n_pass + n_fail == DECLARED)
