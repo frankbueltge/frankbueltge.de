@@ -6,7 +6,9 @@
   const NAME = { R: 'radar indicated', O: 'observed', RC: 'radar ind., considerable', OC: 'observed, considerable', CAT: 'catastrophic', N: 'no tag line' };
   const COLS = ['N', 'R', 'O', 'RC', 'OC', 'CAT'];
   const C = P4.classes, offs = Object.keys(P4.offices_mid).sort();
-  const st = { b: P4.band_mid, rec: 'hour', wfo: '' };
+  const st = { b: P4.band_mid, rec: 'hour', wfo: '', usd: false, v: 7.25 }, PR = window.PRICE;
+  // coda II (2026-10-22): priced, B / L follows the record, as the Field's study 34 computes it
+  const priced = () => { if (st.usd) { st.b = st.v * PR.k[st.rec]; $('p4-b').value = st.b; $('p4-bv').textContent = st.b.toFixed(3); } };
   // the books, computed here from the classes (a second path to plate4.py's curve)
   const book = (b, rec) => { let owed = 0, all = 0; for (const w of COLS) { const e = C[w]['empty_' + rec]; all += e; if (C[w]['P_' + rec] > b) owed += e; } return { owed, charged: all - owed, all }; };
   const unpack = c => ({ word: P3.order[c >> 2], hour: (c >> 1) & 1, later: c & 1 });
@@ -35,7 +37,7 @@
       x += cw + gap;
     }
     g.strokeStyle = css('--ink'); g.lineWidth = 2; g.setLineDash([6, 4]); g.beginPath(); g.moveTo(L, y(st.b)); g.lineTo(W - R, y(st.b)); g.stroke(); g.setLineDash([]); g.lineWidth = 1;
-    g.fillStyle = css('--ink'); g.textBaseline = 'alphabetic'; g.font = '600 12px system-ui'; if (!narrow) { const lab = 'B / L = ' + st.b.toFixed(3), tw = g.measureText(lab).width; g.fillStyle = css('--bg'); g.fillRect(W - R - tw - 10, y(st.b) + 3, tw + 8, 15); g.fillStyle = css('--ink'); g.textBaseline = 'top'; g.fillText(lab, W - R - tw - 6, y(st.b) + 5); g.textBaseline = 'alphabetic'; } g.font = '11px system-ui';
+    g.fillStyle = css('--ink'); g.textBaseline = 'alphabetic'; g.font = '600 12px system-ui'; if (!narrow) { const lab = 'B / L = ' + st.b.toFixed(3) + (st.usd ? ` ($${st.v.toFixed(2)} an hour)` : ''), tw = g.measureText(lab).width; g.fillStyle = css('--bg'); g.fillRect(W - R - tw - 10, y(st.b) + 3, tw + 8, 15); g.fillStyle = css('--ink'); g.textBaseline = 'top'; g.fillText(lab, W - R - tw - 6, y(st.b) + 5); g.textBaseline = 'alphabetic'; } g.font = '11px system-ui';
     // lower panel: the empties Hand charges to the warner, as B/L moves, under both records
     const lt = top + 22, lb = H - 24, lh = lb - lt, X = b => L + (W - L - R) * b, Y = (n, all) => lb - lh * n / all;
     const [b0, b1] = P4.band; g.fillStyle = css('--amber'); g.globalAlpha = 0.18; g.fillRect(X(b0), lt, X(b1) - X(b0), lh); g.globalAlpha = 1;
@@ -61,13 +63,18 @@
     $('p4-read').innerHTML = `${who}, ${recw}, at B / L = <b>${st.b.toFixed(3)}</b>: Hand charges the warner for ${fi(o.charged)} of ${fi(o.all)} empty warnings. ` +
       (inBand ? `<b>This price lies in the amber band</b>, between the chance of “radar indicated” at the hour (${f1(b0)}) and in the later record (${f1(b1)}). Here the choice of record alone decides whether nearly all of the empties were the warner's over-warning or the public's owed burden.`
         : st.b <= P4.absolve_below[st.rec] ? 'At this price every class of warning the Service issues is owed, and Hand charges nothing to the warner: the empties are the price of the hits.'
-        : 'Move the line into the amber band to see the two records part.');
-    window.__p4 = { b: st.b, rec: st.rec, wfo: st.wfo, ...o, inBand, owedCols: cols.filter(c => c.owed).map(c => c.w) };
+        : 'Move the line into the amber band to see the two records part.') +
+      (st.usd ? ` <br><b>Priced (coda II):</b> at $${st.v.toFixed(2)} an hour, the Field's prices give B / L = ${(st.v * PR.k.hour).toFixed(3)} by the hour's ledger and ${(st.v * PR.k.later).toFixed(3)} by the later record. Switch the record: the line moves with it, and “radar indicated” is ${st.v < PR.vstar[st.rec].R ? 'owed' : 'over-warning'} by this record and ${st.v < PR.vstar[st.rec === 'hour' ? 'later' : 'hour'].R ? 'owed' : 'over-warning'} by the other.` : '');
+    window.__p4 = { b: st.b, rec: st.rec, wfo: st.wfo, usd: st.usd, v: st.v, ...o, inBand, owedCols: cols.filter(c => c.owed).map(c => c.w) };
   }
-  $('p4-b').oninput = e => { st.b = +e.target.value; $('p4-bv').textContent = st.b.toFixed(3); draw(); };
+  $('p4-b').oninput = e => { st.usd = false; $('p4-usd').setAttribute('aria-pressed', 'false'); st.b = +e.target.value; $('p4-bv').textContent = st.b.toFixed(3); draw(); };
   const recs = { 'p4-hour': 'hour', 'p4-later': 'later' };
-  for (const [id, r] of Object.entries(recs)) $(id).onclick = () => { st.rec = r; for (const k of Object.keys(recs)) $(k).setAttribute('aria-pressed', String(k === id)); draw(); };
+  for (const [id, r] of Object.entries(recs)) $(id).onclick = () => { st.rec = r; priced(); for (const k of Object.keys(recs)) $(k).setAttribute('aria-pressed', String(k === id)); draw(); };
   sel.onchange = () => { st.wfo = sel.value; draw(); };
+  $('p4-usd').onclick = () => { st.usd = !st.usd; $('p4-usd').setAttribute('aria-pressed', String(st.usd)); priced(); draw(); };
+  $('p4-v').oninput = e => { st.v = +e.target.value; $('p4-vv').textContent = st.v.toFixed(2); if (!st.usd) { st.usd = true; $('p4-usd').setAttribute('aria-pressed', 'true'); } priced(); draw(); };
+  $('p4-vv').textContent = st.v.toFixed(2);
+  $('p4f-usd0').textContent = '$' + PR.band_dollars[0].toFixed(2); $('p4f-usd1').textContent = '$' + PR.band_dollars[1].toFixed(2);
   addEventListener('resize', draw);
   $('p4-b').value = st.b; $('p4-bv').textContent = st.b.toFixed(3);
   // the warner's own word: statements that ended a warning early, drawn from the Studio's fixed sample

@@ -9,6 +9,7 @@ const P3J = JSON.parse(fs.readFileSync(path.join(here, 'plate3.json')));
 const P4J = JSON.parse(fs.readFileSync(path.join(here, 'plate4.json')));
 const P5J = JSON.parse(fs.readFileSync(path.join(here, 'plate5.json')));
 const CJ = JSON.parse(fs.readFileSync(path.join(here, 'coda.json')));
+const PJ = JSON.parse(fs.readFileSync(path.join(here, 'price.json')));
 const br = await chromium.launch({ executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox'] });
 for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   const pg = await br.newPage({ viewport: { width: wd, height: 900 }, colorScheme: scheme }); const errs = [];
@@ -118,6 +119,20 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await pg.$eval('#cd-k', e => { e.value = 6; e.dispatchEvent(new Event('input')); }); cd = await pg.evaluate(() => window.__coda());
   ok(cd.k === 6 && cd.iread.includes('learns') && !cd.iread.includes('habit') && cd.iread.includes('estimate'), `${wd}px: at six times the record habit leaves the interval, learning stays, marked as an estimate`);
   for (const id of ['cd-win', 'cd-int']) { const n = await pg.$eval('#' + id, e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 2000, `${wd}px: ${id} is drawn`); }
+  // coda II (2026-10-22): the Field's prices in plate IV and in its own figure
+  ok(await pg.evaluate(() => window.__pricecheck()), `${wd}px: coda II recomputes the Field's chance of a meeting and the charged empties at $7.25 and $15, as price.py did`);
+  let pr = await pg.evaluate(() => window.__price);
+  ok(pr.v === PJ.min_wage && pr.cH === PJ.at['7.25'].hour.charged && pr.cL === PJ.at['7.25'].later.charged && !pr.owedH.includes('R') && !pr.owedL.includes('R'), `${wd}px: coda II opens at the minimum wage, radar indicated over-warning by both records`);
+  await pg.$eval('#pr-v', e => { e.value = 7.1; e.dispatchEvent(new Event('input')); }); pr = await pg.evaluate(() => window.__price);
+  ok(pr.owedH.includes('R') && !pr.owedL.includes('R') && (await t('pr-read')).includes('five-cent band'), `${wd}px: at $7.10, inside the band, the two records part on radar indicated`);
+  await pg.click('#pr-15'); pr = await pg.evaluate(() => window.__price); ok(pr.v === 15 && pr.cH === PJ.at['15'].hour.charged, `${wd}px: the Field's $15 button`);
+  ok((await t('pr-d0')) === '$7.09' && (await t('pr-d1')) === '$7.14' && (await t('p4f-usd0')) === '$7.09' && (await t('pr-mwh')) === '92.8 %' && (await t('pr-mwl')) === '94.1 %', `${wd}px: coda II figures filled from price.js`);
+  await pg.click('#p4-usd'); await pg.click('#p4-hour'); h = await pg.evaluate(() => window.__p4);
+  ok(h.usd && Math.abs(h.b - 7.25 * PJ.k.hour) < 1e-9 && !h.owedCols.includes('R'), `${wd}px: plate IV priced at $7.25 by the hour's ledger: B / L ${h.b.toFixed(3)}, radar indicated not owed`);
+  await pg.click('#p4-later'); h = await pg.evaluate(() => window.__p4);
+  ok(h.usd && Math.abs(h.b - 7.25 * PJ.k.later) < 1e-9 && !h.owedCols.includes('R') && (await t('p4-read')).includes('Priced'), `${wd}px: priced, switching the record moves the line with it (B / L ${h.b.toFixed(3)}), and radar indicated stays not owed`);
+  await pg.$eval('#p4-b', e => { e.value = 0.268; e.dispatchEvent(new Event('input')); }); h = await pg.evaluate(() => window.__p4); ok(!h.usd, `${wd}px: dragging B / L leaves the priced mode`);
+  { const n = await pg.$eval('#pr-c', e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 2000, `${wd}px: pr-c is drawn`); }
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with the coda`);
   await pg.screenshot({ path: path.join(here, `shot-${wd}.png`), fullPage: false });
   ok(errs.length === 0, `${wd}px: no script errors ${errs.join(' | ')}`);
