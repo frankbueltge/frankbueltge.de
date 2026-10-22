@@ -1,4 +1,4 @@
-// Studies 31-33 page check: headless, 390 px light and 1100 px dark. Usage: NODE_PATH=<dir with playwright> node verify.mjs
+// Studies 31-35 page check: headless, 390 px light and 1100 px dark. Usage: NODE_PATH=<dir with playwright> node verify.mjs
 import { createRequire } from "module"; import path from "path"; import url from "url"; import fs from "fs";
 const require = createRequire(import.meta.url);
 const pw = require("playwright");
@@ -7,6 +7,7 @@ const R = JSON.parse(fs.readFileSync(path.join(here, "data/results31.json"), "ut
 const s32 = fs.readFileSync(path.join(here, "data-32.js"), "utf8"), R2 = JSON.parse(s32.slice(s32.indexOf("{"), s32.lastIndexOf("}") + 1));
 const R3 = JSON.parse(fs.readFileSync(path.join(here, "data/results33.json"), "utf8"));
 const R4 = JSON.parse(fs.readFileSync(path.join(here, "data/results34.json"), "utf8"));
+const R5 = JSON.parse(fs.readFileSync(path.join(here, "data/results35.json"), "utf8"));
 let pass = 0, fail = 0; const ok = (n, c) => { c ? pass++ : fail++; console.log((c ? "PASS " : "FAIL ") + n); };
 const b = await pw.chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {});
 for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
@@ -93,6 +94,25 @@ for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
     ok(`${w}: #price and its labels fit the viewport and the figure`, bx && bx.x >= 0 && bx.x + bx.width <= w + 1 && ex4[0] >= bx.x - 1 && ex4[1] <= bx.x + bx.width + 1);
     await p.locator("#price").scrollIntoViewIfNeeded();
     await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s34_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#price").boundingBox()).y - 260), width: w, height: 700 } });
+  }
+  // study 35
+  ok(`${w}: villages: three rows`, await p.locator("#villages circle.pt").count() === 3);
+  const f5 = R5.fits.inj.run3;
+  ok(`${w}: villages: run-3 injuries from results35.json`, (await p.textContent("#villdet")).includes(`${f5.irr.toFixed(2)} (95 % interval ${f5.lo.toFixed(2)}–${f5.hi.toFixed(2)})`));
+  ok(`${w}: villages: both prices inside at the defaults`, (await p.textContent("#villdet")).includes("cannot tell the two readers apart") && (await p.textContent("#villdet")).includes(`charges ${R5.prices.inj.habit.toFixed(2)}`));
+  await p.locator("#s-b").fill("0");
+  ok(`${w}: villages: total disbelief still inside`, (await p.textContent("#villdet")).includes(`charges ${R5.explore.habit_price_total_disbelief_inj.toFixed(2)}`) && (await p.textContent("#villdet")).includes("cannot tell"));
+  await p.click("#seg-v35 button[data-v=fat]");
+  ok(`${w}: villages: deaths from results35.json`, (await p.textContent("#villdet")).includes(`${R5.fits.fat.run3.irr.toFixed(2)} (95 % interval`));
+  ok(`${w}: six predictions, five held (study 35)`, (await p.locator("#pred35 tbody tr").count()) === 6 && (await p.locator("#pred35 td.held").count()) === 5);
+  {
+    const bx = await p.locator("#villages").boundingBox();
+    const ex = await p.evaluate(() => { const r = [...document.querySelectorAll("#villages text")].map(t => t.getBoundingClientRect()); return [Math.min(...r.map(x => x.left)), Math.max(...r.map(x => x.right))]; });
+    ok(`${w}: #villages and its labels fit the viewport and the figure`, bx && bx.x >= 0 && bx.x + bx.width <= w + 1 && ex[0] >= bx.x - 1 && ex[1] <= bx.x + bx.width + 1);
+    await p.locator("#s-b").fill("0.27");
+    await p.click("#seg-v35 button[data-v=inj]");
+    await p.locator("#villages").scrollIntoViewIfNeeded();
+    await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s35_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#villages").boundingBox()).y - 200), width: w, height: 620 } });
   }
   ok(`${w}: tercile table 3 rows`, await p.locator("#terc tbody tr").count() === 3);
   ok(`${w}: six predictions, six held`, (await p.locator("#pred tbody tr").count()) === 6 && (await p.locator("#pred td.held").count()) === 6);

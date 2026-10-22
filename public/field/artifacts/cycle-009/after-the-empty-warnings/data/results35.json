@@ -1,0 +1,203 @@
+{
+ "n_warned": 9295,
+ "by_cat": {
+  "hit": {
+   "n": 1707,
+   "injured": 2562,
+   "dead": 142,
+   "inj_per_100": 150.09,
+   "dead_per_100": 8.32,
+   "share_EF2plus": 0.144
+  },
+  "none": {
+   "n": 2313,
+   "injured": 1874,
+   "dead": 145,
+   "inj_per_100": 81.02,
+   "dead_per_100": 6.27,
+   "share_EF2plus": 0.137
+  },
+  "run12": {
+   "n": 3565,
+   "injured": 2788,
+   "dead": 152,
+   "inj_per_100": 78.2,
+   "dead_per_100": 4.26,
+   "share_EF2plus": 0.138
+  },
+  "run3": {
+   "n": 1710,
+   "injured": 2031,
+   "dead": 246,
+   "inj_per_100": 118.77,
+   "dead_per_100": 14.39,
+   "share_EF2plus": 0.156
+  }
+ },
+ "fits": {
+  "inj": {
+   "n": 9295,
+   "converged": true,
+   "alpha": 7.191,
+   "none": {
+    "irr": 1.296,
+    "lo": 0.868,
+    "hi": 1.936,
+    "p": 0.20541080190519578
+   },
+   "run12": {
+    "irr": 1.138,
+    "lo": 0.788,
+    "hi": 1.644,
+    "p": 0.48960945553919155
+   },
+   "run3": {
+    "irr": 1.214,
+    "lo": 0.802,
+    "hi": 1.837,
+    "p": 0.3602312723021319
+   }
+  },
+  "fat": {
+   "n": 9295,
+   "converged": true,
+   "alpha": 4.445,
+   "none": {
+    "irr": 1.195,
+    "lo": 0.674,
+    "hi": 2.119,
+    "p": 0.5425095468341732
+   },
+   "run12": {
+    "irr": 1.268,
+    "lo": 0.751,
+    "hi": 2.139,
+    "p": 0.3739901480439236
+   },
+   "run3": {
+    "irr": 1.603,
+    "lo": 0.875,
+    "hi": 2.937,
+    "p": 0.12645251074916858
+   }
+  }
+ },
+ "prices": {
+  "inj": {
+   "habit": 1.458,
+   "learning": 1.04
+  },
+  "fat": {
+   "habit": 1.086,
+   "learning": 1.007
+  }
+ },
+ "explore": {
+  "habit_price_total_disbelief_inj": 1.629,
+  "habit_price_total_disbelief_fat": 1.119,
+  "se_log_run3_inj": 0.2114,
+  "sample_multiple_80pct": 3.07
+ },
+ "studio": {
+  "deadly_all": 340,
+  "deadly_warned": 310,
+  "dead_warned": 1357,
+  "dead_run3": 550,
+  "share_deaths_run3": 0.4053,
+  "boot95": [
+   0.2437,
+   0.5606
+  ],
+  "share_tornadoes_run3": 0.3484,
+  "tornadoes_run3": 108,
+  "baseline_hits": 0.3125,
+  "top10": [
+   {
+    "om": 1782634,
+    "dead": 158,
+    "year": 5,
+    "run": 15
+   },
+   {
+    "om": 1746485,
+    "dead": 72,
+    "year": 5,
+    "run": 3
+   },
+   {
+    "om": 1746583,
+    "dead": 64,
+    "year": 4,
+    "run": 0
+   },
+   {
+    "om": 7334094,
+    "dead": 57,
+    "year": 4,
+    "run": 2
+   },
+   {
+    "om": 1746679,
+    "dead": 25,
+    "year": 5,
+    "run": 0
+   },
+   {
+    "om": 2832236,
+    "dead": 24,
+    "year": 5,
+    "run": 4
+   },
+   {
+    "om": 1746522,
+    "dead": 23,
+    "year": 5,
+    "run": 3
+   },
+   {
+    "om": 5874960,
+    "dead": 23,
+    "year": 4,
+    "run": 4
+   },
+   {
+    "om": 52082,
+    "dead": 22,
+    "year": 3,
+    "run": 0
+   },
+   {
+    "om": 1746688,
+    "dead": 22,
+    "year": 4,
+    "run": 0
+   }
+  ]
+ },
+ "predictions": {
+  "P1": {
+   "text": "injuries run3 vs hit: upper bound below habit's 1.46",
+   "held": false
+  },
+  "P2": {
+   "text": "injuries run3 vs hit: interval includes learning's 1.04",
+   "held": true
+  },
+  "P3": {
+   "text": "deaths run3 vs hit: interval includes both 1.01 and 1.09",
+   "held": true
+  },
+  "P4": {
+   "text": "injuries run1-2 vs hit: interval includes 1",
+   "held": true
+  },
+  "P5": {
+   "text": "bootstrap 95% of death-weighted share includes 0.31",
+   "held": true
+  },
+  "P6": {
+   "text": "per-tornado share nearer 0.31 than death-weighted share",
+   "held": true
+  }
+ }
+}

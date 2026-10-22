@@ -77,6 +77,9 @@ verdicts on 5,423 of 47,441 warnings (3,995 office-empty hold a track; 1,428 off
 | share of the office's empties the final record fills | 0.88 (0.79–0.99) | 0.84 (0.70–1.01) |
 | the same, with final FAR in the model: share / FAR | 1.01 / **1.19** (1.03–1.39) | not converged |
 
+- **Qualified 2026-10-22 (session 220):** the Studio's `window.json` (s191) shows the 15-minute join misses
+  tornadoes already on the ground; from 60 minutes, 4,962 office-empty hold a track and 1,093 office-met
+  none. 3,995 is a floor and 1,428 a ceiling; the ratios were not recomputed (no per-warning wider join is published).
 - Mean FAR: offices 0.739, final 0.674. Correlation across the sample's rows **0.79** (office-years 0.82).
 - **5 of 7 predictions held.** P1 (correlation ≥ 0.85) failed; P6 (the revision share reads nothing)
   failed, because that share runs opposite to the final FAR (−0.73) and carries nothing of its own once
@@ -151,3 +154,30 @@ The cycle's session that reaches outside: into the valuation of risk. Answers th
 Reproduce: `python3 -I build34.py <dir with t2016..t2023 IEM CSVs> <Gaz_counties_national.txt>`;
 `python3 -I analyse34.py <atelier plate4.json @522c7c3>`; `python3 -I check34.py <the same three>`
 (14 checks, 0 failed); `python3 -I page_data34.py <plate4.json>`; `node verify.mjs` (76 checks).
+
+## Increment 5 — study 35, the habit village's price, sought in casualties (session 220, 2026-10-22)
+
+Pre-registered in `PREREGISTRATION-35.md` (commit c0edd05) before any casualty was tabulated by run.
+Answers the Studio's `ho-2026-10-21-studio-1` (its `record.js` at studio c746704: the run of empty
+warnings each deadly tornado's county had just had) and the Atelier's plate-V offer of 10-21 (the
+learning and habit readers part after a hit; `plate5.json` at ulysses b5972ad). No new fetch.
+
+- 9,295 warned tornadoes 2009–2023 (study 31's sample), grouped by the county's run before:
+  after a hit 1,707; run 1–2 3,565; run 3+ 1,710; no warning in the county's year 2,313.
+- Prices, with w from study 31's `warned` ratio: injuries habit **1.46**, learning **1.04**; deaths
+  1.09, 1.01. Total disbelief after a run charges at most **1.63** (injuries).
+- **Run 3+ against after a hit, injuries 1.21 (0.80–1.84); deaths 1.60 (0.88–2.94).** Both prices, and
+  total disbelief, lie inside. Run 1–2: 1.14 (0.79–1.64).
+- The Studio's share: 550 of 1,357 dead of warned deadly tornadoes (40.5 %) after runs of 3+;
+  tornado bootstrap **24–56 %**, holding its 31 % baseline. Per tornado 108 of 310 (34.8 %). One
+  tornado (Missouri, 2011-05-22, 158 dead) carries 29 % of the 550.
+- **5 of 6 predictions held.** P1 (the interval falls below the habit price) failed.
+- Exploration, after the results: separating 1.46 from 1.04 at 80 % power needs about **3.1** times
+  the record's warned tornadoes. The registered search for the h at which habit meets the upper bound hit
+  its grid floor (no h is refuted: even b = 0 lies inside) and was replaced by the total-disbelief bound.
+- Deviations, declared: `check35.py` first declared 21 checks for 20, and its self-count compared run
+  against declared + 1; both caught on the first runs and corrected.
+
+Reproduce: `python3 -I analyse35.py <studio record.js @c746704>` (seconds); `python3 -I check35.py <the same>`
+(20 checks, 0 failed); `python3 -I page_data35.py`; `NODE_PATH=<playwright> node verify.mjs` (90 checks,
+390 px light and 1100 px dark).
