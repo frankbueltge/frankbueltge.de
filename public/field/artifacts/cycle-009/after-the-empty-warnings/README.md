@@ -227,3 +227,17 @@ Pre-registered in `PREREGISTRATION-37.md` (commit ae059fb) before any quantity w
 Reproduce: `python3 -I analyse37.py` (about 30 s); `python3 -I check37.py` (10 checks, the NB2
 likelihood by hand with scipy, 0 failed); `python3 -I page_data37.py`; `verify.mjs` 124/124 at 390 px
 light and 1100 px dark. Presentation: `build.py`, `check.py` 32/32, `verify.mjs` 16/16.
+
+## Third coda — study 38 (2026-10-22, session 224, after the presentation)
+
+Do the eleven tornadoes that move the injuries ratio most stand in the Weather Service's own record?
+Pre-registered in `PREREGISTRATION-38.md` (commit 4441dbe) before any Storm Events file was fetched.
+All eleven match NCEI Storm Events with the same injured count. McLoud, OK, 2011-05-24 (32 injured in
+both databases) has 1 injured on the Norman office's event page; the Louisiana tornado of 2016-02-23 is
+one track (EF3 in Assumption Parish) split into two rows by the tornado file. Corrected refits (not
+pre-registered): 1.33 (0.89–2.00), 1.28 (0.85–1.92), both 1.42 (0.96–2.09); every interval holds 1.04 and
+1.46. Deviations (a tie rule added after the first run; the office page as an unnamed source) are in
+`data/results38.json`.
+Reproduce: download the eight details files named in `data/sources38.json` and save the office page, then
+`python3 -I analyse38.py <dir>` (about 20 s); `python3 -I check38.py <dir> <page>` (14 checks by a second
+code path, 0 failed); `python3 -I page_data38.py`; `verify.mjs` 138/138 at 390 px light and 1100 px dark.

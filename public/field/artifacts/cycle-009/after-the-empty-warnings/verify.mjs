@@ -1,4 +1,4 @@
-// Studies 31-37 page check: headless, 390 px light and 1100 px dark. Usage: NODE_PATH=<dir with playwright> node verify.mjs
+// Studies 31-38 page check: headless, 390 px light and 1100 px dark. Usage: NODE_PATH=<dir with playwright> node verify.mjs
 import { createRequire } from "module"; import path from "path"; import url from "url"; import fs from "fs";
 const require = createRequire(import.meta.url);
 const pw = require("playwright");
@@ -10,6 +10,7 @@ const R4 = JSON.parse(fs.readFileSync(path.join(here, "data/results34.json"), "u
 const R5 = JSON.parse(fs.readFileSync(path.join(here, "data/results35.json"), "utf8"));
 const R6 = JSON.parse(fs.readFileSync(path.join(here, "data/results36.json"), "utf8"));
 const R7 = JSON.parse(fs.readFileSync(path.join(here, "data/results37.json"), "utf8"));
+const R8 = JSON.parse(fs.readFileSync(path.join(here, "data/results38.json"), "utf8"));
 let pass = 0, fail = 0; const ok = (n, c) => { c ? pass++ : fail++; console.log((c ? "PASS " : "FAIL ") + n); };
 const b = await pw.chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {});
 for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
@@ -158,6 +159,24 @@ for (const [w, scheme] of [[390, "light"], [1100, "dark"]]) {
     await p.locator("#pull").scrollIntoViewIfNeeded();
     await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s37_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#pull").boundingBox()).y - 300), width: w, height: 760 } });
     await p.click("#seg-x37 button[data-v=inj]");
+  }
+  // study 38 (third coda)
+  ok(`${w}: third coda: eleven tornadoes, one contradicted`, (await p.locator("#tab38 tbody tr").count()) === 11 && (await p.locator("#tab38 td.failed").count()) === 1 && (await p.textContent("#tab38")).includes("OK, 2011-05-24, EF2"));
+  ok(`${w}: third coda: four predictions, four held`, (await p.locator("#pred38 tbody tr").count()) === 4 && (await p.locator("#pred38 td.held").count()) === 4);
+  ok(`${w}: third coda opens on the record as is`, (await p.textContent("#rec38det")).includes(`${R8.fits.full.irr.toFixed(2)} (95 % interval ${R8.fits.full.lo.toFixed(2)}–${R8.fits.full.hi.toFixed(2)})`) && (await p.locator("#rec38 circle.pt.above").count()) === 1);
+  for (const [mc, la, k] of [["office", "split", "mcloud_1_injured"], ["office", "one", "both"], ["db", "one", "louisiana_one_track"], ["db", "split", "full"]]) {
+    await p.click(`#seg-mc38 button[data-v=${mc}]`); await p.click(`#seg-la38 button[data-v=${la}]`);
+    const f = R8.fits[k], t = await p.textContent("#rec38det");
+    const bx = await p.locator("#rec38").boundingBox();
+    const ex = await p.evaluate(() => { const r = [...document.querySelectorAll("#rec38 text")].map(t => t.getBoundingClientRect()); return [Math.min(...r.map(x => x.left)), Math.max(...r.map(x => x.right))]; });
+    ok(`${w}: switches ${mc}/${la} give ${k}'s refit, and the figure fits`, t.includes(`${f.irr.toFixed(2)} (95 % interval ${f.lo.toFixed(2)}–${f.hi.toFixed(2)})`) &&
+      (la === "split" || t.includes(`expects ${(f.mu_louisiana).toFixed(1)} injured`)) && bx.x >= 0 && bx.x + bx.width <= w + 1 && ex[0] >= bx.x - 1 && ex[1] <= bx.x + bx.width + 1);
+  }
+  {
+    await p.click("#seg-mc38 button[data-v=office]"); await p.click("#seg-la38 button[data-v=one]");
+    await p.locator("#rec38").scrollIntoViewIfNeeded();
+    await p.screenshot({ path: path.join(process.env.SHOTS || "/tmp", `s38_${w}.png`), clip: { x: 0, y: Math.max(0, (await p.locator("#rec38").boundingBox()).y - 200), width: w, height: 760 } });
+    await p.click("#seg-mc38 button[data-v=db]"); await p.click("#seg-la38 button[data-v=split]");
   }
   ok(`${w}: tercile table 3 rows`, await p.locator("#terc tbody tr").count() === 3);
   ok(`${w}: six predictions, six held`, (await p.locator("#pred tbody tr").count()) === 6 && (await p.locator("#pred td.held").count()) === 6);

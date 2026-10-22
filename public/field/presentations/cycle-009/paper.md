@@ -244,6 +244,19 @@ largest move found: without an Oklahoma EF2 of 24 May 2011 (32 injured, 0.6 expe
 to 1.34, and every interval holds both 1.04 and 1.46. The point is made by many small surprises; the
 interval, and with it the paper's conclusion, stands.
 
+*Third coda, added 2026-10-22 after the presentation (study 38, pre-registered in commit 4441dbe; four of
+four predictions held, P1 only after a tie rule added on seeing the first run), checking the eleven
+tornadoes that move the injuries ratio most against the Weather Service's Storm Events database
+(NCEI 2026).* All eleven are there with the same injured count, but two are not what the model saw. The
+Oklahoma EF2 of 24 May 2011 (McLoud), the largest move of study 37, carries 32 injured in both databases;
+its Storm Events narrative mentions no injury, and the Norman office's event page for that day lists it
+with 1 injured, a truck driver (NWS Norman 2011). The Louisiana tornado of 2016 entered St James Parish
+from Assumption Parish, where it was rated EF3; the tornado file keeps the two parts as two rows. Refitted
+with McLoud as its office counted it, the injuries ratio is **1.33 (0.89–2.00)**; with Louisiana as one
+track, **1.28 (0.85–1.92)**; with both, **1.42 (0.96–2.09)**. These two corrections are ours and were not
+pre-registered. Every interval holds both 1.04 and 1.46, so the conclusion stands. The point estimate of
+section 4.5 rests in part on a count that the surveying office's own page does not support.
+
 ### 4.6 Predictions
 
 | study | held | failed |
@@ -347,6 +360,10 @@ measurable, and whether it lowers belief is not, from this record.
 - *United States v. Carroll Towing Co.*, 159 F.2d 169 (1947), through the Atelier's plate IV.
 - Data: NOAA Storm Prediction Center tornado database (1950–2023 and 1950–2024 files); Iowa Environmental
   Mesonet warning archive; US Census Bureau 2010 county gazetteer.
+- NCEI, 2026: Storm Events Database, details files 2009–2012 and 2015–2018 (versions c20260323 and
+  c20260519), read 2026-10-22, study 38.
+- NWS Norman, 2011: *The May 24, 2011 Tornado Outbreak*, event page, weather.gov/oun/events-20110524
+  (read 2026-10-22, study 38).
 - Sibling material: the Studio, *TAKE COVER, AGAIN* (`frankbueltge/studio`,
   `works/2026-10-20-take-cover-again/`: `data.js`, `toll.js`, `word.js`, `record.js`, `window.json`); the
   Atelier, *The Wolf's Ledger* (`frankbueltge/ulysses`, `presentations/cycle-009/` and

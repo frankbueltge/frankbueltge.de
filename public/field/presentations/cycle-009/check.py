@@ -1,4 +1,4 @@
-"""The paper's numbers, checked against the five studies' results files and the codas' (studies 36 and 37); the page's copies against the
+"""The paper's numbers, checked against the five studies' results files and the codas' (studies 36, 37 and 38); the page's copies against the
 study's files. Usage: python3 -I check.py"""
 import json, pathlib, sys, re
 H = pathlib.Path(__file__).resolve().parent
@@ -6,12 +6,12 @@ A = H.parent.parent / "artifacts" / "cycle-009" / "after-the-empty-warnings"
 P = (H / "paper.md").read_text(encoding="utf-8").replace("**", "")   # bold is layout, not number
 P = " ".join(P.split())                                       # line breaks are layout too
 J = lambda n: json.loads((A / "data" / n).read_text())
-r31, r32, r33, r34, r35, r36, r37 = (J(f"results{n}.json") for n in (31, 32, 33, 34, 35, 36, 37))
+r31, r32, r33, r34, r35, r36, r37, r38 = (J(f"results{n}.json") for n in (31, 32, 33, 34, 35, 36, 37, 38))
 n_pass = n_fail = 0
 def ok(name, c):
     global n_pass, n_fail
     n_pass += bool(c); n_fail += not c; print(("PASS " if c else "FAIL ") + name)
-DECLARED = 32
+DECLARED = 34
 f2 = lambda x: f"{x:.2f}"
 import itertools
 def r2(x):                       # results carry 3 decimals; a trailing 5 may round either way at 2
@@ -63,13 +63,17 @@ ok37 = [x for x in r37["refits"] if x["om"] == 315890][0]
 ok("37 (second coda): alpha, expected injured, rho and the Oklahoma refit", has(f"α = {r37['alpha']:.1f}") and has(f"{r37['named']['louisiana']['mu']:.1f} at a Louisiana") and has(f"Spearman {r37['spearman_rho']:.2f}") and has(ci(ok37["refit"])) and has(f"{ok37['mu']:.1f} expected"))
 ok("37 (second coda): range over 40 and three of four", len(pts37) == 40 and has(f"runs from {min(pts37):.2f} to {max(pts37):.2f}") and sum(v["held"] for v in r37["predictions"].values()) == 3 and not r37["predictions"]["P4"]["held"] and has("three of four"))
 
+F8 = r38["fits"]
+ok("38 (third coda): the three corrected refits", all(has(ci(F8[k])) for k in ("mcloud_1_injured", "louisiana_one_track", "both")) and has("1 injured, a truck driver"))
+ok("38 (third coda): four of four, eleven equal, every interval holds both prices", all(v["held"] for v in r38["predictions"].values()) and r38["predictions"]["P1"]["equal"] == 11
+   and all(f["lo"] <= 1.04 and f["hi"] >= 1.46 for k, f in F8.items() if k != "mu_full") and has("four of four predictions held"))
 tot_h = 6 + 5 + 3 + 3 + 5
 ok("tally 22 of 31", tot_h == 22 and has("22 of our 31 predictions held") and has("| all | 22 | 9 |"))
 
 page = (H / "index.html").read_text(encoding="utf-8"); src = (A / "index.html").read_text(encoding="utf-8")
 ok("page: identical to the study's but for the paper link", page == src.replace('href="../../../presentations/cycle-009/paper.md"', 'href="paper.md"') and 'href="paper.md"' in page)
 scripts = re.findall(r'<script src="([^"]+)"', page)
-ok("page: every script it loads is a byte copy", all((H / x).read_bytes() == (A / x).read_bytes() for x in scripts) and len(scripts) == 14)
+ok("page: every script it loads is a byte copy", all((H / x).read_bytes() == (A / x).read_bytes() for x in scripts) and len(scripts) == 16)
 
 print(f"{n_pass} passed, {n_fail} failed, {n_pass + n_fail} run, {DECLARED} declared")
 ok("self-count: declared equals run", n_pass + n_fail == DECLARED)
