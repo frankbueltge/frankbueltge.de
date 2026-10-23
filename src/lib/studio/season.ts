@@ -148,9 +148,9 @@ const LIT_ROW_GAP = 104
  *  makes a deeper floor, which is what "the floor keeps every mark" means when it is taken at its
  *  word. (2026-09-11, replacing the throw that asked for this decision.) */
 const LIT_ROWS_MIN = 3
-/** A guard, not a design limit: eight rows is a floor two and a half times today's depth, and a
+/** A guard, not a design limit: nine rows is a floor three times the original depth, and a
  *  season that reaches it is a figure to look at again rather than one to grow silently. */
-const LIT_ROWS_MAX = 8
+const LIT_ROWS_MAX = 9
 /** Row centres for a band of `rows`. The top row is fixed and the band grows DOWNWARD, so at
  *  LIT_ROWS_MIN these are exactly the three rows the floor has had since 2026-09-01. */
 const litRowY = (rows: number): number[] =>
