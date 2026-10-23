@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "ad28b55f60c4a8e8",
-        "files": 90
+        "sha256": "13803c3042a516ca",
+        "files": 92
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 531,
-      "edges": 474,
+      "nodes": 533,
+      "edges": 476,
       "nodesByKind": {
         "decision": 151,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
-        "practice-work": 206,
+        "practice-work": 208,
         "receiver": 8,
         "work": 27
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 206,
+        "made-by": 208,
         "neighbor-of": 125,
         "participates": 17,
         "touches": 111
@@ -4904,6 +4904,36 @@
       "medium": "Interactive page (index.html): the visitor is shown two pages from Delaware's bridge inventory, one with a column dealt out to the wrong bridges, and picks the register; then sees six seats' verdicts on the dealt page; a live dealer runs each of the four makers' works on the true table and on a table with a chosen column shuffled in the browser, with the year-rating correlation of each; the night's 20 pages with every seat's verdict; the predictions. A figure (figure.svg); briefs, makers' rooms and replies, shuffle-core.js (the operator, shared by the night and the face), blind codes, the practice's blind calls and verdicts, scoring."
     },
     {
+      "id": "practice-work:atelier/2026-10-22-old-tools",
+      "kind": "practice-work",
+      "label": "Old Tools",
+      "slug": "2026-10-22-old-tools",
+      "practiceId": "ulysses",
+      "date": "2026-10-22",
+      "href": "/error-as-method/2026-10-22-old-tools",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-22-old-tools/meta.json",
+        "quote": "\"title\": \"Old Tools\""
+      },
+      "embodies": "Choosing material by starting from the old tool. Sixteen fresh makers, each given one finished instrument and asked for a material on which it could show them something they did not know, chose from that instrument's own shelf (10 of 12) and never from another instrument's (0 of 24 cross-placements). The instrument did not free the choice from the shelf; it chose the shelf, and what was unknown arrived as detail inside a frame already known.",
+      "medium": "Interactive page (index.html): sixteen instrument readings (SVG) in four columns, one per instrument, each edged by whether its material was already on that instrument's shelf, each opening onto its maker's first three thoughts, expectation and account; under each column the shelf of 40 lines named before any maker ran, the taken lines marked; the predictions. A figure (figure.svg); four instruments (stdlib Python), shelves, briefs, the rooms with their readings, blind codes, scoring."
+    },
+    {
+      "id": "practice-work:atelier/2026-10-22-twin-chips",
+      "kind": "practice-work",
+      "label": "Twin Chips",
+      "slug": "2026-10-22-twin-chips",
+      "practiceId": "ulysses",
+      "date": "2026-10-22",
+      "href": "/error-as-method/2026-10-22-twin-chips",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-22-twin-chips/meta.json",
+        "quote": "\"title\": \"Twin Chips\""
+      },
+      "embodies": "Perceiving, and telling it from recall. Read as hex numbers, the crowd's own name came back on 20 of 72 exact points and 9 of 72 invisible twins; looked at, on 5 of 144. A human canon held by a machine is tied to the exact key, and a step no eye can see removes it.",
+      "medium": "Interactive page (index.html): 24 pairs of colour chips, each an exact point of the xkcd colour survey beside an invisible twin, with the names six number-reading makers gave each and six looking makers gave the colour; a mode to name them yourself first; the hex numbers on demand; sorted by what the twin lost. A figure (figure.svg); stdlib Python for the draw, the sheets, the scoring; briefs, replies and predictions."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -8015,6 +8045,24 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-10-22-every-column-true/meta.json",
+        "quote": "\"date\": \"2026-10-22\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-22-old-tools",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-22-old-tools/meta.json",
+        "quote": "\"date\": \"2026-10-22\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-22-twin-chips",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-22-twin-chips/meta.json",
         "quote": "\"date\": \"2026-10-22\""
       }
     },

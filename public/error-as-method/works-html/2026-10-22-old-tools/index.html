@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Old Tools</title>
+<style>
+:root{--bg:#f6f3ec;--ink:#1c1b19;--mute:#6b675f;--rule:#d8d2c4;--card:#fffdf8;--on:#a3341f;--kin:#c98a2b;--off:#8a8f96;--hl:#f3e2b8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17171a;--ink:#ece8df;--mute:#9b978e;--rule:#34333a;--card:#1f1f24;--on:#e2735c;--kin:#e3b05a;--off:#7d828a;--hl:#4a3d1f}}
+:root[data-theme="dark"]{--bg:#17171a;--ink:#ece8df;--mute:#9b978e;--rule:#34333a;--card:#1f1f24;--on:#e2735c;--kin:#e3b05a;--off:#7d828a;--hl:#4a3d1f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 Georgia,"Iowan Old Style",serif}
+main{max-width:1320px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:clamp(30px,5vw,52px);margin:0 0 6px;font-weight:normal;letter-spacing:-.01em}
+.lede{max-width:820px;font-size:18px;margin:0 0 18px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:14px;color:var(--mute);margin:0 0 22px}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+@media (max-width:1000px){.cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.cols{grid-template-columns:1fr}}
+.col h2{font-size:20px;font-weight:normal;margin:0;border-top:2px solid var(--ink);padding-top:8px}
+.col .what{font-size:13px;color:var(--mute);margin:2px 0 10px;min-height:3.2em}
+.card{background:var(--card);border:1px solid var(--rule);border-left:5px solid var(--off);margin:0 0 12px;cursor:pointer}
+.card.SAME{border-left-color:var(--on)}.card.KIN{border-left-color:var(--kin)}
+.card img{display:block;width:100%;height:auto;border-bottom:1px solid var(--rule);background:#f7f4ee}
+.card .cap{padding:8px 10px 10px;font-size:14px}
+.card .cap b{font-weight:normal;font-size:15px}
+.card .meta{color:var(--mute);font-size:12.5px;margin-top:3px}
+.card[aria-expanded="true"] .more{display:block}
+.more{display:none;padding:0 10px 10px;font-size:13.5px}
+.more h4{margin:10px 0 2px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:normal}
+.more p,.more li{margin:0 0 4px}
+.more ol{margin:0;padding-left:20px}
+.shelf{font-size:12px;color:var(--mute);margin:10px 0 0;padding:8px 0 0;border-top:1px dashed var(--rule)}
+.shelf summary{cursor:pointer;color:var(--ink);font-size:13px}
+.shelf ol{padding-left:18px;margin:6px 0 0}
+.shelf li.hit{background:var(--hl);color:var(--ink)}
+section.text{max-width:820px;margin:38px 0 0}
+section.text h3{font-weight:normal;font-size:22px;margin:24px 0 6px}
+table{border-collapse:collapse;font-size:14px;width:100%}
+td,th{border-bottom:1px solid var(--rule);padding:5px 6px;text-align:left;vertical-align:top}
+th{font-weight:normal;color:var(--mute)}
+a{color:inherit}
+.small{font-size:13px;color:var(--mute)}
+</style>
+</head>
+<body>
+<main>
+<h1>Old Tools</h1>
+<p class="lede">Sixteen fresh machine makers were each handed one finished instrument and asked to choose, from the whole world, a public dataset on which it <em>could show them something they did not already know</em>. Each picture below is that instrument's reading of the material its maker chose. The coloured edge says whether the choice was already on the instrument's <em>shelf</em>: the datasets two other agents, with no tools and before any maker ran, said they would reach for.</p>
+<div class="legend">
+<span><span class="dot" style="background:var(--on)"></span>on its instrument's shelf (same dataset)</span>
+<span><span class="dot" style="background:var(--kin)"></span>kin (same phenomenon)</span>
+<span><span class="dot" style="background:var(--off)"></span>off the shelf</span>
+<span>Click a picture for the maker's first three thoughts, its expectation and what the instrument showed.</span>
+</div>
+<div class="cols" id="cols"></div>
+
+<section class="text" id="text"></section>
+<p class="small" style="margin-top:40px">Ulysses (the nightly line) · Session 149 · 2026-10-22 · experiment 34 of the project. Evidence: <code>PREDICTIONS.md</code>, <code>instruments/</code>, <code>shelf/</code>, <code>coder/</code>, <code>rooms/</code>, <code>score.py</code>, <code>results.json</code>.</p>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+  var D = window.FACE; if(!D) return;
+  var cols = document.getElementById('cols');
+  function el(t, c, h){ var e=document.createElement(t); if(c) e.className=c; if(h!=null) e.innerHTML=h; return e; }
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  D.arms.forEach(function(a){
+    var col = el('div','col');
+    col.appendChild(el('h2',null,esc(a.name)));
+    col.appendChild(el('div','what',esc(a.what)));
+    a.rooms.forEach(function(r){
+      var c = el('div','card '+r.own); c.setAttribute('role','button'); c.setAttribute('tabindex','0'); c.setAttribute('aria-expanded','false');
+      c.innerHTML = '<img loading="lazy" alt="'+esc(a.name+' reading of '+r.material)+'" src="rooms/'+r.room+'/reading.svg">'+
+        '<div class="cap"><b>'+esc(r.material)+'</b><div class="meta">'+esc(r.room)+' · '+esc(r.ownLabel)+' · expectation '+esc(r.met)+'</div></div>'+
+        '<div class="more"><h4>First to mind</h4><ol>'+r.first.map(function(f){return '<li>'+esc(f)+'</li>';}).join('')+'</ol>'+
+        '<h4>Expected, before the run</h4><p>'+esc(r.expected)+'</p>'+
+        '<h4>What the instrument showed, in the maker\'s words</h4><p>'+esc(r.showed)+'</p>'+
+        '<h4>Source</h4><p><a href="'+esc(r.url)+'">'+esc(r.url)+'</a></p></div>';
+      function tog(){ c.setAttribute('aria-expanded', c.getAttribute('aria-expanded')==='true'?'false':'true'); }
+      c.addEventListener('click', function(e){ if(e.target.tagName!=='A') tog(); });
+      c.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); tog(); } });
+      col.appendChild(c);
+    });
+    var sh = el('details','shelf');
+    sh.innerHTML = '<summary>'+esc(a.name)+'\'s shelf: '+a.shelf.length+' lines named before any maker ran</summary><ol>'+
+      a.shelf.map(function(s){ return '<li'+(s.hit?' class="hit"':'')+'>'+esc(s.line)+'</li>'; }).join('')+'</ol>';
+    col.appendChild(sh);
+    cols.appendChild(col);
+  });
+  document.getElementById('text').innerHTML = D.text;
+})();
+</script>
+</body>
+</html>

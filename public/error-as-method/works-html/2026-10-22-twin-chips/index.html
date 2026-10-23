@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twin Chips</title>
+<style>
+  :root { --ink:#1d1d1b; --soft:#6b6a66; --line:#d9d6cf; --hit:#1d1d1b; }
+  html, body { margin:0; background:#ffffff; color:var(--ink); }
+  body { font-family: Georgia, "Times New Roman", serif; line-height:1.45; }
+  main { max-width:1100px; margin:0 auto; padding:24px 16px 64px; }
+  h1 { font-weight:normal; font-size:1.9rem; margin:0 0 4px; letter-spacing:.01em; }
+  .lede { max-width:46rem; margin:0 0 18px; }
+  .tally { display:flex; flex-wrap:wrap; gap:10px 28px; margin:0 0 18px; font-size:.95rem; }
+  .tally b { font-size:1.4rem; font-weight:normal; }
+  .controls { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 20px; }
+  button { font:inherit; font-size:.9rem; background:#fff; color:var(--ink); border:1px solid var(--ink); padding:5px 12px; cursor:pointer; }
+  button[aria-pressed="true"] { background:var(--ink); color:#fff; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:26px 22px; }
+  .pair { border-top:1px solid var(--line); padding-top:10px; }
+  .chips { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+  .chip { height:92px; }
+  .crowd { font-size:.85rem; color:var(--soft); margin:6px 0 4px; }
+  .crowd span { color:var(--ink); font-style:italic; }
+  .cols { display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:.82rem; font-family: "Courier New", Courier, monospace; }
+  .cols div { min-height:3.6em; }
+  .hex { color:var(--soft); }
+  .n { display:block; margin-bottom:3px; }
+  .n.exact { font-weight:bold; text-decoration:underline; text-underline-offset:2px; }
+  .seen { margin-top:6px; font-size:.78rem; color:var(--soft); font-family: "Courier New", Courier, monospace; }
+  .seen .n { display:inline; }
+  .seen .n.exact { color:var(--ink); }
+  .hidden .cols, .hidden .seen, .hidden .crowd span { visibility:hidden; }
+  .yours { width:100%; box-sizing:border-box; font:inherit; font-size:.85rem; margin-top:6px; padding:3px 4px; border:1px solid var(--line); display:none; }
+  .hidden .yours, .pair.filled .yours { display:block; }
+  .nohex .hex { display:none; }
+  footer { margin-top:40px; font-size:.85rem; color:var(--soft); max-width:46rem; }
+  footer a { color:var(--ink); }
+  @media (max-width:420px){ h1{font-size:1.5rem;} .chip{height:72px;} }
+</style>
+</head>
+<body>
+<main>
+  <h1>Twin Chips</h1>
+  <p class="lede">Each pair is one colour, twice. The left chip is a point where a crowd of colour-survey takers put a name. The right one is moved two to four units in each channel, too little for an eye to see. Twelve machine makers named them: six read only the hex numbers, six only looked at a picture. Under each chip are the names the number-readers gave. A name in <b>bold</b> is the crowd's own.</p>
+  <div class="tally" id="tally"></div>
+  <div class="controls">
+    <button id="test" aria-pressed="false">Name them yourself first</button>
+    <button id="hex" aria-pressed="false">Show the hex numbers</button>
+    <button id="sort" aria-pressed="true">Sort by how much the twin lost</button>
+  </div>
+  <div class="grid nohex" id="grid"></div>
+  <footer>
+    <p>Crowd names and points: the xkcd colour survey's list of 949 colours (R. Munroe, 2010, CC0), <a href="https://xkcd.com/color/rgb.txt">xkcd.com/color/rgb.txt</a>. Each point is where answers for that name were densest. It is not what most people call that point, so a bold name here is a match with the crowd's map, not with "the right answer". Chips drawn by seed 151. The twin rule, the briefs, every maker's reply and the scoring are in this experiment's directory. Experiment 35 of the error line's project, Session 151.</p>
+  </footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+  var D = window.TWIN, grid = document.getElementById('grid');
+  var C = D.cells;
+  function cell(label, k){ return '<div><b>'+C[k].pct+'%</b><br>'+label+' ('+C[k].exact+' of '+C[k].n+')</div>'; }
+  document.getElementById('tally').innerHTML =
+    cell('crowd name, read as numbers, exact point','N_on') +
+    cell('crowd name, read as numbers, twin','N_off') +
+    cell('crowd name, looked at, either chip','S_all');
+  function names(list){
+    return list.map(function(x){ return '<span class="n'+(x.exact?' exact':'')+'">'+esc(x.name)+'</span>'; }).join('');
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function loss(c){ return c.Non.filter(function(x){return x.exact;}).length - c.Noff.filter(function(x){return x.exact;}).length; }
+  function render(order){
+    grid.innerHTML = '';
+    order.forEach(function(c){
+      var el = document.createElement('div'); el.className = 'pair';
+      el.innerHTML =
+        '<div class="chips"><div class="chip a"></div><div class="chip b"></div></div>' +
+        '<div class="crowd">crowd: <span>'+esc(c.crowd)+'</span></div>' +
+        '<div class="cols"><div><span class="hex">'+c.on+'</span>'+names(c.Non)+'</div>' +
+        '<div><span class="hex">'+c.off+'</span>'+names(c.Noff)+'</div></div>' +
+        '<div class="seen">looked at: '+c.S.map(function(x){return '<span class="n'+(x.exact?' exact':'')+'">'+esc(x.name)+'</span>';}).join(' · ')+'</div>' +
+        '<input class="yours" placeholder="your name for this colour" aria-label="your name for this colour">';
+      el.querySelector('.a').style.background = c.on;
+      el.querySelector('.b').style.background = c.off;
+      el.querySelector('.yours').addEventListener('input', function(e){ el.classList.toggle('filled', e.target.value.trim() !== ''); });
+      grid.appendChild(el);
+    });
+  }
+  var base = D.chips.slice();
+  render(base.slice().sort(function(a,b){ return loss(b) - loss(a); }));
+  function toggle(btn, fn){ btn.addEventListener('click', function(){ var on = btn.getAttribute('aria-pressed') !== 'true'; btn.setAttribute('aria-pressed', on); fn(on); }); }
+  toggle(document.getElementById('test'), function(on){
+    grid.classList.toggle('hidden', on);
+    document.getElementById('test').textContent = on ? 'Reveal the names' : 'Name them yourself first';
+  });
+  toggle(document.getElementById('hex'), function(on){ grid.classList.toggle('nohex', !on); });
+  toggle(document.getElementById('sort'), function(on){
+    var hidden = grid.classList.contains('hidden');
+    render(on ? base.slice().sort(function(a,b){ return loss(b) - loss(a); }) : base);
+    grid.classList.toggle('hidden', hidden);
+  });
+})();
+</script>
+</body>
+</html>
