@@ -13,7 +13,7 @@ import { loadCycle, loadFieldPapers } from '@/lib/ecology/v3'
 import { pieceHref } from '@/lib/engines/publication-links'
 import { readPick, readShelfReport, retirementDay } from './selected-works'
 import { pageSentence, readPoolEntries } from './shelf-pool'
-import { makerStill, SHELF_STILL_DIR, shelfCrop, shelfKey } from './shelf-stills'
+import { makerStill, pageShotSource, SHELF_STILL_DIR, shelfCrop, shelfKey } from './shelf-stills'
 import { dayMonthYear } from './since'
 
 const picks: readonly ShelfPick[] = SELECTED_WORKS.picks
@@ -116,12 +116,13 @@ describe('what the shelf types', () => {
 })
 
 describe('the stills', () => {
-  it.each(picks.map((p) => [shelfKey(p.work), p] as const))('%s shows its maker’s own still, cut to the frame, or none', (key, pick) => {
+  it.each(picks.map((p) => [shelfKey(p.work), p] as const))('%s shows its maker’s own still, cut to the frame, or a shot of its own page', (key, pick) => {
     const source = makerStill(pick.work)
     const card = byKey.get(key)
     if (!card) return // left off tonight; the strict run above names it
     if (!source) {
-      expect(card.still, `${key} shows a picture its maker never committed`).toBeNull()
+      // no still of its maker's: the picture, where there is one, is its own page (shelf:shots)
+      if (card.still) expect(card.still.source).toBe(pageShotSource(card.href))
       return
     }
     const crop = shelfCrop(pick.work)
@@ -144,8 +145,12 @@ describe('the stills', () => {
 describe('the pool the edition draws from', () => {
   const pool = poolEntries.map((e) => e.card)
 
-  it('leads with the picks, in their order, and holds far more than the shelf shows', () => {
-    expect(pool.slice(0, cards.length).map((c) => c.key)).toEqual(cards.map((c) => c.key))
+  it('leads with the pinned pieces, then the picks in their order, and holds far more than the shelf shows', () => {
+    const pinned = SELECTED_WORKS.pinned.map((w) => shelfKey(w))
+    expect(pool.slice(0, pinned.length).map((c) => c.key)).toEqual(pinned)
+    expect(pool.filter((c) => c.pinned).map((c) => c.key)).toEqual(pinned)
+    const rest = pool.slice(pinned.length).map((c) => c.key)
+    expect(rest.slice(0, cards.length - pinned.filter((k) => byKey.has(k)).length)).toEqual(cards.map((c) => c.key).filter((k) => !pinned.includes(k)))
     expect(pool.length).toBeGreaterThan(cards.length * 3)
   })
 
@@ -169,6 +174,13 @@ describe('the pool the edition draws from', () => {
     expect(pieceHref(card.href)).toBe(card.href)
     expect(pageExists(card.href), `no page is built at ${card.href}`).toBe(true)
     if (card.still) expect(existsSync(join('public', card.still.src)), card.still.src).toBe(true)
+  })
+
+  it('shows a picture of its piece on almost every card', () => {
+    // a work that landed tonight has no shot until npm run shelf:shots runs, so this asks for most,
+    // not all; a missing shot never turns a practice's delivery red
+    const pictured = pool.filter((c) => c.still).length
+    expect(pictured / pool.length, `${pool.length - pictured} card(s) without a picture — run npm run shelf:shots`).toBeGreaterThan(0.9)
   })
 
   it('leaves the running cycle out until it is presented', () => {

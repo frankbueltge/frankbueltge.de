@@ -122,7 +122,8 @@ export function poolPicks(root: string = process.cwd()): ShelfPick[] {
 }
 
 /**
- * The pool: the hand-chosen picks first, in their order, then every other published piece, each
+ * The pool: the pinned pieces first, then the hand-chosen picks in their order, then every other
+ * published piece, each
  * with the pick it was read from (scripts/shelf-stills.ts crops by the pick). A piece appears once,
  * however many records name it: by its key, its address, or its title and maker (a Studio work and
  * the presentation that shows it are one piece).
@@ -135,7 +136,9 @@ export function readPoolEntries(
   const entries: { pick: ShelfPick; card: ShelfCard }[] = []
   const seen = new Set<string>()
   const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
-  for (const pick of [...picks, ...poolPicks(root)]) {
+  const pinned: ShelfPick[] = SELECTED_WORKS.pinned.map((work) => ({ work, reason: '' }))
+  const pinnedKeys = new Set(pinned.map((p) => shelfKey(p.work)))
+  for (const pick of [...pinned, ...picks, ...poolPicks(root)]) {
     if (seen.has(`key:${shelfKey(pick.work)}`)) continue
     let card: ShelfCard
     try {
@@ -150,12 +153,13 @@ export function readPoolEntries(
     const marks = [`key:${card.key}`, `href:${card.href.replace(/\/$/, '')}`, `title:${norm(card.title)}|${card.maker}`]
     if (marks.some((m) => seen.has(m))) continue
     for (const m of marks) seen.add(m)
+    if (pinnedKeys.has(card.key)) card = { ...card, pinned: true }
     entries.push({ pick, card })
   }
   return entries
 }
 
-/** The pool's cards, the picks first. */
+/** The pool's cards, the pinned pieces and the picks first. */
 export function readPool(root: string = process.cwd(), picks: readonly ShelfPick[] = SELECTED_WORKS.picks): ShelfCard[] {
   return readPoolEntries(root, picks).map((e) => e.card)
 }

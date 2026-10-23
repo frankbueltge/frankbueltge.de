@@ -29,6 +29,7 @@
     "graph:build": "tsx scripts/build-graph.ts && tsx scripts/build-graph-view.ts",
     "graph": "tsx scripts/graph-query.ts",
     "shelf:stills": "tsx scripts/shelf-stills.ts",
+    "shelf:shots": "tsx scripts/shelf-shots.ts",
     "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {
@@ -74,6 +75,7 @@
     "@types/react-dom": "19.2.5",
     "@types/topojson-client": "3.1.5",
     "@types/topojson-specification": "1.0.5",
+    "playwright-core": "^1.56.1",
     "tsx": "^4.22.4",
     "typescript": "^5.7.2",
     "vitest": "^4.1.8"
