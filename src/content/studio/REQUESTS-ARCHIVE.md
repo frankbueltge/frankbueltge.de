@@ -7080,3 +7080,56 @@ The architect's rejection is accepted: the data had no form. *TAKE COVER, AGAIN*
 **Request:** none. **Status:** a statement.
 
 A coda to *TAKE COVER, AGAIN*, added after the presentation and marked so. The Field showed that the presented contrast cannot be told from chance: 39 % of the dead came out of runs of three or more empty warnings, against 31 % of all hits. The Studio reproduced that on its own record. Drawn again tornado by tornado, the share lies anywhere from 23 to 55 %. One tornado, Joplin 2011, carries 158 of the 550, and without it the share is the hits' share. The page, the summary and the record are marked corrected, dated. A switch under the map now sets that tornado aside. The red site build of 10-21 and 10-22 was ours: the work's `meta.json` lived only in the presentation. It is now beside the work. Nothing is asked.
+
+---
+
+*Moved here unchanged on 2026-10-23 (Ensemble, session 198) under point 7 of the amendment of 2026-10-22, in the session that closed it.*
+
+## 2026-10-22 — The season floor on /studio is full again, and the build gate is red on it
+
+**Request:** a decision in the site's `src/lib/studio/season.ts` (the shelf). Since tonight's runs,
+`buildSeasonModel` throws: 50 premieres do not fit 8 rows at the densest lettering. Five site tests fail
+on it (SeasonFloor, triptych, studio-one-tap, dossier, season), and no deploy happens.
+**Why it is not repairable here:** the 50th premiere is TAKE COVER, AGAIN, cycle 009's presented work.
+Its `meta.json` was committed beside the work in session 192 because the site's dossier test failed
+without it (letter of 2026-10-21: "shipped but the mirror carries no meta.json"). With it, the floor
+overflows. Removing it would hide a presented work to fit a figure. We counted our record: 50 distinct
+shipped slugs, each with its meta.json, no duplicates. The same overflow was reported at 20 premieres
+on 2026-09-11 and decided on your side. Shapes, offered without preference: more rows, a floor that
+keeps only the current cycles lit, or a floor that pages.
+**What it enables:** every deploy, ours and the siblings', until the floor is decided.
+**Status:** open
+
+**Addendum (Ensemble, 2026-10-22, session 195) — the red build now also holds the convening.**
+- The site's mirror of our cycle-009 presentation does not exist. `public/studio/presentations/cycle-009/`
+  answers 404 on main; the Field's and the Atelier's cycle-009 presentations answer 200. Our cycle-007
+  and cycle-008 presentations answer 200. The cycle sentinel reads the presentations from these mirrors.
+  So the clock cannot see three presentations, and the convening cannot open, for all three practices.
+- Reproduced on a read-only clone of the site's main (tonight): its season test passes 34/34. Add our
+  chronicle (194 entries; its first 190 are byte-identical to the mirror's) and TAKE COVER, AGAIN's
+  meta.json, and the same test throws the build's error word for word.
+- Decided under the standing rule, since our next session passed in silence: we do not hide a work,
+  drop a meta.json or rewrite a chronicle move to fit the figure. The fix stays in `season.ts`.
+- The smallest shape we can see: `LIT_ROWS_MAX` from 8 to 9 or more, since the source calls it a guard
+  and not a design limit. We did not run it; whether 9 rows hold 50 names is not tested here.
+**Status:** open
+
+**Addendum (Ensemble, 2026-10-22, session 196) — the smallest shape, now tested.**
+- On a fresh read-only clone of the site's main (accd10c, 17:09Z), in a scratch folder only, with our
+  `chronicle.json` and TAKE COVER, AGAIN's `meta.json` put in place: the season test throws the build's
+  error word for word (8 rows).
+- Same clone, one line changed in `src/lib/studio/season.ts`: `const LIT_ROWS_MAX = 8` → `9`. The five
+  tests the gate names (SeasonFloor, triptych, dossier, season, studio-one-tap) pass, 113/113. So 50
+  premieres fit at 9 rows.
+- The full suite on that clone: 8 further tests fail (graph, register-audit, chronicle anchors). They
+  fail identically with 8 rows. They come from our partial stand-in for the mirror (no synced journals,
+  no regenerated graph), not from the change. One more (paper, a 5 s timeout) fails on the untouched
+  clone too.
+- Nothing was written to the site repository. The decision and the change stay yours. A ninth row holds
+  this season; the guard's comment says a season reaching the guard is "a figure to look at again".
+**Status:** open
+
+**Closed (Ensemble, 2026-10-23, session 198).** Answered in the site, not here: `src/lib/studio/season.ts` on
+main now reads `LIT_ROWS_MAX = 9`, our cycle-009 presentation answers 200 on the site's mirror, and
+`cycle.json` opened the convening after cycle 009 on 2026-10-23. Nothing further is asked.
+**Status:** closed
