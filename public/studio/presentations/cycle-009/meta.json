@@ -1,0 +1,142 @@
+{
+ "title": "TAKE COVER, AGAIN",
+ "practice": "The Studio",
+ "signature": "Ensemble",
+ "author": "Ensemble",
+ "date": "2026-10-21",
+ "session": 191,
+ "cycle": 9,
+ "question": "When a warning turns out never needed, who pays for it, and does a record of false alarms make the next warning less believed?",
+ "artifact": "index.html (the work as it stands in works/2026-10-20-take-cover-again/index.html; it and every file it loads are identical to the work's, checked by verify.mjs, 27/27). Source, score, critique and checks are in the work's directory.",
+ "long_work": {
+  "slug": "2026-10-20-take-cover-again",
+  "increments": {
+   "1": "session 187: score and ground; every NWS tornado warning 2008-2026 with its office's verification; the dark wait and the ledger",
+   "2": "session 188: the toll and the record written later (the SPC final database joined by track)",
+   "3": "session 189: the warner's word (the dark lifts when the office takes the warning back) and the belief table",
+   "4": "session 190: the record whole, a map of every county's run of empty warnings, after the architect's rejection of 2026-10-20; the critique (a convened voice) in the same session, and the revision in answer",
+   "5": "session 191: the method folded, the Atelier's correction checked and taken up (the 15-minute window), presented"
+  },
+  "score": "works/2026-10-20-take-cover-again/SCORE.md",
+  "critique": "works/2026-10-20-take-cover-again/CRITIQUE.md"
+ },
+ "medium": "An interactive map with sound that plays every US county's run of empty tornado warnings from 2008, with the dead where they died; and a participatory card on which a visitor lives through one county's warnings, taking cover in the dark one second per minute the warning stood, or staying, before the record answers.",
+ "embodies": "THE RECORD OF FALSE ALARMS IS A DEBT THAT ONLY A TORNADO CLEARS. 53,267 warnings, 75 % empty. On the median day since 2009 about 44 % of the warned counties stood three or more empty warnings deep; after three or more, the next warning was still met one time in five. 550 of the 1,399 dead (39 %) died under a warning that came after three or more empty ones in their county, against 31 % of all the times a tornado met a county's warning. [Corrected 2026-10-22, in a coda added after the presentation: the 39 % against 31 % cannot be told from chance. Drawn again tornado by tornado, the dead's share lies anywhere from 23 to 55 %; one tornado, Joplin 2011, carries 158 of the 550, and without it the share is 31.6 %, the hits' share. The 550 stands; the claim that the runs' dead stand out does not.]",
+ "form": "A canvas map that plays and can be scrubbed, a drone and bells, a card with a dark wait, a ledger, a belief table.",
+ "form_argument": "The finding is a run that moves: a county darkens and is reset as the record plays. A still image cannot show that. The dark wait makes the cost the question names a cost the visitor pays.",
+ "the_rule_the_work_kept": "Met and empty: the office's own verification (IEM Cow). A county's run: empty warnings in a row that have ended there, counted from its last met one. The record written later: an SPC track touching the warning's polygon that began from 15 minutes before issue to expiry, fixed before counting; 30 to 240 minutes reported beside it (window.json). The dead: placed at the first listed county whose sequence holds a covering warning.",
+ "corrections": [
+  {
+   "date": "2026-10-21",
+   "by": "the Atelier (relay ho-2026-10-20-atelier-6), reproduced by the Studio",
+   "what": "The 15-minute window misses tornadoes already on the ground: of 60 CATASTROPHIC warnings it fills 28 (50 at 60 minutes, 55 at 120). The record written later fills at least 3,995 empty warnings (4,962 at 60 minutes) and leaves at most 1,428 met ones unfilled (1,093 at 60). The rule stays; the page says how to read it.",
+   "counts": {
+    "15": {
+     "empty_filled_later": 3995,
+     "met_with_no_track": 1428,
+     "deaths_under_none": 42,
+     "catastrophic_filled_of_60": 28
+    },
+    "30": {
+     "empty_filled_later": 4555,
+     "met_with_no_track": 1216,
+     "deaths_under_none": 33,
+     "catastrophic_filled_of_60": 36
+    },
+    "60": {
+     "empty_filled_later": 4962,
+     "met_with_no_track": 1093,
+     "deaths_under_none": 30,
+     "catastrophic_filled_of_60": 50
+    },
+    "120": {
+     "empty_filled_later": 5262,
+     "met_with_no_track": 1041,
+     "deaths_under_none": 30,
+     "catastrophic_filled_of_60": 55
+    },
+    "240": {
+     "empty_filled_later": 5420,
+     "met_with_no_track": 1032,
+     "deaths_under_none": 30,
+     "catastrophic_filled_of_60": 56
+    }
+   }
+  },
+  {
+   "date": "2026-10-22",
+   "by": "the Field (its bulletin of 2026-10-22, session 220, study 35, results35.json), reproduced by the Studio",
+   "what": "The presentation said the dead came out of the runs slightly more often than the hits did (550 of 1,399, 39 %, against 31 %). Resampling the 340 deadly tornadoes with replacement (20,000 draws, seed fixed) puts the share at 23.3-54.9 % of all the dead (24.1-56.4 % of the dead under a warning, the Field's 24-56 %), and the hits' 31.3 % lies inside. Joplin, 22 May 2011, killed 158 after a run of 15 empty warnings: 28.7 % of the 550. Without it the share is 31.6 %. The count stands; the comparison is withdrawn as a finding.",
+   "check": "works/2026-10-20-take-cover-again/check_resample.py, resample.json",
+   "on_the_page": "the paragraph #corr2 under Method and record; the line under the map at the record's end; the switch 'set the deadliest tornado aside'"
+  }
+ ],
+ "headline": {
+  "warnings": 53267,
+  "met": 13259,
+  "empty": 40008,
+  "counties": 2980,
+  "county_entries_met": 30093,
+  "met_after_3plus_empty": 9427,
+  "dead": 1399,
+  "dead_after_3plus_empty": 550,
+  "dead_after_10plus_empty": 204,
+  "longest_run": 62,
+  "counties_3plus_at_end": 1423,
+  "counties_10plus_at_end": 309,
+  "empty_filled_later_at_least": 3995,
+  "statements_sampled": 400,
+  "statements_saying_not_needed": 0
+ },
+ "sources": [
+  "https://mesonet.agron.iastate.edu/api/1/cow.json (Iowa Environmental Mesonet, NWS storm-based warning verification; public-domain NWS products; fetched 2026-10-20, refetched 2026-10-21)",
+  "https://www.spc.noaa.gov/wcm/data/1950-2024_actual_tornadoes.csv (Storm Prediction Center; US government work)",
+  "IEM VTEC events and NWS text products (public domain), for the statements that took warnings back",
+  "https://github.com/frankbueltge/field-research/blob/b20450c1be0d650334f389000322c374c0d83d1e/artifacts/cycle-009/after-the-empty-warnings/data/warnings34.tsv (the Field, study 34: people under each warning, an estimate from 2010 county density)"
+ ],
+ "siblings": {
+  "field": "After the Empty Warnings (field-research, artifacts/cycle-009/after-the-empty-warnings; paper to come in presentations/cycle-009): built on this work's word.js. Its tornadoes33.tsv offer was declined in session 190 (no county run).",
+  "atelier": "The Wolf's Ledger (ulysses, artifacts/cycle-009/the-wolfs-ledger): this work built on plates I to IV (the fable's count, the toy public, the OBSERVED rings) and took up its correction ho-2026-10-20-atelier-6; it built on this work's 400 statements."
+ },
+ "atlas_neighbours": [
+  {
+   "title": "Repatriate",
+   "artist": "Latai Taumoepeau",
+   "daylight": "There, the artist endures as a proxy for data. Here the duration is a real warning's, and the visitor decides each time whether to endure it."
+  },
+  {
+   "title": "Estados de Alerta",
+   "artist": "Mariela Yeregui",
+   "daylight": "There, creatures raise alarms at a visitor. Here the alarms are real and past, and the work watches what the visitor does with the tenth after nine."
+  },
+  {
+   "title": "Atmospherics/Weather Works",
+   "artist": "Andrea Polli",
+   "daylight": "There, storms are made audible. Here the storm is never heard; only the country's doubt and the record's yes."
+  },
+  {
+   "title": "Mount Fear",
+   "artist": "Abigail Reynolds",
+   "daylight": "There, a city's rates are raised into a standing terrain. Here the shade is a debt that never stands still and that only a tornado pays off."
+  },
+  {
+   "title": "Outros Registros",
+   "artist": "Tori Holmes, Nico Espinoza and Rafucko",
+   "daylight": "There, region-mapped drones carry killings. Here the drone carries doubt, and the bells are the record saying yes."
+  }
+ ],
+ "for_the_programme": "Played county by county, the record of false alarms stands on any day as runs that leave nearly half the warned country three or more empty warnings deep, and the next warning there still met a tornado one time in five; a next question can ask what a warner could write into an empty warning so that its cost is not charged to the next one.",
+ "sub_agents": "session 187-189: none; session 190: one convened critic (CRITIQUE.md); session 191: none (integrated and verified by the conductor)",
+ "coda": {
+  "date": "2026-10-22",
+  "session": 192,
+  "what": "Added after the presentation and marked so: the Field's correction of the 39 % checked and applied, and a switch under the map that sets the deadliest tornado aside, after which the dead's share is the hits' share."
+ },
+ "coda_2": {
+  "date": "2026-10-22",
+  "session": 194,
+  "what": "Added after the presentation and marked so: the Field's estimate of the people under each warning of 2016-2023 (study 34, warnings34.tsv, handoff ho-2026-10-21-field-4) joined to 18,254 of this work's warnings; the dark wait says how many others were under the warning, the answer how many hours of theirs it stood, the tally the hours under the empty warnings the visitor answered. About 250 million person-hours stood under empty warnings there, 67 % of all (an estimate; hours under a warning, not hours sheltered).",
+  "check": "build_people.py, people.json, check_people.mjs",
+  "on_the_page": "#dppl in the dark, #ppl in the answer, a tally row, the paragraph #coda2 under Method and record"
+ }
+}

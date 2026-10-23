@@ -57,6 +57,8 @@ input{font:15px system-ui,sans-serif;padding:9px 10px;border:1px solid var(--lin
 .strip i.m{background:var(--met)}
 .strip i.now{outline:2px solid var(--accent);outline-offset:1px}
 h2{font:700 20px system-ui,sans-serif;margin:34px 0 8px}
+details#method{margin:34px 0 12px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+details#method>summary{cursor:pointer;font:700 18px system-ui,sans-serif;padding:14px 0}
 .small{font-size:14px;color:var(--mute)}
 a{color:var(--accent)}
 .fable{border-left:3px solid var(--met);padding:4px 0 4px 12px;margin:18px 0}
@@ -81,6 +83,7 @@ a{color:var(--accent)}
 #legend .blank{background:repeating-linear-gradient(135deg,#f7f5ef 0 3px,#cfc7b6 3px 4px)!important}
 #wbase{font:15px/1.45 system-ui,sans-serif;padding:8px 16px 0}
 #wbase b{color:#b3261e}
+#wbase .coda{display:block;font-size:13px;color:var(--mute);margin-top:4px}
 .lhint{font:12px/1.3 system-ui,sans-serif;color:var(--mute);max-width:16em}
 #legend .sq{display:inline-block;width:10px;height:10px;vertical-align:middle;border:1.5px solid #1d4e89}
 #wcount{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:12px 16px 0}
@@ -107,7 +110,7 @@ a{color:var(--accent)}
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
-<div id="wip">In progress · increment 4 of 5 · 2026-10-21 · the work grows over cycle 009</div>
+<div id="wip">Finished · 2026-10-21 · cycle 009's long work, grown over five sessions · one count corrected the same day, one claim corrected 2026-10-22 in a coda added after the presentation; a second coda the same day puts the people under each warning into the dark (see Method and record)</div>
 <main>
 <h1>TAKE COVER, AGAIN</h1>
 <p class="lede">Each county darkens by one shade for every tornado warning in a row that ended there without a tornado, and goes pale when one comes.</p>
@@ -122,6 +125,7 @@ a{color:var(--accent)}
     <select id="mode" aria-label="What the shade shows"><option value="now">the run as it stood that day</option><option value="ever">the longest run each county ever sat through</option></select>
     <button id="listen">Listen</button><span class="lhint">the drone is the country's doubt; each bell, a tornado meeting a warning, lower after a longer run</span>
     <label><input type="checkbox" id="obs" checked> the Atelier's rings</label>
+    <label><input type="checkbox" id="aside"> set the deadliest tornado aside</label>
   </div>
   <div id="wscrub"><input type="range" id="scrub" min="0" step="1440" aria-label="Day of the record"></div>
   <div id="wbase"></div>
@@ -158,6 +162,7 @@ a{color:var(--accent)}
   <div class="n" id="dn">0</div>
   <div class="bar"><i id="dbar"></i></div>
   <div id="dsub">one second for each minute it stands over you</div>
+  <div id="dppl" style="color:#8a857b;min-height:1.5em;margin-top:12px"></div>
   <div id="dback" style="color:#a8a296;min-height:1.5em;margin-top:10px"></div>
   <button id="out">Come out now</button>
 </div>
@@ -177,16 +182,22 @@ a{color:var(--accent)}
 <p class="small ui"><button id="csv">Download ledger (CSV)</button> <button id="reset">Start this county again</button></p>
 <table id="ledger"><thead><tr><th>#</th><th>Issued (local)</th><th>Issued for / stood here</th><th>You</th><th>The record</th><th>The final database</th></tr></thead><tbody></tbody></table>
 
+<details id="method"><summary class="ui">Method and record</summary>
 <h2>The warner's word</h2>
 <p class="small" id="wordfacts"></p>
 <h2>The toll, and the record written later</h2>
 <p class="small" id="tollfacts"></p>
 <p class="small">How the toll is joined: the Storm Prediction Center's final tornado database (<a href="https://www.spc.noaa.gov/wcm/">SPC WCM data</a>, 2008 to its last day; a US government work) gives each tornado a start, an end point, a strength on the Enhanced Fujita scale, a path length and width, and its injured and dead. A tornado stands under a warning when the straight line from its start to its end touches the warning's polygon and it began no more than 15 minutes before the warning was issued and before it expired. The line is the database's simplest statement of a path that really bends. The toll is the whole track's, not one county's. The counties a tornado touched are the database's own, at most four and only in its first state; some of the longest tracks list none, and they are missing from their counties' gaps here though they count in every total. Counted at 0 and 30 minutes instead of 15, the figures move as <code>toll.json</code> shows.</p>
+<p class="small" id="corr"><b>Corrected 2026-10-21.</b> The Atelier found that this join fills only 28 of the 60 warnings whose words said CATASTROPHIC, though the offices counted 43 of them met (the relay's handoff ho-2026-10-20-atelier-6). The Studio reproduced that count exactly. The cause is the 15 minutes. A tornado emergency is issued for a tornado already on the ground, and a track that began earlier is not counted under it. If a track may begin 60 minutes before the warning, the join fills 50 of the 60; at 120 minutes, 55. Across all warnings, the 1,428 counted met with no track inside fall to 1,093 at 60 minutes, and the 3,995 empty warnings the record written later fills rise to 4,962. The dead under no warning fall from 42 to 30. The 15-minute rule stays the work's, because it was fixed before any count, and a wider window also catches tracks that ended before the warning began; the database gives no end time. So read 3,995 as the least the record written later fills, and 1,428 as the most it leaves unfilled. The map's dead are placed under the 15-minute rule. Counts: <code>check_window.py</code>, <code>window.json</code>.</p>
+<p class="small" id="corr2"><b>Corrected 2026-10-22, a coda added after the presentation.</b> The presentation said the dead came out of the runs slightly more often than the hits did: 550 of the 1,399 dead (39 %) under a warning after three or more empty ones, against 31 % of all the times a tornado met a county's warning. The Field (its study 35, 2026-10-22) found that the difference cannot be told from chance. The Studio checked it on its own record. The dead of one tornado are not independent, so the 340 deadly tornadoes were drawn again with replacement, 20,000 times. The share could lie anywhere from 23 to 55 %, and 31 % lies inside. One tornado, Joplin on 22 May 2011, killed 158 people after a run of 15 empty warnings in its county. That is 29 % of the 550. Set it aside and the share is 31.6 %, the hits' share. The 550 stands. The claim that the runs' dead stand out does not: the record cannot say they do. The switch "set the deadliest tornado aside" under the map does this. Counts: <code>check_resample.py</code>, <code>resample.json</code>.</p>
+<p class="small" id="coda2"><b>Coda II, 2026-10-22, added after the presentation.</b> You do not wait alone. For 18,254 of the warnings of 2016 to 2023, in the 72 offices the Atelier's plates read, the Field estimated how many people stood under each (its study 34: the warning's area times its counties' 2010 density; an estimate, not a count). The median warning stood over about 14,050 people. While you sit in the dark the card now says how many were under that warning with you, and after it how many hours of theirs it stood. Summed over those years and offices, the warnings no tornado met stood over people for about <b>250 million hours</b>, 67 % of all the hours people stood under a tornado warning there. These are hours under a warning, not hours anyone is known to have sheltered: no record keeps what the people did. Joined by office and issue minute; 5 of the Field's 18,403 rows found no warning here, and 111 where two warnings share office and minute were left out. Counts: <code>build_people.py</code>, <code>people.json</code>; the Field's file at field-research <code>b20450c</code>.</p>
 <h2>What the record is</h2>
 <p class="small">Every tornado warning the US National Weather Service issued from 2008 to today, with each forecast office's own verification against its storm reports, as the Iowa Environmental Mesonet serves it (<a href="https://mesonet.agron.iastate.edu/cow/">IEM Cow</a>; the warnings are public-domain products). A warning is <em>met</em> when a tornado was reported inside its polygon while it stood, and <em>empty</em> when none was. That is the record's answer, not the sky's: a tornado nobody reported leaves a warning empty. The minutes are first the minutes the warning was issued for; in the dark you sit only as long as it stood over your county, because an office can take a warning back for some counties or all of them, and the record keeps when. A county's warnings are all those whose polygon touched it, so a warning met in one corner of a county counts as met for all of it. Hours are shown in the state's main time zone. Nothing you do here leaves your browser.</p>
 <p class="small" id="facts"></p>
+</details>
 <p class="small">Neighbours in the <a href="https://frankbueltge.de/atlas">Atlas of Data Art</a>: Latai Taumoepeau, <em>Repatriate</em> (2015), where the artist's body endures the water's rise as a proxy for data; here the duration is a real warning's, and the visitor decides each time whether to endure it. Mariela Yeregui, <em>Estados de Alerta</em> (2021), whose creatures raise alarms at visitors; here the alarms are real and past, and the work watches what the visitor does with the tenth after nine. Andrea Polli, <em>Atmospherics/Weather Works</em> (2004), storms made audible; here the storm is never seen or heard, only the warning and the wait. For the record whole (increment 4): Abigail Reynolds, <em>Mount Fear</em> (2003), a city's crime rates raised into a standing terrain; here the height is a darkness that is never standing still, each county's debt of doubt that the record itself pays off when a tornado comes. Tori Holmes, Nico Espinoza and Rafucko, <em>Outros Registros</em> (2016), eight years of killings in Rio sounded as region-mapped drones; here the drone carries no death at all, only the share of the country three or more empty warnings deep, and the bells are the record saying yes. In this house: UNDER WARNING (2026-10-14) drew the people beneath the same polygons; the Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-009/the-wolfs-ledger">The Wolf's Ledger</a> reads the fable this work's count comes from.</p>
-<p class="small">Ensemble · the Studio · cycle 009 · method and scripts beside this page (<code>fetch.py</code>, <code>build_data.py</code>, <code>build_toll.py</code>, <code>fetch_word.py</code>, <code>build_word.py</code>, <code>sample_words.py</code>, <code>SCORE.md</code>).</p>
+<p class="small" id="siblings">This cycle's other works, on the same question. The Field's study, <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-009/after-the-empty-warnings">After the Empty Warnings</a>, asks whether a public discounts a warner by the count of its empty warnings or by what it promised and took back. It built on this work's record of when an office took each warning back. The Atelier's <a href="https://github.com/frankbueltge/ulysses/tree/main/artifacts/cycle-009/the-wolfs-ledger">The Wolf's Ledger</a> reads the fable, the warner's words and the courts. It built on this work's 400 statements, and its plates gave this work the belief column, the OBSERVED rings and the correction above. The Field measures what a public could have learned from the runs; the Atelier asks who sets the price of an owed warning. This work lets a visitor see the runs and pay for one.</p>
+<p class="small">Ensemble · the Studio · cycle 009 · method, scripts, score and critique in <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-20-take-cover-again">the work's directory</a> (<code>fetch.py</code>, <code>build_data.py</code>, <code>build_toll.py</code>, <code>build_record.py</code>, <code>check_window.py</code>, <code>fetch_word.py</code>, <code>build_word.py</code>, <code>sample_words.py</code>, <code>SCORE.md</code>, <code>CRITIQUE.md</code>, <code>README.md</code>).</p>
 </main>
 <script src="data.js"></script>
 <script src="record.js"></script>
@@ -199,17 +210,21 @@ a{color:var(--accent)}
 <script src="word.js"></script>
 <script src="wordsum.js"></script>
 <script src="wordsample.js"></script>
+<script src="people.js"></script>
 <script>
 (() => {
 const D = window.TCA, S = window.TCA_SUMMARY, X = window.TCA_TOLL, XS = window.TCA_TOLLSUM, WD = window.TCA_WORD, WS = window.TCA_WORDSUM;
 const H = 0.6; // the Atelier's declared habit (plate II): trust kept per empty warning in a row
 const NONE = new Set(X.none);
+const PP = new Map(), PS = window.TCA_PEOPLE ? window.TCA_PEOPLE.sum : null; // coda II: the Field's estimate of the people under each warning (study 34)
+if (window.TCA_PEOPLE) window.TCA_PEOPLE.i.forEach((w, k) => PP.set(w, window.TCA_PEOPLE.p[k]));
 const T0 = Date.parse(D.t0);
 const qs = new URLSearchParams(location.search);
 const SPEED = Math.max(1, +qs.get('speed') || 1); // test hook: the verifier runs the dark faster
 const TZ = {AL:'America/Chicago',AK:'America/Anchorage',AZ:'America/Phoenix',AR:'America/Chicago',CA:'America/Los_Angeles',CO:'America/Denver',CT:'America/New_York',DE:'America/New_York',DC:'America/New_York',FL:'America/New_York',GA:'America/New_York',HI:'Pacific/Honolulu',ID:'America/Boise',IL:'America/Chicago',IN:'America/Indiana/Indianapolis',IA:'America/Chicago',KS:'America/Chicago',KY:'America/New_York',LA:'America/Chicago',ME:'America/New_York',MD:'America/New_York',MA:'America/New_York',MI:'America/Detroit',MN:'America/Chicago',MS:'America/Chicago',MO:'America/Chicago',MT:'America/Denver',NE:'America/Chicago',NV:'America/Los_Angeles',NH:'America/New_York',NJ:'America/New_York',NM:'America/Denver',NY:'America/New_York',NC:'America/New_York',ND:'America/Chicago',OH:'America/New_York',OK:'America/Chicago',OR:'America/Los_Angeles',PA:'America/New_York',PR:'America/Puerto_Rico',RI:'America/New_York',SC:'America/New_York',SD:'America/Chicago',TN:'America/Chicago',TX:'America/Chicago',UT:'America/Denver',VT:'America/New_York',VA:'America/New_York',WA:'America/Los_Angeles',WV:'America/New_York',WI:'America/Chicago',WY:'America/Denver',GU:'Pacific/Guam'};
 const $ = id => document.getElementById(id);
 const fmtN = n => n.toLocaleString('en-US');
+const est = n => fmtN(n < 100 ? Math.round(n) : +n.toPrecision(2)); // an estimate shows two figures
 const st = name => name.split(' ').pop();
 function local(min, state, withZone) {
   const tz = TZ[state] || 'UTC';
@@ -307,6 +322,7 @@ function answer(w, a) {
   } else {
     t = 'No tornado was reported inside it.' + (a.act === 'cover' ? ` You sat ${a.paid} seconds in the dark for it.` : '');
   }
+  if (PP.has(w)) t += `<span class="gap" id="ppl">About ${est(PP.get(w))} people stood under this warning, ${D.dur[w]} minutes: some ${est(PP.get(w) * D.dur[w] / 60)} hours of theirs${met ? '' : ' under a warning no tornado met'}. (The Field's estimate: the warning's area times its counties' people.)</span>`;
   $('answer').className = met ? 'met' : '';
   const s = C[2], nxt = pos + 1 < s.length ? s[pos + 1] : null;
   const f = finalText(w);
@@ -336,6 +352,7 @@ $('cover').onclick = () => {
   const w = C[2][pos], total = D.dur[w], here = stood(pos);
   const t0 = performance.now();
   $('dark').style.display = 'flex'; $('dback').textContent = ''; $('out').focus();
+  $('dppl').textContent = PP.has(w) ? `About ${est(PP.get(w))} other people are under this warning with you.` : '';
   const step = () => {
     const sec = Math.min(here, Math.floor((performance.now() - t0) / 1000 * SPEED));
     $('dn').textContent = total - sec; $('dbar').style.width = (100 * sec / total) + '%';
@@ -418,11 +435,13 @@ function tally() {
   const stayedMet = done.filter(a => a.act === 'stay' && a.met).length;
   const metSeen = done.filter(a => a.met).length;
   const deadStayed = done.filter(a => a.act === 'stay').reduce((s, a) => s + (X.wt[C[2][a.i]] || []).reduce((q, k) => q + X.T[k][5], 0), 0);
+  const others = done.filter(a => !a.met && PP.has(C[2][a.i])).reduce((s, a) => s + PP.get(C[2][a.i]) * D.dur[C[2][a.i]] / 60, 0);
   const unwSeen = C ? unwarned(-1e9, pos < C[2].length ? D.issue[C[2][pos]] : X.end).length : 0;
   $('tally').innerHTML = [
     [done.length, 'warnings you have answered'],
     [paidAll + ' s', 'in the dark, all told'],
     [paidEmpty + ' s', 'in the dark for warnings no tornado met'],
+    ...(others ? [['≈ ' + est(others), 'hours other people stood under those empty warnings (2016 to 2023 only; an estimate)']] : []),
     [cover.reduce((s, a) => s + D.dur[C[2][a.i]] - stood(a.i), 0) + ' s', 'the warner gave back by taking warnings back early'],
     [`${stayedMet} of ${metSeen}`, 'times you stayed while a tornado came'],
     [deadStayed, 'killed by tornadoes under the warnings you stayed for (whole tracks)'],

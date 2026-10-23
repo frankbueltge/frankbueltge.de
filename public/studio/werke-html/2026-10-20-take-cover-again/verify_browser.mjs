@@ -3,6 +3,8 @@
 // Session 188: increment 2 (the final database's toll, the empty warnings it fills, the tornadoes under no warning).
 // Session 189: increment 3 (the warner's word: the dark ends where the office took the warning back; the belief columns).
 // Session 190: increment 4 (the record whole: every county's run on one map, the dead, the Atelier's OBSERVED rings).
+// Session 191: increment 5 (finished; the method folded; the 15-minute window corrected against window.json).
+// Session 192: a coda after the presentation (the Field's correction of the 39 %: resample.json, the deadliest tornado set aside).
 import { createRequire } from 'module';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
@@ -16,6 +18,12 @@ const WD = JSON.parse(fs.readFileSync(join(here, 'word.js'), 'utf8').replace(/^w
 const WS = JSON.parse(fs.readFileSync(join(here, 'word.json')));
 const R = JSON.parse(fs.readFileSync(join(here, 'record.js'), 'utf8').replace(/^window\.TCA_RECORD=/, '').replace(/;\s*$/, ''));
 const RS = JSON.parse(fs.readFileSync(join(here, 'record.json')));
+const WIN = JSON.parse(fs.readFileSync(join(here, 'window.json')));
+const RES = JSON.parse(fs.readFileSync(join(here, 'resample.json')));
+const PE = JSON.parse(fs.readFileSync(join(here, 'people.js'), 'utf8').replace(/^window\.TCA_PEOPLE=/, '').replace(/;\s*$/, ''));
+const PJ = JSON.parse(fs.readFileSync(join(here, 'people.json')));
+const PPL = new Map(PE.i.map((w, k) => [w, PE.p[k]]));
+const est = n => (n < 100 ? Math.round(n) : +n.toPrecision(2)).toLocaleString('en-US');
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--autoplay-policy=no-user-gesture-required', '--allow-file-access-from-files'] });
 let pass = 0, fail = 0, live = ''; const t = (n, ok) => { ok ? pass++ : fail++; console.log(ok ? 'ok  ' : 'FAIL', n) };
 
@@ -83,7 +91,10 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   await p.waitForSelector('#strip i');
   t(w + ' no errors on load', errs.length === 0);
   t(w + ' no horizontal overflow', await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
-  t(w + ' in progress, dated, at the top', /In progress · increment 4 of 5 · 2026-10-21/.test(await p.locator('#wip').textContent()));
+  t(w + ' finished, dated, at the top', /^Finished · 2026-10-21 · cycle 009.*corrected 2026-10-22 in a coda/.test(await p.locator('#wip').textContent()));
+  t(w + ' the method is folded, the work is not', !(await p.locator('#method').getAttribute('open')) && await p.locator('#map').isVisible() && await p.locator('#card').isVisible());
+  { const c = await p.locator('#corr').textContent(), V = WIN.by_window, f = n => n.toLocaleString('en-US');
+    t(w + ' the correction carries window.json\'s counts', [V['15'].atelier_classes_2008_to_db_end.CAT.filled_later, V['60'].atelier_classes_2008_to_db_end.CAT.filled_later, V['120'].atelier_classes_2008_to_db_end.CAT.filled_later, V['15'].met_warnings_with_no_track, V['60'].met_warnings_with_no_track, V['15'].empty_warnings_filled_later, V['60'].empty_warnings_filled_later, V['15'].deaths_under_none, V['60'].deaths_under_none].every(n => c.includes(' ' + f(n) + ' ') || c.includes(' ' + f(n) + ',') || c.includes(' ' + f(n) + ';') || c.includes(' ' + f(n) + '.'))); }
   // the record whole
   await p.waitForFunction(() => window.TCA_WHOLE && document.getElementById('wcount').textContent.length > 0);
   const wc = await p.locator('#wcount').textContent();
@@ -92,6 +103,14 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   t(w + ' whole: the baseline line at the end (' + pcS(m3, mN) + ' of met, ' + pcS(dead3, RS.dead) + ' of the dead)', (await p.locator('#wbase').textContent()).includes(pcS(m3, mN)) && (await p.locator('#wbase').textContent()).includes(pcS(dead3, RS.dead)));
   t(w + ' whole: the county taken below is marked on the map', await p.evaluate(() => window.TCA_current()[0] === 'OKC027'));
   t(w + ' whole: the page\'s runs at the end equal the second path', await p.evaluate(([a, b]) => { const r = window.TCA_WHOLE.run; let x = 0, y = 0; for (const v of r) { if (v >= 3) x++; if (v >= 10) y++; } return x === a && y === b; }, [fin3, fin10]));
+  // the coda: the resampled interval and the deadliest tornado set aside
+  { const c = await p.locator('#corr2').textContent(), pr = x => Math.round(100 * x);
+    t(w + ' coda: the correction carries resample.json', [pr(RES.interval_95_all_dead[0]), pr(RES.interval_95_all_dead[1]), RES.largest_tornado.dead, pr(RES.largest_tornado.share_of_the_550)].every(n => c.includes(String(n))) && c.includes(String(Math.round(1000 * RES.without_the_largest.share_of_all_dead) / 10)));
+    t(w + ' coda: the line under the map gives the interval at the end', (await p.locator('#wbase').textContent()).includes(pr(RES.interval_95_all_dead[0]) + ' to ' + pr(RES.interval_95_all_dead[1]) + ' %'));
+    await p.locator('#aside').check();
+    const ab = await p.locator('#wbase').textContent(), big = R.dead.reduce((a, d) => d[1] > a[1] ? d : a);
+    t(w + ' coda: set aside, the dead\'s share is ' + pcS(dead3 - big[1], RS.dead - big[1]) + ', the hits\' ' + pcS(m3, mN), ab.includes(pcS(dead3 - big[1], RS.dead - big[1])) && ab.includes(pcS(m3, mN)) && ab.includes(pr(RES.without_the_largest.interval_95_all_dead[0]) + ' to ' + pr(RES.without_the_largest.interval_95_all_dead[1]) + ' %'));
+    await p.locator('#aside').uncheck(); }
   const may = Math.round((Date.parse('2011-05-01T00:00Z') - Date.parse(D.t0)) / 60000);
   await p.evaluate(m => window.TCA_WHOLE.seek(m), may);
   const wc2 = await p.locator('#wcount').textContent();
@@ -177,6 +196,27 @@ for (const [w, scheme] of [[390, 'light'], [1100, 'dark']]) {
   t(w + ' the toll facts carry the database counts', (await p.locator('#tollfacts').textContent()).includes(B.empty_warnings_with_a_tornado.toLocaleString('en-US')));
   t(w + ' no horizontal overflow after the toll', await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
   t(w + ' no errors after play', errs.length === 0);
+  // coda II (session 194): the people under the warning, in the dark and after it
+  t(w + ' coda II paragraph carries the joined count and the hours', (await p.locator('#coda2').textContent()).includes(PJ.joined.toLocaleString('en-US')) &&
+    (await p.locator('#coda2').textContent()).includes(Math.round(PJ.person_hours_empty / 1e6) + ' million hours'));
+  t(w + ' the top line names the second coda', /second coda/.test(await p.locator('#wip').textContent()));
+  {
+    const kp = HOME[2].findIndex(x => PPL.has(x) && !D.met[x]);
+    await p.goto('file://' + join(here, 'index.html') + '?at=999999999&speed=240&county=' + HOME[0]);
+    await p.waitForSelector('#strip i'); await p.click('#reset');
+    for (let k = 0; k < kp; k++) { await p.click('#stay'); await p.click('#next'); }
+    const x = HOME[2][kp];
+    await p.click('#cover');
+    const dl = await p.locator('#dppl').textContent();
+    t(w + ` in the dark, warning ${kp + 1}: the people under it with you`, dl === `About ${est(PPL.get(x))} other people are under this warning with you.`);
+    await p.waitForSelector('#dark', { state: 'hidden', timeout: 15000 });
+    const ap = await p.locator('#ppl').textContent();
+    t(w + ' after it: their hours under an empty warning', ap.includes(`${est(PPL.get(x) * D.dur[x] / 60)} hours of theirs under a warning no tornado met`));
+    t(w + ' the tally counts other people\'s hours', (await p.locator('#tally').textContent()).includes('hours other people stood under those empty warnings'));
+    const k0 = HOME[2].findIndex(x => !PPL.has(x));
+    t(w + ' a warning outside the estimate says nothing of people', k0 < kp);
+  }
+  t(w + ' no errors after the coda', errs.length === 0);
   await p.screenshot({ path: join(here, `shot-${w}.png`), fullPage: false });
   await ctx.close();
 }

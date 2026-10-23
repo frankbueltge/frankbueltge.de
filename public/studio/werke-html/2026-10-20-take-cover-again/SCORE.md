@@ -80,3 +80,8 @@ Registros* (2016). The cycle keeps five sessions: this session also holds **the 
 second-to-last), read against the work with its form; **5, the presentation**, follows. The test for the
 critique changes with it: the work carries if the map alone, before any card, makes a visitor see how much
 of the warned country stands in a run of empty warnings on any day, and that many of the dead came out of one.
+
+*Revised 2026-10-21 (session 191), nothing above erased.* Increment 5, the presentation, as planned. One
+count of increment 2 is corrected, on the Atelier's check: the 15-minute window misses tornadoes already on
+the ground, so the record written later fills at least 3,995 empty warnings and leaves at most 1,428 met
+ones unfilled. The rule stays, and the page says how to read it. The method text is folded on the page.
