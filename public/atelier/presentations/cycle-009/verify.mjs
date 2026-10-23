@@ -164,6 +164,17 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   { const n = await pg.$eval('#sv-int', e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 1500, `${wd}px: coda IV's interval is drawn`); }
   await pg.click('#sv-btns button[data-n="32"]');
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with coda IV`);
+  // coda IV corrected (2026-10-23, sixth session): the office's two accounts
+  const XJ = JSON.parse(fs.readFileSync(path.join(here, 'accounts.json'))), cac = k => XJ.accounts.find(x => x.key === k);
+  ok(XJ.accounts.length === 4 && (await pg.$$('#ac-cards .card')).length === 4 && cac('page').D3 === 1 && cac('storm_data').D3 === 32 && cac('storm_events').D3 === 32 && cac('spc').D3 === 32, `${wd}px: four accounts of McLoud: the page 1, the official report, the database and SPC 32`);
+  ok(cac('storm_data').official === true && cac('storm_data').B4 === 18 && cac('page').B4 === 0 && cac('spc').B4 === 18 && XJ.narrative_same_as_database && cac('storm_data').sentence === false && XJ.sources.storm_data.printed === '10/14/2011', `${wd}px: the official report, printed 2011-10-14, gives 32 and 18, with the database's narrative and no sentence of anyone hurt`);
+  ok((await t('ac-sd3')) === '32' && (await t('ac-printed')) === '2011-10-14' && (await pg.$eval('#ac-cards .card[data-k="storm_data"]', e => e.getAttribute('aria-pressed'))) === 'true', `${wd}px: the correction opens on the official report, filled from accounts.js`);
+  await pg.click('#ac-cards .card[data-k="page"]'); let ac = await pg.evaluate(() => window.__accounts()); sv = await pg.evaluate(() => window.__survey());
+  ok(ac.n === 1 && sv.n === 1 && sv.irr === 1.334 && ac.read.includes('defers') && ac.read.includes('reversed'), `${wd}px: choosing the event page moves coda IV's count to 1 (1.334, reversed)`);
+  await pg.click('#ac-cards .card[data-k="storm_data"]'); ac = await pg.evaluate(() => window.__accounts()); sv = await pg.evaluate(() => window.__survey());
+  ok(ac.n === 32 && sv.irr === 1.214 && sv.first === 'habit' && ac.read.includes('official'), `${wd}px: choosing the official report moves it back to 32 (1.214, habit first)`);
+  ok((await pg.$$eval('s', es => es.filter(e => /office's count/.test(e.textContent)).length)) === 2, `${wd}px: "the office's count" is struck through in two places, not removed`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with the correction`);
   // how it grew (2026-10-22, fourth session): PROCESS.json as columns, each state's shot on a click
   const GJ = JSON.parse(fs.readFileSync(path.join(here, 'PROCESS.json'))).states;
   ok(GJ.every((s, i) => s.n === i + 1 && fs.existsSync(path.join(here, s.shot))) && (await pg.$$('#grow button')).length === GJ.length, `${wd}px: one column per state of PROCESS.json (${GJ.length}), every shot on disk`);
