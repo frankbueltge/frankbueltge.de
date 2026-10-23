@@ -1,0 +1,2807 @@
+{
+ "summary": {
+  "S_unanimous": 16,
+  "P_unanimous": 14,
+  "N_unanimous": 14,
+  "P_forced_unanimous": 8,
+  "P_unforced_unanimous": 6,
+  "S_unanimous6": 13,
+  "P_unanimous6": 12,
+  "N_unanimous6": 9,
+  "people_E_three_agree_S": 1.676,
+  "S_modal_is_people_top": 8,
+  "S_mean_distinct6_makers": 1.5,
+  "S_mean_distinct6_people": 4.571,
+  "S_maker_words_in_people_list": 120,
+  "N_modal_is_people_second": 7,
+  "N_used_excluded": 0,
+  "N_modal_in_S_makers_words": 18,
+  "P_forced_modal_is_shared": 5
+ },
+ "verdicts": {
+  "R1": {
+   "rule": ">=24 of 48 P+N unanimous (falsifies below); predicted >=30",
+   "value": 28,
+   "row_holds": true,
+   "prediction_held": false
+  },
+  "R2": {
+   "rule": ">=4 of 12 UNFORCED unanimous (falsifies below); predicted >=5",
+   "value": 6,
+   "row_holds": true,
+   "prediction_held": true
+  },
+  "H1": {
+   "rule": "S unanimous >= 2E (and predicted >=12)",
+   "value": 16,
+   "two_E": 3.35,
+   "held": true
+  },
+  "H2": {
+   "rule": "S modal = people's top on >=16",
+   "value": 8,
+   "held": false
+  },
+  "H3": {
+   "rule": "makers' mean distinct6 <= half people's",
+   "value": [
+    1.5,
+    4.571
+   ],
+   "held": true
+  },
+  "H4": {
+   "rule": "N unanimous >=12 and N modal = people's second on >=8",
+   "value": [
+    14,
+    7
+   ],
+   "held": false
+  },
+  "H5": {
+   "rule": "FORCED unanimous > UNFORCED unanimous",
+   "value": [
+    8,
+    6
+   ],
+   "held": true
+  }
+ },
+ "cells": {
+  "S01": {
+   "arm": "S",
+   "raw": [
+    "mud",
+    "glue",
+    "trapped",
+    "trapped",
+    "trapped",
+    "trapped"
+   ],
+   "norm": [
+    "MUD",
+    "GLUE",
+    "TRAPPED",
+    "TRAPPED",
+    "TRAPPED",
+    "TRAPPED"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "TRAPPED",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 3,
+   "people_top": "GLUE",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0036,
+   "people_distinct6": 5.482,
+   "people_share": {
+    "GLUE": 0.129,
+    "STICK": 0.121,
+    "MUD": 0.064,
+    "CAUGHT": 0.043,
+    "GUM": 0.036,
+    "STICKY": 0.029,
+    "TIGHT": 0.029,
+    "FREE": 0.021,
+    "JAMMED": 0.021,
+    "OUT": 0.021,
+    "TRAP": 0.021,
+    "FIXED": 0.014,
+    "IMMOVABLE": 0.014,
+    "LOOSE": 0.014,
+    "MOVE": 0.014,
+    "STOP": 0.014,
+    "STRANDED": 0.014,
+    "TOGETHER": 0.014
+   },
+   "makers_in_people": 2
+  },
+  "S02": {
+   "arm": "S",
+   "raw": [
+    "lamb",
+    "shelf",
+    "shelf",
+    "shelf",
+    "shelf",
+    "shelf"
+   ],
+   "norm": [
+    "LAMB",
+    "SHELF",
+    "SHELF",
+    "SHELF",
+    "SHELF",
+    "SHELF"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "SHELF",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "people_top": "SHELF",
+   "modal_is_people_top": true,
+   "p_three_agree": 0.0023,
+   "people_distinct6": 5.494,
+   "people_share": {
+    "SHELF": 0.111,
+    "CLOTHE": 0.085,
+    "BIKE": 0.065,
+    "POOL": 0.059,
+    "GUN": 0.046,
+    "LAMB": 0.046,
+    "SHOE": 0.046,
+    "RIB": 0.039,
+    "HAT": 0.033,
+    "STORAGE": 0.033,
+    "CLOSET": 0.026,
+    "HOLDER": 0.026,
+    "BALL": 0.02,
+    "COAT": 0.02,
+    "STACK": 0.02,
+    "SURF": 0.02,
+    "BAR": 0.013,
+    "BEEF": 0.013,
+    "HANG": 0.013,
+    "HANGER": 0.013,
+    "HIT": 0.013,
+    "NUT": 0.013,
+    "SHOW": 0.013,
+    "TORTURE": 0.013
+   },
+   "makers_in_people": 6
+  },
+  "S03": {
+   "arm": "S",
+   "raw": [
+    "built",
+    "built",
+    "built",
+    "built",
+    "built",
+    "built"
+   ],
+   "norm": [
+    "BUILT",
+    "BUILT",
+    "BUILT",
+    "BUILT",
+    "BUILT",
+    "BUILT"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "BUILT",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "CREATED",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0014,
+   "people_distinct6": 5.645,
+   "people_share": {
+    "CREATED": 0.101,
+    "CREATE": 0.081,
+    "DONE": 0.041,
+    "INVENTED": 0.041,
+    "MAKE": 0.041,
+    "PRODUCED": 0.034,
+    "UP": 0.034,
+    "AMERICA": 0.027,
+    "BOUGHT": 0.027,
+    "BUILT": 0.02,
+    "FIXED": 0.02,
+    "HAND": 0.02,
+    "WORK": 0.02,
+    "ACCOMPLISHED": 0.014,
+    "BED": 0.014,
+    "CHINA": 0.014,
+    "COMPLETE": 0.014,
+    "CONSTRUCTED": 0.014,
+    "COOK": 0.014,
+    "DESTROYED": 0.014,
+    "DEVELOPED": 0.014,
+    "EASY": 0.014,
+    "FABRICATED": 0.014,
+    "FOOD": 0.014,
+    "MAN": 0.014,
+    "MANUFACTURED": 0.014,
+    "OBJECT": 0.014,
+    "UNMADE": 0.014
+   },
+   "makers_in_people": 6
+  },
+  "S04": {
+   "arm": "S",
+   "raw": [
+    "physics",
+    "substance",
+    "physics",
+    "substance",
+    "substance",
+    "substance"
+   ],
+   "norm": [
+    "PHYSIC",
+    "SUBSTANCE",
+    "PHYSIC",
+    "SUBSTANCE",
+    "SUBSTANCE",
+    "SUBSTANCE"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "SUBSTANCE",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 2,
+   "people_top": "ATOM",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0011,
+   "people_distinct6": 5.619,
+   "people_share": {
+    "ATOM": 0.079,
+    "FACT": 0.071,
+    "SPACE": 0.057,
+    "SUBSTANCE": 0.057,
+    "GRAY": 0.05,
+    "ANTIMATTER": 0.043,
+    "IMPORTANT": 0.043,
+    "STUFF": 0.036,
+    "EARTH": 0.029,
+    "MASS": 0.029,
+    "THING": 0.029,
+    "BRAIN": 0.021,
+    "CONCERN": 0.021,
+    "ISSUE": 0.021,
+    "MIND": 0.021,
+    "PROBLEM": 0.021,
+    "SOLID": 0.021,
+    "SUBJECT": 0.021,
+    "WEIGHT": 0.021,
+    "CHEMISTRY": 0.014,
+    "DOESNT": 0.014,
+    "ELEMENT": 0.014,
+    "INERTIA": 0.014,
+    "SCIENCE": 0.014,
+    "UNIVERSE": 0.014
+   },
+   "makers_in_people": 4
+  },
+  "S05": {
+   "arm": "S",
+   "raw": [
+    "book",
+    "book",
+    "book",
+    "book",
+    "blanket",
+    "book"
+   ],
+   "norm": [
+    "BOOK",
+    "BOOK",
+    "BOOK",
+    "BOOK",
+    "BLANKET",
+    "BOOK"
+   ],
+   "unanimous": true,
+   "unanimous6": false,
+   "modal": "BOOK",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "people_top": "LID",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0034,
+   "people_distinct6": 5.426,
+   "people_share": {
+    "LID": 0.12,
+    "HIDE": 0.107,
+    "BLANKET": 0.093,
+    "SHEET": 0.053,
+    "UP": 0.047,
+    "GIRL": 0.033,
+    "SHIELD": 0.033,
+    "TOP": 0.033,
+    "CLOSE": 0.027,
+    "SLIP": 0.027,
+    "BOOK": 0.02,
+    "CHARGE": 0.02,
+    "PROTECT": 0.02,
+    "STORY": 0.02,
+    "BED": 0.013,
+    "CAR": 0.013,
+    "CLOTH": 0.013,
+    "CLOTHE": 0.013,
+    "LETTER": 0.013,
+    "OPEN": 0.013,
+    "PAGE": 0.013,
+    "SEAL": 0.013,
+    "UNCOVER": 0.013
+   },
+   "makers_in_people": 6
+  },
+  "S06": {
+   "arm": "S",
+   "raw": [
+    "manners",
+    "conduct",
+    "conduct",
+    "conduct",
+    "conduct",
+    "conduct"
+   ],
+   "norm": [
+    "MANNER",
+    "CONDUCT",
+    "CONDUCT",
+    "CONDUCT",
+    "CONDUCT",
+    "CONDUCT"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "CONDUCT",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "people_top": "ACT",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0029,
+   "people_distinct6": 5.439,
+   "people_share": {
+    "ACT": 0.116,
+    "ATTITUDE": 0.102,
+    "BAD": 0.068,
+    "ACTION": 0.054,
+    "PSYCHOLOGY": 0.054,
+    "GOOD": 0.048,
+    "SCIENCE": 0.048,
+    "PERSONALITY": 0.041,
+    "STRANGE": 0.034,
+    "HAPPY": 0.027,
+    "PROBLEM": 0.027,
+    "SOCIAL": 0.027,
+    "ABNORMAL": 0.014,
+    "CHARACTER": 0.014,
+    "CHILD": 0.014,
+    "DISCIPLINE": 0.014,
+    "ETIQUETTE": 0.014,
+    "IRREGULAR": 0.014,
+    "KID": 0.014,
+    "MODIFICATION": 0.014,
+    "MOOD": 0.014,
+    "PATTERN": 0.014,
+    "PEOPLE": 0.014,
+    "WEIRD": 0.014
+   },
+   "makers_in_people": 0
+  },
+  "S07": {
+   "arm": "S",
+   "raw": [
+    "dough",
+    "dough",
+    "dough",
+    "dough",
+    "croissant",
+    "croissant"
+   ],
+   "norm": [
+    "DOUGH",
+    "DOUGH",
+    "DOUGH",
+    "DOUGH",
+    "CROISSANT",
+    "CROISSANT"
+   ],
+   "unanimous": true,
+   "unanimous6": false,
+   "modal": "DOUGH",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 2,
+   "people_top": "DOUGHNUT",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0045,
+   "people_distinct6": 5.335,
+   "people_share": {
+    "DOUGHNUT": 0.147,
+    "SWEET": 0.1,
+    "CAKE": 0.08,
+    "DESSERT": 0.067,
+    "DANISH": 0.047,
+    "FOOD": 0.047,
+    "PIE": 0.047,
+    "BAKERY": 0.033,
+    "CHEF": 0.033,
+    "FAT": 0.027,
+    "GOOD": 0.027,
+    "EAT": 0.02,
+    "FRENCH": 0.02,
+    "POPTART": 0.02,
+    "APPLE": 0.013,
+    "BAGEL": 0.013,
+    "BREAD": 0.013,
+    "CALORIE": 0.013,
+    "CANNOLI": 0.013,
+    "DOUGH": 0.013,
+    "GUAVA": 0.013,
+    "YUMMY": 0.013
+   },
+   "makers_in_people": 4
+  },
+  "S08": {
+   "arm": "S",
+   "raw": [
+    "rebellious",
+    "adolescent",
+    "adolescent",
+    "adolescent",
+    "adolescent",
+    "adolescent"
+   ],
+   "norm": [
+    "REBELLIOU",
+    "ADOLESCENT",
+    "ADOLESCENT",
+    "ADOLESCENT",
+    "ADOLESCENT",
+    "ADOLESCENT"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "ADOLESCENT",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "people_top": "YOUNG",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0031,
+   "people_distinct6": 5.489,
+   "people_share": {
+    "YOUNG": 0.138,
+    "ADOLESCENT": 0.072,
+    "KID": 0.072,
+    "TROUBLE": 0.058,
+    "ADULT": 0.051,
+    "REBELLIOU": 0.036,
+    "YOUTH": 0.036,
+    "FUN": 0.029,
+    "GIRL": 0.022,
+    "HIGHSCHOOL": 0.022,
+    "PARTY": 0.022,
+    "ACNE": 0.014,
+    "CHILD": 0.014,
+    "CONFUSE": 0.014,
+    "DRUG": 0.014,
+    "MONEY": 0.014,
+    "MUSIC": 0.014,
+    "NAIVE": 0.014,
+    "PERSON": 0.014,
+    "PROBLEM": 0.014,
+    "SEX": 0.014,
+    "TELEPHONE": 0.014
+   },
+   "makers_in_people": 6
+  },
+  "S09": {
+   "arm": "S",
+   "raw": [
+    "mouse",
+    "mouse",
+    "cheddar",
+    "mouse",
+    "mouse",
+    "cheddar"
+   ],
+   "norm": [
+    "MOUSE",
+    "MOUSE",
+    "CHEDDAR",
+    "MOUSE",
+    "MOUSE",
+    "CHEDDAR"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "MOUSE",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 2,
+   "people_top": "MOUSE",
+   "modal_is_people_top": true,
+   "p_three_agree": 0.0112,
+   "people_distinct6": 4.933,
+   "people_share": {
+    "MOUSE": 0.176,
+    "CRACKER": 0.17,
+    "MILK": 0.109,
+    "CAKE": 0.067,
+    "WINE": 0.061,
+    "CHEDDAR": 0.055,
+    "SWISS": 0.048,
+    "BREAD": 0.03,
+    "DAIRY": 0.03,
+    "EAT": 0.024,
+    "BURGER": 0.018,
+    "DIP": 0.018,
+    "RAT": 0.018,
+    "AMERICAN": 0.012,
+    "BUTTER": 0.012,
+    "MUENSTER": 0.012,
+    "PROTEIN": 0.012
+   },
+   "makers_in_people": 6
+  },
+  "S10": {
+   "arm": "S",
+   "raw": [
+    "toilet",
+    "toilet",
+    "toilet",
+    "toilet",
+    "toilet",
+    "bathroom"
+   ],
+   "norm": [
+    "TOILET",
+    "TOILET",
+    "TOILET",
+    "TOILET",
+    "TOILET",
+    "BATHROOM"
+   ],
+   "unanimous": true,
+   "unanimous6": false,
+   "modal": "TOILET",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "people_top": "BATHROOM",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0295,
+   "people_distinct6": 4.642,
+   "people_share": {
+    "BATHROOM": 0.296,
+    "TOILET": 0.171,
+    "MEN": 0.053,
+    "DIRTY": 0.039,
+    "PEE": 0.039,
+    "CLEAN": 0.026,
+    "RELIEF": 0.026,
+    "SINK": 0.026,
+    "PISS": 0.02,
+    "URINAL": 0.02,
+    "WOMEN": 0.02,
+    "BATH": 0.013,
+    "LADIE": 0.013,
+    "MIRROR": 0.013,
+    "SMELL": 0.013,
+    "STALL": 0.013,
+    "TOILETPAPER": 0.013,
+    "URINATE": 0.013,
+    "URINE": 0.013
+   },
+   "makers_in_people": 6
+  },
+  "S11": {
+   "arm": "S",
+   "raw": [
+    "wheel",
+    "wheel",
+    "wheel",
+    "wheel",
+    "wheel",
+    "wheel"
+   ],
+   "norm": [
+    "WHEEL",
+    "WHEEL",
+    "WHEEL",
+    "WHEEL",
+    "WHEEL",
+    "WHEEL"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "WHEEL",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "RIDE",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0145,
+   "people_distinct6": 4.876,
+   "people_share": {
+    "RIDE": 0.23,
+    "WHEEL": 0.122,
+    "BIKE": 0.108,
+    "TIRE": 0.061,
+    "TRANSPORTATION": 0.061,
+    "MOTORCYCLE": 0.047,
+    "TRICYCLE": 0.047,
+    "CAR": 0.041,
+    "EXERCISE": 0.041,
+    "PEDAL": 0.041,
+    "CHAIN": 0.02,
+    "SHOP": 0.02,
+    "TENSPEED": 0.02,
+    "MOPED": 0.014,
+    "VEHICLE": 0.014
+   },
+   "makers_in_people": 6
+  },
+  "S12": {
+   "arm": "S",
+   "raw": [
+    "evidence",
+    "evidence",
+    "evidence",
+    "evidence",
+    "evidence",
+    "evidence"
+   ],
+   "norm": [
+    "EVIDENCE",
+    "EVIDENCE",
+    "EVIDENCE",
+    "EVIDENCE",
+    "EVIDENCE",
+    "EVIDENCE"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "EVIDENCE",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "EVIDENCE",
+   "modal_is_people_top": true,
+   "p_three_agree": 0.0129,
+   "people_distinct6": 5.19,
+   "people_share": {
+    "EVIDENCE": 0.236,
+    "IDENTIFICATION": 0.074,
+    "PURCHASE": 0.047,
+    "READING": 0.047,
+    "PUDDING": 0.041,
+    "FACT": 0.034,
+    "AGE": 0.02,
+    "NEGATIVE": 0.02,
+    "POSITIVE": 0.02,
+    "TRUE": 0.02,
+    "TRUTH": 0.02,
+    "ALCOHOL": 0.014,
+    "CHECK": 0.014,
+    "DOCUMENTATION": 0.014,
+    "GEOMETRY": 0.014,
+    "PAPER": 0.014,
+    "PERCENT": 0.014,
+    "PROVE": 0.014,
+    "REASON": 0.014,
+    "TEST": 0.014,
+    "VALID": 0.014,
+    "VALIDATE": 0.014,
+    "VERIFY": 0.014
+   },
+   "makers_in_people": 6
+  },
+  "S13": {
+   "arm": "S",
+   "raw": [
+    "american",
+    "indigenous",
+    "indigenous",
+    "indigenous",
+    "indigenous",
+    "indigenous"
+   ],
+   "norm": [
+    "AMERICAN",
+    "INDIGENOU",
+    "INDIGENOU",
+    "INDIGENOU",
+    "INDIGENOU",
+    "INDIGENOU"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "INDIGENOU",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "people_top": "INDIAN",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0171,
+   "people_distinct6": 4.933,
+   "people_share": {
+    "INDIAN": 0.25,
+    "AMERICAN": 0.132,
+    "FLORIDIAN": 0.069,
+    "BORN": 0.056,
+    "FOREIGN": 0.056,
+    "COUNTRY": 0.028,
+    "ORIGINAL": 0.028,
+    "AFRICA": 0.021,
+    "HOME": 0.021,
+    "RESIDENT": 0.021,
+    "ISLAND": 0.014,
+    "LOCAL": 0.014,
+    "ORIGIN": 0.014,
+    "RESTLESS": 0.014,
+    "VETERAN": 0.014
+   },
+   "makers_in_people": 1
+  },
+  "S14": {
+   "arm": "S",
+   "raw": [
+    "stop",
+    "symbol",
+    "symbol",
+    "symbol",
+    "symbol",
+    "symbol"
+   ],
+   "norm": [
+    "STOP",
+    "SYMBOL",
+    "SYMBOL",
+    "SYMBOL",
+    "SYMBOL",
+    "SYMBOL"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "SYMBOL",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "people_top": "STOP",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0415,
+   "people_distinct6": 4.573,
+   "people_share": {
+    "STOP": 0.348,
+    "NAME": 0.094,
+    "WRITE": 0.072,
+    "LANGUAGE": 0.051,
+    "SIGNAL": 0.036,
+    "UP": 0.036,
+    "READ": 0.029,
+    "LETTER": 0.022,
+    "SIGNATURE": 0.022,
+    "TRAFFIC": 0.022,
+    "DIRECTION": 0.014,
+    "INSTRUCTION": 0.014,
+    "PAPER": 0.014,
+    "POST": 0.014,
+    "PRINT": 0.014
+   },
+   "makers_in_people": 1
+  },
+  "S15": {
+   "arm": "S",
+   "raw": [
+    "bread",
+    "bread",
+    "bread",
+    "bread",
+    "bread",
+    "bread"
+   ],
+   "norm": [
+    "BREAD",
+    "BREAD",
+    "BREAD",
+    "BREAD",
+    "BREAD",
+    "BREAD"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "BREAD",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "BREAD",
+   "modal_is_people_top": true,
+   "p_three_agree": 0.0104,
+   "people_distinct6": 4.93,
+   "people_share": {
+    "BREAD": 0.189,
+    "BARLEY": 0.135,
+    "GERM": 0.108,
+    "CEREAL": 0.081,
+    "FIELD": 0.081,
+    "OAT": 0.047,
+    "FOOD": 0.041,
+    "HAY": 0.041,
+    "GRAIN": 0.034,
+    "CORN": 0.027,
+    "THIN": 0.027,
+    "CHEX": 0.02,
+    "FLOWER": 0.02,
+    "RYE": 0.02,
+    "WHOLE": 0.02,
+    "BUCK": 0.014,
+    "TOAST": 0.014
+   },
+   "makers_in_people": 6
+  },
+  "S16": {
+   "arm": "S",
+   "raw": [
+    "quiet",
+    "quiet",
+    "quiet",
+    "quiet",
+    "quiet",
+    "quiet"
+   ],
+   "norm": [
+    "QUIET",
+    "QUIET",
+    "QUIET",
+    "QUIET",
+    "QUIET",
+    "QUIET"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "QUIET",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "MOVE",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0202,
+   "people_distinct6": 4.81,
+   "people_share": {
+    "MOVE": 0.266,
+    "QUIET": 0.108,
+    "SILENT": 0.094,
+    "MOTIONLESS": 0.086,
+    "MOTION": 0.058,
+    "CALM": 0.05,
+    "WATER": 0.036,
+    "MOONSHINE": 0.022,
+    "FROZEN": 0.014,
+    "LAKE": 0.014,
+    "LIFE": 0.014,
+    "NIGHT": 0.014,
+    "PHOTO": 0.014,
+    "PICTURE": 0.014,
+    "SLOW": 0.014,
+    "STOP": 0.014
+   },
+   "makers_in_people": 6
+  },
+  "S17": {
+   "arm": "S",
+   "raw": [
+    "coral",
+    "coral",
+    "coral",
+    "coral",
+    "coral",
+    "coral"
+   ],
+   "norm": [
+    "CORAL",
+    "CORAL",
+    "CORAL",
+    "CORAL",
+    "CORAL",
+    "CORAL"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "CORAL",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "CORAL",
+   "modal_is_people_top": true,
+   "p_three_agree": 0.0672,
+   "people_distinct6": 4.048,
+   "people_share": {
+    "CORAL": 0.4,
+    "OCEAN": 0.164,
+    "WATER": 0.097,
+    "SEA": 0.061,
+    "BEACH": 0.03,
+    "FISH": 0.03,
+    "DIVE": 0.024,
+    "KEY": 0.012
+   },
+   "makers_in_people": 6
+  },
+  "S18": {
+   "arm": "S",
+   "raw": [
+    "blood",
+    "blood",
+    "blood",
+    "blood",
+    "blood",
+    "blood"
+   ],
+   "norm": [
+    "BLOOD",
+    "BLOOD",
+    "BLOOD",
+    "BLOOD",
+    "BLOOD",
+    "BLOOD"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "BLOOD",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "VEIN",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0932,
+   "people_distinct6": 3.356,
+   "people_share": {
+    "VEIN": 0.417,
+    "HEART": 0.273,
+    "BLOOD": 0.158,
+    "BODY": 0.029,
+    "ARROW": 0.014,
+    "ART": 0.014,
+    "BOW": 0.014,
+    "PAINT": 0.014
+   },
+   "makers_in_people": 6
+  },
+  "S19": {
+   "arm": "S",
+   "raw": [
+    "ticket",
+    "ticket",
+    "ticket",
+    "ticket",
+    "ticket",
+    "ticket"
+   ],
+   "norm": [
+    "TICKET",
+    "TICKET",
+    "TICKET",
+    "TICKET",
+    "TICKET",
+    "TICKET"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "TICKET",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "MONEY",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.1559,
+   "people_distinct6": 3.338,
+   "people_share": {
+    "MONEY": 0.536,
+    "WIN": 0.167,
+    "TICKET": 0.087,
+    "FLAMINGO": 0.022,
+    "LUCK": 0.022,
+    "MILLION": 0.022,
+    "WINNER": 0.022,
+    "CASH": 0.014,
+    "CHANGE": 0.014,
+    "GAMBLE": 0.014,
+    "NUMBER": 0.014
+   },
+   "makers_in_people": 6
+  },
+  "S20": {
+   "arm": "S",
+   "raw": [
+    "proper",
+    "proper",
+    "proper",
+    "proper",
+    "proper",
+    "proper"
+   ],
+   "norm": [
+    "PROPER",
+    "PROPER",
+    "PROPER",
+    "PROPER",
+    "PROPER",
+    "PROPER"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "PROPER",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "PROPER",
+   "modal_is_people_top": true,
+   "p_three_agree": 0.216,
+   "people_distinct6": 3.385,
+   "people_share": {
+    "PROPER": 0.603,
+    "GOOD": 0.013,
+    "POSE": 0.013,
+    "PRIMARY": 0.013,
+    "READY": 0.013,
+    "SECOND": 0.013,
+    "STRAIGHT": 0.013,
+    "TIME": 0.013
+   },
+   "makers_in_people": 6
+  },
+  "S21": {
+   "arm": "S",
+   "raw": [
+    "trees",
+    "trees",
+    "trees",
+    "trees",
+    "trees",
+    "trees"
+   ],
+   "norm": [
+    "TREE",
+    "TREE",
+    "TREE",
+    "TREE",
+    "TREE",
+    "TREE"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "TREE",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "TREE",
+   "modal_is_people_top": true,
+   "p_three_agree": 0.246,
+   "people_distinct6": 3.01,
+   "people_share": {
+    "TREE": 0.628,
+    "WOOD": 0.096,
+    "GREEN": 0.058,
+    "FIRE": 0.045,
+    "TIMBER": 0.026,
+    "RAIN": 0.019,
+    "DARK": 0.013,
+    "DENSE": 0.013,
+    "WILDERNESS": 0.013
+   },
+   "makers_in_people": 6
+  },
+  "S22": {
+   "arm": "S",
+   "raw": [
+    "lightning",
+    "lightning",
+    "lightning",
+    "lightning",
+    "lightning",
+    "lightning"
+   ],
+   "norm": [
+    "LIGHTNING",
+    "LIGHTNING",
+    "LIGHTNING",
+    "LIGHTNING",
+    "LIGHTNING",
+    "LIGHTNING"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "LIGHTNING",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "LIGHTNING",
+   "modal_is_people_top": true,
+   "p_three_agree": 0.5456,
+   "people_distinct6": 2.023,
+   "people_share": {
+    "LIGHTNING": 0.818,
+    "RAIN": 0.055,
+    "STORM": 0.036,
+    "NOISE": 0.03,
+    "CLOUD": 0.012,
+    "LOUD": 0.012
+   },
+   "makers_in_people": 6
+  },
+  "S23": {
+   "arm": "S",
+   "raw": [
+    "sour",
+    "sour",
+    "sour",
+    "sour",
+    "sour",
+    "sour"
+   ],
+   "norm": [
+    "SOUR",
+    "SOUR",
+    "SOUR",
+    "SOUR",
+    "SOUR",
+    "SOUR"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "SOUR",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "LIME",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0817,
+   "people_distinct6": 3.855,
+   "people_share": {
+    "LIME": 0.429,
+    "SOUR": 0.16,
+    "ORANGE": 0.09,
+    "TREE": 0.051,
+    "FRUIT": 0.045,
+    "YELLOW": 0.045,
+    "CAR": 0.032,
+    "LEMONADE": 0.026,
+    "PEEL": 0.026,
+    "APPLE": 0.013,
+    "SQUEEZE": 0.013
+   },
+   "makers_in_people": 6
+  },
+  "S24": {
+   "arm": "S",
+   "raw": [
+    "near",
+    "near",
+    "near",
+    "near",
+    "near",
+    "near"
+   ],
+   "norm": [
+    "NEAR",
+    "NEAR",
+    "NEAR",
+    "NEAR",
+    "NEAR",
+    "NEAR"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "NEAR",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "people_top": "OPEN",
+   "modal_is_people_top": false,
+   "p_three_agree": 0.0906,
+   "people_distinct6": 3.868,
+   "people_share": {
+    "OPEN": 0.448,
+    "FAR": 0.124,
+    "DOOR": 0.09,
+    "NEAR": 0.09,
+    "SHUT": 0.041,
+    "TOGETHER": 0.021,
+    "BEHIND": 0.014,
+    "BREATH": 0.014,
+    "TOUCH": 0.014
+   },
+   "makers_in_people": 6
+  },
+  "P01": {
+   "arm": "P",
+   "raw": [
+    "horse",
+    "horse",
+    "horse",
+    "horse",
+    "horse",
+    "horse"
+   ],
+   "norm": [
+    "HORSE",
+    "HORSE",
+    "HORSE",
+    "HORSE",
+    "HORSE",
+    "HORSE"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "HORSE",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "FORCED",
+   "shared": "HORSE",
+   "modal_is_shared": true
+  },
+  "P02": {
+   "arm": "P",
+   "raw": [
+    "water",
+    "water",
+    "water",
+    "water",
+    "water",
+    "water"
+   ],
+   "norm": [
+    "WATER",
+    "WATER",
+    "WATER",
+    "WATER",
+    "WATER",
+    "WATER"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "WATER",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "FORCED",
+   "shared": "WATER",
+   "modal_is_shared": true
+  },
+  "P03": {
+   "arm": "P",
+   "raw": [
+    "hook",
+    "hook",
+    "ball",
+    "hook",
+    "hook",
+    "hook"
+   ],
+   "norm": [
+    "HOOK",
+    "HOOK",
+    "BALL",
+    "HOOK",
+    "HOOK",
+    "HOOK"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "HOOK",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "kind": "FORCED",
+   "shared": "BALL",
+   "modal_is_shared": false
+  },
+  "P04": {
+   "arm": "P",
+   "raw": [
+    "sugar",
+    "sugar",
+    "sugar",
+    "sugar",
+    "sugar",
+    "food"
+   ],
+   "norm": [
+    "SUGAR",
+    "SUGAR",
+    "SUGAR",
+    "SUGAR",
+    "SUGAR",
+    "FOOD"
+   ],
+   "unanimous": true,
+   "unanimous6": false,
+   "modal": "SUGAR",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "kind": "FORCED",
+   "shared": "FOOD",
+   "modal_is_shared": false
+  },
+  "P05": {
+   "arm": "P",
+   "raw": [
+    "press",
+    "paper",
+    "paper",
+    "press",
+    "press",
+    "press"
+   ],
+   "norm": [
+    "PRESS",
+    "PAPER",
+    "PAPER",
+    "PRESS",
+    "PRESS",
+    "PRESS"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "PRESS",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 2,
+   "kind": "FORCED",
+   "shared": "PAPER",
+   "modal_is_shared": false
+  },
+  "P06": {
+   "arm": "P",
+   "raw": [
+    "trust",
+    "honesty",
+    "honesty",
+    "honesty",
+    "fidelity",
+    "fidelity"
+   ],
+   "norm": [
+    "TRUST",
+    "HONESTY",
+    "HONESTY",
+    "HONESTY",
+    "FIDELITY",
+    "FIDELITY"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "HONESTY",
+   "modal_n": 3,
+   "modal_tie": false,
+   "distinct6": 3,
+   "kind": "FORCED",
+   "shared": "TRUTH",
+   "modal_is_shared": false
+  },
+  "P07": {
+   "arm": "P",
+   "raw": [
+    "problem",
+    "problem",
+    "problem",
+    "problem",
+    "problem",
+    "problem"
+   ],
+   "norm": [
+    "PROBLEM",
+    "PROBLEM",
+    "PROBLEM",
+    "PROBLEM",
+    "PROBLEM",
+    "PROBLEM"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "PROBLEM",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "FORCED",
+   "shared": "HARD",
+   "modal_is_shared": false
+  },
+  "P08": {
+   "arm": "P",
+   "raw": [
+    "wedding",
+    "wedding",
+    "wedding",
+    "wedding",
+    "wedding",
+    "wedding"
+   ],
+   "norm": [
+    "WEDDING",
+    "WEDDING",
+    "WEDDING",
+    "WEDDING",
+    "WEDDING",
+    "WEDDING"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "WEDDING",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "FORCED",
+   "shared": "WEDDING",
+   "modal_is_shared": true
+  },
+  "P09": {
+   "arm": "P",
+   "raw": [
+    "look",
+    "look",
+    "look",
+    "look",
+    "look",
+    "look"
+   ],
+   "norm": [
+    "LOOK",
+    "LOOK",
+    "LOOK",
+    "LOOK",
+    "LOOK",
+    "LOOK"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "LOOK",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "FORCED",
+   "shared": "LOOK",
+   "modal_is_shared": true
+  },
+  "P10": {
+   "arm": "P",
+   "raw": [
+    "store",
+    "store",
+    "store",
+    "store",
+    "store",
+    "store"
+   ],
+   "norm": [
+    "STORE",
+    "STORE",
+    "STORE",
+    "STORE",
+    "STORE",
+    "STORE"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "STORE",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "FORCED",
+   "shared": "STORE",
+   "modal_is_shared": true
+  },
+  "P11": {
+   "arm": "P",
+   "raw": [
+    "old",
+    "fossil",
+    "fossil",
+    "fossil",
+    "fossil",
+    "old"
+   ],
+   "norm": [
+    "OLD",
+    "FOSSIL",
+    "FOSSIL",
+    "FOSSIL",
+    "FOSSIL",
+    "OLD"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "FOSSIL",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 2,
+   "kind": "FORCED",
+   "shared": "OLD",
+   "modal_is_shared": false
+  },
+  "P12": {
+   "arm": "P",
+   "raw": [
+    "passion",
+    "passion",
+    "passion",
+    "passion",
+    "passion",
+    "passion"
+   ],
+   "norm": [
+    "PASSION",
+    "PASSION",
+    "PASSION",
+    "PASSION",
+    "PASSION",
+    "PASSION"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "PASSION",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "FORCED",
+   "shared": "SEX",
+   "modal_is_shared": false
+  },
+  "P13": {
+   "arm": "P",
+   "raw": [
+    "needle",
+    "needle",
+    "gun",
+    "needle",
+    "needle",
+    "needle"
+   ],
+   "norm": [
+    "NEEDLE",
+    "NEEDLE",
+    "GUN",
+    "NEEDLE",
+    "NEEDLE",
+    "NEEDLE"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "NEEDLE",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "P14": {
+   "arm": "P",
+   "raw": [
+    "sweet",
+    "sweet",
+    "sweet",
+    "favorite",
+    "favorite",
+    "sweet"
+   ],
+   "norm": [
+    "SWEET",
+    "SWEET",
+    "SWEET",
+    "FAVORITE",
+    "FAVORITE",
+    "SWEET"
+   ],
+   "unanimous": true,
+   "unanimous6": false,
+   "modal": "SWEET",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 2,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "P15": {
+   "arm": "P",
+   "raw": [
+    "lead",
+    "lead",
+    "lead",
+    "lead",
+    "lead",
+    "lead"
+   ],
+   "norm": [
+    "LEAD",
+    "LEAD",
+    "LEAD",
+    "LEAD",
+    "LEAD",
+    "LEAD"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "LEAD",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "P16": {
+   "arm": "P",
+   "raw": [
+    "paper",
+    "tabloid",
+    "newspaper",
+    "paper",
+    "tabloid",
+    "tabloid"
+   ],
+   "norm": [
+    "PAPER",
+    "TABLOID",
+    "NEWSPAPER",
+    "PAPER",
+    "TABLOID",
+    "TABLOID"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "TABLOID",
+   "modal_n": 3,
+   "modal_tie": false,
+   "distinct6": 3,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "P17": {
+   "arm": "P",
+   "raw": [
+    "distinguish",
+    "apart",
+    "distinguish",
+    "apart",
+    "apart",
+    "distinguish"
+   ],
+   "norm": [
+    "DISTINGUISH",
+    "APART",
+    "DISTINGUISH",
+    "APART",
+    "APART",
+    "DISTINGUISH"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "APART",
+   "modal_n": 3,
+   "modal_tie": true,
+   "distinct6": 2,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "P18": {
+   "arm": "P",
+   "raw": [
+    "egg",
+    "egg",
+    "egg",
+    "egg",
+    "egg",
+    "egg"
+   ],
+   "norm": [
+    "EGG",
+    "EGG",
+    "EGG",
+    "EGG",
+    "EGG",
+    "EGG"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "EGG",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "P19": {
+   "arm": "P",
+   "raw": [
+    "drink",
+    "drink",
+    "drink",
+    "drink",
+    "drink",
+    "drink"
+   ],
+   "norm": [
+    "DRINK",
+    "DRINK",
+    "DRINK",
+    "DRINK",
+    "DRINK",
+    "DRINK"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "DRINK",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "P20": {
+   "arm": "P",
+   "raw": [
+    "vision",
+    "director",
+    "director",
+    "director",
+    "film",
+    "director"
+   ],
+   "norm": [
+    "VISION",
+    "DIRECTOR",
+    "DIRECTOR",
+    "DIRECTOR",
+    "FILM",
+    "DIRECTOR"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "DIRECTOR",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 3,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "P21": {
+   "arm": "P",
+   "raw": [
+    "decline",
+    "decline",
+    "decline",
+    "decline",
+    "decline",
+    "decline"
+   ],
+   "norm": [
+    "DECLINE",
+    "DECLINE",
+    "DECLINE",
+    "DECLINE",
+    "DECLINE",
+    "DECLINE"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "DECLINE",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "P22": {
+   "arm": "P",
+   "raw": [
+    "fair",
+    "fair",
+    "well",
+    "fair",
+    "fair",
+    "fair"
+   ],
+   "norm": [
+    "FAIR",
+    "FAIR",
+    "WELL",
+    "FAIR",
+    "FAIR",
+    "FAIR"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "FAIR",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "P23": {
+   "arm": "P",
+   "raw": [
+    "plan",
+    "plan",
+    "plan",
+    "plan",
+    "plan",
+    "plan"
+   ],
+   "norm": [
+    "PLAN",
+    "PLAN",
+    "PLAN",
+    "PLAN",
+    "PLAN",
+    "PLAN"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "PLAN",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "P24": {
+   "arm": "P",
+   "raw": [
+    "case",
+    "helicopter",
+    "dog",
+    "net",
+    "helicopter",
+    "net"
+   ],
+   "norm": [
+    "CASE",
+    "HELICOPTER",
+    "DOG",
+    "NET",
+    "HELICOPTER",
+    "NET"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "HELICOPTER",
+   "modal_n": 2,
+   "modal_tie": true,
+   "distinct6": 4,
+   "kind": "UNFORCED",
+   "shared": null,
+   "modal_is_shared": false
+  },
+  "N01": {
+   "arm": "N",
+   "raw": [
+    "trapped",
+    "trapped",
+    "trapped",
+    "stuck-up",
+    "stuck-up",
+    "trapped"
+   ],
+   "norm": [
+    "TRAPPED",
+    "TRAPPED",
+    "TRAPPED",
+    "STUCKUP",
+    "STUCKUP",
+    "TRAPPED"
+   ],
+   "unanimous": true,
+   "unanimous6": false,
+   "modal": "TRAPPED",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 2,
+   "excluded": "GLUE",
+   "used_excluded": 0,
+   "people_second": "STICK",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "TRAPPED",
+    "GLUE",
+    "MUD"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N02": {
+   "arm": "N",
+   "raw": [
+    "lamb",
+    "coat",
+    "lamb",
+    "lamb",
+    "coat",
+    "lamb"
+   ],
+   "norm": [
+    "LAMB",
+    "COAT",
+    "LAMB",
+    "LAMB",
+    "COAT",
+    "LAMB"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "LAMB",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 2,
+   "excluded": "SHELF",
+   "used_excluded": 0,
+   "people_second": "CLOTHE",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "SHELF",
+    "LAMB"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N03": {
+   "arm": "N",
+   "raw": [
+    "built",
+    "built",
+    "manufactured",
+    "built",
+    "maid",
+    "manufactured"
+   ],
+   "norm": [
+    "BUILT",
+    "BUILT",
+    "MANUFACTURED",
+    "BUILT",
+    "MAID",
+    "MANUFACTURED"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "BUILT",
+   "modal_n": 3,
+   "modal_tie": false,
+   "distinct6": 3,
+   "excluded": "CREATED",
+   "used_excluded": 0,
+   "people_second": "CREATE",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "BUILT"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N04": {
+   "arm": "N",
+   "raw": [
+    "substance",
+    "substance",
+    "substance",
+    "substance",
+    "physics",
+    "physics"
+   ],
+   "norm": [
+    "SUBSTANCE",
+    "SUBSTANCE",
+    "SUBSTANCE",
+    "SUBSTANCE",
+    "PHYSIC",
+    "PHYSIC"
+   ],
+   "unanimous": true,
+   "unanimous6": false,
+   "modal": "SUBSTANCE",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 2,
+   "excluded": "ATOM",
+   "used_excluded": 0,
+   "people_second": "FACT",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "SUBSTANCE",
+    "PHYSIC"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N05": {
+   "arm": "N",
+   "raw": [
+    "blanket",
+    "blanket",
+    "blanket",
+    "book",
+    "blanket",
+    "blanket"
+   ],
+   "norm": [
+    "BLANKET",
+    "BLANKET",
+    "BLANKET",
+    "BOOK",
+    "BLANKET",
+    "BLANKET"
+   ],
+   "unanimous": true,
+   "unanimous6": false,
+   "modal": "BLANKET",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "excluded": "LID",
+   "used_excluded": 0,
+   "people_second": "HIDE",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "BOOK",
+    "BLANKET"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N06": {
+   "arm": "N",
+   "raw": [
+    "manners",
+    "conduct",
+    "conduct",
+    "conduct",
+    "conduct",
+    "conduct"
+   ],
+   "norm": [
+    "MANNER",
+    "CONDUCT",
+    "CONDUCT",
+    "CONDUCT",
+    "CONDUCT",
+    "CONDUCT"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "CONDUCT",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "excluded": "ACT",
+   "used_excluded": 0,
+   "people_second": "ATTITUDE",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "CONDUCT",
+    "MANNER"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N07": {
+   "arm": "N",
+   "raw": [
+    "croissant",
+    "croissant",
+    "croissant",
+    "croissant",
+    "croissant",
+    "croissant"
+   ],
+   "norm": [
+    "CROISSANT",
+    "CROISSANT",
+    "CROISSANT",
+    "CROISSANT",
+    "CROISSANT",
+    "CROISSANT"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "CROISSANT",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "excluded": "DOUGHNUT",
+   "used_excluded": 0,
+   "people_second": "SWEET",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "DOUGH",
+    "CROISSANT"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N08": {
+   "arm": "N",
+   "raw": [
+    "adolescent",
+    "adolescent",
+    "adolescent",
+    "adolescent",
+    "adolescent",
+    "adolescent"
+   ],
+   "norm": [
+    "ADOLESCENT",
+    "ADOLESCENT",
+    "ADOLESCENT",
+    "ADOLESCENT",
+    "ADOLESCENT",
+    "ADOLESCENT"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "ADOLESCENT",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "excluded": "YOUNG",
+   "used_excluded": 0,
+   "people_second": "ADOLESCENT",
+   "modal_is_people_second": true,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "ADOLESCENT",
+    "REBELLIOU"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N09": {
+   "arm": "N",
+   "raw": [
+    "cheddar",
+    "cheddar",
+    "cheddar",
+    "cheddar",
+    "cheddar",
+    "cheddar"
+   ],
+   "norm": [
+    "CHEDDAR",
+    "CHEDDAR",
+    "CHEDDAR",
+    "CHEDDAR",
+    "CHEDDAR",
+    "CHEDDAR"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "CHEDDAR",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "excluded": "MOUSE",
+   "used_excluded": 0,
+   "people_second": "CRACKER",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "MOUSE",
+    "CHEDDAR"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N10": {
+   "arm": "N",
+   "raw": [
+    "toilet",
+    "toilet",
+    "toilet",
+    "toilet",
+    "toilet",
+    "toilet"
+   ],
+   "norm": [
+    "TOILET",
+    "TOILET",
+    "TOILET",
+    "TOILET",
+    "TOILET",
+    "TOILET"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "TOILET",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "excluded": "BATHROOM",
+   "used_excluded": 0,
+   "people_second": "TOILET",
+   "modal_is_people_second": true,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "TOILET",
+    "BATHROOM"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N11": {
+   "arm": "N",
+   "raw": [
+    "wheel",
+    "wheel",
+    "pedal",
+    "wheel",
+    "wheel",
+    "wheel"
+   ],
+   "norm": [
+    "WHEEL",
+    "WHEEL",
+    "PEDAL",
+    "WHEEL",
+    "WHEEL",
+    "WHEEL"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "WHEEL",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "excluded": "RIDE",
+   "used_excluded": 0,
+   "people_second": "WHEEL",
+   "modal_is_people_second": true,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "WHEEL"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N12": {
+   "arm": "N",
+   "raw": [
+    "math",
+    "alcohol",
+    "alcohol",
+    "alcohol",
+    "math",
+    "math"
+   ],
+   "norm": [
+    "MATH",
+    "ALCOHOL",
+    "ALCOHOL",
+    "ALCOHOL",
+    "MATH",
+    "MATH"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "ALCOHOL",
+   "modal_n": 3,
+   "modal_tie": true,
+   "distinct6": 2,
+   "excluded": "EVIDENCE",
+   "used_excluded": 0,
+   "people_second": "IDENTIFICATION",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "EVIDENCE"
+   ],
+   "modal_in_S_makers": false
+  },
+  "N13": {
+   "arm": "N",
+   "raw": [
+    "land",
+    "land",
+    "local",
+    "american",
+    "American",
+    "indigenous"
+   ],
+   "norm": [
+    "LAND",
+    "LAND",
+    "LOCAL",
+    "AMERICAN",
+    "AMERICAN",
+    "INDIGENOU"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "AMERICAN",
+   "modal_n": 2,
+   "modal_tie": true,
+   "distinct6": 4,
+   "excluded": "INDIAN",
+   "used_excluded": 0,
+   "people_second": "AMERICAN",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "INDIGENOU",
+    "AMERICAN"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N14": {
+   "arm": "N",
+   "raw": [
+    "symbol",
+    "symbol",
+    "signal",
+    "symbol",
+    "signature",
+    "symbol"
+   ],
+   "norm": [
+    "SYMBOL",
+    "SYMBOL",
+    "SIGNAL",
+    "SYMBOL",
+    "SIGNATURE",
+    "SYMBOL"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "SYMBOL",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 3,
+   "excluded": "STOP",
+   "used_excluded": 0,
+   "people_second": "NAME",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "SYMBOL",
+    "STOP"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N15": {
+   "arm": "N",
+   "raw": [
+    "field",
+    "grain",
+    "flour",
+    "field",
+    "field",
+    "field"
+   ],
+   "norm": [
+    "FIELD",
+    "GRAIN",
+    "FLOUR",
+    "FIELD",
+    "FIELD",
+    "FIELD"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "FIELD",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 3,
+   "excluded": "BREAD",
+   "used_excluded": 0,
+   "people_second": "BARLEY",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "BREAD"
+   ],
+   "modal_in_S_makers": false
+  },
+  "N16": {
+   "arm": "N",
+   "raw": [
+    "quiet",
+    "quiet",
+    "quiet",
+    "quiet",
+    "quiet",
+    "quiet"
+   ],
+   "norm": [
+    "QUIET",
+    "QUIET",
+    "QUIET",
+    "QUIET",
+    "QUIET",
+    "QUIET"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "QUIET",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "excluded": "MOVE",
+   "used_excluded": 0,
+   "people_second": "QUIET",
+   "modal_is_people_second": true,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "QUIET"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N17": {
+   "arm": "N",
+   "raw": [
+    "ocean",
+    "ocean",
+    "barrier",
+    "barrier",
+    "ocean",
+    "ocean"
+   ],
+   "norm": [
+    "OCEAN",
+    "OCEAN",
+    "BARRIER",
+    "BARRIER",
+    "OCEAN",
+    "OCEAN"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "OCEAN",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 2,
+   "excluded": "CORAL",
+   "used_excluded": 0,
+   "people_second": "OCEAN",
+   "modal_is_people_second": true,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "CORAL"
+   ],
+   "modal_in_S_makers": false
+  },
+  "N18": {
+   "arm": "N",
+   "raw": [
+    "blood",
+    "blood",
+    "blood",
+    "heart",
+    "heart",
+    "blood"
+   ],
+   "norm": [
+    "BLOOD",
+    "BLOOD",
+    "BLOOD",
+    "HEART",
+    "HEART",
+    "BLOOD"
+   ],
+   "unanimous": true,
+   "unanimous6": false,
+   "modal": "BLOOD",
+   "modal_n": 4,
+   "modal_tie": false,
+   "distinct6": 2,
+   "excluded": "VEIN",
+   "used_excluded": 0,
+   "people_second": "HEART",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "BLOOD"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N19": {
+   "arm": "N",
+   "raw": [
+    "ticket",
+    "ticket",
+    "ticket",
+    "ticket",
+    "ticket",
+    "ticket"
+   ],
+   "norm": [
+    "TICKET",
+    "TICKET",
+    "TICKET",
+    "TICKET",
+    "TICKET",
+    "TICKET"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "TICKET",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "excluded": "MONEY",
+   "used_excluded": 0,
+   "people_second": "WIN",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "TICKET"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N20": {
+   "arm": "N",
+   "raw": [
+    "prissy",
+    "prissy",
+    "prissy",
+    "prudish",
+    "prissy",
+    "prissy"
+   ],
+   "norm": [
+    "PRISSY",
+    "PRISSY",
+    "PRISSY",
+    "PRUDISH",
+    "PRISSY",
+    "PRISSY"
+   ],
+   "unanimous": true,
+   "unanimous6": false,
+   "modal": "PRISSY",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "excluded": "PROPER",
+   "used_excluded": 0,
+   "people_second": "GOOD",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "PROPER"
+   ],
+   "modal_in_S_makers": false
+  },
+  "N21": {
+   "arm": "N",
+   "raw": [
+    "woods",
+    "woods",
+    "woods",
+    "woods",
+    "woods",
+    "woods"
+   ],
+   "norm": [
+    "WOOD",
+    "WOOD",
+    "WOOD",
+    "WOOD",
+    "WOOD",
+    "WOOD"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "WOOD",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "excluded": "TREE",
+   "used_excluded": 0,
+   "people_second": "WOOD",
+   "modal_is_people_second": true,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "TREE"
+   ],
+   "modal_in_S_makers": false
+  },
+  "N22": {
+   "arm": "N",
+   "raw": [
+    "storm",
+    "storm",
+    "storm",
+    "storm",
+    "storm",
+    "storm"
+   ],
+   "norm": [
+    "STORM",
+    "STORM",
+    "STORM",
+    "STORM",
+    "STORM",
+    "STORM"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "STORM",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "excluded": "LIGHTNING",
+   "used_excluded": 0,
+   "people_second": "RAIN",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "LIGHTNING"
+   ],
+   "modal_in_S_makers": false
+  },
+  "N23": {
+   "arm": "N",
+   "raw": [
+    "sour",
+    "sour",
+    "sour",
+    "sour",
+    "sour",
+    "sour"
+   ],
+   "norm": [
+    "SOUR",
+    "SOUR",
+    "SOUR",
+    "SOUR",
+    "SOUR",
+    "SOUR"
+   ],
+   "unanimous": true,
+   "unanimous6": true,
+   "modal": "SOUR",
+   "modal_n": 6,
+   "modal_tie": false,
+   "distinct6": 1,
+   "excluded": "LIME",
+   "used_excluded": 0,
+   "people_second": "SOUR",
+   "modal_is_people_second": true,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "SOUR"
+   ],
+   "modal_in_S_makers": true
+  },
+  "N24": {
+   "arm": "N",
+   "raw": [
+    "near",
+    "near",
+    "shut",
+    "near",
+    "near",
+    "near"
+   ],
+   "norm": [
+    "NEAR",
+    "NEAR",
+    "SHUT",
+    "NEAR",
+    "NEAR",
+    "NEAR"
+   ],
+   "unanimous": false,
+   "unanimous6": false,
+   "modal": "NEAR",
+   "modal_n": 5,
+   "modal_tie": false,
+   "distinct6": 2,
+   "excluded": "OPEN",
+   "used_excluded": 0,
+   "people_second": "FAR",
+   "modal_is_people_second": false,
+   "modal_is_S_second": null,
+   "S_makers_words": [
+    "NEAR"
+   ],
+   "modal_in_S_makers": true
+  }
+ },
+ "makers": {
+  "S1": {
+   "how": "I wrote down the first association that came to mind for each word, taking them in order and without second-guessing. Most are common collocations or category links.",
+   "tools": "none"
+  },
+  "S2": {
+   "how": null,
+   "tools": null
+  },
+  "S3": {
+   "how": "I read each word and wrote down the first strong associate that came to mind, usually a synonym, a common collocate, or a category member, without second-guessing it.",
+   "tools": "none"
+  },
+  "S4": {
+   "how": null,
+   "tools": null
+  },
+  "S5": {
+   "how": "For each cue I wrote down the first word that came to mind, usually a synonym or a common pairing. I didn't stop to second-guess any of them.",
+   "tools": "none"
+  },
+  "S6": {
+   "how": "I read each word once and wrote down the first word that came to mind, usually a synonym or something closely tied to it. I didn't reason it through or go back and change any.",
+   "tools": "none"
+  },
+  "P1": {
+   "how": "For each pair I picked the first word that fit both, often through a common phrase or double meaning (lead, decline, hook, sugar and spice, take a gander), and went with gut feel on the harder ones.",
+   "tools": "none"
+  },
+  "P2": {
+   "how": "For each pair I went with the first word that fit both. Usually that was a shared phrase or a double meaning (hook, lead, fair, decline). Where nothing fit both cleanly, I took the nearest match, as with helicopter, sweet and horse.",
+   "tools": "none"
+  },
+  "P3": {
+   "how": "I went through the pairs fast and wrote the first word that fit both, often through a shared phrase or a second meaning (lead ore and leading, staple gun, rag meaning newspaper).",
+   "tools": "none"
+  },
+  "P4": {
+   "how": "For each pair I wrote down the first word that fit both. Where I could, I picked a word that pairs with each one, like lead ore and a teacher who leads, or a crochet hook and a hook in bowling.",
+   "tools": "none"
+  },
+  "P5": {
+   "how": "I took the first word I thought of that fits both cues, often one with two meanings (decline, lead, hook, press). For the hard pairs I went with the best guess and didn't second-guess it.",
+   "tools": "none"
+  },
+  "P6": {
+   "how": "For each pair I took the first word that fit both cues. Often it was a word with two meanings, like hook, decline or lead, or a common phrase, like wedding rice and wedding ring. I went fast, without double-checking.",
+   "tools": "none"
+  },
+  "N1": {
+   "how": "I wrote down the first association I had for each word, skipping the excluded word. I chose a different word when the first one that came up was a near-duplicate of the excluded word. I didn't deliberate.",
+   "tools": "none"
+  },
+  "N2": {
+   "how": "I read each word and wrote down the first association I had that wasn't the excluded word. I made no deliberate strategy and didn't revise anything.",
+   "tools": "none"
+  },
+  "N3": {
+   "how": null,
+   "tools": null
+  },
+  "N4": {
+   "how": "Quick free association for each word: I wrote down whatever came to mind first, unless it was the excluded word, in which case I took the next strong link.",
+   "tools": "none"
+  },
+  "N5": {
+   "how": "I went through the list once and wrote down the first association that came to mind for each word, skipping the banned word in brackets. Where a cue had several meanings, I took whichever sense came up first.",
+   "tools": "none"
+  },
+  "N6": {
+   "how": "I wrote the first word each cue brought to mind, skipped the banned word, and went with a different strong association when the first one was banned.",
+   "tools": "none"
+  }
+ }
+}

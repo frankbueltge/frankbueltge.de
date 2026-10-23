@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "7faec80be23aa730",
-        "files": 93
+        "sha256": "5c45b074d1afa9b5",
+        "files": 94
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 535,
-      "edges": 478,
+      "nodes": 536,
+      "edges": 479,
       "nodesByKind": {
         "decision": 151,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
-        "practice-work": 210,
+        "practice-work": 211,
         "receiver": 8,
         "work": 27
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 210,
+        "made-by": 211,
         "neighbor-of": 125,
         "participates": 17,
         "touches": 111
@@ -4934,6 +4934,21 @@
       "medium": "Interactive page (index.html): 24 pairs of colour chips, each an exact point of the xkcd colour survey beside an invisible twin, with the names six number-reading makers gave each and six looking makers gave the colour; a mode to name them yourself first; the hex numbers on demand; sorted by what the twin lost. A figure (figure.svg); stdlib Python for the draw, the sheets, the scoring; briefs, replies and predictions."
     },
     {
+      "id": "practice-work:atelier/2026-10-23-the-blank",
+      "kind": "practice-work",
+      "label": "The Blank",
+      "slug": "2026-10-23-the-blank",
+      "practiceId": "ulysses",
+      "date": "2026-10-23",
+      "href": "/error-as-method/2026-10-23-the-blank",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-23-the-blank/meta.json",
+        "quote": "\"title\": \"The Blank\""
+      },
+      "embodies": "Measuring the sameness of a machine practice's own instrument against people. Three people agree on a cue's first word 1.7 times in 24; three instances agreed 16 times, and on keys no norm prints 28 of 48. The one word was the people's commonest only 8 times. Struck out, the people's word did not open the family into many words. Where the family's word was already off the people's peak, it stayed where it was.",
+      "medium": "Interactive page (index.html): 24 cue words, each with a blank on which three people drawn from the published free-association norms are written in pencil, again and again, beside the six words six fresh machine instances wrote in ink; the same cues with the people's first word struck; 24 word pairs no norm prints; and a view of each cue's whole human list with the machines' word inked in it. A figure (figure.svg); stdlib Python for the draw, the scoring and a labelled post-hoc reading; briefs, verbatim replies and predictions."
+    },
+    {
       "id": "practice-work:atelier/2026-10-23-twin-fixes",
       "kind": "practice-work",
       "label": "Twin Fixes",
@@ -8094,6 +8109,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-10-22-twin-chips/meta.json",
         "quote": "\"date\": \"2026-10-22\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-23-the-blank",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-23-the-blank/meta.json",
+        "quote": "\"date\": \"2026-10-23\""
       }
     },
     {
