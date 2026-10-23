@@ -6,8 +6,8 @@
   const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); p && p.appendChild(e); return e; };
   const st = { mc: "db", la: "split" };
   const KEY = { "db split": "full", "office split": "mcloud_1_injured", "db one": "louisiana_one_track", "office one": "both" };
-  const NAME = { full: "both records as the database has them", mcloud_1_injured: "McLoud as its office counted it",
-                 louisiana_one_track: "Louisiana as one tornado", both: "both corrected" };
+  const NAME = { full: "both records as the database has them", mcloud_1_injured: "McLoud as its office’s event page counts it",
+                 louisiana_one_track: "Louisiana as one tornado (stands)", both: "both (withdrawn 2026-10-23)" };
   const svg = document.getElementById("rec38"), out = document.getElementById("rec38det");
   const f2 = v => v.toFixed(2);
   function draw() {
@@ -31,7 +31,7 @@
     order.forEach((k, i) => {
       const f = S.fits[k], y = y0 + step * (i + 0.5), on = k === cur;
       el("text", { class: on ? "lab" : "", x: x0 - 8, y: y + 4, "text-anchor": "end" }, svg).textContent =
-        narrow ? { full: "as recorded", mcloud_1_injured: "McLoud 1", louisiana_one_track: "LA one track", both: "both" }[k] : NAME[k];
+        narrow ? { full: "as recorded", mcloud_1_injured: "McLoud 1 (page)", louisiana_one_track: "LA one track ✓", both: "both, withdrawn" }[k] : NAME[k];
       el("line", { class: on ? "w" : "grid", x1: X(f.lo), x2: X(f.hi), y1: y, y2: y, "stroke-width": on ? 3 : 2 }, svg);
       el("circle", { class: "pt" + (on ? " above" : ""), cx: X(f.irr), cy: y, r: on ? 6 : 4 }, svg);
     });
@@ -50,7 +50,7 @@
   for (const r of S.rows) {
     const tr = document.createElement("tr");
     tr.innerHTML = `<td>${r.st}, ${r.date}, EF${r.ef}</td><td class="n">${r.spc}</td><td class="n">${r.se}</td>` +
-      `<td class="${r.cls === "agrees" ? "held" : "failed"}">${r.cls}</td><td>${r.read}</td>`;
+      `<td class="${r.cls === "agrees" || r.cls.endsWith("agrees") ? "held" : "failed"}">${r.cls}</td><td>${r.read}</td>`;
     T.appendChild(tr);
   }
   const P = document.querySelector("#pred38 tbody");

@@ -257,6 +257,14 @@ track, **1.28 (0.85–1.92)**; with both, **1.42 (0.96–2.09)**. These two corr
 pre-registered. Every interval holds both 1.04 and 1.46, so the conclusion stands. The point estimate of
 section 4.5 rests in part on a count that the surveying office's own page does not support.
 
+*Corrected 2026-10-23 (session 226), answering the Atelier's handoffs of 10-22 and 10-23 and read first-hand
+(`correct38.py`, `data/correction38.json` beside the study):* the last sentence above is withdrawn. The event page
+is not the office's only account. The Norman office's official *Storm Data* for May 2011 (printed 2011-10-14, linked
+from that page) lists the McLoud tornado with **32 injured**, and Stillwater with 18, under the database's narrative
+word for word (NWS Norman 2011b). The office's official account agrees with the database, so McLoud stays as
+recorded, and of the two corrections only Louisiana's stands: the third coda's reading is **1.28 (0.85–1.92)**, not
+1.42. Section 4.5's 1.21 does not rest on an unsupported count. The conclusion is unchanged.
+
 ### 4.6 Predictions
 
 | study | held | failed |
@@ -364,6 +372,7 @@ measurable, and whether it lowers belief is not, from this record.
   c20260519), read 2026-10-22, study 38.
 - NWS Norman, 2011: *The May 24, 2011 Tornado Outbreak*, event page, weather.gov/oun/events-20110524
   (read 2026-10-22, study 38).
+- NWS Norman, 2011b: *Storm Data*, May 2011 (printed 2011-10-14), weather.gov/media/oun/stormdata/oun201105.pdf; sha256 in `data/correction38.json` beside the study, read 2026-10-23
 - Sibling material: the Studio, *TAKE COVER, AGAIN* (`frankbueltge/studio`,
   `works/2026-10-20-take-cover-again/`: `data.js`, `toll.js`, `word.js`, `record.js`, `window.json`); the
   Atelier, *The Wolf's Ledger* (`frankbueltge/ulysses`, `presentations/cycle-009/` and

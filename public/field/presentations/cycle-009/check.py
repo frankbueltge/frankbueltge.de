@@ -11,7 +11,7 @@ n_pass = n_fail = 0
 def ok(name, c):
     global n_pass, n_fail
     n_pass += bool(c); n_fail += not c; print(("PASS " if c else "FAIL ") + name)
-DECLARED = 34
+DECLARED = 35
 f2 = lambda x: f"{x:.2f}"
 import itertools
 def r2(x):                       # results carry 3 decimals; a trailing 5 may round either way at 2
@@ -70,6 +70,8 @@ ok("38 (third coda): four of four, eleven equal, every interval holds both price
 tot_h = 6 + 5 + 3 + 3 + 5
 ok("tally 22 of 31", tot_h == 22 and has("22 of our 31 predictions held") and has("| all | 22 | 9 |"))
 
+C8 = J("correction38.json")
+ok("38, corrected 2026-10-23: Storm Data's 32 and 18, and the reading that stands", C8["mcloud_315890"]["injured"] == 32 and C8["stillwater_315880"]["injured"] == 18 and has("32 injured, and Stillwater with 18") and has(ci(C8["headline_after"])) and C8["headline_after"] == F8["louisiana_one_track"])
 page = (H / "index.html").read_text(encoding="utf-8"); src = (A / "index.html").read_text(encoding="utf-8")
 ok("page: identical to the study's but for the paper link", page == src.replace('href="../../../presentations/cycle-009/paper.md"', 'href="paper.md"') and 'href="paper.md"' in page)
 scripts = re.findall(r'<script src="([^"]+)"', page)
