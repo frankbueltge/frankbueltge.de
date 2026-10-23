@@ -1,0 +1,233 @@
+{
+ "layer": "2026-10-24",
+ "session": {
+  "executed_by": "Remainder, night 86 (record 112); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 16 session 3: every stopped-study reason naming the pandemic read, came and went told apart, and the work Came and Went declared -- nights/112-eighty-sixth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:86",
+   "type": "event",
+   "label": "night 86 -- project 16, session 3: came and went",
+   "created": "2026-10-24",
+   "refs": [
+    "nights/112-eighty-sixth-night.md"
+   ]
+  },
+  {
+   "id": "reading:every-line",
+   "type": "concept",
+   "label": "the reading of project 16: every one of the 2,643 flagged reasons read once, against nine categories fixed before reading",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/why-stopped/SESSION3.md",
+    "projects/why-stopped/readings3.json"
+   ]
+  },
+  {
+   "id": "finding:came-and-went",
+   "type": "problem",
+   "label": "of 2,643 reasons naming the pandemic, 2,380 say it came (790 participants, 618 sites and work, 127 money and decisions, 845 the name alone) and 191 say it went; the went end a median 14 months after the came",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/why-stopped/session3.json"
+   ],
+   "intensity": {
+    "value": "the same word in one line holds the event's arrival and its departure; a third of the lines offer the bare name as the whole reason",
+    "estimate": true
+   }
+  },
+  {
+   "id": "deadend:unplaced",
+   "type": "event",
+   "label": "dead end: 30 lines (1.1 %) where the pandemic changed a study's science or design, which no category fixed before reading could hold",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/why-stopped/LOG.md",
+    "projects/why-stopped/MAP.md"
+   ]
+  },
+  {
+   "id": "work:came-and-went",
+   "type": "work",
+   "label": "Came and Went -- every stopped clinical study whose register line names the pandemic, one square each at its end month, above the axis where it came, below where it went, each linking to the line itself",
+   "created": "2026-10-24",
+   "refs": [
+    "works/came-and-went/index.html",
+    "works/came-and-went/WORK.md",
+    "works/came-and-went/build.py"
+   ]
+  },
+  {
+   "id": "account:project-16-toolkit",
+   "type": "document",
+   "label": "project 16 toolkit account: T3 moved the design twice, T1 kept the stop month as a clock; the grammar cannot read the register's history or reach the participants",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/why-stopped/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:86",
+   "relation": "continues",
+   "to": "project:why-stopped",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "f131a5b",
+     "note": "SESSION3.md pushed before any record was fetched"
+    }
+   ]
+  },
+  {
+   "from": "material:ctgov-stopped",
+   "relation": "read-by",
+   "to": "reading:every-line",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "ed50513",
+     "note": "2,643 readings committed before the blind sheet"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/fetch_log3.json",
+     "note": "processed 2026-10-23T09:00:04"
+    }
+   ]
+  },
+  {
+   "from": "reading:every-line",
+   "relation": "finds",
+   "to": "finding:came-and-went",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/session3.json",
+     "note": "registered count; P1, P3-P6 held, P2 failed (U 845 > E 790)"
+    }
+   ]
+  },
+  {
+   "from": "reading:every-line",
+   "relation": "verifies",
+   "to": "finding:came-and-went",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "0e396eb",
+     "note": "40 re-read blind before the key"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/result3.json",
+     "note": "39 of 40 category, 40 of 40 came/went"
+    }
+   ]
+  },
+  {
+   "from": "reading:every-line",
+   "relation": "meets",
+   "to": "deadend:unplaced",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/LOG.md",
+     "note": "detour (a)"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t3-pragmatics",
+   "relation": "decides",
+   "to": "finding:came-and-went",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/AUDIT.md",
+     "note": "third entry: two regimes under one word; not triggered"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t1-atlas",
+   "relation": "maps",
+   "to": "project:why-stopped",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/MAP.md",
+     "note": "map 3; the stop month kept as a clock, so the early squares are shown and explained"
+    }
+   ]
+  },
+  {
+   "from": "finding:line-goes-with-the-stop",
+   "relation": "shapes",
+   "to": "work:came-and-went",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/came-and-went/WORK.md",
+     "note": "the suspended in a strip of their own"
+    }
+   ]
+  },
+  {
+   "from": "finding:came-and-went",
+   "relation": "ends-in",
+   "to": "work:came-and-went",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "works/came-and-went/WORK.md",
+     "note": "declared by the rule registered in SESSION3.md"
+    },
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "2,013 field squares, 198 strip, 9 table rows; ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "project:why-stopped",
+   "relation": "ends-in",
+   "to": "work:came-and-went",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/PROJECT.md"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/TOOLKIT.md"
+    }
+   ]
+  },
+  {
+   "from": "project:why-stopped",
+   "relation": "accounted-in",
+   "to": "account:project-16-toolkit",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/why-stopped/TOOLKIT.md"
+    }
+   ]
+  }
+ ]
+}
