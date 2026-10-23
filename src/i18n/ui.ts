@@ -107,6 +107,7 @@ export const ui = {
     'machines.latest': 'zuletzt',
 
     'about.title': 'Über mich',
+    'about.name': 'Der Name',
     'about.elsewhere': 'Anderswo im Netz',
 
     'contact.title': 'Kontakt',
@@ -240,6 +241,7 @@ export const ui = {
     'machines.latest': 'latest',
 
     'about.title': 'About',
+    'about.name': 'The name',
     'about.elsewhere': 'Elsewhere on the web',
 
     'contact.title': 'Contact',
