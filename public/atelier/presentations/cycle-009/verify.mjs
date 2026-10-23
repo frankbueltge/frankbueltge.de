@@ -175,6 +175,19 @@ for (const [wd, scheme] of [[390, 'light'], [1100, 'dark']]) {
   ok(ac.n === 32 && sv.irr === 1.214 && sv.first === 'habit' && ac.read.includes('official'), `${wd}px: choosing the official report moves it back to 32 (1.214, habit first)`);
   ok((await pg.$$eval('s', es => es.filter(e => /office's count/.test(e.textContent)).length)) === 2, `${wd}px: "the office's count" is struck through in two places, not removed`);
   ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with the correction`);
+  // coda IV corrected again (2026-10-23, seventh session): one tornado, two rows, at the Field's correction
+  const TJ = JSON.parse(fs.readFileSync(path.join(here, 'tracks.json'))), tc = (m, l) => TJ.cells.find(c => c.mcloud === m && c.louisiana === l);
+  ok(TJ.cells.length === 4 && (await pg.$$('#tr-cards .card')).length === 4 && tc(32, 'two rows').irr === 1.214 && tc(1, 'two rows').irr === 1.334 && tc(32, 'one track').irr === 1.277 && tc(1, 'one track').irr === 1.419, `${wd}px: four readings, equal to the Field's study 38 (1.214, 1.334, 1.277, 1.419)`);
+  ok(TJ.track.segments[0].stop.join() === TJ.track.segments[1].start.join() && TJ.track.segments[0].end === TJ.track.segments[1].begin && TJ.track.spc_rows.length === 2 && TJ.official_mcloud === 32, `${wd}px: the two parish segments meet at one point and one minute; the SPC file counts two`);
+  let tr = await pg.evaluate(() => window.__tracks());
+  ok(tr.mc === 32 && tr.la === 'two rows' && tr.first === 'habit' && tr.read.includes('as the Field fitted'), `${wd}px: the figure opens on the record as fitted, habit first`);
+  await pg.click('#tr-cards .card[data-mc="32"][data-la="one track"]'); tr = await pg.evaluate(() => window.__tracks());
+  ok(tr.irr === 1.277 && tr.first === 'learning' && tr.read.includes('reversed') && tr.read.includes('official report') && (await t('trf-one')) === '1.277', `${wd}px: official 32 with one track reads 1.277, above the parting, order reversed`);
+  ok(TJ.cells.every(c => c.all_inside), `${wd}px: every reading's interval holds all three villages`);
+  ok((await t('tr-s0')).includes('crossed into St. James Parish') && (await t('tr-s1')).includes('moved out of Assumption Parish'), `${wd}px: both crossing sentences quoted from the database file`);
+  for (const id of ['tr-map', 'tr-int']) { const n = await pg.$eval('#' + id, e => { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) n += d[i] > 0; return n; }); ok(n > 1000, `${wd}px: ${id} is drawn`); }
+  ok((await pg.$$eval('del.sup', es => es.filter(e => /the order coda I read stands/.test(e.textContent)).length)) === 1, `${wd}px: "the order coda I read stands" struck through and dated, not removed`);
+  ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${wd}px: still no horizontal page scroll with the second correction`);
   // how it grew (2026-10-22, fourth session): PROCESS.json as columns, each state's shot on a click
   const GJ = JSON.parse(fs.readFileSync(path.join(here, 'PROCESS.json'))).states;
   ok(GJ.every((s, i) => s.n === i + 1 && fs.existsSync(path.join(here, s.shot))) && (await pg.$$('#grow button')).length === GJ.length, `${wd}px: one column per state of PROCESS.json (${GJ.length}), every shot on disk`);
