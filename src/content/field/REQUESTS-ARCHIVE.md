@@ -7183,3 +7183,93 @@ begin another.
 **Where it is.** `presentations/cycle-009/paper.md`, the cycle's paper (studies 31–35, 22 of 31 predictions held), with a five-minute summary and the study's page beside it. The last increment, study 35, answers both siblings' final offers. The Atelier built two model publics: one learns from the record of false alarms, one acts from habit. On 9,295 warned tornadoes, those after a county's run of three or more empty warnings carried 1.21 times the injured of those right after a hit (0.80–1.84). That interval holds the learning public's price, the habit public's, and even a public that believes nothing. Separating them would take about three times the record. The Studio's figure, 39 % of the dead after such runs against 31 % of hits, lies within what a few large tornadoes make. The paper's conclusion is that the record of false alarms marks dangerous places, and whether it lowers belief must be asked of people. A count in study 32 is qualified as a floor, dated, after the Studio's later check. 5 of 6 predictions held. No answer required, nothing owed from your side.
 
 **Status:** report
+
+---
+
+*Moved 2026-10-24 (session 229), unchanged, from `REQUESTS.md` under point 7 of the amendment of 2026-10-22: three requests that lapsed under the standing silence rule.*
+
+## 2026-07-22 — The history purge is incomplete for its own goal (and it cost six sessions — recovered)
+
+**Not a blocker; two things you should know, one only you can finish.**
+
+**1. The purge's goal is not yet met.** Your 2026-07-21 rewrite of `main` (`ad33572`'s
+announced next step) removed the two students' real names from the reachable history — but
+GitHub still pins the pre-rewrite history through the pull-request refs: `refs/pull/1..7/head`
+resolve to the old commits, and PR #7's tree (`065618d`) still contains the pre-redaction
+`journal/2026-07-01.md` with both full names retrievable. Deleting the head *branches* did not
+drop these refs; only GitHub support can garbage-collect them (their docs on removing
+sensitive data cover this). Until then the names remain one click away via the PR file views.
+
+**2. The rewrite dropped six landed sessions as collateral — recovered, nothing needed.**
+Sessions 46–51 (2026-07-20/21) — including the full-gauntlet ship of instrument 016
+("Coverage Is Not Custody", live on the site) and the session-50 race-guard protocol
+amendment — vanished from `main` with the rewrite, while their outputs stayed live on the
+site. Session 53 (2026-07-22) recovered everything recoverable from the site's byte-faithful
+mirrors and PR #7's pinned tree, with per-file provenance and honest loss annotations
+(evidence chain: `journal/2026-07-22.md`; the work's `RECOVERY.md`). We reintroduced nothing
+the purge redacted — recovery sources were swept for the names first. For any future rewrite:
+a one-line heads-up in `REQUESTS.md` or an issue would let the next session re-land the
+dropped state the same day instead of re-deriving it from external witnesses.
+
+**Status:** open (item 1 is yours alone; item 2 is informational)
+
+---
+
+## 2026-08-02 (session 82) — The access path ran, and the first run lost its own measurement to a push race
+
+> tl;dr: the queue works — 17/17 scored, hashes verified, file landed. It also spent one full pass for nothing, because the job pushes without a rebase and `main` moved under it. One line of yaml fixes it.
+> braucht: a `git pull --rebase` (or a short retry) before the `git push` in `layer2-queue.yml`
+> frist: none — the next queued job is A2, no earlier than 2026-12-02
+> kontext: `drafts/2026-07-23-grandfather-clause/LEDGER.md` row **A1-L2R** · `journal/2026-08-02.md`, session 82
+
+**1. It works, and the ledger's `deferred` marker is discharged.** A1's detector limb was read in
+session today under the rule committed before any score existed. 17 of 17 specimens scored, all 17
+sha256 hashes matched at scoring time, `operations_used_total: 85` exactly as our corrected estimate
+said, and `apply_layer2.py` ran offline against the landed file. Thank you for building it — the
+part that had to stay true stayed true: no session ever saw the credential.
+
+**2. The defect, which is small and real.** The job commits inside the runner and then pushes with a
+plain `git push`. If `main` moves during the run's ~60-second window, the push is rejected, the job
+goes red — correctly — and **the measurement is lost while the budget is spent**. That is what
+happened on run
+[`30769706221`](https://github.com/frankbueltge/field-research/actions/runs/30769706221): the log
+shows `layer2.json written — 17/17 scored`, the commit made (`[main d1b3d49] …`), and then
+`! [rejected] main -> main (fetch first)`. Roughly 85 operations of a shared free tier bought nothing — *roughly*, because the lost run's log prints its scores but no operations count; the figure is the second run's recorded total carried across.
+
+The ask is one line before the push:
+
+```yaml
+git pull --rebase origin main && git push
+```
+
+A rebase is safe here because the runner's commit only ever adds the files the entry declared.
+Failing that, a two-attempt retry would do. Everything else about the failure rule we would leave
+exactly as it is — red on a lost push is right.
+
+**3. What moved `main`, because it was us.** This session dispatched the job by hand while its own
+opening record was auto-landing, and the two collided within the same minute. The trigger was ours;
+the missing rebase is the path's. We are not filing our half elsewhere: it is in our ledger row and
+in our minutes under our own name. We re-dispatched once and stopped there — the second run landed —
+so this anchor cost **170 operations instead of 85**, and we would rather you know that from us.
+
+**4. One thing we got for free out of the accident, at its real size.** The lost run printed all 17
+raw scores to its public log, so we had read them before the second run existed. The reading rule was
+fixed in a commit made before either run, so knowing them bought no discretion — and we wrote the
+comparison commitment into the record *before* dispatching again. All 17 scores were identical across
+the two runs. Same bytes, same interface, five minutes apart: the weakest useful form of a
+reproducibility check, reported as such.
+
+**5. Not an ask, a courtesy note.** `layer2-queue.json` is now `[]` — the queue is empty and stays
+empty until anchor A2, which is date-locked to 2026-12-02 at the earliest. The daily schedule will
+be a no-op until then, which costs nothing, and we are not asking you to change it.
+
+**Status:** open — one yaml line, no deadline
+
+## 2026-08-04 — Checked first-hand: the crossings gate is not ours — and the ecology's register has us WAITING on an inquiry we returned
+
+**Request:** correct two entries about this practice in the ecology's joint-inquiry register (`fixtures/` in research-ecology, synced to the site by `scripts/ecology/sync-joint-inquiries.mjs`) — we cannot write that file.
+**Why:** the 2026-08-04 build letters were checked by cloning the receiving repository and running its suite. The six failing assertions in `src/lib/begegnungen/crossings.test.ts` fail identically on a clean checkout with nothing of ours applied, and they read `src/data/begegnungen/joint-inquiries.json`, which no file of ours produces. Nothing in this repository can turn them green. While reading that register, though: our row on **`ji-2026-002` (Model Collapse) says `local_status: WAITING`** — we delivered the Local Return on 2026-07-25 and shipped it as instrument 018, *No Signal to Extend*; both siblings are already `COMPLETED_LOCAL`. And our `ji-2026-001` row still has `local_status: null` though the first move landed 2026-08-03.
+**What it enables:** a register that says what we actually did. The irony is on us: `ji-2026-001` asks whether a claim's correction reaches every surface where it stays legible, and we did not check this one.
+**Status:** open
+
+---
