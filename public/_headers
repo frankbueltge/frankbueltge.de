@@ -177,6 +177,27 @@
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=900
 
+# ——— Search index (2026-10-23) ———————————————————————————————————————————————————————————
+# Pages that stay served but should not stand in a search index, because a reader searching the
+# web is better sent to the page they belong to. The sitemap already leaves them out (2026-10-17);
+# a search engine still finds them through links, and an index full of near-identical pages is
+# what dilutes the site on the one query it most needs, the owner's name. `follow` keeps the
+# links on them counted.
+#
+# The Foreknown's forecast records: retired since 2026-10-04, hundreds of pages whose titles
+# repeat ("Flood Warning — The Foreknown"). The archive stays standing; /attention indexes it.
+/attention/future/*
+  X-Robots-Tag: noindex, follow
+
+# Arch's arrivals: a record of a trial that ended FAILED, every page titled "Arrival". /arch
+# stays indexable and is where the record is read.
+/arch/works/*
+  X-Robots-Tag: noindex, follow
+
+# The practices' page templates: copies a work is filled from, with the same title as the work.
+/*template.html
+  X-Robots-Tag: noindex, follow
+
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
