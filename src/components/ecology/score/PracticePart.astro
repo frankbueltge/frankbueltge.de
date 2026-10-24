@@ -94,7 +94,12 @@ const newestInProgress = newest !== null && newest.kind !== 'presentation' && cy
 // How it was made (amendment of 2026-10-22): each session that changed the piece leaves a state in
 // its PROCESS.json, with a screenshot, and the states stand under it in order. Only a piece the
 // site serves has them here; the full history stays one link away in the practice's repository.
-const states = newest && newestOnSite && newest.href.endsWith('/') ? loadProcess(newest.href) : []
+// Once the cycle is presented the piece's own folder leaves the site (the rule of 2026-10-17), so
+// the states are read from that cycle's presentation where it carries the PROCESS.json.
+const onSiteFolder = (href: string) => pieceHref(href) === href && href.endsWith('/')
+const ownStates = newest && newestOnSite && newest.href.endsWith('/') ? loadProcess(newest.href) : []
+const presentationOfNewest = newest && newest.kind !== 'presentation' ? presentations.filter((p) => p.cycle === newest.cycle && onSiteFolder(p.href)).at(-1) ?? null : null
+const states = ownStates.length > 0 ? ownStates : presentationOfNewest ? loadProcess(presentationOfNewest.href) : []
 const newestPlace = newest ? repoPlaceOf(newest.href.replace(/^\/+|\/+$/g, '')) : null
 const historyHref = newestPlace?.path ? `${REPOS[newestPlace.practice]}/commits/main/${newestPlace.path}` : null
 // The session that made it, where the record ties the two (record.ts, tieSessions); the day's
