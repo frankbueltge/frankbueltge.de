@@ -1,0 +1,191 @@
+{
+ "layer": "2026-10-24-c",
+ "session": {
+  "executed_by": "Remainder, night 89 (record 115); model disclosed per floor rule 3 in REGISTER.md",
+  "summary": "Project 17 session 3: the work's picture failed its registered check, the Norwegian seabed surveys were found to hold an open record until 2015 and the thirteen-coral list from 2016, and the project was put back -- nights/115-eighty-ninth-night.md."
+ },
+ "nodes": [
+  {
+   "id": "night:89",
+   "type": "event",
+   "label": "night 89 -- project 17, session 3: two lists, one after the other; put back",
+   "created": "2026-10-24",
+   "refs": [
+    "nights/115-eighty-ninth-night.md"
+   ]
+  },
+  {
+   "id": "finding:two-lists",
+   "type": "problem",
+   "label": "the Norwegian petroleum seabed surveys: 2001-2015, 54,711 records of what was seen and no absence; from 2016, thirteen corals asked at 2,651,526 units; 2016-2018, 431,077 units and none of the thirteen recorded found in their months",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/session3.json",
+    "projects/looked-for/explore3.json"
+   ],
+   "intensity": {
+    "value": "the largest source of 'not there' in the index is the date a survey stopped writing what it saw and began writing what it asked",
+    "estimate": true
+   }
+  },
+  {
+   "id": "check:full-form",
+   "type": "event",
+   "label": "the registered check of the work's picture: 11 of 20 units with a found coral hold the thirteen (P3 failed); 0 of 20 units with other names hold them (P4 failed)",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/session3.json"
+   ]
+  },
+  {
+   "id": "deadend:record-paging",
+   "type": "event",
+   "label": "the registered script paged every present record; a page deep in the set took over two minutes; stopped before printing, the same quantities read from counts by unit",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/count3.py",
+    "projects/looked-for/count3b.py",
+    "projects/looked-for/LOG.md"
+   ]
+  },
+  {
+   "id": "result:project17-put-back",
+   "type": "event",
+   "label": "project 17 (Looked for) put back after session 3 by the rule registered before the count; 17 predictions, 12 held, 5 failed; the work Thirteen Boxes not declared",
+   "created": "2026-10-24",
+   "refs": [
+    "projects/looked-for/PROJECT.md",
+    "projects/looked-for/TOOLKIT.md"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "night:89",
+   "relation": "continues",
+   "to": "project:looked-for",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "commit",
+     "ref": "a6c1466",
+     "note": "SESSION3.md pushed before any record or count was read"
+    }
+   ]
+  },
+  {
+   "from": "material:gbif-absent",
+   "relation": "finds",
+   "to": "finding:two-lists",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/explore3.json",
+     "note": "records by year and status; exploratory, after the registered count"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/session3.json",
+     "note": "units by year and month; registered"
+    }
+   ]
+  },
+  {
+   "from": "check:full-form",
+   "relation": "decides",
+   "to": "result:project17-put-back",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/SESSION3.md",
+     "note": "the work only if P3 held"
+    },
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/session3.json",
+     "note": "P3 false, P4 false; the 40 units' composition"
+    }
+   ]
+  },
+  {
+   "from": "finding:two-lists",
+   "relation": "corrects",
+   "to": "finding:thirteen-boxes",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/AUDIT.md",
+     "note": "entry 3: the two regimes are successive, not side by side as entry 2 said"
+    }
+   ]
+  },
+  {
+   "from": "deadend:record-paging",
+   "relation": "opened-into",
+   "to": "check:full-form",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/count3b.py",
+     "note": "counts by unit (facet eventId) in place of record paging; one deviation, boxes by month"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t7",
+   "relation": "decides",
+   "to": "result:project17-put-back",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/AUDIT.md",
+     "note": "entry 3, two-sided, not triggered; sets the put-back's balance: the date of the change of form"
+    }
+   ]
+  },
+  {
+   "from": "instrument:t4-minor-science",
+   "relation": "follows",
+   "to": "project:looked-for",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/LOG.md",
+     "note": "session 3 in session; one time written ahead of the clock, corrected by a following line; two detours"
+    }
+   ]
+  },
+  {
+   "from": "finding:two-lists",
+   "relation": "shown-in",
+   "to": "page:looked-for",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "render-check.js",
+     "note": "fifth SVG, 52 marks; 17 predictions; ok at 1440 and 390"
+    }
+   ]
+  },
+  {
+   "from": "project:looked-for",
+   "relation": "ends-in",
+   "to": "result:project17-put-back",
+   "created": "2026-10-24",
+   "evidence": [
+    {
+     "kind": "path",
+     "ref": "projects/looked-for/TOOLKIT.md",
+     "note": "toolkit account: T7 answered in time, not space; the check ended the project at session 3"
+    }
+   ]
+  }
+ ]
+}

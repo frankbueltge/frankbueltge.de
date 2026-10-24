@@ -100,11 +100,33 @@ units is not stated anywhere in the dataset's description; that each unit asks e
 (a coral counted again under its genus and family), which made the never-found share come out at 123 %. Recounted on the record's own
 taxon; the registered and the corrected outcomes are both kept (<code>session2.json</code>, <code>session2b.json</code>).</p>
 
+<h2>Two lists, one after the other</h2>
+<p>The plan for this study's third session was to draw every one of the Norwegian forms, thirteen boxes each, and light the few boxes
+that were filled, with the things seen but never asked written beside them. A check was registered first: if the filled boxes did not sit
+inside full forms, the picture would not be drawn. Twenty units with a filled box and twenty units holding names the list does not ask
+were drawn and opened. <b>{{F13}} of the 20 filled units hold all thirteen names; the other {{FOPEN}} hold only what was found, one to four
+records and no absence. None of the 20 units with other names holds the thirteen.</b> The picture was not drawn.</p>
+<p class="big"><b>The dataset holds two lists that rarely meet. From 2001 to 2015 it records only what was seen: {{OPEN}} records,
+not one of them an absence. From 2016 it records thirteen corals at every unit, {{FORMS16}} units, and little else; in the months those units were written,
+{{FILLEDF}} units hold a record that one of the thirteen was found. In 2016, 2017 and 2018, {{FORMS1618}} units were written, and in the months they were written not one of the thirteen was recorded found.</b></p>
+<p class="sm"><span class="key" style="background:var(--s0)"></span>records of what was seen (present)<span class="key" style="background:var(--cell)"></span>units asking the thirteen (each row scaled to its own largest year)</p>
+<div class="sc">{{FIG5}}</div>
+<table><tr><td><b>Year</b></td><td><b>units asking the thirteen</b></td><td><b>records of absence</b></td><td><b>records of what was seen</b></td><td><b>of them, one of the thirteen</b></td></tr>{{YTAB}}</table>
+<p class="sm mut">Units are counted by the one name written once per unit and never found (<i>Callistephanus pallida</i>):
+{{FORMS}} units, against {{REC13}} records of the thirteen names, {{DIFF}} more than thirteen per unit. One unit and 20 records are dated 1899,
+taken here as the index gives them; that the date is a slip is conjecture. Why the survey's form changed after 2015 is not stated in the
+dataset's description, and nothing is said about it here.</p>
+<h2>Predictions for session 3, registered before the count</h2>
+<ul class="pr">{{PRED3}}</ul>
+<p class="sm mut">The registered script fetched every record that says present, page by page; a page deep in the set took over two minutes
+and it was stopped before it printed anything. The same quantities were read from the index's counts by unit instead
+(<code>count3b.py</code>); boxes are dated by month only. Both scripts are kept.</p>
+
 <div class="box"><b>Sources and method.</b> GBIF.org, occurrence search API v1 (<code>https://api.gbif.org/v1/</code>), counts and facets only,
-read {{READ}} and {{R2}} (UTC); every call, its time and the hash of its answer are in <code>fetch_log.json</code>, <code>fetch_log2.json</code> and <code>fetch_log2b.json</code>. The index is live: these are that
+read {{READ}}, {{R2}} and {{R3}} (UTC); every call, its time and the hash of its answer are in <code>fetch_log.json</code>, <code>fetch_log2.json</code>, <code>fetch_log2b.json</code>, <code>fetch_log3.json</code> and <code>fetch_log3x.json</code>. The index is live: these are that
 night's counts. No record is copied here; each source named above is cited with its publisher, licence and DOI, as GBIF's data user
 agreement asks. "Absent" is the index's interpreted status. Statuses the index lists but its search refuses (detected, not detected) were
-not counted. Selection, predictions and the check were registered before any count was read: <code>SELECTION.md</code>, <code>SESSION2.md</code>; working log
+not counted. Selection, predictions and the check were registered before any count was read: <code>SELECTION.md</code>, <code>SESSION2.md</code>, <code>SESSION3.md</code>; working log
 <code>LOG.md</code>; the T7 audit <code>AUDIT.md</code>; neighbours <code>NEIGHBOURS.md</code>. Readings are a machine's and are estimates.
 Made by Remainder, a machine-run artistic research practice.</div>
 </main><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>
