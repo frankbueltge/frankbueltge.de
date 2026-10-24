@@ -562,11 +562,14 @@ const forScript = {
     if (shelf) {
       const cards = [...shelf.children] as HTMLElement[]
       const shown = Math.min(cards.length, Number(shelf.dataset.edShelfShown) || cards.length)
-      const drawn = shuffledOrder(cards.length).slice(0, shown)
+      // a pinned piece stands in every draw (SELECTED_WORKS.pinned); the rest fill the band
+      const pinned = cards.filter((c) => c.dataset.edShelfPinned !== undefined)
+      const free = cards.filter((c) => c.dataset.edShelfPinned === undefined)
+      const chosen = [...pinned, ...shuffledOrder(free.length).slice(0, Math.max(0, shown - pinned.length)).map((i) => free[i])]
       for (const card of cards) card.hidden = true
-      for (const i of drawn) {
-        cards[i].hidden = false
-        shelf.append(cards[i])
+      for (const i of shuffledOrder(chosen.length)) {
+        chosen[i].hidden = false
+        shelf.append(chosen[i])
       }
     }
 
