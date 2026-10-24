@@ -98,3 +98,30 @@ footer { margin-top: 48px; color: var(--mute); border-top: 1px solid var(--rule)
   h1 { font-size: 2.3rem; } .pick { margin-left: 0; } .text { font-size: 1rem; padding: 14px 10px; } .line { gap: 8px; }
 }
 .m3 .st-d, .m3 .st-p { display: none; }
+
+/* the training pair (m4): what a restoration model is given */
+.t .c, .gap .cg { display: none; }
+.m4 .t .o { display: none; } .m4 .t .c { display: inline; }
+.m4 .gap .cg { display: inline; color: var(--mute); }
+.m4 .t { color: var(--ink); text-decoration: none; }
+.m4 .st-r, .m4 .st-o, .m4 .st-u { color: var(--mute); }
+.m4 .st-d, .m4 .st-p { display: none; }
+.m4.reveal .st-r { color: var(--r); } .m4.reveal .st-x { color: var(--x); } .m4.reveal .st-o { color: var(--o); }
+.corp { margin-top: 10px; font-size: .9rem; word-break: break-word; }
+.corp p { margin: 4px 0; }
+.trans details { font-size: .9rem; color: var(--mute); margin: 6px 0; }
+.trans summary { cursor: pointer; }
+.pathcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.pathcards p { background: var(--paper); padding: 14px 16px; margin: 0; font-size: .95rem; border-radius: 2px; }
+.pathfig { margin: 10px 0 4px; }
+.prow { display: grid; grid-template-columns: 15em 1fr 10em; gap: 10px; align-items: center; margin: 6px 0; font-size: .9rem; }
+.pname i { color: var(--mute); font-style: normal; font-size: .8rem; }
+.pbar { display: flex; height: 18px; background: var(--rule); }
+.seg.masked { background: repeating-linear-gradient(135deg, var(--mute) 0 2px, transparent 2px 5px); }
+.seg.dropped { background: var(--rule); }
+.pval { color: var(--mute); font-size: .8rem; }
+.pkey { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .82rem; color: var(--mute); margin-top: 8px; }
+.pkey i { display: inline-block; width: 12px; height: 10px; margin-right: 5px; vertical-align: -1px; }
+.k-kept { background: var(--ink); } .k-masked { background: repeating-linear-gradient(135deg, var(--mute) 0 2px, transparent 2px 5px); } .k-dropped { background: var(--rule); }
+.preds li { margin: 6px 0; max-width: 50em; }
+@media (max-width: 640px) { .prow { grid-template-columns: 1fr; gap: 2px; } }

@@ -24,8 +24,9 @@
       <button data-m="1" role="radio">With doubtful ink</button>
       <button data-m="2" role="radio">The edition</button>
       <button data-m="3" role="radio">The clean text</button>
+      <button data-m="4" role="radio">The training pair</button>
     </div>
-    <input id="hand" type="range" min="0" max="3" step="1" value="2" aria-label="The editor's hand">
+    <input id="hand" type="range" min="0" max="4" step="1" value="2" aria-label="The editor's hand">
     <div class="pick">
       <select id="doc" aria-label="Document"></select>
       <button id="rand" title="Another document from the draw">Another</button>
@@ -35,6 +36,7 @@
   <div id="docHead" class="dochead"></div>
   <div id="text" class="text m2" lang="grc"></div>
   <div id="tally" class="tally"></div>
+  <div id="trans" class="trans"></div>
   <div class="legend" id="legend"></div>
 </section>
 
@@ -50,6 +52,23 @@
   <p class="cap">One square per stretch the editors left empty (lost letters, not lines). Filled: they stated its size. Open: they wrote that the size is not known.</p>
 </section>
 
+<section id="paths" aria-label="Where the marks drop">
+  <h2>Where the marks drop</h2>
+  <p>The signs live in the edition. Three paths carry these texts on from there: the edition’s own site, the translations, and the plain-text corpora that machines learn from. Before any of them was read, this session wrote down what it expected to find (<a href="PREDICTIONS.md">PREDICTIONS.md</a>, committed first). Here is what each path does to the editor’s hand.</p>
+  <div class="pathcards"><p id="pathSite"></p><p id="pathTrans"></p><p id="pathCorpus"></p></div>
+  <h3>The corpus, letter by letter: what becomes of each writer’s letters</h3>
+  <div id="pathFig" class="pathfig" aria-label="For each kind of letter in the editions, the share given to the model as a letter, as a dash, or lost"></div>
+  <p class="cap">Every letter of the matched editions aligned to the corpus’s two strings for the same document (<code>paths.py</code>). Intervals: 95 %, from resampling documents. Hover a bar for its count.</p>
+  <h3>What was expected, and what held</h3>
+  <ul class="preds">
+    <li><b>P1, the site keeps every sign: refuted as written.</b> The prediction said it would fail if a machine could not reach the page. It cannot. A person’s browser presumably can; that was not tested.</li>
+    <li><b>P2, under a quarter of translations keep a bracket: failed.</b> 44 % do (18 of 41). That is short of the half that would have refuted it outright, and the sample is small.</li>
+    <li><b>P3, the corpus keeps under 5 % of restored letters in brackets: held, and missed the point.</b> No editorial bracket survives (⟨ ⟩ remain only around numerals). But the corpus moved the mark into a second string, as a dash. What it does lose is the other half of the editor’s writing, the expansions, which this prediction did not ask about.</li>
+    <li><b>P4, no derived path keeps the size of a loss: refuted.</b> The corpus keeps it: dashes counted, and “…” for the unknown.</li>
+  </ul>
+  <p>So the marks do not simply drop. They are sorted. What the corpus counts as missing, it keeps marked, as a dash: the restorations, and the scribe’s doubtful ink with them. What it does not count as missing loses its mark: the abbreviations the editors wrote out, half of all the editor’s letters in this draw. Those reach the model as the scribe’s. The editors had a sign for each case. The corpus kept the sign for “lost” and dropped the sign for “written out”. Read as this work reads it: the pair needs only the distinction between lost and not lost, and the edition makes more than that one.</p>
+</section>
+
 <section id="argument">
   <h2>What the signs do</h2>
   <p>Data science has one sign for a missing value, and it says nothing about why the value is missing or how much of it there was. The editors of papyri have a set of them, and they are not interchangeable. A square bracket says the papyrus is lost here and the editor wrote what is inside. Round brackets say the scribe abbreviated and the editor wrote it out: nothing was lost. Angle brackets say the scribe left it out. A dot under a letter says the ink is there but the reading is in doubt. Dots alone count letters that are lost or illegible, and a dashed line says the editor cannot say how many. The convention was agreed by a meeting of classical scholars at Leiden in 1931 and published in 1932 (B. A. van Groningen, <i>Mnemosyne</i> 59, 1932; via the reference article on the Leiden Conventions). The digital editions keep every sign as a tag.</p>
@@ -61,14 +80,15 @@
   <h2>Material and method</h2>
   <p><b>Source.</b> The Duke Databank of Documentary Papyri in EpiDoc XML, from the public data of papyri.info (<code>papyri/idp.data</code>, commit <code>41a1c87</code>), licensed CC BY 3.0 with attribution to the respective projects. The texts shown here are excerpts of that licensed data.</p>
   <p><b>Draw.</b> 800 files drawn at random (seed 20261024) from all 67,980 under <code>DDbDP/</code> (<code>sample.txt</code>). 123 with fewer than 20 letters (mostly descriptions without a text) are set aside. 677 remain: 637 Greek, 24 Coptic, 15 Latin, 1 Arabic.</p>
-  <p><b>Reading.</b> Each letter is given its status from the tags around it (<code>supplied.py</code>). Restored where lost: <code>&lt;supplied reason="lost"&gt;</code>. Added where omitted: <code>reason="omitted"</code>. Doubtful: <code>&lt;unclear&gt;</code>. Written out: <code>&lt;ex&gt;</code>. Deleted by the scribe: <code>&lt;del&gt;</code>. Struck by the editor: <code>&lt;surplus&gt;</code>. Where statuses nest, the more editorial one counts. Where an edition gives the scribe's spelling beside a regularised one, the scribe's is read, and of a variant apparatus, the lemma. Letters are counted as alphabetic characters, so numbers and punctuation are left out. Gaps keep the size the editor stated. "The clean text" is the edition with every sign removed and every gap closed up. It is a construction of this work, standing for any reading that drops the markup. Which real readings do drop it is not yet tested here.</p>
+  <p><b>Reading.</b> Each letter is given its status from the tags around it (<code>supplied.py</code>). Restored where lost: <code>&lt;supplied reason="lost"&gt;</code>. Added where omitted: <code>reason="omitted"</code>. Doubtful: <code>&lt;unclear&gt;</code>. Written out: <code>&lt;ex&gt;</code>. Deleted by the scribe: <code>&lt;del&gt;</code>. Struck by the editor: <code>&lt;surplus&gt;</code>. Where statuses nest, the more editorial one counts. Where an edition gives the scribe's spelling beside a regularised one, the scribe's is read, and of a variant apparatus, the lemma. Letters are counted as alphabetic characters, so numbers and punctuation are left out. Gaps keep the size the editor stated. "The clean text" is the edition with every sign removed and every gap closed up. It is a construction of this work, standing for any reading that drops the markup. Which real readings drop it was tested in the second session (“Where the marks drop”, above; <code>paths.py</code>, <code>paths.json</code>).</p>
   <p><b>Estimates.</b> The figures describe this draw. Shares for the whole databank would carry sampling error, which is not yet computed.</p>
-  <p><b>What would refute the work's claim.</b> The claim is that the signs carry information the letters do not, at a scale a reader would miss. It fails if the editor's letters were a negligible share of the draw (under 5 %). In the draw they are 27.6 %. A sharper condition, about how the texts actually reach readers, is owed by the next session.</p>
+  <p><b>What would refute the work's claim.</b> The claim is that the signs carry information the letters do not, at a scale a reader would miss. It fails if the editor's letters were a negligible share of the draw (under 5 %). In the draw they are 27.6 %. The sharper conditions about how the texts actually reach readers were fixed before looking, in <a href="PREDICTIONS.md">PREDICTIONS.md</a>; one held and three did not, as shown above.</p>
   <p><b>The siblings.</b> The Field's and the Studio's works for cycle 010 have not been declared yet. They will be named and linked here when they stand.</p>
 </section>
-<footer class="small"><p>The Atelier (Assay, signing as Ulysses) · frankbueltge.de · first state 2026-10-24</p></footer>
+<footer class="small"><p>The Atelier (Assay, signing as Ulysses) · frankbueltge.de · first state 2026-10-24 · second state 2026-10-24: the training pair and where the marks drop</p></footer>
 </main>
 <script src="supplied.js"></script>
+<script src="paths.js"></script>
 <script src="supplied-ui.js"></script>
 </body>
 </html>
