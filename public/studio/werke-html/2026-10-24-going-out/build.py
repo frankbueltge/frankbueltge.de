@@ -16,7 +16,11 @@ by its longitude (local solar time, so the sky can stand up to an hour or two of
 fits, and is flagged; one that fits neither is counted as unplaceable and not drawn. Reports
 filed at 0 N 0 E carry no place and are counted, not drawn.
 A fixed sample of up to 320 placeable reports per year (seed 20261024) goes into the face;
-the band counts every report.
+the band counts every report. A report placed by local time keeps the offset of its filed UT
+(minutes, filed minus placed), so the face can turn its sky from the filed hour to the placed one.
+Increment 2 (session 202): a fixed sample of up to 24 reports per year of each kind that cannot
+be given a sky (filed at 0 N 0 E; no hour fits) goes into the face as "lost", with what they did
+file (date, chart, constellation, country), so the band's two bottom rows can be opened.
 """
 import csv, gzip, json, math, random, sys, pathlib, datetime, collections
 
@@ -52,6 +56,7 @@ for line in gzip.open(RAW / "bsc5.dat.gz", "rt", encoding="latin-1"):
 
 band = collections.defaultdict(lambda: collections.Counter())
 pool = collections.defaultdict(list); total = 0
+lostpool = collections.defaultdict(list)  # (kind, ...): 0 = no place (0 N 0 E), 1 = no hour fits
 for y in range(2006, 2026):
     with open(RAW / f"GaN{y}.csv", encoding="utf-8", errors="replace") as fh:
         for r in csv.DictReader(fh):
@@ -69,18 +74,22 @@ for y in range(2006, 2026):
             if not (0 <= m <= 7 and -90 <= lat <= 90 and -180 <= lon <= 180) or t.year != y:
                 band[y]["unreadable"] += 1; continue
             band[y][str(m)] += 1
-            if abs(lat) < 0.05 and abs(lon) < 0.05:  # filed at 0 N 0 E: no place given
-                band[y]["noplace"] += 1; continue
             mins, con, flag = int((t - EPOCH).total_seconds() // 60), r["Constellation"].strip(), 0
+            lost = lambda kind: lostpool[y].append((kind, mins, m, r["Country"].strip() or "?",
+                                                   con or "None", r["CloudCover"].strip() or "?", lt.hour * 60 + lt.minute,
+                                                   round(lat * 10), round(lon * 10)))
+            if abs(lat) < 0.05 and abs(lon) < 0.05:  # filed at 0 N 0 E: no place given
+                band[y]["noplace"] += 1; lost(0); continue
             if con not in ANCHOR:
-                band[y]["unplaceable"] += 1; continue
+                band[y]["unplaceable"] += 1; lost(1); continue
+            filed = mins
             if alt(lat, lon, mins, *ANCHOR[con]) <= 5:
                 ml = int((lt - EPOCH).total_seconds() // 60 - lon * 4)
                 if alt(lat, lon, ml, *ANCHOR[con]) > 5: mins, flag = ml, 1; band[y]["shifted"] += 1
-                else: band[y]["unplaceable"] += 1; continue
+                else: band[y]["unplaceable"] += 1; lost(1); continue
             pool[y].append((round(lat * 10), round(lon * 10), mins, m,
                             r["Country"].strip() or "?", r["Constellation"].strip() or "None",
-                            r["CloudCover"].strip() or "?", flag, lt.hour * 60 + lt.minute))
+                            r["CloudCover"].strip() or "?", flag, lt.hour * 60 + lt.minute, filed - mins))
 
 names = {k: [] for k in ("country", "const", "cloud")}
 def idx(kind, v):
@@ -90,12 +99,19 @@ def idx(kind, v):
 reports = []
 for y in sorted(pool):
     for p in sorted(rng.sample(pool[y], min(320, len(pool[y]))), key=lambda p: p[2]):
-        reports.append(list(p[:4]) + [idx("country", p[4]), idx("const", p[5]), idx("cloud", p[6]), p[7], p[8]])
+        reports.append(list(p[:4]) + [idx("country", p[4]), idx("const", p[5]), idx("cloud", p[6]), p[7], p[8], p[9]])
 
-out = {"stars": stars, "reports": reports, "countries": names["country"], "consts": names["const"],
+lostrep = []  # [kind, filed UT minutes, chart, country, constellation, cloud, local h*60+m, lat*10, lon*10]
+for y in sorted(lostpool):
+    for kind in (0, 1):
+        k = [p for p in lostpool[y] if p[0] == kind]
+        for p in sorted(rng.sample(k, min(24, len(k))), key=lambda p: p[1]):
+            lostrep.append([p[0], p[1], p[2], idx("country", p[3]), idx("const", p[4]), idx("cloud", p[5]), p[6], p[7], p[8]])
+
+out = {"stars": stars, "reports": reports, "lost": lostrep, "countries": names["country"], "consts": names["const"],
        "clouds": names["cloud"], "band": {y: dict(band[y]) for y in sorted(band)}, "gan_reports": total}
 (HERE / "data.js").write_text("window.GO=" + json.dumps(out, separators=(",", ":")) + ";\n")
-summary = {"stars_to_6_5": len(stars) // 4, "gan_reports": total, "sampled": len(reports),
+summary = {"stars_to_6_5": len(stars) // 4, "gan_reports": total, "sampled": len(reports), "lost_sampled": len(lostrep),
            "drawable": sum(len(v) for v in pool.values()),
            "no_chart_filed": sum(b["none"] for b in band.values()),
            "unreadable": sum(b["unreadable"] for b in band.values()),

@@ -7,18 +7,19 @@
  "session": 201,
  "cycle": 10,
  "question": "Missing Data Art",
- "artifact": "index.html (in progress; increment 1 of 3)",
+ "artifact": "index.html (in progress; increment 2 of 3)",
  "long_work": {
   "slug": "2026-10-24-going-out",
   "increments": {
-   "1": "session 201: the dome for each report, the going-out to the chart matched, the lens, the twenty-year band"
+   "1": "session 201: the dome for each report, the going-out to the chart matched, the lens, the twenty-year band",
+   "2": "session 202: the turning from the filed hour; the lost reports opened (trails of every hour, outline over 0 N 0 E); go out yourself, kept in the visitor's browser"
   },
   "score": "works/2026-10-24-going-out/SCORE.md"
  },
  "medium": "An animated, interactive night sky in the browser: one Globe at Night report at a time, its sky set for its place and minute and taken away to what the observer saw; a lens that restores the sky where the visitor holds the pointer; a band of every report since 2006.",
- "form": "Canvas dome, animation, pointer lens, clickable band.",
+ "form": "Canvas dome, animation, pointer lens, clickable band; star trails for reports with no hour; a participatory panel for the visitor's own report (geolocation if allowed, otherwise a time-zone guess; localStorage only, nothing sent).",
  "form_argument": "What the record holds is a subtraction, so the work performs the subtraction on a whole sky each time instead of plotting a number of stars.",
- "the_rule_the_work_kept": "A star is lit if it is no fainter than the chart the observer matched (the work's simplification: they matched one constellation). A report's hour is its filed UT if that puts its constellation's brightest star more than 5 degrees up; otherwise its filed local time shifted by its longitude, if that fits (flagged on the page); otherwise not drawn. Reports at 0 N 0 E and reports with no chart are counted and not drawn.",
+ "the_rule_the_work_kept": "A star is lit if it is no fainter than the chart the observer matched (the work's simplification: they matched one constellation). A report's hour is its filed UT if that puts its constellation's brightest star more than 5 degrees up; otherwise its filed local time shifted by its longitude, if that fits (flagged on the page); otherwise not drawn. Reports at 0 N 0 E and reports with no chart are counted and not drawn. A re-timed report keeps the offset of its filed UT and turns from it (in the sample most often 10 to 14 hours before the placed hour; that it was an evening hour filed as a morning one is the work's guess). Lost reports: a sample of up to 24 per year of each kind.",
  "headline": {
   "gan_reports": 287352,
   "stars_to_6_5": 8404,
@@ -28,12 +29,14 @@
   "placed_by_local_time": 99515,
   "no_place_0N0E": 3176,
   "unplaceable": 6411,
-  "unreadable": 34
+  "unreadable": 34,
+  "lost_sampled": 547
  },
  "sources": [
   "https://globeatnight.org/maps-data/ (Globe at Night, NOIRLab; yearly CSVs 2006-2025; CC BY 4.0; fetched 2026-10-24, sizes and SHA-256 in raw-manifest.json)",
   "https://cdsarc.cds.unistra.fr/ftp/V/50/catalog.gz (Bright Star Catalogue, 5th revised ed., Hoffleit & Warren 1991, CDS VizieR V/50)",
-  "Kyba, Altintas, Walker, Newhouse, Science 379(6629):265-268, 2023, doi:10.1126/science.abq7781 (cited on the page for the 7-10 % a year and the 51,351 reports, from its abstract)"
+  "Kyba, Altintas, Walker, Newhouse, Science 379(6629):265-268, 2023, doi:10.1126/science.abq7781 (cited on the page for the 7-10 % a year and the 51,351 reports, from its abstract)",
+  "https://app.globeatnight.org/ (Globe at Night's own reporting form, linked for the visitor's report; the work sends nothing)"
  ],
  "borrowed_code": {
   "tools/process_shots.mjs": "the Atelier's (ulysses), Apache-2.0: permissive, vendored with attribution and one marked change; a tool for the process shots, not loaded by the work",
@@ -60,5 +63,5 @@
    "daylight": "There, data that does not exist is filed as empty folders. Here the data exists, written by hundreds of thousands of hands, and what it records is a negative: the stars not seen."
   }
  ],
- "sub_agents": "session 201: none (first session; the critique comes at the end of the second)"
+ "sub_agents": "session 201: none. Session 202: one convened voice, which did not build the work, used it in a browser and wrote CRITIQUE.md."
 }
