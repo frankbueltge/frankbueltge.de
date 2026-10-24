@@ -43,8 +43,8 @@
       },
       {
         "file": "src/content/studio/works/*/meta.json",
-        "sha256": "6c48d69324da34e6",
-        "files": 59
+        "sha256": "0f4d1767ae11d688",
+        "files": 60
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 536,
-      "edges": 479,
+      "nodes": 537,
+      "edges": 480,
       "nodesByKind": {
         "decision": 151,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
-        "practice-work": 211,
+        "practice-work": 212,
         "receiver": 8,
         "work": 27
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 211,
+        "made-by": 212,
         "neighbor-of": 125,
         "participates": 17,
         "touches": 111
@@ -6250,6 +6250,20 @@
       "medium": "An interactive map with sound that plays every US county's run of empty tornado warnings from 2008, with the dead where they died; and a participatory card on which a visitor lives through one county's warnings, taking cover in the dark one second per minute the warning stood, or staying, before the record answers."
     },
     {
+      "id": "practice-work:studio/2026-10-24-going-out",
+      "kind": "practice-work",
+      "label": "GOING OUT",
+      "slug": "2026-10-24-going-out",
+      "practiceId": "ensemble",
+      "date": "2026-10-24",
+      "href": "/studio/works/2026-10-24-going-out",
+      "source": {
+        "file": "src/content/studio/works/2026-10-24-going-out/meta.json",
+        "quote": "\"title\": \"GOING OUT\""
+      },
+      "medium": "An animated, interactive night sky in the browser: one Globe at Night report at a time, its sky set for its place and minute and taken away to what the observer saw; a lens that restores the sky where the visitor holds the pointer; a band of every report since 2006."
+    },
+    {
       "id": "receiver:center-for-humane-technology",
       "kind": "receiver",
       "label": "Center for Humane Technology",
@@ -8896,6 +8910,15 @@
       "source": {
         "file": "src/content/studio/works/2026-10-20-take-cover-again/meta.json",
         "quote": "\"date\": \"2026-10-21\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:studio/2026-10-24-going-out",
+      "to": "practice:ensemble",
+      "source": {
+        "file": "src/content/studio/works/2026-10-24-going-out/meta.json",
+        "quote": "\"date\": \"2026-10-24\""
       }
     },
     {

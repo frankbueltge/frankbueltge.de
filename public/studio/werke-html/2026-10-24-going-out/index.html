@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GOING OUT</title>
+<style>
+  :root { --ink:#d9dbe3; --dim:#8a8fa3; --faint:#4a4f62; --bg:#03050b; --warm:#e0a96a; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 Georgia, "Times New Roman", serif; }
+  .wip { font:12px/1.4 ui-monospace, Menlo, monospace; color:var(--warm); letter-spacing:.04em; padding:10px 16px 0; }
+  header { padding:6px 16px 0; max-width:1100px; margin:0 auto; }
+  h1 { font-weight:normal; letter-spacing:.32em; font-size:20px; margin:4px 0 2px; }
+  .lede { color:var(--dim); margin:0; max-width:60ch; }
+  main { max-width:1100px; margin:0 auto; padding:0 16px; }
+  .stage { position:relative; display:flex; justify-content:center; margin-top:8px; }
+  #sky { display:block; touch-action:none; cursor:crosshair; }
+  .who { font:13px/1.45 ui-monospace, Menlo, monospace; color:var(--ink); min-height:3.2em; text-align:center; margin:6px 0 2px; }
+  .who b { font-weight:normal; color:var(--warm); }
+  .hint { text-align:center; color:var(--faint); font-size:13px; margin:0 0 6px; }
+  #band { display:block; width:100%; height:150px; cursor:pointer; }
+  .bandcap { display:flex; justify-content:space-between; font:11px ui-monospace, Menlo, monospace; color:var(--faint); }
+  .ctl { display:flex; gap:8px; justify-content:center; margin:10px 0; }
+  button { background:none; border:1px solid var(--faint); color:var(--ink); font:13px ui-monospace, Menlo, monospace; padding:5px 12px; border-radius:3px; cursor:pointer; }
+  button:hover { border-color:var(--dim); }
+  details { max-width:70ch; margin:18px auto; color:var(--dim); }
+  summary { cursor:pointer; color:var(--ink); }
+  details p, details li { font-size:14px; }
+  a { color:var(--warm); }
+  footer { color:var(--faint); font-size:12px; text-align:center; padding:20px 16px 40px; }
+</style>
+</head>
+<body><style>
+.fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
+ font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+ background:#f4f4f1;color:#1a1a1a;border-bottom:1px solid #d8d8d2;padding:14px 22px;}
+.fbde-work-frame--foot{border-bottom:0;border-top:1px solid #d8d8d2;margin-top:48px;}
+.fbde-work-frame *{box-sizing:border-box;font-family:inherit;}
+.fbde-work-frame .fbde-work-frame__nav{display:block;font-size:13px;line-height:1.6;margin:0;}
+.fbde-work-frame a{color:#1a1a1a;text-decoration:underline;text-underline-offset:2px;}
+.fbde-work-frame a:hover,.fbde-work-frame a:focus{color:#000;background:#e6e6e0;}
+.fbde-work-frame .fbde-work-frame__sep{color:#8a8a84;padding:0 6px;}
+.fbde-work-frame .fbde-work-frame__wall{margin:10px 0 0;max-width:64ch;font-size:15px;
+ line-height:1.65;color:#1a1a1a;}
+.fbde-work-frame .fbde-work-frame__note{margin:8px 0 0;font-size:12px;line-height:1.5;
+ color:#6b6b64;}
+@media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
+</style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header>
+<div class="wip">IN PROGRESS · increment 1 of 3 · 2026-10-24 · cycle 010, <i>Missing Data Art</i></div>
+<header>
+  <h1>GOING OUT</h1>
+  <p class="lede">Since 2006, people have gone out at night, found one constellation, and matched it to one of eight
+  charts. Each report is a sky. Each sky begins whole here and goes out, faintest star first, until only what that
+  person saw is left. The rest stays as holes in the glow: the stars their report records by leaving them out.</p>
+</header>
+<main>
+  <div class="stage"><canvas id="sky" aria-label="The sky above one observer, as their report leaves it"></canvas></div>
+  <div class="who" id="who"></div>
+  <p class="hint">Hold the pointer on the sky to see it without the light. ← → to walk the reports, space to pause.</p>
+  <canvas id="band" aria-label="Every report 2006 to 2025 by the faintest chart matched"></canvas>
+  <div class="bandcap"><span>2006</span><span>each column a year · up: fainter stars seen · bottom row: reports filed with no chart</span><span>2025</span></div>
+  <div class="ctl"><button id="prev">← earlier</button><button id="play">pause</button><button id="next">later →</button></div>
+
+  <details>
+    <summary>What this is made of, and how it is drawn</summary>
+    <p><b>The reports.</b> <a href="https://globeatnight.org/maps-data/">Globe at Night</a> (NOIRLab), one CSV per year,
+    2006 to 2025, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. <span id="ntot"></span>
+    naked-eye reports (type GAN). The observer finds a named constellation and picks the chart that matches what they
+    see: chart 1 shows its stars down to magnitude 1, chart 7 down to magnitude 7, and 0 means the constellation itself
+    could not be found. <span id="nnone"></span> reports were filed with no chart at all; they stand in the band's bottom
+    row and are never drawn as skies. The face plays a fixed sample of up to 320 reports per year (<span id="nsamp"></span>
+    in all, seed 20261024); the band counts every report. Places are rounded to 0.1° (about 11 km). The observers'
+    own comments are not read into the work.</p>
+    <p><b>The hour, checked.</b> A report names the constellation it looked for, so its time must put that
+    constellation's brightest star above the observer's horizon. In the older files the filed UT very often does not:
+    the local times are evening hours, but their conversion to UT has failed. Such a report is set by its local time
+    as filed, shifted by its longitude (so its sky may stand an hour or two off), and its caption says so:
+    <span id="nshift"></span> reports were placed this way, and <span id="nunpl"></span> fit neither hour and are
+    never drawn. <span id="nnop"></span> more were filed at 0°N 0°E, a place in the Gulf of Guinea that stands in for
+    no place given; they are counted and not drawn.</p>
+    <p><b>The sky.</b> Every star of the <a href="https://cdsarc.cds.unistra.fr/viz-bin/cat/V/50">Yale Bright Star
+    Catalogue</a> (5th revised ed., Hoffleit &amp; Warren 1991, via CDS Strasbourg) brighter than magnitude 6.5,
+    <span id="nstars"></span> stars, set for the report's place and minute (sidereal time from the report's UT,
+    J2000 positions, no precession, no refraction, no extinction near the horizon). The dome is drawn as seen lying on
+    one's back with the head to the north: zenith at the centre, east on the left. A star is lit if it is no fainter
+    than the chart the person matched; the others go out. Treating the chart number as a limiting magnitude for the
+    whole sky is the work's simplification, not the observer's claim: they matched one constellation.</p>
+    <p><b>What the record says about itself.</b> Kyba, Altıntaş, Walker and Newhouse used 51,351 of these reports
+    (2011–2022) and found that the loss of visible stars implies a brightening of the sky of 7 to 10 % a year, faster
+    than satellites recorded (<a href="https://doi.org/10.1126/science.abq7781">Science 379, 265–268, 2023</a>;
+    <a href="https://www.gfz.de/en/press/news/details/citizen-scientists-report-global-rapid-reductions-in-the-visibility-of-stars-from-2011-to-2022">GFZ summary</a>).
+    The satellite sensors are blind to much of the blue in white LED light; the stars that went missing were recorded by
+    the people who could no longer see them. This work draws no trend: the band shows who reported, and the people who
+    report change from year to year.</p>
+    <p><b>Nearest works in the Atlas of Data Art, and the daylight.</b> Playmodes, <i>ASTRES: Mapping the Firmament</i>
+    (2025), draws the night sky in laser light to celebrate it; here the sky is drawn to subtract it, one person's
+    report at a time. Bathsheba Grossman's crystal engravings (2002) fix astronomical data whole in glass; here the
+    whole sky is shown only so that it can be taken away, and returns only where the visitor holds their eye.
+    Mimi Ọnụọha, <i>The Library of Missing Datasets</i> (2016), files the data that does not exist as empty folders;
+    here the data exists, written by hundreds of thousands of hands, and what it records is a negative: the stars not
+    seen.</p>
+    <p>Source, data and checks: <code>works/2026-10-24-going-out/</code> in the studio repository
+    (<code>fetch.py</code>, <code>build.py</code>, <code>verify.mjs</code>). Ensemble, the Studio, 2026. CC BY 4.0;
+    code Apache-2.0.</p>
+  </details>
+</main>
+<footer>GOING OUT · Ensemble · reports © Globe at Night / NOIRLab, CC BY 4.0 · stars: Bright Star Catalogue, CDS</footer>
+<script src="data.js"></script>
+<script>
+(() => {
+  const G = window.GO, D2R = Math.PI / 180;
+  const S = G.stars, NS = S.length / 4;
+  const ra = new Float32Array(NS), de = new Float32Array(NS), mg = new Float32Array(NS), bv = new Float32Array(NS);
+  for (let i = 0; i < NS; i++) { ra[i] = S[4*i]/100*D2R; de[i] = S[4*i+1]/100*D2R; mg[i] = S[4*i+2]/100; bv[i] = S[4*i+3]/100; }
+  const order = Array.from({length: NS}, (_, i) => i).sort((a, b) => mg[a] - mg[b]); // brightest first
+  const R = G.reports;
+  const fmt = n => n.toLocaleString('en-US');
+  const none = Object.values(G.band).reduce((s, b) => s + (b.none || 0), 0);
+  document.getElementById('ntot').textContent = fmt(G.gan_reports);
+  document.getElementById('nnone').textContent = fmt(none);
+  document.getElementById('nsamp').textContent = fmt(R.length);
+  document.getElementById('nstars').textContent = fmt(NS);
+  const sumb = k => Object.values(G.band).reduce((s, b) => s + (b[k] || 0), 0);
+  document.getElementById('nshift').textContent = fmt(sumb('shifted'));
+  document.getElementById('nunpl').textContent = fmt(sumb('unplaceable'));
+  document.getElementById('nnop').textContent = fmt(sumb('noplace'));
+
+  // the sky's glow by the chart matched: 0 (nothing found) to 7 (a dark site)
+  const GLOW = [[122,92,58],[104,80,52],[80,64,48],[56,48,44],[34,33,40],[18,21,34],[8,11,22],[3,5,11]];
+  function starCol(b) { // B-V to a plausible eye colour
+    const t = Math.max(-0.3, Math.min(1.8, b));
+    const r = t < 0.4 ? 200 + t*100 : 255, g = t < 0.4 ? 215 + t*60 : 255 - (t-0.4)*55, bl = t < 0.4 ? 255 : 255 - (t-0.4)*120;
+    return [r|0, g|0, bl|0];
+  }
+  const COL = Array.from({length: NS}, (_, i) => starCol(bv[i]));
+
+  const sky = document.getElementById('sky'), ctx = sky.getContext('2d');
+  const band = document.getElementById('band'), bctx = band.getContext('2d');
+  let W = 0, DPR = 1, cur = 0, t0 = performance.now(), playing = true, lens = null;
+  let proj = null; // per-report projected positions
+
+  function size() {
+    DPR = window.devicePixelRatio || 1;
+    W = Math.min(window.innerWidth - 32, Math.max(280, window.innerHeight - 330), 760);
+    sky.style.width = sky.style.height = W + 'px'; sky.width = sky.height = Math.round(W * DPR);
+    band.width = Math.round(band.clientWidth * DPR); band.height = Math.round(150 * DPR);
+    proj = null; drawBand();
+  }
+
+  function project(rep) {
+    const lat = rep[0]/10*D2R, lon = rep[1]/10, minutes = rep[2];
+    const d = (minutes - 720) / 1440; // days since J2000.0
+    const lst = ((280.46061837 + 360.98564736629 * d + lon) % 360 + 360) % 360 * D2R;
+    const sl = Math.sin(lat), cl = Math.cos(lat);
+    const x = new Float32Array(NS), y = new Float32Array(NS), up = new Uint8Array(NS);
+    const rr = W / 2 - 14;
+    for (let i = 0; i < NS; i++) {
+      const H = lst - ra[i], sd = Math.sin(de[i]), cd = Math.cos(de[i]), cH = Math.cos(H);
+      const alt = Math.asin(sd*sl + cd*cl*cH);
+      if (alt <= 0) continue;
+      const az = Math.atan2(-cd*Math.sin(H), sd*cl - cd*sl*cH);
+      const rho = (1 - alt / (Math.PI/2)) * rr;
+      x[i] = W/2 - rho*Math.sin(az); y[i] = W/2 - rho*Math.cos(az); up[i] = 1;
+    }
+    let above = 0, seen = 0;
+    for (let i = 0; i < NS; i++) if (up[i]) { above++; if (mg[i] <= rep[3]) seen++; }
+    return {x, y, up, above, seen, rep};
+  }
+
+  function caption(rep) {
+    const dt = new Date(Date.UTC(2000, 0, 1) + rep[2] * 60000);
+    const lat = rep[0]/10, lon = rep[1]/10;
+    const hh = String(Math.floor(rep[8] / 60)).padStart(2, '0'), mm = String(rep[8] % 60).padStart(2, '0');
+    const cons = G.consts[rep[5]], m = rep[3];
+    const day = dt.toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'});
+    const what = m === 0 ? `could not find <b>${cons}</b>` : `looked for <b>${cons}</b> and saw it down to magnitude <b>${m}</b>`;
+    document.getElementById('who').innerHTML =
+      `${G.countries[rep[4]]} · ${Math.abs(lat).toFixed(1)}°${lat >= 0 ? 'N' : 'S'} ${Math.abs(lon).toFixed(1)}°${lon >= 0 ? 'E' : 'W'} · ${day}, ${hh}:${mm} local time${rep[7] ? ' <span title="The UT this report was filed with puts its constellation below the horizon; the sky is set by its local time instead, shifted by its longitude.">(placed by local time)</span>' : ''}<br>` +
+      `Someone went out, ${what}. Sky: ${G.clouds[rep[6]]}. Of ${fmt(proj.above)} stars above them, ${fmt(proj.seen)} lit.`;
+  }
+
+  const ease = t => t < 0 ? 0 : t > 1 ? 1 : t*t*(3 - 2*t);
+  function frame(now) {
+    if (!proj) { proj = project(R[cur]); caption(R[cur]); }
+    const el = (now - t0) / 1000, rep = R[cur], lim = rep[3];
+    const k = ease((el - 0.8) / 2.6);              // 0: whole sky, 1: the report's sky
+    const thr = 6.6 - k * (6.6 - lim - 0.0001);     // stars fainter than thr have gone out
+    const g0 = GLOW[7], g1 = GLOW[lim];
+    const gc = g0.map((v, j) => Math.round(v + (g1[j] - v) * k));
+    const c = W / 2, rr = W / 2 - 14;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.clearRect(0, 0, W, W);
+    // the dome and its glow, brighter towards the horizon
+    const gr = ctx.createRadialGradient(c, c, 0, c, c, rr);
+    gr.addColorStop(0, `rgb(${gc.map(v => v*0.6|0)})`); gr.addColorStop(0.75, `rgb(${gc})`);
+    gr.addColorStop(1, `rgb(${gc.map(v => Math.min(255, v*1.5)|0)})`);
+    ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(c, c, rr, 0, 2*Math.PI); ctx.fill();
+    drawStars(thr, k, false);
+    if (lens) { // the sky without the light, only where the visitor holds their eye
+      ctx.save(); ctx.beginPath(); ctx.arc(lens.x, lens.y, Math.min(90, W/5), 0, 2*Math.PI); ctx.clip();
+      ctx.fillStyle = `rgb(${GLOW[7]})`; ctx.fillRect(0, 0, W, W); drawStars(6.6, 0, true); ctx.restore();
+      ctx.strokeStyle = 'rgba(224,169,106,.5)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(lens.x, lens.y, Math.min(90, W/5), 0, 2*Math.PI); ctx.stroke();
+    }
+    ctx.strokeStyle = 'rgba(138,143,163,.35)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(c, c, rr, 0, 2*Math.PI); ctx.stroke();
+    ctx.fillStyle = 'rgba(138,143,163,.7)'; ctx.font = '11px ui-monospace, Menlo, monospace'; ctx.textAlign = 'center';
+    ctx.fillText('N', c, 10); ctx.fillText('S', c, W - 2); ctx.fillText('E', 6, c + 4); ctx.fillText('W', W - 6, c + 4);
+    if (playing && el > 8.5) step(1);
+    requestAnimationFrame(frame);
+  }
+
+  function drawStars(thr, k, whole) {
+    const {x, y, up} = proj, s = W / 760;
+    for (const i of order) {
+      if (!up[i]) continue;
+      const m = mg[i], r = Math.max(0.45, (6.9 - m) * 0.62) * Math.max(0.7, s);
+      if (whole || m <= thr) {
+        const a = whole ? 1 : Math.min(1, (thr - m) * 3 + 0.15);
+        const [cr, cg, cb] = COL[i];
+        ctx.fillStyle = `rgba(${cr},${cg},${cb},${Math.min(1, a * (0.35 + (6.6 - m) / 6))})`;
+        ctx.beginPath(); ctx.arc(x[i], y[i], r, 0, 2*Math.PI); ctx.fill();
+        if (m < 1.5) { ctx.fillStyle = `rgba(${cr},${cg},${cb},${0.12*a})`; ctx.beginPath(); ctx.arc(x[i], y[i], r*3.2, 0, 2*Math.PI); ctx.fill(); }
+      } else if (k > 0) { // gone out: a hole where the star was
+        ctx.fillStyle = `rgba(0,0,0,${0.55 * Math.min(1, (m - thr) * 2)})`;
+        ctx.beginPath(); ctx.arc(x[i], y[i], Math.max(0.6, r * 0.7), 0, 2*Math.PI); ctx.fill();
+      }
+    }
+  }
+
+  // the band: every year's reports by chart, every sampled report a point
+  const Y0 = Date.UTC(2006, 0, 1), Y1 = Date.UTC(2026, 0, 1);
+  const tx = (minutes, w) => (Date.UTC(2000, 0, 1) + minutes * 60000 - Y0) / (Y1 - Y0) * w;
+  function drawBand() {
+    const w = band.width, h = band.height, rows = 9, rh = h / rows;
+    bctx.clearRect(0, 0, w, h);
+    for (let yr = 2006; yr <= 2025; yr++) {
+      const b = G.band[yr] || {}, tot = Object.entries(b).filter(([k]) => /^[0-7]$|^none$/.test(k)).reduce((s, [, v]) => s + v, 0);
+      const x0 = (yr - 2006) / 20 * w, cw = w / 20 - 1;
+      for (let m = 0; m <= 7; m++) {
+        const share = (b[m] || 0) / (tot || 1), gc = GLOW[m];
+        bctx.fillStyle = `rgba(${gc.map(v => Math.min(255, v*2.2)|0)},${Math.min(1, 0.08 + share * 3)})`;
+        bctx.fillRect(x0, (7 - m) * rh, cw, rh - 1);
+      }
+      const share = (b.none || 0) / (tot || 1);
+      bctx.fillStyle = `rgba(138,143,163,${Math.min(1, 0.04 + share * 3)})`;
+      bctx.fillRect(x0, 8 * rh, cw, rh - 1);
+    }
+    const cr = R[cur];
+    bctx.fillStyle = 'rgba(217,219,227,.35)';
+    for (let i = 0; i < R.length; i += 2) { const r = R[i]; bctx.fillRect(tx(r[2], w), (7 - r[3]) * rh + rh*0.5 + ((i * 37) % 7 - 3) * DPR, DPR, DPR); }
+    bctx.strokeStyle = '#e0a96a'; bctx.lineWidth = 2 * DPR;
+    bctx.strokeRect(tx(cr[2], w) - 3*DPR, (7 - cr[3]) * rh + 1, 6*DPR, rh - 2);
+  }
+
+  function go(i) { cur = (i + R.length) % R.length; proj = null; t0 = performance.now(); drawBand(); }
+  function step(d) { go(cur + d); }
+  document.getElementById('prev').onclick = () => step(-1);
+  document.getElementById('next').onclick = () => step(1);
+  const pb = document.getElementById('play');
+  pb.onclick = () => { playing = !playing; pb.textContent = playing ? 'pause' : 'play'; t0 = performance.now() - 4000; };
+  addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') step(1); else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === ' ') { e.preventDefault(); pb.click(); }
+  });
+  band.addEventListener('click', e => {
+    const r = band.getBoundingClientRect(), fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+    const m = Math.max(0, Math.min(7, 7 - Math.floor(fy * 9)));
+    let best = 0, bd = 1e9;
+    R.forEach((p, i) => { const dd = Math.abs(tx(p[2], 1) - fx) * 40 + Math.abs(p[3] - m); if (dd < bd) { bd = dd; best = i; } });
+    go(best);
+  });
+  const pt = e => { const r = sky.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; };
+  sky.addEventListener('pointerdown', e => { lens = pt(e); sky.setPointerCapture(e.pointerId); });
+  sky.addEventListener('pointermove', e => { if (lens || e.pointerType === 'mouse' && e.buttons) lens = pt(e); });
+  sky.addEventListener('pointerup', () => { lens = null; });
+  sky.addEventListener('pointercancel', () => { lens = null; });
+  addEventListener('resize', size);
+  // start somewhere the loss is visible: the first sampled report of 2025 under a bright sky
+  const start = R.findIndex(r => new Date(Date.UTC(2000,0,1) + r[2]*60000).getUTCFullYear() === 2025 && r[3] === 2);
+  cur = Math.max(0, start);
+  size(); requestAnimationFrame(frame);
+  window.__going = { project: (i) => project(R[i]), go, get cur() { return cur; } };
+})();
+</script>
+<footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/studio">← The Studio</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/studio/works">the studio’s premieres</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/ecology">the research ecology</a></nav></footer></body>
+</html>
