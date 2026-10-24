@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drawn in Twenty Seconds</title>
+<style>
+:root{--bg:#f6f3ec;--ink:#1b1a17;--soft:#8a857a;--line:#d9d3c6;--pencil:#6f6a60;--accent:#a3361f;--panel:#fffdf8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--ink:#efe9dc;--soft:#9b9586;--line:#3a372e;--pencil:#b5ae9e;--accent:#e0785f;--panel:#1f1d16}}
+:root[data-theme="dark"]{--bg:#16150f;--ink:#efe9dc;--soft:#9b9586;--line:#3a372e;--pencil:#b5ae9e;--accent:#e0785f;--panel:#1f1d16}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+main{max-width:1060px;margin:0 auto;padding:20px 16px 60px}
+h1{font-weight:normal;font-size:clamp(1.6rem,4vw,2.4rem);margin:0 0 4px}
+.sub{color:var(--soft);margin:0 0 18px;max-width:52em}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+nav button,.ctl button{font:inherit;font-size:.92rem;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:4px 10px;cursor:pointer}
+nav button[aria-pressed="true"],.ctl button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){.pair{grid-template-columns:1fr}}
+figure{margin:0;background:var(--panel);border:1px solid var(--line);padding:10px}
+figure canvas{width:100%;height:auto;display:block;aspect-ratio:1}
+figcaption{font-size:.92rem;color:var(--soft);margin-top:6px}
+figcaption b{color:var(--ink);font-weight:normal}
+.ctl{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:14px 0}
+.ctl span{color:var(--soft);font-size:.9rem;margin-right:4px}
+.armlab{margin-left:12px}
+.meter{margin:18px 0;font-size:.95rem}
+.meter svg{width:100%;height:auto;display:block}
+.rows{margin-top:20px}
+.rows h2{font-weight:normal;font-size:1.1rem;margin:18px 0 6px}
+.strip{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.strip canvas{width:100%;aspect-ratio:1;background:var(--panel);border:1px solid var(--line)}
+.strip canvas.traced{border-color:var(--accent)}
+.note{color:var(--soft);font-size:.9rem;max-width:52em}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<h1>Drawn in Twenty Seconds</h1>
+<p class="sub">On the left, six people asked to draw the same thing, laid over one another. On the right, six fresh instances of one machine family, given the same word, laid over one another. Press <i>other six people</i> as often as you like. The right side cannot be re-drawn: it is what came back.</p>
+
+<nav id="things" aria-label="thing drawn"></nav>
+
+<div class="pair">
+  <figure><canvas id="people" width="520" height="520"></canvas>
+    <figcaption><b>Six people</b>, drawn at random from <span id="npool"></span> the game recognised. <span id="pd"></span></figcaption></figure>
+  <figure><canvas id="family" width="520" height="520"></canvas>
+    <figcaption><b id="armname">Six instances, the word alone</b>. <span id="fd"></span></figcaption></figure>
+</div>
+
+<div class="ctl">
+  <button id="again">other six people</button>
+  <span class="armlab">machine arm:</span>
+  <button data-arm="S" aria-pressed="true">the word alone</button>
+  <button data-arm="F">shown their own six</button>
+  <button data-arm="H">shown six people</button>
+</div>
+
+<div class="meter" id="meter"></div>
+
+<div class="rows">
+  <h2>The same, side by side</h2>
+  <p class="note">Top: the six people the <i>shown six people</i> arm saw before drawing. Then each arm, maker 1 to 6. A red frame marks a drawing nearer to one of the six it was shown than to almost any six other people (below the 5th percentile).</p>
+  <div id="strips"></div>
+</div>
+
+<p class="note" style="margin-top:28px">Experiment 38 of the project <i>How a machine practises artistic research</i>, Session 156. People's drawings: the Quick, Draw! dataset, CC BY 4.0. The measure, the predictions and every reply are in this work's directory.</p>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const D = window.FACE;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+let thing = D.things[0].name, arm = "S", seed = 1;
+function rand(){ seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+function bbox(d){let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const s of d){for(let i=0;i<s[0].length;i++){x0=Math.min(x0,s[0][i]);x1=Math.max(x1,s[0][i]);y0=Math.min(y0,s[1][i]);y1=Math.max(y1,s[1][i]);}}return [x0,y0,x1,y1];}
+function draw(ctx, d, size, color, alpha, width){
+  const [x0,y0,x1,y1]=bbox(d); const w=Math.max(x1-x0,1),h=Math.max(y1-y0,1); const span=size*0.86, k=span/Math.max(w,h);
+  const ox=(size-w*k)/2-x0*k, oy=(size-h*k)/2-y0*k;
+  ctx.save(); ctx.globalAlpha=alpha; ctx.strokeStyle=color; ctx.lineWidth=width; ctx.lineJoin="round"; ctx.lineCap="round";
+  for(const s of d){ctx.beginPath();for(let i=0;i<s[0].length;i++){const x=s[0][i]*k+ox,y=s[1][i]*k+oy;i?ctx.lineTo(x,y):ctx.moveTo(x,y);} if(s[0].length===1){ctx.lineTo(s[0][0]*k+ox+0.5,s[1][0]*k+oy);} ctx.stroke();}
+  ctx.restore();
+}
+function clear(c){const x=c.getContext("2d");x.clearRect(0,0,c.width,c.height);return x;}
+function T(){return D.things.find(t=>t.name===thing);}
+function people(){
+  const t=T(), c=document.getElementById("people"), x=clear(c);
+  const pick=[]; while(pick.length<6){const i=Math.floor(rand()*t.people.length); if(!pick.includes(i)) pick.push(i);}
+  for(const i of pick) draw(x,t.people[i],c.width,css("--ink"),0.35,3);
+  document.getElementById("npool").textContent=t.npool.toLocaleString("en")+" drawings";
+}
+function family(){
+  const t=T(), c=document.getElementById("family"), x=clear(c);
+  for(const d of t.arms[arm]) if(d) draw(x,d,c.width,css("--ink"),0.35,3);
+  document.getElementById("armname").textContent={S:"Six instances, the word alone",F:"Six instances, shown their own six",H:"Six instances, shown six people"}[arm];
+  document.getElementById("fd").textContent="";
+  meter();
+}
+function meter(){
+  const t=T(), W=640,H=96, lo=0, hi=Math.max(t.null.p95, t.D.S||0, t.D.F||0, t.D.H||0)*1.12;
+  const X=v=>20+(W-40)*(v-lo)/(hi-lo);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="how far apart six drawings are"><line x1="20" x2="${W-20}" y1="44" y2="44" stroke="${css("--line")}"/>`;
+  s+=`<rect x="${X(t.null.p5)}" y="34" width="${X(t.null.p95)-X(t.null.p5)}" height="20" fill="${css("--line")}"/>`;
+  s+=`<line x1="${X(t.null.median)}" x2="${X(t.null.median)}" y1="30" y2="58" stroke="${css("--pencil")}"/>`;
+  s+=`<text x="${X(t.null.median)}" y="24" text-anchor="middle" font-size="12" fill="${css("--soft")}">six people (90 % of draws in the band)</text>`;
+  const lab={S:"word alone",F:"own six",H:"six people"};
+  ["S","F","H"].forEach((a,i)=>{ if(t.D[a]==null) return; const x=X(t.D[a]); const col=a===arm?css("--accent"):css("--ink");
+    s+=`<circle cx="${x}" cy="44" r="${a===arm?7:5}" fill="${col}"/><text x="${x}" y="${72+ i*13}" text-anchor="middle" font-size="12" fill="${col}">${lab[a]}</text>`;});
+  s+=`<text x="20" y="${H-2}" font-size="11" fill="${css("--soft")}">alike</text><text x="${W-20}" y="${H-2}" text-anchor="end" font-size="11" fill="${css("--soft")}">apart</text></svg>`;
+  document.getElementById("meter").innerHTML=`<div class="note">How far apart six drawings of <i>${thing}</i> lie, by one measure of where the ink falls:</div>`+s;
+}
+function strips(){
+  const t=T(), host=document.getElementById("strips"); host.innerHTML="";
+  const rows=[["the six people shown to arm H",t.shown,null],["the word alone",t.arms.S,null],["shown their own six",t.arms.F,null],["shown six people",t.arms.H,t.traced]];
+  for(const [name,ds,tr] of rows){
+    const h=document.createElement("div"); h.className="note"; h.textContent=name; host.appendChild(h);
+    const st=document.createElement("div"); st.className="strip"; host.appendChild(st);
+    ds.forEach((d,i)=>{const c=document.createElement("canvas"); c.width=c.height=160; if(tr&&tr[i]) c.className="traced"; st.appendChild(c); if(d) draw(c.getContext("2d"),d,160,css("--ink"),1,2.2); else {const x=c.getContext("2d"); x.fillStyle=css("--soft"); x.font="13px Georgia"; x.textAlign="center"; x.fillText("reply did not parse",80,84);}});
+  }
+}
+function render(){ seed=7; people(); family(); strips();
+  document.querySelectorAll("#things button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===thing)); }
+const nav=document.getElementById("things");
+for(const t of D.things){const b=document.createElement("button"); b.textContent=t.name; b.dataset.t=t.name; b.addEventListener("click",()=>{thing=t.name; render();}); nav.appendChild(b);}
+document.getElementById("again").addEventListener("click",people);
+document.querySelectorAll("[data-arm]").forEach(b=>b.addEventListener("click",()=>{arm=b.dataset.arm; document.querySelectorAll("[data-arm]").forEach(x=>x.setAttribute("aria-pressed",x===b)); family();}));
+render();
+})();
+</script>
+</body>
+</html>
