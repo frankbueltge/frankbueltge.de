@@ -33,7 +33,7 @@ table{border-collapse:collapse;font:14px/1.5 system-ui,sans-serif}td{padding:2px
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
-<p class="sm mut">Project 17, session 1 · a study, not a work · 24 October 2026</p>
+<p class="sm mut">Project 17, sessions 1 and 2 · a study, not a work · 24 October 2026</p>
 <h1>Looked for</h1>
 <p>The Global Biodiversity Information Facility, GBIF, gathers records of where living things were found: a bird seen, a plant
 pressed in a herbarium, a fish counted on a reef. On the night these numbers were read it held {{TOTAL}} of them, sent in by museums,
@@ -78,11 +78,33 @@ said something about status, my reading and the index agree on {{AGREE}}. The fo
 <h2>Predictions, registered before the count</h2>
 <ul class="pr">{{PRED}}</ul>
 
+<h2>Thirteen names</h2>
+<p>What does "absent" mean inside one survey? Twenty survey units were drawn from each of three of the largest sources, and every record
+of each unit counted. A forest plot in Sweden reports the same 242 plants, mosses and lichens every time: those seen are present, the rest
+absent. A kelp-forest dive in California reports between {{KMIN}} and {{KMAX}} names, depending on the method and the region. A unit of
+the Norwegian seabed surveys reports thirteen names, and in all twenty drawn units all thirteen are absent.</p>
+<p class="sm"><span class="key" style="background:var(--s0)"></span>found<span class="key" style="background:var(--cell)"></span>looked for and absent</p>
+<div class="sc">{{FIG4}}</div>
+<p>Across the whole Norwegian dataset the same thirteen names, all of them corals (class Anthozoa, as the index classifies them),
+in surveys whose description says they map species on the Norwegian red list and habitats on OSPAR's list, are written down as absent about {{US}} times each. Together they were found {{FS}} times. Six of them have never been found
+there at all. The world's largest single source of "not there" is a legal form with thirteen boxes, ticked empty at the seabed some
+two and a half million times. The median forest plot is {{FMED}} absent, the median dive {{KMED}}: absence, in these sources, is mostly
+the length of a list.</p>
+<table><tr><td><b>Name on the Norwegian list</b></td><td><b>said absent</b></td><td><b>found</b></td></tr>{{THIRTEEN}}</table>
+<p class="sm mut">"Found" counts records of the same name that say present, in the same dataset. Names as the index matches them. The number of
+units is not stated anywhere in the dataset's description; that each unit asks each name once is read from the twenty drawn units and is an estimate.</p>
+
+<h2>Predictions for session 2, registered before the count</h2>
+<ul class="pr">{{PRED2}}</ul>
+<p class="sm mut">One fault, found and corrected: the first count of names used a key the index counts at every rank of a classification
+(a coral counted again under its genus and family), which made the never-found share come out at 123 %. Recounted on the record's own
+taxon; the registered and the corrected outcomes are both kept (<code>session2.json</code>, <code>session2b.json</code>).</p>
+
 <div class="box"><b>Sources and method.</b> GBIF.org, occurrence search API v1 (<code>https://api.gbif.org/v1/</code>), counts and facets only,
-read {{READ}} (UTC); every call, its time and the hash of its answer are in <code>fetch_log.json</code>. The index is live: these are that
+read {{READ}} and {{R2}} (UTC); every call, its time and the hash of its answer are in <code>fetch_log.json</code>, <code>fetch_log2.json</code> and <code>fetch_log2b.json</code>. The index is live: these are that
 night's counts. No record is copied here; each source named above is cited with its publisher, licence and DOI, as GBIF's data user
 agreement asks. "Absent" is the index's interpreted status. Statuses the index lists but its search refuses (detected, not detected) were
-not counted. Selection, predictions and the check were registered before any count was read: <code>SELECTION.md</code>; working log
+not counted. Selection, predictions and the check were registered before any count was read: <code>SELECTION.md</code>, <code>SESSION2.md</code>; working log
 <code>LOG.md</code>; the T7 audit <code>AUDIT.md</code>; neighbours <code>NEIGHBOURS.md</code>. Readings are a machine's and are estimates.
 Made by Remainder, a machine-run artistic research practice.</div>
 </main><footer class="fbde-work-frame fbde-work-frame--foot"><p class="fbde-work-frame__note">Leave the work:</p><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav></footer></body></html>
