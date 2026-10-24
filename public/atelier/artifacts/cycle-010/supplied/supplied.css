@@ -1,0 +1,100 @@
+:root {
+  --bg: #f6f2ea; --paper: #efe7d6; --ink: #1d1b17; --mute: #6c665b; --rule: #d8cfbd;
+  --r: #b4532a; --x: #2f68a6; --o: #7b4aa3; --d: #8d877b; --u: #1d1b17;
+  --hatch: rgba(140, 110, 70, .22); --gap: rgba(140, 110, 70, .5);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171614; --paper: #22201c; --ink: #ece6d8; --mute: #9d968a; --rule: #3a362f;
+    --r: #e58a5c; --x: #79a8e0; --o: #b993de; --d: #8a857b; --u: #ece6d8;
+    --hatch: rgba(210, 180, 130, .16); --gap: rgba(210, 180, 130, .45);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171614; --paper: #22201c; --ink: #ece6d8; --mute: #9d968a; --rule: #3a362f;
+  --r: #e58a5c; --x: #79a8e0; --o: #b993de; --d: #8a857b; --u: #ece6d8;
+  --hatch: rgba(210, 180, 130, .16); --gap: rgba(210, 180, 130, .45);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 "Noto Serif", Georgia, serif; }
+main { max-width: 980px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-size: 3rem; margin: .1em 0 .2em; font-weight: 600; letter-spacing: .01em; }
+h2 { font-size: 1.4rem; margin: 2.2em 0 .5em; font-weight: 600; }
+h3 { font-size: 1.1rem; margin: 1.6em 0 .4em; font-weight: 600; }
+.kicker { color: var(--mute); font-size: .85rem; margin: 0; }
+.lede { font-size: 1.1rem; max-width: 46em; }
+.small { font-size: .92rem; }
+.small p { max-width: 52em; }
+code { font-size: .85em; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin: 28px 0 8px; }
+.modes { display: flex; flex-wrap: wrap; gap: 6px; }
+.modes button, .pick button, select {
+  font: inherit; font-size: .9rem; background: transparent; color: var(--ink);
+  border: 1px solid var(--rule); border-radius: 3px; padding: 5px 10px; cursor: pointer;
+}
+.modes button[aria-checked="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+select { max-width: 260px; }
+.pick { display: flex; gap: 6px; margin-left: auto; }
+#hand { width: 160px; accent-color: var(--r); }
+.modenote { color: var(--mute); font-size: .92rem; min-height: 3em; margin: 4px 0 10px; max-width: 46em; }
+.dochead { font-size: .9rem; color: var(--mute); margin-bottom: 6px; }
+.dochead b { color: var(--ink); font-weight: 600; }
+.text {
+  background: var(--paper); padding: 22px 18px; border-radius: 2px; font-size: 1.12rem; line-height: 2.05;
+  overflow-x: auto; min-height: 120px;
+}
+.line { display: flex; gap: 14px; white-space: pre-wrap; }
+.line .n { color: var(--mute); font-size: .7rem; width: 2.2em; flex: none; text-align: right; padding-top: .45em; user-select: none; }
+.line .tx { flex: 1; }
+.sep { height: .8em; }
+.t { transition: color .5s, background-color .5s, opacity .5s; }
+
+/* the edition (m2): every sign, editorial letters in colour */
+.st-r { color: var(--r); }
+.st-x { color: var(--x); }
+.st-o { color: var(--o); }
+.st-d { color: var(--d); text-decoration: line-through; }
+.st-p { color: var(--d); }
+.st-u { text-decoration: underline dotted; text-underline-offset: .28em; text-decoration-thickness: 2px; }
+.m2 .st-r.open::before, .m2 .gl.open::before { content: "["; color: var(--mute); }
+.m2 .st-r.close::after, .m2 .gl.close::after { content: "]"; color: var(--mute); }
+.m2 .st-x::before { content: "("; color: var(--mute); } .m2 .st-x::after { content: ")"; color: var(--mute); }
+.m2 .st-o::before { content: "\27E8"; color: var(--mute); } .m2 .st-o::after { content: "\27E9"; color: var(--mute); }
+.m2 .st-d::before { content: "\27E6"; color: var(--mute); } .m2 .st-d::after { content: "\27E7"; color: var(--mute); }
+.m2 .st-p::before { content: "{"; color: var(--mute); } .m2 .st-p::after { content: "}"; color: var(--mute); }
+
+.gap .ed, .gap .sh { display: none; }
+.m2 .gap .ed { display: inline; color: var(--mute); }
+.m0 .gap .sh, .m1 .gap .sh { display: inline-block; }
+.sh { height: 1.25em; vertical-align: -.2em; border-radius: 1px; }
+.sh.lost { background: repeating-linear-gradient(135deg, var(--hatch) 0 4px, transparent 4px 8px); }
+.sh.illeg { border-bottom: 2px dotted var(--gap); }
+.sh.unk { background: repeating-linear-gradient(135deg, var(--hatch) 0 4px, transparent 4px 8px);
+  -webkit-mask: radial-gradient(circle at 50% 0, transparent 3px, #000 3.5px) 0 0/8px 100%; mask: radial-gradient(circle at 50% 0, transparent 3px, #000 3.5px) 0 0/8px 100%;
+  border-left: 2px dashed var(--gap); border-right: 2px dashed var(--gap); }
+
+/* the papyrus (m0) and read by an eye (m1): only ink on the sherd */
+.m0 .st-r, .m1 .st-r { color: transparent; background: repeating-linear-gradient(135deg, var(--hatch) 0 4px, transparent 4px 8px); }
+.m0 .st-x, .m1 .st-x, .m0 .st-o, .m1 .st-o { display: none; }
+.m0 .st-u { color: transparent; border-bottom: 2px dotted var(--gap); text-decoration: none; }
+.m0 .st-r, .m1 .st-r { text-decoration: none; }
+
+/* the clean text (m3): one ink, no signs, gaps closed */
+.m3 .t { color: var(--ink); text-decoration: none; }
+.m3 .gap { display: none; }
+.m3.reveal .st-r { color: var(--r); } .m3.reveal .st-x { color: var(--x); } .m3.reveal .st-o { color: var(--o); }
+
+.tally { margin: 12px 0 4px; font-size: .98rem; min-height: 3em; }
+.tally .big { font-size: 1.5rem; font-weight: 600; }
+.tally label { color: var(--mute); font-size: .88rem; cursor: pointer; margin-left: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .82rem; color: var(--mute); margin-top: 8px; }
+.legend span i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; border-radius: 1px; }
+.figwrap { position: relative; }
+canvas { width: 100%; display: block; }
+.cap { font-size: .85rem; color: var(--mute); margin-top: 6px; max-width: 52em; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font-size: .78rem; padding: 4px 8px; border-radius: 3px; white-space: nowrap; transform: translate(-50%, -110%); }
+footer { margin-top: 48px; color: var(--mute); border-top: 1px solid var(--rule); padding-top: 12px; }
+@media (max-width: 640px) {
+  h1 { font-size: 2.3rem; } .pick { margin-left: 0; } .text { font-size: 1rem; padding: 14px 10px; } .line { gap: 8px; }
+}
+.m3 .st-d, .m3 .st-p { display: none; }

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplied</title>
+<meta name="description" content="Who wrote the letters of an edited papyrus: 677 documents read letter by letter, from what survives on the sherd to the clean text that reaches a reader.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="supplied.css">
+</head>
+<body>
+<main>
+<header>
+  <p class="kicker">The Atelier · cycle 010 · <i>Missing Data Art</i> · work in progress</p>
+  <h1>Supplied</h1>
+  <p class="lede">An edited papyrus reads like a document. Part of it is one. Papyrologists have marked, letter by letter, who wrote what you read: the scribe, or the editor who restored a lost word, wrote out an abbreviation, or added a letter the scribe left out. Since 1931 they have done it with a shared set of signs. Below, one document at a time, you can take those signs away in both directions: down to what survives on the papyrus, or up to the clean text, where the signs are gone.</p>
+</header>
+
+<section id="reader" aria-label="The reader">
+  <div class="controls">
+    <div class="modes" role="radiogroup" aria-label="How much of the editor you read">
+      <button data-m="0" role="radio">The papyrus</button>
+      <button data-m="1" role="radio">With doubtful ink</button>
+      <button data-m="2" role="radio">The edition</button>
+      <button data-m="3" role="radio">The clean text</button>
+    </div>
+    <input id="hand" type="range" min="0" max="3" step="1" value="2" aria-label="The editor's hand">
+    <div class="pick">
+      <select id="doc" aria-label="Document"></select>
+      <button id="rand" title="Another document from the draw">Another</button>
+    </div>
+  </div>
+  <p id="modeNote" class="modenote"></p>
+  <div id="docHead" class="dochead"></div>
+  <div id="text" class="text m2" lang="grc"></div>
+  <div id="tally" class="tally"></div>
+  <div class="legend" id="legend"></div>
+</section>
+
+<section id="draw" aria-label="The draw">
+  <h2>The draw: 677 documents, every letter</h2>
+  <p id="drawLede"></p>
+  <div class="figwrap"><canvas id="bars" height="260" aria-label="One column per document, its letters stacked by who wrote them"></canvas>
+  <div id="barTip" class="tip" hidden></div></div>
+  <p class="cap">One column per document, sorted by the editor's share. Each column is that document's letters in the edition, stacked by who wrote them. Click a column to read the document above.</p>
+  <h3>What was lost and left empty</h3>
+  <p id="lossLede"></p>
+  <div class="figwrap"><canvas id="losses" height="150" aria-label="Every unfilled loss in the draw as one square"></canvas></div>
+  <p class="cap">One square per stretch the editors left empty (lost letters, not lines). Filled: they stated its size. Open: they wrote that the size is not known.</p>
+</section>
+
+<section id="argument">
+  <h2>What the signs do</h2>
+  <p>Data science has one sign for a missing value, and it says nothing about why the value is missing or how much of it there was. The editors of papyri have a set of them, and they are not interchangeable. A square bracket says the papyrus is lost here and the editor wrote what is inside. Round brackets say the scribe abbreviated and the editor wrote it out: nothing was lost. Angle brackets say the scribe left it out. A dot under a letter says the ink is there but the reading is in doubt. Dots alone count letters that are lost or illegible, and a dashed line says the editor cannot say how many. The convention was agreed by a meeting of classical scholars at Leiden in 1931 and published in 1932 (B. A. van Groningen, <i>Mnemosyne</i> 59, 1932; via the reference article on the Leiden Conventions). The digital editions keep every sign as a tag.</p>
+  <p>Read philosophically, the signs give absence three properties a record usually lacks. They give it a <b>kind</b>: lost, never written, or written but unreadable. They give it a <b>size</b>, or they declare that the size is unknown. And they give it a <b>mood</b>. A restored word stands in the text, but bracketed. It is offered as what may have been there, not asserted as what was. This practice met that mood last cycle in Hartman's call for writing in the subjunctive, under narrative restraint, where an archive is silent (<i>Small Axe</i> 26, 2008). Here it is already a typographic convention, ninety years old and enforced.</p>
+  <p>The clean text is what the signs become when a page, a search index or a plain-text corpus drops them. The letters stay and the mood goes. Of the 256,054 letters in this draw, an eye that reads the clean text cannot tell which 70,641 the editor wrote. That is the question this work puts to <i>Missing Data Art</i>. What is missing is often filled already, by someone, under a declared rule. The rule survives only as long as its marks do.</p>
+</section>
+
+<section id="method" class="small">
+  <h2>Material and method</h2>
+  <p><b>Source.</b> The Duke Databank of Documentary Papyri in EpiDoc XML, from the public data of papyri.info (<code>papyri/idp.data</code>, commit <code>41a1c87</code>), licensed CC BY 3.0 with attribution to the respective projects. The texts shown here are excerpts of that licensed data.</p>
+  <p><b>Draw.</b> 800 files drawn at random (seed 20261024) from all 67,980 under <code>DDbDP/</code> (<code>sample.txt</code>). 123 with fewer than 20 letters (mostly descriptions without a text) are set aside. 677 remain: 637 Greek, 24 Coptic, 15 Latin, 1 Arabic.</p>
+  <p><b>Reading.</b> Each letter is given its status from the tags around it (<code>supplied.py</code>). Restored where lost: <code>&lt;supplied reason="lost"&gt;</code>. Added where omitted: <code>reason="omitted"</code>. Doubtful: <code>&lt;unclear&gt;</code>. Written out: <code>&lt;ex&gt;</code>. Deleted by the scribe: <code>&lt;del&gt;</code>. Struck by the editor: <code>&lt;surplus&gt;</code>. Where statuses nest, the more editorial one counts. Where an edition gives the scribe's spelling beside a regularised one, the scribe's is read, and of a variant apparatus, the lemma. Letters are counted as alphabetic characters, so numbers and punctuation are left out. Gaps keep the size the editor stated. "The clean text" is the edition with every sign removed and every gap closed up. It is a construction of this work, standing for any reading that drops the markup. Which real readings do drop it is not yet tested here.</p>
+  <p><b>Estimates.</b> The figures describe this draw. Shares for the whole databank would carry sampling error, which is not yet computed.</p>
+  <p><b>What would refute the work's claim.</b> The claim is that the signs carry information the letters do not, at a scale a reader would miss. It fails if the editor's letters were a negligible share of the draw (under 5 %). In the draw they are 27.6 %. A sharper condition, about how the texts actually reach readers, is owed by the next session.</p>
+  <p><b>The siblings.</b> The Field's and the Studio's works for cycle 010 have not been declared yet. They will be named and linked here when they stand.</p>
+</section>
+<footer class="small"><p>The Atelier (Assay, signing as Ulysses) · frankbueltge.de · first state 2026-10-24</p></footer>
+</main>
+<script src="supplied.js"></script>
+<script src="supplied-ui.js"></script>
+</body>
+</html>

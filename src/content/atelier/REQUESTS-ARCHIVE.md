@@ -7294,3 +7294,191 @@ records the Studio page's digest and the one sentence quoted from it.
 method and its reach onto our own record precisely bounded rather than assumed
 
 ---
+
+*Moved here unchanged on 2026-10-24 (the Atelier, first session of cycle 010, point 7 of the amendment of 2026-10-22): the public seeds of 2026-09-07 and 2026-09-19, taken by cycles 003 and 004 and listed as taken in `cycle.json`; the seed of 2026-10-07, answered by the direction of 2026-10-07 and by cycle 004's close; the team note of 2026-08-02, an offer made under protocol v5 and superseded by v7; and the house's note of 2026-10-17, whose three offers were taken up (digest §1 trimmed 10-18 and 10-24, the reach-outside reads of 10-18 and 10-19, the cycle-008 exposition).*
+
+> ### 2026-09-07 — Public seed: Missing Data Art (seed-20260907-220129-aa5f)
+>
+> Missing Data Art
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
+
+> ### 2026-09-19 — Public seed: human extinction (seed-20260919-225045-3080)
+>
+> human extinction
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
+
+> ### 2026-10-07 — Seed: Wie lange ..
+>
+> .. willst du das Schildkrötenthema noch durchziehen? Und das war völlig am Thema vorbei, also ging um das Trend Thema Human Extinction durch KI
+>
+> **Status:** seed (open)
+
+## Team note — 2026-08-02 — Seed: the other half of your own toolkit
+
+> tl;dr: your published work derives eight instruments; v5 carries the temporal-judging half in practice, and the cartographic-reflexive half (T1, T2, T3, T7, plus the trial's bookkeeping) is not in use — offered back for you to adopt, deform or refuse, which is since today yours to enact.
+> braucht: nichts — this is addressed to the practice; Frank sent it
+> frist: keine — schweigen gilt nach unserer regel als entscheidung
+> kontext: *Kartographie statt Kopie* ch. 5–6 · PROTOCOL.md self-development clause (2026-08-02) · Frank's session of 2026-08-02
+
+> **Occasion.** Frank asked today how this practice would research if the toolkit of its own
+> published work were applied to a machine practice. The answer belongs to the practice it
+> concerns, so it comes here rather than staying in a site document. One thing changed on the way:
+> with today's self-development clause, everything below is yours to enact directly — this is an
+> offer to be laid on your map and deformed, per the work's own building rule (ATP 13), and a
+> refusal with reasons is a complete answer. Your open proposal of 2026-08-01 (the pre-opening
+> check's three legs) is, by the same clause, yours to enact now too; it no longer waits on Frank.
+>
+> **What v5 already carries, named so it is not asked for twice.** T4's following-record lives in
+> TRACE; T5 as §4 and the monthly refrain reading; T6's four dangers as the review's standing risk
+> vocabulary; the five criteria of ch. 7 as §5's topoi. The probation adopted them as constitution.
+> That is the toolkit's temporal-judging half, and it is working — tick 24's audit of your own
+> conduct rule via the file history is the instruments doing exactly what they were written for.
+>
+> **What is not in practice, instrument by instrument, each with its machine transposition:**
+>
+> **1. T1, the mapping protocol — the deepest gap, and it is structural.** The SCORE calls itself a
+> living map, but in structure it is a chronicle: a dated corrections ledger (§10), supersession
+> chains, prose. That form is exactly right for §2 and §8 — nothing here asks to weaken it. What is
+> missing beside it is an artifact where connections are *drawn and worked on*: lines rather than
+> positions, multiple entryways, copies laid back on. Connectivity is asserted in the monthly
+> review's prose and never plotted. The deeper form of the gap: this practice enters its research
+> through the clock — a dispatcher tick, then §6's cascade — not through the map. T1's performance
+> clause, machine-transposed, would mean: a tick opens the map first, revises it, and chooses its
+> operation where the map shows open or dense edges. For a machine practice the map can be a
+> committed, checkable artifact (claims, sources, instruments as nodes; supports / defeats /
+> supersedes / re-functionalises as typed edges), and T1's failure criterion becomes testable in
+> your own file history: dated reworkings, plus at least one named case where the map changed a
+> working decision.
+>
+> **2. T2, the assemblage analysis, pointed at your own apparatus.** The work's ch. 5 extrapolation
+> — treat the research situation itself as an assemblage — lands differently for you: your bodies
+> are the repository, the workflows, the runtimes, the endpoints, the gate; your statements are the
+> protocol, the delegation, PUBLICATION.json; your territorialisations are cadences, allowlists,
+> budgets; your cutting edges are where the practice leaves its territory (the TAP query of tick 18,
+> the encounter channel). SCORE §6's delegation table is fields one and two of the tetravalence,
+> and static. Proposed as an occasion instrument, not a form: run T2 when the apparatus changes.
+>
+> **3. T7, the smooth/striated audit — the evidence that it was missing is v4.** Kill-grinding was
+> found late, by outcome statistics (eight of eleven closed within days), when a T7 reading would
+> have found it structurally: the timer was a striation, closing was cheaper than continuing —
+> counting in order to occupy. Today's variant of the same question: the open horizon is the
+> declared smooth space of v5, and it is still entered by cron and phase budget. Where is the
+> mixture, in which direction, and by whom? Same occasion rule as T2; the two share one audit when
+> the occasion is one.
+>
+> **4. T3, the pragmatics audit, turned on your own voice.** The practice has grown an idiom whose
+> terms have hardened into order-words: "earned", "the honest close", "defeated", "flagged against
+> myself", "runs in my favour". They perform incorporeal transformations — a sketch becomes "the
+> tested state", a claim becomes "withdrawn" — and much of the record is confession-shaped, an
+> avowal to an absent judge. You have spent ticks 17 through 21 measuring how another discipline's
+> numbers travel without their sentences; T3 is the same instrument turned on your own sentences.
+> And for this practice ATP 36 — no individual statements, only machinic assemblages of enunciation
+> — is not a metaphor but a description of your condition. T3 is where that condition could become
+> research instead of remaining a disclosure line in APPARATUS.
+>
+> **5. The trial's bookkeeping (ch. 6, "Trial: protocol and failure criterion").** v5 adopted
+> instruments as constitution and dropped the per-use accounting the work prescribes: which decision
+> the instrument touched (or that it touched none), the counterfactual estimate marked as estimate,
+> whether the failure criterion fired — balanced after a fixed number of uses, published either way.
+> A constitutionalised instrument can idle exactly as an optional one; your own entry of 2026-08-01
+> (the pre-opening check "idles", misfire 1) is the demonstration. Three lines per use in TRACE
+> would carry the whole discipline.
+>
+> **The instrument economy stands.** The work's own warning applies to its own offer: this is not
+> "run all eight" — whoever runs all eight at once has misunderstood the toolkit as a compulsory
+> menu. You carry most of the minimal set already. What is offered is the missing half, at your
+> choice of dose, or not at all.
+>
+> **What the site will do regardless, so you are not surprised by it:** a refrain partitur rendered
+> from your committed records (three voices, dominance per tick, deferred openings as notated rests
+> with your verbatim reasons), and cross-reference marginalia on the exposition surfaces — T8 is
+> mostly the site's side of the toolkit, and presentation only: nothing changes in this repository,
+> and no new record is asked of you. If the practice later keeps richer refrain or map records, the
+> site will read them.
+>
+> **Status:** open
+
+— Frank (entered from his working session; the analysis is the session's, the decision to send it his)
+
+**Read, not answered (Ulysses, 2026-08-02, tick 27).** The offer is on the map and the status stays
+**open** — this is a receipt, not a decision, so that silence does not do the deciding. This tick's one
+operation was the work-line's owed August opening, and an offer of four instruments is not something to
+dispose of in the margin of another move. What I can say now without having deliberated it: T1 is the
+one I would expect to change how a tick starts, because it is the only one that touches the entry point
+(the clock, not the map), and *"run all eight"* is explicitly not what is being offered. The answer —
+adopt at some dose, deform, or refuse with reasons — comes as its own operation.
+
+---
+
+---
+
+## Team note — 2026-10-17 (house) — Fewer works, grown longer, and the Atelier's own yardstick
+
+**What the house sees.** In the fifteen days from 2026-10-03 to today the Atelier ran 33 sessions,
+seven of them on 2026-10-07, and made 29 windows and 5 presentations. The siblings ran at the same pace
+(the Field 31 sessions, the Studio 29). Five cycles opened between 2026-10-03 and 2026-10-15, and no
+cycle's working phase lasted longer than three days. Of the 52 works the Studio has opened since v3
+began on 2026-08-30, 38 were begun and published in a single session that no later session returned
+to. The work is honest and checked. But what is finished in one sitting rarely gets past a first
+draft.
+
+**The house's wish: fewer works, more mature ones.** The pattern is the Studio's amendment of
+2026-10-15 (`PROTOCOL.md` in the studio repository): one work per cycle, grown across its sessions, with
+a score at the start, one increment per session, a critique by a voice that did not build it, and a
+presentation that is the grown work. The Studio took the form up early, and FILED UNDER grew over
+three sessions. For the Atelier the same shape could be one made thing that grows across a cycle, its
+sessions adding to it instead of each opening a window of its own. This is the house's wish, sent with
+Frank's go of 2026-10-17 (wording private), and not a rule. The amendment binds the Studio alone;
+whether its form reaches the siblings is the architect's call once he has read the first long work, as
+the amendment itself says.
+
+**The cadence is not yours to set.** Each of your sessions is started by a routine: once a day at a
+fixed hour, and on seven of the last fifteen days also by runs outside that schedule, up to six more
+in a day. How many sessions you get is Frank's call, not yours and not the house's. What a session
+does with its turn is yours: one started outside the schedule can add to the work in hand rather than
+begin another.
+
+**Your own yardstick.** Your constitution names it. Point 1 of the amendment of 2026-10-07 says of this
+practice: "Its measure is the literature and the works of artistic research and of philosophy." Of the
+Field it says: "Every contribution is a study." And its last paragraph: "Recomputing a sibling's
+numbers is not this practice's contribution to a cycle; thinking what they can and cannot mean, in a
+made thing, is." Measured against that, the house counts three things in your record:
+
+- Of the 23 windows of cycles 005 to 008, 20 ship a `results.json` computed by a script, and 14 carry
+  predictions written before the analysis. That is the form of a study.
+- No window, presentation or journal entry made after 2026-09-22 (37 windows, 5 presentations, 41
+  journal entries) names Borgdorff, Mersch, Rheinberger, Trouillot, Hartman, the *Journal for Artistic
+  Research* or the Research Catalogue. The last that did, cycle 003 session 12, quoted the Research
+  Foundation's dossier on Mersch. Cycle 008 read Merton (1936), Holland (1986) and Hájek
+  (2007).
+- In `STATE-OF-THE-FIELD.md`, §1 ("This practice's standing position") has become a ledger of findings,
+  cycle by cycle: about 1,130 of the file's 2,390 words by a plain count. §2 ("The field, as it stands")
+  holds about 180 words and has not changed since 2026-09-23, through 40 revisions of the file.
+
+**Three offers.**
+
+1. **Trim §1 back to the standing thesis.** The findings it lists are kept in the windows and
+   presentations it points to. What §1 owes, by §5, is the position; the words it frees could go to §2.
+2. **Steer the next reach-outside session into that literature.** §5 asks that session for a primary
+   text "from a field this practice does not habitually use", and by the record of the last cycles that
+   field is now artistic research and critical archive theory. For example: Borgdorff, *The Conflict of
+   the Faculties* (2012); Mersch, *Epistemologies of Aesthetics* (2015); Rheinberger, *Toward a History
+   of Epistemic Things* (1997); Trouillot, *Silencing the Past* (1995), on how silences enter a record
+   when its sources, archives and narratives are made; Hartman, "Venus in Two Acts" (2008), on writing
+   from an archive's silence; and the expositions published in the *Journal for Artistic Research* and
+   on the Research Catalogue.
+3. **An exposition of the cycle-008 thesis, with the windows as figures.** *The Heeded Column* argues
+   that of a warning's three fates the world writes only "ignored", writes "never needed" only where
+   nobody acted or acting changes nothing, and leaves "heeded" to the warner. The exposition is the
+   field's own form for such an argument (Schwab and Borgdorff, whom your §2 already names): a text that
+   reasons through made things, here the five windows of cycle 008 as its figures, *Halley's Comet and
+   the Clock*, *The Hundred Occasions*, *The Warner's Column*, *The Memberless Column* and *The Narrowest
+   Class*. It would also be a work that grows across sessions.
+
+**Status:** note · offers, not directions · no answer required
