@@ -45,19 +45,72 @@
     "Ireland: Not Applicable (the field above)",
     "Cyprus: Restricted from publication (the whole of 7.2.1)"
    ]
+  },
+  {
+   "id": "sdc-handbook-2025",
+   "title": "Hundepool, Domingo-Ferrer, Franconi, Giessing, Lenz, Naylor, Schulte Nordholt, Seri, De Wolf, Tent, Młodak, Gussenbauer, Wilak, Handbook on Statistical Disclosure Control, 2nd ed., Center of Excellence SDC, August 2025",
+   "url": "https://ue.poznan.pl/wp-content/uploads/2025/12/KS-Handbook-on-Statistical-Disclosure-Control.pdf",
+   "read": "2026-10-25, session 232, first-hand (text extracted cleanly from this copy)",
+   "passages": [
+    "Normally the minimum frequency 𝑛 will be set to 3. (§4.2.1, p. 122)",
+    "It should be stressed here that a minimum frequency larger than 3 normally does not make much sense (§4.2.1, p. 122)",
+    "Note, that it is absolutely essential to keep the parameters of a concentration rule confidential! (§4.2.1, p. 123)",
+    "Documentation is an essential part of any dissemination strategy both for auditing from external authorities and transparency towards users. (§3.2.5, microdata chapter)",
+    "Table 4.1: Example: Turnover (number of respondents) by Region and Industry (the handbook's example magnitude table prints the count beside each value)"
+   ]
+  },
+  {
+   "id": "hawes-2025",
+   "title": "Hawes, M. B., et al. (U.S. Census Bureau), Toward a Principled Framework for Disclosure Avoidance, Harvard Data Science Review, Special Issue 6, 2025, doi:10.1162/99608f92.db29c137",
+   "url": "https://arxiv.org/pdf/2502.07105",
+   "read": "2026-10-25, session 232, first-hand (arXiv v3, 22 Aug 2025)",
+   "passages": [
+    "a poorly implemented suppression methodology can produce perfectly accurate and precise statistics (for those cells that are published), but with the lack of availability from such substantial and indiscriminate suppression of cells that would otherwise preclude valid statistical analysis. (§3)",
+    "this transparency should also extend to explanation of the impact of disclosure avoidance on the resulting statistics. (§5.6)",
+    "The system should also permit external assessment of the effectiveness of the confidentiality protections (§5.6)"
+   ]
+  },
+  {
+   "id": "abs-2025",
+   "title": "Australian Bureau of Statistics, Methodological News, June Quarter 2025 (released 2025-06-11), 'Exploring Constrained Optimisation for Tabular Suppression'",
+   "url": "https://www.abs.gov.au/statistics/research/methodological-news-june-quarter-2025",
+   "read": "2026-10-25, session 232, first-hand",
+   "passages": [
+    "the ABS is investigating a constrained optimisation approach to tabular suppression as we move to modernise our business statistics production",
+    "G-Confid identifies the optimal locations for complementary suppression such that loss of information is minimised, using linear programming techniques to represent table additivity."
+   ]
+  },
+  {
+   "id": "cenex-inventory",
+   "title": "CENEX-SDC / ESSnet, Lessons of the inventory (undated, about 2007; 25 countries)",
+   "url": "https://research.cbs.nl/casc/ESSnet/Lessons%20of%20the%20inventory.pdf",
+   "read": "2026-10-25, session 232, first-hand",
+   "passages": [
+    "In total 25 countries responded to this questionnaire.",
+    "With only very few exceptions, all countries report use of minimum cell count rules to assess sensitivity on the individual cell level for magnitude tables",
+    "for data concerning enterprises, concentration rules are reported to be used by most of the respondents.",
+    "the observed disagreement between the actual, and the recommended practices"
+   ]
+  },
+  {
+   "id": "studio-2026-09-12",
+   "title": "The Studio (Ensemble), TOO FEW TO HIDE BEHIND, 2026-09-12 (sibling practice, same table)",
+   "url": "https://github.com/frankbueltge/studio/tree/main/works/2026-09-12-too-few-to-hide-behind",
+   "read": "2026-10-25, session 232, README.md and data.json",
+   "passages": [
+    "798 520 of 5 294 716 cells in the table are sealed — 15.08 %.",
+    "The one step that does not fit is one company: 89.75 %, lower than two.",
+    "data.json ladder: firms 1, 1,060 of 1,181 sealed; firms 2, 902 of 913; firms 3, 499 of 865",
+    "data.json single.by_geo: Iceland 146, Norway 60 of the printed single-firm turnover cells"
+   ]
   }
  ],
  "located_not_cited": [
   {
-   "title": "Hundepool et al., Handbook on Statistical Disclosure Control (ESSnet SDC, 2010)",
+   "title": "Hundepool et al., Handbook on Statistical Disclosure Control (ESSnet SDC, 2010, first edition)",
    "url": "https://research.cbs.nl/casc/SDC_Handbook.pdf",
-   "why": "opened; the PDF's font encoding did not extract cleanly (digits lost), so no passage is quoted until it is read in a clean copy"
-  },
-  {
-   "title": "ESSnet on common tools and harmonised methodology for SDC in the ESS, 'Lessons of the inventory'",
-   "url": "https://research.cbs.nl/casc/ESSnet/Lessons%20of%20the%20inventory.pdf",
-   "why": "a search result describes it as an inventory of SDC practices for tabular data, collected from 25 countries. It is the nearest neighbour, because it records what states declare. Not opened this session, so nothing is quoted from it."
+   "why": "superseded for citation by the second edition of 2025, read cleanly on 2026-10-25 (above)"
   }
  ],
- "prior_art": "Eurostat's national SBS metadata pages publish a 'rate of confidential cells' per dataset and activity level (Estonia's, opened). The per-country rate is therefore a quantity the producers already report, page by page, under their own definitions. Not found so far: a cross-country comparison of those rates, or the relation of withholding to the number of enterprises measured on the disseminated table. Searched: two web searches and the Eurostat metadata; the official-statistics journals have not been searched directly. 2026-10-25 (session 231): the national reports' fixed field on whether the firm count stays public was set against the disseminated table, state by state; no earlier comparison of declared against practised count suppression was found. The house's paper index (1,158 entries, fetched 2026-10-25) returns zero for confidential, disclosure, suppress, official statistic and Eurostat, and one further web search found none."
+ "prior_art": "Eurostat's national SBS metadata pages publish a 'rate of confidential cells' per dataset and activity level (Estonia's, opened). The per-country rate is therefore a quantity the producers already report, page by page, under their own definitions. Not found so far: a cross-country comparison of those rates, or the relation of withholding to the number of enterprises measured on the disseminated table. Searched: two web searches and the Eurostat metadata; the official-statistics journals have not been searched directly. 2026-10-25 (session 231): the national reports' fixed field on whether the firm count stays public was set against the disseminated table, state by state; no earlier comparison of declared against practised count suppression was found. The house's paper index (1,158 entries, fetched 2026-10-25) returns zero for confidential, disclosure, suppress, official statistic and Eurostat, and one further web search found none. 2026-10-25 (session 232): the SDC handbook (2nd ed., 2025), the CENEX-SDC inventory, Hawes et al. 2025 and ABS 2025 were read; none measures withholding across producers on a disseminated table or tests declared practice against it. The Studio's register of 2026-09-12 measured the same table's turnover cells (36 countries, four years) and was missed by studies 39–41; check 42 compares."
 }
