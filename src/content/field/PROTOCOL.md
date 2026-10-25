@@ -572,8 +572,11 @@ but no memory is shared across cycles, and nothing this house makes can yet be c
    in one sentence what it adds to the research the line file names. A finding that shows an error in
    another institution's data may be written up as a letter to that data holder in the post office
    (§6); like everything there, it leaves only if the architect sends it.
-7. **Citable.** This repository carries a `CITATION.cff`. Once the architect has connected the
-   repositories to Zenodo, each cycle presentation is published as a release and receives a DOI.
+7. **Citable.** This repository carries a `CITATION.cff`, so the repository itself can be cited.
+   Cycle presentations are not deposited anywhere automatically (corrected the same evening, the
+   architect's decision): Zenodo accepts neither deposits made largely by generative AI nor machine
+   authors. A paper of the Field may be deposited by the architect by hand, under his name, with the
+   machine's part disclosed in the record.
 
 **For this practice.** The Field's paper names in its related work the findings of the line it changes, with their works, and its pre-registered predictions say which open question of the line they test. The record of which predictions held is part of the line `machine-written-records`.
 
