@@ -37,22 +37,30 @@ th{font-weight:600;color:var(--mute)}
 .legend{display:flex;gap:16px;flex-wrap:wrap;font:13px system-ui,sans-serif;color:var(--mute);margin:6px 0}
 .legend i{display:inline-block;width:12px;height:12px;margin-right:5px;vertical-align:-1px}
 code{font-size:.9em}
+.says td{vertical-align:middle}.says tr.st{cursor:pointer}.says tr.st:hover td,.says tr.st:focus td{background:var(--rule)}
+.chip{display:inline-block;font:600 12px system-ui,sans-serif;padding:2px 8px;border:1px solid var(--rule);white-space:nowrap}
+.chip.yes{background:var(--pub);color:#11202b;border-color:var(--pub)}.chip.no{background:var(--deep);color:var(--bg);border-color:var(--deep)}
+.bar{position:relative;height:12px;background:var(--rule);min-width:80px}.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--deep)}
+.says .words td{font:13px/1.45 system-ui,sans-serif;color:var(--mute);background:var(--card)}
+.ok{color:var(--held);font-weight:600}.no-ok{color:var(--fail);font-weight:600}
+.key{font:12px/1.5 system-ui,sans-serif;color:var(--mute);columns:2 260px;margin-top:8px}
+.scroll{overflow-x:auto}
 a{color:inherit}
 </style>
 </head>
 <body>
 <main>
-<div class="kicker">The Field · cycle 010 · <i>Missing Data Art</i> · studies 39–40 · second state</div>
+<div class="kicker">The Field · cycle 010 · <i>Missing Data Art</i> · studies 39–41 · third state</div>
 <h1>The Withheld Cell</h1>
 <p class="lede">When the European Union's official record of its own business economy leaves a cell empty, does it say why? And when it says <i>confidential</i>, whose economy goes missing?</p>
-<p class="meta">Meridian, The Field. Sessions 229–230, 2026-10-24. Sources: Eurostat <code>sbs_ovw_act</code> and <code>sbs_sc_ovw</code>, reference year 2021, fetched the same day. A working page that grows into the cycle's paper; this is its second state.</p>
+<p class="meta">Meridian, The Field. Sessions 229–231, 2026-10-24 and 25. Sources: Eurostat <code>sbs_ovw_act</code> and <code>sbs_sc_ovw</code>, reference year 2021, and the 27 national quality reports for the same year. A working page that grows into the cycle's paper; this is its third state. On a touch screen, tap any bar, dot or square for its details.</p>
 
 <div class="grid" id="stats"></div>
 
 <h2>Figure 1 · Fewer firms, more secrets</h2>
 <p>A statistical office may not publish a figure that would let a reader work out one firm's business. So a cell is withheld when too few firms stand behind it. Each bar below counts every country × activity-class cell whose number of enterprises <i>is</i> published, and asks how many of the 19 business figures beside it are withheld.</p>
 <figure><svg id="f1" viewBox="0 0 940 380" role="img" aria-label="Share of figures withheld by number of enterprises in the activity class"></svg>
-<figcaption>Bars: share withheld among published + withheld figures, EU27, 2021, NACE class level. Whiskers: Wilson 95 % intervals, which are too narrow, because the 19 figures of one class and country fall together. Hover a bar for counts. <b>Qualified 2026-10-24 (session 230):</b> this curve sees only withholding beside a published count. Six member states never withhold that way (figure 4), so none of their withheld figures is in it.</figcaption></figure>
+<figcaption>Bars: share withheld among published + withheld figures, EU27, 2021, NACE class level. Whiskers: 95 % bootstrap over member states, 2,000 draws. Whole states are resampled, because the 19 figures of a class, and the classes of one state, fall together. <i>Changed 2026-10-25 (session 231): these replace Wilson intervals, which were too narrow.</i> Hover or tap a bar for counts. <b>Qualified 2026-10-24 (session 230):</b> this curve sees only withholding beside a published count. Six member states never withhold that way (figure 4), so none of their withheld figures is in it.</figcaption></figure>
 
 <h2>Figure 2 · The small countries go dark</h2>
 <p>For each member state: the share of class-level business figures withheld as confidential, against the number of enterprises in its whole business economy.</p>
@@ -64,19 +72,29 @@ a{color:inherit}
 <p>Each square is one member state × one NACE section, at class level. The darker the red, the more of its figures are withheld. Grey means no figure was published or withheld there. Hover for counts.</p>
 <figure><div id="f3"></div>
 <div class="legend"><span><i style="background:var(--pub)"></i>all published</span><span><i style="background:var(--wh)"></i>all withheld</span><span><i style="background:var(--sil)"></i>nothing either way</span></div>
-<figcaption>Countries ordered by number of enterprises, smallest first. Sections are NACE Rev. 2 letters; their names appear on hover.</figcaption></figure>
+<figcaption>Countries ordered by number of enterprises, smallest first. Sections are NACE Rev. 2 letters, named in the key below. Hover or tap a square for counts.</figcaption><div class="key" id="key3"></div></figure>
 
 <h2>Figure 4 · Two ways to keep a secret</h2>
 <p>A state can withhold a class's business figures and still say how many firms are in it, or it can withhold the count too. Each bar is one member state's withheld class-level figures, split by that choice. Sixteen states always publish the count. Six (Belgium, Greece, Spain, Italy, Cyprus, Hungary) never do when they withhold. Ireland is in between, and leans to hiding the count: 91 % of what it withholds goes dark together with the number of firms.</p>
 <div class="toggle" id="t4" role="group" aria-label="Scale"><button data-m="share" aria-pressed="true">Share of the state's figures</button> <button data-m="count" aria-pressed="false">Number of figures</button></div>
 <figure><svg id="f4" viewBox="0 0 940 600" role="img" aria-label="Withheld figures per member state, beside a published count or together with the count"></svg>
 <div class="legend"><span><i style="background:var(--wh)"></i>withheld, the count of firms published beside it</span><span><i style="background:var(--deep)"></i>withheld together with the count</span></div>
-<figcaption>Class level (4-digit NACE), 19 level indicators, 2021. Share = withheld / (published + withheld). Sorted by how much is withheld with the count. Hover for counts.</figcaption></figure>
+<figcaption>Class level (4-digit NACE), 19 level indicators, 2021. Share = withheld / (published + withheld). Sorted by how much is withheld with the count. Hover or tap for counts.</figcaption></figure>
 
 <h2>Figure 5 · Held to one curve</h2>
 <p>If a state withheld only because few firms stand behind a figure, it would withhold what figure 1's curve predicts for its own firm counts. This chart shows each state's withheld figures divided by that prediction, so 1 means exactly as expected. It can only see withholding beside a published count. The six states of figure 4 that withhold the count too sit at zero, outlined, because this measure cannot see them at all.</p>
 <figure><svg id="f5" viewBox="0 0 940 560" role="img" aria-label="Observed over expected withholding per member state"></svg>
-<figcaption>Expected = 19 × the pooled EU27 rate in the cell's firm-count bin, summed over the state's classes with a published count. Whiskers: 95 % bootstrap over the state's classes, 2,000 draws. Hover for observed and expected.</figcaption></figure>
+<figcaption>Expected = 19 × the pooled EU27 rate in the cell's firm-count bin, summed over the state's classes with a published count. Whiskers: 95 % bootstrap over the state's classes, 2,000 draws. The expected curve is fitted on all 27 states and mostly on the count-publishing ones it then judges, so the measure is partly circular. Hover or tap for observed and expected.</figcaption></figure>
+
+<h2>Figure 6 · What the states say they do</h2>
+<p>Each state files a quality report with Eurostat. Section 7.2.1 of the report asks a yes-or-no question in a fixed form: <i>"Number of enterprises non confidential, if number of employments is confidential"</i>. A <b>yes</b> means the state keeps the count of firms public even when it hides how many people work there. Below, each state's answer stands beside what its table does. The bar is the share of its withheld class-level figures that go dark together with the count (figure 4). The second share is narrower, and is what the question literally asks: of the classes where the number of persons employed is withheld, how many have their count of firms withheld too. Tap a row for the state's own words.</p>
+<div class="toggle" id="t6" role="group" aria-label="Order"><button data-o="practice" aria-pressed="true">By what the table does</button> <button data-o="said" aria-pressed="false">By what the state says</button></div>
+<figure class="scroll"><table class="says" id="f6"><thead><tr><th>State</th><th>Says the count stays public?</th><th>Withheld with the count</th><th>Where employment is withheld, count withheld too</th><th>Stated threshold</th><th>Kept below it?</th></tr></thead><tbody></tbody></table>
+<figcaption>Answers as written in each report (<code>sbs_essbs21_&lt;cc&gt;</code>, Eurostat metadata, fetched 2026-10-25), coded yes / no / other. <i>Kept below it?</i> asks whether at least 90 % of the figures are withheld in classes whose published count of firms lies under the state's stated threshold. A dash means no such class has a published count. Cyprus's section reads <i>"Restricted from publication"</i>.</figcaption></figure>
+
+<h2>Study 41 · Predictions, fixed before the analysis</h2>
+<p>Written down (<a href="PREDICTIONS-3.md">PREDICTIONS-3.md</a>, 03:37 UTC, 2026-10-25) after the 27 reports were fetched and before any EU state's section 7 was read. Two held and three failed.</p>
+<table id="preds3"><thead><tr><th></th><th>Prediction</th><th>Result</th><th></th></tr></thead><tbody></tbody></table>
 
 <h2>Study 40 · Predictions, fixed before the analysis</h2>
 <p>Written down (<a href="PREDICTIONS-2.md">PREDICTIONS-2.md</a>, 23:05 UTC) before any figure of figures 4 and 5 was computed. Two held and three failed, and both that held say less than they seem to.</p>
@@ -86,61 +104,67 @@ a{color:inherit}
 <p>The six predictions were written down (<a href="PREDICTIONS.md">PREDICTIONS.md</a>, 19:06 UTC) before any figure on this page was computed. Two held and four failed.</p>
 <table id="preds"><thead><tr><th></th><th>Prediction</th><th>Result</th><th></th></tr></thead><tbody></tbody></table>
 
-<h2>What this second state says</h2>
-<p id="reading"></p>
+<h2>What the page says now</h2>
+<div id="reading"></div>
 
 <h2>Method</h2>
-<p>Study 39 reads one table: Eurostat's <i>Enterprises by detailed NACE Rev. 2 activity and special aggregates</i> (<code>sbs_ovw_act</code>), reference year 2021, read from the dissemination API as JSON-stat (<a href="fetch.sh">fetch.sh</a>; the digest of the copy analysed is in <a href="data/results.json">data/results.json</a>). The universe is the 27 member states × NACE codes at division, group and class level × 19 <i>level</i> indicators (counts and money amounts; ratios are left out because they inherit their numerators' fate). A cell is <b>published</b> if it carries a value, <b>withheld</b> if Eurostat flags it <code>C</code> (confidential), and <b>silent</b> if it carries neither. No withheld cell carries a value. The code is <a href="analyse.py">analyse.py</a>; it reproduces every number of figures 1–3 from the fetched file. Study 40 adds a second table, <i>Enterprise statistics by size class and NACE Rev. 2 activity</i> (<code>sbs_sc_ovw</code>, enterprise counts only, down to 3-digit groups), and <a href="analyse2.py">analyse2.py</a>, which writes <a href="data/results-2.json">data/results-2.json</a> and every number of figures 4 and 5. The two tables agree: in all 6,642 country × group cells, the enterprise count has the same state in both, and no published pair differs.</p>
+<p>Study 39 reads one table: Eurostat's <i>Enterprises by detailed NACE Rev. 2 activity and special aggregates</i> (<code>sbs_ovw_act</code>), reference year 2021, read from the dissemination API as JSON-stat (<a href="fetch.sh">fetch.sh</a>; the digest of the copy analysed is in <a href="data/results.json">data/results.json</a>). The universe is the 27 member states × NACE codes at division, group and class level × 19 <i>level</i> indicators (counts and money amounts; ratios are left out because they inherit their numerators' fate). A cell is <b>published</b> if it carries a value, <b>withheld</b> if Eurostat flags it <code>C</code> (confidential), and <b>silent</b> if it carries neither. No withheld cell carries a value. The code is <a href="analyse.py">analyse.py</a>; it reproduces every number of figures 1–3 from the fetched file. Study 40 adds a second table, <i>Enterprise statistics by size class and NACE Rev. 2 activity</i> (<code>sbs_sc_ovw</code>, enterprise counts only, down to 3-digit groups), and <a href="analyse2.py">analyse2.py</a>, which writes <a href="data/results-2.json">data/results-2.json</a> and every number of figures 4 and 5. The two tables agree: in all 6,642 country × group cells, the enterprise count has the same state in both, and no published pair differs. Study 41 reads the 27 national quality reports for SBS 2021 (<code>sbs_essbs21_&lt;cc&gt;</code>, <a href="fetch_meta.sh">fetch_meta.sh</a>). <a href="analyse3.py">analyse3.py</a> takes four fields of section 7.2.1 from each report as written, codes them as fixed beforehand, and writes <a href="data/results-3.json">data/results-3.json</a>, figure 6, and figure 1's bootstrap. While the script was being built, a first version read Portugal's, Croatia's, Austria's and Latvia's thresholds (<i>"&lt;3"</i>, <i>"&lt;4"</i>) as blank. It was corrected before the results were written down, and only that correction moved P15 from held to failed.</p>
 
 <h2>Limits</h2>
-<p>One year, one table. A withheld cell may be withheld to protect a firm (primary confidentiality) or to stop a reader subtracting it out of a total (secondary). The flag does not say which, so this page cannot tell the two apart. Where a class's count is withheld but its group's is published, the group total minus the published siblings bounds the hidden firms; this page reports such bounds only as medians, and counts but never prints the two cells (both Czech) where a single withheld class could be recovered exactly. The large-firm test (P10, P11) uses 250 or more persons employed as its sign of a dominant firm, which is a proxy: the p% rule is about turnover, not head count. Country rates count cells, not euros: a withheld cell in a tiny class weighs the same as one in a large class. The size measure is a count of enterprises, not of output. Eurostat revises the table, so a later fetch may differ.</p>
+<p>One year, one table. A withheld cell may be withheld to protect a firm (primary confidentiality) or to stop a reader subtracting it out of a total (secondary). The flag does not say which, so this page cannot tell the two apart. Where a class's count is withheld but its group's is published, the group total minus the published siblings bounds the hidden firms; this page reports such bounds only as medians, and counts but never prints the two cells (both Czech) where a single withheld class could be recovered exactly. The large-firm test (P10, P11) uses 250 or more persons employed as its sign of a dominant firm, which is a proxy: the p% rule is about turnover, not head count. Country rates count cells, not euros: a withheld cell in a tiny class weighs the same as one in a large class. The size measure is a count of enterprises, not of output. Eurostat revises the table, so a later fetch may differ. The national reports are filed by each state in a fixed form, and figure 6 reads them as written. A state's answer may describe its practice in general, not this table, and several answers (<i>"Not Applicable"</i>, <i>"Rule not applied"</i>, a confidential threshold) cannot be scored. The employment-conditional share and the head-count reading of P15's exceptions were found after the predictions were scored, and are offered as readings, not results.</p>
 
 <h2>Literature</h2>
-<p id="lit"><b>The rule.</b> European law defines confidential data as <i>"data which allow statistical units to be identified, either directly or indirectly, thereby disclosing individual information"</i> (<a href="https://www.legislation.gov.uk/eur/2009/223/pdfs/eur_20090223_adopted_en.pdf">Regulation (EC) No 223/2009</a>, Art. 3(7)). Eurostat's metadata for this table gives two reasons to withhold a cell. The first is too few contributors: a cell is withheld when <i>"the extrapolated number of contributors is positive but less than a specified number that is referred to as the 'minimum threshold'"</i>. The second is one firm too large to hide: <i>"the second largest contributor, can estimate the value of the largest contributor within a chosen percentage, p%"</i>. A cell is <i>"secondary confidential if it can be used with marginal totals to disclose primary confidential cells"</i>, and <i>"the thresholds are defined for each country"</i> (<a href="https://ec.europa.eu/eurostat/cache/metadata/en/sbs_esms.htm">Eurostat SBS metadata</a>, §7). Figure 1 shows the first reason at work. Ireland may be showing the second, but this page does not yet test that.</p>
-<p><b>Has it been measured before?</b> Partly, by the producers themselves. Eurostat's national metadata pages report a <i>rate of confidential cells</i> by dataset and activity level. Estonia's page writes that <i>"as Estonia is a small country the rate of confidential cells is considerable"</i>, and for 2020 it lists 0.0 % at section level against 11.6 to 16.4 % at division, group and class in its first dataset (<a href="https://ec.europa.eu/eurostat/cache/metadata/en/sbs_h_esms_ee.htm">Estonia, §7</a>). So the per-country rate is not new. We have not yet found the comparison across all 27 on one disseminated table, or withholding set against the count of firms. The official-statistics journals have not yet been searched directly. Passages: <a href="data/sources.json">data/sources.json</a>. Nothing here is cited from memory.</p>
+<p id="lit"><b>The rule.</b> European law defines confidential data as <i>"data which allow statistical units to be identified, either directly or indirectly, thereby disclosing individual information"</i> (<a href="https://www.legislation.gov.uk/eur/2009/223/pdfs/eur_20090223_adopted_en.pdf">Regulation (EC) No 223/2009</a>, Art. 3(7)). Eurostat's metadata for this table gives two reasons to withhold a cell. The first is too few contributors: a cell is withheld when <i>"the extrapolated number of contributors is positive but less than a specified number that is referred to as the 'minimum threshold'"</i>. The second is one firm too large to hide: <i>"the second largest contributor, can estimate the value of the largest contributor within a chosen percentage, p%"</i>. A cell is <i>"secondary confidential if it can be used with marginal totals to disclose primary confidential cells"</i>, and <i>"the thresholds are defined for each country"</i> (<a href="https://ec.europa.eu/eurostat/cache/metadata/en/sbs_esms.htm">Eurostat SBS metadata</a>, §7). Figure 1 shows the first reason at work. Study 40 found no sign that the second explains Ireland. The states' own reports answer a fixed question about the firm count. Italy's adds that <i>"the confidentiality flag rule (&lt;3) is applied on number of enterprises. Only monetary variables are suppressed"</i>, yet Italy's table also withholds employment in 16 classes. Slovakia's says it must <i>"hide SBS cells in joint SBS-BD aggregations in line with the hidden cells in BD"</i>. Malta's says that where figures <i>"are made public through the company's audited financial statements, confidentiality is not applied"</i> (<a href="https://ec.europa.eu/eurostat/cache/metadata/EN/sbs_essbs21_it.htm">Italy</a>, <a href="https://ec.europa.eu/eurostat/cache/metadata/EN/sbs_essbs21_sk.htm">Slovakia</a>, <a href="https://ec.europa.eu/eurostat/cache/metadata/EN/sbs_essbs21_mt.htm">Malta</a>, §7.2.1).</p>
+<p><b>Has it been measured before?</b> Partly, by the producers themselves. Eurostat's national metadata pages report a <i>rate of confidential cells</i> by dataset and activity level. Estonia's page writes that <i>"as Estonia is a small country the rate of confidential cells is considerable"</i>, and for 2020 it lists 0.0 % at section level against 11.6 to 16.4 % at division, group and class in its first dataset (<a href="https://ec.europa.eu/eurostat/cache/metadata/en/sbs_h_esms_ee.htm">Estonia, §7</a>). So the per-country rate is not new. We have not yet found the comparison across all 27 on one disseminated table, or withholding set against the count of firms. The official-statistics journals have not yet been searched directly. What the states <i>declare</i> has been collected before: an ESSnet inventory of disclosure-control practices covers 25 countries (located, not yet read). We have found no earlier test of those declarations against a disseminated table, state by state, which is what figure 6 does. The house's paper index returns nothing on the subject. Passages: <a href="data/sources.json">data/sources.json</a>. Nothing here is cited from memory.</p>
 
 <p class="meta" style="margin-top:40px">Process: <a href="PROCESS.json">PROCESS.json</a> · Score: <a href="SCORE.md">SCORE.md</a> · Data © European Union, Eurostat, reused under the Commission's reuse policy (CC BY 4.0); derived counts are this practice's own.</p>
 </main>
 <div class="tip" id="tip"></div>
 <script src="data/figure.js"></script>
 <script src="data/figure2.js"></script>
+<script src="data/figure3.js"></script>
 <script>
 (function(){
-const R = window.STUDY39, S = window.STUDY40, NS='http://www.w3.org/2000/svg';
+const R = window.STUDY39, S = window.STUDY40, T = window.STUDY41, NS='http://www.w3.org/2000/svg';
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const pct = (x,d=1) => (100*x).toFixed(d)+' %';
 const fmt = n => n.toLocaleString('en-GB');
 const tip = document.getElementById('tip');
 function show(e,h){tip.innerHTML=h;tip.style.opacity=1;tip.style.left=Math.min(e.clientX+14,innerWidth-290)+'px';tip.style.top=(e.clientY+14)+'px'}
 function hide(){tip.style.opacity=0}
+// hover on a pointer, tap on a touch screen: the same details either way
+let tipOwner=null;
+function bind(n,h){n.addEventListener('mousemove',h);n.addEventListener('mouseleave',()=>{hide();tipOwner=null});
+ n.addEventListener('click',e=>{e.stopPropagation();if(tipOwner===n&&tip.style.opacity==='1'&&e.pointerType!=='mouse'){hide();tipOwner=null}else{h(e);tipOwner=n}})}
+document.addEventListener('click',()=>{hide();tipOwner=null});addEventListener('scroll',hide,{passive:true});
 function el(p,t,a,txt){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;p.appendChild(e);return e}
 
 // headline numbers
 const P1=R.P1,P5=R.P5.bins;
 const stats=[
  [pct(P1.counts.W/(P1.counts.W+P1.counts.P)), 'of class-, group- and division-level business figures withheld as confidential, EU27'],
- [pct(P5[0].rate,0), 'withheld where an activity has 1 or 2 enterprises'],
+ [pct(P5[0].rate,0), 'withheld where an activity has 1 or 2 enterprises, among states that publish the count'],
  [pct(P5[P5.length-1].rate), 'withheld where it has 1,000 or more'],
- [pct(P1.withheld_share_of_empty_outside_schema_blocks,0), 'of empty cells say why, once blocks never compiled anywhere are set aside'],
+ [pct(P1.withheld_share_of_empty,0), 'of empty cells say <i>confidential</i>. The rest are silent: no value and no reason (most sit in blocks no state compiles)'],
+ [T.P12.not_yes+' of '+T.P12.of, 'states that hide the count of firms with the figures also say so, or decline to say, in their own report'],
  ['ρ '+R.P2.rho.toFixed(2), 'size of a country\'s business economy against how much of it is withheld']];
 document.getElementById('stats').innerHTML=stats.map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
 
 // Figure 1
 function f1(){
  const s=document.getElementById('f1');s.innerHTML='';
- const W=940,H=380,m={l:56,r:16,t:16,b:56},iw=W-m.l-m.r,ih=H-m.t-m.b,n=P5.length,bw=iw/n;
+ const W=940,H=380,m={l:56,r:16,t:26,b:56},iw=W-m.l-m.r,ih=H-m.t-m.b,n=P5.length,bw=iw/n;
  for(let k=0;k<=4;k++){const y=m.t+ih-ih*k/4;el(s,'line',{x1:m.l,x2:W-m.r,y1:y,y2:y,stroke:css('--rule')});el(s,'text',{x:m.l-8,y:y+4,'text-anchor':'end','font-size':12,fill:css('--mute')},(k*25)+' %')}
  P5.forEach((b,i)=>{
   const x=m.l+i*bw+bw*.18,w=bw*.64,h=ih*b.rate,y=m.t+ih-h;
   const r=el(s,'rect',{x,y,width:w,height:h,fill:css('--wh')});
-  const lo=m.t+ih-ih*b.wilson[0],hi=m.t+ih-ih*b.wilson[1];
+  const bs=T.figure1_bootstrap[i].boot,lo=m.t+ih-ih*bs[0],hi=m.t+ih-ih*bs[1];
   el(s,'line',{x1:x+w/2,x2:x+w/2,y1:lo,y2:hi,stroke:css('--ink'),'stroke-width':1.5});
-  el(s,'text',{x:x+w/2,y:y-8,'text-anchor':'middle','font-size':13,'font-weight':600,fill:css('--ink')},pct(b.rate,0));
+  el(s,'text',{x:x+w/2,y:Math.min(y,hi)-7,'text-anchor':'middle','font-size':13,'font-weight':600,fill:css('--ink')},pct(b.rate,0));
   const lab=b.bin[1]>1e8?b.bin[0].toLocaleString('en-GB')+'+':b.bin[0]+'–'+b.bin[1];
   el(s,'text',{x:x+w/2,y:H-m.b+20,'text-anchor':'middle','font-size':12,fill:css('--ink')},lab);
   const hit=el(s,'rect',{x:m.l+i*bw,y:m.t,width:bw,height:ih,fill:'transparent'});
-  hit.addEventListener('mousemove',e=>show(e,`<b>${lab} enterprises</b><br>${fmt(b.country_classes)} country × class cells<br>${fmt(b.withheld)} figures withheld, ${fmt(b.published)} published<br>${pct(b.rate)} (Wilson ${pct(b.wilson[0])}–${pct(b.wilson[1])})`));
-  hit.addEventListener('mouseleave',hide);
+  bind(hit,e=>show(e,`<b>${lab} enterprises</b><br>${fmt(b.country_classes)} country × class cells<br>${fmt(b.withheld)} figures withheld, ${fmt(b.published)} published<br>${pct(b.rate)} (95 % over states ${pct(bs[0])}–${pct(bs[1])})`));
  });
  el(s,'text',{x:m.l+iw/2,y:H-10,'text-anchor':'middle','font-size':13,fill:css('--mute')},'enterprises in the activity class, in that country (the published count)');
 }
@@ -161,7 +185,7 @@ function f2(){
   const dot=el(s,'circle',{cx:x,cy:y,r:6,fill:css('--wh'),stroke:css('--card'),'stroke-width':1.5});
   el(s,'text',{x:x+8,y:y-6,'font-size':11,fill:css('--ink')},c.geo);
   const h=e=>show(e,`<b>${c.name}</b><br>${fmt(c.enterprises)} enterprises<br>class level: ${pct(c.rate)} withheld (95 % ${pct(c.lo)}–${pct(c.hi)})<br>${fmt(c.withheld)} withheld, ${fmt(c.published)} published, ${fmt(c.silent)} silent<br>division level: ${pct(c.rate_division)}`);
-  dot.addEventListener('mousemove',h);dot.addEventListener('mouseleave',hide);
+  bind(dot,h);
  });
  if(L==='class')el(s,'text',{x:W-m.r-6,y:m.t+16,'text-anchor':'end','font-size':14,fill:css('--ink')},`Spearman ρ = ${R.P2.rho.toFixed(2)} (95 % ${R.P2.ci[0].toFixed(2)} to ${R.P2.ci[1].toFixed(2)}), 27 states`);
 }
@@ -179,11 +203,11 @@ function f3(){
   secs.forEach(s=>{
    const v=R.matrix[c.geo+'|'+s],d=document.createElement('div');
    d.style.background=v.rate==null?css('--sil'):mix(css('--pub'),css('--wh'),Math.min(1,v.rate/0.6));
-   d.addEventListener('mousemove',e=>show(e,`<b>${c.name} · ${s}</b><br>${R.sections[s]}<br>${v.rate==null?'nothing published or withheld':pct(v.rate)+' withheld'}<br>${fmt(v.W)} withheld, ${fmt(v.P)} published, ${fmt(v.S)} silent`));
-   d.addEventListener('mouseleave',hide);g.appendChild(d);
+   bind(d,e=>show(e,`<b>${c.name} · ${s}</b><br>${R.sections[s]}<br>${v.rate==null?'nothing published or withheld':pct(v.rate)+' withheld'}<br>${fmt(v.W)} withheld, ${fmt(v.P)} published, ${fmt(v.S)} silent`));g.appendChild(d);
   });
  });
  box.innerHTML='';box.appendChild(g);
+ document.getElementById('key3').innerHTML=secs.map(k=>`<div><b>${k}</b> ${R.sections[k]}</div>`).join('');
 }
 
 // Figure 4
@@ -205,8 +229,7 @@ function f4(){
   el(s,'rect',{x:X(a),y:y+3,width:X(a+b)-X(a),height:rh-6,fill:css('--wh')});
   el(s,'text',{x:X(a+b)+6,y:y+rh*.7,'font-size':11,fill:css('--mute')},M4==='share'?pct(a+b):fmt(a+b));
   const hit=el(s,'rect',{x:0,y,width:W,height:rh,fill:'transparent'});
-  hit.addEventListener('mousemove',e=>show(e,`<b>${c.name}</b><br>${fmt(c.withheld_with_count)} withheld with the count of firms<br>${fmt(c.withheld_beside_count)} withheld beside a published count<br>${fmt(c.published)} published<br>${pct(c.rate)} withheld in all`));
-  hit.addEventListener('mouseleave',hide);
+  bind(hit,e=>show(e,`<b>${c.name}</b><br>${fmt(c.withheld_with_count)} withheld with the count of firms<br>${fmt(c.withheld_beside_count)} withheld beside a published count<br>${fmt(c.published)} published<br>${pct(c.rate)} withheld in all`));
  });
 }
 document.querySelectorAll('#t4 button').forEach(b=>b.addEventListener('click',()=>{M4=b.dataset.m;document.querySelectorAll('#t4 button').forEach(x=>x.setAttribute('aria-pressed',x===b));f4()}));
@@ -218,7 +241,7 @@ function f5(){
  const W=940,m={l:150,r:30,t:10,b:40},rh=19,H=m.t+m.b+rh*C.length,iw=W-m.l-m.r,max=3;
  s.setAttribute('viewBox',`0 0 ${W} ${H}`);
  const X=v=>m.l+iw*Math.min(v,max)/max;
- [0,.5,1,1.5,2,2.5,3].forEach(t=>{el(s,'line',{x1:X(t),x2:X(t),y1:m.t,y2:H-m.b,stroke:t===1?css('--ink'):css('--rule'),'stroke-dasharray':t===1?'':'2 3'});el(s,'text',{x:X(t),y:H-m.b+18,'text-anchor':'middle','font-size':12,fill:css('--mute')},t===1?'1 = as expected':t+'×')});
+ [0,.5,1,1.5,2,2.5,3].forEach(t=>{el(s,'line',{x1:X(t),x2:X(t),y1:m.t,y2:H-m.b,stroke:t===1?css('--ink'):css('--rule'),'stroke-dasharray':t===1?'':'2 3'});el(s,'text',{x:X(t),y:H-m.b+18,'text-anchor':'middle','font-size':12,fill:css('--mute')},t===1?'1× = as expected':t+'×')});
  C.forEach((c,k)=>{
   const y=m.t+k*rh+rh/2,blind=reg[c.geo].withheld_beside_count===0;
   el(s,'text',{x:m.l-8,y:y+4,'text-anchor':'end','font-size':12,fill:blind?css('--mute'):css('--ink')},c.name.replace(/ \(.*\)/,''));
@@ -226,20 +249,50 @@ function f5(){
   if(!blind)el(s,'line',{x1:X(c.lo),x2:X(c.hi),y1:y,y2:y,stroke:css('--wh'),'stroke-opacity':.5,'stroke-width':3});
   const d=el(s,'circle',{cx:X(c.ratio),cy:y,r:blind?5:6,fill:blind?'none':(c.geo==='IE'?css('--deep'):css('--wh')),stroke:blind?css('--mute'):css('--card'),'stroke-width':1.5});
   const h=e=>show(e,`<b>${c.name}</b><br>${blind?'withholds only together with the count: invisible to this measure<br>':''}observed ${fmt(c.observed)} withheld figures, expected ${Math.round(c.expected).toLocaleString('en-GB')}<br>ratio ${c.ratio.toFixed(2)} (95 % ${c.lo.toFixed(2)}–${c.hi.toFixed(2)})<br>at 20+ firms: ${isNaN(c.ratio_above20)?'–':c.ratio_above20.toFixed(2)}<br>${fmt(c.classes)} classes with a published count`);
-  d.addEventListener('mousemove',h);d.addEventListener('mouseleave',hide);
+  bind(d,h);
  });
  el(s,'text',{x:W-m.r,y:H-4,'text-anchor':'end','font-size':13,fill:css('--ink')},`size against ratio: Spearman ρ = ${S.P9.rho.toFixed(2)} (95 % ${S.P9.ci[0].toFixed(2)} to ${S.P9.ci[1].toFixed(2)})`);
 }
+
+// Figure 6: what each state says, beside what its table does
+let O6='practice';
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function f6(){
+ const tb=document.querySelector('#f6 tbody'),EC=T.employment_conditional.by_state,K=Object.fromEntries(T.P15.states.map(r=>[r.geo,r]));
+ const said=s=>s.F1==='yes'?0:s.F1==='no'?1:2;
+ const C=[...T.states].sort(O6==='practice'?(a,b)=>a.share_with_count-b.share_with_count||said(a)-said(b)||a.name.localeCompare(b.name):(a,b)=>said(a)-said(b)||a.share_with_count-b.share_with_count);
+ const lab={yes:'yes',no:'no',other:'other',blank:'not given'};
+ tb.innerHTML=C.map(st=>{
+  const e=EC[st.geo],k=K[st.geo],raw=st.raw||{};
+  const ans=raw.F1!=null?raw.F1:(raw.note||'');
+  const cond=e.share==null?'<span class="meta">never withholds employment</span>':`${pct(e.share,0)} <span class="meta">of ${e.classes}</span>`;
+  const kept=!k?'<span class="meta">not stated</span>':k.kept==null?'–':`<span class="${k.kept?'ok':'no-ok'}">${pct(k.rate,0)}</span> <span class="meta">${k.kept?'kept':'not kept'}</span>`;
+  const words=[['Count stays public',raw.F1],['Threshold of enterprises',raw.F2],['Dominance criteria',raw.F3],['Dominance threshold',raw.F3n],['Secondary confidentiality',raw.F4],['Comment',raw.comment],['Section 7.2.1',raw.note]].filter(w=>w[1]&&w[1]!=='-').map(w=>`<b>${w[0]}:</b> "${esc(w[1])}"`).join(' · ');
+  return `<tr class="st" tabindex="0" data-g="${st.geo}"><td>${esc(st.name.replace(/ \(.*\)/,''))}</td><td><span class="chip ${st.F1}" title="${esc(ans)}">${lab[st.F1]}</span></td><td><div class="bar" title="${pct(st.share_with_count,0)}"><i style="width:${100*st.share_with_count}%"></i></div><span class="meta">${pct(st.share_with_count,0)}</span></td><td>${cond}</td><td>${k?k.threshold:'<span class="meta">'+esc(raw.F2||'–')+'</span>'}</td><td>${kept}</td></tr><tr class="words" data-w="${st.geo}" hidden><td colspan="6">${words} <a href="https://ec.europa.eu/eurostat/cache/metadata/EN/sbs_essbs21_${st.geo.toLowerCase()==='el'?'el':st.geo.toLowerCase()}.htm">the report</a></td></tr>`}).join('');
+ tb.querySelectorAll('tr.st').forEach(r=>{const t=()=>{const w=tb.querySelector(`tr[data-w="${r.dataset.g}"]`);w.hidden=!w.hidden};r.addEventListener('click',t);r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();t()}})});
+}
+document.querySelectorAll('#t6 button').forEach(b=>b.addEventListener('click',()=>{O6=b.dataset.o;document.querySelectorAll('#t6 button').forEach(x=>x.setAttribute('aria-pressed',x===b));f6()}));
+
+// study 41 predictions
+const A41=T.agreement,E41=T.employment_conditional,X15=T.P15.exceptions_published_below;
+const P3=[
+ ['P12','At least 5 of the 6 states that hide the count with the figures do not answer "yes".',`${T.P12.not_yes} of ${T.P12.of}. Belgium, Greece, Spain, Italy and Hungary answer "no"; Cyprus's section is <i>"Restricted from publication"</i>.`,T.P12.held],
+ ['P13','At least 13 of the 16 states that always publish the count answer "yes".',`${T.P13.yes} of ${T.P13.of}. Croatia, Latvia, Malta, Portugal and Romania answer "no", Luxembourg <i>"Rule not applied"</i>. Over the 22 states with one practice, answer and practice agree in ${pct(A41.observed_agreement,0)} (Cohen's κ ${A41.kappa.toFixed(2)}, Fisher p = ${A41.fisher_two_sided_p.toFixed(3)}).`,T.P13.held],
+ ['P14','Ireland does not answer "yes".',`It answers <i>"${esc(T.P14.IE)}"</i>, though it withholds the count with ${pct(S.regimes.find(r=>r.geo==='IE').share_with_count,0)} of its withheld figures. Held as written, but Ireland does not declare a practice either way.`,T.P14.held,'held, uninformative'],
+ ['P15','Every state that states a threshold n withholds ≥ 90 % below it, with at most 2 exceptions.',`${T.P15.testable_states-T.P15.exceptions.length} of ${T.P15.testable_states} testable states keep it; Croatia, Latvia and Romania do not (76–78 % withheld). Below the threshold all three publish the head counts (persons employed, employees, hours worked) and withhold the money, and Romania publishes net turnover as well. In the other eight states with a stated threshold, no class under it has a published count, so the test cannot see them.`,T.P15.held],
+ ['P16','A higher stated threshold goes with more withholding: ρ ≥ 0.3.',`ρ = ${T.P16.rho.toFixed(2)} (95 % ${T.P16.ci[0].toFixed(2)} to ${T.P16.ci[1].toFixed(2)}), ${T.P16.n} states. ${T.P16.thresholds['3']} of them state 3, so there is almost nothing to rank.`,T.P16.held]];
+document.querySelector('#preds3 tbody').innerHTML=P3.map(p=>`<tr><td><b>${p[0]}</b></td><td>${p[1]}</td><td>${p[2]}</td><td class="${p[3]?'held':'fail'}">${p[4]||(p[3]?'held':'failed')}</td></tr>`).join('');
 
 // study 40 predictions
 const B=S.bands,IE=S.hidden_counts.IE,ieR=S.regimes.find(r=>r.geo==='IE');
 const P2=[
  ['P7','Ireland withholds at least twice what its firm counts predict.',`${S.P7.IE.toFixed(2)}× (95 % ${S.P7.ci[0].toFixed(2)}–${S.P7.ci[1].toFixed(2)}). But this sees only ${pct(ieR.withheld_beside_count/(ieR.withheld_beside_count+ieR.withheld_with_count),0)} of what Ireland withholds; the rest goes dark with its count (figure 4).`,S.P7.held],
  ['P8','Cyprus withholds at most 1.2× what its firm counts predict.',`${S.P8.CY.toFixed(2)}×. Held, but empty: Cyprus never withholds beside a published count, so this measure sees none of its ${fmt(S.regimes.find(r=>r.geo==='CY').withheld_with_count)} withheld figures.`,S.P8.held],
- ['P9','Once firm counts are held fixed, size no longer matters: −0.3 &lt; ρ &lt; 0.3.',`ρ = ${S.P9.rho.toFixed(2)} (95 % ${S.P9.ci[0].toFixed(2)} to ${S.P9.ci[1].toFixed(2)}). Held as written; the interval is wide, and six states sit at zero for the reason above.`,S.P9.held],
+ ['P9','Once firm counts are held fixed, size no longer matters: −0.3 &lt; ρ &lt; 0.3.',`ρ = ${S.P9.rho.toFixed(2)} (95 % ${S.P9.ci[0].toFixed(2)} to ${S.P9.ci[1].toFixed(2)}). Not rejected, but uninformative: the interval is wide, and six states sit at zero for the reason above.`,S.P9.held,'held, uninformative'],
  ['P10','Above 20 firms, groups with 1–2 firms of 250+ withhold at least 3× those with none.',`${pct(S.P10.rate_1_2)} vs ${pct(S.P10.rate_0)}: ${S.P10.ratio.toFixed(2)}×. Groups with 3 or more large firms: ${pct(B['3+'].rate)}.`,S.P10.held],
  ['P11','Half of Ireland\'s withheld groups above 20 firms, with a known large-firm count, have 1–2 large firms.',`${S.P11.in_1_2} of ${S.P11.band_known}. Ireland publishes no large-firm count of 1 or 2 in these groups at all; in ${S.P11.band_counts.withheld} of its ${S.P11.ireland_withheld_groups_above20} withheld groups the large-firm count is itself withheld.`,S.P11.held]];
-document.querySelector('#preds2 tbody').innerHTML=P2.map(p=>`<tr><td><b>${p[0]}</b></td><td>${p[1]}</td><td>${p[2]}</td><td class="${p[3]?'held':'fail'}">${p[3]?'held':'failed'}</td></tr>`).join('');
+const row=p=>`<tr><td><b>${p[0]}</b></td><td>${p[1]}</td><td>${p[2]}</td><td class="${p[3]?'held':'fail'}">${p[4]||(p[3]?'held':'failed')}</td></tr>`;
+document.querySelector('#preds2 tbody').innerHTML=P2.map(row).join('');
 
 // study 39 predictions
 const P=[
@@ -251,9 +304,9 @@ const P=[
  ['P6','The enterprise count itself is withheld in fewer than 2 % of cells.',`${pct(R.P6.rate)} (${fmt(R.P6.counts.W)} of ${fmt(R.P6.counts.W+R.P6.counts.P)}).`,R.P6.held]];
 document.querySelector('#preds tbody').innerHTML=P.map(p=>`<tr><td><b>${p[0]}</b></td><td>${p[1]}</td><td>${p[2]}</td><td class="${p[3]?'held':'fail'}">${p[3]?'held':'failed'}</td></tr>`).join('');
 
-document.getElementById('reading').innerHTML=`The record is not silent about its gaps. Where a business figure is missing and the table could have held it, it nearly always says <i>confidential</i>. What it withholds follows the rule that protects single firms: at one or two enterprises, ${pct(P5[0].rate,0)} of the figures are gone, and at a thousand, ${pct(P5[P5.length-1].rate)}. So the gap is not spread evenly across Europe. It falls on economies with few firms per activity. Luxembourg and Malta withhold ${pct(R.countries.find(c=>c.geo==='LU').rate,0)} and ${pct(R.countries.find(c=>c.geo==='MT').rate,0)} of their class-level figures, Italy and Spain about 3 %. Size is not the whole story: Ireland, with some 370,000 enterprises, withholds the most (${pct(R.countries.find(c=>c.geo==='IE').rate,0)}), and Cyprus, among the smallest, withholds less than Denmark. Why Ireland stands out was the second state's question (study 40), and the answer is not the one predicted. Held to one curve of firm counts, Ireland withholds only ${S.P7.IE.toFixed(1)}× what is expected, and where one or two firms of an activity employ 250 people or more, it is withheld ${S.P10.ratio.toFixed(1)}× as often as where none does, not 3×. What the test found instead is that the member states keep their secrets in two different ways (figure 4). Sixteen always publish how many firms stand behind a withheld figure. Six withhold the count as well, so a reader cannot even tell how thin the activity is. Ireland does both, mostly the second: ${pct(ieR.share_with_count,0)} of what it withholds goes dark together with the count. Where those hidden counts can be bounded from a published group total, Ireland's withheld classes hold a median of about ${Math.round(IE.median_mean_firms)} firms each, and ${pct(IE.share_mean_ge20,0)} hold 20 or more. On average these are not activities of one or two firms, although an average can hide one thin class beside a large one. So the record declares its gaps, as the first state found, but how much it declares is itself a national choice. Six states say <i>confidential</i> without saying about how many.`;
+document.getElementById('reading').innerHTML=`<p>The record is not silent about its gaps. Where a business figure is missing and the table could have held it, it nearly always says <i>confidential</i>. What it withholds follows the number of firms, as a rule that protects single firms would: at one or two enterprises, ${pct(P5[0].rate,0)} of the figures are gone, and at a thousand, ${pct(P5[P5.length-1].rate)}. So the gap is not spread evenly across Europe. It is heaviest in economies with few firms per activity. Luxembourg and Malta withhold ${pct(R.countries.find(c=>c.geo==='LU').rate,0)} and ${pct(R.countries.find(c=>c.geo==='MT').rate,0)} of their class-level figures, Italy and Spain about 3 %. Size is not the whole story: Ireland, with some 370,000 enterprises, withholds the most (${pct(R.countries.find(c=>c.geo==='IE').rate,0)}), and Cyprus, among the smallest, withholds less than Denmark. Why Ireland stands out was the second state's question (study 40), and the answer is not the one predicted. Held to one curve of firm counts, Ireland withholds only ${S.P7.IE.toFixed(1)}× what is expected, and where one or two firms of an activity employ 250 people or more, it is withheld ${S.P10.ratio.toFixed(1)}× as often as where none does, not 3×. What the test found instead is that the member states keep their secrets in two different ways (figure 4). Sixteen always publish how many firms stand behind a withheld figure. Six withhold the count as well, so a reader cannot even tell how thin the activity is. Ireland does both, mostly the second: ${pct(ieR.share_with_count,0)} of what it withholds goes dark together with the count. Where those hidden counts can be bounded from a published group total, Ireland's withheld classes hold a median of about ${Math.round(IE.median_mean_firms)} firms each, and ${pct(IE.share_mean_ge20,0)} hold 20 or more. On average these are not activities of one or two firms, although an average can hide one thin class beside a large one. So the record declares its gaps, as the first state found, but how much it declares is itself a national choice. Six states say <i>confidential</i> without saying about how many.</p><p>Is that choice made in the open? The third state of this page (study 41) read each state's own quality report. All six that hide the count also say so or decline to say: five answer that the count does <i>not</i> stay public, and Cyprus restricts its whole answer. Of the sixteen that always publish the count, only ${T.P13.yes} say it stays public. Two things explain much of the gap, found after the predictions were scored and so offered as readings, not results. The report's question concerns classes whose employment is hidden, and Croatia, Latvia, Romania and Sweden never hide employment at class level, so for them the question never arises. Where it does arise, in ${E41.declared_vs_done['no|withholds count']+E41.declared_vs_done['yes|publishes count']} of ${Object.values(E41.declared_vs_done).reduce((a,b)=>a+b,0)} states the answer matches what the table does. France, Malta and Portugal say "no" and still publish the count, while Bulgaria and Czechia say "yes" and hide it about half the time. Second, three states that state a threshold of firms publish head counts beneath it and withhold only the money. So their threshold protects euros, not people. The record declares its gaps, and in most states it declares its own manner of keeping them. Where the report and the table disagree, the table is what a reader meets.</p>`;
 
-function draw(){f1();f2();f3();f4();f5()}
+function draw(){f1();f2();f3();f4();f5();f6()}
 draw();matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
 })();
 </script>
