@@ -171,6 +171,16 @@ describe('the notice', () => {
     today: '2026-10-12',
   })
 
+  it("links the briefing and names its fallback when the convening carries one (2026-10-25)", () => {
+    const briefing = { url: 'https://github.com/frankbueltge/research-ecology/blob/main/briefings/after-cycle-006.md', fallback: 'Who goes hungry first?' }
+    const cycle = conveningState({ convening: { afterCycle: 6, opened: '2026-10-10', objected: null, briefing } })
+    const create = planNotice({ ...input(), cycle })[0]!
+    if (create.kind !== 'create') throw new Error(create.kind)
+    expect(create.body).toContain(`The proposals draw on the Middle's briefing: [after cycle 006](${briefing.url}).`)
+    expect(create.body).toContain("cycle 007 on the briefing's fallback, Who goes hungry first?, on 2026-10-17")
+    expect(create.body).not.toContain('the continuing question')
+  })
+
   it('opens one issue for a pending result, assigned to him, with all it needs to decide', () => {
     const actions = planNotice(input())
     expect(actions).toHaveLength(1)

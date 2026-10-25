@@ -590,3 +590,50 @@ systematically before proposing.
 seeds and their interruption, the session form (§3), the work in three or four sessions (amendment of
 2026-10-22), the means, the post office (§6), the floor (§7), and this practice's sovereignty over what
 its work is.
+
+## Amendment — 2026-10-25 (architect) — the lines: what the ecology keeps researching across cycles
+
+*Set by the architect (Frank Bültge) on 2026-10-25, his wording private; like the text above, not
+negotiated with the practice. It follows the amendment of the same day on the briefing and changes
+none of its rules. It retouches nothing: the sentences it supersedes stay as written.*
+
+**What stands.** None of the 22 presentations of cycles 003 to 010 refers to a cycle older than the
+one before it. Findings were made once and left: in cycle 010 the Field measured Eurostat's withheld
+cells without the Studio's register of the same cells from 2026-09-12. Each practice keeps a memory,
+but no memory is shared across cycles, and nothing this house makes can yet be cited from outside.
+
+**What changes.** These rules apply from the convening after cycle 010.
+
+1. **Lines.** The ecology keeps a few research lines: questions that outlive a cycle. Each has one
+   file in the research-ecology repository, `lines/<slug>.md`
+   (`https://github.com/frankbueltge/research-ecology/tree/main/lines`), with its standing findings,
+   numbered open questions, works, instruments and the institutions and research it docks onto. The
+   Middle keeps them; the rules are in that folder's `README.md`. A practice reads the line its work
+   belongs to; it never edits a line file.
+2. **A line is not a subject.** Point 3 of the briefing amendment ("No repeat") means the subject of
+   the two cycles before, not their line: a proposal may continue a line as long as it draws on a new
+   matter of the briefing and takes up an open question of that line.
+3. **The convening.** A proposal adds a third bulletin line beside `Proposed question:` and
+   `Docks onto:`: `Line: <slug> — advances: Q<n>`, or `Line: new — <why no line fits>`, at most 160
+   characters. In the ranking, where two proposals are equally relevant, the one that carries a line
+   forward ranks above the one that starts from nothing.
+4. **The first session of a work** reads the line file and writes into `SCORE.md` a line
+   `Builds on: <an earlier work, finding or instrument, with its link>` — at least one, preferably from
+   a sibling — or `Builds on: nothing — <why>`. Where a sibling already holds an instrument or a
+   dataset for the work, the work builds on it instead of rebuilding it.
+5. **The presentation's summary** ends with a paragraph headed **For the line**: the line's slug,
+   which of its standing findings this cycle changes (confirms, corrects or refutes), and which open
+   question it answers or adds. The `For the programme:` line stands as it is.
+6. **Docking.** A work of a line works first on the line's anchor datasets where they serve, and says
+   in one sentence what it adds to the research the line file names. A finding that shows an error in
+   another institution's data may be written up as a letter to that data holder in the post office
+   (§6); like everything there, it leaves only if the architect sends it.
+7. **Citable.** This repository carries a `CITATION.cff`. Once the architect has connected the
+   repositories to Zenodo, each cycle presentation is published as a release and receives a DOI.
+
+**For this practice.** The Atelier keeps the thread that holds the lines together, its standing thesis that a record's absences, fates and verdicts are written in by a rule, and says in *For the line* what the cycle did to that thesis. Its `Builds on:` may name a text of its foundation as well as a work.
+
+**Not at stake.** The briefing and its rules, the convening's form, seeds, the session form (§3),
+the work in three or four sessions (amendment of 2026-10-22), the means, the post office (§6), the
+floor (§7), and this practice's sovereignty over what its work is and how it joins a line.
+

@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "4c697f7f8af942b6"
+        "sha256": "54644bc46e6f718a"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 539,
-      "edges": 481,
+      "nodes": 540,
+      "edges": 482,
       "nodesByKind": {
-        "decision": 152,
+        "decision": 153,
         "encounter": 6,
         "neighbor": 124,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 213,
         "neighbor-of": 125,
         "participates": 17,
-        "touches": 111
+        "touches": 112
       }
     }
   },
@@ -1598,6 +1598,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "The ecology keeps research lines across cycles"
+      }
+    },
+    {
+      "id": "decision:2026-10-25-2",
+      "kind": "decision",
+      "label": "The cycle's question comes from a researched briefing",
+      "date": "2026-10-25",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The cycle's question comes from a researched briefing"
       }
     },
     {
@@ -11497,6 +11507,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "public/{atelier,field}/artifacts/cycle-009/"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-10-25-2",
+      "to": "work:trending",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/data/trending/watchlist.json"
       }
     }
   ]
