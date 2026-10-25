@@ -108,6 +108,38 @@ jobs:
             echo "relay unchanged"
           fi
 
+      # The lines (2026-10-25; docs/design/2026-10-25-the-lines.md): research-ecology keeps the
+      # ecology's research lines as lines/*.md, kept by the Middle, and /lines renders them. Mirrored
+      # verbatim, the whole folder: a line removed upstream is removed here too. Committed on its own,
+      # like the relay, before the encounter gate below.
+      - name: Mirror the lines (lines/*.md → src/data/middle/lines/)
+        run: |
+          set -euo pipefail
+          SRC=/tmp/ecology/lines
+          DST=src/data/middle/lines
+          rm -rf "$DST"
+          if [ -d "$SRC" ]; then
+            mkdir -p "$DST"
+            cp "$SRC"/*.md "$DST"/
+          else
+            echo "lines/ is not published yet — nothing to mirror (a legal state)"
+          fi
+          if git status --porcelain --untracked-files=all -- "$DST" | grep -q .; then
+            git config user.name "Ecology-Integrate"
+            git config user.email "ecology-integrate@frankbueltge.de"
+            SHA=$(git -C /tmp/ecology rev-parse --short HEAD)
+            git add -A -- "$DST"
+            git commit -m "middle: lines mirrored from research-ecology $SHA"
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              git rebase --abort 2>/dev/null || true
+              [ "$attempt" = 5 ] && { echo "lines push failed after 5 rebase attempts" >&2; exit 1; }
+              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
+            done
+          else
+            echo "lines unchanged"
+          fi
+
       # The convening (2026-10-07; docs/design/2026-10-07-the-convening.md): the relay carries the
       # practices' tally, and the cycle clock opens the next cycle a day after it unless the
       # architect objects. A cron that may run hours late would stretch that day, so the clock is

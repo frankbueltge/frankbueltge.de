@@ -1,0 +1,40 @@
+---
+// /lines/<slug>/ — one research line, as the Middle keeps it (2026-10-25;
+// docs/design/2026-10-25-the-lines.md). The mirrored file rendered as written (src/lib/ecology/research-lines.ts).
+import Page from '@/layouts/Page.astro'
+import { LINES } from '@/config/lines-wording'
+import { loadLines, LINES_REPO, type ResearchLine } from '@/lib/ecology/research-lines'
+
+export function getStaticPaths() {
+  return loadLines().map((line) => ({ params: { slug: line.slug }, props: { line } }))
+}
+
+const { line } = Astro.props as { line: ResearchLine }
+---
+
+<Page title={`${line.slug} · ${LINES.seoTitle}`} description={line.question ?? LINES.seoDescription}>
+  <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-4 py-14">
+    <p class="mb-6 font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">
+      <a href="/lines/" class="underline underline-offset-2">{LINES.all}</a> ·
+      {LINES.status[line.status]} ·
+      <a href={`${LINES_REPO}/${line.slug}.md`} class="underline underline-offset-2">{LINES.source}</a>
+    </p>
+    <article class="line-md" set:html={line.html} />
+    <p class="mt-10 border-t border-line pt-4 font-mono text-[11px] leading-relaxed text-fg-faint">{LINES.foot}</p>
+  </main>
+</Page>
+
+<style>
+  .line-md { font-size: 15.5px; line-height: 1.7; }
+  .line-md :global(h1) { font-size: 1.6rem; font-weight: 600; line-height: 1.25; margin: 0 0 1.25rem; letter-spacing: -0.02em; }
+  .line-md :global(h2) { font-size: 1.15rem; font-weight: 600; margin: 2rem 0 0.6rem; }
+  .line-md :global(p) { margin: 0 0 1rem; }
+  .line-md :global(ul), .line-md :global(ol) { margin: 0 0 1rem 1.4rem; }
+  .line-md :global(ul) { list-style: disc; }
+  .line-md :global(ol) { list-style: decimal; }
+  .line-md :global(li) { margin: 0.35rem 0; }
+  .line-md :global(code) { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em; overflow-wrap: anywhere; }
+  .line-md :global(a) { text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+  .line-md :global(em) { font-style: italic; }
+  .line-md :global(strong) { font-weight: 600; }
+</style>
