@@ -1,0 +1,134 @@
+---
+// Method sheet — Third Reading (2026-10-26). The six parts of the method-sheet duty (werkgruppe spec
+// §3.5), and the limits first in weight: this is the one work of the house that asks people, and what
+// it cannot claim about them matters more than what it computes.
+import MethodSheet from '@/components/experiments/MethodSheet.astro'
+import { CURRENT_ROUND as round } from '@/lib/reading/rounds'
+import { PRIOR } from '@/lib/reading/rank'
+import { READING_FLOOR } from '@/lib/reading/aggregate'
+import { DAILY_CAP } from '@/lib/reading/handlers'
+import { CONSENT_VERSION } from '@/lib/reading/consent'
+
+const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
+const link = 'underline decoration-line underline-offset-4 hover:decoration-fg'
+
+const limits = [
+  'The readers are a sample of no one but themselves. Whoever finds this page and chooses to take part is counted; nobody else is. No sentence here says what "people" think, and the intervals are the model’s uncertainty about this audience, not a margin of error: there is no population for one to refer to.',
+  'Nothing about a reader is asked or kept — no age band, no country, no field — so the page cannot tell who its audience is, or when it changes. That is the price of keeping nothing that could identify anyone, and it is paid on purpose.',
+  'The matters are described in the briefing’s words, shortened. A description frames a judgment; the same words reach every reader, and they change only with a new round.',
+  'A reader who opens the fold with the web’s counts before choosing may answer the page instead of the question. The page cannot prevent it; the reading records it (primed), so the open data can be read with those readings and without them.',
+  'The pairs are drawn in the reader’s browser. A determined script could choose its own pairs; the bot check, the daily limit per visitor and a cap of readings per day narrow that, they do not exclude it.',
+  'One reading per round per day is held by a hash of address and browser that lives one day. Two browsers, or another day, make another reading. It is a brake, not a census of persons.',
+  'The attention count is a rule over terms, and the terms are a choice: a whole-word match lets in what shares a word with a matter (the receipts on the work’s page show every signal it let in). It is not the briefing’s own count, which counted raw occurrences in the same files and named no terms.',
+  '“Urgent” is fixed by the question every pair asks — which the world should act on first, in the coming year — and the question stays the same across rounds, so that rounds can be set beside each other. Another question would give another ranking.',
+  'Each round’s result may enter the next briefing. From then on, the readings of different rounds are not independent of each other, and the briefing says what it took.',
+  'The figures the estimates are judged against come from the sources linked beside them, as of their date. Most are themselves estimates.',
+]
+---
+
+<MethodSheet title="Method sheet — Third Reading" workHref="/third-reading" workLabel="To the work">
+  <section class="sheet-reveal mb-10">
+    <h2 class="kicker mb-2">What this is</h2>
+    <p class="leading-relaxed">
+      Three readings of the same matters, side by side. The briefing the ecology’s Middle writes before a research cycle
+      says why each matter presses, after the expert sources. Common Ground counts how loud the web was about each. The
+      readers of the work answer one question about pairs of them, and three estimates of a matter’s scale. Every reading
+      a reader sends is published every night as open data, and every number on the work’s page is derived from the
+      committed files at build time.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">1. Sources &amp; licences</h2>
+    <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>
+        The briefing — <a class={link} href={round.briefing.url}>{round.briefing.title}</a>, written {round.briefing.written},
+        pinned to its commit. Its matters, shortened, and its “urgent but quiet” order.
+      </li>
+      <li>
+        Common Ground’s day files, {round.attention_window.from} to {round.attention_window.to} — open data (CC0) in
+        <a class={link} href={`${REPO}/tree/main/src/data/trending`}>src/data/trending</a>.
+      </li>
+      <li>
+        The figures of the estimates, each with its own source in
+        <a class={link} href={`${REPO}/blob/main/src/data/reading/rounds/${round.id}.json`}>the round file</a>.
+      </li>
+      <li>
+        The readers’ readings — CC0, in <a class={link} href={`${REPO}/blob/main/src/data/reading/${round.id}.json`}>{`src/data/reading/${round.id}.json`}</a>,
+        given under the consent text of {CONSENT_VERSION}, which every reading names.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">2. Cadence</h2>
+    <p class="leading-relaxed text-fg-muted">
+      One round per briefing; the newest round takes readings. The attention reading of a round is fixed at the briefing’s
+      date and does not move afterwards. The readings are read from the store and committed every night at 02:35 UTC, and
+      only when they changed; the page is rebuilt from that commit.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">3. Processing</h2>
+    <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>
+        A reading is {round.pairs_per_reading} pairs, drawn uniformly from all pairs of the round’s matters, each side by a
+        coin toss, and {round.estimates_per_reading} of the round’s estimates, drawn the same way
+        (<a class={link} href={`${REPO}/blob/main/src/lib/reading/draw.ts`}>draw.ts</a>).
+      </li>
+      <li>
+        The ranking is a Bradley–Terry model fitted by the MM algorithm. Every matter also meets a reference of strength 1,
+        winning and losing {PRIOR} time each, so that a few readings cannot push a matter to an extreme. “Equally urgent”
+        counts as half a win for each side; “can’t say” is counted beside the model. The score is the model’s chance that a
+        matter is chosen over a randomly picked other one, and its interval the 5th to 95th percentile over resampled
+        readings, with a fixed seed (<a class={link} href={`${REPO}/blob/main/src/lib/reading/rank.ts`}>rank.ts</a>).
+      </li>
+      <li>
+        An estimate is close when a count is within a factor of 1.25 of the figure, a percentage within five points, a
+        temperature within a tenth of a degree (<a class={link} href={`${REPO}/blob/main/src/lib/reading/estimate.ts`}>estimate.ts</a>).
+      </li>
+      <li>
+        A signal counts for a matter when its label or a linked headline names one of the matter’s terms as a whole word,
+        case and accents folded (<a class={link} href={`${REPO}/blob/main/src/lib/reading/attention.ts`}>attention.ts</a>).
+      </li>
+      <li>
+        Below {READING_FLOOR} readings the page shows counts and intervals but words no comparison.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">4. Limits of the method</h2>
+    <ul class="list-disc space-y-2 pl-5 leading-relaxed text-fg-muted">
+      {limits.map((l) => <li>{l}</li>)}
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">5. Compute footprint</h2>
+    <p class="leading-relaxed text-fg-muted">
+      One row in a Cloudflare D1 database per reading, a few counter rows per day, at most {DAILY_CAP} readings a day before
+      the work declares standby until midnight UTC. One nightly workflow run that reads one public endpoint. The ranking
+      and its intervals are computed once per build. No model, no third-party script beyond the bot check on the last step.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">6. Change log</h2>
+    <ul class="list-disc space-y-1 pl-5 leading-relaxed text-fg-muted">
+      <li>2026-10-26 — first version: round {round.id}, consent text {CONSENT_VERSION}.</li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">Neighbours</h2>
+    <p class="leading-relaxed text-fg-muted">
+      Expert and public rankings of the same risks exist and are better sampled (the AXA–Ipsos Future Risks Report); media
+      neglect is ranked every year (CARE’s under-reported crises); misperception is measured (Gapminder, Ipsos Perils of
+      Perception); pairwise wiki surveys are a published method (Salganik and Levy). What this adds is the alignment: the
+      same current, named matters read three ways on one page, every reading open data, and each reader shown where they
+      stand. The full search: <a class={link} href="/experiments/neighbors">neighbours of every experiment</a>.
+    </p>
+  </section>
+</MethodSheet>

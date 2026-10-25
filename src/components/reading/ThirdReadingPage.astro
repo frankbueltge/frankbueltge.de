@@ -1,0 +1,314 @@
+---
+// THIRD READING — one briefing's matters, read three ways (2026-10-26; docs/design/2026-10-26-third-reading.md).
+//
+// The first reading is the Middle's briefing: why each matter presses, after the expert sources, and
+// which of them it calls urgent but quiet. The second is Common Ground's: how loud the web was about
+// each, counted from the committed day files by a rule written in src/lib/reading/attention.ts. The
+// third is this page's readers': which of two matters should the world act on first, asked in pairs,
+// and three estimates of a matter's scale.
+//
+// The order on the page is the order of the method. The reader's part comes first; the other two
+// readings wait in a closed fold below it, because a reader who has seen the web's counts would
+// answer the page instead of the question. Opening the fold first is allowed, and the reading says so.
+//
+// Every number is derived at build time by src/lib/reading/* from committed files — the round, the
+// trending days, the nightly record — and typed into no sentence.
+import SheetHead from '@/components/experiments/SheetHead.astro'
+import SheetFoot from '@/components/experiments/SheetFoot.astro'
+import ReadingIsland from './ReadingIsland'
+import { CURRENT_ROUND as round } from '@/lib/reading/rounds'
+import { readAttention } from '@/lib/reading/attention'
+import { getTrendingDays } from '@/lib/trending/data'
+import { committedRecord } from '@/lib/reading/record-data'
+import { READING_FLOOR, readAudience } from '@/lib/reading/aggregate'
+import { BOX, gapFigure } from '@/lib/reading/figure'
+import { CONSENT_LINES } from '@/lib/reading/consent'
+import { fmtValue } from '@/lib/reading/estimate'
+import '@/styles/experiment-sheet.css'
+import '@/styles/third-reading.css'
+
+const READINGS_ID = 'readings'
+const RECEIPTS_SHOWN = 12
+const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
+
+const attention = readAttention(round, getTrendingDays())
+const record = committedRecord(round.id)
+const audience = readAudience(round, record, attention)
+const signals = Object.fromEntries(attention.matters.map((m) => [m.matter, m.signals]))
+const quietIds = round.matters
+  .filter((m) => m.quiet_rank !== null)
+  .sort((a, b) => a.quiet_rank! - b.quiet_rank!)
+  .map((m) => m.id)
+
+const fig = gapFigure(
+  round.matters.map((m) => ({ id: m.id, title: m.title, quiet: m.quiet_rank !== null, signals: signals[m.id] ?? 0 })),
+  audience.rank,
+)
+const rankOf = new Map(audience.rank.map((r) => [r.id, r]))
+const attentionOf = new Map(attention.matters.map((m) => [m.matter, m]))
+
+const fmtDay = (iso: string) => new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+const pct = (t: { of: number; went: number }) => (t.of ? Math.round((t.went / t.of) * 100) : null)
+const louderPct = pct(audience.louder)
+const quietPct = pct(audience.quiet)
+
+const islandRound = {
+  id: round.id,
+  question: round.question,
+  consentVersion: round.consent_version,
+  pairs: round.pairs_per_reading,
+  estimatesPer: round.estimates_per_reading,
+  matters: round.matters.map(({ id, title, gist }) => ({ id, title, gist })),
+  estimates: round.estimates,
+}
+const siteKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined) ?? ''
+---
+
+<main id="main" class="sheet mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:py-14">
+  <SheetHead
+    kicker="From the counter-measurement line"
+    title="Third Reading"
+    sub="Ten matters the world is pressing on, read three ways: why the expert sources say they press, how loud the web has been about them, and how urgent the people who read this page judge them."
+    badges={['in work', `round ${round.id}`]}
+  />
+
+  <section class="mb-10 max-w-3xl">
+    <p class="leading-relaxed text-fg-muted">
+      Before every research cycle, the Middle of this site’s research ecology writes a
+      <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href={round.briefing.url}>briefing</a> of
+      matters that press on the world now, each with its sources. Common Ground, the site’s morning ledger of what the web
+      converges on, counts how much each of them was talked about. Both readings are made by the house. The third is yours:
+      <b class="text-fg">{round.question.toLowerCase().replace(/\?$/, '')}</b>, asked in pairs, so that you never have to
+      rank ten things at once, and three estimates of how large a matter is.
+    </p>
+    <p class="mt-3 leading-relaxed text-fg-muted">
+      Polling the audience is an old move in art; Hans Haacke’s <i>MoMA Poll</i> counted its ballots in 1970. This one
+      keeps its answers as open data, sets them against two other readings of the same matters, and says what it cannot
+      claim: the people who read this page are a sample of no one but themselves.
+    </p>
+  </section>
+
+  <section id="take-part" class="mb-12" aria-label="Give your reading">
+    <ReadingIsland
+      client:visible
+      round={islandRound}
+      signals={signals}
+      quiet={quietIds}
+      consent={[...CONSENT_LINES]}
+      siteKey={siteKey}
+      readingsId={READINGS_ID}
+    />
+    <noscript>
+      <p class="mt-4 text-sm text-fg-muted">Taking part needs JavaScript. The three readings below do not.</p>
+    </noscript>
+  </section>
+
+  <details id={READINGS_ID} class="rd-readings mb-12">
+    <summary>
+      <span class="kicker">The three readings</span>
+      <span class="rd-summary-note">
+        Best opened after your own reading: the web’s counts are in here, and a reading given after seeing them is marked
+        as such in the open data.
+      </span>
+    </summary>
+
+    <div class="mt-6">
+      <figure class="rd-plate">
+        <svg viewBox={`0 0 ${BOX.width} ${BOX.height}`} role="img" class="rd-fig" aria-labelledby="rd-fig-title rd-fig-desc">
+          <title id="rd-fig-title">The gap between the web’s attention and this audience’s urgency</title>
+          <desc id="rd-fig-desc">
+            One mark per matter. Across: how many of Common Ground’s signals named it in the thirty days before the briefing,
+            on a log scale. Up: the chance this page’s readers chose it over a randomly picked other matter, with its interval.
+            Rings are the matters the briefing calls urgent but quiet.
+          </desc>
+          <g class="rd-grid">
+            {fig.yTicks.map((t) => <line x1={BOX.padLeft} y1={t.at} x2={BOX.width - BOX.padRight} y2={t.at} />)}
+          </g>
+          <line class="rd-mid" x1={BOX.padLeft} y1={fig.mid} x2={BOX.width - BOX.padRight} y2={fig.mid} />
+          <g class="rd-axis">
+            {fig.yTicks.map((t) => <text x={BOX.padLeft - 8} y={t.at + 4} text-anchor="end">{t.label}</text>)}
+            {fig.xTicks.map((t) => <text x={t.at} y={BOX.height - BOX.padBottom + 18} text-anchor="middle">{t.label}</text>)}
+            <text x={BOX.padLeft} y={BOX.height - 10}>signals in Common Ground, 30 days (log scale) →</text>
+            <text x={14} y={BOX.padTop + 4} transform={`rotate(-90 14 ${BOX.padTop + 4})`} text-anchor="end">↑ chosen first (%)</text>
+          </g>
+          <g class="rd-marks">
+            {
+              fig.marks.map((m) => (
+                <g>
+                  <title>{`${m.title}: ${m.signals} signals; ${audience.readings ? `chosen first ${m.score} %` : 'no reading yet'}`}</title>
+                  {m.yLow !== m.yHigh && <line class="rd-int" x1={m.x} y1={m.yLow} x2={m.x} y2={m.yHigh} />}
+                  <circle class={m.quiet ? 'rd-ring' : 'rd-dot'} cx={m.x} cy={m.y} r="5" />
+                  <text class="rd-label" x={m.labelX} y={m.labelY} text-anchor={m.anchor}>{m.title}</text>
+                </g>
+              ))
+            }
+          </g>
+        </svg>
+        <figcaption class="rd-caption">
+          {
+            audience.readings === 0
+              ? 'No reading is on the record yet, so every mark sits on the 50 line: an audience that has said nothing ranks nothing.'
+              : `${audience.readings} ${audience.readings === 1 ? 'reading' : 'readings'} on the record, from ${record?.entries[0]?.day ? fmtDay(record.entries[0].day) : '—'}. The vertical strokes are 90 % intervals of the model for this audience — not a margin of error: the readers are not a sample of anyone.`
+          }
+          {' '}Rings: urgent but quiet, after the briefing. Dots: the others.
+        </figcaption>
+      </figure>
+
+      <div class="rd-table-wrap mt-8">
+        <table class="rd-table">
+          <caption class="sr-only">The three readings of every matter</caption>
+          <thead>
+            <tr>
+              <th scope="col">Matter, after the briefing</th>
+              <th scope="col">The web, 30 days</th>
+              <th scope="col">This audience</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              round.matters.map((m) => {
+                const a = attentionOf.get(m.id)!
+                const r = rankOf.get(m.id)!
+                return (
+                  <tr>
+                    <td>
+                      <b class="text-fg">{m.title}</b>
+                      {m.quiet_rank !== null && <span class="rd-tag">urgent but quiet · {m.quiet_rank}</span>}
+                      <span class="block text-fg-muted">{m.gist}</span>
+                    </td>
+                    <td class="tabular-nums">
+                      {a.signals} {a.signals === 1 ? 'signal' : 'signals'}
+                      <span class="block text-fg-muted">{a.converged_days ? `converged on ${a.converged_days} ${a.converged_days === 1 ? 'day' : 'days'}` : 'never converged'}</span>
+                    </td>
+                    <td class="tabular-nums">
+                      {audience.readings ? `${r.score} %` : '—'}
+                      <span class="block text-fg-muted">{audience.readings ? `${r.low}–${r.high} · chosen ${r.wins} of ${r.appearances}` : 'no reading yet'}</span>
+                    </td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <section class="mt-10 max-w-3xl">
+        <p class="kicker mb-3">What this audience says</p>
+        {
+          audience.speaks ? (
+            <p class="leading-relaxed text-fg-muted">
+              Across {audience.readings} readings, of the {audience.louder.of} choices between two matters the web was not equally
+              loud about, <b class="text-fg">{louderPct} %</b> went to the louder one. Where a matter the briefing calls urgent but
+              quiet met one it does not, it was chosen <b class="text-fg">{quietPct} %</b> of the time.
+              {audience.primed > 0 && ` ${audience.primed} of the readings were given after opening this fold.`}
+            </p>
+          ) : (
+            <p class="leading-relaxed text-fg-muted">
+              {audience.readings === 0 ? 'No reading yet.' : `${audience.readings} ${audience.readings === 1 ? 'reading' : 'readings'} so far.`} Below{' '}
+              {READING_FLOOR} readings this page draws the counts and the intervals but words no comparison: an interval that wide
+              says “not yet”, and so does the page.
+            </p>
+          )
+        }
+      </section>
+
+      <section class="mt-10">
+        <p class="kicker mb-3">The estimates</p>
+        <div class="rd-table-wrap">
+          <table class="rd-table">
+            <caption class="sr-only">Every estimate this round asks, against its figure</caption>
+            <thead>
+              <tr>
+                <th scope="col">Question</th>
+                <th scope="col">The figure</th>
+                <th scope="col">This audience</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                round.estimates.map((e) => {
+                  const s = audience.estimates.find((x) => x.id === e.id)!
+                  return (
+                    <tr>
+                      <td>{e.question}</td>
+                      <td>
+                        {e.truth_label}
+                        <a class="block text-fg-muted underline decoration-line underline-offset-4 hover:decoration-fg" href={e.source.url} rel="noopener">
+                          {e.source.label}
+                        </a>
+                      </td>
+                      <td class="tabular-nums">
+                        {s.answered ? `median ${fmtValue(e.kind, s.median!)}` : '—'}
+                        <span class="block text-fg-muted">
+                          {s.answered ? `${s.under} too low · ${s.close} close · ${s.over} too high` : 'no answer yet'}
+                          {s.unknown ? ` · ${s.unknown} did not guess` : ''}
+                        </span>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="mt-10">
+        <p class="kicker mb-3">What the web’s counts were counted from</p>
+        <p class="mb-4 max-w-3xl leading-relaxed text-fg-muted">
+          A signal counts for a matter when its label or a linked headline names one of the matter’s terms as a whole word,
+          in Common Ground’s day files from {fmtDay(attention.window.from)} to {fmtDay(attention.window.to)}. The terms are a
+          choice; the receipts below are there so that anyone can see what the choice let in.
+        </p>
+        {
+          round.matters.map((m) => {
+            const a = attentionOf.get(m.id)!
+            return (
+              <details class="rd-receipts">
+                <summary>
+                  {m.title} · <span class="tabular-nums">{a.signals}</span> · terms: {m.terms.join(', ')}
+                </summary>
+                {a.receipts.length ? (
+                  <ul>
+                    {a.receipts.slice(0, RECEIPTS_SHOWN).map((r) => (
+                      <li>
+                        <span class="font-mono text-[11px] text-fg-faint">{r.date} · {r.source}</span>{' '}
+                        {r.url ? <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href={r.url} rel="noopener nofollow">{r.label}</a> : r.label}
+                      </li>
+                    ))}
+                    {a.receipts.length > RECEIPTS_SHOWN && <li class="text-fg-muted">… and {a.receipts.length - RECEIPTS_SHOWN} more in the day files.</li>}
+                  </ul>
+                ) : (
+                  <p class="text-fg-muted">No signal named it.</p>
+                )}
+              </details>
+            )
+          })
+        }
+      </section>
+    </div>
+  </details>
+
+  <section class="mb-10 max-w-3xl">
+    <p class="kicker mb-3">What this page keeps</p>
+    <dl class="rd-consent">
+      {
+        CONSENT_LINES.map((c) => (
+          <div>
+            <dt>{c.label}</dt>
+            <dd>{c.text}</dd>
+          </div>
+        ))
+      }
+    </dl>
+    <p class="mt-4 text-sm text-fg-muted">
+      The page ends when its store ends; what the nightly snapshot committed stays.
+      The record of this round: <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href={`${REPO}/blob/main/src/data/reading/${round.id}.json`}>{`src/data/reading/${round.id}.json`}</a>
+      (CC0), also as <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href={`/api/reading/record?round=${round.id}`}>JSON</a>.
+      The round itself — matters, terms, figures, sources: <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href={`${REPO}/blob/main/src/data/reading/rounds/${round.id}.json`}>{`rounds/${round.id}.json`}</a>.
+      More in the <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href="/privacy">privacy policy</a>.
+    </p>
+  </section>
+
+  <SheetFoot links={[{ href: '/werke/third-reading', label: 'Method sheet' }, { href: '/experiments', label: 'All experiments' }]} />
+</main>

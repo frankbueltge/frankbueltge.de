@@ -71,6 +71,15 @@ const datenschutzDe: LegalPage = {
       ],
     },
     {
+      heading: 'Third Reading (/third-reading)',
+      paragraphs: [
+        'Unter /third-reading kannst du die Themen eines Lagebilds der Forschungsökologie paarweise nach Dringlichkeit beurteilen und einige Größenordnungen schätzen. Mitmachen ist freiwillig und setzt deine Einwilligung voraus, die du vor der ersten Wahl erteilst (Art. 6 Abs. 1 lit. a DSGVO); teilnehmen darf, wer 16 Jahre oder älter ist. Gesendet wird erst, wenn du am Ende ausdrücklich auf „Add my reading to the record“ drückst; bis dahin verlässt nichts deinen Browser, und ein Abbruch speichert nichts.',
+        'Gespeichert werden deine Wahlen und Schätzungen, wie lange jede gedauert hat, der Tag (nicht die Uhrzeit), die Fassung des Einwilligungstextes und ob du die Auswertung der Seite vor dem Absenden geöffnet hast, in einer Datenbank von Cloudflare (D1). Nicht gespeichert werden IP-Adresse, Cookie, Konto oder irgendetwas, das eine Lesung dir oder einem anderen Besuch zuordnet. Jede Nacht werden alle Lesungen einer Runde als offene Daten (CC0) im öffentlichen Git-Archiv dieser Website veröffentlicht.',
+        'Damit je Person und Tag nur eine Lesung je Runde gezählt wird, wird aus IP-Adresse und User-Agent mit einem täglich neu erzeugten Zufallsschlüssel ein Hash gebildet und höchstens 24 Stunden gespeichert; der Schlüssel wird am Ende des Tages gelöscht, danach lässt sich der Hash niemandem mehr zuordnen (Art. 6 Abs. 1 lit. f DSGVO; berechtigtes Interesse am Schutz vor Mehrfach- und Missbrauchseinsendungen). Die Bot-Prüfung übernimmt Cloudflare Turnstile; dabei gelten die Datenschutzhinweise von Cloudflare.',
+        'Weil eine gespeicherte Lesung keinerlei Bezug zu deiner Person enthält, kann sie dir nachträglich nicht mehr zugeordnet und deshalb auch nicht gezielt gelöscht werden; darauf weist die Seite vor der ersten Wahl hin.',
+      ],
+    },
+    {
       heading: 'Kataloge (/papers, /datasets)',
       paragraphs: [
         'Die Kataloge verzeichnen Veröffentlichungen und Datensätze, auf die sich die Forschung dieser Ökologie stützt. Titel, Urheberinnen und Urheber, Erscheinungsjahr, Fundstelle und Zugriffsweg werden wörtlich aus den öffentlichen Schnittstellen der Quellkataloge übernommen.',
@@ -122,6 +131,15 @@ const datenschutzEn: LegalPage = {
         'So that each work can be rated only once per person and day, IP address and user agent are hashed with a random key that is new every day, and the hash is kept for at most 24 hours. The key is deleted at the end of the day, after which the hash can no longer be linked to anyone. The same technique counts the reports of a note. IP addresses are not stored (Art. 6(1)(f) GDPR; legitimate interest in protection against abuse). No cookie is set for visitors.',
         'Bot screening is done by Cloudflare Turnstile; Cloudflare’s own privacy notice applies to that check. Before it is published, a note is checked by a named AI model (currently gemini-2.5-flash-lite, Google AI Studio) for spam, abuse, personal data of third parties and instructions addressed to machines, and for nothing else; the full prompt is published verbatim on the form. Refused notes are not stored; only a counter per refusal reason is kept. Three reports from different people hide a note until the operator has read it.',
         'On his own devices the operator sets a technically necessary cookie that marks his own notes as his (Section 25(2) no. 2 TDDDG). It carries no identifier and is set for nobody else. Entries are kept as long as the database exists; the nightly files remain in the Git archive with its version history. To have a note of your own removed, write informally to hello@frankbueltge.de, naming the work and the date. The removal takes effect for the website and for future states of the archive; an objection under Art. 21 GDPR is carried out in the archive as well.',
+      ],
+    },
+    {
+      heading: 'Third Reading (/third-reading)',
+      paragraphs: [
+        'At /third-reading you can judge the matters of one of the research ecology’s briefings in pairs by urgency and estimate a few magnitudes. Taking part is voluntary and requires your consent, which you give before the first choice (Art. 6(1)(a) GDPR); you must be 16 or older. Nothing is sent until you press “Add my reading to the record” at the end; until then nothing leaves your browser, and stopping stores nothing.',
+        'What is stored: your choices and estimates, how long each took, the day (not the time), the version of the consent text, and whether you opened the page’s results before sending, in a Cloudflare database (D1). Not stored: your IP address, a cookie, an account, or anything that links a reading to you or to another visit. Every night all readings of a round are published as open data (CC0) in this website’s public Git archive.',
+        'So that only one reading per round is counted per person and day, a hash is formed from IP address and user agent with a random key created fresh each day and stored for at most 24 hours; the key is deleted at the end of the day, after which the hash can no longer be linked to anyone (Art. 6(1)(f) GDPR; legitimate interest in protection against repeated and abusive submissions). The bot check is provided by Cloudflare Turnstile; Cloudflare’s privacy notice applies.',
+        'Because a stored reading contains nothing that relates to you, it cannot be attributed to you afterwards and therefore cannot be deleted on request; the page says so before the first choice.',
       ],
     },
     {

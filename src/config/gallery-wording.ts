@@ -90,6 +90,7 @@ export const GALLERY = {
     redaction: 'one tick per watched page, marked where the page changed, hollow where the change could not be verified',
     'round-number': 'the leading-digit distribution against the expectation it is measured against',
     sawtooth: 'the published gap between Earth time and atomic time, every day of the record',
+    'third-reading': 'one dot per matter of the newest round: across, how loud the web was about it; up, how urgent this page’s readers judged it; the urgent-but-quiet ones marked',
     pattern: 'the last night’s strongest pair, both series over the days on file',
     praemie: 'the premium index over the years the record covers',
     parallaxe: 'what each tracked topic leaves out, one bar per topic',
@@ -123,6 +124,7 @@ export const GALLERY = {
     /* the corrections and the years since the last one — both handed over already formatted by
        src/lib/experiments/thumbnails.ts, per rule 1 of this file */
     sawtooth: (leaps: string, years: string) => `${leaps} leap seconds; none for ${years} years`,
+    'third-reading': (readings: string, matters: string) => `${readings} readings of ${matters} matters on the record`,
     pattern: (a: string, b: string, r: string) => `${a} against ${b}, correlation ${r}`,
     praemie: (base: string, change: string) => `since ${base} the premium has moved ${change}`,
     parallaxe: (topics: string, omission: string) => `${topics} topics tracked, mean omission ${omission}`,

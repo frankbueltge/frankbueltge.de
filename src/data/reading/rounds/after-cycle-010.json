@@ -1,0 +1,138 @@
+{
+  "$contract": "third-reading-round/1",
+  "id": "after-cycle-010",
+  "briefing": {
+    "title": "Briefing after cycle 010 — what the world is pressing on",
+    "written": "2026-10-25",
+    "url": "https://github.com/frankbueltge/research-ecology/blob/38314ede9d78cefd185860ed5b6fd9b89ee5baec/briefings/after-cycle-010.md"
+  },
+  "attention_window": { "from": "2026-09-26", "to": "2026-10-25" },
+  "consent_version": "2026-10-26",
+  "question": "Which of these two should the world act on first, in the coming year?",
+  "pairs_per_reading": 15,
+  "estimates_per_reading": 3,
+  "matters": [
+    {
+      "id": "iran-hormuz",
+      "title": "The war on Iran and the Strait of Hormuz",
+      "gist": "The US and Israel went to war on Iran on 28 February 2026, and Iran closed the strait that carries much of the world's oil and gas.",
+      "quiet_rank": null,
+      "terms": ["Iran", "Iranian", "Hormuz"]
+    },
+    {
+      "id": "energy-shock",
+      "title": "The energy shock as a cost-of-living crisis",
+      "gist": "The IMF expects 4.7 % inflation in 2026 and links cost-of-living crises to worsening inequality and poverty.",
+      "quiet_rank": null,
+      "terms": ["oil price", "oil prices", "energy prices", "cost of living", "inflation"]
+    },
+    {
+      "id": "hunger",
+      "title": "Hunger under war and funding cuts",
+      "gist": "FAO and WFP name 13 hunger hotspots for June to November 2026, with a risk of famine in 14 areas of Sudan, while funding for food aid has fallen steeply.",
+      "quiet_rank": 1,
+      "terms": ["famine", "hunger", "starvation", "malnutrition", "food insecurity", "food aid", "World Food Programme", "WFP"]
+    },
+    {
+      "id": "el-nino",
+      "title": "A very strong El Niño on record-warm oceans",
+      "gist": "Sea surface temperatures set a September record, and the coming El Niño is likely to be one of the strongest ever measured.",
+      "quiet_rank": 4,
+      "terms": ["El Niño"]
+    },
+    {
+      "id": "cop31",
+      "title": "COP31, Antalya, 9 to 20 November",
+      "gist": "Turkey hosts the climate conference and Australia presides over the talks; adaptation, a just transition and the roadmaps away from fossil fuels are on the table.",
+      "quiet_rank": 3,
+      "terms": ["COP31", "COP 31"]
+    },
+    {
+      "id": "wars-returned",
+      "title": "Wars that returned this autumn",
+      "gist": "Ethiopia is back at war, the Houthis advanced on Yemen's Red Sea coast, Pakistan struck Afghanistan again, and Moscow rejects a ceasefire in Ukraine.",
+      "quiet_rank": null,
+      "terms": ["Ethiopia", "Tigray", "TPLF", "Eritrea", "Yemen", "Houthi", "Houthis", "Afghanistan", "Ukraine", "Ukrainian"]
+    },
+    {
+      "id": "ebola",
+      "title": "Ebola in eastern Congo",
+      "gist": "A Bundibugyo-virus outbreak declared in mid-May became the second largest Ebola outbreak on record; most admitted patients were not known contacts.",
+      "quiet_rank": 2,
+      "terms": ["Ebola", "Bundibugyo"]
+    },
+    {
+      "id": "ai-first-rung",
+      "title": "AI and the first rung of work",
+      "gist": "In the occupations most exposed to AI, employment of workers aged 22 to 25 is 19 % below that of their peers.",
+      "quiet_rank": null,
+      "terms": ["entry-level", "junior jobs", "junior developers"]
+    },
+    {
+      "id": "elections-synthetic",
+      "title": "Elections and synthetic media",
+      "gist": "The US votes on 3 November; AI deepfakes have appeared in campaigns, and the WEF ranks mis- and disinformation second among the risks of the next two years.",
+      "quiet_rank": null,
+      "terms": ["deepfake", "deepfakes", "disinformation", "misinformation", "midterm", "midterms"]
+    },
+    {
+      "id": "long-horizon",
+      "title": "Biodiversity loss and the Earth's systems, over ten years",
+      "gist": "Over ten years, the WEF's experts rank extreme weather, biodiversity loss and critical change to Earth systems first to third.",
+      "quiet_rank": null,
+      "terms": ["biodiversity", "mass extinction", "species extinction", "tipping point", "tipping points", "Living Planet", "Earth system", "ecosystem collapse"]
+    }
+  ],
+  "estimates": [
+    {
+      "id": "hunger-people",
+      "matter": "hunger",
+      "question": "FAO and WFP name 13 hunger hotspots for June to November 2026. How many people in those countries face high levels of acute food insecurity?",
+      "kind": "count",
+      "unit": "people",
+      "truth": 266000000,
+      "truth_label": "around 266 million",
+      "source": { "label": "WFP USA on the FAO–WFP Hunger Hotspots report, 17 June 2026", "url": "https://wfpusa.org/news/new-fao-wfp-report-warns-rising-hunger-13-hotspots/" }
+    },
+    {
+      "id": "aid-cut",
+      "matter": "hunger",
+      "question": "Funding for food assistance, emergency agriculture and nutrition in food crises: by what percentage did it fall from 2022 to 2025?",
+      "kind": "percent",
+      "unit": "% decline",
+      "truth": 59,
+      "truth_label": "an estimated 59 %",
+      "source": { "label": "WFP USA on the FAO–WFP Hunger Hotspots report, 17 June 2026", "url": "https://wfpusa.org/news/new-fao-wfp-report-warns-rising-hunger-13-hotspots/" }
+    },
+    {
+      "id": "hormuz-share",
+      "matter": "iran-hormuz",
+      "question": "What share of the world's oil and liquefied natural gas travels through the Strait of Hormuz?",
+      "kind": "percent",
+      "unit": "% of world supply",
+      "truth": 20,
+      "truth_label": "roughly 20 %",
+      "source": { "label": "Al Jazeera, 14 April 2026", "url": "https://www.aljazeera.com/economy/2026/4/14/imf-cuts-global-growth-forecast-during-hormuz-blockade" }
+    },
+    {
+      "id": "warming-september",
+      "matter": "el-nino",
+      "question": "How far above the pre-industrial average (1850–1900) was the global surface air temperature in September 2026?",
+      "kind": "degrees",
+      "unit": "°C",
+      "truth": 1.63,
+      "truth_label": "1.63 °C",
+      "source": { "label": "Copernicus Climate Change Service, October 2026", "url": "https://climate.copernicus.eu/copernicus-second-warmest-september-global-temperatures-stay-above-15degc" }
+    },
+    {
+      "id": "ebola-cases",
+      "matter": "ebola",
+      "question": "How many confirmed Ebola cases had the outbreak in eastern Congo reached by 5 August 2026?",
+      "kind": "count",
+      "unit": "confirmed cases",
+      "truth": 4053,
+      "truth_label": "4,053",
+      "source": { "label": "Outbreak News Today, citing the DRC Ministry of Health, 8 August 2026", "url": "https://outbreaknewstoday.substack.com/p/dr-congo-ebola-outbreak-tops-4000" }
+    }
+  ]
+}

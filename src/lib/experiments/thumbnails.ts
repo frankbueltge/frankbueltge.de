@@ -36,7 +36,12 @@ import { floorX, scaleX, type Domain } from '@/lib/spielraum/chart'
 import { buildFigure as buildInvokedFigure, figureInput as invokedFigureInput } from '@/lib/invoked/figure'
 import { buildFigure as buildBalanceFigure } from '@/lib/balance/figure'
 import { AGENT_POS, EDGES } from '@/lib/society/layout'
-import { getLatestTrending } from '@/lib/trending/data'
+import { getLatestTrending, getTrendingDays } from '@/lib/trending/data'
+import { CURRENT_ROUND } from '@/lib/reading/rounds'
+import { readAttention } from '@/lib/reading/attention'
+import { committedRecord } from '@/lib/reading/record-data'
+import { readAudience, type AudienceReading } from '@/lib/reading/aggregate'
+import { gapFigure } from '@/lib/reading/figure'
 import type { InvokedData } from '@/lib/invoked/types'
 import type { BalanceCountry } from '@/lib/balance/types'
 
@@ -521,6 +526,22 @@ function trendingMarks(): ThumbMark[] {
   return [...marks, ...rule]
 }
 
+/**
+ * Third Reading's own figure in the miniature's box: one dot per matter of the newest round, across
+ * by the web's signals, up by the readers' score — every dot on the middle rule until the first
+ * reading. The urgent-but-quiet matters are the marked ones, as the rings are on the work.
+ */
+function thirdReadingMarks(audience: AudienceReading, signals: Record<string, number>): ThumbMark[] {
+  const fig = gapFigure(
+    CURRENT_ROUND.matters.map((m) => ({ id: m.id, title: m.title, quiet: m.quiet_rank !== null, signals: signals[m.id] ?? 0 })),
+    audience.rank,
+    { width: W, height: H, padLeft: P + 2, padRight: P + 2, padTop: P + 2, padBottom: P + 2 },
+  )
+  const rule: ThumbMark = { t: 'rule', x1: P, y1: r1(fig.mid), x2: W - P, y2: r1(fig.mid) }
+  const dots = fig.marks.map((m): ThumbMark => (m.quiet ? { t: 'dot', x: r1(m.x), y: r1(m.y), r: 2.6, on: true } : { t: 'dot', x: r1(m.x), y: r1(m.y), r: 2.6 }))
+  return [rule, ...dots]
+}
+
 // ── the practices beside the lab ──────────────────────────────────────────────────────────
 /**
  * The three houses listed beside the lab keep no instrument and publish no reading, so there is
@@ -728,6 +749,18 @@ function buildThumbnails(): Thumbnail[] {
     draws: D.sawtooth!,
     readout: R.sawtooth(count(saw.leaps.length), count(saw.yearsSinceLeap)),
     source: 'src/data/sawtooth/rotation.json',
+  })
+
+  const attention = readAttention(CURRENT_ROUND, getTrendingDays())
+  const record = committedRecord(CURRENT_ROUND.id)
+  const audience = readAudience(CURRENT_ROUND, record, attention)
+  out.push({
+    id: 'third-reading',
+    marks: thirdReadingMarks(audience, Object.fromEntries(attention.matters.map((m) => [m.matter, m.signals]))),
+    draws: D['third-reading']!,
+    readout: R['third-reading'](count(audience.readings), count(CURRENT_ROUND.matters.length)),
+    // the readers' record once the first night has committed one; until then the round the dots are drawn from
+    source: record ? `src/data/reading/${CURRENT_ROUND.id}.json` : `src/data/reading/rounds/${CURRENT_ROUND.id}.json`,
   })
 
   return out
