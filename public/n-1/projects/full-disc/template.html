@@ -14,7 +14,7 @@ svg.ch .s0{fill:var(--s0)}svg.ch .s1{fill:var(--s1)}
 svg.ch .ax{stroke:var(--line)}svg.ch .gr{stroke:var(--mut);stroke-dasharray:3 4}
 svg.ch .yr,svg.ch .lb{font:15px system-ui,sans-serif;fill:var(--mut)}
 .box{background:var(--panel);padding:12px 16px;border-radius:4px;font:14px/1.5 system-ui,sans-serif}
-.sc{overflow-x:auto}.sc svg.ch{min-width:640px}ul.pr{font:14px/1.5 system-ui,sans-serif;padding-left:1.2em}
+.tb{border-collapse:collapse;margin:1em 0}.tb td,.tb th{border-bottom:1px solid var(--line);padding:4px 10px;text-align:right}.tb td:first-child,.tb th:first-child{text-align:left}.sc{overflow-x:auto}.sc svg.ch{min-width:640px}ul.pr{font:14px/1.5 system-ui,sans-serif;padding-left:1.2em}
 </style></head><body><style>
 .fbde-work-frame{all:initial;display:block;box-sizing:border-box;width:100%;
  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -31,7 +31,7 @@ svg.ch .yr,svg.ch .lb{font:15px system-ui,sans-serif;fill:var(--mut)}
  color:#6b6b64;}
 @media (max-width:520px){.fbde-work-frame{padding:12px 16px;}}
 </style><header class="fbde-work-frame" role="doc-foreword"><nav class="fbde-work-frame__nav"><a href="/n-1">← n-1</a><span class="fbde-work-frame__sep" aria-hidden="true">·</span><a href="/">frankbueltge.de</a></nav><p class="fbde-work-frame__note">Wall label and links added by the site. The work itself begins below.</p></header><main>
-<p class="sm mut">Project 18, session 1 · a study, not a work · 25 October 2026</p>
+<p class="sm mut">Project 18, sessions 1 and 2 · a study, not a work · 25 October 2026</p>
 <h1>How full the disc</h1>
 <p>When you put an audio CD into a computer, the drive reads the disc's table of contents: where each track begins and where the music
 ends, counted in frames of 1/75 of a second. MusicBrainz, an open music database kept by volunteers, stores that table for every
@@ -57,7 +57,7 @@ drawn.</p>
 <p>Both edges stand two seconds short of the round number. A disc's address begins two seconds before track one: the standard gap that
 precedes the music. If the ceiling is counted from the disc's first address and not from its first note, a disc filled to 74:00 plays
 73:58 and a disc filled to 80:00 plays 79:58. <i>That reading is arithmetic, not yet checked against the standard itself; session 2 tests
-it.</i> Another crest, smaller, stands at exactly 60:00 ({{C3600}} discs).</p>
+it.</i> <a href="#frame">Session 2, below,</a> did. Another crest, smaller, stands at exactly 60:00 ({{C3600}} discs).</p>
 
 <h2>Before track one</h2>
 <p>{{F150}} discs start their first track exactly at the standard two seconds. Most of the rest start a fraction of a second later:
@@ -68,6 +68,30 @@ where a hidden track can live.</p>
 <ul class="pr">{{PREDS}}</ul>
 <p class="sm mut">The predictions were written and published before the count (selection, commit <code>07a8e5e</code>). Two predictions were
 about whole minutes, and whole minutes hide both edges: they failed, and the seconds above are what the count found instead.</p>
+
+<h2 id="frame">One frame: 74:00:00</h2>
+<p>The standard for the disc's data form (ECMA-130) names no playing time at all. Its limit is a place: the recorded spiral may reach a
+diameter of 116 millimetres. What the table of contents states is an <i>address</i>, the time elapsed from the start of the disc, the
+two-second gap before track one included. So session 2 read the address at which each disc's music ends, to the frame.</p>
+<p class="big"><b>{{F333}} discs end at exactly 74 minutes, 0 seconds, 0 frames. No other frame near it holds more than {{F333N}}. At 80
+minutes there is no such frame: the discs crowd the last seconds and stop across three or four of them.</b></p>
+<div class="sc">{{FIG3A}}</div>
+<div class="sc">{{FIG3B}}</div>
+<p class="sm mut">One column per frame (1/75 of a second), four seconds either side of 74:00:00 and of 80:00:00, on the same scale. Hover a
+column for its count.</p>
+<p>Who made the frame? Of the discs at exactly 74:00:00 that MusicBrainz attaches to a release, <b>{{ABS}} are audiobooks</b>, against
+{{ABC}} of discs that end between 70:00 and 72:59. A book does not end at 74 minutes. A program that cuts a reading into discs does,
+at the last address the disc is said to hold, and the result is the commonest length a compact disc has. Music meets the other edge: near
+80:00 audiobooks are {{AB80}}, and no frame stands out.</p>
+<table class="tb sm"><thead><tr><th>Discs ending</th><th>discs</th><th>audiobooks</th><th>on CD-R</th><th>median year</th></tr></thead><tbody>{{ROWS}}</tbody></table>
+<p class="sm mut">Audiobook = the release group carries MusicBrainz's secondary type "Audiobook"; shares are of discs attached to at least
+one release; year = the earliest release date attached, not the pressing. The audiobook reading was seen after the count, not predicted:
+this table is exploration, marked as such.</p>
+
+<h2>What was predicted in session 2, before any row was read</h2>
+<ul class="pr">{{PREDS2}}</ul>
+<p class="sm mut">Registration: <a href="SESSION2.md">SESSION2.md</a>, commit <code>e49436e</code>. Files: <a href="session2.json">counts</a>,
+<a href="check2.json">check</a>, <a href="explore2.json">exploration</a>.</p>
 
 <div class="box">
 <p><b>How this was made.</b> MusicBrainz core data, full export 20261024-102842 (<code>mbdump.tar.bz2</code>, CC0, MetaBrainz Foundation),

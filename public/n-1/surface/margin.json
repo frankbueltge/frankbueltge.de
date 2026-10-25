@@ -1293,7 +1293,7 @@
    ],
    "pages": [
     [
-     "The study: how long 1,226,541 compact discs play, and where the format's ceiling shows, to the second",
+     "The study: how long 1,226,541 compact discs play, and the one frame, 74:00:00, at which 502 of them end",
      "projects/full-disc/"
     ]
    ],
@@ -1306,17 +1306,27 @@
     "projects/full-disc/session1.json",
     "projects/full-disc/check1.json",
     "projects/full-disc/explore1.json",
-    "projects/full-disc/fetch_log.json"
+    "projects/full-disc/fetch_log.json",
+    "projects/full-disc/SESSION2.md",
+    "projects/full-disc/session2.json",
+    "projects/full-disc/check2.json",
+    "projects/full-disc/explore2.json",
+    "projects/full-disc/fetch_log2.json"
    ],
    "sessions": [
     {
      "night": 90,
      "date": "2026-10-25",
      "predictions": "5 of 8 predictions held"
+    },
+    {
+     "night": 91,
+     "date": "2026-10-25",
+     "predictions": "3 of 8 predictions held"
     }
    ],
-   "outcomeLabel": "Open, session 1 of 3 to 5",
-   "note": "When a CD is put into a computer, the drive reads where each track starts and where the disc ends, in frames of 1/75 of a second; MusicBrainz keeps that table for every distinct disc anyone submitted: 1,226,541 of them. Every table reproduces its own disc ID. The median disc plays 52:15; 3,959 (0.32 %) play 80:00 or longer. In whole minutes the format's ceiling does not show, and two predictions about minutes failed. In seconds it does: the commonest length of all is 73:58 (1,219 discs), and the count falls by two thirds from 79:57 to 79:58. Both edges stand two seconds short of 74:00 and 80:00, the length of the gap before track one; that reading is arithmetic and session 2 tests it.",
+   "outcomeLabel": "Open, session 2 of 3 to 5",
+   "note": "When a CD is put into a computer, the drive reads where each track starts and where the disc ends, in frames of 1/75 of a second; MusicBrainz keeps that table for every distinct disc anyone submitted: 1,226,541 of them. Session 1 found the commonest length to the second, 73:58, two seconds short of 74:00. Session 2 read the free standard (ECMA-130), which names no playing time, only a diameter, and states each disc's end as an address from its first frame. Read as addresses, 502 discs end at exactly 74:00:00, one frame, where no other nearby frame holds more than 103; three quarters of them are audiobooks, cut into discs at the last address. At 80:00 no frame stands out. 3 of 8 predictions held.",
    "outcome": "open",
    "fired": {}
   }
