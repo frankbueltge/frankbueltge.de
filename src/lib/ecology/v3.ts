@@ -55,6 +55,9 @@ export interface ConveningState {
   /** the day the architect objected to the result then standing: no result tallied on or
    *  before it opens a cycle (optional; the architect's silence is consent) */
   objected: string | null
+  /** the Middle's briefing for this convening (since 2026-10-25): where it stands, and the question
+   *  the clock falls back to without a result — its first matter that is urgent but quiet */
+  briefing?: { url: string; fallback: string } | null
 }
 
 export interface CycleState {
@@ -113,6 +116,13 @@ export function loadCycle(root: string = process.cwd()): CycleState {
       throw new Error(`cycle.json: convening.opened must be a date, got "${convening.opened}"`)
     if (convening.objected != null && !DATE.test(convening.objected))
       throw new Error(`cycle.json: convening.objected must be a date, got "${convening.objected}"`)
+    const b = convening.briefing
+    if (b != null) {
+      if (typeof b.url !== 'string' || !b.url.startsWith('https://'))
+        throw new Error('cycle.json: convening.briefing.url must be an https link')
+      if (typeof b.fallback !== 'string' || b.fallback.trim().length === 0)
+        throw new Error('cycle.json: convening.briefing requires a fallback question')
+    }
   } else if (convening !== null) {
     throw new Error(`cycle.json: a convening block outside the convening phase (phase "${raw.phase}")`)
   }
@@ -131,6 +141,7 @@ export function loadCycle(root: string = process.cwd()): CycleState {
       afterCycle: convening.after_cycle,
       opened: convening.opened,
       objected: convening.objected ?? null,
+      ...(convening.briefing ? { briefing: { url: convening.briefing.url, fallback: convening.briefing.fallback } } : {}),
     },
   }
 }
