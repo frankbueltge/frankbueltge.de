@@ -72,6 +72,7 @@ describe('the built site carries the wall text on record', () => {
     // The integrate gates, CI and the deploy all build through `npm run build` (the workflows say
     // so in so many words), so the step belongs to that script and to nothing narrower.
     const pkg = JSON.parse(readFileSync(fileURLToPath(new URL('../../../package.json', import.meta.url)), 'utf8'))
-    expect(pkg.scripts.build).toMatch(/^astro build && tsx scripts\/engines\/frame-dist\.ts$/)
+    // Since 2026-10-17 the reception's band follows it (src/lib/reception/dist.ts), after the frame.
+    expect(pkg.scripts.build).toMatch(/^astro build && tsx scripts\/engines\/frame-dist\.ts( && |$)/)
   })
 })
