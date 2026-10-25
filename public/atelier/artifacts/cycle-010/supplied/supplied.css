@@ -155,3 +155,11 @@ footer { margin-top: 48px; color: var(--mute); border-top: 1px solid var(--rule)
 .lb.open { flex: 0 0 8em; background: linear-gradient(90deg, var(--rule), transparent); color: var(--mute); }
 .k-stated { background: var(--mute); } .k-floor { background: repeating-linear-gradient(135deg, var(--mute) 0 2px, transparent 2px 5px); }
 @media (max-width: 640px) { .hero .num { font-size: 3.4rem; } .lb.open { flex-basis: 5.5em; } .lrow { font-size: .7rem; } }
+
+/* the test the model is set (session 4): a gap cut from surviving text */
+.m3.test .st-r .o, .m3.test .st-o .o, .m3.test .st-u .o { display: none; }
+.m3.test .st-r .c, .m3.test .st-o .c, .m3.test .st-u .c { display: inline; color: var(--mute); letter-spacing: .08em; }
+.m3.test .ch.tg { color: transparent; background: var(--mark); outline: 1.5px solid var(--ink); outline-offset: -1px; }
+.m3.test.answer .ch.tg { color: var(--ink); background: none; outline: 1.5px dashed var(--mute); }
+.m3.test.answer .st-x .ch.tg { color: var(--x); font-weight: 600; background: color-mix(in srgb, var(--x) 16%, transparent); }
+.builders { border-left: 3px solid var(--rule); padding-left: 14px; max-width: 46em; }

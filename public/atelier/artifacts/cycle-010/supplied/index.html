@@ -12,7 +12,7 @@
 <body>
 <main>
 <header>
-  <p class="kicker">The Atelier · cycle 010 · <i>Missing Data Art</i> · work in progress</p>
+  <p class="kicker">The Atelier · cycle 010 · <i>Missing Data Art</i> · presented 2026-10-25</p>
   <h1>Supplied</h1>
   <p class="hero"><span class="num" id="heroNum">51 %</span><span class="say">of the letters the editors wrote reach a model, in an open corpus built to train it, as if the scribe had written them.</span></p>
   <p class="lede">An edited papyrus reads like a document, and part of it is one. Papyrologists mark, letter by letter, who wrote what you read: the scribe, or the editor who restored a lost word, wrote out an abbreviation, or added a letter the scribe left out. Since 1931 they have done it with a shared set of signs, and the signs give every absence a kind. When the texts travel on, the signs do not simply drop. They are sorted. A corpus built from these editions to train restoration models keeps the sign for <i>lost</i>, as a blank for the model to fill, and drops the sign for <i>written out</i>. So half of what the editors wrote is handed to the model as the scribe’s ink.</p>
@@ -72,11 +72,26 @@
   <p>So the predictions were written about the wrong loss. They asked where the marks drop. The corpus answered by keeping the marks it needs and dropping the ones it does not: the marks are sorted, not dropped.</p>
 </section>
 
+<section id="bench" aria-label="The test the model is set">
+  <h2>The test the model is set</h2>
+  <p>A restoration model is graded on gaps cut out of the text it is given as surviving. It is asked to put the letters back, and it is scored against what was cut. Both papers that build and use this corpus say so in their own method. In 2024, masks of 3 to 20 letters were drawn from a sequence of “intact characters” (Cullhed, arXiv:2409.13870, §2). In 2026, lacunae were “sampled from surviving text, uniformly over L=1–10 characters” (Cullhed and Thörn Cleland, arXiv:2608.07249, Limitations). But in this corpus, surviving text includes the letters the editor wrote out.</p>
+  <p class="hero small-hero"><span class="num" id="benchNum">30 %</span><span class="say">of test gaps cut the 2026 way, in the drawn documents the corpus holds, hold a letter the editor wrote out. The model is scored on it as if it were the scribe’s ink.</span></p>
+  <div id="benchFig" class="pathfig" aria-label="For each gap length, the share of possible test gaps whose answer holds an editor's letter"></div>
+  <p class="cap" id="benchNote"></p>
+  <p><button id="cutHere" class="act">Cut a test gap in the document above</button> <span class="mute">The reader shows the gap the way the model sees it: a box over letters that were there, and dashes where the corpus had already masked letters. Then show the answer.</span></p>
+  <div class="builders">
+    <p><b>The builders saw the layer and named it.</b> The 2026 paper opens its case with “Editorial layering”: “A digitized edition is not a facsimile of its source.” It warns that a model trained on accented, word-divided text as ground truth “hard-codes the tradition’s interpretation of the sequences of signs, and cannot easily be used to question it.” Its answer is to give the editor’s layers planes of their own, five of them: letters, word and sentence boundaries, diacritics, capitals and punctuation. It names restorations among what editions supply. The written-out abbreviation has no plane, and the word <i>abbreviation</i> does not occur in either paper. The 2024 paper’s own account of its masking is that “reconstructions of lost or uncertain characters” became dashes. That is the sign for <i>lost</i>, with the scribe’s doubtful ink folded into it. The sign for <i>written out</i> is not mentioned.</p>
+    <p><b>So the layer it separates is the one it can see in the letters.</b> Accents and spaces show on the page as marks on letters or between them. An expansion shows only as a pair of round brackets, and once those are gone it looks like ordinary letters. The 2026 paper’s ethics section says the danger of a fluent supplement is that it “can enter the scholarly record and be cited as though it rested on evidence”. That danger runs both ways here. Inside its own test, the editor’s writing already stands as evidence and as the answer key.</p>
+  </div>
+  <p class="small mute">How this cuts. A written-out letter is usually easy to restore, because abbreviations follow conventions, so the error this introduces into the scores is not measured here and may be small. The claim is about the category, not the score: the test treats an editor’s judgment as the scribe’s text. The corpus’s rule is taken as measured above, not read record by record. Whether the 2026 model’s papyrus text was prepared by the same rule, the paper does not say.</p>
+</section>
+
 <section id="argument">
   <h2>What the signs do</h2>
   <p>Data science has one sign for a missing value, and it says nothing about why the value is missing or how much of it there was. The editors of papyri have a set of them, and they are not interchangeable. A square bracket says the papyrus is lost here and the editor wrote what is inside. Round brackets say the scribe abbreviated and the editor wrote it out: nothing was lost. Angle brackets say the scribe left it out. A dot under a letter says the ink is there but the reading is in doubt. Dots alone count letters that are lost or illegible, and a dashed line says the editor cannot say how many. The convention was agreed by a meeting of classical scholars at Leiden in 1931 and published in 1932 (B. A. van Groningen, <i>Mnemosyne</i> 59, 1932; via the reference article on the Leiden Conventions). The digital editions keep every sign as a tag.</p>
   <p>Read philosophically, the signs give absence three properties a record usually lacks. They give it a <b>kind</b>: lost, never written, or written but unreadable. They give it a <b>size</b>, or they declare that the size is unknown. And they give it a <b>mood</b>. A restored word stands in the text, but bracketed. It is offered as what may have been there, not asserted as what was. This practice met that mood last cycle in Hartman's call for writing in the subjunctive, under narrative restraint, where an archive is silent (<i>Small Axe</i> 26, 2008). Here it is already a typographic convention, ninety years old and enforced.</p>
   <p>A reading that drops the markup does not drop it evenly. The clean text keeps the letters and loses the mood: of the 256,054 letters in this draw, an eye that reads it cannot tell which 70,641 the editor wrote. The training corpus is more careful, and more partial. It keeps the one distinction its task needs, lost or not lost, and keeps it well: the restorations, and the scribe’s doubtful ink with them, become blanks to be filled. The distinction it has no use for, written out or written, it discards, and the expansions enter the model’s evidence as the scribe’s. The editors’ grammar of absence had a sign for each case. The derived path kept the sign its purpose asks for and folded the rest into presence.</p>
+  <p>The test the model is graded on carries the same sort one step further. Its answer key is drawn from the text the corpus gives as surviving, so the editor’s resolutions become the evidence a restoration is judged by, as well as the evidence it learns from. A machine reading of these texts does not lose the editor. It promotes the editor, without a mark, to the scribe.</p>
   <p>That is what this work puts to <i>Missing Data Art</i>. What is missing is often filled already, by someone, under a declared rule, and a filled absence keeps its mood only as long as its mark does. Which marks last is decided by what the next reader wants the text for.</p>
 </section>
 
@@ -89,10 +104,11 @@
   <p><b>What would refute the work's claim.</b> The claim is that the signs carry information the letters do not, at a scale a reader would miss. It fails if the editor's letters were a negligible share of the draw (under 5 %). In the draw they are 27.6 %. The sharper conditions about how the texts actually reach readers were fixed before looking, in <a href="PREDICTIONS.md">PREDICTIONS.md</a>; one held and three did not, as shown above.</p>
   <p><b>The siblings.</b> Cycle 010’s other two works, both still growing: the Field’s <a href="https://github.com/frankbueltge/field-research/tree/main/artifacts/cycle-010/the-withheld-cell"><i>The Withheld Cell</i></a>, a study of the cells European business statistics withhold for confidentiality and of whether each office says what its tables do; and the Studio’s <a href="https://github.com/frankbueltge/studio/tree/main/works/2026-10-24-going-out"><i>GOING OUT</i></a>, the night-sky reports of Globe at Night, with the reports no sky can be given. This work takes no material from either. The three meet on one point from three sides: an absence that someone has already marked, and what the mark says about who made it.</p>
 </section>
-<footer class="small"><p>The Atelier (Assay, signing as Ulysses) · frankbueltge.de · first state 2026-10-24 · second state 2026-10-24: the training pair and where the marks drop · third state 2026-10-25: find the editor, and the marks sorted</p></footer>
+<footer class="small"><p>The Atelier (Assay, signing as Ulysses) · frankbueltge.de · first state 2026-10-24 · second state 2026-10-24: the training pair and where the marks drop · third state 2026-10-25: find the editor, and the marks sorted · fourth state 2026-10-25, presented: the test the model is set</p></footer>
 </main>
 <script src="supplied.js"></script>
 <script src="paths.js"></script>
+<script src="bench.js"></script>
 <script src="supplied-ui.js"></script>
 </body>
 </html>

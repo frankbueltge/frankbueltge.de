@@ -20,7 +20,7 @@
   const fold = (t) => t.normalize('NFD').replace(/[\u0300-\u036f\u0345]/g, '').toLowerCase().replace(/ς/g, 'σ');
   const cform = (st, t) => st === 'r' || st === 'o' || st === 'u' ? t.replace(/[^\p{L}]/gu, '').replace(/\p{L}/gu, '-') : st === 'd' || st === 'p' ? '' : fold(t).replace(/[^\p{L}\s]/gu, '');
   const cgap = (g) => g.g === 'e' ? ' … ' : g.u === 'l' ? ' … ' : g.q == null ? ' … ' : '-'.repeat(Math.min(Array.isArray(g.q) ? g.q[0] : g.q, 60));
-  let mode = 3, cur = null, revealed = false;
+  let mode = 3, cur = null, revealed = false, test = null;
   const run = { docs: 0, marked: 0, hit: 0, ed: 0, found: 0 };
   const graph = new Intl.Segmenter('und', { granularity: 'grapheme' });
   // one span per letter, so a visitor can mark letters; other characters stay plain text
@@ -45,7 +45,7 @@
   };
   const gapW = (g) => g.u === 'l' ? 10 : g.q == null ? 3 : Array.isArray(g.q) ? g.q[1] : Math.min(g.q, 40);
   function render(i) {
-    cur = i; sel.value = i; revealed = false;
+    cur = i; sel.value = i; revealed = false; test = null;
     const d = docs[i], box = $('#text'); box.innerHTML = '';
     const lang = { grc: 'Greek', la: 'Latin', cop: 'Coptic', ar: 'Arabic' }[d.lang] || d.lang;
     $('#docHead').innerHTML = `<b>${d.title}</b> · ${lang} · edition of ${d.year || 'unstated year'} · Trismegistos ${d.tm || '—'} · <a href="https://papyri.info/ddbdp/${encodeURIComponent(d.id)}">papyri.info</a>`;
@@ -93,21 +93,25 @@
         + (r ? `<div class="corp"><p class="cap">The corpus’s own record for this document (Trismegistos ${docs[cur].tm}; its letters match this edition’s at ${Math.round(100 * r.match)} %), first 600 characters.</p><p><b>Given:</b> <span lang="grc">${esc(r.without)}</span></p><p><b>Answer:</b> <span lang="grc">${esc(r.with)}</span></p></div>`
           : `<div class="corp"><p class="cap">${docs[cur].lang !== 'grc' ? 'This document is not in the corpus: it holds Greek texts only.' : 'This document is not in the corpus, or its record there does not match this edition (letters under 80 % alike), so it is not counted.'}</p></div>`);
     }
+    else if (test) testTally(t);
     else guessTally(t);
     const tr = TR[docs[cur].id], tb = $('#trans');
     if (tb) tb.innerHTML = tr ? `<details><summary>This document has an English translation in the same open data. Its square brackets: ${tr.bracket ? '<b>kept</b>' : '<b>none</b>'}.</summary><p>${esc(tr.en)}${tr.en.length >= 500 ? ' …' : ''}</p></details>` : '';
     const rev = $('#rev'); if (rev) rev.onchange = () => $('#text').classList.toggle('reveal', rev.checked);
     const rb = $('#revealBtn'); if (rb) rb.onclick = reveal;
+    const an = $('#ansBtn'); if (an) an.onclick = () => { test.shown = true; setMode(3); };
+    const cb = $('#cutBtn'); if (cb) cb.onclick = cutGap;
+    const eb = $('#endBtn'); if (eb) eb.onclick = () => { test = null; document.querySelectorAll('#text .tg').forEach((x) => x.classList.remove('tg')); setMode(3); };
     const ab = $('#againBtn'); if (ab) ab.onclick = () => { revealed = false; document.querySelectorAll('#text .ch.g').forEach((x) => x.classList.remove('g')); setMode(3); };
   }
   function setMode(m) {
     mode = m; const box = $('#text');
-    box.className = 'text m' + m + (m === 3 ? (revealed ? ' reveal' : ' guessing') : '');
+    box.className = 'text m' + m + (m === 3 ? (test ? ' test' + (test.shown ? ' answer' : '') : revealed ? ' reveal' : ' guessing') : '');
     document.querySelectorAll('.modes button').forEach((b) => b.setAttribute('aria-checked', String(+b.dataset.m === m)));
     $('#modeNote').textContent = NOTES[m];
     tally();
   }
-  document.querySelectorAll('.modes button').forEach((b) => (b.onclick = () => setMode(+b.dataset.m)));
+  document.querySelectorAll('.modes button').forEach((b) => (b.onclick = () => { if (test) { test = null; document.querySelectorAll('#text .tg').forEach((x) => x.classList.remove('tg')); } setMode(+b.dataset.m); }));
 
   // --- find the editor (the clean text) ---
   const isEd = (ch) => /st-[rxo]/.test(ch.parentNode.parentNode.className);
@@ -133,9 +137,51 @@
   const tb0 = $('#text'); let paint = null, from = -1, seq = [], before = [];
   const count = () => { const gc = $('#gcount'); if (gc) gc.textContent = fmt(document.querySelectorAll('#text .ch.g').length) + ' marked'; };
   const span = (el) => { const k = seq.indexOf(el); if (k < 0) return; const [lo, hi] = from < k ? [from, k] : [k, from]; seq.forEach((x, j) => x.classList.toggle('g', j >= lo && j <= hi ? paint : before[j])); count(); };
-  tb0.addEventListener('pointerdown', (e) => { if (mode !== 3 || revealed || !e.target.classList.contains('ch')) return; seq = letters(); before = seq.map((x) => x.classList.contains('g')); from = seq.indexOf(e.target); paint = !before[from]; span(e.target); e.preventDefault(); });
+  tb0.addEventListener('pointerdown', (e) => { if (mode !== 3 || revealed || test || !e.target.classList.contains('ch')) return; seq = letters(); before = seq.map((x) => x.classList.contains('g')); from = seq.indexOf(e.target); paint = !before[from]; span(e.target); e.preventDefault(); });
   tb0.addEventListener('pointermove', (e) => { if (paint === null) return; const el = document.elementFromPoint(e.clientX, e.clientY); if (el && el.classList.contains('ch')) span(el); });
   window.addEventListener('pointerup', () => (paint = null)); window.addEventListener('pointercancel', () => (paint = null));
+  // --- the test the model is set (bench.py): a gap cut from what the corpus gives as surviving ---
+  const BENCH = window.BENCH || null;
+  function cutGap() {
+    const runs = []; let cr = [];
+    const brk = () => { if (cr.length) runs.push(cr); cr = []; };
+    document.querySelectorAll('#text .t, #text .gap').forEach((el) => {
+      if (el.classList.contains('gap')) return brk();
+      const st = (el.className.match(/st-(\w)/) || [])[1];
+      if (st === 'd' || st === 'p') return;
+      if ('rou'.includes(st)) return brk();
+      el.querySelectorAll('.o .ch').forEach((ch) => cr.push(ch));
+    });
+    brk();
+    document.querySelectorAll('#text .tg').forEach((x) => x.classList.remove('tg'));
+    const fits = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].filter((L) => runs.some((r) => r.length >= L));
+    if (!fits.length) { test = { L: 0, cells: [], shown: false }; setMode(3); return; }
+    const L = fits[Math.floor(Math.random() * fits.length)];
+    const wins = []; runs.forEach((r) => { for (let i = 0; i + L <= r.length; i++) wins.push([r, i]); });
+    const [r, i] = wins[Math.floor(Math.random() * wins.length)];
+    const cells = r.slice(i, i + L); cells.forEach((c) => c.classList.add('tg'));
+    test = { L, cells, shown: false }; setMode(3);
+  }
+  function testTally(t) {
+    const pc = (x) => (100 * x).toFixed(0) + ' %';
+    if (!test.L) { t.innerHTML = `This document has no letter the corpus would give as surviving, so no test can be cut from it. <button id="endBtn" class="act">Back</button>`; return; }
+    const x = test.cells.filter((c) => /st-x/.test(c.parentNode.parentNode.className)).length, L = test.L, pl = L > 1 ? 's' : '';
+    const head = `<b>A test gap, cut as the model’s makers cut theirs:</b> ${L} letter${pl} taken from the text the corpus gives as surviving. The model sees the box and “[${L} letter${pl} missing]”; the dashes are letters the corpus had already masked. It is scored against the letters under the box. `;
+    const tail = test.shown
+      ? (x ? `The answer key holds <b class="st-x">${x} of ${L}</b> letter${pl} the editor wrote out from an abbreviation. The scribe did not write ${x === 1 ? 'it' : 'them'}, and the model is scored as if it were recovering the scribe’s ink.`
+        : `This answer is the scribe’s ink throughout.${BENCH ? ` Cut again: over the draw, ${pc(BENCH.protocol_2026.any_editor)} of such gaps are not.` : ''}`)
+      : `<button id="ansBtn" class="act">Show the answer</button>`;
+    t.innerHTML = head + tail + ` <button id="cutBtn" class="act">Cut another</button> <button id="endBtn" class="act">Back to finding the editor</button>`;
+  }
+  const cutHere = $('#cutHere');
+  if (cutHere) cutHere.onclick = () => { if (!CORP[docs[cur].id]) { const held = docs.map((d, j) => j).filter((j) => CORP[docs[j].id]); render(held[Math.floor(Math.random() * held.length)]); } test = null; mode = 3; cutGap(); $('#reader').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  if (BENCH) {
+    const b6 = BENCH.protocol_2026, b4 = BENCH.protocol_2024, pc = (x) => (100 * x).toFixed(1) + ' %';
+    $('#benchNum').textContent = Math.round(100 * b6.any_editor) + ' %';
+    $('#benchFig').innerHTML = Object.entries(b6.by_length).map(([L, v]) => `<div class="prow"><span class="pname">${L} letter${L > 1 ? 's' : ''} cut</span><span class="pbar"><span class="seg" style="flex:${v.all_editor};background:var(--x)" title="all the editor’s: ${pc(v.all_editor)}"></span><span class="seg" style="flex:${v.any_editor - v.all_editor};background:color-mix(in srgb, var(--x) 45%, transparent)" title="some of it the editor’s: ${pc(v.any_editor - v.all_editor)}"></span><span class="seg" style="flex:${1 - v.any_editor};background:var(--ink)" title="all the scribe’s: ${pc(1 - v.any_editor)}"></span></span><span class="pval">${pc(v.any_editor)} hold the editor</span></div>`).join('')
+      + `<div class="pkey"><span><i style="background:var(--x)"></i>the answer is all the editor’s</span><span><i style="background:color-mix(in srgb, var(--x) 45%, transparent)"></i>part of it is</span><span><i style="background:var(--ink)"></i>all the scribe’s</span></div>`;
+    $('#benchNote').innerHTML = `Counted exactly over every possible gap (${fmt(b6.windows)} for lengths 1–10, each length weighted equally as the protocol draws it) in the ${BENCH.docs} drawn documents the corpus holds, under the corpus’s rule as measured above: the scribe’s sure letters and the editor’s written-out ones count as surviving, restored, added and doubtful letters are already dashes, and a dash or a loss ends a stretch. ${fmt(BENCH.of_them_editor)} of the ${fmt(BENCH.surviving_letters)} letters given as surviving (${pc(BENCH.editor_share)}) are the editor’s. With the 2024 paper’s masks, 3–20 letters, ${pc(b4.any_editor)} of gaps hold an editor’s letter and ${pc(b4.all_editor)} are wholly the editor’s; with the 2026 protocol, ${pc(b6.any_editor)} and ${pc(b6.all_editor)}. <code>bench.py</code>, <code>bench.json</code>.`;
+  }
   sel.onchange = () => render(+sel.value);
   $('#rand').onclick = () => render(Math.floor(Math.random() * docs.length));
   const lg = [['ink', 'the scribe'], ['r', 'restored by the editor'], ['x', 'written out by the editor'], ['o', 'added by the editor'], ['d', 'deleted or struck']];
