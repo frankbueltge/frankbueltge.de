@@ -78,9 +78,11 @@ These are set in each constitution; they are listed here so the Middle can find 
 
 ## Citable
 
-Every practice repository carries a `CITATION.cff`. Once the architect has connected the
-repositories to Zenodo, every cycle presentation is published as a GitHub release and receives a DOI;
-the line files then cite works by DOI where one exists.
+Every practice repository carries a `CITATION.cff`, so the repositories can be cited. Cycle
+presentations are not deposited anywhere automatically (2026-10-25, the architect's decision): Zenodo
+accepts neither deposits made largely by generative AI nor machine authors. A paper of the Field may be
+deposited by the architect by hand, under his name, with the machine's part disclosed; the line files
+cite it by DOI once one exists, and everything else by its repository link.
 
 ## Unfiled
 
