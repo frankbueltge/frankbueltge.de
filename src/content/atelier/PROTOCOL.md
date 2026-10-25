@@ -543,3 +543,50 @@ session produces or visibly advances an artifact" stands, and point 3 above says
 **Not at stake.** The session form and the bulletin (§3) apart from point 3's first line, the relay,
 the convening, the means (amendment of 2026-10-05), the post office (§6), the floor (§7), and this
 practice's sovereignty over what the work is.
+
+## Amendment — 2026-10-25 (architect) — the question comes from the world: a briefing before every convening
+
+*Set by the architect (Frank Bültge) on 2026-10-25, his wording private; like the text above, not
+negotiated with the practice. This section amends point 4 of the amendment of 2026-10-07 (the
+convening). It retouches nothing: the sentences it supersedes stay as written and are named here.*
+
+**What stands.** Cycles 007 to 009 all asked about warnings, and cycle 010 fell back by hand to the
+continuing question, *Missing Data Art*. The works were made with care, but few of them met a question
+anyone outside this house is working on now. The cause is in the rule: every proposal had to say how it
+continues the cycle just presented, so each question grew out of the last, and nobody looked outward
+systematically before proposing.
+
+**What changes.** These rules apply from the convening after cycle 010.
+
+1. **A briefing comes first.** When a convening opens, one research session of the Middle writes a
+   briefing, `briefings/after-cycle-NNN.md` in the research-ecology repository
+   (`https://github.com/frankbueltge/research-ecology/tree/main/briefings`), and the site's
+   `cycle.json` links it as `convening.briefing.url`. It names eight to twelve matters that press on
+   the world now (geopolitics and conflict, AI, climate and environment, the world economy and
+   inequality, health and food, democracy and information), each with its sources, the open research
+   question as the field states it, open data, and how loud it is in Common Ground. It ends with a
+   list headed **Urgent but quiet**. The rules of the briefing are in that folder's `README.md`.
+2. **Proposals draw on the briefing.** The first convening session reads the briefing before it
+   proposes. A session that finds no briefing linked in `cycle.json` does not propose: it says so in
+   one bulletin line and advances its own work. The two bulletin lines keep their labels, and the
+   second one changes its content:
+   `Proposed question: <the question>` and
+   `Docks onto: <the matter's number and name in the briefing> — <why now>. Data: <at least one open dataset all three can use>`.
+   In point 4 of the amendment of 2026-10-07, "docks onto the cycle just presented" now reads "draws
+   on one matter of the briefing". A proposal still points outward and is still a question all three
+   disciplines can genuinely ask.
+3. **No repeat.** A proposal does not take up the subject of either of the two cycles before it.
+4. **Ranking by relevance.** The second convening session ranks first by relevance (is someone
+   outside this house working on this question now, and would an answer help someone?), then by
+   whether all three disciplines can genuinely ask it. The ranking line and the tally stand.
+5. **The fallback.** If no result stands seven days after the convening opened, the next cycle opens
+   on the first matter of the briefing's list **Urgent but quiet**, as `cycle.json` records it in
+   `convening.briefing.fallback`. Only without a briefing does it open on the continuing question.
+   *Missing Data Art* stays the programme's origin; it is no longer its usual fallback.
+
+**For this practice.** The Atelier places its work in the debate the matter is part of now: it names at least two current voices (essays, papers, works or statements of the last two years) it answers or contradicts, and stays artistic research and philosophy.
+
+**Not at stake.** The convening's form (two sessions, the relay's tally, the architect's veto day),
+seeds and their interruption, the session form (§3), the work in three or four sessions (amendment of
+2026-10-22), the means, the post office (§6), the floor (§7), and this practice's sovereignty over what
+its work is.
