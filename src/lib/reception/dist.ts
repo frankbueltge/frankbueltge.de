@@ -24,6 +24,8 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { dirname, join } from 'node:path'
 import { n1WorkPages } from '../n1/published'
 import { FRAME_MARKER } from '../engines/work-frame'
+import { openCycleFolders } from '../engines/publication.mjs'
+import { readOpenCycle } from '../engines/publication-prune.mjs'
 import { SLUG_RE, formHref, workId, type RatableWork, type ReceptionKind, type ReceptionPractice } from './ids'
 
 export const BAND_CLASS = 'fbde-reception'
@@ -176,6 +178,16 @@ export function barePages(dist: string, root: string): BarePage[] {
     const parts = segments(p)
     const slug = (last.get(parts.at(-1)!) ?? 0) > 1 ? parts.slice(-2).join('-') : parts.at(-1)!
     add(p, 'n-1', slug, 'work', pageTitle(p))
+  }
+
+  // The open cycle (Frank's decision of 2026-10-20): while a cycle is in its working phase, the
+  // Atelier's and the Field's long work grows under artifacts/cycle-NNN/<slug>/ and is published as
+  // work in progress. It is rated under its own folder's name, so its ratings carry on if the piece
+  // later stands among the works under the same slug. Once the cycle is presented the folder is no
+  // longer published, the band goes with it, and the ratings stay on the record.
+  for (const folder of openCycleFolders(readOpenCycle(root))) {
+    const ns = folder.split('/')[0] as 'atelier' | 'field' | 'studio'
+    for (const slug of dirs(join(dist, folder))) add(`${folder}/${slug}/index.html`, ns, slug, 'work', pageTitle(`${folder}/${slug}/index.html`))
   }
 
   // Machine Attention's finished investigation: one archive, rated on its front page.

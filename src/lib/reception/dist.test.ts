@@ -60,6 +60,7 @@ describe('the built site', () => {
     'src/data/nightly/works/bar/meta.json': JSON.stringify({ title: 'Bar' }),
     'src/data/nightly/works/bar/work.md': 'text',
     'src/data/nightly/works/stage-only/meta.json': JSON.stringify({ title: 'Stage Only' }),
+    'src/data/ecology/cycle.json': JSON.stringify({ cycle: 10, phase: 'working' }),
   })
   const dist = tree({
     'studio/werke-html/foo/index.html': frameStandaloneWork(page('Foo page'), 'studio', null),
@@ -73,6 +74,9 @@ describe('the built site', () => {
     'error-as-method/stage-only/index.html': page('Stage'),
     'consensus/index.html': page('Consensus', '<section data-reception-work="lab:consensus" data-reception-title="Consensus &amp; co > more" data-reception-kind="experiment" data-reception-page="astro"></section>'),
     'about/index.html': page('About'),
+    'field/artifacts/cycle-010/the-withheld-cell/index.html': page('The Withheld Cell'),
+    'field/artifacts/cycle-010/the-withheld-cell/notes/index.html': page('A page inside it'),
+    'field/artifacts/cycle-009/an-older-one/index.html': page('Not open any more'),
     'arch/works/arrival/index.html': page('Arrival'),
   })
 
@@ -82,6 +86,7 @@ describe('the built site', () => {
       'field:closing-report report The Field — Closing Report /field/closing-report/',
       'studio:foo work Foo /studio/werke-html/foo/',
       'studio:cycle-008 presentation Filed Under /studio/presentations/cycle-008/',
+      'field:the-withheld-cell work The Withheld Cell /field/artifacts/cycle-010/the-withheld-cell/',
       'attention:the-foreknown archive The Foreknown /attention/',
       'error-as-method:bar work Bar /error-as-method/works-html/bar/',
       'error-as-method:stage-only work Stage Only /error-as-method/stage-only/',
@@ -94,7 +99,7 @@ describe('the built site', () => {
 
   it('bands every bare work and lists every ratable work once, the rendered page first', () => {
     const report = receptionDist(dist, root)
-    expect(report).toMatchObject({ banded: 6, astro: 2, works: 7, failed: [] })
+    expect(report).toMatchObject({ banded: 7, astro: 2, works: 8, failed: [] })
     const list = JSON.parse(readFileSync(join(dist, 'reception/works.json'), 'utf8'))
     expect(list.schema).toBe(1)
     expect(list.works.map((w: { id: string }) => w.id)).toEqual([
@@ -102,6 +107,7 @@ describe('the built site', () => {
       'error-as-method:bar',
       'error-as-method:stage-only',
       'field:closing-report',
+      'field:the-withheld-cell',
       'lab:consensus',
       'studio:cycle-008',
       'studio:foo',

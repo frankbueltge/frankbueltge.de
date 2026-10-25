@@ -24,7 +24,9 @@ and the one critique the page held before.
 * **Bare pages**: the last step of `npm run build` (`src/lib/reception/dist.ts`) writes a band into
   the served copy of each published bare work, after the publication rule has pruned `dist/`. That
   covers the Studio's works, the three practices' presentations and closing reports, n-1's declared
-  works, the Foreknown archive, and the nightly line's faces and stage works. The mirrors are not
+  works, the Foreknown archive, and the nightly line's faces and stage works. Since the open-cycle
+  rule of 2026-10-20 it also covers the Atelier's and the Field's long work while its cycle is in the
+  working phase (`artifacts/cycle-NNN/<slug>/`, rated as `<practice>:<slug>`). The mirrors are not
   touched.
 * **Arch is left out.** Its works are bare by its own model, its room carries the reception question
   the practice designed, and it no longer runs.
