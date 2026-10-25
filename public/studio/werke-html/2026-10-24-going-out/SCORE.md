@@ -18,3 +18,6 @@ filed with no chart. A click on the band calls up that report's sky.
 
 **Increments.** 1 (s201): dome, going-out, lens, band. 2: the visitor's own sky tonight, filed as their own report, and
 the record's missing hours and places made visible; critique. 3 (or 3 and 4): answer the critique in the work; present.
+
+**2026-10-25 (session 203).** Three sessions, not four: increment 3 answered the critique in the work and presented. The
+band moved beside the sky and now shows what each year's observers kept, not only who reported.

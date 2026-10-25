@@ -21,6 +21,9 @@ the band counts every report. A report placed by local time keeps the offset of 
 Increment 2 (session 202): a fixed sample of up to 24 reports per year of each kind that cannot
 be given a sky (filed at 0 N 0 E; no hour fits) goes into the face as "lost", with what they did
 file (date, chart, constellation, country), so the band's two bottom rows can be opened.
+Increment 3 (session 203): every report with a chart and a place (any hour) is counted by chart,
+per 10-degree band of latitude and per year ("cmp"), so a visitor's own report can be set against
+the others filed from their latitude, in each decade.
 """
 import csv, gzip, json, math, random, sys, pathlib, datetime, collections
 
@@ -56,6 +59,7 @@ for line in gzip.open(RAW / "bsc5.dat.gz", "rt", encoding="latin-1"):
 
 band = collections.defaultdict(lambda: collections.Counter())
 pool = collections.defaultdict(list); total = 0
+cmp = collections.defaultdict(lambda: [0] * 8)  # (lat band 0..17, year) -> reports by chart 0..7
 lostpool = collections.defaultdict(list)  # (kind, ...): 0 = no place (0 N 0 E), 1 = no hour fits
 for y in range(2006, 2026):
     with open(RAW / f"GaN{y}.csv", encoding="utf-8", errors="replace") as fh:
@@ -80,6 +84,7 @@ for y in range(2006, 2026):
                                                    round(lat * 10), round(lon * 10)))
             if abs(lat) < 0.05 and abs(lon) < 0.05:  # filed at 0 N 0 E: no place given
                 band[y]["noplace"] += 1; lost(0); continue
+            cmp[(min(17, int((lat + 90) // 10)), y)][m] += 1
             if con not in ANCHOR:
                 band[y]["unplaceable"] += 1; lost(1); continue
             filed = mins
@@ -109,7 +114,8 @@ for y in sorted(lostpool):
             lostrep.append([p[0], p[1], p[2], idx("country", p[3]), idx("const", p[4]), idx("cloud", p[5]), p[6], p[7], p[8]])
 
 out = {"stars": stars, "reports": reports, "lost": lostrep, "countries": names["country"], "consts": names["const"],
-       "clouds": names["cloud"], "band": {y: dict(band[y]) for y in sorted(band)}, "gan_reports": total}
+       "clouds": names["cloud"], "band": {y: dict(band[y]) for y in sorted(band)}, "gan_reports": total,
+       "cmp": [[cmp[(b, y)] for y in range(2006, 2026)] for b in range(18)]}
 (HERE / "data.js").write_text("window.GO=" + json.dumps(out, separators=(",", ":")) + ";\n")
 summary = {"stars_to_6_5": len(stars) // 4, "gan_reports": total, "sampled": len(reports), "lost_sampled": len(lostrep),
            "drawable": sum(len(v) for v in pool.values()),
@@ -118,6 +124,7 @@ summary = {"stars_to_6_5": len(stars) // 4, "gan_reports": total, "sampled": len
            "placed_by_local_time": sum(b["shifted"] for b in band.values()),
            "no_place_0N0E": sum(b["noplace"] for b in band.values()),
            "unplaceable": sum(b["unplaceable"] for b in band.values()),
+           "with_chart_and_place": sum(sum(v) for v in cmp.values()),
            "by_year": {y: dict(band[y]) for y in sorted(band)}}
 (HERE / "summary.json").write_text(json.dumps(summary, indent=1))
 print(json.dumps({k: v for k, v in summary.items() if k != "by_year"}))

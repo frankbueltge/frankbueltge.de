@@ -3,6 +3,8 @@
 // hour), and Betelgeuse is above the horizon for those who reported looking at Orion (a consistency check:
 // the page's projection agrees with build.py's hour check). Increment 2: a re-timed report's ringed star is under the
 // horizon at the filed UT and up at the placed hour; the lost reports and the visitor's own sky open without error.
+// Increment 3: at 1280 x 800 the whole band stands above the fold beside the sky; the dome's corner counts the stars gone;
+// the comparison table sums to every report with a chart and a place, and the visitor's report is set against it.
 //   node verify.mjs            (from this folder; writes shot-1100.png and shot-390.png)
 import { createRequire } from 'module'; import path from 'path'; import fs from 'fs';
 const require = createRequire('/opt/node-tools/node_modules/'); const { chromium } = require('playwright');
@@ -35,13 +37,29 @@ const res = await page.evaluate(() => {
     retimed_checked: tn, retimed_under_then_up: tok, caption: cap, reports: G.reports.length, lost: G.lost.length };
 });
 await page.screenshot({ path: path.join(here, 'shot-1100.png'), fullPage: false });
+const fold = {};
+await page.setViewportSize({ width: 1280, height: 800 }); await page.waitForTimeout(1500);
+Object.assign(fold, await page.evaluate(() => { const b = document.getElementById('band').getBoundingClientRect(), s = document.getElementById('sky').getBoundingClientRect();
+  return { band_bottom: Math.round(b.bottom), band_top: Math.round(b.top), sky_bottom: Math.round(s.bottom), cmp_total: window.GO.cmp.flat(2).reduce((a, v) => a + v, 0) }; }));
+await page.screenshot({ path: path.join(here, 'shot-1280x800.png') });
+await page.setViewportSize({ width: 1100, height: 1000 }); await page.waitForTimeout(1500);
+res.fold_1280x800 = fold;
+// a click on each of the band's two bottom rows opens that kind of lost report (the bottom-row miss of session 202)
+res.band_clicks = {};
+for (const [name, row] of [['nohour', 9], ['noplace', 10]]) {
+  const bb = await page.evaluate(() => { const r = document.getElementById('band').getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width }; });
+  const gut = bb.w < 460 ? 52 : 82;
+  await page.mouse.click(bb.x + gut + (bb.w - gut) * 0.5, bb.y + 60 + row * 17 + 8); await page.waitForTimeout(300);
+  res.band_clicks[name] = await page.evaluate(() => document.getElementById('kind').textContent);
+}
 // the lost reports and the visitor's own sky must open without error
 const states = {};
 for (const [name, fn] of [['noplace', "window.__going.golost(window.GO.lost.findIndex(l => l[0] === 0))"],
                           ['nohour', "window.__going.golost(window.GO.lost.findIndex(l => l[0] === 1 && l[2] >= 4))"],
                           ['you', "window.__going.goyou(); window.__going.setYou(52.5, 13.5, 4)"]]) {
   await page.evaluate(fn); await page.waitForTimeout(5000);
-  states[name] = await page.evaluate(() => ({ mode: window.__going.mode, caption: document.getElementById('who').textContent }));
+  states[name] = await page.evaluate(() => ({ mode: window.__going.mode, caption: document.getElementById('who').textContent,
+    kind: document.getElementById('kind').textContent, against: document.getElementById('yagainst').textContent }));
   await page.screenshot({ path: path.join(here, `shot-${name}.png`), fullPage: false });
 }
 res.states = states;
@@ -53,6 +71,8 @@ await browser.close();
 console.log(JSON.stringify({ ...res, errors, hscroll_at_390: hscroll }, null, 1));
 const ok = !errors.length && res.polaris_max_error_deg < 1.5 && res.orion_betelgeuse_up === res.orion_reports && !hscroll
   && res.retimed_under_then_up === res.retimed_checked && res.states.noplace.mode === 'lost' && res.states.nohour.mode === 'lost'
-  && /magnitude 4/.test(res.states.you.caption);
+  && /magnitude 4/.test(res.states.you.caption) && res.fold_1280x800.band_bottom <= 800 && res.fold_1280x800.cmp_total === 247546
+  && /saw fewer stars than you/.test(res.states.you.against) && /no place/.test(res.states.noplace.kind) && /no hour fits/.test(res.states.nohour.kind)
+  && /no hour fits/.test(res.band_clicks.nohour) && /no place/.test(res.band_clicks.noplace);
 fs.writeFileSync(path.join(here, 'verify.json'), JSON.stringify({ ...res, errors, hscroll_at_390: hscroll, ok }, null, 1));
 process.exit(ok ? 0 : 1);
