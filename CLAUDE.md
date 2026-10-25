@@ -56,7 +56,7 @@ eine fortlaufende Frage** (*continuing question*: *Missing Data Art*): Sie erset
 Default-Themen, Runden drehen sich selbst (Zyklusuhr `src/lib/ecology/cycle-turn.ts` im
 `cycle-sentinel.yml`), und nur ein an alle drei freigegebener Seed unterbricht sie; Zyklus 004
 liest sie durch den Seed *human extinction*. Maßgeblich:
-`docs/design/2026-10-03-the-continuing-question.md`. **Seit 2026-10-25 (Frank, Wortlaut privat) kommt die Frage aus der Welt:** Vor jedem Convening schreibt die Mitte ein Lagebild (research-ecology `briefings/`, gegen Common Ground gelesen), die Vorschläge greifen darauf zurück, und der Rückfall ist dessen erste Lage „urgent but quiet“ statt *Missing Data Art*; maßgeblich `docs/design/2026-10-25-the-briefing.md`. Maßgeblich: `docs/design/2026-08-30-research-ecology-v3.md`
+`docs/design/2026-10-03-the-continuing-question.md`. **Seit 2026-10-25 (Frank, Wortlaut privat) kommt die Frage aus der Welt:** Vor jedem Convening schreibt die Mitte ein Lagebild (research-ecology `briefings/`, gegen Common Ground gelesen), die Vorschläge greifen darauf zurück, und der Rückfall ist dessen erste Lage „urgent but quiet“ statt *Missing Data Art*; maßgeblich `docs/design/2026-10-25-the-briefing.md`. **Seit 2026-10-25 (Frank, Wortlaut privat) führt die Ecology Forschungslinien** über Zyklen hinweg (`research-ecology/lines/`, von der Middle geführt, auf `/lines` gespiegelt); Vorschläge nennen ihre Linie, Werke ihr `Builds on:`. Maßgeblich: `docs/design/2026-10-25-the-lines.md`. Maßgeblich: `docs/design/2026-08-30-research-ecology-v3.md`
 + decision-log 2026-08-30. Die v2-Ordnung (2026-08-08 – 2026-08-30) ist datiert abgelöst;
 ältere Beschreibungen (Seasons, Arcs, Ship-Gates, Kill-Reading) sind historisch.
 
