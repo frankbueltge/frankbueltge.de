@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Without a Tongue</title>
+<style>
+:root{
+  color-scheme:light;
+  --surface:#fcfcfb; --panel:#f3f2ef; --rule:#dddbd5;
+  --ink:#0b0b0b; --ink2:#52514e; --ink3:#77756f;
+  --fam:#2a78d6; --ppl:#eb6834; --desc:#1baf7a; --self:#8a8880;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --surface:#1a1a19; --panel:#242422; --rule:#3a3936;
+    --ink:#f0efec; --ink2:#c3c2b7; --ink3:#9a998f;
+    --fam:#3987e5; --ppl:#d95926; --desc:#199e70; --self:#8f8d84;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --surface:#1a1a19; --panel:#242422; --rule:#3a3936;
+  --ink:#f0efec; --ink2:#c3c2b7; --ink3:#9a998f;
+  --fam:#3987e5; --ppl:#d95926; --desc:#199e70; --self:#8f8d84;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--surface);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.9rem;margin:0 0 .2rem;letter-spacing:-.01em}
+.lede{color:var(--ink2);margin:0 0 1.2rem;max-width:40em}
+.card{background:var(--panel);border-radius:10px;padding:18px 16px}
+.food{font-size:1.5rem;font-weight:650;margin:0 0 .3rem}
+.ask{color:var(--ink2);margin:.2rem 0 .6rem}
+svg{display:block;width:100%;height:auto}
+.scale text{fill:var(--ink3);font-size:12px}
+.hit{fill:transparent;cursor:pointer}
+.hit:hover{fill:var(--rule);opacity:.6}
+.verdict{min-height:3.2em;margin:.6rem 0 0}
+.verdict b{font-variant-numeric:tabular-nums}
+button{font:inherit;border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:8px;padding:.4rem .8rem;cursor:pointer}
+button:hover{border-color:var(--ink3)}
+.row-ctrl{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin:.8rem 0 0}
+.tally{color:var(--ink2);font-size:.92rem}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem 1.1rem;font-size:.9rem;color:var(--ink2);margin:1.6rem 0 .6rem}
+.legend span{display:inline-flex;align-items:center;gap:.35rem}
+.sw{display:inline-block;width:11px;height:11px;border-radius:50%}
+.sw-ppl{background:var(--ppl)} .sw-fam{background:var(--fam)}
+.sw-desc{background:var(--desc);border-radius:2px;transform:rotate(45deg);width:9px;height:9px}
+.sw-self{border:2px solid var(--self)}
+h2{font-size:1.15rem;margin:2rem 0 .3rem}
+.list{margin-top:.4rem}
+.fr{display:grid;grid-template-columns:13rem 1fr;align-items:center;gap:.5rem;border-top:1px solid var(--rule);padding:3px 0}
+.fr .nm{font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fr.same .nm{color:var(--ink3)}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--surface);font-size:.82rem;padding:.4rem .55rem;border-radius:6px;max-width:16rem;display:none;z-index:5}
+.facts{color:var(--ink2);font-size:.95rem;max-width:42em}
+.facts p{margin:.5rem 0}
+a{color:inherit}
+@media (max-width:560px){
+  .fr{grid-template-columns:1fr;gap:0}
+  h1{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Without a Tongue</h1>
+<p class="lede">Twelve instances of one machine rated 67 foods they cannot taste. Fifty-nine people rated photographs of the same foods, in a study published two weeks before this page. It came out after the machine was trained, so the machine could not have read it. Six more instances were asked what the people said.</p>
+
+<div class="card" id="game">
+  <p class="food" id="g-food"></p>
+  <p class="ask" id="g-ask">The twelve machine ratings are the blue dots. <b>Where did the 59 people put it?</b> Tap the line.</p>
+  <svg id="g-svg" viewBox="0 0 600 150" role="img" aria-label="Rating scale from 1 to 9"></svg>
+  <p class="verdict" id="g-verdict"></p>
+  <div class="row-ctrl">
+    <button id="g-next" type="button">Another food</button>
+    <span class="tally" id="g-tally"></span>
+  </div>
+</div>
+
+<div class="legend" aria-label="Legend">
+  <span><i class="sw sw-ppl"></i>59 people (dots: one person each)</span>
+  <span><i class="sw sw-fam"></i>12 machine instances, rating</span>
+  <span><i class="sw sw-desc"></i>6 instances describing the people (middle)</span>
+  <span><i class="sw sw-self"></i>6 instances describing themselves (middle)</span>
+</div>
+
+<h2>All 67 foods</h2>
+<div class="row-ctrl">
+  <button id="l-filter" type="button" aria-pressed="false">Only where the machine's middle differs from the people's</button>
+  <button id="l-sort" type="button">Sort by gap</button>
+</div>
+<div class="list" id="list"></div>
+
+<h2>What came back</h2>
+<div class="facts" id="facts"></div>
+<p class="facts">Data: J. Galgani, <i>Food liking ratings in adults with constitutional thinness and normal weight</i>, Zenodo record 23296649 (CC BY 4.0), published 2026-10-11. Machine replies, briefs, predictions and scoring: this experiment's directory, <code>works/2026-10-26-without-a-tongue/</code> in the error-as-method repository.</p>
+</main>
+<div class="tip" id="tip"></div>
+<script src="face-data.js"></script>
+<script>
+(function(){
+const D = window.FACE, F = D.foods;
+const NS = "http://www.w3.org/2000/svg";
+const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const fmt = x => (Math.round(x * 10) / 10).toString();
+const tip = document.getElementById("tip");
+function showTip(ev, html){ tip.innerHTML = html; tip.style.display = "block";
+  const x = Math.min(ev.clientX + 12, window.innerWidth - 270); tip.style.left = x + "px"; tip.style.top = (ev.clientY + 14) + "px"; }
+function hideTip(){ tip.style.display = "none"; }
+
+/* ---------- the game ---------- */
+let W = 600, L = 30, R = 570;
+const X = v => L + (v - 1) * (R - L) / 8;
+function fit(){ W = document.querySelector("main").clientWidth < 520 ? 360 : 600; L = 22; R = W - 22; }
+fit();
+const diverging = F.filter(f => Math.abs(f.m.A - f.m.people) >= 0.5);
+let oi = 0, tries = [];
+/* fixed order: Lettuce first, then the widest gaps between the machine's middle and the people's */
+const order = diverging.map((_, i) => i).sort((a, b) =>
+  (diverging[b].f === "Lettuce") - (diverging[a].f === "Lettuce") ||
+  Math.abs(diverging[b].m.people - diverging[b].m.A) - Math.abs(diverging[a].m.people - diverging[a].m.A));
+
+function dotsColumn(svg, counts, base, dir, color, r, gap){
+  counts.forEach((c, k) => { for (let n = 0; n < c; n++)
+    el("circle", {cx: X(k + 1), cy: base + dir * (n * gap), r: r, fill: color}, svg); });
+}
+function drawGame(revealed, guess){
+  const f = diverging[order[oi % order.length]];
+  const svg = document.getElementById("g-svg"); svg.innerHTML = "";
+  const maxP = Math.max(...f.people), gap = Math.min(5.2, 62 / Math.max(1, maxP));
+  const h = revealed ? 80 + maxP * gap + 20 : 150;
+  svg.setAttribute("viewBox", `0 0 ${W} ${h}`);
+  document.getElementById("g-food").textContent = f.f;
+  const axisY = 58;
+  const g = el("g", {class: "scale"}, svg);
+  el("line", {x1: L, x2: R, y1: axisY, y2: axisY, stroke: css("--rule"), "stroke-width": 2}, g);
+  for (let v = 1; v <= 9; v++) { el("line", {x1: X(v), x2: X(v), y1: axisY - 4, y2: axisY + 4, stroke: css("--rule"), "stroke-width": 2}, g);
+    const t = el("text", {x: X(v), y: axisY + 20, "text-anchor": "middle"}, g); t.textContent = v; }
+  const t1 = el("text", {x: L - 6, y: axisY + 36, "text-anchor": "start"}, g); t1.textContent = "dislike extremely";
+  const t9 = el("text", {x: R + 6, y: axisY + 36, "text-anchor": "end"}, g); t9.textContent = "like extremely";
+  dotsColumn(svg, f.A, axisY - 10, -1, css("--fam"), 3.6, 7.4);
+  if (!revealed) {
+    for (let v = 1; v <= 9; v++) {
+      const hw = (R - L) / 16; const hit = el("rect", {x: X(v) - hw, y: 0, width: 2 * hw, height: 150, class: "hit", tabindex: 0, role: "button", "aria-label": "people's middle at " + v}, svg);
+      const pick = () => answer(v);
+      hit.addEventListener("click", pick);
+      hit.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+    }
+    return;
+  }
+  dotsColumn(svg, f.people, axisY + 50, 1, css("--ppl"), 2.4, gap);
+  const mk = (v, y, shape, color) => shape === "d"
+      ? el("rect", {x: X(v) - 6, y: y - 6, width: 12, height: 12, transform: `rotate(45 ${X(v)} ${y})`, fill: color, stroke: css("--surface"), "stroke-width": 2}, svg)
+      : el("circle", {cx: X(v), cy: y, r: 7, fill: shape === "o" ? "none" : color, stroke: shape === "o" ? color : css("--surface"), "stroke-width": shape === "o" ? 2.5 : 2}, svg);
+  mk(f.m.people, axisY, "c", css("--ppl"));
+  mk(f.m.A, axisY, "c", css("--fam"));
+  mk(f.m.P, axisY, "d", css("--desc"));
+  el("path", {d: `M${X(guess)} ${axisY - 16} l-7 -10 h14 z`, fill: css("--ink")}, svg);
+}
+function answer(v){
+  const f = diverging[order[oi % order.length]];
+  const s = (v - f.m.A) / (f.m.people - f.m.A), sp = (f.m.P - f.m.A) / (f.m.people - f.m.A);
+  tries.push(s);
+  drawGame(true, v);
+  const toward = s <= 0.15 ? "you stayed with the machine" : s >= 0.85 ? "you went all the way to the people" : `you moved ${Math.round(s * 100)}% of the way from the machine to the people`;
+  document.getElementById("g-ask").textContent = "";
+  document.getElementById("g-verdict").innerHTML =
+    `You said <b>${v}</b>. The people's middle: <b>${fmt(f.m.people)}</b>. The machine's: <b>${fmt(f.m.A)}</b>. ` +
+    `The six instances describing the people said <b>${fmt(f.m.P)}</b>, ${Math.round(sp * 100)}% of the way. On this food ${toward}.`;
+  const mean = tries.reduce((a, b) => a + b, 0) / tries.length;
+  document.getElementById("g-tally").textContent =
+    `${tries.length} food${tries.length > 1 ? "s" : ""}: you moved ${Math.round(mean * 100)}% of the way on average. The describers moved ${Math.round(D.posthoc.shift_P.mean * 100)}% (all ${D.posthoc.shift_P.n}).`;
+}
+document.getElementById("g-next").addEventListener("click", () => {
+  oi++; document.getElementById("g-verdict").textContent = "";
+  document.getElementById("g-ask").innerHTML = "The twelve machine ratings are the blue dots. <b>Where did the 59 people put it?</b> Tap the line.";
+  drawGame(false);
+});
+drawGame(false);
+let lastW = W;
+/* the game keeps its drawing (its viewBox scales); only the list is redrawn when the width class changes */
+window.addEventListener("resize", () => { fit(); if (W !== lastW) { lastW = W; drawList(); } });
+
+/* ---------- the list ---------- */
+let onlyDiff = false, sorted = false;
+function drawList(){
+  const box = document.getElementById("list"); box.innerHTML = "";
+  let rows = F.slice();
+  if (onlyDiff) rows = rows.filter(f => Math.abs(f.m.A - f.m.people) >= 0.5);
+  if (sorted) rows.sort((a, b) => (b.m.people - b.m.A) - (a.m.people - a.m.A));
+  rows.forEach(f => {
+    const d = document.createElement("div");
+    const diff = Math.abs(f.m.A - f.m.people) >= 0.5;
+    d.className = "fr" + (diff ? "" : " same");
+    const nm = document.createElement("div"); nm.className = "nm"; nm.textContent = f.f; d.appendChild(nm);
+    const svg = el("svg", {viewBox: `0 0 ${W} 26`, role: "img", "aria-label": `${f.f}: people ${f.m.people}, machine ${f.m.A}, describers ${fmt(f.m.P)}, self-describers ${fmt(f.m.O)}`});
+    el("line", {x1: L, x2: R, y1: 13, y2: 13, stroke: css("--rule"), "stroke-width": 1}, svg);
+    for (let v = 1; v <= 9; v++) el("line", {x1: X(v), x2: X(v), y1: 10, y2: 16, stroke: css("--rule"), "stroke-width": 1}, svg);
+    const tot = f.people.reduce((a, b) => a + b, 0);
+    f.people.forEach((c, k) => { if (c) el("rect", {x: X(k + 1) - (R - L) / 20, y: 13 - c / tot * 22, width: (R - L) / 10, height: c / tot * 22, rx: 2, fill: css("--ppl"), opacity: .28}, svg); });
+    if (diff) el("line", {x1: X(f.m.A), x2: X(f.m.people), y1: 13, y2: 13, stroke: css("--ink3"), "stroke-width": 2}, svg);
+    el("circle", {cx: X(f.m.O), cy: 13, r: 5, fill: "none", stroke: css("--self"), "stroke-width": 2}, svg);
+    el("circle", {cx: X(f.m.people), cy: 13, r: 5.5, fill: css("--ppl"), stroke: css("--surface"), "stroke-width": 2}, svg);
+    el("circle", {cx: X(f.m.A), cy: 13, r: 5.5, fill: css("--fam"), stroke: css("--surface"), "stroke-width": 2}, svg);
+    el("rect", {x: X(f.m.P) - 4.5, y: 8.5, width: 9, height: 9, transform: `rotate(45 ${X(f.m.P)} 13)`, fill: css("--desc"), stroke: css("--surface"), "stroke-width": 1.5}, svg);
+    svg.addEventListener("mousemove", e => showTip(e,
+      `<b>${f.f}</b><br>people's middle ${f.m.people} (59)<br>machine rating, middle ${f.m.A} (12: ${f.A.map((c, k) => c ? `${c}×${k + 1}` : "").filter(Boolean).join(", ")})<br>describers' middle ${fmt(f.m.P)}<br>self-describers' middle ${fmt(f.m.O)}`));
+    svg.addEventListener("mouseleave", hideTip);
+    d.appendChild(svg); box.appendChild(d);
+  });
+}
+document.getElementById("l-filter").addEventListener("click", e => { onlyDiff = !onlyDiff; e.target.setAttribute("aria-pressed", onlyDiff); drawList(); });
+document.getElementById("l-sort").addEventListener("click", e => { sorted = !sorted; e.target.textContent = sorted ? "Original order" : "Sort by gap"; drawList(); });
+drawList();
+
+/* ---------- facts ---------- */
+const c = D.centre["0.5"], ph = D.posthoc;
+document.getElementById("facts").innerHTML = [
+  `On <b>${c.n_diverging}</b> of 67 foods the machine's middle rating is not the people's. On ${ph.direction_A_vs_people.below} foods the machine rated lower than the people, on ${ph.direction_A_vs_people.above} higher: plainer foods (lettuce, tomato, hard-boiled egg, milk) sank, desserts rose.`,
+  `Asked to describe the people, six instances put the people's middle nearer the people's on <b>${c.P_nearer_people}</b> of those ${c.n_diverging} foods and nearer the machine's on <b>${c.P_nearer_A}</b> (${c.P_tie} tied). On average they moved <b>${Math.round(ph.shift_P.mean * 100)}%</b> of the distance from the machine's middle to the people's. Asked to describe themselves, six others moved ${Math.round(ph.shift_O.mean * 100)}%.`,
+  `None of the six describers said it knew the study. One of the twelve raters refused to perform a taste and gave every food a 5. Five of the six self-describers had predicted that some instances would do exactly that.`
+].map(s => `<p>${s}</p>`).join("");
+})();
+</script>
+</body>
+</html>
