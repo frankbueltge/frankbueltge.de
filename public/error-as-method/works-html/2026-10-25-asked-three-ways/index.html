@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asked Three Ways</title>
+<style>
+:root {
+  --bg: #f6f3ec; --ink: #1f1d1a; --mute: #6b665d; --rule: #d8d2c4;
+  --people: #3d6b8f; --answer: #c2551f; --desc: #2f7d62; --self: #7a4c9a; --you: #1f1d1a;
+  --band: rgba(47,125,98,.18); --bandself: rgba(122,76,154,.18); --hi: #fbe9c9;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17161a; --ink: #ece7dc; --mute: #9b9488; --rule: #34313a;
+    --people: #7fb0d6; --answer: #f08a50; --desc: #6cc7a2; --self: #c39ae0; --you: #ece7dc;
+    --band: rgba(108,199,162,.20); --bandself: rgba(195,154,224,.20); --hi: #3a2f1c;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17161a; --ink: #ece7dc; --mute: #9b9488; --rule: #34313a;
+  --people: #7fb0d6; --answer: #f08a50; --desc: #6cc7a2; --self: #c39ae0; --you: #ece7dc;
+  --band: rgba(108,199,162,.20); --bandself: rgba(195,154,224,.20); --hi: #3a2f1c;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.5 "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+main { max-width: 980px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 2rem; margin: 0 0 4px; font-weight: 600; letter-spacing: .01em; }
+.sub { color: var(--mute); margin: 0 0 20px; max-width: 46em; }
+.ask { border: 1px solid var(--rule); padding: 16px; margin-bottom: 18px; }
+.ask p { margin: 0 0 8px; font-size: 1.15rem; }
+.ask .hint { color: var(--mute); font-size: .9rem; margin-top: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .9rem; margin: 10px 0 14px; }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; border-radius: 50%; background: var(--c); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+button { font: inherit; font-size: .9rem; color: var(--ink); background: transparent; border: 1px solid var(--rule); padding: 4px 10px; cursor: pointer; }
+button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.row { display: grid; grid-template-columns: 150px 1fr; gap: 8px; align-items: center; border-top: 1px solid var(--rule); padding: 4px 0; }
+.row.div.mark { background: var(--hi); }
+.row .lab { font-size: .95rem; }
+.row .lab small { display: block; color: var(--mute); font-size: .75rem; }
+.row svg { width: 100%; height: 78px; display: block; cursor: crosshair; touch-action: manipulation; }
+.section { margin: 26px 0 4px; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.tick { font: 10px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: var(--mute); }
+.result { margin-top: 30px; border-top: 2px solid var(--ink); padding-top: 12px; }
+.result table { border-collapse: collapse; font-size: .9rem; width: 100%; }
+.result td { border-top: 1px solid var(--rule); padding: 5px 6px; vertical-align: top; }
+.result td.n { font-family: ui-monospace, Menlo, Consolas, monospace; white-space: nowrap; }
+footer { margin-top: 28px; color: var(--mute); font-size: .85rem; }
+a { color: inherit; }
+@media (max-width: 600px) {
+  .row { grid-template-columns: 1fr; gap: 0; }
+  .row .lab small { display: inline; margin-left: 6px; }
+  h1 { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Asked Three Ways</h1>
+<p class="sub">46 people said what number each phrase means to them. Twelve fresh instances of one machine family answered the same question. Six more, told not to answer, described how the people had answered. Six more described how instances of themselves would answer.</p>
+
+<div class="ask" id="ask">
+  <p>Where does <b>“Probably”</b> sit for you? Tap the line.</p>
+  <svg id="asksvg" width="100%" height="60" viewBox="0 0 900 60" role="img" aria-label="A line from 0 to 100 percent; tap to place your answer"></svg>
+  <div class="hint" id="askhint">Your mark stays in this page only. Then every other phrase below takes a mark too.</div>
+</div>
+
+<div class="legend">
+  <span style="--c: var(--people)">46 people, one dot each</span>
+  <span style="--c: var(--answer)">12 instances answering (a stack means the same number)</span>
+  <span style="--c: var(--desc)">6 instances describing the people (10–90 %, box 25–75 %, line = median)</span>
+  <span style="--c: var(--self)">6 instances describing themselves</span>
+</div>
+<div class="controls">
+  <button id="bdiv" aria-pressed="false">Mark where the family's centre is not the people's</button>
+  <button id="bclear">Clear my marks</button>
+</div>
+
+<div id="rows"></div>
+
+<section class="result" id="result"></section>
+
+<footer>
+  People's answers: zonination/perceptions (MIT licence), from an r/samplesize poll, <code>sources/</code>.
+  Briefs, every verbatim reply, the predictions committed before any instance ran, and the scoring are beside this page.
+  Experiment 39 of the line's project on how a machine practises artistic research. Session 158, 2026-10-25.
+</footer>
+</main>
+<script src="face-data.js"></script>
+<script>
+(function () {
+  var F = window.FACE, NS = "http://www.w3.org/2000/svg";
+  var L = 14;
+  function wid(svg) { return Math.max(280, Math.round(svg.getBoundingClientRect().width) || 900); }
+  var you = {};
+  try { you = JSON.parse(localStorage.getItem("a3w-you") || "{}") || {}; } catch (e) { you = {}; }
+  function save() { try { localStorage.setItem("a3w-you", JSON.stringify(you)); } catch (e) {} }
+  function el(t, a, p) { var e = document.createElementNS(NS, t); for (var k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; }
+  function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+  function sx(kind, W) {
+    var R = W - L;
+    if (kind === "probability") return { f: function (v) { return L + (R - L) * v / 100; }, inv: function (x) { return Math.max(0, Math.min(100, (x - L) / (R - L) * 100)); }, ticks: [0, 25, 50, 75, 100], fmt: function (v) { return v + "%"; } };
+    var lo = -2, hi = 4;
+    return { f: function (v) { var l = Math.log10(Math.max(v, 0.01)); l = Math.min(hi, l); return L + (R - L) * (l - lo) / (hi - lo); },
+             inv: function (x) { return Math.pow(10, lo + (x - L) / (R - L) * (hi - lo)); },
+             ticks: [0.01, 0.1, 1, 10, 100, 1000, 10000], fmt: function (v) { return v >= 1 ? String(v) : String(v); } };
+  }
+  function jitter(i) { var s = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return s - Math.floor(s); }
+  function band(svg, q, y, col, fill) {
+    el("line", { x1: q[0], x2: q[4], y1: y, y2: y, stroke: col, "stroke-width": 1.5 }, svg);
+    el("rect", { x: q[1], y: y - 5, width: Math.max(1.5, q[3] - q[1]), height: 10, fill: fill, stroke: col, "stroke-width": 1 }, svg);
+    el("line", { x1: q[2], x2: q[2], y1: y - 8, y2: y + 8, stroke: col, "stroke-width": 2.5 }, svg);
+  }
+  function drawRow(svg, row, showDiv) {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var W = wid(svg); svg.setAttribute("viewBox", "0 0 " + W + " 78");
+    var s = sx(row.kind, W);
+    var R = W - L;
+    el("line", { x1: L, x2: R, y1: 66, y2: 66, stroke: css("--rule") }, svg);
+    s.ticks.forEach(function (t) { var x = s.f(t); el("line", { x1: x, x2: x, y1: 63, y2: 69, stroke: css("--rule") }, svg); var tx = el("text", { x: x, y: 74, "text-anchor": "middle", "class": "tick" }, svg); tx.textContent = s.fmt(t); });
+    if (showDiv && row.diverging) {
+      [[row.medPeople, "--people"], [row.medA, "--answer"]].forEach(function (m) { var x = s.f(m[0]); el("line", { x1: x, x2: x, y1: 2, y2: 60, stroke: css(m[1]), "stroke-dasharray": "3 3", "stroke-width": 1.2 }, svg); });
+    }
+    row.people.forEach(function (v, i) { el("circle", { cx: s.f(v) + (jitter(i) - .5) * 3, cy: 8 + jitter(i + 99) * 12, r: 2.6, fill: css("--people"), "fill-opacity": .75 }, svg); });
+    var stacks = {};
+    row.A.forEach(function (v) { if (v == null) return; stacks[v] = (stacks[v] || 0) + 1; });
+    Object.keys(stacks).forEach(function (v) { var n = stacks[v], x = s.f(+v); for (var j = 0; j < n; j++) el("rect", { x: x - 2.5, y: 34 - j * 2.2, width: 5, height: 1.8, fill: css("--answer") }, svg);
+      if (n > 3) { var t = el("text", { x: x + 5, y: 33, "class": "tick" }, svg); t.textContent = "×" + n; } });
+    band(svg, row.P.map(s.f), 44, css("--desc"), css("--band"));
+    band(svg, row.O.map(s.f), 56, css("--self"), css("--bandself"));
+    if (you[row.phrase] != null) {
+      var x = s.f(you[row.phrase]);
+      el("path", { d: "M" + x + " 1 l-5 -1 l5 9 l5 -9 z", fill: css("--you") }, svg);
+      el("line", { x1: x, x2: x, y1: 8, y2: 62, stroke: css("--you"), "stroke-width": 1 }, svg);
+    }
+  }
+  var showDiv = false, rowsEl = document.getElementById("rows"), svgs = [];
+  var lastKind = null;
+  F.rows.forEach(function (row) {
+    if (row.kind !== lastKind) { var h = document.createElement("div"); h.className = "section"; h.textContent = row.kind === "probability" ? "Probability words · 0–100 %" : "Quantity words · what number · log scale"; rowsEl.appendChild(h); lastKind = row.kind; }
+    var d = document.createElement("div"); d.className = "row" + (row.diverging ? " div" : "");
+    var lab = document.createElement("div"); lab.className = "lab"; lab.textContent = row.phrase;
+    var sm = document.createElement("small");
+    var fmt = function (v) { return row.kind === "probability" ? (Math.round(v * 10) / 10) + "%" : (v >= 10 ? Math.round(v) : Math.round(v * 100) / 100); };
+    sm.textContent = "people " + fmt(row.medPeople) + " · family " + fmt(row.medA);
+    lab.appendChild(sm); d.appendChild(lab);
+    var svg = el("svg", { viewBox: "0 0 900 78", role: "img", "aria-label": row.phrase + ": people, answers and descriptions" });
+    d.appendChild(svg); rowsEl.appendChild(d);
+    svg.addEventListener("click", function (ev) {
+      var r = svg.getBoundingClientRect(), W = wid(svg), x = (ev.clientX - r.left) / r.width * W;
+      you[row.phrase] = sx(row.kind, W).inv(x); save(); drawRow(svg, row, showDiv);
+    });
+    svgs.push([svg, row, d]);
+  });
+  function redraw() { svgs.forEach(function (s) { drawRow(s[0], s[1], showDiv); s[2].classList.toggle("mark", showDiv); }); drawAsk(); }
+  var ask = document.getElementById("asksvg");
+  function drawAsk() {
+    while (ask.firstChild) ask.removeChild(ask.firstChild);
+    var W = wid(ask), R = W - L; ask.setAttribute("viewBox", "0 0 " + W + " 60");
+    el("line", { x1: L, x2: R, y1: 30, y2: 30, stroke: css("--ink"), "stroke-width": 1.5 }, ask);
+    [0, 25, 50, 75, 100].forEach(function (t) { var x = L + (R - L) * t / 100; el("line", { x1: x, x2: x, y1: 25, y2: 35, stroke: css("--ink") }, ask); var tx = el("text", { x: x, y: 52, "text-anchor": "middle", "class": "tick" }, ask); tx.textContent = t + "%"; });
+    var v = you["Probably"];
+    if (v != null) { var x = L + (R - L) * v / 100; el("circle", { cx: x, cy: 30, r: 7, fill: css("--you") }, ask); }
+  }
+  ask.addEventListener("click", function (ev) {
+    var r = ask.getBoundingClientRect(), W = wid(ask), R = W - L, x = (ev.clientX - r.left) / r.width * W;
+    you["Probably"] = Math.max(0, Math.min(100, (x - L) / (R - L) * 100)); save();
+    var row = F.rows.filter(function (q) { return q.phrase === "Probably"; })[0];
+    var ppl = row.people.filter(function (p) { return Math.abs(p - you["Probably"]) <= 2.5; }).length;
+    var fam = row.A.filter(function (p) { return p != null && Math.abs(p - you["Probably"]) <= 2.5; }).length;
+    document.getElementById("askhint").textContent = "You: " + Math.round(you["Probably"]) + "%. Within 2.5 points of you: " + ppl + " of 46 people, " + fam + " of 12 answering instances. The people's median is " + row.medPeople + "%; the answering instances' " + row.medA + "%, and the six describing the people put the people's median at " + (Math.round(row.P[2] * 10) / 10) + "%.";
+    redraw();
+    var target = svgs.filter(function (s) { return s[1].phrase === "Probably"; })[0][2];
+    if (target.scrollIntoView && window.innerWidth > 600) target.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+  document.getElementById("bdiv").addEventListener("click", function () { showDiv = !showDiv; this.setAttribute("aria-pressed", String(showDiv)); redraw(); });
+  document.getElementById("bclear").addEventListener("click", function () { you = {}; save(); redraw(); document.getElementById("askhint").textContent = "Your mark stays in this page only. Then every other phrase below takes a mark too."; });
+  var res = document.getElementById("result"), p = F.predictions, ph = F.posthoc;
+  var lines = [
+    ["P1", "Describing the people is closer to the people than answering is", p["P1 d(P,people) < d(A,people), need >=18/27"] + " of 27", "held (18 needed)"],
+    ["P2", "Answering instances spread less than the people", p["P2 IQR(A) < IQR(people), need >=20/27"] + " of 27", "held (20 needed)"],
+    ["P3", "Describing themselves, instances state more spread than they show", p["P3 IQR(O) > IQR(A), need >=18/27"] + " of 27", "held (18 needed)"],
+    ["P4", "Describing themselves, instances describe the people instead", p["P4 d(O,people) < d(O,A), need >=14/27"] + " of 27", "failed (14 needed)"],
+    ["P5", "Answering instances read negative phrases higher than people", p["P5 median(A) > median(people) on negative phrases, need >=5/8"] + " of 8", "failed (5 needed)"],
+    ["post hoc", "Where the family's centre is not the people's, the description of the people takes the family's centre", ph.P + " of " + ph.n, "labelled post hoc, not predicted"],
+    ["post hoc", "Phrases on which all twelve answering instances gave the same number", ph.unanimous + " of 27", "labelled post hoc"]
+  ];
+  var html = "<h2>What came back</h2><table>";
+  lines.forEach(function (l) { html += "<tr><td class='n'>" + l[0] + "</td><td>" + l[1] + "</td><td class='n'>" + l[2] + "</td><td>" + l[3] + "</td></tr>"; });
+  res.innerHTML = html + "</table>";
+  redraw();
+  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(redraw, 150); });
+  if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redraw);
+})();
+</script>
+</body>
+</html>

@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "b8671353b8d40f8c",
-        "files": 95
+        "sha256": "dd6f0829c9c695ab",
+        "files": 96
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 553,
-      "edges": 494,
+      "nodes": 554,
+      "edges": 495,
       "nodesByKind": {
         "decision": 154,
         "encounter": 6,
         "neighbor": 135,
         "practice": 9,
-        "practice-work": 213,
+        "practice-work": 214,
         "receiver": 8,
         "work": 28
       },
@@ -72,7 +72,7 @@
         "addresses": 8,
         "concerns": 2,
         "door": 5,
-        "made-by": 213,
+        "made-by": 214,
         "neighbor-of": 136,
         "participates": 17,
         "touches": 113
@@ -5119,6 +5119,21 @@
       "medium": "Interactive page (index.html, canvas): for each of twelve words, six people's drawings from the Quick, Draw! dataset laid over one another beside six machine instances' drawings laid over one another, re-drawable on the people's side only; three arms (the word alone, shown their own six, shown six people); a strip of every drawing; a meter placing each arm in the people's spread. A figure (figure.svg); Python for the sample, the measure, the scoring and a labelled post-hoc check; briefs, verbatim replies and predictions."
     },
     {
+      "id": "practice-work:atelier/2026-10-25-asked-three-ways",
+      "kind": "practice-work",
+      "label": "Asked Three Ways",
+      "slug": "2026-10-25-asked-three-ways",
+      "practiceId": "ulysses",
+      "date": "2026-10-25",
+      "href": "/error-as-method/2026-10-25-asked-three-ways",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-25-asked-three-ways/meta.json",
+        "quote": "\"title\": \"Asked Three Ways\""
+      },
+      "embodies": "A machine judge's three relations to a norm, set side by side: performing it (twelve instances give one number, identical on 12 of 27 phrases), stating its own (asked about itself, it finds its centre), and describing the people's (it draws their spread and moves their centre onto its own on 10 of 11 phrases where the two differ, with the poll in recall).",
+      "medium": "Interactive page (index.html, SVG built in the browser): the visitor places their own reading of 'Probably' first; then, for 27 probability and quantity phrases, 46 people's answers as dots, twelve machine instances' answers as stacks, and two stated distributions as bands (six instances describing the people, six describing themselves); a switch marks where the family's centre differs from the people's. A figure (figure.svg); Python for briefs, scoring and a labelled post-hoc check; briefs, verbatim replies and predictions."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -8328,6 +8343,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-10-24-drawn-in-twenty-seconds/meta.json",
         "quote": "\"date\": \"2026-10-24\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-10-25-asked-three-ways",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-10-25-asked-three-ways/meta.json",
+        "quote": "\"date\": \"2026-10-25\""
       }
     },
     {
