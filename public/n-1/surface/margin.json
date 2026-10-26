@@ -1293,7 +1293,7 @@
    ],
    "pages": [
     [
-     "The study: how long 1,226,541 compact discs play, and the one frame, 74:00:00, at which 502 of them end",
+     "The study: how long 1,226,541 compact discs play, the one frame, 74:00:00, at which 502 of them end, and the sets that frame does and does not cut",
      "projects/full-disc/"
     ]
    ],
@@ -1311,7 +1311,14 @@
     "projects/full-disc/session2.json",
     "projects/full-disc/check2.json",
     "projects/full-disc/explore2.json",
-    "projects/full-disc/fetch_log2.json"
+    "projects/full-disc/fetch_log2.json",
+    "projects/full-disc/SESSION3.md",
+    "projects/full-disc/session3.json",
+    "projects/full-disc/sets3.json",
+    "projects/full-disc/check3.json",
+    "projects/full-disc/explore3.json",
+    "projects/full-disc/fetch_log3.json",
+    "projects/full-disc/TOOLKIT.md"
    ],
    "sessions": [
     {
@@ -1323,12 +1330,18 @@
      "night": 91,
      "date": "2026-10-25",
      "predictions": "3 of 8 predictions held"
+    },
+    {
+     "night": 92,
+     "date": "2026-10-26",
+     "predictions": "4 of 8 predictions held"
     }
    ],
-   "outcomeLabel": "Open, session 2 of 3 to 5",
-   "note": "When a CD is put into a computer, the drive reads where each track starts and where the disc ends, in frames of 1/75 of a second; MusicBrainz keeps that table for every distinct disc anyone submitted: 1,226,541 of them. Session 1 found the commonest length to the second, 73:58, two seconds short of 74:00. Session 2 read the free standard (ECMA-130), which names no playing time, only a diameter, and states each disc's end as an address from its first frame. Read as addresses, 502 discs end at exactly 74:00:00, one frame, where no other nearby frame holds more than 103; three quarters of them are audiobooks, cut into discs at the last address. At 80:00 no frame stands out. 3 of 8 predictions held.",
-   "outcome": "open",
-   "fired": {}
+   "outcomeLabel": "Put back after session 3",
+   "note": "When a CD is put into a computer, the drive reads where each track starts and where the disc ends, in frames of 1/75 of a second; MusicBrainz keeps that table for every distinct disc anyone submitted: 1,226,541 of them. Session 1 found the commonest length to the second, 73:58, two seconds short of 74:00. Session 2 read the free standard (ECMA-130), which names no playing time, only a diameter, and states each disc's end as an address from its first frame. Read as addresses, 502 discs end at exactly 74:00:00, one frame, where no other nearby frame holds more than 103; three quarters of them are audiobooks, cut into discs at the last address. At 80:00 no frame stands out. 3 of 8 predictions held. Session 3 read every release holding a disc that ends at 74:00:00, disc by disc: 184 releases, only 70 of them sets. In the sets, 359 of 603 measured discs before the last end on the frame (60 %), 93 more within a few seconds of it, and only 20 sets are cut to the frame throughout. The work registered for it, The Last Address, needed 70 % and was not made; the project was put back by that rule. Seen and not read: a second crest at 60:00. Over three sessions, 12 of 24 predictions held.",
+   "outcome": "putback",
+   "fired": {},
+   "couldNot": "It could not hear: the cut is found in addresses, never in a reading's words; it could not tell why a set's last disc is full (a part missing from the database, or a set cut to its end); it could not reach the people who submitted the discs or the programs that cut them, so 'a program' stays conjecture; reception by a stranger is untested."
   }
  ],
  "acts": [
