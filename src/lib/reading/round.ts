@@ -20,6 +20,8 @@ export interface Matter {
   quiet_rank: number | null
   /** what the attention count matches in Common Ground's day files (src/lib/reading/attention.ts) */
   terms: string[]
+  /** what a matching signal must not name to count — a term's known false friends ("hunger stones") */
+  exclude?: string[]
 }
 
 export interface EstimateItem {
@@ -78,6 +80,7 @@ export function roundProblems(r: Round): string[] {
     if (!m.title || !m.gist) out.push(`matter ${m.id} text`)
     if (!m.short || m.short.length > SHORT_MAX) out.push(`matter ${m.id} short name`)
     if (!m.terms.length || m.terms.some((t) => t.trim().length < 2)) out.push(`matter ${m.id} terms`)
+    if (m.exclude !== undefined && (!Array.isArray(m.exclude) || m.exclude.some((t) => t.trim().length < 2))) out.push(`matter ${m.id} exclusions`)
   }
   if (r.matters.length < 4) out.push('fewer than four matters')
   const pairs = (r.matters.length * (r.matters.length - 1)) / 2

@@ -108,8 +108,8 @@ const siteKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
     <summary>
       <span class="kicker">The three readings</span>
       <span class="rd-summary-note">
-        Best opened after your own reading: the web’s counts are in here, and a reading given after seeing them is marked
-        as such in the open data.
+        Best opened after your own reading: the web’s counts are in here, and a reading sent after opening this during the
+        same visit is marked as such in the open data.
       </span>
     </summary>
 
@@ -149,7 +149,7 @@ const siteKey = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
           {
             audience.readings === 0
               ? 'No reading is on the record yet, so every mark sits on the 50 line: an audience that has said nothing ranks nothing.'
-              : `${audience.readings} ${audience.readings === 1 ? 'reading' : 'readings'} on the record, from ${record?.entries[0]?.day ? fmtDay(record.entries[0].day) : '—'}. The vertical strokes are 90 % intervals of the model for this audience — not a margin of error: the readers are not a sample of anyone.`
+              : `${audience.readings} ${audience.readings === 1 ? 'reading' : 'readings'} on the record, released in batches of ${record?.batch_size ?? '—'} once their day was over. The vertical strokes are 90 % intervals of the model for this audience — not a margin of error: the readers are not a sample of anyone.`
           }
           {' '}Rings: urgent but quiet, after the briefing. Dots: the others.
         </figcaption>

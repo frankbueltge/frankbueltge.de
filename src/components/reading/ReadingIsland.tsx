@@ -4,7 +4,8 @@
  *  after the reading is sent or declined — where the reader stands between the other two readings.
  *  The web's counts and the briefing's "urgent but quiet" list are never shown before the last choice:
  *  a reading that saw them first measures the page, not the reader. If the reader opens the page's
- *  three readings anyway, the reading says so (`primed`), and the open data carries it.
+ *  three readings during this visit anyway, the reading says so (`primed`), and the open data carries
+ *  it. The bot check starts only with the last button, so a reader who keeps the reading sends nothing.
  *
  *  Every number and every sentence that judges an answer comes from src/lib/reading/*; this file
  *  draws, times, sends and words what the libs return. No style attribute anywhere (CSP). */
@@ -60,6 +61,19 @@ const CLOSED_WHY: Record<string, string> = {
   'daily-cap': 'today’s readings have reached the daily limit',
 }
 
+/** What each refusal of the store means to the reader. */
+const REFUSED: Record<string, string> = {
+  'once-a-day': 'you have already given a reading in this round today',
+  'address-limit': 'this connection has given as many readings today as one place may',
+  turnstile: 'the bot check did not pass',
+  round: 'a new round opened while you were reading; reload the page to take part in it',
+  'too-fast': 'this connection sent too many requests in a short time',
+  origin: 'the request did not come from this page',
+}
+
+/** A choice made sooner than this after a pair appeared is the second half of a double click. */
+const SETTLE_MS = 400
+
 export default function ReadingIsland({ round, signals, quiet, consent, siteKey, readingsId }: ReadingIslandProps) {
   const [stage, setStage] = useState<Stage>('intro')
   const [agreed, setAgreed] = useState(false)
@@ -71,7 +85,6 @@ export default function ReadingIsland({ round, signals, quiet, consent, siteKey,
   const [revealed, setRevealed] = useState<number | null | undefined>(undefined)
   const [text, setText] = useState('')
   const [scale, setScale] = useState(1e6)
-  const [token, setToken] = useState('')
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState<Sent | null>(null)
   const primed = useRef(false)
@@ -116,27 +129,6 @@ export default function ReadingIsland({ round, signals, quiet, consent, siteKey,
     shownAt.current = performance.now()
   }, [stage, votes.length, answers.length, revealed])
 
-  // Turnstile, loaded only when the reading is ready to send and the round is open.
-  useEffect(() => {
-    if (stage !== 'send' || status.state !== 'open' || !siteKey || !widget.current) return
-    const render = () => {
-      if (!widget.current || !window.turnstile || widget.current.childElementCount) return
-      window.turnstile.render(widget.current, {
-        sitekey: siteKey,
-        theme: 'auto',
-        callback: (t: string) => setToken(t),
-        'expired-callback': () => setToken(''),
-        'error-callback': () => setToken(''),
-      })
-    }
-    if (window.turnstile) return render()
-    const s = document.createElement('script')
-    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
-    s.async = true
-    s.onload = render
-    document.head.appendChild(s)
-  }, [stage, status.state, siteKey])
-
   function start() {
     const rand = cryptoRand()
     setPairs(drawPairs(round.matters.map((m) => m.id), round.pairs, rand))
@@ -145,6 +137,7 @@ export default function ReadingIsland({ round, signals, quiet, consent, siteKey,
   }
 
   function choose(pick: Pick) {
+    if (performance.now() - shownAt.current < SETTLE_MS) return
     const [a, b] = pairs[votes.length]!
     const next: VoteTuple[] = [...votes, [a, b, pick, elapsed(shownAt.current)]]
     setVotes(next)
@@ -171,8 +164,42 @@ export default function ReadingIsland({ round, signals, quiet, consent, siteKey,
     if (answers.length === items.length) setStage('send')
   }
 
+  /** Turnstile, loaded and run only now: until this button, nothing has left the browser. */
+  function botCheck(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const render = () => {
+        if (!widget.current || !window.turnstile) return reject(new Error('no bot check'))
+        window.turnstile.render(widget.current, {
+          sitekey: siteKey,
+          theme: 'auto',
+          callback: (t: string) => resolve(t),
+          'error-callback': () => reject(new Error('bot check')),
+          'expired-callback': () => reject(new Error('bot check expired')),
+        })
+      }
+      if (window.turnstile) return render()
+      const s = document.createElement('script')
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
+      s.async = true
+      s.onload = render
+      s.onerror = () => reject(new Error('bot check script'))
+      document.head.appendChild(s)
+    })
+  }
+
   async function send() {
     setSending(true)
+    let token = ''
+    if (siteKey) {
+      try {
+        token = await botCheck()
+      } catch {
+        setSent({ stored: false, why: 'the bot check could not run' })
+        setSending(false)
+        setStage('done')
+        return
+      }
+    }
     try {
       const res = await fetch('/api/reading/submit', {
         method: 'POST',
@@ -189,10 +216,8 @@ export default function ReadingIsland({ round, signals, quiet, consent, siteKey,
       })
       const body = await res.json().catch(() => null)
       if (res.ok && body?.status === 'stored') setSent({ stored: true, readings: body.readings })
-      else if (body?.reason === 'once-a-day') setSent({ stored: false, why: 'you have already given a reading in this round today' })
       else if (body?.reason === 'standby') setSent({ stored: false, why: CLOSED_WHY[body.detail] ?? 'collection is closed right now' })
-      else if (body?.reason === 'turnstile') setSent({ stored: false, why: 'the bot check did not pass' })
-      else setSent({ stored: false, why: 'the store did not answer' })
+      else setSent({ stored: false, why: REFUSED[body?.reason] ?? 'the store did not answer' })
     } catch {
       setSent({ stored: false, why: 'the page could not reach its store' })
     } finally {
@@ -359,13 +384,13 @@ export default function ReadingIsland({ round, signals, quiet, consent, siteKey,
         {status.state === 'open' ? (
           <>
             <p className="mt-3 max-w-2xl leading-relaxed text-fg-muted">
-              Nothing has left this browser yet. Sending adds your choices and estimates to tonight’s open record, as the text above
-              described; afterwards you see where you stand.
+              Nothing has left this browser yet. Sending runs the bot check and adds your choices and estimates to the record, as
+              the text above described; afterwards you see where you stand.
             </p>
             <input ref={honeypot} type="text" name="website" className="rd-hp" tabIndex={-1} autoComplete="off" aria-hidden="true" />
             {siteKey ? <div ref={widget} className="mt-4" /> : null}
             <div className="mt-4 flex flex-wrap gap-3">
-              <Button onClick={send} disabled={sending || (Boolean(siteKey) && !token)}>
+              <Button onClick={send} disabled={sending}>
                 {sending ? 'Sending …' : 'Add my reading to the record'}
               </Button>
               <Button variant="ghost" onClick={() => decline('you chose not to send it')}>
@@ -391,7 +416,7 @@ export default function ReadingIsland({ round, signals, quiet, consent, siteKey,
   // done: where the reader stands
   const louder = louderTally(votes, signals)
   const quietSet = new Set(quiet)
-  const quietT = quietTally(votes, { matters: round.matters.map((m) => ({ ...m, quiet_rank: quietSet.has(m.id) ? 1 : null, terms: [] })) })
+  const quietT = quietTally(votes, { matters: round.matters.map((m) => ({ id: m.id, quiet_rank: quietSet.has(m.id) ? 1 : null })) })
   const top = ownOrder(votes)
     .filter((r) => r.chosen > 0)
     .slice(0, 3)
@@ -401,8 +426,13 @@ export default function ReadingIsland({ round, signals, quiet, consent, siteKey,
     <div className="rd-card">
       <p className="kicker">Where you stand</p>
       <h3 ref={heading} tabIndex={-1} className="mt-2 text-lg font-semibold text-fg outline-none">
-        {sent?.stored ? `Your reading is on the record, one of ${sent.readings}.` : `Your reading was not stored: ${sent?.why ?? 'not sent'}.`}
+        {sent?.stored ? `Your reading is stored, one of ${sent.readings} in this round.` : `Your reading was not stored: ${sent?.why ?? 'not sent'}.`}
       </h3>
+      {sent?.stored ? (
+        <p className="mt-2 max-w-2xl text-sm text-fg-muted">
+          It joins the open record once its day is over, in the next full batch of five, without its day.
+        </p>
+      ) : null}
       <ul className="rd-stand mt-5">
         <li>
           <span className="rd-stand-label">Against the noise</span>

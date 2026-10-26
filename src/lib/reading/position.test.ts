@@ -25,6 +25,12 @@ describe('louderTally', () => {
     ]
     expect(louderTally(votes, signals)).toEqual({ of: 3, went: 2 })
   })
+
+  it('leaves out pairs whose counts differ by less than double', () => {
+    expect(louderTally([['a', 'b', 0, 1]], { a: 9, b: 8 })).toEqual({ of: 0, went: 0 })
+    expect(louderTally([['a', 'b', 0, 1]], { a: 1, b: 0 })).toEqual({ of: 1, went: 1 })
+    expect(louderTally([['a', 'b', 1, 1]], { a: 130, b: 150 })).toEqual({ of: 0, went: 0 })
+  })
 })
 
 describe('quietTally', () => {

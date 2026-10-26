@@ -7,6 +7,8 @@ import { CURRENT_ROUND as round } from '@/lib/reading/rounds'
 import { PRIOR } from '@/lib/reading/rank'
 import { READING_FLOOR } from '@/lib/reading/aggregate'
 import { DAILY_CAP } from '@/lib/reading/handlers'
+import { ADDRESS_DAILY_MAX } from '@/lib/reading/store'
+import { BATCH_SIZE } from '@/lib/reading/record'
 import { CONSENT_VERSION } from '@/lib/reading/consent'
 
 const REPO = 'https://github.com/frankbueltge/frankbueltge.de'
@@ -16,10 +18,12 @@ const limits = [
   'The readers are a sample of no one but themselves. Whoever finds this page and chooses to take part is counted; nobody else is. No sentence here says what "people" think, and the intervals are the model’s uncertainty about this audience, not a margin of error: there is no population for one to refer to.',
   'Nothing about a reader is asked or kept — no age band, no country, no field — so the page cannot tell who its audience is, or when it changes. That is the price of keeping nothing that could identify anyone, and it is paid on purpose.',
   'The matters are described in the briefing’s words, shortened. A description frames a judgment; the same words reach every reader, and they change only with a new round.',
-  'A reader who opens the fold with the web’s counts before choosing may answer the page instead of the question. The page cannot prevent it; the reading records it (primed), so the open data can be read with those readings and without them.',
-  'The pairs are drawn in the reader’s browser. A determined script could choose its own pairs; the bot check, the daily limit per visitor and a cap of readings per day narrow that, they do not exclude it.',
+  'A reader who opens the fold with the web’s counts before choosing may answer the page instead of the question. The page cannot prevent it; a reading sent after opening it during the same visit records it (primed), so the open data can be read with those readings and without them. A reader who saw the counts, kept that reading to themselves and came back later is not marked.',
+  'The pairs are drawn in the reader’s browser, and anything that passes the bot check can send a reading. A script that solves it can still add readings and choose its own pairs, up to ' + ADDRESS_DAILY_MAX + ' a day from one address whatever browser it claims, and at most ' + DAILY_CAP + ' a day in all — at which point the work closes for everyone until midnight UTC. The limits narrow such a script; they do not exclude it.',
   'One reading per round per day is held by a hash of address and browser that lives one day. Two browsers, or another day, make another reading. It is a brake, not a census of persons.',
-  'The attention count is a rule over terms, and the terms are a choice: a whole-word match lets in what shares a word with a matter (the receipts on the work’s page show every signal it let in). It is not the briefing’s own count, which counted raw occurrences in the same files and named no terms.',
+  'Readings leave the store only once their day is over, in batches of ' + BATCH_SIZE + ' and without their day, so the record has no time series finer than its batches, and the newest readings appear only when enough have come together.',
+  'The salts, marks and address counts of a finished day are deleted by the next night at the latest, but the database’s own point-in-time backups keep earlier states for up to 30 days, readable by the site’s operator only.',
+  'The attention count is a rule over terms, and the terms are a choice: a whole-word match lets in what shares a word with a matter, an exclusion keeps out a known false friend, and the receipts on the work’s page show every signal it let in. A matter counts as louder than another only with at least twice its signals, so that small differences, which are more the terms’ doing than the web’s, decide nothing. It is not the briefing’s own count, which counted raw occurrences in the same files and named no terms.',
   '“Urgent” is fixed by the question every pair asks — which the world should act on first, in the coming year — and the question stays the same across rounds, so that rounds can be set beside each other. Another question would give another ranking.',
   'Each round’s result may enter the next briefing. From then on, the readings of different rounds are not independent of each other, and the briefing says what it took.',
   'The figures the estimates are judged against come from the sources linked beside them, as of their date. Most are themselves estimates.',
@@ -64,8 +68,9 @@ const limits = [
     <h2 class="mb-2 font-semibold">2. Cadence</h2>
     <p class="leading-relaxed text-fg-muted">
       One round per briefing; the newest round takes readings. The attention reading of a round is fixed at the briefing’s
-      date and does not move afterwards. The readings are read from the store and committed every night at 02:35 UTC, and
-      only when they changed; the page is rebuilt from that commit.
+      date and does not move afterwards. Every round’s record is read every night at 02:35 UTC and committed when it
+      changed; a record may only grow, so an answer that has lost a committed reading writes nothing. The page is rebuilt
+      from that commit.
     </p>
   </section>
 
@@ -91,6 +96,11 @@ const limits = [
       <li>
         A signal counts for a matter when its label or a linked headline names one of the matter’s terms as a whole word,
         case and accents folded (<a class={link} href={`${REPO}/blob/main/src/lib/reading/attention.ts`}>attention.ts</a>).
+      </li>
+      <li>
+        The record releases a round’s readings once their day is over, oldest first, in batches of {BATCH_SIZE}, each
+        reading with a random id and its batch number instead of its day
+        (<a class={link} href={`${REPO}/blob/main/src/lib/reading/record.ts`}>record.ts</a>).
       </li>
       <li>
         Below {READING_FLOOR} readings the page shows counts and intervals but words no comparison.

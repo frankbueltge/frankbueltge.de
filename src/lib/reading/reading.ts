@@ -27,10 +27,21 @@ export interface Reading {
   estimates: EstimateTuple[]
 }
 
-/** A reading as the record and the snapshot hold it: an id that sorts by day, never by hour. */
+/** A reading as the store keeps it: a random id, and the UTC day it was given on. */
 export interface StoredReading {
   id: string
   day: string
+  consent: string
+  primed: boolean
+  votes: VoteTuple[]
+  estimates: EstimateTuple[]
+}
+
+/** A reading as the public record releases it: no day, only the batch it was released in
+ *  (src/lib/reading/record.ts). */
+export interface PublicReading {
+  id: string
+  batch: number
   consent: string
   primed: boolean
   votes: VoteTuple[]

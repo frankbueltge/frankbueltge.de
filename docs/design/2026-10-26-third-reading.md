@@ -24,14 +24,17 @@ years, round after round, and each round's record can feed the next briefing.
    and four answers: left, right, *equally urgent*, *can't say*.
 3. **Estimates** three magnitudes drawn from the round's five (e.g. how many people face acute food
    insecurity in the 13 hunger hotspots), each answer judged against its sourced figure at once.
-4. **Sends**, or keeps it to themselves. Nothing leaves the browser before this step.
+4. **Sends**, or keeps it to themselves. Nothing leaves the browser before this step, not even the
+   bot check, which loads with the send button.
 5. **Sees where they stand**: how often they gave a choice to the louder matter, how they treated the
    briefing's "urgent but quiet" matters, their estimates against the figures. Only then does the page
    offer the other two readings.
 
 The web's counts and the "urgent but quiet" list sit in a closed fold below the reader's card. A
-reader who opens it first is not stopped; the reading records it (`primed`), and the open data carries
-it. A reading that saw the counts first would measure the page, not the reader.
+reader who opens it first is not stopped; a reading sent after opening it during the same visit
+records it (`primed`), and the open data carries it. A reading that saw the counts first would measure
+the page, not the reader. (A reader who saw them, kept that reading and came back later is not
+marked; the method sheet says so.)
 
 ## The three readings
 
@@ -55,8 +58,10 @@ readers' ranking is the only full urgency order of the three.
 - **Estimates.** Close within a factor of 1.25 for a count, five points for a percentage, a tenth of a
   degree for a temperature (`estimate.ts`). Gists never state an asked figure (tested).
 - **Attention.** A signal counts when its label or a linked headline names one of the matter's terms
-  as a whole word, case and accents folded. The terms are a disclosed choice; the receipts show what
-  they let in. This is deliberately not the briefing's count, which counted raw occurrences and named
+  as a whole word, case and accents folded, and none of its exclusions ("hunger stones" are not
+  hunger). The terms are a disclosed choice; the receipts show what they let in. A matter counts as
+  louder than another only with at least twice its signals and at least one more, so that small
+  differences, which are more the terms' doing than the web's, decide nothing. This is deliberately not the briefing's count, which counted raw occurrences and named
   no terms; the two differ. The briefing gave "Sudan 25, hunger 8" mentions; here the hunger matter
   counted 9 signals while "Sudan" was one of its terms, one of them a football match between South
   Sudan and Egypt, so "Sudan" was dropped and the matter now counts 3.
@@ -67,16 +72,24 @@ readers' ranking is the only full urgency order of the three.
 
 ## Data, and the six duties (`.claude/rules/runtime-and-works.md`)
 
-- **Store.** The reception's D1 (`RECEPTION_DB`), in four tables of its own that create themselves on
-  first use: `reading_entries` (round, day, consent version, primed, votes, estimates), `reading_salts`,
-  `reading_marks` (24 hours), `reading_counts`. No address, no time of day, no identifier.
+- **Store.** The reception's D1 (`RECEPTION_DB`), in five tables of its own that create themselves on
+  first use: `reading_entries` (random id, round, day, consent version, primed, votes, estimates),
+  `reading_salts`, `reading_marks`, `reading_addr` (readings per address and day, capped at three),
+  `reading_counts`. No address, no time of day, no identifier. Entries, marks and address counts are
+  `WITHOUT ROWID` tables, so the order of writing cannot pair a reading with its reader's mark.
+- **Release.** The public record holds only readings of finished UTC days, in whole batches of five,
+  each without its day (a batch number instead). Polling it shows nothing arrive, and each night's
+  addition to the record and to git history holds five readings or none.
 - **1, declared state.** The consent card and the "What this page keeps" section, plus a section in the
   privacy policy (DE and EN).
-- **2, nightly snapshot.** `reading-snapshot.yml` reads `GET /api/reading/record` (public, no token)
-  and commits `src/data/reading/<round>.json` when it changed, one reading per line; `deploy-cf.yml`
-  waits on it.
-- **3, counting, not identifying.** A day hash (HMAC of address and browser under a salt that lives one
-  UTC day) allows one reading per round per day; deleted after 24 hours.
+- **2, nightly snapshot.** `reading-snapshot.yml` reads `GET /api/reading/record` for every round
+  (public, no token, cached an hour under one key) and commits `src/data/reading/<round>.json` when it
+  changed, one reading per line; a record may only grow, so an answer that has lost committed readings
+  writes nothing and fails the run. `deploy-cf.yml` waits on it.
+- **3, counting, not identifying.** Day hashes (HMAC of address and browser, and of the address alone,
+  under a salt that lives one UTC day) allow one reading per round per day and three per address; the
+  record call of each night deletes the finished day's salt, marks and counts. D1's point-in-time
+  recovery keeps earlier states for up to 30 days, for the operator only; the consent text says so.
 - **4, mortality.** The page ends when its store ends; the committed records stay.
 - **5, cost limit.** 300 readings a day, then standby until midnight UTC.
 - **6, fail-closed.** No store or no bot check → declared standby; the chain in `handlers.ts` repeats
@@ -108,10 +121,32 @@ Kill conditions are named in the audit.
 1. Merge. The tables create themselves; Turnstile and the store already run for the reception.
 2. Check in the Cloudflare dashboard whether the reception's database was created with the `eu`
    jurisdiction. It cannot be added later. If not, either accept it (the stored readings are
-   anonymous) or create an EU database and bind it as a second binding; the consent text names
-   Cloudflare, not a region, so it is true either way.
+   anonymous) or create an EU database and bind it before the first reading; the consent text names
+   Cloudflare, not a region, so it is true either way. A database bound after readings exist must
+   receive them first: the snapshot refuses a record that has lost readings, so the archive cannot be
+   emptied by a fresh database.
 3. Set the work's status to `live` and add a line to the decision log.
 4. Have the new privacy section read once by someone who reads such texts for a living.
+
+## What the independent review changed (2026-10-26, before anything went live)
+
+A second session read the prototype against its own claims, and its probes against the fake D1 found
+what the first build got wrong. All of it is fixed above:
+- The record showed a reading within a minute of its arrival, and the cache could be skipped. It now
+  releases only finished days, in batches, under one cache key per round.
+- Rowid order paired each reading with its reader's mark, which held the second it was written. The
+  tables are now `WITHOUT ROWID`, and marks keep the day.
+- Salts and marks were cleared only when someone sent a reading. The record call now clears them every
+  night.
+- A script could vary its user agent to pass the once-a-day limit. A per-address ceiling now holds.
+- The consent card left out `primed`, and the bot check ran before the last button. Both are fixed,
+  and so is the text.
+- The snapshot read only the current round, and could have emptied the archive. It now reads every
+  round and only ever adds.
+- Broad terms ("Ukraine", "midterms", "inflation") made the web's counts measure the terms. They are
+  narrowed, and the gist of "Wars that returned" now names the wars that did. "Louder" needs a real
+  margin.
+- A double click could answer the next pair. The browser now ignores a second click for 400 ms.
 
 ## Open, for Frank
 

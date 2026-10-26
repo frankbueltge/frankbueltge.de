@@ -3,13 +3,15 @@
 // Two plain counts, for one visitor's reading right after it, and for all readings together on the
 // record. Neither needs a ranking of the briefing, which ranks nothing but its "urgent but quiet" list:
 //
-//   · LOUDER — of the decided choices between two matters the web was NOT equally loud about, how many
-//     went to the louder one. All of them would mean urgency read off the noise; none, against it.
+//   · LOUDER — of the decided choices between two matters one of which was CLEARLY louder on the web
+//     (at least twice the signals, and at least one more), how many went to the louder one. All of
+//     them would mean urgency read off the noise; none, against it. Pairs whose counts differ by less
+//     are left out, because a small difference is more the terms' doing than the web's.
 //   · QUIET — of the decided choices where exactly one of the two stands on the briefing's "urgent but
 //     quiet" list, how many went to that one.
 //
 // Ties ("equally urgent") and "can't say" count in neither.
-import type { Round } from './round'
+import type { Matter } from './round'
 import type { VoteTuple } from './reading'
 
 export interface Tally {
@@ -19,13 +21,16 @@ export interface Tally {
   went: number
 }
 
+/** One count is clearly above another: at least twice it, and at least one more. */
+export const clearlyLouder = (x: number, y: number): boolean => x >= 2 * y + 1
+
 export function louderTally(votes: readonly VoteTuple[], signals: Record<string, number>): Tally {
   const t: Tally = { of: 0, went: 0 }
   for (const [a, b, pick] of votes) {
     if (pick === null || pick === 2) continue
     const sa = signals[a] ?? 0
     const sb = signals[b] ?? 0
-    if (sa === sb) continue
+    if (!clearlyLouder(sa, sb) && !clearlyLouder(sb, sa)) continue
     t.of++
     const chosen = pick === 0 ? a : b
     if ((chosen === a ? sa : sb) > (chosen === a ? sb : sa)) t.went++
@@ -33,7 +38,7 @@ export function louderTally(votes: readonly VoteTuple[], signals: Record<string,
   return t
 }
 
-export function quietTally(votes: readonly VoteTuple[], round: Pick<Round, 'matters'>): Tally {
+export function quietTally(votes: readonly VoteTuple[], round: { matters: readonly Pick<Matter, 'id' | 'quiet_rank'>[] }): Tally {
   const quiet = new Set(round.matters.filter((m) => m.quiet_rank !== null).map((m) => m.id))
   const t: Tally = { of: 0, went: 0 }
   for (const [a, b, pick] of votes) {

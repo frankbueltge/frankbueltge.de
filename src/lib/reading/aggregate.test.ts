@@ -12,7 +12,11 @@ const recordOf = (n: number) =>
     {
       ok: true,
       round: R.id,
-      entries: Array.from({ length: n }, (_, i) => ({ id: `t-20261027-${i.toString(16).padStart(12, '0')}`, day: '2026-10-27', ...sampleReading(i + 1) })),
+      batch_size: 5,
+      entries: Array.from({ length: n }, (_, i) => {
+        const { round: _round, ...reading } = sampleReading(i + 1)
+        return { id: `t-${i.toString(16).padStart(16, '0')}`, batch: Math.floor(i / 5) + 1, ...reading }
+      }),
     },
     'test',
   )

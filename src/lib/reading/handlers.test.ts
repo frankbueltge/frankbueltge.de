@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { fakeD1, sqliteAvailable } from '../reception/fake-d1'
 import { DAILY_CAP, handleRecord, handleStatus, handleSubmit, resetBurst, type Deps, type ReadingEnv } from './handlers'
+import { ADDRESS_DAILY_MAX } from './store'
+import { BATCH_SIZE } from './record'
 import { CURRENT_ROUND } from './rounds'
 import { sampleReading } from './fixtures'
 
@@ -31,6 +33,12 @@ const submit = (env: ReadingEnv, body: Record<string, unknown>, headers: Record<
   )
 
 const human = (seed = 1) => ({ ...sampleReading(seed), turnstileToken: 'human' })
+const raw = (env: ReadingEnv) => (env.RECEPTION_DB as unknown as { raw: { prepare(sql: string): { all(...p: unknown[]): Record<string, unknown>[] } } }).raw
+const record = async (env: ReadingEnv, query = '') => (await handleRecord(new Request(`${ORIGIN}/api/reading/record${query}`), env, deps)).json()
+/** `n` readings from `n` different addresses. */
+async function readingsFrom(env: ReadingEnv, n: number, first = 1) {
+  for (let i = first; i < first + n; i++) expect((await submit(env, human(i), { 'cf-connecting-ip': `198.51.100.${i}` })).status).toBe(200)
+}
 
 beforeEach(() => {
   resetBurst()
@@ -44,8 +52,9 @@ describe.skipIf(!(await sqliteAvailable()))('POST /api/reading/submit', () => {
     const res = await submit(env, human())
     expect(res.status).toBe(200)
     const body = await res.json()
-    expect(body).toMatchObject({ ok: true, status: 'stored', round: CURRENT_ROUND.id, readings: 1 })
-    expect(body.id).toMatch(/^t-20261027-[0-9a-f]{12}$/)
+    expect(body).toEqual({ ok: true, status: 'stored', round: CURRENT_ROUND.id, readings: 1 })
+    // the reader is never handed an id, and the stored one carries no date
+    expect(raw(env).prepare('SELECT id FROM reading_entries').all()[0]!.id).toMatch(/^t-[0-9a-f]{16}$/)
   })
 
   it('declares standby without the store or without the bot check, and stores nothing', async () => {
@@ -66,10 +75,10 @@ describe.skipIf(!(await sqliteAvailable()))('POST /api/reading/submit', () => {
 
   it('answers a filled honeypot like a success and stores nothing', async () => {
     const env = await makeEnv()
+    await handleStatus(new Request(`${ORIGIN}/api/reading/status`), env, deps) // creates the tables
     const res = await submit(env, { ...human(), website: 'http://spam.example' })
     expect(res.status).toBe(200)
-    const record = await (await handleRecord(new Request(`${ORIGIN}/api/reading/record`), env)).json()
-    expect(record.readings).toBe(0)
+    expect(raw(env).prepare('SELECT COUNT(*) AS n FROM reading_entries').all()[0]!.n).toBe(0)
   })
 
   it('takes one reading per visitor per round per day, and another the next day', async () => {
@@ -80,6 +89,15 @@ describe.skipIf(!(await sqliteAvailable()))('POST /api/reading/submit', () => {
     expect((await submit(env, human(3), { 'cf-connecting-ip': '198.51.100.4' })).status).toBe(200)
     now = new Date('2026-10-28T09:00:00Z')
     expect((await submit(env, human(4))).status).toBe(200)
+  })
+
+  it('lets one address give only a few readings a day, whatever browsers it claims', async () => {
+    const env = await makeEnv()
+    for (let i = 1; i <= ADDRESS_DAILY_MAX; i++) expect((await submit(env, human(i), { 'user-agent': `browser ${i}` })).status).toBe(200)
+    const more = await submit(env, human(9), { 'user-agent': 'yet another browser' })
+    expect([more.status, (await more.json()).reason]).toEqual([429, 'address-limit'])
+    now = new Date('2026-10-28T09:00:00Z')
+    expect((await submit(env, human(10), { 'user-agent': 'browser 1' })).status).toBe(200)
   })
 
   it('switches to standby at the daily cap', async () => {
@@ -93,11 +111,19 @@ describe.skipIf(!(await sqliteAvailable()))('POST /api/reading/submit', () => {
   it('keeps no address, no time of day and no hash beside the reading', async () => {
     const env = await makeEnv()
     await submit(env, human())
-    const db = (env.RECEPTION_DB as unknown as { raw: { prepare(sql: string): { all(): Record<string, unknown>[] } } }).raw
-    const row = db.prepare('SELECT * FROM reading_entries').all()[0]!
+    const row = raw(env).prepare('SELECT * FROM reading_entries').all()[0]!
     expect(Object.keys(row).sort()).toEqual(['consent', 'day', 'estimates', 'id', 'primed', 'round', 'votes'])
     expect(JSON.stringify(row)).not.toContain('203.0.113.9')
     expect(row.day).toBe('2026-10-27')
+  })
+
+  it('keeps no order of writing that could pair a reading with its reader’s mark', async () => {
+    const env = await makeEnv()
+    await submit(env, human())
+    for (const table of ['reading_entries', 'reading_marks', 'reading_addr']) {
+      expect(() => raw(env).prepare(`SELECT rowid FROM ${table}`).all(), `${table} has a rowid`).toThrow()
+    }
+    expect(Object.keys(raw(env).prepare('SELECT * FROM reading_marks').all()[0]!).sort()).toEqual(['day', 'hash', 'round'])
   })
 })
 
@@ -111,13 +137,42 @@ describe.skipIf(!(await sqliteAvailable()))('GET /api/reading/status and /record
     expect(closed).toMatchObject({ open: false, standby: 'bot-check' })
   })
 
-  it('publishes every reading of a round as stored, and refuses an unknown round', async () => {
+  it('releases nothing of the day that is still running', async () => {
     const env = await makeEnv()
-    const sent = human()
-    await submit(env, sent)
-    const r = await (await handleRecord(new Request(`${ORIGIN}/api/reading/record?round=${CURRENT_ROUND.id}`), env)).json()
-    expect(r).toMatchObject({ ok: true, schema: 1, round: CURRENT_ROUND.id, readings: 1 })
-    expect(r.entries[0]).toMatchObject({ day: '2026-10-27', consent: CURRENT_ROUND.consent_version, votes: sent.votes, estimates: sent.estimates })
-    expect((await handleRecord(new Request(`${ORIGIN}/api/reading/record?round=nowhere`), env)).status).toBe(404)
+    await readingsFrom(env, BATCH_SIZE + 1)
+    expect(await record(env)).toMatchObject({ ok: true, round: CURRENT_ROUND.id, batch_size: BATCH_SIZE, readings: 0, entries: [] })
+  })
+
+  it('releases a finished day in whole batches, without the day, and holds the rest back', async () => {
+    const env = await makeEnv()
+    await readingsFrom(env, BATCH_SIZE + 1)
+    now = new Date('2026-10-28T02:35:00Z')
+    const r = await record(env, `?round=${CURRENT_ROUND.id}`)
+    expect(r.readings).toBe(BATCH_SIZE)
+    for (const e of r.entries) {
+      expect(Object.keys(e).sort()).toEqual(['batch', 'consent', 'estimates', 'id', 'primed', 'votes'])
+      expect(e.batch).toBe(1)
+    }
+    // the held-back reading waits for four more; then a second batch is released and the first is unchanged
+    await readingsFrom(env, BATCH_SIZE - 1, 50)
+    now = new Date('2026-10-29T02:35:00Z')
+    const next = await record(env)
+    expect(next.readings).toBe(2 * BATCH_SIZE)
+    expect(next.entries.filter((e: { batch: number }) => e.batch === 1)).toEqual(r.entries)
+  })
+
+  it('clears the finished day’s salt, marks and address counts when the record is read', async () => {
+    const env = await makeEnv()
+    await submit(env, human())
+    now = new Date('2026-10-28T02:35:00Z')
+    await record(env)
+    for (const table of ['reading_salts', 'reading_marks', 'reading_addr']) {
+      expect(raw(env).prepare(`SELECT COUNT(*) AS n FROM ${table}`).all()[0]!.n, table).toBe(0)
+    }
+  })
+
+  it('refuses an unknown round', async () => {
+    const env = await makeEnv()
+    expect((await handleRecord(new Request(`${ORIGIN}/api/reading/record?round=nowhere`), env, deps)).status).toBe(404)
   })
 })

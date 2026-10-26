@@ -13,8 +13,13 @@
 //   4. The mechanical check against the round (./reading.ts)     → 422 with the reason
 //   5. Turnstile, server-side                                    → 403
 //   6. The global daily cap                                      → 503 standby (daily-cap)
-//   7. One reading per round per visitor per day (day hash)      → 429 once-a-day
-//   8. Stored in one transaction                                 → 200
+//   7. One reading per round per visitor per day (day hash of address and browser), and at most
+//      ADDRESS_DAILY_MAX per address whatever browser it claims  → 429 once-a-day / address-limit
+//   8. Stored in one transaction                                 → 200, without the reading's id
+//
+// The record (GET /api/reading/record) releases only readings of finished days, in whole batches and
+// without their day (src/lib/reading/record.ts), and every call clears the salts, marks and address
+// counts of finished days — the nightly snapshot makes one such call every night.
 //
 // Invariants (.claude/rules/runtime-and-works.md): fail-closed everywhere; no secret, token or key in
 // any response, error or log; no CORS headers, same origin only.
@@ -22,7 +27,8 @@ import type { D1Like } from '../reception/store'
 import { dayHash, dayOf, hex, randomHex } from '../reception/crypto'
 import { CURRENT_ROUND, roundById } from './rounds'
 import { validateReading } from './reading'
-import { countOf, ensureSchema, hasMark, insertReading, roundEntries, roundTotal, todaysSalt } from './store'
+import { BATCH_SIZE, releaseBatches } from './record'
+import { cleanup, countOf, ensureSchema, finishedEntries, hasMark, insertReading, roundTotal, todaysSalt } from './store'
 
 export interface ReadingEnv {
   RECEPTION_DB?: D1Like
@@ -111,8 +117,6 @@ async function verifyTurnstile(deps: Deps, secret: string, token: unknown, ip: s
   }
 }
 
-const seconds = (d: Date): number => Math.floor(d.getTime() / 1000)
-
 // ── POST /api/reading/submit ──────────────────────────────────────────────────────────────────
 
 export async function handleSubmit(request: Request, env: ReadingEnv, deps: Deps): Promise<Response> {
@@ -140,14 +144,16 @@ export async function handleSubmit(request: Request, env: ReadingEnv, deps: Deps
   try {
     await ensureSchema(db)
     const day = dayOf(now)
-    const nowS = seconds(now)
     if ((await countOf(db, day, 'readings')) >= DAILY_CAP) return standby('daily-cap')
-    const salt = await todaysSalt(db, day, randomHex(32), nowS)
+    const salt = await todaysSalt(db, day, randomHex(32))
     const hash = await dayHash(salt, ip ?? 'unknown', request.headers.get('user-agent') ?? 'unknown')
+    // the address alone, so a script that varies its user agent still meets a ceiling
+    const addr = await dayHash(salt, `address:${ip ?? 'unknown'}`, '')
     if (await hasMark(db, hash, v.value.round)) return json(429, { ok: false, reason: 'once-a-day' })
-    const id = `t-${day.replace(/-/g, '')}-${randomHex(6)}`
-    if (!(await insertReading(db, id, v.value, { hash, nowS, day }))) return json(429, { ok: false, reason: 'once-a-day' })
-    return json(200, { ok: true, status: 'stored', id, round: v.value.round, readings: await roundTotal(db, v.value.round) })
+    // A random id with no date in it: the reader is never handed it, and the record shows it without a day.
+    const stored = await insertReading(db, `t-${randomHex(8)}`, v.value, { hash, addr, day })
+    if (stored !== 'stored') return json(429, { ok: false, reason: stored })
+    return json(200, { ok: true, status: 'stored', round: v.value.round, readings: await roundTotal(db, v.value.round) })
   } catch {
     return json(502, { ok: false, reason: 'upstream' })
   }
@@ -177,8 +183,9 @@ export async function handleStatus(_request: Request, env: ReadingEnv, deps: Dep
 
 // ── GET /api/reading/record?round= ────────────────────────────────────────────────────────────
 
-/** The public record of a round: every reading, as stored. What the nightly snapshot commits. */
-export async function handleRecord(request: Request, env: ReadingEnv): Promise<Response> {
+/** The public record of a round: the released batches of its finished days. What the nightly snapshot
+ *  commits. Clears what a finished day kept to stop a second reading. */
+export async function handleRecord(request: Request, env: ReadingEnv, deps: Deps): Promise<Response> {
   const asked = new URL(request.url).searchParams.get('round')
   const round = asked === null ? CURRENT_ROUND : roundById(asked)
   if (!round) return json(404, { ok: false, reason: 'unknown-round' })
@@ -186,8 +193,10 @@ export async function handleRecord(request: Request, env: ReadingEnv): Promise<R
   if (!db) return standby('store')
   try {
     await ensureSchema(db)
-    const entries = await roundEntries(db, round.id)
-    return json(200, { ok: true, schema: 1, round: round.id, readings: entries.length, entries })
+    const today = dayOf(deps.now())
+    await cleanup(db, today)
+    const entries = releaseBatches(await finishedEntries(db, round.id, today))
+    return json(200, { ok: true, schema: 1, round: round.id, batch_size: BATCH_SIZE, readings: entries.length, entries })
   } catch {
     return json(502, { ok: false, reason: 'upstream' })
   }

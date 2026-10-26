@@ -11,19 +11,19 @@ export const CONSENT_VERSION = '2026-10-26'
 export const CONSENT_LINES: readonly { label: string; text: string }[] = [
   {
     label: 'What is kept',
-    text: 'Your choices and estimates, how long each took, the day (not the hour), and the version of this text.',
+    text: 'Your choices and estimates, how long each took, whether you opened this page’s readings before sending, the day (not the hour), and the version of this text.',
   },
   {
     label: 'What is not',
-    text: 'Your address, a cookie, an account, or anything that links this reading to you or to another visit. For one day a keyed hash of your address and browser stops a second reading; it is deleted after 24 hours.',
+    text: 'Your address, a cookie, an account, or anything that links this reading to you or to another visit. For the day itself, a keyed hash of your address and browser, and one of your address alone, stop more readings from the same place; they go with the day, by the next night at the latest. The database’s own backups keep earlier states for up to 30 days, for the site’s operator only.',
   },
   {
     label: 'Where it goes',
-    text: 'Every night all readings of the round are published as open data (CC0) in this site’s public repository, and this page is drawn from them.',
+    text: 'Into this site’s public repository as open data (CC0): only once its day is over, only in batches of at least five, and without the day, so that no reading can be matched to the moment it was given. This page is drawn from them.',
   },
   {
     label: 'Why it cannot be taken back',
-    text: 'Because nothing ties a reading to you, no one can find yours again to delete it. Until you press the last button, nothing has been sent.',
+    text: 'Because nothing ties a reading to you, no one can find yours again to delete it. Until you press the last button nothing has been sent, not even the bot check, which starts with that button.',
   },
   {
     label: 'Who',

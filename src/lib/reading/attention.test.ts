@@ -74,6 +74,12 @@ describe('readAttention', () => {
     expect(a.matters.find((m) => m.matter === 'ebola')!.converged_days).toBe(0)
   })
 
+  it('does not count a signal that names one of the matter\'s exclusions', () => {
+    const r = { ...round, matters: [{ id: 'hunger', title: 'Hunger', gist: '', quiet_rank: 1, terms: ['hunger'], exclude: ['hunger stones'] }] }
+    const d = [day('2026-10-01', { a: [signal('Hunger in Sudan'), signal('TIL about hunger stones')] })]
+    expect(signalsById(readAttention(r, d))).toEqual({ hunger: 1 })
+  })
+
   it('keeps a receipt for every counted signal, newest first', () => {
     const a = readAttention(round, days)
     expect(a.matters.find((m) => m.matter === 'iran')!.receipts.map((r) => r.label)).toEqual(['Iran and Hormuz', 'Markets'])

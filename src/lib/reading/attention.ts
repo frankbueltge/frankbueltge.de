@@ -4,7 +4,8 @@
 // window, by one disclosed rule, so anyone can count again from the same files:
 //
 //   · a SIGNAL names a matter when its label or the title of one of its links contains one of the
-//     matter's terms as a whole word (case folded, diacritics stripped, hyphens read as spaces);
+//     matter's terms as a whole word (case folded, diacritics stripped, hyphens read as spaces), and
+//     none of the matter's exclusions (a term's known false friends: "hunger stones" are not hunger);
 //     each signal counts once, however many terms it carries;
 //   · a day is CONVERGED for a matter when one of that day's converging topics names it the same way.
 //
@@ -65,8 +66,13 @@ export function namer(terms: readonly string[]): (text: string) => boolean {
 
 const textsOf = (label: string, links: readonly { title: string }[] | undefined): string[] => [label, ...(links ?? []).map((l) => l.title)]
 
-function readMatter(m: Matter, days: readonly TrendingDay[]): MatterAttention {
-  const names = namer(m.terms)
+/** What the count needs of a matter. */
+type Counted = Pick<Matter, 'id' | 'terms' | 'exclude'>
+
+function readMatter(m: Counted, days: readonly TrendingDay[]): MatterAttention {
+  const includes = namer(m.terms)
+  const excludes = namer(m.exclude ?? [])
+  const names = (text: string): boolean => includes(text) && !excludes(text)
   const receipts: AttentionReceipt[] = []
   let converged = 0
   for (const day of days) {
@@ -82,7 +88,7 @@ function readMatter(m: Matter, days: readonly TrendingDay[]): MatterAttention {
 }
 
 /** The attention reading of a round, from whichever committed days fall in its window. */
-export function readAttention(round: Pick<Round, 'matters' | 'attention_window'>, allDays: readonly TrendingDay[]): AttentionReading {
+export function readAttention(round: { matters: readonly Counted[]; attention_window: Round['attention_window'] }, allDays: readonly TrendingDay[]): AttentionReading {
   const { from, to } = round.attention_window
   const days = allDays.filter((d) => d.date >= from && d.date <= to).sort((a, b) => a.date.localeCompare(b.date))
   return {
