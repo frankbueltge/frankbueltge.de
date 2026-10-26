@@ -53,6 +53,10 @@ export interface GapFigure {
 /** log10(1 + signals), so zero has a place on the axis. */
 const lx = (signals: number): number => Math.log10(1 + Math.max(0, signals))
 
+/** The height of a label line, and the slack a comparison of two of them allows. */
+const LINE = 13
+const EPS = 1e-6
+
 /** A label's width in figure units: 12px type, about 0.55 em a character. */
 export const labelWidth = (text: string): number => text.length * 6.6
 
@@ -91,7 +95,9 @@ export function gapFigure(
   })
 
   // Labels whose boxes would overlap are pushed apart vertically, the lower one moving down by a
-  // line at a time, so no two labels share ink; a label never leaves the plot.
+  // line at a time, so no two labels share ink; a label never leaves the plot. A label only ever
+  // moves down, and only when that moves it (LINE − EPS, not LINE: p + 13 − p is 12.999… in floating
+  // point, and a test against 13 would push the same label to the same place forever).
   const span = (m: FigureMark): [number, number] => {
     const w = labelWidth(m.title)
     return m.anchor === 'start' ? [m.labelX, m.labelX + w] : [m.labelX - w, m.labelX]
@@ -99,12 +105,12 @@ export function gapFigure(
   const placed: FigureMark[] = []
   for (const m of [...marks].sort((a, b) => a.labelY - b.labelY || a.x - b.x)) {
     const [l, r] = span(m)
-    for (let moved = true; moved; ) {
+    for (let moved = true, passes = 0; moved && passes <= placed.length; passes++) {
       moved = false
       for (const p of placed) {
         const [pl, pr] = span(p)
-        if (l < pr && pl < r && Math.abs(m.labelY - p.labelY) < 13) {
-          m.labelY = p.labelY + 13
+        if (l < pr && pl < r && Math.abs(m.labelY - p.labelY) < LINE - EPS && p.labelY + LINE > m.labelY) {
+          m.labelY = p.labelY + LINE
           moved = true
         }
       }

@@ -46,6 +46,16 @@ describe('gapFigure', () => {
     expect(Math.abs(a!.labelY - b!.labelY)).toBeGreaterThanOrEqual(13)
   })
 
+  it('settles when floating point makes two stacked labels 12.999… apart (the hang of 2026-10-26)', () => {
+    const rank = [row('a', 66.3), row('b', 66.1), row('c', 65.9), row('d', 65.8), row('e', 65.6)]
+    const f = gapFigure(
+      ['a', 'b', 'c', 'd', 'e'].map((id) => ({ id, title: `${id} label of some length`, quiet: false, signals: 0 })),
+      rank,
+    )
+    const ys = f.marks.map((m) => m.labelY).sort((x, y) => x - y)
+    for (let i = 1; i < ys.length; i++) expect(ys[i]! - ys[i - 1]!).toBeGreaterThan(12.99)
+  })
+
   it('pushes labels apart that would collide', () => {
     const f = gapFigure(
       [
